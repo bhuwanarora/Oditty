@@ -1,5 +1,4 @@
 readers_door
-============
 TODO: Before the data entry initiation
 1. Handle test cases
 2. Tag and SubCategory has many to one relationship. This will be changed to many to many.
