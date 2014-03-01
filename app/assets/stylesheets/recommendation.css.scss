@@ -1,0 +1,35 @@
+/*
+	card on recommendation page
+*/
+.card{
+	width: 243px;
+	height: 666px;
+	background-color: white;
+}
+
+.card:hover {
+	box-shadow: 10px 10px 5px #888888;
+}
+
+.card .header{
+	text-align: center;
+	background: url('header-background.jpg');
+	width: 232px;
+	height: 62px;
+}
+
+.card .thumb{
+	width: 232px;
+	height: 453px;
+	filter: url(filters.svg#grayscale); /* Firefox 3.5+ */
+    filter: gray; /* IE6-9 */
+    -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+}
+
+.card .thumb:hover{
+    filter: none;
+    -webkit-filter: grayscale(0);
+}
+body{
+	background: url('background-1.jpg');
+}

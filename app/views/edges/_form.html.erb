@@ -1,0 +1,13 @@
+<%= simple_form_for(@edge, :remote => true, :html => {:class => "form-horizontal edge", novalidate:false}) do |f| %>
+    <%= f.error_notification %>
+  <div class="modal-body form-inputs">
+  	<%= f.association :nodes,
+  					  :collection => @categories %>
+  	<%= f.input :weight %>
+    
+  </div>
+
+  <div class="form-actions modal-footer">
+    <%= f.button :submit, :class => "btn-inverse" %>
+  </div>
+<% end %>

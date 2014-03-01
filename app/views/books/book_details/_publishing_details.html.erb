@@ -1,0 +1,8 @@
+<% if @book.publishing_details.present? %>
+	<b>PUBLISHING DETAILS:</b></br>
+	&nbsp; <b>DATE:</b> <%= @book.publishing_details.date %></br>
+	&nbsp; <b>PUBLISHERS:</b>
+	<% @book.publishing_details.publishers.each do |publisher| %>
+		&nbsp; &nbsp;<%= publisher.name %>
+	<% end %></br>
+<% end %>

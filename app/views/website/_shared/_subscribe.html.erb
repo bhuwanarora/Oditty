@@ -1,0 +1,12 @@
+<div class="social_subscribe">
+	<a class="span popup" href="<%= user_omniauth_authorize_path(:facebook) %>">
+	  <img src="assets/facebook.png" style="width:40px;height:40px;" title="Subscribe with Facebook">
+	</a>
+	<a class="span popup" href="<%= user_omniauth_authorize_path(:google_oauth2) %>">
+	  <img src="assets/google.png" style="width:40px;height:40px;" title="Subscribe with Google+">
+	</a>
+	<br>
+	<%= form_tag(email_subscription_path) do %>
+		<input class="email_subscription" placeholder="Enter your email here..." name="subscription[email]" type="email"/>
+	<% end %>
+</div>

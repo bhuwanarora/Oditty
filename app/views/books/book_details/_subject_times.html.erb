@@ -1,0 +1,4 @@
+<b>SUBJECT TIMES:</b>
+<% @book.subject_times.each do |subject_time| %>
+	<a href="<%= subject_time.url %>"><%= subject_time.name %></a>&nbsp;
+<% end %></br>

@@ -1,0 +1,26 @@
+.main-header{
+	background: rgb(240, 248, 255);
+	width: inherit;
+	height: 25px;
+	font-family: fantasy;
+	padding-top: 10px;
+	padding-left: 10px;
+}
+
+.tab-group{
+    padding-left:200px;
+}
+
+.tab-center{
+    text-decoration: none;
+    margin-right: 5px;
+}
+.tab-right{
+	text-decoration: none;
+	float:right;
+	padding-right: 10px;
+}
+a:hover {
+    background: rgb(240, 248, 255);
+    color: #AAAAAA;
+}

@@ -1,0 +1,14 @@
+<%= simple_form_for(@category, :remote => true, :html => {:class => "form-horizontal category", novalidate:false}) do |f| %>
+    <%= f.error_notification %>
+  <div class="modal-body form-inputs">
+    <%= f.input :name,
+                :input_html => {
+                  :required => true
+                } %>
+    
+  </div>
+
+  <div class="form-actions modal-footer">
+    <%= f.button :submit, :class => "btn-inverse" %>
+  </div>
+<% end %>

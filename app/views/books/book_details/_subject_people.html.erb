@@ -1,0 +1,4 @@
+<b>SUBJECT PEOPLE:</b>
+<% @book.subject_peoples.each do |subject_people| %>
+	<a href="<%= subject_people.url %>"><%= subject_people.name %></a>&nbsp;
+<% end %></br>

@@ -1,0 +1,244 @@
+<div class="info_box" id="info_box">
+	<div id="irc_pc" style="bottom: auto; left: 220px;"></div>
+	<div class="navigation_bar">
+		<ul class="book_menu span">
+			<li class="span menu active" data-href=".info_box .home">Home</li>
+			<li class="span menu inactive" data-href=".info_box .reviews">Reviews</li>
+			<li class="span menu inactive" data-href=".info_box .groups">Groups</li>
+			<li class="span menu inactive" data-href=".info_box .extras">Extras</li>
+		</ul>
+		<div class="shelves_tag span">
+			<div class="recently_read_inactive_tag book_tag"></div>
+			<div class="recommended_inactive_tag book_tag"></div>
+			<div class="philosophy_tag book_tag"></div>
+			<div class="to_read_tag book_tag"></div>
+		</div>
+		<div><img src="assets/cart.jpeg" class="cart span" /></div>
+		<div id="close">X</div>
+	</div>
+	<div class="window home active_window">
+		<img src="assets/fight_club.jpg" class="thumbnail span"/>
+	</div>
+	<div class="window reviews inactive_window">
+		REVIEWS
+	</div>
+	<div class="window groups inactive_window">
+		GROUPS
+	</div>
+	<div class="window extras inactive_window">
+		EXTRAS
+	</div>
+</div>
+<script type="text/javascript">
+	$('.info_box #close').on('click', function(){
+		$('.info_box').hide();
+	})
+	$('.book_menu .menu').on('click', function(){
+		if(!$(this).hasClass('active')){
+			$('.book_menu .menu').each(function(index, item){
+				if($(item).hasClass('active')){
+					$(item).removeClass('active').addClass('inactive');
+				}
+			});
+			$(this).removeClass('inactive').addClass('active')
+			window_class = $(this).data('href')
+			$('.active_window').removeClass('active_window').addClass('inactive_window')
+			$(window_class).removeClass('inactive_window').addClass('active_window')
+		}
+	})
+	$('.recently_read_tag').on('click', function(){
+		$(this).toggleClass('recently_read_inactive_tag')
+		$(this).toggleClass('recently_read_tag')
+	})
+	$('.recently_read_inactive_tag').on('click', function(){
+		$(this).toggleClass('recently_read_inactive_tag')
+		$(this).toggleClass('recently_read_tag')
+	})
+	$('.to_read_tag').on('click', function(){
+		$(this).toggleClass('to_read_inactive_tag')
+		$(this).toggleClass('to_read_tag')
+	})
+	$('.to_read_inactive_tag').on('click', function(){
+		$(this).toggleClass('to_read_inactive_tag')
+		$(this).toggleClass('to_read_tag')
+	})
+	$('.philosophy_tag').on('click', function(){
+		$(this).toggleClass('philosophy_inactive_tag')
+		$(this).toggleClass('philosophy_tag')
+	})
+	$('.philosophy_inactive_tag').on('click', function(){
+		$(this).toggleClass('philosophy_inactive_tag')
+		$(this).toggleClass('philosophy_tag')
+	})
+	$('.recommended_tag').on('click', function(){
+		$(this).toggleClass('recommended_inactive_tag')
+		$(this).toggleClass('recommended_tag')
+	})
+	$('.recommended_inactive_tag').on('click', function(){
+		$(this).toggleClass('recommended_inactive_tag')
+		$(this).toggleClass('recommended_tag')
+	})
+
+</script>
+<style>
+	.book_tag{
+		width: 18%;
+		height: 25px;
+		float: right;
+		margin-right: 2%;
+		border-bottom-left-radius: 41%;
+		padding: 2%;
+		border-bottom-right-radius: 41%;
+	}
+	.shelves_tag{
+		width: 200px;
+	}
+
+	.to_read_tag{
+		background: #f4503e;
+	}
+	.to_read_inactive_tag{
+		background: #641F17;
+	}
+	.to_read_inactive_tag:hover{
+		/*background: #A83A2E;*/
+		cursor: pointer;
+	}
+	.to_read_tag:hover{
+		background: #A83A2E;
+		cursor: pointer;
+	}
+
+	.recently_read_tag{
+		background: #49bf68;
+	}
+	.recently_read_inactive_tag{
+		background: #1B532A;
+	}
+	.recently_read_inactive_tag:hover{
+		/*background: #2D8143;*/
+		cursor: pointer;
+	}
+	.recently_read_tag:hover{
+		background: #2D8143;
+		cursor: pointer;
+	}
+
+
+	.recommended_tag{
+		background: #FAA226;
+	}
+	.recommended_inactive_tag{
+		background: #644212;
+	}
+	.recommended_inactive_tag:hover{
+		/*background: #9E681C;*/
+		cursor: pointer;
+	}
+	.recommended_tag:hover{
+		background: #9E681C;
+		cursor: pointer;
+	}
+
+	.philosophy_tag{
+		background: #00ACEE;
+	}
+	.philosophy_inactive_tag{
+		background: #015677;
+	}
+	.philosophy_inactive_tag:hover{
+		/*background: #066B92;*/
+		cursor: pointer;
+	}
+	.philosophy_tag:hover{
+		background: #066B92;
+		cursor: pointer;
+	}
+
+	.window{
+		height: 100%;
+		width: 100%;
+	}
+
+	.info_box .active_window{
+		display: block;
+	} 
+
+	.info_box .inactive_window{
+		display: none;
+	}
+
+	.book_menu {
+		width: 49%;
+		padding: 0% 0% 0% 0%;
+		margin: 0% 0% 1% 10%;
+		list-style-type: none;
+		border-style: solid;
+		border-color: #222;
+		border-bottom-color: #363535;
+	}
+	.book_menu .menu{
+		padding: 2% 6% 1% 2%;
+		margin-left: 0.5%;
+		color: rgb(122, 122, 122);
+		font-size: 16px;
+	}
+	.book_menu .active{
+		background: rgba(165, 165, 165, 0); 
+	}
+	.book_menu .inactive{
+		background: rgba(165, 165, 165, 0.13);
+	}
+	.book_menu .inactive:hover{
+		cursor: pointer;
+		background: rgba(165, 165, 165, 0.2); 
+	}
+	.market_book .read_ebook{
+		cursor: pointer;
+	}
+	.cart{
+		width: 5%;
+		position: absolute;
+	}
+	
+	
+	.info_box{
+		/*display: none;*/
+		width: 100%;
+		height: 110%;
+		background: #222;
+		margin: 31% 0% 0% 0%;
+		position: absolute;
+		z-index: 2;
+	}
+	.info_box #close{
+		float: right;
+		color: ghostwhite;
+		margin-right: 1%;
+		margin-top: 1%;
+		cursor: pointer;
+	}
+	.info_box .thumbnail{
+		margin: 0% 0% 4% 4%;
+	}
+	.info_box .header{
+
+	}
+	.info_box #irc_pc{
+		border-bottom: 50px solid #222;
+		border-left: 50px solid transparent;
+		border-right: 50px solid transparent;
+		height: 0;
+		position: absolute;
+		top: -50px;
+		width: 0;
+	}
+	.info_box .reviews{
+		width: 20%;
+		height: 80%;
+		background: rgba(143, 143, 143, 0.23);;
+		margin: 4% 1% 1% 1%;
+		overflow-y: scroll;
+	}
+
+</style>

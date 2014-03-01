@@ -1,0 +1,106 @@
+<div class="book_header">
+	<div class="book_details span">
+		<p class="book_title">Siddhartha (1922)</p>
+		<p class="author_name">by Hermann Hesse</p>
+		<p class="book_description">A young Indian mystic, a contemporary of Buddha, sacrifices everything to search for the true meaning of life.</p>
+	</div>
+	<div class="author_thumbanil span"></div>
+</div>
+<div class="other_details">
+	<div class="quotes">
+		<div class="quotes_header" style="display:none;">Quotes</div>
+		<p class="quote">“When someone is seeking, it happens quite easily that he only sees the thing that he is seeking; that he is unable to find anything, unable to absorb anything because he is only thinking of the thing he is seeking...”</p>
+		<p class="quote">“To whom else should one sacrifice, to whom else was veneration due but to him, the Only One, Atman? And where was Atman to be found, where did he dwell, where did his eternal heart beat if not in one’s own self, in the innermost, in the indestructible essence that every person bore within? But where, where was this self, this innermost, this ultimate? It was not flesh and blood, it was not thinking or consciousness—that was what the wisest teach. But then where, where was it? To pierce there, to the self, to myself, to Atman—was there any other path worth seeking?”
+	Siddharta</p>
+		<p class="quote">“Her clever red lips taught him a lot. Her tender, supple hand taught him a lot. In regard to love, he was still a boy, and he tended to plunge into pleasure blindly, endlessly, insatiably. So she thoroughly taught him that one cannot take pleasure without giving pleasure, and that every gesture, every caress, every touch, every glance, every last bit of the body has its secret, which brings happiness to the person who knows how to wake it.”</p>
+		<p class="quote">“She taught him that after a celebration of love the lovers should not part without admiring each other, without being conquered or having conquered, so that neither is bleak or glutted or has the bad feeling of having misused or been misused.”</p>
+		<p class="quote">“Where are you going, by friend?I am not going anywhere. We … are always on the way…. But where are you going, Siddhartha?It is the same with me at it is with you, my friend. I am not going anywhere. I am only on the way.”</p>
+		<p class="quote">“But today he only saw one of the river’s secrets, one that gripped his soul. He saw that the water continually flowed and flowed and yet it was always there; it was always the same and yet every moment it was new.”</p>
+	</div>
+	<div class="tags">
+		<span class="tag">Buddhism</span>
+		<span class="tag">Spirituality</span>
+		<span class="tag">Journey</span>
+		<span class="tag">Literature</span>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.quotes').on('mouseover', function(){
+			$('.quotes_header').show();
+		})
+		$('.quotes').on('mouseout', function(){
+			$('.quotes_header').hide();	
+		})
+	})
+</script>
+<style>
+	.tags{
+		margin: 3% 1% 1% 1%;
+		width: 100%;
+		padding-left: 0;
+	}
+	.tags .tag{
+		position: relative;
+		background-color: #00ACEE;
+		width: 15%;
+		font: -webkit-small-control;
+		font-size: large;
+		padding: 2%;
+		display: -webkit-inline-flex;
+	}
+	.quotes_header{
+		position: absolute;
+		font-family: -webkit-pictograph;
+		font-size: large;
+		background: rgba(0, 0, 0, 0.05);
+		width: 100%;
+		text-align: center;
+		margin-left: -2%;
+		padding: 2%;
+	}
+	.quotes .quote{
+		background: #FAA226;
+		border-radius: 11px;
+		padding: 3%;
+	}
+	.other_details{
+		height: 50%;
+	}
+	.quotes{
+		height: 52%;
+		overflow-y: scroll;
+		margin: 1% 2% 1% 2%;
+	}
+	.author_name{
+		float: left;
+		margin-left: 5%;
+	}
+	.book_description{
+		float: left;
+		margin-left: 4%;
+	}
+	.book_header{
+		border: black;
+		/*background: aliceblue;*/
+		width: 100%;
+		height: 29%;
+	}
+	.author_thumbanil{
+		width: 42%;
+		background-image: url('assets/hermann_hesse.jpg');
+		height: 99%;
+		margin-left: 0px;
+	}
+	.book_details{
+		width: 58%;
+		height: 100%;
+		float: left;
+		margin-left: 0px;
+	}
+	.book_title{
+		font-family: monospace;
+		font-size: x-large;
+		margin: 2%;
+	}
+</style>

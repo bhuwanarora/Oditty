@@ -1,0 +1,18 @@
+<%= image_tag 'horizontal.jpg', :class => "horizontal_scroll" %>
+<script type="text/javascript">
+$(document).ready(function function_name (argument) {
+	 $(window).bind('mousewheel', function(event) {
+	 		delta = event.originalEvent.deltaY;
+	        if (delta > 0) { 
+	        	window.scrollBy(-80,0);
+	        } 
+	        else window.scrollBy(80,0) ; 
+	    });
+})
+</script>
+<style>
+	.horizontal_scroll{
+		max-width: 3028px;
+		height: 768px;
+	}
+</style>

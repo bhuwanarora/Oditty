@@ -1,0 +1,15 @@
+<%= render :partial => "shared/advertisements"%>
+<table>
+  <thead>
+    <tr>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @books.each do |book| %>
+      <tr>
+        <p><%= render :partial => "book_details", :locals => {:@book => book } %></p></tr></br></br>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

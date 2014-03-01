@@ -1,0 +1,5 @@
+<% @book.authors.each do |author| %>
+	<% if author.human_profile.present? %>
+		&nbsp; <a href="<%= author.human_profile.openlibrary_url %>" title="Link to Openlibrary Author Profile" target="_blank"><%= author.human_profile.name %></a>
+	<% end %>
+<% end %></br>
