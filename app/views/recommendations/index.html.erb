@@ -1,12 +1,13 @@
 <%= stylesheet_link_tag 'recommendation'%>
-<span ng-app="recommendationApp">
-	<span ng-controller="BooksController">
-		<a href="#books">book</a>
-		<a href="#authors">author</a>
-		<a href="#readers">reader</a>
+<div ng-app="recommendationApp">
+	<div  ng-controller="BooksController">
 		<div ng-view></div>
-	</span>
-</span>
-<div id="recommendationFooter">
-	
+		<div id="recommendationFooter">
+			<span class="nav-links">
+				<a href="#readers"><img class="reader-icon" src="assets/icon-sprites.png" /></a>
+				<a href="#books"><img class="book-icon" src="assets/icon-sprites.png"/></a>
+				<a href="#authors"><img class="author-icon" src="assets/icon-sprites.png"/></a>
+			</span>
+		</div>
+	</div>
 </div>

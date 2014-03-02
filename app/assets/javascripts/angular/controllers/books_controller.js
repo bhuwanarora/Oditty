@@ -1,4 +1,4 @@
-recommendationApp.controller('BooksController', function ($scope, $http, recommendationService) {
+recommendationApp.controller('BooksController', function ($scope, recommendationService) {
 
     init();
 
@@ -6,5 +6,10 @@ recommendationApp.controller('BooksController', function ($scope, $http, recomme
         recommendationService.getBooks().then(function(data){
 	    	$scope.books = data["books"];
 	    })
+    }
+
+    $scope.getIntArray = function(number){
+    	debugger
+    	return new Array(number);
     }
 });

@@ -6,12 +6,12 @@ module Api
 						{:title => "City",
 						  :author_name => "P. D. Smith",
 						  :tags => [
-						  	{:name => "Philosophy", :url => ""},
-						  	{:name => "Art", :url => ""},
-						  	{:name => "20th Century", :url => ""}
+						  	{:name => "Philosophy", :url => "javascript:void(0);"},
+						  	{:name => "Art", :url => "javascript:void(0);"},
+						  	{:name => "20th Century", :url => "javascript:void(0);"}
 						  ],
 						  :book_cover_url => "assets/books/12.jpg",
-						  :rating => "",
+						  :rating => 4,
 						  :status => 0,
 						  :readers_count => "112",
 						  :discussions_count => "23",

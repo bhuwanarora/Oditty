@@ -51,11 +51,11 @@ readersDoor.config(function ($routeProvider) {
     templateUrl: "/assets/angular/widgets/base/review_widget.html"
   };
 })
-.directive('tag', function () {
+.directive('tags', function () {
   return {
     restrict: 'E',
-    scope: { 'tag': '=data' },
-    templateUrl: "/assets/angular/widgets/base/tag.html"
+    scope: { 'tags': '=data' },
+    templateUrl: "/assets/angular/widgets/base/tags.html"
   };
 })
 .directive('category', function () {

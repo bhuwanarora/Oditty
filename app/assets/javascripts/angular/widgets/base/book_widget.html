@@ -1,11 +1,13 @@
-<div ng-model="book" ng-mouseover="" class="card">
+<div ng-model="book" ng-mouseenter="hover = true" ng-class="{discovered: hover}" class="card">
 	<div class="header">
 		<div class="background">
+			<rating data="book.rating" class="rating"></rating>
 			<p>
 				<a href="javascript:void(0);">#{{book.title | uppercase}}</a><br/>
 				by <a href="javascript:void(0);">@{{book.author_name}}</a><br/>
 			</p>
 		</div>
 	</div>
+	<tags data="book.tags"></tags>
 	<bookthumb data="book.book_cover_url"></bookthumb>
 </div>
