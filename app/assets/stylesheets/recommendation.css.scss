@@ -1,26 +1,58 @@
+body{
+	background: url('background-1.jpg');
+}
+
+
+/* recommendationFooter */
+#recommendationFooter {
+   position:fixed;
+   left:0px;
+   bottom:0px;
+   height:40px;
+   width:100%;
+   background:url('woodbar.png');
+}
+
+/* IE 6 */
+* html #recommendationFooter {
+   position:absolute;
+   top:expression((0-(recommendationFooter.offsetHeight)+(document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight)+(ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop))+'px');
+}
+
+
 /*
 	card on recommendation page
 */
 .card{
-	width: 243px;
+	width: 242px;
 	height: 666px;
 	background-color: white;
 }
 
 .card:hover {
-	box-shadow: 10px 10px 5px #888888;
+	box-shadow: 8px 10px 9px 1px #090909;
 }
 
 .card .header{
-	text-align: center;
-	background: url('header-background.jpg');
 	width: 232px;
 	height: 62px;
+	margin: 0px 5px 5px 5px;
+}
+
+.card .header .background{
+	height: 62px;
+	background: url('header-background.jpg');
+}
+
+.card .header .background p{
+	text-align: center;
+	vertical-align: middle; 
 }
 
 .card .thumb{
 	width: 232px;
 	height: 453px;
+	margin: 5px;
 	filter: url(filters.svg#grayscale); /* Firefox 3.5+ */
     filter: gray; /* IE6-9 */
     -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
@@ -29,7 +61,4 @@
 .card .thumb:hover{
     filter: none;
     -webkit-filter: grayscale(0);
-}
-body{
-	background: url('background-1.jpg');
 }

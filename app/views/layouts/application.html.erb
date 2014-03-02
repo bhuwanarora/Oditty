@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html ng-app='readersDoor'>
 <head>
   <title>ReadersDoor</title>
   <% unless response.as_json["request"].as_json["fullpath"] == "/test" || (response.as_json["request"].as_json["fullpath"].include? "/coming_soon") || response.as_json["request"].as_json["fullpath"] == "/" || response.as_json["request"].as_json["fullpath"] == "/website" %>
     <%= render :partial => "shared/header"%>
   <% end %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/angular/**/*.js")] %>
   <%= yield %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
 
   <%= csrf_meta_tags %>
