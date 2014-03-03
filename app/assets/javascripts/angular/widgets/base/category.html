@@ -1,3 +1,5 @@
-<div class="category">
-	
+<div ng-class="{'hidden_category':!hovered, 'category':hovered}" ng-mouseenter="hovered=true" ng-mouseleave="hovered=false" ng-init="getCharArray(category.name)">
+	<div ng-repeat="i in charArray track by $index">
+		{{i | uppercase}}<br/>
+	</div>
 </div>

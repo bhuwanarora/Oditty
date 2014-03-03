@@ -6,10 +6,7 @@ recommendationApp.controller('BooksController', function ($scope, recommendation
         recommendationService.getBooks().then(function(data){
 	    	$scope.books = data["books"];
 	    })
+        $scope.extra_elements = true;
     }
 
-    $scope.getIntArray = function(number){
-    	debugger
-    	return new Array(number);
-    }
 });
