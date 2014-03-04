@@ -85,6 +85,7 @@ readersDoor.directive('category', function ($rootScope) {
     scope: { 'category': '=data' },
     link: function(scope) {
     	bindHover(scope, $rootScope)
+    	bindExpand(scope, $rootScope)
     },
     controller: function($scope){
     	$scope.getCharArray = function(name){
@@ -95,10 +96,34 @@ readersDoor.directive('category', function ($rootScope) {
   };
 })
 
-readersDoor.directive('comment', function () {
+readersDoor.directive('comment', function ($rootScope) {
   return {
     restrict: 'E',
     scope: { 'comment': '=data' },
+    link: function(scope){
+    	bindExpand(scope, $rootScope);
+    },
+    controller: function($scope){
+    	$scope.init = function(){
+    		$scope.comment_ready = false
+    	}
+
+    	$scope.toggleCommentBoxState = function(){
+    		if($scope.comment_ready == true){
+    			$scope.comment_ready = false
+    		}
+    		else{
+    			$scope.comment_ready = true	
+    		}
+    	}
+
+    	$scope.postReview = function(){
+    		$scope.$parent.rated = false;
+    		$scope.$parent.reviewed = true;
+    	}
+
+    	$scope.init();
+    },
     templateUrl: "/assets/angular/widgets/base/comment.html"
   };
 })
@@ -164,6 +189,23 @@ readersDoor.directive('rate', function ($rootScope) {
     link: function(scope){
     	bindExpand(scope, $rootScope)
     },
+    controller: function($scope){
+    	$scope.init = function(){
+			$scope.rate_ready = false;
+    	}
+
+		$scope.toggle = function(index){
+			//TODO
+			$scope.mark_as_rated()
+		}
+
+		$scope.mark_as_rated = function(){
+			$scope.$parent.read = false;
+			$scope.$parent.rated = true;
+		}
+
+		$scope.init();
+    },
     templateUrl: "/assets/angular/widgets/base/rate.html"
   };
 })
@@ -175,12 +217,17 @@ readersDoor.directive('markAsRead', function($rootScope){
 			bindExpand($scope, $rootScope)
 		},
 		controller: function($scope, recommendationService){
-			$scope.expand = false;
+			$scope.init = function(){
+				$scope.expand = false;
+			}
+
 			$scope.markAsRead = function(){
-				$scope.logged_in = false
-				$scope.read = true
+				$scope.logged_in = false;
+				$scope.read = true;
 				//ajax call to mark the book as read
 			}
+
+			$scope.init();
 		},
 		templateUrl: "/assets/angular/widgets/base/mark_as_read.html"
 	}
