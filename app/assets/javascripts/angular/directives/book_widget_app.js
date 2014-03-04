@@ -1,24 +1,24 @@
-readersDoor.directive('book', function ($rootScope) {
+bookWidgetApp.directive('book', function ($rootScope) {
   return {
     restrict: 'E',
     scope: { 'book': '=data' },
     link: function(scope){
     	bindExpand(scope, $rootScope)
     },
-    controller: function($scope, recommendationService){
+    controller: function($scope, bookWidgetAppService){
       $scope.hover = function() {
-      	recommendationService.triggerHover();
+      	bookWidgetAppService.triggerHover();
       };
 
       $scope.mouseout = function() {
-      	recommendationService.triggerMouseOut();
+      	bookWidgetAppService.triggerMouseOut();
       };      
     },
     templateUrl: "/assets/angular/widgets/base/book_widget.html"
   };
 })
 
-readersDoor.directive('bookNavbar', function ($rootScope) {
+bookWidgetApp.directive('bookNavbar', function ($rootScope) {
   return {
     restrict: 'E',
     link: function(scope) {
@@ -28,23 +28,23 @@ readersDoor.directive('bookNavbar', function ($rootScope) {
   };
 })
 
-readersDoor.directive('bookthumb', function ($rootScope) {
+bookWidgetApp.directive('bookthumb', function ($rootScope) {
   return {
     restrict: 'E',
     scope: { 'bookthumb': '=data' },
     link: function(scope) {
       bindHover(scope, $rootScope)
     },
-    controller: function($scope, recommendationService){
+    controller: function($scope, bookWidgetAppService){
       $scope.expand = function() {
-		recommendationService.triggerExpand();
+		bookWidgetAppService.triggerExpand();
       };
     },
     templateUrl: "/assets/angular/widgets/base/book_thumb.html"
   };
 })
 
-readersDoor.directive('rating', function ($rootScope) {
+bookWidgetApp.directive('rating', function ($rootScope) {
   return {
     restrict: 'E',
     scope: { 'rating': '=data' },
@@ -55,7 +55,7 @@ readersDoor.directive('rating', function ($rootScope) {
   };
 })
 
-readersDoor.directive('reviewWidget', function () {
+bookWidgetApp.directive('reviewWidget', function () {
   return {
     restrict: 'E',
     scope: { 'reviewWidget': '=data' },
@@ -63,7 +63,7 @@ readersDoor.directive('reviewWidget', function () {
   };
 })
 
-readersDoor.directive('shelf', function () {
+bookWidgetApp.directive('shelf', function () {
   return {
     restrict: 'E',
     scope: { 'shelf': '=data' },
@@ -71,7 +71,7 @@ readersDoor.directive('shelf', function () {
   };
 })
 
-readersDoor.directive('bookmark', function () {
+bookWidgetApp.directive('bookmark', function () {
   return {
     restrict: 'E',
     scope: { 'bookmark': '=data' },
@@ -79,7 +79,7 @@ readersDoor.directive('bookmark', function () {
   };
 })
 
-readersDoor.directive('category', function ($rootScope) {
+bookWidgetApp.directive('category', function ($rootScope) {
   return {
     restrict: 'E',
     scope: { 'category': '=data' },
@@ -96,7 +96,7 @@ readersDoor.directive('category', function ($rootScope) {
   };
 })
 
-readersDoor.directive('comment', function ($rootScope) {
+bookWidgetApp.directive('comment', function ($rootScope) {
   return {
     restrict: 'E',
     scope: { 'comment': '=data' },
@@ -128,7 +128,7 @@ readersDoor.directive('comment', function ($rootScope) {
   };
 })
 
-readersDoor.directive('interact', function () {
+bookWidgetApp.directive('interact', function () {
   return {
     restrict: 'E',
     scope: { 'status': '=data' },
@@ -152,7 +152,7 @@ readersDoor.directive('interact', function () {
   };
 })
 
-readersDoor.directive('newsWidget', function () {
+bookWidgetApp.directive('newsWidget', function () {
   return {
     restrict: 'E',
     scope: { 'newsWidget': '=data' },
@@ -160,7 +160,7 @@ readersDoor.directive('newsWidget', function () {
   };
 })
 
-readersDoor.directive('summary', function ($rootScope) {
+bookWidgetApp.directive('summary', function ($rootScope) {
   return {
     restrict: 'E',
     scope: { 'summary': '=data' },
@@ -171,7 +171,7 @@ readersDoor.directive('summary', function ($rootScope) {
   };
 })
 
-readersDoor.directive('tags', function ($rootScope) {
+bookWidgetApp.directive('tags', function ($rootScope) {
   return {
     restrict: 'E',
     scope: { 'tags': '=data' },
@@ -182,7 +182,7 @@ readersDoor.directive('tags', function ($rootScope) {
   };
 })
 
-readersDoor.directive('rate', function ($rootScope) {
+bookWidgetApp.directive('rate', function ($rootScope) {
   return {
     restrict: 'E',
     scope: { 'rate': '=data' },
@@ -210,13 +210,13 @@ readersDoor.directive('rate', function ($rootScope) {
   };
 })
 
-readersDoor.directive('markAsRead', function($rootScope){
+bookWidgetApp.directive('markAsRead', function($rootScope){
 	return {
 		restrict: 'E',
-		link: function($scope){
-			bindExpand($scope, $rootScope)
+		link: function(scope){
+			bindExpand(scope, $rootScope)
 		},
-		controller: function($scope, recommendationService){
+		controller: function($scope, bookWidgetAppService){
 			$scope.init = function(){
 				$scope.expand = false;
 			}
