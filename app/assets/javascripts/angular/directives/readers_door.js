@@ -1,84 +1,55 @@
-var bindings = {}
-
-readersDoor.directive('book', function () {
+readersDoor.directive('book', function ($rootScope) {
   return {
     restrict: 'E',
     scope: { 'book': '=data' },
-    controller: function($scope){
-      var entities = $scope.entities = [];
- 
+    link: function(scope){
+    	bindExpand(scope, $rootScope)
+    },
+    controller: function($scope, recommendationService){
       $scope.hover = function() {
-        angular.forEach(entities, function(entity) {
-          entity.hovered = true;
-        });
+      	recommendationService.triggerHover();
       };
 
       $scope.mouseout = function() {
-        angular.forEach(entities, function(entity) {
-          entity.hovered = false;
-        });
+      	recommendationService.triggerMouseOut();
       };      
-
-      this.addEntity = function(entity) {
-        if (entities.length === 0) {
-          entity.hovered = false;
-        }
-        entities.push(entity);
-      };
     },
     templateUrl: "/assets/angular/widgets/base/book_widget.html"
   };
 })
 
-readersDoor.directive('bookNavbar', function () {
+readersDoor.directive('bookNavbar', function ($rootScope) {
   return {
     restrict: 'E',
+    link: function(scope) {
+      bindHover(scope, $rootScope)
+    },
     templateUrl: "/assets/angular/widgets/base/book_navbar.html"
   };
 })
 
-readersDoor.directive('bookthumb', function () {
+readersDoor.directive('bookthumb', function ($rootScope) {
   return {
-    require: '^book',
     restrict: 'E',
     scope: { 'bookthumb': '=data' },
-    link: function(scope, element, attrs, bookCtrl) {
-      bookCtrl.addEntity(scope);
+    link: function(scope) {
+      bindHover(scope, $rootScope)
     },
-    controller: function($scope){
-      book = $scope.$parent
-      book_widget = book.$parent
-      var entities = $scope.entities = [book, book_widget];
- 
+    controller: function($scope, recommendationService){
       $scope.expand = function() {
-        angular.forEach(entities, function(entity) {
-          if(entity.expand == true){
-          	entity.expand = false;
-          }
-          else{
-          	entity.expand = true;
-          }
-        });
-      };
-
-      this.addEntity = function(entity) {
-        if (entities.length === 0) {
-          entity.expand = false;
-        }
-        entities.push(entity);
+		recommendationService.triggerExpand();
       };
     },
     templateUrl: "/assets/angular/widgets/base/book_thumb.html"
   };
 })
 
-readersDoor.directive('rating', function () {
+readersDoor.directive('rating', function ($rootScope) {
   return {
-    require: '^book',
     restrict: 'E',
     scope: { 'rating': '=data' },
-    link: function(scope, element, attrs, bookCtrl) {
-      bookCtrl.addEntity(scope);
+    link: function(scope) {
+      bindHover(scope, $rootScope)
     },
     templateUrl: "/assets/angular/widgets/base/rating.html"
   };
@@ -108,13 +79,12 @@ readersDoor.directive('bookmark', function () {
   };
 })
 
-readersDoor.directive('category', function () {
+readersDoor.directive('category', function ($rootScope) {
   return {
-  	require: '^book',
     restrict: 'E',
     scope: { 'category': '=data' },
-    link: function(scope, element, attrs, bookCtrl) {
-      bookCtrl.addEntity(scope);
+    link: function(scope) {
+    	bindHover(scope, $rootScope)
     },
     controller: function($scope){
     	$scope.getCharArray = function(name){
@@ -133,10 +103,26 @@ readersDoor.directive('comment', function () {
   };
 })
 
-readersDoor.directive('interactWidget', function () {
+readersDoor.directive('interact', function () {
   return {
     restrict: 'E',
-    scope: { 'interactWidget': '=data' },
+    scope: { 'status': '=data' },
+    controller: function($scope){
+    	$scope.setStatus = function(status){
+    		if(status == 0){
+    			$scope.logged_in = true;
+    		}
+    		else if(status == 1){
+    			$scope.read = true;
+    		}
+    		else if(status == 2){
+    			$scope.rated = true;
+    		}
+    		else if(status == 3){
+    			$scope.reviewed = true;	
+    		}
+    	}
+    },
     templateUrl: "/assets/angular/widgets/base/interact_widget.html"
   };
 })
@@ -149,34 +135,74 @@ readersDoor.directive('newsWidget', function () {
   };
 })
 
-readersDoor.directive('summary', function () {
+readersDoor.directive('summary', function ($rootScope) {
   return {
-  	require: '^bookthumb',
     restrict: 'E',
     scope: { 'summary': '=data' },
-    link: function(scope, element, attrs, bookthumbCtrl) {
-      bookthumbCtrl.addEntity(scope);
+    link: function(scope) {
+      bindExpand(scope, $rootScope)
     },
     templateUrl: "/assets/angular/widgets/base/summary.html"
   };
 })
 
-readersDoor.directive('tags', function () {
+readersDoor.directive('tags', function ($rootScope) {
   return {
-    require: '^book',
     restrict: 'E',
     scope: { 'tags': '=data' },
-    link: function(scope, element, attrs, bookCtrl) {
-      bookCtrl.addEntity(scope);
+    link: function(scope) {
+      bindHover(scope, $rootScope)
     },
     templateUrl: "/assets/angular/widgets/base/tags.html"
   };
 })
 
-readersDoor.directive('rate', function () {
+readersDoor.directive('rate', function ($rootScope) {
   return {
     restrict: 'E',
     scope: { 'rate': '=data' },
+    link: function(scope){
+    	bindExpand(scope, $rootScope)
+    },
     templateUrl: "/assets/angular/widgets/base/rate.html"
   };
 })
+
+readersDoor.directive('markAsRead', function($rootScope){
+	return {
+		restrict: 'E',
+		link: function($scope){
+			bindExpand($scope, $rootScope)
+		},
+		controller: function($scope, recommendationService){
+			$scope.expand = false;
+			$scope.markAsRead = function(){
+				$scope.logged_in = false
+				$scope.read = true
+				//ajax call to mark the book as read
+			}
+		},
+		templateUrl: "/assets/angular/widgets/base/mark_as_read.html"
+	}
+})
+
+function bindHover(scope, $rootScope){
+	$rootScope.$on('triggerHover', function(){
+  		scope.hovered = true
+  	})
+
+  	$rootScope.$on('triggerMouseOut', function(){
+  		scope.hovered = false
+  	})	
+}
+
+function bindExpand(scope, $rootScope){
+	$rootScope.$on('triggerExpand', function(){
+		if(scope.expand == true){
+			scope.expand = false
+		}
+		else{
+			scope.expand = true
+		}
+	})
+}

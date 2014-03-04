@@ -1,0 +1,9 @@
+<div ng-init="setStatus(status)"></div>
+<div ng-show="logged_in" ng-hide="!logged_in">
+	<mark-as-read></mark-as-read>
+</div>
+<div ng-show="read" ng-hide="!read">
+	<rate></rate>
+</div>
+<div ng-show="rated" ng-hide="!rated">RATED</div>
+<div ng-show="reviewed" ng-hide="!reviewed">REVIEWED</div>

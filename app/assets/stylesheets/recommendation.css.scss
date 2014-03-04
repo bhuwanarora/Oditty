@@ -70,6 +70,13 @@ body{
 	margin: 15px;
 }
 
+.card .header_expand .background p{
+	position: absolute;
+	text-align: center;
+	margin: 15px;
+	margin-left: 180px;
+}
+
 .card .thumb{
 	width: 232px;
 	height: 453px;
@@ -135,7 +142,7 @@ body{
 
 .rating{
 	opacity: 0.3;
-	right: 0;
+	right: 10px;
 	position: absolute;
 	font-size: 0.6em;
 	margin-top: 20px;
@@ -177,11 +184,11 @@ body{
 	margin-top: 15px;
 	z-index: 2;
 	cursor: pointer;
-	opacity: 0.4;
+	opacity: 1;
 }
 
 .expand_book:hover{
-	opacity: 1;
+	opacity: 0.4;
 }
 
 a{
@@ -191,13 +198,14 @@ a{
 
 a:hover{
 	color: #717070;
+	text-decoration:underline;
 }
 
 .summary_button{
 	position: absolute;
 	z-index: 2;
 	color: white;
-	margin-top: 70px;
+	margin-top: 15px;
 	margin-left: 10px;
 	border: 2px solid white;
 	border-radius: 5px;
@@ -237,7 +245,7 @@ a:hover{
 
 .category{
 	width: 20px;
-	height: 666px;
+	height: 516px;
 	float: left;
 	background-color: #3cb878;
 	color: white;
@@ -245,6 +253,8 @@ a:hover{
 	font-size: 0.8em;
 	box-shadow: 4px 10px 9px 1px #090909;
 	cursor: pointer;
+	padding-top: 150px;
+	margin-left: 10px;
 }
 
 .hidden_category{
@@ -259,7 +269,7 @@ a:hover{
 }
 
 .book_widget{
-	width: 263px;
+	width: 275px;
 }
 
 .book_widget_expand{
@@ -298,6 +308,38 @@ a:hover{
 	opacity: 0.6;
 }
 
+.book_navbar_expand{
+	position: absolute;
+	width: 490;
+	height: 70px;
+	margin-top: -80px;
+	margin-left: 5px;
+	z-index: 4;
+}
+
+.book_navbar_expand .heading{
+	color: white;
+	width: 76px;
+	float: left;
+	font-size: 0.8em;
+	text-align: center;
+	margin-top: 20px;
+	margin-right: 50px;
+	cursor: pointer;
+	margin-left: 35px;
+}
+
+.book_navbar_background_expand{
+	width: 490px;
+	height: 70px;
+	margin-top: -80px;
+	margin-left: 5px;
+	position: absolute;
+	background: url("header-background-opaque.jpg");
+	z-index: 3;
+	opacity: 0.6;
+}
+
 .book_navbar{
 	position: absolute;
 	width: 232px;
@@ -306,6 +348,7 @@ a:hover{
 	margin-left: 5px;
 	z-index: 4;
 }
+
 .book_navbar .heading{
 	color: white;
 	width: 76px;
@@ -332,4 +375,79 @@ a:hover{
 	margin-top: -462px;
 	margin-left: 5px;
 	left: 52%;
+}
+
+.mark_as_read_expand{
+	color: #3cb878;
+	background: url('header-background.jpg');
+	width: 490px;
+	margin-left: 5px;
+	height: 35px;
+	text-align: center;
+	padding-top: 15px;
+	border-top-right-radius: 4px;
+	border-top-left-radius: 4px;
+	cursor: pointer;
+	opacity: 0.5;
+}
+
+.mark_as_read_expand:hover{
+	background: #3cb878;
+	color: white;
+	opacity: 1;
+}
+
+.mark_as_read{
+	color: #3cb878;
+	background: url('header-background.jpg');
+	width: 232px;
+	margin-left: 5px;
+	height: 35px;
+	text-align: center;
+	padding-top: 15px;
+	border-top-right-radius: 4px;
+	border-top-left-radius: 4px;
+	cursor: pointer;
+	opacity: 0.5;
+}
+
+.mark_as_read:hover{
+	background: #3cb878;
+	color: white;
+	opacity: 1;
+}
+
+.news_widget{
+	width: 232px;
+	height: 82px;
+	margin-left: 5px;
+}
+
+.rate-icon{
+	width: 21px;
+	margin: -2px;
+	height: 21px;
+	background: url("icon-sprites.png") -28px -5px;	
+}
+
+.rate{
+	text-align: center;
+	background: url('header-background.jpg');
+	width: 232px;
+	height: 35px;
+	margin-left: 5px;
+	padding-top: 15px;
+	border-top-right-radius: 4px;
+	border-top-left-radius: 4px;
+}
+
+.rate_expand{
+	background: url('header-background.jpg');
+	text-align: center;
+	width: 490px;
+	height: 35px;
+	margin-left: 5px;
+	padding-top: 15px;
+	border-top-right-radius: 4px;
+	border-top-left-radius: 4px;
 }

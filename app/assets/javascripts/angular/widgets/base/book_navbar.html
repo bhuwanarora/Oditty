@@ -1,7 +1,7 @@
-<div class="book_navbar_background">
+<div ng-class="{'book_navbar_background':!expand, 'book_navbar_background_expand':expand}" class="animate-fast" ng-show="hovered" ng-hide="!hovered">
 </div>
-<div class="book_navbar">
-	<div class="heading">{{book.readers_count}}<br/>READERS</div>
-	<div class="heading">{{book.discussions_count}}<br/>DISCUSSIONS</div>
-	<div class="heading">{{book.reviews_count}}<br/>REVIEWS</div>
+<div ng-class="{'book_navbar':!expand, 'book_navbar_expand':expand}" ng-show="hovered" ng-hide="!hovered">
+	<div class="heading animate_fast" ng-show="hovered" ng-hide="!hovered">{{book.readers_count}}<br/>READERS</div>
+	<div class="heading animate_fast" ng-show="hovered" ng-hide="!hovered">{{book.discussions_count}}<br/>DISCUSSIONS</div>
+	<div class="heading animate_fast" ng-show="hovered" ng-hide="!hovered">{{book.reviews_count}}<br/>REVIEWS</div>
 </div>

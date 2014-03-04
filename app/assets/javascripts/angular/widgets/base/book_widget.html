@@ -5,7 +5,7 @@
 			<div class="background">
 				<rating data="book.rating" class="rating animate-fast"></rating>
 				<bookmark data="book.bookmark_status"></bookmark>
-				<p>
+				<p class="animate-fast">
 					<a href="javascript:void(0);"><b>#{{book.title | uppercase}}</b></a><br/>
 					<b>by <a href="javascript:void(0);">@{{book.author_name}}</a><br/></b>
 				</p>
@@ -14,5 +14,7 @@
 		<tags data="book.tags"></tags>
 		<bookthumb data="book.book_thumb"></bookthumb>
 		<book-navbar></book-navbar>
+		<news-widget></news-widget>
+		<interact data="book.status" ></interact>
 	</div>
 </div>
