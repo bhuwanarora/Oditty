@@ -1,56 +1,47 @@
-bookWidgetApp.directive('book', function ($rootScope) {
+bookWidgetApp.directive('book', function () {
   return {
     restrict: 'E',
     scope: { 'book': '=data' },
-    link: function(scope){
-    	bindExpand(scope, $rootScope)
-    },
-    controller: function($scope, bookWidgetAppService){
+    controller: function($scope){
       $scope.hover = function() {
-      	bookWidgetAppService.triggerHover();
+        $scope.hovered = true
       };
 
       $scope.mouseout = function() {
-      	bookWidgetAppService.triggerMouseOut();
+      	$scope.hovered = false
       };      
     },
     templateUrl: "/assets/angular/widgets/base/book_widget.html"
   };
 })
 
-bookWidgetApp.directive('bookNavbar', function ($rootScope) {
+bookWidgetApp.directive('bookNavbar', function () {
   return {
     restrict: 'E',
-    link: function(scope) {
-      bindHover(scope, $rootScope)
-    },
     templateUrl: "/assets/angular/widgets/base/book_navbar.html"
   };
 })
 
-bookWidgetApp.directive('bookthumb', function ($rootScope) {
+bookWidgetApp.directive('bookthumb', function () {
   return {
     restrict: 'E',
-    scope: { 'bookthumb': '=data' },
-    link: function(scope) {
-      bindHover(scope, $rootScope)
-    },
-    controller: function($scope, bookWidgetAppService){
-      $scope.expand = function() {
-		bookWidgetAppService.triggerExpand();
+    controller: function($scope){
+      $scope.triggerExpand = function() {
+        if ($scope.expand == true) {
+          $scope.expand = false
+        }
+        else{
+    		  $scope.expand = true
+        }
       };
     },
     templateUrl: "/assets/angular/widgets/base/book_thumb.html"
   };
 })
 
-bookWidgetApp.directive('rating', function ($rootScope) {
+bookWidgetApp.directive('rating', function () {
   return {
     restrict: 'E',
-    scope: { 'rating': '=data' },
-    link: function(scope) {
-      bindHover(scope, $rootScope)
-    },
     templateUrl: "/assets/angular/widgets/base/rating.html"
   };
 })
@@ -58,7 +49,6 @@ bookWidgetApp.directive('rating', function ($rootScope) {
 bookWidgetApp.directive('reviewWidget', function () {
   return {
     restrict: 'E',
-    scope: { 'reviewWidget': '=data' },
     templateUrl: "/assets/angular/widgets/base/review_widget.html"
   };
 })
@@ -74,19 +64,13 @@ bookWidgetApp.directive('shelf', function () {
 bookWidgetApp.directive('bookmark', function () {
   return {
     restrict: 'E',
-    scope: { 'bookmark': '=data' },
     templateUrl: "/assets/angular/widgets/base/bookmark.html"
   };
 })
 
-bookWidgetApp.directive('category', function ($rootScope) {
+bookWidgetApp.directive('category', function () {
   return {
     restrict: 'E',
-    scope: { 'category': '=data' },
-    link: function(scope) {
-    	bindHover(scope, $rootScope)
-    	bindExpand(scope, $rootScope)
-    },
     controller: function($scope){
     	$scope.getCharArray = function(name){
     		$scope.charArray = name.split('');
@@ -96,13 +80,9 @@ bookWidgetApp.directive('category', function ($rootScope) {
   };
 })
 
-bookWidgetApp.directive('comment', function ($rootScope) {
+bookWidgetApp.directive('comment', function () {
   return {
     restrict: 'E',
-    scope: { 'comment': '=data' },
-    link: function(scope){
-    	bindExpand(scope, $rootScope);
-    },
     controller: function($scope){
     	$scope.init = function(){
     		$scope.comment_ready = false
@@ -118,8 +98,8 @@ bookWidgetApp.directive('comment', function ($rootScope) {
     	}
 
     	$scope.postReview = function(){
-    		$scope.$parent.rated = false;
-    		$scope.$parent.reviewed = true;
+    		$scope.rated = false;
+    		$scope.reviewed = true;
     	}
 
     	$scope.init();
@@ -131,7 +111,6 @@ bookWidgetApp.directive('comment', function ($rootScope) {
 bookWidgetApp.directive('interact', function () {
   return {
     restrict: 'E',
-    scope: { 'status': '=data' },
     controller: function($scope){
     	$scope.setStatus = function(status){
     		if(status == 0){
@@ -155,40 +134,27 @@ bookWidgetApp.directive('interact', function () {
 bookWidgetApp.directive('newsWidget', function () {
   return {
     restrict: 'E',
-    scope: { 'newsWidget': '=data' },
     templateUrl: "/assets/angular/widgets/base/news_widget.html"
   };
 })
 
-bookWidgetApp.directive('summary', function ($rootScope) {
+bookWidgetApp.directive('summary', function () {
   return {
     restrict: 'E',
-    scope: { 'summary': '=data' },
-    link: function(scope) {
-      bindExpand(scope, $rootScope)
-    },
     templateUrl: "/assets/angular/widgets/base/summary.html"
   };
 })
 
-bookWidgetApp.directive('tags', function ($rootScope) {
+bookWidgetApp.directive('tags', function () {
   return {
     restrict: 'E',
-    scope: { 'tags': '=data' },
-    link: function(scope) {
-      bindHover(scope, $rootScope)
-    },
     templateUrl: "/assets/angular/widgets/base/tags.html"
   };
 })
 
-bookWidgetApp.directive('rate', function ($rootScope) {
+bookWidgetApp.directive('rate', function () {
   return {
     restrict: 'E',
-    scope: { 'rate': '=data' },
-    link: function(scope){
-    	bindExpand(scope, $rootScope)
-    },
     controller: function($scope){
     	$scope.init = function(){
 			$scope.rate_ready = false;
@@ -200,8 +166,8 @@ bookWidgetApp.directive('rate', function ($rootScope) {
 		}
 
 		$scope.mark_as_rated = function(){
-			$scope.$parent.read = false;
-			$scope.$parent.rated = true;
+			$scope.read = false;
+			$scope.rated = true;
 		}
 
 		$scope.init();
@@ -213,43 +179,13 @@ bookWidgetApp.directive('rate', function ($rootScope) {
 bookWidgetApp.directive('markAsRead', function($rootScope){
 	return {
 		restrict: 'E',
-		link: function(scope){
-			bindExpand(scope, $rootScope)
-		},
-		controller: function($scope, bookWidgetAppService){
-			$scope.init = function(){
-				$scope.expand = false;
-			}
-
+		controller: function($scope){
 			$scope.markAsRead = function(){
 				$scope.logged_in = false;
 				$scope.read = true;
 				//ajax call to mark the book as read
 			}
-
-			$scope.init();
 		},
 		templateUrl: "/assets/angular/widgets/base/mark_as_read.html"
 	}
 })
-
-function bindHover(scope, $rootScope){
-	$rootScope.$on('triggerHover', function(){
-  		scope.hovered = true
-  	})
-
-  	$rootScope.$on('triggerMouseOut', function(){
-  		scope.hovered = false
-  	})	
-}
-
-function bindExpand(scope, $rootScope){
-	$rootScope.$on('triggerExpand', function(){
-		if(scope.expand == true){
-			scope.expand = false
-		}
-		else{
-			scope.expand = true
-		}
-	})
-}
