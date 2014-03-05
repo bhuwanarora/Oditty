@@ -1,6 +1,6 @@
 <div ng-class="{'book_widget':!expand, 'book_widget_expand':expand}" class="animate-fast">
 	<category data="book.category"></category>
-	<div ng-model="book" ng-mouseenter="discovered = true" ng-mouseover="hover()" ng-mouseout="mouseout()" ng-class="{'discovered': discovered, 'card_expand': expand}" class="card animate-fast">
+	<div ng-mouseenter="discovered = true" ng-mouseover="hover()" ng-mouseout="mouseout()" ng-class="{'discovered': discovered, 'card_expand': expand}" class="card animate-fast">
 		<div ng-class="{'header':!expand, 'header_expand':expand}" class="animate-fast">
 			<div class="background">
 				<rating data="book.rating" class="rating animate-fast"></rating>
