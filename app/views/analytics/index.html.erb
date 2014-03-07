@@ -1,0 +1,17 @@
+<%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/backend_panel/**/*.js")] %>
+
+<h4>Feature Analytics</h4>
+<%= column_chart feature_analytics_path, :library => {:backgroundColor => "#eee"} %>
+<br/>
+
+<h4>Click Analytics</h4>
+<%= column_chart click_analytics_path, :library => {:backgroundColor => "#DA3D3D"} %>
+<br/>
+
+<h4>Book Analytics</h4>
+<%= column_chart book_analytics_path, :library => {:backgroundColor => "#eee"} %>
+<br/>
+
+<h4>Category Analytics</h4>
+<%= column_chart category_analytics_path, :library => {:backgroundColor => "#DA3D3D"} %>
+<br/>

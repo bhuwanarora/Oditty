@@ -27,7 +27,6 @@ ReadersDoor::Application.routes.draw do
   resources :website
 
   get 'recommended_books'     => "recommendations#books",    :as => "recommended_books"
-
   get 'recommendations'          => "recommendations#index",    :as => "recommendations"
 
   get 'random_quote'             => "website#random_quote",    :as => "random_quote"

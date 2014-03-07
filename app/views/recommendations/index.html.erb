@@ -1,13 +1,12 @@
 <%= stylesheet_link_tag 'recommendation'%>
-<div>
-	<div  ng-controller="BooksController">
-		<div ng-view></div>
-		<div id="recommendationFooter">
-			<span class="nav-links">
-				<a href="#readers"><img class="reader-icon" src="assets/icon-sprites.png" /></a>
-				<a href="#books"><img class="book-icon" src="assets/icon-sprites.png"/></a>
-				<a href="#authors"><img class="author-icon" src="assets/icon-sprites.png"/></a>
-			</span>
-		</div>
+<horizontal-scroller></horizontal-scroller>
+<div ng-controller="BooksController">
+	<div ng-view></div>
+	<div id="recommendationFooter">
+		<span class="nav-links">
+			<a href="#readers"><img class="reader-icon" src="assets/icon-sprites.png" /></a>
+			<a href="#books"><img class="book-icon" src="assets/icon-sprites.png"/></a>
+			<a href="#authors"><img class="author-icon" src="assets/icon-sprites.png"/></a>
+		</span>
 	</div>
 </div>

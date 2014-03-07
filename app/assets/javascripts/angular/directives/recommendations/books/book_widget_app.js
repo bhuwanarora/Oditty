@@ -176,7 +176,7 @@ bookWidgetApp.directive('rate', function () {
   };
 })
 
-bookWidgetApp.directive('markAsRead', function($rootScope){
+bookWidgetApp.directive('markAsRead', function(){
 	return {
 		restrict: 'E',
 		controller: function($scope){

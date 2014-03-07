@@ -1,11 +1,11 @@
 <div ng-init="setStatus(book.status)"></div>
 <div ng-show="logged_in" ng-hide="!logged_in">
-	<mark-as-read></mark-as-read>
+	<mark-as-read track></mark-as-read>
 </div>
 <div ng-show="read" ng-hide="!read">
-	<rate></rate>
+	<rate track></rate>
 </div>
 <div ng-show="rated" ng-hide="!rated">
-	<comment></comment>
+	<comment track></comment>
 </div>
 <div ng-show="reviewed" ng-hide="!reviewed">REVIEWED</div>

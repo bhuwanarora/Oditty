@@ -5,6 +5,8 @@ gem 'rails', '4.0.1'
 
 gem 'pg'
 gem 'sass-rails', '~> 4.0.0'
+
+#for attr accessibel in rails4
 gem 'protected_attributes'
 gem 'activerecord-postgis-adapter'
 # gem 'rack-cors', :require => 'rack/cors'
@@ -45,6 +47,7 @@ gem 'nifty-generators'
 gem 'faye'
 gem 'thin'
 gem 'mad_chatter', github: 'madchatter/mad_chatter'
+
 # gem 'rubyXL'	
 # gem "cocoon", "1.1.1"
 

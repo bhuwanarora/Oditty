@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html ng-app='readersDoor'>
+<html ng-app='websiteApp'>
   <head>
     <title>ReadersDoor</title>
     <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/angular/**/*.js")] %>
-
   </head>
 
-  <body ng-controller="readersDoorController">
+  <body ng-controller="websiteAppController">
+    <div class="background_mask"></div>
     <div msd-wheel="bindHorizontalScroll($event, $delta, $deltaX, $deltaY)">
       <% unless response.as_json["request"].as_json["fullpath"] == "/test" || (response.as_json["request"].as_json["fullpath"].include? "/coming_soon") || response.as_json["request"].as_json["fullpath"] == "/" || response.as_json["request"].as_json["fullpath"] == "/website" %>
-        <%= render :partial => "shared/header"%>
+        <%#= render :partial => "shared/header"%>
       <% end %>
       <%= yield %>
       <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
