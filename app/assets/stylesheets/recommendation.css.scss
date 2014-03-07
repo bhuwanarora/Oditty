@@ -50,6 +50,8 @@ body{
 	height: 666px;
 	background-color: white;
 	position: relative;
+	border-top-right-radius: 1px;
+	border-bottom-right-radius: 1px;
 }
 
 /*.effect
@@ -140,19 +142,35 @@ body{
 
 .card .thumb{
 	width: 232px;
-	height: 453px;
+	height: 450px;
 	margin: 5px;
 	filter: url(filters.svg#grayscale); /* Firefox 3.5+ */
     filter: gray; /* IE6-9 */
     -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+    background: rgba(113, 112, 112, 0.25);
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	padding: 1px;
+	-webkit-box-shadow: 1px 2px 1px #d1d1d1;
+	-moz-box-shadow: 1px 2px 1px #d1d1d1;
+	box-shadow: 1px 2px 1px #d1d1d1;
 }
 
 .card .thumb_hover{
 	width: 232px;
-	height: 453px;
+	height: 450px;
 	margin: 5px;
     filter: none;
     -webkit-filter: grayscale(0);
+    background: rgba(113, 112, 112, 0.25);
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	padding: 1px;
+	-webkit-box-shadow: 1px 2px 1px #d1d1d1;
+	-moz-box-shadow: 1px 2px 1px #d1d1d1;
+	box-shadow: 1px 2px 1px #d1d1d1;
 }
 
 .tags{
@@ -465,6 +483,7 @@ a:hover{
 .mark_as_read_expand{
 	color: #3cb878;
 	background: url('header-background.jpg');
+	border-top: rgba(113, 112, 112, 0.25) 1px solid;
 	width: 490px;
 	margin-left: 5px;
 	height: 35px;
@@ -491,6 +510,7 @@ a:hover{
 	height: 35px;
 	text-align: center;
 	padding-top: 15px;
+	border-top: rgba(113, 112, 112, 0.25) 1px solid;
 	border-top-right-radius: 4px;
 	border-top-left-radius: 4px;
 	cursor: pointer;
