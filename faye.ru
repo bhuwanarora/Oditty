@@ -1,3 +1,2002 @@
-!function(){"use strict";var Faye={VERSION:"1.0.1",BAYEUX_VERSION:"1.0",ID_LENGTH:160,JSONP_CALLBACK:"jsonpcallback",CONNECTION_TYPES:["long-polling","cross-origin-long-polling","callback-polling","websocket","eventsource","in-process"],MANDATORY_CONNECTION_TYPES:["long-polling","callback-polling","in-process"],ENV:"undefined"!=typeof window?window:global,extend:function(e,t,n){if(!t)return e;for(var i in t)t.hasOwnProperty(i)&&(e.hasOwnProperty(i)&&n===!1||e[i]!==t[i]&&(e[i]=t[i]));return e},random:function(e){return e=e||this.ID_LENGTH,csprng(e,36)},clientIdFromMessages:function(e){var t=this.filter([].concat(e),function(e){return"/meta/connect"===e.channel});return t[0]&&t[0].clientId},copyObject:function(e){var t,n,i;if(e instanceof Array){for(t=[],n=e.length;n--;)t[n]=Faye.copyObject(e[n]);return t}if("object"==typeof e){t=null===e?null:{};for(i in e)t[i]=Faye.copyObject(e[i]);return t}return e},commonElement:function(e,t){for(var n=0,i=e.length;i>n;n++)if(-1!==this.indexOf(t,e[n]))return e[n];return null},indexOf:function(e,t){if(e.indexOf)return e.indexOf(t);for(var n=0,i=e.length;i>n;n++)if(e[n]===t)return n;return-1},map:function(e,t,n){if(e.map)return e.map(t,n);var i=[];if(e instanceof Array)for(var s=0,r=e.length;r>s;s++)i.push(t.call(n||null,e[s],s));else for(var o in e)e.hasOwnProperty(o)&&i.push(t.call(n||null,o,e[o]));return i},filter:function(e,t,n){if(e.filter)return e.filter(t,n);for(var i=[],s=0,r=e.length;r>s;s++)t.call(n||null,e[s],s)&&i.push(e[s]);return i},asyncEach:function(e,t,n,i){var s=e.length,r=-1,o=0,a=!1,c=function(){return o-=1,r+=1,r===s?n&&n.call(i):(t(e[r],h),void 0)},u=function(){if(!a){for(a=!0;o>0;)c();a=!1}},h=function(){o+=1,u()};h()},toJSON:function(e){return this.stringify?this.stringify(e,function(e,t){return this[e]instanceof Array?this[e]:t}):JSON.stringify(e)}};"undefined"!=typeof module?module.exports=Faye:"undefined"!=typeof window&&(window.Faye=Faye),Faye.Class=function(e,t){"function"!=typeof e&&(t=e,e=Object);var n=function(){return this.initialize?this.initialize.apply(this,arguments)||this:this},i=function(){};return i.prototype=e.prototype,n.prototype=new i,Faye.extend(n.prototype,t),n},function(){function e(e,t){if(e.indexOf)return e.indexOf(t);for(var n=0;n<e.length;n++)if(t===e[n])return n;return-1}var t=Faye.EventEmitter=function(){},n="function"==typeof Array.isArray?Array.isArray:function(e){return"[object Array]"===Object.prototype.toString.call(e)};t.prototype.emit=function(e){if("error"===e&&(!this._events||!this._events.error||n(this._events.error)&&!this._events.error.length))throw arguments[1]instanceof Error?arguments[1]:Error("Uncaught, unspecified 'error' event.");if(!this._events)return!1;var t=this._events[e];if(!t)return!1;if("function"==typeof t){switch(arguments.length){case 1:t.call(this);break;case 2:t.call(this,arguments[1]);break;case 3:t.call(this,arguments[1],arguments[2]);break;default:var i=Array.prototype.slice.call(arguments,1);t.apply(this,i)}return!0}if(n(t)){for(var i=Array.prototype.slice.call(arguments,1),s=t.slice(),r=0,o=s.length;o>r;r++)s[r].apply(this,i);return!0}return!1},t.prototype.addListener=function(e,t){if("function"!=typeof t)throw Error("addListener only takes instances of Function");return this._events||(this._events={}),this.emit("newListener",e,t),this._events[e]?n(this._events[e])?this._events[e].push(t):this._events[e]=[this._events[e],t]:this._events[e]=t,this},t.prototype.on=t.prototype.addListener,t.prototype.once=function(e,t){var n=this;return n.on(e,function i(){n.removeListener(e,i),t.apply(this,arguments)}),this},t.prototype.removeListener=function(t,i){if("function"!=typeof i)throw Error("removeListener only takes instances of Function");if(!this._events||!this._events[t])return this;var s=this._events[t];if(n(s)){var r=e(s,i);if(0>r)return this;s.splice(r,1),0==s.length&&delete this._events[t]}else this._events[t]===i&&delete this._events[t];return this},t.prototype.removeAllListeners=function(e){return 0===arguments.length?(this._events={},this):(e&&this._events&&this._events[e]&&(this._events[e]=null),this)},t.prototype.listeners=function(e){return this._events||(this._events={}),this._events[e]||(this._events[e]=[]),n(this._events[e])||(this._events[e]=[this._events[e]]),this._events[e]}}(),Faye.Namespace=Faye.Class({initialize:function(){this._used={}},exists:function(e){return this._used.hasOwnProperty(e)},generate:function(){for(var e=Faye.random();this._used.hasOwnProperty(e);)e=Faye.random();return this._used[e]=e},release:function(e){delete this._used[e]}}),function(){var e,t=setTimeout;e="function"==typeof setImmediate?function(e){setImmediate(e)}:"object"==typeof process&&process.nextTick?function(e){process.nextTick(e)}:function(e){t(e,0)};var n=0,i=1,s=2,r=function(e){return e},o=function(e){throw e},a=function(e){if(this._state=n,this._callbacks=[],this._errbacks=[],"function"==typeof e){var t=this;e(function(e){f(t,e)},function(e){p(t,e)})}};a.prototype.then=function(e,t){var n={},i=this;return n.promise=new a(function(s,r){n.fulfill=s,n.reject=r,c(i,e,n),u(i,t,n)}),n.promise};var c=function(e,t,s){"function"!=typeof t&&(t=r);var o=function(e){h(t,e,s)};e._state===n?e._callbacks.push(o):e._state===i&&o(e._value)},u=function(e,t,i){"function"!=typeof t&&(t=o);var r=function(e){h(t,e,i)};e._state===n?e._errbacks.push(r):e._state===s&&r(e._reason)},h=function(t,n,i){e(function(){l(t,n,i)})},l=function(e,t,n){var i,s,o,a=!1;try{if(i=e(t),s=typeof i,o=null!==i&&("function"===s||"object"===s)&&i.then,i===n.promise)return n.reject(new TypeError("Recursive promise chain detected"));if("function"!=typeof o)return n.fulfill(i);o.call(i,function(e){a||(a=!0,l(r,e,n))},function(e){a||(a=!0,n.reject(e))})}catch(c){if(a)return;a=!0,n.reject(c)}},f=a.fulfill=a.resolve=function(e,t){if(e._state===n){e._state=i,e._value=t,e._errbacks=[];for(var s,r=e._callbacks;s=r.shift();)s(t)}},p=a.reject=function(e,t){if(e._state===n){e._state=s,e._reason=t,e._callbacks=[];for(var i,r=e._errbacks;i=r.shift();)i(t)}};a.defer=e,a.deferred=a.pending=function(){var e={};return e.promise=new a(function(t,n){e.fulfill=e.resolve=t,e.reject=n}),e},a.fulfilled=a.resolved=function(e){return new a(function(t){t(e)})},a.rejected=function(e){return new a(function(t,n){n(e)})},void 0===Faye?module.exports=a:Faye.Promise=a}(),Faye.Set=Faye.Class({initialize:function(){this._index={}},add:function(e){var t=void 0!==e.id?e.id:e;return this._index.hasOwnProperty(t)?!1:(this._index[t]=e,!0)},forEach:function(e,t){for(var n in this._index)this._index.hasOwnProperty(n)&&e.call(t,this._index[n])},isEmpty:function(){for(var e in this._index)if(this._index.hasOwnProperty(e))return!1;return!0},member:function(e){for(var t in this._index)if(this._index[t]===e)return!0;return!1},remove:function(e){var t=void 0!==e.id?e.id:e,n=this._index[t];return delete this._index[t],n},toArray:function(){var e=[];return this.forEach(function(t){e.push(t)}),e}}),Faye.URI={isURI:function(e){return e&&e.protocol&&e.host&&e.path},isSameOrigin:function(e){var t=Faye.ENV.location;return e.protocol===t.protocol&&e.hostname===t.hostname&&e.port===t.port},parse:function(e){if("string"!=typeof e)return e;var t,n,i,s,r,o,a={},c=function(t,n){e=e.replace(n,function(e){return a[t]=e,""}),a[t]=a[t]||""};for(c("protocol",/^[a-z]+\:/i),c("host",/^\/\/[^\/\?#]+/),/^\//.test(e)||a.host||(e=Faye.ENV.location.pathname.replace(/[^\/]*$/,"")+e),c("pathname",/^[^\?#]*/),c("search",/^\?[^#]*/),c("hash",/^#.*/),a.protocol=a.protocol||Faye.ENV.location.protocol,a.host?(a.host=a.host.substr(2),t=a.host.split(":"),a.hostname=t[0],a.port=t[1]||""):(a.host=Faye.ENV.location.host,a.hostname=Faye.ENV.location.hostname,a.port=Faye.ENV.location.port),a.pathname=a.pathname||"/",a.path=a.pathname+a.search,n=a.search.replace(/^\?/,""),i=n?n.split("&"):[],o={},s=0,r=i.length;r>s;s++)t=i[s].split("="),o[decodeURIComponent(t[0]||"")]=decodeURIComponent(t[1]||"");return a.query=o,a.href=this.stringify(a),a},stringify:function(e){var t=e.protocol+"//"+e.hostname;return e.port&&(t+=":"+e.port),t+=e.pathname+this.queryString(e.query)+(e.hash||"")},queryString:function(e){var t=[];for(var n in e)e.hasOwnProperty(n)&&t.push(encodeURIComponent(n)+"="+encodeURIComponent(e[n]));return 0===t.length?"":"?"+t.join("&")}},Faye.Error=Faye.Class({initialize:function(e,t,n){this.code=e,this.params=Array.prototype.slice.call(t),this.message=n},toString:function(){return this.code+":"+this.params.join(",")+":"+this.message}}),Faye.Error.parse=function(e){if(e=e||"",!Faye.Grammar.ERROR.test(e))return new this(null,[],e);var t=e.split(":"),n=parseInt(t[0]),i=t[1].split(","),e=t[2];return new this(n,i,e)},Faye.Error.versionMismatch=function(){return""+new this(300,arguments,"Version mismatch")},Faye.Error.conntypeMismatch=function(){return""+new this(301,arguments,"Connection types not supported")},Faye.Error.extMismatch=function(){return""+new this(302,arguments,"Extension mismatch")},Faye.Error.badRequest=function(){return""+new this(400,arguments,"Bad request")},Faye.Error.clientUnknown=function(){return""+new this(401,arguments,"Unknown client")},Faye.Error.parameterMissing=function(){return""+new this(402,arguments,"Missing required parameter")},Faye.Error.channelForbidden=function(){return""+new this(403,arguments,"Forbidden channel")},Faye.Error.channelUnknown=function(){return""+new this(404,arguments,"Unknown channel")},Faye.Error.channelInvalid=function(){return""+new this(405,arguments,"Invalid channel")},Faye.Error.extUnknown=function(){return""+new this(406,arguments,"Unknown extension")},Faye.Error.publishFailed=function(){return""+new this(407,arguments,"Failed to publish")},Faye.Error.serverError=function(){return""+new this(500,arguments,"Internal server error")},Faye.Deferrable={then:function(e,t){var n=this;return this._promise||(this._promise=new Faye.Promise(function(e,t){n._fulfill=e,n._reject=t})),0===arguments.length?this._promise:this._promise.then(e,t)},callback:function(e,t){return this.then(function(n){e.call(t,n)})},errback:function(e,t){return this.then(null,function(n){e.call(t,n)})},timeout:function(e,t){this.then();var n=this;this._timer=Faye.ENV.setTimeout(function(){n._reject(t)},1e3*e)},setDeferredStatus:function(e,t){this._timer&&Faye.ENV.clearTimeout(this._timer);this.then();"succeeded"===e?this._fulfill(t):"failed"===e?this._reject(t):delete this._promise}},Faye.Publisher={countListeners:function(e){return this.listeners(e).length},bind:function(e,t,n){var i=Array.prototype.slice,s=function(){t.apply(n,i.call(arguments))};return this._listeners=this._listeners||[],this._listeners.push([e,t,n,s]),this.on(e,s)},unbind:function(e,t,n){this._listeners=this._listeners||[];for(var i,s=this._listeners.length;s--;)i=this._listeners[s],i[0]===e&&(!t||i[1]===t&&i[2]===n)&&(this._listeners.splice(s,1),this.removeListener(e,i[3]))}},Faye.extend(Faye.Publisher,Faye.EventEmitter.prototype),Faye.Publisher.trigger=Faye.Publisher.emit,Faye.Timeouts={addTimeout:function(e,t,n,i){if(this._timeouts=this._timeouts||{},!this._timeouts.hasOwnProperty(e)){var s=this;this._timeouts[e]=Faye.ENV.setTimeout(function(){delete s._timeouts[e],n.call(i)},1e3*t)}},removeTimeout:function(e){this._timeouts=this._timeouts||{};var t=this._timeouts[e];t&&(clearTimeout(t),delete this._timeouts[e])},removeAllTimeouts:function(){this._timeouts=this._timeouts||{};for(var e in this._timeouts)this.removeTimeout(e)}},Faye.Logging={LOG_LEVELS:{fatal:4,error:3,warn:2,info:1,debug:0},writeLog:function(e,t){if(Faye.logger){var e=Array.prototype.slice.apply(e),n="[Faye",i=this.className,s=e.shift().replace(/\?/g,function(){try{return Faye.toJSON(e.shift())}catch(t){return"[Object]"}});for(var r in Faye)i||"function"==typeof Faye[r]&&this instanceof Faye[r]&&(i=r);i&&(n+="."+i),n+="] ","function"==typeof Faye.logger[t]?Faye.logger[t](n+s):"function"==typeof Faye.logger&&Faye.logger(n+s)}}},function(){for(var e in Faye.Logging.LOG_LEVELS)(function(e){Faye.Logging[e]=function(){this.writeLog(arguments,e)}})(e,Faye.Logging.LOG_LEVELS[e])}(),Faye.Grammar={CHANNEL_NAME:/^\/(((([a-z]|[A-Z])|[0-9])|(\-|\_|\!|\~|\(|\)|\$|\@)))+(\/(((([a-z]|[A-Z])|[0-9])|(\-|\_|\!|\~|\(|\)|\$|\@)))+)*$/,CHANNEL_PATTERN:/^(\/(((([a-z]|[A-Z])|[0-9])|(\-|\_|\!|\~|\(|\)|\$|\@)))+)*\/\*{1,2}$/,ERROR:/^([0-9][0-9][0-9]:(((([a-z]|[A-Z])|[0-9])|(\-|\_|\!|\~|\(|\)|\$|\@)| |\/|\*|\.))*(,(((([a-z]|[A-Z])|[0-9])|(\-|\_|\!|\~|\(|\)|\$|\@)| |\/|\*|\.))*)*:(((([a-z]|[A-Z])|[0-9])|(\-|\_|\!|\~|\(|\)|\$|\@)| |\/|\*|\.))*|[0-9][0-9][0-9]::(((([a-z]|[A-Z])|[0-9])|(\-|\_|\!|\~|\(|\)|\$|\@)| |\/|\*|\.))*)$/,VERSION:/^([0-9])+(\.(([a-z]|[A-Z])|[0-9])(((([a-z]|[A-Z])|[0-9])|\-|\_))*)*$/},Faye.Extensible={addExtension:function(e){this._extensions=this._extensions||[],this._extensions.push(e),e.added&&e.added(this)},removeExtension:function(e){if(this._extensions)for(var t=this._extensions.length;t--;)this._extensions[t]===e&&(this._extensions.splice(t,1),e.removed&&e.removed(this))},pipeThroughExtensions:function(e,t,n,i,s){if(this.debug("Passing through ? extensions: ?",e,t),!this._extensions)return i.call(s,t);var r=this._extensions.slice(),o=function(t){if(!t)return i.call(s,t);var a=r.shift();if(!a)return i.call(s,t);var c=a[e];return c?(c.length>=3?a[e](t,n,o):a[e](t,o),void 0):o(t)};o(t)}},Faye.extend(Faye.Extensible,Faye.Logging),Faye.Channel=Faye.Class({initialize:function(e){this.id=this.name=e},push:function(e){this.trigger("message",e)},isUnused:function(){return 0===this.countListeners("message")}}),Faye.extend(Faye.Channel.prototype,Faye.Publisher),Faye.extend(Faye.Channel,{HANDSHAKE:"/meta/handshake",CONNECT:"/meta/connect",SUBSCRIBE:"/meta/subscribe",UNSUBSCRIBE:"/meta/unsubscribe",DISCONNECT:"/meta/disconnect",META:"meta",SERVICE:"service",expand:function(e){var t=this.parse(e),n=["/**",e],i=t.slice();i[i.length-1]="*",n.push(this.unparse(i));for(var s=1,r=t.length;r>s;s++)i=t.slice(0,s),i.push("**"),n.push(this.unparse(i));return n},isValid:function(e){return Faye.Grammar.CHANNEL_NAME.test(e)||Faye.Grammar.CHANNEL_PATTERN.test(e)},parse:function(e){return this.isValid(e)?e.split("/").slice(1):null},unparse:function(e){return"/"+e.join("/")},isMeta:function(e){var t=this.parse(e);return t?t[0]===this.META:null},isService:function(e){var t=this.parse(e);return t?t[0]===this.SERVICE:null},isSubscribable:function(e){return this.isValid(e)?!this.isMeta(e)&&!this.isService(e):null},Set:Faye.Class({initialize:function(){this._channels={}},getKeys:function(){var e=[];for(var t in this._channels)e.push(t);return e},remove:function(e){delete this._channels[e]},hasSubscription:function(e){return this._channels.hasOwnProperty(e)},subscribe:function(e,t,n){if(t)for(var i,s=0,r=e.length;r>s;s++){i=e[s];var o=this._channels[i]=this._channels[i]||new Faye.Channel(i);o.bind("message",t,n)}},unsubscribe:function(e,t,n){var i=this._channels[e];return i?(i.unbind("message",t,n),i.isUnused()?(this.remove(e),!0):!1):!1},distributeMessage:function(e){for(var t=Faye.Channel.expand(e.channel),n=0,i=t.length;i>n;n++){var s=this._channels[t[n]];s&&s.trigger("message",e.data)}}})}),Faye.Envelope=Faye.Class({initialize:function(e,t){this.id=e.id,this.message=e,void 0!==t&&this.timeout(t/1e3,!1)}}),Faye.extend(Faye.Envelope.prototype,Faye.Deferrable),Faye.Publication=Faye.Class(Faye.Deferrable),Faye.Subscription=Faye.Class({initialize:function(e,t,n,i){this._client=e,this._channels=t,this._callback=n,this._context=i,this._cancelled=!1},cancel:function(){this._cancelled||(this._client.unsubscribe(this._channels,this._callback,this._context),this._cancelled=!0)},unsubscribe:function(){this.cancel()}}),Faye.extend(Faye.Subscription.prototype,Faye.Deferrable),Faye.Client=Faye.Class({UNCONNECTED:1,CONNECTING:2,CONNECTED:3,DISCONNECTED:4,HANDSHAKE:"handshake",RETRY:"retry",NONE:"none",CONNECTION_TIMEOUT:60,DEFAULT_RETRY:5,MAX_REQUEST_SIZE:2048,DEFAULT_ENDPOINT:"/bayeux",INTERVAL:0,initialize:function(e,t){this.info("New client created for ?",e),this._options=t||{},this.endpoint=Faye.URI.parse(e||this.DEFAULT_ENDPOINT),this.endpoints=this._options.endpoints||{},this.transports={},this.cookies=Faye.CookieJar&&new Faye.CookieJar,this.headers={},this.ca=this._options.ca,this._disabled=[],this._retry=this._options.retry||this.DEFAULT_RETRY;for(var n in this.endpoints)this.endpoints[n]=Faye.URI.parse(this.endpoints[n]);this.maxRequestSize=this.MAX_REQUEST_SIZE,this._state=this.UNCONNECTED,this._channels=new Faye.Channel.Set,this._messageId=0,this._responseCallbacks={},this._advice={reconnect:this.RETRY,interval:1e3*(this._options.interval||this.INTERVAL),timeout:1e3*(this._options.timeout||this.CONNECTION_TIMEOUT)},Faye.Event&&void 0!==Faye.ENV.onbeforeunload&&Faye.Event.on(Faye.ENV,"beforeunload",function(){Faye.indexOf(this._disabled,"autodisconnect")<0&&this.disconnect()},this)},disable:function(e){this._disabled.push(e)},setHeader:function(e,t){this.headers[e]=t},handshake:function(e,t){if(this._advice.reconnect!==this.NONE&&this._state===this.UNCONNECTED){this._state=this.CONNECTING;var n=this;this.info("Initiating handshake with ?",Faye.URI.stringify(this.endpoint)),this._selectTransport(Faye.MANDATORY_CONNECTION_TYPES),this._send({channel:Faye.Channel.HANDSHAKE,version:Faye.BAYEUX_VERSION,supportedConnectionTypes:[this._transport.connectionType]},function(i){i.successful?(this._state=this.CONNECTED,this._clientId=i.clientId,this._selectTransport(i.supportedConnectionTypes),this.info("Handshake successful: ?",this._clientId),this.subscribe(this._channels.getKeys(),!0),e&&Faye.Promise.defer(function(){e.call(t)})):(this.info("Handshake unsuccessful"),Faye.ENV.setTimeout(function(){n.handshake(e,t)},this._advice.interval),this._state=this.UNCONNECTED)},this)}},connect:function(e,t){if(this._advice.reconnect!==this.NONE&&this._state!==this.DISCONNECTED){if(this._state===this.UNCONNECTED)return this.handshake(function(){this.connect(e,t)},this);this.callback(e,t),this._state===this.CONNECTED&&(this.info("Calling deferred actions for ?",this._clientId),this.setDeferredStatus("succeeded"),this.setDeferredStatus("unknown"),this._connectRequest||(this._connectRequest=!0,this.info("Initiating connection for ?",this._clientId),this._send({channel:Faye.Channel.CONNECT,clientId:this._clientId,connectionType:this._transport.connectionType},this._cycleConnection,this)))}},disconnect:function(){this._state===this.CONNECTED&&(this._state=this.DISCONNECTED,this.info("Disconnecting ?",this._clientId),this._send({channel:Faye.Channel.DISCONNECT,clientId:this._clientId},function(e){e.successful&&(this._transport.close(),delete this._transport)},this),this.info("Clearing channel listeners for ?",this._clientId),this._channels=new Faye.Channel.Set)},subscribe:function(e,t,n){if(e instanceof Array)return Faye.map(e,function(e){return this.subscribe(e,t,n)},this);var i=new Faye.Subscription(this,e,t,n),s=t===!0,r=this._channels.hasSubscription(e);return r&&!s?(this._channels.subscribe([e],t,n),i.setDeferredStatus("succeeded"),i):(this.connect(function(){this.info("Client ? attempting to subscribe to ?",this._clientId,e),s||this._channels.subscribe([e],t,n),this._send({channel:Faye.Channel.SUBSCRIBE,clientId:this._clientId,subscription:e},function(s){if(!s.successful)return i.setDeferredStatus("failed",Faye.Error.parse(s.error)),this._channels.unsubscribe(e,t,n);var r=[].concat(s.subscription);this.info("Subscription acknowledged for ? to ?",this._clientId,r),i.setDeferredStatus("succeeded")},this)},this),i)},unsubscribe:function(e,t,n){if(e instanceof Array)return Faye.map(e,function(e){return this.unsubscribe(e,t,n)},this);var i=this._channels.unsubscribe(e,t,n);i&&this.connect(function(){this.info("Client ? attempting to unsubscribe from ?",this._clientId,e),this._send({channel:Faye.Channel.UNSUBSCRIBE,clientId:this._clientId,subscription:e},function(e){if(e.successful){var t=[].concat(e.subscription);this.info("Unsubscription acknowledged for ? from ?",this._clientId,t)}},this)},this)},publish:function(e,t){var n=new Faye.Publication;return this.connect(function(){this.info("Client ? queueing published message to ?: ?",this._clientId,e,t),this._send({channel:e,data:t,clientId:this._clientId},function(e){e.successful?n.setDeferredStatus("succeeded"):n.setDeferredStatus("failed",Faye.Error.parse(e.error))},this)},this),n},receiveMessage:function(e){var t,n=e.id;void 0!==e.successful&&(t=this._responseCallbacks[n],delete this._responseCallbacks[n]),this.pipeThroughExtensions("incoming",e,null,function(e){e&&(e.advice&&this._handleAdvice(e.advice),this._deliverMessage(e),t&&t[0].call(t[1],e))},this),this._transportUp!==!0&&(this._transportUp=!0,this.trigger("transport:up"))},messageError:function(e,t){for(var n,i,s=this._retry,r=this,o=0,a=e.length;a>o;o++)i=e[o],n=i.id,t?this._transportSend(i):Faye.ENV.setTimeout(function(){r._transportSend(i)},1e3*s);t||this._transportUp===!1||(this._transportUp=!1,this.trigger("transport:down"))},_selectTransport:function(e){Faye.Transport.get(this,e,this._disabled,function(e){this.debug("Selected ? transport for ?",e.connectionType,Faye.URI.stringify(e.endpoint)),e!==this._transport&&(this._transport&&this._transport.close(),this._transport=e)},this)},_send:function(e,t,n){this._transport&&(e.id=e.id||this._generateMessageId(),this.pipeThroughExtensions("outgoing",e,null,function(e){e&&(t&&(this._responseCallbacks[e.id]=[t,n]),this._transportSend(e))},this))},_transportSend:function(e){if(this._transport){var t=1.2*(this._advice.timeout||1e3*this._retry),n=new Faye.Envelope(e,t);n.errback(function(t){this.messageError([e],t)},this),this._transport.send(n)}},_generateMessageId:function(){return this._messageId+=1,this._messageId>=Math.pow(2,32)&&(this._messageId=0),this._messageId.toString(36)},_handleAdvice:function(e){Faye.extend(this._advice,e),this._advice.reconnect===this.HANDSHAKE&&this._state!==this.DISCONNECTED&&(this._state=this.UNCONNECTED,this._clientId=null,this._cycleConnection())},_deliverMessage:function(e){e.channel&&void 0!==e.data&&(this.info("Client ? calling listeners for ? with ?",this._clientId,e.channel,e.data),this._channels.distributeMessage(e))},_cycleConnection:function(){this._connectRequest&&(this._connectRequest=null,this.info("Closed connection for ?",this._clientId));var e=this;Faye.ENV.setTimeout(function(){e.connect()},this._advice.interval)}}),Faye.extend(Faye.Client.prototype,Faye.Deferrable),Faye.extend(Faye.Client.prototype,Faye.Publisher),Faye.extend(Faye.Client.prototype,Faye.Logging),Faye.extend(Faye.Client.prototype,Faye.Extensible),Faye.Transport=Faye.extend(Faye.Class({MAX_DELAY:0,batching:!0,initialize:function(e,t){this._client=e,this.endpoint=t,this._outbox=[]},close:function(){},encode:function(){return""},send:function(e){var t=e.message;return this.debug("Client ? sending message to ?: ?",this._client._clientId,Faye.URI.stringify(this.endpoint),t),this.batching?(this._outbox.push(e),t.channel===Faye.Channel.HANDSHAKE?this.addTimeout("publish",.01,this.flush,this):(t.channel===Faye.Channel.CONNECT&&(this._connectMessage=t),this.flushLargeBatch(),this.addTimeout("publish",this.MAX_DELAY,this.flush,this),void 0)):this.request([e])},flush:function(){this.removeTimeout("publish"),this._outbox.length>1&&this._connectMessage&&(this._connectMessage.advice={timeout:0}),this.request(this._outbox),this._connectMessage=null,this._outbox=[]},flushLargeBatch:function(){var e=this.encode(this._outbox);if(!(e.length<this._client.maxRequestSize)){var t=this._outbox.pop();this.flush(),t&&this._outbox.push(t)}},receive:function(e,t){for(var n=e.length;n--;)e[n].setDeferredStatus("succeeded");t=[].concat(t),this.debug("Client ? received from ?: ?",this._client._clientId,Faye.URI.stringify(this.endpoint),t);for(var i=0,n=t.length;n>i;i++)this._client.receiveMessage(t[i])},handleError:function(e,t){for(var n=e.length;n--;)e[n].setDeferredStatus("failed",t)},_getCookies:function(){var e=this._client.cookies;return e?e.getCookies({domain:this.endpoint.hostname,path:this.endpoint.path,secure:"https:"===this.endpoint.protocol}).toValueString():""},_storeCookies:function(e){if(e&&this._client.cookies){e=[].concat(e);for(var t,n=0,i=e.length;i>n;n++)t=this._client.cookies.setCookie(e[n]),t=t[0]||t,t.domain=t.domain||this.endpoint.hostname}}}),{get:function(e,t,n,i,s){var r=e.endpoint;Faye.asyncEach(this._transports,function(o,a){var c=o[0],u=o[1],h=e.endpoints[c]||r;return Faye.indexOf(n,c)>=0?a():Faye.indexOf(t,c)<0?(u.isUsable(e,h,function(){}),a()):(u.isUsable(e,h,function(t){if(!t)return a();var n=u.hasOwnProperty("create")?u.create(e,h):new u(e,h);i.call(s,n)}),void 0)},function(){throw Error("Could not find a usable connection type for "+Faye.URI.stringify(r))})},register:function(e,t){this._transports.push([e,t]),t.prototype.connectionType=e},_transports:[]}),Faye.extend(Faye.Transport.prototype,Faye.Logging),Faye.extend(Faye.Transport.prototype,Faye.Timeouts),Faye.Event={_registry:[],on:function(e,t,n,i){var s=function(){n.call(i)};e.addEventListener?e.addEventListener(t,s,!1):e.attachEvent("on"+t,s),this._registry.push({_element:e,_type:t,_callback:n,_context:i,_handler:s})},detach:function(e,t,n,i){for(var s,r=this._registry.length;r--;)s=this._registry[r],e&&e!==s._element||t&&t!==s._type||n&&n!==s._callback||i&&i!==s._context||(s._element.removeEventListener?s._element.removeEventListener(s._type,s._handler,!1):s._element.detachEvent("on"+s._type,s._handler),this._registry.splice(r,1),s=null)}},void 0!==Faye.ENV.onunload&&Faye.Event.on(Faye.ENV,"unload",Faye.Event.detach,Faye.Event),"object"!=typeof JSON&&(JSON={}),function(){function f(e){return 10>e?"0"+e:e}function quote(e){return escapable.lastIndex=0,escapable.test(e)?'"'+e.replace(escapable,function(e){var t=meta[e];return"string"==typeof t?t:"\\u"+("0000"+e.charCodeAt(0).toString(16)).slice(-4)})+'"':'"'+e+'"'}function str(e,t){var n,i,s,r,o,a=gap,c=t[e];switch(c&&"object"==typeof c&&"function"==typeof c.toJSON&&(c=c.toJSON(e)),"function"==typeof rep&&(c=rep.call(t,e,c)),typeof c){case"string":return quote(c);case"number":return isFinite(c)?c+"":"null";case"boolean":case"null":return c+"";case"object":if(!c)return"null";if(gap+=indent,o=[],"[object Array]"===Object.prototype.toString.apply(c)){for(r=c.length,n=0;r>n;n+=1)o[n]=str(n,c)||"null";return s=0===o.length?"[]":gap?"[\n"+gap+o.join(",\n"+gap)+"\n"+a+"]":"["+o.join(",")+"]",gap=a,s}if(rep&&"object"==typeof rep)for(r=rep.length,n=0;r>n;n+=1)"string"==typeof rep[n]&&(i=rep[n],s=str(i,c),s&&o.push(quote(i)+(gap?": ":":")+s));else for(i in c)Object.prototype.hasOwnProperty.call(c,i)&&(s=str(i,c),s&&o.push(quote(i)+(gap?": ":":")+s));return s=0===o.length?"{}":gap?"{\n"+gap+o.join(",\n"+gap)+"\n"+a+"}":"{"+o.join(",")+"}",gap=a,s}}"function"!=typeof Date.prototype.toJSON&&(Date.prototype.toJSON=function(){return isFinite(this.valueOf())?this.getUTCFullYear()+"-"+f(this.getUTCMonth()+1)+"-"+f(this.getUTCDate())+"T"+f(this.getUTCHours())+":"+f(this.getUTCMinutes())+":"+f(this.getUTCSeconds())+"Z":null},String.prototype.toJSON=Number.prototype.toJSON=Boolean.prototype.toJSON=function(){return this.valueOf()});var cx=/[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,escapable=/[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,gap,indent,meta={"\b":"\\b","	":"\\t","\n":"\\n","\f":"\\f","\r":"\\r",'"':'\\"',"\\":"\\\\"},rep;Faye.stringify=function(e,t,n){var i;if(gap="",indent="","number"==typeof n)for(i=0;n>i;i+=1)indent+=" ";else"string"==typeof n&&(indent=n);if(rep=t,t&&"function"!=typeof t&&("object"!=typeof t||"number"!=typeof t.length))throw Error("JSON.stringify");return str("",{"":e})},"function"!=typeof JSON.stringify&&(JSON.stringify=Faye.stringify),"function"!=typeof JSON.parse&&(JSON.parse=function(text,reviver){function walk(e,t){var n,i,s=e[t];if(s&&"object"==typeof s)for(n in s)Object.prototype.hasOwnProperty.call(s,n)&&(i=walk(s,n),void 0!==i?s[n]=i:delete s[n]);return reviver.call(e,t,s)}var j;if(text+="",cx.lastIndex=0,cx.test(text)&&(text=text.replace(cx,function(e){return"\\u"+("0000"+e.charCodeAt(0).toString(16)).slice(-4)})),/^[\],:{}\s]*$/.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,"@").replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,"]").replace(/(?:^|:|,)(?:\s*\[)+/g,"")))return j=eval("("+text+")"),"function"==typeof reviver?walk({"":j},""):j;throw new SyntaxError("JSON.parse")})}(),Faye.Transport.WebSocket=Faye.extend(Faye.Class(Faye.Transport,{UNCONNECTED:1,CONNECTING:2,CONNECTED:3,batching:!1,isUsable:function(e,t){this.callback(function(){e.call(t,!0)}),this.errback(function(){e.call(t,!1)}),this.connect()},request:function(e){this._pending=this._pending||new Faye.Set;for(var t=0,n=e.length;n>t;t++)this._pending.add(e[t]);this.callback(function(t){if(t){var n=Faye.map(e,function(e){return e.message});t.send(Faye.toJSON(n))}},this),this.connect()},connect:function(){if(!Faye.Transport.WebSocket._unloaded&&(this._state=this._state||this.UNCONNECTED,this._state===this.UNCONNECTED)){this._state=this.CONNECTING;var e=this._createSocket();if(!e)return this.setDeferredStatus("failed");var t=this;e.onopen=function(){e.headers&&t._storeCookies(e.headers["set-cookie"]),t._socket=e,t._state=t.CONNECTED,t._everConnected=!0,t._ping(),t.setDeferredStatus("succeeded",e)};var n=!1;e.onclose=e.onerror=function(){if(!n){n=!0;var i=t._state===t.CONNECTED;e.onopen=e.onclose=e.onerror=e.onmessage=null,delete t._socket,t._state=t.UNCONNECTED,t.removeTimeout("ping"),t.setDeferredStatus("unknown");var s=t._pending?t._pending.toArray():[];delete t._pending,i?t.handleError(s,!0):t._everConnected?t.handleError(s):t.setDeferredStatus("failed")}},e.onmessage=function(e){var n,i=JSON.parse(e.data),s=[];if(i){i=[].concat(i);for(var r=0,o=i.length;o>r;r++)void 0!==i[r].successful&&(n=t._pending.remove(i[r]),n&&s.push(n));t.receive(s,i)}}}},close:function(){this._socket&&this._socket.close()},_createSocket:function(){var e=Faye.Transport.WebSocket.getSocketUrl(this.endpoint),t={headers:Faye.copyObject(this._client.headers),ca:this._client.ca};return t.headers.Cookie=this._getCookies(),Faye.WebSocket?new Faye.WebSocket.Client(e,[],t):Faye.ENV.MozWebSocket?new MozWebSocket(e):Faye.ENV.WebSocket?new WebSocket(e):void 0},_ping:function(){this._socket&&(this._socket.send("[]"),this.addTimeout("ping",this._client._advice.timeout/2e3,this._ping,this))}}),{PROTOCOLS:{"http:":"ws:","https:":"wss:"},create:function(e,t){var n=e.transports.websocket=e.transports.websocket||{};return n[t.href]=n[t.href]||new this(e,t),n[t.href]},getSocketUrl:function(e){return e=Faye.copyObject(e),e.protocol=this.PROTOCOLS[e.protocol],Faye.URI.stringify(e)},isUsable:function(e,t,n,i){this.create(e,t).isUsable(n,i)}}),Faye.extend(Faye.Transport.WebSocket.prototype,Faye.Deferrable),Faye.Transport.register("websocket",Faye.Transport.WebSocket),Faye.Event&&Faye.Event.on(Faye.ENV,"beforeunload",function(){Faye.Transport.WebSocket._unloaded=!0}),Faye.Transport.EventSource=Faye.extend(Faye.Class(Faye.Transport,{initialize:function(e,t){if(Faye.Transport.prototype.initialize.call(this,e,t),!Faye.ENV.EventSource)return this.setDeferredStatus("failed");this._xhr=new Faye.Transport.XHR(e,t),t=Faye.copyObject(t),t.pathname+="/"+e._clientId;var n=new EventSource(Faye.URI.stringify(t)),i=this;n.onopen=function(){i._everConnected=!0,i.setDeferredStatus("succeeded")},n.onerror=function(){i._everConnected?i._client.messageError([]):(i.setDeferredStatus("failed"),n.close())},n.onmessage=function(e){i.receive([],JSON.parse(e.data))},this._socket=n},close:function(){this._socket&&(this._socket.onopen=this._socket.onerror=this._socket.onmessage=null,this._socket.close(),delete this._socket)},isUsable:function(e,t){this.callback(function(){e.call(t,!0)}),this.errback(function(){e.call(t,!1)})},encode:function(e){return this._xhr.encode(e)},request:function(e){this._xhr.request(e)}}),{isUsable:function(e,t,n,i){var s=e._clientId;
-return s?(Faye.Transport.XHR.isUsable(e,t,function(s){return s?(this.create(e,t).isUsable(n,i),void 0):n.call(i,!1)},this),void 0):n.call(i,!1)},create:function(e,t){var n=e.transports.eventsource=e.transports.eventsource||{},i=e._clientId;t=Faye.copyObject(t),t.pathname+="/"+(i||"");var s=Faye.URI.stringify(t);return n[s]=n[s]||new this(e,t),n[s]}}),Faye.extend(Faye.Transport.EventSource.prototype,Faye.Deferrable),Faye.Transport.register("eventsource",Faye.Transport.EventSource),Faye.Transport.XHR=Faye.extend(Faye.Class(Faye.Transport,{encode:function(e){var t=Faye.map(e,function(e){return e.message});return Faye.toJSON(t)},request:function(e){var t=this.endpoint.path,n=Faye.ENV.ActiveXObject?new ActiveXObject("Microsoft.XMLHTTP"):new XMLHttpRequest,i=this;n.open("POST",t,!0),n.setRequestHeader("Content-Type","application/json"),n.setRequestHeader("Pragma","no-cache"),n.setRequestHeader("X-Requested-With","XMLHttpRequest");var s=this._client.headers;for(var r in s)s.hasOwnProperty(r)&&n.setRequestHeader(r,s[r]);var o=function(){n.abort()};Faye.Event.on(Faye.ENV,"beforeunload",o),n.onreadystatechange=function(){if(n&&4===n.readyState){var t=null,s=n.status,r=n.responseText,a=s>=200&&300>s||304===s||1223===s;if(Faye.Event.detach(Faye.ENV,"beforeunload",o),n.onreadystatechange=function(){},n=null,!a)return i.handleError(e);try{t=JSON.parse(r)}catch(c){}t?i.receive(e,t):i.handleError(e)}},n.send(this.encode(e))}}),{isUsable:function(e,t,n,i){n.call(i,Faye.URI.isSameOrigin(t))}}),Faye.Transport.register("long-polling",Faye.Transport.XHR),Faye.Transport.CORS=Faye.extend(Faye.Class(Faye.Transport,{encode:function(e){var t=Faye.map(e,function(e){return e.message});return"message="+encodeURIComponent(Faye.toJSON(t))},request:function(e){var t,n=Faye.ENV.XDomainRequest?XDomainRequest:XMLHttpRequest,i=new n,s=this._client.headers,r=this;if(i.open("POST",Faye.URI.stringify(this.endpoint),!0),i.setRequestHeader){i.setRequestHeader("Pragma","no-cache");for(t in s)s.hasOwnProperty(t)&&i.setRequestHeader(t,s[t])}var o=function(){return i?(i.onload=i.onerror=i.ontimeout=i.onprogress=null,i=null,void 0):!1};i.onload=function(){var t=null;try{t=JSON.parse(i.responseText)}catch(n){}o(),t?r.receive(e,t):r.handleError(e)},i.onerror=i.ontimeout=function(){o(),r.handleError(e)},i.onprogress=function(){},i.send(this.encode(e))}}),{isUsable:function(e,t,n,i){if(Faye.URI.isSameOrigin(t))return n.call(i,!1);if(Faye.ENV.XDomainRequest)return n.call(i,t.protocol===Faye.ENV.location.protocol);if(Faye.ENV.XMLHttpRequest){var s=new Faye.ENV.XMLHttpRequest;return n.call(i,void 0!==s.withCredentials)}return n.call(i,!1)}}),Faye.Transport.register("cross-origin-long-polling",Faye.Transport.CORS),Faye.Transport.JSONP=Faye.extend(Faye.Class(Faye.Transport,{encode:function(e){var t=Faye.map(e,function(e){return e.message}),n=Faye.copyObject(this.endpoint);return n.query.message=Faye.toJSON(t),n.query.jsonp="__jsonp"+Faye.Transport.JSONP._cbCount+"__",Faye.URI.stringify(n)},request:function(e){var t=Faye.map(e,function(e){return e.message}),n=document.getElementsByTagName("head")[0],i=document.createElement("script"),s=Faye.Transport.JSONP.getCallbackName(),r=Faye.copyObject(this.endpoint),o=this;r.query.message=Faye.toJSON(t),r.query.jsonp=s,Faye.ENV[s]=function(t){if(!Faye.ENV[s])return!1;Faye.ENV[s]=void 0;try{delete Faye.ENV[s]}catch(n){}i.parentNode.removeChild(i),o.receive(e,t)},i.type="text/javascript",i.src=Faye.URI.stringify(r),n.appendChild(i)}}),{_cbCount:0,getCallbackName:function(){return this._cbCount+=1,"__jsonp"+this._cbCount+"__"},isUsable:function(e,t,n,i){n.call(i,!0)}}),Faye.Transport.register("callback-polling",Faye.Transport.JSONP)}();
-//@ sourceMappingURL=faye-browser-min.js.map
+/*!
+ * Bootstrap v3.0.2 by @fat and @mdo
+ * Copyright 2013 Twitter, Inc.
+ * Licensed under http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Designed and built with all the love in the world by @mdo and @fat.
+ */
+
+if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery") }
+
+/* ========================================================================
+ * Bootstrap: transition.js v3.0.2
+ * http://getbootstrap.com/javascript/#transitions
+ * ========================================================================
+ * Copyright 2013 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ======================================================================== */
+
+
++function ($) { "use strict";
+
+  // CSS TRANSITION SUPPORT (Shoutout: http://www.modernizr.com/)
+  // ============================================================
+
+  function transitionEnd() {
+    var el = document.createElement('bootstrap')
+
+    var transEndEventNames = {
+      'WebkitTransition' : 'webkitTransitionEnd'
+    , 'MozTransition'    : 'transitionend'
+    , 'OTransition'      : 'oTransitionEnd otransitionend'
+    , 'transition'       : 'transitionend'
+    }
+
+    for (var name in transEndEventNames) {
+      if (el.style[name] !== undefined) {
+        return { end: transEndEventNames[name] }
+      }
+    }
+  }
+
+  // http://blog.alexmaccaw.com/css-transitions
+  $.fn.emulateTransitionEnd = function (duration) {
+    var called = false, $el = this
+    $(this).one($.support.transition.end, function () { called = true })
+    var callback = function () { if (!called) $($el).trigger($.support.transition.end) }
+    setTimeout(callback, duration)
+    return this
+  }
+
+  $(function () {
+    $.support.transition = transitionEnd()
+  })
+
+}(jQuery);
+
+/* ========================================================================
+ * Bootstrap: alert.js v3.0.2
+ * http://getbootstrap.com/javascript/#alerts
+ * ========================================================================
+ * Copyright 2013 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ======================================================================== */
+
+
++function ($) { "use strict";
+
+  // ALERT CLASS DEFINITION
+  // ======================
+
+  var dismiss = '[data-dismiss="alert"]'
+  var Alert   = function (el) {
+    $(el).on('click', dismiss, this.close)
+  }
+
+  Alert.prototype.close = function (e) {
+    var $this    = $(this)
+    var selector = $this.attr('data-target')
+
+    if (!selector) {
+      selector = $this.attr('href')
+      selector = selector && selector.replace(/.*(?=#[^\s]*$)/, '') // strip for ie7
+    }
+
+    var $parent = $(selector)
+
+    if (e) e.preventDefault()
+
+    if (!$parent.length) {
+      $parent = $this.hasClass('alert') ? $this : $this.parent()
+    }
+
+    $parent.trigger(e = $.Event('close.bs.alert'))
+
+    if (e.isDefaultPrevented()) return
+
+    $parent.removeClass('in')
+
+    function removeElement() {
+      $parent.trigger('closed.bs.alert').remove()
+    }
+
+    $.support.transition && $parent.hasClass('fade') ?
+      $parent
+        .one($.support.transition.end, removeElement)
+        .emulateTransitionEnd(150) :
+      removeElement()
+  }
+
+
+  // ALERT PLUGIN DEFINITION
+  // =======================
+
+  var old = $.fn.alert
+
+  $.fn.alert = function (option) {
+    return this.each(function () {
+      var $this = $(this)
+      var data  = $this.data('bs.alert')
+
+      if (!data) $this.data('bs.alert', (data = new Alert(this)))
+      if (typeof option == 'string') data[option].call($this)
+    })
+  }
+
+  $.fn.alert.Constructor = Alert
+
+
+  // ALERT NO CONFLICT
+  // =================
+
+  $.fn.alert.noConflict = function () {
+    $.fn.alert = old
+    return this
+  }
+
+
+  // ALERT DATA-API
+  // ==============
+
+  $(document).on('click.bs.alert.data-api', dismiss, Alert.prototype.close)
+
+}(jQuery);
+
+/* ========================================================================
+ * Bootstrap: button.js v3.0.2
+ * http://getbootstrap.com/javascript/#buttons
+ * ========================================================================
+ * Copyright 2013 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ======================================================================== */
+
+
++function ($) { "use strict";
+
+  // BUTTON PUBLIC CLASS DEFINITION
+  // ==============================
+
+  var Button = function (element, options) {
+    this.$element = $(element)
+    this.options  = $.extend({}, Button.DEFAULTS, options)
+  }
+
+  Button.DEFAULTS = {
+    loadingText: 'loading...'
+  }
+
+  Button.prototype.setState = function (state) {
+    var d    = 'disabled'
+    var $el  = this.$element
+    var val  = $el.is('input') ? 'val' : 'html'
+    var data = $el.data()
+
+    state = state + 'Text'
+
+    if (!data.resetText) $el.data('resetText', $el[val]())
+
+    $el[val](data[state] || this.options[state])
+
+    // push to event loop to allow forms to submit
+    setTimeout(function () {
+      state == 'loadingText' ?
+        $el.addClass(d).attr(d, d) :
+        $el.removeClass(d).removeAttr(d);
+    }, 0)
+  }
+
+  Button.prototype.toggle = function () {
+    var $parent = this.$element.closest('[data-toggle="buttons"]')
+
+    if ($parent.length) {
+      var $input = this.$element.find('input')
+        .prop('checked', !this.$element.hasClass('active'))
+        .trigger('change')
+      if ($input.prop('type') === 'radio') $parent.find('.active').removeClass('active')
+    }
+
+    this.$element.toggleClass('active')
+  }
+
+
+  // BUTTON PLUGIN DEFINITION
+  // ========================
+
+  var old = $.fn.button
+
+  $.fn.button = function (option) {
+    return this.each(function () {
+      var $this   = $(this)
+      var data    = $this.data('bs.button')
+      var options = typeof option == 'object' && option
+
+      if (!data) $this.data('bs.button', (data = new Button(this, options)))
+
+      if (option == 'toggle') data.toggle()
+      else if (option) data.setState(option)
+    })
+  }
+
+  $.fn.button.Constructor = Button
+
+
+  // BUTTON NO CONFLICT
+  // ==================
+
+  $.fn.button.noConflict = function () {
+    $.fn.button = old
+    return this
+  }
+
+
+  // BUTTON DATA-API
+  // ===============
+
+  $(document).on('click.bs.button.data-api', '[data-toggle^=button]', function (e) {
+    var $btn = $(e.target)
+    if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn')
+    $btn.button('toggle')
+    e.preventDefault()
+  })
+
+}(jQuery);
+
+/* ========================================================================
+ * Bootstrap: carousel.js v3.0.2
+ * http://getbootstrap.com/javascript/#carousel
+ * ========================================================================
+ * Copyright 2013 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ======================================================================== */
+
+
++function ($) { "use strict";
+
+  // CAROUSEL CLASS DEFINITION
+  // =========================
+
+  var Carousel = function (element, options) {
+    this.$element    = $(element)
+    this.$indicators = this.$element.find('.carousel-indicators')
+    this.options     = options
+    this.paused      =
+    this.sliding     =
+    this.interval    =
+    this.$active     =
+    this.$items      = null
+
+    this.options.pause == 'hover' && this.$element
+      .on('mouseenter', $.proxy(this.pause, this))
+      .on('mouseleave', $.proxy(this.cycle, this))
+  }
+
+  Carousel.DEFAULTS = {
+    interval: 5000
+  , pause: 'hover'
+  , wrap: true
+  }
+
+  Carousel.prototype.cycle =  function (e) {
+    e || (this.paused = false)
+
+    this.interval && clearInterval(this.interval)
+
+    this.options.interval
+      && !this.paused
+      && (this.interval = setInterval($.proxy(this.next, this), this.options.interval))
+
+    return this
+  }
+
+  Carousel.prototype.getActiveIndex = function () {
+    this.$active = this.$element.find('.item.active')
+    this.$items  = this.$active.parent().children()
+
+    return this.$items.index(this.$active)
+  }
+
+  Carousel.prototype.to = function (pos) {
+    var that        = this
+    var activeIndex = this.getActiveIndex()
+
+    if (pos > (this.$items.length - 1) || pos < 0) return
+
+    if (this.sliding)       return this.$element.one('slid', function () { that.to(pos) })
+    if (activeIndex == pos) return this.pause().cycle()
+
+    return this.slide(pos > activeIndex ? 'next' : 'prev', $(this.$items[pos]))
+  }
+
+  Carousel.prototype.pause = function (e) {
+    e || (this.paused = true)
+
+    if (this.$element.find('.next, .prev').length && $.support.transition.end) {
+      this.$element.trigger($.support.transition.end)
+      this.cycle(true)
+    }
+
+    this.interval = clearInterval(this.interval)
+
+    return this
+  }
+
+  Carousel.prototype.next = function () {
+    if (this.sliding) return
+    return this.slide('next')
+  }
+
+  Carousel.prototype.prev = function () {
+    if (this.sliding) return
+    return this.slide('prev')
+  }
+
+  Carousel.prototype.slide = function (type, next) {
+    var $active   = this.$element.find('.item.active')
+    var $next     = next || $active[type]()
+    var isCycling = this.interval
+    var direction = type == 'next' ? 'left' : 'right'
+    var fallback  = type == 'next' ? 'first' : 'last'
+    var that      = this
+
+    if (!$next.length) {
+      if (!this.options.wrap) return
+      $next = this.$element.find('.item')[fallback]()
+    }
+
+    this.sliding = true
+
+    isCycling && this.pause()
+
+    var e = $.Event('slide.bs.carousel', { relatedTarget: $next[0], direction: direction })
+
+    if ($next.hasClass('active')) return
+
+    if (this.$indicators.length) {
+      this.$indicators.find('.active').removeClass('active')
+      this.$element.one('slid', function () {
+        var $nextIndicator = $(that.$indicators.children()[that.getActiveIndex()])
+        $nextIndicator && $nextIndicator.addClass('active')
+      })
+    }
+
+    if ($.support.transition && this.$element.hasClass('slide')) {
+      this.$element.trigger(e)
+      if (e.isDefaultPrevented()) return
+      $next.addClass(type)
+      $next[0].offsetWidth // force reflow
+      $active.addClass(direction)
+      $next.addClass(direction)
+      $active
+        .one($.support.transition.end, function () {
+          $next.removeClass([type, direction].join(' ')).addClass('active')
+          $active.removeClass(['active', direction].join(' '))
+          that.sliding = false
+          setTimeout(function () { that.$element.trigger('slid') }, 0)
+        })
+        .emulateTransitionEnd(600)
+    } else {
+      this.$element.trigger(e)
+      if (e.isDefaultPrevented()) return
+      $active.removeClass('active')
+      $next.addClass('active')
+      this.sliding = false
+      this.$element.trigger('slid')
+    }
+
+    isCycling && this.cycle()
+
+    return this
+  }
+
+
+  // CAROUSEL PLUGIN DEFINITION
+  // ==========================
+
+  var old = $.fn.carousel
+
+  $.fn.carousel = function (option) {
+    return this.each(function () {
+      var $this   = $(this)
+      var data    = $this.data('bs.carousel')
+      var options = $.extend({}, Carousel.DEFAULTS, $this.data(), typeof option == 'object' && option)
+      var action  = typeof option == 'string' ? option : options.slide
+
+      if (!data) $this.data('bs.carousel', (data = new Carousel(this, options)))
+      if (typeof option == 'number') data.to(option)
+      else if (action) data[action]()
+      else if (options.interval) data.pause().cycle()
+    })
+  }
+
+  $.fn.carousel.Constructor = Carousel
+
+
+  // CAROUSEL NO CONFLICT
+  // ====================
+
+  $.fn.carousel.noConflict = function () {
+    $.fn.carousel = old
+    return this
+  }
+
+
+  // CAROUSEL DATA-API
+  // =================
+
+  $(document).on('click.bs.carousel.data-api', '[data-slide], [data-slide-to]', function (e) {
+    var $this   = $(this), href
+    var $target = $($this.attr('data-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')) //strip for ie7
+    var options = $.extend({}, $target.data(), $this.data())
+    var slideIndex = $this.attr('data-slide-to')
+    if (slideIndex) options.interval = false
+
+    $target.carousel(options)
+
+    if (slideIndex = $this.attr('data-slide-to')) {
+      $target.data('bs.carousel').to(slideIndex)
+    }
+
+    e.preventDefault()
+  })
+
+  $(window).on('load', function () {
+    $('[data-ride="carousel"]').each(function () {
+      var $carousel = $(this)
+      $carousel.carousel($carousel.data())
+    })
+  })
+
+}(jQuery);
+
+/* ========================================================================
+ * Bootstrap: collapse.js v3.0.2
+ * http://getbootstrap.com/javascript/#collapse
+ * ========================================================================
+ * Copyright 2013 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ======================================================================== */
+
+
++function ($) { "use strict";
+
+  // COLLAPSE PUBLIC CLASS DEFINITION
+  // ================================
+
+  var Collapse = function (element, options) {
+    this.$element      = $(element)
+    this.options       = $.extend({}, Collapse.DEFAULTS, options)
+    this.transitioning = null
+
+    if (this.options.parent) this.$parent = $(this.options.parent)
+    if (this.options.toggle) this.toggle()
+  }
+
+  Collapse.DEFAULTS = {
+    toggle: true
+  }
+
+  Collapse.prototype.dimension = function () {
+    var hasWidth = this.$element.hasClass('width')
+    return hasWidth ? 'width' : 'height'
+  }
+
+  Collapse.prototype.show = function () {
+    if (this.transitioning || this.$element.hasClass('in')) return
+
+    var startEvent = $.Event('show.bs.collapse')
+    this.$element.trigger(startEvent)
+    if (startEvent.isDefaultPrevented()) return
+
+    var actives = this.$parent && this.$parent.find('> .panel > .in')
+
+    if (actives && actives.length) {
+      var hasData = actives.data('bs.collapse')
+      if (hasData && hasData.transitioning) return
+      actives.collapse('hide')
+      hasData || actives.data('bs.collapse', null)
+    }
+
+    var dimension = this.dimension()
+
+    this.$element
+      .removeClass('collapse')
+      .addClass('collapsing')
+      [dimension](0)
+
+    this.transitioning = 1
+
+    var complete = function () {
+      this.$element
+        .removeClass('collapsing')
+        .addClass('in')
+        [dimension]('auto')
+      this.transitioning = 0
+      this.$element.trigger('shown.bs.collapse')
+    }
+
+    if (!$.support.transition) return complete.call(this)
+
+    var scrollSize = $.camelCase(['scroll', dimension].join('-'))
+
+    this.$element
+      .one($.support.transition.end, $.proxy(complete, this))
+      .emulateTransitionEnd(350)
+      [dimension](this.$element[0][scrollSize])
+  }
+
+  Collapse.prototype.hide = function () {
+    if (this.transitioning || !this.$element.hasClass('in')) return
+
+    var startEvent = $.Event('hide.bs.collapse')
+    this.$element.trigger(startEvent)
+    if (startEvent.isDefaultPrevented()) return
+
+    var dimension = this.dimension()
+
+    this.$element
+      [dimension](this.$element[dimension]())
+      [0].offsetHeight
+
+    this.$element
+      .addClass('collapsing')
+      .removeClass('collapse')
+      .removeClass('in')
+
+    this.transitioning = 1
+
+    var complete = function () {
+      this.transitioning = 0
+      this.$element
+        .trigger('hidden.bs.collapse')
+        .removeClass('collapsing')
+        .addClass('collapse')
+    }
+
+    if (!$.support.transition) return complete.call(this)
+
+    this.$element
+      [dimension](0)
+      .one($.support.transition.end, $.proxy(complete, this))
+      .emulateTransitionEnd(350)
+  }
+
+  Collapse.prototype.toggle = function () {
+    this[this.$element.hasClass('in') ? 'hide' : 'show']()
+  }
+
+
+  // COLLAPSE PLUGIN DEFINITION
+  // ==========================
+
+  var old = $.fn.collapse
+
+  $.fn.collapse = function (option) {
+    return this.each(function () {
+      var $this   = $(this)
+      var data    = $this.data('bs.collapse')
+      var options = $.extend({}, Collapse.DEFAULTS, $this.data(), typeof option == 'object' && option)
+
+      if (!data) $this.data('bs.collapse', (data = new Collapse(this, options)))
+      if (typeof option == 'string') data[option]()
+    })
+  }
+
+  $.fn.collapse.Constructor = Collapse
+
+
+  // COLLAPSE NO CONFLICT
+  // ====================
+
+  $.fn.collapse.noConflict = function () {
+    $.fn.collapse = old
+    return this
+  }
+
+
+  // COLLAPSE DATA-API
+  // =================
+
+  $(document).on('click.bs.collapse.data-api', '[data-toggle=collapse]', function (e) {
+    var $this   = $(this), href
+    var target  = $this.attr('data-target')
+        || e.preventDefault()
+        || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '') //strip for ie7
+    var $target = $(target)
+    var data    = $target.data('bs.collapse')
+    var option  = data ? 'toggle' : $this.data()
+    var parent  = $this.attr('data-parent')
+    var $parent = parent && $(parent)
+
+    if (!data || !data.transitioning) {
+      if ($parent) $parent.find('[data-toggle=collapse][data-parent="' + parent + '"]').not($this).addClass('collapsed')
+      $this[$target.hasClass('in') ? 'addClass' : 'removeClass']('collapsed')
+    }
+
+    $target.collapse(option)
+  })
+
+}(jQuery);
+
+/* ========================================================================
+ * Bootstrap: dropdown.js v3.0.2
+ * http://getbootstrap.com/javascript/#dropdowns
+ * ========================================================================
+ * Copyright 2013 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ======================================================================== */
+
+
++function ($) { "use strict";
+
+  // DROPDOWN CLASS DEFINITION
+  // =========================
+
+  var backdrop = '.dropdown-backdrop'
+  var toggle   = '[data-toggle=dropdown]'
+  var Dropdown = function (element) {
+    var $el = $(element).on('click.bs.dropdown', this.toggle)
+  }
+
+  Dropdown.prototype.toggle = function (e) {
+    var $this = $(this)
+
+    if ($this.is('.disabled, :disabled')) return
+
+    var $parent  = getParent($this)
+    var isActive = $parent.hasClass('open')
+
+    clearMenus()
+
+    if (!isActive) {
+      if ('ontouchstart' in document.documentElement && !$parent.closest('.navbar-nav').length) {
+        // if mobile we we use a backdrop because click events don't delegate
+        $('<div class="dropdown-backdrop"/>').insertAfter($(this)).on('click', clearMenus)
+      }
+
+      $parent.trigger(e = $.Event('show.bs.dropdown'))
+
+      if (e.isDefaultPrevented()) return
+
+      $parent
+        .toggleClass('open')
+        .trigger('shown.bs.dropdown')
+
+      $this.focus()
+    }
+
+    return false
+  }
+
+  Dropdown.prototype.keydown = function (e) {
+    if (!/(38|40|27)/.test(e.keyCode)) return
+
+    var $this = $(this)
+
+    e.preventDefault()
+    e.stopPropagation()
+
+    if ($this.is('.disabled, :disabled')) return
+
+    var $parent  = getParent($this)
+    var isActive = $parent.hasClass('open')
+
+    if (!isActive || (isActive && e.keyCode == 27)) {
+      if (e.which == 27) $parent.find(toggle).focus()
+      return $this.click()
+    }
+
+    var $items = $('[role=menu] li:not(.divider):visible a', $parent)
+
+    if (!$items.length) return
+
+    var index = $items.index($items.filter(':focus'))
+
+    if (e.keyCode == 38 && index > 0)                 index--                        // up
+    if (e.keyCode == 40 && index < $items.length - 1) index++                        // down
+    if (!~index)                                      index=0
+
+    $items.eq(index).focus()
+  }
+
+  function clearMenus() {
+    $(backdrop).remove()
+    $(toggle).each(function (e) {
+      var $parent = getParent($(this))
+      if (!$parent.hasClass('open')) return
+      $parent.trigger(e = $.Event('hide.bs.dropdown'))
+      if (e.isDefaultPrevented()) return
+      $parent.removeClass('open').trigger('hidden.bs.dropdown')
+    })
+  }
+
+  function getParent($this) {
+    var selector = $this.attr('data-target')
+
+    if (!selector) {
+      selector = $this.attr('href')
+      selector = selector && /#/.test(selector) && selector.replace(/.*(?=#[^\s]*$)/, '') //strip for ie7
+    }
+
+    var $parent = selector && $(selector)
+
+    return $parent && $parent.length ? $parent : $this.parent()
+  }
+
+
+  // DROPDOWN PLUGIN DEFINITION
+  // ==========================
+
+  var old = $.fn.dropdown
+
+  $.fn.dropdown = function (option) {
+    return this.each(function () {
+      var $this = $(this)
+      var data  = $this.data('dropdown')
+
+      if (!data) $this.data('dropdown', (data = new Dropdown(this)))
+      if (typeof option == 'string') data[option].call($this)
+    })
+  }
+
+  $.fn.dropdown.Constructor = Dropdown
+
+
+  // DROPDOWN NO CONFLICT
+  // ====================
+
+  $.fn.dropdown.noConflict = function () {
+    $.fn.dropdown = old
+    return this
+  }
+
+
+  // APPLY TO STANDARD DROPDOWN ELEMENTS
+  // ===================================
+
+  $(document)
+    .on('click.bs.dropdown.data-api', clearMenus)
+    .on('click.bs.dropdown.data-api', '.dropdown form', function (e) { e.stopPropagation() })
+    .on('click.bs.dropdown.data-api'  , toggle, Dropdown.prototype.toggle)
+    .on('keydown.bs.dropdown.data-api', toggle + ', [role=menu]' , Dropdown.prototype.keydown)
+
+}(jQuery);
+
+/* ========================================================================
+ * Bootstrap: modal.js v3.0.2
+ * http://getbootstrap.com/javascript/#modals
+ * ========================================================================
+ * Copyright 2013 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ======================================================================== */
+
+
++function ($) { "use strict";
+
+  // MODAL CLASS DEFINITION
+  // ======================
+
+  var Modal = function (element, options) {
+    this.options   = options
+    this.$element  = $(element)
+    this.$backdrop =
+    this.isShown   = null
+
+    if (this.options.remote) this.$element.load(this.options.remote)
+  }
+
+  Modal.DEFAULTS = {
+      backdrop: true
+    , keyboard: true
+    , show: true
+  }
+
+  Modal.prototype.toggle = function (_relatedTarget) {
+    return this[!this.isShown ? 'show' : 'hide'](_relatedTarget)
+  }
+
+  Modal.prototype.show = function (_relatedTarget) {
+    var that = this
+    var e    = $.Event('show.bs.modal', { relatedTarget: _relatedTarget })
+
+    this.$element.trigger(e)
+
+    if (this.isShown || e.isDefaultPrevented()) return
+
+    this.isShown = true
+
+    this.escape()
+
+    this.$element.on('click.dismiss.modal', '[data-dismiss="modal"]', $.proxy(this.hide, this))
+
+    this.backdrop(function () {
+      var transition = $.support.transition && that.$element.hasClass('fade')
+
+      if (!that.$element.parent().length) {
+        that.$element.appendTo(document.body) // don't move modals dom position
+      }
+
+      that.$element.show()
+
+      if (transition) {
+        that.$element[0].offsetWidth // force reflow
+      }
+
+      that.$element
+        .addClass('in')
+        .attr('aria-hidden', false)
+
+      that.enforceFocus()
+
+      var e = $.Event('shown.bs.modal', { relatedTarget: _relatedTarget })
+
+      transition ?
+        that.$element.find('.modal-dialog') // wait for modal to slide in
+          .one($.support.transition.end, function () {
+            that.$element.focus().trigger(e)
+          })
+          .emulateTransitionEnd(300) :
+        that.$element.focus().trigger(e)
+    })
+  }
+
+  Modal.prototype.hide = function (e) {
+    if (e) e.preventDefault()
+
+    e = $.Event('hide.bs.modal')
+
+    this.$element.trigger(e)
+
+    if (!this.isShown || e.isDefaultPrevented()) return
+
+    this.isShown = false
+
+    this.escape()
+
+    $(document).off('focusin.bs.modal')
+
+    this.$element
+      .removeClass('in')
+      .attr('aria-hidden', true)
+      .off('click.dismiss.modal')
+
+    $.support.transition && this.$element.hasClass('fade') ?
+      this.$element
+        .one($.support.transition.end, $.proxy(this.hideModal, this))
+        .emulateTransitionEnd(300) :
+      this.hideModal()
+  }
+
+  Modal.prototype.enforceFocus = function () {
+    $(document)
+      .off('focusin.bs.modal') // guard against infinite focus loop
+      .on('focusin.bs.modal', $.proxy(function (e) {
+        if (this.$element[0] !== e.target && !this.$element.has(e.target).length) {
+          this.$element.focus()
+        }
+      }, this))
+  }
+
+  Modal.prototype.escape = function () {
+    if (this.isShown && this.options.keyboard) {
+      this.$element.on('keyup.dismiss.bs.modal', $.proxy(function (e) {
+        e.which == 27 && this.hide()
+      }, this))
+    } else if (!this.isShown) {
+      this.$element.off('keyup.dismiss.bs.modal')
+    }
+  }
+
+  Modal.prototype.hideModal = function () {
+    var that = this
+    this.$element.hide()
+    this.backdrop(function () {
+      that.removeBackdrop()
+      that.$element.trigger('hidden.bs.modal')
+    })
+  }
+
+  Modal.prototype.removeBackdrop = function () {
+    this.$backdrop && this.$backdrop.remove()
+    this.$backdrop = null
+  }
+
+  Modal.prototype.backdrop = function (callback) {
+    var that    = this
+    var animate = this.$element.hasClass('fade') ? 'fade' : ''
+
+    if (this.isShown && this.options.backdrop) {
+      var doAnimate = $.support.transition && animate
+
+      this.$backdrop = $('<div class="modal-backdrop ' + animate + '" />')
+        .appendTo(document.body)
+
+      this.$element.on('click.dismiss.modal', $.proxy(function (e) {
+        if (e.target !== e.currentTarget) return
+        this.options.backdrop == 'static'
+          ? this.$element[0].focus.call(this.$element[0])
+          : this.hide.call(this)
+      }, this))
+
+      if (doAnimate) this.$backdrop[0].offsetWidth // force reflow
+
+      this.$backdrop.addClass('in')
+
+      if (!callback) return
+
+      doAnimate ?
+        this.$backdrop
+          .one($.support.transition.end, callback)
+          .emulateTransitionEnd(150) :
+        callback()
+
+    } else if (!this.isShown && this.$backdrop) {
+      this.$backdrop.removeClass('in')
+
+      $.support.transition && this.$element.hasClass('fade')?
+        this.$backdrop
+          .one($.support.transition.end, callback)
+          .emulateTransitionEnd(150) :
+        callback()
+
+    } else if (callback) {
+      callback()
+    }
+  }
+
+
+  // MODAL PLUGIN DEFINITION
+  // =======================
+
+  var old = $.fn.modal
+
+  $.fn.modal = function (option, _relatedTarget) {
+    return this.each(function () {
+      var $this   = $(this)
+      var data    = $this.data('bs.modal')
+      var options = $.extend({}, Modal.DEFAULTS, $this.data(), typeof option == 'object' && option)
+
+      if (!data) $this.data('bs.modal', (data = new Modal(this, options)))
+      if (typeof option == 'string') data[option](_relatedTarget)
+      else if (options.show) data.show(_relatedTarget)
+    })
+  }
+
+  $.fn.modal.Constructor = Modal
+
+
+  // MODAL NO CONFLICT
+  // =================
+
+  $.fn.modal.noConflict = function () {
+    $.fn.modal = old
+    return this
+  }
+
+
+  // MODAL DATA-API
+  // ==============
+
+  $(document).on('click.bs.modal.data-api', '[data-toggle="modal"]', function (e) {
+    var $this   = $(this)
+    var href    = $this.attr('href')
+    var $target = $($this.attr('data-target') || (href && href.replace(/.*(?=#[^\s]+$)/, ''))) //strip for ie7
+    var option  = $target.data('modal') ? 'toggle' : $.extend({ remote: !/#/.test(href) && href }, $target.data(), $this.data())
+
+    e.preventDefault()
+
+    $target
+      .modal(option, this)
+      .one('hide', function () {
+        $this.is(':visible') && $this.focus()
+      })
+  })
+
+  $(document)
+    .on('show.bs.modal',  '.modal', function () { $(document.body).addClass('modal-open') })
+    .on('hidden.bs.modal', '.modal', function () { $(document.body).removeClass('modal-open') })
+
+}(jQuery);
+
+/* ========================================================================
+ * Bootstrap: tooltip.js v3.0.2
+ * http://getbootstrap.com/javascript/#tooltip
+ * Inspired by the original jQuery.tipsy by Jason Frame
+ * ========================================================================
+ * Copyright 2013 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ======================================================================== */
+
+
++function ($) { "use strict";
+
+  // TOOLTIP PUBLIC CLASS DEFINITION
+  // ===============================
+
+  var Tooltip = function (element, options) {
+    this.type       =
+    this.options    =
+    this.enabled    =
+    this.timeout    =
+    this.hoverState =
+    this.$element   = null
+
+    this.init('tooltip', element, options)
+  }
+
+  Tooltip.DEFAULTS = {
+    animation: true
+  , placement: 'top'
+  , selector: false
+  , template: '<div class="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
+  , trigger: 'hover focus'
+  , title: ''
+  , delay: 0
+  , html: false
+  , container: false
+  }
+
+  Tooltip.prototype.init = function (type, element, options) {
+    this.enabled  = true
+    this.type     = type
+    this.$element = $(element)
+    this.options  = this.getOptions(options)
+
+    var triggers = this.options.trigger.split(' ')
+
+    for (var i = triggers.length; i--;) {
+      var trigger = triggers[i]
+
+      if (trigger == 'click') {
+        this.$element.on('click.' + this.type, this.options.selector, $.proxy(this.toggle, this))
+      } else if (trigger != 'manual') {
+        var eventIn  = trigger == 'hover' ? 'mouseenter' : 'focus'
+        var eventOut = trigger == 'hover' ? 'mouseleave' : 'blur'
+
+        this.$element.on(eventIn  + '.' + this.type, this.options.selector, $.proxy(this.enter, this))
+        this.$element.on(eventOut + '.' + this.type, this.options.selector, $.proxy(this.leave, this))
+      }
+    }
+
+    this.options.selector ?
+      (this._options = $.extend({}, this.options, { trigger: 'manual', selector: '' })) :
+      this.fixTitle()
+  }
+
+  Tooltip.prototype.getDefaults = function () {
+    return Tooltip.DEFAULTS
+  }
+
+  Tooltip.prototype.getOptions = function (options) {
+    options = $.extend({}, this.getDefaults(), this.$element.data(), options)
+
+    if (options.delay && typeof options.delay == 'number') {
+      options.delay = {
+        show: options.delay
+      , hide: options.delay
+      }
+    }
+
+    return options
+  }
+
+  Tooltip.prototype.getDelegateOptions = function () {
+    var options  = {}
+    var defaults = this.getDefaults()
+
+    this._options && $.each(this._options, function (key, value) {
+      if (defaults[key] != value) options[key] = value
+    })
+
+    return options
+  }
+
+  Tooltip.prototype.enter = function (obj) {
+    var self = obj instanceof this.constructor ?
+      obj : $(obj.currentTarget)[this.type](this.getDelegateOptions()).data('bs.' + this.type)
+
+    clearTimeout(self.timeout)
+
+    self.hoverState = 'in'
+
+    if (!self.options.delay || !self.options.delay.show) return self.show()
+
+    self.timeout = setTimeout(function () {
+      if (self.hoverState == 'in') self.show()
+    }, self.options.delay.show)
+  }
+
+  Tooltip.prototype.leave = function (obj) {
+    var self = obj instanceof this.constructor ?
+      obj : $(obj.currentTarget)[this.type](this.getDelegateOptions()).data('bs.' + this.type)
+
+    clearTimeout(self.timeout)
+
+    self.hoverState = 'out'
+
+    if (!self.options.delay || !self.options.delay.hide) return self.hide()
+
+    self.timeout = setTimeout(function () {
+      if (self.hoverState == 'out') self.hide()
+    }, self.options.delay.hide)
+  }
+
+  Tooltip.prototype.show = function () {
+    var e = $.Event('show.bs.'+ this.type)
+
+    if (this.hasContent() && this.enabled) {
+      this.$element.trigger(e)
+
+      if (e.isDefaultPrevented()) return
+
+      var $tip = this.tip()
+
+      this.setContent()
+
+      if (this.options.animation) $tip.addClass('fade')
+
+      var placement = typeof this.options.placement == 'function' ?
+        this.options.placement.call(this, $tip[0], this.$element[0]) :
+        this.options.placement
+
+      var autoToken = /\s?auto?\s?/i
+      var autoPlace = autoToken.test(placement)
+      if (autoPlace) placement = placement.replace(autoToken, '') || 'top'
+
+      $tip
+        .detach()
+        .css({ top: 0, left: 0, display: 'block' })
+        .addClass(placement)
+
+      this.options.container ? $tip.appendTo(this.options.container) : $tip.insertAfter(this.$element)
+
+      var pos          = this.getPosition()
+      var actualWidth  = $tip[0].offsetWidth
+      var actualHeight = $tip[0].offsetHeight
+
+      if (autoPlace) {
+        var $parent = this.$element.parent()
+
+        var orgPlacement = placement
+        var docScroll    = document.documentElement.scrollTop || document.body.scrollTop
+        var parentWidth  = this.options.container == 'body' ? window.innerWidth  : $parent.outerWidth()
+        var parentHeight = this.options.container == 'body' ? window.innerHeight : $parent.outerHeight()
+        var parentLeft   = this.options.container == 'body' ? 0 : $parent.offset().left
+
+        placement = placement == 'bottom' && pos.top   + pos.height  + actualHeight - docScroll > parentHeight  ? 'top'    :
+                    placement == 'top'    && pos.top   - docScroll   - actualHeight < 0                         ? 'bottom' :
+                    placement == 'right'  && pos.right + actualWidth > parentWidth                              ? 'left'   :
+                    placement == 'left'   && pos.left  - actualWidth < parentLeft                               ? 'right'  :
+                    placement
+
+        $tip
+          .removeClass(orgPlacement)
+          .addClass(placement)
+      }
+
+      var calculatedOffset = this.getCalculatedOffset(placement, pos, actualWidth, actualHeight)
+
+      this.applyPlacement(calculatedOffset, placement)
+      this.$element.trigger('shown.bs.' + this.type)
+    }
+  }
+
+  Tooltip.prototype.applyPlacement = function(offset, placement) {
+    var replace
+    var $tip   = this.tip()
+    var width  = $tip[0].offsetWidth
+    var height = $tip[0].offsetHeight
+
+    // manually read margins because getBoundingClientRect includes difference
+    var marginTop = parseInt($tip.css('margin-top'), 10)
+    var marginLeft = parseInt($tip.css('margin-left'), 10)
+
+    // we must check for NaN for ie 8/9
+    if (isNaN(marginTop))  marginTop  = 0
+    if (isNaN(marginLeft)) marginLeft = 0
+
+    offset.top  = offset.top  + marginTop
+    offset.left = offset.left + marginLeft
+
+    $tip
+      .offset(offset)
+      .addClass('in')
+
+    // check to see if placing tip in new offset caused the tip to resize itself
+    var actualWidth  = $tip[0].offsetWidth
+    var actualHeight = $tip[0].offsetHeight
+
+    if (placement == 'top' && actualHeight != height) {
+      replace = true
+      offset.top = offset.top + height - actualHeight
+    }
+
+    if (/bottom|top/.test(placement)) {
+      var delta = 0
+
+      if (offset.left < 0) {
+        delta       = offset.left * -2
+        offset.left = 0
+
+        $tip.offset(offset)
+
+        actualWidth  = $tip[0].offsetWidth
+        actualHeight = $tip[0].offsetHeight
+      }
+
+      this.replaceArrow(delta - width + actualWidth, actualWidth, 'left')
+    } else {
+      this.replaceArrow(actualHeight - height, actualHeight, 'top')
+    }
+
+    if (replace) $tip.offset(offset)
+  }
+
+  Tooltip.prototype.replaceArrow = function(delta, dimension, position) {
+    this.arrow().css(position, delta ? (50 * (1 - delta / dimension) + "%") : '')
+  }
+
+  Tooltip.prototype.setContent = function () {
+    var $tip  = this.tip()
+    var title = this.getTitle()
+
+    $tip.find('.tooltip-inner')[this.options.html ? 'html' : 'text'](title)
+    $tip.removeClass('fade in top bottom left right')
+  }
+
+  Tooltip.prototype.hide = function () {
+    var that = this
+    var $tip = this.tip()
+    var e    = $.Event('hide.bs.' + this.type)
+
+    function complete() {
+      if (that.hoverState != 'in') $tip.detach()
+    }
+
+    this.$element.trigger(e)
+
+    if (e.isDefaultPrevented()) return
+
+    $tip.removeClass('in')
+
+    $.support.transition && this.$tip.hasClass('fade') ?
+      $tip
+        .one($.support.transition.end, complete)
+        .emulateTransitionEnd(150) :
+      complete()
+
+    this.$element.trigger('hidden.bs.' + this.type)
+
+    return this
+  }
+
+  Tooltip.prototype.fixTitle = function () {
+    var $e = this.$element
+    if ($e.attr('title') || typeof($e.attr('data-original-title')) != 'string') {
+      $e.attr('data-original-title', $e.attr('title') || '').attr('title', '')
+    }
+  }
+
+  Tooltip.prototype.hasContent = function () {
+    return this.getTitle()
+  }
+
+  Tooltip.prototype.getPosition = function () {
+    var el = this.$element[0]
+    return $.extend({}, (typeof el.getBoundingClientRect == 'function') ? el.getBoundingClientRect() : {
+      width: el.offsetWidth
+    , height: el.offsetHeight
+    }, this.$element.offset())
+  }
+
+  Tooltip.prototype.getCalculatedOffset = function (placement, pos, actualWidth, actualHeight) {
+    return placement == 'bottom' ? { top: pos.top + pos.height,   left: pos.left + pos.width / 2 - actualWidth / 2  } :
+           placement == 'top'    ? { top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2  } :
+           placement == 'left'   ? { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth } :
+        /* placement == 'right' */ { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width   }
+  }
+
+  Tooltip.prototype.getTitle = function () {
+    var title
+    var $e = this.$element
+    var o  = this.options
+
+    title = $e.attr('data-original-title')
+      || (typeof o.title == 'function' ? o.title.call($e[0]) :  o.title)
+
+    return title
+  }
+
+  Tooltip.prototype.tip = function () {
+    return this.$tip = this.$tip || $(this.options.template)
+  }
+
+  Tooltip.prototype.arrow = function () {
+    return this.$arrow = this.$arrow || this.tip().find('.tooltip-arrow')
+  }
+
+  Tooltip.prototype.validate = function () {
+    if (!this.$element[0].parentNode) {
+      this.hide()
+      this.$element = null
+      this.options  = null
+    }
+  }
+
+  Tooltip.prototype.enable = function () {
+    this.enabled = true
+  }
+
+  Tooltip.prototype.disable = function () {
+    this.enabled = false
+  }
+
+  Tooltip.prototype.toggleEnabled = function () {
+    this.enabled = !this.enabled
+  }
+
+  Tooltip.prototype.toggle = function (e) {
+    var self = e ? $(e.currentTarget)[this.type](this.getDelegateOptions()).data('bs.' + this.type) : this
+    self.tip().hasClass('in') ? self.leave(self) : self.enter(self)
+  }
+
+  Tooltip.prototype.destroy = function () {
+    this.hide().$element.off('.' + this.type).removeData('bs.' + this.type)
+  }
+
+
+  // TOOLTIP PLUGIN DEFINITION
+  // =========================
+
+  var old = $.fn.tooltip
+
+  $.fn.tooltip = function (option) {
+    return this.each(function () {
+      var $this   = $(this)
+      var data    = $this.data('bs.tooltip')
+      var options = typeof option == 'object' && option
+
+      if (!data) $this.data('bs.tooltip', (data = new Tooltip(this, options)))
+      if (typeof option == 'string') data[option]()
+    })
+  }
+
+  $.fn.tooltip.Constructor = Tooltip
+
+
+  // TOOLTIP NO CONFLICT
+  // ===================
+
+  $.fn.tooltip.noConflict = function () {
+    $.fn.tooltip = old
+    return this
+  }
+
+}(jQuery);
+
+/* ========================================================================
+ * Bootstrap: popover.js v3.0.2
+ * http://getbootstrap.com/javascript/#popovers
+ * ========================================================================
+ * Copyright 2013 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ======================================================================== */
+
+
++function ($) { "use strict";
+
+  // POPOVER PUBLIC CLASS DEFINITION
+  // ===============================
+
+  var Popover = function (element, options) {
+    this.init('popover', element, options)
+  }
+
+  if (!$.fn.tooltip) throw new Error('Popover requires tooltip.js')
+
+  Popover.DEFAULTS = $.extend({} , $.fn.tooltip.Constructor.DEFAULTS, {
+    placement: 'right'
+  , trigger: 'click'
+  , content: ''
+  , template: '<div class="popover"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+  })
+
+
+  // NOTE: POPOVER EXTENDS tooltip.js
+  // ================================
+
+  Popover.prototype = $.extend({}, $.fn.tooltip.Constructor.prototype)
+
+  Popover.prototype.constructor = Popover
+
+  Popover.prototype.getDefaults = function () {
+    return Popover.DEFAULTS
+  }
+
+  Popover.prototype.setContent = function () {
+    var $tip    = this.tip()
+    var title   = this.getTitle()
+    var content = this.getContent()
+
+    $tip.find('.popover-title')[this.options.html ? 'html' : 'text'](title)
+    $tip.find('.popover-content')[this.options.html ? 'html' : 'text'](content)
+
+    $tip.removeClass('fade top bottom left right in')
+
+    // IE8 doesn't accept hiding via the `:empty` pseudo selector, we have to do
+    // this manually by checking the contents.
+    if (!$tip.find('.popover-title').html()) $tip.find('.popover-title').hide()
+  }
+
+  Popover.prototype.hasContent = function () {
+    return this.getTitle() || this.getContent()
+  }
+
+  Popover.prototype.getContent = function () {
+    var $e = this.$element
+    var o  = this.options
+
+    return $e.attr('data-content')
+      || (typeof o.content == 'function' ?
+            o.content.call($e[0]) :
+            o.content)
+  }
+
+  Popover.prototype.arrow = function () {
+    return this.$arrow = this.$arrow || this.tip().find('.arrow')
+  }
+
+  Popover.prototype.tip = function () {
+    if (!this.$tip) this.$tip = $(this.options.template)
+    return this.$tip
+  }
+
+
+  // POPOVER PLUGIN DEFINITION
+  // =========================
+
+  var old = $.fn.popover
+
+  $.fn.popover = function (option) {
+    return this.each(function () {
+      var $this   = $(this)
+      var data    = $this.data('bs.popover')
+      var options = typeof option == 'object' && option
+
+      if (!data) $this.data('bs.popover', (data = new Popover(this, options)))
+      if (typeof option == 'string') data[option]()
+    })
+  }
+
+  $.fn.popover.Constructor = Popover
+
+
+  // POPOVER NO CONFLICT
+  // ===================
+
+  $.fn.popover.noConflict = function () {
+    $.fn.popover = old
+    return this
+  }
+
+}(jQuery);
+
+/* ========================================================================
+ * Bootstrap: scrollspy.js v3.0.2
+ * http://getbootstrap.com/javascript/#scrollspy
+ * ========================================================================
+ * Copyright 2013 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ======================================================================== */
+
+
++function ($) { "use strict";
+
+  // SCROLLSPY CLASS DEFINITION
+  // ==========================
+
+  function ScrollSpy(element, options) {
+    var href
+    var process  = $.proxy(this.process, this)
+
+    this.$element       = $(element).is('body') ? $(window) : $(element)
+    this.$body          = $('body')
+    this.$scrollElement = this.$element.on('scroll.bs.scroll-spy.data-api', process)
+    this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+    this.selector       = (this.options.target
+      || ((href = $(element).attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')) //strip for ie7
+      || '') + ' .nav li > a'
+    this.offsets        = $([])
+    this.targets        = $([])
+    this.activeTarget   = null
+
+    this.refresh()
+    this.process()
+  }
+
+  ScrollSpy.DEFAULTS = {
+    offset: 10
+  }
+
+  ScrollSpy.prototype.refresh = function () {
+    var offsetMethod = this.$element[0] == window ? 'offset' : 'position'
+
+    this.offsets = $([])
+    this.targets = $([])
+
+    var self     = this
+    var $targets = this.$body
+      .find(this.selector)
+      .map(function () {
+        var $el   = $(this)
+        var href  = $el.data('target') || $el.attr('href')
+        var $href = /^#\w/.test(href) && $(href)
+
+        return ($href
+          && $href.length
+          && [[ $href[offsetMethod]().top + (!$.isWindow(self.$scrollElement.get(0)) && self.$scrollElement.scrollTop()), href ]]) || null
+      })
+      .sort(function (a, b) { return a[0] - b[0] })
+      .each(function () {
+        self.offsets.push(this[0])
+        self.targets.push(this[1])
+      })
+  }
+
+  ScrollSpy.prototype.process = function () {
+    var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+    var scrollHeight = this.$scrollElement[0].scrollHeight || this.$body[0].scrollHeight
+    var maxScroll    = scrollHeight - this.$scrollElement.height()
+    var offsets      = this.offsets
+    var targets      = this.targets
+    var activeTarget = this.activeTarget
+    var i
+
+    if (scrollTop >= maxScroll) {
+      return activeTarget != (i = targets.last()[0]) && this.activate(i)
+    }
+
+    for (i = offsets.length; i--;) {
+      activeTarget != targets[i]
+        && scrollTop >= offsets[i]
+        && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+        && this.activate( targets[i] )
+    }
+  }
+
+  ScrollSpy.prototype.activate = function (target) {
+    this.activeTarget = target
+
+    $(this.selector)
+      .parents('.active')
+      .removeClass('active')
+
+    var selector = this.selector
+      + '[data-target="' + target + '"],'
+      + this.selector + '[href="' + target + '"]'
+
+    var active = $(selector)
+      .parents('li')
+      .addClass('active')
+
+    if (active.parent('.dropdown-menu').length)  {
+      active = active
+        .closest('li.dropdown')
+        .addClass('active')
+    }
+
+    active.trigger('activate')
+  }
+
+
+  // SCROLLSPY PLUGIN DEFINITION
+  // ===========================
+
+  var old = $.fn.scrollspy
+
+  $.fn.scrollspy = function (option) {
+    return this.each(function () {
+      var $this   = $(this)
+      var data    = $this.data('bs.scrollspy')
+      var options = typeof option == 'object' && option
+
+      if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+      if (typeof option == 'string') data[option]()
+    })
+  }
+
+  $.fn.scrollspy.Constructor = ScrollSpy
+
+
+  // SCROLLSPY NO CONFLICT
+  // =====================
+
+  $.fn.scrollspy.noConflict = function () {
+    $.fn.scrollspy = old
+    return this
+  }
+
+
+  // SCROLLSPY DATA-API
+  // ==================
+
+  $(window).on('load', function () {
+    $('[data-spy="scroll"]').each(function () {
+      var $spy = $(this)
+      $spy.scrollspy($spy.data())
+    })
+  })
+
+}(jQuery);
+
+/* ========================================================================
+ * Bootstrap: tab.js v3.0.2
+ * http://getbootstrap.com/javascript/#tabs
+ * ========================================================================
+ * Copyright 2013 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ======================================================================== */
+
+
++function ($) { "use strict";
+
+  // TAB CLASS DEFINITION
+  // ====================
+
+  var Tab = function (element) {
+    this.element = $(element)
+  }
+
+  Tab.prototype.show = function () {
+    var $this    = this.element
+    var $ul      = $this.closest('ul:not(.dropdown-menu)')
+    var selector = $this.data('target')
+
+    if (!selector) {
+      selector = $this.attr('href')
+      selector = selector && selector.replace(/.*(?=#[^\s]*$)/, '') //strip for ie7
+    }
+
+    if ($this.parent('li').hasClass('active')) return
+
+    var previous = $ul.find('.active:last a')[0]
+    var e        = $.Event('show.bs.tab', {
+      relatedTarget: previous
+    })
+
+    $this.trigger(e)
+
+    if (e.isDefaultPrevented()) return
+
+    var $target = $(selector)
+
+    this.activate($this.parent('li'), $ul)
+    this.activate($target, $target.parent(), function () {
+      $this.trigger({
+        type: 'shown.bs.tab'
+      , relatedTarget: previous
+      })
+    })
+  }
+
+  Tab.prototype.activate = function (element, container, callback) {
+    var $active    = container.find('> .active')
+    var transition = callback
+      && $.support.transition
+      && $active.hasClass('fade')
+
+    function next() {
+      $active
+        .removeClass('active')
+        .find('> .dropdown-menu > .active')
+        .removeClass('active')
+
+      element.addClass('active')
+
+      if (transition) {
+        element[0].offsetWidth // reflow for transition
+        element.addClass('in')
+      } else {
+        element.removeClass('fade')
+      }
+
+      if (element.parent('.dropdown-menu')) {
+        element.closest('li.dropdown').addClass('active')
+      }
+
+      callback && callback()
+    }
+
+    transition ?
+      $active
+        .one($.support.transition.end, next)
+        .emulateTransitionEnd(150) :
+      next()
+
+    $active.removeClass('in')
+  }
+
+
+  // TAB PLUGIN DEFINITION
+  // =====================
+
+  var old = $.fn.tab
+
+  $.fn.tab = function ( option ) {
+    return this.each(function () {
+      var $this = $(this)
+      var data  = $this.data('bs.tab')
+
+      if (!data) $this.data('bs.tab', (data = new Tab(this)))
+      if (typeof option == 'string') data[option]()
+    })
+  }
+
+  $.fn.tab.Constructor = Tab
+
+
+  // TAB NO CONFLICT
+  // ===============
+
+  $.fn.tab.noConflict = function () {
+    $.fn.tab = old
+    return this
+  }
+
+
+  // TAB DATA-API
+  // ============
+
+  $(document).on('click.bs.tab.data-api', '[data-toggle="tab"], [data-toggle="pill"]', function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  })
+
+}(jQuery);
+
+/* ========================================================================
+ * Bootstrap: affix.js v3.0.2
+ * http://getbootstrap.com/javascript/#affix
+ * ========================================================================
+ * Copyright 2013 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ======================================================================== */
+
+
++function ($) { "use strict";
+
+  // AFFIX CLASS DEFINITION
+  // ======================
+
+  var Affix = function (element, options) {
+    this.options = $.extend({}, Affix.DEFAULTS, options)
+    this.$window = $(window)
+      .on('scroll.bs.affix.data-api', $.proxy(this.checkPosition, this))
+      .on('click.bs.affix.data-api',  $.proxy(this.checkPositionWithEventLoop, this))
+
+    this.$element = $(element)
+    this.affixed  =
+    this.unpin    = null
+
+    this.checkPosition()
+  }
+
+  Affix.RESET = 'affix affix-top affix-bottom'
+
+  Affix.DEFAULTS = {
+    offset: 0
+  }
+
+  Affix.prototype.checkPositionWithEventLoop = function () {
+    setTimeout($.proxy(this.checkPosition, this), 1)
+  }
+
+  Affix.prototype.checkPosition = function () {
+    if (!this.$element.is(':visible')) return
+
+    var scrollHeight = $(document).height()
+    var scrollTop    = this.$window.scrollTop()
+    var position     = this.$element.offset()
+    var offset       = this.options.offset
+    var offsetTop    = offset.top
+    var offsetBottom = offset.bottom
+
+    if (typeof offset != 'object')         offsetBottom = offsetTop = offset
+    if (typeof offsetTop == 'function')    offsetTop    = offset.top()
+    if (typeof offsetBottom == 'function') offsetBottom = offset.bottom()
+
+    var affix = this.unpin   != null && (scrollTop + this.unpin <= position.top) ? false :
+                offsetBottom != null && (position.top + this.$element.height() >= scrollHeight - offsetBottom) ? 'bottom' :
+                offsetTop    != null && (scrollTop <= offsetTop) ? 'top' : false
+
+    if (this.affixed === affix) return
+    if (this.unpin) this.$element.css('top', '')
+
+    this.affixed = affix
+    this.unpin   = affix == 'bottom' ? position.top - scrollTop : null
+
+    this.$element.removeClass(Affix.RESET).addClass('affix' + (affix ? '-' + affix : ''))
+
+    if (affix == 'bottom') {
+      this.$element.offset({ top: document.body.offsetHeight - offsetBottom - this.$element.height() })
+    }
+  }
+
+
+  // AFFIX PLUGIN DEFINITION
+  // =======================
+
+  var old = $.fn.affix
+
+  $.fn.affix = function (option) {
+    return this.each(function () {
+      var $this   = $(this)
+      var data    = $this.data('bs.affix')
+      var options = typeof option == 'object' && option
+
+      if (!data) $this.data('bs.affix', (data = new Affix(this, options)))
+      if (typeof option == 'string') data[option]()
+    })
+  }
+
+  $.fn.affix.Constructor = Affix
+
+
+  // AFFIX NO CONFLICT
+  // =================
+
+  $.fn.affix.noConflict = function () {
+    $.fn.affix = old
+    return this
+  }
+
+
+  // AFFIX DATA-API
+  // ==============
+
+  $(window).on('load', function () {
+    $('[data-spy="affix"]').each(function () {
+      var $spy = $(this)
+      var data = $spy.data()
+
+      data.offset = data.offset || {}
+
+      if (data.offsetBottom) data.offset.bottom = data.offsetBottom
+      if (data.offsetTop)    data.offset.top    = data.offsetTop
+
+      $spy.affix(data)
+    })
+  })
+
+}(jQuery);
