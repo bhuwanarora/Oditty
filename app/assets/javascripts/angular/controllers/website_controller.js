@@ -15,7 +15,7 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 
 	$scope.scrollOnePage = function(event){
 		event.preventDefault();
-		// _loadRecommendations()
+		$rootScope.$broadcast('loadBooks')
 		event.view.window.scrollBy(1000, 0)
 	}
 

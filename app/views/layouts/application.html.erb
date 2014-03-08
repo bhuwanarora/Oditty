@@ -7,7 +7,7 @@
 
   <body ng-controller="websiteAppController">
     <div class="background_mask"></div>
-    <div msd-wheel="bindHorizontalScroll($event, $delta, $deltaX, $deltaY)">
+    <div msd-wheel="bindHorizontalScroll($event, $delta, $deltaX, $deltaY)" ng-style="dynamicWidth">
       <% unless response.as_json["request"].as_json["fullpath"] == "/test" || 
                 (response.as_json["request"].as_json["fullpath"].include? "/coming_soon") || 
                 response.as_json["request"].as_json["fullpath"] == "/" || 
