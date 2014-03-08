@@ -4,9 +4,15 @@
 	<div ng-view></div>
 	<div id="recommendationFooter">
 		<span class="nav-links">
-			<span ng-click="toggle_readers()"><img class="reader-icon" src="assets/icon-sprites.png" /></span>
-			<span ng-click="toggle_books()"><img class="book-icon" src="assets/icon-sprites.png"/></span>
-			<span ng-click="toggle_authors()"><img class="author-icon" src="assets/icon-sprites.png"/></span>
+			<span ng-click="toggle_readers()">
+				<img ng-class="{'opaque': filters['readers'], 'transparent': !filters['readers']}" class="reader-icon" src="assets/icon-sprites.png" />
+			</span>
+			<span ng-click="toggle_books()">
+				<img ng-class="{'opaque': filters['books'], 'transparent': !filters['books']}" class="book-icon" src="assets/icon-sprites.png"/>
+			</span>
+			<span ng-click="toggle_authors()">
+				<img ng-class="{'opaque': filters['authors'], 'transparent': !filters['authors']}" class="author-icon" src="assets/icon-sprites.png"/>
+			</span>
 		</span>
 	</div>
 </div>

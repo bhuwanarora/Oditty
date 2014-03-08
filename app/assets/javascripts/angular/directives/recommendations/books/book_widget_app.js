@@ -42,6 +42,7 @@ bookWidgetApp.directive('bookthumb', function () {
 bookWidgetApp.directive('rating', function () {
   return {
     restrict: 'E',
+    scope: { 'rating': '=data' },
     templateUrl: "/assets/angular/widgets/base/rating.html"
   };
 })
