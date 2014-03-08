@@ -1,3 +1,4 @@
-<div ng-class="{'hidden_summary':!expand, 'summary':expand}" class="animate-fast">
+<div ng-class="{'hidden_summary':!expand, 'summary':expand && hovered, 'summary_grey':!hovered}" class="animate-fast" 
+style="background:{{book.book_thumb.background_color}}">
 {{book.book_thumb.description}}
 </div>

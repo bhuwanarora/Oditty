@@ -30,6 +30,7 @@ gem 'jquery-ui-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # gem 'isbndb', '~> 2.0.2'
+gem 'rmagick', '2.13.2'
 gem 'openlibrary'
 gem 'simple_form'
 gem 'jquery-tokeninput-rails'

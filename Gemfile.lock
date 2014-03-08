@@ -310,6 +310,7 @@ GEM
       activerecord (>= 3.0.3)
       arel (>= 2.0.6)
       rgeo (>= 0.3.20)
+    rmagick (2.13.2)
     safe_yaml (1.0.1)
     sass (3.2.14)
     sass-rails (4.0.1)
@@ -415,6 +416,7 @@ DEPENDENCIES
   rails_admin
   rails_admin_nestable
   resque (= 1.23.0)
+  rmagick (= 2.13.2)
   sass-rails (~> 4.0.0)
   sdoc
   simple_form

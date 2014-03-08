@@ -358,7 +358,7 @@ a:hover{
 	text-align: center;
 	margin-left: -5px;
 	position: absolute;
-	color: #3cb878;
+	padding-left:10px; 
 	border-top-left-radius: 3px;
 	border-bottom-left-radius: 3px;
 }
@@ -371,7 +371,7 @@ a:hover{
 	text-align: center;
 	margin-left: -5px;
 	position: absolute;
-	color: #3cb878;	
+	padding-left:10px;
 	border-top-left-radius: 3px;
 	border-bottom-left-radius: 3px;
 }
@@ -478,6 +478,7 @@ a:hover{
 	margin-top: -462px;
 	margin-left: 5px;
 	left: 52%;
+	-webkit-filter: grayscale(0);
 }
 
 .mark_as_read_expand{
@@ -714,4 +715,20 @@ a:hover{
 }
 .book_block.ng-leave.ng-leave-active {
 	left:-100%;
+}
+
+.summary_grey{
+	width: 200px;
+	height: 421px;
+	background: black;
+	color: white;
+	padding: 1em;
+	position: absolute;
+	z-index: 0;
+	margin-top: -462px;
+	margin-left: 5px;
+	left: 52%;	
+	filter: url(filters.svg#grayscale); /* Firefox 3.5+ */
+    filter: gray; /* IE6-9 */
+    -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
 }
