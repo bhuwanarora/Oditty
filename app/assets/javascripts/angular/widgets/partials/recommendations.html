@@ -1,0 +1,3 @@
+<div ng-repeat="recommendation in recommendations" class="recommendation_block">
+	<book track ng-if="true" id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></book>
+</div>

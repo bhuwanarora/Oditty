@@ -9,9 +9,9 @@ recommendationApp.controller('BooksController', function ($scope, recommendation
     }
 
     function _get_books(){
-        recommendationService.getBooks().then(function(data){
-	    	$scope.books = $scope.books.concat(data["books"])
-	    })
+     //    recommendationService.getBooks().then(function(data){
+	    // 	$scope.books = $scope.books.concat(data["books"])
+	    // })
     }
 
 

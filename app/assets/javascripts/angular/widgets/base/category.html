@@ -1,6 +1,13 @@
-<div ng-class="{'hidden_category':!hovered && !expand, 'category':hovered && !expand, 'category_expand':expand}" ng-mouseenter="hovered=true" ng-mouseleave="hovered=false" ng-init="getCharArray(book.category.name)"
-style="background-color: {{book.category.background_color}}">
-	<div ng-repeat="i in charArray track by $index">
+<div 
+	ng-class="{'hidden_category':!hovered && !expand, 'category':hovered && !expand, 'category_expand':expand}" 
+	ng-mouseenter="hovered=true; category_hovered=true" 
+	ng-mouseleave="hovered=false; category_hovered=false" 
+	ng-init="initVerticalText(book.category)"
+	style="background-color: {{book.category.background_color}}">
+	<div ng-repeat="i in nameArray track by $index" ng-if="!category_hovered">
+		{{i | uppercase}}<br/>
+	</div>
+	<div ng-repeat="i in descriptionArray track by $index" ng-if="category_hovered">
 		{{i | uppercase}}<br/>
 	</div>
 </div>

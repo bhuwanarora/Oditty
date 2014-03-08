@@ -15,7 +15,7 @@ body{
 	opacity: 0.4;*/
 }
 
-.horizontal_scroller{
+.horizontal_scroller_right{
 	position: fixed;
 	background: url("icon-sprites.png") 45px 0px;
 	z-index: 20;
@@ -25,6 +25,24 @@ body{
 	height: 44px;
 	width: 30px;
 	cursor: pointer;
+}
+
+.horizontal_scroller_left{
+	position: fixed;
+	background: url("icon-sprites.png") 45px 0px;
+	z-index: 20;
+	opacity: 0.7;
+	margin-top: 400px;
+	left: 10px;
+	height: 44px;
+	width: 30px;
+	cursor: pointer;
+	 -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
 }
 
 /* recommendationFooter */
@@ -208,18 +226,21 @@ body{
 	width:20px;
 	height:40px;
 	background:url('icon-sprites.png') -50px 0px;
+	cursor: pointer;
 }
 
 .reader-icon{
 	width:30px;
 	height:40px;
 	background:url('icon-sprites.png') -78px 0px;
+	cursor: pointer;
 }
 
 .author-icon{
 	width:30px;
 	height:40px;
 	background:url('icon-sprites.png') -113px 0px;
+	cursor: pointer;
 }
 
 .rating:hover{
@@ -486,6 +507,38 @@ a:hover{
 	left: 52%;
 	-webkit-filter: grayscale(0);
 	white-space: normal;
+	background: rgba(113, 112, 112, 0.25);
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-box-shadow: 1px 2px 1px #d1d1d1;
+	-moz-box-shadow: 1px 2px 1px #d1d1d1;
+	box-shadow: 1px 2px 1px #d1d1d1;
+}
+
+
+.summary_grey{
+	width: 200px;
+	height: 421px;
+	background: black;
+	color: white;
+	padding: 1em;
+	position: absolute;
+	z-index: 0;
+	margin-top: -462px;
+	margin-left: 5px;
+	left: 52%;	
+	filter: url(filters.svg#grayscale); /* Firefox 3.5+ */
+    filter: gray; /* IE6-9 */
+    -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+    white-space: normal;
+    background: rgba(113, 112, 112, 0.25);
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-box-shadow: 1px 2px 1px #d1d1d1;
+	-moz-box-shadow: 1px 2px 1px #d1d1d1;
+	box-shadow: 1px 2px 1px #d1d1d1;
 }
 
 .mark_as_read_expand{
@@ -703,40 +756,32 @@ a:hover{
 	cursor: pointer;
 }
 
-.book_block{
+.recommendation_block{
 	display: inline-block;
 	margin-top: 70px;
 }
 
-.book_block.ng-enter, .book_block.ng-leave {
+.recommendation_block.ng-enter, .recommendation_block.ng-leave {
     -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2.5s;
     transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2.5s;
 }
 
-.book_block.ng-enter {
+.msd-wheel.ng-move{
+	-webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 5.5s;
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 5.5s;
+}
+
+.msd-wheel.ng-move-active{
+	margin-right: 1200px;
+}
+
+.recommendation_block.ng-enter {
 	margin-left: 100px;
 }
 
-.book_block.ng-enter.ng-enter-active {
+.recommendation_block.ng-enter.ng-enter-active {
 	margin-left: 0px;
 }
-.book_block.ng-leave.ng-leave-active {
+.recommendation_block.ng-leave.ng-leave-active {
 	left:-100%;
-}
-
-.summary_grey{
-	width: 200px;
-	height: 421px;
-	background: black;
-	color: white;
-	padding: 1em;
-	position: absolute;
-	z-index: 0;
-	margin-top: -462px;
-	margin-left: 5px;
-	left: 52%;	
-	filter: url(filters.svg#grayscale); /* Firefox 3.5+ */
-    filter: gray; /* IE6-9 */
-    -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
-    white-space: normal;
 }

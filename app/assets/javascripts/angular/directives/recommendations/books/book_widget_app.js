@@ -72,9 +72,12 @@ bookWidgetApp.directive('category', function () {
   return {
     restrict: 'E',
     controller: function($scope){
-    	$scope.getCharArray = function(name){
-    		$scope.charArray = name.split('');
-    	}
+      $scope.initVerticalText = function(category){
+        name = category.name
+        description = category.description
+        $scope.nameArray = name.split('');
+        $scope.descriptionArray = description.split('');
+      }
     },
     templateUrl: "/assets/angular/widgets/base/category.html"
   };
