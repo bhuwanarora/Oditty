@@ -11,6 +11,7 @@ ReadersDoor::Application.routes.draw do
       match "recommended_books"                      => 'recommendations_api#books',                    :via => [:put, :get, :post]
       match "recommendations"                        => 'recommendations_api#recommendations',          :via => [:put, :get, :post]
       match "track"                                  => 'analytics#track',                              :via => [:put, :get, :post]
+      match "search"                                 => 'search_api#search',                             :via => [:put, :get, :post]
     end
   end
 end

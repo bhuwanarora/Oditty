@@ -3,6 +3,9 @@
 <div ng-controller="recommendationsController">
 	<div ng-view></div>
 	<div id="recommendationFooter">
+		<span class="website-title">
+			Reader's Door
+		</span>
 		<span class="nav-links">
 			<span ng-click="toggle_readers()">
 				<img ng-class="{'opaque': filters['readers'], 'transparent': !filters['readers']}" class="reader-icon" src="assets/icon-sprites.png" />

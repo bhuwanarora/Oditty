@@ -31,7 +31,7 @@ module Api
 						Romain Rolland and Wilhelm Gundert. The word Siddhartha is made up of two words in the Sanskrit language, 
 						siddha + artha, which together means he who has found meaning",
 						:background_color => "#915972"},
-					:category => {:name => "Must Reads", 
+					:category => {:name => "Must Read", 
 								:url => "javascript:void(0);", 
 								:background_color => "#3cb878", 
 								:description => "Highly rated book"},
@@ -47,7 +47,7 @@ module Api
 						afterwards to Romain Rolland and Wilhelm Gundert. The word Siddhartha is made up of two words in the 
 						Sanskrit language, siddha + artha, which together means he who has found meaning",
 						:background_color => "#E9BC4B"},
-					:category => {:name => "Quick Reads", 
+					:category => {:name => "Quick Read", 
 								:url => "javascript:void(0);", 
 								:background_color => "#790000",
 								:description => ""},

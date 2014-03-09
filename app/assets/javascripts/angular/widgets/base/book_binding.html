@@ -1,0 +1,6 @@
+<div ng-if="expand" 
+	class="book_binding" 
+	ng-class="{'book_binding_grey':!hovered}" 
+	style="background-color:{{book.book_thumb.background_color}}">
+	{{book.title | uppercase}} &nbsp; BY &nbsp; {{book.author_name | uppercase}}
+</div>

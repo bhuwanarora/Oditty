@@ -1,11 +1,6 @@
-<div ng-if="rating">
-	<span ng-repeat="i in [1, 2, 3, 4, 5] | limitTo:rating">
+<div>
+	<span ng-repeat="i in [1, 2, 3, 4, 5] | limitTo:book.rating">
 		<img class="rating-icon" src="assets/icon-sprites.png" />
 	</span>
-	<div>Rating {{rating}} out of 5</div>
-</div>
-<div ng-if="!rating">
-	<span ng-repeat="i in [1, 2, 3, 4, 5] | limitTo:rating">
-		<img class="rating-icon" src="assets/icon-sprites.png" />
-	</span>
+	<div>Rating {{book.rating}} out of 5</div>
 </div>

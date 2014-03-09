@@ -42,7 +42,6 @@ bookWidgetApp.directive('bookthumb', function () {
 bookWidgetApp.directive('rating', function () {
   return {
     restrict: 'E',
-    scope: { 'rating': '=data' },
     templateUrl: "/assets/angular/widgets/base/rating.html"
   };
 })
@@ -192,4 +191,11 @@ bookWidgetApp.directive('markAsRead', function(){
 		},
 		templateUrl: "/assets/angular/widgets/base/mark_as_read.html"
 	}
+})
+
+bookWidgetApp.directive('bookBinding', function(){
+  return{
+    restrict: 'E',
+    templateUrl: "/assets/angular/widgets/base/book_binding.html"
+  }
 })

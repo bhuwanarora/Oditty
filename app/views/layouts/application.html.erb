@@ -5,9 +5,17 @@
     <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/angular/**/*.js")] %>
   </head>
 
-  <body ng-controller="websiteAppController">
+  <body ng-controller="websiteAppController" ng-keypress="search()">
     <div class="background_mask"></div>
-    <div msd-wheel="bindHorizontalScroll($event, $delta, $deltaX, $deltaY)" ng-animate="msd-wheel">
+    <div ng-include 
+          src="'assets/angular/widgets/partials/search.html'" 
+          ng-show="searching"
+          ng-hide="!searching"
+          ng-click="stopSearching($event)"></div>
+    <div msd-wheel="bindHorizontalScroll($event, $delta, $deltaX, $deltaY)" 
+        ng-animate="msd-wheel" 
+        ng-hide="searching"
+        ng-show="!searching">
       <% unless response.as_json["request"].as_json["fullpath"] == "/test" || 
                 (response.as_json["request"].as_json["fullpath"].include? "/coming_soon") || 
                 response.as_json["request"].as_json["fullpath"] == "/" || 

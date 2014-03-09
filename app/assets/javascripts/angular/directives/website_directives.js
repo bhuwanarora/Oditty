@@ -55,3 +55,20 @@ websiteApp.directive('horizontalScroller', function(){
 		templateUrl: "/assets/angular/widgets/base/horizontal_scroller.html"
 	}
 })
+
+websiteApp.directive('setFocus', function($timeout, $parse, $rootScope) {
+  return {
+    link: function(scope, element, attrs) {
+      var model = $parse(attrs.setFocus);
+
+      scope.$watch(model, function(value) {
+        if(value === true) { 
+          $timeout(function() {
+            element[0].value = String.fromCharCode($rootScope.keyCode);
+            element[0].focus(); 
+          });
+        }
+      });
+    }
+  };
+});
