@@ -1,1 +1,6 @@
-<div class="news_widget"></div>
+<div class="news_widget">
+	<div class="news" ng-repeat="news in book.news" style="transition-delay: {{$index * 1000}}ms">
+		<div class="news_description">{{news.description}}</div>
+		<div class="news_from">--{{news.from}}</div>
+	</div>
+</div>

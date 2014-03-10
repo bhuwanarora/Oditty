@@ -1,5 +1,6 @@
 
-websiteApp.controller('websiteAppController', function($scope, $rootScope, $interval, $http, $timeout, $q){
+websiteApp.controller('websiteAppController', function($scope, $rootScope, $interval, $http, 
+	$timeout, $q, $window, websiteService){
 	$scope.bindHorizontalScroll = function(event, delta, deltaX, deltaY){
 		event.preventDefault();
 		if(delta > 0){
@@ -81,6 +82,25 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
         }
 	}
 
+	$scope.toggleMoreFilters = function(){
+		if($rootScope.show_more_filters == true){
+			$rootScope.show_more_filters = false
+		}
+		else{
+			$rootScope.show_more_filters = true			
+		}
+	}
+
+	$scope.showFeebackForm = function(){
+		// console.log("showFeebackForm")
+	}
+
+	_bind_feedback_form = function(){
+		$window.onmouseleave = function(){
+			console.log('move');
+		}
+	}
+
 	_loadRecommendations = function(){
 		currentWidth = event.currentTarget.clientWidth
 		lessThanOnePageLeft = event.pageX + 1575 > currentWidth
@@ -100,10 +120,21 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	}
 
 	_init = function(){
-		_init_shelf();
+		$scope.more_filters = []
 		$rootScope.searching = false;
+
+		_init_shelf();
+		_get_filters();
+		_bind_feedback_form()
 		// $http.defaults.headers.post['My-Header'] = 'value';
 	}
+
+	_get_filters = function(){
+    	websiteService.getFilters().then(function(data){
+    		$scope.more_filters = $scope.more_filters.concat(data["filters"])
+    	})
+    }
+
 
 	_init()
 

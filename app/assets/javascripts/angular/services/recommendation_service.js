@@ -9,5 +9,4 @@ recommendationApp.service('recommendationService', function ($http, $q, $rootSco
                         });
         return deferred.promise;
     };
-
 });

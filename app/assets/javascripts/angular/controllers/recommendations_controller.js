@@ -59,15 +59,19 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	}
 
 	_init = function(){
+		//oneMin = 60000
+		var oneSec = 10000
 		$scope.recommendations = []
+
 	    $rootScope.$on('loadRecommendations', function(){
 	    	_get_recommendations();
 	    })
-		//oneMin = 60000
-		oneSec = 10000
+
 		$timeout(function(){
 			_recordUserBehaviour()
 		}, oneSec)
+
+
 		_init_notifications();
         _init_analytics();
 		_initialize_filters();
@@ -87,7 +91,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	}
 
 	_push_recommendations = function(){
-		fiveMinute = 300000//300000
+		fiveMinute = 3000//300000
 		$timeout(function(){
 			var deferred = $q.defer();
 	        $http.get('/api/v0/push_recommendations').then(function(result) {
@@ -122,6 +126,5 @@ recommendationApp.controller('recommendationsController', function($scope, $root
     }
 
 	_init()
-
 
 });

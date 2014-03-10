@@ -9,6 +9,11 @@ module Api
 				# publish
 			end
 
+			def filters
+				filters = Filter.all.order(:priority).select("id, name, priority").as_json
+				render :json => {:filters => filters}, :status => 200
+			end
+
 			def push_recommendations
 				test_book = {:title => "Siddhrtha",
 							  :author_name => "P. D. Smith",
@@ -26,7 +31,10 @@ module Api
 							  :readers_count => "1112",
 							  :discussions_count => "123",
 							  :reviews_count => "51",
-							  :news => [{:description => "", :from => ""}]
+							  :news => [{:description => "Billy Corgan to Perform Eight-Hour Ambient Jam Inspired by Hermann 
+							  	Hesse's Siddhartha", :from => "Lindsay Zoladz"}, 
+							  	{:description => "Billy Corgan to Perform Eight-Hour Ambient Jam Inspired by Hermann 
+							  	Hesse's Siddhartha", :from => "Lindsay Zoladz"},]
 						  }
 				test_book = test_book.merge(
 					:book_thumb => {
@@ -37,7 +45,7 @@ module Api
 						influential during the 1960s. Hesse dedicated Siddhartha to his wife Ninon and supposedly afterwards to 
 						Romain Rolland and Wilhelm Gundert. The word Siddhartha is made up of two words in the Sanskrit language, 
 						siddha + artha, which together means he who has found meaning",
-						:background_color => "#915972"},
+						:background_color => "#F9B131"},
 					:category => {:name => "Hermann Hesse Fan", 
 								:url => "javascript:void(0);",
 								:background_color => "#3cb878",

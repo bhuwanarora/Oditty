@@ -170,7 +170,7 @@ bookWidgetApp.directive('rate', function ($rootScope, $timeout) {
 		$scope.mark_as_rated = function(){
 			$scope.read = false;
 			$scope.rated = true;
-      notify($rootScope, "Thanks, this will help us to recommend you better books, readers and authors.", $timeout)
+      notify($rootScope, "Thanks, this will help us to recommend you better books.", $timeout)
 		}
 
 		$scope.init();
@@ -186,7 +186,7 @@ bookWidgetApp.directive('markAsRead', function($rootScope, $timeout){
 			$scope.markAsRead = function(){
 				$scope.logged_in = false;
 				$scope.read = true;
-        notify($rootScope, "Thanks, this will help us to recommend you better books, readers and authors.", $timeout)
+        notify($rootScope, "Thanks, this will help us to recommend you better books.", $timeout)
 				//ajax call to mark the book as read
 			}
 		},

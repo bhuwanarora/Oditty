@@ -48,7 +48,6 @@ websiteApp.directive('track', function($rootScope){
 	}
 })
 
-
 websiteApp.directive('horizontalScroller', function(){
 	return{
 		restrict: 'E',
@@ -86,5 +85,23 @@ websiteApp.directive('pushNotification', function($rootScope, $parse, $timeout){
 				}
 			})
 		}
+	}
+})
+
+websiteApp.directive('moreFilters', function(){
+	return{
+		restrict: 'E',
+		templateUrl: "/assets/angular/widgets/partials/more_filters.html"
+	}	
+})
+
+websiteApp.directive('filter', function(){
+	return{
+		restrict: 'E',
+		scope: { 'filter': '=data' },
+		controller: function($scope){
+
+		},
+		templateUrl: "/assets/angular/widgets/partials/filter.html"
 	}
 })
