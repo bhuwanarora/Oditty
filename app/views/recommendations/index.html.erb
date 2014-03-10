@@ -1,10 +1,14 @@
 <%= stylesheet_link_tag 'recommendation'%>
 <horizontal-scroller></horizontal-scroller>
+<shelf ng-if="bookmark_selected || read_selected"></shelf>
 <div ng-controller="recommendationsController">
 	<div ng-view></div>
 	<div id="recommendationFooter">
 		<span class="website-title">
 			Reader's Door
+		</span>
+		<span class="search_link" ng-click="search()">
+			Start typing now to search...
 		</span>
 		<span class="nav-links">
 			<span ng-click="toggle_readers()">
@@ -16,6 +20,17 @@
 			<span ng-click="toggle_authors()">
 				<img ng-class="{'opaque': filters['authors'], 'transparent': !filters['authors']}" class="author-icon" src="assets/icon-sprites.png"/>
 			</span>
+		</span>
+		<span class="more_filters">
+			More Filters
+		</span>
+		<span class="shelf_nav_links">
+			<span ng-class="{'bookmarked_shelf_nav':!bookmarked_selected, 'bookmarked_shelf_nav_selected':bookmark_selected}"
+			ng-click="toggle_bookmarked()">
+				<b>BOOKMARKED</b>
+			</span>
+			<span ng-class="{'read_shelf_nav':!read_selected, 'read_shelf_nav_selected':read_selected}"
+			ng-click="toggle_read()"><b>READ</b></span>
 		</span>
 	</div>
 </div>

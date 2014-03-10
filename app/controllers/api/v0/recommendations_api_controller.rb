@@ -1,6 +1,51 @@
 module Api
 	module V0
 		class RecommendationsApiController < ApplicationController
+			# include 'Pubnub'
+
+			def initiate_push
+				# init
+				# subscribe
+				# publish
+			end
+
+			def push_recommendations
+				test_book = {:title => "Siddhrtha",
+							  :author_name => "P. D. Smith",
+							  :tags => [
+							  	{:name => "Philosophy", :url => "javascript:void(0);"},
+							  	{:name => "India", :url => "javascript:void(0);"},
+							  	{:name => "Spirituality", :url => "javascript:void(0);"}
+							  ],
+							  :book_thumb => {
+							  	
+							  },
+							  :rating => 4,
+							  :status => 0,
+							  :bookmark_status => 1,
+							  :readers_count => "1112",
+							  :discussions_count => "123",
+							  :reviews_count => "51",
+							  :news => [{:description => "", :from => ""}]
+						  }
+				test_book = test_book.merge(
+					:book_thumb => {
+						:book_cover_url => "assets/books/a2.jpeg",
+						:description => "Siddhartha is a novel by Hermann Hesse that deals with the spiritual journey of 
+						self-discovery of a man named Siddhartha during the time of the Gautama Buddha. The book, Hesse's ninth 
+						novel, was written in German, in a simple, lyrical style. It was published in the U.S. in 1951 and became 
+						influential during the 1960s. Hesse dedicated Siddhartha to his wife Ninon and supposedly afterwards to 
+						Romain Rolland and Wilhelm Gundert. The word Siddhartha is made up of two words in the Sanskrit language, 
+						siddha + artha, which together means he who has found meaning",
+						:background_color => "#915972"},
+					:category => {:name => "Hermann Hesse Fan", 
+								:url => "javascript:void(0);",
+								:background_color => "#3cb878",
+								:description => ""},
+					:id => 13)
+				render :json => {:recommendations => [test_book]}, :status => 200
+			end
+
 			def recommendations
 				filters = JSON.parse(params[:q])
 				test_book = {:title => "City",

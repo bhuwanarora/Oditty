@@ -1,5 +1,5 @@
 var websiteApp = angular.module('websiteApp', ['ngRoute', 'ngAnimate', 'recommendationApp', 'monospaced.mousewheel', 
-												'bookWidgetApp', 'angular-parallax']);
+												'bookWidgetApp', 'angular-parallax', 'pubnub.angular.service']);
 //This configures the routes and associates each route with a view and a controller
 websiteApp.config(function ($sceDelegateProvider, $routeProvider) {
     $sceDelegateProvider.resourceUrlWhitelist(['self', 'http://bhuwan.com:3000/**']);

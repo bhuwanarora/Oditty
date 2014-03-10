@@ -10,7 +10,6 @@
     <div ng-include 
           src="'assets/angular/widgets/partials/search.html'" 
           ng-show="searching"
-          ng-hide="!searching"
           ng-click="stopSearching($event)"></div>
     <div msd-wheel="bindHorizontalScroll($event, $delta, $deltaX, $deltaY)" 
         ng-animate="msd-wheel" 

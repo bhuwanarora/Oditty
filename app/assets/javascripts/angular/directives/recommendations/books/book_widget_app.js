@@ -56,7 +56,6 @@ bookWidgetApp.directive('reviewWidget', function () {
 bookWidgetApp.directive('shelf', function () {
   return {
     restrict: 'E',
-    scope: { 'shelf': '=data' },
     templateUrl: "/assets/angular/widgets/base/shelf.html"
   };
 })
@@ -155,7 +154,7 @@ bookWidgetApp.directive('tags', function () {
   };
 })
 
-bookWidgetApp.directive('rate', function () {
+bookWidgetApp.directive('rate', function ($rootScope, $timeout) {
   return {
     restrict: 'E',
     controller: function($scope){
@@ -171,6 +170,7 @@ bookWidgetApp.directive('rate', function () {
 		$scope.mark_as_rated = function(){
 			$scope.read = false;
 			$scope.rated = true;
+      notify($rootScope, "Thanks, this will help us to recommend you better books, readers and authors.", $timeout)
 		}
 
 		$scope.init();
@@ -179,13 +179,14 @@ bookWidgetApp.directive('rate', function () {
   };
 })
 
-bookWidgetApp.directive('markAsRead', function(){
+bookWidgetApp.directive('markAsRead', function($rootScope, $timeout){
 	return {
 		restrict: 'E',
 		controller: function($scope){
 			$scope.markAsRead = function(){
 				$scope.logged_in = false;
 				$scope.read = true;
+        notify($rootScope, "Thanks, this will help us to recommend you better books, readers and authors.", $timeout)
 				//ajax call to mark the book as read
 			}
 		},
@@ -199,3 +200,12 @@ bookWidgetApp.directive('bookBinding', function(){
     templateUrl: "/assets/angular/widgets/base/book_binding.html"
   }
 })
+
+function notify($rootScope, message, $timeout){
+  $rootScope.message = message
+  $rootScope.notification_active = true
+  $timeout(function(){
+    $rootScope.notification_active = false
+    $rootScope.message = ""
+  }, 3000)
+}

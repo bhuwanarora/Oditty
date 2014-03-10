@@ -39,10 +39,28 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		event.currentTarget.text = ""
 	}
 
+	$scope.toggle_bookmarked = function(){
+		if($scope.bookmark_selected == true){
+			$scope.bookmark_selected = false
+		}
+		else{
+			$scope.bookmark_selected = true			
+		}
+	}
+
+	$scope.toggle_read = function(){
+		if($scope.read_selected == true){
+			$scope.read_selected = false
+		}
+		else{
+			$scope.read_selected = true			
+		}
+	}
+
+
 	$scope.getSearchResults = function(event){
         currentValue = event.currentTarget.value
         currentInput = String.fromCharCode(event.keyCode)
-		console.log(event.keyCode,currentValue.length)
         backspace_or_delete_or_enter = (event.keyCode == 8) || (event.keyCode == 46) || (event.keyCode == 13)
         if(backspace_or_delete_or_enter && currentValue.length == 0){
         	$scope.stopSearching(event)
@@ -76,14 +94,15 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		}
 	}
 
-	_init = function(){
-		_init_analytics();
-		$rootScope.searching = false;
-		$http.defaults.headers.post['My-Header']='value';
+	_init_shelf = function(){
+		$scope.read_selected = false
+		$scope.bookmark_selected = false
 	}
 
-	_init_analytics = function(){
-		$rootScope.data = []
+	_init = function(){
+		_init_shelf();
+		$rootScope.searching = false;
+		// $http.defaults.headers.post['My-Header'] = 'value';
 	}
 
 	_init()

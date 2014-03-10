@@ -48,6 +48,7 @@ gem 'nifty-generators'
 gem 'faye'
 gem 'thin'
 gem 'mad_chatter', github: 'madchatter/mad_chatter'
+gem 'pubnub'
 
 # gem 'rubyXL'	
 # gem "cocoon", "1.1.1"

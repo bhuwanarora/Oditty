@@ -60,7 +60,6 @@ websiteApp.directive('setFocus', function($timeout, $parse, $rootScope) {
   return {
     link: function(scope, element, attrs) {
       var model = $parse(attrs.setFocus);
-
       scope.$watch(model, function(value) {
         if(value === true) { 
           $timeout(function() {
@@ -72,3 +71,20 @@ websiteApp.directive('setFocus', function($timeout, $parse, $rootScope) {
     }
   };
 });
+
+websiteApp.directive('pushNotification', function($rootScope, $parse, $timeout){
+	return{
+		link: function(scope, element, attrs){
+			var model = $parse(attrs.pushNotification);
+			scope.$watch(model, function(value){
+				if(value == true){
+					element[0].innerHTML = $rootScope.message
+					$timeout(function(){
+						$rootScope.notification_active = false
+						$rootScope.message = ""
+					}, 10000)
+				}
+			})
+		}
+	}
+})
