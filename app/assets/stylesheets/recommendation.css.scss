@@ -843,7 +843,7 @@ a:hover{
 
 .recommendation_block{
 	display: inline-block;
-	margin-top: 70px;
+	margin-top: 10px;
 }
 
 .recommendation_block.ng-enter, .recommendation_block.ng-leave {
@@ -896,12 +896,17 @@ a:hover{
 }
 
 .nav-links{
-	margin-left: 40px;
+	margin: 17px 48px;
+	display: inline-block;
+	float: right;
 }
 
 .website-title{
 	color: #3F2206;
 	padding: 10px;
+	display: inline-block;
+	float: left;
+	margin-left: 80px;
 }
 
 .cancel_search{
@@ -958,17 +963,33 @@ a:hover{
 
 .search_link{
 	width: 180px;
-	background: #E0B365;
 	border-radius: 4px;
 	padding: 17px;
 	color: #694201;
 	box-shadow: inset 0px 1px 4px 0px #694201, inset 0px 0px 40px #694201;
 	margin-left: 200px;
+	display: inline-block;
+	float: left;
+}
+
+.filter_input{
+	width: 400px;
+	background: #E0B365;
+	border-radius: 5px;
+	padding: 10px;
+	color: #694201;
+	box-shadow: inset 0px 1px 4px 0px #694201, inset 0px 0px 40px #694201;
+	display: inline-block;
+	z-index: 5;
+	float: right;
+	margin: 20px 10px 10px 10px;
+	border-color: #E0B365;
 }
 
 .bookmarked_shelf_nav{
 	margin-right: 7px;
 	cursor: pointer;
+	display: inline-block;
 }
 
 .bookmarked_shelf_nav:hover{
@@ -980,6 +1001,7 @@ a:hover{
 	border-bottom: 3px solid #5F3913;
 	cursor: pointer;
 	margin-right: 7px;
+	display: inline-block;
 }
 
 .read_shelf_nav_selected{
@@ -987,6 +1009,7 @@ a:hover{
 	border-bottom: 3px solid #5F3913;
 	cursor: pointer;
 	margin-right: 7px;
+	display: inline-block;
 }
 
 .read_shelf_nav:hover{
@@ -996,6 +1019,7 @@ a:hover{
 .read_shelf_nav{
 	margin-right: 7px;
 	cursor: pointer;
+	display: inline-block;
 }
 
 .shelf_nav_links{
@@ -1004,6 +1028,7 @@ a:hover{
 	margin-top: 14px;
 	color: #5F3913;
 	font-size: 0.8em;
+	display: inline-block;
 }
 
 .shelf{
@@ -1116,26 +1141,90 @@ a:hover{
 }
 
 .more_filters_link{
-	background-color: #664626;
-	color: #F5CA85;
-	margin-left: 75px;
+	margin-left: 25px;
 	padding: 8px 25px 8px 25px;
 	border-bottom-left-radius: 8px;
 	border-bottom-right-radius: 8px;
 	position: absolute;
 	font-size: 0.8em;
-	box-shadow: inset 0px 0px 2px #CD9F56;
-	border-bottom: 1px solid #412C18;
 	cursor: pointer;
+	display: inline-block;
+}
+
+.more_filters_active_link{
+	border-bottom: 1px solid #412C18;
+	color: #F5CA85;
+	box-shadow: inset 0px 0px 2px #CD9F56;
+	background-color: #664626;
+}
+
+.more_filters_inactive_link{
+	background-color: #E3B567;
+	color: #664626;
+    box-shadow: 0px 1px 4px 0px #664626, inset 0px 0px 40px #E3B567;
 }
 
 .more_filters{
 	width: 100%;
-	height: 40px;
+	height: 112px;
 	position: fixed;
 	bottom: 40px;
-	background-color: #717070;
+	background: url('woodbar_surface.png');
 	z-index: 5;
+	padding: 20px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	box-shadow: 0px 1px 4px 0px #664626, inset 0px 0px 40px #E3B567;
+}
+
+.box-shadow-preview{ 
+   
+} 
+
+.active_filter{
+	background-color: #664626;
+	color: #E3B567;
+}
+
+.inactive_filter{
+	background-color: #E3B567;
+	color: #664626;
+    box-shadow: 0px 1px 4px 0px #664626, inset 0px 0px 40px #E3B567;
+}
+
+.more_filter:before, .inactive_filter:before{ 
+    z-index: -1; 
+    position: absolute; 
+    width: 95%; 
+    top: 0px; 
+    right: 10px; 
+    bottom: 0px; 
+    left: 10px; 
+    border-radius: 10px; 
+    box-shadow: 0px 0px 20px #2a2e31; 
+} 
+.more_filter:after, .inactive_filter:after{ 
+    z-index: -1; 
+    position: absolute; 
+    width: 95%; 
+    top: 0px; 
+    right: 10px; 
+    bottom: 0px; 
+    left: 10px; 
+    border-radius: 10px; 
+    box-shadow: 0px 0px 20px #2a2e31; 
+}
+
+.filter{
+	float: left;
+	margin: 2px;
+	display: inline-block;
+	padding: 6px;
+	border-radius: 2px;
+	font-size: 0.8em;
+	cursor: pointer;
+	width: 180px;
+	text-align: center;
 }
 
 .news{
@@ -1150,4 +1239,24 @@ a:hover{
 
 .news.ng-enter.ng-enter-active{
 	opacity: 1;
+}
+
+*::-webkit-input-placeholder {
+    color: #664626;
+    font-size: 1em;
+}    
+*:-moz-placeholder {
+    /* FF 4-18 */
+    color: #664626;
+    font-size: 1em;
+}
+*::-moz-placeholder {
+    /* FF 19+ */
+    color: #664626;
+    font-size: 1em;
+}    
+*:-ms-input-placeholder {
+    /* IE 10+ */
+    color: #664626;
+    font-size: 1em;
 }

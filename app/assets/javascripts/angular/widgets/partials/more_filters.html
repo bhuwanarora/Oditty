@@ -1,10 +1,18 @@
+<link rel="stylesheet" type="text/css" href="assets/ng-slider.css">
 <div class="more_filters">
-	{{more_filters}}
-	<div ng-repeat="filter in filters">
-
-		<!-- <filter data="filter"
-				ng-class="{'active_filter':active, 'inactive_filter':inactive}">
-			{{filter.name}}
-		</filter> -->
+	<div ng-repeat="filter in more_filters" ng-model="filter">
+		<filter data="filter"></filter>
 	</div>
+	<span class="nav-links">
+		<span ng-click="toggle_readers()">
+			<img ng-class="{'opaque': filters['readers'], 'transparent': !filters['readers']}" class="reader-icon" src="assets/icon-sprites.png" />
+		</span>
+		<span ng-click="toggle_books()">
+			<img ng-class="{'opaque': filters['books'], 'transparent': !filters['books']}" class="book-icon" src="assets/icon-sprites.png"/>
+		</span>
+		<span ng-click="toggle_authors()">
+			<img ng-class="{'opaque': filters['authors'], 'transparent': !filters['authors']}" class="author-icon" src="assets/icon-sprites.png"/>
+		</span>
+	</span>
+	<input class="filter_input" placeholder="Filter books by Author, Genre, Country or by Reader"></input>
 </div>

@@ -31,33 +31,17 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	}
 
 	$scope.search = function(){
-		$rootScope.searching = true
-		$rootScope.keyCode = event.keyCode
+		input_aimed_for_searching = event.currentTarget == event.srcElement
+		if(input_aimed_for_searching){
+			$rootScope.searching = true
+			$rootScope.keyCode = event.keyCode
+		}
 	}
 
 	$scope.stopSearching = function(event){
 		$rootScope.searching = false
 		event.currentTarget.text = ""
 	}
-
-	$scope.toggle_bookmarked = function(){
-		if($scope.bookmark_selected == true){
-			$scope.bookmark_selected = false
-		}
-		else{
-			$scope.bookmark_selected = true			
-		}
-	}
-
-	$scope.toggle_read = function(){
-		if($scope.read_selected == true){
-			$scope.read_selected = false
-		}
-		else{
-			$scope.read_selected = true			
-		}
-	}
-
 
 	$scope.getSearchResults = function(event){
         currentValue = event.currentTarget.value
@@ -80,15 +64,6 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
         		//Type atleast 3 chars to search
         	}
         }
-	}
-
-	$scope.toggleMoreFilters = function(){
-		if($rootScope.show_more_filters == true){
-			$rootScope.show_more_filters = false
-		}
-		else{
-			$rootScope.show_more_filters = true			
-		}
 	}
 
 	$scope.showFeebackForm = function(){
@@ -114,27 +89,16 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		}
 	}
 
-	_init_shelf = function(){
-		$scope.read_selected = false
-		$scope.bookmark_selected = false
-	}
 
 	_init = function(){
 		$scope.more_filters = []
 		$rootScope.searching = false;
+		$scope.test = {time: 1970}
 
-		_init_shelf();
-		_get_filters();
+		
 		_bind_feedback_form()
 		// $http.defaults.headers.post['My-Header'] = 'value';
 	}
-
-	_get_filters = function(){
-    	websiteService.getFilters().then(function(data){
-    		$scope.more_filters = $scope.more_filters.concat(data["filters"])
-    	})
-    }
-
 
 	_init()
 

@@ -9,4 +9,12 @@ recommendationApp.service('recommendationService', function ($http, $q, $rootSco
                         });
         return deferred.promise;
     };
+
+    this.getFilters = function(){
+    	var deferred = $q.defer();
+        $http.get('/api/v0/filters').then(function(result) {
+                            return deferred.resolve(result.data); 
+                        });
+        return deferred.promise;	
+    }
 });

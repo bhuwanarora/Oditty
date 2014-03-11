@@ -55,8 +55,10 @@ module Api
 			end
 
 			def recommendations
-				filters = JSON.parse(params[:q])
-				test_book = {:title => "City",
+				# filters list Filter.where(:id => JSON.parse(params[:q])["more_filters"])
+				test_name = Filter.where(:id => JSON.parse(params[:q])["more_filters"]).pluck(:name) rescue "City"
+
+				test_book = {:title => test_name[0],
 							  :author_name => "P. D. Smith",
 							  :tags => [
 							  	{:name => "Philosophy", :url => "javascript:void(0);"},

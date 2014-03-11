@@ -36,6 +36,26 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 		// });
 	};
 
+
+	$scope.toggleBookmarked = function(){
+		if($scope.bookmark_selected == true){
+			$scope.bookmark_selected = false
+		}
+		else{
+			$scope.bookmark_selected = true			
+		}
+	}
+
+	$scope.toggleRead = function(){
+		if($scope.read_selected == true){
+			$scope.read_selected = false
+		}
+		else{
+			$scope.read_selected = true			
+		}
+	}
+
+
 	$scope.subscribe = function() {
 		// PubNub.ngSubscribe({ channel: theChannel })
 		// $rootScope.$on(PubNub.ngMsgEv(theChannel), function(event, payload) {
@@ -48,6 +68,16 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 		// })
 	}
 
+
+	$scope.toggleMoreFilters = function(){
+		if($scope.show_more_filters == true){
+			$scope.show_more_filters = false
+		}
+		else{
+			$scope.show_more_filters = true			
+		}
+	}
+
 	// $scope.channels = PubNub.ngListChannels()
 
 	_init_pubnub = function(){
@@ -58,25 +88,44 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 		// })
 	}
 
-	_init = function(){
-		//oneMin = 60000
-		var oneSec = 10000
-		$scope.recommendations = []
-
+	_init_broadcast = function(){
 	    $rootScope.$on('loadRecommendations', function(){
 	    	_get_recommendations();
 	    })
+
+	    $rootScope.$on('reloadRecommendations', function(){
+	    	_init_recommendations();
+	    	_get_recommendations();
+	    })
+	}
+
+	_init_recommendations = function(){
+		$scope.recommendations = []
+	}
+
+	_init = function(){
+		//oneMin = 60000
+		var oneSec = 10000
+
 
 		$timeout(function(){
 			_recordUserBehaviour()
 		}, oneSec)
 
-
+		_init_recommendations();
+    	_init_broadcast();
+    	_get_filters();
 		_init_notifications();
         _init_analytics();
+        _init_shelf();
 		_initialize_filters();
         _get_recommendations();
         _push_recommendations();
+	}
+
+	_init_shelf = function(){
+		$scope.read_selected = false
+		$scope.bookmark_selected = false
 	}
 
 	_init_notifications = function(){
@@ -84,10 +133,12 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	}
 
 	_initialize_filters = function(){
+		$scope.show_more_filters = true
 		$rootScope.filters = {}
 		$rootScope.filters["readers"] = false
 		$rootScope.filters["books"] = true
 		$rootScope.filters["authors"] = false
+		$rootScope.filters["more_filters"] = []
 	}
 
 	_push_recommendations = function(){
@@ -98,7 +149,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	            return deferred.resolve(result.data); 
 	        });
 	        deferred.promise.then(function(data){
-	        	$rootScope.message = "We think you like Hermann Hesse, and here is it's best read."
+	        	$rootScope.message = "We think you like Hermann Hesse, and here is his best read."
 	        	$rootScope.notification_active = true
 	    		$scope.recommendations = $scope.recommendations.concat(data["recommendations"])
 	    	})
@@ -124,6 +175,13 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	    	$scope.recommendations = $scope.recommendations.concat(data["recommendations"])
 	    })
     }
+
+	_get_filters = function(){
+    	recommendationService.getFilters().then(function(data){
+    		$scope.more_filters = $scope.more_filters.concat(data["filters"])
+    	})
+    }
+
 
 	_init()
 
