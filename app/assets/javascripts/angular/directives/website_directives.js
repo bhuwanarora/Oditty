@@ -77,7 +77,8 @@ websiteApp.directive('pushNotification', function($rootScope, $parse, $timeout){
 			var model = $parse(attrs.pushNotification);
 			scope.$watch(model, function(value){
 				if(value == true){
-					element[0].innerHTML = $rootScope.message
+					element[0].firstChild.nextSibling.innerHTML = $rootScope.message_type //header
+					element[0].firstChild.nextSibling.nextSibling.nextSibling.innerHTML = $rootScope.message //message
 					$timeout(function(){
 						$rootScope.notification_active = false
 						$rootScope.message = ""

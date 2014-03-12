@@ -12,7 +12,9 @@ websiteApp.config(function ($sceDelegateProvider, $routeProvider) {
 })
 
 function notify($rootScope, message, $timeout){
-  $rootScope.message = message
+  message_split = message.split("-")
+  $rootScope.message_type = message_split[0]
+  $rootScope.message = message_split[1]
   $rootScope.notification_active = true
   $timeout(function(){
     $rootScope.notification_active = false

@@ -31,7 +31,6 @@ recommendationApp.directive('moreFilters', function($rootScope){
 					$scope.active_reader_filter = true
 					$rootScope.filters["filter_type"] = "READER"
 				}
-
 			}
 
 			_init()
@@ -114,14 +113,14 @@ function _toggle_filters(type, $scope, $rootScope, $timeout){
 			if(index != -1){
 				$rootScope.filters[type].splice(index, 1)
 			}
-			message = filter_name+" removed from filters."
+			message = "SUCCESS-"+filter_name+" removed from filters."
 		}
 		else{
 			$scope.active = true
 			if(index == -1){
 				$rootScope.filters[type].push(filter_id)
 			}
-			message = filter_name+" added to filters."
+			message = "SUCCESS-"+filter_name+" added to filters."
 		}
 		notify($rootScope, message, $timeout)
 		$rootScope.$broadcast('reloadRecommendations');

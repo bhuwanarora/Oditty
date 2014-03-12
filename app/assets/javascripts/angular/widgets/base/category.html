@@ -1,5 +1,5 @@
 <div 
-	ng-class="{'hidden_category':!hovered && !expand, 'category':hovered && !expand, 'category_expand':expand}" 
+	ng-class="{'category': !expand, 'category_expand':expand}" 
 	ng-mouseenter="hovered=true; category_hovered=true" 
 	ng-mouseleave="hovered=false; category_hovered=false" 
 	ng-init="initVerticalText(book.category)"
