@@ -3,6 +3,7 @@ class CreateFilters < ActiveRecord::Migration
     create_table :filters do |t|
     	t.string		:name
     	t.integer 	:priority
+      t.string    :filter_type
 
       	t.timestamps
     end

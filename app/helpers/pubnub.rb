@@ -1,5 +1,5 @@
-module pubnub
-	require 'pubnub'
+module Pubnub
+	# require 'pubnub'
 
 	def init
 		@pubnub = Pubnub.new(

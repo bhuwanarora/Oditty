@@ -10,8 +10,11 @@ module Api
 			end
 
 			def filters
-				filters = Filter.all.order(:priority).select("id, name, priority").as_json
-				render :json => {:filters => filters}, :status => 200
+				filters_book = Filter.where(:filter_type => "BOOK")
+								.order(:priority)
+								.select("id, name, priority").limit(6)
+								.as_json
+				render :json => {:filters => {"book" => filters_book}}, :status => 200
 			end
 
 			def push_recommendations

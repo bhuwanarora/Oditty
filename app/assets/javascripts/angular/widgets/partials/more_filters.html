@@ -1,18 +1,38 @@
-<link rel="stylesheet" type="text/css" href="assets/ng-slider.css">
 <div class="more_filters">
-	<div ng-repeat="filter in more_filters" ng-model="filter">
-		<filter data="filter"></filter>
+	<div class="main_filters">
+		<div ng-click="toggle_active_filter()"
+			 ng-disabled="active_book_filter"
+			 ng-class="{'active_filter':active_book_filter, 'inactive_filter':!active_book_filter}">
+			 BOOK</div>
+		<div ng-click="toggle_active_filter()"
+			 ng-disabled="active_author_filter"
+			 ng-class="{'active_filter':active_author_filter, 'inactive_filter':!active_author_filter}">AUTHOR</div>
+		<div ng-click="toggle_active_filter()"
+			 ng-disabled="active_reader_filter"
+			 ng-class="{'active_filter':active_reader_filter, 'inactive_filter':!active_reader_filter}">READER</div>
 	</div>
-	<span class="nav-links">
-		<span ng-click="toggle_readers()">
-			<img ng-class="{'opaque': filters['readers'], 'transparent': !filters['readers']}" class="reader-icon" src="assets/icon-sprites.png" />
-		</span>
-		<span ng-click="toggle_books()">
-			<img ng-class="{'opaque': filters['books'], 'transparent': !filters['books']}" class="book-icon" src="assets/icon-sprites.png"/>
-		</span>
-		<span ng-click="toggle_authors()">
-			<img ng-class="{'opaque': filters['authors'], 'transparent': !filters['authors']}" class="author-icon" src="assets/icon-sprites.png"/>
-		</span>
-	</span>
-	<input class="filter_input" placeholder="Filter books by Author, Genre, Country or by Reader"></input>
+	<hr>
+	<div class="filters" ng-if="active_book_filter">
+		<div class="filters_panel">
+			<div class="header">
+				Advanced Filters
+			</div>
+			<div>
+				<input class="input_filter" placeholder="Genre"></input>
+			</div>
+			<div>
+				<input class="input_filter" placeholder="Country"></input>
+			</div>
+		</div>
+		<div class="filters_panel_large">
+			<div class="header">
+				Tags
+			</div>
+			<div ng-repeat="filter in more_filters[0]['book']">
+				<filter data="filter"></filter>
+			</div>
+		</div>
+	</div>
+	<div class="filters" ng-if="active_author_filter">AUTHOR</div>
+	<div class="filters" ng-if="active_reader_filter">READER</div>
 </div>

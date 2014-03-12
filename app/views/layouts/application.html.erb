@@ -7,14 +7,12 @@
 
   <body ng-controller="websiteAppController" ng-keypress="search()" ng-mouseout="showFeebackForm()">
     <div class="background_mask"></div>
-    <div ng-include 
+    <!-- <div ng-include 
           src="'assets/angular/widgets/partials/search.html'" 
           ng-show="searching"
-          ng-click="stopSearching($event)"></div>
+          ng-click="stopSearching($event)"></div> -->
     <div msd-wheel="bindHorizontalScroll($event, $delta, $deltaX, $deltaY)" 
-        ng-animate="msd-wheel" 
-        ng-hide="searching"
-        ng-show="!searching">
+        ng-animate="msd-wheel">
       <% unless response.as_json["request"].as_json["fullpath"] == "/test" || 
                 (response.as_json["request"].as_json["fullpath"].include? "/coming_soon") || 
                 response.as_json["request"].as_json["fullpath"] == "/" || 

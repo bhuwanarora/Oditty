@@ -78,6 +78,34 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 		}
 	}
 
+	$scope.stopSearching = function(event){
+		$rootScope.searching = false
+		event.currentTarget.text = ""
+	}
+
+	$scope.getSearchResults = function(event){
+        currentValue = event.currentTarget.value
+        currentInput = String.fromCharCode(event.keyCode)
+        backspace_or_delete_or_enter = (event.keyCode == 8) || (event.keyCode == 46) || (event.keyCode == 13)
+        if(backspace_or_delete_or_enter && currentValue.length == 0){
+        	$scope.stopSearching(event)
+        	//NOT WORKING
+        }
+        else{
+        	if(currentValue.length >= 2){
+				var deferred = $q.defer();
+				query_params = currentValue+currentInput
+		        $http.get('/api/v0/search?count=5&q='+query_params).then(function(result) {
+		                    return deferred.resolve(result.data); 
+		                });
+		        return deferred.promise;
+        	}
+        	else{
+        		//Type atleast 3 chars to search
+        	}
+        }
+	}
+
 	// $scope.channels = PubNub.ngListChannels()
 
 	_init_pubnub = function(){
@@ -107,11 +135,11 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 		//oneMin = 60000
 		var oneSec = 10000
 
-
 		$timeout(function(){
 			_recordUserBehaviour()
 		}, oneSec)
 
+		$scope.searching = false;
 		_init_recommendations();
     	_init_broadcast();
     	_get_filters();

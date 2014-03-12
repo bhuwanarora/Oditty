@@ -30,44 +30,18 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		event.view.window.scrollBy(-1000, 0)
 	}
 
+
+	$scope.showFeebackForm = function(){
+		// console.log("showFeebackForm")
+	}
+
+
 	$scope.search = function(){
 		input_aimed_for_searching = event.currentTarget == event.srcElement
 		if(input_aimed_for_searching){
 			$rootScope.searching = true
 			$rootScope.keyCode = event.keyCode
 		}
-	}
-
-	$scope.stopSearching = function(event){
-		$rootScope.searching = false
-		event.currentTarget.text = ""
-	}
-
-	$scope.getSearchResults = function(event){
-        currentValue = event.currentTarget.value
-        currentInput = String.fromCharCode(event.keyCode)
-        backspace_or_delete_or_enter = (event.keyCode == 8) || (event.keyCode == 46) || (event.keyCode == 13)
-        if(backspace_or_delete_or_enter && currentValue.length == 0){
-        	$scope.stopSearching(event)
-        	//NOT WORKING
-        }
-        else{
-        	if(currentValue.length >= 2){
-				var deferred = $q.defer();
-				query_params = currentValue+currentInput
-		        $http.get('/api/v0/search?count=5&q='+query_params).then(function(result) {
-		                    return deferred.resolve(result.data); 
-		                });
-		        return deferred.promise;
-        	}
-        	else{
-        		//Type atleast 3 chars to search
-        	}
-        }
-	}
-
-	$scope.showFeebackForm = function(){
-		// console.log("showFeebackForm")
 	}
 
 	_bind_feedback_form = function(){
@@ -92,7 +66,6 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 
 	_init = function(){
 		$scope.more_filters = []
-		$rootScope.searching = false;
 		$scope.test = {time: 1970}
 
 		

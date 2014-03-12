@@ -8,21 +8,24 @@
 		<div class="website-title">
 			Reader's Door
 		</div>
-		<div class="search_link" ng-click="search()">
+		<!-- <div class="search_link" ng-click="search()">
 			Start typing now to search...
-		</div>
-		<div class="more_filters_link" 
+		</div> -->
+		<input set-focus="searching" ng-keypress="getSearchResults($event)" class="filter_input" placeholder="Start typing now to search..."></input>
+		<div class="link filter_link" 
 			  ng-click="toggleMoreFilters()" 
-			  ng-class="{'more_filters_active_link':show_more_filters, 'more_filters_inactive_link':!show_more_filters}">
-			 Filters
+			  ng-class="{'active':show_more_filters, 'inactive':!show_more_filters}">
+			 FILTERS
 		</div>
 		<div class="shelf_nav_links">
-			<div ng-class="{'bookmarked_shelf_nav':!bookmarked_selected, 'bookmarked_shelf_nav_selected':bookmark_selected}"
-			ng-click="toggleBookmarked()">
+			<div ng-class="{'inactive':!bookmark_selected, 'active':bookmark_selected}"
+				 class="link"
+				 ng-click="toggleBookmarked()">
 				<b>BOOKMARKED</b>
 			</div>
-			<div ng-class="{'read_shelf_nav':!read_selected, 'read_shelf_nav_selected':read_selected}"
-			ng-click="toggleRead()"><b>READ</b></div>
+			<div ng-class="{'inactive':!read_selected, 'active':read_selected}"
+				 class="link"
+				 ng-click="toggleRead()"><b>READ</b></div>
 		</div>
 	</div>
 </div>
