@@ -12,10 +12,10 @@
 			 ng-class="{'active_filter':active_reader_filter, 'inactive_filter':!active_reader_filter}">READER</div>
 	</div>
 	<hr>
-	<div class="filters" ng-if="active_book_filter">
+	<div class="filters" ng-show="active_book_filter">
 		<div class="filters_panel">
 			<div class="header">
-				Advance Input Filters
+				<b>Advance Input Filters</b>
 			</div>
 			<div>
 				<input class="input_filter" placeholder="GENRE"></input>
@@ -26,13 +26,53 @@
 		</div>
 		<div class="filters_panel_large">
 			<div class="header">
-				Tags
+				<b>Tags</b>
 			</div>
 			<div ng-repeat="filter in more_filters[0]['book']">
 				<filter data="filter"></filter>
 			</div>
 		</div>
 	</div>
-	<div class="filters" ng-if="active_author_filter">AUTHOR</div>
-	<div class="filters" ng-if="active_reader_filter">READER</div>
+	<div class="filters" ng-show="active_author_filter">
+		<div class="filters_panel">
+			<div class="header">
+				<b>Advance Input Filters</b>
+			</div>
+			<div>
+				<input class="input_filter" placeholder="GENRE"></input>
+			</div>
+			<div>
+				<input class="input_filter" placeholder="COUNTRY"></input>
+			</div>
+		</div>
+		<div class="filters_panel_large">
+			<div class="header">
+				<b>Tags</b>
+			</div>
+			<div ng-repeat="filter in more_filters[0]['author']">
+				<filter data="filter"></filter>
+			</div>
+		</div>
+	</div>
+	<div class="filters" ng-show="active_reader_filter">
+		<div class="filters_panel">
+			<div class="header">
+				<b>Advance Input Filters</b>
+			</div>
+			<div>
+				<input class="input_filter" placeholder="GENRE"></input>
+			</div>
+			<div>
+				<input class="input_filter" placeholder="COUNTRY"></input>
+			</div>
+		</div>
+		<div class="filters_panel_large">
+			<div class="header">
+				<b>Tags</b>
+			</div>
+			<div ng-repeat="filter in more_filters[0]['reader']">
+				<filter data="filter"></filter>
+			</div>
+		</div>
+	</div>
 </div>

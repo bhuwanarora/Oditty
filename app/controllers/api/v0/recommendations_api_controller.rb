@@ -14,7 +14,19 @@ module Api
 								.order(:priority)
 								.select("id, name, priority").limit(6)
 								.as_json
-				render :json => {:filters => {"book" => filters_book}}, :status => 200
+				filter_author = Filter.where(:filter_type => "AUTHOR")
+								.order(:priority)
+								.select("id, name, priority").limit(6)
+								.as_json
+				filter_reader = Filter.where(:filter_type => "READER")
+								.order(:priority)
+								.select("id, name, priority").limit(6)
+								.as_json
+				render :json => {:filters => {
+									"book" => filters_book, 
+									"author" => filter_author,
+									"reader" => filter_reader
+								}}, :status => 200
 			end
 
 			def push_recommendations

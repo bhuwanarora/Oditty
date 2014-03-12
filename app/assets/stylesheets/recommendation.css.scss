@@ -47,41 +47,6 @@ body{
 	border-bottom-right-radius: 1px;
 }
 
-/*.effect
-{
-  position: relative;
-}
-.effect:before, .effect:after
-{
-  z-index: -1;
-  position: absolute;
-  content: "";
-  bottom: 15px;
-  left: 10px;
-  width: 50%;
-  top: 80%;
-  max-width:300px;
-  background: #777;
-  -webkit-box-shadow: 0 15px 10px #777;
-  -moz-box-shadow: 0 15px 10px #777;
-  box-shadow: 0 15px 10px #777;
-  -webkit-transform: rotate(-3deg);
-  -moz-transform: rotate(-3deg);
-  -o-transform: rotate(-3deg);
-  -ms-transform: rotate(-3deg);
-  transform: rotate(-3deg);
-}
-.effect:after
-{
-  -webkit-transform: rotate(3deg);
-  -moz-transform: rotate(3deg);
-  -o-transform: rotate(3deg);
-  -ms-transform: rotate(3deg);
-  transform: rotate(3deg);
-  right: 10px;
-  left: auto;
-}*/
-
 .card_expand{
 	float: left;
 	width: 500px;
@@ -94,43 +59,6 @@ body{
 	/*box-shadow: 4px 10px 9px 1px #090909;*/
     box-shadow: 8px 10px 54px 0px #424242; 
 }
-
-/*.undiscovered{
-	white-space: normal;
-	border-radius: 2px;
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	-webkit-box-shadow: 1px 2px 1px #d1d1d1;
-	-moz-box-shadow: 1px 2px 1px #d1d1d1;
-	box-shadow: 1px 2px 1px #d1d1d1;
-}*/
-
-/*.undiscovered{ 
-    height: 666px; 
-    width: 242px; 
-    position: relative; 
-    background-color: #FFFFFF; 
-    border-width: 1px; 
-    border-style: solid; 
-    border-color: #DDDDDD; 
-    border-radius: 0px; 
-    box-shadow: 0px 0px 0px 0px; 
-} 
-.undiscovered:after{ 
-    content: ""; 
-    z-index: -1; 
-    position: absolute; 
-    width: 50%; 
-    top: 160px; 
-    right: 11px; 
-    bottom: 12px; 
-    left: 100px; 
-    border-radius: 0px; 
-    -webkit-transform: rotate(5deg) skew(15deg); 
-    transform: rotate(5deg) skew(15deg); 
-    box-shadow: -35px 10px 14px 2px #2B2B2B; 
-}*/
-
 
 .undiscovered{ 
     position: relative; 
@@ -192,7 +120,6 @@ body{
 .card .header .background p{
 	position: absolute;
 	text-align: center;
-	/*vertical-align: middle; */
 	font-size: 0.8em;
 	margin: 15px;
 }
@@ -201,7 +128,6 @@ body{
 	position: absolute;
 	text-align: center;
 	margin: 15px;
-	margin-left: 180px;
 }
 
 .card .thumb{
@@ -924,7 +850,7 @@ a:hover{
 	display: inline-block;
 	float: left;
 	margin-left: 35px;
-	color: #717070;
+	color: #3D79A1;
 }
 
 .cancel_search{
@@ -1208,7 +1134,7 @@ a:hover{
 	display: inline-block;
 	padding: 6px;
 	border-radius: 2px;
-	font-size: 0.8em;
+	font-size: 0.6em;
 	cursor: pointer;
 	width: 180px;
 	text-align: center;
@@ -1311,6 +1237,22 @@ input:focus{
 .input_filter:-ms-input-placeholder {  
    font-size: 0.8em;  
    color: #717070;
+}
+
+.input_filter:hover::-webkit-input-placeholder {
+   color: white;
+}
+
+.input_filter:hover:-moz-placeholder { /* Firefox 18- */
+   color: white;
+}
+
+.input_filter:hover::-moz-placeholder {  /* Firefox 19+ */
+   color: white;
+}
+
+.input_filter:hover:-ms-input-placeholder {  
+   color: white;
 }
 
 .rate_radio{
