@@ -165,8 +165,32 @@ bookWidgetApp.directive('rate', function ($rootScope, $timeout) {
     restrict: 'E',
     controller: function($scope){
     	$scope.init = function(){
-			$scope.rate_ready = false;
-    	}
+			  $scope.rate_ready = false;
+        $scope.init_rate_description();
+      }
+
+      $scope.show_rating_description = function(){
+        rating_value = event.currentTarget.value
+        if(rating_value == "1"){
+          $scope.rating_description = "Left the book in between. Didn't like it."
+        }
+        else if (rating_value == "2") {
+          $scope.rating_description = "Ordinary read. Was ok ok."
+        } 
+        else if (rating_value == "3") {
+          $scope.rating_description = "A nice read. Liked it."
+        } 
+        else if (rating_value == "4") {
+          $scope.rating_description = "The book gives goosebumps. Loved it."
+        } 
+        else{
+          $scope.rating_description = "In the list of the best books I've read."
+        }
+      }
+
+      $scope.init_rate_description = function(){
+        $scope.rating_description = "Hover to see what it means."
+      }
 
   		$scope.toggle = function(index){
   			//TODO

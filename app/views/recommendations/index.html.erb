@@ -17,6 +17,7 @@
 			  ng-class="{'active':show_more_filters, 'inactive':!show_more_filters}">
 			 FILTERS
 		</div>
+		<div class="test">{{recommendations.length}} results</div>
 		<div class="shelf_nav_links">
 			<div ng-class="{'inactive':!bookmark_selected, 'active':bookmark_selected}"
 				 class="link"
@@ -25,7 +26,8 @@
 			</div>
 			<div ng-class="{'inactive':!read_selected, 'active':read_selected}"
 				 class="link"
-				 ng-click="toggleRead()"><b>READ</b></div>
+				 ng-click="toggleRead()"><b>READ</b>
+			</div>
 		</div>
 	</div>
 </div>

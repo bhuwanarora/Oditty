@@ -1,6 +1,46 @@
  <div ng-class="{'rate':!expand, 'rate_expand':expand}" class="animate-fast">
-	Rate this book
-	<span ng-repeat="i in [1, 2, 3, 4, 5]" ng-click="toggle($index)">
+ 	<div class="rate_radio_buttons">
+		Rate this book
+		<input type="radio" 
+			   class="rate_radio" 
+			   value="1" 
+			   ng-model="rate_book" 
+			   ng-mouseover="show_rating_description()" 
+			   ng-mouseleave="init_rate_description()"
+			   ng-click="mark_as_rated()"></input>
+		<input type="radio" 
+			   class="rate_radio" 
+			   value="2" 
+			   ng-model="rate_book" 
+			   ng-mouseover="show_rating_description()" 
+			   ng-mouseleave="init_rate_description()"
+			   ng-click="mark_as_rated()"></input>
+		<input type="radio" 
+			   class="rate_radio" 
+			   value="3" 
+			   ng-model="rate_book" 
+			   ng-mouseover="show_rating_description()" 
+			   ng-mouseleave="init_rate_description()"
+			   ng-click="mark_as_rated()"></input>
+		<input type="radio" 
+			   class="rate_radio" 
+			   value="4" 
+			   ng-model="rate_book" 
+			   ng-mouseover="show_rating_description()" 
+			   ng-mouseleave="init_rate_description()"
+			   ng-click="mark_as_rated()"></input>
+		<input type="radio" 
+			   class="rate_radio" 
+			   value="5" 
+			   ng-model="rate_book" 
+			   ng-mouseover="show_rating_description()" 
+			   ng-mouseleave="init_rate_description()"
+			   ng-click="mark_as_rated()"></input>
+ 	</div>
+	<div class="rating_description">
+		{{rating_description}}
+	</div>
+	<!-- <span ng-repeat="i in [1, 2, 3, 4, 5]" ng-click="toggle($index)">
 		<img src="assets/icon-sprites.png" class="rate_icon" />
-	</span>
+	</span> -->
 </div>
