@@ -489,7 +489,7 @@ a:hover{
 }
 
 .book_widget_expand{
-	width: 531px;
+	width: 535px;
 	margin-left: 40px;
 	display: inline-block;
 }
@@ -546,6 +546,22 @@ a:hover{
 	margin-right: 50px;
 	cursor: pointer;
 	margin-left: 35px;
+}
+
+.book_navbar_expand .heading h2{
+	font-size: 1.5em;
+	margin: 0px;
+	padding: 0px;
+	margin-top: -10px;
+	margin-bottom: -10px;
+}
+
+.book_navbar .heading h2{
+	font-size: 1.5em;
+	margin: 0px;
+	padding: 0px;
+	margin-top: -10px;
+	margin-bottom: -10px;
 }
 
 .book_navbar_expand:hover{
@@ -1270,6 +1286,11 @@ input:focus{
 	margin-left: 100px;
 	border-radius: 2px;
 	box-shadow: 0px 1px 4px 0px #99A3AD, inset 0px 0px 40px #EEEEEE;
+}
+
+.input_filter:hover{
+	box-shadow: 0px 1px 4px 0px #143A5F, inset 0px 0px 40px #368AC2;
+	color: white;
 }
 
 .input_filter::-webkit-input-placeholder {

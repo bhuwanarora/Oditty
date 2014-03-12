@@ -28,12 +28,18 @@ bookWidgetApp.directive('bookthumb', function () {
     controller: function($scope){
       $scope.triggerExpand = function() {
         if ($scope.expand == true) {
-          $scope.expand = false
+          $scope.expand = false;
         }
         else{
-    		  $scope.expand = true
+    		  $scope.expand = true;
         }
       };
+
+      _init = function(){
+        $scope.expand = true;
+      }
+
+      _init();
     },
     templateUrl: "/assets/angular/widgets/base/book_thumb.html"
   };
@@ -171,7 +177,7 @@ bookWidgetApp.directive('rate', function ($rootScope, $timeout) {
   			$scope.read = false;
   			$scope.rated = true;
         //rating dependent
-        notify($rootScope, "Thanks, this will help us to recommend you better books.", $timeout)
+        notify($rootScope, "THANKS-This will help us to recommend you better books.", $timeout)
   		}
 
   		$scope.init();
@@ -187,7 +193,7 @@ bookWidgetApp.directive('markAsRead', function($rootScope, $timeout){
 			$scope.markAsRead = function(){
 				$scope.logged_in = false;
 				$scope.read = true;
-        notify($rootScope, "Also please rate the book. This will help us to recommend better books.", $timeout)
+        notify($rootScope, "ADVISE-Also please rate the book. This will help us to recommend better books.", $timeout)
 				//ajax call to mark the book as read
 			}
 		},

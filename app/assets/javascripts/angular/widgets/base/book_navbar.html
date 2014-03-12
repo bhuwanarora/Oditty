@@ -1,5 +1,11 @@
 <div ng-class="{'book_navbar':!expand, 'book_navbar_expand':expand}" class="animate-fast" ng-show="hovered" ng-hide="!hovered">
-	<div class="heading animate_fast" ng-show="hovered" ng-hide="!hovered">{{book.readers_count}}<br/>READERS</div>
-	<div class="heading animate_fast" ng-show="hovered" ng-hide="!hovered">{{book.discussions_count}}<br/>DISCUSSIONS</div>
-	<div class="heading animate_fast" ng-show="hovered" ng-hide="!hovered">{{book.reviews_count}}<br/>REVIEWS</div>
+	<div class="heading animate_fast" ng-show="hovered" ng-hide="!hovered">
+		<h2>{{book.readers_count}}</h2><br/>
+		READERS</div>
+	<div class="heading animate_fast" ng-show="hovered" ng-hide="!hovered">
+		<h2>{{book.discussions_count}}</h2><br/>
+		DISCUSSIONS</div>
+	<div class="heading animate_fast" ng-show="hovered" ng-hide="!hovered">
+		<h2>{{book.reviews_count}}</h2><br/>
+		REVIEWS</div>
 </div>
