@@ -1,7 +1,7 @@
 recommendationApp.directive('moreFilters', function($rootScope){
 	return{
 		restrict: 'E',
-		controller: function($scope){
+		controller: function($scope, recommendationService){
 			_init = function(){
 				$scope.active_book_filter = true
 				$scope.active_author_filter = false
@@ -31,6 +31,18 @@ recommendationApp.directive('moreFilters', function($rootScope){
 					$scope.active_reader_filter = true
 					$rootScope.filters["filter_type"] = "READER"
 				}
+			}
+
+			$scope.show_country_options = function(){
+				recommendationService.get_countries(filter).then(function(data){
+			    	$scope.countries = data["countries"]
+			    })
+			}
+
+			$scope.show_genre_options = function(filter){
+				recommendationService.get_genres(filter).then(function(data){
+			    	$scope.genres = data["genres"]
+			    })
 			}
 
 			_init()

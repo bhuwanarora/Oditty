@@ -18,10 +18,16 @@
 				<b>Advance Input Filters</b>
 			</div>
 			<div>
-				<input class="input_filter" placeholder="GENRE"></input>
+				<input class="input_filter" 
+					   placeholder="GENRE" 
+					   ng-keypress="show_genre_options('BOOK')"
+					   typehead="genre.name for genre in genres"></input>
 			</div>
 			<div>
-				<input class="input_filter" placeholder="COUNTRY"></input>
+				<input class="input_filter" 
+					   placeholder="COUNTRY" 
+					   ng-keypress="show_country_options('BOOK')"
+					   typehead="country.name for country in countries"></input>
 			</div>
 		</div>
 		<div class="filters_panel_large">

@@ -200,13 +200,13 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	}
 
     _get_recommendations = function(){
-        recommendationService.getRecommendations().then(function(data){
+        recommendationService.get_recommendations().then(function(data){
 	    	$scope.recommendations = $scope.recommendations.concat(data["recommendations"])
 	    })
     }
 
 	_get_filters = function(){
-    	recommendationService.getFilters().then(function(data){
+    	recommendationService.get_filters().then(function(data){
     		$scope.more_filters = $scope.more_filters.concat(data["filters"])
     	})
     }

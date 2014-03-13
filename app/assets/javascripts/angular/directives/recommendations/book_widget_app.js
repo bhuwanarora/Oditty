@@ -153,10 +153,10 @@ bookWidgetApp.directive('summary', function () {
   };
 })
 
-bookWidgetApp.directive('tags', function () {
+bookWidgetApp.directive('bookTags', function () {
   return {
     restrict: 'E',
-    templateUrl: "/assets/angular/widgets/base/tags.html"
+    templateUrl: "/assets/angular/widgets/base/book_tags.html"
   };
 })
 
