@@ -849,8 +849,9 @@ a:hover{
 	padding: 25px;
 	display: inline-block;
 	float: left;
-	margin-left: 35px;
+	margin-left: 2%;
 	color: #3D79A1;
+	position: absolute;
 }
 
 .cancel_search{
@@ -917,15 +918,21 @@ a:hover{
 }
 
 .filter_input{
-	width: 20%;
+	width: 15%;
 	border-radius: 2px;
 	display: inline-block;
 	z-index: 5;
-	margin-left: 50px;
+	margin-left: 16%;
+	margin-top: 7px;
 	vertical-align: middle;
 	height: 30px;
 	font-size: 0.8em;
 	padding: 6px 10px 1px 10px;
+	position: absolute;
+}
+
+.filter_input:focus{
+	width: 25%;
 }
 
 
@@ -942,7 +949,7 @@ a:hover{
 }
 
 .filter_link{
-	margin-left: 200px;
+	margin-left: 50%;
 }
 
 .active{
@@ -950,7 +957,8 @@ a:hover{
 	border-radius: 0px;
 	box-shadow: inset 0px 2px 27px -11px #7F868D, inset 0px 0px 40px #EEEEEE;
 	text-decoration: underline;
-	background: #F1F1F1;
+	background: #3D79A1;
+	color: white;
 }
 
 .inactive{
@@ -961,7 +969,7 @@ a:hover{
 
 .shelf_nav_links{
 	float: right;
-	margin-right: 100px;
+	margin-right: 4%;
 }
 
 .shelf{
@@ -1191,7 +1199,10 @@ input:focus{
 
 .inactive_filter:hover{
 	box-shadow: 0px 1px 4px 0px #143A5F, inset 0px 0px 40px #368AC2;
-	color: white;
+}
+
+.link:hover{
+	text-decoration: underline;
 }
 
 .main_filters a:hover{
@@ -1212,11 +1223,15 @@ input:focus{
 	margin-left: 100px;
 	border-radius: 2px;
 	box-shadow: 0px 1px 4px 0px #99A3AD, inset 0px 0px 40px #EEEEEE;
+	cursor: default;
+}
+
+.input_filter:focus{
+	border: none;
 }
 
 .input_filter:hover{
 	box-shadow: 0px 1px 4px 0px #143A5F, inset 0px 0px 40px #368AC2;
-	color: white;
 }
 
 .input_filter::-webkit-input-placeholder {
@@ -1239,22 +1254,6 @@ input:focus{
    color: #717070;
 }
 
-.input_filter:hover::-webkit-input-placeholder {
-   color: white;
-}
-
-.input_filter:hover:-moz-placeholder { /* Firefox 18- */
-   color: white;
-}
-
-.input_filter:hover::-moz-placeholder {  /* Firefox 19+ */
-   color: white;
-}
-
-.input_filter:hover:-ms-input-placeholder {  
-   color: white;
-}
-
 .rate_radio{
 
 }
@@ -1274,4 +1273,20 @@ input:focus{
     float: right;
     padding: 10px;
     margin-right: 40px;
+}
+
+.typeahead_options{
+	position: absolute;
+	margin: -2px 0px 0px 100px;
+	width: 189px;
+	box-shadow: 0px 1px 4px 0px #99A3AD, inset 0px 0px 40px #EEEEEE;
+	color: #717170;
+	font-size: 0.8em;
+}
+
+.typeahead_options .option{
+	cursor: pointer;
+	text-align: center;
+	padding: 4px;
+	background-color: white;
 }

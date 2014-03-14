@@ -18,16 +18,22 @@
 				<b>Advance Input Filters</b>
 			</div>
 			<div>
-				<input class="input_filter" 
-					   placeholder="GENRE" 
-					   ng-keypress="show_genre_options('BOOK')"
-					   typehead="genre.name for genre in genres"></input>
+			 	<type-ahead items="genres" 
+			 				prompt="GENRE" 
+			 				title="name" 
+			 				model="genre" 
+			 				on-select="on_genre_selection()"
+			 				ng-keypress="show_genre_options('BOOK')">
+			 	</type-ahead>
 			</div>
 			<div>
-				<input class="input_filter" 
-					   placeholder="COUNTRY" 
-					   ng-keypress="show_country_options('BOOK')"
-					   typehead="country.name for country in countries"></input>
+				<type-ahead items="countries" 
+			 				prompt="COUNTRY"
+			 				title="name"
+			 				model="country"
+			 				on-select="on_country_selection()"
+			 				ng-keypress="show_country_options('BOOK')">
+			 	</type-ahead>
 			</div>
 		</div>
 		<div class="filters_panel_large">
@@ -45,10 +51,22 @@
 				<b>Advance Input Filters</b>
 			</div>
 			<div>
-				<input class="input_filter" placeholder="GENRE"></input>
+				<type-ahead items="genres" 
+			 				prompt="GENRE" 
+			 				title="name" 
+			 				model="genre" 
+			 				on-select="on_genre_selection()"
+			 				ng-keypress="show_genre_options('BOOK')">
+			 	</type-ahead>
 			</div>
 			<div>
-				<input class="input_filter" placeholder="COUNTRY"></input>
+				<type-ahead items="countries" 
+			 				prompt="COUNTRY"
+			 				title="name"
+			 				model="country"
+			 				on-select="on_country_selection()"
+			 				ng-keypress="show_country_options('BOOK')">
+			 	</type-ahead>
 			</div>
 		</div>
 		<div class="filters_panel_large">
@@ -66,10 +84,22 @@
 				<b>Advance Input Filters</b>
 			</div>
 			<div>
-				<input class="input_filter" placeholder="GENRE"></input>
+				<type-ahead items="genres" 
+			 				prompt="GENRE" 
+			 				title="name" 
+			 				model="genre" 
+			 				on-select="on_genre_selection()"
+			 				ng-keypress="show_genre_options('BOOK')">
+			 	</type-ahead>
 			</div>
 			<div>
-				<input class="input_filter" placeholder="COUNTRY"></input>
+				<type-ahead items="countries" 
+			 				prompt="COUNTRY"
+			 				title="name"
+			 				model="country"
+			 				on-select="on_country_selection()"
+			 				ng-keypress="show_country_options('BOOK')">
+			 	</type-ahead>
 			</div>
 		</div>
 		<div class="filters_panel_large">

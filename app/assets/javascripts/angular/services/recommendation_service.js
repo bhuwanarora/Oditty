@@ -20,7 +20,7 @@ recommendationApp.service('recommendationService', function ($http, $q, $rootSco
 
     this.get_genres = function(filter){
         var deferred = $q.defer();
-        $http.get('/api/v0/genres?q='+filter).then(function(result) {
+        $http.get('/api/v0/genres?'+filter).then(function(result) {
                             return deferred.resolve(result.data); 
                         });
         return deferred.promise;
@@ -28,7 +28,7 @@ recommendationApp.service('recommendationService', function ($http, $q, $rootSco
 
     this.get_countries = function(filter){
         var deferred = $q.defer();
-        $http.get('/api/v0/countries?q='+filter).then(function(result) {
+        $http.get('/api/v0/countries?'+filter).then(function(result) {
                             return deferred.resolve(result.data); 
                         });
         return deferred.promise;

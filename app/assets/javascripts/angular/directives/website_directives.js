@@ -88,3 +88,51 @@ websiteApp.directive('pushNotification', function($rootScope, $parse, $timeout){
 		}
 	}
 })
+
+websiteApp.directive('typeAhead', function($timeout){
+	return{
+		restrict: 'E',
+		scope: {
+			items: '=',
+	      	prompt: '@',
+	      	title: '@',
+	      	id: '@',
+	      	subtitle: '@',
+	      	model: '=',
+	      	onSelect: '&'
+		},
+		link: function(scope, elem, attrs){
+			scope.handleSelection = function(selectedItem) {
+				scope.model = selectedItem.toUpperCase();
+			    scope.current = 0;
+			    scope.selected = true;
+			    $timeout(function() {
+			      scope.onSelect();
+			    }, 200);
+			};
+
+			scope.isCurrent = function(index) {
+			    return scope.current == index;
+			};
+
+			scope.setCurrent = function(index) {
+			    scope.current = index;
+			};
+
+			_init = function(){
+				scope.current = 0;
+				scope.selected = true; // hides the list initially
+			}
+
+			_init()
+		},
+		controller: function($scope, recommendationService){
+		  	_init = function(){
+		  		$scope.name = ''; // This will hold the selected item
+		  	}
+
+		  	_init()
+		},
+		templateUrl: 'assets/angular/widgets/partials/type_ahead.html'
+	}
+})

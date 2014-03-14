@@ -1,4 +1,4 @@
-recommendationApp.directive('moreFilters', function($rootScope){
+recommendationApp.directive('moreFilters', function($rootScope, $timeout){
 	return{
 		restrict: 'E',
 		controller: function($scope, recommendationService){
@@ -33,16 +33,36 @@ recommendationApp.directive('moreFilters', function($rootScope){
 				}
 			}
 
-			$scope.show_country_options = function(){
+			$scope.show_country_options = function(filter){
+				params = $scope.country+String.fromCharCode(event.keyCode)
+				filter = "q="+params+"&filter="+filter
 				recommendationService.get_countries(filter).then(function(data){
 			    	$scope.countries = data["countries"]
 			    })
 			}
 
 			$scope.show_genre_options = function(filter){
+				params = $scope.genre+String.fromCharCode(event.keyCode)
+				filter = "q="+params+"&filter="+filter
 				recommendationService.get_genres(filter).then(function(data){
 			    	$scope.genres = data["genres"]
 			    })
+			}
+
+			$scope.on_genre_selection = function(){
+				filter_name = $scope.genre
+				$rootScope.filters["genre_filter"] = filter_name
+				message = "SUCCESS-'"+filter_name+"' added to filters."
+				notify($rootScope, message, $timeout)
+				$rootScope.$broadcast('reloadRecommendations');
+			}
+
+			$scope.on_country_selection = function(){
+				filter_name = $scope.country
+				$rootScope.filters["country_filter"] = filter_name
+				message = "SUCCESS-'"+filter_name+"' added to filters."
+				notify($rootScope, message, $timeout)
+				$rootScope.$broadcast('reloadRecommendations');
 			}
 
 			_init()
@@ -67,24 +87,6 @@ recommendationApp.directive('filter', function($rootScope, $timeout){
 			_init()
 		},
 		templateUrl: "/assets/angular/widgets/partials/filter.html"
-	}
-})
-
-recommendationApp.directive('typeFilter', function($rootScope, $timeout){
-	return{
-		restrict: 'E',
-		scope: { 'type_filter': '=data' },
-		controller: function($scope){
-			$scope.toggle_filter = function(){
-				_toggle_filters("type_filters", $scope, $rootScope, $timeout)
-			}
-
-			_init = function(){
-				_initialise_filters("type_filters", $scope, $rootScope)
-			}
-
-			_init()
-		}
 	}
 })
 
