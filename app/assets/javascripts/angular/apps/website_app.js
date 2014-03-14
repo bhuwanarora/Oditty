@@ -9,15 +9,16 @@ websiteApp.config(function ($sceDelegateProvider, $routeProvider) {
             controller: 'websiteAppController',
             templateUrl: 'assets/angular/widgets/partials/search.html'
         })
-})
+});
 
 function notify($rootScope, message, $timeout){
-  message_split = message.split("-")
-  $rootScope.message_type = message_split[0]
-  $rootScope.message = message_split[1]
-  $rootScope.notification_active = true
-  $timeout(function(){
+  var message_split = message.split("-");
+  $rootScope.message_type = message_split[0];
+  $rootScope.message = message_split[1];
+  $rootScope.notification_active = true;
+  var timeout_event = $timeout(function(){
     $rootScope.notification_active = false
     $rootScope.message = ""
-  }, 3000)
+  }, 3000);
+  return timeout_event;
 }
