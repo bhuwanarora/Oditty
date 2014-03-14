@@ -1,41 +1,14 @@
  <div ng-class="{'rate':!expand, 'rate_expand':expand}" class="animate-fast">
  	<div class="rate_radio_buttons">
 		Rate this book
-		<input type="radio" 
+		<button type="radio" 
 			   class="rate_radio" 
-			   value="1" 
+			   value="{{$index}}"
 			   ng-model="rate_book" 
 			   ng-mouseover="show_rating_description()" 
 			   ng-mouseleave="init_rate_description()"
-			   ng-click="mark_as_rated()"></input>
-		<input type="radio" 
-			   class="rate_radio" 
-			   value="2" 
-			   ng-model="rate_book" 
-			   ng-mouseover="show_rating_description()" 
-			   ng-mouseleave="init_rate_description()"
-			   ng-click="mark_as_rated()"></input>
-		<input type="radio" 
-			   class="rate_radio" 
-			   value="3" 
-			   ng-model="rate_book" 
-			   ng-mouseover="show_rating_description()" 
-			   ng-mouseleave="init_rate_description()"
-			   ng-click="mark_as_rated()"></input>
-		<input type="radio" 
-			   class="rate_radio" 
-			   value="4" 
-			   ng-model="rate_book" 
-			   ng-mouseover="show_rating_description()" 
-			   ng-mouseleave="init_rate_description()"
-			   ng-click="mark_as_rated()"></input>
-		<input type="radio" 
-			   class="rate_radio" 
-			   value="5" 
-			   ng-model="rate_book" 
-			   ng-mouseover="show_rating_description()" 
-			   ng-mouseleave="init_rate_description()"
-			   ng-click="mark_as_rated()"></input>
+			   ng-click="mark_as_rated()"
+			   ng-repeat="i in [1, 2, 3, 4, 5]">{{i}}</button>
  	</div>
 	<div class="rating_description">
 		{{rating_description}}

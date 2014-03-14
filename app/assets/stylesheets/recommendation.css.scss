@@ -1195,7 +1195,7 @@ input:focus{
 	box-shadow: 0px 1px 4px 0px #99A3AD, inset 0px 0px 40px #EEEEEE;
 }
 
-.inactive_filter:hover{
+.inactive_filter:hover, .rate_radio:hover{
 	box-shadow: 0px 1px 4px 0px #143A5F, inset 0px 0px 40px #368AC2;
 }
 
@@ -1253,7 +1253,11 @@ input:focus{
 }
 
 .rate_radio{
-
+	border: 1px solid #FFFFFF;
+	border-radius: 0px;
+	box-shadow: 0px 1px 4px 0px #D4D7DA, inset 0px 0px 40px #EEEEEE;
+	background-color: white;
+	cursor: pointer;
 }
 
 .rating_description{
