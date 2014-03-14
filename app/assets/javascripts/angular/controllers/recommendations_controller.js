@@ -128,7 +128,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	}
 
 	_init_recommendations = function(){
-		$scope.recommendations = []
+		$scope.recommendations = {"books": [], "readers": [], "authors": []}
 	}
 
 	_init = function(){
@@ -180,7 +180,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	        	$rootScope.message_type = "Notification"
 	        	$rootScope.message = "We think you like Hermann Hesse, and here is his best read."
 	        	$rootScope.notification_active = true
-	    		$scope.recommendations = $scope.recommendations.concat(data["recommendations"])
+	    		$scope.recommendations["books"] = $scope.recommendations["books"].concat(data["recommendations"]["books"])
 	    	})
 		}, fiveMinute)
 	}
@@ -201,7 +201,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 
     _get_recommendations = function(){
         recommendationService.get_recommendations().then(function(data){
-	    	$scope.recommendations = $scope.recommendations.concat(data["recommendations"])
+	    	$scope.recommendations["books"] = $scope.recommendations["books"].concat(data["recommendations"]["books"])
 	    })
     }
 

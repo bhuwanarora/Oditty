@@ -66,7 +66,7 @@ module Api
 								:background_color => "#3cb878",
 								:description => ""},
 					:id => 13)
-				render :json => {:recommendations => [test_book]}, :status => 200
+				render :json => {:recommendations => {:books => [test_book]}}, :status => 200
 			end
 
 			def recommendations
@@ -177,7 +177,7 @@ module Api
 
 				count = params[:count]
 				books = [test_book1, test_book2, test_book3, test_book4, test_book5]
-				render :json => {:recommendations => books}, :status => 200
+				render :json => {:recommendations => {:books => books}}, :status => 200
 			end
 		end
 	end
