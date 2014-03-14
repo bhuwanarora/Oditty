@@ -146,7 +146,6 @@ function _toggle_filters(type, $scope, $rootScope, $timeout){
 		var message = "SUCCESS-'"+filter_name+"' added to filters.";
 	}
 	var timeout_event = notify($rootScope, message, $timeout);
-	console.log("_toggle_filters",$scope);
 	$rootScope.$broadcast('reloadRecommendations');
 
 	$scope.$on('destroy', function(){

@@ -6,7 +6,6 @@ websiteApp.config(function ($sceDelegateProvider, $routeProvider) {
     $routeProvider
     .when('/search',
         {
-            controller: 'websiteAppController',
             templateUrl: 'assets/angular/widgets/partials/search.html'
         })
 });

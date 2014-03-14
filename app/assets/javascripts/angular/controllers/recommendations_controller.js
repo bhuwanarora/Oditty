@@ -69,7 +69,6 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	}
 
 	_init_recommendations = function(){
-		console.log("_init_recommendations",$scope);
 		$scope.recommendations = {"books": [], "readers": [], "authors": []};
 	}
 
@@ -153,7 +152,6 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 
     _get_recommendations = function(){
         recommendationService.get_recommendations().then(function(data){
-        	console.log("_get_recommendations",$scope);
 	    	$scope.recommendations["books"] = $scope.recommendations["books"].concat(data["recommendations"]["books"]);
 	    });
     }
