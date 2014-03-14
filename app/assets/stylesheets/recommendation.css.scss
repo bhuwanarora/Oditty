@@ -409,22 +409,22 @@ a:hover{
 }
 
 .book_widget{
-	width: 275px;
+	width: 280px;
 	display: inline-block;
 	margin-left: 20px;
 }
 
 .book_widget_expand{
-	width: 535px;
+	width: 540px;
 	margin-left: 40px;
 	display: inline-block;
 }
 
 .animate-fast{
-	-webkit-transition:all linear 0.2s;
-    -moz-transition:all linear 0.2s;
-    -o-transition:all linear 0.2s;
-    transition:all linear 0.2s;
+	-webkit-transition:all linear 0s;
+    -moz-transition:all linear 0s;
+    -o-transition:all linear 0s;
+    transition:all linear 0s;
 }
 
 .animate-slow{
