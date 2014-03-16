@@ -1,12 +1,11 @@
-<!-- <img src="assets/icon-sprites.png" class="expand_book" ng-click="triggerExpand()"/> -->
-
 <div track 
 	ng-class="{'summary_button':hovered && !expand, 'hidden_summary_button':!hovered, 'summary_button_expand':expand && hovered}" 
-	class="animate-fast" 
+	class="summary_button_base animate-fast" 
 	ng-click="triggerExpand()">
 	SUMMARY
 </div>
 <img ng-class="{'thumb':!hovered, 'thumb_hover':hovered}" class="animate-slow book_thumb" ng-src={{book.book_thumb.book_cover_url}}/>
+<div ng-if="read" class="stamp_read">READ</div>
 <book_binding track></book_binding>
 <summary track></summary>
 <svg xmlns="http://www.w3.org/2000/svg" style="position: absolute; height: 0px">

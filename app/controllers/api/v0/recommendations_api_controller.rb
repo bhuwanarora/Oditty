@@ -11,10 +11,22 @@ module Api
 
 			def filters
 				filters_book = Filter.where(:filter_type => "BOOK")
+								.order("priority DESC")
+								.select("id, name, priority").limit(6)
+								.as_json
+				filter_author = Filter.where(:filter_type => "AUTHOR")
 								.order(:priority)
 								.select("id, name, priority").limit(6)
 								.as_json
-				render :json => {:filters => {"book" => filters_book}}, :status => 200
+				filter_reader = Filter.where(:filter_type => "READER")
+								.order(:priority)
+								.select("id, name, priority").limit(6)
+								.as_json
+				render :json => {:filters => {
+									"book" => filters_book, 
+									"author" => filter_author,
+									"reader" => filter_reader
+								}}, :status => 200
 			end
 
 			def push_recommendations
@@ -54,7 +66,7 @@ module Api
 								:background_color => "#3cb878",
 								:description => ""},
 					:id => 13)
-				render :json => {:recommendations => [test_book]}, :status => 200
+				render :json => {:recommendations => {:books => [test_book]}}, :status => 200
 			end
 
 			def recommendations
@@ -165,7 +177,7 @@ module Api
 
 				count = params[:count]
 				books = [test_book1, test_book2, test_book3, test_book4, test_book5]
-				render :json => {:recommendations => books}, :status => 200
+				render :json => {:recommendations => {:books => books}}, :status => 200
 			end
 		end
 	end

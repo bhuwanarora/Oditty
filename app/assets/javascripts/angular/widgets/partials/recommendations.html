@@ -8,6 +8,14 @@
 		CONTENT
 	</div>
 </div>
-<div ng-repeat="recommendation in recommendations" class="recommendation_block">
-	<book track ng-if="true" id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></book>
+<div ng-show="active_book_filter" ng-model="recommendations['books']">
+	<div ng-repeat="recommendation in recommendations['books']" class="recommendation_block">
+		<book track ng-if="true" id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></book>
+	</div>
+</div>
+<div ng-show="active_reader_filter">
+	READER
+</div>
+<div ng-show="active_author_filter">
+	AUTHOR
 </div>

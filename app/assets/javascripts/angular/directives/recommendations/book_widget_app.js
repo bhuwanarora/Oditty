@@ -4,12 +4,13 @@ bookWidgetApp.directive('book', function () {
     scope: { 'book': '=data' },
     controller: function($scope){
       $scope.hover = function() {
-        $scope.hovered = true
+        $scope.hovered = true;
       };
 
       $scope.mouseout = function() {
-      	$scope.hovered = false
-      };      
+      	$scope.hovered = false;
+      };
+
     },
     templateUrl: "/assets/angular/widgets/base/book_widget.html"
   };
@@ -36,7 +37,7 @@ bookWidgetApp.directive('bookthumb', function () {
       };
 
       _init = function(){
-        $scope.expand = true;
+        $scope.expand = false;
       }
 
       _init();
@@ -69,6 +70,27 @@ bookWidgetApp.directive('shelf', function () {
 bookWidgetApp.directive('bookmark', function () {
   return {
     restrict: 'E',
+    controller: function($scope){
+      $scope.toggle_bookmarked = function(){
+        var bookmark_status = $scope.book.bookmark_status;
+        if(bookmark_status == 1){
+          $scope.book.bookmark_status = 0;
+          _remove_book_from_shelf();
+        }
+        else{
+          $scope.book.bookmark_status = 1;
+          _add_book_to_shelf();
+        }
+      }
+
+      _remove_book_from_shelf = function(){
+        $scope.$emit('removeBookFromShelf', $scope.book)
+      }
+
+      _add_book_to_shelf = function(){
+        $scope.$emit('addBookToShelf', $scope.book)
+      }
+    },
     templateUrl: "/assets/angular/widgets/base/bookmark.html"
   };
 })
@@ -78,8 +100,8 @@ bookWidgetApp.directive('category', function () {
     restrict: 'E',
     controller: function($scope){
       $scope.initVerticalText = function(category){
-        name = category.name
-        description = category.description
+        var name = category.name;
+        var description = category.description;
         $scope.nameArray = name.split('');
         $scope.descriptionArray = description.split('');
       }
@@ -92,25 +114,24 @@ bookWidgetApp.directive('comment', function () {
   return {
     restrict: 'E',
     controller: function($scope){
-    	$scope.init = function(){
-    		$scope.comment_ready = false
+    	_init = function(){
+    		$scope.comment_ready = false;
     	}
 
     	$scope.toggleCommentBoxState = function(){
     		if($scope.comment_ready == true){
-    			$scope.comment_ready = false
+    			$scope.comment_ready = false;
     		}
     		else{
-    			$scope.comment_ready = true	
+    			$scope.comment_ready = true;
     		}
     	}
 
     	$scope.postReview = function(){
-    		$scope.rated = false;
     		$scope.reviewed = true;
     	}
 
-    	$scope.init();
+    	_init();
     },
     templateUrl: "/assets/angular/widgets/base/comment.html"
   };
@@ -120,20 +141,35 @@ bookWidgetApp.directive('interact', function () {
   return {
     restrict: 'E',
     controller: function($scope){
+      _init = function(){
+        $scope.logged_in = true;
+        $scope.read = false;
+        $scope.rated = false;
+        $scope.reviewed = false;
+      }
+
     	$scope.setStatus = function(status){
     		if(status == 0){
     			$scope.logged_in = true;
     		}
     		else if(status == 1){
+          $scope.logged_in = true;
     			$scope.read = true;
     		}
     		else if(status == 2){
+          $scope.logged_in = true;
+          $scope.read = true;
     			$scope.rated = true;
     		}
     		else if(status == 3){
+          $scope.logged_in = true;
+          $scope.read = true;
+          $scope.rated = true;
     			$scope.reviewed = true;	
     		}
     	}
+
+      _init();
     },
     templateUrl: "/assets/angular/widgets/base/interact_widget.html"
   };
@@ -153,10 +189,10 @@ bookWidgetApp.directive('summary', function () {
   };
 })
 
-bookWidgetApp.directive('tags', function () {
+bookWidgetApp.directive('bookTags', function () {
   return {
     restrict: 'E',
-    templateUrl: "/assets/angular/widgets/base/tags.html"
+    templateUrl: "/assets/angular/widgets/base/book_tags.html"
   };
 })
 
@@ -164,47 +200,50 @@ bookWidgetApp.directive('rate', function ($rootScope, $timeout) {
   return {
     restrict: 'E',
     controller: function($scope){
-    	$scope.init = function(){
+    	_init = function(){
 			  $scope.rate_ready = false;
         $scope.init_rate_description();
       }
 
       $scope.show_rating_description = function(){
-        rating_value = event.currentTarget.value
+        rating_value = event.currentTarget.value;
         if(rating_value == "1"){
-          $scope.rating_description = "Left the book in between. Didn't like it."
+          $scope.rating_description = "Left the book in between. Didn't like it.";
         }
         else if (rating_value == "2") {
-          $scope.rating_description = "Ordinary read. Was ok ok."
+          $scope.rating_description = "Ordinary read. Was ok ok.";
         } 
         else if (rating_value == "3") {
-          $scope.rating_description = "A nice read. Liked it."
+          $scope.rating_description = "A nice read. Liked it.";
         } 
         else if (rating_value == "4") {
-          $scope.rating_description = "The book gives goosebumps. Loved it."
+          $scope.rating_description = "The book gives goosebumps. Loved it.";
         } 
         else{
-          $scope.rating_description = "In the list of the best books I've read."
+          $scope.rating_description = "In the list of the best books I've read.";
         }
       }
 
       $scope.init_rate_description = function(){
-        $scope.rating_description = "Hover to see what it means."
+        $scope.rating_description = "";
       }
 
   		$scope.toggle = function(index){
   			//TODO
-  			$scope.mark_as_rated()
+  			$scope.mark_as_rated();
   		}
 
   		$scope.mark_as_rated = function(){
-  			$scope.read = false;
   			$scope.rated = true;
         //rating dependent
-        notify($rootScope, "THANKS-This will help us to recommend you better books.", $timeout)
+        var timeout_event = notify($rootScope, "THANKS-This will help us to recommend you better books.", $timeout);
+
+        $scope.$on('destroy', function(){
+          $timeout.cancel(timeout_event)
+        })
   		}
 
-  		$scope.init();
+  		_init();
     },
     templateUrl: "/assets/angular/widgets/base/rate.html"
   };
@@ -215,9 +254,12 @@ bookWidgetApp.directive('markAsRead', function($rootScope, $timeout){
 		restrict: 'E',
 		controller: function($scope){
 			$scope.markAsRead = function(){
-				$scope.logged_in = false;
 				$scope.read = true;
-        notify($rootScope, "ADVISE-Also please rate the book. This will help us to recommend better books.", $timeout)
+        var timeout_event = notify($rootScope, "ADVISE-Also please rate the book. This will help us to recommend better books.", $timeout)
+
+        $scope.$on('destroy', function(){
+          $timeout.cancel(timeout_event);
+        })
 				//ajax call to mark the book as read
 			}
 		},
