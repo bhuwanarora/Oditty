@@ -6,7 +6,8 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 			$scope.bookmark_selected = false;
 		}
 		else{
-			$scope.bookmark_selected = true;		
+			$scope.bookmark_selected = true;
+			$scope.read_selected = false;
 		}
 	}
 
@@ -15,6 +16,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 			$scope.read_selected = false;
 		}
 		else{
+			$scope.bookmark_selected = false;
 			$scope.read_selected = true;		
 		}
 	}
@@ -57,16 +59,25 @@ recommendationApp.controller('recommendationsController', function($scope, $root
         }
 	}
 
-	_init_broadcast = function(){
+	_init_emit = function(){
 	    load_recommendations_event = $scope.$on('loadRecommendations', function(){
 	    	_get_recommendations();
 	    });
 
 	    reload_recommendations_event = $scope.$on('reloadRecommendations', function(){
-	    	// $scope.recommendations["books"] = [];
 	    	_init_recommendations();
-	    	// _get_recommendations();
+	    	_get_recommendations();
 	    });
+
+	    add_book_to_shelf_event = $scope.$on('addBookToShelf', function(event, data){
+	    	var book = {title: data['title'], author_name: data['author_name'], book_cover_url: data['book_cover_url']};
+	    	$scope.user_books['bookmarked'].push(book);
+	    })
+
+	    remove_book_from_shelf_event = $scope.$on('removeBookFromShelf', function(event, data){
+	    	var book = {title: data['title'], author_name: data['author_name'], book_cover_url: data['book_cover_url']};
+	    	debugger
+	    })
 	}
 
 	_init_recommendations = function(){
@@ -77,33 +88,14 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 		_init_recommendations()
 	}
 
-	_init = function(){
-		//oneMin = 60000
-		var oneSec = 10000;
-
-		user_behaviour_timer_event = $timeout(function(){
-			_recordUserBehaviour();
-		}, oneSec);
-
-		$scope.searching = false;
-		_init_recommendations();
-    	_init_broadcast();
-    	_get_filters();
-		_init_notifications();
-        _init_analytics();
-        _init_shelf();
-		_initialize_filters();
-        _get_recommendations();
-        _push_recommendations();
-        _bind_destroy();
-	}
-
 	_bind_destroy = function(){
 		$scope.$on('$destroy', function(){
 			$timeout.cancel(push_books_timer_event);
 			$timeout.cancel(user_behaviour_timer_event);
 			$broadcast.cancel(load_recommendations_event);
-			$broadcast.cancel(reload_recommendations_event);
+			$emit.cancel(reload_recommendations_event);
+			$emit.cancel(add_book_to_shelf_event);
+			$emit.cancel(remove_book_from_shelf_event);
 		})
 	}
 
@@ -117,7 +109,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	}
 
 	_initialize_filters = function(){
-		$scope.show_more_filters = true;
+		$scope.show_more_filters = false;
 		$rootScope.filters = {};
 		$rootScope.filters["readers"] = false;
 		$rootScope.filters["books"] = true;
@@ -166,6 +158,35 @@ recommendationApp.controller('recommendationsController', function($scope, $root
     		$scope.more_filters = $scope.more_filters.concat(data["filters"]);
     	});
     }
+
+    _init_user_details = function(){
+    	recommendationService.get_user_details().then(function(data){
+    		$scope.user_books = data["books"];
+    	})
+    }
+
+
+	_init = function(){
+		//oneMin = 60000
+		var oneSec = 10000;
+
+		user_behaviour_timer_event = $timeout(function(){
+			_recordUserBehaviour();
+		}, oneSec);
+
+		$scope.searching = false;
+		_init_recommendations();
+    	_init_emit();
+    	_get_filters();
+		_init_notifications();
+        _init_analytics();
+        _init_shelf();
+		_initialize_filters();
+        _get_recommendations();
+        _push_recommendations();
+        _bind_destroy();
+        _init_user_details();
+	}
 
 	var push_books_timer_event = ""
 	var load_recommendations_event = ""

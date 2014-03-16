@@ -20,6 +20,7 @@ ReadersDoor::Application.routes.draw do
 
       match "genres"                                 => 'website_api#genres',                               :via => [:put, :get, :post]
       match "countries"                              => 'website_api#countries',                            :via => [:put, :get, :post]
+      match "user_details"                           => 'website_api#get_user_details',                     :via => [:put, :get, :post]
     end
   end
 end

@@ -1,3 +1,12 @@
-<div class="shelf">
-	
+<div class="shelf" ng-show="bookmark_selected">
+	<div class="header"><b>{{user_books['bookmarked'].length}}</b> BOOKS BOOKMARKED</div>
+	<div ng-repeat="book in user_books['bookmarked']">
+		<img ng-src="{{book['book_cover_url']}}" class="shelf_book"/>
+	</div>
+</div>
+<div class="shelf" ng-show="read_selected">
+	<div class="header"><b>{{user_books['read'].length}}</b> BOOKS READ</div>
+	<div ng-repeat="book in user_books['read']">
+		<img ng-src="{{book['book_cover_url']}}" class="shelf_book"/>
+	</div>
 </div>

@@ -1,11 +1,11 @@
-<div ng-class="{'book_widget':!expand, 'book_widget_expand':expand}" class="animate-fast">
+<div ng-class="{'book_widget':!expand, 'book_widget_expand':expand}" class="animate-fast book_widget_base">
 	<category track></category>
 	<div ng-model="book" 
 		ng-mouseenter="discovered = true" 
 		ng-mouseover="hover()" 
 		ng-mouseout="mouseout()" 
 		ng-class="{'discovered': discovered, 'undiscovered': !discovered, 'card_expand': expand}" class="card animate-fast">
-		<div ng-class="{'header':!expand, 'header_expand':expand}" class="animate-fast">
+		<div class="animate-fast header">
 			<div class="background">
 				<!-- <rating track class="rating animate-fast" data="book.rating"></rating> -->
 				<bookmark track></bookmark>

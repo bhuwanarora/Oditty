@@ -1,13 +1,13 @@
 <div ng-if="comment_ready">
-	<div ng-class="{'comment_box_background':!expand, 'comment_box_background_expand':expand}" class="animate-fast">
-		<input type="text" ng-class="{'comment_box':!expand, 'comment_box_expand':expand}" value="What do you feel about this book..." class="animate-fast" />
+	<div class="comment_box_background animate-fast">
+		<input type="text" value="What do you feel about this book..." class="comment_box animate-fast" />
 		<div class="post_button" ng-click="postReview()">POST</div>
 		<div class="cancel_button" ng-click="toggleCommentBoxState()">Cancel</div>
 	</div>
 </div>
 <div ng-if="!comment_ready">
-	<div ng-class="{'comment_instruct_background':!expand, 'comment_instruct_background_expand':expand}" class="animate-fast">
-		<div ng-class="{'comment_instruct':!expand, 'comment_instruct_expand':expand}" class="animate-fast" ng-click="toggleCommentBoxState()">
+	<div class="comment_instruct_background animate-fast">
+		<div class="comment_instruct animate-fast" ng-click="toggleCommentBoxState()">
 			What do you feel about this book...
 		</div>
 	</div>

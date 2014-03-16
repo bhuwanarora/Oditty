@@ -9,7 +9,8 @@ bookWidgetApp.directive('book', function () {
 
       $scope.mouseout = function() {
       	$scope.hovered = false;
-      };      
+      };
+
     },
     templateUrl: "/assets/angular/widgets/base/book_widget.html"
   };
@@ -69,6 +70,27 @@ bookWidgetApp.directive('shelf', function () {
 bookWidgetApp.directive('bookmark', function () {
   return {
     restrict: 'E',
+    controller: function($scope){
+      $scope.toggle_bookmarked = function(){
+        var bookmark_status = $scope.book.bookmark_status;
+        if(bookmark_status == 1){
+          $scope.book.bookmark_status = 0;
+          _remove_book_from_shelf();
+        }
+        else{
+          $scope.book.bookmark_status = 1;
+          _add_book_to_shelf();
+        }
+      }
+
+      _remove_book_from_shelf = function(){
+        $scope.$emit('removeBookFromShelf', $scope.book)
+      }
+
+      _add_book_to_shelf = function(){
+        $scope.$emit('addBookToShelf', $scope.book)
+      }
+    },
     templateUrl: "/assets/angular/widgets/base/bookmark.html"
   };
 })
@@ -106,7 +128,6 @@ bookWidgetApp.directive('comment', function () {
     	}
 
     	$scope.postReview = function(){
-    		$scope.rated = false;
     		$scope.reviewed = true;
     	}
 
@@ -120,20 +141,35 @@ bookWidgetApp.directive('interact', function () {
   return {
     restrict: 'E',
     controller: function($scope){
+      _init = function(){
+        $scope.logged_in = true;
+        $scope.read = false;
+        $scope.rated = false;
+        $scope.reviewed = false;
+      }
+
     	$scope.setStatus = function(status){
     		if(status == 0){
     			$scope.logged_in = true;
     		}
     		else if(status == 1){
+          $scope.logged_in = true;
     			$scope.read = true;
     		}
     		else if(status == 2){
+          $scope.logged_in = true;
+          $scope.read = true;
     			$scope.rated = true;
     		}
     		else if(status == 3){
+          $scope.logged_in = true;
+          $scope.read = true;
+          $scope.rated = true;
     			$scope.reviewed = true;	
     		}
     	}
+
+      _init();
     },
     templateUrl: "/assets/angular/widgets/base/interact_widget.html"
   };
@@ -189,7 +225,7 @@ bookWidgetApp.directive('rate', function ($rootScope, $timeout) {
       }
 
       $scope.init_rate_description = function(){
-        $scope.rating_description = "Hover to see what it means.";
+        $scope.rating_description = "";
       }
 
   		$scope.toggle = function(index){
@@ -198,7 +234,6 @@ bookWidgetApp.directive('rate', function ($rootScope, $timeout) {
   		}
 
   		$scope.mark_as_rated = function(){
-  			$scope.read = false;
   			$scope.rated = true;
         //rating dependent
         var timeout_event = notify($rootScope, "THANKS-This will help us to recommend you better books.", $timeout);
@@ -219,7 +254,6 @@ bookWidgetApp.directive('markAsRead', function($rootScope, $timeout){
 		restrict: 'E',
 		controller: function($scope){
 			$scope.markAsRead = function(){
-				$scope.logged_in = false;
 				$scope.read = true;
         var timeout_event = notify($rootScope, "ADVISE-Also please rate the book. This will help us to recommend better books.", $timeout)
 
