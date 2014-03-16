@@ -1,11 +1,13 @@
 body{
-	background: url('background-1.jpg');
+	/*background: url('background-1.jpg');*/
 	/*background-repeat: no-repeat;*/
 	background-color: #DBDBDB;
 	width: 170%;
 	height: 100%;
 	overflow: auto;
 	white-space: nowrap;
+	background: url("x.jpg");
+	background-size: cover;
 }
 
 .background_mask{
@@ -136,7 +138,7 @@ body{
 	margin: 5px;
 	filter: url(filters.svg#grayscale); /* Firefox 3.5+ */
     filter: gray; /* IE6-9 */
-    -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+    -webkit-filter: grayscale(1);  /*Google Chrome, Safari 6+ & Opera 15+ */
     background: rgba(113, 112, 112, 0.25);
 	border-radius: 2px;
 	-webkit-border-radius: 2px;

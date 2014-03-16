@@ -63,13 +63,18 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	    });
 
 	    reload_recommendations_event = $scope.$on('reloadRecommendations', function(){
+	    	// $scope.recommendations["books"] = [];
 	    	_init_recommendations();
-	    	_get_recommendations();
+	    	// _get_recommendations();
 	    });
 	}
 
 	_init_recommendations = function(){
 		$scope.recommendations = {"books": [], "readers": [], "authors": []};
+	}
+
+	$scope.test_scope = function(){
+		_init_recommendations()
 	}
 
 	_init = function(){

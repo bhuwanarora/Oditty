@@ -36,7 +36,7 @@ bookWidgetApp.directive('bookthumb', function () {
       };
 
       _init = function(){
-        $scope.expand = true;
+        $scope.expand = false;
       }
 
       _init();

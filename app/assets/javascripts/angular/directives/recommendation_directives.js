@@ -54,7 +54,7 @@ recommendationApp.directive('moreFilters', function($rootScope, $timeout){
 				$rootScope.filters["genre_filter"] = filter_name;
 				message = "SUCCESS-'"+filter_name+"' added to filters.";
 				var timeout_event = notify($rootScope, message, $timeout);
-				$rootScope.$broadcast('reloadRecommendations');
+				$scope.$emit('reloadRecommendations');
 
 
 				$scope.$on('destroy', function(){
@@ -67,7 +67,7 @@ recommendationApp.directive('moreFilters', function($rootScope, $timeout){
 				$rootScope.filters["country_filter"] = filter_name;
 				message = "SUCCESS-'"+filter_name+"' added to filters.";
 				var timeout_event = notify($rootScope, message, $timeout);
-				$rootScope.$broadcast('reloadRecommendations');
+				$scope.$emit('reloadRecommendations');
 
 				$scope.$on('destroy', function(){
 					$timeout.cancel(timeout_event);
@@ -146,7 +146,7 @@ function _toggle_filters(type, $scope, $rootScope, $timeout){
 		var message = "SUCCESS-'"+filter_name+"' added to filters.";
 	}
 	var timeout_event = notify($rootScope, message, $timeout);
-	$rootScope.$broadcast('reloadRecommendations');
+	$scope.$emit('reloadRecommendations');
 
 	$scope.$on('destroy', function(){
 		$timeout.cancel(timeout_event);

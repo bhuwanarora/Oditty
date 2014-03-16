@@ -11,7 +11,7 @@ module Api
 
 			def filters
 				filters_book = Filter.where(:filter_type => "BOOK")
-								.order(:priority)
+								.order("priority DESC")
 								.select("id, name, priority").limit(6)
 								.as_json
 				filter_author = Filter.where(:filter_type => "AUTHOR")
