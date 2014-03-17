@@ -2,15 +2,12 @@
 <horizontal-scroller></horizontal-scroller>
 <div ng-controller="recommendationsController">
 	<shelf ng-if="bookmark_selected || read_selected"></shelf>
-	<more-filters ng-show="show_more_filters"></more-filters>
-	<div ng-view></div>
+	<more-filters ng-show="show_more_filters" ng-animate=" 'slide' " class="slide"></more-filters>
+	<div ng-model="recommendations" ng-view></div>
 	<div id="recommendationFooter">
 		<div class="website-title">
 			Reader's Door
 		</div>
-		<!-- <div class="search_link" ng-click="search()">
-			Start typing now to search...
-		</div> -->
 		<input set-focus="searching" 
 		       ng-keypress="getSearchResults($event)" 
 		       class="filter_input" 

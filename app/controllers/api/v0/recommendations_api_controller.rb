@@ -84,7 +84,6 @@ module Api
 							  	
 							  },
 							  :rating => 5,
-							  :status => 0,
 							  :bookmark_status => 1,
 							  :readers_count => "112",
 							  :discussions_count => "23",
@@ -92,6 +91,7 @@ module Api
 							  :news => [{:description => "", :from => ""}]
 						  }
 				test_book1 = test_book.merge(
+					:status => 0,
 					:book_thumb => {
 						:book_cover_url => "assets/books/20.jpeg",
 						:description => "Psychiatry is a novel by Hermann Hesse that deals with the spiritual journey of 
@@ -108,6 +108,7 @@ module Api
 					:id => 1)
 
 				test_book2 = test_book.merge(
+					:status => 1,
 					:book_thumb => {
 						:book_cover_url => "assets/books/10.jpg",
 						:description => "Psychiatry is a novel by Hermann Hesse that deals with the spiritual journey of 
@@ -125,6 +126,7 @@ module Api
 
 
 				test_book3 = test_book.merge(
+					:status => 2,
 					:book_thumb => {
 						:book_cover_url => "assets/books/11.jpeg",
 						:description => "Psychiatry is a novel by Hermann Hesse that deals with the spiritual journey of 
@@ -142,6 +144,7 @@ module Api
 
 
 				test_book4 = test_book.merge(
+					:status => 0,
 					:book_thumb => {
 						:book_cover_url => "assets/books/13.jpeg",
 						:description => "Psychiatry is a novel by Hermann Hesse that deals with the spiritual journey of 
@@ -159,6 +162,7 @@ module Api
 
 
 				test_book5 = test_book.merge(
+					:status => 0,
 					:book_thumb => {
 						:book_cover_url => "assets/books/24.jpg",
 						:description => "Psychiatry is a novel by Hermann Hesse that deals with the spiritual journey of 
