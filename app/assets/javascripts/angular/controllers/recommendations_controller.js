@@ -66,7 +66,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 
 	    reload_recommendations_event = $scope.$on('reloadRecommendations', function(){
 	    	_init_recommendations();
-	    	_get_recommendations();
+	    	// _get_recommendations();
 	    });
 
 	    add_book_to_shelf_event = $scope.$on('addBookToShelf', function(event, data){
@@ -76,7 +76,6 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 
 	    remove_book_from_shelf_event = $scope.$on('removeBookFromShelf', function(event, data){
 	    	var book = {title: data['title'], author_name: data['author_name'], book_cover_url: data['book_cover_url']};
-	    	debugger
 	    })
 	}
 
@@ -188,10 +187,10 @@ recommendationApp.controller('recommendationsController', function($scope, $root
         _init_user_details();
 	}
 
-	var push_books_timer_event = ""
-	var load_recommendations_event = ""
-	var reload_recommendations_event = ""
-	var user_behaviour_timer_event = ""
+	var push_books_timer_event = "";
+	var load_recommendations_event = "";
+	var reload_recommendations_event = "";
+	var user_behaviour_timer_event = "";
 	_init();
 
 });

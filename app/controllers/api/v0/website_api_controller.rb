@@ -24,7 +24,7 @@ module Api
 				
 				bookmarked_books = test_books
 				read_books = test_books
-				render :json => {:books => {:bookmarked => bookmarked_books, :read => read_books}}, :status => 200
+				render :json => {:books => {:bookmarked => [], :read => read_books}}, :status => 200
 			end
 
 			private

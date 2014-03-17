@@ -84,11 +84,11 @@ bookWidgetApp.directive('bookmark', function () {
       }
 
       _remove_book_from_shelf = function(){
-        $scope.$emit('removeBookFromShelf', $scope.book)
+        $scope.$emit('removeBookFromShelf', $scope.book);
       }
 
       _add_book_to_shelf = function(){
-        $scope.$emit('addBookToShelf', $scope.book)
+        $scope.$emit('addBookToShelf', $scope.book);
       }
     },
     templateUrl: "/assets/angular/widgets/base/bookmark.html"
@@ -208,19 +208,19 @@ bookWidgetApp.directive('rate', function ($rootScope, $timeout) {
       $scope.show_rating_description = function(){
         rating_value = event.currentTarget.value;
         if(rating_value == "1"){
-          $scope.rating_description = "Left the book in between. Didn't like it.";
+          $scope.rating_description = "Left reading in between.";
         }
         else if (rating_value == "2") {
-          $scope.rating_description = "Ordinary read. Was ok ok.";
+          $scope.rating_description = "Ordinary read.";
         } 
         else if (rating_value == "3") {
-          $scope.rating_description = "A nice read. Liked it.";
+          $scope.rating_description = "A nice read.";
         } 
         else if (rating_value == "4") {
-          $scope.rating_description = "The book gives goosebumps. Loved it.";
+          $scope.rating_description = "Loved it.";
         } 
         else{
-          $scope.rating_description = "In the list of the best books I've read.";
+          $scope.rating_description = "In the best books I've read.";
         }
       }
 
