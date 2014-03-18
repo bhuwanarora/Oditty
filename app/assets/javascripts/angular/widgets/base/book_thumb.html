@@ -1,10 +1,13 @@
 <div track 
 	ng-class="{'summary_button':hovered && !expand, 'hidden_summary_button':!hovered, 'summary_button_expand':expand && hovered}" 
 	class="summary_button_base animate-fast" 
-	ng-click="triggerExpand()">
+	ng-click="trigger_expand()">
 	SUMMARY
 </div>
-<img ng-class="{'thumb':!hovered, 'thumb_hover':hovered}" class="animate-slow book_thumb" ng-src={{book.book_thumb.book_cover_url}}/>
+<img ng-class="{'thumb':!hovered, 'thumb_hover':hovered}" 
+     class="animate-slow book_thumb" 
+     ng-src={{book.book_thumb.book_cover_url}}
+     ng-click="show_book()"/>
 <div ng-if="read" class="stamp_read">READ</div>
 <book_binding track></book_binding>
 <summary track></summary>

@@ -1,13 +1,10 @@
 html{
 	height: 100%;
-	overflow-y: hidden;
-	overflow-x: auto;
 }
 body{
 	/*background: url('background-1.jpg');*/
 	/*background-repeat: no-repeat;*/
 	background-color: #DBDBDB;
-	width: 170%;
 	height: 100%;
 	white-space: nowrap;
 	/*background: url("x2.jpg");*/
@@ -118,6 +115,8 @@ a:hover{
 .recommendation_block{
 	display: inline-block;
 	margin-top: 10px;
+	overflow-y: hidden;
+	overflow-x: auto;
 }
 
 .recommendation_block.ng-enter, .recommendation_block.ng-leave {

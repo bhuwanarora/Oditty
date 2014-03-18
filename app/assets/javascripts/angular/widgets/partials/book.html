@@ -1,0 +1,144 @@
+<link rel="stylesheet" type="text/css" href="assets/detailed_book.css.scss">
+<!-- flipbook -->
+<div ng-model="detailed_book.book" class="detailed_book" id="detailedBook">
+	<!-- PAGE1: Inverted BOOK -->
+	<div class="hard">
+		<div class="thumb">
+			<img ng-src="{{detailed_book['book'].thumb}}" width="400px" height="700px" />			
+		</div>
+	</div>
+
+	<div class="cover_fold">
+
+	</div>
+
+	<div class="content">
+		
+	</div>
+
+	<div class="blank_page">
+		
+	</div>
+
+	<div class="characters">
+	    <div ng-click="toggle_characters()">
+	    	Characters
+	    </div>
+	    <div ng-show="expand_characters">
+			<div class="character" ng-repeat="character in detailed_book['book'].characters">
+				{{character.name}} {{character.description}}
+			</div>
+	    </div>
+	</div>
+	
+
+	<div class="first_sentence">
+		<div ng-click="toggle_first_sentence()">
+	    	First Sentence
+		</div>
+	    <div ng-show="expand_first_sentence">
+	     	{{detailed_book['book'].first_sentence}}
+	    </div>
+	</div>
+	
+	<div class="note_for_parents">
+		<div ng-click="toggle_note_for_parents()">
+			Note For Parents
+		</div>
+		<div ng-show="expand_note_for_parents">
+			{{detailed_book['book'].note_for_parents}}
+		</div>
+	</div>
+
+	<div class="themes">
+		<div ng-click="toggle_themes()">
+			Themes
+		</div>
+		<div ng-show="expand_themes">
+			<div class="theme" ng-repeat="theme in detailed_book['book'].themes">
+				{{theme}}
+			</div>
+		</div>
+	</div>
+
+	<div class="subject_places">
+		<div ng-click="toggle_subject_places()">
+			Subject Places
+		</div>
+		<div ng-show="expand_subject_places">
+			<div class="subject_place" ng-repeat="subject_place in detailed_book['book'].subject_places">
+				{{subject_place}}
+			</div>
+		</div>
+	</div>
+
+	<div class="movies_based">
+		<div ng-click="toggle_movies_based()">
+			Movies Based
+		</div>
+		<div ng-show="expand_movies_based">
+			<div class="movie_based" ng-repeat="movie_based in detailed_book['book'].movies_based">
+				{{movie_based}}
+			</div>
+		</div>
+	</div>
+
+	<div class="book_tags">
+		<div ng-click="toggle_tags()">
+			Tags
+		</div>
+		<div ng-show="expand_tags">
+			<div class="tag" ng-repeat="tag in detailed_book['book'].tags">
+				{{tag}}
+			</div>
+		</div>
+	</div>
+
+	<!-- PAGE4: READERS -->
+	<div class="readers">
+		
+	</div>
+
+	<!-- PAGE4: NEWS -->
+	<div class="news">
+		
+	</div>
+
+	<!-- PAGE5: REVIEWS -->
+	<div class="reviews">
+		
+	</div>
+
+	<!-- PAGE6: DISCUSSIONS -->
+	<div class="discussions">
+		
+	</div>
+
+	<!-- PAGE7: ABOUT AUTHOR -->
+	<div class="about_author">
+		
+	</div>
+
+	<div class="blank_page">
+		
+	</div>
+	<div class="hard">
+		<div class="summary">
+			{{detailed_book['book'].summary}}
+		</div>
+	</div>
+</div>
+
+<!-- detailed book footer -->
+<div class="footer_navbar">
+	
+</div>
+
+<script>
+	// $("#detailedBook .double").scissor();
+	$("#detailedBook").turn({
+		width: 800,
+		height: 700,
+		autoCenter: true
+	});
+</script>

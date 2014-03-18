@@ -10,24 +10,24 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		else{
 			//move forward
 			event.view.window.scrollBy(80, 0);
-			_loadRecommendations()
+			_loadRecommendations();
 		}
 	}
 
 	$scope.scrollOnePageRight = function(event){
 		event.preventDefault();
 		//TODO put a better condition instead of two parent elements
-		clientWidth = event.currentTarget.parentElement.parentElement.clientWidth
-		lessThanOnePageLeft = event.pageX + 1000 > clientWidth
+		clientWidth = event.currentTarget.parentElement.parentElement.clientWidth;
+		lessThanOnePageLeft = event.pageX + 1000 > clientWidth;
 		if(lessThanOnePageLeft){
-			$rootScope.$broadcast('loadRecommendations')
+			$rootScope.$broadcast('loadRecommendations');
 		}
-		event.view.window.scrollBy(1000, 0)
+		event.view.window.scrollBy(1000, 0);
 	}
 
 	$scope.scrollOnePageLeft = function(event){
 		event.preventDefault();
-		event.view.window.scrollBy(-1000, 0)
+		event.view.window.scrollBy(-1000, 0);
 	}
 
 
@@ -37,10 +37,10 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 
 
 	$scope.search = function(){
-		input_aimed_for_searching = event.currentTarget == event.srcElement
+		input_aimed_for_searching = event.currentTarget == event.srcElement;
 		if(input_aimed_for_searching){
-			$rootScope.searching = true
-			$rootScope.keyCode = event.keyCode
+			$rootScope.searching = true;
+			$rootScope.keyCode = event.keyCode;
 		}
 	}
 
@@ -51,28 +51,43 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	}
 
 	_loadRecommendations = function(){
-		currentWidth = event.currentTarget.clientWidth
-		lessThanOnePageLeft = event.pageX + 1575 > currentWidth
+		currentWidth = event.currentTarget.clientWidth;
+		lessThanOnePageLeft = event.pageX + 1575 > currentWidth;
 		if (lessThanOnePageLeft){
-			newElementsCount = 5
-			leftMargin = 40
-			newElementsWidth = (275+leftMargin)*newElementsCount
+			newElementsCount = 5;
+			leftMargin = 40;
+			newElementsWidth = (275+leftMargin)*newElementsCount;
 			newWidth = currentWidth+newElementsWidth;
 			event.currentTarget.style.width = newWidth+"px";
 			$rootScope.$broadcast('loadRecommendations');
 		}
 	}
 
+	_get_book_details = function(data){
+    	filter = "id="+data;
+    	websiteService.get_book_details(filter).then(function(data){
+			$scope.detailed_book["book"] = data;
+    	});
+    }
+
+	_bind_emit = function(){
+		show_book_event = $scope.$on('expandBook', function(event, data){
+	    	$scope.show_book = true;
+	    	_get_book_details(data);
+	    });
+	}
+
 
 	_init = function(){
-		$scope.more_filters = []
-		$scope.test = {time: 1970}
+		$scope.more_filters = [];
+		$scope.test = {time: 1970};
+		$scope.detailed_book = {};
 
-		
-		_bind_feedback_form()
+		_bind_emit();
+		_bind_feedback_form();
 		// $http.defaults.headers.post['My-Header'] = 'value';
 	}
 
-	_init()
+	_init();
 
-})
+});

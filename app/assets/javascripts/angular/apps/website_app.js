@@ -1,13 +1,13 @@
 var websiteApp = angular.module('websiteApp', ['ngRoute', 'ngAnimate', 'recommendationApp', 
-                  'monospaced.mousewheel']);
+                  'monospaced.mousewheel', 'bookApp']);
 //This configures the routes and associates each route with a view and a controller
 websiteApp.config(function ($sceDelegateProvider, $routeProvider) {
-    $sceDelegateProvider.resourceUrlWhitelist(['self', 'http://bhuwan.com:3000/**']);
-    $routeProvider
-    .when('/search',
-        {
-            templateUrl: 'assets/angular/widgets/partials/search.html'
-        })
+  $sceDelegateProvider.resourceUrlWhitelist(['self', 'http://bhuwan.com:3000/**']);
+  $routeProvider
+  .when('/search',
+    {
+      templateUrl: 'assets/angular/widgets/partials/search.html'
+    });
 });
 
 function notify($rootScope, message, $timeout){

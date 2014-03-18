@@ -27,7 +27,7 @@ bookWidgetApp.directive('bookthumb', function () {
   return {
     restrict: 'E',
     controller: function($scope){
-      $scope.triggerExpand = function() {
+      $scope.trigger_expand = function() {
         if ($scope.expand == true) {
           $scope.expand = false;
         }
@@ -35,6 +35,10 @@ bookWidgetApp.directive('bookthumb', function () {
     		  $scope.expand = true;
         }
       };
+
+      $scope.show_book = function(){
+        $scope.$emit('expandBook', $scope.book.id);
+      }
 
       _init = function(){
         $scope.expand = false;
