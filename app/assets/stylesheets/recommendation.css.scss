@@ -1,10 +1,12 @@
 html{
 	height: 100%;
+	overflow-y: hidden;
+	overflow-x: auto;
 }
 body{
-	/*background: url('background-1.jpg');*/
 	/*background-repeat: no-repeat;*/
 	background-color: #DBDBDB;
+	background: url('bg2.jpg');
 	height: 100%;
 	white-space: nowrap;
 	/*background: url("x2.jpg");*/
@@ -115,8 +117,6 @@ a:hover{
 .recommendation_block{
 	display: inline-block;
 	margin-top: 10px;
-	overflow-y: hidden;
-	overflow-x: auto;
 }
 
 .recommendation_block.ng-enter, .recommendation_block.ng-leave {
@@ -174,11 +174,11 @@ a:hover{
 .book_binding{
 	-webkit-transform: rotateZ(-90deg);
 	transform: rotateZ(-90deg);
-	top: 225px;
-	left: 129px;
+	top: 228px;
+	left: 82px;
 	position: absolute;
 	height: 5%;
-	width: 61%;
+	width: 76%;
 	text-align: center;
 	color: white;
 	padding-top: 5px;
@@ -196,7 +196,7 @@ a:hover{
 
 .summary_base{
 	width: 254px;
-	height: 322px;
+	height: 415px;
 	color: white;
 	padding: 1em;
 	padding-top: 54px;
@@ -209,7 +209,8 @@ a:hover{
 	-moz-box-shadow: 1px 2px 1px #d1d1d1;
 	box-shadow: 1px 2px 1px #d1d1d1;
 	left: 53.8%;
-	top: 8.6%;
+	top: 0px;
+	margin-top: 5px;
 }
 
 .summary{
@@ -283,7 +284,7 @@ a:hover{
 
 .card .book_thumb{
 	width: 300px;
-	height: 70%;
+	height: 87%;
 	margin: 5px;
     background: rgba(113, 112, 112, 0.25);
 	border-radius: 2px;
@@ -372,6 +373,7 @@ a:hover{
  	position: absolute;
  	right: 0;
  	margin-top: -5px;
+ 	z-index:4;
 }
 
 .bookmarked{

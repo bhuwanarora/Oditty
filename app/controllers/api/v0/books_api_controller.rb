@@ -119,6 +119,18 @@ module Api
 								that the water continually flowed and flowed and yet it was always there; it was always the same 
 								and yet every moment it was new.”",
 							:from => ""
+						},
+						{
+							:quote => "“Where are you going, by friend?I am not going anywhere. We … are always on the way…. 
+								But where are you going, Siddhartha?It is the same with me at it is with you, my friend. I am not 
+								going anywhere. I am only on the way.”",
+							:from => ""
+						},
+						{
+							:quote => "“But today he only saw one of the river’s secrets, one that gripped his soul. He saw 
+								that the water continually flowed and flowed and yet it was always there; it was always the same 
+								and yet every moment it was new.”",
+							:from => ""
 						}
 					],
 					:themes => [
@@ -226,6 +238,51 @@ module Api
 							:id => 15,
 							:name => "eastern philosophy",
 							:url => ""
+						}
+					],
+					:news => [
+						{
+							:thumb => "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/2/19
+							/1392802798841/d7111211-6010-4fb3-a86f-5416a7051b9d-460x276.jpeg",
+							:title => "Billy Corgan to perform eight-hour jam inspired by Herman Hesse's 
+							Siddhartha",
+							:description => "Billy Corgan has announced that he will be performing an 
+							eight-hour jam inspired by the Herman Hesse novella Siddhartha. The all-day 
+							ambient show will be presented at his Chicago tea shop on 28 February.
+
+							The Smashing Pumpkins bandleader shared concert details by posting on Facebook
+							 (via Stereogum). “[The] performance will be centered around an ambient/musical 
+							 interpretation of [the book] ... built by modular synthesis, on the fly,” he 
+							 wrote. “Readings of the text [will] go hand in hand with whatever is created.”
+							  The show will begin at noon and last between eight and nine hours.
+
+							Said tea shop, Madame ZuZu’s, was launched in 2012. Corgan described it then 
+							as a “salon ... [where] like-minded people can discuss ideas and performance 
+							art”. From the start, Corgan emphasised that he wanted this space to be a 
+							showcase for literature, including his own poetry; he admitted to the Chicago 
+							Tribune that he has been writing “a spiritual memoir” since around 2010.
+
+							Indeed, Corgan is one of those 30m-album-selling rockers for whom an eight-hour 
+							Buddhist synth jam seems par for the course. Before his tea shop, the 46-year-old 
+							launched a religion/philosophy website called Everything From Here To There. He 
+							also became a wrestling promoter. And although many critics might mock Corgan’s 
+							pretense, his fans have his back: “He’s just hanging out at his tea shop playing 
+							music,” one wrote on Facebook. “How is that pretentious?”",
+							:source => "http://www.theguardian.com/",
+							:type => "img"
+						},
+						{
+							:thumb => "http://www.youtube.com/watch?feature=player_embedded&v=C3tV8n-CVnA",
+							:title => "Herman Hesse’s Siddhartha, Interpreted For Modular Synthesizer By 
+							William Corgan",
+							:description => "Here’s the video stream for the 8-hour marathon version of Herman 
+							Hesse’s Siddhartha, interpreted for modular synthesizer by William Corgan (of The 
+								Smashing Pumpkins). 
+
+							It’s from a live improvised performance at at Madame ZuZu?s Teahouse (Chicago). 
+							Corgan describes the event as ‘an ambient/musical interpretation of Hermann 
+							Hesse?s Siddhartha; built by modular synthesis, on the fly.’",
+							:type => "video"
 						}
 					]
 				}
