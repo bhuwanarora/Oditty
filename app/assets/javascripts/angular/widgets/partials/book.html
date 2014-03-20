@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="assets/detailed_book.css.scss">
 <!-- flipbook -->
-<div id="flipbookViewport">
+<div id="flipbookViewport" ng-click="destroy_book($event)" style="display:none;">
 	<div ng-model="detailed_book.book" class="detailed_book" id="detailedBook">
 		
 		<!-- PAGE1: book cover -->
@@ -22,7 +22,7 @@
 				<div class="header">
 					CONTENT
 				</div>
-				<div class="link">
+				<div>
 					<div class="element">GALLERY</div>
 					<div class="page_number"></div>
 					<div class="sub-links">
@@ -56,31 +56,31 @@
 						</div>
 					</div>
 				</div>
-				<div class="link">
+				<div>
 					<div class="element" id="readers">
 						READERS
 						<div class="page_number"></div>
 					</div>
 				</div>
-				<div class="link">
+				<div>
 					<div class="element" id="news">
 						NEWS
 						<div class="page_number"></div>
 					</div>
 				</div>
-				<div class="link">
+				<div>
 					<div class="element" id="reviews">
 						REVIEWS
 						<div class="page_number"></div>
 					</div>
 				</div>
-				<div class="link">
+				<div>
 					<div class="element" id="discussions">
 						DISCUSSIONS
 						<div class="page_number"></div>
 					</div>
 				</div>
-				<div class="link">
+				<div>
 					<div class="element" id="aboutAuthor">
 						ABOUT AUTHOR
 						<div class="page_number"></div>
@@ -142,7 +142,7 @@
 		</div>
 
 		
-		<!-- PAGE9: themes -->
+		<!-- PAGE7: themes -->
 		<div>
 			<div class="themes" ng-model="detailed_book['book'].themes">
 				<div class="header">
@@ -158,7 +158,7 @@
 			</div>
 		</div>
 
-		<!-- PAGE10: subject places -->
+		<!-- PAGE8: subject places -->
 		<div>
 			<div class="subject_places" ng-model="detailed_book['book'].subject_places">
 				<div class="header">
@@ -209,6 +209,7 @@
 		<!-- PAGE12: READERS -->
 		<div>
 			<div class="readers">
+				READERS
 			</div>
 		</div>
 
@@ -240,12 +241,14 @@
 		<!-- PAGE14: REVIEWS -->
 		<div>
 			<div class="reviews">
+				REVIEWS
 			</div>
 		</div>
 
 		<!-- PAGE5: DISCUSSIONS -->
 		<div>
 			<div class="discussions">
+				DISCUSSIONS
 			</div>
 		</div>
 

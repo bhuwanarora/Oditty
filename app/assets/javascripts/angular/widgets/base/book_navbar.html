@@ -1,11 +1,20 @@
 <div ng-show="hovered" ng-hide="!hovered" class="book_navbar_base animate-fast">
-	<div class="heading animate_fast" ng-show="hovered" ng-hide="!hovered">
+	<div class="heading animate_fast" 
+	     ng-show="hovered" 
+	     ng-hide="!hovered"
+	     ng-click="show_book(11)">
 		<h2>{{book.readers_count}}</h2><br/>
 		READERS</div>
-	<div class="heading animate_fast" ng-show="hovered" ng-hide="!hovered">
+	<div class="heading animate_fast" 
+	     ng-show="hovered" 
+	     ng-hide="!hovered"
+	     ng-click="show_book(14)">
 		<h2>{{book.discussions_count}}</h2><br/>
 		DISCUSSIONS</div>
-	<div class="heading animate_fast" ng-show="hovered" ng-hide="!hovered">
+	<div class="heading animate_fast" 
+	     ng-show="hovered" 
+	     ng-hide="!hovered"
+	     ng-click="show_book(13)">
 		<h2>{{book.reviews_count}}</h2><br/>
 		REVIEWS</div>
 </div>

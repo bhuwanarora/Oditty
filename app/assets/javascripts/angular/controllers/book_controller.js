@@ -1,4 +1,4 @@
-bookApp.controller('bookAppController', function($scope, $timeout){
+bookApp.controller('bookAppController', function($scope, $timeout, $rootScope){
 
 	$scope.show_page = function(page_name){
 		console.log('page_name', page_name);
@@ -32,6 +32,21 @@ bookApp.controller('bookAppController', function($scope, $timeout){
 	$scope.zoom_in = function(){
 		
 	}
+
+	$scope.destroy_book = function(event){
+		// $('#flipbookViewport').hide();
+		// $('#detailedBook').turn('destroy');
+		event.stopPropagation();
+		// alert("destroy triggered");
+		// $().css('white-space', 'nowrap');
+	}
+
+	// Why this?  Chrome has the fault:
+	// http://code.google.com/p/chromium/issues/detail?id=128488
+	_is_chrome = function() {
+		return navigator.userAgent.indexOf('Chrome')!=-1;
+	}
+
 
 	_set_image_sizes = function(){
     	var image_width = $scope.width/2+20;
@@ -87,11 +102,14 @@ bookApp.controller('bookAppController', function($scope, $timeout){
 		$timeout(function(){
 			_set_image_sizes();
 			_set_div_sizes();
+			console.log("_init_turnjs");
 			$("#detailedBook").turn({
 				width: $scope.width,
 				height: $scope.height,
 				page: 1,
-				// autoCenter: true,
+				duration: 1500,
+				acceleration: !_is_chrome(),
+				// elevation: 50,
 				when: {
 					turning: function(event, page, pageObject) {
 						var book = $(this),
@@ -134,11 +152,14 @@ bookApp.controller('bookAppController', function($scope, $timeout){
 					}
 				}
 			});
+			$('.recommendations').hide();
+			$('#flipbookViewport').show();
 			$timeout(function(){
-				$("#detailedBook").turn("page", 3);
-			}, 500);
+				var init_page = $rootScope.initPage;
+				$("#detailedBook").turn("page", init_page);
+			}, 1000);
 			_init_page_bindings();
-		}, 100);
+		}, 1000);
     }
 
     _resize_viewport = function(){
@@ -272,8 +293,8 @@ bookApp.controller('bookAppController', function($scope, $timeout){
     }
 
 	_init = function(){
-		$scope.width = screen.width-100;
-		$scope.height = screen.height-200;
+		$scope.width = screen.width*(1220/1320); //1220
+		$scope.height = screen.height*(864/1064); //864
 		_init_turnjs();
 		_init_keyboard_bindings();
 	}

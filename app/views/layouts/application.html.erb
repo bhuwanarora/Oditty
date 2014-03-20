@@ -14,14 +14,15 @@
           ng-click="stopSearching($event)"></div> -->
     <div msd-wheel="bindHorizontalScroll($event, $delta, $deltaX, $deltaY)" 
          ng-animate="msd-wheel"
-         ng-if="!show_book">
+         class="recommendations">
       <%= yield %>
     </div>
     <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/lib/**/*.js")] %>
     <div ng-include 
          src="'assets/angular/widgets/partials/book.html'"
          ng-if="show_book"
-         ng-controller="bookAppController">
+         ng-controller="bookAppController"
+         ng-animate="'detailed_book'">
     </div>
     <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
 

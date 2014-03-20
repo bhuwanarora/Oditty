@@ -67,13 +67,14 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
     	filter = "id="+data;
     	websiteService.get_book_details(filter).then(function(data){
 			$scope.detailed_book["book"] = data;
+	    	$scope.show_book = true;
     	});
     }
 
 	_bind_emit = function(){
 		show_book_event = $scope.$on('expandBook', function(event, data){
-	    	$scope.show_book = true;
 	    	_get_book_details(data);
+			event.stopPropagation();
 	    });
 	}
 
@@ -82,6 +83,7 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		$scope.more_filters = [];
 		$scope.test = {time: 1970};
 		$scope.detailed_book = {};
+		$rootScope.initPage = 3;
 
 		_bind_emit();
 		_bind_feedback_form();

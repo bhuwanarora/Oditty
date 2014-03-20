@@ -15,9 +15,24 @@ module Api
 			end
 
 			def get_book_details
+				id = params[:id]
+				if id == "1"
+					thumb = "assets/books/20.jpeg"
+				elsif id == "2"
+					thumb = "assets/books/10.jpg"
+				elsif id == "3"
+					thumb = "assets/books/11.jpeg"
+				elsif id == "4"
+					thumb = "assets/books/13.jpeg"
+				elsif id == "5"
+					thumb = "assets/books/24.jpg"
+				elsif id == "13"
+					thumb = "assets/Siddhartha.jpg"
+				end
+				
 				info = {
-					:id => params[:id],
-					:thumb => "assets/Siddhartha.jpg",
+					:id => id,
+					:thumb => thumb,
 					:summary => "Siddhartha is a novel by Hermann Hesse 
 						that deals with the spiritual journey of 
 						self-discovery of a man named Siddhartha 

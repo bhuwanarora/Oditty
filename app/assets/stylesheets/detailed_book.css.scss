@@ -1,4 +1,4 @@
-html{
+/*html{
 	overflow-y: hidden;
 	overflow-x: hidden;
 	color: #717070;
@@ -6,7 +6,11 @@ html{
 
 body{
 	background-color: #DBDBDB;
-	background: url('bg2.jpg');
+}
+*/
+
+body{
+	/*white-space: normal;*/
 }
 
 .detailed_book{
@@ -15,8 +19,18 @@ body{
 	-ms-transition:margin-left 0.2s;
 	-o-transition:margin-left 0.2s;
 	transition:margin-left 0.2s;
-	margin-left: 5%;
-	margin-top: 5%;
+	margin-left: 3%;
+	margin-top: 3%;
+	white-space: normal;
+}
+
+#flipbookViewport{
+	position: absolute;
+	top: 0px;
+	z-index: 4000;
+	/*background-color: #DBDBDB;*/
+	width: 100%;
+	height: 100%;
 }
 
 .detailed_book .page{
@@ -207,7 +221,7 @@ body{
 	margin-left:18px;
 }
 
-.book_footer{
+.detailed_book .book_footer{
    position:fixed;
    bottom:0px;
    float: right;
@@ -272,7 +286,7 @@ body{
 	background-color: white;
 }
 
-.share:hover{
+.detailed_book .share:hover{
 	background-color: #3cb878;
 	color: white;
 	cursor: pointer;
@@ -284,37 +298,37 @@ body{
 	height: inherit;
 }
 
-.element{
+.detailed_book .element{
 	cursor: pointer;
 	padding: 5px;
 }
 
-.element:hover{
+.detailed_book .element:hover{
 	background-color: #3D79A1;
 	color: white;
 }
 
-.sub-links{
+.detailed_book .sub-links{
 	margin-left: 10px
 }
 
-.grey_background{
+.detailed_book .grey_background{
 	background: #3D79A1;
 	color: white;
 }
 
-.news_element div .description, 
-.news_element div img{
+.detailed_book .news_element div .description, 
+.detailed_book .news_element div img{
 	display: inline-block;
 }
 
-.news_element div img{
+.detailed_book .news_element div img{
 	width: 300px;
 	margin: 5px;
 	border-radius: 5px;
 }
 
-.news_element{
+.detailed_book .news_element{
 	padding: 10px;
 	margin-bottom: 15px;
 }

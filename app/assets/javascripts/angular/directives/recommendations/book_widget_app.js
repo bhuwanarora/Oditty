@@ -16,14 +16,19 @@ bookWidgetApp.directive('book', function () {
   };
 })
 
-bookWidgetApp.directive('bookNavbar', function () {
+bookWidgetApp.directive('bookNavbar', function ($rootScope, $timeout) {
   return {
     restrict: 'E',
+    controller: function($scope){
+      $scope.show_book = function(page){
+        zoomin_book($scope, $timeout, $rootScope, page);
+      }
+    },
     templateUrl: "/assets/angular/widgets/base/book_navbar.html"
   };
 })
 
-bookWidgetApp.directive('bookthumb', function () {
+bookWidgetApp.directive('bookthumb', function ($timeout, $rootScope) {
   return {
     restrict: 'E',
     controller: function($scope){
@@ -36,11 +41,12 @@ bookWidgetApp.directive('bookthumb', function () {
         }
       };
 
-      $scope.show_book = function(){
-        $scope.$emit('expandBook', $scope.book.id);
+      $scope.show_book = function(page){
+        zoomin_book($scope, $timeout, $rootScope, page);
       }
 
       _init = function(){
+        $scope.zoomin_book = false;
         $scope.expand = false;
       }
 
@@ -193,9 +199,14 @@ bookWidgetApp.directive('summary', function () {
   };
 })
 
-bookWidgetApp.directive('bookTags', function () {
+bookWidgetApp.directive('bookTags', function($rootScope, $timeout) {
   return {
     restrict: 'E',
+    controller: function($scope){
+      $scope.show_book = function(page){
+        zoomin_book($scope, $timeout, $rootScope, page);
+      }
+    },
     templateUrl: "/assets/angular/widgets/base/book_tags.html"
   };
 })
@@ -277,3 +288,17 @@ bookWidgetApp.directive('bookBinding', function(){
     templateUrl: "/assets/angular/widgets/base/book_binding.html"
   }
 })
+
+function zoomin_book($scope, $timeout, $rootScope, page){
+  $rootScope.initPage = page;
+  $('.stamp_read').hide();
+  $scope.zoomin_book = true;
+  $scope.$emit('expandBook', $scope.book.id);
+  var zoomout_event = $timeout(function(){
+    $scope.zoomin_book = false;
+  }, 3000);
+
+  $scope.$on('destroy', function(){
+    $timeout.cancel(zoomout_event);
+  });
+}
