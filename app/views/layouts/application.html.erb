@@ -17,11 +17,11 @@
          ng-if="!show_book">
       <%= yield %>
     </div>
+    <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/lib/**/*.js")] %>
     <div ng-include 
          src="'assets/angular/widgets/partials/book.html'"
          ng-if="show_book"
          ng-controller="bookAppController">
-         <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/lib/**/*.js")] %>
     </div>
     <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
 
