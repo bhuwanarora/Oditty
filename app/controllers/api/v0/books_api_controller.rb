@@ -299,7 +299,150 @@ module Api
 							Hesse?s Siddhartha; built by modular synthesis, on the fly.’",
 							:type => "video"
 						}
-					]
+					],
+					:discussions => [
+						{
+							:user => {
+								:id => 1,
+								:thumb => "assets/profile_pic.jpeg",
+								:name => "test_user",
+								:url => ""
+							},
+							:comment => "i adore this book and will always buy it at a used book store for some i love.",
+							:timestamp => "6 years ago",
+							:url => ""
+						},
+						{
+							:user => {
+								:id => 2,
+								:thumb => "assets/profile_pic.jpeg",
+								:name => "test_user",
+								:url => ""
+							},
+							:comment => "great",
+							:timestamp => "6 years ago",
+							:url => ""
+						},
+						{
+							:user => {
+								:id => 13,
+								:thumb => "assets/profile_pic.jpeg",
+								:name => "test_user",
+								:url => ""
+							},
+							:comment => "I read this book for a class in my first year of university and 
+							something within the story (the philosophy) touched me very deeply. Perhaps one of 
+							the most personally influential books I've read.",
+							:timestamp => "6 years ago",
+							:url => ""
+						},
+						{
+							:user => {
+								:id => 12,
+								:thumb => "assets/profile_pic.jpeg",
+								:name => "test_user",
+								:url => ""
+							},
+							:comment => "I could not complete this book coz of my sister. When I was reading this one 
+							day she saw and started reading and after that she did not return it. Waiting her to finish 
+							it so I can compelet.",
+							:timestamp => "6 years ago",
+							:url => ""
+						},
+						{
+							:user => {
+								:id => 5,
+								:thumb => "assets/profile_pic.jpeg",
+								:name => "test_user",
+								:url => ""
+							},
+							:comment => "My boyfriend just finished reading this and said it was the best book he has 
+							ever read.",
+							:timestamp => "6 years ago",
+							:url => ""
+						},
+						{
+							:user => {
+								:id => 6,
+								:thumb => "assets/profile_pic.jpeg",
+								:name => "test_user",
+								:url => ""
+							},
+							:comment => "the line, \"i can wait, i can think and i can starve\" it's stuck in my head",
+							:timestamp => "6 years ago",
+							:url => ""
+						},
+						{
+							:user => {
+								:id => 7,
+								:thumb => "assets/profile_pic.jpeg",
+								:name => "test_user",
+								:url => ""
+							},
+							:comment => "this book is journey to inside and outside of our ",
+							:timestamp => "6 years ago",
+							:url => ""
+						},
+						{
+							:user => {
+								:id => 8,
+								:thumb => "assets/profile_pic.jpeg",
+								:name => "test_user",
+								:url => ""
+							},
+							:comment => "This book changed my life and is a must read through different stages of life!",
+							:timestamp => "6 years ago",
+							:url => ""
+						},
+						{
+							:user => {
+								:id => 9,
+								:thumb => "assets/profile_pic.jpeg",
+								:name => "test_user",
+								:url => ""
+							},
+							:comment => "I don't think I have something to say for this book. I am just speech less. I felt 
+							crying like Govinda after reading the book, time and again. A life changing book.",
+							:timestamp => "6 years ago",
+							:url => ""
+						},
+						{
+							:user => {
+								:id => 10,
+								:thumb => "assets/profile_pic.jpeg",
+								:name => "test_user",
+								:url => ""
+							},
+							:comment => "when you read this book you realize that there is a big world out there waiting you 
+							to experience.",
+							:timestamp => "6 years ago",
+							:url => ""
+						},
+						{
+							:user => {
+								:id => 11,
+								:thumb => "assets/profile_pic.jpeg",
+								:name => "test_user",
+								:url => ""
+							},
+							:comment => "I think for prof Siddhartha’s massage and his influence knowledge we need to read 
+							it 2 times in our life. One before 30 year and the second time after 50...",
+							:timestamp => "6 years ago",
+							:url => ""
+						},
+						{
+							:user => {
+								:id => 19,
+								:thumb => "assets/profile_pic.jpeg",
+								:name => "test_user",
+								:url => ""
+							},
+							:comment => "'Hermann Hesse' is one of my love and 'Siddhartha' is a very nice novel.",
+							:timestamp => "6 years ago",
+							:url => ""
+						}
+					],
+					:left_discussions_count => 14
 				}
 				render :json => info, :status => 200
 			end

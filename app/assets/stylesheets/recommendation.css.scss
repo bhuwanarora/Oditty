@@ -534,6 +534,9 @@ a:hover{
 	border-top-right-radius: 4px;
 	border-top-left-radius: 4px;
 	cursor: pointer;
+	-webkit-box-shadow: 1px 2px 1px #d1d1d1;
+	-moz-box-shadow: 1px 2px 1px #d1d1d1;
+	box-shadow: 1px 2px 1px #d1d1d1;
 }
 
 .mark_as_read:hover{

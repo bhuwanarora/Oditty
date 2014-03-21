@@ -133,6 +133,7 @@
 			    </div>
 			    <div class="elements">
 					<div class="quote share"
+					     ng-click="share_quote()"
 						 ng-class="{'grey_background':!is_even($index)}"
 					     ng-repeat="quote in detailed_book['book'].quotes">
 						{{quote.quote}} <br/><em>{{quote.from}}</em><br/><br/>
@@ -247,8 +248,38 @@
 
 		<!-- PAGE5: DISCUSSIONS -->
 		<div>
-			<div class="discussions">
-				DISCUSSIONS
+			<div class="discussions elements" 
+			     ng-mouseover="on_discussions()">
+				<div class="header">
+					DISCUSSIONS
+				</div>
+				<div ng-repeat="discussion in detailed_book['book'].discussions">
+					<discussion data="discussion" index="$index"></discussion>
+				</div>
+				<!-- <div ng-repeat="discussion in detailed_book['book'].discussions" 
+				     ng-class="{'grey_background':!is_even($index)}"
+					 class="discussion"
+					 ng-click="show_nested_discussion(detailed_book['book'].discussions[$index])"
+					 ng-mouseover="comment_now=true">
+					<div class="user">
+						<img ng-src="{{discussion.user.thumb}}" class="thumb" />
+						<div class="username">
+							<div>{{discussion.user.name}}</div>
+						</div>
+					</div>
+					<div class="comment">
+						<div>{{discussion.comment}}</div>
+						<div class="timestamp">
+							<div>{{discussion.timestamp}}</div>
+						</div>
+					</div>
+				</div>
+				<div class="more_comments">
+					{{detailed_book['book'].left_discussions_count}} More Discussions
+				</div>
+				<div class="comment_now">
+				     COMMENT NOW
+				</div> -->
 			</div>
 		</div>
 
