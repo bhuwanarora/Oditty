@@ -1,5 +1,10 @@
 <div class="tags">
-	<div ng-model="tags" ng-repeat="tag in book.tags" class="tag animate-fast" ng-show="hovered" ng-hide="!hovered">
+	<div itemprop= "genre" 
+		 ng-model="tags" 
+		 ng-repeat="tag in book.tags" 
+		 class="tag animate-fast" 
+		 ng-show="hovered" 
+		 ng-hide="!hovered">
 		+{{tag.name | uppercase}}
 	</div>
 </div>

@@ -1,4 +1,7 @@
-<div ng-class="{'book_widget':!expand, 'book_widget_expand':expand}" class="animate-fast book_widget_base">
+<div  itemscope 
+ 	  itemtype= "http://schema.org/Book" 
+ 	  ng-class="{'book_widget':!expand, 'book_widget_expand':expand}" 
+ 	  class="animate-fast book_widget_base">
 	<category track></category>
 	<div ng-model="book" 
 		ng-mouseenter="discovered = true" 
@@ -10,8 +13,8 @@
 				<!-- <rating track class="rating animate-fast" data="book.rating"></rating> -->
 				<bookmark track></bookmark>
 				<p class="animate-fast">
-					<a track href="javascript:void(0);"><b>#{{book.title | uppercase}}</b></a><br/>
-					by <a track href="javascript:void(0);">@{{book.author_name}}</a><br/>
+					<a itemprop= "name" track href="javascript:void(0);"><b>#{{book.title | uppercase}}</b></a><br/>
+					by <a itemprop= "author" track href="javascript:void(0);">@{{book.author_name}}</a><br/>
 				</p>
 			</div>
 		</div>

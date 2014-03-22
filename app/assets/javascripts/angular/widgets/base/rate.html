@@ -1,7 +1,9 @@
- <div class="rate animate-fast">
+ <div 
+ 	  class="rate animate-fast">
  	<div class="rate_radio_buttons">
 		Rate this book
-		<button type="radio" 
+		<button itemprop= ""
+				type="radio" 
 			   class="rate_radio" 
 			   value="{{$index+1}}"
 			   ng-model="rate_book" 
@@ -10,7 +12,8 @@
 			   ng-click="mark_as_rated()"
 			   ng-repeat="i in [1, 2, 3, 4, 5]">{{i}}</button>
  	</div>
-	<div class="rating_description">
+	<div itemprop= "description"
+		 class="rating_description">
 		{{rating_description}}
 	</div>
 	<!-- <span ng-repeat="i in [1, 2, 3, 4, 5]" ng-click="toggle($index)">
