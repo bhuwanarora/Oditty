@@ -22,6 +22,7 @@ body{
 	margin-left: 3%;
 	margin-top: 3%;
 	white-space: normal;
+	color: #717070;
 }
 
 #flipbookViewport{
@@ -268,12 +269,18 @@ body{
 .detailed_book .quotes div div{
 	padding: 15px;
 	margin: 5px;
+	border-bottom: 2px solid #f4f4f4;
 }
 
 .detailed_book .first_sentence .sentence{
 	font-size: 1.5em;
 	font-family: monospace;
 	padding: 100px;
+}
+
+.detailed_book .quote{
+	font-size: 0.9em;
+
 }
 
 .detailed_book .characters{
@@ -315,24 +322,32 @@ body{
 }
 
 .detailed_book .grey_background{
-	background: #3D79A1;
-	color: white;
+	background: #f8f8f8;
 }
 
 .detailed_book .news_element div .description, 
 .detailed_book .news_element div img{
 	display: inline-block;
+	font-size: 0.9em;
+	padding: 4px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 
 .detailed_book .news_element div img{
 	width: 300px;
 	margin: 5px;
-	border-radius: 5px;
+	border-radius: 10px;
 }
 
 .detailed_book .news_element{
 	padding: 10px;
 	margin-bottom: 15px;
+	border-radius: 10px;
+	background-color: #f8f8f8;
+	-webkit-box-shadow: 1px 2px 1px #d1d1d1;
+	-moz-box-shadow: 1px 2px 1px #d1d1d1;
+	box-shadow: 1px 2px 1px #d1d1d1;
 }
 
 .user{
@@ -344,6 +359,7 @@ body{
 .user .thumb{
 	width: 50px;
 	height: 50px;
+	border-radius: 10px;
 }
 
 .comment{
@@ -353,13 +369,22 @@ body{
 	padding: 10px;
 }
 
+/*comment text*/
 .comment div{
-	height: 50px;
+	height: 35px;
+	width: 110%;
+	overflow-y: hidden;
 }
 
-.comment .timestamp{
+.comment .footer{
 	height: 10px;
 	text-align: right;
+	margin: 25px -50px 0px 0px;
+	overflow-y: visible;
+}
+
+.comment .footer .comment_now{
+	cursor: pointer;
 }
 
 .discussion{
@@ -367,20 +392,24 @@ body{
 	display: block;
 	padding: 5px;
 	margin: 5px;
-	cursor: pointer;
+	font-size: 0.9em;
+	border-bottom: 2px solid #F4F4F4;
+}
+
+.discussion:hover{
+	background-color: rgb(60, 184, 120);
+	color: white;
 }
 
 .more_comments{
 	text-align: center;
 }
 
-.comment_now{
-	background-color: rgba(60, 184, 120, 0.84);
-	color: white;
-	position: absolute;
-	width: 70%;
-	padding: 35px;
-	cursor: pointer;
-	z-index: 2;
-	text-align: center;
+.comment_box{
+	height: 25px;
+	width: 110%;
+	border: 1px solid #DDDDDD;
+	text-align: left;
+	margin-top: 10px;
+	overflow-y: scroll;
 }

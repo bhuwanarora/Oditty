@@ -328,7 +328,6 @@ a:hover{
 	right: 0;
 	position: absolute;
 	z-index: 2;
-	margin-top: -8px;
 }
 
 .tag{
@@ -388,7 +387,6 @@ a:hover{
  	height: 50px;
  	position: absolute;
  	right: 0;
- 	margin-top: -5px;
  	z-index:4;
 }
 
@@ -751,6 +749,9 @@ a:hover{
 	font-size: 0.8em;
 	padding: 6px 10px 1px 10px;
 	position: absolute;
+	-webkit-box-shadow: 1px 2px 1px #d1d1d1;
+	-moz-box-shadow: 1px 2px 1px #d1d1d1;
+	box-shadow: 1px 2px 1px #d1d1d1;
 }
 
 .filter_input:focus{

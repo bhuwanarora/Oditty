@@ -1,6 +1,4 @@
-<div ng-click="show_nested_discussion()"
-	 ng-mouseover="show_nested_discussion_link()"
-	 class="discussion"
+<div class="discussion"
 	 ng-class="{'grey_background':!is_even({{index}})}">
 	<div class="user">
 		<img ng-src="{{discussion.user.thumb}}" class="thumb" />
@@ -10,12 +8,10 @@
 	</div>
 	<div class="comment">
 		<div>{{discussion.comment}}</div>
-		<div class="timestamp">
-			<div>{{discussion.timestamp}}</div>
+		<div class="footer" ng-show="!comment_box">
+			<span ng-click="show_comment_box()"><u>Comment</u></span>
+			<span>{{discussion.timestamp}}</span>
 		</div>
+		<input class="comment_box" ng-show="comment_box" placeholder="Post a comment"/>
 	</div>
-</div>
-<div class="comment_now"
-     ng-if="hovered">
-     COMMENT NOW
 </div>
