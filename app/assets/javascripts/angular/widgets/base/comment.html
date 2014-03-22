@@ -8,11 +8,12 @@
 		<div class="cancel_button" ng-click="toggleCommentBoxState()">Cancel</div>
 	</div>
 </div>
-<div itemprop= "commentText"
-	 ng-if="!comment_ready">
+<div ng-if="!comment_ready">
 	<div class="comment_instruct_background animate-fast">
 		<div class="comment_instruct animate-fast" ng-click="toggleCommentBoxState()">
+			<span itemprop= "commentText">
 			What do you feel about this book...
+			</span>
 		</div>
 	</div>
 </div>

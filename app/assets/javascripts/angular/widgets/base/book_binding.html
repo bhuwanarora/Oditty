@@ -6,7 +6,9 @@
 		{{book.title | uppercase}} 
 	</span>
 		&nbsp; BY &nbsp;
-	<span itemprop= "author">
+	<span itemprop= "author" itemscope itemtype="http://schema.org/Person">
+		<span itemprop="name" itemprop="author">
 		 {{book.author_name | uppercase}}
 		</span>
+	</span>
 </div>

@@ -1,5 +1,4 @@
-<div itemprop= "interactionCount"
-	 ng-show="hovered" 
+<div ng-show="hovered" 
 	 ng-hide="!hovered" 
 	 class="book_navbar_base animate-fast">
 	<div class="heading animate_fast" ng-show="hovered" ng-hide="!hovered">
@@ -8,15 +7,16 @@
 	<div class="heading animate_fast" ng-show="hovered" ng-hide="!hovered">
 		<h2>{{book.discussions_count}}</h2><br/>
 		DISCUSSIONS</div>
-	<div itemprop="aggregateRating" 
-		 itemscope 
-		 itemtype="http://schema.org/AggregateRating"
-		 class="heading animate_fast" 
+	<div class="heading animate_fast" 
 		 ng-show="hovered" 
 		 ng-hide="!hovered">
 		<h2>
-			<span itemprop="reviewCount">
+			<span itemprop="aggregateRating" 
+		 		  itemscope 
+		 		  itemtype="http://schema.org/AggregateRating">
+				<span itemprop="reviewCount">
 				{{book.reviews_count}}
+				</span>
 			</span>
 		</h2><br/>
 		REVIEWS</div>
