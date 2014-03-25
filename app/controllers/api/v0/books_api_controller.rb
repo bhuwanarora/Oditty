@@ -102,7 +102,7 @@ module Api
 						{
 							:quote => "To whom else should one sacrifice, to whom else was veneration due but to him, 
 								the Only One, Atman? And where was Atman to be found, where did he dwell, where did his eternal 
-								heart beat if not in one’s own self, in the innermost, in the indestructible essence that every 
+								heart beat if not in ones own self, in the innermost, in the indestructible essence that every 
 								person bore within? But where, where was this self, this innermost, this ultimate? It was not 
 								flesh and blood, it was not thinking or consciousness—that was what the wisest teach. But then 
 								where, where was it? To pierce there, to the self, to myself, to Atman—was there any other path 
@@ -130,7 +130,7 @@ module Api
 							:from => ""
 						},
 						{
-							:quote => "But today he only saw one of the river’s secrets, one that gripped his soul. He saw 
+							:quote => "But today he only saw one of the rivers secrets, one that gripped his soul. He saw 
 								that the water continually flowed and flowed and yet it was always there; it was always the same 
 								and yet every moment it was new.",
 							:from => ""
@@ -142,7 +142,7 @@ module Api
 							:from => ""
 						},
 						{
-							:quote => "But today he only saw one of the river’s secrets, one that gripped his soul. He saw 
+							:quote => "But today he only saw one of the rivers secrets, one that gripped his soul. He saw 
 								that the water continually flowed and flowed and yet it was always there; it was always the same 
 								and yet every moment it was new.",
 							:from => ""
@@ -271,7 +271,7 @@ module Api
 							 wrote. Readings of the text [will] go hand in hand with whatever is created.
 							  The show will begin at noon and last between eight and nine hours.
 
-							Said tea shop, Madame ZuZu’s, was launched in 2012. Corgan described it then 
+							Said tea shop, Madame ZuZus, was launched in 2012. Corgan described it then 
 							as a salon ... [where] like-minded people can discuss ideas and performance 
 							art. From the start, Corgan emphasised that he wanted this space to be a 
 							showcase for literature, including his own poetry; he admitted to the Chicago 
@@ -280,23 +280,23 @@ module Api
 							Indeed, Corgan is one of those 30m-album-selling rockers for whom an eight-hour 
 							Buddhist synth jam seems par for the course. Before his tea shop, the 46-year-old 
 							launched a religion/philosophy website called Everything From Here To There. He 
-							also became a wrestling promoter. And although many critics might mock Corgan’s 
-							pretense, his fans have his back: He’s just hanging out at his tea shop playing 
+							also became a wrestling promoter. And although many critics might mock Corgans 
+							pretense, his fans have his back: Hes just hanging out at his tea shop playing 
 							music, one wrote on Facebook. How is that pretentious?",
 							:source => "http://www.theguardian.com/",
 							:type => "img"
 						},
 						{
 							:thumb => "http://www.youtube.com/watch?feature=player_embedded&v=C3tV8n-CVnA",
-							:title => "Herman Hesse’s Siddhartha, Interpreted For Modular Synthesizer By 
+							:title => "Herman Hesses Siddhartha, Interpreted For Modular Synthesizer By 
 							William Corgan",
-							:description => "Here’s the video stream for the 8-hour marathon version of Herman 
-							Hesse’s Siddhartha, interpreted for modular synthesizer by William Corgan (of The 
+							:description => "Heres the video stream for the 8-hour marathon version of Herman 
+							Hesses Siddhartha, interpreted for modular synthesizer by William Corgan (of The 
 								Smashing Pumpkins). 
 
-							It’s from a live improvised performance at at Madame ZuZu?s Teahouse (Chicago). 
+							Its from a live improvised performance at at Madame ZuZu?s Teahouse (Chicago). 
 							Corgan describes the event as ‘an ambient/musical interpretation of Hermann 
-							Hesse?s Siddhartha; built by modular synthesis, on the fly.’",
+							Hesse?s Siddhartha; built by modular synthesis, on the fly.",
 							:type => "video"
 						}
 					],
@@ -564,7 +564,7 @@ module Api
 								:name => "test_user",
 								:url => ""
 							},
-							:comment => "I think for prof Siddhartha’s massage and his influence knowledge we need to read 
+							:comment => "I think for prof Siddharthas massage and his influence knowledge we need to read 
 							it 2 times in our life. One before 30 year and the second time after 50...",
 							:timestamp => "6 years ago",
 							:id => 1,
