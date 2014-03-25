@@ -124,7 +124,7 @@ module Api
 							:from => ""
 						},
 						{
-							:quote => "Where are you going, by friend?I am not going anywhere. We … are always on the way…. 
+							:quote => "Where are you going, by friend?I am not going anywhere. We  are always on the way. 
 								But where are you going, Siddhartha?It is the same with me at it is with you, my friend. I am not 
 								going anywhere. I am only on the way.",
 							:from => ""
@@ -136,7 +136,7 @@ module Api
 							:from => ""
 						},
 						{
-							:quote => "Where are you going, by friend?I am not going anywhere. We … are always on the way…. 
+							:quote => "Where are you going, by friend?I am not going anywhere. We  are always on the way. 
 								But where are you going, Siddhartha?It is the same with me at it is with you, my friend. I am not 
 								going anywhere. I am only on the way.",
 							:from => ""
