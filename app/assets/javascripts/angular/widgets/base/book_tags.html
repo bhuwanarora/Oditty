@@ -5,6 +5,8 @@
 	     ng-show="hovered" 
 	     ng-hide="!hovered"
 	     ng-click="show_book(10)">
-		+{{tag.name | uppercase}}
+	    <span itemprop= "genre" >
+			<span class="glyphicon glyphicon-tag"></span> +{{tag.name | uppercase}}
+		</span>
 	</div>
 </div>

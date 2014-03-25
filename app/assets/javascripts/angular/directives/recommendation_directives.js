@@ -9,7 +9,7 @@ recommendationApp.directive('moreFilters', function($rootScope, $timeout){
 			}
 
 			$scope.toggle_active_filter = function(){
-				var elementText = event.currentTarget.innerText;
+				var elementText = event.currentTarget.innerText.trim();
 				var isBook = elementText == "BOOK";
 				var isAuthor = elementText == "AUTHOR";
 				var isReader = elementText == "READER";

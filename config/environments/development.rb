@@ -27,5 +27,5 @@ ReadersDoor::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
-  config.home = "http://bhuwan.com:3000/"
+  config.home = "http://127.0.0.1:3000/"
 end

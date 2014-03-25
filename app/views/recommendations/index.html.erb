@@ -8,7 +8,7 @@
 	<div ng-model="recommendations" ng-view></div>
 	<div id="recommendationFooter">
 		<div class="website-title">
-			Reader's Door
+			<span class="glyphicon glyphicon-book"></span> Reader's Door
 		</div>
 		<input set-focus="searching" 
 		       ng-keypress="getSearchResults($event)" 
@@ -17,18 +17,19 @@
 		<div class="link filter_link" 
 			 ng-click="toggleMoreFilters()" 
 			 ng-class="{'active':show_more_filters, 'inactive':!show_more_filters}">
-			 FILTERS
+			 <span class="glyphicon glyphicon-filter"></span> FILTERS
 		</div>
 		<div class="test" ng-model="recommendations['books'].length">{{recommendations['books'].length}} results</div>
 		<div class="shelf_nav_links">
 			<div ng-class="{'inactive':!bookmark_selected, 'active':bookmark_selected}"
 				 class="link"
 				 ng-click="toggleBookmarked()">
-				<b>BOOKMARKED</b>
+				<b><span class="glyphicon glyphicon-bookmark"></span> BOOKMARKED</b>
 			</div>
 			<div ng-class="{'inactive':!read_selected, 'active':read_selected}"
 				 class="link"
-				 ng-click="toggleRead()"><b>READ</b>
+				 ng-click="toggleRead()">
+				 <b><span class="glyphicon glyphicon-check"></span> READ</b>
 			</div>
 		</div>
 	</div>

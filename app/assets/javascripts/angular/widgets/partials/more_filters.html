@@ -2,13 +2,15 @@
 	<div ng-click="toggle_active_filter()"
 		 ng-disabled="active_book_filter"
 		 ng-class="{'active_filter':active_book_filter, 'inactive_filter':!active_book_filter}">
-		 BOOK</div>
+		 <span class="glyphicon glyphicon-book"></span> BOOK</div>
 	<div ng-click="toggle_active_filter()"
 		 ng-disabled="active_author_filter"
-		 ng-class="{'active_filter':active_author_filter, 'inactive_filter':!active_author_filter}">AUTHOR</div>
+		 ng-class="{'active_filter':active_author_filter, 'inactive_filter':!active_author_filter}">
+		 <span class="glyphicon glyphicon-user"></span> AUTHOR</div>
 	<div ng-click="toggle_active_filter()"
 		 ng-disabled="active_reader_filter"
-		 ng-class="{'active_filter':active_reader_filter, 'inactive_filter':!active_reader_filter}">READER</div>
+		 ng-class="{'active_filter':active_reader_filter, 'inactive_filter':!active_reader_filter}">
+		 <span class="glyphicon glyphicon-user"></span> READER</div>
 </div>
 <hr>
 <div class="filters" ng-show="active_book_filter">
@@ -37,7 +39,7 @@
 	</div>
 	<div class="filters_panel_large">
 		<div class="header">
-			<b>Tags</b>
+			<span class="glyphicon glyphicon-tags"></span>   <b>Tags</b>
 		</div>
 		<div ng-repeat="filter in more_filters[0]['book']">
 			<filter data="filter"></filter>
@@ -70,7 +72,7 @@
 	</div>
 	<div class="filters_panel_large">
 		<div class="header">
-			<b>Tags</b>
+			<span class="glyphicon glyphicon-tags"></span>   <b>Tags</b>
 		</div>
 		<div ng-repeat="filter in more_filters[0]['author']">
 			<filter data="filter"></filter>
@@ -103,7 +105,7 @@
 	</div>
 	<div class="filters_panel_large">
 		<div class="header">
-			<b>Tags</b>
+			<span class="glyphicon glyphicon-tags"></span>   <b>Tags</b>
 		</div>
 		<div ng-repeat="filter in more_filters[0]['reader']">
 			<filter data="filter"></filter>

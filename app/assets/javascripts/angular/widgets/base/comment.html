@@ -1,6 +1,12 @@
-<div ng-if="comment_ready">
+<div item-prop= "comment" 
+	 itemscope
+	 itemtype= "http://schema.org/UserComments" 
+	ng-if="comment_ready">
 	<div class="comment_box_background animate-fast">
-		<input type="text" placeholder="What do you feel about this book..." class="comment_box animate-fast" />
+		<input itemprop= "commentText" 
+			   type="text" 
+			   placeholder="What do you feel about this book..." 
+			   class="comment_box animate-fast" />
 		<div class="post_button" ng-click="postReview()">POST</div>
 		<div class="cancel_button" ng-click="toggleCommentBoxState()">Cancel</div>
 	</div>
@@ -8,7 +14,7 @@
 <div ng-if="!comment_ready">
 	<div class="comment_instruct_background animate-fast">
 		<div class="comment_instruct animate-fast" ng-click="toggleCommentBoxState()">
-			What do you feel about this book...
+			What do you feel about this book... <span class="glyphicon glyphicon-comment"></span> 
 		</div>
 	</div>
 </div>

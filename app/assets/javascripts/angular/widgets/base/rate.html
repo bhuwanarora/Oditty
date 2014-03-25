@@ -1,4 +1,7 @@
- <div class="rate animate-fast">
+ <div itemprop="review" 
+ 	  itemscope 
+ 	  itemtype="http://schema.org/Review"
+ 	  class="rate animate-fast">
  	<div class="rate_radio_buttons">
 		Rate this book
 		<button type="radio" 
@@ -9,9 +12,12 @@
 			   ng-mouseleave="init_rate_description()"
 			   ng-click="mark_as_rated()"
 			   ng-repeat="i in [1, 2, 3, 4, 5]">{{i}}</button>
+		 <span class="glyphicon glyphicon-star"></span>
  	</div>
 	<div class="rating_description">
-		{{rating_description}}
+		 <span itemprop="description">
+			{{rating_description}}
+		</span>
 	</div>
 	<!-- <span ng-repeat="i in [1, 2, 3, 4, 5]" ng-click="toggle($index)">
 		<img src="assets/icon-sprites.png" class="rate_icon" />

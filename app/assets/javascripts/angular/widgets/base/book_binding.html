@@ -2,5 +2,13 @@
 	class="book_binding" 
 	ng-class="{'book_binding_grey':!hovered}" 
 	style="background-color:{{book.book_thumb.background_color}}">
-	{{book.title | uppercase}} &nbsp; BY &nbsp; {{book.author_name | uppercase}}
+	<span itemprop= "name">
+		{{book.title | uppercase}}
+	</span>
+		&nbsp; BY &nbsp;
+	<span itemprop= "author" itemscope itemtype="http://schema.org/Person">
+		<span itemprop="name" itemprop="author">
+		 {{book.author_name | uppercase}}
+		</span>
+	</span>
 </div>
