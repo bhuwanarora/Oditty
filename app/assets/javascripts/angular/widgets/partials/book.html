@@ -235,7 +235,22 @@
 	<div>
 		<div class="reviews">
 			<div class="header">
-				REVIEWS
+				{{detailed_book['book'].total_reviews_count}} REVIEWS
+			</div>
+			<div class="elements">
+				<div ng-repeat="review in detailed_book['book'].reviews" class="review">
+			        <div class="header">
+			        	<img ng-src="{{review.user.thumb}}" class="review_thumb" />
+			        	<span>{{review.timestamp}}</span>
+			        	<span>{{review.comment_count}} comments</span>
+			        	<span>{{review.dislike_count}} dislikes</span>
+			        	<span>{{review.like_count}} likes</span>
+			        	<span><a ng-href="{{review.user.url}}">{{review.user.name}}</a></span>
+			        </div>
+			        <div class="content">
+			        	{{review.content}}
+			        </div>
+				</div>
 			</div>
 		</div>
 	</div>

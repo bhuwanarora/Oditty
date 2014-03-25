@@ -1,3 +1,6 @@
+websiteApp.controller('accordion', function(){
+
+});
 
 websiteApp.controller('websiteAppController', function($scope, $rootScope, $interval, $http, 
 	$timeout, $q, $window, websiteService){

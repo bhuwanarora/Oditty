@@ -111,14 +111,20 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
               var $comment = $($comment_box.siblings()[1]);
               $comment_box.hide();
               $comment.show();
-            })
+            });
 
             iElement.on('click', '.comment_big_box .post', function(e){
               var $comment_box = $($(this)).parent();
               var $comment = $($comment_box.siblings()[1]);
               $comment_box.hide();
               $comment.show();
-            })
+            });
+
+            iElement.on('click', '.review .header', function(e){
+              var $review_content = $($($(this)).siblings()[0]);
+              $('.review .content').css('display', 'none');
+              $review_content.show();
+            });
 
             iElement.on('click', '.like', function(e){
               var $this = $(this);
@@ -241,6 +247,7 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
         $timeout(function(){
           var init_page = $rootScope.initPage;
           $(".detailed_book").turn("page", init_page);
+          $($('.review .content')[0]).css('display', 'block');
         }, 1000);
       }
 

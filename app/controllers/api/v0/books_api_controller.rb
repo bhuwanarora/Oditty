@@ -300,6 +300,135 @@ module Api
 							:type => "video"
 						}
 					],
+					:total_reviews_count => 23,
+					:reviews => [
+						{
+							:content => "A well written concise life story of Siddhartha that attempts to relate 
+							the volatile fluctuations of the Buddhist life and his struggle with a return to 
+							hedonism. I am not certain if this book was an attempt to appeal to the Buddhist philosophy, 
+							but I did not finish with an affectionate empathy toward Buddhism. However, the final 
+							concept Siddhartha comes to about loving, respecting, and revering the world and living 
+							things instead of looking down upon these things disdainfully was notable. Perhaps we 
+							all struggle with the inclination to hate the world for the ugliness inside of it, but 
+							to rise above this reality and see it with love and kindness can only be positive step 
+							toward progress and peace. ",
+							:user => {
+								:id => 1,
+								:name => "Test User",
+								:thumb => "assets/profile_pic.jpeg",
+								:url => "",
+							},
+							:comment_count => 12,
+							:timestamp => "4 days ago",
+							:like_count => 13,
+							:dislike_count => 14
+						},
+						{
+							:content => "A well written concise life story of Siddhartha that attempts to relate 
+							the volatile fluctuations of the Buddhist life and his struggle with a return to 
+							hedonism. I am not certain if this book was an attempt to appeal to the Buddhist philosophy, 
+							but I did not finish with an affectionate empathy toward Buddhism. However, the final 
+							concept Siddhartha comes to about loving, respecting, and revering the world and living 
+							things instead of looking down upon these things disdainfully was notable. Perhaps we 
+							all struggle with the inclination to hate the world for the ugliness inside of it, but 
+							to rise above this reality and see it with love and kindness can only be positive step 
+							toward progress and peace. ",
+							:user => {
+								:id => 1,
+								:name => "Test User",
+								:thumb => "assets/profile_pic.jpeg",
+								:url => "",
+							},
+							:comment_count => 12,
+							:timestamp => "4 days ago",
+							:like_count => 13,
+							:dislike_count => 14
+						},
+						{
+							:content => "A well written concise life story of Siddhartha that attempts to relate 
+							the volatile fluctuations of the Buddhist life and his struggle with a return to 
+							hedonism. I am not certain if this book was an attempt to appeal to the Buddhist philosophy, 
+							but I did not finish with an affectionate empathy toward Buddhism. However, the final 
+							concept Siddhartha comes to about loving, respecting, and revering the world and living 
+							things instead of looking down upon these things disdainfully was notable. Perhaps we 
+							all struggle with the inclination to hate the world for the ugliness inside of it, but 
+							to rise above this reality and see it with love and kindness can only be positive step 
+							toward progress and peace. ",
+							:user => {
+								:id => 1,
+								:name => "Test User",
+								:thumb => "assets/profile_pic.jpeg",
+								:url => "",
+							},
+							:comment_count => 12,
+							:timestamp => "4 days ago",
+							:like_count => 13,
+							:dislike_count => 14
+						},
+						{
+							:content => "A well written concise life story of Siddhartha that attempts to relate 
+							the volatile fluctuations of the Buddhist life and his struggle with a return to 
+							hedonism. I am not certain if this book was an attempt to appeal to the Buddhist philosophy, 
+							but I did not finish with an affectionate empathy toward Buddhism. However, the final 
+							concept Siddhartha comes to about loving, respecting, and revering the world and living 
+							things instead of looking down upon these things disdainfully was notable. Perhaps we 
+							all struggle with the inclination to hate the world for the ugliness inside of it, but 
+							to rise above this reality and see it with love and kindness can only be positive step 
+							toward progress and peace. ",
+							:user => {
+								:id => 1,
+								:name => "Test User",
+								:thumb => "assets/profile_pic.jpeg",
+								:url => "",
+							},
+							:comment_count => 12,
+							:timestamp => "4 days ago",
+							:like_count => 13,
+							:dislike_count => 14
+						},
+						{
+							:content => "A well written concise life story of Siddhartha that attempts to relate 
+							the volatile fluctuations of the Buddhist life and his struggle with a return to 
+							hedonism. I am not certain if this book was an attempt to appeal to the Buddhist philosophy, 
+							but I did not finish with an affectionate empathy toward Buddhism. However, the final 
+							concept Siddhartha comes to about loving, respecting, and revering the world and living 
+							things instead of looking down upon these things disdainfully was notable. Perhaps we 
+							all struggle with the inclination to hate the world for the ugliness inside of it, but 
+							to rise above this reality and see it with love and kindness can only be positive step 
+							toward progress and peace. ",
+							:user => {
+								:id => 1,
+								:name => "Test User",
+								:thumb => "assets/profile_pic.jpeg",
+								:url => "",
+							},
+							:comment_count => 12,
+							:timestamp => "4 days ago",
+							:like_count => 13,
+							:dislike_count => 14
+						},
+						{
+							:content => "A well written concise life story of Siddhartha that attempts to relate 
+							the volatile fluctuations of the Buddhist life and his struggle with a return to 
+							hedonism. I am not certain if this book was an attempt to appeal to the Buddhist philosophy, 
+							but I did not finish with an affectionate empathy toward Buddhism. However, the final 
+							concept Siddhartha comes to about loving, respecting, and revering the world and living 
+							things instead of looking down upon these things disdainfully was notable. Perhaps we 
+							all struggle with the inclination to hate the world for the ugliness inside of it, but 
+							to rise above this reality and see it with love and kindness can only be positive step 
+							toward progress and peace. ",
+							:user => {
+								:id => 1,
+								:name => "Test User",
+								:thumb => "assets/profile_pic.jpeg",
+								:url => "",
+							},
+							:comment_count => 12,
+							:timestamp => "4 days ago",
+							:like_count => 13,
+							:dislike_count => 14
+						}
+					],
 					:discussions => [
 						{
 							:user => {
@@ -454,7 +583,7 @@ module Api
 							:url => ""
 						}
 					],
-					:left_discussions_count => 14
+					:total_discussions_count => 14
 				}
 				render :json => info, :status => 200
 			end

@@ -237,7 +237,8 @@ body{
 .detailed_book .book_tags,
 .detailed_book .quotes,
 .detailed_book .news,
-.detailed_book .discussions{
+.detailed_book .discussions,
+.detailed_book .reviews{
 	padding: 20px;
 }
 
@@ -341,7 +342,7 @@ body{
 	border-radius: 10px;
 }
 
-.detailed_book .news_element{
+.detailed_book .news_element, .detailed_book .review{
 	padding: 10px;
 	margin-bottom: 15px;
 	border-radius: 10px;
@@ -477,4 +478,39 @@ body{
 	overflow-y: scroll;
 	display: inline-block;
 	float: left;
+}
+
+.review_thumb{
+	width: 50px;
+	height: 50px;
+	border-radius: 10px;
+}
+
+.detailed_book .reviews .elements{
+	padding: 20px;
+}
+
+.detailed_book .review{
+	padding: 0px;
+	background-color: none;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+.detailed_book .review .header span{
+	float: right;
+	margin-left: 10px;
+}
+
+.detailed_book .review .header{
+	background-color: #ECECEC;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	cursor: pointer;
+	font-size: 0.7em;
+	text-align: left;
+}
+
+.detailed_book .review .content{
+	background-color: white;
+	display: none;
 }
