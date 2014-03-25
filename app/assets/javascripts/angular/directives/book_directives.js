@@ -99,12 +99,26 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
               iElement.turn('page', page_number);
             });
 
-            iElement.on('click', '.post_comment', function(e, k){
+            iElement.on('click', '.post_comment', function(e){
               var $comment = $($(this).parent());
               var $comment_box = $($comment.siblings()[1]);
               $comment.hide();
               $comment_box.show();
             });
+
+            iElement.on('click', '.comment_big_box .cancel', function(e){
+              var $comment_box = $($(this)).parent();
+              var $comment = $($comment_box.siblings()[1]);
+              $comment_box.hide();
+              $comment.show();
+            })
+
+            iElement.on('click', '.comment_big_box .post', function(e){
+              var $comment_box = $($(this)).parent();
+              var $comment = $($comment_box.siblings()[1]);
+              $comment_box.hide();
+              $comment.show();
+            })
 
             iElement.on('click', '.like', function(e){
               var $this = $(this);

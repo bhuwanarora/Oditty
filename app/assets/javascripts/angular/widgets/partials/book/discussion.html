@@ -7,13 +7,17 @@
 		</div>
 	</div>
 	<div class="comment">
-		<div>{{discussion.comment}}</div>
+		<div class="comment_text">{{discussion.comment}}</div>
 		<div class="footer">
 			<span class="like">Like</span>
 			<span class="dislike">Dislike</span>
 			<span class="post_comment"><u>Comment</u></span>
 			<span>{{discussion.timestamp}}</span>
 		</div>
-		<input class="comment_box" placeholder="Post a comment" style="display:none;" />
+		<div class="comment_big_box" style="display:none;">
+			<input class="comment_box" placeholder="Write a comment..." />
+			<span class="cancel">CANCEL</span>
+			<span class="post">POST</span>
+		</div>
 	</div>
 </div>

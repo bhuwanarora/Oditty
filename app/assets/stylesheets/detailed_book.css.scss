@@ -371,7 +371,7 @@ body{
 }
 
 /*comment text*/
-.comment div{
+.comment .comment_text{
 	height: 35px;
 	width: 110%;
 	overflow-y: hidden;
@@ -405,15 +405,6 @@ body{
 
 .more_comments{
 	text-align: center;
-}
-
-.comment_box{
-	height: 25px;
-	width: 110%;
-	border: 1px solid #DDDDDD;
-	text-align: left;
-	margin-top: 10px;
-	overflow-y: scroll;
 }
 
 .like, .dislike{
@@ -453,4 +444,37 @@ body{
 	margin-top: -3%;
 	margin-right: -3%;
 	cursor: pointer;
+}
+
+.post_comment{
+	color: #3D79A1;
+}
+
+.comment_big_box .cancel{
+	position: absolute;
+	display: inline-block;
+	float: left;
+	margin: 18px -85px;
+	font-size: 0.7em;
+	color: #3D79A1;
+}
+
+.comment_big_box .post{
+	position: absolute;
+	display: inline-block;
+	float: left;
+	margin: 18px -35px;
+	font-size: 0.7em;
+	color: #3D79A1;
+}
+
+.comment_box{
+	height: 25px;
+	width: 110%;
+	border: 1px solid #DDDDDD;
+	text-align: left;
+	margin-top: 10px;
+	overflow-y: scroll;
+	display: inline-block;
+	float: left;
 }
