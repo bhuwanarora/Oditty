@@ -95,6 +95,14 @@ and (min-width : 1024px) {
 	.rate_radio_buttons{
 		margin-top: -10px;
 	}
+
+
+	.card .zoomedin_thumb{
+		position: absolute;
+		z-index: 1000;
+		width: 510px;
+		height: 650px;
+	}
 }
 
 @media only screen
@@ -139,6 +147,14 @@ and (min-width : 1280px){
 
 	.rate_radio_buttons{
 		margin-top: 0px;
+	}
+
+
+	.card .zoomedin_thumb{
+		position: absolute;
+		z-index: 1000;
+		width: 610px;
+		height: 864px;
 	}
 }
 
@@ -188,7 +204,12 @@ and (min-width : 1824px) {
 		margin-top: 0px;
 	}
 
-
+	.card .zoomedin_thumb{
+		position: absolute;
+		z-index: 1000;
+		width: 610px;
+		height: 864px;
+	}
 }
 
 /*anchor tags*/
@@ -425,13 +446,6 @@ a:hover{
 .card .thumb_hover{
     filter: none;
     -webkit-filter: grayscale(0);
-}
-
-.card .zoomedin_thumb{
-	position: absolute;
-	z-index: 1000;
-	width: 610px;
-	height: 864px;
 }
 
 .tags{
