@@ -251,7 +251,10 @@ body{
 .detailed_book .book_tags .header,
 .detailed_book .quotes .header,
 .detailed_book .news .header,
-.detailed_book .discussions .header{
+.detailed_book .discussions .header,
+.detailed_book .about_author .header,
+.detailed_book .reviews .header,
+.detailed_book .readers .header{
 	text-align: center;
 	padding: 10px;
 	margin-bottom: 2px;
