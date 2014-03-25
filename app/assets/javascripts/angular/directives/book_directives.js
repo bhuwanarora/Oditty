@@ -1,345 +1,281 @@
+var width = screen.width*(1220/1320); //1220
+var height = screen.height*(864/1064); //864
+var page_numbers = {
+  first_sentence: 4, 
+  characters: 5, 
+  quotes: 6, 
+  themes: 7,
+  subject_placces: 8,
+  movies_based: 9,
+  tags: 10,
+  readers: 11,
+  news: 12,
+  reviews: 13,
+  discussions: 14,
+  about_author: 15
+};
+
 bookApp.directive('flipbook', function($rootScope, $timeout){
 	return{
 		restrict: 'E',
-		link: function(scope, element, attr){
-		    _update_depth = function(book, newPage){
-		    	var page = book.turn('page'),
-				pages = book.turn('pages'),
-				depthWidth = 16*Math.min(1, page*2/pages);
+    replace: true,
+    compile: function(tElement, tAttrs, transclude) {
+        var width_edition_factor = width*(20/1320)
+        var height_edition_factor = height*(40/1064)
+        var image_width = width/2+width_edition_factor;
+        var image_height = height+height_edition_factor;
 
-				newPage = newPage || page;
+        _set_elements_height = function(){
+          height_edition_factor = height_edition_factor*2;
 
-				if (newPage>3){
-					$('#detailedBook .p2 .depth').css({
-						width: depthWidth,
-						left: 20 - depthWidth
-					});
-				}
-				else{
-					$('#detailedBook .p2 .depth').css({width: 0});
-				}
+          var div_height = height - height_edition_factor;
+          $('.elements').css('height', div_height);
+          $('.elements').css('overflow-y', "scroll");
+        }
 
-				depthWidth = 16*Math.min(1, (pages-page)*2/pages);
+        _set_depth = function(){
+          $('.depth').css('height', image_height-height_edition_factor/2);
+        }
 
-				if (newPage<pages-3){
-					$('#detailedBook .p17 .depth').css({
-						width: depthWidth,
-						right: 20 - depthWidth
-					});
-				}
-				else{
-					$('#detailedBook .p17 .depth').css({width: 0});
-				}
-		    }
+        _set_pre_css = function(){
+          $('.own-size').css('width', image_width);
+          $('.own-size').css('height', image_height);
 
-		    // Why this?  Chrome has the fault:
-			// http://code.google.com/p/chromium/issues/detail?id=128488
-			_is_chrome = function() {
-				return navigator.userAgent.indexOf('Chrome')!=-1;
-			}
+          $('.back-side').addClass('fixed');
+          $('#backCoverFold').css('width', image_width);
+          $('#backCoverFold').css('height', image_height);
 
-			_init_turnjs = function(){
-				$("#detailedBook").turn({
-					width: scope.width,
-					height: scope.height,
-					page: 1,
-					duration: 500,
-					acceleration: !_is_chrome(),
-					// elevation: 50,
-					when: {
-						turning: function(event, page, pageObject) {
-							var book = $(this),
-								currentPage = book.turn('page'),
-								pages = book.turn('pages');
+          _set_depth();
+          _set_elements_height();
+        }
+        
+        _set_post_css = function(){
+          $('.front-side').addClass('fixed');
+          $('#coverImage').css('width', image_width);
+          $('#coverImage').css('height', image_height);
+          $('#frontCoverFold').css('width', image_width);
+          $('#frontCoverFold').css('height', image_height);
 
-							_update_depth(book, page);
-				
-							if (page>=2){
-								if(!$('#detailedBook .p2').hasClass('fixed')){
-									$('#detailedBook .p2').addClass('fixed');
-								}
-							}
-							else{
-								$('#detailedBook .p2').removeClass('fixed');
-							}
+          $('.detailed_book').css('position', 'absolute');
+          
+          _set_depth();
+          _set_elements_height();
+        }
 
-							if (page<book.turn('pages')){
-								if(!$('#detailedBook .p17').hasClass('fixed')){
-									$('#detailedBook .p17').addClass('fixed');
-								}
-							}
-							else{
-								$('#detailedBook .p17').removeClass('fixed');
-							}
+        _update_depth = function(book, newPage){
+            var page = book.turn('page'),
+          pages = book.turn('pages'),
+          depthWidth = 16*Math.min(1, page*2/pages);
 
-							
-						},
-						turned: function(event, page, view){
-							var book = $(this),
-							pages = book.turn('pages');
+          newPage = newPage || page;
 
-							_update_depth(book);
+          if (newPage>3){
+            $('.detailed_book .p2 .depth').css({
+              width: depthWidth,
+              left: 20 - depthWidth
+            });
+          }
+          else{
+            $('.detailed_book .p2 .depth').css({width: 0});
+          }
 
-							if (page==2 || page==3) {
-								book.turn('peel', 'br');
-							}
-						}
-					}
-				});
-				$('.recommendations').hide();
-				$('#flipbookViewport').show();
-				$timeout(function(){
-					var init_page = $rootScope.initPage;
-					$("#detailedBook").turn("page", init_page);
-				}, 1000);
-				_init_page_bindings();
-		    }
+          depthWidth = 16*Math.min(1, (pages-page)*2/pages);
 
-		    _init_page_bindings = function(){
-				scope.page_numbers = {
-									first_sentence: 4, 
-									characters: 5, 
-									quotes: 6, 
-									themes: 7,
-									subject_placces: 8,
-									movies_based: 9,
-									tags: 10,
-									readers: 11,
-									news: 12,
-									reviews: 13,
-									discussions: 14,
-									about_author: 15
-								};
+          if (newPage<pages-3){
+            $('.detailed_book .p17 .depth').css({
+              width: depthWidth,
+              right: 20 - depthWidth
+            });
+          }
+          else{
+            $('.detailed_book .p17 .depth').css({width: 0});
+          }
+        }
 
-				// $('#firstSentence').on('click', function(){
-				// 	var page_name = "first_sentence";
-				// 	$("#detailedBook").turn("page", scope.page_numbers[page_name]);
-				// });
+        return {
+          pre: function(scope, iElement, iAttrs, controller) { 
+            iElement.on('click', '[data-page]', function(e){
+              var page_number = page_numbers[$(e.target).data('page')];
+              iElement.turn('page', page_number);
+            });
 
-				// $('#characters').on('click', function(){
-				// 	var page_name = "characters";
-				// 	$("#detailedBook").turn("page", scope.page_numbers[page_name]);
-				// });
+            iElement.on('click', '.post_comment', function(e, k){
+              var $comment = $($(this).parent());
+              var $comment_box = $($comment.siblings()[1]);
+              $comment.hide();
+              $comment_box.show();
+            });
 
-				// $('#quotes').on('click', function(){
-				// 	var page_name = "quotes";
-				// 	$("#detailedBook").turn("page", scope.page_numbers[page_name]);	
-				// });
+            iElement.on('click', '.like', function(e){
+              var $this = $(this);
+              if($this.hasClass('like_selected')){
+                $this.removeClass('like_selected');
+              }
+              else{
+                var $dislike = $($(this).siblings()[0]);
+                $this.addClass('like_selected');
+                $dislike.removeClass('dislike_selected');
+              }
+            });
 
-				// $('#themes').on('click', function(){
-				// 	var page_name = "themes";
-				// 	$("#detailedBook").turn("page", scope.page_numbers[page_name]);
-				// });
+            iElement.on('click', '.dislike', function(e){
+              var $this = $(this);
+              if($this.hasClass('dislike_selected')){
+                $this.removeClass('dislike_selected');
+              }
+              else{
+                var $like = $($(this).siblings()[0]);
+                $this.addClass('dislike_selected');
+                $like.removeClass('like_selected');
+              }
+            });
 
-				// $('#subjectPlaces').on('click', function(){
-				// 	var page_name = "subject_placces";
-				// 	$("#detailedBook").turn("page", scope.page_numbers[page_name]);
-				// });
+            iElement.on('click', '.close_book', function(){
+              scope.destroy_book();
+            });
 
-				// $('#moviesBased').on('click', function(){
-				// 	var page_name = "movies_based";
-				// 	$("#detailedBook").turn("page", scope.page_numbers[page_name]);
-				// });
+            _set_pre_css();
+            
+          },
+          post: function(scope, iElement, iAttrs, controller) {
+            iElement.turn({
+              width: width,
+              height: height,
+              when: {
+                turning: function(event, page, pageObject){
+                  var book = $(this),
+                    currentPage = book.turn('page'),
+                    pages = book.turn('pages');
 
-				// $('#tags').on('click', function(){
-				// 	var page_name = "tags";
-				// 	$("#detailedBook").turn("page", scope.page_numbers[page_name]);
-				// });
+                  _update_depth(book, page);
+            
+                  if (page>=2){
+                    if(!$('.detailed_book .p2').hasClass('fixed')){
+                      $('.detailed_book .p2').addClass('fixed');
+                    }
+                  }
+                  else{
+                    $('.detailed_book .p2').removeClass('fixed');
+                  }
 
-				// $('#reviews').on('click', function(){
-				// 	var page_name = "reviews";
-				// 	$("#detailedBook").turn("page", scope.page_numbers[page_name]);
-				// });
+                  if (page<book.turn('pages')){
+                    if(!$('.detailed_book .p17').hasClass('fixed')){
+                      $('.detailed_book .p17').addClass('fixed');
+                    }
+                  }
+                  else{
+                    $('.detailed_book .p17').removeClass('fixed');
+                  }
+                },
+                turned: function(event, page, view){
+                  var book = $(this),
+                  pages = book.turn('pages');
 
-				// $('#readers').on('click', function(){
-				// 	var page_name = "readers";
-				// 	$("#detailedBook").turn("page", scope.page_numbers[page_name]);
-				// });
+                  _update_depth(book);
 
-				// $('#discussions').on('click', function(){
-				// 	var page_name = "discussions";
-				// 	$("#detailedBook").turn("page", scope.page_numbers[page_name]);
-				// });
+                  if (page==2 || page==3) {
+                    book.turn('peel', 'br');
+                  }
+                }
+              }
+            }).turn('peel','br');
+            
+            _set_post_css();
+          }
+        }
+    },
+    controller: function($scope){
+      $scope.is_even = function(index){
+        var isEven = false;
+        if(index%2==0){
+          isEven = true;
+        }
+        return isEven;
+      }
 
-				// $('#news').on('click', function(){
-				// 	var page_name = "news";
-				// 	$("#detailedBook").turn("page", scope.page_numbers[page_name]);
-				// });
+      $scope.is_image = function(type){
+        var isImage = false;
+        if(type=="img"){
+          isImage = true;
+        }
+        return isImage;
+      }
 
-				// $('#aboutAuthor').on('click', function(){
-				// 	var page_name = "about_author";
-				// 	$("#detailedBook").turn("page", scope.page_numbers[page_name]);
-				// });
+      $scope.peel = function(){
+        $(".detailed_book").turn("peel", "br");
+      }
 
-		    }
+      $scope.remove_peel = function(){
+        $(".detailed_book").turn("peel", false); 
+      }
 
-			scope.show_page = function(page_name){
-				console.log('page_name', page_name);
-				$("#detailedBook").turn("page", scope.page_numbers[page_name]);
-			}
+      $scope.zoom_in = function(){
+        
+      
+      }
 
-			scope.is_even = function(index){
-				var isEven = false;
-				if(index%2==0){
-					isEven = true;
-				}
-				return isEven;
-			}
+      $scope.destroy_book = function(event){
+        $rootScope.show_book = false;
+        // $('.detailed_book').turn('destroy');
+      }
 
-			scope.is_image = function(type){
-				var isImage = false;
-				if(type=="img"){
-					isImage = true;
-				}
-				return isImage;
-			}
+      $scope.share_quote = function(){
+        console.log("share_quote");
+      }
 
-			scope.peel = function(){
-				$("#detailedBook").turn("peel", "br");
-			}
+      _init = function(){
+        $timeout(function(){
+          var init_page = $rootScope.initPage;
+          $(".detailed_book").turn("page", init_page);
+        }, 1000);
+      }
 
-			scope.remove_peel = function(){
-				$("#detailedBook").turn("peel", false);	
-			}
-
-			scope.zoom_in = function(){
-				
-			
-			}
-
-			scope.destroy_book = function(event){
-				// $('#flipbookViewport').hide();
-				// $('#detailedBook').turn('destroy');
-				event.stopPropagation();
-				// alert("destroy triggered");
-				// $().css('white-space', 'nowrap');
-			}
-
-			scope.share_quote = function(){
-				console.log("share_quote");
-			}
-
-			_init_turnjs();
-
-		},
-		controller: function($scope){
-			_set_image_sizes = function(){
-				var width_edition_factor = $scope.width*(20/1320)
-				var height_edition_factor = $scope.height*(40/1064)
-		    	var image_width = $scope.width/2+width_edition_factor;
-		    	var image_height = $scope.height+height_edition_factor;
-		    	$('.own-size').css('width', image_width);
-		    	$('.own-size').css('height', image_height);
-		    	$('#coverImage').css('width', image_width);
-		    	$('#coverImage').css('height', image_height);
-		    	$('#frontCoverFold').css('width', image_width);
-		    	$('#frontCoverFold').css('height', image_height);
-		    	$('#backCoverFold').css('width', image_width);
-		    	$('#backCoverFold').css('height', image_height);
-		    	$('.depth').css('height', image_height-height_edition_factor/2);
-		    	height_edition_factor = height_edition_factor*2;
-		    	var div_height = $scope.height - height_edition_factor;
-		    	$('.elements').css('height', div_height);
-		    	$('.elements').css('overflow-y', "scroll");
-		    }
-
-		    _resize_viewport = function(){
-			    var width = $(window).width(),
-			        height = $(window).height(),
-			        options = $('#detailedBook').turn('options');
-
-			    $('#flipbookViewport').css({
-			        width: width,
-			        height: height
-			    }).zoom('resize');
-		    }
-
-		    _init_viewport_change_handle = function(){
-		    	$(window).resize(function() {
-			        _resize_viewport();
-			    }).bind('orientationchange', function() {
-			        _resize_viewport();
-			    });
-		    }
-
-		    _init_keyboard_bindings = function(){
-		    	$(window).bind('keydown', function(e){
-			        if (e.keyCode==37){
-			            $('#detailedBook').turn('previous');
-			        }
-			        else if (e.keyCode==39){
-			            $('#detailedBook').turn('next');
-			        }
-			             
-			    });
-		    }
-
-		    _init_zoom_viewport = function(){
-		    	$("#flipbookViewport").zoom({
-					flipbook: $("#detailedBook")
-				});
-				$('#flipbookViewport').bind('zoom.tap', _zoomTo);
-				console.log("zoom initialised");
-				// $("#newsElement").turn("zoomIn");
-		    }
-
-		    _zoomTo = function(){
-		        setTimeout(function() {
-		            if ($('#flipbookViewport').data().regionClicked) {
-		                $('#flipbookViewport').data().regionClicked = false;
-		            } else {
-		                if ($('#flipbookViewport').zoom('value')==1) {
-		                    $('#flipbookViewport').zoom('zoomIn', event);
-		                } else {
-		                    $('#flipbookViewport').zoom('zoomOut');
-		                }
-		            }
-		        }, 1);
-		    }
-
-			_init = function(){
-				$scope.width = screen.width*(1220/1320); //1220
-				$scope.height = screen.height*(864/1064); //864
-				_init_keyboard_bindings();
-				_set_image_sizes();
-			}
-
-			_init();			
-		},
-		templateUrl: "/assets/angular/widgets/partials/book.html"
-	}
+      _init();
+    },
+    templateUrl: "/assets/angular/widgets/partials/book.html"
+  }
 });
 
 bookApp.directive('discussion', function(){
-	return{
-		restrict: 'E',
-		scope: {"discussion": "=data",
-				"index": "=index"},
-		link: function(scope, element, attr){
-			scope.show_nested_discussion = function(){
-				var discussion_id = scope.discussion.id;
-			}
+  return{
+    restrict: 'E',
+    scope: {"discussion": "=data",
+        "index": "=index"},
+    compile: function(tElement, tAttrs, transclude) {
+      show_nested_discussion = function(){
+        var discussion_id = scope.discussion.id;
+      }
 
-			scope.show_comment_box = function(){
-				scope.comment_box = true;
-				//focus the input box
-			}
-		},
-		controller: function($scope){
-			_init = function(){
-				$scope.comment_box = false;
-			}
 
-			$scope.is_even = function(index){
-				var isEven = false;
-				if(index%2==0){
-					isEven = true;
-				}
-				return isEven;
-			}
+      return {
+        pre: function(scope, iElement, iAttrs, controller) {
+          
+        },
+        post: function(scope, iElement, iAttrs, controller) {
+             
+        }
+      }
+    },
+    controller: function($scope){
+      _show_comment_box = function(){
+        console.log("focus the input box");
+        $scope.comment_box = true;
+      }
 
-			_init();
-		},
-		templateUrl: "/assets/angular/widgets/partials/book/discussion.html"
-	}
+      _init = function(){
+        $scope.comment_box = false;
+      }
+
+      $scope.is_even = function(index){
+        var isEven = false;
+        if(index%2==0){
+          isEven = true;
+        }
+        return isEven;
+      }
+
+      _init();
+    },
+    templateUrl: "/assets/angular/widgets/partials/book/discussion.html"
+  }
 });

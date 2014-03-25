@@ -18,6 +18,7 @@
       <%= yield %>
     </div>
     <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/lib/**/*.js")] %>
+    <link rel="stylesheet" type="text/css" href="assets/detailed_book.css.scss">
     <flipbook ng-if="show_book"></flipbook>
     <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
 

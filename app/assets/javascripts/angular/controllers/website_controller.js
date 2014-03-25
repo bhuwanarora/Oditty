@@ -67,7 +67,7 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
     	filter = "id="+data;
     	websiteService.get_book_details(filter).then(function(data){
 			$scope.detailed_book["book"] = data;
-	    	$scope.show_book = true;
+	    	$rootScope.show_book = true;
     	});
     }
 
@@ -85,6 +85,7 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		$scope.detailed_book = {};
 		$rootScope.initPage = 3;
 
+		// _get_book_details(1);
 		_bind_emit();
 		_bind_feedback_form();
 		// $http.defaults.headers.post['My-Header'] = 'value';

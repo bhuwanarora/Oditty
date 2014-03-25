@@ -8,10 +8,12 @@
 	</div>
 	<div class="comment">
 		<div>{{discussion.comment}}</div>
-		<div class="footer" ng-show="!comment_box">
-			<span ng-click="show_comment_box()"><u>Comment</u></span>
+		<div class="footer">
+			<span class="like">Like</span>
+			<span class="dislike">Dislike</span>
+			<span class="post_comment"><u>Comment</u></span>
 			<span>{{discussion.timestamp}}</span>
 		</div>
-		<input class="comment_box" ng-show="comment_box" placeholder="Post a comment"/>
+		<input class="comment_box" placeholder="Post a comment" style="display:none;" />
 	</div>
 </div>

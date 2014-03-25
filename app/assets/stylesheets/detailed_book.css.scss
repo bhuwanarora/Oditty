@@ -23,15 +23,13 @@ body{
 	margin-top: 3%;
 	white-space: normal;
 	color: #717070;
-}
-
-#flipbookViewport{
 	position: absolute;
 	top: 0px;
 	z-index: 4000;
+}
+
+#flipbookViewport{
 	/*background-color: #DBDBDB;*/
-	width: 100%;
-	height: 100%;
 }
 
 .detailed_book .page{
@@ -381,6 +379,7 @@ body{
 	text-align: right;
 	margin: 25px -50px 0px 0px;
 	overflow-y: visible;
+	font-size: 0.8em;
 }
 
 .comment .footer .comment_now{
@@ -412,4 +411,43 @@ body{
 	text-align: left;
 	margin-top: 10px;
 	overflow-y: scroll;
+}
+
+.like, .dislike{
+	width: 150px;
+	border: 1px solid white;
+	padding: 4px;
+	margin-right: 5px;
+	cursor: pointer;
+	color: #3D79A1;
+	border-radius: 3px;
+}
+
+.like:hover, .dislike:hover{
+	color: #717070;
+	background-color: white;
+	-webkit-box-shadow: 1px 2px 1px #3D79A1;
+	-moz-box-shadow: 1px 2px 1px #3D79A1;
+	box-shadow: 1px 2px 1px #3D79A1;
+}
+
+.like_selected, .dislike_selected{
+	width: 150px;
+	background-color: #3D79A1;
+	color: white;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+}
+
+.like_selected:hover, .dislike_selected:hover{
+	background-color: #3D79A1;
+	color: white;
+}
+
+.close_book{
+	float: right;
+	margin-top: -3%;
+	margin-right: -3%;
+	cursor: pointer;
 }

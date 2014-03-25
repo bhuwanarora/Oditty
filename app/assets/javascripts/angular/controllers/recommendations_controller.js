@@ -168,7 +168,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	_init = function(){
 		//oneMin = 60000
 		var oneSec = 10000;
-		$scope.show_book = false;
+		$rootScope.show_book = false;
 
 		user_behaviour_timer_event = $timeout(function(){
 			_recordUserBehaviour();
