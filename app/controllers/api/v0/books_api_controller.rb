@@ -104,8 +104,8 @@ module Api
 								the Only One, Atman? And where was Atman to be found, where did he dwell, where did his eternal 
 								heart beat if not in ones own self, in the innermost, in the indestructible essence that every 
 								person bore within? But where, where was this self, this innermost, this ultimate? It was not 
-								flesh and blood, it was not thinking or consciousness—that was what the wisest teach. But then 
-								where, where was it? To pierce there, to the self, to myself, to Atman—was there any other path 
+								flesh and blood, it was not thinking or consciousness that was what the wisest teach. But then 
+								where, where was it? To pierce there, to the self, to myself, to Atman was there any other path 
 								worth seeking?",
 							:from => "Siddhartha"
 						},
