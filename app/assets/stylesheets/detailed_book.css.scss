@@ -11,6 +11,193 @@ body{
 
 body{
 	/*white-space: normal;*/
+	font-size: 0.9em;
+}
+
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+/* Styles */
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen
+and (min-width : 321px) {
+/* Styles */
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen
+and (max-width : 320px) {
+/* Styles */
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px) {
+/* Styles */
+}
+
+/* iPads (landscape) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : landscape) {
+/* Styles */
+	font-size: 0.6em;
+}
+
+
+/* Desktops and laptops ----------- */
+@media only screen
+and (min-width : 1024px) {
+/* Styles */
+	.detailed_book .first_sentence .sentence {
+		font-size: 1em;
+		padding: 50px;
+	}
+
+	.detailed_book .characters, 
+	.detailed_book .content, 
+	.detailed_book .first_sentence, 
+	.detailed_book .note_for_parents, 
+	.detailed_book .themes, 
+	.detailed_book .subject_places, 
+	.detailed_book .movies_based, 
+	.detailed_book .book_tags, 
+	.detailed_book .quotes, 
+	.detailed_book .news, 
+	.detailed_book .discussions, 
+	.detailed_book .reviews {
+		padding: 10px;
+	}
+
+	.detailed_book .reviews .elements {
+		padding: 10px;
+	}
+
+	.detailed_book .news_element, 
+	.detailed_book .review{
+		margin-bottom: 5px;
+	}
+
+	.detailed_book .review .header span {
+		margin-left: 5px;
+	}
+
+	.review_thumb{
+		width: 40px;
+		height: 40px;
+	}
+
+	.detailed_book .review .content{
+		font-size: 0.9em;
+		padding: 15px;
+	}
+
+	.comment{
+		width: 310px;
+		padding: 5px;
+	}
+
+	.comment_box{
+		height: 22px;
+		margin-top: 5px;
+	}
+
+	.comment .footer{
+		margin-top: 10px;
+	}
+
+	.comment .comment_text{
+		height: 32px;
+	}
+
+	.discussion{
+		height: 70px;
+	}
+
+	.user .thumb{
+		width: 40px;
+		height: 40px;
+		border-radius: 5px;
+	}
+
+}
+
+/* Large screens ----------- */
+@media only screen
+and (min-width : 1824px) {
+/* Styles */
+	.detailed_book .first_sentence .sentence {
+		font-size: 1.5em;
+		padding: 100px;
+	}
+
+	.detailed_book .reviews .elements{
+		padding: 20px;
+	}
+
+	.detailed_book .characters, 
+	.detailed_book .content,
+	.detailed_book .first_sentence,
+	.detailed_book .note_for_parents,
+	.detailed_book .themes,
+	.detailed_book .subject_places,
+	.detailed_book .movies_based,
+	.detailed_book .book_tags,
+	.detailed_book .quotes,
+	.detailed_book .news,
+	.detailed_book .discussions,
+	.detailed_book .reviews{
+		padding: 20px;
+	}
+
+	.detailed_book .news_element, 
+	.detailed_book .review{
+		margin-bottom: 15px;
+	}
+
+	.detailed_book .review .header span {
+		margin-left: 10px;
+	}
+
+	.review_thumb{
+		width: 50px;
+		height: 50px;
+	}
+
+	.comment{
+		width: 370px;
+		padding: 10px;
+	}
+
+	.comment .footer{
+		margin-top: 25px;
+	}
+
+	.comment_box{
+		height: 25px;
+		margin-top: 10px;
+	}
+
+	.comment .comment_text{
+		height: 35px;
+	}
+
+	.discussion{
+		height: 90px;
+	}
+
+	.user .thumb{
+		width: 50px;
+		height: 50px;
+		border-radius: 10px;
+	}
+
 }
 
 .detailed_book{
@@ -227,21 +414,6 @@ body{
    text-align: center;
 }
 
-.detailed_book .characters, 
-.detailed_book .content,
-.detailed_book .first_sentence,
-.detailed_book .note_for_parents,
-.detailed_book .themes,
-.detailed_book .subject_places,
-.detailed_book .movies_based,
-.detailed_book .book_tags,
-.detailed_book .quotes,
-.detailed_book .news,
-.detailed_book .discussions,
-.detailed_book .reviews{
-	padding: 20px;
-}
-
 .detailed_book .characters .header, 
 .detailed_book .content .header,
 .detailed_book .first_sentence .header,
@@ -275,9 +447,7 @@ body{
 }
 
 .detailed_book .first_sentence .sentence{
-	font-size: 1.5em;
 	font-family: monospace;
-	padding: 100px;
 }
 
 .detailed_book .quote{
@@ -344,7 +514,6 @@ body{
 
 .detailed_book .news_element, .detailed_book .review{
 	padding: 10px;
-	margin-bottom: 15px;
 	border-radius: 10px;
 	background-color: #f8f8f8;
 	-webkit-box-shadow: 1px 2px 1px #d1d1d1;
@@ -358,30 +527,19 @@ body{
 	padding: 10px;
 }
 
-.user .thumb{
-	width: 50px;
-	height: 50px;
-	border-radius: 10px;
-}
-
 .comment{
 	display: inline-block;
 	float: left;
-	width: 370px;
-	padding: 10px;
 }
 
 /*comment text*/
 .comment .comment_text{
-	height: 35px;
-	width: 110%;
 	overflow-y: hidden;
 }
 
 .comment .footer{
 	height: 10px;
 	text-align: right;
-	margin: 25px -50px 0px 0px;
 	overflow-y: visible;
 	font-size: 0.8em;
 }
@@ -391,7 +549,6 @@ body{
 }
 
 .discussion{
-	height: 90px;
 	display: block;
 	padding: 5px;
 	margin: 5px;
@@ -470,24 +627,15 @@ body{
 }
 
 .comment_box{
-	height: 25px;
-	width: 110%;
 	border: 1px solid #DDDDDD;
 	text-align: left;
-	margin-top: 10px;
 	overflow-y: scroll;
 	display: inline-block;
 	float: left;
 }
 
 .review_thumb{
-	width: 50px;
-	height: 50px;
 	border-radius: 10px;
-}
-
-.detailed_book .reviews .elements{
-	padding: 20px;
 }
 
 .detailed_book .review{
@@ -498,7 +646,6 @@ body{
 }
 .detailed_book .review .header span{
 	float: right;
-	margin-left: 10px;
 }
 
 .detailed_book .review .header{
