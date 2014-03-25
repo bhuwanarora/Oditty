@@ -99,6 +99,10 @@ and (min-width : 1024px) {
 		width: 510px;
 		height: 650px;
 	}
+
+	.typeahead_options{
+		margin: -2px 0px 0px 50px;
+	}
 }
 
 @media only screen
@@ -147,6 +151,10 @@ and (min-width : 1280px){
 		z-index: 1000;
 		width: 610px;
 		height: 864px;
+	}
+
+	.typeahead_options{
+		margin: -2px 0px 0px 100px;
 	}
 }
 
@@ -197,6 +205,10 @@ and (min-width : 1824px) {
 		z-index: 1000;
 		width: 610px;
 		height: 864px;
+	}
+
+	.typeahead_options{
+		margin: -2px 0px 0px 100px;
 	}
 }
 
@@ -1216,7 +1228,6 @@ input:focus{
 
 .typeahead_options{
 	position: absolute;
-	margin: -2px 0px 0px 100px;
 	width: 189px;
 	box-shadow: 0px 1px 4px 0px #99A3AD, inset 0px 0px 40px #EEEEEE;
 	color: #717170;

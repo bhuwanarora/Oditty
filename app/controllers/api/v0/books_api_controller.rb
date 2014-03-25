@@ -94,57 +94,57 @@ module Api
 						comprehend the underlying meaning. Wait until high school.",
 					:quotes => [
 						{
-							:quote => "“When someone is seeking, it happens quite easily that he only sees the thing 
+							:quote => "When someone is seeking, it happens quite easily that he only sees the thing 
 								that he is seeking; that he is unable to find anything, unable to absorb anything because 
-								he is only thinking of the thing he is seeking...”",
+								he is only thinking of the thing he is seeking...",
 							:from => ""
 						},
 						{
-							:quote => "“To whom else should one sacrifice, to whom else was veneration due but to him, 
+							:quote => "To whom else should one sacrifice, to whom else was veneration due but to him, 
 								the Only One, Atman? And where was Atman to be found, where did he dwell, where did his eternal 
 								heart beat if not in one’s own self, in the innermost, in the indestructible essence that every 
 								person bore within? But where, where was this self, this innermost, this ultimate? It was not 
 								flesh and blood, it was not thinking or consciousness—that was what the wisest teach. But then 
 								where, where was it? To pierce there, to the self, to myself, to Atman—was there any other path 
-								worth seeking?”",
+								worth seeking?",
 							:from => "Siddhartha"
 						},
 						{
-							:quote => "“Her clever red lips taught him a lot. Her tender, supple hand taught him a lot. In 
+							:quote => "Her clever red lips taught him a lot. Her tender, supple hand taught him a lot. In 
 								regard to love, he was still a boy, and he tended to plunge into pleasure blindly, endlessly, 
 								insatiably. So she thoroughly taught him that one cannot take pleasure without giving pleasure, 
 								and that every gesture, every caress, every touch, every glance, every last bit of the body has 
-								its secret, which brings happiness to the person who knows how to wake it.”",
+								its secret, which brings happiness to the person who knows how to wake it.",
 							:from => ""
 						},
 						{
-							:quote => "“She taught him that after a celebration of love the lovers should not part without 
+							:quote => "She taught him that after a celebration of love the lovers should not part without 
 								admiring each other, without being conquered or having conquered, so that neither is bleak or 
-								glutted or has the bad feeling of having misused or been misused.”",
+								glutted or has the bad feeling of having misused or been misused.",
 							:from => ""
 						},
 						{
-							:quote => "“Where are you going, by friend?I am not going anywhere. We … are always on the way…. 
+							:quote => "Where are you going, by friend?I am not going anywhere. We … are always on the way…. 
 								But where are you going, Siddhartha?It is the same with me at it is with you, my friend. I am not 
-								going anywhere. I am only on the way.”",
+								going anywhere. I am only on the way.",
 							:from => ""
 						},
 						{
-							:quote => "“But today he only saw one of the river’s secrets, one that gripped his soul. He saw 
+							:quote => "But today he only saw one of the river’s secrets, one that gripped his soul. He saw 
 								that the water continually flowed and flowed and yet it was always there; it was always the same 
-								and yet every moment it was new.”",
+								and yet every moment it was new.",
 							:from => ""
 						},
 						{
-							:quote => "“Where are you going, by friend?I am not going anywhere. We … are always on the way…. 
+							:quote => "Where are you going, by friend?I am not going anywhere. We … are always on the way…. 
 								But where are you going, Siddhartha?It is the same with me at it is with you, my friend. I am not 
-								going anywhere. I am only on the way.”",
+								going anywhere. I am only on the way.",
 							:from => ""
 						},
 						{
-							:quote => "“But today he only saw one of the river’s secrets, one that gripped his soul. He saw 
+							:quote => "But today he only saw one of the river’s secrets, one that gripped his soul. He saw 
 								that the water continually flowed and flowed and yet it was always there; it was always the same 
-								and yet every moment it was new.”",
+								and yet every moment it was new.",
 							:from => ""
 						}
 					],
@@ -266,23 +266,23 @@ module Api
 							ambient show will be presented at his Chicago tea shop on 28 February.
 
 							The Smashing Pumpkins bandleader shared concert details by posting on Facebook
-							 (via Stereogum). “[The] performance will be centered around an ambient/musical 
-							 interpretation of [the book] ... built by modular synthesis, on the fly,” he 
-							 wrote. “Readings of the text [will] go hand in hand with whatever is created.”
+							 (via Stereogum). [The] performance will be centered around an ambient/musical 
+							 interpretation of [the book] ... built by modular synthesis, on the fly, he 
+							 wrote. Readings of the text [will] go hand in hand with whatever is created.
 							  The show will begin at noon and last between eight and nine hours.
 
 							Said tea shop, Madame ZuZu’s, was launched in 2012. Corgan described it then 
-							as a “salon ... [where] like-minded people can discuss ideas and performance 
-							art”. From the start, Corgan emphasised that he wanted this space to be a 
+							as a salon ... [where] like-minded people can discuss ideas and performance 
+							art. From the start, Corgan emphasised that he wanted this space to be a 
 							showcase for literature, including his own poetry; he admitted to the Chicago 
-							Tribune that he has been writing “a spiritual memoir” since around 2010.
+							Tribune that he has been writing a spiritual memoir since around 2010.
 
 							Indeed, Corgan is one of those 30m-album-selling rockers for whom an eight-hour 
 							Buddhist synth jam seems par for the course. Before his tea shop, the 46-year-old 
 							launched a religion/philosophy website called Everything From Here To There. He 
 							also became a wrestling promoter. And although many critics might mock Corgan’s 
-							pretense, his fans have his back: “He’s just hanging out at his tea shop playing 
-							music,” one wrote on Facebook. “How is that pretentious?”",
+							pretense, his fans have his back: He’s just hanging out at his tea shop playing 
+							music, one wrote on Facebook. How is that pretentious?",
 							:source => "http://www.theguardian.com/",
 							:type => "img"
 						},
