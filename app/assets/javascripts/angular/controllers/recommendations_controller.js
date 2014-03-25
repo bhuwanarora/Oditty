@@ -72,11 +72,11 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	    add_book_to_shelf_event = $scope.$on('addBookToShelf', function(event, data){
 	    	var book = {title: data['title'], author_name: data['author_name'], book_cover_url: data['book_cover_url']};
 	    	$scope.user_books['bookmarked'].push(book);
-	    })
+	    });
 
 	    remove_book_from_shelf_event = $scope.$on('removeBookFromShelf', function(event, data){
 	    	var book = {title: data['title'], author_name: data['author_name'], book_cover_url: data['book_cover_url']};
-	    })
+	    });
 	}
 
 	_init_recommendations = function(){
@@ -91,10 +91,10 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 		$scope.$on('$destroy', function(){
 			$timeout.cancel(push_books_timer_event);
 			$timeout.cancel(user_behaviour_timer_event);
-			$broadcast.cancel(load_recommendations_event);
-			$emit.cancel(reload_recommendations_event);
-			$emit.cancel(add_book_to_shelf_event);
-			$emit.cancel(remove_book_from_shelf_event);
+			// $emit.cancel(reload_recommendations_event);
+			// $emit.cancel(add_book_to_shelf_event);
+			// $emit.cancel(remove_book_from_shelf_event);
+			// $emit.cancel(show_book_event);
 		})
 	}
 
@@ -161,13 +161,14 @@ recommendationApp.controller('recommendationsController', function($scope, $root
     _init_user_details = function(){
     	recommendationService.get_user_details().then(function(data){
     		$scope.user_books = data["books"];
-    	})
+    	});
     }
 
 
 	_init = function(){
 		//oneMin = 60000
 		var oneSec = 10000;
+		$rootScope.show_book = false;
 
 		user_behaviour_timer_event = $timeout(function(){
 			_recordUserBehaviour();

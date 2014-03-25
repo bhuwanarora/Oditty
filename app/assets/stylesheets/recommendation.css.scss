@@ -4,10 +4,9 @@ html{
 	overflow-x: auto;
 }
 body{
-	/*background: url('background-1.jpg');*/
 	/*background-repeat: no-repeat;*/
 	background-color: #DBDBDB;
-	width: 170%;
+	/*background: url('bg2.jpg');*/
 	height: 100%;
 	white-space: nowrap;
 	/*background: url("x2.jpg");*/
@@ -46,6 +45,7 @@ and (min-device-width : 768px)
 and (max-device-width : 1024px)
 and (orientation : landscape) {
 /* Styles */
+	font-size: 0.6em;
 }
 
 /* iPads (portrait) ----------- */
@@ -63,6 +63,10 @@ and (min-width : 1224px) {
 	.book_widget_base{
 		height: 550px;
 	}
+
+	.card .zoomedin_thumb{
+		width: 600px;
+	}
 }
 
 /* Large screens ----------- */
@@ -71,6 +75,10 @@ and (min-width : 1824px) {
 /* Styles */
 	.book_widget_base{
 		height: 550px;
+	}
+
+	.card .zoomedin_thumb{
+		width: 900px;
 	}
 }
 
@@ -175,11 +183,11 @@ a:hover{
 .book_binding{
 	-webkit-transform: rotateZ(-90deg);
 	transform: rotateZ(-90deg);
-	top: 225px;
-	left: 129px;
+	top: 228px;
+	left: 82px;
 	position: absolute;
 	height: 5%;
-	width: 61%;
+	width: 76%;
 	text-align: center;
 	color: white;
 	padding-top: 5px;
@@ -197,7 +205,7 @@ a:hover{
 
 .summary_base{
 	width: 254px;
-	height: 322px;
+	height: 415px;
 	color: white;
 	padding: 1em;
 	padding-top: 54px;
@@ -210,7 +218,8 @@ a:hover{
 	-moz-box-shadow: 1px 2px 1px #d1d1d1;
 	box-shadow: 1px 2px 1px #d1d1d1;
 	left: 53.8%;
-	top: 8.6%;
+	top: 0px;
+	margin-top: 5px;
 }
 
 .summary{
@@ -284,7 +293,7 @@ a:hover{
 
 .card .book_thumb{
 	width: 300px;
-	height: 70%;
+	height: 87%;
 	margin: 5px;
     background: rgba(113, 112, 112, 0.25);
 	border-radius: 2px;
@@ -308,11 +317,17 @@ a:hover{
     -webkit-filter: grayscale(0);
 }
 
+.card .zoomedin_thumb{
+	position: absolute;
+	z-index: 1000;
+	width: 610px;
+	height: 864px;
+}
+
 .tags{
 	right: 0;
 	position: absolute;
 	z-index: 2;
-	margin-top: -8px;
 }
 
 .tag{
@@ -372,7 +387,7 @@ a:hover{
  	height: 50px;
  	position: absolute;
  	right: 0;
- 	margin-top: -5px;
+ 	z-index:4;
 }
 
 .bookmarked{
@@ -442,10 +457,10 @@ a:hover{
 
 /*animation*/
 .animate-fast{
-	-webkit-transition:all linear 0s;
-    -moz-transition:all linear 0s;
-    -o-transition:all linear 0s;
-    transition:all linear 0s;
+	-webkit-transition:all linear 0.2s;
+    -moz-transition:all linear 0.2s;
+    -o-transition:all linear 0.2s;
+    transition:all linear 0.2s;
 }
 
 .animate-slow{
@@ -517,6 +532,9 @@ a:hover{
 	border-top-right-radius: 4px;
 	border-top-left-radius: 4px;
 	cursor: pointer;
+	-webkit-box-shadow: 1px 2px 1px #d1d1d1;
+	-moz-box-shadow: 1px 2px 1px #d1d1d1;
+	box-shadow: 1px 2px 1px #d1d1d1;
 }
 
 .mark_as_read:hover{
@@ -731,6 +749,9 @@ a:hover{
 	font-size: 0.8em;
 	padding: 6px 10px 1px 10px;
 	position: absolute;
+	-webkit-box-shadow: 1px 2px 1px #d1d1d1;
+	-moz-box-shadow: 1px 2px 1px #d1d1d1;
+	box-shadow: 1px 2px 1px #d1d1d1;
 }
 
 .filter_input:focus{
@@ -781,16 +802,6 @@ a:hover{
 	background: url("bookshelf_empty.png");
 	background-size: cover;
 	bottom: 50px;
-}
-
-.shelf.ng-enter{
-	-webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2.5s;
-    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2.5s;
- 	bottom: 0px;   
-}
-
-.shelf.ng-enter.ng-enter-active{
-	bottom: 50;
 }
 
 .push_notification{
@@ -897,7 +908,6 @@ a:hover{
 
 .more_filters{
 	width: 100%;
-	height: 140px;
 	position: fixed;
 	bottom: 50px;
 	z-index: 5;
@@ -910,24 +920,18 @@ a:hover{
 	box-shadow: 0px -1px 0px -1px #717070;
 }
 
-/*more filters animation NOT WORKING*/
-.slide{
+.more_filters .ng-enter {
 }
 
-.slide.ng-enter {
-	opacity: 0.1;
+.more_filters .ng-enter .ng-enter-active {
 }
 
-.slide.ng-enter.ng-enter-active {
-	opacity: 1;
-}
-.slide.ng-leave.ng-leave-active {
-	opacity: 0.1;
+.more_filters .ng-leave .ng-leave-active {
 }
 
-.slide.ng-enter, .slide.ng-leave {
-    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2.5s;
-    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2.5s;
+.more_filters .ng-enter, .more_filters .ng-leave {
+    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 3s;
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 3s;
 }
 /*more filters animation NOT WORKING*/
 
@@ -1149,4 +1153,11 @@ input:focus{
 	text-align: center;
 	padding-top: 20px;
 	position: absolute;
+}
+
+.loading_gif{
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	z-index: 2000;
 }

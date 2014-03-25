@@ -124,15 +124,15 @@ websiteApp.directive('typeAhead', function($timeout){
 				scope.selected = true; // hides the list initially
 			}
 
-			_init()
+			_init();
 		},
 		controller: function($scope, recommendationService){
 		  	_init = function(){
 		  		$scope.name = ''; // This will hold the selected item
 		  	}
 
-		  	_init()
+		  	_init();
 		},
 		templateUrl: 'assets/angular/widgets/partials/type_ahead.html'
 	}
-})
+});

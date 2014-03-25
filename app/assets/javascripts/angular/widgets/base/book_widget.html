@@ -5,20 +5,20 @@
 		ng-mouseover="hover()" 
 		ng-mouseout="mouseout()" 
 		ng-class="{'discovered': discovered, 'undiscovered': !discovered, 'card_expand': expand}" class="card animate-fast">
-		<div class="animate-fast header">
+		<bookmark track></bookmark>
+		<!-- <div class="animate-fast header">
 			<div class="background">
-				<!-- <rating track class="rating animate-fast" data="book.rating"></rating> -->
-				<bookmark track></bookmark>
+				<rating track class="rating animate-fast" data="book.rating"></rating>
 				<p class="animate-fast">
 					<a track href="javascript:void(0);"><b>#{{book.title | uppercase}}</b></a><br/>
 					by <a track href="javascript:void(0);">@{{book.author_name}}</a><br/>
 				</p>
 			</div>
-		</div>
+		</div> -->
 		<book-tags track></book-tags>
 		<bookthumb track></bookthumb>
 		<book-navbar track></book-navbar>
-		<news-widget track></news-widget>
+		<!-- <news-widget track></news-widget> -->
 		<interact track></interact>
 	</div>
 </div>

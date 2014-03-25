@@ -1,0 +1,19 @@
+<div class="discussion"
+	 ng-class="{'grey_background':!is_even({{index}})}">
+	<div class="user">
+		<img ng-src="{{discussion.user.thumb}}" class="thumb" />
+		<div class="username">
+			<div>{{discussion.user.name}}{{index}}</div>
+		</div>
+	</div>
+	<div class="comment">
+		<div>{{discussion.comment}}</div>
+		<div class="footer">
+			<span class="like">Like</span>
+			<span class="dislike">Dislike</span>
+			<span class="post_comment"><u>Comment</u></span>
+			<span>{{discussion.timestamp}}</span>
+		</div>
+		<input class="comment_box" placeholder="Post a comment" style="display:none;" />
+	</div>
+</div>
