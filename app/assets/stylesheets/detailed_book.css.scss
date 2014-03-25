@@ -9,11 +9,6 @@ body{
 }
 */
 
-body{
-	/*white-space: normal;*/
-	font-size: 0.9em;
-}
-
 
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen
@@ -126,11 +121,15 @@ and (min-width : 1024px) {
 		border-radius: 5px;
 	}
 
+	body{
+		font-size: 0.9em;
+	}
+
 }
 
 /* Large screens ----------- */
 @media only screen
-and (min-width : 1824px) {
+and (min-width : 1280px) {
 /* Styles */
 	.detailed_book .first_sentence .sentence {
 		font-size: 1.5em;
@@ -171,7 +170,7 @@ and (min-width : 1824px) {
 	}
 
 	.comment{
-		width: 370px;
+		width: 410px;
 		padding: 10px;
 	}
 
@@ -196,6 +195,10 @@ and (min-width : 1824px) {
 		width: 50px;
 		height: 50px;
 		border-radius: 10px;
+	}
+
+	body{
+		font-size: 1em;
 	}
 
 }

@@ -76,14 +76,31 @@ and (min-width : 1024px) {
 	.card .zoomedin_thumb{
 		width: 600px;
 	}
+
+	.category{
+		height: 82%;
+	}
+
+	.rate,
+	.mark_as_read,
+	.comment_instruct_box{
+		height: 35px;
+	}
+
+	.mark_as_read,
+	.comment_instruct_box{
+		padding-top: 15px; 
+	}
+
+	.rate_radio_buttons{
+		margin-top: -10px;
+	}
 }
 
-/* Large screens ----------- */
 @media only screen
-and (min-width : 1824px) {
-/* Styles */
+and (min-width : 1280px){
 	.book_widget{
-		height: 550px;
+		height: 650px;
 	}
 
 	.filters_panel{
@@ -105,6 +122,73 @@ and (min-width : 1824px) {
 	.card .zoomedin_thumb{
 		width: 900px;
 	}
+
+	.category{
+		height: 84.5%;
+	}
+
+	.rate{
+		height: 50px;
+	}
+
+	.mark_as_read,
+	.comment_instruct_box{
+		height: 38px;
+		padding-top: 25px;
+	}
+
+	.rate_radio_buttons{
+		margin-top: 0px;
+	}
+}
+
+/* Large screens ----------- */
+@media only screen
+and (min-width : 1824px) {
+/* Styles */
+	.book_widget{
+		height: 650px;
+	}
+
+	.filters_panel{
+		width: 400px;
+	}
+
+	.filters_panel_large{
+		width: 600px;
+	}
+
+	.filter{
+		width: 180px;
+	}
+
+	.input_filter{
+		margin-left: 100px;
+	}
+
+	.card .zoomedin_thumb{
+		width: 900px;
+	}
+
+	.category{
+		height: 84.5%;
+	}
+
+	.rate{
+		height: 50px;
+	}
+
+	.mark_as_read,
+	.comment_instruct_box{
+		height: 38px;
+		padding-top: 25px;
+	}
+
+	.rate_radio_buttons{
+		margin-top: 0px;
+	}
+
+
 }
 
 /*anchor tags*/
@@ -177,7 +261,6 @@ a:hover{
 /* category */
 .category{
 	width: 30px;
-	height: 82%;
 	float: left;
 	background-color: #3cb878;
 	color: white;
@@ -553,10 +636,8 @@ a:hover{
 	border-top: rgba(113, 112, 112, 0.25) 1px solid;
 	width: 97%;
 	margin-left: 5px;
-	height: 35px;
 	text-align: center;
 	font-size: 0.8em;
-	padding-top: 15px;
 	border-top-right-radius: 4px;
 	border-top-left-radius: 4px;
 	cursor: pointer;
@@ -583,7 +664,6 @@ a:hover{
 	text-align: center;
 	background: url('header-background.jpg');
 	width: 97%;
-	height: 35px;
 	margin-left: 5px;
 	padding-top: 15px;
 	border-top-right-radius: 4px;
@@ -599,7 +679,6 @@ a:hover{
 	padding-left: 7%;
 	border-top-right-radius: 4px;
 	border-top-left-radius: 4px;
-	height: 35px;
 }
 
 .comment_instruct{
@@ -1122,7 +1201,6 @@ input:focus{
 }
 
 .rate_radio_buttons{
-	margin-top: -10px;
 	padding: 3px;
 	color: #717070;
 }
