@@ -303,6 +303,7 @@ module Api
 					:total_reviews_count => 23,
 					:reviews => [
 						{
+							:heading => "A well written concise life story of Siddhartha",
 							:content => "A well written concise life story of Siddhartha that attempts to relate 
 							the volatile fluctuations of the Buddhist life and his struggle with a return to 
 							hedonism. I am not certain if this book was an attempt to appeal to the Buddhist philosophy, 
@@ -321,9 +322,36 @@ module Api
 							:comment_count => 12,
 							:timestamp => "4 days ago",
 							:like_count => 13,
-							:dislike_count => 14
+							:dislike_count => 14,
+							:comments => [
+								{
+									:user => {
+										:id => 1,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "i adore this book and will always buy it at a used book store for some i love.",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => ""
+								},
+								{
+									:user => {
+										:id => 2,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "great",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => ""
+								},
+							]
 						},
 						{
+							:heading => "A well written concise life story of Siddhartha",
 							:content => "A well written concise life story of Siddhartha that attempts to relate 
 							the volatile fluctuations of the Buddhist life and his struggle with a return to 
 							hedonism. I am not certain if this book was an attempt to appeal to the Buddhist philosophy, 
@@ -342,9 +370,36 @@ module Api
 							:comment_count => 12,
 							:timestamp => "4 days ago",
 							:like_count => 13,
-							:dislike_count => 14
+							:dislike_count => 14,
+							:comments => [
+								{
+									:user => {
+										:id => 1,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "i adore this book and will always buy it at a used book store for some i love.",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => ""
+								},
+								{
+									:user => {
+										:id => 2,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "great",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => ""
+								},
+							]
 						},
 						{
+							:heading => "A well written concise life story of Siddhartha",
 							:content => "A well written concise life story of Siddhartha that attempts to relate 
 							the volatile fluctuations of the Buddhist life and his struggle with a return to 
 							hedonism. I am not certain if this book was an attempt to appeal to the Buddhist philosophy, 
@@ -363,9 +418,36 @@ module Api
 							:comment_count => 12,
 							:timestamp => "4 days ago",
 							:like_count => 13,
-							:dislike_count => 14
+							:dislike_count => 14,
+							:comments => [
+								{
+									:user => {
+										:id => 1,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "i adore this book and will always buy it at a used book store for some i love.",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => ""
+								},
+								{
+									:user => {
+										:id => 2,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "great",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => ""
+								},
+							]
 						},
 						{
+							:heading => "A well written concise life story of Siddhartha",
 							:content => "A well written concise life story of Siddhartha that attempts to relate 
 							the volatile fluctuations of the Buddhist life and his struggle with a return to 
 							hedonism. I am not certain if this book was an attempt to appeal to the Buddhist philosophy, 
@@ -384,9 +466,36 @@ module Api
 							:comment_count => 12,
 							:timestamp => "4 days ago",
 							:like_count => 13,
-							:dislike_count => 14
+							:dislike_count => 14,
+							:comments => [
+								{
+									:user => {
+										:id => 1,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "i adore this book and will always buy it at a used book store for some i love.",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => ""
+								},
+								{
+									:user => {
+										:id => 2,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "great",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => ""
+								},
+							]
 						},
 						{
+							:heading => "A well written concise life story of Siddhartha",
 							:content => "A well written concise life story of Siddhartha that attempts to relate 
 							the volatile fluctuations of the Buddhist life and his struggle with a return to 
 							hedonism. I am not certain if this book was an attempt to appeal to the Buddhist philosophy, 
@@ -405,9 +514,36 @@ module Api
 							:comment_count => 12,
 							:timestamp => "4 days ago",
 							:like_count => 13,
-							:dislike_count => 14
+							:dislike_count => 14,
+							:comments => [
+								{
+									:user => {
+										:id => 1,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "i adore this book and will always buy it at a used book store for some i love.",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => ""
+								},
+								{
+									:user => {
+										:id => 2,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "great",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => ""
+								}
+							]
 						},
 						{
+							:heading => "A well written concise life story of Siddhartha",
 							:content => "A well written concise life story of Siddhartha that attempts to relate 
 							the volatile fluctuations of the Buddhist life and his struggle with a return to 
 							hedonism. I am not certain if this book was an attempt to appeal to the Buddhist philosophy, 
@@ -426,7 +562,33 @@ module Api
 							:comment_count => 12,
 							:timestamp => "4 days ago",
 							:like_count => 13,
-							:dislike_count => 14
+							:dislike_count => 14,
+							:comments => [
+								{
+									:user => {
+										:id => 1,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "i adore this book and will always buy it at a used book store for some i love.",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => ""
+								},
+								{
+									:user => {
+										:id => 2,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "great",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => ""
+								},
+							]
 						}
 					],
 					:discussions => [

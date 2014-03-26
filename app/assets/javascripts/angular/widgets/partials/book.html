@@ -251,16 +251,22 @@
 				<div ng-repeat="review in detailed_book['book'].reviews" class="review">
 			        <div class="header">
 			        	<img ng-src="{{review.user.thumb}}" class="review_thumb" />
-			        	<div itemscope itemtype="http://schema.org/UserComments">
+			        	<span itemscope itemtype="http://schema.org/UserComments">
 			        		<span itemprop="commentTime">{{review.timestamp}}</span>
-			        	</div>
+			        	</span>
 			        	<span>{{review.comment_count}} comments</span>
 			        	<span>{{review.dislike_count}} dislikes</span>
 			        	<span>{{review.like_count}} likes</span>
 			        	<span><a ng-href="{{review.user.url}}">{{review.user.name}}</a></span>
+			        	<span class="review_header"><b>{{review.heading}}</b></span>
 			        </div>
 			        <div class="content">
 			        	<span itemprop="reviewBody">{{review.content}}</span>
+				        <div class="comments">
+				        	<div ng-repeat="discussion in review.comments">
+				        		<discussion data="discussion" index="$index"></discussion>
+				        	</div>
+				        </div>
 			        </div>
 				</div>
 			</div>

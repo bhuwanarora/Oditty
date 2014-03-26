@@ -333,43 +333,17 @@ a:hover{
 .summary_button_base{
 	position: absolute;
 	z-index: 2;
-	margin-top: 15px;
-	margin-left: 10px;
   	cursor: pointer;
-  	padding: 10px 20px;
-  	border: 1px #018dc4;
-  	-webkit-border-radius: 3px;
-  	border-radius: 3px;
+  	padding: 10px;
+  	color: #717070;
+  	background-color: #F1F1F1;
   	font: normal normal normal 12px/normal Arial, Helvetica, sans-serif;
-  	color: rgba(255,255,255,0.9);
-  	background: #0199d9;
   	-webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
   	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
-  	text-shadow: -1px -1px 0 rgba(15,73,168,0.66);
-  	-webkit-transition: all 200ms cubic-bezier(0.42,0,0.58,1) 10ms;
-  	-moz-transition: all 200ms cubic-bezier(0.42,0,0.58,1) 10ms;
-  	-o-transition: all 200ms cubic-bezier(0.42,0,0.58,1) 10ms;
-  	transition: all 200ms cubic-bezier(0.42,0,0.58,1) 10ms;
 }
 
 .summary_button:hover{
 	text-decoration: underline;
-}
-
-.summary_button_expand:hover{
-	text-decoration: underline;
-}
-
-.summary_button{
-  	border: 1px #018dc4;
-  	color: rgba(255,255,255,0.9);
-  	background: #0199d9;
-}
-
-.summary_button_expand{
-  	background: rgba(255,255,255,0.9);
-	color: #0199d9;
-	border: 1px solid #0199d9;
 }
 
 .hidden_summary_button{

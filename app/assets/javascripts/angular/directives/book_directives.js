@@ -120,8 +120,13 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
 
             iElement.on('click', '.review .header', function(e){
               var $review_content = $($($(this)).siblings()[0]);
-              $('.review .content').css('display', 'none');
-              $review_content.show();
+              if($review_content.css("display") == "block"){
+                $('.review .content').css('display', 'none');
+              }
+              else{
+                $('.review .content').css('display', 'none');
+                $review_content.show(); 
+              }
             });
 
             iElement.on('click', '.like', function(e){

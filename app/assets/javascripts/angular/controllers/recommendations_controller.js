@@ -108,7 +108,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	}
 
 	_initialize_filters = function(){
-		$scope.show_more_filters = false;
+		$scope.show_more_filters = true;
 		$rootScope.filters = {};
 		$rootScope.filters["readers"] = false;
 		$rootScope.filters["books"] = true;
