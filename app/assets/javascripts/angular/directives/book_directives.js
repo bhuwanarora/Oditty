@@ -1,4 +1,5 @@
-var width = screen.width*(1220/1320); //1220
+var screen_width = screen.width;
+var width = screen_width*(1220/1320); //1220
 var height = screen.height*(864/1064); //864
 var page_numbers = {
   first_sentence: 4, 
@@ -57,7 +58,7 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
           $('#frontCoverFold').css('height', image_height);
 
           $('.detailed_book').css('position', 'absolute');
-          
+
           _set_depth();
           _set_elements_height();
         }
@@ -244,10 +245,19 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
       }
 
       _init = function(){
+        var $book = $('.detailed_book');
+        var pos_x = $rootScope.book_x;
+        var screen_x = $rootScope.screen_x;
+        if (pos_x > screen_x){
+          var left_margin = (pos_x - screen_x)+"px";
+          $book.css('margin-left', left_margin);
+        }
+
         $timeout(function(){
           var init_page = $rootScope.initPage;
-          $(".detailed_book").turn("page", init_page);
+          $book.turn("page", init_page);
           $($('.review .content')[0]).css('display', 'block');
+          console.log(left_margin);
         }, 1000);
       }
 
@@ -278,15 +288,6 @@ bookApp.directive('discussion', function(){
       }
     },
     controller: function($scope){
-      _show_comment_box = function(){
-        console.log("focus the input box");
-        $scope.comment_box = true;
-      }
-
-      _init = function(){
-        $scope.comment_box = false;
-      }
-
       $scope.is_even = function(index){
         var isEven = false;
         if(index%2==0){
@@ -295,7 +296,6 @@ bookApp.directive('discussion', function(){
         return isEven;
       }
 
-      _init();
     },
     templateUrl: "/assets/angular/widgets/partials/book/discussion.html"
   }
