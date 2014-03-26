@@ -71,9 +71,10 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
     }
 
 	_bind_emit = function(){
-		show_book_event = $scope.$on('expandBook', function(event, data, posX, screenX){
+		show_book_event = $scope.$on('expandBook', function(event, data, posX, screenX, scrollWidth){
 			$rootScope.book_x = posX;
 			$rootScope.screen_x = screenX;
+			$rootScope.total_x = scrollWidth;
 	    	_get_book_details(data);
 			event.stopPropagation();
 	    });

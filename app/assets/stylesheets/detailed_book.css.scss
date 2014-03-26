@@ -45,7 +45,6 @@ and (orientation : landscape) {
 	font-size: 0.6em;
 }
 
-
 /* Desktops and laptops ----------- */
 @media only screen
 and (min-width : 1024px) {
@@ -70,10 +69,6 @@ and (min-width : 1024px) {
 		padding: 10px;
 	}
 
-	.detailed_book .reviews .elements {
-		padding: 10px;
-	}
-
 	.detailed_book .news_element, 
 	.detailed_book .review{
 		margin-bottom: 5px;
@@ -94,7 +89,7 @@ and (min-width : 1024px) {
 	}
 
 	.comment{
-		width: 310px;
+		width: 290px;
 		padding: 5px;
 	}
 
@@ -136,10 +131,6 @@ and (min-width : 1280px) {
 		padding: 100px;
 	}
 
-	.detailed_book .reviews .elements{
-		padding: 20px;
-	}
-
 	.detailed_book .characters, 
 	.detailed_book .content,
 	.detailed_book .first_sentence,
@@ -170,7 +161,7 @@ and (min-width : 1280px) {
 	}
 
 	.comment{
-		width: 410px;
+		width: 380px;
 		padding: 10px;
 	}
 
@@ -458,10 +449,6 @@ and (min-width : 1280px) {
 
 }
 
-.detailed_book .characters{
-	background: url('bg3.jpg');
-}
-
 .detailed_book .characters .header{
 	background-color: white;
 }
@@ -663,4 +650,8 @@ and (min-width : 1280px) {
 .detailed_book .review .content{
 	background-color: white;
 	display: none;
+}
+
+.elements{
+	overflow-y: scroll;
 }

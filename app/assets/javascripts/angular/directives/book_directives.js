@@ -1,6 +1,6 @@
 var screen_width = screen.width;
-var width = screen_width*(1220/1320); //1220
-var height = screen.height*(864/1064); //864
+var width = screen_width*(1220/1320)-60; //1220
+var height = screen.height*(864/1064)-50; //864
 var page_numbers = {
   first_sentence: 4, 
   characters: 5, 
@@ -27,11 +27,8 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
         var image_height = height+height_edition_factor;
 
         _set_elements_height = function(){
-          height_edition_factor = height_edition_factor*2;
-
-          var div_height = height - height_edition_factor;
+          var div_height = height - height_edition_factor*3;
           $('.elements').css('height', div_height);
-          $('.elements').css('overflow-y', "scroll");
         }
 
         _set_depth = function(){
@@ -60,7 +57,7 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
           $('.detailed_book').css('position', 'absolute');
 
           _set_depth();
-          _set_elements_height();
+          // _set_elements_height();
         }
 
         _update_depth = function(book, newPage){
@@ -155,6 +152,10 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
               scope.destroy_book();
             });
 
+            iElement.on('focusout', ".detailed_book", function(){
+              alert("focusout");
+            })
+
             _set_pre_css();
             
           },
@@ -244,20 +245,36 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
         console.log("share_quote");
       }
 
-      _init = function(){
+      _click_outside_close = function(){
+        $('.detailed_book').click(function(){
+          event.stopPropagation();
+        })
+
+        $('html').click(function(event){
+          $('.detailed_book').turn("destroy");
+        });
+      }
+
+      _set_css = function(){
         var $book = $('.detailed_book');
+        $book.show();
         var pos_x = $rootScope.book_x;
         var screen_x = $rootScope.screen_x;
+        var total_x = $rootScope.total_x;
         if (pos_x > screen_x){
-          var left_margin = (pos_x - screen_x)+"px";
-          $book.css('margin-left', left_margin);
+          var left_margin = pos_x - screen_x;
+          $book.css('margin-left', left_margin+"px");
         }
+      }
 
+      _init = function(){
+        _set_css();
+        _click_outside_close();
         $timeout(function(){
+          var $book = $('.detailed_book');
           var init_page = $rootScope.initPage;
           $book.turn("page", init_page);
           $($('.review .content')[0]).css('display', 'block');
-          console.log(left_margin);
         }, 1000);
       }
 

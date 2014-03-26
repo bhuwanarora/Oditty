@@ -295,7 +295,8 @@ function zoomin_book($scope, $timeout, $rootScope, page){
   $scope.zoomin_book = true;
   var posX = event.currentTarget.offsetParent.offsetLeft + event.currentTarget.offsetWidth;
   var screenX = event.screenX;
-  $scope.$emit('expandBook', $scope.book.id, posX, screenX);
+  var scrollWidth = event.currentTarget.offsetParent.offsetParent.scrollWidth;
+  $scope.$emit('expandBook', $scope.book.id, posX, screenX, scrollWidth);
   var zoomout_event = $timeout(function(){
     $scope.zoomin_book = false;
   }, 3000);
