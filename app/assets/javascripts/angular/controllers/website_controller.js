@@ -1,7 +1,3 @@
-websiteApp.controller('accordion', function(){
-
-});
-
 websiteApp.controller('websiteAppController', function($scope, $rootScope, $interval, $http, 
 	$timeout, $q, $window, websiteService){
 	$scope.bindHorizontalScroll = function(event, delta, deltaX, deltaY){
@@ -75,7 +71,9 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
     }
 
 	_bind_emit = function(){
-		show_book_event = $scope.$on('expandBook', function(event, data){
+		show_book_event = $scope.$on('expandBook', function(event, data, posX, screenX){
+			$rootScope.book_x = posX;
+			$rootScope.screen_x = screenX;
 	    	_get_book_details(data);
 			event.stopPropagation();
 	    });

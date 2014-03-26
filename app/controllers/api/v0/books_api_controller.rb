@@ -295,7 +295,7 @@ module Api
 								Smashing Pumpkins). 
 
 							Its from a live improvised performance at at Madame ZuZu?s Teahouse (Chicago). 
-							Corgan describes the event as ‘an ambient/musical interpretation of Hermann 
+							Corgan describes the event as an ambient/musical interpretation of Hermann 
 							Hesse?s Siddhartha; built by modular synthesis, on the fly.",
 							:type => "video"
 						}
