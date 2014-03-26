@@ -114,7 +114,7 @@ module Api
 								regard to love, he was still a boy, and he tended to plunge into pleasure blindly, endlessly, 
 								insatiably. So she thoroughly taught him that one cannot take pleasure without giving pleasure, 
 								and that every gesture, every caress, every touch, every glance, every last bit of the body has 
-								its secret, which brings happiness to the person who knows how to wake it.",
+								its secret, which brings happiWEness to the person who knows how to wake it.",
 							:from => ""
 						},
 						{
@@ -124,7 +124,7 @@ module Api
 							:from => ""
 						},
 						{
-							:quote => "Where are you going, by friend?I am not going anywhere. We … are always on the way…. 
+							:quote => "Where are you going, by friend?I am not going anywhere. We  are always on the way. 
 								But where are you going, Siddhartha?It is the same with me at it is with you, my friend. I am not 
 								going anywhere. I am only on the way.",
 							:from => ""
@@ -136,7 +136,7 @@ module Api
 							:from => ""
 						},
 						{
-							:quote => "Where are you going, by friend?I am not going anywhere. We … are always on the way…. 
+							:quote => "Where are you going, by friend?I am not going anywhere. We  are always on the way. 
 								But where are you going, Siddhartha?It is the same with me at it is with you, my friend. I am not 
 								going anywhere. I am only on the way.",
 							:from => ""
@@ -295,7 +295,7 @@ module Api
 								Smashing Pumpkins). 
 
 							Its from a live improvised performance at at Madame ZuZu?s Teahouse (Chicago). 
-							Corgan describes the event as ‘an ambient/musical interpretation of Hermann 
+							Corgan describes the event as an ambient/musical interpretation of Hermann 
 							Hesse?s Siddhartha; built by modular synthesis, on the fly.",
 							:type => "video"
 						}
