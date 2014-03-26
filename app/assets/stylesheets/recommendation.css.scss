@@ -13,205 +13,6 @@ body{
 	background-size: cover;
 }
 
-/* Smartphones (portrait and landscape) ----------- */
-@media only screen
-and (min-device-width : 320px)
-and (max-device-width : 480px) {
-/* Styles */
-}
-
-/* Smartphones (landscape) ----------- */
-@media only screen
-and (min-width : 321px) {
-/* Styles */
-}
-
-/* Smartphones (portrait) ----------- */
-@media only screen
-and (max-width : 320px) {
-/* Styles */
-}
-
-/* iPads (portrait and landscape) ----------- */
-@media only screen
-and (min-device-width : 768px)
-and (max-device-width : 1024px) {
-/* Styles */
-}
-
-/* iPads (landscape) ----------- */
-@media only screen
-and (min-device-width : 768px)
-and (max-device-width : 1024px)
-and (orientation : landscape) {
-/* Styles */
-	font-size: 0.6em;
-}
-
-
-/* Desktops and laptops ----------- */
-@media only screen
-and (min-width : 1024px) {
-/* Styles */
-	.book_widget{
-		height: 550px;
-	}
-
-	.filters_panel{
-		width: 300px;
-	}
-
-	.filters_panel_large{
-		width: 500px;
-	}
-
-	.filter{
-		width: 150px;
-	}
-
-	.input_filter{
-		margin-left: 50px;
-	}
-
-	.category{
-		height: 82%;
-	}
-
-	.rate,
-	.mark_as_read,
-	.comment_instruct_box{
-		height: 35px;
-	}
-
-	.mark_as_read,
-	.comment_instruct_box{
-		padding-top: 15px; 
-	}
-
-	.rate_radio_buttons{
-		margin-top: -10px;
-	}
-
-
-	.card .zoomedin_thumb{
-		position: absolute;
-		z-index: 1000;
-		width: 510px;
-		height: 650px;
-	}
-
-	.typeahead_options{
-		margin: -2px 0px 0px 50px;
-	}
-}
-
-@media only screen
-and (min-width : 1280px){
-	.book_widget{
-		height: 650px;
-	}
-
-	.filters_panel{
-		width: 400px;
-	}
-
-	.filters_panel_large{
-		width: 600px;
-	}
-
-	.filter{
-		width: 180px;
-	}
-
-	.input_filter{
-		margin-left: 100px;
-	}
-
-	.category{
-		height: 84.5%;
-	}
-
-	.rate{
-		height: 50px;
-	}
-
-	.mark_as_read,
-	.comment_instruct_box{
-		height: 38px;
-		padding-top: 25px;
-	}
-
-	.rate_radio_buttons{
-		margin-top: 0px;
-	}
-
-
-	.card .zoomedin_thumb{
-		position: absolute;
-		z-index: 1000;
-		width: 610px;
-		height: 864px;
-	}
-
-	.typeahead_options{
-		margin: -2px 0px 0px 100px;
-	}
-}
-
-/* Large screens ----------- */
-@media only screen
-and (min-width : 1824px) {
-/* Styles */
-	.book_widget{
-		height: 650px;
-	}
-
-	.filters_panel{
-		width: 400px;
-	}
-
-	.filters_panel_large{
-		width: 600px;
-	}
-
-	.filter{
-		width: 180px;
-	}
-
-	.input_filter{
-		margin-left: 100px;
-	}
-
-	.category{
-		height: 84.5%;
-	}
-
-	.rate{
-		height: 50px;
-	}
-
-	.mark_as_read,
-	.comment_instruct_box{
-		height: 38px;
-		padding-top: 25px;
-	}
-
-	.rate_radio_buttons{
-		margin-top: 0px;
-	}
-
-	.card .zoomedin_thumb{
-		position: absolute;
-		z-index: 1000;
-		width: 610px;
-		height: 864px;
-	}
-
-	.typeahead_options{
-		margin: -2px 0px 0px 100px;
-	}
-}
-
 /*anchor tags*/
 a{
 	color: #717070;
@@ -268,11 +69,7 @@ a:hover{
 /*book widget*/
 .book_widget_base{
 	display: inline-block;
-	margin-right: -35px;
-}
-
-.book_widget{
-	width: 390px;
+	margin-right: -25px;
 }
 
 .book_widget_expand{
@@ -1281,4 +1078,230 @@ input:focus{
 	left: 10px;
 	top: 10px;
 	z-index: 2000;
+}
+
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+/* Styles */
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen
+and (min-width : 321px) {
+/* Styles */
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen
+and (max-width : 320px) {
+/* Styles */
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px) {
+/* Styles */
+}
+
+/* iPads (landscape) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : landscape) {
+/* Styles */
+	font-size: 0.6em;
+}
+
+
+/* Desktops and laptops ----------- */
+@media only screen
+and (min-width : 400px) {
+/* Styles */
+	body{
+		font-size: 0.9em;
+	}
+
+	.book_widget{
+		height: 420px;
+		width: 320px;
+	}
+	.recommendation_block{
+		margin-top: 7px;
+	}
+
+	.filters_panel{
+		width: 300px;
+	}
+
+	.filters_panel_large{
+		width: 500px;
+	}
+
+	.filter{
+		width: 150px;
+	}
+
+	.input_filter{
+		margin-left: 50px;
+	}
+
+	.category{
+		height: 91%;
+		width: 25px;
+		padding-top: 40px;
+	}
+
+	.rate,
+	.mark_as_read,
+	.comment_instruct_box{
+		height: 25px;
+	}
+
+	.mark_as_read,
+	.comment_instruct_box{
+		padding-top: 10px; 
+	}
+
+	.rate_radio_buttons{
+		margin-top: -10px;
+	}
+
+
+	.card .zoomedin_thumb{
+		position: absolute;
+		z-index: 1000;
+		width: 510px;
+		height: 650px;
+	}
+
+	.card .book_thumb {
+		width: 245px;
+	}
+
+	.typeahead_options{
+		margin: -2px 0px 0px 50px;
+	}
+}
+
+@media only screen
+and (min-width : 1280px){
+	.book_widget{
+		height: 650px;
+		width: 390px;
+	}
+
+	.recommendation_block{
+		margin-top: 20px;
+	}
+
+	.filters_panel{
+		width: 400px;
+	}
+
+	.filters_panel_large{
+		width: 600px;
+	}
+
+	.filter{
+		width: 180px;
+	}
+
+	.input_filter{
+		margin-left: 100px;
+	}
+
+	.category{
+		height: 84.5%;
+		width: 30px;
+		padding-top: 100px;
+	}
+
+	.rate{
+		height: 50px;
+	}
+
+	.mark_as_read,
+	.comment_instruct_box{
+		height: 38px;
+		padding-top: 25px;
+	}
+
+	.rate_radio_buttons{
+		margin-top: 0px;
+	}
+
+
+	.card .zoomedin_thumb{
+		position: absolute;
+		z-index: 1000;
+		width: 610px;
+		height: 864px;
+	}
+
+	.card .book_thumb {
+		width: 300px;
+	}
+
+	.typeahead_options{
+		margin: -2px 0px 0px 100px;
+	}
+}
+
+/* Large screens ----------- */
+@media only screen
+and (min-width : 1824px) {
+/* Styles */
+	.book_widget{
+		height: 650px;
+		width: 390px;
+	}
+
+	.filters_panel{
+		width: 400px;
+	}
+
+	.filters_panel_large{
+		width: 600px;
+	}
+
+	.filter{
+		width: 180px;
+	}
+
+	.input_filter{
+		margin-left: 100px;
+	}
+
+	.category{
+		height: 84.5%;
+	}
+
+	.rate{
+		height: 50px;
+	}
+
+	.mark_as_read,
+	.comment_instruct_box{
+		height: 38px;
+		padding-top: 25px;
+	}
+
+	.rate_radio_buttons{
+		margin-top: 0px;
+	}
+
+	.card .zoomedin_thumb{
+		position: absolute;
+		z-index: 1000;
+		width: 610px;
+		height: 864px;
+	}
+
+	.typeahead_options{
+		margin: -2px 0px 0px 100px;
+	}
 }

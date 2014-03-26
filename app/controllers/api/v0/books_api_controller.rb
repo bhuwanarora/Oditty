@@ -114,7 +114,7 @@ module Api
 								regard to love, he was still a boy, and he tended to plunge into pleasure blindly, endlessly, 
 								insatiably. So she thoroughly taught him that one cannot take pleasure without giving pleasure, 
 								and that every gesture, every caress, every touch, every glance, every last bit of the body has 
-								its secret, which brings happiness to the person who knows how to wake it.",
+								its secret, which brings happiWEness to the person who knows how to wake it.",
 							:from => ""
 						},
 						{

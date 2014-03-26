@@ -20,74 +20,74 @@
 			</div>
 			<div>
 				<div class="element" data-page="gallery">
-					GALLERY
+					<span class="glyphicon glyphicon-picture"></span> GALLERY
 					<div class="page_number"></div>
 				</div>
 				<div class="sub-links">
 					<div class="element" id="firstSentence" data-page="first_sentence">
-						First Sentence
+						<span class="glyphicon glyphicon-hand-right"></span> First Sentence
 						<div class="page_number"></div>
 					</div>
 					<div class="element" id="characters" data-page="characters">
-						Characters
+						<span class="glyphicon glyphicon-user"></span> Characters
 						<div class="page_number"></div>
 					</div>
 					<div class="element" id="quotes" data-page="quotes">
-						Quotes
+						<span class="glyphicon glyphicon-comment"></span> Quotes
 						<div class="page_number"></div>
 					</div>
 					<div class="element" id="themes" data-page="themes">
-						Themes
+						<span class="glyphicon glyphicon-tower"></span> Themes
 						<div class="page_number"></div>
 					</div>
 					<div class="element" id="subjectPlaces" data-page="subject_places">
-						Subject Places
+						<span class="glyphicon glyphicon-globe"></span> Subject Places
 						<div class="page_number"></div>
 					</div>
 					<div class="element" id="moviesBased" data-page="movies_based">
-						Movies based
+						<span class="glyphicon glyphicon-film"></span> Movies based
 						<div class="page_number"></div>
 					</div>
 					<div class="element" id="tags" data-page="tags">
-						Tags
+						<span class="glyphicon glyphicon-tags"></span> Tags
 						<div class="page_number"></div>
 					</div>
 				</div>
 			</div>
 			<div>
 				<div class="element" id="readers" data-page="readers">
-					READERS
+					<span class="glyphicon glyphicon-user"></span> READERS
 					<div class="page_number"></div>
 				</div>
 			</div>
 			<div>
 				<div class="element" id="news" data-page="news">
-					NEWS
+					<span class="glyphicon glyphicon-tasks"></span> NEWS
 					<div class="page_number"></div>
 				</div>
 			</div>
 			<div>
 				<div class="element" id="reviews" data-page="reviews">
-					REVIEWS
+					<span class="glyphicon glyphicon-pencil"></span> REVIEWS
 					<div class="page_number"></div>
 				</div>
 			</div>
 			<div>
 				<div class="element" id="discussions" data-page="discussions">
-					DISCUSSIONS
+					<span class="glyphicon glyphicon-edit"></span> DISCUSSIONS
 					<div class="page_number"></div>
 				</div>
 			</div>
 			<div>
 				<div class="element" id="aboutAuthor" data-page="about_author">
-					ABOUT AUTHOR
+					<span class="glyphicon glyphicon-user"></span> ABOUT AUTHOR
 					<div class="page_number"></div>
 				</div>
 			</div>
 		</div>
 		<div class="note_for_parents" ng-model="detailed_book['book'].note_for_parents">
 			<div class="header">
-				Note For Parents
+				<span class="glyphicon glyphicon-pushpin"></span> Note For Parents
 			</div>
 			<div class="share">
 				{{detailed_book['book'].note_for_parents}}
@@ -98,7 +98,7 @@
 	<div>
 		<div class="first_sentence" ng-model="detailed_book['book'].first_sentence">
 			<div class="header">
-		    	FIRST SENTENCE
+		    	<span class="glyphicon glyphicon-hand-right"></span> FIRST SENTENCE
 			</div>
 		    <div class="sentence share">
 		     	{{detailed_book['book'].first_sentence}}
@@ -109,7 +109,7 @@
 	<div>
 		<div class="characters" ng-model="detailed_book['book'].characters">
 		    <div class="header">
-		    	CHARACTERS
+		    	<span class="glyphicon glyphicon-user"></span> CHARACTERS
 		    </div>
 		    <div class="elements">
 				<div class="character share" 
@@ -124,7 +124,7 @@
 	<div>
 		<div class="quotes" ng-model="detailed_book['book'].quotes">
 		    <div class="header">
-		    	QUOTES
+		    	<span class="glyphicon glyphicon-comment"></span> QUOTES
 		    </div>
 		    <div class="elements">
 				<div class="quote share"
@@ -140,7 +140,7 @@
 	<div>
 		<div class="themes" ng-model="detailed_book['book'].themes">
 			<div class="header">
-				THEMES
+				<span class="glyphicon glyphicon-tower"></span> THEMES    
 			</div>
 			<div>
 				<div class="theme share" 
@@ -151,31 +151,31 @@
 			</div>
 		</div>
 	</div>
-	<div>
+	<div itemscope itemtype="http://schema.org/Place">
 		<div class="subject_places" ng-model="detailed_book['book'].subject_places">
 			<div class="header">
-				SUBJECT PLACES
+				<span class="glyphicon glyphicon-globe"></span> SUBJECT PLACES
 			</div>
 			<div>
 				<div class="subject_place share"
 					 ng-class="{'grey_background':!is_even($index)}"
 				     ng-repeat="subject_place in detailed_book['book'].subject_places">
-					{{subject_place}}
+					<span itemprop="name">{{subject_place}}</span>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div>
+	<div itemscope itemtype="http://schema.org/Movie">
 		<div class="movies_based" ng-model="detailed_book['book'].movies_based">
 			<div class="header">
-				MOVIES BASED
+				<span class="glyphicon glyphicon-film"></span> MOVIES BASED
 			</div>
 			<div>
 				<div class="movie_based share"
 					 ng-class="{'grey_background':!is_even($index)}"
 				     ng-repeat="movie_based in detailed_book['book'].movies_based">
-					{{movie_based}}
+					<span itemprop="name">{{movie_based}}</span>
 				</div>
 			</div>
 		</div>
@@ -184,13 +184,15 @@
 	<div>
 		<div class="book_tags" ng-model="detailed_book['book'].tags">
 			<div class="header">
-				TAGS
+				<span class="glyphicon glyphicon-tags"></span>  TAGS
 			</div>
 			<div class="elements">
 				<div class="tag"
 					 ng-class="{'grey_background':!is_even($index)}"
 				     ng-repeat="tag in detailed_book['book'].tags">
-					<a href="{{tag.url}}">{{tag.name}}</a>
+					<a href="{{tag.url}}">
+						<span itemprop="genre">{{tag.name}}</span>
+					</a>
 				</div>
 			</div>
 		</div>
@@ -199,21 +201,23 @@
 	<div>
 		<div class="readers">
 			<div class="header">
-				READERS
+				<span class="glyphicon glyphicon-user"></span>  READERS
 			</div>
 		</div>
 	</div>
 
-	<div>
+	<div itemscope itemtype="http://schema.org/NewsArticle">
 		<div class="news" id="newsElement">
 			<div class="header">
-				NEWS
+				<span class="glyphicon glyphicon-tasks"></span>  NEWS
 			</div>
 			<div class="elements">
 				<div class="news_element share" 
 				     ng-class="{'grey_background':!is_even($index)}"
 					 ng-repeat="news in detailed_book['book'].news">
-					<div class="header">{{news.title}}</div>
+					<div class="header">
+						<span itemprop="name">{{news.title}}</span>
+					</div>
 					<div>
 						<img ng-src="{{news.thumb}}" ng-if="is_image(news.type)"/>
 						<embed name="player1"
@@ -225,31 +229,38 @@
 							   allowscriptaccess="always" 
 							   flashvars="view_count=11575&amp;is_html5_mobile_device=false&amp;eurl=http%3A%2F%2Fwww.synthtopia.com%2Fcontent%2F2014%2F02%2F28%2Fsiddhartha-by-herman-hesse-with-musical-interpretation-by-william-corgan%2F&amp;el=embedded&amp;fs=1&amp;iv_load_policy=1&amp;rel=1&amp;enablejsapi=1&amp;allow_ratings=0&amp;authuser=0&amp;hl=en_GB&amp;user_display_name=Bhuwan%20Arora&amp;iurl=http%3A%2F%2Fi1.ytimg.com%2Fvi%2FC3tV8n-CVnA%2Fhqdefault.jpg&amp;cr=IN&amp;user_display_image=https%3A%2F%2Fyt3.ggpht.com%2F-ylXtTSmH1GM%2FAAAAAAAAAAI%2FAAAAAAAAAAA%2Fa_lGY0TmAVM%2Fs28-c-k-no%2Fphoto.jpg&amp;title=%22SIDDHARTHA%22%20BY%20HERMAN%20HESSE%2C%20WITH%20MUSICAL%20INTE...&amp;probably_logged_in=1&amp;fexp=930403%2C942000%2C941404%2C914088%2C916626%2C929313%2C936119%2C933610%2C937417%2C913434%2C936910%2C936913%2C934022%2C3300006%2C3300101%2C3300133%2C3300137%2C3300164%2C3310621%2C3310649&amp;sendtmp=1&amp;sentiment=2&amp;ldpj=-20&amp;showinfo=1&amp;avg_rating=0&amp;allow_embed=1&amp;idpj=-4&amp;video_id=C3tV8n-CVnA&amp;showsearch=0&amp;length_seconds=28794&amp;watch_xlb=http%3A%2F%2Fs.ytimg.com%2Fyts%2Fxlbbin%2Fwatch-strings-en_GB-vflXa_Lse.xlb&amp;loaderUrl=http%3A%2F%2Fwww.synthtopia.com%2Fcontent%2F2014%2F02%2F28%2Fsiddhartha-by-herman-hesse-with-musical-interpretation-by-william-corgan%2F&amp;playerapiid=player1&amp;framer=http%3A%2F%2Fwww.synthtopia.com%2Fcontent%2F2014%2F02%2F28%2Fsiddhartha-by-herman-hesse-with-musical-interpretation-by-william-corgan%2F">
 						</embed>
-						<div class="description">{{news.description}}</div>
+						<div class="description">
+							<span itemprop="description">{{news.description}}</span>
+							</div>
 					</div>
-					<div class="source">Source: {{news.source}}</div>
+					<div itemprop="sourceOrganization" itemscope itemtype="http://schema.or/Organization" class="source">
+						<span itemprop="name">Source: {{news.source}}</span>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div>
+	<div itemprop="review" itemscope itemtype="http://schema.org/Review">
 		<div class="reviews">
-			<div class="header">
-				{{detailed_book['book'].total_reviews_count}} REVIEWS
+			<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" class="header">
+				<span class="glyphicon glyphicon-pencil"></span>
+				<span itemprop= "reviewCount"> {{detailed_book['book'].total_reviews_count}} REVIEWS</span>
 			</div>
 			<div class="elements">
 				<div ng-repeat="review in detailed_book['book'].reviews" class="review">
 			        <div class="header">
 			        	<img ng-src="{{review.user.thumb}}" class="review_thumb" />
-			        	<span>{{review.timestamp}}</span>
+			        	<div itemscope itemtype="http://schema.org/UserComments">
+			        		<span itemprop="commentTime">{{review.timestamp}}</span>
+			        	</div>
 			        	<span>{{review.comment_count}} comments</span>
 			        	<span>{{review.dislike_count}} dislikes</span>
 			        	<span>{{review.like_count}} likes</span>
 			        	<span><a ng-href="{{review.user.url}}">{{review.user.name}}</a></span>
 			        </div>
 			        <div class="content">
-			        	{{review.content}}
+			        	<span itemprop="reviewBody">{{review.content}}</span>
 			        </div>
 				</div>
 			</div>
@@ -259,7 +270,7 @@
 	<div>
 		<div class="discussions">
 			<div class="header">
-				DISCUSSIONS
+				<span class="glyphicon glyphicon-edit"></span>  DISCUSSIONS
 			</div>
 			<div class="elements">
 				<div ng-repeat="discussion in detailed_book['book'].discussions">
@@ -272,10 +283,11 @@
 		</div>
 	</div>
 
-	<div>
+	<div itemprop="author" itemscope itemptype="http://schema.org/Person">
 		<div class="about_author">
 			<div class="header">
-				ABOUT AUTHOR
+				<span class="glyphicon glyphicon-user"></span>
+				<span itemprop="description"> ABOUT AUTHOR</span>
 			</div>
 			<div class="description"></div>
 		</div>
@@ -291,8 +303,8 @@
 
 	<div class="hard own-size">
 		<div class="summary" 
-		     style="background-color:{{detailed_book['book'].background_color}}">
-			{{detailed_book['book'].summary}}
+			 style="background-color:{{detailed_book['book'].background_color}}">
+			<span itemprop="description">{{detailed_book['book'].summary}}</span>
 		</div>
 	</div>
 
