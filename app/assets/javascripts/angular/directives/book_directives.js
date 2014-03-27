@@ -72,7 +72,7 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
           $('#frontCoverFold').css('width', image_width);
           $('#frontCoverFold').css('height', image_height);
 
-          $('.detailed_book').css('position', 'absolute');
+          $('.detailed_book').css('position', 'fixed');
 
           _set_depth();
           // _set_elements_height();
