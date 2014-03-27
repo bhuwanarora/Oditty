@@ -265,6 +265,11 @@
 				        <div class="comments">
 				        	<div ng-repeat="discussion in review.comments">
 				        		<discussion data="discussion" index="$index"></discussion>
+				        		<div class="nested_comments">
+					        		<div ng-repeat="discussion in discussion.comments">
+										<discussion data="discussion" index="$index"></discussion>
+									</div>
+				        		</div>
 				        	</div>
 				        </div>
 			        </div>
@@ -281,6 +286,11 @@
 			<div class="elements">
 				<div ng-repeat="discussion in detailed_book['book'].discussions">
 					<discussion data="discussion" index="$index"></discussion>
+					<div class="nested_comments">
+		        		<div ng-repeat="discussion in discussion.comments">
+							<discussion data="discussion" index="$index"></discussion>
+						</div>
+	        		</div>
 				</div>
 				<div class="more_comments">
 					{{detailed_book['book'].left_discussions_count}} More Discussions
@@ -289,22 +299,24 @@
 		</div>
 	</div>
 
+	<div class="blank_page">
+	</div>
+
 	<div itemprop="author" itemscope itemptype="http://schema.org/Person">
 		<div class="about_author">
 			<div class="header">
 				<span class="glyphicon glyphicon-user"></span>
 				<span itemprop="description"> ABOUT AUTHOR</span>
 			</div>
-			<div class="description"></div>
+			<img ng-src="{{detailed_book['book'].author.thumb}}" class="author_thumb" />
 		</div>
 	</div>
 
-	<div class="blank_page">
-	</div>
 
 	<div class="blank_page hard own-size back-side">
 		<div class="depth"></div>
 		<img src="assets/back_cover_fold.jpg" id="backCoverFold"/>
+		<div class=""></div>
 	</div>
 
 	<div class="hard own-size">

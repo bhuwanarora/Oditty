@@ -126,7 +126,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	        deferred.promise.then(function(data){
 	        	$rootScope.message_type = "Notification";
 	        	$rootScope.message = "We think you like Hermann Hesse, and here is his best read.";
-	        	$rootScope.notification_active = true;
+	        	// $rootScope.notification_active = true;
 	    		$scope.recommendations["books"] = $scope.recommendations["books"].concat(data["recommendations"]["books"]);
 	    	})
 		}, fiveMinute);

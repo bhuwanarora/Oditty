@@ -12,12 +12,12 @@
 		 ng-class="{'active_filter':active_reader_filter, 'inactive_filter':!active_reader_filter}">
 		 <span class="glyphicon glyphicon-user"></span> READER</div>
 </div>
-<hr>
 <div class="filters" ng-show="active_book_filter">
 	<div class="filters_panel">
 		<div class="header">
 			<b>Advance Input Filters</b>
 		</div>
+		<hr>
 		<div>
 		 	<type-ahead items="genres" 
 		 				prompt="GENRE" 
@@ -41,6 +41,7 @@
 		<div class="header">
 			<span class="glyphicon glyphicon-tags"></span>   <b>Tags</b>
 		</div>
+			<hr>
 		<div ng-repeat="filter in more_filters[0]['book']">
 			<filter data="filter"></filter>
 		</div>

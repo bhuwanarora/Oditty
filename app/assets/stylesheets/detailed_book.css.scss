@@ -96,7 +96,7 @@ and (min-width : 1024px) {
 
 	.comment_box{
 		height: 22px;
-		margin-top: 5px;
+		margin: 0px;
 	}
 
 	.comment .footer{
@@ -108,7 +108,7 @@ and (min-width : 1024px) {
 	}
 
 	.discussion{
-		height: 70px;
+		height: 65px;
 	}
 
 	.user .thumb{
@@ -172,7 +172,7 @@ and (min-width : 1280px) {
 
 	.comment_box{
 		height: 25px;
-		margin-top: 10px;
+		margin: 0px;
 	}
 
 	.comment .comment_text{
@@ -180,7 +180,7 @@ and (min-width : 1280px) {
 	}
 
 	.discussion{
-		height: 90px;
+		height: 80px;
 	}
 
 	.user .thumb{
@@ -532,7 +532,7 @@ and (min-width : 1280px) {
 	height: 10px;
 	text-align: right;
 	overflow-y: visible;
-	font-size: 0.8em;
+	font-size: 0.9em;
 }
 
 .comment .footer .comment_now{
@@ -558,20 +558,17 @@ and (min-width : 1280px) {
 
 .like, .dislike{
 	width: 150px;
-	border: 1px solid white;
 	padding: 4px;
-	margin-right: 5px;
 	cursor: pointer;
 	color: #3D79A1;
-	border-radius: 3px;
 }
 
 .like:hover, .dislike:hover{
-	color: #717070;
+	/*color: #717070;
 	background-color: white;
 	-webkit-box-shadow: 1px 2px 1px #3D79A1;
 	-moz-box-shadow: 1px 2px 1px #3D79A1;
-	box-shadow: 1px 2px 1px #3D79A1;
+	box-shadow: 1px 2px 1px #3D79A1;*/
 }
 
 .like_selected, .dislike_selected{
@@ -584,8 +581,8 @@ and (min-width : 1280px) {
 }
 
 .like_selected:hover, .dislike_selected:hover{
-	background-color: #3D79A1;
-	color: white;
+	/*background-color: #3D79A1;
+	color: white;*/
 }
 
 .close_book{
@@ -623,6 +620,8 @@ and (min-width : 1280px) {
 	overflow-y: scroll;
 	display: inline-block;
 	float: left;
+	border-radius: 0px;
+	padding-right: 10px;
 }
 
 .review_thumb{
@@ -666,4 +665,83 @@ and (min-width : 1280px) {
 	width: 100%;
 	margin-top: -25px;
 	margin-left: -10px !important;
+}
+
+/*Clearing Floats*/
+.cf:before, .cf:after{
+    content:"";
+    display:table;
+}
+
+.cf:after{
+    clear:both;
+}
+
+.cf{
+    zoom:1;
+}    
+/* Form wrapper styling */
+.form-wrapper {
+    width: 105%;
+}
+
+/* Form text input */
+
+.form-wrapper input {
+    width: 74%;
+	height: 10px;
+	padding: 7px 5px;
+	float: left;
+	border-radius: 3px 0 0 3px;
+	color: #717070;
+}
+
+.form-wrapper input::-webkit-input-placeholder {
+   font-style: italic;
+}
+
+.form-wrapper input:-moz-placeholder {
+    font-style: italic;
+}
+
+.form-wrapper input:-ms-input-placeholder {
+    font-style: italic;
+}   
+
+/* Form submit button */
+.form-wrapper button {
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+	position: relative;
+	border: 0;
+	padding: 0;
+	cursor: pointer;
+	height: 26px;
+	width: 20%;
+	color: #fff;
+	background: #3C7CB8;
+	border-radius: 0 3px 3px 0;
+}
+
+.form-wrapper button:before { /* left arrow */
+    content: '';
+    position: absolute;
+    border-width: 8px 8px 8px 0;
+    border-style: solid solid solid none;
+    border-color: transparent #3C7CB8 transparent;
+    top: 6px;
+    left: -6px;
+}
+
+.form-wrapper button::-moz-focus-inner { 
+	/* remove extra button spacing for Mozilla Firefox */
+    border: 0;
+    padding: 0;
+}
+
+.nested_comments{
+	margin-left: 20px;
+}
+
+.author_thumb{
+	margin: 10px;
 }

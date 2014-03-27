@@ -854,6 +854,11 @@ a:hover{
 	padding: 10px;
 }
 
+.filters{
+	width: 100%;
+	padding: 10px;
+}
+
 .filter{
 	float: left;
 	margin: 2px;
@@ -891,6 +896,10 @@ input:focus{
 
 .main_filters{
 	text-align: center;
+	width: 100%;
+	margin: -10px;
+	padding: 10px;
+	background-color: #FAFAFA;
 }
 
 .main_filters div{
@@ -930,6 +939,7 @@ input:focus{
 .more_filters hr{
 	opacity: 0.3;
 	width: 30%;
+	margin-top: 0px;
 }
 
 .input_filter{
@@ -1146,10 +1156,10 @@ and (min-width : 400px) {
 
 
 	.card .zoomedin_thumb{
-		position: absolute;
-		z-index: 1000;
-		width: 510px;
-		height: 650px;
+		/*position: absolute;*/
+		/*z-index: 1000;*/
+		/*width: 510px;*/
+		/*height: 650px;*/
 	}
 
 	.card .book_thumb {
@@ -1210,10 +1220,10 @@ and (min-width : 1280px){
 
 
 	.card .zoomedin_thumb{
-		position: absolute;
+		/*position: absolute;
 		z-index: 1000;
 		width: 610px;
-		height: 864px;
+		height: 864px;*/
 	}
 
 	.card .book_thumb {
@@ -1269,10 +1279,10 @@ and (min-width : 1824px) {
 	}
 
 	.card .zoomedin_thumb{
-		position: absolute;
+		/*position: absolute;
 		z-index: 1000;
 		width: 610px;
-		height: 864px;
+		height: 864px;*/
 	}
 
 	.typeahead_options{

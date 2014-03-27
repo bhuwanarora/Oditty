@@ -20,6 +20,9 @@
     <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/lib/**/*.js")] %>
     <link rel="stylesheet" type="text/css" 
           href="assets/detailed_book.css.scss" ng-if="show_book">
+    <link rel="stylesheet" type="text/css" 
+          href="assets/book_footer.css.scss" ng-if="show_book">
+    <book-footer ng-if="show_book"></book-footer>
     <flipbook ng-if="show_book"></flipbook>
     <link href="/assets/glyphicons.css" rel="stylesheet">
 
