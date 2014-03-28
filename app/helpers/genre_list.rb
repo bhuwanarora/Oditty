@@ -46,7 +46,6 @@ module GenreList
             end
           end
         rescue Exception => e
-          debugger
           puts " DEBUG #{e} #{url} get_books"
           ELogger.log_info(" DEBUG #{e} #{url} get_books")
         end
@@ -120,7 +119,6 @@ module GenreList
       genre.update_column(:flag, true)
     rescue Exception => e
       puts "DEBUG #{e} #{url} #{i} #{genre_id}"
-      debugger
       ELogger.log_info "DEBUG #{e} #{url} #{i} #{genre_id}"
     end
   end

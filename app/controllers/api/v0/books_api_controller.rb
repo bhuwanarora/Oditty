@@ -182,77 +182,137 @@ module Api
 						{
 							:id => 1,
 							:name => "1001 books you must read before you die",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 2,
 							:name => "20th century",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 3,
 							:name => "adventure",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 4,
 							:name => "allegorical novel",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 5,
 							:name => "allegory",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 6,
 							:name => "asia",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 7,
 							:name => "boring",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 8,
 							:name => "buddha",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 9,
 							:name => "buddhism",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 10,
 							:name => "caste system",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 11,
 							:name => "classic",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 12,
 							:name => "classic literature",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 13,
 							:name => "classics",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 14,
 							:name => "coming of age",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 15,
 							:name => "eastern philosophy",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						}
 					],
 					:news => [

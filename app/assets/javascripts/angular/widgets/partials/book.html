@@ -184,15 +184,36 @@
 	<div>
 		<div class="book_tags" ng-model="detailed_book['book'].tags">
 			<div class="header">
-				<span class="glyphicon glyphicon-tags"></span>  TAGS
+				<span class="glyphicon glyphicon-tags"></span> TAGS
 			</div>
 			<div class="elements">
-				<div class="tag"
-					 ng-class="{'grey_background':!is_even($index)}"
+				<div class="book_tag"
 				     ng-repeat="tag in detailed_book['book'].tags">
-					<a href="{{tag.url}}">
-						<span itemprop="genre">{{tag.name}}</span>
-					</a>
+				     <div class="header">
+						<div>
+							<span class='loading_icon' style="display:none;">
+								<img src="assets/download.gif"/>
+							</span> 
+						</div>
+						<div class="content">
+							<a href="{{tag.url}}">
+								<span itemprop="genre">{{tag.name | uppercase}}</span>
+							</a>
+							<br>
+							<span class="description">
+								<a ng-href="{{tag.books_url}}">
+									<span>{{tag.book_count}} Books</span> · 
+								</a>
+								<span>{{tag.like_count}} Likes</span> · 
+								<span>{{tag.dislike_count}} Disikes</span> · 
+								<span class="like">Like</span> · 
+								<span class="dislike">Dislike</span>
+							</span>
+						</div>
+				    </div>
+					<div class="tag_quotes">
+						
+					</div>
 				</div>
 			</div>
 		</div>
@@ -246,6 +267,17 @@
 			<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" class="header">
 				<span class="glyphicon glyphicon-pencil"></span>
 				<span itemprop= "reviewCount"> {{detailed_book['book'].total_reviews_count}} REVIEWS</span>
+				<span style="display:block;" class="write_review">
+					<span class="glyphicon glyphicon-plus"></span>
+					Write a review
+				</span>
+				<span style="display:none;" class="close_review">
+					<span class="glyphicon glyphicon-remove"></span>
+					Back to reviews
+				</span>
+			</div>
+			<div class="text_editor" style="display:none;">
+				<text-angular ng-model="htmlVariable"></text-angular>
 			</div>
 			<div class="elements">
 				<div ng-repeat="review in detailed_book['book'].reviews" class="review">
@@ -254,10 +286,10 @@
 			        	<span itemscope itemtype="http://schema.org/UserComments">
 			        		<span itemprop="commentTime">{{review.timestamp}}</span>
 			        	</span>
-			        	<span>{{review.comment_count}} comments</span>
-			        	<span>{{review.dislike_count}} dislikes</span>
-			        	<span>{{review.like_count}} likes</span>
-			        	<span><a ng-href="{{review.user.url}}">{{review.user.name}}</a></span>
+			        	<span>{{review.comment_count}} comments · </span>
+			        	<span>{{review.dislike_count}} dislikes · </span>
+			        	<span>{{review.like_count}} likes · </span>
+			        	<span><a ng-href="{{review.user.url}}">{{review.user.name}}</a> · </span>
 			        	<span class="review_header"><b>{{review.heading}}</b></span>
 			        </div>
 			        <div class="content">

@@ -145,8 +145,8 @@ function _toggle_filters(type, $scope, $rootScope, $timeout){
 		}
 		var message = "SUCCESS-'"+filter_name+"' added to filters.";
 	}
-	var timeout_event = notify($rootScope, message, $timeout);
 	$scope.$emit('reloadRecommendations');
+	var timeout_event = notify($rootScope, message, $timeout);
 
 	$scope.$on('destroy', function(){
 		$timeout.cancel(timeout_event);

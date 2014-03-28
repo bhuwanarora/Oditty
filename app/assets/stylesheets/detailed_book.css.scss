@@ -75,7 +75,6 @@ and (min-width : 400px) {
 	}
 
 	.detailed_book .review .header span {
-		margin-left: 5px;
 		color: #ADADAD;
 	}
 
@@ -434,7 +433,6 @@ and (min-width : 1280px) {
 .detailed_book .themes div div,
 .detailed_book .subject_places div div,
 .detailed_book .movies_based div div,
-.detailed_book .book_tags div div,
 .detailed_book .quotes div div{
 	padding: 15px;
 	margin: 5px;
@@ -744,4 +742,57 @@ and (min-width : 1280px) {
 
 .author_thumb{
 	margin: 10px;
+}
+
+.write_review, .close_review{
+	background-color: white;
+	padding: 6px;
+	border: 1px solid #D8D8D8;
+	font-size: 0.8em;
+	position: absolute;
+	left: 15px;
+	margin-top: -24px;
+	border-radius: 2px;
+	cursor: pointer;
+	width: 95px;
+	text-align: left;
+}
+
+.book_tag .description{
+	color: #AAAAAA;
+	font-size: 0.9em;
+}
+
+.book_tag div{
+	display: inline-block;
+	float: left;
+	padding: 10px;
+	margin: 5px;
+	cursor: pointer;
+}
+
+.book_tag .content{
+	margin: 0px;
+	padding: 10px 20px 10px 0px;
+}
+
+.book_tag .header{
+	border-bottom: 1px solid #E7E7E7;
+	width: 95%;
+	height: 52px;
+	padding: 10px;
+	margin: 0px;
+	text-overflow:ellipsis;
+	text-align: left !important;
+}
+
+.book_tag .tag_quotes{
+	display: none;
+	width: 95%;
+	margin: 0px;
+	background: #F7F7F7;
+}
+
+.loading_icon img{
+	width: 15px;
 }

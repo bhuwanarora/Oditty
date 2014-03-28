@@ -17,7 +17,7 @@ var page_numbers = {
   about_author: 16
 };
 
-bookApp.directive('bookFooter', function($rootScope, $timeout){
+bookApp.directive('dock', function($rootScope, $timeout){
   return{
     restrict: 'E',
     compile: function(tElement, tAttrs, transclude){
@@ -28,7 +28,7 @@ bookApp.directive('bookFooter', function($rootScope, $timeout){
         $scope.$emit('turnPage', page);
       }
     },
-    templateUrl: "/assets/angular/widgets/partials/book_footer.html"
+    templateUrl: "/assets/angular/widgets/partials/dock.html"
   }
 });
 
@@ -165,7 +165,7 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
                 $this.removeClass('like_selected');
               }
               else{
-                var $dislike = $($(this).siblings()[0]);
+                var $dislike = $this.siblings('.dislike');
                 $this.addClass('like_selected');
                 $dislike.removeClass('dislike_selected');
               }
@@ -177,7 +177,7 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
                 $this.removeClass('dislike_selected');
               }
               else{
-                var $like = $($(this).siblings()[0]);
+                var $like = $this.siblings('.like');
                 $this.addClass('dislike_selected');
                 $like.removeClass('like_selected');
               }
@@ -189,7 +189,31 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
 
             iElement.on('focusout', ".detailed_book", function(){
               alert("focusout");
-            })
+            });
+
+            iElement.on('click', '.write_review', function(){
+              $('.reviews .elements').hide();
+              $('.reviews .text_editor').show();
+              $('.close_review').css('display', 'block');
+              $('.write_review').hide();
+            });
+
+            iElement.on('click', '.close_review', function(){
+              $('.reviews .elements').show();
+              $('.reviews .text_editor').hide();
+              $('.close_review').hide();
+              $('.write_review').css('display', 'block');
+            });
+
+            iElement.on('click', '.book_tag', function(){
+              var $quotes = $(this).children('.tag_quotes');
+              var $loading_icons = $('.loading_icon')
+              var $loading_icon = $(this).find('.loading_icon');
+              $loading_icons.hide();
+              $('.tag_quotes').hide();
+              $loading_icon.css('display', 'block');
+              // $quotes.css('display', 'block');
+            });
 
             _set_pre_css();
             
@@ -284,8 +308,12 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
           event.stopPropagation();
         })
 
+        $('.book_footer').click(function(){
+          event.stopPropagation();
+        })
+
         $('html').click(function(event){
-          // $('.detailed_book').turn("destroy");
+          $rootScope.show_book = false;
         });
       }
 
@@ -334,16 +362,6 @@ bookApp.directive('discussion', function(){
     compile: function(tElement, tAttrs, transclude) {
       show_nested_discussion = function(){
         var discussion_id = scope.discussion.id;
-      }
-
-
-      return {
-        pre: function(scope, iElement, iAttrs, controller) {
-          
-        },
-        post: function(scope, iElement, iAttrs, controller) {
-             
-        }
       }
     },
     controller: function($scope){

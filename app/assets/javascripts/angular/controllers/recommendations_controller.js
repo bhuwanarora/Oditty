@@ -11,6 +11,10 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 		}
 	}
 
+	$scope.reset = function(){
+		_init_recommendations();
+	}
+
 	$scope.toggleRead = function(){
 		if($scope.read_selected == true){
 			$scope.read_selected = false;
@@ -22,7 +26,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	}
 
 
-	$scope.toggleMoreFilters = function(){
+	$scope.toggle_more_filters = function(){
 		if($scope.show_more_filters == true){
 			$scope.show_more_filters = false;
 		}
@@ -66,7 +70,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 
 	    reload_recommendations_event = $scope.$on('reloadRecommendations', function(){
 	    	_init_recommendations();
-	    	// _get_recommendations();
+	    	_get_recommendations();
 	    });
 
 	    add_book_to_shelf_event = $scope.$on('addBookToShelf', function(event, data){
@@ -127,7 +131,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	        	$rootScope.message_type = "Notification";
 	        	$rootScope.message = "We think you like Hermann Hesse, and here is his best read.";
 	        	// $rootScope.notification_active = true;
-	    		$scope.recommendations["books"] = $scope.recommendations["books"].concat(data["recommendations"]["books"]);
+	    		$scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);
 	    	})
 		}, fiveMinute);
 	}
@@ -148,7 +152,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 
     _get_recommendations = function(){
         recommendationService.get_recommendations().then(function(data){
-	    	$scope.recommendations["books"] = $scope.recommendations["books"].concat(data["recommendations"]["books"]);
+	    	$scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);
 	    });
     }
 
