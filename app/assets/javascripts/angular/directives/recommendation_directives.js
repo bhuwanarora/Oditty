@@ -6,6 +6,51 @@ recommendationApp.directive('moreFilters', function($rootScope, $timeout){
 				$scope.active_book_filter = true;
 				$scope.active_author_filter = false;
 				$scope.active_reader_filter = false;
+
+				$scope.filters = {year:"1914;2014"};
+
+				$scope.options = {
+					from: 1700,
+					to: 2014,
+					step: 10,
+					// dimension: "100px",
+					smooth: true
+				}
+
+			    /* watch for changes*/
+			    $scope.$watch('filters.year',function(newVal, oldVal){
+				    if(newVal){
+
+				    }
+				});
+			}
+
+			$scope.mouseup = function(){
+				console.log("mouseup");
+			}
+
+	     	$scope.mousedown = function(){
+	     		console.log("mousedown");
+	     	}
+
+	     	$scope.mouseenter = function(){
+	     		console.log("mouseenter");
+	     	}
+
+	     	$scope.mouseleave = function(){
+	     		console.log("mouseleave");
+	     	}
+
+	     	$scope.mouseover = function(){
+	     		console.log("mouseover");
+	     	}
+
+	     	$scope.mousemove = function(){
+	     		console.log("mousemove");
+	     	}
+
+			$scope.filter_by_year = function(){
+				console.log("filter_by_year");
 			}
 
 			$scope.toggle_active_filter = function(){

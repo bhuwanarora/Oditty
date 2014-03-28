@@ -17,7 +17,6 @@
 		<div class="header">
 			<b>Advance Input Filters</b>
 		</div>
-		<hr>
 		<div>
 		 	<type-ahead items="genres" 
 		 				prompt="GENRE" 
@@ -39,11 +38,21 @@
 	</div>
 	<div class="filters_panel_large">
 		<div class="header">
-			<span class="glyphicon glyphicon-tags"></span>   <b>Tags</b>
+			<span class="glyphicon glyphicon-tags"></span><b>Tags</b>
 		</div>
-		<hr>
 		<div ng-repeat="filter in more_filters[0]['book']">
 			<filter data="filter"></filter>
+		</div>
+	</div>
+	<div class="filters_panel_right">
+		<div class="header">
+			<span></span><b>Published Year</b>
+		</div>
+		<div class="slider">
+			<input ng-model="filters.year" 
+			       type="text" 
+			       id="mySlider1" slider 
+			       options="options" />
 		</div>
 	</div>
 </div>

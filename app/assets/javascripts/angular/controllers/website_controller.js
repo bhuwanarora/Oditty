@@ -2,6 +2,7 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	$timeout, $q, $window, websiteService){
 	$scope.bindHorizontalScroll = function(event, delta, deltaX, deltaY){
 		event.preventDefault();
+		debugger
 		if(delta > 0){
 			//move backward
 	        event.view.window.scrollBy(-80, 0);
