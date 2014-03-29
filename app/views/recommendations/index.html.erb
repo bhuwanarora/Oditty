@@ -9,10 +9,20 @@
 		<div class="website-title">
 			<span class="glyphicon glyphicon-home"></span> Reader's Door
 		</div>
-		<input set-focus="searching" 
+		<type-ahead items="search_results" 
+	 				prompt="Start typing now to search..." 
+	 				title="name" 
+	 				model="searchResults" 
+	 				custom-options = "search_typeahead_options"
+	 				on-select="show_search_result()"
+	 				ng-keypress="get_search_results($event)"
+	 				custom="filter_input">
+	 	</type-ahead>
+
+		<!-- <input set-focus="searching" 
 		       ng-keypress="getSearchResults($event)" 
 		       class="filter_input" 
-		       placeholder="Start typing now to search..."></input>
+		       placeholder="Start typing now to search..."></input> -->
 		<div class="link filter_link" 
 			 ng-click="toggle_more_filters()" 
 			 ng-class="{'active':show_more_filters, 'inactive':!show_more_filters}">

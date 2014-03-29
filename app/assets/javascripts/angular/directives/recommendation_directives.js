@@ -20,37 +20,10 @@ recommendationApp.directive('moreFilters', function($rootScope, $timeout){
 			    /* watch for changes*/
 			    $scope.$watch('filters.year',function(newVal, oldVal){
 				    if(newVal){
-
+				    	$rootScope.filters["year"] = newVal;
+				    	$scope.$emit('reloadRecommendations');
 				    }
 				});
-			}
-
-			$scope.mouseup = function(){
-				console.log("mouseup");
-			}
-
-	     	$scope.mousedown = function(){
-	     		console.log("mousedown");
-	     	}
-
-	     	$scope.mouseenter = function(){
-	     		console.log("mouseenter");
-	     	}
-
-	     	$scope.mouseleave = function(){
-	     		console.log("mouseleave");
-	     	}
-
-	     	$scope.mouseover = function(){
-	     		console.log("mouseover");
-	     	}
-
-	     	$scope.mousemove = function(){
-	     		console.log("mousemove");
-	     	}
-
-			$scope.filter_by_year = function(){
-				console.log("filter_by_year");
 			}
 
 			$scope.toggle_active_filter = function(){

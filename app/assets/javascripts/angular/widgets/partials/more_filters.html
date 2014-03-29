@@ -20,7 +20,9 @@
 		<div>
 		 	<type-ahead items="genres" 
 		 				prompt="GENRE" 
-		 				title="name" 
+		 				title="name"
+		 				custom-options = "genre_typeahead_options"
+		 				custom="input_filter"
 		 				model="genre" 
 		 				on-select="on_genre_selection()"
 		 				ng-keypress="show_genre_options('BOOK')">
@@ -30,6 +32,8 @@
 			<type-ahead items="countries" 
 		 				prompt="COUNTRY"
 		 				title="name"
+		 				custom-options = "country_typeahead_options"
+		 				custom="input_filter"
 		 				model="country"
 		 				on-select="on_country_selection()"
 		 				ng-keypress="show_country_options('BOOK')">
@@ -64,7 +68,9 @@
 		<div>
 			<type-ahead items="genres" 
 		 				prompt="GENRE" 
-		 				title="name" 
+		 				title="name"
+		 				custom-options = "genre_typeahead_options"
+		 				custom="input_filter"
 		 				model="genre" 
 		 				on-select="on_genre_selection()"
 		 				ng-keypress="show_genre_options('BOOK')">
@@ -74,6 +80,8 @@
 			<type-ahead items="countries" 
 		 				prompt="COUNTRY"
 		 				title="name"
+		 				custom-options = "country_typeahead_options"
+		 				custom="input_filter"
 		 				model="country"
 		 				on-select="on_country_selection()"
 		 				ng-keypress="show_country_options('BOOK')">
@@ -88,6 +96,17 @@
 			<filter data="filter"></filter>
 		</div>
 	</div>
+	<div class="filters_panel_right">
+		<div class="header">
+			<span></span><b>Published Year</b>
+		</div>
+		<div class="slider">
+			<input ng-model="filters.year" 
+			       type="text" 
+			       id="mySlider1" slider 
+			       options="options" />
+		</div>
+	</div>
 </div>
 <div class="filters" ng-show="active_reader_filter">
 	<div class="filters_panel">
@@ -97,7 +116,9 @@
 		<div>
 			<type-ahead items="genres" 
 		 				prompt="GENRE" 
-		 				title="name" 
+		 				title="name"
+		 				custom-options = "genre_typeahead_options"
+		 				custom="input_filter"
 		 				model="genre" 
 		 				on-select="on_genre_selection()"
 		 				ng-keypress="show_genre_options('BOOK')">
@@ -107,6 +128,8 @@
 			<type-ahead items="countries" 
 		 				prompt="COUNTRY"
 		 				title="name"
+		 				custom-options = "country_typeahead_options"
+		 				custom="input_filter"
 		 				model="country"
 		 				on-select="on_country_selection()"
 		 				ng-keypress="show_country_options('BOOK')">
@@ -119,6 +142,17 @@
 		</div>
 		<div ng-repeat="filter in more_filters[0]['reader']">
 			<filter data="filter"></filter>
+		</div>
+	</div>
+	<div class="filters_panel_right">
+		<div class="header">
+			<span></span><b>Published Year</b>
+		</div>
+		<div class="slider">
+			<input ng-model="filters.year" 
+			       type="text" 
+			       id="mySlider1" slider 
+			       options="options" />
 		</div>
 	</div>
 </div>
