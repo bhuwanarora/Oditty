@@ -2,11 +2,11 @@
 	 ng-class="{'grey_background':!is_even({{index}})}">
 	<div class="user">
 		<img ng-src="{{discussion.user.thumb}}" class="thumb" />
+	</div>
+	<div class="comment">
 		<div class="username">
 			<div>{{discussion.user.name}}{{index}}</div>
 		</div>
-	</div>
-	<div class="comment">
 		<div class="comment_text">{{discussion.comment}}</div>
 		<div class="footer">
 			<span class="like">Like</span>

@@ -97,7 +97,10 @@ module Api
 							:quote => "When someone is seeking, it happens quite easily that he only sees the thing 
 								that he is seeking; that he is unable to find anything, unable to absorb anything because 
 								he is only thinking of the thing he is seeking...",
-							:from => ""
+							:from => "",
+							:like_count => 23,
+							:dislike_count => 5,
+							:share_count => 34
 						},
 						{
 							:quote => "To whom else should one sacrifice, to whom else was veneration due but to him, 
@@ -107,7 +110,10 @@ module Api
 								flesh and blood, it was not thinking or consciousness that was what the wisest teach. But then 
 								where, where was it? To pierce there, to the self, to myself, to Atman was there any other path 
 								worth seeking?",
-							:from => "Siddhartha"
+							:from => "Siddhartha",
+							:like_count => 23,
+							:dislike_count => 5,
+							:share_count => 34
 						},
 						{
 							:quote => "Her clever red lips taught him a lot. Her tender, supple hand taught him a lot. In 
@@ -115,37 +121,55 @@ module Api
 								insatiably. So she thoroughly taught him that one cannot take pleasure without giving pleasure, 
 								and that every gesture, every caress, every touch, every glance, every last bit of the body has 
 								its secret, which brings happiWEness to the person who knows how to wake it.",
-							:from => ""
+							:from => "",
+							:like_count => 23,
+							:dislike_count => 5,
+							:share_count => 34
 						},
 						{
 							:quote => "She taught him that after a celebration of love the lovers should not part without 
 								admiring each other, without being conquered or having conquered, so that neither is bleak or 
 								glutted or has the bad feeling of having misused or been misused.",
-							:from => ""
+							:from => "",
+							:like_count => 23,
+							:dislike_count => 5,
+							:share_count => 34
 						},
 						{
 							:quote => "Where are you going, by friend?I am not going anywhere. We  are always on the way. 
 								But where are you going, Siddhartha?It is the same with me at it is with you, my friend. I am not 
 								going anywhere. I am only on the way.",
-							:from => ""
+							:from => "",
+							:like_count => 23,
+							:dislike_count => 5,
+							:share_count => 34
 						},
 						{
 							:quote => "But today he only saw one of the rivers secrets, one that gripped his soul. He saw 
 								that the water continually flowed and flowed and yet it was always there; it was always the same 
 								and yet every moment it was new.",
-							:from => ""
+							:from => "",
+							:like_count => 23,
+							:dislike_count => 5,
+							:share_count => 34
 						},
 						{
 							:quote => "Where are you going, by friend?I am not going anywhere. We  are always on the way. 
 								But where are you going, Siddhartha?It is the same with me at it is with you, my friend. I am not 
 								going anywhere. I am only on the way.",
-							:from => ""
+							:from => "",
+							:like_count => 23,
+							:dislike_count => 5,
+							:share_count => 34
 						},
 						{
 							:quote => "But today he only saw one of the rivers secrets, one that gripped his soul. He saw 
 								that the water continually flowed and flowed and yet it was always there; it was always the same 
 								and yet every moment it was new.",
-							:from => ""
+							:from => "",
+							:like_count => 23,
+							:dislike_count => 5,
+							:share_count => 34
 						}
 					],
 					:themes => [

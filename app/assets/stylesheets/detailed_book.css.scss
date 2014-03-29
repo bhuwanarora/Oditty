@@ -91,7 +91,7 @@ and (min-width : 400px) {
 	.comment{
 		width: 70%;
 		padding: 5px;
-		font-size: 0.9em;
+		/*font-size: 0.9em;*/
 	}
 
 	.comment_box{
@@ -100,11 +100,11 @@ and (min-width : 400px) {
 	}
 
 	.comment .footer{
-		margin-top: 10px;
+		/*margin-top: 10px;*/
 	}
 
 	.comment .comment_text{
-		height: 32px;
+		height: 31px;
 	}
 
 	.discussion{
@@ -167,7 +167,7 @@ and (min-width : 1280px) {
 	}
 
 	.comment .footer{
-		margin-top: 25px;
+		margin-top: 20px;
 	}
 
 	.comment_box{
@@ -433,8 +433,7 @@ and (min-width : 1280px) {
 .detailed_book .note_for_parents div,
 .detailed_book .themes div div,
 .detailed_book .subject_places div div,
-.detailed_book .movies_based div div,
-.detailed_book .quotes div div{
+.detailed_book .movies_based div div{
 	padding: 15px;
 	margin: 5px;
 	border-bottom: 2px solid #f4f4f4;
@@ -444,9 +443,10 @@ and (min-width : 1280px) {
 	font-family: monospace;
 }
 
-.detailed_book .quote{
+.detailed_book .quote,
+.detailed_book .quote .description{
 	font-size: 0.9em;
-
+	padding: 5px;
 }
 
 .detailed_book .characters .header{

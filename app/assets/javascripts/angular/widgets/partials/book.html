@@ -131,8 +131,18 @@
 				     ng-click="share_quote()"
 					 ng-class="{'grey_background':!is_even($index)}"
 				     ng-repeat="quote in detailed_book['book'].quotes">
-					{{quote.quote}} <br/><em>{{quote.from}}</em><br/><br/>
+				    <div>
+						{{quote.quote}} <br/><em>{{quote.from}}</em><br/><br/>
+				    </div>
+					<div class="description">
+						<span>{{quote.like_count}} likes · </span>
+						<span>{{quote.dislike_count}} dislikes · </span>
+						<span>{{quote.share_count}} shares · </span>
+						<span class="like">Like</span> · 
+						<span class="dislike">Dislike</span>
+					</div>
 				</div>
+
 		    </div>
 		</div>
 	</div>
