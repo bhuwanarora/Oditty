@@ -7,7 +7,7 @@
 	<div ng-view></div>
 	<div id="recommendationFooter">
 		<!-- <div class="website-title">
-			<span class="glyphicon glyphicon-home"></span> Reader's Door
+			<span class="icon glyphicon-home"></span> Reader's Door
 		</div> -->
 
 		<!-- <input set-focus="searching" 
@@ -30,11 +30,12 @@
 		</div>
 		<div class="scroller">
 			reader's 
-			d<span class="scroller-left glyphicon glyphicon-chevron-left"
+			d
+			<span class="scroller-left icon-angle-left"
 			      ng-click="scrollOnePageLeft($event)"
 			      title="Scroll left">
 			</span>
-			<span class="scroller-right glyphicon glyphicon-chevron-right"
+			<span class="scroller-right icon-angle-right"
 				  ng-click="scrollOnePageRight($event)"
 				  title="Scroll right">
 			</span>
@@ -52,7 +53,9 @@
 		<div class="link filter_link" 
 			 ng-click="toggle_more_filters()" 
 			 ng-class="{'active':show_more_filters, 'inactive':!show_more_filters}">
-			 <span class="icon-filter2"></span> FILTERS
+			 <span class="icon-filter2"></span> FILTERS 
+			 <span class=" icon-angle-down" ng-if="show_more_filters"></span>
+			 <span class=" icon-angle-up" ng-if="!show_more_filters"></span>
 		</div>
 		<div class="notification_bell link"
 		     title="Notifications">
