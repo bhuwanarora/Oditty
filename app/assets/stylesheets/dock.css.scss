@@ -1,0 +1,22 @@
+.book_footer{
+	position: fixed;
+	left: 0px;
+	bottom: 0px;
+	width: 100%;
+	z-index: 5000;
+	text-align: center;
+	list-style: none;
+}
+
+.book_footer li{
+	font-size: 1.5em;
+	padding: 10px;
+	cursor: pointer;
+	border-radius: 30px;
+	background-color: #1D3446;
+}
+
+.book_footer li:hover{
+	color: #1D3446;
+	background-color: #3D79A1;
+}

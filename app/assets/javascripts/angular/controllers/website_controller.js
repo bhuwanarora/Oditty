@@ -2,6 +2,7 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	$timeout, $q, $window, websiteService){
 	$scope.bindHorizontalScroll = function(event, delta, deltaX, deltaY){
 		event.preventDefault();
+		debugger
 		if(delta > 0){
 			//move backward
 	        event.view.window.scrollBy(-80, 0);
@@ -71,9 +72,10 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
     }
 
 	_bind_emit = function(){
-		show_book_event = $scope.$on('expandBook', function(event, data, posX, screenX){
+		show_book_event = $scope.$on('expandBook', function(event, data, posX, screenX, scrollWidth){
 			$rootScope.book_x = posX;
 			$rootScope.screen_x = screenX;
+			$rootScope.total_x = scrollWidth;
 	    	_get_book_details(data);
 			event.stopPropagation();
 	    });

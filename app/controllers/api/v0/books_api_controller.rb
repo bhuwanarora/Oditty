@@ -182,77 +182,137 @@ module Api
 						{
 							:id => 1,
 							:name => "1001 books you must read before you die",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 2,
 							:name => "20th century",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 3,
 							:name => "adventure",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 4,
 							:name => "allegorical novel",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 5,
 							:name => "allegory",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 6,
 							:name => "asia",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 7,
 							:name => "boring",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 8,
 							:name => "buddha",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 9,
 							:name => "buddhism",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 10,
 							:name => "caste system",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 11,
 							:name => "classic",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 12,
 							:name => "classic literature",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 13,
 							:name => "classics",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 14,
 							:name => "coming of age",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						},
 						{
 							:id => 15,
 							:name => "eastern philosophy",
-							:url => ""
+							:url => "",
+							:book_count => 3435,
+							:books_url => "",
+							:like_count => 12413,
+							:dislike_count => 32
 						}
 					],
 					:news => [
@@ -303,6 +363,7 @@ module Api
 					:total_reviews_count => 23,
 					:reviews => [
 						{
+							:heading => "A well written concise life story of Siddhartha",
 							:content => "A well written concise life story of Siddhartha that attempts to relate 
 							the volatile fluctuations of the Buddhist life and his struggle with a return to 
 							hedonism. I am not certain if this book was an attempt to appeal to the Buddhist philosophy, 
@@ -321,9 +382,36 @@ module Api
 							:comment_count => 12,
 							:timestamp => "4 days ago",
 							:like_count => 13,
-							:dislike_count => 14
+							:dislike_count => 14,
+							:comments => [
+								{
+									:user => {
+										:id => 1,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "i adore this book and will always buy it at a used book store for some i love.",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => ""
+								},
+								{
+									:user => {
+										:id => 2,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "great",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => ""
+								},
+							]
 						},
 						{
+							:heading => "A well written concise life story of Siddhartha",
 							:content => "A well written concise life story of Siddhartha that attempts to relate 
 							the volatile fluctuations of the Buddhist life and his struggle with a return to 
 							hedonism. I am not certain if this book was an attempt to appeal to the Buddhist philosophy, 
@@ -342,9 +430,36 @@ module Api
 							:comment_count => 12,
 							:timestamp => "4 days ago",
 							:like_count => 13,
-							:dislike_count => 14
+							:dislike_count => 14,
+							:comments => [
+								{
+									:user => {
+										:id => 1,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "i adore this book and will always buy it at a used book store for some i love.",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => ""
+								},
+								{
+									:user => {
+										:id => 2,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "great",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => ""
+								},
+							]
 						},
 						{
+							:heading => "A well written concise life story of Siddhartha",
 							:content => "A well written concise life story of Siddhartha that attempts to relate 
 							the volatile fluctuations of the Buddhist life and his struggle with a return to 
 							hedonism. I am not certain if this book was an attempt to appeal to the Buddhist philosophy, 
@@ -363,9 +478,36 @@ module Api
 							:comment_count => 12,
 							:timestamp => "4 days ago",
 							:like_count => 13,
-							:dislike_count => 14
+							:dislike_count => 14,
+							:comments => [
+								{
+									:user => {
+										:id => 1,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "i adore this book and will always buy it at a used book store for some i love.",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => ""
+								},
+								{
+									:user => {
+										:id => 2,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "great",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => ""
+								},
+							]
 						},
 						{
+							:heading => "A well written concise life story of Siddhartha",
 							:content => "A well written concise life story of Siddhartha that attempts to relate 
 							the volatile fluctuations of the Buddhist life and his struggle with a return to 
 							hedonism. I am not certain if this book was an attempt to appeal to the Buddhist philosophy, 
@@ -384,9 +526,36 @@ module Api
 							:comment_count => 12,
 							:timestamp => "4 days ago",
 							:like_count => 13,
-							:dislike_count => 14
+							:dislike_count => 14,
+							:comments => [
+								{
+									:user => {
+										:id => 1,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "i adore this book and will always buy it at a used book store for some i love.",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => ""
+								},
+								{
+									:user => {
+										:id => 2,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "great",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => ""
+								},
+							]
 						},
 						{
+							:heading => "A well written concise life story of Siddhartha",
 							:content => "A well written concise life story of Siddhartha that attempts to relate 
 							the volatile fluctuations of the Buddhist life and his struggle with a return to 
 							hedonism. I am not certain if this book was an attempt to appeal to the Buddhist philosophy, 
@@ -405,9 +574,62 @@ module Api
 							:comment_count => 12,
 							:timestamp => "4 days ago",
 							:like_count => 13,
-							:dislike_count => 14
+							:dislike_count => 14,
+							:comments => [
+								{
+									:user => {
+										:id => 1,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "i adore this book and will always buy it at a used book store for some i love.",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => "",
+									:comments => [
+										{
+											:user => {
+												:id => 1,
+												:thumb => "assets/profile_pic.jpeg",
+												:name => "test_user",
+												:url => ""
+											},
+											:comment => "i adore this book and will always buy it at a used book store for some i love.",
+											:timestamp => "6 years ago",
+											:id => 1,
+											:url => ""
+										},
+										{
+											:user => {
+												:id => 2,
+												:thumb => "assets/profile_pic.jpeg",
+												:name => "test_user",
+												:url => ""
+											},
+											:comment => "great",
+											:timestamp => "6 years ago",
+											:id => 1,
+											:url => ""
+										}
+									]
+								},
+								{
+									:user => {
+										:id => 2,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "great",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => ""
+								}
+							]
 						},
 						{
+							:heading => "A well written concise life story of Siddhartha",
 							:content => "A well written concise life story of Siddhartha that attempts to relate 
 							the volatile fluctuations of the Buddhist life and his struggle with a return to 
 							hedonism. I am not certain if this book was an attempt to appeal to the Buddhist philosophy, 
@@ -426,7 +648,59 @@ module Api
 							:comment_count => 12,
 							:timestamp => "4 days ago",
 							:like_count => 13,
-							:dislike_count => 14
+							:dislike_count => 14,
+							:comments => [
+								{
+									:user => {
+										:id => 1,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "i adore this book and will always buy it at a used book store for some i love.",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => "",
+									:comments => [
+										{
+											:user => {
+												:id => 1,
+												:thumb => "assets/profile_pic.jpeg",
+												:name => "test_user",
+												:url => ""
+											},
+											:comment => "i adore this book and will always buy it at a used book store for some i love.",
+											:timestamp => "6 years ago",
+											:id => 1,
+											:url => ""
+										},
+										{
+											:user => {
+												:id => 2,
+												:thumb => "assets/profile_pic.jpeg",
+												:name => "test_user",
+												:url => ""
+											},
+											:comment => "great",
+											:timestamp => "6 years ago",
+											:id => 1,
+											:url => ""
+										}
+									]
+								},
+								{
+									:user => {
+										:id => 2,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "great",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => ""
+								},
+							]
 						}
 					],
 					:discussions => [
@@ -440,7 +714,33 @@ module Api
 							:comment => "i adore this book and will always buy it at a used book store for some i love.",
 							:timestamp => "6 years ago",
 							:id => 1,
-							:url => ""
+							:url => "",
+							:comments => [
+								{
+									:user => {
+										:id => 1,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "i adore this book and will always buy it at a used book store for some i love.",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => ""
+								},
+								{
+									:user => {
+										:id => 2,
+										:thumb => "assets/profile_pic.jpeg",
+										:name => "test_user",
+										:url => ""
+									},
+									:comment => "great",
+									:timestamp => "6 years ago",
+									:id => 1,
+									:url => ""
+								}
+							]
 						},
 						{
 							:user => {
@@ -583,7 +883,127 @@ module Api
 							:url => ""
 						}
 					],
-					:total_discussions_count => 14
+					:total_discussions_count => 14,
+					:author => {
+						:name => "Hermann Hesse",
+						:thumb => "assets/1113469.jpg",
+						:born_on => "BORN_ON",
+						:books => [
+							{
+								:name => "Steppenwolf",
+								:published_year => "1900",
+								:url => ""
+							},
+							{
+								:name => "Glass Bead Game",
+								:published_year => "1900",
+								:url => ""
+							},
+							{
+								:name => "Demian",
+								:published_year => "1900",
+								:url => ""
+							},
+							{
+								:name => "Gertrud",
+								:published_year => "1990",
+								:url => ""
+							}
+						],
+						:awards => [
+							{
+								:year => 1906,
+								:name => "Bauernfeld-Preis"
+							},
+							{
+								:years => "Mejstrik-Preis of the Schiller Foundation in Vienna",
+								:year => 1928
+							},
+							{
+								:year => 1936,
+								:name => "Gottfried-Keller-Preis"
+							},
+							{
+								:year => 1946,
+								:name => "Goethe Prize"
+							},
+							{
+								:year => 1946,
+								:name => "Nobel Prize in Literature"
+							},
+							{
+								:year => 1947,
+								:name => "Honorary Doctorate from the University of Bern"
+							}
+						],
+						:summary => "Hermann Hesse was a German-Swiss poet, novelist, and painter. In 
+						1946, he received the Nobel Prize in Literature. His best known works include 
+						Steppenwolf, Siddhartha, and The Glass Bead Game (also known as Magister Ludi) 
+						which explore an individual's search for spirituality outside society.
+
+						Hesse was born in the Black Forest town of Calw to a Christian missionary family. 
+						Both of his parents served with a Basel Mission to India, where Hesse's mother 
+						Marie Gundert was born in 1842. Hesse's father, Johannes Hesse, was born in 1877 
+						in Estonia, the son of a doctor. The Hesse family had lived in Calw since 1873, 
+						where they operated a missionary publishing house under the direction of Hesse's 
+						grandfather, Hermann Gundert.
+
+						Hesse spent his first years of life surrounded by the spirit of Swabian piety. 
+						In 1880 the family moved to Basel, Switzerland, for six years, then returned to 
+						Calw. After successful attendance at the Latin School in Göppingen, Hesse began 
+						to attend the Evangelical Theological Seminary in Maulbronn in 1891. Here in 
+						March 1892, Hesse showed his rebellious character and in one instance he fled 
+						from the Seminary and was found in a field a day later.
+
+						During this time, Hesse began a journey through various institutions and schools, 
+						and experienced intense conflicts with his parents. In May, after an attempt at 
+						suicide, he spent time at an institution in Bad Boll under the care of theologian 
+						and minister Christoph Friedrich Blumhardt. Later he was placed in a mental 
+						institution in Stetten im Remstal, and then a boys' institution in Basel.
+
+						In the early summer of 1894, he began a fourteen month mechanic apprenticeship 
+						at a clock tower factory in Calw. The monotony of soldering and filing work made 
+						him resolve to turn himself toward more spiritual activities. In October 1895, 
+						he was ready to begin wholeheartedly a new apprenticeship with a bookseller in 
+							Tübingen. This experience from his youth he returns to later in his novel, 
+							Beneath the Wheel.
+
+						On October 17, 1895, Hesse began working in the bookshop Heckenhauer in Tübingen, 
+						which had a specialized collection in theology, philology, and law. Hesse's 
+						assignment there consisted of organizing, packing, and archiving the books. 
+						After the end of each twelve hour workday, Hesse pursued his own work further, 
+						and he spent his long, idle Sundays with books rather than friends. Hesse 
+						studied theological writings, and later Goethe, Lessing, Schiller, and several 
+						texts on Greek mythology. In 1896, his poem 'Madonna' appeared in a Viennese 
+						periodical.
+
+						By 1898, Hesse had a respectable income that enabled his financial independence 
+						from his parents. During this time, he concentrated on the works of the German 
+						Romantics, including much of the work from Clemens Brentano, Joseph Freiherr 
+						von Eichendorff, Friedrich Holderlin and Novalis. In letters to his parents, 
+						he expressed a belief that \"the morality of artists is replaced by aesthetics.\"
+
+						In the fall, Hesse released his first small volume of poetry, Romantic Songs 
+						and in the summer of 1899, a collection of prose, entitled One Hour After 
+						Midnight. Both works were a business failure. In two years, only 54 of the 600 
+						printed copies of the former were sold, and the latter received only one printing 
+						and sold sluggishly. Nevertheless, the Leipzig publisher Eugen Diederichs was 
+						convinced of the literary quality of the work and from the beginning regarded 
+						the publications more as encouragement of a young author than as profitable 
+						business.",
+						:died => "DIED_ON",
+						:website => "WEBSITE",
+						:genres => [
+							{
+								:name => "Literature & Fiction",
+								:url => ""
+							},
+							{
+								:name => "Poetry",
+								:url => ""
+							}
+						]
+					}
 				}
 				render :json => info, :status => 200
 			end

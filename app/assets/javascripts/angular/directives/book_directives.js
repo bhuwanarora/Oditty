@@ -1,37 +1,50 @@
 var screen_width = screen.width;
-var width = screen_width*(1220/1320); //1220
-var height = screen.height*(864/1064); //864
+var width = screen_width*(1220/1320)-60; //1220
+var height = screen.height*(864/1064)-50; //864
 var page_numbers = {
+  content: 3,
   first_sentence: 4, 
   characters: 5, 
   quotes: 6, 
   themes: 7,
-  subject_placces: 8,
+  subject_places: 8,
   movies_based: 9,
   tags: 10,
   readers: 11,
   news: 12,
   reviews: 13,
   discussions: 14,
-  about_author: 15
+  about_author: 16
 };
+
+bookApp.directive('dock', function($rootScope, $timeout){
+  return{
+    restrict: 'E',
+    compile: function(tElement, tAttrs, transclude){
+
+    },
+    controller: function($scope){
+      $scope.turn_page = function(page){
+        $scope.$emit('turnPage', page);
+      }
+    },
+    templateUrl: "/assets/angular/widgets/partials/dock.html"
+  }
+});
 
 bookApp.directive('flipbook', function($rootScope, $timeout){
 	return{
 		restrict: 'E',
     replace: true,
     compile: function(tElement, tAttrs, transclude) {
-        var width_edition_factor = width*(20/1320)
-        var height_edition_factor = height*(40/1064)
+        var width_edition_factor = width*(10/1320);
+        var height_edition_factor = height*(20/1064);
         var image_width = width/2+width_edition_factor;
         var image_height = height+height_edition_factor;
 
         _set_elements_height = function(){
-          height_edition_factor = height_edition_factor*2;
-
-          var div_height = height - height_edition_factor;
+          var div_height = height - height_edition_factor*6;
           $('.elements').css('height', div_height);
-          $('.elements').css('overflow-y', "scroll");
         }
 
         _set_depth = function(){
@@ -45,6 +58,8 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
           $('.back-side').addClass('fixed');
           $('#backCoverFold').css('width', image_width);
           $('#backCoverFold').css('height', image_height);
+          $('.author_thumb').css('width', width/2-width_edition_factor);
+          $('.author_thumb').css('height', height - height_edition_factor*6);
 
           _set_depth();
           _set_elements_height();
@@ -57,10 +72,10 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
           $('#frontCoverFold').css('width', image_width);
           $('#frontCoverFold').css('height', image_height);
 
-          $('.detailed_book').css('position', 'absolute');
+          $('.detailed_book').css('position', 'fixed');
 
           _set_depth();
-          _set_elements_height();
+          // _set_elements_height();
         }
 
         _update_depth = function(book, newPage){
@@ -105,26 +120,43 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
               var $comment_box = $($comment.siblings()[1]);
               $comment.hide();
               $comment_box.show();
+              $comment_box.focus();
             });
 
-            iElement.on('click', '.comment_big_box .cancel', function(e){
-              var $comment_box = $($(this)).parent();
-              var $comment = $($comment_box.siblings()[1]);
-              $comment_box.hide();
-              $comment.show();
-            });
-
-            iElement.on('click', '.comment_big_box .post', function(e){
-              var $comment_box = $($(this)).parent();
-              var $comment = $($comment_box.siblings()[1]);
-              $comment_box.hide();
-              $comment.show();
+            iElement.on('keypress', '.comment_box', function(e){
+              if(e.which == 10 || e.which == 13) {
+                var $this = $(this);
+                var $discussion = $this.parent().parent().parent().parent();
+                var review_scope = $discussion.parent().parent().parent().parent().scope();
+                var $index = review_scope.$index;
+                var val = $this.val();
+                var comment = {"comment": val, "timestamp": "Just now", "user": {}};
+                var $discussion_index = $discussion.scope().$index;
+                var comments = scope.detailed_book.book.reviews[$index].comments[$discussion_index].comments;
+                var no_nested_comments = comments == null;
+                scope.$apply(function(){
+                  if(no_nested_comments){
+                    scope.detailed_book.book.reviews[$index].comments[$discussion_index].comments = [comment];
+                  }
+                  else{
+                    scope.detailed_book.book.reviews[$index].comments[$discussion_index].comments.push(comment);
+                  }
+                });
+                var $comment = $($($this.parent()).siblings()[1]);
+                $comment.show();
+                $this.hide();
+              }
             });
 
             iElement.on('click', '.review .header', function(e){
               var $review_content = $($($(this)).siblings()[0]);
-              $('.review .content').css('display', 'none');
-              $review_content.show();
+              if($review_content.css("display") == "block"){
+                $('.review .content').css('display', 'none');
+              }
+              else{
+                $('.review .content').css('display', 'none');
+                $review_content.show(); 
+              }
             });
 
             iElement.on('click', '.like', function(e){
@@ -133,7 +165,7 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
                 $this.removeClass('like_selected');
               }
               else{
-                var $dislike = $($(this).siblings()[0]);
+                var $dislike = $this.siblings('.dislike');
                 $this.addClass('like_selected');
                 $dislike.removeClass('dislike_selected');
               }
@@ -145,7 +177,7 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
                 $this.removeClass('dislike_selected');
               }
               else{
-                var $like = $($(this).siblings()[0]);
+                var $like = $this.siblings('.like');
                 $this.addClass('dislike_selected');
                 $like.removeClass('like_selected');
               }
@@ -153,6 +185,34 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
 
             iElement.on('click', '.close_book', function(){
               scope.destroy_book();
+            });
+
+            iElement.on('focusout', ".detailed_book", function(){
+              alert("focusout");
+            });
+
+            iElement.on('click', '.write_review', function(){
+              $('.reviews .elements').hide();
+              $('.reviews .text_editor').show();
+              $('.close_review').css('display', 'block');
+              $('.write_review').hide();
+            });
+
+            iElement.on('click', '.close_review', function(){
+              $('.reviews .elements').show();
+              $('.reviews .text_editor').hide();
+              $('.close_review').hide();
+              $('.write_review').css('display', 'block');
+            });
+
+            iElement.on('click', '.book_tag', function(){
+              var $quotes = $(this).children('.tag_quotes');
+              var $loading_icons = $('.loading_icon')
+              var $loading_icon = $(this).find('.loading_icon');
+              $loading_icons.hide();
+              $('.tag_quotes').hide();
+              $loading_icon.css('display', 'block');
+              // $quotes.css('display', 'block');
             });
 
             _set_pre_css();
@@ -241,23 +301,50 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
       }
 
       $scope.share_quote = function(){
-        console.log("share_quote");
+      }
+
+      _click_outside_close = function(){
+        $('.detailed_book').click(function(){
+          event.stopPropagation();
+        })
+
+        $('.book_footer').click(function(){
+          event.stopPropagation();
+        })
+
+        $('html').click(function(event){
+          $rootScope.show_book = false;
+        });
+      }
+
+      _set_css = function(){
+        var $book = $('.detailed_book');
+        $book.show();
+        var pos_x = $rootScope.book_x;
+        var screen_x = $rootScope.screen_x;
+        var total_x = $rootScope.total_x;
+        if (pos_x > screen_x){
+          var left_margin = pos_x - screen_x;
+          $book.css('margin-left', left_margin+"px");
+        }
+      }
+
+      _add_listeners = function(){
+        $rootScope.$on('turnPage', function(event, page){
+          var page_number = page_numbers[page];
+          $('.detailed_book').turn('page', page_number);
+        })
       }
 
       _init = function(){
-        var $book = $('.detailed_book');
-        var pos_x = $rootScope.book_x;
-        var screen_x = $rootScope.screen_x;
-        if (pos_x > screen_x){
-          var left_margin = (pos_x - screen_x)+"px";
-          $book.css('margin-left', left_margin);
-        }
-
+        _set_css();
+        _add_listeners();
+        _click_outside_close();
         $timeout(function(){
+          var $book = $('.detailed_book');
           var init_page = $rootScope.initPage;
           $book.turn("page", init_page);
           $($('.review .content')[0]).css('display', 'block');
-          console.log(left_margin);
         }, 1000);
       }
 
@@ -275,16 +362,6 @@ bookApp.directive('discussion', function(){
     compile: function(tElement, tAttrs, transclude) {
       show_nested_discussion = function(){
         var discussion_id = scope.discussion.id;
-      }
-
-
-      return {
-        pre: function(scope, iElement, iAttrs, controller) {
-          
-        },
-        post: function(scope, iElement, iAttrs, controller) {
-             
-        }
       }
     },
     controller: function($scope){

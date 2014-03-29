@@ -87,7 +87,7 @@ websiteApp.directive('pushNotification', function($rootScope, $parse, $timeout){
 			})
 		}
 	}
-})
+});
 
 websiteApp.directive('typeAhead', function($timeout){
 	return{
