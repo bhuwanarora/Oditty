@@ -13,6 +13,7 @@ body{
  	-moz-user-select: -moz-none;
   	-ms-user-select: none;
     user-select: none;
+    font-family: Helvetica, Arial, sans-serif;
 }
 
 /*anchor tags*/
@@ -652,7 +653,7 @@ a:hover{
 }
 
 .link [class^="icon-"]{
-	font-size: 1.6em;
+	font-size: 1.5em;
 }
 
 .link{
@@ -663,7 +664,7 @@ a:hover{
 	height: 10px;
 	text-align: center;
 	padding: 15px;
-	color: #262626;
+	color: #717070;
 	text-shadow: 0px 1px 1px #fff;  
 }
 
@@ -811,13 +812,12 @@ a:hover{
 	display: inline-block;
 	float: left;
 	margin-top: 5px;
-	margin-left: 29%;
+	margin-left: 32%;
 	position: absolute;
 	color: #3D79A1;
-	/*font-family: 'Miltonian Tattoo';
-	font-family: 'Candal', sans-serif;
-	font-family: 'Joti One', cursive;*/
-	font-size: 1.5em;
+	text-shadow: 0 0 0 #000, 1px 4px 6px #def;
+	font-weight: bold;
+	margin-top: 12px;
 }
 
 
@@ -837,6 +837,7 @@ a:hover{
 .scroller .scroller-right{
 	margin-right: 3px;
 	margin-left: 1px;
+	padding: 9px 10px 9px 12px;
 }
 .scroller .scroller-left:hover,
 .scroller .scroller-right:hover{
@@ -909,7 +910,7 @@ a:hover{
 	float: left;
 	margin: 2px;
 	display: inline-block;
-	padding: 4px;
+	padding: 5px 4px 5px 4px;
 	border-radius: 2px;
 	font-size: 0.6em;
 	cursor: pointer;
@@ -940,11 +941,13 @@ a:hover{
 }
 
 input{
-	border: 1px solid #DBDBDB;
+	/*border: 1px solid #DBDBDB;*/
+	border: none;
 }
 
 input:focus{
 	border: 1px solid #717070;
+	/*border: 1px solid #DBDBDB;*/
 	outline:none;
 }
 
@@ -961,8 +964,7 @@ input:focus{
 	height: 10px;
 	width: 62px;
 	text-align: center;
-	padding: 4px;
-	border: 1px solid #D3D3D3;
+	padding: 5px 4px 5px 4px;
 }
 
 .active_filter{
@@ -1080,7 +1082,7 @@ input:focus{
 	text-align: center;
 	padding: 9px;
 	color: #710808;
-	margin: -150px 0px 0px -10px;
+	margin: -10px 0px 0px -20px;
 	font-size: 0.7em;
 	background-color: rgba(255, 255, 255, 0.21);
 }
