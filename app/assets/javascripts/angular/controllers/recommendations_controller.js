@@ -96,11 +96,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 		$scope.$on('$destroy', function(){
 			$timeout.cancel(push_books_timer_event);
 			$timeout.cancel(user_behaviour_timer_event);
-			// $emit.cancel(reload_recommendations_event);
-			// $emit.cancel(add_book_to_shelf_event);
-			// $emit.cancel(remove_book_from_shelf_event);
-			// $emit.cancel(show_book_event);
-		})
+		});
 	}
 
 	_init_shelf = function(){

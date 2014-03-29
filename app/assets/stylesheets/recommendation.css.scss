@@ -637,7 +637,7 @@ a:hover{
 	border-radius: 2px;
 	display: inline-block;
 	z-index: 5;
-	margin-left: 16%;
+	margin-left: 1%;
 	margin-top: 2px;
 	vertical-align: middle;
 	height: 30px;
@@ -666,8 +666,10 @@ a:hover{
 	text-shadow: 0px 1px 1px #fff;  
 }
 
-.filter_link{
-	margin-left: 50%;
+.filter_link, 
+.notification_bell{
+	float: right;
+	margin-left: 1%;
 }
 
 .active{
@@ -684,8 +686,8 @@ a:hover{
 }
 
 .shelf_nav_links{
-	float: right;
-	margin-right: 4%;
+	float: left;
+	margin-left: 1%;
 }
 
 .shelf{
@@ -696,7 +698,7 @@ a:hover{
 	right: 0px;
 	background: url("bookshelf_empty.png");
 	background-size: cover;
-	bottom: 50px;
+	bottom: 40px;
 }
 
 .notification{
@@ -804,6 +806,44 @@ a:hover{
     -ms-filter: "FlipH";
 }
 
+.scroller{
+	display: inline-block;
+	float: left;
+	margin-top: 5px;
+	margin-left: 29%;
+	position: absolute;
+	color: #3D79A1;
+	/*font-family: 'Miltonian Tattoo';
+	font-family: 'Candal', sans-serif;
+	font-family: 'Joti One', cursive;*/
+	font-size: 1.5em;
+}
+
+
+.scroller .scroller-left,
+.scroller .scroller-right{
+	padding: 9px;
+	color: #FFFFFF;
+	background-color: #D1D1D1;
+	margin: -1px;
+	font-size: 0.7em;
+}
+
+.scroller .scroller-left{
+	border-top-left-radius: 40px;
+	padding-left: 15px;
+}
+
+.scroller .scroller-right{
+	border-top-right-radius: 40px;
+	padding-right: 15px;
+}
+.scroller .scroller-left:hover,
+.scroller .scroller-right:hover{
+	color: white;
+	background-color: #AAAAAA;
+	cursor: pointer;
+}
 
 .more_filters{
 	width: 100%;
@@ -874,6 +914,15 @@ a:hover{
 	font-size: 0.6em;
 	cursor: pointer;
 	text-align: center;
+}
+
+.reset_filters{
+	float: left;
+	cursor: pointer;
+	color: #717070;
+	padding-left: 10px !important;
+	padding-right: 10px !important;
+	width: 75px !important;
 }
 
 .news{
@@ -1002,11 +1051,10 @@ input:focus{
 	padding: 3px;
 	color: #717070;
 }
-.test{
+.result_count{
     display: inline-block;
     color: #717070;
     float: right;
-    padding: 10px;
     margin-right: 40px;
 }
 
