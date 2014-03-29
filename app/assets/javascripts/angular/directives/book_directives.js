@@ -1,6 +1,6 @@
 var screen_width = screen.width;
-var width = screen_width*(1220/1320)-60; //1220
-var height = screen.height*(864/1064)-50; //864
+var width = screen_width*(1220/1320)-150; //1220
+var height = screen.height*(864/1064)-100; //864
 var page_numbers = {
   content: 3,
   first_sentence: 4, 
@@ -43,7 +43,7 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
         var image_height = height+height_edition_factor;
 
         _set_elements_height = function(){
-          var div_height = height - height_edition_factor*6;
+          var div_height = height - height_edition_factor*7;
           $('.elements').css('height', div_height);
         }
 
@@ -313,6 +313,11 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
         })
 
         $('html').click(function(event){
+          // $('.fade .closing').css('display', 'block');
+          // $('.fade').css('z-index', '5000');
+          $('.detailed_book').hide();
+          $('.book_footer').hide();
+          $('.fade').hide();
           $rootScope.show_book = false;
         });
       }

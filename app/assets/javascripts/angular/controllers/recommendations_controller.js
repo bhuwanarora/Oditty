@@ -40,27 +40,28 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 		event.currentTarget.text = "";
 	}
 
-	$scope.getSearchResults = function(event){
-        var currentValue = event.currentTarget.value;
+	$scope.get_search_results = function(event){
+        var currentValue = $scope.searchResults;
         var currentInput = String.fromCharCode(event.keyCode);
-        var backspace_or_delete_or_enter = (event.keyCode == 8) || (event.keyCode == 46) || (event.keyCode == 13);
-        if(backspace_or_delete_or_enter && currentValue.length == 0){
-        	$scope.stopSearching(event);
-        	//NOT WORKING
-        }
-        else{
-        	if(currentValue.length >= 2){
-				var deferred = $q.defer();
-				var query_params = currentValue+currentInput;
-		        $http.get('/api/v0/search?count=5&q='+query_params).then(function(result) {
-                    return deferred.resolve(result.data); 
-                });
-		        return deferred.promise;
-        	}
-        	else{
-        		//Type atleast 3 chars to search
-        	}
-        }
+        $scope.search_results = [{name: "Test 1"}, {name: "Test 2"}];
+        // var backspace_or_delete_or_enter = (event.keyCode == 8) || (event.keyCode == 46) || (event.keyCode == 13);
+    //     if(backspace_or_delete_or_enter && currentValue.length == 0){
+    //     	$scope.stopSearching(event);
+    //     	//NOT WORKING
+    //     }
+    //     else{
+    //     	if(currentValue.length >= 2){
+				// var deferred = $q.defer();
+				// var query_params = currentValue+currentInput;
+		  //       $http.get('/api/v0/search?count=5&q='+query_params).then(function(result) {
+    //                 return deferred.resolve(result.data); 
+    //             });
+		  //       return deferred.promise;
+    //     	}
+    //     	else{
+    //     		//Type atleast 3 chars to search
+    //     	}
+    //     }
 	}
 
 	_init_emit = function(){
@@ -95,11 +96,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 		$scope.$on('$destroy', function(){
 			$timeout.cancel(push_books_timer_event);
 			$timeout.cancel(user_behaviour_timer_event);
-			// $emit.cancel(reload_recommendations_event);
-			// $emit.cancel(add_book_to_shelf_event);
-			// $emit.cancel(remove_book_from_shelf_event);
-			// $emit.cancel(show_book_event);
-		})
+		});
 	}
 
 	_init_shelf = function(){

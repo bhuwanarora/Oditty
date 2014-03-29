@@ -2,7 +2,6 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	$timeout, $q, $window, websiteService){
 	$scope.bindHorizontalScroll = function(event, delta, deltaX, deltaY){
 		event.preventDefault();
-		debugger
 		if(delta > 0){
 			//move backward
 	        event.view.window.scrollBy(-80, 0);
@@ -33,6 +32,10 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 
 	$scope.showFeebackForm = function(){
 		// console.log("showFeebackForm")
+	}
+
+	$scope.show_search_result = function(){
+		console.log("show_search_result");
 	}
 
 

@@ -1,27 +1,19 @@
 <%= stylesheet_link_tag 'recommendation'%>
-<horizontal-scroller></horizontal-scroller>
+<!-- <horizontal-scroller></horizontal-scroller> -->
 <div ng-controller="recommendationsController">
 	<more-filters ng-show="show_more_filters" 
 	              class="more_filters">
 	</more-filters>
 	<div ng-view></div>
 	<div id="recommendationFooter">
-		<div class="website-title">
+		<!-- <div class="website-title">
 			<span class="glyphicon glyphicon-home"></span> Reader's Door
-		</div>
-		<input set-focus="searching" 
+		</div> -->
+
+		<!-- <input set-focus="searching" 
 		       ng-keypress="getSearchResults($event)" 
 		       class="filter_input" 
-		       placeholder="Start typing now to search..."></input>
-		<div class="link filter_link" 
-			 ng-click="toggle_more_filters()" 
-			 ng-class="{'active':show_more_filters, 'inactive':!show_more_filters}">
-			 <span class="glyphicon glyphicon-filter"></span> FILTERS
-		</div>
-		<div class="link">
-			<span class="glyphicon glyphicon-bell"></span>
-		</div>
-		<div class="test" ng-model="recommendations.books.length">{{recommendations.books.length}} results</div>
+		       placeholder="Start typing now to search..."></input> -->
 		<div class="shelf_nav_links">
 			<div ng-class="{'inactive':!bookmark_selected, 'active':bookmark_selected}"
 				 class="link"
@@ -34,6 +26,35 @@
 				 <b><span class="glyphicon glyphicon-check"></span></b>
 			</div>
 		</div>
+		<div class="scroller">
+			reader's 
+			d
+			<span class="scroller-left glyphicon glyphicon-chevron-left"
+			      ng-click="scrollOnePageLeft($event)">
+			</span>
+			<span class="scroller-right glyphicon glyphicon-chevron-right"
+				  ng-click="scrollOnePageRight($event)">
+			</span>
+			r
+		</div>
+		<type-ahead items="search_results" 
+	 				prompt="Start typing now to search..." 
+	 				title="name" 
+	 				model="searchResults" 
+	 				custom-options = "search_typeahead_options"
+	 				on-select="show_search_result()"
+	 				ng-keypress="get_search_results($event)"
+	 				custom="filter_input">
+	 	</type-ahead>
+		<div class="link filter_link" 
+			 ng-click="toggle_more_filters()" 
+			 ng-class="{'active':show_more_filters, 'inactive':!show_more_filters}">
+			 <span class="glyphicon glyphicon-filter"></span> FILTERS
+		</div>
+		<div class="notification_bell link">
+			<span class="glyphicon glyphicon-bell"></span>
+		</div>
+		
 	</div>
 	<shelf ng-if="bookmark_selected || read_selected" ></shelf>
 </div>

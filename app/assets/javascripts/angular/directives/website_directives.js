@@ -97,12 +97,14 @@ websiteApp.directive('typeAhead', function($timeout){
 	      	prompt: '@',
 	      	title: '@',
 	      	id: '@',
+	      	custom: '@',
+	      	customOptions: '@',
 	      	subtitle: '@',
 	      	model: '=',
 	      	onSelect: '&'
 		},
 		link: function(scope, elem, attrs){
-			scope.handleSelection = function(selectedItem) {
+			scope.handle_selection = function(selectedItem) {
 				scope.model = selectedItem.toUpperCase();
 			    scope.current = 0;
 			    scope.selected = true;
@@ -111,13 +113,34 @@ websiteApp.directive('typeAhead', function($timeout){
 			    }, 200);
 			};
 
-			scope.isCurrent = function(index) {
+			scope.is_current = function(index) {
 			    return scope.current == index;
 			};
 
-			scope.setCurrent = function(index) {
+			scope.set_current = function(index) {
 			    scope.current = index;
 			};
+
+			scope.navigate_options = function(){
+				var keyEnter = event.keyCode == 13;
+				if(keyEnter){
+					scope.handle_selection("NOT WORKING"+scope.current);
+				}
+			}
+
+			scope.key_up = function(){
+				var keyUp = event.keyCode == 38;
+				var keyDown = event.keyCode == 40;
+				if(keyUp){
+					if(scope.current != 0){
+						scope.set_current(scope.current-1);
+					}
+				}
+
+				if(keyDown){
+					scope.set_current(scope.current+1);
+				}
+			}
 
 			_init = function(){
 				scope.current = 0;

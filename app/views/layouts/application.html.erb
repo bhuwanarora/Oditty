@@ -12,6 +12,9 @@
           src="'assets/angular/widgets/partials/search.html'" 
           ng-show="searching"
           ng-click="stopSearching($event)"></div> -->
+    <link href='http://fonts.googleapis.com/css?family=Miltonian+Tattoo' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Candal' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Joti+One' rel='stylesheet' type='text/css'>
     <div msd-wheel="bindHorizontalScroll($event, $delta, $deltaX, $deltaY)" 
          ng-animate="msd-wheel"
          class="recommendations">
@@ -22,6 +25,17 @@
           href="assets/detailed_book.css.scss" ng-if="show_book">
     <link rel="stylesheet" type="text/css" 
           href="assets/dock.css.scss" ng-if="show_book">
+    <!-- <div ng-if="show_book" class="closing">
+      CLOSING...
+    </div> -->
+    <div ng-if="show_book" class="fade">
+      <div class="closing">
+        Closing
+        <img src="assets/preloader.gif"/>
+        <img src="assets/preloader.gif"/>
+        <img src="assets/preloader.gif"/>
+      </div>
+    </div>
     <dock ng-if="show_book"></dock>
     <flipbook ng-if="show_book"></flipbook>
     <link href="/assets/style.css" rel="stylesheet">

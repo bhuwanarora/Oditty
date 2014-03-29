@@ -20,37 +20,16 @@ recommendationApp.directive('moreFilters', function($rootScope, $timeout){
 			    /* watch for changes*/
 			    $scope.$watch('filters.year',function(newVal, oldVal){
 				    if(newVal){
-
+				    	$rootScope.filters["year"] = newVal;
+				    	$scope.$emit('reloadRecommendations');
 				    }
 				});
 			}
 
-			$scope.mouseup = function(){
-				console.log("mouseup");
-			}
-
-	     	$scope.mousedown = function(){
-	     		console.log("mousedown");
-	     	}
-
-	     	$scope.mouseenter = function(){
-	     		console.log("mouseenter");
-	     	}
-
-	     	$scope.mouseleave = function(){
-	     		console.log("mouseleave");
-	     	}
-
-	     	$scope.mouseover = function(){
-	     		console.log("mouseover");
-	     	}
-
-	     	$scope.mousemove = function(){
-	     		console.log("mousemove");
-	     	}
-
-			$scope.filter_by_year = function(){
-				console.log("filter_by_year");
+			$scope.reset_filters = function(){
+				$scope.$broadcast('resetFilter');
+				$rootScope.filters.more_filters = [];
+				$scope.$emit('reloadRecommendations');
 			}
 
 			$scope.toggle_active_filter = function(){
@@ -131,11 +110,70 @@ recommendationApp.directive('filter', function($rootScope, $timeout){
 		scope: { 'filter': '=data' },
 		controller: function($scope){
 			$scope.toggle_filter = function(){
-				_toggle_filters("more_filters", $scope, $rootScope, $timeout);
+				type = "more_filters";
+				var filter_id = $scope.filter["id"];
+				var filter_name = $scope.filter["name"];
+				var index = $rootScope.filters[type].indexOf(filter_id);
+				
+				if($scope.active == true){
+					$scope.active = false;
+					if(index != -1){
+						$rootScope.filters[type].splice(index, 1);
+					}
+					var message = "SUCCESS-'"+filter_name+"' removed from filters.";
+				}
+				else{
+					$scope.active = true;
+					if(index == -1){
+						$rootScope.filters[type].push(filter_id);
+					}
+					var message = "SUCCESS-'"+filter_name+"' added to filters.";
+				}
+				$scope.$emit('reloadRecommendations');
+				var timeout_event = notify($rootScope, message, $timeout);
+
+				$scope.$on('destroy', function(){
+					$timeout.cancel(timeout_event);
+				})
+			}
+
+			_initialise_filters = function(type){
+				if($scope.filter){
+					var filter_id = $scope.filter["id"];
+					var index = $rootScope.filters[type].indexOf(filter_id);
+					var already_selected = index != -1;
+					if (!already_selected){
+						if($scope.filter["priority"] == 100){
+							$scope.active = true;
+							$rootScope.filters[type].push(filter_id);
+						}
+						else{
+							$scope.active = false;
+						}
+					}
+					else{
+						if($rootScope.filters[type][filter_id]){
+							$scope.active = true;
+						}
+						else{
+							$scope.active = false;
+							$rootScope.filters[type].splice(index, 1);
+						}
+					}
+				}
+			}
+
+			_add_listeners = function(){
+				$scope.$on('resetFilter', function(){
+					if($scope.active){
+						$scope.active = false;
+					}
+				});
 			}
 
 			_init = function(){
-				_initialise_filters("more_filters", $scope, $rootScope);
+				_initialise_filters("more_filters");
+				_add_listeners();
 			}
 
 			_init();
@@ -145,55 +183,3 @@ recommendationApp.directive('filter', function($rootScope, $timeout){
 })
 
 
-function _initialise_filters(type, $scope, $rootScope){
-	if($scope.filter){
-		var filter_id = $scope.filter["id"];
-		var index = $rootScope.filters[type].indexOf(filter_id);
-		var already_selected = index != -1;
-		if (!already_selected){
-			if($scope.filter["priority"] == 100){
-				$scope.active = true;
-				$rootScope.filters[type].push(filter_id);
-			}
-			else{
-				$scope.active = false;
-			}
-		}
-		else{
-			if($rootScope.filters[type][filter_id]){
-				$scope.active = true;
-			}
-			else{
-				$scope.active = false;
-				$rootScope.filters[type].splice(index, 1);
-			}
-		}
-	}
-}
-
-function _toggle_filters(type, $scope, $rootScope, $timeout){
-	var filter_id = $scope.filter["id"];
-	var filter_name = $scope.filter["name"];
-	var index = $rootScope.filters[type].indexOf(filter_id);
-	
-	if($scope.active == true){
-		$scope.active = false;
-		if(index != -1){
-			$rootScope.filters[type].splice(index, 1);
-		}
-		var message = "SUCCESS-'"+filter_name+"' removed from filters.";
-	}
-	else{
-		$scope.active = true;
-		if(index == -1){
-			$rootScope.filters[type].push(filter_id);
-		}
-		var message = "SUCCESS-'"+filter_name+"' added to filters.";
-	}
-	$scope.$emit('reloadRecommendations');
-	var timeout_event = notify($rootScope, message, $timeout);
-
-	$scope.$on('destroy', function(){
-		$timeout.cancel(timeout_event);
-	})
-}
