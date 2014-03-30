@@ -108,103 +108,156 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
           }
         }
 
-        return {
-          pre: function(scope, iElement, iAttrs, controller) { 
+        _add_listeners_to_content_page = function(iElement, scope){
             iElement.on('click', '[data-page]', function(e){
               var page_number = page_numbers[$(e.target).data('page')];
               iElement.turn('page', page_number);
             });
+        }
 
+        _add_listeners_to_comment_box = function(iElement, scope){
             iElement.on('click', '.post_comment', function(e){
               var $comment = $($(this).parent());
-              var $comment_box = $($comment.siblings()[1]);
+              var $comment_box = $comment.siblings('.comment_big_box');
               $comment.hide();
               $comment_box.show();
-              $comment_box.focus();
+              $comment_box.find('input').focus();
             });
+        }
 
-            iElement.on('keypress', '.comment_box', function(e){
+        _add_listeners_to_post_comment_discussion_page = function(iElement, scope){
+            iElement.on('keypress', '.discussions .comment_box', function(e){
               if(e.which == 10 || e.which == 13) {
                 var $this = $(this);
                 var $discussion = $this.parent().parent().parent().parent();
-                var review_scope = $discussion.parent().parent().parent().parent().scope();
-                var $index = review_scope.$index;
-                var val = $this.val();
-                var comment = {"comment": val, "timestamp": "Just now", "user": {}};
-                var $discussion_index = $discussion.scope().$index;
-                var comments = scope.detailed_book.book.reviews[$index].comments[$discussion_index].comments;
+                var main_scope = $discussion.parent().scope();
+                var $index = main_scope.$index;
+                var comment = {"comment": $this.val(), "timestamp": "Just now", "user": {}, "nested": true};
+                var is_commented_on_nested = $discussion.scope().discussion.nested
+                if(is_commented_on_nested){
+                  var $discussion_index = $discussion.scope().$parent.$index; 
+                }
+                else{
+                  var $discussion_index = $discussion.scope().$index;
+                }
+                var comments = scope.detailed_book.book.reviews[$index].comments;
                 var no_nested_comments = comments == null;
                 scope.$apply(function(){
                   if(no_nested_comments){
-                    scope.detailed_book.book.reviews[$index].comments[$discussion_index].comments = [comment];
+                    scope.detailed_book.book.reviews[$index].comments = [comment];
                   }
                   else{
-                    scope.detailed_book.book.reviews[$index].comments[$discussion_index].comments.push(comment);
+                    scope.detailed_book.book.reviews[$index].comments.push(comment);
                   }
                 });
-                var $comment = $($($this.parent()).siblings()[1]);
+                var $comment = $this.parent().siblings('.footer');
                 $comment.show();
-                $this.hide();
+                $this.val("");
+                $this.parent().hide();
               }
             });
+        }
 
-            iElement.on('click', '.review .header', function(e){
-              var $review_content = $($($(this)).siblings()[0]);
-              if($review_content.css("display") == "block"){
-                $('.review .content').css('display', 'none');
-              }
-              else{
-                $('.review .content').css('display', 'none');
-                $review_content.show(); 
-              }
-            });
-
-            iElement.on('click', '.like', function(e){
+        _add_listeners_to_post_comment_review_page = function(iElement, scope){
+          iElement.on('keypress', '.reviews .comment_box', function(e){
+            if(e.which == 10 || e.which == 13) {
               var $this = $(this);
-              if($this.hasClass('like_selected')){
-                $this.removeClass('like_selected');
+              var $discussion = $this.parent().parent().parent().parent();
+              var is_discussion_page = $discussion.parent().parent().hasClass('elements');
+              var main_scope = $discussion.parent().parent().parent().parent().scope();
+              var $index = main_scope.$index;
+              var comment = {"comment": $this.val(), "timestamp": "Just now", "user": {}, "nested": true};
+              var is_commented_on_nested = $discussion.scope().discussion.nested
+              if(is_commented_on_nested){
+                var $discussion_index = $discussion.scope().$parent.$index; 
               }
               else{
-                var $dislike = $this.siblings('.dislike');
-                $this.addClass('like_selected');
-                $dislike.removeClass('dislike_selected');
+                var $discussion_index = $discussion.scope().$index;
               }
-            });
+              var comments = scope.detailed_book.book.reviews[$index].comments[$discussion_index].comments;
+              var no_nested_comments = comments == null;
+              scope.$apply(function(){
+                if(no_nested_comments){
+                  scope.detailed_book.book.reviews[$index].comments[$discussion_index].comments = [comment];
+                }
+                else{
+                  scope.detailed_book.book.reviews[$index].comments[$discussion_index].comments.push(comment);
+                }
+              });
+              var $comment = $this.parent().siblings('.footer');
+              $comment.show();
+              $this.val("");
+              $this.parent().hide();
+            }
+          });
+        }
 
-            iElement.on('click', '.dislike', function(e){
-              var $this = $(this);
-              if($this.hasClass('dislike_selected')){
-                $this.removeClass('dislike_selected');
-              }
-              else{
-                var $like = $this.siblings('.like');
-                $this.addClass('dislike_selected');
-                $like.removeClass('like_selected');
-              }
-            });
+        _add_listeners_to_review_header = function(iElement, scope){
+          iElement.on('click', '.review .header', function(e){
+            var $review_content = $(this).siblings();
+            if($review_content.css("display") == "block"){
+              $('.review .content').css('display', 'none');
+            }
+            else{
+              $('.review .content').css('display', 'none');
+              $review_content.show(); 
+            }
+          });
+        }
 
-            iElement.on('click', '.close_book', function(){
-              scope.destroy_book();
-            });
+        _add_listeners_to_like_buttons = function(iElement, scope){
+          iElement.on('click', '.like', function(e){
+            var $this = $(this);
+            if($this.hasClass('like_selected')){
+              $this.removeClass('like_selected');
+            }
+            else{
+              var $dislike = $this.siblings('.dislike');
+              $this.addClass('like_selected');
+              $dislike.removeClass('dislike_selected');
+            }
+          });
+        }
 
-            iElement.on('focusout', ".detailed_book", function(){
-              alert("focusout");
-            });
+        _add_listeners_to_dislike_buttons = function(iElement, scope){
+          iElement.on('click', '.dislike', function(e){
+            var $this = $(this);
+            if($this.hasClass('dislike_selected')){
+              $this.removeClass('dislike_selected');
+            }
+            else{
+              var $like = $this.siblings('.like');
+              $this.addClass('dislike_selected');
+              $like.removeClass('like_selected');
+            }
+          });
+        }
 
-            iElement.on('click', '.write_review', function(){
-              $('.reviews .elements').hide();
-              $('.reviews .text_editor').show();
-              $('.close_review').css('display', 'block');
-              $('.write_review').hide();
-            });
+        _add_listeners_to_close_book = function(iElement, scope){
+          iElement.on('click', '.close_book', function(){
+            scope.destroy_book();
+          });
+        }
 
-            iElement.on('click', '.close_review', function(){
-              $('.reviews .elements').show();
-              $('.reviews .text_editor').hide();
-              $('.close_review').hide();
-              $('.write_review').css('display', 'block');
-            });
+        _add_listeners_to_write_review = function(iElement, scope){
+          iElement.on('click', '.write_review', function(){
+            $('.reviews .elements').hide();
+            $('.reviews .text_editor').show();
+            $('.close_review').css('display', 'block');
+            $('.write_review').hide();
+          });
+        }
 
+        _add_listeners_to_close_review = function(iElement, scope){
+          iElement.on('click', '.close_review', function(){
+            $('.reviews .elements').show();
+            $('.reviews .text_editor').hide();
+            $('.close_review').hide();
+            $('.write_review').css('display', 'block');
+          });
+        }
+
+        _add_listeners_to_book_tag = function(iElement, scope){
             iElement.on('click', '.book_tag', function(){
               var $quotes = $(this).children('.tag_quotes');
               var $loading_icons = $('.loading_icon')
@@ -214,9 +267,23 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
               $loading_icon.css('display', 'block');
               // $quotes.css('display', 'block');
             });
+        }
 
+        return {
+          pre: function(scope, iElement, iAttrs, controller) { 
+            _add_listeners_to_content_page(iElement, scope);
+            _add_listeners_to_comment_box(iElement, scope);
+            _add_listeners_to_post_comment_discussion_page(iElement, scope);
+            _add_listeners_to_post_comment_review_page(iElement, scope);
+            _add_listeners_to_review_header(iElement, scope);
+            _add_listeners_to_like_buttons(iElement, scope);
+            _add_listeners_to_dislike_buttons(iElement, scope);
+            _add_listeners_to_close_book(iElement, scope);
+            _add_listeners_to_write_review(iElement, scope);
+            _add_listeners_to_close_review(iElement, scope);
+            _add_listeners_to_book_tag(iElement, scope);
+            _add_listeners_to_book_tag(iElement, scope);
             _set_pre_css();
-            
           },
           post: function(scope, iElement, iAttrs, controller) {
             iElement.turn({

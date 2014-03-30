@@ -9,6 +9,10 @@
 	</div>
 </div>
 <div ng-show="active_book_filter" ng-model="recommendations.books">
+	<div class="wild_cards">
+		<fb:login-button show-faces="true" max-rows="1" 
+			size="large"></fb:login-button>
+	</div>
 	<div ng-repeat="recommendation in recommendations.books" class="recommendation_block">
 		<book track ng-if="true" id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></book>
 	</div>

@@ -48,14 +48,17 @@ a:hover{
 }
 
 /*recommendation block animations*/
-.recommendation_block.ng-enter {
+.recommendation_block.ng-enter,
+.wild_cards.ng-enter {
 	margin-left: 100px;
 }
 
-.recommendation_block.ng-enter.ng-enter-active {
+.recommendation_block.ng-enter.ng-enter-active, 
+.wild_cards.ng-enter.ng-enter-active{
 	margin-left: 0px;
 }
-.recommendation_block.ng-leave.ng-leave-active {
+.recommendation_block.ng-leave.ng-leave-active,
+.wild_cards.ng-leave.ng-leave-active {
 	left:-100%;
 }
 
@@ -64,7 +67,8 @@ a:hover{
 	margin-top: 20px;
 }
 
-.recommendation_block.ng-enter{
+.recommendation_block.ng-enter,
+.wild_cards.ng-enter{
     -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2.5s;
     transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2.5s;
 }
@@ -837,7 +841,7 @@ a:hover{
 .scroller .scroller-right{
 	margin-right: 3px;
 	margin-left: 1px;
-	padding: 9px 10px 9px 12px;
+	padding: 9px;
 }
 .scroller .scroller-left:hover,
 .scroller .scroller-right:hover{
@@ -1116,6 +1120,20 @@ input:focus{
 	z-index: 2000;
 }
 
+.wild_cards{
+	display: inline-block;
+	width: 250px;
+	height: 420px;
+	background-color: white;
+	float: left;
+	-webkit-box-shadow: 1px 2px 1px #d1d1d1;
+	-moz-box-shadow: 1px 2px 1px #d1d1d1;
+	box-shadow: 1px 2px 1px #d1d1d1;
+	border: 1px solid #F1F1F1;
+	border-radius: 2px;
+	box-shadow: 8px 10px 54px 0px #424242; 
+	margin-right: 15px;
+}
 
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen
