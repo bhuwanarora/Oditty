@@ -950,7 +950,7 @@ module Api
 
 						Hesse spent his first years of life surrounded by the spirit of Swabian piety. 
 						In 1880 the family moved to Basel, Switzerland, for six years, then returned to 
-						Calw. After successful attendance at the Latin School in Göppingen, Hesse began 
+						Calw. After successful attendance at the Latin School in Gppingen, Hesse began 
 						to attend the Evangelical Theological Seminary in Maulbronn in 1891. Here in 
 						March 1892, Hesse showed his rebellious character and in one instance he fled 
 						from the Seminary and was found in a field a day later.
@@ -965,10 +965,10 @@ module Api
 						at a clock tower factory in Calw. The monotony of soldering and filing work made 
 						him resolve to turn himself toward more spiritual activities. In October 1895, 
 						he was ready to begin wholeheartedly a new apprenticeship with a bookseller in 
-							Tübingen. This experience from his youth he returns to later in his novel, 
+							Tbingen. This experience from his youth he returns to later in his novel, 
 							Beneath the Wheel.
 
-						On October 17, 1895, Hesse began working in the bookshop Heckenhauer in Tübingen, 
+						On October 17, 1895, Hesse began working in the bookshop Heckenhauer in Tbingen, 
 						which had a specialized collection in theology, philology, and law. Hesse's 
 						assignment there consisted of organizing, packing, and archiving the books. 
 						After the end of each twelve hour workday, Hesse pursued his own work further, 

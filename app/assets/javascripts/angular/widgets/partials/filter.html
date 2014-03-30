@@ -1,5 +1,6 @@
 <div ng-click="toggle_filter()"
 	 ng-class="{'active_filter':active, 'inactive_filter':!active}"
 	 class="filter">
-	<span class="glyphicon glyphicon-th-large"></span> {{filter.name | uppercase}}
+	<span class="icon-checkbox-partial" ng-if="active"></span>
+	<span class="icon-checkbox-unchecked " ng-if="!active"></span> {{filter.name | uppercase}}
 </div>

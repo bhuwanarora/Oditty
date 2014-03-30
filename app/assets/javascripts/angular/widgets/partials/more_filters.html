@@ -2,20 +2,20 @@
 	<div ng-click="reset_filters()"
 		 class="reset_filters">
 		 RESET FILTERS 
-		 <span class="glyphicon glyphicon-refresh"></span>
+		 <span class="icon-loop"></span>
 	</div>
 	<div ng-click="toggle_active_filter()"
 		 ng-disabled="active_book_filter"
 		 ng-class="{'active_filter':active_book_filter, 'inactive_filter':!active_book_filter}">
-		 <span class="glyphicon glyphicon-book"></span> BOOK</div>
+		 <span class="icon-book"></span> BOOK</div>
 	<div ng-click="toggle_active_filter()"
 		 ng-disabled="active_author_filter"
 		 ng-class="{'active_filter':active_author_filter, 'inactive_filter':!active_author_filter}">
-		 <span class="glyphicon glyphicon-user"></span> AUTHOR</div>
+		 <span class="icon-user2"></span> AUTHOR</div>
 	<div ng-click="toggle_active_filter()"
 		 ng-disabled="active_reader_filter"
 		 ng-class="{'active_filter':active_reader_filter, 'inactive_filter':!active_reader_filter}">
-		 <span class="glyphicon glyphicon-user"></span> READER</div>
+		 <span class="icon-user"></span> READER</div>
 	<span class="result_count" ng-model="recommendations.books.length">{{recommendations.books.length}} results</span>
 </div>
 <div class="filters" ng-show="active_book_filter">
