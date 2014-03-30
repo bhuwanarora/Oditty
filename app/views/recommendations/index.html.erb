@@ -17,11 +17,13 @@
 		<div class="shelf_nav_links">
 			<div ng-class="{'inactive':!bookmark_selected, 'active':bookmark_selected}"
 				 class="link"
+				 title="Books bookmarked"
 				 ng-click="toggleBookmarked()">
 				<b><span class="icon-library"></span></b>
 			</div>
 			<div ng-class="{'inactive':!read_selected, 'active':read_selected}"
 				 class="link"
+				 title="Books marked as read" 
 				 ng-click="toggleRead()">
 				 <b><span class="icon-books"></span></b>
 			</div>
@@ -30,10 +32,12 @@
 			reader's 
 			d
 			<span class="scroller-left icon-angle-left"
-			      ng-click="scrollOnePageLeft($event)">
+			      ng-click="scrollOnePageLeft($event)"
+			      title="Scroll left">
 			</span>
 			<span class="scroller-right icon-angle-right"
-				  ng-click="scrollOnePageRight($event)">
+				  ng-click="scrollOnePageRight($event)"
+				  title="Scroll right">
 			</span>
 			r
 		</div>
@@ -53,7 +57,8 @@
 			 <span class=" icon-angle-down" ng-if="show_more_filters"></span>
 			 <span class=" icon-angle-up" ng-if="!show_more_filters"></span>
 		</div>
-		<div class="notification_bell link">
+		<div class="notification_bell link"
+		     title="Notifications">
 			<span class="icon-bell"></span>
 		</div>
 		
