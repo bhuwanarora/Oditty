@@ -10,7 +10,8 @@
 </div>
 <div ng-show="active_book_filter" ng-model="recommendations.books">
 	<div class="wild_cards">
-		<div class="login_buttons fb" 
+		<div class="header">reader's door.</div>
+		<!-- <div class="login_buttons fb" 
 			 ng-show="!logged"
 		     ng-disabled="!facebookReady"
 		     ng-click="intent_login()">
@@ -18,15 +19,23 @@
 		<div class="google">
 			<google-plus-signin clientid="88213598927-9fij1u8tf2ldf4apf6qob4hgu0supj54.apps.googleusercontent.com"
 			ng-show="!logged"></google-plus-signin>
-		</div>
+		</div> -->
+		<form novalidate class="login_form" ng-model="user">
+	      	<input class="email" type="email" ng-model="user.email" placeholder="Email" required /><br />
+	      	<input class="password" type="password" ng-model="user.password" placeholder="Password" required /><br />
+	      	<span></span>
+	      	<div class="authenticate" ng-click="authenticate(user)" type="button">Log in / Sign up</div>
+	    </form>
 	</div>
 	<div ng-repeat="recommendation in recommendations.books" class="recommendation_block">
 		<book track ng-if="true" id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></book>
+		<!-- <div class="vertical_line">
+		</div> -->
 	</div>
 </div>
 <div ng-show="active_reader_filter">
-	<img src="assets/author.png" style="position:absolute; top:30%; left:45%" />
+	<img src="assets/author.png" style="position:fixed; top:30%; left:45%" />
 </div>
 <div ng-show="active_author_filter">
-	<img src="assets/author.png" style="position:absolute; top:30%; left:45%" />
+	<img src="assets/author.png" style="position:fixed; top:30%; left:45%" />
 </div>

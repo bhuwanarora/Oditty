@@ -30,9 +30,7 @@ module Api
 			end
 
 			def push_recommendations
-				test_book = {:title => "Siddhrtha",
-							  :author_name => "P. D. Smith",
-							  :tags => [
+				test_book = {:tags => [
 							  	{:name => "Philosophy", :url => "javascript:void(0);"},
 							  	{:name => "India", :url => "javascript:void(0);"},
 							  	{:name => "Spirituality", :url => "javascript:void(0);"}
@@ -54,12 +52,6 @@ module Api
 				test_book = test_book.merge(
 					:book_thumb => {
 						:book_cover_url => "assets/books/a2.jpeg",
-						:description => "Siddhartha is a novel by Hermann Hesse that deals with the spiritual journey of 
-						self-discovery of a man named Siddhartha during the time of the Gautama Buddha. The book, Hesse's ninth 
-						novel, was written in German, in a simple, lyrical style. It was published in the U.S. in 1951 and became 
-						influential during the 1960s. Hesse dedicated Siddhartha to his wife Ninon and supposedly afterwards to 
-						Romain Rolland and Wilhelm Gundert. The word Siddhartha is made up of two words in the Sanskrit language, 
-						siddha + artha, which together means he who has found meaning",
 						:background_color => "#F9B131"},
 					:category => {:name => "Hermann Hesse Fan", 
 								:url => "javascript:void(0);",
@@ -73,9 +65,7 @@ module Api
 				# filters list Filter.where(:id => JSON.parse(params[:q])["more_filters"])
 				test_name = Filter.where(:id => JSON.parse(params[:q])["more_filters"]).pluck(:name) rescue "City"
 
-				test_book = {:title => test_name[0],
-							  :author_name => "P. D. Smith",
-							  :tags => [
+				test_book = {:tags => [
 							  	{:name => "Philosophy", :url => "javascript:void(0);"},
 							  	{:name => "Art", :url => "javascript:void(0);"},
 							  	{:name => "20th Century", :url => "javascript:void(0);"}
@@ -94,12 +84,6 @@ module Api
 					:status => 0,
 					:book_thumb => {
 						:book_cover_url => "assets/books/20.jpeg",
-						:description => "Psychiatry is a novel by Hermann Hesse that deals with the spiritual journey of 
-						self-discovery of a man named Siddhartha during the time of the Gautama Buddha. The book, Hesse's ninth 
-						novel, was written in German, in a simple, lyrical style. It was published in the U.S. in 1951 and became 
-						influential during the 1960s. Hesse dedicated Siddhartha to his wife Ninon and supposedly afterwards to 
-						Romain Rolland and Wilhelm Gundert. The word Siddhartha is made up of two words in the Sanskrit language, 
-						siddha + artha, which together means he who has found meaning",
 						:background_color => "#915972"},
 					:category => {:name => "Must Read", 
 								:url => "javascript:void(0);", 
@@ -111,12 +95,6 @@ module Api
 					:status => 1,
 					:book_thumb => {
 						:book_cover_url => "assets/books/10.jpg",
-						:description => "Psychiatry is a novel by Hermann Hesse that deals with the spiritual journey of 
-						self-discovery of a man named Siddhartha during the time of the Gautama Buddha. The book, Hesse's 
-						ninth novel, was written in German, in a simple, lyrical style. It was published in the U.S. in 1951 
-						and became influential during the 1960s. Hesse dedicated Siddhartha to his wife Ninon and supposedly 
-						afterwards to Romain Rolland and Wilhelm Gundert. The word Siddhartha is made up of two words in the 
-						Sanskrit language, siddha + artha, which together means he who has found meaning",
 						:background_color => "#E9BC4B"},
 					:category => {:name => "Quick Read", 
 								:url => "javascript:void(0);", 
@@ -129,12 +107,6 @@ module Api
 					:status => 2,
 					:book_thumb => {
 						:book_cover_url => "assets/books/11.jpeg",
-						:description => "Psychiatry is a novel by Hermann Hesse that deals with the spiritual journey of 
-						self-discovery of a man named Siddhartha during the time of the Gautama Buddha. The book, Hesse's 
-						ninth novel, was written in German, in a simple, lyrical style. It was published in the U.S. in 1951 
-						and became influential during the 1960s. Hesse dedicated Siddhartha to his wife Ninon and supposedly 
-						afterwards to Romain Rolland and Wilhelm Gundert. The word Siddhartha is made up of two words in the 
-						Sanskrit language, siddha + artha, which together means he who has found meaning",
 						:background_color => "#F4EFE9"},
 					:category => {:name => "Recommendation From Friends", 
 								:url => "javascript:void(0);", 
@@ -147,12 +119,6 @@ module Api
 					:status => 0,
 					:book_thumb => {
 						:book_cover_url => "assets/books/13.jpeg",
-						:description => "Psychiatry is a novel by Hermann Hesse that deals with the spiritual journey of 
-						self-discovery of a man named Siddhartha during the time of the Gautama Buddha. The book, Hesse's 
-						ninth novel, was written in German, in a simple, lyrical style. It was published in the U.S. in 1951 
-						and became influential during the 1960s. Hesse dedicated Siddhartha to his wife Ninon and supposedly 
-						afterwards to Romain Rolland and Wilhelm Gundert. The word Siddhartha is made up of two words in the 
-						Sanskrit language, siddha + artha, which together means he who has found meaning",
 						:background_color => "#55504C"},
 					:category => {:name => "Feeling Philosophical", 
 								:url => "javascript:void(0);", 
@@ -165,12 +131,6 @@ module Api
 					:status => 0,
 					:book_thumb => {
 						:book_cover_url => "assets/books/24.jpg",
-						:description => "Psychiatry is a novel by Hermann Hesse that deals with the spiritual journey of 
-						self-discovery of a man named Siddhartha during the time of the Gautama Buddha. The book, Hesse's 
-						ninth novel, was written in German, in a simple, lyrical style. It was published in the U.S. in 1951 
-						and became influential during the 1960s. Hesse dedicated Siddhartha to his wife Ninon and supposedly 
-						afterwards to Romain Rolland and Wilhelm Gundert. The word Siddhartha is made up of two words in the 
-						Sanskrit language, siddha + artha, which together means he who has found meaning",
 						:background_color => "#586846"},
 					:category => {:name => "Feeling Nomadic", 
 								:url => "javascript:void(0);", 

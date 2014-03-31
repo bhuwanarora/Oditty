@@ -25,6 +25,9 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 		}
 	}
 
+	$scope.authenticate = function(){
+		console.log("authenticate");
+	}
 
 	$scope.toggle_more_filters = function(){
 		if($scope.show_more_filters == true){

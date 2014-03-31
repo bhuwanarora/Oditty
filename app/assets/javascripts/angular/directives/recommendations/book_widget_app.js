@@ -1,4 +1,4 @@
-bookWidgetApp.directive('book', function () {
+bookWidgetApp.directive('book', function (bookWidgetService) {
   return {
     restrict: 'E',
     scope: { 'book': '=data' },
@@ -10,6 +10,19 @@ bookWidgetApp.directive('book', function () {
       $scope.mouseout = function() {
       	$scope.hovered = false;
       };
+
+      _init = function(){
+        var book_id = $scope.book.id;
+        bookWidgetService.populate_tooltips(book_id).then(function(data){
+          $scope.book.title = data.title;
+          $scope.book.author_name = data.author_name;
+          $scope.book.users = data.users;
+          $scope.book.summary = data.summary;
+          $scope.book.users_count = data.users_count;
+        });
+      }
+
+      _init();
 
     },
     templateUrl: "/assets/angular/widgets/base/book_widget.html"

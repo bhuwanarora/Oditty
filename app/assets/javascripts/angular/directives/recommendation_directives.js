@@ -81,7 +81,7 @@ recommendationApp.directive('moreFilters', function($rootScope, $timeout){
 			    });
 			}
 
-			$scope.on_genre_or_selection = function(){
+			$scope.on_genre_or_author_selection = function(){
 				var filter_name = $scope.genre;
 				$rootScope.filters["genre_filter"] = filter_name;
 				message = "SUCCESS-'"+filter_name+"' added to filters.";

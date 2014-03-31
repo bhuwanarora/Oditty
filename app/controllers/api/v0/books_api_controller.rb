@@ -14,6 +14,73 @@ module Api
 				render :json => info, :status => status
 			end
 
+			def tooltip
+				info = {
+					:id => 1,
+					:title => "test_book",
+					:author_name => "test_author",
+					:summary => "Siddhartha is a novel by Hermann Hesse 
+						that deals with the spiritual journey of 
+						self-discovery of a man named Siddhartha 
+						during the time of the Gautama Buddha. 
+						The book, Hesse's ninth novel, was written 
+						in German, in a simple, lyrical style. It was 
+						published in the U.S. in 1951 and became 
+						influential during the 1960s. Hesse dedicated 
+						Siddhartha to his wife Ninon and supposedly 
+						afterwards to Romain Rolland and Wilhelm 
+						Gundert. The word Siddhartha is made up 
+						of two words in the Sanskrit language, 
+						siddha + artha, which together means 
+						\"he who has found meaning\" or \"he who 
+						has attained his goals\". In fact, the Buddha's 
+						own name, before his renunciation, was 
+						Siddhartha Gautama, Prince of Kapilvastu, 
+						Nepal. In this book, the Buddha is referred 
+						to as \"Gotama\".",
+					:users => [
+						{
+							:id => 1,
+							:url => "",
+							:name => "test user",
+							:thumb => "assets/profile_pic.jpeg"
+						},
+						{
+							:id => 2,
+							:url => "",
+							:name => "test user",
+							:thumb => "assets/profile_pic.jpeg"
+						},
+						{
+							:id => 3,
+							:url => "",
+							:name => "test user",
+							:thumb => "assets/profile_pic.jpeg"
+						},
+						{
+							:id => 4,
+							:url => "",
+							:name => "test user",
+							:thumb => "assets/profile_pic.jpeg"
+						},
+						{
+							:id => 5,
+							:url => "",
+							:name => "test user",
+							:thumb => "assets/profile_pic.jpeg"
+						},
+						{
+							:id => 6,
+							:url => "",
+							:name => "test user",
+							:thumb => "assets/profile_pic.jpeg"
+						}
+					],
+					:users_count => 15
+				}
+				render :json => info, :status => 200
+			end
+
 			def get_book_details
 				id = params[:id]
 				if id == "1"
