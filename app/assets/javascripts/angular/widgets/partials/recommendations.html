@@ -10,8 +10,15 @@
 </div>
 <div ng-show="active_book_filter" ng-model="recommendations.books">
 	<div class="wild_cards">
-		<fb:login-button show-faces="true" max-rows="1" 
-			size="large"></fb:login-button>
+		<div class="login_buttons fb" 
+			 ng-show="!logged"
+		     ng-disabled="!facebookReady"
+		     ng-click="intent_login()">
+		</div>
+		<div class="google">
+			<google-plus-signin clientid="88213598927-9fij1u8tf2ldf4apf6qob4hgu0supj54.apps.googleusercontent.com"
+			ng-show="!logged"></google-plus-signin>
+		</div>
 	</div>
 	<div ng-repeat="recommendation in recommendations.books" class="recommendation_block">
 		<book track ng-if="true" id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></book>

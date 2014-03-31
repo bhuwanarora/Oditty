@@ -73,6 +73,27 @@ recommendationApp.directive('moreFilters', function($rootScope, $timeout){
 			    });
 			}
 
+			$scope.show_genre_or_author_options = function(filter){
+				var params = $scope.genre+String.fromCharCode(event.keyCode);
+				var filter = "q="+params+"&filter="+filter;
+				recommendationService.get_genres(filter).then(function(data){
+			    	$scope.genres = data["genres"];
+			    });
+			}
+
+			$scope.on_genre_or_selection = function(){
+				var filter_name = $scope.genre;
+				$rootScope.filters["genre_filter"] = filter_name;
+				message = "SUCCESS-'"+filter_name+"' added to filters.";
+				var timeout_event = notify($rootScope, message, $timeout);
+				$scope.$emit('reloadRecommendations');
+
+
+				$scope.$on('destroy', function(){
+					$timeout.cancel(timeout_event);
+				});
+			}
+
 			$scope.on_genre_selection = function(){
 				var filter_name = $scope.genre;
 				$rootScope.filters["genre_filter"] = filter_name;

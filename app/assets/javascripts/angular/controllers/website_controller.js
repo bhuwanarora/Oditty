@@ -1,5 +1,5 @@
 websiteApp.controller('websiteAppController', function($scope, $rootScope, $interval, $http, 
-	$timeout, $q, $window, websiteService){
+	$timeout, $q, $window, websiteService, Facebook){
 	$scope.bindHorizontalScroll = function(event, delta, deltaX, deltaY){
 		event.preventDefault();
 		if(delta > 0){
@@ -46,6 +46,59 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 			$rootScope.keyCode = event.keyCode;
 		}
 	}
+      
+	/**
+     * Watch for Facebook to be ready.
+     * There's also the event that could be used
+    */
+    $scope.$watch(
+        function() {
+          return Facebook.isReady();
+        },
+        function(newVal) {
+          if (newVal)
+            $scope.facebookReady = true;
+        }
+    );
+      
+    $scope.intent_login = function() {
+        Facebook.getLoginStatus(function(response) {
+          	if (response.status == 'connected') {
+            	$rootScope.logged = true;
+            	$scope.me(); 
+          	}
+          	else{
+           		$scope.login();
+          	}
+        });
+    };
+      
+   	$scope.login = function() {
+     	Facebook.login(function(response) {
+      		if (response.status == 'connected') {
+        		$rootScope.logged = true;
+        		$scope.me();
+      		}
+    	});
+   	};
+   
+    $scope.me = function() {
+        Facebook.api('/me', function(response) {
+		    $scope.$apply(function() {
+		    	console.log('logged_in user', response);
+		        $scope.user = response;
+		    });
+        });
+    };
+      
+  	$scope.logout = function() {
+    	Facebook.logout(function() {
+      		$scope.$apply(function() {
+        		$scope.user   = {};
+        		$rootScope.logged = false;
+      		});
+    	});
+  	}
 
 	_bind_feedback_form = function(){
 		$window.onmouseleave = function(){
@@ -84,6 +137,26 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	    });
 	}
 
+	_bind_auth_listeners = function(){
+		$scope.$on('event:google-plus-signin-success', function (event, authResult) {
+		    console.log("google login", authResult);
+		});
+
+		$scope.$on('event:google-plus-signin-failure', function (event, authResult) {
+		    console.log("google login", authResult);
+		});
+
+
+	    $scope.$on('Facebook:statusChange', function(ev, data) {
+	        if (data.status == 'connected') {
+	        	$scope.$apply(function() {
+	          	});
+	        } 
+	        else {
+	        }
+	    });
+	}
+
 
 	_init = function(){
 		$scope.more_filters = [];
@@ -91,9 +164,17 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		$scope.detailed_book = {};
 		$rootScope.initPage = 3;
 
+
+		// Define user empty data :/
+	    $scope.user = {};
+	      
+	    // Defining user logged status
+	    $rootScope.logged = false;
+
 		// _get_book_details(1);
 		_bind_emit();
 		_bind_feedback_form();
+		_bind_auth_listeners();
 		// $http.defaults.headers.post['My-Header'] = 'value';
 	}
 

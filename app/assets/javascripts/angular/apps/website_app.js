@@ -1,5 +1,6 @@
 var websiteApp = angular.module('websiteApp', ['ngRoute', 'ngAnimate', 'recommendationApp', 
-                  'monospaced.mousewheel', 'bookApp', 'ngSlider']);
+                  'monospaced.mousewheel', 'bookApp', 'ngSlider', 'facebook', 
+                  'directive.g+signin']);
 //This configures the routes and associates each route with a view and a controller
 websiteApp.config(function ($sceDelegateProvider, $routeProvider) {
   $sceDelegateProvider.resourceUrlWhitelist(['self', 'http://bhuwan.com:3000/**']);
@@ -9,6 +10,16 @@ websiteApp.config(function ($sceDelegateProvider, $routeProvider) {
       templateUrl: 'assets/angular/widgets/partials/search.html'
     });
 });
+
+
+websiteApp.config(['FacebookProvider',
+    function(FacebookProvider) {
+     var myAppId = '667868653261167';
+     
+     FacebookProvider.setAppId('myAppId');
+     FacebookProvider.init(myAppId);
+    }
+]);
 
 function notify($rootScope, message, $timeout){
   var message_split = message.split("-");

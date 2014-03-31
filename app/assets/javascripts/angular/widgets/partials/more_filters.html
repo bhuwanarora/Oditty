@@ -21,17 +21,17 @@
 <div class="filters" ng-show="active_book_filter">
 	<div class="filters_panel">
 		<div class="header">
-			<b>Advance Input Filters</b>
+			Advance Input Filters
 		</div>
 		<div>
 		 	<type-ahead items="genres" 
-		 				prompt="GENRE" 
+		 				prompt="GENRE OR AUTHOR" 
 		 				title="name"
 		 				custom-options = "genre_typeahead_options"
 		 				custom="input_filter"
 		 				model="genre" 
-		 				on-select="on_genre_selection()"
-		 				ng-keypress="show_genre_options('BOOK')">
+		 				on-select="on_genre_or_author_selection()"
+		 				ng-keypress="show_genre_or_author_options('BOOK')">
 		 	</type-ahead>
 		</div>
 		<div>
@@ -47,8 +47,8 @@
 		</div>
 	</div>
 	<div class="filters_panel_large">
-		<div class="header">
-			<b>Tags</b>
+		<div class="header tags_header">
+			Tags
 		</div>
 		<div ng-repeat="filter in more_filters[0]['book']">
 			<filter data="filter"></filter>
@@ -56,7 +56,7 @@
 	</div>
 	<div class="filters_panel_right">
 		<div class="header">
-			<span></span><b>Published Year</b>
+			<span></span>Published Year
 		</div>
 		<div class="slider">
 			<input ng-model="filters.year" 
@@ -69,7 +69,7 @@
 <div class="filters" ng-show="active_author_filter">
 	<div class="filters_panel">
 		<div class="header">
-			<b>Advance Input Filters</b>
+			Advance Input Filters
 		</div>
 		<div>
 			<type-ahead items="genres" 
@@ -96,7 +96,7 @@
 	</div>
 	<div class="filters_panel_large">
 		<div class="header">
-			<b>Tags</b>
+			Tags
 		</div>
 		<div ng-repeat="filter in more_filters[0]['author']">
 			<filter data="filter"></filter>
@@ -104,7 +104,7 @@
 	</div>
 	<div class="filters_panel_right">
 		<div class="header">
-			<span></span><b>Published Year</b>
+			<span></span>Published Year
 		</div>
 		<div class="slider">
 			<input ng-model="filters.year" 
@@ -117,7 +117,7 @@
 <div class="filters" ng-show="active_reader_filter">
 	<div class="filters_panel">
 		<div class="header">
-			<b>Advance Input Filters</b>
+			Advance Input Filters
 		</div>
 		<div>
 			<type-ahead items="genres" 
@@ -144,7 +144,7 @@
 	</div>
 	<div class="filters_panel_large">
 		<div class="header">
-			<b>Tags</b>
+			Tags
 		</div>
 		<div ng-repeat="filter in more_filters[0]['reader']">
 			<filter data="filter"></filter>
@@ -152,7 +152,7 @@
 	</div>
 	<div class="filters_panel_right">
 		<div class="header">
-			<span></span><b>Published Year</b>
+			<span></span>Published Year
 		</div>
 		<div class="slider">
 			<input ng-model="filters.year" 
