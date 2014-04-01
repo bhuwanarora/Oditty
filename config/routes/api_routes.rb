@@ -19,9 +19,11 @@ ReadersDoor::Application.routes.draw do
       match "track"                                  => 'analytics#track',                              :via => [:put, :get, :post]
       match "search"                                 => 'search_api#search',                            :via => [:put, :get, :post]
 
-      match "genres"                                 => 'website_api#genres',                               :via => [:put, :get, :post]
-      match "countries"                              => 'website_api#countries',                            :via => [:put, :get, :post]
-      match "user_details"                           => 'website_api#get_user_details',                     :via => [:put, :get, :post]
+      match "genres"                                 => 'website_api#genres',                           :via => [:put, :get, :post]
+      match "countries"                              => 'website_api#countries',                        :via => [:put, :get, :post]
+      match "user_details"                           => 'website_api#get_user_details',                 :via => [:put, :get, :post]
+      match "authenticate"                           => 'website_api#authenticate',                     :via => [:put, :get, :post]
+      match "profile"                                => 'website_api#update_profile',                   :via => [:put, :get, :post]
     end
   end
 end

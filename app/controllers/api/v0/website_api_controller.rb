@@ -27,6 +27,16 @@ module Api
 				render :json => {:books => {:bookmarked => [], :read => read_books}}, :status => 200
 			end
 
+			def authenticate
+				render :json => {:message => "success", :profile_status => 0, :user_id => 1}, :status => 200
+			end
+
+			def update_profile
+				profile_status = params[:user['profile_status']]
+				profile_status = profile_status + 1;
+				render :json => {:message => "success", :profile_status => profile_status, :user_id => 1}, :status => 200
+			end
+
 			private
 				def test_books
 					# filters list Filter.where(:id => JSON.parse(params[:q])["more_filters"])

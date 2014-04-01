@@ -54,6 +54,13 @@ a:hover{
 	margin: 0px;
 	color: #717070;
 }
+.login_form input.ng-invalid.ng-dirty {
+  border-color: #FA787E;
+}
+
+.login_form input.ng-valid.ng-dirty {
+  border-color: #78FA89;
+}
 
 .login_form input:focus{
 	outline:none;
@@ -387,7 +394,6 @@ a:hover{
 .summary_button_base{
 	position: absolute;
 	z-index: 2;
-  	cursor: pointer;
   	padding: 10px;
   	color: #717070;
   	background-color: #F1F1F1;
@@ -396,9 +402,6 @@ a:hover{
   	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
 }
 
-.summary_button:hover{
-	text-decoration: underline;
-}
 
 .hidden_summary_button{
 	position: absolute;
@@ -1204,16 +1207,17 @@ input:focus{
 	z-index: 2000;
 }
 
+
 .wild_cards{
 	display: inline-block;
-	background: url('72H.jpg');
-	background-size: cover;
 	float: left;
 	border: 1px solid #F1F1F1;
 	border-radius: 5px;
 	margin-right: 15px;
-	padding: 30px;
-	padding-top: 100px;
+	padding: 100px 30px 30px 30px;
+	color: white;
+	background: url('72H.jpg');
+	background-size: cover;
 }
 
 .wild_cards .header{
@@ -1223,6 +1227,59 @@ input:focus{
 	font-size: 2em;
 	font-weight: bold;
 	padding-bottom: 20px;
+}
+
+.info_cards{
+	display: inline-block;
+	float: left;
+	border: 1px solid #F1F1F1;
+	border-radius: 5px;
+	margin-right: 15px;
+	padding: 50px 30px 30px 30px;
+	color: white;
+	width: 250px;
+	white-space: normal;
+	height: 340px;
+}
+
+.info_cards .header{
+	font-family: Helvetica;
+	color: white;
+	text-align: center;
+	font-size: 1em;
+	font-weight: bold;
+	padding: 40px 0px 10px 0px;
+}
+
+.info_cards input{
+	width: 225px;
+	padding: 10px;
+	border-radius: 2px;
+	font-size: 1em;
+	/*color: #717070;*/
+}
+
+.info_cards .description{
+	position: absolute;
+	top: 280px;
+	white-space: normal;
+	width: 250px;
+}
+
+.info_cards .footer{
+	padding: 20px;
+	border: 1px solid rgba(255, 255, 255, 0.21);
+	margin-top: 100px;
+	background-color: rgba(255, 255, 255, 0.01);
+	border-radius: 2px;
+	position: absolute;
+	top: 230px;
+}
+
+.info_cards .footer .next,
+.info_cards .footer .prev{
+	color: white;
+	cursor: pointer;
 }
 
 .login_buttons{
@@ -1945,6 +2002,28 @@ and (min-width : 1824px) {
 .tooltip .footer .icons{
 	float: right;
 	padding: 2px;
+	color: #9E9E9E;
+}
+
+.tooltip .footer .icon-share:hover{
+	background-color: #9E9E9E;
+	color: #E6E6E6;
+}
+
+.tooltip .share_menu{
+	position: absolute;
+	background-color: #9E9E9E;
+	color: #E6E6E6;
+	padding: 5px;
+}
+
+.tooltip .share_menu div{
+	padding: 2px;
+	border-bottom: 1px solid #9E9E9E;
+}
+
+.tooltip .share_menu div:hover{
+	background-color: #E6E6E6;
 	color: #9E9E9E;
 }
 

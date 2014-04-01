@@ -58,9 +58,18 @@ bookWidgetApp.directive('bookthumb', function ($timeout, $rootScope) {
         zoomin_book($scope, $timeout, $rootScope, page);
       }
 
+      $scope.show_share_options = function(){
+        $scope.show_share_menu = true;
+      }
+
+      $scope.hide_share_options = function(){
+        $scope.show_share_menu = false;
+      }
+
       _init = function(){
         $scope.zoomin_book = false;
         $scope.expand = false;
+        $scope.show_share_menu = false;
       }
 
       _init();

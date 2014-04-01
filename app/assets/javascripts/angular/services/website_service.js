@@ -8,6 +8,22 @@ websiteApp.service('websiteService', function ($http, $q, $rootScope) {
             return deferred.resolve(result.data); 
         });
         return deferred.promise;
-    }    
+    }
+
+    this.authenticate = function(data){
+    	var deferred = $q.defer();
+    	$http.post('http://bhuwan.com:3000/api/v0/authenticate', data).then(function(result){
+            return deferred.resolve(result.data); 
+        });
+        return deferred.promise;	
+    }
+
+    this.update_profile = function(data){
+        var deferred = $q.defer();
+        $http.post('http://bhuwan.com:3000/api/v0/profile', data).then(function(result){
+            return deferred.resolve(result.data); 
+        });
+        return deferred.promise;   
+    }
 
 });

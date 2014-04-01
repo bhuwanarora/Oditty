@@ -38,6 +38,75 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		console.log("show_search_result");
 	}
 
+	_profile_status_colors = function(){
+		var profile_status = $scope.user.profile_status;
+		if(profile_status == 0){
+			$scope.user.profile_status_color = "#4374e0";
+		}
+		else if(profile_status == 1){
+			$scope.user.profile_status_color = "#65b045";
+		}
+		else if(profile_status == 2){
+			$scope.user.profile_status_color = "#d73d32";
+		}
+		else if(profile_status == 3){
+			$scope.user.profile_status_color = "#fbaf5d";
+		}
+		else if(profile_status == 4){
+			$scope.user.profile_status_color = "#11a9cc";
+		}
+		else if(profile_status == 5){
+			$scope.user.profile_status_color = "#981b48";
+		}
+		else if(profile_status == 6){
+			$scope.user.profile_status_color = "#7e3794";
+		}
+		else if(profile_status == 7){
+			$scope.user.profile_status_color = "#4374e0";
+		}
+	}
+
+	$scope.update_profile = function(){
+		var enter_pressed = event.keyCode == 13;
+		if(enter_pressed){
+			var profile_status = $scope.user.profile_status;
+			if(profile_status == 0){
+				websiteService.update_profile($scope.user);
+				$scope.user.profile_status = $scope.user.profile_status + 1;
+				_profile_status_colors();
+			}
+		}
+	}
+
+	$scope.authenticate = function(){
+		var data_json = $scope.user;
+		websiteService.authenticate(data_json).then(function(data){
+			if(data.message == "success"){
+				$scope.logged = true;
+				$scope.user.profile_status = data.profile_status;
+				$scope.user.id = data.user_id;
+				_profile_status_colors();
+			}
+			else{
+				$scope.logged = false;	
+			}
+		});
+	}
+
+	$scope.prev_profile_state = function(){
+		if($scope.user.profile_status != 0){
+			$scope.user.profile_status = $scope.user.profile_status - 1;
+			_profile_status_colors();
+		}
+	}
+
+	$scope.next_profile_state = function(){
+		if($scope.user.profile_status != 7){
+			$scope.user.profile_status = $scope.user.profile_status + 1;
+			_profile_status_colors();
+		}
+	}
+
 
 	$scope.search = function(){
 		input_aimed_for_searching = event.currentTarget == event.srcElement;
@@ -47,19 +116,7 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		}
 	}
       
-	/**
-     * Watch for Facebook to be ready.
-     * There's also the event that could be used
-    */
-    $scope.$watch(
-        function() {
-          return Facebook.isReady();
-        },
-        function(newVal) {
-          if (newVal)
-            $scope.facebookReady = true;
-        }
-    );
+	
       
     $scope.intent_login = function() {
         Facebook.getLoginStatus(function(response) {
@@ -155,6 +212,20 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	        else {
 	        }
 	    });
+
+	    /**
+	     * Watch for Facebook to be ready.
+	     * There's also the event that could be used
+	    */
+	    $scope.$watch(
+	        function() {
+	          return Facebook.isReady();
+	        },
+	        function(newVal) {
+	          if (newVal)
+	            $scope.facebookReady = true;
+	        }
+	    );
 	}
 
 
