@@ -24,11 +24,17 @@
   <div class="triangle"></div>
   <div class="tooltip">
     <div class="header">
-      <div class="title" ng-click="show_book(2)">{{book.title}}</div>
-      <div class="author" ng-click="show_book(16)">{{book.author_name}}</div>
+      <div class="title" ng-click="show_book(2)">
+        <span itemprop= "name">{{book.title}}</span>
+      </div>
+      <div class="author" ng-click="show_book(16)">
+        <span itemprop= "author">{{book.author_name}}</span>
+      </div>
     </div>
     <hr>
-    <div class="description">{{book.summary}}</div>
+    <div class="description">
+      <span itemprop="description">{{book.summary}}</span>
+    </div>
     <hr>
     <div class="users_count">{{book.users_count}} friends have read this</div>
     <div class="users">
@@ -48,7 +54,7 @@
           <div>Twitter</div>
         </div>
       </span>
-      <span class="icons icon-bookmark"></span>
+      <span itemscope itemtype= "http://schema.org/BookmarkAction"><span class="icons icon-bookmark"></span></span>
       <span class="icons icon-location"></span>
     </div>
   </div>

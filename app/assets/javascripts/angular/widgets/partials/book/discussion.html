@@ -3,16 +3,21 @@
 	<div class="user">
 		<img ng-src="{{discussion.user.thumb}}" class="thumb" />
 	</div>
-	<div class="comment">
+	<div class="comment" class="comment_text" itemscope itemtype="http://schema.org/UserComments">
 		<div class="username">
-			<div>{{discussion.user.name}}{{index}}</div>
+			<div itemprop="creator "itemscope itemtype="http://schema.org/Person">
+				<span itemprop="name">{{discussion.user.name}}</span>
+				{{index}}
+			</div>
 		</div>
-		<div class="comment_text">{{discussion.comment}}</div>
+		<div >
+			<span itemprop="commentText">{{discussion.comment}}</span>
+			</div>
 		<div class="footer">
 			<span class="like">Like</span>
 			<span class="dislike">Dislike</span>
 			<span class="post_comment"><u>Comment</u></span>
-			<span>{{discussion.timestamp}}</span>
+			<span itemprop="commentTime">{{discussion.timestamp}}</span>
 		</div>
 		<div class="comment_big_box" style="display:none;">
 			<input class="comment_box" placeholder="Press enter to send..." />
