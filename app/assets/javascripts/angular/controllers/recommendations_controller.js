@@ -39,7 +39,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 		event.currentTarget.text = "";
 	}
 
-	$scope.get_search_results = function(event){
+	$scope.get_search_results = function(event, type){
         var currentValue = $scope.searchResults;
         var currentInput = String.fromCharCode(event.keyCode);
         $scope.search_results = [{name: "Test 1"}, {name: "Test 2"}];
@@ -63,7 +63,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
     //     }
 	}
 
-	_init_emit = function(){
+	_add_listeners = function(){
 	    load_recommendations_event = $scope.$on('loadRecommendations', function(){
 	    	_get_recommendations();
 	    });
@@ -81,6 +81,10 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	    remove_book_from_shelf_event = $scope.$on('removeBookFromShelf', function(event, data){
 	    	var book = {title: data['title'], author_name: data['author_name'], book_cover_url: data['book_cover_url']};
 	    });
+
+	    open_shelf_event = $scope.$on('showBookReadShelf', function(){
+	    	$scope.read_selected = true;
+	    })
 	}
 
 	_init_recommendations = function(){
@@ -158,13 +162,6 @@ recommendationApp.controller('recommendationsController', function($scope, $root
     	});
     }
 
-    _init_user_details = function(){
-    	recommendationService.get_user_details().then(function(data){
-    		$scope.user_books = data["books"];
-    	});
-    }
-
-
 	_init = function(){
 		//oneMin = 60000
 		var oneSec = 10000;
@@ -176,7 +173,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 
 		$scope.searching = false;
 		_init_recommendations();
-    	_init_emit();
+    	_add_listeners();
     	_get_filters();
 		_init_notifications();
         _init_analytics();
@@ -185,13 +182,15 @@ recommendationApp.controller('recommendationsController', function($scope, $root
         _get_recommendations();
         _push_recommendations();
         _bind_destroy();
-        _init_user_details();
 	}
 
 	var push_books_timer_event = "";
 	var load_recommendations_event = "";
 	var reload_recommendations_event = "";
 	var user_behaviour_timer_event = "";
+	var remove_book_from_shelf_event = ""
+	var open_shelf_event = "";
+	var add_book_to_shelf_event = ""
 	_init();
 
 });

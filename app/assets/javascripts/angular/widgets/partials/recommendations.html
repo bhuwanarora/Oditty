@@ -46,7 +46,7 @@
 			<div class="sub_header">Complete your profile, {{user.name | uppercase}}</div>
 			<div class="profile_status_logo"></div>
 			<div ng-switch-when="0">
-				<div class="header">What should I call you</div>
+				<div class="header">What should I call you?</div>
 				<input class="username" 
 		      	       ng-model="user.name" 
 		      	       placeholder="Enter your name" 
@@ -56,12 +56,17 @@
 		      	<div class="description"></div>
 			</div>
 			<div ng-switch-when="1">
-				<div class="header">Give a face to your name</div>
-				<input class="thumb" 
+				<div class="header">Give a face to your name.</div>
+				<!-- <input class="thumb" 
 		      	       ng-model="user.thumb" 
 		      	       spellcheck="false"
 		      	       type="file" 
-		      	       required />
+		      	       required /> -->
+		      	<input type="file" id="selectedFile" style="display: none;" />
+				<input type="button"
+					   class="thumb"
+				       value="Select a photo from your computer" 
+				       onclick="document.getElementById('selectedFile').click();" />
 		      	<div class="description">Help your friends recognise you across Reader's Door.</div>
 			</div>
 			<div ng-switch-when="2">
@@ -77,29 +82,51 @@
 			</div>
 			<div ng-switch-when="3">
 				<div class="header">
-					Where do you live?
+					Meet readers in your area...
 				</div>
-				<div class="description">Meet readers in your area...</div>
+				<map style="display:block; height:180px" />
 			</div>
-			<div ng-switch-when="4">
-				<div class="header">What Genres have you read and liked</div>
+			<!-- <div ng-switch-when="4">
+				<div class="header">Which Genres do you like?</div>
 				<div class="description">
 					Dive deeper into these genres..
 				</div>
-			</div>
-			<div ng-switch-when="5">
-				<div class="header">What Books have you read and liked</div>
+			</div> -->
+			<div ng-switch-when="4">
+				<div class="header">Which Books have you read?</div>
+				<!-- <input class="books" 
+		      	       ng-model="user.user_books"
+		      	       placeholder="Search for the book..." 
+		      	       spellcheck="false"
+		      	       ng-keydown="update_profile()"
+		      	       required /> -->
+		      	<type-ahead items="search_results" 
+	 				prompt="Search for the book.." 
+	 				title="name" 
+	 				model="searchResults" 
+	 				custom-options = "info_typeahead_options"
+	 				on-select="show_search_result()"
+	 				ng-keypress="get_search_results($event, 'BOOK')">
+	 			</type-ahead>
 				<div class="description">
-					Live books similar to these...
+					Tell us about your taste..
 				</div>
 			</div>
-			<div ng-switch-when="6">
-				<div class="header">What Authors have you read and liked</div>
+			<div ng-switch-when="5">
+				<div class="header">Which Authors do you like?</div>
+				<type-ahead items="search_results" 
+	 				prompt="Search for the author.." 
+	 				title="name" 
+	 				model="searchResults"
+	 				custom-options = "info_typeahead_options"
+	 				on-select="show_search_result()"
+	 				ng-keypress="get_search_results($event, 'AUTHOR')">
+	 			</type-ahead>
 				<div class="description">
 					Follow authors and their lives...
 				</div>
 			</div>
-			<div ng-switch-when="7">
+			<div ng-switch-when="6">
 				<div class="header">Invite your friends</div>
 				<div class="description">
 					Know what your friends are reading...

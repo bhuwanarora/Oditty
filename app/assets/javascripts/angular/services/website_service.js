@@ -26,4 +26,14 @@ websiteApp.service('websiteService', function ($http, $q, $rootScope) {
         return deferred.promise;   
     }
 
+    
+    this.get_user_details = function(filter){
+        //filter user_id=USER_ID
+        var deferred = $q.defer();
+        $http.get('/api/v0/user_details?'+filter).then(function(result) {
+            return deferred.resolve(result.data); 
+        });
+        return deferred.promise;
+    }
+
 });

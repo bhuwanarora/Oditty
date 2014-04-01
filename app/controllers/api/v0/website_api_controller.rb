@@ -23,8 +23,8 @@ module Api
 				# user_id = params[:user_id]
 				
 				bookmarked_books = test_books
-				read_books = test_books
-				render :json => {:books => {:bookmarked => [], :read => read_books}}, :status => 200
+				read_books = []
+				render :json => {:books => {:bookmarked => bookmarked_books, :read => read_books}}, :status => 200
 			end
 
 			def authenticate

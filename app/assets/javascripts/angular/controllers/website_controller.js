@@ -50,18 +50,15 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 			$scope.user.profile_status_color = "#d73d32";
 		}
 		else if(profile_status == 3){
-			$scope.user.profile_status_color = "#fbaf5d";
-		}
-		else if(profile_status == 4){
 			$scope.user.profile_status_color = "#11a9cc";
 		}
-		else if(profile_status == 5){
+		else if(profile_status == 4){
 			$scope.user.profile_status_color = "#981b48";
 		}
-		else if(profile_status == 6){
+		else if(profile_status == 5){
 			$scope.user.profile_status_color = "#7e3794";
 		}
-		else if(profile_status == 7){
+		else if(profile_status == 6){
 			$scope.user.profile_status_color = "#4374e0";
 		}
 	}
@@ -86,6 +83,9 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 				$scope.user.profile_status = data.profile_status;
 				$scope.user.id = data.user_id;
 				_profile_status_colors();
+				websiteService.get_user_details().then(function(data){
+		    		$scope.user.books = data["books"];
+		    	});
 			}
 			else{
 				$scope.logged = false;	
@@ -93,16 +93,38 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		});
 	}
 
+	_handle_info_card_bindings = function($scope){
+		if($scope.user.profile_status == 3){
+			if(navigator.geolocation){
+				navigator.geolocation.getCurrentPosition(function(position){
+					var latitude = position.coords.latitude;
+					var longitude = position.coords.longitude;
+					$scope.user.latitude = latitude;
+					$scope.user.longitude = longitude;
+				});
+			}
+			else{
+				x.innerHTML="Geolocation is not supported by this browser.";
+			}
+		}
+		else if($scope.user.profile_status == 4){
+			$rootScope.$broadcast('showBookReadShelf');
+		}
+
+	}
+
 	$scope.prev_profile_state = function(){
 		if($scope.user.profile_status != 0){
 			$scope.user.profile_status = $scope.user.profile_status - 1;
+			_handle_info_card_bindings($scope);
 			_profile_status_colors();
 		}
 	}
 
 	$scope.next_profile_state = function(){
-		if($scope.user.profile_status != 7){
+		if($scope.user.profile_status != 6){
 			$scope.user.profile_status = $scope.user.profile_status + 1;
+			_handle_info_card_bindings($scope);
 			_profile_status_colors();
 		}
 	}
