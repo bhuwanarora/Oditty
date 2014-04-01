@@ -110,7 +110,6 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		else if($scope.user.profile_status == 4){
 			$rootScope.$broadcast('showBookReadShelf');
 		}
-
 	}
 
 	$scope.prev_profile_state = function(){
@@ -177,6 +176,10 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
         		$rootScope.logged = false;
       		});
     	});
+  	}
+
+  	$scope.show_uploader = function(){
+  		$scope.uploader = true;	
   	}
 
 	_bind_feedback_form = function(){

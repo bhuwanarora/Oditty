@@ -56,17 +56,29 @@
 		      	<div class="description"></div>
 			</div>
 			<div ng-switch-when="1">
-				<div class="header">Give a face to your name.</div>
+				<div class="header thumb"
+				     ng-click="show_uploader()">Add a selfie</div>
 				<!-- <input class="thumb" 
 		      	       ng-model="user.thumb" 
 		      	       spellcheck="false"
 		      	       type="file" 
 		      	       required /> -->
-		      	<input type="file" id="selectedFile" style="display: none;" />
-				<input type="button"
+		      	<!-- <input type="file" id="selectedFile" style="display: none;" 
+		      			accept="image/*" image="image"/> -->
+		      	 <cropme
+			        width="640"
+			        height="400"
+			        ratio="1"
+			        icon-class=""
+			        type="png"
+			        destination-width="300"
+			        ng-if="uploader">
+			    </cropme>
+		      	<!-- <img ng-show="image" ng-src="{{image.url}}" type="{{image.file.type}}" /> -->
+				<!-- <input type="button"
 					   class="thumb"
 				       value="Select a photo from your computer" 
-				       onclick="document.getElementById('selectedFile').click();" />
+				       onclick="document.getElementById('selectedFile').click();" /> -->
 		      	<div class="description">Help your friends recognise you across Reader's Door.</div>
 			</div>
 			<div ng-switch-when="2">
