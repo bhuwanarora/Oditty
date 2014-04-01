@@ -1373,7 +1373,7 @@ and (min-width : 400px) {
 		width: 320px;
 	}
 	.recommendation_block{
-		margin-top: 15px;
+		margin-top: 0px;
 	}
 
 	.filters_panel{
@@ -1443,11 +1443,11 @@ and (min-width : 400px) {
 	.wild_cards{
 		width: 185px;
 		height: 290px;
-		margin-top: 15px;
+		margin-top: 0px;
 	}
 
 	.info_cards{
-		margin-top: 15px;	
+		margin-top: 0px;	
 	}
 
 	.login_form input {
@@ -1472,7 +1472,7 @@ and (min-width : 1280px){
 	}
 
 	.recommendation_block{
-		margin-top: 25px;
+		margin-top: 10px;
 	}
 
 	.filters_panel{
@@ -1561,6 +1561,7 @@ and (min-width : 1366px){
 		height: 430px;
 		width: 350px;
 	}
+
 	.recommendation_block{
 		margin-top: 15px;
 	}
@@ -1628,7 +1629,12 @@ and (min-width : 1366px){
 	.wild_cards{
 		width: 195px;
 		height: 300px;
-		margin-top: 0px;
+		margin-top: 15px;
+	}
+
+	.info_cards{
+		margin-top: 15px;
+		height: 350px;
 	}
 
 	.login_form input {
