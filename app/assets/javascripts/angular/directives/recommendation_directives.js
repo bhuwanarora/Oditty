@@ -7,18 +7,47 @@ recommendationApp.directive('moreFilters', function($rootScope, $timeout){
 				$scope.active_author_filter = false;
 				$scope.active_reader_filter = false;
 
-				$scope.filters = {year:"1914;2014"};
+				$scope.bookFilters = {year:"1914;2014"};
+				$scope.authorFilters = {year:"1914;2014"};
+				$scope.readerFilters = {year:"1914;2014"};
 
-				$scope.options = {
+				$scope.bookOptions = {
 					from: 1700,
 					to: 2014,
 					step: 10,
-					// dimension: "100px",
+					smooth: true
+				}
+
+				$scope.authorOptions = {
+					from: 1700,
+					to: 2014,
+					step: 10,
+					smooth: true
+				}
+
+				$scope.readerOptions = {
+					from: 1700,
+					to: 2014,
+					step: 10,
 					smooth: true
 				}
 
 			    /* watch for changes*/
-			    $scope.$watch('filters.year',function(newVal, oldVal){
+				$scope.$watch('bookFilters.year',function(newVal, oldVal){
+				    if(newVal){
+				    	$rootScope.filters["year"] = newVal;
+				    	$scope.$emit('reloadRecommendations');
+				    }
+				});
+
+				$scope.$watch('authorFilters.year',function(newVal, oldVal){
+				    if(newVal){
+				    	$rootScope.filters["year"] = newVal;
+				    	$scope.$emit('reloadRecommendations');
+				    }
+				});
+
+				$scope.$watch('readerFilters.year',function(newVal, oldVal){
 				    if(newVal){
 				    	$rootScope.filters["year"] = newVal;
 				    	$scope.$emit('reloadRecommendations');

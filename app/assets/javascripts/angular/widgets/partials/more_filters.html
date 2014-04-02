@@ -18,6 +18,8 @@
 		 <span class="icon-user22"></span> READER</div>
 	<span class="result_count" ng-model="recommendations.books.length">{{recommendations.books.length}} results</span>
 </div>
+
+<!-- BOOK FILTERS -->
 <div class="filters" ng-show="active_book_filter">
 	<div class="filters_panel">
 		<div class="header">
@@ -59,13 +61,16 @@
 			<span></span>Published Year
 		</div>
 		<div class="slider">
-			<input ng-model="filters.year" 
+			<input ng-model="bookFilters.year" 
 			       type="text" 
 			       id="mySlider1" slider 
-			       options="options" />
+			       options="bookOptions" />
 		</div>
 	</div>
 </div>
+
+
+<!-- AUTHOR FILTERS -->
 <div class="filters" ng-show="active_author_filter">
 	<div class="filters_panel">
 		<div class="header">
@@ -107,13 +112,15 @@
 			<span></span>Published Year
 		</div>
 		<div class="slider">
-			<input ng-model="filters.year" 
+			<input ng-model="authorFilters.year" 
 			       type="text" 
-			       id="mySlider1" slider 
-			       options="options" />
+			       id="mySlider2" slider 
+			       options="authorOptions" />
 		</div>
 	</div>
 </div>
+
+<!-- READER FILTERS -->
 <div class="filters" ng-show="active_reader_filter">
 	<div class="filters_panel">
 		<div class="header">
@@ -155,10 +162,10 @@
 			<span></span>Published Year
 		</div>
 		<div class="slider">
-			<input ng-model="filters.year" 
+			<input ng-model="readerFilters.year" 
 			       type="text" 
-			       id="mySlider1" slider 
-			       options="options" />
+			       id="mySlider3" slider 
+			       options="readerOptions" />
 		</div>
 	</div>
 </div>

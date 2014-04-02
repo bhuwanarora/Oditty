@@ -257,6 +257,7 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		add_book_to_shelf_event = $scope.$on('addBookToShelf', function(event, data){
 	    	var book = {title: data['title'], author_name: data['author_name'], book_cover_url: data['book_cover_url']};
 	    	$scope.user.books['bookmark'].push(book);
+	    	event.stopPropagation();
 	    });
 	}
 
