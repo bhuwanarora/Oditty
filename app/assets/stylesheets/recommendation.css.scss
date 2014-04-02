@@ -91,6 +91,10 @@ a:hover{
 	color: #3cb878;
 }
 
+.glow_bookmark{
+	color: #4374e0;	
+}
+
 /* recommendationFooter */
 #recommendationFooter {
    position:fixed;
@@ -506,7 +510,6 @@ a:hover{
 	-webkit-box-shadow: 1px 2px 1px #d1d1d1;
 	-moz-box-shadow: 1px 2px 1px #d1d1d1;
 	box-shadow: 1px 2px 1px #d1d1d1;
-	width: 96.5%;
 }
 
 .book_navbar_base .heading{
@@ -1478,6 +1481,10 @@ and (min-width : 400px) {
 		padding: 13px;
 	}
 
+	.book_navbar_base{
+		width: 96.5%;
+	}
+
 	.mark_as_read,
 	.comment_instruct_box{
 		padding-top: 15px; 
@@ -1540,6 +1547,10 @@ and (min-width : 1280px){
 	.book_widget{
 		height: 650px;
 		width: 390px;
+	}
+
+	.book_navbar_base{
+		width: 97%;
 	}
 
 	.recommendation_block{
@@ -1633,6 +1644,10 @@ and (min-width : 1366px){
 		font-size: 0.9em;
 	}
 
+	.book_navbar_base{
+		width: 97%;
+	}
+
 	.book_widget{
 		height: 430px;
 		width: 350px;
@@ -1667,15 +1682,18 @@ and (min-width : 1366px){
 		padding-top: 40px;
 	}
 
+	.mark_as_read{
+		height: 29px;
+	}
+
 	.rate,
-	.mark_as_read,
 	.comment_instruct_box{
 		height: 25px;
 	}
 
 	.bookmark{
 		height: 15px;
-		padding: 13px;
+		padding: 13px 15px 12px 15px;
 	}
 
 	.mark_as_read,

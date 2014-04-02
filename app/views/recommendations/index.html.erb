@@ -15,13 +15,13 @@
 				 class="link"
 				 title="Books bookmarked"
 				 ng-click="toggleBookmarked()">
-				<b><span class="icon-library"></span></b>
+				<b><span class="icon-library" ng-class="{'glow_bookmark':glowBookmark}"></span></b>
 			</div>
 			<div ng-class="{'inactive':!read_selected, 'active':read_selected}"
 				 class="link"
 				 title="Books marked as read" 
 				 ng-click="toggleRead()">
-				 <b><span class="icon-books" ng-class="{'glow_shelf':glow}"></span></b>
+				 <b><span class="icon-books" ng-class="{'glow_shelf':glowShelf}"></span></b>
 			</div>
 		</div>
 		<div class="scroller">

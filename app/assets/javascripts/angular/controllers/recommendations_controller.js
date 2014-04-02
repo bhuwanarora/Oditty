@@ -10,6 +10,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 			$scope.panel_selected = 'BOOKMARK';
 			$scope.bookmark_selected = true;
 			$scope.read_selected = false;
+			$scope.glowBookmark = false;
 		}
 	}
 
@@ -23,7 +24,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 			$scope.panel_selected = '';
 		}
 		else{
-			$scope.glow = false;
+			$scope.glowShelf = false;
 			$scope.bookmark_selected = false;
 			$scope.read_selected = true;		
 			$scope.panel_selected = 'READ';
@@ -71,31 +72,33 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	_add_listeners = function(){
 	    load_recommendations_event = $scope.$on('loadRecommendations', function(){
 	    	_get_recommendations();
+	    	event.stopPropagation();
 	    });
 
 	    reload_recommendations_event = $scope.$on('reloadRecommendations', function(){
 	    	_init_recommendations();
 	    	_get_recommendations();
-	    });
-
-	    add_book_to_shelf_event = $scope.$on('addBookToShelf', function(event, data){
-	    	var book = {title: data['title'], author_name: data['author_name'], book_cover_url: data['book_cover_url']};
-	    	$scope.user_books['bookmarked'].push(book);
+	    	event.stopPropagation();
 	    });
 
 	    remove_book_from_shelf_event = $scope.$on('removeBookFromShelf', function(event, data){
 	    	var book = {title: data['title'], author_name: data['author_name'], book_cover_url: data['book_cover_url']};
+	    	event.stopPropagation();
 	    });
 
 	    open_shelf_event = $scope.$on('showBookReadShelf', function(){
 	    	$scope.read_selected = true;
+	    	event.stopPropagation();
 	    })
 
 	    glow_shelf_event = $scope.$on('glowShelf', function(){
-	    	$scope.glow = true;
-	        // var glow_event = $timeout(function(){
-	        // 	$scope.glow = false;
-	        // }, 2000);
+	    	$scope.glowShelf = true;
+	    	event.stopPropagation();
+	    });
+
+	    glow_bookmark_event = $scope.$on('glowBookmark', function(){
+	    	$scope.glowBookmark = true;
+	    	event.stopPropagation();
 	    });
 	}
 

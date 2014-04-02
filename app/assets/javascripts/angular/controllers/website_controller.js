@@ -253,24 +253,31 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	    );
 	}
 
+	_add_listeners = function(){
+		add_book_to_shelf_event = $scope.$on('addBookToShelf', function(event, data){
+	    	var book = {title: data['title'], author_name: data['author_name'], book_cover_url: data['book_cover_url']};
+	    	$scope.user.books['bookmark'].push(book);
+	    });
+	}
+
 
 	_init = function(){
 		$scope.more_filters = [];
 		$scope.test = {time: 1970};
 		$scope.detailed_book = {};
 		$rootScope.initPage = 3;
-
-
+		$scope.logged = true;
 		// Define user empty data :/
-	    $scope.user = {};
-	      
+		$scope.user = {'books': {'bookmark':[], 'read': []}};
+		$scope.user.profile_status = 0;
+	    _profile_status_colors();
 	    // Defining user logged status
-	    $rootScope.logged = false;
 
 		// _get_book_details(1);
 		_bind_emit();
 		_bind_feedback_form();
 		_bind_auth_listeners();
+		_add_listeners();
 		// $http.defaults.headers.post['My-Header'] = 'value';
 		// $speechRecognition.onstart(function(){
 		//   $speechSynthetis.speak("You're at Reader's Door. How can I help you?", 'en-UK');
@@ -279,6 +286,7 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		$speechRecognition.listen();
 	}
 
+	var add_book_to_shelf_event = ""
 	_init();
 
 });

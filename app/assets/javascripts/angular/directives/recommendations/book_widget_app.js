@@ -92,7 +92,7 @@ bookWidgetApp.directive('reviewWidget', function () {
   };
 })
 
-bookWidgetApp.directive('bookmark', function () {
+bookWidgetApp.directive('bookmark', function ($rootScope) {
   return {
     restrict: 'E',
     controller: function($scope){
@@ -113,6 +113,7 @@ bookWidgetApp.directive('bookmark', function () {
       }
 
       _add_book_to_shelf = function(){
+        $rootScope.$broadcast('glowBookmark');
         $scope.$emit('addBookToShelf', $scope.book);
       }
     },
@@ -167,7 +168,6 @@ bookWidgetApp.directive('interact', function () {
     restrict: 'E',
     controller: function($scope){
       _init = function(){
-        $scope.logged_in = true;
         $scope.read = false;
         $scope.rated = false;
         $scope.reviewed = false;
@@ -175,19 +175,15 @@ bookWidgetApp.directive('interact', function () {
 
     	$scope.setStatus = function(status){
     		if(status == 0){
-    			$scope.logged_in = true;
     		}
     		else if(status == 1){
-          $scope.logged_in = true;
     			$scope.read = true;
     		}
     		else if(status == 2){
-          $scope.logged_in = true;
           $scope.read = true;
     			$scope.rated = true;
     		}
     		else if(status == 3){
-          $scope.logged_in = true;
           $scope.read = true;
           $scope.rated = true;
     			$scope.reviewed = true;	
@@ -295,11 +291,6 @@ bookWidgetApp.directive('markAsRead', function($rootScope, $timeout){
         });
         //ajax call to mark the book as read
       }
-
-      // _init = function(){
-      //   $scope.$on('glowIcon', function(){
-      //   });
-      // }
 
       _init();
 		},
