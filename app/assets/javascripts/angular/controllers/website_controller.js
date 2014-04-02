@@ -1,5 +1,5 @@
 websiteApp.controller('websiteAppController', function($scope, $rootScope, $interval, $http, 
-	$timeout, $q, $window, websiteService, Facebook){
+	$timeout, $q, $window, websiteService, Facebook, $speechRecognition, $speechSynthetis){
 	$scope.bindHorizontalScroll = function(event, delta, deltaX, deltaY){
 		event.preventDefault();
 		if(delta > 0){
@@ -272,6 +272,11 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		_bind_feedback_form();
 		_bind_auth_listeners();
 		// $http.defaults.headers.post['My-Header'] = 'value';
+		// $speechRecognition.onstart(function(){
+		//   $speechSynthetis.speak("You're at Reader's Door. How can I help you?", 'en-UK');
+		// });
+		// $speechRecognition.setLang('en-UK'); // Default value is en-US
+		$speechRecognition.listen();
 	}
 
 	_init();

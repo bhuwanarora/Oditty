@@ -43,6 +43,10 @@ namespace :crawl do
   end
 
   desc "goodreads books details"
+  task :parse_goodreads_books => :environment do
+    include GenreList
+    GenreList.parse_books
+  end
 
   desc "get wiki author links"
   task :wiki_authors => :environment do

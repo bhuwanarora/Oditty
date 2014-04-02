@@ -7,18 +7,10 @@
   </head>
 
   <body ng-controller="websiteAppController" ng-keypress="search()" ng-mouseout="showFeebackForm()">
-    <div class="search_page">
-      <div class="logo">reader's door</div>
-      <select ng-options="type for type in ['RD', 'Books', 'Authors', 'Readers']" 
-              ng-model="search_type">
-        <!-- <option value="{{search_type}}">{{search_type}}</option> -->
-      </select>
-      <input/>
-    </div>
-    <!-- <div ng-include 
+    <div ng-include 
           src="'assets/angular/widgets/partials/search.html'" 
           ng-show="searching"
-          ng-click="stopSearching($event)"></div> -->
+          ng-click="stopSearching($event)"></div>
     <link href='http://fonts.googleapis.com/css?family=Miltonian+Tattoo' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Candal' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Joti+One' rel='stylesheet' type='text/css'>

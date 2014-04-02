@@ -55,7 +55,7 @@ websiteApp.directive('horizontalScroller', function(){
 	}
 })
 
-websiteApp.directive('setFocus', function($timeout, $parse, $rootScope) {
+websiteApp.directive('setFocus', function($timeout, $parse, $rootScope, $speechRecognition, $speechSynthetis) {
   return {
     link: function(scope, element, attrs) {
       var model = $parse(attrs.setFocus);
@@ -64,6 +64,7 @@ websiteApp.directive('setFocus', function($timeout, $parse, $rootScope) {
           $timeout(function() {
             element[0].value = String.fromCharCode($rootScope.keyCode);
             element[0].focus(); 
+            $speechSynthetis.speak("You are at Reader's Door. How can I help you?", 'en-UK');
           });
         }
       });

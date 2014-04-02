@@ -30,117 +30,13 @@ module Api
 			end
 
 			def push_recommendations
-				test_book = {:tags => [
-							  	{:name => "Philosophy", :url => "javascript:void(0);"},
-							  	{:name => "India", :url => "javascript:void(0);"},
-							  	{:name => "Spirituality", :url => "javascript:void(0);"}
-							  ],
-							  :book_thumb => {
-							  	
-							  },
-							  :rating => 4,
-							  :status => 0,
-							  :bookmark_status => 1,
-							  :readers_count => "1112",
-							  :discussions_count => "123",
-							  :reviews_count => "51",
-							  :news => [{:description => "Billy Corgan to Perform Eight-Hour Ambient Jam Inspired by Hermann 
-							  	Hesse's Siddhartha", :from => "Lindsay Zoladz"}, 
-							  	{:description => "Billy Corgan to Perform Eight-Hour Ambient Jam Inspired by Hermann 
-							  	Hesse's Siddhartha", :from => "Lindsay Zoladz"},]
-						  }
-				test_book = test_book.merge(
-					:book_thumb => {
-						:book_cover_url => "assets/books/a2.jpeg",
-						:background_color => "#F9B131"},
-					:category => {:name => "Hermann Hesse Fan", 
-								:url => "javascript:void(0);",
-								:background_color => "#3cb878",
-								:description => ""},
-					:id => 13)
+				test_book = BookApi.push_recommendations
 				render :json => {:recommendations => {:books => [test_book]}}, :status => 200
 			end
 
 			def recommendations
 				# filters list Filter.where(:id => JSON.parse(params[:q])["more_filters"])
-				test_name = Filter.where(:id => JSON.parse(params[:q])["more_filters"]).pluck(:name) rescue "City"
-
-				test_book = {:tags => [
-							  	{:name => "Philosophy", :url => "javascript:void(0);"},
-							  	{:name => "Art", :url => "javascript:void(0);"},
-							  	{:name => "20th Century", :url => "javascript:void(0);"}
-							  ],
-							  :book_thumb => {
-							  	
-							  },
-							  :rating => 5,
-							  :bookmark_status => 1,
-							  :readers_count => "112",
-							  :discussions_count => "23",
-							  :reviews_count => "5",
-							  :news => [{:description => "", :from => ""}]
-						  }
-				test_book1 = test_book.merge(
-					:status => 0,
-					:book_thumb => {
-						:book_cover_url => "assets/books/20.jpeg",
-						:background_color => "#915972"},
-					:category => {:name => "Must Read", 
-								:url => "javascript:void(0);", 
-								:background_color => "#3cb878", 
-								:description => "Highly rated book"},
-					:id => 1)
-
-				test_book2 = test_book.merge(
-					:status => 1,
-					:book_thumb => {
-						:book_cover_url => "assets/books/10.jpg",
-						:background_color => "#E9BC4B"},
-					:category => {:name => "Quick Read", 
-								:url => "javascript:void(0);", 
-								:background_color => "#790000",
-								:description => ""},
-					:id => 2)
-
-
-				test_book3 = test_book.merge(
-					:status => 2,
-					:book_thumb => {
-						:book_cover_url => "assets/books/11.jpeg",
-						:background_color => "#F4EFE9"},
-					:category => {:name => "Recommendation From Friends", 
-								:url => "javascript:void(0);", 
-								:background_color => "#0054a6",
-								:description => ""},
-					:id => 3)
-
-
-				test_book4 = test_book.merge(
-					:status => 0,
-					:book_thumb => {
-						:book_cover_url => "assets/books/13.jpeg",
-						:background_color => "#55504C"},
-					:category => {:name => "Feeling Philosophical", 
-								:url => "javascript:void(0);", 
-								:background_color => "#fbaf5d",
-								:description => ""},
-					:id => 4)
-
-
-				test_book5 = test_book.merge(
-					:status => 0,
-					:book_thumb => {
-						:book_cover_url => "assets/books/24.jpg",
-						:background_color => "#586846"},
-					:category => {:name => "Feeling Nomadic", 
-								:url => "javascript:void(0);", 
-								:background_color => "#fbaf5d",
-								:description => ""},
-					:id => 5)
-
-
-				count = params[:count]
-				books = [test_book1, test_book2, test_book3, test_book4, test_book5]
+				books = BookApi.recommendations
 				render :json => {:recommendations => {:books => books}}, :status => 200
 			end
 		end

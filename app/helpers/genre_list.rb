@@ -123,32 +123,64 @@ module GenreList
     end
   end
 
+  def self.parse_books
+    GoodReadsBook.where(:flag => nil).find_each do |book|
+      book_id = book.id
+      book_href = book.url
+      puts "#{book_id} #{book_href}"
+      Resque.enqueue(BookDetailParserWorker, book_id, book_href);
+    end
+  end
+
   def self.get_book_details(id, book_href)
-    doc = Nokogiri::HTML(open(book_href))
-    book_rating = doc.css('.average')[0].content
-    description = doc.css('#description span')[1].nil? ? doc.css('#description span')[0].content : doc.css('#description span')[1].content rescue nil
-    authorName = doc.css('.authorName span')[0].content
-    isbn = doc.css('.clearFloats:nth-child(2) .infoBoxRowItem')[0].content rescue ""
-    isbns = []
-    isbn = isbn.split("\n").map do |s|
-      if s.strip != ""
-        if s.strip.include?"ISBN13: "
-          isbns.push s.strip.split("(ISBN13: ")[1].split(")")[0]
-          s = isbns.join(",")
+    begin
+      doc = Nokogiri::HTML(open(book_href))
+      book_rating = doc.css('.average')[0].content
+      description = doc.css('#description span')[1].nil? ? doc.css('#description span')[0].content : doc.css('#description span')[1].content rescue nil
+      authorName = doc.css('.authorName span')[0].content
+      authorUrl = doc.css('.authorName')[0].attr("href")
+      ratings_count = doc.css('.votes .value-title')[0].content.split("ratings")[0]
+      reviews_count = doc.css('.count .value-title')[0].content.strip
+      begin
+        if(doc.css('#details span+ span')[0].content.include? "pages")
+          page_count = doc.css('#details span+ span')[0].content.split("pages")[0].strip
         else
-          isbns.push s.strip
-          s = nil
+          page_count = doc.css('#details span+ span')[1].content.split("pages")[0].strip
+        end
+      rescue Exception => e
+        page_count = nil        
+      end
+      published_year = doc.css('.row .greyText')[0].content.strip.gsub(")","").gsub("(","").split("first published")[1].strip rescue nil
+      isbn = doc.css('.clearFloats:nth-child(2) .infoBoxRowItem')[0].content rescue ""
+      isbns = []
+      isbn = isbn.split("\n").map do |s|
+        if s.strip != ""
+          if s.strip.include?"ISBN13: "
+            isbns.push s.strip.split("(ISBN13: ")[1].split(")")[0]
+            s = isbns.join(",")
+          else
+            isbns.push s.strip
+            s = nil
+          end
         end
       end
+      isbn.compact!
+      book = GoodReadsBook.find id
+      puts "update #{book.title} : #{book_rating} : #{authorName} : #{isbn[0]}"
+      book.update_attributes(:rating => book_rating, 
+                              :description => description, 
+                              :authorName => authorName, 
+                              :isbn => isbn[0],
+                              :authorUrl => authorUrl,
+                              :reviews_count =>  reviews_count,
+                              :ratings_count => ratings_count,
+                              :page_count => page_count,
+                              :published_year => published_year,
+                              :flag => true)
+    rescue Exception => e
+      debugger
+      puts "#{id}: Error #{e}"
     end
-    isbn.compact!
-    book = GoodReadsBook.find id
-    puts "update #{book.title} : #{book_rating} : #{authorName} : #{isbn[0]}"
-    book.update_attributes(:rating => book_rating, 
-                            :description => description, 
-                            :authorName => authorName, 
-                            :isbn => isbn[0],
-                            :flag => true)
   end
 
   def self.update_flag

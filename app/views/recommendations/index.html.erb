@@ -9,11 +9,7 @@
 		<!-- <div class="website-title">
 			<span class="icon glyphicon-home"></span> Reader's Door
 		</div> -->
-
-		<!-- <input set-focus="searching" 
-		       ng-keypress="getSearchResults($event)" 
-		       class="filter_input" 
-		       placeholder="Start typing now to search..."></input> -->
+		
 		<div class="shelf_nav_links">
 			<div ng-class="{'inactive':!bookmark_selected, 'active':bookmark_selected}"
 				 class="link"
@@ -25,7 +21,7 @@
 				 class="link"
 				 title="Books marked as read" 
 				 ng-click="toggleRead()">
-				 <b><span class="icon-books"></span></b>
+				 <b><span class="icon-books" ng-class="{'glow_shelf':glow}"></span></b>
 			</div>
 		</div>
 		<div class="scroller">
@@ -41,14 +37,14 @@
 			</span>
 			r
 		</div>
-		<type-ahead items="search_results" 
+		<!-- <type-ahead items="search_results" 
 	 				prompt="Start typing now to search..." 
 	 				title="name" 
 	 				model="searchResults" 
 	 				custom-options = "search_typeahead_options"
 	 				on-select="show_search_result()"
 	 				ng-keypress="get_search_results($event)"
-	 				custom="filter_input">
+	 				custom="filter_input"> -->
 	 	</type-ahead>
 		<div class="link filter_link" 
 			 ng-click="toggle_more_filters()" 

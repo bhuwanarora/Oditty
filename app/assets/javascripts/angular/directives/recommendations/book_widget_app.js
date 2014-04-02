@@ -92,13 +92,6 @@ bookWidgetApp.directive('reviewWidget', function () {
   };
 })
 
-bookWidgetApp.directive('shelf', function () {
-  return {
-    restrict: 'E',
-    templateUrl: "/assets/angular/widgets/base/shelf.html"
-  };
-})
-
 bookWidgetApp.directive('bookmark', function () {
   return {
     restrict: 'E',
@@ -294,11 +287,21 @@ bookWidgetApp.directive('markAsRead', function($rootScope, $timeout){
 				$scope.read = true;
         var timeout_event = notify($rootScope, "ADVISE-Also please rate the book. This will help us to recommend better books.", $timeout)
 
+        $rootScope.$broadcast('glowShelf');
+
         $scope.$on('destroy', function(){
           $timeout.cancel(timeout_event);
-        })
-				//ajax call to mark the book as read
-			}
+          $timeout.cancel(glow_event);
+        });
+        //ajax call to mark the book as read
+      }
+
+      // _init = function(){
+      //   $scope.$on('glowIcon', function(){
+      //   });
+      // }
+
+      _init();
 		},
 		templateUrl: "/assets/angular/widgets/base/mark_as_read.html"
 	}

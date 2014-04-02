@@ -4,8 +4,10 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	$scope.toggleBookmarked = function(){
 		if($scope.bookmark_selected == true){
 			$scope.bookmark_selected = false;
+			$scope.panel_selected = '';
 		}
 		else{
+			$scope.panel_selected = 'BOOKMARK';
 			$scope.bookmark_selected = true;
 			$scope.read_selected = false;
 		}
@@ -18,10 +20,13 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	$scope.toggleRead = function(){
 		if($scope.read_selected == true){
 			$scope.read_selected = false;
+			$scope.panel_selected = '';
 		}
 		else{
+			$scope.glow = false;
 			$scope.bookmark_selected = false;
 			$scope.read_selected = true;		
+			$scope.panel_selected = 'READ';
 		}
 	}
 
@@ -85,6 +90,13 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	    open_shelf_event = $scope.$on('showBookReadShelf', function(){
 	    	$scope.read_selected = true;
 	    })
+
+	    glow_shelf_event = $scope.$on('glowShelf', function(){
+	    	$scope.glow = true;
+	        // var glow_event = $timeout(function(){
+	        // 	$scope.glow = false;
+	        // }, 2000);
+	    });
 	}
 
 	_init_recommendations = function(){
