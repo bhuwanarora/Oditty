@@ -427,7 +427,6 @@ a:hover{
 }
 
 .bookmark{
-	width: 16%;
 	display: inline-block;
 	float: left;
 	background-color: rgba(113, 112, 112, 0.15);
@@ -980,9 +979,7 @@ a:hover{
 
 .scroller .scroller-left,
 .scroller .scroller-right{
-	padding: 9px;
-	color: #FFFFFF;
-	font-size: 0.7em;
+	font-size: 1em;
 	box-shadow: inset 0px 2px 50px -11px #7F868D, inset 0px 0px 40px #EEEEEE;
 }
 
@@ -993,16 +990,17 @@ a:hover{
 .scroller .scroller-left{
 	margin-left: 3px;
 	margin-right: 1px;
+	padding: 6px 3px 9px 9px;
 }
 
 .scroller .scroller-right{
 	margin-right: 3px;
 	margin-left: 1px;
-	padding: 9px;
+	padding: 6px 3px 9px 9px;
 }
+
 .scroller .scroller-left:hover,
 .scroller .scroller-right:hover{
-	color: white;
 	background-color: #AAAAAA;
 	cursor: pointer;
 }
@@ -1476,7 +1474,8 @@ and (min-width : 400px) {
 	}
 
 	.bookmark{
-		height: 41px;
+		height: 15px;
+		padding: 13px;
 	}
 
 	.mark_as_read,
@@ -1583,7 +1582,8 @@ and (min-width : 1280px){
 	}
 
 	.bookmark{
-		height: 64px;
+		height: 34px;
+		padding: 13px;
 	}
 
 	.rate_radio_buttons{
@@ -1674,7 +1674,8 @@ and (min-width : 1366px){
 	}
 
 	.bookmark{
-		height: 41px;
+		height: 15px;
+		padding: 13px;
 	}
 
 	.mark_as_read,
