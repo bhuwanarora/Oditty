@@ -138,7 +138,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 			data = $rootScope.data;
 			_init_analytics();
 			data_json = {"data": data};
-			$http.post('http://bhuwan.com:8080/api/v0/track', data_json);
+			$http.post('/api/v0/track', data_json);
 		}, oneMin);
 	}
 

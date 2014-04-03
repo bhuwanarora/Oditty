@@ -1,5 +1,18 @@
 <div class="search_page">
-  	<div class="logo">reader's door</div>
+  	<div class="logo">
+      <span>r</span>
+      <span>e</span>
+      <span>a</span>
+      <span>d</span>
+      <span>e</span>
+      <span>r</span>
+      <span>'</span>
+      <span>s</span>
+      <span>&nbsp;</span>
+      <span>d</span>
+      <span>o</span>
+      <span>o</span>
+      <span>r</span></div>
   	<div class="tagline">
   		<span class="icon-quote-left"></span>
   		<span>Live and build your years with books.</span>
@@ -36,7 +49,8 @@
   		 ng-click="handle_selection(item.name)" 
   		 ng-class="{active:is_current($index)}" 
   		 ng-mouseenter="set_current($index)"
-  		 class="option">
+  		 class="option"
+       ng-hide="show_login_form">
     		<div class="title">{{item.name}}</div>
  	 	</div>
 	</div>
