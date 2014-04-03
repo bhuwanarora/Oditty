@@ -11,7 +11,7 @@
         ng-mouseout="showFeebackForm()">
     <div ng-include 
           src="'assets/angular/widgets/partials/search.html'" 
-          ng-show="searching"
+          ng-if="searching"
           ng-click="stopSearching($event)"></div>
 
     <div msd-wheel="bindHorizontalScroll($event, $delta, $deltaX, $deltaY)" 

@@ -1,5 +1,5 @@
 websiteApp.controller('websiteAppController', function($scope, $rootScope, $interval, $http, 
-	$timeout, $q, $window, websiteService, Facebook, $speechRecognition, $speechSynthetis){
+	$timeout, $q, $window, websiteService, Facebook, $speechRecognition, $speechSynthetis, $document){
 	$scope.bindHorizontalScroll = function(event, delta, deltaX, deltaY){
 		event.preventDefault();
 		if(delta > 0){
@@ -15,10 +15,8 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 
 	$scope.scrollOnePageRight = function(event){
 		event.preventDefault();
-		//TODO put a better condition instead of two parent elements
-		// clientWidth = event.currentTarget.parentElement.parentElement.clientWidth;
-		clientWidth = $('#recommendationFooter')[0].clientWidth;
-		lessThanOnePageLeft = event.pageX + 1000 > clientWidth;
+		clientWidth = $document.width();
+		lessThanOnePageLeft = event.pageX + screen.width > clientWidth;
 		if(lessThanOnePageLeft){
 			$rootScope.$broadcast('loadRecommendations');
 		}
@@ -192,13 +190,9 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	}
 
 	_loadRecommendations = function(){
-		currentWidth = event.currentTarget.clientWidth;
-		lessThanOnePageLeft = event.pageX + 1575 > currentWidth;
+		var currentWidth = $document.width();
+		var lessThanOnePageLeft = event.pageX + screen.width > currentWidth;
 		if (lessThanOnePageLeft){
-			newElementsCount = 5;
-			leftMargin = 40;
-			newElementsWidth = (275+leftMargin)*newElementsCount;
-			newWidth = currentWidth+newElementsWidth;
 			$rootScope.$broadcast('loadRecommendations');
 		}
 	}
