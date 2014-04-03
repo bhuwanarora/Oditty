@@ -55,7 +55,7 @@ ReadersDoor::Application.routes.draw do
   get "angular_test"             => "tests#angular_test",              :as => "angular_test"
 
   # root :to => "website#coming_soon"
-  root :to => "chat_messages#index"
+  root :to => "recommendations#index"
 
   get 'tree'                      => "categories#show_tree",  :as => "show_tree"
 

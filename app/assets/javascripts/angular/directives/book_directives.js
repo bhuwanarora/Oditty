@@ -322,11 +322,11 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
                   _update_depth(book);
 
                   if (page==2 || page==3) {
-                    book.turn('peel', 'br');
+                    // book.turn('peel', 'br');
                   }
                 }
               }
-            }).turn('peel','br');
+            })
             
             _set_post_css();
           }
