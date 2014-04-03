@@ -7,48 +7,51 @@ recommendationApp.directive('moreFilters', function($rootScope, $timeout){
 				$scope.active_author_filter = false;
 				$scope.active_reader_filter = false;
 
-				$scope.bookFilters = {year:"1914;2014"};
-				$scope.authorFilters = {year:"1914;2014"};
-				$scope.readerFilters = {year:"1914;2014"};
+				$scope.bookFilters = {year:"1614;2014"};
+				$scope.authorFilters = {year:"1614;2014"};
+				$scope.readerFilters = {year:"1614;2014"};
 
-				$scope.bookOptions = {
-					from: 1700,
-					to: 2014,
-					step: 10,
-					smooth: true
-				}
+				$scope.bookOptions =  {
+	                from: 1700,
+	                to: 2050,
+	                step: 10,
+	                scale: [1700, '|', 1800, '|', 1900, '|', 2000, '|'],                                
+	                smooth: true
+	            };
 
-				$scope.authorOptions = {
-					from: 1700,
-					to: 2014,
-					step: 10,
-					smooth: true
-				}
+				$scope.authorOptions =  {
+	                from: 1700,
+	                to: 2050,
+	                step: 10,
+	                scale: [1700, '|', 1800, '|', 1900, '|', 2000, '|'],                                
+	                smooth: true
+	            };
 
-				$scope.readerOptions = {
-					from: 1700,
-					to: 2014,
-					step: 10,
-					smooth: true
-				}
+				$scope.readerOptions =  {
+	                from: 1700,
+	                to: 2050,
+	                step: 10,
+	                scale: [1700, '|', 1800, '|', 1900, '|', 2000, '|'],                                
+	                smooth: true
+	            };
 
 			    /* watch for changes*/
 				$scope.$watch('bookFilters.year',function(newVal, oldVal){
-				    if(newVal){
+				    if(newVal!=oldVal){
 				    	$rootScope.filters["year"] = newVal;
 				    	$scope.$emit('reloadRecommendations');
 				    }
 				});
 
 				$scope.$watch('authorFilters.year',function(newVal, oldVal){
-				    if(newVal){
+				    if(newVal!=oldVal){
 				    	$rootScope.filters["year"] = newVal;
 				    	$scope.$emit('reloadRecommendations');
 				    }
 				});
 
 				$scope.$watch('readerFilters.year',function(newVal, oldVal){
-				    if(newVal){
+				    if(newVal!=oldVal){
 				    	$rootScope.filters["year"] = newVal;
 				    	$scope.$emit('reloadRecommendations');
 				    }

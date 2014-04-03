@@ -64,7 +64,7 @@ websiteApp.directive('setFocus', function($timeout, $parse, $rootScope, $speechR
           $timeout(function() {
             element[0].value = String.fromCharCode($rootScope.keyCode);
             element[0].focus(); 
-            $speechSynthetis.speak("You are at Reader's Door. How can I help you?", 'en-UK');
+            // $speechSynthetis.speak("You are at Reader's Door. How can I help you?", 'en-UK');
           });
         }
       });
@@ -109,9 +109,9 @@ websiteApp.directive('typeAhead', function($timeout){
 				scope.model = selectedItem.toUpperCase();
 			    scope.current = 0;
 			    scope.selected = true;
-			    $timeout(function() {
-			      scope.onSelect();
-			    }, 200);
+			    scope.onSelect();
+			    // $timeout(function() {
+			    // }, 200);
 			};
 
 			scope.is_current = function(index) {

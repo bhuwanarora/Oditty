@@ -45,29 +45,6 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 		event.currentTarget.text = "";
 	}
 
-	$scope.get_search_results = function(event, type){
-        var currentValue = $scope.searchResults;
-        var currentInput = String.fromCharCode(event.keyCode);
-        $scope.search_results = [{name: "Test 1"}, {name: "Test 2"}];
-        // var backspace_or_delete_or_enter = (event.keyCode == 8) || (event.keyCode == 46) || (event.keyCode == 13);
-    //     if(backspace_or_delete_or_enter && currentValue.length == 0){
-    //     	$scope.stopSearching(event);
-    //     	//NOT WORKING
-    //     }
-    //     else{
-    //     	if(currentValue.length >= 2){
-				// var deferred = $q.defer();
-				// var query_params = currentValue+currentInput;
-		  //       $http.get('/api/v0/search?count=5&q='+query_params).then(function(result) {
-    //                 return deferred.resolve(result.data); 
-    //             });
-		  //       return deferred.promise;
-    //     	}
-    //     	else{
-    //     		//Type atleast 3 chars to search
-    //     	}
-    //     }
-	}
 
 	_add_listeners = function(){
 	    load_recommendations_event = $scope.$on('loadRecommendations', function(){

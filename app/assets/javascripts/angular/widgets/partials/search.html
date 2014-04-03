@@ -1,7 +1,69 @@
-<div class="search_page">
-  <div class="logo">reader's door</div>
-  <select ng-options="type for type in ['RD', 'Books', 'Authors', 'Readers']" 
-          ng-model="search_type">
-  </select>
-  <input set-focus="searching" ng-keypress="get_search_results($event)" x-webkit-speech/>
+<div class="search_page"
+     ng-click="hide_search_page()">
+  	<div class="logo">reader's door</div>
+  	<div class="login_button" 
+  		 ng-click="toggle_login_panel()"
+  	     ng-show="!logged">
+  	     <span ng-if="!show_login_form">
+  	     	LOG IN
+  	     	<span class="icon-plus"></span>
+  	     </span>
+  	     <span ng-if="show_login_form">
+  	     	SEARCH
+  	     	<span class="icon-close"></span>
+  	     </span>
+  	</div>
+  	<select ng-options="type for type in ['RD', 'Books', 'Authors', 'Readers']" 
+          ng-model="search_type"
+          ng-click="stop_propagtion()"
+          ng-hide="show_login_form">
+  	</select>
+  	<input set-focus="searching" 
+  	       ng-keypress="get_search_results($event)" 
+  	       ng-keydown="selected_result=false"
+  	       ng-keyup="key_up()"
+  	       ng-model="search_input"
+  	       ng-click="stop_propagtion()"
+  	       ng-hide="show_login_form"/>
+  	<div class="website_search_options" 
+	   	 ng-hide="!search_input.length || selected_result"
+	   	 ng-click="stop_propagtion()"
+	   	 ng-hide="show_login_form">
+  		<div ng-repeat="item in search_results | filter:search_input  track by $index" 
+  		 ng-click="handle_selection(item.name)" 
+  		 ng-class="{active:is_current($index)}" 
+  		 ng-mouseenter="set_current($index)"
+  		 class="option">
+    		<div class="title">{{item.name}}</div>
+ 	 	</div>
+	</div>
+</div>
+<div ng-if="!logged && show_login_form">
+	<!-- <div class="login_buttons fb" 
+		 ng-show="!logged"
+	     ng-disabled="!facebookReady"
+	     ng-click="intent_login()">
+	</div>
+	<div class="google">
+		<google-plus-signin clientid="88213598927-9fij1u8tf2ldf4apf6qob4hgu0supj54.apps.googleusercontent.com"
+		ng-show="!logged"></google-plus-signin>
+	</div> -->
+	<form class="login_form" ng-model="user">
+      	<input class="email" 
+      	       type="email" 
+      	       ng-model="user.email" 
+      	       placeholder="Email"
+      	       spellcheck="false" 
+      	       required /><br />
+      	<input class="password" 
+      	       type="password" 
+      	       ng-model="user.password" 
+      	       placeholder="Password" 
+      	       spellcheck="false"
+      	       required /><br />
+      	
+      	<div class="authenticate" ng-click="authenticate(user)" type="button">
+      		LOG IN or SIGN UP
+      	</div>
+    </form>
 </div>

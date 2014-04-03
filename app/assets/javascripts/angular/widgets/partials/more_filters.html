@@ -16,7 +16,16 @@
 		 ng-disabled="active_reader_filter"
 		 ng-class="{'active_filter':active_reader_filter, 'inactive_filter':!active_reader_filter}">
 		 <span class="icon-user22"></span> READER</div>
-	<span class="result_count" ng-model="recommendations.books.length">{{recommendations.books.length}} results</span>
+	<span class="result_count" ng-model="recommendations.books.length">
+		<span ng-switch on="panel_selected">
+			<span ng-switch-when="BOOKMARK">
+				{{user.books.bookmark.length}} books bookmarked</span>
+			<span ng-switch-when="READ">
+			    {{user.books.read.length}} books read</span>
+			<span ng-switch-default>
+			    {{recommendations.books.length}} recommendations</span>
+		</span>
+	</span>
 </div>
 
 <!-- BOOK FILTERS -->

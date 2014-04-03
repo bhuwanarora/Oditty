@@ -35,36 +35,6 @@
 	</div>
 	<div ng-switch-default>
 		<div ng-show="active_book_filter" ng-model="recommendations.books">
-			<div class="wild_cards" ng-if="!logged">
-				<div class="header">reader's door</div>
-				<!-- <div class="login_buttons fb" 
-					 ng-show="!logged"
-				     ng-disabled="!facebookReady"
-				     ng-click="intent_login()">
-				</div>
-				<div class="google">
-					<google-plus-signin clientid="88213598927-9fij1u8tf2ldf4apf6qob4hgu0supj54.apps.googleusercontent.com"
-					ng-show="!logged"></google-plus-signin>
-				</div> -->
-				<form class="login_form" ng-model="user">
-			      	<input class="email" 
-			      	       type="email" 
-			      	       ng-model="user.email" 
-			      	       placeholder="Email"
-			      	       spellcheck="false" 
-			      	       required /><br />
-			      	<input class="password" 
-			      	       type="password" 
-			      	       ng-model="user.password" 
-			      	       placeholder="Password" 
-			      	       spellcheck="false"
-			      	       required /><br />
-			      	
-			      	<div class="authenticate" ng-click="authenticate(user)" type="button">
-			      		LOG IN or SIGN UP
-			      	</div>
-			    </form>
-			</div>
 			<div ng-if="logged" ng-switch on="user.profile_status" ng-model="user.profile_status">
 				<div class="info_cards" 
 				     style="background-color:{{user.profile_status_color}}"
