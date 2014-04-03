@@ -134,6 +134,7 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	$scope.search = function(){
 		input_aimed_for_searching = event.currentTarget == event.srcElement;
 		if(input_aimed_for_searching){
+			$('body').css('white-space', 'normal');
 			$scope.searching = true;
 			$rootScope.keyCode = event.keyCode;
 		}
@@ -273,6 +274,7 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	$scope.hide_search_page = function(){
 		var logged_in = $scope.logged;
 		if(logged_in){
+			$('body').css('white-space', 'nowrap');
 			$scope.searching = false;
 		}
 	}
@@ -357,12 +359,14 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		// Define user empty data :/
 		$scope.user = {'books': {'bookmark':[], 'read': []}};
 		$scope.user.profile_status = 0;
+		$scope.search_type = "Books";
 	    _profile_status_colors();
 
 		_bind_emit();
 		_bind_feedback_form();
 		_bind_auth_listeners();
 		_add_listeners();
+		$('body').css('white-space', 'normal');
 		// $speechRecognition.onstart(function(){
 		//   $speechSynthetis.speak("You're at Reader's Door. How can I help you?", 'en-UK');
 		// });

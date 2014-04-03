@@ -4,7 +4,7 @@ html{
 	overflow-x: auto;
 }
 body{
-	width: 110%;
+	width: 100%;
 	height: 100%;
 	white-space: nowrap;
 	background-size: cover;
@@ -13,7 +13,7 @@ body{
   	-ms-user-select: none;
     user-select: none;
     color: #717070;
-    background-image: url('7H.jpg');
+    /*background-image: url('7H.jpg');*/
     background-image: none;
     /*font-family: 'Lucida Grande';*/
     /*background: url('right_grid_background.jpeg');*/
@@ -33,7 +33,7 @@ a:hover{
 .search_page{
 	position: fixed;
 	background-color: white;
-	background-image: url('7H.jpg');
+	/*background-image: url('7H.jpg');*/
 	width: 100%;
 	height: 100%;
 	background-size: cover;
@@ -41,30 +41,42 @@ a:hover{
 	margin: -10px;
 }
 
-.search_page .login_button{
+.search_page .login_button {
 	position: absolute;
 	top: 10px;
 	right: 10px;
 	border: 1px solid #DEDEDE;
-	background-color: white;
-	color: #717070;
+	background-color: rgba(113, 112, 112, 0.2);
+	color: white;
 	text-align: center;
 	padding: 15px;
 	cursor: pointer;
+	border-radius: 4px;
 }
 
 .search_page .logo{
 	color: white;
-	/*color: #3D79A1;*/
+	color: #3D79A1;
 	position: absolute;
 	left: 50%;
 	top: 39%;
-	margin-top: -20px;
+	margin-top: -40px;
 	margin-left: -170px;
 	font-size: 4em;
 	font-weight: bold;
 	font-family: Helvetica;
-	text-shadow: -1px 0 #F1F1F1, 0 1px #F1F1F1, 1px 0 #F1F1F1, 0 -1px #F1F1F1;
+	text-shadow: -1px 0 #AFAFAF, 0 1px #F1F1F1, 1px 0 #F1F1F1, 0 -1px #F1F1F1;
+}
+
+.search_page .tagline{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	color: white;
+	color: #3D79A1;
+	margin-top: -45px;
+	margin-left: -130px;
+	font-size: 1.1em;
 }
 
 .search_page input{
@@ -101,6 +113,35 @@ a:hover{
 	color: white;
 }
 
+.search_page .internal_links{
+	z-index: 10;
+	color: white;
+	color: #3D79A1;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: 30px;
+	margin-left: -200px;
+	/*background-color: rgba(113, 112, 112, 0.36);*/
+	padding: 20px;
+	border-radius: 2px;
+	/*border: 1px solid white;*/
+}
+
+.search_page .internal_links span{
+	float: left;
+	display: inline-block;
+	text-align: center;
+	width: 130px;
+	/*font-weight: bold;*/
+	font-size: 1.1em;
+	cursor: pointer;
+}
+
+.search_page .internal_links .count{
+	font-size: 1.2em;
+}
+
 .wild_cards{
 	color: white;
 	position: absolute;
@@ -116,12 +157,12 @@ a:hover{
 	padding-bottom: 20px;
 }
 .login_form{
-	position: absolute;
+	position: fixed;
 	top: 50%;
 	left: 50%;
 	z-index: 10;
 	margin-top: -20px;
-	margin-left: -90px;
+	margin-left: -100px;
 }
 
 .login_form input{
