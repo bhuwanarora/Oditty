@@ -487,18 +487,18 @@ and (min-width : 1280px) {
 	background: #f8f8f8;
 }
 
-.detailed_book .news_element div .description, 
-.detailed_book .news_element div img{
+.detailed_book .news_element .description{
 	display: inline-block;
-	font-size: 0.9em;
+	font-size: 0.8em;
 	padding: 4px;
-	margin-top: 5px;
+	margin-top: 10px;
 	margin-bottom: 5px;
 }
 
 .detailed_book .news_element div img{
-	width: 300px;
-	margin: 5px;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
 	border-radius: 10px;
 }
 
@@ -536,6 +536,30 @@ and (min-width : 1280px) {
 
 .comment .footer .comment_now{
 	cursor: pointer;
+}
+
+
+.container{
+	position: relative;
+}
+
+.container .header{
+	position: absolute;
+	padding: 0px !important;
+	text-align: left !important;
+	top: 5px;
+	width: 90%;
+	left: 5px;
+	z-index: 1;
+	color: white;
+}
+
+.container .timestamp{
+	position: absolute;
+	top: 90%;
+	right: 10px;
+	z-index: 1;
+	color: white;
 }
 
 .discussion{

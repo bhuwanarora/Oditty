@@ -540,7 +540,8 @@ module Api
 							pretense, his fans have his back: Hes just hanging out at his tea shop playing 
 							music, one wrote on Facebook. How is that pretentious?",
 							:source => "http://www.theguardian.com/",
-							:type => "img"
+							:type => "img",
+							:timestamp => "29 May 1999"
 						},
 						{
 							:thumb => "http://www.youtube.com/watch?feature=player_embedded&v=C3tV8n-CVnA",
@@ -553,7 +554,8 @@ module Api
 							Its from a live improvised performance at at Madame ZuZu?s Teahouse (Chicago). 
 							Corgan describes the event as an ambient/musical interpretation of Hermann 
 							Hesse?s Siddhartha; built by modular synthesis, on the fly.",
-							:type => "video"
+							:type => "video",
+							:timestamp => "29 June 1999"
 						}
 					],
 					:total_reviews_count => 23,
