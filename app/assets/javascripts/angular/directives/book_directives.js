@@ -384,7 +384,7 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
           // $('.fade').css('z-index', '5000');
           $('.detailed_book').hide();
           $('.book_footer').hide();
-          $('.fade').hide();
+          $('.fade_cover').hide();
           $rootScope.show_book = false;
         });
       }

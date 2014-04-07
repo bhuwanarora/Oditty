@@ -1,1 +1,1 @@
-var bookApp = angular.module('bookApp', ['ngRoute', 'ngAnimate', 'textAngular']);
+var bookApp = angular.module('bookApp', ['ngRoute', 'ngAnimate']);

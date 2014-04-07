@@ -141,9 +141,9 @@
           move($popover, placement_, align_, getBoundingClientRect(elm[0]), $triangle);
 
           // Hide the popover without delay on click events.
-          $popover.on('click', function() {
-            hider_.hide($popover, 0);
-          });
+          // $popover.on('click', function() {
+          //   hider_.hide($popover, 0);
+          // });
         });
 
         elm
