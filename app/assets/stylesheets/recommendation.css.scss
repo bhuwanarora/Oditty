@@ -1526,10 +1526,7 @@ and (min-width : 400px) {
 		height: 420px;
 		width: 320px;
 	}
-	.recommendation_block{
-		margin-top: 0px;
-	}
-
+	
 	.filters_panel{
 		width: 200px;
 		margin-left: 7%;
@@ -1606,11 +1603,11 @@ and (min-width : 400px) {
 	.wild_cards{
 		width: 185px;
 		height: 290px;
-		margin-top: 0px;
+		/*margin-top: 0px;*/
 	}
 
 	.info_cards{
-		margin-top: 0px;	
+		/*margin-top: 0px;	*/
 	}
 
 	.login_form input{
@@ -1625,6 +1622,16 @@ and (min-width : 400px) {
 	.wild_cards .header{
 		margin-top: 0px;
 	}
+
+	.vertical_padder_inactive{
+		height: 0px;
+		width: 100%;
+	}
+
+	.vertical_padder_active{
+		height: 50px;
+		width: 100%;	
+	}
 }
 
 @media only screen
@@ -1636,10 +1643,6 @@ and (min-width : 1280px){
 
 	.book_navbar_base{
 		width: 97%;
-	}
-
-	.recommendation_block{
-		margin-top: 10px;
 	}
 
 	.filters_panel{
@@ -1709,7 +1712,11 @@ and (min-width : 1280px){
 	.wild_cards{
 		width: 250px;
 		height: 520px;
-		margin-top: 10px;
+		/*margin-top: 10px;*/
+	}
+
+	.info_cards{
+		height: 570px;
 	}
 
 	.login_form input{
@@ -1719,6 +1726,16 @@ and (min-width : 1280px){
 
 	.login_form .authenticate{
 		padding: 15px;
+	}
+
+	.vertical_padder_inactive{
+		height: 15px;
+		width: 100%;
+	}
+
+	.vertical_padder_active{
+		height: 50px;
+		width: 100%;	
 	}
 
 }
@@ -1738,8 +1755,14 @@ and (min-width : 1366px){
 		width: 350px;
 	}
 
-	.recommendation_block{
-		margin-top: 15px;
+	.vertical_padder_inactive{
+		height: 15px;
+		width: 100%;
+	}
+
+	.vertical_padder_active{
+		height: 50px;
+		width: 100%;	
 	}
 
 	.filters_panel{
@@ -1817,7 +1840,7 @@ and (min-width : 1366px){
 	}
 
 	.info_cards{
-		margin-top: 15px;
+		/*margin-top: 15px;*/
 		height: 350px;
 	}
 

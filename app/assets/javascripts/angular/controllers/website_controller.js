@@ -14,6 +14,39 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		}
 	}
 
+	$scope.click = function(){
+        $scope.clicked = $timeout(function(){
+            if($scope.stopped == false){
+                $scope.counter = $scope.counter + 1;
+            }
+        },500);
+    };
+    
+    $scope.dclick = function(){
+        $scope.stopped = $timeout.cancel($scope.clicked);
+        
+        if($('#updateButton').hasClass("active")){
+            $('#updateButton').removeClass("active");                 
+            $('#updateButton').button("reset");
+        }
+        else{
+            $('#updateButton').addClass("active");
+                $('#updateButton').button("update");    
+        }
+    };
+
+	$scope.right_scroller = function(event){
+		var current_x = event.pageX - screen.width/2;
+		var delta_x = 80;
+		scroller.scrollTo(current_x + delta_x, 0, 1000);
+	}
+
+	$scope.left_scroller = function(event){
+		var current_x = event.pageX - screen.width/2;
+		var delta_x = 80;
+		scroller.scrollTo(current_x - delta_x, 0, 1000);
+	}
+
 	$scope.move_left = function(event){
 		var current_x = event.pageX - screen.width/2;
 		var delta_x = $('.recommendation_block:first').width();
@@ -32,6 +65,7 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	}
 
 	$scope.scroll_one_page_right = function(event){
+		$scope.dbl_clicked = true;
 		var clientWidth = $document.width();
 		var lessThanOnePageLeft = event.pageX + screen.width > clientWidth;
 		if(lessThanOnePageLeft){
@@ -39,13 +73,14 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		}
 		var current_x = event.pageX - screen.width/2;
 		var delta_x = screen.width;
-		scroller.scrollTo(current_x + delta_x, 0, 5000);
+		scroller.scrollTo(current_x + delta_x, 0, 2000);
 	}
 
 	$scope.scroll_one_page_left = function(event){
+		$scope.dbl_clicked = true;
 		var current_x = event.pageX - screen.width/2;
 		var delta_x = screen.width;
-		scroller.scrollTo(current_x - delta_x, 0, 5000);
+		scroller.scrollTo(current_x - delta_x, 0, 2000);
 	}
 
 

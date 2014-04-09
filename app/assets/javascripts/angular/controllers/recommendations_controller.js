@@ -34,9 +34,13 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	$scope.toggle_more_filters = function(){
 		if($scope.show_more_filters == true){
 			$scope.show_more_filters = false;
+			// $('.recommendation_block').css('margin-top', '40px');
+			// $('.info_cards').css('margin-top', '40px');
 		}
 		else{
 			$scope.show_more_filters = true;		
+			// $('.recommendation_block').css('margin-top', '0px');
+			// $('.info_cards').css('margin-top', '0px');
 		}
 	}
 
@@ -104,7 +108,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	}
 
 	_initialize_filters = function(){
-		$scope.show_more_filters = true;
+		$scope.show_more_filters = false;
 		$rootScope.filters = {};
 		$rootScope.filters["readers"] = false;
 		$rootScope.filters["books"] = true;
