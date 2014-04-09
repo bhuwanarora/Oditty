@@ -1244,7 +1244,7 @@ input:focus{
 	cursor: pointer;
 	color: #717070;
 	background-color: #FFFFFF;
-	box-shadow: 0px 1px 4px 0px #99A3AD, inset 0px 0px 40px #EEEEEE;
+	box-shadow: 0px 1px 4px 0px #DDDCDC, inset 0px 0px 40px #EEEEEE;
 }
 
 .inactive_filter:hover, .rate_radio:hover{
@@ -1947,7 +1947,7 @@ and (min-width : 1824px) {
 .jslider-limitless .jslider-label { display: none; }
 
 .jslider_round .jslider-bg i,
-.jslider_round .jslider-pointer { background-image: url("slider/jslider.round.png"); }
+.jslider_round .jslider-pointer { background-image: url("slider/jslider.plastic.png"); }
 
 .jslider_round .jslider-pointer { width: 17px; height: 17px; top: -6px; margin-left: -8px; }
 

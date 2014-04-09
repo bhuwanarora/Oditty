@@ -133,12 +133,12 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	}
 
 	_recordUserBehaviour = function(){
-		oneMin = 60000;
+		oneMin = 600000000;
 		$interval(function(){
 			data = $rootScope.data;
 			_init_analytics();
 			data_json = {"data": data};
-			$http.post('/api/v0/track', data_json);
+			// $http.post('/api/v0/track', data_json);
 		}, oneMin);
 	}
 

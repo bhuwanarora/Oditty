@@ -7,31 +7,31 @@ recommendationApp.directive('moreFilters', function($rootScope, $timeout){
 				$scope.active_author_filter = false;
 				$scope.active_reader_filter = false;
 
-				$scope.bookFilters = {year:"1614;2014"};
-				$scope.authorFilters = {year:"1614;2014"};
-				$scope.readerFilters = {year:"1614;2014"};
+				$scope.bookFilters = {year:"1600;2010"};
+				$scope.authorFilters = {year:"1600;2010"};
+				$scope.readerFilters = {year:"10;100"};
 
 				$scope.bookOptions =  {
-	                from: 1700,
-	                to: 2050,
+	                from: 1000,
+	                to: 2020,
 	                step: 10,
 	                scale: [1700, '|', 1800, '|', 1900, '|', 2000, '|'],                                
 	                smooth: true
 	            };
 
 				$scope.authorOptions =  {
-	                from: 1700,
-	                to: 2050,
+	                from: 1000,
+	                to: 2020,
 	                step: 10,
 	                scale: [1700, '|', 1800, '|', 1900, '|', 2000, '|'],                                
 	                smooth: true
 	            };
 
 				$scope.readerOptions =  {
-	                from: 1700,
-	                to: 2050,
-	                step: 10,
-	                scale: [1700, '|', 1800, '|', 1900, '|', 2000, '|'],                                
+	                from: 10,
+	                to: 100,
+	                step: 5,
+	                scale: [10, '|', 40, '|', 70, '|', 100],                                
 	                smooth: true
 	            };
 

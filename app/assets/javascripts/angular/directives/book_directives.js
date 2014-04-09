@@ -269,6 +269,32 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
             });
         }
 
+        _bind_text_editor = function(){
+          var element = $('.text_editor').children();
+          element.jqte({
+              // On focus show the toolbar
+              focus: function () {
+                  scope.$apply(function () {
+                      element.parents(".jqte").find(".jqte_toolbar").show();
+                      element.parents(".jqte").click(function () { element.parents(".jqte").find(".jqte_toolbar").show(); });
+                  });
+              },
+              // On blur hide the toolar
+              blur: function () {
+                  scope.$apply(function () {
+                      element.parents(".jqte").find(".jqte_toolbar").hide();
+                  });
+              },
+              // On change refresh the model with the textarea value
+              change: function () {
+                  scope.$apply(function () {
+                      ngModel.$setViewValue(element.parents(".jqte").find(".jqte_editor")[0].innerHTML);
+                  });
+              }
+          });
+          element.parents(".jqte").find(".jqte_toolbar").hide();
+        }
+
         return {
           pre: function(scope, iElement, iAttrs, controller) { 
             _add_listeners_to_content_page(iElement, scope);
@@ -284,6 +310,7 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
             _add_listeners_to_book_tag(iElement, scope);
             _add_listeners_to_book_tag(iElement, scope);
             _set_pre_css();
+            _bind_text_editor();
           },
           post: function(scope, iElement, iAttrs, controller) {
             iElement.turn({
@@ -448,4 +475,44 @@ bookApp.directive('discussion', function(){
     },
     templateUrl: "/assets/angular/widgets/partials/book/discussion.html"
   }
+});
+
+bookApp.directive('angularte', function() {
+    return {
+        restrict: 'A',
+        require: '^ngModel',
+        link: function (scope, element, attrs, ngModel) {
+            $(function () {
+                element.jqte({
+                    // On focus show the toolbar
+                    focus: function () {
+                        scope.$apply(function () {
+                            element.parents(".jqte").find(".jqte_toolbar").show();
+                            element.parents(".jqte").click(function () { element.parents(".jqte").find(".jqte_toolbar").show(); });
+                        });
+                    },
+                    // On blur hide the toolar
+                    blur: function () {
+                        scope.$apply(function () {
+                            element.parents(".jqte").find(".jqte_toolbar").hide();
+                        });
+                    },
+                    // On change refresh the model with the textarea value
+                    change: function () {
+                        scope.$apply(function () {
+                            ngModel.$setViewValue(element.parents(".jqte").find(".jqte_editor")[0].innerHTML);
+                        });
+                }
+                });
+                element.parents(".jqte").find(".jqte_toolbar").hide();
+            });
+
+            // On render refresh the textarea with the model value 
+            ngModel.$render = function () {
+              if(element.parents(".jqte").find(".jqte_editor")[0]){
+                element.parents(".jqte").find(".jqte_editor")[0].innerHTML = ngModel.$viewValue || '';
+              }
+            };
+        }
+    }
 });

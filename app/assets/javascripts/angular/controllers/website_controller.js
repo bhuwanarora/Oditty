@@ -1,5 +1,6 @@
 websiteApp.controller('websiteAppController', function($scope, $rootScope, $interval, $http, 
-	$timeout, $q, $window, websiteService, Facebook, $speechRecognition, $speechSynthetis, $document){
+	$timeout, $q, $window, websiteService, Facebook, $speechRecognition, $speechSynthetis, $document,
+	scroller){
 	$scope.bindHorizontalScroll = function(event, delta, deltaX, deltaY){
 		event.preventDefault();
 		if(delta > 0){
@@ -13,19 +14,38 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		}
 	}
 
-	$scope.scrollOnePageRight = function(event){
-		event.preventDefault();
-		clientWidth = $document.width();
-		lessThanOnePageLeft = event.pageX + screen.width > clientWidth;
+	$scope.move_left = function(event){
+		var current_x = event.pageX - screen.width/2;
+		var delta_x = $('.recommendation_block:first').width();
+		scroller.scrollTo(current_x - delta_x, 0, 3000);
+	}
+
+	$scope.move_right = function(event){
+		var clientWidth = $document.width();
+		var lessThanOnePageLeft = event.pageX + screen.width > clientWidth;
 		if(lessThanOnePageLeft){
 			$rootScope.$broadcast('loadRecommendations');
 		}
-		event.view.window.scrollBy(1000, 0);
+		var current_x = event.pageX - screen.width/2;
+		var delta_x = $('.recommendation_block:first').width();
+		scroller.scrollTo(current_x + delta_x, 0, 3000);
 	}
 
-	$scope.scrollOnePageLeft = function(event){
-		event.preventDefault();
-		event.view.window.scrollBy(-1000, 0);
+	$scope.scroll_one_page_right = function(event){
+		var clientWidth = $document.width();
+		var lessThanOnePageLeft = event.pageX + screen.width > clientWidth;
+		if(lessThanOnePageLeft){
+			$rootScope.$broadcast('loadRecommendations');
+		}
+		var current_x = event.pageX - screen.width/2;
+		var delta_x = screen.width;
+		scroller.scrollTo(current_x + delta_x, 0, 5000);
+	}
+
+	$scope.scroll_one_page_left = function(event){
+		var current_x = event.pageX - screen.width/2;
+		var delta_x = screen.width;
+		scroller.scrollTo(current_x - delta_x, 0, 5000);
 	}
 
 
