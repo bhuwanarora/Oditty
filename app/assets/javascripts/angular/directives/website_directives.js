@@ -80,10 +80,6 @@ websiteApp.directive('pushNotification', function($rootScope, $parse, $timeout){
 				if(value == true){
 					element[0].firstChild.nextSibling.innerHTML = $rootScope.message_type //header
 					element[0].firstChild.nextSibling.nextSibling.nextSibling.innerHTML = $rootScope.message //message
-					$timeout(function(){
-						$rootScope.notification_active = false
-						$rootScope.message = ""
-					}, 10000)
 				}
 			})
 		}

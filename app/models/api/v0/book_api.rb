@@ -204,6 +204,8 @@ module Api
 			def self._test_book_info(id, thumb)
 				info = {
 					:id => id,
+					:title => "Test Book",
+					:author_name => "Test Author",
 					:thumb => thumb,
 					:summary => "Siddhartha is a novel by Hermann Hesse 
 						that deals with the spiritual journey of 

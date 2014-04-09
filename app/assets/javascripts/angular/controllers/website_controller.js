@@ -14,39 +14,6 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		}
 	}
 
-	$scope.click = function(){
-        $scope.clicked = $timeout(function(){
-            if($scope.stopped == false){
-                $scope.counter = $scope.counter + 1;
-            }
-        },500);
-    };
-    
-    $scope.dclick = function(){
-        $scope.stopped = $timeout.cancel($scope.clicked);
-        
-        if($('#updateButton').hasClass("active")){
-            $('#updateButton').removeClass("active");                 
-            $('#updateButton').button("reset");
-        }
-        else{
-            $('#updateButton').addClass("active");
-                $('#updateButton').button("update");    
-        }
-    };
-
-	$scope.right_scroller = function(event){
-		var current_x = event.pageX - screen.width/2;
-		var delta_x = 80;
-		scroller.scrollTo(current_x + delta_x, 0, 1000);
-	}
-
-	$scope.left_scroller = function(event){
-		var current_x = event.pageX - screen.width/2;
-		var delta_x = 80;
-		scroller.scrollTo(current_x - delta_x, 0, 1000);
-	}
-
 	$scope.move_left = function(event){
 		var current_x = event.pageX - screen.width/2;
 		var delta_x = $('.recommendation_block:first').width();
@@ -88,8 +55,13 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		// console.log("showFeebackForm")
 	}
 
-	$scope.show_search_result = function(){
-		console.log("show_search_result");
+	_show_search_result = function(){
+		$rootScope.show_book = true;
+		$rootScope.book_x = 0;
+		$rootScope.screen_x = 0;
+		$rootScope.total_x = screen.width;
+		var data = 1;
+    	_get_book_details(data);
 	}
 
 	_profile_status_colors = function(){
@@ -183,17 +155,14 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		}
 	}
 
-
 	$scope.search = function(){
 		input_aimed_for_searching = event.currentTarget == event.srcElement;
-		if(input_aimed_for_searching){
+		if(input_aimed_for_searching && !$rootScope.show_book){
 			$('body').css('white-space', 'normal');
 			$scope.searching = true;
 			$rootScope.keyCode = event.keyCode;
 		}
 	}
-      
-	
       
     $scope.intent_login = function() {
         Facebook.getLoginStatus(function(response) {
@@ -313,11 +282,11 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	}
 
 	$scope.handle_selection = function(selectedItem) {
-		$scope.search_input = selectedItem.toUpperCase();
-	    $scope.current = 0;
-	    $scope.selected_result = true;
-	    $scope.show_search_result();
+	    $scope.search.current = 0;
+	    $scope.search.selected_result = true;
+	    _show_search_result();
 	    event.stopPropagation();
+		$scope.search.input = "";
 	};
 
 	$scope.hide_search_page = function(){
@@ -328,22 +297,18 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		}
 	}
 
-	$scope.stop_propagation = function(){
-		event.stopPropagation();
-	}
-
 	$scope.is_current = function(index) {
-	    return $scope.current == index;
+	    return $scope.search.current == index;
 	};
 
 	$scope.set_current = function(index) {
-	    $scope.current = index;
+	    $scope.search.current = index;
 	};
 
 	$scope.navigate_options = function(){
 		var keyEnter = event.keyCode == 13;
 		if(keyEnter){
-			$scope.handle_selection("NOT WORKING"+$scope.current);
+			$scope.handle_selection("NOT WORKING"+$scope.search.current);
 		}
 	}
 
@@ -351,13 +316,13 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		var keyUp = event.keyCode == 38;
 		var keyDown = event.keyCode == 40;
 		if(keyUp){
-			if($scope.current != 0){
-				$scope.set_current($scope.current-1);
+			if($scope.search.current != 0){
+				$scope.set_current($scope.search.current-1);
 			}
 		}
 
 		if(keyDown){
-			$scope.set_current($scope.current+1);
+			$scope.set_current($scope.search.current+1);
 		}
 	}
 
@@ -397,9 +362,9 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	}
 
 	_init = function(){
-		$scope.current = 0;
+		$scope.search.current = 0;
 		$scope.searching = true;
-		$scope.selected_result = true; // hides the list initially
+		$scope.search.selected_result = true; // hides the list initially
 		$scope.more_filters = [];
 		$scope.test = {time: 1970};
 		$scope.detailed_book = {};

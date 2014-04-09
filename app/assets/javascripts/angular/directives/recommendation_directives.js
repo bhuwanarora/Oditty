@@ -15,7 +15,7 @@ recommendationApp.directive('moreFilters', function($rootScope, $timeout){
 	                from: 1000,
 	                to: 2020,
 	                step: 10,
-	                scale: [1700, '|', 1800, '|', 1900, '|', 2000, '|'],                                
+	                scale: [1000, '|', 1300, '|', 1600, '|', 1900, '|'],
 	                smooth: true
 	            };
 
@@ -23,7 +23,7 @@ recommendationApp.directive('moreFilters', function($rootScope, $timeout){
 	                from: 1000,
 	                to: 2020,
 	                step: 10,
-	                scale: [1700, '|', 1800, '|', 1900, '|', 2000, '|'],                                
+	                scale: [1000, '|', 1300, '|', 1600, '|', 1900, '|'],
 	                smooth: true
 	            };
 
@@ -31,7 +31,7 @@ recommendationApp.directive('moreFilters', function($rootScope, $timeout){
 	                from: 10,
 	                to: 100,
 	                step: 5,
-	                scale: [10, '|', 40, '|', 70, '|', 100],                                
+	                scale: [10, '|', 40, '|', 70, '|', 100],
 	                smooth: true
 	            };
 
