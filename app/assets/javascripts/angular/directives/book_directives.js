@@ -32,7 +32,7 @@ bookApp.directive('dock', function($rootScope, $timeout){
   }
 });
 
-bookApp.directive('flipbook', function($rootScope, $timeout){
+bookApp.directive('flipbook', function($rootScope, $timeout, scroller){
 	return{
 		restrict: 'E',
     replace: true,
@@ -130,8 +130,7 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
               if(e.which == 10 || e.which == 13) {
                 var $this = $(this);
                 var $discussion = $this.parent().parent().parent().parent();
-                var main_scope = $discussion.parent().scope();
-                var $index = main_scope.$index;
+                var $index = $discussion.parent().scope().$index;
                 var comment = {"comment": $this.val(), "timestamp": "Just now", "user": {}, "nested": true};
                 var is_commented_on_nested = $discussion.scope().discussion.nested
                 if(is_commented_on_nested){
@@ -140,20 +139,28 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
                 else{
                   var $discussion_index = $discussion.scope().$index;
                 }
-                var comments = scope.detailed_book.book.reviews[$index].comments;
+                var comments = scope.detailed_book.book.discussions[$discussion_index].comments;
                 var no_nested_comments = comments == null;
                 scope.$apply(function(){
                   if(no_nested_comments){
-                    scope.detailed_book.book.reviews[$index].comments = [comment];
+                    scope.detailed_book.book.discussions[$discussion_index].comments = [comment];
                   }
                   else{
-                    scope.detailed_book.book.reviews[$index].comments.push(comment);
+                    scope.detailed_book.book.discussions[$discussion_index].comments.push(comment);
                   }
                 });
                 var $comment = $this.parent().siblings('.footer');
                 $comment.show();
                 $this.val("");
                 $this.parent().hide();
+                if(is_commented_on_nested){
+                  var target = $this.parent().parent().parent().parent().parent().parent().children().last();
+                }
+                else{
+                  var target = $this.parent().parent().parent().parent().parent().children('.nested_comments').children().last();
+                }
+                var context = $('.discussions .elements')[0];
+                scroller.scrollToElement(target, 0, 4000, context);
               }
             });
         }
@@ -188,6 +195,14 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
               $comment.show();
               $this.val("");
               $this.parent().hide();
+              if(is_commented_on_nested){
+                var target = $this.parent().parent().parent().parent().parent().parent().children().last();
+              }
+              else{
+                var target = $this.parent().parent().parent().parent().parent().children('.nested_comments').children().last();
+              }
+              var context = $('.reviews .elements')[0];
+              scroller.scrollToElement(target, 0, 4000, context);
             }
           });
         }
@@ -295,6 +310,14 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
           element.parents(".jqte").find(".jqte_toolbar").hide();
         }
 
+        _bind_review_scroller = function(iElement, scope){
+          iElement.on('click', '.review .header', function(){
+            var $this = $(this);
+            var context = $('.reviews .elements')[0];
+            scroller.scrollToElement($this, 0, 5000, context);
+          });
+        }
+
         return {
           pre: function(scope, iElement, iAttrs, controller) { 
             _add_listeners_to_content_page(iElement, scope);
@@ -308,9 +331,9 @@ bookApp.directive('flipbook', function($rootScope, $timeout){
             _add_listeners_to_write_review(iElement, scope);
             _add_listeners_to_close_review(iElement, scope);
             _add_listeners_to_book_tag(iElement, scope);
-            _add_listeners_to_book_tag(iElement, scope);
             _set_pre_css();
             _bind_text_editor();
+            _bind_review_scroller(iElement, scope);
           },
           post: function(scope, iElement, iAttrs, controller) {
             iElement.turn({

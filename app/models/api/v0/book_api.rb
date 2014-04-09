@@ -796,7 +796,8 @@ module Api
 											:comment => "i adore this book and will always buy it at a used book store for some i love.",
 											:timestamp => "6 years ago",
 											:id => 1,
-											:url => ""
+											:url => "",
+											:nested => true
 										},
 										{
 											:user => {
@@ -808,7 +809,8 @@ module Api
 											:comment => "great",
 											:timestamp => "6 years ago",
 											:id => 1,
-											:url => ""
+											:url => "",
+											:nested => true
 										}
 									]
 								},
@@ -924,7 +926,8 @@ module Api
 									:comment => "i adore this book and will always buy it at a used book store for some i love.",
 									:timestamp => "6 years ago",
 									:id => 1,
-									:url => ""
+									:url => "",
+									:nested => true
 								},
 								{
 									:user => {
@@ -936,7 +939,8 @@ module Api
 									:comment => "great",
 									:timestamp => "6 years ago",
 									:id => 1,
-									:url => ""
+									:url => "",
+									:nested => true
 								}
 							]
 						},

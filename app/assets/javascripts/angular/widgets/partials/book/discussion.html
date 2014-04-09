@@ -3,14 +3,14 @@
 	<div class="user">
 		<img ng-src="{{discussion.user.thumb}}" class="thumb" />
 	</div>
-	<div class="comment" class="comment_text" itemscope itemtype="http://schema.org/UserComments">
+	<div class="comment" itemscope itemtype="http://schema.org/UserComments">
 		<div class="username">
 			<div itemprop="creator "itemscope itemtype="http://schema.org/Person">
 				<span itemprop="name">{{discussion.user.name}}</span>
 				{{index}}
 			</div>
 		</div>
-		<div >
+		<div class="comment_text">
 			<span itemprop="commentText">{{discussion.comment}}</span>
 			</div>
 		<div class="footer">
