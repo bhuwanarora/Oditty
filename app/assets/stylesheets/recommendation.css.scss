@@ -33,7 +33,7 @@ a:hover{
 .search_page{
 	position: fixed;
 	background-color: white;
-	background-image: url('7H.jpg');
+	background-image: url('Optimized-7H.jpg');
 	width: 100%;
 	height: 100%;
 	background-size: 100% 80%;
@@ -48,7 +48,7 @@ a:hover{
 	right: 10px;
 	/*border: 1px solid #DEDEDE;*/
 	background-color: #3D79A1;
-	background-color: rgba(255, 255, 255, 0.21);
+	background-color: rgba(0, 0, 0, 0.4);
 	color: white;
 	text-align: center;
 	padding: 15px;
@@ -58,7 +58,7 @@ a:hover{
 
 .search_page .login_button:active{
 	background-color: #244963;
-	background-color: rgba(255, 255, 255, 0.3);
+	background-color: rgba(0, 0, 0, 0.6);
 }
 
 .search_page .logo{
@@ -70,8 +70,8 @@ a:hover{
 	font-size: 2em;
 	font-weight: bold;
 	font-family: Helvetica;
-	text-shadow: -1px 0 #AFAFAF, 0 1px #F1F1F1, 1px 0 #F1F1F1, 0 -1px #F1F1F1;
-	letter-spacing: -4px;
+	/*text-shadow: -1px 0 #AFAFAF, 0 1px #F1F1F1, 1px 0 #F1F1F1, 0 -1px #F1F1F1;*/
+	letter-spacing: -4.2px;
 }
 
 .search_page .tagline{
@@ -95,7 +95,7 @@ a:hover{
 	color: white;
 	padding-left: 10px;
 	border-radius: 2px;
-	border: 1px solid rgba(0, 0, 0, 0.2);;
+	border: 1px solid rgba(255, 255, 255, 0.4);
 	background-color: rgba(0, 0, 0, 0.4);
 }
 
@@ -123,9 +123,9 @@ a:hover{
 	-webkit-appearance: none;
 	margin-top: -20px;
 	border-radius: 0px;
-	border-top: 1px solid rgba(0, 0, 0, 0.2);
-	border-right: 1px solid rgba(0, 0, 0, 0.2);
-	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+	border-top: 1px solid rgba(255, 255, 255, 0.4);
+	border-right: 1px solid rgba(255, 255, 255, 0.4);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.4);
 	border-left: none;
 	outline: none;
 	/*color: #717070;*/
@@ -254,7 +254,7 @@ a:hover{
    width:100%;
    background-color: #FAFAFA; 
    border: 1px solid #DDDDDD;
-   box-shadow: 0px -7px 3px -6px #777777; 
+   /*box-shadow: 0px -7px 3px -6px #777777; */
    background-image: -moz-linear-gradient(top, #b4b4b4, #707070);
    background-image: -webkit-gradient(linear, 0% 0%, 0% 150%, to(#DBDBDB), from(white));
    
@@ -965,6 +965,10 @@ a:hover{
 	text-shadow: 0px 1px 1px #fff;  
 }
 
+.filter_link{
+	color: #3D79A1;
+}
+
 .filter_link, 
 .notification_bell{
 	float: right;
@@ -1026,13 +1030,13 @@ a:hover{
 	font-size: 0.8em;	
 	padding: 15px;
 	color: white;
-	background-color: #4374e0;
+	background-color: #65b045;
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
 }
 
 .message .close{
-	color: #4374e0;
+	color: #65b045;
 	cursor: pointer;
 	padding: 4px;
 	border-radius: 2px;
@@ -1176,7 +1180,7 @@ a:hover{
 	z-index: 5;
 	padding: 0px 0px 10px 0px;
 	margin-left: -10px;
-	background-color: #F1F1F1;
+	background-color: #E6E6E6;
 	border: 1px solid #E2E2E2;
 	border-top-left-radius: 6px;
 	border-top-right-radius: 6px;
@@ -1277,7 +1281,7 @@ input:focus{
 	text-align: center;
 	width: 100%;
 	padding: 5px;
-	background-color: #FAFAFA;
+	background-color: #F0F0F0;
 }
 
 .main_filters div{
