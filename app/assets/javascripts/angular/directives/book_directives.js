@@ -209,12 +209,14 @@ bookApp.directive('flipbook', function($rootScope, $timeout, scroller){
 
         _add_listeners_to_review_header = function(iElement, scope){
           iElement.on('click', '.review .header', function(e){
-            var $review_content = $(this).siblings();
+            var $this = $(this);
+            var $review_content = $this.siblings();
+            var context = $('.reviews .elements')[0];
+            scroller.scrollToElement($this, 0, 3000, context);
             if($review_content.css("display") == "block"){
               $review_content.css('display', 'none');
             }
             else{
-              // $('.review .content').css('display', 'none');
               $review_content.show(); 
             }
           });
@@ -310,14 +312,6 @@ bookApp.directive('flipbook', function($rootScope, $timeout, scroller){
           element.parents(".jqte").find(".jqte_toolbar").hide();
         }
 
-        _bind_review_scroller = function(iElement, scope){
-          iElement.on('click', '.review .header', function(){
-            var $this = $(this);
-            var context = $('.reviews .elements')[0];
-            scroller.scrollToElement($this, 0, 5000, context);
-          });
-        }
-
         return {
           pre: function(scope, iElement, iAttrs, controller) { 
             _add_listeners_to_content_page(iElement, scope);
@@ -333,7 +327,6 @@ bookApp.directive('flipbook', function($rootScope, $timeout, scroller){
             _add_listeners_to_book_tag(iElement, scope);
             _set_pre_css();
             _bind_text_editor();
-            _bind_review_scroller(iElement, scope);
           },
           post: function(scope, iElement, iAttrs, controller) {
             iElement.turn({

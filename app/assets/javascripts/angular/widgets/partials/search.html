@@ -66,6 +66,11 @@
 			<div class="heading">READERS</div>
 		</span>
 	</div>
+  <div class="secondary_login" 
+       ng-click="toggle_login_panel()"
+       ng-if="!logged && !show_login_form">
+    Get book recommendations, meet authors and other readers.
+  </div>
 </div>
 <div ng-if="!logged && show_login_form">
 	<!-- <div class="login_buttons fb" 

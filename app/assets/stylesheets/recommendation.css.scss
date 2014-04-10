@@ -118,19 +118,25 @@ a:hover{
 	color: white;
 }
 
-.search_page .internal_links{
-	z-index: 10;
+.search_page .internal_links,
+.search_page .secondary_login{
 	color: white;
 	color: #3D79A1;
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	margin-top: 30px;
-	margin-left: -200px;
-	/*background-color: rgba(113, 112, 112, 0.36);*/
 	padding: 20px;
 	border-radius: 2px;
-	/*border: 1px solid white;*/
+}
+
+.search_page .internal_links{
+	margin-left: -200px;
+	margin-top: 30px;
+}
+
+.search_page .secondary_login{
+	margin-top: 15px;
+	margin-left: -180px;
 }
 
 .search_page .internal_links span{
