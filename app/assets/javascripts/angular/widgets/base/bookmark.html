@@ -1,7 +1,8 @@
 <div itemscope 
  	 itemtype= "http://schema.org/BookmarkAction"
-	 class="bookmark animate-fast" 
+	 class="bookmark" 
 	 ng-click="toggle_bookmarked()"
+	 ng-class="{'active_bookmark':book.bookmark_status, 'inactive_bookmark':!book.bookmark_status}"
 	 ng-model="book.bookmark_status"
 	 title="bookmark">
 	 <span class="icon-bookmark">

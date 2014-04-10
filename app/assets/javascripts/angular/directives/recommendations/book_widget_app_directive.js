@@ -92,20 +92,28 @@ bookWidgetApp.directive('reviewWidget', function () {
   };
 })
 
-bookWidgetApp.directive('bookmark', function ($rootScope) {
+bookWidgetApp.directive('bookmark', function ($rootScope, $timeout) {
   return {
     restrict: 'E',
     controller: function($scope){
       $scope.toggle_bookmarked = function(){
         var bookmark_status = $scope.book.bookmark_status;
+        var book_title = $scope.book.title;
+        var author_name = $scope.book.author_name;
         if(bookmark_status == 1){
           $scope.book.bookmark_status = 0;
+          var message = "SUCCESS-"+book_title+" by "+author_name+" has been removed from your bookmark shelf.";
           _remove_book_from_shelf();
         }
         else{
           $scope.book.bookmark_status = 1;
+          var message = "SUCCESS-"+book_title+" by "+author_name+" has been added to your bookmark shelf.";
           _add_book_to_shelf();
         }
+        var timeout_event = notify($rootScope, message, $timeout);
+        $scope.$on('destroy', function(){
+          $timeout.cancel(timeout_event);
+        });
       }
 
       _remove_book_from_shelf = function(){
@@ -273,26 +281,54 @@ bookWidgetApp.directive('rate', function ($rootScope, $timeout) {
     },
     templateUrl: "/assets/angular/widgets/base/rate.html"
   };
-})
+});
+
+bookWidgetApp.directive('recommend', function($rootScope, $timeout){
+  return{
+    restrict: 'E',
+    controller: function($scope){
+      $scope.recommend = function(){
+        var book_title = $scope.book.title;
+        var author_name = $scope.book.author_name;
+        if($scope.recommended){
+          $scope.recommended = false;
+          var message = "SUCCESS-"+book_title+" by "+author_name+" will not be recommended to your friends.";
+        }
+        else{
+          $scope.recommended = true;
+          var message = "SUCCESS-"+book_title+" by "+author_name+" has been recommended to all your friends.";
+        }
+        var timeout_event = notify($rootScope, message, $timeout);
+        $scope.$on('destroy', function(){
+          $timeout.cancel(timeout_event);
+        });
+      }
+    },
+    templateUrl: "/assets/angular/widgets/base/recommend.html"
+  }
+});
 
 bookWidgetApp.directive('markAsRead', function($rootScope, $timeout){
 	return {
 		restrict: 'E',
 		controller: function($scope){
 			$scope.markAsRead = function(){
-				$scope.read = true;
-        var timeout_event = notify($rootScope, "ADVISE-Also please rate the book. This will help us to recommend better books.", $timeout)
+        if($scope.read){
+          $scope.read = false;
+        }
+        else{
+  				$scope.read = true;
+          var timeout_event = notify($rootScope, "ADVISE-Also please rate the book. This will help us to recommend better books.", $timeout)
 
-        $rootScope.$broadcast('glowShelf');
+          $rootScope.$broadcast('glowShelf');
 
-        $scope.$on('destroy', function(){
-          $timeout.cancel(timeout_event);
-          $timeout.cancel(glow_event);
-        });
-        //ajax call to mark the book as read
+          $scope.$on('destroy', function(){
+            $timeout.cancel(timeout_event);
+            $timeout.cancel(glow_event);
+          });
+          //ajax call to mark the book as read
+        }
       }
-
-      _init();
 		},
 		templateUrl: "/assets/angular/widgets/base/mark_as_read.html"
 	}

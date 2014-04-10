@@ -48,7 +48,7 @@ module Api
 							  	
 							  },
 							  :rating => 5,
-							  :bookmark_status => 1,
+							  :bookmark_status => 0,
 							  :readers_count => "112",
 							  :discussions_count => "23",
 							  :reviews_count => "5",
@@ -196,7 +196,8 @@ module Api
 							:thumb => "assets/profile_pic.jpeg"
 						}
 					],
-					:users_count => 15
+					:users_count => 15,
+					:recommended => 0
 				}
 			end
 

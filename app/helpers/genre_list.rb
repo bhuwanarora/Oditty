@@ -178,7 +178,6 @@ module GenreList
                               :published_year => published_year,
                               :flag => true)
     rescue Exception => e
-      debugger
       puts "#{id}: Error #{e}"
     end
   end

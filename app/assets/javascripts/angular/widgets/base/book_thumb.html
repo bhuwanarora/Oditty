@@ -43,8 +43,7 @@
       </div>
     </div>
     <div class="footer">
-      <span class="recommend" title="Recommend book to all friends">Recommend</span>
-      <span class="close">Close</span>
+      <recommend></recommend>
       <span class="icons icon-share" 
             ng-mouseover="show_share_options()"
             ng-mouseout="hide_share_options()">
@@ -54,8 +53,18 @@
           <div>Twitter</div>
         </div>
       </span>
-      <span itemscope itemtype= "http://schema.org/BookmarkAction"><span class="icons icon-bookmark"></span></span>
-      <span class="icons icon-location"></span>
+      <span itemscope itemtype= "http://schema.org/BookmarkAction">
+        <span class="icons icon-bookmark" 
+              ng-class="{'active_bookmark':book.bookmark_status, 'inactive_bookmark':!book.bookmark_status}"
+              ng-click="toggle_bookmarked()"
+              ng-model="book.bookmark_status"
+              title="bookmark"></span>
+      </span>
+      <span class="icons icon-location"
+            ng-class="{'book_read':read, 'book_unread':!read}"
+            title="mark as read"
+            ng-model="read"
+            ng-click="markAsRead()"></span>
     </div>
   </div>
 </script>
