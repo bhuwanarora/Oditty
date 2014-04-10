@@ -32,16 +32,14 @@
   	     </span>
   	</div>
   	<select ng-options="type for type in ['R.D.', 'Books', 'Authors', 'Readers']" 
-          ng-model="search_type"
-          ng-hide="show_login_form">
+          ng-model="search_type">
   	</select>
   	<input set-focus="searching" 
   	       ng-keypress="get_search_results($event)" 
   	       ng-keydown="search.selected_result=false"
   	       ng-keyup="key_up()"
   	       ng-model="search.input"
-  	       ng-hide="show_login_form"
-           placeholder="write test"/>
+           placeholder="write test for now..."/>
   	<div class="website_search_options" 
 	   	 ng-hide="!search.input.length || search.selected_result || show_login_form">
   		<div ng-repeat="item in search_results | filter:search.input  track by $index" 
@@ -56,21 +54,21 @@
 	<div class="internal_links" ng-if="logged">
 		<span ng-click="hide_search_page('BOOK')">
 			<div class="count">1,000,000,000+</div>
-			<div class="heading">BOOKS</div>
+			<div class="heading">Books</div>
 		</span>
 		<span ng-click="hide_search_page(AUTHOR)">
 			<div class="count">4,000,000+</div>
-			<div class="heading">AUTHORS</div>
+			<div class="heading">Authors</div>
 		</span>
 		<span ng-click="hide_search_page(READER)">
 			<div class="count">1,000,000+</div>
-			<div class="heading">READERS</div>
+			<div class="heading">Readers</div>
 		</span>
 	</div>
   <div class="secondary_login" 
        ng-click="toggle_login_panel()"
        ng-if="!logged && !show_login_form">
-    Explore books, meet authors and other readers.
+    Explore books, meet authors and readers.
   </div>
 </div>
 <div ng-if="!logged && show_login_form">

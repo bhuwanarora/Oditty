@@ -33,10 +33,11 @@ a:hover{
 .search_page{
 	position: fixed;
 	background-color: white;
-	/*background-image: url('7H.jpg');*/
+	background-image: url('7H.jpg');
 	width: 100%;
 	height: 100%;
-	background-size: cover;
+	background-size: 100% 80%;
+	background-repeat: no-repeat;
 	z-index: 5;
 	margin: -10px;
 }
@@ -45,8 +46,9 @@ a:hover{
 	position: absolute;
 	top: 10px;
 	right: 10px;
-	border: 1px solid #DEDEDE;
+	/*border: 1px solid #DEDEDE;*/
 	background-color: #3D79A1;
+	background-color: rgba(255, 255, 255, 0.21);
 	color: white;
 	text-align: center;
 	padding: 15px;
@@ -56,32 +58,29 @@ a:hover{
 
 .search_page .login_button:active{
 	background-color: #244963;
+	background-color: rgba(255, 255, 255, 0.3);
 }
 
 .search_page .logo{
 	color: white;
-	color: #3D79A1;
+	/* color: #3D79A1; */
 	position: absolute;
-	left: 50%;
-	top: 39%;
-	margin-top: -40px;
-	margin-left: -150px;
-	font-size: 4em;
+	left: 20px;
+	top: 20px;
+	font-size: 2em;
 	font-weight: bold;
 	font-family: Helvetica;
 	text-shadow: -1px 0 #AFAFAF, 0 1px #F1F1F1, 1px 0 #F1F1F1, 0 -1px #F1F1F1;
-	letter-spacing: -10px;
+	letter-spacing: -4px;
 }
 
 .search_page .tagline{
 	position: absolute;
-	top: 50%;
-	left: 50%;
+	top: 32px;
+	left: 215px;
 	color: white;
-	color: #3D79A1;
-	margin-top: -45px;
-	margin-left: -130px;
-	font-size: 1.1em;
+	/* color: #3D79A1; */
+	font-size: 1em;
 }
 
 .search_page input{
@@ -93,12 +92,27 @@ a:hover{
 	margin-left: -225px;
 	margin-top: -20px;
 	font-size: 1.5em;
-	color: #717070;
+	color: white;
 	padding-left: 10px;
 	border-radius: 2px;
-	border: 1px solid #E9E9E9;
+	border: 1px solid rgba(0, 0, 0, 0.2);;
+	background-color: rgba(0, 0, 0, 0.4);
 }
 
+.search_page input::-webkit-input-placeholder {
+   color: white;
+}
+
+.search_page input:-moz-placeholder { /* Firefox 18- */
+   color: white;
+}
+
+.search_page input::-moz-placeholder {  /* Firefox 19+ */
+   color: white; 
+}
+.search_page input:-ms-input-placeholder {  
+   color: white;
+}
 .search_page select{
 	position: absolute;
 	left: 50%;
@@ -109,9 +123,14 @@ a:hover{
 	-webkit-appearance: none;
 	margin-top: -20px;
 	border-radius: 0px;
-	border: 1px solid #E9E9E9;
+	border-top: 1px solid rgba(0, 0, 0, 0.2);
+	border-right: 1px solid rgba(0, 0, 0, 0.2);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+	border-left: none;
 	outline: none;
-	color: #717070;
+	/*color: #717070;*/
+	color: white;
+	background-color: #3D79A1;
 }
 
 .search_page select option{
@@ -120,10 +139,10 @@ a:hover{
 
 .search_page .internal_links,
 .search_page .secondary_login{
-	color: white;
-	color: #3D79A1;
+	color: #717070;
+	/*color: #3D79A1;*/
 	position: absolute;
-	top: 50%;
+	bottom: 5%;
 	left: 50%;
 	padding: 20px;
 	border-radius: 2px;
@@ -131,13 +150,12 @@ a:hover{
 
 .search_page .internal_links{
 	margin-left: -200px;
-	margin-top: 30px;
 }
 
 .search_page .secondary_login{
-	margin-top: 15px;
 	margin-left: -145px;
 	cursor: pointer;
+	font-size: 1em;
 }
 
 .search_page .internal_links span{
@@ -170,7 +188,7 @@ a:hover{
 }
 .login_form{
 	position: fixed;
-	top: 50%;
+	top: 70%;
 	left: 50%;
 	z-index: 10;
 	margin-top: -20px;
@@ -211,7 +229,6 @@ a:hover{
 	text-align: center;
 	padding: 10px;
 	color: white;
-	margin-top: 10px;
 	cursor: pointer;
 	border-radius: 2px;
 }
