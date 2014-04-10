@@ -17,7 +17,8 @@
     <div msd-wheel="bindHorizontalScroll($event, $delta, $deltaX, $deltaY)" 
          ng-animate="msd-wheel"
          class="recommendations"
-         ng-hide="searching">
+         ng-hide="searching"
+         style="height:100%; white-space:nowrap;">
       <%= yield %>
     </div>
     <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/lib/**/*.js")] %>

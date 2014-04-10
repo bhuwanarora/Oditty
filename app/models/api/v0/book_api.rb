@@ -2,7 +2,10 @@ module Api
 	module V0
 		class BookApi
 			def self.bookmarked_books
-				self.recommendations
+				self.recommendations.map do |s|
+					s['bookmark_status'] = 1
+					s
+				end
 			end
 
 			def self.push_recommendations

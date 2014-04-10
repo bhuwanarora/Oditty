@@ -124,7 +124,7 @@ module GenreList
   end
 
   def self.parse_books
-    GoodReadsBook.where(:flag => nil).find_each do |book|
+    GoodReadsBook.where(:flag => nil).limit(100000).each do |book|
       book_id = book.id
       book_href = book.url
       puts "#{book_id} #{book_href}"

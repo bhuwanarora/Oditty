@@ -103,26 +103,18 @@ bookWidgetApp.directive('bookmark', function ($rootScope, $timeout) {
         if(bookmark_status == 1){
           $scope.book.bookmark_status = 0;
           var message = "SUCCESS-"+book_title+" by "+author_name+" has been removed from your bookmark shelf.";
-          _remove_book_from_shelf();
+          $scope.$emit('removeFromBookmarks', $scope.book);
         }
         else{
           $scope.book.bookmark_status = 1;
           var message = "SUCCESS-"+book_title+" by "+author_name+" has been added to your bookmark shelf.";
-          _add_book_to_shelf();
+          $scope.$emit('addToBookmarks', $scope.book);
+          $rootScope.$broadcast('glowBookmark');
         }
         var timeout_event = notify($rootScope, message, $timeout);
         $scope.$on('destroy', function(){
           $timeout.cancel(timeout_event);
         });
-      }
-
-      _remove_book_from_shelf = function(){
-        $scope.$emit('removeBookFromShelf', $scope.book);
-      }
-
-      _add_book_to_shelf = function(){
-        $rootScope.$broadcast('glowBookmark');
-        $scope.$emit('addBookToShelf', $scope.book);
       }
     },
     templateUrl: "/assets/angular/widgets/base/bookmark.html"
@@ -312,18 +304,21 @@ bookWidgetApp.directive('markAsRead', function($rootScope, $timeout){
 	return {
 		restrict: 'E',
 		controller: function($scope){
-			$scope.markAsRead = function(){
+      $scope.markAsRead = function(){
         if($scope.read){
           $scope.read = false;
+          $scope.book.status = 0;
+          $scope.$emit('removeBookFromShelf', $scope.book);
         }
         else{
-  				$scope.read = true;
+          $scope.read = true;
+          $scope.book.status = 1;
+          $scope.$emit('addBookToShelf', $scope.book);
+          $rootScope.$broadcast('glowShelf');
           var book_title = $scope.book.title;
           var author_name = $scope.book.author_name;
           var message = "ADVISE-Also please rate "+book_title+" by "+author_name+". This will help us to recommend better books."
           var timeout_event = notify($rootScope, message, $timeout);
-
-          $rootScope.$broadcast('glowShelf');
 
           $scope.$on('destroy', function(){
             $timeout.cancel(timeout_event);
@@ -332,9 +327,9 @@ bookWidgetApp.directive('markAsRead', function($rootScope, $timeout){
           //ajax call to mark the book as read
         }
       }
-		},
-		templateUrl: "/assets/angular/widgets/base/mark_as_read.html"
-	}
+    },
+    templateUrl: "/assets/angular/widgets/base/mark_as_read.html"
+  }
 });
 
 bookWidgetApp.directive('bookBinding', function(){

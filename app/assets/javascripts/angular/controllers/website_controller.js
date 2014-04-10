@@ -135,7 +135,7 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 			}
 		}
 		else if($scope.user.profile_status == 4){
-			$rootScope.$broadcast('showBookReadShelf');
+			// $rootScope.$broadcast('showBookReadShelf');
 		}
 	}
 
@@ -275,8 +275,24 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 
 	_add_listeners = function(){
 		add_book_to_shelf_event = $scope.$on('addBookToShelf', function(event, data){
-	    	var book = {title: data['title'], author_name: data['author_name'], book_cover_url: data['book_cover_url']};
-	    	$scope.user.books['bookmarked'].push(book);
+	    	$scope.user.books['read'].push(data);
+	    	event.stopPropagation();
+	    });
+
+	    remove_book_from_shelf = $scope.$on('removeBookFromShelf', function(event, data){
+	    	var index = $scope.user.books['read'].indexOf(data);
+	    	$scope.user.books['read'].splice(index, 1);
+	    	event.stopPropagation();
+	    });
+
+	    add_to_bookmarks_event = $scope.$on('addToBookmarks', function(event, data){
+	    	$scope.user.books['bookmarked'].push(data);
+	    	event.stopPropagation();
+	    });
+
+	    remove_from_bookmarks_event = $scope.$on('removeFromBookmarks', function(event, data){
+	    	var index = $scope.user.books['bookmarked'].indexOf(data);
+	    	$scope.user.books['bookmarked'].splice(index, 1);
 	    	event.stopPropagation();
 	    });
 	}
@@ -388,7 +404,10 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		$speechRecognition.listen();
 	}
 
-	var add_book_to_shelf_event = ""
+	var add_book_to_shelf_event = "";
+	var remove_book_from_shelf = "";
+	var add_to_bookmarks_event = "";
+	var remove_from_bookmarks_event = "";
 	_init();
 
 });

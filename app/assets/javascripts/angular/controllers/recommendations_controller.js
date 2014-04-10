@@ -62,11 +62,6 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	    	event.stopPropagation();
 	    });
 
-	    remove_book_from_shelf_event = $scope.$on('removeBookFromShelf', function(event, data){
-	    	var book = {title: data['title'], author_name: data['author_name'], book_cover_url: data['book_cover_url']};
-	    	event.stopPropagation();
-	    });
-
 	    open_shelf_event = $scope.$on('showBookReadShelf', function(){
 	    	$scope.read_selected = true;
 	    	event.stopPropagation();
@@ -184,9 +179,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	var load_recommendations_event = "";
 	var reload_recommendations_event = "";
 	var user_behaviour_timer_event = "";
-	var remove_book_from_shelf_event = ""
 	var open_shelf_event = "";
-	var add_book_to_shelf_event = ""
 	_init();
 
 });
