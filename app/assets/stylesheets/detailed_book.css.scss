@@ -499,10 +499,17 @@ and (min-width : 1280px) {
 	width: 100%;
 	margin: 0px;
 	padding: 0px;
-	border-radius: 10px;
+	border-top-left-radius: 10px;
 }
 
-.detailed_book .news_element, .detailed_book .review{
+.detailed_book .news_element div embed{
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+.detailed_book .news_element, 
+.detailed_book .review{
 	padding: 10px;
 	border-radius: 10px;
 	background-color: #f8f8f8;
@@ -545,13 +552,15 @@ and (min-width : 1280px) {
 
 .container .header{
 	position: absolute;
-	padding: 0px !important;
 	text-align: left !important;
 	top: 5px;
 	width: 90%;
 	left: 5px;
 	z-index: 1;
 	color: white;
+	border-top-left-radius: 10px;
+	padding: 11px !important;
+	background-color: rgba(0, 0, 0, 0.5);
 }
 
 .container .timestamp{

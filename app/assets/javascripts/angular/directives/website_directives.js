@@ -156,3 +156,21 @@ websiteApp.directive('typeAhead', function($timeout){
 		templateUrl: 'assets/angular/widgets/partials/type_ahead.html'
 	}
 });
+
+websiteApp.directive('message', function(){
+	return{
+		restrict: 'E',
+		controller: function($scope){
+			$scope.close_message = function(){
+				$scope.message_closed = true;
+			}
+
+			_init = function(){
+				$scope.message_closed = false;
+			}
+
+			_init();
+		},
+		templateUrl: 'assets/angular/widgets/partials/message.html'
+	}
+});

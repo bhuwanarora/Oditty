@@ -318,7 +318,10 @@ bookWidgetApp.directive('markAsRead', function($rootScope, $timeout){
         }
         else{
   				$scope.read = true;
-          var timeout_event = notify($rootScope, "ADVISE-Also please rate the book. This will help us to recommend better books.", $timeout)
+          var book_title = $scope.book.title;
+          var author_name = $scope.book.author_name;
+          var message = "ADVISE-Also please rate "+book_title+" by "+author_name+". This will help us to recommend better books."
+          var timeout_event = notify($rootScope, message, $timeout);
 
           $rootScope.$broadcast('glowShelf');
 
@@ -332,7 +335,7 @@ bookWidgetApp.directive('markAsRead', function($rootScope, $timeout){
 		},
 		templateUrl: "/assets/angular/widgets/base/mark_as_read.html"
 	}
-})
+});
 
 bookWidgetApp.directive('bookBinding', function(){
   return{

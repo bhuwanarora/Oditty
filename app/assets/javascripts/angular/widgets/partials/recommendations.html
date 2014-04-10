@@ -10,6 +10,7 @@
 		CONTENT
 	</div>
 </div>
+<message></message>
 <div ng-switch on="panel_selected">
 	<div ng-switch-when="BOOKMARK">
 		<div ng-switch on="user.books.bookmarked.length">
@@ -131,8 +132,8 @@
 						</div>
 					</div>
 					<div class="footer">
-						<span class="prev" ng-click="prev_profile_state()">Previous</span>
-						<span class="next" ng-click="next_profile_state()">Next</span>
+						<span class="prev icon-angle-left" ng-click="prev_profile_state()"></span>
+						<span class="next icon-angle-right" ng-click="next_profile_state()"></span>
 					</div>
 				</div>
 			</div>

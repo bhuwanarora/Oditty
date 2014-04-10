@@ -994,6 +994,28 @@ a:hover{
 	font-size: 0.8em;
 }
 
+.message{
+	position: fixed;
+	z-index: 5;
+	bottom: 40px;
+	left: 10px;
+	font-size: 0.8em;	
+	padding: 15px;
+	color: white;
+	background-color: #4374e0;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}
+
+.message .close{
+	color: #4374e0;
+	cursor: pointer;
+	padding: 4px;
+	border-radius: 2px;
+	margin-left: 5px;
+	background-color: white;
+}
+
 .push_notification .content{
 	padding: 15px;
 	color: white;
@@ -1398,6 +1420,7 @@ input:focus{
 	width: 250px;
 	white-space: normal;
 	height: 340px;
+	position: relative;
 }
 
 .info_cards .header{
@@ -1432,13 +1455,9 @@ input:focus{
 }
 
 .info_cards .footer{
-	padding: 20px;
-	border: 1px solid rgba(255, 255, 255, 0.21);
-	margin-top: 100px;
-	background-color: rgba(255, 255, 255, 0.01);
-	border-radius: 2px;
 	position: absolute;
-	top: 280px;
+	bottom: 25px;
+	right: 25px;
 }
 
 .info_cards .thumb{
@@ -1457,6 +1476,11 @@ input:focus{
 .info_cards .footer .prev{
 	color: white;
 	cursor: pointer;
+	text-align: center;
+	padding: 15px;
+	font-size: 2em;
+	background-color: rgba(255, 255, 255, 0.01);
+	border: 1px solid rgba(255, 255, 255, 0.21);
 }
 
 .login_buttons{
