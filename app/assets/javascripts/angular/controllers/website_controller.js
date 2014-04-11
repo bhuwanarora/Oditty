@@ -392,11 +392,19 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		}
 	}
 
+	_handle_search_page = function(){
+		$scope.searching = true;
+		$scope.search.current = 0;
+		$scope.search_type = "Books";
+		$scope.search.selected_result = true; // hides the list initially
+		websiteService.get_background_image().then(function(data){
+			$scope.search_style = {'background-image': 'url("'+data.url+'")'};
+		});
+	}
+
 	_init = function(){
 		$scope.loading = true;
-		$scope.search.current = 0;
-		$scope.searching = true;
-		$scope.search.selected_result = true; // hides the list initially
+		$scope.drop_icon = false;
 		$scope.more_filters = [];
 		$scope.test = {time: 1970};
 		$scope.detailed_book = {};
@@ -405,13 +413,13 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		// Define user empty data :/
 		$scope.user = {'books': {'bookmark':[], 'read': []}};
 		$scope.user.profile_status = 0;
-		$scope.search_type = "Books";
 	    _profile_status_colors();
 
 		_bind_emit();
 		_bind_feedback_form();
 		_bind_auth_listeners();
 		_add_listeners();
+		_handle_search_page();
 		$('body').css('white-space', 'normal');
 		// $speechRecognition.onstart(function(){
 		//   $speechSynthetis.speak("You're at Reader's Door. How can I help you?", 'en-UK');
@@ -421,7 +429,11 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 
 		$timeout(function(){
 			$scope.loading = false;
-		}, 3000);
+		}, 5000);
+
+		$timeout(function(){
+			$scope.drop_icon = true;
+		}, 2000);
 	}
 
 	var add_book_to_shelf_event = "";

@@ -36,4 +36,12 @@ websiteApp.service('websiteService', function ($http, $q, $rootScope) {
         return deferred.promise;
     }
 
+    this.get_background_image = function(){
+        var deferred = $q.defer();
+        $http.get('/api/v0/image').then(function(result) {
+            return deferred.resolve(result.data); 
+        });
+        return deferred.promise;
+    }
+
 });

@@ -1,4 +1,6 @@
-<div class="search_page">
+<link rel="stylesheet" type="text/css" href="assets/search_page.css.scss">
+<div class="search_page"
+     ng-style="search_style">
   	<div class="logo">
       <span>r</span>
       <span>e</span>
@@ -31,6 +33,7 @@
   	     	<span class="icon-close"></span>
   	     </span>
   	</div>
+    <hr>
   	<select ng-options="type for type in ['R.D.', 'Books', 'Authors', 'Readers']" 
           ng-model="search_type">
   	</select>
@@ -65,13 +68,13 @@
 			<div class="heading">Readers</div>
 		</span>
 	</div>
-  <div class="secondary_login" 
+  <div class="secondary_login animate-fast" 
        ng-click="toggle_login_panel()"
        ng-if="!logged && !show_login_form">
     Explore books, meet authors and readers.
   </div>
 </div>
-<div ng-if="!logged && show_login_form">
+<div>
 	<!-- <div class="login_buttons fb" 
 		 ng-show="!logged"
 	     ng-disabled="!facebookReady"
@@ -81,7 +84,9 @@
 		<google-plus-signin clientid="88213598927-9fij1u8tf2ldf4apf6qob4hgu0supj54.apps.googleusercontent.com"
 		ng-show="!logged"></google-plus-signin>
 	</div> -->
-	<form class="login_form" ng-model="user">
+	<form class="login_form animate-fast"
+        ng-if="!logged && show_login_form"
+        ng-model="user">
       	<input class="email" 
       	       type="email" 
       	       ng-model="user.email" 

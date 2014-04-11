@@ -37,6 +37,11 @@ module Api
 				render :json => {:message => "success", :profile_status => profile_status, :user_id => 1}, :status => 200
 			end
 
+			def image
+				image_url = SearchPage.all(:order => "RANDOM()").first.background_image_url
+				render :json => {:url => image_url}, :status => 200
+			end
+
 		end
 	end
 end

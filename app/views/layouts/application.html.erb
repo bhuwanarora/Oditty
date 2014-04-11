@@ -2,6 +2,7 @@
 <html ng-app='websiteApp'>
   <head>
     <title>ReadersDoor</title>
+    <link href="/assets/icomoon.css" rel="stylesheet">
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/angular/**/*.js")] %>
   </head>
@@ -15,6 +16,7 @@
       <div ng-include 
             src="'assets/angular/widgets/partials/search.html'" 
             ng-if="searching"
+            class="search_animate animate-very-slow" 
             ng-click="stopSearching($event)"></div>
       <div ng-if="!loading">
         <div msd-wheel="bindHorizontalScroll($event, $delta, $deltaX, $deltaY)" 
@@ -25,14 +27,15 @@
           <%= yield %>
         </div>
         <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/lib/**/*.js")] %>
+        <div ng-if="show_book" class="fade_cover"></div>
         <link rel="stylesheet" type="text/css" 
               href="assets/detailed_book.css.scss" ng-if="show_book">
+        <div class="book_zoom animate-very-slow">
+          <flipbook ng-if="show_book"></flipbook>
+        </div>
         <link rel="stylesheet" type="text/css" 
               href="assets/dock.css.scss" ng-if="show_book">
-        <div ng-if="show_book" class="fade_cover"></div>
         <dock ng-if="show_book"></dock>
-        <flipbook ng-if="show_book"></flipbook>
-        <link href="/assets/icomoon.css" rel="stylesheet">
         <%= csrf_meta_tags %>
         <%= render :partial => "shared/favicon" %>
         <%= render :partial => "shared/meta_tags"%>

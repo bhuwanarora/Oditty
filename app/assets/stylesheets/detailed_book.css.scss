@@ -210,8 +210,14 @@ and (min-width : 1280px) {
 	z-index: 10;
 }
 
-#flipbookViewport{
-	/*background-color: #DBDBDB;*/
+.book_zoom.ng-enter,
+.book_zoom.ng-leave.ng-leave-active{
+	opacity: 0;
+}
+
+.book_zoom.ng-leave,
+.book_zoom.ng-enter.ng-enter-active{
+	opacity: 1;
 }
 
 .detailed_book .page{
@@ -841,7 +847,7 @@ and (min-width : 1280px) {
 	background-color: rgba(0, 0, 0, 0.4);
 	position: fixed;
 	top: 0px;
-	z-index: 5;
+	z-index: 6;
 	color: #13CEFD;
 }
 
