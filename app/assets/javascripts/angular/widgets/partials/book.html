@@ -112,8 +112,7 @@
 		    	<span class="icon-user"></span> CHARACTERS
 		    </div>
 		    <div class="elements">
-				<div class="character share" 
-					 ng-class="{'grey_background':!is_even($index)}"
+				<div class="character share"
 				     ng-repeat="character in detailed_book['book'].characters">
 					<p>{{character.name}} <br/><em>{{character.description}}</em></p>
 				</div>
@@ -129,7 +128,6 @@
 		    <div class="elements">
 				<div class="quote share"
 				     ng-click="share_quote()"
-					 ng-class="{'grey_background':!is_even($index)}"
 				     ng-repeat="quote in detailed_book['book'].quotes">
 				    <div>
 						{{quote.quote}} <br/><em>{{quote.from}}</em><br/><br/>
@@ -152,9 +150,8 @@
 			<div class="header">
 				<span class="icon-dice"></span> THEMES    
 			</div>
-			<div>
-				<div class="theme share" 
-					 ng-class="{'grey_background':!is_even($index)}"
+			<div class="elements">
+				<div class="theme share"
 				     ng-repeat="theme in detailed_book['book'].themes">
 					{{theme.title}} {{theme.description}}
 				</div>
@@ -168,7 +165,6 @@
 			</div>
 			<div>
 				<div class="subject_place share"
-					 ng-class="{'grey_background':!is_even($index)}"
 				     ng-repeat="subject_place in detailed_book['book'].subject_places">
 					<span itemprop="name">{{subject_place}}</span>
 				</div>
@@ -183,7 +179,6 @@
 			</div>
 			<div>
 				<div class="movie_based share"
-					 ng-class="{'grey_background':!is_even($index)}"
 				     ng-repeat="movie_based in detailed_book['book'].movies_based">
 					<span itemprop="name">{{movie_based}}</span>
 				</div>
@@ -243,8 +238,7 @@
 				<span class="icon-newspaper"></span>  NEWS
 			</div>
 			<div class="elements">
-				<div class="news_element share" 
-				     ng-class="{'grey_background':!is_even($index)}"
+				<div class="news_element share"
 					 ng-repeat="news in detailed_book['book'].news">
 					<div class="container">
 						<span class="header" itemprop="name">{{news.title}}</span>
@@ -292,7 +286,13 @@
 			<div class="elements">
 				<div ng-repeat="review in detailed_book['book'].reviews" class="review">
 			        <div class="header">
-			        	<img ng-src="{{review.user.thumb}}" class="review_thumb" />
+			        	<img ng-src="{{review.user.thumb}}" 
+			        	     class="review_thumb" 
+			        	     ns-popover
+						     ns-popover-template="userPopover"
+						     ns-popover-trigger="mouseover"
+						     ns-popover-timeout="0"
+						     ns-popover-placement="bottom|left"/>
 			        	<span itemscope itemtype="http://schema.org/UserComments">
 			        		<span itemprop="commentTime">{{review.timestamp}}</span>
 			        	</span>
@@ -367,5 +367,4 @@
 			<span itemprop="description">{{detailed_book['book'].summary}}</span>
 		</div>
 	</div>
-
 </div>

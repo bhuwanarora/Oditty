@@ -312,6 +312,13 @@ bookApp.directive('flipbook', function($rootScope, $timeout, scroller){
           element.parents(".jqte").find(".jqte_toolbar").hide();
         }
 
+        _bind_popover_click_handler = function(iElement, scope){
+          iElement.on('click', '.user_tooltip .footer .follow', function(){
+            console.log("user_tooltip");
+            event.stopPropagation();
+          });
+        }
+
         return {
           pre: function(scope, iElement, iAttrs, controller) { 
             _add_listeners_to_content_page(iElement, scope);
@@ -327,6 +334,7 @@ bookApp.directive('flipbook', function($rootScope, $timeout, scroller){
             _add_listeners_to_book_tag(iElement, scope);
             _set_pre_css();
             _bind_text_editor();
+            _bind_popover_click_handler(iElement, scope);
           },
           post: function(scope, iElement, iAttrs, controller) {
             iElement.turn({
@@ -416,11 +424,11 @@ bookApp.directive('flipbook', function($rootScope, $timeout, scroller){
       _click_outside_close = function(){
         $('.detailed_book').click(function(){
           event.stopPropagation();
-        })
+        });
 
         $('.book_footer').click(function(){
           event.stopPropagation();
-        })
+        });
 
         $('html').click(function(event){
           // $('.fade .closing').css('display', 'block');

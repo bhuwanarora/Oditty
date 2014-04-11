@@ -131,7 +131,7 @@ a:hover{
 	outline: none;
 	/*color: #717070;*/
 	color: white;
-	background-color: #3D79A1;
+	background-color: rgba(61, 121, 161, 0.74);
 }
 
 .search_page select option{
@@ -1135,7 +1135,7 @@ a:hover{
 	margin-left: 32%;
 	position: absolute;
 	color: #3D79A1;
-	text-shadow: 0 0 0 #000, 1px 4px 6px #def;
+	/*text-shadow: 0 0 0 #000, 1px 4px 6px #def;*/
 	font-weight: bold;
 	margin-top: 12px;
 }
@@ -1144,7 +1144,9 @@ a:hover{
 .scroller .scroller-left,
 .scroller .scroller-right{
 	font-size: 1em;
-	box-shadow: inset 0px 2px 50px -11px #7F868D, inset 0px 0px 40px #EEEEEE;
+	background-color: white;
+	border: 1px solid #F0F0F0;
+	/*box-shadow: inset 0px 2px 50px -11px #7F868D, inset 0px 0px 40px #EEEEEE;*/
 }
 
 .scroller span:active{
@@ -1169,8 +1171,9 @@ a:hover{
 
 .scroller .scroller-left:hover,
 .scroller .scroller-right:hover{
-	background-color: #AAAAAA;
+	background-color: #3D79A1;
 	cursor: pointer;
+	color: white;
 }
 
 .more_filters{
@@ -1537,6 +1540,11 @@ input:focus{
 	text-align: center;
 }
 
+.genre_typeahead_options,
+.country_typeahead_options{
+	margin-top: 25px;
+}
+
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen
 and (min-device-width : 320px)
@@ -1632,15 +1640,6 @@ and (min-width : 400px) {
 		width: 245px;
 	}
 
-
-	.genre_typeahead_options{
-		bottom: 61px;
-	}
-
-	.country_typeahead_options{
-		bottom: 31px;	
-	}
-
 	.search_typeahead_options{
 		bottom: 40px;
 		position: absolute;
@@ -1727,15 +1726,6 @@ and (min-width : 1280px){
 
 	.card .book_thumb {
 		width: 300px;
-	}
-
-
-	.genre_typeahead_options{
-		bottom: 61px;
-	}
-
-	.country_typeahead_options{
-		bottom: 31px;	
 	}
 
 	.search_typeahead_options{
@@ -1840,15 +1830,6 @@ and (min-width : 1366px){
 
 	.card .book_thumb {
 		width: 270px;
-	}
-
-
-	.genre_typeahead_options{
-		bottom: 76px;
-	}
-
-	.country_typeahead_options{
-		bottom: 47px;	
 	}
 
 	.search_typeahead_options{
@@ -1987,7 +1968,6 @@ and (min-width : 1824px) {
   	-webkit-box-shadow: 0 0.3125rem 0.625rem rgba(0, 0, 0, 0.2);
   	-moz-box-shadow: 0 0.3125rem 0.625rem rgba(0, 0, 0, 0.2);
   	box-shadow: 0 0.3125rem 0.625rem rgba(0, 0, 0, 0.2); 
-  	width: 400px;
 	white-space: normal;
 }
 
@@ -2211,6 +2191,7 @@ and (min-width : 1824px) {
 
 .tooltip{
 	color: #717070;
+	width: 400px;
 }
 
 .tooltip img{

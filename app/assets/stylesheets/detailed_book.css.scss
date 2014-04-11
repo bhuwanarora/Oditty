@@ -207,7 +207,7 @@ and (min-width : 1280px) {
 	color: #717070;
 	position: absolute;
 	top: 0px;
-	z-index: 4000;
+	z-index: 10;
 }
 
 #flipbookViewport{
@@ -688,6 +688,11 @@ and (min-width : 1280px) {
 	overflow-y: scroll;
 }
 
+.elements .quote,
+.elements .theme{
+	border-bottom: 1px solid #E2E2E2;
+}
+
 .review .header .review_header{
 	float: left !important;
 	text-align: center;
@@ -833,7 +838,7 @@ and (min-width : 1280px) {
 .fade_cover{
 	width: 100%;
 	height: 100%;
-	background-color: rgba(0, 0, 0, 0.9);
+	background-color: rgba(0, 0, 0, 0.4);
 	position: fixed;
 	top: 0px;
 	z-index: 5;
@@ -846,4 +851,29 @@ and (min-width : 1280px) {
 
 .detailed_book .front_side .infographic img{
 
+}
+
+.user_tooltip .footer .follow,
+.user_tooltip .footer .send_message{
+	border: 1px solid #B8B8B8;
+	background-color: white;
+	padding: 4px 10px 4px 10px;
+	border-radius: 2px;
+	cursor: pointer;
+	font-size: 0.8em;
+}
+
+.user_tooltip .footer .follow:hover,
+.user_tooltip .footer .send_message:hover{
+	background-color: #B8B8B8;
+	color: white;
+}
+
+.user_tooltip{
+	width: 200px !important;
+}
+
+.user_tooltip .books_read{
+	padding: 10px;
+	font-size: 0.8em;
 }
