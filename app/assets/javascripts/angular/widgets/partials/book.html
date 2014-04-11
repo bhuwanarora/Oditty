@@ -130,7 +130,7 @@
 				     ng-click="share_quote()"
 				     ng-repeat="quote in detailed_book['book'].quotes">
 				    <div>
-						{{quote.quote}} <br/><em>{{quote.from}}</em><br/><br/>
+						<span class="icon-quote-left"></span>&nbsp;&nbsp;{{quote.quote}}&nbsp;&nbsp;<span class="icon-quote-right"></span> <br/><br/><em>{{quote.from}}</em><br/><br/>
 				    </div>
 					<div class="description">
 						<span>{{quote.like_count}} likes · </span>

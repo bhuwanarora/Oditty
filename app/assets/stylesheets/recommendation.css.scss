@@ -806,14 +806,14 @@ a:hover{
 	float: right;
 }
 
-.website-title{
+/*.website_title{
 	padding: 11px;
 	display: inline-block;
 	float: left;
 	margin-left: 2%;
 	color: #3D79A1;
 	position: absolute;
-}
+}*/
 
 .cancel_search{
 	/*position: absolute;*/
@@ -1131,12 +1131,8 @@ a:hover{
 .scroller{
 	display: inline-block;
 	float: left;
-	margin-top: 5px;
-	margin-left: 32%;
-	position: absolute;
+	margin-left: 75px;
 	color: #3D79A1;
-	/*text-shadow: 0 0 0 #000, 1px 4px 6px #def;*/
-	font-weight: bold;
 	margin-top: 12px;
 }
 
@@ -1164,7 +1160,7 @@ a:hover{
 .scroller .scroller-right{
 	margin-right: 3px;
 	margin-left: 1px;
-	padding: 6px 3px 9px 9px;
+	padding: 6px 9px 9px 9px;
 	border-bottom-right-radius: 10px;
 	border-top-right-radius: 10px;
 }
@@ -1174,6 +1170,16 @@ a:hover{
 	background-color: #3D79A1;
 	cursor: pointer;
 	color: white;
+}
+
+.website_logo{
+	display: inline-block;
+	margin-top: 12px;
+	float: left;
+	margin-left: 20%;
+	font-size: 1.1em;
+	font-family: Helvetica;
+	font-weight: bold;
 }
 
 .more_filters{

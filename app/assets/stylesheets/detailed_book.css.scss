@@ -861,6 +861,7 @@ and (min-width : 1280px) {
 	border-radius: 2px;
 	cursor: pointer;
 	font-size: 0.8em;
+	float: right;
 }
 
 .user_tooltip .footer .follow:hover,
@@ -870,10 +871,14 @@ and (min-width : 1280px) {
 }
 
 .user_tooltip{
-	width: 200px !important;
+	/*width: 200px !important;*/
 }
 
-.user_tooltip .books_read{
+.user_tooltip .details{
 	padding: 10px;
-	font-size: 0.8em;
+	font-size: 0.7em;
+}
+
+.user_tooltip .details .count{
+	font-size: 1em;
 }

@@ -59,6 +59,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	    reload_recommendations_event = $scope.$on('reloadRecommendations', function(){
 	    	_init_recommendations();
 	    	_get_recommendations();
+	    	$scope.$emit('moveRight');
 	    	event.stopPropagation();
 	    });
 
@@ -103,7 +104,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	}
 
 	_initialize_filters = function(){
-		$scope.show_more_filters = false;
+		$scope.show_more_filters = true;
 		$rootScope.filters = {};
 		$rootScope.filters["readers"] = false;
 		$rootScope.filters["books"] = true;

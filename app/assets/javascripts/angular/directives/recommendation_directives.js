@@ -74,6 +74,7 @@ recommendationApp.directive('moreFilters', function($rootScope, $timeout){
 					$scope.active_author_filter = false;
 					$scope.active_reader_filter = false;
 					$rootScope.filters["filter_type"] = "BOOK";
+					$scope.$emit('moveRight');
 				}
 				else if(isAuthor){
 					$scope.active_book_filter = false;

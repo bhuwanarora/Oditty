@@ -15,18 +15,24 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	}
 
 	$scope.move_left = function(event){
-		var current_x = event.pageX - screen.width/2;
+		var current_x = event.pageX - $('.scroller-left').position().left;
 		var delta_x = $('.recommendation_block:first').width();
 		scroller.scrollTo(current_x - delta_x, 0, 3000);
 	}
 
 	$scope.move_right = function(event){
+		if(event){
+			var pageX = event.pageX;
+		}
+		else{
+			var pageX = $('.scroller-right').position().left;
+		}
 		var clientWidth = $document.width();
-		var lessThanOnePageLeft = event.pageX + screen.width > clientWidth;
+		var lessThanOnePageLeft = pageX + screen.width > clientWidth;
 		if(lessThanOnePageLeft){
 			$rootScope.$broadcast('loadRecommendations');
 		}
-		var current_x = event.pageX - screen.width/2;
+		var current_x = pageX - $('.scroller-right').position().left;
 		var delta_x = $('.recommendation_block:first').width();
 		scroller.scrollTo(current_x + delta_x, 0, 3000);
 	}
@@ -295,6 +301,12 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	    	$scope.user.books['bookmarked'].splice(index, 1);
 	    	event.stopPropagation();
 	    });
+
+	    move_right_listener_event = $scope.$on('moveRight', function(event){
+	    	move_right_event = $timeout(function(){
+				$scope.move_right();
+			}, 1000);
+	    });
 	}
 
 	$scope.handle_selection = function(selectedItem) {
@@ -310,6 +322,9 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		if(logged_in){
 			$('body').css('white-space', 'nowrap');
 			$scope.searching = false;
+			move_right_event = $timeout(function(){
+				$scope.move_right();
+			}, 1000);
 		}
 	}
 
@@ -378,6 +393,7 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	}
 
 	_init = function(){
+		$scope.loading = true;
 		$scope.search.current = 0;
 		$scope.searching = true;
 		$scope.search.selected_result = true; // hides the list initially
@@ -402,12 +418,18 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		// });
 		// $speechRecognition.setLang('en-UK'); // Default value is en-US
 		$speechRecognition.listen();
+
+		$timeout(function(){
+			$scope.loading = false;
+		}, 3000);
 	}
 
 	var add_book_to_shelf_event = "";
 	var remove_book_from_shelf = "";
 	var add_to_bookmarks_event = "";
 	var remove_from_bookmarks_event = "";
+	var move_right_event = ""
+	var move_right_listener_event = "";
 	_init();
 
 });
