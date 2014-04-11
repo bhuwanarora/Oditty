@@ -70,7 +70,7 @@
 	padding-left: 10px;
 	border-radius: 2px;
 	border: 1px solid rgba(255, 255, 255, 0.4);
-	background-color: rgba(0, 0, 0, 0.4);
+	background-color: rgba(0, 0, 0, 0.5);
 }
 
 .search_page input::-webkit-input-placeholder {
@@ -117,12 +117,15 @@
 .search_page .internal_links,
 .search_page .secondary_login{
 	color: #717070;
-	/*color: #3D79A1;*/
 	position: absolute;
 	bottom: 5%;
 	left: 50%;
 	padding: 20px;
 	border-radius: 2px;
+}
+
+.search_page .secondary_login:hover{
+	border: 1px solid;
 }
 
 .search_page .internal_links{
@@ -133,6 +136,7 @@
 	margin-left: -145px;
 	cursor: pointer;
 	font-size: 1em;
+	border: 1px solid #EBEBEB;
 }
 
 .search_page .secondary_login.ng-enter,
@@ -150,9 +154,14 @@
 	display: inline-block;
 	text-align: center;
 	width: 130px;
-	/*font-weight: bold;*/
 	font-size: 1.1em;
 	cursor: pointer;
+	border: 1px dashed #EBEBEB;
+	padding: 10px;
+}
+
+.search_page .internal_links span:hover{
+	border: 1px solid;
 }
 
 .search_page .internal_links .count{
@@ -166,4 +175,5 @@
 	left: 40px;
 	border-color: rgba(255, 255, 255, 0.4);
 	color: rgba(255, 255, 255, 0.4);
+	/*box-shadow: 10px 2px 60px 25px rgba(0, 0, 0, 0.64);*/
 }

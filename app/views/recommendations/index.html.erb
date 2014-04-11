@@ -9,18 +9,27 @@
 			<span class="icon glyphicon-home"></span> Reader's Door
 		</div> -->
 		
+		<div class="website_logo">
+			
+		</div>
 		<div class="shelf_nav_links">
+			<div ng-class="{'inactive':read_selected || bookmark_selected, 'active':!read_selected && !bookmark_selected}"
+				 class="link"
+				 title="Recommendations"
+				 ng-click="toggle_recommendations()">
+				 <b><span class="icon-home"></span>&nbsp;Recommendations</b>
+			</div>
 			<div ng-class="{'inactive':!bookmark_selected, 'active':bookmark_selected}"
 				 class="link"
 				 title="Books bookmarked"
-				 ng-click="toggleBookmarked()">
-				<b><span class="icon-library" ng-class="{'glow_bookmark':glowBookmark}"></span></b>
+				 ng-click="toggle_bookmarked()">
+				<b><span class="icon-library" ng-class="{'glow_bookmark':glowBookmark}"></span>&nbsp;Bookmarked</b>
 			</div>
 			<div ng-class="{'inactive':!read_selected, 'active':read_selected}"
 				 class="link"
 				 title="Books marked as read" 
-				 ng-click="toggleRead()">
-				 <b><span class="icon-books" ng-class="{'glow_shelf':glowShelf}"></span></b>
+				 ng-click="toggle_read()">
+				 <b><span class="icon-books" ng-class="{'glow_shelf':glowShelf}"></span>&nbsp;Read</b>
 			</div>
 		</div>
 		<div class="scroller">
@@ -34,9 +43,6 @@
 				  ng-click="move_right($event)"
 				  title="Scroll right">
 			</span>
-		</div>
-		<div class="website_logo">
-			reader's door
 		</div>
 		<!-- <type-ahead items="search_results" 
 	 				prompt="Start typing now to search..." 

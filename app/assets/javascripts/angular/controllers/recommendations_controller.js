@@ -1,12 +1,8 @@
 recommendationApp.controller('recommendationsController', function($scope, $rootScope, $interval, 
 	$http, $timeout, recommendationService, $q){
 
-	$scope.toggleBookmarked = function(){
-		if($scope.bookmark_selected == true){
-			$scope.bookmark_selected = false;
-			$scope.panel_selected = '';
-		}
-		else{
+	$scope.toggle_bookmarked = function(){
+		if(!$scope.bookmark_selected){
 			$scope.panel_selected = 'BOOKMARK';
 			$scope.bookmark_selected = true;
 			$scope.read_selected = false;
@@ -14,16 +10,20 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 		}
 	}
 
+	$scope.toggle_recommendations = function(){
+		if($scope.bookmark_selected || $scope.read_selected){
+			$scope.read_selected = false;
+			$scope.bookmark_selected = false;
+			$scope.panel_selected = '';
+		}
+	}
+
 	$scope.reset = function(){
 		_init_recommendations();
 	}
 
-	$scope.toggleRead = function(){
-		if($scope.read_selected == true){
-			$scope.read_selected = false;
-			$scope.panel_selected = '';
-		}
-		else{
+	$scope.toggle_read = function(){
+		if(!$scope.read_selected){
 			$scope.glowShelf = false;
 			$scope.bookmark_selected = false;
 			$scope.read_selected = true;		

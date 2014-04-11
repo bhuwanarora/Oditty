@@ -42,7 +42,7 @@
   	       ng-keydown="search.selected_result=false"
   	       ng-keyup="key_up()"
   	       ng-model="search.input"
-           placeholder="write test for now..."/>
+           placeholder="type test for now..."/>
   	<div class="website_search_options" 
 	   	 ng-hide="!search.input.length || search.selected_result || show_login_form">
   		<div ng-repeat="item in search_results | filter:search.input  track by $index" 
@@ -55,15 +55,15 @@
  	 	</div>
 	</div>
 	<div class="internal_links" ng-if="logged">
-		<span ng-click="hide_search_page('BOOK')">
+		<span ng-click="hide_search_page('BOOK')" class="animate-fast">
 			<div class="count">1,000,000,000+</div>
 			<div class="heading">Books</div>
 		</span>
-		<span ng-click="hide_search_page(AUTHOR)">
+		<span ng-click="hide_search_page(AUTHOR)" class="animate-fast">
 			<div class="count">4,000,000+</div>
 			<div class="heading">Authors</div>
 		</span>
-		<span ng-click="hide_search_page(READER)">
+		<span ng-click="hide_search_page(READER)" class="animate-fast">
 			<div class="count">1,000,000+</div>
 			<div class="heading">Readers</div>
 		</span>

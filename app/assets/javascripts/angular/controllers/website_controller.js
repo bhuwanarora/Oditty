@@ -429,6 +429,7 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 
 		$timeout(function(){
 			$scope.loading = false;
+			$scope.$broadcast('hideLoadingPage');
 		}, 5000);
 
 		$timeout(function(){

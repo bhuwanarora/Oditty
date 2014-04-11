@@ -1,0 +1,1 @@
+var loadingApp = angular.module('loadingApp', ['ngRoute']);

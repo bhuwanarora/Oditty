@@ -334,7 +334,7 @@ bookApp.directive('flipbook', function($rootScope, $timeout, scroller){
             _add_listeners_to_book_tag(iElement, scope);
             _set_pre_css();
             _bind_text_editor();
-            _bind_popover_click_handler(iElement, scope);
+            // _bind_popover_click_handler(iElement, scope);
           },
           post: function(scope, iElement, iAttrs, controller) {
             iElement.turn({

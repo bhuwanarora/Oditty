@@ -6,9 +6,11 @@
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/angular/**/*.js")] %>
   </head>
-  <div ng-include
-       ng-show="loading"
-       src="'assets/angular/widgets/partials/loading.html'"></div>
+  <div ng-controller="loadingAppController">
+    <div ng-include
+         ng-show="loading"
+         src="'assets/angular/widgets/partials/loading.html'"></div>
+  </div>
   <body ng-controller="websiteAppController" 
         ng-keypress="search()" 
         ng-mouseout="showFeebackForm()">
