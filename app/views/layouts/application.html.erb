@@ -17,7 +17,7 @@
     <div ng-show="!loading">
       <div ng-include 
             src="'assets/angular/widgets/partials/search.html'" 
-            ng-if="searching"
+            ng-show="searching"
             class="search_animate animate-very-slow" 
             ng-click="stopSearching($event)"></div>
       <div ng-if="!loading">
@@ -29,12 +29,16 @@
           <%= yield %>
         </div>
         <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/lib/**/*.js")] %>
-        <div ng-if="show_book" class="fade_cover"></div>
+        <div ng-if="show_book" class="fade_cover">
+          <div class="close_book">
+            Close
+          </div>
+        </div>
         <link rel="stylesheet" type="text/css" 
               href="assets/detailed_book.css.scss" ng-if="show_book">
         <div class="book_zoom animate-very-slow">
-          <flipbook ng-if="show_book"></flipbook>
         </div>
+        <flipbook ng-if="show_book"></flipbook>
         <link rel="stylesheet" type="text/css" 
               href="assets/dock.css.scss" ng-if="show_book">
         <dock ng-if="show_book"></dock>

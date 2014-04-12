@@ -624,10 +624,14 @@ and (min-width : 1280px) {
 }
 
 .close_book{
-	float: right;
-	margin-top: -3%;
-	margin-right: -3%;
+	position: absolute;
+	border: 1px solid white;
+	padding: 10px 20px 10px 20px;
+	right: 40px;
+	top: 40px;
 	cursor: pointer;
+	color: white;
+	border-radius: 2px;
 }
 
 .post_comment{

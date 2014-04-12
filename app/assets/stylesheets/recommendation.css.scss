@@ -143,7 +143,6 @@ a:hover{
    z-index: 6;
    background-image: -moz-linear-gradient(top, #b4b4b4, #707070);
    background-image: -webkit-gradient(linear, 0% 0%, 0% 150%, to(#DBDBDB), from(white));
-   
 }
 
 /* IE 6 */
@@ -157,16 +156,24 @@ a:hover{
 .recommendation_block.ng-enter,
 .wild_cards.ng-enter {
 	margin-left: 100px;
+	-webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2.5s;
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2.5s;
 }
 
 .recommendation_block.ng-enter.ng-enter-active, 
 .wild_cards.ng-enter.ng-enter-active{
 	margin-left: 0px;
 }
-.recommendation_block.ng-leave.ng-leave-active,
+
+/*.recommendation_block.ng-leave.ng-leave-active,
 .wild_cards.ng-leave.ng-leave-active {
-	left:-100%;
+	opacity: 0;
 }
+
+.recommendation_block.ng-leave,
+.wild_cards.ng-leave{
+	opacity: 1;
+}*/
 
 .recommendation_block{
 	display: inline-block;
@@ -180,12 +187,6 @@ a:hover{
 	position: absolute;
 	display: inline-block;
 	width: 25px;
-}
-
-.recommendation_block.ng-enter,
-.wild_cards.ng-enter{
-    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2.5s;
-    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2.5s;
 }
 
 /*book widget*/
@@ -458,8 +459,8 @@ a:hover{
 	position: absolute;
 	z-index: 2;
   	padding: 10px;
-  	color: #717070;
-  	background-color: #F1F1F1;
+  	color: white;
+  	background-color: rgba(0, 0, 0, 0.69);
   	font: normal normal normal 12px/normal Arial, Helvetica, sans-serif;
   	-webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
   	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
@@ -468,8 +469,10 @@ a:hover{
 
 
 .hidden_summary_button{
-	position: absolute;
-	display: none;
+	background-color: rgba(241, 241, 241, 0);
+	border: none;
+	box-shadow: none;
+	color: white;
 }
 
 /*animation*/
@@ -842,12 +845,12 @@ a:hover{
 	font-size: 0.7em;
 	cursor: pointer;
 	display: inline-block;
-	background-color: #FFFFFF;
 	height: 10px;
 	text-align: center;
 	padding: 16px;
 	color: #717070;
-	text-shadow: 0px 1px 1px #fff;  
+	text-shadow: 0px 1px 1px #fff; 
+	margin-left: -4px;
 }
 
 .filter_link, 
@@ -859,13 +862,15 @@ a:hover{
     border: 1px solid #DDDDDD;
 	border-radius: 0px;
 	box-shadow: inset 0px 2px 50px -11px #7F868D, inset 0px 0px 40px #EEEEEE;
-	/*text-decoration: underline;*/
+	cursor: default;
 }
 
 .inactive{
-	border: 1px solid #FFFFFF;
-	border-radius: 0px;
-	box-shadow: 0px 1px 4px 0px #D4D7DA, inset 0px 0px 40px #EEEEEE;
+	border: 1px solid rgba(0, 0, 0, 0);
+}
+
+.inactive:hover{
+	border: 1px solid;
 }
 
 .shelf_nav_links{

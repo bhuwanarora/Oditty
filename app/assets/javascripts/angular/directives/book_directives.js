@@ -314,7 +314,6 @@ bookApp.directive('flipbook', function($rootScope, $timeout, scroller){
 
         _bind_popover_click_handler = function(iElement, scope){
           iElement.on('click', '.user_tooltip .footer .follow', function(){
-            console.log("user_tooltip");
             event.stopPropagation();
           });
         }
@@ -422,21 +421,12 @@ bookApp.directive('flipbook', function($rootScope, $timeout, scroller){
       }
 
       _click_outside_close = function(){
-        $('.detailed_book').click(function(){
-          event.stopPropagation();
-        });
-
-        $('.book_footer').click(function(){
-          event.stopPropagation();
-        });
-
-        $('html').click(function(event){
-          // $('.fade .closing').css('display', 'block');
-          // $('.fade').css('z-index', '5000');
+        $('.close_book').click(function(event){
           $('.detailed_book').hide();
           $('.book_footer').hide();
           $('.fade_cover').hide();
           $rootScope.show_book = false;
+          event.stopPropagation();
         });
       }
 
@@ -456,7 +446,8 @@ bookApp.directive('flipbook', function($rootScope, $timeout, scroller){
         $rootScope.$on('turnPage', function(event, page){
           var page_number = page_numbers[page];
           $('.detailed_book').turn('page', page_number);
-        })
+          event.stopPropagation();
+        });
       }
 
       _init = function(){
