@@ -6,21 +6,19 @@
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/angular/**/*.js")] %>
   </head>
-  <div ng-controller="loadingAppController">
-    <div ng-include
-         ng-show="loading"
-         src="'assets/angular/widgets/partials/loading.html'"></div>
-  </div>
   <body ng-controller="websiteAppController" 
         ng-keypress="search()" 
         ng-mouseout="showFeebackForm()">
+    <div ng-include
+         ng-show="loading"
+         src="'assets/angular/widgets/partials/loading.html'"></div>
     <div ng-show="!loading">
       <div ng-include 
             src="'assets/angular/widgets/partials/search.html'" 
             ng-show="searching"
             class="search_animate animate-very-slow" 
             ng-click="stopSearching($event)"></div>
-      <div ng-if="!loading">
+      <div ng-show="!loading">
         <div msd-wheel="bindHorizontalScroll($event, $delta, $deltaX, $deltaY)" 
              ng-animate="msd-wheel"
              class="recommendations"

@@ -1,6 +1,6 @@
 //This handles retrieving data and is used by controllers. 3 options (server, factory, provider) with 
 //each doing the same thing just structuring the functions/data differently.
-recommendationApp.service('recommendationService', function ($http, $q, $rootScope) {
+websiteApp.service('recommendationService', function ($http, $q, $rootScope) {
     this.get_recommendations = function () {
         var deferred = $q.defer();
         filters = angular.toJson($rootScope.filters)

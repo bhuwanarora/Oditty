@@ -1,1 +1,0 @@
-var bookApp = angular.module('bookApp', ['ngRoute', 'ngAnimate', 'duScroll']);

@@ -1,4 +1,4 @@
-bookWidgetApp.directive('book', function (bookWidgetService) {
+websiteApp.directive('book', function (bookWidgetService) {
   return {
     restrict: 'E',
     scope: { 'book': '=data' },
@@ -29,7 +29,7 @@ bookWidgetApp.directive('book', function (bookWidgetService) {
   };
 })
 
-bookWidgetApp.directive('bookNavbar', function ($rootScope, $timeout) {
+websiteApp.directive('bookNavbar', function ($rootScope, $timeout) {
   return {
     restrict: 'E',
     controller: function($scope){
@@ -41,7 +41,7 @@ bookWidgetApp.directive('bookNavbar', function ($rootScope, $timeout) {
   };
 })
 
-bookWidgetApp.directive('bookthumb', function ($timeout, $rootScope) {
+websiteApp.directive('bookthumb', function ($timeout, $rootScope) {
   return {
     restrict: 'E',
     controller: function($scope){
@@ -78,21 +78,21 @@ bookWidgetApp.directive('bookthumb', function ($timeout, $rootScope) {
   };
 })
 
-bookWidgetApp.directive('rating', function () {
+websiteApp.directive('rating', function () {
   return {
     restrict: 'E',
     templateUrl: "/assets/angular/widgets/base/rating.html"
   };
 })
 
-bookWidgetApp.directive('reviewWidget', function () {
+websiteApp.directive('reviewWidget', function () {
   return {
     restrict: 'E',
     templateUrl: "/assets/angular/widgets/base/review_widget.html"
   };
 })
 
-bookWidgetApp.directive('bookmark', function ($rootScope, $timeout) {
+websiteApp.directive('bookmark', function ($rootScope, $timeout) {
   return {
     restrict: 'E',
     controller: function($scope){
@@ -121,7 +121,7 @@ bookWidgetApp.directive('bookmark', function ($rootScope, $timeout) {
   };
 })
 
-bookWidgetApp.directive('category', function () {
+websiteApp.directive('category', function () {
   return {
     restrict: 'E',
     controller: function($scope){
@@ -136,7 +136,7 @@ bookWidgetApp.directive('category', function () {
   };
 })
 
-bookWidgetApp.directive('comment', function () {
+websiteApp.directive('comment', function () {
   return {
     restrict: 'E',
     controller: function($scope){
@@ -163,7 +163,7 @@ bookWidgetApp.directive('comment', function () {
   };
 })
 
-bookWidgetApp.directive('interact', function () {
+websiteApp.directive('interact', function () {
   return {
     restrict: 'E',
     controller: function($scope){
@@ -196,21 +196,21 @@ bookWidgetApp.directive('interact', function () {
   };
 })
 
-bookWidgetApp.directive('newsWidget', function () {
+websiteApp.directive('newsWidget', function () {
   return {
     restrict: 'E',
     templateUrl: "/assets/angular/widgets/base/news_widget.html"
   };
 })
 
-bookWidgetApp.directive('summary', function () {
+websiteApp.directive('summary', function () {
   return {
     restrict: 'E',
     templateUrl: "/assets/angular/widgets/base/summary.html"
   };
 })
 
-bookWidgetApp.directive('bookTags', function($rootScope, $timeout) {
+websiteApp.directive('bookTags', function($rootScope, $timeout) {
   return {
     restrict: 'E',
     controller: function($scope){
@@ -222,7 +222,7 @@ bookWidgetApp.directive('bookTags', function($rootScope, $timeout) {
   };
 })
 
-bookWidgetApp.directive('rate', function ($rootScope, $timeout) {
+websiteApp.directive('rate', function ($rootScope, $timeout) {
   return {
     restrict: 'E',
     controller: function($scope){
@@ -275,7 +275,7 @@ bookWidgetApp.directive('rate', function ($rootScope, $timeout) {
   };
 });
 
-bookWidgetApp.directive('recommend', function($rootScope, $timeout){
+websiteApp.directive('recommend', function($rootScope, $timeout){
   return{
     restrict: 'E',
     controller: function($scope){
@@ -300,7 +300,7 @@ bookWidgetApp.directive('recommend', function($rootScope, $timeout){
   }
 });
 
-bookWidgetApp.directive('markAsRead', function($rootScope, $timeout){
+websiteApp.directive('markAsRead', function($rootScope, $timeout){
 	return {
 		restrict: 'E',
 		controller: function($scope){
@@ -332,7 +332,7 @@ bookWidgetApp.directive('markAsRead', function($rootScope, $timeout){
   }
 });
 
-bookWidgetApp.directive('bookBinding', function(){
+websiteApp.directive('bookBinding', function(){
   return{
     restrict: 'E',
     templateUrl: "/assets/angular/widgets/base/book_binding.html"

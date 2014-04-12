@@ -1,1 +1,0 @@
-var bookWidgetApp = angular.module('bookWidgetApp', ['ngRoute']);

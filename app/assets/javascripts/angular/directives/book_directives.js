@@ -17,7 +17,7 @@ var page_numbers = {
   about_author: 16
 };
 
-bookApp.directive('dock', function($rootScope, $timeout){
+websiteApp.directive('dock', function($rootScope, $timeout){
   return{
     restrict: 'E',
     compile: function(tElement, tAttrs, transclude){
@@ -32,7 +32,7 @@ bookApp.directive('dock', function($rootScope, $timeout){
   }
 });
 
-bookApp.directive('flipbook', function($rootScope, $timeout, scroller){
+websiteApp.directive('flipbook', function($rootScope, $timeout, scroller){
 	return{
 		restrict: 'E',
     replace: true,
@@ -468,7 +468,7 @@ bookApp.directive('flipbook', function($rootScope, $timeout, scroller){
   }
 });
 
-bookApp.directive('discussion', function(){
+websiteApp.directive('discussion', function(){
   return{
     restrict: 'E',
     scope: {"discussion": "=data",
@@ -492,7 +492,7 @@ bookApp.directive('discussion', function(){
   }
 });
 
-bookApp.directive('angularte', function() {
+websiteApp.directive('angularte', function() {
     return {
         restrict: 'A',
         require: '^ngModel',

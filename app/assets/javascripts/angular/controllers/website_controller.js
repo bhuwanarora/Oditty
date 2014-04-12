@@ -419,7 +419,7 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		_bind_auth_listeners();
 		_add_listeners();
 		_handle_search_page();
-		$('body').css('white-space', 'normal');
+		// $('body').css('white-space', 'normal');
 		// $speechRecognition.onstart(function(){
 		//   $speechSynthetis.speak("You're at Reader's Door. How can I help you?", 'en-UK');
 		// });
@@ -428,7 +428,6 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 
 		$timeout(function(){
 			$scope.loading = false;
-			$scope.$broadcast('hideLoadingPage');
 		}, 5000);
 
 		$timeout(function(){

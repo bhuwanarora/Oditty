@@ -71,7 +71,7 @@ module Api
 				test_book2 = test_book.merge(
 					:status => 1,
 					:book_thumb => {
-						:book_cover_url => "assets/books/10.jpg",
+						:book_cover_url => "assets/books/15.jpeg",
 						:background_color => "#E9BC4B"},
 					:category => {:name => "Quick Read", 
 								:url => "javascript:void(0);", 
@@ -95,7 +95,7 @@ module Api
 				test_book4 = test_book.merge(
 					:status => 0,
 					:book_thumb => {
-						:book_cover_url => "assets/books/13.jpeg",
+						:book_cover_url => "assets/books/14.jpeg",
 						:background_color => "#55504C"},
 					:category => {:name => "Feeling Philosophical", 
 								:url => "javascript:void(0);", 
@@ -107,7 +107,7 @@ module Api
 				test_book5 = test_book.merge(
 					:status => 0,
 					:book_thumb => {
-						:book_cover_url => "assets/books/24.jpg",
+						:book_cover_url => "assets/books/a2.jpeg",
 						:background_color => "#586846"},
 					:category => {:name => "Feeling Nomadic", 
 								:url => "javascript:void(0);", 
@@ -124,13 +124,13 @@ module Api
 				if id == "1"
 					thumb = "assets/books/20.jpeg"
 				elsif id == "2"
-					thumb = "assets/books/10.jpg"
+					thumb = "assets/books/15.jpeg"
 				elsif id == "3"
 					thumb = "assets/books/11.jpeg"
 				elsif id == "4"
 					thumb = "assets/books/13.jpeg"
 				elsif id == "5"
-					thumb = "assets/books/24.jpg"
+					thumb = "assets/books/a2.jpeg"
 				elsif id == "13"
 					thumb = "assets/Siddhartha.jpg"
 				end

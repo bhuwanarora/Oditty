@@ -1,4 +1,4 @@
-recommendationApp.directive('moreFilters', function($rootScope, $timeout){
+websiteApp.directive('moreFilters', function($rootScope, $timeout){
 	return{
 		restrict: 'E',
 		controller: function($scope, recommendationService){
@@ -158,7 +158,7 @@ recommendationApp.directive('moreFilters', function($rootScope, $timeout){
 	}	
 })
 
-recommendationApp.directive('filter', function($rootScope, $timeout){
+websiteApp.directive('filter', function($rootScope, $timeout){
 	return{
 		restrict: 'E',
 		scope: { 'filter': '=data' },

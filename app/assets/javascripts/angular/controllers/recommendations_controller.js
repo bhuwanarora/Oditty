@@ -1,4 +1,4 @@
-recommendationApp.controller('recommendationsController', function($scope, $rootScope, $interval, 
+websiteApp.controller('recommendationsController', function($scope, $rootScope, $interval, 
 	$http, $timeout, recommendationService, $q){
 
 	$scope.toggle_bookmarked = function(){
@@ -53,7 +53,7 @@ recommendationApp.controller('recommendationsController', function($scope, $root
 	_add_listeners = function(){
 	    load_recommendations_event = $scope.$on('loadRecommendations', function(){
 	    	_get_recommendations();
-	    	event.stopPropagation();
+	    	// event.stopPropagation();
 	    });
 
 	    reload_recommendations_event = $scope.$on('reloadRecommendations', function(){
