@@ -55,7 +55,7 @@ websiteApp.directive('horizontalScroller', function(){
 	}
 })
 
-websiteApp.directive('setFocus', function($timeout, $parse, $rootScope, $speechRecognition, $speechSynthetis) {
+websiteApp.directive('setFocus', function($timeout, $parse, $rootScope) {
   return {
     link: function(scope, element, attrs) {
       var model = $parse(attrs.setFocus);

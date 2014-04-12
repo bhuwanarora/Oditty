@@ -1,6 +1,5 @@
 websiteApp.controller('websiteAppController', function($scope, $rootScope, $interval, $http, 
-	$timeout, $q, $window, websiteService, Facebook, $speechRecognition, $speechSynthetis, $document,
-	scroller){
+	$timeout, $q, $window, websiteService, Facebook, $document, scroller){
 	$scope.bindHorizontalScroll = function(event, delta, deltaX, deltaY){
 		event.preventDefault();
 		if(delta > 0){
@@ -425,7 +424,7 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		//   $speechSynthetis.speak("You're at Reader's Door. How can I help you?", 'en-UK');
 		// });
 		// $speechRecognition.setLang('en-UK'); // Default value is en-US
-		$speechRecognition.listen();
+		// $speechRecognition.listen();
 
 		$timeout(function(){
 			$scope.loading = false;

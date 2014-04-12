@@ -31,13 +31,11 @@
         <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/lib/**/*.js")] %>
         <div ng-if="show_book" class="fade_cover">
           <div class="close_book">
-            Close
+            CLOSE
           </div>
         </div>
         <link rel="stylesheet" type="text/css" 
               href="assets/detailed_book.css.scss" ng-if="show_book">
-        <div class="book_zoom animate-very-slow">
-        </div>
         <flipbook ng-if="show_book"></flipbook>
         <link rel="stylesheet" type="text/css" 
               href="assets/dock.css.scss" ng-if="show_book">
