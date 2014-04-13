@@ -402,6 +402,7 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	}
 
 	_init = function(){
+		console.time("websiteAppController");
 		$scope.loading = true;
 		$scope.drop_icon = false;
 		$scope.more_filters = [];
@@ -433,6 +434,7 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		$timeout(function(){
 			$scope.drop_icon = true;
 		}, 2000);
+		console.timeEnd("websiteAppController");
 	}
 
 	var add_book_to_shelf_event = "";

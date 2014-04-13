@@ -108,10 +108,15 @@
 	outline: none;
 	color: white;
 	background-color: rgba(61, 121, 161, 0.74);
+	height: 41px;
 }
 
 .search_page select option{
 	color: white;
+    margin:40px;
+    background: black !important;
+    color:#fff;
+    text-shadow:0 1px 0 rgba(0,0,0,0.4);
 }
 
 .search_page .internal_links,

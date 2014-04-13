@@ -14,6 +14,12 @@ websiteApp.config(function ($sceDelegateProvider, $routeProvider) {
     });
 });
 
+angular.element(document).ready(function() {
+  console.time('bootstrap');
+  angular.bootstrap(document, ['websiteApp']);
+  console.timeEnd('bootstrap');
+});
+
 websiteApp.config(['FacebookProvider',
     function(FacebookProvider) {
      var myAppId = '667868653261167';
