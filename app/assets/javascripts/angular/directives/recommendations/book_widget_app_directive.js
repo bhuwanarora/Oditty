@@ -27,7 +27,7 @@ websiteApp.directive('book', function (bookWidgetService) {
     },
     templateUrl: "/assets/angular/widgets/base/book_widget.html"
   };
-})
+});
 
 websiteApp.directive('bookNavbar', function ($rootScope, $timeout) {
   return {
@@ -39,7 +39,7 @@ websiteApp.directive('bookNavbar', function ($rootScope, $timeout) {
     },
     templateUrl: "/assets/angular/widgets/base/book_navbar.html"
   };
-})
+});
 
 websiteApp.directive('bookthumb', function ($timeout, $rootScope) {
   return {
@@ -76,21 +76,7 @@ websiteApp.directive('bookthumb', function ($timeout, $rootScope) {
     },
     templateUrl: "/assets/angular/widgets/base/book_thumb.html"
   };
-})
-
-websiteApp.directive('rating', function () {
-  return {
-    restrict: 'E',
-    templateUrl: "/assets/angular/widgets/base/rating.html"
-  };
-})
-
-websiteApp.directive('reviewWidget', function () {
-  return {
-    restrict: 'E',
-    templateUrl: "/assets/angular/widgets/base/review_widget.html"
-  };
-})
+});
 
 websiteApp.directive('bookmark', function ($rootScope, $timeout) {
   return {
@@ -119,7 +105,7 @@ websiteApp.directive('bookmark', function ($rootScope, $timeout) {
     },
     templateUrl: "/assets/angular/widgets/base/bookmark.html"
   };
-})
+});
 
 websiteApp.directive('category', function () {
   return {
@@ -134,100 +120,56 @@ websiteApp.directive('category', function () {
     },
     templateUrl: "/assets/angular/widgets/base/category.html"
   };
-})
-
-websiteApp.directive('comment', function () {
-  return {
-    restrict: 'E',
-    controller: function($scope){
-    	_init = function(){
-    		$scope.comment_ready = false;
-    	}
-
-    	$scope.toggleCommentBoxState = function(){
-    		if($scope.comment_ready == true){
-    			$scope.comment_ready = false;
-    		}
-    		else{
-    			$scope.comment_ready = true;
-    		}
-    	}
-
-    	$scope.postReview = function(){
-    		$scope.reviewed = true;
-    	}
-
-    	_init();
-    },
-    templateUrl: "/assets/angular/widgets/base/comment.html"
-  };
-})
+});
 
 websiteApp.directive('interact', function () {
   return {
     restrict: 'E',
     controller: function($scope){
       _init = function(){
-        $scope.read = false;
-        $scope.rated = false;
-        $scope.reviewed = false;
+        $scope.setStatus();
       }
 
     	$scope.setStatus = function(status){
-    		if(status == 0){
-    		}
-    		else if(status == 1){
-    			$scope.read = true;
-    		}
-    		else if(status == 2){
+    		if(status == 1){
           $scope.read = true;
-    			$scope.rated = true;
     		}
-    		else if(status == 3){
-          $scope.read = true;
-          $scope.rated = true;
-    			$scope.reviewed = true;	
+    		else{
+    			$scope.read = false;
     		}
+    		
     	}
 
       _init();
     },
     templateUrl: "/assets/angular/widgets/base/interact_widget.html"
   };
-})
+});
 
-websiteApp.directive('newsWidget', function () {
-  return {
-    restrict: 'E',
-    templateUrl: "/assets/angular/widgets/base/news_widget.html"
-  };
-})
-
-websiteApp.directive('summary', function () {
-  return {
-    restrict: 'E',
-    templateUrl: "/assets/angular/widgets/base/summary.html"
-  };
-})
-
-websiteApp.directive('bookTags', function($rootScope, $timeout) {
-  return {
+websiteApp.directive('interactionBox', function($rootScope, $timeout){
+  return{
     restrict: 'E',
     controller: function($scope){
-      $scope.show_book = function(page){
-        zoomin_book($scope, $timeout, $rootScope, page);
+      $scope.toggleCommentBoxState = function(){
+        if($scope.comment_ready == true){
+          $scope.comment_ready = false;
+        }
+        else{
+          $scope.comment_ready = true;
+        }
       }
-    },
-    templateUrl: "/assets/angular/widgets/base/book_tags.html"
-  };
-})
 
-websiteApp.directive('rate', function ($rootScope, $timeout) {
-  return {
-    restrict: 'E',
-    controller: function($scope){
-    	_init = function(){
-			  $scope.rate_ready = false;
+      $scope.close_interaction_box = function(){
+        $scope.interact = false;
+      }
+
+      $scope.postReview = function(){
+        $scope.reviewed = true;
+      }
+      
+      _init = function(){
+        $scope.comment_ready = false;
+        $scope.rate_ready = false;
         $scope.init_rate_description();
       }
 
@@ -254,24 +196,36 @@ websiteApp.directive('rate', function ($rootScope, $timeout) {
         $scope.rating_description = "";
       }
 
-  		$scope.toggle = function(index){
-  			//TODO
-  			$scope.mark_as_rated();
-  		}
+      $scope.toggle = function(index){
+        //TODO
+        $scope.mark_as_rated();
+      }
 
-  		$scope.mark_as_rated = function(){
-  			$scope.rated = true;
+      $scope.mark_as_rated = function(){
+        $scope.rated = true;
         //rating dependent
         var timeout_event = notify($rootScope, "THANKS-This will help us to recommend you better books.", $timeout);
 
         $scope.$on('destroy', function(){
           $timeout.cancel(timeout_event)
         })
-  		}
+      }
 
-  		_init();
+      _init();
     },
-    templateUrl: "/assets/angular/widgets/base/rate.html"
+    templateUrl: "assets/angular/widgets/base/interaction_box.html"
+  }
+});
+
+websiteApp.directive('bookTags', function($rootScope, $timeout) {
+  return {
+    restrict: 'E',
+    controller: function($scope){
+      $scope.show_book = function(page){
+        zoomin_book($scope, $timeout, $rootScope, page);
+      }
+    },
+    templateUrl: "/assets/angular/widgets/base/book_tags.html"
   };
 });
 
@@ -309,6 +263,7 @@ websiteApp.directive('markAsRead', function($rootScope, $timeout){
           $scope.read = false;
           $scope.book.status = 0;
           $scope.$emit('removeBookFromShelf', $scope.book);
+          $scope.interact = true;
         }
         else{
           $scope.read = true;
@@ -319,6 +274,7 @@ websiteApp.directive('markAsRead', function($rootScope, $timeout){
           var author_name = $scope.book.author_name;
           var message = "ADVISE-Also please rate "+book_title+" by "+author_name+". This will help us to recommend better books."
           var timeout_event = notify($rootScope, message, $timeout);
+          $scope.interact = true;
 
           $scope.$on('destroy', function(){
             $timeout.cancel(timeout_event);
@@ -331,13 +287,6 @@ websiteApp.directive('markAsRead', function($rootScope, $timeout){
     templateUrl: "/assets/angular/widgets/base/mark_as_read.html"
   }
 });
-
-websiteApp.directive('bookBinding', function(){
-  return{
-    restrict: 'E',
-    templateUrl: "/assets/angular/widgets/base/book_binding.html"
-  }
-})
 
 function zoomin_book($scope, $timeout, $rootScope, page){
   $rootScope.initPage = page;

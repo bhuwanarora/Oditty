@@ -321,9 +321,10 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		if(logged_in){
 			$('body').css('white-space', 'nowrap');
 			$scope.searching = false;
-			move_right_event = $timeout(function(){
-				$scope.move_right();
-			}, 1000);
+			$scope.loading = true;
+			$timeout(function(){
+				$scope.loading = false;
+			}, 2000);
 		}
 	}
 
@@ -401,10 +402,22 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		});
 	}
 
-	_init = function(){
-		console.time("websiteAppController");
+	_initiate_loading_page = function(){
 		$scope.loading = true;
 		$scope.drop_icon = false;
+		
+		$timeout(function(){
+			$scope.loading = false;
+			// $scope.drop_icon = false;
+		}, 5000);
+
+		$timeout(function(){
+			$scope.drop_icon = true;
+		}, 2000);
+	}
+
+	_init = function(){
+		console.time("websiteAppController");
 		$scope.more_filters = [];
 		$scope.test = {time: 1970};
 		$scope.detailed_book = {};
@@ -426,14 +439,7 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		// });
 		// $speechRecognition.setLang('en-UK'); // Default value is en-US
 		// $speechRecognition.listen();
-
-		$timeout(function(){
-			$scope.loading = false;
-		}, 5000);
-
-		$timeout(function(){
-			$scope.drop_icon = true;
-		}, 2000);
+		_initiate_loading_page();
 		console.timeEnd("websiteAppController");
 	}
 

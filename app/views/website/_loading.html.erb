@@ -18,30 +18,35 @@
 
 	.load_title{
 		color: white;
-		position: absolute;
-		left: 20px;
-		top: 20px;
+		position: fixed;
+		left: 50%;
+		top: 50%;
 		font-size: 2em;
 		font-weight: bold;
 		font-family: Helvetica;
 		letter-spacing: -4.2px;
+		margin-left: -90px;
+		margin-top: -65px;
 	}
 
 	.load_tagline{
-		position: absolute;
-		top: 32px;
-		left: 215px;
+		position: fixed;
+		top: 50%;
+		left: 50%;
 		color: white;
 		font-size: 1em;
+		margin-left: -115px;
+		margin-top: 35px;
 	}
 
 	.load_icon{
-		position: absolute;
+		position: fixed;
 		left: 50%;
 		top: 50%;
 		margin-left: -25px;
 		margin-top: -25px;
 		color: white;
+		z-index: 1000;
 	}
 
 	.load_icon.ng-enter,
@@ -66,7 +71,7 @@
 	      	<span>d</span>
 	      	<span>e</span>
 	      	<span>r</span>
-	      	<span>`</span>
+	      	<span style="letter-spacing:-8px">`</span>
 	      	<span>s</span>
 	      	<span>&nbsp;</span>
 	      	<span>d</span>

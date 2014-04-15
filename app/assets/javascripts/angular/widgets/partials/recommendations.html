@@ -1,16 +1,5 @@
 <div class="vertical_padder_active">
 </div>
-<div push-notification="notification_active" 
-	class="push_notification" 
-	ng-if="notification_active">
-	<!-- <div class="header">
-		HEADER
-	</div> -->
-	<div class="content">
-		CONTENT
-	</div>
-</div>
-<message></message>
 <div ng-switch on="panel_selected">
 	<div ng-switch-when="BOOKMARK">
 		<div ng-switch on="user.books.bookmarked.length">
@@ -149,3 +138,19 @@
 		</div>
 	</div>
 </div>
+
+<div class="load_icon animate-slow"
+     ng-if="drop_icon">
+	<img src="assets/preloader.gif" />
+</div>
+<div push-notification="notification_active" 
+	class="push_notification" 
+	ng-if="notification_active">
+	<!-- <div class="header">
+		HEADER
+	</div> -->
+	<div class="content">
+		CONTENT
+	</div>
+</div>
+<message></message>

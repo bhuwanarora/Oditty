@@ -1,5 +1,7 @@
 require 'resque/server'
 ReadersDoor::Application.routes.draw do
+  resources :facebooks
+
   mount Resque::Server, :at => "/resque"
   mount MadChatter::RailsEngine => "/chat"
   

@@ -35,8 +35,8 @@ function notify($rootScope, message, $timeout){
   $rootScope.message = message_split[1];
   $rootScope.notification_active = true;
   var timeout_event = $timeout(function(){
-    $rootScope.notification_active = false
-    $rootScope.message = ""
-  }, 3000);
+    $rootScope.notification_active = false;
+    $rootScope.message = "";
+  }, 5000);
   return timeout_event;
 }

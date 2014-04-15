@@ -408,17 +408,6 @@ a:hover{
 	opacity: 0.4;
 }
 
-.rating:hover{
-	opacity: 1;
-}
-
-.rating-icon{
-	width: 17px;
-	margin: -2px;
-	height: 17px;
-	background: url("icon-sprites.png") -3px -5px;
-}
-
 .rating{
 	opacity: 0.3;
 	right: 40px;
@@ -430,11 +419,13 @@ a:hover{
 .bookmark{
 	display: inline-block;
 	float: left;
-	background-color: rgba(113, 112, 112, 0.15);
+	background-color: #DEDEDE;
 	margin-left: 2px;
 	border-top-right-radius: 4px;
 	border-bottom-right-radius: 4px;
 	cursor: pointer;
+	font-size: 0.8em;
+	text-align: center;
 }
 
 .bookmarked{
@@ -540,8 +531,6 @@ a:hover{
 .mark_as_read{
 	color: #717070;
 	background-color: #DEDEDE;
-	border-top: rgba(113, 112, 112, 0.25) 1px solid;
-	width: 80%;
 	margin-left: 5px;
 	text-align: center;
 	font-size: 0.8em;
@@ -550,6 +539,10 @@ a:hover{
 	cursor: pointer;
 	display: inline-block;
 	float: left;
+}
+
+.book_read{
+	color: #4374e0 !important;
 }
 
 .active_bookmark{
@@ -583,13 +576,15 @@ a:hover{
 .rate{
 	text-align: center;
 	background-color: #DEDEDE;
-	width: 80%;
-	margin-left: 5px;
 	padding-top: 15px;
-	border-top-left-radius: 4px;
-	border-bottom-left-radius: 4px;
-	display: inline-block;
-	float: left;
+	height: 50px;
+}
+
+.interaction_box .close{
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	cursor: pointer;
 }
 
 /*comment*/
@@ -616,27 +611,17 @@ a:hover{
 	background-color: white;
 }
 
-.comment_box_background{
-	background: url("header-background.jpg");
-	width: 80%;
-	margin-left: 5px;
-	border-top-left-radius: 4px;
-	border-bottom-left-radius: 4px;
-	height: 41px;
-	display: inline-block;
-	float: left;
-}
-
 .comment_box{
 	border: 1px solid #D6D5D5;
 	color: #717070;
-	border-top-left-radius: 4px;
-	border-bottom-left-radius: 4px;
 	font-size: 1.2em;
-	width: 79%;
-	display: inline-block;
-	float: left;
-	margin-left: 5px;
+	margin: 5px 0px 5px 0px;
+	width: 98%;
+	height: 90px;
+	max-width: 98%;
+	max-height: 90px;
+	border-radius: 2px;
+	outline: none;
 }
 
 .post_button{
@@ -847,10 +832,10 @@ a:hover{
 	display: inline-block;
 	height: 10px;
 	text-align: center;
-	padding: 16px;
+	padding: 16px 10px 16px 10px;
 	color: #717070;
-	text-shadow: 0px 1px 1px #fff; 
-	margin-left: -4px;
+	text-shadow: 0px 1px 1px #fff;
+	margin-left: 0px;
 }
 
 .filter_link, 
@@ -870,7 +855,7 @@ a:hover{
 }
 
 .inactive:hover{
-	border: 1px solid;
+	border: 1px solid #C9C9C9;
 }
 
 .shelf_nav_links{
@@ -900,11 +885,11 @@ a:hover{
 .push_notification{
 	position: fixed;
 	z-index: 1000;
-	bottom: 40px;
-	right: 10px;
-	border-radius: 4px;
-	background-color: white;
+	top: 5px;
+	right: 20px;
 	font-size: 0.8em;
+	border: 1px solid #CECECE;
+	border-bottom: none;
 }
 
 .message{
@@ -931,10 +916,10 @@ a:hover{
 
 .push_notification .content{
 	padding: 15px;
+	color: rgb(124, 124, 124);
 	color: white;
+	background-color: #FFFFFF;
 	background-color: #3D79A1;
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
 }
 
 .push_notification.ng-enter, .push_notification.ng-leave {
@@ -945,18 +930,29 @@ a:hover{
 .scroller{
 	display: inline-block;
 	float: left;
-	margin-left: 14%;
+	left: 50%;
 	color: #3D79A1;
-	margin-top: 12px;
+	box-shadow: inset 0px 2px 50px -11px #7F868D, inset 0px 0px 40px #EEEEEE;
+	height: 35px;
+	margin-top: 1px;
+	border-radius: 5px;
+	position: absolute;
+	margin-left: -90px;
+	padding: 12px 15px 0px 15px;
 }
 
 
 .scroller .scroller-left,
 .scroller .scroller-right{
 	font-size: 1em;
-	background-color: #108DAC;
+	background-color: #3D79A1;
 	border: 1px solid #F0F0F0;
 	color: white;
+}
+
+.scroller .scroller-left:active,
+.scroller .scroller-right:active{
+	background-color: #284D66;
 }
 
 .scroller span:active{
@@ -965,16 +961,14 @@ a:hover{
 
 .scroller .scroller-left{
 	margin-left: 3px;
-	margin-right: 1px;
-	padding: 6px 3px 9px 9px;
+	padding: 6px 25px 9px 25px;
 	border-bottom-left-radius: 10px;
 	border-top-left-radius: 10px;
 }
 
 .scroller .scroller-right{
 	margin-right: 3px;
-	margin-left: 1px;
-	padding: 6px 9px 9px 9px;
+	padding: 6px 25px 9px 25px;
 	border-bottom-right-radius: 10px;
 	border-top-right-radius: 10px;
 }
@@ -1055,6 +1049,61 @@ a:hover{
 	font-size: 0.6em;
 	cursor: pointer;
 	text-align: center;
+}
+
+.interaction_box{
+	position: fixed;
+	left: 50%;
+	margin-left: -250px;
+	box-shadow: 8px 10px 54px 0px #424242; 
+	z-index: 5;
+	padding: 1px;
+	background-color: white;
+	border-radius: 2px;
+	width: 500px;
+	height: 200px;
+	bottom: 50px;
+}
+
+.interaction_box .recommend{
+	position: absolute;
+	left: 8px;
+	top: 8px;
+	border: 1px solid #B8B8B8;
+	padding: 5px;
+	background-color: white;
+	border-radius: 2px;
+	font-size: 0.8em;
+	cursor: pointer;
+}
+
+.interaction_box .recommended{
+	position: absolute;
+	left: 8px;
+	top: 8px;
+	background-color: #B8B8B8;
+	color: white;
+	border: 1px solid #B8B8B8;
+	padding: 5px;
+	border-radius: 2px;
+	font-size: 0.8em;
+	cursor: pointer;
+}
+
+.interaction_box.ng-enter,
+.interaction_box.ng-leave.ng-leave-active{
+	width: 200px;
+	height: 50px;
+	bottom: 150px;
+	opacity: 0;
+}
+
+.interaction_box.ng-leave,
+.interaction_box.ng-enter.ng-enter-active{
+	width: 500px;
+	height: 200px;
+	bottom: 50px;
+	opacity: 1;
 }
 
 .reset_filters{
@@ -1356,6 +1405,46 @@ input:focus{
 	margin-top: 25px;
 }
 
+#timeReader-slider-span{
+	width: 200px;
+	display: inline-block;
+	float: left;
+	margin: 5px;
+}
+
+.time_to_read{
+	padding: 5px;
+	letter-spacing: -5px;
+	text-align: center;
+	bottom: 1px;
+	position: absolute;
+	width: 470px;
+}
+
+.time_to_read .header{
+	letter-spacing:0px;
+	padding-bottom: 4px;
+	color: #B6B6B6;
+}
+
+.time_to_read hr{
+	opacity: 0.3;
+}
+
+.time_to_read span{
+	text-align: center;
+	border: 1px solid #DFDFDF;
+	padding: 2px 15px 2px 15px;
+	letter-spacing: 0px;
+	cursor: pointer;
+	background-color: white;
+}
+
+.time_to_read span:hover{
+	background-color: #3D79A1;
+	color: white;
+}
+
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen
 and (min-device-width : 320px)
@@ -1400,10 +1489,6 @@ and (min-width : 400px) {
 		font-size: 0.9em;
 	}
 
-	.comment_box{
-		height: 35px;
-	}
-
 	.book_widget{
 		height: 420px;
 		width: 320px;
@@ -1419,6 +1504,10 @@ and (min-width : 400px) {
 		padding-top: 40px;
 	}
 
+	.mark_as_read{
+		width: 125px;
+	}
+
 	.rate,
 	.mark_as_read,
 	.comment_instruct_box{
@@ -1427,7 +1516,8 @@ and (min-width : 400px) {
 
 	.bookmark{
 		height: 15px;
-		padding: 13px;
+		padding: 17px 13px 8px 13px;
+		width: 95px;
 	}
 
 	.book_navbar_base{
@@ -1499,10 +1589,6 @@ and (min-width : 1280px){
 		width: 390px;
 	}
 
-	.comment_box{
-		height: 60px;
-	}
-
 	.book_navbar_base{
 		width: 97%;
 	}
@@ -1517,8 +1603,8 @@ and (min-width : 1280px){
 		padding-top: 100px;
 	}
 
-	.rate{
-		height: 50px;
+	.mark_as_read{
+		width: 125px;
 	}
 
 	.mark_as_read,
@@ -1529,6 +1615,7 @@ and (min-width : 1280px){
 
 	.bookmark{
 		padding: 25px 18px 25px 18px;
+		width: 125px;
 	}
 
 	.rate_radio_buttons{
@@ -1583,10 +1670,6 @@ and (min-width : 1366px){
 		font-size: 0.9em;
 	}
 
-	.comment_box{
-		height: 35px;
-	}
-
 	.book_navbar_base{
 		width: 97%;
 	}
@@ -1618,6 +1701,7 @@ and (min-width : 1366px){
 
 	.mark_as_read{
 		height: 29px;
+		width: 125px;
 	}
 
 	.rate,
@@ -1625,9 +1709,14 @@ and (min-width : 1366px){
 		height: 25px;
 	}
 
+	.mark_as_read{
+		width: 125px;
+	}
+
 	.bookmark{
 		height: 15px;
 		padding: 13px 15px 12px 15px;
+		width: 125px;
 	}
 
 	.mark_as_read,
@@ -1692,14 +1781,14 @@ and (min-width : 1824px) {
 		min-width: 180px;
 	}
 
+	.mark_as_read{
+		width: 125px;
+	}
+
 	.category{
 		height: 84.5%;
 		width: 30px;
 		padding-top: 100px;
-	}
-
-	.rate{
-		height: 50px;
 	}
 
 	.mark_as_read,
@@ -2073,7 +2162,7 @@ and (min-width : 1824px) {
 	cursor: pointer;
 }
 
-.recommended{
+.tooltip .footer .recommended{
 	background-color: #B8B8B8;
 	color: white;
 	border: 1px solid #B8B8B8;
@@ -2711,4 +2800,16 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	left:10px;
 	font-size:14px;
 	color:#AAA;
+}
+
+.main_book_icon{
+	color: #0054a6;
+}
+
+.main_author_icon{
+	color: #3cb878;
+}
+
+.main_reader_icon{
+	color: #790000;
 }

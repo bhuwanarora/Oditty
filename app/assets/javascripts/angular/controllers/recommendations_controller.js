@@ -3,18 +3,23 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
 
 	$scope.toggle_bookmarked = function(){
 		if(!$scope.bookmark_selected){
+			_load_icon();
 			$scope.panel_selected = 'BOOKMARK';
 			$scope.bookmark_selected = true;
 			$scope.read_selected = false;
 			$scope.glowBookmark = false;
+			// $('body').css('background-image', $scope.search_style['background-image']);
 		}
 	}
 
 	$scope.toggle_recommendations = function(){
 		if($scope.bookmark_selected || $scope.read_selected){
+			_load_icon();
 			$scope.read_selected = false;
 			$scope.bookmark_selected = false;
 			$scope.panel_selected = '';
+			$scope.$emit('moveRight');
+			// $('body').css('background-image', '');
 		}
 	}
 
@@ -24,10 +29,12 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
 
 	$scope.toggle_read = function(){
 		if(!$scope.read_selected){
+			_load_icon();
 			$scope.glowShelf = false;
 			$scope.bookmark_selected = false;
 			$scope.read_selected = true;		
 			$scope.panel_selected = 'READ';
+			// $('body').css('background-image', 'url("assets/wood_shelf.jpg")');
 		}
 	}
 
@@ -47,6 +54,13 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
 	$scope.stopSearching = function(event){
 		$rootScope.searching = false;
 		event.currentTarget.text = "";
+	}
+
+	_load_icon = function(){
+		$scope.drop_icon = true;
+		$timeout(function(){
+			$scope.drop_icon = false;
+		}, 1000);
 	}
 
 
@@ -157,6 +171,7 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
 	_init = function(){
 		//oneMin = 60000
 		var oneSec = 10000;
+		$scope.drop_icon = false;
 		$rootScope.show_book = false;
 
 		user_behaviour_timer_event = $timeout(function(){

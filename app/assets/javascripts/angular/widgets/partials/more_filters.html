@@ -9,15 +9,21 @@
 		<div ng-click="toggle_active_filter()"
 			 ng-disabled="active_book_filter"
 			 ng-class="{'active_filter':active_book_filter, 'inactive_filter':!active_book_filter}">
-			 <span class="icon-book"></span>&nbsp;BOOK</div>
+			 <span class="icon-book" 
+			  	   ng-class="{'main_book_icon':!active_book_filter}">
+			  	   </span>&nbsp;BOOK</div>
 		<div ng-click="toggle_active_filter()"
 			 ng-disabled="active_author_filter"
 			 ng-class="{'active_filter':active_author_filter, 'inactive_filter':!active_author_filter}">
-			 <span class="icon-user"></span>&nbsp;AUTHOR</div>
+			 <span class="icon-user" 
+			       ng-class="{'main_author_icon':!active_author_filter}">
+			       </span>&nbsp;AUTHOR</div>
 		<div ng-click="toggle_active_filter()"
 			 ng-disabled="active_reader_filter"
 			 ng-class="{'active_filter':active_reader_filter, 'inactive_filter':!active_reader_filter}">
-			 <span class="icon-user22"></span>&nbsp;READER</div>
+			 <span class="icon-user22" 
+			  	   ng-class="{'main_reader_icon':!active_reader_filter}">
+			  	   </span>&nbsp;READER</div>
 		<span class="result_count" ng-model="recommendations.books.length">
 			<span ng-show="bookmark_selected">
 				{{user.books.bookmarked.length}} books bookmarked</span>

@@ -1,4 +1,7 @@
-<div class="mark_as_read" 
+<div class="mark_as_read"
+	 ng-class="{'book_read':read}"
 	 ng-click="markAsRead()">
-  PIN AS READ<span class="icon-location"></span>
+  <span class="icon-location"></span>
+  <span ng-show="!read">mark as read</span>
+  <span ng-show="read">marked as read</span>
 </div>

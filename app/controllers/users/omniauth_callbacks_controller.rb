@@ -30,12 +30,15 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if @user.email.present? && @user.persisted?
       session[:email] = @user.email
       status = WebsiteStatus::SubscriptionSuccessful unless status
-      redirect_to coming_soon_path(:notice => status, 
-                                  :image_url => @user.facebook_user_authentication.image_url)
+      facebook_pages = FacebooksHelper.get_facebook_pages(@user.id)
+      redirect_to new_facebook_path(:facebook_pages => facebook_pages.as_json)
+      # redirect_to coming_soon_path(:notice => status, 
+                                  # :image_url => @user.facebook_user_authentication.image_url)
     else
       session[:email] = nil
       status = WebsiteStatus::SubscriptionSuccessful unless status
-      redirect_to coming_soon_path(:notice => status)
+      redirect_to new_facebook_path
+      # redirect_to coming_soon_path(:notice => status)
     end
   end
 

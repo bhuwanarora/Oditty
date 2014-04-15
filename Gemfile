@@ -60,6 +60,7 @@ gem 'ancestry'
 gem 'less-rails-bootstrap', '2.3.3'
 gem "twitter-bootstrap-rails"
 gem 'freebase-api'
+gem 'fb_graph'
 
 # gem 'rails_admin_example_theme', :git => 'git://github.com/bbenezech/rails_admin_example_theme.git'
 

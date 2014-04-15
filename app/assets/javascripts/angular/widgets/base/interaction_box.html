@@ -1,0 +1,44 @@
+<div class="interaction_box animate-fast"
+	 ng-if="interact">
+	<recommend></recommend>
+ 	<div class="close"
+ 		 ng-click="close_interaction_box()">x</div>
+	<div itemprop="review" 
+	 	  itemscope 
+	 	  itemtype="http://schema.org/Review"
+	 	  class="rate">
+	 	<div class="rate_radio_buttons">
+			Rate
+			<button type="radio" 
+				   class="rate_radio" 
+				   value="{{$index+1}}"
+				   ng-model="rate_book" 
+				   ng-mouseover="show_rating_description()" 
+				   ng-mouseleave="init_rate_description()"
+				   ng-click="mark_as_rated()"
+				   ng-repeat="i in [1, 2, 3, 4, 5]">{{i}}</button>
+	 	</div>
+		<div class="rating_description">
+			<span itemprop="description">
+			</span>
+		</div>
+	</div>
+	<textarea itemprop= "commentText" 
+		itemtype= "http://schema.org/UserComments"
+	   type="text" 
+	   ng-keydown="post_review()"
+	   placeholder="What do you feel about {{book.title}} by {{book.author_name}}..." 
+	   class="comment_box animate-fast" 
+	   rows="1"/>
+	<div class="time_to_read">
+		<hr>
+		<div class="header">Time spent to read this book</div>
+		<div>
+			<span>24 hours</span>
+			<span>7 days</span>
+			<span>31 days</span>
+			<span>1 Half year</span>
+			<span>An Year or more</span>
+		</div>
+	</div>
+</div>

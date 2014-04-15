@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
 		    facebook_user_authentication.oauth_token = auth.to_s
 		    facebook_user_authentication.save
 	    end
-	    send_subscription_mail(facebook_user_authentication.first_name, user.email) unless existing_user
+	    # send_subscription_mail(facebook_user_authentication.first_name, user.email) unless existing_user
 	    user
 	end
 
