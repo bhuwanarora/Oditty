@@ -174,3 +174,22 @@ websiteApp.directive('message', function(){
 		templateUrl: 'assets/angular/widgets/partials/message.html'
 	}
 });
+
+websiteApp.directive('notification', function(){
+	return{
+		restrict: 'E',
+		scope: {"notification": "=data"},
+		controller: function($scope){
+			$scope.notification_seen = function(){
+				$scope.seen = true;
+			}
+
+			_init = function(){
+				$scope.seen = false;	
+			}
+
+			_init();
+		},
+		templateUrl: 'assets/angular/widgets/partials/notification.html'
+	}
+});

@@ -118,6 +118,11 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 				websiteService.get_user_details().then(function(data){
 		    		$scope.user.books = data["books"];
 		    	});
+		    	$timeout(function(){
+					websiteService.get_notifications($scope.user).then(function(data){
+						$scope.notifications = data.notifications;
+					});
+		    	}, 5000);
 			}
 			else{
 				$scope.logged = false;	
@@ -416,9 +421,19 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		}, 2000);
 	}
 
+	$scope.toggle_notifications = function(){
+		if($scope.show_notifications){
+			$scope.show_notifications = false;
+		}
+		else{
+			$scope.show_notifications = true;
+		}
+	}
+
 	_init = function(){
 		console.time("websiteAppController");
 		$scope.more_filters = [];
+		$scope.show_notifications = true;
 		$scope.test = {time: 1970};
 		$scope.detailed_book = {};
 		$rootScope.initPage = 3;

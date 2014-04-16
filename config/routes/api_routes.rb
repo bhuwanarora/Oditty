@@ -25,6 +25,7 @@ ReadersDoor::Application.routes.draw do
       match "authenticate"                           => 'website_api#authenticate',                     :via => [:put, :get, :post]
       match "profile"                                => 'website_api#update_profile',                   :via => [:put, :get, :post]
       match "image"                                  => 'website_api#image',                            :via => [:put, :get, :post]
+      match "notifications"                          => 'website_api#notifications',                    :via => [:put, :get, :post]
     end
   end
 end

@@ -614,7 +614,7 @@ a:hover{
 .comment_box{
 	border: 1px solid #D6D5D5;
 	color: #717070;
-	font-size: 1.2em;
+	font-size: 1em;
 	margin: 5px 0px 5px 0px;
 	width: 98%;
 	height: 90px;
@@ -835,12 +835,13 @@ a:hover{
 	padding: 16px 10px 16px 10px;
 	color: #717070;
 	text-shadow: 0px 1px 1px #fff;
-	margin-left: 0px;
+	margin-left: -5px;
 }
 
-.filter_link, 
-.notification_bell{
+.filter_link
+{
 	float: right;
+	margin-right: 20px;
 }
 
 .active{
@@ -859,8 +860,10 @@ a:hover{
 }
 
 .shelf_nav_links{
-	float: left;
-	margin-left: 1%;
+	float: right;
+	margin-right: 1%;
+	box-shadow: inset 0px 2px 50px -11px #7F868D, inset 0px 0px 40px #EEEEEE;
+	border-radius: 4px;
 }
 
 .shelf{
@@ -1077,6 +1080,11 @@ a:hover{
 	cursor: pointer;
 }
 
+.interaction_box .recommend:hover{
+	background-color: #B8B8B8;
+	color: white;
+}
+
 .interaction_box .recommended{
 	position: absolute;
 	left: 8px;
@@ -1166,7 +1174,8 @@ input:focus{
 	box-shadow: 0px 1px 4px 0px #DDDCDC, inset 0px 0px 40px #EEEEEE;
 }
 
-.inactive_filter:hover, .rate_radio:hover{
+.inactive_filter:hover, 
+.rate_radio:hover{
 	box-shadow: 0px 1px 4px 0px #143A5F, inset 0px 0px 40px #368AC2;
 }
 
@@ -1228,6 +1237,17 @@ input:focus{
 	border-radius: 0px;
 	box-shadow: 0px 1px 4px 0px #D4D7DA, inset 0px 0px 40px #EEEEEE;
 	background-color: white;
+	outline: none;
+}
+
+.active_rating{
+	background-color: #3D79A1;
+	box-shadow: none;
+	color: white;
+}
+
+.rate_radio:active{
+	background-color: #3D79A1;
 }
 
 .rating_description{
@@ -1438,6 +1458,10 @@ input:focus{
 	letter-spacing: 0px;
 	cursor: pointer;
 	background-color: white;
+}
+.time_to_read .active_read_timer{
+	background-color: #3D79A1;
+	color: white;
 }
 
 .time_to_read span:hover{
@@ -2812,4 +2836,85 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 
 .main_reader_icon{
 	color: #790000;
+}
+
+.notifications{
+	position: fixed;
+	width: 31	0px;
+	height: 100%;
+	overflow-y: hidden;
+	font-size: 0.9em;
+	z-index: 1;
+}
+
+.notifications.ng-enter,
+.notifications.ng-leave.ng-leave-active{
+	margin-top: 600px;
+}
+
+.notifications.ng-leave,
+.notifications.ng-enter.ng-enter-active{
+	margin-top: 0px;
+}
+
+.notification.ng-enter{
+	margin-top: 300px;
+}
+
+.notification.ng-enter.ng-enter-active{
+	margin-top: 5px;
+}
+
+.notification.ng-leave.ng-leave-active{
+	margin-left: -300px;
+}
+
+.notification.ng-leave{
+	margin-left: 5px;
+}
+
+.notifications a{
+	cursor: pointer;
+	color: #07c;
+}
+
+.notifications .notification_message{
+	width: 220px;
+	white-space: initial;
+	padding: 5px;
+}
+
+.notifications .notification{
+	background-color: white;
+	height: 70px;
+	margin: 5px;
+	border: 1px solid #C9C9C9;
+	padding: 5px;
+	border-radius: 2px;
+}
+
+.notifications span{
+	display: inline-block;
+	float: left;
+}
+
+.notifications img{
+	width: 50px;
+	margin: 5px;
+}
+
+.notifications .timestamp{
+	color: #BBBBBB;
+	font-size: 0.9em;
+	float: right;
+}
+
+.notifications .check{
+	position: absolute;
+	right: 15px;
+	cursor: pointer;
+}
+
+.notifications .check:hover{
+	color: #3D79A1;
 }

@@ -44,4 +44,12 @@ websiteApp.service('websiteService', function ($http, $q, $rootScope) {
         return deferred.promise;
     }
 
+    this.get_notifications = function(data){
+        var deferred = $q.defer();
+        $http.get('/api/v0/notifications?id='+data.id).then(function(result) {
+            return deferred.resolve(result.data); 
+        });
+        return deferred.promise;   
+    }
+
 });

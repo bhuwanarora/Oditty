@@ -19,6 +19,7 @@ module Api
 							  },
 							  :rating => 4,
 							  :status => 0,
+							  :read_timer => 2,
 							  :bookmark_status => 1,
 							  :readers_count => "1112",
 							  :discussions_count => "123",
@@ -51,6 +52,7 @@ module Api
 							  	
 							  },
 							  :rating => 5,
+							  :read_timer => 0,
 							  :bookmark_status => 0,
 							  :readers_count => "112",
 							  :discussions_count => "23",

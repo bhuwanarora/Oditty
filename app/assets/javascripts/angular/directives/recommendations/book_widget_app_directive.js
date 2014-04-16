@@ -150,65 +150,45 @@ websiteApp.directive('interactionBox', function($rootScope, $timeout){
   return{
     restrict: 'E',
     controller: function($scope){
-      $scope.toggleCommentBoxState = function(){
-        if($scope.comment_ready == true){
-          $scope.comment_ready = false;
-        }
-        else{
-          $scope.comment_ready = true;
-        }
-      }
-
       $scope.close_interaction_box = function(){
         $scope.interact = false;
       }
-
-      $scope.postReview = function(){
-        $scope.reviewed = true;
-      }
       
       _init = function(){
-        $scope.comment_ready = false;
-        $scope.rate_ready = false;
-        $scope.init_rate_description();
-      }
-
-      $scope.show_rating_description = function(){
-        rating_value = event.currentTarget.value;
-        if(rating_value == "1"){
-          $scope.rating_description = "Left reading in between.";
-        }
-        else if (rating_value == "2") {
-          $scope.rating_description = "Ordinary read.";
-        } 
-        else if (rating_value == "3") {
-          $scope.rating_description = "A nice read.";
-        } 
-        else if (rating_value == "4") {
-          $scope.rating_description = "Loved it.";
-        } 
-        else{
-          $scope.rating_description = "In the best books I've read.";
-        }
-      }
-
-      $scope.init_rate_description = function(){
-        $scope.rating_description = "";
       }
 
       $scope.toggle = function(index){
-        //TODO
         $scope.mark_as_rated();
       }
 
       $scope.mark_as_rated = function(){
-        $scope.rated = true;
-        //rating dependent
+        $scope.book.rating = parseInt(event.srcElement.innerText);
         var timeout_event = notify($rootScope, "THANKS-This will help us to recommend you better books.", $timeout);
 
         $scope.$on('destroy', function(){
           $timeout.cancel(timeout_event)
         })
+      }
+
+      $scope.is_active = function(index){
+        var rating = parseInt(index) + 1;
+        var is_active = false;
+        if(rating <= $scope.book.rating){
+          is_active = true;
+        }
+        return is_active;
+      }
+
+      $scope.record_read_time = function(read_timer){
+        $scope.book.read_timer = read_timer;
+      }
+
+      $scope.is_timer = function(read_timer){
+        var is_timer = false;
+        if($scope.book.read_timer == read_timer){
+          is_timer = true;
+        }
+        return is_timer;
       }
 
       _init();
