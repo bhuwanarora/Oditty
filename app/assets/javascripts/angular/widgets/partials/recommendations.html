@@ -7,6 +7,8 @@
 				Bookmark some stuff							
 			</div>
 			<div ng-switch-default>
+				<div class="horizontal_padder_active">
+				</div>
 				<div ng-repeat="user_book in user.books.bookmarked" class="recommendation_block">
 					<book track ng-if="true" id="{{user_book.category.name | lowercase}}-{{user_book.id}}" data="user_book"></book>
 				</div>
@@ -19,6 +21,8 @@
 				Add Some books to read				
 			</div>
 			<div ng-switch-default>
+				<div class="horizontal_padder_active">
+				</div>
 				<div ng-repeat="user_book in user.books.read" class="recommendation_block">
 					<book track ng-if="true" id="{{user_book.category.name | lowercase}}-{{user_book.id}}" data="user_book"></book>
 				</div>
@@ -27,6 +31,8 @@
 	</div>
 	<div ng-switch-default>
 		<div ng-show="active_book_filter" ng-model="recommendations.books">
+			<div class="horizontal_padder_active">
+			</div>
 			<div ng-if="logged" ng-switch on="user.profile_status" ng-model="user.profile_status">
 				<div class="info_cards" 
 				     style="background-color:{{user.profile_status_color}}"

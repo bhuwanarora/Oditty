@@ -14,7 +14,17 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	}
 
 	$scope.move_left = function(event){
-		var current_x = event.pageX - $('.scroller-left').position().left;
+		if(event){
+			if(event.type == "keydown"){
+				var current_x = $window.pageXOffset;
+			}
+			else{
+				var current_x = event.pageX - ($('.scroller').position().left + $('.scroller-left').position().left);
+			}
+		}
+		else{
+			var current_x = 0;	
+		}
 		var delta_x = $('.recommendation_block:first').width();
 		scroller.scrollTo(current_x - delta_x, 0, 3000);
 	}
@@ -22,16 +32,23 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	$scope.move_right = function(event){
 		if(event){
 			var pageX = event.pageX;
+			var clientWidth = $document.width();
+			if(event.type == "keydown"){
+				var current_x = $window.pageXOffset;
+				var lessThanOnePageLeft = current_x + (1.5)*screen.width > clientWidth;
+			}
+			else{
+				var current_x = pageX - ($('.scroller').position().left+$('.scroller-right').position().left);
+				var lessThanOnePageLeft = pageX + screen.width > clientWidth;
+			}
 		}
 		else{
-			var pageX = $('.scroller-right').position().left;
+			var pageX = $('.scroller').position().left+$('.scroller-right').position().left;
+			var lessThanOnePageLeft = pageX + screen.width > clientWidth;
 		}
-		var clientWidth = $document.width();
-		var lessThanOnePageLeft = pageX + screen.width > clientWidth;
 		if(lessThanOnePageLeft){
 			$rootScope.$broadcast('loadRecommendations');
 		}
-		var current_x = pageX - $('.scroller-right').position().left;
 		var delta_x = $('.recommendation_block:first').width();
 		scroller.scrollTo(current_x + delta_x, 0, 3000);
 	}
@@ -118,11 +135,9 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 				websiteService.get_user_details().then(function(data){
 		    		$scope.user.books = data["books"];
 		    	});
-		    	$timeout(function(){
-					websiteService.get_notifications($scope.user).then(function(data){
-						$scope.notifications = data.notifications;
-					});
-		    	}, 5000);
+				websiteService.get_notifications($scope.user).then(function(data){
+					$scope.notifications = data.notifications;
+				});
 			}
 			else{
 				$scope.logged = false;	
@@ -427,6 +442,15 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		}
 		else{
 			$scope.show_notifications = true;
+		}
+	}
+
+	$scope.handle_keyboard_bindings = function(){
+		if(event.keyCode == 39){
+			$scope.move_right(event);
+		}
+		else if(event.keyCode == 37){
+			$scope.move_left(event);
 		}
 	}
 

@@ -74,6 +74,7 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
 	    	_init_recommendations();
 	    	_get_recommendations();
 	    	$scope.$emit('moveRight');
+	    	global_display_timer = 1000;
 	    	event.stopPropagation();
 	    });
 

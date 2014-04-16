@@ -45,15 +45,6 @@ websiteApp.directive('bookthumb', function ($timeout, $rootScope) {
   return {
     restrict: 'E',
     controller: function($scope){
-      $scope.trigger_expand = function() {
-        if ($scope.expand == true) {
-          $scope.expand = false;
-        }
-        else{
-    		  $scope.expand = true;
-        }
-      };
-
       $scope.show_book = function(page){
         zoomin_book($scope, $timeout, $rootScope, page);
       }
@@ -68,8 +59,31 @@ websiteApp.directive('bookthumb', function ($timeout, $rootScope) {
 
       _init = function(){
         $scope.zoomin_book = false;
-        $scope.expand = false;
         $scope.show_share_menu = false;
+      }
+
+      $scope.show_images = function(){
+        if(global_display_timer == 5000){
+          global_display_timer = 1000;
+        }
+        else{
+          global_display_timer = global_display_timer + 1000;
+        }
+        var timeout_event = $timeout(function(){
+          $scope.book_thumb_style = {'background': "url('"+$scope.book.book_thumb.book_cover_url+"')"};
+        }, global_display_timer);
+
+        $scope.$on('destroy', function(){
+          $timeout.cancel(timeout_event);
+        });
+      }
+
+      _init = function(){
+        $scope.book_thumb_style = {'background-color':$scope.book.book_thumb.background_color};
+        // $scope.$on('showImages', function(){
+        //   $scope.show_images();
+        // });
+        $scope.show_images();
       }
 
       _init();
@@ -283,3 +297,5 @@ function zoomin_book($scope, $timeout, $rootScope, page){
     $timeout.cancel(zoomout_event);
   });
 }
+
+var global_display_timer = 0;

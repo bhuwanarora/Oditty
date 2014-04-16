@@ -78,13 +78,13 @@ module Api
 					},
 					{
 						:thumb => "assets/profile_pic.jpeg",
-						:message => "Your friend <a href='javascript:void(0);'>Test User 1</a> from Facebook joined Reader's Door. <a href='javascript:void(0);'>Follow</a> him.",
+						:message => "<a href='javascript:void(0);'>Test User 1</a> from Facebook joined Reader's Door. <a href='javascript:void(0);'>Follow</a> him.",
 						:timestamp => "2 days ago",
 						:category_id => 6
 					},
 					{
 						:thumb => "assets/profile_pic.jpeg",
-						:message => "Your friend <a href='javascript:void(0);'>Test User 1</a> from Facebook joined Reader's Door. <a href='javascript:void(0);'>Follow</a> him.",
+						:message => "<a href='javascript:void(0);'>Test User 1</a> from Facebook joined Reader's Door. <a href='javascript:void(0);'>Follow</a> him.",
 						:timestamp => "2 days ago",
 						:category_id => 7
 					},

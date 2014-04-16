@@ -6,6 +6,7 @@
   </head>
   <body ng-controller="websiteAppController" 
         ng-keypress="search()" 
+        ng-keydown="handle_keyboard_bindings()"
         ng-mouseout="showFeebackForm()">
         <%= render :partial => "website/loading"%>
     </div>

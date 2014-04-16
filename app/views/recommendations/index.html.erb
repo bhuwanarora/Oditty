@@ -3,7 +3,7 @@
 <div ng-controller="recommendationsController">
 	<more-filters>
 	</more-filters>
-	<div class="notifications animate-slow" ng-if="show_notifications">
+	<div class="notifications animate-slow" ng-show="show_notifications">
 		<div ng-repeat="notification in notifications">
 			<notification data="notification"></notification>
 		</div>
@@ -22,17 +22,17 @@
 			
 		</div>
 		<div class="shelf_nav_links">
-			<div ng-class="{'inactive':read_selected || bookmark_selected, 'active':!read_selected && !bookmark_selected}"
-				 class="link"
-				 title="Recommendations"
-				 ng-click="toggle_recommendations()">
-				 <b><span class="icon-home"></span>&nbsp;Recommendations</b>
-			</div>
 			<div ng-class="{'inactive':!bookmark_selected, 'active':bookmark_selected}"
 				 class="link"
 				 title="Books bookmarked"
 				 ng-click="toggle_bookmarked()">
 				<b><span class="icon-library" ng-class="{'glow_bookmark':glowBookmark}"></span>&nbsp;Bookmarked</b>
+			</div>
+			<div ng-class="{'inactive':read_selected || bookmark_selected, 'active':!read_selected && !bookmark_selected}"
+				 class="link"
+				 title="Recommendations"
+				 ng-click="toggle_recommendations()">
+				 <b><span class="icon-home"></span>&nbsp;Recommendations</b>
 			</div>
 			<div ng-class="{'inactive':!read_selected, 'active':read_selected}"
 				 class="link"
