@@ -43,14 +43,13 @@
   	       ng-model="search_tag.input"
            id="searchInput"
            ng-blur="expression"
-           placeholder="Search a book, author, or a reader..."/>
+           placeholder="Search a book, author, reader or a book category..."/>
   	<div class="website_search_options">
   		<div ng-repeat="item in search_results track by $index" 
       		 ng-click="handle_selection(item.name)" 
       		 ng-class="{active:is_current($index)}" 
       		 ng-mouseenter="set_current($index)"
-      		 class="option"
-           ng-hide="show_login_form">
+      		 class="option">
     		<div class="title">{{item.name}}</div>
         <div ng-show="item.author_name">by {{item.author_name}}</div>
  	 	  </div>
@@ -60,10 +59,13 @@
       <div class="option">
         <div ng-show="search_initiated" class="title">{{search_display}}</div>
         <div ng-show="!search_initiated && search_tag.input" class="title">No results found.. </div>
-        <div ng-show="!search_initiated && !search_tag.input" class="title">Use '@' to search an author or reader... <br/> 
-        Use '#' to search a book...<br/>
-        Use '+' to search a book category...<br/>
-        eg: @Shakespeare</div>
+        <div ng-show="!search_initiated && !search_tag.input" class="title">
+        start typing OR...<br/>
+        Use '@' to search only an author or reader... eg: @Shakespeare<br/> 
+        Use '#' to search only a book... eg: #Animal Farm<br/>
+        Use '+' to search only a book category... eg: +fashion<br/>
+        Use '+' to add anything and get a new field...eg: #life of pi + #siddhartha
+        </div>
       </div>
   </div>
 	<div class="internal_links" ng-if="logged">

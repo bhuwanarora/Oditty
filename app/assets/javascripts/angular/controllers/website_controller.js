@@ -384,14 +384,20 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
         var backspace_or_delete = (event.keyCode == 8) || (event.keyCode == 46);
         if(backspace_or_delete){
         	var currentValue = _get_search_input();
-        	if(currentValue.length == 1){
-        		$scope.search_type = "[ALL]";
-	    		$scope.search_display = "Searching reader's door...";
+        	console.error(currentValue.length <= 1);
+        	if(currentValue.length <= 1){
+        		_init_search();
         	}
         	else{
 				$scope.get_search_results(event);
         	}
         }
+	}
+
+	_init_search = function(){
+		$scope.search_results = [];
+		$scope.search_type = "[ALL]";
+		$scope.search_display = "Searching reader's door...";
 	}
 
 	_handle_search_input = function(){
@@ -427,21 +433,33 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	}
 
 	$scope.get_search_results = function(event){
+		$scope.search_results = [];
 		if($scope.search_initiated){
     		$timeout.cancel(search_typing_timeout);
 		}
 		else{
         	var firstInput = String.fromCharCode(event.keyCode);
+        	var currentValue = _get_search_input();
+        	if(currentValue && currentValue.length > 1){
+        		var customBookSearch = currentValue.indexOf("#") == 0;
+        		var customAuthorSearch = currentValue.indexOf("@") == 0;
+        		var customTagSearch = currentValue.indexOf("+") == 0;
+        	}
+        	else{
+        		var customBookSearch = firstInput == "#";
+        		var customAuthorSearch = firstInput == "@";
+        		var customTagSearch = firstInput == "+";
+        	}
 			$scope.search_initiated = true;
-			if(firstInput == '@'){
+			if(customAuthorSearch){
 				$scope.search_type = "['AUTHOR', 'READER']";
 				$scope.search_display = "Searching authors and readers..."
 			}
-			else if(firstInput == '#'){
+			else if(customBookSearch){
 				$scope.search_type = "['BOOK']";
 				$scope.search_display = "Searching books..."
 			}
-			else if(firstInput == '+'){
+			else if(customTagSearch){
 				$scope.search_type = "['TAG']";
 				$scope.search_display = "Searching book categories..."
 			}
