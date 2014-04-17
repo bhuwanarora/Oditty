@@ -377,7 +377,6 @@ websiteApp.directive('flipbook', function($rootScope, $timeout, scroller){
                 }
               }
             })
-            
             _set_post_css();
           }
         }

@@ -1,19 +1,14 @@
-<div ng-show="hovered" ng-hide="!hovered" class="book_navbar_base">
+<div class="book_navbar_base">
 	<div class="heading animate_fast" 
-	     ng-show="hovered" 
-	     ng-hide="!hovered"
 	     ng-click="show_book(11)">
-		<h2>{{book.readers_count}}</h2><br/>
+	    <!-- <img ng-show="show_book" src="assets/loader2.gif"/> -->
+		<h2>{{book.readers_count}}{{show_book}}</h2>
 		<span class="icon-users2"></span> READERS</div>
 	<div class="heading animate_fast" 
-	     ng-show="hovered" 
-	     ng-hide="!hovered"
 	     ng-click="show_book(14)">
-		<h2>{{book.discussions_count}}</h2><br/>
+		<h2>{{book.discussions_count}}</h2>
 		<span class="icon-bubbles2"></span> DISCUSSIONS</div>
 	<div class="heading animate_fast" 
-	     ng-show="hovered" 
-	     ng-hide="!hovered"
 	     ng-click="show_book(13)">
 		<h2>
 			<span itemprop="aggregateRating" 
@@ -23,6 +18,6 @@
 				{{book.reviews_count}}
 				</span>
 			</span>
-		</h2><br/>
+		</h2>
 		<span class="icon-pencil2"></span> REVIEWS</div>
 </div>

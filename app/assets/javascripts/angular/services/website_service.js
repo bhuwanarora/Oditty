@@ -52,4 +52,12 @@ websiteApp.service('websiteService', function ($http, $q, $rootScope) {
         return deferred.promise;   
     }
 
+    this.search = function(filter, type){
+        var deferred = $q.defer();
+        $http.get('/api/v0/search?count=3&q='+filter+'&t='+type).then(function(result){
+            return deferred.resolve(result.data);
+        });
+        return deferred.promise;
+    }
+
 });

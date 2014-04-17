@@ -471,8 +471,8 @@ a:hover{
   	-webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
   	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
   	cursor: default;
-  	border-top-left-radius: 5px;
-  	border-bottom-left-radius: 5px;
+  	border-top-right-radius: 5px;
+  	border-bottom-right-radius: 5px;
 }
 
 
@@ -526,18 +526,20 @@ a:hover{
 	float: left;
 	font-size: 0.7em;
 	text-align: center;
-	margin-top: 20px;
+	margin-top: 10px;
 	cursor: pointer;
 	width: 33%;
 	text-align: center;
+}
+
+.book_navbar_base .heading img{
+	width:15px;
 }
 
 .book_navbar_base .heading h2{
 	font-size: 1.5em;
 	margin: 0px;
 	padding: 0px;
-	margin-top: -10px;
-	margin-bottom: -10px;
 }
 
 .book_navbar_base:active{
@@ -639,6 +641,7 @@ a:hover{
 	max-height: 90px;
 	border-radius: 2px;
 	outline: none;
+	border: none;
 }
 
 .post_button{
@@ -745,7 +748,7 @@ a:hover{
 	cursor: pointer;
 	padding: 10px;
 	background-color: white;
-	height: 18px;
+	white-space: normal;
 }
 
 .search_box{
@@ -926,13 +929,13 @@ a:hover{
 	font-size: 0.8em;	
 	padding: 15px;
 	color: white;
-	background-color: #65b045;
+	background-color: #4374e0;
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
 }
 
 .message .close{
-	color: #65b045;
+	color: #4374e0;
 	cursor: pointer;
 	padding: 4px;
 	border-radius: 2px;
@@ -964,7 +967,7 @@ a:hover{
 	border-radius: 5px;
 	position: fixed;
 	margin-left: -78px;
-	padding: 12px 15px 0px 15px;
+	padding: 18px 15px 0px 15px;
 }
 
 
@@ -1630,7 +1633,7 @@ and (min-width : 400px) {
 	}
 
 	.horizontal_padder_active{
-		width: 300px;
+		width: 320px;
 		height: 500px;
 		float: left;
 		display: inline-block;
@@ -1717,6 +1720,12 @@ and (min-width : 1280px){
 		width: 100%;	
 	}
 
+	.horizontal_padder_active{
+		width: 440px;
+		height: 500px;
+		float: left;
+		display: inline-block;
+	}
 }
 
 @media only screen
@@ -1817,6 +1826,13 @@ and (min-width : 1366px){
 	.wild_cards .header{
 		margin-top: 0px;
 	}
+
+	.horizontal_padder_active{
+		width: 320px;
+		height: 500px;
+		float: left;
+		display: inline-block;
+	}
 }
 
 /* Large screens ----------- */
@@ -1858,6 +1874,13 @@ and (min-width : 1824px) {
 
 	.card .book_thumb {
 		width: 300px;
+	}
+
+	.horizontal_padder_active{
+		width: 320px;
+		height: 500px;
+		float: left;
+		display: inline-block;
 	}
 
 }

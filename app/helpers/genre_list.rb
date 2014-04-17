@@ -169,9 +169,9 @@ module GenreList
       puts "update #{book.title} : #{book_rating} : #{authorName} : #{isbn[0]}"
       book.update_attributes(:rating => book_rating, 
                               :description => description, 
-                              :authorName => authorName, 
+                              :author_name => authorName, 
                               :isbn => isbn[0],
-                              :authorUrl => authorUrl,
+                              :author_url => authorUrl,
                               :reviews_count =>  reviews_count,
                               :ratings_count => ratings_count,
                               :page_count => page_count,

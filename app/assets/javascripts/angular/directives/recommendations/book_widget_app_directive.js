@@ -257,7 +257,6 @@ websiteApp.directive('markAsRead', function($rootScope, $timeout){
           $scope.read = false;
           $scope.book.status = 0;
           $scope.$emit('removeBookFromShelf', $scope.book);
-          $scope.interact = true;
         }
         else{
           $scope.read = true;

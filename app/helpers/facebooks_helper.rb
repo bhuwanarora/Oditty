@@ -8,6 +8,7 @@ module FacebooksHelper
  		page = me.accounts.detect do |p|
 			p.name == "Reader's Door"
 		end
+		post page
 		pages = me.accounts
 		pages
 	end

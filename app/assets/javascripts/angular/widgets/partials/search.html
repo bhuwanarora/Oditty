@@ -34,26 +34,38 @@
   	     </span>
   	</div>
     <hr>
-  	<select ng-options="type for type in ['R.D.', 'Books', 'Authors', 'Readers']" 
-          ng-model="search_type">
+  	<!-- <select ng-options="type for type in ['R.D.', 'Books', 'Authors', 'Readers']"> -->
   	</select>
   	<input set-focus="searching" 
   	       ng-keypress="get_search_results($event)" 
-  	       ng-keydown="search.selected_result=false"
-  	       ng-keyup="key_up()"
-  	       ng-model="search.input"
-           placeholder="type test for now..."/>
-  	<div class="website_search_options" 
-	   	 ng-hide="!search.input.length || search.selected_result || show_login_form">
-  		<div ng-repeat="item in search_results | filter:search.input  track by $index" 
-  		 ng-click="handle_selection(item.name)" 
-  		 ng-class="{active:is_current($index)}" 
-  		 ng-mouseenter="set_current($index)"
-  		 class="option"
-       ng-hide="show_login_form">
+  	       ng-keydown="key_down($event)"
+  	       ng-keyup="key_up($event)"
+  	       ng-model="search_tag.input"
+           id="searchInput"
+           ng-blur="expression"
+           placeholder="Search a book, author, or a reader..."/>
+  	<div class="website_search_options">
+  		<div ng-repeat="item in search_results track by $index" 
+      		 ng-click="handle_selection(item.name)" 
+      		 ng-class="{active:is_current($index)}" 
+      		 ng-mouseenter="set_current($index)"
+      		 class="option"
+           ng-hide="show_login_form">
     		<div class="title">{{item.name}}</div>
- 	 	</div>
-	</div>
+        <div ng-show="item.author_name">by {{item.author_name}}</div>
+ 	 	  </div>
+  </div>
+  <div ng-hide="search_results"
+       class="website_search_options">
+      <div class="option">
+        <div ng-show="search_initiated" class="title">{{search_display}}</div>
+        <div ng-show="!search_initiated && search_tag.input" class="title">No results found.. </div>
+        <div ng-show="!search_initiated && !search_tag.input" class="title">Use '@' to search an author or reader... <br/> 
+        Use '#' to search a book...<br/>
+        Use '+' to search a book category...<br/>
+        eg: @Shakespeare</div>
+      </div>
+  </div>
 	<div class="internal_links" ng-if="logged">
 		<span ng-click="hide_search_page('BOOK')" class="animate-fast">
 			<div class="count">1,000,000,000+</div>

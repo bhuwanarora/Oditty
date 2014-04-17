@@ -18,13 +18,15 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
 			$scope.read_selected = false;
 			$scope.bookmark_selected = false;
 			$scope.panel_selected = '';
-			$scope.$emit('moveRight');
+			$scope.reset();			
 			// $('body').css('background-image', '');
 		}
 	}
 
 	$scope.reset = function(){
 		_init_recommendations();
+    	_get_recommendations();
+    	$scope.$emit('moveRight');
 	}
 
 	$scope.toggle_read = function(){
@@ -71,10 +73,7 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
 	    });
 
 	    reload_recommendations_event = $scope.$on('reloadRecommendations', function(){
-	    	_init_recommendations();
-	    	_get_recommendations();
-	    	$scope.$emit('moveRight');
-	    	global_display_timer = 1000;
+	    	$scope.reset();
 	    	event.stopPropagation();
 	    });
 
