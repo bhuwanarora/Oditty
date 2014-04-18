@@ -60,6 +60,16 @@ module Api
 				 		results = [{:name =>  "Did you mean? "+did_you_mean[0].name,
 									:id => did_you_mean[0].id}]
 					end
+				elsif type.include? 'TAG'
+					s = SpellingBee.new :source_text => 'tags.txt'
+					did_you_mean = s.correct q
+					if did_you_mean[0] != q
+						did_you_mean = GoodReadsGenre.where("UPPER(name) LIKE ?", "%#{did_you_mean[0].upcase}%")
+													.select([:id, :name])
+													.limit(1)
+						results = [{:name =>  "Did you mean? "+did_you_mean[0].name,
+									:id => did_you_mean[0].id}]
+					end
 				else
 					s = SpellingBee.new :source_text => 'books.txt'
 					did_you_mean = s.correct q

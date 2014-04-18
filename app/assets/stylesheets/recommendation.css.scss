@@ -63,65 +63,6 @@ a:hover{
 	font-weight: bold;
 	padding-bottom: 20px;
 }
-.login_form{
-	position: fixed;
-	top: 70%;
-	left: 50%;
-	z-index: 10;
-	margin-top: -20px;
-	margin-left: -100px;
-}
-.login_form.ng-enter,
-.login_form.ng-leave.ng-leave-active{
-	margin-top: 50px;
-}
-
-.login_form.ng-leave,
-.login_form.ng-enter.ng-enter-active{
-	margin-top: 0px;
-}
-
-.login_form input{
-	padding: 10px;
-	border: 1px solid #F1F1F1;
-	margin: 0px;
-	color: #717070;
-}
-.login_form input.ng-invalid.ng-dirty {
-  border-color: #FA787E;
-}
-
-.login_form input.ng-valid.ng-dirty {
-  border-color: #78FA89;
-}
-
-.login_form input:focus{
-	outline:none;
-	border: 1px solid #F1F1F1;
-}
-
-.login_form .email{
-	border-top-right-radius: 2px;
-	border-top-left-radius: 2px;
-}
-
-.login_form .password{
-	border-bottom-right-radius: 2px;
-	border-bottom-left-radius: 2px;
-}
-
-.login_form .authenticate{
-	background-color: #2F567E;
-	text-align: center;
-	padding: 10px;
-	color: white;
-	cursor: pointer;
-	border-radius: 2px;
-}
-
-.login_form .authenticate:active{
-	background-color: #2c4762;
-}
 
 .glow_shelf{
 	color: #3cb878;

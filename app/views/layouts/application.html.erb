@@ -13,13 +13,14 @@
     <div ng-show="!loading">
       <div ng-include 
             src="'assets/angular/widgets/partials/search.html'" 
-            ng-show="searching"
+            ng-show="website.searching"
             class="search_animate animate-very-slow" 
-            ng-click="stopSearching($event)"></div>
+            ng-click="stopSearching($event)"
+            ng-controller="searchController"></div>
       <div msd-wheel="bindHorizontalScroll($event, $delta, $deltaX, $deltaY)" 
            ng-animate="msd-wheel"
            class="recommendations"
-           ng-hide="searching"
+           ng-hide="website.searching"
            style="height:100%; white-space:nowrap;">
         <%= yield %>
       </div>

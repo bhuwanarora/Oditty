@@ -1,5 +1,5 @@
-websiteApp.controller('websiteAppController', function($scope, $rootScope, $interval, $http, 
-	$timeout, $q, $window, websiteService, Facebook, $document, scroller){
+websiteApp.controller('websiteAppController', function($scope, $rootScope, 
+	$timeout, websiteService, Facebook, $document, scroller, $window){
 	$scope.bindHorizontalScroll = function(event, delta, deltaX, deltaY){
 		event.preventDefault();
 		if(delta > 0){
@@ -77,15 +77,6 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 
 	$scope.showFeebackForm = function(){
 		// console.log("showFeebackForm")
-	}
-
-	_show_search_result = function(){
-		$rootScope.show_book = true;
-		$rootScope.book_x = 0;
-		$rootScope.screen_x = 0;
-		$rootScope.total_x = screen.width;
-		var data = 1;
-    	_get_book_details(data);
 	}
 
 	_profile_status_colors = function(){
@@ -182,15 +173,6 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		}
 	}
 
-	$scope.search = function(){
-		input_aimed_for_searching = event.currentTarget == event.srcElement;
-		if(input_aimed_for_searching && !$rootScope.show_book){
-			$('body').css('white-space', 'normal');
-			$scope.searching = true;
-			$rootScope.keyCode = event.keyCode;
-		}
-	}
-      
     $scope.intent_login = function() {
         Facebook.getLoginStatus(function(response) {
           	if (response.status == 'connected') {
@@ -330,145 +312,6 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	    });
 	}
 
-	$scope.handle_selection = function(selectedItem) {
-	    $scope.search_tag.current = 0;
-	    $scope.search_tag.selected_result = true;
-	    _show_search_result();
-	    event.stopPropagation();
-		$scope.search_tag.input = "";
-	};
-
-	$scope.hide_search_page = function(){
-		var logged_in = $scope.logged;
-		if(logged_in){
-			$('body').css('white-space', 'nowrap');
-			$scope.searching = false;
-			$scope.loading = true;
-			$timeout(function(){
-				$scope.loading = false;
-			}, 2000);
-		}
-	}
-
-	$scope.is_current = function(index) {
-	    return $scope.search_tag.current == index;
-	};
-
-	$scope.set_current = function(index) {
-	    $scope.search_tag.current = index;
-	};
-
-	$scope.navigate_options = function(){
-		var keyEnter = event.keyCode == 13;
-		if(keyEnter){
-			$scope.handle_selection("NOT WORKING"+$scope.search_tag.current);
-		}
-	}
-
-	$scope.key_up = function(){
-		var keyUp = event.keyCode == 38;
-		var keyDown = event.keyCode == 40;
-		if(keyUp){
-			if($scope.search_tag.current != 0){
-				$scope.set_current($scope.search_tag.current-1);
-			}
-		}
-
-		if(keyDown){
-			$scope.set_current($scope.search_tag.current+1);
-		}
-	}
-
-	$scope.key_down = function(event){
-		// $scope.search_tag.selected_result = false;
-        var backspace_or_delete = (event.keyCode == 8) || (event.keyCode == 46);
-        if(backspace_or_delete){
-        	var currentValue = _get_search_input();
-        	console.error(currentValue.length <= 1);
-        	if(currentValue.length <= 1){
-        		_init_search();
-        	}
-        	else{
-				$scope.get_search_results(event);
-        	}
-        }
-	}
-
-	_init_search = function(){
-		$scope.search_results = [];
-		$scope.search_type = "[ALL]";
-		$scope.search_display = "Searching reader's door...";
-	}
-
-	_handle_search_input = function(){
-        var currentValue = _get_search_input();
-        $scope.search_results = [];
-        $scope.search_ready = true;
-        var firstInput = currentValue.slice(0, 1);
-        var customSearch = (firstInput == "@") || (firstInput == "#") || (firstInput == "+");
-        var currentValueLength = currentValue.length;
-        if(customSearch){
-			if(currentValue.length == 1){
-				$scope.search_ready = false;
-			}
-        	currentValue = currentValue.substring(1, currentValue.length)
-        }
-
-    	if($scope.search_ready && currentValue != ""){
-	        websiteService.search(currentValue, $scope.search_type).then(function(result) {
-	            $scope.search_results = result.results;
-				$scope.search_initiated = false;
-				$timeout.cancel(search_typing_timeout);
-	        });
-    	}
-    	else{
-    		$scope.search_initiated = false;
-			$scope.search_results = [];
-			$timeout.cancel(search_typing_timeout);
-    	}
-	}
-
-	_get_search_input = function(){
-		return $('#searchInput').val().trim();
-	}
-
-	$scope.get_search_results = function(event){
-		$scope.search_results = [];
-		if($scope.search_initiated){
-    		$timeout.cancel(search_typing_timeout);
-		}
-		else{
-        	var firstInput = String.fromCharCode(event.keyCode);
-        	var currentValue = _get_search_input();
-        	if(currentValue && currentValue.length > 1){
-        		var customBookSearch = currentValue.indexOf("#") == 0;
-        		var customAuthorSearch = currentValue.indexOf("@") == 0;
-        		var customTagSearch = currentValue.indexOf("+") == 0;
-        	}
-        	else{
-        		var customBookSearch = firstInput == "#";
-        		var customAuthorSearch = firstInput == "@";
-        		var customTagSearch = firstInput == "+";
-        	}
-			$scope.search_initiated = true;
-			if(customAuthorSearch){
-				$scope.search_type = "['AUTHOR', 'READER']";
-				$scope.search_display = "Searching authors and readers..."
-			}
-			else if(customBookSearch){
-				$scope.search_type = "['BOOK']";
-				$scope.search_display = "Searching books..."
-			}
-			else if(customTagSearch){
-				$scope.search_type = "['TAG']";
-				$scope.search_display = "Searching book categories..."
-			}
-		}
-		search_typing_timeout = $timeout(function(){
-			_handle_search_input();
-		}, 500);
-	}
-
 	$scope.toggle_login_panel = function(){
 		if($scope.show_login_form){
 			$scope.show_login_form = false;
@@ -476,19 +319,6 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		else{
 			$scope.show_login_form = true;
 		}
-	}
-
-	_handle_search_page = function(){
-		$scope.search_initiated = false;
-		$scope.search_display = "Searching reader's door...";
-		$scope.search_type = "[ALL]";
-		// $scope.search_tag.selected_result = true; // hides the list initially
-		$scope.search_tag = {};
-		$scope.search_tag.current = 0;
-		$scope.searching = true;
-		websiteService.get_background_image().then(function(data){
-			$scope.search_style = {'background-image': 'url("'+data.url+'")'};
-		});
 	}
 
 	_initiate_loading_page = function(){
@@ -515,7 +345,7 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	}
 
 	$scope.handle_keyboard_bindings = function(){
-		if(!$scope.searching){
+		if(!$scope.website.searching){
 			if($scope.show_book){
 				if(event.keyCode == 39){
 					event.preventDefault();
@@ -544,6 +374,16 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		}
 	}
 
+	
+	$scope.search = function(){
+		input_aimed_for_searching = event.currentTarget == event.srcElement;
+		if(input_aimed_for_searching && !$rootScope.show_book){
+			$('body').css('white-space', 'normal');
+			$scope.website.searching = true;
+			$rootScope.keyCode = event.keyCode;
+		}
+	}
+
 	_init = function(){
 		console.time("websiteAppController");
 		$scope.more_filters = [];
@@ -555,13 +395,15 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 		// Define user empty data :/
 		$scope.user = {'books': {'bookmark':[], 'read': []}};
 		$scope.user.profile_status = 0;
+		$scope.website = {};
+		$scope.website.searching = true;
 	    _profile_status_colors();
 
 		_bind_emit();
 		_bind_feedback_form();
 		_bind_auth_listeners();
 		_add_listeners();
-		_handle_search_page();
+		
 		// $('body').css('white-space', 'normal');
 		// $speechRecognition.onstart(function(){
 		//   $speechSynthetis.speak("You're at Reader's Door. How can I help you?", 'en-UK');
@@ -578,7 +420,7 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope, $inte
 	var remove_from_bookmarks_event = "";
 	var move_right_event = ""
 	var move_right_listener_event = "";
-	var search_typing_timeout = "";
+	
 	_init();
 
 });

@@ -16,4 +16,13 @@ module SpellcheckerHelper
 			end
 		end
 	end
+
+	def self.write_tags_to_text_file
+		File.open('tags.txt', 'w') do |file|
+			GoodReadsGenre.pluck(:name).each do |name|
+				puts name
+				file.write(name)
+			end
+		end
+	end
 end
