@@ -48,13 +48,32 @@ module Api
 
 			private
 			def self.did_you_mean(q, type)
+				results = [{:name => "No results found."}]
 				if((type.include? 'AUTHOR') || (type.include? 'READER'))
 					s = SpellingBee.new :source_text => 'authors.txt'
-				elsif (type.include? 'BOOK')
+				 	did_you_mean = s.correct q
+				 	if did_you_mean[0] != q
+				 		did_you_mean = HumanProfile.where("UPPER(name) LIKE ?", "%#{did_you_mean[0].upcase}%")
+				 								   .select([:id, :name])
+				 								   .limit(1)
+
+				 		results = [{:name =>  "Did you mean? "+did_you_mean[0].name,
+									:id => did_you_mean[0].id}]
+					end
+				else
 					s = SpellingBee.new :source_text => 'books.txt'
+					did_you_mean = s.correct q
+					if did_you_mean[0] != q
+						did_you_mean = GoodReadsBook.where("UPPER(title) LIKE ?", "%#{did_you_mean[0].upcase}%")
+													.select([:id, :author_name])
+													.select("title as name")
+													.limit(1)
+						results = [{:name =>  "Did you mean? "+did_you_mean[0].name,
+									:id => did_you_mean[0].id,
+									:author_name => did_you_mean[0].author_name}]
+					end
 				end
-				did_you_mean = s.correct q
-				results = [{:name => "Did you mean? "+did_you_mean[0]}]
+
 				results
 			end
 
