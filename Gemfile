@@ -49,7 +49,8 @@ gem 'faye'
 gem 'thin'
 gem 'mad_chatter', github: 'madchatter/mad_chatter'
 gem 'pubnub'
-
+# gem 'goospell'
+gem 'spellingbee'
 # gem 'rubyXL'	
 # gem "cocoon", "1.1.1"
 
@@ -82,6 +83,7 @@ group :development do
 	gem 'better_errors'
 	gem 'binding_of_caller'
 	gem 'meta_request'
+	gem 'did_you_mean'
 end
 
 # Use ActiveModel has_secure_password

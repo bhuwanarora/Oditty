@@ -16,29 +16,46 @@ module Api
 				puts "#{q}, #{count}, #{type}"
 
 				if (type.include? 'BOOK')
-					results = GoodReadsBook.where("UPPER(title) LIKE ?", "%#{q.upcase}%")
+					results = GoodReadsBook.where("UPPER(title) LIKE ?", "#{q.upcase}%")
 									   	   .select([:id, :author_name])
 									   	   .select("title as name")
 									       .limit(count)
 					tester = {:name => "BOOK:"+q.upcase}
 				elsif (type.include? 'AUTHOR') || (type.include? 'READER')
-					results = HumanProfile.where("UPPER(name) LIKE ?", "%#{q.upcase}%")
+					results = HumanProfile.where("UPPER(name) LIKE ?", "#{q.upcase}%")
 									   	  .select([:id, :name])
 									      .limit(count)
 					tester = {:name => "HUMAN:"+q.upcase}
 				elsif (type.include? 'TAG')
-					results = GoodReadsGenre.where("UPPER(name) LIKE ?", "%#{q.upcase}%")
+					results = GoodReadsGenre.where("UPPER(name) LIKE ?", "#{q.upcase}%")
 											.select([:id, :name])
 											.limit(count)
 					tester = {:name => "TAG:"+q.upcase}
 				else
-					results = GoodReadsBook.where("UPPER(title) LIKE ?", "%#{q.upcase}%")
+					results = GoodReadsBook.where("UPPER(title) LIKE ?", "#{q.upcase}%")
 									   .select([:id, :author_name])
 									   .select("title as name")
 									   .limit(count)
 					tester = {:name => "RD:"+q.upcase}	
 				end
-				results.push tester
+				if results.present?
+					results.push tester
+				else
+					results = did_you_mean(q, type)
+				end
+			end
+
+
+			private
+			def self.did_you_mean(q, type)
+				if((type.include? 'AUTHOR') || (type.include? 'READER'))
+					s = SpellingBee.new :source_text => 'authors.txt'
+				elsif (type.include? 'BOOK')
+					s = SpellingBee.new :source_text => 'books.txt'
+				end
+				did_you_mean = s.correct q
+				results = [{:name => "Did you mean? "+did_you_mean[0]}]
+				results
 			end
 
 		end
