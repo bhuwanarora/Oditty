@@ -374,7 +374,7 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope,
 		}
 	}
 
-	
+
 	$scope.search = function(){
 		input_aimed_for_searching = event.currentTarget == event.srcElement;
 		if(input_aimed_for_searching && !$rootScope.show_book){

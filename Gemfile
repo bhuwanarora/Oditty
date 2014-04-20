@@ -37,7 +37,8 @@ gem 'jquery-tokeninput-rails'
 gem 'nokogiri'
 gem 'rails_admin'
 gem 'rails_admin_nestable'
-gem 'tire'
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
 gem "resque", "1.23.0"
 # gem 'angularjs-rails'
 # gem 'angular-ui-router-rails'
@@ -51,6 +52,9 @@ gem 'mad_chatter', github: 'madchatter/mad_chatter'
 gem 'pubnub'
 # gem 'goospell'
 gem 'spellingbee'
+
+gem 'neography'
+gem 'neo4j-cypher'
 # gem 'rubyXL'	
 # gem "cocoon", "1.1.1"
 
@@ -84,6 +88,8 @@ group :development do
 	gem 'binding_of_caller'
 	gem 'meta_request'
 	gem 'did_you_mean'
+	gem 'net-http-spy'
+	gem 'rspec'
 end
 
 # Use ActiveModel has_secure_password

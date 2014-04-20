@@ -62,7 +62,6 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
         var backspace_or_delete = (event.keyCode == 8) || (event.keyCode == 46);
         if(backspace_or_delete){
         	var currentValue = _get_search_input();
-        	console.error(currentValue.length <= 1);
         	if(currentValue.length <= 1){
         		_init_search();
         	}

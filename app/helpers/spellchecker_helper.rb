@@ -3,7 +3,7 @@ module SpellcheckerHelper
 		File.open('books.txt', 'w') do |file|
 			GoodReadsBook.pluck(:title).each do |name|
 				puts name
-				file.write(name)
+				file.write(name+" ")
 			end
 		end
 	end
@@ -12,7 +12,7 @@ module SpellcheckerHelper
 		File.open('authors.txt', 'w') do |file|
 			HumanProfile.pluck(:name).each do |name|
 				puts name
-				file.write(name)
+				file.write(name+" ")
 			end
 		end
 	end
@@ -21,7 +21,7 @@ module SpellcheckerHelper
 		File.open('tags.txt', 'w') do |file|
 			GoodReadsGenre.pluck(:name).each do |name|
 				puts name
-				file.write(name)
+				file.write(name+" ")
 			end
 		end
 	end

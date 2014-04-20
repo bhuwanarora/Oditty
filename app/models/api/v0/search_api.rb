@@ -36,6 +36,13 @@ module Api
 									   .select([:id, :author_name])
 									   .select("title as name")
 									   .limit(count)
+ 					results |= GoodReadsGenre.where("UPPER(name) LIKE ?", "#{q.upcase}%")
+											.select([:id, :name])
+											.limit(count)
+					results |= HumanProfile.where("UPPER(name) LIKE ?", "#{q.upcase}%")
+									   	  .select([:id, :name])
+									      .limit(count)
+					results = results[0, count]
 					tester = {:name => "RD:"+q.upcase}	
 				end
 				if results.present?
