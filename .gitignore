@@ -46,4 +46,4 @@ Gemfile.lock.sample
 Gemfile.sample
 .gitignore
 neo4j/data/graph.db/nioneo_logical.*
-neo4j/data/graph.db/schema/label/lucene/**
+neo4j/data/graph.db/schema/label/lucene/
