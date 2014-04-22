@@ -320,7 +320,7 @@ module ShelfariCrawler
     rescue Exception => e
       puts "DEBUG #{id} #{book.url} #{e}"
       ELogger.log_info "DEBUG #{id} #{book.url} #{e}"
-      initialize_player
+      # initialize_player
     end
   end
 
