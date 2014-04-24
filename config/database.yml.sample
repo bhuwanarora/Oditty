@@ -4,8 +4,6 @@ development:
   pool: 5
   timeout: 5000
   schema_search_path: "public,postgis"
-  username: postgres
-  password: misha
   # script_dir: "/usr/pgsql-9.2/share/contrib/postgis-2.0"
 
 # Warning: The database defined as "test" will be erased and
@@ -17,8 +15,6 @@ test:
   pool: 5
   timeout: 5000
   schema_search_path: "public,postgis"
-  username: postgres
-  password: misha
   # script_dir: "/usr/pgsql-9.2/share/contrib/postgis-2.0"
 
 production:
@@ -27,7 +23,5 @@ production:
   pool: 5
   timeout: 5000
   # script_dir: "/usr/pgsql-9.2/share/contrib/postgis-2.0"
-  username: postgres
-  password: misha
   schema_search_path: "public,postgis"
 

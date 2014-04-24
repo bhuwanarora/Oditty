@@ -1,7 +1,7 @@
 module Neo4jHelper
-	require 'neography'
-	require 'neo4j-cypher'
-	require 'neo4j-cypher/neography'
+	# require 'neography'
+	# require 'neo4j-cypher'
+	# require 'neo4j-cypher/neography'
 
 	def self.init
 		@neo = Neography::Rest.new
