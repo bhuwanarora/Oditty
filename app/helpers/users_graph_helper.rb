@@ -163,5 +163,4 @@ module UsersGraphHelper
 			CREATE (u1)-[:Follow]->(u2)")
 	end
 
-
 end
