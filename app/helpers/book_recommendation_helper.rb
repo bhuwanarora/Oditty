@@ -59,8 +59,8 @@ module BookRecommendationHelper
 			RETURN DISTINCT(rc)")
 	end
 
-	def get_books_for_similar_users
-
+	def self.get_books_for_similar_users
+		
 	end
 
 end
