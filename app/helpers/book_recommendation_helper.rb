@@ -7,11 +7,15 @@ module BookRecommendationHelper
 
 	def get_similar_books(book_id, user_id)
 		#Add category 
-		@neo.execute_query("MATCH (b:Book{id:"+book_id+"})-[h1:Has]->(t:Tag)<-[h2:Has]-(sb:Book), (u:User{id:"+user_id+"})
+		@neo.execute_query("MATCH (b:Book{id:"+book_id+"})-[h1:Has]->(t:Tag)<-[h2:Has]-(sb:Book), 
+			(u:User{id:"+user_id+"}),
+			(b)-[h:Has]->(t0:Tag),
+			(sb)-[H:Has]->(t1:Tag)
 			WHERE b <> sb AND
 			NOT (u)-[:MarkAsReadAction]->(:MarkAsRead)-[:MarkAsRead]->(sb) AND
 			NOT (u)-[:BookmarkAction]->(:Bookmark)-[:Bookmarked]->(sb)
-			RETURN sb, sum(h2.weight*h1.weight)/sqrt(sum(h1.weight^2)*sum(h2.weight^2))	as similarity_index
+			WITH DISTINCT sb, h
+			RETURN sb, sum(h2.weight*h1.weight)/sqrt(sum(h.weight^2)*sum(H.weight^2))	as similarity_index
 			LIMIT 5 
 			ORDER BY similarity_index DESC, sb.gr_rating DESC")
 	end
@@ -41,21 +45,22 @@ module BookRecommendationHelper
 			RETURN b.title")
 	end
 
-	def get_serendipitous_books(user_id)
-		@neo.execute_query("MATCH (u:User{id:"+user_id+"})-[:MarkAsReadAction]->(:MarkAsRead)-[:MarkAsRead]->(b:Book)-[:Belongs_to]->(c:Category),
-			(ac:Category)
-			WHERE ac <> c
-			RETURN b.title
-			ORDER BY rb.gr_rating DESC")
+	def self.get_serendipitous_books(user_id)
+		@neo.execute_query("MATCH (b:Book{gr_rating=5})-[:Belongs_to]->(:Category)-[:Has_root]->(rc:Category), 
+			(u:User{id:"+user_id+"})
+			WHERE NOT (u)-[:Tendency_for]->(rc)
+			RETURN DISTINCT(b)")
 	end
 
 	def self.get_serendipitous_categories(user_id)
-		@neo.execute_query("MATCH (b:Book)-[:Belongs_to]->(c:Category), (u:User{id:"+user_id+"})
-			WHERE NOT (u)-[:MarkAsReadAction]->(:MarkAsRead)-[:MarkAsRead]->(:Book)-[:Has]->(c)
-			RETURN DISTINCT(c)")
+		@neo.execute_query("MATCH (rc:Category), 
+			(u:User{id:"+user_id+"})
+			WHERE NOT (u)-[:Tendency_for]->(rc)
+			RETURN DISTINCT(rc)")
 	end
 
 	def get_books_for_similar_users
+
 	end
 
 end

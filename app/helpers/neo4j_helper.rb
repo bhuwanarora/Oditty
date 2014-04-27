@@ -195,7 +195,36 @@ module Neo4jHelper
 	end
 
 	def self.delete_author_nodes
+		
+	end
 
+	def self.create_category_tree
+		@neo ||= self.init
+		root = ShelfariCategory.where(:name => 'ROOT').first
+		root.children.each do |shelfari_category|
+			puts shelfari_category.name
+			@neo.execute_query("CREATE (c:Category{is_root:true, name:\""+shelfari_category.name+"\", s_url:\""+shelfari_category.url+"\"})")
+			self.create_category_subtree_for(shelfari_category.url, shelfari_category.url, shelfari_category.id)
+		end
+	end
+
+	def self.create_category_subtree_for(root_url, category_url, shelfari_category_id)
+		begin
+			ShelfariCategory.find(shelfari_category_id).children.each do |shelfari_category|
+				puts "-"+shelfari_category.name
+				@neo.execute_query("MATCH (r:Category{s_url:\""+root_url+"\"}), 
+					(p:Category{s_url:\""+category_url+"\"})
+				 CREATE (p)-[:Child]->(c:Category{is_root:false, name:\""+shelfari_category.name+"\", s_url:\""+shelfari_category.url+"\"})-[:Has_root]->(r)")
+				if shelfari_category.children.present?
+					self.create_category_subtree_for(root_url, shelfari_category.url, shelfari_category.id)
+				end
+			end
+		rescue Neography::NeographyError => err
+		  puts err.message     # Neo4j error message
+		  puts err.code        # HTTP error code
+		  puts err.stacktrace  # Neo4j Java stacktrace
+		end
+			
 	end
 
 	def self.test

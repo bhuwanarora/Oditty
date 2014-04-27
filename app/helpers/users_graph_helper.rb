@@ -33,8 +33,9 @@ module UsersGraphHelper
 	end
 
 	def self.mark_as_read(user_id, book_id)
-		@neo.execute_query("MATCH (u:User{id:"+user_id+"}), (b:Book{id:"+book_id+"})
-			CREATE (u)-[:MarkAsReadAction]->(m:MarkAsRead)-[:MarkAsRead]->(b)")
+		@neo.execute_query("MATCH (u:User{id:"+user_id+"}), (b:Book{id:"+book_id+"})-[:Belongs_to]->(:Category)-[r:Has_root]->(c:Category)
+			MERGE (c)<-[ur:Tendency_for]-(u)-[:MarkAsReadAction]->(m:MarkAsReadNode)-[:MarkAsRead]->(b)
+			SET ur.weight = ur.weight + r.weight")
 		#update mark as read cache for the book
 		#update popularity index for the book
 		#update popularity index for the author
@@ -48,8 +49,9 @@ module UsersGraphHelper
 	end
 
 	def self.mark_as_unread(user_id, book_id)
-		@neo.execute_query("MATCH (u:User{id:"+user_id+"})-[r1:MarkAsReadAction]->(m:MarkAsRead)-[r2:MarkAsRead]->(b:Book{id:"+book_id+"})
-			DELETE m, r1, r2")
+		@neo.execute_query("MATCH (u:User{id:"+user_id+"})-[r1:MarkAsReadAction]->(m:MarkAsReadNode)-[r2:MarkAsRead]->(b:Book{id:"+book_id+"})-[:Belongs_to]->(:Category)-[:Has_root]->(c:Category),
+			(c)<-[r3:Tendency_for]-(u)
+			DELETE m, r1, r2, r3")
 		#update mark as read cache for the book
 		#update popularity index for the book
 		#update popularity index for the author
