@@ -1,5 +1,5 @@
-websiteApp.controller('websiteAppController', function($scope, $rootScope, 
-	$timeout, websiteService, Facebook, $document, scroller, $window){
+websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout', 'websiteService', 'Facebook', '$document', 'scroller', '$window', '$motion',
+	function($scope, $rootScope, $timeout, websiteService, Facebook, $document, scroller, $window, $motion){
 	$scope.bindHorizontalScroll = function(event, delta, deltaX, deltaY){
 		event.preventDefault();
 		if(delta > 0){
@@ -16,6 +16,7 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope,
 	}
 
 	$scope.move_left = function(event){
+		var swipe_time = 3000;
 		if(event){
 			if(event.type == "keydown" || event.type == "wheel"){
 				var current_x = $window.pageXOffset;
@@ -25,16 +26,18 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope,
 			}
 		}
 		else{
-			var current_x = 0;	
+			var current_x = $window.pageXOffset;
+			swipe_time = 1000;
 		}
 		var delta_x = $('.recommendation_block:first').width();
-		scroller.scrollTo(current_x - delta_x, 0, 3000);
+		scroller.scrollTo(current_x - delta_x, 0, swipe_time);
 	}
 
 	$scope.move_right = function(event){
+		var swipe_time = 3000;
+		var clientWidth = $document.width();
 		if(event){
 			var pageX = event.pageX;
-			var clientWidth = $document.width();
 			if(event.type == "keydown" || event.type == "wheel"){
 				var current_x = $window.pageXOffset;
 				var lessThanOnePageLeft = current_x + (1.5)*screen.width > clientWidth;
@@ -45,14 +48,16 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope,
 			}
 		}
 		else{
-			var pageX = $('.scroller').position().left+$('.scroller-right').position().left;
-			var lessThanOnePageLeft = pageX + screen.width > clientWidth;
+			var current_x = $window.pageXOffset;
+			// var pageX = $('.scroller').position().left+$('.scroller-right').position().left;
+			var lessThanOnePageLeft = current_x + (1.5)*screen.width > clientWidth;
+			swipe_time = 1000;
 		}
 		if(lessThanOnePageLeft){
 			$rootScope.$broadcast('loadRecommendations');
 		}
 		var delta_x = $('.recommendation_block:first').width();
-		scroller.scrollTo(current_x + delta_x, 0, 3000);
+		scroller.scrollTo(current_x + delta_x, 0, swipe_time);
 	}
 
 	$scope.scroll_one_page_right = function(event){
@@ -411,6 +416,15 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope,
 		// $speechRecognition.setLang('en-UK'); // Default value is en-US
 		// $speechRecognition.listen();
 		_initiate_loading_page();
+		$motion.start();
+		$motion.onSwipeLeft(function(){
+			console.log("%c SWIPE LEFT", "color: blue;");
+			$scope.move_right();
+		});
+		$motion.onSwipeRight(function(){
+			console.log("%c SWIPE RIGHT", "color: blue;");
+			$scope.move_left();
+		});
 		console.timeEnd("websiteAppController");
 	}
 
@@ -423,4 +437,4 @@ websiteApp.controller('websiteAppController', function($scope, $rootScope,
 	
 	_init();
 
-});
+}]);
