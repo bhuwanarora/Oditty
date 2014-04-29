@@ -157,16 +157,36 @@ websiteApp.directive('typeAhead', function($timeout){
 	}
 });
 
-websiteApp.directive('message', function(){
+websiteApp.directive('message', function($motion){
 	return{
 		restrict: 'E',
 		controller: function($scope){
 			$scope.close_message = function(){
-				$scope.message_closed = true;
+				if($scope.message == 'Allow your webcam. Swipe Left|Right to look for more books.'){
+					$scope.message = 'Just "START TYPING" anytime to search.'
+				}
+				else{
+					$scope.message_closed = true;
+				}
+			}
+
+			_init_motion_adaption = function(){
+				$motion.start();
+				
+				$motion.onSwipeLeft(function(){
+					console.log("%c SWIPE LEFT", "color: blue;");
+					$scope.move_right();
+				});
+				$motion.onSwipeRight(function(){
+					console.log("%c SWIPE RIGHT", "color: blue;");
+					$scope.move_left();
+				});
 			}
 
 			_init = function(){
 				$scope.message_closed = false;
+				_init_motion_adaption();
+				$scope.message = 'Allow your webcam. Swipe Left|Right to look for more books.'
 			}
 
 			_init();

@@ -16,7 +16,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	$scope.move_left = function(event){
-		var swipe_time = 3000;
+		var swipe_time = 2000;
 		if(event){
 			if(event.type == "keydown" || event.type == "wheel"){
 				var current_x = $window.pageXOffset;
@@ -34,7 +34,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	$scope.move_right = function(event){
-		var swipe_time = 3000;
+		var swipe_time = 2000;
 		var clientWidth = $document.width();
 		if(event){
 			var pageX = event.pageX;
@@ -416,15 +416,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		// $speechRecognition.setLang('en-UK'); // Default value is en-US
 		// $speechRecognition.listen();
 		_initiate_loading_page();
-		$motion.start();
-		$motion.onSwipeLeft(function(){
-			console.log("%c SWIPE LEFT", "color: blue;");
-			$scope.move_right();
-		});
-		$motion.onSwipeRight(function(){
-			console.log("%c SWIPE RIGHT", "color: blue;");
-			$scope.move_left();
-		});
+		
 		console.timeEnd("websiteAppController");
 	}
 

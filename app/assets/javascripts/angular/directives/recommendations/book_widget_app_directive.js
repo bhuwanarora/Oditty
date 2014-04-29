@@ -20,6 +20,8 @@ websiteApp.directive('book', function (bookWidgetService) {
           $scope.book.summary = data.summary;
           $scope.book.users_count = data.users_count;
         });
+        var tilt_angle = (Math.floor(Math.random() * 10) + 1)/10+"deg";
+        $scope.book_tilt = "transform:rotate("+tilt_angle+"); -ms-transform:rotate("+tilt_angle+"); -webkit-transform:rotate("+tilt_angle+");";
       }
 
       _init();

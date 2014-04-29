@@ -8,14 +8,15 @@ module BookRecommendationHelper
 	def get_similar_books(book_id, user_id)
 		#Add category 
 		@neo.execute_query("MATCH (b:Book{id:"+book_id+"})-[h1:Has]->(t:Tag)<-[h2:Has]-(sb:Book), 
-			(u:User{id:"+user_id+"}),
-			(b)-[h:Has]->(t0:Tag),
-			(sb)-[H:Has]->(t1:Tag)
+			(u:User{id:"+user_id+"})
 			WHERE b <> sb AND
 			NOT (u)-[:MarkAsReadAction]->(:MarkAsRead)-[:MarkAsRead]->(sb) AND
 			NOT (u)-[:BookmarkAction]->(:Bookmark)-[:Bookmarked]->(sb)
-			WITH DISTINCT sb, h
-			RETURN sb, sum(h2.weight*h1.weight)/sqrt(sum(h.weight^2)*sum(H.weight^2))	as similarity_index
+			WITH SUM(h1.weight * h2.weight) AS xyDotProduct,
+              SQRT(REDUCE(xDot = 0, a IN COLLECT(h1) | xDot + a.weight^2)) AS xLength,
+              SQRT(REDUCE(yDot = 0, b IN COLLECT(h2) | yDot + b.weight^2)) AS yLength,
+              b, sb
+            RETURN xyDotProduct/(xLength*yLength) as similarity_index
 			LIMIT 5 
 			ORDER BY similarity_index DESC, sb.gr_rating DESC")
 	end
@@ -61,6 +62,11 @@ module BookRecommendationHelper
 
 	def self.get_books_for_similar_users
 		
+	end
+
+
+	def self.create_book
+		@neo.execute_query("CREATE (b:Book{title:"+title+"})")
 	end
 
 end

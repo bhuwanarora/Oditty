@@ -194,14 +194,13 @@ r9.weight = 4
 
 //GET SIMILAR READS
 MATCH (b:TestBook{id:1})-[h1:Has]->(t:TestTag)<-[h2:Has]-(sb:TestBook),
-(b)-[h:Has]->(t0:TestTag),
-(sb)-[H:Has]->(t1:TestTag)
 WHERE b <> sb
-WITH b, sb, 
-    collect(DISTINCT h) AS h, 
-    collect(DISTINCT H) AS H, 
-    sum(h1.weight*h2.weight) AS num
-RETURN b.id, sb.id, num
+WITH SUM(h1.weight * h2.weight) AS xyDotProduct,
+  SQRT(REDUCE(xDot = 0, a IN COLLECT(h1) | xDot + a.weight^2)) AS xLength,
+  SQRT(REDUCE(yDot = 0, b IN COLLECT(h2) | yDot + b.weight^2)) AS yLength,
+  b, sb
+RETURN xyDotProduct/(xLength*yLength) as similarity_index, b.id, s.id
+
 
 //MARK as Read
 MATCH (u:TestUser{id:1}), (b:TestBook{id:1})-[:Belongs_to]->(:TestCategory)-[r:Has_root]->(c:TestCategory)

@@ -1,5 +1,4 @@
 class WebsiteController < ApplicationController
-
 	def coming_soon
 		@image_url = params[:image_url]
 		@notice = params[:notice]

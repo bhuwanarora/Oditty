@@ -20,8 +20,13 @@ angular.element(document).ready(function() {
   console.timeEnd('bootstrap');
 });
 
-websiteApp.config(['FacebookProvider',
-    function(FacebookProvider) {
+websiteApp.config(['FacebookProvider', '$motionProvider',
+    function(FacebookProvider, $motionProvider) {
+      $motionProvider.setTreshold({
+        'rgb': 150,
+        'move': 1,
+        'bright': 300
+      });
      var myAppId = '667868653261167';
      
      FacebookProvider.setAppId('myAppId');
