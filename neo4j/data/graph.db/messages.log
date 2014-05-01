@@ -694,3 +694,28 @@ Storage files: (filename : modification date - size)
 2014-04-29 13:09:48.613+0000 INFO  [o.n.k.i.DiagnosticsManager]: Server started on: http://localhost:7474/
 2014-04-29 13:09:48.615+0000 INFO  [o.n.k.i.DiagnosticsManager]: --- SERVER STARTED END ---
 2014-04-29 15:55:22.972+0000 WARN  [o.n.k.EmbeddedGraphDatabase]: GC Monitor: Application threads blocked for an additional 201ms [total block time: 0.201s]
+2014-04-30 00:11:14.041+0000 WARN  [o.n.k.EmbeddedGraphDatabase]: GC Monitor: Application threads blocked for an additional 518ms [total block time: 0.719s]
+2014-04-30 11:49:54.973+0000 WARN  [o.n.k.EmbeddedGraphDatabase]: GC Monitor: Application threads blocked for an additional 731ms [total block time: 1.45s]
+2014-05-01 01:37:03.608+0000 INFO  [o.n.k.EmbeddedGraphDatabase]: Shutdown started
+2014-05-01 01:37:03.608+0000 INFO  [o.n.k.EmbeddedGraphDatabase]: Database is now unavailable
+2014-05-01 01:37:03.609+0000 INFO  [o.n.k.EmbeddedGraphDatabase]: GC Monitor stopped. 
+2014-05-01 01:37:03.630+0000 INFO  [o.n.k.i.t.x.XaLogicalLog]: Closed log data/graph.db/index/lucene.log
+2014-05-01 01:37:03.671+0000 INFO  [o.n.k.i.t.TxManager]: TM shutting down
+2014-05-01 01:37:03.739+0000 INFO  [o.n.k.i.t.x.XaLogicalLog]: Closed log data/graph.db/nioneo_logical.log
+2014-05-01 01:37:03.742+0000 INFO  [o.n.k.i.n.s.StoreFactory]: /Volumes/SAMSUNG/test_project/readers_door/neo4j/data/graph.db/neostore.relationshiptypestore.db.names hit=0 miss=4 switches=0 ooe=0
+2014-05-01 01:37:03.744+0000 INFO  [o.n.k.i.n.s.StoreFactory]: /Volumes/SAMSUNG/test_project/readers_door/neo4j/data/graph.db/neostore.relationshiptypestore.db hit=0 miss=4 switches=0 ooe=0
+2014-05-01 01:37:03.746+0000 INFO  [o.n.k.i.n.s.StoreFactory]: /Volumes/SAMSUNG/test_project/readers_door/neo4j/data/graph.db/neostore.labeltokenstore.db.names hit=0 miss=4 switches=0 ooe=0
+2014-05-01 01:37:03.750+0000 INFO  [o.n.k.i.n.s.StoreFactory]: /Volumes/SAMSUNG/test_project/readers_door/neo4j/data/graph.db/neostore.labeltokenstore.db hit=0 miss=4 switches=0 ooe=0
+2014-05-01 01:37:03.751+0000 INFO  [o.n.k.i.n.s.StoreFactory]: /Volumes/SAMSUNG/test_project/readers_door/neo4j/data/graph.db/neostore.propertystore.db.strings hit=0 miss=0 switches=0 ooe=0
+2014-05-01 01:37:03.754+0000 INFO  [o.n.k.i.n.s.StoreFactory]: /Volumes/SAMSUNG/test_project/readers_door/neo4j/data/graph.db/neostore.propertystore.db.index.keys hit=0 miss=3 switches=0 ooe=0
+2014-05-01 01:37:03.756+0000 INFO  [o.n.k.i.n.s.StoreFactory]: /Volumes/SAMSUNG/test_project/readers_door/neo4j/data/graph.db/neostore.propertystore.db.index hit=0 miss=3 switches=0 ooe=0
+2014-05-01 01:37:03.757+0000 INFO  [o.n.k.i.n.s.StoreFactory]: /Volumes/SAMSUNG/test_project/readers_door/neo4j/data/graph.db/neostore.propertystore.db.arrays hit=0 miss=0 switches=0 ooe=0
+2014-05-01 01:37:03.759+0000 INFO  [o.n.k.i.n.s.StoreFactory]: /Volumes/SAMSUNG/test_project/readers_door/neo4j/data/graph.db/neostore.propertystore.db hit=104 miss=0 switches=0 ooe=0
+2014-05-01 01:37:03.801+0000 INFO  [o.n.k.i.n.s.StoreFactory]: /Volumes/SAMSUNG/test_project/readers_door/neo4j/data/graph.db/neostore.relationshipstore.db hit=86 miss=0 switches=0 ooe=0
+2014-05-01 01:37:03.830+0000 INFO  [o.n.k.i.n.s.StoreFactory]: /Volumes/SAMSUNG/test_project/readers_door/neo4j/data/graph.db/neostore.nodestore.db.labels hit=0 miss=0 switches=0 ooe=0
+2014-05-01 01:37:03.832+0000 INFO  [o.n.k.i.n.s.StoreFactory]: /Volumes/SAMSUNG/test_project/readers_door/neo4j/data/graph.db/neostore.nodestore.db hit=86 miss=0 switches=0 ooe=0
+2014-05-01 01:37:03.863+0000 INFO  [o.n.k.i.n.s.StoreFactory]: /Volumes/SAMSUNG/test_project/readers_door/neo4j/data/graph.db/neostore.schemastore.db hit=0 miss=0 switches=0 ooe=0
+2014-05-01 01:37:03.865+0000 INFO  [o.n.k.i.n.s.StoreFactory]: /Volumes/SAMSUNG/test_project/readers_door/neo4j/data/graph.db/neostore hit=0 miss=31 switches=0 ooe=0
+2014-05-01 01:37:03.868+0000 INFO  [o.n.k.i.n.x.NeoStoreXaDataSource]: NeoStore closed
+2014-05-01 01:37:03.868+0000 INFO  [o.n.k.i.DiagnosticsManager]: --- STOPPING diagnostics START ---
+2014-05-01 01:37:03.869+0000 INFO  [o.n.k.i.DiagnosticsManager]: --- STOPPING diagnostics END ---

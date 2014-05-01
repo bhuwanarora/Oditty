@@ -49,7 +49,7 @@ module UsersGraphHelper
 			(b:Book{id:"+book_id+"})-[:Belongs_to]->(:Category)-[r:Has_root]->(c:Category)
 			OPTIONAL MATCH (u)-[fr:FeedNext{id:"+user_id+"}]->(top_feed),
 						   (u)<-[:Follow]-(f)-[ego:Ego]->(ego_user)
-			MERGE (c)<-[ur:Tendency_for]-(u)-[:MarkAsReadAction]->(m:MarkAsReadNode)-[:MarkAsRead]->(b)
+			MERGE (c)<-[ur:Tendency_for]-(u)-[:MarkAsReadAction]->(m:MarkAsReadNode{timestamp:"+Time.now+"})-[:MarkAsRead]->(b)
 			CREATE (u)-[:FeedNext]->(m)-[:FeedNext]->(top_feed)
 			CREATE (f)-[:Ego]->(u)-[:Ego]->(ego_user)
 			DELETE fr, ego
@@ -96,7 +96,7 @@ module UsersGraphHelper
 		@neo.execute_query("MATCH (u:User{id:"+user_id+"}), (b:Book{id:"+book_id+"})
 			OPTIONAL MATCH (u)-[fr:FeedNext{id:"+user_id+"}]->(top_feed),
 						   (u)<-[:Follow]-(f)-[ego:Ego]->(ego_user)
-			CREATE (u)-[:Wrote]->(rv:Review{text:"+review+", comment_count:0, like_count:0, dislike_count:0, bookmark_count:0, view_count:0})-[:HeadComment]->(rv)<-[:has]-(b)
+			CREATE (u)-[:Wrote]->(rv:Review{text:"+review+", comment_count:0, like_count:0, dislike_count:0, bookmark_count:0, view_count:0, timestamp:"+Time.now+"})-[:HeadComment]->(rv)<-[:has]-(b)
 			CREATE (u)-[:FeedNext]->(rv)-[:FeedNext]->(top_feed)
 			CREATE (f)-[:Ego]->(u)-[:Ego]->(ego_user)
 			SET b.review_count = b.review_count + 1
@@ -119,7 +119,8 @@ module UsersGraphHelper
 						   (u)<-[:Follow]-(f)-[ego:Ego]->(ego_user)
 			CREATE (u)-[:FeedNext]->(rv)-[:FeedNext]->(top_feed)
 			CREATE (f)-[:Ego]->(u)-[:Ego]->(ego_user)
-			SET rv.text = "+review)
+			SET rv.text = "+review+"
+			SET rv.timestamp = "+Time.now)
 		#update news feed for the book
 		#update news feed for the user
 	end
@@ -128,9 +129,9 @@ module UsersGraphHelper
 		@neo.execute_query("MATCH (rv:Review{id:"+review_id+"})-[r:HeadComment]->(n), (u:User{id:"+user_id+"})
 			OPTIONAL MATCH (u)-[fr:FeedNext{id:"+user_id+"}]->(top_feed),
 						   (u)<-[:Follow]-(f)-[ego:Ego]->(ego_user)
-			CREATE (n)<-[:NextComment]-(c:Comment{text:'"+comment+"'})<-[:HeadComment]-(rv)
+			CREATE (n)<-[:NextComment]-(c:Comment{text:'"+comment+"', timestamp:"+Time.now+"})<-[:HeadComment]-(rv)
 			CREATE (u)-[:commented]->(c)
-			CREATE (u)-[:FeedNext]->(rv)-[:FeedNext]->(top_feed)
+			CREATE (u)-[:FeedNext]->(c)-[:FeedNext]->(top_feed)
 			CREATE (f)-[:Ego]->(u)-[:Ego]->(ego_user)
 			DELETE r
 			SET rv.comment_count = rv.comment_count + 1
@@ -151,8 +152,8 @@ module UsersGraphHelper
 		@neo.execute_query("MATCH (u:User{id:"+user_id+"}), (b:Book{id:"+book_id+"})
 			OPTIONAL MATCH (u)-[fr:FeedNext{id:"+user_id+"}]->(top_feed),
 						   (u)<-[:Follow]-(f)-[ego:Ego]->(ego_user)
-			CREATE (u)-[:Discussed]->(d:Discussion{text:'"+discussion+"', like_count:0, dislike_count:0, bookmark_count:0, comment_count:0})-[:HeadComment]->(d)<-[:Discussions]-(b)
-			CREATE (u)-[:FeedNext]->(rv)-[:FeedNext]->(top_feed)
+			CREATE (u)-[:Discussed]->(d:Discussion{text:'"+discussion+"', like_count:0, dislike_count:0, bookmark_count:0, comment_count:0, timestamp:"+Time.now+"})-[:HeadComment]->(d)<-[:Discussions]-(b)
+			CREATE (u)-[:FeedNext]->(d)-[:FeedNext]->(top_feed)
 			CREATE (f)-[:Ego]->(u)-[:Ego]->(ego_user)
 			SET u.comment_count = u.comment_count + 1")
 		#update discussion cache for the book
@@ -171,9 +172,9 @@ module UsersGraphHelper
 		@neo.execute_query("MATCH (d:Discussion{id:"+discussion_id+"})-[r:HeadComment]->(n), (u:User{id:"+user_id+"})
 			OPTIONAL MATCH (u)-[fr:FeedNext{id:"+user_id+"}]->(top_feed),
 						   (u)<-[:Follow]-(f)-[ego:Ego]->(ego_user)
-			CREATE (n)<-[:NextComment]-(c:Comment{text:'"+comment+"'})<-[:HeadComment]-(d)
+			CREATE (n)<-[:NextComment]-(c:Comment{text:'"+comment+"', timestamp:"+Time.now+"})<-[:HeadComment]-(d)
 			CREATE (u)-[:commented]->(c)
-			CREATE (u)-[:FeedNext]->(rv)-[:FeedNext]->(top_feed)
+			CREATE (u)-[:FeedNext]->(c)-[:FeedNext]->(top_feed)
 			CREATE (f)-[:Ego]->(u)-[:Ego]->(ego_user)
 			DELETE r
 			SET rv.comment_count = rv.comment_count + 1
@@ -186,8 +187,8 @@ module UsersGraphHelper
 						   (u)<-[:Follow]-(f)-[ego:Ego]->(ego_user)
 			OPTIONAL MATCH (u)-[r:Dislike]->(d)
 			DELETE r
-			CREATE (u)-[:Like]->(d)
-			CREATE (u)-[:FeedNext]->(rv)-[:FeedNext]->(top_feed)
+			CREATE (u)-[:Like{timestamp:"+Time.now+"}]->(d)
+			CREATE (u)-[:FeedNext]->(d)-[:FeedNext]->(top_feed)
 			CREATE (f)-[:Ego]->(u)-[:Ego]->(ego_user)
 			SET d.like_count = d.like_count + 1
 			SET u.dislike_count = u.dislike_count + 1")
@@ -199,7 +200,7 @@ module UsersGraphHelper
 			OPTIONAL MATCH (u)-[fr:FeedNext{id:"+user_id+"}]->(top_feed),
 						   (u)<-[:Follow]-(f)-[ego:Ego]->(ego_user)
 			DELETE r
-			CREATE (u)-[:Dislike]->(d)
+			CREATE (u)-[:Dislike{timestamp:"+Time.now+"}]->(d)
 			CREATE (u)-[:FeedNext]->(rv)-[:FeedNext]->(top_feed)
 			CREATE (f)-[:Ego]->(u)-[:Ego]->(ego_user)
 			SET d.like_count = d.like_count - 1
@@ -269,6 +270,13 @@ module UsersGraphHelper
 
 	def self.create_user
 		@neo.execute_query("CREATE (u:User{name:'"+username+"' like_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0})")
+	end
+
+	def self.get_news_feed_for_user user_id
+		@neo.execute_query("MATCH (u:User{id:"+user_id+"})-[:Ego{id:"+user_id+"}]->(ego_user),
+		(ego_user)-[r:FeedNext]->(f)
+		RETURN f, r
+		ORDER r.timestamp DESC")
 	end
 
 end

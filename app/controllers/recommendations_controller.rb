@@ -1,5 +1,5 @@
 class RecommendationsController < ApplicationController
-
+	layout "website"
 	def index
 		
 	end

@@ -1,0 +1,187 @@
+grammar Sexp
+	rule expression
+	  space? '(' body ')' space? <Expression>
+	end
+
+	rule body
+	  (expression / me / (friends / people) / likeandlives / likeand / likes / lives / thing / space )* <Body>
+	end
+
+
+
+	rule me
+		"me" <Me>
+	end
+
+	rule friends
+		"friends" <Friends>
+	end
+
+	rule books
+		"books" <Books>
+	end
+
+	rule authors
+		"authors" <Authors>
+	end
+
+	rule readers
+		"readers" <Readers>
+	end
+
+
+
+	rule likes
+	  "who like" <Likes>
+	end
+
+	rule reading
+		"who are reading" <Reading>
+	end
+
+	rule read
+		"who read" <Read>
+	end
+
+	rule own
+		"who own" <Own>
+	end
+
+	rule follow
+		"who follow <Follow>"
+	end
+
+	rule bookmarked
+		"who bookmarked" <Bookmarked>
+	end
+
+	rule need
+		"who need" <Need>
+	end
+
+
+
+	rule recommended
+		"recommended by" <Recommended>
+	end
+
+	rule by
+		"by" <By>
+	end
+
+	rule published_in
+		"published in" <PublishedIn>
+	end
+
+	rule published_between
+		"published between" year "and" year <PublishedBetween>
+	end
+
+	rule published_in_country
+		"published in" country <PublishedInCountry>
+	end
+
+	rule tagged
+		"tagged as" <Tagged>
+	end
+
+	rule i_own
+		"i own" <IOwn>
+	end
+
+	rule i_have_read
+		"i have read" <IHaveRead>
+	end
+
+	rule i_have_rated
+		"i have rated" <IHaveRated>
+	end
+
+	rule i_have_discussed
+		"i have discussed" <IHaveDiscussed>
+	end
+
+	rule i_have_reviewed
+		"i have reviewed" <IHaveReviewed>
+	end
+
+	rule discussed
+		"discussed by" <Discussed>
+	end
+
+	rule reviewed
+		"reviewed by" <Reviewed>
+	end
+
+	rule read_by
+		"read by" <ReadBy>
+	end
+
+	rule bookmarked_by
+		"bookmarked by" <BookmarkedBy>
+	end
+
+	rule published_this_year
+		"published this year" <PublishedThisYear>
+	end
+
+	rule reviews_on
+		"reviews on" <ReviewsOn>
+	end
+
+	rule discussions_on
+		"discussions on" <DiscussionsOn>
+	end
+
+	rule quotes_from
+		"quotes from" <QuotesFrom>
+	end
+
+	rule characters_from
+		"characters from" <CharactersFrom>
+	end
+
+	rule movie_based_on
+		"movie based on" <MovieBasedOn>
+	end
+
+	rule tag_on
+		"tags on" <TagsOn>
+	end
+
+
+
+	rule who_won
+		"who won" <WhoWon>
+	end
+
+	rule from_country
+		"from" space country <FromCountry>
+	end
+
+
+	rule year
+		[0-9]+ <Year>
+	end
+
+	rule country
+		"country" <Country>
+	end
+
+	rule thing
+	  [a-zA-Z0-9]+ <Thing>
+	end
+
+	rule place
+	  [a-zA-Z0-9]+
+	end
+
+	rule people
+	  "people" <People>
+	end
+
+	rule space
+	  [\s]+
+	end
+
+end

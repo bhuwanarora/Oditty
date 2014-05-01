@@ -2,7 +2,7 @@ class WebsiteController < ApplicationController
 	def coming_soon
 		@image_url = params[:image_url]
 		@notice = params[:notice]
-		render 'coming_soon'
+		render 'coming_soon', :layout => "coming_soon"
 	end
 
 	def random_quote

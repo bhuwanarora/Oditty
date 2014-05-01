@@ -106,6 +106,12 @@ module Api
 						
 				render :json => {:message => "Success"}, :status => 200
 			end
+
+			def get_news_feed
+				user_id = session[:user_id]
+				UsersGraphHelper.get_news_feed_for_user(user_id)
+				render :json => {:message => "Success"}, :status => 200
+			end
 		end
 	end
 end

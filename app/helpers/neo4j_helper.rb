@@ -53,10 +53,10 @@ module Neo4jHelper
 		end
 	end
 
-	def init_author(name, url)
-		self.init
+	def create_author(author)
+		@neo ||= self.init
 		author_node = @neo.create_node("name" => name,
-										"url" => url)
+										"gr_url" => url)
 		@neo.add_label(author_node, "Author")
 		author_node
 	end
@@ -91,8 +91,8 @@ module Neo4jHelper
 											"gr_ratings_count" => book.ratings_count)
 				@neo.add_label(node_book, "Book")
 
-				author_node = init_author(book.author_name, book.author_url)
-				@neo.create_relationship("written by", node_book, author_node)
+				author_node = create_author(book.author_name, book.author_url)
+				@neo.create_relationship("Wrote", author_node, node_book)
 			end
 			if published_year.present?
 				unless published_year.length < 4
@@ -186,6 +186,78 @@ module Neo4jHelper
 		end
 		puts "THOUSAND COMPLETE"
 		self.init_goodreads_books
+	end
+
+	def self.init_shelfari_books
+		begin
+			ShelfariBook.where(:data_flag => true, :neo_flag => nil).find_each do |book|
+				 # id     | name     | url   | description | summary |first_sentence 
+				book_id = book.id
+				book_title = nil
+				
+				AuthorsShelfariBooks.where(:shelfari_book_id => book_id).each do |author|
+					book_title = @neo.execute_query("MATCH (author:Author{name:'"+author.name+"'})-[:Wrote]->(book:Book)
+						RETURN book.title")
+				end
+
+				ShelfariBooksCategories.where(:shelfari_book_id => book_id).each do |shelfari_category|
+					@neo.execute_query("MATCH (book:Book{title:'"+book_title+"'}), (category:Category{name:'"+shelfari_category.name+"'})
+						CREATE (book)-[:Belongs_to]->(category)")
+				end
+
+				ShelfariBooksTags.where(:shelfari_book_id => book_id).each do |shelfari_tag|
+					@neo.execute_query("MATCH (book:Book{title:'"+book_title+"'})
+						MERGE (tag:Tag{name:'"+shelfari_tag.name+"'})
+						CREATE (book)-[:Has{weight:"+shelfari_tag.weight+"}]->(tag)")
+				end
+
+				CharactersShelfariBooks.where(:shelfari_book_id => book_id).each do |character|
+					@neo.execute_query("MATCH (book:Book{title:'"+book_title+"'})
+						MERGE (character:Character{name:'"+character.name+"'})
+						CREATE (book)-[:Has_character]->(character)")
+					#other attributes for the character
+				end
+
+				ShelfariBooksThemes.where(:shelfari_book_id => book_id).each do |theme|
+					@neo.execute_query("MATCH (book:Book{title:'"+book_title+"'})
+						MERGE (theme:Theme{name:'"+theme.name+"'})
+						CREATE (book)-[:Has_theme]->(theme)")
+				end
+
+				LocationsShelfariBooks.where(:shelfari_book_id => book_id).each do |location|
+					@neo.execute_query("MATCH (book:Book{title:'"+book_title+"'})
+						MERGE (location:Location{})")
+				end
+
+				MoviesShelfariBooks.where(:shelfari_book_id => book_id).each do |movie|
+					@neo.execute_query("MATCH (book:Book{title:'"+book_title+"'})
+						MERGE (movie:Movie{})
+						CREATE (book)-[:Movie_based]->(movie)")
+				end
+
+				EbooksShelfariBooks.where(:shelfari_book_id => book_id).each do |ebook|
+					@neo.execute_query("MATCH (book:Book{title:'"+book_title+"'})
+						MERGE (ebook:Ebook{})
+						CREATE (book)-[:Eversion]->(ebook)")
+				end
+
+				QuotesShelfariBooks.where(:shelfari_book_id => book_id).each do |quote|
+					@neo.execute_query("MATCH (book:Book{title:'"+book_title+"'})
+						MERGE (quote:Quote{})
+						CREATE (book)-[:Has_quote]->(quote)")
+				end
+
+				NoteForParentsShelfariBook.where(:shelfari_book_id => book_id).each do |note_for_parent|
+					@neo.execute_query("MATCH (book:Book{title:'"+book_title+"'})
+						MERGE (note_for_parent:NoteForParent{})
+						CREATE (book)-[:Has_note]->(note_for_parent)")
+				end
+
+
+			end
+		rescue Exception => e
+			
+		end
 	end
 
 	def self.delete_book_nodes
