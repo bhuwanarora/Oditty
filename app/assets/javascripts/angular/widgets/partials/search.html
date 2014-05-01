@@ -1,58 +1,58 @@
 <link rel="stylesheet" type="text/css" href="assets/search_page.css.scss">
 <div class="search_page"
      ng-style="search_style">
-  	<div class="logo">
-      <span>r</span>
-      <span>e</span>
-      <span>a</span>
-      <span>d</span>
-      <span>e</span>
-      <span>r</span>
-      <span style="letter-spacing:-8px">`</span>
-      <span>s</span>
-      <span>&nbsp;</span>
-      <span>d</span>
-      <span>o</span>
-      <span>o</span>
-      <span>r</span>
-    </div>
-      <!-- <div class="logo">reader's door</div> -->
-  	<div class="tagline">
-  		<span class="icon-quote-left"></span>
-  		<span>Live and build the years with books.</span>
-  		<span class="icon-quote-right"></span></div>
-  	<div class="login_button" 
-  		 ng-click="toggle_login_panel()"
-  	     ng-show="!logged">
-  	     <span ng-if="!show_login_form">
-  	     	LOG IN
-  	     	<span class="icon-plus"></span>
-  	     </span>
-  	     <span ng-if="show_login_form">
-  	     	SEARCH
-  	     	<span class="icon-close"></span>
-  	     </span>
-  	</div>
-    <hr>
-  	<!-- <select ng-options="type for type in ['R.D.', 'Books', 'Authors', 'Readers']"> -->
-  	</select>
-  	<input set-focus="website.searching" 
-  	       ng-keypress="get_search_results($event)" 
-  	       ng-keydown="key_down($event)"
-  	       ng-keyup="key_up($event)"
-  	       ng-model="search_tag.input"
-           id="searchInput"
-           ng-blur="expression"
-           placeholder="Search a book, author, reader or a book category..."/>
-  	<div class="website_search_options">
-  		<div ng-repeat="item in search_results track by $index" 
-      		 ng-click="handle_selection(item.name)" 
-      		 ng-class="{active:is_current($index)}" 
-      		 ng-mouseenter="set_current($index)"
-      		 class="option">
-    		<div class="title">{{item.name}}</div>
-        <div ng-show="item.author_name">by {{item.author_name}}</div>
- 	 	  </div>
+	<div class="logo">
+    <span>r</span>
+    <span>e</span>
+    <span>a</span>
+    <span>d</span>
+    <span>e</span>
+    <span>r</span>
+    <span style="letter-spacing:-8px">`</span>
+    <span>s</span>
+    <span>&nbsp;</span>
+    <span>d</span>
+    <span>o</span>
+    <span>o</span>
+    <span>r</span>
+  </div>
+    <!-- <div class="logo">reader's door</div> -->
+	<div class="tagline">
+		<span class="icon-quote-left"></span>
+		<span>Live and build the years with books.</span>
+		<span class="icon-quote-right"></span></div>
+	<div class="login_button" 
+		 ng-click="toggle_login_panel()"
+	     ng-show="!logged">
+	     <span ng-if="!show_login_form">
+	     	LOG IN
+	     	<span class="icon-plus"></span>
+	     </span>
+	     <span ng-if="show_login_form">
+	     	SEARCH
+	     	<span class="icon-close"></span>
+	     </span>
+	</div>
+  <hr>
+	<!-- <select ng-options="type for type in ['R.D.', 'Books', 'Authors', 'Readers']"> -->
+	</select>
+	<input set-focus="website.searching" 
+	       ng-keypress="get_search_results($event)" 
+	       ng-keydown="key_down($event)"
+	       ng-keyup="key_up($event)"
+	       ng-model="search_tag.input"
+         id="searchInput"
+         ng-blur="expression"
+         placeholder="Search a book, author, reader or a book category..."/>
+	<div class="website_search_options">
+		<div ng-repeat="item in search_results track by $index" 
+    		 ng-click="handle_selection(item.name)" 
+    		 ng-class="{active:is_current($index)}" 
+    		 ng-mouseenter="set_current($index)"
+    		 class="option">
+  		<div class="title">{{item.name}}</div>
+      <div ng-show="item.author_name">by {{item.author_name}}</div>
+	 	  </div>
   </div>
   <div ng-hide="search_results"
        class="website_search_helpers">

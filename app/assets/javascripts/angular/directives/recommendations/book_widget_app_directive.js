@@ -138,7 +138,7 @@ websiteApp.directive('category', function () {
   };
 });
 
-websiteApp.directive('interact', function () {
+websiteApp.directive('interact', function (websiteService) {
   return {
     restrict: 'E',
     controller: function($scope){
@@ -155,6 +155,18 @@ websiteApp.directive('interact', function () {
     		}
     		
     	}
+
+      $scope.handle_hash_tags = function(event){
+        var string_to_be_searched = $(event.currentTarget).val().split(" ").pop();
+        var chr = String.fromCharCode(event.keyCode);
+        // $(event.currentTarget).select();
+        // $(event.currentTarget).css('background-color', '#2c87f0');
+        // $(event.currentTarget).css('color', 'white');
+        string_to_be_searched = string_to_be_searched+""+chr;
+        websiteService.search(string_to_be_searched.trim(), "[ALL]").then(function(result) {
+          $scope.hash_tags = result.results;
+        });
+      }
 
       _init();
     },
