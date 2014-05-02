@@ -21,7 +21,9 @@ websiteApp.directive('book', function (bookWidgetService) {
           $scope.book.users_count = data.users_count;
         });
         var tilt_angle = (Math.floor(Math.random() * 10) + 1)/10+"deg";
-        $scope.book_tilt = "transform:rotate("+tilt_angle+"); -ms-transform:rotate("+tilt_angle+"); -webkit-transform:rotate("+tilt_angle+");";
+        // $scope.book_tilt = {"transform":"rotate("+tilt_angle+")",
+        //                   "-ms-transform":"rotate("+tilt_angle+")",
+        //                   "-webkit-transform":"rotate("+tilt_angle+")";
       }
 
       _init();
@@ -144,6 +146,7 @@ websiteApp.directive('interact', function (websiteService) {
     controller: function($scope){
       _init = function(){
         $scope.setStatus();
+        $('.comment_box').contentEditable='true'; 
       }
 
     	$scope.setStatus = function(status){
@@ -156,16 +159,65 @@ websiteApp.directive('interact', function (websiteService) {
     		
     	}
 
-      $scope.handle_hash_tags = function(event){
-        var string_to_be_searched = $(event.currentTarget).val().split(" ").pop();
+      $scope.handle_backspace = function(event){
+        var string_array = $(event.currentTarget).val().split(" ");
         var chr = String.fromCharCode(event.keyCode);
-        // $(event.currentTarget).select();
-        // $(event.currentTarget).css('background-color', '#2c87f0');
-        // $(event.currentTarget).css('color', 'white');
-        string_to_be_searched = string_to_be_searched+""+chr;
-        websiteService.search(string_to_be_searched.trim(), "[ALL]").then(function(result) {
-          $scope.hash_tags = result.results;
-        });
+        var len = string_array.length;
+        var old_string = string_array.slice(0, len-1).join(" ");
+        var current_element = string_array.pop();
+        if(event.keyCode == 8){
+          if(current_element == "#"){
+            $scope.hash_tagging = false;
+            var html = $(event.currentTarget).siblings().html();
+            $(event.currentTarget).siblings().html();
+          }
+          else{
+            if($scope.hash_tagging){
+              var html = $(event.currentTarget).siblings().find('b:last').html();
+              var updated_html = html.substring(0, html.length-1);
+              $(event.currentTarget).siblings().html();
+            }
+            else{
+              var html = $(event.currentTarget).siblings().html();
+              $(event.currentTarget).siblings().html(html.substring(0, html.length-1));
+            }
+          }
+        }
+      }
+
+      $scope.handle_hash_tags = function(event){
+        var string_array = $(event.currentTarget).val().split(" ");
+        var chr = String.fromCharCode(event.keyCode);
+        var len = string_array.length;
+        var old_string = string_array.slice(0, len-1).join(" ");
+        var current_element = string_array.pop();
+        if(chr=="#"){
+          var html = "<b>"+chr+"</b>";
+          $scope.hash_tagging = true;
+          $(event.currentTarget).siblings().append(html);
+        }
+        else{
+          if(chr == " "){
+            $scope.hash_tagging = false;
+            $(event.currentTarget).siblings().append(chr);
+          }
+          else{
+            if($scope.hash_tagging){
+              $(event.currentTarget).siblings().find('b:last').append(chr);
+            }
+            else{
+              $(event.currentTarget).siblings().append(chr);
+            }
+          }
+        }
+        // $(event.currentTarget).siblings().html("<span>"+new_string+"</span>")
+
+        // $scope.hash_tagged = new_string;
+        // $scope.highlighting = ""
+        // string_to_be_searched = string_to_be_searched+""+chr;
+        // websiteService.search(string_to_be_searched.trim(), "[ALL]").then(function(result) {
+        //   $scope.hash_tags = result.results;
+        // });
       }
 
       _init();

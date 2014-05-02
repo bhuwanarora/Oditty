@@ -947,6 +947,22 @@ a:hover{
 	position: fixed;
 }
 
+.interaction_box .highlighter{
+	position: absolute;
+	top: 46px;
+	left: 2px;
+	color: transparent;
+	letter-spacing: 1.2px;
+}
+
+
+.interaction_box .highlighter b{
+	background: rgba(61, 121, 161, 0.34);
+	border-radius: 2px;
+	box-shadow: 0 0 0 1px #A3BCEA;
+	font-weight: normal;
+}
+
 .interaction_box_options .option{
 	cursor: pointer;
 	padding: 10px;

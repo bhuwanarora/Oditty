@@ -17,14 +17,18 @@
 			</button>
 	 	</div>
 	</div>
-	<textarea itemprop= "commentText" 
-		itemtype= "http://schema.org/UserComments"
-	   type="text" 
-	   ng-keydown="post_review()"
-	   placeholder="What do you feel about {{book.title}} by {{book.author_name}}..." 
-	   class="comment_box animate-fast" 
-	   ng-keypress="handle_hash_tags($event)"
-	   rows="1"/>
+	<div>
+		<div class="highlighter"></div>
+		<textarea itemprop= "commentText" 
+			itemtype= "http://schema.org/UserComments"
+		   type="text" 
+		   ng-keydown="handle_backspace($event)"
+		   placeholder="What do you feel about {{book.title}} by {{book.author_name}}..." 
+		   class="comment_box animate-fast" 
+		   ng-keypress="handle_hash_tags($event)"
+		   ng-bind-html="hash_tagged"
+		   rows="1"/>
+	</div>
 	<div class="time_to_read">
 		<hr>
 		<div class="header">Approximate time required to read this book</div>
