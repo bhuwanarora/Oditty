@@ -159,30 +159,67 @@ websiteApp.directive('interact', function (websiteService) {
     		
     	}
 
-      $scope.handle_backspace = function(event){
-        var string_array = $(event.currentTarget).val().split(" ");
+      $scope.handle_selection = function(selected_item){
+        var string_array = $('.comment_box').val().split(" ");
+        var html_array = $('.comment_box').siblings().html().split(" ");
         var chr = String.fromCharCode(event.keyCode);
         var len = string_array.length;
-        var old_string = string_array.slice(0, len-1).join(" ");
+        var old_string = string_array.slice(0, len-1).join(" ")+" ";
+        var old_html = html_array.slice(0, len-1).join(" ")+" ";
         var current_element = string_array.pop();
-        if(event.keyCode == 8){
+        var current_html = html_array.pop();
+        var is_backspace = event.keyCode == 8;
+        var hash_tagging = $scope.hash_tagging;
+        $('.comment_box').siblings().html(old_html+" <b>"+selected_item+"</b>");
+        $('.comment_box').val(old_string+" "+selected_item);
+        $scope.hash_tags = null;
+      }
+
+      $scope.set_current = function(index){
+
+      }
+
+      $scope.handle_backspace = function(event){
+        var string_array = $(event.currentTarget).val().split(" ");
+        var html_array = $(event.currentTarget).siblings().html().split(" ");
+        var chr = String.fromCharCode(event.keyCode);
+        var len = string_array.length;
+        var old_string = string_array.slice(0, len-1).join(" ")+" ";
+        var old_html = html_array.slice(0, len-1).join(" ")+" ";
+        var current_element = string_array.pop();
+        var current_html = html_array.pop();
+        var is_backspace = event.keyCode == 8;
+        var hash_tagging = $scope.hash_tagging;
+        if(is_backspace){
           if(current_element == "#"){
             $scope.hash_tagging = false;
-            var html = $(event.currentTarget).siblings().html();
-            $(event.currentTarget).siblings().html();
+            $(event.currentTarget).siblings().html(old_html);
           }
           else{
-            if($scope.hash_tagging){
-              var html = $(event.currentTarget).siblings().find('b:last').html();
-              var updated_html = html.substring(0, html.length-1);
-              $(event.currentTarget).siblings().html();
+            if(hash_tagging){
+              $(event.currentTarget).siblings().html(old_html);
+              $(event.currentTarget).val(old_string);
+              $scope.hash_tagging = false;
+              event.preventDefault();
             }
             else{
-              var html = $(event.currentTarget).siblings().html();
-              $(event.currentTarget).siblings().html(html.substring(0, html.length-1));
+              var inside_a_hashtag = current_html[current_html.length - 1] == ">";
+              if(inside_a_hashtag){
+                $(event.currentTarget).siblings().html(old_html);
+                $(event.currentTarget).val(old_string);
+                event.preventDefault();
+              }
+              else{
+                var html = $(event.currentTarget).siblings().html();
+                $(event.currentTarget).siblings().html(html.substring(0, html.length-1));
+              }
             }
           }
+          if(!$(event.currentTarget).val() || $(event.currentTarget).val() == ""){
+            $(event.currentTarget).siblings().html("");
+          }
         }
+        event.stopPropagation();
       }
 
       $scope.handle_hash_tags = function(event){
@@ -191,15 +228,31 @@ websiteApp.directive('interact', function (websiteService) {
         var len = string_array.length;
         var old_string = string_array.slice(0, len-1).join(" ");
         var current_element = string_array.pop();
-        if(chr=="#"){
+        var is_new_word_initiation = current_element == "";
+        var under_a_tag = $scope.hash_tagging;
+        
+        if(is_new_word_initiation && chr == "#"){
           var html = "<b>"+chr+"</b>";
           $scope.hash_tagging = true;
           $(event.currentTarget).siblings().append(html);
+        }
+        else if(is_new_word_initiation && chr == "+"){
+          var html = "<b>"+chr+"</b>";
+          $scope.hash_tagging = true;
+          $(event.currentTarget).siblings().append(html);
+          $scope.search_for = "TAGS";
+        }
+        else if(is_new_word_initiation && chr == "@"){
+          var html = "<b>"+chr+"</b>";
+          $scope.hash_tagging = true;
+          $(event.currentTarget).siblings().append(html);
+          $scope.search_for = "[AUTHORS, READERS]";
         }
         else{
           if(chr == " "){
             $scope.hash_tagging = false;
             $(event.currentTarget).siblings().append(chr);
+            $scope.search_for = null;
           }
           else{
             if($scope.hash_tagging){
@@ -210,14 +263,14 @@ websiteApp.directive('interact', function (websiteService) {
             }
           }
         }
-        // $(event.currentTarget).siblings().html("<span>"+new_string+"</span>")
-
-        // $scope.hash_tagged = new_string;
-        // $scope.highlighting = ""
-        // string_to_be_searched = string_to_be_searched+""+chr;
-        // websiteService.search(string_to_be_searched.trim(), "[ALL]").then(function(result) {
-        //   $scope.hash_tags = result.results;
-        // });
+        if($scope.search_for){
+          string_to_be_searched = current_element.slice(1, current_element.length)+""+chr;
+          console.log(string_to_be_searched);
+          websiteService.search(string_to_be_searched.trim(), $scope.search_for).then(function(result) {
+            $scope.hash_tags = result.results;
+          });
+        }
+        event.stopPropagation();
       }
 
       _init();
