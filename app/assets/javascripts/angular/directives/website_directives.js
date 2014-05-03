@@ -110,7 +110,10 @@ websiteApp.directive('typeAhead', function($timeout){
 			    // }, 200);
 			};
 
-			scope.is_current = function(index) {
+			scope.is_current = function(index, selectedItem) {
+				if(scope.current == index){
+					scope.currentItem = selectedItem;
+				}
 			    return scope.current == index;
 			};
 
@@ -121,7 +124,7 @@ websiteApp.directive('typeAhead', function($timeout){
 			scope.navigate_options = function(){
 				var keyEnter = event.keyCode == 13;
 				if(keyEnter){
-					scope.handle_selection("NOT WORKING"+scope.current);
+					scope.handle_selection(scope.currentItem+scope.current);
 				}
 			}
 
@@ -135,7 +138,9 @@ websiteApp.directive('typeAhead', function($timeout){
 				}
 
 				if(keyDown){
-					scope.set_current(scope.current+1);
+					if(scope.current != attrs.items.length-1){
+						scope.set_current(scope.current+1);
+					}
 				}
 			}
 

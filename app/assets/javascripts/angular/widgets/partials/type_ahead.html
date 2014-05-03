@@ -2,7 +2,7 @@
 	   ng-hide="!model.length || selected">
   	<div ng-repeat="item in items | filter:model  track by $index" 
   		 ng-click="handle_selection(item[title])" 
-  		 ng-class="{active:is_current($index)}" 
+  		 ng-class="{active:is_current($index, item[title])}" 
   		 ng-mouseenter="set_current($index)"
   		 class="option">
 
