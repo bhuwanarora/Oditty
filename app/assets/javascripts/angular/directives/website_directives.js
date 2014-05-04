@@ -86,7 +86,7 @@ websiteApp.directive('pushNotification', function($rootScope, $parse, $timeout){
 	}
 });
 
-websiteApp.directive('typeAhead', function($timeout){
+websiteApp.directive('typeAhead', function($timeout, $sce){
 	return{
 		restrict: 'E',
 		scope: {
@@ -142,6 +142,14 @@ websiteApp.directive('typeAhead', function($timeout){
 						scope.set_current(scope.current+1);
 					}
 				}
+			}
+
+			scope.highlight = function(searchItem, textToSearchThrough){
+				if (!searchItem) {
+        			return $sce.trustAsHtml(textToSearchThrough);
+    			}
+    			return $sce.trustAsHtml(textToSearchThrough.replace(new RegExp(searchItem, 'gi'), '<span style="font-weight:bold;">$&</span>'));
+
 			}
 
 			_init = function(){
