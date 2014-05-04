@@ -124,7 +124,7 @@ websiteApp.directive('typeAhead', function($timeout, $sce){
 			scope.navigate_options = function(){
 				var keyEnter = event.keyCode == 13;
 				if(keyEnter){
-					scope.handle_selection(scope.currentItem+scope.current);
+					scope.handle_selection(scope.currentItem);
 				}
 			}
 
@@ -138,7 +138,7 @@ websiteApp.directive('typeAhead', function($timeout, $sce){
 				}
 
 				if(keyDown){
-					if(scope.current != attrs.items.length-1){
+					if(scope.current != scope.filtered.length -1){
 						scope.set_current(scope.current+1);
 					}
 				}
