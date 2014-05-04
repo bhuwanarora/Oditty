@@ -145,11 +145,7 @@ websiteApp.directive('typeAhead', function($timeout, $sce){
 			}
 
 			scope.highlight = function(searchItem, textToSearchThrough){
-				if (!searchItem) {
-        			return $sce.trustAsHtml(textToSearchThrough);
-    			}
     			return $sce.trustAsHtml(textToSearchThrough.replace(new RegExp(searchItem, 'gi'), '<span style="font-weight:bold;">$&</span>'));
-
 			}
 
 			_init = function(){
