@@ -1,4 +1,4 @@
-websiteApp.controller('searchController', function($scope, $rootScope, websiteService, $timeout){
+websiteApp.controller('searchController', function($scope, $rootScope, websiteService, $timeout, $sce){
 	_show_search_result = function(){
 		$rootScope.show_book = true;
 		$rootScope.book_x = 0;
