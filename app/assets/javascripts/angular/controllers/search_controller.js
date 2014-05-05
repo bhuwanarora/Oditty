@@ -28,7 +28,10 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 		}
 	}
 
-	$scope.is_current = function(index) {
+	$scope.is_current = function(index, selectedItem) {
+		if($scope.search_tag.current == index){
+			$scope.search_tag.currentItem = selectedItem;
+		}		
 	    return $scope.search_tag.current == index;
 	};
 
@@ -39,7 +42,7 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 	$scope.navigate_options = function(){
 		var keyEnter = event.keyCode == 13;
 		if(keyEnter){
-			$scope.handle_selection("NOT WORKING"+$scope.search_tag.current);
+			$scope.handle_selection($scope.search_tag.currentItem);
 		}
 	}
 
@@ -53,7 +56,9 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 		}
 
 		if(keyDown){
-			$scope.set_current($scope.search_tag.current+1);
+			if($scope.search_tag.current != $scope.search_results.length -1){
+				$scope.set_current($scope.search_tag.current+1);
+			}
 		}
 	}
 
@@ -69,6 +74,11 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 				$scope.get_search_results(event);
         	}
         }
+	}
+
+
+	$scope.highlight = function(searchItem, textToSearchThrough){
+    	return $sce.trustAsHtml(textToSearchThrough.replace(new RegExp(searchItem, 'gi'), '<span style="font-weight:bold;">$&</span>'));
 	}
 
 	_init_search = function(){

@@ -47,9 +47,10 @@
 	<div class="website_search_options">
 		<div ng-repeat="item in search_results track by $index" 
     		 ng-click="handle_selection(item.name)" 
-    		 ng-class="{active:is_current($index)}" 
+    		 ng-class="{active:is_current($index, item.name)}" 
     		 ng-mouseenter="set_current($index)"
-    		 class="option">
+    		 class="option"
+         ng-bind-html="highlight(search_tag.input, item.name)">
   		<div class="title">{{item.name}}</div>
       <div ng-show="item.author_name">by {{item.author_name}}</div>
 	 	  </div>
