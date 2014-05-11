@@ -51,11 +51,11 @@
 				</span>
 			</span>
 		</div>
-
 		<div class="website_logo">
 			
 		</div>
 		<div class="shelf_nav_links">
+
 			<div ng-class="{'inactive':read_selected || bookmark_selected, 'active':!read_selected && !bookmark_selected}"
 				 class="link"
 				 title="Recommendations"
@@ -65,6 +65,7 @@
 					<span ng-show="active_author_filter">Author Recommendations</span>
 					<span ng-show="active_reader_filter">Reader Recommendations</span>
 				</b>
+
 			</div>
 			<div ng-class="{'inactive':!read_selected, 'active':read_selected}"
 				 class="link"
@@ -85,6 +86,7 @@
 					<span ng-show="active_author_filter">Authors Bookmarked</span>
 					<span ng-show="active_reader_filter">Readers Bookmarked</span>
 				</b>
+
 			</div>
 		</div>
 		<div class="scroller">

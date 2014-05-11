@@ -32,6 +32,7 @@ websiteApp.service('websiteService', function ($http, $q, $rootScope) {
     _deferred_request = function(url){
         var deferred = $q.defer();
         $http.get(url).then(function(result) {
+
             return deferred.resolve(result.data); 
         });
         return deferred.promise;   

@@ -9,7 +9,6 @@ capybara-*.html
 vendor/bundle
 doc/*
 log/*
-neo4j/data/*/*.log
 tmp/*
 db/*.sqlite3
 public/system/*

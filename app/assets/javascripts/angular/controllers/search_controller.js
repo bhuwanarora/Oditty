@@ -87,7 +87,6 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
         }
 	}
 
-
 	$scope.highlight = function(searchItem, textToSearchThrough){
 		var html = '<span><i><b>$&</b></i></span>';
     	return $sce.trustAsHtml(textToSearchThrough.replace(new RegExp(searchItem, 'gi'), html));

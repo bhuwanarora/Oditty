@@ -27,6 +27,6 @@ websiteApp.service('recommendationService', function ($http, $q, $rootScope) {
         $http.get(url).then(function(result) {
             return deferred.resolve(result.data); 
         });
-        return deferred.promise;   
+        return deferred.promise;
     }
 });

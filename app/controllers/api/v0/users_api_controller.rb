@@ -98,7 +98,6 @@ module Api
 				# elsif type == "review"
 				# 	UsersGraphHelper.like_review(user_id, id)
 				# end
-						
 				render :json => {:message => "Success"}, :status => 200
 			end
 
