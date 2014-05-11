@@ -1,0 +1,63 @@
+<%= render :partial => 'users/profile_page/background_grid'%>
+<div class="header">
+	<div class="content">
+		<div class="site_name span">
+			Reader's Door
+		</div>
+		<div class="user_details span">
+			Hi Bhuwan Arora
+		</div>
+		<div class="center_tab span">
+			<input class="search span" placeholder="Find a Book, Author, Or a Friend."/>
+		</div>
+	</div>
+</div>
+<div class="grid">
+	<% for i in 0..20 do %>
+		<%=  render :partial => "users/book_block", 
+					:locals => {:image_url => "assets/0005010001.jpg",
+								:width => '100px',
+								:title => "Test",
+								:description => "test description"}%>
+	<% end %>
+</div>
+<style>
+	.grid{
+		margin-top: 7%;
+		position: absolute;
+	}
+	.header{
+		margin: 0px 0px 0px 0px;
+    	background-color: rgb(6, 137, 162);
+	    height: 10%;
+	    background-image: url('assets/header.jpg');
+	    position: fixed;
+	    z-index: 3;
+	    width: 100%
+	}
+	.header .user_details{
+		font-family: -webkit-body;
+		color: floralwhite;
+		font-size: large;
+		margin-top: 2%;
+	}
+	.header .center_tab{
+		width: 43%;
+		float: right;
+	}
+	.header .site_name{
+		font-family: -webkit-body;
+		color: floralwhite;
+		font-size: large;
+		margin: 1% 1% 0% 1%;
+		float: left;
+	}
+	.header .search{
+		width: 100%;
+		margin: 10px;
+		margin-top: 3%;
+		font-family: -webkit-pictograph;
+		font-size: large;
+		float: right;
+	}
+</style>

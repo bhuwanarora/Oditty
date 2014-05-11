@@ -1,0 +1,11 @@
+<span>
+	<div class="node span" id="node_<%= @root.id %>" onclick="open_modal($(this));" title="Click to Enter a Child" style="<% if @root.name == 'ROOT'%>background-color:rgb(255, 102, 0);<% end %>">
+		<%= @root.name %>
+	</div>
+	<div class="node_edit span" id="node_edit_<%= @root.id %>" onclick="open_edit_modal($(this))" title="Edit">
+		<icon class="icon-edit"></icon>
+	</div>
+	<div class="node_toggle span" id="node_toggle_<%= @root.id %>" onclick="toggle_tree($(this))" title="Toggle">
+		<icon class="icon-leaf"></icon>
+	</div>
+</span>

@@ -1,0 +1,122 @@
+<link rel="stylesheet" type="text/css" href="assets/search_page.css.scss">
+<div class="search_page"
+     ng-style="search_style">
+	<div class="logo">
+    <span>r</span>
+    <span>e</span>
+    <span>a</span>
+    <span>d</span>
+    <span>e</span>
+    <span>r</span>
+    <span style="letter-spacing:-8px">`</span>
+    <span>s</span>
+    <span>&nbsp;</span>
+    <span>d</span>
+    <span>o</span>
+    <span>o</span>
+    <span>r</span>
+  </div>
+    <!-- <div class="logo">reader's door</div> -->
+	<div class="tagline">
+		<span class="icon-quote-left"></span>
+		<span>Live and build the years with books.</span>
+		<span class="icon-quote-right"></span></div>
+	<div class="login_button" 
+		 ng-click="toggle_login_panel()"
+	     ng-show="!logged">
+	     <span ng-if="!show_login_form">
+	     	LOG IN
+	     	<span class="icon-plus"></span>
+	     </span>
+	     <span ng-if="show_login_form">
+	     	SEARCH
+	     	<span class="icon-close"></span>
+	     </span>
+	</div>
+  <hr>
+	<!-- <select ng-options="type for type in ['R.D.', 'Books', 'Authors', 'Readers']"> -->
+	</select>
+	<input set-focus="website.searching" 
+	       ng-keypress="get_search_results($event)" 
+	       ng-keydown="key_down($event)"
+	       ng-keyup="key_up($event)"
+	       ng-model="search_tag.input"
+         id="searchInput"
+         ng-blur="expression"
+         placeholder="Search a book, author, reader or a book category..."/>
+  <div 
+       class="website_search_helpers">
+      <div class="option">
+        <div ng-show="search_initiated" class="title">{{search_display}}</div>
+        <div ng-show="!search_initiated && search_tag.input" class="title">No results found.. </div>
+        <div ng-show="!search_initiated && !search_tag.input" class="helper_title">
+        start typing OR...<br/>
+        Use <b>'@'</b> to search only an author or reader... eg: <em>@Shakespeare</em><br/> 
+        Use <b>'#'</b> to search only a book... eg: <em>#Animal Farm</em><br/>
+        Use <b>'+'</b> to search only a book category... eg: <em>+fashion</em><br/>
+        Use <b>'+'</b> to add anything and get a new field...eg: <em>#life of pi + #siddhartha</em>
+        </div>
+      </div>
+  </div>
+  <div class="website_search_options">
+    <div ng-repeat="item in search_results | filter: search_tag.input | limitTo: search_tag.result_count track by $index "
+         ng-click="handle_selection(item.name, item.graph_option)" 
+         ng-class="{active:is_current($index, item.name), 'graph_option':item.graph_option}" 
+         ng-mouseenter="set_current($index)"
+         class="option"
+         ng-bind-html="highlight(search_tag.input, item.name)">
+      <!-- <div class="title">{{item.name}}</div>
+      <div ng-show="item.author_name">by {{item.author_name}}</div> -->
+    </div>
+  </div>
+	<div class="internal_links" ng-if="logged">
+		<span ng-click="hide_search_page('BOOK')" class="animate-fast">
+			<div class="count">1,000,000,000+</div>
+			<div class="heading">Books</div>
+		</span>
+		<span ng-click="hide_search_page('AUTHOR')" class="animate-fast">
+			<div class="count">4,000,000+</div>
+			<div class="heading">Authors</div>
+		</span>
+		<span ng-click="hide_search_page('READER')" class="animate-fast">
+			<div class="count">1,000,000+</div>
+			<div class="heading">Readers</div>
+		</span>
+	</div>
+  <div class="secondary_login animate-fast" 
+       ng-click="toggle_login_panel()"
+       ng-if="!logged && !show_login_form">
+    Explore books, meet authors and other similar readers.
+  </div>
+</div>
+<div>
+	<!-- <div class="login_buttons fb" 
+		 ng-show="!logged"
+	     ng-disabled="!facebookReady"
+	     ng-click="intent_login()">
+	</div>
+	<div class="google">
+		<google-plus-signin clientid="88213598927-9fij1u8tf2ldf4apf6qob4hgu0supj54.apps.googleusercontent.com"
+		ng-show="!logged"></google-plus-signin>
+	</div> -->
+	<form class="login_form animate-fast"
+        ng-if="!logged && show_login_form"
+        ng-model="user">
+      	<input class="email" 
+      	       type="email" 
+      	       ng-model="user.email" 
+      	       placeholder="Email"
+      	       spellcheck="false" 
+      	       required /><br />
+      	<input class="password" 
+      	       type="password" 
+      	       ng-model="user.password" 
+      	       placeholder="Password" 
+      	       spellcheck="false"
+      	       required /><br />
+      	
+      	<div class="authenticate" ng-click="authenticate(user)" type="button">
+      		LOG IN or SIGN UP
+      	</div>
+    </form>
+</div>

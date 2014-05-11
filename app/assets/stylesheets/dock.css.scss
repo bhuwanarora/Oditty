@@ -1,0 +1,136 @@
+.book_footer{
+	position: fixed;
+	left: 50%;
+	bottom: 15px;
+	width: 870px;
+	z-index: 5000;
+	text-align: center;
+	list-style: none;
+	margin: 1px;
+	border: 1px solid rgba(255, 255, 255, 0);
+	border-radius: 10px;
+	margin-left: -440px;
+	padding: 0px;
+	font-size: 0;
+}
+
+.book_footer li{
+	cursor: pointer;
+	display: inline-block;
+	color: white;
+	text-align: center;
+	padding: 0px 10px 0px 10px;
+	margin: 0px;
+	font-size: 15px;
+	border-right: 1px solid rgba(0, 0, 0, 0);
+	border-radius: 4px;
+}
+
+.book_footer li [class^='icon-']{
+	padding: 10px;
+}
+
+.book_footer .content{
+	background-color: #4374e0;
+	border-left: 1px solid rgba(0, 0, 0, 0);
+}
+
+.book_footer .content:active{
+	background-color: #1E51C0;
+}
+
+.book_footer .first_sentence{
+	background-color: #65b045;
+}
+
+.book_footer .characters{
+	background-color: #d73d32;
+}
+
+.book_footer .quotes{
+	background-color: #11a9cc;
+}
+
+.book_footer .themes{
+	background-color: #981b48;
+}
+
+.book_footer .subject_places{
+	background-color: #7e3794;
+}
+
+.book_footer .movies_based{
+	background-color: #377394;
+}
+
+.book_footer .footer_tags{
+	background-color: #946B37;
+}
+
+.book_footer .readers{
+	background-color: #943737;
+}
+
+.book_footer .news{
+	background-color: #379455;
+}
+
+.book_footer .reviews{
+	background-color: #943773;
+}
+
+.book_footer .discussions{
+	background-color: #375194;
+}
+
+.book_footer .about_author{
+	background-color: #859437;
+}
+
+.book_footer .first_sentence:active{
+	background-color: #56923C;
+}
+
+.book_footer .characters:active{
+	background-color: #A83128;
+}
+
+.book_footer .quotes:active{
+	background-color: #10748B;
+}
+
+.book_footer .themes:active{
+	background-color: #6B1534;
+}
+
+.book_footer .subject_places:active{
+	background-color: #4B2058;
+}
+
+.book_footer .movies_based:active{
+	background-color: #254A5F;
+}
+
+.book_footer .footer_tags:active{
+	background-color: #6F502A;
+}
+
+.book_footer .readers:active{
+	background-color: #5E2424;
+}
+
+.book_footer .news:active{
+	background-color: #26663B;
+}
+
+.book_footer .reviews:active{
+	background-color: #682650;
+}
+
+.book_footer .discussions:active{
+	background-color: #283966;
+}
+
+.book_footer .about_author:active{
+	background-color: #4C551F;
+}

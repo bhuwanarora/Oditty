@@ -1,0 +1,10 @@
+<% if @book.identifier.present? %>
+	<b>IDENTIFIER:</b></br>
+	&nbsp; <b>ISBN_10:</b> <%= @book.identifier.isbn_10 %></br>
+	&nbsp; <b>LCCN:</b> <a href="http://lccn.loc.gov/<%= @book.identifier.lccn %>"><%= @book.identifier.lccn %></a></br>
+	&nbsp; <b>OPEN LIBRARY:</b> <a href="https://openlibrary.org/books/<%= @book.identifier.openlibrary %>"><%= @book.identifier.openlibrary %></a></br>
+	&nbsp; <b>OCLC:</b> <%= @book.identifier.oclc %></br>
+	&nbsp; <b>LIBRARY THING:</b> <a href="http://www.librarything.com/work/<%= @book.identifier.librarything %>"><%= @book.identifier.librarything %></a></br>
+	&nbsp; <b>GUTENBERG:</b> <a href="http://www.gutenberg.org/ebooks/<%= @book.identifier.project_gutenberg %>"><%= @book.identifier.project_gutenberg %></a></br>
+	&nbsp; <b>GOODREADS:</b> <a href="https://www.goodreads.com/book/show/<%= @book.identifier.goodreads %>"><%= @book.identifier.goodreads %></a></br>
+<% end %>

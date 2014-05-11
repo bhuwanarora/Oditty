@@ -1,0 +1,17 @@
+.logs{
+	font-family: fantasy;
+}
+.logs ul{
+	list-style: none;
+	background: rgba(211, 211, 211, 0.19);
+	height: 14px;
+	padding: 10px;
+	margin-top: inherit;
+	font-family: fantasy;
+}
+.logs li{
+	display: inline;
+}
+.logs li a{
+	text-decoration: none;
+}

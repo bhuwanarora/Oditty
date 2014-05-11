@@ -1,0 +1,71 @@
+<input id="add_tags_<%= @book.id %>" type="text" />
+
+<script type="text/javascript">
+  add_tag = function(item){
+    var book_id = parseInt($(this)[0].id.split("add_tags_")[1]);
+    var tag_name = item.name;
+    $.ajax({
+      url: "<%= add_tag_for_book_path %>",
+      data: "id="+book_id+"&tag="+tag_name,
+      type: "POST",
+      error: function(jqXHR, textStatus, errorThrown){
+        alert("Error in adding the tag.")
+      }
+    })
+  }
+
+  remove_tag = function(item){
+    var book_id = parseInt($(this)[0].id.split("add_tags_")[1]);
+    var tag_name = item.name;
+    $.ajax({
+      url: "<%= remove_tag_for_book_path %>",
+      data: "id="+book_id+"&tag="+tag_name,
+      type: "POST",
+      error: function(jqXHR, textStatus, errorThrown){
+        alert("Error in deleting the tag.")
+      }
+    })
+  }
+
+  $('#add_tags_<#%= @book.id %>').tokenInput(tag_prediction_url, {
+    prePopulate: <#%= @book.sorted_tags.map {|s| {name: s.name}}.to_json.html_safe %>,
+    tokenLimit: 1000,
+    preventDuplicates: true,
+    theme: "facebook",
+    onDelete: remove_tag,
+    onAdd: add_tag
+  });
+
+
+  function tag_prediction_url(){
+    return "<#%= tag_prediction_path %>";
+  }
+
+  $('#add_tags_<%= @book.id %>').change(function(){
+    var tag_id = $('#add_tags_<%= @book.id %>').attr('value');
+  });
+
+	
+</script>
+<style>
+  .token-input-list-facebook{
+    width:99% !important;
+  }
+  .typeahead { z-index: 1051; 
+  }
+  textarea{ 
+    height:150px; 
+    min-height:150px;  
+    max-height:150px;
+  }
+  #map{
+    position: absolute;
+    top: 0;
+    left: 300px;
+    bottom: 0;
+    right: 0;
+    background: #363636;
+  }
+  .controls{ position: relative;
+  }
+</style>

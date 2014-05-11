@@ -1,0 +1,129 @@
+<div class="vertical_padder_active">
+</div>
+<div ng-switch on="panel_selected">
+	<div ng-switch-when="BOOKMARK">
+		<div ng-show="active_book_filter" ng-model="user.books.bookmarked">
+			<div ng-switch on="user.books.bookmarked.length">
+				<div ng-switch-when="0">
+					Bookmark some stuff							
+				</div>
+				<div ng-switch-default>
+					<div class="horizontal_padder_active">
+					</div>
+					<div ng-repeat="user_book in user.books.bookmarked" class="recommendation_block">
+						<book track id="{{user_book.category.name | lowercase}}-{{user_book.id}}" data="user_book"></book>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-show="active_author_filter" ng-model="user.authors.bookmarked">
+			<div ng-switch on="user.authors.bookmarked.length">
+				<div ng-switch-when="0">
+					Add Some Authors To Bookmark
+				</div>
+				<div ng-switch-default>
+					<div class="horizontal_padder_active">
+					</div>
+					<div ng-repeat="author in user.authors.bookmarked" class="recommendation_block">
+						<author track id="{{author.category.name | lowercase}}-{{author.id}}" data="author"></author>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-show="active_reader_filter" ng-model="user.readers.follow">
+			<div ng-switch on="user.readers.follow.length">
+				<div ng-switch-when="0">
+					Add Some readers to follow
+				</div>
+				<div ng-switch-default>
+					<div class="horizontal_padder_active">
+					</div>
+					<div ng-repeat="reader in user.readers.follow" class="recommendation_block">
+						<reader track id="{{reader.category.name | lowercase}}-{{reader.id}}" data="reader"></reader>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div ng-switch-when="READ">
+		<div ng-show="active_book_filter" ng-model="user.books.read">
+			<div ng-switch on="user.books.read.length">
+				<div ng-switch-when="0">
+					Add Some books to read				
+				</div>
+				<div ng-switch-default>
+					<div class="horizontal_padder_active">
+					</div>
+					<div ng-repeat="user_book in user.books.read" class="recommendation_block">
+						<book track id="{{user_book.category.name | lowercase}}-{{user_book.id}}" data="user_book"></book>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-show="active_author_filter" ng-model="user.authors.follow">
+			<div ng-switch on="user.authors.follow.length">
+				<div ng-switch-when="0">
+					Add Some Authors To Follow
+				</div>
+				<div ng-switch-default>
+					<div class="horizontal_padder_active">
+					</div>
+					<div ng-repeat="author in user.authors.follow" class="recommendation_block">
+						<author track id="{{author.category.name | lowercase}}-{{author.id}}" data="author"></author>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-show="active_reader_filter" ng-model="user.readers.follow">
+			<div ng-switch on="user.readers.follow.length">
+				<div ng-switch-when="0">
+					Add Some readers to follow				
+				</div>
+				<div ng-switch-default>
+					<div class="horizontal_padder_active">
+					</div>
+					<div ng-repeat="reader in user.readers.follow" class="recommendation_block">
+						<reader track id="{{reader.category.name | lowercase}}-{{reader.id}}" data="reader"></reader>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div ng-switch-default>
+		<div ng-show="active_book_filter" ng-model="recommendations.books">
+			<info-card></info-card>
+			<div ng-repeat="recommendation in recommendations.books" class="recommendation_block">
+				<book track id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></book>
+			</div>
+		</div>
+		<div ng-show="active_reader_filter">
+			<info-card></info-card>
+			<div ng-repeat="recommendation in recommendations.readers" class="recommendation_block">
+				<reader track id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></reader>
+			</div>
+		</div>
+		<div ng-show="active_author_filter">
+			<info-card></info-card>
+			<div ng-repeat="recommendation in recommendations.authors" class="recommendation_block">
+				<author track id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></author>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="load_icon animate-slow"
+     ng-if="drop_icon">
+	<img src="assets/preloader.gif" />
+</div>
+<div push-notification="notification_active" 
+	class="push_notification" 
+	ng-if="notification_active">
+	<!-- <div class="header">
+		HEADER
+	</div> -->
+	<div class="content">
+		CONTENT
+	</div>
+</div>
+<message></message>

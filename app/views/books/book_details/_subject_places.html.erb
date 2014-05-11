@@ -1,0 +1,4 @@
+<b>SUBJECT PLACES:</b>
+<% @book.subject_places.each do |subject_place| %>
+	<a href="<%= subject_place.url %>"><%= subject_place.name %></a>&nbsp;
+<% end %></br>

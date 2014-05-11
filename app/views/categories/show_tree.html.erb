@@ -1,0 +1,63 @@
+<%= render :partial => "show_sub_tree", :locals => {:@root => @root}%>
+<%= render :partial => "shared/modals/modal_box", :locals => {:modal_id => "addChildCategoryModal",
+																:modal_label => "addChildCategoryLabel",
+																:modal_head => "Add Child Category"}%>
+<%= render :partial => "shared/modals/modal_box", :locals => {:modal_id => "editCategoryModal",
+																:modal_label => "editCategoryLabel",
+																:modal_head => "Edit Category"}%>
+
+<script>
+	function open_modal($this){
+		var id = $this.attr('id').split('node_')[1];
+		var url = "<%= new_child_category_path %>";
+		$.ajax({
+			url: url,
+			data: "parent_id="+id,
+			success: function(data, textStatus, jqXHR){
+				$('#addChildCategoryModal .content').html(data)
+				$('#addChildCategoryModal').modal();
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				alert("Something went wrong.")
+			}
+		});
+	}
+
+	function open_edit_modal($this){
+		var id = $this.attr('id').split('node_edit_')[1];
+		var url = "/categories/"+id+"/edit";
+		$.ajax({
+			url: url,
+			data: "id="+id,
+			success: function(data, textStatus, jqXHR){
+				$('#editCategoryModal .content').html(data);
+				$('#editCategoryModal').modal();
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				alert("Something went wrong.")
+			}
+		})
+	}
+
+	function toggle_tree($this){
+		var id = $this.attr('id').split('node_toggle_')[1];
+		$('#children_of_'+id).toggle();
+		// var url = "/categories/"+id+"/edit";
+	}
+
+	$('#addChildCategoryModal').on('ajax:success', function(jqXHR, data, textStatus){
+		$('#addChildCategoryModal').modal('hide')
+		window.location.reload()
+	})
+	$('#addChildCategoryModal').on('ajax:error', function(jqXHR, data, textStatus){
+		alert(data.responseJSON["message"]);
+	})
+
+	$('#editCategoryModal').on('ajax:success', function(jqXHR, data, textStatus){
+		$('#editCategoryModal').modal('hide')
+		window.location.reload()
+	})
+	$('#editCategoryModal').on('ajax:error', function(jqXHR, data, textStatus){
+		alert(data.responseJSON["message"]);
+	})
+</script>
