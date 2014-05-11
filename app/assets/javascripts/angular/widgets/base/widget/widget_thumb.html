@@ -1,4 +1,5 @@
 <div track 
+     ng-if="active_book_filter"
 	   ng-class="{'hidden_summary_button':!hovered}" 
 	   class="summary_button_base animate-fast" 
      ns-popover
@@ -9,23 +10,36 @@
      ns-popover-hide-on-click=false
      >
 	<span class="icon-file"></span>
-</div>
-<!-- ng-class="{'thumb':!hovered, 'thumb_hover':hovered, 'zoomedin_thumb': zoomin_book}"  -->
-<!-- <div class="book_title">{{book.title}}</div>
-<div class="author_name">by {{book.author_name}}</div> -->
-<div class="animate-fast widget_thumb" 
-     ng-style="thumb_style">
-</div>
 
-<div ng-if="read" class="stamp_read">
-	<span class="glyphicon glyphicon-check"></span> READ
 </div>
-<!-- <svg xmlns="http://www.w3.org/2000/svg" style="position: absolute; height: 0px">
- <filter id="grayscale">
-  <feColorMatrix type="matrix" values="0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0"/>
- </filter>
-</svg> -->
+<div track 
+     ng-if="active_author_filter"
+     ng-class="{'hidden_summary_button':!hovered}" 
+     class="summary_button_base animate-fast" 
+     ns-popover
+     ns-popover-template="authorPopover"
+     ns-popover-trigger="mouseover"
+     ns-popover-timeout="0"
+     ns-popover-placement="bottom|left"
+     ns-popover-hide-on-click=false
+     >
+  <span class="icon-file"></span>
 
+</div>
+<div track 
+     ng-if="active_reader_filter"
+     ng-class="{'hidden_summary_button':!hovered}" 
+     class="summary_button_base animate-fast" 
+     ns-popover
+     ns-popover-template="readerPopover"
+     ns-popover-trigger="mouseover"
+     ns-popover-timeout="0"
+     ns-popover-placement="bottom|left"
+     ns-popover-hide-on-click=false
+     >
+  <span class="icon-file"></span>
+
+</div>
 <script type="text/ng-template" id="bookPopover">
   <div class="triangle"></div>
   <div class="tooltip">
@@ -53,3 +67,58 @@
     </div>
   </div>
 </script>
+
+<script type="text/ng-template" id="authorPopover">
+  <div class="triangle"></div>
+  <div class="tooltip">
+    <div class="header">
+      <div class="title">
+        <span itemprop= "name">{{author.name}}</span>
+      </div>
+    </div>
+    <hr>
+    <div class="description">
+      ABOUT AUTHOR
+    </div>
+    <hr>
+    <div class="users_count">readers count</div>
+    <div class="users">
+      
+    </div>
+    <div class="footer">
+      <recommend></recommend>
+    </div>
+  </div>
+</script>
+
+<script type="text/ng-template" id="readerPopover">
+  <div class="triangle"></div>
+  <div class="tooltip">
+    <div class="header">
+      <div class="title">
+        <span itemprop= "name">{{reader.name}}</span>
+      </div>
+    </div>
+    <hr>
+    <div class="description">
+      Reader description
+    </div>
+    <hr>
+    <div class="users_count">Followers Count</div>
+    <div class="users">
+      
+    </div>
+    <div class="footer">
+      <recommend></recommend>
+    </div>
+  </div>
+</script>
+
+<div class="animate-fast widget_thumb" 
+     ng-style="thumb_style">
+</div>
+
+<!-- <div ng-if="read" class="stamp_read">
+	<span class="glyphicon glyphicon-check"></span> READ
+</div>
+ -->

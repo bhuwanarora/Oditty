@@ -12,21 +12,22 @@ websiteApp.directive('reader', function (widgetService) {
       };
 
       _init = function(){
-        var reader_id = $scope.reader.id;
-        widgetService.populate_tooltips(reader_id).then(function(data){
-          $scope.reader.title = data.title;
-          $scope.reader.author_name = data.author_name;
-          $scope.reader.users = data.users;
-          $scope.reader.summary = data.summary;
-          $scope.reader.users_count = data.users_count;
-        });
-        var tilt_angle = (Math.floor(Math.random() * 10) + 1)/10+"deg";
+        $scope.active_reader_filter = true;
+        // var reader_id = $scope.reader.id;
+        // widgetService.populate_tooltips(reader_id).then(function(data){
+        //   $scope.reader.title = data.title;
+        //   $scope.reader.author_name = data.author_name;
+        //   $scope.reader.users = data.users;
+        //   $scope.reader.summary = data.summary;
+        //   $scope.reader.users_count = data.users_count;
+        // });
+        // var tilt_angle = (Math.floor(Math.random() * 10) + 1)/10+"deg";
         // $scope.reader_tilt = {"transform":"rotate("+tilt_angle+")",
         //                   "-ms-transform":"rotate("+tilt_angle+")",
         //                   "-webkit-transform":"rotate("+tilt_angle+")";
       }
 
-      // _init();
+      _init();
 
     },
     templateUrl: "/assets/angular/widgets/base/reader/reader_widget.html"

@@ -12,15 +12,16 @@ websiteApp.directive('book', function (widgetService){
       };
 
       _init = function(){
-        var book_id = $scope.book.id;
-        widgetService.populate_tooltips(book_id).then(function(data){
-          $scope.book.title = data.title;
-          $scope.book.author_name = data.author_name;
-          $scope.book.users = data.users;
-          $scope.book.summary = data.summary;
-          $scope.book.users_count = data.users_count;
-        });
-        var tilt_angle = (Math.floor(Math.random() * 10) + 1)/10+"deg";
+        $scope.active_book_filter = true;
+        // var book_id = $scope.book.id;
+        // widgetService.populate_tooltips(book_id).then(function(data){
+        //   $scope.book.title = data.title;
+        //   $scope.book.author_name = data.author_name;
+        //   $scope.book.users = data.users;
+        //   $scope.book.summary = data.summary;
+        //   $scope.book.users_count = data.users_count;
+        // });
+        // var tilt_angle = (Math.floor(Math.random() * 10) + 1)/10+"deg";
         // $scope.book_tilt = {"transform":"rotate("+tilt_angle+")",
         //                   "-ms-transform":"rotate("+tilt_angle+")",
         //                   "-webkit-transform":"rotate("+tilt_angle+")";

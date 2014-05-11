@@ -12,21 +12,22 @@ websiteApp.directive('author', function (widgetService) {
       };
 
       _init = function(){
-        var author_id = $scope.author.id;
-        widgetService.populate_tooltips(author_id).then(function(data){
-          $scope.author.title = data.title;
-          $scope.author.author_name = data.author_name;
-          $scope.author.users = data.users;
-          $scope.author.summary = data.summary;
-          $scope.author.users_count = data.users_count;
-        });
-        var tilt_angle = (Math.floor(Math.random() * 10) + 1)/10+"deg";
+        $scope.active_author_filter = true;
+        // var author_id = $scope.author.id;
+        // widgetService.populate_tooltips(author_id).then(function(data){
+        //   $scope.author.title = data.title;
+        //   $scope.author.author_name = data.author_name;
+        //   $scope.author.users = data.users;
+        //   $scope.author.summary = data.summary;
+        //   $scope.author.users_count = data.users_count;
+        // });
+        // var tilt_angle = (Math.floor(Math.random() * 10) + 1)/10+"deg";
         // $scope.author_tilt = {"transform":"rotate("+tilt_angle+")",
         //                   "-ms-transform":"rotate("+tilt_angle+")",
         //                   "-webkit-transform":"rotate("+tilt_angle+")";
       }
 
-      // _init();
+      _init();
 
     },
     templateUrl: "/assets/angular/widgets/base/author/author_widget.html"

@@ -13,31 +13,34 @@ module Neo4jHelper
 
 	def self.create_time_nodes
 		self.init
-		@neo.execute_query("CREATE (y:Year{year:"+1000.to_s+"})<-[:Has_year]-(r:Root)")
-		create_internal_nodes_for_an_year(1000)
+		node = @neo.create_node("year" => 1000)
+		@neo.add_node_to_index("Year", node)
+		create_internal_nodes_for_an_year(node)
 
 		for year in 1001..2015
 			t1 = Time.now
-			prev_year = year-1
-			node_year = @neo.execute_query("MATCH (r:Root), (pv:Year{year:"+prev_year.to_s+"})
-				CREATE (pv)-[:Next_year]->(y:Year{year:"+year.to_s+"})<-[:Has_year]-(r)")
-			create_internal_nodes_for_an_year(year)
+			prev_node = node
+			node = @neo.create_node("year" => year)
+			node_year = @neo.add_node_to_index("Year", node)
+			@neo.create_relationship("Next_year", prev_node, node)
+			create_internal_nodes_for_an_year(node)
 			t2 = Time.now
 			puts "#{year} #{t2-t1}"
 		end
 
 	end
 
-	def create_internal_nodes_for_an_year(year)
-		month_count = 1
+	def create_internal_nodes_for_an_year(node)
 		for month_count in 1..12 do
-			month_node = @neo.execute_query("MATCH (y:Year{year:"+year.to_s+"})
-				CREATE (y)-[:Has_month]->(m:Month{month:"+month_count.to_s+"})")
+			month_node = @neo.create_node("month" => month_count)
+			@neo.create_relationship("Has_month", node, month_node)
+			@neo.add_node_to_index("Month", month_node)
+
 			days = Time.days_in_month(month_count, year)
 			for day in 1..days do
-				day_node = @neo.execute_query("MATCH (y:Year{year:"+year.to_s+"}), 
-					(m:Month{month:"+month_count.to_s+"})
-					CREATE (m)-[:Has_day]->(d:Day{day:"+day.to_s+"})")
+				day_node = @neo.create_node("day", day)
+				@neo.create_relationship("Has_day", month_node, day_node)
+				@neo.add_node_to_index("Day", day_node)
 			end
 		end
 	end
