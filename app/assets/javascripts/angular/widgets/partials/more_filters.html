@@ -6,24 +6,6 @@
 			 RESET FILTERS 
 			 <span class="icon-loop"></span>
 		</div>
-		<div ng-click="toggle_active_filter()"
-			 ng-disabled="active_book_filter"
-			 ng-class="{'active_filter':active_book_filter, 'inactive_filter':!active_book_filter}">
-			 <span class="icon-book" 
-			  	   ng-class="{'main_book_icon':!active_book_filter}">
-			 </span>&nbsp;BOOK</div>
-		<div ng-click="toggle_active_filter()"
-			 ng-disabled="active_author_filter"
-			 ng-class="{'active_filter':active_author_filter, 'inactive_filter':!active_author_filter}">
-			 <span class="icon-user" 
-			       ng-class="{'main_author_icon':!active_author_filter}">
-			 </span>&nbsp;AUTHOR</div>
-		<div ng-click="toggle_active_filter()"
-			 ng-disabled="active_reader_filter"
-			 ng-class="{'active_filter':active_reader_filter, 'inactive_filter':!active_reader_filter}">
-			 <span class="icon-user22" 
-			  	   ng-class="{'main_reader_icon':!active_reader_filter}">
-			 </span>&nbsp;READER</div>
 		<span class="result_count" 
 			  ng-model="recommendations.books.length"
 			  ng-show="filters.filter_type == 'BOOK'">
@@ -69,31 +51,25 @@
 		<!-- BOOK FILTERS -->
 		<div class="filters" ng-show="active_book_filter">
 			<div class="filters_panel">
-				<div class="header">
-					Advance Input Filters
-				</div>
-				<div>
-				 	<type-ahead items="genres" 
-				 				prompt="GENRE OR AUTHOR" 
-				 				title="name"
-				 				custom-options = "genre_typeahead_options"
-				 				custom="input_filter"
-				 				model="genre" 
-				 				on-select="on_genre_or_author_selection()"
-				 				ng-keypress="show_genre_or_author_options('BOOK')">
-				 	</type-ahead>
-				</div>
-				<div>
-					<type-ahead items="countries" 
-				 				prompt="COUNTRY"
-				 				title="name"
-				 				custom-options = "country_typeahead_options"
-				 				custom="input_filter"
-				 				model="country"
-				 				on-select="on_country_selection()"
-				 				ng-keypress="show_country_options('BOOK')">
-				 	</type-ahead>
-				</div>
+			 	<type-ahead items="genres" 
+			 				prompt="Filter books by a Genre" 
+			 				title="name"
+			 				custom-options = "genre_typeahead_options"
+			 				custom="input_filter"
+			 				model="genre" 
+			 				on-select="on_genre_selection()"
+			 				ng-keypress="show_genre_options('BOOK')">
+			 	</type-ahead>
+				<type-ahead items="authors" 
+			 				prompt="Filter books by Author Name"
+			 				title="name"
+			 				custom-options = "author_typeahead_options"
+			 				custom="input_filter"
+			 				model="author"
+			 				on-select="on_author_selection()"
+			 				ng-keypress="show_author_options('BOOK')">
+			 	</type-ahead>
+			 	<div dropdown-select="countryOptions" dropdown-model="countrySelected"></div>
 			</div>
 			<hr>
 			<div class="filters_panel_large">

@@ -3,7 +3,9 @@
 	ng-mouseleave="hovered=false; category_hovered=false" 
 	ng-init="initVerticalText()"
 	ng-style="category_style">
-	<div ng-repeat="i in nameArray track by $index">
+	<div class="category_character">&nbsp;</div>
+	<div ng-repeat="i in nameArray track by $index" class="category_character">
 		{{i | uppercase}}<br/>
 	</div>
+	<div class="category_character">&nbsp;</div>
 </div>

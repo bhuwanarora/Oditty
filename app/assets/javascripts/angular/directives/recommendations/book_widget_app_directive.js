@@ -346,14 +346,12 @@ websiteApp.directive('markAsRead', function($rootScope, $timeout, widgetService)
 		restrict: 'E',
 		controller: function($scope){
       $scope.markAsRead = function(){
-        if($scope.read){
-          $scope.read = false;
+        if($scope.book.status){
           $scope.book.status = 0;
           $scope.interact = false;
           $scope.$emit('removeFromShelf', "BOOK", $scope.book);
         }
         else{
-          $scope.read = true;
           $scope.book.status = 1;
           $scope.$emit('addToShelf', "BOOK", $scope.book);
           $rootScope.$broadcast('glowShelf');

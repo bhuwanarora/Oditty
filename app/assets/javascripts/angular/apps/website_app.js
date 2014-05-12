@@ -1,7 +1,7 @@
 var websiteApp = angular.module('websiteApp', ['ngRoute', 'ngAnimate', 
                   'monospaced.mousewheel', 'ngSlider', 'facebook', 
                   'directive.g+signin', 'nsPopover', 'ngMap', 'cropme',
-                  'duScroll', 'adaptive.motion']);
+                  'duScroll', 'adaptive.motion', 'ngDropdowns']);
 websiteApp.config(function ($sceDelegateProvider, $routeProvider) {
   $routeProvider
   .when('/search',

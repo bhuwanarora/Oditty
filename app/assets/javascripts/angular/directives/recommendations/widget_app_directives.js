@@ -48,38 +48,32 @@ websiteApp.directive('follow', function ($rootScope, $timeout, widgetService) {
     restrict: 'E',
     controller: function($scope){
       $scope.toggle_follow = function(){
-        if($scope.follow){
-          $scope.follow = false;
-          if($scope.reader){
+        if($scope.reader){
+          if($scope.reader.follow){
+            $scope.reader.follow = false;
             $scope.$emit('removeFromShelf', "READER", $scope.reader);
-            widgetService.follow($scope.reader.id, "READER", $scope.follow);
           }
-          else if($scope.author){
-            $scope.$emit('removeFromShelf', "AUTHOR", $scope.author);
-            widgetService.follow($scope.author.id, "AUTHOR", $scope.follow);
-          }
-        }
-        else{
-          $scope.follow = true;
-          if($scope.reader){
+          else{
+            $scope.reader.follow = true;
             $scope.$emit('addToShelf', "READER", $scope.reader);
             var reader = $scope.reader.name;
             var message = "SUCCESS-You are now following "+reader;
-            widgetService.follow($scope.reader.id, "READER", $scope.follow);
           }
-          else if($scope.author){
+          widgetService.follow($scope.reader.id, "READER", $scope.reader.follow);
+        }
+        else if($scope.author){
+          if($scope.author.follow){
+            $scope.author.follow = false;
+            $scope.$emit('removeFromShelf', "AUTHOR", $scope.author);
+            widgetService.follow($scope.author.id, "AUTHOR", $scope.author.follow);
+          }
+          else{
+            $scope.author.follow = true;
             $scope.$emit('addToShelf', "AUTHOR", $scope.author);
             var author = $scope.author.name;
             var message = "SUCCESS-You are now following Author "+author; 
-            widgetService.follow($scope.author.id, "AUTHOR", $scope.follow);
           }
-
-          var timeout_event = notify($rootScope, message, $timeout);
-          $rootScope.$broadcast('glowShelf');
-          $scope.$on('destroy', function(){
-            $timeout.cancel(timeout_event);
-            $timeout.cancel(glow_event);
-          });
+          widgetService.follow($scope.author.id, "AUTHOR", $scope.author.follow);
         }
 
       }

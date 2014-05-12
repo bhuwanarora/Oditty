@@ -1,7 +1,6 @@
 <div class="left_action button_effect"
-	 ng-class="{'left_action_active':read}"
+	 ng-class="{'left_action_active':book.status}"
 	 ng-click="markAsRead()">
-  <!-- <span class="icon-location"></span> -->
-  <span ng-show="!read">Mark as read</span>
-  <span ng-show="read">Marked as read</span>
+  <span ng-show="!book.status">Mark as read</span>
+  <span ng-show="book.status">Unmark as read</span>
 </div>

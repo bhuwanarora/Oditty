@@ -9,6 +9,9 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 				$scope.active_book_filter = true;
 				$scope.active_author_filter = false;
 				$scope.active_reader_filter = false;
+				$scope.show_menu = false;
+				$scope.countryOptions = [];
+				$scope.countrySelected = {};
 			}
 
 			$scope.reset_filters = function(){
@@ -45,6 +48,7 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 				var isBook = elementText == "BOOK" || event.currentTarget.className.indexOf("main_book_icon")!=-1;
 				var isAuthor = elementText == "AUTHOR" || event.currentTarget.className.indexOf("main_author_icon")!=-1;
 				var isReader = elementText == "READER" || event.currentTarget.className.indexOf("main_reader_icon")!=-1;
+				$scope.show_menu = false;
 				_reload_page(isBook, isAuthor, isReader);
 			}
 
@@ -64,30 +68,17 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 			    });
 			}
 
-			$scope.show_genre_or_author_options = function(filter){
+			$scope.show_author_options = function(filter){
 				var params = $scope.genre+String.fromCharCode(event.keyCode);
 				var filter = "q="+params+"&filter="+filter;
-				recommendationService.get_genres(filter).then(function(data){
-			    	$scope.genres = data["genres"];
+				recommendationService.get_authors(filter).then(function(data){
+			    	$scope.authors = data["authors"];
 			    });
 			}
 
-			$scope.on_genre_or_author_selection = function(){
-				var filter_name = $scope.genre;
-				$rootScope.filters["genre_filter"] = filter_name;
-				message = "SUCCESS-'"+filter_name+"' added to filters.";
-				var timeout_event = notify($rootScope, message, $timeout);
-				$scope.$emit('reloadRecommendations');
-
-
-				$scope.$on('destroy', function(){
-					$timeout.cancel(timeout_event);
-				});
-			}
-
-			$scope.on_genre_selection = function(){
-				var filter_name = $scope.genre;
-				$rootScope.filters["genre_filter"] = filter_name;
+			$scope.on_author_selection = function(){
+				var filter_name = $scope.author;
+				$rootScope.filters["author_filter"] = filter_name;
 				message = "SUCCESS-'"+filter_name+"' added to filters.";
 				var timeout_event = notify($rootScope, message, $timeout);
 				$scope.$emit('reloadRecommendations');
@@ -108,6 +99,15 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 				$scope.$on('destroy', function(){
 					$timeout.cancel(timeout_event);
 				});
+			}
+
+			$scope.toggle_menu = function(){
+				if($scope.show_menu){
+					$scope.show_menu = false;
+				}
+				else{
+					$scope.show_menu = true;
+				}
 			}
 
 			_init();

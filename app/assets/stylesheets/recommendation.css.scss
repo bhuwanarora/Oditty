@@ -13,7 +13,7 @@ body{
   	-ms-user-select: none;
     user-select: none;
     color: #717070;
-    background-color: #EBEBEB;
+    /*background-color: #EBEBEB;*/
     /*background-image: url('7H.jpg');*/
     background-image: none;
     /*font-family: 'Lucida Grande';*/
@@ -139,7 +139,7 @@ a:hover{
 .category{
 	float: left;
 	background-color: #3cb878;
-	color: white;
+	color: #717070;
 	text-align: center;
 	cursor: pointer;
 	border-top-left-radius: 3px;
@@ -190,6 +190,11 @@ a:hover{
 
 .summary{
 	-webkit-filter: grayscale(0);
+}
+
+.summary_icon{
+	font-size: 2em;
+	font-weight: bold;
 }
 
 .summary_grey{
@@ -654,7 +659,7 @@ a:hover{
 .filter_link{
 	float: right;
 	margin-right: 20px;
-	background-color: rgb(0, 122, 255);
+	background-color: #3D79A1;
 	color: white;
 	text-shadow: none;
 	border-radius: 5px;
@@ -667,8 +672,8 @@ a:hover{
 	margin-left: -5px;
 }
 
-.advanced_filter{
-	font-size: 1.2em;
+.menu_group{
+	font-size: 1em;
 	float: right;
 	margin-right: 10px;
 	display: inline-block;
@@ -676,8 +681,37 @@ a:hover{
 	cursor: pointer;
 }
 
+.advanced_filter{
+	padding: 0px 25px 0px 11px;
+	width: 60px;
+}
+
+.advanced_filter_active{
+	padding: 11px 24px 10px 10px;
+	border-left: 1px solid #C2C2C2;
+	border-right: 1px solid #C2C2C2;
+	width: 60px;
+}
+
 .advanced_filter span{
 	margin-right: 2px;
+}
+
+.menu{
+	margin-top: -70px;
+	border-top: 1px solid #C2C2C2;
+	border-left: 1px solid #C2C2C2;
+	border-right: 1px solid #C2C2C2;
+	background-color: white;
+}
+
+.menu div{
+	padding: 6px 25px 6px 10px;
+}
+
+.menu div:hover{
+	background-color: #3D79A1;
+	color: white;
 }
 
 .active{
@@ -1039,6 +1073,7 @@ input:focus{
 .main_filters{
 	text-align: center;
 	background-color: #F0F0F0;
+	height: 20px;
 }
 
 .main_filters div{
@@ -1081,42 +1116,18 @@ input:focus{
 }
 
 .input_filter{
-	width: 180px;
-	font-size: 0.8em;
+	width: 200px;
 	color: #717070;
 	padding: 4px;
 	background-color: #FFFFFF;
 	border-radius: 2px;
 	box-shadow: 0px 1px 4px 0px #99A3AD, inset 0px 0px 40px #EEEEEE;
 	cursor: default;
+	font-size: 0.9em;
 }
 
 .input_filter:focus{
 	border: none;
-}
-
-.input_filter:hover{
-	box-shadow: 0px 1px 4px 0px #143A5F, inset 0px 0px 40px #368AC2;
-}
-
-.input_filter::-webkit-input-placeholder {
-   font-size: 0.8em;
-   color: #717070;
-}
-
-.input_filter:-moz-placeholder { /* Firefox 18- */
-   font-size: 0.8em;  
-   color: #717070;
-}
-
-.input_filter::-moz-placeholder {  /* Firefox 19+ */
-   font-size: 0.8em; 
-   color: #717070; 
-}
-
-.input_filter:-ms-input-placeholder {  
-   font-size: 0.8em;  
-   color: #717070;
 }
 
 .rate_radio{
@@ -1158,7 +1169,7 @@ input:focus{
 
 .typeahead_options{
 	position: absolute;
-	width: 189px;
+	width: 208px;
 	box-shadow: 0px 1px 4px 0px #99A3AD, inset 0px 0px 40px #EEEEEE;
 	color: #717170;
 	font-size: 0.8em;
@@ -1415,7 +1426,8 @@ and (min-width : 400px) {
 	.category{
 		height: 91%;
 		width: 25px;
-		padding-top: 40px;
+		padding-top: 20px;
+		padding-bottom: 20px;
 	}
 
 	.left_action{
@@ -1518,7 +1530,8 @@ and (min-width : 1280px){
 	.category{
 		height: 83.5%;
 		width: 30px;
-		padding-top: 100px;
+		padding-top: 50px;
+		padding-bottom: 50px;
 	}
 
 	.left_action{
@@ -1619,7 +1632,8 @@ and (min-width : 1366px){
 	.category{
 		height: 91%;
 		width: 25px;
-		padding-top: 40px;
+		padding-top: 20px;
+		padding-bottom: 20px;
 	}
 
 	.left_action{
@@ -1716,7 +1730,8 @@ and (min-width : 1824px) {
 	.category{
 		height: 84.5%;
 		width: 30px;
-		padding-top: 100px;
+		padding-top: 50px;
+		padding-bottom: 50px;
 	}
 
 	.left_action{
@@ -2135,6 +2150,8 @@ and (min-width : 1824px) {
 
 .tooltip .header .author{
 	cursor: pointer;
+	font-weight: bold;
+	color: #136CB2;
 }
 
 .tooltip .header .author:hover,
@@ -2753,18 +2770,6 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	color:#AAA;
 }
 
-.main_book_icon{
-	color: #0054a6;
-}
-
-.main_author_icon{
-	color: #3cb878;
-}
-
-.main_reader_icon{
-	color: #790000;
-}
-
 .notifications{
 	position: fixed;
 	width: 31	0px;
@@ -2877,3 +2882,226 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     margin: 6px;
     position: relative;
 }
+
+.category_character{
+	background-color: white;
+}
+
+/* dropdown css */
+
+/****** dropdown-select *******/
+
+.wrap-dd-select {
+    /* Size and position */
+    position: relative;
+    width: 200px;
+    margin: 0 auto;
+    padding: 10px;
+ 
+    /* Styles */
+    background: #fff;
+    border-radius: 7px;
+    border: 1px solid rgba(0,0,0,0.15);
+    box-shadow: 0 1px 1px rgba(50,50,50,0.1);
+    cursor: pointer;
+    outline: none;
+ 
+    /* Font settings */
+    font-weight: bold;
+    color: #8AA8BD;
+}
+
+.wrap-dd-select:after {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    margin-top: -3px;
+    border-width: 6px 6px 0 6px;
+    border-style: solid;
+    border-color: #8aa8bd transparent;
+}
+
+.wrap-dd-select .dropdown {
+    /* Size & position */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+ 
+    /* Styles */
+    background: white;
+    padding: 0;
+    border-radius: inherit;
+    border: 1px solid rgba(0,0,0,0.17);
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    font-weight: normal;
+    transition: all 0.2s ease-in;
+    list-style: none;
+ 
+    /* Hiding */
+    opacity: 0;
+    pointer-events: none;
+}
+
+.wrap-dd-select .dropdown li.divider {
+    padding: 2px 0;
+    background: #e6e8ea;
+}
+
+.wrap-dd-select .dropdown li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #8aa8bd;
+    border-bottom: 1px solid #e6e8ea;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,1);
+    transition: all 0.3s ease-out;
+}
+
+.wrap-dd-select .dropdown li i {
+    float: right;
+    color: inherit;
+}
+ 
+.wrap-dd-select .dropdown li:first-of-type a {
+    border-radius: 7px 7px 0 0;
+}
+ 
+.wrap-dd-select .dropdown li:last-of-type a {
+    border-radius: 0 0 7px 7px;
+    border: none;
+}
+ 
+/* Hover state */
+ 
+.wrap-dd-select .dropdown li:hover a {
+    background: #f3f8f8;
+}
+
+.wrap-dd-select .dropdown:after {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    bottom: 100%;
+    right: 15px;
+    border-width: 0 6px 6px 6px;
+    border-style: solid;
+    border-color: #fff transparent;    
+}
+ 
+.wrap-dd-select .dropdown:before {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    bottom: 100%;
+    right: 13px;
+    border-width: 0 8px 8px 8px;
+    border-style: solid;
+    border-color: rgba(0,0,0,0.1) transparent;    
+}
+
+.wrap-dd-select.active .dropdown {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/****** dropdown-menu *******/
+.wrap-dd-menu {
+    /* Size and position */
+    position: relative;
+    width: 200px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.wrap-dd-menu .dropdown {
+    /* Size & position */
+    position: absolute;
+    z-index: 1;
+    top: 70%;
+    left: 0;
+    right: 0;
+ 
+    /* Styles */
+    background: white;
+    padding: 0;
+    border-radius: 7px;
+    border: 1px solid rgba(0,0,0,0.17);
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    font-weight: normal;
+    transition: all 0.2s ease-in;
+    list-style: none;
+ 
+    /* Hiding */
+    opacity: 0;
+    pointer-events: none;
+}
+
+.wrap-dd-menu .dropdown li.divider {
+    padding: 2px 0;
+    background: #e6e8ea;
+}
+
+.wrap-dd-menu .dropdown li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #8aa8bd;
+    border-bottom: 1px solid #e6e8ea;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,1);
+    transition: all 0.3s ease-out;
+}
+
+.wrap-dd-menu .dropdown li i {
+    float: right;
+    color: inherit;
+}
+ 
+.wrap-dd-menu .dropdown li:first-of-type a {
+    border-radius: 7px 7px 0 0;
+}
+ 
+.wrap-dd-menu .dropdown li:last-of-type a {
+    border-radius: 0 0 7px 7px;
+    border: none;
+}
+ 
+/* Hover state */
+ 
+.wrap-dd-menu .dropdown li:hover a {
+    background: #f3f8f8;
+}
+
+.wrap-dd-menu .dropdown:after {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    bottom: 100%;
+    border-width: 0 6px 6px 6px;
+    border-style: solid;
+    border-color: #fff transparent;    
+}
+ 
+.wrap-dd-menu .dropdown:before {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    bottom: 100%;
+    right: 95px;
+    border-width: 0 8px 8px 8px;
+    border-style: solid;
+    border-color: rgba(0,0,0,0.1) transparent;    
+}
+
+.wrap-dd-menu .dropdown.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+/* */
