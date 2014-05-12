@@ -1,0 +1,32 @@
+	<input set-focus="website.searching" 
+	       ng-keypress="get_search_results($event)" 
+	       ng-keydown="key_down($event)"
+	       ng-keyup="key_up($event)"
+	       ng-model="search_tag.input"
+         id="searchInput"
+         ng-blur="expression"
+         placeholder="Search a book, author, reader or a book category..."/>
+  <div class="website_search_helpers">
+      <div class="option">
+        <div ng-show="search_initiated" class="title">{{search_display}}</div>
+        <div ng-show="!search_initiated && search_tag.input" class="title">No results found.. </div>
+        <div ng-show="!search_initiated && !search_tag.input" class="helper_title">
+        start typing OR...<br/>
+        Use <b>'@'</b> to search only an author or reader... eg: <em>@Shakespeare</em><br/> 
+        Use <b>'#'</b> to search only a book... eg: <em>#Animal Farm</em><br/>
+        Use <b>'+'</b> to search only a book category... eg: <em>+fashion</em><br/>
+        Use <b>'+'</b> to add anything and get a new field...eg: <em>#life of pi + #siddhartha</em>
+        </div>
+      </div>
+  </div>
+  <div class="website_search_options">
+    <div ng-repeat="item in search_results | filter: search_tag.input | limitTo: search_tag.result_count track by $index "
+         ng-click="handle_selection(item.name, item.graph_option)" 
+         ng-class="{active:is_current($index, item.name), 'graph_option':item.graph_option}" 
+         ng-mouseenter="set_current($index)"
+         class="option"
+         ng-bind-html="highlight(search_tag.input, item.name)">
+      <!-- <div class="title">{{item.name}}</div>
+      <div ng-show="item.author_name">by {{item.author_name}}</div> -->
+    </div>
+  </div>

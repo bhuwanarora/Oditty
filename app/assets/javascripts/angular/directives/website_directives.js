@@ -253,3 +253,10 @@ websiteApp.directive('compile', function($compile){
 	            });
 			}
 });
+
+websiteApp.directive('searchBar', function(){
+	return{
+		restrict: 'E',
+		templateUrl: 'assets/angular/widgets/partials/search_bar.html'
+	}
+});

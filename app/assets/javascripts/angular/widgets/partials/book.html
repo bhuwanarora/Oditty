@@ -1,20 +1,8 @@
 <div ng-model="detailed_book.book" 
      class="detailed_book">
 
-	<!-- PAGE1: book cover -->
-	<div class="hard own-size">
-		<div class="thumb">
-			<img ng-src="{{detailed_book['book'].thumb}}" id="coverImage"/>
-		</div>
-	</div>
-
-	<!-- PAGE2: book front cover fold -->
-	<div class="hard front-side own-size">
-		<img src="assets/front_cover_fold.jpg" id="frontCoverFold"/>
-		<div class="depth"></div>
-	</div>
-
 	<div>
+		<div class="left_column"></div>
 		<div class="content">
 			<div class="header">
 				<span>{{detailed_book.book.title | uppercase}} by </span><span data-page="about_author">{{detailed_book.book.author_name | uppercase}}</span>
@@ -85,18 +73,20 @@
 					<div class="page_number"></div>
 				</div>
 			</div>
-		</div>
-		<div class="note_for_parents" ng-model="detailed_book['book'].note_for_parents">
-			<div class="header">
-				<span class="icon-pushpin"></span> Note For Parents
+			<div class="note_for_parents" ng-model="detailed_book['book'].note_for_parents">
+				<div class="header">
+					<span class="icon-pushpin"></span> Note For Parents
+				</div>
+				<div class="share">
+					{{detailed_book['book'].note_for_parents}}
+				</div>
 			</div>
-			<div class="share">
-				{{detailed_book['book'].note_for_parents}}
-			</div>
 		</div>
+		<div class="right_column"></div>
 	</div>
 
 	<div>
+		<div class="left_column"></div>
 		<div class="first_sentence" ng-model="detailed_book['book'].first_sentence">
 			<div class="header">
 		    	<span class="icon-pen"></span> FIRST SENTENCE
@@ -105,9 +95,11 @@
 		     	{{detailed_book['book'].first_sentence}}
 		    </div>
 		</div>
+		<div class="right_column"></div>
 	</div>
 
 	<div>
+		<div class="left_column"></div>
 		<div class="characters" ng-model="detailed_book['book'].characters">
 		    <div class="header">
 		    	<span class="icon-user"></span> CHARACTERS
@@ -119,9 +111,11 @@
 				</div>
 		    </div>
 		</div>
+		<div class="right_column"></div>
 	</div>
 
 	<div>
+		<div class="left_column"></div>		
 		<div class="quotes" ng-model="detailed_book['book'].quotes">
 		    <div class="header">
 		    	<span class="icon-quote-left"></span> QUOTES
@@ -144,9 +138,11 @@
 
 		    </div>
 		</div>
+		<div class="right_column"></div>
 	</div>
 
 	<div>
+		<div class="left_column"></div>
 		<div class="themes" ng-model="detailed_book['book'].themes">
 			<div class="header">
 				<span class="icon-dice"></span> THEMES    
@@ -158,8 +154,11 @@
 				</div>
 			</div>
 		</div>
+		<div class="right_column"></div>
 	</div>
+
 	<div itemscope itemtype="http://schema.org/Place">
+		<div class="left_column"></div>
 		<div class="subject_places" ng-model="detailed_book['book'].subject_places">
 			<div class="header">
 				<span class="icon-earth"></span> SUBJECT PLACES
@@ -171,9 +170,11 @@
 				</div>
 			</div>
 		</div>
+		<div class="right_column"></div>
 	</div>
 
 	<div itemscope itemtype="http://schema.org/Movie">
+		<div class="left_column"></div>
 		<div class="movies_based" ng-model="detailed_book['book'].movies_based">
 			<div class="header">
 				<span class="icon-film"></span> MOVIES BASED
@@ -185,9 +186,11 @@
 				</div>
 			</div>
 		</div>
+		<div class="right_column"></div>
 	</div>
 
 	<div>
+		<div class="left_column"></div>
 		<div class="book_tags" ng-model="detailed_book['book'].tags">
 			<div class="header">
 				<span class="icon-tags"></span> TAGS
@@ -201,7 +204,7 @@
 								<img src="assets/download.gif"/>
 							</span> 
 						</div>
-						<div class="content">
+						<div class="tag_content">
 							<a href="{{tag.url}}">
 								<span itemprop="genre">{{tag.name | uppercase}}</span>
 							</a>
@@ -223,17 +226,21 @@
 				</div>
 			</div>
 		</div>
+		<div class="right_column"></div>
 	</div>
 
 	<div>
+		<div class="left_column"></div>
 		<div class="readers">
 			<div class="header">
 				<span class="icon-users"></span>  READERS
 			</div>
 		</div>
+		<div class="right_column"></div>
 	</div>
 
 	<div itemscope itemtype="http://schema.org/NewsArticle">
+		<div class="left_column"></div>
 		<div class="news" id="newsElement">
 			<div class="header">
 				<span class="icon-newspaper"></span>  NEWS
@@ -264,9 +271,11 @@
 				</div>
 			</div>
 		</div>
+		<div class="right_column"></div>
 	</div>
 
 	<div itemprop="review" itemscope itemtype="http://schema.org/Review">
+		<div class="left_column"></div>
 		<div class="reviews">
 			<div  itemscope itemtype="http://schema.org/AggregateRating" class="header">
 				<span class="icon-pencil2"></span>
@@ -304,7 +313,7 @@
 			        	<span><a ng-href="{{review.user.url}}">{{review.user.name}}</a> · </span>
 			        	<span class="review_header"><b>{{review.heading}}</b></span>
 			        </div>
-			        <div class="content">
+			        <div class="review_content">
 			        	<span itemprop="reviewBody">{{review.content}}</span>
 				        <div class="comments">
 				        	<div ng-repeat="discussion in review.comments">
@@ -320,9 +329,11 @@
 				</div>
 			</div>
 		</div>
+		<div class="right_column"></div>
 	</div>
 
 	<div>
+		<div class="left_column"></div>
 		<div class="discussions">
 			<div class="header">
 				<span class="icon-bubbles2"></span>  DISCUSSIONS
@@ -341,12 +352,11 @@
 				</div>
 			</div>
 		</div>
-	</div>
-
-	<div class="blank_page">
+		<div class="right_column"></div>
 	</div>
 
 	<div itemprop="author" itemscope itemptype="http://schema.org/Person">
+		<div class="left_column"></div>
 		<div class="about_author">
 			<div class="header">
 				<span class="icon-user2"></span>
@@ -354,19 +364,8 @@
 			</div>
 			<img ng-src="{{detailed_book['book'].author.thumb}}" class="author_thumb" />
 		</div>
+		<div class="right_column"></div>
 	</div>
 
 
-	<div class="blank_page hard own-size back-side">
-		<div class="depth"></div>
-		<img src="assets/back_cover_fold.jpg" id="backCoverFold"/>
-		<div class=""></div>
-	</div>
-
-	<div class="hard own-size">
-		<div class="summary" 
-			 style="background-color:{{detailed_book['book'].background_color}}">
-			<span itemprop="description">{{detailed_book['book'].summary}}</span>
-		</div>
-	</div>
 </div>

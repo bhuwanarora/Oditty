@@ -249,15 +249,23 @@ websiteApp.directive('interactionBox', function($rootScope, $timeout, widgetServ
         widgetService.own_this_book(id, $scope.have_this_book);
       }
       
-      _init = function(){
+      $scope.show_if_rated = function(index){
+        $scope.temp_rating = $scope.book.rating;
+        $scope.book.rating = parseInt(index) + 1;
+        $scope.inactive = true;
       }
 
-      $scope.toggle = function(index){
-        $scope.mark_as_rated();
+      $scope.reset_rating = function(){
+        if($scope.inactive){
+          $scope.book.rating = $scope.temp_rating
+          $scope.inactive = false;
+        }
       }
 
-      $scope.mark_as_rated = function(){
-        $scope.book.rating = parseInt(event.srcElement.innerText);
+      $scope.mark_as_rated = function(index){
+        $scope.inactive = false;
+        $scope.rated = true;
+        $scope.book.rating = parseInt(index) + 1;
         var timeout_event = notify($rootScope, "THANKS-This will help us to recommend you better books.", $timeout);
 
         $scope.$on('destroy', function(){

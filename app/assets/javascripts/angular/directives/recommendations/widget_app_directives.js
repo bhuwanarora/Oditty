@@ -110,11 +110,12 @@ websiteApp.directive('widgetThumb', function ($timeout, $rootScope) {
       }
 
       $scope.show_images = function(){
-        if(global_display_timer == 5000){
-          global_display_timer = 1000;
+        var delay = 500;
+        if(global_display_timer == 2500){
+          global_display_timer = delay;
         }
         else{
-          global_display_timer = global_display_timer + 1000;
+          global_display_timer = global_display_timer + delay;
         }
         var timeout_event = $timeout(function(){
           if($scope.book){

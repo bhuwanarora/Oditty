@@ -204,10 +204,11 @@ and (min-width : 1280px) {
 	margin-left: 7%;
 	margin-top: 1%;
 	white-space: normal;
-	color: #717070;
+	color: rgb(71, 71, 71);
 	position: absolute;
 	top: 0px;
 	z-index: 10;
+	margin-top: 30px;
 }
 
 .book_zoom.ng-enter,
@@ -221,8 +222,37 @@ and (min-width : 1280px) {
 }
 
 .detailed_book .page{
-	background-color: #717070;
+	background-color: white;
 	font-size:1em;
+	/*padding-left: 140px;
+	padding-right: 140px;
+	width: 70% !important;*/
+}
+
+.detailed_book .left_column,
+.detailed_book .right_column{
+	display: inline-block;
+	width: 140px;
+	height: 100%;
+	float: left;
+}
+
+.detailed_book .content,
+.detailed_book .first_sentence,
+.detailed_book .characters,
+.detailed_book .quotes,
+.detailed_book .themes,
+.detailed_book .subject_places,
+.detailed_book .movies_based,
+.detailed_book .book_tags,
+.detailed_book .readers,
+.detailed_book .news,
+.detailed_book .reviews,
+.detailed_book .discussions,
+.detailed_book .about_author{
+	display: inline-block;
+	float: left;
+	width: 62%;
 }
 
 .detailed_book .page-wrapper{
@@ -464,9 +494,9 @@ and (min-width : 1280px) {
 }
 
 .detailed_book .share:hover{
-	background-color: #3cb878;
-	color: white;
-	cursor: pointer;
+	/*background-color: #3cb878;*/
+	/*color: white;*/
+	/*cursor: pointer;*/
 }
 
 .detailed_book .summary{
@@ -481,8 +511,8 @@ and (min-width : 1280px) {
 }
 
 .detailed_book .element:hover{
-	background-color: #3D79A1;
-	color: white;
+	/*background-color: #3D79A1;*/
+	/*color: white;*/
 }
 
 .detailed_book .sub-links{
@@ -585,11 +615,6 @@ and (min-width : 1280px) {
 	border-bottom: 2px solid #F4F4F4;
 }
 
-.discussion:hover{
-	background-color: rgb(60, 184, 120);
-	color: white;
-}
-
 .more_comments{
 	text-align: center;
 }
@@ -689,7 +714,7 @@ and (min-width : 1280px) {
 	text-align: left;
 }
 
-.detailed_book .review .content{
+.detailed_book .review .review_content{
 	background-color: white;
 	display: none;
 }
@@ -819,7 +844,7 @@ and (min-width : 1280px) {
 	padding-top: 10px;
 }
 
-.book_tag .content{
+.book_tag .tag_content{
 	margin: 0px;
 	padding: 10px 0px 10px 5px;
 }
@@ -857,6 +882,11 @@ and (min-width : 1280px) {
 
 .detailed_book .content .element{
 	padding: 1px 5px 1px 5px;
+	color: #136CB2;
+}
+
+.detailed_book .content .element:hover{
+	text-decoration: underline;
 }
 
 .detailed_book .front_side .infographic img{
