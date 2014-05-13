@@ -365,7 +365,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	_initiate_loading_page = function(){
-		$scope.loading = false;
+		$scope.loading = true;
 		$scope.drop_icon = false;
 		
 		$timeout(function(){

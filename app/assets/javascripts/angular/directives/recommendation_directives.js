@@ -6,7 +6,7 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 				$scope.$on('initPage', function(event, type){
 					_reload_page(type=="BOOK", type=="AUTHOR", type=="READER");
 				});
-				$scope.active_book_filter = true;
+				$scope.active_book_filter = false;
 				$scope.active_author_filter = false;
 				$scope.active_reader_filter = false;
 				$scope.show_menu = false;

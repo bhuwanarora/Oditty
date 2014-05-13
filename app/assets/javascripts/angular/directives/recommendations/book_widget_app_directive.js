@@ -367,7 +367,7 @@ websiteApp.directive('markAsRead', function($rootScope, $timeout, widgetService)
           $rootScope.$broadcast('glowShelf');
           var book_title = $scope.book.title;
           var author_name = $scope.book.author_name;
-          var message = "ADVISE-Also please rate "+book_title+" by "+author_name+". This will help us to recommend better books."
+          var message = "ADVISE-Book "+book_title+" by "+author_name+" has been added to your Read Shelf. Also please rate this book."
           var timeout_event = notify($rootScope, message, $timeout);
           $scope.interact = true;
 

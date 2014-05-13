@@ -79,20 +79,6 @@ websiteApp.directive('setFocus', function($timeout, $parse, $rootScope) {
   };
 });
 
-websiteApp.directive('pushNotification', function($rootScope, $parse, $timeout){
-	return{
-		link: function(scope, element, attrs){
-			var model = $parse(attrs.pushNotification);
-			scope.$watch(model, function(value){
-				if(value == true){
-					element[0].firstChild.nextSibling.innerHTML = $rootScope.message_type //header
-					element[0].firstChild.nextSibling.nextSibling.nextSibling.innerHTML = $rootScope.message //message
-				}
-			})
-		}
-	}
-});
-
 websiteApp.directive('typeAhead', function($timeout, $sce){
 	return{
 		restrict: 'E',

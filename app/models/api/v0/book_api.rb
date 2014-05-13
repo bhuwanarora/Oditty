@@ -1093,7 +1093,7 @@ module Api
 							:url => ""
 						}
 					],
-					:total_discussions_count => 14,
+					:total_discussions_count => 0,
 					:author => {
 						:name => "Hermann Hesse",
 						:thumb => "assets/1113469.jpg",

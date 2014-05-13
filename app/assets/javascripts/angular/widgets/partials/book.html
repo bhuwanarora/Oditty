@@ -339,6 +339,10 @@
 				<span class="icon-bubbles2"></span>  DISCUSSIONS
 			</div>
 			<div class="elements">
+				<div ng-if="detailed_book['book'].total_discussions_count == 0">
+					<h1>What do you feel about this book. Start the discussion.</h1>
+					<img src="assets/discussions.png" width="250px">
+				</div>
 				<div ng-repeat="discussion in detailed_book['book'].discussions">
 					<discussion data="discussion" index="$index"></discussion>
 					<div class="nested_comments">
