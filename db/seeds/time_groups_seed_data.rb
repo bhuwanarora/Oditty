@@ -2,11 +2,12 @@ puts "Enter Time Groups..."
 TimeGroups = [{:text => "Post World War I"},
 		   {:text => "Post World War II"},
 		   {:text => "Post Renaissance"},
-		   {:text => "Post Birth Of Islam"},
-		   {:text => "Post BC"},
+		   {:text => "Post Birth of Islam"},
+		   {:text => "Post Birth of Christ"},
 		   {:text => "Post Industrial Revolution"},
 		   {:text => "Post Cold War"},
-		   {:text => "Post Medical Revolution"}
+		   {:text => "Post Medical Revolution"},
+		   {:text => "Custom Time Filters"}
 		]
 
 TimeGroups.each do |filter|

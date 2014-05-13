@@ -3,10 +3,12 @@
 <div ng-controller="recommendationsController">
 	<more-filters>
 	</more-filters>
-	<div class="notifications animate-fast" ng-if="show_notifications">
+	<div class="notifications animate-fast" ng-show="show_notifications">
 		<notification-link></notification-link>
-		<div ng-repeat="notification in notifications">
-			<notification data="notification"></notification>
+		<div class="notification_elements">
+			<div ng-repeat="notification in notifications">
+				<notification data="notification"></notification>
+			</div>
 		</div>
 	</div>
 	<div ng-view></div>
@@ -23,17 +25,14 @@
 			<div ng-class="{'inactive':read_selected || bookmark_selected, 'active':!read_selected && !bookmark_selected}"
 				 class="link"
 				 title="Recommendations"
+				 style="margin-left:0px;" 
 				 ng-click="toggle_recommendations()">
-				<span class="icon-home"></span>&nbsp;
-			 	<span ng-show="active_book_filter">Recommendations</span>
-				<span ng-show="active_author_filter">Recommendations</span>
-				<span ng-show="active_reader_filter">Recommendations</span>
+				Recommendations
 			</div>
 			<div ng-class="{'inactive':!read_selected, 'active':read_selected}"
 				 class="link"
 				 title="Books marked as read" 
 				 ng-click="toggle_read()">
-				<span class="icon-books" ng-class="{'glow_shelf':glowShelf}"></span>&nbsp;
 			 	<span ng-show="active_book_filter">Read List</span>
 				<span ng-show="active_author_filter">Following</span>
 				<span ng-show="active_reader_filter">Following</span>
@@ -43,9 +42,7 @@
 				 ng-show="active_book_filter || active_author_filter"
 				 title="Books bookmarked"
 				 ng-click="toggle_bookmarked()">
-				<span class="icon-library" ng-class="{'glow_bookmark':glowBookmark}"></span>&nbsp;
-				<span ng-show="active_book_filter">Bookmarked List</span>
-				<span ng-show="active_author_filter">Bookmarked List</span>
+				 Bookmarked List
 			</div>
 		</div>
 		<!-- <div class="scroller">
@@ -79,18 +76,18 @@
 		 			<span>Readers</span>
 		 		</div>
 		 	</div>
-			<div ng-class="{'advanced_filter_active':show_menu, 'advanced_filter':!show_menu}">
-				<span ng-show="active_book_filter" ng-click="toggle_menu()">Books</span>
-				<span ng-show="active_author_filter" ng-click="toggle_menu()">Authors</span>
-				<span ng-show="active_reader_filter" ng-click="toggle_menu()">Readers</span>
+			<div ng-class="{'advanced_filter_active':show_menu, 'advanced_filter':!show_menu}"
+				 ng-click="toggle_menu()">
+				<span ng-show="active_book_filter">Books</span>
+				<span ng-show="active_author_filter">Authors</span>
+				<span ng-show="active_reader_filter">Readers</span>
 				<span class=" icon-angle-down" ng-if="show_menu"></span>
 			 	<span class=" icon-angle-up" ng-if="!show_menu"></span>
 			</div>
 	 	</div>
-		<div class="filter_link" 
-			 ng-click="toggle_more_filters()" 
-			 ng-class="{'active_filter':show_more_filters}">
-			 <span class="icon-filter2"></span> Add Filters
+		<div class="filter_link button_effect" 
+			 ng-click="toggle_more_filters()">
+			 <span class="icon-filter2"></span>&nbsp;Add Filters&nbsp;
 			 <span class=" icon-angle-down" ng-if="show_more_filters"></span>
 			 <span class=" icon-angle-up" ng-if="!show_more_filters"></span>
 		</div>
