@@ -229,33 +229,19 @@ websiteApp.directive('bookInteract', function (websiteService) {
   };
 });
 
-websiteApp.directive('interactionBox', function($rootScope, $timeout, widgetService){
+websiteApp.directive('rate', function($rootScope, $timeout, widgetService){
   return{
     restrict: 'E',
     controller: function($scope){
-      $scope.close_interaction_box = function(){
-        $scope.interact = false;
-        $scope.hash_tags = [];
-      }
-
-      $scope.own_this_book = function(){
-        if($scope.have_this_book){
-          $scope.have_this_book = false;
-        }
-        else{
-          $scope.have_this_book = true;
-        }
-        var id = $scope.book.id;
-        widgetService.own_this_book(id, $scope.have_this_book);
-      }
-      
       $scope.show_if_rated = function(index){
         $scope.temp_rating = $scope.book.rating;
         $scope.book.rating = parseInt(index) + 1;
         $scope.inactive = true;
+        $scope.ready_to_rate = true;
       }
 
       $scope.reset_rating = function(){
+        $scope.ready_to_rate = false;
         if($scope.inactive){
           $scope.book.rating = $scope.temp_rating
           $scope.inactive = false;
@@ -282,6 +268,30 @@ websiteApp.directive('interactionBox', function($rootScope, $timeout, widgetServ
           is_active = true;
         }
         return is_active;
+      }
+    },
+    templateUrl: '/assets/angular/widgets/base/book/rate.html'
+  }
+});
+
+websiteApp.directive('interactionBox', function($rootScope, $timeout, widgetService){
+  return{
+    restrict: 'E',
+    controller: function($scope){
+      $scope.close_interaction_box = function(){
+        $scope.interact = false;
+        $scope.hash_tags = [];
+      }
+
+      $scope.own_this_book = function(){
+        if($scope.have_this_book){
+          $scope.have_this_book = false;
+        }
+        else{
+          $scope.have_this_book = true;
+        }
+        var id = $scope.book.id;
+        widgetService.own_this_book(id, $scope.have_this_book);
       }
 
       $scope.record_read_time = function(read_timer){
