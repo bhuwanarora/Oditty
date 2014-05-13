@@ -58,7 +58,7 @@
 			 				custom="input_filter"
 			 				model="genre" 
 			 				on-select="on_genre_selection()"
-			 				ng-keypress="show_genre_options('BOOK')">
+			 				ng-keypress="show_genre_options('BOOK', genre)">
 			 	</type-ahead>
 				<type-ahead items="authors" 
 			 				prompt="Filter books by Author Name"
@@ -67,7 +67,7 @@
 			 				custom="input_filter"
 			 				model="author"
 			 				on-select="on_author_selection()"
-			 				ng-keypress="show_author_options('BOOK')">
+			 				ng-keypress="show_author_options('BOOK', author)">
 			 	</type-ahead>
 			</div>
 			<hr>
@@ -105,7 +105,7 @@
 			 				custom="input_filter"
 			 				model="genre" 
 			 				on-select="on_genre_selection()"
-			 				ng-keypress="show_genre_options('BOOK')">
+			 				ng-keypress="show_genre_options('BOOK', genre)">
 			 	</type-ahead>
 			</div>
 			<hr>
@@ -132,7 +132,7 @@
 			 				custom="input_filter"
 			 				model="genre" 
 			 				on-select="on_genre_selection()"
-			 				ng-keypress="show_genre_options('BOOK')">
+			 				ng-keypress="show_genre_options('BOOK', genre)">
 			 	</type-ahead>
 			</div>
 			<hr>

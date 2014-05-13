@@ -64,16 +64,22 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 				_reload_page(isBook, isAuthor, isReader);
 			}
 
-			$scope.show_genre_options = function(filter){
-				var params = $scope.genre+String.fromCharCode(event.keyCode);
+			$scope.show_genre_options = function(filter, genre){
+				if(genre == "undefined")
+					var params = String.fromCharCode(event.keyCode);
+				else 
+					var params = genre+String.fromCharCode(event.keyCode);
 				var filter = "q="+params+"&filter="+filter;
 				recommendationService.get_genres(filter).then(function(data){
 			    	$scope.genres = data["genres"];
 			    });
 			}
 
-			$scope.show_author_options = function(filter){
-				var params = $scope.genre+String.fromCharCode(event.keyCode);
+			$scope.show_author_options = function(filter, author){
+				if(author == "undefined")
+					var params = String.fromCharCode(event.keyCode);
+				else 
+					var params = author+String.fromCharCode(event.keyCode);
 				var filter = "q="+params+"&filter="+filter;
 				recommendationService.get_authors(filter).then(function(data){
 			    	$scope.authors = data["authors"];
