@@ -139,7 +139,7 @@ a:hover{
 .category{
 	float: left;
 	background-color: #3cb878;
-	color: #717070;
+	color: white;
 	text-align: center;
 	cursor: pointer;
 	border-top-left-radius: 3px;
@@ -147,6 +147,10 @@ a:hover{
 	box-shadow: 8px 10px 54px 0px #424242;
 	font-weight: bold;
 	font-size: 0.7em;
+}
+
+.category_character{
+	background-color: rgba(0, 0, 0, 0.25);
 }
 
 /* card on recommendation page */
@@ -645,12 +649,12 @@ a:hover{
 }
 
 .link{
-	font-size: 0.7em;
+	font-size: 0.9em;
 	cursor: pointer;
 	display: inline-block;
 	height: 10px;
 	text-align: center;
-	padding: 16px 10px 16px 10px;
+	padding: 11px 10px 20px 10px;
 	color: #717070;
 	text-shadow: 0px 1px 1px #fff;
 	margin-left: -5px;
@@ -663,12 +667,12 @@ a:hover{
 	color: white;
 	text-shadow: none;
 	border-radius: 5px;
-	font-size: 0.7em;
+	font-size: 0.9em;
 	cursor: pointer;
 	display: inline-block;
 	height: 10px;
 	text-align: center;
-	padding: 16px 10px 16px 10px;
+	padding: 15px 10px 20px 10px;
 	margin-left: -5px;
 }
 
@@ -714,7 +718,7 @@ a:hover{
 	color: white;
 }
 
-.active{
+#recommendationFooter .active{
     border: 1px solid #DDDDDD;
 	border-radius: 0px;
 	box-shadow: inset 0px 2px 50px -11px #161616, inset 0px 0px 40px #EEEEEE;
@@ -730,7 +734,7 @@ a:hover{
 }
 
 .shelf_nav_links{
-	box-shadow: inset 0px 2px 50px -11px #7F868D, inset 0px 0px 40px #EEEEEE;
+	box-shadow: inset 0px 2px 27px -10px #161616, inset 0px 0px 40px #EEEEEE;
 	border-radius: 4px;
 	position: absolute;
 	left: 50%;
@@ -882,7 +886,7 @@ a:hover{
 }
 
 .more_filters{
-	width: 600px;
+	width: 800px;
 	right: 10px;
 	position: fixed;
 	bottom: 40px;
@@ -904,11 +908,17 @@ a:hover{
 }
 
 .filters_panel,
+.filters_panel_right{
+	height: 42px;
+}
+
+.filters_panel,
 .filters_panel_large,
 .filters_panel_right{
-	width: 78%;
-	padding: 10px 35px 35px 80px;
+	text-align: center;
+	padding: 30px;
 }
+
 .filters_group{
 	width: 100%;
 	height: 60px;
@@ -938,7 +948,7 @@ a:hover{
 	display: inline-block;
 	padding: 5px 4px 5px 4px;
 	border-radius: 2px;
-	font-size: 0.6em;
+	font-size: 0.8em;
 	cursor: pointer;
 	text-align: center;
 }
@@ -1077,7 +1087,7 @@ input:focus{
 }
 
 .main_filters div{
-	font-size: 0.6em;
+	font-size: 0.8em;
 	display: inline-block;
 	height: 10px;
 	width: 62px;
@@ -1118,10 +1128,10 @@ input:focus{
 .input_filter{
 	width: 200px;
 	color: #717070;
-	padding: 4px;
+	padding: 10px;
 	background-color: #FFFFFF;
 	border-radius: 2px;
-	box-shadow: 0px 1px 4px 0px #99A3AD, inset 0px 0px 40px #EEEEEE;
+	/*box-shadow: 0px 1px 4px 0px #99A3AD, inset 0px 0px 40px #EEEEEE;*/
 	cursor: default;
 	font-size: 0.9em;
 }
@@ -1166,20 +1176,28 @@ input:focus{
     margin-right: 20px;
 	margin-top: 8px;
 }
+.typeahead_group{
+	position: relative;
+	width: 220px;
+	height: 38px;
+}
 
 .typeahead_options{
 	position: absolute;
-	width: 208px;
+	width: 220px;
 	box-shadow: 0px 1px 4px 0px #99A3AD, inset 0px 0px 40px #EEEEEE;
 	color: #717170;
 	font-size: 0.8em;
+	top: 40px;
+	left: 0px;
 }
 
 .typeahead_options .option{
 	cursor: pointer;
 	text-align: center;
-	padding: 4px;
+	padding: 10px;
 	background-color: white;
+	border-bottom: 1px solid #EEEEEE;
 }
 
 .stamp_read{
@@ -1322,8 +1340,11 @@ input:focus{
 }
 
 .genre_typeahead_options,
-.country_typeahead_options{
-	margin-top: 25px;
+.author_typeahead_options{
+	z-index: 1;
+	display: inline-block;
+	float: left;
+	margin: 2px;
 }
 
 #timeReader-slider-span{
@@ -1420,7 +1441,7 @@ and (min-width : 400px) {
 	}
 	
 	.filter{
-		min-width: 125px;
+		min-width: 210px;
 	}
 
 	.category{
@@ -1524,7 +1545,7 @@ and (min-width : 1280px){
 	}
 
 	.filter{
-		min-width: 180px;
+		min-width: 210px;
 	}
 
 	.category{
@@ -1626,7 +1647,7 @@ and (min-width : 1366px){
 	}
 
 	.filter{
-		min-width: 160px;
+		min-width: 210px;
 	}
 
 	.category{
@@ -1720,7 +1741,7 @@ and (min-width : 1824px) {
 	}
 
 	.filter{
-		min-width: 180px;
+		min-width: 210px;
 	}
 
 	.left_action{
@@ -2772,11 +2793,40 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 
 .notifications{
 	position: fixed;
-	width: 31	0px;
 	height: 100%;
-	overflow-y: hidden;
+	overflow-y: scroll;
 	font-size: 0.9em;
-	z-index: 1;
+	z-index: 8;
+	width: 100%;
+	padding-left: 300px;
+	background-color: rgba(0, 0, 0, 0.71);
+	margin-top: -12px;
+	margin-left: -7px;
+}
+
+.notification_link{
+	position: absolute;
+	left: 20px;
+	bottom: 5px;
+	font-size: 1.2em;
+	position: absolute;
+	padding: 10px;
+	text-align: center;
+	border-radius: 4px;
+	cursor: pointer;
+	border: 1px solid #BDBDBD;
+}
+
+.notification_link:hover{
+	border: 1px solid none;
+	background-color: #3D79A1;
+	color: white;
+}
+
+
+.notification_link_active{
+	background-color: #3D79A1;
+	color: white;
 }
 
 .notifications.ng-enter,
@@ -2812,7 +2862,7 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 }
 
 .notifications .notification_message{
-	width: 220px;
+	width: 300px;
 	white-space: initial;
 	padding: 5px 15px 5px 5px;
 	height: 45px;
@@ -2823,8 +2873,9 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	height: 70px;
 	margin: 2px;
 	border-bottom: 1px solid #C9C9C9;
-	padding: 5px;
+	padding: 15px 40px 15px 40px;
 	border-radius: 2px;
+	width: 400px;
 }
 
 .notifications span{
@@ -2867,12 +2918,13 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	background: -webkit-radial-gradient(5px -9px, circle, white 8%, #BC0000 26px);
 	color: white;
 	text-align: center;
-	min-width: 14px;
+	min-width: 12px;
 	margin-top: -20px;
-	font-size: 1.2em;
+	font-size: 0.7em;
 	border-radius: 12px;
 	padding: 4px;
 	margin-left: 15px;
+	position: absolute;
 }
 
 /* only needed for this sample */
@@ -2883,32 +2935,19 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     position: relative;
 }
 
-.category_character{
-	background-color: white;
-}
-
 /* dropdown css */
 
 /****** dropdown-select *******/
 
 .wrap-dd-select {
-    /* Size and position */
     position: relative;
-    width: 200px;
-    margin: 0 auto;
-    padding: 10px;
- 
-    /* Styles */
-    background: #fff;
-    border-radius: 7px;
-    border: 1px solid rgba(0,0,0,0.15);
-    box-shadow: 0 1px 1px rgba(50,50,50,0.1);
-    cursor: pointer;
-    outline: none;
- 
-    /* Font settings */
-    font-weight: bold;
-    color: #8AA8BD;
+	width: 200px;
+	padding: 7px;
+	background: white;
+	border-radius: 0px;
+	border: 1px solid rgba(0, 0, 0, 0.15);
+	cursor: pointer;
+	outline: none;
 }
 
 .wrap-dd-select:after {
@@ -2925,25 +2964,23 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 }
 
 .wrap-dd-select .dropdown {
-    /* Size & position */
     position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
- 
-    /* Styles */
-    background: white;
-    padding: 0;
-    border-radius: inherit;
-    border: 1px solid rgba(0,0,0,0.17);
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    font-weight: normal;
-    transition: all 0.2s ease-in;
-    list-style: none;
- 
-    /* Hiding */
-    opacity: 0;
-    pointer-events: none;
+	bottom: 100%;
+	left: 0;
+	right: 0;
+	background: white;
+	padding: 0;
+	border-radius: inherit;
+	border: 1px solid rgba(0, 0, 0, 0.17);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+	font-weight: normal;
+	transition: all 0.2s ease-in;
+	list-style: none;
+	opacity: 0;
+	pointer-events: none;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	z-index: 1;
 }
 
 .wrap-dd-select .dropdown li.divider {
@@ -2979,30 +3016,6 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  
 .wrap-dd-select .dropdown li:hover a {
     background: #f3f8f8;
-}
-
-.wrap-dd-select .dropdown:after {
-    content: "";
-    width: 0;
-    height: 0;
-    position: absolute;
-    bottom: 100%;
-    right: 15px;
-    border-width: 0 6px 6px 6px;
-    border-style: solid;
-    border-color: #fff transparent;    
-}
- 
-.wrap-dd-select .dropdown:before {
-    content: "";
-    width: 0;
-    height: 0;
-    position: absolute;
-    bottom: 100%;
-    right: 13px;
-    border-width: 0 8px 8px 8px;
-    border-style: solid;
-    border-color: rgba(0,0,0,0.1) transparent;    
 }
 
 .wrap-dd-select.active .dropdown {
@@ -3103,5 +3116,11 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 .wrap-dd-menu .dropdown.active {
     opacity: 1;
     pointer-events: auto;
+}
+
+.position_dropdown{
+	float: left;
+	display: inline-block;
+	margin: 5px;
 }
 /* */

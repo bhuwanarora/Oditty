@@ -11,7 +11,19 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 				$scope.active_reader_filter = false;
 				$scope.show_menu = false;
 				$scope.countryOptions = [];
-				$scope.countrySelected = {};
+				$scope.countrySelected = {"text": "Filter books by Country"};
+				$scope.timeSelected = {"text": "Filter books by Time"};
+				$scope.readTimeSelected = {"text": "Filter books by Reading Time"};
+
+				recommendationService.get_countries().then(function(data){
+			    	$scope.countryOptions = data["countries"];
+			    });
+			    recommendationService.get_time_groups().then(function(data){
+			    	$scope.timeOptions = data["times"];
+			    });
+			    recommendationService.get_read_times().then(function(data){
+			    	$scope.readTimeOptions = data["read_times"];
+			    });
 			}
 
 			$scope.reset_filters = function(){
@@ -52,14 +64,6 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 				_reload_page(isBook, isAuthor, isReader);
 			}
 
-			$scope.show_country_options = function(filter){
-				var params = $scope.country+String.fromCharCode(event.keyCode);
-				var filter = "q="+params+"&filter="+filter;
-				recommendationService.get_countries(filter).then(function(data){
-			    	$scope.countries = data["countries"];
-			    });
-			}
-
 			$scope.show_genre_options = function(filter){
 				var params = $scope.genre+String.fromCharCode(event.keyCode);
 				var filter = "q="+params+"&filter="+filter;
@@ -89,18 +93,6 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 				});
 			}
 
-			$scope.on_country_selection = function(){
-				var filter_name = $scope.country;
-				$rootScope.filters["country_filter"] = filter_name;
-				message = "SUCCESS-'"+filter_name+"' added to filters.";
-				var timeout_event = notify($rootScope, message, $timeout);
-				$scope.$emit('reloadRecommendations');
-
-				$scope.$on('destroy', function(){
-					$timeout.cancel(timeout_event);
-				});
-			}
-
 			$scope.toggle_menu = function(){
 				if($scope.show_menu){
 					$scope.show_menu = false;
@@ -113,8 +105,15 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 			_init();
 		},
 		templateUrl: "/assets/angular/widgets/partials/more_filters.html"
-	}	
-})
+	}
+});
+
+websiteApp.directive('notificationLink', function(){
+	return{
+		restrict: 'E',
+		templateUrl: 'assets/angular/widgets/partials/notification_link.html'
+	}
+});
 
 websiteApp.directive('filter', function($rootScope, $timeout){
 	return{

@@ -22,6 +22,14 @@ websiteApp.service('recommendationService', function ($http, $q, $rootScope) {
         return _deferred_request('/api/v0/countries?'+filter);
     }
 
+    this.get_time_groups = function(){
+        return _deferred_request('/api/v0/times');
+    }
+
+    this.get_read_times = function(){
+        return _deferred_request('/api/v0/read_times');   
+    }
+
     _deferred_request = function(url){
         var deferred = $q.defer();
         $http.get(url).then(function(result) {

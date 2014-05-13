@@ -2,55 +2,8 @@
 <html>
   <head>
     <title>ReadersDoor</title>
-    <link href="/assets/icomoon.css" rel="stylesheet">
   </head>
-  <body ng-controller="websiteAppController" 
-        ng-keypress="search()" 
-        ng-keydown="handle_keyboard_bindings()"
-        ng-mouseout="showFeebackForm()">
-        <%= render :partial => "website/loading"%>
-    </div>
-    <div ng-show="!loading">
-      <div ng-include 
-            src="'assets/angular/widgets/partials/search.html'" 
-            ng-show="website.searching"
-            class="search_animate animate-very-slow" 
-            ng-click="stopSearching($event)"
-            ng-controller="searchController"></div>
-      <div msd-wheel="bindHorizontalScroll($event, $delta, $deltaX, $deltaY)" 
-           ng-animate="msd-wheel"
-           class="recommendations"
-           ng-hide="website.searching"
-           style="height:100%; white-space:nowrap;">
-        <%= yield %>
-      </div>
-      <div ng-if="show_book" class="fade_cover">
-        <div class="close_book">
-          CLOSE
-        </div>
-      </div>
-      <link rel="stylesheet" type="text/css" 
-            href="assets/detailed_book.css.scss" ng-if="show_book">
-      <flipbook ng-if="show_book"></flipbook>
-      <link rel="stylesheet" type="text/css" 
-            href="assets/dock.css.scss" ng-if="show_book">
-      <dock ng-if="show_book"></dock>
-      <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-      <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/angular/**/*.js")] %>
-      <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/lib/**/*.js")] %>
-      <%= csrf_meta_tags %>
-      <%= render :partial => "shared/favicon" %>
-      <%= render :partial => "shared/meta_tags"%>
-      <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-        ga('create', 'UA-35051501-1', 'readersdoor.com');
-        ga('send', 'pageview');
-      </script>
-      <%#= render :partial => "shared/responsive" %>
-    </div>
+  <body>
+    <%= yield %>
   </body>
-</html>
+ </html>

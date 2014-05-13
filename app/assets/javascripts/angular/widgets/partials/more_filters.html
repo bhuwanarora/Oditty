@@ -69,13 +69,9 @@
 			 				on-select="on_author_selection()"
 			 				ng-keypress="show_author_options('BOOK')">
 			 	</type-ahead>
-			 	<div dropdown-select="countryOptions" dropdown-model="countrySelected"></div>
 			</div>
 			<hr>
 			<div class="filters_panel_large">
-				<div class="header tags_header">
-					Tags
-				</div>
 				<div class="filters_group">
 					<div ng-repeat="filter in more_filters[0]['book']">
 						<filter data="filter"></filter>
@@ -84,8 +80,16 @@
 			</div>
 			<hr>
 			<div class="filters_panel_right">
-				<div class="header">
-					<span></span>Published Year
+			 	<div>
+				 	<span class="position_dropdown"
+					 	  dropdown-select="countryOptions" 
+					 	  dropdown-model="countrySelected"></span>
+				 	<span class="position_dropdown"
+				 		  dropdown-select="timeOptions" 
+				 		  dropdown-model="timeSelected"></span>
+				 	<span class="position_dropdown"
+				 		  dropdown-select="readTimeOptions" 
+				 		  dropdown-model="readTimeSelected"></span>
 				</div>
 			</div>
 		</div>
@@ -94,37 +98,18 @@
 		<!-- AUTHOR FILTERS -->
 		<div class="filters" ng-show="active_author_filter">
 			<div class="filters_panel">
-				<div class="header">
-					Advance Input Filters
-				</div>
-				<div>
-					<type-ahead items="genres" 
-				 				prompt="GENRE" 
-				 				title="name"
-				 				custom-options = "genre_typeahead_options"
-				 				custom="input_filter"
-				 				model="genre" 
-				 				on-select="on_genre_selection()"
-				 				ng-keypress="show_genre_options('BOOK')">
-				 	</type-ahead>
-				</div>
-				<div>
-					<type-ahead items="countries" 
-				 				prompt="COUNTRY"
-				 				title="name"
-				 				custom-options = "country_typeahead_options"
-				 				custom="input_filter"
-				 				model="country"
-				 				on-select="on_country_selection()"
-				 				ng-keypress="show_country_options('BOOK')">
-				 	</type-ahead>
-				</div>
+				<type-ahead items="genres" 
+			 				prompt="GENRE" 
+			 				title="name"
+			 				custom-options = "genre_typeahead_options"
+			 				custom="input_filter"
+			 				model="genre" 
+			 				on-select="on_genre_selection()"
+			 				ng-keypress="show_genre_options('BOOK')">
+			 	</type-ahead>
 			</div>
 			<hr>
 			<div class="filters_panel_large">
-				<div class="header">
-					Tags
-				</div>
 				<div class="filters_group">
 					<div ng-repeat="filter in more_filters[0]['author']">
 						<filter data="filter"></filter>
@@ -133,46 +118,25 @@
 			</div>
 			<hr>
 			<div class="filters_panel_right">
-				<div class="header">
-					<span></span>Writing Years
-				</div>
+				
 			</div>
 		</div>
 
 		<!-- READER FILTERS -->
 		<div class="filters" ng-show="active_reader_filter">
 			<div class="filters_panel">
-				<div class="header">
-					Advance Input Filters
-				</div>
-				<div>
-					<type-ahead items="genres" 
-				 				prompt="GENRE" 
-				 				title="name"
-				 				custom-options = "genre_typeahead_options"
-				 				custom="input_filter"
-				 				model="genre" 
-				 				on-select="on_genre_selection()"
-				 				ng-keypress="show_genre_options('BOOK')">
-				 	</type-ahead>
-				</div>
-				<div>
-					<type-ahead items="countries" 
-				 				prompt="COUNTRY"
-				 				title="name"
-				 				custom-options = "country_typeahead_options"
-				 				custom="input_filter"
-				 				model="country"
-				 				on-select="on_country_selection()"
-				 				ng-keypress="show_country_options('BOOK')">
-				 	</type-ahead>
-				</div>
+				<type-ahead items="genres" 
+			 				prompt="GENRE" 
+			 				title="name"
+			 				custom-options = "genre_typeahead_options"
+			 				custom="input_filter"
+			 				model="genre" 
+			 				on-select="on_genre_selection()"
+			 				ng-keypress="show_genre_options('BOOK')">
+			 	</type-ahead>
 			</div>
 			<hr>
 			<div class="filters_panel_large">
-				<div class="header">
-					Tags
-				</div>
 				<div class="filters_group">
 					<div ng-repeat="filter in more_filters[0]['reader']">
 						<filter data="filter"></filter>
@@ -182,7 +146,6 @@
 			<hr>
 			<div class="filters_panel_right">
 				<div class="header">
-					<span></span>Age
 				</div>
 			</div>
 		</div>

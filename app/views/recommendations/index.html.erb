@@ -3,7 +3,8 @@
 <div ng-controller="recommendationsController">
 	<more-filters>
 	</more-filters>
-	<div class="notifications animate-slow" ng-if="show_notifications">
+	<div class="notifications animate-fast" ng-if="show_notifications">
+		<notification-link></notification-link>
 		<div ng-repeat="notification in notifications">
 			<notification data="notification"></notification>
 		</div>
@@ -13,12 +14,7 @@
 		<!-- <div class="website-title">
 			<span class="icon glyphicon-home"></span> Reader's Door
 		</div> -->
-		<div class="link"
-		     title="Notifications">
-			<div class="notification_circle" ng-show="!notifications_seen">12</div>
-			<span class="icon-menu2"
-				  ng-click="toggle_notifications()"></span>
-		</div>
+		<notification-link></notification-link>
 		<div class="website_logo">
 			
 		</div>
@@ -28,40 +24,31 @@
 				 class="link"
 				 title="Recommendations"
 				 ng-click="toggle_recommendations()">
-				 <b><span class="icon-home"></span>
-				 	<span ng-show="active_book_filter">Recommendations</span>
-					<span ng-show="active_author_filter">Recommendations</span>
-					<span ng-show="active_reader_filter">Recommendations</span>
-				</b>
-
+				<span class="icon-home"></span>&nbsp;
+			 	<span ng-show="active_book_filter">Recommendations</span>
+				<span ng-show="active_author_filter">Recommendations</span>
+				<span ng-show="active_reader_filter">Recommendations</span>
 			</div>
 			<div ng-class="{'inactive':!read_selected, 'active':read_selected}"
 				 class="link"
 				 title="Books marked as read" 
 				 ng-click="toggle_read()">
-				 <b><span class="icon-books" ng-class="{'glow_shelf':glowShelf}"></span>
-				 	<span ng-show="active_book_filter">Read List</span>
-					<span ng-show="active_author_filter">Following</span>
-					<span ng-show="active_reader_filter">Following</span>
-				 </b>
+				<span class="icon-books" ng-class="{'glow_shelf':glowShelf}"></span>&nbsp;
+			 	<span ng-show="active_book_filter">Read List</span>
+				<span ng-show="active_author_filter">Following</span>
+				<span ng-show="active_reader_filter">Following</span>
 			</div>
 			<div ng-class="{'inactive':!bookmark_selected, 'active':bookmark_selected}"
 				 class="link"
 				 ng-show="active_book_filter || active_author_filter"
 				 title="Books bookmarked"
 				 ng-click="toggle_bookmarked()">
-				<b>
-					<span ng-show="active_book_filter">
-						<span class="icon-library" ng-class="{'glow_bookmark':glowBookmark}"></span>Bookmarked List
-					</span>
-					<span ng-show="active_author_filter">
-						<span class="icon-library" ng-class="{'glow_bookmark':glowBookmark}"></span>Bookmarked List
-					</span>
-				</b>
-
+				<span class="icon-library" ng-class="{'glow_bookmark':glowBookmark}"></span>&nbsp;
+				<span ng-show="active_book_filter">Bookmarked List</span>
+				<span ng-show="active_author_filter">Bookmarked List</span>
 			</div>
 		</div>
-		<div class="scroller">
+		<!-- <div class="scroller">
 			<span class="scroller-left icon-angle-left"
 			      ng-mouseover="move_left($event)"
 			      ng-click="move_left($event)"
@@ -72,7 +59,7 @@
 				  ng-click="move_right($event)"
 				  title="Scroll right">
 			</span>
-		</div>
+		</div> -->
 	 	</type-ahead>
 	 	<div class="menu_group" ng-class="{'menu_group_active':show_menu}">
 		 	<div class="menu" ng-if="show_menu">
