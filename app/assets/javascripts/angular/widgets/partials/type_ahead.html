@@ -1,19 +1,19 @@
-<div class="typeahead_options {{customOptions}}" 
-	   ng-hide="!model.length || selected">
-  	<div ng-repeat="item in filtered = (items | filter:model)  track by $index" 
-  		 ng-click="handle_selection(item[title])" 
-  		 ng-class="{active:is_current($index, item[title])}" 
-  		 ng-mouseenter="set_current($index)"
-  		 class="option"
-       ng-bind-html="highlight(model, item[title])">
-
-    <div class="title">{{item[title]}}</div>
+<div class="typeahead_group {{customOptions}}">
+  <div class="typeahead_options" 
+  	   ng-hide="!model.length || selected">
+    <div ng-repeat="item in filtered = (items | filter:model)  track by $index" 
+    		 ng-click="handle_selection(item[title])" 
+    		 ng-class="{active:is_current($index, item[title])}" 
+    		 ng-mouseenter="set_current($index)"
+    		 class="option"
+         ng-bind-html="highlight(model, item[title])">
+    </div>
   </div>
+  <input type="text" 
+       ng-model="model" 
+       placeholder="{{prompt}}" 
+       ng-keydown="selected=false" 
+       ng-keypress="navigate_options()"
+       ng-keyup="key_up()"
+       class="{{custom}}"/>
 </div>
-<input type="text" 
-     ng-model="model" 
-     placeholder="{{prompt}}" 
-     ng-keydown="selected=false" 
-     ng-keypress="navigate_options()"
-     ng-keyup="key_up()"
-     class="{{custom}}"/>

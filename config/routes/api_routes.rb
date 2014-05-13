@@ -21,11 +21,29 @@ ReadersDoor::Application.routes.draw do
 
       match "genres"                                 => 'website_api#genres',                           :via => [:put, :get, :post]
       match "countries"                              => 'website_api#countries',                        :via => [:put, :get, :post]
+      match "times"                                  => 'website_api#times',                            :via => [:put, :get, :post]
+      match "read_times"                             => 'website_api#read_times',                       :via => [:put, :get, :post]
       match "user_details"                           => 'website_api#get_user_details',                 :via => [:put, :get, :post]
       match "authenticate"                           => 'website_api#authenticate',                     :via => [:put, :get, :post]
       match "profile"                                => 'website_api#update_profile',                   :via => [:put, :get, :post]
       match "image"                                  => 'website_api#image',                            :via => [:put, :get, :post]
       match "notifications"                          => 'website_api#notifications',                    :via => [:put, :get, :post]
+
+      match 'mar'                                     => 'users_api#mark_as_read',                      :via => [:put, :get, :post]
+      match 'recommend'                               => 'users_api#recommend',                         :via => [:put, :get, :post]
+      match 'bookmark'                                => 'users_api#bookmark',                          :via => [:put, :get, :post]
+      match 'comment'                                 => 'users_api#comment',                           :via => [:put, :get, :post]
+      match 'wdyf'                                    => 'users_api#what_do_you_feel_about_this_book',  :via => [:put, :get, :post]
+      match 'time'                                    => 'users_api#time',                              :via => [:put, :get, :post]
+      match 'rate'                                    => 'users_api#rate',                              :via => [:put, :get, :post]
+      match 'own'                                     => 'users_api#own',                               :via => [:put, :get, :post]
+      match 'like'                                    => 'users_api#like',                              :via => [:put, :get, :post]
+      match 'dislike'                                 => 'users_api#dislike',                           :via => [:put, :get, :post]
+      match 'post_review'                             => 'users_api#post_review',                       :via => [:put, :get, :post]
+      match 'edit_review'                             => 'users_api#edit_review',                       :via => [:put, :get, :post]
+      match 'follow'                                  => 'users_api#follow',                            :via => [:put, :get, :post]
+      match 'unfollow'                                => 'users_api#unfollow',                          :via => [:put, :get, :post]
+      match 'user_info'                               => 'users_api#user_info',                         :via => [:put, :get, :post]
     end
   end
 end

@@ -23,6 +23,54 @@ module Sexp
 		end
 	end
 
+	class MeExpressions < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:start => "me = node({me})", 
+		        :return => "me",
+		        :params => {"me" => nil }}
+		end
+	end
+
+	class FriendsExpressions < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:start => "me = node({me})", 
+		        :return => "me",
+		        :params => {"me" => nil }}
+		end 
+	end
+
+	class BooksExpressions < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:start => "me = node({me})", 
+		        :return => "me",
+		        :params => {"me" => nil }}
+		end 
+	end
+
+	class AuthorsExpressions < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:start => "me = node({me})", 
+		        :return => "me",
+		        :params => {"me" => nil }}
+		end 
+	end
+
+	class PopularExpressions < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:start => "me = node({me})", 
+		        :return => "me",
+		        :params => {"me" => nil }}
+		end 
+	end
+
+	class OtherExpressions < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:start => "me = node({me})", 
+		        :return => "me",
+		        :params => {"me" => nil }}
+		end 
+	end
+
 	class Me < Treetop::Runtime::SyntaxNode
 		def to_cypher
 			return {:start => "me = node({me})", 
@@ -40,9 +88,56 @@ module Sexp
 		end 
 	end
 
+	class Books < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:start  => "me = node({me})", 
+		        :match  => "me -[:friends]-> people",
+		        :return => "people",
+		        :params => {"me" => nil }}
+		end 
+	end
+
 	class Likes < Treetop::Runtime::SyntaxNode
 		def to_cypher
 			return {:match => "people -[:likes]-> thing"}
+		end 
+	end
+
+	class Reading < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:match => "people -[:likes]-> thing"}
+		end 
+	end
+
+	class Own < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:match => "people -[:likes]-> thing"}
+		end 
+	end
+
+	class Need < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:match => "people -[:likes]-> thing"}
+		end 
+	end
+
+	class Read < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:match => "people -[:likes]-> thing"}
+		end 
+	end
+
+	class Bookmarked < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:match => "people -[:likes]-> thing"}
+		end 
+	end
+
+	class Follow < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:start => "place = node:places({place})",
+		        :match => "people -[:lives]-> place",
+		        :params => {"place" => "name: " + self.text_value.split("in").last.to_s.strip + "*" } }
 		end 
 	end
 
@@ -54,19 +149,99 @@ module Sexp
 		end 
 	end
 
-	class LikeAnd < Treetop::Runtime::SyntaxNode
+	class Recommended < Treetop::Runtime::SyntaxNode
 		def to_cypher
-			return {:start  => "thing1 = node:things({thing1}), thing2 = node:things({thing2})",
-		        :match  => "people -[:likes]-> thing1, people -[:likes]-> thing2",
-		        :params => {"thing1" => "name: " + self.elements[1].text_value, "thing2" => "name: " + self.elements.last.text_value} }
+			return {:match => "people -[:likes]-> thing"}
 		end 
 	end
 
-	class LikeAndLives < Treetop::Runtime::SyntaxNode
+	class By < Treetop::Runtime::SyntaxNode
 		def to_cypher
-			return {:start  => "thing = node:things({thing}), place = node:places({place})",
-		        :match  => "people -[:likes]-> thing, people -[:lives]-> place",
-		        :params => {"thing" => "name: " + self.elements[1].text_value, "place" => "name: " + self.elements.last.text_value.split("in").last.to_s.strip + "*"} }
+			return {:match => "people -[:likes]-> thing"}
+		end 
+	end
+
+	class PublishedIn < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:match => "people -[:likes]-> thing"}
+		end 
+	end
+
+	class PublishedToday < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:match => "people -[:likes]-> thing"}
+		end 
+	end
+
+	class PublishedBetween < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:match => "people -[:likes]-> thing"}
+		end 
+	end
+
+	class PublishedInCountry < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:match => "people -[:likes]-> thing"}
+		end 
+	end
+
+	class Tagged < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:match => "people -[:likes]-> thing"}
+		end 
+	end
+
+	class IOwn < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:match => "people -[:likes]-> thing"}
+		end 
+	end
+
+	class IHaveRead < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:match => "people -[:likes]-> thing"}
+		end 
+	end
+
+	class IHaveRated < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:match => "people -[:likes]-> thing"}
+		end 
+	end
+
+	class IHaveDiscussed < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:match => "people -[:likes]-> thing"}
+		end 
+	end
+
+	class Discussed < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:match => "people -[:likes]-> thing"}
+		end 
+	end
+
+	class Reviewed < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:match => "people -[:likes]-> thing"}
+		end 
+	end
+
+	class ReadBy < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:match => "people -[:likes]-> thing"}
+		end 
+	end
+
+	class BookmarkedBy < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:match => "people -[:likes]-> thing"}
+		end 
+	end
+
+	class PublishedThisYear < Treetop::Runtime::SyntaxNode
+		def to_cypher
+			return {:match => "people -[:likes]-> thing"}
 		end 
 	end
 

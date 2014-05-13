@@ -8,7 +8,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		}
 		else{
 			$scope.move_right(event);
-			_loadRecommendations();
+			_load_recommendations();
 			//move forward
 			// event.view.window.scrollBy(80, 0);
 		}
@@ -61,20 +61,29 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	$scope.scroll_one_page_right = function(event){
-		$scope.dbl_clicked = true;
 		var clientWidth = $document.width();
-		var lessThanOnePageLeft = event.pageX + screen.width > clientWidth;
+		if(event){
+			var current_x = event.pageX - screen.width/2;
+			var lessThanOnePageLeft = event.pageX + screen.width > clientWidth;
+		}
+		else{
+			var current_x = $window.pageXOffset; - screen.width/2;
+			var lessThanOnePageLeft = $window.pageXOffset; + screen.width > clientWidth;
+		}
 		if(lessThanOnePageLeft){
 			$rootScope.$broadcast('loadRecommendations');
 		}
-		var current_x = event.pageX - screen.width/2;
 		var delta_x = screen.width;
-		scroller.scrollTo(current_x + delta_x, 0, 2000);
+		scroller.scrollTo(current_x + delta_x, 0, 2000);	
 	}
 
 	$scope.scroll_one_page_left = function(event){
-		$scope.dbl_clicked = true;
-		var current_x = event.pageX - screen.width/2;
+		if(event){
+			var current_x = event.pageX - screen.width/2;
+		}
+		else{
+			var current_x = $window.pageXOffset - screen.width/2;
+		}
 		var delta_x = screen.width;
 		scroller.scrollTo(current_x - delta_x, 0, 2000);
 	}
@@ -227,7 +236,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		}
 	}
 
-	_loadRecommendations = function(){
+	_load_recommendations = function(){
 		var currentWidth = $document.width();
 		var lessThanOnePageLeft = event.pageX + screen.width > currentWidth;
 		if (lessThanOnePageLeft){
@@ -288,25 +297,54 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	_add_listeners = function(){
-		add_book_to_shelf_event = $scope.$on('addBookToShelf', function(event, data){
-	    	$scope.user.books['read'].push(data);
+		add_to_shelf_event = $scope.$on('addToShelf', function(event, type, data){
+			if(type == "BOOK"){
+	    		$scope.user.books['read'].push(data);
+			}
+			else if(type == "AUTHOR"){
+				$scope.user.authors['follow'].push(data);
+			}
+			else if(type == "READER"){
+				$scope.user.readers['follow'].push(data);
+			}
 	    	event.stopPropagation();
 	    });
 
-	    remove_book_from_shelf = $scope.$on('removeBookFromShelf', function(event, data){
-	    	var index = $scope.user.books['read'].indexOf(data);
-	    	$scope.user.books['read'].splice(index, 1);
+	    remove_from_shelf = $scope.$on('removeFromShelf', function(event, type, data){
+	    	if(type == "BOOK"){
+		    	var index = $scope.user.books['read'].indexOf(data);
+		    	$scope.user.books['read'].splice(index, 1);
+	    	}
+	    	else if(type == "AUTHOR"){
+	    		var index = $scope.user.authors['follow'].indexOf(data);
+		    	$scope.user.authors['follow'].splice(index, 1);
+	    	}
+	    	else if(type == "READER"){
+	    		var index = $scope.user.readers['follow'].indexOf(data);
+		    	$scope.user.readers['follow'].splice(index, 1);
+	    	}
+		    event.stopPropagation();	
+	    });
+
+	    add_to_bookmarks_event = $scope.$on('addToBookmarks', function(event, type, data){
+	    	if(type == "BOOK"){
+	    		$scope.user.books['bookmarked'].push(data);
+	    	}
+	    	else if(type == "AUTHOR"){
+	    		$scope.user.authors['bookmarked'].push(data);
+	    	}
 	    	event.stopPropagation();
 	    });
 
-	    add_to_bookmarks_event = $scope.$on('addToBookmarks', function(event, data){
-	    	$scope.user.books['bookmarked'].push(data);
-	    	event.stopPropagation();
-	    });
-
-	    remove_from_bookmarks_event = $scope.$on('removeFromBookmarks', function(event, data){
-	    	var index = $scope.user.books['bookmarked'].indexOf(data);
-	    	$scope.user.books['bookmarked'].splice(index, 1);
+	    remove_from_bookmarks_event = $scope.$on('removeFromBookmarks', function(event, type, data){
+	    	if(type == "BOOK"){
+		    	var index = $scope.user.books['bookmarked'].indexOf(data);
+		    	$scope.user.books['bookmarked'].splice(index, 1);
+	    	}
+	    	else if(type == "AUTHOR"){
+	    		var index = $scope.user.authors['bookmarked'].indexOf(data);
+		    	$scope.user.authors['bookmarked'].splice(index, 1);	
+	    	}
 	    	event.stopPropagation();
 	    });
 
@@ -327,7 +365,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	_initiate_loading_page = function(){
-		$scope.loading = true;
+		$scope.loading = false;
 		$scope.drop_icon = false;
 		
 		$timeout(function(){
@@ -343,6 +381,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	$scope.toggle_notifications = function(){
 		if($scope.show_notifications){
 			$scope.show_notifications = false;
+			$scope.notifications_seen = true;
 		}
 		else{
 			$scope.show_notifications = true;
@@ -392,13 +431,16 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	_init = function(){
 		console.time("websiteAppController");
 		$scope.more_filters = [];
-		$scope.show_notifications = true;
+		$scope.show_notifications = false;
+		$scope.notifications_seen = false;
 		$scope.test = {time: 1970};
 		$scope.detailed_book = {};
 		$rootScope.initPage = 3;
 		$scope.logged = false;
 		// Define user empty data :/
-		$scope.user = {'books': {'bookmark':[], 'read': []}};
+		$scope.user = {'books': {'bookmarked':[], 'read': []},
+						'authors': {'bookmarked': [], 'follow': []},
+						'readers': {'follow': []}};
 		$scope.user.profile_status = 0;
 		$scope.website = {};
 		$scope.website.searching = true;
@@ -420,8 +462,8 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		console.timeEnd("websiteAppController");
 	}
 
-	var add_book_to_shelf_event = "";
-	var remove_book_from_shelf = "";
+	var add_to_shelf_event = "";
+	var remove_from_shelf = "";
 	var add_to_bookmarks_event = "";
 	var remove_from_bookmarks_event = "";
 	var move_right_event = ""

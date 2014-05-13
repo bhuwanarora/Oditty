@@ -35,9 +35,22 @@ module Api
 			end
 
 			def recommendations
-				# filters list Filter.where(:id => JSON.parse(params[:q])["more_filters"])
-				books = BookApi.recommendations
-				render :json => {:recommendations => {:books => books}}, :status => 200
+				filter_type = (JSON.parse params[:q])["filter_type"]
+				filters = JSON.parse(params[:q])["more_filters"]
+				if filter_type == "BOOK"
+					books = BookApi.recommendations
+					recommendations =  {:books => books}
+				elsif filter_type == "AUTHOR"
+					authors = AuthorApi.recommendations
+					recommendations = {:authors => authors}
+				elsif filter_type == "READER"
+					readers = ReaderApi.recommendations
+					recommendations = {:readers => readers}
+				else
+					books = BookApi.recommendations
+					recommendations =  {:books => books}
+				end
+				render :json => {:recommendations => recommendations}, :status => 200
 			end
 		end
 	end

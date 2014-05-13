@@ -1,3 +1,10 @@
+websiteApp.directive('infoCard', function($rootScope, $timeout){
+	return{
+		restrict: 'E',
+		templateUrl: "/assets/angular/widgets/base/widget/info_card.html"
+	}
+});
+
 websiteApp.directive('track', function($rootScope){
 	return{
 		restrict: 'A',
@@ -184,11 +191,11 @@ websiteApp.directive('message', function($motion){
 				
 				$motion.onSwipeLeft(function(){
 					console.log("%c SWIPE LEFT", "color: blue;");
-					$scope.move_right();
+					$scope.scroll_one_page_right();
 				});
 				$motion.onSwipeRight(function(){
 					console.log("%c SWIPE RIGHT", "color: blue;");
-					$scope.move_left();
+					$scope.scroll_one_page_left();
 				});
 			}
 
@@ -208,17 +215,6 @@ websiteApp.directive('notification', function(){
 	return{
 		restrict: 'E',
 		scope: {"notification": "=data"},
-		controller: function($scope){
-			$scope.notification_seen = function(){
-				$scope.seen = true;
-			}
-
-			_init = function(){
-				$scope.seen = false;	
-			}
-
-			_init();
-		},
 		templateUrl: 'assets/angular/widgets/partials/notification.html'
 	}
 });
@@ -245,4 +241,11 @@ websiteApp.directive('compile', function($compile){
 	              	ensureCompileRunsOnce();
 	            });
 			}
+});
+
+websiteApp.directive('searchBar', function(){
+	return{
+		restrict: 'E',
+		templateUrl: 'assets/angular/widgets/partials/search_bar.html'
+	}
 });

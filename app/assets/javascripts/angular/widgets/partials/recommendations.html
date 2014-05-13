@@ -1,146 +1,112 @@
-<div class="vertical_padder_active">
-</div>
+<div class="vertical_padder_active"></div>
 <div ng-switch on="panel_selected">
 	<div ng-switch-when="BOOKMARK">
-		<div ng-switch on="user.books.bookmarked.length">
-			<div ng-switch-when="0">
-				Bookmark some stuff							
-			</div>
-			<div ng-switch-default>
-				<div class="horizontal_padder_active">
+		<div ng-show="active_book_filter" ng-model="user.books.bookmarked">
+			<div ng-switch on="user.books.bookmarked.length">
+				<div ng-switch-when="0">
+					Bookmark some stuff							
 				</div>
-				<div ng-repeat="user_book in user.books.bookmarked" class="recommendation_block">
-					<book track ng-if="true" id="{{user_book.category.name | lowercase}}-{{user_book.id}}" data="user_book"></book>
+				<div ng-switch-default>
+					<div class="horizontal_padder_active">
+					</div>
+					<div ng-repeat="user_book in user.books.bookmarked" class="recommendation_block">
+						<book track id="{{user_book.category.name | lowercase}}-{{user_book.id}}" data="user_book"></book>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-show="active_author_filter" ng-model="user.authors.bookmarked">
+			<div ng-switch on="user.authors.bookmarked.length">
+				<div ng-switch-when="0">
+					Add Some Authors To Bookmark
+				</div>
+				<div ng-switch-default>
+					<div class="horizontal_padder_active">
+					</div>
+					<div ng-repeat="author in user.authors.bookmarked" class="recommendation_block">
+						<author track id="{{author.category.name | lowercase}}-{{author.id}}" data="author"></author>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-show="active_reader_filter" ng-model="user.readers.follow">
+			<div ng-switch on="user.readers.follow.length">
+				<div ng-switch-when="0">
+					Add Some readers to follow
+				</div>
+				<div ng-switch-default>
+					<div class="horizontal_padder_active">
+					</div>
+					<div ng-repeat="reader in user.readers.follow" class="recommendation_block">
+						<reader track id="{{reader.category.name | lowercase}}-{{reader.id}}" data="reader"></reader>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div ng-switch-when="READ">
-		<div ng-switch on="user.books.read.length">
-			<div ng-switch-when="0">
-				Add Some books to read				
-			</div>
-			<div ng-switch-default>
-				<div class="horizontal_padder_active">
+		<div ng-show="active_book_filter" ng-model="user.books.read">
+			<div ng-switch on="user.books.read.length">
+				<div ng-switch-when="0">
+					Add Some books to read				
 				</div>
-				<div ng-repeat="user_book in user.books.read" class="recommendation_block">
-					<book track ng-if="true" id="{{user_book.category.name | lowercase}}-{{user_book.id}}" data="user_book"></book>
+				<div ng-switch-default>
+					<div class="horizontal_padder_active">
+					</div>
+					<div ng-repeat="user_book in user.books.read" class="recommendation_block">
+						<book track id="{{user_book.category.name | lowercase}}-{{user_book.id}}" data="user_book"></book>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-show="active_author_filter" ng-model="user.authors.follow">
+			<div ng-switch on="user.authors.follow.length">
+				<div ng-switch-when="0">
+					Add Some Authors To Follow
+				</div>
+				<div ng-switch-default>
+					<div class="horizontal_padder_active">
+					</div>
+					<div ng-repeat="author in user.authors.follow" class="recommendation_block">
+						<author track id="{{author.category.name | lowercase}}-{{author.id}}" data="author"></author>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-show="active_reader_filter" ng-model="user.readers.follow">
+			<div ng-switch on="user.readers.follow.length">
+				<div ng-switch-when="0">
+					Add Some readers to follow				
+				</div>
+				<div ng-switch-default>
+					<div class="horizontal_padder_active">
+					</div>
+					<div ng-repeat="reader in user.readers.follow" class="recommendation_block">
+						<reader track id="{{reader.category.name | lowercase}}-{{reader.id}}" data="reader"></reader>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
 	<div ng-switch-default>
 		<div ng-show="active_book_filter" ng-model="recommendations.books">
-			<div class="horizontal_padder_active">
-			</div>
-			<div ng-if="logged" ng-switch on="user.profile_status" ng-model="user.profile_status">
-				<div class="info_cards" 
-				     style="background-color:{{user.profile_status_color}}"
-				     ng-model="user.profile_status_color">
-					<div class="sub_header">Complete your profile, {{user.name | uppercase}}</div>
-					<div class="profile_status_logo"></div>
-					<div ng-switch-when="0">
-						<div class="header">What should I call you?</div>
-						<input class="username" 
-				      	       ng-model="user.name" 
-				      	       placeholder="Enter your name" 
-				      	       spellcheck="false"
-				      	       ng-keydown="update_profile()"
-				      	       required />
-				      	<div class="description"></div>
-					</div>
-					<div ng-switch-when="1">
-						<div class="header thumb"
-						     ng-click="show_uploader()">Add a selfie</div>
-						<!-- <input class="thumb" 
-				      	       ng-model="user.thumb" 
-				      	       spellcheck="false"
-				      	       type="file" 
-				      	       required /> -->
-				      	<!-- <input type="file" id="selectedFile" style="display: none;" 
-				      			accept="image/*" image="image"/> -->
-				      	 <cropme
-					        width="640"
-					        height="400"
-					        ratio="1"
-					        icon-class=""
-					        type="png"
-					        destination-width="300"
-					        ng-if="uploader">
-					    </cropme>
-				      	<!-- <img ng-show="image" ng-src="{{image.url}}" type="{{image.file.type}}" /> -->
-						<!-- <input type="button"
-							   class="thumb"
-						       value="Select a photo from your computer" 
-						       onclick="document.getElementById('selectedFile').click();" /> -->
-				      	<div class="description">Help your friends recognise you across Reader's Door.</div>
-					</div>
-					<div ng-switch-when="2">
-						<div class="header">When is your birthday?</div>
-						<input class="birthday" 
-				      	       ng-model="user.birthday" 
-				      	       spellcheck="false"
-				      	       type="date" 
-				      	       required />
-				      	<div class="header">I am a </div>
-				      	<div></div>
-				      	<div class="description">Know what people from your age and gender are reading..</div>
-					</div>
-					<div ng-switch-when="3">
-						<div class="header">
-							Meet readers in your area...
-						</div>
-						<map style="display:block; height:180px" />
-					</div>
-					<div ng-switch-when="4">
-						<div class="header">Which Books have you read?</div>
-				      	<type-ahead items="search_results" 
-			 				prompt="Search for the book.." 
-			 				title="name" 
-			 				model="searchResults" 
-			 				custom-options = "info_typeahead_options"
-			 				on-select="show_search_result()"
-			 				ng-keypress="get_search_results($event, 'BOOK')">
-			 			</type-ahead>
-						<div class="description">
-							Tell us about your taste..
-						</div>
-					</div>
-					<div ng-switch-when="5">
-						<div class="header">Which Authors do you like?</div>
-						<type-ahead items="search_results" 
-			 				prompt="Search for the author.." 
-			 				title="name" 
-			 				model="searchResults"
-			 				custom-options = "info_typeahead_options"
-			 				on-select="show_search_result()"
-			 				ng-keypress="get_search_results($event, 'AUTHOR')">
-			 			</type-ahead>
-						<div class="description">
-							Follow authors and their lives...
-						</div>
-					</div>
-					<div ng-switch-when="6">
-						<div class="header">Invite your friends</div>
-						<div class="description">
-							Know what your friends are reading...
-						</div>
-					</div>
-					<div class="footer">
-						<span class="prev icon-angle-left" ng-click="prev_profile_state()"></span>
-						<span class="next icon-angle-right" ng-click="next_profile_state()"></span>
-					</div>
-				</div>
-			</div>
+			<info-card></info-card>
 			<div ng-repeat="recommendation in recommendations.books" class="recommendation_block">
-				<book track ng-if="true" id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></book>
+				<book track id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></book>
 			</div>
 		</div>
 		<div ng-show="active_reader_filter">
-			<img src="assets/author.png" style="position:fixed; top:30%; left:45%" />
+			<info-card></info-card>
+			<div ng-repeat="recommendation in recommendations.readers" class="recommendation_block">
+				<reader track id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></reader>
+			</div>
 		</div>
 		<div ng-show="active_author_filter">
-			<img src="assets/author.png" style="position:fixed; top:30%; left:45%" />
+			<info-card></info-card>
+			<div ng-repeat="recommendation in recommendations.authors" class="recommendation_block">
+				<author track id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></author>
+			</div>
 		</div>
 	</div>
 </div>
@@ -159,4 +125,4 @@
 		CONTENT
 	</div>
 </div>
-<message></message>
+<!-- <message></message> -->

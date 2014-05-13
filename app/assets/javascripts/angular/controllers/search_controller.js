@@ -8,19 +8,30 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
     	_get_book_details(data);
 	}
 
-	$scope.handle_selection = function(selectedItem) {
+	_handle_graph_search = function(selectedItem){
+		$scope.website.searching = false;
+			
+	}
+
+	$scope.handle_selection = function(selectedItem, graphOption) {
 	    $scope.search_tag.current = 0;
 	    $scope.search_tag.selected_result = true;
-	    _show_search_result();
+	    if(graphOption){
+	    	_handle_graph_search(selectedItem);
+	    }
+	    else{
+	    	_show_search_result();
+	    }
 	    event.stopPropagation();
 		$scope.search_tag.input = "";
 	};
 
-	$scope.hide_search_page = function(){
+	$scope.hide_search_page = function(type){
 		var logged_in = $scope.logged;
 		if(logged_in){
 			$('body').css('white-space', 'nowrap');
 			$scope.website.searching = false;
+			$rootScope.$broadcast('initPage', type);
 			$scope.loading = true;
 			$timeout(function(){
 				$scope.loading = false;
@@ -76,20 +87,62 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
         }
 	}
 
-
 	$scope.highlight = function(searchItem, textToSearchThrough){
-    	return $sce.trustAsHtml(textToSearchThrough.replace(new RegExp(searchItem, 'gi'), '<span style="font-weight:bold;">$&</span>'));
+		var html = '<span><i><b>$&</b></i></span>';
+    	return $sce.trustAsHtml(textToSearchThrough.replace(new RegExp(searchItem, 'gi'), html));
+	}
+
+	_init_graph_search = function(){
+		$scope.search_results = [{"name": "Friends who like a-book-category", "graph_option": true},
+		{"name": "Friends who are reading author-name-or-a-book-name", "graph_option": true},
+		{"name": "Friends who own a-book-name", "graph_option": true},
+		{"name": "Friends who need a-book-name", "graph_option": true},
+		{"name": "Friends who read a-book-name", "graph_option": true},
+		{"name": "Friends who bookmarked a-book-name-or-author-name-or-a-reader-name", "graph_option": true},
+		{"name": "Friends who follow an-author-name and a-friend-name", "graph_option": true},
+		{"name": "Books recommended by a-friend-name-or-me", "graph_option": true},
+		{"name": "Books by an-author-name", "graph_option": true},
+		{"name": "Books published in a-year", "graph_option": true},
+		{"name": "Books published today", "graph_option": true},
+		{"name": "Books published between a-year and another-year", "graph_option": true},
+		{"name": "Books published in country a-country-name", "graph_option": true},
+		{"name": "Books tagged as a-tag", "graph_option": true},
+		{"name": "Books I own", "graph_option": true},
+		{"name": "Books I have read", "graph_option": true},
+		{"name": "Books I have rated", "graph_option": true},
+		{"name": "Books I have discussed", "graph_option": true},
+		{"name": "Books discussed by a-friend-name-or-me", "graph_option": true},
+		{"name": "Books reviewed by a-friend-name-or-me", "graph_option": true},
+		{"name": "Books read by a-friend-name-or-me", "graph_option": true},
+		{"name": "Books bookmarked by a-friend-name-or-me", "graph_option": true},
+		{"name": "Authors bookmarked by a-friend-name-or-me", "graph_option": true},
+		{"name": "Readers bookmarked by a-friend-name-or-me", "graph_option": true},
+		{"name": "Books published this year", "graph_option": true},
+		{"name": "Popular books", "graph_option": true},
+		{"name": "Popular Recommendations", "graph_option": true},
+		{"name": "Popular Bookmarks", "graph_option": true},
+		{"name": "Popular Authors", "graph_option": true},
+		{"name": "Popular Readers", "graph_option": true},
+		{"name": "100 Books to read before you die", "graph_option": true},
+		{"name": "100 Readers to meet before you die", "graph_option": true},
+		{"name": "10 Authors to read before you die", "graph_option": true},
+		{"name": "a-book-category Books", "graph_option": true},
+		{"name": "Reviews on a-book-name", "graph_option": true},
+		{"name": "Discussions on a-book-name", "graph_option": true},
+		{"name": "Quotes from a-book-name", "graph_option": true},
+		{"name": "Characters from a-book-name", "graph_option": true},
+		{"name": "Movies based on a-book-name", "graph_option": true}]
 	}
 
 	_init_search = function(){
-		$scope.search_results = [];
+		_init_graph_search();
 		$scope.search_type = "[ALL]";
 		$scope.search_display = "Searching reader's door...";
 	}
 
 	_handle_search_input = function(){
         var currentValue = _get_search_input();
-        $scope.search_results = [];
+        _init_graph_search();
         $scope.search_ready = true;
         var firstInput = currentValue.slice(0, 1);
         var customBookSearch = firstInput == "#";
@@ -106,15 +159,16 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
         }
 
     	if($scope.search_ready && currentValue != ""){
-	        websiteService.search(currentValue, $scope.search_type).then(function(result) {
-	            $scope.search_results = result.results;
+	        websiteService.search(currentValue, $scope.search_type, $scope.search_tag.result_count)
+	        .then(function(result) {
+	            $scope.search_results = $scope.search_results.concat(result.results);
 				$scope.search_initiated = false;
 				$timeout.cancel(search_typing_timeout);
 	        });
     	}
     	else{
     		$scope.search_initiated = false;
-			$scope.search_results = [];
+			_init_graph_search();
 			$timeout.cancel(search_typing_timeout);
     	}
 	}
@@ -139,7 +193,7 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 	}
 
 	$scope.get_search_results = function(event){
-		$scope.search_results = [];
+		_init_graph_search();
 		if($scope.search_initiated){
     		$timeout.cancel(search_typing_timeout);
 		}
@@ -168,9 +222,11 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 		$scope.search_initiated = false;
 		$scope.search_display = "Searching reader's door...";
 		$scope.search_type = "[ALL]";
+
 		// $scope.search_tag.selected_result = true; // hides the list initially
 		$scope.search_tag = {};
 		$scope.search_tag.current = 0;
+		$scope.search_tag.result_count = 5;
 		$scope.website.searching = true;
 		websiteService.get_background_image().then(function(data){
 			$scope.search_style = {'background-image': 'url("'+data.url+'")'};

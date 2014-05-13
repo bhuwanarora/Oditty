@@ -2,33 +2,37 @@
 //each doing the same thing just structuring the functions/data differently.
 websiteApp.service('recommendationService', function ($http, $q, $rootScope) {
     this.get_recommendations = function () {
-        var deferred = $q.defer();
-        filters = angular.toJson($rootScope.filters)
-        $http.get('/api/v0/recommendations?count=5&q='+filters).then(function(result) {
-            return deferred.resolve(result.data); 
-        });
-        return deferred.promise;
-    };
+        var filters = angular.toJson($rootScope.filters);
+        return _deferred_request('/api/v0/recommendations?count=5&q='+filters);
+    }
+
+    this.push_recommendations = function(){
+        return _deferred_request('/api/v0/push_recommendations');   
+    }
 
     this.get_filters = function(){
-    	var deferred = $q.defer();
-        $http.get('/api/v0/filters').then(function(result) {
-            return deferred.resolve(result.data); 
-        });
-        return deferred.promise;	
+        return _deferred_request('/api/v0/filters');
     }
 
     this.get_genres = function(filter){
-        var deferred = $q.defer();
-        $http.get('/api/v0/genres?'+filter).then(function(result) {
-            return deferred.resolve(result.data); 
-        });
-        return deferred.promise;
+        return _deferred_request('/api/v0/genres?'+filter);
     }
 
     this.get_countries = function(filter){
+        return _deferred_request('/api/v0/countries?'+filter);
+    }
+
+    this.get_time_groups = function(){
+        return _deferred_request('/api/v0/times');
+    }
+
+    this.get_read_times = function(){
+        return _deferred_request('/api/v0/read_times');   
+    }
+
+    _deferred_request = function(url){
         var deferred = $q.defer();
-        $http.get('/api/v0/countries?'+filter).then(function(result) {
+        $http.get(url).then(function(result) {
             return deferred.resolve(result.data); 
         });
         return deferred.promise;

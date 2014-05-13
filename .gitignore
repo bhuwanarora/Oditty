@@ -47,3 +47,12 @@ Gemfile.sample
 .gitignore
 neo4j/data/graph.db/nioneo_logical.*
 neo4j/data/graph.db/schema/label/lucene/
+neo4j/*.graphml
+neo4j/data/*
+neo4j/bin/*
+neo4j/doc/*
+neo4j/lib/*
+neo4j/plugins/*
+neo4j/system/*
+neo4j/*.txt
+node_modules/*

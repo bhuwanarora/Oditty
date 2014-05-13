@@ -14,10 +14,19 @@ module Api
 
 			def countries
 				filter = params[:q]
-				countries = [{:name => "India", :id => 1}, {:name => "United States Of America", :id => 2}]
-				results = {:countries => countries}
+				results = {:countries => CountryGroup.all}
 				render :json => results, :status => 200
 			end
+
+            def times
+                results = {:times => TimeGroup.all}
+                render :json => results, :status => 200
+            end
+
+            def read_times
+                results = {:read_times => ReadTime.all}
+                render :json => results, :status => 200
+            end
 
 			def get_user_details
 				# user_id = params[:user_id]

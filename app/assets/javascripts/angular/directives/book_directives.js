@@ -1,20 +1,20 @@
 var screen_width = screen.width;
-var width = screen_width*(1220/1320)-150; //1220
+var width = screen_width*(1220/1320)-150; //1220-2*padding on sides
 var height = screen.height*(864/1064)-100; //864
 var page_numbers = {
-  content: 3,
-  first_sentence: 4, 
-  characters: 5, 
-  quotes: 6, 
-  themes: 7,
-  subject_places: 8,
-  movies_based: 9,
-  tags: 10,
-  readers: 11,
-  news: 12,
-  reviews: 13,
-  discussions: 14,
-  about_author: 16
+  content: 1,
+  first_sentence: 2, 
+  characters: 3, 
+  quotes: 4, 
+  themes: 5,
+  subject_places: 6,
+  movies_based: 7,
+  tags: 8,
+  readers: 9,
+  news: 10,
+  reviews: 11,
+  discussions: 12,
+  about_author: 13
 };
 
 websiteApp.directive('dock', function($rootScope, $timeout){
@@ -43,6 +43,8 @@ websiteApp.directive('flipbook', function($rootScope, $timeout, scroller){
         var image_height = height+height_edition_factor;
 
         _set_elements_height = function(){
+          console.table([{'width':width, 'image_width':image_width, 
+            'height':height, 'image_height':image_height}]);
           var div_height = height - height_edition_factor*7;
           $('.elements').css('height', div_height);
         }
@@ -79,7 +81,7 @@ websiteApp.directive('flipbook', function($rootScope, $timeout, scroller){
         }
 
         _update_depth = function(book, newPage){
-            var page = book.turn('page'),
+          var page = book.turn('page'),
           pages = book.turn('pages'),
           depthWidth = 16*Math.min(1, page*2/pages);
 
@@ -339,6 +341,7 @@ websiteApp.directive('flipbook', function($rootScope, $timeout, scroller){
             iElement.turn({
               width: width,
               height: height,
+              display: 'single',
               when: {
                 turning: function(event, page, pageObject){
                   var book = $(this),

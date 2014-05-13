@@ -1,13 +1,37 @@
 grammar Sexp
 	rule expression
-	  space? '(' body ')' space? <Expression>
+	  space? body space? <Expression>
 	end
 
 	rule body
-	  (expression / me / (friends / people) / likeandlives / likeand / likes / lives / thing / space )* <Body>
+	  (friends_expressions / books_expressions)
+	end
+
+	rule friends_expressions
+		((friends / people) / space / (likes / reading / own / need / read / bookmarked / follow) / space / thing)* <FriendsExpressions>
 	end
 
 
+	rule me_expressions
+		(me)* <MeExpressions>
+	end
+
+
+	rule books_expressions
+		(books / space / (recommended / by / published_in / published_today / published_between / published_in_country / tagged / i_own / i_have_read / i_have_rated / i_have_discussed / discussed / reviewed / read_by / bookmarked_by / published_this_year) / thing)* <BooksExpressions>
+	end
+
+	rule authors_expressions
+		(authors)* <AuthorsExpressions>
+	end
+
+	rule popular_expressions
+		(popular)* <PopularExpressions>
+	end
+
+	rule other_expressions
+		"other" <Other>
+	end
 
 	rule me
 		"me" <Me>
@@ -21,6 +45,10 @@ grammar Sexp
 		"books" <Books>
 	end
 
+	rule book_category
+		"book category" <BookCategory>
+	end
+
 	rule authors
 		"authors" <Authors>
 	end
@@ -28,8 +56,6 @@ grammar Sexp
 	rule readers
 		"readers" <Readers>
 	end
-
-
 
 	rule likes
 	  "who like" <Likes>
@@ -48,7 +74,7 @@ grammar Sexp
 	end
 
 	rule follow
-		"who follow <Follow>"
+		"who follow" <Follow>
 	end
 
 	rule bookmarked
@@ -58,8 +84,6 @@ grammar Sexp
 	rule need
 		"who need" <Need>
 	end
-
-
 
 	rule recommended
 		"recommended by" <Recommended>
@@ -73,12 +97,16 @@ grammar Sexp
 		"published in" <PublishedIn>
 	end
 
+	rule published_today
+		"published today" <PublishedIn>
+	end
+
 	rule published_between
 		"published between" year "and" year <PublishedBetween>
 	end
 
 	rule published_in_country
-		"published in" country <PublishedInCountry>
+		"published in country" <PublishedInCountry>
 	end
 
 	rule tagged
@@ -86,23 +114,23 @@ grammar Sexp
 	end
 
 	rule i_own
-		"i own" <IOwn>
+		"I own" <IOwn>
 	end
 
 	rule i_have_read
-		"i have read" <IHaveRead>
+		"I have read" <IHaveRead>
 	end
 
 	rule i_have_rated
-		"i have rated" <IHaveRated>
+		"I have rated" <IHaveRated>
 	end
 
 	rule i_have_discussed
-		"i have discussed" <IHaveDiscussed>
+		"I have discussed" <IHaveDiscussed>
 	end
 
 	rule i_have_reviewed
-		"i have reviewed" <IHaveReviewed>
+		"I have reviewed" <IHaveReviewed>
 	end
 
 	rule discussed
@@ -148,8 +176,6 @@ grammar Sexp
 	rule tag_on
 		"tags on" <TagsOn>
 	end
-
-
 
 	rule who_won
 		"who won" <WhoWon>

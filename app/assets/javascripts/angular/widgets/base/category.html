@@ -1,9 +1,0 @@
-<div class="category" 
-	ng-mouseenter="hovered=true; category_hovered=true" 
-	ng-mouseleave="hovered=false; category_hovered=false" 
-	ng-init="initVerticalText(book.category)"
-	style="background-color: {{book.category.background_color}}">
-	<div ng-repeat="i in nameArray track by $index">
-		{{i | uppercase}}<br/>
-	</div>
-</div>

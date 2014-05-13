@@ -7,7 +7,7 @@ class HumanProfile < ActiveRecord::Base
 	belongs_to :profession
 	belongs_to :gender
 
-	def name
-		"@#{read_attribute(:name)}"
-	end
+	# def name
+	# 	"@#{read_attribute(:name)}"
+	# end
 end

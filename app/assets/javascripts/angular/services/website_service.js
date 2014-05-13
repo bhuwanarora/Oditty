@@ -1,61 +1,47 @@
-//This handles retrieving data and is used by controllers. 3 options (server, factory, provider) with 
-//each doing the same thing just structuring the functions/data differently.
 websiteApp.service('websiteService', function ($http, $q, $rootScope) {
 	
     this.get_book_details = function(filter){
-        var deferred = $q.defer();
-        $http.get('/api/v0/book?'+filter).then(function(result) {
-            return deferred.resolve(result.data); 
-        });
-        return deferred.promise;
+        return _deferred_request('/api/v0/book?'+filter);
     }
 
     this.authenticate = function(data){
-    	var deferred = $q.defer();
-    	$http.post('/api/v0/authenticate', data).then(function(result){
-            return deferred.resolve(result.data); 
-        });
-        return deferred.promise;	
+        return _deferred_post_request('/api/v0/authenticate', data);
     }
 
     this.update_profile = function(data){
-        var deferred = $q.defer();
-        $http.post('/api/v0/profile', data).then(function(result){
-            return deferred.resolve(result.data); 
-        });
-        return deferred.promise;   
+        return _deferred_post_request('/api/v0/profile', data);
     }
-
     
     this.get_user_details = function(filter){
         //filter user_id=USER_ID
-        var deferred = $q.defer();
-        $http.get('/api/v0/user_details?'+filter).then(function(result) {
-            return deferred.resolve(result.data); 
-        });
-        return deferred.promise;
+        return _deferred_request('/api/v0/user_details?'+filter);
     }
 
     this.get_background_image = function(){
-        var deferred = $q.defer();
-        $http.get('/api/v0/image').then(function(result) {
-            return deferred.resolve(result.data); 
-        });
-        return deferred.promise;
+        return _deferred_request('/api/v0/image');
     }
 
     this.get_notifications = function(data){
+        return _deferred_request('/api/v0/notifications?id='+data.id);
+    }
+
+    this.search = function(filter, type, count){
+        return _deferred_request('/api/v0/search?count='+count+'&q='+filter+'&t='+type);
+    }
+
+    _deferred_request = function(url){
         var deferred = $q.defer();
-        $http.get('/api/v0/notifications?id='+data.id).then(function(result) {
+        $http.get(url).then(function(result) {
+
             return deferred.resolve(result.data); 
         });
         return deferred.promise;   
     }
 
-    this.search = function(filter, type){
+    _deferred_post_request = function(url, params){
         var deferred = $q.defer();
-        $http.get('/api/v0/search?count=3&q='+filter+'&t='+type).then(function(result){
-            return deferred.resolve(result.data);
+        $http.post(url, params).then(function(result){
+            return deferred.resolve(result.data); 
         });
         return deferred.promise;
     }

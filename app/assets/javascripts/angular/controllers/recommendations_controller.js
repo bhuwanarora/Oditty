@@ -95,10 +95,7 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
 
 	_init_recommendations = function(){
 		$scope.recommendations = {"books": [], "readers": [], "authors": []};
-	}
-
-	$scope.test_scope = function(){
-		_init_recommendations()
+		// $rootScope.filters = {"filter_ids": []};
 	}
 
 	_bind_destroy = function(){
@@ -120,25 +117,35 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
 	_initialize_filters = function(){
 		$scope.show_more_filters = false;
 		$rootScope.filters = {};
-		$rootScope.filters["readers"] = false;
-		$rootScope.filters["books"] = true;
-		$rootScope.filters["authors"] = false;
-		$rootScope.filters["more_filters"] = [];
+        $rootScope.filters["more_filters"] = [];
+        $rootScope.filters["filter_type"] = "BOOK";
+		// $rootScope.filters = {"filter_ids": []};
+		// $rootScope.filters["more_filters"] = "BOOK";
+	}
+
+	_update_recommendations = function(data){
+		if($rootScope.filters["filter_type"] == "BOOK"){
+    		$scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);
+    	}
+    	else if($rootScope.filters["filter_type"] == "AUTHOR"){
+    		$scope.recommendations.authors = $scope.recommendations.authors.concat(data["recommendations"]["authors"]);
+    	}
+    	else if($rootScope.filters["filter_type"] == "READER"){
+    		$scope.recommendations.readers = $scope.recommendations.readers.concat(data["recommendations"]["readers"]);
+    	}
+    	else{
+    		$scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);	
+    	}
 	}
 
 	_push_recommendations = function(){
-		fiveMinute = 3000;//300000
+		var fiveMinute = 3000;//300000
 		push_books_timer_event = $timeout(function(){
-			var deferred = $q.defer();
-	        $http.get('/api/v0/push_recommendations').then(function(result) {
-	            return deferred.resolve(result.data); 
-	        });
-	        deferred.promise.then(function(data){
+			recommendationService.push_recommendations().then(function(data){
 	        	$rootScope.message_type = "Notification";
 	        	$rootScope.message = "We think you like Hermann Hesse, and here is his best read.";
-	        	// $rootScope.notification_active = true;
-	    		$scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);
-	    	})
+	        	_update_recommendations(data);
+			});
 		}, fiveMinute);
 	}
 
@@ -147,18 +154,18 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
 	}
 
 	_recordUserBehaviour = function(){
-		oneMin = 600000000;
+		var oneMin = 600000000;
 		$interval(function(){
-			data = $rootScope.data;
+			var data = $rootScope.data;
 			_init_analytics();
-			data_json = {"data": data};
+			var data_json = {"data": data};
 			// $http.post('/api/v0/track', data_json);
 		}, oneMin);
 	}
 
     _get_recommendations = function(){
         recommendationService.get_recommendations().then(function(data){
-	    	$scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);
+        	_update_recommendations(data);
 	    });
     }
 

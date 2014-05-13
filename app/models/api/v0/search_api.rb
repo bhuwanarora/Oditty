@@ -48,7 +48,8 @@ module Api
 				if results.present?
 					results.push tester
 				else
-					results = did_you_mean(q, type)
+					results = []
+					# results = did_you_mean(q, type)
 				end
 			end
 

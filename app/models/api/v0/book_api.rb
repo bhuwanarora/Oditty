@@ -14,7 +14,7 @@ module Api
 							  	{:name => "India", :url => "javascript:void(0);"},
 							  	{:name => "Spirituality", :url => "javascript:void(0);"}
 							  ],
-							  :book_thumb => {
+							  :thumb => {
 							  	
 							  },
 							  :rating => 4,
@@ -30,8 +30,8 @@ module Api
 							  	Hesse's Siddhartha", :from => "Lindsay Zoladz"},]
 						  }
 				test_book = test_book.merge(
-					:book_thumb => {
-						:book_cover_url => "assets/books/a2.jpeg",
+					:thumb => {
+						:url => "assets/books/a2.jpeg",
 						:background_color => "#F9B131"},
 					:category => {:name => "Hermann Hesse Fan", 
 								:url => "javascript:void(0);",
@@ -48,7 +48,7 @@ module Api
 							  	{:name => "Art", :url => "javascript:void(0);"},
 							  	{:name => "20th Century", :url => "javascript:void(0);"}
 							  ],
-							  :book_thumb => {
+							  :thumb => {
 							  	
 							  },
 							  :rating => 5,
@@ -61,8 +61,8 @@ module Api
 						  }
 				test_book1 = test_book.merge(
 					:status => 0,
-					:book_thumb => {
-						:book_cover_url => "assets/books/20.jpeg",
+					:thumb => {
+						:url => "assets/books/20.jpeg",
 						:background_color => "#915972"},
 					:category => {:name => "Must Read", 
 								:url => "javascript:void(0);", 
@@ -72,8 +72,8 @@ module Api
 
 				test_book2 = test_book.merge(
 					:status => 1,
-					:book_thumb => {
-						:book_cover_url => "assets/books/15.jpeg",
+					:thumb => {
+						:url => "assets/books/15.jpeg",
 						:background_color => "#E9BC4B"},
 					:category => {:name => "Quick Read", 
 								:url => "javascript:void(0);", 
@@ -84,8 +84,8 @@ module Api
 
 				test_book3 = test_book.merge(
 					:status => 2,
-					:book_thumb => {
-						:book_cover_url => "assets/books/11.jpeg",
+					:thumb => {
+						:url => "assets/books/11.jpeg",
 						:background_color => "#F4EFE9"},
 					:category => {:name => "Recommendation From Friends", 
 								:url => "javascript:void(0);", 
@@ -96,8 +96,8 @@ module Api
 
 				test_book4 = test_book.merge(
 					:status => 0,
-					:book_thumb => {
-						:book_cover_url => "assets/books/14.jpeg",
+					:thumb => {
+						:url => "assets/books/14.jpeg",
 						:background_color => "#55504C"},
 					:category => {:name => "Feeling Philosophical", 
 								:url => "javascript:void(0);", 
@@ -108,8 +108,8 @@ module Api
 
 				test_book5 = test_book.merge(
 					:status => 0,
-					:book_thumb => {
-						:book_cover_url => "assets/books/a2.jpeg",
+					:thumb => {
+						:url => "assets/books/a2.jpeg",
 						:background_color => "#586846"},
 					:category => {:name => "Feeling Nomadic", 
 								:url => "javascript:void(0);", 

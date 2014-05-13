@@ -1,0 +1,10 @@
+<div itemscope 
+ 	 itemtype= "http://schema.org/BookmarkAction"
+	 class="right_action button_effect" 
+	 ng-click="toggle_bookmarked()"
+	 ng-class="{'right_action_active':author.bookmark_status}"
+	 ng-model="author.bookmark_status"
+	 title="bookmark">
+	 <span ng-show="!author.bookmark_status">Bookmark</span>
+	 <span ng-show="author.bookmark_status">Remove Bookmark</span>
+<div>

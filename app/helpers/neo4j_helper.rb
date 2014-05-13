@@ -13,51 +13,41 @@ module Neo4jHelper
 
 	def self.create_time_nodes
 		self.init
-
-		root = @neo.create_node
-		@neo.add_label(root, "Root")
-
-		node_year = @neo.create_node("year" => 1000)
-		@neo.add_label(node_year, "Year")
-		@neo.create_relationship("has_year", root, node_year)
-		create_internal_nodes_for_an_year(1000, node_year)
+		node = @neo.create_node("year" => 1000)
+		@neo.add_node_to_index("Year", node)
+		create_internal_nodes_for_an_year(node)
 
 		for year in 1001..2015
 			t1 = Time.now
-			prev_year_node = node_year
-			node_year = @neo.create_node("year" => year)
-			@neo.add_label(node_year, "Year")
-			@neo.create_relationship("has_year", root, node_year)
-			@neo.create_relationship("next_year", prev_year_node, node_year)
-
-			create_internal_nodes_for_an_year(year, node_year)
+			prev_node = node
+			node = @neo.create_node("year" => year)
+			node_year = @neo.add_node_to_index("Year", node)
+			@neo.create_relationship("Next_year", prev_node, node)
+			create_internal_nodes_for_an_year(node)
 			t2 = Time.now
 			puts "#{year} #{t2-t1}"
 		end
 
 	end
 
-	def create_internal_nodes_for_an_year(year, node_year)
-		month_count = 1
+	def create_internal_nodes_for_an_year(node)
 		for month_count in 1..12 do
 			month_node = @neo.create_node("month" => month_count)
-			@neo.add_label(month_node, "Month")
-			@neo.create_relationship("has_month", node_year, month_node)
+			@neo.create_relationship("Has_month", node, month_node)
+			@neo.add_node_to_index("Month", month_node)
 
 			days = Time.days_in_month(month_count, year)
 			for day in 1..days do
-				day_node = @neo.create_node("day" => day)
-				@neo.add_label(day_node, "Day")
-				@neo.create_relationship("has_day", month_node, day_node)				
+				day_node = @neo.create_node("day", day)
+				@neo.create_relationship("Has_day", month_node, day_node)
+				@neo.add_node_to_index("Day", day_node)
 			end
 		end
 	end
 
-	def create_author(author)
+	def create_author(name, url)
 		@neo ||= self.init
-		author_node = @neo.create_node("name" => name,
-										"gr_url" => url)
-		@neo.add_label(author_node, "Author")
+		author_node = @neo.execute_query("MERGE (a:Author{name:'"+name+"', gr_url:'"+url+"'})")
 		author_node
 	end
 
@@ -73,52 +63,90 @@ module Neo4jHelper
 
 	def self.create_book book
 		begin
+			puts 1
 			published_year = book.published_year
 			book_url = book.url
-			book_exists = book_exists? book_url
-			unless book_exists
-				@neo ||= self.init
-				node_book = @neo.create_node("url" => book_url,
-											"description" => book.description,
-											"title" => book.title,
-											"isbn" => book.isbn,
-											"page_count" => book.page_count,
-											"author_name" => book.author_name,
-											"published_year" => published_year,
-											"gr_rating" => book.rating,
-											"gr_author_url" => book.author_url,
-											"gr_reviews_count" => book.reviews_count,
-											"gr_ratings_count" => book.ratings_count)
-				@neo.add_label(node_book, "Book")
-
-				author_node = create_author(book.author_name, book.author_url)
-				@neo.create_relationship("Wrote", author_node, node_book)
+			# book_exists = book_exists? book_url
+			@neo ||= self.init
+			puts 2
+			if book.page_count.nil?
+				page_count = 0
+			else
+				page_count = book.page_count 
 			end
+
+			@neo.execute_query("CREATE (b:Book{url:'"+book_url+"', 
+				description:'"+book.description+"',
+				title:'"+book.title+"',
+				isbn:"+book.isbn+",
+				page_count:"+page_count+",
+				author_name:'"+book.author_name+"',
+				published_year:"+published_year+",
+				gr_rating:"+book.rating+",
+				gr_author_url:'"+book.author_url+"',
+				gr_reviews_count:"+book.reviews_count+",
+				gr_ratings_count:"+book.ratings_count+"}")
+			# node_book = @neo.create_node("url" => book_url,
+			# 							"description" => book.description,
+			# 							"title" => book.title,
+			# 							"isbn" => book.isbn,
+			# 							"page_count" => page_count,
+			# 							"author_name" => book.author_name,
+			# 							"published_year" => published_year,
+			# 							"gr_rating" => book.rating,
+			# 							"gr_author_url" => book.author_url,
+			# 							"gr_reviews_count" => book.reviews_count,
+			# 							"gr_ratings_count" => book.ratings_count)
+			puts 3
+			# @neo.add_label(node_book, "Book")
+			puts 4
+			author_node = create_author(book.author_name, book.author_url)
+			puts 5
+			@neo.create_relationship("Wrote", author_node, node_book)
+			puts 6
+			# unless book_exists
+			# end
 			if published_year.present?
 				unless published_year.length < 4
 					if published_year.length == 4
+						puts 7
 						invalid_year = published_year.to_i < 1000
 						unless invalid_year
 							year = published_year
 						else
 							book.update_column("published_year", nil)
 						end
+						puts 8
 					else
-						time = Time.parse published_year
-						year = time.year
+						puts 9
+						unless published_year.to_i < 0
+							time = Time.parse published_year
+							year = time.year
+						end
+						puts 10
 					end
-					self.bind_published_on(book_url, year) if year
+					self.bind_published_on(book.title, book.author_name, year) if year
+					puts 11
 				end
 			end
+			puts 12
 		rescue Exception => e
 			debugger			
 		end
 
 	end
 
-	def self.bind_published_on(book_url, year)
+	def self.bind_published_on(book_name, author_name, year)
 		@neo ||= self.init
-		@neo.execute_query("MATCH (b:Book{url:'"+book_url+"'}), (y:Year{year:"+year+"}) CREATE (b)-[r:published_on]->(y) RETURN r")
+		if book_name.include? "\""
+			@neo.execute_query("MATCH (b:Book{title:'"+book_name+"', author_name:'"+author_name+"'}),
+			 (y:Year{year:"+year.to_s+"}) 
+			CREATE (b)-[r:Published_on]->(y) RETURN r")
+		else
+			@neo.execute_query("MATCH (b:Book{title:\""+book_name+"\", author_name:\""+author_name+"\"}),
+			 (y:Year{year:"+year.to_s+"}) 
+			CREATE (b)-[r:Published_on]->(y) RETURN r")
+		end
 	end
 
 
@@ -167,25 +195,17 @@ module Neo4jHelper
 	def self.init_goodreads_books
 		count = 0
 		t0 = Time.now
-		begin
-			GoodReadsBook.where(:flag => true, :neo_flag => nil).find_each do |book|
-				if count == 1000
-					break
-				else
-					t1 = Time.now
-					self.create_book book
-					count = count + 1
-					t2 = Time.now
-					book.update_column("neo_flag", true)
-					puts "#{t2-t1} #{count} #{book.title}"
-				end
+		for id in 1..1599004
+			t1 = Time.now
+			book = GoodReadsBook.find id
+			if book && book.flag && book.neo_flag.nil?
+				self.create_book book
+				count = count + 1
+				t2 = Time.now
+				book.update_column("neo_flag", true)
+				puts "#{t2-t1} #{count} #{book.title}"
 			end
-		rescue Exception => e
-			puts "RESTARTING #{e}"
-			self.init_goodreads_books
 		end
-		puts "THOUSAND COMPLETE"
-		self.init_goodreads_books
 	end
 
 	def self.init_shelfari_books

@@ -1,0 +1,16 @@
+<div  itemscope 
+ 	  itemtype= "http://schema.org/Book" 
+ 	  ng-style="book_tilt"
+ 	  class="animate-fast widget">
+	<category track widget="book"></category>
+	<div ng-model="book" 
+		ng-mouseenter="discovered = true" 
+		ng-mouseover="hover()" 
+		ng-mouseout="mouseout()" 
+		ng-class="{'discovered': hovered, 'undiscovered': !hovered}" class="card animate-fast">
+		<widget-thumb track></widget-thumb>
+		<book-navbar track></book-navbar>
+		<book-interact track></book-interact>
+	</div>
+</div>
+<div class="base" ng-click="show_book(3)"></div>

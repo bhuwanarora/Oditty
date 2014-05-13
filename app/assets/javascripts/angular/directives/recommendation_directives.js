@@ -3,59 +3,27 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 		restrict: 'E',
 		controller: function($scope, recommendationService){
 			_init = function(){
+				$scope.$on('initPage', function(event, type){
+					_reload_page(type=="BOOK", type=="AUTHOR", type=="READER");
+				});
 				$scope.active_book_filter = true;
 				$scope.active_author_filter = false;
 				$scope.active_reader_filter = false;
+				$scope.show_menu = false;
+				$scope.countryOptions = [];
+				$scope.countrySelected = {"text": "Filter books by Country"};
+				$scope.timeSelected = {"text": "Filter books by Time"};
+				$scope.readTimeSelected = {"text": "Filter books by Reading Time"};
 
-				$scope.bookFilters = {year:"1600;2010"};
-				$scope.authorFilters = {year:"1600;2010"};
-				$scope.readerFilters = {year:"10;100"};
-
-				$scope.bookOptions =  {
-	                from: 1000,
-	                to: 2020,
-	                step: 10,
-	                scale: [1000, '|', 1300, '|', 1600, '|', 1900, '|'],
-	                smooth: true
-	            };
-
-				$scope.authorOptions =  {
-	                from: 1000,
-	                to: 2020,
-	                step: 10,
-	                scale: [1000, '|', 1300, '|', 1600, '|', 1900, '|'],
-	                smooth: true
-	            };
-
-				$scope.readerOptions =  {
-	                from: 10,
-	                to: 100,
-	                step: 5,
-	                scale: [10, '|', 40, '|', 70, '|', 100],
-	                smooth: true
-	            };
-
-			    /* watch for changes*/
-				$scope.$watch('bookFilters.year',function(newVal, oldVal){
-				    if(newVal!=oldVal){
-				    	$rootScope.filters["year"] = newVal;
-				    	$scope.$emit('reloadRecommendations');
-				    }
-				});
-
-				$scope.$watch('authorFilters.year',function(newVal, oldVal){
-				    if(newVal!=oldVal){
-				    	$rootScope.filters["year"] = newVal;
-				    	$scope.$emit('reloadRecommendations');
-				    }
-				});
-
-				$scope.$watch('readerFilters.year',function(newVal, oldVal){
-				    if(newVal!=oldVal){
-				    	$rootScope.filters["year"] = newVal;
-				    	$scope.$emit('reloadRecommendations');
-				    }
-				});
+				recommendationService.get_countries().then(function(data){
+			    	$scope.countryOptions = data["countries"];
+			    });
+			    recommendationService.get_time_groups().then(function(data){
+			    	$scope.timeOptions = data["times"];
+			    });
+			    recommendationService.get_read_times().then(function(data){
+			    	$scope.readTimeOptions = data["read_times"];
+			    });
 			}
 
 			$scope.reset_filters = function(){
@@ -64,17 +32,12 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 				$scope.$emit('reloadRecommendations');
 			}
 
-			$scope.toggle_active_filter = function(){
-				var elementText = event.currentTarget.innerText.trim();
-				var isBook = elementText == "BOOK";
-				var isAuthor = elementText == "AUTHOR";
-				var isReader = elementText == "READER";
+			_reload_page = function(isBook, isAuthor, isReader){
 				if(isBook){
 					$scope.active_book_filter = true;
 					$scope.active_author_filter = false;
 					$scope.active_reader_filter = false;
 					$rootScope.filters["filter_type"] = "BOOK";
-					$scope.$emit('moveRight');
 				}
 				else if(isAuthor){
 					$scope.active_book_filter = false;
@@ -88,14 +51,17 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 					$scope.active_reader_filter = true;
 					$rootScope.filters["filter_type"] = "READER";
 				}
+				$scope.$emit('reloadRecommendations');
+				$scope.$emit('moveRight');
 			}
 
-			$scope.show_country_options = function(filter){
-				var params = $scope.country+String.fromCharCode(event.keyCode);
-				var filter = "q="+params+"&filter="+filter;
-				recommendationService.get_countries(filter).then(function(data){
-			    	$scope.countries = data["countries"];
-			    });
+			$scope.toggle_active_filter = function(){
+				var elementText = event.currentTarget.innerText.trim();
+				var isBook = elementText == "BOOK" || event.currentTarget.className.indexOf("main_book_icon")!=-1;
+				var isAuthor = elementText == "AUTHOR" || event.currentTarget.className.indexOf("main_author_icon")!=-1;
+				var isReader = elementText == "READER" || event.currentTarget.className.indexOf("main_reader_icon")!=-1;
+				$scope.show_menu = false;
+				_reload_page(isBook, isAuthor, isReader);
 			}
 
 			$scope.show_genre_options = function(filter){
@@ -106,17 +72,17 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 			    });
 			}
 
-			$scope.show_genre_or_author_options = function(filter){
+			$scope.show_author_options = function(filter){
 				var params = $scope.genre+String.fromCharCode(event.keyCode);
 				var filter = "q="+params+"&filter="+filter;
-				recommendationService.get_genres(filter).then(function(data){
-			    	$scope.genres = data["genres"];
+				recommendationService.get_authors(filter).then(function(data){
+			    	$scope.authors = data["authors"];
 			    });
 			}
 
-			$scope.on_genre_or_author_selection = function(){
-				var filter_name = $scope.genre;
-				$rootScope.filters["genre_filter"] = filter_name;
+			$scope.on_author_selection = function(){
+				var filter_name = $scope.author;
+				$rootScope.filters["author_filter"] = filter_name;
 				message = "SUCCESS-'"+filter_name+"' added to filters.";
 				var timeout_event = notify($rootScope, message, $timeout);
 				$scope.$emit('reloadRecommendations');
@@ -127,36 +93,27 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 				});
 			}
 
-			$scope.on_genre_selection = function(){
-				var filter_name = $scope.genre;
-				$rootScope.filters["genre_filter"] = filter_name;
-				message = "SUCCESS-'"+filter_name+"' added to filters.";
-				var timeout_event = notify($rootScope, message, $timeout);
-				$scope.$emit('reloadRecommendations');
-
-
-				$scope.$on('destroy', function(){
-					$timeout.cancel(timeout_event);
-				});
-			}
-
-			$scope.on_country_selection = function(){
-				var filter_name = $scope.country;
-				$rootScope.filters["country_filter"] = filter_name;
-				message = "SUCCESS-'"+filter_name+"' added to filters.";
-				var timeout_event = notify($rootScope, message, $timeout);
-				$scope.$emit('reloadRecommendations');
-
-				$scope.$on('destroy', function(){
-					$timeout.cancel(timeout_event);
-				});
+			$scope.toggle_menu = function(){
+				if($scope.show_menu){
+					$scope.show_menu = false;
+				}
+				else{
+					$scope.show_menu = true;
+				}
 			}
 
 			_init();
 		},
 		templateUrl: "/assets/angular/widgets/partials/more_filters.html"
-	}	
-})
+	}
+});
+
+websiteApp.directive('notificationLink', function(){
+	return{
+		restrict: 'E',
+		templateUrl: 'assets/angular/widgets/partials/notification_link.html'
+	}
+});
 
 websiteApp.directive('filter', function($rootScope, $timeout){
 	return{

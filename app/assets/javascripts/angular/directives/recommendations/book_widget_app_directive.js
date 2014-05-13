@@ -1,4 +1,4 @@
-websiteApp.directive('book', function (bookWidgetService) {
+websiteApp.directive('book', function (widgetService){
   return {
     restrict: 'E',
     scope: { 'book': '=data' },
@@ -12,15 +12,16 @@ websiteApp.directive('book', function (bookWidgetService) {
       };
 
       _init = function(){
+        $scope.active_book_filter = true;
         var book_id = $scope.book.id;
-        bookWidgetService.populate_tooltips(book_id).then(function(data){
+        widgetService.populate_tooltips(book_id).then(function(data){
           $scope.book.title = data.title;
           $scope.book.author_name = data.author_name;
           $scope.book.users = data.users;
           $scope.book.summary = data.summary;
           $scope.book.users_count = data.users_count;
         });
-        var tilt_angle = (Math.floor(Math.random() * 10) + 1)/10+"deg";
+        // var tilt_angle = (Math.floor(Math.random() * 10) + 1)/10+"deg";
         // $scope.book_tilt = {"transform":"rotate("+tilt_angle+")",
         //                   "-ms-transform":"rotate("+tilt_angle+")",
         //                   "-webkit-transform":"rotate("+tilt_angle+")";
@@ -29,7 +30,7 @@ websiteApp.directive('book', function (bookWidgetService) {
       _init();
 
     },
-    templateUrl: "/assets/angular/widgets/base/book_widget.html"
+    templateUrl: "/assets/angular/widgets/base/book/book_widget.html"
   };
 });
 
@@ -41,62 +42,11 @@ websiteApp.directive('bookNavbar', function ($rootScope, $timeout) {
         zoomin_book($scope, $timeout, $rootScope, page);
       }
     },
-    templateUrl: "/assets/angular/widgets/base/book_navbar.html"
+    templateUrl: "/assets/angular/widgets/base/book/book_navbar.html"
   };
 });
 
-websiteApp.directive('bookthumb', function ($timeout, $rootScope) {
-  return {
-    restrict: 'E',
-    controller: function($scope){
-      $scope.show_book = function(page){
-        zoomin_book($scope, $timeout, $rootScope, page);
-      }
-
-      $scope.show_share_options = function(){
-        $scope.show_share_menu = true;
-      }
-
-      $scope.hide_share_options = function(){
-        $scope.show_share_menu = false;
-      }
-
-      _init = function(){
-        $scope.zoomin_book = false;
-        $scope.show_share_menu = false;
-      }
-
-      $scope.show_images = function(){
-        if(global_display_timer == 5000){
-          global_display_timer = 1000;
-        }
-        else{
-          global_display_timer = global_display_timer + 1000;
-        }
-        var timeout_event = $timeout(function(){
-          $scope.book_thumb_style = {'background': "url('"+$scope.book.book_thumb.book_cover_url+"')"};
-        }, global_display_timer);
-
-        $scope.$on('destroy', function(){
-          $timeout.cancel(timeout_event);
-        });
-      }
-
-      _init = function(){
-        $scope.book_thumb_style = {'background-color':$scope.book.book_thumb.background_color};
-        // $scope.$on('showImages', function(){
-        //   $scope.show_images();
-        // });
-        $scope.show_images();
-      }
-
-      _init();
-    },
-    templateUrl: "/assets/angular/widgets/base/book_thumb.html"
-  };
-});
-
-websiteApp.directive('bookmark', function ($rootScope, $timeout) {
+websiteApp.directive('bookBookmark', function ($rootScope, $timeout, widgetService) {
   return {
     restrict: 'E',
     controller: function($scope){
@@ -107,40 +57,26 @@ websiteApp.directive('bookmark', function ($rootScope, $timeout) {
         if(bookmark_status == 1){
           $scope.book.bookmark_status = 0;
           var message = "SUCCESS-"+book_title+" by "+author_name+" has been removed from your bookmark shelf.";
-          $scope.$emit('removeFromBookmarks', $scope.book);
+          $scope.$emit('removeFromBookmarks', "BOOK", $scope.book);
         }
         else{
           $scope.book.bookmark_status = 1;
           var message = "SUCCESS-"+book_title+" by "+author_name+" has been added to your bookmark shelf.";
-          $scope.$emit('addToBookmarks', $scope.book);
+          $scope.$emit('addToBookmarks', "BOOK", $scope.book);
           $rootScope.$broadcast('glowBookmark');
         }
         var timeout_event = notify($rootScope, message, $timeout);
         $scope.$on('destroy', function(){
           $timeout.cancel(timeout_event);
         });
+        widgetService.bookmark("BOOK", $scope.book.id, $scope.book.bookmark_status);
       }
     },
-    templateUrl: "/assets/angular/widgets/base/bookmark.html"
+    templateUrl: "/assets/angular/widgets/base/book/bookmark.html"
   };
 });
 
-websiteApp.directive('category', function () {
-  return {
-    restrict: 'E',
-    controller: function($scope){
-      $scope.initVerticalText = function(category){
-        var name = category.name;
-        var description = category.description;
-        $scope.nameArray = name.split('');
-        $scope.descriptionArray = description.split('');
-      }
-    },
-    templateUrl: "/assets/angular/widgets/base/category.html"
-  };
-});
-
-websiteApp.directive('interact', function (websiteService) {
+websiteApp.directive('bookInteract', function (websiteService) {
   return {
     restrict: 'E',
     controller: function($scope){
@@ -164,8 +100,14 @@ websiteApp.directive('interact', function (websiteService) {
         var html_array = $('.comment_box').siblings().html().split(" ");
         var chr = String.fromCharCode(event.keyCode);
         var len = string_array.length;
-        var old_string = string_array.slice(0, len-1).join(" ")+" ";
-        var old_html = html_array.slice(0, len-1).join(" ")+" ";
+        if(len == 1){
+          var old_string = string_array.slice(0, len-1).join(" ").trim();
+          var old_html = html_array.slice(0, len-1).join(" ").trim();
+        }
+        else{
+          var old_string = string_array.slice(0, len-1).join(" ")+" ";
+          var old_html = html_array.slice(0, len-1).join(" ")+" ";
+        }
         var current_element = string_array.pop();
         var current_html = html_array.pop();
         var is_backspace = event.keyCode == 8;
@@ -184,8 +126,14 @@ websiteApp.directive('interact', function (websiteService) {
         var html_array = $(event.currentTarget).siblings().html().split(" ");
         var chr = String.fromCharCode(event.keyCode);
         var len = string_array.length;
-        var old_string = string_array.slice(0, len-1).join(" ")+" ";
-        var old_html = html_array.slice(0, len-1).join(" ")+" ";
+        if(len == 1){
+          var old_string = string_array.slice(0, len-1).join(" ");
+          var old_html = html_array.slice(0, len-1).join(" ");  
+        }
+        else{
+          var old_string = string_array.slice(0, len-1).join(" ")+" ";
+          var old_html = html_array.slice(0, len-1).join(" ")+" ";
+        }
         var current_element = string_array.pop();
         var current_html = html_array.pop();
         var is_backspace = event.keyCode == 8;
@@ -193,6 +141,7 @@ websiteApp.directive('interact', function (websiteService) {
         if(is_backspace){
           if(current_element == "#"){
             $scope.hash_tagging = false;
+            $scope.hash_tags = [];
             $(event.currentTarget).siblings().html(old_html);
           }
           else{
@@ -200,6 +149,7 @@ websiteApp.directive('interact', function (websiteService) {
               $(event.currentTarget).siblings().html(old_html);
               $(event.currentTarget).val(old_string);
               $scope.hash_tagging = false;
+              $scope.hash_tags = [];
               event.preventDefault();
             }
             else{
@@ -207,6 +157,7 @@ websiteApp.directive('interact', function (websiteService) {
               if(inside_a_hashtag){
                 $(event.currentTarget).siblings().html(old_html);
                 $(event.currentTarget).val(old_string);
+                $scope.hash_tags = [];
                 event.preventDefault();
               }
               else{
@@ -265,8 +216,7 @@ websiteApp.directive('interact', function (websiteService) {
         }
         if($scope.search_for){
           string_to_be_searched = current_element.slice(1, current_element.length)+""+chr;
-          console.log(string_to_be_searched);
-          websiteService.search(string_to_be_searched.trim(), $scope.search_for).then(function(result) {
+          websiteService.search(string_to_be_searched.trim(), $scope.search_for, 3).then(function(result) {
             $scope.hash_tags = result.results;
           });
         }
@@ -275,32 +225,54 @@ websiteApp.directive('interact', function (websiteService) {
 
       _init();
     },
-    templateUrl: "/assets/angular/widgets/base/interact_widget.html"
+    templateUrl: "/assets/angular/widgets/base/book/interact_widget.html"
   };
 });
 
-websiteApp.directive('interactionBox', function($rootScope, $timeout){
+websiteApp.directive('interactionBox', function($rootScope, $timeout, widgetService){
   return{
     restrict: 'E',
     controller: function($scope){
       $scope.close_interaction_box = function(){
         $scope.interact = false;
+        $scope.hash_tags = [];
+      }
+
+      $scope.own_this_book = function(){
+        if($scope.have_this_book){
+          $scope.have_this_book = false;
+        }
+        else{
+          $scope.have_this_book = true;
+        }
+        var id = $scope.book.id;
+        widgetService.own_this_book(id, $scope.have_this_book);
       }
       
-      _init = function(){
+      $scope.show_if_rated = function(index){
+        $scope.temp_rating = $scope.book.rating;
+        $scope.book.rating = parseInt(index) + 1;
+        $scope.inactive = true;
       }
 
-      $scope.toggle = function(index){
-        $scope.mark_as_rated();
+      $scope.reset_rating = function(){
+        if($scope.inactive){
+          $scope.book.rating = $scope.temp_rating
+          $scope.inactive = false;
+        }
       }
 
-      $scope.mark_as_rated = function(){
-        $scope.book.rating = parseInt(event.srcElement.innerText);
+      $scope.mark_as_rated = function(index){
+        $scope.inactive = false;
+        $scope.rated = true;
+        $scope.book.rating = parseInt(index) + 1;
         var timeout_event = notify($rootScope, "THANKS-This will help us to recommend you better books.", $timeout);
 
         $scope.$on('destroy', function(){
           $timeout.cancel(timeout_event)
-        })
+        });
+
+        widgetService.rate_this_book($scope.book.id, $scope.book.rating);
       }
 
       $scope.is_active = function(index){
@@ -314,6 +286,7 @@ websiteApp.directive('interactionBox', function($rootScope, $timeout){
 
       $scope.record_read_time = function(read_timer){
         $scope.book.read_timer = read_timer;
+        widgetService.record_time($scope.book.id, read_timer);
       }
 
       $scope.is_timer = function(read_timer){
@@ -326,7 +299,7 @@ websiteApp.directive('interactionBox', function($rootScope, $timeout){
 
       _init();
     },
-    templateUrl: "assets/angular/widgets/base/interaction_box.html"
+    templateUrl: "assets/angular/widgets/base/book/interaction_box.html"
   }
 });
 
@@ -338,11 +311,11 @@ websiteApp.directive('bookTags', function($rootScope, $timeout) {
         zoomin_book($scope, $timeout, $rootScope, page);
       }
     },
-    templateUrl: "/assets/angular/widgets/base/book_tags.html"
+    templateUrl: "/assets/angular/widgets/base/book/book_tags.html"
   };
 });
 
-websiteApp.directive('recommend', function($rootScope, $timeout){
+websiteApp.directive('recommend', function($rootScope, $timeout, widgetService){
   return{
     restrict: 'E',
     controller: function($scope){
@@ -361,26 +334,26 @@ websiteApp.directive('recommend', function($rootScope, $timeout){
         $scope.$on('destroy', function(){
           $timeout.cancel(timeout_event);
         });
+        widgetService.recommend("BOOK", $scope.book.id, $scope.recommended);
       }
     },
-    templateUrl: "/assets/angular/widgets/base/recommend.html"
+    templateUrl: "/assets/angular/widgets/base/book/recommend.html"
   }
 });
 
-websiteApp.directive('markAsRead', function($rootScope, $timeout){
+websiteApp.directive('markAsRead', function($rootScope, $timeout, widgetService){
 	return {
 		restrict: 'E',
 		controller: function($scope){
       $scope.markAsRead = function(){
-        if($scope.read){
-          $scope.read = false;
+        if($scope.book.status){
           $scope.book.status = 0;
-          $scope.$emit('removeBookFromShelf', $scope.book);
+          $scope.interact = false;
+          $scope.$emit('removeFromShelf', "BOOK", $scope.book);
         }
         else{
-          $scope.read = true;
           $scope.book.status = 1;
-          $scope.$emit('addBookToShelf', $scope.book);
+          $scope.$emit('addToShelf', "BOOK", $scope.book);
           $rootScope.$broadcast('glowShelf');
           var book_title = $scope.book.title;
           var author_name = $scope.book.author_name;
@@ -392,11 +365,11 @@ websiteApp.directive('markAsRead', function($rootScope, $timeout){
             $timeout.cancel(timeout_event);
             $timeout.cancel(glow_event);
           });
-          //ajax call to mark the book as read
         }
+        widgetService.mark_as_read($scope.book.id, $scope.read);
       }
     },
-    templateUrl: "/assets/angular/widgets/base/mark_as_read.html"
+    templateUrl: "/assets/angular/widgets/base/book/mark_as_read.html"
   }
 });
 
