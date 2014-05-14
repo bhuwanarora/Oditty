@@ -1,6 +1,6 @@
 <div class="interaction_box animate-fast"
 	 ng-if="interact">
-	<recommend></recommend>
+	<recommend data="book"></recommend>
  	<div class="close"
  		 ng-click="close_interaction_box()">x</div>
  	<div class="own_this_book"
@@ -8,7 +8,7 @@
  		 <span ng-show="!have_this_book">I have this Book</span>
  		 <span ng-show="have_this_book">I don't have this Book</span>
  	</div>
- 	<rate></rate>
+ 	<rate data="book"></rate>
 	<div>
 		<span class="highlighter"></span>
 		<textarea itemprop= "commentText" 

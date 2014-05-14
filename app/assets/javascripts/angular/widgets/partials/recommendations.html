@@ -4,13 +4,15 @@
 		<div ng-show="active_book_filter" ng-model="user.books.bookmarked">
 			<div ng-switch on="user.books.bookmarked.length">
 				<div ng-switch-when="0">
-					Bookmark some stuff							
+					Bookmark some books
 				</div>
 				<div ng-switch-default>
 					<div class="horizontal_padder_active">
 					</div>
 					<div ng-repeat="user_book in user.books.bookmarked" class="recommendation_block">
 						<book track id="{{user_book.category.name | lowercase}}-{{user_book.id}}" data="user_book"></book>
+					</div>
+					<div class="horizontal_padder_active">
 					</div>
 				</div>
 			</div>
@@ -26,19 +28,7 @@
 					<div ng-repeat="author in user.authors.bookmarked" class="recommendation_block">
 						<author track id="{{author.category.name | lowercase}}-{{author.id}}" data="author"></author>
 					</div>
-				</div>
-			</div>
-		</div>
-		<div ng-show="active_reader_filter" ng-model="user.readers.follow">
-			<div ng-switch on="user.readers.follow.length">
-				<div ng-switch-when="0">
-					Add Some readers to follow
-				</div>
-				<div ng-switch-default>
 					<div class="horizontal_padder_active">
-					</div>
-					<div ng-repeat="reader in user.readers.follow" class="recommendation_block">
-						<reader track id="{{reader.category.name | lowercase}}-{{reader.id}}" data="reader"></reader>
 					</div>
 				</div>
 			</div>
@@ -56,6 +46,8 @@
 					<div ng-repeat="user_book in user.books.read" class="recommendation_block">
 						<book track id="{{user_book.category.name | lowercase}}-{{user_book.id}}" data="user_book"></book>
 					</div>
+					<div class="horizontal_padder_active">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -70,6 +62,8 @@
 					<div ng-repeat="author in user.authors.follow" class="recommendation_block">
 						<author track id="{{author.category.name | lowercase}}-{{author.id}}" data="author"></author>
 					</div>
+					<div class="horizontal_padder_active">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -83,6 +77,8 @@
 					</div>
 					<div ng-repeat="reader in user.readers.follow" class="recommendation_block">
 						<reader track id="{{reader.category.name | lowercase}}-{{reader.id}}" data="reader"></reader>
+					</div>
+					<div class="horizontal_padder_active">
 					</div>
 				</div>
 			</div>
@@ -123,3 +119,5 @@
 	</div>
 </div>
 <!-- <message></message> -->
+
+<focused-book></focused-book>

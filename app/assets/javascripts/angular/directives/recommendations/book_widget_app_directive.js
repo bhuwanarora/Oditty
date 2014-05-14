@@ -1,10 +1,13 @@
-websiteApp.directive('book', function (widgetService){
+websiteApp.directive('book', function (widgetService, $rootScope){
   return {
     restrict: 'E',
     scope: { 'book': '=data' },
     controller: function($scope){
       $scope.hover = function() {
         $scope.hovered = true;
+        if($rootScope.focused_book != $scope.book){
+          $rootScope.focused_book = $scope.book;
+        }
       };
 
       $scope.mouseout = function() {
@@ -21,7 +24,17 @@ websiteApp.directive('book', function (widgetService){
           $scope.book.summary = data.summary;
           $scope.book.users_count = data.users_count;
         });
-        // var tilt_angle = (Math.floor(Math.random() * 10) + 1)/10+"deg";
+        var margin_right = (Math.floor(Math.random() * 20) + 1)+"px";
+        var margin_top = (Math.floor(Math.random() * 50) + 1)+"px";
+        var margin_right_neg = (Math.random() < 0.5);
+        var margin_top_neg = (Math.random() < 0.5);
+        if(margin_top_neg){
+          margin_top = "-"+margin_top;
+        }
+        if(margin_right_neg){
+          margin_right = "-"+margin_right;
+        }
+        $scope.randomise_position = {"margin-left": margin_right, "margin-bottom":margin_top};
         // $scope.book_tilt = {"transform":"rotate("+tilt_angle+")",
         //                   "-ms-transform":"rotate("+tilt_angle+")",
         //                   "-webkit-transform":"rotate("+tilt_angle+")";
@@ -232,45 +245,54 @@ websiteApp.directive('bookInteract', function (websiteService) {
 websiteApp.directive('rate', function($rootScope, $timeout, widgetService){
   return{
     restrict: 'E',
+    scope: {'rate_object': '=data'},
     controller: function($scope){
       $scope.show_if_rated = function(index){
-        $scope.temp_rating = $scope.book.rating;
-        $scope.book.rating = parseInt(index) + 1;
-        $scope.inactive = true;
+        $scope.temp_rating = $scope.rate_object.rating;
+        $scope.rate_object.rating = parseInt(index) + 1;
         $scope.ready_to_rate = true;
       }
 
       $scope.reset_rating = function(){
         $scope.ready_to_rate = false;
-        if($scope.inactive){
-          $scope.book.rating = $scope.temp_rating
-          $scope.inactive = false;
-        }
+        $scope.rate_object.rating = $scope.temp_rating;
       }
 
       $scope.mark_as_rated = function(index){
-        $scope.inactive = false;
         $scope.rated = true;
-        $scope.book.rating = parseInt(index) + 1;
+        $scope.rate_object.rating = parseInt(index) + 1;
+        $scope.temp_rating = parseInt(index) + 1;
         var timeout_event = notify($rootScope, "THANKS-This will help us to recommend you better books.", $timeout);
 
         $scope.$on('destroy', function(){
-          $timeout.cancel(timeout_event)
+          $timeout.cancel(timeout_event);
         });
 
-        widgetService.rate_this_book($scope.book.id, $scope.book.rating);
+        widgetService.rate_this_book($scope.rate_object.id, $scope.rate_object.rating);
       }
 
       $scope.is_active = function(index){
-        var rating = parseInt(index) + 1;
         var is_active = false;
-        if(rating <= $scope.book.rating){
-          is_active = true;
+        if($scope.rate_object){
+          var rating = parseInt(index) + 1;
+          if(rating <= $scope.rate_object.rating){
+            is_active = true;
+          }
         }
         return is_active;
       }
     },
     templateUrl: '/assets/angular/widgets/base/book/rate.html'
+  }
+});
+
+websiteApp.directive('focusedBook', function($rootScope){
+  return{
+    restrict: 'E',
+    controller: function($scope){
+      // $rootScope.focused_book = $scope.recomendations.books.first;
+    },
+    templateUrl: "/assets/angular/widgets/base/book/focused_book.html"
   }
 });
 
@@ -328,54 +350,57 @@ websiteApp.directive('bookTags', function($rootScope, $timeout) {
 websiteApp.directive('recommend', function($rootScope, $timeout, widgetService){
   return{
     restrict: 'E',
+    scope: {'recommend_object': '=data'},
     controller: function($scope){
       $scope.recommend = function(){
-        var book_title = $scope.book.title;
-        var author_name = $scope.book.author_name;
-        if($scope.recommended){
-          $scope.recommended = false;
+        var book_title = $scope.recommend_object.title;
+        var author_name = $scope.recommend_object.author_name;
+        if($scope.recommend_object.recommended){
+          $scope.recommend_object.recommended = false;
           var message = "SUCCESS-"+book_title+" by "+author_name+" will not be recommended to your friends.";
         }
         else{
-          $scope.recommended = true;
+          $scope.recommend_object.recommended = true;
           var message = "SUCCESS-"+book_title+" by "+author_name+" has been recommended to all your friends.";
         }
         var timeout_event = notify($rootScope, message, $timeout);
         $scope.$on('destroy', function(){
           $timeout.cancel(timeout_event);
         });
-        widgetService.recommend("BOOK", $scope.book.id, $scope.recommended);
+        widgetService.recommend("BOOK", $scope.recommend_object.id, $scope.recommend_object.recommended);
       }
     },
     templateUrl: "/assets/angular/widgets/base/book/recommend.html"
   }
 });
 
+
 websiteApp.directive('markAsRead', function($rootScope, $timeout, widgetService){
 	return {
 		restrict: 'E',
 		controller: function($scope){
       $scope.markAsRead = function(){
+        var book_title = $scope.book.title;
+        var author_name = $scope.book.author_name;
         if($scope.book.status){
           $scope.book.status = 0;
           $scope.interact = false;
           $scope.$emit('removeFromShelf', "BOOK", $scope.book);
+          var message = "ADVISE-Book "+book_title+" by "+author_name+" has been removed from your Read Shelf. You can mark as read again."
         }
         else{
           $scope.book.status = 1;
           $scope.$emit('addToShelf', "BOOK", $scope.book);
           $rootScope.$broadcast('glowShelf');
-          var book_title = $scope.book.title;
-          var author_name = $scope.book.author_name;
-          var message = "ADVISE-Book "+book_title+" by "+author_name+" has been added to your Read Shelf. Also please rate this book."
-          var timeout_event = notify($rootScope, message, $timeout);
           $scope.interact = true;
+          var message = "ADVISE-Book "+book_title+" by "+author_name+" has been added to your Read Shelf. Also please rate this book."
 
           $scope.$on('destroy', function(){
             $timeout.cancel(timeout_event);
             $timeout.cancel(glow_event);
           });
         }
+        var timeout_event = notify($rootScope, message, $timeout);
         widgetService.mark_as_read($scope.book.id, $scope.read);
       }
     },

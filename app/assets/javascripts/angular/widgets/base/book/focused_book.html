@@ -1,0 +1,31 @@
+<div class="focused_tooltip animate-fast" ng-if="focused_book">
+  <div class="header">
+  <span><img class="book_thumb" ng-src="{{focused_book.thumb.url}}"/></span>
+    <span class="title" ng-click="show_book(2)">
+      <span itemprop= "name">{{focused_book.title}}-{{focused_book.id}}</span>
+    </span>
+    <span>&nbsp;by&nbsp;</span>
+    <span class="author" ng-click="show_book(16)">
+      <span itemprop= "author">{{focused_book.author_name}}</span>
+    </span>
+    <rate data="focused_book"></rate>
+    <div class="rating_star">
+      <img src="assets/star.png"/>
+      <div class="rating_text">{{temp_rating}}</div>
+    </div>
+  </div>
+  <hr>
+  <div class="description">
+    <span itemprop="description">{{focused_book.summary}}</span>
+  </div>
+  <hr>
+  <div class="users_count">{{focused_book.users_count}} friends have read this</div>
+  <div class="users">
+    <div ng-repeat="user in focused_book.users">
+      <img ng-src="{{user.thumb}}" />
+    </div>
+  </div>
+  <div class="footer">
+    <recommend data="focused_book"></recommend>
+  </div>
+</div>

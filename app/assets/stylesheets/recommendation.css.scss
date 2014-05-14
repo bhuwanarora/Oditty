@@ -13,9 +13,9 @@ body{
   	-ms-user-select: none;
     user-select: none;
     color: #717070;
-    /*background-color: #EBEBEB;*/
+    background-color: #EBEBEB;
     /*background-image: url('7H.jpg');*/
-    background-image: none;
+    /*background-image: none;*/
     /*font-family: 'Lucida Grande';*/
     /*background: url('right_grid_background.jpeg');*/
     /*font-family: Helvetica, Arial, sans-serif;*/
@@ -29,6 +29,16 @@ a{
 
 a:hover{
 	text-decoration:underline;
+}
+
+.focused_tooltip.ng-enter,
+.focused_tooltip.ng-leave.ng-leave-active{
+	right: -400px;
+}
+
+.focused_tooltip.ng-leave,
+.focused_tooltip.ng-enter-active{
+	right: 5px;
 }
 
 .push_notification.ng-enter,
@@ -124,7 +134,7 @@ a:hover{
 
 .recommendation_block{
 	display: inline-block;
-	margin-right: -20px;
+	margin-right: 0px;
 }
 
 .vertical_line{
@@ -477,8 +487,8 @@ a:hover{
 	-moz-box-shadow:inset 0px 0px 0px 0px #ffffff;
 	-webkit-box-shadow:inset 0px 0px 0px 0px #ffffff;
 	box-shadow:inset 0px 0px 0px 0px #ffffff;
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
-	background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );	
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #FFF), color-stop(1, #E9E9E9) );
+	background:-moz-linear-gradient( center top, #FFF 5%, #E9E9E9 100% );	
 	border:1px solid #dcdcdc;
 	text-shadow:1px 1px 0px #ffffff;
 }
@@ -502,10 +512,6 @@ a:hover{
 }
 
 /*rate*/
-.tooltip .rate{
-	text-align: left;
-}
-
 .rate{
 	text-align: center;
 	padding-top: 15px;
@@ -736,6 +742,7 @@ a:hover{
 	left: 50%;
 	margin-left: -200px;
 	bottom: -3px;
+	background-color: white;
 }
 
 .result_footer{
@@ -1524,13 +1531,8 @@ and (min-width : 400px) {
 		margin-top: 0px;
 	}
 
-	.vertical_padder_inactive{
-		height: 0px;
-		width: 100%;
-	}
-
 	.vertical_padder_active{
-		height: 50px;
+		height: 10px;
 		width: 100%;	
 	}
 
@@ -1612,13 +1614,8 @@ and (min-width : 1280px){
 		padding: 15px;
 	}
 
-	.vertical_padder_inactive{
-		height: 15px;
-		width: 100%;
-	}
-
 	.vertical_padder_active{
-		height: 50px;
+		height: 10px;
 		width: 100%;	
 	}
 
@@ -1645,13 +1642,8 @@ and (min-width : 1366px){
 		width: 350px;
 	}
 
-	.vertical_padder_inactive{
-		height: 15px;
-		width: 100%;
-	}
-
 	.vertical_padder_active{
-		height: 50px;
+		height: 10px;
 		width: 100%;	
 	}
 
@@ -1837,302 +1829,84 @@ and (min-width : 1824px) {
 .jslider_round .jslider-pointer { width: 17px; height: 17px; top: -6px; margin-left: -8px; }
 
 
-/* line 8, ../sass/ns-popover.scss */
-.ns-popover-list-theme {
-  	box-sizing: border-box;
-  	border: solid 1px #d2d2d2;
-  	border-radius: 3px;
-  	z-index: 100;
-  	background-color: #fff;
-  	-webkit-box-shadow: 0 0.3125rem 0.625rem rgba(0, 0, 0, 0.2);
-  	-moz-box-shadow: 0 0.3125rem 0.625rem rgba(0, 0, 0, 0.2);
-  	box-shadow: 0 0.3125rem 0.625rem rgba(0, 0, 0, 0.2); 
-	white-space: normal;
+.focused_tooltip .rating_star{
+	right: 20px;
+	position: absolute;
+	top: 30px;
 }
 
-  	/* line 18, ../sass/ns-popover.scss */
-	.ns-popover-list-theme ul, .ns-popover-list-theme .list {
-	    padding: 0;
-	    margin: 0.625rem 0;
-	    display: block; 
-	}
-
-  	/* line 24, ../sass/ns-popover.scss */
-	.ns-popover-list-theme li, .ns-popover-list-theme .list-item {
-    	list-style-type: none; 
-    }
-   		/* line 27, ../sass/ns-popover.scss */
-    	.ns-popover-list-theme li a, .ns-popover-list-theme .list-item a {
-      		padding: 0.1875rem 0.625rem;
-      		display: block; 
-      	}
-
-      	/* line 31, ../sass/ns-popover.scss */
-      	.ns-popover-list-theme li a:hover, .ns-popover-list-theme .list-item a:hover {
-        	background-color: #f5f5f5; 
-        }
-
-/* line 123, ../sass/ns-popover.scss */
-.ns-popover-tooltip-theme {
-  	box-sizing: border-box;
-  	z-index: 100;
-  	background-color: transparent; 
-}
-  	/* line 128, ../sass/ns-popover.scss */
-  	.ns-popover-tooltip-theme .ns-popover-tooltip {
-    	box-sizing: border-box;
-    	border: solid 1px #d2d2d2;
-    	border-radius: 3px;
-    	z-index: 100;
-    	background-color: #fff;
-    	padding: 0.5625rem 0.875rem;
-    	max-width: 20rem;
-    	font-size: 0.875rem;
-    	-webkit-box-shadow: 0 0.3125rem 0.625rem rgba(0, 0, 0, 0.2);
-    	-moz-box-shadow: 0 0.3125rem 0.625rem rgba(0, 0, 0, 0.2);
-    	box-shadow: 0 0.3125rem 0.625rem rgba(0, 0, 0, 0.2);
-    	margin: 10px; 
-    }
-
-    /* line 142, ../sass/ns-popover.scss */
-    .ns-popover-tooltip-theme .ns-popover-tooltip ul {
-      	padding: 0;
-      	margin: 0.625rem 0;
-      	display: block; 
-    }
-
-    /* line 148, ../sass/ns-popover.scss */
-    .ns-popover-tooltip-theme .ns-popover-tooltip li {
-      	list-style-type: none; 
-    }
-      	/* line 151, ../sass/ns-popover.scss */
-      	.ns-popover-tooltip-theme .ns-popover-tooltip li a {
-        	padding: 0.1875rem 0.625rem;
-        	display: block; 
-        }
-        /* line 155, ../sass/ns-popover.scss */
-        .ns-popover-tooltip-theme .ns-popover-tooltip li a:hover {
-          	background-color: #f5f5f5; 
-        }
-
-  	/* line 163, ../sass/ns-popover.scss */
-  	.ns-popover-tooltip-theme.ns-popover-bottom-placement .triangle {
-    	content: "";
-    	display: block;
-    	width: 0;
-    	height: 0;
-    	border: solid 11px;
-    	border-color: transparent;
-    	position: absolute;
-    	border-bottom-color: #d2d2d2;
-    	left: 50%;
-    	top: -11px;
-    	margin-left: -11px; 
-    }
-
-    /* line 56, ../sass/ns-popover.scss */
-    .ns-popover-tooltip-theme.ns-popover-bottom-placement .triangle:after {
-      	content: " ";
-      	display: block;
-      	width: 0;
-      	height: 0;
-      	border: solid 10px;
-      	border-color: transparent;
-      	position: absolute; 
-    }
-
-    /* line 86, ../sass/ns-popover.scss */
-    .ns-popover-tooltip-theme.ns-popover-bottom-placement .triangle:after {
-      	border-bottom-color: white;
-      	border-top-width: 0;
-      	top: 1px;
-      	margin-left: -10px; 
-    }
-
-  	/* line 169, ../sass/ns-popover.scss */
-  	.ns-popover-tooltip-theme.ns-popover-top-placement .triangle {
-    	content: "";
-    	display: block;
-    	width: 0;
-    	height: 0;
-    	border: solid 11px;
-    	border-color: transparent;
-    	position: absolute;
-    	border-top-color: #d2d2d2;
-    	left: 50%;
-    	bottom: -11px;
-    	margin-left: -11px; 
-    }
-    /* line 56, ../sass/ns-popover.scss */
-    .ns-popover-tooltip-theme.ns-popover-top-placement .triangle:after {
-      	content: " ";
-      	display: block;
-      	width: 0;
-      	height: 0;
-      	border: solid 10px;
-      	border-color: transparent;
-      	position: absolute; 
-    }
-    /* line 72, ../sass/ns-popover.scss */
-    .ns-popover-tooltip-theme.ns-popover-top-placement .triangle:after {
-      	border-top-color: white;
-      	border-bottom-width: 0;
-      	bottom: 1px;
-      	margin-left: -10px; 
-    }
-  	/* line 175, ../sass/ns-popover.scss */
-  	.ns-popover-tooltip-theme.ns-popover-right-placement .triangle {
-    	content: "";
-    	display: block;
-    	width: 0;
-    	height: 0;
-    	border: solid 11px;
-    	border-color: transparent;
-    	position: absolute;
-    	border-right-color: #d2d2d2;
-    	top: 50%;
-    	left: -11px;
-    	margin-top: -11px; 
-    }
-
-    /* line 56, ../sass/ns-popover.scss */
-    .ns-popover-tooltip-theme.ns-popover-right-placement .triangle:after {
-      	content: " ";
-      	display: block;
-      	width: 0;
-      	height: 0;
-      	border: solid 10px;
-      	border-color: transparent;
-      	position: absolute; 
-   	}
-
-    /* line 114, ../sass/ns-popover.scss */
-    .ns-popover-tooltip-theme.ns-popover-right-placement .triangle:after {
-      	border-right-color: white;
-      	border-left-width: 0;
-      	left: 1px;
-      	bottom: -10px; 
-    }
-
-  	/* line 181, ../sass/ns-popover.scss */
-  	.ns-popover-tooltip-theme.ns-popover-left-placement .triangle {
-    	content: "";
-    	display: block;
-    	width: 0;
-    	height: 0;
-    	border: solid 11px;
-    	border-color: transparent;
-    	position: absolute;
-    	border-left-color: #d2d2d2;
-    	top: 50%;
-    	right: -11px;
-    	margin-top: -11px; 
-    }
-
-    /* line 56, ../sass/ns-popover.scss */
-    .ns-popover-tooltip-theme.ns-popover-left-placement .triangle:after {
-      	content: " ";
-      	display: block;
-      	width: 0;
-      	height: 0;
-      	border: solid 10px;
-      	border-color: transparent;
-      	position: absolute; 
-    }
-
-    /* line 100, ../sass/ns-popover.scss */
-    .ns-popover-tooltip-theme.ns-popover-left-placement .triangle:after {
-      	border-left-color: white;
-      	border-right-width: 0;
-      	right: 1px;
-      	bottom: -10px; 
-    }
-
-  	/* line 187, ../sass/ns-popover.scss */
-  	.ns-popover-tooltip-theme.ns-popover-left-align .ns-popover-tooltip {
-    	margin-left: 0; 
-    }
-
-  	/* line 193, ../sass/ns-popover.scss */
-  	.ns-popover-tooltip-theme.ns-popover-right-align .ns-popover-tooltip {
-    	margin-right: 0; 
-    }
-
-  	/* line 199, ../sass/ns-popover.scss */
-  	.ns-popover-tooltip-theme.ns-popover-top-align .ns-popover-tooltip {
-    	margin-top: 0; 
-    }
-
-  	/* line 205, ../sass/ns-popover.scss */
-  	.ns-popover-tooltip-theme.ns-popover-bottom-align .ns-popover-tooltip {
-    	margin-bottom: 0; 
-    }
-
-.tooltip{
-	color: #717070;
-	width: 400px;
+.focused_tooltip .book_thumb{
+	height: 50px;
+	display: inline-block;
+	float: left;
+	padding: 2px;
 }
 
-.tooltip img{
+.focused_tooltip .rating_star .rating_text{
+	position: absolute;
+	top: 10px;
+	right: 14px;
+	font-size: .9em;
+	color: black;
+}
+
+.focused_tooltip .users img{
 	width: 30px;
 	height: 30px;
 	display: inline-block;
 	float: left;
 	padding: 2px;
-	/*top: -10px;*/
 }
 
+.focused_tooltip .rate{
+	text-align: left;
+	margin-left: 50px;
+}
 
-.tooltip hr{
+.focused_tooltip hr{
 	opacity: 0.2;
 }
 
-.tooltip .users_count{
+.focused_tooltip .users_count{
 	color: #9E9E9E;
 	font-size: 0.8em;
 	padding-left: 10px;
 }
 
-.tooltip .description{
+.focused_tooltip .description{
 	font-size: 0.9em;
 	padding: 12px;
 }
 
-.tooltip .footer .icons{
-	float: right;
-	padding: 2px;
-	color: #9E9E9E;
-}
-
-.tooltip .footer .icon-share:hover{
-	background-color: #9E9E9E;
-	color: #E6E6E6;
-}
-
-.tooltip .share_menu{
-	position: absolute;
-	background-color: #9E9E9E;
-	color: #E6E6E6;
-	padding: 5px;
-}
-
-.tooltip .share_menu div{
+.focused_tooltip .share_menu div{
 	padding: 2px;
 	border-bottom: 1px solid #9E9E9E;
 }
 
-.tooltip .share_menu div:hover{
+.focuseD_tooltip .share_menu div:hover{
 	background-color: #E6E6E6;
 	color: #9E9E9E;
 }
 
-.tooltip .footer{
+.focused_tooltip .footer{
 	background-color: #E6E6E6;
 	padding: 10px;
 	border-top: 1px solid #D5D5D5;
 }
 
-.tooltip .footer .recommend{
+.focused_tooltip{
+	position: fixed;
+	right: 5px;
+	top: 50%;
+	width: 400px;
+	background-color: white;
+	white-space: initial;
+	margin-top: -250px;
+	box-shadow: 0 7px 15px rgba(0,0,0,0.25);
+	border: 1px solid #FFFFFF;
+}
+
+.focused_tooltip .footer .recommend{
 	border: 1px solid #B8B8B8;
 	padding: 5px;
 	background-color: white;
@@ -2141,7 +1915,7 @@ and (min-width : 1824px) {
 	cursor: pointer;
 }
 
-.tooltip .footer .recommended{
+.focused_tooltip .footer .recommended{
 	background-color: #B8B8B8;
 	color: white;
 	border: 1px solid #B8B8B8;
@@ -2151,8 +1925,8 @@ and (min-width : 1824px) {
 	cursor: pointer;	
 }
 
-.tooltip .footer .recommend:hover,
-.interaction_box .recommend:hover{
+.interaction_box .recommend:hover,
+.focused_tooltip .recommend:hover{
 	-moz-box-shadow:inset 0px 0px 0px 0px #ffffff;
 	-webkit-box-shadow:inset 0px 0px 0px 0px #ffffff;
 	box-shadow:inset 0px 0px 0px 0px #ffffff;
@@ -2162,30 +1936,31 @@ and (min-width : 1824px) {
 	text-shadow:1px 1px 0px #ffffff;
 }
 
-.tooltip .users{
+.focused_tooltip .users{
 	display: -webkit-box;
 	padding: 10px;
 }
 
-.tooltip .header{
+.focused_tooltip .header{
 	padding: 10px 10px 0px 10px;
 }
 
-.tooltip .header .title{
+.focused_tooltip .header .title{
 	cursor: pointer;
 	font-weight: bold;
 	color: #136CB2;
 	font-size: 1.2em;
+	margin-left: 10px;
 }
 
-.tooltip .header .author{
+.focused_tooltip .header .author{
 	cursor: pointer;
 	font-weight: bold;
 	color: #136CB2;
 }
 
-.tooltip .header .author:hover,
-.tooltip .header .title:hover{
+.focused_tooltip .header .title:hover,
+.focused_tooltip .header .author:hover,{
 	text-decoration: underline;
 }
 

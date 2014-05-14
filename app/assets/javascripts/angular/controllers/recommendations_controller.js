@@ -175,6 +175,10 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
     	});
     }
 
+    _handle_focused_book = function(){
+    	$rootScope.focused_book = $scope.recommendations.books.first;
+    }
+
 	_init = function(){
 		//oneMin = 60000
 		var oneSec = 10000;
@@ -196,6 +200,7 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
         _get_recommendations();
         _push_recommendations();
         _bind_destroy();
+        _handle_focused_book();
 	}
 
 	var push_books_timer_event = "";

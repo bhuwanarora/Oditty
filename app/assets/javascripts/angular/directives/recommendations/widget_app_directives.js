@@ -49,33 +49,41 @@ websiteApp.directive('follow', function ($rootScope, $timeout, widgetService) {
     controller: function($scope){
       $scope.toggle_follow = function(){
         if($scope.reader){
+          var reader_name = $scope.reader.name;
           if($scope.reader.follow){
             $scope.reader.follow = false;
             $scope.$emit('removeFromShelf', "READER", $scope.reader);
+            var message = "SUCCESS-Reader "+reader_name+" has been removed from your follow list.";
           }
           else{
             $scope.reader.follow = true;
             $scope.$emit('addToShelf', "READER", $scope.reader);
-            var reader = $scope.reader.name;
-            var message = "SUCCESS-You are now following "+reader;
+            var message = "SUCCESS-You are now following "+reader_name+".";
           }
+          var timeout_event = notify($rootScope, message, $timeout);
           widgetService.follow($scope.reader.id, "READER", $scope.reader.follow);
         }
         else if($scope.author){
+          var author = $scope.author.name;
           if($scope.author.follow){
             $scope.author.follow = false;
             $scope.$emit('removeFromShelf', "AUTHOR", $scope.author);
             widgetService.follow($scope.author.id, "AUTHOR", $scope.author.follow);
+            var message = "SUCCESS-Author "+author+" has been removed from your follow list."; 
           }
           else{
             $scope.author.follow = true;
             $scope.$emit('addToShelf', "AUTHOR", $scope.author);
-            var author = $scope.author.name;
-            var message = "SUCCESS-You are now following Author "+author; 
+            var message = "SUCCESS-You are now following Author "+author+"."; 
           }
+          var timeout_event = notify($rootScope, message, $timeout);
           widgetService.follow($scope.author.id, "AUTHOR", $scope.author.follow);
         }
-
+        if(timeout_event){
+          $scope.$on('destroy', function(){
+            $timeout.cancel(timeout_event);
+          });
+        }
       }
     },
     templateUrl: "/assets/angular/widgets/base/widget/follow.html"
