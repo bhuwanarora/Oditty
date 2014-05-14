@@ -130,12 +130,7 @@
 
 .search_page .internal_links{
 	margin-left: -230px;
-	border: 1px solid;	
 	bottom: -20%;
-}
-
-.search_page .internal_links:hover{
-	border: 1px solid #EBEBEB;
 }
 
 .search_page .secondary_login{
@@ -195,6 +190,7 @@
 	font-size: 1em;
 	z-index: 11;
 	width: 100%;
+	margin-left: 2px;
 }
 
 .website_search_options .option,
@@ -292,7 +288,7 @@
 .search_typeahead_group{
 	position: fixed;
 	left: 50%;
-	top: 50%;
+	top: 35%;
 	width: 456px;
 	height: 37px;
 	margin-left: -235px;

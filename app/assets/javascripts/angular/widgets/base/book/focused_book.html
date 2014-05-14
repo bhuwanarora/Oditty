@@ -1,4 +1,4 @@
-<div class="focused_tooltip animate-fast" ng-if="focused_book">
+<div class="focused_tooltip animate-slow" ng-if="focused_book">
   <div class="header">
   <span><img class="book_thumb" ng-src="{{focused_book.thumb.url}}"/></span>
     <span class="title" ng-click="show_book(2)">
@@ -13,6 +13,28 @@
       <img src="assets/star.png"/>
       <div class="rating_text">{{temp_rating}}</div>
     </div>
+  </div>
+  <hr>
+  <div class="book_info">
+    <span> · </span>
+    <span ng-click="show_book(9)" class="book_link">
+      <span>{{focused_book.readers_count}}</span>
+      <span> Readers</span>
+    </span>
+    <span class="icon-users2"></span> · 
+    <span itemprop="aggregateRating" 
+          itemscope 
+          itemtype="http://schema.org/AggregateRating"
+          ng-click="show_book(11)" class="book_link">
+      <span>{{focused_book.reviews_count}}</span>
+      <span>Reviews</span>
+    </span>
+    <span class="icon-pencil2"></span> · 
+    <span ng-click="show_book(11)" class="book_link">
+      <span>{{focused_book.discussions_count}}</span>
+      <span> Discussions</span>
+    </span>
+    <span class="icon-bubbles2"></span> · 
   </div>
   <hr>
   <div class="description">

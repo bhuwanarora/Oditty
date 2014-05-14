@@ -389,7 +389,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	$scope.handle_keyboard_bindings = function(){
-		if(!$scope.website.searching){
+		if(!$scope.website.show_search_page){
 			if($scope.show_book){
 				if(event.keyCode == 39){
 					event.preventDefault();
@@ -420,8 +420,8 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 
 
 	$scope.search = function(){
-		input_aimed_for_searching = event.currentTarget == event.srcElement;
-		if(input_aimed_for_searching && !$rootScope.show_book){
+		var input_aimed_for_searching = (event.currentTarget == event.srcElement) && !$rootScope.show_book;
+		if(input_aimed_for_searching){
 			$('body').css('white-space', 'normal');
 			$scope.website.searching = true;
 			$rootScope.keyCode = event.keyCode;
@@ -444,6 +444,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		$scope.user.profile_status = 0;
 		$scope.website = {};
 		$scope.website.searching = true;
+		$scope.website.show_search_page = true;
 	    _profile_status_colors();
 
 		_bind_emit();

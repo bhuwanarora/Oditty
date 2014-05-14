@@ -9,8 +9,7 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 	}
 
 	_handle_graph_search = function(selectedItem){
-		$scope.website.searching = false;
-			
+		$scope.hide_search_page();
 	}
 
 	$scope.handle_selection = function(selectedItem, graphOption) {
@@ -31,11 +30,15 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 		if(logged_in){
 			$('body').css('white-space', 'nowrap');
 			$scope.website.searching = false;
+			$scope.website.show_search_page = false;
 			$rootScope.$broadcast('initPage', type);
 			$scope.loading = true;
 			$timeout(function(){
 				$scope.loading = false;
 			}, 2000);
+		}
+		else{
+			$scope.show_login_form = true;
 		}
 	}
 
@@ -228,6 +231,7 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 		$scope.search_tag.current = 0;
 		$scope.search_tag.result_count = 5;
 		$scope.website.searching = true;
+		$scope.website.show_search_page = true;
 		websiteService.get_background_image().then(function(data){
 			$scope.search_style = {'background-image': 'url("'+data.url+'")'};
 		});

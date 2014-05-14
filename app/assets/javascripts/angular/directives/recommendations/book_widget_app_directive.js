@@ -286,11 +286,13 @@ websiteApp.directive('rate', function($rootScope, $timeout, widgetService){
   }
 });
 
-websiteApp.directive('focusedBook', function($rootScope){
+websiteApp.directive('focusedBook', function($rootScope, $timeout){
   return{
     restrict: 'E',
     controller: function($scope){
-      // $rootScope.focused_book = $scope.recomendations.books.first;
+      $scope.show_book = function(page){
+        zoomin_book($scope, $timeout, $rootScope, page);
+      }
     },
     templateUrl: "/assets/angular/widgets/base/book/focused_book.html"
   }

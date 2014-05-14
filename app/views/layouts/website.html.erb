@@ -11,16 +11,17 @@
         <%= render :partial => "website/loading"%>
     </div>
     <div ng-show="!loading">
+      <link rel="stylesheet" type="text/css" href="assets/search_page.css.scss">
       <div ng-include 
             src="'assets/angular/widgets/partials/search.html'" 
-            ng-show="website.searching"
+            ng-if="website.show_search_page"
             class="search_animate animate-very-slow" 
             ng-click="stopSearching($event)"
             ng-controller="searchController"></div>
       <div msd-wheel="bindHorizontalScroll($event, $delta, $deltaX, $deltaY)" 
            ng-animate="msd-wheel"
            class="recommendations"
-           ng-hide="website.searching"
+           ng-hide="website.show_search_page"
            style="height:100%; white-space:nowrap;">
         <%= yield %>
       </div>

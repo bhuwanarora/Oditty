@@ -1,7 +1,7 @@
 websiteApp.directive('moreFilters', function($rootScope, $timeout){
 	return{
 		restrict: 'E',
-		controller: function($scope, recommendationService){
+		controller: function($scope, recommendationService, websiteService){
 			_init = function(){
 				$scope.$on('initPage', function(event, type){
 					_reload_page(type=="BOOK", type=="AUTHOR", type=="READER");
@@ -24,6 +24,13 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 			    recommendationService.get_read_times().then(function(data){
 			    	$scope.readTimeOptions = data["read_times"];
 			    });
+			}
+
+			$scope.advance_filter_changed = function(selected){
+				var message = "SUCCESS-"+selected.text+" added to filters."
+				notify($rootScope, message, $timeout);
+				$scope.$emit('reloadRecommendations');
+				return true;
 			}
 
 			$scope.reset_filters = function(){
@@ -65,10 +72,12 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 			}
 
 			$scope.show_genre_options = function(filter, genre){
-				if(genre == "undefined")
-					var params = String.fromCharCode(event.keyCode);
-				else 
+				if(genre){
 					var params = genre+String.fromCharCode(event.keyCode);
+				}
+				else{
+					var params = String.fromCharCode(event.keyCode);
+				}
 				var filter = "q="+params+"&filter="+filter;
 				recommendationService.get_genres(filter).then(function(data){
 			    	$scope.genres = data["genres"];
@@ -76,13 +85,14 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 			}
 
 			$scope.show_author_options = function(filter, author){
-				if(author == "undefined")
-					var params = String.fromCharCode(event.keyCode);
-				else 
+				if(author){
 					var params = author+String.fromCharCode(event.keyCode);
-				var filter = "q="+params+"&filter="+filter;
-				recommendationService.get_authors(filter).then(function(data){
-			    	$scope.authors = data["authors"];
+				}
+				else{
+					var params = String.fromCharCode(event.keyCode);
+				}
+				websiteService.search(params, "AUTHOR", 3).then(function(data){
+			    	$scope.authors = data["results"];
 			    });
 			}
 

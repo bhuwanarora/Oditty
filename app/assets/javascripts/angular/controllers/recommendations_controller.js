@@ -125,16 +125,36 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
 
 	_update_recommendations = function(data){
 		if($rootScope.filters["filter_type"] == "BOOK"){
-    		$scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);
+			if($scope.recommendations.books.length >= 30){
+				$scope.recommendations.books = data["recommendations"]["books"];
+			}
+			else{
+    			$scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);
+			}
     	}
     	else if($rootScope.filters["filter_type"] == "AUTHOR"){
-    		$scope.recommendations.authors = $scope.recommendations.authors.concat(data["recommendations"]["authors"]);
+    		if($scope.recommendations.authors.length >= 30){
+				$scope.recommendations.authors = data["recommendations"]["authors"];
+			}
+			else{
+    			$scope.recommendations.authors = $scope.recommendations.authors.concat(data["recommendations"]["authors"]);
+			}
     	}
     	else if($rootScope.filters["filter_type"] == "READER"){
-    		$scope.recommendations.readers = $scope.recommendations.readers.concat(data["recommendations"]["readers"]);
+    		if($scope.recommendations.readers.length >= 30){
+				$scope.recommendations.readers = data["recommendations"]["readers"];
+			}
+			else{
+    			$scope.recommendations.readers = $scope.recommendations.readers.concat(data["recommendations"]["readers"]);
+			}
     	}
     	else{
-    		$scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);	
+    		if($scope.recommendations.books.length >= 30){
+				$scope.recommendations.books = data["recommendations"]["books"];
+			}
+			else{
+    			$scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);
+			}
     	}
 	}
 

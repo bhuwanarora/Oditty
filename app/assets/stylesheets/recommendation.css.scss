@@ -1214,6 +1214,7 @@ input:focus{
 	padding: 10px;
 	background-color: white;
 	border-bottom: 1px solid #EEEEEE;
+	white-space: normal;
 }
 
 .stamp_read{
@@ -1525,7 +1526,7 @@ and (min-width : 400px) {
 	}
 
 	.vertical_padder_active{
-		height: 60px;
+		height: 100px;
 		width: 100%;	
 	}
 
@@ -1601,7 +1602,7 @@ and (min-width : 1280px){
 	}
 
 	.vertical_padder_active{
-		height: 60px;
+		height: 100px;
 		width: 100%;	
 	}
 
@@ -1629,7 +1630,7 @@ and (min-width : 1366px){
 	}
 
 	.vertical_padder_active{
-		height: 60px;
+		height: 100px;
 		width: 100%;	
 	}
 
@@ -1811,7 +1812,17 @@ and (min-width : 1824px) {
 .focused_tooltip .rating_star{
 	right: 20px;
 	position: absolute;
-	top: 30px;
+	top: 15px;
+}
+
+.focused_tooltip .book_info{
+	padding-left: 10px;
+	color: #136CB2;
+}
+
+.focused_tooltip .book_info .book_link:hover{
+	text-decoration: underline;
+	cursor: pointer;
 }
 
 .focused_tooltip .book_thumb{

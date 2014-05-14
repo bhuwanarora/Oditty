@@ -83,12 +83,15 @@
 			 	<div>
 				 	<span class="position_dropdown"
 					 	  dropdown-select="countryOptions" 
+					 	  dropdown-onchange="advance_filter_changed(selected)"
 					 	  dropdown-model="countrySelected"></span>
 				 	<span class="position_dropdown"
 				 		  dropdown-select="timeOptions" 
+				 		  dropdown-onchange="advance_filter_changed(selected)"
 				 		  dropdown-model="timeSelected"></span>
 				 	<span class="position_dropdown"
 				 		  dropdown-select="readTimeOptions" 
+				 		  dropdown-onchange="advance_filter_changed(selected)"
 				 		  dropdown-model="readTimeSelected"></span>
 				</div>
 			</div>
