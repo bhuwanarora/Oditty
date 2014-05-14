@@ -533,3 +533,14 @@ websiteApp.directive('angularte', function() {
         }
     }
 });
+
+
+websiteApp.directive('reviews', function(){
+  return{
+    restrict: 'E',
+    controller: function($scope){
+
+    },
+    templateUrl: "assets/angular/widgets/partials/book/reviews.html"
+  }
+});
