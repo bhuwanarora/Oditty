@@ -1,10 +1,11 @@
+<div class="search_typeahead_group">
 	<input set-focus="website.searching" 
 	       ng-keypress="get_search_results($event)" 
 	       ng-keydown="key_down($event)"
 	       ng-keyup="key_up($event)"
 	       ng-model="search_tag.input"
          id="searchInput"
-         ng-blur="expression"
+         class="search_input" 
          placeholder="Search a book, author, reader or a book category..."/>
   <div class="website_search_helpers">
       <div class="option">
@@ -30,3 +31,4 @@
       <div ng-show="item.author_name">by {{item.author_name}}</div> -->
     </div>
   </div>
+</div>

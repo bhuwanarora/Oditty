@@ -58,20 +58,15 @@
 	font-size: 1em;
 }
 
-.search_page input{
-   	position: absolute;
-	left: 50%;
-	top: 50%;
-	width: 456px;
-	height: 37px;
-	margin-left: -235px;
-	margin-top: -20px;
-	font-size: 0.9em;
+.search_input{
+   	font-size: 1em;
 	color: white;
 	padding-left: 10px;
 	border-radius: 2px;
 	border: 1px solid rgba(255, 255, 255, 0.4);
 	background-color: rgba(0, 0, 0, 0.5);
+	width: 98%;
+	height: 100%;
 }
 
 .search_page input::-webkit-input-placeholder {
@@ -193,16 +188,13 @@
 
 .website_search_options,
 .website_search_helpers{
-	width: 469px;
-	top: 50%;
-	left: 50%;
-	margin-top: 20px;
-	margin-left: -235px;
+	top: 40px;
 	position: absolute;
 	box-shadow: 0px 1px 4px 0px #99A3AD, inset 0px 0px 40px #EEEEEE;
 	color: #717170;
 	font-size: 1em;
 	z-index: 11;
+	width: 100%;
 }
 
 .website_search_options .option,
@@ -288,4 +280,33 @@
 
 .login_form .authenticate:active{
 	background-color: #2c4762;
+}
+
+.search_typeahead_options{
+	bottom: 40px;
+	position: absolute;
+	left: 164px;
+	width: 280px;
+}
+
+.search_typeahead_group{
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	width: 456px;
+	height: 37px;
+	margin-left: -235px;
+	margin-top: -20px;
+	z-index: 1;
+}
+
+.recommendations_page .search_typeahead_group{
+	top: 15px;
+	margin-top: 0px;
+}
+
+.recommendations_page .search_input{
+	color: #717070;
+	background-color: white;
+	border: 1px solid #D8D8D8;
 }

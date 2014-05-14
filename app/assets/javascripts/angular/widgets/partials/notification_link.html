@@ -1,8 +1,8 @@
 <div class="notification_link"
 	 ng-class="{'notification_link_active':show_notifications}"
-     title="Notifications">
+     title="Notifications"
+     ng-click="toggle_notifications()">
 	<div class="notification_circle" 
 		 ng-show="!notifications_seen">12</div>
-	<span class="icon-menu2"
-		  ng-click="toggle_notifications()"></span>
+	<span class="icon-menu2"></span>
 </div>

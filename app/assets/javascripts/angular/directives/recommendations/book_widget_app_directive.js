@@ -34,7 +34,7 @@ websiteApp.directive('book', function (widgetService, $rootScope){
         if(margin_right_neg){
           margin_right = "-"+margin_right;
         }
-        $scope.randomise_position = {"margin-left": margin_right, "margin-bottom":margin_top};
+        // $scope.randomise_position = {"margin-left": margin_right, "margin-bottom":margin_top};
         // $scope.book_tilt = {"transform":"rotate("+tilt_angle+")",
         //                   "-ms-transform":"rotate("+tilt_angle+")",
         //                   "-webkit-transform":"rotate("+tilt_angle+")";
