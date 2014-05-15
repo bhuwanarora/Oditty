@@ -15,7 +15,7 @@ websiteApp.directive('book', function (widgetService, $rootScope){
       };
 
       _init = function(){
-        $scope.active_book_filter = true;
+        // $scope.active_book_filter = true;
         var book_id = $scope.book.id;
         widgetService.populate_tooltips(book_id).then(function(data){
           $scope.book.title = data.title;

@@ -227,7 +227,6 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
         $scope.logged = true;
 		$rootScope.filters["filter_type"] = "BOOK";
 		// $scope.reset();
-		debugger
 	}
 
 	var push_books_timer_event = "";

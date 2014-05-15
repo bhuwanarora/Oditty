@@ -49,7 +49,7 @@
 	</div>
 	<div ng-show="!bookmark_selected && !read_selected">
 		<!-- BOOK FILTERS -->
-		<div class="filters" ng-show="active_book_filter">
+		<div class="filters" ng-show="$routeParams.type == 'books'">
 			<div class="filters_panel">
 			 	<type-ahead items="genres" 
 			 				prompt="Filter books by a Genre" 
@@ -99,7 +99,7 @@
 
 
 		<!-- AUTHOR FILTERS -->
-		<div class="filters" ng-show="active_author_filter">
+		<div class="filters" ng-show="$routeParams.type == 'authors'">
 			<div class="filters_panel">
 				<type-ahead items="genres" 
 			 				prompt="GENRE" 
@@ -126,7 +126,7 @@
 		</div>
 
 		<!-- READER FILTERS -->
-		<div class="filters" ng-show="active_reader_filter">
+		<div class="filters" ng-show="$routeParams.type == 'readers'">
 			<div class="filters_panel">
 				<type-ahead items="genres" 
 			 				prompt="GENRE" 

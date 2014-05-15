@@ -66,7 +66,7 @@
 }
 
 /* IE 6 */
-#recommendationFooter {
+* html #recommendationFooter {
    position:absolute;
    top:expression((0-(recommendationFooter.offsetHeight)+(document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight)+(ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop))+'px');
 }
