@@ -225,7 +225,18 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
         _bind_destroy();
         _handle_focused_book();
         $scope.logged = true;
-		$rootScope.filters["filter_type"] = "BOOK";
+        if($routeParams.type == "books"){
+        	$rootScope.filters["filter_type"] = "BOOK";
+        }
+        else if($routeParams.type == "authors"){
+        	$rootScope.filters["filter_type"] = "AUTHOR";
+        }
+        else if($routeParams.type == "readers"){
+        	$rootScope.filters["filter_type"] = "READER";
+        }
+        else{
+			$rootScope.filters["filter_type"] = "BOOK";
+        }
 		// $scope.reset();
 	}
 

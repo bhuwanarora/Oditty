@@ -62,14 +62,14 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 				// $scope.$emit('moveRight');
 			}
 
-			$scope.toggle_active_filter = function(){
-				var elementText = event.currentTarget.innerText.trim();
-				var isBook = elementText == "BOOK" || event.currentTarget.className.indexOf("main_book_icon")!=-1;
-				var isAuthor = elementText == "AUTHOR" || event.currentTarget.className.indexOf("main_author_icon")!=-1;
-				var isReader = elementText == "READER" || event.currentTarget.className.indexOf("main_reader_icon")!=-1;
-				$scope.show_menu = false;
-				// _reload_page(isBook, isAuthor, isReader);
-			}
+			// $scope.toggle_active_filter = function(){
+			// 	var elementText = event.currentTarget.innerText.trim();
+			// 	var isBook = elementText == "BOOK" || event.currentTarget.className.indexOf("main_book_icon")!=-1;
+			// 	var isAuthor = elementText == "AUTHOR" || event.currentTarget.className.indexOf("main_author_icon")!=-1;
+			// 	var isReader = elementText == "READER" || event.currentTarget.className.indexOf("main_reader_icon")!=-1;
+			// 	$scope.show_menu = false;
+			// 	// _reload_page(isBook, isAuthor, isReader);
+			// }
 
 			$scope.show_genre_options = function(filter, genre){
 				if(genre){

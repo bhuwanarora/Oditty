@@ -12,10 +12,17 @@ websiteApp.config(function ($sceDelegateProvider, $routeProvider) {
     {
         templateUrl: 'assets/angular/widgets/partials/recommendations.html'
     })
+  .when('/recommendations/:type/status/:status',
+    {
+        templateUrl: 'assets/angular/widgets/partials/recommendations.html'
+    })
   .when('/',
     {
         templateUrl: 'assets/angular/widgets/partials/search.html'
-    });
+    })
+  .otherwise({
+    templateUrl: 'assets/angular/widgets/partials/search.html'
+  });
 });
 
 angular.element(document).ready(function() {

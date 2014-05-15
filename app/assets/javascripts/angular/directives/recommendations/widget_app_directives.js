@@ -18,7 +18,7 @@ websiteApp.directive('category', function () {
         else if(isAuthor){
           var obj = $scope.$parent.author;
         }
-        if(obj.category){
+        if(obj){
           var name = obj.category.name;
           var description = obj.category.description;
           $scope.nameArray = name.split('');
@@ -129,7 +129,9 @@ websiteApp.directive('widgetThumb', function ($timeout, $rootScope) {
           else if($scope.reader){
             var obj = $scope.reader;
           }
-          $scope.thumb_style = {'background': "url('"+obj.thumb.url+"')"};
+          if(obj){
+            $scope.thumb_style = {'background': "url('"+obj.thumb.url+"')"};
+          }
         }, global_display_timer);
 
         $scope.$on('destroy', function(){
@@ -152,7 +154,9 @@ websiteApp.directive('widgetThumb', function ($timeout, $rootScope) {
 
       _init = function(){
         var obj = _get_obj();
-        $scope.thumb_style = {'background-color': obj.thumb.background_color};
+        if(obj){
+          $scope.thumb_style = {'background-color': obj.thumb.background_color};
+        }
         // $scope.$on('showImages', function(){
         //   $scope.show_images();
         // });
