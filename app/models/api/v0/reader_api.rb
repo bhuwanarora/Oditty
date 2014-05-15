@@ -43,7 +43,7 @@ module Api
 			def self.recommendations
 				test_name = Filter.where(:id => JSON.parse(params[:q])["more_filters"]).pluck(:name) rescue "City"
 
-				test_reader = {:thumb => {}}
+				test_reader = {:thumb => {}, :name => "Test Reader"}
 				test_reader1 = test_reader.merge(
 					:thumb => {
 						:url => "assets/profile_pic.jpeg",

@@ -94,94 +94,91 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	_profile_status_colors = function(){
-		var profile_status = $scope.user.profile_status;
+		var profile_status = $rootScope.user.profile_status;
 		if(profile_status == 0){
-			$scope.user.profile_status_color = "#4374e0";
+			$rootScope.user.profile_status_color = "#4374e0";
 		}
 		else if(profile_status == 1){
-			$scope.user.profile_status_color = "#65b045";
+			$rootScope.user.profile_status_color = "#65b045";
 		}
 		else if(profile_status == 2){
-			$scope.user.profile_status_color = "#d73d32";
+			$rootScope.user.profile_status_color = "#d73d32";
 		}
 		else if(profile_status == 3){
-			$scope.user.profile_status_color = "#11a9cc";
+			$rootScope.user.profile_status_color = "#11a9cc";
 		}
 		else if(profile_status == 4){
-			$scope.user.profile_status_color = "#981b48";
+			$rootScope.user.profile_status_color = "#981b48";
 		}
 		else if(profile_status == 5){
-			$scope.user.profile_status_color = "#7e3794";
+			$rootScope.user.profile_status_color = "#7e3794";
 		}
 		else if(profile_status == 6){
-			$scope.user.profile_status_color = "#4374e0";
+			$rootScope.user.profile_status_color = "#4374e0";
 		}
 	}
 
 	$scope.update_profile = function(){
 		var enter_pressed = event.keyCode == 13;
 		if(enter_pressed){
-			var profile_status = $scope.user.profile_status;
+			var profile_status = $rootScope.user.profile_status;
 			if(profile_status == 0){
-				websiteService.update_profile($scope.user);
-				$scope.user.profile_status = $scope.user.profile_status + 1;
+				websiteService.update_profile($rootScope.user);
+				$rootScope.user.profile_status = $rootScope.user.profile_status + 1;
 				_profile_status_colors();
 			}
 		}
 	}
 
 	$scope.authenticate = function(){
-		var data_json = $scope.user;
+		var data_json = $rootScope.user;
 		websiteService.authenticate(data_json).then(function(data){
 			if(data.message == "success"){
-				$scope.logged = true;
-				$scope.user.profile_status = data.profile_status;
-				$scope.user.id = data.user_id;
-				$scope.show_login_form = false;
+				$rootScope.user.profile_status = data.profile_status;
+				$rootScope.user.logged = true;
+				$rootScope.user.id = data.user_id;
+				$scope.show_login_form = true;
 				_profile_status_colors();
 				websiteService.get_user_details().then(function(data){
-		    		$scope.user.books = data["books"];
+		    		$rootScope.user.books = data["books"];
 		    	});
-				websiteService.get_notifications($scope.user).then(function(data){
+				websiteService.get_notifications($rootScope.user).then(function(data){
 					$scope.notifications = data.notifications;
 				});
-			}
-			else{
-				$scope.logged = false;	
 			}
 		});
 	}
 
 	_handle_info_card_bindings = function($scope){
-		if($scope.user.profile_status == 3){
+		if($rootScope.user.profile_status == 3){
 			if(navigator.geolocation){
 				navigator.geolocation.getCurrentPosition(function(position){
 					var latitude = position.coords.latitude;
 					var longitude = position.coords.longitude;
-					$scope.user.latitude = latitude;
-					$scope.user.longitude = longitude;
+					$rootScope.user.latitude = latitude;
+					$rootScope.user.longitude = longitude;
 				});
 			}
 			else{
 				x.innerHTML="Geolocation is not supported by this browser.";
 			}
 		}
-		else if($scope.user.profile_status == 4){
+		else if($rootScope.user.profile_status == 4){
 			// $rootScope.$broadcast('showBookReadShelf');
 		}
 	}
 
 	$scope.prev_profile_state = function(){
-		if($scope.user.profile_status != 0){
-			$scope.user.profile_status = $scope.user.profile_status - 1;
+		if($rootScope.user.profile_status != 0){
+			$rootScope.user.profile_status = $rootScope.user.profile_status - 1;
 			_handle_info_card_bindings($scope);
 			_profile_status_colors();
 		}
 	}
 
 	$scope.next_profile_state = function(){
-		if($scope.user.profile_status != 6){
-			$scope.user.profile_status = $scope.user.profile_status + 1;
+		if($rootScope.user.profile_status != 6){
+			$rootScope.user.profile_status = $rootScope.user.profile_status + 1;
 			_handle_info_card_bindings($scope);
 			_profile_status_colors();
 		}
@@ -212,7 +209,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
         Facebook.api('/me', function(response) {
 		    $scope.$apply(function() {
 		    	console.log('logged_in user', response);
-		        $scope.user = response;
+		        $rootScope.user = response;
 		    });
         });
     };
@@ -220,7 +217,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
   	$scope.logout = function() {
     	Facebook.logout(function() {
       		$scope.$apply(function() {
-        		$scope.user   = {};
+        		$rootScope.user   = {};
         		$rootScope.logged = false;
       		});
     	});
@@ -299,51 +296,51 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	_add_listeners = function(){
 		add_to_shelf_event = $scope.$on('addToShelf', function(event, type, data){
 			if(type == "BOOK"){
-	    		$scope.user.books['read'].push(data);
+	    		$rootScope.user.books['read'].push(data);
 			}
 			else if(type == "AUTHOR"){
-				$scope.user.authors['follow'].push(data);
+				$rootScope.user.authors['follow'].push(data);
 			}
 			else if(type == "READER"){
-				$scope.user.readers['follow'].push(data);
+				$rootScope.user.readers['follow'].push(data);
 			}
 	    	event.stopPropagation();
 	    });
 
 	    remove_from_shelf = $scope.$on('removeFromShelf', function(event, type, data){
 	    	if(type == "BOOK"){
-		    	var index = $scope.user.books['read'].indexOf(data);
-		    	$scope.user.books['read'].splice(index, 1);
+		    	var index = $rootScope.user.books['read'].indexOf(data);
+		    	$rootScope.user.books['read'].splice(index, 1);
 	    	}
 	    	else if(type == "AUTHOR"){
-	    		var index = $scope.user.authors['follow'].indexOf(data);
-		    	$scope.user.authors['follow'].splice(index, 1);
+	    		var index = $rootScope.user.authors['follow'].indexOf(data);
+		    	$rootScope.user.authors['follow'].splice(index, 1);
 	    	}
 	    	else if(type == "READER"){
-	    		var index = $scope.user.readers['follow'].indexOf(data);
-		    	$scope.user.readers['follow'].splice(index, 1);
+	    		var index = $rootScope.user.readers['follow'].indexOf(data);
+		    	$rootScope.user.readers['follow'].splice(index, 1);
 	    	}
 		    event.stopPropagation();	
 	    });
 
 	    add_to_bookmarks_event = $scope.$on('addToBookmarks', function(event, type, data){
 	    	if(type == "BOOK"){
-	    		$scope.user.books['bookmarked'].push(data);
+	    		$rootScope.user.books['bookmarked'].push(data);
 	    	}
 	    	else if(type == "AUTHOR"){
-	    		$scope.user.authors['bookmarked'].push(data);
+	    		$rootScope.user.authors['bookmarked'].push(data);
 	    	}
 	    	event.stopPropagation();
 	    });
 
 	    remove_from_bookmarks_event = $scope.$on('removeFromBookmarks', function(event, type, data){
 	    	if(type == "BOOK"){
-		    	var index = $scope.user.books['bookmarked'].indexOf(data);
-		    	$scope.user.books['bookmarked'].splice(index, 1);
+		    	var index = $rootScope.user.books['bookmarked'].indexOf(data);
+		    	$rootScope.user.books['bookmarked'].splice(index, 1);
 	    	}
 	    	else if(type == "AUTHOR"){
-	    		var index = $scope.user.authors['bookmarked'].indexOf(data);
-		    	$scope.user.authors['bookmarked'].splice(index, 1);	
+	    		var index = $rootScope.user.authors['bookmarked'].indexOf(data);
+		    	$rootScope.user.authors['bookmarked'].splice(index, 1);	
 	    	}
 	    	event.stopPropagation();
 	    });
@@ -367,7 +364,8 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	_initiate_loading_page = function(){
 		$scope.loading = true;
 		$scope.drop_icon = false;
-		
+		$scope.show_login_form = true;
+
 		$timeout(function(){
 			$scope.loading = false;
 			// $scope.drop_icon = false;
@@ -436,12 +434,12 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		$scope.test = {time: 1970};
 		$scope.detailed_book = {};
 		$rootScope.initPage = 3;
-		$scope.logged = false;
 		// Define user empty data :/
-		$scope.user = {'books': {'bookmarked':[], 'read': []},
+		$rootScope.user = {'books': {'bookmarked':[], 'read': []},
 						'authors': {'bookmarked': [], 'follow': []},
-						'readers': {'follow': []}};
-		$scope.user.profile_status = 0;
+						'readers': {'follow': []},
+						'logged': false};
+		$rootScope.user.profile_status = 0;
 		$scope.website = {};
 		$scope.website.searching = true;
 		$scope.website.show_search_page = true;

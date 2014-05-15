@@ -53,21 +53,21 @@
 		 	</type-ahead>
 		 	<div class="menu_group" ng-class="{'menu_group_active':show_menu}">
 			 	<div class="menu" ng-if="show_menu">
-			 		<div ng-hide="$routeParams.type == 'books'" href="#recommendations/books">
-				 		<a href="#recommendations/books">
-				 			<span>Books</span>
-				 		</a>
-			 		</div>
-			 		<div ng-hide="$routeParams.type == 'authors'">
-				 		<a href="#recommendations/authors">
+				 	<a ng-href="#user/{{$routeParams.id}}/recommendations/books">
+				 		<div ng-hide="$routeParams.type == 'books'" href="#recommendations/books">
+					 		<span>Books</span>
+				 		</div>
+				 	</a>
+				 	<a ng-href="#user/{{$routeParams.id}}/recommendations/authors">
+			 			<div ng-hide="$routeParams.type == 'authors'">
 				 			<span>Authors</span>
-				 		</a>
-			 		</div>
-			 		<div ng-hide="$routeParams.type == 'readers'">
-				 		<a href="#recommendations/readers">
+			 			</div>
+				 	</a>
+				 	<a ng-href="#user/{{$routeParams.id}}/recommendations/readers">
+			 			<div ng-hide="$routeParams.type == 'readers'">
 				 			<span>Readers</span>
-				 		</a>
-			 		</div>
+			 			</div>
+				 	</a>
 			 	</div>
 				<div ng-class="{'advanced_filter_active':show_menu, 'advanced_filter':!show_menu}"
 					 ng-click="toggle_menu()">
@@ -88,6 +88,7 @@
 		</div>
 		<shelf ng-if="bookmark_selected || read_selected" ></shelf>
 		<more-filters></more-filters>
+
 		<div class="notifications animate-fast" ng-show="show_notifications">
 			<notification-link></notification-link>
 			<div class="notification_elements">
@@ -96,6 +97,7 @@
 				</div>
 			</div>
 		</div>
+		
 		<div class="vertical_padder_active"></div>
 		<!-- <div class="recommendations_page"><search-bar></search-bar></div> -->
 		<div ng-switch on="panel_selected">
@@ -106,12 +108,8 @@
 							Bookmark some books
 						</div>
 						<div ng-switch-default>
-							<div class="horizontal_padder_active">
-							</div>
 							<div ng-repeat="user_book in user.books.bookmarked" class="recommendation_block">
 								<book track id="{{user_book.category.name | lowercase}}-{{user_book.id}}" data="user_book"></book>
-							</div>
-							<div class="horizontal_padder_active">
 							</div>
 						</div>
 					</div>
@@ -122,12 +120,8 @@
 							Add Some Authors To Bookmark
 						</div>
 						<div ng-switch-default>
-							<div class="horizontal_padder_active">
-							</div>
 							<div ng-repeat="author in user.authors.bookmarked" class="recommendation_block">
 								<author track id="{{author.category.name | lowercase}}-{{author.id}}" data="author"></author>
-							</div>
-							<div class="horizontal_padder_active">
 							</div>
 						</div>
 					</div>
@@ -140,12 +134,8 @@
 							Add Some books to read				
 						</div>
 						<div ng-switch-default>
-							<div class="horizontal_padder_active">
-							</div>
 							<div ng-repeat="user_book in user.books.read" class="recommendation_block">
 								<book track id="{{user_book.category.name | lowercase}}-{{user_book.id}}" data="user_book"></book>
-							</div>
-							<div class="horizontal_padder_active">
 							</div>
 						</div>
 					</div>
@@ -156,12 +146,8 @@
 							Add Some Authors To Follow
 						</div>
 						<div ng-switch-default>
-							<div class="horizontal_padder_active">
-							</div>
 							<div ng-repeat="author in user.authors.follow" class="recommendation_block">
 								<author track id="{{author.category.name | lowercase}}-{{author.id}}" data="author"></author>
-							</div>
-							<div class="horizontal_padder_active">
 							</div>
 						</div>
 					</div>
@@ -172,12 +158,8 @@
 							Add Some readers to follow				
 						</div>
 						<div ng-switch-default>
-							<div class="horizontal_padder_active">
-							</div>
 							<div ng-repeat="reader in user.readers.follow" class="recommendation_block">
 								<reader track id="{{reader.category.name | lowercase}}-{{reader.id}}" data="reader"></reader>
-							</div>
-							<div class="horizontal_padder_active">
 							</div>
 						</div>
 					</div>

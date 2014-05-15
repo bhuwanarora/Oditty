@@ -224,7 +224,6 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
         // _push_recommendations();
         _bind_destroy();
         _handle_focused_book();
-        $scope.logged = true;
         if($routeParams.type == "books"){
         	$rootScope.filters["filter_type"] = "BOOK";
         }
@@ -236,8 +235,8 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
         }
         else{
 			$rootScope.filters["filter_type"] = "BOOK";
+			$scope.show_notifications = true;
         }
-		// $scope.reset();
 	}
 
 	var push_books_timer_event = "";
