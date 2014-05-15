@@ -8,9 +8,13 @@ websiteApp.config(function ($sceDelegateProvider, $routeProvider) {
     {
       templateUrl: 'assets/angular/widgets/partials/search.html'
     })
-  .when('/',
+  .when('/recommendations/:type',
     {
         templateUrl: 'assets/angular/widgets/partials/recommendations.html'
+    })
+  .when('/',
+    {
+        templateUrl: 'assets/angular/widgets/partials/search.html'
     });
 });
 

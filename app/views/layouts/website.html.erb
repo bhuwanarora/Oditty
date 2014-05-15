@@ -4,41 +4,19 @@
     <title>ReadersDoor</title>
     <link href="/assets/icomoon.css" rel="stylesheet">
   </head>
-  <body ng-controller="websiteAppController" 
-        ng-keypress="search()" 
-        ng-keydown="handle_keyboard_bindings()"
-        ng-mouseout="showFeebackForm()">
-        <%= render :partial => "website/loading"%>
-    </div>
+  <body ng-controller="websiteAppController">
+    <%= render :partial => "website/loading"%>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/angular/vendors/*.js")] %>
+    <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/angular/apps/*.js")] %>
+    <%= javascript_include_tag Rails.root.join("app/assets/javascripts/angular/controllers/website_controller.js") %>
+    <%= javascript_include_tag Rails.root.join("app/assets/javascripts/angular/services/website_service.js") %>
+    <%= javascript_include_tag Rails.root.join("app/assets/javascripts/angular/directives/website_directives.js") %>
+    <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/lib/**/*.js")] %>
+    <link rel="stylesheet" type="text/css" href="assets/website.css">
+    <script src="assets/angular/controllers/search_controller.js"></script>
     <div ng-show="!loading">
-      <link rel="stylesheet" type="text/css" href="assets/search_page.css.scss">
-      <div ng-include 
-            src="'assets/angular/widgets/partials/search.html'" 
-            ng-if="website.show_search_page"
-            class="search_animate animate-very-slow" 
-            ng-click="stopSearching($event)"
-            ng-controller="searchController"></div>
-      <div msd-wheel="bindHorizontalScroll($event, $delta, $deltaX, $deltaY)" 
-           ng-animate="msd-wheel"
-           class="recommendations"
-           ng-hide="website.show_search_page"
-           style="height:100%; white-space:nowrap;">
-        <%= yield %>
-      </div>
-      <div ng-if="show_book" class="fade_cover">
-        <div class="close_book">
-          CLOSE
-        </div>
-      </div>
-      <link rel="stylesheet" type="text/css" 
-            href="assets/detailed_book.css.scss" ng-if="show_book">
-      <flipbook ng-if="show_book"></flipbook>
-      <link rel="stylesheet" type="text/css" 
-            href="assets/dock.css.scss" ng-if="show_book">
-      <dock ng-if="show_book"></dock>
-      <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-      <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/angular/**/*.js")] %>
-      <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/lib/**/*.js")] %>
+      <div ng-view></div>
       <%= csrf_meta_tags %>
       <%= render :partial => "shared/favicon" %>
       <%= render :partial => "shared/meta_tags"%>
@@ -51,7 +29,6 @@
         ga('create', 'UA-35051501-1', 'readersdoor.com');
         ga('send', 'pageview');
       </script>
-      <%#= render :partial => "shared/responsive" %>
     </div>
   </body>
 </html>

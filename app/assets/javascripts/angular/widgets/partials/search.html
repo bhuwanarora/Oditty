@@ -1,89 +1,97 @@
-<div class="search_page"
-     ng-style="search_style">
-	<div class="logo">
-    <span>r</span>
-    <span>e</span>
-    <span>a</span>
-    <span>d</span>
-    <span>e</span>
-    <span>r</span>
-    <span style="letter-spacing:-8px">`</span>
-    <span>s</span>
-    <span>&nbsp;</span>
-    <span>d</span>
-    <span>o</span>
-    <span>o</span>
-    <span>r</span>
-  </div>
-    <!-- <div class="logo">reader's door</div> -->
-	<div class="tagline">
-		<span class="icon-quote-left"></span>
-		<span>Live and build the years with books.</span>
-		<span class="icon-quote-right"></span></div>
-	<div class="login_button" 
-		 ng-click="toggle_login_panel()"
-	     ng-show="!logged">
-	     <span ng-if="!show_login_form">
-	     	LOG IN
-	     	<span class="icon-plus"></span>
-	     </span>
-	     <span ng-if="show_login_form">
-	     	SEARCH
-	     	<span class="icon-close"></span>
-	     </span>
+<link rel="stylesheet" type="text/css" href="assets/search_page.css.scss">
+
+<div ng-if="website.show_search_page"
+    class="search_animate animate-very-slow" 
+    ng-click="stopSearching($event)"
+    ng-controller="searchController">
+	<div class="search_page"
+	     ng-style="search_style">
+		<div class="logo">
+	    <span>r</span>
+	    <span>e</span>
+	    <span>a</span>
+	    <span>d</span>
+	    <span>e</span>
+	    <span>r</span>
+	    <span style="letter-spacing:-8px">`</span>
+	    <span>s</span>
+	    <span>&nbsp;</span>
+	    <span>d</span>
+	    <span>o</span>
+	    <span>o</span>
+	    <span>r</span>
+	  </div>
+	    <!-- <div class="logo">reader's door</div> -->
+		<div class="tagline">
+			<span class="icon-quote-left"></span>
+			<span>Live and build the years with books.</span>
+			<span class="icon-quote-right"></span></div>
+		<div class="login_button" 
+			 ng-click="toggle_login_panel()"
+		     ng-show="!logged">
+		     <span ng-if="!show_login_form">
+		     	LOG IN
+		     	<span class="icon-plus"></span>
+		     </span>
+		     <span ng-if="show_login_form">
+		     	SEARCH
+		     	<span class="icon-close"></span>
+		     </span>
+		</div>
+	  <hr>
+		<!-- <select ng-options="type for type in ['R.D.', 'Books', 'Authors', 'Readers']"> -->
+		</select>
+	  <search-bar></search-bar>
+		<div class="internal_links" ng-if="logged">
+			<span ng-click="hide_search_page('BOOK')" class="animate-fast">
+				<!-- <div class="count">1,000,000,000+</div> -->
+				<div class="heading">Explore Books</div>
+			</span>
+			<span ng-click="hide_search_page('AUTHOR')" class="animate-fast">
+				<!-- <div class="count">4,000,000+</div> -->
+				<div class="heading">Follow Authors</div>
+			</span>
+			<span ng-click="hide_search_page('READER')" class="animate-fast">
+				<!-- <div class="count">1,000,000+</div> -->
+				<div class="heading">Meet Readers</div>
+			</span>
+		</div>
+	  <div class="secondary_login animate-fast" 
+	       ng-click="toggle_login_panel()"
+	       ng-if="!logged && !show_login_form">
+	    Explore books, meet authors and other similar readers.
+	  </div>
 	</div>
-  <hr>
-	<!-- <select ng-options="type for type in ['R.D.', 'Books', 'Authors', 'Readers']"> -->
-	</select>
-  <search-bar></search-bar>
-	<div class="internal_links" ng-if="logged">
-		<span ng-click="hide_search_page('BOOK')" class="animate-fast">
-			<!-- <div class="count">1,000,000,000+</div> -->
-			<div class="heading">Explore Books</div>
-		</span>
-		<span ng-click="hide_search_page('AUTHOR')" class="animate-fast">
-			<!-- <div class="count">4,000,000+</div> -->
-			<div class="heading">Follow Authors</div>
-		</span>
-		<span ng-click="hide_search_page('READER')" class="animate-fast">
-			<!-- <div class="count">1,000,000+</div> -->
-			<div class="heading">Meet Readers</div>
-		</span>
+	<div>
+		<!-- <div class="login_buttons fb" 
+			 ng-show="!logged"
+		     ng-disabled="!facebookReady"
+		     ng-click="intent_login()">
+		</div>
+		<div class="google">
+			<google-plus-signin clientid="88213598927-9fij1u8tf2ldf4apf6qob4hgu0supj54.apps.googleusercontent.com"
+			ng-show="!logged"></google-plus-signin>
+		</div> -->
+		<form class="login_form animate-fast"
+	        ng-if="!logged && show_login_form"
+	        ng-model="user">
+	      	<input class="email" 
+	      	       type="email" 
+	      	       ng-model="user.email" 
+	      	       placeholder="Email"
+	      	       spellcheck="false" 
+	      	       required /><br />
+	      	<input class="password" 
+	      	       type="password" 
+	      	       ng-model="user.password" 
+	      	       placeholder="Password" 
+	      	       spellcheck="false"
+	      	       required /><br />
+	      	
+	      	<div class="authenticate" ng-click="authenticate(user)" type="button">
+	      		LOG IN or SIGN UP
+	      	</div>
+	    </form>
 	</div>
-  <div class="secondary_login animate-fast" 
-       ng-click="toggle_login_panel()"
-       ng-if="!logged && !show_login_form">
-    Explore books, meet authors and other similar readers.
-  </div>
-</div>
-<div>
-	<!-- <div class="login_buttons fb" 
-		 ng-show="!logged"
-	     ng-disabled="!facebookReady"
-	     ng-click="intent_login()">
-	</div>
-	<div class="google">
-		<google-plus-signin clientid="88213598927-9fij1u8tf2ldf4apf6qob4hgu0supj54.apps.googleusercontent.com"
-		ng-show="!logged"></google-plus-signin>
-	</div> -->
-	<form class="login_form animate-fast"
-        ng-if="!logged && show_login_form"
-        ng-model="user">
-      	<input class="email" 
-      	       type="email" 
-      	       ng-model="user.email" 
-      	       placeholder="Email"
-      	       spellcheck="false" 
-      	       required /><br />
-      	<input class="password" 
-      	       type="password" 
-      	       ng-model="user.password" 
-      	       placeholder="Password" 
-      	       spellcheck="false"
-      	       required /><br />
-      	
-      	<div class="authenticate" ng-click="authenticate(user)" type="button">
-      		LOG IN or SIGN UP
-      	</div>
-    </form>
+    
 </div>
