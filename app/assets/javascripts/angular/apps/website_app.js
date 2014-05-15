@@ -22,7 +22,7 @@ websiteApp.config(function ($routeProvider, $locationProvider) {
   .otherwise({
     templateUrl: 'assets/angular/widgets/partials/search.html'
   });
-  $locationProvider.html5Mode(true);
+  // $locationProvider.html5Mode(true);
 });
 
 websiteApp.run(function($rootScope, $location){

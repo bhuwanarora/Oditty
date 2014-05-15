@@ -259,7 +259,7 @@ websiteApp.directive('rate', function($rootScope, $timeout, widgetService){
       }
 
       $scope.mark_as_rated = function(index){
-        $scope.rated = true;
+        $scope.rate_object.rated = true;
         $scope.rate_object.rating = parseInt(index) + 1;
         $scope.temp_rating = parseInt(index) + 1;
         var timeout_event = notify($rootScope, "THANKS-This will help us to recommend you better books.", $timeout);
