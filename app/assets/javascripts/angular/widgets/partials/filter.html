@@ -1,5 +1,13 @@
-<div ng-click="toggle_filter()"
+<!-- <div ng-click="toggle_filter()"
 	 ng-class="{'active_filter':active, 'inactive_filter':!active}"
 	 class="filter">
 	 {{filter.name | uppercase}}
 </div>
+ -->
+
+<a ng-href="#user/{{$routeParams.id}}/recommendations/{{$routeParams.type}}/filter/{{filter.id}}">
+	<div ng-class="{'active_filter':active, 'inactive_filter':!active}"
+		 class="filter">
+		 {{filter.name | uppercase}}
+	</div>
+</a>

@@ -1,13 +1,14 @@
 <div class="interaction_box animate-fast"
 	 ng-if="interact">
 	<recommend data="book"></recommend>
- 	<div class="close"
+ 	<div class="close button_effect"
  		 ng-click="close_interaction_box()">x</div>
  	<div class="own_this_book"
  		 ng-click="own_this_book()">
  		 <span ng-show="!have_this_book">I have this Book</span>
  		 <span ng-show="have_this_book">I don't have this Book</span>
  	</div>
+ 	<hr>
  	<rate data="book"></rate>
 	<div>
 		<span class="highlighter"></span>

@@ -117,7 +117,22 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
 		$scope.show_more_filters = false;
 		$rootScope.filters = {};
         $rootScope.filters["more_filters"] = [];
-        $rootScope.filters["filter_type"] = "BOOK";
+        if($routeParams.type == "books"){
+        	$rootScope.filters["filter_type"] = "BOOK";
+        }
+        else if($routeParams.type == "authors"){
+        	$rootScope.filters["filter_type"] = "AUTHOR";
+        }
+        else if($routeParams.type == "readers"){
+        	$rootScope.filters["filter_type"] = "READER";
+        }
+        else{
+			$rootScope.filters["filter_type"] = "BOOK";
+			$scope.show_notifications = true;
+        }
+        if($routeParams.filter_id){
+        	$scope.show_more_filters = true;
+        }
 		// $rootScope.filters = {"filter_ids": []};
 		// $rootScope.filters["more_filters"] = "BOOK";
 	}
@@ -224,19 +239,7 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
         // _push_recommendations();
         _bind_destroy();
         _handle_focused_book();
-        if($routeParams.type == "books"){
-        	$rootScope.filters["filter_type"] = "BOOK";
-        }
-        else if($routeParams.type == "authors"){
-        	$rootScope.filters["filter_type"] = "AUTHOR";
-        }
-        else if($routeParams.type == "readers"){
-        	$rootScope.filters["filter_type"] = "READER";
-        }
-        else{
-			$rootScope.filters["filter_type"] = "BOOK";
-			$scope.show_notifications = true;
-        }
+    	$scope.$emit('moveRight');    
 	}
 
 	var push_books_timer_event = "";

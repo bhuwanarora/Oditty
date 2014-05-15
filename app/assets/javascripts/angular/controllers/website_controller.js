@@ -1,18 +1,20 @@
 websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout', 'websiteService', 'Facebook', '$document', 'scroller', '$window', '$motion',
 	function($scope, $rootScope, $timeout, websiteService, Facebook, $document, scroller, $window, $motion){
 	$scope.bindHorizontalScroll = function(event, delta, deltaX, deltaY){
-		event.preventDefault();
-		if(delta > 0){
-			$scope.move_left(event);
-	        // event.view.window.scrollBy(-80, 0);
+		if(!$scope.show_notifications){
+			event.preventDefault();
+			if(delta > 0){
+				$scope.move_left(event);
+		        // event.view.window.scrollBy(-80, 0);
+			}
+			else{
+				$scope.move_right(event);
+				_load_recommendations();
+				//move forward
+				// event.view.window.scrollBy(80, 0);
+			}
+			event.stopPropagation();
 		}
-		else{
-			$scope.move_right(event);
-			_load_recommendations();
-			//move forward
-			// event.view.window.scrollBy(80, 0);
-		}
-		event.stopPropagation();
 	}
 
 	$scope.move_left = function(event){

@@ -43,21 +43,21 @@
 		</select>
 	  <search-bar></search-bar>
 		<div class="internal_links" ng-if="user.logged">
+			<a ng-href="#user/{{user.id}}/timeline" class="animate-fast">
+				<!-- <div class="count">1,000,000+</div> -->
+				<div class="heading">Go to Timeline</div>
+			</a>
 			<a ng-href="#user/{{user.id}}/recommendations/books" class="animate-fast">
 				<!-- <div class="count">1,000,000,000+</div> -->
 				<div class="heading">Explore Books</div>
-			</a>
-			<a ng-href="#user/{{user.id}}/recommendations/authors" class="animate-fast">
-				<!-- <div class="count">4,000,000+</div> -->
-				<div class="heading">Follow Authors</div>
 			</a>
 			<a ng-href="#user/{{user.id}}/recommendations/readers" class="animate-fast">
 				<!-- <div class="count">1,000,000+</div> -->
 				<div class="heading">Meet Readers</div>
 			</a>
-			<a ng-href="#user/{{user.id}}/timeline" class="animate-fast">
-				<!-- <div class="count">1,000,000+</div> -->
-				<div class="heading">Go to Timeline</div>
+			<a ng-href="#user/{{user.id}}/recommendations/authors" class="animate-fast">
+				<!-- <div class="count">4,000,000+</div> -->
+				<div class="heading">Follow Authors</div>
 			</a>
 		</div>
 	  <div class="secondary_login animate-fast" 

@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="assets/recommendation.css.scss">
+
 <!-- <horizontal-scroller></horizontal-scroller> -->
 <div msd-wheel="bindHorizontalScroll($event, $delta, $deltaX, $deltaY)" 
    ng-animate="msd-wheel"
@@ -195,8 +195,7 @@
 		<div push-notification="notification_active" 
 			class="push_notification" 
 			ng-if="notification_active">
-			<div class="content">
-				{{message}}
+			<div class="content" ng-bind-html="message">
 			</div>
 		</div>
 		<!-- <message></message> -->

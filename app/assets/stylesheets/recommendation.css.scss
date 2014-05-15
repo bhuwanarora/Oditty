@@ -461,15 +461,17 @@
 
 .interaction_box .close{
 	position: absolute;
-	right: 10px;
-	top: 10px;
+	right: 5px;
+	top: 0px;
 	cursor: pointer;
+	padding: 8px;
+	font-size: 1.2em;
 }
 
 .interaction_box .own_this_book{
 	position: absolute;
 	cursor: pointer;
-	right: 30px;
+	left: 125px;
 	top: 15px;
 	color: #3785B8;
 	font-size: 1em;
@@ -901,19 +903,23 @@
 	text-align: center;
 }
 
+.interaction_box hr{
+	opacity: 0.2;
+}
+
 .interaction_box{
 	position: fixed;
 	left: 50%;
 	margin-left: -250px;
 	box-shadow: 8px 10px 54px 0px #424242; 
 	z-index: 5;
-	padding: 1px;
+	padding: 35px;
 	background-color: white;
 	border-radius: 2px;
 	width: 500px;
 	height: 200px;
 	top: 50%;
-	margin-top: -100px;
+	margin-top: -130px;
 }
 
 .interaction_box_options{
@@ -1080,7 +1086,6 @@
 .rate_radio{
 	margin: -3px;
 	font-size: 0.9em;
-	cursor: pointer;
 	color: #717070;
 }
 
@@ -1106,8 +1111,16 @@
 }
 
 .rate_radio_buttons{
-	padding: 5px;
+	padding: 3px 15px;
+	width: 165px;
 	color: #717070;
+	text-align: left;
+	border: 1px solid none;
+}
+
+.rate_radio_buttons:hover{
+	border: 1px solid #CFCFCF;
+	border-radius: 35px;
 }
 
 .result_count{
@@ -1713,6 +1726,10 @@ and (min-width : 1824px) {
 	top: 15px;
 }
 
+.focused_tooltip .rating_star img{
+	width: 30px;
+}
+
 .focused_tooltip .book_info{
 	padding-left: 10px;
 	color: #136CB2;
@@ -1732,8 +1749,8 @@ and (min-width : 1824px) {
 
 .focused_tooltip .rating_star .rating_text{
 	position: absolute;
-	top: 10px;
-	right: 14px;
+	top: 7px;
+	right: 12px;
 	font-size: .9em;
 	color: black;
 }
@@ -1789,7 +1806,7 @@ and (min-width : 1824px) {
 	width: 400px;
 	background-color: white;
 	white-space: initial;
-	margin-top: -250px;
+	margin-top: -190px;
 	box-shadow: 0 7px 15px rgba(0,0,0,0.25);
 	border: 1px solid #FFFFFF;
 }

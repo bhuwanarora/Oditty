@@ -4,6 +4,7 @@
     <title>ReadersDoor</title>
     <!-- <base href="/"> -->
     <link href="/assets/icomoon.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets/website.css">
   </head>
   <body ng-controller="websiteAppController">
     <%= render :partial => "website/loading"%>
@@ -25,7 +26,8 @@
     <!-- angular controllers -->
     <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/angular/controllers/*.js")] %>
 
-    <link rel="stylesheet" type="text/css" href="assets/website.css">
+    <link rel="stylesheet" type="text/css" href="assets/recommendation.css.scss">
+    
     <div ng-show="!loading">
       <div ng-view></div>
       <%= csrf_meta_tags %>

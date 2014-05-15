@@ -248,39 +248,40 @@ websiteApp.directive('rate', function($rootScope, $timeout, widgetService){
     scope: {'rate_object': '=data'},
     controller: function($scope){
       $scope.show_if_rated = function(index){
-        $scope.temp_rating = $scope.rate_object.rating;
-        $scope.rate_object.rating = parseInt(index) + 1;
+        $scope.temp_rating = $scope.rate_object.user_rating;
+        $scope.rate_object.user_rating = parseInt(index) + 1;
         $scope.ready_to_rate = true;
       }
 
       $scope.reset_rating = function(){
         $scope.ready_to_rate = false;
-        $scope.rate_object.rating = $scope.temp_rating;
+        $scope.rate_object.user_rating = $scope.temp_rating;
       }
 
       $scope.mark_as_rated = function(index){
         $scope.rate_object.rated = true;
-        $scope.rate_object.rating = parseInt(index) + 1;
+        $scope.rate_object.user_rating = parseInt(index) + 1;
         $scope.temp_rating = parseInt(index) + 1;
-        var timeout_event = notify($rootScope, "THANKS-This will help us to recommend you better books.", $timeout);
+        var timeout_event = notify($rootScope, "SUCCESS-Thanks, This will help us to recommend you better books.", $timeout);
 
         $scope.$on('destroy', function(){
           $timeout.cancel(timeout_event);
         });
 
-        widgetService.rate_this_book($scope.rate_object.id, $scope.rate_object.rating);
+        widgetService.rate_this_book($scope.rate_object.id, $scope.rate_object.user_rating);
       }
 
       $scope.is_active = function(index){
         var is_active = false;
         if($scope.rate_object){
           var rating = parseInt(index) + 1;
-          if(rating <= $scope.rate_object.rating){
+          if(rating <= $scope.rate_object.user_rating){
             is_active = true;
           }
         }
         return is_active;
       }
+
     },
     templateUrl: '/assets/angular/widgets/base/book/rate.html'
   }
@@ -310,17 +311,28 @@ websiteApp.directive('interactionBox', function($rootScope, $timeout, widgetServ
       $scope.own_this_book = function(){
         if($scope.have_this_book){
           $scope.have_this_book = false;
+          var message = "SUCCESS-Are you sure, you don't have a copy of "+$scope.book.title+"? <br/>Your friends might be looking for this book.";
         }
         else{
           $scope.have_this_book = true;
+          var message = "SUCCESS-Thanks, Your friends will now know that you own a copy of "+$scope.book.title;
         }
         var id = $scope.book.id;
+        var timeout_event = notify($rootScope, message, $timeout);
         widgetService.own_this_book(id, $scope.have_this_book);
+        $scope.$on('destroy', function(){
+          $timeout.cancel(timeout_event);
+        });
       }
 
       $scope.record_read_time = function(read_timer){
         $scope.book.read_timer = read_timer;
+        var message = "SUCCESS-Thanks we have recorded your approximate time to read "+$scope.book.title+". <br/> This will help us to recommend you books according to your reading skills."
+        var timeout_event = notify($rootScope, message, $timeout);
         widgetService.record_time($scope.book.id, read_timer);
+        $scope.$on('destroy', function(){
+          $timeout.cancel('timeout_event');
+        });
       }
 
       $scope.is_timer = function(read_timer){
@@ -388,14 +400,14 @@ websiteApp.directive('markAsRead', function($rootScope, $timeout, widgetService)
           $scope.book.status = 0;
           $scope.interact = false;
           $scope.$emit('removeFromShelf', "BOOK", $scope.book);
-          var message = "ADVISE-Book "+book_title+" by "+author_name+" has been removed from your Read Shelf. You can mark as read again."
+          var message = "ADVISE-Book "+book_title+" by "+author_name+" has been removed from your Read Shelf.<br/> You can mark as read again."
         }
         else{
           $scope.book.status = 1;
           $scope.$emit('addToShelf', "BOOK", $scope.book);
           $rootScope.$broadcast('glowShelf');
           $scope.interact = true;
-          var message = "ADVISE-Book "+book_title+" by "+author_name+" has been added to your Read Shelf. Also please rate this book."
+          var message = "ADVISE-Book "+book_title+" by "+author_name+" has been added to your Read Shelf.<br/> Also please rate this book."
 
           $scope.$on('destroy', function(){
             $timeout.cancel(timeout_event);

@@ -131,62 +131,75 @@ websiteApp.directive('notificationLink', function(){
 	}
 });
 
-websiteApp.directive('filter', function($rootScope, $timeout){
+websiteApp.directive('filter', function($rootScope, $timeout, $routeParams){
 	return{
 		restrict: 'E',
 		scope: { 'filter': '=data' },
 		controller: function($scope){
-			$scope.toggle_filter = function(){
-				type = "more_filters";
-				var filter_id = $scope.filter["id"];
-				var filter_name = $scope.filter["name"];
-				var index = $rootScope.filters[type].indexOf(filter_id);
+			// $scope.toggle_filter = function(){
+			// 	type = "more_filters";
+			// 	var filter_id = $scope.filter["id"];
+			// 	var filter_name = $scope.filter["name"];
+			// 	var index = $rootScope.filters[type].indexOf(filter_id);
 				
-				if($scope.active == true){
-					$scope.active = false;
-					if(index != -1){
-						$rootScope.filters[type].splice(index, 1);
-					}
-					var message = "SUCCESS-'"+filter_name+"' removed from filters.";
-				}
-				else{
-					$scope.active = true;
-					if(index == -1){
-						$rootScope.filters[type].push(filter_id);
-					}
-					var message = "SUCCESS-'"+filter_name+"' added to filters.";
-				}
-				$scope.$emit('reloadRecommendations');
-				var timeout_event = notify($rootScope, message, $timeout);
+			// 	if($scope.active == true){
+			// 		$scope.active = false;
+			// 		if(index != -1){
+			// 			$rootScope.filters[type].splice(index, 1);
+			// 		}
+			// 		var message = "SUCCESS-'"+filter_name+"' removed from filters.";
+			// 	}
+			// 	else{
+			// 		$scope.active = true;
+			// 		if(index == -1){
+			// 			$rootScope.filters[type].push(filter_id);
+			// 		}
+			// 		var message = "SUCCESS-'"+filter_name+"' added to filters.";
+			// 	}
+			// 	$scope.$emit('reloadRecommendations');
+			// 	var timeout_event = notify($rootScope, message, $timeout);
 
-				$scope.$on('destroy', function(){
-					$timeout.cancel(timeout_event);
-				})
-			}
+			// 	$scope.$on('destroy', function(){
+			// 		$timeout.cancel(timeout_event);
+			// 	})
+			// }
 
 			_initialise_filters = function(type){
 				if($scope.filter){
-					var filter_id = $scope.filter["id"];
-					var index = $rootScope.filters[type].indexOf(filter_id);
-					var already_selected = index != -1;
-					if (!already_selected){
-						if($scope.filter["priority"] == 100){
-							$scope.active = true;
-							$rootScope.filters[type].push(filter_id);
-						}
-						else{
-							$scope.active = false;
-						}
+					var filter_id = $scope.filter.id;
+					var filter_name = $scope.filter.name;
+					if(filter_id == parseInt($scope.$routeParams.filter_id)){
+						$scope.active = true;
+						$rootScope.filters[type].push(filter_id);
+						var message = "SUCCESS-'"+filter_name+"' added to filters.";
+						var timeout_event = notify($rootScope, message, $timeout);
+						$scope.$on('destroy', function(){
+							$timeout.cancel(timeout_event);
+						});
 					}
 					else{
-						if($rootScope.filters[type][filter_id]){
-							$scope.active = true;
-						}
-						else{
-							$scope.active = false;
-							$rootScope.filters[type].splice(index, 1);
-						}
+						$scope.active = false;
 					}
+					// var index = $rootScope.filters[type].indexOf(filter_id);
+					// var already_selected = index != -1;
+					// if (!already_selected){
+					// 	if($scope.filter["priority"] == 100){
+					// 		$scope.active = true;
+					// 		$rootScope.filters[type].push(filter_id);
+					// 	}
+					// 	else{
+					// 		$scope.active = false;
+					// 	}
+					// }
+					// else{
+					// 	if($rootScope.filters[type][filter_id]){
+					// 		$scope.active = true;
+					// 	}
+					// 	else{
+					// 		$scope.active = false;
+					// 		$rootScope.filters[type].splice(index, 1);
+					// 	}
+					// }
 				}
 			}
 
@@ -199,6 +212,7 @@ websiteApp.directive('filter', function($rootScope, $timeout){
 			}
 
 			_init = function(){
+				$scope.$routeParams = $routeParams;
 				_initialise_filters("more_filters");
 				_add_listeners();
 			}
