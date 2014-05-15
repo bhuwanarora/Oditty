@@ -18,15 +18,11 @@
 	top: 0px;
 }
 
-.search_animate.ng-enter,
-.search_animate.ng-leave.ng-leave-active,
 .message.ng-enter,
 .message.ng-leave.ng-leave-active{
 	opacity: 0;	
 }
 
-.search_animate.ng-leave,
-.search_animate.ng-enter.ng-enter-active,
 .message.ng-leave,
 .message.ng-enter.ng-enter-active{
 	opacity: 1;
@@ -359,28 +355,6 @@
 	border: none;
 	box-shadow: none;
 	color: white;
-}
-
-/*animation*/
-.animate-fast{
-	-webkit-transition:all linear 0.2s;
-    -moz-transition:all linear 0.2s;
-    -o-transition:all linear 0.2s;
-    transition:all linear 0.2s;
-}
-
-.animate-slow{
-	-webkit-transition:all linear 0.5s;
-    -moz-transition:all linear 0.5s;
-    -o-transition:all linear 0.5s;
-    transition:all linear 0.5s;	
-}
-
-.animate-very-slow{
-	-webkit-transition:all linear 0.9s;
-    -moz-transition:all linear 0.9s;
-    -o-transition:all linear 0.9s;
-    transition:all linear 0.9s;
 }
 
 /*book navbar*/
@@ -1462,15 +1436,6 @@ and (min-width : 400px) {
 		/*margin-top: 0px;	*/
 	}
 
-	.login_form input{
-		width: 200px;
-		font-size: 1em;
-	}
-
-	.login_form .authenticate{
-		padding: 10px;
-	}
-
 	.wild_cards .header{
 		margin-top: 0px;
 	}
@@ -1540,15 +1505,6 @@ and (min-width : 1280px){
 
 	.info_cards{
 		height: 520px;
-	}
-
-	.login_form input{
-		width: 250px;
-		font-size: 1em;
-	}
-
-	.login_form .authenticate{
-		padding: 15px;
 	}
 
 	.vertical_padder_active{
@@ -1635,15 +1591,6 @@ and (min-width : 1366px){
 	.info_cards{
 		/*margin-top: 15px;*/
 		height: 350px;
-	}
-
-	.login_form input{
-		width: 210px;
-		font-size: 1em;
-	}
-
-	.login_form .authenticate{
-		padding: 10px;
 	}
 
 	.wild_cards .header{

@@ -1,5 +1,4 @@
-websiteApp.controller('recommendationsController', function($scope, $rootScope, $interval, 
-	$http, $timeout, recommendationService, $q){
+websiteApp.controller('recommendationsController', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval){
 
 	$scope.toggle_bookmarked = function(){
 		if(!$scope.bookmark_selected){
@@ -158,6 +157,7 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
     	}
 	}
 
+
 	_push_recommendations = function(){
 		var fiveMinute = 3000;//300000
 		push_books_timer_event = $timeout(function(){
@@ -201,6 +201,9 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
 
 	_init = function(){
 		//oneMin = 60000
+		$scope.$routeParams = $routeParams;
+		// $scope.$emit('reloadRecommendations');
+
 		var oneSec = 10000;
 		$scope.drop_icon = false;
 		$rootScope.show_book = false;
@@ -218,9 +221,13 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
         _init_shelf();
 		_initialize_filters();
         _get_recommendations();
-        _push_recommendations();
+        // _push_recommendations();
         _bind_destroy();
         _handle_focused_book();
+        $scope.logged = true;
+		$rootScope.filters["filter_type"] = "BOOK";
+		// $scope.reset();
+		debugger
 	}
 
 	var push_books_timer_event = "";

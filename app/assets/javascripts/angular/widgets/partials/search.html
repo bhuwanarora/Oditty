@@ -43,18 +43,18 @@
 		</select>
 	  <search-bar></search-bar>
 		<div class="internal_links" ng-if="logged">
-			<span ng-click="hide_search_page('BOOK')" class="animate-fast">
+			<a href="#recommendations/books" class="animate-fast">
 				<!-- <div class="count">1,000,000,000+</div> -->
 				<div class="heading">Explore Books</div>
-			</span>
-			<span ng-click="hide_search_page('AUTHOR')" class="animate-fast">
+			</a>
+			<a href="#recommendations/authors" class="animate-fast">
 				<!-- <div class="count">4,000,000+</div> -->
 				<div class="heading">Follow Authors</div>
-			</span>
-			<span ng-click="hide_search_page('READER')" class="animate-fast">
+			</a>
+			<a href="#recommendations/readers" class="animate-fast">
 				<!-- <div class="count">1,000,000+</div> -->
 				<div class="heading">Meet Readers</div>
-			</span>
+			</a>
 		</div>
 	  <div class="secondary_login animate-fast" 
 	       ng-click="toggle_login_panel()"

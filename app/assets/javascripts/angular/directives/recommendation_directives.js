@@ -3,12 +3,12 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 		restrict: 'E',
 		controller: function($scope, recommendationService, websiteService){
 			_init = function(){
-				$scope.$on('initPage', function(event, type){
-					_reload_page(type=="BOOK", type=="AUTHOR", type=="READER");
-				});
-				$scope.active_book_filter = false;
-				$scope.active_author_filter = false;
-				$scope.active_reader_filter = false;
+				// $scope.$on('initPage', function(event, type){
+				// 	_reload_page(type=="BOOK", type=="AUTHOR", type=="READER");
+				// });
+				// $scope.active_book_filter = true;
+				// $scope.active_author_filter = false;
+				// $scope.active_reader_filter = false;
 				$scope.show_menu = false;
 				$scope.countryOptions = [];
 				$scope.countrySelected = {"text": "Filter books by Country"};
@@ -40,26 +40,26 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 			}
 
 			_reload_page = function(isBook, isAuthor, isReader){
-				if(isBook){
-					$scope.active_book_filter = true;
-					$scope.active_author_filter = false;
-					$scope.active_reader_filter = false;
-					$rootScope.filters["filter_type"] = "BOOK";
-				}
-				else if(isAuthor){
-					$scope.active_book_filter = false;
-					$scope.active_author_filter = true;
-					$scope.active_reader_filter = false;
-					$rootScope.filters["filter_type"] = "AUTHOR";
-				}
-				else if(isReader){
-					$scope.active_book_filter = false;
-					$scope.active_author_filter = false;
-					$scope.active_reader_filter = true;
-					$rootScope.filters["filter_type"] = "READER";
-				}
-				$scope.$emit('reloadRecommendations');
-				$scope.$emit('moveRight');
+				// if(isBook){
+				// 	$scope.active_book_filter = true;
+				// 	$scope.active_author_filter = false;
+				// 	$scope.active_reader_filter = false;
+				// 	$rootScope.filters["filter_type"] = "BOOK";
+				// }
+				// else if(isAuthor){
+				// 	$scope.active_book_filter = false;
+				// 	$scope.active_author_filter = true;
+				// 	$scope.active_reader_filter = false;
+				// 	$rootScope.filters["filter_type"] = "AUTHOR";
+				// }
+				// else if(isReader){
+				// 	$scope.active_book_filter = false;
+				// 	$scope.active_author_filter = false;
+				// 	$scope.active_reader_filter = true;
+				// 	$rootScope.filters["filter_type"] = "READER";
+				// }
+				// $scope.$emit('reloadRecommendations');
+				// $scope.$emit('moveRight');
 			}
 
 			$scope.toggle_active_filter = function(){
@@ -68,7 +68,7 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 				var isAuthor = elementText == "AUTHOR" || event.currentTarget.className.indexOf("main_author_icon")!=-1;
 				var isReader = elementText == "READER" || event.currentTarget.className.indexOf("main_reader_icon")!=-1;
 				$scope.show_menu = false;
-				_reload_page(isBook, isAuthor, isReader);
+				// _reload_page(isBook, isAuthor, isReader);
 			}
 
 			$scope.show_genre_options = function(filter, genre){
