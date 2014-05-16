@@ -1,4 +1,4 @@
-websiteApp.controller('searchController', function($scope, $rootScope, websiteService, $timeout, $sce){
+websiteApp.controller('searchController', function($scope, $rootScope, websiteService, $timeout, $sce, recommendationService){
 	_show_search_result = function(){
 		$rootScope.show_book = true;
 		$rootScope.book_x = 0;
@@ -12,17 +12,117 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 		$scope.hide_search_page();
 	}
 
-	$scope.handle_selection = function(selectedItem, graphOption) {
-	    $scope.search_tag.current = 0;
-	    $scope.search_tag.selected_result = true;
-	    if(graphOption){
-	    	_handle_graph_search(selectedItem);
-	    }
-	    else{
-	    	_show_search_result();
-	    }
-	    event.stopPropagation();
-		$scope.search_tag.input = "";
+	_search_by = function(type){
+		if(!type){
+			var type = $scope.search_type;
+		}
+		if(!$scope.search_level1){
+			$scope.website.searching_level1 = true;
+			$scope.search_level1 = true;
+			if(type == "BOOK"){
+				$scope.book_search = true;
+				$scope.author_search = false;
+				$scope.reader_search = false;
+				$scope.search_tag.search_level1_placeholder = "Search Books...";
+				_init_book_search();
+			}
+			else if(type == "AUTHOR"){
+				$scope.author_search = true;
+				$scope.reader_search = false;
+				$scope.book_search = false;
+				$scope.search_tag.search_level1_placeholder = "Search Authors...";
+				_init_author_search();
+			}
+			else if(type == "READER"){
+				$scope.reader_search = true;
+				$scope.book_search = false;
+				$scope.author_search = false;
+				$scope.search_tag.search_level1_placeholder = "Search Readers...";
+				_init_reader_search();
+			}
+		}
+		else if($scope.search_level1){
+			$scope.search_level2 = true;
+			$scope.website.searching_level2 = true;
+			if(type == "YEAR"){
+				$scope.year_search = true;
+				var search_placeholder = "by year...";
+				recommendationService.get_time_groups().then(function(data){
+					$scope.search_results = data;
+				});
+			}
+			else if(type == "LIST"){
+				$scope.list_search = true;	
+				var search_placeholder = "by list...";
+			}
+			else if(type == "COUNTRY"){
+				$scope.country_search = true;
+				var search_placeholder = "by country...";
+				recommendationService.get_countries().then(function(data){
+					$scope.search_results = data;
+				});
+			}
+			else if(type == "GENRE"){
+				$scope.genre_search = true;
+				var search_placeholder = "by genre...";
+			}
+			else if(type == "AUTHOR"){
+				$scope.author_search = true;
+				var search_placeholder = "by author...";
+			}
+			else if(type == "TIME"){
+				$scope.time_search = true;
+				var search_placeholder = "by time...";
+				recommendationService.get_read_times().then(function(data){
+					$scope.search_results = data;
+				});
+			}
+			else if(type == "GENDER"){
+				$scope.gender_search = true;
+				var search_placeholder = "by gender...";
+			}
+			else if(type == "AWARDS"){
+				$scope.awards_search = true;
+				var search_placeholder = "by awards...";	
+			}
+
+			if($scope.book_search){
+				$scope.search_tag.search_level2_placeholder = "Search Books "+search_placeholder;
+			}
+			else if($scope.author_search){
+				$scope.search_tag.search_level2_placeholder = "Search Authors "+search_placeholder;
+			}
+			else if($scope.reader_search){
+				$scope.search_tag.search_level2_placeholder = "Search Readers "+search_placeholder;
+			}
+			$scope.search_results = [];
+		}
+	}
+
+	$scope.handle_selection = function(item){
+		var selectedItem = item.name;
+		var graphOption = item.graph_option;
+		var customOption = item.custom_option;
+		var type = item.type;
+
+		if(customOption){
+			if(!$scope.search_level1){
+				$scope.search_type = type;
+			}
+			_search_by(type);
+		}
+		else{
+		    $scope.search_tag.current = 0;
+		    $scope.search_tag.selected_result = true;
+		    if(graphOption){
+		    	_handle_graph_search(selectedItem);
+		    }
+		    else{
+		    	_show_search_result();
+		    }
+		    event.stopPropagation();
+			$scope.search_tag.input = "";
+		}
 	};
 
 	$scope.hide_search_page = function(type){
@@ -82,7 +182,31 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
         if(backspace_or_delete){
         	var currentValue = _get_search_input();
         	if(currentValue.length <= 1){
-        		_init_search();
+        		if(currentValue.length < 1 && $scope.search_level1 && !$scope.search_level2){
+        			$scope.search_level1 = false;
+        			$scope.book_search = false;
+					$scope.author_search = false;
+					$scope.reader_search = false;
+					_init_graph_search();
+        			event.preventDefault();
+        		}
+        		else if(currentValue.length < 1 && $scope.search_level2){
+        			$scope.search_level1 = false;
+        			$scope.search_level2 = false;
+					$scope.year_search = false;
+					$scope.list_search = false;	
+					$scope.country_search = false;
+					$scope.genre_search = false;
+					$scope.author_search = false;
+					$scope.time_search = false;
+					$scope.gender_search = false;
+					$scope.awards_search = false;
+					_search_by();
+        			event.preventDefault();
+        		}
+        		else{
+        			_init_search();
+        		}
         	}
         	else{
 				$scope.get_search_results(event);
@@ -96,13 +220,21 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 	}
 
 	_init_graph_search = function(){
-		$scope.search_results = [{"name": "Friends who like a-book-category", "graph_option": true},
+		$scope.search_results = [
+		{"name": "Popular Readers", "graph_option": true},
+		{"name": "10 Readers to meet before you die", "graph_option": true},
+		{"name": "Friends who like a-book-category", "graph_option": true},
 		{"name": "Friends who are reading author-name-or-a-book-name", "graph_option": true},
 		{"name": "Friends who own a-book-name", "graph_option": true},
 		{"name": "Friends who need a-book-name", "graph_option": true},
 		{"name": "Friends who read a-book-name", "graph_option": true},
 		{"name": "Friends who bookmarked a-book-name-or-author-name-or-a-reader-name", "graph_option": true},
 		{"name": "Friends who follow an-author-name and a-friend-name", "graph_option": true},
+		{"name": "Readers bookmarked by a-friend-name-or-me", "graph_option": true},
+		
+		{"name": "Popular books", "graph_option": true},
+		{"name": "10 Books to read before you die", "graph_option": true},
+		{"name": "100 Books to read before you die", "graph_option": true},
 		{"name": "Books recommended by a-friend-name-or-me", "graph_option": true},
 		{"name": "Books by an-author-name", "graph_option": true},
 		{"name": "Books published in a-year", "graph_option": true},
@@ -118,23 +250,121 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 		{"name": "Books reviewed by a-friend-name-or-me", "graph_option": true},
 		{"name": "Books read by a-friend-name-or-me", "graph_option": true},
 		{"name": "Books bookmarked by a-friend-name-or-me", "graph_option": true},
-		{"name": "Authors bookmarked by a-friend-name-or-me", "graph_option": true},
-		{"name": "Readers bookmarked by a-friend-name-or-me", "graph_option": true},
 		{"name": "Books published this year", "graph_option": true},
-		{"name": "Popular books", "graph_option": true},
-		{"name": "Popular Recommendations", "graph_option": true},
-		{"name": "Popular Bookmarks", "graph_option": true},
-		{"name": "Popular Authors", "graph_option": true},
-		{"name": "Popular Readers", "graph_option": true},
-		{"name": "100 Books to read before you die", "graph_option": true},
-		{"name": "100 Readers to meet before you die", "graph_option": true},
+		
 		{"name": "10 Authors to read before you die", "graph_option": true},
+		{"name": "Authors bookmarked by a-friend-name-or-me", "graph_option": true},
+		{"name": "Popular Authors", "graph_option": true},
+		
+
+		{"name": "Popular Bookmarks", "graph_option": true},
 		{"name": "a-book-category Books", "graph_option": true},
 		{"name": "Reviews on a-book-name", "graph_option": true},
 		{"name": "Discussions on a-book-name", "graph_option": true},
 		{"name": "Quotes from a-book-name", "graph_option": true},
 		{"name": "Characters from a-book-name", "graph_option": true},
-		{"name": "Movies based on a-book-name", "graph_option": true}]
+		{"name": "Popular Recommendations", "graph_option": true},
+		{"name": "Movies based on a-book-name", "graph_option": true}
+
+		];
+		if(!$scope.search_level1){
+			$scope.search_results = [
+				{
+					"name": "Search a Book", 
+					"icon": "icon-book", 
+					"custom_option": true, 
+					"type": "BOOK",
+					"graph_option": true
+				},
+				{
+					"name": "Search a Reader", 
+					"icon": "icon-users", 
+					"custom_option": true, 
+					"type": "READER",
+					"graph_option": true
+				},
+				{
+					"name": "Search an Author", 
+					"icon": "icon-pen", 
+					"custom_option": true, 
+					"type": "AUTHOR",
+					"graph_option": true
+				}];
+		}
+		else{
+			$scope.search_level1 = false;
+			_search_by();
+		}
+	}
+
+	_init_book_search = function(){
+		$scope.search_results = [
+			{"name": "Popular books", "graph_option": true},
+			{"name": "10 Books to read before you die", "graph_option": true},
+			{"name": "100 Books to read before you die", "graph_option": true},
+			{"name": "Books recommended by a-friend-name-or-me", "graph_option": true},
+			{"name": "Books by an-author-name", "graph_option": true},
+			{"name": "Books published in a-year", "graph_option": true},
+			{"name": "Books published today", "graph_option": true},
+			{"name": "Books published between a-year and another-year", "graph_option": true},
+			{"name": "Books published in country a-country-name", "graph_option": true},
+			{"name": "Books tagged as a-tag", "graph_option": true},
+			{"name": "Books I own", "graph_option": true},
+			{"name": "Books I have read", "graph_option": true},
+			{"name": "Books I have rated", "graph_option": true},
+			{"name": "Books I have discussed", "graph_option": true},
+			{"name": "Books discussed by a-friend-name-or-me", "graph_option": true},
+			{"name": "Books reviewed by a-friend-name-or-me", "graph_option": true},
+			{"name": "Books read by a-friend-name-or-me", "graph_option": true},
+			{"name": "Books bookmarked by a-friend-name-or-me", "graph_option": true},
+			{"name": "Books published this year", "graph_option": true}
+		];
+		$scope.search_results = [
+			{"name": "Get Books by Published Year", "custom_option": true, "type": "YEAR", "icon":"icon-calendar"},
+			{"name": "Get Books by Reading Time", "custom_option": true, "type": "TIME", "icon": "icon-clock"},
+			{"name": "Get Books by Country", "custom_option": true, "type": "COUNTRY", "icon": "icon-earth"},
+			{"name": "Get Books by Genre", "custom_option": true, "type": "GENRE", "icon": "icon-shapes"},
+			{"name": "Get Popular lists", "custom_option": true, "type": "LIST", "icon": "icon-list"},
+			{"name": "Get Books by Author", "custom_option": true, "type": "AUTHOR", "icon": "icon-pen"}
+		]
+	}
+
+	_init_author_search = function(){
+		$scope.search_results = [
+			{"name": "10 Authors to read before you die", "graph_option": true},
+			{"name": "Authors bookmarked by a-friend-name-or-me", "graph_option": true},
+			{"name": "Popular Authors", "graph_option": true}
+		];
+
+		$scope.search_results = [
+			{"name": "Get Authors By Time", "custom_option": true, "type": "YEAR", "icon": "icon-clock"},
+			{"name": "Get Authors By Country", "custom_option": true, "type": "COUNTRY", "icon": "icon-earth"},
+			{"name": "Get Authors By Awards", "custom_option": true, "type": "AWARDS", "icon": "icon-trophy"},
+			{"name": "Get Authors By Genre", "custom_option": true, "type": "GENRE", "icon": "icon-shapes"},
+			{"name": "Get Popular Lists", "custom_option": true, "type": "LIST", "icon": "icon-list"}
+		];
+	}
+
+	_init_reader_search = function(){
+		$scope.search_results = [
+			{"name": "Popular Readers", "graph_option": true},
+			{"name": "10 Readers to meet before you die", "graph_option": true},
+			{"name": "Friends who like a-book-category", "graph_option": true},
+			{"name": "Friends who are reading author-name-or-a-book-name", "graph_option": true},
+			{"name": "Friends who own a-book-name", "graph_option": true},
+			{"name": "Friends who need a-book-name", "graph_option": true},
+			{"name": "Friends who read a-book-name", "graph_option": true},
+			{"name": "Friends who bookmarked a-book-name-or-author-name-or-a-reader-name", "graph_option": true},
+			{"name": "Friends who follow an-author-name and a-friend-name", "graph_option": true},
+			{"name": "Readers bookmarked by a-friend-name-or-me", "graph_option": true},
+		]
+
+		$scope.search_results = [
+			{"name": "Get Readers By Gender", "custom_option": true, "type": "GENDER", "icon": "icon-male icon-female"},
+			{"name": "Get Readers By Country", "custom_option": true, "type": "COUNTRY", "icon": "icon-earth"},
+			{"name": "Get Readers By Genre", "custom_option": true, "type": "GENRE", "icon": "icon-shapes"},
+			{"name": "Get Popular Lists", "custom_option": true, "type": "LIST", "icon": "icon-list"}
+		];
 	}
 
 	_init_search = function(){
@@ -228,6 +458,7 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 
 		// $scope.search_tag.selected_result = true; // hides the list initially
 		$scope.search_tag = {};
+		$scope.search_tag.search_placeholder = "Search...";
 		$scope.search_tag.current = 0;
 		$scope.search_tag.result_count = 5;
 		$scope.website.searching = true;
@@ -235,6 +466,7 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 		websiteService.get_background_image().then(function(data){
 			$scope.search_style = {'background-image': 'url("'+data.url+'")'};
 		});
+		_init_graph_search();
 	}
 
 	_init = function(){

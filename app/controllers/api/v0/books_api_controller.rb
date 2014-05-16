@@ -25,6 +25,12 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def moments
+				id = params[:id]
+				info = BookApi.get_timeline(id)
+				render :json => info, :status => 200
+			end
+
 		end
 	end
 end

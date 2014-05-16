@@ -80,7 +80,7 @@
 }
 
 .search_page .internal_links{
-	margin-left: -315px;
+	margin-left: -360px;
 	bottom: -18%;
 }
 
@@ -141,8 +141,8 @@
 	color: #717170;
 	font-size: 1em;
 	z-index: 11;
-	width: 100%;
-	margin-left: 2px;
+	width: 100.7%;
+	margin-left: 0px;
 }
 
 .website_search_options .option,
@@ -165,16 +165,33 @@
 	cursor: default;
 }
 
+.website_search_helpers .custom_option{
+	background-color: white;
+}
+
+.website_search_helpers .custom_option .title{
+	padding: 10px;
+}
+
 .website_search_helpers .helper_title{
 	color: #888888;
 }
 
+.website_search_helpers .helper_title div{
+	padding: 10px;
+	border-bottom: 1px solid rgba(113, 112, 112, 0.2);
+	cursor: pointer;
+}
+
+.website_search_helpers .helper_title div:hover{
+	background-color: #F3F3F3;
+}
 
 .login_form{
 	position: fixed;
 	top: 70%;
 	left: 50%;
-	z-index: 10;
+	z-index: 5;
 	margin-top: -20px;
 	margin-left: -110px;
 }
@@ -242,6 +259,52 @@
 	opacity: 1;
 }
 
+.search_level1_typeahead_group{
+	width: 418px;
+	margin-left: -198px;
+}
+
+.search_level2_typeahead_group{
+	width: 378px;
+	margin-left: -170px;
+}
+
+.input_handler{
+    position: fixed;
+    left: 50%;
+    top: 35%;
+    width: 38px;
+    height: 37px;
+    margin-left: -235px;
+    margin-top: -20px;
+    z-index: 2;
+}
+
+.input_handler_level2{
+	position: fixed;
+    left: 50%;
+    top: 35%;
+    width: 38px;
+    height: 37px;
+    margin-left: -205px;
+    margin-top: -20px;
+    z-index: 2;	
+}
+
+.input_handler_level2 .custom_icon,
+.input_handler .custom_icon{
+    background-color: white;
+    width: 15px;
+    padding: 11px;
+}
+
+.search_focus{
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.43);
+	z-index: 1;
+}
 
 /* Desktops and laptops ----------- */
 @media only screen

@@ -51,6 +51,14 @@ websiteApp.service('widgetService', function ($http, $q, $rootScope) {
     	return _deferred_post_request('/api/v0/follow', {"id":id, "type":type, "data":data});
     }
 
+    this.get_moments = function(){
+        return _deferred_request('/api/v0/moments?id='+1);
+    }
+
+    this.get_friends = function(id){
+        return _deferred_request('/api/v0/friends?id='+id);
+    }
+
 
     _deferred_request = function(url){
         var deferred = $q.defer();

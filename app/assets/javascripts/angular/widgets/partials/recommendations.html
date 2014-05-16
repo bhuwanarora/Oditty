@@ -1,4 +1,5 @@
-
+<div class="go_left" ng-click="move_left()"></div>
+<div class="go_right" ng-click="move_right()"></div>
 <!-- <horizontal-scroller></horizontal-scroller> -->
 <div msd-wheel="bindHorizontalScroll($event, $delta, $deltaX, $deltaY)" 
    ng-animate="msd-wheel"
@@ -51,10 +52,23 @@
 				</span>
 			</div> -->
 		 	</type-ahead>
-		 	<div class="menu_group" ng-class="{'menu_group_active':show_menu}">
+		 	<div class="menu_group" 
+		 		 ng-class="{'menu_group_active':show_menu}"
+		 		 ng-mouseenter="toggle_menu()"
+				 ng-mouseleave="toggle_menu()">
 			 	<div class="menu" ng-if="show_menu">
+			 		<a ng-href="#user/{{$routeParams.id}}/search">
+				 		<div>
+					 		<span>Home</span>
+				 		</div>
+				 	</a>
+				 	<a ng-href="#user/{{$routeParams.id}}/recommendations/readers">
+			 			<div ng-hide="$routeParams.type == 'readers'">
+				 			<span>Readers</span>
+			 			</div>
+				 	</a>
 				 	<a ng-href="#user/{{$routeParams.id}}/recommendations/books">
-				 		<div ng-hide="$routeParams.type == 'books'" href="#recommendations/books">
+				 		<div ng-hide="$routeParams.type == 'books'">
 					 		<span>Books</span>
 				 		</div>
 				 	</a>
@@ -63,14 +77,8 @@
 				 			<span>Authors</span>
 			 			</div>
 				 	</a>
-				 	<a ng-href="#user/{{$routeParams.id}}/recommendations/readers">
-			 			<div ng-hide="$routeParams.type == 'readers'">
-				 			<span>Readers</span>
-			 			</div>
-				 	</a>
 			 	</div>
-				<div ng-class="{'advanced_filter_active':show_menu, 'advanced_filter':!show_menu}"
-					 ng-click="toggle_menu()">
+				<div ng-class="{'advanced_filter_active':show_menu, 'advanced_filter':!show_menu}">
 					<span ng-show="$routeParams.type == 'books'">Books</span>
 					<span ng-show="$routeParams.type == 'authors'">Authors</span>
 					<span ng-show="$routeParams.type == 'readers'">Readers</span>

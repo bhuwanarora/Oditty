@@ -123,6 +123,11 @@ module Api
 				UsersGraphHelper.get_news_feed_for_user(user_id)
 				render :json => {:message => "Success"}, :status => 200
 			end
+
+			def get_most_connected_friends
+				info = UserApi.get_most_connected_friends
+				render :json => info, :status => 200
+			end
 		end
 	end
 end

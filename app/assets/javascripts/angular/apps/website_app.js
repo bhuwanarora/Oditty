@@ -41,7 +41,7 @@ websiteApp.config(function ($routeProvider, $locationProvider) {
         templateUrl: 'assets/angular/widgets/partials/book.html'
   })
   .when('/book/:book_id/timeline', {
-        templateUrl: 'assets/angular/widgets/partials/book.html'
+        templateUrl: 'assets/angular/widgets/partials/book/timeline.html'
   })
   .when('/', {
         templateUrl: 'assets/angular/widgets/partials/search.html'

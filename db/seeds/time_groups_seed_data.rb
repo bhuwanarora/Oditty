@@ -1,12 +1,12 @@
 puts "Enter Time Groups..."
-TimeGroups = [{:text => "Books Post World War I"},
-		   {:text => "Books Post World War II"},
-		   {:text => "Books Post Renaissance"},
-		   {:text => "Books Post Birth of Islam"},
-		   {:text => "Books Post Birth of Christ"},
-		   {:text => "Books Post Industrial Revolution"},
-		   {:text => "Books Post Cold War"},
-		   {:text => "Books Post Medical Revolution"},
+TimeGroups = [{:text => "Post World War I"},
+		   {:text => "Post World War II"},
+		   {:text => "Post Renaissance"},
+		   {:text => "Post Birth of Islam"},
+		   {:text => "Post Birth of Christ"},
+		   {:text => "Post Industrial Revolution"},
+		   {:text => "Post Cold War"},
+		   {:text => "Post Medical Revolution"},
 		   {:text => "Custom Time Filters"}
 		]
 

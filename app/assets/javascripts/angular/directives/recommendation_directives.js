@@ -30,13 +30,18 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 				var message = "SUCCESS-"+selected.text+" added to filters."
 				notify($rootScope, message, $timeout);
 				$scope.$emit('reloadRecommendations');
-				return true;
+				$('.position_dropdown').removeClass('active');
 			}
 
 			$scope.reset_filters = function(){
 				$scope.$broadcast('resetFilter');
 				$rootScope.filters.more_filters = [];
 				$scope.$emit('reloadRecommendations');
+				var message = "SUCCESS-All filters removed.<br/> You can add filters to look for particular books.";
+				var timeout_event = notify($rootScope, message, $timeout);
+				$scope.$on('destroy', function(){
+					$timeout.cancel(timeout_event);
+				});
 			}
 
 			_reload_page = function(isBook, isAuthor, isReader){
@@ -99,7 +104,7 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 			$scope.on_author_selection = function(){
 				var filter_name = $scope.author;
 				$rootScope.filters["author_filter"] = filter_name;
-				message = "SUCCESS-'"+filter_name+"' added to filters.";
+				var message = "SUCCESS-'"+filter_name+"' added to filters.";
 				var timeout_event = notify($rootScope, message, $timeout);
 				$scope.$emit('reloadRecommendations');
 

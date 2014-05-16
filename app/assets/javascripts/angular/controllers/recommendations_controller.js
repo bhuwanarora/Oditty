@@ -1,4 +1,4 @@
-websiteApp.controller('recommendationsController', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval){
+websiteApp.controller('recommendationsController', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService){
 
 	$scope.toggle_bookmarked = function(){
 		if(!$scope.bookmark_selected){
@@ -214,6 +214,12 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
     	$rootScope.focused_book = $scope.recommendations.books.first;
     }
 
+    _get_friends = function(){
+    	widgetService.get_friends($scope.$routeParams.id).then(function(data){
+    		$rootScope.user.friends = data.friends;
+    	});
+    }
+
 	_init = function(){
 		//oneMin = 60000
 		$scope.$routeParams = $routeParams;
@@ -239,6 +245,7 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
         // _push_recommendations();
         _bind_destroy();
         _handle_focused_book();
+        _get_friends();
     	$scope.$emit('moveRight');    
 	}
 

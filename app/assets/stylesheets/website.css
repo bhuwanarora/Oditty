@@ -62,6 +62,17 @@ input:focus{
     z-index: 1;
 }
 
+.search_typeahead_group .search_icon{
+    position: absolute;
+    right: -40px;
+    background-color: #3D79A1;
+    color: white;
+    padding: 11px;
+    top: 0.55px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
 .recommendations_page .search_typeahead_group{
     top: 15px;
     margin-top: 0px;

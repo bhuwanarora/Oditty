@@ -40,6 +40,84 @@ module Api
 					:id => 13)
 			end
 
+			def self.get_timeline id
+				test_moments = [
+					{
+						:user => {
+							:id => 1,
+							:thumb => "assets/profile_pic.jpeg"
+						},
+						:timestamp => "2 days ago",
+						:votes => 23,
+						:quote => "When someone is seeking, it happens quite easily that he only sees the thing 
+								that he is seeking; that he is unable to find anything, unable to absorb anything because 
+								he is only thinking of the thing he is seeking...",
+						:moment => "Death broken down into molecular importance."
+					},
+					{
+						:user => {
+							:id => 1,
+							:thumb => "assets/profile_pic.jpeg"
+						},
+						:timestamp => "2 days ago",
+						:votes => 23,
+						:quote => "When someone is seeking, it happens quite easily that he only sees the thing 
+								that he is seeking; that he is unable to find anything, unable to absorb anything because 
+								he is only thinking of the thing he is seeking...",
+						:moment => "Death broken down into molecular importance."
+					},
+					{
+						:user => {
+							:id => 1,
+							:thumb => "assets/profile_pic.jpeg"
+						},
+						:timestamp => "2 days ago",
+						:votes => 23,
+						:quote => "When someone is seeking, it happens quite easily that he only sees the thing 
+								that he is seeking; that he is unable to find anything, unable to absorb anything because 
+								he is only thinking of the thing he is seeking...",
+						:moment => "Death broken down into molecular importance."
+					},
+					{
+						:user => {
+							:id => 1,
+							:thumb => "assets/profile_pic.jpeg"
+						},
+						:timestamp => "2 days ago",
+						:votes => 23,
+						:quote => "When someone is seeking, it happens quite easily that he only sees the thing 
+								that he is seeking; that he is unable to find anything, unable to absorb anything because 
+								he is only thinking of the thing he is seeking...",
+						:moment => "Death broken down into molecular importance."
+					},
+					{
+						:user => {
+							:id => 1,
+							:thumb => "assets/profile_pic.jpeg"
+						},
+						:timestamp => "2 days ago",
+						:votes => 23,
+						:quote => "When someone is seeking, it happens quite easily that he only sees the thing 
+								that he is seeking; that he is unable to find anything, unable to absorb anything because 
+								he is only thinking of the thing he is seeking...",
+						:moment => "Death broken down into molecular importance."
+					},
+					{
+						:user => {
+							:id => 1,
+							:thumb => "assets/profile_pic.jpeg"
+						},
+						:timestamp => "2 days ago",
+						:votes => 23,
+						:quote => "When someone is seeking, it happens quite easily that he only sees the thing 
+								that he is seeking; that he is unable to find anything, unable to absorb anything because 
+								he is only thinking of the thing he is seeking...",
+						:moment => "Death broken down into molecular importance."
+					}					
+				]
+				info = {"moments" => test_moments}
+			end
+
 			def self.recommendations
 				test_name = Filter.where(:id => JSON.parse(params[:q])["more_filters"]).pluck(:name) rescue "City"
 

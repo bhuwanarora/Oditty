@@ -146,12 +146,17 @@ websiteApp.directive('typeAhead', function($timeout, $sce){
 				scope.selected = true; // hides the list initially
 			}
 
+		  	scope.focus_on_input = function(){
+		  		elem.find('input').focus();
+		  	}
+
 			_init();
 		},
 		controller: function($scope, recommendationService){
 		  	_init = function(){
 		  		$scope.name = ''; // This will hold the selected item
 		  	}
+
 
 		  	_init();
 		},

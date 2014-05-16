@@ -366,23 +366,42 @@ websiteApp.directive('recommend', function($rootScope, $timeout, widgetService){
     restrict: 'E',
     scope: {'recommend_object': '=data'},
     controller: function($scope){
+      $scope.select_thumb = function(event){
+        if(!$(event.currentTarget).data("selected")){
+          $(event.currentTarget).data("selected", true);
+          $(event.currentTarget).css('border', '2px solid');
+        }
+        else{
+          $(event.currentTarget).data("selected", false);
+          $(event.currentTarget).css('border', '2px solid none'); 
+        }
+      }
+
       $scope.recommend = function(){
         var book_title = $scope.recommend_object.title;
         var author_name = $scope.recommend_object.author_name;
         if($scope.recommend_object.recommended){
           $scope.recommend_object.recommended = false;
-          var message = "SUCCESS-"+book_title+" by "+author_name+" will not be recommended to your friends.";
+          var message = "SUCCESS-"+book_title+" by "+author_name+" has been recommended to selected friends.";
+          var timeout_event = notify($rootScope, message, $timeout);
+          $scope.$on('destroy', function(){
+            $timeout.cancel(timeout_event);
+          });
+          $('body').css('cursor', 'default');
+          widgetService.recommend("BOOK", $scope.recommend_object.id, $scope.recommend_object.recommended);
         }
         else{
           $scope.recommend_object.recommended = true;
-          var message = "SUCCESS-"+book_title+" by "+author_name+" has been recommended to all your friends.";
+          $('body').css('cursor', 'copy');
         }
-        var timeout_event = notify($rootScope, message, $timeout);
-        $scope.$on('destroy', function(){
-          $timeout.cancel(timeout_event);
-        });
-        widgetService.recommend("BOOK", $scope.recommend_object.id, $scope.recommend_object.recommended);
       }
+
+      _init = function(){
+        $scope.user = {};
+        $scope.user.friends = $rootScope.user.friends;
+      }
+
+      _init();
     },
     templateUrl: "/assets/angular/widgets/base/book/recommend.html"
   }

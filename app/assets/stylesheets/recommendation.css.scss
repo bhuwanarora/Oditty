@@ -649,16 +649,18 @@
 	border-left: 1px solid #C2C2C2;
 	border-right: 1px solid #C2C2C2;
 	width: 160px;
-	padding-top: 20px;
+	padding-top: 10px;
 }
 
 .menu{
-	margin-top: -95px;
+	bottom: 42px;
 	border-top: 1px solid #ECECEC;
 	border-left: 1px solid #C2C2C2;
 	border-right: 1px solid #C2C2C2;
 	background-color: white;
 	color: #8aa8bd;
+	position: absolute;
+	width: 160px;
 }
 
 .menu div{
@@ -984,6 +986,7 @@
 	cursor: pointer;
 }
 
+
 .interaction_box.ng-enter,
 .interaction_box.ng-leave.ng-leave-active{
 	width: 200px;
@@ -998,6 +1001,65 @@
 	height: 200px;
 	opacity: 1;
 	margin-top: -100px;
+}
+
+.recommendation_box{
+	position: fixed;
+	background-color: white;
+	width: 500px;
+	height: 500px;
+	left: 50%;
+	margin-left: -250px;
+	top: 50%;
+	margin-top: -300px;
+	box-shadow: 0 7px 15px rgba(0, 0, 0, 0.25);
+}
+
+.recommendation_box.ng-leave,
+.recommendation_box.ng-enter.ng-enter-active{
+	width: 500px;
+	height: 500px;
+	opacity: 1;
+	margin-top: -300px;
+}
+
+.recommendation_box.ng-enter,
+.recommendation_box.ng-leave.ng-leave-active{
+	width: 200px;
+	height: 50px;
+	opacity: 0;
+	margin-top: 0px;
+}
+
+.recommendation_box .friend_grid .friend_thumb{
+	width: 60px;
+	margin: 2px;
+	border: 2px solid white;
+}
+
+.recommendation_box .header{
+	border-bottom: 1px solid rgba(113, 112, 112, 0.14);
+	width: 95%;
+	padding: 12px !important;
+}
+
+.recommendation_box .footer{
+	position: absolute;
+	bottom: 0px;
+	width: 96%;
+}
+
+.recommendation_box .footer .done{
+	padding: 10px;
+	width: 70px;
+	text-align: center;
+}
+
+.recommendation_box .friend_grid{
+	height: 380px;
+	padding: 20px;
+	white-space: normal;
+	overflow-y: scroll;
 }
 
 .reset_filters{
@@ -2825,3 +2887,21 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	width: 100px;
 }
 /* */
+
+.go_left{
+	position: fixed;
+	width: 50%;
+	height: 100%;
+	left: 0px;
+	top: 0px;
+	cursor: w-resize;
+}
+
+.go_right{
+	position: fixed;
+	width: 50%;
+	height: 100%;
+	right: 0px;
+	top: 0px;
+	cursor: e-resize;	
+}

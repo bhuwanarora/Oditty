@@ -1,0 +1,74 @@
+.timeline_wrapper{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	background-color: rgba(0, 0, 0, 0.71);	
+}
+
+.book_timeline{
+	width: 500px;
+	height: 100%;
+	padding-left: 100px;
+	padding-right: 100px;
+	overflow-y: scroll;
+	padding-top: 10px;
+	left: 50%;
+	margin-left: -300px;
+	position: absolute;
+	background-color: white;
+}
+
+.book_timeline .moment{
+	width: 100%;
+	min-height: 400px;
+}
+
+.book_timeline .header{
+	background-color: white;
+	position: fixed;
+	top: 0px;
+	left: 50%;
+	margin-left: -292px;
+	width: 670px;
+	padding: 15px;
+}
+
+.moment .vote{
+	float: left;
+	height: 140px;
+	display: inline-block;
+	background-size: 51px;
+	background-repeat: no-repeat;
+	background-image: url("circle_light_grey_button.png");
+	text-align: center;
+	padding: 20px;
+	margin-top: 50px;
+	margin-right: 50px;
+	cursor: pointer;
+}
+
+.moment .vote:hover{
+	background-image: url('circle_light_blue_button.png');
+	color: white;
+}
+
+.moment .moment_description{
+	float: left;
+	display: inline-block;
+	width: 74%;
+	white-space: initial;
+	border: 1px solid #DBDBDB;
+	margin-top: 30px;
+}
+
+.moment .moment_description .quote{
+	padding: 25px;
+	background-color: #f8f8f8;
+	margin: 2px;
+	border-radius: 4px;
+	font-size: 2em;
+}
+
+.moment .moment_description .description{
+	padding: 10px;
+}
