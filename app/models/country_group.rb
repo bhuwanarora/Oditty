@@ -1,3 +1,3 @@
 class CountryGroup < ActiveRecord::Base
-	attr_accessible :text
+	attr_accessible :name
 end

@@ -44,11 +44,12 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 		else if($scope.search_level1){
 			$scope.search_level2 = true;
 			$scope.website.searching_level2 = true;
+			$scope.search_results = [];
 			if(type == "YEAR"){
 				$scope.year_search = true;
 				var search_placeholder = "by year...";
 				recommendationService.get_time_groups().then(function(data){
-					$scope.search_results = data;
+					$scope.search_results = data.times;
 				});
 			}
 			else if(type == "LIST"){
@@ -59,7 +60,7 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 				$scope.country_search = true;
 				var search_placeholder = "by country...";
 				recommendationService.get_countries().then(function(data){
-					$scope.search_results = data;
+					$scope.search_results = data.countries;
 				});
 			}
 			else if(type == "GENRE"){
@@ -74,12 +75,16 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 				$scope.time_search = true;
 				var search_placeholder = "by time...";
 				recommendationService.get_read_times().then(function(data){
-					$scope.search_results = data;
+					$scope.search_results = data.read_times;
 				});
 			}
 			else if(type == "GENDER"){
 				$scope.gender_search = true;
 				var search_placeholder = "by gender...";
+				$scope.search_results = [
+					{"name": "Male", "custom_option": true, "icon": "icon-male"},
+					{"name": "Female", "custom_option": true, "icon": "icon-female"}
+				];
 			}
 			else if(type == "AWARDS"){
 				$scope.awards_search = true;
@@ -95,7 +100,6 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 			else if($scope.reader_search){
 				$scope.search_tag.search_level2_placeholder = "Search Readers "+search_placeholder;
 			}
-			$scope.search_results = [];
 		}
 	}
 

@@ -11,9 +11,6 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 				// $scope.active_reader_filter = false;
 				$scope.show_menu = false;
 				$scope.countryOptions = [];
-				$scope.countrySelected = {"text": "Filter books by Country"};
-				$scope.timeSelected = {"text": "Filter books by Time"};
-				$scope.readTimeSelected = {"text": "Filter books by Reading Time"};
 
 				recommendationService.get_countries().then(function(data){
 			    	$scope.countryOptions = data["countries"];
@@ -24,16 +21,24 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 			    recommendationService.get_read_times().then(function(data){
 			    	$scope.readTimeOptions = data["read_times"];
 			    });
+			    _init_dropdown_filters();
+			}
+
+			_init_dropdown_filters = function(){
+				$scope.countrySelected = {"name": "Filter books by Country"};
+				$scope.timeSelected = {"name": "Filter books by Time"};
+				$scope.readTimeSelected = {"name": "Filter books by Reading Time"};
 			}
 
 			$scope.advance_filter_changed = function(selected){
-				var message = "SUCCESS-"+selected.text+" added to filters."
+				var message = "SUCCESS-"+selected.name+" added to filters."
 				notify($rootScope, message, $timeout);
 				$scope.$emit('reloadRecommendations');
 				$('.position_dropdown').removeClass('active');
 			}
 
 			$scope.reset_filters = function(){
+				_init_dropdown_filters();
 				$scope.$broadcast('resetFilter');
 				$rootScope.filters.more_filters = [];
 				$scope.$emit('reloadRecommendations');
