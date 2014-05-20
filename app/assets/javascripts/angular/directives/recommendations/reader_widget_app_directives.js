@@ -46,152 +46,173 @@ websiteApp.directive('reader', function (widgetService) {
 //   };
 // });
 
+websiteApp.directive('messageBox', function(){
+  return{
+    restrict: 'E',
+    controller: function($scope){
+      $scope.close_message_box = function(){
+        $scope.reader.show_message_box = false;
+      }
+    },
+    templateUrl: "/assets/angular/widgets/base/reader/message_box.html"
+  }
+});
+
 websiteApp.directive('readerInteract', function (websiteService) {
   return {
     restrict: 'E',
     controller: function($scope){
-      _init = function(){
-        $scope.setStatus();
-        $('.comment_box').contentEditable='true'; 
-      }
 
-    	$scope.setStatus = function(status){
-    		if(status == 1){
-          $scope.read = true;
-    		}
-    		else{
-    			$scope.read = false;
-    		}
+      $scope.toggle_message_box = function(){
+        if($scope.reader.show_message_box){
+          $scope.reader.show_message_box = false;
+        }
+        else{
+          $scope.reader.show_message_box = true;
+        }
+      }
+     //  _init = function(){
+     //    $scope.setStatus();
+     //    $('.comment_box').contentEditable='true'; 
+     //  }
+
+    	// $scope.setStatus = function(status){
+    	// 	if(status == 1){
+     //      $scope.read = true;
+    	// 	}
+    	// 	else{
+    	// 		$scope.read = false;
+    	// 	}
     		
-    	}
+    	// }
 
-      $scope.handle_selection = function(selected_item){
-        var string_array = $('.comment_box').val().split(" ");
-        var html_array = $('.comment_box').siblings().html().split(" ");
-        var chr = String.fromCharCode(event.keyCode);
-        var len = string_array.length;
-        if(len == 1){
-          var old_string = string_array.slice(0, len-1).join(" ").trim();
-          var old_html = html_array.slice(0, len-1).join(" ").trim();
-        }
-        else{
-          var old_string = string_array.slice(0, len-1).join(" ")+" ";
-          var old_html = html_array.slice(0, len-1).join(" ")+" ";
-        }
-        var current_element = string_array.pop();
-        var current_html = html_array.pop();
-        var is_backspace = event.keyCode == 8;
-        var hash_tagging = $scope.hash_tagging;
-        $('.comment_box').siblings().html(old_html+" <b>"+selected_item+"</b>");
-        $('.comment_box').val(old_string+" "+selected_item);
-        $scope.hash_tags = null;
-      }
+     //  $scope.handle_selection = function(selected_item){
+     //    var string_array = $('.comment_box').val().split(" ");
+     //    var html_array = $('.comment_box').siblings().html().split(" ");
+     //    var chr = String.fromCharCode(event.keyCode);
+     //    var len = string_array.length;
+     //    if(len == 1){
+     //      var old_string = string_array.slice(0, len-1).join(" ").trim();
+     //      var old_html = html_array.slice(0, len-1).join(" ").trim();
+     //    }
+     //    else{
+     //      var old_string = string_array.slice(0, len-1).join(" ")+" ";
+     //      var old_html = html_array.slice(0, len-1).join(" ")+" ";
+     //    }
+     //    var current_element = string_array.pop();
+     //    var current_html = html_array.pop();
+     //    var is_backspace = event.keyCode == 8;
+     //    var hash_tagging = $scope.hash_tagging;
+     //    $('.comment_box').siblings().html(old_html+" <b>"+selected_item+"</b>");
+     //    $('.comment_box').val(old_string+" "+selected_item);
+     //    $scope.hash_tags = null;
+     //  }
 
-      $scope.set_current = function(index){
+     //  $scope.set_current = function(index){
 
-      }
+     //  }
 
-      $scope.handle_backspace = function(event){
-        var string_array = $(event.currentTarget).val().split(" ");
-        var html_array = $(event.currentTarget).siblings().html().split(" ");
-        var chr = String.fromCharCode(event.keyCode);
-        var len = string_array.length;
-        if(len == 1){
-          var old_string = string_array.slice(0, len-1).join(" ");
-          var old_html = html_array.slice(0, len-1).join(" ");  
-        }
-        else{
-          var old_string = string_array.slice(0, len-1).join(" ")+" ";
-          var old_html = html_array.slice(0, len-1).join(" ")+" ";
-        }
-        var current_element = string_array.pop();
-        var current_html = html_array.pop();
-        var is_backspace = event.keyCode == 8;
-        var hash_tagging = $scope.hash_tagging;
-        if(is_backspace){
-          if(current_element == "#"){
-            $scope.hash_tagging = false;
-            $scope.hash_tags = [];
-            $(event.currentTarget).siblings().html(old_html);
-          }
-          else{
-            if(hash_tagging){
-              $(event.currentTarget).siblings().html(old_html);
-              $(event.currentTarget).val(old_string);
-              $scope.hash_tagging = false;
-              $scope.hash_tags = [];
-              event.preventDefault();
-            }
-            else{
-              var inside_a_hashtag = current_html[current_html.length - 1] == ">";
-              if(inside_a_hashtag){
-                $(event.currentTarget).siblings().html(old_html);
-                $(event.currentTarget).val(old_string);
-                $scope.hash_tags = [];
-                event.preventDefault();
-              }
-              else{
-                var html = $(event.currentTarget).siblings().html();
-                $(event.currentTarget).siblings().html(html.substring(0, html.length-1));
-              }
-            }
-          }
-          if(!$(event.currentTarget).val() || $(event.currentTarget).val() == ""){
-            $(event.currentTarget).siblings().html("");
-          }
-        }
-        event.stopPropagation();
-      }
+     //  $scope.handle_backspace = function(event){
+     //    var string_array = $(event.currentTarget).val().split(" ");
+     //    var html_array = $(event.currentTarget).siblings().html().split(" ");
+     //    var chr = String.fromCharCode(event.keyCode);
+     //    var len = string_array.length;
+     //    if(len == 1){
+     //      var old_string = string_array.slice(0, len-1).join(" ");
+     //      var old_html = html_array.slice(0, len-1).join(" ");  
+     //    }
+     //    else{
+     //      var old_string = string_array.slice(0, len-1).join(" ")+" ";
+     //      var old_html = html_array.slice(0, len-1).join(" ")+" ";
+     //    }
+     //    var current_element = string_array.pop();
+     //    var current_html = html_array.pop();
+     //    var is_backspace = event.keyCode == 8;
+     //    var hash_tagging = $scope.hash_tagging;
+     //    if(is_backspace){
+     //      if(current_element == "#"){
+     //        $scope.hash_tagging = false;
+     //        $scope.hash_tags = [];
+     //        $(event.currentTarget).siblings().html(old_html);
+     //      }
+     //      else{
+     //        if(hash_tagging){
+     //          $(event.currentTarget).siblings().html(old_html);
+     //          $(event.currentTarget).val(old_string);
+     //          $scope.hash_tagging = false;
+     //          $scope.hash_tags = [];
+     //          event.preventDefault();
+     //        }
+     //        else{
+     //          var inside_a_hashtag = current_html[current_html.length - 1] == ">";
+     //          if(inside_a_hashtag){
+     //            $(event.currentTarget).siblings().html(old_html);
+     //            $(event.currentTarget).val(old_string);
+     //            $scope.hash_tags = [];
+     //            event.preventDefault();
+     //          }
+     //          else{
+     //            var html = $(event.currentTarget).siblings().html();
+     //            $(event.currentTarget).siblings().html(html.substring(0, html.length-1));
+     //          }
+     //        }
+     //      }
+     //      if(!$(event.currentTarget).val() || $(event.currentTarget).val() == ""){
+     //        $(event.currentTarget).siblings().html("");
+     //      }
+     //    }
+     //    event.stopPropagation();
+     //  }
 
-      $scope.handle_hash_tags = function(event){
-        var string_array = $(event.currentTarget).val().split(" ");
-        var chr = String.fromCharCode(event.keyCode);
-        var len = string_array.length;
-        var old_string = string_array.slice(0, len-1).join(" ");
-        var current_element = string_array.pop();
-        var is_new_word_initiation = current_element == "";
-        var under_a_tag = $scope.hash_tagging;
+     //  $scope.handle_hash_tags = function(event){
+     //    var string_array = $(event.currentTarget).val().split(" ");
+     //    var chr = String.fromCharCode(event.keyCode);
+     //    var len = string_array.length;
+     //    var old_string = string_array.slice(0, len-1).join(" ");
+     //    var current_element = string_array.pop();
+     //    var is_new_word_initiation = current_element == "";
+     //    var under_a_tag = $scope.hash_tagging;
         
-        if(is_new_word_initiation && chr == "#"){
-          var html = "<b>"+chr+"</b>";
-          $scope.hash_tagging = true;
-          $(event.currentTarget).siblings().append(html);
-        }
-        else if(is_new_word_initiation && chr == "+"){
-          var html = "<b>"+chr+"</b>";
-          $scope.hash_tagging = true;
-          $(event.currentTarget).siblings().append(html);
-          $scope.search_for = "TAGS";
-        }
-        else if(is_new_word_initiation && chr == "@"){
-          var html = "<b>"+chr+"</b>";
-          $scope.hash_tagging = true;
-          $(event.currentTarget).siblings().append(html);
-          $scope.search_for = "[AUTHORS, READERS]";
-        }
-        else{
-          if(chr == " "){
-            $scope.hash_tagging = false;
-            $(event.currentTarget).siblings().append(chr);
-            $scope.search_for = null;
-          }
-          else{
-            if($scope.hash_tagging){
-              $(event.currentTarget).siblings().find('b:last').append(chr);
-            }
-            else{
-              $(event.currentTarget).siblings().append(chr);
-            }
-          }
-        }
-        if($scope.search_for){
-          string_to_be_searched = current_element.slice(1, current_element.length)+""+chr;
-          websiteService.search(string_to_be_searched.trim(), $scope.search_for, 3).then(function(result) {
-            $scope.hash_tags = result.results;
-          });
-        }
-        event.stopPropagation();
-      }
+     //    if(is_new_word_initiation && chr == "#"){
+     //      var html = "<b>"+chr+"</b>";
+     //      $scope.hash_tagging = true;
+     //      $(event.currentTarget).siblings().append(html);
+     //    }
+     //    else if(is_new_word_initiation && chr == "+"){
+     //      var html = "<b>"+chr+"</b>";
+     //      $scope.hash_tagging = true;
+     //      $(event.currentTarget).siblings().append(html);
+     //      $scope.search_for = "TAGS";
+     //    }
+     //    else if(is_new_word_initiation && chr == "@"){
+     //      var html = "<b>"+chr+"</b>";
+     //      $scope.hash_tagging = true;
+     //      $(event.currentTarget).siblings().append(html);
+     //      $scope.search_for = "[AUTHORS, READERS]";
+     //    }
+     //    else{
+     //      if(chr == " "){
+     //        $scope.hash_tagging = false;
+     //        $(event.currentTarget).siblings().append(chr);
+     //        $scope.search_for = null;
+     //      }
+     //      else{
+     //        if($scope.hash_tagging){
+     //          $(event.currentTarget).siblings().find('b:last').append(chr);
+     //        }
+     //        else{
+     //          $(event.currentTarget).siblings().append(chr);
+     //        }
+     //      }
+     //    }
+     //    if($scope.search_for){
+     //      string_to_be_searched = current_element.slice(1, current_element.length)+""+chr;
+     //      websiteService.search(string_to_be_searched.trim(), $scope.search_for, 3).then(function(result) {
+     //        $scope.hash_tags = result.results;
+     //      });
+     //    }
+     //    event.stopPropagation();
+     //  }
 
       // _init();
     },

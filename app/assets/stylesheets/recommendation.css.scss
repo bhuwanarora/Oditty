@@ -482,7 +482,8 @@
 	height: 50px;
 }
 
-.interaction_box .close{
+.interaction_box .close,
+.message_box .close{
 	position: absolute;
 	right: 5px;
 	top: 0px;
@@ -659,6 +660,7 @@
 
 .filter_link:hover{
 	border-bottom: 2px solid #8A2119;
+	background-color: #DA5148;
 }
 
 .filter_link:active{
@@ -937,7 +939,8 @@
 	opacity: 0.2;
 }
 
-.interaction_box{
+.interaction_box,
+.message_box{
 	position: fixed;
 	left: 50%;
 	margin-left: -250px;
@@ -1201,6 +1204,10 @@
 	background-color: white;
 	border-bottom: 1px solid #EEEEEE;
 	white-space: normal;
+}
+
+.typeahead_options .option:hover{
+	background-color: #F1F1F1;
 }
 
 .stamp_read{

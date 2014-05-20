@@ -79,15 +79,18 @@
 
 
 .interaction_box.ng-enter,
-.interaction_box.ng-leave.ng-leave-active{
+.interaction_box.ng-leave.ng-leave-active,
+.message_box.ng-enter,
+.message_box.ng-leave.ng-leave-active{
 	bottom: -300px;
 }
 
 .interaction_box.ng-leave,
-.interaction_box.ng-enter.ng-enter-active{
+.interaction_box.ng-enter.ng-enter-active,
+.message_box.ng-leave,
+.message_box.ng-enter.ng-enter-active{
 	bottom: 40px;
 }
-
 
 .recommendation_box.ng-leave,
 .recommendation_box.ng-enter.ng-enter-active{

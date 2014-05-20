@@ -146,6 +146,11 @@
 	margin-left: 0px;
 }
 
+.website_search_options .option:hover,
+.website_search_helpers .option:hover{
+	background-color: #F1F1F1;
+}
+
 .website_search_options .option,
 .website_search_helpers .option{
 	cursor: pointer;
@@ -156,10 +161,6 @@
 }
 
 .website_search_options .graph_option{
-	/*background-color: #26486B;*/
-	/*color: white;*/
-	/*box-shadow: none;*/
-	/*border: 1px solid white;*/
 }
 
 .website_search_helpers .option{
