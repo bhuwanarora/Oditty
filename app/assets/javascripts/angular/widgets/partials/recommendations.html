@@ -7,120 +7,8 @@
    style="height:100%; white-space:nowrap;"
    ng-controller="recommendationsController"
    ng-click="hide_more_filters()">
-	
-		<div id="recommendationFooter">
-			<!-- <div class="website-title">
-				<span class="icon glyphicon-home"></span> Reader's Door
-			</div> -->
-			<notification-link></notification-link>
-			<div class="website_logo">
-				
-			</div>
-			<div class="shelf_nav_links">
+		<recommendation-footer></recommendation-footer>
 
-				<div ng-class="{'inactive':read_selected || bookmark_selected, 'active':!read_selected && !bookmark_selected}"
-					 class="link"
-					 title="Recommendations"
-					 style="margin-left:0px;" 
-					 ng-click="toggle_recommendations()">
-					Recommendations
-				</div>
-				<div ng-class="{'inactive':!read_selected, 'active':read_selected}"
-					 class="link"
-					 title="Books marked as read" 
-					 ng-click="toggle_read()">
-				 	<span ng-show="$routeParams.type == 'books'">Read Shelf</span>
-					<span ng-show="$routeParams.type == 'authors'">Following</span>
-					<span ng-show="$routeParams.type == 'readers'">Following</span>
-				</div>
-				<div ng-class="{'inactive':!bookmark_selected, 'active':bookmark_selected}"
-					 class="link"
-					 ng-show="$routeParams.type == 'books' || $routeParams.type == 'authors'"
-					 title="Books bookmarked"
-					 ng-click="toggle_bookmarked()">
-					 Bookmarked Shelf
-				</div>
-			</div>
-			<!-- <div class="scroller">
-				<span class="scroller-left icon-angle-left"
-				      ng-mouseover="move_left($event)"
-				      ng-click="move_left($event)"
-				      title="Scroll left">
-				</span>
-				<span class="scroller-right icon-angle-right"
-					  ng-mouseover="move_right($event)"
-					  ng-click="move_right($event)"
-					  title="Scroll right">
-				</span>
-			</div> -->
-		 	<!-- </type-ahead> -->
-			<div class="filter_link" 
-				 ng-click="toggle_more_filters($event)">
-				 <span class="icon-filter2"></span>&nbsp;Add Filters&nbsp;
-				 <span class=" icon-angle-down" ng-if="show_more_filters"></span>
-				 <span class=" icon-angle-up" ng-if="!show_more_filters"></span>
-			</div>
-		 	<div class="menu_group" 
-		 		 ng-class="{'menu_group_active':show_menu}"
-		 		 ng-mouseenter="toggle_menu()"
-				 ng-mouseleave="toggle_menu()">
-			 	<div class="menu" ng-if="show_menu">
-			 		<a ng-href="#user/{{$routeParams.id}}/search">
-				 		<div>
-					 		<span>Home</span>
-				 		</div>
-				 	</a>
-				 	<a ng-href="#user/{{$routeParams.id}}/recommendations/books">
-				 		<div ng-hide="$routeParams.type == 'books'">
-				 			<span class="icon-book"></span>
-					 		<span>Books</span>
-				 		</div>
-				 	</a>
-				 	<a ng-href="#user/{{$routeParams.id}}/recommendations/authors">
-			 			<div ng-hide="$routeParams.type == 'authors'">
-			 				<span class="icon-pen"></span>
-				 			<span>Authors</span>
-			 			</div>
-				 	</a>
-				 	<a ng-href="#user/{{$routeParams.id}}/recommendations/readers">
-			 			<div ng-hide="$routeParams.type == 'readers'">
-			 				<span class="icon-users"></span>
-				 			<span>Readers</span>
-			 			</div>
-				 	</a>
-			 	</div>
-				<div class="advanced_filter animate-fast" 
-					 ng-class="{'advanced_filter_active':show_menu || filter_expanded}">
-					<span ng-show="$routeParams.type == 'books'">
-						<span class="icon-book"></span>
-						<span ng-show="filter_expanded || show_menu">Books</span>
-					</span>
-					<span ng-show="$routeParams.type == 'authors'">
-						<span class="icon-pen"></span>
-						<span ng-show="filter_expanded || show_menu">Authors</span>
-					</span>
-					<span ng-show="$routeParams.type == 'readers'">
-						<span class="icon-users"></span>
-						<span ng-show="filter_expanded || show_menu">Readers</span>
-					</span>
-					<span class=" icon-angle-down" ng-if="show_menu"></span>
-				 	<span class=" icon-angle-up" ng-if="!show_menu"></span>
-				</div>
-		 	</div>
-			
-		</div>
-		<shelf ng-if="bookmark_selected || read_selected" ></shelf>
-		<more-filters></more-filters>
-
-		<div class="notifications animate-fast" ng-show="show_notifications">
-			<notification-link></notification-link>
-			<div class="notification_elements">
-				<div ng-repeat="notification in notifications">
-					<notification data="notification"></notification>
-				</div>
-			</div>
-		</div>
-		
 		<div class="vertical_padder_active"></div>
 		<!-- <div class="recommendations_page"><search-bar></search-bar></div> -->
 		<div ng-switch on="panel_selected" class="recommendation_window">
@@ -225,8 +113,24 @@
 			<div class="content" ng-bind-html="message">
 			</div>
 		</div>
+		
 		<!-- <message></message> -->
+		<div class="notifications animate-fast" ng-show="show_notifications">
+			<notification-link></notification-link>
+			<div class="notification_elements">
+				<div ng-repeat="notification in notifications">
+					<notification data="notification"></notification>
+				</div>
+			</div>
+		</div>
 
+		<div  ng-mouseenter="remove_focused_book()" class="top_hover_detector"></div>
+		<div  ng-mouseenter="remove_focused_book()" class="bottom_hover_detector"></div>
+
+		<more-filters></more-filters>
 		<focused-book></focused-book>
+		<notification-link></notification-link>
+
+
 		
 </div>

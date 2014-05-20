@@ -236,12 +236,24 @@
 }
 
 .login_form .authenticate{
+	padding: 10px 0px 10px 5px;
 	background-color: #2F567E;
 	text-align: center;
-	padding: 10px;
 	color: white;
 	cursor: pointer;
 	border-radius: 2px;
+	width: 47%;
+	display: inline-block;
+	float: left;
+}
+
+.login_form .authenticate:hover{
+	background-color: #3B6997;
+	border-bottom: 2px solid #15283C;
+}
+
+.login_form .authenticate_left{
+	border-right: 1px solid;
 }
 
 .login_form .authenticate:active{
@@ -317,9 +329,6 @@ and (min-width : 400px) {
 		font-size: 1em;
 	}
 
-	.login_form .authenticate{
-		padding: 10px;
-	}
 }
 
 
@@ -330,9 +339,6 @@ and (min-width : 1280px){
 		font-size: 1em;
 	}
 
-	.login_form .authenticate{
-		padding: 15px;
-	}
 }
 
 
@@ -343,9 +349,6 @@ and (min-width : 1366px){
 		font-size: 1em;
 	}
 
-	.login_form .authenticate{
-		padding: 10px;
-	}
 }
 
 @media only screen

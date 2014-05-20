@@ -35,6 +35,26 @@
    background-image: -webkit-gradient(linear, 0% 0%, 0% 150%, to(#DBDBDB), from(white));
 }
 
+.compact_footer{
+	width: 28% !important;
+}
+
+.compact_link{
+	width: 50px !important;
+	float: left;
+	padding-top: 10px !important;
+	margin-bottom: 6px;
+}
+
+.compact_shelf_nav_links{
+	margin-left: -103px !important;
+}
+
+.compact_filter_link{
+	margin-right: 0px !important;
+}
+
+
 /* IE 6 */
 * html #recommendationFooter{
    position:absolute;
@@ -95,6 +115,16 @@
 
 .category_character{
 	background-color: rgba(0, 0, 0, 0.25);
+}
+
+.category_character_top{
+	border-top-right-radius: 2px;
+	border-top-left-radius: 2px;
+}
+
+.category_character_bottom{
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
 }
 
 /* card on recommendation page */
@@ -238,6 +268,13 @@
 	top: 5px;
 	right: 5px;
 	bottom: 12%;
+}
+
+.card .widget_thumb_focus{
+	left: 10px;
+	top: 10px;
+	right: 10px;
+	bottom: 15%;	
 }
 
 .card .thumb{
@@ -911,8 +948,8 @@
 	border-radius: 2px;
 	width: 500px;
 	height: 200px;
-	top: 50%;
-	margin-top: -130px;
+	bottom: 40px;
+	/*margin-top: -130px;*/
 }
 
 .interaction_box_options{
@@ -1324,14 +1361,12 @@
 	padding: 5px;
 	letter-spacing: -5px;
 	text-align: center;
-	bottom: 1px;
-	position: absolute;
-	width: 470px;
+	margin-bottom: 25px;
 }
 
 .time_to_read .header{
 	letter-spacing:0px;
-	padding-bottom: 4px;
+	padding-bottom: 10px !important;
 	color: #B6B6B6;
 }
 
@@ -1650,6 +1685,19 @@ and (min-width : 1824px) {
 	opacity: 0.2;
 }
 
+.focused_tooltip .own_this_book{
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+	cursor: pointer;
+	color: #136CB2;
+	font-size: 0.8em;
+}
+
+.focused_tooltip .own_this_book:hover{
+	text-decoration: underline;
+}
+
 .focused_tooltip .users_count{
 	color: #9E9E9E;
 	font-size: 0.8em;
@@ -1657,8 +1705,11 @@ and (min-width : 1824px) {
 }
 
 .focused_tooltip .description{
-	font-size: 0.9em;
+	font-size: 1.2em;
 	padding: 12px;
+	height: 38%;
+	line-height: 1.5em;
+	overflow-y: scroll;
 }
 
 .focused_tooltip .share_menu div{
@@ -1673,19 +1724,22 @@ and (min-width : 1824px) {
 
 .focused_tooltip .footer{
 	background-color: #E6E6E6;
-	padding: 10px;
 	border-top: 1px solid #D5D5D5;
+	position: absolute;
+	bottom: 0px;
+	width: 96%;
+	padding: 10px;
 }
 
 .focused_tooltip{
 	position: fixed;
 	right: 5px;
-	top: 50%;
+	top: 5px;
 	width: 42%;
+	height: 92%;
 	min-width: 400px;
 	background-color: white;
 	white-space: initial;
-	margin-top: -190px;
 	box-shadow: 0 7px 15px rgba(0,0,0,0.25);
 	border: 1px solid #FFFFFF;
 }
@@ -1724,6 +1778,19 @@ and (min-width : 1824px) {
 	display: -webkit-box;
 	padding: 10px;
 }
+
+.focused_tooltip .interact{
+	background-color: white;
+	padding: 12px;
+	font-size: .8em;
+	border-radius: 4px;
+	cursor: pointer;
+	position: absolute;
+	left: 50%;
+	margin-left: -85px;
+	margin-top: -11px;
+}
+
 
 .focused_tooltip .header{
 	padding: 10px 10px 0px 10px;
@@ -2361,28 +2428,28 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 
 .notifications{
 	position: fixed;
-	height: 100%;
-	width: 85%;
+	left: 0px;
+	right: 0px;
 	overflow-y: scroll;
 	font-size: 0.9em;
 	z-index: 8;
-	padding-left: 170px;
+	padding-left: 13%;
 	background-color: rgba(0, 0, 0, 0.71);
-	margin-top: -8px;
-	margin-left: -8px;
+	top: 0px;
+	bottom: 0px;
 }
 
 .notification_elements{
 	overflow-y: scroll;
-	width: 735px;
+	width: 80%;
 	height: 100%; 
 }
 .notification_link{
-	position: absolute;
 	right: 20px;
 	bottom: 0px;
+	z-index: 6;
 	font-size: 1.2em;
-	position: absolute;
+	position: fixed;
 	padding: 8px;
 	text-align: center;
 	border-radius: 4px;
@@ -2422,8 +2489,7 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	border-bottom: 1px solid #C9C9C9;
 	padding: 15px 40px 15px 74px;
 	border-radius: 2px;
-	width: 600px;
-	}
+}
 
 .notifications span{
 	display: inline-block;
@@ -2704,4 +2770,20 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	left: 0px;
 	top: 0px;
 	background-color: rgba(0, 0, 0, 0.2);
+}
+
+.top_hover_detector{
+	position: fixed;
+	width: 100%;
+	left: 0px;
+	top: 0px;
+	height: 20%;
+}
+
+.bottom_hover_detector{
+	position: fixed;
+	width: 100%;
+	left: 0px;
+	bottom: 0px;
+	height: 20%;
 }

@@ -108,8 +108,14 @@
 	      	       spellcheck="false"
 	      	       required /><br />
 	      	
+	      	<div class="authenticate authenticate_left" ng-click="authenticate(user)" type="button">
+	      		<span ng-show="!loading_icon">
+	      			<span>LOG IN</span>
+	      		<span ng-show="loading_icon"><img src="assets/loader2.gif" width="20px"></span>
+	      	</div>
 	      	<div class="authenticate" ng-click="authenticate(user)" type="button">
-	      		<span ng-show="!loading_icon">LOG IN or SIGN UP</span>
+	      		<span ng-show="!loading_icon">
+	      			<span>SIGN UP</span>
 	      		<span ng-show="loading_icon"><img src="assets/loader2.gif" width="20px"></span>
 	      	</div>
 	    </form>

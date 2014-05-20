@@ -1,41 +1,19 @@
-<div class="interaction_box animate-slow"
-	 ng-if="interact">
-	<recommend data="book"></recommend>
+<div class="interaction_box animate-fast"
+	 ng-if="focused_book.interact">
  	<div class="close button_effect"
  		 ng-click="close_interaction_box()">x</div>
- 	<div class="own_this_book"
- 		 ng-click="own_this_book()">
- 		 <span ng-show="!have_this_book">I have this Book</span>
- 		 <span ng-show="have_this_book">I don't have this Book</span>
- 	</div>
- 	<hr>
- 	<rate data="book"></rate>
+ 	
 	<div>
 		<span class="highlighter"></span>
 		<textarea itemprop= "commentText" 
 			itemtype= "http://schema.org/UserComments"
 		   type="text" 
 		   ng-keydown="handle_backspace($event)"
-		   placeholder="What do you feel about {{book.title}} by {{book.author_name}}..." 
+		   placeholder="What do you feel about {{focused_book.title}} by {{focused_book.author_name}}..." 
 		   class="comment_box animate-fast" 
 		   ng-keypress="handle_hash_tags($event)"
 		   ng-bind-html="hash_tagged"
 		   rows="1"/>
-	</div>
-	<div class="time_to_read">
-		<hr>
-		<div class="header">Describe the reading length of this book</div>
-		<div>
-			<span ng-click="record_read_time(0)"
-				  ng-class="{'active_read_timer':is_timer(0)}">Tiny Read</span>
-			<span ng-click="record_read_time(1)"
-				  ng-class="{'active_read_timer':is_timer(1)}">Small Read</span>
-			<span ng-click="record_read_time(2)"
-				  ng-class="{'active_read_timer':is_timer(2)}">Normal Read</span>
-			<span ng-click="record_read_time(3)"
-				  ng-class="{'active_read_timer':is_timer(3)}">Long Read</span>
-			
-		</div>
 	</div>
 </div>
 <div class="interaction_box_options"

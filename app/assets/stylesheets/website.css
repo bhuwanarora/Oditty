@@ -100,6 +100,7 @@ input:focus{
     border-radius: 2px;
     border: 1px solid rgba(255, 255, 255, 0.4);
     background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     width: 98%;
     height: 100%;
 }
@@ -143,4 +144,9 @@ input:focus{
     -moz-transition:all linear 0.9s;
     -o-transition:all linear 0.9s;
     transition:all linear 0.9s;
+}
+
+.stuck {
+  position: fixed;
+  top: 0;
 }

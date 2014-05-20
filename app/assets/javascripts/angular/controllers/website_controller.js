@@ -31,13 +31,13 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 			var current_x = $window.pageXOffset;
 			swipe_time = 1000;
 		}
-		var delta_x = $('.recommendation_block:first').width();
+		var delta_x = screen.width*(0.31);
 		scroller.scrollTo(current_x - delta_x, 0, swipe_time);
 	}
 
 	$scope.move_right = function(event){
 		var swipe_time = 2000;
-		var clientWidth = $document.width();
+		var clientWidth = document.body["scrollWidth"];
 		if(event){
 			var pageX = event.pageX;
 			if(event.type == "keydown" || event.type == "wheel"){
@@ -58,12 +58,12 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		if(lessThanOnePageLeft){
 			$rootScope.$broadcast('loadRecommendations');
 		}
-		var delta_x = $('.recommendation_block:first').width();
+		var delta_x = screen.width*(0.31);
 		scroller.scrollTo(current_x + delta_x, 0, swipe_time);
 	}
 
 	$scope.scroll_one_page_right = function(event){
-		var clientWidth = $document.width();
+		var clientWidth = document.body["scrollWidth"];
 		if(event){
 			var current_x = event.pageX - screen.width/2;
 			var lessThanOnePageLeft = event.pageX + screen.width > clientWidth;
@@ -237,7 +237,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	_load_recommendations = function(){
-		var currentWidth = $document.width();
+		var currentWidth = document.body["scrollWidth"];
 		var lessThanOnePageLeft = event.pageX + screen.width > currentWidth;
 		if (lessThanOnePageLeft){
 			$rootScope.$broadcast('loadRecommendations');

@@ -248,3 +248,16 @@ websiteApp.directive('filter', function($rootScope, $timeout, $routeParams){
 })
 
 
+websiteApp.directive('recommendationFooter', function(){
+	return{
+		restrict: 'E',
+		controller: function($scope){
+			$scope.compact_footer = false;
+
+			$scope.toggle_footer = function(){
+				$scope.compact_footer = true;
+			}
+		},
+		templateUrl: "/assets/angular/widgets/partials/recommendation_footer.html"
+	}
+});

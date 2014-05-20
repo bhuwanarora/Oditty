@@ -3,9 +3,9 @@
   <head>
     <title>ReadersDoor</title>
     <!-- <base href="/"> -->
-    <!-- <link href="/assets/icomoon.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="http://i.icomoon.io/public/temp/e9d01a0b09/UntitledProject1/style.css">
+    <link href="/assets/icomoon.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="assets/website.css">
+    <!-- <link rel="stylesheet" href="http://i.icomoon.io/public/temp/ead8d445d9/UntitledProject1/style.css"> -->
   </head>
   <body ng-controller="websiteAppController" ng-keydown="stop_back_propagation($event)">
     <%= render :partial => "website/loading"%>
@@ -32,7 +32,9 @@
     <link rel="stylesheet" type="text/css" href="assets/animate.css.scss">
     
     <div ng-show="!loading" style="height:100%;">
-      <div ng-view style="height:100%;"></div>
+      <div ng-view 
+           style="height:100%;" 
+           class="main_view animate-slow"></div>
       <%= csrf_meta_tags %>
       <%= render :partial => "shared/favicon" %>
       <%= render :partial => "shared/meta_tags"%>

@@ -95,7 +95,6 @@ websiteApp.directive('bookInteract', function (websiteService) {
     controller: function($scope){
       _init = function(){
         $scope.setStatus();
-        $('.comment_box').contentEditable='true'; 
       }
 
     	$scope.setStatus = function(status){
@@ -287,12 +286,56 @@ websiteApp.directive('rate', function($rootScope, $timeout, widgetService){
   }
 });
 
-websiteApp.directive('focusedBook', function($rootScope, $timeout){
+websiteApp.directive('focusedBook', function($rootScope, $timeout, widgetService){
   return{
     restrict: 'E',
     controller: function($scope){
-      $scope.show_book = function(page){
-        zoomin_book($scope, $timeout, $rootScope, page);
+      // $scope.show_book = function(page){
+      //   zoomin_book($scope, $timeout, $rootScope, page);
+      // }
+
+      $scope.own_this_book = function(){
+        if($scope.have_this_book){
+          $scope.have_this_book = false;
+          var message = "SUCCESS-Are you sure, you don't have a copy of "+$scope.focused_book.title+"? <br/>Your friends might be looking for this book.";
+        }
+        else{
+          $scope.have_this_book = true;
+          var message = "SUCCESS-Thanks, Your friends will now know that you own a copy of "+$scope.focused_book.title;
+        }
+        var id = $scope.focused_book.id;
+        var timeout_event = notify($rootScope, message, $timeout);
+        widgetService.own_this_book(id, $scope.have_this_book);
+        $scope.$on('destroy', function(){
+          $timeout.cancel(timeout_event);
+        });
+      }
+
+      $scope.record_read_time = function(read_timer){
+        $scope.focused_book.read_timer = read_timer;
+        var message = "SUCCESS-Thanks we have recorded your approximate time to read "+$scope.focused_book.title+". <br/> This will help us to recommend you books according to your reading skills."
+        var timeout_event = notify($rootScope, message, $timeout);
+        widgetService.record_time($scope.focused_book.id, read_timer);
+        $scope.$on('destroy', function(){
+          $timeout.cancel('timeout_event');
+        });
+      }
+
+      $scope.is_timer = function(read_timer){
+        var is_timer = false;
+        if($scope.focused_book.read_timer == read_timer){
+          is_timer = true;
+        }
+        return is_timer;
+      }
+
+      $scope.close_interaction_box = function(){
+        $scope.focused_book.interact = false;
+        $scope.hash_tags = [];
+      }
+
+      $scope.stop_horizontal_scroll = function(event){
+        event.stopPropagation();
       }
     },
     templateUrl: "/assets/angular/widgets/base/book/focused_book.html"
@@ -303,45 +346,7 @@ websiteApp.directive('interactionBox', function($rootScope, $timeout, widgetServ
   return{
     restrict: 'E',
     controller: function($scope){
-      $scope.close_interaction_box = function(){
-        $scope.interact = false;
-        $scope.hash_tags = [];
-      }
-
-      $scope.own_this_book = function(){
-        if($scope.have_this_book){
-          $scope.have_this_book = false;
-          var message = "SUCCESS-Are you sure, you don't have a copy of "+$scope.book.title+"? <br/>Your friends might be looking for this book.";
-        }
-        else{
-          $scope.have_this_book = true;
-          var message = "SUCCESS-Thanks, Your friends will now know that you own a copy of "+$scope.book.title;
-        }
-        var id = $scope.book.id;
-        var timeout_event = notify($rootScope, message, $timeout);
-        widgetService.own_this_book(id, $scope.have_this_book);
-        $scope.$on('destroy', function(){
-          $timeout.cancel(timeout_event);
-        });
-      }
-
-      $scope.record_read_time = function(read_timer){
-        $scope.book.read_timer = read_timer;
-        var message = "SUCCESS-Thanks we have recorded your approximate time to read "+$scope.book.title+". <br/> This will help us to recommend you books according to your reading skills."
-        var timeout_event = notify($rootScope, message, $timeout);
-        widgetService.record_time($scope.book.id, read_timer);
-        $scope.$on('destroy', function(){
-          $timeout.cancel('timeout_event');
-        });
-      }
-
-      $scope.is_timer = function(read_timer){
-        var is_timer = false;
-        if($scope.book.read_timer == read_timer){
-          is_timer = true;
-        }
-        return is_timer;
-      }
+      
 
       _init();
     },
@@ -417,7 +422,6 @@ websiteApp.directive('markAsRead', function($rootScope, $timeout, widgetService)
         var author_name = $scope.book.author_name;
         if($scope.book.status){
           $scope.book.status = 0;
-          $scope.interact = false;
           $scope.$emit('removeFromShelf', "BOOK", $scope.book);
           var message = "ADVISE-Book "+book_title+" by "+author_name+" has been removed from your Read Shelf.<br/> You can mark as read again."
         }
@@ -425,7 +429,6 @@ websiteApp.directive('markAsRead', function($rootScope, $timeout, widgetService)
           $scope.book.status = 1;
           $scope.$emit('addToShelf', "BOOK", $scope.book);
           $rootScope.$broadcast('glowShelf');
-          $scope.interact = true;
           var message = "ADVISE-Book "+book_title+" by "+author_name+" has been added to your Read Shelf.<br/> Also please rate this book."
 
           $scope.$on('destroy', function(){

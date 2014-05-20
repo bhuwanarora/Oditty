@@ -1,6 +1,8 @@
 <div class="horizontal_padder_active">
 </div>
-<div ng-if="user.logged" ng-switch on="user.profile_status" ng-model="user.profile_status">
+<div ng-if="user.logged" 
+	 ng-switch on="user.profile_status" 
+	 ng-model="user.profile_status">
 	<div class="info_cards" 
 	     style="background-color:{{user.profile_status_color}}"
 	     ng-model="user.profile_status_color">

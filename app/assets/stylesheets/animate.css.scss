@@ -1,13 +1,35 @@
 .focused_tooltip.ng-enter,
 .focused_tooltip.ng-leave.ng-leave-active{
-	right: -400px;
+    -webkit-transform: rotateX(-180deg) translatez(30px);
+    -moz-transform: rotateX(-180deg) translatez(30px);
+    -ms-transform: rotateX(-180deg) translatez(30px);
+    -o-transform: rotateX(-180deg) translatez(30px);
+    transform: rotateX(-180deg) translatez(30px);
+    opacity: 0;
+    height: 0px;
+	/*right: -400px;*/
 }
 
 .focused_tooltip.ng-leave,
 .focused_tooltip.ng-enter-active{
-	right: 5px;
+    -webkit-transform: rotateX(0deg) translatez(30px);
+    -moz-transform: rotateX(0deg) translatez(30px);
+    -ms-transform: rotateX(0deg) translatez(30px);
+    -o-transform: rotateX(0deg) translatez(30px);
+    transform: rotateX(0deg) translatez(30px);
+    opacity: 1;
+    height: 92%;
+	/*right: 5px;*/
 }
 
+/*.animate-leave.animate-leave-active,
+.animate-enter {
+}        
+ 
+.animate-enter.animate-enter-active,
+.animate-leave {
+}
+*/
 .push_notification.ng-enter,
 .push_notification.ng-leave.ng-leave-active{
 	top: -150px;
@@ -58,18 +80,12 @@
 
 .interaction_box.ng-enter,
 .interaction_box.ng-leave.ng-leave-active{
-	width: 200px;
-	height: 50px;
-	opacity: 0;
-	margin-top: 0px;
+	bottom: -300px;
 }
 
 .interaction_box.ng-leave,
 .interaction_box.ng-enter.ng-enter-active{
-	width: 500px;
-	height: 200px;
-	opacity: 1;
-	margin-top: -100px;
+	bottom: 40px;
 }
 
 
@@ -123,4 +139,18 @@
 
 .notification.ng-leave{
 	margin-left: 5px;
+}
+
+.main_view.ng-enter,
+.main_view.ng-leave.ng-leave-active{
+	width: 0px;
+	height: 0px;
+	opacity: 0;
+}
+
+.main_view.ng-leave,
+.main_view.ng-enter.ng-enter-active{
+	width: 100%;
+	height: 100%;
+	opacity: 1;
 }

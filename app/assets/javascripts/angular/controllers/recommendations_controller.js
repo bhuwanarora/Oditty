@@ -22,6 +22,10 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
 		}
 	}
 
+	$scope.remove_focused_book = function(){
+		$rootScope.focused_book = null;
+	}
+
 	$scope.reset = function(){
 		_init_recommendations();
     	_get_recommendations();
