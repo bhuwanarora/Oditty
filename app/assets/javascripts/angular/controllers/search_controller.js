@@ -83,7 +83,8 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 				var search_placeholder = "by gender...";
 				$scope.search_results = [
 					{"name": "Male", "custom_option": true, "icon": "icon-male"},
-					{"name": "Female", "custom_option": true, "icon": "icon-female"}
+					{"name": "Female", "custom_option": true, "icon": "icon-female"},
+					{"name": "I don't care", "custom_option": true}
 				];
 			}
 			else if(type == "AWARDS"){
@@ -187,25 +188,11 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
         	var currentValue = _get_search_input();
         	if(currentValue.length <= 1){
         		if(currentValue.length < 1 && $scope.search_level1 && !$scope.search_level2){
-        			$scope.search_level1 = false;
-        			$scope.book_search = false;
-					$scope.author_search = false;
-					$scope.reader_search = false;
-					_init_graph_search();
+        			$scope.clear_search_level1_var();
         			event.preventDefault();
         		}
         		else if(currentValue.length < 1 && $scope.search_level2){
-        			$scope.search_level1 = false;
-        			$scope.search_level2 = false;
-					$scope.year_search = false;
-					$scope.list_search = false;	
-					$scope.country_search = false;
-					$scope.genre_search = false;
-					$scope.author_search = false;
-					$scope.time_search = false;
-					$scope.gender_search = false;
-					$scope.awards_search = false;
-					_search_by();
+        			$scope.clear_search_level2_var();
         			event.preventDefault();
         		}
         		else{
@@ -218,59 +205,84 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
         }
 	}
 
+	$scope.clear_search_level1_var = function(){
+		$scope.clear_search_level2_var();
+		$scope.search_level1 = false;
+		$scope.book_search = false;
+		$scope.author_search = false;
+		$scope.reader_search = false;
+		$scope.website.searching_level1 = false;
+		_init_graph_search();
+	}
+
+	$scope.clear_search_level2_var = function(){
+		$scope.search_level1 = false;
+		$scope.search_level2 = false;
+		$scope.year_search = false;
+		$scope.list_search = false;	
+		$scope.country_search = false;
+		$scope.genre_search = false;
+		$scope.author_search = false;
+		$scope.time_search = false;
+		$scope.gender_search = false;
+		$scope.awards_search = false;
+		$scope.website.searching_level2 = false;
+		_search_by();
+	}
+
 	$scope.highlight = function(searchItem, textToSearchThrough){
 		var html = '<span><i><b>$&</b></i></span>';
     	return $sce.trustAsHtml(textToSearchThrough.replace(new RegExp(searchItem, 'gi'), html));
 	}
 
 	_init_graph_search = function(){
-		$scope.search_results = [
-		{"name": "Popular Readers", "graph_option": true},
-		{"name": "10 Readers to meet before you die", "graph_option": true},
-		{"name": "Friends who like a-book-category", "graph_option": true},
-		{"name": "Friends who are reading author-name-or-a-book-name", "graph_option": true},
-		{"name": "Friends who own a-book-name", "graph_option": true},
-		{"name": "Friends who need a-book-name", "graph_option": true},
-		{"name": "Friends who read a-book-name", "graph_option": true},
-		{"name": "Friends who bookmarked a-book-name-or-author-name-or-a-reader-name", "graph_option": true},
-		{"name": "Friends who follow an-author-name and a-friend-name", "graph_option": true},
-		{"name": "Readers bookmarked by a-friend-name-or-me", "graph_option": true},
+		// $scope.search_results = [
+		// {"name": "Popular Readers", "graph_option": true},
+		// {"name": "10 Readers to meet before you die", "graph_option": true},
+		// {"name": "Friends who like a-book-category", "graph_option": true},
+		// {"name": "Friends who are reading author-name-or-a-book-name", "graph_option": true},
+		// {"name": "Friends who own a-book-name", "graph_option": true},
+		// {"name": "Friends who need a-book-name", "graph_option": true},
+		// {"name": "Friends who read a-book-name", "graph_option": true},
+		// {"name": "Friends who bookmarked a-book-name-or-author-name-or-a-reader-name", "graph_option": true},
+		// {"name": "Friends who follow an-author-name and a-friend-name", "graph_option": true},
+		// {"name": "Readers bookmarked by a-friend-name-or-me", "graph_option": true},
 		
-		{"name": "Popular books", "graph_option": true},
-		{"name": "10 Books to read before you die", "graph_option": true},
-		{"name": "100 Books to read before you die", "graph_option": true},
-		{"name": "Books recommended by a-friend-name-or-me", "graph_option": true},
-		{"name": "Books by an-author-name", "graph_option": true},
-		{"name": "Books published in a-year", "graph_option": true},
-		{"name": "Books published today", "graph_option": true},
-		{"name": "Books published between a-year and another-year", "graph_option": true},
-		{"name": "Books published in country a-country-name", "graph_option": true},
-		{"name": "Books tagged as a-tag", "graph_option": true},
-		{"name": "Books I own", "graph_option": true},
-		{"name": "Books I have read", "graph_option": true},
-		{"name": "Books I have rated", "graph_option": true},
-		{"name": "Books I have discussed", "graph_option": true},
-		{"name": "Books discussed by a-friend-name-or-me", "graph_option": true},
-		{"name": "Books reviewed by a-friend-name-or-me", "graph_option": true},
-		{"name": "Books read by a-friend-name-or-me", "graph_option": true},
-		{"name": "Books bookmarked by a-friend-name-or-me", "graph_option": true},
-		{"name": "Books published this year", "graph_option": true},
+		// {"name": "Popular books", "graph_option": true},
+		// {"name": "10 Books to read before you die", "graph_option": true},
+		// {"name": "100 Books to read before you die", "graph_option": true},
+		// {"name": "Books recommended by a-friend-name-or-me", "graph_option": true},
+		// {"name": "Books by an-author-name", "graph_option": true},
+		// {"name": "Books published in a-year", "graph_option": true},
+		// {"name": "Books published today", "graph_option": true},
+		// {"name": "Books published between a-year and another-year", "graph_option": true},
+		// {"name": "Books published in country a-country-name", "graph_option": true},
+		// {"name": "Books tagged as a-tag", "graph_option": true},
+		// {"name": "Books I own", "graph_option": true},
+		// {"name": "Books I have read", "graph_option": true},
+		// {"name": "Books I have rated", "graph_option": true},
+		// {"name": "Books I have discussed", "graph_option": true},
+		// {"name": "Books discussed by a-friend-name-or-me", "graph_option": true},
+		// {"name": "Books reviewed by a-friend-name-or-me", "graph_option": true},
+		// {"name": "Books read by a-friend-name-or-me", "graph_option": true},
+		// {"name": "Books bookmarked by a-friend-name-or-me", "graph_option": true},
+		// {"name": "Books published this year", "graph_option": true},
 		
-		{"name": "10 Authors to read before you die", "graph_option": true},
-		{"name": "Authors bookmarked by a-friend-name-or-me", "graph_option": true},
-		{"name": "Popular Authors", "graph_option": true},
+		// {"name": "10 Authors to read before you die", "graph_option": true},
+		// {"name": "Authors bookmarked by a-friend-name-or-me", "graph_option": true},
+		// {"name": "Popular Authors", "graph_option": true},
 		
 
-		{"name": "Popular Bookmarks", "graph_option": true},
-		{"name": "a-book-category Books", "graph_option": true},
-		{"name": "Reviews on a-book-name", "graph_option": true},
-		{"name": "Discussions on a-book-name", "graph_option": true},
-		{"name": "Quotes from a-book-name", "graph_option": true},
-		{"name": "Characters from a-book-name", "graph_option": true},
-		{"name": "Popular Recommendations", "graph_option": true},
-		{"name": "Movies based on a-book-name", "graph_option": true}
+		// {"name": "Popular Bookmarks", "graph_option": true},
+		// {"name": "a-book-category Books", "graph_option": true},
+		// {"name": "Reviews on a-book-name", "graph_option": true},
+		// {"name": "Discussions on a-book-name", "graph_option": true},
+		// {"name": "Quotes from a-book-name", "graph_option": true},
+		// {"name": "Characters from a-book-name", "graph_option": true},
+		// {"name": "Popular Recommendations", "graph_option": true},
+		// {"name": "Movies based on a-book-name", "graph_option": true}
 
-		];
+		// ];
 		if(!$scope.search_level1){
 			$scope.search_results = [
 				{
@@ -281,17 +293,17 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 					"graph_option": true
 				},
 				{
-					"name": "Search a Reader", 
-					"icon": "icon-users", 
-					"custom_option": true, 
-					"type": "READER",
-					"graph_option": true
-				},
-				{
 					"name": "Search an Author", 
 					"icon": "icon-pen", 
 					"custom_option": true, 
 					"type": "AUTHOR",
+					"graph_option": true
+				},
+				{
+					"name": "Search a Reader", 
+					"icon": "icon-users", 
+					"custom_option": true, 
+					"type": "READER",
 					"graph_option": true
 				}];
 		}
@@ -302,72 +314,72 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 	}
 
 	_init_book_search = function(){
+		// $scope.search_results = [
+		// 	{"name": "Popular books", "graph_option": true},
+		// 	{"name": "10 Books to read before you die", "graph_option": true},
+		// 	{"name": "100 Books to read before you die", "graph_option": true},
+		// 	{"name": "Books recommended by a-friend-name-or-me", "graph_option": true},
+		// 	{"name": "Books by an-author-name", "graph_option": true},
+		// 	{"name": "Books published in a-year", "graph_option": true},
+		// 	{"name": "Books published today", "graph_option": true},
+		// 	{"name": "Books published between a-year and another-year", "graph_option": true},
+		// 	{"name": "Books published in country a-country-name", "graph_option": true},
+		// 	{"name": "Books tagged as a-tag", "graph_option": true},
+		// 	{"name": "Books I own", "graph_option": true},
+		// 	{"name": "Books I have read", "graph_option": true},
+		// 	{"name": "Books I have rated", "graph_option": true},
+		// 	{"name": "Books I have discussed", "graph_option": true},
+		// 	{"name": "Books discussed by a-friend-name-or-me", "graph_option": true},
+		// 	{"name": "Books reviewed by a-friend-name-or-me", "graph_option": true},
+		// 	{"name": "Books read by a-friend-name-or-me", "graph_option": true},
+		// 	{"name": "Books bookmarked by a-friend-name-or-me", "graph_option": true},
+		// 	{"name": "Books published this year", "graph_option": true}
+		// ];
 		$scope.search_results = [
-			{"name": "Popular books", "graph_option": true},
-			{"name": "10 Books to read before you die", "graph_option": true},
-			{"name": "100 Books to read before you die", "graph_option": true},
-			{"name": "Books recommended by a-friend-name-or-me", "graph_option": true},
-			{"name": "Books by an-author-name", "graph_option": true},
-			{"name": "Books published in a-year", "graph_option": true},
-			{"name": "Books published today", "graph_option": true},
-			{"name": "Books published between a-year and another-year", "graph_option": true},
-			{"name": "Books published in country a-country-name", "graph_option": true},
-			{"name": "Books tagged as a-tag", "graph_option": true},
-			{"name": "Books I own", "graph_option": true},
-			{"name": "Books I have read", "graph_option": true},
-			{"name": "Books I have rated", "graph_option": true},
-			{"name": "Books I have discussed", "graph_option": true},
-			{"name": "Books discussed by a-friend-name-or-me", "graph_option": true},
-			{"name": "Books reviewed by a-friend-name-or-me", "graph_option": true},
-			{"name": "Books read by a-friend-name-or-me", "graph_option": true},
-			{"name": "Books bookmarked by a-friend-name-or-me", "graph_option": true},
-			{"name": "Books published this year", "graph_option": true}
-		];
-		$scope.search_results = [
-			{"name": "Get Books by Published Year", "custom_option": true, "type": "YEAR", "icon":"icon-calendar"},
-			{"name": "Get Books by Reading Time", "custom_option": true, "type": "TIME", "icon": "icon-clock"},
-			{"name": "Get Books by Country", "custom_option": true, "type": "COUNTRY", "icon": "icon-earth"},
-			{"name": "Get Books by Genre", "custom_option": true, "type": "GENRE", "icon": "icon-shapes"},
-			{"name": "Get Popular lists", "custom_option": true, "type": "LIST", "icon": "icon-list"},
+			{"name": "Find Books by Era", "custom_option": true, "type": "YEAR", "icon":"icon-calendar"},
+			{"name": "Find Books by Reading Time", "custom_option": true, "type": "TIME", "icon": "icon-clock"},
+			{"name": "Find Books by Author's Region", "custom_option": true, "type": "COUNTRY", "icon": "icon-earth"},
+			{"name": "Find Books by Genre", "custom_option": true, "type": "GENRE", "icon": "icon-shapes"},
+			{"name": "Get popular lists of Books", "custom_option": true, "type": "LIST", "icon": "icon-list"},
 			{"name": "Get Books by Author", "custom_option": true, "type": "AUTHOR", "icon": "icon-pen"}
 		]
 	}
 
 	_init_author_search = function(){
-		$scope.search_results = [
-			{"name": "10 Authors to read before you die", "graph_option": true},
-			{"name": "Authors bookmarked by a-friend-name-or-me", "graph_option": true},
-			{"name": "Popular Authors", "graph_option": true}
-		];
+		// $scope.search_results = [
+		// 	{"name": "10 Authors to read before you die", "graph_option": true},
+		// 	{"name": "Authors bookmarked by a-friend-name-or-me", "graph_option": true},
+		// 	{"name": "Popular Authors", "graph_option": true}
+		// ];
 
 		$scope.search_results = [
-			{"name": "Get Authors By Time", "custom_option": true, "type": "YEAR", "icon": "icon-clock"},
-			{"name": "Get Authors By Country", "custom_option": true, "type": "COUNTRY", "icon": "icon-earth"},
-			{"name": "Get Authors By Awards", "custom_option": true, "type": "AWARDS", "icon": "icon-trophy"},
-			{"name": "Get Authors By Genre", "custom_option": true, "type": "GENRE", "icon": "icon-shapes"},
-			{"name": "Get Popular Lists", "custom_option": true, "type": "LIST", "icon": "icon-list"}
+			{"name": "Find Authors by Era", "custom_option": true, "type": "YEAR", "icon": "icon-clock"},
+			{"name": "Find Authors by Region", "custom_option": true, "type": "COUNTRY", "icon": "icon-earth"},
+			{"name": "Find Authors by Awards", "custom_option": true, "type": "AWARDS", "icon": "icon-trophy"},
+			{"name": "Find Authors by Genre", "custom_option": true, "type": "GENRE", "icon": "icon-shapes"},
+			{"name": "Get popular lists of Authors", "custom_option": true, "type": "LIST", "icon": "icon-list"}
 		];
 	}
 
 	_init_reader_search = function(){
-		$scope.search_results = [
-			{"name": "Popular Readers", "graph_option": true},
-			{"name": "10 Readers to meet before you die", "graph_option": true},
-			{"name": "Friends who like a-book-category", "graph_option": true},
-			{"name": "Friends who are reading author-name-or-a-book-name", "graph_option": true},
-			{"name": "Friends who own a-book-name", "graph_option": true},
-			{"name": "Friends who need a-book-name", "graph_option": true},
-			{"name": "Friends who read a-book-name", "graph_option": true},
-			{"name": "Friends who bookmarked a-book-name-or-author-name-or-a-reader-name", "graph_option": true},
-			{"name": "Friends who follow an-author-name and a-friend-name", "graph_option": true},
-			{"name": "Readers bookmarked by a-friend-name-or-me", "graph_option": true},
-		]
+		// $scope.search_results = [
+		// 	{"name": "Popular Readers", "graph_option": true},
+		// 	{"name": "10 Readers to meet before you die", "graph_option": true},
+		// 	{"name": "Friends who like a-book-category", "graph_option": true},
+		// 	{"name": "Friends who are reading author-name-or-a-book-name", "graph_option": true},
+		// 	{"name": "Friends who own a-book-name", "graph_option": true},
+		// 	{"name": "Friends who need a-book-name", "graph_option": true},
+		// 	{"name": "Friends who read a-book-name", "graph_option": true},
+		// 	{"name": "Friends who bookmarked a-book-name-or-author-name-or-a-reader-name", "graph_option": true},
+		// 	{"name": "Friends who follow an-author-name and a-friend-name", "graph_option": true},
+		// 	{"name": "Readers bookmarked by a-friend-name-or-me", "graph_option": true},
+		// ]
 
 		$scope.search_results = [
-			{"name": "Get Readers By Gender", "custom_option": true, "type": "GENDER", "icon": "icon-male icon-female"},
-			{"name": "Get Readers By Country", "custom_option": true, "type": "COUNTRY", "icon": "icon-earth"},
-			{"name": "Get Readers By Genre", "custom_option": true, "type": "GENRE", "icon": "icon-shapes"},
-			{"name": "Get Popular Lists", "custom_option": true, "type": "LIST", "icon": "icon-list"}
+			{"name": "Find Readers by Region", "custom_option": true, "type": "COUNTRY", "icon": "icon-earth"},
+			{"name": "Find Readers by their Taste", "custom_option": true, "type": "GENRE", "icon": "icon-shapes"},
+			{"name": "Find Readers by Gender", "custom_option": true, "type": "GENDER", "icon": "icon-male icon-female"},
+			{"name": "Get popular lists of Readers", "custom_option": true, "type": "LIST", "icon": "icon-list"}
 		];
 	}
 
@@ -455,10 +467,20 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 		}, 500);
 	}
 
+	$scope.toggle_login_panel = function(){
+		if($scope.show_login_form){
+			$scope.show_login_form = false;
+		}
+		else{
+			$scope.show_login_form = true;	
+		}
+	}
+
 	_handle_search_page = function(){
 		$scope.search_initiated = false;
 		$scope.search_display = "Searching reader's door...";
 		$scope.search_type = "[ALL]";
+		$scope.show_login_form = false;
 
 		// $scope.search_tag.selected_result = true; // hides the list initially
 		$scope.search_tag = {};

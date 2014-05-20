@@ -1,11 +1,13 @@
-<div class="go_left" ng-click="move_left()"></div>
-<div class="go_right" ng-click="move_right()"></div>
+<!-- <div class="go_left" ng-click="move_left()"></div>
+<div class="go_right" ng-click="move_right()"></div> -->
 <!-- <horizontal-scroller></horizontal-scroller> -->
 <div msd-wheel="bindHorizontalScroll($event, $delta, $deltaX, $deltaY)" 
    ng-animate="msd-wheel"
    class="recommendations"
-   style="height:100%; white-space:nowrap;">
-	<div ng-controller="recommendationsController">
+   style="height:100%; white-space:nowrap;"
+   ng-controller="recommendationsController"
+   ng-click="hide_more_filters()">
+	
 		<div id="recommendationFooter">
 			<!-- <div class="website-title">
 				<span class="icon glyphicon-home"></span> Reader's Door
@@ -51,7 +53,13 @@
 					  title="Scroll right">
 				</span>
 			</div> -->
-		 	</type-ahead>
+		 	<!-- </type-ahead> -->
+			<div class="filter_link" 
+				 ng-click="toggle_more_filters($event)">
+				 <span class="icon-filter2"></span>&nbsp;Add Filters&nbsp;
+				 <span class=" icon-angle-down" ng-if="show_more_filters"></span>
+				 <span class=" icon-angle-up" ng-if="!show_more_filters"></span>
+			</div>
 		 	<div class="menu_group" 
 		 		 ng-class="{'menu_group_active':show_menu}"
 		 		 ng-mouseenter="toggle_menu()"
@@ -62,36 +70,43 @@
 					 		<span>Home</span>
 				 		</div>
 				 	</a>
-				 	<a ng-href="#user/{{$routeParams.id}}/recommendations/readers">
-			 			<div ng-hide="$routeParams.type == 'readers'">
-				 			<span>Readers</span>
-			 			</div>
-				 	</a>
 				 	<a ng-href="#user/{{$routeParams.id}}/recommendations/books">
 				 		<div ng-hide="$routeParams.type == 'books'">
+				 			<span class="icon-book"></span>
 					 		<span>Books</span>
 				 		</div>
 				 	</a>
 				 	<a ng-href="#user/{{$routeParams.id}}/recommendations/authors">
 			 			<div ng-hide="$routeParams.type == 'authors'">
+			 				<span class="icon-pen"></span>
 				 			<span>Authors</span>
 			 			</div>
 				 	</a>
+				 	<a ng-href="#user/{{$routeParams.id}}/recommendations/readers">
+			 			<div ng-hide="$routeParams.type == 'readers'">
+			 				<span class="icon-users"></span>
+				 			<span>Readers</span>
+			 			</div>
+				 	</a>
 			 	</div>
-				<div ng-class="{'advanced_filter_active':show_menu, 'advanced_filter':!show_menu}">
-					<span ng-show="$routeParams.type == 'books'">Books</span>
-					<span ng-show="$routeParams.type == 'authors'">Authors</span>
-					<span ng-show="$routeParams.type == 'readers'">Readers</span>
+				<div class="advanced_filter animate-fast" 
+					 ng-class="{'advanced_filter_active':show_menu || filter_expanded}">
+					<span ng-show="$routeParams.type == 'books'">
+						<span class="icon-book"></span>
+						<span ng-show="filter_expanded || show_menu">Books</span>
+					</span>
+					<span ng-show="$routeParams.type == 'authors'">
+						<span class="icon-pen"></span>
+						<span ng-show="filter_expanded || show_menu">Authors</span>
+					</span>
+					<span ng-show="$routeParams.type == 'readers'">
+						<span class="icon-users"></span>
+						<span ng-show="filter_expanded || show_menu">Readers</span>
+					</span>
 					<span class=" icon-angle-down" ng-if="show_menu"></span>
 				 	<span class=" icon-angle-up" ng-if="!show_menu"></span>
 				</div>
 		 	</div>
-			<div class="filter_link button_effect" 
-				 ng-click="toggle_more_filters()">
-				 <span class="icon-filter2"></span>&nbsp;Add Filters&nbsp;
-				 <span class=" icon-angle-down" ng-if="show_more_filters"></span>
-				 <span class=" icon-angle-up" ng-if="!show_more_filters"></span>
-			</div>
 			
 		</div>
 		<shelf ng-if="bookmark_selected || read_selected" ></shelf>
@@ -108,8 +123,8 @@
 		
 		<div class="vertical_padder_active"></div>
 		<!-- <div class="recommendations_page"><search-bar></search-bar></div> -->
-		<div ng-switch on="panel_selected">
-			<div ng-switch-when="BOOKMARK">
+		<div ng-switch on="panel_selected" class="recommendation_window">
+			<div ng-switch-when="BOOKMARK" class="recommendation_panel">
 				<div ng-show="$routeParams.type == 'books'" ng-model="user.books.bookmarked">
 					<div ng-switch on="user.books.bookmarked.length">
 						<div ng-switch-when="0">
@@ -135,7 +150,7 @@
 					</div>
 				</div>
 			</div>
-			<div ng-switch-when="READ">
+			<div ng-switch-when="READ" class="recommendation_panel">
 				<div ng-show="$routeParams.type == 'books'" ng-model="user.books.read">
 					<div ng-switch on="user.books.read.length">
 						<div ng-switch-when="0">
@@ -174,20 +189,24 @@
 				</div>
 			</div>
 
-			<div ng-switch-default>
-				<div ng-show="$routeParams.type == 'books'" ng-model="recommendations.books">
+			<div ng-switch-default class="recommendation_panel">
+				<div ng-show="$routeParams.type == 'books'" 
+					ng-model="recommendations.books" class="recommendation_panel">
 					<info-card></info-card>
-					<div ng-repeat="recommendation in recommendations.books" class="recommendation_block">
+					<div ng-repeat="recommendation in recommendations.books" 
+						 class="recommendation_block">
 						<book track id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></book>
 					</div>
 				</div>
-				<div ng-show="$routeParams.type == 'readers'">
+				<div ng-show="$routeParams.type == 'readers'" 
+					class="recommendation_panel">
 					<info-card></info-card>
 					<div ng-repeat="recommendation in recommendations.readers" class="recommendation_block">
 						<reader track id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></reader>
 					</div>
 				</div>
-				<div ng-show="$routeParams.type == 'authors'">
+				<div ng-show="$routeParams.type == 'authors'" 
+					class="recommendation_panel">
 					<info-card></info-card>
 					<div ng-repeat="recommendation in recommendations.authors" class="recommendation_block">
 						<author track id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></author>
@@ -210,5 +229,4 @@
 
 		<focused-book></focused-book>
 		
-	</div>
 </div>

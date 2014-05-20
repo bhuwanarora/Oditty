@@ -13,7 +13,6 @@
 	/*background-size: 100% 80%;*/
 	background-repeat: no-repeat;
 	background-size: cover;
-	z-index: 5;
 	margin: -10px;
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
@@ -22,32 +21,33 @@
 	position: absolute;
 	top: 10px;
 	right: 10px;
-	/*border: 1px solid #DEDEDE;*/
-	background-color: #3D79A1;
-	background-color: rgba(0, 0, 0, 0.4);
+	background-color: #d73d32;
 	color: white;
 	text-align: center;
 	padding: 15px;
 	cursor: pointer;
 	border-radius: 4px;
+	text-shadow: 0 -1px 0px rgba(0, 0, 0, 0.5);
+}
+
+.search_page .login_button:hover{
+	border-bottom: 2px solid #8A2119;
 }
 
 .search_page .login_button:active{
-	background-color: #244963;
-	background-color: rgba(0, 0, 0, 0.6);
+	background-color: #EE4C41;
 }
 
 .search_page .logo{
 	color: white;
-	/* color: #3D79A1; */
 	position: absolute;
 	left: 20px;
 	top: 20px;
 	font-size: 2em;
 	font-weight: bold;
 	font-family: Helvetica;
-	/*text-shadow: -1px 0 #AFAFAF, 0 1px #F1F1F1, 1px 0 #F1F1F1, 0 -1px #F1F1F1;*/
 	letter-spacing: -4.2px;
+	text-shadow: 0 2px 3px rgba(0,0,0,0.5);
 }
 
 .search_page .tagline{
@@ -55,7 +55,8 @@
 	top: 32px;
 	left: 215px;
 	color: white;
-	font-size: 1em;
+	font-size: 1.1em;
+	text-shadow: 0 1px 1px rgba(0,0,0,0.5);
 }
 
 .search_page select option{
@@ -80,13 +81,13 @@
 }
 
 .search_page .internal_links{
-	margin-left: -360px;
+	margin-left: -230px;
 	bottom: -18%;
 }
 
 .search_page .secondary_login{
 	bottom: -20%;
-	margin-left: -175px;
+	margin-left: -115px;
 	cursor: pointer;
 	font-size: 1em;
 	border: 1px solid;
@@ -191,7 +192,7 @@
 	position: fixed;
 	top: 70%;
 	left: 50%;
-	z-index: 5;
+	z-index: 4;
 	margin-top: -20px;
 	margin-left: -110px;
 }
@@ -260,13 +261,13 @@
 }
 
 .search_level1_typeahead_group{
-	width: 418px;
+	width: 369px;
 	margin-left: -198px;
 }
 
 .search_level2_typeahead_group{
-	width: 378px;
-	margin-left: -170px;
+	width: 339px;
+	margin-left: -168px;
 }
 
 .input_handler{

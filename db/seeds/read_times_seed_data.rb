@@ -1,9 +1,9 @@
 puts "Enter Read Times.."
-ReadTimes = [{:text => "Within a Day"},
-		   {:text => "Within a Week"},
-		   {:text => "Within a Month"},
-		   {:text => "Long Reads"}]
+ReadTimes = [{:name => "for a flight journey"},
+			{:name => "for a weekend getaway"},
+		   {:name => "for a week holiday"},
+		   {:name => "for a month vacation"}]
 
 ReadTimes.each do |filter|
-	country_group = ReadTime.find_or_create_by(:text => filter[:text])
+	country_group = ReadTime.find_or_create_by(:name => filter[:name])
 end

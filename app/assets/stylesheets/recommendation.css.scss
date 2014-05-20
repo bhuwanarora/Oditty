@@ -1,33 +1,3 @@
-.focused_tooltip.ng-enter,
-.focused_tooltip.ng-leave.ng-leave-active{
-	right: -400px;
-}
-
-.focused_tooltip.ng-leave,
-.focused_tooltip.ng-enter-active{
-	right: 5px;
-}
-
-.push_notification.ng-enter,
-.push_notification.ng-leave.ng-leave-active{
-	top: -150px;
-}
-
-.push_notification.ng-leave,
-.push_notification.ng-enter.ng-enter-active{
-	top: 0px;
-}
-
-.message.ng-enter,
-.message.ng-leave.ng-leave-active{
-	opacity: 0;	
-}
-
-.message.ng-leave,
-.message.ng-enter.ng-enter-active{
-	opacity: 1;
-}
-
 .wild_cards{
 	color: white;
 	position: absolute;
@@ -61,43 +31,29 @@
    /*background-color: #FAFAFA; */
    /*border: 1px solid #DDDDDD;*/
    z-index: 6;
-   /*background-image: -moz-linear-gradient(top, #b4b4b4, #707070);*/
-   /*background-image: -webkit-gradient(linear, 0% 0%, 0% 150%, to(#DBDBDB), from(white));*/
+   background-image: -moz-linear-gradient(top, #b4b4b4, #707070);
+   background-image: -webkit-gradient(linear, 0% 0%, 0% 150%, to(#DBDBDB), from(white));
 }
 
 /* IE 6 */
-* html #recommendationFooter {
+* html #recommendationFooter{
    position:absolute;
    top:expression((0-(recommendationFooter.offsetHeight)+(document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight)+(ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop))+'px');
 }
 
 
-/*recommendation block animations*/
-.recommendation_block.ng-enter,
-.wild_cards.ng-enter {
-	margin-left: 100px;
-	-webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2.5s;
-    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2.5s;
-}
-
-.recommendation_block.ng-enter.ng-enter-active, 
-.wild_cards.ng-enter.ng-enter-active{
-	margin-left: 0px;
-}
-
-/*.recommendation_block.ng-leave.ng-leave-active,
-.wild_cards.ng-leave.ng-leave-active {
-	opacity: 0;
-}
-
-.recommendation_block.ng-leave,
-.wild_cards.ng-leave{
-	opacity: 1;
-}*/
-
 .recommendation_block{
 	display: inline-block;
 	margin-right: 0px;
+	position: relative;
+	width: 31%;
+	min-width: 320px;
+}
+
+.recommendation_block:after {
+    padding-top: 140%;
+	display: block;
+	content: '';
 }
 
 .vertical_line{
@@ -112,11 +68,19 @@
 /*book widget*/
 .widget{
 	display: inline-block;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	bottom: 0px;
+	right: 0px;
 }
 
 /* category */
 .category{
 	float: left;
+	width: 8%;
+	height: 100%;
+	padding-top: 3px;
 	background-color: #3cb878;
 	color: white;
 	text-align: center;
@@ -126,6 +90,7 @@
 	box-shadow: 8px 10px 54px 0px #424242;
 	font-weight: bold;
 	font-size: 0.7em;
+	text-shadow: 0 2px 3px rgba(0,0,0,0.5);
 }
 
 .category_character{
@@ -187,6 +152,15 @@
     -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
 }
 
+.recommendation_window{
+	height: 100%;
+	/*background-color: red;*/
+}
+
+.recommendation_window .recommendation_panel{
+	height: 100%;
+}
+
 /*other card properties*/
 .discovered {
     box-shadow: 8px 10px 54px 0px #424242; 
@@ -226,6 +200,10 @@
     box-shadow: 0px 0px 20px #000000; 
 }
 
+.vertical_padder_active{
+	height: 12%;
+	width: 100%;
+}
 
 .card .header{
 	height: 7%;
@@ -247,18 +225,19 @@
 }
 
 .card .widget_thumb{
-	width: 300px;
-	height: 87%;
-	margin: 5px;
-    background: rgba(113, 112, 112, 0.25);
+	background: rgba(113, 112, 112, 0.25);
 	border-radius: 5px !important;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
-	padding: 1px;
 	-webkit-box-shadow: 1px 2px 1px #d1d1d1;
 	-moz-box-shadow: 1px 2px 1px #d1d1d1;
 	box-shadow: 1px 2px 1px #d1d1d1;
 	background-size: cover !important;
+	position: absolute;
+	left: 5px;
+	top: 5px;
+	right: 5px;
+	bottom: 12%;
 }
 
 .card .thumb{
@@ -400,28 +379,35 @@
 
 /*mark as read*/
 .left_action{
-	display: inline-block;
-	float: left;
-	background-color: #DEDEDE;
-	margin-left: 5px;
+	text-align: center;
 	border-top-left-radius: 4px;
 	border-bottom-left-radius: 4px;
 	cursor: pointer;
 	color: #717070;
 	font-size: 0.8em;
-	text-align: center;
+	width: 47%;
+	min-width: 120px;
+	padding-top: 5%;
+	padding-bottom: 5%;
+	position: absolute;
+	bottom: 5px;
+	left: 5px;
 }
 
 .right_action{
-	display: inline-block;
-	float: left;
-	background-color: #DEDEDE;
-	margin-left: 2px;
+	text-align: center;
 	border-top-right-radius: 4px;
 	border-bottom-right-radius: 4px;
 	cursor: pointer;
+	color: #717070;
 	font-size: 0.8em;
-	text-align: center;
+	width: 47%;
+	min-width: 120px;
+	padding-top: 5%;
+	padding-bottom: 5%;
+	position: absolute;
+	bottom: 5px;
+	right: 5px;
 }
 
 .button_effect {
@@ -627,8 +613,19 @@
 	display: inline-block;
 	height: 10px;
 	text-align: center;
-	padding: 15px 10px 20px 10px;
+	padding: 15px 10px 13px 10px;
 	border-radius: 4px;
+	background-color: #d73d32;
+	color: #EBEBEB;
+	border-bottom: 2px solid transparent;
+}
+
+.filter_link:hover{
+	border-bottom: 2px solid #8A2119;
+}
+
+.filter_link:active{
+	background-color: #E03C30;
 }
 
 .menu_group{
@@ -641,19 +638,22 @@
 }
 
 .advanced_filter{
-	width: 160px;
+	width: 40px;
 	padding-top: 10px;
+	padding-bottom: 12px;
+	background-color: #427fed;
+	color: white;
+	border-radius: 2px;
 }
 
 .advanced_filter_active{
+	width: 160px;
 	border-left: 1px solid #C2C2C2;
 	border-right: 1px solid #C2C2C2;
-	width: 160px;
-	padding-top: 10px;
 }
 
 .menu{
-	bottom: 41px;
+	bottom: 40px;
 	border-top: 1px solid #ECECEC;
 	border-left: 1px solid #C2C2C2;
 	border-right: 1px solid #C2C2C2;
@@ -661,6 +661,12 @@
 	color: #8aa8bd;
 	position: absolute;
 	width: 160px;
+}
+
+.menu a:hover{
+	text-decoration: none;
+	/*color: #5A5A5A;*/
+	font-weight: bold;
 }
 
 .menu div{
@@ -686,7 +692,7 @@
 	border-radius: 4px;
 	position: absolute;
 	left: 50%;
-	margin-left: -200px;
+	margin-left: -220px;
 	bottom: -3px;
 	background-color: white;
 }
@@ -702,7 +708,7 @@
 }
 
 .shelf_nav_links div{
-	width: 100px;
+	width: 125px;
 	border-right: 1px solid #DDDDDD;
 }
 
@@ -770,11 +776,6 @@
 	white-space: normal;
 }
 
-.push_notification.ng-enter, .push_notification.ng-leave {
-    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-}
-
 .scroller{
 	display: inline-block;
 	float: left;
@@ -838,7 +839,7 @@
 }
 
 .more_filters{
-	width: 800px;
+	width: 80%;
 	right: 10px;
 	position: fixed;
 	bottom: 40px;
@@ -847,16 +848,6 @@
 	background-color: #E6E6E6;
 	border: 1px solid #E2E2E2;
 	box-shadow: 8px -30px 43px 0px rgba(66, 66, 66, 0.47);
-}
-
-.more_filters.ng-enter,
-.more_filters.ng-leave.ng-leave-active{
-	bottom: -1000px;
-}
-
-.more_filters.ng-leave,
-.more_filters.ng-enter.ng-enter-active {
-	bottom: 40px;
 }
 
 .filters_panel,
@@ -868,7 +859,7 @@
 .filters_panel_large,
 .filters_panel_right{
 	text-align: center;
-	padding: 30px;
+	padding: 4%;
 }
 
 .filters_group{
@@ -987,22 +978,6 @@
 }
 
 
-.interaction_box.ng-enter,
-.interaction_box.ng-leave.ng-leave-active{
-	width: 200px;
-	height: 50px;
-	opacity: 0;
-	margin-top: 0px;
-}
-
-.interaction_box.ng-leave,
-.interaction_box.ng-enter.ng-enter-active{
-	width: 500px;
-	height: 200px;
-	opacity: 1;
-	margin-top: -100px;
-}
-
 .recommendation_box{
 	position: fixed;
 	background-color: white;
@@ -1013,22 +988,6 @@
 	top: 50%;
 	margin-top: -300px;
 	box-shadow: 0 7px 15px rgba(0, 0, 0, 0.25);
-}
-
-.recommendation_box.ng-leave,
-.recommendation_box.ng-enter.ng-enter-active{
-	width: 500px;
-	height: 500px;
-	opacity: 1;
-	margin-top: -300px;
-}
-
-.recommendation_box.ng-enter,
-.recommendation_box.ng-leave.ng-leave-active{
-	width: 200px;
-	height: 50px;
-	opacity: 0;
-	margin-top: 0px;
 }
 
 .recommendation_box .friend_grid .friend_thumb{
@@ -1075,15 +1034,6 @@
 
 }
 
-.news.ng-enter{
-	opacity: 0;
-	-webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2.5s;
-    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2.5s;
-}
-
-.news.ng-enter.ng-enter-active{
-	opacity: 1;
-}
 
 .main_filters{
 	text-align: center;
@@ -1102,7 +1052,7 @@
 
 .active_filter{
 	color: white;
-	background-color: #3D79A1;
+	background-color: #427fed;
 }
 
 .inactive_filter{
@@ -1174,7 +1124,7 @@
 
 .rate_radio_buttons{
 	padding: 3px 15px;
-	width: 165px;
+	width: 170px;
 	color: #717070;
 	text-align: left;
 	border: 1px solid none;
@@ -1187,7 +1137,6 @@
 
 .result_count{
     display: inline-block;
-    color: #BC0000;
     float: right;
     margin-right: 20px;
 	margin-top: 8px;
@@ -1265,12 +1214,12 @@
 	border-radius: 5px;
 	margin-right: 30px;
 	margin-left: 30px;
-	padding: 50px 30px 30px 30px;
+	padding: 8% 3% 3% 3%;
 	color: white;
-	width: 250px;
 	white-space: normal;
 	height: 340px;
 	position: relative;
+	width: 25%;
 }
 
 .info_cards .header{
@@ -1452,38 +1401,12 @@ and (min-width : 400px) {
 		font-size: 0.9em;
 	}
 
-	.widget{
-		height: 420px;
-		width: 320px;
-	}
-	
 	.filter{
 		min-width: 210px;
 	}
 
-	.category{
-		height: 91%;
-		width: 25px;
-		padding-top: 20px;
-		padding-bottom: 20px;
-	}
-
-	.left_action{
-		width: 120px;
-		padding-top: 10px; 
-		margin-top: 2px;
-	}
-
-	.rate,
-	.left_action{
+	.rate{
 		height: 25px;
-	}
-
-	.right_action{
-		height: 15px;
-		padding: 12px 13px 8px 13px;
-		width: 95px;
-		margin-top: 2px;
 	}
 
 	.book_navbar_base{
@@ -1496,10 +1419,6 @@ and (min-width : 400px) {
 
 
 	.card .zoomedin_thumb{
-	}
-
-	.card .widget_thumb {
-		width: 245px;
 	}
 
 	.wild_cards{
@@ -1516,11 +1435,6 @@ and (min-width : 400px) {
 		margin-top: 0px;
 	}
 
-	.vertical_padder_active{
-		height: 100px;
-		width: 100%;	
-	}
-
 	.horizontal_padder_active{
 		width: 320px;
 		height: 500px;
@@ -1531,10 +1445,6 @@ and (min-width : 400px) {
 
 @media only screen
 and (min-width : 1280px){
-	.widget{
-		height: 600px;
-		width: 390px;
-	}
 
 	.book_navbar_base{
 		width: 97%;
@@ -1544,33 +1454,8 @@ and (min-width : 1280px){
 		min-width: 210px;
 	}
 
-	.category{
-		height: 83.5%;
-		width: 30px;
-		padding-top: 50px;
-		padding-bottom: 50px;
-	}
-
-	.left_action{
-		width: 125px;
-	}
-
-	.left_action{
-		height: 38px;
-		padding-top: 25px;
-	}
-
-	.right_action{
-		padding: 25px 18px 25px 18px;
-		width: 125px;
-	}
-
 	.rate_radio_buttons{
 		margin-top: 0px;
-	}
-
-	.card .widget_thumb {
-		width: 300px;
 	}
 
 	.wild_cards{
@@ -1581,11 +1466,6 @@ and (min-width : 1280px){
 
 	.info_cards{
 		height: 520px;
-	}
-
-	.vertical_padder_active{
-		height: 100px;
-		width: 100%;	
 	}
 
 	.horizontal_padder_active{
@@ -1606,56 +1486,16 @@ and (min-width : 1366px){
 		width: 97%;
 	}
 
-	.widget{
-		height: 430px;
-		width: 350px;
-	}
-
-	.vertical_padder_active{
-		height: 100px;
-		width: 100%;	
-	}
-
 	.filter{
 		min-width: 210px;
-	}
-
-	.category{
-		height: 91%;
-		width: 25px;
-		padding-top: 20px;
-		padding-bottom: 20px;
-	}
-
-	.left_action{
-		height: 29px;
-		width: 125px;
 	}
 
 	.rate{
 		height: 25px;
 	}
 
-	.left_action{
-		width: 125px;
-	}
-
-	.right_action{
-		height: 15px;
-		padding: 13px 15px 12px 15px;
-		width: 112px;
-	}
-
-	.left_action{
-		padding-top: 10px; 
-	}
-
 	.rate_radio_buttons{
 		margin-top: -10px;
-	}
-
-	.card .widget_thumb {
-		width: 270px;
 	}
 
 	.wild_cards{
@@ -1685,10 +1525,6 @@ and (min-width : 1366px){
 @media only screen
 and (min-width : 1824px) {
 /* Styles */
-	.widget{
-		height: 650px;
-		width: 390px;
-	}
 
 	.recommendation_block{
 		margin-top: 35px;
@@ -1698,28 +1534,8 @@ and (min-width : 1824px) {
 		min-width: 210px;
 	}
 
-	.left_action{
-		width: 125px;
-	}
-
-	.category{
-		height: 84.5%;
-		width: 30px;
-		padding-top: 50px;
-		padding-bottom: 50px;
-	}
-
-	.left_action{
-		height: 38px;
-		padding-top: 25px;
-	}
-
 	.rate_radio_buttons{
 		margin-top: 0px;
-	}
-
-	.card .widget_thumb {
-		width: 300px;
 	}
 
 	.horizontal_padder_active{
@@ -1865,7 +1681,8 @@ and (min-width : 1824px) {
 	position: fixed;
 	right: 5px;
 	top: 50%;
-	width: 400px;
+	width: 42%;
+	min-width: 400px;
 	background-color: white;
 	white-space: initial;
 	margin-top: -190px;
@@ -2585,32 +2402,6 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	color: white;
 }
 
-.notifications.ng-enter,
-.notifications.ng-leave.ng-leave-active{
-	margin-top: 600px;
-}
-
-.notifications.ng-leave,
-.notifications.ng-enter.ng-enter-active{
-	margin-top: 0px;
-}
-
-.notification.ng-enter{
-	margin-top: 300px;
-}
-
-.notification.ng-enter.ng-enter-active{
-	margin-top: 5px;
-}
-
-.notification.ng-leave.ng-leave-active{
-	margin-left: -300px;
-}
-
-.notification.ng-leave{
-	margin-left: 5px;
-}
-
 .notifications a{
 	cursor: pointer;
 	color: #3D79A1;
@@ -2672,7 +2463,7 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	background: -ms-radial-gradient(5px -9px, circle, white 8%, #BC0000 26px);
 	background: -o-radial-gradient(5px -9px, circle, white 8%, #BC0000 26px);
 	background: -webkit-radial-gradient(5px -9px, circle, white 8%, #BC0000 26px);*/
-	background-color: #E9212B;
+	background-color: #d73d32;
 	color: white;
 	text-align: center;
 	min-width: 12px;

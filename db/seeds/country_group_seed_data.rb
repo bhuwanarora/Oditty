@@ -1,17 +1,17 @@
 puts "Enter Country Groups..."
-CountryGroups = [{:text => "European"},
-		   {:text => "Asian"},
-		   {:text => "African"},
-		   {:text => "Australian"},
-		   {:text => "Latin American"},
-		   {:text => "North American"},
-		   {:text => "South American"},
-		   {:text => "Japanese"},
-		   {:text => "Indian"},
-		   {:text => "Russian"},
-		   {:text => "German"},
+CountryGroups = [{:name => "European"},
+		   {:name => "Asian"},
+		   {:name => "African"},
+		   {:name => "Australian"},
+		   {:name => "Latin American"},
+		   {:name => "North American"},
+		   {:name => "South American"},
+		   {:name => "Japanese"},
+		   {:name => "Indian"},
+		   {:name => "Russian"},
+		   {:name => "German"},
 		]
 
 CountryGroups.each do |filter|
-	country_group = CountryGroup.find_or_create_by(:text => filter[:text])
+	country_group = CountryGroup.find_or_create_by(:name => filter[:name])
 end

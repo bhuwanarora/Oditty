@@ -2,7 +2,7 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
 
 	$scope.toggle_bookmarked = function(){
 		if(!$scope.bookmark_selected){
-			_load_icon();
+			// _load_icon();
 			$scope.panel_selected = 'BOOKMARK';
 			$scope.bookmark_selected = true;
 			$scope.read_selected = false;
@@ -13,7 +13,7 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
 
 	$scope.toggle_recommendations = function(){
 		if($scope.bookmark_selected || $scope.read_selected){
-			_load_icon();
+			// _load_icon();
 			$scope.read_selected = false;
 			$scope.bookmark_selected = false;
 			$scope.panel_selected = '';
@@ -30,7 +30,7 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
 
 	$scope.toggle_read = function(){
 		if(!$scope.read_selected){
-			_load_icon();
+			// _load_icon();
 			$scope.glowShelf = false;
 			$scope.bookmark_selected = false;
 			$scope.read_selected = true;		
@@ -39,7 +39,7 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
 		}
 	}
 
-	$scope.toggle_more_filters = function(){
+	$scope.toggle_more_filters = function(event){
 		if($scope.show_more_filters == true){
 			$scope.show_more_filters = false;
 			// $('.recommendation_block').css('margin-top', '40px');
@@ -50,11 +50,16 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
 			// $('.recommendation_block').css('margin-top', '0px');
 			// $('.info_cards').css('margin-top', '0px');
 		}
+		event.stopPropagation();
 	}
 
 	$scope.stopSearching = function(event){
 		$rootScope.searching = false;
 		event.currentTarget.text = "";
+	}
+
+	$scope.hide_more_filters = function(){
+		$scope.show_more_filters = false;
 	}
 
 	_load_icon = function(){
@@ -220,6 +225,10 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
     	});
     }
 
+    _collapse_dropdown_menu = function(){
+    	
+    }
+
 	_init = function(){
 		//oneMin = 60000
 		$scope.$routeParams = $routeParams;
@@ -246,6 +255,7 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
         _bind_destroy();
         _handle_focused_book();
         _get_friends();
+        _collapse_dropdown_menu();
     	$scope.$emit('moveRight');    
 	}
 

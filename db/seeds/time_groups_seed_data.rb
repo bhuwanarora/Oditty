@@ -1,15 +1,15 @@
 puts "Enter Time Groups..."
-TimeGroups = [{:text => "Post World War I"},
-		   {:text => "Post World War II"},
-		   {:text => "Post Renaissance"},
-		   {:text => "Post Birth of Islam"},
-		   {:text => "Post Birth of Christ"},
-		   {:text => "Post Industrial Revolution"},
-		   {:text => "Post Cold War"},
-		   {:text => "Post Medical Revolution"},
-		   {:text => "Custom Time Filters"}
+TimeGroups = [{:name => "Post World War I"},
+		   {:name => "Post World War II"},
+		   {:name => "Post Renaissance"},
+		   {:name => "Post Birth of Islam"},
+		   {:name => "Post Birth of Christ"},
+		   {:name => "Post Industrial Revolution"},
+		   {:name => "Post Cold War"},
+		   {:name => "Post Medical Revolution"},
+		   {:name => "Custom Time Filters"}
 		]
 
 TimeGroups.each do |filter|
-	country_group = TimeGroup.find_or_create_by(:text => filter[:text])
+	country_group = TimeGroup.find_or_create_by(:name => filter[:name])
 end

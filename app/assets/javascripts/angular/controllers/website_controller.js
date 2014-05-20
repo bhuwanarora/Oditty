@@ -134,12 +134,13 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 
 	$scope.authenticate = function(){
 		var data_json = $rootScope.user;
+		$scope.loading_icon = true;
 		websiteService.authenticate(data_json).then(function(data){
 			if(data.message == "success"){
 				$rootScope.user.profile_status = data.profile_status;
 				$rootScope.user.logged = true;
 				$rootScope.user.id = data.user_id;
-				$scope.show_login_form = true;
+				// $scope.show_login_form = true;
 				_profile_status_colors();
 				websiteService.get_user_details().then(function(data){
 		    		$rootScope.user.books = data["books"];
@@ -371,11 +372,11 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		$timeout(function(){
 			$scope.loading = false;
 			// $scope.drop_icon = false;
-		}, 5000);
+		}, 3000);
 
 		$timeout(function(){
 			$scope.drop_icon = true;
-		}, 2000);
+		}, 1000);
 	}
 
 	$scope.toggle_notifications = function(){
@@ -425,6 +426,13 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 			$('body').css('white-space', 'normal');
 			$scope.website.searching = true;
 			$rootScope.keyCode = event.keyCode;
+		}
+	}
+
+	$scope.stop_back_propagation = function(event){
+		var backspace = (event.keyCode == 8);
+		if(backspace){
+			// event.preventDefault();
 		}
 	}
 

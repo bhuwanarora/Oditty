@@ -22,11 +22,19 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 			    	$scope.readTimeOptions = data["read_times"];
 			    });
 			    _init_dropdown_filters();
+			    _collapse_dropdown_menu();
+			}
+
+			_collapse_dropdown_menu = function(){
+				$scope.filter_expanded = true;
+				var timeout_event = $timeout(function(){
+					$scope.filter_expanded = false;
+				}, 3000);
 			}
 
 			_init_dropdown_filters = function(){
-				$scope.countrySelected = {"name": "Filter books by Country"};
-				$scope.timeSelected = {"name": "Filter books by Time"};
+				$scope.countrySelected = {"name": "Filter books by Region"};
+				$scope.timeSelected = {"name": "Filter books by Era"};
 				$scope.readTimeSelected = {"name": "Filter books by Reading Time"};
 			}
 
@@ -47,6 +55,10 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 				$scope.$on('destroy', function(){
 					$timeout.cancel(timeout_event);
 				});
+			}
+
+			$scope.stop_click_propagation = function(event){
+				event.stopPropagation();
 			}
 
 			_reload_page = function(isBook, isAuthor, isReader){
@@ -122,9 +134,11 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 			$scope.toggle_menu = function(){
 				if($scope.show_menu){
 					$scope.show_menu = false;
+					$scope.filter_expanded = false;
 				}
 				else{
 					$scope.show_menu = true;
+					$scope.filter_expanded = true;
 				}
 			}
 
