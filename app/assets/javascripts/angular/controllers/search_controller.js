@@ -126,7 +126,7 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 		    	_show_search_result();
 		    }
 		    event.stopPropagation();
-			$scope.search_tag.input = "";
+			$scope.search_tag.input = null;
 		}
 	};
 
@@ -486,6 +486,7 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 		$scope.search_tag = {};
 		$scope.search_tag.search_placeholder = "Search...";
 		$scope.search_tag.current = 0;
+		$scope.search_tag.input = null;
 		$scope.search_tag.result_count = 5;
 		$scope.website.searching = true;
 		$scope.website.show_search_page = true;

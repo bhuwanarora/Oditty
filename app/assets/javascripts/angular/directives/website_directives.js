@@ -191,7 +191,7 @@ websiteApp.directive('message', function($motion){
 			}
 
 			_init = function(){
-				$scope.message_closed = false;
+				$scope.message_closed = true;
 				_init_motion_adaption();
 				$scope.message = 'Allow your webcam. Swipe Left|Right to look for more books.'
 			}

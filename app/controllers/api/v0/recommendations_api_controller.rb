@@ -12,15 +12,15 @@ module Api
 			def filters
 				filters_book = Filter.where(:filter_type => "BOOK")
 								.order("priority DESC")
-								.select("id, name, priority").limit(6)
+								.select("id, name, priority")
 								.as_json
 				filter_author = Filter.where(:filter_type => "AUTHOR")
 								.order(:priority)
-								.select("id, name, priority").limit(6)
+								.select("id, name, priority")
 								.as_json
 				filter_reader = Filter.where(:filter_type => "READER")
 								.order(:priority)
-								.select("id, name, priority").limit(6)
+								.select("id, name, priority")
 								.as_json
 				render :json => {:filters => {
 									"book" => filters_book, 

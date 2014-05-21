@@ -37,7 +37,7 @@
 
 .push_notification.ng-leave,
 .push_notification.ng-enter.ng-enter-active{
-	top: 0px;
+	top: 40px;
 }
 
 .message.ng-enter,
@@ -69,12 +69,12 @@
 
 .more_filters.ng-enter,
 .more_filters.ng-leave.ng-leave-active{
-	bottom: -1000px;
+	top: -1000px;
 }
 
 .more_filters.ng-leave,
 .more_filters.ng-enter.ng-enter-active {
-	bottom: 40px;
+	top: 40px;
 }
 
 .login_box.ng-enter,
@@ -91,14 +91,14 @@
 .interaction_box.ng-leave.ng-leave-active,
 .message_box.ng-enter,
 .message_box.ng-leave.ng-leave-active{
-	bottom: -300px;
+	bottom: -260px;
 }
 
 .interaction_box.ng-leave,
 .interaction_box.ng-enter.ng-enter-active,
 .message_box.ng-leave,
 .message_box.ng-enter.ng-enter-active{
-	bottom: 40px;
+	bottom: 0px;
 }
 
 .recommendation_box.ng-leave,
@@ -106,7 +106,7 @@
 	width: 500px;
 	height: 500px;
 	opacity: 1;
-	margin-top: -300px;
+	margin-top: -350px;
 }
 
 .recommendation_box.ng-enter,

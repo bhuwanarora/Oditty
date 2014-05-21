@@ -1,53 +1,8 @@
 <div ng-if="show_more_filters" 
 	 class="more_filters animate-slow"
 	 ng-click="stop_click_propagation($event)">
-	<div class="main_filters">
-		<div ng-click="reset_filters()"
-			 class="reset_filters">
-			 RESET FILTERS 
-			 <span class="icon-loop"></span>
-		</div>
-		<span class="result_count" 
-			  ng-model="recommendations.books.length"
-			  ng-show="filters.filter_type == 'BOOK'">
-			<span ng-show="bookmark_selected">
-				{{user.books.bookmarked.length}} books bookmarked</span>
-			<span ng-show="read_selected">
-			    {{user.books.read.length}} books read</span>
-			<span ng-show="!bookmark_selected && !read_selected">
-			    {{recommendations.books.length}} books
-			</span>
-		</span>
-		<span class="result_count" 
-		      ng-model="recommendations.readers.length"
-		      ng-show="filters.filter_type == 'READER'">
-			<span ng-show="bookmark_selected">
-				{{user.readers.bookmarked.length}} readers bookmarked</span>
-			<span ng-show="read_selected">
-			    {{user.readers.read.length}} readers followed</span>
-			<span ng-show="!bookmark_selected && !read_selected">
-			    {{recommendations.readers.length}} readers
-			</span>
-		</span>
-		<span class="result_count" 
-			  ng-model="recommendations.authors.length"
-			  ng-show="filters.filter_type == 'AUTHOR'">
-			<span ng-show="bookmark_selected">
-				{{user.authors.bookmarked.length}} authors bookmarked</span>
-			<span ng-show="read_selected">
-			    {{user.authors.read.length}} authors followed</span>
-			<span ng-show="!bookmark_selected && !read_selected">
-			    {{recommendations.authors.length}} authors
-			</span>
-		</span>
-	</div>
+	
 
-	<div ng-show="bookmark_selected">
-		
-	</div>
-	<div ng-show="read_selected">
-		
-	</div>
 	<div ng-show="!bookmark_selected && !read_selected">
 		<!-- BOOK FILTERS -->
 		<div class="filters" ng-show="$routeParams.type == 'books'">
@@ -155,5 +110,45 @@
 			</div>
 		</div>
 		
+	</div>
+	<div class="main_filters">
+		<div ng-click="reset_filters()"
+			 class="reset_filters">
+			 RESET FILTERS 
+			 <span class="icon-loop"></span>
+		</div>
+		<span class="result_count" 
+			  ng-model="recommendations.books.length"
+			  ng-show="filters.filter_type == 'BOOK'">
+			<span ng-show="bookmark_selected">
+				{{user.books.bookmarked.length}} books bookmarked</span>
+			<span ng-show="read_selected">
+			    {{user.books.read.length}} books read</span>
+			<span ng-show="!bookmark_selected && !read_selected">
+			    {{recommendations.books.length}} books
+			</span>
+		</span>
+		<span class="result_count" 
+		      ng-model="recommendations.readers.length"
+		      ng-show="filters.filter_type == 'READER'">
+			<span ng-show="bookmark_selected">
+				{{user.readers.bookmarked.length}} readers bookmarked</span>
+			<span ng-show="read_selected">
+			    {{user.readers.read.length}} readers followed</span>
+			<span ng-show="!bookmark_selected && !read_selected">
+			    {{recommendations.readers.length}} readers
+			</span>
+		</span>
+		<span class="result_count" 
+			  ng-model="recommendations.authors.length"
+			  ng-show="filters.filter_type == 'AUTHOR'">
+			<span ng-show="bookmark_selected">
+				{{user.authors.bookmarked.length}} authors bookmarked</span>
+			<span ng-show="read_selected">
+			    {{user.authors.read.length}} authors followed</span>
+			<span ng-show="!bookmark_selected && !read_selected">
+			    {{recommendations.authors.length}} authors
+			</span>
+		</span>
 	</div>
 </div>

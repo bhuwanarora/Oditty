@@ -25,14 +25,14 @@
 #recommendationFooter {
    position:fixed;
    left:0px;
-   bottom:0px;
+   top:0px;
    height:40px;
    width:100%;
    /*background-color: #FAFAFA; */
    /*border: 1px solid #DDDDDD;*/
    z-index: 6;
-   background-image: -moz-linear-gradient(top, #b4b4b4, #707070);
-   background-image: -webkit-gradient(linear, 0% 0%, 0% 150%, to(#DBDBDB), from(white));
+   background-image: -moz-linear-gradient(top, #707070, #b4b4b4);
+   background-image: -webkit-gradient(linear, 0% 0%, 0% 150%, to(white), from(#DBDBDB));
 }
 
 .compact_link{
@@ -62,15 +62,15 @@
 	display: inline-block;
 	margin-right: 0px;
 	position: relative;
-	width: 31%;
-	min-width: 320px;
+	width: 57vh;
+	height: 80vh;
 }
 
-.recommendation_block:after {
+/*.recommendation_block:after {
     padding-top: 140%;
 	display: block;
 	content: '';
-}
+}*/
 
 .vertical_line{
 	border-right: 1px solid #DADADA;
@@ -227,7 +227,7 @@
 }
 
 .vertical_padder_active{
-	height: 12%;
+	height: 60px;
 	width: 100%;
 }
 
@@ -263,14 +263,14 @@
 	left: 5px;
 	top: 5px;
 	right: 5px;
-	bottom: 12%;
+	bottom: 11%;
 }
 
 .card .widget_thumb_focus{
 	left: 10px;
 	top: 10px;
 	right: 10px;
-	bottom: 15%;	
+	bottom: 13%;	
 }
 
 .card .thumb{
@@ -479,7 +479,8 @@
 }
 
 .interaction_box .close,
-.message_box .close{
+.message_box .close,
+.user_guide .close{
 	position: absolute;
 	right: 5px;
 	top: 0px;
@@ -649,18 +650,18 @@
 	text-align: center;
 	padding: 15px 10px 13px 10px;
 	border-radius: 4px;
-	background-color: #d73d32;
+	background-color: #65b045;
 	color: #EBEBEB;
 	border-bottom: 2px solid transparent;
 }
 
 .filter_link:hover{
-	border-bottom: 2px solid #8A2119;
-	background-color: #DA5148;
+	border-bottom: 2px solid #4F8837;
+	background-color: #59993E;
 }
 
 .filter_link:active{
-	background-color: #E03C30;
+	background-color: #4F8837;
 }
 
 .menu_group{
@@ -669,7 +670,6 @@
 	margin-right: 10px;
 	display: inline-block;
 	text-align: center;
-	cursor: pointer;
 }
 
 .advanced_filter{
@@ -688,7 +688,7 @@
 }
 
 .menu{
-	bottom: 40px;
+	top: 40px;
 	border-top: 1px solid #ECECEC;
 	border-left: 1px solid #C2C2C2;
 	border-right: 1px solid #C2C2C2;
@@ -728,8 +728,8 @@
 	position: absolute;
 	left: 50%;
 	margin-left: -220px;
-	bottom: -3px;
 	background-color: white;
+	top: -3px;
 }
 
 .result_footer{
@@ -762,8 +762,8 @@
 
 .push_notification{
 	position: fixed;
-	z-index: 1000;
-	top: 0px;
+	z-index: 2;
+	top: 40px;
 	font-size: 1em;
 	background-color: rgba(0, 0, 0, 0.43);
 	text-align: center;
@@ -877,9 +877,9 @@
 	width: 80%;
 	right: 10px;
 	position: fixed;
-	bottom: 40px;
-	z-index: 5;
-	padding: 0px 0px 10px 0px;
+	top: 40px;
+	z-index: 1;
+	padding: 10px 0px 0px 0px;
 	background-color: #E6E6E6;
 	border: 1px solid #E2E2E2;
 	box-shadow: 8px -30px 43px 0px rgba(66, 66, 66, 0.47);
@@ -952,8 +952,7 @@
 	border-radius: 2px;
 	width: 500px;
 	height: 200px;
-	bottom: 40px;
-	/*margin-top: -130px;*/
+	bottom: 0px;
 }
 
 .interaction_box_options{
@@ -1025,9 +1024,10 @@
 	width: 500px;
 	max-width: 90%;
 	height: 500px;
-	left: 5%;
+	left: 50%;
+	margin-left: -250px;
 	top: 50%;
-	margin-top: -300px;
+	margin-top: -350px;
 	box-shadow: 0 7px 15px rgba(0, 0, 0, 0.25);
 }
 
@@ -1262,9 +1262,9 @@
 	padding: 8% 3% 3% 3%;
 	color: white;
 	white-space: normal;
-	height: 340px;
 	position: relative;
-	width: 25%;
+	width: 38vh;
+	height: 64vh;
 }
 
 .info_cards .header{
@@ -1488,10 +1488,6 @@ and (min-width : 1280px){
 		/*margin-top: 10px;*/
 	}
 
-	.info_cards{
-		height: 520px;
-	}
-
 	.horizontal_padder_active{
 		width: 440px;
 		height: 500px;
@@ -1507,7 +1503,7 @@ and (min-width : 1366px){
 	}
 
 	.vertical_padder_active{
-		height: 0px;
+		/*height: 0px;*/
 	}
 
 	.book_navbar_base{
@@ -1530,11 +1526,6 @@ and (min-width : 1366px){
 		width: 195px;
 		height: 300px;
 		margin-top: 15px;
-	}
-
-	.info_cards{
-		/*margin-top: 15px;*/
-		height: 350px;
 	}
 
 	.wild_cards .header{
@@ -1727,7 +1718,7 @@ and (min-width : 1824px) {
 .focused_tooltip{
 	position: fixed;
 	right: 5px;
-	top: 5px;
+	bottom: 5px;
 	width: 42%;
 	height: 92%;
 	min-width: 400px;
@@ -2440,7 +2431,7 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 }
 .notification_link{
 	right: 20px;
-	bottom: 0px;
+	top: 0px;
 	z-index: 6;
 	font-size: 1.2em;
 	position: fixed;
@@ -2527,11 +2518,11 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	color: white;
 	text-align: center;
 	min-width: 12px;
-	margin-top: -20px;
+	margin-top: 10px;
 	font-size: 0.7em;
 	border-radius: 12px;
 	padding: 4px;
-	margin-left: 15px;
+	margin-left: 10px;
 	position: absolute;
 }
 
@@ -2779,5 +2770,16 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	width: 100%;
 	left: 0px;
 	bottom: 0px;
-	height: 20%;
+	height: 10%;
 }
+
+.user_guide{
+	position: absolute;
+	width: 60%;
+	height: 90%;
+	right: -300px;
+	top: 10px;
+	background-color: white;
+	z-index: 1;
+}
+

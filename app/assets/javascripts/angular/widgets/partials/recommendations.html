@@ -115,9 +115,10 @@
 		</div>
 		
 		<!-- <message></message> -->
-		<div class="notifications animate-fast" ng-show="show_notifications">
+		<div class="notifications animate-fast" ng-if="show_notifications">
 			<notification-link></notification-link>
 			<div class="notification_elements">
+				<div class="notification">News Feed</div>
 				<div ng-repeat="notification in notifications">
 					<notification data="notification"></notification>
 				</div>
