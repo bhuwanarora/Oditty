@@ -81,7 +81,7 @@ websiteApp.config(['FacebookProvider', '$motionProvider',
       });
      var myAppId = '667868653261167';
      
-     FacebookProvider.setAppId('myAppId');
+     // FacebookProvider.setAppId('myAppId');
      FacebookProvider.init(myAppId);
     }
 ]);

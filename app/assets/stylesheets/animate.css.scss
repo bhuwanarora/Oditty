@@ -77,6 +77,15 @@
 	bottom: 40px;
 }
 
+.login_box.ng-enter,
+.login_box.ng-leave.ng-leave-active{
+	bottom: -300px;
+}
+
+.login_box.ng-leave,
+.login_box.ng-enter.ng-enter-active{
+	bottom: 0px;
+}
 
 .interaction_box.ng-enter,
 .interaction_box.ng-leave.ng-leave-active,
@@ -156,4 +165,14 @@
 	width: 100%;
 	height: 100%;
 	opacity: 1;
+}
+
+.login_form.ng-enter,
+.login_form.ng-leave.ng-leave-active{
+	margin-top: 50px;
+}
+
+.login_form.ng-leave,
+.login_form.ng-enter.ng-enter-active{
+	margin-top: 0px;
 }

@@ -41,8 +41,24 @@
 		<!-- <select ng-options="type for type in ['R.D.', 'Books', 'Authors', 'Readers']"> -->
 		</select>
 	  <search-bar></search-bar>
-		<div class="internal_links" ng-if="user.logged">
-			<!-- <a ng-href="#book/1/timeline" class="animate-fast">
+	  	<div class="nav_menu"> 
+		  <ul class="nav" ng-if="user.logged"> 
+		    <li><a ng-href="#user/{{user.id}}/recommendations/books">
+		    		<span class="icon-book"></span><br/>
+		    		<span>Books</span>
+		    	</a></li> 
+		    <li><a ng-href="#user/{{user.id}}/recommendations/authors">
+		    		<span class="icon-pen"></span><br/>
+		    		<span>Authors</span>
+		    	</a></li> 
+		    <li><a ng-href="#user/{{user.id}}/recommendations/readers">
+		    		<span class="icon-users"></span><br/>
+		    		<span>Readers</span>
+		    	</a></li> 
+		  </ul> 
+		</div>
+		<!-- <div class="internal_links" ng-if="user.logged">
+			<a ng-href="#book/1/timeline" class="animate-fast">
 				<div class="heading">
 					<span class="icon-book-alt2"></span>
 					<span>Reading Timeline</span>
@@ -53,37 +69,42 @@
 					<span class="icon-calendar"></span>
 					<span>Go to Timeline</span>
 				</div>
-			</a> -->
+			</a>
 			<a ng-href="#user/{{user.id}}/recommendations/books" class="animate-fast">
-				<!-- <div class="count">1,000,000,000+</div> -->
+				<div class="count">1,000,000,000+</div>
 				<div class="heading">
 					<span class="icon-book"></span>
 					<span>Books</span>
 				</div>
 			</a>
 			<a ng-href="#user/{{user.id}}/recommendations/authors" class="animate-fast">
-				<!-- <div class="count">4,000,000+</div> -->
+				<div class="count">4,000,000+</div>
 				<div class="heading">
 					<span class="icon-pen"></span>
 					<span>Authors</span>
 				</div>
 			</a>
 			<a ng-href="#user/{{user.id}}/recommendations/readers" class="animate-fast">
-				<!-- <div class="count">1,000,000+</div> -->
+				<div class="count">1,000,000+</div>
 				<div class="heading">
 					<span class="icon-users"></span>
 					<span>Readers</span>
 				</div>
 			</a>
-		</div>
+		</div> -->
 	  <div class="secondary_login animate-fast" 
 	       ng-click="toggle_login_panel()"
 	       ng-if="!user.logged && !show_login_form">
 	    Explore Recommendation Engine
 	  </div>
 	</div>
-	<div>
-		<!-- <div class="login_buttons fb" 
+	<div class="login_box animate-fast"
+		ng-if="!user.logged && show_login_form">
+		<div class="header">
+			Please login to explore recommendations.
+			<hr>
+		</div>
+		<div class="fb" 
 			 ng-show="!user.logged"
 		     ng-disabled="!facebookReady"
 		     ng-click="intent_login()">
@@ -91,7 +112,7 @@
 		<div class="google">
 			<google-plus-signin clientid="88213598927-9fij1u8tf2ldf4apf6qob4hgu0supj54.apps.googleusercontent.com"
 			ng-show="!user.logged"></google-plus-signin>
-		</div> -->
+		</div>
 		<form class="login_form animate-fast"
 	        ng-if="!user.logged && show_login_form"
 	        ng-model="user">

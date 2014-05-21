@@ -188,8 +188,8 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
     $scope.intent_login = function() {
-        Facebook.getLoginStatus(function(response) {
-          	if (response.status == 'connected') {
+        Facebook.getLoginStatus(function(response){
+          	if (response.status == 'connected'){
             	$rootScope.logged = true;
             	$scope.me(); 
           	}
@@ -211,7 +211,6 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
     $scope.me = function() {
         Facebook.api('/me', function(response) {
 		    $scope.$apply(function() {
-		    	console.log('logged_in user', response);
 		        $rootScope.user = response;
 		    });
         });
@@ -264,11 +263,11 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 
 	_bind_auth_listeners = function(){
 		$scope.$on('event:google-plus-signin-success', function (event, authResult) {
-		    console.log("google login", authResult);
+		    // console.log("google login", authResult);
 		});
 
 		$scope.$on('event:google-plus-signin-failure', function (event, authResult) {
-		    console.log("google login", authResult);
+		    // console.log("google login", authResult);
 		});
 
 

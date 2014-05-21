@@ -81,8 +81,8 @@
 }
 
 .search_page .internal_links{
-	margin-left: -230px;
-	bottom: -18%;
+	margin-left: -245px;
+	bottom: -21%;
 }
 
 .search_page .secondary_login{
@@ -92,6 +92,7 @@
 	font-size: 1em;
 	border: 1px solid;
 	padding: 20px;
+	background-color: white;
 }
 
 .search_page .secondary_login.ng-enter,
@@ -107,16 +108,20 @@
 .search_page .internal_links a{
 	float: left;
 	display: inline-block;
-	text-align: center;
-	width: 130px;
-	font-size: 1.1em;
+	font-size: 0.9em;
 	cursor: pointer;
-	border: 1px solid #EBEBEB;
-	padding: 10px;
+    width:80px;
+    height:80px;
+    border-radius:40px;
+    color:#fff;
+    line-height:80px;
+    text-align:center;
+    background:#4d90fe;
+    margin-left: 60px;
 }
 
 .search_page .internal_links a:hover{
-	border: 1px solid;
+	/*border: 1px solid;*/
 	text-decoration: none;
 }
 
@@ -191,20 +196,47 @@
 
 .login_form{
 	position: fixed;
-	top: 70%;
+	top: 83%;
 	left: 50%;
 	z-index: 4;
 	margin-top: -20px;
-	margin-left: -110px;
-}
-.login_form.ng-enter,
-.login_form.ng-leave.ng-leave-active{
-	margin-top: 50px;
+	margin-left: -115px;
 }
 
-.login_form.ng-leave,
-.login_form.ng-enter.ng-enter-active{
-	margin-top: 0px;
+.fb{
+	cursor: pointer;
+	background-image: url("fb_active.png");
+	height: 32px;
+	background-size: 180px 32px;
+	text-align: center;
+	background-repeat: no-repeat;
+	padding: 2px;
+	left: 50%;
+	margin-left: 20%;
+}
+
+.google{
+	cursor: pointer;
+	text-align: center;
+}
+
+.login_box{
+	position: fixed;
+	left: 50%;
+	margin-left: -195px;
+	box-shadow: 8px 10px 54px 0px #424242;
+	z-index: 5;
+	padding: 35px;
+	background-color: white;
+	border-radius: 2px;
+	width: 300px;
+	height: 220px;
+	bottom: 0px;
+	text-align: center;
+}
+
+.login_box .header{
+	margin-bottom: 10px;
 }
 
 .login_form input{
@@ -275,12 +307,12 @@
 
 .search_level1_typeahead_group{
 	width: 369px;
-	margin-left: -198px;
+	margin-left: -178px;
 }
 
 .search_level2_typeahead_group{
 	width: 339px;
-	margin-left: -168px;
+	margin-left: -148px;
 }
 
 .input_handler{
@@ -289,7 +321,7 @@
     top: 35%;
     width: 38px;
     height: 37px;
-    margin-left: -235px;
+    margin-left: -215px;
     margin-top: -20px;
     z-index: 2;
 }
@@ -300,7 +332,7 @@
     top: 35%;
     width: 38px;
     height: 37px;
-    margin-left: -205px;
+    margin-left: -185px;
     margin-top: -20px;
     z-index: 2;	
 }
@@ -312,12 +344,92 @@
     padding: 11px;
 }
 
+
+.input_handler_level2 .custom_icon:hover,
+.input_handler .custom_icon:hover{
+	background-color: #F1F1F1;
+}
+
 .search_focus{
 	position: fixed;
 	width: 100%;
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.43);
 	z-index: 1;
+}
+
+.nav_menu{
+	position: absolute;
+	bottom: -25%;
+	left: 50%;
+	margin-left: -280px;
+}
+
+.nav {
+  list-style: none;
+  text-align: center;
+}
+
+.nav li {
+  position: relative;
+  display: inline-block;
+  margin-right: -4px;
+}
+
+.nav a [class^="icon-"]{
+	font-size: 1.5em;
+}
+
+.nav a {
+  display: block;
+  background-color: white;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(white));
+  background-image: -webkit-linear-gradient(top, #f7f7f7, white); 
+  background-image: -moz-linear-gradient(top, #f7f7f7, white); 
+  background-image: -ms-linear-gradient(top, #f7f7f7, white); 
+  background-image: -o-linear-gradient(top, #f7f7f7, white); 
+  color: #a7a7a7;
+  margin: 10px 40px;
+  width: 70px;
+  height: 70px;
+  position: relative;
+  text-align: center;
+  line-height: 70px;
+  border-radius: 50%;
+  box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff;
+}
+
+.nav a:hover{
+  text-decoration: none;
+  color: #555;
+  background: #f5f5f5;
+}
+
+.nav li:before {
+  content: "";
+  display: block;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #fff;
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  top: 50%;
+  z-index: -1;
+}
+
+.nav a:before {
+  content: "";
+  display: block;
+  background: #fff;
+  border-top: 2px solid #ddd;
+  position: absolute;
+  top: -18px;
+  left: -18px;
+  bottom: -18px;
+  right: -18px;
+  z-index: -1;
+  border-radius: 50%;
+  box-shadow: inset 0px 8px 48px #ddd;
 }
 
 /* Desktops and laptops ----------- */

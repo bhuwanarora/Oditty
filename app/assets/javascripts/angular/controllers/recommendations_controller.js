@@ -229,10 +229,6 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
     	});
     }
 
-    _collapse_dropdown_menu = function(){
-    	
-    }
-
 	_init = function(){
 		//oneMin = 60000
 		$scope.$routeParams = $routeParams;
@@ -259,7 +255,6 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
         _bind_destroy();
         _handle_focused_book();
         _get_friends();
-        _collapse_dropdown_menu();
     	$scope.$emit('moveRight');    
 	}
 

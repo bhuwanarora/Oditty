@@ -7,7 +7,7 @@ body{
 	width: 100%;
 	height: 100%;
 	white-space: nowrap;
-	background-size: cover;
+    /*remove selection*/
  	-webkit-user-select: none;
  	-moz-user-select: -moz-none;
   	-ms-user-select: none;
@@ -15,11 +15,11 @@ body{
     color: #717070;
     background-color: #EBEBEB;
     font-size: 0.9em;
-    /*background-image: url('7H.jpg');*/
-    /*background-image: none;*/
-    /*font-family: 'Lucida Grande';*/
-    /*background: url('right_grid_background.jpeg');*/
-    /*font-family: Helvetica, Arial, sans-serif;*/
+    background-image: url('bg.png');
+}
+
+hr{
+    opacity: 0.2;
 }
 
 /*anchor tags*/
@@ -57,14 +57,14 @@ input:focus{
     top: 35%;
     width: 406px;
     height: 37px;
-    margin-left: -235px;
+    margin-left: -215px;
     margin-top: -20px;
     z-index: 1;
 }
 
 .search_typeahead_group .search_icon{
     position: absolute;
-    right: -76px;
+    right: -4px;
     color: white;
     padding: 11px 30px 12px 30px;
     top: 0.2px;
@@ -95,33 +95,14 @@ input:focus{
 
 .search_input{
     font-size: 1em;
-    color: white;
+    color: #717070;
     padding-left: 10px;
     border-radius: 2px;
     border: 1px solid rgba(255, 255, 255, 0.4);
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: white;
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    width: 98%;
+    width: 97%;
     height: 100%;
-}
-
-.search_page input::-webkit-input-placeholder {
-   color: white;
-   font-size: 0.8em;
-}
-
-.search_page input:-moz-placeholder { /* Firefox 18- */
-   color: white;
-   font-size: 0.8em;
-}
-
-.search_page input::-moz-placeholder {  /* Firefox 19+ */
-   color: white;
-   font-size: 0.8em;
-}
-.search_page input:-ms-input-placeholder {  
-   color: white;
-   font
 }
 
 /*animation*/
