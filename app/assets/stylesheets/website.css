@@ -57,7 +57,7 @@ input:focus{
     top: 35%;
     width: 406px;
     height: 37px;
-    margin-left: -215px;
+    margin-left: -200px;
     margin-top: -20px;
     z-index: 1;
 }
@@ -103,6 +103,7 @@ input:focus{
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     width: 97%;
     height: 100%;
+    content: '';
 }
 
 /*animation*/

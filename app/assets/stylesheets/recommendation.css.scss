@@ -35,10 +35,6 @@
    background-image: -webkit-gradient(linear, 0% 0%, 0% 150%, to(#DBDBDB), from(white));
 }
 
-.compact_footer{
-	width: 28% !important;
-}
-
 .compact_link{
 	width: 50px !important;
 	float: left;
@@ -50,10 +46,10 @@
 	margin-left: -103px !important;
 }
 
-.compact_filter_link{
-	margin-right: 0px !important;
-}
 
+.compact_filter_link{
+	margin-right: 55px !important;
+}
 
 /* IE 6 */
 * html #recommendationFooter{
@@ -890,11 +886,6 @@
 }
 
 .filters_panel,
-.filters_panel_right{
-	height: 42px;
-}
-
-.filters_panel,
 .filters_panel_large,
 .filters_panel_right{
 	text-align: center;
@@ -903,7 +894,17 @@
 
 .filters_group{
 	width: 100%;
-	height: 60px;
+	overflow: auto;
+}
+
+.filters_panel,
+.filters_group,
+.filters_panel_right{
+	display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
 .filters_panel .header,
@@ -1022,9 +1023,9 @@
 	position: fixed;
 	background-color: white;
 	width: 500px;
+	max-width: 90%;
 	height: 500px;
-	left: 50%;
-	margin-left: -250px;
+	left: 5%;
 	top: 50%;
 	margin-top: -300px;
 	box-shadow: 0 7px 15px rgba(0, 0, 0, 0.25);
@@ -1505,6 +1506,10 @@ and (min-width : 1366px){
 		font-size: 0.9em;
 	}
 
+	.vertical_padder_active{
+		height: 0px;
+	}
+
 	.book_navbar_base{
 		width: 97%;
 	}
@@ -1730,6 +1735,7 @@ and (min-width : 1824px) {
 	white-space: initial;
 	box-shadow: 0 7px 15px rgba(0,0,0,0.25);
 	border: 1px solid #FFFFFF;
+	max-height: 700px;
 }
 
 .focused_tooltip .footer .recommend{
@@ -1774,8 +1780,8 @@ and (min-width : 1824px) {
 	border-radius: 4px;
 	cursor: pointer;
 	position: absolute;
-	left: 50%;
-	margin-left: -85px;
+	right: 50%;
+	margin-right: -80px;
 	margin-top: -11px;
 }
 
@@ -2466,13 +2472,13 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 .notifications .notification_message{
 	width: 300px;
 	white-space: initial;
-	padding: 5px 15px 5px 5px;
+	padding: 5px;
 	height: 45px;
 }
 
 .notifications .notification{
 	background-color: white;
-	height: 70px;
+	overflow: auto;
 	margin: 5px;
 	border-bottom: 1px solid #C9C9C9;
 	padding: 15px 40px 15px 74px;

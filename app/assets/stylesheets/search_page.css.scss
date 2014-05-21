@@ -52,8 +52,8 @@
 
 .search_page .tagline{
 	position: absolute;
-	top: 32px;
-	left: 215px;
+	top: 50px;
+	left: 10px;
 	color: white;
 	font-size: 1.1em;
 	text-shadow: 0 1px 1px rgba(0,0,0,0.5);
@@ -194,15 +194,6 @@
 	background-color: #F3F3F3;
 }
 
-.login_form{
-	position: fixed;
-	top: 83%;
-	left: 50%;
-	z-index: 4;
-	margin-top: -20px;
-	margin-left: -115px;
-}
-
 .fb{
 	cursor: pointer;
 	background-image: url("fb_active.png");
@@ -211,8 +202,7 @@
 	text-align: center;
 	background-repeat: no-repeat;
 	padding: 2px;
-	left: 50%;
-	margin-left: 20%;
+	width: 176px;
 }
 
 .google{
@@ -233,6 +223,11 @@
 	height: 220px;
 	bottom: 0px;
 	text-align: center;
+	display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
 .login_box .header{
@@ -307,12 +302,12 @@
 
 .search_level1_typeahead_group{
 	width: 369px;
-	margin-left: -178px;
+	margin-left: -163px;
 }
 
 .search_level2_typeahead_group{
 	width: 339px;
-	margin-left: -148px;
+	margin-left: -133px;
 }
 
 .input_handler{
@@ -321,7 +316,7 @@
     top: 35%;
     width: 38px;
     height: 37px;
-    margin-left: -215px;
+    margin-left: -200px;
     margin-top: -20px;
     z-index: 2;
 }
@@ -332,7 +327,7 @@
     top: 35%;
     width: 38px;
     height: 37px;
-    margin-left: -185px;
+    margin-left: -170px;
     margin-top: -20px;
     z-index: 2;	
 }
@@ -362,7 +357,7 @@
 	position: absolute;
 	bottom: -25%;
 	left: 50%;
-	margin-left: -280px;
+	margin-left: -220px;
 }
 
 .nav {
@@ -389,7 +384,7 @@
   background-image: -ms-linear-gradient(top, #f7f7f7, white); 
   background-image: -o-linear-gradient(top, #f7f7f7, white); 
   color: #a7a7a7;
-  margin: 10px 40px;
+  margin: 10px 25px;
   width: 70px;
   height: 70px;
   position: relative;
