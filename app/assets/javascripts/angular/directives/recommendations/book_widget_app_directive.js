@@ -3,15 +3,21 @@ websiteApp.directive('book', function (widgetService, $rootScope){
     restrict: 'E',
     scope: { 'book': '=data' },
     controller: function($scope){
-      $scope.hover = function() {
+      $scope.hover = function(event){
         $scope.hovered = true;
         if($rootScope.focused_book != $scope.book){
           $rootScope.focused_book = $scope.book;
+          // event.currentTarget.offsetParent.offsetParent.scrollWidth;
+          // var test = event.currentTarget.offsetParent.offsetParent.offsetLeft -event.currentTarget.offsetLeft;
+          // var test2 = event.currentTarget.offsetParent.offsetParent.scrollWidth;
+          // var left = event.currentTarget.offsetParent.offsetParent.scrollWidth + event.screenX;
+          // $rootScope.focused_book.reposition_tooltip = {"left": test, "top": "50px"};
         }
       };
 
       $scope.mouseout = function() {
       	$scope.hovered = false;
+        // $rootScope.focused_book = null;
       };
 
       _init = function(){
@@ -337,6 +343,12 @@ websiteApp.directive('focusedBook', function($rootScope, $timeout, widgetService
       $scope.stop_horizontal_scroll = function(event){
         event.stopPropagation();
       }
+
+      _init = function(){
+        console.log("inittooltip");
+      }
+
+      _init();
     },
     templateUrl: "/assets/angular/widgets/base/book/focused_book.html"
   }

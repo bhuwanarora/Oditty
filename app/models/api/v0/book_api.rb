@@ -121,7 +121,9 @@ module Api
 			def self.recommendations
 				test_name = Filter.where(:id => JSON.parse(params[:q])["more_filters"]).pluck(:name) rescue "City"
 
-				test_book = {:tags => [
+				test_book = {:title => "test_book",
+							  :author_name => "test_author",
+							  :tags => [
 							  	{:name => "Philosophy", :url => "javascript:void(0);"},
 							  	{:name => "Art", :url => "javascript:void(0);"},
 							  	{:name => "20th Century", :url => "javascript:void(0);"}
@@ -220,8 +222,6 @@ module Api
 			def self.tooltip
 				info = {
 					:id => 1,
-					:title => "test_book",
-					:author_name => "test_author",
 					:summary => "Siddhartha is a novel by Hermann Hesse 
 						that deals with the spiritual journey of 
 						self-discovery of a man named Siddhartha 

@@ -94,23 +94,6 @@ websiteApp.directive('widgetThumb', function ($timeout, $rootScope) {
   return {
     restrict: 'E',
     controller: function($scope){
-      $scope.show_book = function(page){
-        zoomin_book($scope, $timeout, $rootScope, page);
-      }
-
-      $scope.show_share_options = function(){
-        $scope.show_share_menu = true;
-      }
-
-      $scope.hide_share_options = function(){
-        $scope.show_share_menu = false;
-      }
-
-      _init = function(){
-        $scope.zoomin_book = false;
-        $scope.show_share_menu = false;
-      }
-
       $scope.show_images = function(){
         var delay = 500;
         if(global_display_timer == 2500){
@@ -142,6 +125,8 @@ websiteApp.directive('widgetThumb', function ($timeout, $rootScope) {
       _get_obj = function(){
         if($scope.book){
           var obj = $scope.book;
+          obj.name = $scope.book.title;
+          obj.description = $scope.book.author_name;
         }
         else if($scope.author){
           var obj = $scope.author;
@@ -156,12 +141,15 @@ websiteApp.directive('widgetThumb', function ($timeout, $rootScope) {
         var obj = _get_obj();
         if(obj){
           $scope.thumb_style = {'background-color': obj.thumb.background_color};
+          $scope.name = obj.name;
+          $scope.description = obj.description;
         }
         // $scope.$on('showImages', function(){
         //   $scope.show_images();
         // });
         $scope.show_images();
       }
+
 
       _init();
     },

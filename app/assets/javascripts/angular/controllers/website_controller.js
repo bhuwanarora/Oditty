@@ -209,9 +209,14 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
    	};
    
     $scope.me = function() {
-        Facebook.api('/me', function(response) {
-		    $scope.$apply(function() {
+        Facebook.api('/me', function(response){
+        	console.log(response);
+		    $scope.$apply(function(){
 		        $rootScope.user = response;
+		        $rootScope.user.profile_status = 0;
+		        $rootScope.user.thumb = "https://scontent-b-kul.xx.fbcdn.net/hphotos-ash3/t1.0-9/66784_415130785223231_1615890777_n.jpg";
+		        _profile_status_colors();
+		        $rootScope.user.logged = true;
 		    });
         });
     };

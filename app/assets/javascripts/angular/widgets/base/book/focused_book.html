@@ -1,12 +1,14 @@
-<div class="focused_tooltip animate-fast" ng-if="focused_book">
+<div class="focused_tooltip animate-fast" 
+     ng-style="focused_book.reposition_tooltip"
+     ng-if="focused_book">
   <div class="header">
   <span><img class="book_thumb" ng-src="{{focused_book.thumb.url}}"/></span>
     <span class="title" ng-click="show_book(2)">
-      <span itemprop= "name">{{focused_book.title}}-{{focused_book.id}}</span>
+      <span itemprop= "name">{{focused_book.name}}-{{focused_book.id}}-|{{focused_book.test}}-|{{focused_book.test2}}</span>
     </span>
     <span>&nbsp;by&nbsp;</span>
     <span class="author" ng-click="show_book(16)">
-      <span itemprop= "author">{{focused_book.author_name}}</span>
+      <span itemprop= "author">{{focused_book.description}}</span>
     </span>
     <rate data="focused_book"></rate>
     <div class="rating_star">
