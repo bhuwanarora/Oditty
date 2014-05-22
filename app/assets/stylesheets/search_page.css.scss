@@ -264,7 +264,7 @@
 
 .login_form .authenticate{
 	padding: 10px 0px 10px 5px;
-	background-color: #2F567E;
+	background-color: #427fed;
 	text-align: center;
 	color: white;
 	cursor: pointer;
@@ -275,8 +275,8 @@
 }
 
 .login_form .authenticate:hover{
-	background-color: #3B6997;
-	border-bottom: 2px solid #15283C;
+	background-color: #417FF0;
+	border-bottom: 2px solid #3D78E4;
 }
 
 .login_form .authenticate_left{
@@ -284,7 +284,7 @@
 }
 
 .login_form .authenticate:active{
-	background-color: #2c4762;
+	background-color: #3D78E4;
 }
 
 
@@ -425,6 +425,16 @@
   /*border-radius: 50%;*/
   box-shadow: inset 0px 8px 48px #ddd;
 }
+
+.login_box .close{
+	position: absolute;
+	right: 5px;
+	top: 0px;
+	cursor: pointer;
+	padding: 8px;
+	font-size: 1.2em;
+}
+
 
 /* Desktops and laptops ----------- */
 @media only screen

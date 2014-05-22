@@ -45,15 +45,15 @@
 		  <ul class="nav" ng-if="user.logged"> 
 		    <li><a ng-href="#user/{{user.id}}/recommendations/books">
 		    		<span class="icon-book"></span><br/>
-		    		<span>Books</span>
+		    		<span>Explore Books</span>
 		    	</a></li> 
 		    <li><a ng-href="#user/{{user.id}}/recommendations/authors">
 		    		<span class="icon-pen"></span><br/>
-		    		<span>Authors</span>
+		    		<span>Follow Authors</span>
 		    	</a></li> 
 		    <li><a ng-href="#user/{{user.id}}/recommendations/readers">
 		    		<span class="icon-users"></span><br/>
-		    		<span>Readers</span>
+		    		<span>Meet Readers</span>
 		    	</a></li> 
 		  </ul> 
 		</div>
@@ -95,13 +95,14 @@
 	  <div class="secondary_login animate-fast" 
 	       ng-click="toggle_login_panel()"
 	       ng-if="!user.logged && !show_login_form">
-	    Please login to explore recommendations.
+	    Login to explore recommendations.
 	  </div>
 	</div>
 	<div class="login_box animate-fast"
 		ng-if="!user.logged && show_login_form">
+		<div class="close button_effect" ng-click="close_login_box()">x</div>
 		<div class="header">
-			Please login to explore recommendations.
+			Login to explore recommendations.
 			<hr>
 		</div>
 		<div class="fb" 

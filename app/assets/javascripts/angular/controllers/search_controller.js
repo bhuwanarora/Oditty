@@ -215,6 +215,10 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 		_init_graph_search();
 	}
 
+	$scope.close_login_box = function(){
+		$scope.show_login_form = false;
+	}
+
 	$scope.clear_search_level2_var = function(){
 		$scope.search_level1 = false;
 		$scope.search_level2 = false;
@@ -486,7 +490,7 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 		$scope.search_tag = {};
 		$scope.search_tag.search_placeholder = "Search...";
 		$scope.search_tag.current = 0;
-		$scope.search_tag.input = null;
+		$scope.search_tag.input = "";
 		$scope.search_tag.result_count = 5;
 		$scope.website.searching = true;
 		$scope.website.show_search_page = true;

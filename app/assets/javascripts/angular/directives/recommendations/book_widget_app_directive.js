@@ -7,11 +7,27 @@ websiteApp.directive('book', function (widgetService, $rootScope){
         $scope.hovered = true;
         if($rootScope.focused_book != $scope.book){
           $rootScope.focused_book = $scope.book;
+          var posX = event.currentTarget.offsetParent.offsetParent.offsetLeft - event.pageX + event.clientX;
+          console.table([{"pageX":event.pageX, 
+            "clientX":event.clientX, 
+            "screenX":event.screenX, 
+            "posX": posX,
+            "offsetLeft":event.currentTarget.offsetParent.offsetParent.offsetLeft,
+            "ct.scrollWidth":event.currentTarget.scrollWidth}])
+          var display_right_width =  screen.width - (posX + event.currentTarget.offsetParent.scrollWidth);
+          var display_left_width = posX;
+          if(display_right_width > display_left_width){
+            posX = posX + event.currentTarget.offsetParent.scrollWidth - event.currentTarget.offsetLeft;
+            $rootScope.focused_book.reposition_tooltip = {"left": posX, "top": "60px"};
+          }
+          else{
+            posX = screen.width - posX;
+            $rootScope.focused_book.reposition_tooltip = {"right": posX, "top": "60px"}; 
+          }
           // event.currentTarget.offsetParent.offsetParent.scrollWidth;
           // var test = event.currentTarget.offsetParent.offsetParent.offsetLeft -event.currentTarget.offsetLeft;
           // var test2 = event.currentTarget.offsetParent.offsetParent.scrollWidth;
           // var left = event.currentTarget.offsetParent.offsetParent.scrollWidth + event.screenX;
-          // $rootScope.focused_book.reposition_tooltip = {"left": test, "top": "50px"};
         }
       };
 
@@ -299,6 +315,9 @@ websiteApp.directive('focusedBook', function($rootScope, $timeout, widgetService
       // $scope.show_book = function(page){
       //   zoomin_book($scope, $timeout, $rootScope, page);
       // }
+      $scope.close_focused_tooltip = function(){
+        $rootScope.focused_book = null;
+      }
 
       $scope.own_this_book = function(){
         if($scope.have_this_book){

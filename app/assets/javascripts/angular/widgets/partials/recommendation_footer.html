@@ -113,7 +113,12 @@
  		 ng-class="{'compact_filter_link': compact_footer}" 
 		 ng-click="toggle_more_filters($event)">
 		 <span class="icon-filter2" ng-class="{'filter_link_icon': !show_more_filters}"></span>
-		 <span ng-if="!compact_footer">&nbsp;Add Filters&nbsp;</span>
+		 <span ng-if="!compact_footer">
+		 	<span>&nbsp;Add filters</span>
+		 	<span ng-show="$routeParams.type == 'books'">for Books</span>
+		 	<span ng-show="$routeParams.type == 'authors'">for Authors</span>
+		 	<span ng-show="$routeParams.type == 'readers'">for Readers</span>
+		 </span>
 		 <span class=" icon-angle-down" ng-if="!show_more_filters"></span>
 		 <span class=" icon-angle-up" ng-if="show_more_filters"></span>
 	</div>
