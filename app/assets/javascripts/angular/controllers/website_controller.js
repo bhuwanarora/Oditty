@@ -457,6 +457,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		$scope.website = {};
 		$scope.website.searching = true;
 		$scope.website.show_search_page = true;
+		$scope.authenticate();
 	    _profile_status_colors();
 
 		_bind_emit();

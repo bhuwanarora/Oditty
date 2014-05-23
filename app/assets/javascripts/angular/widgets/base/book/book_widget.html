@@ -6,6 +6,7 @@
 	<category track widget="book"></category>
 	<div ng-model="book" 
 		ng-mouseenter="discovered = true" 
+		ng-click="show_focused_tooltip()"
 		ng-mouseover="hover($event)" 
 		ng-mouseout="mouseout()" 
 		ng-class="{'discovered': hovered, 'undiscovered': !hovered}" class="card animate-fast">

@@ -252,7 +252,7 @@ websiteApp.directive('recommendationFooter', function(){
 	return{
 		restrict: 'E',
 		controller: function($scope){
-			if(window.innerWidth < 1024){
+			if(window.innerWidth < 1000){
 				$scope.compact_footer = true;
 			}
 			else{

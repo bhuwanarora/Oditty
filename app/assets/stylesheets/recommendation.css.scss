@@ -1669,7 +1669,8 @@ and (min-width : 1824px) {
 
 .focused_tooltip{
 	position: fixed;
-	right: 5px;
+	/*left: 50%;*/
+	/*margin-left: -220px;*/
 	top: 50px;
 	width: 42%;
 	min-width: 400px;

@@ -5,17 +5,26 @@ websiteApp.directive('book', function (widgetService, $rootScope){
     controller: function($scope){
       $scope.hover = function(event){
         $scope.hovered = true;
+      };
+
+      $scope.mouseout = function() {
+        $scope.hovered = false;
+        // $rootScope.focused_book = null;
+      };
+
+      $scope.show_focused_tooltip = function(){
         if($rootScope.focused_book != $scope.book){
           $rootScope.focused_book = $scope.book;
           var posX = event.currentTarget.offsetParent.offsetParent.offsetLeft - event.pageX + event.clientX;
-          console.table([{"pageX":event.pageX, 
-            "clientX":event.clientX, 
-            "screenX":event.screenX, 
-            "posX": posX,
-            "offsetLeft":event.currentTarget.offsetParent.offsetParent.offsetLeft,
-            "ct.scrollWidth":event.currentTarget.scrollWidth}])
           var display_right_width =  screen.width - (posX + event.currentTarget.offsetParent.scrollWidth);
           var display_left_width = posX;
+          console.table([{"pageX":event.pageX, 
+            "clientX":event.clientX, 
+            "posX": posX,
+            "offsetLeft":event.currentTarget.offsetParent.offsetParent.offsetLeft,
+            "scrollWidth":event.currentTarget.offsetParent.scrollWidth,
+            "display_left_width":display_left_width,
+            "display_right_width":display_right_width}]);
           if(display_right_width > display_left_width){
             posX = posX + event.currentTarget.offsetParent.scrollWidth - event.currentTarget.offsetLeft;
             $rootScope.focused_book.reposition_tooltip = {"left": posX, "top": "60px"};
@@ -29,12 +38,11 @@ websiteApp.directive('book', function (widgetService, $rootScope){
           // var test2 = event.currentTarget.offsetParent.offsetParent.scrollWidth;
           // var left = event.currentTarget.offsetParent.offsetParent.scrollWidth + event.screenX;
         }
-      };
-
-      $scope.mouseout = function() {
-      	$scope.hovered = false;
-        // $rootScope.focused_book = null;
-      };
+        else{
+          $rootScope.focused_book = null;
+        }
+        // body...
+      }
 
       _init = function(){
         // $scope.active_book_filter = true;
