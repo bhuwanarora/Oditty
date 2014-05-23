@@ -50,7 +50,7 @@ websiteApp.directive('authorBookmark', function ($rootScope, $timeout, widgetSer
   return {
     restrict: 'E',
     controller: function($scope){
-      $scope.toggle_bookmarked = function(){
+      $scope.toggle_bookmarked = function(event){
         var bookmark_status = $scope.author.bookmark_status;
         var author_name = $scope.author.name;
         if(bookmark_status == 1){
@@ -69,6 +69,7 @@ websiteApp.directive('authorBookmark', function ($rootScope, $timeout, widgetSer
           $timeout.cancel(timeout_event);
         });
         widgetService.bookmark("AUTHOR", $scope.author.id, $scope.author.bookmark_status);
+        event.stopPropagation();
       }
     },
     templateUrl: "/assets/angular/widgets/base/author/bookmark.html"

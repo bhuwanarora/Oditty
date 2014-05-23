@@ -1,6 +1,12 @@
 <div class="left_action button_effect"
 	 ng-class="{'left_action_active':book.status}"
-	 ng-click="markAsRead()">
-  <span ng-show="!book.status">Add to Read Shelf</span>
-  <span ng-show="book.status">Remove from Shelf</span>
+	 ng-click="markAsRead($event)">
+  <span ng-show="!book.status">
+  	<span>Mark as read</span>
+  	<span class="icon-check-square-o"></span>
+  </span>
+  <span ng-show="book.status">
+  	<span>Remove from Shelf</span>
+  	<span class="icon-check-square-o glow_shelf"></span>
+  </span>
 </div>

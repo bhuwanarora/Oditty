@@ -12,7 +12,7 @@ websiteApp.directive('book', function (widgetService, $rootScope){
         // $rootScope.focused_book = null;
       };
 
-      $scope.show_focused_tooltip = function(){
+      $scope.show_focused_tooltip = function(event){
         if($rootScope.focused_book != $scope.book){
           $rootScope.focused_book = $scope.book;
           var posX = event.currentTarget.offsetParent.offsetParent.offsetLeft - event.pageX + event.clientX;
@@ -26,12 +26,22 @@ websiteApp.directive('book', function (widgetService, $rootScope){
             "display_left_width":display_left_width,
             "display_right_width":display_right_width}]);
           if(display_right_width > display_left_width){
-            posX = posX + event.currentTarget.offsetParent.scrollWidth - event.currentTarget.offsetLeft;
-            $rootScope.focused_book.reposition_tooltip = {"left": posX, "top": "60px"};
+            if(display_right_width > 400){
+              posX = posX + event.currentTarget.offsetParent.scrollWidth - event.currentTarget.offsetLeft;
+              $rootScope.focused_book.reposition_tooltip = {"left": posX, "top": "60px"};
+            }
+            else{
+              $rootScope.focused_book.reposition_tooltip = {"right": "0px", "top": "60px"}; 
+            }
           }
           else{
-            posX = screen.width - posX;
-            $rootScope.focused_book.reposition_tooltip = {"right": posX, "top": "60px"}; 
+            if(display_left_width > 400){
+              posX = screen.width - posX;
+              $rootScope.focused_book.reposition_tooltip = {"right": posX, "top": "60px"}; 
+            }
+            else{
+              $rootScope.focused_book.reposition_tooltip = {"left": "0px", "top": "60px"};  
+            }
           }
           // event.currentTarget.offsetParent.offsetParent.scrollWidth;
           // var test = event.currentTarget.offsetParent.offsetParent.offsetLeft -event.currentTarget.offsetLeft;
@@ -41,6 +51,7 @@ websiteApp.directive('book', function (widgetService, $rootScope){
         else{
           $rootScope.focused_book = null;
         }
+        event.stopPropagation();
         // body...
       }
 
@@ -93,7 +104,7 @@ websiteApp.directive('bookBookmark', function ($rootScope, $timeout, widgetServi
   return {
     restrict: 'E',
     controller: function($scope){
-      $scope.toggle_bookmarked = function(){
+      $scope.toggle_bookmarked = function(event){
         var bookmark_status = $scope.book.bookmark_status;
         var book_title = $scope.book.title;
         var author_name = $scope.book.author_name;
@@ -113,6 +124,7 @@ websiteApp.directive('bookBookmark', function ($rootScope, $timeout, widgetServi
           $timeout.cancel(timeout_event);
         });
         widgetService.bookmark("BOOK", $scope.book.id, $scope.book.bookmark_status);
+        event.stopPropagation();
       }
     },
     templateUrl: "/assets/angular/widgets/base/book/bookmark.html"
@@ -287,7 +299,7 @@ websiteApp.directive('rate', function($rootScope, $timeout, widgetService){
         $scope.rate_object.user_rating = $scope.temp_rating;
       }
 
-      $scope.mark_as_rated = function(index){
+      $scope.mark_as_rated = function(index, event){
         $scope.rate_object.rated = true;
         $scope.rate_object.user_rating = parseInt(index) + 1;
         $scope.temp_rating = parseInt(index) + 1;
@@ -298,6 +310,7 @@ websiteApp.directive('rate', function($rootScope, $timeout, widgetService){
         });
 
         widgetService.rate_this_book($scope.rate_object.id, $scope.rate_object.user_rating);
+        event.stopPropagation();
       }
 
       $scope.is_active = function(index){
@@ -323,6 +336,11 @@ websiteApp.directive('focusedBook', function($rootScope, $timeout, widgetService
       // $scope.show_book = function(page){
       //   zoomin_book($scope, $timeout, $rootScope, page);
       // }
+
+      $scope.stop_propagation = function(event){
+        event.stopPropagation();
+      }
+
       $scope.close_focused_tooltip = function(){
         $rootScope.focused_book = null;
       }
@@ -385,7 +403,9 @@ websiteApp.directive('interactionBox', function($rootScope, $timeout, widgetServ
   return{
     restrict: 'E',
     controller: function($scope){
-      
+      $scope.stop_propagation = function(event){
+        event.stopPropagation();
+      }      
 
       _init();
     },
@@ -456,7 +476,7 @@ websiteApp.directive('markAsRead', function($rootScope, $timeout, widgetService)
 	return {
 		restrict: 'E',
 		controller: function($scope){
-      $scope.markAsRead = function(){
+      $scope.markAsRead = function(event){
         var book_title = $scope.book.title;
         var author_name = $scope.book.author_name;
         if($scope.book.status){
@@ -477,7 +497,9 @@ websiteApp.directive('markAsRead', function($rootScope, $timeout, widgetService)
         }
         var timeout_event = notify($rootScope, message, $timeout);
         widgetService.mark_as_read($scope.book.id, $scope.read);
+        event.stopPropagation();
       }
+
     },
     templateUrl: "/assets/angular/widgets/base/book/mark_as_read.html"
   }

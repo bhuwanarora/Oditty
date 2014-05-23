@@ -1,5 +1,6 @@
 <div class="interaction_box animate-fast"
-	 ng-if="focused_book.interact">
+	 ng-if="focused_book.interact"
+	 ng-click="stop_propagation($event)">
  	<div class="close button_effect"
  		 ng-click="close_interaction_box()">x</div>
  	

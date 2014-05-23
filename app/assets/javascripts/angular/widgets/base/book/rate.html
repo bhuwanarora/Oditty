@@ -11,7 +11,7 @@
 			   'rated icon-star22':rate_object.rated && is_active($index) && !ready_to_rate}"
 			   ng-mouseenter="show_if_rated($index)"
 			   ng-mouseleave="reset_rating()"
-			   ng-click="mark_as_rated($index)"
+			   ng-click="mark_as_rated($index, $event)"
 			   ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">
 		</span>
 		<span ng-model="rate_object.user_rating">{{rate_object.user_rating}}/10</span>

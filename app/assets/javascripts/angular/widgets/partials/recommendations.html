@@ -6,7 +6,7 @@
    class="recommendations"
    style="height:100%; white-space:nowrap;"
    ng-controller="recommendationsController"
-   ng-click="hide_more_filters()">
+   ng-click="hide_popups()">
 		<recommendation-footer></recommendation-footer>
 
 		<div class="vertical_padder_active"></div>
@@ -16,7 +16,7 @@
 				<div ng-show="$routeParams.type == 'books'" ng-model="user.books.bookmarked">
 					<div ng-switch on="user.books.bookmarked.length">
 						<div ng-switch-when="0">
-							Bookmark some books
+							Place a bookmark in your books
 						</div>
 						<div ng-switch-default>
 							<div ng-repeat="user_book in user.books.bookmarked" class="recommendation_block">
@@ -28,7 +28,7 @@
 				<div ng-show="$routeParams.type == 'authors'" ng-model="user.authors.bookmarked">
 					<div ng-switch on="user.authors.bookmarked.length">
 						<div ng-switch-when="0">
-							Add Some Authors To Bookmark
+							Bookmark authors
 						</div>
 						<div ng-switch-default>
 							<div ng-repeat="author in user.authors.bookmarked" class="recommendation_block">
@@ -42,7 +42,7 @@
 				<div ng-show="$routeParams.type == 'books'" ng-model="user.books.read">
 					<div ng-switch on="user.books.read.length">
 						<div ng-switch-when="0">
-							Add Some books to read				
+							Add Books you have read
 						</div>
 						<div ng-switch-default>
 							<div ng-repeat="user_book in user.books.read" class="recommendation_block">
@@ -54,7 +54,7 @@
 				<div ng-show="$routeParams.type == 'authors'" ng-model="user.authors.follow">
 					<div ng-switch on="user.authors.follow.length">
 						<div ng-switch-when="0">
-							Add Some Authors To Follow
+							Follow authors
 						</div>
 						<div ng-switch-default>
 							<div ng-repeat="author in user.authors.follow" class="recommendation_block">
@@ -124,9 +124,6 @@
 				</div>
 			</div>
 		</div>
-
-		<div  ng-mouseenter="remove_focused_book()" class="top_hover_detector"></div>
-		<div  ng-mouseenter="remove_focused_book()" class="bottom_hover_detector"></div>
 
 		<more-filters></more-filters>
 		<focused-book></focused-book>

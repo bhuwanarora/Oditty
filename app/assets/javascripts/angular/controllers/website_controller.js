@@ -393,7 +393,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		}
 	}
 
-	$scope.handle_keyboard_bindings = function(){
+	$scope.handle_keyboard_bindings = function(event){
 		if(!$scope.website.show_search_page){
 			if($scope.show_book){
 				if(event.keyCode == 39){
@@ -421,6 +421,10 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 			}
 			event.stopPropagation();
 		}
+		var backspace = (event.keyCode == 8);
+		if(backspace){
+			// event.preventDefault();
+		}
 	}
 
 
@@ -430,13 +434,6 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 			$('body').css('white-space', 'normal');
 			$scope.website.searching = true;
 			$rootScope.keyCode = event.keyCode;
-		}
-	}
-
-	$scope.stop_back_propagation = function(event){
-		var backspace = (event.keyCode == 8);
-		if(backspace){
-			// event.preventDefault();
 		}
 	}
 

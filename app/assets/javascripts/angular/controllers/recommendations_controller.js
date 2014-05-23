@@ -1,6 +1,6 @@
 websiteApp.controller('recommendationsController', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService){
 
-	$scope.toggle_bookmarked = function(){
+	$scope.toggle_bookmarked = function(event){
 		if(!$scope.bookmark_selected){
 			// _load_icon();
 			$scope.panel_selected = 'BOOKMARK';
@@ -9,6 +9,7 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
 			$scope.glowBookmark = false;
 			// $('body').css('background-image', $scope.search_style['background-image']);
 		}
+		event.stopPropagation();
 	}
 
 	$scope.toggle_recommendations = function(){
@@ -20,10 +21,6 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
 			$scope.reset();			
 			// $('body').css('background-image', '');
 		}
-	}
-
-	$scope.remove_focused_book = function(){
-		$rootScope.focused_book = null;
 	}
 
 	$scope.reset = function(){
@@ -62,7 +59,8 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
 		event.currentTarget.text = "";
 	}
 
-	$scope.hide_more_filters = function(){
+	$scope.hide_popups = function(){
+		$rootScope.focused_book = null;
 		$scope.show_more_filters = false;
 	}
 

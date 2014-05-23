@@ -29,8 +29,11 @@
    height:40px;
    width:100%;
    z-index: 6;
-   background-image: -moz-linear-gradient(top, #707070, #b4b4b4);
-   background-image: -webkit-gradient(linear, 0% 0%, 0% 150%, to(white), from(#DBDBDB));
+   background-color: #F5F5F5;
+   /*background-image: -moz-linear-gradient(top, #707070, #b4b4b4);*/
+   /*background-image: -webkit-gradient(linear, 0% 0%, 0% 150%, to(white), from(#DBDBDB));*/
+   -webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
 }
 
 .profile_thumb{
@@ -51,6 +54,7 @@
 
 .compact_shelf_nav_links{
 	margin-left: -103px !important;
+	margin-top: -3px !important;
 }
 
 
@@ -197,16 +201,6 @@
     left: 0px; 
     box-shadow: 0px 0px 20px #2A2E31; 
 } 
-.undiscovered:after{ 
-    content: ""; 
-    z-index: -1; 
-    position: absolute; 
-    width: 95%; 
-    top: 10px; 
-    right: 0px; 
-    bottom: 10px; 
-    box-shadow: 0px 0px 20px #000000; 
-}
 
 .vertical_padder_active{
 	height: 60px;
@@ -243,6 +237,7 @@
 	top: 5px;
 	right: 5px;
 	bottom: 11%;
+	cursor: pointer;
 }
 
 .card .widget_thumb_focus{
@@ -408,7 +403,7 @@
 	text-align: center;
 	cursor: pointer;
 	color: #717070;
-	font-size: 0.8em;
+	font-size: 0.9em;
 	width: 47%;
 	min-width: 120px;
 	padding-top: 5%;
@@ -422,7 +417,7 @@
 	text-align: center;
 	cursor: pointer;
 	color: #717070;
-	font-size: 0.8em;
+	font-size: 0.9em;
 	width: 47%;
 	min-width: 120px;
 	padding-top: 5%;
@@ -433,24 +428,15 @@
 }
 
 .button_effect {
-	-moz-box-shadow:inset 0px 0px 0px 0px #ffffff;
-	-webkit-box-shadow:inset 0px 0px 0px 0px #ffffff;
-	box-shadow:inset 0px 0px 0px 0px #ffffff;
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #FFF), color-stop(1, #E9E9E9) );
-	background:-moz-linear-gradient( center top, #FFF 5%, #E9E9E9 100% );	
-	border:1px solid #dcdcdc;
-	text-shadow:1px 1px 0px #ffffff;
+	-moz-box-shadow: inset 0px 0px 0px 0px #ffffff;
+	border: 1px solid #F3F3F3;
+	-webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
+	background-color: white;
+	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
 }
 
 .button_effect:hover {
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
-	background:-moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
-	text-shadow:none;
-}
-
-.right_action:hover,
-.left_action:hover{
-	text-decoration: underline;
+	border-bottom: 1px solid #427fed;
 }
 
 /*news widget*/
@@ -607,7 +593,7 @@
 	text-align: center;
 	padding: 16px 10px 17px 10px;
 	color: #717070;
-	text-shadow: 0px 1px 1px #fff;
+	/*text-shadow: 0px 1px 1px #fff;*/
 	margin-left: -5px;
 }
 
@@ -619,7 +605,7 @@
 	display: inline-block;
 	height: 10px;
 	text-align: center;
-	padding: 15px 10px 13px 10px;
+	padding: 12px 10px 17px 10px;
 	background-color: #427fed;
 	color: #EBEBEB;
 	border-bottom: 2px solid transparent;
@@ -659,7 +645,7 @@
 .advanced_filter{
 	width: 40px;
 	padding-top: 10px;
-	padding-bottom: 12px;
+	padding-bottom: 13px;
 	background-color: #427fed;
 	color: white;
 }
@@ -698,18 +684,20 @@
 }
 
 #recommendationFooter .active{
-    border: 1px solid #DDDDDD;
-	box-shadow: inset 0px 2px 40px -11px #666666, inset 0px 0px 40px #EEEEEE;
+    /*border: 1px solid #DDDDDD;*/
+	/*box-shadow: inset 0px 2px 40px -11px #666666, inset 0px 0px 40px #EEEEEE;*/
 	cursor: default;
+	/*background-color: #EBEBEB;*/
+	font-weight: bold;
 }
 
 .shelf_nav_links{
-	box-shadow: inset 0px 2px 27px -10px #161616, inset 0px 0px 40px #EEEEEE;
+	/*box-shadow: inset 0px 2px 27px -10px #161616, inset 0px 0px 40px #EEEEEE;*/
 	position: absolute;
 	left: 50%;
 	margin-left: -220px;
 	background-color: white;
-	top: -3px;
+	top: -5px;
 }
 
 .result_footer{
@@ -1064,7 +1052,7 @@
 }
 
 .link:active{
-	background-color: #D6D6D6;
+	/*background-color: #D6D6D6;*/
 }
 
 .main_filters a:hover{
@@ -1698,17 +1686,6 @@ and (min-width : 1824px) {
 	/*border-radius: 2px;*/
 	font-size: 0.7em;
 	cursor: pointer;	
-}
-
-.interaction_box .recommend:hover,
-.focused_tooltip .recommend:hover{
-	-moz-box-shadow:inset 0px 0px 0px 0px #ffffff;
-	-webkit-box-shadow:inset 0px 0px 0px 0px #ffffff;
-	box-shadow:inset 0px 0px 0px 0px #ffffff;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #FFFFFF), color-stop(1, #CACACA));
-	background:-moz-linear-gradient( center top, #FFFFFF 5%, #CACACA 100% );	
-	border:1px solid #dcdcdc;
-	text-shadow:1px 1px 0px #ffffff;
 }
 
 .focused_tooltip .users{
@@ -2650,6 +2627,10 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	float: left;
 	display: inline-block;
 	margin: 5px;
+}
+
+.time_group{
+	width: 270px;
 }
 
 .site_menu{

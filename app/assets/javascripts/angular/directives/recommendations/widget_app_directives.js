@@ -125,8 +125,6 @@ websiteApp.directive('widgetThumb', function ($timeout, $rootScope) {
       _get_obj = function(){
         if($scope.book){
           var obj = $scope.book;
-          obj.name = $scope.book.title;
-          obj.description = $scope.book.author_name;
         }
         else if($scope.author){
           var obj = $scope.author;
@@ -141,8 +139,6 @@ websiteApp.directive('widgetThumb', function ($timeout, $rootScope) {
         var obj = _get_obj();
         if(obj){
           $scope.thumb_style = {'background-color': obj.thumb.background_color};
-          $scope.name = obj.name;
-          $scope.description = obj.description;
         }
         // $scope.$on('showImages', function(){
         //   $scope.show_images();

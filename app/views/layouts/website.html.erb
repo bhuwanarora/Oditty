@@ -4,10 +4,11 @@
     <title>ReadersDoor</title>
     <!-- <base href="/"> -->
     <link href="/assets/icomoon.css" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="http://i.icomoon.io/public/temp/ead8d445d9/UntitledProject1/style.css"> -->
+    <!-- <link rel="stylesheet" href="http://i.icomoon.io/public/temp/0c35d0b646/UntitledProject1/style.css"> -->
     <link rel="stylesheet" type="text/css" href="assets/website.css">
   </head>
-  <body ng-controller="websiteAppController" ng-keydown="stop_back_propagation($event)">
+  <body ng-controller="websiteAppController" 
+        ng-keydown="handle_keyboard_bindings($event)">
     <%= render :partial => "website/loading"%>
     <link rel="stylesheet" type="text/css" href="assets/search_page.css.scss">
 

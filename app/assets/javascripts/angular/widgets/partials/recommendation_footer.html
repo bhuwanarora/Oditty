@@ -85,18 +85,17 @@
 			 class="link"
 			 title="Books marked as read" 
 			 ng-click="toggle_read()">
-			<span ng-if="compact_footer"></span>
 		 	<span ng-show="$routeParams.type == 'books'">
 		 		<span ng-if="compact_footer" class="icon-books"></span>
-		 		<span ng-if="!compact_footer">Read Shelf</span>
+		 		<span ng-if="!compact_footer">Books Read</span>
 		 	</span>
 			<span ng-show="$routeParams.type == 'authors'">
 				<span ng-if="compact_footer" class="icon-users"></span>
-				<span ng-if="!compact_footer">Following</span>
+				<span ng-if="!compact_footer">Following Authors</span>
 			</span>
 			<span ng-show="$routeParams.type == 'readers'">
 				<span ng-if="compact_footer" class="icon-users"></span>
-				<span ng-if="!compact_footer">Following</span>
+				<span ng-if="!compact_footer">Following Readers</span>
 			</span>
 		</div>
 		<div ng-class="{'inactive':!bookmark_selected, 'active':bookmark_selected, 'compact_link': compact_footer}"
@@ -104,8 +103,15 @@
 			 ng-show="$routeParams.type == 'books' || $routeParams.type == 'authors'"
 			 title="Books bookmarked"
 			 ng-click="toggle_bookmarked()">
-			 <span ng-if="!compact_footer">Bookmarked Shelf</span>
-			 <span ng-if="compact_footer" class="icon-bookmark"></span>
+			 <span ng-show="$routeParams.type == 'books'">
+			 	<span ng-if="compact_footer" class="icon-bookmarks"></span>
+			 	<span ng-if="!compact_footer">Books Bookmarked</span>
+		 	 </span>
+			 <span ng-show="$routeParams.type == 'authors'">
+			 	<span ng-if="compact_footer" class="icon-bookmarks"></span>
+				<span ng-if="!compact_footer">Authors Bookmarked</span>
+			 </span>
+
 		</div>
 	</div>
 

@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'icomoon';
-	src:url('fonts/icomoon.eot?dwqf39');
-	src:url('fonts/icomoon.eot?#iefixdwqf39') format('embedded-opentype'),
-		url('fonts/icomoon.woff?dwqf39') format('woff'),
-		url('fonts/icomoon.ttf?dwqf39') format('truetype'),
-		url('fonts/icomoon.svg?dwqf39#icomoon') format('svg');
+	src:url('fonts/icomoon.eot?6l0jct');
+	src:url('fonts/icomoon.eot?#iefix6l0jct') format('embedded-opentype'),
+		url('fonts/icomoon.woff?6l0jct') format('woff'),
+		url('fonts/icomoon.ttf?6l0jct') format('truetype'),
+		url('fonts/icomoon.svg?6l0jct#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -26,13 +26,16 @@
 .icon-book-alt2:before {
 	content: "\e6c0";
 }
+.icon-bookmark:before {
+	content: "\e6c1";
+}
 .icon-shapes:before {
 	content: "\e6bd";
 }
 .icon-search:before {
 	content: "\e6b8";
 }
-.icon-bookmark:before {
+.icon-bookmark2:before {
 	content: "\e6b4";
 }
 .icon-connection:before {
@@ -226,6 +229,12 @@
 }
 .icon-earth:before {
 	content: "\e62a";
+}
+.icon-bookmark3:before {
+	content: "\e6c2";
+}
+.icon-bookmarks:before {
+	content: "\e6c3";
 }
 .icon-star:before {
 	content: "\e62b";
@@ -607,6 +616,9 @@
 }
 .icon-list3:before {
 	content: "\f03a";
+}
+.icon-check-square-o:before {
+	content: "\f046";
 }
 .icon-trophy:before {
 	content: "\f091";

@@ -9,7 +9,9 @@ module Api
 			end
 
 			def self.push_recommendations
-				test_book = {:tags => [
+				test_book = {:title => "test_book",
+							  :author_name => "test_author",
+							  :tags => [
 							  	{:name => "Philosophy", :url => "javascript:void(0);"},
 							  	{:name => "India", :url => "javascript:void(0);"},
 							  	{:name => "Spirituality", :url => "javascript:void(0);"}
@@ -121,9 +123,7 @@ module Api
 			def self.recommendations
 				test_name = Filter.where(:id => JSON.parse(params[:q])["more_filters"]).pluck(:name) rescue "City"
 
-				test_book = {:title => "test_book",
-							  :author_name => "test_author",
-							  :tags => [
+				test_book = {:tags => [
 							  	{:name => "Philosophy", :url => "javascript:void(0);"},
 							  	{:name => "Art", :url => "javascript:void(0);"},
 							  	{:name => "20th Century", :url => "javascript:void(0);"}
@@ -157,7 +157,7 @@ module Api
 						:background_color => "#E9BC4B"},
 					:category => {:name => "Quick Read", 
 								:url => "javascript:void(0);", 
-								:background_color => "#790000",
+								:background_color => "#AD2B2B",
 								:description => ""},
 					:id => 2)
 
@@ -169,7 +169,7 @@ module Api
 						:background_color => "#F4EFE9"},
 					:category => {:name => "Recommendation From Friends", 
 								:url => "javascript:void(0);", 
-								:background_color => "#0054a6",
+								:background_color => "#87ABC5",
 								:description => ""},
 					:id => 3)
 
@@ -222,6 +222,8 @@ module Api
 			def self.tooltip
 				info = {
 					:id => 1,
+					:title => "test_book",
+					:author_name => "test_author",
 					:summary => "Siddhartha is a novel by Hermann Hesse 
 						that deals with the spiritual journey of 
 						self-discovery of a man named Siddhartha 
