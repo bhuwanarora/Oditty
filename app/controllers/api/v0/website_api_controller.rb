@@ -3,11 +3,12 @@ module Api
 		class WebsiteApiController < ApplicationController
 			def genres
 				filter = params[:q]
-				genres = [{:name => "Philosophy", :id => 1}, 
-						  {:name => "Arts", :id => 2},
-						  {:name => "Music", :id => 3},
-						  {:name => "Fiction", :id => 4},
-						  {:name => "Non-fiction", :id => 5}]
+                genres = [{:name => "Philosophy", :id => 1}, 
+                          {:name => "Arts", :id => 2},
+                          {:name => "Music", :id => 3},
+                          {:name => "Fiction", :id => 4},
+                          {:name => "Non-fiction", :id => 5}]
+                genres = ShelfariCategory.first.children
 				results = {:genres => genres}
 				render :json => results, :status => 200
 			end

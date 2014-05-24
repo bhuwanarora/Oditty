@@ -95,43 +95,6 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		// console.log("showFeebackForm")
 	}
 
-	_profile_status_colors = function(){
-		var profile_status = $rootScope.user.profile_status;
-		if(profile_status == 0){
-			$rootScope.user.profile_status_color = "#4374e0";
-		}
-		else if(profile_status == 1){
-			$rootScope.user.profile_status_color = "#65b045";
-		}
-		else if(profile_status == 2){
-			$rootScope.user.profile_status_color = "#d73d32";
-		}
-		else if(profile_status == 3){
-			$rootScope.user.profile_status_color = "#11a9cc";
-		}
-		else if(profile_status == 4){
-			$rootScope.user.profile_status_color = "#981b48";
-		}
-		else if(profile_status == 5){
-			$rootScope.user.profile_status_color = "#7e3794";
-		}
-		else if(profile_status == 6){
-			$rootScope.user.profile_status_color = "#4374e0";
-		}
-	}
-
-	$scope.update_profile = function(){
-		var enter_pressed = event.keyCode == 13;
-		if(enter_pressed){
-			var profile_status = $rootScope.user.profile_status;
-			if(profile_status == 0){
-				websiteService.update_profile($rootScope.user);
-				$rootScope.user.profile_status = $rootScope.user.profile_status + 1;
-				_profile_status_colors();
-			}
-		}
-	}
-
 	$scope.authenticate = function(){
 		var data_json = $rootScope.user;
 		$scope.loading_icon = true;
@@ -141,7 +104,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 				$rootScope.user.logged = true;
 				$rootScope.user.id = data.user_id;
 				// $scope.show_login_form = true;
-				_profile_status_colors();
+				// _profile_status_colors();
 				websiteService.get_user_details().then(function(data){
 		    		$rootScope.user.books = data["books"];
 		    	});
@@ -150,41 +113,6 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 				});
 			}
 		});
-	}
-
-	_handle_info_card_bindings = function($scope){
-		if($rootScope.user.profile_status == 3){
-			if(navigator.geolocation){
-				navigator.geolocation.getCurrentPosition(function(position){
-					var latitude = position.coords.latitude;
-					var longitude = position.coords.longitude;
-					$rootScope.user.latitude = latitude;
-					$rootScope.user.longitude = longitude;
-				});
-			}
-			else{
-				x.innerHTML="Geolocation is not supported by this browser.";
-			}
-		}
-		else if($rootScope.user.profile_status == 4){
-			// $rootScope.$broadcast('showBookReadShelf');
-		}
-	}
-
-	$scope.prev_profile_state = function(){
-		if($rootScope.user.profile_status != 0){
-			$rootScope.user.profile_status = $rootScope.user.profile_status - 1;
-			_handle_info_card_bindings($scope);
-			_profile_status_colors();
-		}
-	}
-
-	$scope.next_profile_state = function(){
-		if($rootScope.user.profile_status != 6){
-			$rootScope.user.profile_status = $rootScope.user.profile_status + 1;
-			_handle_info_card_bindings($scope);
-			_profile_status_colors();
-		}
 	}
 
     $scope.intent_login = function() {
@@ -256,6 +184,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
     	});
     }
 
+    
 	_bind_emit = function(){
 		show_book_event = $scope.$on('expandBook', function(event, data, posX, screenX, scrollWidth){
 			$rootScope.book_x = posX;
@@ -394,7 +323,8 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	$scope.handle_keyboard_bindings = function(event){
-		if(!$scope.website.show_search_page){
+		// $scope.website.show_search_page
+		if(true){
 			if($scope.show_book){
 				if(event.keyCode == 39){
 					event.preventDefault();
@@ -450,12 +380,10 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 						'authors': {'bookmarked': [], 'follow': []},
 						'readers': {'follow': []},
 						'logged': false};
-		$rootScope.user.profile_status = 0;
 		$scope.website = {};
 		$scope.website.searching = true;
 		$scope.website.show_search_page = true;
 		$scope.authenticate();
-	    _profile_status_colors();
 
 		_bind_emit();
 		_bind_feedback_form();

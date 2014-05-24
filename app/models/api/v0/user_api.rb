@@ -58,6 +58,19 @@ module Api
 				
 				info = {"friends" => friends}
 			end
+
+			def self.get_info_card_data
+				reading_count_list = [
+					{"name"=> "0-10 Books"},
+					{"name"=> "10-30 Books"},
+					{"name"=> "30-50 Books"},
+					{"name"=> "50-100 Books"},
+					{"name"=> "100+ Books"}
+				]
+
+				info = {"reading_count_list" => reading_count_list}
+
+			end
 		end
 	end
 end

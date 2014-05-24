@@ -137,3 +137,16 @@ input:focus{
   position: fixed;
   top: 0;
 }
+
+.center{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom_radio{
+    width: 12px !important;
+}
+

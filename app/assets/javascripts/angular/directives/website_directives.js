@@ -1,7 +1,152 @@
 websiteApp.directive('infoCard', function($rootScope, $timeout){
 	return{
 		restrict: 'E',
+		controller: function($scope, websiteService){
+			_get_genres = function(){
+		    	websiteService.get_genres().then(function(data){
+		    		$scope.genres = data.genres;
+		    	});
+		    }
+
+		    _profile_status_colors = function(){
+				var profile_status = $rootScope.user.profile_status;
+				if(profile_status == 0){
+					$rootScope.user.profile_status_color = "#4374e0";
+				}
+				else if(profile_status == 1){
+					$rootScope.user.profile_status_color = "#65b045";
+				}
+				else if(profile_status == 2){
+					$rootScope.user.profile_status_color = "#d73d32";
+				}
+				else if(profile_status == 3){
+					$rootScope.user.profile_status_color = "#11a9cc";
+				}
+				else if(profile_status == 4){
+					$rootScope.user.profile_status_color = "#981b48";
+				}
+				else if(profile_status == 5){
+					$rootScope.user.profile_status_color = "#7e3794";
+				}
+				else if(profile_status == 6){
+					$rootScope.user.profile_status_color = "#4374e0";
+				}
+				else if(profile_status == 7){
+					$rootScope.user.profile_status_color = "#981b48";	
+				}
+				else if(profile_status == 8){
+					$rootScope.user.profile_status_color = "#981b48";
+				}
+			}
+
+			_handle_info_card_bindings = function($scope){
+				if($rootScope.user.profile_status == 3){
+					if(navigator.geolocation){
+						navigator.geolocation.getCurrentPosition(function(position){
+							var latitude = position.coords.latitude;
+							var longitude = position.coords.longitude;
+							$rootScope.user.latitude = latitude;
+							$rootScope.user.longitude = longitude;
+						});
+					}
+					else{
+						x.innerHTML="Geolocation is not supported by this browser.";
+					}
+				}
+				else if($rootScope.user.profile_status == 4){
+					// $rootScope.$broadcast('showBookReadShelf');
+				}
+				else if($rootScope.user.profile_status == 6){
+					_get_genres();
+				}
+			}
+
+			_get_info_data = function(){
+				websiteService.get_info_data().then(function(data){
+					$scope.book_counts = data.reading_count_list;
+					$scope.user_book_count = $scope.book_counts[0];
+				});
+
+			}
+			
+			_init = function(){
+				$rootScope.user.profile_status = 0;
+	    		_profile_status_colors();
+	    		_get_info_data();
+
+				$scope.profileOptions = [
+					{"name": "Reader"},
+					{"name": "Author"},
+					{"name": "Publisher"},
+					{"name": "Editor"}
+				]
+				$scope.profileSelected = {"name": "Reader"};
+			}
+
+
+			$scope.prev_profile_state = function(){
+				if($rootScope.user.profile_status != 0){
+					$rootScope.user.profile_status = $rootScope.user.profile_status - 1;
+					_handle_info_card_bindings($scope);
+					_profile_status_colors();
+				}
+			}
+
+			$scope.next_profile_state = function(){
+				if($rootScope.user.profile_status != 8){
+					$rootScope.user.profile_status = $rootScope.user.profile_status + 1;
+					_handle_info_card_bindings($scope);
+					_profile_status_colors();
+				}
+			}
+
+			$scope.stop_horizontal_scroll = function(event){
+				event.stopPropagation();
+			}
+
+			$scope.update_profile = function(){
+				var enter_pressed = event.keyCode == 13;
+				if(enter_pressed){
+					var profile_status = $rootScope.user.profile_status;
+					if(profile_status == 0){
+						websiteService.update_profile($rootScope.user);
+						$rootScope.user.profile_status = $rootScope.user.profile_status + 1;
+						_profile_status_colors();
+					}
+				}
+			}
+			$scope.user_profile_changed = function(selected){
+				if(selected.name == "Reader"){
+					$scope.show_loading_bar = true;
+					var timeout_event = $timeout(function(){
+						$scope.show_loading_bar = false;
+						$scope.ask_book_count = true;
+					}, 1000);
+				}
+			}
+
+			_init();
+
+		},
 		templateUrl: "/assets/angular/widgets/base/widget/info_card.html"
+	}
+});
+
+websiteApp.directive('toggle', function(){
+	return{
+		restrict: 'E',
+		scope: {"obj": "=data"},
+		controller: function($scope){
+			$scope.toggle = function(){
+				if($scope.active){
+					$scope.active = false;
+				}
+				else{
+					$scope.active = true;
+				}
+			}
+		},
+		templateUrl: "/assets/angular/widgets/partials/toggle.html"
 	}
 });
 
@@ -147,7 +292,7 @@ websiteApp.directive('typeAhead', function($timeout, $sce){
 			}
 
 		  	scope.focus_on_input = function(){
-		  		elem.find('input').focus();
+		  		elem.find('input')[0].focus();
 		  	}
 
 			_init();

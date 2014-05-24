@@ -60,7 +60,7 @@ websiteApp.run(function($rootScope, $location){
         // already going to #login, no redirect needed
       }else{
         // not going to #login, we should redirect now
-        $location.path( "/search" );
+        // $location.path( "/search" );
       }
     }         
   });

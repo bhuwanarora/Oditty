@@ -128,6 +128,11 @@ module Api
 				info = UserApi.get_most_connected_friends
 				render :json => info, :status => 200
 			end
+
+			def get_info_card_data
+				info = UserApi.get_info_card_data
+				render :json => info, :status => 200
+			end
 		end
 	end
 end

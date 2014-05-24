@@ -16,9 +16,6 @@
 	      	       spellcheck="false"
 	      	       ng-keydown="update_profile()"
 	      	       required />
-	      	<div class="description">
-	      		<!-- {{user}} -->
-	      	</div>
 		</div>
 		<div ng-switch-when="1">
 			<!-- <input class="thumb" 
@@ -71,8 +68,8 @@
 			</div>
 			<map style="display:block; height:180px" />
 		</div>
-		<div ng-switch-when="4">
-			<div class="header">Which Books have you read?</div>
+		<div ng-switch-when="4" class="center">
+			<div class="header">Which 3 Book are you currently reading?</div>
 	      	<type-ahead items="search_results" 
  				prompt="Search for the book.." 
  				title="name" 
@@ -86,7 +83,7 @@
 			</div>
 		</div>
 		<div ng-switch-when="5">
-			<div class="header">Which Authors do you like?</div>
+			<div class="header">Which 3 Authors you like?</div>
 			<type-ahead items="search_results" 
  				prompt="Search for the author.." 
  				title="name" 
@@ -104,6 +101,43 @@
 			<div class="description">
 				Know what your friends are reading...
 			</div>
+		</div>
+		<div ng-switch-when="7">
+			<div class="header">Choose atleast 3 genres you like</div>
+			<div class="description_box center" msd-wheel="stop_horizontal_scroll($event)">
+				<div ng-repeat="genre in genres  | orderBy:genre.name">
+					<toggle data="genre"></toggle>
+					<!-- <div class="filter inactive_filter">{{genre.name}}</div> -->
+				</div>
+			</div>
+		</div>
+		<div ng-switch-when="8">
+			<div class="header">I am a</div>
+	      	<div class="position_dropdown"
+			 		  dropdown-select="profileOptions" 
+			 		  dropdown-onchange="user_profile_changed(selected)"
+			 		  dropdown-model="profileSelected"
+			 		  dropdown-item-label="name"></div>
+	      	<div class="description_box">
+	      		<div ng-show="show_loading_bar" class="center">
+	      			<img src="assets/loader.gif" class="loading_circle">
+	      		</div>
+	      		<div ng-show="profileSelected.name == 'Reader' && !show_loading_bar">
+	      			<div class="header">
+	      				How many books have you read?
+	      			</div>
+	      			<form name="book_count_form">
+		      			<label ng-repeat="book_count in book_counts">
+		      				<input type="radio" 
+		      					   ng-model="$parent.user_book_count" 
+		      					   ng-value="book_count"
+		      					   class="custom_radio">
+		      				{{book_count.name}}<br/>
+		      			</label>
+	      				
+	      			</form>
+	      		</div>
+	      	</div>
 		</div>
 		<div class="footer">
 			<span class="prev icon-angle-left" ng-click="prev_profile_state()"></span>

@@ -389,11 +389,6 @@ websiteApp.directive('focusedBook', function($rootScope, $timeout, widgetService
         event.stopPropagation();
       }
 
-      _init = function(){
-        console.log("inittooltip");
-      }
-
-      _init();
     },
     templateUrl: "/assets/angular/widgets/base/book/focused_book.html"
   }
@@ -431,13 +426,18 @@ websiteApp.directive('recommend', function($rootScope, $timeout, widgetService){
     scope: {'recommend_object': '=data'},
     controller: function($scope){
       $scope.select_thumb = function(event){
-        if(!$(event.currentTarget).data("selected")){
-          $(event.currentTarget).data("selected", true);
-          $(event.currentTarget).css('border', '2px solid');
+        var selected = event.currentTarget.dataset.selected == "true";
+        if(!selected){
+          event.currentTarget.dataset.selected = true;
+          event.currentTarget.style.border = "2px solid";
+          // $(event.currentTarget).data("selected", true);
+          // $(event.currentTarget).css('border', '2px solid');
         }
         else{
-          $(event.currentTarget).data("selected", false);
-          $(event.currentTarget).css('border', '2px solid none'); 
+          event.currentTarget.dataset.selected = false;
+          event.currentTarget.style.border = "2px solid transparent";
+          // $(event.currentTarget).data("selected", false);
+          // $(event.currentTarget).css('border', '2px solid none'); 
         }
       }
 
@@ -451,12 +451,12 @@ websiteApp.directive('recommend', function($rootScope, $timeout, widgetService){
           $scope.$on('destroy', function(){
             $timeout.cancel(timeout_event);
           });
-          $('body').css('cursor', 'default');
+          // $('body').css('cursor', 'default');
           widgetService.recommend("BOOK", $scope.recommend_object.id, $scope.recommend_object.recommended);
         }
         else{
           $scope.recommend_object.recommended = true;
-          $('body').css('cursor', 'copy');
+          // $('body').css('cursor', 'copy');
         }
       }
 

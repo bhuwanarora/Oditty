@@ -13,7 +13,6 @@
     <link rel="stylesheet" type="text/css" href="assets/search_page.css.scss">
 
     <!-- jquery -->
-    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <!-- angular vendors -->
     <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/angular/vendors/*.js")] %>
     <!-- angular libs -->
@@ -30,6 +29,7 @@
     <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/angular/controllers/*.js")] %>
 
     <link rel="stylesheet" type="text/css" href="assets/recommendation.css.scss">
+    <link rel="stylesheet" type="text/css" href="assets/focused_tooltip.css.scss">
     <link rel="stylesheet" type="text/css" href="assets/animate.css.scss">
     
     <div ng-show="!loading" style="height:100%;">

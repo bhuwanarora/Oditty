@@ -41,8 +41,9 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 			$scope.advance_filter_changed = function(selected){
 				var message = "SUCCESS-"+selected.name+" added to filters."
 				notify($rootScope, message, $timeout);
-				$scope.$emit('reloadRecommendations');
-				$('.position_dropdown').removeClass('active');
+				// $scope.$emit('reloadRecommendations');
+				// debugger
+				// $('.position_dropdown').removeClass('active');
 			}
 
 			$scope.reset_filters = function(){

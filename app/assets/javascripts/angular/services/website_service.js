@@ -17,6 +17,10 @@ websiteApp.service('websiteService', function ($http, $q, $rootScope) {
         return _deferred_request('/api/v0/user_details?'+filter);
     }
 
+    this.get_genres = function(){
+        return _deferred_request('/api/v0/genres');
+    }
+
     this.get_background_image = function(){
         return _deferred_request('/api/v0/image');
     }
@@ -27,6 +31,10 @@ websiteApp.service('websiteService', function ($http, $q, $rootScope) {
 
     this.search = function(filter, type, count){
         return _deferred_request('/api/v0/search?count='+count+'&q='+filter+'&t='+type);
+    }
+
+    this.get_info_data = function(){
+        return _deferred_request('/api/v0/info_data');
     }
 
     _deferred_request = function(url){

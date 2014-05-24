@@ -102,7 +102,7 @@
 			 class="link"
 			 ng-show="$routeParams.type == 'books' || $routeParams.type == 'authors'"
 			 title="Books bookmarked"
-			 ng-click="toggle_bookmarked()">
+			 ng-click="toggle_bookmarked($event)">
 			 <span ng-show="$routeParams.type == 'books'">
 			 	<span ng-if="compact_footer" class="icon-bookmarks"></span>
 			 	<span ng-if="!compact_footer">Books Bookmarked</span>
