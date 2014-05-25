@@ -1,5 +1,6 @@
 <div ng-class="{'active_filter':active, 'inactive_filter':!active}"
-	 class="filter"
+	 class="filter toggle_filter"
 	 ng-click="toggle()">
-	 {{obj.name | uppercase}}
+	 <span class="{{obj.icon}}"></span>&nbsp;
+	 <span>{{obj.name | uppercase}}</span>
 </div>

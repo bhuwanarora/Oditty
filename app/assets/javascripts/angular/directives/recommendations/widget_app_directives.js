@@ -23,7 +23,7 @@ websiteApp.directive('category', function () {
           var description = obj.category.description;
           $scope.nameArray = name.split('');
           $scope.descriptionArray = description.split('');
-          $scope.category_style = {"background-color": obj.category.background_color};
+          // $scope.category_style = {"background-color": obj.category.background_color};
         }
       }
     },

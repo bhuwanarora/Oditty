@@ -59,8 +59,17 @@
 	      	       type="date" 
 	      	       required />
 	      	<div class="header">I am a </div>
-	      	<div></div>
-	      	<div class="description">Know what people from your age and gender are reading..</div>
+	      	<div class="description_box">
+		      	<form name="gender_form">
+				  <input type="radio" ng-model="gender" value="Male" 
+				  		class="custom_radio icon-checkbox-unchecked">  Male <br/>
+				  <input type="radio" ng-model="gender" value="Female"
+				  		class="custom_radio icon-checkbox-unchecked"> Female <br/>
+				  <input type="radio" ng-model="gender" value="Transgender"
+				  		class="custom_radio icon-checkbox-unchecked"> Trans <br/>
+				</form>
+	      	</div>
+	      	<!-- <div class="description">Know what people from your age and gender are reading..</div> -->
 		</div>
 		<div ng-switch-when="3">
 			<div class="header">
@@ -68,28 +77,28 @@
 			</div>
 			<map style="display:block; height:180px" />
 		</div>
-		<div ng-switch-when="4" class="center">
-			<div class="header">Which 3 Book are you currently reading?</div>
+		<div ng-switch-when="4" class="center" ng-controller="searchController">
+			<div class="header">Which 3 Books are you currently reading?</div>
 	      	<type-ahead items="search_results" 
  				prompt="Search for the book.." 
  				title="name" 
  				model="searchResults" 
  				custom-options = "info_typeahead_options"
- 				on-select="show_search_result()"
+ 				on-select="add_book()"
  				ng-keypress="get_search_results($event, 'BOOK')">
  			</type-ahead>
 			<div class="description">
 				Tell us about your taste..
 			</div>
 		</div>
-		<div ng-switch-when="5">
+		<div ng-switch-when="5" ng-controller="searchController">
 			<div class="header">Which 3 Authors you like?</div>
 			<type-ahead items="search_results" 
  				prompt="Search for the author.." 
  				title="name" 
  				model="searchResults"
  				custom-options = "info_typeahead_options"
- 				on-select="show_search_result()"
+ 				on-select="add_author()"
  				ng-keypress="get_search_results($event, 'AUTHOR')">
  			</type-ahead>
 			<div class="description">
@@ -113,7 +122,7 @@
 		</div>
 		<div ng-switch-when="8">
 			<div class="header">I am a</div>
-	      	<div class="position_dropdown"
+	      	<div class="profile_dropdown"
 			 		  dropdown-select="profileOptions" 
 			 		  dropdown-onchange="user_profile_changed(selected)"
 			 		  dropdown-model="profileSelected"
@@ -131,10 +140,23 @@
 		      				<input type="radio" 
 		      					   ng-model="$parent.user_book_count" 
 		      					   ng-value="book_count"
-		      					   class="custom_radio">
+		      					   class="custom_radio icon-checkbox-unchecked">
 		      				{{book_count.name}}<br/>
 		      			</label>
-	      				
+	      			</form>
+	      		</div>
+	      		<div ng-show="profileSelected.name == 'Author' && !show_loading_bar">
+	      			<div class="header">
+	      				How many books have you written?
+	      			</div>
+	      			<form name="book_count_form">
+		      			<label ng-repeat="book_count in book_counts">
+		      				<input type="radio" 
+		      					   ng-model="$parent.user_book_count" 
+		      					   ng-value="book_count"
+		      					   class="custom_radio icon-checkbox-unchecked">
+		      				{{book_count.name}}<br/>
+		      			</label>
 	      			</form>
 	      		</div>
 	      	</div>

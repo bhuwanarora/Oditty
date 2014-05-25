@@ -85,7 +85,7 @@
 	width: 8%;
 	height: 100%;
 	padding-top: 3px;
-	background-color: #3cb878;
+	background-color: #404040;
 	color: white;
 	text-align: center;
 	cursor: pointer;
@@ -472,6 +472,7 @@
 	background-color: #B1B1B1;
 }
 
+.toggle_filter [class^="icon-"],
 .link [class^="icon-"]{
 	font-size: 1.5em;
 }
@@ -1137,7 +1138,6 @@
 
 .info_cards .description_box{
 	position: absolute;
-	top: 165px;
 	white-space: normal;
 	width: 250px;
 	height: 50%;
@@ -1671,6 +1671,21 @@ and (min-width : 1824px) {
 	margin: 5px;
 }
 
+.profile_dropdown{
+	color: #717070;
+	/*display: inline-block;
+	float: left;
+	border: 1px solid #F1F1F1;
+	margin-right: 30px;
+	margin-left: 30px;
+	padding: 8% 3% 3% 3%;
+	color: white;
+	white-space: normal;
+	position: relative;
+	width: 38vh;
+	height: 64vh;*/
+}
+
 .time_group{
 	width: 270px;
 }
@@ -1735,3 +1750,8 @@ and (min-width : 1824px) {
 	z-index: 1;
 }
 
+.toggle_filter{
+	text-align: left;
+	margin-top: 15px;
+	padding: 20px;
+}

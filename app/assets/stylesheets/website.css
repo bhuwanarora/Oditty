@@ -148,5 +148,15 @@ input:focus{
 
 .custom_radio{
     width: 12px !important;
+    -webkit-appearance: none;
+    color: white;
+    font-weight: bolder;
 }
 
+.custom_radio:before{
+    content: "\e654";
+}
+
+.custom_radio:checked:before{
+    content: "\f14a";
+}

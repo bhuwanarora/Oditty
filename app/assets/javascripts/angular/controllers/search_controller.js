@@ -17,33 +17,39 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 			var type = $scope.search_type;
 		}
 		if(!$scope.search_level1){
-			$scope.website.searching_level1 = true;
+			console.debug("setting search level 1", type);
 			$scope.search_level1 = true;
-			if(type == "BOOK"){
+			if(type.indexOf("BOOK") != -1){
+				$scope.search_display = "Searching Books...";
+				$scope.search_type = "[BOOK]";
 				$scope.book_search = true;
 				$scope.author_search = false;
 				$scope.reader_search = false;
-				$scope.search_tag.search_level1_placeholder = "Search Books...";
+				$scope.search_tag.placeholder = "Search Books...";
 				_init_book_search();
 			}
-			else if(type == "AUTHOR"){
+			else if(type.indexOf("AUTHOR") != -1){
+				$scope.search_display = "Searching Authors...";
+				$scope.search_type = "[AUTHOR]";
 				$scope.author_search = true;
 				$scope.reader_search = false;
 				$scope.book_search = false;
-				$scope.search_tag.search_level1_placeholder = "Search Authors...";
+				$scope.search_tag.placeholder = "Search Authors...";
 				_init_author_search();
 			}
-			else if(type == "READER"){
+			else if(type.indexOf("READER") != -1){
+				$scope.search_display = "Searching Readers...";
+				$scope.search_type = "[READER]";
 				$scope.reader_search = true;
 				$scope.book_search = false;
 				$scope.author_search = false;
-				$scope.search_tag.search_level1_placeholder = "Search Readers...";
+				$scope.search_tag.placeholder = "Search Readers...";
 				_init_reader_search();
 			}
 		}
 		else if($scope.search_level1){
+			console.debug("setting search level 2");
 			$scope.search_level2 = true;
-			$scope.website.searching_level2 = true;
 			$scope.search_results = [];
 			if(type == "YEAR"){
 				$scope.year_search = true;
@@ -92,15 +98,16 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 				var search_placeholder = "by awards...";	
 			}
 
-			if($scope.book_search){
-				$scope.search_tag.search_level2_placeholder = "Search Books "+search_placeholder;
-			}
-			else if($scope.author_search){
-				$scope.search_tag.search_level2_placeholder = "Search Authors "+search_placeholder;
-			}
-			else if($scope.reader_search){
-				$scope.search_tag.search_level2_placeholder = "Search Readers "+search_placeholder;
-			}
+			// if($scope.book_search){
+			// 	$scope.search_tag.placeholder = "Search Books "+search_placeholder;
+			// }
+			// else if($scope.author_search){
+			// 	$scope.search_tag.placeholder = "Search Authors "+search_placeholder;
+			// }
+			// else if($scope.reader_search){
+			// 	$scope.search_tag.placeholder = "Search Readers "+search_placeholder;
+			// }
+			$scope.search_tag.placeholder = "Select a category";
 		}
 	}
 
@@ -115,6 +122,7 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 				$scope.search_type = type;
 			}
 			_search_by(type);
+			$scope.search_tag.input = "";
 		}
 		else{
 		    $scope.search_tag.current = 0;
@@ -125,8 +133,8 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 		    else{
 		    	_show_search_result();
 		    }
+			$scope.search_tag.input = "";
 		    event.stopPropagation();
-			$scope.search_tag.input = null;
 		}
 	};
 
@@ -150,7 +158,7 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 	$scope.is_current = function(index, selectedItem) {
 		if($scope.search_tag.current == index){
 			$scope.search_tag.currentItem = selectedItem;
-		}		
+		}
 	    return $scope.search_tag.current == index;
 	};
 
@@ -185,7 +193,7 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 		// $scope.search_tag.selected_result = false;
         var backspace_or_delete = (event.keyCode == 8) || (event.keyCode == 46);
         if(backspace_or_delete){
-        	var currentValue = _get_search_input();
+        	var currentValue = _get_search_input(event);
         	if(currentValue.length <= 1){
         		if(currentValue.length < 1 && $scope.search_level1 && !$scope.search_level2){
         			$scope.clear_search_level1_var();
@@ -211,7 +219,6 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 		$scope.book_search = false;
 		$scope.author_search = false;
 		$scope.reader_search = false;
-		$scope.website.searching_level1 = false;
 		_init_graph_search();
 	}
 
@@ -230,7 +237,6 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 		$scope.time_search = false;
 		$scope.gender_search = false;
 		$scope.awards_search = false;
-		$scope.website.searching_level2 = false;
 		_search_by();
 	}
 
@@ -288,6 +294,7 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 
 		// ];
 		if(!$scope.search_level1){
+			$scope.search_tag.placeholder = "Search...";
 			$scope.search_results = [
 				{
 					"name": "Search a Book", 
@@ -389,12 +396,14 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 
 	_init_search = function(){
 		_init_graph_search();
-		$scope.search_type = "[ALL]";
-		$scope.search_display = "Searching reader's door...";
+		if(!$scope.search_level1 && !$scope.search_level2){
+			$scope.search_type = "[ALL]";
+			$scope.search_display = "Searching reader's door...";
+		}
 	}
 
-	_handle_search_input = function(){
-        var currentValue = _get_search_input();
+	_handle_search_input = function(event){
+        var currentValue = _get_search_input(event);
         _init_graph_search();
         $scope.search_ready = true;
         var firstInput = currentValue.slice(0, 1);
@@ -410,7 +419,7 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 			}
         	currentValue = currentValue.substring(1, currentValue.length)
         }
-
+        console.debug(currentValue, $scope.search_type, $scope.search_tag.result_count);
     	if($scope.search_ready && currentValue != ""){
 	        websiteService.search(currentValue, $scope.search_type, $scope.search_tag.result_count)
 	        .then(function(result) {
@@ -426,11 +435,20 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
     	}
 	}
 
-	_get_search_input = function(){
-		return $('#searchInput').val().trim();
+	_get_search_input = function(event){
+		// console.debug("search_input", $scope.search_tag.input.trim()+":");
+		return $scope.search_tag.input.trim();
+		// if(event.currentTarget.type == "text"){
+		// 	return event.currentTarget.value.trim();
+		// }
+		// else{
+		// 	return event.currentTarget.getElementsByTagName("input").value.trim();
+		// }
+		// return $('#searchInput').val().trim();
 	}
 
 	_set_custom_search = function(customAuthorSearch, customBookSearch, customTagSearch){
+		console.debug("_set_custom_search", customBookSearch, customAuthorSearch, customTagSearch);
 		if(customAuthorSearch){
 			$scope.search_type = "['AUTHOR', 'READER']";
 			$scope.search_display = "Searching authors and readers..."
@@ -445,29 +463,48 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 		}
 	}
 
-	$scope.get_search_results = function(event){
-		_init_graph_search();
-		if($scope.search_initiated){
-    		$timeout.cancel(search_typing_timeout);
-		}
-		else{
-        	var firstInput = String.fromCharCode(event.keyCode);
-        	var currentValue = _get_search_input();
-        	if(currentValue && currentValue.length > 1){
-        		var customBookSearch = currentValue.indexOf("#") == 0;
-        		var customAuthorSearch = currentValue.indexOf("@") == 0;
-        		var customTagSearch = currentValue.indexOf("+") == 0;
-        	}
-        	else{
-        		var customBookSearch = firstInput == "#";
-        		var customAuthorSearch = firstInput == "@";
-        		var customTagSearch = firstInput == "+";
-        	}
+	$scope.get_search_results = function(event, type){
+		if(type){
 			$scope.search_initiated = true;
+			if(type == "BOOK"){
+				var customBookSearch = true;
+				var customAuthorSearch = false;
+				var customTagSearch = false;
+			}
+			else if(type == "AUTHOR"){
+				var firstInput = "@";	
+				var customBookSearch = false;
+				var customAuthorSearch = true;
+				var customTagSearch = false;
+			}
 			_set_custom_search(customAuthorSearch, customBookSearch, customTagSearch);
 		}
+		else{
+			_init_graph_search();
+			if($scope.search_initiated){
+	    		$timeout.cancel(search_typing_timeout);
+			}
+			else{
+				if(!firstInput){
+	        		var firstInput = String.fromCharCode(event.keyCode);
+				}
+	        	var currentValue = _get_search_input(event);
+	        	if(currentValue && currentValue.length > 1){
+	        		var customBookSearch = currentValue.indexOf("#") == 0;
+	        		var customAuthorSearch = currentValue.indexOf("@") == 0;
+	        		var customTagSearch = currentValue.indexOf("+") == 0;
+	        	}
+	        	else{
+	        		var customBookSearch = firstInput == "#";
+	        		var customAuthorSearch = firstInput == "@";
+	        		var customTagSearch = firstInput == "+";
+	        	}
+				$scope.search_initiated = true;
+				_set_custom_search(customAuthorSearch, customBookSearch, customTagSearch);
+			}
+		}
 		search_typing_timeout = $timeout(function(){
-			_handle_search_input();
+			_handle_search_input(event);
 		}, 500);
 	}
 

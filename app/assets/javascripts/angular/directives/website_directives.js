@@ -80,6 +80,7 @@ websiteApp.directive('infoCard', function($rootScope, $timeout){
 					{"name": "Publisher"},
 					{"name": "Editor"}
 				]
+				$scope.gender = "Male";
 				$scope.profileSelected = {"name": "Reader"};
 			}
 
@@ -116,13 +117,21 @@ websiteApp.directive('infoCard', function($rootScope, $timeout){
 				}
 			}
 			$scope.user_profile_changed = function(selected){
-				if(selected.name == "Reader"){
+				if(selected.name == "Reader" || selected.name == "Author"){
 					$scope.show_loading_bar = true;
 					var timeout_event = $timeout(function(){
 						$scope.show_loading_bar = false;
 						$scope.ask_book_count = true;
 					}, 1000);
 				}
+			}
+
+			$scope.add_book = function(){
+
+			}
+
+			$scope.add_author = function(){
+				
 			}
 
 			_init();

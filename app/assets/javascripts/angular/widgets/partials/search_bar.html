@@ -29,50 +29,36 @@
 	       ng-keydown="key_down($event)"
 	       ng-keyup="key_up($event)"
 	       ng-model="search_tag.input"
+         ng-disabled="search_level2"
          id="searchInput"
          class="search_input" 
-         placeholder="Search..."
-         ng-if="!search_level1 && !search_level2"/>
-  <input set-focus="website.searching_level1"
-         ng-keypress="get_search_results($event)" 
-         ng-keydown="key_down($event)"
-         ng-keyup="key_up($event)"
-         ng-model="search_tag.input"
-         id="searchInput"
-         class="search_input" 
-         placeholder="{{search_tag.search_level1_placeholder}}"
-         ng-if="search_level1 && !search_level2"/>
-  <input set-focus="website.searching_level2"
-         ng-keypress="get_search_results($event)" 
-         ng-keydown="key_down($event)"
-         ng-keyup="key_up($event)"
-         ng-model="search_tag.input"
-         id="searchInput"
-         class="search_input" 
-         placeholder="{{search_tag.search_level2_placeholder}}"
-         ng-if="search_level2"/>
+         placeholder="{{search_tag.placeholder}}"/>
+
   <div class="website_search_helpers" ng-if="!search_level1">
       <div class="custom_option">
         <div ng-show="search_initiated" class="title">{{search_display}}</div>
         <div ng-show="!search_initiated && search_tag.input" 
              class="title">No results found.. </div>
-        <div ng-show="!search_initiated && !search_tag.input" 
+        <!-- <div ng-show="!search_initiated && !search_tag.input" 
              class="helper_title">
-          <!-- <div ng-click="search_by('BOOK')"><span class="icon-book"></span>&nbsp;&nbsp;
+          <div ng-click="search_by('BOOK')"><span class="icon-book"></span>&nbsp;&nbsp;
               <span>Search a Book</span></div>
           <div ng-click="search_by('READER')"><span class="icon-users"></span>&nbsp;&nbsp;
               <span>Search a Reader</span></div>
           <div ng-click="search_by('AUTHOR')"><span class="icon-pen"></span>&nbsp;&nbsp;
-              <span>Search an Author</span></div> -->
-        </div>
+              <span>Search an Author</span></div>
+        </div> -->
       </div>
   </div>
   <div class="website_search_helpers" ng-if="search_level1">
       <div class="custom_option">
-        <div ng-show="!search_initiated && !search_tag.input" 
+        <div ng-show="search_initiated" class="title">{{search_display}}</div>
+        <div ng-show="!search_initiated && search_tag.input" 
+             class="title">No results found.. </div>
+        <!-- <div ng-show="!search_initiated && !search_tag.input" 
              class="helper_title_level2">
-          TEST
-        </div>
+          
+        </div> -->
       </div>
   </div>
   <div class="website_search_options" ng-if="search_results">

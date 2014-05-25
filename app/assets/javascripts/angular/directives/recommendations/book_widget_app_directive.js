@@ -18,17 +18,18 @@ websiteApp.directive('book', function (widgetService, $rootScope){
           var posX = event.currentTarget.offsetParent.offsetParent.offsetLeft - event.pageX + event.clientX;
           var display_right_width =  screen.width - (posX + event.currentTarget.offsetParent.scrollWidth);
           var display_left_width = posX;
-          console.table([{"pageX":event.pageX, 
+          console.table([{
+            "offsetLeft":event.currentTarget.offsetParent.offsetParent.offsetLeft,
+            "pageX":event.pageX, 
             "clientX":event.clientX, 
             "posX": posX,
-            "offsetLeft":event.currentTarget.offsetParent.offsetParent.offsetLeft,
             "scrollWidth":event.currentTarget.offsetParent.scrollWidth,
             "display_left_width":display_left_width,
             "display_right_width":display_right_width}]);
           if(display_right_width > display_left_width){
             if(display_right_width > 400){
               posX = posX + event.currentTarget.offsetParent.scrollWidth - event.currentTarget.offsetLeft;
-              $rootScope.focused_book.reposition_tooltip = {"left": posX, "top": "60px"};
+              $rootScope.focused_book.reposition_tooltip = {"left": posX+"px", "top": "60px"};
             }
             else{
               $rootScope.focused_book.reposition_tooltip = {"right": "0px", "top": "60px"}; 
@@ -37,7 +38,7 @@ websiteApp.directive('book', function (widgetService, $rootScope){
           else{
             if(display_left_width > 400){
               posX = screen.width - posX;
-              $rootScope.focused_book.reposition_tooltip = {"right": posX, "top": "60px"}; 
+              $rootScope.focused_book.reposition_tooltip = {"right": posX+"px", "top": "60px"}; 
             }
             else{
               $rootScope.focused_book.reposition_tooltip = {"left": "0px", "top": "60px"};  
