@@ -40,7 +40,7 @@ websiteApp.directive('infoCard', function($rootScope, $timeout){
 			}
 
 			_handle_info_card_bindings = function($scope){
-				if($rootScope.user.profile_status == 3){
+				if($rootScope.user.profile_status == 6){
 					if(navigator.geolocation){
 						navigator.geolocation.getCurrentPosition(function(position){
 							var latitude = position.coords.latitude;
@@ -56,7 +56,7 @@ websiteApp.directive('infoCard', function($rootScope, $timeout){
 				else if($rootScope.user.profile_status == 4){
 					// $rootScope.$broadcast('showBookReadShelf');
 				}
-				else if($rootScope.user.profile_status == 6){
+				else if($rootScope.user.profile_status == 2){
 					_get_genres();
 				}
 			}
@@ -88,17 +88,23 @@ websiteApp.directive('infoCard', function($rootScope, $timeout){
 			$scope.prev_profile_state = function(){
 				if($rootScope.user.profile_status != 0){
 					$rootScope.user.profile_status = $rootScope.user.profile_status - 1;
-					_handle_info_card_bindings($scope);
-					_profile_status_colors();
 				}
+				else{
+					$rootScope.user.profile_status = 8;
+				}
+				_handle_info_card_bindings($scope);
+				_profile_status_colors();
 			}
 
 			$scope.next_profile_state = function(){
 				if($rootScope.user.profile_status != 8){
 					$rootScope.user.profile_status = $rootScope.user.profile_status + 1;
-					_handle_info_card_bindings($scope);
-					_profile_status_colors();
 				}
+				else{
+					$rootScope.user.profile_status = 1;
+				}
+				_handle_info_card_bindings($scope);
+				_profile_status_colors();
 			}
 
 			$scope.stop_horizontal_scroll = function(event){
@@ -131,7 +137,20 @@ websiteApp.directive('infoCard', function($rootScope, $timeout){
 			}
 
 			$scope.add_author = function(){
-				
+
+			}
+
+			$scope.get_search_results = function(event, type, searchResults){
+				if(searchResults){
+					searchResults = searchResults + String.fromCharCode(event.keyCode);
+				}
+				else{
+					searchResults = String.fromCharCode(event.keyCode);	
+				}
+				websiteService.search(searchResults, type, 3)
+		        .then(function(result) {
+		            $scope.search_results = $scope.search_results.concat(result.results);
+		        });
 			}
 
 			_init();

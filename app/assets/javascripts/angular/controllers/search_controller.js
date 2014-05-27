@@ -436,7 +436,7 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 	}
 
 	_get_search_input = function(event){
-		// console.debug("search_input", $scope.search_tag.input.trim()+":");
+		console.debug("search_input", $scope.search_tag.input.trim());
 		return $scope.search_tag.input.trim();
 		// if(event.currentTarget.type == "text"){
 		// 	return event.currentTarget.value.trim();

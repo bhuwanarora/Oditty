@@ -1,0 +1,51 @@
+<div class="focused_tooltip animate-fast" 
+     ng-style="focused_reader.reposition_tooltip"
+     ng-click="stop_propagation($event)"
+     ng-if="focused_reader">
+  <div class="close button_effect" ng-click="close_focused_tooltip()">x</div>
+  <div class="book_info">
+    <span> · </span>
+    <span class="book_link">
+      <span class="count">
+        <span>{{focused_reader.readers_count}}</span>
+        <span class="icon-users2"></span> 
+      </span>
+      <span>&nbsp;&nbsp;Readers</span>
+    </span>
+    · 
+    <span itemprop="aggregateRating" 
+          itemscope 
+          itemtype="http://schema.org/AggregateRating" class="book_link">
+      <span class="count">
+        <span>{{focused_reader.reviews_count}}</span>
+        <span class="icon-pencil2"></span> 
+      </span>
+      <span>&nbsp;&nbsp;Reviews</span>
+    </span>
+    · 
+    <span class="book_link">
+      <span class="count">
+        <span>{{focused_reader.discussions_count}}</span>
+        <span class="icon-bubbles2"></span>
+      </span>
+      <span>&nbsp;&nbsp;Discussions</span>
+    </span>
+     · 
+  </div>
+  <hr>
+  <div class="description" msd-wheel="stop_horizontal_scroll($event)" >
+    <span itemprop="description">{{focused_reader.summary}}</span>
+  </div>
+  <hr>
+  <div class="users_count">{{focused_reader.users_count}} mutual friends</div>
+  <div class="users">
+    <div ng-repeat="user in focused_reader.users">
+      <img ng-src="{{user.thumb}}" />
+    </div>
+  </div>
+  
+  <div class="footer">
+  
+  </div>
+</div>
+<interaction-box></interaction-box>
