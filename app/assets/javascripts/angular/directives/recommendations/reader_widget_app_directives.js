@@ -1,8 +1,8 @@
-websiteApp.directive('reader', function ($rootScope, widgetService) {
+websiteApp.directive('reader', ['$rootScope', 'widgetService', function ($rootScope, widgetService) {
   return {
     restrict: 'E',
     scope: { 'reader': '=data' },
-    controller: function($scope){
+    controller: ['$scope', function($scope){
       $scope.hover = function() {
         $scope.hovered = true;
       }
@@ -49,15 +49,15 @@ websiteApp.directive('reader', function ($rootScope, widgetService) {
 
       _init();
 
-    },
+    }],
     templateUrl: "/assets/angular/widgets/base/reader/reader_widget.html"
   };
-});
+}]);
 
-websiteApp.directive('focusedReader', function($rootScope, $timeout, widgetService){
+websiteApp.directive('focusedReader', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
   return{
     restrict: 'E',
-    controller: function($scope){
+    controller: ['$scope', function($scope){
       $scope.stop_propagation = function(event){
         event.stopPropagation();
       }
@@ -75,27 +75,27 @@ websiteApp.directive('focusedReader', function($rootScope, $timeout, widgetServi
         event.stopPropagation();
       }
 
-    },
+    }],
     templateUrl: "/assets/angular/widgets/base/reader/focused_reader.html"
   }
-});
+}]);
 
 websiteApp.directive('messageBox', function(){
   return{
     restrict: 'E',
-    controller: function($scope){
+    controller: ['$scope', function($scope){
       $scope.close_message_box = function(){
         $scope.reader.show_message_box = false;
       }
-    },
+    }],
     templateUrl: "/assets/angular/widgets/base/reader/message_box.html"
   }
 });
 
-websiteApp.directive('readerInteract', function (websiteService) {
+websiteApp.directive('readerInteract', ['websiteService', function (websiteService) {
   return {
     restrict: 'E',
-    controller: function($scope){
+    controller: ['$scope', function($scope){
 
       $scope.toggle_message_box = function(){
         if($scope.reader.show_message_box){
@@ -105,7 +105,7 @@ websiteApp.directive('readerInteract', function (websiteService) {
           $scope.reader.show_message_box = true;
         }
       }
-    },
+    }],
     templateUrl: "/assets/angular/widgets/base/reader/reader_interact.html"
   };
-});
+}]);

@@ -1,8 +1,8 @@
-websiteApp.directive('book', function (widgetService, $rootScope){
+websiteApp.directive('book', ['widgetService', '$rootScope', function (widgetService, $rootScope){
   return {
     restrict: 'E',
     scope: { 'book': '=data' },
-    controller: function($scope){
+    controller: ['$scope', function($scope){
       $scope.hover = function(event){
         $scope.hovered = true;
       };
@@ -84,27 +84,27 @@ websiteApp.directive('book', function (widgetService, $rootScope){
 
       _init();
 
-    },
+    }],
     templateUrl: "/assets/angular/widgets/base/book/book_widget.html"
   };
-});
+}]);
 
-websiteApp.directive('bookNavbar', function ($rootScope, $timeout) {
+websiteApp.directive('bookNavbar', ['$rootScope', '$timeout', function ($rootScope, $timeout) {
   return {
     restrict: 'E',
-    controller: function($scope){
+    controller: ['$scope', function($scope){
       $scope.show_book = function(page){
         zoomin_book($scope, $timeout, $rootScope, page);
       }
-    },
+    }],
     templateUrl: "/assets/angular/widgets/base/book/book_navbar.html"
   };
-});
+}]);
 
-websiteApp.directive('bookBookmark', function ($rootScope, $timeout, widgetService) {
+websiteApp.directive('bookBookmark', ['$rootScope', '$timeout', 'widgetService', function ($rootScope, $timeout, widgetService) {
   return {
     restrict: 'E',
-    controller: function($scope){
+    controller: ['$scope', function($scope){
       $scope.toggle_bookmarked = function(event){
         var bookmark_status = $scope.book.bookmark_status;
         var book_title = $scope.book.title;
@@ -127,15 +127,15 @@ websiteApp.directive('bookBookmark', function ($rootScope, $timeout, widgetServi
         widgetService.bookmark("BOOK", $scope.book.id, $scope.book.bookmark_status);
         event.stopPropagation();
       }
-    },
+    }],
     templateUrl: "/assets/angular/widgets/base/book/bookmark.html"
   };
-});
+}]);
 
-websiteApp.directive('bookInteract', function (websiteService) {
+websiteApp.directive('bookInteract', ['websiteService', function (websiteService) {
   return {
     restrict: 'E',
-    controller: function($scope){
+    controller: ['$scope', function($scope){
       _init = function(){
         $scope.setStatus();
       }
@@ -279,16 +279,16 @@ websiteApp.directive('bookInteract', function (websiteService) {
       }
 
       _init();
-    },
+    }],
     templateUrl: "/assets/angular/widgets/base/book/interact_widget.html"
   };
-});
+}]);
 
-websiteApp.directive('rate', function($rootScope, $timeout, widgetService){
+websiteApp.directive('rate', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
   return{
     restrict: 'E',
     scope: {'rate_object': '=data'},
-    controller: function($scope){
+    controller: ['$scope', function($scope){
       $scope.show_if_rated = function(index){
         $scope.temp_rating = $scope.rate_object.user_rating;
         $scope.rate_object.user_rating = parseInt(index) + 1;
@@ -325,15 +325,15 @@ websiteApp.directive('rate', function($rootScope, $timeout, widgetService){
         return is_active;
       }
 
-    },
+    }],
     templateUrl: '/assets/angular/widgets/base/book/rate.html'
   }
-});
+}]);
 
-websiteApp.directive('focusedBook', function($rootScope, $timeout, widgetService){
+websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
   return{
     restrict: 'E',
-    controller: function($scope){
+    controller: ['$scope', function($scope){
       // $scope.show_book = function(page){
       //   zoomin_book($scope, $timeout, $rootScope, page);
       // }
@@ -382,7 +382,7 @@ websiteApp.directive('focusedBook', function($rootScope, $timeout, widgetService
       }
 
       $scope.close_interaction_box = function(){
-        $scope.focused_book.interact = false;
+        $rootScope.focused_book.interact = false;
         $scope.hash_tags = [];
       }
 
@@ -390,42 +390,42 @@ websiteApp.directive('focusedBook', function($rootScope, $timeout, widgetService
         event.stopPropagation();
       }
 
-    },
+    }],
     templateUrl: "/assets/angular/widgets/base/book/focused_book.html"
   }
-});
+}]);
 
-websiteApp.directive('interactionBox', function($rootScope, $timeout, widgetService){
+websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
   return{
     restrict: 'E',
-    controller: function($scope){
+    controller: ['$scope', function($scope){
       $scope.stop_propagation = function(event){
         event.stopPropagation();
       }      
 
       _init();
-    },
+    }],
     templateUrl: "assets/angular/widgets/base/book/interaction_box.html"
   }
-});
+}]);
 
-websiteApp.directive('bookTags', function($rootScope, $timeout) {
+websiteApp.directive('bookTags', ['$rootScope', '$timeout', function($rootScope, $timeout) {
   return {
     restrict: 'E',
-    controller: function($scope){
+    controller: ['$scope', function($scope){
       $scope.show_book = function(page){
         zoomin_book($scope, $timeout, $rootScope, page);
       }
-    },
+    }],
     templateUrl: "/assets/angular/widgets/base/book/book_tags.html"
   };
-});
+}]);
 
-websiteApp.directive('recommend', function($rootScope, $timeout, widgetService){
+websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
   return{
     restrict: 'E',
     scope: {'recommend_object': '=data'},
-    controller: function($scope){
+    controller: ['$scope', function($scope){
       $scope.select_thumb = function(event){
         var selected = event.currentTarget.dataset.selected == "true";
         if(!selected){
@@ -467,16 +467,16 @@ websiteApp.directive('recommend', function($rootScope, $timeout, widgetService){
       }
 
       _init();
-    },
+    }],
     templateUrl: "/assets/angular/widgets/base/book/recommend.html"
   }
-});
+}]);
 
 
-websiteApp.directive('markAsRead', function($rootScope, $timeout, widgetService){
+websiteApp.directive('markAsRead', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
 	return {
 		restrict: 'E',
-		controller: function($scope){
+		controller: ['$scope', function($scope){
       $scope.markAsRead = function(event){
         var book_title = $scope.book.title;
         var author_name = $scope.book.author_name;
@@ -501,10 +501,10 @@ websiteApp.directive('markAsRead', function($rootScope, $timeout, widgetService)
         event.stopPropagation();
       }
 
-    },
+    }],
     templateUrl: "/assets/angular/widgets/base/book/mark_as_read.html"
   }
-});
+}]);
 
 function zoomin_book($scope, $timeout, $rootScope, page){
   $rootScope.initPage = page;

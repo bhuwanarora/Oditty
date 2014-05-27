@@ -1,7 +1,7 @@
-websiteApp.directive('infoCard', function($rootScope, $timeout){
+websiteApp.directive('infoCard', ['$rootScope', '$timeout', function($rootScope, $timeout){
 	return{
 		restrict: 'E',
-		controller: function($scope, websiteService){
+		controller: ['$scope', 'websiteService', function($scope, websiteService){
 			_get_genres = function(){
 		    	websiteService.get_genres().then(function(data){
 		    		$scope.genres = data.genres;
@@ -101,7 +101,7 @@ websiteApp.directive('infoCard', function($rootScope, $timeout){
 					$rootScope.user.profile_status = $rootScope.user.profile_status + 1;
 				}
 				else{
-					$rootScope.user.profile_status = 1;
+					$rootScope.user.profile_status = 0;
 				}
 				_handle_info_card_bindings($scope);
 				_profile_status_colors();
@@ -155,16 +155,16 @@ websiteApp.directive('infoCard', function($rootScope, $timeout){
 
 			_init();
 
-		},
+		}],
 		templateUrl: "/assets/angular/widgets/base/widget/info_card.html"
 	}
-});
+}]);
 
 websiteApp.directive('toggle', function(){
 	return{
 		restrict: 'E',
 		scope: {"obj": "=data"},
-		controller: function($scope){
+		controller: ['$scope', function($scope){
 			$scope.toggle = function(){
 				if($scope.active){
 					$scope.active = false;
@@ -173,15 +173,15 @@ websiteApp.directive('toggle', function(){
 					$scope.active = true;
 				}
 			}
-		},
+		}],
 		templateUrl: "/assets/angular/widgets/partials/toggle.html"
 	}
 });
 
-websiteApp.directive('track', function($rootScope){
+websiteApp.directive('track', ['$rootScope', function($rootScope){
 	return{
 		restrict: 'A',
-		link: function(scope, element, attrs){
+		link: ['scope', 'element', 'attrs', function(scope, element, attrs){
 			element.bind('mouseleave', function(event){
 				_record_details(event)
 			})
@@ -224,20 +224,20 @@ websiteApp.directive('track', function($rootScope){
 							"book_id": book_id}]
 				$rootScope.data = $rootScope.data.concat(data_json)
 			}
-		}
+		}]
 	}
-})
+}]);
 
 websiteApp.directive('horizontalScroller', function(){
 	return{
 		restrict: 'E',
 		templateUrl: "/assets/angular/widgets/base/horizontal_scroller.html"
 	}
-})
+});
 
-websiteApp.directive('setFocus', function($timeout, $parse, $rootScope) {
+websiteApp.directive('setFocus', ['$timeout', '$parse' , '$rootScope', function($timeout, $parse, $rootScope) {
   return {
-    link: function(scope, element, attrs) {
+    link: ['scope', 'element', 'attrs', function(scope, element, attrs) {
       var model = $parse(attrs.setFocus);
       scope.$watch(model, function(value) {
         if(value === true) { 
@@ -248,11 +248,11 @@ websiteApp.directive('setFocus', function($timeout, $parse, $rootScope) {
           });
         }
       });
-    }
+    }]
   };
-});
+}]);
 
-websiteApp.directive('typeAhead', function($timeout, $sce){
+websiteApp.directive('typeAhead', ['$timeout', '$sce', function($timeout, $sce){
 	return{
 		restrict: 'E',
 		scope: {
@@ -266,7 +266,7 @@ websiteApp.directive('typeAhead', function($timeout, $sce){
 	      	model: '=',
 	      	onSelect: '&'
 		},
-		link: function(scope, elem, attrs){
+		link: ['scope', 'elem', 'attrs', function(scope, elem, attrs){
 			scope.handle_selection = function(selectedItem) {
 				scope.model = selectedItem.toUpperCase();
 			    scope.current = 0;
@@ -324,23 +324,23 @@ websiteApp.directive('typeAhead', function($timeout, $sce){
 		  	}
 
 			_init();
-		},
-		controller: function($scope, recommendationService){
+		}],
+		controller: ['$scope', 'recommendationService', function($scope, recommendationService){
 		  	_init = function(){
 		  		$scope.name = ''; // This will hold the selected item
 		  	}
 
 
 		  	_init();
-		},
+		}],
 		templateUrl: 'assets/angular/widgets/partials/type_ahead.html'
 	}
-});
+}]);
 
-websiteApp.directive('message', function($motion){
+websiteApp.directive('message', ['$motion', function($motion){
 	return{
 		restrict: 'E',
-		controller: function($scope){
+		controller: ['$scope', function($scope){
 			$scope.close_message = function(){
 				if($scope.message == 'Allow your webcam. Swipe Left|Right to look for more books.'){
 					$scope.message = 'Just "START TYPING" anytime to search.'
@@ -370,10 +370,10 @@ websiteApp.directive('message', function($motion){
 			}
 
 			_init();
-		},
+		}],
 		templateUrl: 'assets/angular/widgets/partials/message.html'
 	}
-});
+}]);
 
 websiteApp.directive('notification', function(){
 	return{
@@ -384,8 +384,8 @@ websiteApp.directive('notification', function(){
 });
 
 
-websiteApp.directive('compile', function($compile){
-	return function(scope, element, attrs){
+websiteApp.directive('compile', ['$compile', function($compile){
+	return ['scope', 'element', 'attrs', function(scope, element, attrs){
 				var ensureCompileRunsOnce = scope.$watch(function(scope){
 	            	// watch the 'compile' expression for changes
 	            	return scope.$eval(attrs.compile);
@@ -404,8 +404,8 @@ websiteApp.directive('compile', function($compile){
 	              	// Use Angular's un-watch feature to ensure compilation only happens once.
 	              	ensureCompileRunsOnce();
 	            });
-			}
-});
+			}]
+}]);
 
 websiteApp.directive('searchBar', function(){
 	return{

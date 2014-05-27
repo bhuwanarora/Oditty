@@ -1,7 +1,8 @@
-websiteApp.directive('moreFilters', function($rootScope, $timeout){
+websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootScope, $timeout){
 	return{
 		restrict: 'E',
-		controller: function($scope, recommendationService, websiteService){
+		controller: ['$scope', 'recommendationService', 'websiteService', 
+			function($scope, recommendationService, websiteService){
 			_init = function(){
 				// $scope.$on('initPage', function(event, type){
 				// 	_reload_page(type=="BOOK", type=="AUTHOR", type=="READER");
@@ -144,10 +145,10 @@ websiteApp.directive('moreFilters', function($rootScope, $timeout){
 			}
 
 			_init();
-		},
+		}],
 		templateUrl: "/assets/angular/widgets/partials/more_filters.html"
 	}
-});
+}]);
 
 websiteApp.directive('notificationLink', function(){
 	return{
@@ -156,11 +157,11 @@ websiteApp.directive('notificationLink', function(){
 	}
 });
 
-websiteApp.directive('filter', function($rootScope, $timeout, $routeParams){
+websiteApp.directive('filter', ['$rootScope', '$timeout', '$routeParams', function($rootScope, $timeout, $routeParams){
 	return{
 		restrict: 'E',
 		scope: { 'filter': '=data' },
-		controller: function($scope){
+		controller: ['$scope', function($scope){
 			// $scope.toggle_filter = function(){
 			// 	type = "more_filters";
 			// 	var filter_id = $scope.filter["id"];
@@ -243,16 +244,16 @@ websiteApp.directive('filter', function($rootScope, $timeout, $routeParams){
 			}
 
 			_init();
-		},
+		}],
 		templateUrl: "/assets/angular/widgets/partials/filter.html"
 	}
-})
+}]);
 
 
 websiteApp.directive('recommendationFooter', function(){
 	return{
 		restrict: 'E',
-		controller: function($scope){
+		controller: ['$scope', function($scope){
 			if(window.innerWidth < 1000){
 				$scope.compact_footer = true;
 			}
@@ -263,7 +264,7 @@ websiteApp.directive('recommendationFooter', function(){
 			$scope.toggle_footer = function(){
 				$scope.compact_footer = true;
 			}
-		},
+		}],
 		templateUrl: "/assets/angular/widgets/partials/recommendation_footer.html"
 	}
 });

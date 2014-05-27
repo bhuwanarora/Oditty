@@ -17,26 +17,23 @@ var page_numbers = {
   about_author: 13
 };
 
-websiteApp.directive('dock', function($rootScope, $timeout){
+websiteApp.directive('dock', ['$rootScope', '$timeout', function($rootScope, $timeout){
   return{
     restrict: 'E',
-    compile: function(tElement, tAttrs, transclude){
-
-    },
-    controller: function($scope){
+    controller: ['$scope', function($scope){
       $scope.turn_page = function(page){
         $scope.$emit('turnPage', page);
       }
-    },
+    }],
     templateUrl: "/assets/angular/widgets/partials/dock.html"
   }
-});
+}]);
 
-websiteApp.directive('flipbook', function($rootScope, $timeout, scroller){
+websiteApp.directive('flipbook', ['$rootScope', '$timeout', 'scroller', function($rootScope, $timeout, scroller){
 	return{
 		restrict: 'E',
     replace: true,
-    compile: function(tElement, tAttrs, transclude) {
+    compile: ['tElement', 'tAttrs', 'transclude', function(tElement, tAttrs, transclude) {
         var width_edition_factor = width*(10/1320);
         var height_edition_factor = height*(20/1064);
         var image_width = width/2+width_edition_factor;
@@ -383,8 +380,8 @@ websiteApp.directive('flipbook', function($rootScope, $timeout, scroller){
             _set_post_css();
           }
         }
-    },
-    controller: function($scope){
+    }],
+    controller: ['$scope', function($scope){
       $scope.is_even = function(index){
         var isEven = false;
         if(index%2==0){
@@ -465,22 +462,22 @@ websiteApp.directive('flipbook', function($rootScope, $timeout, scroller){
       }
 
       _init();
-    },
+    }],
     templateUrl: "/assets/angular/widgets/partials/book.html"
   }
-});
+}]);
 
 websiteApp.directive('discussion', function(){
   return{
     restrict: 'E',
     scope: {"discussion": "=data",
         "index": "=index"},
-    compile: function(tElement, tAttrs, transclude) {
+    compile: ['tElement', 'tAttrs', 'transclude', function(tElement, tAttrs, transclude) {
       show_nested_discussion = function(){
         var discussion_id = scope.discussion.id;
       }
-    },
-    controller: function($scope){
+    }],
+    controller: ['$scope', function($scope){
       $scope.is_even = function(index){
         var isEven = false;
         if(index%2==0){
@@ -489,7 +486,7 @@ websiteApp.directive('discussion', function(){
         return isEven;
       }
 
-    },
+    }],
     templateUrl: "/assets/angular/widgets/partials/book/discussion.html"
   }
 });
@@ -498,7 +495,7 @@ websiteApp.directive('angularte', function() {
     return {
         restrict: 'A',
         require: '^ngModel',
-        link: function (scope, element, attrs, ngModel) {
+        link: ['scope', 'element', 'attrs', 'ngModel', function (scope, element, attrs, ngModel) {
             $(function () {
                 element.jqte({
                     // On focus show the toolbar
@@ -530,7 +527,7 @@ websiteApp.directive('angularte', function() {
                 element.parents(".jqte").find(".jqte_editor")[0].innerHTML = ngModel.$viewValue || '';
               }
             };
-        }
+        }]
     }
 });
 
@@ -538,9 +535,6 @@ websiteApp.directive('angularte', function() {
 websiteApp.directive('reviews', function(){
   return{
     restrict: 'E',
-    controller: function($scope){
-
-    },
     templateUrl: "assets/angular/widgets/partials/book/reviews.html"
   }
 });

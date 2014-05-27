@@ -1,8 +1,8 @@
-websiteApp.directive('author', function ($rootScope, widgetService) {
+websiteApp.directive('author', ['$rootScope', 'widgetService', function ($rootScope, widgetService) {
   return {
     restrict: 'E',
     scope: { 'author': '=data' },
-    controller: function($scope){
+    controller: ['$scope', function($scope){
       $scope.hover = function() {
         $scope.hovered = true;
       };
@@ -66,15 +66,15 @@ websiteApp.directive('author', function ($rootScope, widgetService) {
 
       _init();
 
-    },
+    }],
     templateUrl: "/assets/angular/widgets/base/author/author_widget.html"
   };
-});
+}]);
 
-websiteApp.directive('focusedAuthor', function($rootScope, $timeout, widgetService){
+websiteApp.directive('focusedAuthor', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
   return{
     restrict: 'E',
-    controller: function($scope){
+    controller: ['$scope', function($scope){
       $scope.stop_propagation = function(event){
         event.stopPropagation();
       }
@@ -92,15 +92,15 @@ websiteApp.directive('focusedAuthor', function($rootScope, $timeout, widgetServi
         event.stopPropagation();
       }
 
-    },
+    }],
     templateUrl: "/assets/angular/widgets/base/author/focused_author.html"
   }
-});
+}]);
 
-websiteApp.directive('authorBookmark', function ($rootScope, $timeout, widgetService) {
+websiteApp.directive('authorBookmark', ['$rootScope', '$timeout', 'widgetService', function ($rootScope, $timeout, widgetService) {
   return {
     restrict: 'E',
-    controller: function($scope){
+    controller: ['$scope', function($scope){
       $scope.toggle_bookmarked = function(event){
         var bookmark_status = $scope.author.bookmark_status;
         var author_name = $scope.author.name;
@@ -122,15 +122,15 @@ websiteApp.directive('authorBookmark', function ($rootScope, $timeout, widgetSer
         widgetService.bookmark("AUTHOR", $scope.author.id, $scope.author.bookmark_status);
         event.stopPropagation();
       }
-    },
+    }],
     templateUrl: "/assets/angular/widgets/base/author/bookmark.html"
   };
-});
+}]);
 
-websiteApp.directive('authorInteract', function (websiteService) {
+websiteApp.directive('authorInteract', ['websiteService', function (websiteService) {
   return {
     restrict: 'E',
-    controller: function($scope){
+    controller: ['$scope', function($scope){
       _init = function(){
         $scope.setStatus();
       }
@@ -256,10 +256,10 @@ websiteApp.directive('authorInteract', function (websiteService) {
       }
 
       // _init();
-    },
+    }],
     templateUrl: "/assets/angular/widgets/base/author/author_interact.html"
   };
-});
+}]);
 
 // websiteApp.directive('interactionBox', function($rootScope, $timeout, widgetService){
 //   return{

@@ -1,4 +1,4 @@
-websiteApp.controller('searchController', function($scope, $rootScope, websiteService, $timeout, $sce, recommendationService){
+websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteService', '$timeout', '$sce', 'recommendationService', function($scope, $rootScope, websiteService, $timeout, $sce, recommendationService){
 	_show_search_result = function(){
 		$rootScope.show_book = true;
 		$rootScope.book_x = 0;
@@ -542,4 +542,4 @@ websiteApp.controller('searchController', function($scope, $rootScope, websiteSe
 	}
 	var search_typing_timeout = "";
 	_init();
-});
+}]);

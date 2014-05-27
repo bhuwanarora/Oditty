@@ -1,4 +1,4 @@
-websiteApp.service('widgetService', function ($http, $q, $rootScope) {
+websiteApp.service('widgetService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
     this.populate_tooltips = function(id){
     	return _deferred_request('/api/v0/tooltip?id='+id);
     };
@@ -76,4 +76,4 @@ websiteApp.service('widgetService', function ($http, $q, $rootScope) {
         return deferred.promise;
     }
 
-});
+}]);

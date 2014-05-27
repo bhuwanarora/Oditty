@@ -1,4 +1,4 @@
-websiteApp.controller('recommendationsController', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService){
+websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService){
 
 	$scope.toggle_bookmarked = function(event){
 		if(!$scope.bookmark_selected){
@@ -263,4 +263,4 @@ websiteApp.controller('recommendationsController', function($scope, $rootScope, 
 	var open_shelf_event = "";
 	_init();
 
-});
+}]);

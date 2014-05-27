@@ -2,7 +2,7 @@ var websiteApp = angular.module('websiteApp', ['ngRoute', 'ngAnimate',
                   'monospaced.mousewheel', 'facebook', 
                   'directive.g+signin', 'ngMap', 'cropme',
                   'duScroll', 'adaptive.motion', 'ngDropdowns', 'sticky']);
-websiteApp.config(function ($routeProvider, $locationProvider) {
+websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
   $routeProvider
   .when('/search', {
       templateUrl: 'assets/angular/widgets/partials/search.html'
@@ -50,9 +50,9 @@ websiteApp.config(function ($routeProvider, $locationProvider) {
     templateUrl: 'assets/angular/widgets/partials/search.html'
   });
   // $locationProvider.html5Mode(true);
-});
+}]);
 
-websiteApp.run(function($rootScope, $location){
+websiteApp.run(['$rootScope', '$location', function($rootScope, $location){
   $rootScope.$on("$routeChangeStart", function(event, next, current) {
     if(!$rootScope.user.logged){
       // no logged user, we should be going to #login
@@ -64,7 +64,7 @@ websiteApp.run(function($rootScope, $location){
       }
     }         
   });
-})
+}])
 
 angular.element(document).ready(function() {
   console.time('bootstrap');
@@ -73,13 +73,13 @@ angular.element(document).ready(function() {
 });
 
 websiteApp.config(['FacebookProvider', '$motionProvider',
-    function(FacebookProvider, $motionProvider) {
+    function(FacebookProvider, $motionProvider){
       $motionProvider.setTreshold({
         'rgb': 150,
         'move': 1,
         'bright': 300
       });
-     var myAppId = '667868653261167';
+      var myAppId = '667868653261167';
      
      // FacebookProvider.setAppId('myAppId');
      FacebookProvider.init(myAppId);

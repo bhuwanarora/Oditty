@@ -56,3 +56,4 @@ neo4j/plugins/*
 neo4j/system/*
 neo4j/*.txt
 node_modules/*
+app/assets/javascripts/min/**

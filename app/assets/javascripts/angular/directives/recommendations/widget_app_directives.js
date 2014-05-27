@@ -4,7 +4,7 @@ websiteApp.directive('category', function () {
     scope: {
       widget : '@'
     },
-    controller: function($scope){
+    controller: ['$scope', function($scope){
       $scope.initVerticalText = function(){
         var isBook = $scope.widget == "book";
         var isReader = $scope.widget == "reader";
@@ -26,27 +26,27 @@ websiteApp.directive('category', function () {
           // $scope.category_style = {"background-color": obj.category.background_color};
         }
       }
-    },
+    }],
     templateUrl: "/assets/angular/widgets/base/widget/category.html"
   };
 });
 
-websiteApp.directive('messageApp', function (websiteService) {
+websiteApp.directive('messageApp', ['websiteService', function (websiteService) {
   return{
     restrict: 'E',
-    controller: function($scope){
+    controller: ['$scope', function($scope){
       $scope.send_message = function(){
 
       }
-    },
+    }],
     templateUrl: "/assets/angular/widgets/base/widget/message_app.html"
   }
-});
+}]);
 
-websiteApp.directive('follow', function ($rootScope, $timeout, widgetService) {
+websiteApp.directive('follow', ['$rootScope', '$timeout', 'widgetService', function ($rootScope, $timeout, widgetService) {
   return{
     restrict: 'E',
-    controller: function($scope){
+    controller: ['$scope', function($scope){
       $scope.toggle_follow = function(){
         if($scope.reader){
           var reader_name = $scope.reader.name;
@@ -85,15 +85,15 @@ websiteApp.directive('follow', function ($rootScope, $timeout, widgetService) {
           });
         }
       }
-    },
+    }],
     templateUrl: "/assets/angular/widgets/base/widget/follow.html"
   }
-});
+}]);
 
-websiteApp.directive('widgetThumb', function ($timeout, $rootScope) {
+websiteApp.directive('widgetThumb', ['$timeout', '$rootScope', function ($timeout, $rootScope) {
   return {
     restrict: 'E',
-    controller: function($scope){
+    controller: ['$scope', function($scope){
       $scope.show_images = function(){
         var delay = 500;
         if(global_display_timer == 2500){
@@ -148,7 +148,7 @@ websiteApp.directive('widgetThumb', function ($timeout, $rootScope) {
 
 
       _init();
-    },
+    }],
     templateUrl: "/assets/angular/widgets/base/widget/widget_thumb.html"
   };
-});
+}]);
