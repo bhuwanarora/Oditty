@@ -57,3 +57,5 @@ neo4j/system/*
 neo4j/*.txt
 node_modules/*
 app/assets/javascripts/min/**
+app/assets/stylesheets/min/**
+app/assets/javascripts/angular/widgets/gzip/**

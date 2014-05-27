@@ -3,14 +3,13 @@
   <head>
     <title>ReadersDoor</title>
     <!-- <base href="/"> -->
-    <link href="/assets/icomoon.css" rel="stylesheet">
     <!-- <link rel="stylesheet" href="http://i.icomoon.io/public/temp/879b1518b3/UntitledProject1/style.css"> -->
-    <link rel="stylesheet" type="text/css" href="assets/website.css">
+    <link rel="stylesheet" type="text/css" href="assets/min/site.min.css">
   </head>
   <body ng-controller="websiteAppController" 
         ng-keydown="handle_keyboard_bindings($event)">
     <%= render :partial => "website/loading"%>
-    <link rel="stylesheet" type="text/css" href="assets/search_page.css.scss">
+    <link rel="stylesheet" type="text/css" href="assets/min/search_page.min.css">
 
     <!-- jquery -->
     <!-- angular vendors -->
@@ -39,10 +38,9 @@
 
     <!-- angular controllers -->
     <%= javascript_include_tag Rails.root.join("app/assets/javascripts/min/angular/controllers.js") %>
+    <%= javascript_include_tag Rails.root.join("app/assets/javascripts/min/angular/templates.js") %>
 
-    <link rel="stylesheet" type="text/css" href="assets/recommendation.css.scss">
-    <link rel="stylesheet" type="text/css" href="assets/focused_tooltip.css.scss">
-    <link rel="stylesheet" type="text/css" href="assets/animate.css.scss">
+    <link rel="stylesheet" type="text/css" href="assets/min/recommendation_main.min.css">
     
     <div ng-show="!loading" style="height:100%;">
       <div ng-view 

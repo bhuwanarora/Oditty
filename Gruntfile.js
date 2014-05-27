@@ -3,6 +3,68 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    cssmin: {
+      minify: {
+        expand: true,
+        cwd: 'app/assets/stylesheets/website/',
+        src: ['*.css', '!*.min.css', '*.css.scss'],
+        dest: 'app/assets/stylesheets/min/',
+        ext: '.min.css'
+      },
+      combine: {
+        files: {
+          'app/assets/stylesheets/min/site.min.css': [
+            'app/assets/stylesheets/min/website.min.css',
+            'app/assets/stylesheets/min/animate.min.css',
+            'app/assets/stylesheets/min/icomoon.min.css'
+          ],
+
+          'app/assets/stylesheets/min/recommendation_main.min.css': [
+            'app/assets/stylesheets/min/recommendation.min.css',
+            'app/assets/stylesheets/min/focused_tooltip.min.css'
+          ]
+        }
+      }
+    },
+    // htmlmin: {                                     // Task
+    //   dist: {                                      // Target
+    //     options: {                                 // Target options
+    //       removeComments: true,
+    //       removeCommentsFromCDATA: true,
+    //       collapseWhitespace: true,
+    //       minifyJS: true,
+    //       minifyCSS: true
+    //     },
+    //     files: {                                   // Dictionary of files
+    //       'app/assets/javascripts/angular/widgets/gzip/base/**/*.html': 'app/assets/javascripts/angular/widgets/base/.html'
+    //       // 'dist/contact.html': 'src/contact.html'
+    //     }
+    //   }
+    // },
+    // compress: {
+    //   main: {
+    //     options: {
+    //       mode: 'gzip'
+    //     },
+    //     files: [
+    //       {
+    //         expand: true,
+    //         cwd: 'app/assets/javascripts/angular/widgets/base/',
+    //         src: ['**/*'],
+    //         dest: 'app/assets/javascripts/angular/widgets/gzip/base',
+    //         ext: '.gz'
+    //       },
+    //       {
+    //         expand: true,
+    //         cwd: 'app/assets/javascripts/angular/widgets/partials/',
+    //         src: ['**/*'],
+    //         dest: 'app/assets/javascripts/angular/widgets/gzip/partials/',
+    //         ext: '.gz'
+    //       }
+          
+    //     ]
+    //   }
+    // },
     uglify: {
       options: {
         compress: {
@@ -22,6 +84,21 @@ module.exports = function(grunt) {
             src: '**/*.js',
             dest: 'app/assets/javascripts/min/lib'
         }]
+      }
+    },
+    ngtemplates:{
+      app:{
+        src: 'app/assets/javascripts/angular/widgets/**/*.html',
+        dest: 'app/assets/javascripts/min/angular/templates.js',
+        options:{
+          htmlmin:{ 
+            removeComments: true,
+            removeCommentsFromCDATA: true,
+            collapseWhitespace: true,
+            minifyJS: true,
+            minifyCSS: true
+          }
+        }
       }
     },
     concat: {
@@ -77,8 +154,13 @@ module.exports = function(grunt) {
   // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+  // grunt.loadNpmTasks('grunt-contrib-compress');
+  // grunt.loadNpmTasks('grunt-contrib-htmlmin');
+  grunt.loadNpmTasks('grunt-angular-templates');
+
 
   // Default task(s).
-  grunt.registerTask('default', ['uglify', 'concat']);
+  grunt.registerTask('default', ['cssmin', 'uglify', 'concat', 'ngtemplates']);
   
 };
