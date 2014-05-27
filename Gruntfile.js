@@ -65,6 +65,21 @@ module.exports = function(grunt) {
     //     ]
     //   }
     // },
+    ngtemplates:{
+      app:{
+        src: 'app/assets/javascripts/angular/widgets/**/*.html',
+        dest: 'app/assets/javascripts/min/angular/templates.js',
+        options:{
+          htmlmin:{ 
+            removeComments: true,
+            removeCommentsFromCDATA: true,
+            collapseWhitespace: true,
+            minifyJS: true,
+            minifyCSS: true
+          }
+        }
+      }
+    },
     uglify: {
       options: {
         compress: {
@@ -83,22 +98,11 @@ module.exports = function(grunt) {
             cwd: 'app/assets/javascripts/lib/',
             src: '**/*.js',
             dest: 'app/assets/javascripts/min/lib'
-        }]
-      }
-    },
-    ngtemplates:{
-      app:{
-        src: 'app/assets/javascripts/angular/widgets/**/*.html',
-        dest: 'app/assets/javascripts/min/angular/templates.js',
-        options:{
-          htmlmin:{ 
-            removeComments: true,
-            removeCommentsFromCDATA: true,
-            collapseWhitespace: true,
-            minifyJS: true,
-            minifyCSS: true
+          },
+          {
+            'app/assets/javascripts/min/angular/templates.min.js' : ['app/assets/javascripts/min/angular/templates.js']
           }
-        }
+        ]
       }
     },
     concat: {
@@ -161,6 +165,6 @@ module.exports = function(grunt) {
 
 
   // Default task(s).
-  grunt.registerTask('default', ['cssmin', 'uglify', 'concat', 'ngtemplates']);
+  grunt.registerTask('default', ['cssmin', 'ngtemplates', 'uglify', 'concat']);
   
 };
