@@ -1,0 +1,154 @@
+<div ng-if="show_more_filters" 
+	 class="more_filters animate-slow"
+	 ng-click="stop_click_propagation($event)">
+	
+
+	<div ng-show="!bookmark_selected && !read_selected">
+		<!-- BOOK FILTERS -->
+		<div class="filters" ng-show="$routeParams.type == 'books'">
+			<div class="filters_panel_large">
+				<div class="filters_group">
+					<div ng-repeat="filter in more_filters[0]['book']">
+						<filter data="filter"></filter>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="filters_panel">
+			 	<type-ahead items="genres" 
+			 				prompt="Filter books by a Genre" 
+			 				title="name"
+			 				custom-options = "genre_typeahead_options"
+			 				custom="input_filter"
+			 				model="genre" 
+			 				on-select="on_genre_selection()"
+			 				ng-keypress="show_genre_options('BOOK', genre)">
+			 	</type-ahead>
+				<type-ahead items="authors" 
+			 				prompt="Filter books by Author Name"
+			 				title="name"
+			 				custom-options = "author_typeahead_options"
+			 				custom="input_filter"
+			 				model="author"
+			 				on-select="on_author_selection()"
+			 				ng-keypress="show_author_options('BOOK', author)">
+			 	</type-ahead>
+			</div>
+			<hr>
+			<div class="filters_panel_right">
+			 	<div class="position_dropdown"
+				 	  dropdown-select="countryOptions" 
+				 	  dropdown-onchange="advance_filter_changed(selected)"
+				 	  dropdown-model="countrySelected"
+				 	  dropdown-item-label="name"></div>
+			 	<div class="position_dropdown"
+			 		  dropdown-select="readTimeOptions" 
+			 		  dropdown-onchange="advance_filter_changed(selected)"
+			 		  dropdown-model="readTimeSelected"
+			 		  dropdown-item-label="name"></div>
+			 	<div class="position_dropdown time_group"
+			 		  dropdown-select="timeOptions" 
+			 		  dropdown-onchange="advance_filter_changed(selected)"
+			 		  dropdown-model="timeSelected"
+			 		  dropdown-item-label="name"></div>
+			</div>
+		</div>
+
+
+		<!-- AUTHOR FILTERS -->
+		<div class="filters" ng-show="$routeParams.type == 'authors'">
+			<div class="filters_panel_large">
+				<div class="filters_group">
+					<div ng-repeat="filter in more_filters[0]['author']">
+						<filter data="filter"></filter>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="filters_panel">
+				<type-ahead items="genres" 
+			 				prompt="GENRE" 
+			 				title="name"
+			 				custom-options = "genre_typeahead_options"
+			 				custom="input_filter"
+			 				model="genre" 
+			 				on-select="on_genre_selection()"
+			 				ng-keypress="show_genre_options('BOOK', genre)">
+			 	</type-ahead>
+			</div>
+			<hr>
+			<div class="filters_panel_right">
+				
+			</div>
+		</div>
+
+		<!-- READER FILTERS -->
+		<div class="filters" ng-show="$routeParams.type == 'readers'">
+			<div class="filters_panel_large">
+				<div class="filters_group">
+					<div ng-repeat="filter in more_filters[0]['reader']">
+						<filter data="filter"></filter>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="filters_panel">
+				<type-ahead items="genres" 
+			 				prompt="GENRE" 
+			 				title="name"
+			 				custom-options = "genre_typeahead_options"
+			 				custom="input_filter"
+			 				model="genre" 
+			 				on-select="on_genre_selection()"
+			 				ng-keypress="show_genre_options('BOOK', genre)">
+			 	</type-ahead>
+			</div>
+			<hr>
+			<div class="filters_panel_right">
+				<div class="header">
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	<div class="main_filters">
+		<div ng-click="reset_filters()"
+			 class="reset_filters">
+			 RESET FILTERS 
+			 <span class="icon-loop"></span>
+		</div>
+		<span class="result_count" 
+			  ng-model="recommendations.books.length"
+			  ng-show="filters.filter_type == 'BOOK'">
+			<span ng-show="bookmark_selected">
+				{{user.books.bookmarked.length}} books bookmarked</span>
+			<span ng-show="read_selected">
+			    {{user.books.read.length}} books read</span>
+			<span ng-show="!bookmark_selected && !read_selected">
+			    {{recommendations.books.length}} books
+			</span>
+		</span>
+		<span class="result_count" 
+		      ng-model="recommendations.readers.length"
+		      ng-show="filters.filter_type == 'READER'">
+			<span ng-show="bookmark_selected">
+				{{user.readers.bookmarked.length}} readers bookmarked</span>
+			<span ng-show="read_selected">
+			    {{user.readers.read.length}} readers followed</span>
+			<span ng-show="!bookmark_selected && !read_selected">
+			    {{recommendations.readers.length}} readers
+			</span>
+		</span>
+		<span class="result_count" 
+			  ng-model="recommendations.authors.length"
+			  ng-show="filters.filter_type == 'AUTHOR'">
+			<span ng-show="bookmark_selected">
+				{{user.authors.bookmarked.length}} authors bookmarked</span>
+			<span ng-show="read_selected">
+			    {{user.authors.read.length}} authors followed</span>
+			<span ng-show="!bookmark_selected && !read_selected">
+			    {{recommendations.authors.length}} authors
+			</span>
+		</span>
+	</div>
+</div>

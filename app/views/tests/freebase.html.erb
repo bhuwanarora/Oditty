@@ -1,0 +1,92 @@
+<input id="freebaseSearch" type="string" value="hermann hesse" style="width:800px; margin:40px 10px 40px 150px;" />
+<button id="freebaseSearchButton">Search</button>
+<div class="results" style="margin:20p 20px 0px 40pxx;">
+	
+</div>
+<script>
+	function append_properties(id, $this){
+		id = id.split(":").join("/")
+		$.ajax({
+			url: "<%= freebase_resource_path %>",
+			data: "q="+id,
+			success: function(data, jqXHR, textStatus){
+				$($this.children()[1]).html('')
+				debugger
+				name = data.name
+				description = data.description
+				image = data.image
+				html = "<img src='"+image+"'/><p>"+name+"</p><p>"+description+"</p>"
+				$this.append(html)
+				properties = ""
+				p = data.properties
+				for (var key in p) {
+					properties = properties + "<p style='margin:0px 20px 0px 40px;'><u>"+key+"</u></p><p>"
+					for(var pkey in p[key]){
+					   if(p[key][pkey].data.id){
+					   	 mid = p[key][pkey].data.id.split('/').join(':')
+					   }
+					   else{
+						 mid = p[key][pkey].data.id					   	
+					   }
+					   properties = properties +"<div id='result-"+mid+
+					   				"'  style='margin:0px 20px 0px 40px;'><a href='javascript:void(0);'>"+pkey+" "+
+					   				p[key][pkey].data["text"]+"</a></div>";
+					}
+					properties = properties + "</p>"
+				}
+				$this.append(properties)
+				$('[id^=result-]').unbind('click')
+				$('[id^=result-]').on('click', function(){
+					$($(this).children()[0]).css('color', 'black')
+					$(this).append('<p>loading...</p>')
+					id = $(this).attr('id').split('result-')[1]
+					append_properties(id, $(this))
+				})
+			}
+		})
+	}
+
+	$('#freebaseSearchButton').on('click', function(){
+		var data = $('#freebaseSearch').val();
+		$('.results').html('loading...')
+		if(data){
+			$.ajax({
+				url: "<%= freebase_search_path %>",
+				data: "q="+data,
+				success: function(data, textStatus, jqXHR){
+					$('.results').html('')
+					data_array = data.data
+					if(data_array.length == 0){
+						$('.results').append("No results found...")
+					}
+					else{
+						for(var i=0; i<data_array.length; i++){
+							if(data_array[i].id){
+								id = data_array[i].id.split("/").join(":")
+							}
+							else{
+								id = data_array[i].id	
+							}
+							if(data_array[i].notable){
+								identity = data_array[i].notable.name
+							}
+							else{
+								identity = data_array[i].notable	
+							}
+							score = data_array[i].score
+							html = "<div id=result-"+id+" style='margin:0px 20px 0px 40px;'><a href='javascript:void(0)'>"+identity+"-"+score+"</a></div>"
+							$('.results').append(html)
+						}
+						$('[id^=result-]').on('click', function(){
+							$($(this).children()[0]).css('color', 'black')
+							$(this).append('<p>loading...</p>')
+							id = $(this).attr('id').split('result-')[1]
+							append_properties(id, $(this))
+						})
+					}
+				}
+			})
+		}
+	})
+
+</script>

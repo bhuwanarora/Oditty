@@ -1,0 +1,5 @@
+<%= form_tag(find_book_by_isbn_path, :method => :post, :class => "search_box") do %>
+	<%= label_tag :book, :isbn %>
+  	<%= text_field_tag :book, :isbn, :value => @isbn_number %>
+  	<%= submit_tag 'Search', :class => "search_button"%>
+<% end %>

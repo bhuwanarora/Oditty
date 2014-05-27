@@ -1,0 +1,22 @@
+<%= simple_form_for(@category, :remote => true, :html => {:class => "form-horizontal category", novalidate:false}) do |f| %>
+    <%= f.error_notification %>
+  <div class="modal-body form-inputs">
+  	<%= hidden_field_tag :parent_id, @parent_id %>
+  	<%= f.input :name,
+                :input_html => {
+                  :placeholder => @parent_category.name+"'s child category",
+                  :required => true
+                } %>
+  	<%= f.simple_fields_for :edge do |c| %>
+  		<%= c.input :weight,
+                :input_html => {
+                  :placeholder => "Give a connection weight."
+                  } %>
+  	<% end %>
+    
+  </div>
+
+  <div class="form-actions modal-footer">
+    <%= f.button :submit, :class => "btn-inverse" %>
+  </div>
+<% end %>

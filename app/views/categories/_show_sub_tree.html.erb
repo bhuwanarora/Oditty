@@ -1,0 +1,23 @@
+<div class="category_tree span">
+	<%= render :partial => "node" %>
+	<br/>
+	<span class="children" id="children_of_<%= @root.id %>">
+		<% if @root.has_children? %>
+			<% @root.children.each do |child| %>
+				<%= render :partial => "show_sub_tree", :locals => {:@root => child} %>
+			<% end %>
+		<% end %>
+	</span>
+</div>
+<script type="text/javascript">
+	$('.node').on('mouseover', function(){
+		var id = $(this).attr('id').split("node_")[1]
+		var children_id = "children_of_"+id
+		$('#'+children_id+' div div').addClass('highlight_children') 
+	})
+	$('.node').on('mouseout', function(){
+		var id = $(this).attr('id').split("node_")[1]
+		var children_id = "children_of_"+id
+		$('#'+children_id+' div div').removeClass('highlight_children')	
+	})
+</script>

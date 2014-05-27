@@ -1,0 +1,31 @@
+<style type="text/css">
+	.facebook_pages{
+		width: 25%;
+		height: 100%;
+		float: left;
+		display: inline-block;
+		border-right: 1px solid #717070;
+		color: #717070;
+		padding: 10px;
+	}
+
+	.resource_feeds{
+		color: #717070;
+		padding: 10px;
+		width: 70%;
+		height: 100%;
+		float: left;
+		display: inline-block;	
+	}
+</style>
+<div>
+	<span class="facebook_pages">
+		<div>FACEBOOK PAGES</div>
+		<% @facebook_pages.each do |facebook_page|%>
+			<a target="_blank" href="<%= facebook_page['link'] %>"><%= facebook_page["name"] %></a>
+		<% end %>
+	</span>
+	<span class="resource_feeds">
+		<div>RESOURCE FEED</div>
+	</span>
+</div>

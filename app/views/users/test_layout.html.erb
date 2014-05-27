@@ -1,0 +1,328 @@
+<%= javascript_include_tag 'panel.js' %>
+<%= stylesheet_link_tag 'panel.css'%>
+<%= javascript_include_tag  'jquery.bxslider.js'%>
+<%= render :partial => 'users/profile_page/background_grid'%>
+<div class="header">
+	<div class="content">
+		<div class="user_details span">
+			Hi <%= @user.human_profile.name %>
+		</div>
+		<div class="center_tab span">
+			<input class="search span" placeholder="Find a Book, Author, Or a Friend."/>
+		</div>
+		<div class="site_name span">
+			Reader's Door
+		</div>
+	</div>
+</div>
+
+<%= render :partial => 'users/profile_page/info_box'%>
+
+<div class="left_grid span">
+	<%= render :partial => 'users/profile_page/header'%>
+</div>
+<div class="right_grid span">
+	<ul class="bxslider">
+		<li data-slide-index="1"><%= render :partial => "users/profile_page/recommendation", 
+					:locals => {:image_url => "assets/Siddhartha.jpg", 
+								:title => "Siddhartha(1992) by Hermann Hesse", 
+								:description => "A young Indian mystic, a contemporary of Buddha, sacrifices everything to search for the true meaning of life.",
+								:back_logo => "hermann_hesse.jpg"} %></li>
+		<li data-slide-index="2"><%= render :partial => "users/profile_page/recommendation", 
+					:locals => {:image_url => "assets/tolstoy.jpg", 
+								:title => "Leo Tolstoy", 
+								:description => "Count Lev Nikolayevich Tolstoy, also known as Leo Tolstoy, was a Russian writer who primarily wrote novels and short stories. Tolstoy was a master of realistic fiction and is widely considered one of the world's greatest novelists",
+								:back_logo => ""} %></li>
+		<li data-slide-index="3"><%= render :partial => "users/profile_page/recommendation", 
+					:locals => {:image_url => "assets/Siddhartha.jpg", 
+								:title => "Siddhartha(1992) by Hermann Hesse", 
+								:description => "A young Indian mystic, a contemporary of Buddha, sacrifices everything to search for the true meaning of life.",
+								:back_logo => "hermann_hesse.jpg"} %></li>
+		<li data-slide-index="4"><%= render :partial => "users/profile_page/recommendation", 
+					:locals => {:image_url => "assets/Siddhartha.jpg", 
+								:title => "Siddhartha(1992) by Hermann Hesse", 
+								:description => "A young Indian mystic, a contemporary of Buddha, sacrifices everything to search for the true meaning of life.",
+								:back_logo => "hermann_hesse.jpg"} %></li>
+		<li data-slide-index="5"><%= render :partial => "users/profile_page/recommendation", 
+					:locals => {:image_url => "assets/Siddhartha.jpg", 
+								:title => "Siddhartha(1992) by Hermann Hesse", 
+								:description => "A young Indian mystic, a contemporary of Buddha, sacrifices everything to search for the true meaning of life.",
+								:back_logo => "hermann_hesse.jpg"} %></li>
+	</ul>
+	<div class="groups">
+		<%= render :partial => "users/profile_page/groups" %>
+	</div>
+</div>
+<div class="footer">
+	<%= render :partial => 'users/profile_page/footer'%>
+</div>
+<script type="text/javascript">
+	$(function(){
+	    $('.bxslider').bxSlider({
+		  	auto: true,
+  		  	// autoControls: true,
+  		  	captions: true,
+		});
+	});
+	$('.user_books').on('click', function(){
+		$('.selected').removeClass('selected')
+		$(this).addClass('selected');
+		$('.info_box').show();
+	})
+	$('.recommended').on('mouseover', function function_name (argument) {
+		$('.show_grid').removeClass('show_grid')
+		$('.recommended').addClass('show_grid')
+	})
+	$('.philosophy').on('mouseover', function function_name (argument) {
+		$('.show_grid').removeClass('show_grid')
+		$('.philosophy').addClass('show_grid')
+	})
+	$('.to_read').on('mouseover', function function_name (argument) {
+		$('.show_grid').removeClass('show_grid')
+		$('.to_read').addClass('show_grid')
+	})
+	$('.recent').on('mouseover', function function_name (argument) {
+		$('.show_grid').removeClass('show_grid')
+		$('.recent').addClass('show_grid')
+	})
+</script>
+
+<style type="text/css">
+	.groups{
+		width: 100%;
+		height: 50%
+	}
+	.bx-wrapper .bx-caption{
+		font-family: fantasy !important;
+		font-size: large !important;
+	}
+	.bx-wrapper{
+		margin: 0px !important;
+		background-image: url('assets/slider.jpg');
+		/*background-image: url('assets/right_grid_background.jpeg');*/
+	}
+	.bx-wrapper .bx-viewport {
+		height: 353px !important;
+	}
+	.slider_thumb{
+		width: 13%;
+		max-height: 21% !important;
+		/*min-height: 21%;*/
+		margin-left: 1%;
+	}
+	.user_details{
+		font-family: -webkit-body;
+		color: floralwhite;
+		font-size: large;
+		margin-top: 2%;
+	}
+	.center_tab{
+		width: 43%;
+	}
+	.site_name{
+		font-family: -webkit-body;
+		color: floralwhite;
+		font-size: large;
+		margin: 2% 1% 0% 0%;
+		float: right;
+	}
+	.search{
+		width: 100%;
+		margin: 10px;
+		margin-top: 3%;
+		font-family: -webkit-pictograph;
+		font-size: large;
+		float: right;
+	}
+	.grid2{
+		margin-top: 30px;
+	}
+	.header{
+		margin: 0px 0px 0px 0px;
+    	background-color: rgb(6, 137, 162);
+	    height: 50px;
+	    background-image: url('assets/header.jpg');
+	    position: fixed;
+	    z-index: 3;
+	    width: 100%
+	}
+	.footer{
+		position: fixed;
+		width: 100%;
+		height: 10%;
+		margin-top: 50%;
+		z-index: 4;
+	}
+	.left_grid{
+	    width: 55%;
+	    margin: 0px;
+	    margin-top: 4%;
+	    height: 100%;
+	    position: absolute;
+	    background-color: beige;
+	}
+	.right_grid{
+		margin: 4% 0px 0px 55%;
+	    height: 100%;
+	    width: 45%;
+	    position: absolute;
+	    background-color: beige;
+	}
+	.profile_header{
+		height: 50%;
+    	background-image: url('assets/slider.jpg');
+	}
+	.profile_header:hover{
+		cursor: pointer;
+	}
+	.profile_pic{
+		width: 28%;
+		margin: 4% 1% 1% 2%;
+		z-index: 1;
+		position: absolute;
+		box-shadow: 0 0 35px 29px rgba(0, 0, 0, 0.8);
+	}
+	.profile_pic:hover{
+	}
+	.grid_container{
+		margin: 7px;
+	}
+	.popular_tag{
+		width: 98%;
+		height: 88%;
+		margin: 7px;
+	}
+	.popular_tag:hover{
+		/*background-color: rgb(10, 84, 126);*/
+		cursor: pointer;
+	}
+	.popular_tag .user_books{
+		width: 14%;
+		padding-left: 1%;
+		margin-left: 0px;
+		margin-top: 1%;
+		height: 117px;
+	}
+	.recent{
+		z-index: 3;
+		width: 20%;
+		height: 100%;	
+		/*background-color: #49bf68;*/
+		background-image: url('assets/wooden_shelf.jpeg');
+		/*margin-top: 280px;*/
+		-webkit-transition:margin-top:2s;
+		-webkit-transition:height:2s;
+	}
+	.recommended{
+		z-index: 3;
+		width: 20%;
+		height: 150%;	
+		/*background-color: #FAA226;*/
+		background-image: url('assets/wooden_shelf.jpeg');
+		margin-top: -40px;
+		-webkit-transition:margin-top:2s;
+		-webkit-transition:height:2s;
+	}
+	.philosophy{
+		z-index: 3;
+		width: 20%;
+		height: 120%;	
+		/*background-color: #00ACEE;*/
+		background-image: url('assets/wooden_shelf.jpeg');
+		margin-top: -15px;
+		-webkit-transition:margin-top:2s;
+		-webkit-transition:height:2s;
+	}
+	.recent .grid_header{
+		background-color: #49bf68;
+	}
+	.recommended .grid_header{
+		background-color: #FAA226;
+	}
+	.philosophy .grid_header{
+		background-color: #00ACEE;
+	}
+	.to_read .grid_header{
+		background-color: #f4503e;	
+	}
+	.to_read{
+		z-index: 3;
+		width: 20%;
+		height: 120%;	
+		/*background-color: #f4503e;*/
+		background-image: url('assets/wooden_shelf.jpeg');
+		/*margin-top: -15px;*/
+		-webkit-transition:margin-top:2s;
+		-webkit-transition:height:2s;
+	}
+	.show_grid{
+		cursor: pointer;
+		margin-top: -20%;
+		height: 500%;
+	}
+	.grid_content{
+		margin: 10px 10px 10px 10px;
+	}
+	.footer .grid_content{
+		overflow-y:auto; 
+		height: 65%;
+	}
+	.footer .user_books{
+		width: 29%;
+		padding-left: 4%;
+		margin-left: 0px;
+		margin-top: 5%;
+		height: 100px;
+	}
+	.add_items{
+		height: 40%;
+		width: 60%;
+		margin-top: -48px;
+	}
+	.add_items:hover{
+		background-color: aqua;
+		cursor: pointer;
+	}
+	.add_items .user_books{
+		width: 25%;
+		height: 89%;
+		margin-top: 1%;
+	}
+	.grid_header{
+		-webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+		box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+		color: azure;
+		height: 30px;
+		margin: 2%;
+		text-align: center;
+	}
+	.navigation{
+		position: relative;
+		z-index: 2;
+		width: 10%;
+	}
+	.navigation:hover{
+		box-shadow: 0px 0px 100px 0px;
+		background-color: rgba(0, 0, 0, 0.38);
+		cursor:pointer;
+	}
+	.navigation-left{
+		-moz-transform: scaleX(-1);
+		float: left;
+	}
+	.navigation_icon{
+		position: absolute;
+		padding-top: 185%;
+	}
+	.navigation_right{
+		float: right;
+		margin-top: -41%;
+		height: 300px;
+	}
+	.selected{
+		border: orange;
+		border-width: 10px;
+		box-sizing: border-box;
+		border-radius: 30px;
+	}
+</style>

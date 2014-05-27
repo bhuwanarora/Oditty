@@ -1,0 +1,87 @@
+<style>
+	.load_page{
+		background-color: #172A36;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		background: -moz-radial-gradient(center, ellipse cover, #6FE2FF 0%,#0B7097 121%); /* FF3.6+ */
+		background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#1e5799), color-stop(50%,#2989d8), color-stop(51%,#207cca), color-stop(100%,#7db9e8)); /* Chrome,Safari4+ */
+		background: -webkit-radial-gradient(center, ellipse cover, #6FE2FF 0%,#0B7097 121%); /* Chrome10+,Safari5.1+ */
+		background: -o-radial-gradient(center, ellipse cover, #6FE2FF 0%,#0B7097 121%); /* Opera 12+ */
+		background: -ms-radial-gradient(center, ellipse cover,#6FE2FF 0%,#0B7097 121%); /* IE10+ */
+		background: radial-gradient(ellipse at center, #6FE2FF 0%,#0B7097 121%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+		z-index: 1000;
+	}
+
+	.load_title{
+		color: white;
+		position: fixed;
+		left: 50%;
+		top: 50%;
+		font-size: 2em;
+		font-weight: bold;
+		font-family: Helvetica;
+		letter-spacing: -4.2px;
+		margin-left: -90px;
+		margin-top: -65px;
+		/*text-shadow: 0 2px 3px rgba(0,0,0,0.5);*/
+	}
+
+	.load_tagline{
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		color: white;
+		font-size: 1.1em;
+		margin-left: -127px;
+		margin-top: 35px;
+		/*text-shadow: 0 1px 1px rgba(0,0,0,0.5);*/
+	}
+
+	.load_icon{
+		position: fixed;
+		left: 50%;
+		top: 50%;
+		margin-left: -25px;
+		margin-top: -25px;
+		color: white;
+		z-index: 1000;
+	}
+
+	.load_icon.ng-enter,
+	.load_icon.ng-leave.ng-leave-active{
+		margin-top: 200px;
+	}
+
+	.load_icon.ng-leave,
+	.load_icon.ng-enter.ng-enter-active{
+		margin-top: -25px;
+	}
+
+	.load_icon img{
+		width: 50px;
+	}
+</style>
+<div class="load_page" ng-if="loading">
+	<div class="load_title">
+		<span>r</span>
+      	<span>e</span>
+      	<span>a</span>
+      	<span>d</span>
+      	<span>e</span>
+      	<span>r</span>
+      	<span>'</span>
+      	<span>s</span>
+      	<span>&nbsp;</span>
+      	<span>d</span>
+      	<span>o</span>
+      	<span>o</span>
+      	<span>r</span>
+	</div>
+	<div class="load_tagline"><span class="icon-quote-left"></span>&nbsp;Live and build the years with books.&nbsp;<span class="icon-quote-right"></span></div>
+	<div class="load_icon animate-slow"
+		 ng-if="drop_icon">
+		<img src="assets/preloader.gif" />
+	</div>
+</div>

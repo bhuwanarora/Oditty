@@ -1,0 +1,147 @@
+
+<div ng-if="website.show_search_page"
+    class="search_animate animate-very-slow" 
+    ng-click="stopSearching($event)"
+    ng-controller="searchController">
+	<div class="search_page"
+	     ng-style="search_style">
+		<div class="logo">
+	    <span>r</span>
+	    <span>e</span>
+	    <span>a</span>
+	    <span>d</span>
+	    <span>e</span>
+	    <span>r</span>
+	    <span>'</span>
+	    <span>s</span>
+	    <span>&nbsp;</span>
+	    <span>d</span>
+	    <span>o</span>
+	    <span>o</span>
+	    <span>r</span>
+	  </div>
+	    <!-- <div class="logo">reader's door</div> -->
+		<div class="tagline">
+			<span class="icon-quote-left"></span>
+			<span>Live and build the years with books.</span>
+			<span class="icon-quote-right"></span></div>
+		<!-- <div class="login_button" 
+			 ng-click="toggle_login_panel()"
+		     ng-show="!user.logged">
+		     <span ng-if="!show_login_form">
+		     	Log In
+		     	<span class="icon-plus"></span>
+		     </span>
+		     <span ng-if="show_login_form">
+		     	Search
+		     	<span class="icon-close"></span>
+		     </span>
+		</div> -->
+	  <hr>
+		<!-- <select ng-options="type for type in ['R.D.', 'Books', 'Authors', 'Readers']"> -->
+		</select>
+	  <search-bar></search-bar>
+	  	<div class="nav_menu"> 
+		  <ul class="nav" ng-if="user.logged"> 
+		    <li><a ng-href="#user/{{user.id}}/recommendations/books">
+		    		<span class="icon-book"></span><br/>
+		    		<!-- <span>Explore Books</span> -->
+		    	</a></li> 
+		    <li><a ng-href="#user/{{user.id}}/recommendations/authors">
+		    		<span class="icon-pen"></span><br/>
+		    		<!-- <span>Follow Authors</span> -->
+		    	</a></li> 
+		    <li><a ng-href="#user/{{user.id}}/recommendations/readers">
+		    		<span class="icon-users"></span><br/>
+		    		<!-- <span>Meet Readers</span> -->
+		    	</a></li> 
+		  </ul> 
+		</div>
+		<!-- <div class="internal_links" ng-if="user.logged">
+			<a ng-href="#book/1/timeline" class="animate-fast">
+				<div class="heading">
+					<span class="icon-book-alt2"></span>
+					<span>Reading Timeline</span>
+				</div>
+			</a>
+			<a ng-href="#user/{{user.id}}/timeline" class="animate-fast">
+				<div class="heading">
+					<span class="icon-calendar"></span>
+					<span>Go to Timeline</span>
+				</div>
+			</a>
+			<a ng-href="#user/{{user.id}}/recommendations/books" class="animate-fast">
+				<div class="count">1,000,000,000+</div>
+				<div class="heading">
+					<span class="icon-book"></span>
+					<span>Books</span>
+				</div>
+			</a>
+			<a ng-href="#user/{{user.id}}/recommendations/authors" class="animate-fast">
+				<div class="count">4,000,000+</div>
+				<div class="heading">
+					<span class="icon-pen"></span>
+					<span>Authors</span>
+				</div>
+			</a>
+			<a ng-href="#user/{{user.id}}/recommendations/readers" class="animate-fast">
+				<div class="count">1,000,000+</div>
+				<div class="heading">
+					<span class="icon-users"></span>
+					<span>Readers</span>
+				</div>
+			</a>
+		</div> -->
+	  <div class="secondary_login animate-fast" 
+	       ng-click="toggle_login_panel()"
+	       ng-if="!user.logged && !show_login_form">
+	    Login to explore recommendations.
+	  </div>
+	</div>
+	<div class="login_box animate-fast"
+		ng-if="!user.logged && show_login_form">
+		<div class="close button_effect" ng-click="close_login_box()">x</div>
+		<div class="header">
+			Login to explore recommendations.
+			<hr>
+		</div>
+		<div class="fb" 
+			 ng-show="!user.logged"
+		     ng-disabled="!facebookReady"
+		     ng-click="intent_login()">
+		</div>
+		<div class="google">
+			<google-plus-signin clientid="88213598927-9fij1u8tf2ldf4apf6qob4hgu0supj54.apps.googleusercontent.com"
+			ng-show="!user.logged"></google-plus-signin>
+		</div>
+		<form class="login_form"
+	        ng-model="user">
+	      	<input class="email" 
+	      	       type="email" 
+	      	       ng-model="user.email" 
+	      	       placeholder="Email"
+	      	       spellcheck="false" 
+	      	       required /><br />
+	      	<input class="password" 
+	      	       type="password" 
+	      	       ng-model="user.password" 
+	      	       placeholder="Password" 
+	      	       spellcheck="false"
+	      	       required /><br />
+	      	
+	      	<div class="authenticate authenticate_left" ng-click="authenticate(user)" type="button">
+	      		<span ng-show="!loading_icon">
+	      			<span>LOG IN</span>
+	      		<span ng-show="loading_icon"><img src="assets/loader2.gif" width="20px"></span>
+	      	</div>
+	      	<div class="authenticate" ng-click="authenticate(user)" type="button">
+	      		<span ng-show="!loading_icon">
+	      			<span>SIGN UP</span>
+	      		<span ng-show="loading_icon"><img src="assets/loader2.gif" width="20px"></span>
+	      	</div>
+	    </form>
+	</div>
+    
+</div>
+<!-- <div class="search_focus" ng-if="website.searching">
+</div> -->
