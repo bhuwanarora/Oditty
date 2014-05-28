@@ -1,5 +1,5 @@
 module DominantColorHelper
-  require 'rmagick'
+  # require 'rmagick'
   TOP_N = 10           # Number of swatches
    
   # Create a 1-row image that has a column for every color in the quantized
