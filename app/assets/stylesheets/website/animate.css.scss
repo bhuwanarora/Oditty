@@ -153,15 +153,11 @@
 
 .main_view.ng-enter,
 .main_view.ng-leave.ng-leave-active{
-	width: 0px;
-	height: 0px;
 	opacity: 0;
 }
 
 .main_view.ng-leave,
 .main_view.ng-enter.ng-enter-active{
-	width: 100%;
-	height: 100%;
 	opacity: 1;
 }
 
