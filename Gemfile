@@ -68,8 +68,6 @@ gem 'freebase-api'
 gem 'fb_graph'
 gem 'treetop'
 gem 'polyglot'
-
-gem 'heroku-deflater', :group => :production
 # gem 'rails_admin_example_theme', :git => 'git://github.com/bbenezech/rails_admin_example_theme.git'
 
 group :doc do
