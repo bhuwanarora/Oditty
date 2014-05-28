@@ -1,7 +1,7 @@
 var websiteApp = angular.module('websiteApp', ['ngRoute', 'ngAnimate', 
                   'monospaced.mousewheel', 'facebook', 
                   'directive.g+signin', 'ngMap', 'cropme',
-                  'duScroll', 'adaptive.motion', 'ngDropdowns', 'sticky']);
+                  'duScroll', 'ngDropdowns', 'sticky']);
 websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
   $routeProvider
   .when('/search', {
