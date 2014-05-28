@@ -1,5 +1,5 @@
-websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout', 'websiteService', 'Facebook', '$document', 'scroller', '$window', '$motion',
-	function($scope, $rootScope, $timeout, websiteService, Facebook, $document, scroller, $window, $motion){
+websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout', 'websiteService', 'Facebook', '$document', 'scroller', '$window',
+	function($scope, $rootScope, $timeout, websiteService, Facebook, $document, scroller, $window){
 	$scope.bindHorizontalScroll = function(event, delta, deltaX, deltaY){
 		if(!$scope.show_notifications){
 			event.preventDefault();

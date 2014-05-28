@@ -337,7 +337,7 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', function($timeout, $sce){
 	}
 }]);
 
-websiteApp.directive('message', ['$motion', function($motion){
+websiteApp.directive('message', function(){
 	return{
 		restrict: 'E',
 		controller: ['$scope', function($scope){
@@ -351,21 +351,21 @@ websiteApp.directive('message', ['$motion', function($motion){
 			}
 
 			_init_motion_adaption = function(){
-				$motion.start();
+				// $motion.start();
 				
-				$motion.onSwipeLeft(function(){
-					console.log("%c SWIPE LEFT", "color: blue;");
-					$scope.scroll_one_page_right();
-				});
-				$motion.onSwipeRight(function(){
-					console.log("%c SWIPE RIGHT", "color: blue;");
-					$scope.scroll_one_page_left();
-				});
+				// $motion.onSwipeLeft(function(){
+				// 	console.log("%c SWIPE LEFT", "color: blue;");
+				// 	$scope.scroll_one_page_right();
+				// });
+				// $motion.onSwipeRight(function(){
+				// 	console.log("%c SWIPE RIGHT", "color: blue;");
+				// 	$scope.scroll_one_page_left();
+				// });
 			}
 
 			_init = function(){
 				$scope.message_closed = true;
-				_init_motion_adaption();
+				// _init_motion_adaption();
 				// $scope.message = 'Allow your webcam. Swipe Left|Right to look for more books.'
 			}
 
@@ -373,7 +373,7 @@ websiteApp.directive('message', ['$motion', function($motion){
 		}],
 		templateUrl: 'assets/angular/widgets/partials/message.html'
 	}
-}]);
+});
 
 websiteApp.directive('notification', function(){
 	return{

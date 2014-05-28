@@ -1,7 +1,7 @@
 var websiteApp = angular.module('websiteApp', ['ngRoute', 'ngAnimate', 
                   'monospaced.mousewheel', 'facebook', 
                   'directive.g+signin', 'ngMap', 'cropme',
-                  'duScroll', 'ngDropdowns', 'adaptive.motion', 'sticky']);
+                  'duScroll', 'ngDropdowns', 'sticky']);
 websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
   $routeProvider
   .when('/search', {
@@ -72,13 +72,13 @@ angular.element(document).ready(function() {
   console.timeEnd('bootstrap');
 });
 
-websiteApp.config(['FacebookProvider', '$motionProvider',
-    function(FacebookProvider, $motionProvider){
-      $motionProvider.setTreshold({
-        'rgb': 150,
-        'move': 1,
-        'bright': 300
-      });
+websiteApp.config(['FacebookProvider',
+    function(FacebookProvider){
+      // $motionProvider.setTreshold({
+      //   'rgb': 150,
+      //   'move': 1,
+      //   'bright': 300
+      // });
       var myAppId = '667868653261167';
      
      // FacebookProvider.setAppId('myAppId');
