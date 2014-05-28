@@ -13,32 +13,32 @@
 
     <!-- jquery -->
     <!-- angular vendors -->
-    <%#= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/angular/vendors/*.js")] %>
+    <%= javascript_include_tag *Dir[Rails.root.join("/assets/angular/vendors/*.js")] %>
     <!-- angular libs -->
-    <%#= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/lib/*.js")] %>
+    <%= javascript_include_tag *Dir[Rails.root.join("/assets/lib/*.js")] %>
     <!-- angular apps -->
-    <%#= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/angular/apps/*.js")] %>
+    <%= javascript_include_tag *Dir[Rails.root.join("/assets/angular/apps/*.js")] %>
     <!-- angular directives -->
-    <%#= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/angular/directives/**/*.js")] %>
+    <%= javascript_include_tag *Dir[Rails.root.join("/assets/angular/directives/**/*.js")] %>
     <!-- angualar services -->
-    <%#= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/angular/services/*.js")] %>
+    <%= javascript_include_tag *Dir[Rails.root.join("/assets/angular/services/*.js")] %>
     <!-- angular widgets -->
-    <%#= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/angular/widgets/**/*.js")] %>
+    <%= javascript_include_tag *Dir[Rails.root.join("/assets/angular/widgets/**/*.js")] %>
     <!-- angular controllers -->
-    <%#= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/angular/controllers/*.js")] %>
+    <%= javascript_include_tag *Dir[Rails.root.join("/assets/angular/controllers/*.js")] %>
 
-    <%= javascript_include_tag Rails.root.join("/assets/angular/vendors/angular.min.js") %>
+    <%#= javascript_include_tag Rails.root.join("/assets/angular/vendors/angular.min.js") %>
 
 
-    <%= javascript_include_tag Rails.root.join("/assets/min/angular/vendors.js") %>
-    <%= javascript_include_tag Rails.root.join("/assets/min/angular/libs.js") %>
-    <%= javascript_include_tag Rails.root.join("/assets/min/angular/apps/website_app.js") %>
-    <%= javascript_include_tag Rails.root.join("/assets/min/angular/directives.js") %>
-    <%= javascript_include_tag Rails.root.join("/assets/min/angular/services.js") %>
+    <%#= javascript_include_tag Rails.root.join("/assets/min/angular/vendors.js") %>
+    <%#= javascript_include_tag Rails.root.join("/assets/min/angular/libs.js") %>
+    <%#= javascript_include_tag Rails.root.join("/assets/min/angular/apps/website_app.js") %>
+    <%#= javascript_include_tag Rails.root.join("/assets/min/angular/directives.js") %>
+    <%#= javascript_include_tag Rails.root.join("/assets/min/angular/services.js") %>
 
     <!-- angular controllers -->
-    <%= javascript_include_tag Rails.root.join("/assets/min/angular/controllers.js") %>
-    <%= javascript_include_tag Rails.root.join("/assets/min/angular/templates.min.js") %>
+    <%#= javascript_include_tag Rails.root.join("/assets/min/angular/controllers.js") %>
+    <%#= javascript_include_tag Rails.root.join("/assets/min/angular/templates.min.js") %>
 
     <link rel="stylesheet" type="text/css" href="assets/min/recommendation_main.min.css">
     
