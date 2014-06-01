@@ -16,10 +16,8 @@ module.exports = function(grunt) {
           'app/assets/stylesheets/min/site.min.css': [
             'app/assets/stylesheets/min/website.min.css',
             'app/assets/stylesheets/min/animate.min.css',
-            'app/assets/stylesheets/min/icomoon.min.css'
-          ],
-
-          'app/assets/stylesheets/min/recommendation_main.min.css': [
+            'app/assets/stylesheets/min/icomoon.min.css',
+            'app/assets/stylesheets/min/search_page.min.css',
             'app/assets/stylesheets/min/recommendation.min.css',
             'app/assets/stylesheets/min/focused_tooltip.min.css'
           ]
@@ -101,7 +99,8 @@ module.exports = function(grunt) {
             dest: 'app/assets/javascripts/min/lib'
           },
           {
-            'app/assets/javascripts/min/angular/templates.min.js' : ['app/assets/javascripts/min/angular/templates.js']
+            'app/assets/javascripts/min/angular/templates.min.js' : [
+              'app/assets/javascripts/min/angular/templates.js']
           }
         ]
       }
@@ -151,6 +150,17 @@ module.exports = function(grunt) {
             'app/assets/javascripts/angular/vendors/google_plus_signin.js',
             'app/assets/javascripts/angular/vendors/hamster.min.js',
             'app/assets/javascripts/angular/vendors/sticky.js'],
+
+          'app/assets/javascripts/min/angular/main.js': [
+            'app/assets/javascripts/angular/vendors/angular.min.js',
+            'app/assets/javascripts/min/angular/apps/website_app.js',
+            'app/assets/javascripts/min/angular/vendors.js',
+            'app/assets/javascripts/min/angular/libs.js',
+            'app/assets/javascripts/min/angular/directives.js',
+            'app/assets/javascripts/min/angular/controllers.js',
+            'app/assets/javascripts/min/angular/services.js',
+            'app/assets/javascripts/min/angular/templates.min.js'
+          ]
         },
       },
     },

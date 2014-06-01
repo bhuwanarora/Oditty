@@ -14,13 +14,16 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 				$scope.countryOptions = [];
 
 				recommendationService.get_countries().then(function(data){
-			    	$scope.countryOptions = data["countries"];
+			    	$scope.countryOptions = [{"name": "Reset"}];
+			    	$scope.countryOptions = $scope.countryOptions.concat(data["countries"]);
 			    });
 			    recommendationService.get_time_groups().then(function(data){
-			    	$scope.timeOptions = data["times"];
+			    	$scope.timeOptions = [{"name": "Reset"}];
+			    	$scope.timeOptions = $scope.timeOptions.concat(data["times"]);
 			    });
 			    recommendationService.get_read_times().then(function(data){
-			    	$scope.readTimeOptions = data["read_times"];
+			    	$scope.readTimeOptions = [{"name": "Reset"}];
+			    	$scope.readTimeOptions = $scope.readTimeOptions.concat(data["read_times"]);
 			    });
 			    _init_dropdown_filters();
 			    _collapse_dropdown_menu();

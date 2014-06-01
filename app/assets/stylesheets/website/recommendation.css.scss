@@ -1086,13 +1086,13 @@
 }
 
 .info_cards{
+	background-color: white;
 	display: inline-block;
 	float: left;
 	border: 1px solid #F1F1F1;
 	margin-right: 30px;
 	margin-left: 30px;
 	padding: 8% 3% 3% 3%;
-	color: white;
 	white-space: normal;
 	position: relative;
 	width: 38vh;
@@ -1528,7 +1528,7 @@ and (min-width : 1824px) {
 
 .wrap-dd-select .dropdown {
     position: absolute;
-	bottom: -250%;
+	bottom: -290%;
 	left: 0;
 	right: 0;
 	background: white;

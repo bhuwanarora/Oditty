@@ -257,7 +257,7 @@ websiteApp.directive('authorInteract', ['websiteService', function (websiteServi
 
       // _init();
     }],
-    templateUrl: "/assets/angular/widgets/base/author/author_interact.html"
+    templateUrl: "app/assets/javascripts/angular/widgets/base/author/author_interact.html"
   };
 }]);
 

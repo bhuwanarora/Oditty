@@ -101,6 +101,16 @@ websiteApp.directive('bookNavbar', ['$rootScope', '$timeout', function ($rootSco
   };
 }]);
 
+websiteApp.directive('listDropdown', function(){
+  return{
+    restrict: 'E',
+    controller: function($scope){
+      
+    },
+    templateUrl: "app/assets/javascripts/angular/widgets/base/book/list_dropdown.html"
+  }
+});
+
 websiteApp.directive('bookBookmark', ['$rootScope', '$timeout', 'widgetService', function ($rootScope, $timeout, widgetService) {
   return {
     restrict: 'E',
