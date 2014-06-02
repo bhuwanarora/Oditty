@@ -14,33 +14,34 @@ module Neo4jHelper
 	def self.create_time_nodes
 		self.init
 		node = @neo.create_node("year" => 1000)
-		@neo.add_node_to_index("Year", node)
-		create_internal_nodes_for_an_year(node)
+		@neo.add_label(node, "Year")
+		create_internal_nodes_for_an_year(node, 1000)
 
 		for year in 1001..2015
 			t1 = Time.now
 			prev_node = node
 			node = @neo.create_node("year" => year)
-			node_year = @neo.add_node_to_index("Year", node)
+			node_year = @neo.add_label(node, "Year")
 			@neo.create_relationship("Next_year", prev_node, node)
-			create_internal_nodes_for_an_year(node)
+			create_internal_nodes_for_an_year(node, year)
 			t2 = Time.now
 			puts "#{year} #{t2-t1}"
 		end
 
 	end
 
-	def create_internal_nodes_for_an_year(node)
+	def create_internal_nodes_for_an_year(node, year)
 		for month_count in 1..12 do
 			month_node = @neo.create_node("month" => month_count)
 			@neo.create_relationship("Has_month", node, month_node)
-			@neo.add_node_to_index("Month", month_node)
+			@neo.add_label(month_node, "Month")
 
 			days = Time.days_in_month(month_count, year)
+			puts "#{days}-#{month_count}-#{year}"
 			for day in 1..days do
-				day_node = @neo.create_node("day", day)
+				day_node = @neo.create_node("day" => day)
 				@neo.create_relationship("Has_day", month_node, day_node)
-				@neo.add_node_to_index("Day", day_node)
+				@neo.add_label(day_node, "Day")
 			end
 		end
 	end
