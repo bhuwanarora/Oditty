@@ -149,8 +149,9 @@ input:focus{
 .custom_radio{
     width: 12px !important;
     -webkit-appearance: none;
-    color: white;
+    color: #717070;
     font-weight: bolder;
+    outline: none !important;
 }
 
 .custom_radio:before{

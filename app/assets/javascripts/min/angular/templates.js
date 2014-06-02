@@ -69,6 +69,11 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('app/assets/javascripts/angular/widgets/base/book/list_dropdown.html',
+    ""
+  );
+
+
   $templateCache.put('app/assets/javascripts/angular/widgets/base/book/mark_as_read.html',
     "<div class=\"left_action button_effect\" ng-class=\"{'left_action_active':book.status}\" ng-click=\"markAsRead($event)\"><span ng-show=\"!book.status\"><span>Mark as Read</span> <span class=\"icon-check-square-o\"></span></span> <span ng-show=\"book.status\"><span>Mark as Unread</span> <span class=\"icon-check-square-o glow_shelf\"></span></span></div>"
   );
@@ -129,7 +134,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('app/assets/javascripts/angular/widgets/base/widget/widget_thumb.html',
-    "<div class=\"animate-fast widget_thumb\" ng-class=\"{'widget_thumb_focus': hovered}\" ng-style=\"thumb_style\"></div>"
+    "<div class=\"animate-fast widget_thumb\" ng-class=\"{'widget_thumb_focus': hovered}\" ng-style=\"thumb_style\"></div><div class=\"description\"><div><b>{{book.title | uppercase}}</b></div><div>by {{book.author_name | uppercase}}</div></div>"
   );
 
 

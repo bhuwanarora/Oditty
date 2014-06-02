@@ -9,37 +9,7 @@ module Api
 			end
 
 			def self.push_recommendations
-				test_book = {:title => "test_book",
-							  :author_name => "test_author",
-							  :tags => [
-							  	{:name => "Philosophy", :url => "javascript:void(0);"},
-							  	{:name => "India", :url => "javascript:void(0);"},
-							  	{:name => "Spirituality", :url => "javascript:void(0);"}
-							  ],
-							  :thumb => {
-							  	
-							  },
-							  :rating => 4,
-							  :status => 0,
-							  :read_timer => 2,
-							  :bookmark_status => 1,
-							  :readers_count => "1112",
-							  :discussions_count => "123",
-							  :reviews_count => "51",
-							  :news => [{:description => "Billy Corgan to Perform Eight-Hour Ambient Jam Inspired by Hermann 
-							  	Hesse's Siddhartha", :from => "Lindsay Zoladz"}, 
-							  	{:description => "Billy Corgan to Perform Eight-Hour Ambient Jam Inspired by Hermann 
-							  	Hesse's Siddhartha", :from => "Lindsay Zoladz"},]
-						  }
-				test_book = test_book.merge(
-					:thumb => {
-						:url => "assets/books/a2.jpeg",
-						:background_color => "#F9B131"},
-					:category => {:name => "Hermann Hesse Fan", 
-								:url => "javascript:void(0);",
-								:background_color => "#3cb878",
-								:description => ""},
-					:id => 13)
+				self.recommendations
 			end
 
 			def self.get_timeline id
@@ -121,85 +91,78 @@ module Api
 			end
 
 			def self.recommendations
-				test_name = Filter.where(:id => JSON.parse(params[:q])["more_filters"]).pluck(:name) rescue "City"
-
-				test_book = {:tags => [
-							  	{:name => "Philosophy", :url => "javascript:void(0);"},
-							  	{:name => "Art", :url => "javascript:void(0);"},
-							  	{:name => "20th Century", :url => "javascript:void(0);"}
-							  ],
-							  :thumb => {
-							  	
-							  },
-							  :rating => 5,
-							  :read_timer => 0,
-							  :bookmark_status => 0,
-							  :readers_count => "112",
-							  :discussions_count => "23",
-							  :reviews_count => "5",
-							  :news => [{:description => "", :from => ""}]
-						  }
-				test_book1 = test_book.merge(
-					:status => 0,
-					:thumb => {
-						:url => "assets/books/20.jpeg",
-						:background_color => "#915972"},
-					:category => {:name => "Must Read", 
-								:url => "javascript:void(0);", 
-								:background_color => "#3cb878", 
-								:description => "Highly rated book"},
-					:id => 1)
-
-				test_book2 = test_book.merge(
-					:status => 1,
-					:thumb => {
-						:url => "assets/books/15.jpeg",
-						:background_color => "#E9BC4B"},
-					:category => {:name => "Quick Read", 
-								:url => "javascript:void(0);", 
-								:background_color => "#AD2B2B",
-								:description => ""},
-					:id => 2)
-
-
-				test_book3 = test_book.merge(
-					:status => 2,
-					:thumb => {
-						:url => "assets/books/11.jpeg",
-						:background_color => "#F4EFE9"},
-					:category => {:name => "Recommendation From Friends", 
-								:url => "javascript:void(0);", 
-								:background_color => "#87ABC5",
-								:description => ""},
-					:id => 3)
-
-
-				test_book4 = test_book.merge(
-					:status => 0,
-					:thumb => {
-						:url => "assets/books/14.jpeg",
-						:background_color => "#55504C"},
-					:category => {:name => "Feeling Philosophical", 
-								:url => "javascript:void(0);", 
-								:background_color => "#fbaf5d",
-								:description => ""},
-					:id => 4)
-
-
-				test_book5 = test_book.merge(
-					:status => 0,
-					:thumb => {
-						:url => "assets/books/a2.jpeg",
-						:background_color => "#586846"},
-					:category => {:name => "Feeling Nomadic", 
-								:url => "javascript:void(0);", 
-								:background_color => "#fbaf5d",
-								:description => ""},
-					:id => 5)
-
-
-				# count = params[:count]
-				books = [test_book1, test_book2, test_book3, test_book4, test_book5]
+				@neo = Neography::Rest.new
+				# random = Random.new.rand(1..100)
+				# WHERE ID(book)%"+random.to_s+"=0 
+				books = @neo.execute_query("MATCH (book:Book) 
+											WHERE rand()>0.3
+												AND book.gr_rating = '5.00'
+											RETURN book 
+											ORDER BY book.gr_ratings_count DESC, book.gr_reviews_count DESC
+											LIMIT 5")["data"]
+				results = []
+				for book in books
+					book = book[0]["data"]
+					isbn = book["isbn"].split(",")[0]
+					thumb = "http://covers.openlibrary.org/b/isbn/"+isbn+"-L.jpg" rescue ""
+					book = {
+						:title => book["title"],
+						:author_name => book["author_name"],
+						:rating => book["gr_rating"].to_i,
+						:readers_count => book["gr_ratings_count"],
+						:discussions_count => book["gr_reviews_count"],
+						:reviews_count => book["gr_reviews_count"],
+						:published_year => book["published_year"],
+						:thumb => {
+							:url => thumb
+						},
+						:category => {
+							:name => "test"
+						},
+						:summary => book["description"],
+						:users => [
+							{
+								:id => 1,
+								:url => "",
+								:name => "test user",
+								:thumb => "assets/profile_pic.jpeg"
+							},
+							{
+								:id => 2,
+								:url => "",
+								:name => "test user",
+								:thumb => "assets/profile_pic.jpeg"
+							},
+							{
+								:id => 3,
+								:url => "",
+								:name => "test user",
+								:thumb => "assets/profile_pic.jpeg"
+							},
+							{
+								:id => 4,
+								:url => "",
+								:name => "test user",
+								:thumb => "assets/profile_pic.jpeg"
+							},
+							{
+								:id => 5,
+								:url => "",
+								:name => "test user",
+								:thumb => "assets/profile_pic.jpeg"
+							},
+							{
+								:id => 6,
+								:url => "",
+								:name => "test user",
+								:thumb => "assets/profile_pic.jpeg"
+							}
+						],
+						:users_count => 15
+					}
+					results.push book
+				end
+				results
 			end
 
 			def self.detailed_book id
@@ -222,66 +185,6 @@ module Api
 			def self.tooltip
 				info = {
 					:id => 1,
-					:title => "test_book",
-					:author_name => "test_author",
-					:summary => "Siddhartha is a novel by Hermann Hesse 
-						that deals with the spiritual journey of 
-						self-discovery of a man named Siddhartha 
-						during the time of the Gautama Buddha. 
-						The book, Hesse's ninth novel, was written 
-						in German, in a simple, lyrical style. It was 
-						published in the U.S. in 1951 and became 
-						influential during the 1960s. Hesse dedicated 
-						Siddhartha to his wife Ninon and supposedly 
-						afterwards to Romain Rolland and Wilhelm 
-						Gundert. The word Siddhartha is made up 
-						of two words in the Sanskrit language, 
-						siddha + artha, which together means 
-						\"he who has found meaning\" or \"he who 
-						has attained his goals\". In fact, the Buddha's 
-						own name, before his renunciation, was 
-						Siddhartha Gautama, Prince of Kapilvastu, 
-						Nepal. In this book, the Buddha is referred 
-						to as \"Gotama\".",
-					:users => [
-						{
-							:id => 1,
-							:url => "",
-							:name => "test user",
-							:thumb => "assets/profile_pic.jpeg"
-						},
-						{
-							:id => 2,
-							:url => "",
-							:name => "test user",
-							:thumb => "assets/profile_pic.jpeg"
-						},
-						{
-							:id => 3,
-							:url => "",
-							:name => "test user",
-							:thumb => "assets/profile_pic.jpeg"
-						},
-						{
-							:id => 4,
-							:url => "",
-							:name => "test user",
-							:thumb => "assets/profile_pic.jpeg"
-						},
-						{
-							:id => 5,
-							:url => "",
-							:name => "test user",
-							:thumb => "assets/profile_pic.jpeg"
-						},
-						{
-							:id => 6,
-							:url => "",
-							:name => "test user",
-							:thumb => "assets/profile_pic.jpeg"
-						}
-					],
-					:users_count => 15,
 					:recommended => 0
 				}
 			end

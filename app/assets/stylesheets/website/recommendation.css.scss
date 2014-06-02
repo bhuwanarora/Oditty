@@ -221,6 +221,7 @@
 	right: 1px;
 	bottom: 11%;
 	cursor: pointer;
+	z-index: 1;
 }
 
 .card .widget_thumb_focus{
@@ -232,20 +233,12 @@
 
 .card .description{
 	position: absolute;
-	top: 10px;
+	top: 40%;
 	left: 10px;
 	right: 10px;
-	color: white;
-	background-color: rgba(0, 0, 0, 0.44);
-	overflow: auto;
-	font-size: 1.2em;
-	padding: 10px;
-	text-shadow: 0 2px 3px rgba(1,1,1,0.5);
-	text-shadow: 0 2px 3px rgba(1, 1, 1, 0.5);
- 	background: -webkit-linear-gradient(rgba(0, 0, 0, 0.7), transparent); 
-	background: -o-linear-gradient(rgba(0, 0, 0, 0.7), transparent);
-	background: -moz-linear-gradient(rgba(0, 0, 0, 0.7), transparent);
-	background: linear-gradient(rgba(0, 0, 0, 0.7), transparent);
+	font-size: 0.9em;
+	text-align: center;
+	white-space: initial;
 }
 
 .card .thumb{
@@ -1119,6 +1112,7 @@
 	width: 90%;
 	padding: 10px;
 	font-size: 1em;
+	outline: 1px solid #D3D3D3;
 }
 /*
 .info_typeahead_options{
@@ -1163,13 +1157,12 @@
 
 .info_cards .footer .next,
 .info_cards .footer .prev{
-	color: white;
 	cursor: pointer;
 	text-align: center;
 	padding: 15px;
 	font-size: 2em;
 	background-color: rgba(255, 255, 255, 0.01);
-	border: 1px solid rgba(255, 255, 255, 0.21);
+	border: 1px solid #CFCFCF;
 }
 
 .tags_header{

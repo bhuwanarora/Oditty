@@ -59,13 +59,13 @@ websiteApp.directive('book', ['widgetService', '$rootScope', function (widgetSer
       _init = function(){
         // $scope.active_book_filter = true;
         var book_id = $scope.book.id;
-        widgetService.populate_tooltips(book_id).then(function(data){
-          $scope.book.title = data.title;
-          $scope.book.author_name = data.author_name;
-          $scope.book.users = data.users;
-          $scope.book.summary = data.summary;
-          $scope.book.users_count = data.users_count;
-        });
+        // widgetService.populate_tooltips(book_id).then(function(data){
+          // $scope.book.title = data.title;
+          // $scope.book.author_name = data.author_name;
+          // $scope.book.users = data.users;
+          // $scope.book.summary = data.summary;
+          // $scope.book.users_count = data.users_count;
+        // });
         var margin_right = (Math.floor(Math.random() * 20) + 1)+"px";
         var margin_top = (Math.floor(Math.random() * 50) + 1)+"px";
         var margin_right_neg = (Math.random() < 0.5);

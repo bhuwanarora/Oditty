@@ -100,8 +100,6 @@
 
 .focused_tooltip{
 	position: fixed;
-	/*left: 50%;*/
-	/*margin-left: -220px;*/
 	top: 50px;
 	width: 42%;
 	min-width: 400px;
@@ -109,6 +107,7 @@
 	white-space: initial;
 	box-shadow: 0 7px 15px rgba(0,0,0,0.25);
 	border: 1px solid #FFFFFF;
+	z-index: 1;
 	/* for big screens */
 }
 
