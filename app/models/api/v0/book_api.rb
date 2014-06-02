@@ -96,9 +96,8 @@ module Api
 				# WHERE ID(book)%"+random.to_s+"=0 
 				books = @neo.execute_query("MATCH (book:Book) 
 											WHERE rand()>0.3
-												AND book.gr_rating = '5.00'
 											RETURN book 
-											ORDER BY book.gr_ratings_count DESC, book.gr_reviews_count DESC
+											ORDER BY book.gr_ratings_count DESC, book.gr_reviews_count DESC, book.gr_rating DESC
 											LIMIT 5")["data"]
 				results = []
 				for book in books

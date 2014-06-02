@@ -64,6 +64,28 @@ module Neo4jHelper
 		author_node
 	end
 
+	def create_genre genre
+		@neo ||= self.init
+		name = genre.name
+		if(name.include? "'")
+			genre_node = @neo.execute_query('match (a:Genre) where a.name = "'+name+'" return a')
+		else
+			genre_node = @neo.execute_query("match (a:Genre) where a.name = '"+name+"' return a")
+		end
+		genre_present = genre_node["data"].present?
+		if genre_present
+			genre_node = genre_node["data"]
+		else
+			genre_node = @neo.create_node("name" => genre.name,
+										"gr_url" => genre.url,
+										"flag" => genre.flag,
+										"gr_book_count" => genre.book_count)
+			@neo.add_label(genre_node, "Genre")
+		end
+
+		genre_node
+	end
+
 	def self.book_exists? book_url
 		@neo ||= self.init
 		@neo.execute_query("MATCH (b:Book{url:'"+book_url+"'}) RETURN b")["data"].present?
@@ -87,7 +109,7 @@ module Neo4jHelper
 			if book.page_count.nil?
 				page_count = 0
 			else
-				page_count = book.page_count 
+				page_count = book.page_count.to_i
 			end
 
 			if book.isbn.present?
@@ -100,6 +122,11 @@ module Neo4jHelper
 			else
 				description = ""
 			end
+
+			reviews_count = book.reviews_count.to_i rescue 0
+			ratings_count = book.ratings_count.to_i rescue 0
+			
+
 			author_name = book.author_name.gsub("\"", "'")
 			title = book.title.gsub(/\(.*?\)/, '').strip.gsub("\"","'")
 			node_book = @neo.create_node(
@@ -111,10 +138,10 @@ module Neo4jHelper
 				"page_count" => page_count,
 				"author_name" => author_name,
 				"published_year" => published_year,
-				"gr_rating" => book.rating,
+				"gr_rating" => book.rating.to_f,
 				"gr_author_url" => book.author_url,
-				"gr_reviews_count" => book.reviews_count,
-				"gr_ratings_count" => book.ratings_count)
+				"gr_reviews_count" => reviews_count,
+				"gr_ratings_count" => ratings_count)
 
 			@neo.add_label(node_book, "Book")
 			author_node = create_author(author_name, book.author_url)
@@ -137,6 +164,15 @@ module Neo4jHelper
 					self.bind_published_in(title, author_name, year) if year
 				end
 			end
+			genres = GoodReadsBooksGenres.where(:good_reads_book_id => book.id)
+			genres.each do |genre|
+				genre_id = genre.good_reads_genre_id
+				genre = GoodReadsGenre.find(genre_id)
+				genre_node = create_genre genre
+				@neo.create_relationship("Belongs_to", node_book, genre_node)
+			end
+
+			book.update_column("neo_flag", true)
 			title
 		rescue Exception => e
 			debugger
@@ -211,7 +247,6 @@ module Neo4jHelper
 						title = self.create_book book
 						count = count + 1
 						t2 = Time.now
-						book.update_column("neo_flag", true)
 						puts "#{t2-t1} #{count} #{title}"
 					end
 				end
