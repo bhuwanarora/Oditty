@@ -12,9 +12,23 @@ module Api
 
 			end
 
-			def self.search(q, count, type)
-				puts "#{q}, #{count}, #{type}"
+			def self.search_genres filter
+				neo_init
+				match_clause = "MATCH (g:Genre) "
+				return_clause = "RETURN g 
+                                 ORDER BY g.gr_book_count DESC "
+				if filter.chop.present?
+					where_clause = "WHERE g.name =~ '(?i)"+filter+".*'"
+                    limit_clause = "LIMIT 5"
+                	genres = @neo.execute_query(match_clause+where_clause+return_clause+limit_clause)
+                else
+                	limit_clause = "LIMIT 2"
+                	genres = @neo.execute_query(match_clause+return_clause+limit_clause)
+                end
+			end
 
+			def self.search(q, count, type)
+				neo_init
 				if (type.include? 'BOOK')
 					results = GoodReadsBook.where("UPPER(title) LIKE ?", "#{q.upcase}%")
 									   	   .select([:id, :author_name])
@@ -22,9 +36,10 @@ module Api
 									       .limit(count)
 					tester = {:name => "BOOK:"+q.upcase}
 				elsif (type.include? 'AUTHOR') || (type.include? 'READER')
-					results = HumanProfile.where("UPPER(name) LIKE ?", "#{q.upcase}%")
-									   	  .select([:id, :name])
-									      .limit(count)
+					q = "@"+q
+					clause = "MATCH (author:Author) WHERE author.name =~ '(?i)"+q+".*' 
+								RETURN author.name LIMIT "+count.to_s
+					results = @neo.execute_query(clause)
 					tester = {:name => "HUMAN:"+q.upcase}
 				elsif (type.include? 'TAG')
 					results = GoodReadsGenre.where("UPPER(name) LIKE ?", "#{q.upcase}%")
@@ -32,21 +47,16 @@ module Api
 											.limit(count)
 					tester = {:name => "TAG:"+q.upcase}
 				else
-					results = GoodReadsBook.where("UPPER(title) LIKE ?", "#{q.upcase}%")
-									   .select([:id, :author_name])
-									   .select("title as name")
-									   .limit(count)
- 					results |= GoodReadsGenre.where("UPPER(name) LIKE ?", "#{q.upcase}%")
-											.select([:id, :name])
-											.limit(count)
-					results |= HumanProfile.where("UPPER(name) LIKE ?", "#{q.upcase}%")
-									   	  .select([:id, :name])
-									      .limit(count)
-					results = results[0, count]
+					results = @neo.execute_query("MATCH (book:Book) 
+										WHERE book.title =~ '(?i)"+q+".*' 
+										RETURN book.title as name, book.author_name
+										ORDER BY book.gr_rating DESC
+										LIMIT 5")
 					tester = {:name => "RD:"+q.upcase}	
 				end
 				if results.present?
-					results.push tester
+					results
+					# results.push tester
 				else
 					results = []
 					# results = did_you_mean(q, type)
@@ -94,6 +104,11 @@ module Api
 
 				results
 			end
+
+			private
+			def self.neo_init
+                @neo = Neography::Rest.new
+            end
 
 		end
 	end

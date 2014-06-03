@@ -264,7 +264,8 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', function($timeout, $sce){
 	      	customOptions: '@',
 	      	subtitle: '@',
 	      	model: '=',
-	      	onSelect: '&'
+	      	onSelect: '&',
+	      	autoPopulate: '&'
 		},
 		link: ['scope', 'elem', 'attrs', function(scope, elem, attrs){
 
@@ -292,6 +293,7 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', function($timeout, $sce){
 			$scope.key_up = function(){
 				var keyUp = event.keyCode == 38;
 				var keyDown = event.keyCode == 40;
+				debugger
 				if(keyUp){
 					if($scope.current != 0){
 						$scope.set_current($scope.current-1);
@@ -308,7 +310,6 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', function($timeout, $sce){
 						$scope.set_current(0);
 					}
 				}
-				console.log($scope.current);
 			}
 
 			_init = function(){
@@ -321,9 +322,13 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', function($timeout, $sce){
 		  		// elem.find('input')[0].focus();
 		  	}
 
+		  	$scope.auto_populate = function(){
+		  		$scope.autoPopulate();
+		  	}
+
 			$scope.highlight = function(searchItem, textToSearchThrough){
     			return $sce.trustAsHtml(textToSearchThrough
-    				.replace(new RegExp(searchItem, 'gi'), 
+    					.replace(new RegExp(searchItem, 'gi'), 
     					'<span style="font-weight:bold;">$&</span>'));
 			}
 
@@ -331,9 +336,9 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', function($timeout, $sce){
 				$scope.model = selectedItem.toUpperCase();
 			    $scope.current = 0;
 			    $scope.selected = true;
-			    $scope.onSelect();
-			    // $timeout(function() {
-			    // }, 200);
+			    $timeout(function() {
+			    	$scope.onSelect();
+			    }, 200);
 			};
 
 		  	_init();

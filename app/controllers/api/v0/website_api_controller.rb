@@ -4,11 +4,8 @@ module Api
 			def genres
                 @neo ||= neo_init
 				filter = params[:q]
-                genres = @neo.execute_query("MATCH (g:Genre) 
-                                            WHERE g.name = "+filter+"
-                                            RETURN g 
-                                            ORDER BY g.gr_book_count DESC 
-                                            LIMIT 5")
+                genres = SearchApi.search_genres filter
+                
 				results = {:genres => genres}
 				render :json => results, :status => 200
 			end

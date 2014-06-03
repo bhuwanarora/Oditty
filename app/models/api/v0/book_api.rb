@@ -129,6 +129,18 @@ module Api
 						where_clause = where_clause + "AND toInt(y.year) > "+time_range[0]+
 													  " AND toInt(y.year) < "+time_range[1]+" "
 					end
+					if filters["other_filters"]["author"].present?
+						author_name =  filters["other_filters"]["author"]
+						category = "Written by "+ author_name
+						match_clause = match_clause + ", (author:Author)-[:Wrote]->(book) "
+						where_clause = where_clause + "AND author.name =~ '(?i)"+author_name+"' "
+					end
+					if filters["other_filters"]["genre"].present?
+						genre = filters["other_filters"]["genre"]
+						category = "Genre: "+genre
+						match_clause = match_clause + ", (genre:Genre)<-[:Belongs_to]-(book) "
+						where_clause = where_clause + "AND genre.name =~ '(?i)"+genre+"' "
+					end
 					clause = init_match_clause+match_clause+"WHERE "+
 						random_clause+where_clause+return_clause
 					books = @neo.execute_query(clause)["data"]

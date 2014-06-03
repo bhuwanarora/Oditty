@@ -1,6 +1,6 @@
 <div class="typeahead_group {{customOptions}}">
   <div class="typeahead_options" 
-  	   ng-hide="!model.length || selected">
+  	   ng-hide="selected">
     <div ng-repeat="item in filtered = (items | filter:model)  track by $index" 
     		 ng-click="handle_selection(item[title])" 
     		 ng-class="{active:is_current($index, item[title])}" 
@@ -17,6 +17,7 @@
        ng-keydown="selected=false" 
        ng-keypress="navigate_options()"
        ng-keyup="key_up()"
-       ng-mouseenter="focus_on_input()"
+       ng-click="auto_populate()"
+       ng-mouseenter="focus_on_input($event)"
        class="{{custom}}"/>
 </div>

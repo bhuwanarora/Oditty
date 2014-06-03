@@ -121,18 +121,17 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 			    });
 			}
 
-			$scope.on_genre_selection = function(){
-				alert("on_genre_selection");
-				// var filter_name = $scope.author;
-				// $rootScope.filters["author_filter"] = filter_name;
-				// var message = "SUCCESS-'"+filter_name+"' added to filters.";
-				// var timeout_event = notify($rootScope, message, $timeout);
-				// $scope.$emit('reloadRecommendations');
+			$scope.on_genre_selection = function(genre){
+				var filter_name = genre;
+				$rootScope.filters["other_filters"]["genre"] = filter_name;
+				var message = "SUCCESS-'"+filter_name+"' added to filters.";
+				var timeout_event = notify($rootScope, message, $timeout);
+				$scope.$emit('reloadRecommendations');
 
 
-				// $scope.$on('destroy', function(){
-				// 	$timeout.cancel(timeout_event);
-				// });
+				$scope.$on('destroy', function(){
+					$timeout.cancel(timeout_event);
+				});
 			}
 
 			$scope.show_author_options = function(filter, author){
@@ -143,13 +142,17 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 					var params = String.fromCharCode(event.keyCode);
 				}
 				websiteService.search(params, "AUTHOR", 3).then(function(data){
-			    	$scope.authors = data["results"];
+					$scope.authors = [];
+					for(var i=0; i<data.results.data.length; i++){
+						var json = {"name":data.results.data[i][0]};
+						$scope.authors.push(json);
+					}
 			    });
 			}
 
-			$scope.on_author_selection = function(){
-				var filter_name = $scope.author;
-				$rootScope.filters["author_filter"] = filter_name;
+			$scope.on_author_selection = function(author){
+				var filter_name = author;
+				$rootScope.filters["other_filters"]["author"] = filter_name;
 				var message = "SUCCESS-'"+filter_name+"' added to filters.";
 				var timeout_event = notify($rootScope, message, $timeout);
 				$scope.$emit('reloadRecommendations');

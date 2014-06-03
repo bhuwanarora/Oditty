@@ -87,9 +87,9 @@ websiteApp.config(['FacebookProvider',
 ]);
 
 function notify($rootScope, message, $timeout){
-  var message_split = message.split("-");
-  $rootScope.message_type = message_split[0];
-  $rootScope.message = message_split[1];
+  // var message_split = message.split("-");
+  // $rootScope.message_type = message_split[0];
+  $rootScope.message = message;
   $rootScope.notification_active = true;
   var timeout_event = $timeout(function(){
     $rootScope.notification_active = false;

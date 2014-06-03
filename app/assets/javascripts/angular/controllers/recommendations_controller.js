@@ -1,4 +1,4 @@
-websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService){
+websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', 'scroller', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService, scroller){
 
 	$scope.toggle_bookmarked = function(event){
 		if(!$scope.bookmark_selected){
@@ -149,6 +149,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		if($rootScope.filters["filter_type"] == "BOOK"){
 			if($scope.recommendations.books.length >= 30){
 				$scope.recommendations.books = data["recommendations"]["books"];
+				scroller.scrollTo(0, 0, 0);
 			}
 			else{
     			$scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);
@@ -242,9 +243,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		}, oneSec);
 
 		$scope.searching = false;
+    	_get_filters();
 		_init_recommendations();
     	_add_listeners();
-    	_get_filters();
 		_init_notifications();
         _init_analytics();
         _init_shelf();
@@ -254,7 +255,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         _bind_destroy();
         _handle_focused_book();
         _get_friends();
-    	$scope.$emit('moveRight');    
+    	// $scope.$emit('moveRight');    
 	}
 
 	var push_books_timer_event = "";

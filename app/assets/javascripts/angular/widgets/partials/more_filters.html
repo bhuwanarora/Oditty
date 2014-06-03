@@ -18,10 +18,11 @@
 			 	<type-ahead items="genres" 
 			 				prompt="Filter books by a Genre" 
 			 				title="name"
-			 				custom-options = "genre_typeahead_options"
+			 				custom-options="genre_typeahead_options"
 			 				custom="input_filter"
 			 				model="genre" 
-			 				on-select="on_genre_selection()"
+			 				on-select="on_genre_selection(genre, $event)"
+			 				auto-populate="show_genre_options('BOOK', genre)"
 			 				ng-keypress="show_genre_options('BOOK', genre)">
 			 	</type-ahead>
 				<type-ahead items="authors" 
@@ -30,7 +31,7 @@
 			 				custom-options = "author_typeahead_options"
 			 				custom="input_filter"
 			 				model="author"
-			 				on-select="on_author_selection()"
+			 				on-select="on_author_selection(author)"
 			 				ng-keypress="show_author_options('BOOK', author)">
 			 	</type-ahead>
 			</div>
