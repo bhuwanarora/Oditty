@@ -12,6 +12,9 @@ class ApplicationController < ActionController::Base
   end
 
   def check_permission
+    unless ($redis.get 'book_ids').present?
+      $redis.set 'book_ids', ""
+    end
     public_access = ["coming_soon", "invalid_user", "facebook", "google_oauth2", "random_quote", 
                       "email_subscription", "chat", "website", "freebase", "freebase_search",
                       "freebase_resource"]

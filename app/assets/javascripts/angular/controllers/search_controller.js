@@ -55,7 +55,13 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				$scope.year_search = true;
 				var search_placeholder = "by year...";
 				recommendationService.get_time_groups().then(function(data){
-					$scope.search_results = data.times;
+					$scope.search_results = [];
+			    	for(var i=0; i < data["times"].length; i++){
+			    		var time_data = data.times[i][0]["data"];
+			    		var name = time_data["name"]+" ("+time_data["range"]+")";
+			    		var json = {"name": name};
+			    		$scope.search_results = $scope.search_results.concat([json]);
+			    	}
 				});
 			}
 			else if(type == "LIST"){

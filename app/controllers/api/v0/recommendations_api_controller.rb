@@ -36,9 +36,9 @@ module Api
 
 			def recommendations
 				filter_type = (JSON.parse params[:q])["filter_type"]
-				filters = JSON.parse(params[:q])["more_filters"]
+				filters = JSON.parse(params[:q])
 				if filter_type == "BOOK"
-					books = BookApi.recommendations
+					books = BookApi.recommendations filters
 					recommendations =  {:books => books}
 				elsif filter_type == "AUTHOR"
 					authors = AuthorApi.recommendations

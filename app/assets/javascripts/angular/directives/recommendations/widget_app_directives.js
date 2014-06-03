@@ -20,9 +20,11 @@ websiteApp.directive('category', function () {
         }
         if(obj){
           var name = obj.category.name;
-          var description = obj.category.description;
-          $scope.nameArray = name.split('');
-          $scope.descriptionArray = description.split('');
+          // var description = obj.category.description;
+          if(name){
+            $scope.nameArray = name.split('');
+          }
+          // $scope.descriptionArray = description.split('');
           // $scope.category_style = {"background-color": obj.category.background_color};
         }
       }

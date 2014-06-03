@@ -1,7 +1,7 @@
 websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootScope, $timeout){
 	return{
 		restrict: 'E',
-		controller: ['$scope', 'recommendationService', 'websiteService', 
+		controller: ['$scope', 'recommendationService', 'websiteService',
 			function($scope, recommendationService, websiteService){
 			_init = function(){
 				// $scope.$on('initPage', function(event, type){
@@ -19,7 +19,13 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 			    });
 			    recommendationService.get_time_groups().then(function(data){
 			    	$scope.timeOptions = [{"name": "Reset"}];
-			    	$scope.timeOptions = $scope.timeOptions.concat(data["times"]);
+			    	for(var i=0; i < data["times"].length; i++){
+			    		var time_data = data.times[i][0]["data"];
+			    		var name = time_data["name"]+" ("+time_data["range"]+")";
+			    		var json = {"name": name};
+			    		$scope.timeOptions = $scope.timeOptions.concat([json]);
+			    	}
+			    	// $scope.timeOptions = $scope.timeOptions.concat(data["times"]);
 			    });
 			    recommendationService.get_read_times().then(function(data){
 			    	$scope.readTimeOptions = [{"name": "Reset"}];
@@ -42,10 +48,16 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 				$scope.readTimeSelected = {"name": "Filter books by Reading Time"};
 			}
 
-			$scope.advance_filter_changed = function(selected){
+			$scope.highlight = function(searchItem, textToSearchThrough){
+				debugger
+    			return $sce.trustAsHtml(textToSearchThrough.replace(new RegExp(searchItem, 'gi'), '<span style="font-weight:bold;">$&</span>'));
+			}
+
+			$scope.advance_filter_changed = function(selected, type){
 				var message = "SUCCESS-"+selected.name+" added to filters."
 				notify($rootScope, message, $timeout);
-				// $scope.$emit('reloadRecommendations');
+				$rootScope.filters.other_filters[type] = selected.name;
+				$scope.$emit('reloadRecommendations');
 				// debugger
 				// $('.position_dropdown').removeClass('active');
 			}
@@ -107,7 +119,10 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 				}
 				var filter = "q="+params+"&filter="+filter;
 				recommendationService.get_genres(filter).then(function(data){
-			    	$scope.genres = data["genres"];
+					$scope.genres = [];
+					for(var i=0; i<data.genres.data.length; i++){
+						$scope.genres.push(data.genres.data[i][0].data);
+					}
 			    });
 			}
 

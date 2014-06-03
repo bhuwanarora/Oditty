@@ -38,17 +38,17 @@
 			<div class="filters_panel_right">
 			 	<div class="position_dropdown"
 				 	  dropdown-select="countryOptions" 
-				 	  dropdown-onchange="advance_filter_changed(selected)"
+				 	  dropdown-onchange="advance_filter_changed(selected, 'country')"
 				 	  dropdown-model="countrySelected"
 				 	  dropdown-item-label="name"></div>
 			 	<div class="position_dropdown"
 			 		  dropdown-select="readTimeOptions" 
-			 		  dropdown-onchange="advance_filter_changed(selected)"
+			 		  dropdown-onchange="advance_filter_changed(selected, 'readingTime')"
 			 		  dropdown-model="readTimeSelected"
 			 		  dropdown-item-label="name"></div>
 			 	<div class="position_dropdown time_group"
 			 		  dropdown-select="timeOptions" 
-			 		  dropdown-onchange="advance_filter_changed(selected)"
+			 		  dropdown-onchange="advance_filter_changed(selected, 'timeGroup')"
 			 		  dropdown-model="timeSelected"
 			 		  dropdown-item-label="name"></div>
 			</div>

@@ -367,6 +367,24 @@ module Neo4jHelper
 			
 	end
 
+	def self.create_time_groups
+		@neo ||= self.init
+		TimeGroup.all.each do |time_group|
+			range = time_group.time_group.split("-")
+			# time_group_node = @neo.create_node("name" => time_group.name,
+												# "range" => time_group.time_group)
+			# @neo.add_label(time_group_node, "Era")
+			init_year = range[0].to_i
+			end_year = range[1].to_i-1
+			for year in init_year..end_year
+				puts "TimeGroup #{time_group.name} #{time_group.time_group} #{year}"
+				@neo.execute_query("MATCH (t:Era{name:'"+time_group.name+"'}),
+									(y:Year{year:'"+year.to_s+"'})
+									CREATE (y)-[:FromEra]->(t)")
+			end
+		end
+	end
+
 	def self.test
 		@neo ||= self.init
 		t1 = Time.now

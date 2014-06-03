@@ -90,76 +90,126 @@ module Api
 				info = {"moments" => test_moments}
 			end
 
-			def self.recommendations
+			def self.recommendations filters={}
+				book_ids = ($redis.get 'book_ids').split(",")
+				# puts book_ids.sort
 				@neo = Neography::Rest.new
-				# random = Random.new.rand(1..100)
-				# WHERE ID(book)%"+random.to_s+"=0 
-				books = @neo.execute_query("MATCH (book:Book) 
-											WHERE rand()>0.3
-											RETURN book 
-											ORDER BY book.gr_ratings_count DESC, book.gr_reviews_count DESC, book.gr_rating DESC
-											LIMIT 5")["data"]
+				random = Random.new.rand(1..100)
 				results = []
+
+
+				init_match_clause = "MATCH (book:Book) "
+				random_clause = "ID(book)%"+random.to_s+"=0  
+								AND rand() > 0.3
+								AND ALL (id in "+book_ids.to_s+" WHERE toInt(id) <> ID(book)) "
+				return_clause = "WITH book, book.gr_ratings_count * book.gr_reviews_count * book.gr_rating AS weight
+								RETURN book, weight 
+								ORDER BY weight DESC, book.gr_rating DESC 
+								LIMIT 5"
+
+
+				if filters["other_filters"].present?
+					where_clause = ""
+					match_clause = ""
+					if filters["other_filters"]["country"].present?
+						where_clause = where_clause + ""
+						match_clause = match_clause + ""
+					end
+					if filters["other_filters"]["readingTime"].present?
+						where_clause = where_clause + ""
+						match_clause = match_clause + ""
+					end
+					if filters["other_filters"]["timeGroup"].present?
+						category = "Era: "+filters["other_filters"]["timeGroup"].gsub(/\(.*?\)/, "").strip
+						time_range =  filters["other_filters"]["timeGroup"][/\(.*?\)/]
+										.gsub("(","")
+										.gsub(")","")
+										.split("-")
+						match_clause = match_clause + ", (book)-[:Published_in]->(y:Year) "
+						where_clause = where_clause + "AND toInt(y.year) > "+time_range[0]+
+													  " AND toInt(y.year) < "+time_range[1]+" "
+					end
+					clause = init_match_clause+match_clause+"WHERE "+
+						random_clause+where_clause+return_clause
+					books = @neo.execute_query(clause)["data"]
+				else
+					category = "Must Reads"
+					books = @neo.execute_query(init_match_clause+"WHERE "+
+						random_clause+return_clause)["data"]
+				end
+
+
 				for book in books
-					book = book[0]["data"]
-					isbn = book["isbn"].split(",")[0]
-					thumb = "http://covers.openlibrary.org/b/isbn/"+isbn+"-L.jpg" rescue ""
-					book = {
-						:title => book["title"],
-						:author_name => book["author_name"],
-						:rating => book["gr_rating"].to_i,
-						:readers_count => book["gr_ratings_count"],
-						:discussions_count => book["gr_reviews_count"],
-						:reviews_count => book["gr_reviews_count"],
-						:published_year => book["published_year"],
-						:thumb => {
-							:url => thumb
-						},
-						:category => {
-							:name => "test"
-						},
-						:summary => book["description"],
-						:users => [
-							{
-								:id => 1,
-								:url => "",
-								:name => "test user",
-								:thumb => "assets/profile_pic.jpeg"
+					node_id = book[0]["self"].gsub("http://localhost:7474/db/data/node/", "")
+					book_sent = book_ids.include? node_id
+					puts book_sent
+					unless book_sent
+						if book_ids.present?
+							book_ids = ($redis.get 'book_ids')+","+node_id
+						else
+							book_ids = node_id
+						end
+						$redis.set 'book_ids', book_ids
+						book = book[0]["data"]
+						isbn = book["isbn"].split(",")[0]
+						thumb = "http://covers.openlibrary.org/b/isbn/"+isbn+"-L.jpg" rescue ""
+						book = {
+							:title => book["title"],
+							:author_name => book["author_name"],
+							:rating => book["gr_rating"].to_f*2,
+							:readers_count => book["gr_ratings_count"],
+							:discussions_count => book["gr_reviews_count"],
+							:reviews_count => book["gr_reviews_count"],
+							:published_year => book["published_year"],
+							:thumb => {
+								:url => thumb
 							},
-							{
-								:id => 2,
-								:url => "",
-								:name => "test user",
-								:thumb => "assets/profile_pic.jpeg"
+							:category => {
+								:name => category
 							},
-							{
-								:id => 3,
-								:url => "",
-								:name => "test user",
-								:thumb => "assets/profile_pic.jpeg"
-							},
-							{
-								:id => 4,
-								:url => "",
-								:name => "test user",
-								:thumb => "assets/profile_pic.jpeg"
-							},
-							{
-								:id => 5,
-								:url => "",
-								:name => "test user",
-								:thumb => "assets/profile_pic.jpeg"
-							},
-							{
-								:id => 6,
-								:url => "",
-								:name => "test user",
-								:thumb => "assets/profile_pic.jpeg"
-							}
-						],
-						:users_count => 15
-					}
-					results.push book
+							:summary => book["description"],
+							:users => [
+								{
+									:id => 1,
+									:url => "",
+									:name => "test user",
+									:thumb => "assets/profile_pic.jpeg"
+								},
+								{
+									:id => 2,
+									:url => "",
+									:name => "test user",
+									:thumb => "assets/profile_pic.jpeg"
+								},
+								{
+									:id => 3,
+									:url => "",
+									:name => "test user",
+									:thumb => "assets/profile_pic.jpeg"
+								},
+								{
+									:id => 4,
+									:url => "",
+									:name => "test user",
+									:thumb => "assets/profile_pic.jpeg"
+								},
+								{
+									:id => 5,
+									:url => "",
+									:name => "test user",
+									:thumb => "assets/profile_pic.jpeg"
+								},
+								{
+									:id => 6,
+									:url => "",
+									:name => "test user",
+									:thumb => "assets/profile_pic.jpeg"
+								}
+							],
+							:users_count => 15
+						}
+						results.push book
+					end
 				end
 				results
 			end

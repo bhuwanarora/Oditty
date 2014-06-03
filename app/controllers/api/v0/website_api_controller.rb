@@ -2,13 +2,12 @@ module Api
 	module V0
 		class WebsiteApiController < ApplicationController
 			def genres
+                @neo ||= neo_init
 				filter = params[:q]
-                genres = [{:name => "Philosophy", :id => 1}, 
-                          {:name => "Arts", :id => 2},
-                          {:name => "Music", :id => 3},
-                          {:name => "Fiction", :id => 4},
-                          {:name => "Non-fiction", :id => 5}]
-                genres = ShelfariCategory.first.children
+                genres = @neo.execute_query("MATCH (g:Genre) 
+                                            RETURN g 
+                                            ORDER BY g.gr_book_count DESC 
+                                            LIMIT 5")
 				results = {:genres => genres}
 				render :json => results, :status => 200
 			end
@@ -20,7 +19,9 @@ module Api
 			end
 
             def times
-                results = {:times => TimeGroup.all}
+                @neo = Neography::Rest.new
+                time_groups = @neo.execute_query("MATCH (t:Era) RETURN t")["data"]
+                results = {:times => time_groups}
                 render :json => results, :status => 200
             end
 
@@ -254,6 +255,11 @@ module Api
 				]
 				render :json => {:notifications => notifications}, :status => 200
 			end
+
+            private
+            def neo_init
+                @neo = Neography::Rest.new
+            end
 
 		end
 	end

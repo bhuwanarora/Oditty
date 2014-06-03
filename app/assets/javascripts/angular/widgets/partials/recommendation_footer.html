@@ -78,7 +78,14 @@
 			 title="Recommendations"
 			 style="margin-left:0px;" 
 			 ng-click="toggle_recommendations()">
-			<span ng-if="!compact_footer">Recommendations</span>
+			<span ng-if="!compact_footer">
+				<span ng-show="$routeParams.type == 'books'">
+					{{recommendations.books.count}} </span>
+				<span ng-show="$routeParams.type == 'authors'">
+					{{recommendations.authors.count}} </span>
+				<span ng-show="$routeParams.type == 'readers'">
+					{{recommendations.readers.count}} </span>	
+				<span>Recommendations</span>
 			<span ng-if="compact_footer" class="icon-dice"></span>
 		</div>
 		<div ng-class="{'inactive':!read_selected, 'active':read_selected, 'compact_link': compact_footer}"

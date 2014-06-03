@@ -80,7 +80,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	    reload_recommendations_event = $scope.$on('reloadRecommendations', function(){
 	    	$scope.reset();
-	    	event.stopPropagation();
+	    	// event.stopPropagation();
 	    });
 
 	    open_shelf_event = $scope.$on('showBookReadShelf', function(){
@@ -124,6 +124,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		$scope.show_more_filters = false;
 		$rootScope.filters = {};
         $rootScope.filters["more_filters"] = [];
+        $rootScope.filters["other_filters"] = {};
         if($routeParams.type == "books"){
         	$rootScope.filters["filter_type"] = "BOOK";
         }

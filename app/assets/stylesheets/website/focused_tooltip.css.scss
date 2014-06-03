@@ -1,8 +1,7 @@
-
-
 .focused_tooltip .rating_star{
 	position: absolute;
 	top: 15px;
+	right: 40px;
 }
 
 .focused_tooltip .rating_star img{
@@ -42,11 +41,6 @@
 	display: inline-block;
 	float: left;
 	padding: 2px;
-}
-
-.focused_tooltip .rate{
-	text-align: left;
-	margin-left: 50px;
 }
 
 .focused_tooltip hr{
@@ -158,12 +152,16 @@
 	color: #136CB2;
 	font-size: 1.2em;
 	margin-left: 10px;
+	width: 70%;
+	max-height: 6vh;
+	overflow-y: scroll;
 }
 
 .focused_tooltip .header .author{
 	cursor: pointer;
 	font-weight: bold;
 	color: #136CB2;
+	width: 70%;
 }
 
 .focused_tooltip .header .title:hover,

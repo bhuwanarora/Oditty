@@ -3,6 +3,7 @@
 <div ng-if="user.logged" 
 	 ng-switch on="user.profile_status" 
 	 ng-model="user.profile_status">
+	<div class="back_color" style="background-color:{{user.profile_status_color}}"></div>
 	<div class="info_cards" 
 	     ng-model="user.profile_status_color">
 		<div class="sub_header">Complete your profile, {{user.name | uppercase}}</div>
