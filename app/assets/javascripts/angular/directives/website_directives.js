@@ -267,69 +267,74 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', function($timeout, $sce){
 	      	onSelect: '&'
 		},
 		link: ['scope', 'elem', 'attrs', function(scope, elem, attrs){
-			scope.handle_selection = function(selectedItem) {
-				scope.model = selectedItem.toUpperCase();
-			    scope.current = 0;
-			    scope.selected = true;
-			    scope.onSelect();
-			    // $timeout(function() {
-			    // }, 200);
-			};
 
-			scope.is_current = function(index, selectedItem) {
-				if(scope.current == index){
-					scope.currentItem = selectedItem;
+
+		}],
+		controller: ['$scope', '$sce', 'recommendationService', function($scope, $sce, recommendationService){
+			$scope.is_current = function(index, selectedItem) {
+				if($scope.current == index){
+					$scope.currentItem = selectedItem;
 				}
-			    return scope.current == index;
+			    return $scope.current == index;
 			};
 
-			scope.set_current = function(index) {
-			    scope.current = index;
+			$scope.set_current = function(index) {
+			    $scope.current = index;
 			};
 
-			scope.navigate_options = function(){
+			$scope.navigate_options = function(){
 				var keyEnter = event.keyCode == 13;
 				if(keyEnter){
-					scope.handle_selection(scope.currentItem);
+					$scope.handle_selection($scope.currentItem);
 				}
 			}
 
-			scope.key_up = function(){
+			$scope.key_up = function(){
 				var keyUp = event.keyCode == 38;
 				var keyDown = event.keyCode == 40;
 				if(keyUp){
-					if(scope.current != 0){
-						scope.set_current(scope.current-1);
+					if($scope.current != 0){
+						$scope.set_current($scope.current-1);
+					}
+					else{
+						$scope.set_current($scope.filtered.length-1);
 					}
 				}
-
-				if(keyDown){
-					if(scope.current != scope.filtered.length -1){
-						scope.set_current(scope.current+1);
+				else if(keyDown){
+					if($scope.current != $scope.filtered.length -1){
+						$scope.set_current($scope.current+1);
+					}
+					else{
+						$scope.set_current(0);
 					}
 				}
-			}
-
-			scope.highlight = function(searchItem, textToSearchThrough){
-    			return $sce.trustAsHtml(textToSearchThrough.replace(new RegExp(searchItem, 'gi'), '<span style="font-weight:bold;">$&</span>'));
+				console.log($scope.current);
 			}
 
 			_init = function(){
-				scope.current = 0;
-				scope.selected = true; // hides the list initially
+				$scope.current = 0;
+				$scope.selected = true; // hides the list initially
+		  		$scope.name = ''; // This will hold the selected item
 			}
 
-		  	scope.focus_on_input = function(){
-		  		elem.find('input')[0].focus();
+		  	$scope.focus_on_input = function(){
+		  		// elem.find('input')[0].focus();
 		  	}
 
-			_init();
-		}],
-		controller: ['$scope', 'recommendationService', function($scope, recommendationService){
-		  	_init = function(){
-		  		$scope.name = ''; // This will hold the selected item
-		  	}
+			$scope.highlight = function(searchItem, textToSearchThrough){
+    			return $sce.trustAsHtml(textToSearchThrough
+    				.replace(new RegExp(searchItem, 'gi'), 
+    					'<span style="font-weight:bold;">$&</span>'));
+			}
 
+		  	$scope.handle_selection = function(selectedItem) {
+				$scope.model = selectedItem.toUpperCase();
+			    $scope.current = 0;
+			    $scope.selected = true;
+			    $scope.onSelect();
+			    // $timeout(function() {
+			    // }, 200);
+			};
 
 		  	_init();
 		}],

@@ -48,11 +48,6 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 				$scope.readTimeSelected = {"name": "Filter books by Reading Time"};
 			}
 
-			$scope.highlight = function(searchItem, textToSearchThrough){
-				debugger
-    			return $sce.trustAsHtml(textToSearchThrough.replace(new RegExp(searchItem, 'gi'), '<span style="font-weight:bold;">$&</span>'));
-			}
-
 			$scope.advance_filter_changed = function(selected, type){
 				var message = "SUCCESS-"+selected.name+" added to filters."
 				notify($rootScope, message, $timeout);
@@ -124,6 +119,20 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 						$scope.genres.push(data.genres.data[i][0].data);
 					}
 			    });
+			}
+
+			$scope.on_genre_selection = function(){
+				alert("on_genre_selection");
+				// var filter_name = $scope.author;
+				// $rootScope.filters["author_filter"] = filter_name;
+				// var message = "SUCCESS-'"+filter_name+"' added to filters.";
+				// var timeout_event = notify($rootScope, message, $timeout);
+				// $scope.$emit('reloadRecommendations');
+
+
+				// $scope.$on('destroy', function(){
+				// 	$timeout.cancel(timeout_event);
+				// });
 			}
 
 			$scope.show_author_options = function(filter, author){

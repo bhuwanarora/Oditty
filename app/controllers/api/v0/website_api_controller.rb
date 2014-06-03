@@ -5,6 +5,7 @@ module Api
                 @neo ||= neo_init
 				filter = params[:q]
                 genres = @neo.execute_query("MATCH (g:Genre) 
+                                            WHERE g.name = "+filter+"
                                             RETURN g 
                                             ORDER BY g.gr_book_count DESC 
                                             LIMIT 5")
