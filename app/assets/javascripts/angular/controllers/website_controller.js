@@ -9,7 +9,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 			}
 			else{
 				$scope.move_right(event);
-				_load_recommendations();
+				// _load_recommendations();
 				//move forward
 				// event.view.window.scrollBy(80, 0);
 			}
@@ -18,10 +18,13 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	$scope.move_left = function(event){
+		$rootScope.focused_book = null;
 		var swipe_time = 2000;
+		var clientWidth = document.body["scrollWidth"];
 		if(event){
 			if(event.type == "keydown" || event.type == "wheel"){
 				var current_x = $window.pageXOffset;
+				var progression_width = (current_x*screen.width)/clientWidth;
 			}
 			else{
 				var current_x = event.pageX - ($('.scroller').position().left + $('.scroller-left').position().left);
@@ -31,18 +34,23 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 			var current_x = $window.pageXOffset;
 			swipe_time = 1000;
 		}
+
+		$scope.progression_state = {"width": progression_width+"px"};
+		
 		var delta_x = screen.width*(0.31);
 		scroller.scrollTo(current_x - delta_x, 0, swipe_time);
 	}
 
 	$scope.move_right = function(event){
+		$rootScope.focused_book = null;
 		var swipe_time = 2000;
 		var clientWidth = document.body["scrollWidth"];
 		if(event){
 			var pageX = event.pageX;
 			if(event.type == "keydown" || event.type == "wheel"){
 				var current_x = $window.pageXOffset;
-				var lessThanOnePageLeft = current_x + (1.5)*screen.width > clientWidth;
+				var lessThanOnePageLeft = current_x + (2.5)*screen.width > clientWidth;
+				var progression_width = (current_x*screen.width)/clientWidth;
 			}
 			else{
 				var current_x = pageX - ($('.scroller').position().left+$('.scroller-right').position().left);
@@ -52,11 +60,18 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		else{
 			var current_x = $window.pageXOffset;
 			// var pageX = $('.scroller').position().left+$('.scroller-right').position().left;
-			var lessThanOnePageLeft = current_x + (1.5)*screen.width > clientWidth;
+			var lessThanOnePageLeft = current_x + 2.5*screen.width > clientWidth;
 			swipe_time = 1000;
 		}
+
+		$scope.progression_state = {"width": progression_width+"px"};
+
 		if(lessThanOnePageLeft){
-			$rootScope.$broadcast('loadRecommendations');
+			if(!$rootScope.loading){
+				console.debug("%c lessThanOnePageLeft", "color:green");
+				$rootScope.loading = true;
+				$rootScope.$broadcast('loadRecommendations');
+			}
 		}
 		var delta_x = screen.width*(0.31);
 		scroller.scrollTo(current_x + delta_x, 0, swipe_time);
@@ -143,7 +158,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		        $rootScope.user = response;
 		        $rootScope.user.profile_status = 0;
 		        $rootScope.user.thumb = "https://scontent-b-kul.xx.fbcdn.net/hphotos-ash3/t1.0-9/66784_415130785223231_1615890777_n.jpg";
-		        _profile_status_colors();
+		        // _profile_status_colors();
 		        $rootScope.user.logged = true;
 		    });
         });
@@ -383,7 +398,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		$scope.website = {};
 		$scope.website.searching = true;
 		$scope.website.show_search_page = true;
-		$scope.authenticate();
+		// $scope.authenticate();
 
 		_bind_emit();
 		_bind_feedback_form();

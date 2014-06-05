@@ -96,6 +96,26 @@ module Neo4jHelper
 		@neo.execute_query("MATCH (b:Book{url:'"+book_url+"'}) RETURN b")
 	end
 
+	def self.resolve_int_bug
+		@neo ||= self.init
+		GoodReadsBook.where(:neo_flag => true).find_each do |book|
+			ratings_count = book.ratings_count.gsub(/[^\d]/, '').to_i rescue 0
+			reviews_count = book.reviews_count.gsub(/[^\d]/, '').to_i rescue 0
+			page_count = book.page_count.gsub(/[^\d]/, '').to_i rescue 0
+			title = book.title.gsub(/\(.*?\)/, '').strip.gsub("\"","'")
+			clause = "MATCH (book:Book{title:\""+title+"\"}) RETURN book"
+			puts "#{ratings_count} #{book.ratings_count} #{clause}"
+			book_node = @neo.execute_query(clause)
+			for node in book_node["data"]
+				puts "--"
+				@neo.set_node_properties(node, {
+					"gr_ratings_count" => ratings_count,
+					"gr_reviews_count" => reviews_count,
+					"page_count" => page_count})
+			end
+		end
+	end
+
 	def self.create_book book
 		begin
 			unless book.published_year.present?
@@ -109,7 +129,7 @@ module Neo4jHelper
 			if book.page_count.nil?
 				page_count = 0
 			else
-				page_count = book.page_count.to_i
+				page_count = book.page_count.gsub(/[^\d]/, '').to_i
 			end
 
 			if book.isbn.present?
@@ -123,9 +143,8 @@ module Neo4jHelper
 				description = ""
 			end
 
-			reviews_count = book.reviews_count.to_i rescue 0
-			ratings_count = book.ratings_count.to_i rescue 0
-			
+			reviews_count = book.reviews_count.gsub(/[^\d]/, '').to_i rescue 0
+			ratings_count = book.ratings_count.gsub(/[^\d]/, '').to_i rescue 0
 
 			author_name = book.author_name.gsub("\"", "'")
 			title = book.title.gsub(/\(.*?\)/, '').strip.gsub("\"","'")
@@ -149,14 +168,14 @@ module Neo4jHelper
 			if published_year.present?
 				unless published_year.length < 4
 					if published_year.length == 4
-						invalid_year = published_year.to_i < 1000
+						invalid_year = published_year.gsub(/[^\d]/, '').to_i < 1000
 						unless invalid_year
 							year = published_year
 						else
 							book.update_column("published_year", nil)
 						end
 					else
-						unless published_year.to_i < 0
+						unless published_year.gsub(/[^\d]/, '').to_i < 0
 							time = Time.parse published_year
 							year = time.year
 						end
@@ -191,7 +210,6 @@ module Neo4jHelper
 			CREATE (b)-[r:Published_in]->(y) RETURN r")
 		end
 	end
-
 
 	def self.find_year_node year
 		@neo ||= self.init
@@ -320,8 +338,6 @@ module Neo4jHelper
 						MERGE (note_for_parent:NoteForParent{})
 						CREATE (book)-[:Has_note]->(note_for_parent)")
 				end
-
-
 			end
 		rescue Exception => e
 			
@@ -364,7 +380,6 @@ module Neo4jHelper
 		  puts err.code        # HTTP error code
 		  puts err.stacktrace  # Neo4j Java stacktrace
 		end
-			
 	end
 
 	def self.create_time_groups
@@ -399,5 +414,17 @@ module Neo4jHelper
 		puts "create_time_nodes_complete"
 	 	self.init_goodreads_books
 	 	puts "init_goodreads_books_complete"
+	end
+
+	def self.create_read_time_groups
+		@neo ||= self.init
+		node1 = @neo.create_node("name" => "For a flight journey", "page_count_range" => "<50")
+		node2 = @neo.create_node("name" => "For a weekend getaway", "page_count_range" => "50-100")
+		node3 = @neo.create_node("name" => "For a week holiday", "page_count_range" => "100-250")
+		node4 = @neo.create_node("name" => "For a month vacation", "page_count_range" => ">250")
+		@neo.add_label(node1, 'ReadTime')
+		@neo.add_label(node2, 'ReadTime')
+		@neo.add_label(node3, 'ReadTime')
+		@neo.add_label(node4, 'ReadTime')
 	end
 end

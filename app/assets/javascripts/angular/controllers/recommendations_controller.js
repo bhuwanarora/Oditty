@@ -18,7 +18,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			$scope.read_selected = false;
 			$scope.bookmark_selected = false;
 			$scope.panel_selected = '';
-			$scope.reset();			
+			$scope.reset();
 			// $('body').css('background-image', '');
 		}
 	}
@@ -26,7 +26,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	$scope.reset = function(){
 		_init_recommendations();
     	_get_recommendations();
-    	$scope.$emit('moveRight');
+    	// $scope.$emit('moveRight');
 	}
 
 	$scope.toggle_read = function(){
@@ -71,14 +71,27 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		}, 1000);
 	}
 
-
 	_add_listeners = function(){
 	    load_recommendations_event = $scope.$on('loadRecommendations', function(){
+	    	console.debug("%cloadRecommendations", "color: purple;");
+	    	$rootScope.filters["reset"] = false;
+	    	if($rootScope.filters["reset_count"] == undefined){
+	    		console.debug("%c reset count", "color: purple");
+	    		$rootScope.filters["reset_count"] = 0;
+	    	}
+	    	else{
+	    		console.debug("%c increase count", "color: purple");
+	    		$rootScope.filters["reset_count"] = $rootScope.filters["reset_count"]+1;
+	    	}
 	    	_get_recommendations();
 	    	// event.stopPropagation();
 	    });
 
 	    reload_recommendations_event = $scope.$on('reloadRecommendations', function(){
+	    	console.debug("%creloadRecommendations", "color: orange;");
+	    	console.debug("%c reset count", "color: purple");
+	    	$rootScope.filters["reset"] = true;
+	    	$rootScope.filters["reset_count"] = 0;
 	    	$scope.reset();
 	    	// event.stopPropagation();
 	    });
@@ -101,7 +114,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	_init_recommendations = function(){
 		$scope.recommendations = {"books": [], "readers": [], "authors": []};
-		// $rootScope.filters = {"filter_ids": []};
 	}
 
 	_bind_destroy = function(){
@@ -147,12 +159,34 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	_update_recommendations = function(data){
 		if($rootScope.filters["filter_type"] == "BOOK"){
-			if($scope.recommendations.books.length >= 30){
-				$scope.recommendations.books = data["recommendations"]["books"];
-				scroller.scrollTo(0, 0, 0);
-			}
-			else{
-    			$scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);
+			var message = "SUCCESS: "+data.recommendations.books.length+" books found."
+			var timeout_event = notify($rootScope, message, $timeout);
+			$scope.$on('destroy', function(){
+				$timeout.cancel(timeout_event);
+			});
+
+			if($rootScope.loading){
+				var max_limit = 30;
+				if(data.recommendations.books.length == 0){
+					var message = "ALERT: Reset the filters couldn't find more books."
+					var timeout_event = notify($rootScope, message, $timeout);
+					$scope.$on('destroy', function(){
+						$timeout.cancel(timeout_event);
+					});
+				}
+				else{
+					if($scope.recommendations.books.length >= max_limit){
+						$scope.recommendations.books = [$scope.recommendations.books[max_limit-2], $scope.recommendations.books[max_limit-1]];
+						var timeout_event = $timeout(function(){
+							scroller.scrollTo(screen.width/2, 0, 3000);
+						}, 1000)
+						$scope.$on('destroy', function(){
+							$timeout.cancel(timeout_event);
+						});
+					}
+		    		$scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);
+				}
+		    	$rootScope.loading = false;
 			}
     	}
     	else if($rootScope.filters["filter_type"] == "AUTHOR"){
@@ -181,7 +215,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	}
 	}
 
-
 	_push_recommendations = function(){
 		var fiveMinute = 3000;//300000
 		push_books_timer_event = $timeout(function(){
@@ -208,6 +241,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
     _get_recommendations = function(){
+    	$rootScope.loading = true;
         recommendationService.get_recommendations().then(function(data){
         	_update_recommendations(data);
 	    });
@@ -232,6 +266,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	_init = function(){
 		//oneMin = 60000
 		$scope.$routeParams = $routeParams;
+		// console.debug("%crouteparams "+$routeParams+" ", "color: yellow");
 		// $scope.$emit('reloadRecommendations');
 
 		var oneSec = 10000;

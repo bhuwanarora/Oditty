@@ -24,6 +24,7 @@ websiteApp.directive('category', function () {
           if(name){
             $scope.nameArray = name.split('');
           }
+          $scope.rating = obj.rating;
           // $scope.descriptionArray = description.split('');
           // $scope.category_style = {"background-color": obj.category.background_color};
         }

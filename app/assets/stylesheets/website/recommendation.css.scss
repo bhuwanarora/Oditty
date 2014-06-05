@@ -54,7 +54,7 @@
 
 .recommendation_block{
 	display: inline-block;
-	margin-right: 0px;
+	margin-right: -25px;
 	position: relative;
 	width: 57vh;
 	height: 80vh;
@@ -90,13 +90,17 @@
 	text-align: center;
 	cursor: pointer;
 	box-shadow: 8px 10px 54px 0px #424242;
-	font-weight: bold;
 	font-size: 0.7em;
 	text-shadow: 0 2px 3px rgba(0,0,0,0.5);
 }
 
 .category_character{
 	background-color: rgba(0, 0, 0, 0.25);
+	padding-top: 5px;
+}
+
+.book_rating{
+	padding: 15px 0px;
 }
 
 /* card on recommendation page */
@@ -233,12 +237,19 @@
 
 .card .description{
 	position: absolute;
-	top: 40%;
-	left: 10px;
-	right: 10px;
+	left: 5px;
+	right: 5px;
+	top: 5px;
+	bottom: 12%;
+	color: white;
+	background-color: silver;
 	font-size: 0.9em;
 	text-align: center;
 	white-space: initial;
+}
+
+.card .description p{
+	margin-top: 50%;
 }
 
 .card .thumb{
@@ -291,32 +302,34 @@
 
 
 /*mark as read*/
-.left_action{
-	text-align: center;
-	cursor: pointer;
-	color: #717070;
-	font-size: 0.9em;
-	width: 47%;
-	min-width: 120px;
-	padding-top: 5%;
-	padding-bottom: 5%;
-	position: absolute;
-	bottom: 5px;
+.input_bookmark{
+	width: 58%;
 	left: 5px;
+	position: absolute;
+	bottom: 3px;
+	padding: 6% 6% 3%;
+	border: 1px solid #DBDBDB;
+	font-size: 1em;
 }
 
 .right_action{
+	right: 5px;
+}
+
+.left_action{
+	right: 18%;
+}
+
+.action_button{
 	text-align: center;
 	cursor: pointer;
 	color: #717070;
-	font-size: 0.9em;
-	width: 47%;
-	min-width: 120px;
-	padding-top: 5%;
-	padding-bottom: 5%;
+	font-size: 1.5em;
+	width: 15%;
+	padding-top: 4%;
+	padding-bottom: 2%;
 	position: absolute;
 	bottom: 5px;
-	right: 5px;
 }
 
 .button_effect {
@@ -483,7 +496,7 @@
 }
 
 .filter_link{
-	float: right;
+	float: left;
 	margin-right: 85px;
 	font-size: 0.9em;
 	cursor: pointer;
@@ -521,8 +534,8 @@
 
 .menu_group{
 	font-size: 1em;
-	float: left;
-	margin-right: 10px;
+	float: right;
+	margin-right: 70px;
 	display: inline-block;
 	text-align: center;
 }
@@ -611,14 +624,18 @@
 }
 
 .push_notification{
+	padding: 15px;
+	color: #717070;
+	background-color: #fff;
+	right: 10px;
+	top: 50px;
 	position: fixed;
-	z-index: 2;
-	top: 40px;
-	font-size: 1em;
-	background-color: rgba(0, 0, 0, 0.43);
-	text-align: center;
-	width: 100%;
-	margin-left: -8px;
+	width: 350px;
+	max-height: 60px;
+	white-space: normal;
+	min-height: 80px;
+	box-shadow: 1px 1px 18px 0 #424242;
+	z-index: 1;
 }
 
 .push_notification .content{
@@ -627,7 +644,6 @@
 	background-color: white;
 	left: 10px;
 	position: absolute;
-	width: 500px;
 	max-height: 60px;
 	white-space: normal;
 }
@@ -712,7 +728,7 @@
 
 .more_filters{
 	width: 80%;
-	right: 10px;
+	left: 10px;
 	position: fixed;
 	top: 40px;
 	z-index: 1;
@@ -720,6 +736,7 @@
 	background-color: #E6E6E6;
 	border: 1px solid #E2E2E2;
 	box-shadow: 8px -30px 43px 0px rgba(66, 66, 66, 0.47);
+	border-bottom: 2px solid #C7C7C7;
 }
 
 .filters_panel,
@@ -1760,4 +1777,17 @@ and (min-width : 1824px) {
 	text-align: left;
 	margin-top: 15px;
 	padding: 20px;
+}
+
+.progression_state{
+	position: fixed;
+	background: rgba(0, 0, 0, 0.07);
+	height: 100%;
+}
+
+.selected_filter{
+	background-color: #918FB5;
+	padding: 4px;
+	color: white;
+	margin-right: 1px;
 }

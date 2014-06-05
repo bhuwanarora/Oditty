@@ -91,6 +91,17 @@ module Api
 			end
 
 			def self.recommendations filters={}
+				skip_clause = ""
+				if filters["reset"]
+					$redis.set 'book_ids', ""
+					puts "RESET TRUE".red.on_yellow.blink
+				else
+					if filters["reset_count"]
+						skip_clause = "SKIP "+(filters["reset_count"] * 10).to_s+" "
+						puts "RESET "+filters["reset_count"].to_s+" FALSE".red.on_yellow.blink
+					end
+				end
+
 				book_ids = ($redis.get 'book_ids').split(",")
 				# puts book_ids.sort
 				@neo = Neography::Rest.new
@@ -99,13 +110,10 @@ module Api
 
 
 				init_match_clause = "MATCH (book:Book) "
-				random_clause = "ID(book)%"+random.to_s+"=0  
-								AND rand() > 0.3
-								AND ALL (id in "+book_ids.to_s+" WHERE toInt(id) <> ID(book)) "
-				return_clause = "WITH book, book.gr_ratings_count * book.gr_reviews_count * book.gr_rating AS weight
-								RETURN book, weight 
-								ORDER BY weight DESC, book.gr_rating DESC 
-								LIMIT 5"
+				distinct_clause = "ALL (id in "+book_ids.to_s+" WHERE toInt(id) <> ID(book)) "
+				random_clause = "ID(book)%"+random.to_s+"=0 AND rand() > 0.3 "
+				return_clause = "WITH book, book.gr_ratings_count * book.gr_reviews_count * book.gr_rating AS total_weight, book.gr_ratings_count * book.gr_rating AS rating_weight RETURN book, total_weight, rating_weight ORDER BY rating_weight DESC, total_weight DESC, book.gr_rating DESC "
+				limit_clause = "LIMIT 10 "
 
 
 				if filters["other_filters"].present?
@@ -126,35 +134,64 @@ module Api
 										.gsub(")","")
 										.split("-")
 						match_clause = match_clause + ", (book)-[:Published_in]->(y:Year) "
-						where_clause = where_clause + "AND toInt(y.year) > "+time_range[0]+
-													  " AND toInt(y.year) < "+time_range[1]+" "
+						clause = " toInt(y.year) > "+time_range[0]+
+								" AND toInt(y.year) < "+time_range[1]+" "
+						if where_clause.present?
+							where_clause = where_clause + " AND"+clause
+						else
+							where_clause = where_clause + clause
+						end
 					end
 					if filters["other_filters"]["author"].present?
 						author_name =  filters["other_filters"]["author"]
 						category = "Written by "+ author_name
 						match_clause = match_clause + ", (author:Author)-[:Wrote]->(book) "
-						where_clause = where_clause + "AND author.name =~ '(?i)"+author_name+"' "
+						clause = " author.name =~ '(?i)"+author_name+"' "
+						if where_clause.present?
+							where_clause = where_clause + " AND"+clause
+						else
+							where_clause = where_clause + clause
+						end
 					end
 					if filters["other_filters"]["genre"].present?
 						genre = filters["other_filters"]["genre"]
 						category = "Genre: "+genre
 						match_clause = match_clause + ", (genre:Genre)<-[:Belongs_to]-(book) "
-						where_clause = where_clause + "AND genre.name =~ '(?i)"+genre+"' "
+						clause = " genre.name =~ '(?i)"+genre+"' "
+						if where_clause.present?
+							where_clause = where_clause + " AND"+clause
+						else
+							where_clause = where_clause + clause
+						end
 					end
-					clause = init_match_clause+match_clause+"WHERE "+
-						random_clause+where_clause+return_clause
-					books = @neo.execute_query(clause)["data"]
+					if where_clause.present?
+						clause = init_match_clause+match_clause+"WHERE "+
+							where_clause+return_clause+skip_clause+limit_clause
+					else
+						category = "Must Reads"
+						clause = init_match_clause+"WHERE "+random_clause+return_clause+skip_clause+limit_clause
+					end
 				else
 					category = "Must Reads"
-					books = @neo.execute_query(init_match_clause+"WHERE "+
-						random_clause+return_clause)["data"]
+					clause = init_match_clause+"WHERE "+random_clause+return_clause+skip_clause+limit_clause
 				end
+
+
+				puts clause.blue.on_red
+				begin
+					books = @neo.execute_query(clause)["data"]
+				rescue Exception => e
+					puts "RESET".blue.on_red.blink
+					$redis.set 'book_ids', ""
+					books = @neo.execute_query(clause)["data"]
+				end
+				puts books.length.to_s.red.on_blue
 
 
 				for book in books
 					node_id = book[0]["self"].gsub("http://localhost:7474/db/data/node/", "")
 					book_sent = book_ids.include? node_id
-					puts book_sent
+					# puts "#{book_sent} #{node_id} #{book_ids.split(',').sort.join(',')}"
 					unless book_sent
 						if book_ids.present?
 							book_ids = ($redis.get 'book_ids')+","+node_id
@@ -166,13 +203,14 @@ module Api
 						isbn = book["isbn"].split(",")[0]
 						thumb = "http://covers.openlibrary.org/b/isbn/"+isbn+"-L.jpg" rescue ""
 						book = {
-							:title => book["title"],
+							:title => book["title"]+"-"+node_id,
 							:author_name => book["author_name"],
 							:rating => book["gr_rating"].to_f*2,
 							:readers_count => book["gr_ratings_count"],
 							:discussions_count => book["gr_reviews_count"],
 							:reviews_count => book["gr_reviews_count"],
 							:published_year => book["published_year"],
+							:page_count => book["page_count"],
 							:thumb => {
 								:url => thumb
 							},

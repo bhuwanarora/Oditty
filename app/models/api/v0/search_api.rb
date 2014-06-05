@@ -17,7 +17,7 @@ module Api
 				match_clause = "MATCH (g:Genre) "
 				return_clause = "RETURN g 
                                  ORDER BY g.gr_book_count DESC "
-				if filter.chop.present?
+				if filter && filter.chop.present?
 					where_clause = "WHERE g.name =~ '(?i)"+filter+".*'"
                     limit_clause = "LIMIT 5"
                 	genres = @neo.execute_query(match_clause+where_clause+return_clause+limit_clause)

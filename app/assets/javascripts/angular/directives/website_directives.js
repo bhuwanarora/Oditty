@@ -265,7 +265,8 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', function($timeout, $sce){
 	      	subtitle: '@',
 	      	model: '=',
 	      	onSelect: '&',
-	      	autoPopulate: '&'
+	      	autoPopulate: '&',
+	      	onClear: '&'
 		},
 		link: ['scope', 'elem', 'attrs', function(scope, elem, attrs){
 
@@ -293,7 +294,7 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', function($timeout, $sce){
 			$scope.key_up = function(){
 				var keyUp = event.keyCode == 38;
 				var keyDown = event.keyCode == 40;
-				debugger
+				var backSpace = event.keyCode == 8;
 				if(keyUp){
 					if($scope.current != 0){
 						$scope.set_current($scope.current-1);
@@ -308,6 +309,11 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', function($timeout, $sce){
 					}
 					else{
 						$scope.set_current(0);
+					}
+				}
+				else if(backSpace){
+					if($scope.model == undefined || $scope.model == ""){
+						$scope.onClear();
 					}
 				}
 			}

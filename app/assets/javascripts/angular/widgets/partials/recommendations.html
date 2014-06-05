@@ -7,7 +7,7 @@
    style="height:100%; white-space:nowrap;"
    ng-controller="recommendationsController"
    ng-click="hide_popups()">
-
+   		<div class="progression_state" ng-style="progression_state">{{progression_state}}</div>
 		<recommendation-footer></recommendation-footer>
 
 		<div class="vertical_padder_active"></div>
@@ -95,6 +95,9 @@
 					<div ng-repeat="recommendation in recommendations.books" 
 						 class="recommendation_block">
 						<book track id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></book>
+					</div>
+					<div class="recommendation_block">
+						<div class="widget">loading..</div>
 					</div>
 				</div>
 				<div ng-show="$routeParams.type == 'readers'" 

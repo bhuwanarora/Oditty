@@ -4,6 +4,7 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 		controller: ['$scope', 'recommendationService', 'websiteService',
 			function($scope, recommendationService, websiteService){
 			_init = function(){
+				console.debug("%c init moreFilters ", "color: purple");
 				// $scope.$on('initPage', function(event, type){
 				// 	_reload_page(type=="BOOK", type=="AUTHOR", type=="READER");
 				// });
@@ -12,7 +13,6 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 				// $scope.active_reader_filter = false;
 				$scope.show_menu = false;
 				$scope.countryOptions = [];
-
 				recommendationService.get_countries().then(function(data){
 			    	$scope.countryOptions = [{"name": "Reset"}];
 			    	$scope.countryOptions = $scope.countryOptions.concat(data["countries"]);
@@ -48,10 +48,38 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 				$scope.readTimeSelected = {"name": "Filter books by Reading Time"};
 			}
 
+			$scope.clear_filter = function(main_filter, type){
+				$rootScope.filters["other_filters"][type] = null;
+				var message = "SUCCESS-"+type+" filter removed";
+				var timeout_event = notify($rootScope, message, $timeout);
+				$scope.$on('destroy', function(){
+					$timeout.cancel(timeout_event);
+				});
+				$scope.$emit('reloadRecommendations');
+			}
+
 			$scope.advance_filter_changed = function(selected, type){
-				var message = "SUCCESS-"+selected.name+" added to filters."
-				notify($rootScope, message, $timeout);
-				$rootScope.filters.other_filters[type] = selected.name;
+				if(selected.name == "Reset"){
+					var message = "SUCCESS-"+type+" filter has been reset."
+					delete $rootScope.filters.other_filters[type];
+					if(type == "country"){
+						$scope.countrySelected = {"name": "Filter books by Region"};
+					}
+					else if(type == "timeGroup"){
+						$scope.timeSelected = {"name": "Filter books by Era"};
+					}
+					else if(type == "readingTime"){
+						$scope.readTimeSelected = {"name": "Filter books by Reading Time"};
+					}
+				}
+				else{
+					var message = "SUCCESS-"+selected.name+" added to filters."
+					$rootScope.filters.other_filters[type] = selected.name;
+				}
+				var timeout_event = notify($rootScope, message, $timeout);
+				$scope.$on('destroy', function(){
+					$timeout.cancel(timeout_event);
+				});
 				$scope.$emit('reloadRecommendations');
 				// debugger
 				// $('.position_dropdown').removeClass('active');
@@ -61,6 +89,7 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 				_init_dropdown_filters();
 				$scope.$broadcast('resetFilter');
 				$rootScope.filters.more_filters = [];
+				$rootScope.filters.other_filters = {};
 				$scope.$emit('reloadRecommendations');
 				var message = "SUCCESS-All filters removed.<br/> You can add filters to look for particular books.";
 				var timeout_event = notify($rootScope, message, $timeout);
@@ -122,9 +151,9 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 			}
 
 			$scope.on_genre_selection = function(genre){
-				var filter_name = genre;
-				$rootScope.filters["other_filters"]["genre"] = filter_name;
-				var message = "SUCCESS-'"+filter_name+"' added to filters.";
+				$scope.genre = genre;
+				$rootScope.filters["other_filters"]["genre"] = genre;
+				var message = "SUCCESS-'"+genre+"' added to filters.";
 				var timeout_event = notify($rootScope, message, $timeout);
 				$scope.$emit('reloadRecommendations');
 
@@ -151,9 +180,9 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 			}
 
 			$scope.on_author_selection = function(author){
-				var filter_name = author;
-				$rootScope.filters["other_filters"]["author"] = filter_name;
-				var message = "SUCCESS-'"+filter_name+"' added to filters.";
+				$scope.author = author;
+				$rootScope.filters["other_filters"]["author"] = author;
+				var message = "SUCCESS-'"+author+"' added to filters.";
 				var timeout_event = notify($rootScope, message, $timeout);
 				$scope.$emit('reloadRecommendations');
 
@@ -268,6 +297,7 @@ websiteApp.directive('filter', ['$rootScope', '$timeout', '$routeParams', functi
 			}
 
 			_init = function(){
+				console.debug("%c filters : "+$scope.filter.name, "color:green");
 				$scope.$routeParams = $routeParams;
 				_initialise_filters("more_filters");
 				_add_listeners();

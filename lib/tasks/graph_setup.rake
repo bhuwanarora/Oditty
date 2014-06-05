@@ -18,4 +18,16 @@ namespace :graph do
     Neo4jHelper.create_time_groups
   end  
 
+  desc "Read Time nodes"
+  task :read_time => :environment do
+    include Neo4jHelper
+    Neo4jHelper.create_read_time_groups
+  end
+
+  desc "Resolve int bug for rating count etc"
+  task :resolve_int_bug => :environment do
+    include Neo4jHelper
+    Neo4jHelper.resolve_int_bug
+  end
+
 end

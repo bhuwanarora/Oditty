@@ -32,9 +32,17 @@ websiteApp.service('recommendationService', ['$http', '$q', '$rootScope', functi
 
     _deferred_request = function(url){
         var deferred = $q.defer();
-        $http.get(url).then(function(result) {
+        var successCallback = function(result) {
             return deferred.resolve(result.data); 
-        });
+        }
+        var errorCallback = function(reason){
+            $rootScope.loading = false;
+            if(reason.status == 500){
+                alert("internal server error");
+            }
+        }
+
+        $http.get(url).then(successCallback, errorCallback);
         return deferred.promise;
     }
 }]);

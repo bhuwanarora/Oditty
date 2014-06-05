@@ -1,3 +1,17 @@
+.focused_tooltip{
+	position: fixed;
+	top: 50px;
+	width: 42%;
+	min-width: 400px;
+	background-color: white;
+	white-space: initial;
+	box-shadow: 0 7px 15px rgba(0,0,0,0.25);
+	border: 1px solid #FFFFFF;
+	z-index: 1;
+	height: 80vh;
+	/* for big screens */
+}
+
 .focused_tooltip .rating_star{
 	position: absolute;
 	top: 15px;
@@ -70,7 +84,7 @@
 	font-family: Proxima Nova, sans-serif;
 	font-size: 0.8em;
 	padding: 12px;
-	height: 27vh;
+	height: 20vh;
 	line-height: 1.5em;
 	overflow-y: scroll;
 }
@@ -90,19 +104,10 @@
 	border-top: 1px solid #D5D5D5;
 	margin-top: 5px;
 	padding: 10px;
-}
-
-.focused_tooltip{
-	position: fixed;
-	top: 50px;
-	width: 42%;
-	min-width: 400px;
-	background-color: white;
-	white-space: initial;
-	box-shadow: 0 7px 15px rgba(0,0,0,0.25);
-	border: 1px solid #FFFFFF;
-	z-index: 1;
-	/* for big screens */
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
 }
 
 .focused_tooltip .footer .recommend{

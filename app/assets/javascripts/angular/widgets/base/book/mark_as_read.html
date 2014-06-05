@@ -1,12 +1,12 @@
-<div class="left_action button_effect"
-	 ng-class="{'left_action_active':book.status}"
+<div class="right_action button_effect action_button"
+	 ng-class="{'right_action_active':book.status}"
 	 ng-click="markAsRead($event)">
   <span ng-show="!book.status">
-  	<span>Mark as Read</span>
-  	<span class="icon-check-square-o"></span>
+  	<!-- <span>Mark as Read</span> -->
+  	<span class="icon-checkmark"></span>
   </span>
   <span ng-show="book.status">
-  	<span>Mark as Unread</span>
-  	<span class="icon-check-square-o glow_shelf"></span>
+  	<!-- <span>Mark as Unread</span> -->
+  	<span class="icon-check-square glow_shelf"></span>
   </span>
 </div>

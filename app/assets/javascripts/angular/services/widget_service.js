@@ -62,17 +62,29 @@ websiteApp.service('widgetService', ['$http', '$q', '$rootScope', function ($htt
 
     _deferred_request = function(url){
         var deferred = $q.defer();
-        $http.get(url).then(function(result) {
+        var success_callback = function(result) {
             return deferred.resolve(result.data); 
-        });
+        }
+        var error_callback = function(reason){
+            if(reason.status == 500){
+                alert("internal server error");
+            }
+        }
+        $http.get(url).then(success_callback, error_callback);
         return deferred.promise;
     }
 
     _deferred_post_request = function(url, params){
         var deferred = $q.defer();
-        $http.post(url, params).then(function(result){
+        var success_callback = function(result){
             return deferred.resolve(result.data); 
-        });
+        }
+        var error_callback = function(reason){
+            if(reason.status == 500){
+                alert("internal server error");
+            }
+        }
+        $http.post(url, params).then(success_callback, error_callback);
         return deferred.promise;
     }
 

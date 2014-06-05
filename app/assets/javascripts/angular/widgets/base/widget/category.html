@@ -2,6 +2,7 @@
 	ng-mouseenter="hovered=true; category_hovered=true" 
 	ng-mouseleave="hovered=false; category_hovered=false" 
 	ng-init="initVerticalText()">
+	<div class="book_rating">{{rating | rating}}</div>
 	<div class="category_character_top category_character">&nbsp;</div>
 	<div ng-repeat="i in nameArray track by $index" class="category_character">
 		{{i | uppercase}}<br/>

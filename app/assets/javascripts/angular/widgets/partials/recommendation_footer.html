@@ -26,24 +26,24 @@
  		 ng-mouseenter="toggle_menu()"
 		 ng-mouseleave="toggle_menu()">
 	 	<div class="menu" ng-if="show_menu">
-	 		<a ng-href="#user/{{$routeParams.id}}/search">
+	 		<a ng-href="#/user/{{$routeParams.id}}/search">
 		 		<div>
 			 		<span>Home</span>
 		 		</div>
 		 	</a>
-		 	<a ng-href="#user/{{$routeParams.id}}/recommendations/books">
+		 	<a ng-href="#/user/{{$routeParams.id}}/recommendations/books">
 		 		<div ng-hide="$routeParams.type == 'books'">
 		 			<span class="icon-book"></span>
 			 		<span>Books</span>
 		 		</div>
 		 	</a>
-		 	<a ng-href="#user/{{$routeParams.id}}/recommendations/authors">
+		 	<a ng-href="#/user/{{$routeParams.id}}/recommendations/authors">
 	 			<div ng-hide="$routeParams.type == 'authors'">
 	 				<span class="icon-pen"></span>
 		 			<span>Authors</span>
 	 			</div>
 		 	</a>
-		 	<a ng-href="#user/{{$routeParams.id}}/recommendations/readers">
+		 	<a ng-href="#/user/{{$routeParams.id}}/recommendations/readers">
 	 			<div ng-hide="$routeParams.type == 'readers'">
 	 				<span class="icon-users"></span>
 		 			<span>Readers</span>
@@ -52,20 +52,20 @@
 	 	</div>
 		<div class="advanced_filter animate-fast" 
 			 ng-class="{'advanced_filter_active':show_menu || filter_expanded}">
-			<span ng-show="$routeParams.type == 'books'">
+			<span ng-if="$routeParams.type == 'books'">
 				<span class="icon-book"></span>
-				<span ng-show="filter_expanded || show_menu">Books</span>
+				<span ng-if="filter_expanded || show_menu">Books</span>
 			</span>
-			<span ng-show="$routeParams.type == 'authors'">
+			<span ng-if="$routeParams.type == 'authors'">
 				<span class="icon-pen"></span>
-				<span ng-show="filter_expanded || show_menu">Authors</span>
+				<span ng-if="filter_expanded || show_menu">Authors</span>
 			</span>
-			<span ng-show="$routeParams.type == 'readers'">
+			<span ng-if="$routeParams.type == 'readers'">
 				<span class="icon-users"></span>
-				<span ng-show="filter_expanded || show_menu">Readers</span>
+				<span ng-if="filter_expanded || show_menu">Readers</span>
 			</span>
-			<span class=" icon-angle-down" ng-if="!show_menu"></span>
-		 	<span class=" icon-angle-up" ng-if="show_menu"></span>
+			<span class="icon-angle-down" ng-if="!show_menu"></span>
+		 	<span class="icon-angle-up" ng-if="show_menu"></span>
 		</div>
  	</div>
 
@@ -79,42 +79,43 @@
 			 style="margin-left:0px;" 
 			 ng-click="toggle_recommendations()">
 			<span ng-if="!compact_footer">
-				<span ng-show="$routeParams.type == 'books'">
+				<span ng-if="$routeParams.type == 'books'">
 					{{recommendations.books.count}} </span>
-				<span ng-show="$routeParams.type == 'authors'">
+				<span ng-if="$routeParams.type == 'authors'">
 					{{recommendations.authors.count}} </span>
-				<span ng-show="$routeParams.type == 'readers'">
+				<span ng-if="$routeParams.type == 'readers'">
 					{{recommendations.readers.count}} </span>	
 				<span>Recommendations</span>
+			</span>
 			<span ng-if="compact_footer" class="icon-dice"></span>
 		</div>
 		<div ng-class="{'inactive':!read_selected, 'active':read_selected, 'compact_link': compact_footer}"
 			 class="link"
 			 title="Books marked as read" 
 			 ng-click="toggle_read()">
-		 	<span ng-show="$routeParams.type == 'books'">
+		 	<span ng-if="$routeParams.type == 'books'">
 		 		<span ng-if="compact_footer" class="icon-books"></span>
 		 		<span ng-if="!compact_footer">Books Read</span>
 		 	</span>
-			<span ng-show="$routeParams.type == 'authors'">
+			<span ng-if="$routeParams.type == 'authors'">
 				<span ng-if="compact_footer" class="icon-users"></span>
 				<span ng-if="!compact_footer">Following Authors</span>
 			</span>
-			<span ng-show="$routeParams.type == 'readers'">
+			<span ng-if="$routeParams.type == 'readers'">
 				<span ng-if="compact_footer" class="icon-users"></span>
 				<span ng-if="!compact_footer">Following Readers</span>
 			</span>
 		</div>
 		<div ng-class="{'inactive':!bookmark_selected, 'active':bookmark_selected, 'compact_link': compact_footer}"
 			 class="link"
-			 ng-show="$routeParams.type == 'books' || $routeParams.type == 'authors'"
+			 ng-if="$routeParams.type == 'books' || $routeParams.type == 'authors'"
 			 title="Books bookmarked"
 			 ng-click="toggle_bookmarked($event)">
-			 <span ng-show="$routeParams.type == 'books'">
+			 <span ng-if="$routeParams.type == 'books'">
 			 	<span ng-if="compact_footer" class="icon-bookmarks"></span>
 			 	<span ng-if="!compact_footer">Books Bookmarked</span>
 		 	 </span>
-			 <span ng-show="$routeParams.type == 'authors'">
+			 <span ng-if="$routeParams.type == 'authors'">
 			 	<span ng-if="compact_footer" class="icon-bookmarks"></span>
 				<span ng-if="!compact_footer">Authors Bookmarked</span>
 			 </span>
@@ -128,9 +129,9 @@
 		 <span class="icon-filter2" ng-class="{'filter_link_icon': !show_more_filters}"></span>
 		 <span ng-if="!compact_footer">
 		 	<span>&nbsp;Add filters</span>
-		 	<span ng-show="$routeParams.type == 'books'">for Books</span>
-		 	<span ng-show="$routeParams.type == 'authors'">for Authors</span>
-		 	<span ng-show="$routeParams.type == 'readers'">for Readers</span>
+		 	<span ng-if="$routeParams.type == 'books'">for Books</span>
+		 	<span ng-if="$routeParams.type == 'authors'">for Authors</span>
+		 	<span ng-if="$routeParams.type == 'readers'">for Readers</span>
 		 </span>
 		 <span class=" icon-angle-down" ng-if="!show_more_filters"></span>
 		 <span class=" icon-angle-up" ng-if="show_more_filters"></span>

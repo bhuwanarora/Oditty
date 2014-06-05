@@ -91,6 +91,7 @@ group :development do
 	gem 'did_you_mean'
 	gem 'net-http-spy'
 	gem 'rspec'
+	gem 'colorize'
 end
 
 # Use ActiveModel has_secure_password

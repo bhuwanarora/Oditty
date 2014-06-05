@@ -18,7 +18,7 @@
     -o-transform: rotateX(0deg) translatez(30px);
     transform: rotateX(0deg) translatez(30px);
     opacity: 1;
-    height: 88%;
+    height: 80vh;
 	/*right: 5px;*/
 }
 
@@ -32,12 +32,12 @@
 */
 .push_notification.ng-enter,
 .push_notification.ng-leave.ng-leave-active{
-	top: -150px;
+	right: -400px;
 }
 
 .push_notification.ng-leave,
 .push_notification.ng-enter.ng-enter-active{
-	top: 40px;
+	right: 10px;
 }
 
 .message.ng-enter,

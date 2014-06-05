@@ -527,7 +527,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope.search_initiated = false;
 		$scope.search_display = "Searching reader's door...";
 		$scope.search_type = "[ALL]";
-		$scope.show_login_form = false;
+		$scope.show_login_form = true;
 
 		// $scope.search_tag.selected_result = true; // hides the list initially
 		$scope.search_tag = {};
