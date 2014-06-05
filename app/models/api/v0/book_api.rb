@@ -124,8 +124,13 @@ module Api
 						match_clause = match_clause + ""
 					end
 					if filters["other_filters"]["readingTime"].present?
-						where_clause = where_clause + ""
-						match_clause = match_clause + ""
+						read_time = filters["other_filters"]["readingTime"]
+						match_clause = match_clause + ", (rt:ReadTime{name: '"+read_time+"'})<-[:WithReadingTime]-(book) "
+						if where_clause.present?
+							where_clause = where_clause + " AND book.page_count <> 0 "
+						else
+							where_clause = where_clause + " book.page_count <> 0 "
+						end
 					end
 					if filters["other_filters"]["timeGroup"].present?
 						category = "Era: "+filters["other_filters"]["timeGroup"].gsub(/\(.*?\)/, "").strip
@@ -164,8 +169,13 @@ module Api
 							where_clause = where_clause + clause
 						end
 					end
-					if where_clause.present?
+					if where_clause.present? && match_clause.present?
 						clause = init_match_clause+match_clause+"WHERE "+
+							where_clause+return_clause+skip_clause+limit_clause
+					elsif match_clause.present?
+						clause = init_match_clause+match_clause+return_clause+skip_clause+limit_clause
+					elsif where_clause.present?
+						clause = init_match_clause+"WHERE "+
 							where_clause+return_clause+skip_clause+limit_clause
 					else
 						category = "Must Reads"
@@ -203,7 +213,7 @@ module Api
 						isbn = book["isbn"].split(",")[0]
 						thumb = "http://covers.openlibrary.org/b/isbn/"+isbn+"-L.jpg" rescue ""
 						book = {
-							:title => book["title"]+"-"+node_id,
+							:title => book["title"],
 							:author_name => book["author_name"],
 							:rating => book["gr_rating"].to_f*2,
 							:readers_count => book["gr_ratings_count"],

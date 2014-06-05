@@ -427,4 +427,32 @@ module Neo4jHelper
 		@neo.add_label(node3, 'ReadTime')
 		@neo.add_label(node4, 'ReadTime')
 	end
+
+	def self.label_readtime_groups
+		@neo ||= self.init
+
+		clause = "MATCH (book:Book)-[r:WithReadingTime]->(rt:ReadTime) DELETE r"
+		@neo.execute_query(clause)
+		puts "delete WithReadingTime relations".red
+
+		clause = "MATCH (book:Book), (rt:ReadTime{page_count_range: '<50'})"+
+				" WHERE book.page_count <= 50"+
+				" CREATE (book)-[:WithReadingTime]->(rt)"
+		puts clause.green
+		@neo.execute_query(clause)
+
+		clause = "MATCH (book:Book), (rt:ReadTime{page_count_range: '50-100'}) WHERE book.page_count > 50 AND book.page_count <= 100 CREATE (book)-[:WithReadingTime]->(rt)"
+		puts clause.blue
+		@neo.execute_query(clause)
+
+		clause = "MATCH (book:Book), (rt:ReadTime{page_count_range: '100-250'}) WHERE book.page_count > 100 AND book.page_count <= 250 CREATE (book)-[:WithReadingTime]->(rt)"
+		puts clause.yellow
+		@neo.execute_query(clause)
+
+		clause = "MATCH (book:Book), (rt:ReadTime{page_count_range: '>250'}) WHERE book.page_count > 250 CREATE (book)-[:WithReadingTime]->(rt)"
+		puts clause.blue
+		@neo.execute_query(clause)
+
+		puts "DONE".red
+	end
 end

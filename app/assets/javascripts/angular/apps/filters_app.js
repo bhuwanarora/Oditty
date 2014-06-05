@@ -16,4 +16,16 @@ angular.module('filtersApp', [])
       var output = input.toFixed(1);
       return output;
     }
+  })
+  .filter('published_year', function(){
+    return function(input){
+      var output = "("+input+")";
+      return output;
+    }
+  })
+  .filter('page_count', function(){
+    return function(input){
+      var output = "-"+input+" pages";
+      return output;
+    }
   });

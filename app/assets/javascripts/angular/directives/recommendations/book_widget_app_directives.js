@@ -29,19 +29,19 @@ websiteApp.directive('book', ['widgetService', '$rootScope', function (widgetSer
           if(display_right_width > display_left_width){
             if(display_right_width > 400){
               posX = posX + event.currentTarget.offsetParent.scrollWidth - event.currentTarget.offsetLeft;
-              $rootScope.focused_book.reposition_tooltip = {"left": posX+"px", "top": "60px"};
+              $rootScope.focused_book.reposition_tooltip = {"left": posX+"px"};
             }
             else{
-              $rootScope.focused_book.reposition_tooltip = {"right": "0px", "top": "60px"}; 
+              $rootScope.focused_book.reposition_tooltip = {"right": "0px"}; 
             }
           }
           else{
             if(display_left_width > 400){
               posX = screen.width - posX;
-              $rootScope.focused_book.reposition_tooltip = {"right": posX+"px", "top": "60px"}; 
+              $rootScope.focused_book.reposition_tooltip = {"right": posX+"px"}; 
             }
             else{
-              $rootScope.focused_book.reposition_tooltip = {"left": "0px", "top": "60px"};  
+              $rootScope.focused_book.reposition_tooltip = {"left": "0px"};  
             }
           }
           // event.currentTarget.offsetParent.offsetParent.scrollWidth;
@@ -159,6 +159,10 @@ websiteApp.directive('bookInteract', ['websiteService', function (websiteService
     		}
     		
     	}
+
+      $scope.show_bookmark_options = function(event){
+        event.stopPropagation();
+      }
 
       $scope.handle_selection = function(selected_item){
         var string_array = $('.comment_box').val().split(" ");

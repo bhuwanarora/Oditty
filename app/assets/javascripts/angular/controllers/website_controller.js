@@ -398,7 +398,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		$scope.website = {};
 		$scope.website.searching = true;
 		$scope.website.show_search_page = true;
-		// $scope.authenticate();
+		$scope.authenticate();
 
 		_bind_emit();
 		_bind_feedback_form();

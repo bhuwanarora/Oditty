@@ -30,4 +30,10 @@ namespace :graph do
     Neo4jHelper.resolve_int_bug
   end
 
+  desc "Label reading time"
+  task :label_readtime_groups => :environment do
+    include Neo4jHelper
+    Neo4jHelper.label_readtime_groups
+  end
+  
 end

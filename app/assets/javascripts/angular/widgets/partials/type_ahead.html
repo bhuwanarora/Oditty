@@ -20,4 +20,5 @@
        ng-click="auto_populate()"
        ng-mouseenter="focus_on_input($event)"
        class="{{custom}}"/>
+  <div class="remove_filter" ng-if="selected && model" ng-click="remove_filter()">x</div>
 </div>

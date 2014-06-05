@@ -279,4 +279,5 @@ module UsersGraphHelper
 		ORDER r.timestamp DESC")
 	end
 
+
 end

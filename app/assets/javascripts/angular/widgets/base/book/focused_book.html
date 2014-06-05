@@ -6,7 +6,9 @@
   <div class="header">
     <div class="title">{{focused_book.title}}</div>
     <div class="author">by {{focused_book.author_name}} 
-      <span ng-if="focused_book.published_year">({{focused_book.published_year}})</span>
+      <span ng-if="focused_book.published_year">
+        {{focused_book.published_year | published_year}}</span>
+      <span>{{focused_book.page_count | page_count}}</span>
     </div>
     <rate data="focused_book"></rate>
     <div class="rating_star">

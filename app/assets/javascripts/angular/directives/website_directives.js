@@ -338,6 +338,11 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', function($timeout, $sce){
     					'<span style="font-weight:bold;">$&</span>'));
 			}
 
+			$scope.remove_filter = function(){
+				$scope.model = "";
+				$scope.onClear();
+			}
+
 		  	$scope.handle_selection = function(selectedItem) {
 				$scope.model = selectedItem.toUpperCase();
 			    $scope.current = 0;

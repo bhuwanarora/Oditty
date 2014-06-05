@@ -17,7 +17,7 @@
 		</span>
 	</div> -->
  	<!-- </type-ahead> -->
-	<div class="profile_thumb">
+	<div class="profile_thumb" ng-click="goto_info_card()">
 		<img ng-src="{{user.thumb}}" class="profile_small_thumb" ng-if="user.thumb">
 		<img src="assets/profile_pic.jpeg" ng-if="!user.thumb">
 	</div>
@@ -78,6 +78,7 @@
 			 title="Recommendations"
 			 style="margin-left:0px;" 
 			 ng-click="toggle_recommendations()">
+			<span class="icon-dice"></span>
 			<span ng-if="!compact_footer">
 				<span ng-if="$routeParams.type == 'books'">
 					{{recommendations.books.count}} </span>
@@ -87,22 +88,21 @@
 					{{recommendations.readers.count}} </span>	
 				<span>Recommendations</span>
 			</span>
-			<span ng-if="compact_footer" class="icon-dice"></span>
 		</div>
 		<div ng-class="{'inactive':!read_selected, 'active':read_selected, 'compact_link': compact_footer}"
 			 class="link"
 			 title="Books marked as read" 
 			 ng-click="toggle_read()">
 		 	<span ng-if="$routeParams.type == 'books'">
-		 		<span ng-if="compact_footer" class="icon-books"></span>
+		 		<span class="icon-books"></span>
 		 		<span ng-if="!compact_footer">Books Read</span>
 		 	</span>
 			<span ng-if="$routeParams.type == 'authors'">
-				<span ng-if="compact_footer" class="icon-users"></span>
+				<span class="icon-users"></span>
 				<span ng-if="!compact_footer">Following Authors</span>
 			</span>
 			<span ng-if="$routeParams.type == 'readers'">
-				<span ng-if="compact_footer" class="icon-users"></span>
+				<span class="icon-users"></span>
 				<span ng-if="!compact_footer">Following Readers</span>
 			</span>
 		</div>
@@ -112,11 +112,11 @@
 			 title="Books bookmarked"
 			 ng-click="toggle_bookmarked($event)">
 			 <span ng-if="$routeParams.type == 'books'">
-			 	<span ng-if="compact_footer" class="icon-bookmarks"></span>
+			 	<span class="icon-bookmarks"></span>
 			 	<span ng-if="!compact_footer">Books Bookmarked</span>
 		 	 </span>
 			 <span ng-if="$routeParams.type == 'authors'">
-			 	<span ng-if="compact_footer" class="icon-bookmarks"></span>
+			 	<span class="icon-bookmarks"></span>
 				<span ng-if="!compact_footer">Authors Bookmarked</span>
 			 </span>
 

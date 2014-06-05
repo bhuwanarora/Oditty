@@ -1,4 +1,7 @@
-<div ng-init="setStatus(book.status)"></div>
-<input placeholder="Name the bookmark" class="input_bookmark"/>
-<book-bookmark></book-bookmark>
-<mark-as-read track></mark-as-read>
+<div class="bottom_widget">
+	<div ng-init="setStatus(book.status)"></div>
+	<input placeholder="Name the bookmark" class="input_bookmark" 
+			ng-click="show_bookmark_options($event)"/>
+	<book-bookmark></book-bookmark>
+	<mark-as-read track></mark-as-read>
+</div>

@@ -310,7 +310,7 @@ websiteApp.directive('filter', ['$rootScope', '$timeout', '$routeParams', functi
 }]);
 
 
-websiteApp.directive('recommendationFooter', function(){
+websiteApp.directive('recommendationFooter', ['scroller', function(scroller){
 	return{
 		restrict: 'E',
 		controller: ['$scope', function($scope){
@@ -321,10 +321,14 @@ websiteApp.directive('recommendationFooter', function(){
 				$scope.compact_footer = false;	
 			}
 
+			$scope.goto_info_card = function(){
+				scroller.scrollTo(0, 0, 2000);
+			}
+
 			$scope.toggle_footer = function(){
 				$scope.compact_footer = true;
 			}
 		}],
 		templateUrl: "/assets/angular/widgets/partials/recommendation_footer.html"
 	}
-});
+}]);

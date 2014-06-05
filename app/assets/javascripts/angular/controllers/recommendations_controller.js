@@ -179,7 +179,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 						$scope.recommendations.books = [$scope.recommendations.books[max_limit-2], $scope.recommendations.books[max_limit-1]];
 						var timeout_event = $timeout(function(){
 							scroller.scrollTo(screen.width/2, 0, 3000);
-						}, 1000)
+						}, 1000);
 						$scope.$on('destroy', function(){
 							$timeout.cancel(timeout_event);
 						});
