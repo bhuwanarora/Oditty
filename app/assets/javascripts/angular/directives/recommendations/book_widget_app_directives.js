@@ -561,13 +561,13 @@ websiteApp.directive('markAsRead', ['$rootScope', '$timeout', 'widgetService', f
         if($scope.book.status){
           $scope.book.status = 0;
           $scope.$emit('removeFromShelf', "BOOK", $scope.book);
-          var message = "SUCCESS-Book "+book_title+" by "+author_name+" has been removed from your Read Shelf."
+          var message = "SUCCESS-Removed from <span class='icon-books'></span> Books Read. ";
         }
         else{
           $scope.book.status = 1;
           $scope.$emit('addToShelf', "BOOK", $scope.book);
           $rootScope.$broadcast('glowShelf');
-          var message = "SUCCESS-Book "+book_title+" by "+author_name+" has been added to your Read Shelf."
+          var message = "SUCCESS-Added to <span class='icon-books'></span> Books Read. ";
 
           $scope.$on('destroy', function(){
             $timeout.cancel(timeout_event);

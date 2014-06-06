@@ -7,7 +7,7 @@
    style="height:100%; white-space:nowrap;"
    ng-controller="recommendationsController"
    ng-click="hide_popups()">
-   		
+
 		<div class="vertical_padder_active"></div>
 		<main-header></main-header>
 		<recommendation-footer></recommendation-footer>
@@ -127,10 +127,10 @@
 			ng-if="notification_active">
 			<div class="type" ng-style="message_style">
 				<span class="icon-thumbs-up" ng-if="message_type == 0"></span>
-				<span class="icon-thumbs-up2" ng-if="message_type == 1"></span>
+				<span class="icon-bolt" ng-if="message_type == 1"></span>
 				<span class="icon-bell" ng-if="message_type == 2"></span>
 			</div>
-			<div class="content">{{message | message}}
+			<div class="content" ng-bind-html="message | message">
 			</div>
 		</div>
 		
@@ -146,6 +146,7 @@
 		</div>
 
 		<more-filters></more-filters>
+		<!-- <div class="wrapper" ng-if="focused_book"></div> -->
 		<focused-book></focused-book>
 		<focused-author></focused-author>
 		<focused-reader></focused-reader>

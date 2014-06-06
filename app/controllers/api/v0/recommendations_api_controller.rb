@@ -14,6 +14,7 @@ module Api
 								.order("priority DESC")
 								.select("id, name, priority")
 								.as_json
+								.first(5)
 				filter_author = Filter.where(:filter_type => "AUTHOR")
 								.order(:priority)
 								.select("id, name, priority")

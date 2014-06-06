@@ -5,7 +5,10 @@
 		ng-model="book.labels">
 		<li ng-repeat="label in book.labels">
   			<label ng-click="label.checked = true; select_label(label.name)">
-  				<span class="bookmark_label">{{label.name}}</span>
+  				<span class="bookmark_label">
+  					<span class="icon-tag"></span>&nbsp;
+  					<span>{{label.name}}</span>
+  				</span>
   				<input type="checkbox" 
   					   ng-checked="label.checked"
   					   ng-value="label.name"

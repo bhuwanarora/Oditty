@@ -161,6 +161,7 @@ input:focus{
 
 .custom_radio:checked{
     color: #427fed;
+    font-size: 1.1em;
 }
 
 .custom_radio:checked:before{

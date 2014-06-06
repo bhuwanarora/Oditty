@@ -1,7 +1,7 @@
 .focused_tooltip{
 	position: fixed;
 	top: 13vh;
-	width: 42%;
+	width: 55vh;
 	min-width: 400px;
 	background-color: white;
 	white-space: initial;
@@ -24,7 +24,7 @@
 }
 
 .focused_tooltip .book_info{
-	padding-left: 10px;
+	padding: 10px;
 }
 
 .focused_tooltip .book_info .book_link .count{
@@ -63,12 +63,13 @@
 }
 
 .focused_tooltip .own_this_book{
-	position: absolute;
-	right: 10px;
 	bottom: 10px;
 	cursor: pointer;
-	font-size: 0.8em;
+	font-size: .8em;
 	color: #181f25;
+	float: left;
+	display: inline-block;
+	margin-top: 5px;
 }
 
 .focused_tooltip .own_this_book:hover{
@@ -83,7 +84,7 @@
 
 .focused_tooltip .description{
 	font-family: Proxima Nova, sans-serif;
-	font-size: 0.8em;
+	font-size: 1em;
 	padding: 12px;
 	height: 20vh;
 	line-height: 1.5em;
@@ -117,9 +118,10 @@
 	border: 1px solid #B8B8B8;
 	padding: 5px;
 	background-color: white;
-	/*border-radius: 2px;*/
 	font-size: 0.7em;
 	cursor: pointer;
+	float: left;
+	margin-right: 10px;
 }
 
 .focused_tooltip .footer .recommended{
@@ -127,9 +129,10 @@
 	color: white;
 	border: 1px solid #B8B8B8;
 	padding: 5px;
-	/*border-radius: 2px;*/
 	font-size: 0.7em;
 	cursor: pointer;	
+	float: left;
+	margin-right: 10px;
 }
 
 .focused_tooltip .users{
@@ -139,16 +142,22 @@
 
 .focused_tooltip .interact{
 	background-color: #918FB5;
-	color: white;
-	padding: 12px;
+	color: #fff;
+	padding: 14px;
 	font-size: .8em;
 	cursor: pointer;
 	position: absolute;
-	right: 50%;
-	margin-right: -80px;
-	margin-top: -11px;
+	right: 0px;
+	border-bottom-right-radius: 3px;
+	bottom: 0px;
+	top: 0px;
 }
 
+.rate{
+	text-align: center;
+	padding-top: 10px;
+	height: 15px;
+}
 
 .focused_tooltip .header{
 	padding: 10px 10px 0px 10px;
@@ -158,8 +167,7 @@
 	cursor: pointer;
 	font-weight: bold;
 	color: #136CB2;
-	font-size: 1.2em;
-	margin-left: 10px;
+	font-size: 1em;
 	width: 70%;
 	max-height: 6vh;
 	overflow-y: scroll;
@@ -170,6 +178,7 @@
 	font-weight: bold;
 	color: #136CB2;
 	width: 70%;
+	font-size: 0.9em;
 }
 
 .focused_tooltip .header .title:hover,
@@ -206,6 +215,7 @@
 	letter-spacing: 0px;
 	cursor: pointer;
 	background-color: white;
+	font-size: 0.8em;
 }
 .time_to_read .active_read_timer{
 	background-color: #918FB5;

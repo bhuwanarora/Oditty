@@ -27,7 +27,9 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 				var progression_width = (current_x*screen.width)/clientWidth;
 			}
 			else{
-				var current_x = event.pageX - ($('.scroller').position().left + $('.scroller-left').position().left);
+				// debugger
+				var current_x = event.pageX - (event.screenX);
+				// var current_x = event.pageX - ($('.scroller').position().left + $('.scroller-left').position().left);
 			}
 		}
 		else{
@@ -53,7 +55,8 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 				var progression_width = (current_x*screen.width)/clientWidth;
 			}
 			else{
-				var current_x = pageX - ($('.scroller').position().left+$('.scroller-right').position().left);
+				// var current_x = pageX - ($('.scroller').position().left+$('.scroller-right').position().left);
+				var current_x = event.pageX - (event.screenX - event.offsetX);
 				var lessThanOnePageLeft = pageX + screen.width > clientWidth;
 			}
 		}

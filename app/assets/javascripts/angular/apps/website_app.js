@@ -92,11 +92,11 @@ function notify($rootScope, message, $timeout){
   var message_type = message_split[0];
   if(message_type == "SUCCESS"){
     $rootScope.message_type = 0;
-    $rootScope.message_style = {"background-color": "rgb(0, 170, 0)"};
+    $rootScope.message_style = {"background-color": "#f9edbe"};
   }
   else if(message_type == "ALERT"){
     $rootScope.message_type = 1;
-    $rootScope.message_style = {"background-color": "red"};
+    $rootScope.message_style = {"background-color": "#d73d32"};
   }
   else{
     $rootScope.message_type = 2;

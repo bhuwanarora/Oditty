@@ -1,52 +1,53 @@
+
 <div class="focused_tooltip animate-fast"
      ng-style="focused_book.reposition_tooltip"
      ng-click="stop_propagation($event)"
      ng-if="focused_book">
   <div class="close button_effect" ng-click="close_focused_tooltip()">x</div>
   <div class="header">
-    <div class="title">{{focused_book.title}}</div>
-    <div class="author">by {{focused_book.author_name}} 
+    <div class="title">{{focused_book.title}} by {{focused_book.author_name}} </div>
+    <div class="author">
       <span ng-if="focused_book.published_year">
         {{focused_book.published_year | published_year}}</span>
       <span>{{focused_book.page_count | page_count}}</span>
     </div>
-    <rate data="focused_book"></rate>
+    <div class="book_info">
+      <span> · </span>
+      <span ng-click="show_book(9)" class="book_link">
+        <span class="count">
+          <span>{{focused_book.readers_count | integer}}</span>
+          <span class="icon-users2"></span> 
+        </span>
+        <!-- <span>&nbsp;&nbsp;Readers</span> -->
+      </span>
+      · 
+      <span itemprop="aggregateRating" 
+            itemscope 
+            itemtype="http://schema.org/AggregateRating"
+            ng-click="show_book(11)" class="book_link">
+        <span class="count">
+          <span>{{focused_book.reviews_count | integer}}</span>
+          <span class="icon-pencil2"></span> 
+        </span>
+        <!-- <span>&nbsp;&nbsp;Reviews</span> -->
+      </span>
+      · 
+      <span ng-click="show_book(11)" class="book_link">
+        <span class="count">
+          <span>{{focused_book.discussions_count | integer}}</span>
+          <span class="icon-bubbles2"></span>
+        </span>
+        <!-- <span>&nbsp;&nbsp;Discussions</span> -->
+      </span>
+       · 
+    </div>
     <div class="rating_star">
       <img src="assets/star.png"/>
       <div class="rating_text">{{focused_book.rating | rating }}</div>
     </div>
   </div>
   <hr>
-  <div class="book_info">
-    <span> · </span>
-    <span ng-click="show_book(9)" class="book_link">
-      <span class="count">
-        <span>{{focused_book.readers_count | integer}}</span>
-        <span class="icon-users2"></span> 
-      </span>
-      <!-- <span>&nbsp;&nbsp;Readers</span> -->
-    </span>
-    · 
-    <span itemprop="aggregateRating" 
-          itemscope 
-          itemtype="http://schema.org/AggregateRating"
-          ng-click="show_book(11)" class="book_link">
-      <span class="count">
-        <span>{{focused_book.reviews_count | integer}}</span>
-        <span class="icon-pencil2"></span> 
-      </span>
-      <!-- <span>&nbsp;&nbsp;Reviews</span> -->
-    </span>
-    · 
-    <span ng-click="show_book(11)" class="book_link">
-      <span class="count">
-        <span>{{focused_book.discussions_count | integer}}</span>
-        <span class="icon-bubbles2"></span>
-      </span>
-      <!-- <span>&nbsp;&nbsp;Discussions</span> -->
-    </span>
-     · 
-  </div>
+    <rate data="focused_book"></rate>
   <hr>
   <div class="description" msd-wheel="stop_horizontal_scroll($event)" >
     <span itemprop="description">{{focused_book.summary}}</span>
@@ -75,7 +76,7 @@
   </div>
   <div class="footer">
     <recommend data="focused_book"></recommend>
-    <span class="interact" ng-click="focused_book.interact = true;">What do you feel about this book</span>
+    <span class="interact" ng-click="focused_book.interact = true;">Tweet</span>
     <div class="own_this_book"
        ng-click="own_this_book()">
        <span ng-show="!have_this_book">I have this Book</span>

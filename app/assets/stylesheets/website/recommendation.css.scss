@@ -13,7 +13,7 @@
    	height:40px;
    	width:100%;
    	z-index: 7;
-   	background-color: #D8D8D8;
+   	background-color: #929292;
 }
 
 .main_header input{
@@ -116,6 +116,7 @@
 	background-color: white;
 	border-top-left-radius: 4px;
 	border-bottom-left-radius: 4px;
+	overflow: hidden;
 	/*text-shadow: 0 2px 3px rgba(0,0,0,0.5);*/
 }
 
@@ -333,7 +334,7 @@
 
 /*mark as read*/
 .input_bookmark{
-	width: 69%;
+	width: 64%;
 	left: 0px;
 	position: absolute;
 	bottom: 0px;
@@ -342,6 +343,7 @@
 	top: 0px;
 	margin: 0px;
 	cursor: default;
+	padding-left: 10px;
 }
 
 .tag_bookmark{
@@ -387,7 +389,7 @@
 	color: #E5E5E5;
 	font-size: 1.5em;
 	width: 17%;
-	padding-top: 6%;
+	padding-top: 5%;
 	position: absolute;
 	bottom: 0px;
 	top: 0px;
@@ -412,13 +414,6 @@
 	width: 97%;
 	height: 10%;
 	margin-left: 5px;
-}
-
-/*rate*/
-.rate{
-	text-align: center;
-	padding-top: 15px;
-	height: 50px;
 }
 
 .interaction_box .close,
@@ -647,6 +642,7 @@
 #recommendationFooter .active{
 	cursor: default;
 	background-color: #F0F0F0;
+	color: #427fed;
 }
 
 .shelf_nav_links{
@@ -747,15 +743,11 @@
 }
 
 .scroller{
-	display: inline-block;
-	float: left;
-	left: 50%;
+	right: 5px;
 	color: #3D79A1;
 	height: 35px;
-	bottom: 50px;
+	bottom: -5px;
 	position: fixed;
-	margin-left: -78px;
-	padding: 18px 15px 0px 15px;
 }
 
 
@@ -803,11 +795,12 @@
 }
 
 .more_filters{
-	width: 80%;
+	width: 350px;
+	height: 80vh;
 	left: 10px;
 	position: fixed;
 	top: 80px;
-	z-index: 1;
+	z-index: 2;
 	padding: 10px 0px 0px 0px;
 	background-color: #E6E6E6;
 	border: 1px solid #E2E2E2;
@@ -1084,14 +1077,14 @@
 
 .rate_radio_buttons{
 	padding: 3px 15px;
-	width: 260px;
+	width: 275px;
 	color: #717070;
 	text-align: left;
-	border: 1px solid none;
+	/*border: 1px solid none;*/
 }
 
 .rate_radio_buttons:hover{
-	border: 1px solid #CFCFCF;
+	/*border: 1px solid #CFCFCF;*/
 }
 
 .result_count{
@@ -1303,6 +1296,13 @@
 	margin: 5px;
 }
 
+.horizontal_padder_active{
+	width: 60vh;
+	height: 80vh;
+	display: inline-block;
+	float: left;
+}
+
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen
 and (min-device-width : 320px)
@@ -1351,10 +1351,6 @@ and (min-width : 400px) {
 		min-width: 210px;
 	}
 
-	.rate{
-		height: 25px;
-	}
-
 	.book_navbar_base{
 		width: 96.5%;
 	}
@@ -1367,12 +1363,6 @@ and (min-width : 400px) {
 	.card .zoomedin_thumb{
 	}
 
-	.horizontal_padder_active{
-		width: 320px;
-		height: 500px;
-		float: left;
-		display: inline-block;
-	}
 }
 
 @media only screen
@@ -1390,12 +1380,6 @@ and (min-width : 1280px){
 		margin-top: 0px;
 	}
 
-	.horizontal_padder_active{
-		width: 440px;
-		height: 500px;
-		float: left;
-		display: inline-block;
-	}
 }
 
 @media only screen
@@ -1416,20 +1400,10 @@ and (min-width : 1366px){
 		min-width: 210px;
 	}
 
-	.rate{
-		height: 25px;
-	}
-
 	.rate_radio_buttons{
 		margin-top: -10px;
 	}
 
-	.horizontal_padder_active{
-		width: 320px;
-		height: 500px;
-		float: left;
-		display: inline-block;
-	}
 }
 
 /* Large screens ----------- */
@@ -1449,12 +1423,6 @@ and (min-width : 1824px) {
 		margin-top: 0px;
 	}
 
-	.horizontal_padder_active{
-		width: 320px;
-		height: 500px;
-		float: left;
-		display: inline-block;
-	}
 
 }
 
@@ -1582,7 +1550,7 @@ and (min-width : 1824px) {
 
 .wrap-dd-select {
     position: relative;
-	width: 220px;
+	width: 270px;
 	padding: 7px;
 	background: white;
 	border: 1px solid rgba(0, 0, 0, 0.15);
@@ -1605,7 +1573,7 @@ and (min-width : 1824px) {
 
 .wrap-dd-select .dropdown {
     position: absolute;
-	bottom: -290%;
+	bottom: -360%;
 	left: 0;
 	right: 0;
 	background: white;
@@ -1763,10 +1731,6 @@ and (min-width : 1824px) {
 	height: 64vh;*/
 }
 
-.time_group{
-	width: 270px;
-}
-
 .site_menu{
 	display: inline-block;
 	float: left;
@@ -1816,7 +1780,7 @@ and (min-width : 1824px) {
 	bottom: 0px;
 	height: 6vh;
 	box-shadow: 0 -3px 4px 0 rgba(0,0,0,.15);
-	background-color: #F5F5F5;
+	background-color: white;
 }
 
 .user_guide{
@@ -1837,7 +1801,7 @@ and (min-width : 1824px) {
 
 .progression_state{
 	position: fixed;
-	background: #D8D8D8;
+	background: #F5F5F5;
 	height: 100%;
 }
 
@@ -1858,6 +1822,7 @@ and (min-width : 1824px) {
     font-family: Helvetica;
     letter-spacing: -4.2px;
     margin-left: 20px;
+    margin-top: 5px;
 }
 
 .label_dropdown{
