@@ -28,4 +28,12 @@ angular.module('filtersApp', [])
       var output = "-"+input+" pages";
       return output;
     }
-  });
+  })
+  .filter('message', function(){
+    return function(input){
+      if(input.length > 55){
+        input = input.slice(0, 53)+"..."
+      }
+      return input;
+    }
+  });;

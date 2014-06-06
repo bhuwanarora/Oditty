@@ -6,16 +6,37 @@
 	color: #4374e0;	
 }
 
+.main_header{
+	position:fixed;
+   	left:0px;
+   	top:0px;
+   	height:40px;
+   	width:100%;
+   	z-index: 7;
+   	background-color: #D8D8D8;
+}
+
+.main_header input{
+	position: fixed;
+	left: 50%;
+	height: 30px;
+	top: 4px;
+	width: 40%;
+	border-radius: 2px;
+	font-size: 1.1em;
+	padding-left: 10px;
+}
+
 /* recommendationFooter */
 #recommendationFooter {
-   position:fixed;
-   left:0px;
-   top:0px;
-   height:40px;
-   width:100%;
-   z-index: 6;
-   background-color: #F5F5F5;
-   -webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
+   	position:fixed;
+   	left:0px;
+   	top:40px;
+   	height:40px;
+   	width:100%;
+   	z-index: 6;
+   	background-color: #F5F5F5;
+   	-webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
 	box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
 }
 
@@ -90,12 +111,11 @@
 	height: 100%;
 	color: white;
 	text-align: center;
-	cursor: pointer;
 	box-shadow: -3px 0 5px -2px #888;
 	font-size: 0.7em;
 	background-color: white;
-	border-top-left-radius: 3px;
-	border-bottom-left-radius: 3px;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
 	/*text-shadow: 0 2px 3px rgba(0,0,0,0.5);*/
 }
 
@@ -116,8 +136,8 @@
 	float: left;
 	background-color: white;
 	position: relative;
-	border-top-right-radius: 3px;
-	border-bottom-right-radius: 3px;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
 }
 
 .card_expand{
@@ -198,7 +218,7 @@
 } */
 
 .vertical_padder_active{
-	height: 50px;
+	height: 13vh;
 	width: 100%;
 }
 
@@ -234,7 +254,7 @@
 	bottom: 10%;
 	cursor: pointer;
 	z-index: 1;
-	border-top-right-radius: 3px;
+	border-top-right-radius: 4px;
 }
 
 .card .widget_thumb_focus{
@@ -255,7 +275,7 @@
 	font-size: 0.9em;
 	text-align: center;
 	white-space: initial;
-	border-top-right-radius: 3px;
+	border-top-right-radius: 4px;
 }
 
 .card .description p{
@@ -321,6 +341,18 @@
 	font-size: 1em;
 	top: 0px;
 	margin: 0px;
+	cursor: default;
+}
+
+.tag_bookmark{
+	height: 100%;
+
+}
+
+.tag_bookmark:hover{
+	background-color: #F1F1F1;
+	border-bottom: 1px solid !important;
+	color: white;
 }
 
 .bottom_widget{
@@ -333,7 +365,7 @@
 
 .right_action{
 	right: 0px;
-	border-bottom-right-radius: 3px;
+	border-bottom-right-radius: 4px;
 }
 
 .right_action_active{
@@ -352,11 +384,10 @@
 
 .action_button{
 	text-align: center;
-	cursor: pointer;
 	color: #E5E5E5;
 	font-size: 1.5em;
 	width: 17%;
-	padding-top: 4%;
+	padding-top: 6%;
 	position: absolute;
 	bottom: 0px;
 	top: 0px;
@@ -566,8 +597,8 @@
 
 .menu_group{
 	font-size: 1em;
-	float: right;
-	margin-right: 70px;
+	float: left;
+	margin-left: 3%;
 	display: inline-block;
 	text-align: center;
 }
@@ -576,7 +607,7 @@
 	width: 40px;
 	padding-top: 10px;
 	padding-bottom: 13px;
-	background-color: #427fed;
+	background-color: #757575;
 	color: white;
 }
 
@@ -615,7 +646,7 @@
 
 #recommendationFooter .active{
 	cursor: default;
-	font-weight: bold;
+	background-color: #F0F0F0;
 }
 
 .shelf_nav_links{
@@ -656,28 +687,41 @@
 }
 
 .push_notification{
-	padding: 15px;
 	color: #717070;
 	background-color: #fff;
 	right: 1px;
-	top: 50px;
+	top: 13vh;
 	position: fixed;
-	width: 350px;
-	max-height: 60px;
+	width: 240px;
 	white-space: normal;
-	min-height: 80px;
+	height: 55px;
 	box-shadow: 1px 1px 6px 0 #424242;
-	z-index: 1;
+	z-index: 10;
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+}
+
+.push_notification .type{
+	display: inline-block;
+	float: left;
+	background: #427fed;
+	color: #fff;
+	padding: 10px;
+	font-size: 2em;
+	border-bottom-left-radius: 3px;
+	border-bottom-left-radius: 3px;
 }
 
 .push_notification .content{
-	padding: 15px;
 	color: #717070;
-	background-color: white;
-	left: 10px;
-	position: absolute;
-	max-height: 60px;
+	background-color: #fff;
 	white-space: normal;
+	display: inline-block;
+	float: left;
+	width: 170px;
+	height: 35px;
+	padding: 10px;
+	font-size: 0.8em;
 }
 
 .message{
@@ -762,7 +806,7 @@
 	width: 80%;
 	left: 10px;
 	position: fixed;
-	top: 40px;
+	top: 80px;
 	z-index: 1;
 	padding: 10px 0px 0px 0px;
 	background-color: #E6E6E6;
@@ -1146,7 +1190,7 @@
 	display: inline-block;
 	float: left;
 	border: 1px solid #F1F1F1;
-	margin-right: 30px;
+	margin-right: 50px;
 	margin-left: 30px;
 	padding: 8% 3% 3% 3%;
 	white-space: normal;
@@ -1257,41 +1301,6 @@
 	display: inline-block;
 	float: left;
 	margin: 5px;
-}
-
-.time_to_read{
-	padding: 5px;
-	letter-spacing: -5px;
-	text-align: center;
-	background-color: #E6E6E6;
-	padding-bottom: 20px;
-}
-
-.time_to_read .header{
-	letter-spacing:0px;
-	padding-bottom: 10px !important;
-}
-
-.time_to_read hr{
-	opacity: 0.3;
-}
-
-.time_to_read span{
-	text-align: center;
-	border: 1px solid #DFDFDF;
-	padding: 2px 15px 2px 15px;
-	letter-spacing: 0px;
-	cursor: pointer;
-	background-color: white;
-}
-.time_to_read .active_read_timer{
-	background-color: #918FB5;
-	color: white;
-}
-
-.time_to_read span:hover{
-	background-color: #417FF0;
-	color: white;
 }
 
 /* Smartphones (portrait and landscape) ----------- */
@@ -1470,7 +1479,7 @@ and (min-width : 1824px) {
 }
 .notification_link{
 	right: 20px;
-	top: 0px;
+	top: 40px;
 	z-index: 6;
 	font-size: 1.2em;
 	position: fixed;
@@ -1805,7 +1814,7 @@ and (min-width : 1824px) {
 	width: 100%;
 	left: 0px;
 	bottom: 0px;
-	height: 11%;
+	height: 6vh;
 	box-shadow: 0 -3px 4px 0 rgba(0,0,0,.15);
 	background-color: #F5F5F5;
 }
@@ -1828,7 +1837,7 @@ and (min-width : 1824px) {
 
 .progression_state{
 	position: fixed;
-	background: rgba(0, 0, 0, 0.07);
+	background: #D8D8D8;
 	height: 100%;
 }
 
@@ -1837,4 +1846,39 @@ and (min-width : 1824px) {
 	padding: 4px;
 	color: white;
 	margin-right: 1px;
+}
+
+
+.site_logo{
+    color: white;
+    float: left;
+    top: 4px;
+    font-size: 2em;
+    font-weight: bold;
+    font-family: Helvetica;
+    letter-spacing: -4.2px;
+    margin-left: 20px;
+}
+
+.label_dropdown{
+	position: absolute;
+	bottom: 73%;
+	background-color: white;
+	z-index: 2;
+	list-style-type: none;
+	padding: 2px;
+	width: 37vh;
+	border-top-right-radius: 3px;
+	border-left: 1px solid #F0F0F0;
+	max-height: 60vh;
+	overflow-y: scroll;
+}
+
+.label_dropdown li{
+	padding: 2vh;
+	border-bottom: 1px solid #F0F0F0;
+}
+
+.label_dropdown input{
+	float: right;
 }

@@ -159,6 +159,10 @@ input:focus{
     content: "\e654";
 }
 
+.custom_radio:checked{
+    color: #427fed;
+}
+
 .custom_radio:checked:before{
     content: "\f14a";
 }

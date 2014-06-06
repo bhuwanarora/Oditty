@@ -88,9 +88,21 @@ websiteApp.config(['FacebookProvider',
 ]);
 
 function notify($rootScope, message, $timeout){
-  // var message_split = message.split("-");
-  // $rootScope.message_type = message_split[0];
-  $rootScope.message = message;
+  var message_split = message.split("-");
+  var message_type = message_split[0];
+  if(message_type == "SUCCESS"){
+    $rootScope.message_type = 0;
+    $rootScope.message_style = {"background-color": "rgb(0, 170, 0)"};
+  }
+  else if(message_type == "ALERT"){
+    $rootScope.message_type = 1;
+    $rootScope.message_style = {"background-color": "red"};
+  }
+  else{
+    $rootScope.message_type = 2;
+    $rootScope.message_style = {"background-color": "#427fed"};
+  }
+  $rootScope.message = message_split.slice(1, message_split.length).join("-");
   $rootScope.notification_active = true;
   var timeout_event = $timeout(function(){
     $rootScope.notification_active = false;

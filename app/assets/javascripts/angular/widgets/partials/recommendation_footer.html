@@ -21,53 +21,7 @@
 		<img ng-src="{{user.thumb}}" class="profile_small_thumb" ng-if="user.thumb">
 		<img src="assets/profile_pic.jpeg" ng-if="!user.thumb">
 	</div>
- 	<div class="menu_group" 
- 		 ng-class="{'menu_group_active':show_menu}"
- 		 ng-mouseenter="toggle_menu()"
-		 ng-mouseleave="toggle_menu()">
-	 	<div class="menu" ng-if="show_menu">
-	 		<a ng-href="#/user/{{$routeParams.id}}/search">
-		 		<div>
-			 		<span>Home</span>
-		 		</div>
-		 	</a>
-		 	<a ng-href="#/user/{{$routeParams.id}}/recommendations/books">
-		 		<div ng-hide="$routeParams.type == 'books'">
-		 			<span class="icon-book"></span>
-			 		<span>Books</span>
-		 		</div>
-		 	</a>
-		 	<a ng-href="#/user/{{$routeParams.id}}/recommendations/authors">
-	 			<div ng-hide="$routeParams.type == 'authors'">
-	 				<span class="icon-pen"></span>
-		 			<span>Authors</span>
-	 			</div>
-		 	</a>
-		 	<a ng-href="#/user/{{$routeParams.id}}/recommendations/readers">
-	 			<div ng-hide="$routeParams.type == 'readers'">
-	 				<span class="icon-users"></span>
-		 			<span>Readers</span>
-	 			</div>
-		 	</a>
-	 	</div>
-		<div class="advanced_filter animate-fast" 
-			 ng-class="{'advanced_filter_active':show_menu || filter_expanded}">
-			<span ng-if="$routeParams.type == 'books'">
-				<span class="icon-book"></span>
-				<span ng-if="filter_expanded || show_menu">Books</span>
-			</span>
-			<span ng-if="$routeParams.type == 'authors'">
-				<span class="icon-pen"></span>
-				<span ng-if="filter_expanded || show_menu">Authors</span>
-			</span>
-			<span ng-if="$routeParams.type == 'readers'">
-				<span class="icon-users"></span>
-				<span ng-if="filter_expanded || show_menu">Readers</span>
-			</span>
-			<span class="icon-angle-down" ng-if="!show_menu"></span>
-		 	<span class="icon-angle-up" ng-if="show_menu"></span>
-		</div>
- 	</div>
+ 	
 
 
  	<div class="shelf_nav_links"
@@ -124,6 +78,7 @@
 	</div>
 
  	<div class="filter_link"
+ 		 ng-if="!bookmark_selected && !read_selected"
  		 ng-class="{'compact_filter_link': compact_footer}" 
 		 ng-click="toggle_more_filters($event)">
 		 <span class="icon-filter2" ng-class="{'filter_link_icon': !show_more_filters}"></span>

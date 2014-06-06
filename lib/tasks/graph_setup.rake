@@ -35,5 +35,11 @@ namespace :graph do
     include Neo4jHelper
     Neo4jHelper.label_readtime_groups
   end
+
+  desc " Add Labels"
+  task :add_labels => :environment do
+    include Neo4jHelper
+    Neo4jHelper.create_labels
+  end
   
 end

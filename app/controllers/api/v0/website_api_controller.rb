@@ -16,9 +16,14 @@ module Api
 				render :json => results, :status => 200
 			end
 
+            def labels
+                labels = WebsiteApi.get_labels
+                results = {:labels => labels}
+                render :json => results, :status => 200
+            end
+
             def times
-                @neo = Neography::Rest.new
-                time_groups = @neo.execute_query("MATCH (t:Era) RETURN t")["data"]
+                time_groups = WebsiteApi.get_time_groups
                 results = {:times => time_groups}
                 render :json => results, :status => 200
             end

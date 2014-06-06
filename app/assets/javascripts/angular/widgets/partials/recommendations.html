@@ -7,10 +7,11 @@
    style="height:100%; white-space:nowrap;"
    ng-controller="recommendationsController"
    ng-click="hide_popups()">
-   		<div class="progression_state" ng-style="progression_state">{{progression_state}}</div>
+   		
+		<div class="vertical_padder_active"></div>
+		<main-header></main-header>
 		<recommendation-footer></recommendation-footer>
 
-		<div class="vertical_padder_active"></div>
 		<!-- <div class="recommendations_page"><search-bar></search-bar></div> -->
 		<div ng-switch on="panel_selected" class="recommendation_window">
 			<div ng-switch-when="BOOKMARK" class="recommendation_panel">
@@ -124,7 +125,12 @@
 		<div push-notification="notification_active" 
 			class="push_notification" 
 			ng-if="notification_active">
-			<div class="content" ng-bind-html="message">
+			<div class="type" ng-style="message_style">
+				<span class="icon-thumbs-up" ng-if="message_type == 0"></span>
+				<span class="icon-thumbs-up2" ng-if="message_type == 1"></span>
+				<span class="icon-bell" ng-if="message_type == 2"></span>
+			</div>
+			<div class="content">{{message | message}}
 			</div>
 		</div>
 		
@@ -145,7 +151,9 @@
 		<focused-reader></focused-reader>
 		<notification-link></notification-link>
 
-		<div class="bottom_hover_detector"></div>
+		<div class="bottom_hover_detector">
+			<div class="progression_state" ng-style="progression_state"></div>
+		</div>
 		<div class="top_hover_detector"></div>
 		
 </div>

@@ -455,4 +455,15 @@ module Neo4jHelper
 
 		puts "DONE".red
 	end
+
+	def self.create_labels
+		@neo ||= self.init
+
+		labels = ["Books left in between", "I own this book", "Books I plan to Read", "Books I plan to buy"]
+		for label in labels do
+			puts label.green
+			node = @neo.create_node("name" => label)
+			@neo.add_label(node, "Label")
+		end
+	end
 end

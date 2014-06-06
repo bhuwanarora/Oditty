@@ -157,7 +157,7 @@ module ShelfariCrawler
         end
         characters = doc.css('#WikiModule_Characters li')
         index = 0
-        while characters[index]!=nil
+        while characters && characters[index]!=nil
           character_description = characters[index].children[1].content rescue nil
           name = characters[index].children[0].content rescue nil
           character_url = characters[index].children[0].attr("href") rescue nil
@@ -170,7 +170,7 @@ module ShelfariCrawler
         end
         locations = doc.css('#WikiModule_Settings li')
         index = 0
-        while locations[index]!=nil
+        while locations && locations[index]!=nil
           if locations[index].content.include? ":"
             location_name = locations[index].content.split(":")[0]
             location_description = locations[index].content.split(":")[1]
@@ -190,7 +190,7 @@ module ShelfariCrawler
         book.first_sentence = first_sentence
         index = 0
         themes = doc.css('#WikiModule_Themes li')
-        while themes[index]!=nil
+        while themes && themes[index]!=nil
           if themes[index].content.include? ":"
             theme_name = themes[index].content.split(":")[0]
             theme_description = themes[index].content.split(":")[1]
@@ -211,7 +211,7 @@ module ShelfariCrawler
 
         index = 0
         quotes = doc.css('#WikiModule_Quotations li')
-        while quotes[index]!=nil
+        while quotes && quotes[index]!=nil
            person_url = quotes[index].children[3].children[0].attr("href") rescue nil
            name = quotes[index].children[1].content rescue nil
            person = quotes[index].children[3].content rescue nil
@@ -223,7 +223,7 @@ module ShelfariCrawler
         end
         note_for_parents = doc.css('#WikiModule_Parents .editable')
         index = 0
-        while note_for_parents[index]!=nil
+        while note_for_parents && note_for_parents[index]!=nil
           note_url = note_for_parents[index].children[5].attr("href")
           note = note_for_parents[index].children[5].content
           note = NoteForParent.find_or_create_by(:name => note,
@@ -234,7 +234,7 @@ module ShelfariCrawler
         end
         index = 0
         movies = doc.css('#WikiModule_Movies li')
-        while movies[index]!=nil
+        while movies && movies[index]!=nil
           movies_url = movies[index].children[0].attr("href")
           if movies[index].content.include? ":"
             movie_name = movies[index].content.split(":")[0]
@@ -253,7 +253,7 @@ module ShelfariCrawler
 
         index = 0
         authors = doc.css('.primary a')
-        while authors[index]!=nil
+        while authors && authors[index]!=nil
           name = authors[index].content
           authors_url = authors[index].attr("href")
           human_profile = HumanProfile.find_or_create_by(:name => name)
@@ -266,26 +266,28 @@ module ShelfariCrawler
 
         index = 0
         tags = doc.css('.tags')
-        tags[0].children.each do |tag|
-          name = tag.children[0]
-          if name
-            name = name.content
-            children_url = tag.children[0].attr("href") rescue nil
-            value = tag.children[0].attr("class")
-            value.slice!("tag") rescue nil
-            shelfari_tag = ShelfariTag.find_or_create_by(:name => name,
-                                                         :url => children_url)
-            ShelfariBooksTags.find_or_create_by(:shelfari_book_id => id,
-                                                :shelfari_tag_id => shelfari_tag.id,
-                                                :weight => value)
-          else
-            break
+        if tags && tags[0]
+          tags[0].children.each do |tag|
+            name = tag.children[0]
+            if name
+              name = name.content
+              children_url = tag.children[0].attr("href") rescue nil
+              value = tag.children[0].attr("class")
+              value.slice!("tag") rescue nil
+              shelfari_tag = ShelfariTag.find_or_create_by(:name => name,
+                                                           :url => children_url)
+              ShelfariBooksTags.find_or_create_by(:shelfari_book_id => id,
+                                                  :shelfari_tag_id => shelfari_tag.id,
+                                                  :weight => value)
+            else
+              break
+            end
           end
         end
 
         index = 0
         ebooks = doc.css('#WikiModule_SupplementalMaterial li')
-        while ebooks[index] != nil
+        while ebooks && ebooks[index] != nil
           notes = ebooks[index].content
           ebook_url = ebooks[index].children[0].attr("href")
           name = book.name
@@ -300,7 +302,7 @@ module ShelfariCrawler
         categories = doc.css('#WikiModule_Subjects li')
         index = 0
         parent = ShelfariCategory.first
-        while categories[index]!=nil
+        while categories && categories[index]!=nil
           tree_index = 3
           while categories[index].children[tree_index]!=nil
             category_name = categories[index].children[tree_index].content
@@ -318,6 +320,7 @@ module ShelfariCrawler
         book.save
       end
     rescue Exception => e
+      debugger
       puts "DEBUG #{id} #{book.url} #{e}"
       ELogger.log_info "DEBUG #{id} #{book.url} #{e}"
       # initialize_player

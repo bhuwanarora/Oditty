@@ -309,6 +309,15 @@ websiteApp.directive('filter', ['$rootScope', '$timeout', '$routeParams', functi
 	}
 }]);
 
+websiteApp.directive('mainHeader', [function(){
+	return{
+		restrict: 'E',
+		controller: ['$scope', function($scope){
+			
+		}],
+		templateUrl: "/assets/angular/widgets/partials/main_header.html"
+	}
+}]);
 
 websiteApp.directive('recommendationFooter', ['scroller', function(scroller){
 	return{

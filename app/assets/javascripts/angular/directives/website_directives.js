@@ -1,3 +1,10 @@
+websiteApp.directive('siteLogo', [function(){
+	return{
+		restrict: 'E',
+		templateUrl: "/assets/angular/widgets/partials/site_logo.html"
+	}
+}]);
+
 websiteApp.directive('infoCard', ['$rootScope', '$timeout', function($rootScope, $timeout){
 	return{
 		restrict: 'E',

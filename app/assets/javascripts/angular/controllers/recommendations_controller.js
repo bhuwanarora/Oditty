@@ -159,7 +159,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	_update_recommendations = function(data){
 		if($rootScope.filters["filter_type"] == "BOOK"){
-			var message = "SUCCESS: "+data.recommendations.books.length+" books found."
+			var message = "INFO- "+data.recommendations.books.length+" books found."
 			var timeout_event = notify($rootScope, message, $timeout);
 			$scope.$on('destroy', function(){
 				$timeout.cancel(timeout_event);
@@ -168,7 +168,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			if($rootScope.loading){
 				var max_limit = 30;
 				if(data.recommendations.books.length == 0){
-					var message = "ALERT: Reset the filters couldn't find more books."
+					var message = "ALERT- Reset the filters couldn't find more books."
 					var timeout_event = notify($rootScope, message, $timeout);
 					$scope.$on('destroy', function(){
 						$timeout.cancel(timeout_event);
@@ -263,6 +263,14 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	});
     }
 
+    _get_labels = function(){
+      recommendationService.get_labels().then(function(data){
+        console.debug("%c labels", "color: green");
+        $rootScope.labels = data["labels"];
+      });
+    }
+
+
 	_init = function(){
 		//oneMin = 60000
 		$scope.$routeParams = $routeParams;
@@ -279,6 +287,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 		$scope.searching = false;
     	_get_filters();
+    	_get_labels();
 		_init_recommendations();
     	_add_listeners();
 		_init_notifications();

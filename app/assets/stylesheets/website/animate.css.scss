@@ -72,7 +72,7 @@
 
 .more_filters.ng-leave,
 .more_filters.ng-enter.ng-enter-active {
-	top: 40px;
+	top: 80px;
 }
 
 .login_box.ng-enter,
@@ -169,4 +169,14 @@
 .login_form.ng-leave,
 .login_form.ng-enter.ng-enter-active{
 	margin-top: 0px;
+}
+
+.label_dropdown.ng-enter,
+.label_dropdown.ng-leave.ng-leave-active{
+	bottom: 0px;
+}
+
+.label_dropdown.ng-leave,
+.label_dropdown.ng-enter.ng-enter-active{
+	bottom: 73%;
 }

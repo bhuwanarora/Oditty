@@ -59,6 +59,9 @@ websiteApp.service('widgetService', ['$http', '$q', '$rootScope', function ($htt
         return _deferred_request('/api/v0/friends?id='+id);
     }
 
+    this.get_labels = function(){
+        return _deferred_request('/api/v0/labels');   
+    }
 
     _deferred_request = function(url){
         var deferred = $q.defer();
