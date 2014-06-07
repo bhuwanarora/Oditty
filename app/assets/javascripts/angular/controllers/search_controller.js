@@ -1,4 +1,4 @@
-websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteService', '$timeout', '$sce', 'recommendationService', function($scope, $rootScope, websiteService, $timeout, $sce, recommendationService){
+websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteService', '$timeout', '$sce', 'recommendationService', '$routeParams', function($scope, $rootScope, websiteService, $timeout, $sce, recommendationService, $routeParams){
 	_show_search_result = function(){
 		$rootScope.show_book = true;
 		$rootScope.book_x = 0;
@@ -140,8 +140,8 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		    	_show_search_result();
 		    }
 			$scope.search_tag.input = "";
-		    event.stopPropagation();
 		}
+		event.stopPropagation();
 	};
 
 	$scope.hide_search_page = function(type){
@@ -202,11 +202,11 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
         	var currentValue = _get_search_input(event);
         	if(currentValue.length <= 1){
         		if(currentValue.length < 1 && $scope.search_level1 && !$scope.search_level2){
-        			$scope.clear_search_level1_var();
+        			$scope.clear_search_level1_var(event);
         			event.preventDefault();
         		}
         		else if(currentValue.length < 1 && $scope.search_level2){
-        			$scope.clear_search_level2_var();
+        			$scope.clear_search_level2_var(event);
         			event.preventDefault();
         		}
         		else{
@@ -219,20 +219,21 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
         }
 	}
 
-	$scope.clear_search_level1_var = function(){
-		$scope.clear_search_level2_var();
+	$scope.clear_search_level1_var = function(event){
+		$scope.clear_search_level2_var(event);
 		$scope.search_level1 = false;
 		$scope.book_search = false;
 		$scope.author_search = false;
 		$scope.reader_search = false;
 		_init_graph_search();
+		event.stopPropagation();
 	}
 
 	$scope.close_login_box = function(){
 		$scope.show_login_form = false;
 	}
 
-	$scope.clear_search_level2_var = function(){
+	$scope.clear_search_level2_var = function(event){
 		$scope.search_level1 = false;
 		$scope.search_level2 = false;
 		$scope.year_search = false;
@@ -244,6 +245,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope.gender_search = false;
 		$scope.awards_search = false;
 		_search_by();
+		event.stopPropagation();
 	}
 
 	$scope.highlight = function(searchItem, textToSearchThrough){
@@ -523,6 +525,18 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		}
 	}
 
+	$scope.handle_options = function(){
+		if($routeParams.type){
+			if($rootScope.hide_options){
+				$rootScope.hide_options = false;
+			}
+			else{
+				$rootScope.hide_options = true;	
+			}
+			event.stopPropagation();
+		}
+	}
+
 	_handle_search_page = function(){
 		$scope.search_initiated = false;
 		$scope.search_display = "Searching reader's door...";
@@ -541,6 +555,12 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$scope.search_style = {'background-image': 'url("'+data.url+'")'};
 		});
 		_init_graph_search();
+		if($routeParams.type){
+			$rootScope.hide_options = true;
+		}
+		else{
+			$rootScope.hide_options = false;
+		}
 	}
 
 	_init = function(){

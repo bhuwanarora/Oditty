@@ -1,13 +1,12 @@
-<!-- <div class="wrapper" 
-     ng-if="website.searching_level1 || website.searching_level2"></div> -->
-<div class="input_handler" ng-if="search_level1" ng-click="clear_search_level1_var()">
+<div class="wrapper" ng-if="$routeParams.type && !hide_options"></div>
+<div class="input_handler" ng-if="search_level1" ng-click="clear_search_level1_var($event)">
   <div class="custom_icon" ng-if="book_search || reader_search || author_search">
     <span class="icon-book" ng-if="book_search"></span>
     <span class="icon-users" ng-if="reader_search"></span>
     <span class="icon-pen" ng-if="author_search"></span>
   </div>
 </div>
-<div class="input_handler_level2" ng-if="search_level2" ng-click="clear_search_level2_var()">
+<div class="input_handler_level2" ng-if="search_level2" ng-click="clear_search_level2_var($event)">
   <div class="custom_icon" 
        ng-if="time_search || year_search || country_search || genre_search || by_author_search || list_search || gender_search || awards_search">
     <span class="icon-clock" ng-if="time_search"></span>
@@ -31,10 +30,11 @@
 	       ng-model="search_tag.input"
          ng-disabled="search_level2"
          id="searchInput"
+         ng-click="handle_options()"
          class="search_input" 
          placeholder="{{search_tag.placeholder}}"/>
 
-  <div class="website_search_helpers" ng-if="!search_level1">
+  <div class="website_search_helpers" ng-if="!search_level1 && !hide_options">
       <div class="custom_option">
         <div ng-show="search_initiated" class="title">{{search_display}}</div>
         <div ng-show="!search_initiated && search_tag.input" 
@@ -50,7 +50,7 @@
         </div> -->
       </div>
   </div>
-  <div class="website_search_helpers" ng-if="search_level1">
+  <div class="website_search_helpers" ng-if="search_level1 && !hide_options">
       <div class="custom_option">
         <div ng-show="search_initiated" class="title">{{search_display}}</div>
         <div ng-show="!search_initiated && search_tag.input" 
@@ -61,7 +61,7 @@
         </div> -->
       </div>
   </div>
-  <div class="website_search_options" ng-if="search_results">
+  <div class="website_search_options" ng-if="search_results && !hide_options">
     <div ng-repeat="item in search_results | filter: search_tag.input | limitTo: search_tag.result_count track by $index "
          ng-click="handle_selection(item)" 
          ng-class="{active:is_current($index, item.name), 'graph_option':item.graph_option}" 

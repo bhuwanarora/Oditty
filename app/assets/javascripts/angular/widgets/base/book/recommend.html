@@ -4,19 +4,21 @@
 	<span ng-show="!recommend_object.recommended">RECOMMEND</span>
 	<span ng-show="recommend_object.recommended">CANCEL</span>
 </span>
-<div class="recommendation_box animate-slow" ng-if="recommend_object.recommended">
-	<div class="header">
-		Select friends whom you want to recommend
-	</div>
-	<div class="friend_grid">
-		<img ng-src="{{friend.thumb}}" 
-			 title="{{friend.name}}" 
-		     ng-repeat="friend in user.friends" 
-		     class="friend_thumb" 
-		     data-selected="false"
-		     ng-click="select_thumb($event)"/>
-	</div>
-	<div class="footer">
-		<div class="button_effect done" ng-click="recommend()">Done</div>
+<div class="wrapper" ng-if="recommend_object.recommended">
+	<div class="recommendation_box animate-slow" ng-if="recommend_object.recommended">
+		<div class="header">
+			Select friends whom you want to recommend
+		</div>
+		<div class="friend_grid">
+			<img ng-src="{{friend.thumb}}" 
+				 title="{{friend.name}}" 
+			     ng-repeat="friend in user.friends" 
+			     class="friend_thumb" 
+			     data-selected="false"
+			     ng-click="select_thumb($event)"/>
+		</div>
+		<div class="footer">
+			<div class="button_effect done" ng-click="recommend()">Done</div>
+		</div>
 	</div>
 </div>
