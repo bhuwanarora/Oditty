@@ -49,6 +49,15 @@ input:focus{
     outline:none;
 }
 
+.search_page .search_level2_typeahead_group{
+    width: 339px !important;
+    margin-left: -133px !important;
+}
+
+.search_page .search_level1_typeahead_group{
+    width: 369px !important;
+    margin-left: -163px !important;
+}
 
 .search_typeahead_options{
     bottom: 40px;
@@ -57,7 +66,7 @@ input:focus{
     width: 280px;
 }
 
-.search_typeahead_group{
+.search_page .search_typeahead_group{
     position: fixed;
     left: 50%;
     top: 35%;
@@ -107,7 +116,7 @@ input:focus{
     border: 1px solid rgba(255, 255, 255, 0.4);
     background-color: white;
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    width: 97%;
+    width: 96%;
     height: 100%;
     content: '';
 }
