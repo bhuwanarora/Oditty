@@ -1,11 +1,16 @@
 websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteService', '$timeout', '$sce', 'recommendationService', '$routeParams', function($scope, $rootScope, websiteService, $timeout, $sce, recommendationService, $routeParams){
-	_show_search_result = function(){
-		$rootScope.show_book = true;
-		$rootScope.book_x = 0;
-		$rootScope.screen_x = 0;
-		$rootScope.total_x = screen.width;
-		var data = 1;
-    	_get_book_details(data);
+	_show_search_result = function(item){
+		console.debug("%c _show_search_result"+item.name, "color: green");
+		// $rootScope.show_book = true;
+		// $rootScope.book_x = 0;
+		// $rootScope.screen_x = 0;
+		// $rootScope.total_x = screen.width;
+		// var data = 1;
+  //   	_get_book_details(data);
+  		// console.log
+  		$rootScope.filters.other_filters["title"] = item.name;
+  		$rootScope.filters.other_filters["author_name"] = item.author_name;
+  		$scope.$emit('reloadRecommendations');
 	}
 
 	_handle_graph_search = function(selectedItem){
@@ -137,7 +142,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		    	_handle_graph_search(selectedItem);
 		    }
 		    else{
-		    	_show_search_result();
+		    	_show_search_result(item);
 		    }
 			$scope.search_tag.input = "";
 		}
@@ -430,8 +435,13 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
         console.debug(currentValue, $scope.search_type, $scope.search_tag.result_count);
     	if($scope.search_ready && currentValue != ""){
 	        websiteService.search(currentValue, $scope.search_type, $scope.search_tag.result_count)
-	        .then(function(result) {
-	            $scope.search_results = $scope.search_results.concat(result.results);
+	        .then(function(result){
+	        	$scope.search_results = [];
+	        	var results = result.results.data;
+	        	for(var i=0; i<results.length; i++){
+	        		var json = {"name": results[i][0], "author_name": results[i][1]}
+	            	$scope.search_results.push(json);
+	        	}
 				$scope.search_initiated = false;
 				$timeout.cancel(search_typing_timeout);
 	        });
