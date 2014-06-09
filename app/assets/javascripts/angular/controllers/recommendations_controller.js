@@ -195,7 +195,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 					}
 					else{
 		    			$scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);
-						
 					}
 				}
 		    	$rootScope.loading = false;

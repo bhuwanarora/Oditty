@@ -194,7 +194,7 @@ module Neo4jHelper
 			book.update_column("neo_flag", true)
 			title
 		rescue Exception => e
-			debugger
+			puts e
 		end
 	end
 
@@ -267,6 +267,8 @@ module Neo4jHelper
 						t2 = Time.now
 						puts "#{t2-t1} #{count} #{title}"
 					end
+				else
+					puts id
 				end
 			rescue Exception => e
 				puts e

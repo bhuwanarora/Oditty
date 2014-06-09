@@ -13,7 +13,7 @@
    	height:40px;
    	width:100%;
    	z-index: 7;
-   	background-color: #929292;
+   	background-color: white;
 }
 
 /*.main_header input{
@@ -219,7 +219,7 @@
 } */
 
 .vertical_padder_active{
-	height: 13vh;
+	height: 90px;
 	width: 100%;
 }
 
@@ -602,8 +602,8 @@
 	width: 40px;
 	padding-top: 10px;
 	padding-bottom: 13px;
-	background-color: #757575;
-	color: white;
+	background-color: #F5F5F5;
+	/*color: white;*/
 }
 
 .advanced_filter_active{
@@ -1819,7 +1819,7 @@ and (min-width : 1824px) {
 
 
 .site_logo{
-    color: white;
+    /*color: white;*/
     float: left;
     top: 4px;
     font-size: 2em;
@@ -1837,7 +1837,7 @@ and (min-width : 1824px) {
 	z-index: 2;
 	list-style-type: none;
 	padding: 2px;
-	width: 37vh;
+	width: 81%;
 	border-top-right-radius: 3px;
 	border-left: 1px solid #F0F0F0;
 	max-height: 60vh;
