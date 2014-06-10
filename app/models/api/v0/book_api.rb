@@ -112,7 +112,7 @@ module Api
 				init_match_clause = "MATCH (book:Book) "
 				distinct_clause = "ALL (id in "+book_ids.to_s+" WHERE toInt(id) <> ID(book)) "
 				random_clause = "ID(book)%"+random.to_s+"=0 AND rand() > 0.3 "
-				return_clause = "WITH book, book.gr_ratings_count * book.gr_reviews_count * book.gr_rating AS total_weight, book.gr_ratings_count * book.gr_rating AS rating_weight RETURN book, total_weight, rating_weight ORDER BY rating_weight DESC, total_weight DESC, book.gr_rating DESC "
+				return_clause = "WITH book, toInt(book.gr_ratings_count) * toInt(book.gr_reviews_count) * toInt(book.gr_rating) AS total_weight, toInt(book.gr_ratings_count) * toInt(book.gr_rating) AS rating_weight RETURN book, total_weight, rating_weight ORDER BY rating_weight DESC, total_weight DESC, book.gr_rating DESC "
 				limit_clause = "LIMIT 10 "
 
 
@@ -210,7 +210,7 @@ module Api
 						end
 						$redis.set 'book_ids', book_ids
 						book = book[0]["data"]
-						isbn = book["isbn"].split(",")[0]
+						isbn = book["isbn"].split(",")[0] rescue nil
 						thumb = "http://covers.openlibrary.org/b/isbn/"+isbn+"-L.jpg" rescue ""
 						book = {
 							:title => book["title"],
