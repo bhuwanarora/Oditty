@@ -616,7 +616,7 @@ function add_custom_bookmark($scope, $rootScope, $timeout){
 
     if(!already_exists){
       $scope.book.bookmark_status = 1;
-      $scope.book.labels.push({"name": custom_bookmark, "checked": true});
+      $scope.book.labels = $scope.book.labels.concat([{"name": custom_bookmark, "checked": true}]);
       $scope.book.custom_bookmark = "";
       var message = "SUCCESS-Custom Bookmark "+custom_bookmark+" added to book "+$scope.book.title;
     }

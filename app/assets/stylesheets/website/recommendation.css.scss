@@ -219,7 +219,7 @@
 } */
 
 .vertical_padder_active{
-	height: 90px;
+	height: 85px;
 	width: 100%;
 }
 
@@ -1819,15 +1819,13 @@ and (min-width : 1824px) {
 
 
 .site_logo{
-    /*color: white;*/
     float: left;
-    top: 4px;
-    font-size: 2em;
-    font-weight: bold;
-    font-family: Helvetica;
-    letter-spacing: -4.2px;
-    margin-left: 20px;
-    margin-top: 5px;
+	font-size: 1.5em;
+	font-weight: 700;
+	font-family: Helvetica;
+	letter-spacing: -3.2px;
+	margin-left: 20px;
+	margin-top: 10px;
 }
 
 .label_dropdown{
@@ -1847,6 +1845,10 @@ and (min-width : 1824px) {
 .label_dropdown li{
 	padding: 2vh;
 	border-bottom: 1px solid #F0F0F0;
+}
+
+.label_dropdown li:hover{
+	background-color: #F1F1F1;
 }
 
 .label_dropdown input{
