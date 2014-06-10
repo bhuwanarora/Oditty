@@ -85,7 +85,7 @@ module Api
 								that he is seeking; that he is unable to find anything, unable to absorb anything because 
 								he is only thinking of the thing he is seeking...",
 						:moment => "Death broken down into molecular importance."
-					}					
+					}
 				]
 				info = {"moments" => test_moments}
 			end
@@ -119,54 +119,60 @@ module Api
 				if filters["other_filters"].present?
 					where_clause = ""
 					match_clause = ""
-					if filters["other_filters"]["country"].present?
-						where_clause = where_clause + ""
-						match_clause = match_clause + ""
-					end
-					if filters["other_filters"]["readingTime"].present?
-						read_time = filters["other_filters"]["readingTime"]
-						match_clause = match_clause + ", (rt:ReadTime{name: '"+read_time+"'})<-[:WithReadingTime]-(book) "
-						if where_clause.present?
-							where_clause = where_clause + " AND book.page_count <> 0 "
-						else
-							where_clause = where_clause + " book.page_count <> 0 "
+					book_name = filters["other_filters"]["title"]
+					author_name = filters["other_filters"]["author_name"]
+					if book_name.present?
+						where_clause = where_clause + " book.title=\""+book_name+"\" AND book.author_name=\""+author_name+"\" "
+					else
+						if filters["other_filters"]["country"].present?
+							where_clause = where_clause + ""
+							match_clause = match_clause + ""
 						end
-					end
-					if filters["other_filters"]["timeGroup"].present?
-						category = "Era: "+filters["other_filters"]["timeGroup"].gsub(/\(.*?\)/, "").strip
-						time_range =  filters["other_filters"]["timeGroup"][/\(.*?\)/]
-										.gsub("(","")
-										.gsub(")","")
-										.split("-")
-						match_clause = match_clause + ", (book)-[:Published_in]->(y:Year) "
-						clause = " toInt(y.year) > "+time_range[0]+
-								" AND toInt(y.year) < "+time_range[1]+" "
-						if where_clause.present?
-							where_clause = where_clause + " AND"+clause
-						else
-							where_clause = where_clause + clause
+						if filters["other_filters"]["readingTime"].present?
+							read_time = filters["other_filters"]["readingTime"]
+							match_clause = match_clause + ", (rt:ReadTime{name: '"+read_time+"'})<-[:WithReadingTime]-(book) "
+							if where_clause.present?
+								where_clause = where_clause + " AND book.page_count <> 0 "
+							else
+								where_clause = where_clause + " book.page_count <> 0 "
+							end
 						end
-					end
-					if filters["other_filters"]["author"].present?
-						author_name =  filters["other_filters"]["author"]
-						category = "Written by "+ author_name
-						match_clause = match_clause + ", (author:Author)-[:Wrote]->(book) "
-						clause = " author.name =~ '(?i)"+author_name+"' "
-						if where_clause.present?
-							where_clause = where_clause + " AND"+clause
-						else
-							where_clause = where_clause + clause
+						if filters["other_filters"]["timeGroup"].present?
+							category = "Era: "+filters["other_filters"]["timeGroup"].gsub(/\(.*?\)/, "").strip
+							time_range =  filters["other_filters"]["timeGroup"][/\(.*?\)/]
+											.gsub("(","")
+											.gsub(")","")
+											.split("-")
+							match_clause = match_clause + ", (book)-[:Published_in]->(y:Year) "
+							clause = " toInt(y.year) > "+time_range[0]+
+									" AND toInt(y.year) < "+time_range[1]+" "
+							if where_clause.present?
+								where_clause = where_clause + " AND"+clause
+							else
+								where_clause = where_clause + clause
+							end
 						end
-					end
-					if filters["other_filters"]["genre"].present?
-						genre = filters["other_filters"]["genre"]
-						category = "Genre: "+genre
-						match_clause = match_clause + ", (genre:Genre)<-[:Belongs_to]-(book) "
-						clause = " genre.name =~ '(?i)"+genre+"' "
-						if where_clause.present?
-							where_clause = where_clause + " AND"+clause
-						else
-							where_clause = where_clause + clause
+						if filters["other_filters"]["author"].present?
+							author_name =  filters["other_filters"]["author"]
+							category = "Written by "+ author_name
+							match_clause = match_clause + ", (author:Author)-[:Wrote]->(book) "
+							clause = " author.name =~ '(?i)"+author_name+"' "
+							if where_clause.present?
+								where_clause = where_clause + " AND"+clause
+							else
+								where_clause = where_clause + clause
+							end
+						end
+						if filters["other_filters"]["genre"].present?
+							genre = filters["other_filters"]["genre"]
+							category = "Genre: "+genre
+							match_clause = match_clause + ", (genre:Genre)<-[:Belongs_to]-(book) "
+							clause = " genre.name =~ '(?i)"+genre+"' "
+							if where_clause.present?
+								where_clause = where_clause + " AND"+clause
+							else
+								where_clause = where_clause + clause
+							end
 						end
 					end
 					if where_clause.present? && match_clause.present?

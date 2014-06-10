@@ -185,7 +185,17 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 							$timeout.cancel(timeout_event);
 						});
 					}
-		    		$scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);
+					if($rootScope.filters.other_filters["title"]){
+						$scope.bookmark_selected  = false;
+						$scope.read_selected = false;
+						$scope.$emit('moveRight');
+						$rootScope.hide_options = true;
+						$scope.recommendations.books = data["recommendations"]["books"];
+						$rootScope.focused_book = $scope.recommendations.books[0];
+					}
+					else{
+		    			$scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);
+					}
 				}
 		    	$rootScope.loading = false;
 			}

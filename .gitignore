@@ -58,3 +58,5 @@ neo4j/*.txt
 node_modules/*
 app/assets/javascripts/angular/widgets/gzip/**
 app/build/**
+.elasticbeanstalk/
+Archive.zip
