@@ -65,17 +65,18 @@ module.exports = function(grunt) {
     // },
     ngtemplates:{
       app:{
-        module: 'websiteApp',
         src: 'app/assets/javascripts/angular/widgets/**/*.html',
         dest: 'app/assets/javascripts/min/angular/templates.js',
         options:{
+          module: 'websiteApp',
           htmlmin:{ 
             removeComments: true,
             removeCommentsFromCDATA: true,
             collapseWhitespace: true,
             minifyJS: true,
             minifyCSS: true
-          }
+          },
+          url: function(url) { return url.replace('app/assets/javascripts/', '/assets/'); }
         }
       }
     },

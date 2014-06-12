@@ -212,7 +212,7 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 websiteApp.directive('notificationLink', function(){
 	return{
 		restrict: 'E',
-		templateUrl: 'assets/angular/widgets/partials/notification_link.html'
+		templateUrl: '/assets/angular/widgets/partials/notification_link.html'
 	}
 });
 
