@@ -7,13 +7,13 @@
 }
 
 .main_header{
-	position:fixed;
-   	left:0px;
-   	top:0px;
+   	background-color: white;
    	height:40px;
+   	left:0px;
+	position:fixed;
+   	top:0px;
    	width:100%;
    	z-index: 7;
-   	background-color: white;
 }
 
 /*.main_header input{
@@ -29,20 +29,20 @@
 */
 /* recommendationFooter */
 #recommendationFooter {
-   	position:fixed;
-   	left:0px;
-   	top:40px;
+   	background-color: #F5F5F5;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
    	height:40px;
+   	left:0px;
+   	position:fixed;
+   	top:40px;
    	width:100%;
    	z-index: 6;
-   	background-color: #F5F5F5;
    	-webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
-	box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
 }
 
 .profile_thumb{
-	float: left;
 	display: inline-block;
+	float: left;
 	margin-right: 2px;
 }
 
@@ -51,9 +51,9 @@
 }
 
 .compact_link{
-	width: 50px !important;
 	float: left;
 	padding-top: 15px !important;
+	width: 50px !important;
 }
 
 .compact_shelf_nav_links{
@@ -75,29 +75,29 @@
 
 .recommendation_block{
 	display: inline-block;
+	height: 80vh;
 	margin-right: -35px;
 	position: relative;
 	width: 67vh;
-	height: 80vh;
 }
 
 .vertical_line{
 	border-right: 1px solid #DADADA;
-	height: 40%;
-	top: 15%;
-	position: absolute;
 	display: inline-block;
+	height: 40%;
+	position: absolute;
+	top: 15%;
 	width: 25px;
 }
 
 /*book widget*/
 .widget{
-	display: inline-block;
-	position: absolute;
-	left: 0px;
-	top: 0px;
 	bottom: 0px;
+	display: inline-block;
+	left: 0px;
+	position: absolute;
 	right: 0px;
+	top: 0px;
 }
 
 /* category */
@@ -106,17 +106,17 @@
 }
 
 .category{
-	float: left;
-	width: 8%;
-	height: 100%;
-	color: white;
-	text-align: center;
-	box-shadow: -3px 0 5px -2px #888;
-	font-size: 0.7em;
 	background-color: white;
-	border-top-left-radius: 4px;
 	border-bottom-left-radius: 4px;
+	border-top-left-radius: 4px;
+	box-shadow: -3px 0 5px -2px #888;
+	color: white;
+	float: left;
+	font-size: 0.7em;
+	height: 100%;
 	overflow: hidden;
+	text-align: center;
+	width: 8%;
 	/*text-shadow: 0 2px 3px rgba(0,0,0,0.5);*/
 }
 
@@ -126,19 +126,19 @@
 }
 
 .book_rating{
-	padding: 15px 0px;
 	color: #717070;
+	padding: 15px 0px;
 }
 
 /* card on recommendation page */
 .card{
-	width: 80%;
-	height: 100%;
-	float: left;
 	background-color: white;
-	position: relative;
-	border-top-right-radius: 4px;
 	border-bottom-right-radius: 4px;
+	border-top-right-radius: 4px;
+	float: left;
+	height: 100%;
+	position: relative;
+	width: 80%;
 }
 
 .card_expand{

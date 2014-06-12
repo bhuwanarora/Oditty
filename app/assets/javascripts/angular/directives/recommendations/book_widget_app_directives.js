@@ -122,7 +122,7 @@ websiteApp.directive('labelDropdown', function(){
         event.stopPropagation();
       }
     }],
-    templateUrl: 'assets/angular/widgets/base/book/label_dropdown.html'    
+    templateUrl: '/assets/angular/widgets/base/book/label_dropdown.html'    
   }
 });
 
@@ -483,7 +483,7 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'widgetService
 
       _init();
     }],
-    templateUrl: "assets/angular/widgets/base/book/interaction_box.html"
+    templateUrl: "/assets/angular/widgets/base/book/interaction_box.html"
   }
 }]);
 

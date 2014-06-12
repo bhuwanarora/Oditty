@@ -535,6 +535,6 @@ websiteApp.directive('angularte', function() {
 websiteApp.directive('reviews', function(){
   return{
     restrict: 'E',
-    templateUrl: "assets/angular/widgets/partials/book/reviews.html"
+    templateUrl: "/assets/angular/widgets/partials/book/reviews.html"
   }
 });

@@ -1,22 +1,22 @@
 .focused_tooltip{
+	background-color: white;
+	border: 1px solid #FFFFFF;
+	border-radius: 4px;
+	box-shadow: 0 7px 15px rgba(0,0,0,0.25);
+	height: 80vh;
+	min-width: 400px;
 	position: fixed;
 	top: 13vh;
-	width: 65vh;
-	min-width: 400px;
-	background-color: white;
 	white-space: initial;
-	box-shadow: 0 7px 15px rgba(0,0,0,0.25);
-	border: 1px solid #FFFFFF;
+	width: 65vh;
 	z-index: 2;
-	height: 80vh;
-	border-radius: 4px;
 	/* for big screens */
 }
 
 .focused_tooltip .rating_star{
 	position: absolute;
-	top: 15px;
 	right: 40px;
+	top: 15px;
 }
 
 .focused_tooltip .rating_star img{
@@ -28,34 +28,34 @@
 }
 
 .focused_tooltip .book_info .book_link .count{
-	cursor: pointer;
 	background-color: #918FB5;
 	color: white;
+	cursor: pointer;
 	padding: 4px;
 	text-shadow: 0 2px 3px rgba(0,0,0,0.5);
 }
 
 .focused_tooltip .book_thumb{
-	height: 50px;
 	display: inline-block;
 	float: left;
+	height: 50px;
 	padding: 2px;
 }
 
 .focused_tooltip .rating_star .rating_text{
-	position: absolute;
-	top: 7px;
-	right: 12px;
-	font-size: .9em;
 	color: black;
+	font-size: .9em;
+	position: absolute;
+	right: 12px;
+	top: 7px;
 }
 
 .focused_tooltip .users img{
-	width: 30px;
-	height: 30px;
 	display: inline-block;
 	float: left;
+	height: 30px;
 	padding: 2px;
+	width: 30px;
 }
 
 .focused_tooltip hr{
@@ -64,11 +64,11 @@
 
 .focused_tooltip .own_this_book{
 	bottom: 10px;
-	cursor: pointer;
-	font-size: .8em;
 	color: #181f25;
-	float: left;
+	cursor: pointer;
 	display: inline-block;
+	float: left;
+	font-size: .8em;
 	margin-top: 5px;
 }
 
@@ -85,15 +85,15 @@
 .focused_tooltip .description{
 	font-family: Proxima Nova, sans-serif;
 	font-size: 1em;
-	padding: 12px;
 	height: 20vh;
 	line-height: 1.5em;
 	overflow-y: scroll;
+	padding: 12px;
 }
 
 .focused_tooltip .share_menu div{
-	padding: 2px;
 	border-bottom: 1px solid #9E9E9E;
+	padding: 2px;
 }
 
 .focuseD_tooltip .share_menu div:hover{
@@ -103,36 +103,36 @@
 
 .focused_tooltip .footer{
 	background-color: #E6E6E6;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
 	border-top: 1px solid #D5D5D5;
+	bottom: 0px;
+	left: 0px;
 	margin-top: 5px;
 	padding: 10px;
 	position: absolute;
-	left: 0px;
 	right: 0px;
-	bottom: 0px;
-	border-bottom-right-radius: 4px;
-	border-bottom-left-radius: 4px;
 }
 
 .focused_tooltip .footer .recommend{
-	border: 1px solid #B8B8B8;
-	padding: 5px;
 	background-color: white;
-	font-size: 0.7em;
+	border: 1px solid #B8B8B8;
 	cursor: pointer;
 	float: left;
+	font-size: 0.7em;
 	margin-right: 10px;
+	padding: 5px;
 }
 
 .focused_tooltip .footer .recommended{
 	background-color: #B8B8B8;
-	color: white;
 	border: 1px solid #B8B8B8;
-	padding: 5px;
-	font-size: 0.7em;
+	color: white;
 	cursor: pointer;	
 	float: left;
+	font-size: 0.7em;
 	margin-right: 10px;
+	padding: 5px;
 }
 
 .focused_tooltip .users{
@@ -142,21 +142,21 @@
 
 .focused_tooltip .interact{
 	background-color: #918FB5;
-	color: #fff;
-	padding: 14px;
-	font-size: .8em;
-	cursor: pointer;
-	position: absolute;
-	right: 0px;
 	border-bottom-right-radius: 3px;
 	bottom: 0px;
+	color: #fff;
+	cursor: pointer;
+	font-size: .8em;
+	padding: 14px;
+	position: absolute;
+	right: 0px;
 	top: 0px;
 }
 
 .rate{
-	text-align: center;
-	padding-top: 10px;
 	height: 15px;
+	padding-top: 10px;
+	text-align: center;
 }
 
 .focused_tooltip .header{
@@ -165,20 +165,20 @@
 
 .focused_tooltip .header .title{
 	cursor: pointer;
-	font-weight: bold;
 	color: #136CB2;
 	font-size: 1em;
-	width: 70%;
+	font-weight: bold;
 	max-height: 6vh;
 	overflow-y: scroll;
+	width: 70%;
 }
 
 .focused_tooltip .header .author{
-	cursor: pointer;
-	font-weight: bold;
 	color: #136CB2;
-	width: 70%;
+	cursor: pointer;
 	font-size: 0.9em;
+	font-weight: bold;
+	width: 70%;
 }
 
 .focused_tooltip .header .title:hover,
@@ -188,15 +188,15 @@
 
 
 .time_to_read{
-	padding: 5px;
-	letter-spacing: -5px;
-	text-align: center;
 	background-color: #E6E6E6;
-	padding-bottom: 20px;
-	left: 0px;
-	right: 0px;
-	position: absolute;
 	bottom: 50px;
+	left: 0px;
+	letter-spacing: -5px;
+	padding: 5px;
+	padding-bottom: 20px;
+	position: absolute;
+	right: 0px;
+	text-align: center;
 }
 
 .time_to_read .header{
@@ -209,13 +209,13 @@
 }
 
 .time_to_read span{
-	text-align: center;
-	border: 1px solid #DFDFDF;
-	padding: 2px 15px 2px 15px;
-	letter-spacing: 0px;
-	cursor: pointer;
 	background-color: white;
+	border: 1px solid #DFDFDF;
+	cursor: pointer;
 	font-size: 0.8em;
+	letter-spacing: 0px;
+	padding: 2px 15px 2px 15px;
+	text-align: center;
 }
 .time_to_read .active_read_timer{
 	background-color: #918FB5;

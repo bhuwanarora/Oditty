@@ -361,7 +361,7 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', function($timeout, $sce){
 
 		  	_init();
 		}],
-		templateUrl: 'assets/angular/widgets/partials/type_ahead.html'
+		templateUrl: '/assets/angular/widgets/partials/type_ahead.html'
 	}
 }]);
 
@@ -399,7 +399,7 @@ websiteApp.directive('message', function(){
 
 			_init();
 		}],
-		templateUrl: 'assets/angular/widgets/partials/message.html'
+		templateUrl: '/assets/angular/widgets/partials/message.html'
 	}
 });
 
@@ -407,7 +407,7 @@ websiteApp.directive('notification', function(){
 	return{
 		restrict: 'E',
 		scope: {"notification": "=data"},
-		templateUrl: 'assets/angular/widgets/partials/notification.html'
+		templateUrl: '/assets/angular/widgets/partials/notification.html'
 	}
 });
 
@@ -438,6 +438,6 @@ websiteApp.directive('compile', ['$compile', function($compile){
 websiteApp.directive('searchBar', function(){
 	return{
 		restrict: 'E',
-		templateUrl: 'assets/angular/widgets/partials/search_bar.html'
+		templateUrl: '/assets/angular/widgets/partials/search_bar.html'
 	}
 });
