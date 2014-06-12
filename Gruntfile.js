@@ -65,10 +65,10 @@ module.exports = function(grunt) {
     // },
     ngtemplates:{
       app:{
-        module: 'websiteApp',
         src: 'app/assets/javascripts/angular/widgets/**/*.html',
         dest: 'app/assets/javascripts/min/angular/templates.js',
         options:{
+          module: 'websiteApp',
           htmlmin:{ 
             removeComments: true,
             removeCommentsFromCDATA: true,
@@ -152,9 +152,9 @@ module.exports = function(grunt) {
             'app/assets/javascripts/angular/vendors/sticky.js'],
 
           'app/assets/javascripts/min/angular/main.js': [
-            'app/assets/javascripts/angular/vendors/angular.min.js',
+            // 'app/assets/javascripts/angular/vendors/angular.min.js',
+            // 'app/assets/javascripts/min/angular/vendors.js',
             'app/assets/javascripts/min/angular/apps/website_app.js',
-            'app/assets/javascripts/min/angular/vendors.js',
             'app/assets/javascripts/min/angular/libs.js',
             'app/assets/javascripts/min/angular/directives.js',
             'app/assets/javascripts/min/angular/controllers.js',

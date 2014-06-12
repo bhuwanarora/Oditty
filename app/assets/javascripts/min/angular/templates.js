@@ -1,4 +1,4 @@
-angular.module('app').run(['$templateCache', function($templateCache) {
+angular.module('websiteApp').run(['$templateCache', function($templateCache) {
   'use strict';
 
   $templateCache.put('app/assets/javascripts/angular/widgets/base/author/author_interact.html',
