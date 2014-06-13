@@ -122,14 +122,12 @@
 	      	<!-- <input type="file" id="selectedFile" style="display: none;" 
 	      			accept="image/*" image="image"/> -->
 	      	<div ng-if="!user.thumb">
-				<div class="header thumb"
-				     ng-click="show_uploader()">Add a profile pic</div>
+				<div class="header thumb">Add a profile pic</div>
 
 		      	<div class="description">Help your friends recognise you across Reader's Door.</div>
 	      	</div>
 	      	<div ng-if="user.thumb">
-	      		<div class="header thumb"
-				     ng-click="show_uploader()">Change your profile pic</div>
+	      		<div class="header thumb">Change your profile pic</div>
 		    	<img ng-src="{{user.thumb}}" class="profile_pic">
 	      	</div>
       	 	<cropme
@@ -138,8 +136,7 @@
 		        ratio="1"
 		        icon-class=""
 		        type="png"
-		        destination-width="300"
-		        ng-if="uploader">
+		        destination-width="300">
 		    </cropme>
 	      	<!-- <img ng-show="image" ng-src="{{image.url}}" type="{{image.file.type}}" /> -->
 			<!-- <input type="button"

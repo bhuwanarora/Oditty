@@ -15,6 +15,7 @@ module.exports = function(grunt) {
         files: {
           'app/assets/stylesheets/min/site.min.css': [
             'app/assets/stylesheets/min/website.min.css',
+            'app/assets/stylesheets/min/cropme.min.css',
             'app/assets/stylesheets/min/animate.min.css',
             'app/assets/stylesheets/min/icomoon.min.css',
             'app/assets/stylesheets/min/search_page.min.css',
