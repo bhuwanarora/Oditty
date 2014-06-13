@@ -1931,3 +1931,75 @@ and (min-width : 1824px) {
 	right: 10%;
 	margin-right: 238px;
 }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/standup75\/Code\/cropme\/styles\/cropme\.scss}line{font-family:\0000331}}
+cropme .cropme-file-input {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  width: 0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/standup75\/Code\/cropme\/styles\/cropme\.scss}line{font-family:\0000337}}
+cropme input[type=file] {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/standup75\/Code\/cropme\/styles\/cropme\.scss}line{font-family:\0000344}}
+cropme .cropme-button {
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  background: #3ba5b3;
+  color: white;
+  height: 50px;
+  width: 250px;
+  margin-left: -125px;
+  line-height: 50px;
+  -webkit-box-shadow: #cccccc 2px 2px 1px 0, #328d99 0 0 2px 2px inset;
+  -moz-box-shadow: #cccccc 2px 2px 1px 0, #328d99 0 0 2px 2px inset;
+  box-shadow: #cccccc 2px 2px 1px 0, #328d99 0 0 2px 2px inset;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/standup75\/Code\/cropme\/styles\/cropme\.scss}line{font-family:\0000355}}
+cropme .cropme-button:hover {
+  background: #3799a6;
+  color: #e6fafc;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/standup75\/Code\/cropme\/styles\/cropme\.scss}line{font-family:\0000398}}
+cropme .overlay-tile {
+  position: absolute;
+  opacity: 0.5;
+  background-color: #000;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/standup75\/Code\/cropme\/styles\/cropme\.scss}line{font-family:\00003103}}
+cropme .overlay-border {
+  position: absolute;
+  border: 2px solid #328d99;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/standup75\/Code\/cropme\/styles\/cropme\.scss}line{font-family:\00003107}}
+cropme .step-2 {
+  cursor: crosshair;
+  overflow: hidden;
+  z-index: 1000;
+	position: absolute;
+	top: 10px;
+	left: 200px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/standup75\/Code\/cropme\/styles\/cropme\.scss}line{font-family:\00003111}}
+cropme .step-2.col-resize {
+  cursor: col-resize;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/standup75\/Code\/cropme\/styles\/cropme\.scss}line{font-family:\00003113}}
+cropme img {
+  float: left;
+}
