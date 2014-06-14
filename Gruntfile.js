@@ -15,7 +15,7 @@ module.exports = function(grunt) {
         files: {
           'app/assets/stylesheets/min/site.min.css': [
             'app/assets/stylesheets/min/website.min.css',
-            'app/assets/stylesheets/min/cropme.min.css',
+            // 'app/assets/stylesheets/min/cropme.min.css',
             'app/assets/stylesheets/min/animate.min.css',
             'app/assets/stylesheets/min/icomoon.min.css',
             'app/assets/stylesheets/min/search_page.min.css',
@@ -154,9 +154,9 @@ module.exports = function(grunt) {
             'app/assets/javascripts/angular/vendors/sticky.js'],
 
           'app/assets/javascripts/min/angular/main.js': [
-            'app/assets/javascripts/angular/vendors/angular.min.js',
+            // 'app/assets/javascripts/angular/vendors/angular.min.js',
+            // 'app/assets/javascripts/min/angular/vendors.js',
             'app/assets/javascripts/min/angular/apps/website_app.js',
-            'app/assets/javascripts/min/angular/vendors.js',
             'app/assets/javascripts/min/angular/libs.js',
             'app/assets/javascripts/min/angular/directives.js',
             'app/assets/javascripts/min/angular/controllers.js',

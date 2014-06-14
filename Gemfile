@@ -68,6 +68,7 @@ gem 'freebase-api'
 gem 'fb_graph'
 gem 'treetop'
 gem 'polyglot'
+gem 'rubber'
 # gem 'rails_admin_example_theme', :git => 'git://github.com/bbenezech/rails_admin_example_theme.git'
 
 group :doc do
@@ -102,3 +103,4 @@ end
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
+gem 'open4'

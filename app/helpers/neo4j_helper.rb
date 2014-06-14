@@ -437,9 +437,7 @@ module Neo4jHelper
 		@neo.execute_query(clause)
 		puts "delete WithReadingTime relations".red
 
-		clause = "MATCH (book:Book), (rt:ReadTime{page_count_range: '<50'})"+
-				" WHERE book.page_count <= 50"+
-				" CREATE (book)-[:WithReadingTime]->(rt)"
+		clause = "MATCH (book:Book), (rt:ReadTime{page_count_range: '<50'}) WHERE book.page_count <= 50 CREATE (book)-[:WithReadingTime]->(rt)"
 		puts clause.green
 		@neo.execute_query(clause)
 
