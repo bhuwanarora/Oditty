@@ -57,22 +57,14 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/base/book/interaction_box.html',
-    "<div class=\"interaction_box animate-fast\" ng-if=\"focused_book.interact\" ng-click=\"stop_propagation($event)\"><div class=\"close button_effect\" ng-click=\"close_interaction_box()\">x</div><div><span class=\"highlighter\"></span><textarea itemprop=\"commentText\" itemtype=\"http://schema.org/UserComments\" type=\"text\" ng-keydown=\"handle_backspace($event)\" placeholder=\"What do you feel about {{focused_book.title}} by {{focused_book.author_name}}...\" class=\"comment_box animate-fast\" ng-keypress=\"handle_hash_tags($event)\" ng-bind-html=\"hash_tagged\" rows=\"1\">\r" +
-    "\n" +
-    "\t</div>\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "<div class=\"interaction_box_options\" ng-if=\"interact\">\r" +
-    "\n" +
-    "\t<div ng-repeat=\"item in hash_tags track by $index\" ng-click=\"handle_selection(item.name)\" ng-class=\"{active:is_current($index)}\" ng-mouseenter=\"set_current($index)\" class=\"option\">\r" +
-    "\n" +
-    "  \t\t<div class=\"title\">{{item.name}}</div>\r" +
-    "\n" +
-    "      \t<div ng-show=\"item.author_name\">by {{item.author_name}}</div>\r" +
-    "\n" +
-    "\t</div>\r" +
-    "\n" +
+    "<div class=\"interaction_box animate-fast\" ng-if=\"focused_book.interact\" ng-click=\"stop_propagation($event)\"><div class=\"close button_effect\" ng-click=\"close_interaction_box()\">x</div><div><span class=\"highlighter\"></span><textarea itemprop=\"commentText\" itemtype=\"http://schema.org/UserComments\" type=\"text\" ng-keydown=\"handle_backspace($event)\" placeholder=\"What do you feel about {{focused_book.title}} by {{focused_book.author_name}}...\" class=\"comment_box animate-fast\" ng-keypress=\"handle_hash_tags($event)\" ng-bind-html=\"hash_tagged\" rows=\"1\">\n" +
+    "\t</div>\n" +
+    "</div>\n" +
+    "<div class=\"interaction_box_options\" ng-if=\"interact\">\n" +
+    "\t<div ng-repeat=\"item in hash_tags track by $index\" ng-click=\"handle_selection(item.name)\" ng-class=\"{active:is_current($index)}\" ng-mouseenter=\"set_current($index)\" class=\"option\">\n" +
+    "  \t\t<div class=\"title\">{{item.name}}</div>\n" +
+    "      \t<div ng-show=\"item.author_name\">by {{item.author_name}}</div>\n" +
+    "\t</div>\n" +
     "</div>"
   );
 
@@ -93,12 +85,9 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/base/book/rate.html',
-    "<div itemprop=\"review\" itemscope=\"\" itemtype=\"http://schema.org/Review\" class=\"rate\"><div class=\"rate_radio_buttons\"><span type=\"radio\" class=\"rate_radio\" ng-class=\"{'active_rating icon-star22':is_active($index) && !rate_object.rated,\r" +
-    "\n" +
-    "\t\t\t   'icon-star':!is_active($index),\r" +
-    "\n" +
-    "\t\t\t   'ready_to_rate icon-star22':ready_to_rate && is_active($index),\r" +
-    "\n" +
+    "<div itemprop=\"review\" itemscope=\"\" itemtype=\"http://schema.org/Review\" class=\"rate\"><div class=\"rate_radio_buttons\"><span type=\"radio\" class=\"rate_radio\" ng-class=\"{'active_rating icon-star22':is_active($index) && !rate_object.rated,\n" +
+    "\t\t\t   'icon-star':!is_active($index),\n" +
+    "\t\t\t   'ready_to_rate icon-star22':ready_to_rate && is_active($index),\n" +
     "\t\t\t   'rated icon-star22':rate_object.rated && is_active($index) && !ready_to_rate}\" ng-mouseenter=\"show_if_rated($index)\" ng-mouseleave=\"reset_rating()\" ng-click=\"mark_as_rated($index, $event)\" ng-repeat=\"i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\"></span> <span ng-model=\"rate_object.user_rating\">{{rate_object.user_rating}}/10</span> <span>&nbsp;Rate this book</span></div></div>"
   );
 
@@ -114,8 +103,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/base/reader/message_box.html',
-    "<div class=\"message_box animate-fast action_button\" ng-if=\"reader.show_message_box\"><div class=\"close button_effect\" ng-click=\"close_message_box()\">x</div><textarea type=\"text\" placeholder=\"type and enter to send message..\" class=\"comment_box animate-fast\" rows=\"1\">\r" +
-    "\n" +
+    "<div class=\"message_box animate-fast action_button\" ng-if=\"reader.show_message_box\"><div class=\"close button_effect\" ng-click=\"close_message_box()\">x</div><textarea type=\"text\" placeholder=\"type and enter to send message..\" class=\"comment_box animate-fast\" rows=\"1\">\n" +
     "</div>"
   );
 
@@ -141,7 +129,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/base/widget/info_card.html',
-    "<div class=\"horizontal_padder_active\"></div><div ng-if=\"user.logged\" ng-switch=\"\" on=\"user.profile_status\" ng-model=\"user.profile_status\"><div class=\"back_color\" style=\"background-color:{{user.profile_status_color}}\"></div><div class=\"info_cards\" ng-model=\"user.profile_status_color\"><div class=\"sub_header\">Complete your profile, {{user.name | uppercase}}</div><div class=\"profile_status_logo\"></div><div ng-switch-when=\"0\"><div class=\"header\">Name</div><input class=\"username\" ng-model=\"user.name\" placeholder=\"Enter your name\" spellcheck=\"false\" ng-keydown=\"update_profile()\" required=\"\"><div class=\"header\">Born on</div><input class=\"birthday\" ng-model=\"user.birthday\" spellcheck=\"false\" type=\"date\" required=\"\"><div class=\"header\">Gender</div><div class=\"description_box\"><form name=\"gender_form\"><input type=\"radio\" ng-model=\"gender\" value=\"Male\" class=\"custom_radio icon-checkbox-unchecked\">Male<br><input type=\"radio\" ng-model=\"gender\" value=\"Female\" class=\"custom_radio icon-checkbox-unchecked\">Female<br></form></div></div><div ng-switch-when=\"1\"><div class=\"header\">I am a</div><div class=\"profile_dropdown\" dropdown-select=\"profileOptions\" dropdown-onchange=\"user_profile_changed(selected)\" dropdown-model=\"profileSelected\" dropdown-item-label=\"name\"></div><div class=\"description_box\"><div ng-show=\"show_loading_bar\" class=\"center\"><img src=\"assets/loader.gif\" class=\"loading_circle\"></div><div ng-show=\"profileSelected.name == 'Reader' && !show_loading_bar\"><div class=\"header\">I have read</div><form name=\"book_count_form\"><label ng-repeat=\"book_count in book_counts\"><input type=\"radio\" ng-model=\"$parent.user_book_count\" ng-value=\"book_count\" class=\"custom_radio icon-checkbox-unchecked\">{{book_count.name}}<br></label></form></div><div ng-show=\"profileSelected.name == 'Author' && !show_loading_bar\"><div class=\"header\">I have written</div><form name=\"book_count_form\"><label ng-repeat=\"book_count in book_counts\"><input type=\"radio\" ng-model=\"$parent.user_book_count\" ng-value=\"book_count\" class=\"custom_radio icon-checkbox-unchecked\">{{book_count.name}}<br></label></form></div></div></div><div ng-switch-when=\"2\"><div class=\"header\">Choose atleast 3 genres you like</div><div class=\"description_box center\" msd-wheel=\"stop_horizontal_scroll($event)\"><div ng-repeat=\"genre in genres  | orderBy:genre.name\"><toggle data=\"genre\"></toggle></div></div></div><div ng-switch-when=\"3\" class=\"center\"><div class=\"header\">Which 3 Books are you currently reading?</div><type-ahead items=\"search_results\" prompt=\"Search for the book..\" title=\"name\" model=\"searchResults\" custom-options=\"info_typeahead_options\" on-select=\"add_book()\" ng-keypress=\"get_search_results($event, 'BOOK', searchResults)\"></type-ahead><div class=\"description\">Tell us about your taste..</div></div><div ng-switch-when=\"4\"><div class=\"header\">Which 3 Authors you like?</div><type-ahead items=\"search_results\" prompt=\"Search for the author..\" title=\"name\" model=\"searchResults\" custom-options=\"info_typeahead_options\" on-select=\"add_author()\" ng-keypress=\"get_search_results($event, 'AUTHOR', searchResults)\"></type-ahead><div class=\"description\">Follow authors and their lives...</div></div><div ng-switch-when=\"5\"><div ng-if=\"!user.thumb\"><div class=\"header thumb\">Add a profile pic</div><div class=\"description\">Help your friends recognise you across Reader's Door.</div></div><div ng-if=\"user.thumb\"><div class=\"header thumb\">Change your profile pic</div><img ng-src=\"{{user.thumb}}\" class=\"profile_pic\"></div><cropme width=\"200\" height=\"200\" ratio=\"1\" icon-class=\"\" type=\"png\" destination-width=\"100\"></cropme></div><div ng-switch-when=\"6\"><div class=\"header\">Meet readers in your area...</div><map style=\"display:block; height:180px\"></div><div ng-switch-when=\"7\"><div class=\"header\">Invite your friends</div><div class=\"description\">Know what your friends are reading...</div></div><div ng-switch-when=\"8\"></div><div class=\"footer\"><span class=\"prev icon-angle-left\" ng-click=\"prev_profile_state()\"></span> <span class=\"next icon-angle-right\" ng-click=\"next_profile_state()\"></span></div></div></div>"
+    "<div class=\"horizontal_padder_active\"></div><div ng-if=\"user.logged\" ng-switch=\"\" on=\"user.profile_status\" ng-model=\"user.profile_status\"><div class=\"back_color\" style=\"background-color:{{user.profile_status_color}}\"></div><div class=\"info_cards\" ng-model=\"user.profile_status_color\"><div class=\"sub_header\">Complete your profile, {{user.name | uppercase}}</div><div class=\"profile_status_logo\"></div><div ng-switch-when=\"0\"><div class=\"header\">Name</div><input class=\"username\" ng-model=\"user.name\" placeholder=\"Enter your name\" spellcheck=\"false\" ng-keydown=\"update_profile()\" required=\"\"><div class=\"header\">Born on</div><input class=\"birthday\" ng-model=\"user.birthday\" spellcheck=\"false\" type=\"date\" required=\"\"><div class=\"header\">Gender</div><div class=\"description_box\"><form name=\"gender_form\"><input type=\"radio\" ng-model=\"gender\" value=\"Male\" class=\"custom_radio icon-checkbox-unchecked\">Male<br><input type=\"radio\" ng-model=\"gender\" value=\"Female\" class=\"custom_radio icon-checkbox-unchecked\">Female<br></form></div></div><div ng-switch-when=\"1\"><div class=\"header\">I am a</div><div class=\"profile_dropdown\" dropdown-select=\"profileOptions\" dropdown-onchange=\"user_profile_changed(selected)\" dropdown-model=\"profileSelected\" dropdown-item-label=\"name\"></div><div class=\"description_box\"><div ng-show=\"show_loading_bar\" class=\"center\"><img src=\"assets/loader.gif\" class=\"loading_circle\"></div><div ng-show=\"profileSelected.name == 'Reader' && !show_loading_bar\"><div class=\"header\">I have read</div><form name=\"book_count_form\"><label ng-repeat=\"book_count in book_counts\"><input type=\"radio\" ng-model=\"$parent.user_book_count\" ng-value=\"book_count\" class=\"custom_radio icon-checkbox-unchecked\">{{book_count.name}}<br></label></form></div><div ng-show=\"profileSelected.name == 'Author' && !show_loading_bar\"><div class=\"header\">I have written</div><form name=\"book_count_form\"><label ng-repeat=\"book_count in book_counts\"><input type=\"radio\" ng-model=\"$parent.user_book_count\" ng-value=\"book_count\" class=\"custom_radio icon-checkbox-unchecked\">{{book_count.name}}<br></label></form></div></div></div><div ng-switch-when=\"2\"><div class=\"header\">Choose atleast 3 genres you like</div><div class=\"description_box center\" msd-wheel=\"stop_horizontal_scroll($event)\"><div ng-repeat=\"genre in genres  | orderBy:genre.name\"><toggle data=\"genre\"></toggle></div></div></div><div ng-switch-when=\"3\" class=\"center\"><div class=\"header\">Which 3 Books are you currently reading?</div><type-ahead items=\"search_results\" prompt=\"Search for the book..\" title=\"name\" model=\"searchResults\" custom-options=\"info_typeahead_options\" on-select=\"add_book()\" ng-keypress=\"get_search_results($event, 'BOOK', searchResults)\"></type-ahead><div class=\"description\">Tell us about your taste..</div></div><div ng-switch-when=\"4\"><div class=\"header\">Which 3 Authors you like?</div><type-ahead items=\"search_results\" prompt=\"Search for the author..\" title=\"name\" model=\"searchResults\" custom-options=\"info_typeahead_options\" on-select=\"add_author()\" ng-keypress=\"get_search_results($event, 'AUTHOR', searchResults)\"></type-ahead><div class=\"description\">Follow authors and their lives...</div></div><div ng-switch-when=\"5\"><div ng-if=\"!user.thumb\"><div class=\"header thumb\">Add a profile pic</div><div class=\"description\">Help your friends recognise you across Reader's Door.</div></div><div ng-if=\"user.thumb\"><div class=\"header thumb\">Change your profile pic</div><img ng-src=\"{{user.thumb}}\" class=\"profile_pic\"></div><cropme width=\"300\" height=\"200\" ratio=\"1\" icon-class=\"\" type=\"png\" destination-width=\"100\"></cropme></div><div ng-switch-when=\"6\"><div class=\"header\">Meet readers in your area...</div><map style=\"display:block; height:180px\"></div><div ng-switch-when=\"7\"><div class=\"header\">Invite your friends</div><div class=\"description\">Know what your friends are reading...</div></div><div ng-switch-when=\"8\"></div><div class=\"footer\"><span class=\"prev icon-angle-left\" ng-click=\"prev_profile_state()\"></span> <span class=\"next icon-angle-right\" ng-click=\"next_profile_state()\"></span></div></div></div>"
   );
 
 
@@ -161,44 +149,25 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/partials/book/discussion.html',
-    "<div class=\"discussion\" ng-class=\"{'grey_background':!is_even({{index}})}\"><div class=\"user\" ns-popover=\"\" ns-popover-template=\"userPopover\" ns-popover-trigger=\"mouseover\" ns-popover-timeout=\"0\" hide-on-click=\"false\" ns-popover-ns-popover-placement=\"bottom|left\"><img ng-src=\"{{discussion.user.thumb}}\" class=\"thumb\"></div><div class=\"comment\" itemscope=\"\" itemtype=\"http://schema.org/UserComments\"><div class=\"username\"><div itemprop=\"creator \" itemscope=\"\" itemtype=\"http://schema.org/Person\"><span itemprop=\"name\">{{discussion.user.name}}</span> {{index}}</div></div><div class=\"comment_text\"><span itemprop=\"commentText\">{{discussion.comment}}</span></div><div class=\"footer\"><span class=\"like\">Like</span> <span class=\"dislike\">Dislike</span> <span class=\"post_comment\"><u>Comment</u></span> <span itemprop=\"commentTime\">{{discussion.timestamp}}</span></div><div class=\"comment_big_box\" style=\"display:none\"><input class=\"comment_box\" placeholder=\"Press enter to send...\"></div></div></div><script type=\"text/ng-template\" id=\"userPopover\"><div class=\"triangle\"></div>\r" +
-    "\n" +
-    "  \t<div class=\"tooltip user_tooltip\">\r" +
-    "\n" +
-    "    \t<div class=\"header\">\r" +
-    "\n" +
-    "    \t\tUsername from Country or state\r" +
-    "\n" +
-    "    \t</div>\r" +
-    "\n" +
-    "    \t<hr>\r" +
-    "\n" +
-    "    \t<div class=\"details\">\r" +
-    "\n" +
-    "    \t\t<span class=\"count\">N </span><span>books read</span> · \r" +
-    "\n" +
-    "    \t\t<span class=\"count\">N </span><span>profile views</span> · \r" +
-    "\n" +
-    "    \t\t<span class=\"count\">N </span><span>followers</span> · \r" +
-    "\n" +
-    "    \t\t<span>Following</span><span class=\"count\"> N</span><span> readers</span>\r" +
-    "\n" +
-    "    \t</div>\r" +
-    "\n" +
-    "    \t<div class=\"recommends\">\r" +
-    "\n" +
-    "    \t</div>\r" +
-    "\n" +
-    "    \t<div class=\"footer\">\r" +
-    "\n" +
-    "    \t\t<span class=\"timestamp\">Member Since</span>\r" +
-    "\n" +
-    "    \t\t<span class=\"follow\">Follow</span>\r" +
-    "\n" +
-    "    \t\t<span class=\"send_message\">Message</span>\r" +
-    "\n" +
-    "    \t</div>\r" +
-    "\n" +
+    "<div class=\"discussion\" ng-class=\"{'grey_background':!is_even({{index}})}\"><div class=\"user\" ns-popover=\"\" ns-popover-template=\"userPopover\" ns-popover-trigger=\"mouseover\" ns-popover-timeout=\"0\" hide-on-click=\"false\" ns-popover-ns-popover-placement=\"bottom|left\"><img ng-src=\"{{discussion.user.thumb}}\" class=\"thumb\"></div><div class=\"comment\" itemscope=\"\" itemtype=\"http://schema.org/UserComments\"><div class=\"username\"><div itemprop=\"creator \" itemscope=\"\" itemtype=\"http://schema.org/Person\"><span itemprop=\"name\">{{discussion.user.name}}</span> {{index}}</div></div><div class=\"comment_text\"><span itemprop=\"commentText\">{{discussion.comment}}</span></div><div class=\"footer\"><span class=\"like\">Like</span> <span class=\"dislike\">Dislike</span> <span class=\"post_comment\"><u>Comment</u></span> <span itemprop=\"commentTime\">{{discussion.timestamp}}</span></div><div class=\"comment_big_box\" style=\"display:none\"><input class=\"comment_box\" placeholder=\"Press enter to send...\"></div></div></div><script type=\"text/ng-template\" id=\"userPopover\"><div class=\"triangle\"></div>\n" +
+    "  \t<div class=\"tooltip user_tooltip\">\n" +
+    "    \t<div class=\"header\">\n" +
+    "    \t\tUsername from Country or state\n" +
+    "    \t</div>\n" +
+    "    \t<hr>\n" +
+    "    \t<div class=\"details\">\n" +
+    "    \t\t<span class=\"count\">N </span><span>books read</span> · \n" +
+    "    \t\t<span class=\"count\">N </span><span>profile views</span> · \n" +
+    "    \t\t<span class=\"count\">N </span><span>followers</span> · \n" +
+    "    \t\t<span>Following</span><span class=\"count\"> N</span><span> readers</span>\n" +
+    "    \t</div>\n" +
+    "    \t<div class=\"recommends\">\n" +
+    "    \t</div>\n" +
+    "    \t<div class=\"footer\">\n" +
+    "    \t\t<span class=\"timestamp\">Member Since</span>\n" +
+    "    \t\t<span class=\"follow\">Follow</span>\n" +
+    "    \t\t<span class=\"send_message\">Message</span>\n" +
+    "    \t</div>\n" +
     "  </div></script>"
   );
 
@@ -239,44 +208,25 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/partials/notification.html',
-    "<div ng-if=\"!seen\" class=\"notification animate-fast\"><span class=\"user_thumb\"><img ng-src=\"{{notification.thumb}}\"></span> <span><div class=\"notification_message\" ng-bind-html=\"notification.message\"></div><div class=\"timestamp\">{{notification.timestamp}}</div></span></div><script type=\"text/ng-template\" id=\"userPopover\"><div class=\"triangle\"></div>\r" +
-    "\n" +
-    "  \t<div class=\"tooltip user_tooltip\">\r" +
-    "\n" +
-    "    \t<div class=\"header\">\r" +
-    "\n" +
-    "    \t\tUsername from Country or state\r" +
-    "\n" +
-    "    \t</div>\r" +
-    "\n" +
-    "    \t<hr>\r" +
-    "\n" +
-    "    \t<div class=\"details\">\r" +
-    "\n" +
-    "    \t\t<span class=\"count\">N </span><span>books read</span> · \r" +
-    "\n" +
-    "    \t\t<span class=\"count\">N </span><span>profile views</span> · \r" +
-    "\n" +
-    "    \t\t<span class=\"count\">N </span><span>followers</span> · \r" +
-    "\n" +
-    "    \t\t<span>Following</span><span class=\"count\"> N</span><span> readers</span>\r" +
-    "\n" +
-    "    \t</div>\r" +
-    "\n" +
-    "    \t<div class=\"recommends\">\r" +
-    "\n" +
-    "    \t</div>\r" +
-    "\n" +
-    "    \t<div class=\"footer\">\r" +
-    "\n" +
-    "    \t\t<span class=\"timestamp\">Member Since</span>\r" +
-    "\n" +
-    "    \t\t<span class=\"follow\">Follow</span>\r" +
-    "\n" +
-    "    \t\t<span class=\"send_message\">Message</span>\r" +
-    "\n" +
-    "    \t</div>\r" +
-    "\n" +
+    "<div ng-if=\"!seen\" class=\"notification animate-fast\"><span class=\"user_thumb\"><img ng-src=\"{{notification.thumb}}\"></span> <span><div class=\"notification_message\" ng-bind-html=\"notification.message\"></div><div class=\"timestamp\">{{notification.timestamp}}</div></span></div><script type=\"text/ng-template\" id=\"userPopover\"><div class=\"triangle\"></div>\n" +
+    "  \t<div class=\"tooltip user_tooltip\">\n" +
+    "    \t<div class=\"header\">\n" +
+    "    \t\tUsername from Country or state\n" +
+    "    \t</div>\n" +
+    "    \t<hr>\n" +
+    "    \t<div class=\"details\">\n" +
+    "    \t\t<span class=\"count\">N </span><span>books read</span> · \n" +
+    "    \t\t<span class=\"count\">N </span><span>profile views</span> · \n" +
+    "    \t\t<span class=\"count\">N </span><span>followers</span> · \n" +
+    "    \t\t<span>Following</span><span class=\"count\"> N</span><span> readers</span>\n" +
+    "    \t</div>\n" +
+    "    \t<div class=\"recommends\">\n" +
+    "    \t</div>\n" +
+    "    \t<div class=\"footer\">\n" +
+    "    \t\t<span class=\"timestamp\">Member Since</span>\n" +
+    "    \t\t<span class=\"follow\">Follow</span>\n" +
+    "    \t\t<span class=\"send_message\">Message</span>\n" +
+    "    \t</div>\n" +
     "  </div></script>"
   );
 
