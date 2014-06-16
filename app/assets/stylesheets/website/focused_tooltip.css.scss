@@ -6,7 +6,7 @@
 	height: 80vh;
 	min-width: 400px;
 	position: fixed;
-	top: 13vh;
+	top: 85px;
 	white-space: initial;
 	width: 65vh;
 	z-index: 2;
@@ -25,13 +25,20 @@
 
 .focused_tooltip .book_info{
 	padding: 10px;
+	margin-top: 20px;
+	margin-left: -10px;
+	background-color: #F5F5F5;
+	width: 100%;
+	border-top: 1px solid #E2E2E2;
+	border-bottom: 1px solid #E2E2E2;
 }
 
 .focused_tooltip .book_info .book_link .count{
 	background-color: #918FB5;
 	color: white;
 	cursor: pointer;
-	padding: 4px;
+	padding: 5px;
+	border-radius: 4px;
 	text-shadow: 0 2px 3px rgba(0,0,0,0.5);
 }
 
@@ -44,10 +51,10 @@
 
 .focused_tooltip .rating_star .rating_text{
 	color: black;
-	font-size: .9em;
+	font-size: 0.7em;
 	position: absolute;
-	right: 12px;
-	top: 7px;
+	right: 8px;
+	top: 10px;
 }
 
 .focused_tooltip .users img{
@@ -154,8 +161,8 @@
 }
 
 .rate{
-	height: 15px;
-	padding-top: 10px;
+	height: 25px;
+	padding-top: 20px;
 	text-align: center;
 }
 
@@ -168,17 +175,18 @@
 	color: #136CB2;
 	font-size: 1em;
 	font-weight: bold;
-	max-height: 6vh;
-	overflow-y: scroll;
 	width: 70%;
 }
 
 .focused_tooltip .header .author{
-	color: #136CB2;
 	cursor: pointer;
 	font-size: 0.9em;
-	font-weight: bold;
-	width: 70%;
+ 	width: 70%;
+}
+
+.focused_tooltip .user_box{
+	bottom: 50px;
+	position: absolute;
 }
 
 .focused_tooltip .header .title:hover,
@@ -186,10 +194,30 @@
 	text-decoration: underline;
 }
 
+.focused_tooltip .tabs{
+	overflow: auto;
+	width: 101%;
+	margin-left: -1px;
+}
+
+.focused_tooltip .tabs .tab{
+	background-color: #485057;
+	color: white;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	cursor: pointer;
+	float: left;
+	display: inline-block;
+	width: 33%;
+	text-align: center;
+}
+
+.focused_tooltip .tabs .active_tab{
+	background-color: #181F25;
+}
 
 .time_to_read{
-	background-color: #E6E6E6;
-	bottom: 50px;
+	background-color: #F5F5F5;
 	left: 0px;
 	letter-spacing: -5px;
 	padding: 5px;
@@ -197,6 +225,43 @@
 	position: absolute;
 	right: 0px;
 	text-align: center;
+	border-top: 1px solid #E2E2E2;
+	border-bottom: 1px solid #E2E2E2;
+}
+
+.focused_tooltip .popup_icon{
+	position: absolute;
+	right: 6px;
+	top: 6px;
+	color: #7E7E7E;
+	font-size: 1.2em;
+	cursor: pointer;
+}
+
+.focused_tooltip .popup_icon:hover{
+	color: black;
+}
+
+.focused_tooltip .feedback_popup{
+	list-style-type: none;
+	position: absolute;
+	right: 5px;
+	background-color: #fff;
+	z-index: 2;
+	padding-left: 0;
+	top: 10px;
+	font-size: .8em;
+	box-shadow: 0 3px 8px rgba(0, 0, 0, .3);
+	padding: 10px;
+	border-radius: 3px;
+}
+
+.focused_tooltip .feedback_popup li{
+	padding: 4px;
+}
+
+.focused_tooltip .feedback_popup li:hover{
+	background-color: #F1F1F1;
 }
 
 .time_to_read .header{
@@ -225,4 +290,24 @@
 .time_to_read span:hover{
 	background-color: #417FF0;
 	color: white;
+}
+
+.focused_tooltip .arrow{
+	position: absolute;
+	top: 10px;	
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+	width: 0; 
+	height: 0; 
+}
+
+
+.focused_tooltip .arrow_right{
+	right: -11px;
+	border-left: 10px solid white;
+}
+
+.focused_tooltip .arrow_left{
+	left: -11px;
+	border-right: 10px solid white; 
 }

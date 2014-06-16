@@ -60,3 +60,4 @@ app/assets/javascripts/angular/widgets/gzip/**
 app/build/**
 .elasticbeanstalk/
 Archive.zip
+ neo4j/*.log

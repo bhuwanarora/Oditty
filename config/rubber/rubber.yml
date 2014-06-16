@@ -1,14 +1,14 @@
 app_name: readers-door
 app_user: app
-admin_email: "bhuwanarora67@gmail.com"
+admin_email: "bhuwanarora0@gmail.com"
 timezone: US/Eastern
 domain: readersdoor.com
 cloud_providers:
   aws:
     region: ap-southeast-1
-    access_key: AKIAI3KNZLSEUZWDAFZQ
-    secret_access_key: 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
-    account: 140589999432
+    access_key: AKIAIRVORNBM7ELGRKUA
+    secret_access_key: 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
+    account: 672564320288
     key_name: rd
     key_file: "/Users/bhuwan/ReadersDoor/ec2/ssh/rd"
     image_type: t1.micro

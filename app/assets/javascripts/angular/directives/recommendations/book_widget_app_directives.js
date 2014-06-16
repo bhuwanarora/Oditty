@@ -34,6 +34,7 @@ websiteApp.directive('book', ['widgetService', '$rootScope', function (widgetSer
             else{
               $rootScope.focused_book.reposition_tooltip = {"right": "0px"}; 
             }
+            $rootScope.on_left = true;
           }
           else{
             if(display_left_width > 400){
@@ -43,6 +44,7 @@ websiteApp.directive('book', ['widgetService', '$rootScope', function (widgetSer
             else{
               $rootScope.focused_book.reposition_tooltip = {"left": "0px"};  
             }
+            $rootScope.on_left = false;
           }
           // event.currentTarget.offsetParent.offsetParent.scrollWidth;
           // var test = event.currentTarget.offsetParent.offsetParent.offsetLeft -event.currentTarget.offsetLeft;
@@ -415,6 +417,15 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
       // $scope.show_book = function(page){
       //   zoomin_book($scope, $timeout, $rootScope, page);
       // }
+
+      $scope.show_feedback_popup = function(){
+        if($rootScope.focused_book.show_feedback_popup){
+          $rootScope.focused_book.show_feedback_popup = false;
+        }
+        else{
+          $rootScope.focused_book.show_feedback_popup = true; 
+        }
+      }
 
       $scope.stop_propagation = function(event){
         event.stopPropagation();

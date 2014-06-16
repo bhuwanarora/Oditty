@@ -3,6 +3,7 @@
  	  itemtype="http://schema.org/Review"
  	  class="rate">
  	<div class="rate_radio_buttons">
+		<span>&nbsp;Rate this book</span>
 		<span type="radio" 
 			   class="rate_radio"
 			   ng-class="{'active_rating icon-star22':is_active($index) && !rate_object.rated,
@@ -15,6 +16,5 @@
 			   ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">
 		</span>
 		<span ng-model="rate_object.user_rating">{{rate_object.user_rating}}/10</span>
-		<span>&nbsp;Rate this book</span>
  	</div>
 </div>
