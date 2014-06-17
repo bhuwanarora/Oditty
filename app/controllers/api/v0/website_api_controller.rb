@@ -29,7 +29,10 @@ module Api
             end
 
             def read_times
-                results = {:read_times => ReadTime.all}
+                @neo ||= neo_init
+                clause = "MATCH (r:ReadTime) RETURN r"
+                read_times = @neo.execute_query(clause)["data"]
+                results = {:read_times => read_times}
                 render :json => results, :status => 200
             end
 

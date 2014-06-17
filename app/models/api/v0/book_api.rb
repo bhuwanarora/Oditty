@@ -121,8 +121,8 @@ module Api
 					match_clause = ""
 					book_name = filters["other_filters"]["title"]
 					author_name = filters["other_filters"]["author_name"]
-					puts "book_name "+book_name+" author_name "+author_name+" ".green
 					if book_name.present?
+						puts "book_name "+book_name+" author_name "+author_name+" ".green
 						where_clause = where_clause + " book.title=\""+book_name+"\" AND book.author_name=\""+author_name+"\" "
 					else
 						if filters["other_filters"]["country"].present?

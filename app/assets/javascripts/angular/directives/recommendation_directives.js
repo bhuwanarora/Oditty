@@ -13,6 +13,19 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 				// $scope.active_reader_filter = false;
 				$scope.show_menu = false;
 				$scope.countryOptions = [];
+				$scope.$on('filterChange', function(scope, selected, type){
+					var json = {"name": selected};
+					if(type == "country"){
+						$scope.countrySelected = json;
+					}
+					else if(type == "timeGroup"){
+						$scope.timeSelected = json;
+					}
+					else if(type == "readingTime"){
+						$scope.readTimeSelected = json;
+					}
+					$scope.advance_filter_changed(selected, type)
+				});
 				recommendationService.get_countries().then(function(data){
 			    	$scope.countryOptions = [{"name": "Reset"}];
 			    	$scope.countryOptions = $scope.countryOptions.concat(data["countries"]);

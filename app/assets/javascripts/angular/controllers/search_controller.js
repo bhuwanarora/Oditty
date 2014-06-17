@@ -68,7 +68,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				    	for(var i=0; i < data["times"].length; i++){
 				    		var time_data = data.times[i][0]["data"];
 				    		var name = time_data["name"]+" ("+time_data["range"]+")";
-				    		var json = {"name": name};
+				    		var json = {"name": name, "custom_option": true, "type": "timeGroup"};
 				    		$scope.search_results = $scope.search_results.concat([json]);
 				    	}
 				    	$rootScope.time_groups = $scope.search_results;
@@ -108,7 +108,13 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				}
 				else{
 					recommendationService.get_read_times().then(function(data){
-						$scope.search_results = data.read_times;
+						$scope.search_results = [];
+				    	for(var i=0; i < data["read_times"].length; i++){
+				    		var time_data = data.read_times[i][0]["data"];
+				    		var name = time_data["name"];
+				    		var json = {"name": name, "custom_option": true, "type": "readingTime"};
+				    		$scope.search_results = $scope.search_results.concat([json]);
+				    	}
 						$rootScope.read_times = $scope.search_results;
 					});
 				}
@@ -146,10 +152,15 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		var customOption = item.custom_option;
 		var type = item.type;
 
-		console.log("%c search "+graphOption+" "+customOption+" "+selectedItem+" "+type, "color: green; font-weight: bold;");
+		console.log("%c search "+graphOption+" "+customOption+" "+selectedItem+" "+type+" "+$scope.search_level1+" "+$scope.search_level2, "color: green; font-weight: bold;");
 		if(customOption){
 			if(!$scope.search_level1){
 				$scope.search_type = type;
+			}
+			else if($scope.search_level2){
+				$rootScope.$broadcast('filterChange', {"name": selectedItem}, type);
+				$rootScope.hide_options = true;
+				$scope.search_tag.input = selectedItem;
 			}
 			_search_by(type);
 			$scope.search_tag.input = "";
