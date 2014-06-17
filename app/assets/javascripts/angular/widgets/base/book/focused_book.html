@@ -21,7 +21,30 @@
         {{focused_book.published_year | published_year}}</span>
       <span>{{focused_book.page_count | page_count}}</span>
     </div>
-    <div class="book_info">
+    <div class="rating_star">
+      <img src="assets/star.png"/>
+      <div class="rating_text">{{focused_book.rating | rating }}</div>
+    </div>
+  </div>
+  <div class="tabs">
+    <div ng-click="show_info = true;" 
+          class="tab"
+          ng-class="{'active_tab': show_info}">
+        <span>Info</span><span class=""></span>
+    </div>
+    <div ng-click="show_info = false;" 
+          class="tab"
+          ng-class="{'active_tab': !show_info}">
+        <span>Actions</span><span class=""></span>
+    </div>
+    <div class="tab">
+        <span>About Author</span><span class=""></span>
+    </div>
+    <div class="tab">
+        <span>Buy this book</span><span class=""></span>
+    </div>
+  </div>
+    <div class="book_info" ng-if="show_info">
       <span> · </span>
       <span ng-click="show_book(9)" class="book_link">
         <span class="count">
@@ -51,29 +74,6 @@
       </span>
        · 
     </div>
-    <div class="rating_star">
-      <img src="assets/star.png"/>
-      <div class="rating_text">{{focused_book.rating | rating }}</div>
-    </div>
-  </div>
-  <div class="tabs">
-    <div ng-click="show_info = true;" 
-          class="tab"
-          ng-class="{'active_tab': show_info}">
-        <span>Info</span><span class=""></span>
-    </div>
-    <div ng-click="show_info = false;" 
-          class="tab"
-          ng-class="{'active_tab': !show_info}">
-        <span>Actions</span><span class=""></span>
-    </div>
-    <div class="tab">
-        <span>About Author</span><span class=""></span>
-    </div>
-    <div class="tab">
-        <span>Buy this book</span><span class=""></span>
-    </div>
-  </div>
   <div ng-if="!show_info">
     <rate data="focused_book"></rate>
   </div>

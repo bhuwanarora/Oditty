@@ -134,7 +134,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
 	_initialize_filters = function(){
-		$scope.show_more_filters = false;
+		$scope.show_more_filters = true;
 		$rootScope.filters = {};
         $rootScope.filters["more_filters"] = [];
         $rootScope.filters["other_filters"] = {};
@@ -305,7 +305,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         _init_analytics();
         _init_shelf();
 		_initialize_filters();
-        _get_recommendations();
+        // _get_recommendations();
         // _push_recommendations();
         _bind_destroy();
         // _handle_focused_book();

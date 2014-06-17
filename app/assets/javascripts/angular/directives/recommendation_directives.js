@@ -14,15 +14,15 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 				$scope.show_menu = false;
 				$scope.countryOptions = [];
 				$scope.$on('filterChange', function(scope, selected, type){
-					var json = {"name": selected};
+					
 					if(type == "country"){
-						$scope.countrySelected = json;
+						$scope.countrySelected = selected;
 					}
 					else if(type == "timeGroup"){
-						$scope.timeSelected = json;
+						$scope.timeSelected = selected;
 					}
 					else if(type == "readingTime"){
-						$scope.readTimeSelected = json;
+						$scope.readTimeSelected = selected;
 					}
 					$scope.advance_filter_changed(selected, type)
 				});
@@ -42,7 +42,12 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 			    });
 			    recommendationService.get_read_times().then(function(data){
 			    	$scope.readTimeOptions = [{"name": "Reset"}];
-			    	$scope.readTimeOptions = $scope.readTimeOptions.concat(data["read_times"]);
+			    	for(var i=0; i < data["read_times"].length; i++){
+			    		var time_data = data.read_times[i][0]["data"];
+			    		var name = time_data["name"];
+			    		var json = {"name": name, "custom_option": true, "type": "readingTime"};
+			    		$scope.readTimeOptions = $scope.readTimeOptions.concat([json]);
+			    	}
 			    });
 			    _init_dropdown_filters();
 			    _collapse_dropdown_menu();
@@ -56,9 +61,9 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 			}
 
 			_init_dropdown_filters = function(){
-				$scope.countrySelected = {"name": "Filter books by Region"};
-				$scope.timeSelected = {"name": "Filter books by Era"};
-				$scope.readTimeSelected = {"name": "Filter books by Reading Time"};
+				$scope.countrySelected = {"name": "Filter by Region"};
+				$scope.timeSelected = {"name": "Filter by Era"};
+				$scope.readTimeSelected = {"name": "Filter by Reading Time"};
 			}
 
 			$scope.clear_filter = function(main_filter, type){
@@ -76,13 +81,13 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 					var message = "SUCCESS-"+type+" filter has been reset."
 					delete $rootScope.filters.other_filters[type];
 					if(type == "country"){
-						$scope.countrySelected = {"name": "Filter books by Region"};
+						$scope.countrySelected = {"name": "Filter by Region"};
 					}
 					else if(type == "timeGroup"){
-						$scope.timeSelected = {"name": "Filter books by Era"};
+						$scope.timeSelected = {"name": "Filter by Era"};
 					}
 					else if(type == "readingTime"){
-						$scope.readTimeSelected = {"name": "Filter books by Reading Time"};
+						$scope.readTimeSelected = {"name": "Filter by Reading Time"};
 					}
 				}
 				else{
@@ -325,9 +330,6 @@ websiteApp.directive('filter', ['$rootScope', '$timeout', '$routeParams', functi
 websiteApp.directive('mainHeader', [function(){
 	return{
 		restrict: 'E',
-		controller: ['$scope', function($scope){
-			
-		}],
 		templateUrl: "/assets/angular/widgets/partials/main_header.html"
 	}
 }]);

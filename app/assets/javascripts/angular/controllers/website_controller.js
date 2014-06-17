@@ -123,9 +123,9 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 				$rootScope.user.id = data.user_id;
 				// $scope.show_login_form = true;
 				// _profile_status_colors();
-				websiteService.get_user_details().then(function(data){
-		    		$rootScope.user.books = data["books"];
-		    	});
+				// websiteService.get_user_details().then(function(data){
+		  //   		$rootScope.user.books = data["books"];
+		  //   	});
 				websiteService.get_notifications($rootScope.user).then(function(data){
 					$scope.notifications = data.notifications;
 				});

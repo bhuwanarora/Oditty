@@ -16,7 +16,7 @@
 			<hr>
 			<div class="filters_panel">
 			 	<type-ahead items="genres" 
-			 				prompt="Filter books by a Genre" 
+			 				prompt="Filter by a Genre" 
 			 				title="name"
 			 				custom-options="genre_typeahead_options"
 			 				custom="input_filter"
@@ -27,7 +27,7 @@
 			 				ng-keypress="show_genre_options('BOOK', genre)">
 			 	</type-ahead>
 				<type-ahead items="authors" 
-			 				prompt="Filter books by Author Name"
+			 				prompt="Filter by Author Name"
 			 				title="name"
 			 				custom-options = "author_typeahead_options"
 			 				custom="input_filter"
@@ -123,7 +123,7 @@
 			 </a>
 		</div>
 
-		<span class="selected_filters">
+		<!-- <span class="selected_filters">
 			<span ng-if="filters.filter_type == 'BOOK'" 
 				class="selected_filter icon-book"></span>
 			<span class="selected_filter" ng-if="filters.more_filters">
@@ -131,23 +131,18 @@
 			</span>
 			<span ng-if="filters.other_filters.author" class="selected_filter">
 				<span class="icon-pen"></span>
-				<!-- <span>{{filters.other_filters.author}}</span> -->
 			</span>
 			<span ng-if="filters.other_filters.genre" class="selected_filter">
 				<span class="icon-shapes"></span>
-				<!-- <span>{{filters.other_filters.genre}}</span> -->
 			</span>
 			<span ng-if="filters.other_filters.timeGroup" class="selected_filter">
 				<span class="icon-calendar"></span>
-				<!-- <span>{{filters.other_filters.timeGroup}}</span> -->
 			</span>
 			<span ng-if="filters.other_filters.readingTime" class="selected_filter">
 				<span class="icon-clock"></span>
-				<!-- <span>{{filters.other_filters.readingTime}}</span> -->
 			</span>
 			<span ng-if="filters.other_filters.country" class="selected_filter">
 				<span class="icon-earth"></span>
-				<!-- <span>{{filters.other_filters.country}}</span> -->
 			</span>
 		</span>
 
@@ -183,6 +178,6 @@
 			<span ng-if="!bookmark_selected && !read_selected">
 			    {{recommendations.authors.length}} authors
 			</span>
-		</span>
+		</span> -->
 	</div>
 </div>

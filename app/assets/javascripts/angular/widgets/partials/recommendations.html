@@ -156,5 +156,19 @@
 			<div class="progression_state" ng-style="progression_state"></div>
 		</div>
 		<div class="top_hover_detector"></div>
+	
+		<div class="scroller">
+			<span class="scroller-left icon-angle-left"
+			      ng-mouseover="move_left($event)"
+			      ng-click="move_left($event)"
+			      title="Scroll left">
+			</span>
+			<span class="scroller-right icon-angle-right"
+				  ng-mouseover="move_right($event)"
+				  ng-click="move_right($event)"
+				  title="Scroll right">
+			</span>
+		</div>
+	 	<!-- </type-ahead> -->
 		
 </div>

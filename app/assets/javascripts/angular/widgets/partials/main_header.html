@@ -53,5 +53,10 @@
  	<div ng-controller="searchController">
  		<search-bar></search-bar>
  	</div>
+
+ 	<div class="profile_thumb" ng-click="goto_info_card()">
+		<img ng-src="{{user.thumb}}" class="profile_small_thumb" ng-if="user.thumb">
+		<img src="assets/profile_pic.jpeg" ng-if="!user.thumb">
+	</div>	
  	<!-- <input placeholder="Search..."/> -->
 </div>

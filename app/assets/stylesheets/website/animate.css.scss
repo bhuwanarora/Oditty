@@ -17,7 +17,7 @@
     -o-transform: rotateX(0deg) translatez(30px);
     transform: rotateX(0deg) translatez(30px);
     -webkit-transform: rotateX(0deg) translatez(30px);
-    height: 80vh;
+    height: 70vh;
     opacity: 1;
 	/*right: 5px;*/
 }
@@ -67,12 +67,12 @@
 
 .more_filters.ng-enter,
 .more_filters.ng-leave.ng-leave-active{
-	top: -1000px;
+	top: -400px;
 }
 
 .more_filters.ng-leave,
 .more_filters.ng-enter.ng-enter-active {
-	top: 80px;
+	top: 90px;
 }
 
 .login_box.ng-enter,
