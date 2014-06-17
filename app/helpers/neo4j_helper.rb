@@ -193,8 +193,10 @@ module Neo4jHelper
 
 			book.update_column("neo_flag", true)
 			title
-		rescue Exception => e
-			puts e
+		rescue Neography::NeographyError => err
+		  puts err.message     # Neo4j error message
+		  # puts err.code        # HTTP error code
+		  # puts err.stacktrace  # Neo4j Java stacktrace
 		end
 	end
 
@@ -256,7 +258,7 @@ module Neo4jHelper
 	def self.init_goodreads_books
 		count = GoodReadsBook.where(:neo_flag => true).count
 		t0 = Time.now
-		for id in 1..1599029
+		for id in 440000..1599029
 			t1 = Time.now
 			begin
 				book = GoodReadsBook.find id

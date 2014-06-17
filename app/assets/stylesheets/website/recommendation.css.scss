@@ -386,7 +386,7 @@
 
 .action_button{
 	text-align: center;
-	color: #E5E5E5;
+	color: #D8D8D8;
 	font-size: 1.5em;
 	width: 17%;
 	padding-top: 5%;
@@ -404,7 +404,7 @@
 }
 
 .button_effect:hover {
-	background-color: #F1F1F1;
+	background-color: #D8D8D8;
 	border-bottom: 1px solid !important;
 	color: white;
 }
@@ -868,13 +868,14 @@
 	position: fixed;
 	left: 50%;
 	margin-left: -250px;
-	box-shadow: 8px 10px 54px 0px #424242; 
+	box-shadow: 8px 10px 54px 0 #424242;
 	z-index: 5;
 	padding: 35px;
-	background-color: white;
+	background-color: #fff;
 	width: 500px;
 	height: 200px;
-	bottom: 0px;
+	top: 50%;
+	margin-top: -130px;
 }
 
 .interaction_box_options{
@@ -1199,9 +1200,13 @@
 	height: 66vh;
 }
 
+.info_cards .dropdown{
+	float: right;
+	width: 25vh;
+}
+
 .info_cards .header{
 	font-family: Helvetica;
-	text-align: center;
 	font-size: 1em;
 	font-weight: bold;
 	padding: 40px 0px 10px 0px;
@@ -1226,12 +1231,18 @@
 	display: inline-block;
 }
 
-.info_cards input{
-	width: 90%;
+.info_cards .header input{
+	width: 25vh;
 	padding: 10px;
 	font-size: 1em;
 	outline: 1px solid #D3D3D3;
+	float: right;
 }
+
+.info_cards .custom_radio{
+	float: none !important;
+}
+
 /*
 .info_typeahead_options{
 	left: 164px;
@@ -1724,17 +1735,6 @@ and (min-width : 1824px) {
 
 .profile_dropdown{
 	color: #717070;
-	/*display: inline-block;
-	float: left;
-	border: 1px solid #F1F1F1;
-	margin-right: 30px;
-	margin-left: 30px;
-	padding: 8% 3% 3% 3%;
-	color: white;
-	white-space: normal;
-	position: relative;
-	width: 38vh;
-	height: 64vh;*/
 }
 
 .site_menu{

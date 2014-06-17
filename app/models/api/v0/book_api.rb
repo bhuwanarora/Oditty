@@ -121,6 +121,7 @@ module Api
 					match_clause = ""
 					book_name = filters["other_filters"]["title"]
 					author_name = filters["other_filters"]["author_name"]
+					puts "book_name "+book_name+" author_name "+author_name+" ".green
 					if book_name.present?
 						where_clause = where_clause + " book.title=\""+book_name+"\" AND book.author_name=\""+author_name+"\" "
 					else
@@ -197,7 +198,7 @@ module Api
 				begin
 					books = @neo.execute_query(clause)["data"]
 				rescue Exception => e
-					puts "RESET".blue.on_red.blink
+					puts "ERROR "+e.to_s.blue.on_red.blink
 					$redis.set 'book_ids', ""
 					books = @neo.execute_query(clause)["data"]
 				end

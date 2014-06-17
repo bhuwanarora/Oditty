@@ -1,30 +1,32 @@
-<div class="interaction_box animate-fast"
-	 ng-if="focused_book.interact"
-	 ng-click="stop_propagation($event)">
- 	<div class="close button_effect"
- 		 ng-click="close_interaction_box()">x</div>
- 	
-	<div>
-		<span class="highlighter"></span>
-		<textarea itemprop= "commentText" 
-			itemtype= "http://schema.org/UserComments"
-		   type="text" 
-		   ng-keydown="handle_backspace($event)"
-		   placeholder="What do you feel about {{focused_book.title}} by {{focused_book.author_name}}..." 
-		   class="comment_box animate-fast" 
-		   ng-keypress="handle_hash_tags($event)"
-		   ng-bind-html="hash_tagged"
-		   rows="1"/>
+<div class="wrapper" ng-if="focused_book.interact" style="z-index: 7;">
+	<div class="interaction_box animate-fast"
+		 ng-if="focused_book.interact"
+		 ng-click="stop_propagation($event)">
+	 	<div class="close button_effect"
+	 		 ng-click="close_interaction_box()">x</div>
+	 	
+		<div>
+			<span class="highlighter"></span>
+			<textarea itemprop= "commentText" 
+				itemtype= "http://schema.org/UserComments"
+			   type="text" 
+			   ng-keydown="handle_backspace($event)"
+			   placeholder="What do you feel about {{focused_book.title}} by {{focused_book.author_name}}..." 
+			   class="comment_box animate-fast" 
+			   ng-keypress="handle_hash_tags($event)"
+			   ng-bind-html="hash_tagged"
+			   rows="1"/>
+		</div>
 	</div>
-</div>
-<div class="interaction_box_options"
-	ng-if="interact">
-	<div ng-repeat="item in hash_tags track by $index" 
-    		 ng-click="handle_selection(item.name)" 
-    		 ng-class="{active:is_current($index)}" 
-    		 ng-mouseenter="set_current($index)"
-    		 class="option">
-  		<div class="title">{{item.name}}</div>
-      	<div ng-show="item.author_name">by {{item.author_name}}</div>
+	<div class="interaction_box_options"
+		ng-if="interact">
+		<div ng-repeat="item in hash_tags track by $index" 
+	    		 ng-click="handle_selection(item.name)" 
+	    		 ng-class="{active:is_current($index)}" 
+	    		 ng-mouseenter="set_current($index)"
+	    		 class="option">
+	  		<div class="title">{{item.name}}</div>
+	      	<div ng-show="item.author_name">by {{item.author_name}}</div>
+		</div>
 	</div>
 </div>

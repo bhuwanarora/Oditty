@@ -492,6 +492,11 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'widgetService
         event.stopPropagation();
       }
 
+      $scope.close_interaction_box = function(){
+        $scope.focused_book.interact = false;
+        $scope.hash_tags = [];
+      }
+
       _init();
     }],
     templateUrl: "/assets/angular/widgets/base/book/interaction_box.html"

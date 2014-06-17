@@ -11,7 +11,7 @@ cloud_providers:
     account: 672564320288
     key_name: rd
     key_file: "/Users/bhuwan/ReadersDoor/ec2/ssh/rd"
-    image_type: t1.micro
+    image_type: m1.small
     image_id: ami-20702c72
   # digital_ocean:
   #   region: Singapore 1

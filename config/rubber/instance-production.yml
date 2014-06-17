@@ -67,15 +67,15 @@
   - !ruby/object:Rubber::Configuration::RoleItem
     name: web_tools
     options: {}
-  instance_id: i-1fbc0f37
-  image_type: t1.micro
+  instance_id: i-0778cb2f
+  image_type: m1.small
   image_id: ami-20702c72
   security_groups:
   - readers-door_production_default
-  external_host: ec2-54-254-253-139.ap-southeast-1.compute.amazonaws.com
-  external_ip: 54.254.253.139
-  internal_host: ip-172-31-8-201.ap-southeast-1.compute.internal
-  internal_ip: 172.31.8.201
+  external_host: ec2-54-255-143-127.ap-southeast-1.compute.amazonaws.com
+  external_ip: 54.255.143.127
+  internal_host: ip-172-31-6-72.ap-southeast-1.compute.internal
+  internal_ip: 172.31.6.72
   zone: ap-southeast-1a
   provider: aws
   platform: linux

@@ -9,38 +9,51 @@
 		<div class="sub_header">Complete your profile, {{user.name | uppercase}}</div>
 		<div class="profile_status_logo"></div>
 		<div ng-switch-when="0">
-			<div class="header">Name</div>
-			<input class="username" 
+			<div class="header">
+				<label for="username">Name</label>
+				<input class="username" 
+					id="username"
 	      	       ng-model="user.name" 
 	      	       placeholder="Enter your name" 
 	      	       spellcheck="false"
 	      	       ng-keydown="update_profile()"
 	      	       required />
-	      	<div class="header">Born on</div>
-			<input class="birthday" 
+	      	</div>
+	      	<div class="header">
+	      		<label for="birthday">Born on</label>
+				<input class="birthday" 
+				   id="birthday"
 	      	       ng-model="user.birthday" 
 	      	       spellcheck="false"
 	      	       type="date" 
 	      	       required />
-	      	<div class="header">Gender</div>
-	      	<div class="description_box">
-		      	<form name="gender_form">
-				  <input type="radio" ng-model="gender" value="Male" 
-				  		class="custom_radio icon-checkbox-unchecked">  Male <br/>
-				  <input type="radio" ng-model="gender" value="Female"
-				  		class="custom_radio icon-checkbox-unchecked"> Female <br/>
-				  <!-- <input type="radio" ng-model="gender" value="Transgender"
-				  		class="custom_radio icon-checkbox-unchecked"> Trans <br/> -->
+	      	</div>
+	      	<div class="header">
+      			<label for="gender">Gender</label>
+	      		<form name="gender_form">
+	      			<label for="male">Male</label>
+			  		<input type="radio" ng-model="gender" value="Male" id="male" 
+			  				class="custom_radio icon-checkbox-unchecked">
+
+			  		<label for="female">Female</label>
+			  		<input type="radio" ng-model="gender" value="Female" id="female"
+			  				class="custom_radio icon-checkbox-unchecked">
+
+			  		<label for="trans">Trans</label>
+			  		<input type="radio" ng-model="gender" value="Transgender" id="trans" 
+			  				class="custom_radio icon-checkbox-unchecked">
 				</form>
 	      	</div>
 		</div>
 		<div ng-switch-when="1">
-			<div class="header">I am a</div>
-	      	<div class="profile_dropdown"
+			<div class="header">
+				<span>I am a</span>
+	      		<span class="profile_dropdown dropdown"
 			 		  dropdown-select="profileOptions" 
 			 		  dropdown-onchange="user_profile_changed(selected)"
 			 		  dropdown-model="profileSelected"
-			 		  dropdown-item-label="name"></div>
+			 		  dropdown-item-label="name"></span>
+			</div>
 	      	<div class="description_box">
 	      		<div ng-show="show_loading_bar" class="center">
 	      			<img src="assets/loader.gif" class="loading_circle">

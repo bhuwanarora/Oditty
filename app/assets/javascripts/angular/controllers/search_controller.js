@@ -59,15 +59,21 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			if(type == "YEAR"){
 				$scope.year_search = true;
 				var search_placeholder = "by year...";
-				recommendationService.get_time_groups().then(function(data){
-					$scope.search_results = [];
-			    	for(var i=0; i < data["times"].length; i++){
-			    		var time_data = data.times[i][0]["data"];
-			    		var name = time_data["name"]+" ("+time_data["range"]+")";
-			    		var json = {"name": name};
-			    		$scope.search_results = $scope.search_results.concat([json]);
-			    	}
-				});
+				if($rootScope.time_groups){
+					$scope.search_results = $rootScope.time_groups;
+				}
+				else{
+					recommendationService.get_time_groups().then(function(data){
+						$scope.search_results = [];
+				    	for(var i=0; i < data["times"].length; i++){
+				    		var time_data = data.times[i][0]["data"];
+				    		var name = time_data["name"]+" ("+time_data["range"]+")";
+				    		var json = {"name": name};
+				    		$scope.search_results = $scope.search_results.concat([json]);
+				    	}
+				    	$rootScope.time_groups = $scope.search_results;
+					});
+				}
 			}
 			else if(type == "LIST"){
 				$scope.list_search = true;	
@@ -76,9 +82,15 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			else if(type == "COUNTRY"){
 				$scope.country_search = true;
 				var search_placeholder = "by country...";
-				recommendationService.get_countries().then(function(data){
-					$scope.search_results = data.countries;
-				});
+				if($rootScope.regions){
+					$scope.search_results = $rootScope.regions;
+				}
+				else{
+					recommendationService.get_countries().then(function(data){
+						$scope.search_results = data.countries;
+						$rootScope.regions = $scope.search_results;
+					});
+				}
 			}
 			else if(type == "GENRE"){
 				$scope.genre_search = true;
@@ -91,9 +103,15 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			else if(type == "TIME"){
 				$scope.time_search = true;
 				var search_placeholder = "by time...";
-				recommendationService.get_read_times().then(function(data){
-					$scope.search_results = data.read_times;
-				});
+				if($rootScope.read_times){
+					$scope.search_results = $rootScope.read_times;
+				}
+				else{
+					recommendationService.get_read_times().then(function(data){
+						$scope.search_results = data.read_times;
+						$rootScope.read_times = $scope.search_results;
+					});
+				}
 			}
 			else if(type == "GENDER"){
 				$scope.gender_search = true;
@@ -128,6 +146,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		var customOption = item.custom_option;
 		var type = item.type;
 
+		console.log("%c search "+graphOption+" "+customOption+" "+selectedItem+" "+type, "color: green; font-weight: bold;");
 		if(customOption){
 			if(!$scope.search_level1){
 				$scope.search_type = type;

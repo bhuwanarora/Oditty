@@ -308,7 +308,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         _get_recommendations();
         // _push_recommendations();
         _bind_destroy();
-        _handle_focused_book();
+        // _handle_focused_book();
         _get_friends();
     	// $scope.$emit('moveRight');    
 	}

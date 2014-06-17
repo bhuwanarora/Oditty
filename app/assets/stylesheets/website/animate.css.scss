@@ -89,14 +89,20 @@
 .interaction_box.ng-leave.ng-leave-active,
 .message_box.ng-enter,
 .message_box.ng-leave.ng-leave-active{
-	bottom: -260px;
+	width: 400px;
+	height: 100px;
+	margin-left: -200px;
+	margin-top: -65px;
 }
 
 .interaction_box.ng-leave,
 .interaction_box.ng-enter.ng-enter-active,
 .message_box.ng-leave,
 .message_box.ng-enter.ng-enter-active{
-	bottom: 0px;
+	width: 500px;
+	height: 200px;
+	margin-left: -250px;
+	margin-top: -130px;
 }
 
 .recommendation_box.ng-leave,

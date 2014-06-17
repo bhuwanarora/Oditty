@@ -387,6 +387,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 
 	_init = function(){
 		console.time("websiteAppController");
+		_initiate_loading_page();
 		$scope.more_filters = [];
 		$scope.show_notifications = false;
 		$scope.notifications_seen = false;
@@ -401,7 +402,6 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		$scope.website = {};
 		$scope.website.searching = true;
 		$scope.website.show_search_page = true;
-		$scope.authenticate();
 
 		_bind_emit();
 		_bind_feedback_form();
@@ -414,7 +414,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		// });
 		// $speechRecognition.setLang('en-UK'); // Default value is en-US
 		// $speechRecognition.listen();
-		_initiate_loading_page();
+		$scope.authenticate();
 		
 		console.timeEnd("websiteAppController");
 	}
