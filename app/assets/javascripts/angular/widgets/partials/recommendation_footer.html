@@ -60,15 +60,62 @@
  		 ng-if="!bookmark_selected && !read_selected"
  		 ng-class="{'compact_filter_link': compact_footer}" 
 		 ng-click="toggle_more_filters($event)">
-		 <span class="icon-filter2" ng-class="{'filter_link_icon': !show_more_filters}"></span>
+		<span ng-if="filters.filter_type == 'BOOK'" class="selected_filter icon-book"></span>
+		<span class="icon-pen" ng-class="{'selected_filter':filters.other_filters.author}"></span>
+		<span class="icon-shapes" ng-class="{'selected_filter':filters.other_filters.genre}"></span>
+		<span class="icon-calendar" ng-class="{'selected_filter':filters.other_filters.timegroup}"></span>
+		<span class="icon-clock" ng-class="{'selected_filter':filters.other_filters.readingTime}"></span>
+		<span class="icon-earth" ng-class="{'selected_filter':filters.other_filters.country}"></span>
+		<span class="selected_filter" ng-if="filters.more_filters">
+			{{filters.more_filters}}
+		</span>
+		
+		 <span class="icon-filter2 selected_filter" ng-class="{'filter_link_icon': !show_more_filters}"></span>
 		 <span ng-if="!compact_footer">
 		 	<!-- <span>&nbsp;Add filters</span> -->
 		 	<!-- <span ng-if="$routeParams.type == 'books'">for Books</span> -->
 		 	<!-- <span ng-if="$routeParams.type == 'authors'">for Authors</span> -->
 		 	<!-- <span ng-if="$routeParams.type == 'readers'">for Readers</span> -->
 		 </span>
-		 <span class=" icon-angle-down" ng-if="!show_more_filters"></span>
-		 <span class=" icon-angle-up" ng-if="show_more_filters"></span>
+		 <span class="selected_filter icon-angle-down" ng-if="!show_more_filters"></span>
+		 <span class="selected_filter icon-angle-up" ng-if="show_more_filters"></span>
+	</div>
+	<div class="filter_status">
+		<span class="selected_filters">
+		</span>
+		<!-- <span class="result_count selected_filter" 
+			  ng-model="recommendations.books.length"
+			  ng-if="filters.filter_type == 'BOOK'">
+			<span ng-if="bookmark_selected">
+				{{user.books.bookmarked.length}} books bookmarked</span>
+			<span ng-if="read_selected">
+			    {{user.books.read.length}} books read</span>
+			<span ng-if="!bookmark_selected && !read_selected">
+			    {{recommendations.books.length}} books
+			</span>
+		</span>
+		<span class="result_count" 
+		      ng-model="recommendations.readers.length"
+		      ng-if="filters.filter_type == 'READER'">
+			<span ng-if="bookmark_selected">
+				{{user.readers.bookmarked.length}} readers bookmarked</span>
+			<span ng-if="read_selected">
+			    {{user.readers.read.length}} readers followed</span>
+			<span ng-if="!bookmark_selected && !read_selected">
+			    {{recommendations.readers.length}} readers
+			</span>
+		</span>
+		<span class="result_count" 
+			  ng-model="recommendations.authors.length"
+			  ng-if="filters.filter_type == 'AUTHOR'">
+			<span ng-if="bookmark_selected">
+				{{user.authors.bookmarked.length}} authors bookmarked</span>
+			<span ng-if="read_selected">
+			    {{user.authors.read.length}} authors followed</span>
+			<span ng-if="!bookmark_selected && !read_selected">
+			    {{recommendations.authors.length}} authors
+			</span>
+		</span> -->
 	</div>
 	
 </div>
