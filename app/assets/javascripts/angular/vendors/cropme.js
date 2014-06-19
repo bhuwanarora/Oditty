@@ -18,6 +18,9 @@
           scope.error  = "Can't initialize cropme: destinationWidth x ratio needs to be lower than height";
         }
         if (scope.destinationWidth > scope.width) {
+          scope.error  = "Can't initialize cropme: destinationWidth x ratio needs to be lower than height";
+        }
+        if (scope.destinationWidth > scope.width) {
           scope.error = "Can't initialize cropme: destinationWidth needs to be lower than width";
         }
         if (scope.ratio && !scope.height) {
