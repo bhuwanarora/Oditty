@@ -62,4 +62,4 @@ app/build/**
 Archive.zip
 neo4j/*.log
 app/assets/javascripts/min/**/*
-app/assets/stylesheets/min/**/*
+app/assets/stylesheets/min/*
