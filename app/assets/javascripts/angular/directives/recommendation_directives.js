@@ -273,12 +273,14 @@ websiteApp.directive('filter', ['$rootScope', '$timeout', '$routeParams', functi
 					var filter_name = $scope.filter.name;
 					if(filter_id == parseInt($scope.$routeParams.filter_id)){
 						$scope.active = true;
-						$rootScope.filters[type].push(filter_id);
-						var message = "SUCCESS-'"+filter_name+"' added to filters.";
-						var timeout_event = notify($rootScope, message, $timeout);
-						$scope.$on('destroy', function(){
-							$timeout.cancel(timeout_event);
-						});
+						if($rootScope.filters[type].indexOf(filter_id) == -1){
+							$rootScope.filters[type].push(filter_id);
+							var message = "SUCCESS-'"+filter_name+"' added to filters.";
+							var timeout_event = notify($rootScope, message, $timeout);
+							$scope.$on('destroy', function(){
+								$timeout.cancel(timeout_event);
+							});
+						}
 					}
 					else{
 						$scope.active = false;
