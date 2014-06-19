@@ -1,3 +1,6 @@
+echo "pluto" > /etc/hostname
+hostname -F /etc/hostname
+
 sudo apt-get update
 sudo apt-get install git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties
 cd
@@ -72,14 +75,80 @@ apt-get update
 apt-get install neo4j
 service neo4j-service status
 
-sudo apt-get install npm
-sudo npm install -g grunt-cli
-sudo npm install grunt --save-dev
 
 mkdir rd
 cd rd
 git init
-git remote add origin 
+git remote add origin git@github.com:test-rd/rd.git
 git pull origin master
 
+sudo apt-get install postgresql
+sudo apt-get install libpq-dev
+sudo apt-get install graphicsmagick-libmagick-dev-compat
+sudo apt-get install libmagickcore-dev 
+sudo apt-get install libmagickwand-dev
 bundle install
+
+
+touch config/database.yml
+vim config/database.yml #add username and other details
+sudo -u postgres createuser bhuwan
+sudo -u postgres psql -c " ALTER ROLE bhuwan CREATEDB" 
+# psql -U ubuntu postgres
+sudo -u postgres psql -c "DROP EXTENSION PostGIS;"
+sudo -u postgres psql -c "CREATE SCHEMA postgis;"
+sudo -u postgres psql -c "CREATE EXTENSION PostGIS WITH SCHEMA postgis;"
+sudo -u postgres psql -c "GRANT ALL ON postgis.geometry_columns TO PUBLIC;"
+sudo -u postgres psql -c "GRANT ALL ON postgis.spatial_ref_sys TO PUBLIC"
+sudo -u postgres psql -c "ALTER USER bhuwan WITH SUPERUSER;"
+rake db:create
+# psql -d readers_door_development -f /usr/share/postgresql/9.3/contrib/postgis-2.1/postgis.sql
+# 
+
+rake db:migrate
+
+rake neo4j:install[advanced,2.1]
+
+
+
+sudo apt-get install npm
+sudo npm install -g grunt-cli
+sudo npm install grunt --save-dev
+
+
+# gem install thin
+# sudo apt-get install thin
+# sudo /usr/sbin/update-rc.d -f thin defaults
+# thin config -C /etc/thin2.0/readersdoor.com -c /var/www/readersdoor.com --servers 3 -e production # or: -e production for caching, etc
+
+# touch /etc/nginx/sites-available/readersdoor.com
+
+# upstream myapp {
+#   server 127.0.0.1:3000;
+#   server 127.0.0.1:3001;
+#   server 127.0.0.1:3002;
+# }
+# server {
+#   listen   80;
+#   server_name .readersdoor.com;
+
+#   access_log /var/www/readersdoor.com/log/access.log;
+#   error_log  /var/www/readersdoor.com/log/error.log;
+#   root     /var/www/readersdoor.com;
+#   index    index.html;
+
+#   location / {
+#     proxy_set_header  X-Real-IP  $remote_addr;
+#     proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+#     proxy_set_header  Host $http_host;
+#     proxy_redirect  off;
+#     try_files /system/maintenance.html $uri $uri/index.html $uri.html @ruby;
+#   }
+
+#   location @ruby {
+#     proxy_pass http://readersdoor;
+#   }
+# }
+
+# ln -nfs /etc/nginx/sites-available/readersdoor.com /etc/nginx/sites-enabled/readersdoor.com
+# /etc/init.d/thin restart && /etc/init.d/nginx reload; tail -f log/*.log
