@@ -52,18 +52,18 @@ function(){this.$get=function(){return{}}});h.directive("ngView",u);h.directive(
       checkScopeVariables = function(scope) {
         if (scope.destinationHeight) {
           if (scope.ratio) {
-            throw "You can't specify both destinationHeight and ratio, destinationHeight = destinationWidth * ratio";
+            scope.error = "You can't specify both destinationHeight and ratio, destinationHeight = destinationWidth * ratio";
           } else {
-            scope.ratio = destinationHeight / destinationWidth;
+            scope.ratio = scope.destinationHeight / scope.destinationWidth;
           }
         } else if (scope.ratio) {
           scope.destinationHeight = scope.destinationWidth * scope.ratio;
         }
         if (scope.ratio && scope.height && scope.destinationHeight > scope.height) {
-          throw "Can't initialize cropme: destinationWidth x ratio needs to be lower than height";
+          scope.error  = "Can't initialize cropme: destinationWidth x ratio needs to be lower than height";
         }
         if (scope.destinationWidth > scope.width) {
-          throw "Can't initialize cropme: destinationWidth needs to be lower than width";
+          scope.error = "Can't initialize cropme: destinationWidth needs to be lower than width";
         }
         if (scope.ratio && !scope.height) {
           scope.height = scope.destinationHeight;
@@ -85,10 +85,11 @@ function(){this.$get=function(){return{}}});h.directive("ngView",u);h.directive(
         };
       };
       return {
-        template: "<div\n   ng-show=\"state == 'step-1'\"\n ng-style=\"{'width': width + 'px', 'height': height + 'px'}\">\n     <div class=\"cropme-file-input\">\n     <input type=\"file\"/>\n        <div\n          class=\"cropme-button\"\n           ng-click=\"browseFiles()\">\n            Upload Profile Picture          </div>\n            </div>\n</div>\n<div\n  class=\"step-2\"\n  ng-show=\"state == 'step-2'\"\n ng-style=\"{'width': width + 'px'}\"\n  ng-mousemove=\"mousemove($event)\"\n    ng-mousedown=\"mousedown($event)\"\n    ng-mouseup=\"mouseup($event)\"\n    ng-mouseleave=\"deselect()\"\n  ng-class=\"{'col-resize': colResizePointer}\">\n    <img ng-src=\"{{imgSrc}}\" ng-style=\"{'width': width + 'px'}\"/>\n <div class=\"overlay-tile\" ng-style=\"{'top': 0, 'left': 0, 'width': xCropZone + 'px', 'height': yCropZone + 'px'}\"></div>\n  <div class=\"overlay-tile\" ng-style=\"{'top': 0, 'left': xCropZone + 'px', 'width': widthCropZone + 'px', 'height': yCropZone + 'px'}\"></div>\n   <div class=\"overlay-tile\" ng-style=\"{'top': 0, 'left': xCropZone + widthCropZone + 'px', 'right': 0, 'height': yCropZone + 'px'}\"></div>\n  <div class=\"overlay-tile\" ng-style=\"{'top': yCropZone + 'px', 'left': xCropZone + widthCropZone + 'px', 'right': 0, 'height': heightCropZone + 'px'}\"></div>\n  <div class=\"overlay-tile\" ng-style=\"{'top': yCropZone + heightCropZone + 'px', 'left': xCropZone + widthCropZone + 'px', 'right': 0, 'bottom': 0}\"></div>\n <div class=\"overlay-tile\" ng-style=\"{'top': yCropZone + heightCropZone + 'px', 'left': xCropZone + 'px', 'width': widthCropZone + 'px', 'bottom': 0}\"></div>\n  <div class=\"overlay-tile\" ng-style=\"{'top': yCropZone + heightCropZone + 'px', 'left': 0, 'width': xCropZone + 'px', 'bottom': 0}\"></div>\n <div class=\"overlay-tile\" ng-style=\"{'top': yCropZone + 'px', 'left': 0, 'width': xCropZone + 'px', 'height': heightCropZone + 'px'}\"></div>\n  <div class=\"overlay-border\" ng-style=\"{'top': (yCropZone - 2) + 'px', 'left': (xCropZone - 2) + 'px', 'width': widthCropZone + 'px', 'height': heightCropZone + 'px'}\"></div>\n</div>\n<div class=\"cropme-actions\" ng-show=\"state == 'step-2'\">\n   <button id=\"cropme-cancel\" ng-click=\"cancel()\">Cancel</button>\n    <button id=\"cropme-ok\" ng-click=\"ok()\">Ok</button>\n</div>\n<canvas\n   width=\"{{destinationWidth}}\"\n    height=\"{{destinationHeight}}\"\n  ng-style=\"{'width': destinationWidth + 'px', 'height': destinationHeight + 'px'}\">\n</canvas>",
+        templateUrl: "/assets/angular/widgets/base/widget/cropme.html",
         restrict: "E",
         scope: {
           width: "=",
+          maxHeight: "=",
           destinationWidth: "=",
           height: "=?",
           destinationHeight: "=?",
@@ -99,7 +100,8 @@ function(){this.$get=function(){return{}}});h.directive("ngView",u);h.directive(
         link: function(scope, element, attributes) {
           var $input, canvasEl, checkBounds, checkHRatio, checkVRatio, ctx, draggingFn, elOffset, grabbedBorder, heightWithImage, imageAreaEl, imageEl, isNearBorders, moveBorders, moveCropZone, nearHSegment, nearVSegment, startCropping, zoom;
           scope.dropText = "Drop picture here";
-          scope.state = "step-1";
+          scope.showButton = true;
+          scope.error = null;
           draggingFn = null;
           grabbedBorder = null;
           heightWithImage = null;
@@ -111,9 +113,15 @@ function(){this.$get=function(){return{}}});h.directive("ngView",u);h.directive(
           startCropping = function(imageWidth, imageHeight) {
             zoom = scope.width / imageWidth;
             heightWithImage = imageHeight * zoom;
+            scope.img_width = scope.width;
+            if(heightWithImage > scope.maxHeight){
+              heightWithImage = scope.maxHeight;
+              zoom = heightWithImage / imageHeight;
+              scope.img_width = imageWidth * zoom;
+            }
             scope.widthCropZone = Math.round(scope.destinationWidth * zoom);
             scope.heightCropZone = Math.round((scope.destinationHeight || minHeight) * zoom);
-            scope.xCropZone = Math.round((scope.width - scope.widthCropZone) / 2);
+            scope.xCropZone = Math.round((scope.img_width - scope.widthCropZone) / 2);
             scope.yCropZone = Math.round((scope.height - scope.heightCropZone) / 2);
             return $timeout(function() {
               return elOffset = offset(imageAreaEl);
@@ -121,6 +129,12 @@ function(){this.$get=function(){return{}}});h.directive("ngView",u);h.directive(
           };
           imageAreaEl = element[0].getElementsByClassName("step-2")[0];
           checkScopeVariables(scope);
+          scope.width_vh = scope.destinationWidth*100/document.documentElement.clientHeight;
+          scope.height_vh = scope.destinationHeight*100/document.documentElement.clientHeight;
+          // scope.width *= document.documentElement.clientWidth/100;
+          // scope.height *= document.documentElement.clientHeight/100;
+          // scope.destinationHeight *= document.documentElement.clientHeight/100;
+          // scope.destinationWidth *= document.documentElement.clientHeight/100;
           $input = element.find("input");
           $input.bind("change", function() {
             var file;
@@ -134,11 +148,13 @@ function(){this.$get=function(){return{}}});h.directive("ngView",u);h.directive(
             return $input.val("");
           });
           scope.browseFiles = function() {
+            scope.error = null;
             return $input[0].click();
           };
           scope.setFiles = function(file) {
             var reader;
             if (!file.type.match(/^image\//)) {
+              scope.error = "Wrong file type, please select an image.";
               return scope.dropError = "Wrong file type, please select an image.";
             }
             scope.dropError = "";
@@ -150,12 +166,15 @@ function(){this.$get=function(){return{}}});h.directive("ngView",u);h.directive(
                 height = imageEl.naturalHeight;
                 errors = [];
                 if (width < scope.width) {
-                  errors.push("The image you dropped has a width of " + width + ", but the minimum is " + scope.width + ".");
+                  scope.error = "Please choose an image with minimum size " + scope.width + " x " + Math.round(scope.destinationHeight) + " px."
+                  errors.push("The image you dropped has a width of " + width + ",px but the minimum is " + scope.width + ".");
                 }
                 if (scope.height && height < scope.height) {
+                  scope.error = "Please choose an image with minimum size " + scope.width + " x " + Math.round(scope.destinationHeight) + " px."
                   errors.push("The image you dropped has a height of " + height + ", but the minimum is " + scope.height + ".");
                 }
                 if (scope.ratio && scope.destinationHeight > height) {
+                  scope.error = "Please choose an image with minimum size " + scope.width + " x " + Math.round(scope.destinationHeight) + " px."
                   errors.push("The image you dropped has a height of " + height + ", but the minimum is " + scope.destinationHeight + ".");
                 }
                 return scope.$apply(function() {
@@ -163,7 +182,7 @@ function(){this.$get=function(){return{}}});h.directive("ngView",u);h.directive(
                     return scope.dropError = errors.join("<br/>");
                   } else {
                     $rootScope.$broadcast("cropme:loaded", width, height);
-                    scope.state = "step-2";
+                    scope.showButton = false;
                     return startCropping(width, height);
                   }
                 });
@@ -235,10 +254,10 @@ function(){this.$get=function(){return{}}});h.directive("ngView",u);h.directive(
               scope.heightCropZone = scope.destinationHeight * zoom;
               checkVRatio();
             }
-            if (scope.xCropZone + scope.widthCropZone > scope.width) {
-              scope.xCropZone = scope.width - scope.widthCropZone;
+            if (scope.xCropZone + scope.widthCropZone > scope.img_width) {
+              scope.xCropZone = scope.img_width - scope.widthCropZone;
               if (scope.xCropZone < 0) {
-                scope.widthCropZone = scope.width;
+                scope.widthCropZone = scope.img_width;
                 scope.xCropZone = 0;
                 checkHRatio();
               }
@@ -313,17 +332,18 @@ function(){this.$get=function(){return{}}});h.directive("ngView",u);h.directive(
           scope.cancel = function() {
             scope.dropText = "Drop files here";
             scope.dropClass = "";
-            return scope.state = "step-1";
+            return scope.showButton = true;
           };
-          scope.ok = function() {
+          scope.ok = function() { 
             scope.croppedWidth = scope.widthCropZone / zoom;
             scope.croppedHeight = scope.heightCropZone / zoom;
+            scope.set=true;
             return $timeout(function() {
               var destinationHeight;
               destinationHeight = scope.destinationHeight || scope.destinationWidth * scope.croppedHeight / scope.croppedWidth;
               ctx.drawImage(imageEl, scope.xCropZone / zoom, scope.yCropZone / zoom, scope.croppedWidth, scope.croppedHeight, 0, 0, scope.destinationWidth, scope.destinationHeight);
               return canvasEl.toBlob(function(blob) {
-                return ($rootScope.$broadcast("cropme:done", blob))&&(scope.state = "step-1");
+                return ($rootScope.$broadcast("cropme:done", blob))&&(scope.showButton = true);
               }, 'image/' + scope.type);
             });
           };
