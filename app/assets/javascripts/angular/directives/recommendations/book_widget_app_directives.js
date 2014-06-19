@@ -102,10 +102,16 @@ websiteApp.directive('labelDropdown', function(){
         event.stopPropagation();
       }
 
-      $scope.select_label = function(name){
+      $scope.select_label = function(index){
         var atleast_one_label_checked = false;
         var labels = $scope.book.labels;
         // labels["name"]
+        if($scope.book.labels[index]["checked"]){
+          $scope.book.labels[index]["checked"]= false;
+        }
+        else{
+          $scope.book.labels[index]["checked"] = true;
+        }
         for(var i=0; i<labels.length; i++){
           if(labels[i]["checked"]){
             atleast_one_label_checked = true;
@@ -155,6 +161,11 @@ websiteApp.directive('bookBookmark', ['$rootScope', '$timeout', 'widgetService',
     restrict: 'E',
     controller: ['$scope', function($scope){
       $scope.toggle_bookmarked = function(event){
+        var book_scope_length = $scope.book.labels.length;
+        var rootScope_length =$rootScope.labels.length;
+        for(var i=book_scope_length; i<rootScope_length; i++){
+            $scope.book.labels = $scope.book.labels.concat($rootScope.labels[i]);
+        }
         if($scope.book.show_labels){
           var bookmark_status = $scope.book.bookmark_status;
           var book_title = $scope.book.title;
@@ -224,6 +235,11 @@ websiteApp.directive('bookInteract', ['websiteService', '$rootScope', '$timeout'
           $scope.book.show_labels = false;
         }
         else{
+          var book_scope_length = $scope.book.labels.length;
+          var rootScope_length =$rootScope.labels.length;
+          for(var i=book_scope_length; i<rootScope_length; i++){
+            $scope.book.labels = $scope.book.labels.concat($rootScope.labels[i]);
+          }
           $scope.book.blur_input = false;
           $scope.book.show_labels = true;
         }
@@ -632,13 +648,14 @@ function add_custom_bookmark($scope, $rootScope, $timeout){
 
     if(!already_exists){
       $scope.book.bookmark_status = 1;
+      $rootScope.labels = $rootScope.labels.concat([{"name": custom_bookmark, "checked": false}]);
       $scope.book.labels = $scope.book.labels.concat([{"name": custom_bookmark, "checked": true}]);
       $scope.book.custom_bookmark = "";
       var message = "SUCCESS-Custom Bookmark "+custom_bookmark+" added to book "+$scope.book.title;
     }
 
     var timeout_event = notify($rootScope, message, $timeout);
-    $scope.on('destroy', function(){
+    $scope.$on('destroy', function(){
       $timeout.cancel(timeout_event);
     });
   }
