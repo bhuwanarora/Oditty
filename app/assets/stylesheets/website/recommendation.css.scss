@@ -546,7 +546,7 @@
 }
 
 .filter_link{
-	font-size: 0.9em;
+	font-size: 1.1em;
 	cursor: pointer;
 	text-align: center;
 	padding: 10px 10px 8px 10px;
@@ -559,6 +559,7 @@
    	box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
    	position: fixed;
    	border-radius: 3px;
+   	letter-spacing: 0.13em;
 }
 
 .filter_link [class^="icon-"]{

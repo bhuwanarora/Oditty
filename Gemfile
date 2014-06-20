@@ -68,7 +68,7 @@ gem 'freebase-api'
 gem 'fb_graph'
 gem 'treetop'
 gem 'polyglot'
-gem 'rubber'
+# gem 'rubber'
 # gem 'rails_admin_example_theme', :git => 'git://github.com/bbenezech/rails_admin_example_theme.git'
 
 group :doc do
@@ -79,6 +79,10 @@ end
 group :production do
 	gem 'rails_12factor'
 end
+
+gem 'capistrano'
+gem 'capistrano-bundler'
+gem 'capistrano-rails'
 
 group :development do
 	gem "byebug", "~> 2.5.0"
