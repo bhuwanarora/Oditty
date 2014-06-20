@@ -48,7 +48,7 @@ gem 'rack-zippy'
 gem 'nifty-generators'
 gem 'faye'
 gem 'thin'
-gem 'mad_chatter', github: 'madchatter/mad_chatter'
+#gem 'mad_chatter', github: 'madchatter/mad_chatter'
 gem 'pubnub'
 # gem 'goospell'
 gem 'spellingbee'
@@ -68,7 +68,6 @@ gem 'freebase-api'
 gem 'fb_graph'
 gem 'treetop'
 gem 'polyglot'
-gem 'rubber'
 # gem 'rails_admin_example_theme', :git => 'git://github.com/bbenezech/rails_admin_example_theme.git'
 
 group :doc do
@@ -79,6 +78,12 @@ end
 group :production do
 	gem 'rails_12factor'
 end
+
+gem 'capistrano'
+gem 'capistrano-bundler'
+gem 'capistrano-rails'
+gem 'capistrano-rbenv'
+
 
 group :development do
 	gem "byebug", "~> 2.5.0"
