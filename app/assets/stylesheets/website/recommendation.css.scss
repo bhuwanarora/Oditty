@@ -835,12 +835,18 @@
 .filters_panel_large,
 .filters_panel_right{
 	text-align: center;
-	padding: 4%;
+	margin-bottom: 10px;
+	/*padding: 4%;*/
 }
 
 .filters_group{
 	width: 100%;
 	overflow: auto;
+}
+
+.filters_panel_right{
+	border-top: 1px solid #E5E5E5;
+	border-bottom: 1px solid #E5E5E5;
 }
 
 .filters_panel,
@@ -880,6 +886,7 @@
 	cursor: pointer;
 	text-align: left;
 	min-width: 170px;
+	border-radius: 3px;
 }
 
 .interaction_box hr{
@@ -1574,20 +1581,26 @@ and (min-width : 1824px) {
 
 /****** dropdown-select *******/
 
-.wrap-dd-select {
+.wrap-dd-select:hover{
+	background-color: #F1F1F1;
+}
+
+.wrap-dd-select{
     position: relative;
-	width: 270px;
-	padding: 7px;
+	/*width: 270px;*/
+	width: 100%;
+	padding: 12px;
 	background: white;
-	border: 1px solid rgba(0, 0, 0, 0.15);
+	/*border: 1px solid rgba(0, 0, 0, 0.15);*/
 	cursor: pointer;
 	outline: none;
 	white-space: initial;
 	text-align: left;
 	font-size: 0.8em;
+	/*border-radius: 3px; */
 }
 
-.wrap-dd-select:after {
+/*.wrap-dd-select:after {
     content: "";
     width: 0;
     height: 0;
@@ -1598,7 +1611,7 @@ and (min-width : 1824px) {
     border-width: 6px 6px 0 6px;
     border-style: solid;
     border-color: #918FB5 transparent;
-}
+}*/
 
 .wrap-dd-select .dropdown {
     position: absolute;
@@ -1743,7 +1756,7 @@ and (min-width : 1824px) {
 .position_dropdown{
 	float: left;
 	display: inline-block;
-	margin: 5px;
+	/*margin: 5px;*/
 }
 
 .profile_dropdown{
