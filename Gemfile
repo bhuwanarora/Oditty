@@ -48,7 +48,7 @@ gem 'rack-zippy'
 gem 'nifty-generators'
 gem 'faye'
 gem 'thin'
-gem 'mad_chatter', github: 'madchatter/mad_chatter'
+#gem 'mad_chatter', github: 'madchatter/mad_chatter'
 gem 'pubnub'
 # gem 'goospell'
 gem 'spellingbee'
@@ -83,6 +83,7 @@ end
 gem 'capistrano'
 gem 'capistrano-bundler'
 gem 'capistrano-rails'
+gem 'capistrano-rbenv'
 
 group :development do
 	gem "byebug", "~> 2.5.0"

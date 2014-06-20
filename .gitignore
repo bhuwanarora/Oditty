@@ -1,6 +1,7 @@
 *.sassc
 *.lessc
 *.swp
+shared/
 .sass-cache
 .less-cache
 capybara-*.html

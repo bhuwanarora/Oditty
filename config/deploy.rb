@@ -1,6 +1,22 @@
 # config valid only for Capistrano 3.1
 lock '3.2.1'
 
+
+# rbenv
+set :rbenv_type, :root
+set :rbenv_ruby, '2.1.2'
+
+# bundler
+set :bundle_gemfile, -> { release_path.join('Gemfile') }
+set :bundle_dir, -> { shared_path.join('bundle') }
+#set :bundle_dir, -> { path: "/usr/bin/bundle" }
+set :bundle_flags, '--deployment --quiet'
+set :bundle_without, %w{development test}.join(' ')
+set :bundle_binstubs, -> { shared_path.join('bin') }
+set :bundle_roles, :all
+
+
+
 set :application, 'rd'
 set :repo_url, 'git@github.com:test-rd/rd.git'
 
@@ -8,7 +24,7 @@ set :repo_url, 'git@github.com:test-rd/rd.git'
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
 # Default deploy_to directory is /var/www/my_app
-set :deploy_to, '/var/www/vhosts/readersdoor.com'
+set :deploy_to, '/var/www/rd'
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -29,7 +45,8 @@ set :linked_files, %w{config/database.yml}
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 # Default value for default_env is {}
-# set :default_env, { path: "/opt/ruby/bin:$PATH" }
+set :default_env, { path: "~/.rbenv/shims:~/.rbenv/bin:$PATH" }
+#set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
@@ -43,17 +60,7 @@ namespace :deploy do
       execute :touch, release_path.join('tmp/restart.txt')
     end
   end
-
   after :publishing, :restart
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
-    end
-  end
-
   after :finishing, 'deploy:cleanup'
 
 end
