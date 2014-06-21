@@ -64,3 +64,4 @@ Archive.zip
 neo4j/*.log
 app/assets/javascripts/min/**/*
 app/assets/stylesheets/min/*.css
+neo4j/neo4j-wrapper.conf
