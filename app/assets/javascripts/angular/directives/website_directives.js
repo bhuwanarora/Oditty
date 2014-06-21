@@ -89,6 +89,8 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', function($rootScope,
 				]
 				$scope.gender = "Male";
 				$scope.profileSelected = {"name": "Reader"};
+				$scope.info_card_width = 350; //in px
+				$scope.info_card_ratio = 1.34;
 			}
 
 
