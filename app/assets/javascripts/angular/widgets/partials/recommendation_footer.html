@@ -61,6 +61,7 @@
  		 ng-class="{'compact_filter_link': compact_footer}" 
 		 ng-click="toggle_more_filters($event)">
 		<span ng-if="filters.filter_type == 'BOOK'" class="selected_filter icon-book"></span>
+		<span class="icon-angle-right"></span>
 		<span class="icon-pen" ng-class="{'selected_filter':filters.other_filters.author}"></span>
 		<span class="icon-shapes" ng-class="{'selected_filter':filters.other_filters.genre}"></span>
 		<span class="icon-calendar" ng-class="{'selected_filter':filters.other_filters.timegroup}"></span>
