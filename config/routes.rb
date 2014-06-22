@@ -3,7 +3,7 @@ ReadersDoor::Application.routes.draw do
   resources :facebooks
 
   mount Resque::Server, :at => "/resque"
-  mount MadChatter::RailsEngine => "/chat"
+#  mount MadChatter::RailsEngine => "/chat"
   
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }

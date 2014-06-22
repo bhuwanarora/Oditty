@@ -468,4 +468,21 @@ module Neo4jHelper
 			@neo.add_label(node, "Label")
 		end
 	end
+
+
+	def self.create_indexes
+		@neo ||= self.init
+		puts "indexing initiated..."
+		@neo.create_schema_index("Book", ["title"])
+		@neo.create_schema_index("Book", ["author_name"])
+		@neo.create_schema_index("Author", ["name"])
+		@neo.create_schema_index("Label", ["name"])
+		@neo.create_schema_index("ReadTime", ["name"])
+		@neo.create_schema_index("Era", ["name"])
+		@neo.create_schema_index("Year", ["year"])
+		@neo.create_schema_index("Genre", ["name"])
+		@neo.set_node_auto_index_status(true)
+		@neo.set_relationship_auto_index_status(true)
+		puts "indexing finished..."
+	end
 end

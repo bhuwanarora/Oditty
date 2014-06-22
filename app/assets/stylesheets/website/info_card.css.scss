@@ -1,0 +1,120 @@
+.horizontal_padder_active{
+	width: 60vh;
+	height: 80vh;
+	display: inline-block;
+	float: left;
+}
+
+.info_cards{
+	background-color: white;
+	display: inline-block;
+	float: left;
+	border: 1px solid #F1F1F1;
+	margin-right: 50px;
+	margin-left: 30px;
+	padding: 3%;
+	white-space: normal;
+	position: relative;
+	width: 38vh;
+	height: 66vh;
+	border-radius: 3px;
+}
+
+.info_cards .dropdown{
+	float: right;
+	width: 25vh;
+}
+
+.info_cards .header{
+	font-family: Helvetica;
+	font-size: 1em;
+	font-weight: bold;
+	padding: 40px 0px 10px 0px;
+}
+
+.info_cards .profile_pic{
+	width: 70%;
+	max-height: 300px;
+	border: 4px solid;
+	border-bottom: 40px solid;
+}
+
+.back_color{
+	position: absolute;
+	z-index: 1;
+	left: 0px;
+	right: 0px;
+	height: 4px;
+	top: 0px;
+}
+
+.info_cards .header input{
+	width: 25vh;
+	padding: 10px;
+	font-size: 1em;
+	outline: 1px solid #D3D3D3;
+	float: right;
+}
+
+.info_cards .custom_radio{
+	float: none !important;
+}
+
+/*
+.info_typeahead_options{
+	left: 164px;
+	width: 245px;
+	margin: 39px 0px 0px -125px;
+	z-index: 1000;
+}*/
+
+.info_cards .description{
+	position: absolute;
+	top: 280px;
+	white-space: normal;
+	width: 250px;
+	left: 30px;
+}
+
+.info_cards .description_box{
+	position: absolute;
+	white-space: normal;
+	width: 250px;
+	height: 50%;
+	overflow-y: scroll;
+}
+
+.info_cards .footer{
+	position: absolute;
+	bottom: 25px;
+	right: 25px;
+}
+
+.info_cards .thumb{
+	color: white;
+	background-color: rgba(255, 255, 255, 0.26);
+	font-size: 0.7em;
+	cursor: pointer;
+}
+
+.info_cards .birthday{
+	color: #717070;
+}
+
+.info_cards .footer .next,
+.info_cards .footer .prev{
+	cursor: pointer;
+	text-align: center;
+	padding: 15px;
+	font-size: 2em;
+	background-color: rgba(255, 255, 255, 0.01);
+	border: 1px solid #CFCFCF;
+}
+
+.profile_dropdown{
+	color: #717070;
+}
+
+.loading_circle{
+	width: 10px;
+}
