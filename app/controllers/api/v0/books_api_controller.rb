@@ -32,8 +32,9 @@ module Api
 			end
 
 			def affiliate_links
-				
-				info = {:amazon => {:link => "", :price => ""}, :bnn => {}}
+				id = params[:id]
+				info = {:amazon => {:link => "", :price => ""},
+						 :bnn => {:link => "http://www.betterworldbooks.com/ProductDetail.aspx?ItemId=" + id}}
 				render :json => info, :status => 200
 			end
 

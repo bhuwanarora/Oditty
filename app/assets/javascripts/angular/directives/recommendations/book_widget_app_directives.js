@@ -355,8 +355,10 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
       }
 
       _init = function(){
-        widgetService.get_affiliate_links().then(function(results){
-          debugger
+        // var id = $scope.focused_book.id;
+        debugger
+        widgetService.get_affiliate_links($scope.focused_book.id).then(function(results){
+          console.log(results);
         });
       }
 
