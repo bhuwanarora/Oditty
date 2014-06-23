@@ -14,6 +14,7 @@ websiteApp.directive('book', ['widgetService', '$rootScope', function (widgetSer
 
       $scope.show_focused_tooltip = function(event){
         if($rootScope.focused_book != $scope.book){
+          // $rootScope.show_more_filters = false;
           $rootScope.focused_book = $scope.book;
           var posX = event.currentTarget.offsetParent.offsetParent.offsetLeft - event.pageX + event.clientX;
           var display_right_width =  screen.width - (posX + event.currentTarget.offsetParent.scrollWidth);
@@ -62,6 +63,7 @@ websiteApp.directive('book', ['widgetService', '$rootScope', function (widgetSer
         // $scope.active_book_filter = true;
         var book_id = $scope.book.id;
         console.debug("%c _init book", "color: purple");
+        $scope.book.tweets = [];
         $scope.book.labels = $rootScope.labels;
         $scope.book.show_labels = false;
         // widgetService.populate_tooltips(book_id).then(function(data){
@@ -193,30 +195,14 @@ websiteApp.directive('bookBookmark', ['$rootScope', '$timeout', 'widgetService',
   };
 }]);
 
-websiteApp.directive('bookInteract', ['websiteService', '$rootScope', '$timeout', 
-  function (websiteService, $rootScope, $timeout) {
+websiteApp.directive('bookInteract', ['$rootScope', '$timeout', 
+  function ($rootScope, $timeout) {
   return {
     restrict: 'E',
     controller: ['$scope', function($scope){
       _init = function(){
         $scope.setStatus();
       }
-
-      $scope.handle_enter = function(event){
-        var is_enter = event.keyCode == 13;
-        if(is_enter){
-          add_custom_bookmark($scope, $rootScope, $timeout);
-        }
-      }
-
-    	$scope.setStatus = function(status){
-    		if(status == 1){
-          $scope.read = true;
-    		}
-    		else{
-    			$scope.read = false;
-    		}
-    	}
 
       $scope.show_bookmark_options = function(event){
         if($scope.book.show_labels){
@@ -230,132 +216,13 @@ websiteApp.directive('bookInteract', ['websiteService', '$rootScope', '$timeout'
         event.stopPropagation();
       }
 
-      $scope.handle_selection = function(selected_item){
-        var string_array = $('.comment_box').val().split(" ");
-        var html_array = $('.comment_box').siblings().html().split(" ");
-        var chr = String.fromCharCode(event.keyCode);
-        var len = string_array.length;
-        if(len == 1){
-          var old_string = string_array.slice(0, len-1).join(" ").trim();
-          var old_html = html_array.slice(0, len-1).join(" ").trim();
+      $scope.setStatus = function(status){
+        if(status == 1){
+          $scope.read = true;
         }
         else{
-          var old_string = string_array.slice(0, len-1).join(" ")+" ";
-          var old_html = html_array.slice(0, len-1).join(" ")+" ";
+          $scope.read = false;
         }
-        var current_element = string_array.pop();
-        var current_html = html_array.pop();
-        var is_backspace = event.keyCode == 8;
-        var hash_tagging = $scope.hash_tagging;
-        $('.comment_box').siblings().html(old_html+" <b>"+selected_item+"</b>");
-        $('.comment_box').val(old_string+" "+selected_item);
-        $scope.hash_tags = null;
-      }
-
-      $scope.set_current = function(index){
-
-      }
-
-      $scope.handle_backspace = function(event){
-        var string_array = $(event.currentTarget).val().split(" ");
-        var html_array = $(event.currentTarget).siblings().html().split(" ");
-        var chr = String.fromCharCode(event.keyCode);
-        var len = string_array.length;
-        if(len == 1){
-          var old_string = string_array.slice(0, len-1).join(" ");
-          var old_html = html_array.slice(0, len-1).join(" ");  
-        }
-        else{
-          var old_string = string_array.slice(0, len-1).join(" ")+" ";
-          var old_html = html_array.slice(0, len-1).join(" ")+" ";
-        }
-        var current_element = string_array.pop();
-        var current_html = html_array.pop();
-        var is_backspace = event.keyCode == 8;
-        var hash_tagging = $scope.hash_tagging;
-        if(is_backspace){
-          if(current_element == "#"){
-            $scope.hash_tagging = false;
-            $scope.hash_tags = [];
-            $(event.currentTarget).siblings().html(old_html);
-          }
-          else{
-            if(hash_tagging){
-              $(event.currentTarget).siblings().html(old_html);
-              $(event.currentTarget).val(old_string);
-              $scope.hash_tagging = false;
-              $scope.hash_tags = [];
-              event.preventDefault();
-            }
-            else{
-              var inside_a_hashtag = current_html[current_html.length - 1] == ">";
-              if(inside_a_hashtag){
-                $(event.currentTarget).siblings().html(old_html);
-                $(event.currentTarget).val(old_string);
-                $scope.hash_tags = [];
-                event.preventDefault();
-              }
-              else{
-                var html = $(event.currentTarget).siblings().html();
-                $(event.currentTarget).siblings().html(html.substring(0, html.length-1));
-              }
-            }
-          }
-          if(!$(event.currentTarget).val() || $(event.currentTarget).val() == ""){
-            $(event.currentTarget).siblings().html("");
-          }
-        }
-        event.stopPropagation();
-      }
-
-      $scope.handle_hash_tags = function(event){
-        var string_array = $(event.currentTarget).val().split(" ");
-        var chr = String.fromCharCode(event.keyCode);
-        var len = string_array.length;
-        var old_string = string_array.slice(0, len-1).join(" ");
-        var current_element = string_array.pop();
-        var is_new_word_initiation = current_element == "";
-        var under_a_tag = $scope.hash_tagging;
-        
-        if(is_new_word_initiation && chr == "#"){
-          var html = "<b>"+chr+"</b>";
-          $scope.hash_tagging = true;
-          $(event.currentTarget).siblings().append(html);
-        }
-        else if(is_new_word_initiation && chr == "+"){
-          var html = "<b>"+chr+"</b>";
-          $scope.hash_tagging = true;
-          $(event.currentTarget).siblings().append(html);
-          $scope.search_for = "TAGS";
-        }
-        else if(is_new_word_initiation && chr == "@"){
-          var html = "<b>"+chr+"</b>";
-          $scope.hash_tagging = true;
-          $(event.currentTarget).siblings().append(html);
-          $scope.search_for = "[AUTHORS, READERS]";
-        }
-        else{
-          if(chr == " "){
-            $scope.hash_tagging = false;
-            $(event.currentTarget).siblings().append(chr);
-            $scope.search_for = null;
-          }
-          else{
-            if($scope.hash_tagging){
-              $(event.currentTarget).siblings().find('b:last').append(chr);
-            }
-            else{
-              $(event.currentTarget).siblings().append(chr);
-            }
-          }
-        }
-        if($scope.search_for){
-          string_to_be_searched = current_element.slice(1, current_element.length)+""+chr;
-          websiteService.search(string_to_be_searched.trim(), $scope.search_for, 3).then(function(result) {
-            $scope.hash_tags = result.results;
-          });
-        }
-        event.stopPropagation();
       }
 
       _init();
@@ -484,7 +351,7 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
   }
 }]);
 
-websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
+websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteService', function($rootScope, $timeout, websiteService){
   return{
     restrict: 'E',
     controller: ['$scope', function($scope){
@@ -497,7 +364,199 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'widgetService
         $scope.hash_tags = [];
       }
 
+      $scope.handle_enter = function(event){
+        var is_enter = event.keyCode == 13;
+        if(is_enter){
+          add_custom_bookmark($scope, $rootScope, $timeout);
+        }
+      }
+
+
+      $scope.handle_selection = function(selected_item){
+        var string_array = $scope.focused_book.current_comment.split(" ");
+        var html_array = $scope.focused_book.hash_tagged_comment.split(" ");
+        var chr = String.fromCharCode(event.keyCode);
+        var len = string_array.length;
+        if(len == 1){
+          var old_string = string_array.slice(0, len-1).join(" ").trim();
+          var old_html = html_array.slice(0, len-1).join(" ").trim();
+        }
+        else{
+          var old_string = string_array.slice(0, len-1).join(" ")+" ";
+          var old_html = html_array.slice(0, len-1).join(" ")+" ";
+        }
+        var current_element = string_array.pop();
+        var current_html = html_array.pop();
+        var is_backspace = event.keyCode == 8;
+        var hash_tagging = $scope.hash_tagging;
+        $scope.focused_book.hash_tagged_comment = old_html+" <b>"+selected_item+"</b>";
+        $scope.focused_book.current_comment = old_string+" "+selected_item;
+        $scope.hash_tags = null;
+      }
+
+      $scope.set_current = function(index){
+
+      }
+
+      $scope.handle_backspace = function(event){
+        var string_array = $scope.focused_book.current_comment.split(" ");
+        var html_array = $scope.focused_book.hash_tagged_comment.split(" ");
+        var chr = String.fromCharCode(event.keyCode);
+        var len = string_array.length;
+        if(len == 1){
+          var old_string = string_array.slice(0, len-1).join(" ");
+          var old_html = html_array.slice(0, len-1).join(" ");  
+        }
+        else{
+          var old_string = string_array.slice(0, len-1).join(" ")+" ";
+          var old_html = html_array.slice(0, len-1).join(" ")+" ";
+        }
+        var current_element = string_array.pop();
+        var current_html = html_array.pop();
+        var is_backspace = event.keyCode == 8;
+        var hash_tagging = $scope.hash_tagging;
+        if(is_backspace){
+          if(current_element == "#"){
+            $scope.hash_tagging = false;
+            $scope.hash_tags = [];
+            $scope.focused_book.hash_tagged_comment = old_html;
+            // $(event.currentTarget).siblings().html(old_html);
+          }
+          else{
+            if(hash_tagging){
+              $scope.focused_book.hash_tagged_comment = old_html;
+              $scope.focused_book.current_comment = old_string;
+              // $(event.currentTarget).siblings().html(old_html);
+              // $(event.currentTarget).val(old_string);
+              $scope.is_new_word_initiation = true;
+              $scope.hash_tagging = false;
+              $scope.hash_tags = [];
+              event.preventDefault();
+            }
+            else{
+              var inside_a_hashtag = current_html[current_html.length - 1] == ">";
+              if(inside_a_hashtag){
+                $scope.focused_book.hash_tagged_comment = old_html;
+                $scope.focused_book.current_comment = old_string;
+                $scope.is_new_word_initiation = true;
+                // $(event.currentTarget).siblings().html(old_html);
+                // $(event.currentTarget).val(old_string);
+                $scope.hash_tags = [];
+                event.preventDefault();
+              }
+              else{
+                var html = $scope.focused_book.hash_tagged_comment;
+                $scope.focused_book.hash_tagged_comment = html.substring(0, html.length-1);
+                // $(event.currentTarget).siblings().html(html.substring(0, html.length-1));
+              }
+            }
+          }
+          if(!$scope.focused_book.current_comment || $scope.focused_book.current_comment == ""){
+            $scope.focused_book.hash_tagged_comment = "";
+            // $(event.currentTarget).siblings().html("");
+          }
+        }
+        event.stopPropagation();
+      }
+
+      $scope.handle_hash_tags = function(event){
+        console.log("%c "+$scope.focused_book.current_comment, "color: indigo;");
+        var string_array = $scope.focused_book.current_comment.split(" ");
+        var chr = String.fromCharCode(event.keyCode);
+        var len = string_array.length;
+        var old_string = string_array.slice(0, len-1).join(" ");
+        var current_element = string_array.pop();
+        var is_new_word_initiation = $scope.is_new_word_initiation;
+        var under_a_tag = $scope.hash_tagging;
+        console.table([{"is_new_word_initiation":  is_new_word_initiation,
+                        "chr": chr,
+                        "len": len,
+                        "old_string": old_string,
+                        "current_element": current_element,
+                        "current_comment": $scope.focused_book.current_comment,
+                        "under_a_tag": under_a_tag}]);
+        if(is_new_word_initiation && chr == "#"){
+          var html = "<b>"+chr+"</b>";
+          $scope.hash_tagging = true;
+          $scope.focused_book.hash_tagged_comment = $scope.focused_book.hash_tagged_comment+html;
+          // $(event.currentTarget).siblings().append(html);
+        }
+        else if(is_new_word_initiation && chr == "+"){
+          var html = "<b>"+chr+"</b>";
+          $scope.hash_tagging = true;
+          $scope.focused_book.hash_tagged_comment = $scope.focused_book.hash_tagged_comment+html;
+          // $(event.currentTarget).siblings().append(html);
+          $scope.search_for = "TAGS";
+        }
+        else if(is_new_word_initiation && chr == "@"){
+          var html = "<b>"+chr+"</b>";
+          $scope.hash_tagging = true;
+          $scope.focused_book.hash_tagged_comment = $scope.focused_book.hash_tagged_comment+html;
+          // $(event.currentTarget).siblings().append(html);
+          $scope.search_for = "[AUTHORS, READERS]";
+        }
+        else{
+          if(chr == " "){
+            $scope.hash_tagging = false;
+            $scope.focused_book.hash_tagged_comment = $scope.focused_book.hash_tagged_comment+chr;
+            // $(event.currentTarget).siblings().append(chr);
+            $scope.search_for = null;
+          }
+          else{
+            if($scope.hash_tagging){
+              var hash_tagged = $scope.focused_book.hash_tagged_comment.split("</b>");
+              var length = hash_tagged.length;
+              var last = hash_tagged[length - 2]+chr+"</b>"+hash_tagged[length - 1];
+              // var more_than_one_bold = length > 2;
+              $scope.focused_book.hash_tagged_comment = hash_tagged.slice(0, length - 2).join("</b>")+"</b>"+last;
+              // if(more_than_one_bold){
+              // }
+              // else{
+                // $scope.focused_book.hash_tagged_comment = last;
+              // }
+              console.log("%c "+$scope.focused_book.hash_tagged_comment, "color: orange;");
+              // $scope.focused_book.hash_tagged_comment = $scope.focused_book.hash_tagged_comment+html;
+              // $scope.focused_book.hash_tagged_comment = $scope.focused_book.hash_tagged_comment+html;
+              // $(event.currentTarget).siblings().find('b:last').append(chr);
+            }
+            else{
+              $scope.focused_book.hash_tagged_comment = $scope.focused_book.hash_tagged_comment+chr;
+              // $(event.currentTarget).siblings().append(chr);
+            }
+          }
+        }
+        if($scope.search_for){
+          if(current_element.length > 2){
+            string_to_be_searched = current_element.slice(1, current_element.length)+""+chr;
+            websiteService.search(string_to_be_searched.trim(), $scope.search_for, 3).then(function(result) {
+                $scope.hash_tags = [];
+                var data = result.results.data;
+                for(var i=0; i < data.length; i++){
+                  var json = {"name": data[i]};
+                  $scope.hash_tags.push(json);
+                }
+            });
+          }
+        }
+
+        if(chr == " "){
+          $scope.is_new_word_initiation = true;
+        }
+        else{
+          $scope.is_new_word_initiation = false; 
+        }
+
+        event.stopPropagation();
+      }
+
+      _init = function(){
+        $scope.is_new_word_initiation = true;
+        $scope.focused_book.current_comment = "";
+        $scope.focused_book.hash_tagged_comment = "";
+      }
+
       _init();
+
     }],
     templateUrl: "/assets/angular/widgets/base/book/interaction_box.html"
   }
