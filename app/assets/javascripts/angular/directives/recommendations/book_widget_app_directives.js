@@ -216,6 +216,14 @@ websiteApp.directive('bookInteract', ['$rootScope', '$timeout',
         event.stopPropagation();
       }
 
+      $scope.handle_enter = function(event){
+        var is_enter = event.keyCode == 13;
+        if(is_enter){
+          add_custom_bookmark($scope, $rootScope, $timeout);
+        }
+      }
+
+
       $scope.setStatus = function(status){
         if(status == 1){
           $scope.read = true;
@@ -371,14 +379,6 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
         $scope.focused_book.interact = false;
         $scope.hash_tags = [];
       }
-
-      $scope.handle_enter = function(event){
-        var is_enter = event.keyCode == 13;
-        if(is_enter){
-          add_custom_bookmark($scope, $rootScope, $timeout);
-        }
-      }
-
 
       $scope.handle_selection = function(selected_item){
         var string_array = $scope.focused_book.current_comment.split(" ");
