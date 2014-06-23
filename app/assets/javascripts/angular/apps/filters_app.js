@@ -36,4 +36,9 @@ angular.module('filtersApp', [])
       }
       return input;
     }
+  })
+  .filter('reverse', function(){
+    return function(input){
+      return input.slice().reverse();
+    }
   });

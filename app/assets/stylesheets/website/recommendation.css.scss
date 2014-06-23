@@ -1600,3 +1600,20 @@ and (min-width : 1824px) {
 	border-bottom: 1px solid !important;
 	color: white;
 }
+
+.tweets{
+	position: fixed;
+	top: 220px;
+	left: 50%;
+	width: 520px;
+	margin-left: -250px;
+	overflow-y: scroll;
+	height: 55vh;
+}
+
+.tweets .tweet{
+	background: white;
+	padding: 10px;
+	margin-top: 5px;
+	border-radius: 2px;
+}
