@@ -1,4 +1,8 @@
-<div class="wrapper" ng-if="focused_book.interact" style="z-index: 7;">
+<div class="wrapper" 
+	 ng-click="close_interaction_box()"
+	 msd-wheel="stop_horizontal_scroll($event)"
+	 ng-if="focused_book.interact" 
+	 style="z-index: 7;">
 	<div class="interaction_box_options">
 		<div ng-repeat="item in hash_tags track by $index" 
     		 ng-click="handle_selection(item.name)" 
@@ -11,9 +15,6 @@
 	</div>
 	<div class="interaction_box animate-fast"
 		 ng-click="stop_propagation($event)">
-	 	<div class="close button_effect"
-	 		 ng-click="close_interaction_box()">x</div>
-	 	
 		<div>
 			<span class="highlighter" ng-bind-html="focused_book.hash_tagged_comment"></span>
 			<textarea itemprop= "commentText"
@@ -28,5 +29,10 @@
 			</textarea>
 		</div>
 		<div class="character_count">{{140 - focused_book.current_comment.length}} characters left</div>
+	</div>
+	<div class="tweets">
+		<div class="tweet" ng-repeat="tweet in focused_book.tweets | reverse">
+			{{tweet}}	
+		</div>
 	</div>
 </div>

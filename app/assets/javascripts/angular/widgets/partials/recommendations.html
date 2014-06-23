@@ -147,9 +147,12 @@
 
 		<more-filters></more-filters>
 		<!-- <div class="wrapper" ng-if="focused_book"></div> -->
-		<focused-book></focused-book>
-		<focused-author></focused-author>
-		<focused-reader></focused-reader>
+		<div class="focused_tooltip animate-fast"
+		     ng-style="focused_book.reposition_tooltip"
+		     ng-click="stop_propagation($event)"
+		     ng-if="focused_book"><focused-book></focused-book></div>
+		<div ng-if="focused_author"><focused-author></focused-author></div>
+		<div ng-if="focused_reader"><focused-reader></focused-reader></div>
 		<notification-link></notification-link>
 
 		<div class="bottom_hover_detector">
