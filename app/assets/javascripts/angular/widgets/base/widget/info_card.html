@@ -136,7 +136,7 @@
       			accept="image/*" image="image"/> -->
       	<div ng-if="!user.thumb">
 			<div class="header thumb">Add a profile pic</div>
-		      	<div class="description">Help your friends recognise you across Reader's Door.</div>
+	      	<div class="description">Help your friends recognise you across Reader's Door.</div>
 	      	<!-- </div> -->
 	      	<div ng-if="user.thumb">
 	      		<div class="header thumb">Change your profile pic</div>
@@ -156,21 +156,12 @@
 			       value="Select a photo from your computer" 
 			       onclick="document.getElementById('selectedFile').click();" /> -->
 		</div>
-		<div ng-switch-when="6">
-			<div class="header">
-				Meet readers in your area...
-			</div>
-			<map style="display:block; height:180px" />
+	</div>
+	<div ng-switch-when="6">
+		<div class="header">
+			Meet readers in your area...
 		</div>
-		<div ng-switch-when="7">
-			<div class="header">Invite your friends</div>
-			<div class="description">
-				Know what your friends are reading...
-			</div>
-		</div>
-		<div ng-switch-when="8">
-		</div>
-		<!-- <map style="display:block; height:180px" /> -->
+		<map style="display:block; height:180px" />
 	</div>
 	<div ng-switch-when="7">
 		<div class="header">Invite your friends</div>
@@ -179,7 +170,6 @@
 		</div>
 	</div>
 	<div ng-switch-when="8">
-		
 	</div>
 	<div class="footer">
 		<span class="prev icon-angle-left" ng-click="prev_profile_state()"></span>
