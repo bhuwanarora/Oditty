@@ -337,8 +337,8 @@
 	cursor: pointer;
 	text-align: center;
 	padding: 10px 10px 8px 10px;
-	background-color: #427fed;
-	color: #EBEBEB;
+	background-color: white;
+	color: #D3D3D3;
 	border-bottom: 2px solid transparent;
 	left: 10px;
 	top: 50px;
@@ -349,14 +349,10 @@
    	letter-spacing: 0.13em;
 }
 
-.filter_link [class^="icon-"]{
-	color: #0148C7;
-}
-
 .selected_filter{
 	/*background-color: #918FB5;*/
 	/*padding: 8px;*/
-	color: white !important;
+	color: #717070 !important;
 	/*border-radius: 3px;*/
 }
 
@@ -378,15 +374,6 @@
    50% { -webkit-transform: translate3d(0,-10px,0); 
          -webkit-animation-timing-function: ease-in; }
   100% { -webkit-transform: translate3d(0,   0px,0); }
-}
-
-.filter_link:hover{
-	border-bottom: 2px solid #4478D6;
-	background-color: #427DE7;
-}
-
-.filter_link:active{
-	background-color: #4478D6;
 }
 
 .menu_group{
