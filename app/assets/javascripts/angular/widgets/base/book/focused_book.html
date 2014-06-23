@@ -102,14 +102,17 @@
       </div>
     </div>
   </div>
+  <div class="tweet_link">
+    <span ng-click="focused_book.interact = true;">What do you feel about this book?</span>
+  </div>
   <div class="footer">
     <recommend data="focused_book"></recommend>
-    <span class="interact" ng-click="focused_book.interact = true;">Tweet</span>
+    <!-- <span class="interact" ng-click="focused_book.interact = true;">Tweet</span> -->
     <!-- <div class="own_this_book"
        ng-click="own_this_book()">
        <span ng-show="!have_this_book">I have this Book</span>
        <span ng-show="have_this_book">I don't have this Book</span>
     </div> -->
   </div>
+  <interaction-box></interaction-box>
 </div>
-<interaction-box></interaction-box>
