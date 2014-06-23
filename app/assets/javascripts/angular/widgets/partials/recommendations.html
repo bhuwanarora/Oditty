@@ -18,14 +18,10 @@
 				<div ng-show="$routeParams.type == 'books'" ng-model="user.books.bookmarked">
 					<div ng-switch on="user.books.bookmarked.length">
 						<div ng-switch-when="0">
-							<div class="horizontal_padder_active">
-							</div>
 							<info-card></info-card>
 							Place a bookmark in your books
 						</div>
 						<div ng-switch-default>
-							<div class="horizontal_padder_active">
-							</div>
 							<info-card></info-card>
 							<div ng-repeat="user_book in user.books.bookmarked" class="recommendation_block">
 								<book track id="{{user_book.category.name | lowercase}}-{{user_book.id}}" data="user_book"></book>
@@ -36,14 +32,10 @@
 				<div ng-show="$routeParams.type == 'authors'" ng-model="user.authors.bookmarked">
 					<div ng-switch on="user.authors.bookmarked.length">
 						<div ng-switch-when="0">
-							<div class="horizontal_padder_active">
-							</div>
 							<info-card></info-card>
 							Bookmark authors
 						</div>
 						<div ng-switch-default>
-							<div class="horizontal_padder_active">
-							</div>
 							<info-card></info-card>
 							<div ng-repeat="author in user.authors.bookmarked" class="recommendation_block">
 								<author track id="{{author.category.name | lowercase}}-{{author.id}}" data="author"></author>
@@ -56,14 +48,10 @@
 				<div ng-show="$routeParams.type == 'books'" ng-model="user.books.read">
 					<div ng-switch on="user.books.read.length">
 						<div ng-switch-when="0">
-							<div class="horizontal_padder_active">
-							</div>
 							<info-card></info-card>
 							Add Books you have read
 						</div>
 						<div ng-switch-default>
-							<div class="horizontal_padder_active">
-							</div>
 							<info-card></info-card>
 							<div ng-repeat="user_book in user.books.read" class="recommendation_block">
 								<book track id="{{user_book.category.name | lowercase}}-{{user_book.id}}" data="user_book"></book>
@@ -74,14 +62,10 @@
 				<div ng-show="$routeParams.type == 'authors'" ng-model="user.authors.follow">
 					<div ng-switch on="user.authors.follow.length">
 						<div ng-switch-when="0">
-							<div class="horizontal_padder_active">
-							</div>
 							<info-card></info-card>
 							Follow authors
 						</div>
 						<div ng-switch-default>
-							<div class="horizontal_padder_active">
-							</div>
 							<info-card></info-card>
 							<div ng-repeat="author in user.authors.follow" class="recommendation_block">
 								<author track id="{{author.category.name | lowercase}}-{{author.id}}" data="author"></author>
@@ -92,14 +76,10 @@
 				<div ng-show="$routeParams.type == 'readers'" ng-model="user.readers.follow">
 					<div ng-switch on="user.readers.follow.length">
 						<div ng-switch-when="0">
-							<div class="horizontal_padder_active">
-							</div>
 							<info-card></info-card>
 							Add Some readers to follow				
 						</div>
 						<div ng-switch-default>
-							<div class="horizontal_padder_active">
-							</div>
 							<info-card></info-card>
 							<div ng-repeat="reader in user.readers.follow" class="recommendation_block">
 								<reader track id="{{reader.category.name | lowercase}}-{{reader.id}}" data="reader"></reader>
@@ -112,8 +92,6 @@
 			<div ng-switch-default class="recommendation_panel">
 				<div ng-show="$routeParams.type == 'books'" 
 					ng-model="recommendations.books" class="recommendation_panel">
-					<div class="horizontal_padder_active">
-							</div>
 					<info-card></info-card>
 					<div ng-repeat="recommendation in recommendations.books" 
 						 class="recommendation_block">
@@ -125,8 +103,6 @@
 				</div>
 				<div ng-show="$routeParams.type == 'readers'" 
 					class="recommendation_panel">
-					<div class="horizontal_padder_active">
-							</div>
 					<info-card></info-card>
 					<div ng-repeat="recommendation in recommendations.readers" class="recommendation_block">
 						<reader track id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></reader>
@@ -134,8 +110,6 @@
 				</div>
 				<div ng-show="$routeParams.type == 'authors'" 
 					class="recommendation_panel">
-					<div class="horizontal_padder_active">
-							</div>
 					<info-card></info-card>
 					<div ng-repeat="recommendation in recommendations.authors" class="recommendation_block">
 						<author track id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></author>
