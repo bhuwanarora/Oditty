@@ -22,7 +22,7 @@ module.exports = function(grunt) {
             'app/assets/stylesheets/min/recommendation.min.css',
             'app/assets/stylesheets/min/focused_tooltip.min.css',
             'app/assets/stylesheets/min/info_card.min.css',
-            'app/assets/stylesheets/min/book.min.css'
+            'app/assets/stylesheets/min/card.min.css'
           ]
         }
       }

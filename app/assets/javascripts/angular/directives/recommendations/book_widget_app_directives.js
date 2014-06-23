@@ -346,6 +346,14 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
         event.stopPropagation();
       }
 
+      _init = function(){
+        widgetService.get_affiliate_links().then(function(results){
+          debugger
+        });
+      }
+
+      _init();
+
     }],
     templateUrl: "/assets/angular/widgets/base/book/focused_book.html"
   }
