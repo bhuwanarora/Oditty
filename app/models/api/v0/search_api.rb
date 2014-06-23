@@ -47,11 +47,9 @@ module Api
 											.limit(count)
 					tester = {:name => "TAG:"+q.upcase}
 				else
-					results = @neo.execute_query("MATCH (book:Book) 
-										WHERE book.title =~ '(?i)"+q+".*' 
-										RETURN book.title as name, book.author_name
-										ORDER BY book.gr_rating DESC
-										LIMIT 5")
+					clause = "MATCH (book:Book) WHERE book.title =~ '(?i)"+q+".*' RETURN book.title as name, book.author_name ORDER BY toFloat(book.gr_rating) DESC LIMIT 5"
+					puts clause.blue.on_red
+					results = @neo.execute_query(clause)
 					tester = {:name => "RD:"+q.upcase}	
 				end
 				if results.present?

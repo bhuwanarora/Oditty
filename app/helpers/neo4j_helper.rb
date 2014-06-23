@@ -258,7 +258,7 @@ module Neo4jHelper
 	def self.init_goodreads_books
 		count = GoodReadsBook.where(:neo_flag => true).count
 		t0 = Time.now
-		for id in 440000..1599029
+		for id in 540000..1599029
 			t1 = Time.now
 			begin
 				book = GoodReadsBook.find id
@@ -267,7 +267,7 @@ module Neo4jHelper
 						title = self.create_book book
 						count = count + 1
 						t2 = Time.now
-						puts "#{t2-t1} #{count} #{title}"
+						puts "#{t2-t1} #{count}/1599029 #{title}"
 					end
 				else
 					puts id
