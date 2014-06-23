@@ -8,6 +8,14 @@ module Api
 				end
 			end
 
+			def self.get_book(title, author_name)
+				@neo = Neography::Rest.new
+				clause = "MATCH (book:Book) WHERE book.title =~ \"(?i)"+title+"\" AND book.author_name =~ \"(?i)"+author_name+"\" RETURN book"
+				puts clause.blue.on_red
+				book = @neo.execute_query(clause)["data"]
+				book
+			end
+
 			def self.push_recommendations
 				self.recommendations
 			end

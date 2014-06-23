@@ -63,8 +63,8 @@ websiteApp.service('widgetService', ['$http', '$q', '$rootScope', function ($htt
         return _deferred_request('/api/v0/labels');   
     }
 
-    this.get_affiliate_links = function(id){
-        return _deferred_request('/api/v0/affiliate_links?id='+id);
+    this.get_affiliate_links = function(book_name, author_name){
+        return _deferred_request('/api/v0/affiliate_links?title='+book_name+"&author_name="+author_name);
     }
 
     _deferred_request = function(url){

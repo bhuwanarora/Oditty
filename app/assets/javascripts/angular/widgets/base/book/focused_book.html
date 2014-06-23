@@ -90,6 +90,9 @@
     
   </div>
 </div>
+<div ng-if="!show_info">
+  <a ng-href="{{link}}" ng-repeat="link in bnn_links" target="_blank">{{focused_book.title}}-bnn</a>
+</div>
 <div class="user_box">
   <div class="users_count">{{focused_book.users_count}} friends have read this</div>
   <div class="users">

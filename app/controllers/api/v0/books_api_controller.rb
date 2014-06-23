@@ -32,9 +32,16 @@ module Api
 			end
 
 			def affiliate_links
-				id = params[:id]
+				book = BookApi.get_book(params[:title], params[:author_name])
+				isbn =  book[0][0]["data"]["isbn"]
+				bnn_links = []
+				if isbn
+					for isbn in isbn.split(",")
+						bnn_links |= ["http://www.betterworldbooks.com/ProductDetail.aspx?ItemId=" + isbn]
+					end
+				end
 				info = {:amazon => {:link => "", :price => ""},
-						 :bnn => {:link => "http://www.betterworldbooks.com/ProductDetail.aspx?ItemId=" + id}}
+						 :bnn => {:links => bnn_links}}
 				render :json => info, :status => 200
 			end
 
