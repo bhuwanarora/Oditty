@@ -592,7 +592,7 @@
 }
 
 .more_filters{
-	width: 200px;
+	width: 253px;
 	height: 58vh;
 	/*left: 10px;*/
 	/*position: fixed;*/
@@ -601,7 +601,7 @@
 	padding: 10px 0 0;
 	background-color: #fff;
 	border: 1px solid #E2E2E2;
-	box-shadow: 8px 0px 43px 0 rgba(66,66,66,.47);
+	/*box-shadow: 8px 0px 43px 0 rgba(66,66,66,.47);*/
 	border-radius: 3px;
 }
 
@@ -805,7 +805,7 @@
 	position: absolute;
 	left: 0px;
 	bottom: 0px;
-	width: 172px;
+	right: 0px;
 	border-radius: 3px;
 }
 
@@ -1131,7 +1131,7 @@ and (min-width : 1824px) {
 	/*top: 90px;*/
 	/*left: 10px;*/
 	border-radius: 4px;
-	box-shadow: 0 7px 15px rgba(0,0,0,.25);
+	/*box-shadow: 0 7px 15px rgba(0,0,0,.25);*/
 }
 
 .notification_elements{
@@ -1251,7 +1251,7 @@ and (min-width : 1824px) {
 .wrap-dd-select{
     position: relative;
 	/*width: 270px;*/
-	width: 100%;
+	width: 67%;
 	padding: 12px;
 	background: white;
 	/*border: 1px solid rgba(0, 0, 0, 0.15);*/
@@ -1651,4 +1651,6 @@ and (min-width : 1824px) {
 	left: 10px;
 	top: 90px;
 	position: fixed;
+	z-index: 1;
+	box-shadow: 8px 0 43px 0 rgba(66,66,66,.47);
 }
