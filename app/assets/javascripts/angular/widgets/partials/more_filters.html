@@ -1,4 +1,4 @@
-<div ng-if="show_more_filters" 
+<div ng-if="show_more_filters"
 	 class="more_filters animate-fast"
 	 ng-click="stop_click_propagation($event)">	
 
@@ -12,7 +12,7 @@
 					</div>
 				</div>
 			</div>
-			<hr>
+			
 			<div class="filters_panel">
 			 	<type-ahead items="genres" 
 			 				prompt="Filter by a Genre" 
@@ -36,7 +36,7 @@
 			 				ng-keypress="show_author_options('BOOK', author)">
 			 	</type-ahead>
 			</div>
-			<hr>
+			
 			<div class="filters_panel_right">
 			 	<div class="position_dropdown"
 				 	  dropdown-select="countryOptions" 
@@ -67,7 +67,7 @@
 					</div>
 				</div>
 			</div>
-			<hr>
+			
 			<div class="filters_panel">
 				<type-ahead items="genres" 
 			 				prompt="GENRE" 
@@ -79,7 +79,7 @@
 			 				ng-keypress="show_genre_options('BOOK', genre)">
 			 	</type-ahead>
 			</div>
-			<hr>
+			
 			<div class="filters_panel_right">
 				
 			</div>
@@ -94,7 +94,7 @@
 					</div>
 				</div>
 			</div>
-			<hr>
+			
 			<div class="filters_panel">
 				<type-ahead items="genres" 
 			 				prompt="GENRE" 
@@ -106,7 +106,7 @@
 			 				ng-keypress="show_genre_options('BOOK', genre)">
 			 	</type-ahead>
 			</div>
-			<hr>
+			
 			<div class="filters_panel_right">
 				<div class="header">
 				</div>
@@ -117,8 +117,8 @@
 	<div class="main_filters">
 		<div class="reset_filters">
 			 <a ng-href="#/user/{{$routeParams.id}}/recommendations/{{$routeParams.type}}" ng-click="reset_filters()">
-			 	<span>RESET FILTERS </span>
 			 	<span class="icon-loop"></span>
+			 	<span>RESET FILTERS </span>
 			 </a>
 		</div>
 
