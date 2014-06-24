@@ -4,7 +4,10 @@
 	<span ng-show="!recommend_object.recommended">RECOMMEND TO FRIENDS</span>
 	<span ng-show="recommend_object.recommended">Cancel</span>
 </span>
-<div class="wrapper" ng-if="recommend_object.recommended" style="z-index:1;">
+<div class="wrapper" 
+	ng-if="recommend_object.recommended" 
+	style="z-index:1;" 
+	msd-wheel="stop_horizontal_scroll($event)">
 	<div class="recommendation_box animate-slow" ng-if="recommend_object.recommended">
 		<div class="header">
 			Select friends whom you want to recommend

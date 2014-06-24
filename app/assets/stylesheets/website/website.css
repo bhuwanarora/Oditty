@@ -176,3 +176,14 @@ input:focus{
 .custom_radio:checked:before{
     content: "\f14a";
 }
+
+.arrow_down{
+    border-top: 10px solid white;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    position: absolute;
+    top: 1px;  
+    width: 0; 
+    height: 0;
+    z-index: 3;
+}

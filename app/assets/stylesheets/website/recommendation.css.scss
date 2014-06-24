@@ -347,6 +347,7 @@
    	position: fixed;
    	border-radius: 3px;
    	letter-spacing: 0.13em;
+   	min-width: 195px;
 }
 
 .selected_filter{
@@ -354,6 +355,10 @@
 	/*padding: 8px;*/
 	color: #717070 !important;
 	/*border-radius: 3px;*/
+}
+
+.selected_filter:hover:before{
+    content: "\e694";
 }
 
 .filter_status{
@@ -1601,6 +1606,7 @@ and (min-width : 1824px) {
 	border: 1px solid #F3F3F3;
 	/*-webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);*/
 	background-color: white;
+	cursor: pointer;
 	/*box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);*/
 }
 

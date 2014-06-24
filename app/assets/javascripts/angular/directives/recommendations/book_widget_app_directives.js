@@ -384,11 +384,16 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
         }
       }
 
+      _open_tab = function(){
+        $scope.show_info = true;
+      }
+
       _init = function(){
         widgetService.get_affiliate_links().then(function(results){
           // debugger
         });
         _display_tweet(0);
+        _open_tab();
       }
 
       _init();
@@ -635,15 +640,15 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', fu
         if(!selected){
           event.currentTarget.dataset.selected = true;
           event.currentTarget.style.border = "2px solid";
-          // $(event.currentTarget).data("selected", true);
-          // $(event.currentTarget).css('border', '2px solid');
         }
         else{
           event.currentTarget.dataset.selected = false;
           event.currentTarget.style.border = "2px solid transparent";
-          // $(event.currentTarget).data("selected", false);
-          // $(event.currentTarget).css('border', '2px solid none'); 
         }
+      }
+
+      $scope.stop_horizontal_scroll = function(event){
+        event.stopPropagation();
       }
 
       $scope.recommend = function(){

@@ -253,7 +253,7 @@ websiteApp.directive('horizontalScroller', function(){
 
 websiteApp.directive('setFocus', ['$timeout', '$parse' , '$rootScope', function($timeout, $parse, $rootScope) {
   return {
-    link: ['scope', 'element', 'attrs', function(scope, element, attrs) {
+    link: function(scope, element, attrs) {
       var model = $parse(attrs.setFocus);
       scope.$watch(model, function(value) {
         if(value === true) { 
@@ -264,7 +264,7 @@ websiteApp.directive('setFocus', ['$timeout', '$parse' , '$rootScope', function(
           });
         }
       });
-    }]
+    }
   };
 }]);
 
