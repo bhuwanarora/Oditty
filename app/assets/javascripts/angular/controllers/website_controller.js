@@ -316,7 +316,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	_initiate_loading_page = function(){
 		$scope.loading = true;
 		$scope.drop_icon = false;
-		$scope.show_login_form = true;
+		$scope.show_login_form = false;
 
 		$timeout(function(){
 			$scope.loading = false;
@@ -412,7 +412,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		// });
 		// $speechRecognition.setLang('en-UK'); // Default value is en-US
 		// $speechRecognition.listen();
-		// $scope.authenticate();
+		$scope.authenticate();
 		
 		console.timeEnd("websiteAppController");
 	}
