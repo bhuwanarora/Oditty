@@ -41,4 +41,12 @@ angular.module('filtersApp', [])
     return function(input){
       return input.slice().reverse();
     }
+  }).
+  filter('display_tweet', function(){
+    return function(input){
+      if(input.length > 40){
+        input = input.slice(0, 40)+"..."
+      }
+      return input; 
+    }
   });

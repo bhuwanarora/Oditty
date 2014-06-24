@@ -20,6 +20,7 @@
 			<textarea itemprop= "commentText"
 			   itemtype= "http://schema.org/UserComments"
 			   type="text"
+			   ng-paste="update_hashtagged_comment()"
 			   ng-model="focused_book.current_comment"
 			   ng-keydown="handle_backspace($event)"
 			   placeholder="What do you feel about {{focused_book.title}} by {{focused_book.author_name}}..."
@@ -28,10 +29,14 @@
 			   rows="1">
 			</textarea>
 		</div>
+		<div>{{focused_book.hash_tagged_comment}}</div>
 		<div class="character_count">{{140 - focused_book.current_comment.length}} characters left</div>
 	</div>
-	<div class="tweets">
-		<div class="tweet" ng-repeat="tweet in focused_book.tweets | reverse" ng-bind-html="tweet">
+	<div class="tweets"
+	 	 ng-click="stop_propagation($event)">
+		<div class="tweet" ng-repeat="tweet in focused_book.tweets | reverse">
+			<div class="thumb"><user-thumb></user-thumb></div>
+			<div class="tweet_text" ng-bind-html="tweet.tweet"></div>
 		</div>
 	</div>
-</div>
+</div>	

@@ -5,6 +5,13 @@ websiteApp.directive('siteLogo', [function(){
 	}
 }]);
 
+websiteApp.directive('userThumb', [function(){
+	return{
+		restrict: 'E',
+		templateUrl: '/assets/angular/widgets/partials/user_thumb.html'
+	}
+}]);
+
 websiteApp.directive('infoCard', ['$rootScope', '$timeout', function($rootScope, $timeout){
 	return{
 		restrict: 'E',

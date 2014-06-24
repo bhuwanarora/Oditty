@@ -360,7 +360,13 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
           var tweets = $rootScope.focused_book.tweets;
           var timeout_event = $timeout(function(){
             if(index < tweets.length){
-              $rootScope.focused_book.display_tweet = $rootScope.focused_book.tweets[index];
+              $rootScope.focused_book.display_tweet = $rootScope.focused_book.tweets[index]["tweet"];
+              if($rootScope.focused_book.tweets[index]["tweet"]){
+                $rootScope.focused_book.display_profile = $rootScope.focused_book.tweets[index]["thumb"];
+              }
+              else{
+                $rootScope.focused_book.display_profile = "/assets/profile_pic.jpeg"; 
+              }
               index++;
               _display_tweet(index);
             }
@@ -373,6 +379,7 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
           });
         }
         else{
+          $rootScope.focused_book.display_profile = null;
           $rootScope.focused_book.display_tweet = "What do you feel about this book?";
         }
       }
@@ -395,6 +402,10 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
   return{
     restrict: 'E',
     controller: ['$scope', function($scope){
+      $scope.update_hashtagged_comment = function(){
+
+      }
+
       $scope.stop_propagation = function(event){
         event.stopPropagation();
       }
@@ -425,8 +436,8 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
         var current_html = html_array.pop();
         var is_backspace = event.keyCode == 8;
         var hash_tagging = $scope.hash_tagging;
-        $rootScope.focused_book.hash_tagged_comment = old_html+" <b>"+selected_item+"</b>";
-        $rootScope.focused_book.current_comment = old_string+" "+selected_item;
+        $rootScope.focused_book.hash_tagged_comment = old_html+"<b>"+selected_item+"</b>";
+        $rootScope.focused_book.current_comment = old_string+selected_item;
         $scope.hash_tags = null;
         event.stopPropagation();
         //TODO: SET FOCUS ON CLICK
@@ -458,46 +469,40 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
             $scope.hash_tagging = false;
             $scope.hash_tags = [];
             $rootScope.focused_book.hash_tagged_comment = old_html;
-            // $(event.currentTarget).siblings().html(old_html);
           }
           else{
-            if(hash_tagging){
+            var hash_tagging_breaking_in_betwen = old_html.split("<b>").length != old_html.split("</b>").length
+            var inside_a_hashtag = current_html[current_html.length - 1] == ">";
+            if(hash_tagging_breaking_in_betwen){
+              html_array = old_html.split("<b>");
+              len = html_array.length;
+              old_html = html_array.slice(0, len-1).join("<b>");
+              old_string = old_html.replace(/<b>/, "").replace(/<\/b>/, "");
+            }
+            if(hash_tagging || inside_a_hashtag){
               $rootScope.focused_book.hash_tagged_comment = old_html;
               $rootScope.focused_book.current_comment = old_string;
-              // $(event.currentTarget).siblings().html(old_html);
-              // $(event.currentTarget).val(old_string);
               $scope.is_new_word_initiation = true;
               $scope.hash_tagging = false;
               $scope.hash_tags = [];
               event.preventDefault();
             }
             else{
-              var inside_a_hashtag = current_html[current_html.length - 1] == ">";
-              if(inside_a_hashtag){
-                $rootScope.focused_book.hash_tagged_comment = old_html;
-                $rootScope.focused_book.current_comment = old_string;
-                $scope.is_new_word_initiation = true;
-                // $(event.currentTarget).siblings().html(old_html);
-                // $(event.currentTarget).val(old_string);
-                $scope.hash_tags = [];
-                event.preventDefault();
-              }
-              else{
-                var html = $rootScope.focused_book.hash_tagged_comment;
-                $rootScope.focused_book.hash_tagged_comment = html.substring(0, html.length-1);
-                // $(event.currentTarget).siblings().html(html.substring(0, html.length-1));
-              }
+              var html = $rootScope.focused_book.hash_tagged_comment;
+              $rootScope.focused_book.hash_tagged_comment = html.substring(0, html.length-1);
             }
           }
           if(!$rootScope.focused_book.current_comment || $rootScope.focused_book.current_comment == ""){
             $rootScope.focused_book.hash_tagged_comment = "";
-            // $(event.currentTarget).siblings().html("");
           }
         }
         event.stopPropagation();
       }
 
       $scope.handle_hash_tags = function(event){
+        if($rootScope.focused_book.current_comment.trim() == ""){
+          $scope.is_new_word_initiation = true;
+        }
         var string_array = $rootScope.focused_book.current_comment.split(" ");
         var chr = String.fromCharCode(event.keyCode);
         var len = string_array.length;
@@ -513,9 +518,16 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
                         "current_comment": $rootScope.focused_book.current_comment,
                         "under_a_tag": under_a_tag}]);
         if(event.keyCode == 13){
-          var tweet = $rootScope.focused_book.hash_tagged_comment
+          var tweet_text = $rootScope.focused_book.hash_tagged_comment
                                 .replace(/<b>/, "<a>")
                                 .replace(/<\/b>/, "<\/a>");
+          if($rootScope.user.thumb){
+            var thumb = $rootScope.user.thumb;
+            var tweet = {"tweet": tweet_text, "thumb": thumb};
+          }
+          else{
+            var tweet = {"tweet": tweet_text}; 
+          }
           $rootScope.focused_book.current_comment = "";
           $rootScope.focused_book.hash_tagged_comment = "";
           $rootScope.focused_book.tweets.push(tweet);
@@ -526,49 +538,40 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
             var html = "<b>"+chr+"</b>";
             $scope.hash_tagging = true;
             $rootScope.focused_book.hash_tagged_comment = $rootScope.focused_book.hash_tagged_comment+html;
-            // $(event.currentTarget).siblings().append(html);
           }
           else if(is_new_word_initiation && chr == "+"){
             var html = "<b>"+chr+"</b>";
             $scope.hash_tagging = true;
             $rootScope.focused_book.hash_tagged_comment = $rootScope.focused_book.hash_tagged_comment+html;
-            // $(event.currentTarget).siblings().append(html);
             $scope.search_for = "TAGS";
           }
           else if(is_new_word_initiation && chr == "@"){
             var html = "<b>"+chr+"</b>";
             $scope.hash_tagging = true;
             $rootScope.focused_book.hash_tagged_comment = $rootScope.focused_book.hash_tagged_comment+html;
-            // $(event.currentTarget).siblings().append(html);
             $scope.search_for = "[AUTHORS, READERS]";
           }
           else{
             if(chr == " "){
               $scope.hash_tagging = false;
               $rootScope.focused_book.hash_tagged_comment = $rootScope.focused_book.hash_tagged_comment+chr;
-              // $(event.currentTarget).siblings().append(chr);
               $scope.search_for = null;
             }
             else{
               if($scope.hash_tagging){
                 var hash_tagged = $rootScope.focused_book.hash_tagged_comment.split("</b>");
                 var length = hash_tagged.length;
-                var last = hash_tagged[length - 2]+chr+"</b>"+hash_tagged[length - 1];
-                // var more_than_one_bold = length > 2;
-                $rootScope.focused_book.hash_tagged_comment = hash_tagged.slice(0, length - 2).join("</b>")+"</b>"+last;
-                // if(more_than_one_bold){
-                // }
-                // else{
-                  // $rootScope.focused_book.hash_tagged_comment = last;
-                // }
-                console.log("%c "+$rootScope.focused_book.hash_tagged_comment, "color: orange;");
-                // $rootScope.focused_book.hash_tagged_comment = $rootScope.focused_book.hash_tagged_comment+html;
-                // $rootScope.focused_book.hash_tagged_comment = $rootScope.focused_book.hash_tagged_comment+html;
-                // $(event.currentTarget).siblings().find('b:last').append(chr);
+                if(length > 2){
+                  var last = hash_tagged[length - 2]+chr+"</b>"+hash_tagged[length - 1];
+                  $rootScope.focused_book.hash_tagged_comment = hash_tagged.slice(0, length - 2).join("</b>")+"</b>"+last;
+                }
+                else{
+                  var last = hash_tagged[length - 2]+chr+"</b>"+hash_tagged[length - 1];
+                  $rootScope.focused_book.hash_tagged_comment = last;
+                }
               }
               else{
                 $rootScope.focused_book.hash_tagged_comment = $rootScope.focused_book.hash_tagged_comment+chr;
-                // $(event.currentTarget).siblings().append(chr);
               }
             }
           }
@@ -579,7 +582,7 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
                   $scope.hash_tags = [];
                   var data = result.results.data;
                   for(var i=0; i < data.length; i++){
-                    var json = {"name": data[i]};
+                    var json = {"name": data[i][0]};
                     $scope.hash_tags.push(json);
                   }
               });

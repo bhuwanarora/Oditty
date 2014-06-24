@@ -1608,7 +1608,7 @@ and (min-width : 1824px) {
 	width: 520px;
 	margin-left: -250px;
 	overflow-y: scroll;
-	height: 55vh;
+	max-height: 55vh;
 }
 
 .tweets .tweet{
@@ -1616,4 +1616,28 @@ and (min-width : 1824px) {
 	padding: 10px;
 	margin-top: 5px;
 	border-radius: 2px;
+	overflow: auto;
+}
+
+.tweets a{
+	color: #136CB2;
+	cursor: pointer;
+}
+
+.tweets .tweet .thumb{
+	display: inline-block;
+	float: left;
+}
+
+.tweets .tweet .thumb img{
+	width: 30px;
+	border-radius: 2px;
+}
+
+.tweets .tweet .tweet_text{
+	display: inline-block;
+	float: left;
+	padding: 0px 10px 0px 10px;
+	width: 440px;
+	word-wrap: break-word;
 }

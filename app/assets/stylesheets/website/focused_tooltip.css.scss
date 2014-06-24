@@ -182,7 +182,7 @@
 }
 
 .focused_tooltip .user_box{
-	bottom: 80px;
+	bottom: 100px;
 	position: absolute;
 }
 
@@ -311,12 +311,18 @@
 	border-right: 10px solid white; 
 }
 
+.focused_tooltip .tweet_link img{
+	width: 30px;
+	border-radius: 2px;
+}
+
 .focused_tooltip .tweet_link{
 	bottom: 50px;
 	position: absolute;
-	width: 100%;
-	font-size: 0.8em;
+	width: 90%;
+	font-size: .8em;
 	padding: 10px;
+	word-wrap: break-word;
 }
 
 .focused_tooltip .tweet_link span{
