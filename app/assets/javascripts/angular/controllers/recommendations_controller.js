@@ -62,7 +62,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	$scope.hide_popups = function(){
 		$rootScope.hide_options = true;
 		$rootScope.focused_book = null;
-		$scope.show_more_filters = false;
+ 		// $scope.show_more_filters = false;
 	}
 
 	_load_icon = function(){

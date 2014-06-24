@@ -593,16 +593,24 @@
 
 .more_filters{
 	width: 253px;
-	height: 58vh;
+	/*height: 58vh;*/
 	/*left: 10px;*/
 	/*position: fixed;*/
 	/*top: 90px;*/
 	z-index: 2;
-	padding: 10px 0 0;
+	/*padding: 10px 0 0;*/
 	background-color: #fff;
 	border: 1px solid #E2E2E2;
 	/*box-shadow: 8px 0px 43px 0 rgba(66,66,66,.47);*/
 	border-radius: 3px;
+	margin-top: 5px;
+}
+
+.more_filters .filter_header{
+	padding: 10px;
+	background-color: #F3F3F3;
+	cursor: pointer;
+	border-bottom: 1px solid;
 }
 
 .filters_panel,
@@ -631,6 +639,7 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    padding: 5px;
 }
 
 .filters_panel .header,
@@ -659,7 +668,7 @@
 	font-size: 0.8em;
 	cursor: pointer;
 	text-align: left;
-	min-width: 170px;
+	min-width: 220px;
 	border-radius: 3px;
 }
 
@@ -800,12 +809,8 @@
 
 .main_filters{
 	text-align: center;
-	background-color: #F0F0F0;
+	background-color: #DFDFDF;
 	height: 20px;
-	position: absolute;
-	left: 0px;
-	bottom: 0px;
-	right: 0px;
 	border-radius: 3px;
 }
 
@@ -1251,7 +1256,7 @@ and (min-width : 1824px) {
 .wrap-dd-select{
     position: relative;
 	/*width: 270px;*/
-	width: 67%;
+	width: 100%;
 	padding: 12px;
 	background: white;
 	/*border: 1px solid rgba(0, 0, 0, 0.15);*/
@@ -1293,7 +1298,7 @@ and (min-width : 1824px) {
 	margin-top: 0px;
 	margin-bottom: 0px;
 	z-index: 1;
-	max-height: 50vh;
+	max-height: 35vh;
 	overflow-y: scroll;
 }
 
