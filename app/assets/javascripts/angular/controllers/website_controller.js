@@ -414,7 +414,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		// });
 		// $speechRecognition.setLang('en-UK'); // Default value is en-US
 		// $speechRecognition.listen();
-		$scope.authenticate();
+		// $scope.authenticate();
 		
 		console.timeEnd("websiteAppController");
 	}

@@ -31,6 +31,12 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def affiliate_links
+				
+				info = {:amazon => {:link => "", :price => ""}, :bnn => {}}
+				render :json => info, :status => 200
+			end
+
 		end
 	end
 end

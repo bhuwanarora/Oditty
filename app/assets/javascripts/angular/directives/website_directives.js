@@ -5,6 +5,13 @@ websiteApp.directive('siteLogo', [function(){
 	}
 }]);
 
+websiteApp.directive('userThumb', [function(){
+	return{
+		restrict: 'E',
+		templateUrl: '/assets/angular/widgets/partials/user_thumb.html'
+	}
+}]);
+
 websiteApp.directive('infoCard', ['$rootScope', '$timeout', function($rootScope, $timeout){
 	return{
 		restrict: 'E',
@@ -89,6 +96,8 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', function($rootScope,
 				]
 				$scope.gender = "Male";
 				$scope.profileSelected = {"name": "Reader"};
+				$scope.info_card_width = 350; //in px
+				$scope.info_card_ratio = 1.34;
 			}
 
 

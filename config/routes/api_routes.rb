@@ -8,6 +8,7 @@ ReadersDoor::Application.routes.draw do
       match "book"                                   => 'books_api#get_book_details',                   :via => [:put, :get, :post]
       match "tooltip"                                => 'books_api#tooltip',                            :via => [:put, :get, :post]
       match "moments"                                => 'books_api#moments',                            :via => [:put, :get, :post]
+      match "affiliate_links"                        => 'books_api#affiliate_links',                    :via => [:put, :get, :post]
 
       match "get_similar_authors"                    => 'authors_api#get_similar_authors',              :via => [:put, :get, :post]
       match "get_author_details"                     => 'authors_api#get_author_details',               :via => [:put, :get, :post]

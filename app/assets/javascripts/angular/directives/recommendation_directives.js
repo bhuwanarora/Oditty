@@ -27,11 +27,11 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 					$scope.advance_filter_changed(selected, type)
 				});
 				recommendationService.get_countries().then(function(data){
-			    	$scope.countryOptions = [{"name": "Reset"}];
+			    	$scope.countryOptions = _reset_json();
 			    	$scope.countryOptions = $scope.countryOptions.concat(data["countries"]);
 			    });
 			    recommendationService.get_time_groups().then(function(data){
-			    	$scope.timeOptions = [{"name": "Reset"}];
+			    	$scope.timeOptions = _reset_json();
 			    	for(var i=0; i < data["times"].length; i++){
 			    		var time_data = data.times[i][0]["data"];
 			    		var name = time_data["name"]+" ("+time_data["range"]+")";
@@ -41,7 +41,7 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 			    	// $scope.timeOptions = $scope.timeOptions.concat(data["times"]);
 			    });
 			    recommendationService.get_read_times().then(function(data){
-			    	$scope.readTimeOptions = [{"name": "Reset"}];
+			    	$scope.readTimeOptions = _reset_json();
 			    	for(var i=0; i < data["read_times"].length; i++){
 			    		var time_data = data.read_times[i][0]["data"];
 			    		var name = time_data["name"];
@@ -53,6 +53,10 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 			    _collapse_dropdown_menu();
 			}
 
+			_reset_json = function(){
+				return [{"name": "<span class='icon-loop'></span><span>&nbsp;Reset</span>"}];
+			}
+
 			_collapse_dropdown_menu = function(){
 				$scope.filter_expanded = true;
 				var timeout_event = $timeout(function(){
@@ -61,9 +65,9 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 			}
 
 			_init_dropdown_filters = function(){
-				$scope.countrySelected = {"name": "Filter by Region"};
-				$scope.timeSelected = {"name": "Filter by Era"};
-				$scope.readTimeSelected = {"name": "Filter by Reading Time"};
+				$scope.countrySelected = {"name": "<span class='icon-earth'></span><span>&nbsp;Filter by Region</span>"};
+				$scope.timeSelected = {"name": "<span class='icon-calendar'></span><span>&nbsp;Filter by Era</span>"};
+				$scope.readTimeSelected = {"name": "<span class='icon-clock'></span><span>&nbsp;Filter by Reading Time</span>"};
 			}
 
 			$scope.clear_filter = function(main_filter, type){
@@ -77,17 +81,17 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 			}
 
 			$scope.advance_filter_changed = function(selected, type){
-				if(selected.name == "Reset"){
+				if(selected.name == "<span class='icon-loop'></span><span>&nbsp;Reset</span>"){
 					var message = "SUCCESS-"+type+" filter has been reset."
 					delete $rootScope.filters.other_filters[type];
 					if(type == "country"){
-						$scope.countrySelected = {"name": "Filter by Region"};
+						$scope.countrySelected = {"name": "<span class='icon-earth'></span><span>&nbsp;Filter by Region</span>"};
 					}
 					else if(type == "timeGroup"){
-						$scope.timeSelected = {"name": "Filter by Era"};
+						$scope.timeSelected = {"name": "<span class='icon-calendar'></span><span>&nbsp;Filter by Era</span>"};
 					}
 					else if(type == "readingTime"){
-						$scope.readTimeSelected = {"name": "Filter by Reading Time"};
+						$scope.readTimeSelected = {"name": "<span class='icon-clock'></span><span>&nbsp;Filter by Reading Time</span>"};
 					}
 				}
 				else{
