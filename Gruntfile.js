@@ -20,7 +20,9 @@ module.exports = function(grunt) {
             'app/assets/stylesheets/min/icomoon.min.css',
             'app/assets/stylesheets/min/search_page.min.css',
             'app/assets/stylesheets/min/recommendation.min.css',
-            'app/assets/stylesheets/min/focused_tooltip.min.css'
+            'app/assets/stylesheets/min/focused_tooltip.min.css',
+            'app/assets/stylesheets/min/info_card.min.css',
+            'app/assets/stylesheets/min/card.min.css'
           ]
         }
       }
@@ -139,6 +141,11 @@ module.exports = function(grunt) {
             'app/assets/javascripts/min/lib/hash.js',
             'app/assets/javascripts/min/lib/text_angular.min.js'],
 
+          'app/assets/javascripts/min/angular/apps.js': [
+            'app/assets/javascripts/min/angular/apps/website_app.js',
+            'app/assets/javascripts/min/angular/apps/filters_app.js'],
+
+
           'app/assets/javascripts/min/angular/vendors.js': [
             'app/assets/javascripts/angular/vendors/angular_animate.min.js',
             'app/assets/javascripts/angular/vendors/angular-adaptive-motion.min.js',
@@ -154,10 +161,10 @@ module.exports = function(grunt) {
             'app/assets/javascripts/angular/vendors/sticky.js'],
 
           'app/assets/javascripts/min/angular/main.js': [
-            // 'app/assets/javascripts/angular/vendors/angular.min.js',
-            // 'app/assets/javascripts/min/angular/vendors.js',
-            'app/assets/javascripts/min/angular/apps/website_app.js',
+            'app/assets/javascripts/angular/vendors/angular.min.js',
+            'app/assets/javascripts/min/angular/vendors.js',
             'app/assets/javascripts/min/angular/libs.js',
+            'app/assets/javascripts/min/angular/apps.js',
             'app/assets/javascripts/min/angular/directives.js',
             'app/assets/javascripts/min/angular/controllers.js',
             'app/assets/javascripts/min/angular/services.js',

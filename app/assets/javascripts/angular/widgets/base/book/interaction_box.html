@@ -1,32 +1,42 @@
-<div class="wrapper" ng-if="focused_book.interact" style="z-index: 7;">
-	<div class="interaction_box animate-fast"
-		 ng-if="focused_book.interact"
-		 ng-click="stop_propagation($event)">
-	 	<div class="close button_effect"
-	 		 ng-click="close_interaction_box()">x</div>
-	 	
-		<div>
-			<span class="highlighter"></span>
-			<textarea itemprop= "commentText" 
-				itemtype= "http://schema.org/UserComments"
-			   type="text" 
-			   ng-keydown="handle_backspace($event)"
-			   placeholder="What do you feel about {{focused_book.title}} by {{focused_book.author_name}}..." 
-			   class="comment_box animate-fast" 
-			   ng-keypress="handle_hash_tags($event)"
-			   ng-bind-html="hash_tagged"
-			   rows="1"/>
-		</div>
-	</div>
-	<div class="interaction_box_options"
-		ng-if="interact">
+<div class="wrapper" 
+	 ng-click="close_interaction_box()"
+	 msd-wheel="stop_horizontal_scroll($event)"
+	 ng-if="focused_book.interact" 
+	 style="z-index: 7;">
+	<div class="interaction_box_options">
 		<div ng-repeat="item in hash_tags track by $index" 
-	    		 ng-click="handle_selection(item.name)" 
-	    		 ng-class="{active:is_current($index)}" 
-	    		 ng-mouseenter="set_current($index)"
-	    		 class="option">
+    		 ng-click="handle_selection(item.name)" 
+    		 ng-class="{active:is_current($index)}" 
+    		 ng-mouseenter="set_current($index)"
+    		 class="option">
 	  		<div class="title">{{item.name}}</div>
 	      	<div ng-show="item.author_name">by {{item.author_name}}</div>
 		</div>
 	</div>
-</div>
+	<div class="interaction_box animate-fast"
+		 ng-click="stop_propagation($event)">
+		<div>
+			<span class="highlighter" ng-bind-html="focused_book.hash_tagged_comment"></span>
+			<textarea itemprop= "commentText"
+			   itemtype= "http://schema.org/UserComments"
+			   type="text"
+			   ng-paste="update_hashtagged_comment()"
+			   ng-model="focused_book.current_comment"
+			   ng-keydown="handle_backspace($event)"
+			   placeholder="What do you feel about {{focused_book.title}} by {{focused_book.author_name}}..."
+			   class="comment_box animate-fast"
+			   ng-keypress="handle_hash_tags($event)"
+			   rows="1">
+			</textarea>
+		</div>
+		<div>{{focused_book.hash_tagged_comment}}</div>
+		<div class="character_count">{{140 - focused_book.current_comment.length}} characters left</div>
+	</div>
+	<div class="tweets"
+	 	 ng-click="stop_propagation($event)">
+		<div class="tweet" ng-repeat="tweet in focused_book.tweets | reverse">
+			<div class="thumb"><user-thumb></user-thumb></div>
+			<div class="tweet_text" ng-bind-html="tweet.tweet"></div>
+		</div>
+	</div>
+</div>	

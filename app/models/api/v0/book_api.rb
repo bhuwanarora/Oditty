@@ -112,7 +112,9 @@ module Api
 				init_match_clause = "MATCH (book:Book) "
 				distinct_clause = "ALL (id in "+book_ids.to_s+" WHERE toInt(id) <> ID(book)) "
 				random_clause = "ID(book)%"+random.to_s+"=0 AND rand() > 0.3 "
-				return_clause = "WITH book, toInt(book.gr_ratings_count) * toInt(book.gr_reviews_count) * toInt(book.gr_rating) AS total_weight, toInt(book.gr_ratings_count) * toInt(book.gr_rating) AS rating_weight RETURN book, total_weight, rating_weight ORDER BY rating_weight DESC, total_weight DESC, book.gr_rating DESC "
+				with_clause = "WITH book, toInt(book.gr_ratings_count) * toInt(book.gr_reviews_count) * toInt(book.gr_rating) AS total_weight, toInt(book.gr_ratings_count) * toInt(book.gr_rating) AS rating_weight "
+				return_clause = "RETURN book"
+				order_clause = ", total_weight, rating_weight ORDER BY rating_weight DESC, total_weight DESC, book.gr_rating DESC "
 				limit_clause = "LIMIT 10 "
 
 
@@ -123,7 +125,7 @@ module Api
 					author_name = filters["other_filters"]["author_name"]
 					if book_name.present?
 						puts "book_name "+book_name+" author_name "+author_name+" ".green
-						where_clause = where_clause + " book.title=\""+book_name+"\" AND book.author_name=\""+author_name+"\" "
+						where_clause = where_clause + " book.title=~\"(?i)"+book_name+"\" AND book.author_name=~\"(?i)"+author_name+"\" "
 					else
 						if filters["other_filters"]["country"].present?
 							where_clause = where_clause + ""
@@ -178,19 +180,18 @@ module Api
 					end
 					if where_clause.present? && match_clause.present?
 						clause = init_match_clause+match_clause+"WHERE "+
-							where_clause+return_clause+skip_clause+limit_clause
+							where_clause+with_clause+return_clause+order_clause+skip_clause+limit_clause
 					elsif match_clause.present?
-						clause = init_match_clause+match_clause+return_clause+skip_clause+limit_clause
+						clause = init_match_clause+match_clause+with_clause+return_clause+order_clause+skip_clause+limit_clause
 					elsif where_clause.present?
-						clause = init_match_clause+"WHERE "+
-							where_clause+return_clause+skip_clause+limit_clause
+						clause = init_match_clause+"WHERE "+where_clause+return_clause
 					else
 						category = "Must Reads"
-						clause = init_match_clause+"WHERE "+random_clause+return_clause+skip_clause+limit_clause
+						clause = init_match_clause+"WHERE "+random_clause+with_clause+return_clause+order_clause+skip_clause+limit_clause
 					end
 				else
 					category = "Must Reads"
-					clause = init_match_clause+"WHERE "+random_clause+return_clause+skip_clause+limit_clause
+					clause = init_match_clause+"WHERE "+random_clause+with_clause+return_clause+order_clause+skip_clause+limit_clause
 				end
 
 

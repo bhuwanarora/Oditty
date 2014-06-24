@@ -41,5 +41,11 @@ namespace :graph do
     include Neo4jHelper
     Neo4jHelper.create_labels
   end
+
+  desc "Add Graph Indexes"
+  task :create_indexes => :environment do
+    include Neo4jHelper
+    Neo4jHelper.create_indexes
+  end
   
 end

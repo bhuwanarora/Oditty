@@ -80,7 +80,7 @@
             scope.widthCropZone = Math.round(scope.destinationWidth * zoom);
             scope.heightCropZone = Math.round((scope.destinationHeight || minHeight) * zoom);
             scope.xCropZone = Math.round((scope.img_width - scope.widthCropZone) / 2);
-            scope.yCropZone = Math.round((scope.height - scope.heightCropZone) / 2);
+            scope.yCropZone = Math.round((heightWithImage - scope.heightCropZone) / 2);
             return $timeout(function() {
               return elOffset = offset(imageAreaEl);
             });

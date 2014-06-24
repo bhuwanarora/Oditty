@@ -194,13 +194,17 @@
 
 .fb{
 	cursor: pointer;
-	background-image: url("/assets/fb_active.png");
-	height: 32px;
-	background-size: 180px 32px;
 	text-align: center;
-	background-repeat: no-repeat;
-	padding: 2px;
-	width: 176px;
+	padding: 12px;
+	width: 155px;
+	background-color: #43609b;
+	background: -webkit-linear-gradient(#5678bc, #314a7b);
+	background: linear-gradient(#5678bc, #314a7b);
+	border: 1px solid #293f69;
+	border-top-color: #314a7b;
+	color: white;
+	border-radius: 2px;
+	margin-bottom: 4px;
 }
 
 .google{
@@ -210,16 +214,17 @@
 
 .login_box{
 	position: fixed;
-	left: 50%;
-	margin-left: -195px;
 	box-shadow: 8px 10px 54px 0px #424242;
 	z-index: 5;
 	padding: 35px;
 	background-color: white;
-	/*border-radius: 2px;*/
-	width: 300px;
-	height: 220px;
-	bottom: 0px;
+	border-radius: 2px;
+	width: 350px;
+	height: 250px;
+	left: 50%;
+	top: 50%;
+	margin-left: -190px;
+	margin-top: -170px;
 	text-align: center;
 	display: flex;
     flex-direction: row;
@@ -271,11 +276,6 @@
 	width: 47%;
 	display: inline-block;
 	float: left;
-}
-
-.login_form .authenticate:hover{
-	background-color: #417FF0;
-	border-bottom: 2px solid #3D78E4;
 }
 
 .login_form .authenticate_left{

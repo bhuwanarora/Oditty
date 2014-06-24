@@ -1,0 +1,239 @@
+.widget{
+	bottom: 0px;
+	display: inline-block;
+	left: 0px;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+}
+
+/*other card properties*/
+.discovered {
+    /*box-shadow: 8px 10px 54px 0px #424242; */
+}
+
+.undiscovered{ 
+    position: relative; 
+    background-color: #FFFFFF; 
+    /*border-width: 1px; */
+    /*border-style: solid; */
+    /*border-color: #DDDDDD; */
+    /*box-shadow: 0px 1px 4px 0px #8E97A1, inset 0px 0px 40px #EEEEEE; */
+} 
+/*
+.undiscovered:before{ 
+    content: ""; 
+    z-index: -1; 
+    position: absolute; 
+    width: 95%; 
+    top: 10px; 
+    right: 0px; 
+    bottom: 10px; 
+    left: 0px; 
+    box-shadow: 0px 0px 20px #2A2E31; 
+} */
+
+/* card on recommendation page */
+.card{
+	background-color: white;
+	border-bottom-right-radius: 4px;
+	border-top-right-radius: 4px;
+	float: left;
+	height: 100%;
+	position: relative;
+	width: 80%;
+}
+
+.category_hovered{
+	padding-top: 1px;
+}
+
+.category{
+	background-color: white;
+	border-bottom-left-radius: 4px;
+	border-top-left-radius: 4px;
+	box-shadow: -3px 0 5px -2px #888;
+	color: white;
+	float: left;
+	font-size: 0.7em;
+	height: 100%;
+	overflow: hidden;
+	text-align: center;
+	width: 8%;
+	/*text-shadow: 0 2px 3px rgba(0,0,0,0.5);*/
+}
+
+.category_character{
+	background-color: #7198B9;
+	padding-top: 5px;
+}
+
+.book_rating{
+	color: #717070;
+	padding: 15px 0px;
+}
+
+.bottom_widget{
+	height: 10%;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	position: absolute;
+}
+
+.tag_bookmark{
+	height: 100%;
+
+}
+
+.tag_bookmark:hover{
+	background-color: #F1F1F1;
+	border-bottom: 1px solid !important;
+	color: white;
+}
+
+/*mark as read*/
+.input_bookmark{
+	width: 64%;
+	left: 0px;
+	position: absolute;
+	bottom: 0px;
+	padding: 0px;
+	font-size: 1em;
+	top: 0px;
+	margin: 0px;
+	cursor: default;
+	padding-left: 10px;
+}
+
+.left_action_active{
+	background-color: #4374e0 !important;
+	color: white !important;
+}
+
+.left_action{
+	right: 17%;
+}
+
+.action_button{
+	text-align: center;
+	color: #D8D8D8;
+	font-size: 1.5em;
+	width: 17%;
+	padding-top: 5%;
+	position: absolute;
+	bottom: 0px;
+	top: 0px;
+}
+
+.right_action{
+	right: 0px;
+	border-bottom-right-radius: 4px;
+}
+
+.right_action_active{
+	background-color: #3cb878 !important;
+	color: white !important;
+}
+
+.label_dropdown{
+	position: absolute;
+	bottom: 73%;
+	background-color: white;
+	z-index: 2;
+	list-style-type: none;
+	padding: 2px;
+	width: 55%;
+	font-size: 0.8em;
+	border-top-right-radius: 3px;
+	border-left: 1px solid #F0F0F0;
+	max-height: 60vh;
+	overflow-y: scroll;
+	box-shadow: 0 7px 15px rgba(0,0,0,.25);
+}
+
+.label_dropdown li{
+	padding: 8px;
+	border-bottom: 1px solid #F0F0F0;
+}
+
+.label_dropdown li:hover{
+	background-color: #F1F1F1;
+}
+
+.label_dropdown input{
+	float: right;
+}
+
+.card .widget_thumb{
+	background: rgba(113, 112, 112, 0.25);
+	/*-webkit-box-shadow: 1px 2px 1px #d1d1d1;*/
+	/*-moz-box-shadow: 1px 2px 1px #d1d1d1;*/
+	/*box-shadow: 1px 2px 1px #d1d1d1;*/
+	background-size: 100% 100% !important;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 10%;
+	cursor: pointer;
+	z-index: 1;
+	border-top-right-radius: 4px;
+}
+
+.card .widget_thumb_focus{
+	/*left: 8px;
+	top: 8px;
+	right: 8px;
+	bottom: 13%;	*/
+}
+
+.card .description{
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 10%;
+	color: #817C65;
+	background-color: #f9edbe;
+	font-size: 0.9em;
+	text-align: center;
+	white-space: initial;
+	border-top-right-radius: 4px;
+}
+
+.card .description p{
+	margin-top: 50%;
+}
+
+/*.card .header{
+	height: 7%;
+	margin: 0px 5px 5px 5px;
+}
+
+.card .header .background{
+	height: 100%;
+	background-color: rgba(113, 112, 112, 0.07);
+	border-bottom: rgba(0, 0, 0, 0.08) 1px solid;
+}
+
+.card .header .background p{
+	position: absolute;
+	text-align: center;
+	font-size: 0.8em;
+	width: 50%;
+	margin: 2px;
+}
+
+
+.card .thumb{
+	filter: url(filters.svg#grayscale); /* Firefox 3.5+ */
+	/*filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 3.5+ */
+    /*filter: gray; /* IE6-9 */
+    /*-webkit-filter: grayscale(1);  /*Google Chrome, Safari 6+ & Opera 15+ */
+/*}
+
+.card .thumb_hover{
+    filter: none;
+    -webkit-filter: grayscale(0);
+}*/
