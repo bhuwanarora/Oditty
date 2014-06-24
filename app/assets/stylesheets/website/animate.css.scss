@@ -85,12 +85,20 @@
 
 .login_box.ng-enter,
 .login_box.ng-leave.ng-leave-active{
-	bottom: -300px;
+	width: 280px;
+	height: 200px;
+	margin-left: -170px;
+	margin-top: -150px;
+	opacity: 0.5;
 }
 
 .login_box.ng-leave,
 .login_box.ng-enter.ng-enter-active{
-	bottom: 0px;
+	width: 300px;
+	height: 220px;
+	margin-left: -180px;
+	margin-top: -160px;
+	opacity: 1;
 }
 
 .interaction_box.ng-enter,
@@ -101,6 +109,7 @@
 	height: 100px;
 	margin-left: -200px;
 	margin-top: -65px;
+	opacity: 1;
 }
 
 .interaction_box.ng-leave,

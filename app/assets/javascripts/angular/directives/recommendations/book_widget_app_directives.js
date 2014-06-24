@@ -513,7 +513,9 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
                         "current_comment": $rootScope.focused_book.current_comment,
                         "under_a_tag": under_a_tag}]);
         if(event.keyCode == 13){
-          var tweet = {"tweet": $rootScope.focused_book.current_comment};
+          var tweet = $rootScope.focused_book.hash_tagged_comment
+                                .replace(/<b>/, "<a>")
+                                .replace(/<\/b>/, "<\/a>");
           $rootScope.focused_book.current_comment = "";
           $rootScope.focused_book.hash_tagged_comment = "";
           $rootScope.focused_book.tweets.push(tweet);
