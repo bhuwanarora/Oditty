@@ -151,13 +151,14 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		var graphOption = item.graph_option;
 		var customOption = item.custom_option;
 		var type = item.type;
-
 		console.log("%c search "+graphOption+" "+customOption+" "+selectedItem+" "+type+" "+$scope.search_level1+" "+$scope.search_level2, "color: green; font-weight: bold;");
 		if(customOption){
 			if(!$scope.search_level1){
+				$scope.website.searching = true;
 				$scope.search_type = type;
 			}
 			else if($scope.search_level2){
+				$scope.website.searching = true;
 				$rootScope.$broadcast('filterChange', {"name": selectedItem}, type);
 				$rootScope.hide_options = true;
 				$scope.search_tag.input = selectedItem;
@@ -166,6 +167,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$scope.search_tag.input = "";
 		}
 		else{
+			console.log($scope.website.searching + "not custom");
 		    $scope.search_tag.current = 0;
 		    $scope.search_tag.selected_result = true;
 		    if(graphOption){
@@ -199,7 +201,8 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	$scope.is_current = function(index, selectedItem) {
 		if($scope.search_tag.current == index){
 			$scope.search_tag.currentItem = selectedItem;
-		}
+		} 
+		console.log("%c + is_current " + index + ($scope.search_tag.current == index), "color: blue");
 	    return $scope.search_tag.current == index;
 	};
 
@@ -217,9 +220,13 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	$scope.key_up = function(){
 		var keyUp = event.keyCode == 38;
 		var keyDown = event.keyCode == 40;
+		console.log($scope.search_tag.current+ " :before", "color: green;");
 		if(keyUp){
 			if($scope.search_tag.current != 0){
 				$scope.set_current($scope.search_tag.current-1);
+			}
+			else{
+				$scope.set_current($scope.search_results.length-1);
 			}
 		}
 
@@ -227,7 +234,12 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			if($scope.search_tag.current != $scope.search_results.length -1){
 				$scope.set_current($scope.search_tag.current+1);
 			}
+			else{
+				$scope.set_current(0);
+			}
 		}
+		console.log($scope.search_tag.current+ " :after", "color: green;");
+
 	}
 
 	$scope.key_down = function(event){
@@ -589,7 +601,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope.search_tag.current = 0;
 		$scope.search_tag.input = "";
 		$scope.search_tag.result_count = 5;
-		$scope.website.searching = true;
+	    $scope.website.searching = false;
 		$scope.website.show_search_page = true;
 		websiteService.get_background_image().then(function(data){
 			$scope.search_style = {'background-image': 'url("'+data.url+'")'};

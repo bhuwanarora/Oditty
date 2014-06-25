@@ -380,7 +380,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		var input_aimed_for_searching = (event.currentTarget == event.srcElement) && !$rootScope.show_book;
 		if(input_aimed_for_searching){
 			$('body').css('white-space', 'normal');
-			$scope.website.searching = true;
+			$scope.website.searching = false;
 			$rootScope.keyCode = event.keyCode;
 		}
 	}
@@ -400,9 +400,8 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 						'readers': {'follow': []},
 						'logged': false};
 		$scope.website = {};
-		$scope.website.searching = true;
+		$scope.website.searching = false;
 		$scope.website.show_search_page = true;
-
 		_bind_emit();
 		_bind_feedback_form();
 		_bind_auth_listeners();

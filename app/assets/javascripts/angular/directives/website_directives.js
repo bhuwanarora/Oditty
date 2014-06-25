@@ -246,18 +246,18 @@ websiteApp.directive('horizontalScroller', function(){
 
 websiteApp.directive('setFocus', ['$timeout', '$parse' , '$rootScope', function($timeout, $parse, $rootScope) {
   return {
-    link: ['scope', 'element', 'attrs', function(scope, element, attrs) {
+    link: function(scope, element, attrs) {
       var model = $parse(attrs.setFocus);
       scope.$watch(model, function(value) {
-        if(value === true) { 
-          $timeout(function() {
-            element[0].value = String.fromCharCode($rootScope.keyCode);
+        if(value === true){ 
+          $timeout(function(){
+          	// element[0].value = String.fromCharCode($rootScope.keyCode);
             element[0].focus(); 
             // $speechSynthetis.speak("You are at Reader's Door. How can I help you?", 'en-UK');
           });
         }
       });
-    }]
+    }
   };
 }]);
 
