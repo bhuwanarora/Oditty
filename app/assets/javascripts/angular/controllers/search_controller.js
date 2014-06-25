@@ -151,14 +151,15 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		var graphOption = item.graph_option;
 		var customOption = item.custom_option;
 		var type = item.type;
+
 		console.log("%c search "+graphOption+" "+customOption+" "+selectedItem+" "+type+" "+$scope.search_level1+" "+$scope.search_level2, "color: green; font-weight: bold;");
 		if(customOption){
 			if(!$scope.search_level1){
-				$scope.website.searching = true;
+				_handle_input_focus();
 				$scope.search_type = type;
 			}
 			else if($scope.search_level2){
-				$scope.website.searching = true;
+				_handle_input_focus();
 				$rootScope.$broadcast('filterChange', {"name": selectedItem}, type);
 				$rootScope.hide_options = true;
 				$scope.search_tag.input = selectedItem;
@@ -167,7 +168,6 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$scope.search_tag.input = "";
 		}
 		else{
-			console.log($scope.website.searching + "not custom");
 		    $scope.search_tag.current = 0;
 		    $scope.search_tag.selected_result = true;
 		    if(graphOption){
@@ -202,7 +202,6 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		if($scope.search_tag.current == index){
 			$scope.search_tag.currentItem = selectedItem;
 		} 
-		console.log("%c + is_current " + index + ($scope.search_tag.current == index), "color: blue");
 	    return $scope.search_tag.current == index;
 	};
 
@@ -220,7 +219,6 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	$scope.key_up = function(){
 		var keyUp = event.keyCode == 38;
 		var keyDown = event.keyCode == 40;
-		console.log($scope.search_tag.current+ " :before", "color: green;");
 		if(keyUp){
 			if($scope.search_tag.current != 0){
 				$scope.set_current($scope.search_tag.current-1);
@@ -238,7 +236,6 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				$scope.set_current(0);
 			}
 		}
-		console.log($scope.search_tag.current+ " :after", "color: green;");
 
 	}
 
@@ -272,8 +269,21 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope.book_search = false;
 		$scope.author_search = false;
 		$scope.reader_search = false;
+
+		_handle_input_focus();
 		_init_graph_search();
 		event.stopPropagation();
+	}
+
+	_handle_input_focus = function(){
+		$scope.website.searching = true;
+		var timeout_event = $timeout(function(){
+			$scope.website.searching = false;
+		}, 200);
+
+		$scope.$on('destroy', function(){
+			$timeout.cancel(timeout_event);
+		});
 	}
 
 	$scope.close_login_box = function(){
@@ -292,6 +302,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope.gender_search = false;
 		$scope.awards_search = false;
 		_search_by();
+		_handle_input_focus();
 		event.stopPropagation();
 	}
 
