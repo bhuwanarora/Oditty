@@ -12,6 +12,12 @@ namespace :graph do
     Neo4jHelper.init_goodreads_books
   end  
 
+  desc "goodreads book nodes"
+  task :goodreads_books_rev => :environment do
+    include Neo4jHelper
+    Neo4jHelper.init_goodreads_books_reverse
+  end
+
   desc "Time Group nodes"
   task :era => :environment do
     include Neo4jHelper
@@ -40,6 +46,12 @@ namespace :graph do
   task :add_labels => :environment do
     include Neo4jHelper
     Neo4jHelper.create_labels
+  end
+
+  desc "Add Graph Indexes"
+  task :create_indexes => :environment do
+    include Neo4jHelper
+    Neo4jHelper.create_indexes
   end
   
 end

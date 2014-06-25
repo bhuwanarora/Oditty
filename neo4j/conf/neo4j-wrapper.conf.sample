@@ -27,12 +27,12 @@ wrapper.java.additional=-XX:+CMSClassUnloadingEnabled
 #wrapper.java.additional=-Djava.rmi.server.hostname=$THE_NEO4J_SERVER_HOSTNAME
 
 # Uncomment the following lines to enable garbage collection logging
-#wrapper.java.additional=-Xloggc:data/log/neo4j-gc.log
-#wrapper.java.additional=-XX:+PrintGCDetails
-#wrapper.java.additional=-XX:+PrintGCDateStamps
-#wrapper.java.additional=-XX:+PrintGCApplicationStoppedTime
-#wrapper.java.additional=-XX:+PrintPromotionFailure
-#wrapper.java.additional=-XX:+PrintTenuringDistribution
+wrapper.java.additional=-Xloggc:data/log/neo4j-gc.log
+wrapper.java.additional=-XX:+PrintGCDetails
+wrapper.java.additional=-XX:+PrintGCDateStamps
+wrapper.java.additional=-XX:+PrintGCApplicationStoppedTime
+wrapper.java.additional=-XX:+PrintPromotionFailure
+wrapper.java.additional=-XX:+PrintTenuringDistribution
 
 # Uncomment the following lines to enable JVM startup diagnostics
 #wrapper.java.additional=-XX:+PrintFlagsFinal
@@ -42,7 +42,7 @@ wrapper.java.additional=-XX:+CMSClassUnloadingEnabled
 # calculated based on available system resources.
 # Uncomment these lines to set specific initial and maximum
 # heap size in MB.
-#wrapper.java.initmemory=512
+wrapper.java.initmemory=512
 wrapper.java.maxmemory=1024
 
 #********************************************************************

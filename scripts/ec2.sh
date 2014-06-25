@@ -14,7 +14,7 @@ echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
 exec $SHELL
 
 rbenv install 2.1.2
-rbenv global 2.1.2
+rbenv global 2.1.2	
 ruby -v
 echo "gem: --no-ri --no-rdoc" > ~/.gemrc
 git config --global color.ui true
@@ -116,6 +116,26 @@ sudo npm install -g grunt-cli
 sudo npm install grunt --save-dev
 
 
+add-apt-repository ppa:nginx/stable
+apt-get update
+apt-get upgrade --show-upgraded
+apt-get install nginx
+/etc/init.d/nginx start
+
+cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.$(date "+%b_%d_%Y_%H.%M.%S")
+
+
+gpg --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
+gpg --armor --export 561F9B9CAC40B2F7 | sudo apt-key add -
+sudo apt-get install apt-transport-https
+sudo sh -c "echo 'deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main' >> /etc/apt/sources.list.d/passenger.list"
+sudo chown root: /etc/apt/sources.list.d/passenger.list
+sudo chmod 600 /etc/apt/sources.list.d/passenger.list
+sudo apt-get update
+sudo apt-get install nginx-full passenger
+sudo service nginx start
+
+apt-get install redis-server
 # gem install thin
 # sudo apt-get install thin
 # sudo /usr/sbin/update-rc.d -f thin defaults
