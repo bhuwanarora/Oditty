@@ -158,9 +158,7 @@ module.exports = function(grunt) {
             'app/assets/javascripts/min/angular/vendors/cropme.js',
             'app/assets/javascripts/min/angular/vendors/google_plus_signin.js',
             'app/assets/javascripts/min/angular/vendors/hamster.min.js',
-            'app/assets/javascripts/min/angular/vendors/sticky.js',
-            'app/assets/javascripts/min/angular/vendors/socket.io.js',
-            'app/assets/javascripts/min/angular/vendors/socket.js'],
+            'app/assets/javascripts/min/angular/vendors/sticky.js'],
 
           'app/assets/javascripts/min/angular/main.js': [
             'app/assets/javascripts/angular/vendors/angular.min.js',
