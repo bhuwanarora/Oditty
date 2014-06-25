@@ -135,17 +135,20 @@
 		</div>
 		
 		<message></message>
-		<div class="notifications animate-fast" ng-if="show_notifications">
-			<notification-link></notification-link>
-			<div class="notification_elements">
-				<div class="notification">News Feed</div>
-				<div ng-repeat="notification in notifications">
-					<notification data="notification"></notification>
+		
+		<div class="left_column animate-fast">
+			<div class="notifications animate-fast" 
+				 ng-if="show_notifications"
+				 msd-wheel="stop_horizontal_scroll($event)">
+				<div class="notification_elements">
+					<!-- <div class="notification">News Feed</div> -->
+					<div ng-repeat="notification in notifications">
+						<notification data="notification"></notification>
+					</div>
 				</div>
 			</div>
+			<more-filters></more-filters>
 		</div>
-
-		<more-filters></more-filters>
 		<!-- <div class="wrapper" ng-if="focused_book"></div> -->
 		<div class="focused_tooltip animate-fast"
 		     ng-style="focused_book.reposition_tooltip"
@@ -153,7 +156,6 @@
 		     ng-if="focused_book"><focused-book></focused-book></div>
 		<div ng-if="focused_author"><focused-author></focused-author></div>
 		<div ng-if="focused_reader"><focused-reader></focused-reader></div>
-		<notification-link></notification-link>
 
 		<div class="bottom_hover_detector">
 			<div class="progression_state" ng-style="progression_state"></div>

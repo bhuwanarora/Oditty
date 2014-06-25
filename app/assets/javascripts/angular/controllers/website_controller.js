@@ -1,20 +1,18 @@
 websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout', 'websiteService', 'Facebook', '$document', 'scroller', '$window',
 	function($scope, $rootScope, $timeout, websiteService, Facebook, $document, scroller, $window){
 	$scope.bindHorizontalScroll = function(event, delta, deltaX, deltaY){
-		if(!$scope.show_notifications){
-			event.preventDefault();
-			if(delta > 0){
-				$scope.move_left(event);
-		        // event.view.window.scrollBy(-80, 0);
-			}
-			else{
-				$scope.move_right(event);
-				// _load_recommendations();
-				//move forward
-				// event.view.window.scrollBy(80, 0);
-			}
-			event.stopPropagation();
+		event.preventDefault();
+		if(delta > 0){
+			$scope.move_left(event);
+	        // event.view.window.scrollBy(-80, 0);
 		}
+		else{
+			$scope.move_right(event);
+			// _load_recommendations();
+			//move forward
+			// event.view.window.scrollBy(80, 0);
+		}
+		event.stopPropagation();
 	}
 
 	$scope.move_left = function(event){
@@ -318,7 +316,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	_initiate_loading_page = function(){
 		$scope.loading = true;
 		$scope.drop_icon = false;
-		$scope.show_login_form = true;
+		$scope.show_login_form = false;
 
 		$timeout(function(){
 			$scope.loading = false;
@@ -385,6 +383,13 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		}
 	}
 
+	_handle_socket_error = function(){
+		$scope.$on('socket:error', function (ev, data) {
+
+	    });
+		
+	}
+
 	_init = function(){
 		console.time("websiteAppController");
 		_initiate_loading_page();
@@ -414,7 +419,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		// });
 		// $speechRecognition.setLang('en-UK'); // Default value is en-US
 		// $speechRecognition.listen();
-		// $scope.authenticate();
+		$scope.authenticate();
 		
 		console.timeEnd("websiteAppController");
 	}

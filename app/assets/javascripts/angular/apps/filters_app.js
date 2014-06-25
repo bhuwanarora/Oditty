@@ -44,7 +44,7 @@ angular.module('filtersApp', [])
   }).
   filter('display_tweet', function(){
     return function(input){
-      if(input.length > 40){
+      if(input && input.length > 40){
         input = input.slice(0, 40)+"..."
       }
       return input; 

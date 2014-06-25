@@ -55,19 +55,32 @@
 
 		</div>
 	</div>
-
+	<notification-link></notification-link>
  	<div class="filter_link"
  		 ng-if="!bookmark_selected && !read_selected"
  		 ng-class="{'compact_filter_link': compact_footer}" 
 		 ng-click="toggle_more_filters($event)">
-		<span ng-if="filters.filter_type == 'BOOK'" class="selected_filter icon-book"></span>
+		<span ng-if="filters.filter_type == 'BOOK'" 
+			class="selected_filter icon-book"></span>
 		<span class="icon-angle-right"></span>
-		<span class="icon-pen" ng-class="{'selected_filter':filters.other_filters.author}"></span>
-		<span class="icon-shapes" ng-class="{'selected_filter':filters.other_filters.genre}"></span>
-		<span class="icon-calendar" ng-class="{'selected_filter':filters.other_filters.timegroup}"></span>
-		<span class="icon-clock" ng-class="{'selected_filter':filters.other_filters.readingTime}"></span>
-		<span class="icon-earth" ng-class="{'selected_filter':filters.other_filters.country}"></span>
-		<span class="selected_filter" ng-if="filters.more_filters">
+		<span class="icon-pen" 
+			title="author filter"
+			ng-class="{'selected_filter':filters.other_filters.author}"></span>
+		<span class="icon-shapes" 
+			title="genre filter"
+			ng-class="{'selected_filter':filters.other_filters.genre}"></span>
+		<span class="icon-calendar" 
+			title="time group filter"
+			ng-class="{'selected_filter':filters.other_filters.timeGroup}"></span>
+		<span class="icon-clock" 
+			title="reading time filter"
+			ng-class="{'selected_filter':filters.other_filters.readingTime}"></span>
+		<span class="icon-earth" 
+			title="region filter"
+			ng-class="{'selected_filter':filters.other_filters.country}"></span>
+		<span class="selected_filter" 
+			title="list filter"
+			ng-if="filters.more_filters">
 			{{filters.more_filters}}
 		</span>
 		
@@ -81,6 +94,12 @@
 		 <span class="selected_filter icon-angle-down" ng-if="!show_more_filters"></span>
 		 <span class="selected_filter icon-angle-up" ng-if="show_more_filters"></span>
 	</div>
+	<div class="filter_link"
+ 		 ng-if="bookmark_selected"
+		 ng-click="toggle_more_filters($event)">
+		 <span>Bookmarks</span><span class="icon-bookmark3"></span>
+	</div>
+
 	<div class="filter_status">
 		<span class="selected_filters">
 		</span>

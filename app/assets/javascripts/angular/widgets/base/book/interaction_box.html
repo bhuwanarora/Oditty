@@ -19,6 +19,7 @@
 			<span class="highlighter" ng-bind-html="focused_book.hash_tagged_comment"></span>
 			<textarea itemprop= "commentText"
 			   itemtype= "http://schema.org/UserComments"
+			   set-focus="focused_book.interact"
 			   type="text"
 			   ng-paste="update_hashtagged_comment()"
 			   ng-model="focused_book.current_comment"

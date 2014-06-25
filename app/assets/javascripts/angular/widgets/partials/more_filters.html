@@ -1,19 +1,14 @@
-<div ng-if="show_more_filters" 
+<div ng-if="show_more_filters"
 	 class="more_filters animate-fast"
 	 ng-click="stop_click_propagation($event)">	
 
 	<div ng-if="!bookmark_selected && !read_selected">
 		<!-- BOOK FILTERS -->
 		<div class="filters" ng-if="$routeParams.type == 'books'">
-			<div class="filters_panel_large">
-				<div class="filters_group">
-					<div ng-repeat="filter in more_filters[0]['book']">
-						<filter data="filter"></filter>
-					</div>
-				</div>
+			<div ng-click="show_lists = false;" class="filter_header">
+				<span class="icon-filter"></span><span>&nbsp;&nbsp;Main Filters</span>
 			</div>
-			<hr>
-			<div class="filters_panel">
+			<div class="filters_panel" ng-if="!show_lists">
 			 	<type-ahead items="genres" 
 			 				prompt="Filter by a Genre" 
 			 				title="name"
@@ -36,8 +31,8 @@
 			 				ng-keypress="show_author_options('BOOK', author)">
 			 	</type-ahead>
 			</div>
-			<hr>
-			<div class="filters_panel_right">
+			
+			<div class="filters_panel_right" ng-if="!show_lists">
 			 	<div class="position_dropdown"
 				 	  dropdown-select="countryOptions" 
 				 	  dropdown-onchange="advance_filter_changed(selected, 'country')"
@@ -55,6 +50,18 @@
 			 		  dropdown-item-label="name"></div>
 			 	
 			</div>
+
+			<div ng-click="show_lists = true;" class="filter_header">
+				<span class="icon-list3"></span><span>&nbsp;&nbsp;Show Lists</span>
+			</div>
+			<div class="filters_panel_large" ng-if="show_lists">
+				<div class="filters_group">
+					<div ng-repeat="filter in more_filters[0]['book']">
+						<filter data="filter"></filter>
+					</div>
+				</div>
+			</div>
+
 		</div>
 
 
@@ -67,7 +74,7 @@
 					</div>
 				</div>
 			</div>
-			<hr>
+			
 			<div class="filters_panel">
 				<type-ahead items="genres" 
 			 				prompt="GENRE" 
@@ -79,7 +86,7 @@
 			 				ng-keypress="show_genre_options('BOOK', genre)">
 			 	</type-ahead>
 			</div>
-			<hr>
+			
 			<div class="filters_panel_right">
 				
 			</div>
@@ -94,7 +101,7 @@
 					</div>
 				</div>
 			</div>
-			<hr>
+			
 			<div class="filters_panel">
 				<type-ahead items="genres" 
 			 				prompt="GENRE" 
@@ -106,22 +113,35 @@
 			 				ng-keypress="show_genre_options('BOOK', genre)">
 			 	</type-ahead>
 			</div>
-			<hr>
+			
 			<div class="filters_panel_right">
 				<div class="header">
 				</div>
 			</div>
 		</div>
-		
-	</div>
-	<div class="main_filters">
-		<div class="reset_filters">
-			 <a ng-href="#/user/{{$routeParams.id}}/recommendations/{{$routeParams.type}}" ng-click="reset_filters()">
-			 	<span>RESET FILTERS </span>
-			 	<span class="icon-loop"></span>
-			 </a>
+		<div class="main_filters">
+			<div class="reset_filters">
+				 <a ng-href="#/user/{{$routeParams.id}}/recommendations/{{$routeParams.type}}" ng-click="reset_filters()">
+				 	<span class="icon-loop"></span>
+				 	<span>RESET FILTERS </span>
+				 </a>
+			</div>
 		</div>
+	</div>
 
-		
+	<div ng-if="bookmark_selected">
+		<div class="filters" ng-if="$routeParams.type == 'books'">
+			<div class="filters_panel_large">
+				<div ng-repeat="filter in labels">
+					<filter data="filter"></filter>
+				</div>
+			</div>
+		</div>
+		<div class="filters" ng-if="$routeParams.type == 'authors'">
+			{{labels}}
+		</div>
+		<div class="filters" ng-if="$routeParams.type == 'readers'">
+			{{labels}}
+		</div>
 	</div>
 </div>

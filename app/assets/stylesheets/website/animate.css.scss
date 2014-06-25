@@ -150,12 +150,12 @@
 
 .notifications.ng-enter,
 .notifications.ng-leave.ng-leave-active{
-	margin-top: 600px;
+	top: 0px;
 }
 
 .notifications.ng-leave,
 .notifications.ng-enter.ng-enter-active{
-	margin-top: 0px;
+	top: 90px;
 }
 
 .notification.ng-enter{

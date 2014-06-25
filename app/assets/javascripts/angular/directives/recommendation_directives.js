@@ -351,6 +351,11 @@ websiteApp.directive('recommendationFooter', ['scroller', function(scroller){
 				$scope.compact_footer = false;	
 			}
 
+
+			$scope.stop_horizontal_scroll = function(event){
+	            event.stopPropagation();
+	        }
+	        
 			$scope.goto_info_card = function(){
 				scroller.scrollTo(0, 0, 2000);
 			}
