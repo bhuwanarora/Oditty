@@ -682,7 +682,7 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', fu
 }]);
 
 
-websiteApp.directive('markAsRead', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
+websiteApp.directive('markAsRead', ['$rootScope', '$timeout', 'widgetService', 'appSocket', function($rootScope, $timeout, widgetService, appSocket){
 	return {
 		restrict: 'E',
 		controller: ['$scope', function($scope){
@@ -713,9 +713,9 @@ websiteApp.directive('markAsRead', ['$rootScope', '$timeout', 'widgetService', f
       }
 
       _trigger_notification_socket = function(message){
-        // appSocket.emit('push:notification', {
-        //   notification: message
-        // });
+        appSocket.emit('push:notification', {
+          notification: message
+        });
       }
 
     }],
