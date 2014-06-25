@@ -383,6 +383,13 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		}
 	}
 
+	_handle_socket_error = function(){
+		$scope.$on('socket:error', function (ev, data) {
+
+	    });
+		
+	}
+
 	_init = function(){
 		console.time("websiteAppController");
 		_initiate_loading_page();
