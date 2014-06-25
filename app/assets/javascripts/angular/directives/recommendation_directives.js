@@ -366,28 +366,20 @@ websiteApp.directive('recommendationFooter', ['scroller', function(scroller){
 websiteApp.directive('calendar', function(){
 	return{
 		restrict: 'E',
+		scope : {},
 		controller: ['$scope', function($scope){
 			$scope.date_check =function(){
-				if($scope.selectedMonth == "Feb"){
-					$scope.days = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28];
-					if(($scope.selectedYear%100 == 0) && ($scope.selectedYear%4 == 0)){
-						$scope.days = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29];
-					}
-					else if($scope.selectedYear%4 == 0){
-						$scope.days = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29];
-					}
-				}
-				else if($scope.selectedMonth == "Jan" || $scope.selectedMonth == "Mar" || $scope.selectedMonth == "May" || $scope.selectedMonth == "Jul" ||
-					$scope.selectedMonth == "Aug" || $scope.selectedMonth == "Oct" || $scope.selectedMonth == "Dec"){
-				$scope.days = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
-				}
-				else{
-				$scope.days = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
-				}
+				var month = $scope.months.indexOf($scope.selectedMonth) +1;
+				var no_days = new Date($scope.selectedYear, month, 0).getDate();
+				$scope.days = new Array(no_days)
+								.join().split(',')
+								.map(function(item, index){ return ++index;});
 			}
 
 			_init =function(){
-				$scope.days = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
+				$scope.days = new Array(31)
+									.join().split(',')
+									.map(function(item, index){ return ++index;});
 				$scope.months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 				$scope.years = [];
 				var currentYear = new Date().getFullYear();
