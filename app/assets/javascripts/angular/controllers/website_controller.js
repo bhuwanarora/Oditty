@@ -380,7 +380,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		var input_aimed_for_searching = (event.currentTarget == event.srcElement) && !$rootScope.show_book;
 		if(input_aimed_for_searching){
 			$('body').css('white-space', 'normal');
-			$scope.website.searching = false;
+			$scope.website.searching = true;
 			$rootScope.keyCode = event.keyCode;
 		}
 	}

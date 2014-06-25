@@ -522,15 +522,15 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		console.debug("_set_custom_search", customBookSearch, customAuthorSearch, customTagSearch);
 		if(customAuthorSearch){
 			$scope.search_type = "['AUTHOR', 'READER']";
-			$scope.search_display = "Searching authors and readers..."
+			$scope.search_display = "Searching authors and readers...";
 		}
 		else if(customBookSearch){
 			$scope.search_type = "['BOOK']";
-			$scope.search_display = "Searching books..."
+			$scope.search_display = "Searching books...";
 		}
 		else if(customTagSearch){
 			$scope.search_type = "['TAG']";
-			$scope.search_display = "Searching book categories..."
+			$scope.search_display = "Searching book categories...";
 		}
 	}
 
