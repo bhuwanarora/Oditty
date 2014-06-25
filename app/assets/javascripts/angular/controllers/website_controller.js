@@ -384,7 +384,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 
 	_handle_socket_error = function(){
 		$scope.$on('socket:error', function (ev, data) {
-
+			debugger
 	    });
 	    // debugger
 
