@@ -367,3 +367,39 @@ websiteApp.directive('recommendationFooter', ['scroller', function(scroller){
 		templateUrl: "/assets/angular/widgets/partials/recommendation_footer.html"
 	}
 }]);
+
+websiteApp.directive('calendar', function(){
+	return{
+		restrict: 'E',
+		scope : {},
+		controller: ['$scope', function($scope){
+			$scope.date_check = function(){
+				var month = $scope.months.indexOf($scope.selectedMonth) + 1;
+				var no_days = new Date($scope.selectedYear, month, 0).getDate();
+				$scope.days = new Array(no_days)
+							.join()
+							.split(',')
+							.map(function(item, index){return ++index;});
+			}
+
+			_init =function(){
+				$scope.days = new Array(31)
+							.join()
+							.split(',')
+							.map(function(item, index){return ++index;});
+				$scope.months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+				$scope.years = [];
+				var currentYear = new Date().getFullYear();
+				for(var i=currentYear; i>1904; i--){
+					$scope.years.push(i);
+				}
+				$scope.selectedDay = $scope.days[0];
+				$scope.selectedMonth = $scope.months[0];
+				$scope.selectedYear = $scope.years[0];
+			}
+
+			_init();
+		}],
+		templateUrl: '/assets/angular/widgets/partials/calendar.html'
+	}
+});

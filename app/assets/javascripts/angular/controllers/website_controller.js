@@ -1,5 +1,4 @@
-websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout', 'websiteService', 'Facebook', '$document', 'scroller', '$window',
-	function($scope, $rootScope, $timeout, websiteService, Facebook, $document, scroller, $window){
+websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout', 'websiteService', 'Facebook', '$document', 'scroller', '$window', 'appSocket', function($scope, $rootScope, $timeout, websiteService, Facebook, $document, scroller, $window, appSocket){
 	$scope.bindHorizontalScroll = function(event, delta, deltaX, deltaY){
 		event.preventDefault();
 		if(delta > 0){
@@ -387,7 +386,12 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		$scope.$on('socket:error', function (ev, data) {
 
 	    });
-		
+	    debugger
+
+	    appSocket.forward('someEvent', $scope);
+	    $scope.$on('socket:someEvent', function (ev, data) {
+	      $scope.theData = data;
+	    });
 	}
 
 	_init = function(){
@@ -412,7 +416,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		_bind_feedback_form();
 		_bind_auth_listeners();
 		_add_listeners();
-		
+		_handle_socket_error();
 		// $('body').css('white-space', 'normal');
 		// $speechRecognition.onstart(function(){
 		//   $speechSynthetis.speak("You're at Reader's Door. How can I help you?", 'en-UK');
