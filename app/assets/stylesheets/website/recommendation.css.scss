@@ -476,12 +476,15 @@
 }
 
 .push_notification{
+	display: table;
 	color: #717070;
 	background-color: #fff;
 	right: 1px;
 	top: 95px;
 	position: fixed;
-	width: 240px;
+	max-width: 240px;
+	width: auto;
+	padding-right: 10px;
 	white-space: normal;
 	height: 55px;
 	box-shadow: 1px 1px 6px 0 #424242;
@@ -499,17 +502,16 @@
 	font-size: 2em;
 	border-bottom-left-radius: 3px;
 	border-bottom-left-radius: 3px;
+	margin-right: 10px;
 }
 
 .push_notification .content{
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
 	color: #717070;
 	background-color: #fff;
 	white-space: normal;
-	display: inline-block;
-	float: left;
-	width: 170px;
-	height: 35px;
-	padding: 10px;
 	font-size: 0.8em;
 }
 
@@ -1002,6 +1004,10 @@
 	float: left;
 	margin: 2px;
 	width: 170px;
+}
+
+.genre_z_index{
+	z-index: 2;
 }
 
 #timeReader-slider-span{
