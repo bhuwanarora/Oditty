@@ -1,5 +1,5 @@
 websiteApp.factory('appSocket', ['socketFactory', function(socketFactory){
-  var appSocket = socketFactory();
-  appSocket.forward('error');
-  return appSocket;
+	var appSocket = socketFactory();
+	appSocket.forward('error');
+	return appSocket;
 }]);
