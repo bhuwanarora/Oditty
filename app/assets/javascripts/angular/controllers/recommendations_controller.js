@@ -1,4 +1,4 @@
-websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', 'scroller', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService, scroller){
+websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', 'scroller', 'appSocket', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService, scroller, appSocket){
 
 	$scope.toggle_bookmarked = function(event){
 		if(!$scope.bookmark_selected){
@@ -292,6 +292,13 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
       });
     }
 
+    _handle_socket = function(){
+    	appSocket.forward('push:notification', $scope);
+    	appSocket.on('push:notification', function(notification){
+          	$scope.notifications.push({"message": notification.notification});
+        });
+    }
+
 
 	_init = function(){
 		//oneMin = 60000
@@ -324,6 +331,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         _bind_destroy();
         // _handle_focused_book();
         _get_friends();
+        _handle_socket();
     	// $scope.$emit('moveRight');    
 	}
 

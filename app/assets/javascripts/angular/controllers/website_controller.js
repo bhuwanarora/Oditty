@@ -1,4 +1,4 @@
-websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout', 'websiteService', 'Facebook', '$document', 'scroller', '$window', 'appSocket', function($scope, $rootScope, $timeout, websiteService, Facebook, $document, scroller, $window, appSocket){
+websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout', 'websiteService', 'Facebook', '$document', 'scroller', '$window', function($scope, $rootScope, $timeout, websiteService, Facebook, $document, scroller, $window){
 	$scope.bindHorizontalScroll = function(event, delta, deltaX, deltaY){
 		event.preventDefault();
 		if(delta > 0){
@@ -386,12 +386,12 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		$scope.$on('socket:error', function (ev, data) {
 
 	    });
-	    debugger
+	    // debugger
 
-	    appSocket.forward('someEvent', $scope);
-	    $scope.$on('socket:someEvent', function (ev, data) {
-	      $scope.theData = data;
-	    });
+	    // appSocket.forward('someEvent', $scope);
+	    // $scope.$on('socket:someEvent', function (ev, data) {
+	    //   $scope.theData = data;
+	    // });
 	}
 
 	_init = function(){

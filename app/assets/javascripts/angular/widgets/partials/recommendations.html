@@ -142,7 +142,7 @@
 				 msd-wheel="stop_horizontal_scroll($event)">
 				<div class="notification_elements">
 					<!-- <div class="notification">News Feed</div> -->
-					<div ng-repeat="notification in notifications">
+					<div ng-repeat="notification in notifications | reverse">
 						<notification data="notification"></notification>
 					</div>
 				</div>
