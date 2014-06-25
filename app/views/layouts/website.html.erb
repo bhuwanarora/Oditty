@@ -12,7 +12,7 @@
 
     <!-- jquery -->
     <!-- angular vendors -->
-    <% if !Rails.env.development? %>
+    <% if Rails.env.development? %>
       <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/angular/vendors/*.js")] %>
       <!-- angular libs -->
       <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/lib/*.js")] %>
@@ -32,7 +32,7 @@
       <%#= javascript_include_tag Rails.root.join("app/assets/javascripts/min/angular/templates.js") %>
     <% end %>
 
-    <% if !Rails.env.production? %>
+    <% if Rails.env.production? %>
       <%= javascript_include_tag Rails.root.join("/assets/min/angular/main.js") %>
     <% end %>
 
