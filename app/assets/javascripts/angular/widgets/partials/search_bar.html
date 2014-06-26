@@ -64,7 +64,7 @@
   <div class="website_search_options" ng-if="search_results && !hide_options">
     <div ng-repeat="item in search_results | filter: search_tag.input | limitTo: search_tag.result_count track by $index "
          ng-click="handle_selection(item)" 
-         ng-class="{active:is_current($index, item.name), 'graph_option':item.graph_option}" 
+         ng-class="{active:is_current($index, item), 'graph_option':item.graph_option}" 
          ng-mouseenter="set_current($index)"
          class="option">
          <!-- ng-bind-html="highlight(search_tag.input, item.name)" -->

@@ -418,9 +418,8 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 						'readers': {'follow': []},
 						'logged': false};
 		$scope.website = {};
-		$scope.website.searching = true;
+		$scope.website.searching = false;
 		$scope.website.show_search_page = true;
-
 		_bind_emit();
 		_bind_feedback_form();
 		_bind_auth_listeners();

@@ -110,7 +110,6 @@
 
 .tag_bookmark{
 	height: 100%;
-
 }
 
 .tag_bookmark:hover{
@@ -147,10 +146,16 @@
 	color: #D8D8D8;
 	font-size: 1.5em;
 	width: 17%;
-	padding-top: 5%;
 	position: absolute;
 	bottom: 0px;
 	top: 0px;
+}
+
+.action_button:before{
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
 }
 
 .right_action{
@@ -231,6 +236,11 @@
 
 .card .description p{
 	margin-top: 50%;
+}
+
+.table_cell_icon{
+    display: inline-block;
+    vertical-align: middle;
 }
 
 /*.card .header{

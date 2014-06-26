@@ -155,9 +155,11 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		console.log("%c search "+graphOption+" "+customOption+" "+selectedItem+" "+type+" "+$scope.search_level1+" "+$scope.search_level2, "color: green; font-weight: bold;");
 		if(customOption){
 			if(!$scope.search_level1){
+				_handle_input_focus();
 				$scope.search_type = type;
 			}
 			else if($scope.search_level2){
+				_handle_input_focus();
 				$rootScope.$broadcast('filterChange', {"name": selectedItem}, type);
 				$rootScope.hide_options = true;
 				$scope.search_tag.input = selectedItem;
@@ -166,7 +168,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$scope.search_tag.input = "";
 		}
 		else{
-		    $scope.search_tag.current = 0;
+		    // $scope.search_tag.current = 0;
 		    $scope.search_tag.selected_result = true;
 		    if(graphOption){
 		    	_handle_graph_search(selectedItem);
@@ -199,7 +201,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	$scope.is_current = function(index, selectedItem) {
 		if($scope.search_tag.current == index){
 			$scope.search_tag.currentItem = selectedItem;
-		}
+		} 
 	    return $scope.search_tag.current == index;
 	};
 
@@ -207,7 +209,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	    $scope.search_tag.current = index;
 	};
 
-	$scope.navigate_options = function(){
+	_navigate_options = function(){
 		var keyEnter = event.keyCode == 13;
 		if(keyEnter){
 			$scope.handle_selection($scope.search_tag.currentItem);
@@ -221,13 +223,20 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			if($scope.search_tag.current != 0){
 				$scope.set_current($scope.search_tag.current-1);
 			}
+			else{
+				$scope.set_current($scope.search_results.length-1);
+			}
 		}
 
 		if(keyDown){
 			if($scope.search_tag.current != $scope.search_results.length -1){
 				$scope.set_current($scope.search_tag.current+1);
 			}
+			else{
+				$scope.set_current(0);
+			}
 		}
+
 	}
 
 	$scope.key_down = function(event){
@@ -260,8 +269,21 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope.book_search = false;
 		$scope.author_search = false;
 		$scope.reader_search = false;
+
+		_handle_input_focus();
 		_init_graph_search();
 		event.stopPropagation();
+	}
+
+	_handle_input_focus = function(){
+		$scope.website.searching = true;
+		var timeout_event = $timeout(function(){
+			$scope.website.searching = false;
+		}, 200);
+
+		$scope.$on('destroy', function(){
+			$timeout.cancel(timeout_event);
+		});
 	}
 
 	$scope.close_login_box = function(){
@@ -280,6 +302,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope.gender_search = false;
 		$scope.awards_search = false;
 		_search_by();
+		_handle_input_focus();
 		event.stopPropagation();
 	}
 
@@ -499,15 +522,15 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		console.debug("_set_custom_search", customBookSearch, customAuthorSearch, customTagSearch);
 		if(customAuthorSearch){
 			$scope.search_type = "['AUTHOR', 'READER']";
-			$scope.search_display = "Searching authors and readers..."
+			$scope.search_display = "Searching authors and readers...";
 		}
 		else if(customBookSearch){
 			$scope.search_type = "['BOOK']";
-			$scope.search_display = "Searching books..."
+			$scope.search_display = "Searching books...";
 		}
 		else if(customTagSearch){
 			$scope.search_type = "['TAG']";
-			$scope.search_display = "Searching book categories..."
+			$scope.search_display = "Searching book categories...";
 		}
 	}
 
@@ -535,6 +558,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			else{
 				if(!firstInput){
 	        		var firstInput = String.fromCharCode(event.keyCode);
+	        		_navigate_options();
 				}
 	        	var currentValue = _get_search_input(event);
 	        	if(currentValue && currentValue.length > 1){
@@ -570,9 +594,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			if($rootScope.hide_options){
 				$rootScope.hide_options = false;
 			}
-			else{
+			/*else{
 				$rootScope.hide_options = true;	
-			}
+			}*/
 			event.stopPropagation();
 		}
 	}
@@ -589,7 +613,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope.search_tag.current = 0;
 		$scope.search_tag.input = "";
 		$scope.search_tag.result_count = 5;
-		$scope.website.searching = true;
+	    $scope.website.searching = false;
 		$scope.website.show_search_page = true;
 		websiteService.get_background_image().then(function(data){
 			$scope.search_style = {'background-image': 'url("'+data.url+'")'};
