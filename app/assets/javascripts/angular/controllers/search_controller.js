@@ -168,7 +168,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$scope.search_tag.input = "";
 		}
 		else{
-		    $scope.search_tag.current = 0;
+		    // $scope.search_tag.current = 0;
 		    $scope.search_tag.selected_result = true;
 		    if(graphOption){
 		    	_handle_graph_search(selectedItem);
@@ -558,6 +558,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			else{
 				if(!firstInput){
 	        		var firstInput = String.fromCharCode(event.keyCode);
+	        		navigate_options();
 				}
 	        	var currentValue = _get_search_input(event);
 	        	if(currentValue && currentValue.length > 1){
@@ -594,7 +595,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				$rootScope.hide_options = false;
 			}
 			else{
-				$rootScope.hide_options = true;	
+				//$rootScope.hide_options = true;	
 			}
 			event.stopPropagation();
 		}
