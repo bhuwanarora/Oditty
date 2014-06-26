@@ -1667,25 +1667,31 @@ and (min-width : 1824px) {
 	top: 95px;
 	left: 270px;
 	white-space: initial;
-	overflow: scroll;
 	background-color: white;
 	border-radius: 4px;
 	border: 1px solid #FFF;
 	box-shadow: 0 7px 15px rgba(0,0,0,.25);
-	height: 72vh;
+	height: 42vh;
 	min-width: 380px;
 	position: fixed;
 	width: 57vh;
 	z-index: 1;
+	padding: 4px;
 }
 
 .ticker_popup .arrow_left{
 	position: absolute;
-	top: 10px;	
+	top: 20px;	
 	border-top: 10px solid transparent;
 	border-bottom: 10px solid transparent;
 	width: 0; 
 	height: 0;
 	left: -11px;
 	border-right: 10px solid white; 
+}
+
+.ticker_popup .ticker_overflow{
+	height: 42vh;
+	overflow: scroll;
+	width: 57vh;
 }

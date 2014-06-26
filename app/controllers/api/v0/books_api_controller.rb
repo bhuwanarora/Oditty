@@ -33,7 +33,7 @@ module Api
 
 			def affiliate_links
 				book = BookApi.get_book(params[:title], params[:author_name])
-				isbn =  book[0][0]["data"]["isbn"]
+				isbn =  book[0][0]["data"]["isbn"] rescue ""
 				bnn_links = []
 				if isbn
 					for isbn in isbn.split(",")

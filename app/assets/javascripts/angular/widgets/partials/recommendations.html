@@ -155,7 +155,10 @@
 		     ng-style="focused_book.reposition_tooltip"
 		     ng-click="stop_propagation($event)"
 		     ng-if="focused_book"><focused-book></focused-book></div>
-		<div class="ticker_popup" ng-if="ticker_popup">
+		<div class="ticker_popup" 
+			 ng-if="ticker_popup"
+			 ng-style="ticker_popup_style"
+			 msd-wheel="handle_height_of_popup($event)">
 			<ticker-popup></ticker-popup>
 		</div>
 		<div ng-if="focused_author"><focused-author></focused-author></div>

@@ -23,6 +23,16 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		}
 	}
 
+	$scope.handle_height_of_popup = function(event){
+		if(event.deltaY > 0){
+			$scope.ticker_popup_style = {"height": "62vh"};
+		}
+		else{
+			$scope.ticker_popup_style = {"height": "42vh"};		
+		}
+		event.stopPropagation();
+	}
+
 	$scope.reset = function(){
 		_init_recommendations();
     	_get_recommendations();
@@ -62,6 +72,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	$scope.hide_popups = function(){
 		$rootScope.hide_options = true;
 		$rootScope.focused_book = null;
+		$rootScope.ticker_popup = null;
  		// $scope.show_more_filters = false;
 	}
 

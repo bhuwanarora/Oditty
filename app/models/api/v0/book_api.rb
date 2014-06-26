@@ -131,9 +131,15 @@ module Api
 					match_clause = ""
 					book_name = filters["other_filters"]["title"]
 					author_name = filters["other_filters"]["author_name"]
+					show_all = filters["other_filters"]["show_all"]
 					if book_name.present?
-						puts "book_name "+book_name+" author_name "+author_name+" ".green
-						where_clause = where_clause + " book.title=~\"(?i)"+book_name+"\" AND book.author_name=~\"(?i)"+author_name+"\" "
+						if show_all
+							puts "book_name "+book_name+" show_all ".green
+							where_clause = where_clause + " book.title=~\"(?i)"+book_name+".*\" "
+						else
+							puts "book_name "+book_name+" author_name "+author_name+" ".green
+							where_clause = where_clause + " book.title=~\"(?i)"+book_name+"\" AND book.author_name=~\"(?i)"+author_name+"\" "
+						end
 					else
 						if filters["other_filters"]["country"].present?
 							where_clause = where_clause + ""

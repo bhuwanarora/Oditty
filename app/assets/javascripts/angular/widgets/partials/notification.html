@@ -1,5 +1,6 @@
 <div ng-if="!seen"
-	 ng-click="show_ticker_popup()"
+	 ng-click="toggle_ticker_popup($event)"
+	 ng-mouseenter="show_ticker_popup($event)"
      class="notification animate-fast">
 	<span class="user_thumb"><img ng-src="{{notification.thumb}}"></span>
 	<span>
