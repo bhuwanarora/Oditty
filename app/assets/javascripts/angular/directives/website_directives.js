@@ -258,7 +258,9 @@ websiteApp.directive('setFocus', ['$timeout', '$parse' , '$rootScope', function(
       scope.$watch(model, function(value) {
         if(value === true) { 
           $timeout(function() {
-            element[0].value = String.fromCharCode($rootScope.keyCode);
+          	if($rootScope.keyCode){
+            	element[0].value = String.fromCharCode($rootScope.keyCode);
+          	}
             element[0].focus(); 
             // $speechSynthetis.speak("You are at Reader's Door. How can I help you?", 'en-UK');
           });
@@ -412,13 +414,24 @@ websiteApp.directive('message', function(){
 	}
 });
 
-websiteApp.directive('notification', function(){
+websiteApp.directive('notification', ['$rootScope', function($rootScope){
 	return{
 		restrict: 'E',
 		scope: {"notification": "=data"},
+		controller: ['$scope', function($scope){
+			$scope.show_ticker_popup = function(){
+				var ticker_popup_present = $rootScope.ticker_popup;
+				if(ticker_popup_present){
+					$rootScope.ticker_popup = false;
+				}
+				else{
+					$rootScope.ticker_popup = true;
+				}
+			}
+		}],
 		templateUrl: '/assets/angular/widgets/partials/notification.html'
 	}
-});
+}]);
 
 
 websiteApp.directive('compile', ['$compile', function($compile){

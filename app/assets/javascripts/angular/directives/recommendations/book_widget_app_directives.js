@@ -61,7 +61,7 @@ websiteApp.directive('book', ['widgetService', '$rootScope', function (widgetSer
 
       _init = function(){
         // $scope.active_book_filter = true;
-        var book_id = $scope.book.id;
+        // var book_id = $scope.book.id;
         console.debug("%c _init book", "color: purple");
         $scope.book.tweets = [];
         $scope.book.labels = $rootScope.labels;

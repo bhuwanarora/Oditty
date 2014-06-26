@@ -45,7 +45,12 @@ module Api
 			end
 
 			def authenticate
-				render :json => {:message => "success", :profile_status => 0, :user_id => 1}, :status => 200
+				authentication_info = UserApi.authenticate params
+				if authentication_info[:authenticate]
+					render :json => authentication_info, :status => 200
+				else
+					render :json => authentication_info, :status => 403
+				end
 			end
 
 			def update_profile

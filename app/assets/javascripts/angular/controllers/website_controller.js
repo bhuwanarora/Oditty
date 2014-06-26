@@ -110,24 +110,33 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		// console.log("showFeebackForm")
 	}
 
-	$scope.authenticate = function(){
-		var data_json = $rootScope.user;
+	$scope.authenticate = function(email, password, old_user){
+		var email = "test@gmail.com";
+		var old_user = true;
+		var data_json = {"email": email, "password": password, "old_user": old_user};
 		$scope.loading_icon = true;
-		websiteService.authenticate(data_json).then(function(data){
-			if(data.message == "success"){
-				$rootScope.user.profile_status = data.profile_status;
-				$rootScope.user.logged = true;
-				$rootScope.user.id = data.user_id;
-				// $scope.show_login_form = true;
-				// _profile_status_colors();
-				// websiteService.get_user_details().then(function(data){
-		  //   		$rootScope.user.books = data["books"];
-		  //   	});
-				websiteService.get_notifications($rootScope.user).then(function(data){
-					$scope.notifications = data.notifications;
-				});
-			}
-		});
+		var success_callback = function(data){
+			$scope.error_message = data.message;
+			$rootScope.user.profile_status = data.profile_status;
+			$rootScope.user.logged = true;
+			$rootScope.user.id = data.user_id;
+			$scope.loading_icon = false;
+			// $scope.show_login_form = true;
+			// _profile_status_colors();
+			// websiteService.get_user_details().then(function(data){
+	  //   		$rootScope.user.books = data["books"];
+	  //   	});
+			websiteService.get_notifications($rootScope.user).then(function(data){
+				$scope.notifications = data.notifications;
+			});
+		}
+
+		var error_callback = function(reason){
+			$scope.loading_icon = false;
+			$scope.error_message = reason.data.message;
+		}
+
+		websiteService.authenticate(data_json).then(success_callback, error_callback);
 	}
 
     $scope.intent_login = function() {

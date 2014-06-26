@@ -2,6 +2,38 @@ module Api
 	module V0
 		class UserApi
 
+			def self.authenticate params
+				authenticate = false
+				info = {}
+				if params[:old_user]
+					verified_user = params[:email] == "test@gmail.com"
+					unregistered_user = params[:email] == "unregistered@gmail.com"
+					unverified_user = params[:email] == "unverified@gmail.com"
+
+					if verified_user
+						authenticate = true
+						info = {:profile_status => 0, :user_id => 1}
+						message = "Logged in successfully."
+					elsif unregistered_user
+						message = "Email and password doesn't match."
+					elsif unverified_user
+						message = "Please verify your email address."
+					else
+						message = "Email and password doesn't match."
+					end
+				else
+					email_already_registered = params[:email] == "alreadyregistered@gmail.com"
+
+					if email_already_registered
+						message = "Email already registered. Please check your inbox to reset password if you have forgotten."
+					else
+						message = "We have sent you an email with an activation link. Please activate your account."
+					end
+				end
+				info = info.merge(:message => message, :authenticate => authenticate)
+				info
+			end
+
 			def self.get_most_connected_friends
 				friends = [
 					{

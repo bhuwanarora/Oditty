@@ -64,15 +64,6 @@
    top:expression((0-(recommendationFooter.offsetHeight)+(document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight)+(ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop))+'px');
 }
 
-
-.recommendation_block{
-	display: inline-block;
-	height: 78vh;
-	margin-right: -35px;
-	position: relative;
-	width: 66vh;
-}
-
 .vertical_line{
 	border-right: 1px solid #DADADA;
 	display: inline-block;
@@ -83,9 +74,9 @@
 }
 
 
-.card_expand{
+/*.card_expand{
 	width: 92%;
-}
+}*/
 
 /*book binding*/
 /*.book_binding{
@@ -1664,4 +1655,31 @@ and (min-width : 1824px) {
 	position: fixed;
 	z-index: 1;
 	box-shadow: 8px 0 43px 0 rgba(66,66,66,.47);
+}
+
+.ticker_popup{
+	top: 95px;
+	left: 270px;
+	white-space: initial;
+	overflow: scroll;
+	background-color: white;
+	border-radius: 4px;
+	border: 1px solid #FFF;
+	box-shadow: 0 7px 15px rgba(0,0,0,.25);
+	height: 72vh;
+	min-width: 380px;
+	position: fixed;
+	width: 57vh;
+	z-index: 1;
+}
+
+.ticker_popup .arrow_left{
+	position: absolute;
+	top: 10px;	
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+	width: 0; 
+	height: 0;
+	left: -11px;
+	border-right: 10px solid white; 
 }

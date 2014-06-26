@@ -238,6 +238,13 @@ websiteApp.directive('notificationLink', function(){
 	}
 });
 
+websiteApp.directive('tickerPopup', function(){
+	return{
+		restrict: 'E',
+		templateUrl: '/assets/angular/widgets/partials/ticker_popup.html'
+	}
+});
+
 websiteApp.directive('filter', ['$rootScope', '$timeout', '$routeParams', function($rootScope, $timeout, $routeParams){
 	return{
 		restrict: 'E',
@@ -352,7 +359,14 @@ websiteApp.directive('recommendationFooter', ['scroller', function(scroller){
 			}
 
 
-			$scope.stop_horizontal_scroll = function(event){
+			$scope.handle_notification_ticker_size = function(event){
+				var increase_tab_size = event.deltaY > 0;
+				if(increase_tab_size){
+					$scope.notifications_style = {"height": "225px"};
+				}
+				else{
+					$scope.notifications_style = {"height": "110px"};
+				}
 	            event.stopPropagation();
 	        }
 	        

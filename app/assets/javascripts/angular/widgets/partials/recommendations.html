@@ -138,8 +138,9 @@
 		
 		<div class="left_column animate-fast">
 			<div class="notifications animate-fast" 
+				 ng-style="notifications_style"
 				 ng-if="show_notifications"
-				 msd-wheel="stop_horizontal_scroll($event)">
+				 msd-wheel="handle_notification_ticker_size($event)">
 				<div class="notification_elements">
 					<!-- <div class="notification">News Feed</div> -->
 					<div ng-repeat="notification in notifications | reverse">
@@ -154,6 +155,9 @@
 		     ng-style="focused_book.reposition_tooltip"
 		     ng-click="stop_propagation($event)"
 		     ng-if="focused_book"><focused-book></focused-book></div>
+		<div class="ticker_popup" ng-if="ticker_popup">
+			<ticker-popup></ticker-popup>
+		</div>
 		<div ng-if="focused_author"><focused-author></focused-author></div>
 		<div ng-if="focused_reader"><focused-reader></focused-reader></div>
 

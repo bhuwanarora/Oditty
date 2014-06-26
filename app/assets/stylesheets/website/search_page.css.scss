@@ -220,7 +220,7 @@
 	background-color: white;
 	border-radius: 2px;
 	width: 350px;
-	height: 250px;
+	overflow: auto;
 	left: 50%;
 	top: 50%;
 	margin-left: -190px;
@@ -235,6 +235,13 @@
 
 .login_box .header{
 	margin-bottom: 10px;
+}
+
+.login_box .login_status{
+	width: 250px;
+	padding: 10px;
+	color: #d73d32;
+	white-space: initial;
 }
 
 .login_form input{

@@ -294,8 +294,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
     _handle_socket = function(){
     	appSocket.forward('push:notification', $scope);
-    	appSocket.on('push:notification', function(notification){
-          	$scope.notifications.push({"message": notification.notification});
+    	$scope.$on('socket:push:notification', function(ev, data){
+          	$scope.notifications.push({"message": data.notification});
         });
     }
 
