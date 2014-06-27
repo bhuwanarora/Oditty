@@ -164,7 +164,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
 	_initialize_filters = function(){
-		$scope.show_more_filters = false;
+		$scope.show_more_filters = true;
 		$rootScope.filters = {};
         $rootScope.filters["more_filters"] = [];
         $rootScope.filters["other_filters"] = {};

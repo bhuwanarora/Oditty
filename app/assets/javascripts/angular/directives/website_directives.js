@@ -423,6 +423,7 @@ websiteApp.directive('notification', ['$rootScope', function($rootScope){
 				var ticker_popup_absent = $rootScope.ticker_popup == null;
 				if(ticker_popup_absent){
 					$rootScope.ticker_popup = true;
+					$rootScope.focused_book = null;
 					var top = _get_arrow_position(event);
 					$rootScope.ticker_position = {"top": top+"px"};
 				}

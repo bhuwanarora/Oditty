@@ -412,7 +412,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		console.time("websiteAppController");
 		_initiate_loading_page();
 		$scope.more_filters = [];
-		$scope.show_notifications = false;
+		$scope.show_notifications = true;
 		$scope.notifications_seen = false;
 		$scope.test = {time: 1970};
 		$scope.detailed_book = {};

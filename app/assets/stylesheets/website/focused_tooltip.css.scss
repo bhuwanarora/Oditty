@@ -193,6 +193,9 @@
 .focused_tooltip .user_box{
 	bottom: 100px;
 	position: absolute;
+	background-color: white;
+	width: 100%;
+	padding-top: 5px;
 }
 
 .focused_tooltip .header .title:hover,
