@@ -506,7 +506,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	        		var json = {"name": results[i][0], "author_name": results[i][1]}
 	            	$scope.search_results.push(json);
 	        	}
-	        	var show_all = {"name": "Show all results", "show_all": true};
+	        	var show_all = {"name": "<span class='icon-list'></span><span>&nbsp;&nbsp;Show all results for '<em>"+$scope.search_tag.input+"</em>'</span>", "show_all": true};
 				$scope.search_results.push(show_all);
 				$scope.search_initiated = false;
 				$timeout.cancel(search_typing_timeout);

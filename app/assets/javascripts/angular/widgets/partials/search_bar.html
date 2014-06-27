@@ -70,7 +70,7 @@
          <!-- ng-bind-html="highlight(search_tag.input, item.name)" -->
       <div class="title">
         <span ng-show="item.icon" class="{{item.icon}}">&nbsp;</span>
-        <span>{{item.name}}</span>
+        <span ng-bind-html="item.name"></span>
       </div>
       <div ng-show="item.author_name">by {{item.author_name}}</div>
     </div>

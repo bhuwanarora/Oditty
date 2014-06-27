@@ -1299,7 +1299,7 @@ and (min-width : 1824px) {
 	pointer-events: none;
 	margin-top: 0px;
 	margin-bottom: 0px;
-	z-index: 1;
+	z-index: 2;
 	max-height: 35vh;
 	overflow-y: scroll;
 }
@@ -1694,4 +1694,22 @@ and (min-width : 1824px) {
 	height: 42vh;
 	overflow: scroll;
 	width: 57vh;
+}
+
+
+.left_column .friends_grid{
+	max-height: 35px;
+	padding: 5px;
+	white-space: normal;
+	overflow-y: scroll;
+	width: 245px;
+	background-color: white;
+	margin-top: 5px;
+	border-radius: 4px;
+}
+
+.left_column .friends_grid img{
+	width: 30px;
+	margin: 2px;
+	border-radius: 2px;
 }
