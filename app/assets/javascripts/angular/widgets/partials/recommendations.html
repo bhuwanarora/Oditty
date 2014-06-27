@@ -139,6 +139,8 @@
 		<div class="left_column animate-fast">
 			<div class="scrollbar notifications animate-fast" 
 				 ng-style="column_heights.notifications_style"
+				 ng-if="show_notifications"
+				 msd-wheel="handle_notification_ticker_size($event)">
 				<div class="notification_elements">
 					<!-- <div class="notification">News Feed</div> -->
 					<div ng-repeat="notification in notifications | reverse">
