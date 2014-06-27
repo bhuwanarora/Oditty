@@ -15,6 +15,7 @@ websiteApp.directive('book', ['widgetService', '$rootScope', function (widgetSer
       $scope.show_focused_tooltip = function(event){
         if($rootScope.focused_book != $scope.book){
           // $rootScope.show_more_filters = false;
+          $rootScope.ticker_popup = null;
           $rootScope.focused_book = $scope.book;
           var posX = event.currentTarget.offsetParent.offsetParent.offsetLeft - event.pageX + event.clientX;
           var display_right_width =  screen.width - (posX + event.currentTarget.offsetParent.scrollWidth);

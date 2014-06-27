@@ -23,20 +23,22 @@
   </div>
 </div>
 <div class="tabs">
-  <div ng-click="show_info = true;" 
+  <div ng-click="show_info = true; show_buy = false;"
         class="tab"
         ng-class="{'active_tab': show_info}">
       <span>Info</span><span class=""></span>
   </div>
-  <div ng-click="show_info = false;" 
+  <div ng-click="show_info = false; show_buy = false;"
         class="tab"
-        ng-class="{'active_tab': !show_info}">
+        ng-class="{'active_tab': !show_info && !show_buy}">
       <span>Actions</span><span class=""></span>
   </div>
   <div class="tab">
       <span>About Author</span><span class=""></span>
   </div>
-  <div class="tab">
+  <div ng-click="show_info = false; show_buy = true;"
+       class="tab"
+       ng-class="{'active_tab': show_buy}">
       <span>Buy this book</span><span class=""></span>
   </div>
 </div>
@@ -70,13 +72,13 @@
     </span>
      · 
   </div>
-<div ng-if="!show_info">
+<div ng-if="!show_info && !show_buy">
   <rate data="focused_book"></rate>
 </div>
 <div class="scrollbar description" msd-wheel="stop_horizontal_scroll($event)" ng-if="show_info">
   <span itemprop="description">{{focused_book.summary}}</span>
 </div>
-<div class="time_to_read" ng-if="!show_info">
+<div class="time_to_read" ng-if="!show_info && !show_buy">
   <div class="header">Describe the reading length of this book</div>
   <div>
     <span ng-click="record_read_time(0)"
@@ -90,8 +92,15 @@
     
   </div>
 </div>
-<div ng-if="!show_info">
-  <a ng-href="{{link}}" ng-repeat="link in bnn_links" target="_blank">{{focused_book.title}}-bnn</a>
+<div ng-if="show_buy" class="buy_column">
+  <div ng-if="bnn_links">
+    <span ng-repeat="link in bnn_links">
+      <a ng-href="{{link}}" target="_blank"><em>Barnes & Nobles</em></a>
+    </span>
+  </div>
+  <div ng-if="!bnn_links">
+    Sorry! Could find this book on <em>Barnes & Nobles</em>.
+  </div>
 </div>
 <div class="user_box">
   <div class="users_count">{{focused_book.users_count}} friends have read this</div>

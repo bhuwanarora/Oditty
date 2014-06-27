@@ -14,8 +14,13 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		event.stopPropagation();
 	}
 
-	$scope.move_left = function(event){
+	_hide_popups = function(){
 		$rootScope.focused_book = null;
+		$rootScope.ticker_popup = null;
+	}
+
+	$scope.move_left = function(event){
+		_hide_popups();
 		var swipe_time = 2000;
 		var clientWidth = document.body["scrollWidth"];
 		if(event){
@@ -41,7 +46,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	$scope.move_right = function(event){
-		$rootScope.focused_book = null;
+		_hide_popups();
 		var swipe_time = 2000;
 		var clientWidth = document.body["scrollWidth"];
 		if(event){
@@ -407,7 +412,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		console.time("websiteAppController");
 		_initiate_loading_page();
 		$scope.more_filters = [];
-		$scope.show_notifications = false;
+		$scope.show_notifications = true;
 		$scope.notifications_seen = false;
 		$scope.test = {time: 1970};
 		$scope.detailed_book = {};

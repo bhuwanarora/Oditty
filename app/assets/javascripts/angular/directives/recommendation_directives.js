@@ -70,6 +70,12 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 				$scope.readTimeSelected = {"name": "<span class='icon-clock'></span><span>&nbsp;Filter by Reading Time</span>"};
 			}
 
+			$scope.handle_left_columns = function(){
+				$scope.column_heights = {"show_filters": true,
+										"notifications_style" : {"height": "110px"}, 
+										"friends_grid_style": {"height": "30px"}};
+			}
+
 			$scope.clear_filter = function(main_filter, type){
 				$rootScope.filters["other_filters"][type] = null;
 				var message = "SUCCESS-"+type+" filter removed";
@@ -362,10 +368,14 @@ websiteApp.directive('recommendationFooter', ['scroller', function(scroller){
 			$scope.handle_notification_ticker_size = function(event){
 				var increase_tab_size = event.deltaY > 0;
 				if(increase_tab_size){
-					$scope.notifications_style = {"height": "225px"};
+					$scope.column_heights = {"notifications_style": {"height": "225px"},
+											"friends_grid_style": {"height": "30px"},
+											"show_filters": false};
 				}
 				else{
-					$scope.notifications_style = {"height": "110px"};
+					$scope.column_heights = {"notifications_style": {"height": "110px"},
+											"friends_grid_style": {"height": "30px"},
+											"show_filters": false};
 				}
 	            event.stopPropagation();
 	        }

@@ -138,9 +138,7 @@
 		
 		<div class="left_column animate-fast">
 			<div class="scrollbar notifications animate-fast" 
-				 ng-style="notifications_style"
-				 ng-if="show_notifications"
-				 msd-wheel="handle_notification_ticker_size($event)">
+				 ng-style="column_heights.notifications_style"
 				<div class="notification_elements">
 					<!-- <div class="notification">News Feed</div> -->
 					<div ng-repeat="notification in notifications | reverse">
@@ -149,13 +147,26 @@
 				</div>
 			</div>
 			<more-filters></more-filters>
+			<div class="friends_grid" 
+				 ng-style="column_heights.friends_grid_style"
+				 msd-wheel="handle_friends_grid_size($event)">
+				<img ng-src="{{friend.thumb}}" 
+					 title="{{friend.name}}" 
+				     ng-repeat="friend in user.friends" 
+				     class="friend_thumb" 
+				     data-selected="false"
+				     ng-click="select_thumb($event)"/>
+			</div>
 		</div>
 		<!-- <div class="wrapper" ng-if="focused_book"></div> -->
 		<div class="focused_tooltip animate-fast"
 		     ng-style="focused_book.reposition_tooltip"
 		     ng-click="stop_propagation($event)"
 		     ng-if="focused_book"><focused-book></focused-book></div>
-		<div class="ticker_popup" ng-if="ticker_popup">
+		<div class="ticker_popup" 
+			 ng-if="ticker_popup"
+			 ng-style="ticker_popup_style"
+			 msd-wheel="handle_height_of_popup($event)">
 			<ticker-popup></ticker-popup>
 		</div>
 		<div ng-if="focused_author"><focused-author></focused-author></div>
