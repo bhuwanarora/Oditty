@@ -33,7 +33,7 @@ angular.module('ngDropdowns', []).directive('dropdownSelect', [
           }
         }
       ],
-      template: "<div class='wrap-dd-select'>\n    <span class='selected' ng-bind-html='dropdownModel[labelField]'></span>\n    <ul msd-wheel='stop_horizontal_scroll($event)' class='dropdown'>\n        <li ng-repeat='item in dropdownSelect'\n            class='dropdown-item'\n            dropdown-select-item='item'\n            dropdown-item-label='labelField'>\n        </li>\n    </ul>\n</div>"
+      template: "<div class='wrap-dd-select'>\n    <span class='selected' ng-bind-html='dropdownModel[labelField]'></span>\n    <ul msd-wheel='stop_horizontal_scroll($event)' class='scrollbar dropdown'>\n        <li ng-repeat='item in dropdownSelect'\n            class='dropdown-item'\n            dropdown-select-item='item'\n            dropdown-item-label='labelField'>\n        </li>\n    </ul>\n</div>"
     };
   }
 ]).directive('dropdownSelectItem', [

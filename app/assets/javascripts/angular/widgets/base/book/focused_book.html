@@ -73,7 +73,7 @@
 <div ng-if="!show_info">
   <rate data="focused_book"></rate>
 </div>
-<div class="description" msd-wheel="stop_horizontal_scroll($event)" ng-if="show_info">
+<div class="scrollbar description" msd-wheel="stop_horizontal_scroll($event)" ng-if="show_info">
   <span itemprop="description">{{focused_book.summary}}</span>
 </div>
 <div class="time_to_read" ng-if="!show_info">

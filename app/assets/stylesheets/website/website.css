@@ -20,7 +20,7 @@ body{
     font-family: helvetica neue;
 }
 
-::-webkit-scrollbar { 
+:not(.scrollbar)::-webkit-scrollbar { 
     display: none; 
 }
 
