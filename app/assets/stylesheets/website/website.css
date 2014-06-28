@@ -187,3 +187,119 @@ input:focus{
     height: 0;
     z-index: 3;
 }
+
+.scrollbar{
+    overflow: hidden;
+}
+
+
+.scrollbar:hover{
+    overflow-y: auto;
+}
+
+
+.scrollbar::-webkit-scrollbar {
+    width: 10px;
+}
+
+
+.scrollbar::-webkit-scrollbar-thumb {
+    -webkit-background-clip: content-box;
+    background-color: rgba(0, 0, 0, .4);
+    border: 1px solid rgba(85, 85, 85, .6);
+    -webkit-border-radius: 7px;
+    -webkit-transition: width 250ms;
+    width: 5px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+    opacity:0;
+    display: block;
+    pointer-events: none;
+    -webkit-user-select: none;
+    width: 7px;
+    z-index: 5;
+}
+
+.scrollbar::-webkit-scrollbar-track:hover {
+    opacity: 1;
+    width: 10px;
+    background-color: rgba(0, 0, 0, .15);
+    -webkit-border-radius: 10px;
+}
+
+@-webkit-keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        display: block;
+    }   
+    25% {
+        opacity: 1;
+        display:none;
+    }
+    75% {
+        opacity: 1;
+        display: none;
+    }
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}
+
+@-moz-keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }   
+    25% {
+        opacity: 1;
+    }
+    75% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@-o-keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }   
+    25% {
+        opacity: 1;
+    }
+    75% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }   
+    25% {
+        opacity: 1;
+    }
+    75% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.scrollbar:hover::-webkit-scrollbar-thumb{
+    -webkit-animation: fadeInOut 5s;
+    -moz-animation: fadeInOut 5s;
+    -o-animation: fadeIOut 5s;
+    animation: fadeInOut 5s;
+    -webkit-animation-fill-mode:both;
+    -moz-animation-fill-mode:both;
+    -ms-animation-fill-mode:both;
+    -o-animation-fill-mode:both;
+    animation-fill-mode:both;
+}
