@@ -99,19 +99,21 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	_add_listeners = function(){
 	    load_recommendations_event = $scope.$on('loadRecommendations', function(){
-	    	console.debug("%cloadRecommendations", "color: purple;");
-	    	$rootScope.filters["reset"] = false;
-	    	if($rootScope.filters["reset_count"] == undefined){
-	    		console.debug("%c reset count", "color: purple");
-	    		$rootScope.filters["reset_count"] = 0;
-	    	}
-	    	else{
-	    		console.debug("%c increase count", "color: purple");
-	    		$rootScope.filters["reset_count"] = $rootScope.filters["reset_count"]+1;
+	    	if(!$scope.read_selected && !$scope.bookmark_selected){
+		    	console.debug("%cloadRecommendations", "color: purple;");
+		    	$rootScope.filters["reset"] = false;
+		    	if($rootScope.filters["reset_count"] == undefined){
+		    		console.debug("%c reset count", "color: purple");
+		    		$rootScope.filters["reset_count"] = 0;
+		    	}
+		    	else{
+		    		console.debug("%c increase count", "color: purple");
+		    		$rootScope.filters["reset_count"] = $rootScope.filters["reset_count"]+1;
 	    	}
 	    	console.log("%c load_recommendations_event", "color: green;");
 	    	_get_recommendations();
 	    	// event.stopPropagation();
+	    	}
 	    });
 
 	    reload_recommendations_event = $scope.$on('reloadRecommendations', function(){
