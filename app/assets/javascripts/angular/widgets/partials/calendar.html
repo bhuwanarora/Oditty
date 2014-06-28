@@ -1,5 +1,11 @@
 <span>
- 	<select ng-model="selectedMonth" ng-options="selectedMonth for selectedMonth in months" ng-change="date_check()"></select>
- 	<select ng-model="selectedDay" ng-options="selectedDay for selectedDay in days" ng-change="date_check()"></select>
- 	<select ng-model="selectedYear" ng-options="selectedYear for selectedYear in years" ng-change="date_check()"></select>
+ 	<select ng-model="selectedYear" ng-options="selectedYear for selectedYear in years" ng-change="date_check()">
+ 	 	<option value="">Year</option>
+ 	</select>
+ 	<select ng-model="selectedMonth" ng-options="selectedMonth for selectedMonth in months" ng-change="date_check()" ng-disabled="!selectedYear">
+ 		<option value="">Month</option>
+ 	</select>
+ 	<select ng-model="selectedDay" ng-options="selectedDay for selectedDay in days" ng-change="date_check()" ng-disabled="!selectedYear || !selectedMonth">
+ 		<option value="">Day</option>
+ 	</select>
  </span>

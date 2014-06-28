@@ -417,9 +417,6 @@ websiteApp.directive('calendar', function(){
 				for(var i=currentYear; i>1904; i--){
 					$scope.years.push(i);
 				}
-				$scope.selectedDay = $scope.days[0];
-				$scope.selectedMonth = $scope.months[0];
-				$scope.selectedYear = $scope.years[0];
 			}
 
 			_init();
