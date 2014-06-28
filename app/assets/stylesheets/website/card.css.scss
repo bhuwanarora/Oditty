@@ -12,7 +12,7 @@
 	height: 78vh;
 	margin-right: 20px;
 	position: relative;
-	width: 58vh;
+	width: 52vh;
 }
 
 .widget{
@@ -68,7 +68,9 @@
 	float: left;
 	height: 100%;
 	position: relative;
-	width: 92%;
+	width: 100%;
+	border-top-left-radius: 4px;
+	box-shadow: -3px 0 5px -2px #888;
 }
 
 .category_hovered{
@@ -211,6 +213,7 @@
 	cursor: pointer;
 	z-index: 1;
 	border-top-right-radius: 4px;
+	border-top-left-radius: 4px;
 }
 
 .card .widget_thumb_focus{

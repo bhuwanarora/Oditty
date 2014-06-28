@@ -10,7 +10,6 @@
 	<div class="profile_status_logo"></div>
 	<div ng-switch-when="0">
 		<div class="header">
-			<label for="username">Name</label>
 			<input class="username" 
 				id="username"
       	       ng-model="user.name" 
@@ -111,9 +110,20 @@
 				on-select="add_book()"
 				ng-keypress="get_search_results($event, 'BOOK', searchResults)">
 			</type-ahead>
-		<div class="description">
-			Tell us about your taste..
+		<div class="header" msd-wheel="stop_horizontal_scroll($event)">
+			<div ng-if="book.thumb | is_present" class="book_column" 
+					 ng-repeat="book in popular_books">
+				<img ng-src="{{book.thumb}}" 
+					 class="book_thumb"/>
+				<div class="book_details">
+					<span>{{book.title}}</span>
+					<span>by {{book.author_name}}</span>
+				</div>
+			</div>
 		</div>
+		<!-- <div class="description">
+			Tell us about your taste..
+		</div> -->
 	</div>
 	<div ng-switch-when="4">
 		<div class="header">Which 3 Authors you like?</div>

@@ -14,6 +14,11 @@ module Api
 				render :json => info, :status => status
 			end
 
+			def get_popular_books
+				books = BookApi.get_popular_books params
+				render :json => books, :status => 200
+			end
+
 			def tooltip
 				info = BookApi.tooltip
 				render :json => info, :status => 200

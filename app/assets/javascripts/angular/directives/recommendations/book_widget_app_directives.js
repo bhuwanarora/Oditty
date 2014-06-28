@@ -685,7 +685,7 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', fu
 }]);
 
 
-websiteApp.directive('markAsRead', ['$rootScope', '$timeout', 'widgetService', 'appSocket', function($rootScope, $timeout, widgetService, appSocket){
+websiteApp.directive('markAsRead', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
 	return {
 		restrict: 'E',
 		controller: ['$scope', function($scope){
@@ -708,17 +708,10 @@ websiteApp.directive('markAsRead', ['$rootScope', '$timeout', 'widgetService', '
             $timeout.cancel(glow_event);
           });
 
-          _trigger_notification_socket(message);
         }
         var timeout_event = notify($rootScope, message, $timeout);
         widgetService.mark_as_read($scope.book.id, $scope.read);
         event.stopPropagation();
-      }
-
-      _trigger_notification_socket = function(message){
-        appSocket.emit('push:notification', {
-          notification: message
-        });
       }
 
     }],
