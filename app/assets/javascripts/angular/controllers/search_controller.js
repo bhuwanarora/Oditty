@@ -280,6 +280,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope.book_search = false;
 		$scope.author_search = false;
 		$scope.reader_search = false;
+		$rootScope.hide_options = false;
 
 		_handle_input_focus();
 		_init_graph_search();
@@ -312,6 +313,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope.time_search = false;
 		$scope.gender_search = false;
 		$scope.awards_search = false;
+		$rootScope.hide_options = false;
 		_search_by();
 		_handle_input_focus();
 		event.stopPropagation();
