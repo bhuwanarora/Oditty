@@ -82,11 +82,18 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', function($rootScope,
 				});
 
 			}
+
+			_get_popular_books = function(){
+				websiteService.get_popular_books().then(function(data){
+					$scope.popular_books = data;
+				});
+			}
 			
 			_init = function(){
 				$rootScope.user.profile_status = 0;
 	    		_profile_status_colors();
 	    		_get_info_data();
+	    		_get_popular_books();
 
 				$scope.profileOptions = [
 					{"name": "Reader"},
