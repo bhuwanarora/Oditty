@@ -209,6 +209,12 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 				$scope.move_right();
 			}, 1000);
 	    });
+
+	    get_notifications_event = $scope.$on('getNotifications', function(){
+	    	websiteService.get_notifications($rootScope.user).then(function(data){
+				$scope.notifications = data.notifications;
+			});
+	    });
 	}
 
 	$scope.toggle_login_panel = function(){

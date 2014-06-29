@@ -15,9 +15,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 			// websiteService.get_user_details().then(function(data){
 	  //   		$rootScope.user.books = data["books"];
 	  //   	});
-			websiteService.get_notifications($rootScope.user).then(function(data){
-				$scope.notifications = data.notifications;
-			});
+			$scope.$emit('getNotifications');
 		}
 
 		var error_callback = function(reason){
