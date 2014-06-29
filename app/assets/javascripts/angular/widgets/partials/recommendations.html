@@ -143,8 +143,13 @@
 				 msd-wheel="handle_notification_ticker_size($event)">
 				<div class="notification_elements">
 					<!-- <div class="notification">News Feed</div> -->
-					<div ng-repeat="notification in notifications | reverse">
-						<notification data="notification"></notification>
+					<div ng-if="notifications">
+						<div ng-repeat="notification in notifications | reverse">
+							<notification data="notification"></notification>
+						</div>
+					</div>
+					<div ng-if="!notifications">
+						No notifications.
 					</div>
 				</div>
 			</div>

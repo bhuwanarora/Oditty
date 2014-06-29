@@ -109,7 +109,6 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
   	}
 
 	_init = function(){
-		
 		_bind_auth_listeners();
 	}
 
