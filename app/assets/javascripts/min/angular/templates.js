@@ -64,7 +64,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/base/book/label_dropdown.html',
-    "<form ng-if=\"book.show_labels\"><div class=\"arrow_down\"></div><ul class=\"label_dropdown animate-fast\" ng-click=\"stop_propagation($event)\" msd-wheel=\"stop_horizontal_scroll($event)\" ng-model=\"book.labels\"><li ng-repeat=\"label in book.labels\"><label ng-click=\"label.checked = true; select_label(label.name)\"><span class=\"bookmark_label\"><span class=\"icon-bookmark3\"></span>&nbsp; <span>{{label.name}}</span></span><input type=\"checkbox\" ng-checked=\"label.checked\" ng-value=\"label.name\" class=\"custom_radio icon-checkbox-unchecked\"></label></li></ul></form>"
+    "<form ng-if=\"book.show_labels\"><div class=\"arrow_down\"></div><ul class=\"label_dropdown animate-fast\" ng-click=\"stop_propagation($event)\" msd-wheel=\"stop_horizontal_scroll($event)\" ng-model=\"book.labels\"><li ng-repeat=\"label in book.labels track by $index\"><label ng-click=\"select_label($index)\"><span class=\"bookmark_label\"><span class=\"icon-bookmark3\"></span>&nbsp; <span>{{label.name}}</span></span><input type=\"checkbox\" ng-checked=\"label.checked\" ng-value=\"label.name\" class=\"custom_radio icon-checkbox-unchecked\"></label></li></ul></form>"
   );
 
 

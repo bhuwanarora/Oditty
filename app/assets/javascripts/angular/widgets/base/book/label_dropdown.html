@@ -4,17 +4,17 @@
 		ng-click="stop_propagation($event)"
 		msd-wheel="stop_horizontal_scroll($event)"
 		ng-model="book.labels">
-		<li ng-repeat="label in book.labels track by $index">
-  			<label ng-click="select_label($index)">
+		<li ng-repeat="label in book.labels track by $index"  ng-click="select_label($index);">
+  			<label>
   				<span class="bookmark_label">
   					<span class="icon-bookmark3"></span>&nbsp;
   					<span>{{label.name}}</span>
   				</span>
-  				<input type="checkbox" 
+        </label>
+  			<input type="checkbox" 
   					   ng-checked="label.checked"
   					   ng-value="label.name"
   					   class="custom_radio icon-checkbox-unchecked">
-  			</label>
 		</li>
 	</ul>
 </form>

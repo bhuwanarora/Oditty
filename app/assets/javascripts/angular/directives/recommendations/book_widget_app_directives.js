@@ -65,7 +65,13 @@ websiteApp.directive('book', ['widgetService', '$rootScope', function (widgetSer
         // var book_id = $scope.book.id;
         console.debug("%c _init book", "color: purple");
         $scope.book.tweets = [];
-        $scope.book.labels = $rootScope.labels;
+        var labels_length = $rootScope.labels.length;
+        $scope.book.labels = [];
+        for(var i=0; i<labels_length; i++){
+          $scope.book.labels.push({
+            name: $rootScope.labels[i].name
+          });
+        }
         $scope.book.show_labels = false;
         // widgetService.populate_tooltips(book_id).then(function(data){
           // $scope.book.title = data.title;
@@ -106,19 +112,15 @@ websiteApp.directive('labelDropdown', function(){
       }
 
       $scope.select_label = function(index){
+        debugger
         var atleast_one_label_checked = false;
         var labels = $scope.book.labels;
         // labels["name"]
-        if($scope.book.labels[index]["checked"]){
-          $scope.book.labels[index]["checked"]= false;
-        }
-        else{
-          $scope.book.labels[index]["checked"] = true;
-        }
+          $scope.book.labels[index]["checked"] = !$scope.book.labels[index]["checked"];
         for(var i=0; i<labels.length; i++){
           if(labels[i]["checked"]){
             atleast_one_label_checked = true;
-            break
+            break;
           }
         }
         if(atleast_one_label_checked){
@@ -165,9 +167,9 @@ websiteApp.directive('bookBookmark', ['$rootScope', '$timeout', 'widgetService',
     controller: ['$scope', function($scope){
       $scope.toggle_bookmarked = function(event){
         var book_scope_length = $scope.book.labels.length;
-        var rootScope_length =$rootScope.labels.length;
+        var rootScope_length = $rootScope.labels.length;
         for(var i=book_scope_length; i<rootScope_length; i++){
-            $scope.book.labels = $scope.book.labels.concat($rootScope.labels[i]);
+          $scope.book.labels.push({name: $rootScope.labels[i].name});
         }
         if($scope.book.show_labels){
           var bookmark_status = $scope.book.bookmark_status;
@@ -223,9 +225,9 @@ websiteApp.directive('bookInteract', ['$rootScope', '$timeout',
         }
         else{
           var book_scope_length = $scope.book.labels.length;
-          var rootScope_length =$rootScope.labels.length;
+          var rootScope_length = $rootScope.labels.length;
           for(var i=book_scope_length; i<rootScope_length; i++){
-            $scope.book.labels = $scope.book.labels.concat($rootScope.labels[i]);
+            $scope.book.labels.push({name: $rootScope.labels[i].name});
           }
           $scope.book.blur_input = false;
           $scope.book.show_labels = true;
@@ -767,7 +769,7 @@ function add_custom_bookmark($scope, $rootScope, $timeout){
 
     if(!already_exists){
       $scope.book.bookmark_status = 1;
-      $rootScope.labels = $rootScope.labels.concat([{"name": custom_bookmark, "checked": false}]);
+      $rootScope.labels = $rootScope.labels.concat([{"name": custom_bookmark}]);
       $scope.book.labels = $scope.book.labels.concat([{"name": custom_bookmark, "checked": true}]);
       $scope.book.custom_bookmark = "";
       var message = "SUCCESS-Custom Bookmark "+custom_bookmark+" added to book "+$scope.book.title;
