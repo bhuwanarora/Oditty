@@ -112,7 +112,6 @@ websiteApp.directive('labelDropdown', function(){
       }
 
       $scope.select_label = function(index){
-        debugger
         var atleast_one_label_checked = false;
         var labels = $scope.book.labels;
         // labels["name"]
