@@ -508,4 +508,11 @@ module Neo4jHelper
 		@neo.set_relationship_auto_index_status(true)
 		puts "indexing finished..."
 	end
+
+	def self.add_constraints
+		@neo ||= self.init
+		clause = "CREATE CONSTRAINT ON (user:User) ASSERT user.email IS UNIQUE"
+		@neo.execute_query clause
+		puts clause.blue.on_red
+	end
 end

@@ -5,28 +5,42 @@ module Api
 			def self.authenticate params
 				authenticate = false
 				info = {}
-				if params[:old_user]
-					verified_user = params[:email] == "test@gmail.com"
-					unregistered_user = params[:email] == "unregistered@gmail.com"
-					unverified_user = params[:email] == "unverified@gmail.com"
-
-					if verified_user
+				signin = params[:old_user]
+				email = params[:email]
+				@neo = Neography::Rest.new
+				clause = "MATCH (user:User{email:\""+email+"\"}) RETURN user"
+				puts clause.blue.on_red
+				user = @neo.execute_query(clause)["data"]
+				if signin
+					if  user[0][0]["data"]["password"] == params[:password] &&  user[0][0]["data"]["verified"]
 						authenticate = true
+						# request.session[:email] = email
 						info = {:profile_status => 0, :user_id => 1}
 						message = "Logged in successfully."
-					elsif unregistered_user
+					elsif  user[0][0]["data"]["password"] != params[:password]
 						message = "Email and password doesn't match."
-					elsif unverified_user
+					elsif ! user[0][0]["data"]["verified"]
 						message = "Please verify your email address."
 					else
 						message = "Email and password doesn't match."
 					end
 				else
-					email_already_registered = params[:email] == "alreadyregistered@gmail.com"
-
-					if email_already_registered
-						message = "Email already registered. Please check your inbox to reset password if you have forgotten."
+					verification_token = SecureRandom.hex
+					link = Rails.application.config.home+'verify?p='+verification_token.to_s+"&e="+email
+					invitation = {:email => email, :template => 'email_verification', :link => link}
+					if user.present?
+						if user[0][0]["data"]["verified"]
+							message = "Email already registered. Please check your inbox to reset password if you have forgotten."
+						else
+							clause = "MATCH (user:User{email:\""+email+"\"}) SET user.verification_token = \""+verification_token+"\""
+							@neo.execute_query clause
+							SubscriptionMailer.verify_email(invitation).deliver
+							message = "Please activate your email account. We are sending you another mail."
+						end
 					else
+						clause = "CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+params[:password]+"\"})"
+						@neo.execute_query clause
+						SubscriptionMailer.invite(invitation).deliver
 						message = "We have sent you an email with an activation link. Please activate your account."
 					end
 				end
@@ -103,6 +117,7 @@ module Api
 				info = {"reading_count_list" => reading_count_list}
 
 			end
+
 		end
 	end
 end
