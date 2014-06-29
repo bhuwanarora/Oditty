@@ -1,5 +1,4 @@
-websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout', 'websiteService', 'Facebook', '$document', 'scroller', '$window',
-	function($scope, $rootScope, $timeout, websiteService, Facebook, $document, scroller, $window){
+websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout', 'websiteService', 'Facebook', '$document', 'scroller', '$window', function($scope, $rootScope, $timeout, websiteService, Facebook, $document, scroller, $window){
 	$scope.bindHorizontalScroll = function(event, delta, deltaX, deltaY){
 		event.preventDefault();
 		if(delta > 0){
@@ -15,8 +14,13 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		event.stopPropagation();
 	}
 
-	$scope.move_left = function(event){
+	_hide_popups = function(){
 		$rootScope.focused_book = null;
+		$rootScope.ticker_popup = null;
+	}
+
+	$scope.move_left = function(event){
+		_hide_popups();
 		var swipe_time = 2000;
 		var clientWidth = document.body["scrollWidth"];
 		if(event){
@@ -42,7 +46,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	$scope.move_right = function(event){
-		$rootScope.focused_book = null;
+		_hide_popups();
 		var swipe_time = 2000;
 		var clientWidth = document.body["scrollWidth"];
 		if(event){
@@ -111,24 +115,33 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		// console.log("showFeebackForm")
 	}
 
-	$scope.authenticate = function(){
-		var data_json = $rootScope.user;
+	$scope.authenticate = function(email, password, old_user){
+		var email = "test@gmail.com";
+		var old_user = true;
+		var data_json = {"email": email, "password": password, "old_user": old_user};
 		$scope.loading_icon = true;
-		websiteService.authenticate(data_json).then(function(data){
-			if(data.message == "success"){
-				$rootScope.user.profile_status = data.profile_status;
-				$rootScope.user.logged = true;
-				$rootScope.user.id = data.user_id;
-				// $scope.show_login_form = true;
-				// _profile_status_colors();
-				// websiteService.get_user_details().then(function(data){
-		  //   		$rootScope.user.books = data["books"];
-		  //   	});
-				websiteService.get_notifications($rootScope.user).then(function(data){
-					$scope.notifications = data.notifications;
-				});
-			}
-		});
+		var success_callback = function(data){
+			$scope.error_message = data.message;
+			$rootScope.user.profile_status = data.profile_status;
+			$rootScope.user.logged = true;
+			$rootScope.user.id = data.user_id;
+			$scope.loading_icon = false;
+			// $scope.show_login_form = true;
+			// _profile_status_colors();
+			// websiteService.get_user_details().then(function(data){
+	  //   		$rootScope.user.books = data["books"];
+	  //   	});
+			websiteService.get_notifications($rootScope.user).then(function(data){
+				$scope.notifications = data.notifications;
+			});
+		}
+
+		var error_callback = function(reason){
+			$scope.loading_icon = false;
+			$scope.error_message = reason.data.message;
+		}
+
+		websiteService.authenticate(data_json).then(success_callback, error_callback);
 	}
 
     $scope.intent_login = function() {
@@ -385,16 +398,21 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 
 	_handle_socket_error = function(){
 		$scope.$on('socket:error', function (ev, data) {
-
+			debugger
 	    });
-		
+	    // debugger
+
+	    // appSocket.forward('someEvent', $scope);
+	    // $scope.$on('socket:someEvent', function (ev, data) {
+	    //   $scope.theData = data;
+	    // });
 	}
 
 	_init = function(){
 		console.time("websiteAppController");
 		_initiate_loading_page();
 		$scope.more_filters = [];
-		$scope.show_notifications = false;
+		$scope.show_notifications = true;
 		$scope.notifications_seen = false;
 		$scope.test = {time: 1970};
 		$scope.detailed_book = {};
@@ -405,14 +423,13 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 						'readers': {'follow': []},
 						'logged': false};
 		$scope.website = {};
-		$scope.website.searching = true;
+		$scope.website.searching = false;
 		$scope.website.show_search_page = true;
-
 		_bind_emit();
 		_bind_feedback_form();
 		_bind_auth_listeners();
 		_add_listeners();
-		
+		_handle_socket_error();
 		// $('body').css('white-space', 'normal');
 		// $speechRecognition.onstart(function(){
 		//   $speechSynthetis.speak("You're at Reader's Door. How can I help you?", 'en-UK');

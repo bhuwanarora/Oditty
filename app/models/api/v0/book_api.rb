@@ -8,6 +8,14 @@ module Api
 				end
 			end
 
+			def self.get_book(title, author_name)
+				@neo = Neography::Rest.new
+				clause = "MATCH (book:Book) WHERE book.title =~ \"(?i)"+title+"\" AND book.author_name =~ \"(?i)"+author_name+"\" RETURN book"
+				puts clause.blue.on_red
+				book = @neo.execute_query(clause)["data"]
+				book
+			end
+
 			def self.push_recommendations
 				self.recommendations
 			end
@@ -90,6 +98,36 @@ module Api
 				info = {"moments" => test_moments}
 			end
 
+			def self.get_popular_books filters
+				skip_count = filters[:skip_count]
+				unless skip_count
+					skip_count = 0
+				end
+				@neo = Neography::Rest.new
+				clause = "MATCH (book:Book) WITH book, toInt(book.gr_reviews_count) + toInt(book.gr_ratings_count) AS weight RETURN book, weight as weight ORDER BY weight DESC SKIP "+(10*skip_count).to_s+" LIMIT 10"
+				puts clause.blue.on_red
+				begin
+					books =  @neo.execute_query(clause)["data"]
+				rescue Exception => e
+					puts e.to_s.red
+					books = [{:message => "Error in finding books"}]
+					# books =  @neo.execute_query(clause)["data"]
+				end
+				results = []
+				for book in books
+					book = book[0]["data"]
+					isbn = book["isbn"].split(",")[0] rescue nil
+					thumb = "http://covers.openlibrary.org/b/isbn/"+isbn+"-S.jpg" rescue ""
+					book = {
+						:title => book["title"],
+						:author_name => book["author_name"],
+						:thumb => thumb
+					}
+					results.push book
+				end
+				results
+			end
+
 			def self.recommendations filters={}
 				skip_clause = ""
 				if filters["reset"]
@@ -123,9 +161,15 @@ module Api
 					match_clause = ""
 					book_name = filters["other_filters"]["title"]
 					author_name = filters["other_filters"]["author_name"]
+					show_all = filters["other_filters"]["show_all"]
 					if book_name.present?
-						puts "book_name "+book_name+" author_name "+author_name+" ".green
-						where_clause = where_clause + " book.title=~\"(?i)"+book_name+"\" AND book.author_name=~\"(?i)"+author_name+"\" "
+						if show_all
+							puts "book_name "+book_name+" show_all ".green
+							where_clause = where_clause + " book.title=~\"(?i)"+book_name+".*\" "
+						else
+							puts "book_name "+book_name+" author_name "+author_name+" ".green
+							where_clause = where_clause + " book.title=~\"(?i)"+book_name+"\" AND book.author_name=~\"(?i)"+author_name+"\" "
+						end
 					else
 						if filters["other_filters"]["country"].present?
 							where_clause = where_clause + ""

@@ -13,6 +13,14 @@
 	/* for big screens */
 }
 
+.focused_tooltip .buy_column{
+	padding: 10px;
+}
+
+.focused_tooltip a{
+	color: #136CB2;
+}
+
 .focused_tooltip .rating_star{
 	position: absolute;
 	right: 40px;
@@ -91,7 +99,7 @@
 	font-size: 0.93em;
 	height: 20vh;
 	line-height: 1.3em;
-	overflow-y: scroll;
+	/*overflow-y: scroll;*/
 	padding: 12px;
 	border-bottom: 1px solid #D3D3D3;
 }
@@ -185,6 +193,9 @@
 .focused_tooltip .user_box{
 	bottom: 100px;
 	position: absolute;
+	background-color: white;
+	width: 100%;
+	padding-top: 5px;
 }
 
 .focused_tooltip .header .title:hover,

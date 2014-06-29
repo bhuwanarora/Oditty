@@ -33,7 +33,7 @@
 		<div>{{focused_book.hash_tagged_comment}}</div>
 		<div class="character_count">{{140 - focused_book.current_comment.length}} characters left</div>
 	</div>
-	<div class="tweets"
+	<div class="scrollbar tweets"
 	 	 ng-click="stop_propagation($event)">
 		<div class="tweet" ng-repeat="tweet in focused_book.tweets | reverse">
 			<div class="thumb"><user-thumb></user-thumb></div>

@@ -23,6 +23,30 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		}
 	}
 
+	$scope.handle_height_of_popup = function(event){
+		if(event.deltaY > 0){
+			$scope.ticker_popup_style = {"height": "62vh"};
+		}
+		else{
+			$scope.ticker_popup_style = {"height": "42vh"};		
+		}
+		event.stopPropagation();
+	}
+
+	$scope.handle_friends_grid_size = function(){
+		if(event.deltaY > 0){
+			$scope.column_heights = {"notifications_style" : {"height": "110px"}, 
+									"friends_grid_style": {"max-height": "90px", "overflow": "auto"},
+									"show_filters": false};
+		}
+		else{
+			$scope.column_heights = {"notifications_style" : {"height": "110px"}, 
+									"friends_grid_style": {"height": "30px"},
+									"show_filters": false};
+		}
+		event.stopPropagation();
+	}
+
 	$scope.reset = function(){
 		_init_recommendations();
     	_get_recommendations();
@@ -62,6 +86,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	$scope.hide_popups = function(){
 		$rootScope.hide_options = true;
 		$rootScope.focused_book = null;
+		$rootScope.ticker_popup = null;
  		// $scope.show_more_filters = false;
 	}
 
@@ -74,19 +99,21 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	_add_listeners = function(){
 	    load_recommendations_event = $scope.$on('loadRecommendations', function(){
-	    	console.debug("%cloadRecommendations", "color: purple;");
-	    	$rootScope.filters["reset"] = false;
-	    	if($rootScope.filters["reset_count"] == undefined){
-	    		console.debug("%c reset count", "color: purple");
-	    		$rootScope.filters["reset_count"] = 0;
-	    	}
-	    	else{
-	    		console.debug("%c increase count", "color: purple");
-	    		$rootScope.filters["reset_count"] = $rootScope.filters["reset_count"]+1;
+	    	if(!$scope.read_selected && !$scope.bookmark_selected){
+		    	console.debug("%cloadRecommendations", "color: purple;");
+		    	$rootScope.filters["reset"] = false;
+		    	if($rootScope.filters["reset_count"] == undefined){
+		    		console.debug("%c reset count", "color: purple");
+		    		$rootScope.filters["reset_count"] = 0;
+		    	}
+		    	else{
+		    		console.debug("%c increase count", "color: purple");
+		    		$rootScope.filters["reset_count"] = $rootScope.filters["reset_count"]+1;
 	    	}
 	    	console.log("%c load_recommendations_event", "color: green;");
 	    	_get_recommendations();
 	    	// event.stopPropagation();
+	    	}
 	    });
 
 	    reload_recommendations_event = $scope.$on('reloadRecommendations', function(){
@@ -139,7 +166,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
 	_initialize_filters = function(){
-		$scope.show_more_filters = false;
+		$scope.show_more_filters = true;
 		$rootScope.filters = {};
         $rootScope.filters["more_filters"] = [];
         $rootScope.filters["other_filters"] = {};
@@ -291,7 +318,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         $rootScope.labels = data["labels"];
       });
     }
-
 
 	_init = function(){
 		//oneMin = 60000

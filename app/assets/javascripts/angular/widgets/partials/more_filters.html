@@ -5,14 +5,14 @@
 	<div ng-if="!bookmark_selected && !read_selected">
 		<!-- BOOK FILTERS -->
 		<div class="filters" ng-if="$routeParams.type == 'books'">
-			<div ng-click="show_lists = false;" class="filter_header">
+			<div ng-click="show_lists = false; handle_left_columns();" class="filter_header">
 				<span class="icon-filter"></span><span>&nbsp;&nbsp;Main Filters</span>
 			</div>
-			<div class="filters_panel" ng-if="!show_lists">
+			<div class="filters_panel" ng-if="!show_lists && column_heights.show_filters">
 			 	<type-ahead items="genres" 
 			 				prompt="Filter by a Genre" 
 			 				title="name"
-			 				custom-options="genre_typeahead_options"
+			 				custom-options="genre_z_index genre_typeahead_options"
 			 				custom="input_filter"
 			 				model="genre" 
 			 				on-select="on_genre_selection(genre, $event)"
@@ -32,7 +32,7 @@
 			 	</type-ahead>
 			</div>
 			
-			<div class="filters_panel_right" ng-if="!show_lists">
+			<div class="filters_panel_right" ng-if="!show_lists && column_heights.show_filters">
 			 	<div class="position_dropdown"
 				 	  dropdown-select="countryOptions" 
 				 	  dropdown-onchange="advance_filter_changed(selected, 'country')"
@@ -48,13 +48,12 @@
 			 		  dropdown-onchange="advance_filter_changed(selected, 'timeGroup')"
 			 		  dropdown-model="timeSelected"
 			 		  dropdown-item-label="name"></div>
-			 	
 			</div>
 
-			<div ng-click="show_lists = true;" class="filter_header">
+			<div ng-click="show_lists = true; handle_left_columns();" class="filter_header">
 				<span class="icon-list3"></span><span>&nbsp;&nbsp;Show Lists</span>
 			</div>
-			<div class="filters_panel_large" ng-if="show_lists">
+			<div class="filters_panel_large" ng-if="show_lists && column_heights.show_filters">
 				<div class="filters_group">
 					<div ng-repeat="filter in more_filters[0]['book']">
 						<filter data="filter"></filter>

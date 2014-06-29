@@ -14,6 +14,11 @@ module Api
 				render :json => info, :status => status
 			end
 
+			def get_popular_books
+				books = BookApi.get_popular_books params
+				render :json => books, :status => 200
+			end
+
 			def tooltip
 				info = BookApi.tooltip
 				render :json => info, :status => 200
@@ -32,8 +37,16 @@ module Api
 			end
 
 			def affiliate_links
-				
-				info = {:amazon => {:link => "", :price => ""}, :bnn => {}}
+				book = BookApi.get_book(params[:title], params[:author_name])
+				isbn =  book[0][0]["data"]["isbn"] rescue ""
+				bnn_links = []
+				if isbn
+					for isbn in isbn.split(",")
+						bnn_links |= ["http://www.betterworldbooks.com/ProductDetail.aspx?ItemId=" + isbn]
+					end
+				end
+				info = {:amazon => {:link => "", :price => ""},
+						 :bnn => {:links => bnn_links}}
 				render :json => info, :status => 200
 			end
 

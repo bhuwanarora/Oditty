@@ -82,11 +82,18 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', function($rootScope,
 				});
 
 			}
+
+			_get_popular_books = function(){
+				websiteService.get_popular_books().then(function(data){
+					$scope.popular_books = data;
+				});
+			}
 			
 			_init = function(){
 				$rootScope.user.profile_status = 0;
 	    		_profile_status_colors();
 	    		_get_info_data();
+	    		_get_popular_books();
 
 				$scope.profileOptions = [
 					{"name": "Reader"},
@@ -258,7 +265,9 @@ websiteApp.directive('setFocus', ['$timeout', '$parse' , '$rootScope', function(
       scope.$watch(model, function(value) {
         if(value === true) { 
           $timeout(function() {
-            element[0].value = String.fromCharCode($rootScope.keyCode);
+          	if($rootScope.keyCode){
+            	element[0].value = String.fromCharCode($rootScope.keyCode);
+          	}
             element[0].focus(); 
             // $speechSynthetis.speak("You are at Reader's Door. How can I help you?", 'en-UK');
           });
@@ -412,13 +421,62 @@ websiteApp.directive('message', function(){
 	}
 });
 
-websiteApp.directive('notification', function(){
+websiteApp.directive('notification', ['$rootScope', function($rootScope){
 	return{
 		restrict: 'E',
 		scope: {"notification": "=data"},
+		controller: ['$scope', function($scope){
+			$scope.toggle_ticker_popup = function(event){
+				var ticker_popup_absent = $rootScope.ticker_popup == null;
+				if(ticker_popup_absent){
+					$rootScope.ticker_popup = true;
+					$rootScope.focused_book = null;
+					var top = _get_arrow_position(event);
+					$rootScope.ticker_position = {"top": top+"px"};
+				}
+				else{
+					$rootScope.ticker_popup = null;
+				}
+				event.stopPropagation();
+			}
+
+			_get_arrow_position = function(event){
+				console.log(event.currentTarget);
+				console.log(event.currentTarget.clientHeight);
+				console.log(event.currentTarget.offsetHeight);
+				console.log(event.currentTarget.pageY);
+				console.log(event.currentTarget.y);
+				console.log(event.currentTarget.style);
+				console.log(event.currentTarget.css);
+				var base = 90;
+				var top = 17;
+				if(event.y > base && event.y < base + 54){
+
+				}
+				else if(event.y > base + 54 && event.y < base + 54*2){
+					top = top + 54;
+				}
+				else if(event.y > base + 54*2 && event.y < base + 54*3){
+					top = top + 54*2;
+				}
+				else if(event.y > base + 54*3 && event.y < base + 54*4){
+					top = top + 54*3;
+				}
+				else if(event.y > base + 54*4 && event.y < base + 54*5){
+					top = top + 54*4;
+				}
+				return top;
+			}
+
+			$scope.show_ticker_popup = function(){
+				var top = _get_arrow_position(event);
+				$rootScope.ticker_popup = true;	
+				$rootScope.ticker_position = {"top": top+"px"};
+			}
+		}],
 		templateUrl: '/assets/angular/widgets/partials/notification.html'
 	}
-});
+}]);
 
 
 websiteApp.directive('compile', ['$compile', function($compile){

@@ -32,7 +32,7 @@ angular.module('filtersApp', [])
   .filter('message', function(){
     return function(input){
       if(input.length > 55){
-        input = input.slice(0, 53)+"..."
+        input = input.slice(0, 53)+"...";
       }
       return input;
     }
@@ -41,12 +41,28 @@ angular.module('filtersApp', [])
     return function(input){
       return input.slice().reverse();
     }
-  }).
-  filter('display_tweet', function(){
+  })
+  .filter('display_tweet', function(){
     return function(input){
       if(input && input.length > 40){
-        input = input.slice(0, 40)+"..."
+        input = input.slice(0, 40)+"...";
       }
       return input; 
+    }
+  })
+  .filter('thumb', function(){
+    return function(isbn_string){
+      var isbn = isbn_string.split(",");
+      var thumb = "http://covers.openlibrary.org/b/isbn/"+isbn[0]+"-L.jpg"
+      return thumb;
+    }
+  })
+  .filter('is_present', function(){
+    return function(input){
+      var is_present = false;
+      if(input && input != ""){
+        is_present = true;
+      }
+      return is_present;
     }
   });

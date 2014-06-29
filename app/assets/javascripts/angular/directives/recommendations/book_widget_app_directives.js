@@ -15,6 +15,7 @@ websiteApp.directive('book', ['widgetService', '$rootScope', function (widgetSer
       $scope.show_focused_tooltip = function(event){
         if($rootScope.focused_book != $scope.book){
           // $rootScope.show_more_filters = false;
+          $rootScope.ticker_popup = null;
           $rootScope.focused_book = $scope.book;
           var posX = event.currentTarget.offsetParent.offsetParent.offsetLeft - event.pageX + event.clientX;
           var display_right_width =  screen.width - (posX + event.currentTarget.offsetParent.scrollWidth);
@@ -61,7 +62,7 @@ websiteApp.directive('book', ['widgetService', '$rootScope', function (widgetSer
 
       _init = function(){
         // $scope.active_book_filter = true;
-        var book_id = $scope.book.id;
+        // var book_id = $scope.book.id;
         console.debug("%c _init book", "color: purple");
         $scope.book.tweets = [];
         $scope.book.labels = $rootScope.labels;
@@ -405,8 +406,10 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
       }
 
       _init = function(){
-        widgetService.get_affiliate_links().then(function(results){
-          // debugger
+        var book_name = $rootScope.focused_book.title;
+        var author_name = $rootScope.focused_book.author_name;
+        widgetService.get_affiliate_links(book_name, author_name).then(function(results){
+          $scope.bnn_links = results.bnn.links;
         });
         _display_tweet(0);
         _open_tab();
@@ -720,6 +723,7 @@ websiteApp.directive('markAsRead', ['$rootScope', '$timeout', 'widgetService', f
             $timeout.cancel(timeout_event);
             $timeout.cancel(glow_event);
           });
+
         }
         var timeout_event = notify($rootScope, message, $timeout);
         widgetService.mark_as_read($scope.book.id, $scope.read);
