@@ -116,8 +116,8 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	$scope.authenticate = function(email, password, old_user){
-		var email = "test@gmail.com";
-		var old_user = true;
+		// var email = "test@gmail.com";
+		// var old_user = true;
 		var data_json = {"email": email, "password": password, "old_user": old_user};
 		$scope.loading_icon = true;
 		var success_callback = function(data){
