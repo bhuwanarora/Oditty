@@ -109,10 +109,10 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		    	else{
 		    		console.debug("%c increase count", "color: purple");
 		    		$rootScope.filters["reset_count"] = $rootScope.filters["reset_count"]+1;
-	    	}
-	    	console.log("%c load_recommendations_event", "color: green;");
-	    	_get_recommendations();
-	    	// event.stopPropagation();
+		    	}
+		    	console.log("%c load_recommendations_event", "color: green;");
+		    	_get_recommendations();
+		    	// event.stopPropagation();
 	    	}
 	    });
 
