@@ -58,6 +58,16 @@
 	overflow: visible !important;
 }
 
+.info_cards .header::-webkit-scrollbar-track{
+	background-color: #F5F5F5;
+}
+
+.info_cards .header::-webkit-scrollbar-track:hover {
+    opacity: 1;
+    width: 10px;
+    background-color: #D5D5D5;
+}
+
 .info_cards .header{
 	font-family: Helvetica;
 	font-size: 1em;

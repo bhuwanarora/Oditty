@@ -1619,6 +1619,20 @@ and (min-width : 1824px) {
 	max-height: 55vh;
 }
 
+.tweets::-webkit-scrollbar-track{
+	background-color: rgba(0,0,0,0);
+}
+
+.tweets:hover::-webkit-scrollbar-track{
+	background-color: rgba(0,0,0,0);
+}
+
+.tweets::-webkit-scrollbar-track:hover {
+    opacity: 1;
+    width: 10px;
+    background-color: #D5D5D5;
+}
+
 .tweets .tweet{
 	background: white;
 	padding: 10px;
