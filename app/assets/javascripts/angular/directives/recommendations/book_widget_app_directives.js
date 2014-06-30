@@ -414,6 +414,7 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
         });
         _display_tweet(0);
         _open_tab();
+        $scope.add_thumb = false;
       }
 
       _init();

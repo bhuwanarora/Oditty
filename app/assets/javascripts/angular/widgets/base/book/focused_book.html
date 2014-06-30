@@ -1,5 +1,8 @@
 <span class="popup_icon icon-angle-down" ng-click="show_feedback_popup()"></span>
+<input placeholder="Add a thumb url..." class="input_thumb" ng-if="add_thumb"/>
 <ul ng-if="focused_book.show_feedback_popup" class="feedback_popup">
+  <li><span ng-click="add_thumb = !add_thumb;">Suggest a new thumbnail{{add_thumb}}</span></li>
+  <hr>
   <li><span>Error in data</span></li>
   <hr>
   <li><span>Share</span><span></span></li>

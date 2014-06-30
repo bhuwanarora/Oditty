@@ -21,6 +21,10 @@ class BooksController < ApplicationController
   def edit
   end
 
+  def thumbs
+    @requests = ThumbRequest.all
+  end
+
   # POST /books
   # POST /books.json
   def create
