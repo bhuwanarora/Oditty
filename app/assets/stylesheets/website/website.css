@@ -189,12 +189,12 @@ input:focus{
 }
 
 .scrollbar{
-    overflow: hidden;
+    overflow: hidden !important;
 }
 
 
 .scrollbar:hover{
-    overflow-y: auto;
+    overflow-y: auto !important;
 }
 
 
@@ -217,14 +217,16 @@ input:focus{
     display: block;
     pointer-events: none;
     -webkit-user-select: none;
+    background-color: #fff;
     width: 7px;
+    -webkit-border-radius: 10px;
     z-index: 5;
 }
 
 .scrollbar::-webkit-scrollbar-track:hover {
     opacity: 1;
     width: 10px;
-    background-color: rgba(0, 0, 0, .15);
+    background-color: #D5D5D5;
     -webkit-border-radius: 10px;
 }
 
