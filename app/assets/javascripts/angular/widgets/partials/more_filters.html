@@ -131,8 +131,10 @@
 	<div ng-if="bookmark_selected">
 		<div class="filters" ng-if="$routeParams.type == 'books'">
 			<div class="filters_panel_large">
-				<div ng-repeat="filter in labels">
-					<filter data="filter"></filter>
+				<div class="filters_group">
+					<div ng-repeat="filter in labels">
+						<filter data="filter"></filter>
+					</div>
 				</div>
 			</div>
 		</div>

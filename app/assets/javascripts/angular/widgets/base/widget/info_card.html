@@ -110,7 +110,7 @@
 				on-select="add_book()"
 				ng-keypress="get_search_results($event, 'BOOK', searchResults)">
 			</type-ahead>
-		<div class="header" msd-wheel="stop_horizontal_scroll($event)">
+		<div class="scrollbar header" msd-wheel="stop_horizontal_scroll($event)">
 			<div ng-if="book.thumb | is_present" class="book_column" 
 					 ng-repeat="book in popular_books">
 				<img ng-src="{{book.thumb}}" 
