@@ -22,4 +22,15 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
                   important: true,
                   inline_css: true
   end
+
+  def verify_email(invitation)
+    mandrill_mail template: invitation[:template],
+                  subject: 'Welcome To Reader\'s Door',
+                  to: { email: invitation[:email] },
+                  vars: {
+                    'LINK' => invitation[:link]
+                  },
+                  important: true,
+                  inline_css: true
+  end
 end

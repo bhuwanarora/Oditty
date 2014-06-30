@@ -1131,16 +1131,11 @@ and (min-width : 1824px) {
 
 
 .notifications{
-	/*position: fixed;*/
-	/*overflow-y: scroll;*/
 	font-size: .9em;
 	z-index: 3;
 	width: 255px;
-	height: 170px;
-	/*top: 90px;*/
-	/*left: 10px;*/
+	max-height: 170px;
 	border-radius: 4px;
-	/*box-shadow: 0 7px 15px rgba(0,0,0,.25);*/
 }
 
 .notification_elements{

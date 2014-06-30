@@ -56,6 +56,8 @@ ReadersDoor::Application.routes.draw do
   get "horizontal_scroll"        => "tests#horizontal_scroll",         :as => "horizontal_scroll"
   get "angular_test"             => "tests#angular_test",              :as => "angular_test"
 
+  get "verify"                   => "users#verify",                     :as => "verify"   
+
   # root :to => "website#coming_soon"
   root :to => "recommendations#index"
 

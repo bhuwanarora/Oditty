@@ -110,10 +110,9 @@
     </div>
   </div>
 </div>
-<div class="tweet_link">
-  <span ng-click="focused_book.interact = true;"><img ng-src="{{focused_book.display_profile}}"></span>
-  <span ng-click="focused_book.interact = true;" 
-        ng-model="focused_book.display_tweet" ng-bind-html="focused_book.display_tweet | display_tweet"></span>
+<div class="tweet_link" ng-click="focused_book.interact = true;">
+  <span><img ng-src="{{focused_book.display_profile}}"></span>
+  <span ng-model="focused_book.display_tweet" ng-bind-html="focused_book.display_tweet | display_tweet"></span>
 </div>
 <div class="footer">
   <recommend data="focused_book"></recommend>
