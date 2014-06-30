@@ -350,10 +350,8 @@
 }
 
 .focused_tooltip .input_thumb{
-	position: absolute;
 	border: 1px solid #136CB2;
 	padding: 4px;
-	top: 35px;
-	right: 0px;
 	box-shadow: 0 3px 8px rgba(0,0,0,.3);
+	width: 90%;
 }

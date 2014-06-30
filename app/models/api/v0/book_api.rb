@@ -1,6 +1,11 @@
 module Api
 	module V0
 		class BookApi
+
+			def self.create_thumb_request params
+				ThumbRequest.create params[:books_api]
+			end
+
 			def self.bookmarked_books
 				self.recommendations.map do |s|
 					s['bookmark_status'] = 1

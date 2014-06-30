@@ -2,6 +2,8 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 	$scope.authenticate = function(old_user){
 		var email = $rootScope.user.email;
 		var password = $rootScope.user.password;
+		var email = "bhuwanarora67@gmail.com";
+		var password = "test";
 		var data_json = {"email": email, "password": password, "old_user": old_user};
 		$scope.loading_icon = true;
 		var success_callback = function(data){
@@ -108,6 +110,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 
 	_init = function(){
 		_bind_auth_listeners();
+		$scope.authenticate(true);
 	}
 
 	_init();	

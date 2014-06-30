@@ -10,9 +10,12 @@
 	<% @requests.each do |request| %>
 		<tr>
 			<td><img src="<%= request.user_thumb %>" class=""/></td>
-			<td><a href="<%= request.user_link %>"><%= request.username %></a></td>
-			<td><a href="<%= request.book_url %>"><%= request.title %></a></td>
-			<td><a href="<%= request.image_url %>"><img src="<%= request.image_url %>"/></a></td>
+			<td><a href="<%= request.user_link %>" target="_blank">
+				<%= request.username %></a></td>
+			<td><a href="<%= request.book_url %>" target="_blank">
+				<%= request.title %></a></td>
+			<td><a href="<%= request.thumb_url %>" target="_blank">
+				<img src="<%= request.thumb_url %>"/></a></td>
 			<td><select>
 					<option>Status</option>
 					<option>Approve</option>

@@ -1,15 +1,21 @@
 <span class="popup_icon icon-angle-down" ng-click="show_feedback_popup()"></span>
-<input placeholder="Add a thumb url..." class="input_thumb" ng-if="add_thumb"/>
 <ul ng-if="focused_book.show_feedback_popup" class="feedback_popup">
-  <li><span ng-click="add_thumb = !add_thumb;">Suggest a new thumbnail{{add_thumb}}</span></li>
-  <hr>
+  <li><span ng-click="add_thumb = !add_thumb;" 
+            ng-show="!add_thumb">Suggest a new thumbnail</span>
+  <span><input placeholder="Add a thumb url..." 
+              class="input_thumb" 
+              set-focus="add_thumb"
+              ng-model="new_thumb"
+              ng-keypress="handle_enter($event, new_thumb)"
+              ng-show="add_thumb"/></span></li>
+  <!-- <hr>
   <li><span>Error in data</span></li>
   <hr>
   <li><span>Share</span><span></span></li>
   <hr>
   <li><span>I don't want to see this</span></li>
   <li><span>Incorrect Recommendation</span></li>
-  <li><span>Make Recommendations Better</span></li>
+  <li><span>Make Recommendations Better</span></li> -->
 </ul>
 <div class="arrow" ng-class="{'arrow_left': on_left, 'arrow_right': !on_left}"></div>
 <!-- <div class="close button_effect" ng-click="close_focused_tooltip()">x</div> -->
