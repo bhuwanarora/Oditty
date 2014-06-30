@@ -98,13 +98,13 @@ module Api
 				info = {"moments" => test_moments}
 			end
 
-			def self.get_popular_books filters
-				skip_count = filters[:skip_count]
+			def self.get_popular_books params
+				skip_count = params[:skip_count]
 				unless skip_count
 					skip_count = 0
 				end
 				@neo = Neography::Rest.new
-				clause = "MATCH (book:Book) WITH book, toInt(book.gr_reviews_count) + toInt(book.gr_ratings_count) AS weight RETURN book, weight as weight ORDER BY weight DESC SKIP "+(10*skip_count).to_s+" LIMIT 10"
+				clause = "MATCH (book:Book) WITH book, toInt(book.gr_reviews_count) + toInt(book.gr_ratings_count) AS weight RETURN book, weight as weight ORDER BY weight DESC SKIP "+(10*skip_count.to_i).to_s+" LIMIT 10"
 				puts clause.blue.on_red
 				begin
 					books =  @neo.execute_query(clause)["data"]

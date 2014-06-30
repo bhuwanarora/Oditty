@@ -83,17 +83,23 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', function($rootScope,
 
 			}
 
-			_get_popular_books = function(){
-				websiteService.get_popular_books().then(function(data){
-					$scope.popular_books = data;
-				});
+			$scope.get_popular_books = function(){
+				var skip_count = $scope.popular_books.length;
+				if(!$scope.loading_icon){
+					$scope.loading_icon = true;
+					websiteService.get_popular_books(skip_count).then(function(data){
+						$scope.popular_books = $scope.popular_books.concat(data);
+						$scope.loading_icon = false;
+					});
+				}
 			}
 			
 			_init = function(){
 				$rootScope.user.profile_status = 0;
 	    		_profile_status_colors();
 	    		_get_info_data();
-	    		_get_popular_books();
+	    		$scope.popular_books = [];
+	    		$scope.get_popular_books();
 
 				$scope.profileOptions = [
 					{"name": "Reader"},
@@ -507,4 +513,18 @@ websiteApp.directive('searchBar', function(){
 		restrict: 'E',
 		templateUrl: '/assets/angular/widgets/partials/search_bar.html'
 	}
+});
+
+websiteApp.directive('checkEnd', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var elem = element[0];
+            element.bind('scroll', function () {
+                if (elem.scrollTop + elem.offsetHeight > elem.scrollHeight) {
+                    scope.$apply(attrs.checkEnd);
+                }
+            });
+        }
+    };
 });

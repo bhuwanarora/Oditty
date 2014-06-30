@@ -53,18 +53,23 @@
 	background-color: #ECECEC;
 }
 
+.info_cards .wrap_header{
+	height: 39px;
+	overflow: visible !important;
+}
+
 .info_cards .header{
 	font-family: Helvetica;
 	font-size: 1em;
 	font-weight: 700;
 	padding: 4px;
-	/*overflow: auto;*/
+	overflow: auto;
 	background-color: #F5F5F5;
 	border-radius: 5px;
 	margin-top: 10px;
 	border: 1px solid #EBEBEB;
 	max-height: 35vh;
-	/*overflow-y: scroll;*/
+	overflow-y: scroll;
 }
 
 .info_cards .profile_pic{
@@ -87,9 +92,9 @@
 	padding: 6px;
 	font-size: 1em;
 	outline: 1px solid #D3D3D3;
-	/*float: left;*/
+	float: left;
 	border-radius: 4px;
-	margin-top: 11px;
+	margin-top: 10px;
 }
 
 .info_cards .custom_radio{
@@ -153,4 +158,8 @@
 
 .loading_circle{
 	width: 10px;
+}
+
+.loading_icon{
+	padding: 5px 105px;
 }

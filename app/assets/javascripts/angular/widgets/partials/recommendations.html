@@ -15,7 +15,7 @@
 		<!-- <div class="recommendations_page"><search-bar></search-bar></div> -->
 		<div ng-switch on="panel_selected" class="recommendation_window">
 			<div ng-switch-when="BOOKMARK" class="recommendation_panel">
-				<div ng-show="$routeParams.type == 'books'" ng-model="user.books.bookmarked">
+				<div ng-if="$routeParams.type == 'books'" ng-model="user.books.bookmarked">
 					<div ng-switch on="user.books.bookmarked.length">
 						<div ng-switch-when="0">
 							<info-card></info-card>
@@ -29,7 +29,7 @@
 						</div>
 					</div>
 				</div>
-				<div ng-show="$routeParams.type == 'authors'" ng-model="user.authors.bookmarked">
+				<div ng-if="$routeParams.type == 'authors'" ng-model="user.authors.bookmarked">
 					<div ng-switch on="user.authors.bookmarked.length">
 						<div ng-switch-when="0">
 							<info-card></info-card>
@@ -45,7 +45,7 @@
 				</div>
 			</div>
 			<div ng-switch-when="READ" class="recommendation_panel">
-				<div ng-show="$routeParams.type == 'books'" ng-model="user.books.read">
+				<div ng-if="$routeParams.type == 'books'" ng-model="user.books.read">
 					<div ng-switch on="user.books.read.length">
 						<div ng-switch-when="0">
 							<info-card></info-card>
@@ -59,7 +59,7 @@
 						</div>
 					</div>
 				</div>
-				<div ng-show="$routeParams.type == 'authors'" ng-model="user.authors.follow">
+				<div ng-if="$routeParams.type == 'authors'" ng-model="user.authors.follow">
 					<div ng-switch on="user.authors.follow.length">
 						<div ng-switch-when="0">
 							<info-card></info-card>
@@ -73,7 +73,7 @@
 						</div>
 					</div>
 				</div>
-				<div ng-show="$routeParams.type == 'readers'" ng-model="user.readers.follow">
+				<div ng-if="$routeParams.type == 'readers'" ng-model="user.readers.follow">
 					<div ng-switch on="user.readers.follow.length">
 						<div ng-switch-when="0">
 							<info-card></info-card>
@@ -90,7 +90,7 @@
 			</div>
 
 			<div ng-switch-default class="recommendation_panel">
-				<div ng-show="$routeParams.type == 'books'" 
+				<div ng-if="$routeParams.type == 'books'" 
 					ng-model="recommendations.books" class="recommendation_panel">
 					<info-card></info-card>
 					<div ng-repeat="recommendation in recommendations.books" 
@@ -101,14 +101,14 @@
 						<div class="widget">loading..</div>
 					</div>
 				</div>
-				<div ng-show="$routeParams.type == 'readers'" 
+				<div ng-if="$routeParams.type == 'readers'" 
 					class="recommendation_panel">
 					<info-card></info-card>
 					<div ng-repeat="recommendation in recommendations.readers" class="recommendation_block">
 						<reader track id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></reader>
 					</div>
 				</div>
-				<div ng-show="$routeParams.type == 'authors'" 
+				<div ng-if="$routeParams.type == 'authors'" 
 					class="recommendation_panel">
 					<info-card></info-card>
 					<div ng-repeat="recommendation in recommendations.authors" class="recommendation_block">

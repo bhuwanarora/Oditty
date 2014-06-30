@@ -37,8 +37,8 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         return _deferred_request('/api/v0/info_data');
     }
 
-    this.get_popular_books = function(){
-        return _deferred_request('/api/v0/popular_books');   
+    this.get_popular_books = function(skip_count){
+        return _deferred_request('/api/v0/popular_books?skip_count='+skip_count);   
     }
 
     _deferred_request = function(url){
