@@ -1,9 +1,9 @@
 # Default values for the low-level graph engine
-neostore.nodestore.db.mapped_memory=25M
-neostore.relationshipstore.db.mapped_memory=240M
-neostore.propertystore.db.mapped_memory=230M
-neostore.propertystore.db.strings.mapped_memory=1200M
-neostore.propertystore.db.arrays.mapped_memory=130M
+#neostore.nodestore.db.mapped_memory=25M
+#neostore.relationshipstore.db.mapped_memory=240M
+#neostore.propertystore.db.mapped_memory=230M
+#neostore.propertystore.db.strings.mapped_memory=1200M
+#neostore.propertystore.db.arrays.mapped_memory=130M
 
 # Enable this to be able to upgrade a store from an earlier version.
 #allow_store_upgrade=true

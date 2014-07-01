@@ -6,7 +6,7 @@ require 'eventmachine'
    end
 
    def receive_data data
-     send_data ">>>you sent: #{data}"
+     send_data ">>>test: #{data}"
      close_connection if data =~ /quit/i
    end
 
@@ -20,4 +20,10 @@ puts "module eventmachine..."
 EventMachine.run {
   EventMachine.start_server "127.0.0.1", 8081, EchoServer
   puts "Listening..."
+  # EM::Timer.new(10) do
+  #   puts 'Timed-out after 10 seconds'
+  #   EM.stop_event_loop
+  # end
 }
+
+puts "end..."
