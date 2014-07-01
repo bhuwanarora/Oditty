@@ -85,11 +85,11 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', function($rootScope,
 
 			$scope.get_popular_books = function(){
 				var skip_count = $scope.popular_books.length;
-				if(!$scope.loading_icon){
-					$scope.loading_icon = true;
+				if(!$scope.loading){
+					$scope.loading = true;
 					websiteService.get_popular_books(skip_count).then(function(data){
 						$scope.popular_books = $scope.popular_books.concat(data);
-						$scope.loading_icon = false;
+						$scope.loading = false;
 					});
 				}
 			}
@@ -515,14 +515,14 @@ websiteApp.directive('searchBar', function(){
 	}
 });
 
-websiteApp.directive('checkEnd', function () {
+websiteApp.directive('checkScrollBottom', function () {
     return {
         restrict: 'A',
         link: function (scope, element, attrs) {
             var elem = element[0];
             element.bind('scroll', function () {
                 if (elem.scrollTop + elem.offsetHeight > elem.scrollHeight) {
-                    scope.$apply(attrs.checkEnd);
+                    scope.$apply(attrs.checkScrollBottom);
                 }
             });
         }
