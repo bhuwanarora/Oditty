@@ -99,6 +99,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', function($rootScope,
 	    		_profile_status_colors();
 	    		_get_info_data();
 	    		$scope.popular_books = [];
+	    		$scope.loading = false;
 	    		$scope.get_popular_books();
 
 				$scope.profileOptions = [
