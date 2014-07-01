@@ -67,6 +67,10 @@ websiteApp.service('widgetService', ['$http', '$q', '$rootScope', function ($htt
         return _deferred_request('/api/v0/affiliate_links?title='+book_name+"&author_name="+author_name);
     }
 
+    this.add_thumbnail = function(params){
+        return _deferred_post_request('/api/v0/add_thumbnail', params);
+    }
+
     _deferred_request = function(url){
         var deferred = $q.defer();
         var success_callback = function(result) {

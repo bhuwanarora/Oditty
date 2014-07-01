@@ -50,6 +50,11 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def add_thumbnail
+				status = BookApi.create_thumb_request params
+				render :json => {:message => "Request Initiated...", :status => 200}
+			end
+
 		end
 	end
 end

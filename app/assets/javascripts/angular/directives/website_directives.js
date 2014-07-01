@@ -54,7 +54,16 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', function($rootScope,
 			}
 
 			_handle_info_card_bindings = function($scope){
-				if($rootScope.user.profile_status == 6){
+				if($rootScope.user.profile_status == 2){
+					$scope.get_popular_books();
+				}
+				else if($rootScope.user.profile_status == 3){
+					_get_genres();
+				}
+				else if($rootScope.user.profile_status == 4){
+					// $rootScope.$broadcast('showBookReadShelf');
+				}
+				else if($rootScope.user.profile_status == 6){
 					if(navigator.geolocation){
 						navigator.geolocation.getCurrentPosition(function(position){
 							var latitude = position.coords.latitude;
@@ -66,12 +75,6 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', function($rootScope,
 					else{
 						x.innerHTML="Geolocation is not supported by this browser.";
 					}
-				}
-				else if($rootScope.user.profile_status == 4){
-					// $rootScope.$broadcast('showBookReadShelf');
-				}
-				else if($rootScope.user.profile_status == 2){
-					_get_genres();
 				}
 			}
 
@@ -99,7 +102,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', function($rootScope,
 	    		_profile_status_colors();
 	    		_get_info_data();
 	    		$scope.popular_books = [];
-	    		$scope.get_popular_books();
+	    		// $scope.get_popular_books();
 
 				$scope.profileOptions = [
 					{"name": "Reader"},
