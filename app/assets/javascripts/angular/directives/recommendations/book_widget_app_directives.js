@@ -310,6 +310,24 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
       // $scope.show_book = function(page){
       //   zoomin_book($scope, $timeout, $rootScope, page);
       // }
+      $scope.handle_enter = function(event, new_thumb){
+        var enter_key = event.keyCode == 13;
+        if(enter_key){
+          $scope.add_thumb = false;
+          var title = $rootScope.focused_book.title;
+          var author_name = $rootScope.focused_book.author_name;
+          var book_url = "/#/user/1/book/"+title+"/author/"+author_name;
+          var params = {"thumb_url": new_thumb, 
+                        "title": title,
+                        "book_url": book_url,
+                        "username": $rootScope.user.name,
+                        "user_thumb": $rootScope.user.thumb,
+                        "user_link": ""}
+          widgetService.add_thumbnail(params).then(function(data){
+            
+          });
+        }
+      }
 
       $scope.show_feedback_popup = function(){
         if($rootScope.focused_book.show_feedback_popup){
@@ -414,6 +432,7 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
         });
         _display_tweet(0);
         _open_tab();
+        $scope.add_thumb = false;
       }
 
       _init();

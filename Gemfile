@@ -68,6 +68,8 @@ gem 'freebase-api'
 gem 'fb_graph'
 gem 'treetop'
 gem 'polyglot'
+gem 'blather'
+gem "eventmachine"
 # gem 'amazon-ecs'
 # gem 'rubber'
 # gem 'rails_admin_example_theme', :git => 'git://github.com/bbenezech/rails_admin_example_theme.git'

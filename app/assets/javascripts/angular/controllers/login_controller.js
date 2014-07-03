@@ -1,13 +1,13 @@
 websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteService', 'Facebook', function($scope, $rootScope, websiteService, Facebook){
 	$scope.authenticate = function(old_user){
 		var email = $rootScope.user.email;
-		var password = $rootScope.user.password;
-		$rootScope.user.email = "aroramisha44@gmail.com";
-		$rootScope.user.password = "abc";		
+		var password = $rootScope.user.password;		
 		var pattern1 = new RegExp("^.{8,}$");
 		var pattern2 = new RegExp("^(.)\\1{7,16}$");
 		var pattern3 = new RegExp("^.{100,}$");
 		$scope.error_message = "";
+		// var email = "bhuwanarora67@gmail.com";
+		// var password = "test";
 		var data_json = {"email": email, "password": password, "old_user": old_user};
 		$scope.loading_icon = false;
 		var success_callback = function(data){
@@ -130,8 +130,8 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
   	}
 
 	_init = function(){
-		$scope.authenticate(true);
 		_bind_auth_listeners();
+		// $scope.authenticate(true);
 	}
 
 	_init();	
