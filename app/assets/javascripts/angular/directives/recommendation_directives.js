@@ -77,6 +77,7 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 			}
 
 			$scope.clear_filter = function(main_filter, type){
+				console.log("inside clear 1");
 				$rootScope.filters["other_filters"][type] = null;
 				var message = "SUCCESS-"+type+" filter removed";
 				var timeout_event = notify($rootScope, message, $timeout);
@@ -356,7 +357,9 @@ websiteApp.directive('mainHeader', [function(){
 websiteApp.directive('recommendationFooter', ['scroller', function(scroller){
 	return{
 		restrict: 'E',
+	    // require: '^moreFilters',
 		controller: ['$scope', function($scope){
+		// link: function(scope, element, attrs, moreFiltersCtrl){
 			if(window.innerWidth < 1000){
 				$scope.compact_footer = true;
 			}
@@ -400,6 +403,7 @@ websiteApp.directive('recommendationFooter', ['scroller', function(scroller){
 				$scope.compact_footer = true;
 			}
 		}],
+		// },
 		templateUrl: "/assets/angular/widgets/partials/recommendation_footer.html"
 	}
 }]);
