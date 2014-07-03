@@ -310,6 +310,24 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
       // $scope.show_book = function(page){
       //   zoomin_book($scope, $timeout, $rootScope, page);
       // }
+      $scope.handle_enter = function(event, new_thumb){
+        var enter_key = event.keyCode == 13;
+        if(enter_key){
+          $scope.add_thumb = false;
+          var title = $rootScope.focused_book.title;
+          var author_name = $rootScope.focused_book.author_name;
+          var book_url = "/#/user/1/book/"+title+"/author/"+author_name;
+          var params = {"thumb_url": new_thumb, 
+                        "title": title,
+                        "book_url": book_url,
+                        "username": $rootScope.user.name,
+                        "user_thumb": $rootScope.user.thumb,
+                        "user_link": ""}
+          widgetService.add_thumbnail(params).then(function(data){
+            
+          });
+        }
+      }
 
       $scope.show_feedback_popup = function(){
         if($rootScope.focused_book.show_feedback_popup){
@@ -414,6 +432,7 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
         });
         _display_tweet(0);
         _open_tab();
+        $scope.add_thumb = false;
       }
 
       _init();
@@ -445,6 +464,7 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
       }
 
       $scope.handle_selection = function(selected_item){
+        $scope.current = 0;
         var string_array = $rootScope.focused_book.current_comment.split(" ");
         var html_array = $rootScope.focused_book.hash_tagged_comment.split(" ");
         var chr = String.fromCharCode(event.keyCode);
@@ -466,10 +486,6 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
         $scope.hash_tags = null;
         event.stopPropagation();
         //TODO: SET FOCUS ON CLICK
-      }
-
-      $scope.set_current = function(index){
-
       }
 
       $scope.handle_backspace = function(event){
@@ -542,7 +558,10 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
                         "current_element": current_element,
                         "current_comment": $rootScope.focused_book.current_comment,
                         "under_a_tag": under_a_tag}]);
-        if(event.keyCode == 13){
+        if((event.keyCode == 13) && ($scope.hash_tags)){
+          $scope.handle_selection($scope.currentItem);
+        }
+        else if((event.keyCode == 13) && (!$scope.hash_tags)){
           var tweet_text = $rootScope.focused_book.hash_tagged_comment
                                 .replace(/<b>/, "<a>")
                                 .replace(/<\/b>/, "<\/a>");
@@ -625,10 +644,44 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
         event.stopPropagation();
       }
 
+      $scope.is_current = function(index, selectedItem) {
+        if($scope.current == index){
+          $scope.currentItem = selectedItem;
+        }
+          return $scope.current == index;
+      };
+
+      $scope.set_current = function(index) {
+          $scope.current = index;
+      };
+
+      $scope.key_up = function(){
+        var keyUp = event.keyCode == 38;
+        var keyDown = event.keyCode == 40;
+        var backSpace = event.keyCode == 8;
+        if(keyUp){
+          if($scope.current != 0){
+            $scope.set_current($scope.current-1);
+          }
+          else{
+            $scope.set_current($scope.hash_tags.length-1);
+          }
+        }
+        else if(keyDown){
+          if($scope.current != $scope.hash_tags.length -1){
+            $scope.set_current($scope.current+1);
+          }
+          else{
+            $scope.set_current(0);
+          }
+        }
+      }
+
       _init = function(){
         $scope.is_new_word_initiation = true;
         $rootScope.focused_book.current_comment = "";
         $rootScope.focused_book.hash_tagged_comment = "";
+        $scope.current = 0;
       }
 
       _init();
@@ -730,7 +783,6 @@ websiteApp.directive('markAsRead', ['$rootScope', '$timeout', 'widgetService', f
         widgetService.mark_as_read($scope.book.id, $scope.read);
         event.stopPropagation();
       }
-
     }],
     templateUrl: "/assets/angular/widgets/base/book/mark_as_read.html"
   }

@@ -57,7 +57,7 @@ ReadersDoor::Application.routes.draw do
   get "angular_test"             => "tests#angular_test",              :as => "angular_test"
 
   get "verify"                   => "users#verify",                     :as => "verify"   
-
+  get "thumbs"                   => "books#thumbs",                     :as => "thumbs"
   # root :to => "website#coming_soon"
   root :to => "recommendations#index"
 
