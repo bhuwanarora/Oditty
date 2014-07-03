@@ -755,33 +755,12 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', fu
 }]);
 
 
-websiteApp.directive('markAsRead', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
+websiteApp.directive('markAsRead', ['$rootScope', '$timeout', 'widgetService', 'sharedService', function($rootScope, $timeout, widgetService, sharedService){
 	return {
 		restrict: 'E',
 		controller: ['$scope', function($scope){
       $scope.markAsRead = function(event){
-        var book_title = $scope.book.title;
-        var author_name = $scope.book.author_name;
-        if($scope.book.status){
-          $scope.book.status = 0;
-          $scope.$emit('removeFromShelf', "BOOK", $scope.book);
-          var message = "SUCCESS-Removed from <span class='icon-books'></span> Books Read. ";
-        }
-        else{
-          $scope.book.status = 1;
-          $scope.$emit('addToShelf', "BOOK", $scope.book);
-          $rootScope.$broadcast('glowShelf');
-          var message = "SUCCESS-Added to <span class='icon-books'></span> Books Read. ";
-
-          $scope.$on('destroy', function(){
-            $timeout.cancel(timeout_event);
-            $timeout.cancel(glow_event);
-          });
-
-        }
-        var timeout_event = notify($rootScope, message, $timeout);
-        widgetService.mark_as_read($scope.book.id, $scope.read);
-        event.stopPropagation();
+        sharedService.markAsRead($scope, $scope.book, event);
       }
     }],
     templateUrl: "/assets/angular/widgets/base/book/mark_as_read.html"

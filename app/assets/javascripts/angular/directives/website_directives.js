@@ -12,10 +12,14 @@ websiteApp.directive('userThumb', [function(){
 	}
 }]);
 
-websiteApp.directive('infoCard', ['$rootScope', '$timeout', function($rootScope, $timeout){
+websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', function($rootScope, $timeout, sharedService){
 	return{
 		restrict: 'E',
 		controller: ['$scope', 'websiteService', function($scope, websiteService){
+			$scope.markAsRead = function(book, event){
+		        sharedService.markAsRead($scope, book, event);
+			}
+
 			_get_genres = function(){
 		    	websiteService.get_genres().then(function(data){
 		    		$scope.genres = data.genres;
