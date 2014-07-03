@@ -489,11 +489,9 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
       }
 
       $scope.handle_backspace = function(event){
-        console.log("inside handle_backspace");
         var string_array = $rootScope.focused_book.current_comment.split(" ");
         var html_array = $rootScope.focused_book.hash_tagged_comment.split(" ");
         var chr = String.fromCharCode(event.keyCode);
-        console.log(event.keyCode);
         var len = string_array.length;
         if(len == 1){
           var old_string = string_array.slice(0, len-1).join(" ");
@@ -508,7 +506,6 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
         var is_backspace = event.keyCode == 8;
         var hash_tagging = $scope.hash_tagging;
         if(is_backspace){
-          console.log("inside backspace");
           if(current_element == "#"){
             $scope.hash_tagging = false;
             $scope.hash_tags = [];
@@ -544,7 +541,6 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
       }
 
       $scope.handle_hash_tags = function(event){
-        console.log("inside handle hash TAGS");
         if($rootScope.focused_book.current_comment.trim() == ""){
           $scope.is_new_word_initiation = true;
         }
@@ -601,14 +597,12 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
           }
           else{
             if(chr == " "){
-              console.log("inside chr");
               $scope.hash_tagging = false;
               $rootScope.focused_book.hash_tagged_comment = $rootScope.focused_book.hash_tagged_comment+chr;
               $scope.search_for = null;
             }
             else{
               if($scope.hash_tagging){
-                console.log("inside hash tagging");
                 var hash_tagged = $rootScope.focused_book.hash_tagged_comment.split("</b>");
                 var length = hash_tagged.length;
                 if(length > 2){
@@ -621,15 +615,12 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
                 }
               }
               else{
-                console.log("inside focused_book");
                 $rootScope.focused_book.hash_tagged_comment = $rootScope.focused_book.hash_tagged_comment+chr;
               }
             }
           }
           if($scope.search_for){
-            console.log("inside search_for");
             if(current_element.length > 2){
-              console.log("inside gretaer 2");
               string_to_be_searched = current_element.slice(1, current_element.length)+""+chr;
               websiteService.search(string_to_be_searched.trim(), $scope.search_for, 3).then(function(result) {
                   $scope.hash_tags = [];
@@ -643,11 +634,9 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
           }
 
           if(chr == " "){
-            console.log("is_new_word_initiation");
             $scope.is_new_word_initiation = true;
           }
           else{
-            console.log("!is_new_word_initiation");
             $scope.is_new_word_initiation = false; 
           }
         }
@@ -771,7 +760,6 @@ websiteApp.directive('markAsRead', ['$rootScope', '$timeout', 'widgetService', f
 		restrict: 'E',
 		controller: ['$scope', function($scope){
       $scope.markAsRead = function(event){
-        debugger
         var book_title = $scope.book.title;
         var author_name = $scope.book.author_name;
         if($scope.book.status){
