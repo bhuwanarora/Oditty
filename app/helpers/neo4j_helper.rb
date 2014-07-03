@@ -255,10 +255,33 @@ module Neo4jHelper
 		@neo.create_schema_index("Book", ["title", "author_name"])
 	end
 
+	def self.init_goodreads_books_reverse
+		# count = GoodReadsBook.where(:neo_flag => true).count
+		t0 = Time.now
+		for id in 1100000..1599029
+			t1 = Time.now
+			begin
+				book = GoodReadsBook.find id
+				if book && book.flag && book.neo_flag.nil? 
+					unless book.title.include? "\\"
+						title = self.create_book book
+						# count = count + 1
+						t2 = Time.now
+						puts "#{t2-t1} #{id}/1599029 #{title}"
+					end
+				else
+					puts id
+				end
+			rescue Exception => e
+				puts e
+			end
+		end
+	end
+
 	def self.init_goodreads_books
 		count = GoodReadsBook.where(:neo_flag => true).count
 		t0 = Time.now
-		for id in 440000..1599029
+		for id in 830000..1599029
 			t1 = Time.now
 			begin
 				book = GoodReadsBook.find id
@@ -267,7 +290,7 @@ module Neo4jHelper
 						title = self.create_book book
 						count = count + 1
 						t2 = Time.now
-						puts "#{t2-t1} #{count} #{title}"
+						puts "#{t2-t1} #{count}/1599029 #{title}"
 					end
 				else
 					puts id
@@ -467,5 +490,29 @@ module Neo4jHelper
 			node = @neo.create_node("name" => label)
 			@neo.add_label(node, "Label")
 		end
+	end
+
+
+	def self.create_indexes
+		@neo ||= self.init
+		puts "indexing initiated..."
+		@neo.create_schema_index("Book", ["title"])
+		@neo.create_schema_index("Book", ["author_name"])
+		@neo.create_schema_index("Author", ["name"])
+		@neo.create_schema_index("Label", ["name"])
+		@neo.create_schema_index("ReadTime", ["name"])
+		@neo.create_schema_index("Era", ["name"])
+		@neo.create_schema_index("Year", ["year"])
+		@neo.create_schema_index("Genre", ["name"])
+		@neo.set_node_auto_index_status(true)
+		@neo.set_relationship_auto_index_status(true)
+		puts "indexing finished..."
+	end
+
+	def self.add_constraints
+		@neo ||= self.init
+		clause = "CREATE CONSTRAINT ON (user:User) ASSERT user.email IS UNIQUE"
+		@neo.execute_query clause
+		puts clause.blue.on_red
 	end
 end

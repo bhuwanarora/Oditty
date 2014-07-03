@@ -53,5 +53,11 @@ namespace :graph do
     include Neo4jHelper
     Neo4jHelper.create_indexes
   end
+
+  desc "Create Constraints"
+  task :add_constraints => :environment do
+    include Neo4jHelper
+    Neo4jHelper.add_constraints
+  end
   
 end

@@ -30,6 +30,46 @@
 	font-size: 1em;
 	font-weight: bold;
 	padding: 40px 0px 10px 0px;
+.info_cards .book_thumb{
+	border-radius: 2px;
+	margin: 4px;
+	float: left;
+	display: inline-block;
+}
+
+.info_cards .book_details{
+	width: 76%;
+	float: left;
+	display: inline-block;
+	font-weight: normal;
+	padding: 4px;
+	font-weight: normal;
+}
+
+.info_cards .book_column{
+	overflow: auto;
+	width: 100%;
+	margin-top: 10px;
+	border-bottom: 1px solid #E4E4E4;
+	cursor: pointer;
+}
+
+.info_cards .book_column:hover{
+	background-color: #ECECEC;
+}
+
+.info_cards .header{
+	font-family: Helvetica;
+	font-size: 1em;
+	font-weight: 700;
+	padding: 4px;
+	overflow: auto;
+	background-color: #F5F5F5;
+	border-radius: 5px;
+	margin-top: 10px;
+	border: 1px solid #EBEBEB;
+	max-height: 35vh;
+	overflow-y: scroll;
 }
 
 .info_cards .profile_pic{

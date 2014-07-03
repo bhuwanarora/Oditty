@@ -80,7 +80,7 @@
             scope.widthCropZone = Math.round(scope.destinationWidth * zoom);
             scope.heightCropZone = Math.round((scope.destinationHeight || minHeight) * zoom);
             scope.xCropZone = Math.round((scope.img_width - scope.widthCropZone) / 2);
-            scope.yCropZone = Math.round((scope.height - scope.heightCropZone) / 2);
+            scope.yCropZone = Math.round((heightWithImage - scope.heightCropZone) / 2);
             return $timeout(function() {
               return elOffset = offset(imageAreaEl);
             });
@@ -152,14 +152,14 @@
             return reader.readAsDataURL(file);
           };
           moveCropZone = function(ev) {
-            scope.xCropZone = ev.pageX - elOffset.left - scope.widthCropZone / 2;
-            scope.yCropZone = ev.pageY - elOffset.top - scope.heightCropZone / 2;
+            scope.xCropZone = ev.clientX - elOffset.left - scope.widthCropZone / 2;
+            scope.yCropZone = ev.clientY - elOffset.top - scope.heightCropZone / 2;
             return checkBounds();
           };
           moveBorders = {
             top: function(ev) {
               var y;
-              y = ev.pageY - elOffset.top;
+              y = ev.clientY - elOffset.top;
               scope.heightCropZone += scope.yCropZone - y;
               scope.yCropZone = y;
               checkVRatio();
@@ -167,21 +167,21 @@
             },
             right: function(ev) {
               var x;
-              x = ev.pageX - elOffset.left;
+              x = ev.clientX - elOffset.left;
               scope.widthCropZone = x - scope.xCropZone;
               checkHRatio();
               return checkBounds();
             },
             bottom: function(ev) {
               var y;
-              y = ev.pageY - elOffset.top;
+              y = ev.clientY - elOffset.top;
               scope.heightCropZone = y - scope.yCropZone;
               checkVRatio();
               return checkBounds();
             },
             left: function(ev) {
               var x;
-              x = ev.pageX - elOffset.left;
+              x = ev.clientX - elOffset.left;
               scope.widthCropZone += scope.xCropZone - x;
               scope.xCropZone = x;
               checkHRatio();
@@ -254,12 +254,12 @@
             return nearHSegment(ev, x, w, y, "top") || nearVSegment(ev, y, h, x + w, "right") || nearHSegment(ev, x, w, y + h, "bottom") || nearVSegment(ev, y, h, x, "left");
           };
           nearHSegment = function(ev, x, w, y, borderName) {
-            if (ev.pageX >= x && ev.pageX <= x + w && Math.abs(ev.pageY - y) <= borderSensitivity) {
+            if (ev.clientX >= x && ev.clientX <= x + w && Math.abs(ev.clientY - y) <= borderSensitivity) {
               return borderName;
             }
           };
           nearVSegment = function(ev, y, h, x, borderName) {
-            if (ev.pageY >= y && ev.pageY <= y + h && Math.abs(ev.pageX - x) <= borderSensitivity) {
+            if (ev.clientY >= y && ev.clientY <= y + h && Math.abs(ev.clientX - x) <= borderSensitivity) {
               return borderName;
             }
           };

@@ -98,50 +98,52 @@
 	    Login to explore recommendations.
 	  </div>
 	</div>
-	<div class="login_box animate-fast"
-		ng-if="!user.logged && show_login_form">
-		<div class="close button_effect" ng-click="close_login_box()">x</div>
-		<div class="header">
-			Login to explore recommendations.
-			<hr>
-		</div>
-		<div class="fb" 
-			 ng-show="!user.logged"
-		     ng-click="intent_login()">
-		     <!-- ng-disabled="!facebookReady" -->
-		</div>
-		<div class="google">
-			<google-plus-signin clientid="88213598927-9fij1u8tf2ldf4apf6qob4hgu0supj54.apps.googleusercontent.com"
-			ng-show="!user.logged"></google-plus-signin>
-		</div>
-		<form class="login_form"
-	        ng-model="user">
-	      	<input class="email" 
-	      	       type="email" 
-	      	       ng-model="user.email" 
-	      	       placeholder="Email"
-	      	       spellcheck="false" 
-	      	       required /><br />
-	      	<input class="password" 
-	      	       type="password" 
-	      	       ng-model="user.password" 
-	      	       placeholder="Password" 
-	      	       spellcheck="false"
-	      	       required /><br />
-	      	
-	      	<div class="authenticate authenticate_left" ng-click="authenticate(user)" type="button">
-	      		<span ng-show="!loading_icon">
-	      			<span>LOG IN</span>
-	      		<span ng-show="loading_icon"><img src="assets/loader2.gif" width="20px"></span>
+	<div class="wrapper" ng-if="!user.logged && show_login_form" ng-controller="loginController">
+		<div class="login_box animate-fast"
+			ng-if="!user.logged && show_login_form">
+			<div class="close button_effect" ng-click="close_login_box()">x</div>
+			<div class="header">
+				Login to explore recommendations.
+				<hr>
+			</div>
+			<div class="fb" 
+				 ng-show="!user.logged"
+			     ng-click="intent_login()">
+			     Sign in with Facebook
+			     <!-- ng-disabled="!facebookReady" -->
+			</div>
+			<div class="google">
+				<google-plus-signin clientid="88213598927-9fij1u8tf2ldf4apf6qob4hgu0supj54.apps.googleusercontent.com"
+				ng-show="!user.logged"></google-plus-signin>
+			</div>
+			<form class="login_form">
+		      	<input class="email" 
+		      	       type="email" 
+		      	       value="test@gmail.com" 
+		      	       ng-model="user.email" 
+		      	       placeholder="Email"
+		      	       spellcheck="false" 
+		      	       required /><br />
+		      	<input class="password" 
+		      	       type="password" 
+		      	       ng-model="user.password" 
+		      	       placeholder="Password" 
+		      	       spellcheck="false"
+		      	       required /><br />
+		      	
+		      	<div class="authenticate authenticate_left" ng-click="authenticate(true)" type="button">
+		      		<span>LOG IN</span>
+		      	</div>
+		      	<div class="authenticate" ng-click="authenticate(false)" type="button">
+		      		<span>SIGN UP</span>
+		      	</div>
+		    </form>
+	      	<div class="login_status">
+	      		<span ng-if="error_message">{{error_message}}</span>
+	      		<img src="assets/loader2.gif" width="20px" ng-show="loading_icon"/>
 	      	</div>
-	      	<div class="authenticate" ng-click="authenticate(user)" type="button">
-	      		<span ng-show="!loading_icon">
-	      			<span>SIGN UP</span>
-	      		<span ng-show="loading_icon"><img src="assets/loader2.gif" width="20px"></span>
-	      	</div>
-	    </form>
-	</div>
-    
+		</div>
+    </div>
 </div>
 <!-- <div class="search_focus" ng-if="website.searching">
 </div> -->

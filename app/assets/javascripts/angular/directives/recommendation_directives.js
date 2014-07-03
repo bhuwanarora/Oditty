@@ -27,11 +27,11 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 					$scope.advance_filter_changed(selected, type)
 				});
 				recommendationService.get_countries().then(function(data){
-			    	$scope.countryOptions = [{"name": "Reset"}];
+			    	$scope.countryOptions = _reset_json();
 			    	$scope.countryOptions = $scope.countryOptions.concat(data["countries"]);
 			    });
 			    recommendationService.get_time_groups().then(function(data){
-			    	$scope.timeOptions = [{"name": "Reset"}];
+			    	$scope.timeOptions = _reset_json();
 			    	for(var i=0; i < data["times"].length; i++){
 			    		var time_data = data.times[i][0]["data"];
 			    		var name = time_data["name"]+" ("+time_data["range"]+")";
@@ -41,7 +41,7 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 			    	// $scope.timeOptions = $scope.timeOptions.concat(data["times"]);
 			    });
 			    recommendationService.get_read_times().then(function(data){
-			    	$scope.readTimeOptions = [{"name": "Reset"}];
+			    	$scope.readTimeOptions = _reset_json();
 			    	for(var i=0; i < data["read_times"].length; i++){
 			    		var time_data = data.read_times[i][0]["data"];
 			    		var name = time_data["name"];
@@ -53,6 +53,10 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 			    _collapse_dropdown_menu();
 			}
 
+			_reset_json = function(){
+				return [{"name": "<span class='icon-loop'></span><span>&nbsp;Reset</span>"}];
+			}
+
 			_collapse_dropdown_menu = function(){
 				$scope.filter_expanded = true;
 				var timeout_event = $timeout(function(){
@@ -61,9 +65,15 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 			}
 
 			_init_dropdown_filters = function(){
-				$scope.countrySelected = {"name": "Filter by Region"};
-				$scope.timeSelected = {"name": "Filter by Era"};
-				$scope.readTimeSelected = {"name": "Filter by Reading Time"};
+				$scope.countrySelected = {"name": "<span class='icon-earth'></span><span>&nbsp;Filter by Region</span>"};
+				$scope.timeSelected = {"name": "<span class='icon-calendar'></span><span>&nbsp;Filter by Era</span>"};
+				$scope.readTimeSelected = {"name": "<span class='icon-clock'></span><span>&nbsp;Filter by Reading Time</span>"};
+			}
+
+			$scope.handle_left_columns = function(){
+				$scope.column_heights = {"show_filters": true,
+										"notifications_style" : {"height": "110px"}, 
+										"friends_grid_style": {"height": "30px"}};
 			}
 
 			$scope.clear_filter = function(main_filter, type){
@@ -77,17 +87,17 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 			}
 
 			$scope.advance_filter_changed = function(selected, type){
-				if(selected.name == "Reset"){
+				if(selected.name == "<span class='icon-loop'></span><span>&nbsp;Reset</span>"){
 					var message = "SUCCESS-"+type+" filter has been reset."
 					delete $rootScope.filters.other_filters[type];
 					if(type == "country"){
-						$scope.countrySelected = {"name": "Filter by Region"};
+						$scope.countrySelected = {"name": "<span class='icon-earth'></span><span>&nbsp;Filter by Region</span>"};
 					}
 					else if(type == "timeGroup"){
-						$scope.timeSelected = {"name": "Filter by Era"};
+						$scope.timeSelected = {"name": "<span class='icon-calendar'></span><span>&nbsp;Filter by Era</span>"};
 					}
 					else if(type == "readingTime"){
-						$scope.readTimeSelected = {"name": "Filter by Reading Time"};
+						$scope.readTimeSelected = {"name": "<span class='icon-clock'></span><span>&nbsp;Filter by Reading Time</span>"};
 					}
 				}
 				else{
@@ -234,6 +244,13 @@ websiteApp.directive('notificationLink', function(){
 	}
 });
 
+websiteApp.directive('tickerPopup', function(){
+	return{
+		restrict: 'E',
+		templateUrl: '/assets/angular/widgets/partials/ticker_popup.html'
+	}
+});
+
 websiteApp.directive('filter', ['$rootScope', '$timeout', '$routeParams', function($rootScope, $timeout, $routeParams){
 	return{
 		restrict: 'E',
@@ -347,6 +364,22 @@ websiteApp.directive('recommendationFooter', ['scroller', function(scroller){
 				$scope.compact_footer = false;	
 			}
 
+
+			$scope.handle_notification_ticker_size = function(event){
+				var increase_tab_size = event.deltaY > 0;
+				if(increase_tab_size){
+					$scope.column_heights = {"notifications_style": {"height": "225px"},
+											"friends_grid_style": {"height": "30px"},
+											"show_filters": false};
+				}
+				else{
+					$scope.column_heights = {"notifications_style": {"height": "110px"},
+											"friends_grid_style": {"height": "30px"},
+											"show_filters": false};
+				}
+	            event.stopPropagation();
+	        }
+	        
 			$scope.goto_info_card = function(){
 				scroller.scrollTo(0, 0, 2000);
 			}
@@ -358,3 +391,36 @@ websiteApp.directive('recommendationFooter', ['scroller', function(scroller){
 		templateUrl: "/assets/angular/widgets/partials/recommendation_footer.html"
 	}
 }]);
+
+websiteApp.directive('calendar', function(){
+	return{
+		restrict: 'E',
+		scope : {},
+		controller: ['$scope', function($scope){
+			$scope.date_check = function(){
+				var month = $scope.months.indexOf($scope.selectedMonth) + 1;
+				var no_days = new Date($scope.selectedYear, month, 0).getDate();
+				$scope.days = new Array(no_days)
+							.join()
+							.split(',')
+							.map(function(item, index){return ++index;});
+			}
+
+			_init =function(){
+				$scope.days = new Array(31)
+							.join()
+							.split(',')
+							.map(function(item, index){return ++index;});
+				$scope.months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+				$scope.years = [];
+				var currentYear = new Date().getFullYear();
+				for(var i=currentYear; i>1904; i--){
+					$scope.years.push(i);
+				}
+			}
+
+			_init();
+		}],
+		templateUrl: '/assets/angular/widgets/partials/calendar.html'
+	}
+});

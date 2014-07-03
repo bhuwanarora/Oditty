@@ -6,11 +6,19 @@
 	height: 70vh;
 	min-width: 380px;
 	position: fixed;
-	top: 90px;
+	top: 95px;
 	white-space: initial;
 	width: 55vh;
 	z-index: 1;
 	/* for big screens */
+}
+
+.focused_tooltip .buy_column{
+	padding: 10px;
+}
+
+.focused_tooltip a{
+	color: #136CB2;
 }
 
 .focused_tooltip .rating_star{
@@ -88,11 +96,12 @@
 
 .focused_tooltip .description{
 	font-family: Proxima Nova, sans-serif;
-	font-size: 1em;
+	font-size: 0.93em;
 	height: 20vh;
-	line-height: 1.5em;
-	overflow-y: scroll;
+	line-height: 1.3em;
+	/*overflow-y: scroll;*/
 	padding: 12px;
+	border-bottom: 1px solid #D3D3D3;
 }
 
 .focused_tooltip .share_menu div{
@@ -182,12 +191,15 @@
 }
 
 .focused_tooltip .user_box{
-	bottom: 50px;
+	bottom: 100px;
 	position: absolute;
+	background-color: white;
+	width: 100%;
+	padding-top: 5px;
 }
 
 .focused_tooltip .header .title:hover,
-.focused_tooltip .header .author:hover,{
+.focused_tooltip .header .author:hover{
 	text-decoration: underline;
 }
 
@@ -309,4 +321,37 @@
 .focused_tooltip .arrow_left{
 	left: -11px;
 	border-right: 10px solid white; 
+}
+
+.focused_tooltip .tweet_link img{
+	width: 30px;
+	border-radius: 2px;
+}
+
+.focused_tooltip .tweet_link{
+	bottom: 50px;
+	position: absolute;
+	width: 90%;
+	font-size: .8em;
+	padding: 10px;
+	word-wrap: break-word;
+}
+
+.focused_tooltip .tweet_link span{
+	cursor: pointer;
+	background-color: #F5F5F5;
+	border-radius: 2px;
+	padding: 5px;
+	color: #136CB2;
+}
+
+.focused_tooltip .tweet_link span:hover{
+	background-color: #E6E6E6;
+}
+
+.focused_tooltip .input_thumb{
+	border: 1px solid #136CB2;
+	padding: 4px;
+	box-shadow: 0 3px 8px rgba(0,0,0,.3);
+	width: 90%;
 }

@@ -10,7 +10,6 @@
 	<div class="profile_status_logo"></div>
 	<div ng-switch-when="0">
 		<div class="header">
-			<label for="username">Name</label>
 			<input class="username" 
 				id="username"
       	       ng-model="user.name" 
@@ -21,12 +20,15 @@
       	</div>
       	<div class="header">
       		<label for="birthday">Born on</label>
+			<!-- 
 			<input class="birthday" 
 			   id="birthday"
       	       ng-model="user.birthday" 
       	       spellcheck="false"
       	       type="date" 
       	       required />
+			 -->
+			 <calendar></calendar>
       	</div>
       	<div class="header">
   			<label for="gender">Gender</label>
@@ -39,8 +41,8 @@
 		  		<input type="radio" ng-model="gender" value="Female" id="female"
 		  				class="custom_radio icon-checkbox-unchecked">
 
-		  		<label for="trans">Trans</label>
-		  		<input type="radio" ng-model="gender" value="Transgender" id="trans" 
+		  		<label for="other">Other</label>
+		  		<input type="radio" ng-model="gender" value="Other" id="other" 
 		  				class="custom_radio icon-checkbox-unchecked">
 			</form>
       	</div>
@@ -108,9 +110,20 @@
 				on-select="add_book()"
 				ng-keypress="get_search_results($event, 'BOOK', searchResults)">
 			</type-ahead>
-		<div class="description">
-			Tell us about your taste..
+		<div class="header" msd-wheel="stop_horizontal_scroll($event)">
+			<div ng-if="book.thumb | is_present" class="book_column" 
+					 ng-repeat="book in popular_books">
+				<img ng-src="{{book.thumb}}" 
+					 class="book_thumb"/>
+				<div class="book_details">
+					<span>{{book.title}}</span>
+					<span>by {{book.author_name}}</span>
+				</div>
+			</div>
 		</div>
+		<!-- <div class="description">
+			Tell us about your taste..
+		</div> -->
 	</div>
 	<div ng-switch-when="4">
 		<div class="header">Which 3 Authors you like?</div>
@@ -136,16 +149,16 @@
       			accept="image/*" image="image"/> -->
       	<div ng-if="!user.thumb">
 			<div class="header thumb">Add a profile pic</div>
-		      	<div class="description">Help your friends recognise you across Reader's Door.</div>
+	      	<div class="description">Help your friends recognise you across Reader's Door.</div>
 	      	<!-- </div> -->
 	      	<div ng-if="user.thumb">
 	      		<div class="header thumb">Change your profile pic</div>
 		    	<img ng-src="{{user.thumb}}" class="profile_pic">
 	      	</div>
       	 	<cropme
-		        width="350"
+		        width="info_card_width"
 		        max-height="470"
-		        ratio="1.34"
+		        ratio="info_card_ratio"
 		        icon-class=""
 		        type="png"
 		        destination-width="350">
@@ -156,21 +169,12 @@
 			       value="Select a photo from your computer" 
 			       onclick="document.getElementById('selectedFile').click();" /> -->
 		</div>
-		<div ng-switch-when="6">
-			<div class="header">
-				Meet readers in your area...
-			</div>
-			<map style="display:block; height:180px" />
+	</div>
+	<div ng-switch-when="6">
+		<div class="header">
+			Meet readers in your area...
 		</div>
-		<div ng-switch-when="7">
-			<div class="header">Invite your friends</div>
-			<div class="description">
-				Know what your friends are reading...
-			</div>
-		</div>
-		<div ng-switch-when="8">
-		</div>
-		<!-- <map style="display:block; height:180px" /> -->
+		<map style="display:block; height:180px" />
 	</div>
 	<div ng-switch-when="7">
 		<div class="header">Invite your friends</div>
@@ -179,7 +183,6 @@
 		</div>
 	</div>
 	<div ng-switch-when="8">
-		
 	</div>
 	<div class="footer">
 		<span class="prev icon-angle-left" ng-click="prev_profile_state()"></span>

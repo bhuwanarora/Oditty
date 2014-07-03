@@ -3,7 +3,7 @@ ReadersDoor::Application.routes.draw do
   resources :facebooks
 
   mount Resque::Server, :at => "/resque"
-  mount MadChatter::RailsEngine => "/chat"
+#  mount MadChatter::RailsEngine => "/chat"
   
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
@@ -56,6 +56,8 @@ ReadersDoor::Application.routes.draw do
   get "horizontal_scroll"        => "tests#horizontal_scroll",         :as => "horizontal_scroll"
   get "angular_test"             => "tests#angular_test",              :as => "angular_test"
 
+  get "verify"                   => "users#verify",                     :as => "verify"   
+  get "thumbs"                   => "books#thumbs",                     :as => "thumbs"
   # root :to => "website#coming_soon"
   root :to => "recommendations#index"
 

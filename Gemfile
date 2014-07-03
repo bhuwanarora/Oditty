@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.1'
@@ -48,7 +48,7 @@ gem 'rack-zippy'
 gem 'nifty-generators'
 gem 'faye'
 gem 'thin'
-gem 'mad_chatter', github: 'madchatter/mad_chatter'
+#gem 'mad_chatter', github: 'madchatter/mad_chatter'
 gem 'pubnub'
 # gem 'goospell'
 gem 'spellingbee'
@@ -68,7 +68,10 @@ gem 'freebase-api'
 gem 'fb_graph'
 gem 'treetop'
 gem 'polyglot'
-gem 'rubber'
+gem 'blather'
+gem "eventmachine"
+# gem 'amazon-ecs'
+# gem 'rubber'
 # gem 'rails_admin_example_theme', :git => 'git://github.com/bbenezech/rails_admin_example_theme.git'
 
 group :doc do
@@ -79,6 +82,11 @@ end
 group :production do
 	gem 'rails_12factor'
 end
+
+gem 'capistrano'
+gem 'capistrano-bundler'
+gem 'capistrano-rails'
+gem 'capistrano-rbenv'
 
 group :development do
 	gem "byebug", "~> 2.5.0"
@@ -92,8 +100,8 @@ group :development do
 	gem 'did_you_mean'
 	gem 'net-http-spy'
 	gem 'rspec'
-	gem 'colorize'
 end
+gem 'colorize'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'

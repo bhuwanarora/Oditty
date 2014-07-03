@@ -45,7 +45,12 @@ module Api
 			end
 
 			def authenticate
-				render :json => {:message => "success", :profile_status => 0, :user_id => 1}, :status => 200
+				authentication_info = UserApi.authenticate params
+				if authentication_info[:authenticate]
+					render :json => authentication_info, :status => 200
+				else
+					render :json => authentication_info, :status => 403
+				end
 			end
 
 			def update_profile
@@ -64,197 +69,61 @@ module Api
 					{
 						:thumb => "assets/profile_pic.jpeg",
 						:user => "",
-						:message => "<a href='javascript:void(0);'
-						                ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>Test User1</a> added book <a href='javascript:void(0);'
-                     					ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>Test Book2</a> to his <a href='javascript:void(0);'
-                     					ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>reading shelf</a>, and gave 4 rating to the book.",
+						:message => "Test User1 added book to his reading shelf, and gave 4 rating to the book.",
 						:timestamp => "2 days ago",
 						:category_id => 1
 					},
 					{
 						:thumb => "assets/profile_pic.jpeg",
-						:message => "<a href='javascript:void(0);'
-						                ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>Test User4</a> recommended you <a href='javascript:void(0);'
-                     					ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>Test-BookA</a> by <a href='javascript:void(0);'
-                     					ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>Test-AuthorB.</a>",
+						:message => "Test User4 recommended you Test-BookA by Test-AuthorB",
 						:timestamp => "3 days ago",
 						:category_id => 2
 					},
 					{
 						:thumb => "assets/profile_pic.jpeg",
-						:message => "<a href='javascript:void(0);'
-						                ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>Test User 1</a>, <a href='javascript:void(0);'
-                     					ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>Test User 4</a> read <a href='javascript:void(0);'
-                     					ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>Test book A</a> recommended by <a href='javascript:void(0);'
-                     					ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>Test User 2.</a>",
+						:message => "Test User 1, Test User 4 read Test book A recommended by Test User 2.",
 						:timestamp => "4 days ago",
 						:category_id => 3
 					},
 					{
 						:thumb => "assets/profile_pic.jpeg",
-						:message => "<a href='javascript:void(0);'
-						                ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>Test User 4</a> wrote a <a href='javascript:void(0);'
-                     					ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>review on Test-BookA.</a>",
-						:description => "<a href='javascript:void(0);'
-						                ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>A well written concise life story of Siddhartha...</a>",
+						:message => "Test User 4 wrote a review on Test-BookA.",
 						:timestamp => "2 days ago",
 						:category_id => 4
 					},
 					{
 						:thumb => "assets/profile_pic.jpeg",
-						:message => "<a href='javascript:void(0);'
-						                ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>Test User 1</a> bookmarked <a href='javascript:void(0);'
-                     					ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>test book</a> for later viewing.",
+						:message => "Test User 1 bookmarked test book for later viewing.",
 						:timestamp => "2 days ago",
 						:category_id => 5
 					},
 					{
 						:thumb => "assets/profile_pic.jpeg",
-						:message => "<a href='javascript:void(0);'
-						                ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>Test User 1</a> from Facebook joined Reader's Door. <a href='javascript:void(0);'
-                     					ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>Follow</a> him.",
+						:message => "Test User 1 from Facebook joined Reader's Door.",
 						:timestamp => "2 days ago",
 						:category_id => 6
 					},
 					{
 						:thumb => "assets/profile_pic.jpeg",
-						:message => "<a href='javascript:void(0);'
-						                ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>Test User 1</a> from Facebook joined Reader's Door. <a href='javascript:void(0);'
-                     					ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>Follow</a> him.",
+						:message => "Test User 1 from Facebook joined Reader's Door.",
 						:timestamp => "2 days ago",
 						:category_id => 7
 					},
 					{
 						:thumb => "assets/profile_pic.jpeg",
-						:message => "<a href='javascript:void(0);'
-						               	ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>Test User 1</a> started following you. <a href='javascript:void(0);'
-                     					ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>Follow</a> him.",
+						:message => "Test User 1 started following you.",
 						:timestamp => "2 days ago",
 						:category_id => 8
 					},
 					{
 						:thumb => "assets/profile_pic.jpeg",
-						:message => "<a href='javascript:void(0);'
-						               	ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>Test User 1</a>, <a href='javascript:void(0);'
-                     					ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>Test User 2</a> tagged <a href='javascript:void(0);'
-                     					ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>TestUser4</a> as Tag.",
+						:message => "Test User 1, Test User 2 tagged as Tag.",
 						:timestamp => "2 days ago",
 						:category_id => 9
 					},
 					{
 						:thumb => "assets/profile_pic.jpeg",
-						:message => "<a href='javascript:void(0);'
-						                ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>Test User 1</a>, <a href='javascript:void(0);'
-                     					ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>Test User 2</a> started following <a href='javascript:void(0);'
-                     					ns-popover
-     									ns-popover-template='popover'
-     									ns-popover-trigger='mouseover'
-     									ns-popover-timeout='0'
-     									ns-popover-placement='bottom|right'>TestUser4</a>.",
+						:message => "Test User 1, Test User 2 started following TestUser4.",
 						:timestamp => "2 days ago",
 						:category_id => 10
 					}

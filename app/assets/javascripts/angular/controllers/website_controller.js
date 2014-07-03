@@ -1,24 +1,26 @@
-websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout', 'websiteService', 'Facebook', '$document', 'scroller', '$window',
-	function($scope, $rootScope, $timeout, websiteService, Facebook, $document, scroller, $window){
+websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout', 'websiteService', '$document', 'scroller', '$window', function($scope, $rootScope, $timeout, websiteService, $document, scroller, $window){
 	$scope.bindHorizontalScroll = function(event, delta, deltaX, deltaY){
-		if(!$scope.show_notifications){
-			event.preventDefault();
-			if(delta > 0){
-				$scope.move_left(event);
-		        // event.view.window.scrollBy(-80, 0);
-			}
-			else{
-				$scope.move_right(event);
-				// _load_recommendations();
-				//move forward
-				// event.view.window.scrollBy(80, 0);
-			}
-			event.stopPropagation();
+		event.preventDefault();
+		if(delta > 0){
+			$scope.move_left(event);
+	        // event.view.window.scrollBy(-80, 0);
 		}
+		else{
+			$scope.move_right(event);
+			// _load_recommendations();
+			//move forward
+			// event.view.window.scrollBy(80, 0);
+		}
+		event.stopPropagation();
+	}
+
+	_hide_popups = function(){
+		$rootScope.focused_book = null;
+		$rootScope.ticker_popup = null;
 	}
 
 	$scope.move_left = function(event){
-		$rootScope.focused_book = null;
+		_hide_popups();
 		var swipe_time = 2000;
 		var clientWidth = document.body["scrollWidth"];
 		if(event){
@@ -44,7 +46,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	$scope.move_right = function(event){
-		$rootScope.focused_book = null;
+		_hide_popups();
 		var swipe_time = 2000;
 		var clientWidth = document.body["scrollWidth"];
 		if(event){
@@ -113,69 +115,6 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		// console.log("showFeebackForm")
 	}
 
-	$scope.authenticate = function(){
-		var data_json = $rootScope.user;
-		$scope.loading_icon = true;
-		websiteService.authenticate(data_json).then(function(data){
-			if(data.message == "success"){
-				$rootScope.user.profile_status = data.profile_status;
-				$rootScope.user.logged = true;
-				$rootScope.user.id = data.user_id;
-				// $scope.show_login_form = true;
-				// _profile_status_colors();
-				// websiteService.get_user_details().then(function(data){
-		  //   		$rootScope.user.books = data["books"];
-		  //   	});
-				websiteService.get_notifications($rootScope.user).then(function(data){
-					$scope.notifications = data.notifications;
-				});
-			}
-		});
-	}
-
-    $scope.intent_login = function() {
-        Facebook.getLoginStatus(function(response){
-          	if (response.status == 'connected'){
-            	$rootScope.logged = true;
-            	$scope.me(); 
-          	}
-          	else{
-           		$scope.login();
-          	}
-        });
-    };
-      
-   	$scope.login = function() {
-     	Facebook.login(function(response) {
-      		if (response.status == 'connected') {
-        		$rootScope.logged = true;
-        		$scope.me();
-      		}
-    	});
-   	};
-   
-    $scope.me = function() {
-        Facebook.api('/me', function(response){
-        	console.log(response);
-		    $scope.$apply(function(){
-		        $rootScope.user = response;
-		        $rootScope.user.profile_status = 0;
-		        $rootScope.user.thumb = "https://scontent-b-kul.xx.fbcdn.net/hphotos-ash3/t1.0-9/66784_415130785223231_1615890777_n.jpg";
-		        // _profile_status_colors();
-		        $rootScope.user.logged = true;
-		    });
-        });
-    };
-      
-  	$scope.logout = function() {
-    	Facebook.logout(function() {
-      		$scope.$apply(function() {
-        		$rootScope.user   = {};
-        		$rootScope.logged = false;
-      		});
-    	});
-  	}
-
   	$scope.show_uploader = function(){
   		$scope.uploader = true;	
   	}
@@ -211,40 +150,6 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    	_get_book_details(data);
 			event.stopPropagation();
 	    });
-	}
-
-	_bind_auth_listeners = function(){
-		$scope.$on('event:google-plus-signin-success', function (event, authResult) {
-		    // console.log("google login", authResult);
-		});
-
-		$scope.$on('event:google-plus-signin-failure', function (event, authResult) {
-		    // console.log("google login", authResult);
-		});
-
-
-	    $scope.$on('Facebook:statusChange', function(ev, data) {
-	        if (data.status == 'connected') {
-	        	$scope.$apply(function() {
-	          	});
-	        } 
-	        else {
-	        }
-	    });
-
-	    /**
-	     * Watch for Facebook to be ready.
-	     * There's also the event that could be used
-	    */
-	    $scope.$watch(
-	        function() {
-	          return Facebook.isReady();
-	        },
-	        function(newVal) {
-	          if (newVal)
-	            $scope.facebookReady = true;
-	        }
-	    );
 	}
 
 	_add_listeners = function(){
@@ -304,6 +209,12 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 				$scope.move_right();
 			}, 1000);
 	    });
+
+	    get_notifications_event = $scope.$on('getNotifications', function(){
+	    	websiteService.get_notifications($rootScope.user).then(function(data){
+				$scope.notifications = data.notifications;
+			});
+	    });
 	}
 
 	$scope.toggle_login_panel = function(){
@@ -318,7 +229,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	_initiate_loading_page = function(){
 		$scope.loading = true;
 		$scope.drop_icon = false;
-		$scope.show_login_form = true;
+		$scope.show_login_form = false;
 
 		$timeout(function(){
 			$scope.loading = false;
@@ -385,37 +296,47 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		}
 	}
 
+	_handle_socket_error = function(){
+		// $scope.$on('socket:error', function (ev, data) {
+		// 	debugger
+	 //    });
+	    // debugger
+
+	    // appSocket.forward('someEvent', $scope);
+	    // $scope.$on('socket:someEvent', function (ev, data) {
+	    //   $scope.theData = data;
+	    // });
+	}
+
 	_init = function(){
 		console.time("websiteAppController");
 		_initiate_loading_page();
 		$scope.more_filters = [];
-		$scope.show_notifications = false;
+		$scope.show_notifications = true;
 		$scope.notifications_seen = false;
-		$scope.test = {time: 1970};
-		$scope.detailed_book = {};
-		$rootScope.initPage = 3;
+		// $scope.test = {time: 1970};
+		// $scope.detailed_book = {};
+		// $rootScope.initPage = 3;
 		// Define user empty data :/
-		$rootScope.user = {'books': {'bookmarked':[], 'read': []},
-						'authors': {'bookmarked': [], 'follow': []},
-						'readers': {'follow': []},
-						'logged': false};
+		
 		$scope.website = {};
-		$scope.website.searching = true;
+		$scope.website.searching = false;
 		$scope.website.show_search_page = true;
-
 		_bind_emit();
 		_bind_feedback_form();
-		_bind_auth_listeners();
+		// _bind_auth_listeners();
 		_add_listeners();
-		
+		_handle_socket_error();
 		// $('body').css('white-space', 'normal');
 		// $speechRecognition.onstart(function(){
 		//   $speechSynthetis.speak("You're at Reader's Door. How can I help you?", 'en-UK');
 		// });
 		// $speechRecognition.setLang('en-UK'); // Default value is en-US
 		// $speechRecognition.listen();
-		$scope.authenticate();
-		
+		$rootScope.user = {'books': {'bookmarked':[], 'read': []},
+						'authors': {'bookmarked': [], 'follow': []},
+						'readers': {'follow': []},
+						'logged': false};	
 		console.timeEnd("websiteAppController");
 	}
 

@@ -23,6 +23,30 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		}
 	}
 
+	$scope.handle_height_of_popup = function(event){
+		if(event.deltaY > 0){
+			$scope.ticker_popup_style = {"height": "62vh"};
+		}
+		else{
+			$scope.ticker_popup_style = {"height": "42vh"};		
+		}
+		event.stopPropagation();
+	}
+
+	$scope.handle_friends_grid_size = function(){
+		if(event.deltaY > 0){
+			$scope.column_heights = {"notifications_style" : {"height": "110px"}, 
+									"friends_grid_style": {"max-height": "90px", "overflow": "auto"},
+									"show_filters": false};
+		}
+		else{
+			$scope.column_heights = {"notifications_style" : {"height": "110px"}, 
+									"friends_grid_style": {"height": "30px"},
+									"show_filters": false};
+		}
+		event.stopPropagation();
+	}
+
 	$scope.reset = function(){
 		_init_recommendations();
     	_get_recommendations();
@@ -62,7 +86,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	$scope.hide_popups = function(){
 		$rootScope.hide_options = true;
 		$rootScope.focused_book = null;
-		$scope.show_more_filters = false;
+		$rootScope.ticker_popup = null;
+ 		// $scope.show_more_filters = false;
 	}
 
 	_load_icon = function(){
@@ -74,18 +99,21 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	_add_listeners = function(){
 	    load_recommendations_event = $scope.$on('loadRecommendations', function(){
-	    	console.debug("%cloadRecommendations", "color: purple;");
-	    	$rootScope.filters["reset"] = false;
-	    	if($rootScope.filters["reset_count"] == undefined){
-	    		console.debug("%c reset count", "color: purple");
-	    		$rootScope.filters["reset_count"] = 0;
+	    	if(!$scope.read_selected && !$scope.bookmark_selected){
+		    	console.debug("%cloadRecommendations", "color: purple;");
+		    	$rootScope.filters["reset"] = false;
+		    	if($rootScope.filters["reset_count"] == undefined){
+		    		console.debug("%c reset count", "color: purple");
+		    		$rootScope.filters["reset_count"] = 0;
+		    	}
+		    	else{
+		    		console.debug("%c increase count", "color: purple");
+		    		$rootScope.filters["reset_count"] = $rootScope.filters["reset_count"]+1;
+		    	}
+		    	console.log("%c load_recommendations_event", "color: green;");
+		    	_get_recommendations();
+		    	// event.stopPropagation();
 	    	}
-	    	else{
-	    		console.debug("%c increase count", "color: purple");
-	    		$rootScope.filters["reset_count"] = $rootScope.filters["reset_count"]+1;
-	    	}
-	    	_get_recommendations();
-	    	// event.stopPropagation();
 	    });
 
 	    reload_recommendations_event = $scope.$on('reloadRecommendations', function(){
@@ -94,21 +122,25 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	    	$rootScope.filters["reset"] = true;
 	    	$rootScope.filters["reset_count"] = 0;
 	    	$scope.reset();
+	    	console.log("%c reload_recommendations_event", "color: green;");
 	    	// event.stopPropagation();
 	    });
 
 	    open_shelf_event = $scope.$on('showBookReadShelf', function(){
 	    	$scope.read_selected = true;
+	    	console.log("%c open_shelf_event", "color: green;");
 	    	event.stopPropagation();
 	    })
 
 	    glow_shelf_event = $scope.$on('glowShelf', function(){
 	    	$scope.glowShelf = true;
+	    	console.log("%c glow_shelf_event", "color: green;");
 	    	event.stopPropagation();
 	    });
 
 	    glow_bookmark_event = $scope.$on('glowBookmark', function(){
 	    	$scope.glowBookmark = true;
+	    	console.log("%c glow_bookmark_event", "color: green;");
 	    	event.stopPropagation();
 	    });
 	}
@@ -147,6 +179,13 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         else if($routeParams.type == "readers"){
         	$rootScope.filters["filter_type"] = "READER";
         }
+        else if($routeParams.title){
+			$scope.$routeParams.type = 'books';
+        	$rootScope.filters["reset"] = true;
+        	$rootScope.filters["filter_type"] = "BOOK";
+        	$rootScope.filters.other_filters["title"] = $scope.$routeParams.title;
+			$rootScope.filters.other_filters["author_name"] = $scope.$routeParams.author;
+        }
         else{
 			$rootScope.filters["filter_type"] = "BOOK";
 			$scope.show_notifications = true;
@@ -154,13 +193,11 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         if($routeParams.filter_id){
         	$scope.show_more_filters = true;
         }
-		// $rootScope.filters = {"filter_ids": []};
-		// $rootScope.filters["more_filters"] = "BOOK";
 	}
 
 	_update_recommendations = function(data){
 		if($rootScope.filters["filter_type"] == "BOOK"){
-			var message = "INFO- "+data.recommendations.books.length+" books found."
+			var message = "INFO- "+data.recommendations.books.length+" books found.";
 			var timeout_event = notify($rootScope, message, $timeout);
 			$scope.$on('destroy', function(){
 				$timeout.cancel(timeout_event);
@@ -188,10 +225,11 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 					if($rootScope.filters.other_filters["title"]){
 						$scope.bookmark_selected  = false;
 						$scope.read_selected = false;
-						$scope.$emit('moveRight');
+						// $scope.$emit('moveRight');
 						$rootScope.hide_options = true;
 						$scope.recommendations.books = data["recommendations"]["books"];
 						$rootScope.focused_book = $scope.recommendations.books[0];
+						$rootScope.focused_book.tweets = [];
 					}
 					else{
 		    			$scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);
@@ -281,7 +319,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
       });
     }
 
-
 	_init = function(){
 		//oneMin = 60000
 		$scope.$routeParams = $routeParams;
@@ -299,12 +336,15 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		$scope.searching = false;
     	_get_filters();
     	_get_labels();
+		_initialize_filters();
 		_init_recommendations();
+		if($scope.$routeParams.title){
+			_get_recommendations();
+		}
     	_add_listeners();
 		_init_notifications();
         _init_analytics();
         _init_shelf();
-		_initialize_filters();
         // _get_recommendations();
         // _push_recommendations();
         _bind_destroy();

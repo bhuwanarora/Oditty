@@ -37,6 +37,10 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         return _deferred_request('/api/v0/info_data');
     }
 
+    this.get_popular_books = function(){
+        return _deferred_request('/api/v0/popular_books');   
+    }
+
     _deferred_request = function(url){
         var deferred = $q.defer();
         var success_callback = function(result){
@@ -59,6 +63,9 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         var error_callback = function(reason){
             if(reason.status == 500){
                 alert("internal server error");
+            }
+            else if(reason.status == 403){
+                return deferred.reject(reason);
             }
         }
         $http.post(url, params).then(success_callback, error_callback);

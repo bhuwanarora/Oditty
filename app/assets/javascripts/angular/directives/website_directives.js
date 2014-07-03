@@ -5,6 +5,13 @@ websiteApp.directive('siteLogo', [function(){
 	}
 }]);
 
+websiteApp.directive('userThumb', [function(){
+	return{
+		restrict: 'E',
+		templateUrl: '/assets/angular/widgets/partials/user_thumb.html'
+	}
+}]);
+
 websiteApp.directive('infoCard', ['$rootScope', '$timeout', function($rootScope, $timeout){
 	return{
 		restrict: 'E',
@@ -47,7 +54,16 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', function($rootScope,
 			}
 
 			_handle_info_card_bindings = function($scope){
-				if($rootScope.user.profile_status == 6){
+				if($rootScope.user.profile_status == 2){
+					_get_popular_books();
+				}
+				else if($rootScope.user.profile_status == 3){
+					_get_genres();
+				}
+				else if($rootScope.user.profile_status == 4){
+					// $rootScope.$broadcast('showBookReadShelf');
+				}
+				else if($rootScope.user.profile_status == 6){
 					if(navigator.geolocation){
 						navigator.geolocation.getCurrentPosition(function(position){
 							var latitude = position.coords.latitude;
@@ -60,12 +76,6 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', function($rootScope,
 						x.innerHTML="Geolocation is not supported by this browser.";
 					}
 				}
-				else if($rootScope.user.profile_status == 4){
-					// $rootScope.$broadcast('showBookReadShelf');
-				}
-				else if($rootScope.user.profile_status == 2){
-					_get_genres();
-				}
 			}
 
 			_get_info_data = function(){
@@ -74,6 +84,12 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', function($rootScope,
 					$scope.user_book_count = $scope.book_counts[0];
 				});
 
+			}
+
+			_get_popular_books = function(){
+				websiteService.get_popular_books().then(function(data){
+					$scope.popular_books = data;
+				});
 			}
 			
 			_init = function(){
@@ -89,6 +105,8 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', function($rootScope,
 				]
 				$scope.gender = "Male";
 				$scope.profileSelected = {"name": "Reader"};
+				$scope.info_card_width = 350; //in px
+				$scope.info_card_ratio = 1.34;
 			}
 
 
@@ -244,18 +262,20 @@ websiteApp.directive('horizontalScroller', function(){
 
 websiteApp.directive('setFocus', ['$timeout', '$parse' , '$rootScope', function($timeout, $parse, $rootScope) {
   return {
-    link: ['scope', 'element', 'attrs', function(scope, element, attrs) {
+    link: function(scope, element, attrs) {
       var model = $parse(attrs.setFocus);
       scope.$watch(model, function(value) {
         if(value === true) { 
           $timeout(function() {
-            element[0].value = String.fromCharCode($rootScope.keyCode);
+          	if($rootScope.keyCode){
+            	element[0].value = String.fromCharCode($rootScope.keyCode);
+          	}
             element[0].focus(); 
             // $speechSynthetis.speak("You are at Reader's Door. How can I help you?", 'en-UK');
           });
         }
       });
-    }]
+    }
   };
 }]);
 
@@ -403,13 +423,62 @@ websiteApp.directive('message', function(){
 	}
 });
 
-websiteApp.directive('notification', function(){
+websiteApp.directive('notification', ['$rootScope', function($rootScope){
 	return{
 		restrict: 'E',
 		scope: {"notification": "=data"},
+		controller: ['$scope', function($scope){
+			$scope.toggle_ticker_popup = function(event){
+				var ticker_popup_absent = $rootScope.ticker_popup == null;
+				if(ticker_popup_absent){
+					$rootScope.ticker_popup = true;
+					$rootScope.focused_book = null;
+					var top = _get_arrow_position(event);
+					$rootScope.ticker_position = {"top": top+"px"};
+				}
+				else{
+					$rootScope.ticker_popup = null;
+				}
+				event.stopPropagation();
+			}
+
+			_get_arrow_position = function(event){
+				console.log(event.currentTarget);
+				console.log(event.currentTarget.clientHeight);
+				console.log(event.currentTarget.offsetHeight);
+				console.log(event.currentTarget.pageY);
+				console.log(event.currentTarget.y);
+				console.log(event.currentTarget.style);
+				console.log(event.currentTarget.css);
+				var base = 90;
+				var top = 17;
+				if(event.y > base && event.y < base + 54){
+
+				}
+				else if(event.y > base + 54 && event.y < base + 54*2){
+					top = top + 54;
+				}
+				else if(event.y > base + 54*2 && event.y < base + 54*3){
+					top = top + 54*2;
+				}
+				else if(event.y > base + 54*3 && event.y < base + 54*4){
+					top = top + 54*3;
+				}
+				else if(event.y > base + 54*4 && event.y < base + 54*5){
+					top = top + 54*4;
+				}
+				return top;
+			}
+
+			$scope.show_ticker_popup = function(){
+				var top = _get_arrow_position(event);
+				$rootScope.ticker_popup = true;	
+				$rootScope.ticker_position = {"top": top+"px"};
+			}
+		}],
 		templateUrl: '/assets/angular/widgets/partials/notification.html'
 	}
-});
+}]);
 
 
 websiteApp.directive('compile', ['$compile', function($compile){

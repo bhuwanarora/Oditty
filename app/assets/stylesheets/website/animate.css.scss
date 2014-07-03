@@ -1,24 +1,32 @@
 .focused_tooltip.ng-enter,
 .focused_tooltip.ng-leave.ng-leave-active{
-    -moz-transform: rotateX(-180deg) translatez(30px);
+    /*-moz-transform: rotateX(-180deg) translatez(30px);
     -ms-transform: rotateX(-180deg) translatez(30px);
     -o-transform: rotateX(-180deg) translatez(30px);
     transform: rotateX(-180deg) translatez(30px);
     -webkit-transform: rotateX(-180deg) translatez(30px);
     height: 0px;
-    opacity: 0;
+    opacity: 0;*/
 	/*right: -400px;*/
+	height: 60vh;
+	width: 40vh;
+	opacity: 0.5;
+	top: 110px;
 }
 
 .focused_tooltip.ng-leave,
 .focused_tooltip.ng-enter-active{
-    -moz-transform: rotateX(0deg) translatez(30px);
+	height: 70vh;
+	width: 55vh;
+	opacity: 1;
+	top: 95px;
+   /* -moz-transform: rotateX(0deg) translatez(30px);
     -ms-transform: rotateX(0deg) translatez(30px);
     -o-transform: rotateX(0deg) translatez(30px);
     transform: rotateX(0deg) translatez(30px);
     -webkit-transform: rotateX(0deg) translatez(30px);
     height: 70vh;
-    opacity: 1;
+    opacity: 1;*/
 	/*right: 5px;*/
 }
 
@@ -77,12 +85,20 @@
 
 .login_box.ng-enter,
 .login_box.ng-leave.ng-leave-active{
-	bottom: -300px;
+	width: 280px;
+	height: 200px;
+	margin-left: -170px;
+	margin-top: -150px;
+	opacity: 0.5;
 }
 
 .login_box.ng-leave,
 .login_box.ng-enter.ng-enter-active{
-	bottom: 0px;
+	width: 300px;
+	height: 220px;
+	margin-left: -180px;
+	margin-top: -160px;
+	opacity: 1;
 }
 
 .interaction_box.ng-enter,
@@ -93,6 +109,7 @@
 	height: 100px;
 	margin-left: -200px;
 	margin-top: -65px;
+	opacity: 1;
 }
 
 .interaction_box.ng-leave,
@@ -133,12 +150,12 @@
 
 .notifications.ng-enter,
 .notifications.ng-leave.ng-leave-active{
-	margin-top: 600px;
+	top: 0px;
 }
 
 .notifications.ng-leave,
 .notifications.ng-enter.ng-enter-active{
-	margin-top: 0px;
+	top: 90px;
 }
 
 .notification.ng-enter{

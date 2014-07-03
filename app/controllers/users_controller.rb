@@ -84,6 +84,18 @@ class UsersController < ApplicationController
 
   end
 
+  def verify
+    @neo = Neography::Rest.new
+    clause = "MATCH (user:User) WHERE user.email=\""+params[:e]+"\" AND user.verification_token=\""+params[:p]+"\" SET user.verified = true RETURN user"
+    puts clause.blue.on_red
+    user = @neo.execute_query clause
+    if user["data"]
+      @message = "Email Confirmed."
+    else
+      @message = "Email Confirmation Failed."
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
