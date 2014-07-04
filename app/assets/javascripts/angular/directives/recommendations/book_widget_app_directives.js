@@ -559,6 +559,7 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
                         "current_comment": $rootScope.focused_book.current_comment,
                         "under_a_tag": under_a_tag}]);
         if((event.keyCode == 13) && ($scope.hash_tags)){
+          event.preventDefault();
           $scope.handle_selection($scope.currentItem);
         }
         else if((event.keyCode == 13) && (!$scope.hash_tags)){
