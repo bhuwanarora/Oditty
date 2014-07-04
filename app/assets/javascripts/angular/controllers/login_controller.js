@@ -2,9 +2,9 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 	$scope.authenticate = function(old_user){
 		var email = $rootScope.user.email;
 		var password = $rootScope.user.password;		
-		var pattern1 = new RegExp("^.{8,}$");
-		var pattern2 = new RegExp("^(.)\\1{7,16}$");
-		var pattern3 = new RegExp("^.{100,}$");
+		var min_len_pattern = new RegExp("^.{8,}$");
+		var not_repeat_pattern = new RegExp("^(.)\\1{7,16}$");
+		var max_len_pattern = new RegExp("^.{100,}$");
 		$scope.error_message = "";
 		// var email = "bhuwanarora67@gmail.com";
 		// var password = "test";
@@ -35,13 +35,13 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		else if (!$rootScope.user.password) {
 			$scope.error_message = "Enter your password";
 		}
-		else if(!pattern1.test($rootScope.user.password) && (!old_user)){
+		else if(!min_len_pattern.test($rootScope.user.password) && (!old_user)){
 			$scope.error_message = "Minimum password length is 8";
 		}
-		else if((pattern2.test($rootScope.user.password)) && (!old_user)){
+		else if((not_repeat_pattern.test($rootScope.user.password)) && (!old_user)){
 			$scope.error_message = "Choose a more secure password";
 		}
-		else if((pattern3.test($rootScope.user.password)) && (!old_user)){
+		else if((max_len_pattern.test($rootScope.user.password)) && (!old_user)){
 			$scope.error_message = "Maximum password length is 100";	
 		}
 		else{

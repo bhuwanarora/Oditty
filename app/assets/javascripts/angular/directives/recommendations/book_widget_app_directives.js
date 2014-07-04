@@ -551,6 +551,7 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
         var current_element = string_array.pop();
         var is_new_word_initiation = $scope.is_new_word_initiation;
         var under_a_tag = $scope.hash_tagging;
+        var keyEnter = event.keyCode == 13;
         console.table([{"is_new_word_initiation":  is_new_word_initiation,
                         "chr": chr,
                         "len": len,
@@ -558,11 +559,11 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
                         "current_element": current_element,
                         "current_comment": $rootScope.focused_book.current_comment,
                         "under_a_tag": under_a_tag}]);
-        if((event.keyCode == 13) && ($scope.hash_tags)){
+        if((keyEnter) && ($scope.hash_tags)){
           event.preventDefault();
           $scope.handle_selection($scope.currentItem);
         }
-        else if((event.keyCode == 13) && (!$scope.hash_tags)){
+        else if((keyEnter) && (!$scope.hash_tags)){
           var tweet_text = $rootScope.focused_book.hash_tagged_comment
                                 .replace(/<b>/, "<a>")
                                 .replace(/<\/b>/, "<\/a>");
@@ -659,7 +660,6 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
       $scope.key_up = function(){
         var keyUp = event.keyCode == 38;
         var keyDown = event.keyCode == 40;
-        var backSpace = event.keyCode == 8;
         if(keyUp){
           if($scope.current != 0){
             $scope.set_current($scope.current-1);
