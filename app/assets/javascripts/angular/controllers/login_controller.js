@@ -6,8 +6,6 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		var pattern2 = new RegExp("^(.)\\1{7,16}$");
 		var pattern3 = new RegExp("^.{100,}$");
 		$scope.error_message = "";
-		$rootScope.user.email = "aroramisha44@gmail.com";
-		$rootScope.user.password = "abc";
 		// var email = "bhuwanarora67@gmail.com";
 		// var password = "test";
 		var data_json = {"email": email, "password": password, "old_user": old_user};
@@ -132,8 +130,8 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
   	}
 
 	_init = function(){
-		$scope.authenticate(true);
 		_bind_auth_listeners();
+		// $scope.authenticate(true);
 	}
 
 	_init();	
