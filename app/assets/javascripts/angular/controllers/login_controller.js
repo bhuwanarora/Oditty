@@ -131,7 +131,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 
 	_init = function(){
 		_bind_auth_listeners();
-		// $scope.authenticate(true);
+		$scope.authenticate(true);
 	}
 
 	_init();	

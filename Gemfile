@@ -9,7 +9,7 @@ gem 'sass-rails', '~> 4.0.0'
 #for attr accessibel in rails4
 gem 'protected_attributes'
 gem 'activerecord-postgis-adapter'
-# gem 'rack-cors', :require => 'rack/cors'
+gem 'rack-cors', :require => 'rack/cors'
 gem "omniauth-google-oauth2"
 gem 'omniauth-facebook'
 gem 'devise'
