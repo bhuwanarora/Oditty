@@ -268,6 +268,7 @@ GEM
     rack (1.5.2)
     rack-contrib (1.1.0)
       rack (>= 0.9.1)
+    rack-cors (0.2.9)
     rack-oauth2 (1.0.8)
       activesupport (>= 2.3)
       attr_required (>= 0.0.5)
@@ -469,6 +470,7 @@ DEPENDENCIES
   polyglot
   protected_attributes
   pubnub
+  rack-cors
   rack-zippy
   railroady
   rails (= 4.0.1)
