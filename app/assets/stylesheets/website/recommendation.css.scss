@@ -1136,6 +1136,11 @@ and (min-width : 1824px) {
 	width: 255px;
 	max-height: 170px;
 	border-radius: 4px;
+	overflow-y: hidden; 
+}
+
+.notifications:hover{
+	overflow-y: auto; 
 }
 
 .notification_elements{
