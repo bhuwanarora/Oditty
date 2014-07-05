@@ -319,6 +319,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		// $rootScope.initPage = 3;
 		// Define user empty data :/
 		
+		
 		$scope.website = {};
 		$scope.website.searching = false;
 		$scope.website.show_search_page = true;

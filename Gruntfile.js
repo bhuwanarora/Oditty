@@ -162,7 +162,9 @@ module.exports = function(grunt) {
             'app/assets/javascripts/min/angular/vendors/hamster.min.js',
             'app/assets/javascripts/min/angular/vendors/socket.io.js',
             'app/assets/javascripts/min/angular/vendors/socket.js',
-            'app/assets/javascripts/min/angular/vendors/sticky.js'],
+            'app/assets/javascripts/min/angular/vendors/sticky.js',
+            'app/assets/javascripts/min/angular/vendors/strophe.min.js',
+            'app/assets/javascripts/min/angular/vendors/strophe.flxhr.min.js'],
 
           'app/assets/javascripts/min/angular/main.js': [
             'app/assets/javascripts/angular/vendors/angular.min.js',
