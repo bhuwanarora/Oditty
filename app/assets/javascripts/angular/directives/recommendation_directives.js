@@ -375,6 +375,7 @@ websiteApp.directive('recommendationFooter', ['scroller', function(scroller){
 						$scope.advance_filter_changed(selected, type);
 					}
 				}
+				event.stopPropagation();
 			}
 
 			$scope.handle_notification_ticker_size = function(event){
