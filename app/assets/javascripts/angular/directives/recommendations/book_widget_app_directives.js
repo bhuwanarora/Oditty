@@ -464,6 +464,7 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
       }
 
       $scope.handle_selection = function(selected_item){
+        $scope.current = 0;
         var string_array = $rootScope.focused_book.current_comment.split(" ");
         var html_array = $rootScope.focused_book.hash_tagged_comment.split(" ");
         var chr = String.fromCharCode(event.keyCode);
@@ -485,10 +486,6 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
         $scope.hash_tags = null;
         event.stopPropagation();
         //TODO: SET FOCUS ON CLICK
-      }
-
-      $scope.set_current = function(index){
-
       }
 
       $scope.handle_backspace = function(event){
@@ -554,6 +551,7 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
         var current_element = string_array.pop();
         var is_new_word_initiation = $scope.is_new_word_initiation;
         var under_a_tag = $scope.hash_tagging;
+        var keyEnter = event.keyCode == 13;
         console.table([{"is_new_word_initiation":  is_new_word_initiation,
                         "chr": chr,
                         "len": len,
@@ -561,7 +559,11 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
                         "current_element": current_element,
                         "current_comment": $rootScope.focused_book.current_comment,
                         "under_a_tag": under_a_tag}]);
-        if(event.keyCode == 13){
+        if((keyEnter) && ($scope.hash_tags)){
+          event.preventDefault();
+          $scope.handle_selection($scope.currentItem);
+        }
+        else if((keyEnter) && (!$scope.hash_tags)){
           var tweet_text = $rootScope.focused_book.hash_tagged_comment
                                 .replace(/<b>/, "<a>")
                                 .replace(/<\/b>/, "<\/a>");
@@ -644,10 +646,43 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
         event.stopPropagation();
       }
 
+      $scope.is_current = function(index, selectedItem) {
+        if($scope.current == index){
+          $scope.currentItem = selectedItem;
+        }
+          return $scope.current == index;
+      };
+
+      $scope.set_current = function(index) {
+          $scope.current = index;
+      };
+
+      $scope.key_up = function(){
+        var keyUp = event.keyCode == 38;
+        var keyDown = event.keyCode == 40;
+        if(keyUp){
+          if($scope.current != 0){
+            $scope.set_current($scope.current-1);
+          }
+          else{
+            $scope.set_current($scope.hash_tags.length-1);
+          }
+        }
+        else if(keyDown){
+          if($scope.current != $scope.hash_tags.length -1){
+            $scope.set_current($scope.current+1);
+          }
+          else{
+            $scope.set_current(0);
+          }
+        }
+      }
+
       _init = function(){
         $scope.is_new_word_initiation = true;
         $rootScope.focused_book.current_comment = "";
         $rootScope.focused_book.hash_tagged_comment = "";
+        $scope.current = 0;
       }
 
       _init();
@@ -721,35 +756,13 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', fu
 }]);
 
 
-websiteApp.directive('markAsRead', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
+websiteApp.directive('markAsRead', ['$rootScope', '$timeout', 'widgetService', 'sharedService', function($rootScope, $timeout, widgetService, sharedService){
 	return {
 		restrict: 'E',
 		controller: ['$scope', function($scope){
       $scope.markAsRead = function(event){
-        var book_title = $scope.book.title;
-        var author_name = $scope.book.author_name;
-        if($scope.book.status){
-          $scope.book.status = 0;
-          $scope.$emit('removeFromShelf', "BOOK", $scope.book);
-          var message = "SUCCESS-Removed from <span class='icon-books'></span> Books Read. ";
-        }
-        else{
-          $scope.book.status = 1;
-          $scope.$emit('addToShelf', "BOOK", $scope.book);
-          $rootScope.$broadcast('glowShelf');
-          var message = "SUCCESS-Added to <span class='icon-books'></span> Books Read. ";
-
-          $scope.$on('destroy', function(){
-            $timeout.cancel(timeout_event);
-            $timeout.cancel(glow_event);
-          });
-
-        }
-        var timeout_event = notify($rootScope, message, $timeout);
-        widgetService.mark_as_read($scope.book.id, $scope.read);
-        event.stopPropagation();
+        sharedService.markAsRead($scope, $scope.book, event);
       }
-
     }],
     templateUrl: "/assets/angular/widgets/base/book/mark_as_read.html"
   }

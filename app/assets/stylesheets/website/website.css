@@ -189,7 +189,7 @@ input:focus{
 }
 
 .scrollbar{
-    overflow-y: scroll !important;
+    overflow-y: scroll;
 }
 
 .scrollbar::-webkit-scrollbar {

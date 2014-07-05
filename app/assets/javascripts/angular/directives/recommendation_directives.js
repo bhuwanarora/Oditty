@@ -379,6 +379,18 @@ websiteApp.directive('recommendationFooter', ['scroller', function(scroller){
 				$scope.compact_footer = false;	
 			}
 
+			$scope.reset_filter =  function(selectedFilter, type, main_filter){
+				var selected = {"name":"<span class='icon-loop'></span><span>&nbsp;Reset</span>"};
+				if(selectedFilter){
+					if(main_filter){
+						$scope.clear_filter(main_filter, type);
+						$scope.genre = "";
+					}
+					else{
+						$scope.advance_filter_changed(selected, type);
+					}
+				}
+			}
 
 			$scope.handle_notification_ticker_size = function(event){
 				var increase_tab_size = event.deltaY > 0;

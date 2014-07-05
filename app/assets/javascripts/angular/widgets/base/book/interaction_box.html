@@ -6,7 +6,7 @@
 	<div class="interaction_box_options">
 		<div ng-repeat="item in hash_tags track by $index" 
     		 ng-click="handle_selection(item.name)" 
-    		 ng-class="{active:is_current($index)}" 
+    		 ng-class="{active:is_current($index, item.name)}" 
     		 ng-mouseenter="set_current($index)"
     		 class="option">
 	  		<div class="title">{{item.name}}</div>
@@ -27,6 +27,7 @@
 			   placeholder="What do you feel about {{focused_book.title}} by {{focused_book.author_name}}..."
 			   class="comment_box animate-fast"
 			   ng-keypress="handle_hash_tags($event)"
+			   ng-keyup="key_up()"
 			   rows="1">
 			</textarea>
 		</div>

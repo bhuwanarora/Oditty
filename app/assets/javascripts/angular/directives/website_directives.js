@@ -12,10 +12,14 @@ websiteApp.directive('userThumb', [function(){
 	}
 }]);
 
-websiteApp.directive('infoCard', ['$rootScope', '$timeout', function($rootScope, $timeout){
+websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', function($rootScope, $timeout, sharedService){
 	return{
 		restrict: 'E',
 		controller: ['$scope', 'websiteService', function($scope, websiteService){
+			$scope.markAsRead = function(book, event){
+		        sharedService.markAsRead($scope, book, event);
+			}
+
 			_get_genres = function(){
 		    	websiteService.get_genres().then(function(data){
 		    		$scope.genres = data.genres;
@@ -102,8 +106,8 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', function($rootScope,
 	    		_profile_status_colors();
 	    		_get_info_data();
 	    		$scope.popular_books = [];
-	    		// $scope.get_popular_books();
-
+	    		$scope.loading = false;
+	    		$scope.get_popular_books();
 				$scope.profileOptions = [
 					{"name": "Reader"},
 					{"name": "Author"},

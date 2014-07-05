@@ -1,11 +1,15 @@
 websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteService', 'Facebook', function($scope, $rootScope, websiteService, Facebook){
 	$scope.authenticate = function(old_user){
 		var email = $rootScope.user.email;
-		var password = $rootScope.user.password;
-		var email = "bhuwanarora67@gmail.com";
-		var password = "test";
+		var password = $rootScope.user.password;		
+		var min_len_pattern = new RegExp("^.{8,}$");
+		var not_repeat_pattern = new RegExp("^(.)\\1{7,16}$");
+		var max_len_pattern = new RegExp("^.{100,}$");
+		$scope.error_message = "";
+		// var email = "bhuwanarora67@gmail.com";
+		// var password = "test";
 		var data_json = {"email": email, "password": password, "old_user": old_user};
-		$scope.loading_icon = true;
+		$scope.loading_icon = false;
 		var success_callback = function(data){
 			$scope.error_message = data.message;
 			$rootScope.user.profile_status = data.profile_status;
@@ -14,7 +18,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 			$scope.loading_icon = false;
 			// $scope.show_login_form = true;
 			// _profile_status_colors();
-			// websiteService.get_user_details().then(function(data){
+		// 	websiteService.get_user_details().then(function(data){
 	  //   		$rootScope.user.books = data["books"];
 	  //   	});
 			$scope.$emit('getNotifications');
@@ -25,8 +29,25 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 			$scope.error_message = reason.data.message;
 			$rootScope.user.password = null;
 		}
-
-		websiteService.authenticate(data_json).then(success_callback, error_callback);
+		if(!$rootScope.user.email){
+			$scope.error_message = "Enter your email address";
+		}
+		else if (!$rootScope.user.password) {
+			$scope.error_message = "Enter your password";
+		}
+		else if(!min_len_pattern.test($rootScope.user.password) && (!old_user)){
+			$scope.error_message = "Minimum password length is 8";
+		}
+		else if((not_repeat_pattern.test($rootScope.user.password)) && (!old_user)){
+			$scope.error_message = "Choose a more secure password";
+		}
+		else if((max_len_pattern.test($rootScope.user.password)) && (!old_user)){
+			$scope.error_message = "Maximum password length is 100";	
+		}
+		else{
+			$scope.loading_icon = true;
+			websiteService.authenticate(data_json).then(success_callback, error_callback);
+		}
 	}
 
 		

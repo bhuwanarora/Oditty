@@ -112,7 +112,7 @@
 			</type-ahead>
 		<div class="scrollbar header" msd-wheel="stop_horizontal_scroll($event)" check-scroll-bottom="get_popular_books()">
 			<div ng-if="book.thumb | is_present" class="book_column" 
-					 ng-repeat="book in popular_books">
+					 ng-repeat="book in popular_books" ng-click="markAsRead(book, $event)">
 				<img ng-src="{{book.thumb}}" 
 					 class="book_thumb"/>
 				<div class="book_details">

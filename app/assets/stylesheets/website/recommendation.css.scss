@@ -958,7 +958,7 @@
 }
 
 .interaction_box_options .option:hover,
-.interaction_box_options .option .active,
+.interaction_box_options .active,
 .typeahead_options .active,
 .typeahead_options .option:hover{
 	background-color: #F1F1F1;
@@ -1142,6 +1142,11 @@ and (min-width : 1824px) {
 	width: 255px;
 	max-height: 170px;
 	border-radius: 4px;
+	overflow-y: hidden; 
+}
+
+.notifications:hover{
+	overflow-y: auto; 
 }
 
 .notification_elements{
