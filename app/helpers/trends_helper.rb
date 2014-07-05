@@ -7,8 +7,10 @@ module TrendsHelper
 		url = "http://socialmention.com/"
 		doc = Nokogiri::HTML(open(url))
 		trends = doc.css('.clearfix a')
+		results = []
 		for trend in trends
-			puts trend.children.text.green
+			results.push trend.children.text
 		end
+		results
 	end
 end

@@ -41,7 +41,7 @@
 		  		<input type="radio" ng-model="gender" value="Female" id="female"
 		  				class="custom_radio icon-checkbox-unchecked">
 
-		  		<label for="other">Other</label>
+		  		<label for="other">Others</label>
 		  		<input type="radio" ng-model="gender" value="Other" id="other" 
 		  				class="custom_radio icon-checkbox-unchecked">
 			</form>
@@ -101,7 +101,7 @@
 		</div>
 	</div>
 	<div ng-switch-when="3" class="center">
-		<div class="header">Which 3 Books are you currently reading?</div>
+		<div class="header">Which books do you like?</div>
       	<type-ahead items="search_results" 
 				prompt="Search for the book.." 
 				title="name" 
@@ -129,7 +129,7 @@
 		</div> -->
 	</div>
 	<div ng-switch-when="4">
-		<div class="header">Which 3 Authors you like?</div>
+		<div class="header">Which authors do you like?</div>
 		<type-ahead items="search_results" 
 				prompt="Search for the author.." 
 				title="name" 

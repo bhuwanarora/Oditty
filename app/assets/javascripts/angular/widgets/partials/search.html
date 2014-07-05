@@ -97,6 +97,14 @@
 	       ng-if="!user.logged && !show_login_form">
 	    Login to explore recommendations.
 	  </div>
+	  <div class="trends">
+	  	<div class="trend">
+	  		TRENDING TOPICS
+	  	</div>
+	  	<div ng-repeat="trend in trends" class="trend">
+	  		<a href="">{{trend}}</a>
+	  	</div>
+	  </div>
 	</div>
 	<div class="wrapper" ng-if="!user.logged && show_login_form" ng-controller="loginController">
 		<div class="login_box animate-fast"

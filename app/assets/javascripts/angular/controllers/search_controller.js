@@ -642,8 +642,15 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		}
 	}
 
+	_get_trends = function(){
+		websiteService.get_trending_topics().then(function(data){
+			$scope.trends = data;
+		});
+	}
+
 	_init = function(){
 		_handle_search_page();
+		_get_trends();
 	}
 	var search_typing_timeout = "";
 	_init();

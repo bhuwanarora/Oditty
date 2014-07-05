@@ -281,7 +281,6 @@ module Neo4jHelper
 	def self.init_goodreads_books
 		count = GoodReadsBook.where(:neo_flag => true).count
 		t0 = Time.now
-		debugger
 		for id in 1400000..1599029
 			t1 = Time.now
 			begin

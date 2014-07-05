@@ -17,8 +17,21 @@ class BooksController < ApplicationController
     @book = Book.new
   end
 
+  def trends
+    @trends = TrendsHelper.social_mention
+    neo = Neography::Rest.new
+    @tags = neo.execute_query("MATCH (g:Genre) RETURN g")["data"]
+  end
+
   # GET /books/1/edit
   def edit
+  end
+
+  def count
+    neo = Neography::Rest.new
+    tags = params[:q]
+    # count = neo.execute_query("MATCH (b:Book)-[:Belongs_to]->(g:Genre) WHERE g.name=''")
+    render :json => {:count => 1}, :status => 200
   end
 
   def thumbs

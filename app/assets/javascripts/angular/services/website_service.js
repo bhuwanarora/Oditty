@@ -4,6 +4,10 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         return _deferred_request('/api/v0/book?'+filter);
     }
 
+    this.get_trending_topics = function(){
+        return _deferred_request('/api/v0/trends');
+    }
+
     this.authenticate = function(data){
         return _deferred_post_request('/api/v0/authenticate', data);
     }
