@@ -33,17 +33,17 @@
       	<div class="header">
   			<label for="gender">Gender</label>
       		<form name="gender_form">
-      			<label for="male">Male</label>
 		  		<input type="radio" ng-model="gender" value="Male" id="male" 
-		  				class="custom_radio icon-checkbox-unchecked">
+		  				class="custom_radio icon-checkbox-unchecked">&nbsp;&nbsp;&nbsp;
+      			<label for="male">Male</label><br/>
 
-		  		<label for="female">Female</label>
 		  		<input type="radio" ng-model="gender" value="Female" id="female"
-		  				class="custom_radio icon-checkbox-unchecked">
+		  				class="custom_radio icon-checkbox-unchecked">&nbsp;&nbsp;&nbsp;
+		  		<label for="female">Female</label><br/>
 
-		  		<label for="other">Others</label>
 		  		<input type="radio" ng-model="gender" value="Other" id="other" 
-		  				class="custom_radio icon-checkbox-unchecked">
+		  				class="custom_radio icon-checkbox-unchecked">&nbsp;&nbsp;&nbsp;
+		  		<label for="other">Others</label><br/>
 			</form>
       	</div>
 	</div>
@@ -70,7 +70,7 @@
 	      					   ng-model="$parent.user_book_count" 
 	      					   ng-value="book_count"
 	      					   class="custom_radio icon-checkbox-unchecked">
-	      				{{book_count.name}}<br/>
+	      				&nbsp;&nbsp;&nbsp;{{book_count.name}}<br/>
 	      			</label>
       			</form>
       		</div>

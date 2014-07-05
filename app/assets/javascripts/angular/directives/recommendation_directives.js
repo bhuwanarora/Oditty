@@ -379,7 +379,7 @@ websiteApp.directive('recommendationFooter', ['scroller', function(scroller){
 				$scope.compact_footer = false;	
 			}
 
-			$scope.reset_filter =  function(selectedFilter, type, main_filter){
+			$scope.reset_filter =  function(event, selectedFilter, type, main_filter){
 				var selected = {"name":"<span class='icon-loop'></span><span>&nbsp;Reset</span>"};
 				if(selectedFilter){
 					if(main_filter){
@@ -389,6 +389,7 @@ websiteApp.directive('recommendationFooter', ['scroller', function(scroller){
 					else{
 						$scope.advance_filter_changed(selected, type);
 					}
+					event.stopPropagation();
 				}
 			}
 
