@@ -113,31 +113,3 @@ function notify($rootScope, message, $timeout){
   }, 7000);
   return timeout_event;
 }
-
-var connection = new Strophe.Connection("http://localhost:5280/http-bind");
-var on_status = function(status){
-  console.log(status, Strophe.Status);
-  if(status == Strophe.Status.CONNECTED){
-    //query for the roster
-    var stanza = new Strophe.Builder("message", {"to": "bhuwan@localhost", "type": "chat"})
-                .c("body")
-                .t("Hello World");
-    console.debug("send initial presence...", stanza.tree());
-    // debugger
-    // var xmp = "";
-    connection.addHandler(on_message, null, "message", "chat");
-    connection.send(stanza);
-  }
-}
-var on_message = function(message){
-  //extract message body
-  // display text
-  // debugger
-  alert("message");
-  return true;
-}
-
-// connection.addTimeHandler(100, send_flood);
-// connection.addHandler(on_version, null, "iq", null, "disco-1");
-// connection.addHandler(on_iq_version, "jabber:iq:version", "iq", "get");
-connection.connect("bhuwan@localhost", "bhuwan", on_status);

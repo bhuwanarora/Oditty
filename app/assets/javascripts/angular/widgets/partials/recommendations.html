@@ -8,13 +8,13 @@
    ng-controller="recommendationsController"
    ng-click="hide_popups()">
 
-		<div class="vertical_padder_active"></div>
+		<div class="vertical_padder_active width_hundred_percent"></div>
 		<main-header></main-header>
 		<recommendation-footer></recommendation-footer>
 
 		<!-- <div class="recommendations_page"><search-bar></search-bar></div> -->
-		<div ng-switch on="panel_selected" class="recommendation_window">
-			<div ng-switch-when="BOOKMARK" class="recommendation_panel">
+		<div ng-switch on="panel_selected" class="height_hundred_percent">
+			<div ng-switch-when="BOOKMARK" class="height_hundred_percent">
 				<div ng-if="$routeParams.type == 'books'" ng-model="user.books.bookmarked">
 					<div ng-switch on="user.books.bookmarked.length">
 						<div ng-switch-when="0">
@@ -44,7 +44,7 @@
 					</div>
 				</div>
 			</div>
-			<div ng-switch-when="READ" class="recommendation_panel">
+			<div ng-switch-when="READ" class="height_hundred_percent">
 				<div ng-if="$routeParams.type == 'books'" ng-model="user.books.read">
 					<div ng-switch on="user.books.read.length">
 						<div ng-switch-when="0">
@@ -89,9 +89,9 @@
 				</div>
 			</div>
 
-			<div ng-switch-default class="recommendation_panel">
+			<div ng-switch-default class="height_hundred_percent">
 				<div ng-if="$routeParams.type == 'books'" 
-					ng-model="recommendations.books" class="recommendation_panel">
+					ng-model="recommendations.books" class="height_hundred_percent">
 					<info-card></info-card>
 					<div ng-repeat="recommendation in recommendations.books" 
 						 class="recommendation_block">
@@ -102,14 +102,14 @@
 					</div>
 				</div>
 				<div ng-if="$routeParams.type == 'readers'" 
-					class="recommendation_panel">
+					class="height_hundred_percent">
 					<info-card></info-card>
 					<div ng-repeat="recommendation in recommendations.readers" class="recommendation_block">
 						<reader track id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></reader>
 					</div>
 				</div>
 				<div ng-if="$routeParams.type == 'authors'" 
-					class="recommendation_panel">
+					class="height_hundred_percent">
 					<info-card></info-card>
 					<div ng-repeat="recommendation in recommendations.authors" class="recommendation_block">
 						<author track id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></author>
@@ -141,7 +141,7 @@
 				 ng-style="column_heights.notifications_style"
 				 ng-if="show_notifications"
 				 msd-wheel="handle_notification_ticker_size($event)">
-				<div class="notification_elements">
+				<div class="height_hundred_percent">
 					<!-- <div class="notification">News Feed</div> -->
 					<div ng-if="notifications">
 						<div ng-repeat="notification in notifications | reverse">

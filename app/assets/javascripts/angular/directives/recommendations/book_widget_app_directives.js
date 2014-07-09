@@ -208,7 +208,7 @@ websiteApp.directive('bookBookmark', ['$rootScope', '$timeout', 'widgetService',
   };
 }]);
 
-websiteApp.directive('bookInteract', ['$rootScope', '$timeout', 
+websiteApp.directive('bookInteract', ['$rootScope', '$timeout',
   function ($rootScope, $timeout) {
   return {
     restrict: 'E',
@@ -756,12 +756,14 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', fu
 }]);
 
 
-websiteApp.directive('markAsRead', ['$rootScope', '$timeout', 'widgetService', 'sharedService', function($rootScope, $timeout, widgetService, sharedService){
+websiteApp.directive('markAsRead', ['$rootScope', '$timeout', 'widgetService', 'sharedService', 'stropheService', function($rootScope, $timeout, widgetService, sharedService, stropheService){
 	return {
 		restrict: 'E',
 		controller: ['$scope', function($scope){
       $scope.markAsRead = function(event){
         sharedService.markAsRead($scope, $scope.book, event);
+        var message = "TestUser1 added " + $scope.book.title + " to Books Read."
+        stropheService.send_notification(message);
       }
     }],
     templateUrl: "/assets/angular/widgets/base/book/mark_as_read.html"

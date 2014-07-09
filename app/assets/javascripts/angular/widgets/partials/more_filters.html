@@ -4,15 +4,15 @@
 
 	<div ng-if="!bookmark_selected && !read_selected">
 		<!-- BOOK FILTERS -->
-		<div class="filters" ng-if="$routeParams.type == 'books'">
+		<div class="width_hundred_percent" ng-if="$routeParams.type == 'books'">
 			<div ng-click="show_lists = false; handle_left_columns();" class="filter_header">
 				<span class="icon-filter"></span><span>&nbsp;&nbsp;Main Filters</span>
 			</div>
-			<div class="filters_panel" ng-if="!show_lists && column_heights.show_filters">
+			<div class="text_align_center filters_panel" ng-if="!show_lists && column_heights.show_filters">
 			 	<type-ahead items="genres" 
 			 				prompt="Filter by a Genre" 
 			 				title="name"
-			 				custom-options="genre_z_index genre_typeahead_options"
+			 				custom-options="z_index_two genre_typeahead_options"
 			 				custom="input_filter"
 			 				model="genre" 
 			 				on-select="on_genre_selection(genre, $event)"
@@ -32,18 +32,18 @@
 			 	</type-ahead>
 			</div>
 			
-			<div class="filters_panel_right" ng-if="!show_lists && column_heights.show_filters">
-			 	<div class="position_dropdown"
+			<div class="text_align_center filters_panel_right" ng-if="!show_lists && column_heights.show_filters">
+			 	<div class="display_inline_block_float_left"
 				 	  dropdown-select="countryOptions" 
 				 	  dropdown-onchange="advance_filter_changed(selected, 'country')"
 				 	  dropdown-model="countrySelected"
 				 	  dropdown-item-label="name"></div>
-			 	<div class="position_dropdown"
+			 	<div class="display_inline_block_float_left"
 			 		  dropdown-select="readTimeOptions" 
 			 		  dropdown-onchange="advance_filter_changed(selected, 'readingTime')"
 			 		  dropdown-model="readTimeSelected"
 			 		  dropdown-item-label="name"></div>
-			 	<div class="position_dropdown"
+			 	<div class="display_inline_block_float_left"
 			 		  dropdown-select="timeOptions" 
 			 		  dropdown-onchange="advance_filter_changed(selected, 'timeGroup')"
 			 		  dropdown-model="timeSelected"
@@ -53,7 +53,7 @@
 			<div ng-click="show_lists = true; handle_left_columns();" class="filter_header">
 				<span class="icon-list3"></span><span>&nbsp;&nbsp;Show Lists</span>
 			</div>
-			<div class="filters_panel_large" ng-if="show_lists && column_heights.show_filters">
+			<div class="text_align_center filters_panel_large" ng-if="show_lists && column_heights.show_filters">
 				<div class="filters_group">
 					<div ng-repeat="filter in more_filters[0]['book']">
 						<filter data="filter"></filter>
@@ -65,8 +65,8 @@
 
 
 		<!-- AUTHOR FILTERS -->
-		<div class="filters" ng-if="$routeParams.type == 'authors'">
-			<div class="filters_panel_large">
+		<div class="width_hundred_percent" ng-if="$routeParams.type == 'authors'">
+			<div class="text_align_center filters_panel_large">
 				<div class="filters_group">
 					<div ng-repeat="filter in more_filters[0]['author']">
 						<filter data="filter"></filter>
@@ -74,7 +74,7 @@
 				</div>
 			</div>
 			
-			<div class="filters_panel">
+			<div class="text_align_center filters_panel">
 				<type-ahead items="genres" 
 			 				prompt="GENRE" 
 			 				title="name"
@@ -86,14 +86,14 @@
 			 	</type-ahead>
 			</div>
 			
-			<div class="filters_panel_right">
+			<div class="text_align_center filters_panel_right">
 				
 			</div>
 		</div>
 
 		<!-- READER FILTERS -->
-		<div class="filters" ng-if="$routeParams.type == 'readers'">
-			<div class="filters_panel_large">
+		<div class="width_hundred_percent" ng-if="$routeParams.type == 'readers'">
+			<div class="text_align_center filters_panel_large">
 				<div class="filters_group">
 					<div ng-repeat="filter in more_filters[0]['reader']">
 						<filter data="filter"></filter>
@@ -101,7 +101,7 @@
 				</div>
 			</div>
 			
-			<div class="filters_panel">
+			<div class="text_align_center filters_panel">
 				<type-ahead items="genres" 
 			 				prompt="GENRE" 
 			 				title="name"
@@ -113,7 +113,7 @@
 			 	</type-ahead>
 			</div>
 			
-			<div class="filters_panel_right">
+			<div class="text_align_center filters_panel_right">
 				<div class="header">
 				</div>
 			</div>
@@ -129,8 +129,8 @@
 	</div>
 
 	<div ng-if="bookmark_selected">
-		<div class="filters" ng-if="$routeParams.type == 'books'">
-			<div class="filters_panel_large">
+		<div class="width_hundred_percent" ng-if="$routeParams.type == 'books'">
+			<div class="text_align_center filters_panel_large">
 				<div class="filters_group">
 					<div ng-repeat="filter in labels">
 						<filter data="filter"></filter>
@@ -138,10 +138,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="filters" ng-if="$routeParams.type == 'authors'">
+		<div class="width_hundred_percent" ng-if="$routeParams.type == 'authors'">
 			{{labels}}
 		</div>
-		<div class="filters" ng-if="$routeParams.type == 'readers'">
+		<div class="width_hundred_percent" ng-if="$routeParams.type == 'readers'">
 			{{labels}}
 		</div>
 	</div>

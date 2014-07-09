@@ -126,6 +126,7 @@ module.exports = function(grunt) {
           'app/assets/javascripts/min/angular/services/recommendation_service.js', 
           'app/assets/javascripts/min/angular/services/shared_service.js', 
           'app/assets/javascripts/min/angular/services/socket_factory.js',
+          'app/assets/javascripts/min/angular/services/strophe_service.js',
           'app/assets/javascripts/min/angular/services/website_service.js',
           'app/assets/javascripts/min/angular/services/widget_service.js'],
 

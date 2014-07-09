@@ -50,7 +50,7 @@
 	<div ng-switch-when="1">
 		<div class="wrap_header header">
 			<span>I am a</span>
-      		<span class="profile_dropdown dropdown"
+      		<span class="dark_gray_color dropdown"
 		 		  dropdown-select="profileOptions" 
 		 		  dropdown-onchange="user_profile_changed(selected)"
 		 		  dropdown-model="profileSelected"
@@ -58,7 +58,7 @@
 		</div>
       	<div class="description_box">
       		<div ng-show="show_loading_bar" class="center">
-      			<img src="assets/loader.gif" class="loading_circle">
+      			<img src="assets/loader.gif" class="width_ten_pixel">
       		</div>
       		<div ng-show="profileSelected.name == 'Reader' && !show_loading_bar">
       			<div class="header">
