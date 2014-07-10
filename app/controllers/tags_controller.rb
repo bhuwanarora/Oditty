@@ -12,6 +12,11 @@ class TagsController < ApplicationController
   def show
   end
 
+  def search_tag
+    tags = Api::V0::SearchApi.search_genres params[:q]
+    render :json => tags, :status => 200
+  end
+
   # GET /tags/new
   def new
     @tag = Tag.new

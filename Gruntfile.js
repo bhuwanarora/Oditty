@@ -120,6 +120,7 @@ module.exports = function(grunt) {
           'app/assets/javascripts/min/angular/controllers/recommendations_controller.js',
           'app/assets/javascripts/min/angular/controllers/search_controller.js',
           'app/assets/javascripts/min/angular/controllers/timeline_controller.js',
+          'app/assets/javascripts/min/angular/controllers/login_controller.js',
           'app/assets/javascripts/min/angular/controllers/website_controller.js'],
 
           'app/assets/javascripts/min/angular/services.js': [

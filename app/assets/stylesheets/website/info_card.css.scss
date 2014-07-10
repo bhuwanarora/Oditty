@@ -32,6 +32,10 @@
 	display: inline-block;
 }
 
+.info_cards .sub_header{
+	margin-top: 5px;
+}
+
 .info_cards .book_details{
 	width: 76%;
  	float: left;
@@ -160,4 +164,47 @@
 
 .loading_icon{
 	padding: 5px 105px;
+}
+
+.arrow_boxes{
+	position: absolute;
+}
+
+.arrow_box{
+	position: relative;
+	background: #D094AB;
+	height: 20px;
+	width: 40px;
+	border-top-left-radius: 2px;
+	border-bottom-left-radius: 2px;
+	margin-bottom: 20px;
+	display: inline-block;
+	color: white;
+	font-size: 0.6em;
+	text-align: center;
+	padding-top: 5px;
+}
+
+.arrow_box:after, .arrow_box:before{
+	left: 100%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136,183,213,0);
+	border-left-color: #D094AB;
+	border-width: 12px;
+	margin-top: -5px;
+}
+
+.arrow_box_type2{
+	padding-left: 9px;
+}
+
+.arrow_box_type2:before{
+	left: 0px;
+	padding-left: 10px;
+	border-left-color: white;
 }
