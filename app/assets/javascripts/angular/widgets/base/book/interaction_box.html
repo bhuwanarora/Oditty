@@ -37,8 +37,8 @@
 	<div class="scrollbar tweets"
 	 	 ng-click="stop_propagation($event)">
 		<div class="tweet" ng-repeat="tweet in focused_book.tweets | reverse">
-			<div class="display_inline_block_float_left"><user-thumb></user-thumb></div>
-			<div class="tweet_text display_inline_block_float_left" ng-bind-html="tweet.tweet"></div>
+			<div class="inline_block_left"><user-thumb></user-thumb></div>
+			<div class="tweet_text" ng-bind-html="tweet.tweet"></div>
 		</div>
 	</div>
 </div>	

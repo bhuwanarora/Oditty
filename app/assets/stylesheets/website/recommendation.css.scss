@@ -123,12 +123,12 @@
 	height: 100%;
 }*/
 
-.width_hundred_percent{
-	width: 100%;
+.full_height(){
+	height: 100%;
 }
 
-.height_hundred_percent{
-	height: 100%;
+.full_width(){
+	width: 100%;
 }
 
 /*.recommendation_window .recommendation_panel{
@@ -137,6 +137,7 @@
 
 .vertical_padder_active{
 	height: 95px;
+	width: 100%;
 }
 
 /*.nav-link{
@@ -186,8 +187,7 @@
 
 /*.interaction_box .close,*/
 /*.user_guide .close,*/
-.message_box .close,
-.focused_tooltip .close{
+.box_close{
 	position: absolute;
 	right: 5px;
 	top: 0px;
@@ -349,7 +349,6 @@
    	letter-spacing: 0.13em;
    	min-width: 195px;
 }
-
 
 .selected_filter{
 	/*background-color: #918FB5;*/
@@ -621,7 +620,9 @@
 	border-bottom: 1px solid;
 }
 
-.text_align_center{
+.filters_panel,
+.filters_panel_large,
+.filters_panel_right{
 	text-align: center;
 	/*margin-bottom: 10px;*/
 	/*padding: 4%;*/
@@ -871,25 +872,13 @@
 }
 
 /*.input_filter:focus{
-	/*border: none;*/
-/*}*/
+	border: none;
+}*/
 
 .rate_radio{
 	font-size: 0.9em;
 	color: #717070;
 	/*margin-right: -6px;*/
-}
-
-.yellow_color{
-	color: #E2B503;
-}
-
-.dark_blue_color{
-	color: #136CB2;
-}
-
-.purple_color{
-	color: #918FB5;
 }
 
 .rate_radio:active{
@@ -910,8 +899,8 @@
 }
 
 /*.rate_radio_buttons:hover{
-	/*border: 1px solid #CFCFCF;*/
-/*}*/
+	border: 1px solid #CFCFCF;
+}*/
 
 .result_count{
     display: inline-block;
@@ -1150,10 +1139,10 @@ and (min-width : 1824px) {
 	overflow-y: auto; 
 }
 
-/*.notification_elements{*/
-	/*overflow-y: scroll;*/
-	/*height: 100%; */
-/*}*/
+/*.notification_elements{
+	overflow-y: scroll;
+	height: 100%; 
+}*/
 
 .notification_link{
 	left: 10px;
@@ -1427,7 +1416,7 @@ and (min-width : 1824px) {
     pointer-events: auto;
 }*/
 
-.display_inline_block_float_left{
+.inline_block_left{
 	float: left;
 	display: inline-block;
 	/*margin: 5px;*/
@@ -1663,8 +1652,8 @@ and (min-width : 1824px) {
 }
 
 .tweets .tweet .tweet_text{
-	/*display: inline-block;
-	float: left;*/
+	display: inline-block;
+	float: left;
 	padding: 0px 10px 0px 10px;
 	width: 440px;
 	word-wrap: break-word;
@@ -1728,4 +1717,16 @@ and (min-width : 1824px) {
 	margin: 2px;
 	border-radius: 5px;
 
+}
+
+.yellow_color{
+  	color: #E2B503;
+ }
+  
+.dark_blue_color{
+  	color: #136CB2;
+}
+  
+.purple_color{
+  	color: #918FB5;
 }

@@ -17,9 +17,9 @@ websiteApp.service('stropheService', ['$rootScope', function ($rootScope) {
     }
     var jabber_id = $rootScope.user.email.split("@");
     jabber_id[0] = jabber_id[0].concat("@misha-pc");
-    var pwd = $rootScope.user.password;
+    var password = $rootScope.user.password;
     this.connection = new Strophe.Connection("http://localhost:5280/http-bind");
-    this.connection.connect(jabber_id[0], pwd, on_status);
+    this.connection.connect(jabber_id[0], password, on_status);
     // this.connection.addTimeHandler(100, send_flood);
     // this.connection.addHandler(on_version, null, "iq", null, "disco-1");
     // this.connection.addHandler(on_iq_version, "jabber:iq:version", "iq", "get");
@@ -30,10 +30,10 @@ websiteApp.service('stropheService', ['$rootScope', function ($rootScope) {
       console.log("on_message");
       //extract message body
       // display text
-      alert("message");
       return true;
     }
-    var stanza = new Strophe.Builder("message", {"to": "abclearner2@misha-pc", "type": "notification"})
+    var friend_jabberid = "abclearner2@misha-pc";
+    var stanza = new Strophe.Builder("message", {"to": friend_jabberid, "type": "notification"})
                   .c("body")
                   .t(message);
     this.connection.addHandler(on_message, null, "message", "notification");

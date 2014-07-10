@@ -63,10 +63,7 @@
 
 .card{
 	background-color: #fff;
-	border-bottom-left-radius: 4px;
-	border-bottom-right-radius: 4px;
-	border-top-right-radius: 4px;
-	border-top-left-radius: 4px;
+	border-radius: 4px;
 	float: left;
 	height: 100%;
 	position: relative;
@@ -112,7 +109,7 @@
 }
 
 .tag_bookmark{
-	/*height: 100%;*/
+	height: 100%;
 }
 
 .tag_bookmark:hover{
@@ -218,12 +215,12 @@
 	border-top-left-radius: 4px;
 }
 
-/*.card .widget_thumb_focus{*/
-	/*left: 8px;
+/*.card .widget_thumb_focus{
+	left: 8px;
 	top: 8px;
 	right: 8px;
-	bottom: 13%;	*/
-/*}*/
+	bottom: 13%;	
+}*/
 
 .card .description{
 	position: absolute;

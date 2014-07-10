@@ -110,7 +110,7 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 				});
 				$scope.$emit('reloadRecommendations');
 				// debugger
-				// $('.display_inline_block_float_left').removeClass('active');
+				// $('.inline_block_left').removeClass('active');
 			}
 
 			$scope.reset_filters = function(){

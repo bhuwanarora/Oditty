@@ -761,8 +761,9 @@ websiteApp.directive('markAsRead', ['$rootScope', '$timeout', 'widgetService', '
 		restrict: 'E',
 		controller: ['$scope', function($scope){
       $scope.markAsRead = function(event){
+        var username = $rootScope.user.name;
+        var message = username + "added " + $scope.book.title + " to Books Read."
         sharedService.markAsRead($scope, $scope.book, event);
-        var message = "TestUser1 added " + $scope.book.title + " to Books Read."
         stropheService.send_notification(message);
       }
     }],
