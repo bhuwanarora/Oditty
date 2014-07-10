@@ -5,12 +5,11 @@ websiteApp.service('stropheService', ['$rootScope', function ($rootScope) {
       if(status == Strophe.Status.CONNECTED){
         //query for the roster
         var stanza = new Strophe.Builder("presence");
-        console.log("send initial presence...", stanza);
+        console.log("send initial presence...", stanza.tree());
         // debugger
         // var xmp = "";
         this.connection.send(stanza);
         this.connection.addHandler(function(presence){
-          console.log("on_presence");
           return true;
         }, null, "presence");
       }
@@ -19,7 +18,6 @@ websiteApp.service('stropheService', ['$rootScope', function ($rootScope) {
     var jabber_id = $rootScope.user.email.split("@");
     jabber_id[0] = jabber_id[0].concat("@misha-pc");
     var pwd = $rootScope.user.password;
-    console.log(jabber_id[0] + pwd);
     this.connection = new Strophe.Connection("http://localhost:5280/http-bind");
     this.connection.connect(jabber_id[0], pwd, on_status);
     // this.connection.addTimeHandler(100, send_flood);
@@ -28,19 +26,16 @@ websiteApp.service('stropheService', ['$rootScope', function ($rootScope) {
   }
 
   this.send_notification = function(message){
-    // debugger
     var on_message = function(message){
       console.log("on_message");
       //extract message body
       // display text
-      // debugger
       alert("message");
       return true;
     }
     var stanza = new Strophe.Builder("message", {"to": "abclearner2@misha-pc", "type": "notification"})
                   .c("body")
                   .t(message);
-    console.log("send_notification...", stanza.tree());
     this.connection.addHandler(on_message, null, "message", "notification");
     this.connection.send(stanza);
   }

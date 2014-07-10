@@ -1,4 +1,4 @@
-websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteService', 'Facebook','stropheService', function($scope, $rootScope, websiteService, Facebook,stropheService){
+websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteService', 'Facebook', 'stropheService', function($scope, $rootScope, websiteService, Facebook, stropheService){
 	$scope.authenticate = function(old_user){
 		var email = $rootScope.user.email;
 		var password = $rootScope.user.password;		
@@ -47,7 +47,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		else{
 			$scope.loading_icon = true;
 			websiteService.authenticate(data_json).then(success_callback, error_callback);
-			stropheService.startConnection();
+			stropheService.start_connection();
 		}
 	}
 
@@ -131,8 +131,8 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
   	}
 
 	_init = function(){
-		$scope.authenticate(true);
 		_bind_auth_listeners();
+		$scope.authenticate(true);
 	}
 
 	_init();	
