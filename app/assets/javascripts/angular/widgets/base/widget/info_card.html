@@ -6,13 +6,13 @@
  	 ng-model="user.profile_status" 
      ng-model="user.profile_status_color">
 	<div class="back_color" style="background-color:{{user.profile_status_color}}"></div>
-	<div>
+	<!-- <div>
 		<div class="arrow_box" style="z-index:6">Basic</div>
 		<div class="arrow_box arrow_box_type2" style="z-index:5">Genres</div>
 		<div class="arrow_box arrow_box_type2" style="z-index:4">Books</div>
 		<div class="arrow_box arrow_box_type2" style="z-index:3">Authors</div>
 		<div class="arrow_box arrow_box_type2" style="z-index:2">More</div>
-	</div>
+	</div> -->
 	<div class="sub_header">Complete your profile, {{user.name | uppercase}}</div>
 	<div class="profile_status_logo"></div>
 	<div ng-switch-when="0">
