@@ -188,6 +188,14 @@ input:focus{
     z-index: 3;
 }
 
+.full_height{
+    height: 100%;
+}
+
+.full_width{
+    width: 100%;
+}
+
 .scrollbar{
     overflow-y: scroll;
 }
@@ -231,4 +239,16 @@ input:focus{
     width: 10px;
     background-color: #D5D5D5;
     -webkit-border-radius: 10px;
+}
+
+.yellow_color{
+    color: #E2B503 !important;
+ }
+  
+.dark_blue_color{
+    color: #136CB2 !important;
+}
+  
+.purple_color{
+    color: #918FB5 !important;
 }

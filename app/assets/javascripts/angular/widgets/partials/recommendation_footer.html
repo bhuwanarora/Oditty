@@ -61,7 +61,7 @@
  		 ng-class="{'compact_filter_link': compact_footer}" 
 		 ng-click="toggle_more_filters($event)">
 		<span ng-if="filters.filter_type == 'BOOK'" 
-			class="selected_filter icon-book"></span>
+			class="base_font_color icon-book"></span>
 		<span class="icon-angle-right"></span>
 		<span class="icon-pen" 
 			title="author filter"
@@ -89,15 +89,15 @@
 			{{filters.more_filters}}
 		</span>
 		
-		 <span class="icon-filter2 selected_filter" ng-class="{'filter_link_icon': !show_more_filters}"></span>
+		 <span class="icon-filter2 base_font_color" ng-class="{'filter_link_icon': !show_more_filters}"></span>
 		 <span ng-if="!compact_footer">
 		 	<!-- <span>&nbsp;Add filters</span> -->
 		 	<!-- <span ng-if="$routeParams.type == 'books'">for Books</span> -->
 		 	<!-- <span ng-if="$routeParams.type == 'authors'">for Authors</span> -->
 		 	<!-- <span ng-if="$routeParams.type == 'readers'">for Readers</span> -->
 		 </span>
-		 <span class="selected_filter icon-angle-down" ng-if="!show_more_filters"></span>
-		 <span class="selected_filter icon-angle-up" ng-if="show_more_filters"></span>
+		 <span class="base_font_color icon-angle-down" ng-if="!show_more_filters"></span>
+		 <span class="base_font_color icon-angle-up" ng-if="show_more_filters"></span>
 	</div>
 	<div class="filter_link"
  		 ng-if="bookmark_selected"
