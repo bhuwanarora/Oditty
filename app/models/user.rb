@@ -10,17 +10,23 @@ class User < ActiveRecord::Base
 	has_one :google_user_authentication
 
 	def self.find_for_google_oauth2(access_token, existing_user, signed_in_resource=nil)
+		neo = Neography::Rest.new
 	    data = access_token.info
-	    if data["email"].present?
+		clause = "MATCH (user:User{email: \""+data["email"]+"\"}) RETURN user"
+		graph_data = neo.execute_query(clause)["data"]
+		debugger
+	    if graph_data["email"].present?
+	    	debugger
 	    	#FIXME create user node in the graph for google auth
-		    user = User.find_or_create_by(:email => data["email"], :is_subscribed => true)
-	    	google_user_authentication = GoogleUserAuthentication.find_or_create_by(:user_id => user.id)
-	    	google_user_authentication.first_name = data.first_name
-	    	google_user_authentication.last_name = data.last_name
-	    	google_user_authentication.image_url = data.image
-	    	google_user_authentication.link = data.urls["Google"]
-	    	google_user_authentication.oauth_token = data.to_s
-	    	google_user_authentication.save
+		    # user = User.find_or_create_by(:email => data["email"], :is_subscribed => true)
+	    	# google_user_authentication = GoogleUserAuthentication.find_or_create_by(:user_id => user.id)
+	    	# google_user_authentication.first_name = data.first_name
+	    	# google_user_authentication.last_name = data.last_name
+	    	# google_user_authentication.image_url = data.image
+	    	# google_user_authentication.link = data.urls["Google"]
+	    	# google_user_authentication.oauth_token = data.to_s
+	    	# google_user_authentication.save
+	    else
 	    end
 	    send_subscription_mail(google_user_authentication.first_name, user.email) unless existing_user
 	    user
