@@ -782,7 +782,8 @@ and (min-width : 1824px) {
 	width: 165px;
 	white-space: initial;
 	padding: 5px;
-	height: 45px;
+	min-height: 45px;
+	height: auto;
 }
 
 .notifications .notification:hover{
