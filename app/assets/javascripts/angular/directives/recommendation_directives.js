@@ -32,22 +32,21 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 			    });
 			    recommendationService.get_time_groups().then(function(data){
 			    	$scope.timeOptions = _reset_json();
-			    	for(var i=0; i < data["times"].length; i++){
-			    		var time_data = data.times[i][0]["data"];
+			    	angular.forEach(data["times"], function(value){
+			    		var time_data = value[0]["data"];
 			    		var name = time_data["name"]+" ("+time_data["range"]+")";
 			    		var json = {"name": name};
-			    		$scope.timeOptions = $scope.timeOptions.concat([json]);
-			    	}
-			    	// $scope.timeOptions = $scope.timeOptions.concat(data["times"]);
+			    		this.push(json);
+			    	}, $scope.timeOptions);
 			    });
 			    recommendationService.get_read_times().then(function(data){
 			    	$scope.readTimeOptions = _reset_json();
-			    	for(var i=0; i < data["read_times"].length; i++){
-			    		var time_data = data.read_times[i][0]["data"];
+			    	angular.forEach(data["read_times"], function(value){
+			    		var time_data = value[0]["data"];
 			    		var name = time_data["name"];
 			    		var json = {"name": name, "custom_option": true, "type": "readingTime"};
-			    		$scope.readTimeOptions = $scope.readTimeOptions.concat([json]);
-			    	}
+			    		this.push(json);
+			    	}, $scope.readTimeOptions);
 			    });
 			    _init_dropdown_filters();
 			    _collapse_dropdown_menu();
@@ -187,9 +186,9 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 				var filter = "q="+params+"&filter="+filter;
 				recommendationService.get_genres(filter).then(function(data){
 					$scope.genres = [];
-					for(var i=0; i<data.genres.data.length; i++){
-						$scope.genres.push(data.genres.data[i][0].data);
-					}
+					angular.forEach(data.genres.data, function(value){
+						this.push(value[0].data);
+					}, $scope.genres);
 			    });
 			}
 
@@ -215,10 +214,10 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 				}
 				websiteService.search(params, "AUTHOR", 3).then(function(data){
 					$scope.authors = [];
-					for(var i=0; i<data.results.data.length; i++){
-						var json = {"name":data.results.data[i][0]};
-						$scope.authors.push(json);
-					}
+					angular.forEach(data.results.data, function(value){
+						var json = {"name": value[0]};
+						this.push(json);
+					}, $scope.authors);
 			    });
 			}
 

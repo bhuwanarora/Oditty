@@ -7,7 +7,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/base/author/author_widget.html',
-    "<div class=\"animate-fast widget\"><category track=\"\" widget=\"author\"></category><div ng-model=\"author\" ng-mouseenter=\"discovered = true\" ng-mouseover=\"hover()\" ng-mouseout=\"mouseout()\" ng-click=\"show_focused_tooltip($event)\" ng-class=\"{'discovered': hovered, 'undiscovered': !hovered}\" class=\"card animate-fast\"><widget-thumb track=\"\"></widget-thumb><author-interact track=\"\"></author-interact></div></div>"
+    "<div class=\"animate-fast widget\"><div ng-model=\"author\" ng-mouseenter=\"discovered = true\" ng-mouseover=\"hover()\" ng-mouseout=\"mouseout()\" ng-click=\"show_focused_tooltip($event)\" ng-class=\"{'discovered': hovered, 'undiscovered': !hovered}\" class=\"card animate-fast\"><widget-thumb track=\"\"></widget-thumb><author-interact track=\"\"></author-interact></div></div>"
   );
 
 
@@ -107,7 +107,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/base/reader/reader_widget.html',
-    "<div class=\"animate-fast widget\"><category track=\"\" widget=\"reader\"></category><div ng-model=\"reader\" ng-mouseenter=\"discovered = true\" ng-mouseover=\"hover()\" ng-mouseout=\"mouseout()\" ng-click=\"show_focused_tooltip($event)\" ng-class=\"{'discovered': hovered, 'undiscovered': !hovered}\" class=\"card animate-fast\"><widget-thumb track=\"\"></widget-thumb><reader-interact track=\"\"></reader-interact></div></div>"
+    "<div class=\"animate-fast widget\"><div ng-model=\"reader\" ng-mouseenter=\"discovered = true\" ng-mouseover=\"hover()\" ng-mouseout=\"mouseout()\" ng-click=\"show_focused_tooltip($event)\" ng-class=\"{'discovered': hovered, 'undiscovered': !hovered}\" class=\"card animate-fast\"><widget-thumb track=\"\"></widget-thumb><reader-interact track=\"\"></reader-interact></div></div>"
   );
 
 

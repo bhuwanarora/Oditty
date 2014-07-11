@@ -67,11 +67,9 @@ websiteApp.directive('book', ['widgetService', '$rootScope', function (widgetSer
         $scope.book.tweets = [];
         var labels_length = $rootScope.labels.length;
         $scope.book.labels = [];
-        for(var i=0; i<labels_length; i++){
-          $scope.book.labels.push({
-            name: $rootScope.labels[i].name
-          });
-        }
+        angular.forEach($rootScope.labels, function(value){
+          this.push({"name": value.name});
+        }, $scope.book.labels);
         $scope.book.show_labels = false;
         // widgetService.populate_tooltips(book_id).then(function(data){
           // $scope.book.title = data.title;
@@ -115,7 +113,7 @@ websiteApp.directive('labelDropdown', function(){
         var atleast_one_label_checked = false;
         var labels = $scope.book.labels;
         // labels["name"]
-          $scope.book.labels[index]["checked"] = !$scope.book.labels[index]["checked"];
+        $scope.book.labels[index]["checked"] = !$scope.book.labels[index]["checked"];
         for(var i=0; i<labels.length; i++){
           if(labels[i]["checked"]){
             atleast_one_label_checked = true;
