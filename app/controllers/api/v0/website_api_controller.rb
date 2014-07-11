@@ -10,6 +10,11 @@ module Api
 				render :json => results, :status => 200
 			end
 
+			def trends
+				trends = TrendsHelper.social_mention
+				render :json => trends, :status => 200
+			end
+
 			def countries
 				filter = params[:q]
 				results = {:countries => CountryGroup.all}

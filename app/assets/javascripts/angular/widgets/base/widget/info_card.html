@@ -6,6 +6,13 @@
  	 ng-model="user.profile_status" 
      ng-model="user.profile_status_color">
 	<div class="back_color" style="background-color:{{user.profile_status_color}}"></div>
+	<!-- <div>
+		<div class="arrow_box" style="z-index:6">Basic</div>
+		<div class="arrow_box arrow_box_type2" style="z-index:5">Genres</div>
+		<div class="arrow_box arrow_box_type2" style="z-index:4">Books</div>
+		<div class="arrow_box arrow_box_type2" style="z-index:3">Authors</div>
+		<div class="arrow_box arrow_box_type2" style="z-index:2">More</div>
+	</div> -->
 	<div class="sub_header">Complete your profile, {{user.name | uppercase}}</div>
 	<div class="profile_status_logo"></div>
 	<div ng-switch-when="0">
@@ -33,17 +40,17 @@
       	<div class="header">
   			<label for="gender">Gender</label>
       		<form name="gender_form">
-      			<label for="male">Male</label>
 		  		<input type="radio" ng-model="gender" value="Male" id="male" 
-		  				class="custom_radio icon-checkbox-unchecked">
+		  				class="custom_radio icon-checkbox-unchecked">&nbsp;&nbsp;&nbsp;
+      			<label for="male">Male</label><br/>
 
-		  		<label for="female">Female</label>
 		  		<input type="radio" ng-model="gender" value="Female" id="female"
-		  				class="custom_radio icon-checkbox-unchecked">
+		  				class="custom_radio icon-checkbox-unchecked">&nbsp;&nbsp;&nbsp;
+		  		<label for="female">Female</label><br/>
 
-		  		<label for="other">Other</label>
 		  		<input type="radio" ng-model="gender" value="Other" id="other" 
-		  				class="custom_radio icon-checkbox-unchecked">
+		  				class="custom_radio icon-checkbox-unchecked">&nbsp;&nbsp;&nbsp;
+		  		<label for="other">Others</label><br/>
 			</form>
       	</div>
 	</div>
@@ -70,7 +77,7 @@
 	      					   ng-model="$parent.user_book_count" 
 	      					   ng-value="book_count"
 	      					   class="custom_radio icon-checkbox-unchecked">
-	      				{{book_count.name}}<br/>
+	      				&nbsp;&nbsp;&nbsp;{{book_count.name}}<br/>
 	      			</label>
       			</form>
       		</div>
@@ -101,7 +108,7 @@
 		</div>
 	</div>
 	<div ng-switch-when="3" class="center">
-		<div class="header">Which 3 Books are you currently reading?</div>
+		<div class="header">Which books do you like?</div>
       	<type-ahead items="search_results" 
 				prompt="Search for the book.." 
 				title="name" 
@@ -129,7 +136,7 @@
 		</div> -->
 	</div>
 	<div ng-switch-when="4">
-		<div class="header">Which 3 Authors you like?</div>
+		<div class="header">Which authors do you like?</div>
 		<type-ahead items="search_results" 
 				prompt="Search for the author.." 
 				title="name" 

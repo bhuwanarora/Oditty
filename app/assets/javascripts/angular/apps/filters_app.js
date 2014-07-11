@@ -19,7 +19,48 @@ angular.module('filtersApp', [])
   })
   .filter('published_year', function(){
     return function(input){
-      var output = "("+input+")";
+      var inputs = input.split(" ");
+      var input = inputs[inputs.length-1];
+      input = parseInt(input);
+      var old_english_literature = input > 658 && input < 1100;
+      var middle_english_literature = input > 1100 && input < 1500;
+      var english_renaissance = input > 1500 && input < 1660;
+      var neo_classical_period = input > 1660 && input < 1798;
+      var romanticism = input > 1798 && input < 1837;
+      var victorian_literature = input > 1837 && input < 1901;
+      var modernism = input > 1901 && input < 1939;
+      var post_modern_literature = input > 1939 && input < 2000;
+      var twentieth_century_literature = input > 2000 && input < 2014;
+      if(old_english_literature){
+        output = "Old English Literature";
+      }
+      else if(middle_english_literature){
+        output = "Middle English Literature";
+      }
+      else if(english_renaissance){
+        output = "English Renaissance";
+      }
+      else if(neo_classical_period){
+        output = "Neo Classical Period";
+      }
+      else if(romanticism){
+        output = "Romanticism";
+      }
+      else if(victorian_literature){
+        output = "Victorian Literature";
+      }
+      else if(modernism){
+        output = "Modernism";
+      }
+      else if(post_modern_literature){
+        output = "Post Modern Literature";
+      }
+      else if(twentieth_century_literature){
+        output = "20th Century Literature";
+      }
+      else{
+        output = "Invalid";
+      }
       return output;
     }
   })

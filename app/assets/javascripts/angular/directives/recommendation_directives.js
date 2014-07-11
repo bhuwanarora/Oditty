@@ -64,10 +64,25 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 				}, 3000);
 			}
 
+			_country_init = function(){
+				return {"name": "<span class='icon-earth filter_icon green'></span>"+
+						"<span>&nbsp;&nbsp;&nbsp;Filter by Region</span>"};
+			}
+
+			_time_init = function(){
+				return {"name": "<span class='icon-calendar filter_icon magenta'></span>"+
+						"<span>&nbsp;&nbsp;&nbsp;Filter by Era</span>"};
+			}
+
+			_read_time_init = function(){
+				return {"name": "<span class='icon-clock filter_icon cyan'></span>"+
+						"<span>&nbsp;&nbsp;&nbsp;Filter by Reading Time</span>"};
+			}
+
 			_init_dropdown_filters = function(){
-				$scope.countrySelected = {"name": "<span class='icon-earth'></span><span>&nbsp;Filter by Region</span>"};
-				$scope.timeSelected = {"name": "<span class='icon-calendar'></span><span>&nbsp;Filter by Era</span>"};
-				$scope.readTimeSelected = {"name": "<span class='icon-clock'></span><span>&nbsp;Filter by Reading Time</span>"};
+				$scope.countrySelected = _country_init();
+				$scope.timeSelected = _time_init();
+				$scope.readTimeSelected = _read_time_init();
 			}
 
 			$scope.handle_left_columns = function(){
@@ -91,13 +106,13 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 					var message = "SUCCESS-"+type+" filter has been reset."
 					delete $rootScope.filters.other_filters[type];
 					if(type == "country"){
-						$scope.countrySelected = {"name": "<span class='icon-earth'></span><span>&nbsp;Filter by Region</span>"};
+						$scope.countrySelected = _country_init();
 					}
 					else if(type == "timeGroup"){
-						$scope.timeSelected = {"name": "<span class='icon-calendar'></span><span>&nbsp;Filter by Era</span>"};
+						$scope.timeSelected = _time_init();
 					}
 					else if(type == "readingTime"){
-						$scope.readTimeSelected = {"name": "<span class='icon-clock'></span><span>&nbsp;Filter by Reading Time</span>"};
+						$scope.readTimeSelected = _read_time_init();
 					}
 				}
 				else{
@@ -364,7 +379,7 @@ websiteApp.directive('recommendationFooter', ['scroller', function(scroller){
 				$scope.compact_footer = false;	
 			}
 
-			$scope.reset_filter =  function(selectedFilter, type, main_filter){
+			$scope.reset_filter =  function(event, selectedFilter, type, main_filter){
 				var selected = {"name":"<span class='icon-loop'></span><span>&nbsp;Reset</span>"};
 				if(selectedFilter){
 					if(main_filter){
@@ -374,6 +389,7 @@ websiteApp.directive('recommendationFooter', ['scroller', function(scroller){
 					else{
 						$scope.advance_filter_changed(selected, type);
 					}
+					event.stopPropagation();
 				}
 				event.stopPropagation();
 			}

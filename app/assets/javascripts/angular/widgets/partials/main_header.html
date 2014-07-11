@@ -2,6 +2,10 @@
 	<div class="site_logo">
  		<site-logo></site-logo>
  	</div>
+ 	<div class="profile_thumb" ng-click="goto_info_card()">
+		<user-thumb></user-thumb>
+		<span>{{user.name | uppercase}}</span>
+	</div>
 	<div class="menu_group" 
  		 ng-class="{'menu_group_active':show_menu}"
  		 ng-mouseenter="toggle_menu()"
@@ -54,8 +58,6 @@
  		<search-bar></search-bar>
  	</div>
 
- 	<div class="profile_thumb" ng-click="goto_info_card()">
-		<user-thumb></user-thumb>
-	</div>	
+
  	<!-- <input placeholder="Search..."/> -->
 </div>

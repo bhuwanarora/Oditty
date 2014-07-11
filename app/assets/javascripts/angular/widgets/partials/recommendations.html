@@ -98,7 +98,10 @@
 						<book track id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></book>
 					</div>
 					<div class="recommendation_block">
-						<div class="widget">loading..</div>
+						<div class="widget loading_widget">
+							<span ng-show="loading">loading..</span>
+							<span ng-show="!loading"><div>SHOW</div><div>BOOKS</div></span>
+						</div>
 					</div>
 				</div>
 				<div ng-if="$routeParams.type == 'readers'" 

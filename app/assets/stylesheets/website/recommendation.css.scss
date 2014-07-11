@@ -29,6 +29,13 @@
 	display: inline-block;
 	float: left;
 	margin-right: 2px;
+	margin-left: 25px;
+	cursor: pointer;
+	height: 40px;
+}
+
+.profile_thumb:hover{
+	background-color: #F3F3F3;
 }
 
 .profile_thumb img{
@@ -130,6 +137,7 @@
 
 .selected_filter{
 	color: #717070 !important;
+	cursor: default;
 }
 
 .selected_filter:hover:before{
@@ -146,6 +154,12 @@
 	-webkit-animation: bounce 850ms linear infinite alternate;
 	-moz-animation: bounce 850ms linear infinite alternate;
 	animation: bounce 850ms linear infinite alternate;
+}
+
+.filter_icon{
+	color: white;
+	padding: 12px;
+	border-radius: 2px;
 }
 
 @-webkit-keyframes bounce {
@@ -1115,7 +1129,7 @@ and (min-width : 1824px) {
 	left: 10px;
 	top: 90px;
 	position: fixed;
-	z-index: 1;
+	z-index: 2;
 	box-shadow: 8px 0 43px 0 rgba(66,66,66,.47);
 }
 
@@ -1131,7 +1145,7 @@ and (min-width : 1824px) {
 	min-width: 337px;
 	position: fixed;
 	width: 52vh;
-	z-index: 1;
+	z-index: 2;
 	padding: 4px 15px 4px 15px;
 }
 
@@ -1166,8 +1180,28 @@ and (min-width : 1824px) {
 }
 
 .left_column .friends_grid img{
-	width: 30px;
+	width: 40px;
 	margin: 2px;
 	border-radius: 5px;
 
+}
+
+
+.green{
+	background-color: #65b045;
+}
+
+.magenta{
+	background-color: #11a9cc;
+}
+
+.cyan{
+	background-color: #981b48;
+}
+
+.loading_widget{
+	width: 100px;
+	background-color: white;
+	height: 75vh;
+	border-radius: 4px;
 }
