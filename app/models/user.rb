@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
 	def self.find_for_facebook_oauth(auth, existing_user, signed_in_resource=nil)
 	    data = auth.extra.raw_info
 	    if data["email"].present?
-	    	#FIXME create user node in the graph for facebook auth
+	    	#FIXME create user node in the graph for Facebook auth
 	      	user = User.find_or_create_by(:email => data["email"], :is_subscribed => true)
 	      	facebook_user_authentication = FacebookUserAuthentication.find_or_create_by(:user_id => user.id)
 		    facebook_user_authentication.uid = auth.uid
@@ -77,6 +77,5 @@ class User < ActiveRecord::Base
 	    # facebook_user_authentication.access_token+"&method=POST&"+
 	    # "object=%7B%22app_id%22%3A161119590634528%2C%22type%22%3A%22%5C%22website%5C%22%22%2C%22url%22%3A%22%5C%22http%3A%5C%2F%5C%2Fsamples.ogp.me%5C%2F256986074381212%5C%22%22%2C%22title%22%3A%22%5C%22Sample+Website%5C%22%22%2C%22image%22%3A%22%5C%22https%3A%5C%2F%5C%2Fs-static.ak.fbcdn.net%5C%2Fimages%5C%2Fdevsite%5C%2Fattachment_blank.png%5C%22%22%2C%22description%22%3A%22%5C%22%5C%22%22%7D"
 	    # response = Net::HTTP.post_form(url, {})
-	    # debugger
 	end
 end

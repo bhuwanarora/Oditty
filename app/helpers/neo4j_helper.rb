@@ -495,18 +495,19 @@ module Neo4jHelper
 
 	def self.create_indexes
 		@neo ||= self.init
-		puts "indexing initiated..."
-		@neo.create_schema_index("Book", ["title"])
-		@neo.create_schema_index("Book", ["author_name"])
-		@neo.create_schema_index("Author", ["name"])
-		@neo.create_schema_index("Label", ["name"])
-		@neo.create_schema_index("ReadTime", ["name"])
-		@neo.create_schema_index("Era", ["name"])
+		puts "indexing initiated...".green
+		@neo.create_schema_index("Book", ["indexed_title"])
+		@neo.create_schema_index("Book", ["indexed_author_name"])
+		@neo.create_schema_index("Author", ["indexed_name"])
+		@neo.create_schema_index("Label", ["indexed_name"])
+		@neo.create_schema_index("ReadTime", ["indexed_name"])
+		@neo.create_schema_index("Era", ["indexed_name"])
 		@neo.create_schema_index("Year", ["year"])
-		@neo.create_schema_index("Genre", ["name"])
+		@neo.create_schema_index("Genre", ["indexed_name"])
+		@neo.create_schema_index("User", ["indexed_name"])
 		@neo.set_node_auto_index_status(true)
 		@neo.set_relationship_auto_index_status(true)
-		puts "indexing finished..."
+		puts "indexing finished...".green
 	end
 
 	def self.add_constraints
@@ -514,5 +515,64 @@ module Neo4jHelper
 		clause = "CREATE CONSTRAINT ON (user:User) ASSERT user.email IS UNIQUE"
 		@neo.execute_query clause
 		puts clause.blue.on_red
+	end
+
+	def self.restructure_database
+		@neo ||= self.init
+		clause = "MATCH (book:Book)
+		WITH book, toFloat(book.gr_rating)*toFloat(book.gr_ratings_count)*toFloat(book.gr_reviews_count) as weight
+		ORDER BY weight DESC, toFloat(book.gr_rating)
+		WITH collect(book) as p
+		FOREACH(i in RANGE(0, length(p)-2) | 
+		FOREACH(p1 in [p[i]] | 
+		FOREACH(p2 in [p[i+1]] | 
+		CREATE UNIQUE (p1)-[:Next_book]->(p2))))"
+		puts "adding books in form of sorted linked lists...".green
+		@neo.execute_query clause
+
+		puts "Droping existing indexes...".green
+		@neo.delete_schema_index("Book", ["title"])
+		@neo.delete_schema_index("Book", ["author_name"])
+		@neo.delete_schema_index("Author", ["name"])
+		@neo.delete_schema_index("Label", ["name"])
+		@neo.delete_schema_index("ReadTime", ["name"])
+		@neo.delete_schema_index("Era", ["name"])
+		@neo.delete_schema_index("Genre", ["name"])
+
+		self.create_indexes
+
+		puts "adding index_by title for book...".green
+		clause = "MATCH (book:Book) SET book.indexed_title = LOWER(book.title)"
+		@neo.execute_query clause
+
+		puts "adding index_by author_name for books...".green
+		clause = "MATCH (book:Book) SET book.indexed_author_name = LOWER(book.author_name)"
+		@neo.execute_query clause
+
+		puts "adding index_by name for authors...".green
+		clause = "MATCH (author:Author) SET author.indexed_name = LOWER(author.name)"
+		@neo.execute_query clause
+
+		puts "adding index_by name for labels...".green
+		clause = "MATCH (label:Label) SET label.indexed_name = LOWER(label.name)"
+		@neo.execute_query clause
+
+		puts "adding index_by name for labels...".green
+		clause = "MATCH (readTime: ReadTime) SET readTime.indexed_name = LOWER(readTime.name)"
+		@neo.execute_query clause
+
+		puts "adding index_by name for era...".green
+		clause = "MATCH (era: Era) SET era.indexed_name = LOWER(era.name)"
+		@neo.execute_query clause
+
+		puts "adding index_by name for genre...".green
+		clause = "MATCH (genre: Genre) SET genre.indexed_name = LOWER(genre.name)"
+		@neo.execute_query clause
+
+		puts "adding index_by name for users...".green
+		clause = "MATCH (user: User) SET user.indexed_name = LOWER(user.name)"
+		@neo.execute_query clause
+
+		puts "End...".red
 	end
 end
