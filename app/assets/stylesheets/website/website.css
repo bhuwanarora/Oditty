@@ -79,7 +79,7 @@ input:focus{
 
 .search_typeahead_group .search_icon{
     position: absolute;
-    right: -4px;
+    right: -2px;
     color: white;
     padding: 11px 30px 12px 30px;
     top: 0.2px;
@@ -89,6 +89,7 @@ input:focus{
     /*border-radius: 0 2px 2px 0;*/
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     text-shadow: 1px 0px 0px rgba(0, 0, 0, 0.5);
+    border-top-right-radius: 4px;
 }
 
 .recommendations_page .search_typeahead_group{
@@ -119,6 +120,7 @@ input:focus{
     width: 96%;
     height: 100%;
     content: '';
+    border-top-left-radius: 4px;
 }
 
 /*animation*/
@@ -251,4 +253,12 @@ input:focus{
   
 .purple_color{
     color: #918FB5 !important;
+}
+
+.light_gray_background{
+    background-color: #F1F1F1 !important;
+}
+
+.black_blue_background{
+    background-color: #181F25 !important;
 }
