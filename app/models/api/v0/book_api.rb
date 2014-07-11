@@ -134,6 +134,7 @@ module Api
 			end
 
 			def self.recommendations filters={}
+				#FIXME only output isbns
 				skip_clause = ""
 				if filters["reset"]
 					$redis.set 'book_ids', ""

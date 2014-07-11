@@ -88,7 +88,7 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 			$scope.handle_left_columns = function(){
 				$scope.column_heights = {"show_filters": true,
 										"notifications_style" : {"height": "110px"}, 
-										"friends_grid_style": {"height": "30px"}};
+										"friends_grid_style": {"height": "75px"}};
 			}
 
 			$scope.clear_filter = function(main_filter, type){
@@ -368,7 +368,7 @@ websiteApp.directive('mainHeader', [function(){
 	}
 }]);
 
-websiteApp.directive('recommendationFooter', ['scroller', function(scroller){
+websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', function(scroller, $rootScope){
 	return{
 		restrict: 'E',
 		controller: ['$scope', function($scope){
@@ -380,32 +380,41 @@ websiteApp.directive('recommendationFooter', ['scroller', function(scroller){
 			}
 
 			$scope.reset_filter =  function(event, selectedFilter, type, main_filter){
-				var selected = {"name":"<span class='icon-loop'></span><span>&nbsp;Reset</span>"};
+				var is_dropdown_filter = type == "timeGroup" || type == "readingTime" || type == "country";
 				if(selectedFilter){
-					if(main_filter){
+					if(is_dropdown_filter){
+						var selected = {"name":"<span class='icon-loop'></span><span>&nbsp;Reset</span>"};
+						$scope.advance_filter_changed(selected, type);
+					}
+					else{
 						$scope.clear_filter(main_filter, type);
 						$scope.genre = "";
 					}
-					else{
-						$scope.advance_filter_changed(selected, type);
-					}
 					event.stopPropagation();
 				}
-				event.stopPropagation();
+				else{
+					if(is_dropdown_filter){
+						//open the specific dropdown
+					}
+					else{
+						//focus the specific input box
+					}
+				}
 			}
 
 			$scope.handle_notification_ticker_size = function(event){
 				var increase_tab_size = event.deltaY > 0;
 				if(increase_tab_size){
 					$scope.column_heights = {"notifications_style": {"height": "225px"},
-											"friends_grid_style": {"height": "30px"},
+											"friends_grid_style": {"height": "75px"},
 											"show_filters": false};
 				}
 				else{
 					$scope.column_heights = {"notifications_style": {"height": "110px"},
-											"friends_grid_style": {"height": "30px"},
+											"friends_grid_style": {"height": "75px"},
 											"show_filters": false};
 				}
+				$rootScope.ticker_popup = null;
 	            event.stopPropagation();
 	        }
 	        

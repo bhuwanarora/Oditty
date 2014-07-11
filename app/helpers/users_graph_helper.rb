@@ -5,6 +5,7 @@ module UsersGraphHelper
 	end
 
 	def self.bookmark_book(user_id, book_id)
+		#FIXME: bookmark book
 		@neo.execute_query("MATCH (u:User{id:"+user_id+"}), (b:Book{id:"+book_id+"})
 			OPTIONAL MATCH (u)-[r:FeedNext{id:"+user_id+"}]->(top_feed),
 							(u)<-[:Follow]-(f)-[ego:Ego]->(ego_user)
@@ -26,6 +27,7 @@ module UsersGraphHelper
 	end
 
 	def self.remove_bookmark(user_id, book_id)
+		#FIXME: remove_bookmark
 		@neo.execute_query("MATCH (u:User{id:"+user_id+"})-[r1:BookmarkAction]->(bm:Bookmark)-[r2:Bookmarked]->(b:Book{id:"+book_id+"})
 			OPTIONAL MATCH (s)-[f1:FeedNext]->(bm)-[f2:FeedNext]->(e)
 			CREATE (s)-[:FeedNext]->(e)
@@ -45,6 +47,7 @@ module UsersGraphHelper
 	end
 
 	def self.mark_as_read(user_id, book_id)
+		#FIXME mark_as_read
 		@neo.execute_query("MATCH (u:User{id:"+user_id+"}), 
 			(b:Book{id:"+book_id+"})-[:Belongs_to]->(:Category)-[r:Has_root]->(c:Category)
 			OPTIONAL MATCH (u)-[fr:FeedNext{id:"+user_id+"}]->(top_feed),
@@ -70,6 +73,7 @@ module UsersGraphHelper
 	end
 
 	def self.mark_as_unread(user_id, book_id)
+		#FIXME mark_as_unread
 		@neo.execute_query("MATCH (u:User{id:"+user_id+"})-[r1:MarkAsReadAction]->(m:MarkAsReadNode)-[r2:MarkAsRead]->(b:Book{id:"+book_id+"})-[:Belongs_to]->(:Category)-[r:Has_root]->(c:Category),
 			(c)<-[r3:Tendency_for]-(u)
 			OPTIONAL MATCH (s)-[f1:FeedNext]->(m)-[f2:FeedNext]->(e)
@@ -273,6 +277,7 @@ module UsersGraphHelper
 	end
 
 	def self.get_news_feed_for_user user_id
+		#FIXME get_news_feed_for_user
 		@neo.execute_query("MATCH (u:User{id:"+user_id+"})-[:Ego{id:"+user_id+"}]->(ego_user),
 		(ego_user)-[r:FeedNext]->(f)
 		RETURN f, r
