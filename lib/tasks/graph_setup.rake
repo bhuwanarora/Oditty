@@ -1,5 +1,11 @@
 namespace :graph do
 
+  desc "Restructure database"
+  task :restructure => :environment do
+    include Neo4jHelper
+    Neo4jHelper.restructure_database
+  end
+
   desc "time nodes"
   task :time_nodes => :environment do
     include Neo4jHelper
