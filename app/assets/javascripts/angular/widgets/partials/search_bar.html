@@ -35,7 +35,7 @@
          placeholder="{{search_tag.placeholder}}"/>
 
   <div class="website_search_helpers" ng-if="!search_level1 && !hide_options">
-      <div class="custom_option">
+      <!-- <div class="custom_option"> -->
         <div ng-show="search_initiated" class="title">{{search_display}}</div>
         <div ng-show="!search_initiated && search_tag.input" 
              class="title">No results found.. </div>
@@ -48,10 +48,10 @@
           <div ng-click="search_by('AUTHOR')"><span class="icon-pen"></span>&nbsp;&nbsp;
               <span>Search an Author</span></div>
         </div> -->
-      </div>
+      <!-- </div> -->
   </div>
   <div class="website_search_helpers" ng-if="search_level1 && !hide_options">
-      <div class="custom_option">
+      <!-- <div class="custom_option"> -->
         <div ng-show="search_initiated" class="title">{{search_display}}</div>
         <div ng-show="!search_initiated && search_tag.input" 
              class="title">No results found.. </div>
@@ -59,12 +59,12 @@
              class="helper_title_level2">
           
         </div> -->
-      </div>
+      <!-- </div> -->
   </div>
   <div class="website_search_options" ng-if="search_results && !hide_options">
     <div ng-repeat="item in search_results | limitTo: search_tag.result_count+1 track by $index "
          ng-click="handle_selection(item)" 
-         ng-class="{active:is_current($index, item), 'graph_option':item.graph_option}" 
+         ng-class="{'light_gray_background':is_current($index, item), 'graph_option':item.graph_option}" 
          ng-mouseenter="set_current($index)"
          class="option">
          <!-- ng-bind-html="highlight(search_tag.input, item.name)" -->

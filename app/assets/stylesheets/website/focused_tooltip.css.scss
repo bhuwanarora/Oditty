@@ -8,8 +8,8 @@
 	position: fixed;
 	top: 95px;
 	white-space: initial;
-	width: 55vh;
 	z-index: 3;
+	width: 62vh;
 	padding-left: 15px;
 	padding-right: 15px;
 	/* for big screens */
@@ -72,24 +72,6 @@
 	width: 30px;
 }
 
-.focused_tooltip hr{
-	opacity: 0.2;
-}
-
-.focused_tooltip .own_this_book{
-	bottom: 10px;
-	color: #181f25;
-	cursor: pointer;
-	display: inline-block;
-	float: left;
-	font-size: .8em;
-	margin-top: 5px;
-}
-
-.focused_tooltip .own_this_book:hover{
-	text-decoration: underline;
-}
-
 .focused_tooltip .users_count{
 	color: #9E9E9E;
 	font-size: 0.8em;
@@ -101,19 +83,8 @@
 	font-size: 0.93em;
 	height: 20vh;
 	line-height: 1.3em;
-	/*overflow-y: scroll;*/
 	padding: 12px;
 	border-bottom: 1px solid #D3D3D3;
-}
-
-.focused_tooltip .share_menu div{
-	border-bottom: 1px solid #9E9E9E;
-	padding: 2px;
-}
-
-.focuseD_tooltip .share_menu div:hover{
-	background-color: #E6E6E6;
-	color: #9E9E9E;
 }
 
 .focused_tooltip .footer{
@@ -155,19 +126,6 @@
 	padding: 10px;
 }
 
-.focused_tooltip .interact{
-	background-color: #918FB5;
-	border-bottom-right-radius: 3px;
-	bottom: 0px;
-	color: #fff;
-	cursor: pointer;
-	font-size: .8em;
-	padding: 14px;
-	position: absolute;
-	right: 0px;
-	top: 0px;
-}
-
 .rate{
 	height: 25px;
 	padding-top: 20px;
@@ -179,7 +137,6 @@
 }
 
 .focused_tooltip .header .title{
-	/*cursor: pointer;*/
 	color: #136CB2;
 	font-size: 1em;
 	font-weight: bold;
@@ -187,7 +144,6 @@
 }
 
 .focused_tooltip .header .author{
-	/*cursor: pointer;*/
 	font-size: 0.9em;
  	width: 70%;
 }
@@ -223,10 +179,6 @@
 	width: 25%;
 	text-align: center;
 	font-size: 0.8em;
-}
-
-.focused_tooltip .tabs .active_tab{
-	background-color: #181F25;
 }
 
 .time_to_read{
@@ -279,10 +231,6 @@
 .time_to_read .header{
 	letter-spacing:0px;
 	padding-bottom: 10px !important;
-}
-
-.time_to_read hr{
-	opacity: 0.3;
 }
 
 .time_to_read span{
