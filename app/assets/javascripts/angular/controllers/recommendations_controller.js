@@ -36,12 +36,12 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	$scope.handle_friends_grid_size = function(){
 		if(event.deltaY > 0){
 			$scope.column_heights = {"notifications_style" : {"height": "110px"}, 
-									"friends_grid_style": {"max-height": "90px", "overflow": "auto"},
+									"friends_grid_style": {"max-height": "120px", "overflow": "auto"},
 									"show_filters": false};
 		}
 		else{
 			$scope.column_heights = {"notifications_style" : {"height": "110px"}, 
-									"friends_grid_style": {"height": "30px"},
+									"friends_grid_style": {"height": "75px"},
 									"show_filters": false};
 		}
 		event.stopPropagation();

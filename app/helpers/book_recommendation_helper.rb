@@ -7,6 +7,7 @@ module BookRecommendationHelper
 
 	def get_similar_books(book_id, user_id)
 		#Add category 
+		#FIXME get_similar_books
 		@neo.execute_query("MATCH (b:Book{id:"+book_id+"})-[h1:Has]->(t:Tag)<-[h2:Has]-(sb:Book), 
 			(u:User{id:"+user_id+"})
 			WHERE b <> sb AND
@@ -47,6 +48,7 @@ module BookRecommendationHelper
 	end
 
 	def self.get_serendipitous_books(user_id)
+		#FIXME get_serendipitous_books
 		@neo.execute_query("MATCH (b:Book{gr_rating=5})-[:Belongs_to]->(:Category)-[:Has_root]->(rc:Category), 
 			(u:User{id:"+user_id+"})
 			WHERE NOT (u)-[:Tendency_for]->(rc)
@@ -54,6 +56,7 @@ module BookRecommendationHelper
 	end
 
 	def self.get_serendipitous_categories(user_id)
+		#FIXME get_serendipitous_categories
 		@neo.execute_query("MATCH (rc:Category), 
 			(u:User{id:"+user_id+"})
 			WHERE NOT (u)-[:Tendency_for]->(rc)
@@ -66,6 +69,7 @@ module BookRecommendationHelper
 
 
 	def self.create_book
+		#FIXME create_book
 		@neo.execute_query("CREATE (b:Book{title:"+title+"})")
 	end
 

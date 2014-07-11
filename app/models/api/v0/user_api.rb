@@ -38,6 +38,7 @@ module Api
 							message = "Please activate your email account. We are sending you another mail."
 						end
 					else
+						#FIXME: create new user in the graph
 						clause = "CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+params[:password]+"\"})"
 						@neo.execute_query clause
 						SubscriptionMailer.invite(invitation).deliver
@@ -49,6 +50,7 @@ module Api
 			end
 
 			def self.get_most_connected_friends
+				#FIXME Get most connected friends from the graph
 				friends = [
 					{
 						:id => 1,

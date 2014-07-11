@@ -70,6 +70,7 @@ gem 'treetop'
 gem 'polyglot'
 gem 'blather'
 gem "eventmachine"
+gem "whenever"
 # gem 'amazon-ecs'
 # gem 'rubber'
 # gem 'rails_admin_example_theme', :git => 'git://github.com/bbenezech/rails_admin_example_theme.git'
