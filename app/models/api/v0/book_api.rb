@@ -317,18 +317,26 @@ module Api
 					books = @neo.execute_query(clause)["data"]
 				end
 				puts books.length.to_s.red.on_blue
-
+				for book in books
+					node_id = book[1].to_s
+					book_sent = book_ids.include? node_id
+					puts book_ids.to_s.blue.on_red
+					puts node_id.green.on_red
+					puts book_sent.to_s.blue.on_yellow
+					unless book_sent
+						if book_ids.present?
+							book_ids = ($redis.get 'book_ids')+","+node_id
+						else
+							book_ids = node_id
+						end
+						$redis.set 'book_ids', book_ids
+						results.push book
+					end
+				end
 				# for book in books
 				# 	node_id = book[0]["self"].gsub("http://localhost:7474/db/data/node/", "")
 				# 	book_sent = book_ids.include? node_id
 				# 	# puts "#{book_sent} #{node_id} #{book_ids.split(',').sort.join(',')}"
-				# 	unless book_sent
-				# 		if book_ids.present?
-				# 			book_ids = ($redis.get 'book_ids')+","+node_id
-				# 		else
-				# 			book_ids = node_id
-				# 		end
-				# 		$redis.set 'book_ids', book_ids
 				# 		book = book[0]["data"]
 				# 		isbn = book["isbn"].split(",")[0] rescue nil
 				# 		thumb = "http://covers.openlibrary.org/b/isbn/"+isbn+"-L.jpg" rescue ""
@@ -391,8 +399,8 @@ module Api
 				# 		results.push book
 				# 	end
 				# end
-				# results
-				books
+				results
+				# books
 			end
 
 			def self.detailed_book id
