@@ -100,26 +100,6 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 					});
 				}
 			}
-			
-			_init = function(){
-				$rootScope.user.profile_status = 0;
-	    		_profile_status_colors();
-	    		_get_info_data();
-	    		$scope.popular_books = [];
-	    		$scope.loading = false;
-	    		$scope.get_popular_books();
-				$scope.profileOptions = [
-					{"name": "Reader"},
-					{"name": "Author"},
-					{"name": "Publisher"},
-					{"name": "Editor"}
-				]
-				$scope.gender = "Male";
-				$scope.profileSelected = {"name": "Reader"};
-				$scope.info_card_width = 350; //in px
-				$scope.info_card_ratio = 1.34;
-			}
-
 
 			$scope.prev_profile_state = function(){
 				if($rootScope.user.profile_status != 0){
@@ -187,6 +167,24 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 		        .then(function(result) {
 		            $scope.search_results = $scope.search_results.concat(result.results);
 		        });
+			}
+
+			_init = function(){
+				$rootScope.user.profile_status = 0;
+	    		_profile_status_colors();
+	    		_get_info_data();
+	    		$scope.popular_books = [];
+	    		$scope.loading = false;
+				$scope.profileOptions = [
+					{"name": "Reader"},
+					{"name": "Author"},
+					{"name": "Publisher"},
+					{"name": "Editor"}
+				]
+				$scope.gender = "Male";
+				$scope.profileSelected = {"name": "Reader"};
+				$scope.info_card_width = 350; //in px
+				$scope.info_card_ratio = 1.34;
 			}
 
 			_init();

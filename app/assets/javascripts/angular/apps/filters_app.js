@@ -17,6 +17,14 @@ angular.module('filtersApp', [])
       return output;
     }
   })
+  .filter('book_title', function(){
+    return function(input){
+      if(input.length > 55){
+        input = input.slice(0, 53)+"...";
+      }
+      return input;
+    }
+  })
   .filter('published_year', function(){
     return function(input){
       var inputs = input.split(" ");

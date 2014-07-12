@@ -36,12 +36,22 @@
       <%= javascript_include_tag Rails.root.join("/assets/min/angular/main.js") %>
     <% end %>
 
+    <div push-notification="notification_active" 
+      class="push_notification" 
+      ng-if="notification_active">
+      <div class="type" ng-style="message_style">
+        <span class="icon-thumbs-up" ng-if="message_type == 0"></span>
+        <span class="icon-bolt" ng-if="message_type == 1"></span>
+        <span class="icon-bell" ng-if="message_type == 2"></span>
+      </div>
+      <div class="content" ng-bind-html="message | message">
+      </div>
+    </div>
 
 
     
     <div ng-show="!loading" style="height:100%;">
-      <div ng-view 
-           class="main_view animate-slow"></div>
+      <div ng-view class="main_view animate-slow"></div>
       <%= csrf_meta_tags %>
       <%= render :partial => "shared/favicon" %>
       <%= render :partial => "shared/meta_tags"%>
