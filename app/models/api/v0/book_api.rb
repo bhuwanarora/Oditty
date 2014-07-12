@@ -216,7 +216,7 @@ module Api
 				distinct_clause = "ALL (id in "+book_ids.to_s+" WHERE toInt(id) <> ID(book)) "
 				random_clause = "ID(book)%"+random.to_s+"=0 AND rand() > 0.3 "
 				with_clause = "WITH book, toInt(book.gr_ratings_count) * toInt(book.gr_reviews_count) * toInt(book.gr_rating) AS total_weight, toInt(book.gr_ratings_count) * toInt(book.gr_rating) AS rating_weight "
-				return_clause = "RETURN book"
+				return_clause = "RETURN book.isbn as isbn, ID(book), book.indexed_author_name as author_name, book.indexed_title as title"
 				order_clause = ", total_weight, rating_weight ORDER BY rating_weight DESC, total_weight DESC, book.gr_rating DESC "
 				limit_clause = " LIMIT 10 "
 
@@ -318,81 +318,81 @@ module Api
 				end
 				puts books.length.to_s.red.on_blue
 
-
-				for book in books
-					node_id = book[0]["self"].gsub("http://localhost:7474/db/data/node/", "")
-					book_sent = book_ids.include? node_id
-					# puts "#{book_sent} #{node_id} #{book_ids.split(',').sort.join(',')}"
-					unless book_sent
-						if book_ids.present?
-							book_ids = ($redis.get 'book_ids')+","+node_id
-						else
-							book_ids = node_id
-						end
-						$redis.set 'book_ids', book_ids
-						book = book[0]["data"]
-						isbn = book["isbn"].split(",")[0] rescue nil
-						thumb = "http://covers.openlibrary.org/b/isbn/"+isbn+"-L.jpg" rescue ""
-						book = {
-							:title => book["title"],
-							:author_name => book["author_name"],
-							:rating => book["gr_rating"].to_f*2,
-							:readers_count => book["gr_ratings_count"],
-							:discussions_count => book["gr_reviews_count"],
-							:reviews_count => book["gr_reviews_count"],
-							:published_year => book["published_year"],
-							:page_count => book["page_count"],
-							:thumb => {
-								:url => thumb
-							},
-							:category => {
-								:name => category
-							},
-							:summary => book["description"],
-							:users => [
-								{
-									:id => 1,
-									:url => "",
-									:name => "test user",
-									:thumb => "assets/profile_pic.jpeg"
-								},
-								{
-									:id => 2,
-									:url => "",
-									:name => "test user",
-									:thumb => "assets/profile_pic.jpeg"
-								},
-								{
-									:id => 3,
-									:url => "",
-									:name => "test user",
-									:thumb => "assets/profile_pic.jpeg"
-								},
-								{
-									:id => 4,
-									:url => "",
-									:name => "test user",
-									:thumb => "assets/profile_pic.jpeg"
-								},
-								{
-									:id => 5,
-									:url => "",
-									:name => "test user",
-									:thumb => "assets/profile_pic.jpeg"
-								},
-								{
-									:id => 6,
-									:url => "",
-									:name => "test user",
-									:thumb => "assets/profile_pic.jpeg"
-								}
-							],
-							:users_count => 15
-						}
-						results.push book
-					end
-				end
-				results
+				# for book in books
+				# 	node_id = book[0]["self"].gsub("http://localhost:7474/db/data/node/", "")
+				# 	book_sent = book_ids.include? node_id
+				# 	# puts "#{book_sent} #{node_id} #{book_ids.split(',').sort.join(',')}"
+				# 	unless book_sent
+				# 		if book_ids.present?
+				# 			book_ids = ($redis.get 'book_ids')+","+node_id
+				# 		else
+				# 			book_ids = node_id
+				# 		end
+				# 		$redis.set 'book_ids', book_ids
+				# 		book = book[0]["data"]
+				# 		isbn = book["isbn"].split(",")[0] rescue nil
+				# 		thumb = "http://covers.openlibrary.org/b/isbn/"+isbn+"-L.jpg" rescue ""
+				# 		book = {
+				# 			:title => book["title"],
+				# 			:author_name => book["author_name"],
+				# 			:rating => book["gr_rating"].to_f*2,
+				# 			:readers_count => book["gr_ratings_count"],
+				# 			:discussions_count => book["gr_reviews_count"],
+				# 			:reviews_count => book["gr_reviews_count"],
+				# 			:published_year => book["published_year"],
+				# 			:page_count => book["page_count"],
+				# 			:thumb => {
+				# 				:url => thumb
+				# 			},
+				# 			:category => {
+				# 				:name => category
+				# 			},
+				# 			:summary => book["description"],
+				# 			:users => [
+				# 				{
+				# 					:id => 1,
+				# 					:url => "",
+				# 					:name => "test user",
+				# 					:thumb => "assets/profile_pic.jpeg"
+				# 				},
+				# 				{
+				# 					:id => 2,
+				# 					:url => "",
+				# 					:name => "test user",
+				# 					:thumb => "assets/profile_pic.jpeg"
+				# 				},
+				# 				{
+				# 					:id => 3,
+				# 					:url => "",
+				# 					:name => "test user",
+				# 					:thumb => "assets/profile_pic.jpeg"
+				# 				},
+				# 				{
+				# 					:id => 4,
+				# 					:url => "",
+				# 					:name => "test user",
+				# 					:thumb => "assets/profile_pic.jpeg"
+				# 				},
+				# 				{
+				# 					:id => 5,
+				# 					:url => "",
+				# 					:name => "test user",
+				# 					:thumb => "assets/profile_pic.jpeg"
+				# 				},
+				# 				{
+				# 					:id => 6,
+				# 					:url => "",
+				# 					:name => "test user",
+				# 					:thumb => "assets/profile_pic.jpeg"
+				# 				}
+				# 			],
+				# 			:users_count => 15
+				# 		}
+				# 		results.push book
+				# 	end
+				# end
+				# results
+				books
 			end
 
 			def self.detailed_book id

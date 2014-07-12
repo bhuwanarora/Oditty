@@ -5,6 +5,10 @@ module Api
 
 			end
 
+			def google_auth
+				params[:access_token]
+			end
+
 			def own
 				render :json => {:message => "Success"}, :status => 200
 			end

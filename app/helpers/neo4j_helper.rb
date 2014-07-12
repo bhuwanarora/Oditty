@@ -528,13 +528,13 @@ module Neo4jHelper
 
 	def self.restructure_database
 		puts "Droping existing indexes...".green
-		@neo.delete_schema_index("Book", ["title"])
-		@neo.delete_schema_index("Book", ["author_name"])
-		@neo.delete_schema_index("Author", ["name"])
-		@neo.delete_schema_index("Label", ["name"])
-		@neo.delete_schema_index("ReadTime", ["name"])
-		@neo.delete_schema_index("Era", ["name"])
-		@neo.delete_schema_index("Genre", ["name"])
+		@neo.delete_schema_index("Book", "title")
+		@neo.delete_schema_index("Book", "author_name")
+		@neo.delete_schema_index("Author", "name")
+		@neo.delete_schema_index("Label", "name")
+		@neo.delete_schema_index("ReadTime","name")
+		@neo.delete_schema_index("Era", "name")
+		@neo.delete_schema_index("Genre", "name")
 		
 		@neo ||= self.init
 		clause = "MATCH (book:Book) WITH book, toFloat(book.gr_rating)*toFloat(book.gr_ratings_count)*toFloat(book.gr_reviews_count) as weight ORDER BY weight DESC, toFloat(book.gr_rating) WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:Next_book]->(p2))))"

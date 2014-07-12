@@ -223,12 +223,14 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 						$scope.read_selected = false;
 						// $scope.$emit('moveRight');
 						$rootScope.hide_options = true;
-						$scope.recommendations.books = data["recommendations"]["books"];
+						// $scope.recommendations.books = data["recommendations"]["books"];
+						_set_books(data["recommendations"]["books"]);
 						$rootScope.focused_book = $scope.recommendations.books[0];
 						$rootScope.focused_book.tweets = [];
 					}
 					else{
-		    			$scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);
+		    			// $scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);
+		    			_set_books(data["recommendations"]["books"]);
 					}
 				}
 		    	$rootScope.loading = false;
@@ -252,12 +254,21 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	}
     	else{
     		if($scope.recommendations.books.length >= 30){
-				$scope.recommendations.books = data["recommendations"]["books"];
+
+    			_set_books(data["recommendations"]["books"]);
+				// $scope.recommendations.books = data["recommendations"]["books"];
 			}
 			else{
-    			$scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);
+    			// $scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);
+    			_set_books(data["recommendations"]["books"]);
 			}
     	}
+	}
+	_set_books = function(data){
+		angular.forEach(data, function(value){
+			var json = {"isbn": value[0], "id": value[1], "author_name": value[2], "title": value[3]};
+			this.push(json);
+		},  $scope.recommendations.books);
 	}
 
 	_push_recommendations = function(){

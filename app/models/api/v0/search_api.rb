@@ -47,7 +47,7 @@ module Api
 											.limit(count)
 					tester = {:name => "TAG:"+q.upcase}
 				else
-					clause = "MATCH (book:Book) WHERE book.title =~ '(?i)"+q+".*' RETURN book.title as name, book.author_name ORDER BY toFloat(book.gr_rating) DESC LIMIT 5"
+					clause = "START book=node:node_auto_index('indexed_title:"+q.downcase+"*') WITH book, toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) as weight RETURN book.title as name, book.author_name, weight ORDER by weight DESC LIMIT "+count.to_s
 					puts clause.blue.on_red
 					results = @neo.execute_query(clause)
 					tester = {:name => "RD:"+q.upcase}	

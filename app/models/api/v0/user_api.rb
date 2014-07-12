@@ -12,17 +12,21 @@ module Api
 				puts clause.blue.on_red
 				user = @neo.execute_query(clause)["data"]
 				if signin
-					if  user[0][0]["data"]["password"] == params[:password] &&  user[0][0]["data"]["verified"]
-						authenticate = true
-						# request.session[:email] = email
-						info = {:profile_status => 0, :user_id => 1}
-						message = "Logged in successfully."
-					elsif  user[0][0]["data"]["password"] != params[:password]
-						message = "Email and password doesn't match."
-					elsif ! user[0][0]["data"]["verified"]
-						message = "Please verify your email address."
-					else
-						message = "Email and password doesn't match."
+					begin
+						if  user[0][0]["data"]["password"] == params[:password] &&  user[0][0]["data"]["verified"]
+							authenticate = true
+							# request.session[:email] = email
+							info = {:profile_status => 0, :user_id => 1}
+							message = "Logged in successfully."
+						elsif  user[0][0]["data"]["password"] != params[:password]
+							message = "Email and password doesn't match."
+						elsif ! user[0][0]["data"]["verified"]
+							message = "Please verify your email address."
+						else
+							message = "Email and password doesn't match."
+						end
+					rescue => err
+						message = "Email not registered."
 					end
 				else
 					verification_token = SecureRandom.hex
