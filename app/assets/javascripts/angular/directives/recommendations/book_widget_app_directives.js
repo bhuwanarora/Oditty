@@ -1,4 +1,4 @@
-websiteApp.directive('book', ['widgetService', '$rootScope', function (widgetService, $rootScope){
+websiteApp.directive('book', ['websiteService', '$rootScope', function (websiteService, $rootScope){
   return {
     restrict: 'E',
     scope: { 'book': '=data' },
@@ -62,32 +62,28 @@ websiteApp.directive('book', ['widgetService', '$rootScope', function (widgetSer
 
       _init = function(){
         // $scope.active_book_filter = true;
-        // var book_id = $scope.book.id;
-        console.debug("%c _init book", "color: purple");
-        $scope.book.tweets = [];
-        var labels_length = $rootScope.labels.length;
+        var book_id = $scope.book.id;
+        console.debug("%c _init book"+book_id, "color: purple");
         $scope.book.labels = [];
+        $scope.book.tweets = [];
+        $scope.book.show_labels = false;
         angular.forEach($rootScope.labels, function(value){
           this.push({"name": value.name});
         }, $scope.book.labels);
-        $scope.book.show_labels = false;
-        // widgetService.populate_tooltips(book_id).then(function(data){
-          // $scope.book.title = data.title;
-          // $scope.book.author_name = data.author_name;
-          // $scope.book.users = data.users;
-          // $scope.book.summary = data.summary;
-          // $scope.book.users_count = data.users_count;
-        // });
-        var margin_right = (Math.floor(Math.random() * 20) + 1)+"px";
-        var margin_top = (Math.floor(Math.random() * 50) + 1)+"px";
-        var margin_right_neg = (Math.random() < 0.5);
-        var margin_top_neg = (Math.random() < 0.5);
-        if(margin_top_neg){
-          margin_top = "-"+margin_top;
-        }
-        if(margin_right_neg){
-          margin_right = "-"+margin_right;
-        }
+        websiteService.get_book_details("id="+book_id).then(function(data){
+          $scope.book = angular.extend({}, $scope.book, data);
+          console.log($scope.book);
+        });
+        // var margin_right = (Math.floor(Math.random() * 20) + 1)+"px";
+        // var margin_top = (Math.floor(Math.random() * 50) + 1)+"px";
+        // var margin_right_neg = (Math.random() < 0.5);
+        // var margin_top_neg = (Math.random() < 0.5);
+        // if(margin_top_neg){
+        //   margin_top = "-"+margin_top;
+        // }
+        // if(margin_right_neg){
+        //   margin_right = "-"+margin_right;
+        // }
         // $scope.randomise_position = {"margin-left": margin_right, "margin-bottom":margin_top};
         // $scope.book_tilt = {"transform":"rotate("+tilt_angle+")",
         //                   "-ms-transform":"rotate("+tilt_angle+")",

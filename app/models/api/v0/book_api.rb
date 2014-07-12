@@ -137,8 +137,7 @@ module Api
 				clause = "MATCH (book:Book) WHERE ID(book)="+id.to_s+" RETURN book"
 				@neo = Neography::Rest.new
 				puts clause.blue.on_red
-				book = @neo.execute_query(clause)["data"]
-				
+				book = @neo.execute_query(clause)["data"][0][0]["data"]
 				info = {
 							:title => book["title"],
 							:author_name => book["author_name"],
@@ -216,7 +215,7 @@ module Api
 				distinct_clause = "ALL (id in "+book_ids.to_s+" WHERE toInt(id) <> ID(book)) "
 				random_clause = "ID(book)%"+random.to_s+"=0 AND rand() > 0.3 "
 				with_clause = "WITH book, toInt(book.gr_ratings_count) * toInt(book.gr_reviews_count) * toInt(book.gr_rating) AS total_weight, toInt(book.gr_ratings_count) * toInt(book.gr_rating) AS rating_weight "
-				return_clause = "RETURN book.isbn as isbn, ID(book), book.indexed_author_name as author_name, book.indexed_title as title"
+				return_clause = "RETURN book.isbn as isbn, ID(book)
 				order_clause = ", total_weight, rating_weight ORDER BY rating_weight DESC, total_weight DESC, book.gr_rating DESC "
 				limit_clause = " LIMIT 10 "
 
