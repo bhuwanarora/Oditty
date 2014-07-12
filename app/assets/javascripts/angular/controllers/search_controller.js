@@ -643,9 +643,11 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	}
 
 	_get_trends = function(){
-		websiteService.get_trending_topics().then(function(data){
-			$scope.trends = data;
-		});
+		if(angular.isUndefined($scope.$routeParams)){
+			websiteService.get_trending_topics().then(function(data){
+				$scope.trends = data;
+			});
+		}
 	}
 
 	_init = function(){

@@ -161,10 +161,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		$scope.bookmark_selected = false;
 	}
 
-	_init_notifications = function(){
-		$rootScope.notification_active = false;
-	}
-
 	_initialize_filters = function(){
 		$scope.show_more_filters = true;
 		$rootScope.filters = {};
@@ -342,7 +338,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			_get_recommendations();
 		}
     	_add_listeners();
-		_init_notifications();
         _init_analytics();
         _init_shelf();
         // _get_recommendations();

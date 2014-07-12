@@ -308,6 +308,10 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    // });
 	}
 
+	_init_notifications = function(){
+		$rootScope.notification_active = false;
+	}
+
 	_init = function(){
 		console.time("websiteAppController");
 		_initiate_loading_page();
@@ -328,6 +332,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		// _bind_auth_listeners();
 		_add_listeners();
 		_handle_socket_error();
+		_init_notifications();
 		// $('body').css('white-space', 'normal');
 		// $speechRecognition.onstart(function(){
 		//   $speechSynthetis.speak("You're at Reader's Door. How can I help you?", 'en-UK');

@@ -1,4 +1,4 @@
-websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteService', 'Facebook', 'stropheService', function($scope, $rootScope, websiteService, Facebook, stropheService){
+websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteService', 'Facebook', 'stropheService', '$timeout', function($scope, $rootScope, websiteService, Facebook, stropheService, $timeout){
 	$scope.authenticate = function(old_user){
 		var email = $rootScope.user.email;
 		var password = $rootScope.user.password;		
@@ -16,11 +16,16 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 			$rootScope.user.logged = true;
 			$rootScope.user.id = data.user_id;
 			$scope.loading_icon = false;
+			var message = "INFO- Welcome back "+$rootScope.user.name;
+			var timeout_event = notify($rootScope, message, $timeout);
+			$scope.$on('destroy', function(){
+				$timeout.cancel(timeout_event);
+			});
 			// $scope.show_login_form = true;
 			// _profile_status_colors();
-		// 	websiteService.get_user_details().then(function(data){
-	  //   		$rootScope.user.books = data["books"];
-	  //   	});
+			// 	websiteService.get_user_details().then(function(data){
+	  		//   		$rootScope.user.books = data["books"];
+	  	   	//	});
 			$scope.$emit('getNotifications');
 		}
 
