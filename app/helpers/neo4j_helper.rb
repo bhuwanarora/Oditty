@@ -528,16 +528,16 @@ module Neo4jHelper
 		FOREACH(p2 in [p[i+1]] | 
 		CREATE UNIQUE (p1)-[:Next_book]->(p2))))"
 		puts "adding books in form of sorted linked lists...".green
-		@neo.execute_query clause
+		# @neo.execute_query clause
 
 		puts "Droping existing indexes...".green
-		@neo.delete_schema_index("Book", ["title"])
-		@neo.delete_schema_index("Book", ["author_name"])
-		@neo.delete_schema_index("Author", ["name"])
-		@neo.delete_schema_index("Label", ["name"])
-		@neo.delete_schema_index("ReadTime", ["name"])
-		@neo.delete_schema_index("Era", ["name"])
-		@neo.delete_schema_index("Genre", ["name"])
+		@neo.delete_schema_index("Book", "title")
+		@neo.delete_schema_index("Book", "author_name")
+		@neo.delete_schema_index("Author", "name")
+		@neo.delete_schema_index("Label", "name")
+		@neo.delete_schema_index("ReadTime","name")
+		@neo.delete_schema_index("Era", "name")
+		@neo.delete_schema_index("Genre", "name")
 
 		self.create_indexes
 

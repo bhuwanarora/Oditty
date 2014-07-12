@@ -93,7 +93,7 @@ websiteApp.directive('follow', ['$rootScope', '$timeout', 'widgetService', funct
   }
 }]);
 
-websiteApp.directive('widgetThumb', ['$timeout', '$rootScope', function ($timeout, $rootScope) {
+websiteApp.directive('widgetThumb', ['$timeout', '$rootScope', '$filter', function ($timeout, $rootScope, $filter) {
   return {
     restrict: 'E',
     controller: ['$scope', function($scope){
@@ -108,15 +108,13 @@ websiteApp.directive('widgetThumb', ['$timeout', '$rootScope', function ($timeou
         var timeout_event = $timeout(function(){
           if($scope.book){
             var obj = $scope.book;
+            $scope.thumb_style = {'background': "url('"+_get_thumb(obj)+"')"};
           }
           else if($scope.author){
             var obj = $scope.author;
           }
           else if($scope.reader){
             var obj = $scope.reader;
-          }
-          if(obj){
-            $scope.thumb_style = {'background': "url('"+obj.thumb.url+"')"};
           }
         }, global_display_timer);
 
@@ -138,10 +136,15 @@ websiteApp.directive('widgetThumb', ['$timeout', '$rootScope', function ($timeou
         return obj;
       }
 
+      _get_thumb = function(obj){
+        var thumb = $filter('thumb')(obj.isbn);
+        return thumb;
+      }
+
       _init = function(){
         var obj = _get_obj();
         if(obj){
-          $scope.thumb_style = {'background-color': obj.thumb.background_color};
+          $scope.thumb_style = {'background': "url('"+_get_thumb(obj)+"')"};
         }
         // $scope.$on('showImages', function(){
         //   $scope.show_images();
