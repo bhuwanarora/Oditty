@@ -496,15 +496,24 @@ module Neo4jHelper
 	def self.create_indexes
 		@neo ||= self.init
 		puts "indexing initiated...".green
-		@neo.create_schema_index("Book", ["indexed_title"])
-		@neo.create_schema_index("Book", ["indexed_author_name"])
-		@neo.create_schema_index("Author", ["indexed_name"])
-		@neo.create_schema_index("Label", ["indexed_name"])
-		@neo.create_schema_index("ReadTime", ["indexed_name"])
-		@neo.create_schema_index("Era", ["indexed_name"])
-		@neo.create_schema_index("Year", ["year"])
-		@neo.create_schema_index("Genre", ["indexed_name"])
-		@neo.create_schema_index("User", ["indexed_name"])
+		@neo.execute_query "CREATE INDEX ON :Book(indexed_title)"
+		@neo.execute_query "CREATE INDEX ON :Book(indexed_author_name)"
+		@neo.execute_query "CREATE INDEX ON :Author(indexed_name)"
+		@neo.execute_query "CREATE INDEX ON :Label(indexed_name)"
+		@neo.execute_query "CREATE INDEX ON :ReadTime(indexed_name)"
+		@neo.execute_query "CREATE INDEX ON :Era(indexed_name)"
+		@neo.execute_query "CREATE INDEX ON :Genre(indexed_name)"
+		@neo.execute_query "CREATE INDEX ON :User(indexed_name)"
+
+		# @neo.create_schema_index("Book", ["indexed_title"])
+		# @neo.create_schema_index("Book", ["indexed_author_name"])
+		# @neo.create_schema_index("Author", ["indexed_name"])
+		# @neo.create_schema_index("Label", ["indexed_name"])
+		# @neo.create_schema_index("ReadTime", ["indexed_name"])
+		# @neo.create_schema_index("Era", ["indexed_name"])
+		# @neo.create_schema_index("Year", ["year"])
+		# @neo.create_schema_index("Genre", ["indexed_name"])
+		# @neo.create_schema_index("User", ["indexed_name"])
 		@neo.set_node_auto_index_status(true)
 		@neo.set_relationship_auto_index_status(true)
 		puts "indexing finished...".green
@@ -518,18 +527,6 @@ module Neo4jHelper
 	end
 
 	def self.restructure_database
-		@neo ||= self.init
-		clause = "MATCH (book:Book)
-		WITH book, toFloat(book.gr_rating)*toFloat(book.gr_ratings_count)*toFloat(book.gr_reviews_count) as weight
-		ORDER BY weight DESC, toFloat(book.gr_rating)
-		WITH collect(book) as p
-		FOREACH(i in RANGE(0, length(p)-2) | 
-		FOREACH(p1 in [p[i]] | 
-		FOREACH(p2 in [p[i+1]] | 
-		CREATE UNIQUE (p1)-[:Next_book]->(p2))))"
-		puts "adding books in form of sorted linked lists...".green
-		# @neo.execute_query clause
-
 		puts "Droping existing indexes...".green
 		@neo.delete_schema_index("Book", "title")
 		@neo.delete_schema_index("Book", "author_name")
@@ -538,6 +535,12 @@ module Neo4jHelper
 		@neo.delete_schema_index("ReadTime","name")
 		@neo.delete_schema_index("Era", "name")
 		@neo.delete_schema_index("Genre", "name")
+		
+		@neo ||= self.init
+		clause = "MATCH (book:Book) WITH book, toFloat(book.gr_rating)*toFloat(book.gr_ratings_count)*toFloat(book.gr_reviews_count) as weight ORDER BY weight DESC, toFloat(book.gr_rating) WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:Next_book]->(p2))))"
+		puts "adding books in form of sorted linked lists...".green
+		@neo.execute_query clause
+
 
 		self.create_indexes
 

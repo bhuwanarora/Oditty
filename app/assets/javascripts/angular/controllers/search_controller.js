@@ -70,12 +70,12 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				else{
 					recommendationService.get_time_groups().then(function(data){
 						$scope.search_results = [];
-				    	for(var i=0; i < data["times"].length; i++){
-				    		var time_data = data.times[i][0]["data"];
+						angular.forEach(data["times"], function(value){
+							var time_data = value[0]["data"];
 				    		var name = time_data["name"]+" ("+time_data["range"]+")";
 				    		var json = {"name": name, "custom_option": true, "type": "timeGroup"};
-				    		$scope.search_results = $scope.search_results.concat([json]);
-				    	}
+							this.push(json);
+						}, $scope.search_results)
 				    	$rootScope.time_groups = $scope.search_results;
 					});
 				}
@@ -114,12 +114,12 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				else{
 					recommendationService.get_read_times().then(function(data){
 						$scope.search_results = [];
-				    	for(var i=0; i < data["read_times"].length; i++){
-				    		var time_data = data.read_times[i][0]["data"];
+						angular.forEach(data["read_times"], function(value){
+				    		var time_data = value[0]["data"];
 				    		var name = time_data["name"];
 				    		var json = {"name": name, "custom_option": true, "type": "readingTime"};
-				    		$scope.search_results = $scope.search_results.concat([json]);
-				    	}
+							this.push(json);
+						}, $scope.search_results);
 						$rootScope.read_times = $scope.search_results;
 					});
 				}
@@ -504,10 +504,10 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	        .then(function(result){
 	        	$scope.search_results = [];
 	        	var results = result.results.data;
-	        	for(var i=0; i<results.length; i++){
-	        		var json = {"name": results[i][0], "author_name": results[i][1]}
-	            	$scope.search_results.push(json);
-	        	}
+	        	angular.forEach(results, function(value){
+	        		var json = {"name": value[0], "author_name": value[1]}
+	        		this.push(json);
+	        	}, $scope.search_results);
 	        	var show_all = {"name": "<span class='icon-list'></span><span>&nbsp;&nbsp;Show all results for '<em>"+$scope.search_tag.input+"</em>'</span>", "show_all": true};
 				$scope.search_results.push(show_all);
 				$scope.search_initiated = false;

@@ -68,7 +68,7 @@ input:focus{
 
 .search_page .search_typeahead_group{
     position: fixed;
-    left: 50%;
+    left: 40%;
     top: 35%;
     width: 406px;
     height: 37px;
