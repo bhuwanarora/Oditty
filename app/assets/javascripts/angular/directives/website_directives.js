@@ -350,7 +350,7 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', function($timeout, $sce){
 					}
 				}
 				else if(backSpace){
-					if($scope.model == undefined || $scope.model == ""){
+					if(angular.isUndefined($scope.model) || $scope.model == ""){
 						$scope.onClear();
 					}
 				}

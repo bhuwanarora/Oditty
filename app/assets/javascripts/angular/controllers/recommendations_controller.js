@@ -102,7 +102,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	    	if(!$scope.read_selected && !$scope.bookmark_selected){
 		    	console.debug("%cloadRecommendations", "color: purple;");
 		    	$rootScope.filters["reset"] = false;
-		    	if($rootScope.filters["reset_count"] == undefined){
+		    	if(angular.isUndefined($rootScope.filters["reset_count"])){
 		    		console.debug("%c reset count", "color: purple");
 		    		$rootScope.filters["reset_count"] = 0;
 		    	}

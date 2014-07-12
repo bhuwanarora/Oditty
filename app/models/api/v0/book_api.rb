@@ -133,6 +133,65 @@ module Api
 				results
 			end
 
+			def self.get_book_details id
+				clause = "MATCH (book:Book) WHERE ID(book)="+id.to_s+" RETURN book"
+				@neo = Neography::Rest.new
+				puts clause.blue.on_red
+				book = @neo.execute_query(clause)["data"]
+				
+				info = {
+							:title => book["title"],
+							:author_name => book["author_name"],
+							:rating => book["gr_rating"].to_f*2,
+							:readers_count => book["gr_ratings_count"],
+							:discussions_count => book["gr_reviews_count"],
+							:reviews_count => book["gr_reviews_count"],
+							:published_year => book["published_year"],
+							:page_count => book["page_count"],
+							:summary => book["description"],
+							:users => [
+								{
+									:id => 1,
+									:url => "",
+									:name => "test user",
+									:thumb => "assets/profile_pic.jpeg"
+								},
+								{
+									:id => 2,
+									:url => "",
+									:name => "test user",
+									:thumb => "assets/profile_pic.jpeg"
+								},
+								{
+									:id => 3,
+									:url => "",
+									:name => "test user",
+									:thumb => "assets/profile_pic.jpeg"
+								},
+								{
+									:id => 4,
+									:url => "",
+									:name => "test user",
+									:thumb => "assets/profile_pic.jpeg"
+								},
+								{
+									:id => 5,
+									:url => "",
+									:name => "test user",
+									:thumb => "assets/profile_pic.jpeg"
+								},
+								{
+									:id => 6,
+									:url => "",
+									:name => "test user",
+									:thumb => "assets/profile_pic.jpeg"
+								}
+							],
+							:users_count => 15
+						}
+				info
+			end
+
 			def self.recommendations filters={}
 				#FIXME only output isbns
 				skip_clause = ""

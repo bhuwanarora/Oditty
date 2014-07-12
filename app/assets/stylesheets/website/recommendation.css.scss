@@ -767,6 +767,7 @@ and (min-width : 1824px) {
 	border-radius: 3px;
 	-webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
    	box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
+   	background-color: white;
 }
 
 .notification_link:hover{
@@ -1215,8 +1216,25 @@ and (min-width : 1824px) {
 }
 
 .loading_widget{
-	width: 100px;
+	width: 52vh;
 	background-color: white;
-	height: 75vh;
+	height: 77vh;
 	border-radius: 4px;
 }
+
+.loading_widget .loading_thumb{
+	margin: 10px;
+	width: 49vh;
+	height: 66vh;
+	background-color: #F7F7F7;
+	border-radius: 4px;
+}
+
+.loading_widget .loading_interaction_box{
+	width: 49vh;
+	height: 7vh;
+	background-color: #F3F3F3;
+	margin: 10px;
+	border-radius: 4px;
+}
+

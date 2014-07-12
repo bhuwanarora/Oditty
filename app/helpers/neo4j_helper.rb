@@ -502,7 +502,6 @@ module Neo4jHelper
 		@neo.execute_query "CREATE INDEX ON :Label(indexed_name)"
 		@neo.execute_query "CREATE INDEX ON :ReadTime(indexed_name)"
 		@neo.execute_query "CREATE INDEX ON :Era(indexed_name)"
-		@neo.execute_query "CREATE INDEX ON :Year(year)"
 		@neo.execute_query "CREATE INDEX ON :Genre(indexed_name)"
 		@neo.execute_query "CREATE INDEX ON :User(indexed_name)"
 
