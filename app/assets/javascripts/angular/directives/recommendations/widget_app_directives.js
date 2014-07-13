@@ -108,7 +108,9 @@ websiteApp.directive('widgetThumb', ['$timeout', '$rootScope', '$filter', functi
         var timeout_event = $timeout(function(){
           if($scope.book){
             var obj = $scope.book;
-            $scope.thumb_style = {'background': "url('"+_get_thumb(obj)+"')"};
+            if(obj.isbn){
+              $scope.thumb_style = {'background': "url('"+_get_thumb(obj)+"')"};
+            }
           }
           else if($scope.author){
             var obj = $scope.author;
@@ -143,7 +145,7 @@ websiteApp.directive('widgetThumb', ['$timeout', '$rootScope', '$filter', functi
 
       _init = function(){
         var obj = _get_obj();
-        if(obj){
+        if(obj && obj.isbn){
           $scope.thumb_style = {'background': "url('"+_get_thumb(obj)+"')"};
         }
         // $scope.$on('showImages', function(){
