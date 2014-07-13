@@ -71,8 +71,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', function (websiteS
           this.push({"name": value.name});
         }, $scope.book.labels);
         websiteService.get_book_details("id="+book_id).then(function(data){
-          $scope.book = angular.extend({}, $scope.book, data);
-          console.log($scope.book);
+          angular.extend($scope.book, data);
         });
         // var margin_right = (Math.floor(Math.random() * 20) + 1)+"px";
         // var margin_top = (Math.floor(Math.random() * 50) + 1)+"px";

@@ -577,11 +577,11 @@ module Neo4jHelper
 		@neo.execute_query clause
 
 		puts "adding index_by name for books...".green
-		clause = "MATCH (user: User) SET book.search_index = LOWER(book.title)"
+		clause = "MATCH (book: Book) SET book.search_index = LOWER(book.title)"
 		@neo.execute_query clause
 
 		puts "adding index_by name for authors...".green
-		clause = "MATCH (user: User) SET author.search_index = LOWER(author.name)"
+		clause = "MATCH (author: Author) SET author.search_index = LOWER(author.name)"
 		@neo.execute_query clause
 
 		puts "adding index_by name for users...".green
