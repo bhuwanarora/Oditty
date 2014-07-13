@@ -89,7 +89,6 @@ sudo apt-get install libmagickcore-dev
 sudo apt-get install libmagickwand-dev
 bundle install
 
-
 touch config/database.yml
 vim config/database.yml #add username and other details
 sudo -u postgres createuser bhuwan
