@@ -9,7 +9,7 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
         }
         else{
           book.status = true;
-          $scope.$emit('addToShelf', "BOOK", book);
+          $scope.$emit('addToShelf', "BOOK", [book]);
           $rootScope.$broadcast('glowShelf');
           var message = "SUCCESS-Added to <span class='icon-books'></span> Books Read. ";
 

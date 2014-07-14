@@ -1,28 +1,5 @@
 websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', 'scroller', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService, scroller){
 
-	$scope.toggle_bookmarked = function(event){
-		if(!$scope.bookmark_selected){
-			// _load_icon();
-			$scope.panel_selected = 'BOOKMARK';
-			$scope.bookmark_selected = true;
-			$scope.read_selected = false;
-			$scope.glowBookmark = false;
-			// $('body').css('background-image', $scope.search_style['background-image']);
-		}
-		event.stopPropagation();
-	}
-
-	$scope.toggle_recommendations = function(){
-		if($scope.bookmark_selected || $scope.read_selected){
-			// _load_icon();
-			$scope.read_selected = false;
-			$scope.bookmark_selected = false;
-			$scope.panel_selected = '';
-			$scope.reset();
-			// $('body').css('background-image', '');
-		}
-	}
-
 	$scope.handle_height_of_popup = function(event){
 		if(event.deltaY > 0){
 			$scope.ticker_popup_style = {"height": "62vh"};
@@ -51,31 +28,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		_init_recommendations();
     	_get_recommendations();
     	// $scope.$emit('moveRight');
-	}
-
-	$scope.toggle_read = function(){
-		if(!$scope.read_selected){
-			// _load_icon();
-			$scope.glowShelf = false;
-			$scope.bookmark_selected = false;
-			$scope.read_selected = true;		
-			$scope.panel_selected = 'READ';
-			// $('body').css('background-image', 'url("assets/wood_shelf.jpg")');
-		}
-	}
-
-	$scope.toggle_more_filters = function(event){
-		if($scope.show_more_filters == true){
-			$scope.show_more_filters = false;
-			// $('.recommendation_block').css('margin-top', '40px');
-			// $('.info_cards').css('margin-top', '40px');
-		}
-		else{
-			$scope.show_more_filters = true;		
-			// $('.recommendation_block').css('margin-top', '0px');
-			// $('.info_cards').css('margin-top', '0px');
-		}
-		event.stopPropagation();
 	}
 
 	$scope.stopSearching = function(event){
@@ -125,24 +77,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	    	console.log("%c reload_recommendations_event", "color: green;");
 	    	// event.stopPropagation();
 	    });
-
-	    open_shelf_event = $scope.$on('showBookReadShelf', function(){
-	    	$scope.read_selected = true;
-	    	console.log("%c open_shelf_event", "color: green;");
-	    	event.stopPropagation();
-	    })
-
-	    glow_shelf_event = $scope.$on('glowShelf', function(){
-	    	$scope.glowShelf = true;
-	    	console.log("%c glow_shelf_event", "color: green;");
-	    	event.stopPropagation();
-	    });
-
-	    glow_bookmark_event = $scope.$on('glowBookmark', function(){
-	    	$scope.glowBookmark = true;
-	    	console.log("%c glow_bookmark_event", "color: green;");
-	    	event.stopPropagation();
-	    });
+	    
 	}
 
 	_init_recommendations = function(){
@@ -154,11 +89,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			$timeout.cancel(push_books_timer_event);
 			$timeout.cancel(user_behaviour_timer_event);
 		});
-	}
-
-	_init_shelf = function(){
-		$scope.read_selected = false;
-		$scope.bookmark_selected = false;
 	}
 
 	_initialize_filters = function(){
@@ -211,6 +141,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				else{
 					if($scope.recommendations.books.length >= max_limit){
 						$scope.recommendations.books = [$scope.recommendations.books[max_limit-2], $scope.recommendations.books[max_limit-1]];
+						$rootScope.focused_book = null;
 						var timeout_event = $timeout(function(){
 							scroller.scrollTo(screen.width/2, 0, 3000);
 						}, 1000);
@@ -266,7 +197,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 	_set_books = function(data){
 		angular.forEach(data, function(value){
-			var json = {"isbn": value[0], "id": value[1], "title": value[2], "author_name": value[3]};
+			var json = {"isbn": value[0], "id": value[1]};
 			this.push(json);
 		},  $scope.recommendations.books);
 	}
@@ -350,7 +281,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		}
     	_add_listeners();
         _init_analytics();
-        _init_shelf();
+        // _init_shelf();
         // _get_recommendations();
         // _push_recommendations();
         _bind_destroy();
@@ -363,7 +294,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	var load_recommendations_event = "";
 	var reload_recommendations_event = "";
 	var user_behaviour_timer_event = "";
-	var open_shelf_event = "";
+	
 	_init();
 
 }]);

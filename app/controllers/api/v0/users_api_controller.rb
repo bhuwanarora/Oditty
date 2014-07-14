@@ -6,6 +6,11 @@ module Api
 				params[:access_token]
 			end
 
+			def books_read
+				user_id = session[:user_id]
+				
+			end
+
 			def own
 				render :json => {:message => "Success"}, :status => 200
 			end

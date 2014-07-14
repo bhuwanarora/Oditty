@@ -4,6 +4,10 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         return _deferred_request('/api/v0/book?'+filter);
     }
 
+    this.get_books_read = function(){
+        return _deferred_request('/api/v0/books_read');
+    }
+
     this.search_books = function(data, skip_count){
         return _deferred_request('/api/v0/search_books?q='+data+'&skip_count='+skip_count);
     }
