@@ -266,7 +266,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 	_set_books = function(data){
 		angular.forEach(data, function(value){
-			var json = {"isbn": value[0], "id": value[1]};
+			var json = {"isbn": value[0], "id": value[1], "title": value[2], "author_name": value[3]};
 			this.push(json);
 		},  $scope.recommendations.books);
 	}

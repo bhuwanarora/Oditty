@@ -20,6 +20,40 @@
 	border-radius: 3px;
 }
 
+.info_card_placeholder{
+	display: inline-block;
+	float: left;
+	margin-right: 50px;
+	margin-left: 30px;
+	padding: 3%;
+	white-space: normal;
+	position: relative;
+	width: 38vh;
+	height: 66vh;
+}
+
+.compressed_info_card{
+	position: fixed;
+	top: 95px;
+	position: fixed;
+	z-index: 3;
+	left: 268px;
+}
+
+.compressed_info_card .block{
+	border-radius: 3px;
+	padding: 10px;
+	background-color: white;
+	border-bottom: 1px solid #E9E9E9;
+	cursor: pointer;
+	text-align: center;
+	margin-bottom: 2px;
+}
+
+.compressed_info_card .block:hover{
+	background-color: #F1F1F1;
+}
+
 .info_cards .dropdown{
 	float: right;
 	width: 25vh;
@@ -51,6 +85,16 @@
 	margin-top: 10px;
 	border-bottom: 1px solid #E4E4E4;
 	cursor: pointer;
+	border-radius: 3px;
+}
+
+.info_cards .selected{
+	background-color: #918FB5;
+	color: white;
+}
+
+.info_cards .selected:hover{
+	background-color: rgba(145, 143, 181, 0.7) !important;	
 }
 
 .info_cards .book_column:hover{
