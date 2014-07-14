@@ -1,9 +1,6 @@
 module Api
 	module V0
 		class UsersApiController < ApplicationController
-			def authenticate
-
-			end
 
 			def google_auth
 				params[:access_token]
@@ -38,14 +35,14 @@ module Api
 			end
 
 			def mark_as_read
-				# mark_as_read_action = params[:q]
-				# user_id = session[:user_id]
-				# book_id = params[:book_id]
-				# if mark_as_read_action
-				# 	UsersGraphHelper.mark_as_read(user_id, book_id)
-				# else
-				# 	UsersGraphHelper.mark_as_unread(user_id, book_id)
-				# end
+				mark_as_read_action = params[:data]
+				user_id = session[:user_id]
+				book_id = params[:book_id]
+				if mark_as_read_action
+					UsersGraphHelper.mark_as_read(user_id, book_id)
+				else
+					UsersGraphHelper.mark_as_unread(user_id, book_id)
+				end
 				render :json => {:message => "Success"}, :status => 200
 			end
 

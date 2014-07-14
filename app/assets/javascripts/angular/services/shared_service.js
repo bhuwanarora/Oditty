@@ -20,7 +20,7 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
 
         }
         var timeout_event = notify($rootScope, message, $timeout);
-        widgetService.mark_as_read(book.id, $scope.read);
+        widgetService.mark_as_read(book.id, $scope.book.status);
         event.stopPropagation();
     };
 }]);

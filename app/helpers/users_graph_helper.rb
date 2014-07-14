@@ -6,7 +6,8 @@ module UsersGraphHelper
 
 	def self.bookmark_book(user_id, book_id)
 		#FIXME: bookmark book
-		@neo.execute_query("MATCH (u:User{id:"+user_id+"}), (b:Book{id:"+book_id+"})
+		@neo ||= self.neo_init
+		clause = "MATCH (u:User{id:"+user_id+"}), (b:Book{id:"+book_id+"})
 			OPTIONAL MATCH (u)-[r:FeedNext{id:"+user_id+"}]->(top_feed),
 							(u)<-[:Follow]-(f)-[ego:Ego]->(ego_user)
 			CREATE (u)-[:BookmarkAction]->(bm:Bookmark{timestamp:"+Time.now+"})-[:Bookmarked]->(b)
@@ -14,7 +15,9 @@ module UsersGraphHelper
 			CREATE (f)-[:Ego]->(u)-[:Ego]->(ego_user)
 			DELETE r, ego
 			SET b.bookmark_count = b.bookmark_count + 1
-			SET u.bookmark_count = u.bookmark_count + 1")
+			SET u.bookmark_count = u.bookmark_count + 1"
+		puts clause.blue.on_red
+		@neo.execute_query(clause)
 		#update bookmark cache for the book
 		#update popularity index for the book
 		#update popularity index for the author
@@ -48,18 +51,10 @@ module UsersGraphHelper
 
 	def self.mark_as_read(user_id, book_id)
 		#FIXME mark_as_read
-		@neo.execute_query("MATCH (u:User{id:"+user_id+"}), 
-			(b:Book{id:"+book_id+"})-[:Belongs_to]->(:Category)-[r:Has_root]->(c:Category)
-			OPTIONAL MATCH (u)-[fr:FeedNext{id:"+user_id+"}]->(top_feed),
-						   (u)<-[:Follow]-(f)-[ego:Ego]->(ego_user)
-			MERGE (c)<-[ur:Tendency_for]-(u)-[:MarkAsReadAction]->(m:MarkAsReadNode{timestamp:"+Time.now+"})-[:MarkAsRead]->(b)
-			CREATE (u)-[:FeedNext]->(m)-[:FeedNext]->(top_feed)
-			CREATE (f)-[:Ego]->(u)-[:Ego]->(ego_user)
-			DELETE fr, ego
-			SET b.readers_count = b.readers_count + 1
-			SET u.book_read_count = u.book_read_count + 1
-			ON CREATE SET ur.weight = r.weight
-			ON MATCH SET ur.weight = ur.weight + r.weight")
+		@neo ||= self.neo_init
+		clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" OPTIONAL MATCH (b)-[:Belongs_to]->(:Category)-[r:Has_root]->(c:Category), (u)-[fr:FeedNext]->(top_feed), (u)<-[:Follow]-(f)-[ego:Ego]->(ego_user) WHERE ID(fr)="+user_id.to_s+" MERGE (c)<-[ur:Tendency_for]-(u)-[:MarkAsReadAction]->(m:MarkAsReadNode{timestamp:"+Time.now.to_i.to_s+"})-[:MarkAsRead]->(b) ON CREATE SET ur.weight = r.weight ON MATCH SET ur.weight = ur.weight + r.weight CREATE (u)-[:FeedNext]->(m)-[:FeedNext]->(top_feed) CREATE (f)-[:Ego]->(u)-[:Ego]->(ego_user) DELETE fr, ego SET b.readers_count = b.readers_count + 1 SET u.book_read_count = u.book_read_count + 1"
+		puts clause.blue.on_red
+		# @neo.execute_query clause
 		#update mark as read cache for the book
 		#update popularity index for the book
 		#update popularity index for the author
@@ -74,8 +69,9 @@ module UsersGraphHelper
 
 	def self.mark_as_unread(user_id, book_id)
 		#FIXME mark_as_unread
-		@neo.execute_query("MATCH (u:User{id:"+user_id+"})-[r1:MarkAsReadAction]->(m:MarkAsReadNode)-[r2:MarkAsRead]->(b:Book{id:"+book_id+"})-[:Belongs_to]->(:Category)-[r:Has_root]->(c:Category),
+		@neo.execute_query("MATCH (u:User)-[r1:MarkAsReadAction]->(m:MarkAsReadNode)-[r2:MarkAsRead]->(b:Book)-[:Belongs_to]->(:Category)-[r:Has_root]->(c:Category),
 			(c)<-[r3:Tendency_for]-(u)
+			WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+"
 			OPTIONAL MATCH (s)-[f1:FeedNext]->(m)-[f2:FeedNext]->(e)
 			CREATE (s)-[:FeedNext]->(e)
 			SET r3.weight = r3.weight - r.weight

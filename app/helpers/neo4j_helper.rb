@@ -258,7 +258,7 @@ module Neo4jHelper
 	def self.init_goodreads_books_reverse
 		# count = GoodReadsBook.where(:neo_flag => true).count
 		t0 = Time.now
-		for id in 1540000..1599029
+		for id in 1599029..1699029
 			t1 = Time.now
 			begin
 				book = GoodReadsBook.find id

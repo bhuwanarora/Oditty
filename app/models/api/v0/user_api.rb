@@ -2,21 +2,22 @@ module Api
 	module V0
 		class UserApi
 
-			def self.authenticate params
+			def self.authenticate(session, params)
 				authenticate = false
 				info = {}
 				signin = params[:old_user]
 				email = params[:email]
 				@neo = Neography::Rest.new
-				clause = "MATCH (user:User{email:\""+email+"\"}) RETURN user"
+				clause = "MATCH (user:User{email:\""+email+"\"}) RETURN user, ID(user) as id"
 				puts clause.blue.on_red
 				user = @neo.execute_query(clause)["data"]
 				if signin
 					begin
 						if  user[0][0]["data"]["password"] == params[:password] &&  user[0][0]["data"]["verified"]
 							authenticate = true
+							session[:user_id] = user[0][1]
 							# request.session[:email] = email
-							info = {:profile_status => 0, :user_id => 1}
+							info = {:profile_status => 0, :user_id => user[0][1]}
 							message = "Logged in successfully."
 						elsif  user[0][0]["data"]["password"] != params[:password]
 							message = "Email and password doesn't match."
