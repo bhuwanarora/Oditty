@@ -127,6 +127,7 @@
 			<form class="login_form">
 		      	<input class="email" 
 		      	       type="email" 
+		      	       ng-keydown="submit($event)"
 		      	       value="test@gmail.com" 
 		      	       ng-model="user.email" 
 		      	       placeholder="Email"
@@ -137,6 +138,7 @@
 		      	       ng-model="user.password" 
 		      	       placeholder="Password" 
 		      	       spellcheck="false"
+		      	       ng-keydown="submit($event)"
 		      	       required /><br />
 		      	
 		      	<div class="authenticate authenticate_left" ng-click="authenticate(true)" type="button">

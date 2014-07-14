@@ -1,4 +1,11 @@
 websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteService', 'Facebook', 'stropheService', '$timeout', function($scope, $rootScope, websiteService, Facebook, stropheService, $timeout){
+	$scope.submit = function(event){
+		var enter_pressed = event.keyCode == 13;
+		if(enter_pressed){
+			$scope.authenticate(true);
+		}
+	}
+
 	$scope.authenticate = function(old_user){
 		var email = $rootScope.user.email;
 		var password = $rootScope.user.password;		

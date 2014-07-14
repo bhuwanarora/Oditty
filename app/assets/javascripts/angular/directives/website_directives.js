@@ -32,6 +32,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 						var search_for = $scope.search_book + String.fromCharCode(event.keyCode);
 					}
 					else{
+						var skip_count = 0;
 						$scope.popular_books = [];
 						var search_for = String.fromCharCode(event.keyCode);
 					}
@@ -39,14 +40,16 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 					if(!$scope.loading){
 						$scope.loading = true;
 						websiteService.search_books(search_for, skip_count).then(function(data){
-							angular.forEach(data, function(value){
-								var json = {"isbn": value[0], 
-										"id": value[1], 
-										"title": value[2], 
-										"author_name": value[3], 
-										"status": false};
-								this.push(json);
-							},  $scope.popular_books);
+							if(data.length != 0){
+								angular.forEach(data, function(value){
+									var json = {"isbn": value[0], 
+											"id": value[1], 
+											"title": value[2], 
+											"author_name": value[3], 
+											"status": false};
+									this.push(json);
+								},  $scope.popular_books);
+							}
 							$scope.loading = false;
 						});
 					}

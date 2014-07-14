@@ -134,30 +134,38 @@
 					on-select="add_book()"
 					ng-keypress="get_search_results($event, 'BOOK', searchResults)">
 				</type-ahead> -->
-			<div class="scrollbar header" msd-wheel="stop_horizontal_scroll($event)" check-scroll-bottom="get_popular_books()">
-				<div class="book_column"
-					 ng-repeat="book in popular_books" 
-					 ng-class="{'selected': book.status}"
-					 ng-click="mark_as_read(book, $event);">
-					<img ng-src="{{book.isbn | small_thumb}}" 
-						 class="book_thumb"/>
-					<div class="book_details">
-						<div>
-							<span>{{book.title}}</span>
-							<span>by {{book.author_name}}</span>
-						</div>
-						<div>&nbsp;</div>
-						<div ng-show="book.status">Added</div>
-						<div ng-show="!book.status">
-							<span>Add to</span>
-							<span class='icon-books'></span>
-							<span>&nbsp;Books Read</span>
+			<div class="scrollbar header" 
+				msd-wheel="stop_horizontal_scroll($event)" check-scroll-bottom="get_popular_books()">
+				<!-- <div ng-if="popular_books">
+					<div class="book_column" ng-show="!loading">
+						No books found...
+					</div>
+				</div> -->
+				<!-- <div ng-if="!popular_books"> -->
+					<div class="book_column"
+						 ng-repeat="book in popular_books" 
+						 ng-class="{'selected': book.status}"
+						 ng-click="mark_as_read(book, $event);">
+						<img ng-src="{{book.isbn | small_thumb}}" 
+							 class="book_thumb"/>
+						<div class="book_details">
+							<div>
+								<span>{{book.title}}</span>
+								<span>by {{book.author_name}}</span>
+							</div>
+							<div>&nbsp;</div>
+							<div ng-show="book.status">Added</div>
+							<div ng-show="!book.status">
+								<span>Add to</span>
+								<span class='icon-books'></span>
+								<span>Books Read</span>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="book_column">
-					<img src="assets/loader2.gif" width="20px" ng-show="loading" class="loading_icon"/>
-				</div>
+					<div class="book_column">
+						<img src="assets/loader2.gif" width="20px" ng-show="loading" class="loading_icon"/>
+					</div>
+				<!-- </div> -->
 			</div>
 			<!-- <div class="description">
 				Tell us about your taste..

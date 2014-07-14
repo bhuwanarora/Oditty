@@ -10,7 +10,7 @@ module Api
 			end
 
 			def search_books
-				results = SearchApi.search(params[:q].strip, params[:skip_count])
+				results = SearchApi.search_books(params[:q].strip, params[:skip_count])
 				render :json => {:results => results}, :status => 200
 			end
 
