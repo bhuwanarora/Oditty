@@ -1,3 +1,4 @@
+include UsersGraphHelper
 module Api
 	module V0
 		class UserApi
@@ -44,8 +45,7 @@ module Api
 						end
 					else
 						#FIXME: create new user in the graph
-						clause = "CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+params[:password]+"\"})"
-						@neo.execute_query clause
+						UsersGraphHelper.create_user(email, params[:password], verification_token)
 						SubscriptionMailer.invite(invitation).deliver
 						message = "We have sent you an email with an activation link. Please activate your account."
 					end

@@ -367,7 +367,7 @@ websiteApp.directive('mainHeader', [function(){
 	}
 }]);
 
-websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', function(scroller, $rootScope){
+websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'websiteService', function(scroller, $rootScope, websiteService){
 	return{
 		restrict: 'E',
 		controller: ['$scope', function($scope){
@@ -416,15 +416,14 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', function
 					$scope.bookmark_selected = false;
 					$scope.read_selected = true;		
 					$scope.panel_selected = 'READ';
-					if(angular.isDefined($rootScope.user.books['read']) && $rootScope.user.books['read'].length == 0){
-						websiteService.get_books_read().then(function(data){
-							angular.forEach(data, function(value){
-								var json = {"isbn": value[0], "id": value[1]};
-								this.push(json);
-							},  $rootScope.user.books['read']);
-						});
-					}
-					$scope.$emit('addToShelf', "BOOK", book);
+					websiteService.get_books_read(0).then(function(data){
+						$rootScope.user.books['read'] = [];
+						angular.forEach(data, function(value){
+							var json = {"isbn": value[0], "id": value[1]};
+							this.push(json);
+						},  $rootScope.user.books['read']);
+					});
+					// $scope.$emit('addToShelf', "BOOK", book);
 					// $('body').css('background-image', 'url("assets/wood_shelf.jpg")');
 				}
 			}

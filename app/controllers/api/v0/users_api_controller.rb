@@ -8,7 +8,8 @@ module Api
 
 			def books_read
 				user_id = session[:user_id]
-				
+				info = UsersGraphHelper.get_books_read(user_id, params[:skip_count])
+				render :json => {:info => info}, :status => 200
 			end
 
 			def own
@@ -43,7 +44,7 @@ module Api
 				mark_as_read_action = params[:data]
 				user_id = session[:user_id]
 				book_id = params[:book_id]
-				if mark_as_read_action == 1
+				if mark_as_read_action
 					UsersGraphHelper.mark_as_read(user_id, book_id)
 				else
 					UsersGraphHelper.mark_as_unread(user_id, book_id)
