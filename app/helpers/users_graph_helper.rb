@@ -89,7 +89,6 @@ module UsersGraphHelper
 		#FIXME mark_as_read
 		@neo ||= self.neo_init
 		# clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" OPTIONAL MATCH (b)-[:Belongs_to]->(:Category)-[r:Has_root]->(c:Category), (u)-[fr:FeedNext]->(top_feed), (u)<-[:Follow]-(f)-[ego:Ego]->(ego_user) WHERE fr.user_id="+user_id.to_s+" CREATE (u)-[:MarkAsReadAction]->(m:MarkAsReadNode{timestamp:"+Time.now.to_i.to_s+"})-[:MarkAsRead]->(b) MERGE (c)<-[ur:Tendency_for]-(u) ON CREATE SET ur.weight = r.weight ON MATCH SET ur.weight = ur.weight + r.weight CREATE (u)-[:FeedNext{user_id:"+user_id.to_s+"}]->(m)-[:FeedNext{user_id:"+user_id.to_s+"}]->(top_feed) CREATE (f)-[:Ego]->(u)-[:Ego]->(ego_user) DELETE fr, ego SET b.readers_count = b.readers_count + 1 SET u.book_read_count = u.book_read_count + 1"
-		clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" CREATE UNIQUE (u)-[:MarkAsReadAction]->(m:MarkAsReadNode{timestamp:"+Time.now.to_i.to_s+"})-[:MarkAsRead]->(b) WITH u, b, m MATCH (u)-[:FeedNext*0..]->(before),(after)-[:FeedNext*0..]->(u),(before)-[old:FeedNext]->(after) WHERE before = u AND after = u CREATE UNIQUE (before)-[:FeedNext{user_id:"+user_id.to_s+"}]->(m)-[:FeedNext{user_id:"+user_id.to_s+"}]->(after) DELETE old WITH u, b MATCH (u)<-[:Follow]-(f), (f)-[:Ego*0..]->(before),(after)-[:Ego*0..]->(f),(before)-[old:Ego]->(after) WHERE before = f AND after = f CREATE UNIQUE (before)-[:Ego]->(u)-[:Ego]->(after) DELETE old SET b.readers_count = b.readers_count + 1 SET u.book_read_count = u.book_read_count + 1"
 		mark_as_read_clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" CREATE UNIQUE (u)-[:MarkAsReadAction]->(m:MarkAsReadNode{timestamp:"+Time.now.to_i.to_s+"})-[:MarkAsRead]->(b) WITH u, b, m "
 
 		feednext_clause = "MATCH (u)-[old:FeedNext]->(type_feed) CREATE UNIQUE (u)-[:FeedNext{user_id:"+user_id.to_s+"}]->(m)-[:FeedNext{user_id:"+user_id.to_s+"}]->(type_feed) DELETE old WITH u, b, m "
@@ -116,14 +115,36 @@ module UsersGraphHelper
 
 	end
 
+
+	# ************************************************
+
+	# MATCH (u:User)-[r1:MarkAsReadAction]->(m:MarkAsReadNode)-[r2:MarkAsRead]->(b:Book) 
+	# WHERE ID(u)=USER_ID AND ID(b)=BOOK_ID 
+	# DELETE r1, r2, m
+	# WITH u, b, m
+
+	# MATCH (s)-[f1:FeedNext{user_id:USER_ID}]->(m)-[f2:FeedNext{user_id:USER_ID}]->(e) 
+	# CREATE (s)-[:FeedNext{user_id:USER_ID}]->(e) 
+	# DELETE f1, f2
+	# WITH u, b
+
+	# SET b.readers_count = b.readers_count - 1 
+	# SET u.book_read_count = u.book_read_count - 1 
+
+	# ************************************************
 	def self.mark_as_unread(user_id, book_id)
 		#FIXME mark_as_unread
 		@neo ||= self.neo_init
 		# clause = "MATCH (u:User)-[r1:MarkAsReadAction]->(m:MarkAsReadNode)-[r2:MarkAsRead]->(b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" OPTIONAL MATCH (b)-[:Belongs_to]->(:Category)-[r:Has_root]->(c:Category), (c)<-[r3:Tendency_for]-(u), (s)-[f1:FeedNext]->(m)-[f2:FeedNext]->(e) CREATE (s)-[:FeedNext]->(e) SET r3.weight = r3.weight - r.weight SET b.readers_count = b.readers_count - 1 SET u.book_read_count = u.book_read_count - 1 DELETE m, r1, r2, f1, f2"
-		clause = "MATCH (u:User)-[r1:MarkAsReadAction]->(m:MarkAsReadNode)-[r2:MarkAsRead]->(b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" MATCH (s)-[f1:FeedNext{user_id:504641}]->(m)-[f2:FeedNext{user_id:504641}]->(e) CREATE (s)-[:FeedNext{user_id:504641}]->(e) SET b.readers_count = b.readers_count - 1 SET u.book_read_count = u.book_read_count - 1 DELETE m, r1, r2, f1, f2"
+		
+		mark_as_unread_clause = "MATCH (u:User)-[r1:MarkAsReadAction]->(m:MarkAsReadNode)-[r2:MarkAsRead]->(b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" DELETE r1, r2, m WITH u, b, m "
+		feednext_clause = "MATCH (s)-[f1:FeedNext{user_id:"+user_id.to_s+"}]->(m)-[f2:FeedNext{user_id:"+user_id.to_s+"}]->(e) 	CREATE (s)-[:FeedNext{user_id:"+user_id.to_s+"}]->(e) DELETE f1, f2 WITH u, b "
+		set_clause = "SET b.readers_count = b.readers_count - 1 SET u.book_read_count = u.book_read_count - 1 "
+		clause = mark_as_unread_clause + feednext_clause + set_clause
 		# WHERE r3.weight = 0 DELETE r3
 		puts clause.blue.on_red
-		# @neo.execute_query(clause)
+		puts "MARK AS UNREAD".green
+		@neo.execute_query(clause)
 		#ego feed update
 		#update mark as read cache for the book
 		#update popularity index for the book
