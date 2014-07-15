@@ -53,6 +53,7 @@ module UsersGraphHelper
 		set_clause = "SET b.bookmark_count = b.bookmark_count + 1  SET u.bookmark_count = u.bookmark_count + 1 "
 		clause = bookmark_clause + feednext_clause + bookfeed_next_clause + follow_clause + ego_clause + set_clause
 		puts clause.blue.on_red
+		puts "BOOK BOOKMARKED".green
 		# @neo.execute_query(clause)
 		#update bookmark cache for the book
 		#update popularity index for the book
