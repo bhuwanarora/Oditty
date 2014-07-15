@@ -147,6 +147,8 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
   			if(data["logged_in"]){
   				$rootScope.user.logged = true;
   				$rootScope.user.id = data["id"];
+  				$scope.$emit('getNotifications');
+  				stropheService.start_connection();
   			}
   		});
   	}
