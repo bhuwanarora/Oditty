@@ -527,26 +527,30 @@ module Neo4jHelper
 	end
 
 	def self.restructure_database
-		puts "Droping existing indexes...".green
-		@neo.delete_schema_index("Book", "title")
-		@neo.delete_schema_index("Book", "author_name")
-		@neo.delete_schema_index("Author", "name")
-		@neo.delete_schema_index("Label", "name")
-		@neo.delete_schema_index("ReadTime","name")
-		@neo.delete_schema_index("Era", "name")
-		@neo.delete_schema_index("Genre", "name")
-		
+		# puts "Droping existing indexes...".green
 		@neo ||= self.init
-		clause = "MATCH (book:Book) WITH book, toFloat(book.gr_rating)*toFloat(book.gr_ratings_count)*toFloat(book.gr_reviews_count) as weight ORDER BY weight DESC, toFloat(book.gr_rating) WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:Next_book]->(p2))))"
-		puts "adding books in form of sorted linked lists...".green
-		@neo.execute_query clause
+		# @neo.delete_schema_index("Book", "title")
+		# @neo.delete_schema_index("Book", "author_name")
+		# @neo.delete_schema_index("Author", "name")
+		# @neo.delete_schema_index("Label", "name")
+		# @neo.delete_schema_index("ReadTime","name")
+		# @neo.delete_schema_index("Era", "name")
+		# @neo.delete_schema_index("Genre", "name")
+		
+		# clause = "MATCH (book:Book) WITH book, toFloat(book.gr_rating)*toFloat(book.gr_ratings_count)*toFloat(book.gr_reviews_count) as weight ORDER BY weight DESC, toFloat(book.gr_rating) WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:Next_book]->(p2))))"
+		# puts "adding books in form of sorted linked lists...".green
+		# @neo.execute_query clause
 
 
-		self.create_indexes
-
-		puts "adding index_by title for book...".green
-		clause = "MATCH (book:Book) SET book.indexed_title = LOWER(book.title)"
-		@neo.execute_query clause
+		# self.create_indexes
+		skip = 0
+		limit = 10000
+		while skip <= 160000
+			puts "adding index_by title for book..."+skip.to_s.green
+			clause = "MATCH (book:Book) CREATE (book)-[:BookFeed]->(book) SET book.indexed_title = LOWER(book.title), book.search_index = LOWER(book.title) RETURN COUNT(*) SKIP "+skip.to_s+" LIMIT "+limit.to_s
+			@neo.execute_query clause
+			skip = skip + limit
+		end
 
 		puts "adding index_by author_name for books...".green
 		clause = "MATCH (book:Book) SET book.indexed_author_name = LOWER(book.author_name)"
@@ -576,10 +580,6 @@ module Neo4jHelper
 		clause = "MATCH (user: User) SET user.indexed_name = LOWER(user.name)"
 		@neo.execute_query clause
 
-		puts "adding index_by name for books...".green
-		clause = "MATCH (book: Book) SET book.search_index = LOWER(book.title)"
-		@neo.execute_query clause
-
 		puts "adding index_by name for authors...".green
 		clause = "MATCH (author: Author) SET author.search_index = LOWER(author.name)"
 		@neo.execute_query clause
@@ -588,6 +588,12 @@ module Neo4jHelper
 		clause = "MATCH (user: User) SET user.search_index = LOWER(user.name)"
 		@neo.execute_query clause
 
+		puts "set label names to upper case...".green
+		clause = "MATCH (l:Label) SET l.name = UPPER(l.name)"
+		@neo.execute_query clause
+
 		puts "End...".red
 	end
+
+
 end

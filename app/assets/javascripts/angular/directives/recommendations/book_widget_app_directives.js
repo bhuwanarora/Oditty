@@ -783,13 +783,14 @@ function zoomin_book($scope, $timeout, $rootScope, page){
 function add_custom_bookmark($scope, $rootScope, $timeout){
   var custom_bookmark = $scope.book.custom_bookmark;
   if(custom_bookmark){
+    custom_bookmark = custom_bookmark.trim().toUpperCase();
     var labels = $scope.book.labels;
     var already_exists = false;
     for(var i = 0; i < labels.length; i++){
       var label = labels[i];
       if(label["name"] == custom_bookmark){
         already_exists = true;
-        var message = "ALERT- Bookmark with the name "+custom_bookmark+" is already added in the list";
+        var message = "ALERT- Bookmark with the name '"+custom_bookmark+"' is already added in the list";
         break;
       }
     }

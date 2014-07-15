@@ -419,7 +419,7 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 					websiteService.get_books_read(0).then(function(data){
 						$rootScope.user.books['read'] = [];
 						angular.forEach(data, function(value){
-							var json = {"isbn": value[0], "id": value[1]};
+							var json = {"isbn": value[0], "id": value[1], "status": true};
 							this.push(json);
 						},  $rootScope.user.books['read']);
 					});

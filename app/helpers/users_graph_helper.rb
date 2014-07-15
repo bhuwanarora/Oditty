@@ -11,20 +11,49 @@ module UsersGraphHelper
 		@neo.execute_query(clause)["data"]
 	end
 
-	def self.bookmark_book(user_id, book_id)
+
+	# ************************************************
+
+	# MATCH (u:User), (b:Book)
+	# WHERE ID(u)=USER_ID AND ID(b)=BOOK_ID
+	# MERGE (bm:Label{name: BOOKMARK_NAME})
+	# CREATE UNIQUE (u)-[:BookmarkAction{timestamp:TIMESTAMP}]->(bm)-[:Bookmarked]->(b) 
+	# WITH u, b, m
+
+	# MATCH (u)-[old:FeedNext]->(type_feed) 
+	# CREATE UNIQUE (u)-[:FeedNext{user_id:USER_ID}]->(bm)-[:FeedNext{user_id:USER_ID}]->(type_feed) 
+	# DELETE old 
+	# WITH u, b, m
+
+	# MATCH (b)-[old:BookFeed]->(old_feed) 
+	# CREATE UNIQUE (b)-[:BookFeed{user_id:USER_ID}]->(bm)-[:BookFeed{user_id:USER_ID}]->(old_feed) 
+	# DELETE old 
+	# WITH u, b, m 
+
+	# OPTIONAL MATCH (u)<-[:Follow]-(f) 
+	# WHERE f <> u 
+	# WITH u, b, f 
+
+	# MATCH (f)-[old:Ego]-(old_ego) 
+	# CREATE UNIQUE (f)-[:Ego{user_id:ID(f)}]->(u)-[:Ego{user_id:ID(f)}]->(old_ego) 
+	# DELETE old 
+
+	# SET b.bookmark_count = b.bookmark_count + 1  
+	# SET u.bookmark_count = u.bookmark_count + 1 
+
+	# ************************************************
+	def self.bookmark_book(user_id, book_id, bookmark_name)
 		#FIXME: bookmark book
 		@neo ||= self.neo_init
-		clause = "MATCH (u:User{id:"+user_id+"}), (b:Book{id:"+book_id+"})
-			OPTIONAL MATCH (u)-[r:FeedNext{id:"+user_id+"}]->(top_feed),
-							(u)<-[:Follow]-(f)-[ego:Ego]->(ego_user)
-			CREATE (u)-[:BookmarkAction]->(bm:Bookmark{timestamp:"+Time.now+"})-[:Bookmarked]->(b)
-			CREATE (u)-[:FeedNext]->(bm)-[:FeedNext]->(top_feed)
-			CREATE (f)-[:Ego]->(u)-[:Ego]->(ego_user)
-			DELETE r, ego
-			SET b.bookmark_count = b.bookmark_count + 1
-			SET u.bookmark_count = u.bookmark_count + 1"
+		bookmark_clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id+" AND ID(b)="+book_id+" MERGE (bm:Label{name: \""+bookmark_name.strip.upcase+"\"}) CREATE UNIQUE (u)-[:BookmarkAction{timestamp:TIMESTAMP}]->(bm)-[:Bookmarked]->(b) WITH u, b, m "
+		feednext_clause = "MATCH (u)-[old:FeedNext]->(old_feed) CREATE UNIQUE (u)-[:FeedNext{user_id:"+user_id+"}]->(bm)-[:FeedNext{user_id:"+user_id+"}]->(old_feed) DELETE old WITH u, b, m "
+		bookfeed_next_clause = "MATCH (b)-[old:BookFeed]->(old_feed) CREATE UNIQUE (b)-[:BookFeed{user_id:"+user_id+"}]->(bm)-[:BookFeed{user_id:"+user_id+"}]->(old_feed) DELETE old WITH u, b, m "
+		follow_clause = "OPTIONAL MATCH (u)<-[:Follow]-(f) WHERE f <> u WITH u, b, f "
+		ego_clause = "MATCH (f)-[old:Ego]-(old_ego) CREATE UNIQUE (f)-[:Ego{user_id:ID(f)}]->(u)-[:Ego{user_id:ID(f)}]->(old_ego) DELETE old "
+		set_clause = "SET b.bookmark_count = b.bookmark_count + 1  SET u.bookmark_count = u.bookmark_count + 1 "
+		clause = bookmark_clause + feednext_clause + bookfeed_next_clause + follow_clause + ego_clause + set_clause
 		puts clause.blue.on_red
-		@neo.execute_query(clause)
+		# @neo.execute_query(clause)
 		#update bookmark cache for the book
 		#update popularity index for the book
 		#update popularity index for the author
