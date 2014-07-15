@@ -423,7 +423,6 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 							this.push(json);
 						},  $rootScope.user.books['read']);
 					});
-					// $scope.$emit('addToShelf', "BOOK", book);
 					// $('body').css('background-image', 'url("assets/wood_shelf.jpg")');
 				}
 			}
@@ -487,17 +486,6 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 			    	event.stopPropagation();
 			    })
 
-			    glow_shelf_event = $scope.$on('glowShelf', function(){
-			    	$scope.glowShelf = true;
-			    	console.log("%c glow_shelf_event", "color: green;");
-			    	event.stopPropagation();
-			    });
-
-			    glow_bookmark_event = $scope.$on('glowBookmark', function(){
-			    	$scope.glowBookmark = true;
-			    	console.log("%c glow_bookmark_event", "color: green;");
-			    	event.stopPropagation();
-			    });
 			}
 
 			_init = function(){

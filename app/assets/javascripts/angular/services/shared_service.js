@@ -4,13 +4,14 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
         var author_name = book.author_name;
         if(book.status){
           book.status = false;
-          $scope.$emit('removeFromShelf', "BOOK", book);
+          var index = $rootScope.user.books['read'].indexOf(data);
+          $rootScope.user.books['read'].splice(index, 1);
           var message = "SUCCESS-Removed from <span class='icon-books'></span> Books Read. ";
         }
         else{
           book.status = true;
-          $scope.$emit('addToShelf', "BOOK", [book]);
-          $rootScope.$broadcast('glowShelf');
+          $rootScope.user.books['read'].push(book);
+          
           var message = "SUCCESS-Added to <span class='icon-books'></span> Books Read. ";
 
           $scope.$on('destroy', function(){

@@ -23,8 +23,7 @@ module Api
 
             def labels
                 labels = WebsiteApi.get_labels
-                results = {:labels => labels}
-                render :json => results, :status => 200
+                render :json => labels, :status => 200
             end
 
             def times

@@ -16,6 +16,7 @@ module UsersGraphHelper
 	def self.get_bookmark_labels user_id
 		@neo ||= self.neo_init
 		clause = "MATCH (u:User) WHERE ID(user)="+user_id.to_s+" OPTIONAL MATCH (u)-[:BookmarkAction{user_id:"+user_id.to_s+"}]->(bm:Label) RETURN bm.name"
+		@neo.execute_query(clause)["data"]
 	end
 
 	def self.get_books_read(user_id, skip_count=0)
@@ -350,7 +351,7 @@ module UsersGraphHelper
 
 	def self.create_user(email, password, verification_token)
 		@neo ||= self.neo_init
-		clause = "CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0}), (user)-[fn:FeedNext{user_id:ID(user)}]->(user), (user)-[:Ego{user_id:ID(user)}]->(user)"
+		clause = "CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0}), (user)-[fn:FeedNext{user_id:ID(user)}]->(user), (user)-[:Ego{user_id:ID(user)}]->(user), (u)-[:BookmarkAction{user_id:"+user_id.to_s+"}]->(bm:Label) WHERE bm.basic = true"
 		puts clause.blue.on_red
 		@neo.execute_query(clause)
 	end
@@ -361,6 +362,13 @@ module UsersGraphHelper
 		(ego_user)-[r:FeedNext]->(f)
 		RETURN f, r
 		ORDER r.timestamp DESC")
+	end
+
+	def self.delete_user
+		@neo ||= self.neo_init
+		clause = ""
+		puts clause.blue.on_red
+		@neo.execute_query clause
 	end
 
 

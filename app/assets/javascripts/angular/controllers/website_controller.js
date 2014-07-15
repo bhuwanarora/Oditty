@@ -153,61 +153,28 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	_add_listeners = function(){
-		add_to_shelf_event = $scope.$on('addToShelf', function(event, type, data){
-			if(angular.isArray(data)){
-				if(type == "BOOK"){
-		    		$rootScope.user.books['read'].push(data);
-				}
-				else if(type == "AUTHOR"){
-					$rootScope.user.authors['follow'].push(data);
-				}
-				else if(type == "READER"){
-					$rootScope.user.readers['follow'].push(data);
-				}
-			}
-			else{
-				$rootScope.user.books['read'] = $rootScope.user.books['read'].concat(data);
-			}
-	    	event.stopPropagation();
-	    });
 
-	    remove_from_shelf = $scope.$on('removeFromShelf', function(event, type, data){
-	    	if(type == "BOOK"){
-		    	var index = $rootScope.user.books['read'].indexOf(data);
-		    	$rootScope.user.books['read'].splice(index, 1);
-	    	}
-	    	else if(type == "AUTHOR"){
-	    		var index = $rootScope.user.authors['follow'].indexOf(data);
-		    	$rootScope.user.authors['follow'].splice(index, 1);
-	    	}
-	    	else if(type == "READER"){
-	    		var index = $rootScope.user.readers['follow'].indexOf(data);
-		    	$rootScope.user.readers['follow'].splice(index, 1);
-	    	}
-		    event.stopPropagation();	
-	    });
+	    // add_to_bookmarks_event = $scope.$on('addToBookmarks', function(event, type, data){
+	    // 	if(type == "BOOK"){
+	    // 		$rootScope.user.books['bookmarked'].push(data);
+	    // 	}
+	    // 	else if(type == "AUTHOR"){
+	    // 		$rootScope.user.authors['bookmarked'].push(data);
+	    // 	}
+	    // 	event.stopPropagation();
+	    // });
 
-	    add_to_bookmarks_event = $scope.$on('addToBookmarks', function(event, type, data){
-	    	if(type == "BOOK"){
-	    		$rootScope.user.books['bookmarked'].push(data);
-	    	}
-	    	else if(type == "AUTHOR"){
-	    		$rootScope.user.authors['bookmarked'].push(data);
-	    	}
-	    	event.stopPropagation();
-	    });
-
-	    remove_from_bookmarks_event = $scope.$on('removeFromBookmarks', function(event, type, data){
-	    	if(type == "BOOK"){
-		    	var index = $rootScope.user.books['bookmarked'].indexOf(data);
-		    	$rootScope.user.books['bookmarked'].splice(index, 1);
-	    	}
-	    	else if(type == "AUTHOR"){
-	    		var index = $rootScope.user.authors['bookmarked'].indexOf(data);
-		    	$rootScope.user.authors['bookmarked'].splice(index, 1);	
-	    	}
-	    	event.stopPropagation();
-	    });
+	    // remove_from_bookmarks_event = $scope.$on('removeFromBookmarks', function(event, type, data){
+	    // 	if(type == "BOOK"){
+		   //  	var index = $rootScope.user.books['bookmarked'].indexOf(data);
+		   //  	$rootScope.user.books['bookmarked'].splice(index, 1);
+	    // 	}
+	    // 	else if(type == "AUTHOR"){
+	    // 		var index = $rootScope.user.authors['bookmarked'].indexOf(data);
+		   //  	$rootScope.user.authors['bookmarked'].splice(index, 1);	
+	    // 	}
+	    // 	event.stopPropagation();
+	    // });
 
 	    move_right_listener_event = $scope.$on('moveRight', function(event){
 	    	move_right_event = $timeout(function(){
@@ -351,10 +318,8 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		console.timeEnd("websiteAppController");
 	}
 
-	var add_to_shelf_event = "";
-	var remove_from_shelf = "";
-	var add_to_bookmarks_event = "";
-	var remove_from_bookmarks_event = "";
+	// var add_to_bookmarks_event = "";
+	// var remove_from_bookmarks_event = "";
 	var move_right_event = ""
 	var move_right_listener_event = "";
 	
