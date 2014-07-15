@@ -4,6 +4,20 @@ module UsersGraphHelper
 		@neo = Neography::Rest.new
 	end
 
+	
+	# ************************************************
+
+	# MATCH (u:User)
+	# WHERE ID(u) = USER_ID
+	# OPTIONAL MATCH (u)-[:BookmarkAction{user_id:USER_ID}]->(bm:Label)
+	# RETURN bm.name
+
+	# ************************************************
+	def self.get_bookmark_labels user_id
+		@neo ||= self.neo_init
+		clause = "MATCH (u:User) WHERE ID(user)="+user_id.to_s+" OPTIONAL MATCH (u)-[:BookmarkAction{user_id:"+user_id.to_s+"}]->(bm:Label) RETURN bm.name"
+	end
+
 	def self.get_books_read(user_id, skip_count=0)
 		@neo ||= self.neo_init
 		clause = "MATCH (u:User)-[:MarkAsReadAction]->(m:MarkAsReadNode)-[:MarkAsRead]->(b:Book) WHERE ID(u)="+user_id.to_s+" RETURN b.isbn, ID(b), m.timestamp as timestamp ORDER BY timestamp SKIP "+skip_count.to_s+" LIMIT 10"
@@ -17,7 +31,7 @@ module UsersGraphHelper
 	# MATCH (u:User), (b:Book)
 	# WHERE ID(u)=USER_ID AND ID(b)=BOOK_ID
 	# MERGE (bm:Label{name: BOOKMARK_NAME})
-	# CREATE UNIQUE (u)-[:BookmarkAction{timestamp:TIMESTAMP}]->(bm)-[:Bookmarked]->(b) 
+	# CREATE UNIQUE (u)-[:BookmarkAction{timestamp:TIMESTAMP, user_id:USER_ID}]->(bm)-[:Bookmarked{user_id:USER_ID}]->(b) 
 	# WITH u, b, m
 
 	# MATCH (u)-[old:FeedNext]->(type_feed) 
@@ -45,7 +59,7 @@ module UsersGraphHelper
 	def self.bookmark_book(user_id, book_id, bookmark_name)
 		#FIXME: bookmark book
 		@neo ||= self.neo_init
-		bookmark_clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id+" AND ID(b)="+book_id+" MERGE (bm:Label{name: \""+bookmark_name.strip.upcase+"\"}) CREATE UNIQUE (u)-[:BookmarkAction{timestamp:TIMESTAMP}]->(bm)-[:Bookmarked]->(b) WITH u, b, m "
+		bookmark_clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id+" AND ID(b)="+book_id+" MERGE (bm:Label{name: \""+bookmark_name.strip.upcase+"\"}) CREATE UNIQUE (u)-[:BookmarkAction{timestamp:"+Time.now.to_i.to_s+", user_id:"+user_id+"}]->(bm)-[:Bookmarked{user_id:"+user_id+"}]->(b) WITH u, b, m "
 		feednext_clause = "MATCH (u)-[old:FeedNext]->(old_feed) CREATE UNIQUE (u)-[:FeedNext{user_id:"+user_id+"}]->(bm)-[:FeedNext{user_id:"+user_id+"}]->(old_feed) DELETE old WITH u, b, m "
 		bookfeed_next_clause = "MATCH (b)-[old:BookFeed]->(old_feed) CREATE UNIQUE (b)-[:BookFeed{user_id:"+user_id+"}]->(bm)-[:BookFeed{user_id:"+user_id+"}]->(old_feed) DELETE old WITH u, b, m "
 		follow_clause = "OPTIONAL MATCH (u)<-[:Follow]-(f) WHERE f <> u WITH u, b, f "
