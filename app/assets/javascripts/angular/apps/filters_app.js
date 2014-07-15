@@ -106,6 +106,13 @@ angular.module('filtersApp', [])
       return thumb;
     }
   })
+  .filter('small_thumb', function(){
+    return function(isbn_string){
+      var isbn = isbn_string.split(",");
+      var thumb = "http://covers.openlibrary.org/b/isbn/"+isbn[0]+"-S.jpg"
+      return thumb;
+    }
+  })
   .filter('is_present', function(){
     return function(input){
       var is_present = false;

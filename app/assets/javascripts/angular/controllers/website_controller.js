@@ -154,14 +154,19 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 
 	_add_listeners = function(){
 		add_to_shelf_event = $scope.$on('addToShelf', function(event, type, data){
-			if(type == "BOOK"){
-	    		$rootScope.user.books['read'].push(data);
+			if(angular.isArray(data)){
+				if(type == "BOOK"){
+		    		$rootScope.user.books['read'].push(data);
+				}
+				else if(type == "AUTHOR"){
+					$rootScope.user.authors['follow'].push(data);
+				}
+				else if(type == "READER"){
+					$rootScope.user.readers['follow'].push(data);
+				}
 			}
-			else if(type == "AUTHOR"){
-				$rootScope.user.authors['follow'].push(data);
-			}
-			else if(type == "READER"){
-				$rootScope.user.readers['follow'].push(data);
+			else{
+				$rootScope.user.books['read'] = $rootScope.user.books['read'].concat(data);
 			}
 	    	event.stopPropagation();
 	    });

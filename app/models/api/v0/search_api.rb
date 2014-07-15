@@ -1,8 +1,11 @@
 module Api
 	module V0
 		class SearchApi
-			def search_book
-
+			def self.search_books(q, skip_count)
+				clause = "START book=node:node_auto_index('indexed_title:*"+q.downcase+"*') WITH book, toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) as weight RETURN book.isbn, ID(book), book.title as name, book.author_name, weight ORDER BY weight DESC SKIP "+skip_count.to_s+" LIMIT 10"
+				puts clause.blue.on_red
+				results = @neo.execute_query(clause)["data"]
+				results
 			end
 
 			def search_author
@@ -47,7 +50,7 @@ module Api
 											.limit(count)
 					tester = {:name => "TAG:"+q.upcase}
 				else
-					clause = "START book=node:node_auto_index('search_index:"+q.downcase+"*') WITH book, toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) as weight RETURN book.title as name, book.author_name, weight ORDER by weight DESC LIMIT "+count.to_s
+					clause = "START book=node:node_auto_index('search_index:*"+q.downcase+"*') WITH book, toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) as weight RETURN book.title as name, book.author_name, weight ORDER by weight DESC LIMIT "+count.to_s
 					puts clause.blue.on_red
 					results = @neo.execute_query(clause)
 					tester = {:name => "RD:"+q.upcase}	

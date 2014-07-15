@@ -109,7 +109,7 @@ module Api
 					skip_count = 0
 				end
 				@neo = Neography::Rest.new
-				clause = "MATCH (book:Book) WITH book, toInt(book.gr_reviews_count) + toInt(book.gr_ratings_count) AS weight RETURN book, weight as weight ORDER BY weight DESC SKIP "+(10*skip_count.to_i).to_s+" LIMIT 10"
+				clause = "MATCH (book:Book) RETURN book.isbn as isbn, ID(book), book.title, book.author_name SKIP "+(10*skip_count.to_i).to_s+" LIMIT 10"
 				puts clause.blue.on_red
 				begin
 					books =  @neo.execute_query(clause)["data"]
@@ -118,19 +118,20 @@ module Api
 					books = [{:message => "Error in finding books"}]
 					# books =  @neo.execute_query(clause)["data"]
 				end
-				results = []
-				for book in books
-					book = book[0]["data"]
-					isbn = book["isbn"].split(",")[0] rescue nil
-					thumb = "http://covers.openlibrary.org/b/isbn/"+isbn+"-S.jpg" rescue ""
-					book = {
-						:title => book["title"],
-						:author_name => book["author_name"],
-						:thumb => thumb
-					}
-					results.push book
-				end
-				results
+				# results = []
+				# for book in books
+				# 	book = book[0]["data"]
+				# 	isbn = book["isbn"].split(",")[0] rescue nil
+				# 	thumb = "http://covers.openlibrary.org/b/isbn/"+isbn+"-S.jpg" rescue ""
+				# 	book = {
+				# 		:title => book["title"],
+				# 		:author_name => book["author_name"],
+				# 		:thumb => thumb
+				# 	}
+				# 	results.push book
+				# end
+				# results
+				books
 			end
 
 			def self.get_book_details id

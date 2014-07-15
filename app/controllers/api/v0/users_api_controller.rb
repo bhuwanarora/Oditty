@@ -6,6 +6,11 @@ module Api
 				params[:access_token]
 			end
 
+			def books_read
+				user_id = session[:user_id]
+				
+			end
+
 			def own
 				render :json => {:message => "Success"}, :status => 200
 			end
@@ -38,7 +43,7 @@ module Api
 				mark_as_read_action = params[:data]
 				user_id = session[:user_id]
 				book_id = params[:book_id]
-				if mark_as_read_action
+				if mark_as_read_action == 1
 					UsersGraphHelper.mark_as_read(user_id, book_id)
 				else
 					UsersGraphHelper.mark_as_unread(user_id, book_id)

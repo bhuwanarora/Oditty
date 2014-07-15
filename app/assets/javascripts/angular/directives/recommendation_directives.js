@@ -371,11 +371,62 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', function
 	return{
 		restrict: 'E',
 		controller: ['$scope', function($scope){
-			if(window.innerWidth < 1000){
-				$scope.compact_footer = true;
+
+			$scope.toggle_bookmarked = function(event){
+				if(!$scope.bookmark_selected){
+					// _load_icon();
+					$scope.panel_selected = 'BOOKMARK';
+					$scope.bookmark_selected = true;
+					$scope.read_selected = false;
+					$scope.glowBookmark = false;
+					// $('body').css('background-image', $scope.search_style['background-image']);
+				}
+				event.stopPropagation();
 			}
-			else{
-				$scope.compact_footer = false;	
+
+			$scope.toggle_recommendations = function(){
+				if($scope.bookmark_selected || $scope.read_selected){
+					// _load_icon();
+					$scope.read_selected = false;
+					$scope.bookmark_selected = false;
+					$scope.panel_selected = '';
+					$scope.reset();
+					// $('body').css('background-image', '');
+				}
+			}
+
+			$scope.toggle_more_filters = function(event){
+				if($scope.show_more_filters == true){
+					$scope.show_more_filters = false;
+					// $('.recommendation_block').css('margin-top', '40px');
+					// $('.info_cards').css('margin-top', '40px');
+				}
+				else{
+					$scope.show_more_filters = true;		
+					// $('.recommendation_block').css('margin-top', '0px');
+					// $('.info_cards').css('margin-top', '0px');
+				}
+				event.stopPropagation();
+			}
+
+			$scope.toggle_read = function(){
+				if(!$scope.read_selected){
+					// _load_icon();
+					$scope.glowShelf = false;
+					$scope.bookmark_selected = false;
+					$scope.read_selected = true;		
+					$scope.panel_selected = 'READ';
+					if(angular.isDefined($rootScope.user.books['read']) && $rootScope.user.books['read'].length == 0){
+						websiteService.get_books_read().then(function(data){
+							angular.forEach(data, function(value){
+								var json = {"isbn": value[0], "id": value[1]};
+								this.push(json);
+							},  $rootScope.user.books['read']);
+						});
+					}
+					$scope.$emit('addToShelf', "BOOK", book);
+					// $('body').css('background-image', 'url("assets/wood_shelf.jpg")');
+				}
 			}
 
 			$scope.reset_filter =  function(event, selectedFilter, type, main_filter){
@@ -424,6 +475,47 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', function
 			$scope.toggle_footer = function(){
 				$scope.compact_footer = true;
 			}
+
+			_init_shelf = function(){
+				$scope.read_selected = false;
+				$scope.bookmark_selected = false;
+			}
+
+			_add_listeners = function(){
+				open_shelf_event = $scope.$on('showBookReadShelf', function(){
+			    	$scope.read_selected = true;
+			    	console.log("%c open_shelf_event", "color: green;");
+			    	event.stopPropagation();
+			    })
+
+			    glow_shelf_event = $scope.$on('glowShelf', function(){
+			    	$scope.glowShelf = true;
+			    	console.log("%c glow_shelf_event", "color: green;");
+			    	event.stopPropagation();
+			    });
+
+			    glow_bookmark_event = $scope.$on('glowBookmark', function(){
+			    	$scope.glowBookmark = true;
+			    	console.log("%c glow_bookmark_event", "color: green;");
+			    	event.stopPropagation();
+			    });
+			}
+
+			_init = function(){
+				_init_shelf();
+				if(window.innerWidth < 1000){
+					$scope.compact_footer = true;
+				}
+				else{
+					$scope.compact_footer = false;	
+				}
+			}
+
+			_init();
+
+			var open_shelf_event = "";
+			var glow_bookmark_event = "";
+			var glow_shelf_event = "";
 		}],
 		templateUrl: "/assets/angular/widgets/partials/recommendation_footer.html"
 	}
