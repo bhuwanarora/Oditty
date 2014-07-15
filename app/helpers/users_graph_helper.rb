@@ -355,13 +355,17 @@ module UsersGraphHelper
 		@neo.execute_query(clause)
 	end
 
+	# MATCH (u:User)-[:FeedNext*0..]->(news_feed)
+	# WHERE (ID)=USER_ID
+	# RETURN news_feed
 	def self.get_news_feed_for_user user_id
 		#FIXME get_news_feed_for_user
-		@neo.execute_query("MATCH (u:User{id:"+user_id+"})-[:Ego{id:"+user_id+"}]->(ego_user),
-		(ego_user)-[r:FeedNext]->(f)
-		RETURN f, r
-		ORDER r.timestamp DESC")
+		@neo ||= self.neo_init
+		clause = "MATCH (u:User)-[:FeedNext*0..]->(news_feed) WHERE (ID)="+user_id.to_s+" RETURN news_feed"
+		puts clause.blue.on_red
+		@neo.execute_query clause
 	end
+
 
 	def self.delete_user
 		@neo ||= self.neo_init
