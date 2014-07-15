@@ -543,22 +543,14 @@ module Neo4jHelper
 
 
 		# self.create_indexes
-
-		puts "adding index_by title for book...1".green
-		clause = "MATCH (book:Book) SET book.indexed_title = LOWER(book.title), book.search_index = LOWER(book.title) RETURN COUNT(*) SKIP 0 LIMIT 50000"
-		@neo.execute_query clause
-
-		puts "adding index_by title for book...2".green
-		clause = "MATCH (book:Book) SET book.indexed_title = LOWER(book.title), book.search_index = LOWER(book.title) RETURN COUNT(*) SKIP 50000 LIMIT 100000"
-		@neo.execute_query clause
-
-		puts "adding index_by title for book...3".green
-		clause = "MATCH (book:Book) SET book.indexed_title = LOWER(book.title), book.search_index = LOWER(book.title) RETURN COUNT(*) SKIP 100000 LIMIT 150000"
-		@neo.execute_query clause
-
-		puts "adding index_by title for book...4".green
-		clause = "MATCH (book:Book) SET book.indexed_title = LOWER(book.title), book.search_index = LOWER(book.title) RETURN COUNT(*) SKIP 150000 LIMIT 200000"
-		@neo.execute_query clause
+		skip = 0
+		limit = 10000
+		while skip <= 160000
+			puts "adding index_by title for book..."+skip.to_s.green
+			clause = "MATCH (book:Book) CREATE (book)-[:BookFeed]->(book) SET book.indexed_title = LOWER(book.title), book.search_index = LOWER(book.title) RETURN COUNT(*) SKIP "+skip.to_s+" LIMIT "+limit.to_s
+			@neo.execute_query clause
+			skip = skip + limit
+		end
 
 		puts "adding index_by author_name for books...".green
 		clause = "MATCH (book:Book) SET book.indexed_author_name = LOWER(book.author_name)"
@@ -596,6 +588,12 @@ module Neo4jHelper
 		clause = "MATCH (user: User) SET user.search_index = LOWER(user.name)"
 		@neo.execute_query clause
 
+		puts "set label names to upper case...".green
+		clause = "MATCH (l:Label) SET l.name = UPPER(l.name)"
+		@neo.execute_query clause
+
 		puts "End...".red
 	end
+
+
 end
