@@ -16,6 +16,7 @@ module UsersGraphHelper
 	def self.get_bookmark_labels user_id
 		@neo ||= self.neo_init
 		clause = "MATCH (u:User) WHERE ID(user)="+user_id.to_s+" OPTIONAL MATCH (u)-[:BookmarkAction{user_id:"+user_id.to_s+"}]->(bm:Label) RETURN bm.name"
+		@neo.execute_query(clause)["data"]
 	end
 
 	def self.get_books_read(user_id, skip_count=0)

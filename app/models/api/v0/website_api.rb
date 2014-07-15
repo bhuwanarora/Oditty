@@ -3,12 +3,8 @@ module Api
 		class WebsiteApi
 			def self.get_labels
 				neo_init
-				labels = @neo.execute_query("MATCH (l:Label) RETURN l")["data"]
-				output_labels = []
-				for label in labels do
-					output_labels.push label[0]["data"]
-				end
-				output_labels
+				labels = UserGraphHelper.get_bookmark_labels
+				labels
 			end
 
 			def self.get_time_groups
