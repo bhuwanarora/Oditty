@@ -96,7 +96,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', function (websiteS
   };
 }]);
 
-websiteApp.directive('labelDropdown', function(){
+websiteApp.directive('labelDropdown', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
   return{
     restrict: 'E',
     controller: ['$scope', function($scope){
@@ -107,8 +107,24 @@ websiteApp.directive('labelDropdown', function(){
       $scope.select_label = function(index){
         var atleast_one_label_checked = false;
         var labels = $scope.book.labels;
-        // labels["name"]
+        
         $scope.book.labels[index]["checked"] = !$scope.book.labels[index]["checked"];
+        if($scope.book.labels[index]["checked"]){
+          var message = "Bookmark tagged.";
+        }
+        else{
+          var message = "Bookmark removed.";
+        }
+        var timeout_event = notify($rootScope, message, $timeout);
+        var params = {"id": $scope.book.id, 
+                    "type": "BOOK",
+                    "name": $scope.book.labels["name"],
+                    "data": $scope.book.labels[index]["checked"]};
+        widgetService.bookmark(params);
+        $scope.$on('destroy', function(){
+          $timeout.cancel(timeout_event);
+        });
+
         for(var i=0; i<labels.length; i++){
           if(labels[i]["checked"]){
             atleast_one_label_checked = true;
@@ -129,7 +145,7 @@ websiteApp.directive('labelDropdown', function(){
     }],
     templateUrl: '/assets/angular/widgets/base/book/label_dropdown.html'    
   }
-});
+}]);
 
 websiteApp.directive('bookNavbar', ['$rootScope', '$timeout', function ($rootScope, $timeout) {
   return {
@@ -168,27 +184,19 @@ websiteApp.directive('bookBookmark', ['$rootScope', '$timeout', 'widgetService',
           var book_title = $scope.book.title;
           var author_name = $scope.book.author_name;
           if($scope.book.custom_bookmark){
-            add_custom_bookmark($scope, $rootScope, $timeout);
+            var already_exists = add_custom_bookmark($scope, $rootScope, $timeout);
+            if(!already_exists){
+              var params = {"id": $scope.book.id, 
+                    "type": "BOOK",
+                    "name": $scope.book.custom_bookmark,
+                    "data": true};
+              widgetService.bookmark(params);
+            }
           }
           else{
             $scope.book.show_labels = false;
             // alert("custom_bookmark not present");
           }
-          // if(bookmark_status == 1){
-          //   $scope.book.bookmark_status = 0;
-          //   var message = "SUCCESS-"+book_title+" by "+author_name+" has been removed from your bookmark shelf.";
-          //   $scope.$emit('removeFromBookmarks', "BOOK", $scope.book);
-          // }
-          // else{
-          //   $scope.book.bookmark_status = 1;
-          //   var message = "SUCCESS-"+book_title+" by "+author_name+" has been added to your bookmark shelf.";
-          //   $scope.$emit('addToBookmarks', "BOOK", $scope.book);
-          //   $rootScope.$broadcast('glowBookmark');
-          // }
-          // var timeout_event = notify($rootScope, message, $timeout);
-          // $scope.$on('destroy', function(){
-          //   $timeout.cancel(timeout_event);
-          // });
           // widgetService.bookmark("BOOK", $scope.book.id, $scope.book.bookmark_status);
         }
         else{
@@ -230,7 +238,14 @@ websiteApp.directive('bookInteract', ['$rootScope', '$timeout',
       $scope.handle_enter = function(event){
         var is_enter = event.keyCode == 13;
         if(is_enter){
-          add_custom_bookmark($scope, $rootScope, $timeout);
+          var already_exists = add_custom_bookmark($scope, $rootScope, $timeout);
+          if(!already_exists){
+            var params = {"id": $scope.book.id, 
+                  "type": "BOOK",
+                  "name": $scope.book.custom_bookmark,
+                  "data": true};
+            widgetService.bookmark(params);
+          }
         }
       }
 
@@ -807,6 +822,7 @@ function add_custom_bookmark($scope, $rootScope, $timeout){
     $scope.$on('destroy', function(){
       $timeout.cancel(timeout_event);
     });
+    return already_exists;
   }
 }
 

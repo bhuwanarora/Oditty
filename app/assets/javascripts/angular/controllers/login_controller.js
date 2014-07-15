@@ -142,7 +142,17 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
     	});
   	}
 
+  	_is_logged_in = function(){
+  		websiteService.get_user().then(function(data){
+  			if(data["logged_in"]){
+  				$rootScope.user.logged = true;
+  				$rootScope.user.id = data["id"];
+  			}
+  		});
+  	}
+
 	_init = function(){
+		_is_logged_in();
 		_bind_auth_listeners();
 		// $scope.authenticate(true);
 	}

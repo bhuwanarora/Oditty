@@ -29,14 +29,20 @@ module Api
 			end
 
 			def bookmark
-				# bookmark_action = params[:q]
-				# user_id = session[:user_id]
-				# book_id = params[:book_id]
-				# if bookmark_action
-				# 	UsersGraphHelper.mark_as_read(user_id, book_id)
-				# else
-				# 	UsersGraphHelper.mark_as_unread(user_id, book_id)
-				# end
+				type = params[:type]
+				bookmark_action = params[:data]
+				user_id = session[:user_id]
+				book_id = params[:id]
+				name = params[:name]
+				if type == "BOOK"
+					if bookmark_action
+						UsersGraphHelper.bookmark_book(user_id, book_id, name)
+					else
+						UsersGraphHelper.remove_bookmark(user_id, book_id, name)
+					end
+				elsif type == "AUTHOR"
+				elsif type == "READER"
+				end
 				render :json => {:message => "Success"}, :status => 200
 			end
 
@@ -123,6 +129,14 @@ module Api
 
 			def user_info
 				render :json => {:message => "Success"}, :status => 200
+			end
+
+			def user
+				logged_in = false
+				if session[:user_id]
+					logged_in = true
+				end
+				render :json => {:logged_in => logged_in, :id => session[:user_id]}, :status => 200
 			end
 
 			def get_news_feed

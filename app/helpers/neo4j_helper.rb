@@ -544,7 +544,7 @@ module Neo4jHelper
 
 		# self.create_indexes
 		skip = 0
-		limit = 10000
+		limit = 1000
 		while skip <= 160000
 			puts "adding index_by title for book..."+skip.to_s.green
 			clause = "MATCH (book:Book) CREATE (book)-[:BookFeed]->(book) SET book.indexed_title = LOWER(book.title), book.search_index = LOWER(book.title) RETURN COUNT(*) SKIP "+skip.to_s+" LIMIT "+limit.to_s
