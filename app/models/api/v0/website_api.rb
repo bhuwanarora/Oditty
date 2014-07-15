@@ -1,9 +1,10 @@
+include UsersGraphHelper
 module Api
 	module V0
 		class WebsiteApi
-			def self.get_labels
+			def self.get_labels user_id
 				neo_init
-				labels = UserGraphHelper.get_bookmark_labels
+				labels = UsersGraphHelper.get_bookmark_labels user_id
 				labels
 			end
 

@@ -251,10 +251,13 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     }
 
     _get_labels = function(){
-      recommendationService.get_labels().then(function(data){
-        console.debug("%c labels", "color: green");
-        $rootScope.labels = data["labels"];
-      });
+    	$rootScope.labels = [];
+      	recommendationService.get_labels().then(function(data){
+        	console.debug("%c labels", "color: green");
+        	angular.forEach(data[0], function(value){
+        		this.push({"name": value});
+        	}, $rootScope.labels);
+      	});
     }
 
 	_init = function(){

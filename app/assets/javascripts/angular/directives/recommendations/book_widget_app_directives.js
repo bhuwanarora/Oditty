@@ -118,7 +118,7 @@ websiteApp.directive('labelDropdown', ['$rootScope', '$timeout', 'widgetService'
         var timeout_event = notify($rootScope, message, $timeout);
         var params = {"id": $scope.book.id, 
                     "type": "BOOK",
-                    "name": $scope.book.labels["name"],
+                    "name": $scope.book.labels[index]["name"],
                     "data": $scope.book.labels[index]["checked"]};
         widgetService.bookmark(params);
         $scope.$on('destroy', function(){

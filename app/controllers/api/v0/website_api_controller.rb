@@ -22,7 +22,7 @@ module Api
 			end
 
             def labels
-                labels = WebsiteApi.get_labels
+                labels = WebsiteApi.get_labels session[:user_id]
                 render :json => labels, :status => 200
             end
 
