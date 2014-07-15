@@ -544,7 +544,7 @@ module Neo4jHelper
 
 		# self.create_indexes
 		skip = 0
-		limit = 1000
+		limit = 100
 		while skip <= 160000
 			puts "adding index_by title for book..."+skip.to_s.green
 			clause = "MATCH (book:Book) CREATE (book)-[:BookFeed]->(book) SET book.indexed_title = LOWER(book.title), book.search_index = LOWER(book.title) RETURN COUNT(*) SKIP "+skip.to_s+" LIMIT "+limit.to_s
@@ -589,7 +589,7 @@ module Neo4jHelper
 		@neo.execute_query clause
 
 		puts "set label names to upper case...".green
-		clause = "MATCH (l:Label) SET l.name = UPPER(l.name)"
+		clause = "MATCH (l:Label) SET l.name = UPPER(l.name), l.basic = true"
 		@neo.execute_query clause
 
 		puts "End...".red
