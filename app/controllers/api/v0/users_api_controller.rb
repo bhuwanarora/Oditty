@@ -9,7 +9,7 @@ module Api
 			def books_read
 				user_id = session[:user_id]
 				info = UsersGraphHelper.get_books_read(user_id, params[:skip_count])
-				render :json => {:info => info}, :status => 200
+				render :json => info, :status => 200
 			end
 
 			def own
