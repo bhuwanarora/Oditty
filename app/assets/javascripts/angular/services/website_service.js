@@ -1,5 +1,9 @@
 websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
 	
+    this.get_user = function(){
+        return _deferred_request('/api/v0/user');
+    }
+
     this.get_book_details = function(filter){
         return _deferred_request('/api/v0/book?'+filter);
     }

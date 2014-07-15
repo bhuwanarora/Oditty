@@ -189,7 +189,7 @@ websiteApp.directive('bookBookmark', ['$rootScope', '$timeout', 'widgetService',
               var params = {"id": $scope.book.id, 
                     "type": "BOOK",
                     "name": $scope.book.custom_bookmark,
-                    "data": true;
+                    "data": true};
               widgetService.bookmark(params);
             }
           }
@@ -243,7 +243,7 @@ websiteApp.directive('bookInteract', ['$rootScope', '$timeout',
             var params = {"id": $scope.book.id, 
                   "type": "BOOK",
                   "name": $scope.book.custom_bookmark,
-                  "data": true;
+                  "data": true};
             widgetService.bookmark(params);
           }
         }
