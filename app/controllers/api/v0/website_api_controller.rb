@@ -69,70 +69,8 @@ module Api
 			end
 
 			def notifications
-				notifications = [
-					{
-						:thumb => "assets/profile_pic.jpeg",
-						:user => "",
-						:message => "Test User1 added book to his reading shelf, and gave 4 rating to the book.",
-						:timestamp => "2 days ago",
-						:category_id => 1
-					},
-					{
-						:thumb => "assets/profile_pic.jpeg",
-						:message => "Test User4 recommended you Test-BookA by Test-AuthorB",
-						:timestamp => "3 days ago",
-						:category_id => 2
-					},
-					{
-						:thumb => "assets/profile_pic.jpeg",
-						:message => "Test User 1, Test User 4 read Test book A recommended by Test User 2.",
-						:timestamp => "4 days ago",
-						:category_id => 3
-					},
-					{
-						:thumb => "assets/profile_pic.jpeg",
-						:message => "Test User 4 wrote a review on Test-BookA.",
-						:timestamp => "2 days ago",
-						:category_id => 4
-					},
-					{
-						:thumb => "assets/profile_pic.jpeg",
-						:message => "Test User 1 bookmarked test book for later viewing.",
-						:timestamp => "2 days ago",
-						:category_id => 5
-					},
-					{
-						:thumb => "assets/profile_pic.jpeg",
-						:message => "Test User 1 from Facebook joined Reader's Door.",
-						:timestamp => "2 days ago",
-						:category_id => 6
-					},
-					{
-						:thumb => "assets/profile_pic.jpeg",
-						:message => "Test User 1 from Facebook joined Reader's Door.",
-						:timestamp => "2 days ago",
-						:category_id => 7
-					},
-					{
-						:thumb => "assets/profile_pic.jpeg",
-						:message => "Test User 1 started following you.",
-						:timestamp => "2 days ago",
-						:category_id => 8
-					},
-					{
-						:thumb => "assets/profile_pic.jpeg",
-						:message => "Test User 1, Test User 2 tagged as Tag.",
-						:timestamp => "2 days ago",
-						:category_id => 9
-					},
-					{
-						:thumb => "assets/profile_pic.jpeg",
-						:message => "Test User 1, Test User 2 started following TestUser4.",
-						:timestamp => "2 days ago",
-						:category_id => 10
-					}
-				]
-				render :json => {:notifications => notifications}, :status => 200
+				news_feed = WebsiteApi.get_news_feed session[:user_id]
+				render :json => {:notifications => news_feed}, :status => 200
 			end
 
             private

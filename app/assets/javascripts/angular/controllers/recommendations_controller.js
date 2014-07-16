@@ -253,9 +253,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     _get_labels = function(){
     	$rootScope.labels = [];
       	recommendationService.get_labels().then(function(data){
-        	console.debug("%c labels", "color: green");
-        	angular.forEach(data[0], function(value){
-        		this.push({"name": value});
+        	console.debug("%c labels"+data, "color: green");
+        	angular.forEach(data, function(value){
+        		this.push({"name": value[0].replace("\"", "")});
         	}, $rootScope.labels);
       	});
     }

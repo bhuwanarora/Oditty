@@ -133,6 +133,7 @@
 					<div ng-if="notifications">
 						<div ng-repeat="notification in notifications | reverse">
 							<notification data="notification"></notification>
+							<div class="arrow_left" ng-style="ticker_position"></div>
 						</div>
 					</div>
 					<div ng-if="!notifications">

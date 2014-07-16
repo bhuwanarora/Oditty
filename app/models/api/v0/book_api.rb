@@ -316,13 +316,13 @@ module Api
 					$redis.set 'book_ids', ""
 					books = @neo.execute_query(clause)["data"]
 				end
-				puts books.length.to_s.red.on_blue
+				# puts books.length.to_s.red.on_blue
 				for book in books
 					node_id = book[1].to_s
 					book_sent = book_ids.include? node_id
-					puts book_ids.to_s.blue.on_red
-					puts node_id.green.on_red
-					puts book_sent.to_s.blue.on_yellow
+					# puts book_ids.to_s.blue.on_red
+					# puts node_id.green.on_red
+					# puts book_sent.to_s.blue.on_yellow
 					unless book_sent
 						if book_ids.present?
 							book_ids = ($redis.get 'book_ids')+","+node_id

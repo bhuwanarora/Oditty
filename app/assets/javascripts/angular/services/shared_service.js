@@ -4,7 +4,7 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
         var author_name = book.author_name;
         if(book.status){
           book.status = false;
-          var index = $rootScope.user.books['read'].indexOf(data);
+          var index = $rootScope.user.books['read'].indexOf(book);
           $rootScope.user.books['read'].splice(index, 1);
           var message = "SUCCESS-Removed from <span class='icon-books'></span> Books Read. ";
         }

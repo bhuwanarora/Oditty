@@ -220,6 +220,10 @@ input:focus{
     color: #918FB5 !important;
 }
 
+.site_color{
+    color: #427fed !important;
+}
+
 .light_gray_background{
     background-color: #F1F1F1 !important;
 }
