@@ -101,16 +101,20 @@ angular.module('filtersApp', [])
   })
   .filter('thumb', function(){
     return function(isbn_string){
-      var isbn = isbn_string.split(",");
-      var thumb = "http://covers.openlibrary.org/b/isbn/"+isbn[0]+"-L.jpg"
-      return thumb;
+      if(isbn_string){
+        var isbn = isbn_string.split(",");
+        var thumb = "http://covers.openlibrary.org/b/isbn/"+isbn[0]+"-L.jpg"
+        return thumb;
+      }
     }
   })
   .filter('small_thumb', function(){
     return function(isbn_string){
-      var isbn = isbn_string.split(",");
-      var thumb = "http://covers.openlibrary.org/b/isbn/"+isbn[0]+"-S.jpg"
-      return thumb;
+      if(isbn_string){
+        var isbn = isbn_string.split(",");
+        var thumb = "http://covers.openlibrary.org/b/isbn/"+isbn[0]+"-S.jpg"
+        return thumb;
+      }
     }
   })
   .filter('is_present', function(){

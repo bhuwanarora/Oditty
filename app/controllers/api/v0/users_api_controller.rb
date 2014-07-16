@@ -71,10 +71,8 @@ module Api
 			end
 
 			def comment
-				# discussion_id = params[:discussion_id]
-				# comment = params[:comment]
-				# user_id = session[:user_id]
-				# UsersGraphHelper.comment_on_discussion(discussion_id, comment)
+ 				user_id = session[:user_id]
+				UsersGraphHelper.comment_on_book(user_id, params[:id], params[:tweet])
 				render :json => {:message => "Success"}, :status => 200
 			end
 

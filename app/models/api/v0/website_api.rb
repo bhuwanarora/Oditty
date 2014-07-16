@@ -16,12 +16,15 @@ module Api
 					type = feed[0][0]
 					data = feed[1]["data"]
 					if type == "User"
-					else type == "MarkAsReadNode"
+					elsif type == "MarkAsReadNode"
 						notification = self.mark_as_read_notification data
+						notifications.push notification
+					elsif type == "Tweet"
+						notification = self.comment_notification data
 						notifications.push notification
 					end
 				end
-				notifications
+				notifications.reverse
 			end
 
 			def self.get_time_groups
@@ -36,7 +39,28 @@ module Api
 			end
 
 			def self.mark_as_read_notification data
-				message = "<span><b>"+data["name"]+"</b> added </span><span class='site_color'><em>"+data["title"]+" by "+data["author"]+"</em></span><span> to &nbsp;</span><span class='icon-books'></span><span>&nbsp;books read.</span>"
+				message = "<span><b>"+data["name"]+"</b> added </span><span class='site_color'><em>"+data["title"]+" by "+data["author"]+"</em></span><span> to &nbsp;</span><span class='icon-books'></span><span>&nbsp;Books Read.</span>"
+				thumb = "assets/profile_pic.jpeg"
+				notification = {
+					:thumb => thumb,
+					:message => message,
+					:timestamp => data["timestamp"],
+					:book => {
+						:id => data["book_id"],
+						:title => data["title"],
+						:author_name => data["author_name"],
+						:isbn => data["isbn"]
+					},
+					:user => {
+						:id => data["user_id"],
+						:name => data["name"]
+					}
+				}
+				notification
+			end
+
+			def self.comment_notification data
+				message = "<span><b>"+data["name"]+"</b> </span><span class='site_color'>"+data["tweet"]+"</span>";
 				thumb = "assets/profile_pic.jpeg"
 				notification = {
 					:thumb => thumb,

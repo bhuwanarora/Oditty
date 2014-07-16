@@ -1,4 +1,4 @@
-websiteApp.directive('book', ['websiteService', '$rootScope', function (websiteService, $rootScope){
+websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', function (websiteService, $rootScope, widgetService){
   return {
     restrict: 'E',
     scope: { 'book': '=data' },
@@ -48,6 +48,9 @@ websiteApp.directive('book', ['websiteService', '$rootScope', function (websiteS
             }
             $rootScope.on_left = false;
           }
+          widgetService.get_book_feed($rootScope.focused_book.id).then(function(data){
+            
+          });
           // event.currentTarget.offsetParent.offsetParent.scrollWidth;
           // var test = event.currentTarget.offsetParent.offsetParent.offsetLeft -event.currentTarget.offsetLeft;
           // var test2 = event.currentTarget.offsetParent.offsetParent.scrollWidth;
@@ -450,7 +453,7 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
   }
 }]);
 
-websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteService', function($rootScope, $timeout, websiteService){
+websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteService', 'widgetService', function($rootScope, $timeout, websiteService, widgetService){
   return{
     restrict: 'E',
     controller: ['$scope', function($scope){
@@ -585,6 +588,7 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
           $rootScope.focused_book.current_comment = "";
           $rootScope.focused_book.hash_tagged_comment = "";
           $rootScope.focused_book.tweets.push(tweet);
+          _add_comment(tweet);
           event.preventDefault();
         }
         else{
@@ -652,6 +656,33 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
         }
 
         event.stopPropagation();
+      }
+
+      _add_comment = function(tweet){
+        var params = {
+          "id": $rootScope.focused_book.id,
+          "tweet": tweet
+        }
+        widgetService.comment(params);
+        // var name = $rootScope.user.email;
+        // var message = "<span><b>"+name+"</b> </span><span class='site_color'>"+tweet["tweet"]+"</span>";
+        // var thumb = "assets/profile_pic.jpeg"
+        // var notification = {
+        //   "thumb":thumb,
+        //   "message":message,
+        //   "timestamp":new Date().getTime(),
+        //   "book":{
+        //     "id":$rootScope.focused_book.id,
+        //     "title":$rootScope.focused_book.title,
+        //     "author_name":$rootScope.focused_book.author_name,
+        //     "isbn":$rootScope.focused_book.isbn
+        //   },
+        //   "user":{
+        //     "id":$rootScope.user.id,
+        //     "name":$rootScope.user.email
+        //   }
+        // }
+        // $rootScope.notifications.splice(0, 0, notification);
       }
 
       $scope.is_current = function(index, selectedItem) {

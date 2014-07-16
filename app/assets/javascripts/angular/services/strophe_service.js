@@ -15,7 +15,12 @@ websiteApp.service('stropheService', ['$rootScope', function ($rootScope) {
       }
       return true;
     }
-    var jabber_id = $rootScope.user.email.split("@");
+    if(angular.isDefined($rootScope.user.email)){
+      var jabber_id = $rootScope.user.email.split("@");
+    }
+    else{
+      var jabber_id = "admin"; 
+    }
     jabber_id[0] = jabber_id[0].concat("@misha-pc");
     var password = $rootScope.user.password;
     this.connection = new Strophe.Connection("http://localhost:5280/http-bind");
