@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_permission
+    # session[:user_id] = nil
     unless ($redis.get 'book_ids').present?
       $redis.set 'book_ids', ""
     end

@@ -484,33 +484,44 @@ websiteApp.directive('message', function(){
 	}
 });
 
-websiteApp.directive('notification', ['$rootScope', function($rootScope){
+websiteApp.directive('notification', ['$rootScope', '$timeout', function($rootScope, $timeout){
 	return{
 		restrict: 'E',
 		scope: {"notification": "=data"},
 		controller: ['$scope', function($scope){
-			$scope.toggle_ticker_popup = function(event){
+			$scope.toggle_ticker_popup = function(event, notification){
 				var ticker_popup_absent = $rootScope.ticker_popup == null;
 				if(ticker_popup_absent){
-					$rootScope.ticker_popup = true;
+					$rootScope.ticker_popup = $scope.notification.book;
 					$rootScope.focused_book = null;
-					var top = _get_arrow_position(event);
-					$rootScope.ticker_position = {"top": top+"px"};
+					// var top = _get_arrow_position(event);
+					// $rootScope.ticker_position = {"top": top+"px"};
 				}
 				else{
-					$rootScope.ticker_popup = null;
+					if($rootScope.ticker_popup == $scope.notification.book){
+						$rootScope.ticker_popup = null;
+					}
+					else{
+						var timeout_event = $timeout(function(){
+							$rootScope.ticker_popup = $scope.notification.book;
+						});
+
+						$scope.$on('destroy', function(){
+							$timeout.cancel(timeout_event);
+						});
+					}
 				}
 				event.stopPropagation();
 			}
 
 			_get_arrow_position = function(event){
-				console.log(event.currentTarget);
-				console.log(event.currentTarget.clientHeight);
-				console.log(event.currentTarget.offsetHeight);
-				console.log(event.currentTarget.pageY);
-				console.log(event.currentTarget.y);
-				console.log(event.currentTarget.style);
-				console.log(event.currentTarget.css);
+				// console.log(event.currentTarget);
+				// console.log(event.currentTarget.clientHeight);
+				// console.log(event.currentTarget.offsetHeight);
+				// console.log(event.currentTarget.pageY);
+				// console.log(event.currentTarget.y);
+				// console.log(event.currentTarget.style);
+				// console.log(event.currentTarget.css);
 				var base = 90;
 				var top = 17;
 				if(event.y > base && event.y < base + 54){
@@ -532,9 +543,9 @@ websiteApp.directive('notification', ['$rootScope', function($rootScope){
 			}
 
 			$scope.show_ticker_popup = function(){
-				var top = _get_arrow_position(event);
-				$rootScope.ticker_popup = true;	
-				$rootScope.ticker_position = {"top": top+"px"};
+				// var top = _get_arrow_position(event);
+				$rootScope.ticker_popup = $scope.notification.book;	
+				// $rootScope.ticker_position = {"top": top+"px"};
 			}
 		}],
 		templateUrl: '/assets/angular/widgets/partials/notification.html'
