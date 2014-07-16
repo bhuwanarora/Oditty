@@ -27,8 +27,8 @@ websiteApp.service('widgetService', ['$http', '$q', '$rootScope', function ($htt
     	return _deferred_post_request('/api/v0/time', {"id":id, "data":data});
     }
 
-    this.rate_this_book = function(id, data){
-    	return _deferred_post_request('/api/v0/rate', {"id":id, "data":data});
+    this.rate_this_book = function(params){
+    	return _deferred_post_request('/api/v0/rate', params);
     }
 
     this.own_this_book = function(id, data){

@@ -14,10 +14,18 @@ module Api
 			end
 
 			def time
+				user_id = session[:user_id]
+				book_id = params[:id]
+				time = params[:data]
+				UsersGraphHelper.record_time(user_id, book_id, time)
 				render :json => {:message => "Success"}, :status => 200
 			end
 
 			def rate
+				user_id = session[:user_id]
+				book_id = params[:id]
+				rating = params[:data]
+				UsersGraphHelper.rate_book(user_id, book_id, rating)
 				render :json => {:message => "Success"}, :status => 200
 			end
 

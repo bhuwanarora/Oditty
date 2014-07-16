@@ -536,17 +536,20 @@ module Neo4jHelper
 		@neo.delete_schema_index("Era", ["name"])
 		@neo.delete_schema_index("Genre", ["name"])
 		
-		@neo ||= self.init
-		clause = "MATCH (book:Book) WITH book, toFloat(book.gr_rating)*toFloat(book.gr_ratings_count)*toFloat(book.gr_reviews_count) as weight ORDER BY weight DESC, toFloat(book.gr_rating) WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:Next_book]->(p2))))"
-		puts "adding books in form of sorted linked lists...".green
-		@neo.execute_query clause
+		# clause = "MATCH (book:Book) WITH book, toFloat(book.gr_rating)*toFloat(book.gr_ratings_count)*toFloat(book.gr_reviews_count) as weight ORDER BY weight DESC, toFloat(book.gr_rating) WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:Next_book]->(p2))))"
+		# puts "adding books in form of sorted linked lists...".green
+		# @neo.execute_query clause
 
 
-		self.create_indexes
-
-		puts "adding index_by title for book...".green
-		clause = "MATCH (book:Book) SET book.indexed_title = LOWER(book.title)"
-		@neo.execute_query clause
+		# self.create_indexes
+		skip = 0
+		limit = 100
+		while skip <= 160000
+			puts "adding index_by title for book..."+skip.to_s.green
+			clause = "MATCH (book:Book) CREATE (book)-[:BookFeed]->(book) SET book.indexed_title = LOWER(book.title), book.search_index = LOWER(book.title), book.readers_count = 0, book.comment_count = 0, book.bookmark_count = 0, book.time_required = [{'0': 0, '1': 0, '2': 0, '3': 0}] RETURN COUNT(*) SKIP "+skip.to_s+" LIMIT "+limit.to_s
+			@neo.execute_query clause
+			skip = skip + limit
+		end
 
 		puts "adding index_by author_name for books...".green
 		clause = "MATCH (book:Book) SET book.indexed_author_name = LOWER(book.author_name)"

@@ -81,7 +81,7 @@
     </span>
      · 
   </div>
-<div ng-if="!show_info && !show_buy">
+<div ng-if="!show_info && !show_buy" ng-disabled="!focused_book.status">
   <rate data="focused_book"></rate>
 </div>
 <div class="scrollbar description" msd-wheel="stop_horizontal_scroll($event)" ng-if="show_info">

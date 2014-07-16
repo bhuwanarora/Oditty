@@ -274,14 +274,15 @@ websiteApp.directive('rate', ['$rootScope', '$timeout', 'widgetService', functio
       $scope.mark_as_rated = function(index, event){
         $scope.rate_object.rated = true;
         $scope.rate_object.user_rating = parseInt(index) + 1;
+        $scope.rate_object.status = true;
         $scope.temp_rating = parseInt(index) + 1;
         var timeout_event = notify($rootScope, "SUCCESS-Thanks, This will help us to recommend you better books.", $timeout);
 
         $scope.$on('destroy', function(){
           $timeout.cancel(timeout_event);
         });
-
-        widgetService.rate_this_book($scope.rate_object.id, $scope.rate_object.user_rating);
+        var params = {"id":$scope.rate_object.id, "data":$scope.rate_object.user_rating};
+        widgetService.rate_this_book(params);
         event.stopPropagation();
       }
 
@@ -363,6 +364,7 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
 
       $scope.record_read_time = function(read_timer){
         $rootScope.focused_book.read_timer = read_timer;
+        $rootScope.focused_book.status = true;
         var message = "SUCCESS-Thanks we have recorded your approximate time to read "+$rootScope.focused_book.title+". <br/> This will help us to recommend you books according to your reading skills."
         var timeout_event = notify($rootScope, message, $timeout);
         widgetService.record_time($rootScope.focused_book.id, read_timer);
