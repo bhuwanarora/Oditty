@@ -55,6 +55,11 @@ module Api
 				render :json => {:message => "Request Initiated...", :status => 200}
 			end
 
+			def get_feed
+				feed = BookApi.get_feed params[:id]
+				render :json => feed, :status => 200
+			end
+
 		end
 	end
 end

@@ -6,6 +6,7 @@ ReadersDoor::Application.routes.draw do
     namespace :v0 do
       match "get_similar_books"                      => 'books_api#get_similar_books',                  :via => [:put, :get, :post]
       match "book"                                   => 'books_api#get_book_details',                   :via => [:put, :get, :post]
+      match "book_feed"                              => 'books_api#get_feed',                           :via => [:put, :get, :post]
       match "tooltip"                                => 'books_api#tooltip',                            :via => [:put, :get, :post]
       match "moments"                                => 'books_api#moments',                            :via => [:put, :get, :post]
       match "affiliate_links"                        => 'books_api#affiliate_links',                    :via => [:put, :get, :post]

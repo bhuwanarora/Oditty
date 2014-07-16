@@ -1,3 +1,4 @@
+include BooksGraphHelper
 module Api
 	module V0
 		class BookApi
@@ -11,6 +12,19 @@ module Api
 					s['bookmark_status'] = 1
 					s
 				end
+			end
+
+			def self.get_feed book_id
+				feeds = BooksGraphHelper.get_feed book_id
+				notifications = []
+				for feed in feeds
+					label = feed[0][0]
+					data = feed[1]["data"]
+					if label == "Book"
+					else
+					end
+				end
+				notifications
 			end
 
 			def self.get_book(title, author_name)

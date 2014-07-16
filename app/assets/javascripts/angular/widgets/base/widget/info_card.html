@@ -124,7 +124,7 @@
 			</div>
 		</div>
 		<div ng-switch-when="3" class="center">
-			<div class="header">Add books you have read</div>
+			<!-- <div class="header">Add books you have read</div> -->
 			<input ng-keypress="search_books($event)" ng-model="search_book" placeholder="Add books you have read..."/>
 	      	<!-- <type-ahead items="search_results" 
 					prompt="Search for the book.." 
@@ -173,14 +173,14 @@
 		</div>
 		<div ng-switch-when="4">
 			<div class="header">Which authors do you like?</div>
-			<type-ahead items="search_results" 
+			<!-- <type-ahead items="search_results" 
 					prompt="Search for the author.." 
 					title="name" 
 					model="searchResults"
 					custom-options = "info_typeahead_options"
 					on-select="add_author()"
 					ng-keypress="get_search_results($event, 'AUTHOR', searchResults)">
-				</type-ahead>
+				</type-ahead> -->
 			<div class="description">
 				Follow authors and their lives...
 			</div>
