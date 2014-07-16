@@ -107,12 +107,12 @@ websiteApp.directive('authorBookmark', ['$rootScope', '$timeout', 'widgetService
         if(bookmark_status == 1){
           $scope.author.bookmark_status = 0;
           var message = "SUCCESS-Author "+author_name+" has been removed from your bookmark shelf.";
-          $scope.$emit('removeFromBookmarks', "AUTHOR", $scope.author);
+          // $scope.$emit('removeFromBookmarks', "AUTHOR", $scope.author);
         }
         else{
           $scope.author.bookmark_status = 1;
           var message = "SUCCESS-AUTHOR "+author_name+" has been added to your bookmark shelf.";
-          $scope.$emit('addToBookmarks', "AUTHOR", $scope.author);
+          // $scope.$emit('addToBookmarks', "AUTHOR", $scope.author);
           $rootScope.$broadcast('glowBookmark');
         }
         var timeout_event = notify($rootScope, message, $timeout);

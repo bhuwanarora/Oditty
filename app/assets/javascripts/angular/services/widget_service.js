@@ -1,7 +1,12 @@
 websiteApp.service('widgetService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
+    
+    this.get_book_feed = function(id){
+        return _deferred_request('/api/v0/book_feed?id='+id);
+    }
+
     this.populate_tooltips = function(id){
     	return _deferred_request('/api/v0/tooltip?id='+id);
-    };
+    }
 
     this.mark_as_read = function(id, data){
     	return _deferred_post_request('/api/v0/mar', {"book_id":id, "data":data});
@@ -11,12 +16,12 @@ websiteApp.service('widgetService', ['$http', '$q', '$rootScope', function ($htt
     	return _deferred_post_request('/api/v0/recommend', {"id":id, "type":type, "data":data});
     }
 
-    this.bookmark = function(type, id, data){
-    	return _deferred_post_request('/api/v0/bookmark', {"id":id, "type":type, "data":data});
+    this.bookmark = function(params){
+    	return _deferred_post_request('/api/v0/bookmark', params);
     }
 
-    this.comment = function(id, type, data){
-    	return _deferred_post_request('/api/v0/comment', {"id":id, "type":type, "data":data});
+    this.comment = function(params){
+    	return _deferred_post_request('/api/v0/comment', params);
     }
 
     this.what_do_you_feel = function(id, type, data){

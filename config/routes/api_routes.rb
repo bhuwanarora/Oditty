@@ -6,6 +6,7 @@ ReadersDoor::Application.routes.draw do
     namespace :v0 do
       match "get_similar_books"                      => 'books_api#get_similar_books',                  :via => [:put, :get, :post]
       match "book"                                   => 'books_api#get_book_details',                   :via => [:put, :get, :post]
+      match "book_feed"                              => 'books_api#get_feed',                           :via => [:put, :get, :post]
       match "tooltip"                                => 'books_api#tooltip',                            :via => [:put, :get, :post]
       match "moments"                                => 'books_api#moments',                            :via => [:put, :get, :post]
       match "affiliate_links"                        => 'books_api#affiliate_links',                    :via => [:put, :get, :post]
@@ -22,6 +23,7 @@ ReadersDoor::Application.routes.draw do
 
       match "track"                                  => 'analytics#track',                              :via => [:put, :get, :post]
       match "search"                                 => 'search_api#search',                            :via => [:put, :get, :post]
+      match "search_books"                           => 'search_api#search_books',                      :via => [:put, :get, :post]
 
       match "genres"                                 => 'website_api#genres',                           :via => [:put, :get, :post]
       match "countries"                              => 'website_api#countries',                        :via => [:put, :get, :post]
@@ -50,8 +52,10 @@ ReadersDoor::Application.routes.draw do
       match 'follow'                                  => 'users_api#follow',                            :via => [:put, :get, :post]
       match 'unfollow'                                => 'users_api#unfollow',                          :via => [:put, :get, :post]
       match 'user_info'                               => 'users_api#user_info',                         :via => [:put, :get, :post]
+      match 'user'                                    => 'users_api#user',                              :via => [:put, :get, :post]
       match 'friends'                                 => 'users_api#get_most_connected_friends',        :via => [:put, :get, :post]
       match 'info_data'                               => 'users_api#get_info_card_data',                :via => [:put, :get, :post]
+      match 'books_read'                              => 'users_api#books_read',                        :via => [:put, :get, :post]
     end
   end
 end

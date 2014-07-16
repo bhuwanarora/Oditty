@@ -1,7 +1,19 @@
 websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
 	
+    this.get_user = function(){
+        return _deferred_request('/api/v0/user');
+    }
+
     this.get_book_details = function(filter){
         return _deferred_request('/api/v0/book?'+filter);
+    }
+
+    this.get_books_read = function(skip_count){
+        return _deferred_request('/api/v0/books_read?skip_count='+skip_count);
+    }
+
+    this.search_books = function(data, skip_count){
+        return _deferred_request('/api/v0/search_books?q='+data+'&skip_count='+skip_count);
     }
 
     this.get_trending_topics = function(){

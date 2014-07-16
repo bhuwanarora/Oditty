@@ -1,14 +1,30 @@
+include UsersGraphHelper
 module Api
 	module V0
 		class WebsiteApi
-			def self.get_labels
+			def self.get_labels user_id
 				neo_init
-				labels = @neo.execute_query("MATCH (l:Label) RETURN l")["data"]
-				output_labels = []
-				for label in labels do
-					output_labels.push label[0]["data"]
+				labels = UsersGraphHelper.get_bookmark_labels user_id
+				labels
+			end
+
+			def self.get_news_feed user_id
+				news_feed = UsersGraphHelper.get_news_feed user_id
+				notifications = []
+
+				for feed in news_feed["data"]
+					type = feed[0][0]
+					data = feed[1]["data"]
+					if type == "User"
+					elsif type == "MarkAsReadNode"
+						notification = self.mark_as_read_notification data
+						notifications.push notification
+					elsif type == "Tweet"
+						notification = self.comment_notification data
+						notifications.push notification
+					end
 				end
-				output_labels
+				notifications.reverse
 			end
 
 			def self.get_time_groups

@@ -12,7 +12,6 @@ module UsersGraphHelper
 		self.mark_as_read(user_id, book_id, "time", time)
 	end
 
-	
 	# ************************************************
 
 	# MATCH (u:User)
@@ -68,15 +67,17 @@ module UsersGraphHelper
 	# ************************************************
 	def self.bookmark_book(user_id, book_id, bookmark_name)
 		#FIXME: bookmark book
-		@neo.execute_query("MATCH (u:User{id:"+user_id+"}), (b:Book{id:"+book_id+"})
-			OPTIONAL MATCH (u)-[r:FeedNext{id:"+user_id+"}]->(top_feed),
-							(u)<-[:Follow]-(f)-[ego:Ego]->(ego_user)
-			CREATE (u)-[:BookmarkAction]->(bm:Bookmark{timestamp:"+Time.now+"})-[:Bookmarked]->(b)
-			CREATE (u)-[:FeedNext]->(bm)-[:FeedNext]->(top_feed)
-			CREATE (f)-[:Ego]->(u)-[:Ego]->(ego_user)
-			DELETE r, ego
-			SET b.bookmark_count = b.bookmark_count + 1
-			SET u.bookmark_count = u.bookmark_count + 1")
+		@neo ||= self.neo_init
+		bookmark_clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" MERGE (bm:Label{name: \""+bookmark_name.strip.upcase+"\"}) CREATE UNIQUE (u)-[:BookmarkAction{timestamp:"+Time.now.to_i.to_s+", user_id:"+user_id.to_s+"}]->(bm)-[:Bookmarked{user_id:"+user_id.to_s+"}]->(b) WITH u, b, m "
+		feednext_clause = "MATCH (u)-[old:FeedNext]->(old_feed) CREATE UNIQUE (u)-[:FeedNext{user_id:"+user_id.to_s+"}]->(bm)-[:FeedNext{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, m "
+		bookfeed_next_clause = "MATCH (b)-[old:BookFeed]->(old_feed) CREATE UNIQUE (b)-[:BookFeed{user_id:"+user_id.to_s+"}]->(bm)-[:BookFeed{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, m "
+		follow_clause = "OPTIONAL MATCH (u)<-[:Follow]-(f) WHERE f <> u WITH u, b, f "
+		ego_clause = "MATCH (f)-[old:Ego]-(old_ego) CREATE UNIQUE (f)-[:Ego{user_id:ID(f)}]->(u)-[:Ego{user_id:ID(f)}]->(old_ego) DELETE old "
+		set_clause = "SET b.bookmark_count = b.bookmark_count + 1  SET u.bookmark_count = u.bookmark_count + 1 "
+		clause = bookmark_clause + feednext_clause + bookfeed_next_clause + follow_clause + ego_clause + set_clause
+		puts clause.blue.on_red
+		puts "BOOK BOOKMARKED".green
+		# @neo.execute_query(clause)
 		#update bookmark cache for the book
 		#update popularity index for the book
 		#update popularity index for the author
@@ -90,7 +91,7 @@ module UsersGraphHelper
 
 	def self.remove_bookmark(user_id, book_id)
 		#FIXME: remove_bookmark
-		@neo.execute_query("MATCH (u:User{id:"+user_id+"})-[r1:BookmarkAction]->(bm:Bookmark)-[r2:Bookmarked]->(b:Book{id:"+book_id+"})
+		@neo.execute_query("MATCH (u:User{id:"+user_id.to_s+"})-[r1:BookmarkAction]->(bm:Bookmark)-[r2:Bookmarked]->(b:Book{id:"+book_id+"})
 			OPTIONAL MATCH (s)-[f1:FeedNext]->(bm)-[f2:FeedNext]->(e)
 			CREATE (s)-[:FeedNext]->(e)
 			SET b.bookmark_count = b.bookmark_count - 1
@@ -184,18 +185,36 @@ module UsersGraphHelper
 
 	end
 
+
+	# ************************************************
+
+	# MATCH (u:User)-[r1:MarkAsReadAction]->(m:MarkAsReadNode)-[r2:MarkAsRead]->(b:Book) 
+	# WHERE ID(u)=USER_ID AND ID(b)=BOOK_ID 
+	# DELETE r1, r2, m
+	# WITH u, b, m
+
+	# MATCH (s)-[f1:FeedNext{user_id:USER_ID}]->(m)-[f2:FeedNext{user_id:USER_ID}]->(e) 
+	# CREATE (s)-[:FeedNext{user_id:USER_ID}]->(e) 
+	# DELETE f1, f2
+	# WITH u, b
+
+	# SET b.readers_count = b.readers_count - 1 
+	# SET u.book_read_count = u.book_read_count - 1 
+
+	# ************************************************
 	def self.mark_as_unread(user_id, book_id)
 		#FIXME mark_as_unread
-		@neo.execute_query("MATCH (u:User{id:"+user_id+"})-[r1:MarkAsReadAction]->(m:MarkAsReadNode)-[r2:MarkAsRead]->(b:Book{id:"+book_id+"})-[:Belongs_to]->(:Category)-[r:Has_root]->(c:Category),
-			(c)<-[r3:Tendency_for]-(u)
-			OPTIONAL MATCH (s)-[f1:FeedNext]->(m)-[f2:FeedNext]->(e)
-			CREATE (s)-[:FeedNext]->(e)
-			SET r3.weight = r3.weight - r.weight
-			SET b.readers_count = b.readers_count - 1
-			SET u.book_read_count = u.book_read_count  1
-			DELETE m, r1, r2, f1, f2
-			WHERE r3.weight = 0
-			DELETE r3")
+		@neo ||= self.neo_init
+		# clause = "MATCH (u:User)-[r1:MarkAsReadAction]->(m:MarkAsReadNode)-[r2:MarkAsRead]->(b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" OPTIONAL MATCH (b)-[:Belongs_to]->(:Category)-[r:Has_root]->(c:Category), (c)<-[r3:Tendency_for]-(u), (s)-[f1:FeedNext]->(m)-[f2:FeedNext]->(e) CREATE (s)-[:FeedNext]->(e) SET r3.weight = r3.weight - r.weight SET b.readers_count = b.readers_count - 1 SET u.book_read_count = u.book_read_count - 1 DELETE m, r1, r2, f1, f2"
+		
+		mark_as_unread_clause = "MATCH (u:User)-[r1:MarkAsReadAction]->(m:MarkAsReadNode)-[r2:MarkAsRead]->(b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" DELETE r1, r2, m WITH u, b, m "
+		feednext_clause = "MATCH (s)-[f1:FeedNext{user_id:"+user_id.to_s+"}]->(m)-[f2:FeedNext{user_id:"+user_id.to_s+"}]->(e) 	CREATE (s)-[:FeedNext{user_id:"+user_id.to_s+"}]->(e) DELETE f1, f2 WITH u, b "
+		set_clause = "SET b.readers_count = b.readers_count - 1 SET u.book_read_count = u.book_read_count - 1 "
+		clause = mark_as_unread_clause + feednext_clause + set_clause
+		# WHERE r3.weight = 0 DELETE r3
+		puts clause.blue.on_red
+		puts "MARK AS UNREAD".green
+		@neo.execute_query(clause)
 		#ego feed update
 		#update mark as read cache for the book
 		#update popularity index for the book
@@ -384,16 +403,104 @@ module UsersGraphHelper
 			DELETE r")
 	end
 
-	def self.create_user
-		@neo.execute_query("CREATE (u:User{name:'"+username+"' like_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0})")
+
+	# ************************************************
+
+	# CREATE (user:User{email:EMAIL, 
+		# verification_token:VERIFICATION_TOKEN, 
+		# password:PASSWORD, 
+		# like_count:0, 
+		# dislike_count:0, 
+		# comment_count:0, 
+		# bookmark_count:0, 
+		# book_read_count:0, 
+		# follows_count:0, 
+		# followed_by_count:0}), 
+	# (user)-[fn:FeedNext{user_id:ID(user)}]->(user), 
+	# (user)-[:Ego{user_id:ID(user)}]->(user)
+	# WITH user
+	# MATCH (bm:Label{basic:true}) 
+	# CREATE (user)-[:BookmarkAction{user_id:ID(user)}]->(bm) 
+
+	# ************************************************
+	def self.create_user(email, password, verification_token)
+		@neo ||= self.neo_init
+		clause = "CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0}), (user)-[fn:FeedNext{user_id:ID(user)}]->(user), (user)-[:Ego{user_id:ID(user)}]->(user) WITH user MATCH(bm:Label) CREATE (user)-[:BookmarkAction{user_id:ID(user)}]->(bm)"
+		puts clause.blue.on_red
+		@neo.execute_query(clause)
 	end
 
-	def self.get_news_feed_for_user user_id
+	# ************************************************
+	
+	# MATCH (u:User)-[:FeedNext*0..]->(news_feed)
+	# WHERE (ID)=USER_ID
+	# RETURN labels(news_feed), news_feed
+
+	# ************************************************
+	def self.get_news_feed user_id
 		#FIXME get_news_feed_for_user
-		@neo.execute_query("MATCH (u:User{id:"+user_id+"})-[:Ego{id:"+user_id+"}]->(ego_user),
-		(ego_user)-[r:FeedNext]->(f)
-		RETURN f, r
-		ORDER r.timestamp DESC")
+		@neo ||= self.neo_init
+		clause = "MATCH (u:User)-[:FeedNext*0..]->(news_feed) WHERE ID(u)="+user_id.to_s+" RETURN labels(news_feed), news_feed"
+		puts clause.blue.on_red
+		@neo.execute_query clause
+	end
+
+	# ************************************************
+
+	# MATCH (u:User)-[r]-() DELETE u, r 
+	# MATCH (u:MarkAsReadNode)-[r]-() DELETE u, r
+
+	# ************************************************
+	def self.delete_user
+		@neo ||= self.neo_init
+		user_delete_clause = "MATCH (u:User)-[r]-() DELETE u, r "
+		mark_as_read_delete_clause = "MATCH (u:MarkAsReadNode)-[r]-() DELETE u, r"
+		clause = user_delete_clause + mark_as_read_delete_clause
+		puts clause.blue.on_red
+		@neo.execute_query clause
+	end
+
+
+	# ************************************************
+
+	# MATCH (u:User), (b:Book)
+	# WHERE ID(u)=USER_ID AND ID(b)=BOOK_ID
+	# CREATE UNIQUE (u)-[:Commented]->(t:Tweet{tweet:tweet["tweet"], timestamp:TIMESTAMP})-[:CommentedOn]->(b)
+	# WITH u, b, t
+
+	# MATCH (u)-[old:FeedNext]->(old_feed)
+	# CREATE UNIQUE (u)-[:FeedNext{user_id:USER_ID}]->(t)-[:FeedNext{user_id:USER_ID}]->(old_feed)
+	# DELETE old
+	# WITH u, b, t
+
+	# MATCH (b)-[old:BookFeed]->(old_feed) 
+	# CREATE UNIQUE (b)-[:BookFeed{user_id:USER_ID}]->(t)-[:BookFeed{user_id:USER_ID}]->(old_feed) 
+	# DELETE old 
+	# WITH u, b, t 
+
+	# OPTIONAL MATCH (u)<-[:Follow]-(f)
+	# WHERE f <> u
+	# WITH u, b, f
+
+	# MATCH (f)-[old:Ego]-(old_ego)
+	# CREATE UNIQUE (f)-[:Ego{user_id: ID(f)}]->(u)-[:Ego{user_id:ID(f)}]->(old_ego)
+	# DELETE old
+
+	# SET u.comment_count = u.comment_count + 1
+	# SET b.comment_count = b.comment_count + 1
+
+	# ************************************************
+	def self.comment_on_book(user_id, book_id, tweet)
+		@neo ||= self.neo_init
+		tweet_clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" CREATE UNIQUE (u)-[:Commented]->(t:Tweet{tweet:\""+tweet["tweet"]+"\", timestamp:"+Time.now.to_i.to_s+", name: u.email, book_id: "+book_id.to_s+", title: b.title, author_name: b.author_name, isbn: b.isbn, user_id: "+user_id.to_s+"})-[:CommentedOn]->(b) WITH u, b, t "
+		feednext_clause = "MATCH (u)-[old:FeedNext]->(old_feed) CREATE UNIQUE (u)-[:FeedNext{user_id:"+user_id.to_s+"}]->(t)-[:FeedNext{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, t "
+		bookfeed_clause = 	"MATCH (b)-[old:BookFeed]->(old_feed) CREATE UNIQUE (u)-[:BookFeed{user_id:"+user_id.to_s+"}]->(t)-[:BookFeed{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, t "
+		follow_clause = "OPTIONAL MATCH (u)<-[:Follow]-(f) WHERE f <> u	WITH u, b, f "
+		ego_clause = "MATCH (f)-[old:Ego]-(old_ego) CREATE UNIQUE (f)-[:Ego{user_id: ID(f)}]->(u)-[:Ego{user_id:ID(f)}]->(old_ego) DELETE old "
+		set_clause = "SET u.comment_count = u.comment_count + 1 SET b.comment_count = b.comment_count + 1"
+		clause = tweet_clause + feednext_clause + bookfeed_clause + follow_clause + ego_clause + set_clause
+		puts clause.blue.on_red
+		@neo.execute_query clause
 	end
 
 

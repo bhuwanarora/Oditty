@@ -9,6 +9,11 @@ module Api
 				render :json => {:results => results}, :status => 200
 			end
 
+			def search_books
+				results = SearchApi.search_books(params[:q].strip, params[:skip_count])
+				render :json => {:results => results}, :status => 200
+			end
+
 		end
 	end
 end

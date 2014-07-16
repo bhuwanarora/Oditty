@@ -258,7 +258,7 @@ module Neo4jHelper
 	def self.init_goodreads_books_reverse
 		# count = GoodReadsBook.where(:neo_flag => true).count
 		t0 = Time.now
-		for id in 1460000..1599029
+		for id in 1599029..1699029
 			t1 = Time.now
 			begin
 				book = GoodReadsBook.find id
@@ -527,14 +527,15 @@ module Neo4jHelper
 	end
 
 	def self.restructure_database
-		puts "Droping existing indexes...".green
-		@neo.delete_schema_index("Book", ["title"])
-		@neo.delete_schema_index("Book", ["author_name"])
-		@neo.delete_schema_index("Author", ["name"])
-		@neo.delete_schema_index("Label", ["name"])
-		@neo.delete_schema_index("ReadTime", ["name"])
-		@neo.delete_schema_index("Era", ["name"])
-		@neo.delete_schema_index("Genre", ["name"])
+		# puts "Droping existing indexes...".green
+		@neo ||= self.init
+		# @neo.delete_schema_index("Book", "title")
+		# @neo.delete_schema_index("Book", "author_name")
+		# @neo.delete_schema_index("Author", "name")
+		# @neo.delete_schema_index("Label", "name")
+		# @neo.delete_schema_index("ReadTime","name")
+		# @neo.delete_schema_index("Era", "name")
+		# @neo.delete_schema_index("Genre", "name")
 		
 		# clause = "MATCH (book:Book) WITH book, toFloat(book.gr_rating)*toFloat(book.gr_ratings_count)*toFloat(book.gr_reviews_count) as weight ORDER BY weight DESC, toFloat(book.gr_rating) WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:Next_book]->(p2))))"
 		# puts "adding books in form of sorted linked lists...".green
@@ -579,6 +580,20 @@ module Neo4jHelper
 		clause = "MATCH (user: User) SET user.indexed_name = LOWER(user.name)"
 		@neo.execute_query clause
 
+		puts "adding index_by name for authors...".green
+		clause = "MATCH (author: Author) SET author.search_index = LOWER(author.name)"
+		@neo.execute_query clause
+
+		puts "adding index_by name for users...".green
+		clause = "MATCH (user: User) SET user.search_index = LOWER(user.name)"
+		@neo.execute_query clause
+
+		puts "set label names to upper case...".green
+		clause = "MATCH (l:Label) SET l.name = UPPER(l.name), l.basic = true"
+		@neo.execute_query clause
+
 		puts "End...".red
 	end
+
+
 end

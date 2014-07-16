@@ -508,8 +508,10 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	        		var json = {"name": value[0], "author_name": value[1]}
 	        		this.push(json);
 	        	}, $scope.search_results);
-	        	var show_all = {"name": "<span class='icon-list'></span><span>&nbsp;&nbsp;Show all results for '<em>"+$scope.search_tag.input+"</em>'</span>", "show_all": true};
-				$scope.search_results.push(show_all);
+	        	if($scope.search_results.length != 0){
+		        	var show_all = {"name": "<span class='icon-list'></span><span>&nbsp;&nbsp;Show all results for '<em>"+$scope.search_tag.input+"</em>'</span>", "show_all": true};
+					$scope.search_results.push(show_all);
+	        	}
 				$scope.search_initiated = false;
 				$timeout.cancel(search_typing_timeout);
 	        });
@@ -643,9 +645,11 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	}
 
 	_get_trends = function(){
-		websiteService.get_trending_topics().then(function(data){
-			$scope.trends = data;
-		});
+		if(angular.isUndefined($scope.$routeParams)){
+			websiteService.get_trending_topics().then(function(data){
+				$scope.trends = data;
+			});
+		}
 	}
 
 	_init = function(){

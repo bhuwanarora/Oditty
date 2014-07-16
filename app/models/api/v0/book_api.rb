@@ -1,3 +1,4 @@
+include BooksGraphHelper
 module Api
 	module V0
 		class BookApi
@@ -11,6 +12,19 @@ module Api
 					s['bookmark_status'] = 1
 					s
 				end
+			end
+
+			def self.get_feed book_id
+				feeds = BooksGraphHelper.get_feed book_id
+				notifications = []
+				for feed in feeds
+					label = feed[0][0]
+					data = feed[1]["data"]
+					if label == "Book"
+					else
+					end
+				end
+				notifications
 			end
 
 			def self.get_book(title, author_name)
@@ -109,7 +123,7 @@ module Api
 					skip_count = 0
 				end
 				@neo = Neography::Rest.new
-				clause = "MATCH (book:Book) WITH book, toInt(book.gr_reviews_count) + toInt(book.gr_ratings_count) AS weight RETURN book, weight as weight ORDER BY weight DESC SKIP "+(10*skip_count.to_i).to_s+" LIMIT 10"
+				clause = "MATCH (book:Book) RETURN book.isbn as isbn, ID(book), book.title, book.author_name SKIP "+(10*skip_count.to_i).to_s+" LIMIT 10"
 				puts clause.blue.on_red
 				begin
 					books =  @neo.execute_query(clause)["data"]
@@ -118,27 +132,27 @@ module Api
 					books = [{:message => "Error in finding books"}]
 					# books =  @neo.execute_query(clause)["data"]
 				end
-				results = []
-				for book in books
-					book = book[0]["data"]
-					isbn = book["isbn"].split(",")[0] rescue nil
-					thumb = "http://covers.openlibrary.org/b/isbn/"+isbn+"-S.jpg" rescue ""
-					book = {
-						:title => book["title"],
-						:author_name => book["author_name"],
-						:thumb => thumb
-					}
-					results.push book
-				end
-				results
+				# results = []
+				# for book in books
+				# 	book = book[0]["data"]
+				# 	isbn = book["isbn"].split(",")[0] rescue nil
+				# 	thumb = "http://covers.openlibrary.org/b/isbn/"+isbn+"-S.jpg" rescue ""
+				# 	book = {
+				# 		:title => book["title"],
+				# 		:author_name => book["author_name"],
+				# 		:thumb => thumb
+				# 	}
+				# 	results.push book
+				# end
+				# results
+				books
 			end
 
 			def self.get_book_details id
 				clause = "MATCH (book:Book) WHERE ID(book)="+id.to_s+" RETURN book"
 				@neo = Neography::Rest.new
 				puts clause.blue.on_red
-				book = @neo.execute_query(clause)["data"]
-				
+				book = @neo.execute_query(clause)["data"][0][0]["data"]
 				info = {
 							:title => book["title"],
 							:author_name => book["author_name"],
@@ -216,7 +230,7 @@ module Api
 				distinct_clause = "ALL (id in "+book_ids.to_s+" WHERE toInt(id) <> ID(book)) "
 				random_clause = "ID(book)%"+random.to_s+"=0 AND rand() > 0.3 "
 				with_clause = "WITH book, toInt(book.gr_ratings_count) * toInt(book.gr_reviews_count) * toInt(book.gr_rating) AS total_weight, toInt(book.gr_ratings_count) * toInt(book.gr_rating) AS rating_weight "
-				return_clause = "RETURN book"
+				return_clause = "RETURN book.isbn as isbn, ID(book)"
 				order_clause = ", total_weight, rating_weight ORDER BY rating_weight DESC, total_weight DESC, book.gr_rating DESC "
 				limit_clause = " LIMIT 10 "
 
@@ -316,13 +330,13 @@ module Api
 					$redis.set 'book_ids', ""
 					books = @neo.execute_query(clause)["data"]
 				end
-				puts books.length.to_s.red.on_blue
-
-
+				# puts books.length.to_s.red.on_blue
 				for book in books
-					node_id = book[0]["self"].gsub("http://localhost:7474/db/data/node/", "")
+					node_id = book[1].to_s
 					book_sent = book_ids.include? node_id
-					# puts "#{book_sent} #{node_id} #{book_ids.split(',').sort.join(',')}"
+					# puts book_ids.to_s.blue.on_red
+					# puts node_id.green.on_red
+					# puts book_sent.to_s.blue.on_yellow
 					unless book_sent
 						if book_ids.present?
 							book_ids = ($redis.get 'book_ids')+","+node_id
@@ -330,69 +344,77 @@ module Api
 							book_ids = node_id
 						end
 						$redis.set 'book_ids', book_ids
-						book = book[0]["data"]
-						isbn = book["isbn"].split(",")[0] rescue nil
-						thumb = "http://covers.openlibrary.org/b/isbn/"+isbn+"-L.jpg" rescue ""
-						book = {
-							:title => book["title"],
-							:author_name => book["author_name"],
-							:rating => book["gr_rating"].to_f*2,
-							:readers_count => book["gr_ratings_count"],
-							:discussions_count => book["gr_reviews_count"],
-							:reviews_count => book["gr_reviews_count"],
-							:published_year => book["published_year"],
-							:page_count => book["page_count"],
-							:thumb => {
-								:url => thumb
-							},
-							:category => {
-								:name => category
-							},
-							:summary => book["description"],
-							:users => [
-								{
-									:id => 1,
-									:url => "",
-									:name => "test user",
-									:thumb => "assets/profile_pic.jpeg"
-								},
-								{
-									:id => 2,
-									:url => "",
-									:name => "test user",
-									:thumb => "assets/profile_pic.jpeg"
-								},
-								{
-									:id => 3,
-									:url => "",
-									:name => "test user",
-									:thumb => "assets/profile_pic.jpeg"
-								},
-								{
-									:id => 4,
-									:url => "",
-									:name => "test user",
-									:thumb => "assets/profile_pic.jpeg"
-								},
-								{
-									:id => 5,
-									:url => "",
-									:name => "test user",
-									:thumb => "assets/profile_pic.jpeg"
-								},
-								{
-									:id => 6,
-									:url => "",
-									:name => "test user",
-									:thumb => "assets/profile_pic.jpeg"
-								}
-							],
-							:users_count => 15
-						}
 						results.push book
 					end
 				end
+				# for book in books
+				# 	node_id = book[0]["self"].gsub("http://localhost:7474/db/data/node/", "")
+				# 	book_sent = book_ids.include? node_id
+				# 	# puts "#{book_sent} #{node_id} #{book_ids.split(',').sort.join(',')}"
+				# 		book = book[0]["data"]
+				# 		isbn = book["isbn"].split(",")[0] rescue nil
+				# 		thumb = "http://covers.openlibrary.org/b/isbn/"+isbn+"-L.jpg" rescue ""
+				# 		book = {
+				# 			:title => book["title"],
+				# 			:author_name => book["author_name"],
+				# 			:rating => book["gr_rating"].to_f*2,
+				# 			:readers_count => book["gr_ratings_count"],
+				# 			:discussions_count => book["gr_reviews_count"],
+				# 			:reviews_count => book["gr_reviews_count"],
+				# 			:published_year => book["published_year"],
+				# 			:page_count => book["page_count"],
+				# 			:thumb => {
+				# 				:url => thumb
+				# 			},
+				# 			:category => {
+				# 				:name => category
+				# 			},
+				# 			:summary => book["description"],
+				# 			:users => [
+				# 				{
+				# 					:id => 1,
+				# 					:url => "",
+				# 					:name => "test user",
+				# 					:thumb => "assets/profile_pic.jpeg"
+				# 				},
+				# 				{
+				# 					:id => 2,
+				# 					:url => "",
+				# 					:name => "test user",
+				# 					:thumb => "assets/profile_pic.jpeg"
+				# 				},
+				# 				{
+				# 					:id => 3,
+				# 					:url => "",
+				# 					:name => "test user",
+				# 					:thumb => "assets/profile_pic.jpeg"
+				# 				},
+				# 				{
+				# 					:id => 4,
+				# 					:url => "",
+				# 					:name => "test user",
+				# 					:thumb => "assets/profile_pic.jpeg"
+				# 				},
+				# 				{
+				# 					:id => 5,
+				# 					:url => "",
+				# 					:name => "test user",
+				# 					:thumb => "assets/profile_pic.jpeg"
+				# 				},
+				# 				{
+				# 					:id => 6,
+				# 					:url => "",
+				# 					:name => "test user",
+				# 					:thumb => "assets/profile_pic.jpeg"
+				# 				}
+				# 			],
+				# 			:users_count => 15
+				# 		}
+				# 		results.push book
+				# 	end
+				# end
 				results
+				# books
 			end
 
 			def self.detailed_book id

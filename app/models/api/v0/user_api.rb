@@ -1,28 +1,34 @@
+include UsersGraphHelper
 module Api
 	module V0
 		class UserApi
 
-			def self.authenticate params
+			def self.authenticate(session, params)
 				authenticate = false
 				info = {}
 				signin = params[:old_user]
 				email = params[:email]
 				@neo = Neography::Rest.new
-				clause = "MATCH (user:User{email:\""+email+"\"}) RETURN user"
+				clause = "MATCH (user:User{email:\""+email+"\"}) RETURN user, ID(user) as id"
 				puts clause.blue.on_red
 				user = @neo.execute_query(clause)["data"]
 				if signin
-					if  user[0][0]["data"]["password"] == params[:password] &&  user[0][0]["data"]["verified"]
-						authenticate = true
-						# request.session[:email] = email
-						info = {:profile_status => 0, :user_id => 1}
-						message = "Logged in successfully."
-					elsif  user[0][0]["data"]["password"] != params[:password]
-						message = "Email and password doesn't match."
-					elsif ! user[0][0]["data"]["verified"]
-						message = "Please verify your email address."
-					else
-						message = "Email and password doesn't match."
+					begin
+						if  user[0][0]["data"]["password"] == params[:password] &&  user[0][0]["data"]["verified"]
+							authenticate = true
+							session[:user_id] = user[0][1]
+							# request.session[:email] = email
+							info = {:profile_status => 0, :user_id => user[0][1]}
+							message = "Logged in successfully."
+						elsif  user[0][0]["data"]["password"] != params[:password]
+							message = "Email and password doesn't match."
+						elsif ! user[0][0]["data"]["verified"]
+							message = "Please verify your email address."
+						else
+							message = "Email and password doesn't match."
+						end
+					rescue => err
+						message = "Email not registered."
 					end
 				else
 					verification_token = SecureRandom.hex
@@ -39,8 +45,7 @@ module Api
 						end
 					else
 						#FIXME: create new user in the graph
-						clause = "CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+params[:password]+"\"})"
-						@neo.execute_query clause
+						UsersGraphHelper.create_user(email, params[:password], verification_token)
 						SubscriptionMailer.invite(invitation).deliver
 						message = "We have sent you an email with an activation link. Please activate your account."
 					end

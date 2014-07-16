@@ -20,7 +20,7 @@
 <div class="arrow" ng-class="{'arrow_left': on_left, 'arrow_right': !on_left}"></div>
 <!-- <div class="close button_effect" ng-click="close_focused_tooltip()">x</div> -->
 <div class="header">
-  <div class="title">{{focused_book.title}} by {{focused_book.author_name}} </div>
+  <div class="title">{{focused_book.title | book_title}} by {{focused_book.author_name}} </div>
   <div class="author">
     <span ng-if="focused_book.published_year">
       {{focused_book.published_year | published_year}}</span>

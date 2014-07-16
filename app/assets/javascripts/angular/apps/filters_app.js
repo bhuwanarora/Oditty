@@ -17,6 +17,14 @@ angular.module('filtersApp', [])
       return output;
     }
   })
+  .filter('book_title', function(){
+    return function(input){
+      if(input.length > 55){
+        input = input.slice(0, 53)+"...";
+      }
+      return input;
+    }
+  })
   .filter('published_year', function(){
     return function(input){
       var inputs = input.split(" ");
@@ -93,9 +101,20 @@ angular.module('filtersApp', [])
   })
   .filter('thumb', function(){
     return function(isbn_string){
-      var isbn = isbn_string.split(",");
-      var thumb = "http://covers.openlibrary.org/b/isbn/"+isbn[0]+"-L.jpg"
-      return thumb;
+      if(isbn_string){
+        var isbn = isbn_string.split(",");
+        var thumb = "http://covers.openlibrary.org/b/isbn/"+isbn[0]+"-L.jpg"
+        return thumb;
+      }
+    }
+  })
+  .filter('small_thumb', function(){
+    return function(isbn_string){
+      if(isbn_string){
+        var isbn = isbn_string.split(",");
+        var thumb = "http://covers.openlibrary.org/b/isbn/"+isbn[0]+"-S.jpg"
+        return thumb;
+      }
     }
   })
   .filter('is_present', function(){
