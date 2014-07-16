@@ -15,7 +15,7 @@ module UsersGraphHelper
 	# ************************************************
 	def self.get_bookmark_labels user_id
 		@neo ||= self.neo_init
-		clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" OPTIONAL MATCH (u)-[:BookmarkAction{user_id:"+user_id.to_s+"}]->(bm:Label) RETURN bm.name"
+		clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" OPTIONAL MATCH (u)-[:Labelled]->(bm:Label) RETURN bm.name"
 		puts clause.blue.on_red
 		@neo.execute_query(clause)["data"]
 	end
@@ -23,6 +23,13 @@ module UsersGraphHelper
 	def self.get_books_read(user_id, skip_count=0)
 		@neo ||= self.neo_init
 		clause = "MATCH (u:User)-[:MarkAsReadAction]->(m:MarkAsReadNode)-[:MarkAsRead]->(b:Book) WHERE ID(u)="+user_id.to_s+" RETURN b.isbn as isbn, ID(b), m.timestamp as timestamp ORDER BY timestamp SKIP "+skip_count.to_s+" LIMIT 10"
+		puts clause.blue.on_red
+		@neo.execute_query(clause)["data"]
+	end
+
+	def self.get_books_bookmarked(user_id, skip_count=0)
+		@neo ||= self.neo_init
+		clause = "MATCH (u:User)-[r:BookmarkAction]->(bm:BookmarkNode)-[:Bookmarked]->(b:Book) WHERE ID(u)="+user_id.to_s+" RETURN b.isbn as isbn, ID(b), bm.name as label, r.timestamp as timestamp ORDER BY timestamp SKIP "+skip_count.to_s
 		puts clause.blue.on_red
 		@neo.execute_query(clause)["data"]
 	end
@@ -64,17 +71,17 @@ module UsersGraphHelper
 	def self.bookmark_book(user_id, book_id, bookmark_name)
 		#FIXME: bookmark book
 		@neo ||= self.neo_init
-		bookmark_clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" CREATE (u)-[:BookmarkAction{timestamp:"+Time.now.to_i.to_s+", user_id:"+user_id.to_s+"}]->(bm:BookmarkNode{name: BOOKMARK_NAME})-[:Bookmarked{user_id:"+user_id.to_s+"}]->(b) WITH u, b, m "
-		label_clause = "MERGE (bm:Label{name: \""+bookmark_name.strip.upcase+"\"}) CREATE UNIQUE (b)<-[:BookmarkedOn]-(l)<-[:Labelled]-(u) WITH u, b, bm, l "
-		feednext_clause = "MATCH (u)-[old:FeedNext]->(old_feed) CREATE UNIQUE (u)-[:FeedNext{user_id:"+user_id.to_s+"}]->(bm)-[:FeedNext{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, m "
-		bookfeed_next_clause = "MATCH (b)-[old:BookFeed]->(old_feed) CREATE UNIQUE (b)-[:BookFeed{user_id:"+user_id.to_s+"}]->(bm)-[:BookFeed{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, m "
+		bookmark_clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" CREATE (u)-[:BookmarkAction{timestamp:"+Time.now.to_i.to_s+", user_id:"+user_id.to_s+"}]->(bm:BookmarkNode{name: \""+bookmark_name.strip.upcase+"\"})-[:Bookmarked{user_id:"+user_id.to_s+"}]->(b) WITH u, b, bm "
+		label_clause = "MERGE (l:Label{name: \""+bookmark_name.strip.upcase+"\"}) CREATE UNIQUE (b)<-[:BookmarkedOn]-(l)<-[:Labelled]-(u) WITH u, b, bm, l "
+		feednext_clause = "MATCH (u)-[old:FeedNext]->(type_feed) CREATE UNIQUE (u)-[:FeedNext{user_id:"+user_id.to_s+"}]->(bm)-[:FeedNext{user_id:"+user_id.to_s+"}]->(type_feed) DELETE old WITH u, b, bm "
+		bookfeed_next_clause = "MATCH (b)-[old:BookFeed]->(old_feed) CREATE UNIQUE (b)-[:BookFeed{user_id:"+user_id.to_s+"}]->(bm)-[:BookFeed{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, bm "
 		follow_clause = "OPTIONAL MATCH (u)<-[:Follow]-(f) WHERE f <> u WITH u, b, f "
 		ego_clause = "MATCH (f)-[old:Ego]-(old_ego) CREATE UNIQUE (f)-[:Ego{user_id:ID(f)}]->(u)-[:Ego{user_id:ID(f)}]->(old_ego) DELETE old "
 		set_clause = "SET b.bookmark_count = b.bookmark_count + 1  SET u.bookmark_count = u.bookmark_count + 1 "
-		clause = bookmark_clause + label_clause+ feednext_clause + bookfeed_next_clause + follow_clause + ego_clause + set_clause
+		clause = bookmark_clause + label_clause + feednext_clause + bookfeed_next_clause + follow_clause + ego_clause + set_clause
 		puts clause.blue.on_red
 		puts "BOOK BOOKMARKED".green
-		# @neo.execute_query(clause)
+		@neo.execute_query(clause)
 		#update bookmark cache for the book
 		#update popularity index for the book
 		#update popularity index for the author
@@ -86,14 +93,50 @@ module UsersGraphHelper
 		#update news feed for the user
 	end
 
-	def self.remove_bookmark(user_id, book_id)
+	# ************************************************
+
+	# MATCH (u:User), (b:Book)
+	# WHERE ID(u)=USER_ID AND ID(b)=BOOK_ID
+	# MATCH (u)-[r1:BookmarkAction{user_id:USER_ID}]->(bm:BookmarkNode{name: BOOKMARK_NAME})-[r2:Bookmarked{user_id:USER_ID}]->(b) 
+	# DELETE r1, bm,r2
+	# WITH u, b, bm
+
+	# MATCH  (b)<-[r3:BookmarkedOn]-(l:Label{name: BOOKMARK_NAME})<-[:Labelled]-(u)
+	# DELETE r3
+	# WITH u, b, bm, l
+
+	# MATCH (s)-[f1:FeedNext{user_id:USER_ID}]->(bm)-[f2:FeedNext{user_id:USER_ID}]->(e) 
+	# CREATE (s)-[:FeedNext{user_id:USER_ID}]->(e) 
+	# DELETE f1, f2
+	# WITH u, b, bm
+
+	# MATCH (s)-[b1:BookFeed{user_id:USER_ID}]->(bm)-[b2:BookFeed{user_id:USER_ID}]->(e) 
+	# CREATE (s)-[:BookFeed{user_id:USER_ID}]->(e)
+	# DELETE b1, b2
+	# WITH u, b
+
+	# SET b.bookmark_count = b.bookmark_count - 1  
+	# SET u.bookmark_count = u.bookmark_count - 1 
+
+	# ************************************************
+
+	def self.remove_bookmark(user_id, book_id, bookmark_name)
 		#FIXME: remove_bookmark
-		@neo.execute_query("MATCH (u:User{id:"+user_id.to_s+"})-[r1:BookmarkAction]->(bm:Bookmark)-[r2:Bookmarked]->(b:Book{id:"+book_id+"})
-			OPTIONAL MATCH (s)-[f1:FeedNext]->(bm)-[f2:FeedNext]->(e)
-			CREATE (s)-[:FeedNext]->(e)
-			SET b.bookmark_count = b.bookmark_count - 1
-			SET u.bookmark_count = u.bookmark_count - 1
-			DELETE bm, r1, r2, f1, f2")
+	remove_bookmark_node_clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" MATCH (u)-[r1:BookmarkAction{user_id:"+user_id.to_s+"}]->(bm:BookmarkNode{name: \""+bookmark_name.strip.upcase+"\"})-[r2:Bookmarked{user_id:"+user_id.to_s+"}]->(b) DELETE r1, bm,r2 WITH u, b, bm "
+		remove_bookmark_label_on_clause = "MATCH  (b)<-[r3:BookmarkedOn]-(l:Label{name: \""+bookmark_name.strip.upcase+"\"})<-[:Labelled]-(u) DELETE r3 WITH u, b, bm, l "
+		feednext_clause = "MATCH (s)-[f1:FeedNext{user_id:"+user_id.to_s+"}]->(bm)-[f2:FeedNext{user_id:"+user_id.to_s+"}]->(e) CREATE (s)-[:FeedNext{user_id:"+user_id.to_s+"}]->(e) DELETE f1, f2 WITH u, b, bm "
+		bookfeed_next_clause = "MATCH (s)-[b1:BookFeed{user_id:"+user_id.to_s+"}]->(bm)-[b2:BookFeed{user_id:"+user_id.to_s+"}]->(e)CREATE (s)-[:BookFeed{user_id:"+user_id.to_s+"}]->(e) DELETE b1, b2 WITH u, b "
+		set_clause = "SET b.bookmark_count = b.bookmark_count - 1  SET u.bookmark_count = u.bookmark_count - 1"
+		clause = remove_bookmark_node_clause + remove_bookmark_label_on_clause + feednext_clause + bookfeed_next_clause + set_clause
+		puts clause.blue.on_red
+		puts "REMOVE BOOKMARKED".green
+		@neo.execute_query(clause)
+		# @neo.execute_query("MATCH (u:User{id:"+user_id.to_s+"})-[r1:BookmarkAction]->(bm:Bookmark)-[r2:Bookmarked]->(b:Book{id:"+book_id+"})
+		# 	OPTIONAL MATCH (s)-[f1:FeedNext]->(bm)-[f2:FeedNext]->(e)
+		# 	CREATE (s)-[:FeedNext]->(e)
+		# 	SET b.bookmark_count = b.bookmark_count - 1
+		# 	SET u.bookmark_count = u.bookmark_count - 1
+		# 	DELETE bm, r1, r2, f1, f2")
 		#ego feed update
 		#update bookmark cache for the book
 		#update popularity index for the book
@@ -422,5 +465,11 @@ module UsersGraphHelper
 		@neo.execute_query clause
 	end
 
+	# MATCH ()-[r:BookmarkAction]-() DELETE (r)
+	# MATCH ()-[r:Bookmarked]-() DELETE (r)
+	# MATCH ()-[r:BookmarkedOn]-() DELETE (r)
+	# MATCH ()-[r:Labelled]-() DELETE (r)
+	# MATCH ()-[r:FeedNext]-() DELETE (r)
+	# MATCH (b:Book)-[r:BookFeed]-(:BookmarkNode) CREATE (b)-[:BookFeed]->(b) DELETE (r)
 
 end

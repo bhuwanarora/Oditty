@@ -16,7 +16,7 @@ module Api
 					type = feed[0][0]
 					data = feed[1]["data"]
 					if type == "User"
-					else type == "MarkAsReadNode"
+					elsif type == "MarkAsReadNode"
 						notification = self.mark_as_read_notification data
 						notifications.push notification
 					end
@@ -45,7 +45,7 @@ module Api
 					:book => {
 						:id => data["book_id"],
 						:title => data["title"],
-						:author_name => data["author_name"],
+						:author_name => data["author"],
 						:isbn => data["isbn"]
 					},
 					:user => {

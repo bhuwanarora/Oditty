@@ -12,6 +12,12 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def books_bookmarked
+				user_id = session[:user_id]
+				info = UsersGraphHelper.get_books_bookmarked(user_id, params[:skip_count])
+				render :json => info, :status => 200
+			end
+
 			def own
 				render :json => {:message => "Success"}, :status => 200
 			end

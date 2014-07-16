@@ -8,6 +8,10 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         return _deferred_request('/api/v0/book?'+filter);
     }
 
+    this.get_books_bookmarked = function(skip_count){
+        return _deferred_request('/api/v0/books_bookmarked?skip_count='+skip_count);
+    }
+
     this.get_books_read = function(skip_count){
         return _deferred_request('/api/v0/books_read?skip_count='+skip_count);
     }

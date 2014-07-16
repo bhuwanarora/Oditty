@@ -379,6 +379,14 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 					$scope.bookmark_selected = true;
 					$scope.read_selected = false;
 					$scope.glowBookmark = false;
+					// websiteService.get_books_bookmarked(0).then(function(data){
+					// 	$rootScope.user.books['bookmarked'] = [];
+					// 	angular.forEach(data, function(value){
+					// 		var label_name = value[2];
+					// 		var json = {"isbn": value[0], "id": value[1], "bookmark_status": true, "labels[label_name]['checked']": true};
+					// 		this.push(json);
+					// 	},  $rootScope.user.books['bookmarked']);
+					// });
 					// $('body').css('background-image', $scope.search_style['background-image']);
 				}
 				event.stopPropagation();

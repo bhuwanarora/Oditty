@@ -57,7 +57,8 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/base/book/interaction_box.html',
-    "<div class=\"wrapper\" ng-click=\"close_interaction_box()\" msd-wheel=\"stop_horizontal_scroll($event)\" ng-if=\"focused_book.interact\" style=\"z-index: 7\"><div class=\"interaction_box_options\"><div ng-repeat=\"item in hash_tags track by $index\" ng-click=\"handle_selection(item.name)\" ng-class=\"{active:is_current($index, item.name)}\" ng-mouseenter=\"set_current($index)\" class=\"option\"><div class=\"title\">{{item.name}}</div><div ng-show=\"item.author_name\">by {{item.author_name}}</div></div></div><div class=\"interaction_box animate-fast\" ng-click=\"stop_propagation($event)\"><div><span class=\"highlighter\" ng-bind-html=\"focused_book.hash_tagged_comment\"></span><textarea itemprop=\"commentText\" itemtype=\"http://schema.org/UserComments\" set-focus=\"focused_book.interact\" type=\"text\" ng-paste=\"update_hashtagged_comment()\" ng-model=\"focused_book.current_comment\" ng-keydown=\"handle_backspace($event)\" placeholder=\"What do you feel about {{focused_book.title}} by {{focused_book.author_name}}...\" class=\"comment_box animate-fast\" ng-keypress=\"handle_hash_tags($event)\" ng-keyup=\"key_up()\" rows=\"1\">\n" +
+    "<div class=\"wrapper\" ng-click=\"close_interaction_box()\" msd-wheel=\"stop_horizontal_scroll($event)\" ng-if=\"focused_book.interact\" style=\"z-index: 7\"><div class=\"interaction_box_options\"><div ng-repeat=\"item in hash_tags track by $index\" ng-click=\"handle_selection(item.name)\" ng-class=\"{active:is_current($index, item.name)}\" ng-mouseenter=\"set_current($index)\" class=\"option\"><div class=\"title\">{{item.name}}</div><div ng-show=\"item.author_name\">by {{item.author_name}}</div></div></div><div class=\"interaction_box animate-fast\" ng-click=\"stop_propagation($event)\"><div><span class=\"highlighter\" ng-bind-html=\"focused_book.hash_tagged_comment\"></span><textarea itemprop=\"commentText\" itemtype=\"http://schema.org/UserComments\" set-focus=\"focused_book.interact\" type=\"text\" ng-paste=\"update_hashtagged_comment()\" ng-model=\"focused_book.current_comment\" ng-keydown=\"handle_backspace($event)\" placeholder=\"What do you feel about {{focused_book.title}} by {{focused_book.author_name}}...\" class=\"comment_box animate-fast\" ng-keypress=\"handle_hash_tags($event)\" ng-keyup=\"key_up()\" rows=\"1\">\r" +
+    "\n" +
     "\t\t\t</textarea></div><div>{{focused_book.hash_tagged_comment}}</div><div class=\"character_count\">{{140 - focused_book.current_comment.length}} characters left</div></div><div class=\"scrollbar tweets\" ng-click=\"stop_propagation($event)\"><div class=\"tweet\" ng-repeat=\"tweet in focused_book.tweets | reverse\"><div class=\"inline_block_left\"><user-thumb></user-thumb></div><div class=\"tweet_text\" ng-bind-html=\"tweet.tweet\"></div></div></div></div>"
   );
 
@@ -78,9 +79,12 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/base/book/rate.html',
-    "<div itemprop=\"review\" itemscope=\"\" itemtype=\"http://schema.org/Review\" class=\"rate\"><div class=\"rate_radio_buttons\"><span>&nbsp;Rate this book</span> <span type=\"radio\" class=\"rate_radio\" ng-class=\"{'yellow_color icon-star22':is_active($index) && !rate_object.rated,\n" +
-    "\t\t\t   'icon-star':!is_active($index),\n" +
-    "\t\t\t   'dark_blue_color icon-star22':ready_to_rate && is_active($index),\n" +
+    "<div itemprop=\"review\" itemscope=\"\" itemtype=\"http://schema.org/Review\" class=\"rate\"><div class=\"rate_radio_buttons\"><span>&nbsp;Rate this book</span> <span type=\"radio\" class=\"rate_radio\" ng-class=\"{'yellow_color icon-star22':is_active($index) && !rate_object.rated,\r" +
+    "\n" +
+    "\t\t\t   'icon-star':!is_active($index),\r" +
+    "\n" +
+    "\t\t\t   'dark_blue_color icon-star22':ready_to_rate && is_active($index),\r" +
+    "\n" +
     "\t\t\t   'purple_color icon-star22':rate_object.rated && is_active($index) && !ready_to_rate}\" ng-mouseenter=\"show_if_rated($index)\" ng-mouseleave=\"reset_rating()\" ng-click=\"mark_as_rated($index, $event)\" ng-repeat=\"i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\"></span> <span ng-model=\"rate_object.user_rating\">{{rate_object.user_rating}}/10</span></div></div>"
   );
 
@@ -96,7 +100,8 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/base/reader/message_box.html',
-    "<div class=\"message_box animate-fast action_button\" ng-if=\"reader.show_message_box\"><div class=\"close_button button_effect\" ng-click=\"close_message_box()\">x</div><textarea type=\"text\" placeholder=\"type and enter to send message..\" class=\"comment_box animate-fast\" rows=\"1\">\n" +
+    "<div class=\"message_box animate-fast action_button\" ng-if=\"reader.show_message_box\"><div class=\"close_button button_effect\" ng-click=\"close_message_box()\">x</div><textarea type=\"text\" placeholder=\"type and enter to send message..\" class=\"comment_box animate-fast\" rows=\"1\">\r" +
+    "\n" +
     "</div>"
   );
 
@@ -147,25 +152,44 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/partials/book/discussion.html',
-    "<div class=\"discussion\" ng-class=\"{'grey_background':!is_even({{index}})}\"><div class=\"user\" ns-popover=\"\" ns-popover-template=\"userPopover\" ns-popover-trigger=\"mouseover\" ns-popover-timeout=\"0\" hide-on-click=\"false\" ns-popover-ns-popover-placement=\"bottom|left\"><img ng-src=\"{{discussion.user.thumb}}\" class=\"thumb\"></div><div class=\"comment\" itemscope=\"\" itemtype=\"http://schema.org/UserComments\"><div class=\"username\"><div itemprop=\"creator \" itemscope=\"\" itemtype=\"http://schema.org/Person\"><span itemprop=\"name\">{{discussion.user.name}}</span> {{index}}</div></div><div class=\"comment_text\"><span itemprop=\"commentText\">{{discussion.comment}}</span></div><div class=\"footer\"><span class=\"like\">Like</span> <span class=\"dislike\">Dislike</span> <span class=\"post_comment\"><u>Comment</u></span> <span itemprop=\"commentTime\">{{discussion.timestamp}}</span></div><div class=\"comment_big_box\" style=\"display:none\"><input class=\"comment_box\" placeholder=\"Press enter to send...\"></div></div></div><script type=\"text/ng-template\" id=\"userPopover\"><div class=\"triangle\"></div>\n" +
-    "  \t<div class=\"tooltip user_tooltip\">\n" +
-    "    \t<div class=\"header\">\n" +
-    "    \t\tUsername from Country or state\n" +
-    "    \t</div>\n" +
-    "    \t<hr>\n" +
-    "    \t<div class=\"details\">\n" +
-    "    \t\t<span class=\"count\">N </span><span>books read</span> · \n" +
-    "    \t\t<span class=\"count\">N </span><span>profile views</span> · \n" +
-    "    \t\t<span class=\"count\">N </span><span>followers</span> · \n" +
-    "    \t\t<span>Following</span><span class=\"count\"> N</span><span> readers</span>\n" +
-    "    \t</div>\n" +
-    "    \t<div class=\"recommends\">\n" +
-    "    \t</div>\n" +
-    "    \t<div class=\"footer\">\n" +
-    "    \t\t<span class=\"timestamp\">Member Since</span>\n" +
-    "    \t\t<span class=\"follow\">Follow</span>\n" +
-    "    \t\t<span class=\"send_message\">Message</span>\n" +
-    "    \t</div>\n" +
+    "<div class=\"discussion\" ng-class=\"{'grey_background':!is_even({{index}})}\"><div class=\"user\" ns-popover=\"\" ns-popover-template=\"userPopover\" ns-popover-trigger=\"mouseover\" ns-popover-timeout=\"0\" hide-on-click=\"false\" ns-popover-ns-popover-placement=\"bottom|left\"><img ng-src=\"{{discussion.user.thumb}}\" class=\"thumb\"></div><div class=\"comment\" itemscope=\"\" itemtype=\"http://schema.org/UserComments\"><div class=\"username\"><div itemprop=\"creator \" itemscope=\"\" itemtype=\"http://schema.org/Person\"><span itemprop=\"name\">{{discussion.user.name}}</span> {{index}}</div></div><div class=\"comment_text\"><span itemprop=\"commentText\">{{discussion.comment}}</span></div><div class=\"footer\"><span class=\"like\">Like</span> <span class=\"dislike\">Dislike</span> <span class=\"post_comment\"><u>Comment</u></span> <span itemprop=\"commentTime\">{{discussion.timestamp}}</span></div><div class=\"comment_big_box\" style=\"display:none\"><input class=\"comment_box\" placeholder=\"Press enter to send...\"></div></div></div><script type=\"text/ng-template\" id=\"userPopover\"><div class=\"triangle\"></div>\r" +
+    "\n" +
+    "  \t<div class=\"tooltip user_tooltip\">\r" +
+    "\n" +
+    "    \t<div class=\"header\">\r" +
+    "\n" +
+    "    \t\tUsername from Country or state\r" +
+    "\n" +
+    "    \t</div>\r" +
+    "\n" +
+    "    \t<hr>\r" +
+    "\n" +
+    "    \t<div class=\"details\">\r" +
+    "\n" +
+    "    \t\t<span class=\"count\">N </span><span>books read</span> · \r" +
+    "\n" +
+    "    \t\t<span class=\"count\">N </span><span>profile views</span> · \r" +
+    "\n" +
+    "    \t\t<span class=\"count\">N </span><span>followers</span> · \r" +
+    "\n" +
+    "    \t\t<span>Following</span><span class=\"count\"> N</span><span> readers</span>\r" +
+    "\n" +
+    "    \t</div>\r" +
+    "\n" +
+    "    \t<div class=\"recommends\">\r" +
+    "\n" +
+    "    \t</div>\r" +
+    "\n" +
+    "    \t<div class=\"footer\">\r" +
+    "\n" +
+    "    \t\t<span class=\"timestamp\">Member Since</span>\r" +
+    "\n" +
+    "    \t\t<span class=\"follow\">Follow</span>\r" +
+    "\n" +
+    "    \t\t<span class=\"send_message\">Message</span>\r" +
+    "\n" +
+    "    \t</div>\r" +
+    "\n" +
     "  </div></script>"
   );
 
@@ -246,7 +270,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/partials/ticker_popup.html',
-    "<div class=\"ticker_overflow\" ng-style=\"ticker_popup_style\"><div class=\"recommendation_block\"><book data=\"ticker_popup\"></book></div></div>"
+    "<div class=\"scrollbar ticker_overflow\" ng-style=\"ticker_popup_style\"><div class=\"recommendation_block\"><book data=\"ticker_popup\"></book></div></div>"
   );
 
 

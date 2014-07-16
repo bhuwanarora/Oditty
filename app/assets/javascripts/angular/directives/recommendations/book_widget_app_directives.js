@@ -64,12 +64,14 @@ websiteApp.directive('book', ['websiteService', '$rootScope', function (websiteS
         // $scope.active_book_filter = true;
         var book_id = $scope.book.id;
         console.debug("%c _init book"+book_id, "color: purple");
-        $scope.book.labels = [];
         $scope.book.tweets = [];
         $scope.book.show_labels = false;
-        angular.forEach($rootScope.labels, function(value){
-          this.push({"name": value.name});
-        }, $scope.book.labels);
+        if(!angular.isArray($scope.book.labels)){
+          $scope.book.labels = [];
+          angular.forEach($rootScope.labels, function(value){
+            this.push({"name": value.name});
+          }, $scope.book.labels);
+        }
         websiteService.get_book_details("id="+book_id).then(function(data){
           angular.extend($scope.book, data);
         });
@@ -209,8 +211,8 @@ websiteApp.directive('bookBookmark', ['$rootScope', '$timeout', 'widgetService',
   };
 }]);
 
-websiteApp.directive('bookInteract', ['$rootScope', '$timeout',
-  function ($rootScope, $timeout) {
+websiteApp.directive('bookInteract', ['$rootScope', '$timeout', 'widgetService',
+  function ($rootScope, $timeout, widgetService){
   return {
     restrict: 'E',
     controller: ['$scope', function($scope){
@@ -245,6 +247,7 @@ websiteApp.directive('bookInteract', ['$rootScope', '$timeout',
                   "name": $scope.book.custom_bookmark,
                   "data": true};
             widgetService.bookmark(params);
+            $scope.book.custom_bookmark = "";
           }
         }
       }
@@ -814,7 +817,6 @@ function add_custom_bookmark($scope, $rootScope, $timeout){
       $scope.book.bookmark_status = 1;
       $rootScope.labels = $rootScope.labels.concat([{"name": custom_bookmark}]);
       $scope.book.labels = $scope.book.labels.concat([{"name": custom_bookmark, "checked": true}]);
-      $scope.book.custom_bookmark = "";
       var message = "SUCCESS-Custom Bookmark "+custom_bookmark+" added to book "+$scope.book.title;
     }
 
