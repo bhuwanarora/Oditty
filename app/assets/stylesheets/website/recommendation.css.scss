@@ -1136,11 +1136,14 @@ and (min-width : 1824px) {
 	word-wrap: break-word;
 }
 
-.left_column{
-	overflow: auto;
+.column_wrapper{
 	left: 10px;
 	top: 90px;
 	position: fixed;
+}
+
+.left_column{
+	overflow: auto;
 	z-index: 2;
 	box-shadow: 8px 0 43px 0 rgba(66,66,66,.47);
 }
@@ -1157,7 +1160,12 @@ and (min-width : 1824px) {
 	min-width: 337px;
 	position: fixed;
 	z-index: 3;
-	padding: 4px 15px 4px 15px;
+	padding: 4px 0px 4px 15px;
+}
+
+.relative_position{
+	position: relative;
+	overflow: visible;
 }
 
 .notifications .arrow_left{
@@ -1167,16 +1175,23 @@ and (min-width : 1824px) {
 	border-bottom: 10px solid transparent;
 	width: 0; 
 	height: 0;
-	left: -11px;
+	left: 250px;
 	border-right: 10px solid white; 
 }
 
 .ticker_popup .ticker_overflow{
-	height: 42vh;
-	overflow: scroll;
+	height: 35vh;
 	width: 57vh;
 }
 
+.ticker_popup .bottom_widget{
+	height: 18%;
+	z-index: 1;
+}
+
+.shift_right{
+	padding-right: 15px;
+}
 .left_column .friends_grid .friends_grid_header{
 	padding: 10px;
 	background-color: #F3F3F3;

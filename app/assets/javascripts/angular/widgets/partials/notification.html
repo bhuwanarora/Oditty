@@ -1,12 +1,15 @@
-<div ng-if="!seen"
-	 ng-click="toggle_ticker_popup($event)"
-     class="notification animate-fast">
-	<div class="user_thumb block"><img ng-src="{{notification.thumb}}"></div>
-	<div class="block">
-		<div class="notification_message" ng-bind-html="notification.message">
+<div class="relative_position">
+	<div class="arrow_left ng-scope" ng-style="ticker_position" ng-if="ticker_popup"></div>
+	<div ng-if="!seen"
+		 ng-click="toggle_ticker_popup($event)"
+	     class="notification animate-fast">
+		<div class="user_thumb block"><img ng-src="{{notification.thumb}}"></div>
+		<div class="block">
+			<div class="notification_message" ng-bind-html="notification.message">
+			</div>
+			<!-- <div class="timestamp">
+				{{notification.timestamp}}
+			</div> -->
 		</div>
-		<!-- <div class="timestamp">
-			{{notification.timestamp}}
-		</div> -->
 	</div>
 </div>

@@ -220,6 +220,9 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 		        });
 			}
 
+			$scope.set_user_name = function(){
+			}
+
 			_init = function(){
 				$rootScope.user.profile_status = 0;
 	    		_profile_status_colors();
@@ -595,4 +598,12 @@ websiteApp.directive('checkScrollBottom', function () {
             });
         }
     };
+});
+
+websiteApp.directive('focusOut',function(){
+	return function postLink(scope, element, attrs) {
+                element.bind('blur', function () {
+                    scope.$apply(attrs.focusOut);
+                });
+	};
 });

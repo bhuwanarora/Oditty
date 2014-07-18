@@ -122,36 +122,36 @@
 		
 		
 		<message></message>
-		
-		<div class="left_column animate-fast">
-			<div class="scrollbar notifications animate-fast" 
-				 ng-style="column_heights.notifications_style"
-				 ng-if="show_notifications"
-				 msd-wheel="handle_notification_ticker_size($event)">
-				<div class="full_height">
-					<!-- <div class="notification">News Feed</div> -->
-					<div ng-if="notifications">
-						<div ng-repeat="notification in notifications | reverse">
-							<notification data="notification"></notification>
-							<div class="arrow_left" ng-style="ticker_position"></div>
+		<div class="column_wrapper">
+			<div class="left_column animate-fast">
+				<div class="scrollbar notifications animate-fast" 
+					 ng-style="column_heights.notifications_style"
+					 ng-if="show_notifications"
+					 msd-wheel="handle_notification_ticker_size($event)">
+					<div class="full_height">
+						<!-- <div class="notification">News Feed</div> -->
+						<div ng-if="notifications">
+							<div ng-repeat="notification in notifications | reverse">
+								<notification data="notification"></notification>
+							</div>
+						</div>
+						<div ng-if="!notifications">
+							No notifications.
 						</div>
 					</div>
-					<div ng-if="!notifications">
-						No notifications.
-					</div>
 				</div>
-			</div>
-			<more-filters></more-filters>
-			<div class="scrollbar friends_grid" 
-				 ng-style="column_heights.friends_grid_style"
-				 msd-wheel="handle_friends_grid_size($event)">
-				<div class="friends_grid_header">15 Friends</div>
-				<img ng-src="{{friend.thumb}}" 
-					 title="{{friend.name}}" 
-				     ng-repeat="friend in user.friends" 
-				     class="friend_thumb" 
-				     data-selected="false"
-				     ng-click="select_thumb($event)"/>
+				<more-filters></more-filters>
+				<div class="scrollbar friends_grid" 
+					 ng-style="column_heights.friends_grid_style"
+					 msd-wheel="handle_friends_grid_size($event)">
+					<div class="friends_grid_header">15 Friends</div>
+					<img ng-src="{{friend.thumb}}" 
+						 title="{{friend.name}}" 
+					     ng-repeat="friend in user.friends" 
+					     class="friend_thumb" 
+					     data-selected="false"
+					     ng-click="select_thumb($event)"/>
+				</div>
 			</div>
 		</div>
 		<!-- <div class="wrapper" ng-if="focused_book"></div> -->
@@ -159,11 +159,16 @@
 		     ng-style="focused_book.reposition_tooltip"
 		     ng-click="stop_propagation($event)"
 		     ng-if="focused_book"><focused-book></focused-book></div>
-		<div class="ticker_popup" 
-			 ng-if="ticker_popup"
-			 ng-style="ticker_popup_style"
-			 msd-wheel="handle_height_of_popup($event)">
-			<ticker-popup></ticker-popup>
+		<div>
+			<div class="ticker_popup" 
+				 ng-if="ticker_popup"
+				 ng-style="ticker_popup_style"
+				 msd-wheel="handle_height_of_popup($event)">
+				 <div class="scrollbar shift_right">
+					<ticker-popup></ticker-popup>
+				</div>
+				<book-interact track></book-interact>
+			</div>
 		</div>
 		<div ng-if="focused_author"><focused-author></focused-author></div>
 		<div ng-if="focused_reader"><focused-reader></focused-reader></div>
