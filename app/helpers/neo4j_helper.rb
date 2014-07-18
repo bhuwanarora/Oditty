@@ -568,13 +568,16 @@ module Neo4jHelper
 
 
 		# self.create_indexes
-		skip = 0
-		limit = 100
-		while skip <= 160000
-			puts "adding index_by title for book..."+skip.to_s.green
-			clause = "MATCH (book:Book) CREATE UNIQUE (book)-[:BookFeed]->(book) SET book.indexed_author_name = LOWER(book.author_name), book.indexed_title = LOWER(book.title), book.search_index = LOWER(book.title), book.readers_count = 0, book.comment_count = 0, book.bookmark_count = 0, book.rating_count = 0, book.time_required = [0, 0, 0, 0] RETURN COUNT(*) SKIP "+skip.to_s+" LIMIT "+limit.to_s
+		skip = 10000
+		start_id = 384293 #MIN ID
+		end_id = 2500000 #MAX ID
+		# limit = 100
+		while start_id <= end_id
+			puts "adding index_by title for book..."+start_id.to_s.green
+			limit = start_id + skip
+			clause = "MATCH (book:Book)  WHERE ID(book) >= "+start_id.to_s+" AND ID(book) < "+limit.to_s+" CREATE UNIQUE (book)-[:BookFeed]->(book) SET book.indexed_author_name = LOWER(book.author_name), book.indexed_title = LOWER(book.title), book.search_index = LOWER(book.title), book.readers_count = 0, book.comment_count = 0, book.bookmark_count = 0, book.rating_count = 0, book.time_required = [0, 0, 0, 0]"
 			@neo.execute_query clause
-			skip = skip + limit
+			start_id = start_id + skip
 		end
 
 		puts "adding index_by name for authors...".green

@@ -12,12 +12,12 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	$scope.handle_friends_grid_size = function(){
 		if(event.deltaY > 0){
-			$scope.column_heights = {"notifications_style" : {"height": "110px"}, 
+			$scope.column_heights = {"notifications_style" : {"max-height": "110px"}, 
 									"friends_grid_style": {"max-height": "120px", "overflow": "auto"},
 									"show_filters": false};
 		}
 		else{
-			$scope.column_heights = {"notifications_style" : {"height": "110px"}, 
+			$scope.column_heights = {"notifications_style" : {"max-height": "110px"}, 
 									"friends_grid_style": {"height": "75px"},
 									"show_filters": false};
 		}
@@ -285,7 +285,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	_add_listeners();
         _init_analytics();
         // _init_shelf();
-        // _get_recommendations();
+        _get_recommendations();
         // _push_recommendations();
         _bind_destroy();
         // _handle_focused_book();
