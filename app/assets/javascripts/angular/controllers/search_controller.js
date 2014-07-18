@@ -1,4 +1,4 @@
-websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteService', '$timeout', '$sce', 'recommendationService', '$routeParams', function($scope, $rootScope, websiteService, $timeout, $sce, recommendationService, $routeParams){
+websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteService', '$timeout', '$sce', 'recommendationService', '$routeParams', '$location', function($scope, $rootScope, websiteService, $timeout, $sce, recommendationService, $routeParams, $location){
 	_show_search_result = function(item, show_all){
 		console.debug("%c _show_search_result"+item.name, "color: green");
 		// $rootScope.show_book = true;
@@ -7,6 +7,10 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		// $rootScope.total_x = screen.width;
 		// var data = 1;
   //   	_get_book_details(data);
+  		if(angular.isUndefined($rootScope.filters)){
+  			$rootScope.filters = {"other_filters": {}};
+  		}
+  		var user_id = $rootScope.user.id;
   		if(show_all){
   			$rootScope.filters.other_filters["title"] = item;
   			$rootScope.filters.other_filters["show_all"] = true;
@@ -14,6 +18,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
   		else{
 	  		$rootScope.filters.other_filters["title"] = item.name;
 	  		$rootScope.filters.other_filters["author_name"] = item.author_name;
+ 	  		$location.path("/user/"+user_id+"/book/"+item.name+"/author/"+item.author_name);
   		}
 	  	$scope.$emit('reloadRecommendations');
 	}
@@ -75,7 +80,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				    		var name = time_data["name"]+" ("+time_data["range"]+")";
 				    		var json = {"name": name, "custom_option": true, "type": "timeGroup"};
 							this.push(json);
-						}, $scope.search_results)
+						}, $scope.search_results);
 				    	$rootScope.time_groups = $scope.search_results;
 					});
 				}
@@ -505,7 +510,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	        	$scope.search_results = [];
 	        	var results = result.results.data;
 	        	angular.forEach(results, function(value){
-	        		var json = {"name": value[0], "author_name": value[1]}
+	        		var json = {"name": value[0], "author_name": value[1]};
 	        		this.push(json);
 	        	}, $scope.search_results);
 	        	if($scope.search_results.length != 0){
@@ -645,7 +650,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	}
 
 	_get_trends = function(){
-		if(angular.isUndefined($scope.$routeParams)){
+		if(angular.isUndefined($scope.$routeParams) && angular.isUndefined($scope.trends)){
 			websiteService.get_trending_topics().then(function(data){
 				$scope.trends = data;
 			});

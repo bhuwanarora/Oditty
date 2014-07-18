@@ -6,7 +6,7 @@ var websiteApp = angular.module('websiteApp', ['ngRoute', 'ngAnimate',
 websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
   $routeProvider
   .when('/search', {
-      templateUrl: '/assets/angular/widgets/partials/search.html'
+    templateUrl: '/assets/angular/widgets/partials/search.html'
   })
   .when('/user/:id', {
     templateUrl: '/assets/angular/widgets/partials/search.html'
