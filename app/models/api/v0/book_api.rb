@@ -226,7 +226,10 @@ module Api
 
 				if filters["other_filters"].present?
 					book_name = filters["other_filters"]["title"]
-					if book_name.present?
+					book_id = filters["other_filters"]["id"]
+					if book_id.present?
+						clause = self.get_books_by_id filters
+					elsif book_name.present?
 						clause = self.get_books_by_title filters
 					else
 						clause = self.get_filtered_books filters
@@ -306,6 +309,12 @@ module Api
 				clause
 			end
 
+			def self.get_books_by_id filters
+				book_id = filters["other_filters"]["id"]
+				clause = "MATCH(book:Book) WHERE ID(book)="+book_id.to_s+" RETURN book.isbn as isbn, ID(book)"
+				clause
+			end
+
 			def self.get_books_by_title filters
 				book_name = filters["other_filters"]["title"]
 				author_name = filters["other_filters"]["author_name"]
@@ -336,7 +345,7 @@ module Api
 				init_match_clause = "MATCH (book:Book) "
 				distinct_clause = "ALL (id in "+book_ids.to_s+" WHERE toInt(id) <> ID(book)) "
 				random_clause = "ID(book)%"+random.to_s+"=0 AND rand() > 0.3 "
-				with_clause = "WITH book, toInt(book.gr_ratings_count) * toInt(book.gr_reviews_count) * toInt(book.gr_rating) AS total_weight, toInt(book.gr_ratings_count) * toInt(book.gr_rating) AS rating_weight "
+				with_clause = "WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight "
 				return_clause = "RETURN book.isbn as isbn, ID(book)"
 				order_clause = ", total_weight, rating_weight ORDER BY rating_weight DESC, total_weight DESC, book.gr_rating DESC "
 				limit_clause = " LIMIT 10 "

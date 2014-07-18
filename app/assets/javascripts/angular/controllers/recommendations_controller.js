@@ -111,6 +111,16 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         	$rootScope.filters["filter_type"] = "BOOK";
         	$rootScope.filters.other_filters["title"] = $scope.$routeParams.title;
 			$rootScope.filters.other_filters["author_name"] = $scope.$routeParams.author;
+			var id_defined = angular.isDefined($scope.$routeParams.book_id);
+			var show_all = angular.isDefined($scope.$routeParams.status);
+			if(show_all){
+				$rootScope.filters.other_filters["show_all"] = $scope.$routeParams.status;
+				$rootScope.filters["reset"] = true;
+	    		$rootScope.filters["reset_count"] = 0;
+			}
+			if(id_defined){
+				$rootScope.filters.other_filters["id"] = $scope.$routeParams.book_id;
+			}
         }
         else{
 			$rootScope.filters["filter_type"] = "BOOK";
@@ -254,9 +264,13 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	$rootScope.labels = [];
       	recommendationService.get_labels().then(function(data){
         	console.debug("%c labels"+data, "color: green");
-        	angular.forEach(data, function(value){
-        		this.push({"name": value[0].replace("\"", "")});
-        	}, $rootScope.labels);
+        	if(angular.isArray(data) && data.length > 0){
+	        	angular.forEach(data, function(value){
+	        		if(value[0]!=null){
+	        			this.push({"name": value[0].replace("\"", "")});
+	        		}
+	        	}, $rootScope.labels);
+        	}
       	});
     }
 
@@ -279,9 +293,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	_get_labels();
 		_initialize_filters();
 		_init_recommendations();
-		if($scope.$routeParams.title){
-			_get_recommendations();
-		}
+		// if($scope.$routeParams.title){
+		// 	_get_recommendations();
+		// }
     	_add_listeners();
         _init_analytics();
         // _init_shelf();
