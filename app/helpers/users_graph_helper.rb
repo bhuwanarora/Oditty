@@ -4,12 +4,59 @@ module UsersGraphHelper
 		@neo = Neography::Rest.new
 	end
 
+
 	def self.rate_book(user_id, book_id, rating)
-		self.mark_as_read(user_id, book_id, "rating", rating)	
+		@neo ||= self.neo_init
+
+		rating_clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" CREATE UNIQUE (u)-[:RatingAction]->(m:RatingNode{book_id:"+book_id.to_s+", title:b.title, author:b.author_name, user_id:"+user_id.to_s+", name:u.email, isbn:b.isbn})-[:Rate]->(b) SET m.rating="+rating.to_s+", m.timestamp="+Time.now.to_i.to_s+" WITH u, b, m "
+
+		delete_existing_feednext_clause = "OPTIONAL MATCH (x)-[r1:FeedNext{user_id:"+user_id.to_s+"}]->(m)-[r2:FeedNext{user_id:"+user_id.to_s+"}]->(y) FOREACH (a IN CASE WHEN x IS NULL THEN [] ELSE [x] END | FOREACH (b IN CASE WHEN y IS NULL THEN [] ELSE [y] END |	CREATE  (a)-[:FeedNext{user_id:"+user_id.to_s+"}]->(b) DELETE r1, r2)) WITH u, b, m "
+
+		feednext_clause = "MATCH (u)-[old:FeedNext]->(old_feed) CREATE UNIQUE (u)-[:FeedNext{user_id:"+user_id.to_s+"}]->(m)-[:FeedNext{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, m "
+
+		bookfeed_clause = "MATCH (b)-[old:BookFeed]->(old_feed) CREATE UNIQUE (b)-[:BookFeed{user_id:"+user_id.to_s+"}]->(m)-[:BookFeed{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, m "
+
+		follow_clause = "OPTIONAL MATCH (u)<-[:Follow]-(f) WHERE f <> u WITH u, b, f "
+
+		ego_clause = "MATCH (f)-[old:Ego]-(old_ego) CREATE UNIQUE (f)-[:Ego{user_id:ID(f)}]->(u)-[:Ego{user_id:ID(f)}]->(old_ego) DELETE old "
+
+		set_clause = "SET b.rating_count = b.rating_count + 1  SET u.rating_count = u.rating_count + 1 "
+
+		clause = rating_clause + delete_existing_feednext_clause + feednext_clause + bookfeed_clause + follow_clause + ego_clause + set_clause
+		puts "RATE".green
+		puts clause.blue.on_red
+		@neo.execute_query clause
+		#update mark as read cache for the book
+		#update popularity index for the book
+		#update popularity index for the author
+
+		#update mark as read cache for the user
+		#update bookworm index for the user
+
+		#update news feed for the book
+		#update news feed for the user
 	end
 
 	def self.record_time(user_id, book_id, time)
-		self.mark_as_read(user_id, book_id, "time", time)
+		@neo ||= self.neo_init
+		rating_clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" CREATE UNIQUE (u)-[:TimingAction]->(m:TimingNode{book_id:"+book_id.to_s+", title:b.title, author:b.author_name, user_id:"+user_id.to_s+", name:u.email, isbn:b.isbn})-[:Timer]->(b) SET m.timestamp="+Time.now.to_i.to_s+", m.time_index="+time.to_s+" WITH u, b, m "
+
+		delete_existing_feednext_clause = "OPTIONAL MATCH (x)-[r1:FeedNext{user_id:"+user_id.to_s+"}]->(m)-[r2:FeedNext{user_id:"+user_id.to_s+"}]->(y) FOREACH (a IN CASE WHEN x IS NULL THEN [] ELSE [x] END | FOREACH (b IN CASE WHEN y IS NULL THEN [] ELSE [y] END |	CREATE  (a)-[:FeedNext{user_id:"+user_id.to_s+"}]->(b) DELETE r1, r2)) WITH u, b, m "
+
+		feednext_clause = "MATCH (u)-[old:FeedNext]->(old_feed) CREATE UNIQUE (u)-[:FeedNext{user_id:"+user_id.to_s+"}]->(m)-[:FeedNext{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, m "
+
+		bookfeed_clause = "MATCH (b)-[old:BookFeed]->(old_feed) CREATE UNIQUE (b)-[:BookFeed{user_id:"+user_id.to_s+"}]->(m)-[:BookFeed{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, m "
+
+		follow_clause = "OPTIONAL MATCH (u)<-[:Follow]-(f) WHERE f <> u WITH u, b, f "
+
+		ego_clause = "MATCH (f)-[old:Ego]-(old_ego) CREATE UNIQUE (f)-[:Ego{user_id:ID(f)}]->(u)-[:Ego{user_id:ID(f)}]->(old_ego) DELETE old "
+
+		set_clause = "SET b.rating_count = b.rating_count + 1  SET u.rating_count = u.rating_count + 1 "
+
+		clause = rating_clause + delete_existing_feednext_clause + feednext_clause + bookfeed_clause + follow_clause + ego_clause + set_clause
+		puts "TIMER".green
+		puts clause.blue.on_red
+		@neo.execute_query clause
 	end
 
 	# ************************************************
@@ -120,7 +167,6 @@ module UsersGraphHelper
 		# author_name: b.author_name, 
 		# user_id:USER_ID, 
 		# name:u.email})-[:MarkAsRead]->(b) 
-	# CREATE UNIQUE (m)-[:InternalFeed]->(r:RatingFeed)
 	# WITH u, b, m 
 
 	# MATCH (u)-[old:FeedNext]->(old_feed) 
@@ -145,20 +191,11 @@ module UsersGraphHelper
 	# SET u.book_read_count = u.book_read_count + 1 
 
 	# ************************************************
-	def self.mark_as_read(user_id, book_id, type="", value=nil)
+	def self.mark_as_read(user_id, book_id)
 		#FIXME mark_as_read
 		@neo ||= self.neo_init
 		# clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" OPTIONAL MATCH (b)-[:Belongs_to]->(:Category)-[r:Has_root]->(c:Category), (u)-[fr:FeedNext]->(top_feed), (u)<-[:Follow]-(f)-[ego:Ego]->(ego_user) WHERE fr.user_id="+user_id.to_s+" CREATE (u)-[:MarkAsReadAction]->(m:MarkAsReadNode{timestamp:"+Time.now.to_i.to_s+"})-[:MarkAsRead]->(b) MERGE (c)<-[ur:Tendency_for]-(u) ON CREATE SET ur.weight = r.weight ON MATCH SET ur.weight = ur.weight + r.weight CREATE (u)-[:FeedNext{user_id:"+user_id.to_s+"}]->(m)-[:FeedNext{user_id:"+user_id.to_s+"}]->(top_feed) CREATE (f)-[:Ego]->(u)-[:Ego]->(ego_user) DELETE fr, ego SET b.readers_count = b.readers_count + 1 SET u.book_read_count = u.book_read_count + 1"
-		mark_as_read_clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" CREATE UNIQUE (u)-[:MarkAsReadAction]->(m:MarkAsReadNode)-[:MarkAsRead]->(b) SET m.timestamp="+Time.now.to_i.to_s+", m.book_id="+book_id.to_s+", m.title=b.title, m.author=b.author_name, m.user_id="+user_id.to_s+", m.name=u.email, m.isbn=b.isbn"
-		if type == "rating"
-			mark_as_read_clause = mark_as_read_clause + ", m.rating="+value.to_s+" CREATE UNIQUE (m)-[:Rated]->(rf:RatingFeed) SET rf.timestamp="+Time.now.to_i.to_s+", rf.book_id="+book_id.to_s+", rf.title=b.title, rf.author=b.author_name, rf.user_id="+user_id.to_s+", rf.name=u.email, rf.isbn=b.isbn WITH u, b, m "
-		elsif type == "time"
-			mark_as_read_clause = mark_as_read_clause + ", m.time_index="+value.to_s+" WITH u, b, m "
-			#TODO book: update time required to read
-		else
-			mark_as_read_clause = mark_as_read_clause + " WITH u, b, m "
-		end
-
+		mark_as_read_clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" CREATE UNIQUE (u)-[:MarkAsReadAction]->(m:MarkAsReadNode{timestamp:"+Time.now.to_i.to_s+", book_id:"+book_id.to_s+", title:b.title, author:b.author_name, user_id:"+user_id.to_s+", name:u.email, isbn:b.isbn})-[:MarkAsRead]->(b) WITH u, b, m "
 		feednext_clause = "MATCH (u)-[old:FeedNext]->(old_feed) CREATE UNIQUE (u)-[:FeedNext{user_id:"+user_id.to_s+"}]->(m)-[:FeedNext{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, m "
 
 		bookfeed_clause = "MATCH (b)-[old:BookFeed]->(old_feed) CREATE UNIQUE (b)-[:BookFeed{user_id:"+user_id.to_s+"}]->(m)-[:BookFeed{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, m "
@@ -169,10 +206,10 @@ module UsersGraphHelper
 
 		set_clause = "SET b.readers_count = b.readers_count + 1  SET u.book_read_count = u.book_read_count + 1 "
 
-		clause = mark_as_read_clause + feednext_clause + follow_clause + ego_clause + set_clause
+		clause = mark_as_read_clause + feednext_clause + bookfeed_clause + follow_clause + ego_clause + set_clause
 		puts "MARK AS READ".green
 		puts clause.blue.on_red
-		# @neo.execute_query clause
+		@neo.execute_query clause
 		#update mark as read cache for the book
 		#update popularity index for the book
 		#update popularity index for the author
@@ -425,7 +462,7 @@ module UsersGraphHelper
 	# ************************************************
 	def self.create_user(email, password, verification_token)
 		@neo ||= self.neo_init
-		clause = "CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0}), (user)-[fn:FeedNext{user_id:ID(user)}]->(user), (user)-[:Ego{user_id:ID(user)}]->(user) WITH user MATCH(bm:Label) CREATE (user)-[:BookmarkAction{user_id:ID(user)}]->(bm)"
+		clause = "CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0}), (user)-[fn:FeedNext{user_id:ID(user)}]->(user), (user)-[:Ego{user_id:ID(user)}]->(user) WITH user MATCH(bm:Label) CREATE (user)-[:BookmarkAction{user_id:ID(user)}]->(bm)"
 		puts clause.blue.on_red
 		@neo.execute_query(clause)
 	end
@@ -494,7 +531,7 @@ module UsersGraphHelper
 		@neo ||= self.neo_init
 		tweet_clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" CREATE UNIQUE (u)-[:Commented]->(t:Tweet{tweet:\""+tweet["tweet"]+"\", timestamp:"+Time.now.to_i.to_s+", name: u.email, book_id: "+book_id.to_s+", title: b.title, author_name: b.author_name, isbn: b.isbn, user_id: "+user_id.to_s+"})-[:CommentedOn]->(b) WITH u, b, t "
 		feednext_clause = "MATCH (u)-[old:FeedNext]->(old_feed) CREATE UNIQUE (u)-[:FeedNext{user_id:"+user_id.to_s+"}]->(t)-[:FeedNext{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, t "
-		bookfeed_clause = 	"MATCH (b)-[old:BookFeed]->(old_feed) CREATE UNIQUE (u)-[:BookFeed{user_id:"+user_id.to_s+"}]->(t)-[:BookFeed{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, t "
+		bookfeed_clause = 	"MATCH (b)-[old:BookFeed]->(old_feed) CREATE UNIQUE (b)-[:BookFeed{user_id:"+user_id.to_s+"}]->(t)-[:BookFeed{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, t "
 		follow_clause = "OPTIONAL MATCH (u)<-[:Follow]-(f) WHERE f <> u	WITH u, b, f "
 		ego_clause = "MATCH (f)-[old:Ego]-(old_ego) CREATE UNIQUE (f)-[:Ego{user_id: ID(f)}]->(u)-[:Ego{user_id:ID(f)}]->(old_ego) DELETE old "
 		set_clause = "SET u.comment_count = u.comment_count + 1 SET b.comment_count = b.comment_count + 1"

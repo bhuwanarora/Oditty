@@ -147,12 +147,13 @@ module Api
 				# results
 				books
 			end
-
-			def self.get_book_details id
-				clause = "MATCH (book:Book) WHERE ID(book)="+id.to_s+" RETURN book"
-				@neo = Neography::Rest.new
-				puts clause.blue.on_red
-				book = @neo.execute_query(clause)["data"][0][0]["data"]
+			def self.get_book_details(id, user_id=nil)
+				book = BooksGraphHelper.get_details(id, user_id)
+				if user_id
+					rating = book[1]
+					time_index = book[2]
+					book = book[0]["data"]
+				end
 				info = {
 							:title => book["title"],
 							:author_name => book["author_name"],
@@ -203,6 +204,9 @@ module Api
 							],
 							:users_count => 15
 						}
+				if user_id
+					info.merge!(:user_rating => rating, :time_index => time_index)
+				end
 				info
 			end
 

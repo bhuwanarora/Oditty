@@ -302,70 +302,95 @@ module Neo4jHelper
 	end
 
 	def self.init_shelfari_books
-		begin
 			ShelfariBook.where(:data_flag => true, :neo_flag => nil).find_each do |book|
-				 # id     | name     | url   | description | summary |first_sentence 
+				# id     | name     | url   | description | summary |first_sentence 
 				book_id = book.id
-				book_title = nil
+				book_title = book.title.downcase
+				puts book_title+"-"+book_id.to_s.green
 				
-				AuthorsShelfariBooks.where(:shelfari_book_id => book_id).each do |author|
-					book_title = @neo.execute_query("MATCH (author:Author{name:'"+author.name+"'})-[:Wrote]->(book:Book)
-						RETURN book.title")
+				AuthorsShelfariBooks.where(:shelfari_book_id => book_id).each do |author_book|
+					author_id = author_book.author_id
+					author = Author.find(author_id)
+					human_profile = HumanProfile.find(author_id)
+					author_name = "@"+human_profile.name
+					lower_case = author_name.downcase
+
+					clause = "CREATE UNIQUE (author:Author{search_index:\""+lower_case+"\"})-[:Wrote]->(book:Book{search_index:\""+book_title+"\"}), (author)-[:AuthorFeed]->(author) SET author.indexed_name=\""+lower_case+"\", author.name=\""+author_name+"\", author.olid=\""+author.olid+"\", author.overview=\""+author.overview.to_s+"\", author.legal_name=\""+author.legal_name.to_s+"\", author.birthday=\""+author.birthday.to_s+"\", author.birthplace=\""+author.birthplace.to_s+"\", author.nationality=\""+author.nationality.to_s+"\", author.gender=\""+author.gender.to_s+"\", author.official_website=\""+author.official_website.to_s+"\", author.date_of_death=\""+author.date_of_death.to_s+"\", author.burial_location=\""+author.burial_location.to_s+"\", author.wiki_url=\""+author.wiki_url.to_s+"\", author.comments=\""+author.comments.to_s+"\""
+					
+					@neo.execute_query clause
 				end
 
-				ShelfariBooksCategories.where(:shelfari_book_id => book_id).each do |shelfari_category|
-					@neo.execute_query("MATCH (book:Book{title:'"+book_title+"'}), (category:Category{name:'"+shelfari_category.name+"'})
-						CREATE (book)-[:Belongs_to]->(category)")
+				ShelfariBooksCategories.where(:shelfari_book_id => book_id).each do |book_category|
+					category_id = book_category.shelfari_category_id
+					category = ShelfariCategory.find(category_id)
+					category_name = category.name
+					lower_case = category_name.downcase
+					
+					clause =  "CREATE UNIQUE (book:Book{search_index:\""+book_title+"\"})-[:Belongs_to]->(category:Category{search_index:\""+lower_case+"\"}), (category)-[:CategoryFeed]->(category) SET category.indexed_category_name=\""+lower_case+"\", category.name=\""+category_name+"\", category.icon='"+category.icon+"'"
+					
+					@neo.execute_query clause
 				end
 
-				ShelfariBooksTags.where(:shelfari_book_id => book_id).each do |shelfari_tag|
-					@neo.execute_query("MATCH (book:Book{title:'"+book_title+"'})
-						MERGE (tag:Tag{name:'"+shelfari_tag.name+"'})
-						CREATE (book)-[:Has{weight:"+shelfari_tag.weight+"}]->(tag)")
+				ShelfariBooksTags.where(:shelfari_book_id => book_id).each do |book_tag|
+					tag_id = book_tag.shelfari_tag_id
+					weight = book_tag.weight
+					shelfari_tag = ShelfariTag.find tag_id
+					clause = "CREATE UNIQUE (book:Book{search_index:\""+book_title+"\"})<-[r:Belongs_to]-(genre:Genre{indexed_genre_name:'"+shelfari_tag.name.downcase+"'}) SET r.weight="+weight.to_s+" Set genre.name=\""+shelfari_tag.name+"\""
+					
+					@neo.execute_query clause
 				end
 
-				CharactersShelfariBooks.where(:shelfari_book_id => book_id).each do |character|
-					@neo.execute_query("MATCH (book:Book{title:'"+book_title+"'})
-						MERGE (character:Character{name:'"+character.name+"'})
-						CREATE (book)-[:Has_character]->(character)")
-					#other attributes for the character
+				# CharactersShelfariBooks.where(:shelfari_book_id => book_id).each do |character|
+				# 	clause = "MATCH (book:Book{title:'"+book_title+"'})
+				# 		MERGE (character:Character{name:'"+character.name+"'})
+				# 		CREATE (book)-[:Has_character]->(character)"
+				# 	@neo.execute_query clause
+				# 	#other attributes for the character
+				# end
+
+				# ShelfariBooksThemes.where(:shelfari_book_id => book_id).each do |theme|
+				# 	clause = "MATCH (book:Book{title:'"+book_title+"'})
+				# 		MERGE (theme:Theme{name:'"+theme.name+"'})
+				# 		CREATE (book)-[:Has_theme]->(theme)"
+				# 	@neo.execute_query clause
+				# end
+
+				# LocationsShelfariBooks.where(:shelfari_book_id => book_id).each do |location|
+				# 	clause = "MATCH (book:Book{title:'"+book_title+"'})
+				# 		MERGE (location:Location{})"
+				# 	@neo.execute_query clause
+				# end
+
+				MoviesShelfariBooks.where(:shelfari_book_id => book_id).each do |book_movie|
+					movie_id = book_movie.movie_id
+					movie = Movie.find movie_id
+					clause = "CREATE UNIQUE (book:Book{search_index:\""+book_title+"\"})-[:MovieBased]->(movie:Movie{indexed_movie_name:\""+movie.name.downcase+"\"}) SET movie.imdb_url=\""+movie.imdb_url.to_s+"\", movie.year="+movie.year.to_s
+					@neo.execute_query clause
 				end
 
-				ShelfariBooksThemes.where(:shelfari_book_id => book_id).each do |theme|
-					@neo.execute_query("MATCH (book:Book{title:'"+book_title+"'})
-						MERGE (theme:Theme{name:'"+theme.name+"'})
-						CREATE (book)-[:Has_theme]->(theme)")
+				EbooksShelfariBooks.where(:shelfari_book_id => book_id).each do |book_ebook|
+					ebook_id = book_ebook.ebook_id
+					ebook = Ebook.find(ebook_id)
+					clause = "CREATE UNIQUE (book:Book{search_index:\""+book_title+"\"})-[:Eversion]->(ebook:EBook{indexed_ebook_name:\""+ebook.name+"\"}) SET ebook.url=\""+ebook.url.to_s+"\", ebook.notes=\""+ebook.notes.to_s+"\""
+					@neo.execute_query clause
 				end
 
-				LocationsShelfariBooks.where(:shelfari_book_id => book_id).each do |location|
-					@neo.execute_query("MATCH (book:Book{title:'"+book_title+"'})
-						MERGE (location:Location{})")
-				end
+				# QuotesShelfariBooks.where(:shelfari_book_id => book_id).each do |quote|
+				# 	clause = "MATCH (book:Book{title:'"+book_title+"'})
+				# 		MERGE (quote:Quote{})
+				# 		CREATE (book)-[:Has_quote]->(quote)"
+				# 	@neo.execute_query clause
+				# end
 
-				MoviesShelfariBooks.where(:shelfari_book_id => book_id).each do |movie|
-					@neo.execute_query("MATCH (book:Book{title:'"+book_title+"'})
-						MERGE (movie:Movie{})
-						CREATE (book)-[:Movie_based]->(movie)")
-				end
+				NoteForParentsShelfariBooks.where(:shelfari_book_id => book_id).each do |book_reading_level|
+					reading_level_id = book_reading_level.note_for_parent_id
+					reading_level = NoteForParent.find reading_level_id
 
-				EbooksShelfariBooks.where(:shelfari_book_id => book_id).each do |ebook|
-					@neo.execute_query("MATCH (book:Book{title:'"+book_title+"'})
-						MERGE (ebook:Ebook{})
-						CREATE (book)-[:Eversion]->(ebook)")
-				end
-
-				QuotesShelfariBooks.where(:shelfari_book_id => book_id).each do |quote|
-					@neo.execute_query("MATCH (book:Book{title:'"+book_title+"'})
-						MERGE (quote:Quote{})
-						CREATE (book)-[:Has_quote]->(quote)")
-				end
-
-				NoteForParentsShelfariBook.where(:shelfari_book_id => book_id).each do |note_for_parent|
-					@neo.execute_query("MATCH (book:Book{title:'"+book_title+"'})
-						MERGE (note_for_parent:NoteForParent{})
-						CREATE (book)-[:Has_note]->(note_for_parent)")
+					clause = "CREATE UNIQUE (book:Book{search_index:\""+book_title+"\"})-[:ReadingLevel]->(note_for_parent:ReadingLevel{\""+reading_level.name.to_s+"\"})"
+					@neo.execute_query clause
 				end
 			end
+		begin
 		rescue Exception => e
 			
 		end
@@ -547,49 +572,33 @@ module Neo4jHelper
 		limit = 100
 		while skip <= 160000
 			puts "adding index_by title for book..."+skip.to_s.green
-			clause = "MATCH (book:Book) CREATE (book)-[:BookFeed]->(book) SET book.indexed_title = LOWER(book.title), book.search_index = LOWER(book.title), book.readers_count = 0, book.comment_count = 0, book.bookmark_count = 0, book.time_required = [{'0': 0, '1': 0, '2': 0, '3': 0}] RETURN COUNT(*) SKIP "+skip.to_s+" LIMIT "+limit.to_s
+			clause = "MATCH (book:Book) CREATE UNIQUE (book)-[:BookFeed]->(book) SET book.indexed_author_name = LOWER(book.author_name), book.indexed_title = LOWER(book.title), book.search_index = LOWER(book.title), book.readers_count = 0, book.comment_count = 0, book.bookmark_count = 0, book.rating_count = 0, book.time_required = [0, 0, 0, 0] RETURN COUNT(*) SKIP "+skip.to_s+" LIMIT "+limit.to_s
 			@neo.execute_query clause
 			skip = skip + limit
 		end
 
-		puts "adding index_by author_name for books...".green
-		clause = "MATCH (book:Book) SET book.indexed_author_name = LOWER(book.author_name)"
-		@neo.execute_query clause
-
 		puts "adding index_by name for authors...".green
-		clause = "MATCH (author:Author) SET author.indexed_name = LOWER(author.name)"
+		clause = "MATCH (author:Author) SET author.indexed_name = LOWER(author.name), author.search_index = LOWER(author.name)"
 		@neo.execute_query clause
 
 		puts "adding index_by name for labels...".green
-		clause = "MATCH (label:Label) SET label.indexed_name = LOWER(label.name)"
+		clause = "MATCH (label:Label) SET label.indexed_label_name = LOWER(label.name), label.name = UPPER(label.name), label.basic = true"
 		@neo.execute_query clause
 
 		puts "adding index_by name for labels...".green
-		clause = "MATCH (readTime: ReadTime) SET readTime.indexed_name = LOWER(readTime.name)"
+		clause = "MATCH (readTime: ReadTime) SET readTime.indexed_readtime_name = LOWER(readTime.name)"
 		@neo.execute_query clause
 
 		puts "adding index_by name for era...".green
-		clause = "MATCH (era: Era) SET era.indexed_name = LOWER(era.name)"
+		clause = "MATCH (era: Era) SET era.indexed_era_name = LOWER(era.name)"
 		@neo.execute_query clause
 
 		puts "adding index_by name for genre...".green
-		clause = "MATCH (genre: Genre) SET genre.indexed_name = LOWER(genre.name)"
+		clause = "MATCH (genre: Genre) SET genre.indexed_genre_name = LOWER(genre.name)"
 		@neo.execute_query clause
 
 		puts "adding index_by name for users...".green
-		clause = "MATCH (user: User) SET user.indexed_name = LOWER(user.name)"
-		@neo.execute_query clause
-
-		puts "adding index_by name for authors...".green
-		clause = "MATCH (author: Author) SET author.search_index = LOWER(author.name)"
-		@neo.execute_query clause
-
-		puts "adding index_by name for users...".green
-		clause = "MATCH (user: User) SET user.search_index = LOWER(user.name)"
-		@neo.execute_query clause
-
-		puts "set label names to upper case...".green
-		clause = "MATCH (l:Label) SET l.name = UPPER(l.name), l.basic = true"
+		clause = "MATCH (user: User) SET user.indexed_user_name = LOWER(user.name), user.search_index = LOWER(user.name)"
 		@neo.execute_query clause
 
 		puts "End...".red

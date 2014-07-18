@@ -161,6 +161,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 				}
 				_handle_info_card_bindings($scope);
 				_profile_status_colors();
+				_update_user_info();
 			}
 
 			$scope.next_profile_state = function(){
@@ -172,6 +173,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 				}
 				_handle_info_card_bindings($scope);
 				_profile_status_colors();
+				_update_user_info();
 			}
 
 			$scope.stop_horizontal_scroll = function(event){
@@ -218,6 +220,9 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 		        .then(function(result) {
 		            $scope.search_results = $scope.search_results.concat(result.results);
 		        });
+			}
+
+			_update_user_info = function(){
 			}
 
 			_init = function(){

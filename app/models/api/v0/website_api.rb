@@ -19,6 +19,12 @@ module Api
 					elsif type == "MarkAsReadNode"
 						notification = self.mark_as_read_notification data
 						notifications.push notification
+					elsif type == "RatingNode"
+						notification = self.rating_notification data
+						notifications.push notification
+					elsif type == "TimingNode"
+						notification = self.timing_node_notification data
+						notifications.push notification
 					elsif type == "Tweet"
 						notification = self.comment_notification data
 						notifications.push notification
@@ -38,18 +44,22 @@ module Api
 				@neo = Neography::Rest.new
 			end
 
+			def self.rating_notification data
+				message = "<span><b>"+data["name"]+"</b> gave "+data["rating"].to_s+"/10 stars to </span><span class='site_color'><em>"+data["title"]+"</em>.</span>"
+				self.notification(message, data)
+			end
+			def self.timing_node_notification data
+				book_length_string = self.get_time_index data["time_index"]
+				message = "<span><b>"+data["name"]+"</b> described reading length of <span class='site_color'><em>"+data["title"]+"</em></span>&nbsp; as a '"+book_length_string+"' </span>"
+				self.notification(message, data)
+			end
+
 			def self.mark_as_read_notification data
-				if data["rating"] && data["time_index"]
-					book_length_string = self.get_time_index data["time_index"]
-					message = "<span><b>"+data["name"]+"</b> gave "+data["rating"].to_s+"/10 stars to "+book_length_string+" </span><span class='site_color'><em>"+data["title"]+"</em>.</span>"
-				elsif data["rating"]
-					message = "<span><b>"+data["name"]+"</b> gave "+data["rating"].to_s+"/10 stars to </span><span class='site_color'><em>"+data["title"]+"</em>.</span>"
-				elsif data["time_index"]
-					book_length_string = self.get_time_index data["time_index"]
-					message = "<span><b>"+data["name"]+"</b> added "+book_length_string+" </span><span class='site_color'><em>"+data["title"]+"</em> to &nbsp;</span><span class='icon-books'></span><span>&nbsp;Books Read.</span>"
-				else
-					message = "<span><b>"+data["name"]+"</b> added </span><span class='site_color'><em>"+data["title"]+"</em></span><span> to &nbsp;</span><span class='icon-books'></span><span>&nbsp;Books Read.</span>"
-				end
+				message = "<span><b>"+data["name"]+"</b> added </span><span class='site_color'><em>"+data["title"]+"</em></span><span> to &nbsp;</span><span class='icon-books'></span><span>&nbsp;Books Read.</span>"
+				self.notification(message, data)
+			end
+
+			def self.notification(message, data)
 				thumb = "assets/profile_pic.jpeg"
 				notification = {
 					:thumb => thumb,

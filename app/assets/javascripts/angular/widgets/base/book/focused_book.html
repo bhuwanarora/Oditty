@@ -90,13 +90,13 @@
 <div class="time_to_read" ng-if="!show_info && !show_buy">
   <div class="header">Describe the reading length of this book</div>
   <div>
-    <span ng-click="record_read_time(0)"
+    <span ng-click="record_read_time(0, $event)"
         ng-class="{'active_read_timer':is_timer(0)}">Tiny Read</span>
-    <span ng-click="record_read_time(1)"
+    <span ng-click="record_read_time(1, $event)"
         ng-class="{'active_read_timer':is_timer(1)}">Small Read</span>
-    <span ng-click="record_read_time(2)"
+    <span ng-click="record_read_time(2, $event)"
         ng-class="{'active_read_timer':is_timer(2)}">Normal Read</span>
-    <span ng-click="record_read_time(3)"
+    <span ng-click="record_read_time(3, $event)"
         ng-class="{'active_read_timer':is_timer(3)}">Long Read</span>
     
   </div>
