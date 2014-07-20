@@ -6,7 +6,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		// $rootScope.screen_x = 0;
 		// $rootScope.total_x = screen.width;
 		// var data = 1;
-  //   	_get_book_details(data);
+  		// _get_book_details(data);
   		var user_id = $rootScope.user.id;
   		var on_search_page = angular.isUndefined($routeParams.type);
   		if(angular.isUndefined($rootScope.filters)){

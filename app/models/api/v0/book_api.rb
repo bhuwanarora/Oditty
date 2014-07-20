@@ -29,7 +29,7 @@ module Api
 
 			def self.get_book(title, author_name)
 				@neo = Neography::Rest.new
-				clause = "MATCH (book:Book) WHERE book.indexed_name = \""+title.downcase+"\" AND book.indexed_author_name = \""+author_name.downcase+"\" RETURN book"
+				clause = "START book=node:node_auto_index('indexed_name = \""+title.downcase.gsub(" ", "")+"\"') WHERE book.indexed_author_name = \""+author_name.downcase.gsub(" ", "")+"\" RETURN book"
 				puts clause.blue.on_red
 				book = @neo.execute_query(clause)["data"]
 				book
@@ -210,7 +210,7 @@ module Api
 				info
 			end
 
-			def self.recommendations filters={}
+			def self.recommendations(last_book, filters={})
 				#FIXME only output isbns
 				if filters["reset"]
 					$redis.set 'book_ids', ""
@@ -235,7 +235,7 @@ module Api
 						clause = self.get_filtered_books filters
 					end
 				else
-					clause = self.get_basic_recommendations filters
+					clause = self.get_basic_recommendations(filters, last_book)
 				end
 
 
@@ -248,20 +248,21 @@ module Api
 					books = @neo.execute_query(clause)["data"]
 				end
 				# puts books.length.to_s.red.on_blue
-				for book in books
-					node_id = book[1].to_s
-					book_sent = book_ids.include? node_id
-					unless book_sent
-						if book_ids.present?
-							book_ids = ($redis.get 'book_ids')+","+node_id
-						else
-							book_ids = node_id
-						end
-						$redis.set 'book_ids', book_ids
-						results.push book
-					end
-				end
-				results
+				# for book in books
+				# 	node_id = book[1].to_s
+				# 	book_sent = book_ids.include? node_id
+				# 	unless book_sent
+				# 		if book_ids.present?
+				# 			book_ids = ($redis.get 'book_ids')+","+node_id
+				# 		else
+				# 			book_ids = node_id
+				# 		end
+				# 		$redis.set 'book_ids', book_ids
+				# 		results.push book
+				# 	end
+				# end
+				# results
+				books
 			end
 
 			def self.detailed_book id
@@ -289,23 +290,8 @@ module Api
 			end
 
 			private
-			def self.get_basic_recommendations filters
-				skip_clause = ""
-				random = Random.new.rand(1..100)
-				unless filters["reset"]
-					if filters["reset_count"]
-						skip_clause = "SKIP "+(filters["reset_count"] * 10).to_s+" "
-						puts "RESET "+filters["reset_count"].to_s+" FALSE".red.on_yellow.blink
-					end
-				end
-				init_match_clause = "MATCH (book:Book) "
-				# distinct_clause = "ALL (id in "+book_ids.to_s+" WHERE toInt(id) <> ID(book)) "
-				random_clause = "ID(book)%"+random.to_s+"=0 AND rand() > 0.3 "
-				with_clause = "WITH book, toInt(book.gr_ratings_count) * toInt(book.gr_reviews_count) * toInt(book.gr_rating) AS total_weight, toInt(book.gr_ratings_count) * toInt(book.gr_rating) AS rating_weight "
-				return_clause = "RETURN book.isbn as isbn, ID(book)"
-				order_clause = ", total_weight, rating_weight ORDER BY rating_weight DESC, total_weight DESC, book.gr_rating DESC "
-				limit_clause = " LIMIT 10 "
-				clause = init_match_clause+"WHERE "+random_clause+with_clause+return_clause+order_clause+skip_clause+limit_clause
+			def self.get_basic_recommendations(filters, last_book)
+				clause = "START book = node:node_auto_index(\"indexed_title:\\\""+last_book+"\\\"\") MATCH p=(book)-[:Next_book*..10]->(b) WITH last(nodes(p)) as b RETURN b.isbn, ID(b), b.indexed_title"
 				clause
 			end
 
@@ -316,16 +302,16 @@ module Api
 			end
 
 			def self.get_books_by_title filters
-				book_name = filters["other_filters"]["title"]
-				author_name = filters["other_filters"]["author_name"]
+				book_name = filters["other_filters"]["title"].gsub(" ", "")
+				author_name = filters["other_filters"]["author_name"].gsub(" ", "")
 				show_all = filters["other_filters"]["show_all"]
 				if show_all
 					puts "book_name "+book_name+" show_all ".green
 					skip_count = filters["reset_count"]
-					clause = "START book=node:node_auto_index('indexed_title:\""+book_name.downcase+"*\"') WITH book, toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) as weight RETURN book.isbn as isbn, ID(book), weight ORDER BY weight DESC SKIP "+skip_count.to_s+" LIMIT 10"
+					clause = "START book=node:node_auto_index(\"indexed_title:\\\""+book_name.downcase+"*\\\"\") WITH book, toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) as weight RETURN book.isbn as isbn, ID(book), weight ORDER BY weight DESC SKIP "+skip_count.to_s+" LIMIT 10"
 				else
 					puts "book_name "+book_name+" author_name "+author_name+" ".green
-					clause = "START book=node:node_auto_index('indexed_title:\""+book_name.downcase+"\"') WHERE book.indexed_author_name=\""+author_name.downcase+"\" RETURN book.isbn as isbn, ID(book)"
+					clause = "START book=node:node_auto_index(\"indexed_title:\\\""+book_name.downcase+"\\\"\") WHERE book.indexed_author_name=\""+author_name.downcase+"\" RETURN book.isbn as isbn, ID(book)"
 				end
 				clause
 			end

@@ -2,7 +2,8 @@ module Api
 	module V0
 		class SearchApi
 			def self.search_books(q, skip_count)
-				clause = "START book=node:node_auto_index('indexed_title:"+q.downcase+"*') WITH book, toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) as weight RETURN book.isbn, ID(book), book.title as name, book.author_name, ID(book), weight ORDER BY weight DESC SKIP "+skip_count.to_s+" LIMIT 10"
+				q = q.downcase.gsub(" ", "")
+				clause = "START book=node:node_auto_index('indexed_title:"+q+"*') WITH book, toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) as weight RETURN book.isbn, ID(book), book.title as name, book.author_name, ID(book), weight ORDER BY weight DESC SKIP "+skip_count.to_s+" LIMIT 10"
 				puts clause.blue.on_red
 				results = @neo.execute_query(clause)["data"]
 				results
@@ -32,21 +33,22 @@ module Api
 
 			def self.search(q, count, type)
 				neo_init
+				q = q.downcase.gsub(" ", "")
 				if (type.include? 'BOOK')
-					clause = "START book=node:node_auto_index('indexed_title:"+q.downcase+"*') WITH book, toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) as weight RETURN book.title as name, book.author_name, ID(book), weight ORDER by weight DESC LIMIT "+count.to_s
+					clause = "START book=node:node_auto_index('indexed_title:"+q+"*') WITH book, toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) as weight RETURN book.title as name, book.author_name, ID(book), weight ORDER by weight DESC LIMIT "+count.to_s
 					puts clause.blue.on_red
 					tester = {:name => "BOOK:"+q.upcase}
 				elsif (type.include? 'AUTHOR') || (type.include? 'READER')
 					q = "@"+q
-					clause = "START author=node:node_auto_index('indexed_author_name:"+q.downcase+"*') RETURN DISTINCT author.author_name as name, ID(author) LIMIT "+count.to_s
+					clause = "START author=node:node_auto_index('indexed_author_name:"+q+"*') RETURN DISTINCT author.author_name as name, ID(author) LIMIT "+count.to_s
 					puts clause.blue.on_red
 					tester = {:name => "HUMAN:"+q.upcase}
 				elsif (type.include? 'TAG')
-					clause = "START genre=node:node_auto_index('indexed_genre_name:"+q.downcase+"*') RETURN genre.name as name, ID(genre) LIMIT "+count.to_s
+					clause = "START genre=node:node_auto_index('indexed_genre_name:"+q+"*') RETURN genre.name as name, ID(genre) LIMIT "+count.to_s
 					puts clause.blue.on_red
 					tester = {:name => "TAG:"+q.upcase}
 				else
-					clause = "START search_node=node:node_auto_index('search_index:"+q.downcase+"*') RETURN search_node.title as name, search_node.author_name, ID(search_node) LIMIT "+count.to_s
+					clause = "START search_node=node:node_auto_index('search_index:"+q+"*') RETURN search_node.title as name, search_node.author_name, ID(search_node) LIMIT "+count.to_s
 					puts clause.blue.on_red
 					tester = {:name => "RD:"+q.upcase}
 				end

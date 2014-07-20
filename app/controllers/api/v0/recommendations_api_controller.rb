@@ -39,18 +39,25 @@ module Api
 				filter_type = (JSON.parse params[:q])["filter_type"]
 				filters = JSON.parse(params[:q])
 				if filter_type == "BOOK"
-					books = BookApi.recommendations filters
+					last_book = $redis.get 'last_book'
+					if last_book
+						books = BookApi.recommendations(last_book, filters)
+					else
+						books = BookApi.recommendations("thehungergames", filters)
+					end
+					if books.present?
+						$redis.set 'last_book', books[books.length-1][2].gsub(" ", "")
+					end
 					recommendations =  {:books => books}
 				elsif filter_type == "AUTHOR"
 					authors = AuthorApi.recommendations
 					recommendations = {:authors => authors}
-				elsif filter_type == "READER"
+				else
 					readers = ReaderApi.recommendations
 					recommendations = {:readers => readers}
-				else
-					books = BookApi.recommendations
-					recommendations =  {:books => books}
 				end
+				last_book = $redis.get 'last_book'
+				puts last_book.to_s.blue.on_red
 				render :json => {:recommendations => recommendations}, :status => 200
 			end
 		end

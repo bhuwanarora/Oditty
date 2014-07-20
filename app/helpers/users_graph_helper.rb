@@ -223,22 +223,6 @@ module UsersGraphHelper
 	end
 
 
-	# ************************************************
-
-	# MATCH (u:User)-[r1:MarkAsReadAction]->(m:MarkAsReadNode)-[r2:MarkAsRead]->(b:Book) 
-	# WHERE ID(u)=USER_ID AND ID(b)=BOOK_ID 
-	# DELETE r1, r2, m
-	# WITH u, b, m
-
-	# MATCH (s)-[f1:FeedNext{user_id:USER_ID}]->(m)-[f2:FeedNext{user_id:USER_ID}]->(e) 
-	# CREATE (s)-[:FeedNext{user_id:USER_ID}]->(e) 
-	# DELETE f1, f2
-	# WITH u, b
-
-	# SET b.readers_count = b.readers_count - 1 
-	# SET u.book_read_count = u.book_read_count - 1 
-
-	# ************************************************
 	def self.mark_as_unread(user_id, book_id)
 		#FIXME mark_as_unread
 		@neo ||= self.neo_init
@@ -246,22 +230,12 @@ module UsersGraphHelper
 		
 		mark_as_unread_clause = "MATCH (u:User)-[r1:MarkAsReadAction]->(m:MarkAsReadNode)-[r2:MarkAsRead]->(b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" DELETE r1, r2, m WITH u, b, m "
 		feednext_clause = "MATCH (s)-[f1:FeedNext{user_id:"+user_id.to_s+"}]->(m)-[f2:FeedNext{user_id:"+user_id.to_s+"}]->(e) 	CREATE (s)-[:FeedNext{user_id:"+user_id.to_s+"}]->(e) DELETE f1, f2 WITH u, b "
-		set_clause = "SET b.readers_count = b.readers_count - 1 SET u.book_read_count = u.book_read_count - 1 "
+		set_clause = "SET b.readers_count = b.readers_count - 1, u.book_read_count = u.book_read_count - 1"
 		clause = mark_as_unread_clause + feednext_clause + set_clause
 		# WHERE r3.weight = 0 DELETE r3
 		puts clause.blue.on_red
 		puts "MARK AS UNREAD".green
 		@neo.execute_query(clause)
-		#ego feed update
-		#update mark as read cache for the book
-		#update popularity index for the book
-		#update popularity index for the author
-
-		#update mark as read cache for the user
-		#update bookworm index for the user
-
-		#update news feed for the book
-		#update news feed for the user
 	end
 
 	def self.write_a_review(user_id, book_id, review)
