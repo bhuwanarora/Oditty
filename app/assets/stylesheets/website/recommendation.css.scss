@@ -31,11 +31,13 @@
 	margin-right: 2px;
 	margin-left: 25px;
 	cursor: pointer;
-	height: 40px;
+	height: 35px;
+	margin-top: 2px;
+	border-radius: 5px;
 }
 
 .profile_thumb:hover{
-	background-color: #F3F3F3;
+	background-color: #E6E6E6;
 }
 
 .profile_thumb img{

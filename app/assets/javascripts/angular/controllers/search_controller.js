@@ -19,6 +19,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	  		else{
   				$scope.search_tag.input = item;
   				$rootScope.filters.other_filters["title"] = item;
+  				$rootScope.filters.other_filters["author_name"] = null;
   				$rootScope.filters.other_filters["show_all"] = true;
 	  			$scope.$emit('reloadRecommendations');
 	  		}

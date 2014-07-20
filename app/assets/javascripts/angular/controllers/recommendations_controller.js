@@ -149,9 +149,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 					});
 				}
 				else{
+					$rootScope.focused_book = null;
 					if($scope.recommendations.books.length >= max_limit){
 						$scope.recommendations.books = [$scope.recommendations.books[max_limit-2], $scope.recommendations.books[max_limit-1]];
-						$rootScope.focused_book = null;
 						var timeout_event = $timeout(function(){
 							scroller.scrollTo(screen.width/2, 0, 3000);
 						}, 1000);
@@ -166,8 +166,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 						$rootScope.hide_options = true;
 						// $scope.recommendations.books = data["recommendations"]["books"];
 						_set_books(data["recommendations"]["books"]);
-						$rootScope.focused_book = $scope.recommendations.books[0];
-						$rootScope.focused_book.tweets = [];
+						// $rootScope.focused_book = $scope.recommendations.books[0];
+						// $rootScope.focused_book.tweets = [];
 					}
 					else{
 		    			// $scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);

@@ -444,9 +444,9 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
       }
 
       _init = function(){
-        var book_name = $rootScope.focused_book.title;
-        var author_name = $rootScope.focused_book.author_name;
-        widgetService.get_affiliate_links(book_name, author_name).then(function(results){
+        // var book_name = $rootScope.focused_book.title;
+        // var author_name = $rootScope.focused_book.author_name;
+        widgetService.get_affiliate_links($rootScope.focused_book.id).then(function(results){
           $scope.bnn_links = results.bnn.links;
         });
         _display_tweet(0);

@@ -45,7 +45,8 @@ module Api
 					else
 						books = BookApi.recommendations("thehungergames", filters)
 					end
-					if books.present?
+					not_recommendations = filters["other_filters"].present? || filters["other_filters"]["title"].present? || filters["other_filters"]["id"].present?
+					if books.present? && !not_recommendations
 						$redis.set 'last_book', books[books.length-1][2].gsub(" ", "")
 					end
 					recommendations =  {:books => books}

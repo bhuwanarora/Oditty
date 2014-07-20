@@ -27,9 +27,9 @@ module Api
 				notifications
 			end
 
-			def self.get_book(title, author_name)
+			def self.get_book(id)
 				@neo = Neography::Rest.new
-				clause = "START book=node:node_auto_index('indexed_name = \""+title.downcase.gsub(" ", "")+"\"') WHERE book.indexed_author_name = \""+author_name.downcase.gsub(" ", "")+"\" RETURN book"
+				clause = "MATCH (book:Book) WHERE ID(book)="+id.to_s+" RETURN book"
 				puts clause.blue.on_red
 				book = @neo.execute_query(clause)["data"]
 				book
@@ -248,21 +248,21 @@ module Api
 					books = @neo.execute_query(clause)["data"]
 				end
 				# puts books.length.to_s.red.on_blue
-				# for book in books
-				# 	node_id = book[1].to_s
-				# 	book_sent = book_ids.include? node_id
-				# 	unless book_sent
-				# 		if book_ids.present?
-				# 			book_ids = ($redis.get 'book_ids')+","+node_id
-				# 		else
-				# 			book_ids = node_id
-				# 		end
-				# 		$redis.set 'book_ids', book_ids
-				# 		results.push book
-				# 	end
-				# end
-				# results
-				books
+				for book in books
+					node_id = book[1].to_s
+					book_sent = book_ids.include? node_id
+					unless book_sent
+						if book_ids.present?
+							book_ids = ($redis.get 'book_ids')+","+node_id
+						else
+							book_ids = node_id
+						end
+						$redis.set 'book_ids', book_ids
+						results.push book
+					end
+				end
+				results
+				# books
 			end
 
 			def self.detailed_book id
@@ -291,7 +291,8 @@ module Api
 
 			private
 			def self.get_basic_recommendations(filters, last_book)
-				clause = "START book = node:node_auto_index(\"indexed_title:\\\""+last_book+"\\\"\") MATCH p=(book)-[:Next_book*..10]->(b) WITH last(nodes(p)) as b RETURN b.isbn, ID(b), b.indexed_title"
+				last_book.gsub!(":", "")
+				clause = "START book = node:node_auto_index(\"indexed_title:"+last_book+"\") MATCH p=(book)-[:Next_book*..10]->(b) WITH last(nodes(p)) as b RETURN b.isbn, ID(b), b.indexed_title"
 				clause
 			end
 
@@ -302,16 +303,16 @@ module Api
 			end
 
 			def self.get_books_by_title filters
-				book_name = filters["other_filters"]["title"].gsub(" ", "")
-				author_name = filters["other_filters"]["author_name"].gsub(" ", "")
+				book_name = filters["other_filters"]["title"].gsub(" ", "").gsub(":", "")
+				author_name = filters["other_filters"]["author_name"].gsub(" ", "").gsub!(":", "") rescue ""
 				show_all = filters["other_filters"]["show_all"]
 				if show_all
 					puts "book_name "+book_name+" show_all ".green
 					skip_count = filters["reset_count"]
-					clause = "START book=node:node_auto_index(\"indexed_title:\\\""+book_name.downcase+"*\\\"\") WITH book, toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) as weight RETURN book.isbn as isbn, ID(book), weight ORDER BY weight DESC SKIP "+skip_count.to_s+" LIMIT 10"
+					clause = "START book=node:node_auto_index(\"indexed_title:"+book_name.downcase+"*\") WITH book, toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) as weight RETURN book.isbn as isbn, ID(book), weight ORDER BY weight DESC SKIP "+skip_count.to_s+" LIMIT 10"
 				else
 					puts "book_name "+book_name+" author_name "+author_name+" ".green
-					clause = "START book=node:node_auto_index(\"indexed_title:\\\""+book_name.downcase+"\\\"\") WHERE book.indexed_author_name=\""+author_name.downcase+"\" RETURN book.isbn as isbn, ID(book)"
+					clause = "START book=node:node_auto_index(\"indexed_title:"+book_name.downcase+"\") WHERE book.indexed_author_name=\""+author_name.downcase+"\" RETURN book.isbn as isbn, ID(book)"
 				end
 				clause
 			end
