@@ -1142,11 +1142,14 @@ and (min-width : 1824px) {
 	word-wrap: break-word;
 }
 
-.left_column{
-	overflow: auto;
+.column_wrapper{
 	left: 10px;
 	top: 90px;
 	position: fixed;
+}
+
+.left_column{
+	overflow: auto;
 	z-index: 2;
 	box-shadow: 8px 0 43px 0 rgba(66,66,66,.47);
 }
