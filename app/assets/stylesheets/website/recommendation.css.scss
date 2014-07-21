@@ -31,11 +31,13 @@
 	margin-right: 2px;
 	margin-left: 25px;
 	cursor: pointer;
-	height: 40px;
+	height: 35px;
+	margin-top: 2px;
+	border-radius: 5px;
 }
 
 .profile_thumb:hover{
-	background-color: #F3F3F3;
+	background-color: #E6E6E6;
 }
 
 .profile_thumb img{
@@ -427,7 +429,7 @@
 .interaction_box .highlighter{
 	position: absolute;
 	top: 18px;
-	left: 12px;
+	left: 24px;
 	color: transparent;
 	letter-spacing: 0.04em;
 	width: 100%;
@@ -498,9 +500,9 @@
 	float: left;
 	cursor: pointer;
 	color: #717070;
-	padding-left: 10px !important;
-	padding-right: 10px !important;
-	width: 75px !important;
+	padding: 10px !important;
+	border-radius: 2px;
+	background-color: #F3F3F3;
 }
 
 .main_filters{
@@ -514,7 +516,6 @@
 	font-size: 0.8em;
 	display: inline-block;
 	height: 10px;
-	width: 62px;
 	text-align: center;
 	padding: 5px 4px 5px 4px;
 }
@@ -800,6 +801,7 @@ and (min-width : 1824px) {
 	padding: 5px;
 	min-height: 45px;
 	height: auto;
+	line-height: 1.4em;
 }
 
 .notifications .notification:hover{

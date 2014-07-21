@@ -1,0 +1,28 @@
+START user=node:node_auto_index('indexed_email:EMAIL')
+MERGE (user)-[:FacebookAuth]->(fu:FacebookUser)
+SET user.fb_id = params[:id],
+fu.first_name = params[:first_name],
+fu.last_name = params[:last_name],
+fu.link = params[:link],
+fu.locale = params[:locale],
+fu.name = params[:name],
+fu.timezone = params[:timezone],
+fu.updated_time = params[:updated_time],
+fu.verified = params[:verified],
+fu.profile_status = params[:profile_status],
+fu.thumb = params[:thumb],
+fu.logged = params[:logged]
+
+MERGE (user:User{fb_id:FB_ID})
+MERGE (user)-[:FacebookAuth]->(fu:FacebookUser)
+SET fu.first_name = params[:first_name],
+fu.last_name = params[:last_name],
+fu.link = params[:link],
+fu.locale = params[:locale],
+fu.name = params[:name],
+fu.timezone = params[:timezone],
+fu.updated_time = params[:updated_time],
+fu.verified = params[:verified],
+fu.profile_status = params[:profile_status],
+fu.thumb = params[:thumb],
+fu.logged = params[:logged]

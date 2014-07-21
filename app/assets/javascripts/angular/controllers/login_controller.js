@@ -65,11 +65,14 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 
 		
 	_bind_auth_listeners = function(){
-		$scope.$on('event:google-plus-signin-success', function (event, authResult) {
+		$scope.$on('event:google-plus-signin-success', function (event, authResult){
+			
+			// debugger
+			// websiteService.handle_google_user(authResult);
 		    // console.log("google login", authResult);
 		});
 
-		$scope.$on('event:google-plus-signin-failure', function (event, authResult) {
+		$scope.$on('event:google-plus-signin-failure', function (event, authResult){
 		    // console.log("google login", authResult);
 		});
 
@@ -122,11 +125,12 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
    
     $scope.me = function() {
         Facebook.api('/me', function(response){
-        	console.log(response);
+        	// console.log(response);
+        	websiteService.handle_facebook_user(response);
 		    $scope.$apply(function(){
 		        $rootScope.user = response;
 		        $rootScope.user.profile_status = 0;
-		        $rootScope.user.thumb = "https://scontent-b-kul.xx.fbcdn.net/hphotos-ash3/t1.0-9/66784_415130785223231_1615890777_n.jpg";
+		        $rootScope.user.thumb = response["thumb"];
 		        // _profile_status_colors();
 		        $rootScope.user.logged = true;
 		    });

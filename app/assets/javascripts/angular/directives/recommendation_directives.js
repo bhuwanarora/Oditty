@@ -86,7 +86,7 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 
 			$scope.handle_left_columns = function(){
 				$scope.column_heights = {"show_filters": true,
-										"notifications_style" : {"height": "110px"}, 
+										"notifications_style" : {"max-height": "110px"}, 
 										"friends_grid_style": {"height": "75px"}};
 			}
 
@@ -498,12 +498,12 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 					var increase_tab_size = scroll_down;
 				}
 				if(increase_tab_size){
-					$scope.column_heights = {"notifications_style": {"height": "225px"},
+					$scope.column_heights = {"notifications_style": {"max-height": "225px"},
 											"friends_grid_style": {"height": "75px"},
 											"show_filters": false};
 				}
 				else{
-					$scope.column_heights = {"notifications_style": {"height": "110px"},
+					$scope.column_heights = {"notifications_style": {"max-height": "110px"},
 											"friends_grid_style": {"height": "75px"},
 											"show_filters": false};
 				}
@@ -535,7 +535,15 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 
 			}
 
+			_init_left_column = function(){
+				$scope.show_lists = false;
+				$scope.column_heights = {"notifications_style": {"max-height": "110px"},
+											"friends_grid_style": {"height": "75px"},
+											"show_filters": true};
+			}
+
 			_init = function(){
+				_init_left_column();
 				_init_shelf();
 				if(window.innerWidth < 1000){
 					$scope.compact_footer = true;

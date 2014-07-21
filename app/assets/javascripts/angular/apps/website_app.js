@@ -6,7 +6,7 @@ var websiteApp = angular.module('websiteApp', ['ngRoute', 'ngAnimate',
 websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
   $routeProvider
   .when('/search', {
-      templateUrl: '/assets/angular/widgets/partials/search.html'
+    templateUrl: '/assets/angular/widgets/partials/search.html'
   })
   .when('/user/:id', {
     templateUrl: '/assets/angular/widgets/partials/search.html'
@@ -18,6 +18,12 @@ websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvid
     templateUrl: '/assets/angular/widgets/partials/recommendations.html'
   })
   .when('/user/:id/book/:title/author/:author', {
+    templateUrl: '/assets/angular/widgets/partials/recommendations.html'
+  })
+  .when('/user/:id/book/:title/all/:status', {
+    templateUrl: '/assets/angular/widgets/partials/recommendations.html'
+  })
+  .when('/user/:id/book/:title/author/:author/id/:book_id', {
     templateUrl: '/assets/angular/widgets/partials/recommendations.html'
   })
   // .when('/user/:id/timeline', {
@@ -83,7 +89,8 @@ websiteApp.config(['FacebookProvider',
       //   'move': 1,
       //   'bright': 300
       // });
-      var myAppId = '667868653261167';
+      var myAppId = '609609685818282';
+      // var myAppId = '667868653261167'; #PRODUCTION
      
      // FacebookProvider.setAppId('myAppId');
      FacebookProvider.init(myAppId);

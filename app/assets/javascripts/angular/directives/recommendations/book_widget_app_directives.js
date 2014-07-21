@@ -271,7 +271,7 @@ websiteApp.directive('bookInteract', ['$rootScope', '$timeout', 'widgetService',
   };
 }]);
 
-websiteApp.directive('rate', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
+websiteApp.directive('rate', ['$rootScope', '$timeout', 'widgetService', 'sharedService', function($rootScope, $timeout, widgetService, sharedService){
   return{
     restrict: 'E',
     scope: {'rate_object': '=data'},
@@ -296,8 +296,13 @@ websiteApp.directive('rate', ['$rootScope', '$timeout', 'widgetService', functio
         $scope.$on('destroy', function(){
           $timeout.cancel(timeout_event);
         });
+        var params = {"id":$scope.rate_object.id, "data":$scope.rate_object.user_rating};
 
-        widgetService.rate_this_book($scope.rate_object.id, $scope.rate_object.user_rating);
+        //ONLY FOR BOOKS
+        if(angular.isUndefined($scope.rate_object.status) || !$scope.rate_object.status){
+          sharedService.mark_as_read($scope, $scope.rate_object, event);
+        }
+        widgetService.rate_this_book(params);
         event.stopPropagation();
       }
 
@@ -317,7 +322,7 @@ websiteApp.directive('rate', ['$rootScope', '$timeout', 'widgetService', functio
   }
 }]);
 
-websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
+websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 'sharedService', function($rootScope, $timeout, widgetService, sharedService){
   return{
     restrict: 'E',
     controller: ['$scope', function($scope){
@@ -377,10 +382,13 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
         });
       }
 
-      $scope.record_read_time = function(read_timer){
-        $rootScope.focused_book.read_timer = read_timer;
+      $scope.record_read_time = function(read_timer, event){
+        $rootScope.focused_book.time_index = read_timer;
         var message = "SUCCESS-Thanks we have recorded your approximate time to read "+$rootScope.focused_book.title+". <br/> This will help us to recommend you books according to your reading skills."
         var timeout_event = notify($rootScope, message, $timeout);
+        if(!$rootScope.focused_book.status){
+          sharedService.mark_as_read($rootScope, $rootScope.focused_book, event);
+        }
         widgetService.record_time($rootScope.focused_book.id, read_timer);
         $scope.$on('destroy', function(){
           $timeout.cancel('timeout_event');
@@ -389,7 +397,7 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
 
       $scope.is_timer = function(read_timer){
         var is_timer = false;
-        if($rootScope.focused_book.read_timer == read_timer){
+        if($rootScope.focused_book.time_index == read_timer){
           is_timer = true;
         }
         return is_timer;
@@ -439,9 +447,9 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
       }
 
       _init = function(){
-        var book_name = $rootScope.focused_book.title;
-        var author_name = $rootScope.focused_book.author_name;
-        widgetService.get_affiliate_links(book_name, author_name).then(function(results){
+        // var book_name = $rootScope.focused_book.title;
+        // var author_name = $rootScope.focused_book.author_name;
+        widgetService.get_affiliate_links($rootScope.focused_book.id).then(function(results){
           $scope.bnn_links = results.bnn.links;
         });
         _display_tweet(0);

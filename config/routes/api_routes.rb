@@ -58,6 +58,8 @@ ReadersDoor::Application.routes.draw do
       match 'info_data'                               => 'users_api#get_info_card_data',                :via => [:put, :get, :post]
       match 'books_read'                              => 'users_api#books_read',                        :via => [:put, :get, :post]
       match 'books_bookmarked'                        => 'users_api#books_bookmarked',                  :via => [:put, :get, :post]
+      match 'fb'                                      => 'users_api#fb',                                :via => [:put, :get, :post]
+      match 'google'                                  => 'users_api#google',                            :via => [:put, :get, :post]
     end
   end
 end

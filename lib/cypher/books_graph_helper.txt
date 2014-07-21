@@ -1,0 +1,5 @@
+#get_quick_reads
+
+MATCH (book:Book)-[:WithReadingTime]->(rt:ReadingTime{page_count_range: '<50'})
+RETURN book.isbn, ID(book)
+LIMIT 10

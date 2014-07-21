@@ -6,6 +6,12 @@ namespace :graph do
     Neo4jHelper.restructure_database
   end
 
+  desc "Recreate Indexes"
+  task :recreate_indexes => :environment do
+    include Neo4jHelper
+    Neo4jHelper.create_new_indexes
+  end
+
   desc "time nodes"
   task :time_nodes => :environment do
     include Neo4jHelper
@@ -64,6 +70,12 @@ namespace :graph do
   task :add_constraints => :environment do
     include Neo4jHelper
     Neo4jHelper.add_constraints
+  end
+
+  desc "Add Shelfari Books"
+  task :init_shelfari_books => :environment do
+     include Neo4jHelper
+     Neo4jHelper.init_shelfari_books
   end
   
 end

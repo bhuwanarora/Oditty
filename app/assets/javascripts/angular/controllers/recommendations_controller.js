@@ -24,7 +24,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 									"show_filters": false};
 		}
 		else{
-			$scope.column_heights = {"notifications_style" : {"height": "110px"}, 
+			$scope.column_heights = {"notifications_style" : {"max-height": "110px"}, 
 									"friends_grid_style": {"height": "75px"},
 									"show_filters": false};
 		}
@@ -120,6 +120,16 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         	$rootScope.filters["filter_type"] = "BOOK";
         	$rootScope.filters.other_filters["title"] = $scope.$routeParams.title;
 			$rootScope.filters.other_filters["author_name"] = $scope.$routeParams.author;
+			var id_defined = angular.isDefined($scope.$routeParams.book_id);
+			var show_all = angular.isDefined($scope.$routeParams.status);
+			if(show_all){
+				$rootScope.filters.other_filters["show_all"] = $scope.$routeParams.status;
+				$rootScope.filters["reset"] = true;
+	    		$rootScope.filters["reset_count"] = 0;
+			}
+			if(id_defined){
+				$rootScope.filters.other_filters["id"] = $scope.$routeParams.book_id;
+			}
         }
         else{
 			$rootScope.filters["filter_type"] = "BOOK";
@@ -132,7 +142,12 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	_update_recommendations = function(data){
 		if($rootScope.filters["filter_type"] == "BOOK"){
-			var message = "INFO- "+data.recommendations.books.length+" books found.";
+			if(data.recommendations.books.length > 0){
+				var message = "INFO- "+data.recommendations.books.length+" books found.";
+			}
+			else{
+				var message = "INFO- "+data.recommendations.books.length+" book found.";	
+			}
 			var timeout_event = notify($rootScope, message, $timeout);
 			$scope.$on('destroy', function(){
 				$timeout.cancel(timeout_event);
@@ -148,9 +163,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 					});
 				}
 				else{
+					$rootScope.focused_book = null;
 					if($scope.recommendations.books.length >= max_limit){
 						$scope.recommendations.books = [$scope.recommendations.books[max_limit-2], $scope.recommendations.books[max_limit-1]];
-						$rootScope.focused_book = null;
 						var timeout_event = $timeout(function(){
 							scroller.scrollTo(screen.width/2, 0, 3000);
 						}, 1000);
@@ -165,8 +180,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 						$rootScope.hide_options = true;
 						// $scope.recommendations.books = data["recommendations"]["books"];
 						_set_books(data["recommendations"]["books"]);
-						$rootScope.focused_book = $scope.recommendations.books[0];
-						$rootScope.focused_book.tweets = [];
+						// $rootScope.focused_book = $scope.recommendations.books[0];
+						// $rootScope.focused_book.tweets = [];
 					}
 					else{
 		    			// $scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);
@@ -262,13 +277,14 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     _get_labels = function(){
     	$rootScope.labels = [];
       	recommendationService.get_labels().then(function(data){
-      		if(angular.isArray(data)){
+        	console.debug("%c labels"+data, "color: green");
+        	if(angular.isArray(data) && data.length > 0){
 	        	angular.forEach(data, function(value){
 	        		if(value[0]!=null){
 	        			this.push({"name": value[0].replace("\"", "")});
 	        		}
 	        	}, $rootScope.labels);
-      		}
+        	}
       	});
     }
 
@@ -291,13 +307,13 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	_get_labels();
 		_initialize_filters();
 		_init_recommendations();
-		if($scope.$routeParams.title){
-			_get_recommendations();
-		}
+		// if($scope.$routeParams.title){
+		// 	_get_recommendations();
+		// }
     	_add_listeners();
         _init_analytics();
         // _init_shelf();
-        // _get_recommendations();
+        _get_recommendations();
         // _push_recommendations();
         _bind_destroy();
         // _handle_focused_book();

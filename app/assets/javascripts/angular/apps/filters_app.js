@@ -13,14 +13,18 @@ angular.module('filtersApp', [])
   })
   .filter('rating', function(){
     return function(input){
-      var output = input.toFixed(1);
+      if(angular.isDefined(input)){
+        var output = input.toFixed(1);
+      }
       return output;
     }
   })
   .filter('book_title', function(){
     return function(input){
-      if(input.length > 55){
-        input = input.slice(0, 53)+"...";
+      if(angular.isDefined(input)){
+        if(input.length > 55){
+          input = input.slice(0, 53)+"...";
+        }
       }
       return input;
     }

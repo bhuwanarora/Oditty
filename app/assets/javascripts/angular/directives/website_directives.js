@@ -40,6 +40,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 					if(!$scope.loading){
 						$scope.loading = true;
 						websiteService.search_books(search_for, skip_count).then(function(data){
+							data = data.results;
 							if(data.length != 0){
 								angular.forEach(data, function(value){
 									var json = {"isbn": value[0], 
@@ -161,6 +162,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 				}
 				_handle_info_card_bindings($scope);
 				_profile_status_colors();
+				_update_user_info();
 			}
 
 			$scope.next_profile_state = function(){
@@ -172,6 +174,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 				}
 				_handle_info_card_bindings($scope);
 				_profile_status_colors();
+				_update_user_info();
 			}
 
 			$scope.stop_horizontal_scroll = function(event){
@@ -221,6 +224,9 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 			}
 
 			$scope.set_user_name = function(){
+			}
+			
+			_update_user_info = function(){
 			}
 
 			_init = function(){
@@ -437,9 +443,11 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', '$document', function($ti
 		  	}
 
 			$scope.highlight = function(searchItem, textToSearchThrough){
-    			return $sce.trustAsHtml(textToSearchThrough
-    					.replace(new RegExp(searchItem, 'gi'), 
-    					'<span style="font-weight:bold;">$&</span>'));
+				if(angular.isDefined(textToSearchThrough) && angular.isDefined(searchItem)){
+	    			return $sce.trustAsHtml(textToSearchThrough
+	    					.replace(new RegExp(searchItem, 'gi'), 
+	    					'<span style="font-weight:bold;">$&</span>'));
+				}
 			}
 
 			$scope.remove_filter = function(){

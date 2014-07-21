@@ -26,7 +26,8 @@ module Api
 
 			def get_book_details
 				id = params[:id]
-				info = BookApi.get_book_details(id)
+				user_id = session[:user_id]
+				info = BookApi.get_book_details(id, user_id)
 				render :json => info, :status => 200
 			end
 
@@ -37,7 +38,7 @@ module Api
 			end
 
 			def affiliate_links
-				book = BookApi.get_book(params[:title], params[:author_name])
+				book = BookApi.get_book(params[:id])
 				isbn =  book[0][0]["data"]["isbn"] rescue ""
 				bnn_links = []
 				if isbn
