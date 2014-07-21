@@ -317,8 +317,9 @@ module Neo4jHelper
 					human_profile = author.human_profile
 					author_name = "@"+human_profile.name
 					lower_case = author_name.downcase.gsub(" ", "")
+					overview = author.overview.gsub("\"", "'").to_s rescue ""
 
-					clause = "MERGE (author:Author{search_index:\""+lower_case+"\"}) MERGE (book:Book{search_index:\""+book_title+"\"}) CREATE UNIQUE (author)-[:Wrote]->(book), (author)-[:AuthorFeed]->(author) SET author.indexed_name=\""+lower_case+"\", author.name=\""+author_name+"\", author.olid=\""+author.olid.to_s+"\", author.overview=\""+author.overview.to_s+"\", author.legal_name=\""+author.legal_name.to_s+"\", author.birthdate=\""+author.birthdate.to_s+"\", author.birthplace=\""+author.birthplace.to_s+"\", author.nationality=\""+author.nationality.to_s+"\", author.gender=\""+author.gender.to_s+"\", author.official_website=\""+author.official_website.to_s+"\", author.date_of_death=\""+author.date_of_death.to_s+"\", author.burial_location=\""+author.burial_location.to_s+"\", author.wiki_url=\""+author.wiki_url.to_s+"\", author.comments=\""+author.comments.to_s+"\""
+					clause = "MERGE (author:Author{search_index:\""+lower_case+"\"}) MERGE (book:Book{search_index:\""+book_title+"\"}) CREATE UNIQUE (author)-[:Wrote]->(book), (author)-[:AuthorFeed]->(author) SET author.indexed_name=\""+lower_case+"\", author.name=\""+author_name+"\", author.olid=\""+author.olid.to_s+"\", author.overview=\""+overview+"\", author.legal_name=\""+author.legal_name.to_s+"\", author.birthdate=\""+author.birthdate.to_s+"\", author.birthplace=\""+author.birthplace.to_s+"\", author.nationality=\""+author.nationality.to_s+"\", author.gender=\""+author.gender.to_s+"\", author.official_website=\""+author.official_website.to_s+"\", author.date_of_death=\""+author.date_of_death.to_s+"\", author.burial_location=\""+author.burial_location.to_s+"\", author.wiki_url=\""+author.wiki_url.to_s+"\", author.comments=\""+author.comments.to_s+"\""
 					puts "adding authors...".yellow
 					@neo.execute_query clause
 				end
@@ -338,7 +339,9 @@ module Neo4jHelper
 					tag_id = book_tag.shelfari_tag_id
 					weight = book_tag.weight
 					shelfari_tag = ShelfariTag.find tag_id
-					clause = "MATCH (book:Book{search_index:\""+book_title+"\"}) WHERE book.indexed_author_name=\""+author_name.downcase.gsub(" ", "")+"\" MERGE (genre:Genre{indexed_genre_name:\""+shelfari_tag.name.downcase.gsub(" ", "")+"\"}) CREATE UNIQUE (book)<-[r:Belongs_to]-(genre) SET r.weight="+weight.to_s+" Set genre.name=\""+shelfari_tag.name+"\""
+					genre_name = shelfari_tag.name.gsub("\"", "'").to_s rescue ""
+					lower_case = genre_name.downcase.gsub(" ", "").to_s rescue ""
+					clause = "MATCH (book:Book{search_index:\""+book_title+"\"}) WHERE book.indexed_author_name=\""+author_name.downcase.gsub(" ", "")+"\" MERGE (genre:Genre{indexed_genre_name:\""+lower_case+"\"}) CREATE UNIQUE (book)<-[r:Belongs_to]-(genre) SET r.weight="+weight.to_s+" Set genre.name=\""+genre_name+"\""
 					puts "adding tags...".yellow
 					@neo.execute_query clause
 				end
@@ -367,7 +370,8 @@ module Neo4jHelper
 				MoviesShelfariBooks.where(:shelfari_book_id => book_id).each do |book_movie|
 					movie_id = book_movie.movie_id
 					movie = Movie.find movie_id
-					clause = "MATCH (book:Book{search_index:\""+book_title+"\"}) WHERE book.indexed_author_name=\""+author_name.downcase.gsub(" ", "")+"\" MERGE (movie:Movie{indexed_movie_name:\""+movie.name.downcase.gsub(" ", "")+"\"})  CREATE UNIQUE (book)-[:MovieBased]->(movie) SET movie.imdb_url=\""+movie.imdb_url.to_s+"\", movie.year=\""+movie.year.to_s+"\""
+					movie_name = movie.name.downcase.gsub(" ", "").gsub("\"", "'").to_s rescue ""
+					clause = "MATCH (book:Book{search_index:\""+book_title+"\"}) WHERE book.indexed_author_name=\""+author_name.downcase.gsub(" ", "")+"\" MERGE (movie:Movie{indexed_movie_name:\""+movie_name+"\"})  CREATE UNIQUE (book)-[:MovieBased]->(movie) SET movie.imdb_url=\""+movie.imdb_url.to_s+"\", movie.year=\""+movie.year.to_s+"\""
 					puts "adding movies...".yellow
 					@neo.execute_query clause
 				end
@@ -494,21 +498,21 @@ module Neo4jHelper
 	def self.label_readtime_groups
 		@neo ||= self.init
 
-		# clause = "MATCH (book:Book)-[r:WithReadingTime]->(rt:ReadTime) DELETE r"
-		# @neo.execute_query(clause)
-		# puts "delete WithReadingTime relations".red
+		clause = "MATCH (book:Book)-[r:WithReadingTime]->(rt:ReadTime) DELETE r"
+		@neo.execute_query(clause)
+		puts "delete WithReadingTime relations".red
 
-		# clause = "MATCH (book:Book), (rt:ReadTime{page_count_range: '<50'}) WHERE toInt(book.page_count) <= 50 CREATE UNIQUE (book)-[:WithReadingTime]->(rt)"
-		# puts clause.green
-		# @neo.execute_query(clause)
+		clause = "MATCH (book:Book), (rt:ReadTime{page_count_range: '<50'}) WHERE toInt(book.page_count) <= 50 CREATE UNIQUE (book)-[:WithReadingTime]->(rt)"
+		puts clause.green
+		@neo.execute_query(clause)
 
-		# clause = "MATCH (book:Book), (rt:ReadTime{page_count_range: '50-100'}) WHERE toInt(book.page_count) > 50 AND toInt(book.page_count) <= 100 CREATE UNIQUE (book)-[:WithReadingTime]->(rt)"
-		# puts clause.blue
-		# @neo.execute_query(clause)
+		clause = "MATCH (book:Book), (rt:ReadTime{page_count_range: '50-100'}) WHERE toInt(book.page_count) > 50 AND toInt(book.page_count) <= 100 CREATE UNIQUE (book)-[:WithReadingTime]->(rt)"
+		puts clause.blue
+		@neo.execute_query(clause)
 
-		# clause = "MATCH (book:Book), (rt:ReadTime{page_count_range: '100-250'}) WHERE toInt(book.page_count) > 100 AND toInt(book.page_count) <= 250 CREATE UNIQUE (book)-[:WithReadingTime]->(rt)"
-		# puts clause.yellow
-		# @neo.execute_query(clause)
+		clause = "MATCH (book:Book), (rt:ReadTime{page_count_range: '100-250'}) WHERE toInt(book.page_count) > 100 AND toInt(book.page_count) <= 250 CREATE UNIQUE (book)-[:WithReadingTime]->(rt)"
+		puts clause.yellow
+		@neo.execute_query(clause)
 
 		clause = "MATCH (book:Book), (rt:ReadTime{page_count_range: '>250'}) WHERE toInt(book.page_count) > 250 CREATE UNIQUE  (book)-[:WithReadingTime]->(rt)"
 		puts clause.blue

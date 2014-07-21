@@ -89,7 +89,8 @@ websiteApp.config(['FacebookProvider',
       //   'move': 1,
       //   'bright': 300
       // });
-      var myAppId = '667868653261167';
+      var myAppId = '609609685818282';
+      // var myAppId = '667868653261167'; #PRODUCTION
      
      // FacebookProvider.setAppId('myAppId');
      FacebookProvider.init(myAppId);

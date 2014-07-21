@@ -2,8 +2,15 @@ module Api
 	module V0
 		class UsersApiController < ApplicationController
 
-			def google_auth
-				params[:access_token]
+			def google
+				# params[:result]
+				debugger
+			end
+
+			def fb
+				user_id = UserApi.handle_facebook_user params
+				session[:user_id] = user_id
+				render :json => {:message => "Success"}, :status => 200				
 			end
 
 			def books_read
@@ -138,6 +145,7 @@ module Api
 			end
 
 			def user
+				# session[:user_id] = nil
 				logged_in = false
 				if session[:user_id]
 					logged_in = true

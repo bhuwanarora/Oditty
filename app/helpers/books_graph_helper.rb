@@ -42,4 +42,10 @@ module BooksGraphHelper
 		end
 		book
 	end
+
+	def self.get_quick_reads(book_id, user_id=nil)
+		@neo = Neography::Rest.new
+		clause ="MATCH (book:Book)-[:WithReadingTime]->(rt:ReadingTime{page_count_range: '<50'}) RETURN book.isbn, ID(book) LIMIT 10"
+		@neo.execute_query(clause)["data"]
+	end
 end

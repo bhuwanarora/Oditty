@@ -40,6 +40,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 					if(!$scope.loading){
 						$scope.loading = true;
 						websiteService.search_books(search_for, skip_count).then(function(data){
+							data = data.results;
 							if(data.length != 0){
 								angular.forEach(data, function(value){
 									var json = {"isbn": value[0], 
@@ -426,9 +427,11 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', function($timeout, $sce){
 		  	}
 
 			$scope.highlight = function(searchItem, textToSearchThrough){
-    			return $sce.trustAsHtml(textToSearchThrough
-    					.replace(new RegExp(searchItem, 'gi'), 
-    					'<span style="font-weight:bold;">$&</span>'));
+				if(angular.isDefined(textToSearchThrough) && angular.isDefined(searchItem)){
+	    			return $sce.trustAsHtml(textToSearchThrough
+	    					.replace(new RegExp(searchItem, 'gi'), 
+	    					'<span style="font-weight:bold;">$&</span>'));
+				}
 			}
 
 			$scope.remove_filter = function(){

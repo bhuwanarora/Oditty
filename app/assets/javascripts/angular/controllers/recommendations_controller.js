@@ -133,7 +133,12 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	_update_recommendations = function(data){
 		if($rootScope.filters["filter_type"] == "BOOK"){
-			var message = "INFO- "+data.recommendations.books.length+" books found.";
+			if(data.recommendations.books.length > 0){
+				var message = "INFO- "+data.recommendations.books.length+" books found.";
+			}
+			else{
+				var message = "INFO- "+data.recommendations.books.length+" book found.";	
+			}
 			var timeout_event = notify($rootScope, message, $timeout);
 			$scope.$on('destroy', function(){
 				$timeout.cancel(timeout_event);

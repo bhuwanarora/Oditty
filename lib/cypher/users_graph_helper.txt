@@ -1,3 +1,4 @@
+# ************************************************
 #RATE
 MATCH (u:User), (b:Book) 
 WHERE ID(u)=USER_ID AND ID(b)=BOOK_ID 
@@ -35,6 +36,48 @@ DELETE old
 
 SET b.rating_count = b.rating_count + 1  
 SET u.rating_count = u.rating_count + 1
+# ************************************************
+
+
+
+
+
+
+# ************************************************
+# MARK AS READ
+
+	MATCH (u:User), (b:Book) 
+	WHERE ID(u)=USER_ID AND ID(b)=BOOK_ID 
+	CREATE UNIQUE (u)-[:MarkAsReadAction]->(m:MarkAsReadNode{timestamp:TIMESTAMP, 
+		book_id:BOOK_ID, 
+		title:b.title, 
+		author_name: b.author_name, 
+		user_id:USER_ID, 
+		name:u.email})-[:MarkAsRead]->(b) 
+	WITH u, b, m 
+
+	MATCH (u)-[old:FeedNext]->(old_feed) 
+	CREATE UNIQUE (u)-[:FeedNext{user_id:USER_ID}]->(m)-[:FeedNext{user_id:USER_ID}]->(old_feed) 
+	DELETE old 
+	WITH u, b, m
+
+	MATCH (b)-[old:BookFeed]->(old_feed) 
+	CREATE UNIQUE (b)-[:BookFeed{user_id:USER_ID}]->(m)-[:BookFeed{user_id:USER_ID}]->(old_feed) 
+	DELETE old 
+	WITH u, b, m 
+
+	OPTIONAL MATCH (u)<-[:Follow]-(f) 
+	WHERE f <> u 
+	WITH u, b, f 
+
+	MATCH (f)-[old:Ego]-(old_ego) 
+	CREATE UNIQUE (f)-[:Ego{user_id:ID(f)}]->(u)-[:Ego{user_id:ID(f)}]->(old_ego) 
+	DELETE old 
+
+	SET b.readers_count = b.readers_count + 1  
+	SET u.book_read_count = u.book_read_count + 1 
+
+# ************************************************
 
 
 
@@ -42,14 +85,7 @@ SET u.rating_count = u.rating_count + 1
 
 
 
-
-
-
-
-
-
-
-
+# ************************************************
 # MARK AS UNREAD
 
 # delete mark as read relation
@@ -60,6 +96,7 @@ WITH u, b, m
 
 # delete rating action
 MATCH (u:User)-[r1:RatingAction]->(m:RatingNode)-[r2:Rate]->(b:Book) 
+SET b.rating_count = b.rating_count - 1
 WHERE ID(u)=USER_ID AND ID(b)=BOOK_ID 
 DELETE r1, r2, m
 WITH u, b, m	
@@ -71,23 +108,20 @@ DELETE r1, r2, m
 WITH u, b, m
 
 #delete feed relation
-OPTIONAL MATCH (x)-[r1:FeedNext{user_id:USER_ID}]->(m)-[r2:FeedNext{user_id:USER_ID}]->(y) 
-FOREACH (a IN CASE WHEN x IS NULL THEN [] ELSE [x] END | 
-	FOREACH (b IN CASE WHEN y IS NULL THEN [] ELSE [y] END |	
-		CREATE  (a)-[:FeedNext{user_id:USER_ID}]->(b) 
-		DELETE r1, r2)) WITH u, b, m
+MATCH (x)-[r1:FeedNext{user_id:USER_ID}]->(m)-[r2:FeedNext{user_id:USER_ID}]->(y) 
+CREATE  (a)-[:FeedNext{user_id:USER_ID}]->(b) 
+DELETE r1, r2
+WITH u, b, m
 
 #delete book feed relation
-OPTIONAL MATCH (x)-[r1:BookFeed{user_id:USER_ID}]->(m)-[r2:BookFeed{user_id:USER_ID}]->(y) 
-FOREACH (a IN CASE WHEN x IS NULL THEN [] ELSE [x] END | 
-	FOREACH (b IN CASE WHEN y IS NULL THEN [] ELSE [y] END |	
-		CREATE  (a)-[:BookFeed{user_id:USER_ID}]->(b) 
-		DELETE r1, r2)) WITH u, b, m
+MATCH (x)-[r1:BookFeed{user_id:USER_ID}]->(m)-[r2:BookFeed{user_id:USER_ID}]->(y) 
+CREATE  (a)-[:BookFeed{user_id:USER_ID}]->(b) 
+DELETE r1, r2
+WITH u, b, m
 
 #update book and user properties
 SET b.readers_count = b.readers_count - 1,
 u.book_read_count = u.book_read_count - 1 
-b.rating_count = b.rating_count - 1
 
 #ego feed update
 #update mark as read cache for the book
@@ -99,3 +133,4 @@ b.rating_count = b.rating_count - 1
 
 #update news feed for the book
 #update news feed for the user
+# ************************************************

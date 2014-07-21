@@ -488,7 +488,15 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 
 			}
 
+			_init_left_column = function(){
+				$scope.show_lists = false;
+				$scope.column_heights = {"notifications_style": {"max-height": "110px"},
+											"friends_grid_style": {"height": "75px"},
+											"show_filters": true};
+			}
+
 			_init = function(){
+				_init_left_column();
 				_init_shelf();
 				if(window.innerWidth < 1000){
 					$scope.compact_footer = true;

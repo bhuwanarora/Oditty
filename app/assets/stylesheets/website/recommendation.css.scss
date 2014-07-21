@@ -495,9 +495,9 @@
 	float: left;
 	cursor: pointer;
 	color: #717070;
-	padding-left: 10px !important;
-	padding-right: 10px !important;
-	width: 75px !important;
+	padding: 10px !important;
+	border-radius: 2px;
+	background-color: #F3F3F3;
 }
 
 .main_filters{
@@ -511,7 +511,6 @@
 	font-size: 0.8em;
 	display: inline-block;
 	height: 10px;
-	width: 62px;
 	text-align: center;
 	padding: 5px 4px 5px 4px;
 }

@@ -4,6 +4,14 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         return _deferred_request('/api/v0/user');
     }
 
+    this.handle_facebook_user = function(params){
+        return _deferred_post_request('/api/v0/fb', params);
+    }
+
+    this.handle_google_user = function(params){
+        return _deferred_post_request('/api/v0/google', params);
+    }
+
     this.get_book_details = function(filter){
         return _deferred_request('/api/v0/book?'+filter);
     }
