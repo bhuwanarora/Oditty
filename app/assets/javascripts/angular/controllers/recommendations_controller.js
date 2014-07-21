@@ -10,8 +10,11 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		event.stopPropagation();
 	}
 
-	$scope.handle_friends_grid_size = function(){
-		if(event.deltaY > 0){
+	$scope.handle_friends_grid_size = function(type, event){
+		if(event){
+					var increase_tab_size = event.deltaY > 0;
+				}
+		if(type == "scroll_down" || increase_tab_size){
 			$scope.column_heights = {"notifications_style" : {"height": "110px"}, 
 									"friends_grid_style": {"max-height": "120px", "overflow": "auto"},
 									"show_filters": false};
@@ -21,7 +24,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 									"friends_grid_style": {"height": "75px"},
 									"show_filters": false};
 		}
-		event.stopPropagation();
+		if(event){
+			event.stopPropagation();
+		}
 	}
 
 	$scope.reset = function(){

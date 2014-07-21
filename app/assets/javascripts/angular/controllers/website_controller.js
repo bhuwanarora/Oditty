@@ -187,6 +187,12 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 				$scope.notifications = data.notifications;
 			});
 	    });
+
+	    get_latest_notification = $scope.$on('getLatestNotification', function(){
+			websiteService.get_latest_notification($rootScope.user).then(function(data){
+				$scope.notifications.push(data.notification);
+			});
+	    });
 	}
 
 	$scope.toggle_login_panel = function(){

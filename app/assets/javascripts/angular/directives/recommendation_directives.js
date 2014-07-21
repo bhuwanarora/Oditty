@@ -367,7 +367,7 @@ websiteApp.directive('mainHeader', [function(){
 	}
 }]);
 
-websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'websiteService', function(scroller, $rootScope, websiteService){
+websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'websiteService', '$timeout', function(scroller, $rootScope, websiteService, $timeout){
 	return{
 		restrict: 'E',
 		controller: ['$scope', function($scope){
@@ -403,7 +403,7 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 				}
 			}
 
-			$scope.toggle_more_filters = function(event){
+ 			$scope.toggle_more_filters = function(event){
 				if($scope.show_more_filters == true){
 					$scope.show_more_filters = false;
 					// $('.recommendation_block').css('margin-top', '40px');
@@ -454,13 +454,42 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 					}
 					else{
 						//focus the specific input box
+						if($scope.show_more_filters == true && $scope.column_heights.show_filters == true){
+							$scope.show_more_filters = false;
+						}
+						else {	
+							$scope.show_more_filters = true;
+							$scope.handle_left_columns();
+							if(type == "genre"){
+								$scope.genre_selected = true;
+								var timeout_event = $timeout(function(){
+									$scope.genre_selected = false;
+								}, 200);
+
+								$scope.$on('destroy', function(){
+									$timeout.cancel(timeout_event);
+								});
+							}
+							if(type == "author"){
+								$scope.author_selected = true;
+								var timeout_event = $timeout(function(){
+									$scope.author_selected = false;
+								}, 200);
+
+								$scope.$on('destroy', function(){
+									$timeout.cancel(timeout_event);
+								});
+							}
+						}
 					}
 				}
 			}
 
-			$scope.handle_notification_ticker_size = function(event){
-				var increase_tab_size = event.deltaY > 0;
-				if(increase_tab_size){
+			$scope.handle_notification_ticker_size = function(type, event){
+				if(event){
+					var increase_tab_size = event.deltaY > 0;
+				}
+				if(type == "scroll_down" || increase_tab_size){
 					$scope.column_heights = {"notifications_style": {"height": "225px"},
 											"friends_grid_style": {"height": "75px"},
 											"show_filters": false};
@@ -471,7 +500,21 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 											"show_filters": false};
 				}
 				$rootScope.ticker_popup = null;
-	            event.stopPropagation();
+				if(event){
+		            event.stopPropagation();
+				}
+	        }
+
+	        $scope.on_scroll_down = function(){
+	        	$scope.column_heights = {"notifications_style": {"height": "225px"},
+											"friends_grid_style": {"height": "75px"},
+											"show_filters": false};
+	        }
+
+	        $scope.on_scroll_up = function(){
+	        	$scope.column_heights = {"notifications_style": {"height": "110px"},
+											"friends_grid_style": {"height": "75px"},
+											"show_filters": false};
 	        }
 	        
 			$scope.goto_info_card = function(){
@@ -504,6 +547,9 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 				else{
 					$scope.compact_footer = false;	
 				}
+				$scope.genre_selected = false;
+				$scope.author_selected = false;
+				$scope.column_heights = {"show_filters": false};
 			}
 
 			_init();

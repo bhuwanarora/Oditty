@@ -171,6 +171,11 @@
 	border-radius: 2px;
 }
 
+.filters_panel .filter_icon{
+	font-size: 0.8em;
+	margin-left: -3px;
+}
+
 @-webkit-keyframes bounce {
     0% { -webkit-transform: translate3d(0,   0px,0); 
          -webkit-animation-timing-function: ease-out; }
@@ -595,6 +600,7 @@
 	font-size: 0.8em;
 	top: 40px;
 	left: 0px;
+	margin-left: 57px;
 }
 
 .typeahead_options .option{
@@ -630,7 +636,7 @@
 	display: inline-block;
 	float: left;
 	margin: 2px;
-	width: 170px;
+	/*width: 170px;*/
 }
 
 .z_index_two{
@@ -1157,7 +1163,12 @@ and (min-width : 1824px) {
 	min-width: 337px;
 	position: fixed;
 	z-index: 3;
-	padding: 4px 15px 4px 15px;
+	padding: 4px 0px 4px 15px;
+}
+
+.relative_position{
+	position: relative;
+	overflow: visible;
 }
 
 .notifications .arrow_left{
@@ -1167,16 +1178,23 @@ and (min-width : 1824px) {
 	border-bottom: 10px solid transparent;
 	width: 0; 
 	height: 0;
-	left: -11px;
+	left: 250px;
 	border-right: 10px solid white; 
 }
 
 .ticker_popup .ticker_overflow{
-	height: 42vh;
-	overflow: scroll;
+	height: 35vh;
 	width: 57vh;
 }
 
+.ticker_popup .bottom_widget{
+	height: 18%;
+	z-index: 1;
+}
+
+.shift_right{
+	padding-right: 15px;
+}
 .left_column .friends_grid .friends_grid_header{
 	padding: 10px;
 	background-color: #F3F3F3;

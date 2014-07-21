@@ -73,6 +73,11 @@ module Api
 				render :json => {:notifications => news_feed}, :status => 200
 			end
 
+			def latest_notification
+				news_feed = WebsiteApi.get_latest_notification session[:user_id]
+				render :json => {:notifications => news_feed}, :status => 200
+			end
+
             private
             def neo_init
                 @neo = Neography::Rest.new

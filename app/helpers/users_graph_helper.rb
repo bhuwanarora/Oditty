@@ -479,6 +479,17 @@ module UsersGraphHelper
 	end
 
 	# ************************************************
+	
+	# MATCH (u:User)-[:FeedNext]->(news_feed)
+	# WHERE (ID)=USER_ID
+	# RETURN labels(news_feed), news_feed
+
+	# ************************************************
+	def self.get_latest_news_feed user_id
+		
+	end
+
+	# ************************************************
 
 	# MATCH (u:User)-[r]-() DELETE u, r 
 	# MATCH (u:MarkAsReadNode)-[r]-() DELETE u, r

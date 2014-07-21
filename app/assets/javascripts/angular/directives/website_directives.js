@@ -220,6 +220,9 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 		        });
 			}
 
+			$scope.set_user_name = function(){
+			}
+
 			_init = function(){
 				$rootScope.user.profile_status = 0;
 	    		_profile_status_colors();
@@ -340,7 +343,7 @@ websiteApp.directive('setFocus', ['$timeout', '$parse' , '$rootScope', function(
   };
 }]);
 
-websiteApp.directive('typeAhead', ['$timeout', '$sce', function($timeout, $sce){
+websiteApp.directive('typeAhead', ['$timeout', '$sce', '$document', function($timeout, $sce, $document){
 	return{
 		restrict: 'E',
 		scope: {
@@ -349,17 +352,30 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', function($timeout, $sce){
 	      	title: '@',
 	      	id: '@',
 	      	custom: '@',
+	      	iconClass: '@',
 	      	customOptions: '@',
+	      	focusWhen: '=',
 	      	subtitle: '@',
 	      	model: '=',
 	      	onSelect: '&',
 	      	autoPopulate: '&',
 	      	onClear: '&'
 		},
-		link: ['scope', 'elem', 'attrs', function(scope, elem, attrs){
+		link: function(scope, elem, attrs){
+			$document.bind('click', function(event){
+		        var isClickedElementChildOfPopup = elem
+		          .find(event.target)
+		          .length > 0;
+		          console.log();
+		        if (!isClickedElementChildOfPopup){
+			        scope.selected = true;
+			        scope.$apply();
+		        }
+		          	
+	      });
 
+		},
 
-		}],
 		controller: ['$scope', '$sce', 'recommendationService', function($scope, $sce, recommendationService){
 			$scope.is_current = function(index, selectedItem) {
 				if($scope.current == index){
@@ -595,4 +611,32 @@ websiteApp.directive('checkScrollBottom', function () {
             });
         }
     };
+});
+
+websiteApp.directive('checkScrollUpDown', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var elem = element[0];
+            var position = elem.scrollTop;
+            var attribute = attrs.checkScrollUpDown.split(',');
+            element.bind('scroll', function () {
+                if (elem.scrollTop > position) {
+                	scope.$apply(attribute[0]);
+                }
+                else{
+                	scope.$apply(attribute[1]);
+                }
+                position = elem.scrollTop;
+            });
+        }
+    };
+});
+
+websiteApp.directive('focusOut',function(){
+	return function postLink(scope, element, attrs) {
+                element.bind('blur', function () {
+                    scope.$apply(attrs.focusOut);
+                });
+	};
 });

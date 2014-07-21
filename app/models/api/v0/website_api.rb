@@ -27,6 +27,10 @@ module Api
 				notifications.reverse
 			end
 
+			def self.get_latest_notification user_id
+
+			end
+
 			def self.get_time_groups
 				neo_init
                 time_groups = @neo.execute_query("MATCH (t:Era) RETURN t")["data"]

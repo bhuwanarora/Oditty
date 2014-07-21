@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.1'
@@ -30,13 +30,15 @@ gem 'jquery-ui-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # gem 'isbndb', '~> 2.0.2'
-gem 'rmagick', '2.13.2'
+# gem 'rmagick', '2.13.2'
 gem 'openlibrary'
 gem 'simple_form'
 gem 'jquery-tokeninput-rails'
 gem 'nokogiri'
 gem 'rails_admin'
 gem 'rails_admin_nestable'
+# add it
+gem 'tire'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 gem "resque", "1.23.0"
@@ -48,9 +50,11 @@ gem 'rack-zippy'
 gem 'nifty-generators'
 gem 'faye'
 gem 'thin'
-#gem 'mad_chatter', github: 'madchatter/mad_chatter'
+# gem 'mad_chatter', github: 'madchatter/mad_chatter'
 gem 'pubnub'
 # gem 'goospell'
+# add it
+gem 'bootstrap-sass'
 gem 'spellingbee'
 
 gem 'neography'
@@ -62,8 +66,9 @@ gem 'neo4j-cypher'
 gem 'jbuilder', '~> 1.2'
 gem 'ancestry'
 
-gem 'less-rails-bootstrap', '2.3.3'
-gem "twitter-bootstrap-rails"
+# commment them
+# gem 'less-rails-bootstrap', '2.3.3'
+# gem "twitter-bootstrap-rails"
 gem 'freebase-api'
 gem 'fb_graph'
 gem 'treetop'
@@ -71,6 +76,7 @@ gem 'polyglot'
 gem 'blather'
 gem "eventmachine"
 gem "whenever"
+gem "debugger"
 # gem 'amazon-ecs'
 # gem 'rubber'
 # gem 'rails_admin_example_theme', :git => 'git://github.com/bbenezech/rails_admin_example_theme.git'
@@ -84,13 +90,14 @@ group :production do
 	gem 'rails_12factor'
 end
 
-gem 'capistrano'
-gem 'capistrano-bundler'
-gem 'capistrano-rails'
-gem 'capistrano-rbenv'
+#gem 'capistrano'
+#gem 'capistrano-bundler'
+#gem 'capistrano-rails'
+#gem 'capistrano-rbenv'
 
 group :development do
-	gem "byebug", "~> 2.5.0"
+	#comment it
+	# gem "byebug", "~> 2.5.0"
 	gem 'annotate'
 	gem 'hirb'
 	gem 'hirb-unicode'
@@ -102,7 +109,7 @@ group :development do
 	gem 'net-http-spy'
 	gem 'rspec'
 end
-gem 'colorize'
+	gem 'colorize'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'

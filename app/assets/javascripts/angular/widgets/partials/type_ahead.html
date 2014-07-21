@@ -11,6 +11,8 @@
          
     </div>
   </div>
+  <span class='{{iconClass}}'></span>
+  <span>&nbsp;</span>
   <input type="text" 
        ng-model="model" 
        placeholder="{{prompt}}" 
@@ -19,6 +21,7 @@
        ng-keyup="key_up()"
        ng-click="auto_populate()"
        ng-mouseenter="focus_on_input($event)"
-       class="{{custom}}"/>
+       class="{{custom}}"
+       set-focus="{{focusWhen}}"/>
   <div class="remove_filter" ng-if="selected && model" ng-click="remove_filter()">x</div>
 </div>

@@ -12,23 +12,27 @@
 			 	<type-ahead items="genres" 
 			 				prompt="Filter by a Genre" 
 			 				title="name"
+			 				icon-class="icon-shapes filter_icon green"
 			 				custom-options="z_index_two genre_typeahead_options"
 			 				custom="input_filter"
 			 				model="genre" 
 			 				on-select="on_genre_selection(genre, $event)"
 			 				auto-populate="show_genre_options('BOOK', genre)"
 			 				on-clear="clear_filter('BOOK', 'genre')"
-			 				ng-keypress="show_genre_options('BOOK', genre)">
+			 				ng-keypress="show_genre_options('BOOK', genre)"
+			 				focus-when="genre_selected">
 			 	</type-ahead>
 				<type-ahead items="authors" 
 			 				prompt="Filter by Author Name"
 			 				title="name"
+			 				icon-class="icon-pen filter_icon green"
 			 				custom-options = "author_typeahead_options"
 			 				custom="input_filter"
 			 				model="author"
 			 				on-clear="clear_filter('BOOK', 'author')"
 			 				on-select="on_author_selection(author)"
-			 				ng-keypress="show_author_options('BOOK', author)">
+			 				ng-keypress="show_author_options('BOOK', author)"
+			 				focus-when="author_selected">
 			 	</type-ahead>
 			</div>
 			
