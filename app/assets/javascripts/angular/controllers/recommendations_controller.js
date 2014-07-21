@@ -19,7 +19,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			var increase_tab_size = scroll_down;
 		}
 		if(increase_tab_size){
-			$scope.column_heights = {"notifications_style" : {"height": "110px"}, 
+			$scope.column_heights = {"notifications_style" : {"max-height": "110px"}, 
 									"friends_grid_style": {"max-height": "120px", "overflow": "auto"},
 									"show_filters": false};
 		}
@@ -101,7 +101,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
 	_initialize_filters = function(){
-		$scope.show_more_filters = true;
+		// $scope.show_more_filters = true;
 		$rootScope.filters = {};
         $rootScope.filters["more_filters"] = [];
         $rootScope.filters["other_filters"] = {};
@@ -135,9 +135,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			$rootScope.filters["filter_type"] = "BOOK";
 			$scope.show_notifications = true;
         }
-        if($routeParams.filter_id){
-        	$scope.show_more_filters = true;
-        }
+        // if($routeParams.filter_id){
+        // 	$scope.show_more_filters = true;
+        // }
 	}
 
 	_update_recommendations = function(data){

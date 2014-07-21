@@ -403,19 +403,19 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 				}
 			}
 
- 			$scope.toggle_more_filters = function(event){
-				if($scope.show_more_filters == true){
-					$scope.show_more_filters = false;
-					// $('.recommendation_block').css('margin-top', '40px');
-					// $('.info_cards').css('margin-top', '40px');
-				}
-				else{
-					$scope.show_more_filters = true;		
-					// $('.recommendation_block').css('margin-top', '0px');
-					// $('.info_cards').css('margin-top', '0px');
-				}
-				event.stopPropagation();
-			}
+ 		// 	$scope.toggle_more_filters = function(event){
+			// 	if($scope.show_more_filters == true){
+			// 		$scope.show_more_filters = false;
+			// 		// $('.recommendation_block').css('margin-top', '40px');
+			// 		// $('.info_cards').css('margin-top', '40px');
+			// 	}
+			// 	else{
+			// 		$scope.show_more_filters = true;		
+			// 		// $('.recommendation_block').css('margin-top', '0px');
+			// 		// $('.info_cards').css('margin-top', '0px');
+			// 	}
+			// 	event.stopPropagation();
+			// }
 
 			$scope.toggle_read = function(){
 				if(!$scope.read_selected){
@@ -454,34 +454,34 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 					}
 					else{
 						//focus the specific input box
-						if($scope.show_more_filters && $scope.column_heights.show_filters){
-							$scope.show_more_filters = false;
-						}
-						else {	
-							$scope.show_more_filters = true;
-							$scope.handle_left_columns();
-							_handle_filter_selection(type);
-						}
+						// $scope.show_more_filters = true;
+						$scope.handle_left_columns();
+						_handle_filter_selection(type);
 					}
 				}
 			}
 
-			_handle_filter_selection = function(){
+			_handle_filter_selection = function(type){
 				if(type == "genre"){
+					// debugger
+					$scope.show_lists = false;
+					console.log("genre_selected", $scope.genre_selected);
 					$scope.genre_selected = true;
 					var timeout_event = $timeout(function(){
+						// debugger
 						$scope.genre_selected = false;
-					}, 200);
+					}, 1000);
 
 					$scope.$on('destroy', function(){
 						$timeout.cancel(timeout_event);
 					});
 				}
 				if(type == "author"){
+					$scope.show_lists = false;
 					$scope.author_selected = true;
 					var timeout_event = $timeout(function(){
 						$scope.author_selected = false;
-					}, 200);
+					}, 500);
 
 					$scope.$on('destroy', function(){
 						$timeout.cancel(timeout_event);

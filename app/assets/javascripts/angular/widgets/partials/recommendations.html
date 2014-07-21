@@ -135,9 +135,12 @@
 						<div ng-repeat="notification in notifications | reverse">
 							<notification data="notification"></notification>
 						</div>
-						<div ng-if="!notifications">
-							No notifications.
+						<div class="notification">
+							No new notifications.
 						</div>
+					</div>
+					<div ng-if="!notifications" class="notification">
+						No notifications.
 					</div>
 				</div>
 			</div>

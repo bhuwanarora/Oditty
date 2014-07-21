@@ -182,8 +182,13 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 			}, 1000);
 	    });
 
+	    add_to_notifications = $scope.$on('addToNotifications', function(event, notification){
+	    	scroller.scrollTo(0, 0, 1000);
+	    	$scope.notifications.push(notification);
+	    });
+
 	    get_notifications_event = $scope.$on('getNotifications', function(){
-	    	websiteService.get_notifications($rootScope.user).then(function(data){
+	    	websiteService.get_notifications().then(function(data){
 				$scope.notifications = data.notifications;
 			});
 	    });

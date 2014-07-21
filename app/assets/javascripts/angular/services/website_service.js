@@ -53,8 +53,8 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         return _deferred_request('/api/v0/image');
     }
 
-    this.get_notifications = function(data){
-        return _deferred_request('/api/v0/notifications?id='+data.id);
+    this.get_notifications = function(){
+        return _deferred_request('/api/v0/notifications');
     }
 
     this.get_latest_notification = function(){

@@ -232,3 +232,24 @@ input:focus{
 .black_blue_background{
     background-color: #181F25 !important;
 }
+
+
+.green{
+    background-color: #65b045;
+}
+
+.magenta{
+    background-color: #11a9cc;
+}
+
+.cyan{
+    background-color: #981b48;
+}
+
+.orange{
+    background-color: #d73d32;
+}
+
+.purple{
+    background-color: #7e3794;
+}

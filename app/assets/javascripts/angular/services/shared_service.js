@@ -22,7 +22,26 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
         }
         var timeout_event = notify($rootScope, message, $timeout);
         widgetService.mark_as_read(book.id, book.status);
-        $scope.$emit('getLatestNotification');
+        var name = $rootScope.user.email;
+        var message = "<span><b>"+name+"</b> </span> added <span class='site_color'>"+book_title+"</span>&nbsp;to&nbsp;<span class='icon-books'></span><span>&nbsp;books read.</span>";
+        var thumb = "assets/profile_pic.jpeg"
+        var notification = {
+          "thumb":thumb,
+          "message":message,
+          "timestamp":new Date().getTime(),
+          "book":{
+            "id":book.id,
+            "title":book_title,
+            "author_name":author_name,
+            "isbn":book.isbn
+          },
+          "user":{
+            "id":$rootScope.user.id,
+            "name":$rootScope.user.email
+          }
+        }
+        $scope.$emit('addToNotifications', notification);
         event.stopPropagation();
     };
+
 }]);

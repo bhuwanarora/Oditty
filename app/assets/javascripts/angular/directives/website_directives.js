@@ -335,12 +335,12 @@ websiteApp.directive('setFocus', ['$timeout', '$parse' , '$rootScope', function(
     link: function(scope, element, attrs) {
       var model = $parse(attrs.setFocus);
       scope.$watch(model, function(value) {
-        if(value === true) { 
+        if(value == true) { 
           $timeout(function() {
           	if($rootScope.keyCode){
             	element[0].value = String.fromCharCode($rootScope.keyCode);
           	}
-            element[0].focus(); 
+            element[0].focus();
             // $speechSynthetis.speak("You are at Reader's Door. How can I help you?", 'en-UK');
           });
         }
@@ -628,7 +628,7 @@ websiteApp.directive('checkScrollUp', function () {
             var elem = element[0];
             var position = elem.scrollTop;
             element.bind('scroll', function(){
-                if(elem.scrollTop < position){
+                if(elem.scrollTop <= position){
                 	scope.$apply(attrs.checkScrollUp);
                 }
                 position = elem.scrollTop;

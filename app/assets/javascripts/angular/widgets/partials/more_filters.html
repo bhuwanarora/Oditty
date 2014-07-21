@@ -1,5 +1,4 @@
-<div ng-if="show_more_filters"
-	 class="more_filters animate-fast"
+<div class="more_filters animate-fast"
 	 ng-click="stop_click_propagation($event)">	
 
 	<div ng-if="!bookmark_selected && !read_selected">
@@ -12,7 +11,7 @@
 			 	<type-ahead items="genres" 
 			 				prompt="Filter by a Genre" 
 			 				title="name"
-			 				icon-class="icon-shapes filter_icon green"
+			 				icon-class="icon-shapes filter_icon orange"
 			 				custom-options="z_index_two genre_typeahead_options"
 			 				custom="input_filter"
 			 				model="genre" 
@@ -25,7 +24,7 @@
 				<type-ahead items="authors" 
 			 				prompt="Filter by Author Name"
 			 				title="name"
-			 				icon-class="icon-pen filter_icon green"
+			 				icon-class="icon-pen filter_icon purple"
 			 				custom-options = "author_typeahead_options"
 			 				custom="input_filter"
 			 				model="author"
