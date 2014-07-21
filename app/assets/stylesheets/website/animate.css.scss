@@ -1,0 +1,179 @@
+.focused_tooltip.ng-enter,
+.focused_tooltip.ng-leave.ng-leave-active{
+	height: 60vh;
+	opacity: 0.5;
+	top: 110px;
+}
+
+.focused_tooltip.ng-leave,
+.focused_tooltip.ng-enter-active{
+	height: 70vh;
+	opacity: 1;
+	top: 95px;
+}
+
+.push_notification.ng-enter,
+.push_notification.ng-leave.ng-leave-active{
+	right: -400px;
+}
+
+.push_notification.ng-leave,
+.push_notification.ng-enter.ng-enter-active{
+	right: 1px;
+}
+
+.message.ng-enter,
+.message.ng-leave.ng-leave-active{
+	opacity: 0;	
+}
+
+.message.ng-leave,
+.message.ng-enter.ng-enter-active{
+	opacity: 1;
+}
+
+.recommendation_block.ng-enter{
+	margin-left: 100px;
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2.5s;
+    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2.5s;
+}
+
+.recommendation_block.ng-enter.ng-enter-active{
+	margin-left: 0px;
+}
+
+.push_notification.ng-enter, .push_notification.ng-leave {
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+}
+
+.more_filters.ng-enter,
+.more_filters.ng-leave.ng-leave-active{
+	top: -400px;
+}
+
+.more_filters.ng-leave,
+.more_filters.ng-enter.ng-enter-active {
+	top: 90px;
+}
+
+.login_box.ng-enter,
+.login_box.ng-leave.ng-leave-active{
+	width: 280px;
+	height: 200px;
+	margin-left: -170px;
+	margin-top: -150px;
+	opacity: 0.5;
+}
+
+.login_box.ng-leave,
+.login_box.ng-enter.ng-enter-active{
+	width: 300px;
+	height: 220px;
+	margin-left: -180px;
+	margin-top: -160px;
+	opacity: 1;
+}
+
+.interaction_box.ng-enter,
+.interaction_box.ng-leave.ng-leave-active,
+.message_box.ng-enter,
+.message_box.ng-leave.ng-leave-active{
+	width: 400px;
+	height: 100px;
+	margin-left: -200px;
+	margin-top: -65px;
+	opacity: 1;
+}
+
+.interaction_box.ng-leave,
+.interaction_box.ng-enter.ng-enter-active,
+.message_box.ng-leave,
+.message_box.ng-enter.ng-enter-active{
+	width: 500px;
+	height: 200px;
+	margin-left: -250px;
+	margin-top: -130px;
+}
+
+.recommendation_box.ng-leave,
+.recommendation_box.ng-enter.ng-enter-active{
+	height: 500px;
+	margin-top: -250px;
+	opacity: 1;
+	width: 500px;	
+}
+
+.recommendation_box.ng-enter,
+.recommendation_box.ng-leave.ng-leave-active{
+	height: 50px;
+	margin-top: 0px;
+	opacity: 0;
+	width: 200px;
+}
+
+.news.ng-enter{
+	opacity: 0;
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2.5s;
+    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2.5s;
+}
+
+.news.ng-enter.ng-enter-active{
+	opacity: 1;
+}
+
+.notifications.ng-enter,
+.notifications.ng-leave.ng-leave-active{
+	top: 0px;
+}
+
+.notifications.ng-leave,
+.notifications.ng-enter.ng-enter-active{
+	top: 90px;
+}
+
+.notification.ng-enter{
+	margin-top: 300px;
+}
+
+.notification.ng-enter.ng-enter-active{
+	margin-top: 5px;
+}
+
+.notification.ng-leave.ng-leave-active{
+	margin-left: -300px;
+}
+
+.notification.ng-leave{
+	margin-left: 5px;
+}
+
+.main_view.ng-enter,
+.main_view.ng-leave.ng-leave-active{
+	opacity: 0;
+}
+
+.main_view.ng-leave,
+.main_view.ng-enter.ng-enter-active{
+	opacity: 1;
+}
+
+.login_form.ng-enter,
+.login_form.ng-leave.ng-leave-active{
+	margin-top: 50px;
+}
+
+.login_form.ng-leave,
+.login_form.ng-enter.ng-enter-active{
+	margin-top: 0px;
+}
+
+.label_dropdown.ng-enter,
+.label_dropdown.ng-leave.ng-leave-active{
+	bottom: 0px;
+}
+
+.label_dropdown.ng-leave,
+.label_dropdown.ng-enter.ng-enter-active{
+	bottom: 73%;
+}

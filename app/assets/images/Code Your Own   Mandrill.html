@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<!-- saved from url=(0070)https://mandrillapp.com/templates/code?id=coming-soon-without-an-image -->
+<html style="overflow: hidden;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Code Your Own | Mandrill</title>
+    
+		<meta charset="utf-8">
+        <link rel="shortcut icon" href="https://mandrillapp.com/img/favicon.ico" type="image/x-icon">
+		<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+		    <!--[if lt IE 9]>
+		      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		    <![endif]-->
+		<link rel="stylesheet" href="./Code Your Own   Mandrill_files/common.css" type="text/css" media="screen" charset="utf-8">
+        <link rel="stylesheet" href="./Code Your Own   Mandrill_files/mandrill.css" type="text/css" media="screen" charset="utf-8">
+        <!--[if lte IE 9]>
+              <link rel="stylesheet" href="/css/ie8.css" type="text/css" media="screen" charset="utf-8">
+            <![endif]-->
+        <script type="text/javascript" async="" src="./Code Your Own   Mandrill_files/ga.js"></script><script type="text/javascript" src="./Code Your Own   Mandrill_files/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="./Code Your Own   Mandrill_files/jquery-cookie.js"></script>
+        <script type="text/javascript" src="./Code Your Own   Mandrill_files/mdcommon.js"></script>
+        <script type="text/javascript" src="./Code Your Own   Mandrill_files/jquery-ui-1.10.3.custom.min.js"></script>
+		<script type="text/javascript">
+                        var _sudo_time = 1388817190;
+              			$(function(){
+                function logSupportEvent(event_type, extra_data) {
+                    if (typeof extra_data != 'object') var extra_data = {};
+                    $.post('/support/log-event', {
+                        current_page: "\/templates\/code?id=coming-soon-without-an-image",
+                        event_type: event_type,
+                        extra_data: extra_data
+                    });
+                }
+
+                $('#flash').prependTo($('#main-narrow'));
+                $('#sudo-dialog').dialog({
+                    autoOpen: false,
+                    width: 430,
+                    modal: true,
+                    resizable: false
+                });
+                $('#support-dialog').dialog({
+                    autoOpen: false,
+                    width: 680,
+                    modal: true,
+                    resizable: false,
+                    draggable: false,
+                    position: ['center',50],
+                    open: function(event, ui) {
+                        logSupportEvent('open_dialog');
+                    },
+                    close: function(event, ui) {
+                        logSupportEvent('close_dialog');
+                    }
+                });
+
+                function clearValidation(form) {
+                    $(form + ' input, ' + form + ' textarea').removeClass('invalid');
+                    $(form + ' .invalid-error').remove();
+                }
+
+                function showValidation(form, details) {
+                    clearValidation(form);
+                    for (var name in details) {
+                        var elem = $('#support-form [name=' + name + ']');
+                        elem.addClass('invalid');
+                        var error_display = $('<span class="invalid-error"></span>');
+                        error_display.text(details[name]);
+                        elem.parent().append(error_display);
+                    }
+                }
+
+                $('#support').click(function() {
+                    $('#ticket-submit').attr('disabled', false);
+                    $('#ticket-search-results').empty();
+                    $('#support-dialog').data('enable-search', true);
+                    $('#support-dialog').dialog('open');
+                    $('#ticket-search-wrapper .show-ticket-form-wrapper').hide();
+                    $('#ticket-search-wrapper').show();
+                    $('#ticket-details').hide();
+                    $('#help-cat1').hide();
+                    $('#help-cat2').hide();
+                    $('#help-cat3').hide();
+                    return false;
+                });
+
+                $('#support-billing').click(function() {
+                    $('#support-dialog').data('enable-search', false);
+                    $('#support-dialog').dialog('open');
+                    $('#ticket-search-wrapper .show-ticket-form-wrapper').show();
+                    $('#ticket-search-wrapper').hide();
+                    $('#ticket-details').show();
+                    $('input#ticket-subject').val('Sending was paused due to billing updates');
+                    return false;
+                });
+
+                $('#ticket-submit').click(function() {
+                    var params = {};
+                    $('#ticket-submit').val('Submitting');
+                    $('#ticket-submit').attr('disabled', true);
+
+                    $('#support-form input, #support-form textarea').each(function() {
+                        params[this.name] = this.value;
+                    });
+
+                    $.post('/support/new-ticket', params, function(response) {
+                        if (response.status == 'error') {
+                            $('#ticket-submit').attr('disabled', false);
+                            showValidation('#support-form', response.details);
+                        } else {
+                            logSupportEvent('create_ticket', {ticket: response.ticket});
+                            $('#support-dialog').dialog('close');
+                            $(window).scrollTop(0);
+                            md.toast("Your ticket has been submitted. We'll be in touch soon.");
+                        }
+                    });
+                    return false;
+                });
+
+                $('#support-search').click(function() {
+                    var query = $('#support-query').val();
+                    $('#ticket-searching').show();
+                    $('#ticket-search-wrapper .show-ticket-form-wrapper').hide();
+                    $('#ticket-search-results').empty().hide().load('/support/search-kb', {q: query}, function() {
+                        $('#ticket-search-results').slideDown('250');
+                        $('#ticket-searching').hide();
+                        $('#ticket-search-wrapper .show-ticket-form-wrapper').show();
+                        var results = [];
+                        $(this).find('h4 a').each(function(index, ele) {
+                            $(ele).addClass('track-support-click').data('click-type', 'result').data('query', query);
+                            results.push({
+                                url: $(ele).attr('href'),
+                                title: $(ele).text()
+                            });
+                        });
+                        logSupportEvent('search', {
+                            query: query,
+                            results: results
+                        });
+                    });
+                    return false;
+                });
+
+                function showHelpCat(id) {
+                    $('#ticket-search-wrapper').slideUp('250');
+                    $('.help-cat-active').removeClass('help-cat-active');
+                    $('#' + id).addClass('help-cat-active').slideDown('250');
+                }
+
+                $('#helplink-cat1').click(function(e) {
+                    e.preventDefault();
+                    showHelpCat('help-cat1');
+                });
+
+                $('#helplink-cat2').click(function(e) {
+                    e.preventDefault();
+                    showHelpCat('help-cat2');
+                    $('#support-dialog-reputation').empty().load('/support/reputation');
+                });
+
+                $('#helplink-cat3').click(function(e) {
+                    e.preventDefault();
+                    showHelpCat('help-cat3');
+                });
+
+                $('.help-cat-back').click(function() {
+                    $('.help-cat-active').removeClass('help-cat-active').slideUp('250');
+                    $('#ticket-search-wrapper').slideDown('250');
+                    return false;
+                });
+
+                $('#ticket-search-wrapper .show-ticket-form').click(function() {
+                    $('#ticket-subject').val($('#support-query').val());
+                    $('#ticket-search-wrapper').slideUp('250');
+                    $('#ticket-details').slideDown('250');
+                    return false;
+                });
+
+                $('.show-ticket-form:not(#ticket-search-wrapper .show-ticket-form)').click(function() {
+                    $('#ticket-subject').val('');
+                    $('.help-cat-active').slideUp('250');
+                    $('#ticket-details').slideDown('250');
+                    return false;
+                });
+
+                $('#hide-ticket-form').click(function() {
+                    if ($('#support-dialog').data('enable-search')) {
+                        $('#ticket-details').slideUp('250');
+                        $('#ticket-search-wrapper').slideDown('250');
+                    } else {
+                        $('#support-dialog').dialog('close');
+                    }
+                    return false;
+                });
+
+                $('#support-dialog').on('click', 'a.track-support-click', function() {
+                    var click_type = $(this).data('click-type');
+                    var query = $(this).data('query');
+                    if (typeof query != 'string') query = null;
+                    logSupportEvent(click_type + '_click', {
+                        url: $(this).attr('href'),
+                        title: $(this).text(),
+                        query: query
+                    });
+                });
+  			});  
+        </script>
+
+        <script type="text/javascript">
+
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-329148-80']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+
+        </script>
+    
+    <link rel="stylesheet" type="text/css" href="./Code Your Own   Mandrill_files/jquery.tagit.css">
+    <script type="text/javascript" src="./Code Your Own   Mandrill_files/tag-it.min.js"></script>
+    <script type="text/javascript" src="./Code Your Own   Mandrill_files/codemirror.js"></script>
+    <link rel="stylesheet" type="text/css" href="./Code Your Own   Mandrill_files/codemirror.css">
+    <link rel="stylesheet" href="https://mandrillapp.com/js/codemirror/theme/neat.css">
+    <link rel="stylesheet" href="https://mandrillapp.com/js/codemirror/theme/elegant.css">
+    <link rel="stylesheet" href="https://mandrillapp.com/js/codemirror/theme/erlang-dark.css">
+    <link rel="stylesheet" href="https://mandrillapp.com/js/codemirror/theme/night.css">
+    <link rel="stylesheet" href="https://mandrillapp.com/js/codemirror/theme/monokai.css">
+    <link rel="stylesheet" href="https://mandrillapp.com/js/codemirror/theme/mandrill.css">
+    <link rel="stylesheet" href="https://mandrillapp.com/js/codemirror/theme/cobalt.css">
+    <link rel="stylesheet" href="https://mandrillapp.com/js/codemirror/theme/eclipse.css">
+    <link rel="stylesheet" href="https://mandrillapp.com/js/codemirror/theme/rubyblue.css">
+    <link rel="stylesheet" href="https://mandrillapp.com/js/codemirror/theme/lesser-dark.css">
+    <link rel="stylesheet" href="https://mandrillapp.com/js/codemirror/theme/xq-dark.css">
+    <link rel="stylesheet" href="https://mandrillapp.com/js/codemirror/theme/xq-light.css">
+    <link rel="stylesheet" href="https://mandrillapp.com/js/codemirror/theme/ambiance.css">
+    <link rel="stylesheet" href="https://mandrillapp.com/js/codemirror/theme/blackboard.css">
+    <link rel="stylesheet" href="https://mandrillapp.com/js/codemirror/theme/vibrant-ink.css">
+    <link rel="stylesheet" href="https://mandrillapp.com/js/codemirror/theme/solarized.css">
+    <link rel="stylesheet" href="https://mandrillapp.com/js/codemirror/theme/twilight.css">
+    <link rel="stylesheet" href="https://mandrillapp.com/js/codemirror/theme/midnight.css">
+    <script type="text/javascript" src="./Code Your Own   Mandrill_files/xml.js"></script>
+    <script type="text/javascript" src="./Code Your Own   Mandrill_files/css.js"></script>
+    <script type="text/javascript" src="./Code Your Own   Mandrill_files/javascript.js"></script>
+    <script type="text/javascript" src="./Code Your Own   Mandrill_files/htmlmixed.js"></script>
+    <script type="text/javascript">
+
+        function currentTags() {
+            var tags = [];
+            $('input[name="tags[]"]').each(function(i, e) {
+                var v = $(e).val();
+                if(v) tags.push(v);
+            });
+            return tags;
+        }
+
+        function saveDraft(then, arg) {
+            editor.save();
+            var tpl_data = {
+                html: $('#html').val(),
+                text: $('#text').val(),
+                subject: $('#subject').val(),
+                from_email: $('#from_email').val(),
+                from_name: $('#from_name').val()
+            };
+
+            var tags = currentTags();
+
+            $.post('/templates/save-code', {id: $('#id').val(), name: $('#template-name').val(), tags: tags, data: tpl_data}, function(data) {
+                if(data.status == 'success') {
+                    md.toast('Draft saved');
+                    if(then) then(arg);
+                } else {
+                    md.toast('Error saving draft: ' + data.msg, 'error');
+                }
+            }, 'json');
+        }
+
+        function sendTest() {
+            $('#send-test-form').dialog('open');
+        }
+
+        function sendTestPost() {
+            //Save the draft before posting the test
+            saveDraft(function() {
+                $('#send-test-form form')[0].submit();
+            });
+        }
+
+        function sendSpamTest() {
+            saveDraft(function() {
+                $('#spam-filter-form').dialog('open');
+            });
+        }
+
+        function showSpamUpgrade() {
+            $('#spam-filter-upgrade').dialog('open');
+        }
+
+        function openSpamReport(report) {
+            $.get('/templates/spam-report', {id: "coming-soon-without-an-image", report: report}, function(data) {
+                $('#spam-filter-report').html(data);
+                $('#spam-filter-report').dialog('open');
+            });
+        }
+
+        function sendScreenshotTest() {
+            saveDraft(function() {
+                $('#screenshot-test-form').dialog('open');
+            });
+        }
+
+        function showScreenshotUpgrade() {
+            $('#screenshot-test-upgrade').dialog('open');
+        }
+
+        $(document).ready(function() {
+            function isFullScreen(cm) {
+                return /\bCodeMirror-fullscreen\b/.test(cm.getWrapperElement().className);
+            }
+            function winHeight() {
+                return window.innerHeight - 70 || (document.documentElement || document.body).clientHeight;
+            }
+            function setFullScreen(cm, full) {
+                var wrap = cm.getWrapperElement();
+                if (full) {
+                    wrap.className += " CodeMirror-fullscreen";
+                    wrap.style.height = winHeight() + "px";
+                    document.documentElement.style.overflow = "hidden";
+                    $('#content').addClass('fullscreen-mode live-preview');
+                    $('#enter-fullscreen').hide();
+                    $('#quit-fullscreen').show();
+                    $('#live-preview').show();
+                    $('#enter-live-preview').hide();
+                    $('#quit-live-preview').show();
+                    document.getElementById('live-preview').style.height = winHeight() + "px";
+                } else {
+                    wrap.className = wrap.className.replace(" CodeMirror-fullscreen", "");
+                    wrap.style.height = "";
+                    document.documentElement.style.overflow = "";
+                    $('#content').removeClass('fullscreen-mode live-preview');
+                    $('#enter-fullscreen').show();
+                    $('#quit-fullscreen').hide();
+                    $('#enter-live-preview').show();
+                    $('#quit-live-preview').hide();
+                    $('#live-preview').hide();
+                }
+                cm.refresh();
+            }
+            CodeMirror.on(window, "resize", function() {
+                var showing = document.body.getElementsByClassName("CodeMirror-fullscreen")[0];
+                if (!showing) return;
+                showing.CodeMirror.getWrapperElement().style.height = winHeight() + "px";
+                document.getElementById('live-preview').style.height = winHeight() + "px";
+            });
+            editor = CodeMirror.fromTextArea(document.getElementById('html'), {mode: 'text/html', indentUnit: 4, lineNumbers: true,
+                lineWrapping: true,
+                extraKeys: {
+                    "F11": function(cm) {
+                    setFullScreen(cm, !isFullScreen(cm));
+                    },
+                    "Esc": function(cm) {
+                    if (isFullScreen(cm)) setFullScreen(cm, false);
+                    }
+                }
+            });
+            var delay;
+            editor.on("change", function() {
+                clearTimeout(delay);
+                delay = setTimeout(updatePreview, 500);
+            });
+      
+            function updatePreview() {
+                var previewFrame = document.getElementById('template-preview');
+                var preview =  previewFrame.contentDocument ||  previewFrame.contentWindow.document;
+                preview.open();
+                preview.write(editor.getValue());
+                preview.close();
+            }
+            setTimeout(updatePreview, 500);
+            var selected_theme = $.cookie('mdtpltheme') || 'default';
+            $('#select-theme').val(selected_theme);
+
+            editor.setOption('theme', selected_theme);
+            function selectTheme() {
+                var theme = $('#select-theme').val();
+                editor.setOption("theme", theme);
+                $.cookie('mdtpltheme', theme);
+            }
+            $('#enter-live-preview').hide();
+            $('#quit-live-preview').hide();
+            $('#quit-fullscreen').hide();
+            $('#enter-fullscreen').click(function(event) {
+                setFullScreen(editor, true);
+                event.preventDefault();
+            });
+
+            $('#quit-fullscreen').click(function(event) {
+                setFullScreen(editor, false);
+                $('#enter-live-preview').hide();
+                $('#quit-live-preview').hide();
+                event.preventDefault();
+            });
+            $('#enter-live-preview').click(function(event) {
+                $('#content').addClass('live-preview');
+                $('#enter-live-preview').hide();
+                $('#quit-live-preview').show();
+                event.preventDefault();
+            });
+            $('#quit-live-preview').click(function(event) {
+                $('#content').removeClass('live-preview');
+                $('#enter-live-preview').show();
+                $('#quit-live-preview').hide();
+                event.preventDefault();
+            });
+            $('#show-tab-html').addClass('btn-selected');
+            $('#show-tab-html').click(function(event) {
+                $('#tab-text').fadeOut('250');
+                $('#tab-html').fadeIn('250');
+                $('#tab-text').fadeOut('250');
+                $('#tab-html').fadeIn('250');
+                $('#show-tab-text').removeClass('btn-selected');
+                $('#show-tab-html').addClass('btn-selected');
+                event.preventDefault();
+            });
+
+            $('#show-tab-text').click(function(event) {
+                $('#tab-html').fadeOut('250');
+                $('#tab-text').fadeIn('250');
+                $('#tab-html').fadeOut('250');
+                $('#tab-text').fadeIn('250');
+                $('#show-tab-html').removeClass('btn-selected');
+                $('#show-tab-text').addClass('btn-selected');
+                event.preventDefault();
+            });
+            
+            $('#flash').prependTo($('#content'));
+            $('#send-test-form').dialog({
+                autoOpen: false,
+                modal: true,
+                resizable: false,
+                width: 400
+            });
+
+            $('#send-test-cancel').click(function() {
+                $('#send-test-form').dialog('close');
+                return false;
+            });
+
+            $('#spam-filter-form').dialog({
+                autoOpen: false,
+                modal: true,
+                resizable: false,
+                width: 520
+            });
+
+            $('#spam-filter-upgrade').dialog({
+                autoOpen: false,
+                modal: true,
+                resizable: false,
+                width: 400
+            });
+
+            $('#spam-filter-cancel').click(function() {
+                $('#spam-filter-form').dialog('close');
+                return false;
+            });
+
+            $('#spam-filter-report').dialog({
+                autoOpen: false,
+                modal: true,
+                resizable: false,
+                width: 600
+            });
+
+            $('#screenshot-test-form').dialog({
+                autoOpen: false,
+                modal: true,
+                resizable: false,
+                width: 520
+            });
+
+            $('#screenshot-test-upgrade').dialog({
+                autoOpen: false,
+                modal: true,
+                resizable: false,
+                width: 400
+            });
+
+            $('#screenshot-test-cancel').click(function() {
+                $('#screenshot-test-form').dialog('close');
+                return false;
+            });
+
+            $('#select-theme').change(selectTheme);
+            $("#template-labels").tagit({fieldName: 'tags[]', availableTags: [], tagLimit: 10});
+        });
+    </script>
+</head>
+<body class="row no-sidebar">
+        <div class="page-wrap">
+        		<header role="banner">
+            <div class="row overflow">
+                <a href="https://mandrillapp.com/" id="logo" class="pull-left"><h1 class="imgrpl">Mandrill</h1></a>
+				<nav role="navigation" class="overflow pull-left main-nav">
+					<ul class="linear-list above0 below0 overflow">
+                        <li><a href="https://mandrillapp.com/" class="">Dashboard</a></li>
+                        <li>
+                            <ul class="hover-list">
+                                <li>
+                                    <a href="https://mandrillapp.com/reports" class="">Reports <span class="dwn">▼</span></a>
+                                    <ul>
+                                        <li><a href="https://mandrillapp.com/reports/compare" class="">Compare Stats</a></li>
+                                        <li><a href="https://mandrillapp.com/reports/demographics" class="">Demographics</a></li>
+                                        <li><a href="https://mandrillapp.com/reports/urls" class="">URL Tracking</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul class="hover-list">
+                                <li>
+                                    <a href="https://mandrillapp.com/activity" class="current ">Outbound <span class="dwn">▼</span></a>
+                                    <ul>
+                                        <li><a href="https://mandrillapp.com/activity" class="">Activity</a></li>
+                                        <li><a href="https://mandrillapp.com/tags" class="">Tags</a></li>
+                                        <li><a href="https://mandrillapp.com/templates" class="current">Templates</a></li>
+                                        <li><a href="https://mandrillapp.com/rules" class="">Rules</a></li>
+                                        <li><a href="https://mandrillapp.com/split-test" class="">Split Tests</a></li>
+                                        <li><a href="https://mandrillapp.com/url-patterns" class="">URL Patterns</a></li>
+                                        <li><a href="https://mandrillapp.com/subaccounts" class="">Subaccounts</a></li>
+                                        <li><a href="https://mandrillapp.com/compose" class="">Compose Message</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul class="hover-list">
+                                <li>
+                                    <a href="https://mandrillapp.com/inbound" class="">Inbound <span class="dwn">▼</span></a>
+                                    <ul>
+                                        <li><a href="https://mandrillapp.com/inbound" class="">Domains</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+					</ul>
+				</nav>                <nav role="navigation" class="overflow pull-right account-settings">
+                    <ul class="linear-list above0 below0 overflow">
+                        <li>
+                            <ul class="hover-list">
+                                <li>
+                                    <a href="https://mandrillapp.com/account/contact" class="" onclick=" return md.checkSudoSession(this.href);">bhuwanarora67@gmail.com <span class="dwn">▼</span></a>
+                                    <ul>
+                                        <li><a href="https://mandrillapp.com/account/billing/plan" class=" " onclick=" return md.checkSudoSession(this.href);">Account Details</a></li>                                        <li><a href="https://mandrillapp.com/account/contact" class="" onclick=" return md.checkSudoSession(this.href);">Username &amp; Contact Information</a></li>
+                                                                                                                                                                <li><a href="https://mandrillapp.com/account/billing/add-ons" class="" onclick=" return md.checkSudoSession(this.href);">Add Ons</a></li>                                        <li><a href="https://mandrillapp.com/account/close" class="" onclick=" return md.checkSudoSession(this.href);">Close My Account</a></li>                                        <li><a href="https://mandrillapp.com/account/test-mode" class="acct-switch">Turn on test mode</a></li>
+                                        <li></li>
+                                        <li><a href="https://mandrillapp.com/login/out" class="logout">Log out</a></li>                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul class="hover-list">
+                                <li>
+                                    <a href="https://mandrillapp.com/settings/index" class="" onclick=" return md.checkSudoSession(this.href);"><span class="settings">Settings</span> <span class="dwn">▼</span></a>
+                                    <ul>
+                                        <li><a href="https://mandrillapp.com/settings/index" class="" onclick=" return md.checkSudoSession(this.href);">SMTP &amp; API Credentials</a></li>
+                                        <li><a href="https://mandrillapp.com/settings/sending-domains" class="">Sending Domains</a></li>
+                                        <li><a href="https://mandrillapp.com/settings/tracking-domains" class="">Tracking &amp; Return Path Domains</a></li>
+                                        <li><a href="https://mandrillapp.com/settings/sending-options" class="">Sending Options</a></li>
+                                        <li><a href="https://mandrillapp.com/settings/alerts" class="">Alerts</a></li>
+                                        <li><a href="https://mandrillapp.com/settings/rejections" class="">Rejection Blacklist</a></li>
+                                        <li><a href="https://mandrillapp.com/settings/whitelist" class="">Rejection Whitelist</a></li>
+                                        <li><a href="https://mandrillapp.com/settings/applications" class="">Applications</a></li>
+                                        <li><a href="https://mandrillapp.com/settings/api" class="">API Logs</a></li>
+                                        <li><a href="https://mandrillapp.com/settings/webhooks" class="">Webhooks</a></li>
+                                        <li><a href="https://mandrillapp.com/settings/custom-metadata" class="">Custom Metadata</a></li>
+                                        <li><a href="https://mandrillapp.com/settings/exports" class="">Exports</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>	        </div>
+        </header>
+        
+        <section id="content" role="main" class="clear fullscreen-mode live-preview"><div id="flash">
+                                    
+        </div>
+    <form action="https://mandrillapp.com/templates/publish" method="POST">
+        <div class="template-header row border-bottom below30">
+            <div class="span8">
+                <h2>Coming Soon(Without an image)</h2>
+            </div>
+            <div class="span4 alignr">
+                <div class="above30 header-buttons">
+                    <a href="https://mandrillapp.com/templates/code?id=coming-soon-without-an-image#" class="btn" onclick="saveDraft(); return false;">Save Draft</a>
+                    <a href="https://mandrillapp.com/templates/revert-published?id=coming-soon-without-an-image" class="btn">Revert to Published</a>                    <input type="submit" value="Publish" class="btn btn-primary">
+                </div>
+            </div>
+        </div>
+        <div class="row below30">
+            <div class="span5">
+                <input type="hidden" name="id" class="av-hidden" value="coming-soon-without-an-image" id="id">
+                <fieldset>
+                    <h5 class="above0 below0">Template Info</h5>
+                    <div class="field-wrapper">
+                        <label for="template-name" class="">Name</label>
+                        <input type="text" name="name" id="template-name" class=" av-text" value="Coming Soon(Without an image)">                    </div>
+                    <div class="field-wrapper">
+                        <label for="template-slug" class="">Template Slug</label>
+                        <input type="text" name="slug" id="template-slug" readonly="" class=" av-text" value="coming-soon-without-an-image">                        <div class="field-help always-show">Use to identify this template in the API or via SMTP headers</div>
+                    </div>
+                    <div class="field-wrapper template-labels">
+                        <label class="stacked">Template Labels</label>
+                        <ul id="template-labels" class="above0 below0 tagit ui-widget ui-widget-content ui-corner-all">
+                                                    <li class="tagit-new"><span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input type="text" class="ui-widget-content ui-autocomplete-input" autocomplete="off"></li></ul>
+                        <div class="field-help always-show">Labels are used as a filter on the templates index page. Separate multiple labels with a space or comma.</div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <h5 class="below0">Template Defaults</h5>
+                    <div class="field-wrapper">
+                        <label for="">From Address</label>
+                        <input type="text" name="data[from_email]" id="from_email" class=" av-text" value="noreply@readersdoor.com">                    </div>
+                    <div class="field-wrapper">
+                        <label for="">From Name</label>
+                        <input type="text" name="data[from_name]" id="from_name" class=" av-text" value="Readers Door">                    </div>
+                    <div class="field-wrapper">
+                        <label for="">Subject</label>
+                        <input type="text" name="data[subject]" id="subject" class=" av-text" value="Welcome To Reader&#39;s Door">                    </div>
+                </fieldset>
+
+                
+                
+            </div>
+            <div class="span7 template-code">
+                <div class="pull-right alignr">
+                    <ul class="hover-list above0">
+                        <li><a class="btn pull-right" href="https://mandrillapp.com/templates/code?id=coming-soon-without-an-image#">Preview and Test <span class="dwn">▼</span></a>
+                            <ul class="above0 alignl">
+                                <li><a href="https://mandrillapp.com/templates/preview?id=coming-soon-without-an-image" class="" onclick="saveDraft(function(a){md.popup(a.href);}, this); return false;">Preview</a></li>
+                                <li><a href="https://mandrillapp.com/templates/code?id=coming-soon-without-an-image#" class="" onclick="sendTest(); return false;">Send Test</a></li>
+                                <li><a href="https://mandrillapp.com/templates/code?id=coming-soon-without-an-image#" class="" onclick="showSpamUpgrade(); return false;">Spam Filter Test</a></li>                                <li><a href="https://mandrillapp.com/templates/code?id=coming-soon-without-an-image#" class="" onclick="showScreenshotUpgrade(); return false;">Screenshot Test</a></li>                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <ul class="linear-list button-nav above0 below30">
+                    <li><button href="#tab-html" id="show-tab-html" class="btn btn-selected">HTML</button></li>
+                    <li><button href="#tab-text" id="show-tab-text" class="btn">Text</button></li>
+                </ul>
+                <div class="tab-container" style="top:0; height:600px;">
+                    <div id="tab-html" class="tab-content">
+                        <fieldset>
+                            <div class="codemirror-header alignr">
+                                <label class="inline above0 below0">Select theme: </label>
+                                <select id="select-theme">
+                                    <option selected="">default</option>
+                                    <option>ambiance</option>
+                                    <option>blackboard</option>
+                                    <option>cobalt</option>
+                                    <option>eclipse</option>
+                                    <option>elegant</option>
+                                    <option>erlang-dark</option>
+                                    <option>lesser-dark</option>
+                                    <option>mandrill</option>
+                                    <option>midnight</option>
+                                    <option>monokai</option>
+                                    <option>neat</option>
+                                    <option>night</option>
+                                    <option>rubyblue</option>
+                                    <option>solarized dark</option>
+                                    <option>solarized light</option>
+                                    <option>twilight</option>
+                                    <option>vibrant-ink</option>
+                                    <option>xq-dark</option>
+                                    <option>xq-light</option>
+                                </select>
+                                <a href="https://mandrillapp.com/templates/code?id=coming-soon-without-an-image#" id="enter-live-preview" class="btn btn-icon" style="display: none;"><span>enter live preview</span></a><a href="https://mandrillapp.com/templates/code?id=coming-soon-without-an-image#" id="quit-live-preview" class="btn btn-icon active" style="display: inline-block;"><span>exit live preview</span></a>
+                                <a href="https://mandrillapp.com/templates/code?id=coming-soon-without-an-image#" id="enter-fullscreen" class="btn btn-icon" style="display: none;"><span>enter fullscreen</span></a><a href="https://mandrillapp.com/templates/code?id=coming-soon-without-an-image#" id="quit-fullscreen" class="btn btn-icon" style="display: inline-block;"><span>exit fullscreen</span></a>
+                            </div>
+                            <textarea name="data[html]" id="html" class="" style="display: none;">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;head&gt;
+    	&lt;!-- NAME: 1 COLUMN --&gt;
+        &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+        &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+        &lt;title&gt;*|SUBJECT|*&lt;/title&gt;
+        
+        &lt;!--[if gte mso 6]&gt;
+        &lt;style&gt;
+            table.mcnFollowContent {width:100% !important;}
+            table.mcnShareContent {width:100% !important;}
+        &lt;/style&gt;
+        &lt;![endif]--&gt;
+    &lt;style type="text/css"&gt;
+		body,#bodyTable,#bodyCell{
+			height:100% !important;
+			margin:0;
+			padding:0;
+			width:100% !important;
+		}
+		table{
+			border-collapse:collapse;
+		}
+		img,a img{
+			border:0;
+			outline:none;
+			text-decoration:none;
+		}
+		h1,h2,h3,h4,h5,h6{
+			margin:0;
+			padding:0;
+		}
+		p{
+			margin:1em 0;
+			padding:0;
+		}
+		a{
+			word-wrap:break-word;
+		}
+		.ReadMsgBody{
+			width:100%;
+		}
+		.ExternalClass{
+			width:100%;
+		}
+		.ExternalClass,.ExternalClass p,.ExternalClass span,.ExternalClass font,.ExternalClass td,.ExternalClass div{
+			line-height:100%;
+		}
+		table,td{
+			mso-table-lspace:0pt;
+			mso-table-rspace:0pt;
+		}
+		#outlook a{
+			padding:0;
+		}
+		img{
+			-ms-interpolation-mode:bicubic;
+		}
+		body,table,td,p,a,li,blockquote{
+			-ms-text-size-adjust:100%;
+			-webkit-text-size-adjust:100%;
+		}
+		#bodyCell{
+			padding:20px;
+		}
+		.mcnImage{
+			vertical-align:bottom;
+		}
+		.mcnTextContent img{
+			height:auto !important;
+		}
+		body,#bodyTable{
+			background-color:#F2F2F2;
+		}
+		#bodyCell{
+			border-top:0;
+		}
+		#templateContainer{
+			border:0;
+		}
+		h1{
+			color:#606060 !important;
+			display:block;
+			font-family:Helvetica;
+			font-size:40px;
+			font-style:normal;
+			font-weight:bold;
+			line-height:125%;
+			letter-spacing:-1px;
+			margin:0;
+			text-align:left;
+		}
+		h2{
+			color:#404040 !important;
+			display:block;
+			font-family:Helvetica;
+			font-size:26px;
+			font-style:normal;
+			font-weight:bold;
+			line-height:125%;
+			letter-spacing:-.75px;
+			margin:0;
+			text-align:left;
+		}
+		h3{
+			color:#606060 !important;
+			display:block;
+			font-family:Helvetica;
+			font-size:18px;
+			font-style:normal;
+			font-weight:bold;
+			line-height:125%;
+			letter-spacing:-.5px;
+			margin:0;
+			text-align:left;
+		}
+		h4{
+			color:#808080 !important;
+			display:block;
+			font-family:Helvetica;
+			font-size:16px;
+			font-style:normal;
+			font-weight:bold;
+			line-height:125%;
+			letter-spacing:normal;
+			margin:0;
+			text-align:left;
+		}
+		#templatePreheader{
+			background-color:#FFFFFF;
+			border-top:0;
+			border-bottom:0;
+		}
+		.preheaderContainer .mcnTextContent,.preheaderContainer .mcnTextContent p{
+			color:#606060;
+			font-family:Helvetica;
+			font-size:11px;
+			line-height:125%;
+			text-align:left;
+		}
+		.preheaderContainer .mcnTextContent a{
+			color:#606060;
+			font-weight:normal;
+			text-decoration:underline;
+		}
+		#templateHeader{
+			background-color:#FFFFFF;
+			border-top:0;
+			border-bottom:0;
+		}
+		.headerContainer .mcnTextContent,.headerContainer .mcnTextContent p{
+			color:#606060;
+			font-family:Helvetica;
+			font-size:15px;
+			line-height:150%;
+			text-align:left;
+		}
+		.headerContainer .mcnTextContent a{
+			color:#6DC6DD;
+			font-weight:normal;
+			text-decoration:underline;
+		}
+		#templateBody{
+			background-color:#FFFFFF;
+			border-top:0;
+			border-bottom:0;
+		}
+		.bodyContainer .mcnTextContent,.bodyContainer .mcnTextContent p{
+			color:#606060;
+			font-family:Helvetica;
+			font-size:15px;
+			line-height:150%;
+			text-align:left;
+		}
+		.bodyContainer .mcnTextContent a{
+			color:#6DC6DD;
+			font-weight:normal;
+			text-decoration:underline;
+		}
+		#templateFooter{
+			background-color:#FFFFFF;
+			border-top:0;
+			border-bottom:0;
+		}
+		.footerContainer .mcnTextContent,.footerContainer .mcnTextContent p{
+			color:#606060;
+			font-family:Helvetica;
+			font-size:11px;
+			line-height:125%;
+			text-align:left;
+		}
+		.footerContainer .mcnTextContent a{
+			color:#606060;
+			font-weight:normal;
+			text-decoration:underline;
+		}
+	@media only screen and (max-width: 480px){
+		body,table,td,p,a,li,blockquote{
+			-webkit-text-size-adjust:none !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		body{
+			width:100% !important;
+			min-width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		td[id=bodyCell]{
+			padding:10px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		table[class=mcnTextContentContainer]{
+			width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		table[class=mcnBoxedTextContentContainer]{
+			width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		table[class=mcpreview-image-uploader]{
+			width:100% !important;
+			display:none !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		img[class=mcnImage]{
+			width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		table[class=mcnImageGroupContentContainer]{
+			width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		td[class=mcnImageGroupContent]{
+			padding:9px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		td[class=mcnImageGroupBlockInner]{
+			padding-bottom:0 !important;
+			padding-top:0 !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		tbody[class=mcnImageGroupBlockOuter]{
+			padding-bottom:9px !important;
+			padding-top:9px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		table[class=mcnCaptionTopContent],table[class=mcnCaptionBottomContent]{
+			width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		table[class=mcnCaptionLeftTextContentContainer],table[class=mcnCaptionRightTextContentContainer],table[class=mcnCaptionLeftImageContentContainer],table[class=mcnCaptionRightImageContentContainer],table[class=mcnImageCardLeftTextContentContainer],table[class=mcnImageCardRightTextContentContainer]{
+			width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		td[class=mcnImageCardLeftImageContent],td[class=mcnImageCardRightImageContent]{
+			padding-right:18px !important;
+			padding-left:18px !important;
+			padding-bottom:0 !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		td[class=mcnImageCardBottomImageContent]{
+			padding-bottom:9px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		td[class=mcnImageCardTopImageContent]{
+			padding-top:18px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		td[class=mcnImageCardLeftImageContent],td[class=mcnImageCardRightImageContent]{
+			padding-right:18px !important;
+			padding-left:18px !important;
+			padding-bottom:0 !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		td[class=mcnImageCardBottomImageContent]{
+			padding-bottom:9px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		td[class=mcnImageCardTopImageContent]{
+			padding-top:18px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		table[class=mcnCaptionLeftContentOuter] td[class=mcnTextContent],table[class=mcnCaptionRightContentOuter] td[class=mcnTextContent]{
+			padding-top:9px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		td[class=mcnCaptionBlockInner] table[class=mcnCaptionTopContent]:last-child td[class=mcnTextContent]{
+			padding-top:18px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		td[class=mcnBoxedTextContentColumn]{
+			padding-left:18px !important;
+			padding-right:18px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		td[class=mcnTextContent]{
+			padding-right:18px !important;
+			padding-left:18px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		table[id=templateContainer],table[id=templatePreheader],table[id=templateHeader],table[id=templateBody],table[id=templateFooter]{
+			max-width:600px !important;
+			width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		h1{
+			font-size:24px !important;
+			line-height:125% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		h2{
+			font-size:20px !important;
+			line-height:125% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		h3{
+			font-size:18px !important;
+			line-height:125% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		h4{
+			font-size:16px !important;
+			line-height:125% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		table[class=mcnBoxedTextContentContainer] td[class=mcnTextContent],td[class=mcnBoxedTextContentContainer] td[class=mcnTextContent] p{
+			font-size:18px !important;
+			line-height:125% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		table[id=templatePreheader]{
+			display:block !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		td[class=preheaderContainer] td[class=mcnTextContent],td[class=preheaderContainer] td[class=mcnTextContent] p{
+			font-size:14px !important;
+			line-height:115% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		td[class=headerContainer] td[class=mcnTextContent],td[class=headerContainer] td[class=mcnTextContent] p{
+			font-size:18px !important;
+			line-height:125% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		td[class=bodyContainer] td[class=mcnTextContent],td[class=bodyContainer] td[class=mcnTextContent] p{
+			font-size:18px !important;
+			line-height:125% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		td[class=footerContainer] td[class=mcnTextContent],td[class=footerContainer] td[class=mcnTextContent] p{
+			font-size:14px !important;
+			line-height:115% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		td[class=footerContainer] a[class=utilityLink]{
+			display:block !important;
+		}
+
+}&lt;/style&gt;&lt;/head&gt;
+    &lt;body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" style="margin: 0;padding: 0;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #F2F2F2;height: 100% !important;width: 100% !important;"&gt;
+        &lt;center&gt;
+            &lt;table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;margin: 0;padding: 0;background-color: #F2F2F2;height: 100% !important;width: 100% !important;"&gt;
+                &lt;tr&gt;
+                    &lt;td align="center" valign="top" id="bodyCell" style="mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;margin: 0;padding: 20px;border-top: 0;height: 100% !important;width: 100% !important;"&gt;
+                        &lt;!-- BEGIN TEMPLATE // --&gt;
+                        &lt;table border="0" cellpadding="0" cellspacing="0" width="600" id="templateContainer" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;border: 0;"&gt;
+                            &lt;tr&gt;
+                                &lt;td align="center" valign="top" style="mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                    &lt;!-- BEGIN PREHEADER // --&gt;
+                                    &lt;table border="0" cellpadding="0" cellspacing="0" width="600" id="templatePreheader" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #FFFFFF;border-top: 0;border-bottom: 0;"&gt;
+                                        &lt;tr&gt;
+                                        	&lt;td valign="top" class="preheaderContainer" style="padding-top: 9px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;&lt;table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+    &lt;tbody class="mcnTextBlockOuter"&gt;
+        &lt;tr&gt;
+            &lt;td valign="top" class="mcnTextBlockInner" style="mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                
+                &lt;table align="left" border="0" cellpadding="0" cellspacing="0" width="366" class="mcnTextContentContainer" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                    &lt;tbody&gt;&lt;tr&gt;
+                        
+                        &lt;td valign="top" class="mcnTextContent" style="padding-top: 9px;padding-left: 18px;padding-bottom: 9px;padding-right: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #606060;font-family: Helvetica;font-size: 11px;line-height: 125%;text-align: left;"&gt;
+                        
+                            Live your year through books.
+                        &lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;/tbody&gt;&lt;/table&gt;
+                
+                &lt;table align="right" border="0" cellpadding="0" cellspacing="0" width="197" class="mcnTextContentContainer" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                    &lt;tbody&gt;&lt;tr&gt;
+                        
+                        &lt;td valign="top" class="mcnTextContent" style="padding-top: 9px;padding-right: 18px;padding-bottom: 9px;padding-left: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #606060;font-family: Helvetica;font-size: 11px;line-height: 125%;text-align: left;"&gt;
+                        
+                            &lt;a href="*|ARCHIVE|*" target="_blank" style="word-wrap: break-word;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #606060;font-weight: normal;text-decoration: underline;"&gt;View this email in your browser&lt;/a&gt;
+                        &lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;/tbody&gt;&lt;/table&gt;
+                
+            &lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;&lt;/td&gt;
+                                        &lt;/tr&gt;
+                                    &lt;/table&gt;
+                                    &lt;!-- // END PREHEADER --&gt;
+                                &lt;/td&gt;
+                            &lt;/tr&gt;
+                            &lt;tr&gt;
+                                &lt;td align="center" valign="top" style="mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                    &lt;!-- BEGIN HEADER // --&gt;
+                                    &lt;table border="0" cellpadding="0" cellspacing="0" width="600" id="templateHeader" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #FFFFFF;border-top: 0;border-bottom: 0;"&gt;
+                                        &lt;tr&gt;
+                                            &lt;td valign="top" class="headerContainer" style="mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;&lt;table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+    &lt;tbody class="mcnTextBlockOuter"&gt;
+        &lt;tr&gt;
+            &lt;td valign="top" class="mcnTextBlockInner" style="mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                
+                &lt;table align="left" border="0" cellpadding="0" cellspacing="0" width="600" class="mcnTextContentContainer" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                    &lt;tbody&gt;&lt;tr&gt;
+                        
+                        &lt;td valign="top" class="mcnTextContent" style="padding-top: 9px;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #606060;font-family: Helvetica;font-size: 15px;line-height: 150%;text-align: left;"&gt;
+                        
+                            &lt;h1 style="margin: 0;padding: 0;display: block;font-family: Helvetica;font-size: 40px;font-style: normal;font-weight: bold;line-height: 125%;letter-spacing: -1px;text-align: left;color: #606060 !important;"&gt;Hi&lt;/h1&gt;
+
+&lt;h3 style="margin: 0;padding: 0;display: block;font-family: Helvetica;font-size: 18px;font-style: normal;font-weight: bold;line-height: 125%;letter-spacing: -.5px;text-align: left;color: #606060 !important;"&gt;We are glad that Reader's Door&amp;nbsp;will be coming up live in&amp;nbsp;2014. Please spread the word, and share us.&lt;/h3&gt;
+
+                        &lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;/tbody&gt;&lt;/table&gt;
+                
+            &lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;&lt;table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnButtonBlock" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+    &lt;tbody class="mcnButtonBlockOuter"&gt;
+        &lt;tr&gt;
+            &lt;td style="padding-top: 0;padding-right: 18px;padding-bottom: 18px;padding-left: 18px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" valign="top" align="center" class="mcnButtonBlockInner"&gt;
+                &lt;table border="0" cellpadding="0" cellspacing="0" class="mcnButtonContentContainer" style="border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;background-color: #084C9E;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                    &lt;tbody&gt;
+                        &lt;tr&gt;
+                            &lt;td align="center" valign="middle" class="mcnButtonContent" style="font-family: 'Times New Roman', Times, Baskerville, Georgia, serif;font-size: 24px;padding: 15px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                &lt;a class="mcnButton " title="Reader's Door" href="http://www.readersdoor.com/" target="_blank" style="font-weight: bold;letter-spacing: -0.5px;line-height: 100%;text-align: center;text-decoration: none;color: #FFFFFF;word-wrap: break-word;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;Visit ReadersDoor.com&lt;/a&gt;
+                            &lt;/td&gt;
+                        &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                &lt;/table&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;&lt;table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+    &lt;tbody class="mcnTextBlockOuter"&gt;
+        &lt;tr&gt;
+            &lt;td valign="top" class="mcnTextBlockInner" style="mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                
+                &lt;table align="left" border="0" cellpadding="0" cellspacing="0" width="600" class="mcnTextContentContainer" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                    &lt;tbody&gt;&lt;tr&gt;
+                        
+                        &lt;td valign="top" class="mcnTextContent" style="padding-top: 9px;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #606060;font-family: Helvetica;font-size: 15px;line-height: 150%;text-align: left;"&gt;
+                        
+                            Thank you, keep reading and have a good day.&lt;br&gt;
+&lt;br&gt;
+Best Wishes&lt;br&gt;
+Reader's Door Team
+                        &lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;/tbody&gt;&lt;/table&gt;
+                
+            &lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;&lt;table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnShareBlock" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+    &lt;tbody class="mcnShareBlockOuter"&gt;
+            &lt;tr&gt;
+                &lt;td valign="top" style="padding: 9px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnShareBlockInner"&gt;
+                    &lt;table width="100%" border="0" cellpadding="0" cellspacing="0" class="mcnShareContentContainer" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+    &lt;tbody&gt;&lt;tr&gt;
+        &lt;td align="left" style="padding-top: 9px;padding-left: 9px;padding-bottom: 0;padding-right: 9px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+            &lt;table border="0" cellpadding="0" cellspacing="0" class="mcnShareContent" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                &lt;tbody&gt;&lt;tr&gt;
+                    &lt;td valign="top" class="mcnShareContentItemContainer" style="mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                        
+                            &lt;table align="left" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                &lt;tbody&gt;&lt;tr&gt;
+                                    &lt;td valign="top" style="padding-right: 10px;padding-bottom: 9px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnShareContentItemContainer"&gt;
+                                        &lt;table border="0" cellpadding="0" cellspacing="0" width="" class="mcnShareContentItem" style="border-collapse: separate;background-color: #FFFFFF;border: 1px solid #CCCCCC;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                            &lt;tbody&gt;&lt;tr&gt;
+                                                &lt;td align="left" valign="middle" style="padding-top: 5px;padding-right: 10px;padding-bottom: 5px;padding-left: 9px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                                    &lt;table align="left" border="0" cellpadding="0" cellspacing="0" width="" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                                        &lt;tbody&gt;&lt;tr&gt;
+                                                            &lt;td align="center" valign="middle" width="18" class="mcnShareIconContent" style="mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                                                &lt;a href="http://www.facebook.com/sharer/sharer.php?u=*|URL:ARCHIVE_LINK_SHORT|*" target="_blank" style="word-wrap: break-word;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;&lt;img src="http://cdn-images.mailchimp.com/icons/social-block/color-facebook-128.png" style="display: block;border: 0;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" height="18" width="18" class=""&gt;&lt;/a&gt;
+                                                            &lt;/td&gt;
+                                                            &lt;td align="left" valign="middle" class="mcnShareTextContent" style="padding-left: 5px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                                                &lt;a href="http://www.facebook.com/sharer/sharer.php?u=*|URL:ARCHIVE_LINK_SHORT|*" target="" style="color: #505050;font-family: Arial;font-size: 12px;text-decoration: none;font-weight: normal;line-height: 100%;text-align: center;word-wrap: break-word;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;Share&lt;/a&gt;
+                                                            &lt;/td&gt;
+                                                        &lt;/tr&gt;
+                                                    &lt;/tbody&gt;&lt;/table&gt;
+                                                &lt;/td&gt;
+                                            &lt;/tr&gt;
+                                        &lt;/tbody&gt;&lt;/table&gt;
+                                    &lt;/td&gt;
+                                &lt;/tr&gt;
+                            &lt;/tbody&gt;&lt;/table&gt;
+                        
+                            &lt;table align="left" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                &lt;tbody&gt;&lt;tr&gt;
+                                    &lt;td valign="top" style="padding-right: 10px;padding-bottom: 9px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnShareContentItemContainer"&gt;
+                                        &lt;table border="0" cellpadding="0" cellspacing="0" width="" class="mcnShareContentItem" style="border-collapse: separate;background-color: #FFFFFF;border: 1px solid #CCCCCC;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                            &lt;tbody&gt;&lt;tr&gt;
+                                                &lt;td align="left" valign="middle" style="padding-top: 5px;padding-right: 10px;padding-bottom: 5px;padding-left: 9px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                                    &lt;table align="left" border="0" cellpadding="0" cellspacing="0" width="" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                                        &lt;tbody&gt;&lt;tr&gt;
+                                                            &lt;td align="center" valign="middle" width="18" class="mcnShareIconContent" style="mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                                                &lt;a href="https://plus.google.com/share?url=*|URL:ARCHIVE_LINK_SHORT|*" target="_blank" style="word-wrap: break-word;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;&lt;img src="http://cdn-images.mailchimp.com/icons/social-block/color-googleplus-128.png" style="display: block;border: 0;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" height="18" width="18" class=""&gt;&lt;/a&gt;
+                                                            &lt;/td&gt;
+                                                            &lt;td align="left" valign="middle" class="mcnShareTextContent" style="padding-left: 5px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                                                &lt;a href="https://plus.google.com/share?url=*|URL:ARCHIVE_LINK_SHORT|*" target="" style="color: #505050;font-family: Arial;font-size: 12px;text-decoration: none;font-weight: normal;line-height: 100%;text-align: center;word-wrap: break-word;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;+1&lt;/a&gt;
+                                                            &lt;/td&gt;
+                                                        &lt;/tr&gt;
+                                                    &lt;/tbody&gt;&lt;/table&gt;
+                                                &lt;/td&gt;
+                                            &lt;/tr&gt;
+                                        &lt;/tbody&gt;&lt;/table&gt;
+                                    &lt;/td&gt;
+                                &lt;/tr&gt;
+                            &lt;/tbody&gt;&lt;/table&gt;
+                        
+                            &lt;table align="left" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                &lt;tbody&gt;&lt;tr&gt;
+                                    &lt;td valign="top" style="padding-right: 10px;padding-bottom: 9px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnShareContentItemContainer"&gt;
+                                        &lt;table border="0" cellpadding="0" cellspacing="0" width="" class="mcnShareContentItem" style="border-collapse: separate;background-color: #FFFFFF;border: 1px solid #CCCCCC;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                            &lt;tbody&gt;&lt;tr&gt;
+                                                &lt;td align="left" valign="middle" style="padding-top: 5px;padding-right: 10px;padding-bottom: 5px;padding-left: 9px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                                    &lt;table align="left" border="0" cellpadding="0" cellspacing="0" width="" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                                        &lt;tbody&gt;&lt;tr&gt;
+                                                            &lt;td align="center" valign="middle" width="18" class="mcnShareIconContent" style="mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                                                &lt;a href="http://twitter.com/?status=*|URL:MC_SUBJECT|*: *|URL:ARCHIVE_LINK_SHORT|*" target="_blank" style="word-wrap: break-word;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;&lt;img src="http://cdn-images.mailchimp.com/icons/social-block/color-twitter-128.png" style="display: block;border: 0;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" height="18" width="18" class=""&gt;&lt;/a&gt;
+                                                            &lt;/td&gt;
+                                                            &lt;td align="left" valign="middle" class="mcnShareTextContent" style="padding-left: 5px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                                                &lt;a href="http://twitter.com/?status=*|URL:MC_SUBJECT|*: *|URL:ARCHIVE_LINK_SHORT|*" target="" style="color: #505050;font-family: Arial;font-size: 12px;text-decoration: none;font-weight: normal;line-height: 100%;text-align: center;word-wrap: break-word;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;Tweet&lt;/a&gt;
+                                                            &lt;/td&gt;
+                                                        &lt;/tr&gt;
+                                                    &lt;/tbody&gt;&lt;/table&gt;
+                                                &lt;/td&gt;
+                                            &lt;/tr&gt;
+                                        &lt;/tbody&gt;&lt;/table&gt;
+                                    &lt;/td&gt;
+                                &lt;/tr&gt;
+                            &lt;/tbody&gt;&lt;/table&gt;
+                        
+                            &lt;table align="left" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                &lt;tbody&gt;&lt;tr&gt;
+                                    &lt;td valign="top" style="padding-right: 0;padding-bottom: 9px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnShareContentItemContainer"&gt;
+                                        &lt;table border="0" cellpadding="0" cellspacing="0" width="" class="mcnShareContentItem" style="border-collapse: separate;background-color: #FFFFFF;border: 1px solid #CCCCCC;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                            &lt;tbody&gt;&lt;tr&gt;
+                                                &lt;td align="left" valign="middle" style="padding-top: 5px;padding-right: 10px;padding-bottom: 5px;padding-left: 9px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                                    &lt;table align="left" border="0" cellpadding="0" cellspacing="0" width="" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                                        &lt;tbody&gt;&lt;tr&gt;
+                                                            &lt;td align="center" valign="middle" width="18" class="mcnShareIconContent" style="mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                                                &lt;a href="*|FORWARD|*" target="_blank" style="word-wrap: break-word;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;&lt;img src="http://cdn-images.mailchimp.com/icons/social-block/color-forwardtofriend-128.png" style="display: block;border: 0;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" height="18" width="18" class=""&gt;&lt;/a&gt;
+                                                            &lt;/td&gt;
+                                                            &lt;td align="left" valign="middle" class="mcnShareTextContent" style="padding-left: 5px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                                                &lt;a href="*|FORWARD|*" target="" style="color: #505050;font-family: Arial;font-size: 12px;text-decoration: none;font-weight: normal;line-height: 100%;text-align: center;word-wrap: break-word;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;Forward to Friend&lt;/a&gt;
+                                                            &lt;/td&gt;
+                                                        &lt;/tr&gt;
+                                                    &lt;/tbody&gt;&lt;/table&gt;
+                                                &lt;/td&gt;
+                                            &lt;/tr&gt;
+                                        &lt;/tbody&gt;&lt;/table&gt;
+                                    &lt;/td&gt;
+                                &lt;/tr&gt;
+                            &lt;/tbody&gt;&lt;/table&gt;
+                        
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/tbody&gt;&lt;/table&gt;
+        &lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+
+                &lt;/td&gt;
+            &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;&lt;/td&gt;
+                                        &lt;/tr&gt;
+                                    &lt;/table&gt;
+                                    &lt;!-- // END HEADER --&gt;
+                                &lt;/td&gt;
+                            &lt;/tr&gt;
+                            &lt;tr&gt;
+                                &lt;td align="center" valign="top" style="mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                    &lt;!-- BEGIN BODY // --&gt;
+                                    &lt;table border="0" cellpadding="0" cellspacing="0" width="600" id="templateBody" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #FFFFFF;border-top: 0;border-bottom: 0;"&gt;
+                                        &lt;tr&gt;
+                                            &lt;td valign="top" class="bodyContainer" style="mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;&lt;/td&gt;
+                                        &lt;/tr&gt;
+                                    &lt;/table&gt;
+                                    &lt;!-- // END BODY --&gt;
+                                &lt;/td&gt;
+                            &lt;/tr&gt;
+                            &lt;tr&gt;
+                                &lt;td align="center" valign="top" style="mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;
+                                    &lt;!-- BEGIN FOOTER // --&gt;
+                                    &lt;table border="0" cellpadding="0" cellspacing="0" width="600" id="templateFooter" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #FFFFFF;border-top: 0;border-bottom: 0;"&gt;
+                                        &lt;tr&gt;
+                                            &lt;td valign="top" class="footerContainer" style="padding-bottom: 9px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"&gt;&lt;/td&gt;
+                                        &lt;/tr&gt;
+                                    &lt;/table&gt;
+                                    &lt;!-- // END FOOTER --&gt;
+                                &lt;/td&gt;
+                            &lt;/tr&gt;
+                        &lt;/table&gt;
+                        &lt;!-- // END TEMPLATE --&gt;
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/table&gt;
+        &lt;/center&gt;
+                &lt;center&gt;
+                &lt;br/&gt;
+                &lt;br/&gt;
+                &lt;br/&gt;
+                &lt;br/&gt;
+                &lt;br/&gt;
+                &lt;br/&gt;
+                &lt;table border="0" cellpadding="0" cellspacing="0" width="100%" id="canspamBarWrapper" style="background-color:#FFFFFF; border-top:1px solid #E5E5E5;"&gt;
+                    &lt;tr&gt;
+                        &lt;td align="center" valign="top" style="padding-top:20px; padding-bottom:20px;"&gt;
+                            &lt;table border="0" cellpadding="0" cellspacing="0" id="canspamBar"&gt;
+                                &lt;tr&gt;
+                                    &lt;td align="center" valign="top" style="color:#606060; font-family:Helvetica, Arial, sans-serif; font-size:11px; line-height:150%; padding-right:20px; padding-bottom:5px; padding-left:20px; text-align:center;"&gt;
+                                        This email was sent to &lt;a href="*|EMAIL|*" target="_blank" style="color:#404040 !important;"&gt;*|EMAIL|*&lt;/a&gt;
+                                        &lt;br/&gt;
+                                        &lt;a href="*|ABOUT_LIST|*" target="_blank" style="color:#404040 !important;"&gt;&lt;em&gt;why did I get this?&lt;/em&gt;&lt;/a&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;a href="*|UNSUB|*" style="color:#404040 !important;"&gt;unsubscribe from this list&lt;/a&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;a href="*|UPDATE_PROFILE|*" style="color:#404040 !important;"&gt;update subscription preferences&lt;/a&gt;
+                                        &lt;br/&gt;
+                                        *|LIST:ADDRESSLINE|*
+                                        &lt;br/&gt;
+                                        &lt;br/&gt;
+                                        *|REWARDS|*
+                                    &lt;/td&gt;
+                                &lt;/tr&gt;
+                            &lt;/table&gt;
+                        &lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;/table&gt;
+                &lt;style type="text/css"&gt;
+                    @media only screen and (max-width: 480px){
+                        table[id="canspamBar"] td{font-size:14px !important;}
+                        table[id="canspamBar"] td a{display:block !important; margin-top:10px !important;}
+                    }
+                &lt;/style&gt;
+            &lt;/center&gt;&lt;/body&gt;
+&lt;/html&gt;</textarea><div class="CodeMirror CodeMirror-wrap cm-s-blackboard CodeMirror-fullscreen CodeMirror-focused" style="height: 591px;"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 177px; left: 436px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" style="position: absolute; padding: 0px; width: 1000px; height: 1em; outline: none; font-size: 4px;" tabindex="0"></textarea></div><div class="CodeMirror-hscrollbar" style="left: 32px; min-height: 18px;"><div style="height: 1px;"></div></div><div class="CodeMirror-vscrollbar" style="display: block; bottom: 0px; min-width: 18px;"><div style="width: 1px; height: 12440px;"></div></div><div class="CodeMirror-scrollbar-filler"></div><div class="CodeMirror-gutter-filler"></div><div class="CodeMirror-scroll" tabindex="-1" draggable="false"><div class="CodeMirror-sizer" style="margin-left: 32px; min-height: 12410px;"><div style="position: relative; top: 6617px;"><div class="CodeMirror-lines"><div style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span> </span><span>&nbsp;</span><span> </span><span>&nbsp;</span><span> </span><span>&nbsp;</span><span> </span><span>&nbsp;</span><span> </span><span>&nbsp;</span><span> </span><span>&nbsp;</span><span> </span><span>&nbsp;</span><span> </span><span>&nbsp;</span><span> </span><span>&nbsp;</span><span> </span><span>&nbsp;</span><span> </span><span>&nbsp;</span><span> </span><span>&nbsp;</span><span> </span><span>&nbsp;</span><span> </span><span> </span><span class="cm-tag">&lt;</span><span class="cm-tag">h</span><span class="cm-tag">1</span><span> </span><span class="cm-attribute">s</span><span class="cm-attribute">t</span><span class="cm-attribute">y</span><span class="cm-attribute">l</span><span class="cm-attribute">e</span><span>=</span><span class="cm-string">"</span><span class="cm-string">m</span><span class="cm-string">a</span><span class="cm-string">r</span><span class="cm-string">g</span><span class="cm-string">i</span><span class="cm-string">n</span><span class="cm-string">:</span><span class="cm-string"> </span><span class="cm-string">0</span><span class="cm-string">;</span><span class="cm-string">p</span><span class="cm-string">a</span><span class="cm-string">d</span><span class="cm-string">d</span><span class="cm-string">i</span><span class="cm-string">n</span><span class="cm-string">g</span><span class="cm-string">:</span><span class="cm-string"> </span><span class="cm-string">0</span><span class="cm-string">;</span><span class="cm-string">d</span><span class="cm-string">i</span><span class="cm-string">s</span><span class="cm-string">p</span><span class="cm-string">l</span><span class="cm-string">a</span><span class="cm-string">y</span><span class="cm-string">:</span><span class="cm-string"> </span><span class="cm-string">b</span><span class="cm-string">l</span><span class="cm-string">o</span><span class="cm-string">c</span><span class="cm-string">k</span><span class="cm-string">;</span><span class="cm-string">f</span><span class="cm-string">o</span><span class="cm-string">n</span><span class="cm-string">t</span><span class="cm-string">-</span><wbr><span class="cm-string">f</span><span class="cm-string">a</span><span class="cm-string">m</span><span class="cm-string">i</span><span class="cm-string">l</span><span class="cm-string">y</span><span class="cm-string">:</span><span class="cm-string"> </span><span class="cm-string">H</span><span class="cm-string">e</span><span class="cm-string">l</span><span class="cm-string">v</span><span class="cm-string">e</span><span class="cm-string">t</span><span class="cm-string">i</span><span class="cm-string">c</span><span class="cm-string">a</span><span class="cm-string">;</span><span class="cm-string">f</span><span class="cm-string">o</span><span class="cm-string">n</span><span class="cm-string">t</span><span class="cm-string">-</span><wbr><span class="cm-string">s</span><span class="cm-string">i</span><span class="cm-string">z</span><span class="cm-string">e</span><span class="cm-string">:</span><span class="cm-string"> </span><span class="cm-string">4</span><span class="cm-string">0</span><span class="cm-string">p</span><span class="cm-string">x</span><span class="cm-string">;</span><span class="cm-string">f</span><span class="cm-string">o</span><span class="cm-string">n</span><span class="cm-string">t</span><span class="cm-string">-</span><wbr><span class="cm-string">s</span><span class="cm-string">t</span><span class="cm-string">y</span><span class="cm-string">l</span><span class="cm-string">e</span><span class="cm-string">:</span><span class="cm-string"> </span><span class="cm-string">n</span><span class="cm-string">o</span><span class="cm-string">r</span><span class="cm-string">m</span><span class="cm-string">a</span><span class="cm-string">l</span><span class="cm-string">;</span><span class="cm-string">f</span><span class="cm-string">o</span><span class="cm-string">n</span><span class="cm-string">t</span><span class="cm-string">-</span><wbr><span class="cm-string">w</span><span class="cm-string">e</span><span class="cm-string">i</span><span class="cm-string">g</span><span class="cm-string">h</span><span class="cm-string">t</span><span class="cm-string">:</span><span class="cm-string"> </span><span class="cm-string">b</span><span class="cm-string">o</span><span class="cm-string">l</span><span class="cm-string">d</span><span class="cm-string">;</span><span class="cm-string">l</span><span class="cm-string">i</span><span class="cm-string">n</span><span class="cm-string">e</span><span class="cm-string">-</span><wbr><span class="cm-string">h</span><span class="cm-string">e</span><span class="cm-string">i</span><span class="cm-string">g</span><span class="cm-string">h</span><span class="cm-string">t</span><span class="cm-string">:</span><span class="cm-string"> </span><span class="cm-string">1</span><span class="cm-string">2</span><span class="cm-string">5</span><span class="cm-string">%</span><span class="cm-string">;</span><span class="cm-string">l</span><span class="cm-string">e</span><span class="cm-string">t</span><span class="cm-string">t</span><span class="cm-string">e</span><span class="cm-string">r</span><span class="cm-string">-</span><wbr><span class="cm-string">s</span><span class="cm-string">p</span><span class="cm-string">a</span><span class="cm-string">c</span><span class="cm-string">i</span><span class="cm-string">n</span><span class="cm-string">g</span><span class="cm-string">:</span><span class="cm-string"> </span><span class="cm-string">-</span><span class="cm-string">1</span><span class="cm-string">p</span><span class="cm-string">x</span><span class="cm-string">;</span><span class="cm-string">t</span><span class="cm-string">e</span><span class="cm-string">x</span><span class="cm-string">t</span><span class="cm-string">-</span><wbr><span class="cm-string">a</span><span class="cm-string">l</span><span class="cm-string">i</span><span class="cm-string">g</span><span class="cm-string">n</span><span class="cm-string">:</span><span class="cm-string"> </span><span class="cm-string">l</span><span class="cm-string">e</span><span class="cm-string">f</span><span class="cm-string">t</span><span class="cm-string">;</span><span class="cm-string">c</span><span class="cm-string">o</span><span class="cm-string">l</span><span class="cm-string">o</span><span class="cm-string">r</span><span class="cm-string">:</span><span class="cm-string"> </span><span class="cm-string">#</span><span class="cm-string">6</span><span class="cm-string">0</span><span class="cm-string">6</span><span class="cm-string">0</span><span class="cm-string">6</span><span class="cm-string">0</span><span class="cm-string"> </span><span class="cm-string">!</span><span class="cm-string">i</span><span class="cm-string">m</span><span class="cm-string">p</span><span class="cm-string">o</span><span class="cm-string">r</span><span class="cm-string">t</span><span class="cm-string">a</span><span class="cm-string">n</span><span class="cm-string">t</span><span class="cm-string">;</span><span class="cm-string">"</span><span class="cm-tag">&gt;</span><wbr><span class="cm-tag">&lt;</span><span class="cm-tag">d</span><span class="cm-tag">i</span><span class="cm-tag">v</span><span> </span><span class="cm-attribute">m</span><span class="cm-attribute">c</span><span class="cm-attribute">:</span><span class="cm-attribute">e</span><span class="cm-attribute">d</span><span class="cm-attribute">i</span><span class="cm-attribute">t</span><span>=</span><span class="cm-string">'</span><span class="cm-string">U</span><span class="cm-string">S</span><span class="cm-string">E</span><span class="cm-string">R</span><span class="cm-string">N</span><span class="cm-string">A</span><span class="cm-string">M</span><span class="cm-string">E</span><span class="cm-string">'</span><span class="cm-tag">&gt;</span><wbr><span class="cm-tag">&lt;</span><span class="cm-tag">/</span><span class="cm-tag">d</span><span class="cm-tag">i</span><span class="cm-tag">v</span><span class="cm-error">&lt;</span><span class="cm-error">/</span><span class="cm-error">h</span><span class="cm-error">1</span><span class="cm-tag">&gt;</span></pre></div><div style="position: relative; z-index: 1; display: none;"><div class="CodeMirror-selected" style="position: absolute; left: 196px; top: 571px; width: 64px; height: 14px;"></div></div><div class="CodeMirror-code" style=""><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">435</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;/tr&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">436</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;/table&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">437</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-comment">&lt;!-- // END PREHEADER --&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">438</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;/td&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">439</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;/tr&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">440</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;tr&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">441</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;td</span> <span class="cm-attribute">align</span>=<span class="cm-string">"center"</span> <span class="cm-attribute">valign</span>=<span class="cm-string">"top"</span> <span class="cm-attribute">style</span>=<span class="cm-string">"mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"</span><span class="cm-tag">&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">442</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-comment">&lt;!-- BEGIN HEADER // --&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">443</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;table</span> <span class="cm-attribute">border</span>=<span class="cm-string">"0"</span> <span class="cm-attribute">cellpadding</span>=<span class="cm-string">"0"</span> <span class="cm-attribute">cellspacing</span>=<span class="cm-string">"0"</span> <span class="cm-attribute">width</span>=<span class="cm-string">"600"</span> <span class="cm-attribute">id</span>=<span class="cm-string">"templateHeader"</span> <span class="cm-attribute">style</span>=<span class="cm-string">"border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #FFFFFF;border-top: 0;border-bottom: 0;"</span><span class="cm-tag">&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">444</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;tr&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">445</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;td</span> <span class="cm-attribute">valign</span>=<span class="cm-string">"top"</span> <span class="cm-attribute">class</span>=<span class="cm-string">"headerContainer"</span> <span class="cm-attribute">style</span>=<span class="cm-string">"mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"</span><span class="cm-tag">&gt;&lt;table</span> <span class="cm-attribute">border</span>=<span class="cm-string">"0"</span> <span class="cm-attribute">cellpadding</span>=<span class="cm-string">"0"</span> <span class="cm-attribute">cellspacing</span>=<span class="cm-string">"0"</span> <span class="cm-attribute">width</span>=<span class="cm-string">"100%"</span> <span class="cm-attribute">class</span>=<span class="cm-string">"mcnTextBlock"</span> <span class="cm-attribute">style</span>=<span class="cm-string">"border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"</span><span class="cm-tag">&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">446</div></div><pre> &nbsp;  <span class="cm-tag">&lt;tbody</span> <span class="cm-attribute">class</span>=<span class="cm-string">"mcnTextBlockOuter"</span><span class="cm-tag">&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">447</div></div><pre> &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;tr&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">448</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;td</span> <span class="cm-attribute">valign</span>=<span class="cm-string">"top"</span> <span class="cm-attribute">class</span>=<span class="cm-string">"mcnTextBlockInner"</span> <span class="cm-attribute">style</span>=<span class="cm-string">"mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"</span><span class="cm-tag">&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">449</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  </pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">450</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;table</span> <span class="cm-attribute">align</span>=<span class="cm-string">"left"</span> <span class="cm-attribute">border</span>=<span class="cm-string">"0"</span> <span class="cm-attribute">cellpadding</span>=<span class="cm-string">"0"</span> <span class="cm-attribute">cellspacing</span>=<span class="cm-string">"0"</span> <span class="cm-attribute">width</span>=<span class="cm-string">"600"</span> <span class="cm-attribute">class</span>=<span class="cm-string">"mcnTextContentContainer"</span> <span class="cm-attribute">style</span>=<span class="cm-string">"border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"</span><span class="cm-tag">&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">451</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;tbody&gt;&lt;tr&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">452</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  </pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">453</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;td</span> <span class="cm-attribute">valign</span>=<span class="cm-string">"top"</span> <span class="cm-attribute">class</span>=<span class="cm-string">"mcnTextContent"</span> <span class="cm-attribute">style</span>=<span class="cm-string">"padding-top: 9px;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #606060;font-family: Helvetica;font-size: 15px;line-height: 150%;text-align: left;"</span><span class="cm-tag">&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">454</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  </pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">455</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;h1</span> <span class="cm-attribute">style</span>=<span class="cm-string">"margin: 0;padding: 0;display: block;font-family: Helvetica;font-size: 40px;font-style: normal;font-weight: bold;line-height: 125%;letter-spacing: -1px;text-align: left;color: #606060 !important;"</span><span class="cm-tag">&gt;&lt;div</span> <span class="cm-attribute">mc:edit</span>=<span class="cm-string">'USERNAME'</span><span class="cm-tag">&gt;&lt;/div</span><span class="cm-error">&lt;/h1</span><span class="cm-tag">&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">456</div></div><pre>&nbsp;</pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">457</div></div><pre><span class="cm-tag">&lt;h3</span> <span class="cm-attribute">style</span>=<span class="cm-string">"margin: 0;padding: 0;display: block;font-family: Helvetica;font-size: 18px;font-style: normal;font-weight: bold;line-height: 125%;letter-spacing: -.5px;text-align: left;color: #606060 !important;"</span><span class="cm-tag">&gt;</span>We are glad that Reader's Door<span class="cm-atom">&amp;nbsp;</span>will be coming up live in<span class="cm-atom">&amp;nbsp;</span>2014. Please spread the word, and share us.<span class="cm-tag">&lt;/h3&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">458</div></div><pre>&nbsp;</pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">459</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-error">&lt;/td&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">460</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;/tr&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">461</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;/tbody&gt;&lt;/table&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">462</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  </pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">463</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;/td&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">464</div></div><pre> &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;/tr&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">465</div></div><pre> &nbsp;  <span class="cm-tag">&lt;/tbody&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">466</div></div><pre><span class="cm-tag">&lt;/table&gt;&lt;table</span> <span class="cm-attribute">border</span>=<span class="cm-string">"0"</span> <span class="cm-attribute">cellpadding</span>=<span class="cm-string">"0"</span> <span class="cm-attribute">cellspacing</span>=<span class="cm-string">"0"</span> <span class="cm-attribute">width</span>=<span class="cm-string">"100%"</span> <span class="cm-attribute">class</span>=<span class="cm-string">"mcnButtonBlock"</span> <span class="cm-attribute">style</span>=<span class="cm-string">"border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"</span><span class="cm-tag">&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">467</div></div><pre> &nbsp;  <span class="cm-tag">&lt;tbody</span> <span class="cm-attribute">class</span>=<span class="cm-string">"mcnButtonBlockOuter"</span><span class="cm-tag">&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">468</div></div><pre> &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;tr&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">469</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;td</span> <span class="cm-attribute">style</span>=<span class="cm-string">"padding-top: 0;padding-right: 18px;padding-bottom: 18px;padding-left: 18px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"</span> <span class="cm-attribute">valign</span>=<span class="cm-string">"top"</span> <span class="cm-attribute">align</span>=<span class="cm-string">"center"</span> <span class="cm-attribute">class</span>=<span class="cm-string">"mcnButtonBlockInner"</span><span class="cm-tag">&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">470</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;table</span> <span class="cm-attribute">border</span>=<span class="cm-string">"0"</span> <span class="cm-attribute">cellpadding</span>=<span class="cm-string">"0"</span> <span class="cm-attribute">cellspacing</span>=<span class="cm-string">"0"</span> <span class="cm-attribute">class</span>=<span class="cm-string">"mcnButtonContentContainer"</span> <span class="cm-attribute">style</span>=<span class="cm-string">"border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;background-color: #084C9E;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"</span><span class="cm-tag">&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">471</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;tbody&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">472</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;tr&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">473</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;td</span> <span class="cm-attribute">align</span>=<span class="cm-string">"center"</span> <span class="cm-attribute">valign</span>=<span class="cm-string">"middle"</span> <span class="cm-attribute">class</span>=<span class="cm-string">"mcnButtonContent"</span> <span class="cm-attribute">style</span>=<span class="cm-string">"font-family: 'Times New Roman', Times, Baskerville, Georgia, serif;font-size: 24px;padding: 15px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"</span><span class="cm-tag">&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">474</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;a</span> <span class="cm-attribute">class</span>=<span class="cm-string">"mcnButton "</span> <span class="cm-attribute">title</span>=<span class="cm-string">"Reader's Door"</span> <span class="cm-attribute">href</span>=<span class="cm-string">"http://www.readersdoor.com/"</span> <span class="cm-attribute">target</span>=<span class="cm-string">"_blank"</span> <span class="cm-attribute">style</span>=<span class="cm-string">"font-weight: bold;letter-spacing: -0.5px;line-height: 100%;text-align: center;text-decoration: none;color: #FFFFFF;word-wrap: break-word;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"</span><span class="cm-tag">&gt;</span>Visit ReadersDoor.com<span class="cm-tag">&lt;/a&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">475</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;/td&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">476</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;/tr&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">477</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;/tbody&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">478</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;/table&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">479</div></div><pre> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;/td&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">480</div></div><pre> &nbsp; &nbsp; &nbsp;  <span class="cm-tag">&lt;/tr&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">481</div></div><pre> &nbsp;  <span class="cm-tag">&lt;/tbody&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">482</div></div><pre><span class="cm-tag">&lt;/table&gt;&lt;table</span> <span class="cm-attribute">border</span>=<span class="cm-string">"0"</span> <span class="cm-attribute">cellpadding</span>=<span class="cm-string">"0"</span> <span class="cm-attribute">cellspacing</span>=<span class="cm-string">"0"</span> <span class="cm-attribute">width</span>=<span class="cm-string">"100%"</span> <span class="cm-attribute">class</span>=<span class="cm-string">"mcnTextBlock"</span> <span class="cm-attribute">style</span>=<span class="cm-string">"border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"</span><span class="cm-tag">&gt;</span></pre></div><div style="position: relative; display: none;"><div style="position: absolute; left: -32px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 24px;">456</div></div><pre>&nbsp;</pre></div></div><div class="CodeMirror-cursor" style="left: 404px; top: 571px; height: 14px;">&nbsp;</div><div class="CodeMirror-cursor CodeMirror-secondarycursor" style="display: none;">&nbsp;</div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px; top: 12410px;"></div><div class="CodeMirror-gutters" style="height: 12410px; left: 0px;"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 32px;"></div></div></div></div>                            <div id="live-preview" style="height: 591px;">
+                                <iframe id="template-preview" height="100%" width="100%"></iframe>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div id="tab-text" class="tab-content" style="display:none">
+                        <fieldset>
+                            <textarea name="data[text]" id="text" style="font-weight: normal; color: black;" class=""></textarea>                        </fieldset>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    <input type="hidden" name="__csrf_token" value="0be17bbd9aa27bb1cf32507aa8c27b189dff549c" class="av-hidden" id="__csrf_token"></form>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</section>
+    </div>
+	<footer class="row">
+        <div id="footer-left">
+            <a href="https://mandrillapp.com/templates/code?id=coming-soon-without-an-image#" id="support" class="btn btn-small">Support</a>
+            <p class="copyright-notice">© 2012-2014 All rights reserved <span class="up">▼</span></p>
+        </div>
+        <div id="footer-inner">
+            <div class="row">
+                <div class="span4 pull-left">
+                    <ul class="linear-list above0 below0">
+                        <li><a href="http://mandrillapp.com/api/docs/index.html" target="_blank">API Docs</a></li>
+                        <li><a href="http://help.mandrill.com/categories/20090941-SMTP-Integration" target="_blank">SMTP Docs</a></li>
+                        <li><a href="http://status.mandrillapp.com/" target="_blank">Service Status</a></li>
+                    </ul>
+                </div>
+                <div class="span8 pull-left">
+                    <ul class="linear-list above0 below0 pull-right">
+                        <li><a href="http://mandrill.com/privacy/" target="_blank">Privacy Policy</a></li>
+                        <li><a href="http://mandrill.com/privacy/" target="_blank">Terms of Use</a></li>
+                        <li><p role="contentinfo" class="trademark">Mandrill<sup>®</sup> is a registered trademark of <a href="http://rocketsciencegroup.com/" target="_blank">The Rocket Science Group</a>.</p></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+	</footer>
+    
+    
+    
+
+<div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable" tabindex="-1" role="dialog" aria-describedby="sudo-dialog" aria-labelledby="ui-id-1" style="display: none;"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span id="ui-id-1" class="ui-dialog-title">Verify Password</span><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" aria-disabled="false" title="close"><span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span><span class="ui-button-text">close</span></button></div><div id="sudo-dialog" class="ui-dialog-content ui-widget-content">
+        <p>Some pages are a bit more secure and have shorter session timeouts. Verify your password to continue on.</p>
+        <form id="sudo-dialog-form" action="https://mandrillapp.com/sudo/post" class="fatform" name="sudosubform" method="POST">
+            <input type="hidden" name="referrer" id="sudo-referrer" class="av-hidden">
+            <fieldset>
+                <div>
+                    <label for="sudo-password" class="stacked above0">Password</label>
+                    <input type="password" name="password" id="sudo-password" class="av-password">
+                </div>
+            </fieldset>
+            <input type="submit" value="Verify Password" class="btn btn-primary">
+        <input type="hidden" name="__csrf_token" value="0be17bbd9aa27bb1cf32507aa8c27b189dff549c" class="av-hidden" id="__csrf_token"></form>
+    </div></div><div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front" tabindex="-1" role="dialog" aria-describedby="support-dialog" aria-labelledby="ui-id-2" style="display: none;"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span id="ui-id-2" class="ui-dialog-title">Support</span><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" aria-disabled="false" title="close"><span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span><span class="ui-button-text">close</span></button></div><div id="support-dialog" class="ui-dialog-content ui-widget-content">
+            <div id="ticket-search-wrapper" class="above-below15 above0">
+                                <div id="help-categories">
+                    <h5>What would you like help with?</h5>
+                    <ul class="row above0">
+                        <li class="span4 above0"><a href="https://mandrillapp.com/templates/code?id=coming-soon-without-an-image#" id="helplink-cat1" class="btn panel-block track-support-click" data-click-type="section">Getting Started<br>with Mandrill</a></li>
+                        <li class="span4 above0"><a href="https://mandrillapp.com/templates/code?id=coming-soon-without-an-image#" id="helplink-cat2" class="btn panel-block track-support-click" data-click-type="section">Reputation<br>&amp; Quota</a></li>
+                        <li class="span4 above0"><a href="https://mandrillapp.com/templates/code?id=coming-soon-without-an-image#" id="helplink-cat3" class="btn panel-block track-support-click" data-click-type="section">Deliverability<br>Questions</a></li>
+                    </ul>
+                </div>
+                <form class="table-search above0" method="POST">
+                    <h5 av:else="">or do you have a question about something else?</h5>
+                    <div class="searchform">
+                        <input id="support-query" type="text" placeholder="Type a question or keyword" class="searchinput av-text">
+                        <input id="support-search" type="submit" class="search button" value="search">
+                    </div>
+                <input type="hidden" name="__csrf_token" value="0be17bbd9aa27bb1cf32507aa8c27b189dff549c" class="av-hidden" id="__csrf_token"></form>
+                <div class="clear"></div>
+
+                <div id="ticket-searching" style="display:none;">Searching...</div>
+                <div id="ticket-search-results" class="above0 below15">
+                </div>
+
+                <p class="show-ticket-form-wrapper" style="display:none;"><strong>Not what you're looking for? <a href="https://mandrillapp.com/templates/code?id=coming-soon-without-an-image#" class="show-ticket-form">Submit a support request</a>.</strong></p>
+            </div>
+
+            <div id="help-cat1" class="help-cat-block" style="display:none;">
+                <a href="https://mandrillapp.com/templates/code?id=coming-soon-without-an-image#" class="help-cat-back">« Back to support overview</a>
+                <h4>Getting Started with Mandrill</h4>
+                <h5 class="above0"><a href="http://help.mandrill.com/entries/22242948-What-is-Mandrill-" target="_blank" class="track-support-click" data-click-type="article">What is Mandrill?</a></h5>
+                <p>Mandrill is designed to help applications or websites that need to send transactional email like password resets, order confirmations, and welcome messages. Technically, though, you can send any legal, non-spam emails through Mandrill.</p>
+
+                <h5><a href="http://help.mandrill.com/entries/21650603-How-do-I-get-started-with-Mandrill-" target="_blank" class="track-support-click" data-click-type="article">How do I get started with Mandrill?</a></h5>
+                <p>Ready to send email through Mandrill? Start here to make sure you're ready to go. == Create a Mandrill Account == To get started, you'll want to create a new Mandrill account here: http://mandrill…</p>
+
+                <h5><a href="http://help.mandrill.com/entries/25252978-Tips-for-using-images-in-Mandrill-emails" target="_blank" class="track-support-click" data-click-type="article">Tips for using images in Mandrill emails.</a></h5>
+                <p>Mandrill doesn't store images for you, but there are a few ways to include them in your emails. Below are some tips to help you get started. - Upload images to a publicly-accessible server or a r…</p>
+
+                <h5><a href="http://mandrillapp.com/docs/" target="_blank" class="track-support-click" data-click-type="article">Mandrill documentation</a></h5>
+                <p class="show-ticket-form-wrapper above-below15 below0"><strong>Not what you're looking for? <a href="https://mandrillapp.com/templates/code?id=coming-soon-without-an-image#" class="show-ticket-form">Submit a support request</a>.</strong></p>
+            </div>
+
+            <div id="help-cat2" class="help-cat-block" style="display:none;">
+                <a href="https://mandrillapp.com/templates/code?id=coming-soon-without-an-image#" class="help-cat-back">« Back to support overview</a>
+                <h4>Reputation &amp; Quota</h4>
+                <div id="support-dialog-reputation"></div>
+
+                <h5><a href="http://help.mandrill.com/entries/22038718-How-does-the-account-reputation-and-hourly-quota-system-work-" target="_blank" class="track-support-click" data-click-type="article">How does the reputation system work?</a></h5>
+                <p>Every Mandrill account has an hourly send quota based on account reputation and typical sending volume. It's part of how we protect our users and our system from spammers that send out a lot of email real...</p>
+
+                <h5><a href="http://help.mandrill.com/entries/23586816-How-quickly-will-my-hourly-quota-increase-" target="_blank" class="track-support-click" data-click-type="article">How quickly will my hourly quota increase?</a></h5>
+                <p>The hourly quota is designed to scale quickly if you need to send higher volumes. Each time you send to a higher volume, though, there will be a period of adjustment as Mandrill learns about the new...</p>
+
+                <h5><a href="http://help.mandrill.com/entries/23570162-Can-you-manually-increase-my-quota-" target="_blank" class="track-support-click" data-click-type="article">Can you manually increase my quota?</a></h5>
+                <p>Account reputation and the hourly sending quota are handled automatically as you send email and Mandrill learns about the emails you're sending. If you have questions about your sending quota or need assist...</p>
+
+                <p class="show-ticket-form-wrapper above-below15 below0"><strong>Not what you're looking for? <a href="https://mandrillapp.com/templates/code?id=coming-soon-without-an-image#" class="show-ticket-form">Submit a support request</a>.</strong></p>
+            </div>
+
+            <div id="help-cat3" class="help-cat-block" style="display:none;">
+                <a href="https://mandrillapp.com/templates/code?id=coming-soon-without-an-image#" class="help-cat-back">« Back to support overview</a>
+                <h4>Deliverability Questions</h4>
+
+                <h5><a href="http://help.mandrill.com/entries/25076866-Can-I-view-the-SMTP-response-for-sent-emails-" target="_blank" class="track-support-click" data-click-type="article">Can I tell if my email was actually delivered?</a></h5>
+                <p>Yes. When Mandrill sends an email, the recipient's mail server provides a response when the message is accepted for delivery, when it bounces, or when it can't be delivered for any reason...</p>
+
+                <h5><a href="http://help.mandrill.com/entries/23317558-Why-are-my-emails-going-into-recipients-spam-folders-" target="_blank" class="track-support-click" data-click-type="article">Why are my emails going into recipients' spam folders?</a></h5>
+                <p>Every recipient server is different and may apply different spam filtering criteria for the messages being received. In most cases, recipient servers don't provide any information about spam fil...</p>
+
+                <h5><a href="http://help.mandrill.com/entries/22880521-What-is-a-rejected-email-Rejection-Blacklist-" target="_blank" class="track-support-click" data-click-type="article">What is a rejected email?</a></h5>
+                <p>Recipient email addresses are added to the Rejection Blacklist when one of the following events occurs: The recipient address bounces, The recipient address registers a spam complaint...</p>
+
+                <p class="show-ticket-form-wrapper above-below15 below0"><strong>Not what you're looking for? <a href="https://mandrillapp.com/templates/code?id=coming-soon-without-an-image#" class="show-ticket-form">Submit a support request</a>.</strong></p>
+            </div>
+
+            <div id="ticket-details" style="display:none;">
+                <form id="support-form" action="https://mandrillapp.com/support/new-ticket" class="fatform" method="POST">
+                    <fieldset>
+                        <div class="field-wrapper">
+                            <label class="stacked" for="name">Name</label>
+                            <input type="text" name="name" id="ticket-name" placeholder="Enter your name" class="av-text">                                                    </div>
+                        <div class="field-wrapper">
+                            <label class="stacked" for="email">Send replies to</label>
+                                                        <input type="text" name="email" id="ticket-email" placeholder="Enter your email address" value="bhuwanarora67@gmail.com" class="av-text">                        </div>
+                        <div class="field-wrapper">
+                            <label class="stacked " for="subject">Subject</label>
+                            <input type="text" name="subject" id="ticket-subject" class="av-text">
+                        </div>
+                        <div class="field-wrapper">
+                            <label class="stacked" for="body">Comments</label>
+                            <textarea name="body" id="ticket-body" placeholder="Please include as many details as possible (including recipients if you have a question about email delivery) so that we can get back to you as quickly as possible."></textarea>
+                        </div>
+                    </fieldset>
+
+                    <div class="clear"></div>
+                    <input id="ticket-submit" type="submit" value="Submit" class="btn btn-primary">
+                    <button class="btn btn-cancel" id="hide-ticket-form">Cancel</button>
+                <input type="hidden" name="__csrf_token" value="0be17bbd9aa27bb1cf32507aa8c27b189dff549c" class="av-hidden" id="__csrf_token"></form>
+            </div>
+        
+    </div></div><div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable" tabindex="-1" role="dialog" aria-describedby="send-test-form" style="display: none;" aria-labelledby="ui-id-3"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span id="ui-id-3" class="ui-dialog-title">Send Test Email</span><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" aria-disabled="false" title="close"><span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span><span class="ui-button-text">close</span></button></div><div id="send-test-form" class="ui-dialog-content ui-widget-content">
+        <form action="https://mandrillapp.com/templates/send-test" onsubmit="sendTestPost(); return false;" method="POST">
+            <input type="hidden" name="id" class="av-hidden" value="coming-soon-without-an-image" id="id">
+            <fieldset>
+                <div>
+                    <label for="test_email" class="stacked">Send test to</label>
+                    <input type="text" name="test_email" id="test_email" class="av-text">
+                    <span class="field-help always-show">Separate email addresses with commas to send to multiple accounts at once. <br><em>Test emails will be billed and tracked just like all other emails.</em></span>
+                </div>
+
+                <div class="clear above-below15 below0">
+                    <input type="submit" value="Send Test" class="btn btn-primary">
+                    <button id="send-test-cancel" class="btn btn-cancel">Cancel</button>
+                </div>
+            </fieldset>
+        <input type="hidden" name="__csrf_token" value="0be17bbd9aa27bb1cf32507aa8c27b189dff549c" class="av-hidden" id="__csrf_token"></form>
+    </div></div><div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable" tabindex="-1" role="dialog" aria-describedby="spam-filter-form" aria-labelledby="ui-id-4" style="display: none;"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span id="ui-id-4" class="ui-dialog-title">Spam Filter Test</span><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" aria-disabled="false" title="close"><span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span><span class="ui-button-text">close</span></button></div><div id="spam-filter-form" class="ui-dialog-content ui-widget-content">
+        <form action="https://mandrillapp.com/templates/spam-test" method="POST">
+            <input type="hidden" name="id" class="av-hidden" value="coming-soon-without-an-image" id="id">
+            <fieldset>
+                <div>
+                    <p class="below0">Spam filter tests run your template content against the following major spam filters:</p>
+                    <div class="row spam-filter-list">
+                        <ul class="span6">
+                            <li class="above0 below0">SpamAssassin</li>
+                            <li class="above0 below0">Outlook</li>
+                            <li class="above0 below0">Gmail</li>
+                            <li class="above0 below0">Yahoo! Mail</li>
+                            <li class="above0 below0">AOL Mail</li>
+                            <li class="above0 below0">GMX</li>
+                        </ul>
+                        <ul class="span6">
+                            <li class="above0 below0">Mail.com</li>
+                            <li class="above0 below0">Link and image verification</li>
+                            <li class="above0 below0">MessageLabs</li>
+                            <li class="above0 below0">Postini</li>
+                            <li class="above0 below0">Barracuda</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <p><strong>This spam filter test will reduce your balance by $1 to $0.00. Do you want to pay $1 to send this test?</strong></p>
+                <div class="clear">
+                    <input type="submit" value="Yes, Send Test" class="btn btn-primary">
+                    <button id="spam-filter-cancel" class="btn btn-cancel">Cancel</button>
+                </div>
+            </fieldset>
+        <input type="hidden" name="__csrf_token" value="0be17bbd9aa27bb1cf32507aa8c27b189dff549c" class="av-hidden" id="__csrf_token"></form>
+    </div></div><div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable" tabindex="-1" role="dialog" aria-describedby="spam-filter-upgrade" aria-labelledby="ui-id-5" style="display: none;"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span id="ui-id-5" class="ui-dialog-title">Upgrade Your Mandrill Account</span><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" aria-disabled="false" title="close"><span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span><span class="ui-button-text">close</span></button></div><div id="spam-filter-upgrade" class="ui-dialog-content ui-widget-content">
+        <p>Spam filter testing will check your template in 10 common spam filters for just $1 per test, powered by <a href="http://litmus.com/" target="_blank">Litmus</a>.</p>
+        <p><a href="https://mandrillapp.com/account/billing/add-funds" class="btn btn-primary" onclick=" return md.checkSudoSession(this.href);">Add funds to your account</a></p>
+    </div></div><div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable" tabindex="-1" role="dialog" aria-describedby="spam-filter-report" aria-labelledby="ui-id-6" style="display: none;"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span id="ui-id-6" class="ui-dialog-title">Spam Filter Test</span><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" aria-disabled="false" title="close"><span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span><span class="ui-button-text">close</span></button></div><div id="spam-filter-report" style="max-height:500px;" class="ui-dialog-content ui-widget-content">
+    </div></div><div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable" tabindex="-1" role="dialog" aria-describedby="screenshot-test-form" aria-labelledby="ui-id-7" style="display: none;"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span id="ui-id-7" class="ui-dialog-title">Screenshot Test</span><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" aria-disabled="false" title="close"><span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span><span class="ui-button-text">close</span></button></div><div id="screenshot-test-form" class="ui-dialog-content ui-widget-content">
+        <form action="https://mandrillapp.com/templates/screenshot-test" method="POST">
+            <input type="hidden" name="id" class="av-hidden" value="coming-soon-without-an-image" id="id">
+            <fieldset>
+                <p>Screenshot testing will check your template against a combination of 30 email clients/browsers for just $3 per test, powered by <a href="http://litmus.com/" target="_blank">Litmus</a>.</p>
+                <p><strong>This screenshot test will reduce your balance by $3 to $0.00. Do you want to pay $3 to send this test?</strong></p>
+                <div class="clear">
+                    <input type="submit" value="Yes, Send Test" class="btn btn-primary">
+                    <button id="screenshot-test-cancel" class="btn btn-cancel">Cancel</button>
+                </div>
+            </fieldset>
+        <input type="hidden" name="__csrf_token" value="0be17bbd9aa27bb1cf32507aa8c27b189dff549c" class="av-hidden" id="__csrf_token"></form>
+    </div></div><div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable" tabindex="-1" role="dialog" aria-describedby="screenshot-test-upgrade" aria-labelledby="ui-id-8" style="display: none;"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span id="ui-id-8" class="ui-dialog-title">Upgrade Your Mandrill Account</span><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" aria-disabled="false" title="close"><span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span><span class="ui-button-text">close</span></button></div><div id="screenshot-test-upgrade" class="ui-dialog-content ui-widget-content">
+        <p>Screenshot testing will check your template against a combination of 30 email clients/browsers for just $3 per test, powered by <a href="http://litmus.com/" target="_blank">Litmus</a>.</p>
+        <p><a href="https://mandrillapp.com/account/billing/add-funds" class="btn btn-primary" onclick=" return md.checkSudoSession(this.href);">Add funds to your account</a></p>
+    </div></div><ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content ui-corner-all" id="ui-id-9" tabindex="0" style="display: none;"></ul></body></html>

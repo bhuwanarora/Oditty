@@ -1,0 +1,63 @@
+<div class="main_header">
+	<div class="site_logo">
+ 		<site-logo></site-logo>
+ 	</div>
+ 	<div class="profile_thumb" ng-click="goto_info_card()">
+		<user-thumb></user-thumb>
+		<span>{{user.name | uppercase}}</span>
+	</div>
+	<div class="menu_group" 
+ 		 ng-class="{'menu_group_active':show_menu}"
+ 		 ng-mouseenter="toggle_menu()"
+		 ng-mouseleave="toggle_menu()">
+	 	<div class="menu" ng-if="show_menu">
+	 		<a ng-href="#/user/{{$routeParams.id}}/search">
+		 		<div>
+		 			<span class="icon-home2"></span>
+			 		<span>Home</span>
+		 		</div>
+		 	</a>
+		 	<a ng-href="#/user/{{$routeParams.id}}/recommendations/books">
+		 		<div ng-hide="$routeParams.type == 'books'">
+		 			<span class="icon-book"></span>
+			 		<span>Books</span>
+		 		</div>
+		 	</a>
+		 	<a ng-href="#/user/{{$routeParams.id}}/recommendations/authors">
+	 			<div ng-hide="$routeParams.type == 'authors'">
+	 				<span class="icon-pen"></span>
+		 			<span>Authors</span>
+	 			</div>
+		 	</a>
+		 	<a ng-href="#/user/{{$routeParams.id}}/recommendations/readers">
+	 			<div ng-hide="$routeParams.type == 'readers'">
+	 				<span class="icon-users"></span>
+		 			<span>Readers</span>
+	 			</div>
+		 	</a>
+	 	</div>
+		<div class="advanced_filter animate-fast" 
+			 ng-class="{'advanced_filter_active':show_menu || filter_expanded}">
+			<span ng-if="$routeParams.type == 'books'">
+				<span class="icon-book"></span>
+				<span ng-if="filter_expanded || show_menu">Books</span>
+			</span>
+			<span ng-if="$routeParams.type == 'authors'">
+				<span class="icon-pen"></span>
+				<span ng-if="filter_expanded || show_menu">Authors</span>
+			</span>
+			<span ng-if="$routeParams.type == 'readers'">
+				<span class="icon-users"></span>
+				<span ng-if="filter_expanded || show_menu">Readers</span>
+			</span>
+			<span class="icon-angle-down" ng-if="!show_menu"></span>
+		 	<span class="icon-angle-up" ng-if="show_menu"></span>
+		</div>
+ 	</div>
+ 	<div ng-controller="searchController">
+ 		<search-bar></search-bar>
+ 	</div>
+
+
+ 	<!-- <input placeholder="Search..."/> -->
+</div>

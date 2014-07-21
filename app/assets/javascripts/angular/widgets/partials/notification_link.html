@@ -1,0 +1,8 @@
+<div class="notification_link"
+	 ng-class="{'notification_link_active':show_notifications}"
+     title="Notifications"
+     ng-click="toggle_notifications()">
+	<div class="notification_circle" 
+		 ng-show="!notifications_seen">{{notifications.length}}</div>
+	<span class="icon-bell"></span>
+</div>

@@ -1,0 +1,255 @@
+.horizontal_padder_active{
+	width: 60vh;
+	height: 80vh;
+	display: inline-block;
+	float: left;
+}
+
+.info_cards{
+	background-color: white;
+	display: inline-block;
+	float: left;
+	border: 1px solid #F1F1F1;
+	margin-right: 50px;
+	margin-left: 30px;
+	padding: 3%;
+	white-space: normal;
+	position: relative;
+	width: 38vh;
+	height: 66vh;
+	border-radius: 3px;
+}
+
+.info_card_placeholder{
+	display: inline-block;
+	float: left;
+	margin-right: 50px;
+	margin-left: 30px;
+	padding: 3%;
+	white-space: normal;
+	position: relative;
+	width: 38vh;
+	height: 66vh;
+}
+
+.compressed_info_card{
+	position: fixed;
+	top: 95px;
+	position: fixed;
+	z-index: 3;
+	left: 268px;
+}
+
+.compressed_info_card .block{
+	border-radius: 3px;
+	padding: 10px;
+	background-color: white;
+	border-bottom: 1px solid #E9E9E9;
+	cursor: pointer;
+	text-align: center;
+	margin-bottom: 2px;
+	box-shadow: 1px 0 1px 0 rgba(66,66,66,.47);
+}
+
+.compressed_info_card .block:hover{
+	background-color: #F1F1F1;
+}
+
+.info_cards .dropdown{
+	float: right;
+	width: 25vh;
+}
+
+.info_cards .book_thumb{
+	border-radius: 2px;
+	margin: 4px;
+	float: left;
+	display: inline-block;
+}
+
+.info_cards .sub_header{
+	margin-top: 5px;
+}
+
+.info_cards .book_details{
+	width: 76%;
+ 	float: left;
+ 	display: inline-block;
+	font-weight: normal;
+	padding: 4px;
+	font-weight: normal;
+}
+
+.info_cards .book_column{
+	overflow: auto;
+	width: 100%;
+	margin-top: 10px;
+	border-bottom: 1px solid #E4E4E4;
+	cursor: pointer;
+	border-radius: 3px;
+}
+
+.info_cards .selected{
+	background-color: #918FB5;
+	color: white;
+}
+
+.info_cards .selected:hover{
+	background-color: rgba(145, 143, 181, 0.7) !important;	
+}
+
+.info_cards .book_column:hover{
+	background-color: #ECECEC;
+}
+
+.info_cards .wrap_header{
+	height: 39px;
+	overflow: visible !important;
+}
+
+.info_cards .header::-webkit-scrollbar-track{
+	background-color: #F5F5F5;
+}
+
+.info_cards .header::-webkit-scrollbar-track:hover {
+    opacity: 1;
+    width: 10px;
+    background-color: #D5D5D5;
+}
+
+.info_cards .header{
+	font-family: Helvetica;
+	font-size: 1em;
+	font-weight: 700;
+	padding: 4px;
+	overflow: auto;
+	background-color: #F5F5F5;
+	border-radius: 5px;
+	margin-top: 10px;
+	border: 1px solid #EBEBEB;
+	max-height: 35vh;
+	overflow-y: scroll;
+}
+
+.info_cards .profile_pic{
+	width: 70%;
+	max-height: 300px;
+	border: 4px solid;
+	border-bottom: 40px solid;
+}
+
+.info_cards .back_color{
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	height: 4px;
+	top: 0px;
+}
+
+.info_cards input{
+	width: 90%;
+	padding: 6px;
+	font-size: 1em;
+	outline: 1px solid #D3D3D3;
+	float: left;
+	border-radius: 4px;
+	margin-top: 10px;
+}
+
+.info_cards .custom_radio{
+	float: none !important;
+}
+
+.info_cards .description{
+	position: absolute;
+	top: 280px;
+	white-space: normal;
+	width: 250px;
+	left: 30px;
+}
+
+.info_cards .description_box{
+	position: absolute;
+	white-space: normal;
+	width: 250px;
+	height: 50%;
+	overflow-y: scroll;
+}
+
+.info_cards .footer{
+	position: absolute;
+	bottom: 25px;
+	right: 25px;
+}
+
+.info_cards .thumb{
+	color: white;
+	background-color: rgba(255, 255, 255, 0.26);
+	font-size: 0.7em;
+	cursor: pointer;
+}
+
+.info_cards .footer .next,
+.info_cards .footer .prev{
+	cursor: pointer;
+	text-align: center;
+	padding: 15px;
+	font-size: 2em;
+	background-color: rgba(255, 255, 255, 0.01);
+	border: 1px solid #CFCFCF;
+}
+
+.base_font_color{
+	color: #717070;
+}
+
+.loading_circle{
+	width: 10px;
+}
+
+.loading_icon{
+	padding: 5px 105px;
+}
+
+.arrow_boxes{
+	position: absolute;
+}
+
+.arrow_box{
+	position: relative;
+	background: #D094AB;
+	height: 20px;
+	width: 40px;
+	border-top-left-radius: 2px;
+	border-bottom-left-radius: 2px;
+	margin-bottom: 20px;
+	display: inline-block;
+	color: white;
+	font-size: 0.6em;
+	text-align: center;
+	padding-top: 5px;
+}
+
+.arrow_box:after, .arrow_box:before{
+	left: 100%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136,183,213,0);
+	border-left-color: #D094AB;
+	border-width: 12px;
+	margin-top: -5px;
+}
+
+.arrow_box_type2{
+	padding-left: 9px;
+}
+
+.arrow_box_type2:before{
+	left: 0px;
+	padding-left: 10px;
+	border-left-color: white;
+}

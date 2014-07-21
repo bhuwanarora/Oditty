@@ -1,0 +1,20 @@
+<link href='http://fonts.googleapis.com/css?family=Rosario:700' rel='stylesheet' type='text/css'>
+<div class="details">
+	<div class="header">
+		<% unless @notice %>
+			<h2>
+			Coming Soon...<br>
+			Subscribe & Stay Updated
+			</h2>
+			<%= render :partial => "website/_shared/subscribe" %>
+		<% else %>
+			<%= render :partial => "website/_shared/subscription_success" %>
+		<% end %>
+	</div>
+	<%= render :partial => "website/_shared/quotes"%>
+</div>
+<script>
+	$(document).ready(function(){
+		quote_display();
+	})
+</script>

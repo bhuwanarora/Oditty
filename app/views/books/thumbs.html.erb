@@ -1,0 +1,27 @@
+<table>
+	<tr>
+		<th></th>
+		<th>User</th>
+		<th>Book</th>
+		<th>Image</th>
+		<th>Status</th>
+		<th>Action</th>
+	</tr>
+	<% @requests.each do |request| %>
+		<tr>
+			<td><img src="<%= request.user_thumb %>" class=""/></td>
+			<td><a href="<%= request.user_link %>" target="_blank">
+				<%= request.username %></a></td>
+			<td><a href="<%= request.book_url %>" target="_blank">
+				<%= request.title %></a></td>
+			<td><a href="<%= request.thumb_url %>" target="_blank">
+				<img src="<%= request.thumb_url %>"/></a></td>
+			<td><select>
+					<option>Status</option>
+					<option>Approve</option>
+					<option>Deny</option>
+				</select></td>
+			<td><button>Submit</button></td>
+		</tr>
+	<% end %>
+</table>

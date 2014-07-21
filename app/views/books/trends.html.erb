@@ -1,0 +1,73 @@
+<table>
+	<tr>
+		<th>Trending</th>
+		<th>Date</th>
+		<th>Select Tags</th>
+		<th>Tags</th>
+		<th>Books Count</th>
+	</tr>
+	<% @trends.each do |trend|%>
+		<tr>
+			<td><%= trend %></td>
+			<td>Date</td>
+			<td>
+				<input class="book_tag" />
+			</td>
+			<td class="tags">
+				
+			</td>
+			<td class="count">Books Count</td>
+		</tr>
+	<% end %>
+</table>
+<div>
+	<% @tags.each do |tag| %>
+		<span><%= tag[0]["data"]["name"] %></span>
+	<% end %>
+</div>
+<script>
+	$(document).ready(function(){
+		var _get_count = function($this){
+			var tags = $this.parent().siblings('.tags').html();
+			$.ajax({
+				url: "<%= get_book_count_path %>",
+				data: "q="+tags,
+				success: function(data, textStatus, jqXHR){
+					$this.parent().siblings('.count').html(data["count"]);
+				}
+			});
+		}
+
+		$('.book_tag').on('keypress', function(event){
+			var $this = $(this);
+			var search_for = $this.val()+String.fromCharCode(event.charCode);
+			$.ajax({
+				url: "<%= search_tag_path %>",
+				data: "q="+search_for,
+				success: function(data, textStatus, jqXHR){
+					var tags = [];
+					for(var i=0; i<data["data"].length; i++){
+						var tag = data["data"][i][0]["data"]["name"];
+						tags.push(tag);
+					}
+					$this.autocomplete({
+				      source: tags,
+				      select: function(event, ui){
+				      	$this.parent().siblings('.tags').append(ui.item.label+" ");
+				      	$this.val("");
+				      	_get_count($this);
+				      	event.preventDefault();
+				      }
+				    });
+				}
+			});
+		});
+
+	});
+</script>
+
+<style>
+	.tags{
+		width: 400px;
+	}
+</style>

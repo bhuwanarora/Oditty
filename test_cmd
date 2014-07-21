@@ -1,0 +1,244 @@
+CREATE (c1:TestCategory{id:1, is_root:true}), 
+(c2:TestCategory{id:2, is_root:true}), 
+(c3:TestCategory{id:3}), 
+(c4:TestCategory{id:4}), 
+(c5:TestCategory{id:5}), 
+(c6:TestCategory{id:6}), 
+(c7:TestCategory{id:7}), 
+(c8:TestCategory{id:8}), 
+(c9:TestCategory{id:9}),
+(b1:TestBook{id:1}),
+(b2:TestBook{id:2}),
+(b3:TestBook{id:3}),
+(b4:TestBook{id:4}),
+(b5:TestBook{id:5}),
+(b6:TestBook{id:6}),
+(t1:TestTag{id:1}),
+(t2:TestTag{id:2}),
+(t3:TestTag{id:3}),
+(t4:TestTag{id:4}),
+(t5:TestTag{id:5}),
+(t6:TestTag{id:6}),
+(t7:TestTag{id:7}),
+(t8:TestTag{id:8}),
+(t9:TestTag{id:9}),
+(t10:TestTag{id:10}),
+(t11:TestTag{id:11}),
+(t12:TestTag{id:12}),
+(t13:TestTag{id:13}),
+(u1:TestUser{id:1}),
+(u2:TestUser{id:2})
+
+MATCH (b1:TestBook{id:1}),
+(b2:TestBook{id:2}),
+(b3:TestBook{id:3}),
+(b4:TestBook{id:4}),
+(b5:TestBook{id:5}),
+(b6:TestBook{id:6}),
+(c1:TestCategory{id:1}), 
+(c2:TestCategory{id:2}), 
+(c3:TestCategory{id:3}), 
+(c4:TestCategory{id:4}), 
+(c5:TestCategory{id:5}), 
+(c6:TestCategory{id:6}), 
+(c7:TestCategory{id:7}), 
+(c8:TestCategory{id:8}), 
+(c9:TestCategory{id:9}),
+(t1:TestTag{id:1}),
+(t2:TestTag{id:2}),
+(t3:TestTag{id:3}),
+(t4:TestTag{id:4}),
+(t5:TestTag{id:5}),
+(t6:TestTag{id:6}),
+(t7:TestTag{id:7}),
+(t8:TestTag{id:8}),
+(t9:TestTag{id:9}),
+(t10:TestTag{id:10}),
+(t11:TestTag{id:11}),
+(t12:TestTag{id:12}),
+(t13:TestTag{id:13})
+CREATE (b1)-[:Belongs_to]->(c1),
+(b1)-[:Belongs_to]->(c2),
+(b2)-[:Belongs_to]->(c3),
+(b2)-[:Belongs_to]->(c4),
+(b2)-[:Belongs_to]->(c5),
+(b3)-[:Belongs_to]->(c1),
+(b3)-[:Belongs_to]->(c6),
+(b4)-[:Belongs_to]->(c5),
+(b5)-[:Belongs_to]->(c5),
+(b5)-[:Belongs_to]->(c7),
+(b5)-[:Belongs_to]->(c8),
+(b6)-[:Belongs_to]->(c9),
+(b6)-[:Belongs_to]->(c1),
+(b6)-[:Belongs_to]->(c3),
+(b1)-[:Belongs_to]->(c9),
+(c1)-[:Child]->(c3),
+(c3)-[:Child]->(c4),
+(c1)-[:Has_root]->(c1),
+(c2)-[:Has_root]->(c2),
+(c3)-[:Has_root]->(c1),
+(c4)-[:Has_root]->(c1),
+(c2)-[:Child]->(c5),
+(c5)-[:Child]->(c6),
+(c5)-[:Has_root]->(c2),
+(c6)-[:Has_root]->(c2),
+(c5)-[:Child]->(c7),
+(c5)-[:Child]->(c8),
+(c8)-[:Child]->(c9),
+(c7)-[:Has_root]->(c2),
+(c8)-[:Has_root]->(c2),
+(c9)-[:Has_root]->(c2),
+(b1)-[r1:Has]->(t1),
+(b1)-[r2:Has]->(t3),
+(b1)-[r3:Has]->(t4),
+(b1)-[r4:Has]->(t5),
+(b2)-[r5:Has]->(t1),
+(b2)-[r6:Has]->(t5),
+(b2)-[r7:Has]->(t8),
+(b3)-[r8:Has]->(t1),
+(b3)-[r9:Has]->(t9),
+(b3)-[r10:Has]->(t10),
+(b4)-[r11:Has]->(t11),
+(b4)-[r12:Has]->(t12),
+(b4)-[r13:Has]->(t10),
+(b5)-[r14:Has]->(t1),
+(b5)-[r15:Has]->(t11),
+(b5)-[r16:Has]->(t12),
+(b6)-[r17:Has]->(t5),
+(b6)-[r18:Has]->(t11),
+(b6)-[r19:Has]->(t10),
+(b1)-[r20:Has]->(t5),
+(b1)-[r21:Has]->(t6),
+(b1)-[r22:Has]->(t7),
+(b2)-[r23:Has]->(t7),
+(b2)-[r24:Has]->(t10),
+(b2)-[r25:Has]->(t9),
+(b3)-[r26:Has]->(t2),
+(b3)-[r27:Has]->(t5),
+(b3)-[r28:Has]->(t4),
+(b4)-[r29:Has]->(t4),
+(b4)-[r30:Has]->(t3),
+(b4)-[r31:Has]->(t2),
+(b5)-[r32:Has]->(t2),
+(b5)-[r33:Has]->(t13),
+(b6)-[r34:Has]->(t10),
+(b6)-[r35:Has]->(t1),
+(b6)-[r36:Has]->(t2),
+(b6)-[r37:Has]->(t13)
+SET r1.weight = 4,
+r2.weight = 10,
+r3.weight = 12,
+r4.weight = 5,
+r5.weight = 13,
+r6.weight = 3,
+r7.weight = 3,
+r8.weight = 5,
+r9.weight = 3,
+r10.weight = 5,
+r11.weight = 7,
+r12.weight = 9,
+r13.weight = 12,
+r14.weight = 10,
+r15.weight = 11,
+r16.weight = 18,
+r17.weight = 10,
+r18.weight = 21,
+r19.weight = 5,
+r20.weight = 9,
+r21.weight = 10,
+r22.weight = 12,
+r23.weight = 10,
+r24.weight = 11,
+r25.weight = 18,
+r26.weight = 1,
+r27.weight = 12,
+r28.weight = 3,
+r29.weight = 5,
+r30.weight = 3,
+r31.weight = 2,
+r32.weight = 2,
+r33.weight = 4,
+r34.weight = 5,
+r35.weight = 7,
+r36.weight = 8,
+r37.weight = 8
+
+MATCH (c1:TestCategory{id:1}), 
+(c2:TestCategory{id:2}), 
+(c3:TestCategory{id:3}), 
+(c4:TestCategory{id:4}), 
+(c5:TestCategory{id:5}), 
+(c6:TestCategory{id:6}), 
+(c7:TestCategory{id:7}), 
+(c8:TestCategory{id:8}), 
+(c9:TestCategory{id:9}),
+(c7)-[r1:Has_root]->(c2),
+(c8)-[r2:Has_root]->(c2),
+(c9)-[r3:Has_root]->(c2),
+(c1)-[r4:Has_root]->(c1),
+(c2)-[r5:Has_root]->(c2),
+(c3)-[r6:Has_root]->(c1),
+(c4)-[r7:Has_root]->(c1),
+(c5)-[r8:Has_root]->(c2),
+(c6)-[r9:Has_root]->(c2)
+SET r1.weight = 4,
+r2.weight = 4,
+r3.weight = 3,
+r4.weight = 2,
+r5.weight = 5,
+r6.weight = 1,
+r7.weight = 5,
+r8.weight = 3,
+r9.weight = 4
+
+
+//GET SIMILAR READS
+MATCH (b:TestBook{id:1})-[h1:Has]->(t:TestTag)<-[h2:Has]-(sb:TestBook),
+WHERE b <> sb
+WITH SUM(h1.weight * h2.weight) AS xyDotProduct,
+  SQRT(REDUCE(xDot = 0, a IN COLLECT(h1) | xDot + a.weight^2)) AS xLength,
+  SQRT(REDUCE(yDot = 0, b IN COLLECT(h2) | yDot + b.weight^2)) AS yLength,
+  b, sb
+RETURN xyDotProduct/(xLength*yLength) as similarity_index, b.id, s.id
+
+
+//MARK as Read
+MATCH (u:TestUser{id:1}), (b:TestBook{id:1})-[:Belongs_to]->(:TestCategory)-[r:Has_root]->(c:TestCategory)
+MERGE (c)<-[ur:Tendency_for]-(u)-[:MarkAsReadAction]->(:MarkAsReadNode)-[:MarkAsRead]->(b)
+SET ur.weight = ur.weight + r.weight
+
+//MARK AS UNREAD
+MATCH (u:TestUser{id:1})-[r1:MarkAsReadAction]->(m:MarkAsReadNode)-[r2:MarkAsRead]->(b:TestBook{id:1})-[:Belongs_to]->(:TestCategory)-[:Has_root]->(c:TestCategory),
+(c)<-[r3:Tendency_for]-(u)
+DELETE m, r1, r2, r3
+
+//BOOKMARK BOOK
+MATCH (u:TestUser{id:1}), (b:TestBook{id:1})
+CREATE (u)-[:BookmarkAction]->(bm:Bookmark)-[:Bookmarked]->(b)
+
+//REMOVE BOOKMARK
+MATCH (u:TestUser{id:1})-[r1:BookmarkAction]->(bm:Bookmark)-[r2:Bookmarked]->(b:TestBook{id:1})
+DELETE bm, r1, r2
+
+//WRITE A REVIEW
+MATCH (u:TestUser{id:1}), (b:TestBook{id:1})
+CREATE (u)-[:Wrote]->(rv:Review{text:"Test Review"})-[:HeadComment]->(rv)<-[:has]-(b)"
+
+
+//EDIT A REVIEW
+MATCH (u:TestUser{id:1})-[:Wrote]->(rv:Review)-[:HeadComment]->(rv)<-[:has]-(b:TestBook{id:1})
+SET rv.text = "Edited review"
+
+//COMMENT ON A REVIEW
+MATCH (rv:Review{ID:34})-[r:HeadComment]->(n)
+DELETE r
+CREATE (n)<-[:NextComment]-(c:Comment{text:'test comment'})<-[:HeadComment]-(rv)
+
+//INITIATE DISCUSSION
+MATCH (u:TestUser{id:1}), (b:TestBook{id:1})
+CREATE (u)-[:Discussed]->(d:TestDiscussion{text:'test discussion'})-[:HeadComment]->(d)<-[:Discussions]-(b)
+
+//COMMENT ON DISCUSSION
+MATCH (d:Discussion{id:35})-[r:HeadComment]->(n)
+DELETE r
+CREATE (n)<-[:NextComment]-(c:Comment{text:'"+comment+"'})<-[:HeadComment]-(d)

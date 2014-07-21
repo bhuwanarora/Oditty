@@ -1,0 +1,21 @@
+<!-- <table> -->
+	<!-- <tr> -->
+		<!-- <td> -->
+			<!-- <img src="<%#= @book.covers[0].present? ? @book.covers[0].large : "" %>"></img><br/> -->
+		<!-- </td> -->
+		<!-- <td class="book-details"> -->
+			<a href="http://en.wikipedia.org/wiki/<%= @book.formatted_name %>" target="_blank" title="Link to Wiki page"><%= @book.title %></a> by
+			<%= render :partial => "books/book_details/authors" %>
+			</br>
+			<%#= render :partial => "books/book_details/identifiers" %>
+			<%#= render :partial => "books/book_details/other_details" %>
+			<%= render :partial => "books/book_details/tags" %>
+			
+			<%#= render :partial => "books/book_details/publishing_details" %>
+			<%#= render :partial => "books/book_details/subject_places" %>
+			<%#= render :partial => "books/book_details/subject_people" %>
+			<%#= render :partial => "books/book_details/subject_times" %>
+		<!-- </td> -->
+	<!-- </tr> -->
+
+<!-- </table> -->

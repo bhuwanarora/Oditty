@@ -1,0 +1,56 @@
+<div class="wrapper" ng-if="$routeParams.type && !hide_options"></div>
+<div class="input_handler" ng-if="search_level1" ng-click="clear_search_level1_var($event)">
+  <div class="custom_icon" ng-if="book_search || reader_search || author_search">
+    <span class="icon-book" ng-if="book_search"></span>
+    <span class="icon-users" ng-if="reader_search"></span>
+    <span class="icon-pen" ng-if="author_search"></span>
+  </div>
+</div>
+<div class="input_handler_level2" ng-if="search_level2" ng-click="clear_search_level2_var($event)">
+  <div class="custom_icon" 
+       ng-if="time_search || year_search || country_search || genre_search || by_author_search || list_search || gender_search || awards_search">
+    <span class="icon-clock" ng-if="time_search"></span>
+    <span class="icon-calendar" ng-if="year_search"></span>
+    <span class="icon-earth" ng-if="country_search"></span>
+    <span class="icon-shapes" ng-if="genre_search"></span>
+    <span class="icon-pen" ng-if="by_author_search"></span>
+    <span class="icon-list" ng-if="list_search"></span>
+    <span class="icon-male" ng-if="gender_search"></span>
+    <span class="icon-trophy" ng-if="awards_search"></span>
+  </div>
+</div>
+<div class="search_typeahead_group" ng-class="{'search_level1_typeahead_group': search_level1 && !search_level2, 'search_level2_typeahead_group': search_level2}">
+  <div class="search_icon">
+    <span class="icon-search"></span>
+  </div>
+	<input set-focus="website.searching" 
+	       ng-keypress="get_search_results($event)" 
+	       ng-keydown="key_down($event)"
+	       ng-keyup="key_up($event)"
+	       ng-model="search_tag.input"
+         ng-disabled="search_level2"
+         id="searchInput"
+         ng-click="handle_options()"
+         class="search_input" 
+         placeholder="{{search_tag.placeholder}}"/>
+
+  <div class="website_search_helpers" ng-if="!hide_options">
+        <div ng-show="search_initiated" class="title">{{search_display}}</div>
+        <div ng-show="!search_initiated && search_tag.input" 
+             class="title">No results found.. </div>
+  </div>
+  <div class="website_search_options" ng-if="!search_initiated && search_results && !hide_options">
+    <div ng-repeat="item in search_results | limitTo: search_tag.result_count+1 track by $index "
+         ng-click="handle_selection(item)" 
+         ng-class="{'light_gray_background':is_current($index, item), 'graph_option':item.graph_option}" 
+         ng-mouseenter="set_current($index)"
+         class="option">
+         <!-- ng-bind-html="highlight(search_tag.input, item.name)" -->
+      <div class="title">
+        <span ng-show="item.icon" class="{{item.icon}}">&nbsp;</span>
+        <span ng-bind-html="item.name"></span>
+      </div>
+      <div ng-show="item.author_name">by {{item.author_name}}</div>
+    </div>
+  </div>
+</div>

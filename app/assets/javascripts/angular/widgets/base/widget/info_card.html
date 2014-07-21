@@ -1,0 +1,242 @@
+<div class="horizontal_padder_active">
+</div>
+<div ng-if="user.logged" 
+	 sticky>
+	 <div ng-show="compressed_info" class="info_card_placeholder"></div>
+     <div ng-show="compressed_info" class="compressed_info_card">
+     	<div class="block"
+     		ng-click="goto_info_card(); user.profile_status=0; compressed_info=false;">
+     		<div class="icon-user"></div>
+     		<div>Edit</div><div>Profile</div>
+     	</div>
+     	<div class="block"
+     		ng-click="edit_books_read();">
+     		<div class="icon-books"></div>
+     		<div>Add</div><div>Books</div>
+     	</div>
+     	<div class="block"
+     		ng-click="goto_info_card(); user.profile_status=4; compressed_info=false;">
+     		<div class="icon-pen"></div>
+     		<div>Add</div><div>Authors</div>
+     	</div>
+     	<div class="block"
+     		ng-click="goto_info_card(); user.profile_status=7; compressed_info=false;">
+     		<div class="icon-users"></div>
+     		<div>Invite</div><div>Friends</div>
+     	</div>
+     </div>
+     <div ng-hide="compressed_info"
+     		class="info_cards"
+ 	 		ng-switch on="user.profile_status" 
+ 	 		ng-model="user.profile_status">
+		<div class="back_color" style="background-color:{{user.profile_status_color}}"></div>
+		<!-- <div>
+			<div class="arrow_box" style="z-index:6">Basic</div>
+			<div class="arrow_box arrow_box_type2" style="z-index:5">Genres</div>
+			<div class="arrow_box arrow_box_type2" style="z-index:4">Books</div>
+			<div class="arrow_box arrow_box_type2" style="z-index:3">Authors</div>
+			<div class="arrow_box arrow_box_type2" style="z-index:2">More</div>
+		</div> -->
+		<div class="sub_header">Complete your profile, {{user.name | uppercase}}</div>
+		<div class="profile_status_logo"></div>
+		<div ng-switch-when="0">
+			<div class="header">
+				<input class="username" 
+					id="username"
+	      	       ng-model="user.name" 
+	      	       placeholder="Enter your name" 
+	      	       spellcheck="false"
+	      	       ng-keydown="update_profile()"
+	      	       required 
+	      	       focus-out="set_user_name()"/>
+	      	</div>
+	      	<div class="header">
+	      		<label for="birthday">Born on</label>
+				 <calendar></calendar>
+	      	</div>
+	      	<div class="header">
+	  			<label for="gender">Gender</label>
+	      		<form name="gender_form">
+			  		<input type="radio" ng-model="gender" value="Male" id="male" 
+			  				class="custom_radio icon-checkbox-unchecked">&nbsp;&nbsp;&nbsp;
+	      			<label for="male">Male</label><br/>
+
+			  		<input type="radio" ng-model="gender" value="Female" id="female"
+			  				class="custom_radio icon-checkbox-unchecked">&nbsp;&nbsp;&nbsp;
+			  		<label for="female">Female</label><br/>
+
+			  		<input type="radio" ng-model="gender" value="Other" id="other" 
+			  				class="custom_radio icon-checkbox-unchecked">&nbsp;&nbsp;&nbsp;
+			  		<label for="other">Others</label><br/>
+				</form>
+	      	</div>
+		</div>
+		<div ng-switch-when="1">
+			<div class="wrap_header header">
+				<span>I am a</span>
+	      		<span class="base_font_color dropdown"
+			 		  dropdown-select="profileOptions" 
+			 		  dropdown-onchange="user_profile_changed(selected)"
+			 		  dropdown-model="profileSelected"
+			 		  dropdown-item-label="name"></span>
+			</div>
+	      	<div class="description_box">
+	      		<div ng-show="show_loading_bar" class="center">
+	      			<img src="assets/loader.gif" class="loading_circle">
+	      		</div>
+	      		<div ng-show="profileSelected.name == 'Reader' && !show_loading_bar">
+	      			<div class="header">
+	      				I have read
+	      			</div>
+	      			<form name="book_count_form">
+		      			<label ng-repeat="book_count in book_counts">
+		      				<input type="radio" 
+		      					   ng-model="$parent.user_book_count" 
+		      					   ng-value="book_count"
+		      					   class="custom_radio icon-checkbox-unchecked">
+		      				&nbsp;&nbsp;&nbsp;{{book_count.name}}<br/>
+		      			</label>
+	      			</form>
+	      		</div>
+	      		<div ng-show="profileSelected.name == 'Author' && !show_loading_bar">
+	      			<div class="header">
+	      				I have written
+	      			</div>
+	      			<form name="book_count_form">
+		      			<label ng-repeat="book_count in book_counts">
+		      				<input type="radio" 
+		      					   ng-model="$parent.user_book_count" 
+		      					   ng-value="book_count"
+		      					   class="custom_radio icon-checkbox-unchecked">
+		      				{{book_count.name}}<br/>
+		      			</label>
+	      			</form>
+	      		</div>
+	      	</div>
+	      	<!-- <div class="description">Know what people from your age and gender are reading..</div> -->
+		</div>
+		<div ng-switch-when="2">
+			<div class="header">Choose atleast 3 genres you like</div>
+			<div class="description_box center" msd-wheel="stop_horizontal_scroll($event)">
+				<div ng-repeat="genre in genres  | orderBy:genre.name">
+					<toggle data="genre"></toggle>
+					<!-- <div class="filter inactive_filter">{{genre.name}}</div> -->
+				</div>
+			</div>
+		</div>
+		<div ng-switch-when="3" class="center">
+			<!-- <div class="header">Add books you have read</div> -->
+			<input ng-keypress="search_books($event)" ng-model="search_book" placeholder="Add books you have read..."/>
+	      	<!-- <type-ahead items="search_results" 
+					prompt="Search for the book.." 
+					title="name" 
+					model="searchResults" 
+					custom-options = "info_typeahead_options"
+					on-select="add_book()"
+					ng-keypress="get_search_results($event, 'BOOK', searchResults)">
+				</type-ahead> -->
+			<div class="scrollbar header" 
+				msd-wheel="stop_horizontal_scroll($event)" check-scroll-bottom="get_popular_books()">
+				<!-- <div ng-if="popular_books">
+					<div class="book_column" ng-show="!loading">
+						No books found...
+					</div>
+				</div> -->
+				<!-- <div ng-if="!popular_books"> -->
+					<div class="book_column"
+						 ng-repeat="book in popular_books" 
+						 ng-class="{'selected': book.status}"
+						 ng-click="mark_as_read(book, $event);">
+						<img ng-src="{{book.isbn | small_thumb}}" 
+							 class="book_thumb"/>
+						<div class="book_details">
+							<div>
+								<span>{{book.title}}</span>
+								<span>by {{book.author_name}}</span>
+							</div>
+							<div>&nbsp;</div>
+							<div ng-show="book.status">Added</div>
+							<div ng-show="!book.status">
+								<span>Add to</span>
+								<span class='icon-books'></span>
+								<span>Books Read</span>
+							</div>
+						</div>
+					</div>
+					<div class="book_column">
+						<img src="assets/loader2.gif" width="20px" ng-show="loading" class="loading_icon"/>
+					</div>
+				<!-- </div> -->
+			</div>
+			<!-- <div class="description">
+				Tell us about your taste..
+			</div> -->
+		</div>
+		<div ng-switch-when="4">
+			<div class="header">Which authors do you like?</div>
+			<!-- <type-ahead items="search_results" 
+					prompt="Search for the author.." 
+					title="name" 
+					model="searchResults"
+					custom-options = "info_typeahead_options"
+					on-select="add_author()"
+					ng-keypress="get_search_results($event, 'AUTHOR', searchResults)">
+				</type-ahead> -->
+			<div class="description">
+				Follow authors and their lives...
+			</div>
+		</div>
+		<div ng-switch-when="5">
+			<!-- <input class="thumb" 
+	      	       ng-model="user.thumb" 
+	      	       spellcheck="false"
+	      	       type="file" 
+	      	       required /> -->
+	      	<!-- <input type="file" id="selectedFile" style="display: none;" 
+	      			accept="image/*" image="image"/> -->
+	      	<div ng-if="!user.thumb">
+				<div class="header thumb">Add a profile pic</div>
+		      	<div class="description">Help your friends recognise you across Reader's Door.</div>
+		      	<!-- </div> -->
+		      	<div ng-if="user.thumb">
+		      		<div class="header thumb">Change your profile pic</div>
+			    	<img ng-src="{{user.thumb}}" class="profile_pic">
+		      	</div>
+	      	 	<cropme
+			        width="info_card_width"
+			        max-height="470"
+			        ratio="info_card_ratio"
+			        icon-class=""
+			        type="png"
+			        destination-width="350">
+			    </cropme>
+		      	<!-- <img ng-show="image" ng-src="{{image.url}}" type="{{image.file.type}}" /> -->
+				<!-- <input type="button"
+					   class="thumb"
+				       value="Select a photo from your computer" 
+				       onclick="document.getElementById('selectedFile').click();" /> -->
+			</div>
+		</div>
+		<div ng-switch-when="6">
+			<div class="header">
+				Meet readers in your area...
+			</div>
+			<map style="display:block; height:180px" />
+		</div>
+		<div ng-switch-when="7">
+			<div class="header">Invite your friends</div>
+			<div class="description">
+				Know what your friends are reading...
+			</div>
+		</div>
+		<div ng-switch-when="8">
+		</div>
+		<div class="footer">
+			<span class="prev icon-angle-left" ng-click="prev_profile_state()"></span>
+			<span class="next icon-angle-right" ng-click="next_profile_state()"></span>
+		</div>
+     </div>
+</div>
+<!-- <div class="user_guide">
+	<div class="close button_effect">x</div>
+</div> -->

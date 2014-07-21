@@ -1,0 +1,57 @@
+<div itemprop="review" itemscope itemtype="http://schema.org/Review">
+	<div class="left_column"></div>
+	<div class="reviews">
+		<div  itemscope itemtype="http://schema.org/AggregateRating" class="header">
+			<span class="icon-pencil2"></span>
+			<span itemprop= "reviewCount"> {{detailed_book['book'].total_reviews_count}} REVIEWS</span>
+			<span style="display:block;" class="write_review">
+				<span class="icon-plus"></span>
+				Write a review
+			</span>
+			<span style="display:none;" class="close_review">
+				<span class="icon-close"></span>
+				Back to reviews
+			</span>
+		</div>
+		<div class="text_editor" style="display:none;">
+			<!-- <text-angular ng-model="htmlVariable"></text-angular> -->
+			<textarea angularte ng-model="descrizione"></textarea>
+		</div>
+		<div class="elements">
+			<div ng-repeat="review in detailed_book['book'].reviews" class="review">
+		        <div class="header">
+		        	<img ng-src="{{review.user.thumb}}" 
+		        	     class="review_thumb" 
+		        	     ns-popover
+		        	     ns-popover-hide-on-click=false
+					     ns-popover-template="userPopover"
+					     ns-popover-trigger="mouseover"
+					     ns-popover-timeout="0"
+					     ns-popover-placement="bottom|left"/>
+		        	<span itemscope itemtype="http://schema.org/UserComments">
+		        		<span itemprop="commentTime">{{review.timestamp}}</span>
+		        	</span>
+		        	<span>{{review.comment_count}} comments · </span>
+		        	<span>{{review.dislike_count}} <span class="icon-thumbs-up2"></span> · </span>
+		        	<span>{{review.like_count}} <span class="icon-thumbs-up"></span> · </span>
+		        	<span><a ng-href="{{review.user.url}}">{{review.user.name}}</a> · </span>
+		        	<span class="review_header"><b>{{review.heading}}</b></span>
+		        </div>
+		        <div class="review_content">
+		        	<span itemprop="reviewBody">{{review.content}}</span>
+			        <div class="comments">
+			        	<div ng-repeat="discussion in review.comments">
+			        		<discussion data="discussion" index="$index"></discussion>
+			        		<div class="nested_comments">
+				        		<div ng-repeat="discussion in discussion.comments">
+									<discussion data="discussion" index="$index"></discussion>
+								</div>
+			        		</div>
+			        	</div>
+			        </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+	<div class="right_column"></div>
+</div>

@@ -1,0 +1,2 @@
+(mkdir -p ~/.graphlab && echo -e "[Product]\nproduct_key=0B07-2E8B-179D-AA36-4BEE-8ACF-A1E3-6177" > ~/.graphlab/config && echo "Configuration file written") || echo "Configuration file not written"
+sudo pip install graphlab-create==0.3

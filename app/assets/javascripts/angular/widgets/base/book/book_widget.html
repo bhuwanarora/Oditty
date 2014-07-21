@@ -1,0 +1,15 @@
+<!-- <div class="wrapper" ng-if="hovered "></div> -->
+<div  itemscope 
+ 	  itemtype= "http://schema.org/Book" 
+ 	  ng-style="randomise_position"
+ 	  class="animate-fast widget">
+	<!-- <category track widget="book"></category> -->
+	<div ng-model="book" 
+		ng-click="show_focused_tooltip($event)"
+		ng-class="{'discovered': hovered, 'undiscovered': !hovered}" class="card animate-fast">
+		<book-interact track></book-interact>
+		<widget-thumb track></widget-thumb>
+		<!-- <book-navbar track></book-navbar> -->
+	</div>
+</div>
+<div class="base" ng-click="show_book(3)"></div>

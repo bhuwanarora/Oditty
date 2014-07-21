@@ -1,0 +1,7 @@
+<a ng-href="#/user/{{$routeParams.id}}/recommendations/{{$routeParams.type}}/filter/{{filter.id}}">
+	<div ng-class="{'active_filter':active, 'inactive_filter':!active}"
+		 class="filter">
+		 <span class="icon-star"></span>
+		 <span>{{filter.name | uppercase}}</span>
+	</div>
+</a>

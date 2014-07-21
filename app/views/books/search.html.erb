@@ -1,0 +1,7 @@
+<% if @isbn_number.present? %>
+	<% if @book.present? %>
+		<%= render :partial => "book_details", :locals => {:@book => @book } %>
+	<% else %>
+		0 Results Found.
+	<% end %>
+<% end %>

@@ -1,0 +1,49 @@
+<div class="square_grid">
+</div>
+<style>
+	body {
+	    padding: 0;
+	}
+
+	.square_grid {
+	    border: 1px solid #ccc;
+	    border-width: 1px 0 0 1px;
+	    position: absolute;
+		margin-top: 4%;
+		margin-left: 3%;
+		z-index: 1;
+		/*background-color: beige;*/
+	}
+	.box{
+		border: rgba(0, 0, 0, 0.05);
+		border-width: 1px;
+		border-style: inherit;
+		margin-left: 0px;
+	}
+</style>
+<script>
+	function createGrid(size) {
+	    var ratioW = Math.floor((window.innerWidth || document.documentElement.offsetWidth) / size),
+	        ratioH = Math.floor((window.innerHeight || document.documentElement.offsetHeight) / size);
+
+	    var parent = $('.square_grid')
+	    parent.css('width', '1220px');
+	    parent.css('height', (ratioH * size) + 'px');
+	    for (var i = 0; i < ratioH; i++) {
+	        for (var p = 0; p < ratioW; p++) {
+	            var cell = document.createElement('div');
+	            cell.className = 'span box'
+	            cell.style.height = (size - 1) + 'px';
+	            cell.style.width = (size - 1) + 'px';
+	            parent.append(cell);
+	        }
+	    }
+
+	    // document.body.appendChild(parent);
+	}
+
+	$(document).ready(function(){
+		// createGrid(100);
+	});
+
+</script>
