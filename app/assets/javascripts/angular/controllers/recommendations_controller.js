@@ -10,11 +10,15 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		event.stopPropagation();
 	}
 
-	$scope.handle_friends_grid_size = function(type, event){
-		if(event){
-					var increase_tab_size = event.deltaY > 0;
-				}
-		if(type == "scroll_down" || increase_tab_size){
+	$scope.handle_friends_grid_size = function(event, scroll_down){
+		var event_defined = angular.isDefined(event);
+		if(event_defined){
+			var increase_tab_size = event.deltaY > 0;
+		}
+		else{
+			var increase_tab_size = scroll_down;
+		}
+		if(increase_tab_size){
 			$scope.column_heights = {"notifications_style" : {"height": "110px"}, 
 									"friends_grid_style": {"max-height": "120px", "overflow": "auto"},
 									"show_filters": false};
@@ -24,7 +28,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 									"friends_grid_style": {"height": "75px"},
 									"show_filters": false};
 		}
-		if(event){
+		if(event_defined){
 			event.stopPropagation();
 		}
 	}
@@ -258,10 +262,13 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     _get_labels = function(){
     	$rootScope.labels = [];
       	recommendationService.get_labels().then(function(data){
-        	console.debug("%c labels"+data, "color: green");
-        	angular.forEach(data, function(value){
-        		this.push({"name": value[0].replace("\"", "")});
-        	}, $rootScope.labels);
+      		if(angular.isArray(data)){
+	        	angular.forEach(data, function(value){
+	        		if(value[0]!=null){
+	        			this.push({"name": value[0].replace("\"", "")});
+	        		}
+	        	}, $rootScope.labels);
+      		}
       	});
     }
 

@@ -1152,6 +1152,9 @@ and (min-width : 1824px) {
 	overflow: auto;
 	z-index: 2;
 	box-shadow: 8px 0 43px 0 rgba(66,66,66,.47);
+	position: fixed;
+	top: 95px;
+	left: 10px;
 }
 
 .ticker_popup{

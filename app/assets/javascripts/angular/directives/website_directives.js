@@ -362,17 +362,17 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', '$document', function($ti
 	      	onClear: '&'
 		},
 		link: function(scope, elem, attrs){
-			$document.bind('click', function(event){
-		        var isClickedElementChildOfPopup = elem
-		          .find(event.target)
-		          .length > 0;
-		          console.log();
-		        if (!isClickedElementChildOfPopup){
-			        scope.selected = true;
-			        scope.$apply();
-		        }
+			// $document.bind('click', function(event){
+		 //        var isClickedElementChildOfPopup = elem
+		 //          .find(event.target)
+		 //          .length > 0;
+		 //          console.log();
+		 //        if (!isClickedElementChildOfPopup){
+			//         scope.selected = true;
+			//         scope.$apply();
+		 //        }
 		          	
-	      });
+	  //     });
 
 		},
 
@@ -613,19 +613,31 @@ websiteApp.directive('checkScrollBottom', function () {
     };
 });
 
-websiteApp.directive('checkScrollUpDown', function () {
+websiteApp.directive('checkScrollUp', function () {
     return {
         restrict: 'A',
-        link: function (scope, element, attrs) {
+        link: function(scope, element, attrs){
             var elem = element[0];
             var position = elem.scrollTop;
-            var attribute = attrs.checkScrollUpDown.split(',');
-            element.bind('scroll', function () {
-                if (elem.scrollTop > position) {
-                	scope.$apply(attribute[0]);
+            element.bind('scroll', function(){
+                if(elem.scrollTop < position){
+                	scope.$apply(attrs.checkScrollUp);
                 }
-                else{
-                	scope.$apply(attribute[1]);
+                position = elem.scrollTop;
+            });
+        }
+    };
+});
+
+websiteApp.directive('checkScrollDown', function () {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs){
+            var elem = element[0];
+            var position = elem.scrollTop;
+            element.bind('scroll', function(){
+                if(elem.scrollTop > position){
+                	scope.$apply(attrs.checkScrollDown);
                 }
                 position = elem.scrollTop;
             });
@@ -635,8 +647,8 @@ websiteApp.directive('checkScrollUpDown', function () {
 
 websiteApp.directive('focusOut',function(){
 	return function postLink(scope, element, attrs) {
-                element.bind('blur', function () {
-                    scope.$apply(attrs.focusOut);
-                });
+        element.bind('blur', function () {
+            scope.$apply(attrs.focusOut);
+        });
 	};
 });

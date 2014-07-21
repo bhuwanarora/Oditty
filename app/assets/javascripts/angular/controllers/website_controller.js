@@ -189,7 +189,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    });
 
 	    get_latest_notification = $scope.$on('getLatestNotification', function(){
-			websiteService.get_latest_notification($rootScope.user).then(function(data){
+			websiteService.get_latest_notification().then(function(data){
 				$scope.notifications.push(data.notification);
 			});
 	    });
@@ -328,7 +328,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	// var remove_from_bookmarks_event = "";
 	var move_right_event = ""
 	var move_right_listener_event = "";
-	
+	var get_latest_notification = "";
 	_init();
 
 }]);

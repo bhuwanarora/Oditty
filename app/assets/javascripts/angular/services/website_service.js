@@ -49,8 +49,8 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         return _deferred_request('/api/v0/notifications?id='+data.id);
     }
 
-    this.get_latest_notification = function(data){
-        return _deferred_request('/api/v0/latest_notification?id='+data.id);
+    this.get_latest_notification = function(){
+        return _deferred_request('/api/v0/latest_notification');
     }
 
     this.search = function(filter, type, count){

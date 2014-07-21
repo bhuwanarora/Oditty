@@ -667,7 +667,7 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
           "tweet": tweet
         }
         widgetService.comment(params);
-        $scope.$emit('getNotifications');
+        // $scope.$emit('getNotifications');
         // var name = $rootScope.user.email;
         // var message = "<span><b>"+name+"</b> </span><span class='site_color'>"+tweet["tweet"]+"</span>";
         // var thumb = "assets/profile_pic.jpeg"

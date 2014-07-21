@@ -378,15 +378,15 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 					$scope.panel_selected = 'BOOKMARK';
 					$scope.bookmark_selected = true;
 					$scope.read_selected = false;
-					$scope.glowBookmark = false;
-					// websiteService.get_books_bookmarked(0).then(function(data){
-					// 	$rootScope.user.books['bookmarked'] = [];
-					// 	angular.forEach(data, function(value){
-					// 		var label_name = value[2];
-					// 		var json = {"isbn": value[0], "id": value[1], "bookmark_status": true, "labels[label_name]['checked']": true};
-					// 		this.push(json);
-					// 	},  $rootScope.user.books['bookmarked']);
-					// });
+					// $scope.glowBookmark = false;
+					websiteService.get_books_bookmarked().then(function(data){
+						$rootScope.user.books['bookmarked'] = [];
+						angular.forEach(data, function(value){
+							var label_name = value[2];
+							var json = {"isbn": value[0], "id": value[1], "bookmark_status": true, "labels[label_name]['checked']": true};
+							this.push(json);
+						},  $rootScope.user.books['bookmarked']);
+					});
 					// $('body').css('background-image', $scope.search_style['background-image']);
 				}
 				event.stopPropagation();
@@ -454,42 +454,50 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 					}
 					else{
 						//focus the specific input box
-						if($scope.show_more_filters == true && $scope.column_heights.show_filters == true){
+						if($scope.show_more_filters && $scope.column_heights.show_filters){
 							$scope.show_more_filters = false;
 						}
 						else {	
 							$scope.show_more_filters = true;
 							$scope.handle_left_columns();
-							if(type == "genre"){
-								$scope.genre_selected = true;
-								var timeout_event = $timeout(function(){
-									$scope.genre_selected = false;
-								}, 200);
-
-								$scope.$on('destroy', function(){
-									$timeout.cancel(timeout_event);
-								});
-							}
-							if(type == "author"){
-								$scope.author_selected = true;
-								var timeout_event = $timeout(function(){
-									$scope.author_selected = false;
-								}, 200);
-
-								$scope.$on('destroy', function(){
-									$timeout.cancel(timeout_event);
-								});
-							}
+							_handle_filter_selection(type);
 						}
 					}
 				}
 			}
 
-			$scope.handle_notification_ticker_size = function(type, event){
-				if(event){
+			_handle_filter_selection = function(){
+				if(type == "genre"){
+					$scope.genre_selected = true;
+					var timeout_event = $timeout(function(){
+						$scope.genre_selected = false;
+					}, 200);
+
+					$scope.$on('destroy', function(){
+						$timeout.cancel(timeout_event);
+					});
+				}
+				if(type == "author"){
+					$scope.author_selected = true;
+					var timeout_event = $timeout(function(){
+						$scope.author_selected = false;
+					}, 200);
+
+					$scope.$on('destroy', function(){
+						$timeout.cancel(timeout_event);
+					});
+				}
+			}
+
+			$scope.handle_notification_ticker_size = function(event, scroll_down){
+				var event_defined = angular.isDefined(event);
+				if(event_defined){
 					var increase_tab_size = event.deltaY > 0;
 				}
-				if(type == "scroll_down" || increase_tab_size){
+				else{
+					var increase_tab_size = scroll_down;
+				}
+				if(increase_tab_size){
 					$scope.column_heights = {"notifications_style": {"height": "225px"},
 											"friends_grid_style": {"height": "75px"},
 											"show_filters": false};
@@ -500,21 +508,9 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 											"show_filters": false};
 				}
 				$rootScope.ticker_popup = null;
-				if(event){
-		            event.stopPropagation();
+				if(event_defined){
+		        	event.stopPropagation();
 				}
-	        }
-
-	        $scope.on_scroll_down = function(){
-	        	$scope.column_heights = {"notifications_style": {"height": "225px"},
-											"friends_grid_style": {"height": "75px"},
-											"show_filters": false};
-	        }
-
-	        $scope.on_scroll_up = function(){
-	        	$scope.column_heights = {"notifications_style": {"height": "110px"},
-											"friends_grid_style": {"height": "75px"},
-											"show_filters": false};
 	        }
 	        
 			$scope.goto_info_card = function(){
@@ -553,10 +549,6 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 			}
 
 			_init();
-
-			var open_shelf_event = "";
-			var glow_bookmark_event = "";
-			var glow_shelf_event = "";
 		}],
 		templateUrl: "/assets/angular/widgets/partials/recommendation_footer.html"
 	}
