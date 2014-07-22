@@ -28,6 +28,9 @@ module Api
 					elsif type == "Tweet"
 						notification = self.comment_notification data
 						notifications.push notification
+					elsif type == "BookmarkNode"
+						notification = self.bookmark_notification data
+						notifications.push notification
 					end
 				end
 				notifications.reverse
@@ -46,6 +49,11 @@ module Api
 			private
 			def self.neo_init
 				@neo = Neography::Rest.new
+			end
+
+			def self.bookmark_notification data
+				message = "<span><b>"+data["name"]+"</b> bookmarked </span><span class='site_color'><em>"+data["title"]+"</em></span><span>&nbsp; to &nbsp;</span><span>'"+data["label"]+"'</span>"
+				self.notification(message, data)
 			end
 
 			def self.rating_notification data

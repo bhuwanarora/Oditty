@@ -380,12 +380,26 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 					$scope.read_selected = false;
 					// $scope.glowBookmark = false;
 					websiteService.get_books_bookmarked().then(function(data){
-						$rootScope.user.books['bookmarked'] = [];
-						angular.forEach(data, function(value){
-							var label_name = value[2];
-							var json = {"isbn": value[0], "id": value[1], "bookmark_status": true, "labels[label_name]['checked']": true};
-							this.push(json);
-						},  $rootScope.user.books['bookmarked']);
+						if(angular.isArray(data)){
+							$rootScope.user.books['bookmarked'] = [];
+							angular.forEach(data, function(data){
+								var labels = [];
+								angular.forEach($rootScope.labels, function(value){
+									if(data[2].indexOf(value.name) >= 0){
+										var json = {"name": value.name, "checked": true};
+									}
+									else{
+										var json = {"name": value.name, "checked": false};
+									}
+									labels.push(json);	
+								}, labels);
+								var json = {"isbn": data[0], 
+											"id": data[1], 
+											"bookmark_status": true, 
+											"labels": labels};
+								this.push(json);
+							},  $rootScope.user.books['bookmarked']);
+						}
 					});
 					// $('body').css('background-image', $scope.search_style['background-image']);
 				}

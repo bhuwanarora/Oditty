@@ -83,56 +83,28 @@ module UsersGraphHelper
 
 	def self.get_books_bookmarked(user_id, skip_count=0)
 		@neo ||= self.neo_init
-		clause = "MATCH (u:User)-[r1:BookmarkAction]->(bm:BookmarkNode)-[:Bookmarked]->(b:Book), (u)-[r2:Labelled]->(l:Label) WHERE ID(u)="+user_id.to_s+" RETURN b.isbn as isbn, ID(b), bm.name as label, r1.timestamp as timestamp ORDER BY timestamp SKIP "+skip_count.to_s
+		clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" WITH u MATCH (u)-[:Labelled]->(l:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(b:Book) RETURN b.isbn as isbn, ID(b), COLLECT(l.name) as labels"
+
 		puts clause.blue.on_red
 		@neo.execute_query(clause)["data"]
 	end
 
 
-	# ************************************************
-
-	# MATCH (u:User), (b:Book)
-	# WHERE ID(u)=USER_ID AND ID(b)=BOOK_ID
-	# CREATE (u)-[:BookmarkAction{timestamp:TIMESTAMP, user_id:USER_ID}]->(bm:BookmarkNode{name: BOOKMARK_NAME})-[:Bookmarked{user_id:USER_ID}]->(b) 
-	# WITH u, b, bm
-
-	# MERGE (l:Label{name: BOOKMARK_NAME})
-	# CREATE UNIQUE (b)<-[:BookmarkedOn]-(l)<-[:Labelled]-(u)
-	# WITH u, b, bm, l
-
-	# MATCH (u)-[old:FeedNext]->(type_feed) 
-	# CREATE UNIQUE (u)-[:FeedNext{user_id:USER_ID}]->(bm)-[:FeedNext{user_id:USER_ID}]->(type_feed) 
-	# DELETE old 
-	# WITH u, b, bm
-
-	# MATCH (b)-[old:BookFeed]->(old_feed) 
-	# CREATE UNIQUE (b)-[:BookFeed{user_id:USER_ID}]->(bm)-[:BookFeed{user_id:USER_ID}]->(old_feed) 
-	# DELETE old 
-	# WITH u, b, bm 
-
-	# OPTIONAL MATCH (u)<-[:Follow]-(f) 
-	# WHERE f <> u 
-	# WITH u, b, f 
-
-	# MATCH (f)-[old:Ego]-(old_ego) 
-	# CREATE UNIQUE (f)-[:Ego{user_id:ID(f)}]->(u)-[:Ego{user_id:ID(f)}]->(old_ego) 
-	# DELETE old 
-
-	# SET b.bookmark_count = b.bookmark_count + 1  
-	# SET u.bookmark_count = u.bookmark_count + 1 
-
-	# ************************************************
 	def self.bookmark_book(user_id, book_id, bookmark_name)
 		#FIXME: bookmark book
 		@neo ||= self.neo_init
-		bookmark_clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" CREATE (u)-[:BookmarkAction{timestamp:"+Time.now.to_i.to_s+", user_id:"+user_id.to_s+"}]->(bm:BookmarkNode{name: \""+bookmark_name.strip.upcase+"\"})-[:Bookmarked{user_id:"+user_id.to_s+"}]->(b) WITH u, b, bm "
-		label_clause = "MERGE (l:Label{name: \""+bookmark_name.strip.upcase+"\"}) CREATE UNIQUE (b)<-[:BookmarkedOn]-(l)<-[:Labelled]-(u) WITH u, b, bm, l "
-		feednext_clause = "MATCH (u)-[old:FeedNext]->(type_feed) CREATE UNIQUE (u)-[:FeedNext{user_id:"+user_id.to_s+"}]->(bm)-[:FeedNext{user_id:"+user_id.to_s+"}]->(type_feed) DELETE old WITH u, b, bm "
-		bookfeed_next_clause = "MATCH (b)-[old:BookFeed]->(old_feed) CREATE UNIQUE (b)-[:BookFeed{user_id:"+user_id.to_s+"}]->(bm)-[:BookFeed{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, bm "
-		follow_clause = "OPTIONAL MATCH (u)<-[:Follow]-(f) WHERE f <> u WITH u, b, f "
+		bookmark_clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" CREATE UNIQUE (u)-[:Labelled]->(l:Label{name: \""+bookmark_name.strip.upcase+"\"}), (l)-[:BookmarkedOn]->(bm: BookmarkNode{label:\""+bookmark_name.strip.upcase+"\", book_id:"+book_id.to_s+", user_id:"+user_id.to_s+"}), (bm)-[:BookmarkAction]->(b) SET bm.title = b.title,  bm.author = b.author_name, bm.name = u.email, bm.isbn = b.isbn, bm.timestamp = "+Time.now.to_i.to_s+" WITH u, b, bm, l "
+
+		feednext_clause = "MATCH (u)-[old:FeedNext]->(type_feed) CREATE UNIQUE (u)-[:FeedNext{user_id:"+user_id.to_s+"}]->(bm)-[:FeedNext{user_id:"+user_id.to_s+"}]->(type_feed) DELETE old WITH u, b, bm, l "
+
+		bookfeed_next_clause = "MATCH (b)-[old:BookFeed]->(old_feed) CREATE UNIQUE (b)-[:BookFeed{user_id:"+user_id.to_s+"}]->(bm)-[:BookFeed{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, bm, l "
+
+		follow_clause = "OPTIONAL MATCH (u)<-[:Follow]-(f) WHERE f <> u WITH u, b, f, l "
 		ego_clause = "MATCH (f)-[old:Ego]-(old_ego) CREATE UNIQUE (f)-[:Ego{user_id:ID(f)}]->(u)-[:Ego{user_id:ID(f)}]->(old_ego) DELETE old "
-		set_clause = "SET b.bookmark_count = b.bookmark_count + 1  SET u.bookmark_count = u.bookmark_count + 1 "
-		clause = bookmark_clause + label_clause + feednext_clause + bookfeed_next_clause + follow_clause + ego_clause + set_clause
+
+		set_clause = "SET b.bookmark_count = b.bookmark_count + 1  SET u.bookmark_count = u.bookmark_count + 1 SET l.bookmark_count = l.bookmark_count + 1 "
+
+		clause = bookmark_clause + feednext_clause + bookfeed_next_clause + follow_clause + ego_clause + set_clause
 		puts clause.blue.on_red
 		puts "BOOK BOOKMARKED".green
 		@neo.execute_query(clause)
@@ -454,7 +426,7 @@ module UsersGraphHelper
 	# ************************************************
 	def self.create_user(email, password=nil, verification_token=nil)
 		@neo ||= self.neo_init
-		clause = "CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, indexed_email: "+params[:email]+", rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0}), (user)-[fn:FeedNext{user_id:ID(user)}]->(user), (user)-[:Ego{user_id:ID(user)}]->(user) WITH user MATCH(bm:Label{basic:true}) CREATE (user)-[:BookmarkAction{user_id:ID(user)}]->(bm)"
+		clause = "CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, indexed_email: "+params[:email]+", rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0}), (user)-[fn:FeedNext{user_id:ID(user)}]->(user), (user)-[:Ego{user_id:ID(user)}]->(user) WITH user MATCH(bm:Label{basic:true}) CREATE (user)-[:Labelled{user_id:ID(user)}]->(bm)"
 		puts clause.blue.on_red
 		@neo.execute_query(clause)
 	end
