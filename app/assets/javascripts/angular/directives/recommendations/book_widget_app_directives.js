@@ -405,7 +405,6 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
         });
       }
 
-
       $scope.record_read_time = function(read_timer, event){
         $rootScope.focused_book.time_index = read_timer;
         var message = "SUCCESS-Thanks we have recorded your approximate time to read "+$rootScope.focused_book.title+". <br/> This will help us to recommend you books according to your reading skills."
