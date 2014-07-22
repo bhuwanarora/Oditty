@@ -69,7 +69,7 @@ module UsersGraphHelper
 	# ************************************************
 	def self.get_bookmark_labels user_id
 		@neo ||= self.neo_init
-		clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" OPTIONAL MATCH (u)-[:Labelled]->(bm:Label) RETURN bm.name"
+		clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" OPTIONAL MATCH (u)-[:Labelled]->(bm:Label) RETURN bm.name, ID(bm)"
 		puts clause.blue.on_red
 		@neo.execute_query(clause)["data"]
 	end

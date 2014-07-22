@@ -537,7 +537,9 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 
 			_init_shelf = function(){
 				$scope.read_selected = false;
-				$scope.bookmark_selected = false;
+				if(angular.isUndefined($scope.bookmark_selected) || !$scope.bookmark_selected){
+					$scope.bookmark_selected = false;
+				}
 			}
 
 			_add_listeners = function(){

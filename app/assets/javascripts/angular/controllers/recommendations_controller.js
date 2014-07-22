@@ -100,6 +100,11 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		});
 	}
 
+	_show_bookmark_tab = function(){
+		$scope.bookmark_selected  = true;
+        $scope.panel_selected = 'BOOKMARK';
+	}
+
 	_initialize_filters = function(){
 		// $scope.show_more_filters = true;
 		$rootScope.filters = {};
@@ -107,6 +112,11 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         $rootScope.filters["other_filters"] = {};
         if($routeParams.type == "books"){
         	$rootScope.filters["filter_type"] = "BOOK";
+        	var specific_list = angular.isDefined($routeParams.filter_id);
+        	if(specific_list){
+        		_show_bookmark_tab();
+        		$rootScope.filters["filter_id"] = $routeParams.filter_id;
+        	}
         }
         else if($routeParams.type == "authors"){
         	$rootScope.filters["filter_type"] = "AUTHOR";
@@ -220,10 +230,19 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	}
 	}
 	_set_books = function(data){
-		angular.forEach(data, function(value){
-			var json = {"isbn": value[0], "id": value[1]};
-			this.push(json);
-		},  $scope.recommendations.books);
+		if($scope.bookmark_selected){
+			$rootScope.user.books['bookmarked'] = [];
+			angular.forEach(data, function(value){
+				var json = {"isbn": value[0], "id": value[1]};
+				this.push(json);
+			},  $rootScope.user.books['bookmarked']);
+		}
+		else{
+			angular.forEach(data, function(value){
+				var json = {"isbn": value[0], "id": value[1]};
+				this.push(json);
+			},  $scope.recommendations.books);
+		}
 	}
 
 	_push_recommendations = function(){
@@ -281,7 +300,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         	if(angular.isArray(data) && data.length > 0){
 	        	angular.forEach(data, function(value){
 	        		if(value[0]!=null){
-	        			this.push({"name": value[0].replace("\"", "")});
+	        			this.push({"name": value[0].replace("\"", ""), "id": value[1]});
 	        		}
 	        	}, $rootScope.labels);
         	}

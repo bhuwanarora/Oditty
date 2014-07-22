@@ -304,8 +304,6 @@
 
 		MATCH (u:User)
 		CREATE UNIQUE (u)-[:FeedNext]->(u)
-
-		MATCH (u:User)
 		CREATE UNIQUE (u)-[:Ego]->(u)
 
 		MATCH (u:User), (l:Label)

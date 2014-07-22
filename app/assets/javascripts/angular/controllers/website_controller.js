@@ -186,6 +186,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 
 	    add_to_notifications = $scope.$on('addToNotifications', function(event, notification){
 	    	$scope.notifications.push(notification);
+	    	event.stopPropagation();
 	    });
 
 	    get_notifications_event = $scope.$on('getNotifications', function(){

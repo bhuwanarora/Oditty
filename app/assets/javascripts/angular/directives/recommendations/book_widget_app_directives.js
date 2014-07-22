@@ -115,16 +115,40 @@ websiteApp.directive('labelDropdown', ['$rootScope', '$timeout', 'widgetService'
         
         $scope.book.labels[index]["checked"] = !$scope.book.labels[index]["checked"];
         if($scope.book.labels[index]["checked"]){
-          var message = "Bookmark tagged.";
+          //add to notifications
+          var name = $rootScope.user.email;
+          var message = "<span><b>"+name+"</b> </span><span>bookmarked&nbsp;</span><span class='site_color'>"+$scope.book.title+"</span><span> to '"+$scope.book.labels[index]["name"]+"'</span>";
+          var thumb = "assets/profile_pic.jpeg"
+          var notification = {
+            "thumb":thumb,
+            "message":message,
+            "timestamp":new Date().getTime(),
+            "book":{
+              "id":$scope.book.id,
+              "title":$scope.book.title,
+              "author_name":$scope.book.author_name,
+              "isbn":$scope.book.isbn
+            },
+            "user":{
+              "id":$rootScope.user.id,
+              "name":$rootScope.user.email
+            }
+          }
+          $scope.$emit('addToNotifications', notification);
+
+          var message = "SUCCESS-Added to "+$scope.book.labels[index]["name"]+" <span class='icon-bookmarks'></span>.";
         }
         else{
-          var message = "Bookmark removed.";
+          var message = "SUCCESS-Removed from "+$scope.book.labels[index]["name"]+" <span class='icon-bookmarks'></span>.";
         }
         var timeout_event = notify($rootScope, message, $timeout);
         var params = {"id": $scope.book.id, 
                     "type": "BOOK",
                     "name": $scope.book.labels[index]["name"],
                     "data": $scope.book.labels[index]["checked"]};
+
+
+
         widgetService.bookmark(params);
         $scope.$on('destroy', function(){
           $timeout.cancel(timeout_event);

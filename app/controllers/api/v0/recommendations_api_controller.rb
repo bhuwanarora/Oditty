@@ -41,14 +41,14 @@ module Api
 				if filter_type == "BOOK"
 					last_book = $redis.get 'last_book'
 					if last_book
-						books = BookApi.recommendations(last_book, filters)
+						books = BookApi.recommendations(last_book, filters, session[:user_id])
 					else
-						books = BookApi.recommendations("thehungergames", filters)
+						books = BookApi.recommendations("thehungergames", filters, session[:user_id])
 					end
 					not_recommendations = filters["other_filters"].present? || 
 							filters["other_filters"]["title"].present? || 
 							filters["other_filters"]["id"].present?
-					if books.present? && !not_recommendations
+					if books.present? && !not_recommendations && books.length > 0
 						$redis.set 'last_book', books[books.length-1][2].gsub(" ", "")
 					end
 					recommendations =  {:books => books}

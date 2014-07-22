@@ -232,7 +232,7 @@ module Api
 				info
 			end
 
-			def self.recommendations(last_book, filters={})
+			def self.recommendations(last_book, filters={}, user_id=nil)
 				#FIXME only output isbns
 				if filters["reset"]
 					$redis.set 'book_ids', ""
@@ -245,8 +245,11 @@ module Api
 				
 				results = []
 
+				specific_list = filters["filter_id"].present?
 
-				if filters["other_filters"].present?
+				if specific_list
+					clause = self.get_specific_lists(filters["filter_id"], user_id)
+				elsif filters["other_filters"].present?
 					book_name = filters["other_filters"]["title"]
 					book_id = filters["other_filters"]["id"]
 					if book_id.present?
@@ -270,19 +273,23 @@ module Api
 					books = @neo.execute_query(clause)["data"]
 				end
 				# puts books.length.to_s.red.on_blue
-				for book in books
-					node_id = book[1].to_s
-					book_sent = book_ids.include? node_id
-					unless book_sent
-						if book_ids.present?
-							book_ids = ($redis.get 'book_ids')+","+node_id
-						else
-							book_ids = node_id
+				unless filters["filter_id"].present?
+					for book in books
+						node_id = book[1].to_s
+						book_sent = book_ids.include? node_id
+						unless book_sent
+							if book_ids.present?
+								book_ids = ($redis.get 'book_ids')+","+node_id
+							else
+								book_ids = node_id
+							end
+							$redis.set 'book_ids', book_ids
+							results.push book
 						end
-						$redis.set 'book_ids', book_ids
-						results.push book
 					end
-				end
+				else
+					results = books
+				end 
 				results
 				# books
 			end
@@ -312,6 +319,11 @@ module Api
 			end
 
 			private
+			def self.get_specific_lists(filter_id, user_id)
+				clause = "MATCH (l:Label), (u:User) WHERE ID(l)="+filter_id.to_s+" AND ID(u)="+user_id.to_s+" WITH u, l MATCH (u)-[:Labelled]->(l)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(b:Book) RETURN b.isbn, ID(b), b.indexed_title"
+				clause
+			end
+
 			def self.get_basic_recommendations(filters, last_book)
 				last_book.gsub!(":", "")
 				clause = "START book = node:node_auto_index(\"indexed_title:"+last_book+"\") MATCH p=(book)-[:Next_book*..10]->(b) WITH last(nodes(p)) as b RETURN b.isbn, ID(b), b.indexed_title"
