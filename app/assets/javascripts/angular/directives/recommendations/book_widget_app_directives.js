@@ -48,9 +48,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
             }
             $rootScope.on_left = false;
           }
-          widgetService.get_book_feed($rootScope.focused_book.id).then(function(data){
-            
-          });
+          
           // event.currentTarget.offsetParent.offsetParent.scrollWidth;
           // var test = event.currentTarget.offsetParent.offsetParent.offsetLeft -event.currentTarget.offsetLeft;
           // var test2 = event.currentTarget.offsetParent.offsetParent.scrollWidth;
@@ -404,6 +402,14 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
         }
       }
 
+      $scope.get_buy_links = function(){
+        $scope.show_info = false; 
+        $scope.show_buy = true;
+        widgetService.get_affiliate_links($rootScope.focused_book.id).then(function(results){
+          $scope.bnn_links = results.bnn.links;
+        });
+      }
+
       $scope.stop_propagation = function(event){
         event.stopPropagation();
       }
@@ -497,12 +503,12 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
 
       _display_tweet = function(index){
         // console.log("%c display_tweet", "color: red;");
-        if($rootScope.focused_book.tweets.length != 0){
+        if(angular.isDefined($rootScope.focused_book.tweets) && $rootScope.focused_book.tweets.length > 0){
           var tweets = $rootScope.focused_book.tweets;
           var timeout_event = $timeout(function(){
             if(index < tweets.length){
-              $rootScope.focused_book.display_tweet = $rootScope.focused_book.tweets[index]["tweet"];
-              if($rootScope.focused_book.tweets[index]["tweet"]){
+              $rootScope.focused_book.display_tweet = $rootScope.focused_book.tweets[index]["message"];
+              if($rootScope.focused_book.tweets[index]["message"]){
                 $rootScope.focused_book.display_profile = $rootScope.focused_book.tweets[index]["thumb"];
               }
               else{
@@ -532,9 +538,12 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
       _init = function(){
         // var book_name = $rootScope.focused_book.title;
         // var author_name = $rootScope.focused_book.author_name;
-        widgetService.get_affiliate_links($rootScope.focused_book.id).then(function(results){
-          $scope.bnn_links = results.bnn.links;
-        });
+        var book_id = $rootScope.focused_book.id;
+        if(angular.isUndefined($rootScope.focused_book.tweets) || $rootScope.focused_book.tweets.length == 0){
+          widgetService.get_book_feed(book_id).then(function(data){
+            $rootScope.focused_book.tweets = data;
+          });
+        }
         _display_tweet(0);
         _open_tab();
         $scope.add_thumb = false;
@@ -674,10 +683,10 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
                                 .replace(/<\/b>/, "<\/a>");
           if($rootScope.user.thumb){
             var thumb = $rootScope.user.thumb;
-            var tweet = {"tweet": tweet_text, "thumb": thumb};
+            var tweet = {"message": tweet_text, "thumb": thumb};
           }
           else{
-            var tweet = {"tweet": tweet_text}; 
+            var tweet = {"message": tweet_text}; 
           }
           $rootScope.focused_book.current_comment = "";
           $rootScope.focused_book.hash_tagged_comment = "";
@@ -755,11 +764,11 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
       _add_comment = function(tweet){
         var params = {
           "id": $rootScope.focused_book.id,
-          "tweet": tweet
+          "message": tweet
         }
         widgetService.comment(params);
         var name = $rootScope.user.email;
-        var message = "<span><b>"+name+"</b> </span><span class='site_color'>"+tweet["tweet"]+"</span>";
+        var message = "<span><b>"+name+"</b> </span><span class='site_color'>"+tweet["message"]+"</span>";
         var thumb = "assets/profile_pic.jpeg"
         var notification = {
           "thumb":thumb,

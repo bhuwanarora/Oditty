@@ -97,8 +97,8 @@ angular.module('filtersApp', [])
   })
   .filter('display_tweet', function(){
     return function(input){
-      if(input && input.length > 40){
-        input = input.slice(0, 40)+"...";
+      if(input && input.length > 70){
+        input = input.slice(0, 70)+"...";
       }
       return input; 
     }

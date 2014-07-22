@@ -41,11 +41,8 @@ module Api
             end
 
 			def get_user_details
-				# user_id = params[:user_id]
-				
-				bookmarked_books = BookApi.bookmarked_books
-				read_books = []
-				render :json => {:books => {:bookmarked => bookmarked_books, :read => read_books}}, :status => 200
+				info = UserApi.get_details session[:user_id]				
+				render :json => info, :status => 200
 			end
 
 			def authenticate

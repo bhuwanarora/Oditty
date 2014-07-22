@@ -455,7 +455,7 @@ module UsersGraphHelper
 	
 	def self.comment_on_book(user_id, book_id, tweet)
 		@neo ||= self.neo_init
-		tweet_clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" CREATE UNIQUE (u)-[:Commented]->(t:Tweet{tweet:\""+tweet["tweet"]+"\", timestamp:"+Time.now.to_i.to_s+", book_id: "+book_id.to_s+", title: b.title, author_name: b.author_name, user_id: "+user_id.to_s+"})-[:CommentedOn]->(b) SET t.isbn=b.isbn, t.name=u.email WITH u, b, t "
+		tweet_clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" CREATE UNIQUE (u)-[:Commented]->(t:Tweet{tweet:\""+tweet["message"]+"\", timestamp:"+Time.now.to_i.to_s+", book_id: "+book_id.to_s+", title: b.title, author_name: b.author_name, user_id: "+user_id.to_s+"})-[:CommentedOn]->(b) SET t.isbn=b.isbn, t.name=u.email WITH u, b, t "
 		feednext_clause = "MATCH (u)-[old:FeedNext]->(old_feed) CREATE UNIQUE (u)-[:FeedNext{user_id:"+user_id.to_s+"}]->(t)-[:FeedNext{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, t "
 		bookfeed_clause = 	"MATCH (b)-[old:BookFeed]->(old_feed) CREATE UNIQUE (b)-[:BookFeed{user_id:"+user_id.to_s+"}]->(t)-[:BookFeed{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, t "
 		follow_clause = "OPTIONAL MATCH (u)<-[:Follow]-(f) WHERE f <> u	WITH u, b, f "

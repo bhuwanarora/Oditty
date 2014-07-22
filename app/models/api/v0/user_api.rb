@@ -3,6 +3,13 @@ module Api
 	module V0
 		class UserApi
 
+			def self.get_details user_id
+				@neo = Neography::Rest.new
+				clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" RETURN u.name, u.email, u.book_read_count, u.bookmark_count"
+				info = @neo.execute_query(clause)["data"][0]
+				info
+			end
+
 			def self.handle_facebook_user params
 				@neo = Neography::Rest.new	
 				set_clause = " SET fu.first_name = \""+params[:first_name].to_s+"\", fu.last_name = \""+params[:last_name].to_s+"\", fu.link = \""+params[:link].to_s+"\", fu.locale = \""+params[:locale].to_s+"\", fu.name = \""+params[:name].to_s+"\", fu.timezone = \""+params[:timezone].to_s+"\", fu.updated_time = \""+params[:updated_time].to_s+"\", fu.verified = "+params[:verified].to_s+", fu.profile_status = "+params[:profile_status].to_s+", fu.thumb = \""+params[:thumb].to_s+"\", fu.logged = "+params[:logged].to_s

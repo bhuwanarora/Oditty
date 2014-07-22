@@ -93,7 +93,7 @@ module Api
 
 			def comment
  				user_id = session[:user_id]
-				UsersGraphHelper.comment_on_book(user_id, params[:id], params[:tweet])
+				UsersGraphHelper.comment_on_book(user_id, params[:id], params[:message])
 				render :json => {:message => "Success"}, :status => 200
 			end
 

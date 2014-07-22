@@ -284,17 +284,14 @@
 	font-size: .8em;
 	padding: 10px;
 	word-wrap: break-word;
-}
-
-.focused_tooltip .tweet_link span{
-	cursor: pointer;
 	background-color: #F5F5F5;
+	cursor: pointer;
 	border-radius: 2px;
 	padding: 5px;
 	color: #136CB2;
 }
 
-.focused_tooltip .tweet_link span:hover{
+.focused_tooltip .tweet_link:hover{
 	background-color: #E6E6E6;
 }
 

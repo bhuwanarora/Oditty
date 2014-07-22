@@ -1,4 +1,5 @@
 include BooksGraphHelper
+include NotificationHelper
 module Api
 	module V0
 		class BookApi
@@ -16,14 +17,7 @@ module Api
 
 			def self.get_feed book_id
 				feeds = BooksGraphHelper.get_feed book_id
-				notifications = []
-				for feed in feeds
-					label = feed[0][0]
-					data = feed[1]["data"]
-					if label == "Book"
-					else
-					end
-				end
+				notifications = NotificationHelper.structure_feed feeds
 				notifications
 			end
 

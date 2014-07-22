@@ -225,6 +225,10 @@ input:focus{
     color: #427fed !important;
 }
 
+.green_color{
+    color: #3cb878 !important;
+}
+
 .light_gray_background{
     background-color: #F1F1F1 !important;
 }
@@ -232,6 +236,7 @@ input:focus{
 .black_blue_background{
     background-color: #181F25 !important;
 }
+
 
 
 .green{

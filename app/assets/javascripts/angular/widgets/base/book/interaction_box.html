@@ -38,7 +38,7 @@
 	 	 ng-click="stop_propagation($event)">
 		<div class="tweet" ng-repeat="tweet in focused_book.tweets | reverse">
 			<div class="inline_block_left"><user-thumb></user-thumb></div>
-			<div class="tweet_text" ng-bind-html="tweet.tweet"></div>
+			<div class="tweet_text" ng-bind-html="tweet.message"></div>
 		</div>
 	</div>
 </div>	

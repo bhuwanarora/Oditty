@@ -28,11 +28,6 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 			$scope.$on('destroy', function(){
 				$timeout.cancel(timeout_event);
 			});
-			// $scope.show_login_form = true;
-			// _profile_status_colors();
-			// 	websiteService.get_user_details().then(function(data){
-	  		//   		$rootScope.user.books = data["books"];
-	  	   	//	});
 			$scope.$emit('getNotifications');
 		}
 
@@ -152,6 +147,10 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
   				$rootScope.user.logged = true;
   				$rootScope.user.id = data["id"];
   				$scope.$emit('getNotifications');
+  				websiteService.get_user_details().then(function(data){
+	  		  		 var json = {"name":data[0], "email":data[1], "book_read_count":data[2], "bookmark_count":data[3]};
+	  		  		 angular.extend($rootScope.user, json);
+	  	   		});
   				stropheService.start_connection();
   			}
   		});
