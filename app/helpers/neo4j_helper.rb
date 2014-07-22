@@ -527,7 +527,7 @@ module Neo4jHelper
 		labels = ["Books left in between", "I own this book", "Books I plan to Read", "Books I plan to buy"]
 		for label in labels do
 			puts label.green
-			node = @neo.create_node("name" => label)
+			node = @neo.create_node("name" => label.upcase, "basic" => true)
 			@neo.add_label(node, "Label")
 		end
 	end

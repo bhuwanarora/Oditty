@@ -152,7 +152,27 @@ module Api
 				if user_id
 					rating = book[1]
 					time_index = book[2]
+					labels = book[3]
+					selected_labels = book[4]
+					structured_labels = []
+					for label in labels
+						if selected_labels.include? label
+							json = {"name" => label, "checked" => true}
+						else
+							json = {"name" => label, "checked" => false}
+						end
+						structured_labels.push json
+					end
+
+					mark_as_read = book[5]
+					if mark_as_read.nil?
+						mark_as_read = false
+					else
+						mark_as_read = true
+					end
+
 					book = book[0]["data"]
+					
 				end
 				info = {
 							:title => book["title"],
@@ -164,6 +184,8 @@ module Api
 							:published_year => book["published_year"],
 							:page_count => book["page_count"],
 							:summary => book["description"],
+							:status => mark_as_read,
+							:labels => structured_labels,
 							:users => [
 								{
 									:id => 1,

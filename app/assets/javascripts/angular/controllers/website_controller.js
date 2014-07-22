@@ -41,7 +41,8 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 
 		$scope.progression_state = {"width": progression_width+"px"};
 		
-		var delta_x = screen.width*(0.31);
+		var delta_x = screen.width*(0.35);
+		// var delta_x = screen.width;
 		scroller.scrollTo(current_x - delta_x, 0, swipe_time);
 	}
 
@@ -78,7 +79,8 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 				$rootScope.$broadcast('loadRecommendations');
 			}
 		}
-		var delta_x = screen.width*(0.31);
+		var delta_x = screen.width*(0.35);
+		// var delta_x = screen.width;
 		scroller.scrollTo(current_x + delta_x, 0, swipe_time);
 	}
 

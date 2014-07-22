@@ -3,3 +3,16 @@
 MATCH (book:Book)-[:WithReadingTime]->(rt:ReadingTime{page_count_range: '<50'})
 RETURN book.isbn, ID(book)
 LIMIT 10
+
+
+#get book details
+MATCH (b:Book), (u:User) 
+WHERE ID(b)="+book_id.to_s+" AND ID(u)="+user_id.to_s+" 
+WITH b	
+
+OPTIONAL MATCH (u)-[:RatingAction]->(rn:RatingNode)-[:Rate]->(b) 
+OPTIONAL MATCH (u)-[:TimingAction]->(tm:TimingNode)-[:Timer]->(b) 
+OPTIONAL MATCH (u)-[:Labelled]->(l1:Label)
+OPTIONAL MATCH (u)-[:Labelled]->(l2:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(b)
+OPTIONAL MATCH (u)-[:MarkAsReadAction]->(m)-[:MarkAsRead]->(b)
+RETURN b, rn.rating, tm.time_index, COLLECT(l1.name) as labels, COLLECT(l2.name) as selected_labels, m.timestamp as mark_as_read 

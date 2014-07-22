@@ -69,12 +69,12 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
         console.debug("%c _init book"+book_id, "color: purple");
         $scope.book.tweets = [];
         $scope.book.show_labels = false;
-        if(!angular.isArray($scope.book.labels)){
-          $scope.book.labels = [];
-          angular.forEach($rootScope.labels, function(value){
-            this.push({"name": value.name});
-          }, $scope.book.labels);
-        }
+        // if(!angular.isArray($scope.book.labels)){
+        //   $scope.book.labels = [];
+        //   angular.forEach($rootScope.labels, function(value){
+        //     this.push({"name": value.name});
+        //   }, $scope.book.labels);
+        // }
         websiteService.get_book_details("id="+book_id).then(function(data){
           angular.extend($scope.book, data);
         });
