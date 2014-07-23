@@ -7,7 +7,7 @@
 	<div ng-model="book" 
 		ng-click="show_focused_tooltip($event)"
 		ng-class="{'discovered': hovered, 'undiscovered': !hovered}" class="card animate-fast">
-		<book-interact track></book-interact>
+		<book-interact data="book" track></book-interact>
 		<widget-thumb track></widget-thumb>
 		<!-- <book-navbar track></book-navbar> -->
 	</div>

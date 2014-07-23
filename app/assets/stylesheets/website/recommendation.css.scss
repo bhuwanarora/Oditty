@@ -25,6 +25,11 @@
    	z-index: 6;
 }
 
+.restrict_height{
+	max-height: 30vh;
+	overflow-y: scroll;
+}
+
 .profile_thumb{
 	display: inline-block;
 	float: left;
@@ -1190,13 +1195,17 @@ and (min-width : 1824px) {
 	border-right: 10px solid white; 
 }
 
+.ticker_popup .recommendation_block .bottom_widget{
+	display: none;
+}
+
 .ticker_popup .ticker_overflow{
 	height: 35vh;
 	width: 57vh;
 }
 
 .ticker_popup .bottom_widget{
-	height: 18%;
+	height: 65px;
 	z-index: 1;
 }
 
@@ -1223,11 +1232,9 @@ and (min-width : 1824px) {
 }
 
 .left_column .friends_grid img{
-	width: 40px;
+	width: 70px;
 	margin: 2px;
 }
-
-
 
 .loading_widget{
 	width: 52vh;

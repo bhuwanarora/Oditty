@@ -240,6 +240,7 @@ websiteApp.directive('bookInteract', ['$rootScope', '$timeout', 'widgetService',
   function ($rootScope, $timeout, widgetService){
   return {
     restrict: 'E',
+    scope: {"book": "=data"},
     controller: ['$scope', function($scope){
       _init = function(){
         $scope.setStatus();

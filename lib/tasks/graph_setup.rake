@@ -1,5 +1,12 @@
 namespace :graph do
 
+  
+  desc "Remove colon database"
+  task :remove_colon => :environment do
+    include Neo4jHelper
+    Neo4jHelper.remove_colon_from_indexed_fields
+  end
+
   desc "Restructure database"
   task :restructure => :environment do
     include Neo4jHelper

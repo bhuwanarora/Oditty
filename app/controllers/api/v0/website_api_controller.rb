@@ -12,7 +12,8 @@ module Api
 
 			def trends
 				neo = Neography::Rest.new
-    			clause = "MATCH (t:Trending) RETURN t.name, ID(t), t.timestamp"
+    			clause = "MATCH (t:Trending) WHERE t.status = 1 RETURN t.name, ID(t), t.timestamp"
+    			puts clause.blue.on_red
     			trends = neo.execute_query(clause)["data"]
 				render :json => trends, :status => 200
 			end
@@ -37,6 +38,7 @@ module Api
             def read_times
                 @neo ||= neo_init
                 clause = "MATCH (r:ReadTime) RETURN r"
+                puts clause.blue.on_red
                 read_times = @neo.execute_query(clause)["data"]
                 results = {:read_times => read_times}
                 render :json => results, :status => 200

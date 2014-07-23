@@ -242,11 +242,7 @@ module Api
 				specific_list = filters["filter_id"].present?
 				trends = filters["trend_id"].present?
 
-				if trends
-					clause = self.get_trends(filters["trend_id"])
-				elsif specific_list
-					clause = self.get_specific_lists(filters["filter_id"], user_id)
-				elsif filters["other_filters"].present?
+				if filters["other_filters"].present?
 					book_name = filters["other_filters"]["title"]
 					book_id = filters["other_filters"]["id"]
 					if book_id.present?
@@ -256,6 +252,10 @@ module Api
 					else
 						clause = self.get_filtered_books filters
 					end
+				elsif trends
+					clause = self.get_trends(filters["trend_id"])
+				elsif specific_list
+					clause = self.get_specific_lists(filters["filter_id"], user_id)
 				else
 					clause = self.get_basic_recommendations(filters, last_book)
 				end

@@ -134,7 +134,8 @@
 	<div ng-if="bookmark_selected">
 		<div class="full_width" ng-if="$routeParams.type == 'books'">
 			<div class="filters_panel_large">
-				<div class="filters_group">
+				<div class="filters_group restrict_height" 
+					 msd-wheel="stop_horizontal_scroll($event)">
 					<div ng-repeat="filter in labels">
 						<filter data="filter"></filter>
 					</div>

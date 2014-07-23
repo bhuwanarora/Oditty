@@ -122,6 +122,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         		$rootScope.filters["reset"] = true;
 	    		$rootScope.filters["reset_count"] = 0;
         		$rootScope.filters["trend_id"] = $routeParams.trend_id;
+        		$rootScope.main_header = $routeParams.name;
         	}
         }
         else if($routeParams.type == "authors"){
@@ -135,6 +136,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         	$rootScope.filters["reset"] = true;
         	$rootScope.filters["filter_type"] = "BOOK";
         	$rootScope.filters.other_filters["title"] = $scope.$routeParams.title;
+        	$rootScope.main_header = $scope.$routeParams.title;
 			$rootScope.filters.other_filters["author_name"] = $scope.$routeParams.author;
 			var id_defined = angular.isDefined($scope.$routeParams.book_id);
 			var show_all = angular.isDefined($scope.$routeParams.status);

@@ -21,14 +21,18 @@ class BooksController < ApplicationController
     neo = Neography::Rest.new
 
     if params[:trending_id]
-      book_ids = params[:book_ids].split(",") rescue ""
+      book_ids = params[:book_ids].gsub("[", "").gsub("]", "").split(",") rescue ""
       id_string = ""
+      clause = "MATCH (t:Trending)-[r:RelatedBooks]->(:Book) WHERE ID(t)="+params[:trending_id]+" DELETE r"
+      neo.execute_query clause
       if book_ids.present?
         for book_id in book_ids
-          if id_string.present?
-            id_string = id_string + " OR ID(b) = " + book_id
-          else
-            id_string = id_string + " AND (ID(b) = " + book_id
+          if book_id.present?
+            if id_string.present?
+              id_string = id_string + " OR ID(b) = " + book_id
+            else
+              id_string = id_string + " AND (ID(b) = " + book_id
+            end
           end
         end
         id_string = id_string + ")"
@@ -48,7 +52,7 @@ class BooksController < ApplicationController
       neo.execute_query clause
     end
 
-    clause = "MATCH (t:Trending) OPTIONAL MATCH (t)-[:RelatedBooks]->(b:Book) RETURN t.name, t.timestamp, ID(t), COLLECT(b.title), t.status"
+    clause = "MATCH (t:Trending) OPTIONAL MATCH (t)-[:RelatedBooks]->(b:Book) RETURN t.name, t.timestamp, ID(t), COLLECT(b.title), t.status, COLLECT(ID(b))"
     puts clause.blue.on_red
     @trends = neo.execute_query(clause)["data"]
 

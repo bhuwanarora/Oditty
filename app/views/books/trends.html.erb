@@ -18,13 +18,17 @@
 
 			<form action="<%= trends_path %>">
 				<td class="books" name="books">
-					<% trend[3].each do |book| %>
-						<div class="book_name"><span> · </span><span><%= book %></span></div>
+					<% trend[3].each.with_index do |book, index| %>
+						<div data-id="<%= trend[5][index] %>" class="book_name"><span> · </span><span><%= book %></span></div>
 					<% end %>
 				</td>
 				<input type="hidden" value="<%= trend[2] %>" name="trending_id"/>
-				<input type="hidden" value="" name="book_ids" />
-				<td><input type="checkbox" name="status" value="<%= trend[4] %>"></td>
+				<input type="hidden" value="<%= trend[5] %>" name="book_ids" />
+				<% if trend[4].present? && trend[4] == 1 %>
+					<td><input type="checkbox" name="status" checked></td>
+				<% else %>
+					<td><input type="checkbox" name="status"></td>
+				<% end %>
 				<td><input type="submit" value="Submit"></td>
 			</form>
 			<td><button>Reset</button></td>
@@ -79,13 +83,27 @@
 			if(search_for.length > 2){
 				setTimeout(function(){
 					search_on = true;
-					search_for = $this.val()+String.fromCharCode(event.charCode);
+					search_for = $this.val();
 					if(search_on){
 						search($this, search_for);
 					}
 				}, 1000);
 				
 			}
+		});
+
+		$('.book_name').on('click', function(){
+			var $this = $(this);
+			var id = $this.attr('data-id');
+			var book_ids = $this.parent().siblings('input[name=book_ids]').val().split(",");
+			var new_book_ids = []
+			for(var i=0; i < book_ids.length; i++){
+				if(book_ids[i].indexOf(id) < 0){
+					new_book_ids.push(book_ids[i])
+				}
+			}
+			$this.parent().siblings('input[name=book_ids]').val(new_book_ids.join(","));
+			$this.remove();
 		});
 
 	});
