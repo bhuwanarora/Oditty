@@ -9,7 +9,7 @@
 			</div>
 			<div class="filters_panel" ng-if="!show_lists && column_heights.show_filters">
 			 	<type-ahead items="genres" 
-			 				prompt="Filter by a Genre" 
+			 				prompt="Books by Genre" 
 			 				title="name"
 			 				icon-class="icon-shapes filter_icon orange"
 			 				custom-options="z_index_two genre_typeahead_options"
@@ -22,7 +22,7 @@
 			 				focus-when="genre_selected">
 			 	</type-ahead>
 				<type-ahead items="authors" 
-			 				prompt="Filter by Author Name"
+			 				prompt="Books from Author"
 			 				title="name"
 			 				icon-class="icon-pen filter_icon purple"
 			 				custom-options = "author_typeahead_options"

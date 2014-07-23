@@ -63,8 +63,8 @@ ReadersDoor::Application.routes.draw do
   # root :to => "website#coming_soon"
   root :to => "recommendations#index"
 
-  get 'tree'                      => "categories#show_tree",  :as => "show_tree"
-  get 'search_tag'                => "tags#search_tag",       :as => "search_tag"
+  get 'tree'                      => "categories#show_tree",    :as => "show_tree"
+  get 'search_tag'                => "tags#search_tag",         :as => "search_tag"
   get 'search_book'               => "books#search_book",       :as => "search_book"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

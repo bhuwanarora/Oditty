@@ -672,8 +672,12 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 
 	_get_trends = function(){
 		if(angular.isUndefined($scope.$routeParams) && angular.isUndefined($scope.trends)){
+			$scope.trends = [];
 			websiteService.get_trending_topics().then(function(data){
-				$scope.trends = data;
+				angular.forEach(data, function(value){
+					var json = {"name": value[0], "id": value[1]};
+					this.push(json);
+				}, $scope.trends);
 			});
 		}
 	}

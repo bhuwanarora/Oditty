@@ -113,9 +113,15 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         if($routeParams.type == "books"){
         	$rootScope.filters["filter_type"] = "BOOK";
         	var specific_list = angular.isDefined($routeParams.filter_id);
+        	var trends = angular.isDefined($routeParams.trend_id);
         	if(specific_list){
         		_show_bookmark_tab();
         		$rootScope.filters["filter_id"] = $routeParams.filter_id;
+        	}
+        	else if(trends){
+        		$rootScope.filters["reset"] = true;
+	    		$rootScope.filters["reset_count"] = 0;
+        		$rootScope.filters["trend_id"] = $routeParams.trend_id;
         	}
         }
         else if($routeParams.type == "authors"){

@@ -240,8 +240,11 @@ module Api
 				results = []
 
 				specific_list = filters["filter_id"].present?
+				trends = filters["trend_id"].present?
 
-				if specific_list
+				if trends
+					clause = self.get_trends(filters["trend_id"])
+				elsif specific_list
 					clause = self.get_specific_lists(filters["filter_id"], user_id)
 				elsif filters["other_filters"].present?
 					book_name = filters["other_filters"]["title"]
@@ -313,6 +316,11 @@ module Api
 			end
 
 			private
+			def self.get_trends trend_id
+				clause = "MATCH (t:Trending)-[:RelatedBooks]->(b:Book) WHERE ID(t)="+trend_id.to_s+" RETURN b.isbn, ID(b), b.indexed_title"
+				clause
+			end
+
 			def self.get_specific_lists(filter_id, user_id)
 				clause = "MATCH (l:Label), (u:User) WHERE ID(l)="+filter_id.to_s+" AND ID(u)="+user_id.to_s+" WITH u, l MATCH (u)-[:Labelled]->(l)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(b:Book) RETURN b.isbn, ID(b), b.indexed_title"
 				clause

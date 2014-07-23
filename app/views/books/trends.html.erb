@@ -1,63 +1,90 @@
 <table>
 	<tr>
 		<th>Trending</th>
-		<th>Date</th>
+		<th>Timestamp</th>
 		<th>Search Books</th>
 		<th>Books</th>
-		<th>Books Count</th>
+		<th>Active</th>
+		<th>Submit</th>
+		<th>Reset</th>
 	</tr>
 	<% @trends.each do |trend|%>
 		<tr>
 			<td><%= trend[0] %></td>
 			<td><%= trend[1] %></td>
 			<td>
-				<input class="book_tag" />
+				<input class="search_box" />
 			</td>
-			<td class="books">
-				
-			</td>
-			<td class="count">0</td>
+
+			<form action="<%= trends_path %>">
+				<td class="books" name="books">
+					<% trend[3].each do |book| %>
+						<div class="book_name"><span> · </span><span><%= book %></span></div>
+					<% end %>
+				</td>
+				<input type="hidden" value="<%= trend[2] %>" name="trending_id"/>
+				<input type="hidden" value="" name="book_ids" />
+				<td><input type="checkbox" name="status" value="<%= trend[4] %>"></td>
+				<td><input type="submit" value="Submit"></td>
+			</form>
+			<td><button>Reset</button></td>
 		</tr>
 	<% end %>
 </table>
 <script>
 	$(document).ready(function(){
+		var search_on = false;
+		var search = function($this, search_for){
+			$.ajax({
+				url: "<%= search_book_path %>",
+				data: "q="+search_for,
+				success: function(data, textStatus, jqXHR){
+					var books = [];
+					for(var i=0; i < data.length; i++){
+						var book = {"label": data[i][2]+" by "+data[i][3], "value": data[i][1]};
+						books.push(book);
+					}
+					if(books.length == 0){
+						books = "No results found...";
+					}
 
-		$('.book_tag').on('keypress', function(event){
+
+					$this.autocomplete({
+				      source: books,
+				      select: function(event, ui){
+				      	var html = "<div class='book_name'><span> · </span><span>"+ui.item.label+" <span></div>"
+				      	$this.parent().siblings('.books').append(html);
+				      	var current_val = $this.parent().siblings('input[name=book_ids]').val();
+				      	
+				      	if(current_val == ""){
+				      		var new_val = ui.item.value;
+				      	}
+				      	else{
+				      		var new_val = current_val + ", "+ui.item.value;
+				      	}
+				      	$this.parent().siblings('input[name=book_ids]').val(new_val);
+				      	$this.val("");
+				      	
+				      	event.preventDefault();
+				      }
+				    });
+				}
+			});
+		}
+
+		$('.search_box').on('keypress', function(event){
+			search_on = false;
 			var $this = $(this);
 			var search_for = $this.val()+String.fromCharCode(event.charCode);
 			if(search_for.length > 2){
-				$this.autocomplete({
-			      source: ["Searching for "+search_for+" ..."],
-			      select: function(event, ui){
-			      	$this.parent().siblings('.books').append(ui.item.label+" ");
-			      	$this.val("");
-			      	_get_count($this);
-			      	event.preventDefault();
-			      }
-			    });
-				$.ajax({
-					url: "<%= search_book_path %>",
-					data: "q="+search_for,
-					success: function(data, textStatus, jqXHR){
-						var books = [];
-						for(var i=0; i<data.length; i++){
-							var book = data[i][2]+" by "+data[i][3];
-							books.push(book);
-						}
-
-						$this.autocomplete({
-					      source: books,
-					      select: function(event, ui){
-					      	$this.parent().siblings('.books').append(ui.item.label+" ");
-					      	$this.val("");
-					      	var count = parseInt($this.parent().siblings('.count')) + 1;
-					      	$this.parent().siblings('.count').html(count);
-					      	event.preventDefault();
-					      }
-					    });
+				setTimeout(function(){
+					search_on = true;
+					search_for = $this.val()+String.fromCharCode(event.charCode);
+					if(search_on){
+						search($this, search_for);
 					}
-				});
+				}, 1000);
+				
 			}
 		});
 
@@ -67,5 +94,17 @@
 <style>
 	.books{
 		width: 400px;
+	}
+
+	.book_name{
+		background-color: #918FB5;
+		color: white;
+		padding: 2px;
+		margin: 2px;
+	}
+
+	.search_box{
+		width: 180px;
+		height: 20px;
 	}
 </style>

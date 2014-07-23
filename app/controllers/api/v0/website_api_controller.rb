@@ -12,7 +12,7 @@ module Api
 
 			def trends
 				neo = Neography::Rest.new
-    			clause = "MATCH (t:Trending) RETURN t.name, t.timestamp"
+    			clause = "MATCH (t:Trending) RETURN t.name, ID(t), t.timestamp"
     			trends = neo.execute_query(clause)["data"]
 				render :json => trends, :status => 200
 			end

@@ -95,21 +95,18 @@
 	bottom: 0px;
 	left: 0px;
 	margin-top: 5px;
-	padding: 10px;
 	position: absolute;
 	right: 0px;
 }
 
 .focused_tooltip .footer .recommend{
-	border: 1px solid #2152AD;
 	cursor: pointer;
 	float: left;
 	font-size: .7em;
 	margin-right: 10px;
-	padding: 5px;
-	color: white;
-	padding-left: 15px;
-	padding-right: 15px;
+	padding: 10px 15px 10px 15px;
+	color: #fff;
+	border-radius: 3px;
 }
 
 .focused_tooltip .footer .recommended{

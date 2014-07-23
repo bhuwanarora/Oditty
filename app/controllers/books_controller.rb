@@ -19,9 +19,39 @@ class BooksController < ApplicationController
 
   def trends
     neo = Neography::Rest.new
-    clause = "MATCH (t:Trending) RETURN t.name, t.timestamp"
+
+    if params[:trending_id]
+      book_ids = params[:book_ids].split(",") rescue ""
+      id_string = ""
+      if book_ids.present?
+        for book_id in book_ids
+          if id_string.present?
+            id_string = id_string + " OR ID(b) = " + book_id
+          else
+            id_string = id_string + " AND (ID(b) = " + book_id
+          end
+        end
+        id_string = id_string + ")"
+        if params[:status] == "on"
+          clause = "MATCH (b:Book), (t:Trending) WHERE ID(t)="+params[:trending_id]+id_string+" SET t.status = 1 CREATE UNIQUE (t)-[:RelatedBooks]->(b)"
+        else
+          clause = "MATCH (b:Book), (t:Trending) WHERE ID(t)="+params[:trending_id]+id_string+" SET t.status = 0 CREATE UNIQUE (t)-[:RelatedBooks]->(b)"
+        end
+      else
+        if params[:status] == "on"
+          clause = "MATCH (t:Trending) WHERE ID(t)="+params[:trending_id]+id_string+" SET t.status = 1"
+        else
+          clause = "MATCH (t:Trending) WHERE ID(t)="+params[:trending_id]+id_string+" SET t.status = 0"
+        end
+      end
+      puts clause.blue.on_red
+      neo.execute_query clause
+    end
+
+    clause = "MATCH (t:Trending) OPTIONAL MATCH (t)-[:RelatedBooks]->(b:Book) RETURN t.name, t.timestamp, ID(t), COLLECT(b.title), t.status"
+    puts clause.blue.on_red
     @trends = neo.execute_query(clause)["data"]
-    # @tags = neo.execute_query("MATCH (g:Genre) RETURN g")["data"]
+
   end
 
   def search_book
