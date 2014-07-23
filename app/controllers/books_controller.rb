@@ -18,9 +18,15 @@ class BooksController < ApplicationController
   end
 
   def trends
-    @trends = TrendsHelper.social_mention
     neo = Neography::Rest.new
-    @tags = neo.execute_query("MATCH (g:Genre) RETURN g")["data"]
+    clause = "MATCH (t:Trending) RETURN t.name, t.timestamp"
+    @trends = neo.execute_query(clause)["data"]
+    # @tags = neo.execute_query("MATCH (g:Genre) RETURN g")["data"]
+  end
+
+  def search_book
+    tags = Api::V0::SearchApi.search_books params[:q]
+    render :json => tags, :status => 200
   end
 
   # GET /books/1/edit

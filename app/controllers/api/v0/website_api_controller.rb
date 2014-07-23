@@ -11,7 +11,9 @@ module Api
 			end
 
 			def trends
-				trends = TrendsHelper.social_mention
+				neo = Neography::Rest.new
+    			clause = "MATCH (t:Trending) RETURN t.name, t.timestamp"
+    			trends = neo.execute_query(clause)["data"]
 				render :json => trends, :status => 200
 			end
 

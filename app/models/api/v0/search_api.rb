@@ -1,7 +1,8 @@
 module Api
 	module V0
 		class SearchApi
-			def self.search_books(q, skip_count)
+			def self.search_books(q, skip_count=0)
+				neo_init
 				q = q.downcase.gsub(" ", "")
 				clause = "START book=node:node_auto_index('indexed_title:"+q+"*') WITH book, toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) as weight RETURN book.isbn, ID(book), book.title as name, book.author_name, ID(book), weight ORDER BY weight DESC SKIP "+skip_count.to_s+" LIMIT 10"
 				puts clause.blue.on_red
