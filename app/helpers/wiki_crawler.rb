@@ -8,7 +8,7 @@ module WikiCrawler
 			begin
 				author_name = author.human_profile.name rescue nil
 				next if author_name.blank?
-				author_search = author_name.gsub(" ","+").downcase
+				author_search =  I18n.transliterate(author_name.gsub(" ","+").downcase)
 				url = "https://www.google.co.in/search?q=#{author_search}"
 				doc = Nokogiri::HTML(open(url))
 
@@ -26,10 +26,10 @@ module WikiCrawler
 					end
 				end
 				author.update_column(:wiki_url, author_link)
-				puts "#{author_name}"
+				puts "#{author_name}".green
 			rescue => e
-				author.update_column(:comments, e)
-				puts "#{author.id} #{author_name} #{e}"
+				# author.update_column(:comments, e)
+				puts "#{author.id} #{author_name} #{e}".red
 			end
 		end
 	end
@@ -75,7 +75,7 @@ module WikiCrawler
  												.gsub("[e]", "")
  												.gsub("[f]", "") rescue nil
  				details = doc.css(".vcard")[0].content rescue ""
- 				
+ 				debugger
 			rescue Exception => e
 				debugger
 				puts e

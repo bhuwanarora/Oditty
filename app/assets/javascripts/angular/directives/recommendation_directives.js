@@ -362,9 +362,50 @@ websiteApp.directive('filter', ['$rootScope', '$timeout', '$routeParams', functi
 	}
 }]);
 
-websiteApp.directive('mainHeader', [function(){
+websiteApp.directive('mainHeader', ['$timeout', '$rootScope', function($timeout, $rootScope){
 	return{
 		restrict: 'E',
+		controller: ['$scope', function($scope){
+			_add_listeners = function(){
+				$scope.$on('gamifyCount', function(event, data, is_additive){
+					if($scope.initiate_counting){
+						$scope.count = $scope.count + data;
+					}
+					else{
+						$scope.initiate_counting = true;
+						$scope.count = data;
+						var timeout_event = $timeout(function(){
+							$scope.is_additive = is_additive;
+							if(is_additive){
+								$rootScope.user.total_count = $rootScope.user.total_count + $scope.count;
+							}
+							else{
+								$rootScope.user.total_count = $rootScope.user.total_count - $scope.count;	
+							}
+							$scope.initiate_counting = false;
+							var timeout_event = $timeout(function(){
+								$scope.count = false;
+							}, 3000);
+
+							$scope.$on('destroy', function(){
+								$timeout.cancel(timeout_event);
+							});
+						}, 200);
+						$scope.$on('destroy', function(){
+							$timeout.cancel(timeout_event);
+						});
+					}
+					// event.stopPropagation();
+				});
+			}
+
+			_init = function(){
+				$scope.count = false;
+				_add_listeners();
+			}
+
+			_init();
+		}],
 		templateUrl: "/assets/angular/widgets/partials/main_header.html"
 	}
 }]);
@@ -747,11 +788,12 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 					$scope.loading = true;
 					websiteService.get_popular_books(skip_count).then(function(data){
 						angular.forEach(data, function(value){
+							var status = value[4] != null;
 							var json = {"isbn": value[0], 
 									"id": value[1], 
 									"title": value[2], 
 									"author_name": value[3], 
-									"status": false};
+									"status": status};
 							this.push(json);
 						},  $scope.popular_books);
 						$scope.loading = false;

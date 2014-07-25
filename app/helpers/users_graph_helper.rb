@@ -20,7 +20,7 @@ module UsersGraphHelper
 
 		ego_clause = "MATCH (f)-[old:Ego]-(old_ego) CREATE UNIQUE (f)-[:Ego{user_id:ID(f)}]->(u)-[:Ego{user_id:ID(f)}]->(old_ego) DELETE old "
 
-		set_clause = "SET b.rating_count = CASE WHEN b.rating_count IS NULL THEN 1 ELSE toInt(b.rating_count) + 1 END, u.rating_count = CASE WHEN u.rating_count IS NULL THEN 1 ELSE toInt(u.rating_count) + 1 END"
+		set_clause = "SET b.rating_count = CASE WHEN b.rating_count IS NULL THEN 1 ELSE toInt(b.rating_count) + 1 END, u.rating_count = CASE WHEN u.rating_count IS NULL THEN 1 ELSE toInt(u.rating_count) + 1 END, u.total_count = CASE WHEN u.total_count IS NULL THEN "+Constants::RatingPoints.to_s+" ELSE toInt(u.total_count) + "+Constants::RatingPoints.to_s+" END"
 
 		clause = rating_clause + delete_existing_feednext_clause + feednext_clause + bookfeed_clause + follow_clause + ego_clause + set_clause
 		puts "RATE".green
@@ -51,7 +51,7 @@ module UsersGraphHelper
 
 		ego_clause = "MATCH (f)-[old:Ego]-(old_ego) CREATE UNIQUE (f)-[:Ego{user_id:ID(f)}]->(u)-[:Ego{user_id:ID(f)}]->(old_ego) DELETE old "
 
-		set_clause = "SET b.rating_count = CASE WHEN b.rating_count IS NULL THEN 1 ELSE toInt(b.rating_count) + 1 END, u.rating_count = CASE WHEN u.rating_count IS NULL THEN 1 ELSE toInt(u.rating_count) + 1 END"
+		set_clause = "SET u.total_count = CASE WHEN u.total_count IS NULL THEN "+Constants::ReadTimePoints.to_s+" ELSE toInt(u.total_count) + "+Constants::ReadTimePoints.to_s+" END"
 
 		clause = rating_clause + delete_existing_feednext_clause + feednext_clause + bookfeed_clause + follow_clause + ego_clause + set_clause
 		puts "TIMER".green
@@ -103,7 +103,7 @@ module UsersGraphHelper
 
 		ego_clause = "MATCH (f)-[old:Ego]-(old_ego) CREATE UNIQUE (f)-[:Ego{user_id:ID(f)}]->(u)-[:Ego{user_id:ID(f)}]->(old_ego) DELETE old WITH u, b, l, lr "
 
-		set_clause = "SET b.bookmark_count = CASE WHEN b.bookmark_count IS NULL THEN 1 ELSE toInt(b.bookmark_count) + 1 END, u.bookmark_count = CASE WHEN u.bookmark_count IS NULL THEN 1 ELSE toInt(u.bookmark_count) + 1 END, l.bookmark_count = CASE WHEN l.bookmark_count IS NULL THEN 1 ELSE toInt(l.bookmark_count) + 1 END, lr.bookmark_count = CASE WHEN lr.bookmark_count IS NULL THEN 1 ELSE toInt(lr.bookmark_count) + 1 END"
+		set_clause = "SET b.bookmark_count = CASE WHEN b.bookmark_count IS NULL THEN 1 ELSE toInt(b.bookmark_count) + 1 END, u.bookmark_count = CASE WHEN u.bookmark_count IS NULL THEN 1 ELSE toInt(u.bookmark_count) + 1 END, l.bookmark_count = CASE WHEN l.bookmark_count IS NULL THEN 1 ELSE toInt(l.bookmark_count) + 1 END, lr.bookmark_count = CASE WHEN lr.bookmark_count IS NULL THEN 1 ELSE toInt(lr.bookmark_count) + 1 END, u.total_count = CASE WHEN u.total_count IS NULL THEN "+Constants::BookmarkPoints.to_s+" ELSE toInt(u.total_count) + "+Constants::BookmarkPoints.to_s+" END"
 
 		clause = bookmark_clause + feednext_clause + bookfeed_next_clause + set_clause
 		puts clause.blue.on_red
@@ -129,7 +129,7 @@ module UsersGraphHelper
 
 		bookfeed_next_clause = "MATCH (s)-[b1:BookFeed{user_id:"+user_id.to_s+"}]->(r2)-[b2:BookFeed{user_id:"+user_id.to_s+"}]->(e) CREATE (s)-[:BookFeed{user_id:"+user_id.to_s+"}]->(e) DELETE b1, b2, r2 WITH u, b, lr, l "
 
-		set_clause = "SET b.bookmark_count = CASE WHEN b.bookmark_count IS NULL THEN 0 ELSE toInt(b.bookmark_count) - 1 END, u.bookmark_count = CASE WHEN u.bookmark_count IS NULL THEN 0 ELSE toInt(u.bookmark_count) - 1 END, l.bookmark_count = CASE WHEN l.bookmark_count IS NULL THEN 0 ELSE toInt(l.bookmark_count) - 1 END, lr.bookmark_count = CASE WHEN lr.bookmark_count IS NULL THEN 0 ELSE toInt(lr.bookmark_count) - 1 END"
+		set_clause = "SET b.bookmark_count = CASE WHEN b.bookmark_count IS NULL THEN 0 ELSE toInt(b.bookmark_count) - 1 END, u.bookmark_count = CASE WHEN u.bookmark_count IS NULL THEN 0 ELSE toInt(u.bookmark_count) - 1 END, l.bookmark_count = CASE WHEN l.bookmark_count IS NULL THEN 0 ELSE toInt(l.bookmark_count) - 1 END, lr.bookmark_count = CASE WHEN lr.bookmark_count IS NULL THEN 0 ELSE toInt(lr.bookmark_count) - 1 END, u.total_count = CASE WHEN u.total_count IS NULL THEN 0 ELSE toInt(u.total_count) - "+Constants::BookmarkPoints.to_s+" END"
 
 		clause = remove_bookmark_node_clause + feednext_clause + bookfeed_next_clause + set_clause
 
@@ -163,7 +163,7 @@ module UsersGraphHelper
 
 		ego_clause = "MATCH (f)-[old:Ego]-(old_ego) CREATE UNIQUE (f)-[:Ego{user_id:ID(f)}]->(u)-[:Ego{user_id:ID(f)}]->(old_ego) DELETE old WITH u, b "
 
-		set_clause = "SET b.readers_count = CASE WHEN b.readers_count IS NULL THEN 1 ELSE toInt(b.readers_count) + 1 END, u.book_read_count = CASE WHEN u.book_read_count IS NULL THEN 1 ELSE toInt(u.book_read_count) + 1 END"
+		set_clause = "SET b.readers_count = CASE WHEN b.readers_count IS NULL THEN 1 ELSE toInt(b.readers_count) + 1 END, u.book_read_count = CASE WHEN u.book_read_count IS NULL THEN 1 ELSE toInt(u.book_read_count) + 1 END, u.total_count = CASE WHEN u.total_count IS NULL THEN "+Constants::MarkAsReadPoints.to_s+" ELSE toInt(u.total_count) + "+Constants::MarkAsReadPoints.to_s+" END"
 
 		clause = mark_as_read_clause + feednext_clause + bookfeed_clause + set_clause
 		puts "MARK AS READ".green
@@ -190,10 +190,10 @@ module UsersGraphHelper
 		mark_as_unread_clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" WITH u, b MATCH (u)-[r1:MarkAsReadAction]->(m:MarkAsReadNode)-[r2:MarkAsRead]->(b) DELETE r1, r2 WITH u, b, m "
 
 		# delete rating action
-		rating_clause = "OPTIONAL MATCH (u)-[r1:RatingAction]->(rn:RatingNode)-[r2:Rate]->(b) FOREACH (p IN CASE WHEN r1 IS NULL THEN [] ELSE [u] END | FOREACH (q IN CASE WHEN r2 IS NULL THEN [] ELSE [b] END | SET q.rating_count = CASE WHEN q.rating_count IS NULL THEN 0 ELSE toInt(q.rating_count) - 1 END DELETE r1, r2))  WITH u, b, m, rn "
+		rating_clause = "OPTIONAL MATCH (u)-[r1:RatingAction]->(rn:RatingNode)-[r2:Rate]->(b) FOREACH (p IN CASE WHEN r1 IS NULL THEN [] ELSE [u] END | FOREACH (q IN CASE WHEN r2 IS NULL THEN [] ELSE [b] END | SET q.rating_count = CASE WHEN q.rating_count IS NULL THEN 0 ELSE toInt(q.rating_count) - 1 END,  p.total_count = CASE WHEN p.total_count IS NULL THEN 0 ELSE toInt(p.total_count) - "+Constants::RatingPoints.to_s+" END, p.rating_count = CASE WHEN p.rating_count IS NULL THEN 0 ELSE toInt(p.rating_count) - 1 END DELETE r1, r2))  WITH u, b, m, rn "
 
 		#delete timing action
-		timing_clause = "OPTIONAL MATCH (u)-[r1:TimingAction]->(tn:TimingNode)-[r2:Timer]->(b) DELETE r1, r2 WITH u, b, m, rn, tn "
+		timing_clause = "OPTIONAL MATCH (u)-[r1:TimingAction]->(tn:TimingNode)-[r2:Timer]->(b) FOREACH (p IN CASE WHEN r1 IS NULL THEN [] ELSE [u] END | FOREACH (q IN CASE WHEN r2 IS NULL THEN [] ELSE [b] END | SET p.total_count = CASE WHEN p.total_count IS NULL THEN 0 ELSE toInt(p.total_count) - "+Constants::ReadTimePoints.to_s+" END DELETE r1, r2)) WITH u, b, m, rn, tn "
 
 		#delete feed relation
 		feednext_clause = "MATCH (x)-[r1:FeedNext{user_id:"+user_id.to_s+"}]->(m)-[r2:FeedNext{user_id:"+user_id.to_s+"}]->(y) CREATE  (x)-[:FeedNext{user_id:"+user_id.to_s+"}]->(y) DELETE r1, r2 WITH u, b, m, rn, tn "
@@ -212,7 +212,7 @@ module UsersGraphHelper
 		timing_node_bookfeed_clause = "OPTIONAL MATCH (x)-[r1:BookFeed{user_id:"+user_id.to_s+"}]->(tn)-[r2:BookFeed{user_id:"+user_id.to_s+"}]->(y) FOREACH (a IN CASE WHEN x IS NULL THEN [] ELSE [x] END | FOREACH (b IN CASE WHEN y IS NULL THEN [] ELSE [y] END |	CREATE  (a)-[:BookFeed{user_id:"+user_id.to_s+"}]->(b) DELETE r1, r2, tn)) WITH u, b "
 
 		#update book and user properties
-		set_clause = "SET b.readers_count = CASE WHEN b.readers_count IS NULL THEN 0 ELSE toInt(b.readers_count) - 1 END, u.book_read_count = CASE WHEN u.book_read_count IS NULL THEN 0 ELSE toInt(u.book_read_count) - 1 END"
+		set_clause = "SET b.readers_count = CASE WHEN b.readers_count IS NULL THEN 0 ELSE toInt(b.readers_count) - 1 END, u.book_read_count = CASE WHEN u.book_read_count IS NULL THEN 0 ELSE toInt(u.book_read_count) - 1 END, u.total_count = CASE WHEN u.total_count IS NULL THEN 0 ELSE toInt(u.total_count) - "+Constants::MarkAsReadPoints.to_s+" END"
 
 		# mark_as_unread_clause = "MATCH (u:User)-[r1:MarkAsReadAction]->(m:MarkAsReadNode)-[r2:MarkAsRead]->(b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" DELETE r1, r2, m WITH u, b, m "
 		# feednext_clause = "MATCH (s)-[f1:FeedNext{user_id:"+user_id.to_s+"}]->(m)-[f2:FeedNext{user_id:"+user_id.to_s+"}]->(e) 	CREATE (s)-[:FeedNext{user_id:"+user_id.to_s+"}]->(e) DELETE f1, f2 WITH u, b "
@@ -423,7 +423,7 @@ module UsersGraphHelper
 	def self.get_news_feed user_id
 		#FIXME get_news_feed_for_user
 		@neo ||= self.neo_init
-		clause = "MATCH (u:User)-[:FeedNext*0..]->(news_feed) WHERE ID(u)="+user_id.to_s+" RETURN labels(news_feed), news_feed"
+		clause = "MATCH (u:User)-[:FeedNext*0..4]->(news_feed) WHERE ID(u)="+user_id.to_s+" RETURN labels(news_feed), news_feed"
 		puts clause.blue.on_red
 		@neo.execute_query clause
 	end

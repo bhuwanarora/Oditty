@@ -111,13 +111,13 @@ module Api
 				info = {"moments" => test_moments}
 			end
 
-			def self.get_popular_books params
+			def self.get_popular_books(params, user_id)
 				skip_count = params[:skip_count]
 				unless skip_count
 					skip_count = 0
 				end
 				@neo = Neography::Rest.new
-				clause = "MATCH (book:Book) RETURN book.isbn as isbn, ID(book), book.title, book.author_name SKIP "+(10*skip_count.to_i).to_s+" LIMIT 10"
+				clause = "MATCH (book:Book) WITH book OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" RETURN book.isbn as isbn, ID(book), book.title, book.author_name, ID(m) SKIP "+(10*skip_count.to_i).to_s+" LIMIT 10"
 				puts clause.blue.on_red
 				begin
 					books =  @neo.execute_query(clause)["data"]

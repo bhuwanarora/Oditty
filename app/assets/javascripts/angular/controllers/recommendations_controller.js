@@ -342,7 +342,13 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	_add_listeners();
         _init_analytics();
         // _init_shelf();
-        _get_recommendations();
+        var timeout_event = $timeout(function(){
+        	_get_recommendations();
+        }, 1000);
+
+        $scope.$on('destroy', function(){
+        	$timeout.cancel(timeout_event);
+        });
         _push_recommendations();
         _bind_destroy();
         // _handle_focused_book();

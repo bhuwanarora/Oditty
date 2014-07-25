@@ -55,7 +55,7 @@
 </div>
   <div class="book_info" ng-if="show_info">
     <span> · </span>
-    <span ng-click="show_book(9)" class="book_link">
+    <span ng-click="focused_book.interact = true;" class="book_link">
       <span class="count">
         <span>{{focused_book.readers_count | integer}}</span>
         <span class="icon-users2"></span> 
@@ -66,7 +66,7 @@
     <span itemprop="aggregateRating" 
           itemscope 
           itemtype="http://schema.org/AggregateRating"
-          ng-click="show_book(11)" class="book_link">
+          ng-click="focused_book.interact = true;" class="book_link">
       <span class="count">
         <span>{{focused_book.bookmark_count | integer}}</span>
         <span class="icon-bookmarks"></span> 
@@ -74,7 +74,7 @@
       <!-- <span>&nbsp;&nbsp;Reviews</span> -->
     </span>
     · 
-    <span ng-click="show_book(11)" class="book_link">
+    <span ng-click="focused_book.interact = true;" class="book_link">
       <span class="count">
         <span>{{focused_book.comment_count | integer}}</span>
         <span class="icon-pencil2"></span>

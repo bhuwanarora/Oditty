@@ -12,6 +12,16 @@
 	top: 95px;
 }
 
+.main_header .count.ng-enter,
+.main_header .count.ng-leave-active{
+	opacity: 0.5;
+}
+
+.main_header .count.ng-leave,
+.main_header .count.ng-enter-active{
+	opacity: 1;
+}
+
 .push_notification.ng-enter,
 .push_notification.ng-leave.ng-leave-active{
 	right: -400px;

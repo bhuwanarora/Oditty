@@ -15,7 +15,7 @@ module Api
 			end
 
 			def get_popular_books
-				books = BookApi.get_popular_books params
+				books = BookApi.get_popular_books(params, session[:user_id])
 				render :json => books, :status => 200
 			end
 

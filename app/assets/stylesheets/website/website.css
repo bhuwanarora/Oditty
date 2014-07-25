@@ -229,6 +229,10 @@ input:focus{
     color: #3cb878 !important;
 }
 
+.orange_color{
+    color: #d73d32 !important;
+}
+
 .light_gray_background{
     background-color: #F1F1F1 !important;
 }
@@ -244,21 +248,21 @@ input:focus{
 
 
 .green{
-    background-color: #65b045;
+    background-color: #65b045 !important;
 }
 
 .magenta{
-    background-color: #11a9cc;
+    background-color: #981b48 !important;
 }
 
 .cyan{
-    background-color: #981b48;
+    background-color: #11a9cc !important;
 }
 
 .orange{
-    background-color: #d73d32;
+    background-color: #d73d32 !important;
 }
 
 .purple{
-    background-color: #7e3794;
+    background-color: #7e3794 !important;
 }

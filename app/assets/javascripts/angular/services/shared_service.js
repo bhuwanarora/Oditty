@@ -7,6 +7,19 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
           var index = $rootScope.user.books['read'].indexOf(book);
           $rootScope.user.books['read'].splice(index, 1);
           var message = "SUCCESS-Removed from <span class='icon-books'></span> Books Read. ";
+          $rootScope.user.book_read_count = $rootScope.user.book_read_count - 1;
+          var points = 5;
+          var remove_rating = angular.isDefined(book.user_rating) && book.user_rating != null;
+          var remove_read_time = angular.isDefined(book.time_index) && book.time_index != null;
+          if(remove_rating){
+            book.user_rating = null;
+            points = points + 10;
+          }
+          if(remove_read_time){
+            book.time_index = null;
+            points = points + 10;
+          }
+          $rootScope.$broadcast('gamifyCount', points, false);
         }
         else{
           var message = "<span><b>"+name+"</b> </span> added <span class='site_color'>"+book_title+"</span>&nbsp;to&nbsp;<span class='icon-books'></span><span>&nbsp;books read.</span>";
@@ -27,8 +40,9 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
               "name":$rootScope.user.email
             }
           }
+          $rootScope.$broadcast('gamifyCount', 5, true);
+          $rootScope.user.book_read_count = $rootScope.user.book_read_count + 1;
           $scope.$emit('addToNotifications', notification);
-
 
           book.status = true;
           $rootScope.user.books['read'].push(book);

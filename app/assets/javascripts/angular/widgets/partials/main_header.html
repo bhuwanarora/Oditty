@@ -1,10 +1,26 @@
 <div class="main_header">
 	<div class="site_logo">
- 		<site-logo></site-logo>
+ 		<span>r</span>
+		<span>e</span>
+		<span>a</span>
+		<span>d</span>
+		<span>e</span>
+		<span>r</span>
+		<span>'</span>
+		<span>s</span>
+		<span>&nbsp;</span>
+		<span>d</span>
+		<span>o</span>
+		<span>o</span>
+		<span>r</span>
  	</div>
  	<div class="profile_thumb" ng-click="goto_info_card()">
 		<user-thumb></user-thumb>
 		<div class="user_details">
+			<div class="animate-slow count" ng-class="{'green': is_additive, 'magenta': !is_additive}" ng-show="count && !initiate_counting">
+				<span ng-if="is_additive">+</span><span ng-if="!is_additive">-</span>{{count}}
+			</div>
+			<span class="site_color">{{user.total_count | integer}}</span><span> · </span>
 			<span class="green_color">{{user.book_read_count}}&nbsp;</span><span class='green_color icon-books'></span><span> · </span>
 			<span class="purple_color">{{user.bookmark_count}}&nbsp;</span><span class='purple_color icon-bookmarks'></span><span> · </span>
 		</div>
