@@ -1,29 +1,27 @@
 <table>
 	<tr>
-		<th>Trending</th>
-		<th>Timestamp</th>
+		<th>Book Grids</th>
 		<th>Search Books</th>
 		<th>Books</th>
 		<th>Active</th>
 		<th>Submit</th>
 	</tr>
-	<% @trends.each do |trend|%>
+	<% @grids.each do |grid|%>
 		<tr>
-			<td><%= trend[0] %></td>
-			<td><%= trend[1] %></td>
+			<td><%= grid[0] %></td>
 			<td>
 				<input class="search_box" />
 			</td>
 
-			<form action="<%= trends_path %>">
+			<form action="<%= grids_path %>">
 				<td class="books" name="books">
-					<% trend[3].each.with_index do |book, index| %>
-						<div data-id="<%= trend[5][index] %>" class="book_name"><span> · </span><span><%= book %></span></div>
+					<% grid[3].each.with_index do |book, index| %>
+						<div data-id="<%= grid[5][index] %>" class="book_name"><span> · </span><span><%= book %></span></div>
 					<% end %>
 				</td>
-				<input type="hidden" value="<%= trend[2] %>" name="trending_id"/>
-				<input type="hidden" value="<%= trend[5] %>" name="book_ids" />
-				<% if trend[4].present? && trend[4] == 1 %>
+				<input type="hidden" value="<%= grid[2] %>" name="griding_id"/>
+				<input type="hidden" value="<%= grid[5] %>" name="book_ids" />
+				<% if grid[4].present? && grid[4] == 1 %>
 					<td><input type="checkbox" name="status" checked></td>
 				<% else %>
 					<td><input type="checkbox" name="status"></td>

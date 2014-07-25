@@ -28,6 +28,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 			$scope.$on('destroy', function(){
 				$timeout.cancel(timeout_event);
 			});
+			_is_logged_in();
 			$scope.$emit('getNotifications');
 		}
 
@@ -148,8 +149,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
   				$rootScope.user.id = data["id"];
   				$scope.$emit('getNotifications');
   				websiteService.get_user_details().then(function(data){
-	  		  		 var json = {"name":data[0], "email":data[1], "book_read_count":data[2], "bookmark_count":data[3]};
-	  		  		 angular.extend($rootScope.user, json);
+	  		  		angular.extend($rootScope.user, data);
 	  	   		});
   				stropheService.start_connection();
   			}

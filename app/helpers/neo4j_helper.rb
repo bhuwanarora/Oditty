@@ -420,7 +420,9 @@ module Neo4jHelper
 			begin
 				self.add_book book
 			rescue Neography::SyntaxException
-				puts "ERROR".blue.on_red
+				puts "Neography::SyntaxException".blue.on_red
+			rescue Neography::UniquePathNotUniqueException
+				puts "Neography::UniquePathNotUniqueException".blue.on_red
 			end
 		end
 	end
@@ -689,34 +691,45 @@ module Neo4jHelper
 		while start_id <= end_id
 			puts "adding index_by title for book..."+start_id.to_s.green
 			limit = start_id + skip
-			clause = 'MATCH (book:Book) WHERE ID(book) >= '+start_id.to_s+' AND ID(book) < '+limit.to_s+'  SET book.indexed_author_name = REPLACE(book.indexed_author_name,"\'", ""), book.indexed_title = REPLACE(book.indexed_title, "\'", ""), book.search_index = REPLACE(book.search_index, "\'", "")'
+			clause = 'MATCH (book:Book) WHERE ID(book) >= '+start_id.to_s+' AND ID(book) < '+limit.to_s+'  SET book.indexed_author_name = REPLACE(book.indexed_author_name,"!", ""), book.indexed_title = REPLACE(book.indexed_title, "!", ""), book.search_index = REPLACE(book.search_index, "!", "")'
 			@neo.execute_query clause
 			start_id = start_id + skip
 		end
 
-		clause = 'MATCH (author:Author) SET author.indexed_name = REPLACE(author.indexed_name, "\'", ""), author.search_index = REPLACE(author.indexed_name, "\'", "")'
+		clause = 'MATCH (author:Author) SET author.indexed_name = REPLACE(author.indexed_name, "!", ""), author.search_index = REPLACE(author.indexed_name, "!", "")'
 		puts "adding index_by name for authors...".green
 		@neo.execute_query clause
 
 		puts "adding index_by name for labels...".green
-		clause = 'MATCH (label:Label) SET label.indexed_label_name = REPLACE(label.indexed_label_name, "\'", "")'
+		clause = 'MATCH (label:Label) SET label.indexed_label_name = REPLACE(label.indexed_label_name, "!", "")'
 		@neo.execute_query clause
 
 		puts "adding index_by name for labels...".green
-		clause = 'MATCH (readTime: ReadTime) SET readTime.indexed_readtime_name = REPLACE(readTime.indexed_readtime_name, "\'", "")'
+		clause = 'MATCH (readTime: ReadTime) SET readTime.indexed_readtime_name = REPLACE(readTime.indexed_readtime_name, "!", "")'
 		@neo.execute_query clause
 
 		puts "adding index_by name for era...".green
-		clause = 'MATCH (era: Era) SET era.indexed_era_name = REPLACE(era.indexed_era_name, "\'", "")'
+		clause = 'MATCH (era: Era) SET era.indexed_era_name = REPLACE(era.indexed_era_name, "!", "")'
 		@neo.execute_query clause
 
 		puts "adding index_by name for genre...".green
-		clause = 'MATCH (genre: Genre) SET genre.indexed_genre_name = REPLACE(genre.indexed_genre_name, "\'", "")'
+		clause = 'MATCH (genre: Genre) SET genre.indexed_genre_name = REPLACE(genre.indexed_genre_name, "!", "")'
 		@neo.execute_query clause
 
 		puts "adding index_by name for users...".green
-		clause = 'MATCH (user: User) SET user.indexed_user_name = REPLACE(user.indexed_user_name, "\'", ""), user.search_index = REPLACE(user.search_index, "\'", "")'
+		clause = 'MATCH (user: User) SET user.indexed_user_name = REPLACE(user.indexed_user_name, "!", ""), user.search_index = REPLACE(user.search_index, "!", "")'
 		@neo.execute_query clause
+	end
+
+	def self.grids
+		grid_array = ["Books becoming movies", "Greatest Batman Graphic novels", "Must Reads for Dog Lovers", "Books To Read When Life Sucks", "Books that will change your view of the world", "Big Idea Business Books", "Books every entrepreneur must read before starting up", "Motivational Books of all time", "Childhood Classics you should reread as adults", "Books that will inspite creativity"]
+		@neo ||= self.init
+		for grid in grid_array
+			puts grid.green
+			clause = "CREATE (grid:BookGrid{name:\""+grid+"\", indexed_grid_name:\"" + 
+				grid.downcase.gsub(" ", "").gsub("'", "")+"\"})"	
+			@neo.execute_query clause		
+		end
 	end
 
 

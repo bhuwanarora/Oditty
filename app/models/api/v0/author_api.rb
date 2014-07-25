@@ -8,6 +8,24 @@ module Api
 				# end
 			end
 
+			def self.get_popular_authors params
+				skip_count = params[:skip_count]
+				unless skip_count
+					skip_count = 0
+				end
+				@neo = Neography::Rest.new
+				clause = "MATCH (author:Author) RETURN author.name SKIP "+(10*skip_count.to_i).to_s+" LIMIT 10"
+				puts clause.blue.on_red
+				begin
+					authors =  @neo.execute_query(clause)["data"]
+				rescue Exception => e
+					puts e.to_s.red
+					authors = [{:message => "Error in finding authors"}]
+					# books =  @neo.execute_query(clause)["data"]
+				end
+				authors
+			end
+
 			def self.push_recommendations
 				test_author = {:tags => [
 							  	{:name => "Philosophy", :url => "javascript:void(0);"},

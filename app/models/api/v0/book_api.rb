@@ -172,9 +172,9 @@ module Api
 							:title => book["title"],
 							:author_name => book["author_name"],
 							:rating => book["gr_rating"].to_f*2,
-							:readers_count => book["gr_ratings_count"],
-							:discussions_count => book["gr_reviews_count"],
-							:reviews_count => book["gr_reviews_count"],
+							:readers_count => book["readers_count"],
+							:bookmark_count => book["bookmark_count"],
+							:comment_count => book["comment_count"],
 							:published_year => book["published_year"],
 							:page_count => book["page_count"],
 							:summary => book["description"],
@@ -327,8 +327,7 @@ module Api
 			end
 
 			def self.get_basic_recommendations(filters, last_book)
-				last_book.gsub!(":", "")
-				clause = "START book = node:node_auto_index(\"indexed_title:"+last_book+"\") MATCH p=(book)-[:Next_book*..10]->(b) WITH last(nodes(p)) as b RETURN b.isbn, ID(b), b.indexed_title"
+				clause = "START book = node:node_auto_index(\"indexed_title:"+last_book+"\") MATCH p=(book)-[:Next_book*..5]->(b) WITH last(nodes(p)) as b RETURN b.isbn, ID(b), b.indexed_title"
 				clause
 			end
 

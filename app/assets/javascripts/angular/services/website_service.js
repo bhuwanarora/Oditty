@@ -4,6 +4,10 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         return _deferred_request('/api/v0/user');
     }
 
+    this.save_user_info = function(params){
+        return _deferred_post_request('/api/v0/save_info', params);
+    }
+
     this.handle_facebook_user = function(params){
         return _deferred_post_request('/api/v0/fb', params);
     }
@@ -70,6 +74,10 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
 
     this.get_popular_books = function(skip_count){
         return _deferred_request('/api/v0/popular_books?skip_count='+skip_count);   
+    }
+
+    this.get_popular_authors = function(skip_count){
+        return _deferred_request('/api/v0/popular_authors?skip_count='+skip_count);   
     }
 
     _deferred_request = function(url){

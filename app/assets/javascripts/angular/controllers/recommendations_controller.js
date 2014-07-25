@@ -257,9 +257,11 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		var fiveMinute = 3000;//300000
 		push_books_timer_event = $timeout(function(){
 			recommendationService.push_recommendations().then(function(data){
-	        	$rootScope.message_type = "Notification";
-	        	$rootScope.message = "We think you like Hermann Hesse, and here is his best read.";
-	        	_update_recommendations(data);
+				var grid = {"grid_text": "Books becoming movies", 
+				"grid_books": data, "is_grid": true};
+				$scope.recommendations.books.splice(3, 0, grid);
+				var message = "INFO-Checkout Books becoming movies...";
+				notify($rootScope, message, $timeout);
 			});
 		}, fiveMinute);
 	}
@@ -341,7 +343,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         _init_analytics();
         // _init_shelf();
         _get_recommendations();
-        // _push_recommendations();
+        _push_recommendations();
         _bind_destroy();
         // _handle_focused_book();
         _get_friends();

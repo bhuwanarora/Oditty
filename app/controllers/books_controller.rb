@@ -17,6 +17,86 @@ class BooksController < ApplicationController
     @book = Book.new
   end
 
+  def grids
+    neo = Neography::Rest.new
+
+    if params[:grid_id]
+      book_ids = params[:book_ids].gsub("[", "").gsub("]", "").split(",") rescue ""
+      id_string = ""
+      clause = "MATCH (bg:BookGrid)-[r:RelatedBooks]->(:Book) WHERE ID(bg)="+params[:grid_id]+" DELETE r"
+      neo.execute_query clause
+      if book_ids.present?
+        for book_id in book_ids
+          if book_id.present?
+            if id_string.present?
+              id_string = id_string + " OR ID(b) = " + book_id
+            else
+              id_string = id_string + " AND (ID(b) = " + book_id
+            end
+          end
+        end
+        id_string = id_string + ")"
+        if params[:status] == "on"
+          clause = "MATCH (b:Book), (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 1 CREATE UNIQUE (bg)-[:RelatedBooks]->(b)"
+        else
+          clause = "MATCH (b:Book), (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 0 CREATE UNIQUE (bg)-[:RelatedBooks]->(b)"
+        end
+      else
+        if params[:status] == "on"
+          clause = "MATCH (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 1"
+        else
+          clause = "MATCH (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 0"
+        end
+      end
+      puts clause.blue.on_red
+      neo.execute_query clause
+    end
+
+    clause = "MATCH (bg:BookGrid) OPTIONAL MATCH (bg)-[:RelatedBooks]->(b:Book) RETURN bg.name, bg.timestamp, ID(bg), COLLECT(b.title), bg.status, COLLECT(ID(b))"
+    puts clause.blue.on_red
+    @grids = neo.execute_query(clause)["data"]
+  end
+
+  def labels
+    neo = Neography::Rest.new
+
+    if params[:label_id]
+      book_ids = params[:book_ids].gsub("[", "").gsub("]", "").split(",") rescue ""
+      id_string = ""
+      clause = "MATCH (l:Label)-[r:BookmarkedOn]->(:Book) WHERE ID(l)="+params[:label_id]+" DELETE r"
+      neo.execute_query clause
+      if book_ids.present?
+        for book_id in book_ids
+          if book_id.present?
+            if id_string.present?
+              id_string = id_string + " OR ID(b) = " + book_id
+            else
+              id_string = id_string + " AND (ID(b) = " + book_id
+            end
+          end
+        end
+        id_string = id_string + ")"
+        if params[:status] == "on"
+          clause = "MATCH (b:Book), (l:Label) WHERE ID(l)="+params[:label_id]+id_string+" SET l.status = 1 CREATE UNIQUE (l)-[:BookmarkedOn]->(b)"
+        else
+          clause = "MATCH (b:Book), (l:Label) WHERE ID(l)="+params[:label_id]+id_string+" SET l.status = 0 CREATE UNIQUE (l)-[:BookmarkedOn]->(b)"
+        end
+      else
+        if params[:status] == "on"
+          clause = "MATCH (l:Label) WHERE ID(l)="+params[:label_id]+id_string+" SET l.status = 1"
+        else
+          clause = "MATCH (l:Label) WHERE ID(l)="+params[:label_id]+id_string+" SET l.status = 0"
+        end
+      end
+      puts clause.blue.on_red
+      neo.execute_query clause
+    end
+
+    clause = "MATCH (l:Label) OPTIONAL MATCH (l)-[:BookmarkedOn]->(b:Book) RETURN l.name, l.timestamp, ID(l), COLLECT(b.title), l.status, COLLECT(ID(b))"
+    puts clause.blue.on_red
+    @labels = neo.execute_query(clause)["data"]
+  end
+
   def trends
     neo = Neography::Rest.new
 

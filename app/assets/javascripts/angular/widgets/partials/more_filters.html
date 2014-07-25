@@ -4,8 +4,15 @@
 	<div ng-if="!bookmark_selected && !read_selected">
 		<!-- BOOK FILTERS -->
 		<div class="full_width" ng-if="$routeParams.type == 'books'">
-			<div ng-click="show_lists = false; handle_left_columns();" class="filter_header">
-				<span class="icon-filter"></span><span>&nbsp;&nbsp;Main Filters</span>
+			<div class="filter_header" ng-click="show_lists = false; handle_left_columns();">
+				<span>
+					<span class="icon-filter2"></span>
+					<span>&nbsp;&nbsp;Main Filters</span>
+				</span>
+				 <a ng-href="#/user/{{$routeParams.id}}/recommendations/{{$routeParams.type}}" ng-click="reset_filters()" class="reset_filters">
+				 	<span class="icon-loop"></span>
+				 	<span>RESET FILTERS </span>
+				 </a>
 			</div>
 			<div class="filters_panel" ng-if="!show_lists && column_heights.show_filters">
 			 	<type-ahead items="genres" 
@@ -121,20 +128,13 @@
 				</div>
 			</div>
 		</div>
-		<div class="main_filters">
-			<div class="reset_filters">
-				 <a ng-href="#/user/{{$routeParams.id}}/recommendations/{{$routeParams.type}}" ng-click="reset_filters()">
-				 	<span class="icon-loop"></span>
-				 	<span>RESET FILTERS </span>
-				 </a>
-			</div>
-		</div>
+		
 	</div>
 
 	<div ng-if="bookmark_selected">
 		<div class="full_width" ng-if="$routeParams.type == 'books'">
 			<div class="filters_panel_large">
-				<div class="filters_group restrict_height" 
+				<div class="filters_group restrict_height scrollbar" 
 					 msd-wheel="stop_horizontal_scroll($event)">
 					<div ng-repeat="filter in labels">
 						<filter data="filter"></filter>

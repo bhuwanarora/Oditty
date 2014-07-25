@@ -136,7 +136,7 @@
 	text-align: center;
 	padding: 10px 10px 8px 10px;
 	background-color: white;
-	color: #D3D3D3;
+	color: #BEBEBE;
 	border-bottom: 2px solid transparent;
 	left: 50px;
 	top: 50px;
@@ -365,6 +365,10 @@
 	border-bottom: 1px solid #DDDDDD;
 }
 
+.more_filters .filter_header [class^="icon-"]{
+	color: #BEBEBE;
+}
+
 .filters_panel,
 .filters_panel_large,
 .filters_panel_right{
@@ -508,12 +512,19 @@
 }
 
 .reset_filters{
-	float: left;
+	float: right;
 	cursor: pointer;
 	color: #717070;
-	padding: 10px !important;
+	padding: 10px!important;
 	border-radius: 2px;
-	background-color: #F3F3F3;
+	background-color: #E0E0E0;
+	font-size: .7em;
+	margin-top: -10px;
+	margin-right: -10px;
+}
+
+.reset_filters:hover{
+	text-decoration: none;
 }
 
 .main_filters{
@@ -1212,23 +1223,22 @@ and (min-width : 1824px) {
 .shift_right{
 	padding-right: 15px;
 }
+
 .left_column .friends_grid .friends_grid_header{
 	padding: 10px;
 	background-color: #F3F3F3;
 	margin-bottom: 5px;
 	border-radius: 3px;
+	border-bottom: 1px solid #DDD;
 }
 
 .left_column .friends_grid{
 	max-height: 85px;
-	padding: 5px;
 	white-space: normal;
-	width: 235px;
-	background-color: white;
+	width: 255px;
+	background-color: #fff;
 	margin-top: 5px;
 	border-radius: 4px;
-	padding-left: 10px;
-	padding-right: 10px;
 }
 
 .left_column .friends_grid img{

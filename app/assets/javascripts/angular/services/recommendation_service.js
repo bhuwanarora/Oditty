@@ -6,6 +6,10 @@ websiteApp.service('recommendationService', ['$http', '$q', '$rootScope', functi
         return _deferred_request('/api/v0/recommendations?count=5&q='+filters);
     }
 
+    this.get_grid_books = function(){
+        return _deferred_request('/api/v0/grid');
+    }
+
     this.push_recommendations = function(){
         return _deferred_request('/api/v0/push_recommendations');   
     }

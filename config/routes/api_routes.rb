@@ -4,6 +4,8 @@ ReadersDoor::Application.routes.draw do
   #############################################
   namespace :api do
     namespace :v0 do
+      match "popular_authors"                        => 'authors_api#get_popular_authors',              :via => [:put, :get, :post]
+
       match "get_similar_books"                      => 'books_api#get_similar_books',                  :via => [:put, :get, :post]
       match "book"                                   => 'books_api#get_book_details',                   :via => [:put, :get, :post]
       match "book_feed"                              => 'books_api#get_feed',                           :via => [:put, :get, :post]
@@ -16,6 +18,7 @@ ReadersDoor::Application.routes.draw do
       match "get_similar_authors"                    => 'authors_api#get_similar_authors',              :via => [:put, :get, :post]
       match "get_author_details"                     => 'authors_api#get_author_details',               :via => [:put, :get, :post]
 
+      match "grid"                                   => 'recommendations_api#grid',                     :via => [:put, :get, :post]
       match "recommended_books"                      => 'recommendations_api#books',                    :via => [:put, :get, :post]
       match "push_recommendations"                   => 'recommendations_api#push_recommendations',     :via => [:put, :get, :post]
       match "filters"                                => 'recommendations_api#filters',                  :via => [:put, :get, :post]
@@ -38,6 +41,7 @@ ReadersDoor::Application.routes.draw do
       match "latest_notification"                    => 'website_api#latest_notification',              :via => [:put, :get, :post]
       match "trends"                                 => 'website_api#trends',                           :via => [:put, :get, :post]
 
+      match 'save_info'                               => 'users_api#save_info',                         :via => [:put, :get, :post]
       match 'mar'                                     => 'users_api#mark_as_read',                      :via => [:put, :get, :post]
       match 'recommend'                               => 'users_api#recommend',                         :via => [:put, :get, :post]
       match 'bookmark'                                => 'users_api#bookmark',                          :via => [:put, :get, :post]

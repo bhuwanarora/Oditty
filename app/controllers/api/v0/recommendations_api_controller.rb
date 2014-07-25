@@ -9,6 +9,14 @@ module Api
 				# publish
 			end
 
+			def grid
+				@neo = Neography::Rest.new
+				clause = "MATCH (b:Book) RETURN b.isbn, ID(b), b.indexed_title LIMIT 20"
+				puts clause.blue.on_red
+				info = @neo.execute_query(clause)["data"]
+				render :json => info, :status => 200
+			end
+
 			def filters
 				filters_book = Filter.where(:filter_type => "BOOK")
 								.order("priority DESC")
@@ -31,8 +39,11 @@ module Api
 			end
 
 			def push_recommendations
-				test_book = BookApi.push_recommendations
-				render :json => {:recommendations => {:books => [test_book]}}, :status => 200
+				@neo = Neography::Rest.new
+				clause = "MATCH (b:Book) RETURN b.isbn, ID(b), b.indexed_title LIMIT 20"
+				puts clause.blue.on_red
+				info = @neo.execute_query(clause)["data"]
+				render :json => info, :status => 200
 			end
 
 			def recommendations

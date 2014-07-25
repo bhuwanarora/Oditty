@@ -3,11 +3,64 @@ module Api
 	module V0
 		class UserApi
 
+			def self.save_info(user_id, params)
+				@neo = Neography::Rest.new
+				clause = ""
+				if params[:name]
+					clause = " SET u.name = \""+params[:name]+"\""
+				elsif params[:latitude]
+					if clause.present?
+						link_clause = ", "
+					else
+						link_clause = " SET "
+					end
+					clause = clause + link_clause + "u.latitude="+params[:latitude].to_s+", u.longitude="+params[:longitude].to_s
+				elsif params[:init_book_read_count]
+					if clause.present?
+						link_clause = ", "
+					else
+						link_clause = " SET "
+					end
+					clause = clause + link_clause + "u.init_book_read_count=\""+params[:init_book_read_count]+"\""
+				elsif params[:gender]
+					if clause.present?
+						link_clause = ", "
+					else
+						link_clause = " SET "
+					end
+					clause = clause + link_clause + "u.gender=\""+params[:gender]+"\""	
+				elsif params[:selectedDay]
+					if clause.present?
+						link_clause = ", "
+					else
+						link_clause = " SET "
+					end
+					clause = clause + link_clause + "u.selectedYear="+params[:selectedYear].to_s+", u.selectedMonth=\""+params[:selectedMonth].to_s+"\", u.selectedDay="+params[:selectedDay].to_s
+				elsif params[:profile]
+					if clause.present?
+						link_clause = ", "
+					else
+						link_clause = " SET "
+					end
+					clause = clause + link_clause + "u.profile=\""+params[:profile]+"\""
+				elsif params[:profile_picture]
+					if clause.present?
+						link_clause = ", "
+					else
+						link_clause = " SET "
+					end
+					clause = clause + link_clause + "u.profile_picture="+params[:profile_picture]
+				end
+				clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+clause
+				puts clause.blue.on_red
+				@neo.execute_query clause
+			end
+
 			def self.get_details user_id
 				@neo = Neography::Rest.new
-				clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" RETURN u.name, u.email, u.book_read_count, u.bookmark_count"
+				clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" RETURN u"
 				puts clause.blue.on_red
-				info = @neo.execute_query(clause)["data"][0]
+				info = @neo.execute_query(clause)["data"][0][0]["data"]
 				info
 			end
 

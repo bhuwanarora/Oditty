@@ -26,6 +26,11 @@ module Api
 				render :json => info, :status => status
 			end
 
+			def get_popular_authors
+				authors = AuthorApi.get_popular_authors params
+				render :json => authors, :status => 200
+			end
+
 
 		end
 	end

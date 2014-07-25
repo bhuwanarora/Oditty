@@ -1,5 +1,10 @@
 namespace :graph do
 
+  desc "grid init"
+  task :grids => :environment do
+    include Neo4jHelper
+    Neo4jHelper.grids
+  end
   
   desc "Remove colon database"
   task :remove_colon => :environment do

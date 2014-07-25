@@ -112,6 +112,15 @@ angular.module('filtersApp', [])
       }
     }
   })
+  .filter('medium_thumb', function(){
+    return function(isbn_string){
+      if(isbn_string){
+        var isbn = isbn_string.split(",");
+        var thumb = "http://covers.openlibrary.org/b/isbn/"+isbn[0]+"-M.jpg"
+        return thumb;
+      }
+    }
+  })
   .filter('small_thumb', function(){
     return function(isbn_string){
       if(isbn_string){

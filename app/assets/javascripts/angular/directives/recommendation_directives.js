@@ -13,6 +13,8 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 				// $scope.active_reader_filter = false;
 				$scope.show_menu = false;
 				$scope.countryOptions = [];
+				$scope.show_lists = false;
+				$scope.handle_left_columns();
 				$scope.$on('filterChange', function(scope, selected, type){
 					
 					if(type == "country"){
@@ -578,35 +580,313 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 	}
 }]);
 
-websiteApp.directive('calendar', function(){
+websiteApp.directive('bookGrid', ['recommendationService', function(recommendationService){
 	return{
 		restrict: 'E',
-		scope : {},
+		scope: {'grid': '=data'},
 		controller: ['$scope', function($scope){
-			$scope.date_check = function(){
-				var month = $scope.months.indexOf($scope.selectedMonth) + 1;
-				var no_days = new Date($scope.selectedYear, month, 0).getDate();
-				$scope.days = new Array(no_days)
-							.join()
-							.split(',')
-							.map(function(item, index){return ++index;});
-			}
-
-			_init =function(){
-				$scope.days = new Array(31)
-							.join()
-							.split(',')
-							.map(function(item, index){return ++index;});
-				$scope.months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-				$scope.years = [];
-				var currentYear = new Date().getFullYear();
-				for(var i=currentYear; i>1904; i--){
-					$scope.years.push(i);
-				}
-			}
+			_init = function(){
+				console.log($scope);
+				// recommendationService.get_grid_books().then(function(data){
+				// 	$scope.grid_books = [];
+				// 	angular.forEach(data, function(value){
+				// 		var json = {"isbn": value[0], "id": value[1]};
+				// 		this.push(json);
+				// 	}, $scope.grid_books);
+				// });
+			}			
 
 			_init();
 		}],
-		templateUrl: '/assets/angular/widgets/partials/calendar.html'
+		templateUrl: '/assets/angular/widgets/partials/book_grid.html'
 	}
-});
+}]);
+
+websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', function($rootScope, $timeout, sharedService){
+	return{
+		restrict: 'E',
+		controller: ['$scope', 'websiteService', function($scope, websiteService){
+			$scope.mark_as_read = function(book, event){
+		        sharedService.mark_as_read($scope, book, event);
+			}
+
+			$scope.search_books = function(event){
+				var keyUp = event.keyCode == 38;
+				var keyDown = event.keyCode == 40;
+				var backSpace = event.keyCode == 8;
+				var enter_pressed = event.keyCode == 13;
+				var char_pressed = !(keyUp || keyDown || backSpace || enter_pressed);
+				if(char_pressed){
+					if($scope.search_book){
+						var skip_count = $scope.popular_books.length;
+						var search_for = $scope.search_book + String.fromCharCode(event.keyCode);
+					}
+					else{
+						var skip_count = 0;
+						$scope.popular_books = [];
+						var search_for = String.fromCharCode(event.keyCode);
+					}
+					
+					if(!$scope.loading){
+						$scope.loading = true;
+						websiteService.search_books(search_for, skip_count).then(function(data){
+							data = data.results;
+							if(data.length != 0){
+								angular.forEach(data, function(value){
+									var json = {"isbn": value[0], 
+											"id": value[1], 
+											"title": value[2], 
+											"author_name": value[3], 
+											"status": false};
+									this.push(json);
+								},  $scope.popular_books);
+							}
+							$scope.loading = false;
+						});
+					}
+				}
+			}
+
+			_get_genres = function(){
+				if(angular.isUndefined($scope.genres) || $scope.genres.length == 0){
+			    	websiteService.get_genres().then(function(data){
+			    		$scope.genres = data.genres;
+			    	});
+				}
+		    }
+
+		    _profile_status_colors = function(){
+				var profile_status = $rootScope.user.profile_status;
+				if(profile_status == 0){
+					$rootScope.user.profile_status_color = "#4374e0";
+				}
+				else if(profile_status == 1){
+					$rootScope.user.profile_status_color = "#65b045";
+				}
+				else if(profile_status == 2){
+					$rootScope.user.profile_status_color = "#d73d32";
+				}
+				else if(profile_status == 3){
+					$rootScope.user.profile_status_color = "#11a9cc";
+				}
+				else if(profile_status == 4){
+					$rootScope.user.profile_status_color = "#981b48";
+				}
+				else if(profile_status == 5){
+					$rootScope.user.profile_status_color = "#7e3794";
+				}
+				else if(profile_status == 6){
+					$rootScope.user.profile_status_color = "#4374e0";
+				}
+				else if(profile_status == 7){
+					$rootScope.user.profile_status_color = "#981b48";	
+				}
+				else if(profile_status == 8){
+					$rootScope.user.profile_status_color = "#981b48";
+				}
+			}
+
+			_handle_info_card_bindings = function($scope){
+				if($rootScope.user.profile_status == 3){
+					$scope.get_popular_books();
+				}
+				else if($rootScope.user.profile_status == 2){
+					_get_genres();
+				}
+				else if($rootScope.user.profile_status == 4){
+					$scope.get_popular_authors();
+					// $rootScope.$broadcast('showBookReadShelf');
+				}
+				else if($rootScope.user.profile_status == 6){
+					if(navigator.geolocation){
+						navigator.geolocation.getCurrentPosition(function(position){
+							var latitude = position.coords.latitude;
+							var longitude = position.coords.longitude;
+							$rootScope.user.latitude = latitude;
+							$rootScope.user.longitude = longitude;
+							$scope.set_location();
+						});
+					}
+					else{
+						x.innerHTML="Geolocation is not supported by this browser.";
+					}
+				}
+			}
+
+			_get_info_data = function(){
+				websiteService.get_info_data().then(function(data){
+					$scope.book_counts = data.reading_count_list;
+					$scope.user_book_count = $scope.book_counts[0];
+				});
+			}
+
+			$scope.edit_books_read = function(){
+				$scope.goto_info_card();
+				$rootScope.user.profile_status = 3;
+				$scope.get_popular_books();
+				$scope.compressed_info = false;
+			}
+
+			$scope.get_popular_authors = function(){
+				var skip_count = $scope.popular_authors.length;
+				if(!$scope.loading){
+					$scope.loading = true;
+					websiteService.get_popular_authors(skip_count).then(function(data){
+						angular.forEach(data, function(value){
+							var json = {"name": value[0]};
+							this.push(json);
+						},  $scope.popular_authors);
+						$scope.loading = false;
+					});
+				}
+			}			
+
+			$scope.get_popular_books = function(){
+				var skip_count = $scope.popular_books.length;
+				if(!$scope.loading){
+					$scope.loading = true;
+					websiteService.get_popular_books(skip_count).then(function(data){
+						angular.forEach(data, function(value){
+							var json = {"isbn": value[0], 
+									"id": value[1], 
+									"title": value[2], 
+									"author_name": value[3], 
+									"status": false};
+							this.push(json);
+						},  $scope.popular_books);
+						$scope.loading = false;
+					});
+				}
+			}
+
+			$scope.prev_profile_state = function(){
+				if($rootScope.user.profile_status != 0){
+					$rootScope.user.profile_status = $rootScope.user.profile_status - 1;
+				}
+				else{
+					$rootScope.user.profile_status = 8;
+				}
+				_handle_info_card_bindings($scope);
+				_profile_status_colors();
+			}
+
+			$scope.next_profile_state = function(){
+				if($rootScope.user.profile_status != 8){
+					$rootScope.user.profile_status = $rootScope.user.profile_status + 1;
+				}
+				else{
+					$rootScope.user.profile_status = 0;
+				}
+				_handle_info_card_bindings($scope);
+				_profile_status_colors();
+			}
+
+			$scope.stop_horizontal_scroll = function(event){
+				event.stopPropagation();
+			}
+
+			$scope.update_profile = function(){
+				var enter_pressed = event.keyCode == 13;
+				if(enter_pressed){
+					var profile_status = $rootScope.user.profile_status;
+					if(profile_status == 0){
+						websiteService.update_profile($rootScope.user);
+						$rootScope.user.profile_status = $rootScope.user.profile_status + 1;
+						_profile_status_colors();
+					}
+				}
+			}
+
+			$scope.user_profile_changed = function(selected){
+				var params = {"profile": selected.name};
+				websiteService.save_user_info(params);
+			}
+
+			$scope.add_book = function(){
+
+			}
+
+			$scope.add_author = function(){
+
+			}
+
+			$scope.get_search_results = function(event, type, searchResults){
+				if(searchResults){
+					searchResults = searchResults + String.fromCharCode(event.keyCode);
+				}
+				else{
+					searchResults = String.fromCharCode(event.keyCode);	
+				}
+				websiteService.search(searchResults, type, 3)
+		        .then(function(result) {
+		            $scope.search_results = $scope.search_results.concat(result.results);
+		        });
+			}
+
+			$scope.set_user_name = function(){
+				if($rootScope.user.name.length > 0){
+					var params = {"name": $rootScope.user.name};
+					websiteService.save_user_info(params);
+				}
+			}
+
+			$scope.set_gender = function(){
+				if($rootScope.user.gender){
+					var params = {"gender": $rootScope.user.gender};
+					websiteService.save_user_info(params);
+				}
+			}
+
+			$scope.set_init_book_read_count = function(){
+				if($rootScope.user.init_book_read_count){
+					var params = {"init_book_read_count": $rootScope.user.init_book_read_count};
+					websiteService.save_user_info(params);	
+				}
+			}
+
+			$scope.set_init_book_written_count = function(){
+				if($rootScope.user.init_book_written_count){
+					var params = {"init_book_written_count": $rootScope.user.init_book_written_count};
+					websiteService.save_user_info(params);	
+				}	
+			}
+
+			$scope.set_location = function(){
+				if($rootScope.user.latitude){
+					var params = {"latitude": $rootScope.user.latitude, "longitude": $rootScope.user.longitude};
+					websiteService.save_user_info(params);
+				}
+			}
+
+			$scope.set_date_of_birth = function(){
+				var params = {"selectedYear":$rootScope.user.selectedYear, 
+							  "selectedMonth": $rootScope.user.selectedMonth,
+							  "selectedDay": $rootScope.user.selectedDay};
+				websiteService.save_user_info(params);
+			}
+			
+			_init = function(){
+				$rootScope.user.profile_status = 0;
+	    		_profile_status_colors();
+	    		_get_info_data();
+	    		$scope.popular_books = [];
+	    		$scope.popular_authors = [];
+	    		$scope.loading = false;
+				$scope.profileOptions = [
+					{"name": "Reader"},
+					{"name": "Author"},
+					{"name": "Publisher"},
+					{"name": "Editor"}
+				]
+				$scope.compressed_info = false;
+				$scope.profileSelected = {"name": "Reader"};
+				$scope.info_card_width = 350; //in px
+				$scope.info_card_ratio = 1.34;
+			}
+
+			_init();
+
+		}],
+		templateUrl: "/assets/angular/widgets/base/widget/info_card.html"
+	}
+}]);

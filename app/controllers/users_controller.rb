@@ -25,6 +25,8 @@ class UsersController < ApplicationController
     render 'test_layout'
   end
 
+  
+
   # POST /users
   # POST /users.json
   def create

@@ -57,8 +57,6 @@ ReadersDoor::Application.routes.draw do
   get "angular_test"             => "tests#angular_test",              :as => "angular_test"
 
   get "verify"                   => "users#verify",                     :as => "verify"   
-  get "trends"                   => "books#trends",                     :as => "trends"   
-  get "thumbs"                   => "books#thumbs",                     :as => "thumbs"
   get "book_count"               => "books#count",                      :as => "get_book_count"
   # root :to => "website#coming_soon"
   root :to => "recommendations#index"
@@ -66,6 +64,11 @@ ReadersDoor::Application.routes.draw do
   get 'tree'                      => "categories#show_tree",    :as => "show_tree"
   get 'search_tag'                => "tags#search_tag",         :as => "search_tag"
   get 'search_book'               => "books#search_book",       :as => "search_book"
+
+  get "panel/labels"                   => "books#labels",                     :as => "labels"   
+  get "panel/trends"                   => "books#trends",                     :as => "trends"   
+  get "panel/grids"                   => "books#grids",                     :as => "grids"   
+  get "panel/thumbs"                   => "books#thumbs",                     :as => "thumbs"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

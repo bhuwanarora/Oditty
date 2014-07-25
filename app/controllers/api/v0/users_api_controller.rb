@@ -7,10 +7,15 @@ module Api
 				debugger
 			end
 
+			def save_info
+				user_id = UserApi.save_info(session[:user_id], params)
+				render :json => {:message => "Success"}, :status => 200
+			end
+
 			def fb
 				user_id = UserApi.handle_facebook_user params
 				session[:user_id] = user_id
-				render :json => {:message => "Success"}, :status => 200				
+				render :json => {:message => "Success"}, :status => 200
 			end
 
 			def books_read
