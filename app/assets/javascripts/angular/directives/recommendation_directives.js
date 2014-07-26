@@ -422,7 +422,8 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 					$scope.bookmark_selected = true;
 					$scope.read_selected = false;
 					// $scope.glowBookmark = false;
-					websiteService.get_books_bookmarked().then(function(data){
+					var skip_count = 0;
+					websiteService.get_books_bookmarked(skip_count).then(function(data){
 						if(angular.isArray(data)){
 							$rootScope.user.books['bookmarked'] = [];
 							angular.forEach(data, function(data){
@@ -481,7 +482,8 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 					$scope.bookmark_selected = false;
 					$scope.read_selected = true;		
 					$scope.panel_selected = 'READ';
-					websiteService.get_books_read(0).then(function(data){
+					var skip_count = 0;
+					websiteService.get_books_read(skip_count).then(function(data){
 						$rootScope.user.books['read'] = [];
 						angular.forEach(data, function(value){
 							var json = {"isbn": value[0], "id": value[1], "status": true};

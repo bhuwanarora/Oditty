@@ -1,4 +1,4 @@
-websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', 'scroller', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService, scroller){
+websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', 'scroller', 'websiteService', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService, scroller, websiteService){
 
 	$scope.handle_height_of_popup = function(event){
 		if(event.deltaY > 0){
@@ -74,6 +74,35 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		    	console.log("%c load_recommendations_event", "color: green;");
 		    	_get_recommendations();
 		    	// event.stopPropagation();
+	    	}
+	    	else if($scope.bookmark_selected){
+	    		websiteService.get_books_bookmarked($rootScope.user.books.bookmarked.length).then(function(data){
+					angular.forEach(data, function(data){
+						var labels = [];
+						angular.forEach($rootScope.labels, function(value){
+							if(data[2].indexOf(value.name) >= 0){
+								var json = {"name": value.name, "checked": true};
+							}
+							else{
+								var json = {"name": value.name, "checked": false};
+							}
+							labels.push(json);	
+						}, labels);
+						var json = {"isbn": data[0], 
+									"id": data[1], 
+									"bookmark_status": true, 
+									"labels": labels};
+						this.push(json);
+					},  $rootScope.user.books['bookmarked']);
+				});
+	    	}
+	    	else if($scope.read_selected){
+	    		websiteService.get_books_read($rootScope.user.books.read.length).then(function(data){
+	    			angular.forEach(data, function(value){
+						var json = {"isbn": value[0], "id": value[1], "status": true};
+						this.push(json);
+					},  $rootScope.user.books.read);
+	    		});
 	    	}
 	    });
 

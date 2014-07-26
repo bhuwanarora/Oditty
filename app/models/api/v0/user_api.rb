@@ -111,16 +111,16 @@ module Api
 							session[:user_id] = user[0][1]
 							# request.session[:email] = email
 							info = {:profile_status => 0, :user_id => user[0][1]}
-							message = "Logged in successfully."
+							message = Constants::LoginSuccess
 						elsif  user[0][0]["data"]["password"] != params[:password]
-							message = "Email and password doesn't match."
+							message = Constants::AuthenticationFailed
 						elsif ! user[0][0]["data"]["verified"]
-							message = "Please verify your email address."
+							message = Constants::VerifyEmail
 						else
-							message = "Email and password doesn't match."
+							message = Constants::AuthenticationFailed
 						end
 					rescue => err
-						message = "Email not registered."
+						message = Constants::EmailNotRegistered
 					end
 				else
 					verification_token = SecureRandom.hex
@@ -128,18 +128,18 @@ module Api
 					invitation = {:email => email, :template => 'email_verification', :link => link}
 					if user.present?
 						if user[0][0]["data"]["verified"]
-							message = "Email already registered. Please check your inbox to reset password if you have forgotten."
+							message = Constants::EmailAlreadyRegistered
 						else
 							clause = "MATCH (user:User{email:\""+email+"\"}) SET user.verification_token = \""+verification_token+"\""
 							@neo.execute_query clause
 							SubscriptionMailer.verify_email(invitation).deliver
-							message = "Please activate your email account. We are sending you another mail."
+							message = Constants::AnotherActivationRequest
 						end
 					else
 						#FIXME: create new user in the graph
 						UsersGraphHelper.create_user(email, params[:password], verification_token)
 						SubscriptionMailer.invite(invitation).deliver
-						message = "We have sent you an email with an activation link. Please activate your account."
+						message = Constants::ActivateAccount
 					end
 				end
 				info = info.merge(:message => message, :authenticate => authenticate)

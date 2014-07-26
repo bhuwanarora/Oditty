@@ -83,7 +83,7 @@ module UsersGraphHelper
 
 	def self.get_books_bookmarked(user_id, skip_count=0)
 		@neo ||= self.neo_init
-		clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" WITH u MATCH (u)-[:Labelled]->(l:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(b:Book) RETURN b.isbn as isbn, ID(b), COLLECT(l.name) as labels"
+		clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" WITH u MATCH (u)-[:Labelled]->(l:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(b:Book) RETURN b.isbn as isbn, ID(b), COLLECT(l.name) as labels SKIP "+skip_count.to_s+" LIMIT 10"
 
 		puts clause.blue.on_red
 		@neo.execute_query(clause)["data"]
