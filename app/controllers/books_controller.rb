@@ -17,39 +17,49 @@ class BooksController < ApplicationController
     @book = Book.new
   end
 
+  # def dates
+  #   "MATCH (a:Author) WHERE a.birthdate <> '' RETURN a.name, a.birthdate, a.birthplace, a.nationality, a.gender, a.official website, a.date_of_death, a.wiki_url LIMIT 10"
+  # end
+
   def grids
     neo = Neography::Rest.new
-
-    if params[:grid_id]
-      book_ids = params[:book_ids].gsub("[", "").gsub("]", "").split(",") rescue ""
-      id_string = ""
-      clause = "MATCH (bg:BookGrid)-[r:RelatedBooks]->(:Book) WHERE ID(bg)="+params[:grid_id]+" DELETE r"
+    new_grid = params[:grid_name].present?
+    if new_grid
+      indexed_name = params[:grid_name].downcase.gsub("\"", "").gsub("'", "").gsub(" ", "").gsub("-", "").gsub(":", "") rescue ""
+      clause = "CREATE (bg:BookGrid{name:\""+params[:grid_name].to_s+"\"}) SET bg.indexed_grid_name=\""+indexed_name+"\""
       neo.execute_query clause
-      if book_ids.present?
-        for book_id in book_ids
-          if book_id.present?
-            if id_string.present?
-              id_string = id_string + " OR ID(b) = " + book_id
-            else
-              id_string = id_string + " AND (ID(b) = " + book_id
+    else
+      if params[:grid_id]
+        book_ids = params[:book_ids].gsub("[", "").gsub("]", "").split(",") rescue ""
+        id_string = ""
+        clause = "MATCH (bg:BookGrid)-[r:RelatedBooks]->(:Book) WHERE ID(bg)="+params[:grid_id]+" DELETE r"
+        neo.execute_query clause
+        if book_ids.present?
+          for book_id in book_ids
+            if book_id.present?
+              if id_string.present?
+                id_string = id_string + " OR ID(b) = " + book_id
+              else
+                id_string = id_string + " AND (ID(b) = " + book_id
+              end
             end
           end
-        end
-        id_string = id_string + ")"
-        if params[:status] == "on"
-          clause = "MATCH (b:Book), (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 1 CREATE UNIQUE (bg)-[:RelatedBooks]->(b)"
+          id_string = id_string + ")"
+          if params[:status] == "on"
+            clause = "MATCH (b:Book), (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 1 CREATE UNIQUE (bg)-[:RelatedBooks]->(b)"
+          else
+            clause = "MATCH (b:Book), (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 0 CREATE UNIQUE (bg)-[:RelatedBooks]->(b)"
+          end
         else
-          clause = "MATCH (b:Book), (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 0 CREATE UNIQUE (bg)-[:RelatedBooks]->(b)"
+          if params[:status] == "on"
+            clause = "MATCH (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 1"
+          else
+            clause = "MATCH (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 0"
+          end
         end
-      else
-        if params[:status] == "on"
-          clause = "MATCH (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 1"
-        else
-          clause = "MATCH (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 0"
-        end
+        puts clause.blue.on_red
+        neo.execute_query clause
       end
-      puts clause.blue.on_red
-      neo.execute_query clause
     end
 
     clause = "MATCH (bg:BookGrid) OPTIONAL MATCH (bg)-[:RelatedBooks]->(b:Book) RETURN bg.name, bg.timestamp, ID(bg), COLLECT(b.title), bg.status, COLLECT(ID(b))"

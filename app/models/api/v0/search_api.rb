@@ -20,7 +20,7 @@ module Api
 			def self.search_genres filter
 				neo_init
 				match_clause = "MATCH (g:Genre) "
-				return_clause = "RETURN g 
+				return_clause = "RETURN g.name, ID(g) 
                                  ORDER BY g.gr_book_count DESC "
 				if filter && filter.chop.present?
 					where_clause = "WHERE g.name =~ '(?i)"+filter+".*'"
@@ -41,7 +41,7 @@ module Api
 					tester = {:name => "BOOK:"+q.upcase}
 				elsif (type.include? 'AUTHOR') || (type.include? 'READER')
 					q = "@"+q
-					clause = "START author=node:node_auto_index('indexed_author_name:"+q+"*') RETURN DISTINCT author.author_name as name, ID(author) LIMIT "+count.to_s
+					clause = "START author=node:node_auto_index('indexed_main_author_name:"+q+"*') RETURN DISTINCT author.name as name, ID(author) LIMIT "+count.to_s
 					puts clause.blue.on_red
 					tester = {:name => "HUMAN:"+q.upcase}
 				elsif (type.include? 'TAG')

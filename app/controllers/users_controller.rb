@@ -4,7 +4,21 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    neo = Neography::Rest.new
+    if params[:id].present?
+      if params[:active].present?
+        clause = "MATCH (u:User) WHERE ID(u)="+params[:id].to_s+" SET u.active=true "
+      else
+        clause = "MATCH (u:User) WHERE ID(u)="+params[:id].to_s+" SET u.active=false "
+      end
+
+      puts clause.blue.on_red
+      neo.execute_query clause
+    end
+
+    clause = "MATCH (u:User) RETURN u, ID(u)"
+    @users = neo.execute_query(clause)["data"]
+    render :index
   end
 
   # GET /users/1
@@ -92,9 +106,9 @@ class UsersController < ApplicationController
     puts clause.blue.on_red
     user = @neo.execute_query clause
     if user["data"]
-      @message = "Email Confirmed."
+      @message = Constants::EmailConfirmed
     else
-      @message = "Email Confirmation Failed."
+      @message = Constants::EmailConfirmationFailed
     end
   end
 

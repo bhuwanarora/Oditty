@@ -132,11 +132,13 @@ websiteApp.directive('labelDropdown', ['$rootScope', '$timeout', 'widgetService'
               "name":$rootScope.user.email
             }
           }
+          $scope.$emit('gamifyCount', 10, true);
           $scope.$emit('addToNotifications', notification);
 
           var message = "SUCCESS-Added to "+$scope.book.labels[index]["name"]+" <span class='icon-bookmarks'></span>.";
         }
         else{
+          $scope.$emit('gamifyCount', 10, false);
           var message = "SUCCESS-Removed from "+$scope.book.labels[index]["name"]+" <span class='icon-bookmarks'></span>.";
         }
         var timeout_event = notify($rootScope, message, $timeout);

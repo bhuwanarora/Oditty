@@ -1,3 +1,4 @@
+
 websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', 'scroller', 'websiteService', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService, scroller, websiteService){
 
 	$scope.handle_height_of_popup = function(event){
@@ -273,12 +274,16 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				var json = {"isbn": value[0], "id": value[1]};
 				this.push(json);
 			},  $rootScope.user.books['bookmarked']);
+			var width = screen.width/$rootScope.user.books['bookmarked'].length;
+			$scope.block_style = {"width": width+"px"};
 		}
 		else{
 			angular.forEach(data, function(value){
 				var json = {"isbn": value[0], "id": value[1]};
 				this.push(json);
 			},  $scope.recommendations.books);
+			var width = screen.width/($scope.recommendations.books.length + 4);
+			$scope.block_style = {"width": width+"px"};
 		}
 	}
 

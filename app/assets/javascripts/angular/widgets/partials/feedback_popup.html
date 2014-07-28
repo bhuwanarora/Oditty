@@ -1,0 +1,8 @@
+<div class="feedback_popup black_blue_background" 
+	ng-class="{'feedback_box': get_feedback}"
+	ng-click="get_feedback = !get_feedback;">
+	<div>Feedback</div>
+	<div ng-if="get_feedback">
+		<textarea></textarea>
+	</div>
+</div>

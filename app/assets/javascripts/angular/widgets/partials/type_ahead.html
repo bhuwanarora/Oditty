@@ -2,8 +2,8 @@
   <div class="typeahead_options" 
   	   ng-hide="selected">
     <div ng-repeat="item in filtered = (items | filter:model)  track by $index" 
-    		 ng-click="handle_selection(item[title])" 
-    		 ng-class="{active:is_current($index, item[title])}" 
+    		 ng-click="handle_selection(item)" 
+    		 ng-class="{active:is_current($index, item)}" 
     		 ng-mouseenter="set_current($index)"
     		 class="option"
          ng-bind-html="highlight(model, item[title])">

@@ -401,10 +401,9 @@ module Api
 					end
 				end
 				if filters["other_filters"]["author"].present?
-					author_name =  filters["other_filters"]["author"]
-					category = "Written by "+ author_name
+					author_id =  filters["other_filters"]["author"]
 					match_clause = match_clause + ", (author:Author)-[:Wrote]->(book) "
-					clause = " author.name =~ '(?i)"+author_name+"' "
+					clause = " ID(author) = "+author_id.to_s+" "
 					if where_clause.present?
 						where_clause = where_clause + " AND"+clause
 					else
@@ -413,9 +412,8 @@ module Api
 				end
 				if filters["other_filters"]["genre"].present?
 					genre = filters["other_filters"]["genre"]
-					category = "Genre: "+genre
-					match_clause = match_clause + ", (genre:Genre)<-[:Belongs_to]-(book) "
-					clause = " genre.name =~ '(?i)"+genre+"' "
+					match_clause = match_clause + ", (genre:Genre)-[:Belongs_to]->(book) "
+					clause = " ID(genre) = "+genre.to_s+" "
 					if where_clause.present?
 						where_clause = where_clause + " AND"+clause
 					else

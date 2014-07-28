@@ -732,5 +732,24 @@ module Neo4jHelper
 		end
 	end
 
+	def self.index_authors
+		# min_id = 384295
+		# max_id = 2567037
+		# clause = 'MATCH (a:Author) SET a.indexed_main_author_name = REPLACE(a.name, " ", "")'
+		# @neo ||= self.init
+		# puts "spaces removal..."
+		# @neo.execute_query clause
+
+		# clause = 'MATCH (a:Author) SET a.indexed_main_author_name = REPLACE(a.indexed_main_author_name, "\'", "")'
+		# @neo ||= self.init
+		# puts "inverted commas removal"
+		# @neo.execute_query clause
+
+		clause = 'MATCH (a:Author) SET a.indexed_main_author_name = LOWER(a.indexed_main_author_name)'
+		@neo ||= self.init
+		puts "downcase..."
+		@neo.execute_query clause
+	end
+
 
 end

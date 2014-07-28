@@ -7,7 +7,7 @@
 			<div class="filter_header" ng-click="show_lists = false; handle_left_columns();">
 				<span>
 					<span class="icon-filter2"></span>
-					<span>&nbsp;&nbsp;Main Filters</span>
+					<span>&nbsp;&nbsp;Filter books</span>
 				</span>
 				 <a ng-href="#/user/{{$routeParams.id}}/recommendations/{{$routeParams.type}}" ng-click="reset_filters()" class="reset_filters">
 				 	<span class="icon-loop"></span>
@@ -22,7 +22,8 @@
 			 				custom-options="z_index_two genre_typeahead_options"
 			 				custom="input_filter"
 			 				model="genre" 
-			 				on-select="on_genre_selection(genre, $event)"
+			 				item-id="itemId"
+			 				on-select="on_genre_selection(itemId, $event)"
 			 				auto-populate="show_genre_options('BOOK', genre)"
 			 				on-clear="clear_filter('BOOK', 'genre')"
 			 				ng-keypress="show_genre_options('BOOK', genre)"
@@ -35,8 +36,9 @@
 			 				custom-options = "author_typeahead_options"
 			 				custom="input_filter"
 			 				model="author"
+			 				item-id="itemId"
 			 				on-clear="clear_filter('BOOK', 'author')"
-			 				on-select="on_author_selection(author)"
+			 				on-select="on_author_selection(itemId)"
 			 				ng-keypress="show_author_options('BOOK', author)"
 			 				focus-when="author_selected">
 			 	</type-ahead>

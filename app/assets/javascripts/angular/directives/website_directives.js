@@ -120,6 +120,7 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', '$document', function($ti
 	      	focusWhen: '=',
 	      	subtitle: '@',
 	      	model: '=',
+	      	itemId: '=',
 	      	onSelect: '&',
 	      	autoPopulate: '&',
 	      	onClear: '&'
@@ -142,7 +143,8 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', '$document', function($ti
 		controller: ['$scope', '$sce', 'recommendationService', function($scope, $sce, recommendationService){
 			$scope.is_current = function(index, selectedItem) {
 				if($scope.current == index){
-					$scope.currentItem = selectedItem;
+					$scope.currentItem = selectedItem.name;
+					$scope.currentItemId = selectedItem.id;
 				}
 			    return $scope.current == index;
 			};
@@ -154,7 +156,7 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', '$document', function($ti
 			$scope.navigate_options = function(){
 				var keyEnter = event.keyCode == 13;
 				if(keyEnter){
-					$scope.handle_selection($scope.currentItem);
+					$scope.handle_selection($scope.currentItem, $scope.currentItemId);
 				}
 			}
 
@@ -180,6 +182,7 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', '$document', function($ti
 				}
 				else if(backSpace){
 					if(angular.isUndefined($scope.model) || $scope.model == ""){
+						$scope.filtered = [];
 						$scope.onClear();
 					}
 				}
@@ -212,8 +215,15 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', '$document', function($ti
 				$scope.onClear();
 			}
 
-		  	$scope.handle_selection = function(selectedItem) {
-				$scope.model = selectedItem.toUpperCase();
+		  	$scope.handle_selection = function(selectedItem, selectedItemId) {
+		  		if(angular.isDefined(selectedItemId)){
+		  			$scope.itemId = selectedItemId;
+					$scope.model = selectedItem.toUpperCase();
+		  		}
+		  		else{
+		  			$scope.itemId = selectedItem.id;
+					$scope.model = selectedItem.name.toUpperCase();	
+		  		}
 			    $scope.current = 0;
 			    $scope.selected = true;
 			    $timeout(function() {
@@ -461,4 +471,18 @@ websiteApp.directive('calendar', ['$rootScope', function($rootScope){
 		}],
 		templateUrl: '/assets/angular/widgets/partials/calendar.html'
 	}
+}]);
+
+websiteApp.directive('feedbackPopup', [function() {
+  return {
+    restrict: 'A',
+    link: function(scope, elm, attrs) {
+      // var options = scope.$eval(attrs.feedbackPopup);
+      elm.draggable();
+    },
+    controller: ['$scope', function($scope){
+    	$scope.get_feedback = false;
+    }],
+    templateUrl: '/assets/angular/widgets/partials/feedback_popup.html'
+  };
 }]);

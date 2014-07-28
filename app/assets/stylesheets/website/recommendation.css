@@ -109,6 +109,7 @@
 	outline: none;
 	border: 1px solid #F1F1F1;
 	border-radius: 4px;
+	font-family: Consolas,Monaco,monospace;
 }
 
 .interaction_box .character_count{
@@ -639,7 +640,7 @@
 	font-size: 0.8em;
 	top: 40px;
 	left: 0px;
-	margin-left: 57px;
+	margin-left: 50px;
 }
 
 .typeahead_options .option{
@@ -1006,9 +1007,10 @@ and (min-width : 1824px) {
 .bottom_hover_detector{
 	position: fixed;
 	width: 100%;
-	left: 0px;
+	left: 0;
 	bottom: 0px;
-	height: 6vh;
+	background-color: #181F25;
+	display: table;
 }
 
 .toggle_filter{
@@ -1017,9 +1019,19 @@ and (min-width : 1824px) {
 	padding: 20px;
 }
 
-.progression_state{
-	position: fixed;
-	height: 100%;
+.progression_state_block{
+	display: inline-block;
+	float: left;
+	border-right: 1px solid rgba(255, 255, 255, 0.14);
+	text-align: center;
+	font-size: .7em;
+	color: transparent;
+	cursor: pointer;
+	height: 15px;
+}
+
+.progression_state_block:hover{
+	color: #717070;
 }
 
 .site_logo{
@@ -1285,3 +1297,20 @@ and (min-width : 1824px) {
 	border-radius: 4px;
 }
 
+
+.feedback_popup{
+	position: fixed;
+	top: 40%;
+	left: 30%;
+	padding: 10px;
+	border-radius: 2px;
+	cursor: move;
+	z-index: 4;
+	color: white;
+}
+
+.feedback_popup textarea{
+	width: 250px;
+	height: 100px;
+	margin-top: 10px;
+}

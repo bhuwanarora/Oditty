@@ -1,5 +1,11 @@
 namespace :graph do
 
+  desc "index authors"
+  task :index_authors => :environment do
+    include Neo4jHelper
+    Neo4jHelper.index_authors
+  end
+
   desc "grid init"
   task :grids => :environment do
     include Neo4jHelper

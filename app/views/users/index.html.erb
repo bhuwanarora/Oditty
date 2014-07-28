@@ -3,23 +3,46 @@
 <table>
   <thead>
     <tr>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>S.No</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Total Count</th>
+      <th>Date of Birth</th>
+      <th>Profile</th>
+      <th>Location</th>
+      <th>Init Book Read Count</th>
+      <th>Book Read Count</th>
+      <th>Gender</th>
+      <th>Verified</th>
+      <th>Rating Count</th>
+      <th>Bookmark Count</th>
+      <th>Active</th>
+      <th>Update</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @users.each do |user| %>
+    <% @users.each_with_index do |user, index| %>
       <tr>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= index %></td>
+        <td><%= user[0]["data"]["name"] %></td>
+        <td><%= user[0]["data"]["email"] %></td>
+        <td><%= user[0]["data"]["total_count"] %></td>
+        <td><%= user[0]["data"]["selectedDay"] %>-<%= user[0]["data"]["selectedMonth"] %>-<%= user[0]["data"]["selectedYear"] %></td>
+        <td><%= user[0]["data"]["profile"] %></td>
+        <td><%= user[0]["data"]["latitude"] %>-<%= user[0]["data"]["longitude"] %></td>
+        <td><%= user[0]["data"]["init_book_read_count"] %></td>
+        <td><%= user[0]["data"]["book_read_count"] %></td>
+        <td><%= user[0]["data"]["gender"] %></td>
+        <td><%= user[0]["data"]["verified"] %></td>
+        <td><%= user[0]["data"]["rating_count"] %></td>
+        <td><%= user[0]["data"]["bookmark_count"] %></td>
+        <form action="<%= users_path %>">
+          <input type="hidden"  value="<%= user[1] %>" name="id" />
+          <td><input type="checkbox" name="active" <% if user[0]["data"]["active"] %>checked<% end %>/></td>
+          <td><button type="submit">Sumbit</button></td>
+        </form>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New User', new_user_path %>

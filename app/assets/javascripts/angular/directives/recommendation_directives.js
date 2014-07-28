@@ -67,17 +67,17 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 
 			_country_init = function(){
 				return {"name": "<span class='icon-earth filter_icon green'></span>"+
-						"<span>&nbsp;&nbsp;&nbsp;Filter by Region</span>"};
+						"<span>&nbsp;&nbsp;&nbsp;Books by Region</span>"};
 			}
 
 			_time_init = function(){
 				return {"name": "<span class='icon-calendar filter_icon magenta'></span>"+
-						"<span>&nbsp;&nbsp;&nbsp;Filter by Era</span>"};
+						"<span>&nbsp;&nbsp;&nbsp;Books by Era</span>"};
 			}
 
 			_read_time_init = function(){
 				return {"name": "<span class='icon-clock filter_icon cyan'></span>"+
-						"<span>&nbsp;&nbsp;&nbsp;Filter by Reading Time</span>"};
+						"<span>&nbsp;&nbsp;&nbsp;Books by Reading Time</span>"};
 			}
 
 			_init_dropdown_filters = function(){
@@ -189,7 +189,8 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 				recommendationService.get_genres(filter).then(function(data){
 					$scope.genres = [];
 					angular.forEach(data.genres.data, function(value){
-						this.push(value[0].data);
+						var json = {"name": value[0], "id": value[1]};
+						this.push(json);
 					}, $scope.genres);
 			    });
 			}
@@ -217,7 +218,7 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 				websiteService.search(params, "AUTHOR", 3).then(function(data){
 					$scope.authors = [];
 					angular.forEach(data.results.data, function(value){
-						var json = {"name": value[0]};
+						var json = {"name": value[0], "id": value[1]};
 						this.push(json);
 					}, $scope.authors);
 			    });

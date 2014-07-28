@@ -106,12 +106,15 @@ module Api
 				user = @neo.execute_query(clause)["data"]
 				if signin
 					begin
-						if user[0][0]["data"]["password"] == params[:password] && user[0][0]["data"]["verified"]
+						active_user_authenticated = user[0][0]["data"]["password"] == params[:password] && user[0][0]["data"]["verified"] && user[0][0]["data"]["active"] == true
+						user_authenticated = user[0][0]["data"]["password"] == params[:password] && user[0][0]["data"]["verified"]
+						if active_user_authenticated
 							authenticate = true
 							session[:user_id] = user[0][1]
-							# request.session[:email] = email
 							info = {:profile_status => 0, :user_id => user[0][1]}
 							message = Constants::LoginSuccess
+						elsif user_authenticated
+							message = Constants::PendingActivation
 						elsif  user[0][0]["data"]["password"] != params[:password]
 							message = Constants::AuthenticationFailed
 						elsif ! user[0][0]["data"]["verified"]

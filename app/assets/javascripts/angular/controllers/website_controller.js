@@ -39,7 +39,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 			swipe_time = 1000;
 		}
 
-		$scope.progression_state = {"width": progression_width+"px"};
+		// $scope.progression_state = {"width": progression_width+"px"};
 		
 		var delta_x = screen.width*(0.35);
 		// var delta_x = screen.width;
@@ -70,7 +70,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 			swipe_time = 1000;
 		}
 
-		$scope.progression_state = {"width": progression_width+"px"};
+		// $scope.progression_state = {"width": progression_width+"px"};
 
 		if(lessThanOnePageLeft){
 			if(!$rootScope.loading){

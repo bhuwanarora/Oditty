@@ -1,6 +1,7 @@
 <!-- <div class="go_left" ng-click="move_left()"></div>
 <div class="go_right" ng-click="move_right()"></div> -->
 <!-- <horizontal-scroller></horizontal-scroller> -->
+<div feedback-popup></div>
 <div msd-wheel="bindHorizontalScroll($event, $delta, $deltaX, $deltaY)" 
    ng-animate="msd-wheel"
    class="recommendations"
@@ -13,6 +14,7 @@
 		<div class="vertical_padder_active"></div>
 
 		<!-- <div class="recommendations_page"><search-bar></search-bar></div> -->
+		
 		<info-card></info-card>
 		
 		<div ng-switch on="panel_selected" class="full_height">
@@ -185,7 +187,8 @@
 		<div ng-if="focused_reader"><focused-reader></focused-reader></div>
 
 		<div class="bottom_hover_detector">
-			<div class="progression_state" ng-style="progression_state"></div>
+			<!-- <div class="progression_state" ng-style="progression_state"></div> -->
+			<div ng-repeat="book in recommendations.books" class="progression_state_block" ng-style="block_style">{{$index+1}}</div>
 		</div>
 		<div class="top_hover_detector"></div>
 	
