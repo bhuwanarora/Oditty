@@ -7,10 +7,10 @@
 		<th>Active</th>
 		<th>Submit</th>
 	</tr>
-	<% @trends.each do |trend|%>
+	<% @trends.sort_by!{|s| Time.at(s[1])}.reverse.each do |trend|%>
 		<tr>
 			<td><%= trend[0] %></td>
-			<td><%= trend[1] %></td>
+			<td><%= Time.at(trend[1]).strftime("%d-%m-%y") %></td>
 			<td>
 				<input class="search_box" />
 			</td>

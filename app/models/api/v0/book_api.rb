@@ -250,13 +250,22 @@ module Api
 					elsif book_name.present?
 						clause = self.get_books_by_title filters
 					else
-						clause = self.get_filtered_books filters
+						clause = self.get_filtered_books(filters, last_book)
 					end
 				elsif trends
+					unless last_book.present?
+						last_book = Constants::BestBook
+					end
 					clause = self.get_trends(filters["trend_id"])
 				elsif specific_list
+					unless last_book.present?
+						last_book = Constants::BestBook
+					end
 					clause = self.get_specific_lists(filters["filter_id"], user_id)
 				else
+					unless last_book.present?
+						last_book = Constants::BestBook
+					end
 					clause = self.get_basic_recommendations(filters, last_book)
 				end
 
@@ -352,90 +361,162 @@ module Api
 				clause
 			end
 
-			def self.get_filtered_books filters
+			def self.get_filtered_books(filters, last_book)
 				where_clause = ""
 				match_clause = ""
 				skip_clause = ""
 				book_ids = ($redis.get 'book_ids').split(",")
 				random = Random.new.rand(1..100)
-				unless filters["reset"]
-					if filters["reset_count"]
-						skip_clause = "SKIP "+(filters["reset_count"] * 10).to_s+" "
-						puts "RESET "+filters["reset_count"].to_s+" FALSE".red.on_yellow.blink
+				read_time = filters["other_filters"]["readingTime"].downcase.gsub(" ", "") rescue ""
+				only_read_time = filters["other_filters"].keys.length == 1 && read_time.present?
+				if only_read_time
+					if read_time == Constants::TinyRead
+						unless last_book.present?
+							last_book = Constants::BestTinyRead
+						end
+						init_match_clause = "START b=node:node_auto_index('indexed_title:"+last_book+"') "
+						match_clause = "MATCH p=(b)-[:NextTinyRead*..5]->(next_book) WITH last(nodes(p)) as book MATCH(book) "
+					elsif read_time == Constants::SmallRead
+						unless last_book.present?
+							last_book = Constants::BestSmallRead
+						end
+						init_match_clause = "START b=node:node_auto_index('indexed_title:"+last_book+"') "
+						match_clause = "MATCH p=(b)-[:NextSmallRead*..5]->(next_book) WITH last(nodes(p)) as book MATCH(book) "
+					elsif read_time == Constants::NormalRead
+						unless last_book.present?
+							last_book = Constants::BestNormalRead
+						end
+						init_match_clause = "START b=node:node_auto_index('indexed_title:"+last_book+"') "
+						match_clause = "MATCH p=(b)-[:NextNormalRead*..5]->(next_book) WITH last(nodes(p)) as book MATCH(book) "
+					elsif read_time == Constants::LongRead
+						unless last_book.present?
+							last_book = Constants::BestLongRead
+						end
+						init_match_clause = "START b=node:node_auto_index('indexed_title:"+last_book+"') "
+						match_clause = "MATCH p=(b)-[:NextLongRead*..5]->(next_book) WITH last(nodes(p)) as book MATCH(book) "
+					end
+				else
+					time_group = filters["other_filters"]["timeGroup"].split("(")[0].gsub(" " , "").downcase rescue ""
+					if time_group.present?
+						case time_group
+						when Constants::OldEnglishLiterature
+							init_match_clause = "MATCH (book:OldEnglishLiterature) "
+						when Constants::MiddleEnglishLiterature
+							init_match_clause = "MATCH (book:MiddleEnglishLiterature) "
+						when Constants::EnglishRenaissance
+							init_match_clause = "MATCH (book:EnglishRenaissance) "
+						when Constants::NeoClassicalPeriod
+							init_match_clause = "MATCH (book:NeoClassicalPeriod) "
+						when Constants::Romanticism
+							init_match_clause = "MATCH (book:Romanticism) "
+						when Constants::VictorianLiterature
+							init_match_clause = "MATCH (book:VictorianLiterature) "
+						when Constants::Modernism
+							init_match_clause = "MATCH (book:Modernism) "
+						when Constants::PostModernLiterature
+							init_match_clause = "MATCH (book:PostModernLiterature) "
+						when Constants::TwentiethCenturyLiterature
+							init_match_clause = "MATCH (book:TwentiethCenturyLiterature) "
+						end
+					else
+						init_match_clause = "MATCH (book:Book) "
+					end
+					# random_clause = "ID(book)%"+random.to_s+"=0 AND rand() > 0.3 "
+					with_clause = "WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight "
+					order_clause = ", total_weight, rating_weight ORDER BY rating_weight DESC, total_weight DESC, book.gr_rating DESC "
+					limit_clause = " LIMIT 5 "
+
+					unless filters["reset"]
+						if filters["reset_count"]
+							skip_clause = "SKIP "+(filters["reset_count"] * 10).to_s+" "
+							puts "RESET "+filters["reset_count"].to_s+" FALSE".red.on_yellow.blink
+						end
 					end
 				end
-				init_match_clause = "MATCH (book:Book) "
-				distinct_clause = "ALL (id in "+book_ids.to_s+" WHERE toInt(id) <> ID(book)) "
-				random_clause = "ID(book)%"+random.to_s+"=0 AND rand() > 0.3 "
-				with_clause = "WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight "
-				return_clause = "RETURN book.isbn as isbn, ID(book)"
-				order_clause = ", total_weight, rating_weight ORDER BY rating_weight DESC, total_weight DESC, book.gr_rating DESC "
-				limit_clause = " LIMIT 10 "
+				return_clause = "RETURN book.isbn as isbn, ID(book), book.indexed_title"
+				# distinct_clause = "ALL (id in "+book_ids.to_s+" WHERE toInt(id) <> ID(book)) "
 
 				if filters["other_filters"]["country"].present?
 					where_clause = where_clause + ""
 					match_clause = match_clause + ""
 				end
-				if filters["other_filters"]["readingTime"].present?
-					read_time = filters["other_filters"]["readingTime"]
-					match_clause = match_clause + ", (rt:ReadTime{name: '"+read_time+"'})<-[:WithReadingTime]-(book) "
-					if where_clause.present?
-						where_clause = where_clause + " AND book.page_count <> 0 "
-					else
-						where_clause = where_clause + " book.page_count <> 0 "
-					end
-				end
-				if filters["other_filters"]["timeGroup"].present?
-					category = "Era: "+filters["other_filters"]["timeGroup"].gsub(/\(.*?\)/, "").strip
-					time_range =  filters["other_filters"]["timeGroup"][/\(.*?\)/]
-									.gsub("(","")
-									.gsub(")","")
-									.split("-")
-					match_clause = match_clause + ", (book)-[:Published_in]->(y:Year) "
-					clause = " toInt(y.year) > "+time_range[0]+
-							" AND toInt(y.year) < "+time_range[1]+" "
-					if where_clause.present?
-						where_clause = where_clause + " AND"+clause
-					else
-						where_clause = where_clause + clause
-					end
-				end
+				
+				# if filters["other_filters"]["timeGroup"].present?
+				# 	category = "Era: "+filters["other_filters"]["timeGroup"].gsub(/\(.*?\)/, "").strip
+				# 	time_range =  filters["other_filters"]["timeGroup"][/\(.*?\)/]
+				# 					.gsub("(","")
+				# 					.gsub(")","")
+				# 					.split("-")
+				# 	match_clause = match_clause + ", (book)-[:Published_in]->(y:Year) "
+				# 	next_Where_clause = " toInt(y.year) >= "+time_range[0]+
+				# 			" AND toInt(y.year) < "+time_range[1]+" "
+				# 	if where_clause.present?
+				# 		where_clause = where_clause + " AND" + next_Where_clause
+				# 	else
+				# 		where_clause = where_clause + next_Where_clause
+				# 	end
+				# end
 				if filters["other_filters"]["author"].present?
 					author_id =  filters["other_filters"]["author"]
 					match_clause = match_clause + ", (author:Author)-[:Wrote]->(book) "
-					clause = " ID(author) = "+author_id.to_s+" "
+					next_Where_clause = " ID(author) = "+author_id.to_s+" "
 					if where_clause.present?
-						where_clause = where_clause + " AND"+clause
+						where_clause = where_clause + " AND" + next_Where_clause
 					else
-						where_clause = where_clause + clause
+						where_clause = where_clause + next_Where_clause
 					end
 				end
 				if filters["other_filters"]["genre"].present?
 					genre = filters["other_filters"]["genre"]
 					match_clause = match_clause + ", (genre:Genre)-[:Belongs_to]->(book) "
-					clause = " ID(genre) = "+genre.to_s+" "
+					next_Where_clause = " ID(genre) = "+genre.to_s+" "
 					if where_clause.present?
-						where_clause = where_clause + " AND"+clause
+						where_clause = where_clause + " AND"+next_Where_clause
 					else
-						where_clause = where_clause + clause
+						where_clause = where_clause + next_Where_clause
+					end
+				end
+				if !only_read_time && filters["other_filters"]["readingTime"].present?
+					if read_time == Constants::TinyRead
+						next_Where_clause = " toInt(book.page_count) <= 50 "
+					elsif read_time == Constants::SmallRead
+						next_Where_clause = " toInt(book.page_count) > 50 AND toInt(book.page_count) <= 100 "
+					elsif read_time == Constants::NormalRead
+						next_Where_clause = " toInt(book.page_count) < 100 AND toInt(book.page_count) <= 250"
+					elsif read_time == Constants::LongRead
+						next_Where_clause = " toInt(book.page_count) > 250 "
+					end
+					if where_clause.present?
+						where_clause = where_clause + " AND"+next_Where_clause
+					else
+						where_clause = where_clause + next_Where_clause
 					end
 				end
 
 				puts where_clause.present?
 				puts match_clause.present?
-				if where_clause.present? && match_clause.present?
-					clause = init_match_clause+match_clause+"WHERE "+where_clause+with_clause+return_clause+order_clause+skip_clause+limit_clause
-				# elsif match_clause.present?
-				# 	clause = init_match_clause+match_clause+with_clause+return_clause+order_clause+skip_clause+limit_clause
-				# elsif where_clause.present?
-				# 	if filters["other_filters"]["show_all"]
-				# 		clause = init_match_clause+"WHERE "+where_clause+return_clause+limit_clause
-				# 	else
-				# 		clause = init_match_clause+"WHERE "+where_clause+return_clause
-				# 	end
-				else
-					category = "Must Reads"
-					clause = init_match_clause+"WHERE "+random_clause+with_clause+return_clause+order_clause+skip_clause+limit_clause
+			
+				clause = init_match_clause
+				if match_clause.present?
+					clause = clause + match_clause
+				end
+				if where_clause.present?
+					clause = clause + "WHERE "+where_clause
+				end
+				if with_clause.present?
+					clause = clause + with_clause
+				end
+				if return_clause.present?
+					clause = clause + return_clause
+				end
+				if order_clause.present?
+					clause = clause + order_clause
+				end
+				if skip_clause
+					clause = clause + skip_clause
+				end
+				if limit_clause
+					clause = clause + limit_clause
 				end
 				clause
 			end

@@ -25,6 +25,14 @@ module Api
                 time_groups
 			end
 
+			def self.get_root_categories
+				neo_init
+				clause = "MATCH (category:Category) WHERE category.icon IS NOT NULL AND category.icon <> '' RETURN category.name, ID(category), category.icon LIMIT 28"
+				puts clause.blue.on_red
+				info = @neo.execute_query(clause)["data"]
+				info
+			end
+
 			private
 			def self.neo_init
 				@neo = Neography::Rest.new

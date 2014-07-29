@@ -11,7 +11,7 @@ module Api
 
 			def grid
 				@neo = Neography::Rest.new
-				clause = "MATCH (b:Book) RETURN b.isbn, ID(b), b.indexed_title LIMIT 20"
+				clause = "MATCH (bg:BookGrid) WHERE bg.status = 1 WITH bg OPTIONAL MATCH (bg)-[:RelatedBooks]->(book:Book) RETURN bg.name, book.isbn, ID(book), ID(bg)"
 				puts clause.blue.on_red
 				info = @neo.execute_query(clause)["data"]
 				render :json => info, :status => 200
@@ -50,18 +50,28 @@ module Api
 				filter_type = (JSON.parse params[:q])["filter_type"]
 				filters = JSON.parse(params[:q])
 				if filter_type == "BOOK"
-					last_book = $redis.get 'last_book'
-					if last_book
-						books = BookApi.recommendations(last_book, filters, session[:user_id])
+					reading_time_filter = filters["other_filters"]["readingTime"].present?
+					if reading_time_filter
+						if filters["reset"]
+							$redis.set 'last_filter_book', nil
+						end
+						last_book = $redis.get 'last_filter_book'
 					else
-						books = BookApi.recommendations("thehungergames", filters, session[:user_id])
+						last_book = $redis.get 'last_book'
 					end
-					not_recommendations = filters["other_filters"].present? || 
-							filters["other_filters"]["title"].present? || 
-							filters["other_filters"]["id"].present?
-					if books.present? && !not_recommendations && books.length > 0
-						$redis.set 'last_book', books[books.length-1][2].gsub(" ", "")
+					books = BookApi.recommendations(last_book, filters, session[:user_id])
+
+					basic_recommendations = !filters["other_filters"].present?
+					non_zero_result = books.present? && books.length > 0
+					if non_zero_result
+						if basic_recommendations 
+							$redis.set 'last_book', books[books.length-1][2].gsub(" ", "")
+							$redis.set 'last_filter_book', nil
+						elsif reading_time_filter
+							$redis.set 'last_filter_book', books[books.length-1][2].gsub(" ", "")
+						end
 					end
+					
 					recommendations =  {:books => books}
 				elsif filter_type == "AUTHOR"
 					authors = AuthorApi.recommendations

@@ -327,7 +327,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		$rootScope.user = {'books': {'bookmarked':[], 'read': []},
 						'authors': {'bookmarked': [], 'follow': []},
 						'readers': {'follow': []},
-						'logged': false};	
+						'logged': false};
 		console.timeEnd("websiteAppController");
 	}
 

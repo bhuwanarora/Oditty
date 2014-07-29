@@ -121,11 +121,11 @@
 		<div ng-switch-when="2">
 			<div class="header">
 				Choose atleast 3 genres you like
-				<div class="description_box center" msd-wheel="stop_horizontal_scroll($event)">
-					<div ng-repeat="genre in genres  | orderBy:genre.name">
-						<toggle data="genre"></toggle>
-						<!-- <div class="filter inactive_filter">{{genre.name}}</div> -->
-					</div>
+			</div>
+			<div class="header center scrollbar" msd-wheel="stop_horizontal_scroll($event)">
+				<div ng-repeat="genre in genres  | orderBy:genre.name">
+					<toggle data="genre"></toggle>
+					<!-- <div class="filter inactive_filter">{{genre.name}}</div> -->
 				</div>
 			</div>
 		</div>

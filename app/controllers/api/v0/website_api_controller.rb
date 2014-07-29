@@ -4,10 +4,9 @@ module Api
 			def genres
                 @neo ||= neo_init
 				filter = params[:q]
-                genres = SearchApi.search_genres filter
+                genres = WebsiteApi.get_root_categories
                 
-				results = {:genres => genres}
-				render :json => results, :status => 200
+				render :json => genres, :status => 200
 			end
 
 			def trends

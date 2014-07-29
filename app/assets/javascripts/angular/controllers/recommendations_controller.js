@@ -1,5 +1,4 @@
-
-websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', 'scroller', 'websiteService', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService, scroller, websiteService){
+websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', 'scroller', 'websiteService', 'sharedService', '$cookieStore', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService, scroller, websiteService, sharedService, $cookieStore){
 
 	$scope.handle_height_of_popup = function(event){
 		if(event.deltaY > 0){
@@ -145,7 +144,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         	var specific_list = angular.isDefined($routeParams.filter_id);
         	var trends = angular.isDefined($routeParams.trend_id);
         	if(specific_list){
-        		_show_bookmark_tab();
+        		if($cookieStore.get('tab') == "BOOKMARK"){
+        			_show_bookmark_tab();
+        		}
         		$rootScope.filters["filter_id"] = $routeParams.filter_id;
         	}
         	else if(trends){
@@ -287,6 +288,46 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		}
 	}
 
+	_get_grids = function(){
+		var threeSeconds = 3000;
+		var push_grids_timer_event = $timeout(function(){
+			recommendationService.get_grid_books().then(function(data){
+				var book_grid = [];
+				var grid_name = ""
+				for(var i=0; i < data.length; i++){
+					var new_grid = grid_name != data[i][0];
+					if(new_grid){
+						var not_first_iteration = grid_name != "";
+						if(not_first_iteration){
+							if(book_grid.length > 4){
+								var grid = {"grid_text": grid_name, 
+											"grid_books": book_grid, 
+											"is_grid": true, 
+											"id": grid_id};
+								$scope.recommendations.books.splice(3, 0, grid);
+							}
+							book_grid = [];
+						}
+						grid_name = data[i][0];
+						grid_id = data[i][3];
+					}
+					var json = {"isbn": data[i][1], "id": data[i][2]};
+					book_grid.push(json);
+				}
+				if(book_grid.length > 4){
+					var grid = {"grid_text": grid_name, 
+								"grid_books": book_grid, 
+								"is_grid": true, 
+								"id": grid_id};
+					$scope.recommendations.books.splice(3, 0, grid);
+				}
+			});
+		}, threeSeconds);
+		$scope.$on('destroy', function(){
+			$timeout.cancel(push_grids_timer_event);
+		});
+	}
+
 	_push_recommendations = function(){
 		var fiveMinute = 3000;//300000
 		push_books_timer_event = $timeout(function(){
@@ -351,6 +392,12 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
       	});
     }
 
+    _init_user = function(){
+    	if(angular.isUndefined($rootScope.user) || angular.isUndefined($rootScope.user.id)){
+    		sharedService.is_logged_in($scope);
+    	}
+    }
+
 	_init = function(){
 		//oneMin = 60000
 		$scope.$routeParams = $routeParams;
@@ -383,8 +430,10 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         $scope.$on('destroy', function(){
         	$timeout.cancel(timeout_event);
         });
-        _push_recommendations();
+        // _push_recommendations();
+        _get_grids();
         _bind_destroy();
+        _init_user();
         // _handle_focused_book();
         _get_friends();
     	// $scope.$emit('moveRight');    

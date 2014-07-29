@@ -1,7 +1,7 @@
 var websiteApp = angular.module('websiteApp', ['ngRoute', 'ngAnimate', 
                   'monospaced.mousewheel', 'facebook', 
                   'directive.g+signin', 'ngMap', 'cropme',
-                  'duScroll', 'ngDropdowns', 'sticky', 'filtersApp']);
+                  'duScroll', 'ngDropdowns', 'sticky', 'filtersApp', 'ngCookies']);
 
 websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
   $routeProvider
@@ -65,9 +65,10 @@ websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvid
   // $locationProvider.html5Mode(true);
 }]);
 
-websiteApp.run(['$rootScope', '$location', function($rootScope, $location){
-  $rootScope.$on("$routeChangeStart", function(event, next, current) {
-    if(!$rootScope.user.logged){
+websiteApp.run(['$rootScope', '$location', '$cookieStore', function($rootScope, $location, $cookieStore){
+  $rootScope.$on("$routeChangeStart", function(event, next, current){
+    var unauthenticated_user = !$rootScope.user.logged && !$cookieStore.get('logged');
+    if(unauthenticated_user){
       // no logged user, we should be going to #login
       if(next.templateUrl == "/assets/angular/widgets/partials/search.html"){
         // already going to #login, no redirect needed
@@ -75,7 +76,7 @@ websiteApp.run(['$rootScope', '$location', function($rootScope, $location){
         // not going to #login, we should redirect now
         $location.path( "/search" );
       }
-    }         
+    }
   });
 }]);
 

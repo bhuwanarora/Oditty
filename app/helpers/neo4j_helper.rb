@@ -751,5 +751,101 @@ module Neo4jHelper
 		@neo.execute_query clause
 	end
 
+	def self.sorted_readtime_books
+		@neo ||= self.init
+		clause = "MATCH ()-[r:NextTinyRead]->() DELETE r"
+		puts "deleting...".green
+		@neo.execute_query clause
+
+		clause = "MATCH (book:Book) WHERE toInt(book.page_count) <> 0 AND toInt(book.page_count) <= 50 WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight ORDER BY total_weight DESC, rating_weight DESC WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:NextTinyRead]->(p2))))"
+		puts "adding tiny reads in form of sorted linked lists...".green
+		@neo.execute_query clause
+
+		# clause = "MATCH (book:Book) WHERE book.page_count <> 0 AND toInt(book.page_count) > 50 AND toInt(book.page_count) < 100 WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight ORDER BY total_weight DESC, rating_weight DESC WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:NextSmallRead]->(p2))))"
+		# puts "adding Small reads in form of sorted linked lists...".green
+		# @neo.execute_query clause
+
+		
+		# clause = "MATCH (book:Book) WHERE book.page_count <> 0 AND toInt(book.page_count) > 100 AND toInt(book.page_count) < 250 WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight ORDER BY total_weight DESC, rating_weight DESC WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:NextNormalRead]->(p2))))"
+		# puts "adding normal reads in form of sorted linked lists...".green
+		# @neo.execute_query clause
+
+		# clause = "MATCH (book:Book) WHERE book.page_count <> 0 AND toInt(book.page_count) > 250 WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight ORDER BY total_weight DESC, rating_weight DESC WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:NextLongRead]->(p2))))"
+		# puts "adding long reads in form of sorted linked lists...".green
+		# @neo.execute_query clause
+
+		# clause = "MATCH ()-[r1:WithReadingTime]->(:ReadTime) DELETE r1"
+		# puts "Delete WithReadingTime relations...".green
+		# @neo.execute_query clause	
+	end
+
+	def self.delete_belongs_to_relationship_on_categories
+		@neo ||= self.init
+		clause = "MATCH (c:Category)-[r:Belongs_to]-(b) CREATE UNIQUE (c)<-[:FromCategory]-(b) DELETE r"
+		@neo.execute_query clause	
+	end
+
+	def self.get_best_reads_for_time
+		@neo ||= self.init
+		clause = "MATCH (book)-[r:NextTinyRead]->(:Book) WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight ORDER BY total_weight DESC RETURN ID(book) LIMIT 1"
+		puts @neo.execute_query(clause)["data"][0][0].to_s.green
+
+		clause = "MATCH (book)-[r:NextSmallRead]->(:Book) WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight ORDER BY total_weight DESC RETURN ID(book) LIMIT 1"
+		puts @neo.execute_query(clause)["data"][0][0].to_s.green
+
+		clause = "MATCH (book)-[r:NextNormalRead]->(:Book) WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight ORDER BY total_weight DESC RETURN ID(book) LIMIT 1"
+		puts @neo.execute_query(clause)["data"][0][0].to_s.green
+
+		clause = "MATCH (book)-[r:NextLongRead]->(:Book) WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight ORDER BY total_weight DESC RETURN ID(book) LIMIT 1"
+		puts @neo.execute_query(clause)["data"][0][0].to_s.green
+	end
+
+	def self.remove_tiny_reads_with_zero_count
+		@neo ||= self.init
+		clause = "MATCH (b1:Book)-[r1:NextTinyRead]-(b:Book)-[r2:NextTinyRead]->(b2:Book) WHERE toInt(b.page_count) = 0 CREATE (b1)-[:NextTinyRead]->(b2) DELETE r1, r2"
+		puts clause.green
+		@neo.execute_query clause
+	end
+
+	def self.set_year_labels
+		@neo ||= self.init
+		# MATCH (book:Modernism) RETURN COUNT(book)
+		clause = "MATCH (book)-[:Published_in]->(y:Year) WHERE toInt(y.year) >= 658 AND toInt(y.year) < 1100 SET book :OldEnglishLiterature"
+		puts "OldEnglishLiterature".green
+		@neo.execute_query clause
+
+		clause = "MATCH (book)-[:Published_in]->(y:Year) WHERE toInt(y.year) >= 1100 AND toInt(y.year) < 1500 SET book :MiddleEnglishLiterature"
+		puts "MiddleEnglishLiterature".green
+		@neo.execute_query clause
+
+		clause = "MATCH (book)-[:Published_in]->(y:Year) WHERE toInt(y.year) >= 1500 AND toInt(y.year) < 1660 SET book :EnglishRenaissance"
+		puts "EnglishRenaissance".green
+		@neo.execute_query clause
+
+		clause = "MATCH (book)-[:Published_in]->(y:Year) WHERE toInt(y.year) >= 1660 AND toInt(y.year) < 1798 SET book :NeoClassicalPeriod"
+		puts "NeoClassicalPeriod".green
+		@neo.execute_query clause
+
+		clause = "MATCH (book)-[:Published_in]->(y:Year) WHERE toInt(y.year) >= 1798 AND toInt(y.year) < 1837 SET book :Romanticism"
+		puts "Romanticism".green
+		@neo.execute_query clause
+
+		clause = "MATCH (book)-[:Published_in]->(y:Year) WHERE toInt(y.year) >= 1837 AND toInt(y.year) < 1901 SET book :VictorianLiterature"
+		puts "VictorianLiterature".green
+		@neo.execute_query clause
+
+		clause = "MATCH (book)-[:Published_in]->(y:Year) WHERE toInt(y.year) >= 1900 AND toInt(y.year) < 1939 SET book :Modernism"
+		puts "Modernism".green
+		@neo.execute_query clause
+
+		clause = "MATCH (book)-[:Published_in]->(y:Year) WHERE toInt(y.year) >= 1939 AND toInt(y.year) < 2000 SET book :PostModernLiterature"
+		puts "PostModernLiterature".green
+		@neo.execute_query clause
+
+		clause = "MATCH (book)-[:Published_in]->(y:Year) WHERE toInt(y.year) >= 2000 AND toInt(y.year) < 2015 SET book :TwentiethCenturyLiterature"
+		puts "TwentiethCenturyLiterature".green
+		@neo.execute_query clause
+	end
+
 
 end

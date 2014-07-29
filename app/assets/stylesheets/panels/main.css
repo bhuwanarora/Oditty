@@ -1,0 +1,24 @@
+.books{
+	width: 400px;
+}
+
+.book_name{
+	background-color: #918FB5;
+	color: white;
+	padding: 2px;
+	margin: 2px;
+	cursor: crosshair;
+}
+
+.search_box{
+	width: 180px;
+	height: 20px;
+}
+
+.delete{
+	cursor: pointer;
+}
+
+tr:hover{
+	background-color: #F3F3F3;
+}

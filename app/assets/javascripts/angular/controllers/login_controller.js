@@ -1,4 +1,4 @@
-websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteService', 'Facebook', 'stropheService', '$timeout', function($scope, $rootScope, websiteService, Facebook, stropheService, $timeout){
+websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteService', 'Facebook', 'stropheService', '$timeout', '$cookieStore', function($scope, $rootScope, websiteService, Facebook, stropheService, $timeout, $cookieStore){
 	$scope.submit = function(event){
 		var enter_pressed = event.keyCode == 13;
 		if(enter_pressed){
@@ -29,7 +29,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 				$timeout.cancel(timeout_event);
 			});
 			_is_logged_in();
-			$scope.$emit('getNotifications');
+			// $scope.$emit('getNotifications');
 		}
 
 		var error_callback = function(reason){
@@ -151,6 +151,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
   				websiteService.get_user_details().then(function(data){
 	  		  		angular.extend($rootScope.user, data);
 	  	   		});
+	  	   		$cookieStore.put('logged', true);
   				stropheService.start_connection();
   			}
   		});

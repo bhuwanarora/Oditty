@@ -4,6 +4,7 @@ module Constants
 	RatingPoints				= 10
 	BookmarkPoints				= 10
 	ReadTimePoints				= 10
+
 	LoginSuccess				= "Logged in successfully."
 	AuthenticationFailed		= "Email and password doesn't match."
 	VerifyEmail					= "Please verify your email address."
@@ -14,4 +15,25 @@ module Constants
 	EmailConfirmed				= "Email Verified. We have recieved your request and will soon be able give access. Please bear with us."
 	EmailConfirmationFailed		= "Email Confirmation Failed."
 	PendingActivation			= "We will soon give access to your account. Please bear with us."
+
+	BestTinyRead				= "thelosthero"
+	BestSmallRead				= "thelittleprince"
+	BestNormalRead				= "harrypotterandthephilosophersstone"
+	BestLongRead				= "thehungergames"
+	BestBook					= "thehungergames"
+
+	TinyRead 					= "foraflightjourney"
+	SmallRead 					= "foraweekendgetaway"
+	NormalRead 					= "foraweekholiday"
+	LongRead 					= "foramonthvacation"
+
+	OldEnglishLiterature		= "oldenglishliterature"
+	MiddleEnglishLiterature		= "middleenglishliterature"
+	EnglishRenaissance 			= "englishrenaissance"
+	NeoClassicalPeriod 			= "neoclassicalperiod"
+	Romanticism 				= "romanticism"
+	VictorianLiterature 		= "victorianliterature"
+	Modernism 					= "modernism"
+	PostModernLiterature 		= "postmodernliterature"
+	TwentiethCenturyLiterature	= "20thcenturyliterature"
 end

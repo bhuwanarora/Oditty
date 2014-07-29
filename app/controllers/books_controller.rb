@@ -21,14 +21,35 @@ class BooksController < ApplicationController
   #   "MATCH (a:Author) WHERE a.birthdate <> '' RETURN a.name, a.birthdate, a.birthplace, a.nationality, a.gender, a.official website, a.date_of_death, a.wiki_url LIMIT 10"
   # end
 
-  def grids
-    neo = Neography::Rest.new
-    new_grid = params[:grid_name].present?
-    if new_grid
+  def delete_grid
+    begin
+      neo = Neography::Rest.new
+      clause = "MATCH (bg:BookGrid) WHERE ID(bg)="+params[:id].to_s+" OPTIONAL MATCH (bg)-[r:RelatedBooks]->()  DELETE bg, r"
+      puts clause.blue.on_red
+      neo.execute_query clause
+      render :json => {:message => "Success"}, :status => 200
+    rescue Exception => e
+      puts e
+      render :json => {:message => e}, :status => 500
+    end
+  end
+
+  def add_grid
+    begin
+      neo = Neography::Rest.new
       indexed_name = params[:grid_name].downcase.gsub("\"", "").gsub("'", "").gsub(" ", "").gsub("-", "").gsub(":", "") rescue ""
       clause = "CREATE (bg:BookGrid{name:\""+params[:grid_name].to_s+"\"}) SET bg.indexed_grid_name=\""+indexed_name+"\""
       neo.execute_query clause
-    else
+      render :json => {:message => "Success"}, :status => 200
+    rescue Exception => e
+      puts e
+      render :json => {:message => e}, :status => 500
+    end
+  end
+
+  def update_grid
+    begin
+      neo = Neography::Rest.new
       if params[:grid_id]
         book_ids = params[:book_ids].gsub("[", "").gsub("]", "").split(",") rescue ""
         id_string = ""
@@ -60,7 +81,15 @@ class BooksController < ApplicationController
         puts clause.blue.on_red
         neo.execute_query clause
       end
+      render :json => {:message => "Success"}, :status => 200
+    rescue Exception => e
+      render :json => {:error => e}, :status => 500
     end
+    
+  end
+
+  def grids
+    neo = Neography::Rest.new
 
     clause = "MATCH (bg:BookGrid) OPTIONAL MATCH (bg)-[:RelatedBooks]->(b:Book) RETURN bg.name, bg.timestamp, ID(bg), COLLECT(b.title), bg.status, COLLECT(ID(b))"
     puts clause.blue.on_red

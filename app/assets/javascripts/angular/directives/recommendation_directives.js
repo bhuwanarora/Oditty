@@ -411,7 +411,7 @@ websiteApp.directive('mainHeader', ['$timeout', '$rootScope', function($timeout,
 	}
 }]);
 
-websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'websiteService', '$timeout', function(scroller, $rootScope, websiteService, $timeout){
+websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'websiteService', '$timeout', '$cookieStore', function(scroller, $rootScope, websiteService, $timeout, $cookieStore){
 	return{
 		restrict: 'E',
 		controller: ['$scope', function($scope){
@@ -420,6 +420,7 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 				if(!$scope.bookmark_selected){
 					// _load_icon();
 					$scope.panel_selected = 'BOOKMARK';
+					$cookieStore.put("tab", $scope.panel_selected);
 					$scope.bookmark_selected = true;
 					$scope.read_selected = false;
 					// $scope.glowBookmark = false;
@@ -457,6 +458,7 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 					$scope.read_selected = false;
 					$scope.bookmark_selected = false;
 					$scope.panel_selected = '';
+					$cookieStore.put("tab", $scope.panel_selected);
 					$scope.reset();
 					// $('body').css('background-image', '');
 				}
@@ -483,6 +485,7 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 					$scope.bookmark_selected = false;
 					$scope.read_selected = true;		
 					$scope.panel_selected = 'READ';
+					$cookieStore.put("tab", $scope.panel_selected);
 					var skip_count = 0;
 					websiteService.get_books_read(skip_count).then(function(data){
 						$rootScope.user.books['read'] = [];
@@ -624,13 +627,13 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 	}
 }]);
 
-websiteApp.directive('bookGrid', ['recommendationService', function(recommendationService){
+websiteApp.directive('bookGrid', ['recommendationService', '$rootScope', function(recommendationService, $rootScope){
 	return{
 		restrict: 'E',
 		scope: {'grid': '=data'},
 		controller: ['$scope', function($scope){
 			_init = function(){
-				console.log($scope);
+				$scope.user_id = $rootScope.user.id;
 				// recommendationService.get_grid_books().then(function(data){
 				// 	$scope.grid_books = [];
 				// 	angular.forEach(data, function(value){
@@ -693,8 +696,12 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 
 			_get_genres = function(){
 				if(angular.isUndefined($scope.genres) || $scope.genres.length == 0){
+					$scope.genres = [];
 			    	websiteService.get_genres().then(function(data){
-			    		$scope.genres = data.genres;
+			    		angular.forEach(data, function(value){
+			    			var json = {"name": value[0], "id": value[1], "icon": value[2]};
+			    			this.push(json);
+			    		}, $scope.genres);
 			    	});
 				}
 		    }

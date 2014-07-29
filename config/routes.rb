@@ -65,10 +65,13 @@ ReadersDoor::Application.routes.draw do
   get 'search_tag'                => "tags#search_tag",         :as => "search_tag"
   get 'search_book'               => "books#search_book",       :as => "search_book"
 
-  get "panel/labels"                   => "books#labels",                     :as => "labels"   
-  get "panel/trends"                   => "books#trends",                     :as => "trends"   
-  get "panel/grids"                   => "books#grids",                     :as => "grids"   
-  get "panel/thumbs"                   => "books#thumbs",                     :as => "thumbs"
+  get "panel/labels"                    => "books#labels",                      :as => "labels"   
+  get "panel/trends"                    => "books#trends",                      :as => "trends"   
+  get "panel/grids"                     => "books#grids",                       :as => "grids"   
+  get "panel/thumbs"                    => "books#thumbs",                      :as => "thumbs"
+  get "delete_grid"                     => "books#delete_grid",                 :as => "delete_grid"
+  get "add_grid"                        => "books#add_grid",                    :as => "add_grid"
+  get "update_grid"                     => "books#update_grid",                 :as => "update_grid"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

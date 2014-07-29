@@ -165,7 +165,7 @@ input:focus{
 
 .scrollbar{
     overflow-y: scroll;
-    overflow-x: hidden;
+    overflow-x: hidden !important;
 }
 
 .scrollbar::-webkit-scrollbar {

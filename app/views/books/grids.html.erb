@@ -1,0 +1,172 @@
+<table class="grid_table">
+	<tr>
+		<th>Book Grids</th>
+		<th>Search Books</th>
+		<th>Books</th>
+		<th>Active</th>
+		<th>Submit</th>
+
+	</tr>
+	<% @grids.each do |grid|%>
+		<tr>
+			<td><%= grid[0] %></td>
+			<td>
+				<input class="search_box" />
+			</td>
+
+			<td class="books" name="books">
+				<% grid[3].each.with_index do |book, index| %>
+					<div data-id="<%= grid[5][index] %>" class="book_name"><span> · </span><span><%= book %></span></div>
+				<% end %>
+			</td>
+			
+			<% if grid[4].present? && grid[4] == 1 %>
+				<td class="status"><input type="checkbox" name="status" checked></td>
+			<% else %>
+				<td class="status"><input type="checkbox" name="status"></td>
+			<% end %>
+			<td class="update"><button class="update_grid">Submit</button>
+				<input type="hidden" value="<%= grid[2] %>" name="grid_id"/>
+				<input type="hidden" value="<%= grid[5] %>" name="book_ids" />
+			</td>
+			<td><div class="delete" data-id="<%= grid[2] %>">x</div></td>
+		</tr>
+	<% end %>
+</table>
+<input name="grid_name" class="grid_name" />
+<button class="add">Add New</button>
+<script>
+	$(document).ready(function(){
+		var search_on = false;
+		var search = function($this, search_for){
+			$.ajax({
+				url: "<%= search_book_path %>",
+				data: "q="+search_for,
+				success: function(data, textStatus, jqXHR){
+					var books = [];
+					for(var i=0; i < data.length; i++){
+						var book = {"label": data[i][2]+" by "+data[i][3], "value": data[i][1]};
+						books.push(book);
+					}
+					if(books.length == 0){
+						books = "No results found...";
+					}
+
+
+					$this.autocomplete({
+				      source: books,
+				      select: function(event, ui){
+				      	var html = "<div class='book_name'><span> · </span><span>"+ui.item.label+" <span></div>"
+				      	$this.parent().siblings('.books').append(html);
+				      	var current_val = $this.parent().siblings('.update').children('input[name=book_ids]').val();
+				      	
+				      	if(current_val == ""){
+				      		var new_val = ui.item.value;
+				      	}
+				      	else{
+				      		var new_val = current_val + ", "+ui.item.value;
+				      	}
+				      	$this.parent().siblings('.update').children('input[name=book_ids]').val(new_val);
+				      	$this.val("");
+				      	remove_book_from_grid();
+				      	event.preventDefault();
+				      }
+				    });
+				}
+			});
+		}
+
+		bind_search_book();
+		remove_book_from_grid();
+		remove_grid();
+		add_grid();
+		update_grid();
+
+		function bind_search_book(){
+			$('.search_box').on('keypress', function(event){
+				search_on = false;
+				var $this = $(this);
+				var search_for = $this.val()+String.fromCharCode(event.charCode);
+				if(search_for.length > 2){
+					setTimeout(function(){
+						search_on = true;
+						search_for = $this.val();
+						if(search_on){
+							search($this, search_for);
+						}
+					}, 500);
+					
+				}
+			});
+		}
+
+		function add_grid(){
+			$('.add').on('click', function(){
+				var $this = $(this);
+				$.ajax({
+					url: "<%= add_grid_path %>",
+					data: "grid_name="+$('.grid_name').val(),
+					success: function(data, textStatus, jqXHR){
+						window.location.reload();
+					},
+					error: function(jqXHR, textStatus, error){
+						alert(error);
+					}
+				})
+			});
+		}
+
+		function remove_grid(){
+			$('.delete').on('click', function(){
+				var $this = $(this);
+				$.ajax({
+					url: "<%= delete_grid_path %>",
+					data: "id="+$this.attr('data-id'),
+					success: function(data, textStatus, jqXHR){
+						$this.parent().parent('tr').remove();
+					},
+					error: function(jqXHR, textStatus, error){
+						alert(error);
+					}
+				});
+			});
+		}
+
+		function remove_book_from_grid(){
+			$('.book_name').on('click', function(){
+				var $this = $(this);
+				var id = $this.attr('data-id');
+				var book_ids = $this.parent().siblings('.update').children('input[name=book_ids]').val().split(",");
+				var new_book_ids = []
+				for(var i=0; i < book_ids.length; i++){
+					if(book_ids[i].indexOf(id) < 0){
+						new_book_ids.push(book_ids[i])
+					}
+				}
+				$this.parent().siblings('.update').children('input[name=book_ids]').val(new_book_ids.join(","));
+				$this.remove();
+			});			
+		}
+
+		function update_grid(){
+			$('.update_grid').on('click', function(){
+				var $this = $(this);
+				var grid_id = $this.siblings('input[name=grid_id]').val();
+				var book_ids = $this.siblings('input[name=book_ids]').val();
+				var status = $(this).parent().siblings('.status').children().val();
+				var data = "grid_id="+grid_id+"&book_ids="+book_ids+"&status="+status;
+				$.ajax({
+					url: "<%= update_grid_path %>",
+					data: data,
+					success: function(data, textStatus, jqXHR){
+						window.location.reload();
+					},
+					error: function(jqXHR, textStatus, error){
+						alert(error);
+					}
+				});
+			});
+		}
+
+	});
+</script>

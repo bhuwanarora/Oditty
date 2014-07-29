@@ -1,5 +1,35 @@
 namespace :graph do
 
+  desc "set_year_labels"
+  task :set_year_labels => :environment do
+    include Neo4jHelper
+    Neo4jHelper.set_year_labels
+  end
+
+  desc "remove_tiny_reads_with_zero_count"
+  task :remove_tiny_reads_with_zero_count => :environment do
+    include Neo4jHelper
+    Neo4jHelper.remove_tiny_reads_with_zero_count
+  end
+
+  desc "get_best_reads_for_time"
+  task :get_best_reads_for_time => :environment do
+    include Neo4jHelper
+    Neo4jHelper.get_best_reads_for_time
+  end
+
+  desc "delete_belongs_to_relationship_on_categoriess"
+  task :delete_belongs_to_relationship_on_categories => :environment do
+    include Neo4jHelper
+    Neo4jHelper.delete_belongs_to_relationship_on_categories
+  end
+
+  desc "sorted readtime books"
+  task :sorted_readtime_books => :environment do
+    include Neo4jHelper
+    Neo4jHelper.sorted_readtime_books
+  end
+
   desc "index authors"
   task :index_authors => :environment do
     include Neo4jHelper

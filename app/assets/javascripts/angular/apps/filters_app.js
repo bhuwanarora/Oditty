@@ -84,6 +84,9 @@ angular.module('filtersApp', [])
   .filter('page_count', function(){
     return function(input){
       var output = "-"+input+" pages";
+      if(angular.isUndefined(input) || input == 0){
+        output = ""  
+      }
       return output;
     }
   })

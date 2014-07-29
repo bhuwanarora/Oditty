@@ -132,12 +132,14 @@ websiteApp.directive('labelDropdown', ['$rootScope', '$timeout', 'widgetService'
               "name":$rootScope.user.email
             }
           }
+          $rootScope.user.bookmark_count = $rootScope.user.bookmark_count + 1;
           $scope.$emit('gamifyCount', 10, true);
           $scope.$emit('addToNotifications', notification);
 
           var message = "SUCCESS-Added to "+$scope.book.labels[index]["name"]+" <span class='icon-bookmarks'></span>.";
         }
         else{
+          $rootScope.user.bookmark_count = $rootScope.user.bookmark_count - 1;
           $scope.$emit('gamifyCount', 10, false);
           var message = "SUCCESS-Removed from "+$scope.book.labels[index]["name"]+" <span class='icon-bookmarks'></span>.";
         }
@@ -557,7 +559,9 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
         var book_id = $rootScope.focused_book.id;
         if(angular.isUndefined($rootScope.focused_book.tweets) || $rootScope.focused_book.tweets.length == 0){
           widgetService.get_book_feed(book_id).then(function(data){
-            $rootScope.focused_book.tweets = data;
+            if($rootScope.focused_book != null){
+              $rootScope.focused_book.tweets = data;
+            }
           });
         }
         _display_tweet(0);
@@ -964,6 +968,8 @@ function add_custom_bookmark($scope, $rootScope, $timeout){
       $scope.book.bookmark_status = 1;
       $rootScope.labels = $rootScope.labels.concat([{"name": custom_bookmark}]);
       $scope.book.labels = $scope.book.labels.concat([{"name": custom_bookmark, "checked": true}]);
+      $rootScope.user.bookmark_count = $rootScope.user.bookmark_count + 1;
+      $scope.$emit('gamifyCount', 10, true);
       var message = "SUCCESS-Custom Bookmark "+custom_bookmark+" added to book "+$scope.book.title;
     }
 

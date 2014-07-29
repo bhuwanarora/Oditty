@@ -1,4 +1,18 @@
-websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', function ($timeout, $rootScope, widgetService) {
+websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 'websiteService', 'stropheService', function ($timeout, $rootScope, widgetService, websiteService, stropheService) {
+    this.is_logged_in = function($scope){
+      websiteService.get_user().then(function(data){
+        if(data["logged_in"]){
+          $rootScope.user.logged = true;
+          $rootScope.user.id = data["id"];
+          $scope.$emit('getNotifications');
+          websiteService.get_user_details().then(function(data){
+              angular.extend($rootScope.user, data);
+            });
+          stropheService.start_connection();
+        }
+      });
+    }
+
     this.mark_as_read = function($scope, book, event){
         var book_title = book.title;
         var author_name = book.author_name;
