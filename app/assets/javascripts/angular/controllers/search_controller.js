@@ -1,4 +1,4 @@
-websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteService', '$timeout', '$sce', 'recommendationService', '$routeParams', '$location', '$cookieStore', function($scope, $rootScope, websiteService, $timeout, $sce, recommendationService, $routeParams, $location, $cookieStore){
+websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteService', '$timeout', '$sce', 'recommendationService', '$routeParams', '$location', function($scope, $rootScope, websiteService, $timeout, $sce, recommendationService, $routeParams, $location){
 	_show_search_result = function(item, show_all){
 		console.debug("%c _show_search_result"+item.name, "color: green");
 		// $rootScope.show_book = true;
@@ -683,7 +683,6 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	}
 
 	_init = function(){
-		$cookieStore.remove('tab');
 		_handle_search_page();
 		_get_trends();
 	}

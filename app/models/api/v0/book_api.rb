@@ -240,32 +240,45 @@ module Api
 				results = []
 
 				specific_list = filters["filter_id"].present?
+				bookmark_list = filters["label_id"].present?
 				trends = filters["trend_id"].present?
 
 				if filters["other_filters"].present?
 					book_name = filters["other_filters"]["title"]
 					book_id = filters["other_filters"]["id"]
 					if book_id.present?
+						puts "get_books_by_id".green
 						clause = self.get_books_by_id filters
 					elsif book_name.present?
+						puts "get_books_by_title".green
 						clause = self.get_books_by_title filters
 					else
+						puts "get_filtered_books".green
 						clause = self.get_filtered_books(filters, last_book)
 					end
 				elsif trends
 					unless last_book.present?
 						last_book = Constants::BestBook
 					end
+					puts "get_trends".green
 					clause = self.get_trends(filters["trend_id"])
+				elsif bookmark_list
+					unless last_book.present?
+						last_book = Constants::BestBook
+					end
+					puts "get_bookmark_lists".green
+					clause = self.get_bookmark_lists(filters["label_id"], user_id)
 				elsif specific_list
 					unless last_book.present?
 						last_book = Constants::BestBook
 					end
+					puts "get_specific_lists".green
 					clause = self.get_specific_lists(filters["filter_id"], user_id)
 				else
 					unless last_book.present?
 						last_book = Constants::BestBook
 					end
+					puts "get_basic_recommendations".green
 					clause = self.get_basic_recommendations(filters, last_book)
 				end
 
@@ -330,13 +343,18 @@ module Api
 				clause
 			end
 
-			def self.get_specific_lists(filter_id, user_id)
+			def self.get_bookmark_lists(filter_id, user_id)
 				clause = "MATCH (l:Label), (u:User) WHERE ID(l)="+filter_id.to_s+" AND ID(u)="+user_id.to_s+" WITH u, l MATCH (u)-[:Labelled]->(l)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(b:Book) RETURN b.isbn, ID(b), b.indexed_title"
 				clause
 			end
 
+			def self.get_specific_lists(filter_id, user_id)
+				clause = "MATCH (bg:BookGrid) WHERE ID(bg)="+filter_id.to_s+" WITH bg MATCH (bg)-[:RelatedBooks]->(b:Book) RETURN b.isbn, ID(b), b.indexed_title"
+				clause
+			end
+
 			def self.get_basic_recommendations(filters, last_book)
-				clause = "START book = node:node_auto_index(\"indexed_title:"+last_book+"\") MATCH p=(book)-[:Next_book*..5]->(b) WITH last(nodes(p)) as b RETURN b.isbn, ID(b), b.indexed_title"
+				clause = "MATCH (book:Book) WHERE ID(book)="+last_book.to_s+" MATCH p=(book)-[:Next_book*..5]->(b) WITH last(nodes(p)) as b RETURN b.isbn, ID(b), b.indexed_title"
 				clause
 			end
 
@@ -374,27 +392,25 @@ module Api
 						unless last_book.present?
 							last_book = Constants::BestTinyRead
 						end
-						init_match_clause = "START b=node:node_auto_index('indexed_title:"+last_book+"') "
-						match_clause = "MATCH p=(b)-[:NextTinyRead*..5]->(next_book) WITH last(nodes(p)) as book MATCH(book) "
+						relation = "NextTinyRead"
 					elsif read_time == Constants::SmallRead
 						unless last_book.present?
 							last_book = Constants::BestSmallRead
 						end
-						init_match_clause = "START b=node:node_auto_index('indexed_title:"+last_book+"') "
-						match_clause = "MATCH p=(b)-[:NextSmallRead*..5]->(next_book) WITH last(nodes(p)) as book MATCH(book) "
+						relation = "NextSmallRead"
 					elsif read_time == Constants::NormalRead
 						unless last_book.present?
 							last_book = Constants::BestNormalRead
 						end
-						init_match_clause = "START b=node:node_auto_index('indexed_title:"+last_book+"') "
-						match_clause = "MATCH p=(b)-[:NextNormalRead*..5]->(next_book) WITH last(nodes(p)) as book MATCH(book) "
+						relation = "NextNormalRead"
 					elsif read_time == Constants::LongRead
 						unless last_book.present?
 							last_book = Constants::BestLongRead
 						end
-						init_match_clause = "START b=node:node_auto_index('indexed_title:"+last_book+"') "
-						match_clause = "MATCH p=(b)-[:NextLongRead*..5]->(next_book) WITH last(nodes(p)) as book MATCH(book) "
+						relation = "NextLongRead"
 					end
+					init_match_clause = "MATCH (b:Book) WHERE ID(b)="+last_book.to_s+" "
+					match_clause = "MATCH p=(b)-[:"+relation+"*..5]->(next_book) WITH last(nodes(p)) as book MATCH(book) "
 				else
 					time_group = filters["other_filters"]["timeGroup"].split("(")[0].gsub(" " , "").downcase rescue ""
 					if time_group.present?
@@ -441,21 +457,6 @@ module Api
 					match_clause = match_clause + ""
 				end
 				
-				# if filters["other_filters"]["timeGroup"].present?
-				# 	category = "Era: "+filters["other_filters"]["timeGroup"].gsub(/\(.*?\)/, "").strip
-				# 	time_range =  filters["other_filters"]["timeGroup"][/\(.*?\)/]
-				# 					.gsub("(","")
-				# 					.gsub(")","")
-				# 					.split("-")
-				# 	match_clause = match_clause + ", (book)-[:Published_in]->(y:Year) "
-				# 	next_Where_clause = " toInt(y.year) >= "+time_range[0]+
-				# 			" AND toInt(y.year) < "+time_range[1]+" "
-				# 	if where_clause.present?
-				# 		where_clause = where_clause + " AND" + next_Where_clause
-				# 	else
-				# 		where_clause = where_clause + next_Where_clause
-				# 	end
-				# end
 				if filters["other_filters"]["author"].present?
 					author_id =  filters["other_filters"]["author"]
 					match_clause = match_clause + ", (author:Author)-[:Wrote]->(book) "

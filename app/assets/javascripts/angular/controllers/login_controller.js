@@ -158,10 +158,11 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
   	}
 
 	_init = function(){
+		$cookieStore.remove('tab');
 		_is_logged_in();
 		_bind_auth_listeners();
 		// $scope.authenticate(true);
 	}
 
-	_init();	
+	_init();
 }]);

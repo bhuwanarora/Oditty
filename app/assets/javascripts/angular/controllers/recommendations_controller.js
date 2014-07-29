@@ -146,8 +146,13 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         	if(specific_list){
         		if($cookieStore.get('tab') == "BOOKMARK"){
         			_show_bookmark_tab();
+        			$rootScope.filters["label_id"] = $routeParams.filter_id;
+        			$rootScope.main_header = $routeParams.name;
         		}
-        		$rootScope.filters["filter_id"] = $routeParams.filter_id;
+        		else{
+        			$rootScope.filters["filter_id"] = $routeParams.filter_id;
+        			$rootScope.main_header = $routeParams.name;
+        		}
         	}
         	else if(trends){
         		$rootScope.filters["reset"] = true;

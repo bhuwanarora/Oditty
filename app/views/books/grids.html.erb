@@ -1,5 +1,6 @@
 <table class="grid_table">
 	<tr>
+		<th>Count</th>
 		<th>Book Grids</th>
 		<th>Search Books</th>
 		<th>Books</th>
@@ -9,6 +10,7 @@
 	</tr>
 	<% @grids.each do |grid|%>
 		<tr>
+			<td><%= grid[5].length %></td>
 			<td><%= grid[0] %></td>
 			<td>
 				<input class="search_box" />
@@ -20,11 +22,10 @@
 				<% end %>
 			</td>
 			
-			<% if grid[4].present? && grid[4] == 1 %>
-				<td class="status"><input type="checkbox" name="status" checked></td>
-			<% else %>
-				<td class="status"><input type="checkbox" name="status"></td>
-			<% end %>
+			
+			<td class="status">
+				<input type="checkbox" name="status" <% if grid[4].present? && grid[4] == 1 %>checked><% end %>
+			</td>
 			<td class="update"><button class="update_grid">Submit</button>
 				<input type="hidden" value="<%= grid[2] %>" name="grid_id"/>
 				<input type="hidden" value="<%= grid[5] %>" name="book_ids" />
@@ -49,7 +50,7 @@
 						books.push(book);
 					}
 					if(books.length == 0){
-						books = "No results found...";
+						books = ["No results found..."];
 					}
 
 

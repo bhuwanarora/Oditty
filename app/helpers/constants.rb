@@ -16,11 +16,11 @@ module Constants
 	EmailConfirmationFailed		= "Email Confirmation Failed."
 	PendingActivation			= "We will soon give access to your account. Please bear with us."
 
-	BestTinyRead				= "thelosthero"
-	BestSmallRead				= "thelittleprince"
-	BestNormalRead				= "harrypotterandthephilosophersstone"
-	BestLongRead				= "thehungergames"
-	BestBook					= "thehungergames"
+	BestTinyRead				= 395910 #"thelosthero"
+	BestSmallRead				= 390071 #"thelittleprince"
+	BestNormalRead				= 1171522 #"harrypotterandthephilosophersstone"
+	BestLongRead				= 395152 #"thehungergames"
+	BestBook					= 395152 #"thehungergames"
 
 	TinyRead 					= "foraflightjourney"
 	SmallRead 					= "foraweekendgetaway"

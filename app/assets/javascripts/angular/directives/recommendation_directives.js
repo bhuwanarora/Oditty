@@ -93,7 +93,8 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 			}
 
 			$scope.clear_filter = function(main_filter, type){
-				$rootScope.filters["other_filters"][type] = null;
+				delete $rootScope.filters.other_filters[type];
+				// $rootScope.filters["other_filters"][type] = null;
 				var message = "SUCCESS-"+type+" filter removed";
 				var timeout_event = notify($rootScope, message, $timeout);
 				$scope.$on('destroy', function(){

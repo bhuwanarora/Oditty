@@ -64,11 +64,11 @@ module Api
 					basic_recommendations = !filters["other_filters"].present?
 					non_zero_result = books.present? && books.length > 0
 					if non_zero_result
-						if basic_recommendations 
-							$redis.set 'last_book', books[books.length-1][2].gsub(" ", "")
+						if basic_recommendations
+							$redis.set 'last_book', books[books.length-1][1]
 							$redis.set 'last_filter_book', nil
 						elsif reading_time_filter
-							$redis.set 'last_filter_book', books[books.length-1][2].gsub(" ", "")
+							$redis.set 'last_filter_book', books[books.length-1][1]
 						end
 					end
 					

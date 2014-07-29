@@ -17,6 +17,9 @@ websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvid
   .when('/user/:id/recommendations/:type/filter/:filter_id', {
     templateUrl: '/assets/angular/widgets/partials/recommendations.html'
   })
+  .when('/user/:id/recommendations/:type/filter/:filter_id/name/:name', {
+    templateUrl: '/assets/angular/widgets/partials/recommendations.html'
+  })
   .when('/user/:id/trending/:type/id/:trend_id/name/:name', {
     templateUrl: '/assets/angular/widgets/partials/recommendations.html'
   })
