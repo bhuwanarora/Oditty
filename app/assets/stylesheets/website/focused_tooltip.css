@@ -87,6 +87,10 @@
 	border-bottom: 1px solid #D3D3D3;
 }
 
+.focused_tooltip .description b{
+	font-size: 2em;
+}
+
 .focused_tooltip .footer{
 	background-color: #E6E6E6;
 	border-bottom-left-radius: 4px;

@@ -1,16 +1,32 @@
 module Api
 	module V0
 		class SearchApi
-			def self.search_books(q, skip_count=0)
+			def self.search_books(q, user_id=nil)
+				results = []
 				neo_init
 				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "")
-				clause = "START book=node:node_auto_index('indexed_title:"+q+"*') WITH book, toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) as weight RETURN book.isbn, ID(book), book.title as name, book.author_name, ID(book), weight ORDER BY weight DESC SKIP "+skip_count.to_s+" LIMIT 10"
+				unless user_id.present?
+					clause = "START book=node:node_auto_index('indexed_title:"+q+"*') WITH book, toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) as weight RETURN book.isbn, ID(book), book.title as name, book.author_name, weight ORDER BY weight DESC LIMIT 10"
+				else
+					clause = "START book=node:node_auto_index('indexed_title:"+q+"*') WITH book, toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) as weight ORDER BY weight DESC OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" RETURN book.isbn, ID(book), book.title as name, book.author_name, ID(m) LIMIT 10"
+				end
 				puts clause.blue.on_red
-				results = @neo.execute_query(clause)["data"]
+				if q.length >= 3
+					results = @neo.execute_query(clause)["data"]
+				end
 				results
 			end
 
-			def search_author
+			def self.search_authors(q)
+				results = []
+				neo_init
+				q = "@"+q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "")
+				clause = "START author=node:node_auto_index('indexed_main_author_name:"+q+"*') RETURN author.name LIMIT 10"
+				puts clause.blue.on_red
+				if q.length >= 4
+					results = @neo.execute_query(clause)["data"]
+				end
+				results
 			end
 
 			def search_reader

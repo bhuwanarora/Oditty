@@ -28,8 +28,12 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         return _deferred_request('/api/v0/books_read?skip_count='+skip_count);
     }
 
-    this.search_books = function(data, skip_count){
-        return _deferred_request('/api/v0/search_books?q='+data+'&skip_count='+skip_count);
+    this.search_books = function(data){
+        return _deferred_request('/api/v0/search_books?q='+data);
+    }
+
+    this.search_authors = function(data){
+        return _deferred_request('/api/v0/search_authors?q='+data);
     }
 
     this.get_trending_topics = function(){

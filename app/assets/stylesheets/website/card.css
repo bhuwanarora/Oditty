@@ -161,9 +161,9 @@
 	background: rgba(113, 112, 112, 0.25);
 	background-size: 100% 100% !important;
 	position: absolute;
-	left: 0px;
-	top: 0px;
-	right: 0px;
+	left: 3px;
+	top: 3px;
+	right: 3px;
 	bottom: 10%;
 	cursor: pointer;
 	z-index: 1;
@@ -177,8 +177,8 @@
 	right: 0px;
 	top: 0px;
 	bottom: 10%;
-	color: #817C65;
-	background-color: #f9edbe;
+	/*color: #817C65;*/
+	/*background-color: #f9edbe;*/
 	font-size: 0.9em;
 	text-align: center;
 	white-space: initial;
@@ -187,7 +187,8 @@
 }
 
 .card .description p{
-	margin-top: 50%;
+	margin-top: 10%;
+	padding: 30px;
 }
 
 .table_cell_icon{

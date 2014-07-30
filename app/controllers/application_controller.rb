@@ -16,20 +16,19 @@ class ApplicationController < ActionController::Base
     unless ($redis.get 'book_ids').present?
       $redis.set 'book_ids', ""
     end
-    public_access = ["coming_soon", "invalid_user", "facebook", "google_oauth2", "random_quote", 
-                      "email_subscription", "chat", "website", "freebase", "freebase_search",
-                      "freebase_resource"]
-    accessible_page = public_access.include? params[:action]
-    unless accessible_page
-      email = session[:email]
-      email = "bhuwanarora67@gmail.com"
-      valid_admin = ReadersDoorAdmin.pluck(:email).include? email
-      if valid_admin
-        @user = User.where(:email => email).first
-      else
-        redirect_to "#{Rails.application.config.home}coming_soon"
-      end
-    end
+    # private_access = ["panel/labels", "freebase", "freebase_search", "freebase_resource", "trends", "users", "grids", "panel/thumbs", "delete_grid", "add_grid", "update_grid"]
+    # unaccessible_page = private_access.include? params[:action]
+    # debugger
+    # if unaccessible_page
+    #   email = session[:email]
+    #   # email = "bhuwanarora67@gmail.com"
+    #   valid_admin = ReadersDoorAdmin.pluck(:email).include? email
+    #   if valid_admin
+    #     @user = User.where(:email => email).first
+    #   else
+    #     redirect_to "#{Rails.application.config.home}"
+    #   end
+    # end
   end
 
   protected

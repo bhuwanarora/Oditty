@@ -130,7 +130,7 @@
 			</div>
 		</div>
 		<div ng-switch-when="3" class="center">
-			<input ng-keypress="search_books($event)" ng-model="search_book" placeholder="Add books you have read..."/>
+			<input ng-keydown="search_info_card($event, 'BOOK')" ng-model="info.search_book" placeholder="Add books you have read..."/>
 	      	
 			<div class="scrollbar header" 
 				msd-wheel="stop_horizontal_scroll($event)" check-scroll-bottom="get_popular_books()">
@@ -163,7 +163,7 @@
 			</div> -->
 		</div>
 		<div ng-switch-when="4" class="center">
-			<input ng-keypress="search_authors($event)" ng-model="search_author" placeholder="Add authors you like..."/>
+			<input ng-keydown="search_info_card($event, 'AUTHOR')" ng-model="info.search_author" placeholder="Add authors you like..."/>
 			<div class="scrollbar header" 
 				msd-wheel="stop_horizontal_scroll($event)" check-scroll-bottom="get_popular_authors()">
 					<div class="book_column"

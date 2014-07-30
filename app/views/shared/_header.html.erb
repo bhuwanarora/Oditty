@@ -1,23 +1,23 @@
 <div class="main-header">
-	<% if @user %>
-		Hi <%= @user.human_profile.name %>
-		<span class="tab-group">
-			<a href="<%= users_path %>" class="tab-center">Users</a>
-			<a href="<%= trends_path %>" class="tab-center">Trends</a>
-			<a href="<%= grids_path %>" class="tab-center">Grids</a>
-			<a href="<%= thumbs_path %>" class="tab-center">Thumbs</a>
-			<a href="<%= labels_path %>" class="tab-center">Labels</a>
-		    <a href="https://drive.google.com/folderview?id=0B2XvzrkA012saWJJNHN1SjBpbWM&usp=sharing" target="_blank" class="tab-center">Drive</a>
-		</span>
-	    
-	    <%= @message %>
-		<a class="tab-right" href="<%= logout_user_path %>">
-		    Logout
-		</a>
-	<% else %>
-		<%= @message %>
-		<a class="tab-right" href="<%= user_omniauth_authorize_path(:google_oauth2) %>">
-		    Login with Google
-		</a>
-	<% end %>
+	<span class="tab-group">
+		<a href="<%= users_path %>" class="tab-center">Users</a>
+		<a href="<%= trends_path %>" class="tab-center">Trends</a>
+		<a href="<%= grids_path %>" class="tab-center">Grids</a>
+		<a href="<%= thumbs_path %>" class="tab-center">Thumbs</a>
+		<a href="<%= labels_path %>" class="tab-center">Labels</a>
+	    <a href="https://drive.google.com/folderview?id=0B2XvzrkA012saWJJNHN1SjBpbWM&usp=sharing" target="_blank" class="tab-center">Drive</a>
+	</span>
+    
+    <%#= @message %>
+	<!-- <a class="tab-right" href="<%= logout_user_path %>"> -->
+	    <!-- Logout -->
+	<!-- </a> -->
+	<!-- Hi <%#= @user.human_profile.name %> -->
+	<%# if @user %>
+	<%# else %>
+		<%#= @message %>
+		<!-- <a class="tab-right" href="<%#= user_omniauth_authorize_path(:google_oauth2) %>"> -->
+		    <!-- Login with Google -->
+		<!-- </a> -->
+	<%# end %>
 </div>

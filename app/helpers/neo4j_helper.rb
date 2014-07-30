@@ -691,33 +691,33 @@ module Neo4jHelper
 		while start_id <= end_id
 			puts "adding index_by title for book..."+start_id.to_s.green
 			limit = start_id + skip
-			clause = 'MATCH (book:Book) WHERE ID(book) >= '+start_id.to_s+' AND ID(book) < '+limit.to_s+'  SET book.indexed_author_name = REPLACE(book.indexed_author_name,"!", ""), book.indexed_title = REPLACE(book.indexed_title, "!", ""), book.search_index = REPLACE(book.search_index, "!", "")'
+			clause = 'MATCH (book:Book) WHERE ID(book) >= '+start_id.to_s+' AND ID(book) < '+limit.to_s+'  SET book.indexed_author_name = REPLACE(book.indexed_author_name,"]", ""), book.indexed_title = REPLACE(book.indexed_title, "]", ""), book.search_index = REPLACE(book.search_index, "]", "")'
 			@neo.execute_query clause
 			start_id = start_id + skip
 		end
 
-		clause = 'MATCH (author:Author) SET author.indexed_name = REPLACE(author.indexed_name, "!", ""), author.search_index = REPLACE(author.indexed_name, "!", "")'
+		clause = 'MATCH (author:Author) SET author.indexed_name = REPLACE(author.indexed_name, "]", ""), author.search_index = REPLACE(author.indexed_name, "]", "")'
 		puts "adding index_by name for authors...".green
 		@neo.execute_query clause
 
 		puts "adding index_by name for labels...".green
-		clause = 'MATCH (label:Label) SET label.indexed_label_name = REPLACE(label.indexed_label_name, "!", "")'
+		clause = 'MATCH (label:Label) SET label.indexed_label_name = REPLACE(label.indexed_label_name, "]", "")'
 		@neo.execute_query clause
 
 		puts "adding index_by name for labels...".green
-		clause = 'MATCH (readTime: ReadTime) SET readTime.indexed_readtime_name = REPLACE(readTime.indexed_readtime_name, "!", "")'
+		clause = 'MATCH (readTime: ReadTime) SET readTime.indexed_readtime_name = REPLACE(readTime.indexed_readtime_name, "]", "")'
 		@neo.execute_query clause
 
 		puts "adding index_by name for era...".green
-		clause = 'MATCH (era: Era) SET era.indexed_era_name = REPLACE(era.indexed_era_name, "!", "")'
+		clause = 'MATCH (era: Era) SET era.indexed_era_name = REPLACE(era.indexed_era_name, "]", "")'
 		@neo.execute_query clause
 
 		puts "adding index_by name for genre...".green
-		clause = 'MATCH (genre: Genre) SET genre.indexed_genre_name = REPLACE(genre.indexed_genre_name, "!", "")'
+		clause = 'MATCH (genre: Genre) SET genre.indexed_genre_name = REPLACE(genre.indexed_genre_name, "]", "")'
 		@neo.execute_query clause
 
 		puts "adding index_by name for users...".green
-		clause = 'MATCH (user: User) SET user.indexed_user_name = REPLACE(user.indexed_user_name, "!", ""), user.search_index = REPLACE(user.search_index, "!", "")'
+		clause = 'MATCH (user: User) SET user.indexed_user_name = REPLACE(user.indexed_user_name, "]", ""), user.search_index = REPLACE(user.search_index, "]", "")'
 		@neo.execute_query clause
 	end
 
@@ -761,22 +761,22 @@ module Neo4jHelper
 		puts "adding tiny reads in form of sorted linked lists...".green
 		@neo.execute_query clause
 
-		# clause = "MATCH (book:Book) WHERE book.page_count <> 0 AND toInt(book.page_count) > 50 AND toInt(book.page_count) < 100 WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight ORDER BY total_weight DESC, rating_weight DESC WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:NextSmallRead]->(p2))))"
-		# puts "adding Small reads in form of sorted linked lists...".green
-		# @neo.execute_query clause
+		clause = "MATCH (book:Book) WHERE book.page_count <> 0 AND toInt(book.page_count) > 50 AND toInt(book.page_count) < 100 WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight ORDER BY total_weight DESC, rating_weight DESC WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:NextSmallRead]->(p2))))"
+		puts "adding Small reads in form of sorted linked lists...".green
+		@neo.execute_query clause
 
 		
-		# clause = "MATCH (book:Book) WHERE book.page_count <> 0 AND toInt(book.page_count) > 100 AND toInt(book.page_count) < 250 WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight ORDER BY total_weight DESC, rating_weight DESC WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:NextNormalRead]->(p2))))"
-		# puts "adding normal reads in form of sorted linked lists...".green
-		# @neo.execute_query clause
+		clause = "MATCH (book:Book) WHERE book.page_count <> 0 AND toInt(book.page_count) > 100 AND toInt(book.page_count) < 250 WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight ORDER BY total_weight DESC, rating_weight DESC WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:NextNormalRead]->(p2))))"
+		puts "adding normal reads in form of sorted linked lists...".green
+		@neo.execute_query clause
 
-		# clause = "MATCH (book:Book) WHERE book.page_count <> 0 AND toInt(book.page_count) > 250 WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight ORDER BY total_weight DESC, rating_weight DESC WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:NextLongRead]->(p2))))"
-		# puts "adding long reads in form of sorted linked lists...".green
-		# @neo.execute_query clause
+		clause = "MATCH (book:Book) WHERE book.page_count <> 0 AND toInt(book.page_count) > 250 WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight ORDER BY total_weight DESC, rating_weight DESC WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:NextLongRead]->(p2))))"
+		puts "adding long reads in form of sorted linked lists...".green
+		@neo.execute_query clause
 
-		# clause = "MATCH ()-[r1:WithReadingTime]->(:ReadTime) DELETE r1"
-		# puts "Delete WithReadingTime relations...".green
-		# @neo.execute_query clause	
+		clause = "MATCH ()-[r1:WithReadingTime]->(:ReadTime) DELETE r1"
+		puts "Delete WithReadingTime relations...".green
+		@neo.execute_query clause	
 	end
 
 	def self.delete_belongs_to_relationship_on_categories

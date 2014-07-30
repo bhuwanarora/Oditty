@@ -15,6 +15,29 @@ angular.module('filtersApp', [])
       }
       return output;
     };
+  }).
+  filter('summary', function() {
+    return function(input) {
+      var output = input;
+      if(angular.isDefined(input) && input != "" && input != null){
+        output = "<span><b>"+input[0]+"</b></span><span>"+input.substring(1, input.length)+"</span>"
+      }
+      return output;
+    };
+  })
+  .filter('heading', function(){
+    return function(input){
+      var output = input;
+      if(angular.isDefined(input)){
+        input = input.split(" ");
+        output = "";
+        for(var i=0; i<input.length; i++){
+          var value = input[i];
+          output = output + "<span><b>"+value[0]+"</b><span>"+value.substring(1, value.length)+"</span> "
+        }
+      }
+      return output;
+    }
   })
   .filter('rating', function(){
     return function(input){

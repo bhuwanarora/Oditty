@@ -282,7 +282,6 @@ module Api
 					clause = self.get_basic_recommendations(filters, last_book)
 				end
 
-
 				puts clause.blue.on_red
 				begin
 					books = @neo.execute_query(clause)["data"]

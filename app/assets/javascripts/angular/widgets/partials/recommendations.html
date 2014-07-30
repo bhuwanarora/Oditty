@@ -177,7 +177,9 @@
 		<div class="ticker_popup" 
 			 ng-if="ticker_popup"
 			 ng-style="ticker_popup_style"
-			 msd-wheel="handle_height_of_popup($event)">
+			 msd-wheel="handle_height_of_popup($event)"
+			 check-scroll-down="handle_height_of_popup($event, true)"
+			 check-scroll-up="handle_height_of_popup($event, false)">
 			 <div class="scrollbar shift_right">
 				<ticker-popup></ticker-popup>
 			</div>

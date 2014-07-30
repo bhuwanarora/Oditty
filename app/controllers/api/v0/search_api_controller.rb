@@ -10,7 +10,12 @@ module Api
 			end
 
 			def search_books
-				results = SearchApi.search_books(params[:q].strip, params[:skip_count])
+				results = SearchApi.search_books(params[:q].strip, session[:user_id])
+				render :json => {:results => results}, :status => 200
+			end
+
+			def search_authors
+				results = SearchApi.search_authors(params[:q].strip, session[:user_id])
 				render :json => {:results => results}, :status => 200
 			end
 

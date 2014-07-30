@@ -1,13 +1,22 @@
 websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', 'scroller', 'websiteService', 'sharedService', '$cookieStore', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService, scroller, websiteService, sharedService, $cookieStore){
 
-	$scope.handle_height_of_popup = function(event){
-		if(event.deltaY > 0){
+	$scope.handle_height_of_popup = function(event, scroll_down){
+		var event_defined = angular.isDefined(event);
+		if(event_defined){
+			var increase_tab_size = event.deltaY > 0;
+		}
+		else{
+			var increase_tab_size = scroll_down;
+		}
+		if(increase_tab_size){
 			$scope.ticker_popup_style = {"height": "62vh"};
 		}
 		else{
 			$scope.ticker_popup_style = {"height": "42vh"};		
 		}
-		event.stopPropagation();
+		if(event_defined){
+			event.stopPropagation();
+		}
 	}
 
 	$scope.handle_friends_grid_size = function(event, scroll_down){
@@ -288,7 +297,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				var json = {"isbn": value[0], "id": value[1]};
 				this.push(json);
 			},  $scope.recommendations.books);
-			var width = screen.width/($scope.recommendations.books.length + 4);
+			var width = screen.width/($scope.recommendations.books.length + 6);
 			$scope.block_style = {"width": width+"px"};
 		}
 	}

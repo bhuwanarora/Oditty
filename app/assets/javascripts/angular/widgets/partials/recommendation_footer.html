@@ -9,8 +9,7 @@
  			<div class="link active"
 				 style="margin-left:0px;">
 				<span class="icon-dice"></span>
-				<span>
-					Trending {{main_header}}
+				<span ng-bind-html="main_header | heading">
 				</span>
 			</div>
  		</div>
@@ -28,7 +27,7 @@
 						{{recommendations.authors.count}} </span>
 					<span ng-if="$routeParams.type == 'readers'">
 						{{recommendations.readers.count}} </span>	
-					<span>Recommendations</span>
+					<span><b>R</b>ecommendations</span>
 				</span>
 			</div>
 			<div ng-class="{'inactive':!read_selected, 'active':read_selected}"
@@ -37,15 +36,15 @@
 				 ng-click="toggle_read()">
 			 	<span ng-if="$routeParams.type == 'books'">
 			 		<span class="icon-books"></span>
-			 		<span>Books Read</span>
+			 		<span><b>B</b>ooks <b>R</b>ead</span>
 			 	</span>
 				<span ng-if="$routeParams.type == 'authors'">
 					<span class="icon-users"></span>
-					<span>Following Authors</span>
+					<span><b>F</b>ollowing <b>A</b>uthors</span>
 				</span>
 				<span ng-if="$routeParams.type == 'readers'">
 					<span class="icon-users"></span>
-					<span>Following Readers</span>
+					<span><b>F</b>ollowing <b>R</b>eaders</span>
 				</span>
 			</div>
 			<div ng-class="{'inactive':!bookmark_selected, 'active':bookmark_selected}"
@@ -55,11 +54,11 @@
 				 ng-click="toggle_bookmarked($event)">
 				 <span ng-if="$routeParams.type == 'books'">
 				 	<span class="icon-bookmarks"></span>
-				 	<span>Books Bookmarked</span>
+				 	<span><b>B</b>ooks <b>B</b>ookmarked</span>
 			 	 </span>
 				 <span ng-if="$routeParams.type == 'authors'">
 				 	<span class="icon-bookmarks"></span>
-					<span>Authors Bookmarked</span>
+					<span><b>A</b>uthors <b>B</b>ookmarked</span>
 				 </span>
 
 			</div>

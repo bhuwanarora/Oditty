@@ -658,40 +658,77 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 		        sharedService.mark_as_read($scope, book, event);
 			}
 
-			$scope.search_books = function(event){
+			$scope.search_info_card = function(event, type){
 				var keyUp = event.keyCode == 38;
 				var keyDown = event.keyCode == 40;
-				var backSpace = event.keyCode == 8;
 				var enter_pressed = event.keyCode == 13;
-				var char_pressed = !(keyUp || keyDown || backSpace || enter_pressed);
+				var backspace = event.keyCode == 8;
+				var char_pressed = !(keyUp || keyDown || enter_pressed);
 				if(char_pressed){
-					if($scope.search_book){
-						var skip_count = $scope.popular_books.length;
-						var search_for = $scope.search_book + String.fromCharCode(event.keyCode);
+					if(type == 'BOOK'){
+						var has_minimum_length = $scope.info.search_book.length > 3;
 					}
 					else{
-						var skip_count = 0;
+						var has_minimum_length = $scope.info.search_author.length > 3;	
+					}
+					if(has_minimum_length){
+						search_input_timeout = $timeout(function(){
+							_handle_search_input(type);
+						}, 500);
+					}
+					else if(backspace){
+						if(type == "BOOK"){
+							$scope.popular_books = [];
+							$scope.get_popular_books();
+						}
+						else{
+							$scope.popular_authors = [];
+							$scope.get_popular_authors();
+						}
+					}
+				}
+			}
+
+			_handle_search_input = function(type){
+				$scope.loading = true;
+				if(type == "BOOK"){
+					websiteService.search_books($scope.info.search_book).then(function(data){
 						$scope.popular_books = [];
-						var search_for = String.fromCharCode(event.keyCode);
-					}
-					
-					if(!$scope.loading){
-						$scope.loading = true;
-						websiteService.search_books(search_for, skip_count).then(function(data){
-							data = data.results;
-							if(data.length != 0){
-								angular.forEach(data, function(value){
-									var json = {"isbn": value[0], 
-											"id": value[1], 
-											"title": value[2], 
-											"author_name": value[3], 
-											"status": false};
-									this.push(json);
-								},  $scope.popular_books);
-							}
-							$scope.loading = false;
-						});
-					}
+						data = data.results;
+						if(data.length != 0){
+							angular.forEach(data, function(value){
+								var status = value[4] != null;
+								var json = {"isbn": value[0], 
+										"id": value[1], 
+										"title": value[2], 
+										"author_name": value[3], 
+										"status": status};
+								this.push(json);
+							},  $scope.popular_books);
+						}
+						else{
+							$scope.popular_books = {"title": "No results found..."};
+						}
+						$scope.loading = false;
+						$timeout.cancel(search_input_timeout);
+					});
+				}
+				else{
+					websiteService.search_authors($scope.info.search_author).then(function(data){
+						$scope.popular_authors = [];
+						data = data.results;
+						if(data.length != 0){
+							angular.forEach(data, function(value){
+								var json = {"name": value[0]};
+								this.push(json);
+							},  $scope.popular_authors);
+						}
+						else{
+							$scope.popular_authors = {"title": "No results found..."};
+						}
+						$scope.loading = false;
+						$timeout.cancel(search_input_timeout);
+					});
 				}
 			}
 
@@ -781,7 +818,8 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 
 			$scope.get_popular_authors = function(){
 				var skip_count = $scope.popular_authors.length;
-				if(!$scope.loading){
+				var get_popular_authors = !$scope.loading;
+				if(get_popular_authors){
 					$scope.loading = true;
 					websiteService.get_popular_authors(skip_count).then(function(data){
 						angular.forEach(data, function(value){
@@ -795,7 +833,8 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 
 			$scope.get_popular_books = function(){
 				var skip_count = $scope.popular_books.length;
-				if(!$scope.loading){
+				var get_popular_books = !$scope.loading;
+				if(get_popular_books){
 					$scope.loading = true;
 					websiteService.get_popular_books(skip_count).then(function(data){
 						angular.forEach(data, function(value){
@@ -919,12 +958,14 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 			}
 			
 			_init = function(){
+				var search_input_timeout = "";
 				$rootScope.user.profile_status = 0;
 	    		_profile_status_colors();
 	    		_get_info_data();
 	    		$scope.popular_books = [];
 	    		$scope.popular_authors = [];
 	    		$scope.loading = false;
+	    		$scope.info = {"search_book": "", "search_author": ""};
 				$scope.profileOptions = [
 					{"name": "Reader"},
 					{"name": "Author"},

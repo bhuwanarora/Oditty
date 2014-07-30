@@ -100,27 +100,27 @@ websiteApp.directive('widgetThumb', ['$timeout', '$rootScope', '$filter', functi
     restrict: 'E',
     controller: ['$scope', function($scope){
       $scope.show_images = function(){
-        var delay = 500;
-        if(global_display_timer == 2500){
-          global_display_timer = delay;
+        // var delay = 0;
+        // if(global_display_timer == 2500){
+        //   global_display_timer = delay;
+        // }
+        // else{
+        //   global_display_timer = global_display_timer + delay;
+        // }
+        if(angular.isDefined($scope.book)){
+          var obj = $scope.book;
+          if(angular.isDefined(obj.isbn)){
+            $scope.thumb_style = {'background': "url('"+_get_thumb(obj)+"')"};
+          }
         }
-        else{
-          global_display_timer = global_display_timer + delay;
+        else if(angular.isDefined($scope.author)){
+          var obj = $scope.author;
         }
-        var timeout_event = $timeout(function(){
-          if($scope.book){
-            var obj = $scope.book;
-            if(obj.isbn){
-              $scope.thumb_style = {'background': "url('"+_get_thumb(obj)+"')"};
-            }
-          }
-          else if($scope.author){
-            var obj = $scope.author;
-          }
-          else if($scope.reader){
-            var obj = $scope.reader;
-          }
-        }, global_display_timer);
+        else if(angular.isDefined($scope.reader)){
+          var obj = $scope.reader;
+        }
+        // var timeout_event = $timeout(function(){
+        // }, global_display_timer);
 
         $scope.$on('destroy', function(){
           $timeout.cancel(timeout_event);
