@@ -19,6 +19,11 @@ module Api
 				render :json => {:results => results}, :status => 200
 			end
 
+			def search_genres
+				results = SearchApi.search_genres(params[:q].strip, params[:count])
+				render :json => results, :status => 200
+			end
+
 		end
 	end
 end

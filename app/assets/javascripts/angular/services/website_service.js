@@ -36,6 +36,10 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         return _deferred_request('/api/v0/search_authors?q='+data);
     }
 
+    this.search_genres = function(data){
+        return _deferred_request('/api/v0/search_genres?'+data);
+    }
+
     this.get_trending_topics = function(){
         return _deferred_request('/api/v0/trends');
     }

@@ -7,14 +7,14 @@
 		<li ng-repeat="label in book.labels track by $index"  ng-click="select_label($index);">
   			<label>
   				<span class="bookmark_label">
-  					<span class="icon-bookmark3"></span>&nbsp;
+  					<!-- <span class="icon-bookmark3"></span>&nbsp; -->
   					<span>{{label.name}}</span>
   				</span>
         </label>
   			<input type="checkbox" 
   					   ng-checked="label.checked"
   					   ng-value="label.name"
-  					   class="custom_radio icon-checkbox-unchecked">
+  					   class="custom_bookmark_radio icon-checkbox-unchecked">
 		</li>
     <li ng-if="book.labels.length == 0"><span class="bookmark_label">Add some bookmarks...</span></li>
 	</ul>

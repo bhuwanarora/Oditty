@@ -17,6 +17,20 @@ module Api
 				results
 			end
 
+			def self.search_genres(q, limit)
+				results = []
+				neo_init
+				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "") rescue ""
+				if q.present?
+					clause = "START genre=node:node_auto_index('indexed_genre_name:"+q+"*') RETURN genre.name, ID(genre) ORDER BY genre.gr_book_count DESC LIMIT "+limit.to_s
+				else
+					clause = "MATCH(genre:Genre) WHERE genre.gr_book_count IS NOT NULL RETURN genre.name, ID(genre) ORDER BY genre.gr_book_count DESC LIMIT "+limit.to_s
+				end
+				puts clause.blue.on_red
+				results = @neo.execute_query(clause)["data"]
+				results
+			end
+
 			def self.search_authors(q)
 				results = []
 				neo_init
@@ -31,21 +45,6 @@ module Api
 
 			def search_reader
 
-			end
-
-			def self.search_genres filter
-				neo_init
-				match_clause = "MATCH (g:Genre) "
-				return_clause = "RETURN g.name, ID(g) 
-                                 ORDER BY g.gr_book_count DESC "
-				if filter && filter.chop.present?
-					where_clause = "WHERE g.name =~ '(?i)"+filter+".*'"
-                    limit_clause = "LIMIT 5"
-                	genres = @neo.execute_query(match_clause+where_clause+return_clause+limit_clause)
-                else
-                	limit_clause = "LIMIT 2"
-                	genres = @neo.execute_query(match_clause+return_clause+limit_clause)
-                end
 			end
 
 			def self.search(q, count, type)

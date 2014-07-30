@@ -123,7 +123,8 @@ input:focus{
     align-items: center;
 }
 
-.custom_radio{
+.custom_radio, 
+.custom_bookmark_radio{
     width: 12px !important;
     -webkit-appearance: none;
     color: #717070;
@@ -143,6 +144,24 @@ input:focus{
 .custom_radio:checked:before{
     content: "\f14a";
 }
+
+.custom_bookmark_radio{
+    font-size: 1.2em;
+    color: #B6B6B6;
+}
+
+.custom_bookmark_radio:before{
+    content: "\e6c2" !important;
+}
+
+.custom_bookmark_radio:checked:before{
+    content: "\e6c3" !important;
+}
+
+.custom_bookmark_radio:checked{
+    color: #427fed;
+}
+
 
 .arrow_down{
     border-top: 10px solid white;

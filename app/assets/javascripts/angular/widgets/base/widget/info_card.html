@@ -16,7 +16,7 @@
      		<div>Add</div><div>Books</div>
      	</div>
      	<div class="block"
-     		ng-click="goto_info_card(); user.profile_status=4; compressed_info=false;">
+     		ng-click="edit_authors_read();">
      		<div class="icon-pen"></div>
      		<div>Add</div><div>Authors</div>
      	</div>
@@ -123,7 +123,7 @@
 				Choose atleast 3 genres you like
 			</div>
 			<div class="header center scrollbar" msd-wheel="stop_horizontal_scroll($event)">
-				<div ng-repeat="genre in genres  | orderBy:genre.name">
+				<div ng-repeat="genre in info.genres  | orderBy:genre.name">
 					<toggle data="genre"></toggle>
 					<!-- <div class="filter inactive_filter">{{genre.name}}</div> -->
 				</div>

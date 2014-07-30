@@ -89,7 +89,7 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 			$scope.handle_left_columns = function(){
 				$scope.column_heights = {"show_filters": true,
 										"notifications_style" : {"max-height": "110px"}, 
-										"friends_grid_style": {"height": "75px"}};
+										"friends_grid_style": {"height": "40px"}};
 			}
 
 			$scope.clear_filter = function(main_filter, type){
@@ -181,15 +181,19 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 
 			$scope.show_genre_options = function(filter, genre){
 				if(genre){
-					var params = genre+String.fromCharCode(event.keyCode);
+					var genre = genre+String.fromCharCode(event.keyCode);
 				}
 				else{
-					var params = String.fromCharCode(event.keyCode);
+					var genre = String.fromCharCode(event.keyCode);
 				}
-				var filter = "q="+params+"&filter="+filter;
-				recommendationService.get_genres(filter).then(function(data){
+				var count = 3;
+				if(genre == ""){
+					count = 2;
+				}
+				var params = "q="+genre+"&filter="+filter+"&count="+count;
+				websiteService.search_genres(params).then(function(data){
 					$scope.genres = [];
-					angular.forEach(data.genres.data, function(value){
+					angular.forEach(data, function(value){
 						var json = {"name": value[0], "id": value[1]};
 						this.push(json);
 					}, $scope.genres);
@@ -563,12 +567,12 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 				}
 				if(increase_tab_size){
 					$scope.column_heights = {"notifications_style": {"max-height": "225px"},
-											"friends_grid_style": {"height": "75px"},
+											"friends_grid_style": {"height": "40px"},
 											"show_filters": false};
 				}
 				else{
 					$scope.column_heights = {"notifications_style": {"max-height": "110px"},
-											"friends_grid_style": {"height": "75px"},
+											"friends_grid_style": {"height": "40px"},
 											"show_filters": false};
 				}
 				$rootScope.ticker_popup = null;
@@ -604,7 +608,7 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 			_init_left_column = function(){
 				$scope.show_lists = false;
 				$scope.column_heights = {"notifications_style": {"max-height": "110px"},
-											"friends_grid_style": {"height": "75px"},
+											"friends_grid_style": {"height": "40px"},
 											"show_filters": true};
 			}
 
@@ -733,13 +737,13 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 			}
 
 			_get_genres = function(){
-				if(angular.isUndefined($scope.genres) || $scope.genres.length == 0){
-					$scope.genres = [];
+				if(angular.isUndefined($scope.info.genres) || $scope.info.genres.length == 0){
+					$scope.info.genres = [];
 			    	websiteService.get_genres().then(function(data){
 			    		angular.forEach(data, function(value){
 			    			var json = {"name": value[0], "id": value[1], "icon": value[2]};
 			    			this.push(json);
-			    		}, $scope.genres);
+			    		}, $scope.info.genres);
 			    	});
 				}
 		    }
@@ -814,6 +818,13 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 				$rootScope.user.profile_status = 3;
 				$scope.get_popular_books();
 				$scope.compressed_info = false;
+			}
+
+			$scope.edit_authors_read = function(){
+				$scope.goto_info_card();
+				$rootScope.user.profile_status = 4;
+				$scope.get_popular_authors();
+				$scope.compressed_info = false;	
 			}
 
 			$scope.get_popular_authors = function(){
@@ -965,7 +976,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 	    		$scope.popular_books = [];
 	    		$scope.popular_authors = [];
 	    		$scope.loading = false;
-	    		$scope.info = {"search_book": "", "search_author": ""};
+	    		$scope.info = {"search_book": "", "search_author": "", "genres": []};
 				$scope.profileOptions = [
 					{"name": "Reader"},
 					{"name": "Author"},

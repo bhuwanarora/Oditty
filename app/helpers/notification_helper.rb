@@ -26,26 +26,31 @@ module NotificationHelper
 	end
 
 	def self.bookmark_notification data
-		message = "<span><b>"+data["name"]+"</b> bookmarked </span><span class='site_color'><em>"+data["title"]+"</em></span><span>&nbsp; to &nbsp;</span><span>'"+data["label"]+"'</span>"
+		name = self._get_name data
+		message = "<span><b>"+name+"</b> bookmarked </span><span class='site_color'><em>"+data["title"]+"</em></span><span>&nbsp; to &nbsp;</span><span>'"+data["label"]+"'</span>"
 		self.notification(message, data)
 	end
 
 	def self.rating_notification data
-		message = "<span><b>"+data["name"]+"</b> gave "+data["rating"].to_s+"/10 stars to </span><span class='site_color'><em>"+data["title"]+"</em>.</span>"
+		name = self._get_name data
+		message = "<span><b>"+name+"</b> gave "+data["rating"].to_s+"/10 stars to </span><span class='site_color'><em>"+data["title"]+"</em>.</span>"
 		self.notification(message, data)
 	end
 	def self.timing_node_notification data
+		name = self._get_name data
 		book_length_string = self.get_time_index data["time_index"]
-		message = "<span><b>"+data["name"]+"</b> described reading length of <span class='site_color'><em>"+data["title"]+"</em></span>&nbsp; as a '"+book_length_string+"' </span>"
+		message = "<span><b>"+name+"</b> described reading length of <span class='site_color'><em>"+data["title"]+"</em></span>&nbsp; as a '"+book_length_string+"' </span>"
 		self.notification(message, data)
 	end
 
 	def self.mark_as_read_notification data
-		message = "<span><b>"+data["name"]+"</b> added </span><span class='site_color'><em>"+data["title"]+"</em></span><span> to &nbsp;</span><span class='icon-books'></span><span>&nbsp;Books Read.</span>"
+		name = self._get_name data
+		message = "<span><b>"+name+"</b> added </span><span class='site_color'><em>"+data["title"]+"</em></span><span> to &nbsp;</span><span class='icon-books'></span><span>&nbsp;Books Read.</span>"
 		self.notification(message, data)
 	end
 
 	def self.notification(message, data)
+		name = self._get_name data
 		thumb = "assets/profile_pic.jpeg"
 		notification = {
 			:thumb => thumb,
@@ -66,23 +71,10 @@ module NotificationHelper
 	end
 
 	def self.comment_notification data
-		message = "<span><b>"+data["name"]+"</b> </span><span class='site_color'>"+data["tweet"]+"</span>";
+		name = self._get_name data
+		message = "<span><b>"+name+"</b> </span><span class='site_color'>"+data["tweet"]+"</span>";
 		thumb = "assets/profile_pic.jpeg"
-		notification = {
-			:thumb => thumb,
-			:message => message,
-			:timestamp => data["timestamp"],
-			:book => {
-				:id => data["book_id"],
-				:title => data["title"],
-				:author_name => data["author"],
-				:isbn => data["isbn"]
-			},
-			:user => {
-				:id => data["user_id"],
-				:name => data["name"]
-			}
-		}
+		self.notification(message, data)
 		notification
 	end
 
@@ -98,5 +90,14 @@ module NotificationHelper
 			output = "long read"
 		end
 		output
+	end
+
+	def self._get_name data
+		if data["name"]
+			name = data["name"]
+		else
+			name = data["email"]
+		end
+		name
 	end
 end

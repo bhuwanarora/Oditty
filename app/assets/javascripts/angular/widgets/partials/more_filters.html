@@ -23,9 +23,9 @@
 			 				custom="input_filter"
 			 				model="genre" 
 			 				item-id="itemId"
-			 				on-select="on_genre_selection(itemId, $event)"
-			 				auto-populate="show_genre_options('BOOK', genre)"
 			 				on-clear="clear_filter('BOOK', 'genre')"
+			 				on-select="on_genre_selection(itemId)"
+			 				auto-populate="show_genre_options('BOOK', genre)"
 			 				ng-keypress="show_genre_options('BOOK', genre)"
 			 				focus-when="genre_selected">
 			 	</type-ahead>

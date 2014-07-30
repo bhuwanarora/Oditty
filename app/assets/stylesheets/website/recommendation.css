@@ -643,7 +643,7 @@
 
 .typeahead_options .option{
 	cursor: pointer;
-	text-align: center;
+	text-align: left;
 	padding: 10px;
 	background-color: white;
 	border-bottom: 1px solid #EEEEEE;
@@ -908,19 +908,20 @@ and (min-width : 1824px) {
 	bottom: -300%;
 	left: 0;
 	right: 0;
-	background: white;
+	background: #fff;
 	padding: 0;
-	border: 1px solid rgba(0, 0, 0, 0.17);
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-	font-weight: normal;
-	transition: all 0.2s ease-in;
+	border: 1px solid rgba(0, 0, 0, 0.06);
+	box-shadow: 0 0 5px rgba(0,0,0,.1);
+	font-weight: 400;
+	transition: all .2s ease-in;
 	list-style: none;
 	opacity: 0;
 	pointer-events: none;
-	margin-top: 0px;
-	margin-bottom: 0px;
+	margin-top: 0;
+	margin-bottom: 0;
 	z-index: 2;
 	max-height: 35vh;
+	border-radius: 2px;
 }
 
 .wrap-dd-select .dropdown li.divider {
@@ -933,8 +934,8 @@ and (min-width : 1824px) {
     padding: 10px;
     padding-left: 20px;
     text-decoration: none;
-    color: #8aa8bd;
-    border-bottom: 1px solid #e6e8ea;
+    /*color: #8aa8bd;*/
+    border-bottom: 1px solid #F5F5F5;
     box-shadow: inset 0 1px 0 rgba(255,255,255,1);
     transition: all 0.3s ease-out;
     white-space: initial;
@@ -948,7 +949,7 @@ and (min-width : 1824px) {
 /* Hover state */
  
 .wrap-dd-select .dropdown li:hover a {
-    background: #f3f8f8;
+    background: #F5F5F5;
 }
 
 .wrap-dd-select.active .dropdown {
@@ -1264,6 +1265,20 @@ and (min-width : 1824px) {
 .left_column .friends_grid img{
 	width: 70px;
 	margin: 2px;
+}
+
+.left_column .status{
+	background-color: white;
+	padding: 10px 4px 10px 4px;
+	text-align: center;
+	margin-bottom: 5px;
+	border-radius: 4px;
+	font-size: .9em;
+	cursor: pointer;
+}
+
+.left_column .status:hover{
+	background-color: #F1F1F1;
 }
 
 .loading_widget{

@@ -248,41 +248,41 @@ module Api
 					book_id = filters["other_filters"]["id"]
 					if book_id.present?
 						puts "get_books_by_id".green
-						clause = self.get_books_by_id filters
+						clause = self._get_books_by_id filters
 					elsif book_name.present?
 						puts "get_books_by_title".green
-						clause = self.get_books_by_title filters
+						clause = self._get_books_by_title filters
 					else
 						puts "get_filtered_books".green
-						clause = self.get_filtered_books(filters, last_book)
+						clause = self._get_filtered_books(filters, last_book)
 					end
 				elsif trends
 					unless last_book.present?
 						last_book = Constants::BestBook
 					end
 					puts "get_trends".green
-					clause = self.get_trends(filters["trend_id"])
+					clause = self._get_trends(filters["trend_id"])
 				elsif bookmark_list
 					unless last_book.present?
 						last_book = Constants::BestBook
 					end
 					puts "get_bookmark_lists".green
-					clause = self.get_bookmark_lists(filters["label_id"], user_id)
+					clause = self._get_bookmark_lists(filters["label_id"], user_id)
 				elsif specific_list
 					unless last_book.present?
 						last_book = Constants::BestBook
 					end
 					puts "get_specific_lists".green
-					clause = self.get_specific_lists(filters["filter_id"], user_id)
+					clause = self._get_specific_lists(filters["filter_id"], user_id)
 				else
 					unless last_book.present?
 						last_book = Constants::BestBook
 					end
 					puts "get_basic_recommendations".green
-					clause = self.get_basic_recommendations(filters, last_book)
+					clause = self._get_basic_recommendations(filters, last_book)
 				end
 
-				puts clause.blue.on_red
+				puts clause.green
 				begin
 					books = @neo.execute_query(clause)["data"]
 				rescue Exception => e
@@ -337,33 +337,33 @@ module Api
 			end
 
 			private
-			def self.get_trends trend_id
+			def self._get_trends trend_id
 				clause = "MATCH (t:Trending)-[:RelatedBooks]->(b:Book) WHERE ID(t)="+trend_id.to_s+" RETURN b.isbn, ID(b), b.indexed_title"
 				clause
 			end
 
-			def self.get_bookmark_lists(filter_id, user_id)
+			def self._get_bookmark_lists(filter_id, user_id)
 				clause = "MATCH (l:Label), (u:User) WHERE ID(l)="+filter_id.to_s+" AND ID(u)="+user_id.to_s+" WITH u, l MATCH (u)-[:Labelled]->(l)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(b:Book) RETURN b.isbn, ID(b), b.indexed_title"
 				clause
 			end
 
-			def self.get_specific_lists(filter_id, user_id)
+			def self._get_specific_lists(filter_id, user_id)
 				clause = "MATCH (bg:BookGrid) WHERE ID(bg)="+filter_id.to_s+" WITH bg MATCH (bg)-[:RelatedBooks]->(b:Book) RETURN b.isbn, ID(b), b.indexed_title"
 				clause
 			end
 
-			def self.get_basic_recommendations(filters, last_book)
+			def self._get_basic_recommendations(filters, last_book)
 				clause = "MATCH (book:Book) WHERE ID(book)="+last_book.to_s+" MATCH p=(book)-[:Next_book*..5]->(b) WITH last(nodes(p)) as b RETURN b.isbn, ID(b), b.indexed_title"
 				clause
 			end
 
-			def self.get_books_by_id filters
+			def self._get_books_by_id filters
 				book_id = filters["other_filters"]["id"]
 				clause = "MATCH(book:Book) WHERE ID(book)="+book_id.to_s+" RETURN book.isbn as isbn, ID(book)"
 				clause
 			end
 
-			def self.get_books_by_title filters
+			def self._get_books_by_title filters
 				book_name = filters["other_filters"]["title"].gsub(" ", "").gsub(":", "")
 				author_name = filters["other_filters"]["author_name"].gsub(" ", "").gsub!(":", "") rescue ""
 				show_all = filters["other_filters"]["show_all"]
@@ -378,7 +378,7 @@ module Api
 				clause
 			end
 
-			def self.get_filtered_books(filters, last_book)
+			def self._get_filtered_books(filters, last_book)
 				where_clause = ""
 				match_clause = ""
 				skip_clause = ""
@@ -386,26 +386,19 @@ module Api
 				random = Random.new.rand(1..100)
 				read_time = filters["other_filters"]["readingTime"].downcase.gsub(" ", "") rescue ""
 				only_read_time = filters["other_filters"].keys.length == 1 && read_time.present?
+
 				if only_read_time
 					if read_time == Constants::TinyRead
-						unless last_book.present?
-							last_book = Constants::BestTinyRead
-						end
+						last_book = Constants::BestTinyRead unless last_book.present?
 						relation = "NextTinyRead"
 					elsif read_time == Constants::SmallRead
-						unless last_book.present?
-							last_book = Constants::BestSmallRead
-						end
+						last_book = Constants::BestSmallRead unless last_book.present?
 						relation = "NextSmallRead"
 					elsif read_time == Constants::NormalRead
-						unless last_book.present?
-							last_book = Constants::BestNormalRead
-						end
+						last_book = Constants::BestNormalRead unless last_book.present?
 						relation = "NextNormalRead"
 					elsif read_time == Constants::LongRead
-						unless last_book.present?
-							last_book = Constants::BestLongRead
-						end
+						last_book = Constants::BestLongRead unless last_book.present?
 						relation = "NextLongRead"
 					end
 					init_match_clause = "MATCH (b:Book) WHERE ID(b)="+last_book.to_s+" "
@@ -438,7 +431,9 @@ module Api
 					end
 					# random_clause = "ID(book)%"+random.to_s+"=0 AND rand() > 0.3 "
 					with_clause = "WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight "
-					order_clause = ", total_weight, rating_weight ORDER BY rating_weight DESC, total_weight DESC, book.gr_rating DESC "
+					return_clause = ", total_weight, rating_weight "
+					init_order_clause = " ORDER BY "
+					base_order_clause = " rating_weight DESC, total_weight DESC, book.gr_rating DESC "
 					limit_clause = " LIMIT 5 "
 
 					unless filters["reset"]
@@ -448,7 +443,13 @@ module Api
 						end
 					end
 				end
-				return_clause = "RETURN book.isbn as isbn, ID(book), book.indexed_title"
+
+				init_return_clause = "RETURN book.isbn as isbn, ID(book), book.indexed_title"
+				if return_clause
+					return_clause = init_return_clause + return_clause
+				else
+					return_clause = init_return_clause
+				end
 				# distinct_clause = "ALL (id in "+book_ids.to_s+" WHERE toInt(id) <> ID(book)) "
 
 				if filters["other_filters"]["country"].present?
@@ -456,6 +457,7 @@ module Api
 					match_clause = match_clause + ""
 				end
 				
+
 				if filters["other_filters"]["author"].present?
 					author_id =  filters["other_filters"]["author"]
 					match_clause = match_clause + ", (author:Author)-[:Wrote]->(book) "
@@ -466,16 +468,23 @@ module Api
 						where_clause = where_clause + next_Where_clause
 					end
 				end
+
+
 				if filters["other_filters"]["genre"].present?
 					genre = filters["other_filters"]["genre"]
-					match_clause = match_clause + ", (genre:Genre)-[:Belongs_to]->(book) "
-					next_Where_clause = " ID(genre) = "+genre.to_s+" "
+					match_clause = match_clause + ", (genre:Genre)-[r:Belongs_to]->(book) "
+					next_Where_clause = " ID(genre) = "+genre.to_s+" AND r.weight IS NOT NULL "
+					
+					with_clause = with_clause + " ,r.weight as genre_weight " if with_clause.present?
+					base_order_clause = " genre_weight DESC, "+base_order_clause if base_order_clause.present?
 					if where_clause.present?
 						where_clause = where_clause + " AND"+next_Where_clause
 					else
 						where_clause = where_clause + next_Where_clause
 					end
 				end
+
+
 				if !only_read_time && filters["other_filters"]["readingTime"].present?
 					if read_time == Constants::TinyRead
 						next_Where_clause = " toInt(book.page_count) <= 50 "
@@ -493,31 +502,20 @@ module Api
 					end
 				end
 
+				puts init_match_clause.present?
 				puts where_clause.present?
 				puts match_clause.present?
-			
-				clause = init_match_clause
-				if match_clause.present?
-					clause = clause + match_clause
-				end
-				if where_clause.present?
-					clause = clause + "WHERE "+where_clause
-				end
-				if with_clause.present?
-					clause = clause + with_clause
-				end
-				if return_clause.present?
-					clause = clause + return_clause
-				end
-				if order_clause.present?
-					clause = clause + order_clause
-				end
-				if skip_clause
-					clause = clause + skip_clause
-				end
-				if limit_clause
-					clause = clause + limit_clause
-				end
+				
+				#MATCH WHERE WITH RETURN ORDER SKIP LIMIT
+				order_clause = init_order_clause + base_order_clause 	if init_order_clause.present?
+				clause = init_match_clause				
+				clause = clause + match_clause 							if match_clause.present?
+				clause = clause + "WHERE "+where_clause 				if where_clause.present?
+				clause = clause + with_clause 							if with_clause.present?
+				clause = clause + return_clause 						if return_clause.present?
+				clause = clause + order_clause 							if order_clause.present?
+				clause = clause + skip_clause 							if skip_clause.present?
+				clause = clause + limit_clause 							if limit_clause.present?
 				clause
 			end
 
