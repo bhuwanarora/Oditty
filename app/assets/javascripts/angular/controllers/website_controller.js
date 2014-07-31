@@ -1,4 +1,4 @@
-websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout', 'websiteService', '$document', 'scroller', '$window', function($scope, $rootScope, $timeout, websiteService, $document, scroller, $window){
+websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout', 'websiteService', '$document', 'scroller', '$window', 'WebsiteUIConstants', function($scope, $rootScope, $timeout, websiteService, $document, scroller, $window, WebsiteUIConstants){
 	$scope.bindHorizontalScroll = function(event, delta, deltaX, deltaY){
 		event.preventDefault();
 		if(delta > 0){
@@ -339,7 +339,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		var fullVersion  = ''+parseFloat(navigator.appVersion); 
 		var majorVersion = parseInt(navigator.appVersion,10);
 		var nameOffset,verOffset,ix;
-		var message = "Please use latest version of Chrome for now...";
+		var message = WebsiteUIConstants.BrowserIncompatible;
 		// In Opera, the true version is after "Opera" or after "Version"
 		if ((verOffset=nAgt.indexOf("Opera"))!=-1) {
 			alert(message);

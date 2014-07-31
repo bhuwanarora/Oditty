@@ -45,115 +45,117 @@
 	top: 0px;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	max-width: 180px;
-	width: 180px;
-	height: 285px;
+	width: 28vh;
+	height: 44vh;
 }
 
 .grid1 .second{
 	position: absolute;
-	left: 185px;
-	top: 0px;
-	width: 110px;
+	left: 28.6vh;
+	top: 0;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 110px;
-	height: 170px;
+	width: 17vh;
+	height: 27vh;
 }
 
 .grid1 .third{
 	position: absolute;
-	left: 300px;
-	top: 0px;
-	width: 110px;
+	left: 46vh;
+	top: 0;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 110px;
-	height: 170px;
+	width: 17vh;
+	height: 27vh;
 }
 
 .grid1 .fourth{
 	position: absolute;
-	left: 185px;
-	top: 180px;
-	width: 110px;
+	left: 28.6vh;
+	top: 28vh;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 110px;
-	height: 170px;
+	width: 17vh;
+	height: 27vh;
 }
 
 .grid1 .fifth{
 	position: absolute;
-	left: 300px;
-	top: 180px;
-	width: 110px;
+	left: 46vh;
+	top: 28vh;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 110px;
-	height: 170px;
+	width: 17vh;
+	height: 27vh;
 }
 
 .grid1 .sixth{
 	position: absolute;
-	top: 293px;
-	width: 110px;
-	left: 70px;
+	top: 45vh;
+	left: 11vh;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 110px;
-	height: 170px;
+	width: 17vh;
+	height: 27vh;
 }
 
 .grid2 .first{
 	position: absolute;
-	left: 0px;
-	top: 0px;
+	left: 0;
+	top: 0;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
+	max-width: 180px;
+	width: 20vh;
+	height: 32vh;
 }
 
 .grid2 .second{
 	position: absolute;
-	left: 185px;
-	top: 0px;
-	width: 110px;
+	left: 20.6vh;
+	top: 0;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
+	width: 25vh;
+	height: 44vh;
 }
 
 .grid2 .third{
 	position: absolute;
-	left: 300px;
-	top: 0px;
-	width: 110px;
+	left: 46vh;
+	top: 0;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
+	width: 17vh;
+	height: 27vh;
 }
 
 .grid2 .fourth{
 	position: absolute;
-	left: 185px;
-	top: 180px;
-	width: 110px;
+	left: 0;
+	top: 32vh;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
+	width: 20vh;
+	height: 32vh;
 }
 
 .grid2 .fifth{
 	position: absolute;
-	left: 300px;
-	top: 180px;
-	width: 110px;
+	left: 46vh;
+	top: 28vh;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
+	width: 17vh;
+	height: 27vh;
 }
 
 .grid2 .sixth{
 	position: absolute;
-	top: 293px;
-	width: 110px;
-	left: 70px;
+	top: 45vh;
+	left: 11vh;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
+	width: 17vh;
+	height: 27vh;
 }

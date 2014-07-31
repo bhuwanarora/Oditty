@@ -1,4 +1,4 @@
-websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', 'scroller', 'websiteService', 'sharedService', '$cookieStore', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService, scroller, websiteService, sharedService, $cookieStore){
+websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', 'scroller', 'websiteService', 'sharedService', '$cookieStore', 'RecommendationUIConstants', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService, scroller, websiteService, sharedService, $cookieStore, RecommendationUIConstants){
 
 	$scope.handle_height_of_popup = function(event, scroll_down){
 		var event_defined = angular.isDefined(event);
@@ -9,10 +9,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			var increase_tab_size = scroll_down;
 		}
 		if(increase_tab_size){
-			$scope.ticker_popup_style = {"height": "62vh"};
-		}
-		else{
-			$scope.ticker_popup_style = {"height": "42vh"};		
+			$scope.ticker_popup_style = {"height": RecommendationUIConstants.TickerPopupMaxHeight};
 		}
 		if(event_defined){
 			event.stopPropagation();
@@ -28,15 +25,18 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			var increase_tab_size = scroll_down;
 		}
 		if(increase_tab_size){
-			$scope.column_heights = {"notifications_style" : {"max-height": "110px"}, 
-									"friends_grid_style": {"max-height": "120px", "overflow": "auto"},
-									"show_filters": false};
+			$scope.column_heights = {"notifications_style" : 
+			{"max-height": RecommendationUIConstants.NotificationsMinHeight}, 
+			"friends_grid_style": 
+			{"max-height": RecommendationUIConstants.FriendsGridMaxHeight, 
+			"overflow": "auto"},
+			"show_filters": false};
 		}
-		else{
-			$scope.column_heights = {"notifications_style" : {"max-height": "110px"}, 
-									"friends_grid_style": {"height": "75px"},
-									"show_filters": false};
-		}
+		// else{
+		// 	$scope.column_heights = {"notifications_style" : {"max-height": "110px"}, 
+		// 							"friends_grid_style": {"height": "75px"},
+		// 							"show_filters": false};
+		// }
 		if(event_defined){
 			event.stopPropagation();
 		}
@@ -140,7 +140,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	_show_bookmark_tab = function(){
 		$scope.bookmark_selected  = true;
-        $scope.panel_selected = 'BOOKMARK';
+        $scope.panel_selected = RecommendationUIConstants.BookmarkPanel;
 	}
 
 	_initialize_filters = function(){
@@ -149,11 +149,11 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         $rootScope.filters["more_filters"] = [];
         $rootScope.filters["other_filters"] = {};
         if($routeParams.type == "books"){
-        	$rootScope.filters["filter_type"] = "BOOK";
+        	$rootScope.filters["filter_type"] = RecommendationUIConstants.BookTab;
         	var specific_list = angular.isDefined($routeParams.filter_id);
         	var trends = angular.isDefined($routeParams.trend_id);
         	if(specific_list){
-        		if($cookieStore.get('tab') == "BOOKMARK"){
+        		if($cookieStore.get('tab') == RecommendationUIConstants.BookmarkPanel){
         			_show_bookmark_tab();
         			$rootScope.filters["label_id"] = $routeParams.filter_id;
         			$rootScope.main_header = $routeParams.name;
@@ -171,15 +171,15 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         	}
         }
         else if($routeParams.type == "authors"){
-        	$rootScope.filters["filter_type"] = "AUTHOR";
+        	$rootScope.filters["filter_type"] = RecommendationUIConstants.AuthorTab;
         }
         else if($routeParams.type == "readers"){
-        	$rootScope.filters["filter_type"] = "READER";
+        	$rootScope.filters["filter_type"] = RecommendationUIConstants.ReaderTab;
         }
         else if($routeParams.title){
 			$scope.$routeParams.type = 'books';
         	$rootScope.filters["reset"] = true;
-        	$rootScope.filters["filter_type"] = "BOOK";
+        	$rootScope.filters["filter_type"] = RecommendationUIConstants.BookTab;
         	$rootScope.filters.other_filters["title"] = $scope.$routeParams.title;
         	$rootScope.main_header = $scope.$routeParams.title;
 			$rootScope.filters.other_filters["author_name"] = $scope.$routeParams.author;
@@ -195,7 +195,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			}
         }
         else{
-			$rootScope.filters["filter_type"] = "BOOK";
+			$rootScope.filters["filter_type"] = RecommendationUIConstants.BookTab;
 			$scope.show_notifications = true;
         }
         // if($routeParams.filter_id){
@@ -204,7 +204,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
 	_update_recommendations = function(data){
-		if($rootScope.filters["filter_type"] == "BOOK"){
+		if($rootScope.filters["filter_type"] == RecommendationUIConstants.BookTab){
 			if(data.recommendations.books.length > 0){
 				var message = "INFO- "+data.recommendations.books.length+" books found.";
 			}
@@ -219,7 +219,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			if($rootScope.loading){
 				var max_limit = 30;
 				if(data.recommendations.books.length == 0){
-					var message = "ALERT- Reset the filters couldn't find more books."
+					var message = RecommendationUIConstants.ZeroBooksFound;
 					var timeout_event = notify($rootScope, message, $timeout);
 					$scope.$on('destroy', function(){
 						$timeout.cancel(timeout_event);
@@ -254,7 +254,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		    	$rootScope.loading = false;
 			}
     	}
-    	else if($rootScope.filters["filter_type"] == "AUTHOR"){
+    	else if($rootScope.filters["filter_type"] == RecommendationUIConstants.AuthorTab){
     		if($scope.recommendations.authors.length >= 30){
 				$scope.recommendations.authors = data["recommendations"]["authors"];
 			}
@@ -262,7 +262,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     			$scope.recommendations.authors = $scope.recommendations.authors.concat(data["recommendations"]["authors"]);
 			}
     	}
-    	else if($rootScope.filters["filter_type"] == "READER"){
+    	else if($rootScope.filters["filter_type"] == RecommendationUIConstants.ReaderTab){
     		if($scope.recommendations.readers.length >= 30){
 				$scope.recommendations.readers = data["recommendations"]["readers"];
 			}
@@ -272,7 +272,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	}
     	else{
     		if($scope.recommendations.books.length >= 30){
-
     			_set_books(data["recommendations"]["books"]);
 				// $scope.recommendations.books = data["recommendations"]["books"];
 			}
@@ -282,6 +281,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			}
     	}
 	}
+	
 	_set_books = function(data){
 		if($scope.bookmark_selected){
 			$rootScope.user.books['bookmarked'] = [];

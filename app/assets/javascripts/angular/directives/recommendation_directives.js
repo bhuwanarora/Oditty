@@ -570,15 +570,15 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 					var increase_tab_size = scroll_down;
 				}
 				if(increase_tab_size){
-					$scope.column_heights = {"notifications_style": {"max-height": "225px"},
+					$scope.column_heights = {"notifications_style": {"max-height": "350px"},
 											"friends_grid_style": {"height": "40px"},
 											"show_filters": false};
 				}
-				else{
-					$scope.column_heights = {"notifications_style": {"max-height": "110px"},
-											"friends_grid_style": {"height": "40px"},
-											"show_filters": false};
-				}
+				// else{
+				// 	$scope.column_heights = {"notifications_style": {"max-height": "110px"},
+				// 							"friends_grid_style": {"height": "40px"},
+				// 							"show_filters": true};
+				// }
 				$rootScope.ticker_popup = null;
 				if(event_defined){
 		        	event.stopPropagation();

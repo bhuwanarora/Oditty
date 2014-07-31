@@ -1,7 +1,8 @@
 var websiteApp = angular.module('websiteApp', ['ngRoute', 'ngAnimate', 
                   'monospaced.mousewheel', 'facebook', 
                   'directive.g+signin', 'ngMap', 'cropme',
-                  'duScroll', 'ngDropdowns', 'sticky', 'filtersApp', 'ngCookies']);
+                  'duScroll', 'ngDropdowns', 'sticky', 'filtersApp', 'ngCookies', 
+                  'appConstants']);
 
 websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
   $routeProvider
@@ -68,6 +69,8 @@ websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvid
   // $locationProvider.html5Mode(true);
 }]);
 
+websiteApp.constant('facebookAppId', 609609685818282);
+
 websiteApp.run(['$rootScope', '$location', '$cookieStore', function($rootScope, $location, $cookieStore){
   $rootScope.$on("$routeChangeStart", function(event, next, current){
     var unauthenticated_user = !$rootScope.user.logged && !$cookieStore.get('logged');
@@ -89,14 +92,14 @@ angular.element(document).ready(function() {
   console.timeEnd('bootstrap');
 });
 
-websiteApp.config(['FacebookProvider',
-    function(FacebookProvider){
+websiteApp.config(['FacebookProvider', 'facebookAppId',
+    function(FacebookProvider, facebookAppId){
       // $motionProvider.setTreshold({
       //   'rgb': 150,
       //   'move': 1,
       //   'bright': 300
       // });
-      var myAppId = '609609685818282';
+      var myAppId = facebookAppId;
       // var myAppId = '667868653261167'; #PRODUCTION
      
      // FacebookProvider.setAppId('myAppId');

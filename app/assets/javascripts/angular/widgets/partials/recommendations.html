@@ -133,12 +133,11 @@
 		
 		<!-- <message></message> -->
 		<div class="left_column animate-fast">
-			<div class="status site_color">What's on your mind?</div>
+			<!-- <div class="status site_color">What's on your mind?</div> -->
 			<div class="scrollbar notifications animate-fast" 
 				 ng-style="column_heights.notifications_style"
 				 ng-if="show_notifications"
 				 msd-wheel="handle_notification_ticker_size($event)"
-				 check-scroll-up="handle_notification_ticker_size($event, false)"
 				 check-scroll-down="handle_notification_ticker_size($event, true)">
 				<div class="full_height">
 					<!-- <div class="notification">News Feed</div> -->
@@ -159,8 +158,7 @@
 			<div class="scrollbar friends_grid" 
 				 ng-style="column_heights.friends_grid_style"
 				 msd-wheel="handle_friends_grid_size($event)"
-				 check-scroll-down="handle_friends_grid_size($event, true)"
-				 check-scroll-up="handle_friends_grid_size($event, false)">
+				 check-scroll-down="handle_friends_grid_size($event, true)">
 				<div class="friends_grid_header">15 Friends</div>
 				<img ng-src="{{friend.thumb}}" 
 					 title="{{friend.name}}" 
@@ -179,8 +177,7 @@
 			 ng-if="ticker_popup"
 			 ng-style="ticker_popup_style"
 			 msd-wheel="handle_height_of_popup($event)"
-			 check-scroll-down="handle_height_of_popup($event, true)"
-			 check-scroll-up="handle_height_of_popup($event, false)">
+			 check-scroll-down="handle_height_of_popup($event, true)">
 			 <div class="scrollbar shift_right">
 				<ticker-popup></ticker-popup>
 			</div>

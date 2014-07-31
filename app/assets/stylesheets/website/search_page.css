@@ -14,6 +14,18 @@
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
+.login_box .logo{
+	font-size: 2em;
+	font-weight: bold;
+	font-family: Helvetica;
+	letter-spacing: -4.2px;
+}
+
+.login_box .tagline{
+	font-size: 1.5em;
+	font-weight: 200;
+}
+
 .search_page .logo{
 	color: white;
 	position: absolute;
@@ -140,6 +152,10 @@
 	font-weight: 150px;
 }
 
+.search_page .trends .trend a:hover{
+	text-decoration: none;
+}
+
 .website_search_options,
 .website_search_helpers{
 	top: 40px;
@@ -174,14 +190,14 @@
 	text-align: center;
 	padding: 12px;
 	width: 155px;
-	background-color: #43609b;
-	background: -webkit-linear-gradient(#5678bc, #314a7b);
-	background: linear-gradient(#5678bc, #314a7b);
+	background: -webkit-linear-gradient(#5678bc,#314a7b);
+	background: linear-gradient(#5678bc,#314a7b);
 	border: 1px solid #293f69;
 	border-top-color: #314a7b;
-	color: white;
+	color: #fff;
 	border-radius: 2px;
 	margin-bottom: 4px;
+	margin-left: 160px;
 }
 
 .google{
@@ -191,23 +207,23 @@
 
 .login_box{
 	position: fixed;
-	box-shadow: 8px 10px 54px 0px #424242;
+	box-shadow: 8px 10px 54px 0 #424242;
 	z-index: 5;
 	padding: 35px;
-	background-color: white;
+	background-color: #fff;
 	border-radius: 2px;
-	width: 350px;
-	overflow: auto;
+	width: 500px;
+	/*overflow: auto;*/
 	left: 50%;
 	top: 50%;
-	margin-left: -190px;
+	margin-left: -285px;
 	margin-top: -170px;
 	text-align: center;
-	display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+	/*display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;*/
 }
 
 .login_box .header{
@@ -241,18 +257,18 @@
 }
 
 .login_form .authenticate{
-	padding: 10px 0px 10px 5px;
+	padding: 10px 0 10px 5px;
 	background-color: #427fed;
 	text-align: center;
-	color: white;
+	color: #fff;
 	cursor: pointer;
-	width: 47%;
+	width: 104px;
 	display: inline-block;
-	float: left;
 }
 
 .login_form .authenticate_left{
 	border-right: 1px solid;
+	margin-right: -3px;
 }
 
 .login_form .authenticate:active{

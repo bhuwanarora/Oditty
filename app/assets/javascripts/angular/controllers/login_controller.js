@@ -1,4 +1,4 @@
-websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteService', 'Facebook', 'stropheService', '$timeout', '$cookieStore', function($scope, $rootScope, websiteService, Facebook, stropheService, $timeout, $cookieStore){
+websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteService', 'Facebook', 'stropheService', '$timeout', '$cookieStore', 'LoginConstants', function($scope, $rootScope, websiteService, Facebook, stropheService, $timeout, $cookieStore, LoginConstants){
 	$scope.submit = function(event){
 		var enter_pressed = event.keyCode == 13;
 		if(enter_pressed){
@@ -38,19 +38,19 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 			$rootScope.user.password = null;
 		}
 		if(!$rootScope.user.email){
-			$scope.error_message = "Enter your email address";
+			$scope.error_message = LoginConstants.EmailNotPresent;
 		}
 		else if (!$rootScope.user.password) {
-			$scope.error_message = "Enter your password";
+			$scope.error_message = LoginConstants.PasswordNotPresent;
 		}
 		else if(!min_length_pattern.test($rootScope.user.password) && (!old_user)){
-			$scope.error_message = "Minimum password length is 8";
+			$scope.error_message = LoginConstants.PasswordLengthError;
 		}
 		else if((not_repeat_pattern.test($rootScope.user.password)) && (!old_user)){
-			$scope.error_message = "Choose a more secure password";
+			$scope.error_message = LoginConstants.ChooseAMoreSecurePassword;
 		}
 		else if((max_length_pattern.test($rootScope.user.password)) && (!old_user)){
-			$scope.error_message = "Maximum password length is 100";	
+			$scope.error_message = LoginConstants.MaximumPasswordLengthError;	
 		}
 		else{
 			$scope.loading_icon = true;
@@ -74,7 +74,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 
 
 	    $scope.$on('Facebook:statusChange', function(ev, data) {
-	        if (data.status == 'connected') {
+	        if (data.status == LoginConstants.FacebookLoginStatusCheck) {
 	        	$scope.$apply(function() {
 	          	});
 	        } 
@@ -100,7 +100,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 
     $scope.intent_login = function() {
         Facebook.getLoginStatus(function(response){
-          	if (response.status == 'connected'){
+          	if (response.status == LoginConstants.FacebookLoginStatusCheck){
             	$rootScope.logged = true;
             	$scope.me(); 
           	}
@@ -112,7 +112,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
       
    	$scope.login = function() {
      	Facebook.login(function(response) {
-      		if (response.status == 'connected') {
+      		if (response.status == LoginConstants.FacebookLoginStatusCheck) {
         		$rootScope.logged = true;
         		$scope.me();
       		}

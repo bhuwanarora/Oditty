@@ -37,6 +37,20 @@ img{
 	right: 0px;
 }
 
+.main_footer{
+	position: fixed;
+	bottom: 0px;
+	padding: 10px;
+	background-color: #F5F5F5;
+	left: 0px;
+	right: 0px;
+}
+
+.main_footer input{
+	width: 500px;
+	padding: 7px;
+}
+
 .main-header a{
 	color: white;
 	text-decoration: none;
