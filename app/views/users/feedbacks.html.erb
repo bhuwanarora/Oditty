@@ -1,0 +1,26 @@
+<table>
+	<tr>
+		<th>User</th>
+		<th>Timestamp</th>
+		<th>Feedback</th>
+		<th>Status</th>
+		<th>Submit</th>
+	</tr>
+	<% @feedbacks.each do |feedback|%>
+		<tr>
+			<td><%= feedback[2] %></td>
+			<td><%= Time.at(feedback[4]).strftime("%d-%m-%y") %></td>
+			<td><div class="highlighter"><%= feedback[3] %></div></td>
+			<td>
+				<select>
+					<option>Pending</option>
+					<option value="0">Dont Publish</option>
+					<option value="1">Publish</option>
+				</select>
+			</td>
+			<td>
+				<button>Submit</button>
+			</td>
+		</tr>
+	<% end %>
+</table>

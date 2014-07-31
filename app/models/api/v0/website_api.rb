@@ -3,8 +3,13 @@ include NotificationHelper
 module Api
 	module V0
 		class WebsiteApi
-			def self.get_labels user_id
+			def self.save_feedback(feedback, user_id)
 				neo_init
+				clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" CREATE (u)-[:GaveFeedback]->(f:Feedback) SET f.feedback_text=\""+feedback+"\", f.timestamp="+Time.now.to_i.to_s
+				@neo.execute_query clause
+			end
+
+			def self.get_labels user_id
 				labels = UsersGraphHelper.get_bookmark_labels user_id
 				labels
 			end

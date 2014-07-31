@@ -78,6 +78,11 @@ module Api
 				render :json => {:notifications => news_feed}, :status => 200
 			end
 
+			def save_feedback
+				WebsiteApi.save_feedback(params[:feedback], session[:user_id])
+				render :json => {:message => "Success"}, :status => 200
+			end
+
             private
             def neo_init
                 @neo = Neography::Rest.new

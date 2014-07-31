@@ -42,7 +42,8 @@ ReadersDoor::Application.routes.draw do
       match "notifications"                          => 'website_api#notifications',                    :via => [:put, :get, :post]
       match "latest_notification"                    => 'website_api#latest_notification',              :via => [:put, :get, :post]
       match "trends"                                 => 'website_api#trends',                           :via => [:put, :get, :post]
-
+      match "save_feedback"                          => 'website_api#save_feedback',                    :via => [:put, :get, :post]
+      
       match 'save_info'                               => 'users_api#save_info',                         :via => [:put, :get, :post]
       match 'mar'                                     => 'users_api#mark_as_read',                      :via => [:put, :get, :post]
       match 'recommend'                               => 'users_api#recommend',                         :via => [:put, :get, :post]

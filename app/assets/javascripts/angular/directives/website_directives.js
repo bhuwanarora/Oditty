@@ -473,7 +473,7 @@ websiteApp.directive('calendar', ['$rootScope', function($rootScope){
 	}
 }]);
 
-websiteApp.directive('feedbackPopup', ['$document', function($document) {
+websiteApp.directive('feedbackPopup', ['$document', 'websiteService', '$rootScope', function($document, websiteService, $rootScope) {
   return {
     restrict: 'A',
     link: function(scope, element, attrs) {
@@ -484,7 +484,7 @@ websiteApp.directive('feedbackPopup', ['$document', function($document) {
       
       element.on('mousedown', function(event) {
         // Prevent default dragging of selected content
-        event.preventDefault();
+        // event.preventDefault();
         startX = event.screenX - x;
         startY = event.screenY - y;
         $document.on('mousemove', mousemove);
@@ -519,9 +519,17 @@ websiteApp.directive('feedbackPopup', ['$document', function($document) {
     },
     controller: ['$scope', function($scope){
     	$scope.get_feedback = false;
-
-    	$scope.stop_propagation = function(event){
-    		event.stopPropagation();
+    	$scope.feedback_text = "Feedback";
+    	$scope.handle_feedback = function(event){
+    		if($rootScope.user.feedback.length > 8){
+				var params = {"feedback": $rootScope.user.feedback};
+				$scope.get_feedback = false;
+				$scope.feedback_text = "Thanks! :)";
+				websiteService.save_feedback(params);
+    		}
+    		else{
+    			$scope.feedback_text = "Please elaborate a bit more..";
+    		}
     	}
     }],
     templateUrl: '/assets/angular/widgets/partials/feedback_popup.html'

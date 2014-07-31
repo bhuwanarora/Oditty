@@ -2,7 +2,7 @@
 	width: 400px;
 }
 
-.book_name{
+.book_name, .highlighter{
 	background-color: #918FB5;
 	color: white;
 	padding: 2px;

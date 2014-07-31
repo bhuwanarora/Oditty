@@ -1,7 +1,10 @@
 <div class="feedback black_blue_background" 
 	ng-class="{'feedback_box': get_feedback}">
-	<div>Feedback</div>
+	<div ng-click="get_feedback = !get_feedback">{{feedback_text}}</div>
 	<div ng-if="get_feedback">
-		<textarea></textarea>
+		<textarea placeholder="Please give your valuable feedback..." 
+				  ng-model="user.feedback"></textarea>
+		<div class="button_effect feedback_sumbit"
+			 ng-click="handle_feedback($event)">Submit</div>
 	</div>
 </div>

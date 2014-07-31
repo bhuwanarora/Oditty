@@ -21,6 +21,12 @@ class UsersController < ApplicationController
     render :index
   end
 
+  def feedbacks
+    neo = Neography::Rest.new
+    clause = "MATCH (u:User)-[:GaveFeedback]->(f:Feedback) RETURN ID(u), ID(f), u.name, f.feedback_text, f.timestamp"
+    @feedbacks = neo.execute_query(clause)["data"]
+  end
+
   # GET /users/1
   # GET /users/1.json
   def show
