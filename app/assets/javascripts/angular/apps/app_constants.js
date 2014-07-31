@@ -78,6 +78,91 @@ var constants = {
 		},
 		"WebsiteUIConstants":{
 			"BrowserIncompatible": "Please use latest version of Chrome for now..."
+		},
+		"StatusUIConstants":{
+			"EmotionConstants":{
+				"icon": "icon-happy",
+				"name": "Emotion",
+				"value": [
+					{"FeelingConstants": {
+						"name": "Feeling", 
+						"icon": "",
+						"label": "Feeling", 
+						"value":[
+							{"name": "Nostalgic while reading", "icon": "", "label": "Nostalgic"},
+							{"name": "Enlightened while reading", "icon": "", "label": "Enlightened"},
+							{"name": "Insane while reading", "icon": "", "label": "Insane"},
+							{"name": "Happy while reading", "icon": "", "label": "Happy"},
+							{"name": "Sad while reading", "icon": "", "label": "Sad"},
+							{"name": "Frustrated while reading", "icon": "", "label": "Frustrated"},
+							{"name": "Bored while reading", "icon": "", "label": "Bored"},
+							{"name": "Scared while reading", "icon": "", "label": "Scared"},
+							{"name": "Excited while reading", "icon": "", "label": "Excited"}
+						],
+					}},
+					{"ThinkingConstants":{
+						"name": "Thinking",
+						"icon": "",
+						"label": "Thinking"
+					}},
+					{"SmellingConstants":{
+						"name": "Smelling pages of",
+						"icon": "",
+						"label": "Smelling"
+					}},
+					{"CountingConstants":{
+						"name": "Counting pages of",
+						"icon": "",
+						"label": "Counting"
+					}},
+					{"ReadingConstants":{
+						"name": "Reading",
+						"icon": "",
+						"label": "Reading",
+						"value": [
+							{"SearchBook": true},
+							{"name": "On Mountains", "icon": ""},
+							{"name": "On Bed", "icon": ""},
+							{"name": "On Train", "icon": ""},
+							{"name": "About Author", "icon": "", "value": [
+								{"SearchAuthor": true}
+							]}
+						]
+					}}
+				]
+			},
+			"OwnershipConstants":{
+				"icon": "icon-feed",
+				"name": "Shout",
+				"value": [
+					{"BuyConstants": {
+						"name": "Wants to buy",
+						"icon": "",
+						"value": [
+							{"SearchBook": true}
+						]
+					}},
+					{"BorrowConstants": {
+						"name": "Wants to borrow",
+						"icon": "",
+						"value": [
+							{"SearchBook": true}
+						]
+					}},
+					{"GiveConstants": {
+						"name": "Wants to give",
+						"icon": "",
+						"value": [
+							{"SearchBook": true}
+						]
+					}}
+				]
+			},
+			"QuoteConstants":{
+				"icon": "icon-quote-right",
+				"name": "Quote"
+			}
+
 		}
 	}
 

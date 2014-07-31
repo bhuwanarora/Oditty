@@ -31,8 +31,10 @@
 			   rows="1">
 			</textarea>
 		</div>
-		<div>{{focused_book.hash_tagged_comment}}</div>
-		<div class="character_count">{{140 - focused_book.current_comment.length}} characters left</div>
+		<span class="icon-happy interaction_icons" ng-click="show_interaction_options('Emotion')"></span>
+		<span class="icon-feed interaction_icons" ng-click="show_interaction_options('Shout')"></span>
+		<span class="icon-quote-right interaction_icons" ng-click="show_interaction_options('Quote')"></span>
+		<div class="character_count">{{focused_book.current_comment.length}} characters</div>
 	</div>
 	<div class="scrollbar tweets"
 	 	 ng-click="stop_propagation($event)">

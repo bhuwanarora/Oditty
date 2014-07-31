@@ -148,7 +148,8 @@ module.exports = function(grunt) {
 
           'app/assets/javascripts/min/angular/apps.js': [
             'app/assets/javascripts/min/angular/apps/website_app.js',
-            'app/assets/javascripts/min/angular/apps/filters_app.js'],
+            'app/assets/javascripts/min/angular/apps/filters_app.js',
+            'app/assets/javascripts/min/angular/apps/app_constants.js'],
 
 
           'app/assets/javascripts/min/angular/vendors.js': [
