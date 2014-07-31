@@ -1271,14 +1271,31 @@ and (min-width : 1824px) {
 	margin: 2px;
 }
 
-.left_column .status{
-	background-color: white;
-	padding: 10px 4px 10px 4px;
-	text-align: center;
-	margin-bottom: 5px;
-	border-radius: 4px;
+.recommendations .status{
+	background-color: #f5f5f5;
+	border-radius: 1px;
 	font-size: .9em;
 	cursor: pointer;
+	position: fixed;
+	bottom: 0px;
+	z-index: 1;
+	left: 50%;
+	margin-left: -230px;
+	padding: 2px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.recommendations .status [class^="icon-"]{
+	padding: 10px;
+	font-size: 1.5em;
+}
+
+.recommendations .status input{
+	width: 400px;
+	font-size: 1.1em;
+	padding: 5px;
+	border-top-right-radius: 10px;
 }
 
 .left_column .status:hover{

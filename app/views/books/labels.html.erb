@@ -1,7 +1,6 @@
 <table>
 	<tr>
 		<th>Labels</th>
-		<th>Timestamp</th>
 		<th>Search Books</th>
 		<th>Books</th>
 		<th>Active</th>
@@ -10,7 +9,6 @@
 	<% @labels.each do |label|%>
 		<tr>
 			<td><%= label[0] %></td>
-			<td><%= Time.at(label[1]).strftime("%d-%m-%y") %></td>
 			<td>
 				<input class="search_box" />
 			</td>

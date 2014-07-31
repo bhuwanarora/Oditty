@@ -36,8 +36,13 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
           $rootScope.$broadcast('gamifyCount', points, false);
         }
         else{
+          if($rootScope.user.name){
+            var name = $rootScope.user.name;
+          }
+          else{
+            var name = $rootScope.user.email; 
+          }
           var message = "<span><b>"+name+"</b> </span> added <span class='site_color'>"+book_title+"</span>&nbsp;to&nbsp;<span class='icon-books'></span><span>&nbsp;books read.</span>";
-          var name = $rootScope.user.email;
           var thumb = "assets/profile_pic.jpeg"
           var notification = {
             "thumb":thumb,
@@ -51,7 +56,7 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
             },
             "user":{
               "id":$rootScope.user.id,
-              "name":$rootScope.user.email
+              "name":name
             }
           }
           $rootScope.$broadcast('gamifyCount', 5, true);
