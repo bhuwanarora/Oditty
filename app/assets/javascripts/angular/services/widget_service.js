@@ -4,6 +4,10 @@ websiteApp.service('widgetService', ['$http', '$q', '$rootScope', function ($htt
         return _deferred_request('/api/v0/book_feed?id='+id);
     }
 
+    this.save_genre = function(params){
+        return _deferred_post_request('/api/v0/save_genre', params);
+    }
+
     this.populate_tooltips = function(id){
     	return _deferred_request('/api/v0/tooltip?id='+id);
     }

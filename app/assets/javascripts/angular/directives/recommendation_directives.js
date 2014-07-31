@@ -658,12 +658,22 @@ websiteApp.directive('bookGrid', ['recommendationService', '$rootScope', functio
 	}
 }]);
 
-websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', function($rootScope, $timeout, sharedService){
+websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'websiteService', function($rootScope, $timeout, sharedService, websiteService){
 	return{
 		restrict: 'E',
 		controller: ['$scope', 'websiteService', function($scope, websiteService){
 			$scope.mark_as_read = function(book, event){
 		        sharedService.mark_as_read($scope, book, event);
+			}
+
+			$scope.save_genre = function(genre){
+				var params = {"genre": genre.id, "status": true};
+				websiteService.save_user_info(params);
+			}
+
+			$scope.remove_genre = function(genre){
+				var params = {"genre": genre.id, "status": false};
+				websiteService.save_user_info(params);
 			}
 
 			$scope.search_info_card = function(event, type){
@@ -745,7 +755,11 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 					$scope.info.genres = [];
 			    	websiteService.get_genres().then(function(data){
 			    		angular.forEach(data, function(value){
-			    			var json = {"name": value[0], "id": value[1], "icon": value[2]};
+			    			var status = value[3] != null;
+			    			var json = {"name": value[0], 
+			    						"id": value[1], 
+			    						"icon": value[2], 
+			    						"status": status};
 			    			this.push(json);
 			    		}, $scope.info.genres);
 			    	});

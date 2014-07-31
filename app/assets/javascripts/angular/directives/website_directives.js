@@ -15,14 +15,18 @@ websiteApp.directive('userThumb', [function(){
 websiteApp.directive('toggle', function(){
 	return{
 		restrict: 'E',
-		scope: {"obj": "=data"},
+		scope: {"obj": "=data", 
+				"onSelect": "&",
+				"onDeselect": "&"},
 		controller: ['$scope', function($scope){
 			$scope.toggle = function(){
-				if($scope.active){
-					$scope.active = false;
+				if($scope.obj.status){
+					$scope.obj.status = false;
+					$scope.onDeselect();
 				}
 				else{
-					$scope.active = true;
+					$scope.obj.status = true;
+					$scope.onSelect();
 				}
 			}
 		}],

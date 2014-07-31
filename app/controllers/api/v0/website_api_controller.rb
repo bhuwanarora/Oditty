@@ -4,7 +4,7 @@ module Api
 			def genres
                 @neo ||= neo_init
 				filter = params[:q]
-                genres = WebsiteApi.get_root_categories
+                genres = WebsiteApi.get_root_categories(session[:user_id])
                 
 				render :json => genres, :status => 200
 			end
