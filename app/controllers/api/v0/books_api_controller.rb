@@ -52,7 +52,7 @@ module Api
 			end
 
 			def add_thumbnail
-				status = BookApi.create_thumb_request params
+				status = BookApi.create_thumb_request(params, session[:user_id])
 				render :json => {:message => "Request Initiated...", :status => 200}
 			end
 

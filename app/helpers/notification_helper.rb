@@ -6,46 +6,56 @@ module NotificationHelper
 			data = feed[1]["data"]
 			if type == "User"
 			elsif type == "MarkAsReadNode"
-				notification = self.mark_as_read_notification data
+				notification = self._mark_as_read_notification data
 				notifications.push notification
 			elsif type == "RatingNode"
-				notification = self.rating_notification data
+				notification = self._rating_notification data
 				notifications.push notification
 			elsif type == "TimingNode"
-				notification = self.timing_node_notification data
+				notification = self._timing_node_notification data
 				notifications.push notification
 			elsif type == "Tweet"
-				notification = self.comment_notification data
+				notification = self._comment_notification data
 				notifications.push notification
 			elsif type == "BookmarkNode"
-				notification = self.bookmark_notification data
+				notification = self._bookmark_notification data
+				notifications.push notification
+			elsif type == "ThumbRequest"
+				notification = self._thumb_request_notification data
 				notifications.push notification
 			end
 		end
 		notifications.reverse
 	end
 
-	def self.bookmark_notification data
+	def self._thumb_request_notification data
 		name = self._get_name data
-		message = "<span><b>"+name+"</b> bookmarked </span><span class='site_color'><em>"+data["title"]+"</em></span><span>&nbsp; to &nbsp;</span><span>'"+data["label"]+"'</span>"
+		message = "<span><b>"+name+"</b></span><br/><span> suggested thumbnail for </span><span class='site_color'><em>"+data["title"]+"</em>.</span>"
 		self.notification(message, data)
 	end
 
-	def self.rating_notification data
+	def self._bookmark_notification data
 		name = self._get_name data
-		message = "<span><b>"+name+"</b> gave "+data["rating"].to_s+"/10 stars to </span><span class='site_color'><em>"+data["title"]+"</em>.</span>"
-		self.notification(message, data)
-	end
-	def self.timing_node_notification data
-		name = self._get_name data
-		book_length_string = self.get_time_index data["time_index"]
-		message = "<span><b>"+name+"</b> described reading length of <span class='site_color'><em>"+data["title"]+"</em></span>&nbsp; as a '"+book_length_string+"' </span>"
+		message = "<span><b>"+name+"</b></span><br/><span> bookmarked </span><span class='site_color'><em>"+data["title"]+"</em></span><span>&nbsp; to &nbsp;</span><span>'"+data["label"]+"'.</span>"
 		self.notification(message, data)
 	end
 
-	def self.mark_as_read_notification data
+	def self._rating_notification data
 		name = self._get_name data
-		message = "<span><b>"+name+"</b> added </span><span class='site_color'><em>"+data["title"]+"</em></span><span> to &nbsp;</span><span class='icon-books'></span><span>&nbsp;Books Read.</span>"
+		message = "<span><b>"+name+"</b></span><br/><span> gave "+data["rating"].to_s+"/10 stars to </span><span class='site_color'><em>"+data["title"]+"</em>.</span>"
+		self.notification(message, data)
+	end
+
+	def self._timing_node_notification data
+		name = self._get_name data
+		book_length_string = self._get_time_index data["time_index"]
+		message = "<span><b>"+name+"</b></span><br/><span> described reading length of <span class='site_color'><em>"+data["title"]+"</em></span>&nbsp; as a '"+book_length_string+"'. </span>"
+		self.notification(message, data)
+	end
+
+	def self._mark_as_read_notification data
+		name = self._get_name data
+		message = "<span><b>"+name+"</b></span><br/><span> added </span><span class='site_color'><em>"+data["title"]+"</em></span><span> to &nbsp;</span><span class='icon-books'></span><span>&nbsp;Books Read.</span>"
 		self.notification(message, data)
 	end
 
@@ -70,15 +80,15 @@ module NotificationHelper
 		notification
 	end
 
-	def self.comment_notification data
+	def self._comment_notification data
 		name = self._get_name data
-		message = "<span><b>"+name+"</b> </span><span class='site_color'>"+data["tweet"]+"</span>";
+		message = "<span><b>"+name+"</b></span><br/><span class='site_color'>"+data["tweet"]+".</span>";
 		thumb = "assets/profile_pic.jpeg"
 		self.notification(message, data)
 		notification
 	end
 
-	def self.get_time_index time_index
+	def self._get_time_index time_index
 		output = ""
 		if time_index == 0
 			output = "tiny read"

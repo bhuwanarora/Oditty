@@ -2,10 +2,10 @@
 	<a ng-href="#user/{{user_id}}/recommendations/books/filter/{{grid.id}}/name/{{grid.grid_text}}" target="_blank" class="header">
 		<div class="text" ng-bind-html="grid.grid_text"></div>
 	</a>
-	<img ng-src="{{grid.grid_books[0].isbn | medium_thumb}}" class="first" />
-	<img ng-src="{{grid.grid_books[1].isbn | medium_thumb}}" class="second" />
-	<img ng-src="{{grid.grid_books[2].isbn | medium_thumb}}" class="third" />
-	<img ng-src="{{grid.grid_books[3].isbn | medium_thumb}}" class="fourth" />
-	<img ng-src="{{grid.grid_books[4].isbn | medium_thumb}}" class="fifth" />
-	<img ng-src="{{grid.grid_books[5].isbn | medium_thumb}}" class="sixth" />	
+	<img ng-src="{{grid.grid_books[0] | choose_medium_thumb}}" class="first" />
+	<img ng-src="{{grid.grid_books[1] | choose_medium_thumb}}" class="second" />
+	<img ng-src="{{grid.grid_books[2] | choose_medium_thumb}}" class="third" />
+	<img ng-src="{{grid.grid_books[3] | choose_medium_thumb}}" class="fourth" />
+	<img ng-src="{{grid.grid_books[4] | choose_medium_thumb}}" class="fifth" />
+	<img ng-src="{{grid.grid_books[5] | choose_medium_thumb}}" class="sixth" />	
 </div>

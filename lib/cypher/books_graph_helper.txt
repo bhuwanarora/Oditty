@@ -16,3 +16,29 @@ OPTIONAL MATCH (u)-[:Labelled]->(l1:Label)
 OPTIONAL MATCH (u)-[:Labelled]->(l2:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(b)
 OPTIONAL MATCH (u)-[:MarkAsReadAction]->(m)-[:MarkAsRead]->(b)
 RETURN b, rn.rating, tm.time_index, COLLECT(l1.name) as labels, COLLECT(l2.name) as selected_labels, m.timestamp as mark_as_read 
+
+#CREATE THUMB REQUEST
+MATCH (u:User), (b:Book) 
+WHERE ID(u)=USER_ID AND ID(b) = BOOK_ID
+CREATE UNIQUE (u)-[:DataEdit]->(t:ThumbRequest{url: THUMB_URL, user_id: USER_ID, book_id: BOOK_ID})-[:DataEditRequest]->(b) 
+SET t.timestamp = Time.now
+WITH u, b, t
+
+MATCH (u)-[old:FeedNext]->(old_feed) 
+CREATE UNIQUE (u)-[:FeedNext{user_id:USER_ID}]->(t)-[:FeedNext{user_id:USER_ID}]->(old_feed) 
+DELETE old 
+WITH u, b, t
+
+MATCH (b)-[old:BookFeed]->(old_feed) 
+CREATE UNIQUE (b)-[:BookFeed{user_id:USER_ID}]->(t)-[:BookFeed{user_id:USER_ID}]->(old_feed) 
+DELETE old 
+WITH u, b, t 
+
+# approve_thumb_request
+MATCH (u)-[r1:DataEdit]->(t:ThumbRequest)-[r2:DataEditRequest]->(b)
+WHERE ID(t)=THUMB_REQUEST_ID
+SET t.status = 1
+SET b.external_thumb = CASE WHEN t.status = 1 THEN t.url ELSE null END
+
+
+

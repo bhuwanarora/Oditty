@@ -33,6 +33,8 @@
 		</tr>
 	<% end %>
 </table>
+<input class="label_name" />
+<button class="add_label">Add Label</button>
 <script>
 	$(document).ready(function(){
 		var search_on = false;
@@ -104,23 +106,24 @@
 			$this.remove();
 		});
 
+		add_label();
+
+		function add_label(){
+			$('.add_label').on('click', function(){
+				var $this = $(this);
+				var name = $('.label_name').val();
+				$.ajax({
+					url: "<%= add_label_path %>",
+					data: "name="+name,
+					success: function(data, textStatus, jqxhr){
+						window.location.reload();
+					},
+					error: function(jqxhr, textStatus, errorThrown){
+						alert(errorThrown);
+					}
+				});
+			});
+		}
+
 	});
 </script>
-
-<style>
-	.books{
-		width: 400px;
-	}
-
-	.book_name{
-		background-color: #918FB5;
-		color: white;
-		padding: 2px;
-		margin: 2px;
-	}
-
-	.search_box{
-		width: 180px;
-		height: 20px;
-	}
-</style>

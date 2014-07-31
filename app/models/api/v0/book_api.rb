@@ -4,8 +4,8 @@ module Api
 	module V0
 		class BookApi
 
-			def self.create_thumb_request params
-				ThumbRequest.create params[:books_api]
+			def self.create_thumb_request(params, user_id)
+				BooksGraphHelper.create_thumb_request(params, user_id)
 			end
 
 			def self.bookmarked_books
@@ -164,7 +164,6 @@ module Api
 					else
 						mark_as_read = true
 					end
-
 					book = book[0]["data"]
 					
 				end
@@ -178,6 +177,7 @@ module Api
 							:published_year => book["published_year"],
 							:page_count => book["page_count"],
 							:summary => book["description"],
+							:external_thumb => book["external_thumb"],
 							:status => mark_as_read,
 							:labels => structured_labels,
 							:users => [
@@ -338,28 +338,28 @@ module Api
 
 			private
 			def self._get_trends trend_id
-				clause = "MATCH (t:Trending)-[:RelatedBooks]->(b:Book) WHERE ID(t)="+trend_id.to_s+" RETURN b.isbn, ID(b), b.indexed_title"
+				clause = "MATCH (t:Trending)-[:RelatedBooks]->(b:Book) WHERE ID(t)="+trend_id.to_s+" RETURN b.isbn, ID(b), b.external_thumb"
 				clause
 			end
 
 			def self._get_bookmark_lists(filter_id, user_id)
-				clause = "MATCH (l:Label), (u:User) WHERE ID(l)="+filter_id.to_s+" AND ID(u)="+user_id.to_s+" WITH u, l MATCH (u)-[:Labelled]->(l)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(b:Book) RETURN b.isbn, ID(b), b.indexed_title"
+				clause = "MATCH (l:Label), (u:User) WHERE ID(l)="+filter_id.to_s+" AND ID(u)="+user_id.to_s+" WITH u, l MATCH (u)-[:Labelled]->(l)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(b:Book) RETURN b.isbn, ID(b), b.external_thumb"
 				clause
 			end
 
 			def self._get_specific_lists(filter_id, user_id)
-				clause = "MATCH (bg:BookGrid) WHERE ID(bg)="+filter_id.to_s+" WITH bg MATCH (bg)-[:RelatedBooks]->(b:Book) RETURN b.isbn, ID(b), b.indexed_title"
+				clause = "MATCH (bg:BookGrid) WHERE ID(bg)="+filter_id.to_s+" WITH bg MATCH (bg)-[:RelatedBooks]->(b:Book) RETURN b.isbn, ID(b), b.external_thumb"
 				clause
 			end
 
 			def self._get_basic_recommendations(filters, last_book)
-				clause = "MATCH (book:Book) WHERE ID(book)="+last_book.to_s+" MATCH p=(book)-[:Next_book*..5]->(b) WITH last(nodes(p)) as b RETURN b.isbn, ID(b), b.indexed_title"
+				clause = "MATCH (book:Book) WHERE ID(book)="+last_book.to_s+" MATCH p=(book)-[:Next_book*..5]->(b) WITH last(nodes(p)) as b RETURN b.isbn, ID(b), b.external_thumb"
 				clause
 			end
 
 			def self._get_books_by_id filters
 				book_id = filters["other_filters"]["id"]
-				clause = "MATCH(book:Book) WHERE ID(book)="+book_id.to_s+" RETURN book.isbn as isbn, ID(book)"
+				clause = "MATCH(book:Book) WHERE ID(book)="+book_id.to_s+" RETURN book.isbn as isbn, ID(book), book.external_thumb"
 				clause
 			end
 
@@ -370,10 +370,10 @@ module Api
 				if show_all
 					puts "book_name "+book_name+" show_all ".green
 					skip_count = filters["reset_count"]
-					clause = "START book=node:node_auto_index(\"indexed_title:"+book_name.downcase+"*\") WITH book, toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) as weight RETURN book.isbn as isbn, ID(book), weight ORDER BY weight DESC SKIP "+skip_count.to_s+" LIMIT 10"
+					clause = "START book=node:node_auto_index(\"indexed_title:"+book_name.downcase+"*\") WITH book, toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) as weight RETURN book.isbn as isbn, ID(book), book.external_thumb ORDER BY weight DESC SKIP "+skip_count.to_s+" LIMIT 10"
 				else
 					puts "book_name "+book_name+" author_name "+author_name+" ".green
-					clause = "START book=node:node_auto_index(\"indexed_title:"+book_name.downcase+"\") WHERE book.indexed_author_name=\""+author_name.downcase+"\" RETURN book.isbn as isbn, ID(book)"
+					clause = "START book=node:node_auto_index(\"indexed_title:"+book_name.downcase+"\") WHERE book.indexed_author_name=\""+author_name.downcase+"\" RETURN book.isbn as isbn, ID(book), book.external_thumb"
 				end
 				clause
 			end
@@ -431,7 +431,6 @@ module Api
 					end
 					# random_clause = "ID(book)%"+random.to_s+"=0 AND rand() > 0.3 "
 					with_clause = "WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight "
-					return_clause = ", total_weight, rating_weight "
 					init_order_clause = " ORDER BY "
 					base_order_clause = " rating_weight DESC, total_weight DESC, book.gr_rating DESC "
 					limit_clause = " LIMIT 5 "
@@ -444,12 +443,8 @@ module Api
 					end
 				end
 
-				init_return_clause = "RETURN book.isbn as isbn, ID(book), book.indexed_title"
-				if return_clause
-					return_clause = init_return_clause + return_clause
-				else
-					return_clause = init_return_clause
-				end
+				return_clause = "RETURN book.isbn as isbn, ID(book), book.external_thumb"
+				
 				# distinct_clause = "ALL (id in "+book_ids.to_s+" WHERE toInt(id) <> ID(book)) "
 
 				if filters["other_filters"]["country"].present?

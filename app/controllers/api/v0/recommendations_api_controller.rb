@@ -11,7 +11,7 @@ module Api
 
 			def grid
 				@neo = Neography::Rest.new
-				clause = "MATCH (bg:BookGrid) WHERE bg.status = 1 WITH bg OPTIONAL MATCH (bg)-[:RelatedBooks]->(book:Book) RETURN bg.name, book.isbn, ID(book), ID(bg)"
+				clause = "MATCH (bg:BookGrid) WHERE bg.status = 1 WITH bg OPTIONAL MATCH (bg)-[:RelatedBooks]->(book:Book) RETURN bg.name, book.isbn, ID(book), ID(bg), book.external_thumb"
 				puts clause.blue.on_red
 				info = @neo.execute_query(clause)["data"]
 				render :json => info, :status => 200

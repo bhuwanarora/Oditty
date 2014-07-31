@@ -25,7 +25,6 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	  		}
   		}
   		else{
-	  		// debugger
 	  		if(on_search_page){
 		  		$location.path("/user/"+user_id+"/book/"+item.name+"/author/"+item.author_name+"/id/"+item.id);
 	  		}
@@ -573,7 +572,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	}
 
 	$scope.get_search_results = function(event, type){
-		if(type){
+		if(angular.isDefined(type)){
 			$scope.search_initiated = true;
 			if(type == "BOOK"){
 				var customBookSearch = true;
@@ -649,7 +648,8 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope.search_tag = {};
 		$scope.search_tag.search_placeholder = "Search...";
 		$scope.search_tag.current = 0;
-		if(angular.isDefined($rootScope.filters) && angular.isDefined($rootScope.filters.other_filters)){
+		var searched_input = angular.isDefined($rootScope.filters.other_filters.title);
+		if(searched_input){
 			$scope.search_tag.input = $rootScope.filters.other_filters["title"];
 		}
 		else{

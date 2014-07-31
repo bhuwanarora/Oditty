@@ -286,7 +286,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		if($scope.bookmark_selected){
 			$rootScope.user.books['bookmarked'] = [];
 			angular.forEach(data, function(value){
-				var json = {"isbn": value[0], "id": value[1]};
+				var json = {"isbn": value[0], "id": value[1], "external_thumb": value[2]};
 				this.push(json);
 			},  $rootScope.user.books['bookmarked']);
 			var width = screen.width/$rootScope.user.books['bookmarked'].length;
@@ -294,7 +294,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		}
 		else{
 			angular.forEach(data, function(value){
-				var json = {"isbn": value[0], "id": value[1]};
+				var json = {"isbn": value[0], "id": value[1], "external_thumb": value[2]};
 				this.push(json);
 			},  $scope.recommendations.books);
 			var width = screen.width/($scope.recommendations.books.length + 6);
@@ -325,7 +325,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 						grid_name = data[i][0];
 						grid_id = data[i][3];
 					}
-					var json = {"isbn": data[i][1], "id": data[i][2]};
+					var json = {"isbn": data[i][1], "id": data[i][2], "external_thumb": data[i][4]};
 					book_grid.push(json);
 				}
 				if(book_grid.length > 4){
@@ -376,12 +376,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	    });
     }
 
-	_get_filters = function(){
-    	recommendationService.get_filters().then(function(data){
-    		$scope.more_filters = $scope.more_filters.concat(data["filters"]);
-    	});
-    }
-
     _handle_focused_book = function(){
     	$rootScope.focused_book = $scope.recommendations.books.first;
     }
@@ -427,7 +421,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		}, oneSec);
 
 		$scope.searching = false;
-    	_get_filters();
     	_get_labels();
 		_initialize_filters();
 		_init_recommendations();
@@ -440,7 +433,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         var timeout_event = $timeout(function(){
         	_get_recommendations();
         }, 1000);
-
         $scope.$on('destroy', function(){
         	$timeout.cancel(timeout_event);
         });

@@ -29,7 +29,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
             "display_left_width":display_left_width,
             "display_right_width":display_right_width}]);
           if(display_right_width > display_left_width){
-            if(display_right_width > 400){
+            if(display_right_width > 410){
               posX = posX + event.currentTarget.offsetParent.scrollWidth - event.currentTarget.offsetLeft;
               $rootScope.focused_book.reposition_tooltip = {"left": posX+"px"};
             }
@@ -39,7 +39,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
             $rootScope.on_left = true;
           }
           else{
-            if(display_left_width > 400){
+            if(display_left_width > 410){
               posX = screen.width - posX;
               $rootScope.focused_book.reposition_tooltip = {"right": posX+"px"}; 
             }
@@ -73,6 +73,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
         //     this.push({"name": value.name});
         //   }, $scope.book.labels);
         // }
+
         websiteService.get_book_details("id="+book_id).then(function(data){
           angular.extend($scope.book, data);
         });
@@ -386,22 +387,24 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
       // $scope.show_book = function(page){
       //   zoomin_book($scope, $timeout, $rootScope, page);
       // }
+      $scope.stop_keyboard_navigation = function(event){
+        var keyLeft = event.keyCode == 37;
+        var keyUp = event.keyCode == 38;
+        var keyRight = event.keyCode == 39;
+        var keyDown = event.keyCode == 40;
+        if(keyLeft || keyRight || keyUp || keyDown){
+          event.stopPropagation();
+        }
+      }
+
       $scope.handle_enter = function(event, new_thumb){
         var enter_key = event.keyCode == 13;
         if(enter_key){
-          $scope.add_thumb = false;
-          var title = $rootScope.focused_book.title;
-          var author_name = $rootScope.focused_book.author_name;
-          var book_url = "/#/user/1/book/"+title+"/author/"+author_name;
+          $rootScope.focused_book.add_thumb = false;
+          var id = $rootScope.focused_book.id;
           var params = {"thumb_url": new_thumb, 
-                        "title": title,
-                        "book_url": book_url,
-                        "username": $rootScope.user.name,
-                        "user_thumb": $rootScope.user.thumb,
-                        "user_link": ""}
-          widgetService.add_thumbnail(params).then(function(data){
-            
-          });
+                        "book_id": id}
+          widgetService.add_thumbnail(params);
         }
       }
 
@@ -521,7 +524,8 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
 
       _display_tweet = function(index){
         // console.log("%c display_tweet", "color: red;");
-        if(angular.isDefined($rootScope.focused_book.tweets) && $rootScope.focused_book.tweets.length > 0){
+        var tweets_defined = $rootScope.focused_book != null && angular.isDefined($rootScope.focused_book.tweets) && $rootScope.focused_book.tweets.length > 0
+        if(tweets_defined){
           var tweets = $rootScope.focused_book.tweets;
           var timeout_event = $timeout(function(){
             if(index < tweets.length){
@@ -566,7 +570,6 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
         }
         _display_tweet(0);
         _open_tab();
-        $scope.add_thumb = false;
       }
 
       _init();

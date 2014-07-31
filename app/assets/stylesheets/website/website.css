@@ -285,3 +285,7 @@ input:focus{
 .purple{
     background-color: #7e3794 !important;
 }
+
+.draggable{
+    cursor: move;
+}

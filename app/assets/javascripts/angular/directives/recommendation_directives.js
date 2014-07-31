@@ -52,7 +52,14 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 			    });
 			    _init_dropdown_filters();
 			    _collapse_dropdown_menu();
+			    // _get_filters();
 			}
+
+			_get_filters = function(){
+		    	recommendationService.get_filters().then(function(data){
+		    		$scope.more_filters = $scope.more_filters.concat(data["filters"]);
+		    	});
+		    }
 
 			_reset_json = function(){
 				return [{"name": "<span class='icon-loop'></span><span>&nbsp;Reset</span>"}];
@@ -126,7 +133,6 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 					$timeout.cancel(timeout_event);
 				});
 				$scope.$emit('reloadRecommendations');
-				// debugger
 				// $('.inline_block_left').removeClass('active');
 			}
 
@@ -531,12 +537,10 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 
 			_handle_filter_selection = function(type){
 				if(type == "genre"){
-					// debugger
 					$scope.show_lists = false;
 					console.log("genre_selected", $scope.genre_selected);
 					$scope.genre_selected = true;
 					var timeout_event = $timeout(function(){
-						// debugger
 						$scope.genre_selected = false;
 					}, 1000);
 
@@ -677,7 +681,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 					}
 					if(has_minimum_length){
 						search_input_timeout = $timeout(function(){
-							_handle_search_input(type);
+							$scope.handle_search_input(type);
 						}, 500);
 					}
 					else if(backspace){
@@ -693,7 +697,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 				}
 			}
 
-			_handle_search_input = function(type){
+			$scope.handle_search_input = function(type){
 				$scope.loading = true;
 				if(type == "BOOK"){
 					websiteService.search_books($scope.info.search_book).then(function(data){
@@ -913,18 +917,18 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', fun
 
 			}
 
-			$scope.get_search_results = function(event, type, searchResults){
-				if(searchResults){
-					searchResults = searchResults + String.fromCharCode(event.keyCode);
-				}
-				else{
-					searchResults = String.fromCharCode(event.keyCode);	
-				}
-				websiteService.search(searchResults, type, 3)
-		        .then(function(result) {
-		            $scope.search_results = $scope.search_results.concat(result.results);
-		        });
-			}
+			// $scope.get_search_results = function(event, type, searchResults){
+			// 	if(searchResults){
+			// 		searchResults = searchResults + String.fromCharCode(event.keyCode);
+			// 	}
+			// 	else{
+			// 		searchResults = String.fromCharCode(event.keyCode);	
+			// 	}
+			// 	websiteService.search(searchResults, type, 3)
+		 //        .then(function(result) {
+		 //            $scope.search_results = $scope.search_results.concat(result.results);
+		 //        });
+			// }
 
 			$scope.set_user_name = function(){
 				if($rootScope.user.name.length > 0){

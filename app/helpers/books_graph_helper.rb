@@ -4,6 +4,32 @@ module BooksGraphHelper
 		@neo = Neography::Rest.new
 	end
 
+	def self.create_thumb_request(params, user_id)
+		book_id = params[:book_id]
+		thumb_url = params[:thumb_url]
+		@neo ||= self.neo_init
+		thumb_request_clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b) = "+book_id.to_s+" CREATE UNIQUE (u)-[:DataEdit]->(t:ThumbRequest{url: \""+thumb_url+"\", user_id: "+user_id.to_s+", book_id: "+book_id.to_s+"})-[:DataEditRequest]->(b) SET t.name=u.name, t.email=u.email, t.thumb=u.thumb, t.title=b.title, t.author_name=b.author_name, t.isbn=b.isbn, t.timestamp = "+Time.now.to_i.to_s+" WITH u, b, t "
+
+		feednext_clause = "MATCH (u)-[old:FeedNext]->(old_feed) CREATE UNIQUE (u)-[:FeedNext{user_id:"+user_id.to_s+"}]->(t)-[:FeedNext{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, t "
+
+		bookfeed_clause = "MATCH (b)-[old:BookFeed]->(old_feed) CREATE UNIQUE (b)-[:BookFeed{user_id:"+user_id.to_s+"}]->(t)-[:BookFeed{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, t "
+
+		follow_clause = "OPTIONAL MATCH (u)<-[:Follow]-(f) WHERE f <> u WITH u, b, f "
+
+		ego_clause = "MATCH (f)-[old:Ego]-(old_ego) CREATE UNIQUE (f)-[:Ego{user_id:ID(f)}]->(u)-[:Ego{user_id:ID(f)}]->(old_ego) DELETE old "
+
+		clause = thumb_request_clause + feednext_clause + bookfeed_clause + follow_clause + ego_clause
+		puts clause.blue.on_red
+		@neo.execute_query(clause)["data"]
+	end
+
+	def self.approve_thumb_request(status, id)
+		@neo ||= self.neo_init
+		clause = "MATCH (u)-[r1:DataEdit]->(t:ThumbRequest)-[r2:DataEditRequest]->(b) WHERE ID(t)="+id.to_s+" SET t.status = "+status.to_s+", b.external_thumb = CASE WHEN "+status.to_s+" = 1 THEN t.url ELSE null END"
+		puts clause.blue.on_red
+		@neo.execute_query clause
+	end
+
 	# ************************************************
 
 	# MATCH (b:Book)-[:BookFeed*0..]->(news_feed)

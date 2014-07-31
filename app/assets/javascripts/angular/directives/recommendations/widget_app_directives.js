@@ -141,7 +141,13 @@ websiteApp.directive('widgetThumb', ['$timeout', '$rootScope', '$filter', functi
       }
 
       _get_thumb = function(obj){
-        var thumb = $filter('thumb')(obj.isbn);
+        var external_thumb = angular.isDefined(obj.external_thumb) && obj.external_thumb != null;
+        if(external_thumb){
+          var thumb = obj.external_thumb;
+        }
+        else{
+          var thumb = $filter('thumb')(obj.isbn);
+        }
         return thumb;
       }
 

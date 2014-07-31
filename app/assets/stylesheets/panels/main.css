@@ -22,3 +22,31 @@
 tr:hover{
 	background-color: #F3F3F3;
 }
+
+img{
+	width: 50px;
+}
+
+.main-header{
+	position: fixed;
+	top: 0px;
+	padding: 10px;
+	background-color: #427fed;
+	float: left;
+	left: 0px;
+	right: 0px;
+}
+
+.main-header a{
+	color: white;
+	text-decoration: none;
+	margin-left: 10px;
+}
+
+table{
+	margin-top: 40px;
+}
+
+a{
+	color: #717070;
+}

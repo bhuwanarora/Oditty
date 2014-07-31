@@ -15,8 +15,23 @@ angular.module('filtersApp', [])
       }
       return output;
     };
-  }).
-  filter('summary', function() {
+  })
+  .filter('choose_medium_thumb', function() {
+    return function(input) {
+      var external_thumb = angular.isDefined(input.external_thumb) && input.external_thumb != null;
+      if(external_thumb){
+        output = input.external_thumb;
+      }
+      else{
+        if(input.isbn){
+          var isbn = input.isbn.split(",");
+          output = "http://covers.openlibrary.org/b/isbn/"+isbn[0]+"-M.jpg"
+        }
+      }
+      return output;
+    };
+  })
+  .filter('summary', function() {
     return function(input) {
       var output = input;
       if(angular.isDefined(input) && input != "" && input != null){

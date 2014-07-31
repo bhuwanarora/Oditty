@@ -96,6 +96,31 @@ class BooksController < ApplicationController
     @grids = neo.execute_query(clause)["data"]
   end
 
+  def add_label
+    begin
+      neo = Neography::Rest.new
+      indexed_name = params[:name].downcase.gsub(" ", "")
+      clause = "MERGE (label:Label{indexed_label_name:\""+indexed_name+"\"}) SET label.name = UPPER(\""+params[:name].strip.to_s+"\")"
+      puts clause.blue.on_red
+      neo.execute_query clause
+      render :json => {:message => "Success"}, :status => 200
+    rescue Exception => e
+      render :json => {:error => e}, :status => 500
+    end
+  end
+
+  def remove_label
+    begin
+      neo = Neography::Rest.new
+      clause = "MATCH (label:Label) WHERE ID(label)="+params[:label_id].to_s+" DELETE label"
+      puts clause.blue.on_red
+      neo.execute_query clause
+      render :json => {:message => "Success"}, :status => 200
+    rescue Exception => e
+      render :json => {:error => e}, :status => 500
+    end
+  end
+
   def labels
     neo = Neography::Rest.new
 
@@ -194,7 +219,18 @@ class BooksController < ApplicationController
   end
 
   def thumbs
-    @requests = ThumbRequest.all
+    neo = Neography::Rest.new
+    clause = "MATCH (u:User)-[:DataEdit]->(t:ThumbRequest)-[:DataEditRequest]->(b:Book) RETURN ID(u), ID(b), u.name, b.title, b.author_name, t.url, ID(t), t.status"
+    @requests = neo.execute_query(clause)["data"]
+  end
+
+  def update_thumb_status
+    begin
+      BooksGraphHelper.approve_thumb_request(params[:status], params[:id])
+      render :json => {:message => "Success"}, :status => 200
+    rescue Exception => e
+      render :json => {:message => e}, :status => 500
+    end
   end
 
   # POST /books

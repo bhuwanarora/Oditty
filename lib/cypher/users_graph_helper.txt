@@ -305,6 +305,10 @@
 		MATCH (:User)-[r1:Commented]->(r2:Tweet)-[r3:CommentedOn]->(:Book)
 		DELETE r1, r2, r3
 
+	#delete edit actions
+		MATCH (:User)-[r1:DataEdit]->(r2:ThumbRequest)-[r3:DataEditRequest]->(:Book)
+		DELETE r1, r2, r3
+
 	#reset bookfeed
 		MATCH  (b:Book)
 		CREATE UNIQUE (b)-[:BookFeed]->(b)
