@@ -145,16 +145,11 @@
 				 check-scroll-down="handle_notification_ticker_size($event, true)">
 				<div class="full_height">
 					<!-- <div class="notification">News Feed</div> -->
-					<div ng-if="notifications">
-						<div ng-repeat="notification in notifications | reverse">
-							<notification data="notification"></notification>
-						</div>
-						<div class="notification">
-							No new notifications.
-						</div>
+					<div ng-repeat="notification in notifications | reverse">
+						<notification data="notification"></notification>
 					</div>
-					<div ng-if="!notifications" class="notification">
-						No notifications.
+					<div class="notification">
+						No new notifications.
 					</div>
 				</div>
 			</div>

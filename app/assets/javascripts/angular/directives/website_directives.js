@@ -144,7 +144,7 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', '$document', function($ti
 
 		},
 
-		controller: ['$scope', '$sce', 'recommendationService', function($scope, $sce, recommendationService){
+		controller: ['$scope', '$sce', 'recommendationService', 'WebsiteUIConstants', function($scope, $sce, recommendationService, WebsiteUIConstants){
 			$scope.is_current = function(index, selectedItem) {
 				if($scope.current == index){
 					$scope.currentItem = selectedItem.name;
@@ -158,16 +158,16 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', '$document', function($ti
 			};
 
 			$scope.navigate_options = function(){
-				var keyEnter = event.keyCode == 13;
+				var keyEnter = event.keyCode == WebsiteUIConstants.Enter;
 				if(keyEnter){
 					$scope.handle_selection($scope.currentItem, $scope.currentItemId);
 				}
 			}
 
 			$scope.key_up = function(){
-				var keyUp = event.keyCode == 38;
-				var keyDown = event.keyCode == 40;
-				var backSpace = event.keyCode == 8;
+				var keyUp = event.keyCode == WebsiteUIConstants.KeyUp;
+				var keyDown = event.keyCode == WebsiteUIConstants.KeyDown;
+				var backSpace = event.keyCode == WebsiteUIConstants.Backspace;
 				if(keyUp){
 					if($scope.current != 0){
 						$scope.set_current($scope.current-1);
@@ -540,7 +540,7 @@ websiteApp.directive('feedbackPopup', ['$document', 'websiteService', '$rootScop
   };
 }]);
 
-websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteService', 'widgetService', function($rootScope, $timeout, websiteService, widgetService){
+websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteService', 'widgetService', 'WebsiteUIConstants', function($rootScope, $timeout, websiteService, widgetService, WebsiteUIConstants){
   return{
     restrict: 'E',
     controller: ['$scope', function($scope){
@@ -577,7 +577,7 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
         }
         var current_element = string_array.pop();
         var current_html = html_array.pop();
-        var is_backspace = event.keyCode == 8;
+        var is_backspace = event.keyCode == WebsiteUIConstants.Enter;
         var hash_tagging = $scope.hash_tagging;
         $rootScope.focused_book.hash_tagged_comment = old_html+"<b>"+selected_item+"</b>";
         $rootScope.focused_book.current_comment = old_string+selected_item;
@@ -601,7 +601,7 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
         }
         var current_element = string_array.pop();
         var current_html = html_array.pop();
-        var is_backspace = event.keyCode == 8;
+        var is_backspace = event.keyCode == WebsiteUIConstants.Backspace;
         var hash_tagging = $scope.hash_tagging;
         if(is_backspace){
           if(current_element == "#"){
@@ -649,7 +649,7 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
         var current_element = string_array.pop();
         var is_new_word_initiation = $scope.is_new_word_initiation;
         var under_a_tag = $scope.hash_tagging;
-        var keyEnter = event.keyCode == 13;
+        var keyEnter = event.keyCode == WebsiteUIConstants.Enter;
         console.table([{"is_new_word_initiation":  is_new_word_initiation,
                         "chr": chr,
                         "len": len,
@@ -784,8 +784,8 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
       };
 
       $scope.key_up = function(){
-        var keyUp = event.keyCode == 38;
-        var keyDown = event.keyCode == 40;
+        var keyUp = event.keyCode == WebsiteUIConstants.KeyUp;
+        var keyDown = event.keyCode == WebsiteUIConstants.KeyDown;
         if(keyUp){
           if($scope.current != 0){
             $scope.set_current($scope.current-1);

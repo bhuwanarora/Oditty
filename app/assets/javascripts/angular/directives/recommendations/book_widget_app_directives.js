@@ -73,9 +73,13 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
         //     this.push({"name": value.name});
         //   }, $scope.book.labels);
         // }
-
         websiteService.get_book_details("id="+book_id).then(function(data){
           angular.extend($scope.book, data);
+          angular.forEach($scope.book.labels, function(value){
+            if(value.checked){
+              $scope.book.bookmark_status = 1;
+            }
+          });
         });
         // var margin_right = (Math.floor(Math.random() * 20) + 1)+"px";
         // var margin_top = (Math.floor(Math.random() * 50) + 1)+"px";
@@ -116,7 +120,10 @@ websiteApp.directive('labelDropdown', ['$rootScope', '$timeout', 'widgetService'
         if($scope.book.labels[index]["checked"]){
           //add to notifications
           var name = $rootScope.user.email;
-          var message = "<span><b>"+name+"</b> </span><span>bookmarked&nbsp;</span><span class='site_color'>"+$scope.book.title+"</span><span> to '"+$scope.book.labels[index]["name"]+"'</span>";
+          if(angular.isDefined($rootScope.user.name)){
+            name = $rootScope.user.name;
+          }
+          var message = "<span><b>"+name+"</b> </span><br/><span>bookmarked&nbsp;</span><span class='site_color'>"+$scope.book.title+"</span><span> to '"+$scope.book.labels[index]["name"]+"'</span>";
           var thumb = "assets/profile_pic.jpeg"
           var notification = {
             "thumb":thumb,
@@ -149,8 +156,6 @@ websiteApp.directive('labelDropdown', ['$rootScope', '$timeout', 'widgetService'
                     "type": "BOOK",
                     "name": $scope.book.labels[index]["name"],
                     "data": $scope.book.labels[index]["checked"]};
-
-
 
         widgetService.bookmark(params);
         $scope.$on('destroy', function(){
@@ -241,8 +246,8 @@ websiteApp.directive('bookBookmark', ['$rootScope', '$timeout', 'widgetService',
   };
 }]);
 
-websiteApp.directive('bookInteract', ['$rootScope', '$timeout', 'widgetService',
-  function ($rootScope, $timeout, widgetService){
+websiteApp.directive('bookInteract', ['$rootScope', '$timeout', 'widgetService', 'WebsiteUIConstants',
+  function ($rootScope, $timeout, widgetService, WebsiteUIConstants){
   return {
     restrict: 'E',
     scope: {"book": "=data"},
@@ -269,7 +274,7 @@ websiteApp.directive('bookInteract', ['$rootScope', '$timeout', 'widgetService',
       }
 
       $scope.handle_enter = function(event){
-        var is_enter = event.keyCode == 13;
+        var is_enter = event.keyCode == WebsiteUIConstants.Enter;
         if(is_enter){
           var already_exists = add_custom_bookmark($scope, $rootScope, $timeout);
           if(!already_exists){
@@ -317,7 +322,10 @@ websiteApp.directive('rate', ['$rootScope', '$timeout', 'widgetService', 'shared
 
       _add_notification = function(){
         var name = $rootScope.user.email;
-        var message = "<span><b>"+name+"</b> </span><span>gave "+$scope.rate_object.user_rating+"/10 stars to&nbsp;</span><span class='site_color'>"+$scope.rate_object.title+"</span>";
+        if(angular.isDefined($rootScope.user.name)){
+          name = $rootScope.user.name;
+        }
+        var message = "<span><b>"+name+"</b> </span><br/><span>gave "+$scope.rate_object.user_rating+"/10 stars to&nbsp;</span><span class='site_color'>"+$scope.rate_object.title+"</span>";
         var thumb = "assets/profile_pic.jpeg"
         var notification = {
           "thumb":thumb,
@@ -380,7 +388,7 @@ websiteApp.directive('rate', ['$rootScope', '$timeout', 'widgetService', 'shared
   }
 }]);
 
-websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 'sharedService', function($rootScope, $timeout, widgetService, sharedService){
+websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 'sharedService', 'WebsiteUIConstants', function($rootScope, $timeout, widgetService, sharedService, WebsiteUIConstants){
   return{
     restrict: 'E',
     controller: ['$scope', function($scope){
@@ -388,17 +396,17 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
       //   zoomin_book($scope, $timeout, $rootScope, page);
       // }
       $scope.stop_keyboard_navigation = function(event){
-        var keyLeft = event.keyCode == 37;
-        var keyUp = event.keyCode == 38;
-        var keyRight = event.keyCode == 39;
-        var keyDown = event.keyCode == 40;
+        var keyLeft = event.keyCode == WebsiteUIConstants.KeyLeft;
+        var keyUp = event.keyCode == WebsiteUIConstants.KeyUp;
+        var keyRight = event.keyCode == WebsiteUIConstants.KeyRight;
+        var keyDown = event.keyCode == WebsiteUIConstants.KeyDown;
         if(keyLeft || keyRight || keyUp || keyDown){
           event.stopPropagation();
         }
       }
 
       $scope.handle_enter = function(event, new_thumb){
-        var enter_key = event.keyCode == 13;
+        var enter_key = event.keyCode == WebsiteUIConstants.Enter;
         if(enter_key){
           $rootScope.focused_book.add_thumb = false;
           var id = $rootScope.focused_book.id;
@@ -478,7 +486,10 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
                 break;
         }
         var name = $rootScope.user.email;
-        var message = "<span><b>"+name+"</b> </span><span>described reading length of <span class='site_color'>"+$rootScope.focused_book.title+"</span><span>&nbsp; as a&nbsp;'"+reading_length+"'</span>";
+        if(angular.isDefined($rootScope.user.name)){
+          name = $rootScope.user.name;
+        }
+        var message = "<span><b>"+name+"</b> </span><br/><span>described reading length of <span class='site_color'>"+$rootScope.focused_book.title+"</span><span>&nbsp; as a&nbsp;'"+reading_length+"'</span>";
         var thumb = "assets/profile_pic.jpeg";
         var notification = {
           "thumb":thumb,

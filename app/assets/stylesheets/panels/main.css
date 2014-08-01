@@ -51,6 +51,12 @@ img{
 	padding: 7px;
 }
 
+.main_footer .footer_status{
+	float: right;
+	color: #427fed;
+	font-weight: bold;
+}
+
 .main-header a{
 	color: white;
 	text-decoration: none;

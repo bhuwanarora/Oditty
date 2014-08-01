@@ -658,7 +658,7 @@ websiteApp.directive('bookGrid', ['recommendationService', '$rootScope', functio
 	}
 }]);
 
-websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'websiteService', function($rootScope, $timeout, sharedService, websiteService){
+websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'websiteService', 'WebsiteUIConstants', function($rootScope, $timeout, sharedService, websiteService, WebsiteUIConstants){
 	return{
 		restrict: 'E',
 		controller: ['$scope', 'websiteService', function($scope, websiteService){
@@ -677,10 +677,10 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 			}
 
 			$scope.search_info_card = function(event, type){
-				var keyUp = event.keyCode == 38;
-				var keyDown = event.keyCode == 40;
-				var enter_pressed = event.keyCode == 13;
-				var backspace = event.keyCode == 8;
+				var keyUp = event.keyCode == WebsiteUIConstants.KeyUp;
+				var keyDown = event.keyCode == WebsiteUIConstants.KeyDown;
+				var enter_pressed = event.keyCode == WebsiteUIConstants.Enter;
+				var backspace = event.keyCode == WebsiteUIConstants.Backspace;
 				var char_pressed = !(keyUp || keyDown || enter_pressed);
 				if(char_pressed){
 					if(type == 'BOOK'){
@@ -907,7 +907,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 			}
 
 			$scope.update_profile = function(){
-				var enter_pressed = event.keyCode == 13;
+				var enter_pressed = event.keyCode == WebsiteUIConstants.Enter;
 				if(enter_pressed){
 					var profile_status = $rootScope.user.profile_status;
 					if(profile_status == 0){

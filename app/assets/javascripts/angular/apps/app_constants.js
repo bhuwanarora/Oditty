@@ -77,7 +77,15 @@ var constants = {
 			"TagSearch": "TAG"
 		},
 		"WebsiteUIConstants":{
-			"BrowserIncompatible": "Please use latest version of Chrome for now..."
+			"BrowserIncompatible": "Please use latest version of Chrome for now...",
+			"Enter": 13,
+			"BackSpace": 8,
+			"KeyUp": 38,
+			"KeyDown": 40,
+			"KeyLeft": 37,
+			"KeyRight": 39,
+			"Delete": 46,
+			"Escape": 27
 		},
 		"StatusUIConstants":{
 			"EmotionConstants":{

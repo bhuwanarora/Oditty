@@ -127,7 +127,7 @@ websiteApp.directive('authorBookmark', ['$rootScope', '$timeout', 'widgetService
   };
 }]);
 
-websiteApp.directive('authorInteract', ['websiteService', function (websiteService) {
+websiteApp.directive('authorInteract', ['websiteService', 'WebsiteUIConstants', function (websiteService, WebsiteUIConstants) {
   return {
     restrict: 'E',
     controller: ['$scope', function($scope){
@@ -168,7 +168,7 @@ websiteApp.directive('authorInteract', ['websiteService', function (websiteServi
         }
         var current_element = string_array.pop();
         var current_html = html_array.pop();
-        var is_backspace = event.keyCode == 8;
+        var is_backspace = event.keyCode == WebsiteUIConstants.Backspace;
         var hash_tagging = $scope.hash_tagging;
         if(is_backspace){
           if(current_element == "#"){

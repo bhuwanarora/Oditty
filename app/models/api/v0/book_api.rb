@@ -291,7 +291,8 @@ module Api
 					books = @neo.execute_query(clause)["data"]
 				end
 				# puts books.length.to_s.red.on_blue
-				unless filters["filter_id"].present?
+				specific_lists = filters["filter_id"].present? || filters["trend_id"].present?
+				unless specific_lists
 					for book in books
 						node_id = book[1].to_s
 						book_sent = book_ids.include? node_id

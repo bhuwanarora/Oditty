@@ -42,7 +42,7 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
           else{
             var name = $rootScope.user.email; 
           }
-          var message = "<span><b>"+name+"</b> </span> added <span class='site_color'>"+book_title+"</span>&nbsp;to&nbsp;<span class='icon-books'></span><span>&nbsp;books read.</span>";
+          var message = "<span><b>"+name+"</b> </span><br/><span> added </span><span class='site_color'>"+book_title+"</span>&nbsp;to&nbsp;<span class='icon-books'></span><span>&nbsp;books read.</span>";
           var thumb = "assets/profile_pic.jpeg"
           var notification = {
             "thumb":thumb,

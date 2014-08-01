@@ -1,5 +1,5 @@
 <div class="grid1">
-	<a ng-href="#user/{{user_id}}/recommendations/books/filter/{{grid.id}}/name/{{grid.grid_text}}" target="_blank" class="header">
+	<a ng-href="#user/{{user_id}}/grid/books/id/{{grid.id}}/name/{{grid.grid_text}}" target="_blank" class="header">
 		<div class="text" ng-bind-html="grid.grid_text"></div>
 	</a>
 	<img ng-src="{{grid.grid_books[0] | choose_medium_thumb}}" class="first" />

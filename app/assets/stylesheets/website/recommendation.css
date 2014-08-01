@@ -160,6 +160,10 @@
 	margin-left: -5px;
 }
 
+.link:hover{
+	text-decoration: none;
+}
+
 .filter_link{
 	font-size: 1.1em;
 	cursor: pointer;

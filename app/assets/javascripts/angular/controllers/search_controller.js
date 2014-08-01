@@ -1,13 +1,7 @@
-websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteService', '$timeout', '$sce', 'recommendationService', '$routeParams', '$location', 'SearchUIConstants', function($scope, $rootScope, websiteService, $timeout, $sce, recommendationService, $routeParams, $location, SearchUIConstants){
+websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteService', '$timeout', '$sce', 'recommendationService', '$routeParams', '$location', 'SearchUIConstants', 'WebsiteUIConstants', function($scope, $rootScope, websiteService, $timeout, $sce, recommendationService, $routeParams, $location, SearchUIConstants, WebsiteUIConstants){
 	_show_search_result = function(item, show_all){
 		console.debug("%c _show_search_result"+item.name, "color: green");
-		// $rootScope.show_book = true;
-		// $rootScope.book_x = 0;
-		// $rootScope.screen_x = 0;
-		// $rootScope.total_x = screen.width;
-		// var data = 1;
-  		// _get_book_details(data);
-  		var user_id = $rootScope.user.id;
+		var user_id = $rootScope.user.id;
   		var on_search_page = angular.isUndefined($routeParams.type);
   		if(angular.isUndefined($rootScope.filters)){
   			$rootScope.filters = {"other_filters": {}};
@@ -19,7 +13,8 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	  		else{
   				$scope.search_tag.input = item;
   				$rootScope.filters.other_filters["title"] = item;
-  				$rootScope.filters.other_filters["author_name"] = null;
+  				delete $rootScope.filters.other_filters["author_name"];
+  				delete $rootScope.filters.other_filters["id"];
   				$rootScope.filters.other_filters["show_all"] = true;
 	  			$scope.$emit('reloadRecommendations');
 	  		}
@@ -33,6 +28,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		  		$rootScope.filters.other_filters["title"] = item.name;
 		  		$rootScope.filters.other_filters["author_name"] = item.author_name;
 		  		$rootScope.filters.other_filters["id"] = item.id;
+		  		delete $rootScope.filters.other_filters["show_all"];
 	  			$scope.$emit('reloadRecommendations');
 	  		}
   		}
@@ -157,16 +153,6 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				$scope.awards_search = true;
 				var search_placeholder = SearchUIConstants.AwardsPlaceholder;	
 			}
-
-			// if($scope.book_search){
-			// 	$scope.search_tag.placeholder = "Search Books "+search_placeholder;
-			// }
-			// else if($scope.author_search){
-			// 	$scope.search_tag.placeholder = "Search Authors "+search_placeholder;
-			// }
-			// else if($scope.reader_search){
-			// 	$scope.search_tag.placeholder = "Search Readers "+search_placeholder;
-			// }
 			$scope.search_tag.placeholder = SearchUIConstants.LevelTwoPlaceHolder;
 		}
 	}
@@ -241,15 +227,15 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	};
 
 	_navigate_options = function(){
-		var keyEnter = event.keyCode == 13;
+		var keyEnter = event.keyCode == WebsiteUIConstants.Enter;
 		if(keyEnter){
 			$scope.handle_selection($scope.search_tag.currentItem);
 		}
 	}
 
 	$scope.key_up = function(){
-		var keyUp = event.keyCode == 38;
-		var keyDown = event.keyCode == 40;
+		var keyUp = event.keyCode == WebsiteUIConstants.KeyUp;
+		var keyDown = event.keyCode == WebsiteUIConstants.KeyDown;
 		if(keyUp){
 			if($scope.search_tag.current != 0){
 				$scope.set_current($scope.search_tag.current-1);
@@ -272,7 +258,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 
 	$scope.key_down = function(event){
 		// $scope.search_tag.selected_result = false;
-        var backspace_or_delete = (event.keyCode == 8) || (event.keyCode == 46);
+        var backspace_or_delete = (event.keyCode == WebsiteUIConstants.Backspace) || (event.keyCode == WebsiteUIConstants.Delete);
         if(backspace_or_delete){
         	var currentValue = _get_search_input(event);
         	if(currentValue.length <= 1){

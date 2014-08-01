@@ -37,11 +37,13 @@
 <div class="main_footer">
 	<input name="grid_name" class="grid_name" />
 	<button class="add">Add New</button>
+	<span type="status" class="footer_status"></span>
 </div>
 <script>
 	$(document).ready(function(){
 		var search_on = false;
 		var search = function($this, search_for){
+			$('.footer_status').html("Searching for "+search_for+"...");
 			$.ajax({
 				url: "<%= search_book_path %>",
 				data: "q="+search_for,
@@ -54,6 +56,7 @@
 					if(books.length == 0){
 						books = ["No results found..."];
 					}
+					$('.footer_status').html('Searching Complete');
 
 
 					$this.autocomplete({
@@ -153,6 +156,7 @@
 
 		function update_grid(){
 			$('.update_grid').on('click', function(){
+				$('.footer_status').html('updating...');
 				var $this = $(this);
 				var grid_id = $this.siblings('input[name=grid_id]').val();
 				var book_ids = $this.siblings('input[name=book_ids]').val();

@@ -185,6 +185,9 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    });
 
 	    add_to_notifications = $scope.$on('addToNotifications', function(event, notification){
+	    	if(angular.isUndefined($scope.notifications)){
+	    		$scope.notifications = [];	
+	    	}
 	    	$scope.notifications.push(notification);
 	    	event.stopPropagation();
 	    });
@@ -240,32 +243,32 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		// $scope.website.show_search_page
 		if(true){
 			if($scope.show_book){
-				if(event.keyCode == 39){
+				if(event.keyCode == WebsiteUIConstants.KeyRight){
 					event.preventDefault();
 					$('.detailed_book').turn('next');
 				}
-				else if(event.keyCode == 37){
+				else if(event.keyCode == WebsiteUIConstants.KeyLeft){
 					event.preventDefault();
 					$('.detailed_book').turn('previous');
 				}
-				else if(event.keyCode == 27){
+				else if(event.keyCode == WebsiteUIConstants.Escape){
 					event.preventDefault();
 					$rootScope.show_book = false;
 				}
 			}
 			else{
-				if(event.keyCode == 39){
+				if(event.keyCode == WebsiteUIConstants.KeyRight){
 					event.preventDefault();
 					$scope.move_right(event);
 				}
-				else if(event.keyCode == 37){
+				else if(event.keyCode == WebsiteUIConstants.KeyLeft){
 					event.preventDefault();
 					$scope.move_left(event);
 				}
 			}
 			event.stopPropagation();
 		}
-		var backspace = (event.keyCode == 8);
+		var backspace = (event.keyCode == WebsiteUIConstants.Backspace);
 		if(backspace){
 			// event.preventDefault();
 		}

@@ -43,6 +43,12 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
 	$scope.reset = function(){
+		var searching = angular.isDefined($scope.filters.other_filters) && (angular.isDefined($scope.filters.other_filters.id) || angular.isDefined($scope.filters.other_filters.title))
+		if(searching){
+			$scope.panel_selected = "";
+			$scope.bookmark_selected = false;
+			$scope.read_selected = false;
+		}
 		_init_recommendations();
     	_get_recommendations();
     	// $scope.$emit('moveRight');
@@ -151,6 +157,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         if($routeParams.type == "books"){
         	$rootScope.filters["filter_type"] = RecommendationUIConstants.BookTab;
         	var specific_list = angular.isDefined($routeParams.filter_id);
+        	var grids = angular.isDefined($routeParams.grid_id);
         	var trends = angular.isDefined($routeParams.trend_id);
         	if(specific_list){
         		if($cookieStore.get('tab') == RecommendationUIConstants.BookmarkPanel){
@@ -167,6 +174,10 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         		$rootScope.filters["reset"] = true;
 	    		$rootScope.filters["reset_count"] = 0;
         		$rootScope.filters["trend_id"] = $routeParams.trend_id;
+        		$rootScope.main_header = $routeParams.name;
+        	}
+        	else if(grids){
+        		$rootScope.filters["filter_id"] = $routeParams.grid_id;
         		$rootScope.main_header = $routeParams.name;
         	}
         }

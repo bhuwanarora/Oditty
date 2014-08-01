@@ -138,7 +138,11 @@ angular.module('filtersApp', [])
   })
   .filter('reverse', function(){
     return function(input){
-      return input.slice().reverse();
+      var output = input;
+      if(angular.isDefined(input)){
+        output = input.slice().reverse();
+      }
+      return output;
     }
   })
   .filter('display_tweet', function(){
