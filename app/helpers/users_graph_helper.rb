@@ -202,7 +202,7 @@ module UsersGraphHelper
 		rating_feed_clause = "OPTIONAL MATCH (x)-[r1:FeedNext{user_id:"+user_id.to_s+"}]->(rn)-[r2:FeedNext{user_id:"+user_id.to_s+"}]->(y) FOREACH (a IN CASE WHEN x IS NULL THEN [] ELSE [x] END | FOREACH (b IN CASE WHEN y IS NULL THEN [] ELSE [y] END |	CREATE  (a)-[:FeedNext{user_id:"+user_id.to_s+"}]->(b) DELETE r1, r2)) WITH u, b, m, rn, tn "
 
 		#delete timing node feed
-		timing_feed_clause = "OPTIONAL MATCH (x)-[r1:FeedNext{user_id:"+user_id.to_s+"}]->(rn)-[r2:FeedNext{user_id:"+user_id.to_s+"}]->(y) FOREACH (a IN CASE WHEN x IS NULL THEN [] ELSE [x] END | FOREACH (b IN CASE WHEN y IS NULL THEN [] ELSE [y] END |	CREATE  (a)-[:FeedNext{user_id:"+user_id.to_s+"}]->(b) DELETE r1, r2))  WITH u, b, m, rn, tn "
+		timing_feed_clause = "OPTIONAL MATCH (x)-[r1:FeedNext{user_id:"+user_id.to_s+"}]->(tn)-[r2:FeedNext{user_id:"+user_id.to_s+"}]->(y) FOREACH (a IN CASE WHEN x IS NULL THEN [] ELSE [x] END | FOREACH (b IN CASE WHEN y IS NULL THEN [] ELSE [y] END |	CREATE  (a)-[:FeedNext{user_id:"+user_id.to_s+"}]->(b) DELETE r1, r2))  WITH u, b, m, rn, tn "
 
 		#delete book feed relation
 		bookfeed_clause = "MATCH (x)-[r1:BookFeed{user_id:"+user_id.to_s+"}]->(m)-[r2:BookFeed{user_id:"+user_id.to_s+"}]->(y) CREATE  (x)-[:BookFeed{user_id:"+user_id.to_s+"}]->(y) DELETE r1, r2, m WITH u, b, rn, tn  "

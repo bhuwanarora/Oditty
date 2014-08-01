@@ -164,21 +164,23 @@
 # ************************************************
 # MARK AS UNREAD
 	MATCH (u:User), (b:Book) 
-	WHERE ID(u)=1633203 AND ID(b)=1949627 
-	WITH u, b MATCH (u)-[r1:MarkAsReadAction]->(m:MarkAsReadNode)-[r2:MarkAsRead]->(b) 
+	WHERE ID(u)=1633203 AND ID(b)=1160304 
+	WITH u, b 
+
+	MATCH (u)-[r1:MarkAsReadAction]->(m:MarkAsReadNode)-[r2:MarkAsRead]->(b) 
 	DELETE r1, r2 
 	WITH u, b, m 
 
 	OPTIONAL MATCH (u)-[r1:RatingAction]->(rn:RatingNode)-[r2:Rate]->(b) 
 	FOREACH (p IN CASE WHEN r1 IS NULL THEN [] ELSE [u] END | 
 		FOREACH (q IN CASE WHEN r2 IS NULL THEN [] ELSE [b] END | 
-			SET q.rating_count = CASE WHEN q.rating_count IS NULL THEN 0 ELSE toInt(q.rating_count) - 1 END,  
-			p.total_count = CASE WHEN p.total_count IS NULL THEN 0 ELSE toInt(p.total_count) - 10 END, 
-			p.rating_count = CASE WHEN p.rating_count IS NULL THEN 0 ELSE toInt(p.rating_count) - 1 END 
-			DELETE r1, r2))  
-	WITH u, b, m, rn OPTIONAL 
+			SET q.rating_count = CASE WHEN q.rating_count IS NULL THEN 0 ELSE toInt(q.rating_count) - 1 END,
+			  p.total_count = CASE WHEN p.total_count IS NULL THEN 0 ELSE toInt(p.total_count) - 10 END, 
+			  p.rating_count = CASE WHEN p.rating_count IS NULL THEN 0 ELSE toInt(p.rating_count) - 1 END 
+			  DELETE r1, r2))  
+	WITH u, b, m, rn 
 
-	MATCH (u)-[r1:TimingAction]->(tn:TimingNode)-[r2:Timer]->(b) 
+	OPTIONAL MATCH (u)-[r1:TimingAction]->(tn:TimingNode)-[r2:Timer]->(b) 
 	FOREACH (p IN CASE WHEN r1 IS NULL THEN [] ELSE [u] END | 
 		FOREACH (q IN CASE WHEN r2 IS NULL THEN [] ELSE [b] END | 
 			SET p.total_count = CASE WHEN p.total_count IS NULL THEN 0 ELSE toInt(p.total_count) - 10 END 
@@ -206,8 +208,7 @@
 
 	MATCH (x)-[r1:BookFeed{user_id:1633203}]->(m)-[r2:BookFeed{user_id:1633203}]->(y) 
 	CREATE  (x)-[:BookFeed{user_id:1633203}]->(y) 
-	DELETE r1, r2, m 
-	WITH u, b, rn, tn  
+	DELETE r1, r2, m WITH u, b, rn, tn  
 
 	OPTIONAL MATCH (x)-[r1:BookFeed{user_id:1633203}]->(rn)-[r2:BookFeed{user_id:1633203}]->(y) 
 	FOREACH (a IN CASE WHEN x IS NULL THEN [] ELSE [x] END | 
@@ -222,7 +223,7 @@
 			CREATE  (a)-[:BookFeed{user_id:1633203}]->(b) 
 			DELETE r1, r2, tn)) 
 	WITH u, b 
-
+	
 	SET b.readers_count = CASE WHEN b.readers_count IS NULL THEN 0 ELSE toInt(b.readers_count) - 1 END, 
 	u.book_read_count = CASE WHEN u.book_read_count IS NULL THEN 0 ELSE toInt(u.book_read_count) - 1 END, 
 	u.total_count = CASE WHEN u.total_count IS NULL THEN 0 ELSE toInt(u.total_count) - 5 END
