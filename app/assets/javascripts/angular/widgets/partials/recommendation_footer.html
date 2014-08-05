@@ -15,11 +15,14 @@
 		</a>
 		<div ng-class="{'inactive':read_selected || bookmark_selected, 'active':!read_selected && !bookmark_selected}"
 			 class="link"
-			 ng-if="(!$routeParams.trend_id && !$routeParams.grid_id && !$routeParams.filter_id) || ($routeParams.trend_id)"
+			 ng-if="(!$routeParams.trend_id && !$routeParams.grid_id && !$routeParams.filter_id) || ($routeParams.trend_id || $routeParams.grid_id)"
 			 title="Recommendations"
 			 style="margin-left:0px;" 
 			 ng-click="toggle_recommendations()">
-			<span ng-class="{'icon-home':!$routeParams.trend_id && !$routeParams.grid_id && !$routeParams.filter_id, 'icon-bars':$routeParams.trend_id}"></span>
+			<span ng-class="{
+			'icon-feed2':!$routeParams.trend_id && !$routeParams.grid_id && !$routeParams.filter_id, 
+			'icon-bars':$routeParams.trend_id, 
+			'icon-paragraph-justify': $routeParams.grid_id}"></span>
 			<span ng-if="!$routeParams.trend_id && !$routeParams.grid_id && !$routeParams.filter_id">
 				<span ng-if="$routeParams.type == 'books'">
 					{{recommendations.books.count}} </span>

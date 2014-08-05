@@ -399,7 +399,8 @@
 	border-bottom: 1px solid #DDDDDD;
 }
 
-.more_filters .filter_header [class^="icon-"]{
+.more_filters .filter_header [class^="icon-"],
+.friends_grid_header [class^="icon-"]{
 	color: #BEBEBE;
 }
 
@@ -1213,6 +1214,17 @@ and (min-width : 1824px) {
 	position: fixed;
 	top: 50px;
 	left: 5px;
+}
+
+.left_column .friends_grid .friend_block{
+	position: relative;
+}
+
+.left_column .friends_grid .friend_name{
+	position: absolute;
+	bottom: 10px;
+	left: 5px;
+	width: 60px;	
 }
 
 .ticker_popup{

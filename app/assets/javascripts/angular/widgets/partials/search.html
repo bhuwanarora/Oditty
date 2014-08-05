@@ -131,9 +131,10 @@
 				</div>
 				<div class="fb" 
 					 ng-show="!user.logged"
+					 ng-disabled="!facebookReady"
 				     ng-click="intent_login()">
 				     Sign in with Facebook
-				     <!-- ng-disabled="!facebookReady" -->
+				     
 				</div>
 				<div class="google">
 					<google-plus-signin clientid="88213598927-9fij1u8tf2ldf4apf6qob4hgu0supj54.apps.googleusercontent.com"

@@ -76,7 +76,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	_add_listeners = function(){
 	    load_recommendations_event = $scope.$on('loadRecommendations', function(){
 	    	if(!$scope.read_selected && !$scope.bookmark_selected){
-		    	console.debug("%cloadRecommendations", "color: purple;");
+		    	console.debug("%c loadRecommendations", "color: purple;");
 		    	$rootScope.filters["reset"] = false;
 		    	if(angular.isUndefined($rootScope.filters["reset_count"])){
 		    		console.debug("%c reset count", "color: purple");
@@ -84,14 +84,16 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		    	}
 		    	else{
 		    		console.debug("%c increase count", "color: purple");
-		    		$rootScope.filters["reset_count"] = $rootScope.filters["reset_count"]+1;
+		    		$rootScope.filters["reset_count"] = $rootScope.filters["reset_count"] + 1;
 		    	}
+		    	_get_grids();
 		    	console.log("%c load_recommendations_event", "color: green;");
 		    	_get_recommendations();
 		    	// event.stopPropagation();
 	    	}
 	    	else if($scope.bookmark_selected){
-	    		websiteService.get_books_bookmarked($rootScope.user.books.bookmarked.length).then(function(data){
+	    		websiteService.get_books_bookmarked($rootScope.user.books.bookmarked.length)
+	    			.then(function(data){
 					angular.forEach(data, function(data){
 						var labels = [];
 						angular.forEach($rootScope.labels, function(value){
@@ -329,7 +331,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 											"grid_books": book_grid, 
 											"is_grid": true, 
 											"id": grid_id};
-								$scope.recommendations.books.splice(3, 0, grid);
+								var index = $scope.recommendations.books.length - 5;
+								$scope.recommendations.books.splice(index, 0, grid);
 							}
 							book_grid = [];
 						}
@@ -344,7 +347,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 								"grid_books": book_grid, 
 								"is_grid": true, 
 								"id": grid_id};
-					$scope.recommendations.books.splice(3, 0, grid);
+					var index = $scope.recommendations.books.length - 5;
+					$scope.recommendations.books.splice(index, 0, grid);
 				}
 			});
 		}, threeSeconds);
@@ -393,7 +397,17 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
     _get_friends = function(){
     	widgetService.get_friends($scope.$routeParams.id).then(function(data){
-    		$rootScope.user.friends = data.friends;
+    		$rootScope.user.friends = [];
+    		angular.forEach(data, function(value){
+    			if(value[2] == null){
+    				thumb = "/assets/profile_pic.jpeg"
+    			}
+    			else{
+    				thumb = value[2];
+    			}
+    			var json = {"id": value[0], "name": value[1], "thumb": thumb};
+    			this.push(json);
+    		}, $rootScope.user.friends);
     	});
     }
 
@@ -448,7 +462,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         	$timeout.cancel(timeout_event);
         });
         // _push_recommendations();
-        _get_grids();
         _bind_destroy();
         _init_user();
         // _handle_focused_book();

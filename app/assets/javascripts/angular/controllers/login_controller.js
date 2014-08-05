@@ -63,7 +63,6 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 	_bind_auth_listeners = function(){
 		$scope.$on('event:google-plus-signin-success', function (event, authResult){
 			
-			// debugger
 			// websiteService.handle_google_user(authResult);
 		    // console.log("google login", authResult);
 		});
@@ -73,7 +72,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		});
 
 
-	    $scope.$on('Facebook:statusChange', function(ev, data) {
+	    $scope.$on('Facebook:statusChange', function(ev, data){
 	        if (data.status == LoginConstants.FacebookLoginStatusCheck) {
 	        	$scope.$apply(function() {
 	          	});
@@ -87,12 +86,13 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 	     * There's also the event that could be used
 	    */
 	    $scope.$watch(
-	        function() {
+	        function(){
 	          return Facebook.isReady();
 	        },
-	        function(newVal) {
-	          if (newVal)
+	        function(newVal){
+	          if(newVal){
 	            $scope.facebookReady = true;
+	          }
 	        }
 	    );
 	}

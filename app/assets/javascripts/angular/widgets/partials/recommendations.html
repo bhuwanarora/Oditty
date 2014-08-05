@@ -158,13 +158,15 @@
 				 ng-style="column_heights.friends_grid_style"
 				 msd-wheel="handle_friends_grid_size($event)"
 				 check-scroll-down="handle_friends_grid_size($event, true)">
-				<div class="friends_grid_header">15 Friends</div>
-				<img ng-src="{{friend.thumb}}" 
-					 title="{{friend.name}}" 
-				     ng-repeat="friend in user.friends" 
-				     class="friend_thumb" 
-				     data-selected="false"
-				     ng-click="select_thumb($event)"/>
+				<div class="friends_grid_header">
+					<span class="icon-users2"></span>
+					<span>{{user.friends.length}} Friends</span>
+				</div>
+				<div ng-repeat="friend in user.friends" class="friend_block">
+					<img ng-src="{{friend.thumb}}" 
+					     class="friend_thumb" />
+					<div class="friend_name">{{friend.name}}</div>
+				</div>
 			</div>
 		</div>
 		<!-- <div class="wrapper" ng-if="focused_book"></div> -->

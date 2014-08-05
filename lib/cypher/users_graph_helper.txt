@@ -123,35 +123,34 @@
 # MARK AS READ
 
 	MATCH (u:User), (b:Book) 
-	WHERE ID(u)=1633203 AND ID(b)=558129 
-	CREATE UNIQUE (u)-[:MarkAsReadAction]->(m:MarkAsReadNode{timestamp:1406029120, 
-		book_id:558129, 
-		title:b.title, 
-		author:b.author_name, 
-		user_id:1633203, 
-		name:u.email, 
-		isbn:b.isbn})-[:MarkAsRead]->(b) 
+	WHERE ID(u)=2241449 AND ID(b)=1743400 
+	CREATE UNIQUE (u)-[:MarkAsReadAction]->(m:MarkAsReadNode{timestamp:1407005955, book_id:1743400, title:b
+.title, author:b.author_name, user_id:2241449})-[:MarkAsRead]->(b) 
+	SET m.name = u.name, m.email=u.email, m.isbn = b.isbn 
 	WITH u, b, m 
 
 	MATCH (u)-[old:FeedNext]->(old_feed) 
-	CREATE UNIQUE (u)-[:FeedNext{user_id:1633203}]->(m)-[:FeedNext{user_id:1633203}]->(old_feed) 
+	CREATE UNIQUE (u)-[:FeedNext{user_id:2241449}]->(m)-[:FeedNext{user_id:2241449}]->(old_feed) 
 	DELETE old 
 	WITH u, b, m 
 
 	MATCH (b)-[old:BookFeed]->(old_feed) 
-	CREATE UNIQUE (b)-[:BookFeed{user_id:1633203}]->(m)-[:BookFeed{user_id:1633203}]->(old_feed) 
+	CREATE UNIQUE (b)-[:BookFeed{user_id:2241449}]->(m)-[:BookFeed{user_id:2241449}]->(old_feed) 
 	DELETE old 
 	WITH u, b, m 
 
-	OPTIONAL MATCH (u)<-[:Follow]-(f) 
-	WHERE f <> u 
+	OPTIONAL MATCH (u)<-[:Follow]-(f:User) 
 	WITH u, b, f 
-
-	MATCH (f)-[old:Ego]-(old_ego) 
-	CREATE UNIQUE (f)-[:Ego{user_id:ID(f)}]->(u)-[:Ego{user_id:ID(f)}]->(old_ego) 
-	DELETE old 
-	SET b.readers_count = b.readers_count + 1  
-	SET u.book_read_count = u.book_read_count + 1 
+	OPTIONAL MATCH (f)-[old:Ego]->(old_ego) 
+	WHERE old_ego <> u 
+	FOREACH(p IN CASE WHEN old_ego IS NULL THEN [] ELSE [old_ego] END | 
+		FOREACH (q IN CASE WHEN f IS NULL THEN [] ELSE [f] END | 
+			CREATE (q)-[:Ego{user_id:ID(q)}]->(u)-[:Ego{user_id:ID(f)}]->(p) 
+			DELETE old)) 
+	WITH u, b 
+	SET b.readers_count = CASE WHEN b.readers_count IS NULL THEN 1 ELSE toInt(b.readers_count) + 1 END, 
+	u.book_read_count = CASE WHEN u.book_read_count IS NULL THEN 1 ELSE toInt(u.book_read_count) + 1 END, 
+	u.total_count = CASE WHEN u.total_count IS NULL THEN 5 ELSE toInt(u.total_count) + 5 END
 
 # ************************************************
 
@@ -282,9 +281,9 @@
 		DELETE r
 
 	#delete book feed
-		MATCH (a)-[r:BookFeed]->(b)
-		WHERE a <> b
-		DELETE r
+			MATCH (a)-[r:BookFeed]->(b)
+			WHERE a <> b
+			DELETE r
 
 	#delete rating actions
 		MATCH (:User)-[r1:RatingAction]->(r2:RatingNode)-[r3:Rate]->(:Book)
@@ -296,7 +295,7 @@
 
 	#delete bookmark actions
 		MATCH (:User)-[r1:Labelled]-(r2:Label)-[r3:BookmarkedOn]->(r4:BookmarkNode)-[r5:BookmarkAction]-(:Book)
-		DELETE r1, r2, r3, r4, r5
+		DELETE r3, r4, r5
 
 	#delete markasread actions
 		MATCH (:User)-[r1:MarkAsReadAction]->(r2:MarkAsReadNode)-[r3:MarkAsRead]->(:Book)
@@ -307,8 +306,8 @@
 		DELETE r1, r2, r3
 
 	#delete edit actions
-		MATCH (:User)-[r1:DataEdit]->(r2:ThumbRequest)-[r3:DataEditRequest]->(:Book)
-		DELETE r1, r2, r3
+		# MATCH (:User)-[r1:DataEdit]->(r2:ThumbRequest)-[r3:DataEditRequest]->(:Book)
+		# DELETE r1, r2, r3
 
 	#reset bookfeed
 		MATCH  (b:Book)
@@ -316,7 +315,8 @@
 
 		MATCH (u:User)
 		CREATE UNIQUE (u)-[:FeedNext]->(u)
-		CREATE UNIQUE (u)-[:Ego]->(u)
+		CREATE UNIQUE (u)-[:Ego{user_id:ID(u)}]->(u)
+		SET u.total_count = 0, u.bookmark_count = 0, u.book_read_count = 0, u.rating_count = 0
 
 		MATCH (u:User), (l:Label)
 		CREATE UNIQUE (u)-[:Labelled]->(l)

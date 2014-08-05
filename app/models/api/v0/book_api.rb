@@ -374,7 +374,7 @@ module Api
 					clause = "START book=node:node_auto_index(\"indexed_title:"+book_name.downcase+"*\") WITH book, toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) as weight RETURN book.isbn as isbn, ID(book), book.external_thumb ORDER BY weight DESC SKIP "+skip_count.to_s+" LIMIT 10"
 				else
 					puts "book_name "+book_name+" author_name "+author_name+" ".green
-					clause = "START book=node:node_auto_index(\"indexed_title:"+book_name.downcase+"\") WHERE book.indexed_author_name=\""+author_name.downcase+"\" RETURN book.isbn as isbn, ID(book), book.external_thumb"
+					# clause = "START book=node:node_auto_index(\"indexed_title:"+book_name.downcase+"\") WHERE book.indexed_author_name=\""+author_name.downcase+"\" RETURN book.isbn as isbn, ID(book), book.external_thumb"
 				end
 				clause
 			end

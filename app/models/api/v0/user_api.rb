@@ -81,7 +81,7 @@ module Api
 							message = Constants::PendingActivation
 						elsif  user[0][0]["data"]["password"] != params[:password]
 							message = Constants::AuthenticationFailed
-						elsif ! user[0][0]["data"]["verified"]
+						elsif !user[0][0]["data"]["verified"]
 							message = Constants::VerifyEmail
 						else
 							message = Constants::AuthenticationFailed
@@ -113,62 +113,11 @@ module Api
 				info
 			end
 
-			def self.get_most_connected_friends
-				#FIXME Get most connected friends from the graph
-				friends = [
-					{
-						:id => 1,
-						:name => "Test User",
-						:thumb => "assets/profile_pic.jpeg"
-					},
-					{
-						:id => 2,
-						:name => "Test User",
-						:thumb => "assets/profile_pic.jpeg"
-					},
-					{
-						:id => 3,
-						:name => "Test User",
-						:thumb => "assets/profile_pic.jpeg"
-					},
-					{
-						:id => 4,
-						:name => "Test User",
-						:thumb => "assets/profile_pic.jpeg"
-					},
-					{
-						:id => 5,
-						:name => "Test User",
-						:thumb => "assets/profile_pic.jpeg"
-					},
-					{
-						:id => 6,
-						:name => "Test User",
-						:thumb => "assets/profile_pic.jpeg"
-					},
-					{
-						:id => 7,
-						:name => "Test User",
-						:thumb => "assets/profile_pic.jpeg"
-					},
-					{
-						:id => 8,
-						:name => "Test User",
-						:thumb => "assets/profile_pic.jpeg"
-					},
-					{
-						:id => 9,
-						:name => "Test User",
-						:thumb => "assets/profile_pic.jpeg"
-					},
-					{
-						:id => 10,
-						:name => "Test User",
-						:thumb => "assets/profile_pic.jpeg"
-					}
-				]
-				
-				info = {"friends" => friends}
+			def self.get_most_connected_friends user_id
+				@neo = Neography::Rest.new
+				clause = "MATCH (u:User)-[:Follow]->(friend:User) WHERE ID(u)="+user_id.to_s+" RETURN ID(friend), friend.name, friend.thumb"
+				friends = @neo.execute_query(clause)["data"]
+				friends
 			end
 
 			def self.get_info_card_data
