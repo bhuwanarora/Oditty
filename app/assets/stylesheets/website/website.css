@@ -289,3 +289,7 @@ input:focus{
 .draggable{
     cursor: move;
 }
+
+.relative{
+    position: relative;
+}

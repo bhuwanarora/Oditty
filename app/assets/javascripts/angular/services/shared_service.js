@@ -26,11 +26,11 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
           var remove_rating = angular.isDefined(book.user_rating) && book.user_rating != null;
           var remove_read_time = angular.isDefined(book.time_index) && book.time_index != null;
           if(remove_rating){
-            book.user_rating = null;
+            delete book.user_rating;
             points = points + 10;
           }
           if(remove_read_time){
-            book.time_index = null;
+            delete book.time_index ;
             points = points + 10;
           }
           $rootScope.$broadcast('gamifyCount', points, false);

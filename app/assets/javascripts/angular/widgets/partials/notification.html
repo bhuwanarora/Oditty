@@ -5,11 +5,12 @@
 	     class="notification animate-fast">
 		<div class="user_thumb block"><img ng-src="{{notification.thumb}}"></div>
 		<div class="block">
+			<div class="notification_message" ng-bind-html="notification.user.name">
+			</div>
+			<div class="notification_message" ng-bind-html="notification.tag">
+			</div>
 			<div class="notification_message" ng-bind-html="notification.message">
 			</div>
-			<!-- <div class="timestamp">
-				{{notification.timestamp}}
-			</div> -->
 		</div>
 	</div>
 </div>

@@ -44,3 +44,27 @@
     <% end %>
   </tbody>
 </table>
+<div class="main_footer">
+  <a class="clear_data">Clear Dummy User Data</a>
+  <div class="footer_status"></div>
+</div>
+<script>
+  $(document).ready(function(){
+    var clear_data = function(){
+      $('.footer_status').html("Processing request...");
+      $.ajax({
+        url: "<%= clear_data_path %>",
+        success: function(){
+          $('.footer_status').html('Data cleaned..');
+        },
+        error: function(){
+          $('.footer_status').html('Error in cleaning data');
+        }
+      })
+    }
+
+    $('.clear_data').on('click', function(){
+      clear_data();
+    });
+  });
+</script>

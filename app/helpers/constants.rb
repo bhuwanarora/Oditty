@@ -5,6 +5,7 @@ module Constants
 	BookmarkPoints				= 10
 	ReadTimePoints				= 10
 	ThumbSuggest				= 10
+	RecommendationPoints		= 10
 
 	LoginSuccess				= "Logged in successfully."
 	AuthenticationFailed		= "Email and password doesn't match."

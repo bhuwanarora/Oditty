@@ -21,6 +21,59 @@ class UsersController < ApplicationController
     render :index
   end
 
+  def clear_data
+    begin
+      neo = Neography::Rest.new
+
+      clause = "MATCH (a)-[r:FeedNext]->(b) WHERE a <> b DELETE r"
+      puts "Feednext...".green
+      neo.execute_query clause
+
+      clause = "MATCH (a)-[r:Ego]->(b) DELETE r"
+      puts "Ego...".green
+      neo.execute_query clause
+
+      clause = "MATCH (a)-[r:BookFeed]->(b) WHERE a <> b DELETE r"
+      puts "Bookfeed...".green
+      neo.execute_query clause
+
+      clause = "MATCH (:User)-[r1:RatingAction]->(r2:RatingNode)-[r3:Rate]->(:Book) DELETE r1, r2, r3"
+      puts "Rating...".green
+      neo.execute_query clause    
+
+      clause = "MATCH (:User)-[r1:TimingAction]->(r2:TimingNode)-[r3:Timer]->(:Book) DELETE r1, r2, r3"
+      puts "Timing...".green
+      neo.execute_query clause
+
+      clause = "MATCH (:User)-[r1:Labelled]-(r2:Label)-[r3:BookmarkedOn]->(r4:BookmarkNode)-[r5:BookmarkAction]-(:Book) DELETE r3, r4, r5"
+      puts "Bookmark...".green
+      neo.execute_query clause
+
+      clause = "MATCH (:User)-[r1:MarkAsReadAction]->(r2:MarkAsReadNode)-[r3:MarkAsRead]->(:Book) DELETE r1, r2, r3"
+      puts "MarkAsRead...".green
+      neo.execute_query clause
+
+      clause = "MATCH (:User)-[r1:Commented]->(r2:Tweet)-[r3:CommentedOn]->(:Book) DELETE r1, r2, r3"
+      puts "Comment...".green
+      neo.execute_query clause
+
+      clause = "MATCH (:User)-[r1:RecommendedTo]->()-[r2:RecommendedAction]->(r3:RecommendNode)-[r4:Recommended]->() DELETE r1, r2, r3, r4"
+      puts "Recommended...".green
+      neo.execute_query clause
+
+      clause = "MATCH  (b:Book) CREATE UNIQUE (b)-[:BookFeed]->(b)"
+      puts "Create bookfeed...".green
+      neo.execute_query clause
+
+      clause = "MATCH (u:User) CREATE UNIQUE (u)-[:FeedNext]->(u) CREATE UNIQUE (u)-[:Ego{user_id:ID(u)}]->(u) SET u.total_count = 0, u.bookmark_count = 0, u.book_read_count = 0, u.rating_count = 0"
+      puts "handle user...".green
+      neo.execute_query clause
+      render :json => {:message => "Success"}, :status => 200
+    rescue Exception => e
+      render :json => {:message => e}, :status => 500
+    end
+  end
+
   def feedbacks
     neo = Neography::Rest.new
     clause = "MATCH (u:User)-[:GaveFeedback]->(f:Feedback) RETURN ID(u), ID(f), u.name, f.feedback_text, f.timestamp"

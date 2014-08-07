@@ -432,12 +432,12 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		// 	{"name": "Books published this year", "graph_option": true}
 		// ];
 		$scope.search_results = [
-			{"name": SearchUIConstants.BookByYearLink, "custom_option": true, "type": SearchUIConstants.Year, "icon":"icon-calendar"},
-			{"name": SearchUIConstants.BookByReadingTimeLink, "custom_option": true, "type": SearchUIConstants.Time, "icon": "icon-clock"},
-			{"name": SearchUIConstants.BookByRegionLink, "custom_option": true, "type": SearchUIConstants.Country, "icon": "icon-earth"},
-			{"name": SearchUIConstants.BookByGenreLink, "custom_option": true, "type": SearchUIConstants.Genre, "icon": "icon-shapes"},
-			{"name": SearchUIConstants.BookListsLink, "custom_option": true, "type": SearchUIConstants.List, "icon": "icon-list"},
-			{"name": SearchUIConstants.BookByAuthorLink, "custom_option": true, "type": SearchUIConstants.AuthorSearch, "icon": "icon-pen"}
+			{"name": SearchUIConstants.BookByYearLink, "custom_option": true, "type": SearchUIConstants.Year, "icon":"icon-calendar", "icon2": "icon-book"},
+			{"name": SearchUIConstants.BookByReadingTimeLink, "custom_option": true, "type": SearchUIConstants.Time, "icon": "icon-clock", "icon2": "icon-book"},
+			{"name": SearchUIConstants.BookByRegionLink, "custom_option": true, "type": SearchUIConstants.Country, "icon": "icon-earth", "icon2": "icon-book"},
+			{"name": SearchUIConstants.BookByGenreLink, "custom_option": true, "type": SearchUIConstants.Genre, "icon": "icon-shapes", "icon2": "icon-book"},
+			{"name": SearchUIConstants.BookListsLink, "custom_option": true, "type": SearchUIConstants.List, "icon": "icon-list", "icon2": "icon-book"},
+			{"name": SearchUIConstants.BookByAuthorLink, "custom_option": true, "type": SearchUIConstants.AuthorSearch, "icon": "icon-pen", "icon2": "icon-book"}
 		]
 	}
 
@@ -449,12 +449,16 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		// ];
 
 		$scope.search_results = [
-			{"name": SearchUIConstants.AuthorByYearLink, "custom_option": true, "type": SearchUIConstants.Year, "icon": "icon-clock"},
-			{"name": SearchUIConstants.AuthorByRegionLink, "custom_option": true, "type": SearchUIConstants.Country, "icon": "icon-earth"},
-			{"name": SearchUIConstants.AuthorByAwardsLink, "custom_option": true, "type": SearchUIConstants.Awards, "icon": "icon-trophy"},
-			{"name": SearchUIConstants.AuthorsByGenreLink, "custom_option": true, "type": SearchUIConstants.Genre, "icon": "icon-shapes"},
-			{"name": SearchUIConstants.AuthorListsLink, "custom_option": true, "type": SearchUIConstants.List, "icon": "icon-list"}
+			{"name": SearchUIConstants.AuthorByYearLink, "custom_option": true, "type": SearchUIConstants.Year, "icon": "icon-clock", "icon2": "icon-pen"},
+			{"name": SearchUIConstants.AuthorByRegionLink, "custom_option": true, "type": SearchUIConstants.Country, "icon": "icon-earth", "icon2": "icon-pen"},
+			{"name": SearchUIConstants.AuthorByAwardsLink, "custom_option": true, "type": SearchUIConstants.Awards, "icon": "icon-trophy", "icon2": "icon-pen"},
+			{"name": SearchUIConstants.AuthorsByGenreLink, "custom_option": true, "type": SearchUIConstants.Genre, "icon": "icon-shapes", "icon2": "icon-pen"},
+			{"name": SearchUIConstants.AuthorListsLink, "custom_option": true, "type": SearchUIConstants.List, "icon": "icon-list", "icon2": "icon-pen"}
 		];
+
+		$scope.search_results = [
+			{"name": SearchUIConstants.ComingSoon, "custom_option": true, "type": SearchUIConstants.ComingSoon, "icon2": "icon-pen"}
+		]
 	}
 
 	_init_reader_search = function(){
@@ -472,11 +476,14 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		// ]
 
 		$scope.search_results = [
-			{"name": SearchUIConstants.ReaderByRegionLink, "custom_option": true, "type": SearchUIConstants.Country, "icon": "icon-earth"},
-			{"name": SearchUIConstants.ReaderByTasteLink, "custom_option": true, "type": SearchUIConstants.Genre, "icon": "icon-shapes"},
-			{"name": SearchUIConstants.ReaderByGenderLink, "custom_option": true, "type": SearchUIConstants.Gender, "icon": "icon-male icon-female"},
-			{"name": SearchUIConstants.ReaderListsLink, "custom_option": true, "type": SearchUIConstants.List, "icon": "icon-list"}
+			{"name": SearchUIConstants.ReaderByRegionLink, "custom_option": true, "type": SearchUIConstants.Country, "icon": "icon-earth", "icon2": "icon-user22"},
+			{"name": SearchUIConstants.ReaderByTasteLink, "custom_option": true, "type": SearchUIConstants.Genre, "icon": "icon-shapes", "icon2": "icon-user22"},
+			{"name": SearchUIConstants.ReaderByGenderLink, "custom_option": true, "type": SearchUIConstants.Gender, "icon": "icon-male icon-female", "icon2": "icon-user22"},
+			{"name": SearchUIConstants.ReaderListsLink, "custom_option": true, "type": SearchUIConstants.List, "icon": "icon-list", "icon2": "icon-user22"}
 		];
+		$scope.search_results = [
+			{"name": SearchUIConstants.ComingSoon, "custom_option": true, "type": SearchUIConstants.ComingSoon, "icon2": "icon-user22"}
+		]
 	}
 
 	_init_search = function(){

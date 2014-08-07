@@ -16,7 +16,11 @@ module Api
 
 			def self.get_news_feed user_id
 				news_feed = UsersGraphHelper.get_news_feed user_id
-				notifications = NotificationHelper.structure_feed news_feed["data"]
+				begin
+					notifications = NotificationHelper.structure_feed news_feed["data"]
+				rescue Exception => e
+					notifications = []
+				end
 				notifications
 			end
 

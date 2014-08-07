@@ -3,6 +3,26 @@ module Api
 	module V0
 		class UserApi
 
+			def self.recommend_book(user_id, friend_ids, book_id)
+				for friend_id in friend_ids
+					UsersGraphHelper.recommend_book(user_id, friend_id, book_id)
+				end
+			end
+
+			def self.comment_on_book(user_id, params)
+				icon = params[:message][:label2][:icon].present? ? params[:message][:label2][:icon] : params[:message][:label1][:icon] rescue ""
+				label1 = params[:message][:label1][:name] rescue ""
+				label2 = params[:message][:label2][:name] rescue ""
+				message = params[:message][:message] rescue ""
+				tweet = {
+					:icon => icon, 
+					:label1 => label1, 
+					:label2 => label2, 
+					:message => message
+				}
+				UsersGraphHelper.comment_on_book(user_id, params[:id], tweet)
+			end
+
 			def self.save_info(user_id, params)
 				@neo = Neography::Rest.new
 				

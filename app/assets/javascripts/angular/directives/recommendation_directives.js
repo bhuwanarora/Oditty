@@ -73,17 +73,17 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 			}
 
 			_country_init = function(){
-				return {"name": "<span class='icon-earth filter_icon green'></span>"+
+				return {"name": "<span class='icon-earth filter_icon yellow_color'></span>"+
 						"<span>&nbsp;&nbsp;&nbsp;Books by Region</span>"};
 			}
 
 			_time_init = function(){
-				return {"name": "<span class='icon-calendar filter_icon magenta'></span>"+
+				return {"name": "<span class='icon-calendar filter_icon'></span>"+
 						"<span>&nbsp;&nbsp;&nbsp;Books by Era</span>"};
 			}
 
 			_read_time_init = function(){
-				return {"name": "<span class='icon-clock filter_icon cyan'></span>"+
+				return {"name": "<span class='icon-clock filter_icon orange_color'></span>"+
 						"<span>&nbsp;&nbsp;&nbsp;Books by Reading Time</span>"};
 			}
 
@@ -579,7 +579,7 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 				// 							"friends_grid_style": {"height": "40px"},
 				// 							"show_filters": true};
 				// }
-				$rootScope.ticker_popup = null;
+				delete $rootScope.ticker_popup;
 				if(event_defined){
 		        	event.stopPropagation();
 				}
@@ -725,7 +725,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 							},  $scope.popular_books);
 						}
 						else{
-							$scope.popular_books = {"title": "No results found..."};
+							$scope.popular_books = [{"title": "No results found..."}];
 						}
 						$scope.loading = false;
 						$timeout.cancel(search_input_timeout);
@@ -742,7 +742,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 							},  $scope.popular_authors);
 						}
 						else{
-							$scope.popular_authors = {"title": "No results found..."};
+							$scope.popular_authors = [{"title": "No results found..."}];
 						}
 						$scope.loading = false;
 						$timeout.cancel(search_input_timeout);

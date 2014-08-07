@@ -15,8 +15,8 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	_hide_popups = function(){
-		$rootScope.focused_book = null;
-		$rootScope.ticker_popup = null;
+		delete $rootScope.focused_book;
+		delete $rootScope.ticker_popup;
 	}
 
 	$scope.move_left = function(event){
@@ -310,7 +310,9 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		// $scope.detailed_book = {};
 		// $rootScope.initPage = 3;
 		// Define user empty data :/
-		
+		if(angular.isDefined($rootScope.focused_book)){
+			$rootScope.focused_book.level2_option = "";
+		}
 		
 		$scope.website = {};
 		$scope.website.searching = false;

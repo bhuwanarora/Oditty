@@ -3,19 +3,10 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
     restrict: 'E',
     scope: { 'book': '=data' },
     controller: ['$scope', function($scope){
-      // $scope.hover = function(event){
-      //   $scope.hovered = true;
-      // };
-
-      // $scope.mouseout = function() {
-      //   $scope.hovered = false;
-      //   // $rootScope.focused_book = null;
-      // };
-
       $scope.show_focused_tooltip = function(event){
         if($rootScope.focused_book != $scope.book){
           // $rootScope.show_more_filters = false;
-          $rootScope.ticker_popup = null;
+          delete $rootScope.ticker_popup;
           $rootScope.focused_book = $scope.book;
           var posX = event.currentTarget.offsetParent.offsetParent.offsetLeft - event.pageX + event.clientX;
           var display_right_width =  screen.width - (posX + event.currentTarget.offsetParent.scrollWidth);
@@ -55,7 +46,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
           // var left = event.currentTarget.offsetParent.offsetParent.scrollWidth + event.screenX;
         }
         else{
-          $rootScope.focused_book = null;
+          delete $rootScope.focused_book;
         }
         event.stopPropagation();
         // body...
@@ -438,7 +429,7 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
       }
 
       $scope.close_focused_tooltip = function(){
-        $rootScope.focused_book = null;
+        delete $rootScope.focused_book;
       }
 
       $scope.own_this_book = function(){
@@ -559,7 +550,7 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
           });
         }
         else{
-          $rootScope.focused_book.display_profile = null;
+          delete $rootScope.focused_book.display_profile;
           $rootScope.focused_book.display_tweet = "What do you feel about this book?";
         }
       }
@@ -607,13 +598,15 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', fu
     restrict: 'E',
     scope: {'recommend_object': '=data'},
     controller: ['$scope', function($scope){
-      $scope.select_thumb = function(event){
+      $scope.select_thumb = function(event, friend_id){
         var selected = event.currentTarget.dataset.selected == "true";
         if(!selected){
+          $scope.user.selected_friends.push(friend_id);
           event.currentTarget.dataset.selected = true;
           event.currentTarget.style.border = "2px solid";
         }
         else{
+          $scope.user.selected_friends($scope.user.selected_friends.indexOf(friend_id), 1);
           event.currentTarget.dataset.selected = false;
           event.currentTarget.style.border = "2px solid transparent";
         }
@@ -634,7 +627,9 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', fu
             $timeout.cancel(timeout_event);
           });
           // $('body').css('cursor', 'default');
-          widgetService.recommend("BOOK", $scope.recommend_object.id, $scope.recommend_object.recommended);
+          var params = {"friend_ids": $scope.user.selected_friends, "book_id": $scope.recommend_object.id};
+          widgetService.recommend(params);
+          $scope.$emit('gamifyCount', 10, true);
         }
         else{
           $scope.recommend_object.recommended = true;
@@ -645,6 +640,7 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', fu
       _init = function(){
         $scope.user = {};
         $scope.user.friends = $rootScope.user.friends;
+        $scope.user.selected_friends = [];
       }
 
       _init();

@@ -280,10 +280,13 @@
 		WHERE a <> b
 		DELETE r
 
+		MATCH (a)-[r:Ego]->(b)
+		DELETE r
+
 	#delete book feed
-			MATCH (a)-[r:BookFeed]->(b)
-			WHERE a <> b
-			DELETE r
+		MATCH (a)-[r:BookFeed]->(b)
+		WHERE a <> b
+		DELETE r
 
 	#delete rating actions
 		MATCH (:User)-[r1:RatingAction]->(r2:RatingNode)-[r3:Rate]->(:Book)
@@ -305,6 +308,9 @@
 		MATCH (:User)-[r1:Commented]->(r2:Tweet)-[r3:CommentedOn]->(:Book)
 		DELETE r1, r2, r3
 
+		MATCH (:User)-[r1:RecommendedTo]->()-[r2:RecommendedAction]->(r3:RecommendNode)-[r4:Recommended]->()
+		DELETE r1, r2, r3, r4
+
 	#delete edit actions
 		# MATCH (:User)-[r1:DataEdit]->(r2:ThumbRequest)-[r3:DataEditRequest]->(:Book)
 		# DELETE r1, r2, r3
@@ -322,3 +328,37 @@
 		CREATE UNIQUE (u)-[:Labelled]->(l)
 
 # ************************************************
+#RECOMMEND
+	MATCH (u:User), (b:Book), (friend:User) 
+	WHERE ID(u)=1637498 AND ID(b)=1077018 AND ID(friend)=1633203 
+	CREATE UNIQUE (u)-[:RecommendedTo]->(friend)-[:RecommendedAction]->(rn:RecommendNode{book_id:1077018, title:b.title, author:b.author_name, user_id:1637498, friend_id:1633203, timestamp:1407261405, email:u.email, friend_email:friend.email, isbn:b.isbn})-[:Recommended]->(b) 
+	SET rn.name=u.name, rn.friend_name=friend.name
+	WITH u, friend, b, rn 
+
+	MATCH (u)-[old:FeedNext]->(old_feed) 
+	CREATE UNIQUE (u)-[:FeedNext{user_id:1637498}]->(rn)-[:FeedNext{user_id:1637498}]->(old_feed) 
+	DELETE old 
+	WITH u, friend, b, rn 
+
+	MATCH (b)-[old:BookFeed]->(old_feed) 
+	CREATE UNIQUE (b)-[:BookFeed{user_id:1637498}]->(rn)-[:BookFeed{user_id:1637498}]->(old_feed) 
+	DELETE old 
+	WITH u, friend, b, rn 
+
+	OPTIONAL MATCH (u)<-[:Follow]-(f:User) 
+	OPTIONAL MATCH (x1)-[r1:Ego{user_id:ID(f)}]->(u)-[r2:Ego{user_id:ID(f)}]->(x2) 
+	FOREACH (s IN CASE WHEN r1 IS NULL THEN [] ELSE [r1] END | 
+		FOREACH (t IN CASE WHEN r2 IS NULL THEN [] ELSE [r2] END | 
+			CREATE (x1)-[:Ego{user_id:ID(f)}]->(x2) 
+			DELETE s, t)) 
+	WITH u, friend, b, f 
+
+	OPTIONAL MATCH (f)-[old:Ego{user_id:ID(f)}]->(old_ego) 
+	FOREACH(p IN CASE WHEN old_ego IS NULL THEN [] ELSE [old_ego] END | 
+		FOREACH (q IN CASE WHEN f IS NULL THEN [] ELSE [f] END | 
+			CREATE (q)-[:Ego{user_id:ID(q)}]->(u)-[:Ego{user_id:ID(q)}]->(p) 
+			DELETE old)) 
+	WITH DISTINCT u, friend, b 
+
+	SET u.total_count = CASE WHEN u.total_count IS NULL THEN 1 ELSE u.total_count + 10 END, 
+	b.recommended_count = CASE WHEN b.recommended_count IS NULL THEN 1 ELSE b.recommended_count + 1 END

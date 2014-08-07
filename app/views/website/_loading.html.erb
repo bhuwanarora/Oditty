@@ -4,12 +4,12 @@
 		width: 100%;
 		height: 100%;
 		position: absolute;
-		background: -moz-radial-gradient(center, ellipse cover, #6FE2FF 0%,#0B7097 121%); /* FF3.6+ */
+		background: -moz-radial-gradient(center, ellipse cover, #6FE2FF 0%,#022C86 121%); /* FF3.6+ */
 		background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#1e5799), color-stop(50%,#2989d8), color-stop(51%,#207cca), color-stop(100%,#7db9e8)); /* Chrome,Safari4+ */
-		background: -webkit-radial-gradient(center, ellipse cover, #6FE2FF 0%,#0B7097 121%); /* Chrome10+,Safari5.1+ */
-		background: -o-radial-gradient(center, ellipse cover, #6FE2FF 0%,#0B7097 121%); /* Opera 12+ */
-		background: -ms-radial-gradient(center, ellipse cover,#6FE2FF 0%,#0B7097 121%); /* IE10+ */
-		background: radial-gradient(ellipse at center, #6FE2FF 0%,#0B7097 121%);
+		background: -webkit-radial-gradient(center, ellipse cover, #6FE2FF 0%,#022C86 121%); /* Chrome10+,Safari5.1+ */
+		background: -o-radial-gradient(center, ellipse cover, #6FE2FF 0%,#022C86 121%); /* Opera 12+ */
+		background: -ms-radial-gradient(center, ellipse cover,#6FE2FF 0%,#022C86 121%); /* IE10+ */
+		background: radial-gradient(ellipse at center, #6FE2FF 0%,#022C86 121%);
 		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 		z-index: 1000;
 	}
@@ -23,9 +23,17 @@
 		font-weight: bold;
 		font-family: Helvetica;
 		letter-spacing: -6.2px;
-		margin-left: -140px;
+		margin-left: -170px;
 		margin-top: -75px;
-		/*text-shadow: 0 2px 3px rgba(0,0,0,0.5);*/
+	}
+
+	.beta{
+		position: fixed;
+		left: 50%;
+		color: white;
+		margin-left: 104px;
+		top: 50%;
+		margin-top: -49px;
 	}
 
 	.load_tagline{
@@ -33,11 +41,10 @@
 		top: 50%;
 		left: 50%;
 		color: white;
-		font-size: 1.1em;
-		margin-left: -148px;
+		margin-left: -210px;
 		margin-top: 35px;
-		font-family: Georgia,serif;
-		/*text-shadow: 0 1px 1px rgba(0,0,0,0.5);*/
+		font-size: 1.5em;
+		font-weight: 200;
 	}
 
 	.load_icon{
@@ -80,7 +87,8 @@
       	<span>o</span>
       	<span>r</span>
 	</div>
-	<div class="load_tagline"><span class="icon-quote-left"></span>&nbsp;Live and build the years with books.&nbsp;<span class="icon-quote-right"></span></div>
+    <div class="beta">BETA</div>
+	<div class="load_tagline">LIVE AND BUILD THE YEARS WITH BOOKS.</div>
 	<div class="load_icon animate-slow"
 		 ng-if="drop_icon">
 		<img src="assets/preloader.gif" />

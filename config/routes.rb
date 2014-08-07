@@ -76,6 +76,7 @@ ReadersDoor::Application.routes.draw do
   get "update_thumb_status"             => "books#update_thumb_status",         :as => "update_thumb_status"
   get "add_label"                       => "books#add_label",                   :as => "add_label"
   get "remove_label"                    => "books#remove_label",                :as => "remove_label"
+  get "clear_data"                      => "users#clear_data",                  :as => "clear_data"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

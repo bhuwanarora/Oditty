@@ -10,9 +10,9 @@
    ng-click="hide_popups()">
 		<main-header></main-header>
 		<recommendation-footer></recommendation-footer>
-		<div class="status">
+		<div class="status" ng-click="show_interaction_box()">
 			<span class="icon-pen site_color"></span>
-			<span><input placeholder="What's on your mind?" /></span>
+			<span><input disabled placeholder="What's on your mind?" /></span>
 		</div>
 
 		<div class="vertical_padder_active"></div>
@@ -26,7 +26,11 @@
 				<div ng-if="$routeParams.type == 'books'" ng-model="user.books.bookmarked">
 					<div ng-switch on="user.books.bookmarked.length">
 						<div ng-switch-when="0">
-							Place a bookmark in your books
+							<div class="recommendation_block">
+								<div class="widget bookmark_instruct">
+									
+								</div>
+							</div>
 						</div>
 						<div ng-switch-default>
 							<div ng-repeat="user_book in user.books.bookmarked" class="recommendation_block">
@@ -52,7 +56,11 @@
 				<div ng-if="$routeParams.type == 'books'" ng-model="user.books.read">
 					<div ng-switch on="user.books.read.length">
 						<div ng-switch-when="0">
-							Add Books you have read
+							<div class="recommendation_block">
+								<div class="widget mark_as_read_instruct">
+									
+								</div>
+							</div>
 						</div>
 						<div ng-switch-default>
 							<div ng-repeat="user_book in user.books.read" class="recommendation_block">
@@ -208,3 +216,4 @@
 	 	<!-- </type-ahead> -->
 		
 </div>
+<interaction-box ng-if="user.interact"></interaction-box>

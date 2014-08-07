@@ -1,5 +1,11 @@
 namespace :crawl do
 
+  desc "facebook emotions"
+  task :facebook_emotions => :environment do
+    include ShelfariCrawler
+    ShelfariCrawler.facebook_crawl
+  end
+
   desc "shelfari books list"
   task :shelfari_books_list => :environment do
     include ShelfariCrawler

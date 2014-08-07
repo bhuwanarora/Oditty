@@ -423,7 +423,7 @@ module UsersGraphHelper
 		@neo ||= self.neo_init
 		clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" OPTIONAL MATCH p=(u)-[r:Ego*..]->(friend:User) WHERE all(r2 in relationships(p) WHERE r2.user_id="+user_id.to_s+") WITH friend MATCH (friend)-[:FeedNext*]->(feed) RETURN labels(feed), feed, feed.timestamp ORDER BY feed.timestamp DESC LIMIT 10"
 		puts clause.blue.on_red
-		@neo.execute_query clause
+		# @neo.execute_query clause
 	end
 
 	# ************************************************
@@ -453,52 +453,50 @@ module UsersGraphHelper
 	
 	def self.comment_on_book(user_id, book_id, tweet)
 		@neo ||= self.neo_init
-		tweet_clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" CREATE UNIQUE (u)-[:Commented]->(t:Tweet{tweet:\""+tweet["message"]+"\", timestamp:"+Time.now.to_i.to_s+", book_id: "+book_id.to_s+", title: b.title, author_name: b.author_name, user_id: "+user_id.to_s+"})-[:CommentedOn]->(b) SET t.isbn=b.isbn, t.name=u.name, t.email=u.email WITH u, b, t "
-		
-		feednext_clause = "MATCH (u)-[old:FeedNext]->(old_feed) CREATE UNIQUE (u)-[:FeedNext{user_id:"+user_id.to_s+"}]->(t)-[:FeedNext{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, t "
-		
-		bookfeed_clause = 	"MATCH (b)-[old:BookFeed]->(old_feed) CREATE UNIQUE (b)-[:BookFeed{user_id:"+user_id.to_s+"}]->(t)-[:BookFeed{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, t "
-		
-		existing_ego_clause = "OPTIONAL MATCH (u)<-[:Follow]-(f:User) OPTIONAL MATCH (x1)-[r1:Ego{user_id:ID(f)}]->(u)-[r2:Ego{user_id:ID(f)}]->(x2) FOREACH (s IN CASE WHEN r1 IS NULL THEN [] ELSE [r1] END | FOREACH (t IN CASE WHEN r2 IS NULL THEN [] ELSE [r2] END | CREATE (x1)-[:Ego{user_id:ID(f)}]->(x2) DELETE s, t)) WITH u, b, f "
+		if book_id
+			tweet_clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" CREATE UNIQUE (u)-[:Commented]->(t:Tweet{tweet:\""+tweet[:message]+"\", timestamp:"+Time.now.to_i.to_s+", book_id: "+book_id.to_s+", title: b.title, author_name: b.author_name, user_id: "+user_id.to_s+", label1:\""+tweet[:label1]+"\", label2:\""+tweet[:label2]+"\", icon:\""+tweet[:icon]+"\"})-[:CommentedOn]->(b) SET t.isbn=b.isbn, t.name=u.name, t.email=u.email WITH u, b, t "
+			with_clause = ", b "
+			bookfeed_clause = "MATCH (b)-[old:BookFeed]->(old_feed) CREATE UNIQUE (b)-[:BookFeed{user_id:"+user_id.to_s+"}]->(t)-[:BookFeed{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, t "+with_clause
+			set_clause = ", b.comment_count = CASE WHEN b.comment_count IS NULL THEN 1 ELSE b.comment_count + 1 END"
+		else
+			tweet_clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" CREATE UNIQUE (u)-[:Commented]->(t:Tweet{tweet:\""+tweet[:message]+"\", timestamp:"+Time.now.to_i.to_s+", user_id: "+user_id.to_s+", label1:\""+tweet[:label1]+"\", label2:\""+tweet[:label2]+"\", icon:\""+tweet[:icon]+"\"}) SET t.name=u.name, t.email=u.email WITH u, t "
+			with_clause = " "
+			bookfeed_clause = " "
+			set_clause = " "
+		end
 
-		ego_clause = "OPTIONAL MATCH (f)-[old:Ego{user_id:ID(f)}]->(old_ego) FOREACH(p IN CASE WHEN old_ego IS NULL THEN [] ELSE [old_ego] END | FOREACH (q IN CASE WHEN f IS NULL THEN [] ELSE [f] END | CREATE (q)-[:Ego{user_id:ID(q)}]->(u)-[:Ego{user_id:ID(q)}]->(p) DELETE old)) WITH DISTINCT u, b "
-
 		
-		set_clause = "SET u.comment_count = CASE WHEN u.comment_count IS NULL THEN 1 ELSE u.comment_count + 1 END, b.comment_count = CASE WHEN b.comment_count IS NULL THEN 1 ELSE b.comment_count + 1 END"
+		feednext_clause = "MATCH (u)-[old:FeedNext]->(old_feed) CREATE UNIQUE (u)-[:FeedNext{user_id:"+user_id.to_s+"}]->(t)-[:FeedNext{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, t "+with_clause
+		
+		existing_ego_clause = "OPTIONAL MATCH (u)<-[:Follow]-(f:User) OPTIONAL MATCH (x1)-[r1:Ego{user_id:ID(f)}]->(u)-[r2:Ego{user_id:ID(f)}]->(x2) FOREACH (s IN CASE WHEN r1 IS NULL THEN [] ELSE [r1] END | FOREACH (t IN CASE WHEN r2 IS NULL THEN [] ELSE [r2] END | CREATE (x1)-[:Ego{user_id:ID(f)}]->(x2) DELETE s, t)) WITH u, f "+with_clause
+
+		ego_clause = "OPTIONAL MATCH (f)-[old:Ego{user_id:ID(f)}]->(old_ego) FOREACH(p IN CASE WHEN old_ego IS NULL THEN [] ELSE [old_ego] END | FOREACH (q IN CASE WHEN f IS NULL THEN [] ELSE [f] END | CREATE (q)-[:Ego{user_id:ID(q)}]->(u)-[:Ego{user_id:ID(q)}]->(p) DELETE old)) WITH DISTINCT u "+with_clause
+
+		set_clause = "SET u.comment_count = CASE WHEN u.comment_count IS NULL THEN 1 ELSE u.comment_count + 1 END" + set_clause
 		
 		clause = tweet_clause + feednext_clause + bookfeed_clause + existing_ego_clause + ego_clause + set_clause
 		puts clause.blue.on_red
 		@neo.execute_query clause
 	end
 
-	def self.recommend_book(user_id, friend_ids, book_id)
+	def self.recommend_book(user_id, friend_id, book_id)
 		@neo || self.neo_init
 
-		match_clause = "MATCH (u:User), (b:Book) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" WITH u, b "
+		recommend_clause = "MATCH (u:User), (b:Book), (friend:User) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" AND ID(friend)="+friend_id.to_s+" CREATE UNIQUE (u)-[:RecommendedTo]->(friend)-[:RecommendedAction]->(rn:RecommendNode{book_id:"+book_id.to_s+", title:b.title, author:b.author_name, user_id:"+user_id.to_s+", friend_id:"+friend_id.to_s+", timestamp:"+Time.now.to_i.to_s+", email:u.email, friend_email:friend.email})-[:Recommended]->(b) SET rn.name=u.name, rn.friend_name=friend.name, rn.isbn=b.isbn WITH u, b, rn "
 
-		friends_clause = "MATCH "
-		friends_where_clause = " WHERE "
-		with_clause = " WITH u, b"
-		recommend_clause = "CREATE UNIQUE "
-		for friend_id in friend_ids
-			if friends_clause == "MATCH "
-				join_clause = ""
-				where_join_clause = ""
-			else
-				join_clause = ", "
-				where_join_clause = " AND "
-			end
-			
-			friends_where_clause = friends_where_clause + where_join_clause + "ID(u"+friend_id.to_s+")="+friend_id.to_s
-			friends_clause = friends_clause + join_clause + " (u"+friend_id.to_s+":User)"
-			recommend_clause = recommend_clause + join_clause + 
-			"(u)-[:RecommendedTo]->()-[:RecommendedAction]->(:RecommendNode)-[:Reommended]->(b) "
-			with_clause = with_clause + ", u"+friend_id.to_s
-		end
-		recommend_clause = friends_clause + friends_where_clause + with_clause + recommend_clause
+		feednext_clause = "MATCH (u)-[old:FeedNext]->(old_feed) CREATE UNIQUE (u)-[:FeedNext{user_id:"+user_id.to_s+"}]->(rn)-[:FeedNext{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, rn "
 
-		clause = recommend_clause
+		bookfeed_clause = "MATCH (b)-[old:BookFeed]->(old_feed) CREATE UNIQUE (b)-[:BookFeed{user_id:"+user_id.to_s+"}]->(rn)-[:BookFeed{user_id:"+user_id.to_s+"}]->(old_feed) DELETE old WITH u, b, rn "
+
+		existing_ego_clause = "OPTIONAL MATCH (u)<-[:Follow]-(f:User) OPTIONAL MATCH (x1)-[r1:Ego{user_id:ID(f)}]->(u)-[r2:Ego{user_id:ID(f)}]->(x2) FOREACH (s IN CASE WHEN r1 IS NULL THEN [] ELSE [r1] END | FOREACH (t IN CASE WHEN r2 IS NULL THEN [] ELSE [r2] END | CREATE (x1)-[:Ego{user_id:ID(f)}]->(x2) DELETE s, t)) WITH u, b, f "
+
+		ego_clause = "OPTIONAL MATCH (f)-[old:Ego{user_id:ID(f)}]->(old_ego) FOREACH(p IN CASE WHEN old_ego IS NULL THEN [] ELSE [old_ego] END | FOREACH (q IN CASE WHEN f IS NULL THEN [] ELSE [f] END | CREATE (q)-[:Ego{user_id:ID(q)}]->(u)-[:Ego{user_id:ID(q)}]->(p) DELETE old)) WITH DISTINCT u, b "
+
+		set_clause = "SET u.total_count = CASE WHEN u.total_count IS NULL THEN 1 ELSE u.total_count + "+Constants::RecommendationPoints.to_s+" END, b.recommended_count = CASE WHEN b.recommended_count IS NULL THEN 1 ELSE b.recommended_count + 1 END"
+
+		clause = recommend_clause + feednext_clause + bookfeed_clause + existing_ego_clause + ego_clause + set_clause
 		puts clause.blue.on_red
+		@neo.execute_query clause
 	end
 
 

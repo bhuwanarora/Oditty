@@ -7,6 +7,16 @@ module ShelfariCrawler
   require 'open-uri'
   puts "Shelfari crawler..."
 
+  def self.facebook_crawl
+    begin
+      base_url = "https://www.facebook.com/"
+      doc = Nokogiri::HTML(open(base_url))
+      emotions = doc.css('.page')
+    rescue Exception => e
+      
+    end
+  end
+
   def self.parse
     begin
       @root = ShelfariCategory.find_or_create_by(:name => "ROOT")

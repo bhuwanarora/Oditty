@@ -21,6 +21,12 @@
 	letter-spacing: -4.2px;
 }
 
+.login_box .logo .beta_label{
+	font-size: 0.5em;
+	letter-spacing: 0px;
+	margin-left: 5px;
+}
+
 .login_box .tagline{
 	font-size: 1.5em;
 	font-weight: 200;
@@ -43,8 +49,15 @@
 	top: 50px;
 	left: 10px;
 	color: white;
-	font-size: 1.1em;
+	font-size: 1.5em;
 	text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+}
+
+.search_page .beta_tag{
+	position: fixed;
+	left: 205px;
+	color: white;
+	top: 34px;
 }
 
 .search_page .search_typeahead_group{
@@ -62,7 +75,7 @@
     position: absolute;
     right: -2px;
     color: white;
-    padding: 11px 30px 12px 30px;
+    padding: 11px 30px 14px 30px;
     background-color: #4d90fe;
     background-image: -webkit-linear-gradient(top,#4d90fe,#4787ed);
     border: 0;
@@ -135,9 +148,11 @@
 	position: fixed;
 	padding: 30px;
 	background-color: rgba(0,0,0,.5);
-	right: 5px;
 	border-radius: 2px;
-	top: 5px;
+	bottom: 0px;
+	right: 0px;
+	left: 0px;
+	text-align: center;
 }
 
 .search_page .trends .trend{
@@ -167,6 +182,11 @@
 	width: 100.7%;
 	background-color: white;
 	margin-left: 0px;
+}
+
+.website_search_options .right_icon{
+	color: #C7C7C7;
+	float: right;
 }
 
 .website_search_options .option:hover{
@@ -336,11 +356,33 @@
 	z-index: 1;
 }
 
+.nav_menu_wrapper{
+	cursor: pointer;
+	left: 0px;
+	right: 0px;
+	bottom: 80px;
+	position: fixed;
+	vertical-align: middle;
+	z-index: 2;
+	padding: 50px;
+	background-color: rgba(0, 0, 0, 0.6);
+	color: white;
+	font-weight: 100;
+	font-size: 2em;
+	text-align: center;
+}
+
+.nav_menu_wrapper:hover{
+	text-decoration: none;
+}
+
 .nav_menu{
 	position: absolute;
-	bottom: -20px;
-	left: 50%;
-	margin-left: -340px;
+	bottom: 80px;
+}
+
+.nav_menu img{
+	height: 220px;
 }
 
 .nav {

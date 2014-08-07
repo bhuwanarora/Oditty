@@ -16,8 +16,8 @@ websiteApp.service('widgetService', ['$http', '$q', '$rootScope', function ($htt
     	return _deferred_post_request('/api/v0/mar', {"book_id":id, "data":data});
     }
 
-    this.recommend = function(type, id, data){
-    	return _deferred_post_request('/api/v0/recommend', {"id":id, "type":type, "data":data});
+    this.recommend = function(params){
+    	return _deferred_post_request('/api/v0/recommend', params);
     }
 
     this.bookmark = function(params){

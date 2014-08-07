@@ -72,6 +72,16 @@ angular.module('filtersApp', [])
       return input;
     }
   })
+  .filter('book_tag', function(){
+    return function(input){
+      if(angular.isDefined(input)){
+        if(input.length > 28){
+          input = input.slice(0, 25)+"...";
+        }
+      }
+      return input;
+    }
+  })
   .filter('published_year', function(){
     return function(input){
       var inputs = input.split(" ");
@@ -178,6 +188,15 @@ angular.module('filtersApp', [])
         var thumb = "http://covers.openlibrary.org/b/isbn/"+isbn[0]+"-S.jpg"
         return thumb;
       }
+    }
+  })
+  .filter('thumb_backup', function(){
+    return function(input){
+      var output = input;
+      if(angular.isUndefined(input) || input == ""){
+        output = "assets/profile_pic.jpeg"
+      }
+      return output;
     }
   })
   .filter('is_present', function(){

@@ -108,12 +108,23 @@
 	margin: 5px 0px 5px 0px;
 	width: 98%;
 	height: 60px;
-	max-width: 98%;
+	max-width: 89%;
 	max-height: 90px;
 	outline: none;
 	border: 1px solid #F1F1F1;
 	border-radius: 4px;
 	font-family: Consolas,Monaco,monospace;
+}
+
+.interaction_box_options [class^="icon-"],
+.interaction_box_book_options [class^="icon-"]{
+	font-size: 1.4em !important;
+}
+
+.interaction_box_options .right_icon,
+.interaction_box_book_options .right_icon{
+	color: #C7C7C7;
+	float: right;
 }
 
 .interaction_box .character_count{
@@ -122,11 +133,37 @@
 	float: right;
 }
 
+.interaction_box .share_status{
+	float: right;
+	color: white;
+	padding: 5px 15px;
+	border-radius: 3px;
+	cursor: pointer;
+	border: none;
+}
+
+.interaction_box .share_status:disabled{
+	background-color: rgba(101, 176, 69, 0.51) !important;
+	cursor: default;
+}
+
 .interaction_box .interaction_icons{
 	padding: 7px;
 	cursor: pointer;
 	margin-right: -4px;
-	font-size: 1.6em;
+	color: #9B9B9B;
+	background-color: #F5F5F5;
+	border: 1px solid #FFFFFF;
+	border-radius: 5px;
+}
+
+.interaction_box .interact_book{
+	position: absolute;
+	top: 18px;
+	background-color: #f5F5F5;
+	padding: 4px;
+	width: 200px;
+	border-radius: 2px;
 }
 
 .interaction_box .interaction_icons:hover{
@@ -213,15 +250,17 @@
 }
 
 .filter_icon{
-	color: white;
-	padding: 12px;
+	padding: 8px;
 	border-radius: 20px;
 	box-shadow: -3px 0 5px -2px #888;
+	font-size: 1.5em;
+	color: #427fed;
 }
 
 .filters_panel .filter_icon{
-	font-size: 0.8em;
+	font-size: 1.2em;
 	margin-left: -3px;
+	color: #427fed;
 }
 
 @-webkit-keyframes bounce {
@@ -448,38 +487,91 @@
 	border-radius: 3px;
 }
 
-.interaction_box,
-.message_box{
+.interaction_group{
 	position: fixed;
 	left: 50%;
 	margin-left: -250px;
+	top: 100px;
+}
+
+.interaction_box,
+.message_box{
 	box-shadow: 8px 10px 54px 0 #424242;
 	z-index: 5;
 	padding: 10px;
 	background-color: #fff;
 	width: 500px;
-	top: 100px;
 	border-radius: 4px;
 	padding-right: 20px;
 	padding-left: 20px;
 }
 
-.interaction_box_options{
+.interaction_box_options,
+.interaction_box_book_options{
 	width: 250px;
-	top: 182px;
-	margin-left: -239px;
+	top: 71px;
+	margin-left: 45px;
 	box-shadow: 0 1px 4px 0 #99A3AD,inset 0 0 40px #EEE;
 	color: #717170;
 	font-size: 1em;
 	z-index: 6;
-	position: fixed;
-	left: 50%;
+	position: absolute;
+	max-height: 300px;
+	overflow-y: scroll;
+}
+
+.interaction_box_book_options{
+	width: 207px;
+	top: 44px;
+	right: 30px;
+	margin-left: 0px;
+}
+
+
+.interaction_box img{
+	width: 40px;
+	margin-bottom: 20px;
+}
+
+.interaction_box .second_input{
+	background-color: #F5F5F5;
+	height: 15px;
+	padding: 11px;
+	width: 480px;
+	border-radius: 4px;
+	overflow-x: hidden;
+}
+
+.interaction_box .second_input span{
+	float: right;
+}
+
+.interaction_box [class^="icon-"]{
+	font-size: 1.5em !important;
+}
+
+.interaction_box .second_input input{
+	font-size: 1em;
+	border-radius: 2px;
+	padding: 4px;
+	width: 200px;
+	margin-top: -4px;
+	border: 1px solid #E9E9E9;
+}
+
+.interaction_box .interaction_links{
+	padding: 2px;
+	margin-left: 40px;
+}
+
+.interaction_box .interaction_links .status_message{
+	float: right;
 }
 
 .interaction_box .highlighter{
 	position: absolute;
-	top: 18px;
-	left: 24px;
+	top: 8px;
+	left: 45px;
 	color: transparent;
 	letter-spacing: 0.04em;
 	width: 100%;
@@ -493,7 +585,8 @@
 	font-weight: normal;
 }
 
-.interaction_box_options .option{
+.interaction_box_options .option,
+.interaction_box_book_options .option{
 	cursor: pointer;
 	padding: 10px;
 	background-color: white;
@@ -501,7 +594,7 @@
 }
 
 .recommendation_box{
-	position: fixed;
+	position: relative;
 	background-color: white;
 	width: 500px;
 	max-width: 90%;
@@ -513,6 +606,14 @@
 	box-shadow: 0 7px 15px rgba(0, 0, 0, 0.25);
 	z-index: 1;
 	border-radius: 4px;
+}
+
+.mark_as_read_instruct{
+	background-image: url("/assets/base_case/markasread.png");
+}
+
+.bookmark_instruct{
+	background-image: url("/assets/base_case/bookmark.png");
 }
 
 .recommendation_box .friend_grid .friend_thumb{
@@ -670,6 +771,8 @@
 	white-space: normal;
 }
 
+.interaction_box_book_options .option:hover,
+.interaction_box_book_options .active,
 .interaction_box_options .option:hover,
 .interaction_box_options .active,
 .typeahead_options .active,
@@ -850,8 +953,7 @@ and (min-width : 1824px) {
 .notifications .notification_message{
 	width: 175px;
 	white-space: initial;
-	padding: 5px;
-	min-height: 45px;
+	padding: 0px 5px;
 	height: auto;
 	line-height: 1.4em;
 }
@@ -875,6 +977,7 @@ and (min-width : 1824px) {
 .notifications .block{
 	display: inline-block;
 	float: left;
+	min-height: 45px;
 }
 
 .notifications img{
@@ -1094,7 +1197,7 @@ and (min-width : 1824px) {
 
 .main_header .website_search_helpers, 
 .main_header .website_search_options{
-	top: 34px;
+	top: 32px;
 }
 
 .main_header .search_level1_typeahead_group{
@@ -1151,13 +1254,10 @@ and (min-width : 1824px) {
 }
 
 .tweets{
-	position: fixed;
-	top: 220px;
-	left: 50%;
 	width: 550px;
-	margin-left: -250px;
 	overflow-y: scroll;
 	max-height: 55vh;
+	margin-top: 5px;
 }
 
 .tweets::-webkit-scrollbar-track{
@@ -1218,6 +1318,7 @@ and (min-width : 1824px) {
 
 .left_column .friends_grid .friend_block{
 	position: relative;
+	float: left;
 }
 
 .left_column .friends_grid .friend_name{

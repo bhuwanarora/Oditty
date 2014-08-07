@@ -42,7 +42,7 @@ websiteApp.directive('author', ['$rootScope', 'widgetService', function ($rootSc
           // var left = event.currentTarget.offsetParent.offsetParent.scrollWidth + event.screenX;
         }
         else{
-          $rootScope.focused_author = null;
+          delete $rootScope.focused_author;
         }
         event.stopPropagation();
         // body...
@@ -80,7 +80,7 @@ websiteApp.directive('focusedAuthor', ['$rootScope', '$timeout', 'widgetService'
       }
 
       $scope.close_focused_tooltip = function(){
-        $rootScope.focused_author = null;
+        delete $rootScope.focused_author;
       }
 
       $scope.close_interaction_box = function(){
@@ -235,7 +235,7 @@ websiteApp.directive('authorInteract', ['websiteService', 'WebsiteUIConstants', 
           if(chr == " "){
             $scope.hash_tagging = false;
             $(event.currentTarget).siblings().append(chr);
-            $scope.search_for = null;
+            delete $scope.search_for;
           }
           else{
             if($scope.hash_tagging){

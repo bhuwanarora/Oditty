@@ -16,6 +16,11 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		}
 	}
 
+	$scope.show_interaction_box = function(){
+		$rootScope.user.interact = true; 
+		delete $rootScope.focused_book;
+	}
+
 	$scope.handle_friends_grid_size = function(event, scroll_down){
 		var event_defined = angular.isDefined(event);
 		if(event_defined){
@@ -61,8 +66,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	$scope.hide_popups = function(){
 		$rootScope.hide_options = true;
-		$rootScope.focused_book = null;
-		$rootScope.ticker_popup = null;
+		delete $rootScope.focused_book;
+		delete $rootScope.ticker_popup;
  		// $scope.show_more_filters = false;
 	}
 
@@ -239,7 +244,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 					});
 				}
 				else{
-					$rootScope.focused_book = null;
+					delete $rootScope.focused_book;
 					if($scope.recommendations.books.length >= max_limit){
 						$scope.recommendations.books = [$scope.recommendations.books[max_limit-2], $scope.recommendations.books[max_limit-1]];
 						var timeout_event = $timeout(function(){
@@ -439,7 +444,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 		var oneSec = 10000;
 		$scope.drop_icon = false;
-		$rootScope.show_book = false;
+		// $rootScope.show_book = false;
+		$rootScope.user.interact = false;
 
 		user_behaviour_timer_event = $timeout(function(){
 			_recordUserBehaviour();

@@ -35,6 +35,7 @@ module Api
 			end
 
 			def recommend
+				UserApi.recommend_book(session[:user_id], params[:friend_ids], params[:book_id])
 				render :json => {:message => "Success"}, :status => 200
 			end
 
@@ -98,7 +99,7 @@ module Api
 
 			def comment
  				user_id = session[:user_id]
-				UsersGraphHelper.comment_on_book(user_id, params[:id], params[:message])
+ 				UserApi.comment_on_book(user_id, params)
 				render :json => {:message => "Success"}, :status => 200
 			end
 

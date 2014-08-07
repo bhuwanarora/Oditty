@@ -19,7 +19,7 @@
 			     ng-repeat="friend in user.friends" 
 			     class="friend_thumb" 
 			     data-selected="false"
-			     ng-click="select_thumb($event)"/>
+			     ng-click="select_thumb($event, friend.id)"/>
 		</div>
 		<div class="footer">
 			<div class="button_effect done" ng-click="recommend()">Done</div>

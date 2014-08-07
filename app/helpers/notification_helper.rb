@@ -23,9 +23,18 @@ module NotificationHelper
 			elsif type == "ThumbRequest"
 				notification = self._thumb_request_notification data
 				notifications.push notification
+			elsif type == "RecommendNode"
+				notification = self._recommend_notification data
+				notifications.push notification
 			end
 		end
 		notifications.reverse
+	end
+
+	def self._recommend_notification data
+		name = self._get_name data
+		message = "<span><b>"+name+"</b></span><br/><span> recommended </span><span class='site_color'><em>"+data["title"]+"</em></span><span> to "+data["friend_name"]+".</span>"
+		self.notification(message, data)
 	end
 
 	def self._thumb_request_notification data
@@ -59,10 +68,10 @@ module NotificationHelper
 		self.notification(message, data)
 	end
 
-	def self.notification(message, data)
+	def self.notification(message, data, tag=nil)
 		name = self._get_name data
 		thumb = "assets/profile_pic.jpeg"
-		notification = {
+		notification_json = {
 			:thumb => thumb,
 			:message => message,
 			:timestamp => data["timestamp"],
@@ -77,15 +86,28 @@ module NotificationHelper
 				:name => data["name"]
 			}
 		}
-		notification
+		if tag.present?
+			notification_json.merge!("tag" => tag)
+		end
+		notification_json
 	end
 
 	def self._comment_notification data
 		name = self._get_name data
-		message = "<span><b>"+name+"</b></span><br/><span class='site_color'>"+data["tweet"]+".</span>";
+		message = "<span class='site_color'>"+data["tweet"]+".</span>";
+
+		tag = "<span class='"+data["icon"]+"'></span>" rescue ""
+		clause = "<span> "+data["label1"] rescue "<span> "
+		tag = tag + clause
+
+		clause = " "+data["label2"]+" " rescue " "
+		tag = tag + clause
+
+		clause = data["title"]+"</span>" rescue "</span>"
+		tag = tag + clause
+
 		thumb = "assets/profile_pic.jpeg"
-		self.notification(message, data)
-		notification
+		self.notification(message, data, tag)
 	end
 
 	def self._get_time_index time_index

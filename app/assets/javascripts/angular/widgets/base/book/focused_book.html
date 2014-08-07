@@ -57,7 +57,7 @@
 </div>
   <div class="book_info" ng-if="show_info">
     <span> · </span>
-    <span ng-click="focused_book.interact = true;" class="book_link">
+    <span ng-click="user.interact = true;" class="book_link">
       <span class="count">
         <span>{{focused_book.readers_count | integer}}</span>
         <span class="icon-users2"></span> 
@@ -68,7 +68,7 @@
     <span itemprop="aggregateRating" 
           itemscope 
           itemtype="http://schema.org/AggregateRating"
-          ng-click="focused_book.interact = true;" class="book_link">
+          ng-click="user.interact = true;" class="book_link">
       <span class="count">
         <span>{{focused_book.bookmark_count | integer}}</span>
         <span class="icon-bookmarks"></span> 
@@ -76,7 +76,7 @@
       <!-- <span>&nbsp;&nbsp;Reviews</span> -->
     </span>
     · 
-    <span ng-click="focused_book.interact = true;" class="book_link">
+    <span ng-click="user.interact = true;" class="book_link">
       <span class="count">
         <span>{{focused_book.comment_count | integer}}</span>
         <span class="icon-pencil2"></span>
@@ -123,17 +123,16 @@
     </div>
   </div>
 </div>
-<div class="tweet_link" ng-click="focused_book.interact = true;">
+<div class="tweet_link" ng-click="user.interact = true;">
   <span><img ng-src="{{focused_book.display_profile}}"></span>
   <span ng-model="focused_book.display_tweet" ng-bind-html="focused_book.display_tweet | display_tweet"></span>
 </div>
 <div class="footer">
   <recommend data="focused_book"></recommend>
-  <!-- <span class="interact" ng-click="focused_book.interact = true;">Tweet</span> -->
+  <!-- <span class="interact" ng-click="user.interact = true;">Tweet</span> -->
   <!-- <div class="own_this_book"
      ng-click="own_this_book()">
      <span ng-show="!have_this_book">I have this Book</span>
      <span ng-show="have_this_book">I don't have this Book</span>
   </div> -->
 </div>
-<interaction-box></interaction-box>
