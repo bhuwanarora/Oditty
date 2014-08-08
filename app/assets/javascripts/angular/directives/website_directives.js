@@ -297,9 +297,10 @@ websiteApp.directive('notification', ['$rootScope', '$timeout', function($rootSc
 						delete $rootScope.ticker_popup;
 					}
 					else{
+						delete $rootScope.ticker_popup;
 						var timeout_event = $timeout(function(){
 							$rootScope.ticker_popup = $scope.notification.book;
-						});
+						}, 200);
 
 						$scope.$on('destroy', function(){
 							$timeout.cancel(timeout_event);

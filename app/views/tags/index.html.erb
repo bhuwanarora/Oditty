@@ -1,25 +1,21 @@
-<h1>Listing tags</h1>
-
 <table>
-  <thead>
+  <tr>
+    <th>S.No.</th>
+    <th>Name</th>
+    <th>#Books</th>
+    <th>Active</th>
+    <th>Submit</th>
+  </tr>
+  <% @genres.each_with_index do |genre, index|%>
     <tr>
-      <th></th>
-      <th></th>
-      <th></th>
+      <td><%= index %></td>
+      <td><%= genre[1] %></td>
+      <td><%= genre[2] %></td>
     </tr>
-  </thead>
-
-  <tbody>
-    <% @tags.each do |tag| %>
-      <tr>
-        <td><%= link_to 'Show', tag %></td>
-        <td><%= link_to 'Edit', edit_tag_path(tag) %></td>
-        <td><%= link_to 'Destroy', tag, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
+  <% end %>
 </table>
+<div class="main_footer">
+  GENRES
+</div>
 
-<br>
-
-<%= link_to 'New Tag', new_tag_path %>
+<div class="vertical_padder"></div>

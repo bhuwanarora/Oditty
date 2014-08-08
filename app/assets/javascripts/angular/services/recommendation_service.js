@@ -11,6 +11,10 @@ websiteApp.service('recommendationService', ['$http', '$q', '$rootScope', functi
         return _deferred_request('/api/v0/grid');
     }
 
+    this.get_book_lists = function(){
+        return _deferred_request('/api/v0/book_lists');   
+    }
+
     this.push_recommendations = function(){
         return _deferred_request('/api/v0/push_recommendations');   
     }

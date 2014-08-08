@@ -26,7 +26,6 @@
 	<input set-focus="website.searching" 
 	       ng-keypress="get_search_results($event)"
 	       ng-keydown="key_down($event)"
-	       ng-keyup="key_up($event)"
 	       ng-model="search_tag.input"
          ng-disabled="search_level2"
          id="searchInput"
@@ -39,11 +38,12 @@
         <div ng-show="!search_initiated && search_tag.input" 
              class="title">No results found.. </div>
   </div>
-  <div class="website_search_options" ng-if="!search_initiated && search_results && !hide_options">
+  <div class="website_search_options scrollbar" ng-if="!search_initiated && search_results && !hide_options">
     <div ng-repeat="item in search_results | limitTo: search_tag.result_count+1 track by $index "
          ng-click="handle_selection(item)" 
          ng-class="{'light_gray_background':is_current($index, item), 'graph_option':item.graph_option}" 
          ng-mouseenter="set_current($index)"
+         msd-wheel="stop_horizontal_scroll($event)"
          class="option">
          <!-- ng-bind-html="highlight(search_tag.input, item.name)" -->
       <div class="title">

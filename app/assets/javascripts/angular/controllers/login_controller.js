@@ -147,7 +147,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
   			if(data["logged_in"]){
   				$rootScope.user.logged = true;
   				$rootScope.user.id = data["id"];
-  				$scope.$emit('getNotifications');
+  				// $scope.$emit('getNotifications');
   				websiteService.get_user_details().then(function(data){
 	  		  		angular.extend($rootScope.user, data);
 	  	   		});

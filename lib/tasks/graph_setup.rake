@@ -6,6 +6,37 @@ namespace :graph do
     Neo4jHelper.set_year_labels
   end
 
+  desc "add_movies"
+  task :add_movies => :environment do
+    include Neo4jHelper
+    Neo4jHelper.add_movies
+  end
+
+  desc "add_ebooks"
+  task :add_ebooks => :environment do
+    include Neo4jHelper
+    Neo4jHelper.add_ebooks
+  end
+
+  desc "add_genres"
+  task :add_genres => :environment do
+    include Neo4jHelper
+    Neo4jHelper.add_genres
+  end
+  
+
+  desc "add_categories"
+  task :add_categories => :environment do
+    include Neo4jHelper
+    Neo4jHelper.add_categories
+  end
+
+  desc "category tree"
+  task :create_category_tree => :environment do
+    include Neo4jHelper
+    Neo4jHelper.create_category_tree
+  end
+
   desc "remove_tiny_reads_with_zero_count"
   task :remove_tiny_reads_with_zero_count => :environment do
     include Neo4jHelper

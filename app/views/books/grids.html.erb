@@ -1,6 +1,6 @@
 <table class="grid_table">
 	<tr>
-		<th>Count</th>
+		<th>#Books</th>
 		<th>Book Grids</th>
 		<th>Search Books</th>
 		<th>Books</th>
@@ -11,7 +11,10 @@
 	<% @grids.sort_by!{|s| s[6]}.reverse.each do |grid|%>
 		<tr>
 			<td><%= grid[5].length %></td>
-			<td><%= grid[0] %></td>
+			<td class="grid_edit_name">
+				<div><%= grid[0] %></div>
+				<input class="hidden_input" value="<%= grid[0] %>"/>
+			</td>
 			<td>
 				<input class="search_box" />
 			</td>
@@ -96,11 +99,18 @@
 			});
 		}
 
-		bind_search_book();
-		remove_book_from_grid();
-		remove_grid();
-		add_grid();
-		update_grid();
+		register_functions();
+
+		function register_functions(){
+			bind_search_book();
+			remove_book_from_grid();
+			remove_grid();
+			add_grid();
+			update_grid();
+			reset_links();
+			edit_grid_name();
+		}
+
 
 		function bind_search_book(){
 			$('.search_box').on('keypress', function(event){
@@ -189,11 +199,12 @@
 			$('.update_grid').on('click', function(){
 				$('.footer_status').html('updating...');
 				var $this = $(this);
+				var grid_name = $this.parent().siblings('.grid_edit_name').children('input').val();
 				var grid_id = $this.siblings('input[name=grid_id]').val();
 				var book_ids = $this.siblings('input[name=book_ids]').val();
 				var status = $(this).parent().siblings('.status').children().is(':Checked');
 				var priority = $(this).parent().siblings('.priority').children().val();
-				var data = "grid_id="+grid_id+"&book_ids="+book_ids+"&status="+status+"&priority="+priority;
+				var data = "grid_id="+grid_id+"&book_ids="+book_ids+"&status="+status+"&priority="+priority+"&name="+grid_name;
 				$.ajax({
 					url: "<%= update_grid_path %>",
 					data: data,
@@ -204,6 +215,14 @@
 						alert(error);
 					}
 				});
+			});
+		}
+
+		function edit_grid_name(){
+			$('.grid_edit_name').on('click', function(){
+				var $this = $(this);
+				$this.children('input').removeClass('hidden_input');
+				$this.children('div').addClass('hidden_input');
 			});
 		}
 

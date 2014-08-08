@@ -324,17 +324,17 @@ module Neo4jHelper
 			# @neo.execute_query clause
 		end
 
-		ShelfariBooksCategories.where(:shelfari_book_id => book_id).each do |book_category|
-			category_id = book_category.shelfari_category_id
-			category = ShelfariCategory.find(category_id)
-			category_name = category.name
-			lower_case = category_name.downcase.gsub(" ", "").gsub("\"", "").gsub("'", "").gsub(":", "")
+		# ShelfariBooksCategories.where(:shelfari_book_id => book_id).each do |book_category|
+		# 	category_id = book_category.shelfari_category_id
+		# 	category = ShelfariCategory.find(category_id)
+		# 	category_name = category.name
+		# 	lower_case = category_name.downcase.gsub(" ", "").gsub("\"", "").gsub("'", "").gsub(":", "")
 			
-			clause =  " MERGE (category:Category{search_index:\""+lower_case+"\"}) CREATE UNIQUE (book)-[:FromCategory]->(category), (category)-[:CategoryFeed]->(category) SET category.indexed_category_name=\""+lower_case+"\", category.name=\""+category_name+"\", category.icon='"+category.icon.to_s+"' WITH book "
-			puts "adding categories...".yellow
-			# @neo.execute_query clause
-			main_clause = main_clause + clause
-		end
+		# 	clause =  " MERGE (category:Category{search_index:\""+lower_case+"\"}) CREATE UNIQUE (book)-[:FromCategory]->(category), (category)-[:CategoryFeed]->(category) SET category.indexed_category_name=\""+lower_case+"\", category.name=\""+category_name+"\", category.icon='"+category.icon.to_s+"' WITH book "
+		# 	puts "adding categories...".yellow
+		# 	# @neo.execute_query clause
+		# 	main_clause = main_clause + clause
+		# end
 
 		ShelfariBooksTags.where(:shelfari_book_id => book_id).each do |book_tag|
 			tag_id = book_tag.shelfari_tag_id
@@ -416,9 +416,9 @@ module Neo4jHelper
 
 	def self.init_shelfari_books
 		@neo ||= self.init
-		ShelfariBook.where(:data_flag => true, :flag => nil).find_each do |book|
+		ShelfariBook.where(:data_flag => true, :flag => true).find_each do |book|
 			begin
-				self.add_book book
+				self.add_category_again book
 			rescue Neography::SyntaxException
 				book.update_column("flag", false)
 				puts "Neography::SyntaxException".blue.on_red
@@ -430,6 +430,138 @@ module Neo4jHelper
 				puts "Neography::NeographyError".blue.on_red
 			end
 		end
+	end
+
+	def self.add_ebooks
+		@neo ||= self.init
+		EbooksShelfariBooks.all.find_each do |book_ebook|
+			begin
+				book_id = book_ebook.shelfari_book_id
+				book = ShelfariBook.find book_id
+				book_title = book.name.downcase.gsub(" ", "").gsub("\"", "").gsub("'", "").gsub(":", "")
+				puts book_title.green
+
+				ebook_id = book_ebook.ebook_id
+				ebook = Ebook.find ebook_id
+				ebook_name = ebook.name.downcase.gsub(" ", "").gsub("\"", "'").to_s rescue ""
+				notes = ebook.notes.gsub("\"", "'").to_s rescue ""
+
+				main_clause = "MATCH (book:Book{indexed_title:\""+book_title+"\"})"
+				clause = " MERGE (ebook:Ebook{indexed_ebook_name:\""+ebook_name+"\"}) CREATE UNIQUE (book)-[:Eversion]->(ebook) SET ebook.url=\""+ebook.url.to_s+"\", ebook.notes=\""+notes+"\""
+				puts "adding ebooks...".yellow
+				main_clause = main_clause + clause
+				@neo.execute_query main_clause
+				book.update_column("ebook_flag", true)
+			rescue Neography::SyntaxException
+				book.update_column("ebook_flag", false)
+				puts "Neography::SyntaxException".blue.on_red
+			rescue Neography::UniquePathNotUniqueException
+				book.update_column("ebook_flag", false)
+				puts "Neography::UniquePathNotUniqueException".blue.on_red
+			rescue Neography::NeographyError
+				book.update_column("ebook_flag", false)
+				puts "Neography::NeographyError".blue.on_red
+			end
+		end
+	end
+
+	def self.add_movies
+		@neo ||= self.init
+		MoviesShelfariBooks.all.find_each do |movie_book|
+			begin
+				book_id = movie_book.shelfari_book_id
+				book = ShelfariBook.find book_id
+				book_title = book.name.downcase.gsub(" ", "").gsub("\"", "").gsub("'", "").gsub(":", "")
+				puts book_title.green
+
+				movie_id = movie_book.movie_id
+				movie = Movie.find movie_id
+				movie_name = movie.name.downcase.gsub(" ", "").gsub("\"", "'").to_s rescue ""
+
+				main_clause = "MATCH (book:Book{indexed_title:\""+book_title+"\"})"
+				clause = " MERGE (movie:Movie{uuid:"+movie_id.to_s+"}) CREATE UNIQUE (book)-[:MovieBased]->(movie) SET movie.imdb_url=\""+movie.imdb_url.to_s+"\", movie.year=\""+movie.year.to_s+"\", movie.indexed_movie_name=\""+movie_name+"\", movie.name=\""+movie.name.gsub("\"", "'")+"\""
+				puts "adding movies...".yellow
+				main_clause = main_clause + clause
+				@neo.execute_query main_clause
+				book.update_column("movie_flag", true)
+			rescue Neography::SyntaxException
+				book.update_column("movie_flag", false)
+				puts "Neography::SyntaxException".blue.on_red
+			rescue Neography::UniquePathNotUniqueException
+				book.update_column("movie_flag", false)
+				puts "Neography::UniquePathNotUniqueException".blue.on_red
+			rescue Neography::NeographyError
+				book.update_column("movie_flag", false)
+				puts "Neography::NeographyError".blue.on_red
+			end
+		end
+	end
+
+	def self.add_genres
+		@neo ||= self.init
+		ShelfariBooksTags.all.find_each do |book_tag|
+			begin
+				book_id = book_tag.shelfari_book_id
+				book = ShelfariBook.find book_id
+				book_title = book.name.downcase.gsub(" ", "").gsub("\"", "").gsub("'", "").gsub(":", "")
+				puts book_title.green
+				weight = book_tag.weight
+
+				shelfari_tag_id = book_tag.shelfari_tag_id
+				shelfari_tag = ShelfariTag.find shelfari_tag_id
+				genre_name = shelfari_tag.name.gsub("\"", "'").to_s rescue ""
+				lower_case = genre_name.downcase.gsub(" ", "").to_s rescue ""
+
+				main_clause = "MATCH (book:Book{indexed_title:\""+book_title+"\"})"
+				clause = " MERGE (shelfari_tag:Genre{indexed_genre_name:\""+lower_case+"\"}) CREATE UNIQUE (book)-[r:Belongs_to]->(shelfari_tag) SET r.weight="+weight.to_s+", shelfari_tag.name=\""+genre_name+"\""
+				puts "adding genres...".yellow
+				main_clause = main_clause + clause
+				@neo.execute_query main_clause
+				book.update_column("genre_flag", true)
+			rescue Neography::SyntaxException
+				book.update_column("genre_flag", false)
+				puts "Neography::SyntaxException".blue.on_red
+			rescue Neography::UniquePathNotUniqueException
+				book.update_column("genre_flag", false)
+				puts "Neography::UniquePathNotUniqueException".blue.on_red
+			rescue Neography::NeographyError
+				book.update_column("genre_flag", false)
+				puts "Neography::NeographyError".blue.on_red
+			end
+		end
+	end
+
+	def self.add_categories
+		@neo ||= self.init
+		ShelfariBooksCategories.all.find_each do |book_category|
+			begin
+				book_id = book_category.shelfari_book_id
+				book = ShelfariBook.find book_id
+				book_title = book.name.downcase.gsub(" ", "").gsub("\"", "").gsub("'", "").gsub(":", "")
+				puts book_title.green
+
+				shelfari_category_id = book_category.shelfari_category_id
+				shelfari_category = ShelfariCategory.find shelfari_category_id
+				category_name = shelfari_category.name.downcase.gsub(" ", "").gsub("\"", "'").to_s rescue ""
+
+				main_clause = "MATCH (book:Book{indexed_title:\""+book_title+"\"})"
+				clause = " MERGE (shelfari_category:Category{uuid:"+shelfari_category_id.to_s+"}) CREATE UNIQUE (book)-[:FromCategory]->(shelfari_category)"
+				puts "adding categories...".yellow
+				main_clause = main_clause + clause
+				@neo.execute_query main_clause
+				book.update_column("category_flag", true)
+			rescue Neography::SyntaxException
+				book.update_column("category_flag", false)
+				puts "Neography::SyntaxException".blue.on_red
+			rescue Neography::UniquePathNotUniqueException
+				book.update_column("category_flag", false)
+				puts "Neography::UniquePathNotUniqueException".blue.on_red
+			rescue Neography::NeographyError
+				book.update_column("category_flag", false)
+				puts "Neography::NeographyError".blue.on_red
+			end
+		end
+
 	end
 
 	def self.delete_book_nodes
@@ -446,27 +578,23 @@ module Neo4jHelper
 		@neo ||= self.init
 		root = ShelfariCategory.where(:name => 'ROOT').first
 		root.children.each do |shelfari_category|
-			puts shelfari_category.name
-			@neo.execute_query("CREATE (c:Category{is_root:true, name:\""+shelfari_category.name+"\", s_url:\""+shelfari_category.url+"\"})")
-			self.create_category_subtree_for(shelfari_category.url, shelfari_category.url, shelfari_category.id)
+			puts shelfari_category.name.blue
+			lower_case = shelfari_category.name.downcase.gsub(" ", "").gsub("\"", "").gsub("'", "").gsub(":", "")
+			clause = "MERGE (c:Category{uuid:"+shelfari_category.id.to_s+"}) SET c.is_root=true, c.name=\""+shelfari_category.name+"\", c.indexed_category_name=\""+lower_case+"\""
+			@neo.execute_query(clause)
+			self.create_category_subtree_for(shelfari_category.id, shelfari_category.id)
 		end
 	end
 
-	def self.create_category_subtree_for(root_url, category_url, shelfari_category_id)
-		begin
-			ShelfariCategory.find(shelfari_category_id).children.each do |shelfari_category|
-				puts "-"+shelfari_category.name
-				@neo.execute_query("MATCH (r:Category{s_url:\""+root_url+"\"}), 
-					(p:Category{s_url:\""+category_url+"\"})
-				 CREATE (p)-[:Child]->(c:Category{is_root:false, name:\""+shelfari_category.name+"\", s_url:\""+shelfari_category.url+"\"})-[:Has_root]->(r)")
-				if shelfari_category.children.present?
-					self.create_category_subtree_for(root_url, shelfari_category.url, shelfari_category.id)
-				end
+	def self.create_category_subtree_for(root, parent)
+		ShelfariCategory.find(parent).children.each do |shelfari_category|
+			puts "-"+shelfari_category.name.green
+			lower_case = shelfari_category.name.downcase.gsub(" ", "").gsub("\"", "").gsub("'", "").gsub(":", "")
+			clause = "MERGE (r:Category{uuid:"+root.to_s+"}) MERGE (p:Category{uuid:"+parent.to_s+"}) MERGE (c:Category{uuid:"+shelfari_category.id.to_s+"}) CREATE UNIQUE (p)-[:HasChild]->(c)-[:HasRoot]->(r) SET c.name=\""+shelfari_category.name+"\", c.indexed_category_name=\""+lower_case+"\""
+			@neo.execute_query clause
+			if shelfari_category.children.present?
+				self.create_category_subtree_for(root, shelfari_category.id)
 			end
-		rescue Neography::NeographyError => err
-		  puts err.message     # Neo4j error message
-		  puts err.code        # HTTP error code
-		  puts err.stacktrace  # Neo4j Java stacktrace
 		end
 	end
 
@@ -850,6 +978,15 @@ module Neo4jHelper
 		clause = "MATCH (book)-[:Published_in]->(y:Year) WHERE toInt(y.year) >= 2000 AND toInt(y.year) < 2015 SET book :TwentiethCenturyLiterature"
 		puts "TwentiethCenturyLiterature".green
 		@neo.execute_query clause
+	end
+
+	def self.set_icons
+		@neo ||= self.init
+		ShelfariCategory.where(:name => 'ROOT').first.children.each do |category|
+			clause = "MATCH (c:Category{uuid:"+category.id.to_s+"}) SET c.icon=\""+category.icon+"\""
+			puts category.name.green
+			@neo.execute_query clause
+		end
 	end
 
 

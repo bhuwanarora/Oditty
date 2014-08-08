@@ -10,11 +10,16 @@ class BooksController < ApplicationController
   # GET /books/1
   # GET /books/1.json
   def show
+
   end
 
   # GET /books/new
   def new
     @book = Book.new
+  end
+
+  def book_detail
+    
   end
 
   # def dates
@@ -38,7 +43,7 @@ class BooksController < ApplicationController
     begin
       neo = Neography::Rest.new
       indexed_name = params[:grid_name].downcase.gsub("\"", "").gsub("'", "").gsub(" ", "").gsub("-", "").gsub(":", "") rescue ""
-      clause = "CREATE (bg:BookGrid{name:\""+params[:grid_name].to_s+"\"}) SET bg.indexed_grid_name=\""+indexed_name+"\""
+      clause = "CREATE (bg:BookGrid{name:\""+params[:grid_name].to_s+"\"}) SET bg.indexed_grid_name=\""+indexed_name+"\", bg.priority=0"
       neo.execute_query clause
       render :json => {:message => "Success"}, :status => 200
     rescue Exception => e
@@ -49,7 +54,7 @@ class BooksController < ApplicationController
 
   def reset_grid_links
     begin
-      neo = Neography::Rest.new
+      @neo = Neography::Rest.new
       clause = "MATCH (:BookGrid)-[r:NextGrid]->(:BookGrid) DELETE r"
       puts clause.blue.on_red
       @neo.execute_query clause
@@ -85,15 +90,15 @@ class BooksController < ApplicationController
           end
           id_string = id_string + ")"
           if params[:status]=="true"
-            clause = "MATCH (b:Book), (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 1, bg.priority="+params[:priority].to_s+" CREATE UNIQUE (bg)-[:RelatedBooks]->(b)"
+            clause = "MATCH (b:Book), (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 1, bg.priority="+params[:priority].to_s+", bg.name=\""+params[:name]+"\" CREATE UNIQUE (bg)-[:RelatedBooks]->(b)"
           else
-            clause = "MATCH (b:Book), (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 0, bg.priority="+params[:priority].to_s+" CREATE UNIQUE (bg)-[:RelatedBooks]->(b)"
+            clause = "MATCH (b:Book), (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 0, bg.priority="+params[:priority].to_s+", bg.name=\""+params[:name]+"\" CREATE UNIQUE (bg)-[:RelatedBooks]->(b)"
           end
         else
           if params[:status]=="true"
-            clause = "MATCH (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 1, bg.priority="+params[:priority].to_s+""
+            clause = "MATCH (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 1, bg.priority="+params[:priority].to_s+", bg.name=\""+params[:name]+"\""
           else
-            clause = "MATCH (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 0, bg.priority="+params[:priority].to_s+""
+            clause = "MATCH (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 0, bg.priority="+params[:priority].to_s+", bg.name=\""+params[:name]+"\""
           end
         end
 

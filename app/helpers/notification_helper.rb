@@ -33,38 +33,38 @@ module NotificationHelper
 
 	def self._recommend_notification data
 		name = self._get_name data
-		message = "<span><b>"+name+"</b></span><br/><span> recommended </span><span class='site_color'><em>"+data["title"]+"</em></span><span> to "+data["friend_name"]+".</span>"
+		message = "<span> recommended </span><span class='site_color'><em>"+data["title"]+"</em></span><span> to "+data["friend_name"]+".</span>"
 		self.notification(message, data)
 	end
 
 	def self._thumb_request_notification data
 		name = self._get_name data
-		message = "<span><b>"+name+"</b></span><br/><span> suggested thumbnail for </span><span class='site_color'><em>"+data["title"]+"</em>.</span>"
+		message = "<span> suggested thumbnail for </span><span class='site_color'><em>"+data["title"]+"</em>.</span>"
 		self.notification(message, data)
 	end
 
 	def self._bookmark_notification data
 		name = self._get_name data
-		message = "<span><b>"+name+"</b></span><br/><span> bookmarked </span><span class='site_color'><em>"+data["title"]+"</em></span><span>&nbsp; to &nbsp;</span><span>'"+data["label"]+"'.</span>"
+		message = "<span> bookmarked </span><span class='site_color'><em>"+data["title"]+"</em></span><span>&nbsp; to &nbsp;</span><span>'"+data["label"]+"'.</span>"
 		self.notification(message, data)
 	end
 
 	def self._rating_notification data
 		name = self._get_name data
-		message = "<span><b>"+name+"</b></span><br/><span> gave "+data["rating"].to_s+"/10 stars to </span><span class='site_color'><em>"+data["title"]+"</em>.</span>"
+		message = "<span> gave "+data["rating"].to_s+"/10 stars to </span><span class='site_color'><em>"+data["title"]+"</em>.</span>"
 		self.notification(message, data)
 	end
 
 	def self._timing_node_notification data
 		name = self._get_name data
 		book_length_string = self._get_time_index data["time_index"]
-		message = "<span><b>"+name+"</b></span><br/><span> described reading length of <span class='site_color'><em>"+data["title"]+"</em></span>&nbsp; as a '"+book_length_string+"'. </span>"
+		message = "<span> described reading length of <span class='site_color'><em>"+data["title"]+"</em></span>&nbsp; as a '"+book_length_string+"'. </span>"
 		self.notification(message, data)
 	end
 
 	def self._mark_as_read_notification data
 		name = self._get_name data
-		message = "<span><b>"+name+"</b></span><br/><span> added </span><span class='site_color'><em>"+data["title"]+"</em></span><span> to &nbsp;</span><span class='icon-books'></span><span>&nbsp;Books Read.</span>"
+		message = "<span> added </span><span class='site_color'><em>"+data["title"]+"</em></span><span> to &nbsp;</span><span class='icon-books'></span><span>&nbsp;Books Read.</span>"
 		self.notification(message, data)
 	end
 

@@ -4,8 +4,11 @@ class CategoriesController < ApplicationController
   # GET /categories
   # GET /categories.json
   def index
-    @categories = Category.all
-    render 'index', :status => 200, :layout => false
+    neo = Neography::Rest.new
+
+    clause = "MATCH (c:Category)-[:HasChild]->(child:Category) WHERE c.is_root=true RETURN c.name, c.icon, COUNT(child)"
+    puts clause.blue.on_red
+    @categories = neo.execute_query(clause)["data"]
   end
 
   # GET /categories/1

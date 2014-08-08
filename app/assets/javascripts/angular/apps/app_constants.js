@@ -121,7 +121,7 @@ var constants = {
 		"WebsiteUIConstants":{
 			"BrowserIncompatible": "Please use latest version of Chrome for now...",
 			"Enter": 13,
-			"BackSpace": 8,
+			"Backspace": 8,
 			"KeyUp": 38,
 			"KeyDown": 40,
 			"KeyLeft": 37,

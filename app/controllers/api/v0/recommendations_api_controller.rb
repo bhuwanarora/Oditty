@@ -9,6 +9,7 @@ module Api
 				# publish
 			end
 
+
 			def grid
 				@neo = Neography::Rest.new
 				last_grid_id = $redis.get 'last_grid'
@@ -25,7 +26,7 @@ module Api
 				begin
 					$redis.set 'last_grid', info[0][3]
 				rescue Exception => e
-					$redis.set 'last_grid', last_grid_id
+					$redis.set 'last_grid', Constants::BestGrid
 				end
 				render :json => info, :status => 200
 			end

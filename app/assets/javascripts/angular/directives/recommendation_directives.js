@@ -16,7 +16,6 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 				$scope.show_lists = false;
 				$scope.handle_left_columns();
 				$scope.$on('filterChange', function(scope, selected, type){
-					
 					if(type == "country"){
 						$scope.countrySelected = selected;
 					}

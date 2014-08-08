@@ -8,6 +8,13 @@ module Api
                 
 				render :json => genres, :status => 200
 			end
+			
+			def book_lists
+				@neo = Neography::Rest.new
+				clause = "MATCH (bg:BookGrid) RETURN ID(bg), bg.name"
+				info = @neo.execute_query(clause)["data"]
+				render :json => info, :status => 200
+			end
 
 			def trends
 				neo = Neography::Rest.new

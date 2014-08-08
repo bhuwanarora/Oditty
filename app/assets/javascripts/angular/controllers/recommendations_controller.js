@@ -166,6 +166,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         	var specific_list = angular.isDefined($routeParams.filter_id);
         	var grids = angular.isDefined($routeParams.grid_id);
         	var trends = angular.isDefined($routeParams.trend_id);
+        	var broadcast_required = angular.isDefined($cookieStore.get('broadcast'));
         	if(specific_list){
         		if($cookieStore.get('tab') == RecommendationUIConstants.BookmarkPanel){
         			_show_bookmark_tab();
@@ -186,6 +187,17 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         	else if(grids){
         		$rootScope.filters["filter_id"] = $routeParams.grid_id;
         		$rootScope.main_header = $routeParams.name;
+        	}
+        	else if(broadcast_required){
+        		var broadcast = $cookieStore.get('broadcast');
+        		var selectedItem = $cookieStore.get('selectedItem');
+        		var type = $cookieStore.get('type');
+        		$scope.$broadcast(broadcast, {"name": selectedItem}, type);
+				$rootScope.hide_options = true;
+
+        		$cookieStore.remove('broadcast');
+        		$cookieStore.remove('selectedItem');
+        		$cookieStore.remove('type');
         	}
         	else{
         		delete $rootScope.main_header;
@@ -469,6 +481,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         _init_user();
         // _handle_focused_book();
         _get_friends();
+        $scope.$emit('getNotifications');
     	// $scope.$emit('moveRight');    
 	}
 

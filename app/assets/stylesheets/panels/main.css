@@ -19,13 +19,12 @@
 	cursor: pointer;
 }
 
-tr{
-	max-height: 40px;
-	overflow-y: scroll;
+.hidden_input{
+	display: none;
 }
 
 .limit_height{
-	max-height: 40px;
+	max-height: 50px;
 	overflow-y: scroll;
 }
 
@@ -39,6 +38,10 @@ tr{
 
 tr:hover{
 	background-color: #F3F3F3;
+}
+
+td{
+	cursor: default;
 }
 
 img{

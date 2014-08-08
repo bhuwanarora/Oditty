@@ -12,6 +12,8 @@ ReadersDoor::Application.routes.draw do
 
   resources :categories
 
+  resources :movies
+
   resources :prizes
 
   resources :books
@@ -78,6 +80,7 @@ ReadersDoor::Application.routes.draw do
   get "remove_label"                    => "books#remove_label",                :as => "remove_label"
   get "clear_data"                      => "users#clear_data",                  :as => "clear_data"
   get "reset_grid_links"                => "books#reset_grid_links",            :as => "reset_grid_links"
+  get "book_detail"                     => "books#book_detail",                 :as => "book_detail"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
