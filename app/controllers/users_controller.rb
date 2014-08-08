@@ -61,6 +61,8 @@ class UsersController < ApplicationController
       puts "Recommended...".green
       neo.execute_query clause
 
+      # clause = " MATCH (:User)-[r1:DataEdit]->(r2:ThumbRequest)-[r3:DataEditRequest]->(:Book) DELETE r1, r2, r3"
+
       clause = "MATCH  (b:Book) CREATE UNIQUE (b)-[:BookFeed]->(b)"
       puts "Create bookfeed...".green
       neo.execute_query clause

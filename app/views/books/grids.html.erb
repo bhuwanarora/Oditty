@@ -183,7 +183,7 @@
 			$('.book_name').on('click', function(){
 				var $this = $(this);
 				var id = $this.attr('data-id');
-				var book_ids = $this.parent().siblings('.update').children('input[name=book_ids]').val().split(",");
+				var book_ids = $this.parent().parent().siblings('.update').children('input[name=book_ids]').val().split(",");
 				var new_book_ids = []
 				for(var i=0; i < book_ids.length; i++){
 					if(book_ids[i].indexOf(id) < 0){

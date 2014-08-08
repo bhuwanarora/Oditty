@@ -192,7 +192,10 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         		var broadcast = $cookieStore.get('broadcast');
         		var selectedItem = $cookieStore.get('selectedItem');
         		var type = $cookieStore.get('type');
-        		$scope.$broadcast(broadcast, {"name": selectedItem}, type);
+        		// $rootScope.$broadcast(broadcast, {"name": selectedItem}, type);
+        		$rootScope.filters["reset"] = true;
+	    		$rootScope.filters["reset_count"] = 0;
+        		$rootScope.filters.other_filters[type] = selectedItem;
 				$rootScope.hide_options = true;
 
         		$cookieStore.remove('broadcast');

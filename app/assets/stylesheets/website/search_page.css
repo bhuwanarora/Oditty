@@ -184,6 +184,7 @@
 	margin-left: 0px;
 	max-height: 200px;
 	overflow-y: scroll;
+	border-bottom-left-radius: 4px;
 }
 
 .website_search_options .right_icon{

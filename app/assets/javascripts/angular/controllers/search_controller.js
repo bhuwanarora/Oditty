@@ -191,27 +191,35 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				if(!$scope.search_level1){
 					_handle_input_focus();
 					$scope.search_type = type;
+					_search_by(type);
+					$scope.search_tag.input = "";
 				}
 				else if($scope.search_level2){
-					_handle_input_focus();
-					$rootScope.$broadcast('filterChange', {"name": selectedItem}, type);
-					$rootScope.hide_options = true;
-					$scope.search_tag.input = selectedItem;
 
 					var on_search_page = angular.isUndefined($routeParams.type);
 					var user_id = $rootScope.user.id;
 					if(type == SearchUIConstants.List){
 						$location.path("/user/"+user_id+"/grid/books/id/"+item.id+"/name/"+item.name);
 					}
-					else if(on_search_page){
-						$location.path("/user/"+user_id+"/recommendations/books");
-						$cookieStore.put('broadcast', 'filterChange');
-						$cookieStore.put('selectedItem', selectedItem);
-						$cookieStore.put('type', type);
+					else {
+						if(on_search_page){
+							$location.path("/user/"+user_id+"/recommendations/books");
+							$cookieStore.put('broadcast', 'filterChange');
+							$cookieStore.put('selectedItem', selectedItem);
+							$cookieStore.put('type', type);
+						}
+						else{
+							_handle_input_focus();
+							$rootScope.$broadcast('filterChange', {"name": selectedItem}, type);
+							$rootScope.hide_options = true;
+							$scope.search_tag.input = selectedItem;
+						}
 					}
 				}
-				_search_by(type);
-				$scope.search_tag.input = "";
+				else{
+					_search_by(type);
+					$scope.search_tag.input = "";
+				}
 			}
 			else{
 			    // $scope.search_tag.current = 0;
