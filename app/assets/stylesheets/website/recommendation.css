@@ -491,7 +491,7 @@
 	position: fixed;
 	left: 50%;
 	margin-left: -250px;
-	top: 100px;
+	top: 50px;
 }
 
 .interaction_box,
@@ -956,6 +956,10 @@ and (min-width : 1824px) {
 	padding: 0px 5px;
 	height: auto;
 	line-height: 1.4em;
+}
+
+.notifications .notification_message [class^="icon-"]{
+	font-style: 1.4em !important;
 }
 
 .notifications .notification:hover{

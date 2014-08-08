@@ -187,6 +187,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         		$rootScope.filters["filter_id"] = $routeParams.grid_id;
         		$rootScope.main_header = $routeParams.name;
         	}
+        	else{
+        		delete $rootScope.main_header;
+        	}
         }
         else if($routeParams.type == "authors"){
         	$rootScope.filters["filter_type"] = RecommendationUIConstants.AuthorTab;
@@ -321,44 +324,38 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
 	_get_grids = function(){
-		var threeSeconds = 3000;
-		var push_grids_timer_event = $timeout(function(){
-			recommendationService.get_grid_books().then(function(data){
-				var book_grid = [];
-				var grid_name = ""
-				for(var i=0; i < data.length; i++){
-					var new_grid = grid_name != data[i][0];
-					if(new_grid){
-						var not_first_iteration = grid_name != "";
-						if(not_first_iteration){
-							if(book_grid.length > 4){
-								var grid = {"grid_text": grid_name, 
-											"grid_books": book_grid, 
-											"is_grid": true, 
-											"id": grid_id};
-								var index = $scope.recommendations.books.length - 5;
-								$scope.recommendations.books.splice(index, 0, grid);
-							}
-							book_grid = [];
+		recommendationService.get_grid_books().then(function(data){
+			var book_grid = [];
+			var grid_name = ""
+			for(var i=0; i < data.length; i++){
+				var new_grid = grid_name != data[i][0];
+				if(new_grid){
+					var not_first_iteration = grid_name != "";
+					if(not_first_iteration){
+						if(book_grid.length > 4){
+							var grid = {"grid_text": grid_name, 
+										"grid_books": book_grid, 
+										"is_grid": true, 
+										"id": grid_id};
+							var index = $scope.recommendations.books.length - 2;
+							$scope.recommendations.books.splice(index, 0, grid);
 						}
-						grid_name = data[i][0];
-						grid_id = data[i][3];
+						book_grid = [];
 					}
-					var json = {"isbn": data[i][1], "id": data[i][2], "external_thumb": data[i][4]};
-					book_grid.push(json);
+					grid_name = data[i][0];
+					grid_id = data[i][3];
 				}
-				if(book_grid.length > 4){
-					var grid = {"grid_text": grid_name, 
-								"grid_books": book_grid, 
-								"is_grid": true, 
-								"id": grid_id};
-					var index = $scope.recommendations.books.length - 5;
-					$scope.recommendations.books.splice(index, 0, grid);
-				}
-			});
-		}, threeSeconds);
-		$scope.$on('destroy', function(){
-			$timeout.cancel(push_grids_timer_event);
+				var json = {"isbn": data[i][1], "id": data[i][2], "external_thumb": data[i][4]};
+				book_grid.push(json);
+			}
+			if(book_grid.length > 4){
+				var grid = {"grid_text": grid_name, 
+							"grid_books": book_grid, 
+							"is_grid": true, 
+							"id": grid_id};
+				var index = $scope.recommendations.books.length - 2;
+				$scope.recommendations.books.splice(index, 0, grid);
+			}
 		});
 	}
 

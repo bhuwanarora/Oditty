@@ -105,10 +105,12 @@
             e.stopPropagation();
             return $input.val("");
           });
+
           scope.browseFiles = function() {
             scope.error = null;
             return $input[0].click();
           };
+
           scope.setFiles = function(file) {
             var reader;
             if (!file.type.match(/^image\//)) {
@@ -188,16 +190,19 @@
               return checkBounds();
             }
           };
+
           checkHRatio = function() {
             if (scope.ratio) {
               return scope.heightCropZone = scope.widthCropZone * scope.ratio;
             }
           };
+
           checkVRatio = function() {
             if (scope.ratio) {
               return scope.widthCropZone = scope.heightCropZone / scope.ratio;
             }
           };
+
           checkBounds = function() {
             if (scope.xCropZone < 0) {
               scope.xCropZone = 0;
@@ -229,6 +234,7 @@
               }
             }
           };
+
           isNearBorders = function(ev) {
             var bottomLeft, bottomRight, h, topLeft, topRight, w, x, y;
             x = scope.xCropZone + elOffset.left;
@@ -253,16 +259,19 @@
             };
             return nearHSegment(ev, x, w, y, "top") || nearVSegment(ev, y, h, x + w, "right") || nearHSegment(ev, x, w, y + h, "bottom") || nearVSegment(ev, y, h, x, "left");
           };
+
           nearHSegment = function(ev, x, w, y, borderName) {
             if (ev.clientX >= x && ev.clientX <= x + w && Math.abs(ev.clientY - y) <= borderSensitivity) {
               return borderName;
             }
           };
+
           nearVSegment = function(ev, y, h, x, borderName) {
             if (ev.clientY >= y && ev.clientY <= y + h && Math.abs(ev.clientX - x) <= borderSensitivity) {
               return borderName;
             }
           };
+
           scope.mousedown = function(e) {
             grabbedBorder = isNearBorders(e);
             if (grabbedBorder) {
@@ -272,26 +281,31 @@
             }
             return draggingFn(e);
           };
+
           scope.mouseup = function(e) {
             if (draggingFn) {
               draggingFn(e);
             }
             return draggingFn = null;
           };
+
           scope.mousemove = function(e) {
             if (draggingFn) {
               draggingFn(e);
             }
             return scope.colResizePointer = isNearBorders(e);
           };
+
           scope.deselect = function() {
             return draggingFn = null;
           };
+
           scope.cancel = function() {
             scope.dropText = "Drop files here";
             scope.dropClass = "";
             return scope.showButton = true;
           };
+
           scope.ok = function() { 
             scope.croppedWidth = scope.widthCropZone / zoom;
             scope.croppedHeight = scope.heightCropZone / zoom;
@@ -300,11 +314,13 @@
               var destinationHeight;
               destinationHeight = scope.destinationHeight || scope.destinationWidth * scope.croppedHeight / scope.croppedWidth;
               ctx.drawImage(imageEl, scope.xCropZone / zoom, scope.yCropZone / zoom, scope.croppedWidth, scope.croppedHeight, 0, 0, scope.destinationWidth, scope.destinationHeight);
-              return canvasEl.toBlob(function(blob) {
-                return ($rootScope.$broadcast("cropme:done", blob))&&(scope.showButton = true);
+              var data_url = canvasEl.toDataURL();
+              return canvasEl.toBlob(function(blob){
+                return ($rootScope.$broadcast("cropme:done", data_url))&&(scope.showButton = true);
               }, 'image/' + scope.type);
             });
           };
+
           scope.$on("cropme:cancel", scope.cancel);
           return scope.$on("cropme:ok", scope.ok);
         }

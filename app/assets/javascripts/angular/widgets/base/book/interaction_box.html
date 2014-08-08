@@ -68,7 +68,7 @@
 					</div>
 				</div>
 				<span class="highlighter" ng-bind-html="user.hash_tagged_comment"></span>
-				<span class="thumb"><img ng-src="{{user.thumb | thumb_backup}}"></span>
+				<span class="thumb"><img ng-src="{{user | blob_backup}}"></span>
 				<textarea itemprop= "commentText"
 				   itemtype= "http://schema.org/UserComments"
 				   set-focus="user.interact"
@@ -88,7 +88,7 @@
 				<span class="icon-feed interaction_icons" ng-click="show_interaction_options('Shout', $event)"></span>
 				<span class="icon-quote-right interaction_icons" ng-click="show_interaction_options('Quote', $event)"></span>
 				<!-- <div class="character_count">{{user.current_comment.length}} characters</div> -->
-				<button class="share_status green" ng-click="share_post()" ng-disabled="!(level1_option && selected_interact_book) || (user.current_comment.length > 0 && level1_option && selected_interact_book) || (user.current_comment.length > 0 && !level1_option && !selected_interact_book)">Share{{disable_share}}</button>
+				<button class="share_status green" ng-click="share_post()" ng-disabled="!((level1_option && selected_interact_book) || (user.current_comment.length > 0 && !level1_option))">Share</button>
 				<span class="site_color status_message">{{status_message}}</span>
 			</div>
 		</div>

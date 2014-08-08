@@ -16,7 +16,7 @@
 		<div ng-class="{'inactive':read_selected || bookmark_selected, 'active':!read_selected && !bookmark_selected}"
 			 class="link"
 			 ng-if="(!$routeParams.trend_id && !$routeParams.grid_id && !$routeParams.filter_id) || ($routeParams.trend_id || $routeParams.grid_id)"
-			 title="Recommendations"
+			 title="{{main_header | header_title}}"
 			 style="margin-left:0px;" 
 			 ng-click="toggle_recommendations()">
 			<span ng-class="{

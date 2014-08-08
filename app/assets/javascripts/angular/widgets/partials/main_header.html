@@ -15,7 +15,7 @@
 		<span>r</span>
  	</a>
  	<div class="profile_thumb" ng-click="goto_info_card()">
-		<user-thumb></user-thumb>
+		<img ng-src="{{user | blob_backup}}" class="profile_small_thumb" ng-if="user">
 		<div class="user_details">
 			<div class="animate-slow count" ng-class="{'green': is_additive, 'magenta': !is_additive}" ng-show="count && !initiate_counting">
 				<span ng-if="is_additive">+</span><span ng-if="!is_additive">-</span>{{count}}

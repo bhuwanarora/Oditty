@@ -4,11 +4,11 @@
 		<th>Book Grids</th>
 		<th>Search Books</th>
 		<th>Books</th>
+		<th>Priority</th>
 		<th>Active</th>
 		<th>Submit</th>
-
 	</tr>
-	<% @grids.each do |grid|%>
+	<% @grids.sort_by!{|s| s[6]}.reverse.each do |grid|%>
 		<tr>
 			<td><%= grid[5].length %></td>
 			<td><%= grid[0] %></td>
@@ -17,14 +17,25 @@
 			</td>
 
 			<td class="books" name="books">
-				<% grid[3].each.with_index do |book, index| %>
-					<div data-id="<%= grid[5][index] %>" class="book_name"><span> · </span><span><%= book %></span></div>
-				<% end %>
+				<div class="limit_height">
+					<% grid[3].each.with_index do |book, index| %>
+						<div data-id="<%= grid[5][index] %>" class="book_name"><span> · </span><span><%= book %></span></div>
+					<% end %>
+				</div>
 			</td>
 			
-			
+			<td class="priority"><select>
+					<option>Select</option>
+					<% for i in 1..@grids.length do %>
+						<option value="<%= i %>"
+							<% if grid[6] == i %>selected<% end %>><%= i %></option>
+					<% end %>
+				</select>
+			</td>
 			<td class="status">
-				<input type="checkbox" name="status" <% if grid[4].present? && grid[4] == 1 %>checked><% end %>
+				<input type="checkbox" name="status" 
+					<% if grid[4].present? && grid[4] == 1 %>checked
+					<% end %> />
 			</td>
 			<td class="update"><button class="update_grid">Submit</button>
 				<input type="hidden" value="<%= grid[2] %>" name="grid_id"/>
@@ -38,7 +49,10 @@
 	<input name="grid_name" class="grid_name" />
 	<button class="add">Add New</button>
 	<span type="status" class="footer_status"></span>
+	<button class="reset_link">RESET LINKS</button>
 </div>
+
+<div class="vertical_padder"></div>
 <script>
 	$(document).ready(function(){
 		var search_on = false;
@@ -122,6 +136,23 @@
 			});
 		}
 
+		function reset_links(){
+			$('.reset_link').on('click', function(){
+				$('.footer_status').html("Updating Links");
+				var $this = $(this);
+				$.ajax({
+					url: "<%= reset_grid_links_path %>",
+					success: function(data, textStatus, jqXHR){
+						window.location.reload();
+					},
+					error: function(jqXHR, textStatus, error){
+						$('.footer_status').html(error);
+					}
+
+				})
+			});
+		}
+
 		function remove_grid(){
 			$('.delete').on('click', function(){
 				var $this = $(this);
@@ -160,8 +191,9 @@
 				var $this = $(this);
 				var grid_id = $this.siblings('input[name=grid_id]').val();
 				var book_ids = $this.siblings('input[name=book_ids]').val();
-				var status = $(this).parent().siblings('.status').children().val();
-				var data = "grid_id="+grid_id+"&book_ids="+book_ids+"&status="+status;
+				var status = $(this).parent().siblings('.status').children().is(':Checked');
+				var priority = $(this).parent().siblings('.priority').children().val();
+				var data = "grid_id="+grid_id+"&book_ids="+book_ids+"&status="+status+"&priority="+priority;
 				$.ajax({
 					url: "<%= update_grid_path %>",
 					data: data,

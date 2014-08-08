@@ -40,10 +40,22 @@ angular.module('filtersApp', [])
       return output;
     };
   })
+  .filter('header_title', function(){
+    return function(input){
+      output = input;
+      if(angular.isUndefined(input) || input == ""){
+        output = "Recommendations";
+      }
+      return output;
+    }
+  })
   .filter('heading', function(){
     return function(input){
       var output = input;
       if(angular.isDefined(input)){
+        if(input.length > 40){
+          input = input.slice(0, 37)+"...";
+        }
         input = input.split(" ");
         output = "";
         for(var i=0; i<input.length; i++){
@@ -195,6 +207,18 @@ angular.module('filtersApp', [])
       var output = input;
       if(angular.isUndefined(input) || input == ""){
         output = "assets/profile_pic.jpeg"
+      }
+      return output;
+    }
+  })
+  .filter('blob_backup', function(){
+    return function(input){
+      var output = input.thumb;
+      if(angular.isUndefined(output) || output == ""){
+        output = input.thumb_blob;
+        if(angular.isUndefined(output)){
+          output = "assets/profile_pic.jpeg"
+        }
       }
       return output;
     }

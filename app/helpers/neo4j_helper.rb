@@ -425,6 +425,9 @@ module Neo4jHelper
 			rescue Neography::UniquePathNotUniqueException
 				book.update_column("flag", false)
 				puts "Neography::UniquePathNotUniqueException".blue.on_red
+			rescue Neography::NeographyError
+				book.update_column("flag", false)
+				puts "Neography::NeographyError".blue.on_red
 			end
 		end
 	end

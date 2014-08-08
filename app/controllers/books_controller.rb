@@ -47,6 +47,24 @@ class BooksController < ApplicationController
     end
   end
 
+  def reset_grid_links
+    begin
+      neo = Neography::Rest.new
+      clause = "MATCH (:BookGrid)-[r:NextGrid]->(:BookGrid) DELETE r"
+      puts clause.blue.on_red
+      @neo.execute_query clause
+
+      clause = "MATCH (grid:BookGrid) WITH grid ORDER BY grid.priority DESC WITH collect(grid) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] | FOREACH(p2 in [p[i+1]] | CREATE UNIQUE (p1)-[:NextGrid]->(p2))))"
+      puts clause.blue.on_red
+      @neo.execute_query clause  
+
+       
+      render :json => {"message" => "Success"}, :status => 200
+    rescue Exception => e
+      render :json => {:error => e}, :status => 500
+    end
+  end
+
   def update_grid
     begin
       neo = Neography::Rest.new
@@ -66,18 +84,19 @@ class BooksController < ApplicationController
             end
           end
           id_string = id_string + ")"
-          if params[:status] == "on"
-            clause = "MATCH (b:Book), (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 1 CREATE UNIQUE (bg)-[:RelatedBooks]->(b)"
+          if params[:status]=="true"
+            clause = "MATCH (b:Book), (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 1, bg.priority="+params[:priority].to_s+" CREATE UNIQUE (bg)-[:RelatedBooks]->(b)"
           else
-            clause = "MATCH (b:Book), (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 0 CREATE UNIQUE (bg)-[:RelatedBooks]->(b)"
+            clause = "MATCH (b:Book), (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 0, bg.priority="+params[:priority].to_s+" CREATE UNIQUE (bg)-[:RelatedBooks]->(b)"
           end
         else
-          if params[:status] == "on"
-            clause = "MATCH (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 1"
+          if params[:status]=="true"
+            clause = "MATCH (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 1, bg.priority="+params[:priority].to_s+""
           else
-            clause = "MATCH (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 0"
+            clause = "MATCH (bg:BookGrid) WHERE ID(bg)="+params[:grid_id]+id_string+" SET bg.status = 0, bg.priority="+params[:priority].to_s+""
           end
         end
+
         puts clause.blue.on_red
         neo.execute_query clause
       end
@@ -91,7 +110,7 @@ class BooksController < ApplicationController
   def grids
     neo = Neography::Rest.new
 
-    clause = "MATCH (bg:BookGrid) OPTIONAL MATCH (bg)-[:RelatedBooks]->(b:Book) RETURN bg.name, bg.timestamp, ID(bg), COLLECT(b.title), bg.status, COLLECT(ID(b))"
+    clause = "MATCH (bg:BookGrid) OPTIONAL MATCH (bg)-[:RelatedBooks]->(b:Book) RETURN bg.name, bg.timestamp, ID(bg), COLLECT(b.title), bg.status, COLLECT(ID(b)), bg.priority"
     puts clause.blue.on_red
     @grids = neo.execute_query(clause)["data"]
   end
@@ -140,13 +159,13 @@ class BooksController < ApplicationController
           end
         end
         id_string = id_string + ")"
-        if params[:status] == "on"
+        if params[:status]
           clause = "MATCH (b:Book), (l:Label) WHERE ID(l)="+params[:label_id]+id_string+" SET l.status = 1 CREATE UNIQUE (l)-[:BookmarkedOn]->(b)"
         else
           clause = "MATCH (b:Book), (l:Label) WHERE ID(l)="+params[:label_id]+id_string+" SET l.status = 0 CREATE UNIQUE (l)-[:BookmarkedOn]->(b)"
         end
       else
-        if params[:status] == "on"
+        if params[:status]
           clause = "MATCH (l:Label) WHERE ID(l)="+params[:label_id]+id_string+" SET l.status = 1"
         else
           clause = "MATCH (l:Label) WHERE ID(l)="+params[:label_id]+id_string+" SET l.status = 0"
@@ -180,13 +199,13 @@ class BooksController < ApplicationController
           end
         end
         id_string = id_string + ")"
-        if params[:status] == "on"
+        if params[:status]
           clause = "MATCH (b:Book), (t:Trending) WHERE ID(t)="+params[:trending_id]+id_string+" SET t.status = 1 CREATE UNIQUE (t)-[:RelatedBooks]->(b)"
         else
           clause = "MATCH (b:Book), (t:Trending) WHERE ID(t)="+params[:trending_id]+id_string+" SET t.status = 0 CREATE UNIQUE (t)-[:RelatedBooks]->(b)"
         end
       else
-        if params[:status] == "on"
+        if params[:status]
           clause = "MATCH (t:Trending) WHERE ID(t)="+params[:trending_id]+id_string+" SET t.status = 1"
         else
           clause = "MATCH (t:Trending) WHERE ID(t)="+params[:trending_id]+id_string+" SET t.status = 0"

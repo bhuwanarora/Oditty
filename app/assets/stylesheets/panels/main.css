@@ -19,6 +19,24 @@
 	cursor: pointer;
 }
 
+tr{
+	max-height: 40px;
+	overflow-y: scroll;
+}
+
+.limit_height{
+	max-height: 40px;
+	overflow-y: scroll;
+}
+
+.limit_height:hover{
+	max-height: 600px;
+}
+
+.vertical_padder{
+	height: 100px;
+}
+
 tr:hover{
 	background-color: #F3F3F3;
 }

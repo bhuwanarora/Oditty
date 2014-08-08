@@ -94,7 +94,7 @@ module NotificationHelper
 
 	def self._comment_notification data
 		name = self._get_name data
-		message = "<span class='site_color'>"+data["tweet"]+".</span>";
+		message = "<span>"+data["tweet"]+".</span>";
 
 		tag = "<span class='"+data["icon"]+"'></span>" rescue ""
 		clause = "<span> "+data["label1"] rescue "<span> "
@@ -105,6 +105,8 @@ module NotificationHelper
 
 		clause = data["title"]+"</span>" rescue "</span>"
 		tag = tag + clause
+
+		tag = "<span class='site_color'>"+tag+"</span>"
 
 		thumb = "assets/profile_pic.jpeg"
 		self.notification(message, data, tag)

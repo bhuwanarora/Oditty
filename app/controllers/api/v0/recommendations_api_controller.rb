@@ -11,9 +11,22 @@ module Api
 
 			def grid
 				@neo = Neography::Rest.new
-				clause = "MATCH (bg:BookGrid) WHERE bg.status = 1 WITH bg LIMIT 1 OPTIONAL MATCH (bg)-[:RelatedBooks]->(book:Book) RETURN bg.name, book.isbn, ID(book), ID(bg), book.external_thumb"
+				last_grid_id = $redis.get 'last_grid'
+				unless last_grid_id
+					last_grid_id = Constants::BestGrid
+					$redis.set 'last_grid', last_grid_id
+					clause = "MATCH (bg:BookGrid) WHERE ID(bg)="+last_grid_id.to_s+" WITH bg "
+				else
+					clause = "MATCH (grid:BookGrid)-[:NextGrid]->(bg) WHERE ID(grid)="+last_grid_id.to_s+" WITH bg "
+				end
+				clause = clause + "OPTIONAL MATCH (bg)-[:RelatedBooks]->(book:Book) RETURN bg.name, book.isbn, ID(book), ID(bg), book.external_thumb"
 				puts clause.blue.on_red
 				info = @neo.execute_query(clause)["data"]
+				begin
+					$redis.set 'last_grid', info[0][3]
+				rescue Exception => e
+					$redis.set 'last_grid', last_grid_id
+				end
 				render :json => info, :status => 200
 			end
 

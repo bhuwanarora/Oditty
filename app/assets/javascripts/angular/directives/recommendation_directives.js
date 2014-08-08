@@ -1005,6 +1005,10 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 				$scope.profileSelected = {"name": "Reader"};
 				$scope.info_card_width = 350; //in px
 				$scope.info_card_ratio = 1.34;
+				$scope.$on('cropme:done', function(event, canvasEl){
+					var params = {"blob": canvasEl};
+					websiteService.save_user_info(params);
+				});
 			}
 
 			_init();
