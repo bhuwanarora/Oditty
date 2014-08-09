@@ -3,23 +3,28 @@
 	  class='purple_background'
       title="Recommend book to all friends">
 	<span ng-show="!recommend_object.recommended">RECOMMEND TO FRIENDS</span>
-	<span ng-show="recommend_object.recommended">Cancel</span>
+	<!-- <span ng-show="recommend_object.recommended">Cancel</span> -->
 </span>
 <div class="wrapper" 
 	ng-if="recommend_object.recommended" 
 	style="z-index:1;" 
-	msd-wheel="stop_horizontal_scroll($event)">
-	<div class="recommendation_box animate-slow" ng-if="recommend_object.recommended">
+	ng-click="recommend_object.recommended = false;"
+	msd-wheel="stop_propagation($event)">
+	<div class="recommendation_box animate-slow"
+		 ng-click="stop_propagation($event)">
 		<div class="header">
-			Select friends whom you want to recommend
+			<span>Select friends whom you want to recommend</span><br/>
+			<span class="site_color"> {{recommend_object.title}} by {{recommend_object.author_name}}</span>
 		</div>
 		<div class="friend_grid">
-			<img ng-src="{{friend.thumb}}" 
-				 title="{{friend.name}}" 
-			     ng-repeat="friend in user.friends" 
-			     class="friend_thumb" 
-			     data-selected="false"
-			     ng-click="select_thumb($event, friend.id)"/>
+			<div ng-repeat="friend in user.friends" class="friend_block">
+				<div class="friend_name">{{friend.name}}</div>
+				<img ng-src="{{friend | blob_backup}}" 
+					 title="{{friend.name}}" 
+				     class="friend_thumb" 
+				     data-selected="false"
+				     ng-click="select_thumb($event, friend.id)"/>
+			</div>
 		</div>
 		<div class="footer">
 			<div class="button_effect done" ng-click="recommend()">Done</div>

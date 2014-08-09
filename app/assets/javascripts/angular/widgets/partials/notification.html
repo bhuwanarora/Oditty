@@ -2,14 +2,17 @@
 	<div class="arrow_left ng-scope" ng-style="ticker_position" ng-if="ticker_popup"></div>
 	<div ng-if="!seen"
 		 ng-click="toggle_ticker_popup($event)"
-	     class="notification animate-fast">
-		<div class="user_thumb block"><img ng-src="{{notification.thumb}}"></div>
+		 ng-class="{'notification': notification.book.id != null}"
+	     class="notification_stable animate-fast">
+		<div class="float_left">
+			<img ng-src="{{notification.thumb | thumb_backup}}">
+		</div>
 		<div class="block">
-			<b><div class="notification_message" ng-bind-html="notification.user.name"></div></b>
-			<div class="notification_message" ng-bind-html="notification.tag">
+			<div class="notification_message">
+				<b><div ng-bind-html="notification.user.name"></div></b>
+				<div ng-bind-html="notification.tag"></div>
 			</div>
-			<div class="notification_message" ng-bind-html="notification.message">
-			</div>
+			<div class="notification_message" ng-bind-html="notification.message"></div>
 		</div>
 	</div>
 </div>

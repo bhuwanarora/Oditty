@@ -136,7 +136,14 @@ module Api
 
 			def self.get_most_connected_friends user_id
 				@neo = Neography::Rest.new
-				clause = "MATCH (u:User)-[:Follow]->(friend:User) WHERE ID(u)="+user_id.to_s+" RETURN ID(friend), friend.name, friend.thumb"
+				clause = "MATCH (u:User)-[:Follow]->(friend:User) WHERE ID(u)="+user_id.to_s+" RETURN ID(friend), friend.name, friend.thumb, friend.init_book_read_count, friend.total_count, friend.book_read_count, friend.bookmark_count"
+				friends = @neo.execute_query(clause)["data"]
+				friends
+			end
+
+			def self.get_followed_by user_id
+				@neo = Neography::Rest.new
+				clause = "MATCH (u:User)<-[:Follow]-(friend:User) WHERE ID(u)="+user_id.to_s+" RETURN ID(friend), friend.name, friend.thumb"
 				friends = @neo.execute_query(clause)["data"]
 				friends
 			end

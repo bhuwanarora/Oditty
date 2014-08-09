@@ -72,7 +72,7 @@ module NotificationHelper
 		name = self._get_name data
 		thumb = "assets/profile_pic.jpeg"
 		notification_json = {
-			:thumb => thumb,
+			:thumb => data["thumb"],
 			:message => message,
 			:timestamp => data["timestamp"],
 			:book => {
@@ -108,7 +108,6 @@ module NotificationHelper
 
 		tag = "<span class='site_color'>"+tag+"</span>"
 
-		thumb = "assets/profile_pic.jpeg"
 		self.notification(message, data, tag)
 	end
 

@@ -10,8 +10,8 @@
    ng-click="hide_popups()">
 		<main-header></main-header>
 		<recommendation-footer></recommendation-footer>
-		<div class="status" ng-click="show_interaction_box()">
-			<span class="icon-pen site_color"></span>
+		<div class="status animate-slow" ng-click="show_interaction_box()">
+			<span class="icon-pen green_color"></span>
 			<span><input disabled placeholder="What's on your mind?" /></span>
 		</div>
 
@@ -144,6 +144,9 @@
 		
 		
 		<!-- <message></message> -->
+		<div class="expand_notifications" ng-click="show_interaction_box()">
+			<span class="icon-expand2"></span>
+		</div>
 		<div class="left_column animate-fast">
 			<!-- <div class="status site_color">What's on your mind?</div> -->
 			<div class="scrollbar notifications animate-fast" 
@@ -156,7 +159,7 @@
 					<div ng-repeat="notification in notifications | reverse">
 						<notification data="notification"></notification>
 					</div>
-					<div class="notification">
+					<div class="notification_stable">
 						No new notifications.
 					</div>
 				</div>
@@ -170,10 +173,23 @@
 					<span class="icon-users2"></span>
 					<span>{{user.friends.length}} Friends</span>
 				</div>
-				<div ng-repeat="friend in user.friends" class="friend_block">
+				<div ng-repeat="friend in user.friends" class="friend_block animate-fast">
 					<img ng-src="{{friend.thumb}}" 
 					     class="friend_thumb" />
-					<div class="friend_name">{{friend.name}}</div>
+					<div class="friend_details">
+						<div><b>{{friend.name}}</b></div>
+						<div class="light_grey_color">{{friend.init_book_read_count}}</div>
+						<div class="light_grey_color">
+							<span>{{friend.total_count}}</span>
+							<span> · </span>
+							<span>{{friend.book_read_count}}</span>
+							<span class="icon-books"></span>
+							<span> · </span>
+							<span>{{friend.bookmark_count}}</span>
+							<span class="icon-bookmarks"></span>
+							<span> · </span>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -195,10 +211,10 @@
 		<div ng-if="focused_author"><focused-author></focused-author></div>
 		<div ng-if="focused_reader"><focused-reader></focused-reader></div>
 
-		<div class="bottom_hover_detector">
-			<!-- <div class="progression_state" ng-style="progression_state"></div> -->
+		<!-- <div class="bottom_hover_detector">
+			<div class="progression_state" ng-style="progression_state"></div>
 			<div ng-repeat="book in recommendations.books" class="progression_state_block" ng-style="block_style">{{$index+1}}</div>
-		</div>
+		</div> -->
 		<div class="top_hover_detector"></div>
 	
 		<div class="scroller">

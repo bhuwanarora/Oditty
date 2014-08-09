@@ -91,7 +91,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		    		console.debug("%c increase count", "color: purple");
 		    		$rootScope.filters["reset_count"] = $rootScope.filters["reset_count"] + 1;
 		    	}
-		    	_get_grids();
+		    	
 		    	console.log("%c load_recommendations_event", "color: green;");
 		    	_get_recommendations();
 		    	// event.stopPropagation();
@@ -253,7 +253,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			});
 
 			if($rootScope.loading){
-				var max_limit = 30;
+				var max_limit = 20;
 				if(data.recommendations.books.length == 0){
 					var message = RecommendationUIConstants.ZeroBooksFound;
 					var timeout_event = notify($rootScope, message, $timeout);
@@ -291,7 +291,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			}
     	}
     	else if($rootScope.filters["filter_type"] == RecommendationUIConstants.AuthorTab){
-    		if($scope.recommendations.authors.length >= 30){
+    		if($scope.recommendations.authors.length >= max_limit){
 				$scope.recommendations.authors = data["recommendations"]["authors"];
 			}
 			else{
@@ -299,7 +299,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			}
     	}
     	else if($rootScope.filters["filter_type"] == RecommendationUIConstants.ReaderTab){
-    		if($scope.recommendations.readers.length >= 30){
+    		if($scope.recommendations.readers.length >= max_limit){
 				$scope.recommendations.readers = data["recommendations"]["readers"];
 			}
 			else{
@@ -307,7 +307,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			}
     	}
     	else{
-    		if($scope.recommendations.books.length >= 30){
+    		if($scope.recommendations.books.length >= max_limit){
     			_set_books(data["recommendations"]["books"]);
 				// $scope.recommendations.books = data["recommendations"]["books"];
 			}
@@ -406,6 +406,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         recommendationService.get_recommendations().then(function(data){
         	_update_recommendations(data);
 	    });
+	    _get_grids();
     }
 
     _handle_focused_book = function(){
@@ -422,7 +423,14 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     			else{
     				thumb = value[2];
     			}
-    			var json = {"id": value[0], "name": value[1], "thumb": thumb};
+    			
+    			var json = {"id": value[0], 
+			    			"name": value[1], 
+			    			"thumb": thumb, 
+			    			"init_book_read_count": value[3],
+			    			"total_count": value[4],
+			    			"book_read_count": value[5],
+			    			"bookmark_count": value[6]};
     			this.push(json);
     		}, $rootScope.user.friends);
     	});

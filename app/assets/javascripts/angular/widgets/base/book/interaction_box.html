@@ -95,11 +95,27 @@
 		<div class="scrollbar tweets"
 		 	 ng-click="stop_propagation($event)">
 			<div class="tweet" ng-repeat="tweet in focused_book.tweets | reverse">
-				<div class="inline_block_left"><user-thumb></user-thumb></div>
-				<div class="tweet_text" ng-bind-html="tweet.user.name"></div>
+				<div class="inline_block_left"><img src="{{tweet.user.thumb | thumb_backup}}"></div>
+				<b><div class="tweet_text" ng-bind-html="tweet.user.name"></div></b>
 				<div class="tweet_text" ng-bind-html="tweet.tag"></div>
 				<div class="tweet_text" ng-bind-html="tweet.message"></div>
 			</div>
 		</div>
+		<div class="scrollbar tweets"
+			ng-if="!focused_book.tweets"
+			ng-click="stop_propagation($event)">
+			<div ng-repeat="notification in notifications | reverse" class="tweet">
+				<div class="inline_block_left"><img src="{{notification.thumb | thumb_backup}}"></div>
+				<b><div class="tweet_text" ng-bind-html="notification.user.name"></div></b>
+				<div class="tweet_text" ng-bind-html="notification.tag"></div>
+				<div class="tweet_text" ng-bind-html="notification.message"></div>
+
+				
+			</div>
+			<div class="tweet">
+				No new notifications.
+			</div>
+		</div>
+		
 	</div>
 </div>	

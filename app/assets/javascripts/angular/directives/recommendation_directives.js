@@ -1,8 +1,8 @@
 websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootScope, $timeout){
 	return{
 		restrict: 'E',
-		controller: ['$scope', 'recommendationService', 'websiteService',
-			function($scope, recommendationService, websiteService){
+		controller: ['$scope', 'recommendationService', 'websiteService', 'RecommendationUIConstants',
+			function($scope, recommendationService, websiteService, RecommendationUIConstants){
 			_init = function(){
 				console.debug("%c init moreFilters ", "color: purple");
 				// $scope.$on('initPage', function(event, type){
@@ -30,6 +30,7 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 				recommendationService.get_countries().then(function(data){
 			    	$scope.countryOptions = _reset_json();
 			    	$scope.countryOptions = $scope.countryOptions.concat(data["countries"]);
+			    	$scope.countryOptions = [];
 			    });
 			    recommendationService.get_time_groups().then(function(data){
 			    	$scope.timeOptions = _reset_json();
@@ -73,7 +74,7 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 
 			_country_init = function(){
 				return {"name": "<span class='icon-earth filter_icon yellow_color'></span>"+
-						"<span>&nbsp;&nbsp;&nbsp;Books by Region</span>"};
+						"<span>&nbsp;&nbsp;&nbsp;Books by Region (Coming Soon)</span>"};
 			}
 
 			_time_init = function(){
@@ -95,7 +96,7 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 			$scope.handle_left_columns = function(){
 				$scope.column_heights = {"show_filters": true,
 										"notifications_style" : {"max-height": "110px"}, 
-										"friends_grid_style": {"height": "40px"}};
+										"friends_grid_style": {"height": RecommendationUIConstants.FriendsGridMinHeight}};
 			}
 
 			$scope.clear_filter = function(main_filter, type){
@@ -421,7 +422,7 @@ websiteApp.directive('mainHeader', ['$timeout', '$rootScope', function($timeout,
 	}
 }]);
 
-websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'websiteService', '$timeout', '$cookieStore', function(scroller, $rootScope, websiteService, $timeout, $cookieStore){
+websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'websiteService', '$timeout', '$cookieStore', 'RecommendationUIConstants', function(scroller, $rootScope, websiteService, $timeout, $cookieStore, RecommendationUIConstants){
 	return{
 		restrict: 'E',
 		controller: ['$scope', function($scope){
@@ -570,14 +571,9 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 				}
 				if(increase_tab_size){
 					$scope.column_heights = {"notifications_style": {"max-height": "350px"},
-											"friends_grid_style": {"height": "40px"},
+											"friends_grid_style": {"height": RecommendationUIConstants.FriendsGridMinHeight},
 											"show_filters": false};
 				}
-				// else{
-				// 	$scope.column_heights = {"notifications_style": {"max-height": "110px"},
-				// 							"friends_grid_style": {"height": "40px"},
-				// 							"show_filters": true};
-				// }
 				delete $rootScope.ticker_popup;
 				if(event_defined){
 		        	event.stopPropagation();
@@ -611,7 +607,7 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 			_init_left_column = function(){
 				$scope.show_lists = false;
 				$scope.column_heights = {"notifications_style": {"max-height": "110px"},
-											"friends_grid_style": {"height": "40px"},
+											"friends_grid_style": {"height": RecommendationUIConstants.FriendsGridMinHeight},
 											"show_filters": true};
 			}
 

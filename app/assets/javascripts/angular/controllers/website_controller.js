@@ -186,7 +186,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 
 	    add_to_notifications = $scope.$on('addToNotifications', function(event, notification){
 	    	if(angular.isUndefined($scope.notifications)){
-	    		$scope.notifications = [];	
+	    		_intro_notifications();
 	    	}
 	    	$scope.notifications.push(notification);
 	    	event.stopPropagation();
@@ -194,7 +194,8 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 
 	    get_notifications_event = $scope.$on('getNotifications', function(){
 	    	websiteService.get_notifications().then(function(data){
-				$scope.notifications = data.notifications;
+	    		_intro_notifications();
+				$scope.notifications = $scope.notifications.concat(data.notifications);
 			});
 	    });
 
@@ -203,6 +204,11 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 				$scope.notifications.push(data.notification);
 			});
 	    });
+	}
+
+	_intro_notifications = function(){
+		
+		$scope.notifications = [];
 	}
 
 	$scope.toggle_login_panel = function(){

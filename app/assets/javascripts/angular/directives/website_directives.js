@@ -287,8 +287,10 @@ websiteApp.directive('notification', ['$rootScope', '$timeout', function($rootSc
 			$scope.toggle_ticker_popup = function(event, notification){
 				var ticker_popup_absent = $rootScope.ticker_popup == null;
 				if(ticker_popup_absent){
-					$rootScope.ticker_popup = $scope.notification.book;
-					delete $rootScope.focused_book;
+					if(angular.isDefined($scope.notification.book) && $scope.notification.book.id != null){
+						$rootScope.ticker_popup = $scope.notification.book;
+						delete $rootScope.focused_book;
+					}
 					// var top = _get_arrow_position(event);
 					// $rootScope.ticker_position = {"top": top+"px"};
 				}
@@ -299,7 +301,9 @@ websiteApp.directive('notification', ['$rootScope', '$timeout', function($rootSc
 					else{
 						delete $rootScope.ticker_popup;
 						var timeout_event = $timeout(function(){
-							$rootScope.ticker_popup = $scope.notification.book;
+							if(angular.isDefined($scope.notification.book.id) && $scope.notification.book.id != null){
+								$rootScope.ticker_popup = $scope.notification.book;
+							}
 						}, 200);
 
 						$scope.$on('destroy', function(){
@@ -821,20 +825,33 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
 	                                .replace(/<\/b>/, "<\/a>");
 	          	if($rootScope.user.thumb){
 	            	var thumb = $rootScope.user.thumb;
-	            	var tweet = {"message": tweet_text, "thumb": thumb};
+	            	var tweet = {"message": tweet_text, 
+	            				 "user": {
+	            				 	"name": $rootScope.user.name
+	            				 },
+	            				 "thumb": thumb};
 	          	}
 	          	else{
-	            	var tweet = {"message": tweet_text}; 
+	            	var tweet = {"message": tweet_text,
+	            				 "user": {
+	            				 	"name": $rootScope.user.name
+	            				 }}; 
 	          	}
+	          	tweet = _add_labels_to_tweet(tweet);
+	          	if(angular.isDefined($scope.selected_interact_book)){
+	      			var book = $scope.selected_interact_book;
+	      		}
+	      		else if(angular.isDefined($rootScope.focused_book)){
+	      			var book = $rootScope.focused_book;
+	      		}
+	          	var tag = _get_tag_for_tweet(tweet, book);
+	          	tweet = angular.extend(tweet, {"tag": tag})
 	          	if(angular.isDefined($rootScope.focused_book)){
 		          	$rootScope.focused_book.tweets.push(tweet);
+		      		$rootScope.user.current_comment = "";
+		          	$rootScope.user.hash_tagged_comment = "";
+		          	_add_comment(tweet);
 	          	}
-	          	else{
-	          		debugger
-	          	}
-	      		$rootScope.user.current_comment = "";
-	          	$rootScope.user.hash_tagged_comment = "";
-	          	_add_comment(tweet);
 	          	event.preventDefault();
 	        }
 	        else{
@@ -909,7 +926,13 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
 	                                .replace(/<b>/, "<a>")
 	                                .replace(/<\/b>/, "<\/a>");
 	        var tweet = {"message": message};
-	        if(angular.isDefined($scope.level1_option)){
+	        tweet = _add_labels_to_tweet(tweet);
+      		var book = $scope.selected_interact_book;
+      		_add_comment(tweet, book);
+      	}
+
+      	_add_labels_to_tweet = function(tweet){
+      		if(angular.isDefined($scope.level1_option)){
 	      		var json = {
 	      			"label1": {"name": $scope.level1_option.name,
 	      					   "icon": $scope.level1_option.icon,
@@ -929,9 +952,7 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
 	        	}
 	        	tweet = angular.extend(tweet, json);
 	        }
-
-      		var book = $scope.selected_interact_book;
-      		_add_comment(tweet, book);
+	        return tweet;
       	}
 
       	_reset_interact_box = function(){
@@ -950,6 +971,30 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
       		});
       	}
 
+      	_get_tag_for_tweet = function(tweet, book){
+      		if(angular.isDefined(tweet["label2"])){
+		        if(angular.isDefined(tweet["label2"]["icon"]) && tweet["label2"]["icon"] != null){
+		        	var icon = tweet["label2"]["icon"];
+		        }
+		        else{
+		        	var icon = tweet["label1"]["icon"];
+		        }
+	        	var tag = "<span class='site_color'><span class='"+icon+"'></span><span> "+tweet["label1"]["name"]+" "+tweet["label2"]["name"]+" "+book.title+"</span></span>";
+	        }
+	        else if(angular.isDefined(tweet["label1"])){
+	        	var tag = "<span class='site_color'><span class='"+tweet["label1"]["icon"]+"'></span><span> "+tweet["label1"]["name"]+" "+book.title+"</span></span>";
+	        }
+	        else{
+	        	if(angular.isDefined(book)){
+	        		var tag = "<span class='site_color'><span>"+book.title+"</span></span>";	
+	        	}
+	        	else{
+	        		var tag = null;
+	        	}
+	        }
+	        return tag;
+      	}
+
       	_add_comment = function(tweet){
       		if(angular.isDefined($scope.selected_interact_book)){
       			var book = $scope.selected_interact_book;
@@ -964,23 +1009,13 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
   				var name = $rootScope.user.email;
   			}
 	        var message = "<span>"+tweet["message"]+"</span>";
-	        if(angular.isDefined(tweet["label2"])){
-		        if(angular.isDefined(tweet["label2"]["icon"]) && tweet["label2"]["icon"] != null){
-		        	var icon = tweet["label2"]["icon"];
-		        }
-		        else{
-		        	var icon = tweet["label1"]["icon"];
-		        }
-	        	var tag = "<span class='site_color'><span class='"+icon+"'></span><span> "+tweet["label1"]["name"]+" "+tweet["label2"]["name"]+" "+book.title+"</span></span>";
-	        }
-	        else if(angular.isDefined(tweet["label1"])){
-	        	var tag = "<span class='site_color'><span class='"+tweet["label1"]["icon"]+"'></span><span> "+tweet["label1"]["name"]+" "+book.title+"</span></span>";
-	        }
-	        var thumb = "assets/profile_pic.jpeg";
+	        var tag = _get_tag_for_tweet(tweet, book);
+	        
+	        
       		if(angular.isDefined(book)){
 		        var params = {"id": book.id, "message": tweet};
 		        var notification = {
-		          "thumb":thumb,
+		          "thumb":$rootScope.user.thumb,
 		          "message":message,
 		          "timestamp":new Date().getTime(),
 		          "book":{
@@ -999,7 +1034,7 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
       			var params = {"message": tweet};
       			
       			var notification = {
-		          "thumb":thumb,
+		          "thumb":$rootScope.user.thumb,
 		          "message":message,
 		          "timestamp":new Date().getTime(),
 		          "user":{

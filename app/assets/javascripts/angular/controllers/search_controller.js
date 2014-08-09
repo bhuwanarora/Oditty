@@ -80,7 +80,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$scope.search_results = [];
 			if(type == SearchUIConstants.Year){
 				$scope.year_search = true;
-				var search_placeholder = SearchUIConstants.YearPlaceholder;
+				// var search_placeholder = SearchUIConstants.YearPlaceholder;
 				if($rootScope.time_groups){
 					$scope.search_results = $rootScope.time_groups;
 				}
@@ -89,8 +89,8 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 						$scope.search_results = [];
 						angular.forEach(data["times"], function(value){
 							var time_data = value[0]["data"];
-				    		var name = time_data["name"]+" ("+time_data["range"]+")";
-				    		var json = {"name": name, "custom_option": true, "type": "timeGroup"};
+				    		var name = time_data["name"];
+				    		var json = {"name": name, "custom_option": true, "type": "timeGroup", "label": time_data["range"]};
 							this.push(json);
 						}, $scope.search_results);
 				    	$rootScope.time_groups = $scope.search_results;
@@ -99,7 +99,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			}
 			else if(type == SearchUIConstants.List){
 				$scope.list_search = true;	
-				var search_placeholder = SearchUIConstants.ListPlaceholder;
+				// var search_placeholder = SearchUIConstants.ListPlaceholder;
 				if($rootScope.book_lists){
 					$scope.search_results = $rootScope.book_lists;
 				}
@@ -116,7 +116,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			}
 			else if(type == SearchUIConstants.Country){
 				$scope.country_search = true;
-				var search_placeholder = SearchUIConstants.CountryPlaceholder;
+				// var search_placeholder = SearchUIConstants.CountryPlaceholder;
 				if($rootScope.regions){
 					$scope.search_results = $rootScope.regions;
 				}
@@ -129,15 +129,15 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			}
 			else if(type == SearchUIConstants.Genre){
 				$scope.genre_search = true;
-				var search_placeholder = SearchUIConstants.GenrePlaceholder;
+				// var search_placeholder = SearchUIConstants.GenrePlaceholder;
 			}
 			else if(type == SearchUIConstants.AuthorSearch){
 				$scope.author_search = true;
-				var search_placeholder = SearchUIConstants.AuthorPlaceholder;
+				// var search_placeholder = SearchUIConstants.AuthorPlaceholder;
 			}
 			else if(type == SearchUIConstants.Time){
 				$scope.time_search = true;
-				var search_placeholder = SearchUIConstants.TimePlaceholder;
+				// var search_placeholder = SearchUIConstants.TimePlaceholder;
 				if($rootScope.read_times){
 					$scope.search_results = $rootScope.read_times;
 				}
@@ -156,7 +156,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			}
 			else if(type == SearchUIConstants.Gender){
 				$scope.gender_search = true;
-				var search_placeholder = SearchUIConstants.GenderPlaceholder;
+				// var search_placeholder = SearchUIConstants.GenderPlaceholder;
 				$scope.search_results = [
 					{"name": SearchUIConstants.MaleGender, "custom_option": true, "icon": "icon-male"},
 					{"name": SearchUIConstants.FemaleGender, "custom_option": true, "icon": "icon-female"},
@@ -165,7 +165,11 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			}
 			else if(type == SearchUIConstants.Awards){
 				$scope.awards_search = true;
-				var search_placeholder = SearchUIConstants.AwardsPlaceholder;	
+				// var search_placeholder = SearchUIConstants.AwardsPlaceholder;	
+			}
+			else if(type == SearchUIConstants.ComingSoon){
+				$scope.coming_soon = true;
+				// var search_placeholder = 
 			}
 			$scope.search_tag.placeholder = SearchUIConstants.LevelTwoPlaceHolder;
 		}
@@ -312,6 +316,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope.book_search = false;
 		$scope.author_search = false;
 		$scope.reader_search = false;
+		$scope.search_tag.input = "";
 		$rootScope.hide_options = false;
 
 		_handle_input_focus();
@@ -345,7 +350,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope.time_search = false;
 		$scope.gender_search = false;
 		$scope.awards_search = false;
+		$scope.coming_soon = false;
 		$rootScope.hide_options = false;
+		$scope.search_tag.input = "";
 		_search_by();
 		_handle_input_focus();
 		event.stopPropagation();

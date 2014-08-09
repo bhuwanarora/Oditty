@@ -8,7 +8,7 @@
 </div>
 <div class="input_handler_level2" ng-if="search_level2" ng-click="clear_search_level2_var($event)">
   <div class="custom_icon" 
-       ng-if="time_search || year_search || country_search || genre_search || by_author_search || list_search || gender_search || awards_search">
+       ng-if="time_search || year_search || country_search || genre_search || by_author_search || list_search || gender_search || awards_search || coming_soon">
     <span class="icon-clock" ng-if="time_search"></span>
     <span class="icon-calendar" ng-if="year_search"></span>
     <span class="icon-earth" ng-if="country_search"></span>
@@ -17,6 +17,7 @@
     <span class="icon-list" ng-if="list_search"></span>
     <span class="icon-male" ng-if="gender_search"></span>
     <span class="icon-trophy" ng-if="awards_search"></span>
+    <span class="icon-close" ng-if="coming_soon"></span>
   </div>
 </div>
 <div class="search_typeahead_group" ng-class="{'search_level1_typeahead_group': search_level1 && !search_level2, 'search_level2_typeahead_group': search_level2}">
@@ -50,6 +51,7 @@
         <span ng-show="item.icon" class="{{item.icon}}">&nbsp;</span>
         <span ng-bind-html="item.name"></span>
         <span class="{{item.icon2}} right_icon"></span>
+        <span class="right_icon">{{item.label}}</span>
       </div>
       <div ng-show="item.author_name">by {{item.author_name}}</div>
     </div>

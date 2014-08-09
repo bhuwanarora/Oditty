@@ -14,52 +14,55 @@
 				 	<span>RESET FILTERS </span>
 				 </a>
 			</div>
-			<div class="filters_panel" ng-if="!show_lists && column_heights.show_filters">
-			 	<type-ahead items="genres" 
-			 				prompt="Books by Genre" 
-			 				title="name"
-			 				icon-class="icon-shapes filter_icon green_color"
-			 				custom-options="z_index_two genre_typeahead_options"
-			 				custom="input_filter"
-			 				model="genre" 
-			 				item-id="itemId"
-			 				on-clear="clear_filter('BOOK', 'genre')"
-			 				on-select="on_genre_selection(itemId)"
-			 				auto-populate="show_genre_options('BOOK', genre)"
-			 				ng-keypress="show_genre_options('BOOK', genre)"
-			 				focus-when="genre_selected">
-			 	</type-ahead>
-				<type-ahead items="authors" 
-			 				prompt="Books from Author"
-			 				title="name"
-			 				icon-class="icon-pen filter_icon purple_color"
-			 				custom-options = "author_typeahead_options"
-			 				custom="input_filter"
-			 				model="author"
-			 				item-id="itemId"
-			 				on-clear="clear_filter('BOOK', 'author')"
-			 				on-select="on_author_selection(itemId)"
-			 				ng-keypress="show_author_options('BOOK', author)"
-			 				focus-when="author_selected">
-			 	</type-ahead>
-			</div>
-			
-			<div class="filters_panel_right" ng-if="!show_lists && column_heights.show_filters">
-			 	<div class="inline_block_left"
-				 	  dropdown-select="countryOptions" 
-				 	  dropdown-onchange="advance_filter_changed(selected, 'country')"
-				 	  dropdown-model="countrySelected"
-				 	  dropdown-item-label="name"></div>
-			 	<div class="inline_block_left"
-			 		  dropdown-select="readTimeOptions" 
-			 		  dropdown-onchange="advance_filter_changed(selected, 'readingTime')"
-			 		  dropdown-model="readTimeSelected"
-			 		  dropdown-item-label="name"></div>
-			 	<div class="inline_block_left"
-			 		  dropdown-select="timeOptions" 
-			 		  dropdown-onchange="advance_filter_changed(selected, 'timeGroup')"
-			 		  dropdown-model="timeSelected"
-			 		  dropdown-item-label="name"></div>
+			<div class="filter_group" ng-if="!show_lists && column_heights.show_filters">
+				<div class="filters_panel" >
+				 	<type-ahead items="genres" 
+				 				prompt="Books by Genre" 
+				 				title="name"
+				 				icon-class="icon-shapes filter_icon green_color"
+				 				custom-options="z_index_two genre_typeahead_options"
+				 				custom="input_filter"
+				 				model="genre" 
+				 				item-id="itemId"
+				 				on-clear="clear_filter('BOOK', 'genre')"
+				 				on-select="on_genre_selection(itemId)"
+				 				auto-populate="show_genre_options('BOOK', genre)"
+				 				ng-keypress="show_genre_options('BOOK', genre)"
+				 				focus-when="genre_selected">
+				 	</type-ahead>
+					<type-ahead items="authors" 
+				 				prompt="Books from Author"
+				 				title="name"
+				 				icon-class="icon-pen filter_icon purple_color"
+				 				custom-options = "author_typeahead_options"
+				 				custom="input_filter"
+				 				model="author"
+				 				item-id="itemId"
+				 				on-clear="clear_filter('BOOK', 'author')"
+				 				on-select="on_author_selection(itemId)"
+				 				ng-keypress="show_author_options('BOOK', author)"
+				 				focus-when="author_selected">
+				 	</type-ahead>
+				</div>
+				
+				<div class="filters_panel_right">
+				 	<div class="inline_block_left"
+					 	  dropdown-select="countryOptions" 
+					 	  dropdown-onchange="advance_filter_changed(selected, 'country')"
+					 	  dropdown-model="countrySelected"
+					 	  dropdown-item-label="name"></div>
+				 	<div class="inline_block_left"
+				 		  dropdown-select="readTimeOptions" 
+				 		  dropdown-onchange="advance_filter_changed(selected, 'readingTime')"
+				 		  dropdown-model="readTimeSelected"
+				 		  dropdown-item-label="name"></div>
+				 	<div class="inline_block_left"
+				 		  dropdown-select="timeOptions" 
+				 		  dropdown-onchange="advance_filter_changed(selected, 'timeGroup')"
+				 		  dropdown-model="timeSelected"
+				 		  dropdown-item-label="name"></div>
+				</div>
+				
 			</div>
 
 			<div ng-click="show_lists = true; handle_left_columns();" class="filter_header">

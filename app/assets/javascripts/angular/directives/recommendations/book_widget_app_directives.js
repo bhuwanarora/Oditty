@@ -114,10 +114,10 @@ websiteApp.directive('labelDropdown', ['$rootScope', '$timeout', 'widgetService'
           if(angular.isDefined($rootScope.user.name)){
             name = $rootScope.user.name;
           }
-          var message = "<span><b>"+name+"</b> </span><br/><span>bookmarked&nbsp;</span><span class='site_color'>"+$scope.book.title+"</span><span> to '"+$scope.book.labels[index]["name"]+"'</span>";
-          var thumb = "assets/profile_pic.jpeg"
+          var message = "<span>bookmarked&nbsp;</span><span class='site_color'>"+$scope.book.title+"</span><span> to '"+$scope.book.labels[index]["name"]+"'</span>";
+          
           var notification = {
-            "thumb":thumb,
+            "thumb":$rootScope.user.thumb,
             "message":message,
             "timestamp":new Date().getTime(),
             "book":{
@@ -128,7 +128,7 @@ websiteApp.directive('labelDropdown', ['$rootScope', '$timeout', 'widgetService'
             },
             "user":{
               "id":$rootScope.user.id,
-              "name":$rootScope.user.email
+              "name":name
             }
           }
           $rootScope.user.bookmark_count = $rootScope.user.bookmark_count + 1;
@@ -316,10 +316,9 @@ websiteApp.directive('rate', ['$rootScope', '$timeout', 'widgetService', 'shared
         if(angular.isDefined($rootScope.user.name)){
           name = $rootScope.user.name;
         }
-        var message = "<span><b>"+name+"</b> </span><br/><span>gave "+$scope.rate_object.user_rating+"/10 stars to&nbsp;</span><span class='site_color'>"+$scope.rate_object.title+"</span>";
-        var thumb = "assets/profile_pic.jpeg"
+        var message = "<span>gave "+$scope.rate_object.user_rating+"/10 stars to&nbsp;</span><span class='site_color'>"+$scope.rate_object.title+"</span>";
         var notification = {
-          "thumb":thumb,
+          "thumb":$rootScope.user.thumb,
           "message":message,
           "timestamp":new Date().getTime(),
           "book":{
@@ -330,7 +329,7 @@ websiteApp.directive('rate', ['$rootScope', '$timeout', 'widgetService', 'shared
           },
           "user":{
             "id":$rootScope.user.id,
-            "name":$rootScope.user.email
+            "name":name
           }
         }
         $scope.$emit('addToNotifications', notification);
@@ -480,10 +479,10 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
         if(angular.isDefined($rootScope.user.name)){
           name = $rootScope.user.name;
         }
-        var message = "<span><b>"+name+"</b> </span><br/><span>described reading length of <span class='site_color'>"+$rootScope.focused_book.title+"</span><span>&nbsp; as a&nbsp;'"+reading_length+"'</span>";
-        var thumb = "assets/profile_pic.jpeg";
+        var message = "<span>described reading length of <span class='site_color'>"+$rootScope.focused_book.title+"</span><span>&nbsp; as a&nbsp;'"+reading_length+"'</span>";
+        
         var notification = {
-          "thumb":thumb,
+          "thumb":$rootScope.user.thumb,
           "message":message,
           "timestamp":new Date().getTime(),
           "book":{
@@ -494,7 +493,7 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
           },
           "user":{
             "id":$rootScope.user.id,
-            "name":$rootScope.user.email
+            "name":name
           }
         };
         
@@ -593,7 +592,7 @@ websiteApp.directive('bookTags', ['$rootScope', '$timeout', function($rootScope,
   };
 }]);
 
-websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
+websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', 'websiteService', function($rootScope, $timeout, widgetService, websiteService){
   return{
     restrict: 'E',
     scope: {'recommend_object': '=data'},
@@ -606,13 +605,13 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', fu
           event.currentTarget.style.border = "2px solid";
         }
         else{
-          $scope.user.selected_friends($scope.user.selected_friends.indexOf(friend_id), 1);
+          $scope.user.selected_friends.slice($scope.user.selected_friends.indexOf(friend_id), 1);
           event.currentTarget.dataset.selected = false;
           event.currentTarget.style.border = "2px solid transparent";
         }
       }
 
-      $scope.stop_horizontal_scroll = function(event){
+      $scope.stop_propagation = function(event){
         event.stopPropagation();
       }
 
@@ -639,7 +638,14 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', fu
 
       _init = function(){
         $scope.user = {};
-        $scope.user.friends = $rootScope.user.friends;
+        websiteService.get_followed_by().then(function(data){
+          $scope.user.friends = [];
+          angular.forEach(data, function(value){
+            var json = {"name": value[1], "id": value[0], "thumb": value[2]};
+            this.push(json);
+          }, $scope.user.friends);
+
+        });
         $scope.user.selected_friends = [];
       }
 

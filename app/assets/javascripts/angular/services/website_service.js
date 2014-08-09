@@ -4,6 +4,10 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         return _deferred_request('/api/v0/user');
     }
 
+    this.get_followed_by = function(){
+        return _deferred_request('/api/v0/followed_by');
+    }
+
     this.save_feedback = function(params){
         return _deferred_post_request('/api/v0/save_feedback', params);
     }

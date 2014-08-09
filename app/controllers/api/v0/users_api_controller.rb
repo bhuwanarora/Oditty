@@ -177,6 +177,11 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def get_followed_by
+				info = UserApi.get_followed_by session[:user_id]
+				render :json => info, :status => 200
+			end
+
 			def get_info_card_data
 				info = UserApi.get_info_card_data
 				render :json => info, :status => 200

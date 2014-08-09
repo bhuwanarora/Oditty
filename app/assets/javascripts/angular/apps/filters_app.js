@@ -205,7 +205,7 @@ angular.module('filtersApp', [])
   .filter('thumb_backup', function(){
     return function(input){
       var output = input;
-      if(angular.isUndefined(input) || input == ""){
+      if(angular.isUndefined(input) || input == "" || input == null){
         output = "assets/profile_pic.jpeg"
       }
       return output;
@@ -214,7 +214,7 @@ angular.module('filtersApp', [])
   .filter('blob_backup', function(){
     return function(input){
       var output = input.thumb;
-      if(angular.isUndefined(output) || output == ""){
+      if(angular.isUndefined(output) || output == "" || output == null){
         output = input.thumb_blob;
         if(angular.isUndefined(output)){
           output = "assets/profile_pic.jpeg"

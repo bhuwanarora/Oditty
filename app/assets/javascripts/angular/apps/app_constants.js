@@ -52,7 +52,8 @@ var constants = {
 		},
 		"RecommendationUIConstants": {
 			"TickerPopupMaxHeight": "62vh",
-			"FriendsGridMaxHeight": "250px",
+			"FriendsGridMaxHeight": "500px",
+			"FriendsGridMinHeight": "250px",
 			"NotificationsMinHeight": "110px",
 			"BookmarkPanel": 'BOOKMARK',
 			"BookTab": "BOOK",

@@ -291,7 +291,6 @@
 	cursor: pointer;
 	border-radius: 2px;
 	padding: 5px;
-	color: #136CB2;
 }
 
 .focused_tooltip .tweet_link:hover{

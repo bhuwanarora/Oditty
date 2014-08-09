@@ -187,11 +187,6 @@
 	border-bottom-left-radius: 4px;
 }
 
-.website_search_options .right_icon{
-	color: #C7C7C7;
-	float: right;
-}
-
 .website_search_options .option:hover{
 	background-color: #F1F1F1;
 }
