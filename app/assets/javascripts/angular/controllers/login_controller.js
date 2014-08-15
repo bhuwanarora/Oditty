@@ -23,7 +23,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 			$rootScope.user.logged = true;
 			$rootScope.user.id = data.user_id;
 			$scope.loading_icon = false;
-			var message = "INFO- Welcome back "+$rootScope.user.name;
+			var message = "INFO- Welcome back ";
 			var timeout_event = notify($rootScope, message, $timeout);
 			$scope.$on('destroy', function(){
 				$timeout.cancel(timeout_event);

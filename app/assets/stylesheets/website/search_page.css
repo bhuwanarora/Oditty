@@ -33,31 +33,34 @@
 }
 
 .search_page .logo{
-	color: white;
+	color: #fff;
 	position: absolute;
 	left: 20px;
-	top: 20px;
-	font-size: 2em;
-	font-weight: bold;
+	top: 7px;
+	font-size: 1.5em;
+	font-weight: 700;
 	font-family: Helvetica;
-	letter-spacing: -4.2px;
-	text-shadow: 0 2px 3px rgba(0,0,0,0.5);
+	letter-spacing: -3.2px;
+	text-shadow: 0 2px 3px rgba(0,0,0,.5);
 }
 
 .search_page .tagline{
 	position: absolute;
-	top: 50px;
-	left: 10px;
-	color: white;
+	top: 20%;
+	left: 50%;
+	color: #fff;
 	font-size: 1.5em;
-	text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+	text-shadow: 0 1px 1px rgba(0,0,0,.5);
+	margin-left: -215px;
+	margin-top: -50px;
 }
 
 .search_page .beta_tag{
 	position: fixed;
-	left: 205px;
-	color: white;
-	top: 34px;
+	left: 158px;
+	color: #fff;
+	top: 16px;
+	font-size: .8em;
 }
 
 .search_page .search_typeahead_group{
@@ -161,22 +164,23 @@
 }
 
 .search_page .trends .trend a{
-	/*text-shadow: 0 2px 3px rgba(0,0,0,0.5);*/
-	/*color: #249EFF !important;*/
 	color: white;
 	font-weight: 150px;
+	padding: 4px;
+	border-radius: 3px;
 }
 
 .search_page .trends .trend a:hover{
 	text-decoration: none;
+	background-color: rgba(0, 0, 0, .6);
 }
 
 .website_search_options,
 .website_search_helpers{
 	top: 40px;
 	position: absolute;
-	box-shadow: 0px 1px 4px 0px #99A3AD, inset 0px 0px 40px #EEEEEE;
-	color: #717170;
+	/*box-shadow: 0px 1px 4px 0px #99A3AD, inset 0px 0px 40px #EEEEEE;*/
+	box-shadow: 0 1px 7px 0 #919191,inset 0 0 40px #EEE;
 	font-size: 1em;
 	z-index: 11;
 	width: 100.7%;
@@ -372,6 +376,7 @@
 
 .nav_menu_wrapper:hover{
 	text-decoration: none;
+	background-color: rgba(0, 0, 0, 0.8);
 }
 
 .nav_menu{

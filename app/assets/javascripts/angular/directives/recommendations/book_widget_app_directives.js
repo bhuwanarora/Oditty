@@ -602,12 +602,12 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', 'w
         if(!selected){
           $scope.user.selected_friends.push(friend_id);
           event.currentTarget.dataset.selected = true;
-          event.currentTarget.style.border = "2px solid";
+          event.currentTarget.style.border = "5px solid #427fed";
         }
         else{
           $scope.user.selected_friends.slice($scope.user.selected_friends.indexOf(friend_id), 1);
           event.currentTarget.dataset.selected = false;
-          event.currentTarget.style.border = "2px solid transparent";
+          event.currentTarget.style.border = "5px solid transparent";
         }
       }
 

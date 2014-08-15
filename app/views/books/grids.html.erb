@@ -190,7 +190,7 @@
 						new_book_ids.push(book_ids[i])
 					}
 				}
-				$this.parent().siblings('.update').children('input[name=book_ids]').val(new_book_ids.join(","));
+				$this.parent().parent().siblings('.update').children('input[name=book_ids]').val(new_book_ids.join(","));
 				$this.remove();
 			});			
 		}

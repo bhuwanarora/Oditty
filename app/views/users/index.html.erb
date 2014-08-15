@@ -44,8 +44,17 @@
     <% end %>
   </tbody>
 </table>
+<div class="hidden_input modal">
+  <form id="newUser">
+    <input name="email" type="email" placeholder="email"/>
+    <input name="password" type="password" placeholder="password"/>
+    <input name="thumb" type="thumb" placeholder="thumb url"/>
+    <div class="submit">Add</div>
+  </form>
+</div>
 <div class="main_footer">
   <a class="clear_data">Clear Dummy User Data</a>
+  <button class="add_user">Add test user</button>
   <div class="footer_status"></div>
 </div>
 <script>
@@ -66,5 +75,18 @@
     $('.clear_data').on('click', function(){
       clear_data();
     });
+
+    function add_user(){
+      $('.add_user').on('click', function(){
+        $('.modal').removeClass('hidden_input');
+      });
+    }
+
+    function submit_user(){
+      $('.submit').on('click', function(){
+        var data = $('#newUser').serialise();
+         
+      });
+    }
   });
 </script>

@@ -26,47 +26,48 @@
 				<span>LIVE AND BUILD THE YEARS WITH BOOKS.</span>
 			</div>
 			
-		  <hr>
+		  	<hr>
 			<!-- <select ng-options="type for type in ['R.D.', 'Books', 'Authors', 'Readers']"> -->
-			</select>
-		  <search-bar></search-bar>
-		  <div class="secondary_login animate-fast" 
+			<!-- </select> -->
+		  	<search-bar></search-bar>
+		  	<div class="secondary_login animate-fast" 
 		       ng-click="toggle_login_panel()"
 		       ng-if="!user.logged && !show_login_form">
-		    Login to explore recommendations.
-		  </div>
-		  	<a ng-href="#user/{{user.id}}/recommendations/books" class="nav_menu_wrapper">
+		    	Login to explore recommendations.
+		  	</div>
+		  	<a ng-href="#user/{{user.id}}/recommendations/books" class="nav_menu_wrapper animate-fast">
 		  		<div>EXPLORE YOUR READING COMPANION</div>
 		    </a>
-	    <div class="nav_menu"> 
-	    	<img src="assets/grids/grid.png">
-		 <!--  <ul class="nav" ng-if="user.logged"> 
-		    <li><a ng-href="#user/{{user.id}}/recommendations/books">
+	    	<div class="nav_menu"> 
+	    		<img src="assets/grids/grid.png">
+		 		<!--  <ul class="nav" ng-if="user.logged"> 
+		    	<li><a ng-href="#user/{{user.id}}/recommendations/books">
 		    		<span class="icon-book"></span><span>&nbsp;&nbsp;Book Recommendation Engine</span>
 		    		
-		    	</a></li> 
-		    <li><a>
+		    		</a></li> 
+		    	<li><a>
 		    		<span class="icon-pen"></span><span>&nbsp;&nbsp;Book Reading Timeline </span><br/>
 		    		<span>Coming Soon...</span>
 		    	</a></li> 
-		    <li><a>
+		    	<li><a>
 		    		<span class="icon-users"></span><span>&nbsp;&nbsp;Barter System</span><br/><span>Coming Soon...</span>
 		    	</a></li> 
-		  </ul>  -->
-		</div>
-		  <div class="trends">
-		  	<span class="trend">
-		  		TRENDING
-		  	</span>
-		  	<span> · &nbsp;&nbsp;&nbsp;&nbsp;</span>
-		  	<span ng-repeat="trend in trends" class="trend">
-		  		<a ng-href="#user/{{user.id}}/trending/books/id/{{trend.id}}/name/{{trend.name}}">
-		  			<span class="icon-bars"></span>
-		  			<span>{{trend.name}}</span>
+		  	</ul>  -->
+			</div>
+		  	<div class="trends">
+		  		<span class="trend">
+		  			TRENDING
+		  		</span>
+		  		<span> · &nbsp;&nbsp;&nbsp;&nbsp;</span>
+		  		<span ng-repeat="trend in trends" class="trend">
+		  			<a ng-href="#user/{{user.id}}/trending/books/id/{{trend.id}}/name/{{trend.name}}"
+		  				class="animate-fast">
+		  				<span class="icon-bars"></span>
+		  				<span>{{trend.name}}</span>
+		  			</a>
 		  			<span>&nbsp;·&nbsp;</span>
-		  		</a>
-		  	</span>
-		  </div>
+		  		</span>
+		  	</div>
 		</div>
 		<div class="wrapper" ng-if="!user.logged && show_login_form" ng-controller="loginController">
 			<div class="login_box animate-fast"

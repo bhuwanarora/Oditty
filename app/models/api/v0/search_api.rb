@@ -64,7 +64,7 @@ module Api
 					puts clause.blue.on_red
 					tester = {:name => "TAG:"+q.upcase}
 				else
-					clause = "START search_node=node:node_auto_index('search_index:"+q+"*') RETURN search_node.title as name, search_node.author_name, ID(search_node) LIMIT "+count.to_s
+					clause = "START search_node=node:node_auto_index('search_index:"+q+"*') RETURN search_node.title, search_node.author_name, ID(search_node), labels(search_node) LIMIT "+count.to_s
 					puts clause.blue.on_red
 					tester = {:name => "RD:"+q.upcase}
 				end

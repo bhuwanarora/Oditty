@@ -95,7 +95,7 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 
 			$scope.handle_left_columns = function(){
 				$scope.column_heights = {"show_filters": true,
-										"notifications_style" : {"max-height": "110px"}, 
+										"notifications_style" : {"max-height": RecommendationUIConstants.NotificationsMinHeight}, 
 										"friends_grid_style": {"height": RecommendationUIConstants.FriendsGridMinHeight}};
 			}
 
@@ -606,7 +606,7 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 
 			_init_left_column = function(){
 				$scope.show_lists = false;
-				$scope.column_heights = {"notifications_style": {"max-height": "110px"},
+				$scope.column_heights = {"notifications_style": {"max-height": RecommendationUIConstants.NotificationsMinHeight},
 											"friends_grid_style": {"height": RecommendationUIConstants.FriendsGridMinHeight},
 											"show_filters": true};
 			}

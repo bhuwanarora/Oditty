@@ -27,7 +27,7 @@
 	height: 100%;
 	position: relative;
 	width: 100%;
-	box-shadow: -3px 0 5px -2px #888;
+	box-shadow: -3px 0 5px -2px #B4B4B4;
 }
 
 .category_hovered{
@@ -54,7 +54,6 @@
 }
 
 .book_rating{
-	color: #717070;
 	padding: 15px 0px;
 }
 

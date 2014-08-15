@@ -144,21 +144,119 @@
 		
 		
 		<!-- <message></message> -->
-		<div class="expand_notifications" ng-click="show_interaction_box()">
+		<div class="expand_notifications" ng-class="{'expand_notifications_shift': user.collapsed_column}" ng-click="show_interaction_box()">
 			<span class="icon-expand2"></span>
 		</div>
-		<div class="left_column animate-fast">
-			<!-- <div class="status site_color">What's on your mind?</div> -->
+		<div class="left_column animate-fast"
+			 ng-class="{'left_column_collapsed': user.collapsed_column}">
+			<div class="collapse_icon" ng-click="user.collapsed_column = !user.collapsed_column;" ng-if="!user.collapsed_column">
+				<span class="icon-angle-left"></span>
+			</div>
+			<div ng-if="user.collapsed_column" class="animate-slow collapsed_column"
+				ng-click="user.collapsed_column = false;">
+				<div>
+					<img ng-src="{{user.thumb | thumb_backup}}" class="thumb">
+				</div>
+				<div class="f3_background">
+					<span class="icon-filter2 light_grey_color"></span>
+				</div>
+				<div>
+					<span class="icon-shapes green_color"></span>
+				</div>
+				<div>
+					<span class="icon-pen purple_color"></span>
+				</div>
+				<div>
+					<span class="icon-earth yellow_color"></span>
+				</div>
+				<div>
+					<span class="icon-clock orange_color"></span>
+				</div>
+				<div>
+					<span class="icon-calendar site_color"></span>
+				</div>
+				<div class="f3_background">
+					<span class="icon-menu2 light_grey_color"></span>
+				</div>
+				<div class="f3_background">
+					<span class="icon-users2 light_grey_color"></span>
+				</div>
+			</div>
 			<div class="scrollbar notifications animate-fast" 
 				 ng-style="column_heights.notifications_style"
 				 ng-if="show_notifications"
+				 ng-hide="user.collapsed_column"
 				 msd-wheel="handle_notification_ticker_size($event)"
 				 check-scroll-down="handle_notification_ticker_size($event, true)">
 				<div class="full_height">
-					<!-- <div class="notification">News Feed</div> -->
 					<div ng-repeat="notification in notifications | reverse">
 						<notification data="notification"></notification>
 					</div>
+					
+					<div class="relative_position">
+						<div class="notification_stable animate-fast">
+							<div class="float_left instruct_block site">
+								<span class="icon-book"></span>
+							</div>
+							<div class="block">
+								<div class="notification_message">
+									<b>Welcome to Reader's Door</b>
+								</div>
+								<div class="notification_message">
+									Explore and find your next precious read like never before.
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="relative_position">
+						<div class="notification_stable animate-fast">
+							<div class="float_left instruct_block green">
+								<span class="icon-user22"></span>
+							</div>
+							<div class="block">
+								<div class="notification_message">
+									<b>Help us recommend you better</b>
+								</div>
+								<div class="notification_message">
+									Rate, bookmark books, create virtual book shelves and tell us what all you have read. 
+								</div>
+							</div>
+						</div>
+					</div>
+				
+					<div class="relative_position">
+						<div class="notification_stable animate-fast">
+							<div class="float_left instruct_icon purple_color">
+								<span class="icon-cool2"></span>
+							</div>
+							<div class="block">
+								<div class="notification_message">
+									<b>User arrow keys to navigate</b>
+								</div>
+								<div class="notification_message">
+									<span class="icon-arrow-left keyboard_keys"></span>
+									<span class="icon-arrow-right keyboard_keys"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				
+					<div class="relative_position">
+						<div class="notification_stable animate-fast">
+							<div class="float_left instruct_icon red_color">
+								<span class="icon-bars"></span>
+							</div>
+							<div class="block">
+								<div class="notification_message">
+									<b>Check books on mainstream topics</b>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+					<!-- <div class="notification">News Feed</div> -->
+					
 					<div class="notification_stable">
 						No new notifications.
 					</div>
@@ -166,12 +264,14 @@
 			</div>
 			<more-filters></more-filters>
 			<div class="scrollbar friends_grid" 
+				 ng-hide="user.collapsed_column"
 				 ng-style="column_heights.friends_grid_style"
 				 msd-wheel="handle_friends_grid_size($event)"
 				 check-scroll-down="handle_friends_grid_size($event, true)">
-				<div class="friends_grid_header">
+				<div class="friends_grid_header"
+					 ng-click="handle_friends_grid_size(undefined, true)">
 					<span class="icon-users2"></span>
-					<span>{{user.friends.length}} Friends</span>
+					<span>&nbsp;&nbsp;{{user.friends.length}} Friends</span>
 				</div>
 				<div ng-repeat="friend in user.friends" class="friend_block animate-fast">
 					<img ng-src="{{friend.thumb}}" 
@@ -180,18 +280,20 @@
 						<div><b>{{friend.name}}</b></div>
 						<div class="light_grey_color">{{friend.init_book_read_count}}</div>
 						<div class="light_grey_color">
-							<span>{{friend.total_count}}</span>
+							<span>{{friend.total_count | integer}}</span>
 							<span> · </span>
-							<span>{{friend.book_read_count}}</span>
+							<span>{{friend.book_read_count | integer}}</span>
 							<span class="icon-books"></span>
 							<span> · </span>
-							<span>{{friend.bookmark_count}}</span>
+							<span>{{friend.bookmark_count| integer}}</span>
 							<span class="icon-bookmarks"></span>
 							<span> · </span>
 						</div>
+						<div class="light_grey_color site_color">{{friend.fav_categories}}</div>
 					</div>
 				</div>
 			</div>
+			<!-- <div class="status site_color">What's on your mind?</div> -->
 		</div>
 		<!-- <div class="wrapper" ng-if="focused_book"></div> -->
 		<div class="focused_tooltip animate-fast"

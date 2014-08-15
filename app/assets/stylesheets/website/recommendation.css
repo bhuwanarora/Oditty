@@ -103,7 +103,6 @@
 
 .comment_box{
 	border: 1px solid #D6D5D5;
-	color: #717070;
 	font-size: 1em;
 	margin: 5px 0px 5px 0px;
 	width: 98%;
@@ -196,7 +195,6 @@
 	height: 10px;
 	text-align: center;
 	padding: 8px 15px 20px;
-	color: #717070;
 	margin-left: -5px;
 }
 
@@ -232,7 +230,7 @@
 }
 
 .selected_filter{
-	color: #717070 !important;
+	/*color: #717070 !important;*/
 	cursor: default;
 }
 
@@ -255,7 +253,7 @@
 .filter_icon{
 	padding: 8px;
 	border-radius: 20px;
-	box-shadow: -3px 0 5px -2px #888;
+	/*box-shadow: -3px 0 5px -2px #888;*/
 	font-size: 1.5em;
 	color: #427fed;
 }
@@ -346,7 +344,6 @@
 
 .push_notification{
 	display: table;
-	color: #717070;
 	background-color: #fff;
 	right: 1px;
 	top: 95px;
@@ -378,14 +375,13 @@
 	display: table-cell;
 	text-align: center;
 	vertical-align: middle;
-	color: #717070;
 	background-color: #fff;
 	white-space: normal;
 	font-size: 0.8em;
 }
 
 .scroller{
-	right: 5px;
+	right: 10px;
 	color: #3D79A1;
 	height: 35px;
 	bottom: -5px;
@@ -473,7 +469,6 @@
 }
 
 .filters_panel_right .header{
-	color: #717070;
 	font-size: 0.8em;
 }
 
@@ -519,7 +514,6 @@
 	top: 71px;
 	margin-left: 45px;
 	box-shadow: 0 1px 4px 0 #99A3AD,inset 0 0 40px #EEE;
-	color: #717170;
 	font-size: 1em;
 	z-index: 6;
 	position: absolute;
@@ -640,7 +634,7 @@
 .recommendation_box .friend_grid .friend_block .friend_name{
 	position: absolute;
 	bottom: 10px;
-	left: 8px;
+	left: 12px;
 	color: white;
 }
 
@@ -672,7 +666,6 @@
 .reset_filters{
 	float: right;
 	cursor: pointer;
-	color: #717070;
 	padding: 10px!important;
 	border-radius: 2px;
 	background-color: #E0E0E0;
@@ -707,7 +700,6 @@
 
 .inactive_filter{
 	cursor: pointer;
-	color: #717070;
 	background-color: #FFFFFF;
 	box-shadow: 0px 1px 4px 0px #DDDCDC, inset 0px 0px 40px #FCFCFC;
 }
@@ -722,7 +714,6 @@
 
 .input_filter{
 	width: 163px;
-	color: #717070;
 	padding: 8px;
 	background-color: #FFFFFF;
 	cursor: default;
@@ -733,7 +724,6 @@
 
 .rate_radio{
 	font-size: 0.9em;
-	color: #717070;
 }
 
 .rate_radio:active{
@@ -743,7 +733,6 @@
 .rate_radio_buttons{
 	padding: 3px 15px;
 	width: 275px;
-	color: #717070;
 	text-align: left;
 }
 
@@ -819,6 +808,7 @@
 	display: inline-block;
 	float: left;
 	margin: 2px;
+	margin-left: -20px;
 	/*width: 170px;*/
 }
 
@@ -978,6 +968,26 @@ and (min-width : 1824px) {
 	line-height: 1.4em;
 	word-break: break-word;
 	width: auto;
+}
+
+.notifications .instruct_block{
+	padding: 10px;
+	color: white;
+	border-radius: 2px;
+	margin: 4px;
+}
+
+.notifications .instruct_icon{
+	font-size: 2em;
+	padding: 3px;
+	margin: 4px;
+}
+
+.notifications .keyboard_keys{
+	border: 1px solid #C9C9C9;
+	padding: 5px;
+	border-radius: 4px;
+	line-height: 2em;
 }
 
 .notifications .notification_message [class^="icon-"]{
@@ -1167,10 +1177,6 @@ and (min-width : 1824px) {
 	height: 15px;
 }
 
-.progression_state_block:hover{
-	color: #717070;
-}
-
 .site_logo{
     float: left;
     color: #427fed;
@@ -1337,14 +1343,20 @@ and (min-width : 1824px) {
 	top: 50px;
 	width: 280px;
 	left: 5px;
+	background-color: white;
 }
 
 .expand_notifications{
 	position: fixed;
-	left: 267px;
 	z-index: 6;
 	font-size: 1em;
-	top: 55px;
+	left: 265px;
+	top: 57px;
+}
+
+.expand_notifications_shift{
+	top: 66px !important;
+	left: 17px !important;
 }
 
 .expand_notifications:hover{
@@ -1366,6 +1378,7 @@ and (min-width : 1824px) {
 .left_column .friends_grid .friend_block .friend_details{
 	float: left;
 	margin: 10px;
+	width: 180px;
 }
 
 .ticker_popup{
@@ -1417,18 +1430,18 @@ and (min-width : 1824px) {
 }
 
 .left_column .friends_grid .friends_grid_header{
-	padding: 10px;
+	padding: 15px;
 	background-color: #F3F3F3;
 	margin-bottom: 5px;
 	border-radius: 3px;
 	border-bottom: 1px solid #DDD;
+	cursor: pointer;
 }
 
 .left_column .friends_grid{
 	max-height: 120px;
 	white-space: normal;
 	background-color: #fff;
-	margin-top: 5px;
 	border-radius: 4px;
 }
 
@@ -1448,7 +1461,7 @@ and (min-width : 1824px) {
 	bottom: 0px;
 	z-index: 1;
 	left: 50%;
-	margin-left: -230px;
+	margin-left: -250px;
 	padding: 2px;
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
@@ -1469,7 +1482,7 @@ and (min-width : 1824px) {
 }
 
 .recommendations .status input{
-	width: 400px;
+	width: 480px;
 	font-size: 1.1em;
 	padding: 5px;
 	border-top-right-radius: 10px;
@@ -1524,9 +1537,46 @@ and (min-width : 1824px) {
 
 .feedback_sumbit{
 	padding: 5px;
-	color: #717070;
 }
 
 .float_left{
 	float: left;
+}
+
+.left_column .collapse_icon{
+	position: fixed;
+	left: 285px;
+	padding: 4px 7px;
+	background-color: rgba(0, 0, 0, 0.6);
+	border-radius: 2px;
+	top: 55%;
+	font-size: 1.5em;
+	color: white;
+	cursor: pointer;
+}
+
+.left_column .collapse_icon:hover{
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+.left_column .collapsed_column img{
+	width: 20px;
+	border-radius: 3px;
+}
+
+.left_column_collapsed{
+	width: 40px!important;
+}
+
+.left_column .collapsed_column{
+	font-size: 1.4em;
+	cursor: pointer;
+}
+
+.left_column .collapsed_column div{
+	padding: 10px;
+}
+
+.left_column .collapsed_column:hover{
+	background-color: #F3F3F3;
 }

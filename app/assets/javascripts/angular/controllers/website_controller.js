@@ -339,6 +339,12 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 						'authors': {'bookmarked': [], 'follow': []},
 						'readers': {'follow': []},
 						'logged': false};
+		var collapsed_column = $timeout(function(){
+			$rootScope.user.collapsed_column = true;
+		}, 6000);
+		$scope.$on('destroy', function(){
+			$timeout.cancel(collapsed_column);
+		});
 		_detect_browser();
 		console.timeEnd("websiteAppController");
 	}

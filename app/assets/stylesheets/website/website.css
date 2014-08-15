@@ -12,7 +12,7 @@ body{
  	-moz-user-select: -moz-none;
   	-ms-user-select: none;
     user-select: none;
-    color: #717070;
+    color: #333;
     background-color: #E5E5E5;
     font-size: 0.9em;
     /*background-image: url('bg.png');*/
@@ -257,8 +257,12 @@ input:focus{
 }
 
 .light_grey_color{
-    color: #C0C0C0 !important;
+    color: #717070 !important;
     font-size: 0.8em !important;
+}
+
+.f3_background{
+    background-color: #F3F3F3 !important;
 }
 
 .light_gray_background{
@@ -271,6 +275,10 @@ input:focus{
 
 .purple_background{
     background-color: #918FB5 !important;
+}
+
+.site{
+    background-color: #427fed !important;
 }
 
 

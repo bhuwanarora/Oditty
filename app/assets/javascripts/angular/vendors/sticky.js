@@ -21,7 +21,7 @@ angular.module('sticky', [])
 				// Get the sticky line
 				//
 				function setInitial(){
-					stickyLine = 400 - offsetLeft;
+					stickyLine = 200;
 					checkSticky();
 				}
 

@@ -1,10 +1,10 @@
-<div class="horizontal_padder_active">
+<div class="animate-fast" ng-class="{'horizontal_padder_active': !user.collapsed_column}">
 </div>
 
 <div ng-if="user.logged" 
 	 sticky>
 	 <div ng-show="compressed_info" class="info_card_placeholder"></div>
-     <div ng-show="compressed_info" class="compressed_info_card">
+     <div ng-show="compressed_info" class="compressed_info_card animate-fast" ng-class="{'compressed_info_card_shifted': user.collapsed_column}">
      	<div class="block"
      		ng-click="goto_info_card(); user.profile_status=0; compressed_info=false;">
      		<div class="icon-user"></div>
@@ -184,35 +184,20 @@
 			</div> -->
 		</div>
 		<div ng-switch-when="5">
-			<!-- <input class="thumb" 
-	      	       ng-model="user.thumb" 
-	      	       spellcheck="false"
-	      	       type="file" 
-	      	       required /> -->
-	      	<!-- <input type="file" id="selectedFile" style="display: none;" 
-	      			accept="image/*" image="image"/> -->
-	      	<div ng-if="!user.thumb">
-				<div class="header thumb">Add a profile pic</div>
-		      	<div class="description">Help your friends recognise you across Reader's Door.</div>
-		      	<!-- </div> -->
-		      	<div ng-if="user.thumb">
-		      		<div class="header thumb">Change your profile pic</div>
-			    	<img ng-src="{{user.thumb}}" class="profile_pic">
-		      	</div>
-	      	 	<cropme
-			        width="info_card_width"
-			        max-height="470"
-			        ratio="info_card_ratio"
-			        icon-class=""
-			        type="png"
-			        destination-width="350">
-			    </cropme>
-		      	<!-- <img ng-show="image" ng-src="{{image.url}}" type="{{image.file.type}}" /> -->
-				<!-- <input type="button"
-					   class="thumb"
-				       value="Select a photo from your computer" 
-				       onclick="document.getElementById('selectedFile').click();" /> -->
-			</div>
+			<div class="header thumb">Add a profile pic</div>
+	      	<div class="description">Help your friends recognise you across Reader's Door.</div>
+	      	<div ng-if="user.thumb">
+	      		<div class="header thumb">Change your profile pic</div>
+		    	<img ng-src="{{user.thumb}}" class="profile_pic">
+	      	</div>
+      	 	<cropme
+		        width="info_card_width"
+		        max-height="470"
+		        ratio="info_card_ratio"
+		        icon-class=""
+		        type="png"
+		        destination-width="350">
+		    </cropme>
 		</div>
 		<div ng-switch-when="6">
 			<div class="header">

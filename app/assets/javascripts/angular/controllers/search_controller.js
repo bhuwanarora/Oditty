@@ -188,7 +188,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 
 		console.log("%c search "+graphOption+" "+customOption+" "+selectedItem+" "+type+" "+$scope.search_level1+" "+$scope.search_level2, "color: green; font-weight: bold;");
 		if(show_all){
-			_show_search_result($scope.search_tag.input, true);
+			_show_search_result(item.value, true);
 		}
 		else{
 			if(customOption){
@@ -273,20 +273,32 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
         var backspace_or_delete = (event.keyCode == WebsiteUIConstants.Backspace) || (event.keyCode == WebsiteUIConstants.Delete);
 		var keyUp = event.keyCode == WebsiteUIConstants.KeyUp;
 		var keyDown = event.keyCode == WebsiteUIConstants.KeyDown;
+		var keyLeft = event.keyCode == WebsiteUIConstants.KeyLeft;
+		var keyRight = event.keyCode == WebsiteUIConstants.KeyRight;
 		if(keyUp){
-			if($scope.search_tag.current != 0){
-				$scope.set_current($scope.search_tag.current-1);
+			if(angular.isUndefined($scope.search_tag.current)){
+				$scope.search_tag.current = 0;
 			}
 			else{
-				$scope.set_current($scope.search_results.length-1);
+				if($scope.search_tag.current != 0){
+					$scope.set_current($scope.search_tag.current-1);
+				}
+				else{
+					$scope.set_current($scope.search_results.length-1);
+				}
 			}
 		}
 		else if(keyDown){
-			if($scope.search_tag.current != $scope.search_results.length -1){
-				$scope.set_current($scope.search_tag.current+1);
+			if(angular.isUndefined($scope.search_tag.current)){
+				$scope.search_tag.current = 0;
 			}
 			else{
-				$scope.set_current(0);
+				if($scope.search_tag.current != $scope.search_results.length -1){
+					$scope.set_current($scope.search_tag.current+1);
+				}
+				else{
+					$scope.set_current(0);
+				}
 			}
 		}
         else if(backspace_or_delete){
@@ -307,6 +319,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
         	else{
 				$scope.get_search_results(event);
         	}
+        }
+        else if(keyLeft || keyRight){
+        	event.stopPropagation();
         }
 	}
 
@@ -525,6 +540,15 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$scope.search_type = SearchUIConstants.All;
 			$scope.search_display = SearchUIConstants.SearchingWebsite;
 		}
+		var on_search_page = angular.isUndefined($routeParams.type);
+		if(!on_search_page){
+			delete $rootScope.filters.other_filters.title;
+			delete $rootScope.filters.other_filters.show_all;
+			delete $rootScope.filters.other_filters.author_name;
+  			delete $rootScope.filters.other_filters.id;
+  			$scope.$emit('reloadRecommendations');
+		}
+
 	}
 
 	_handle_search_input = function(event){
@@ -555,7 +579,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	        		this.push(json);
 	        	}, $scope.search_results);
 	        	if($scope.search_results.length != 0){
-		        	var show_all = {"name": "<span class='icon-list'></span><span>&nbsp;&nbsp;Show all results for '<em>"+$scope.search_tag.input+"</em>'</span>", "show_all": true};
+		        	var show_all = {"name": "<span class='icon-list'></span><span>&nbsp;&nbsp;Show all results for '<em>"+$scope.search_tag.input+"</em>'</span>", "show_all": true, "value":$scope.search_tag.input};
 					$scope.search_results.push(show_all);
 	        	}
 				$scope.search_initiated = false;
@@ -678,7 +702,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		// $scope.search_tag.selected_result = true; // hides the list initially
 		$scope.search_tag = {};
 		$scope.search_tag.search_placeholder = SearchUIConstants.SearchPlaceholder;
-		$scope.search_tag.current = 0;
+		
 		var searched_input = angular.isDefined($rootScope.filters) && angular.isDefined($rootScope.filters.other_filters) && angular.isDefined($rootScope.filters.other_filters.title);
 		if(searched_input){
 			$scope.search_tag.input = $rootScope.filters.other_filters["title"];

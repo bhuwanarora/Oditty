@@ -56,7 +56,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		}
 		_init_recommendations();
     	_get_recommendations();
-    	// $scope.$emit('moveRight');
 	}
 
 	$scope.stopSearching = function(event){
@@ -253,7 +252,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			});
 
 			if($rootScope.loading){
-				var max_limit = 20;
+				var max_limit = 10;
 				if(data.recommendations.books.length == 0){
 					var message = RecommendationUIConstants.ZeroBooksFound;
 					var timeout_event = notify($rootScope, message, $timeout);
@@ -406,7 +405,11 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         recommendationService.get_recommendations().then(function(data){
         	_update_recommendations(data);
 	    });
-	    _get_grids();
+	    var no_filters = (angular.isUndefined($rootScope.filters.more_filters) || $rootScope.filters.more_filters.length == 0) && (angular.isUndefined($rootScope.filters.other_filters) || JSON.stringify($rootScope.filters.other_filters) == '{}');
+	    
+	    if(no_filters){
+	    	_get_grids();
+	    }
     }
 
     _handle_focused_book = function(){
@@ -430,7 +433,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			    			"init_book_read_count": value[3],
 			    			"total_count": value[4],
 			    			"book_read_count": value[5],
-			    			"bookmark_count": value[6]};
+			    			"bookmark_count": value[6],
+			    			"fav_categories": value[7].join(", ")};
     			this.push(json);
     		}, $rootScope.user.friends);
     	});

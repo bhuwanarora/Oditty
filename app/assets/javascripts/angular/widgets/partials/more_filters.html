@@ -1,4 +1,5 @@
 <div class="more_filters animate-fast"
+	 ng-hide="user.collapsed_column"
 	 ng-click="stop_click_propagation($event)">	
 
 	<div ng-if="!bookmark_selected && !read_selected">
@@ -7,11 +8,11 @@
 			<div class="filter_header" ng-click="show_lists = false; handle_left_columns();">
 				<span>
 					<span class="icon-filter2"></span>
-					<span>&nbsp;&nbsp;Filter books</span>
+					<span>&nbsp;&nbsp;Filter Books</span>
 				</span>
 				 <a ng-href="#/user/{{$routeParams.id}}/recommendations/{{$routeParams.type}}" ng-click="reset_filters()" class="reset_filters">
-				 	<span class="icon-loop"></span>
-				 	<span>RESET FILTERS </span>
+				 	<!-- <span class="icon-loop"></span> -->
+				 	<span>RESET</span>
 				 </a>
 			</div>
 			<div class="filter_group" ng-if="!show_lists && column_heights.show_filters">
@@ -66,7 +67,7 @@
 			</div>
 
 			<div ng-click="show_lists = true; handle_left_columns();" class="filter_header">
-				<span class="icon-menu2"></span><span>&nbsp;&nbsp;Show Lists</span>
+				<span class="icon-menu2"></span><span>&nbsp;&nbsp;&nbsp;Show Lists</span>
 			</div>
 			<div class="filters_panel_large" ng-if="show_lists && column_heights.show_filters">
 				<div class="filters_group" ng-if="more_filters[0]['book']">
@@ -140,14 +141,23 @@
 	</div>
 
 	<div ng-if="bookmark_selected">
+		<div class="filter_header" ng-click="show_lists = false; handle_left_columns();">
+			<span>
+				<span class="icon-bookmark3"></span>
+				<span>&nbsp;&nbsp;Bookmark Tags</span>
+			</span>
+		</div>
 		<div class="full_width" ng-if="$routeParams.type == 'books'">
-			<div class="filters_panel_large">
-				<div class="filters_group restrict_height scrollbar" 
-					 msd-wheel="stop_horizontal_scroll($event)">
-					<div ng-repeat="filter in labels">
-						<filter data="filter"></filter>
+			<div class="filter_group" ng-if="!show_lists && column_heights.show_filters">
+				<div class="filters_panel_large">
+					<div class="filters_group restrict_height scrollbar" 
+						 msd-wheel="stop_horizontal_scroll($event)">
+						<div ng-repeat="filter in labels">
+							<filter data="filter"></filter>
+						</div>
 					</div>
 				</div>
+				
 			</div>
 		</div>
 		<div class="full_width" ng-if="$routeParams.type == 'authors'">

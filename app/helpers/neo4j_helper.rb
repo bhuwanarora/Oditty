@@ -517,15 +517,15 @@ module Neo4jHelper
 				puts "adding genres...".yellow
 				main_clause = main_clause + clause
 				@neo.execute_query main_clause
-				book.update_column("genre_flag", true)
+				book_tag.update_column("genre_flag", true)
 			rescue Neography::SyntaxException
-				book.update_column("genre_flag", false)
+				book_tag.update_column("genre_flag", false)
 				puts "Neography::SyntaxException".blue.on_red
 			rescue Neography::UniquePathNotUniqueException
-				book.update_column("genre_flag", false)
+				book_tag.update_column("genre_flag", false)
 				puts "Neography::UniquePathNotUniqueException".blue.on_red
 			rescue Neography::NeographyError
-				book.update_column("genre_flag", false)
+				book_tag.update_column("genre_flag", false)
 				puts "Neography::NeographyError".blue.on_red
 			end
 		end
@@ -549,15 +549,15 @@ module Neo4jHelper
 				puts "adding categories...".yellow
 				main_clause = main_clause + clause
 				@neo.execute_query main_clause
-				book.update_column("category_flag", true)
+				book_category.update_column("category_flag", true)
 			rescue Neography::SyntaxException
-				book.update_column("category_flag", false)
+				book_category.update_column("category_flag", false)
 				puts "Neography::SyntaxException".blue.on_red
 			rescue Neography::UniquePathNotUniqueException
-				book.update_column("category_flag", false)
+				book_category.update_column("category_flag", false)
 				puts "Neography::UniquePathNotUniqueException".blue.on_red
 			rescue Neography::NeographyError
-				book.update_column("category_flag", false)
+				book_category.update_column("category_flag", false)
 				puts "Neography::NeographyError".blue.on_red
 			end
 		end
