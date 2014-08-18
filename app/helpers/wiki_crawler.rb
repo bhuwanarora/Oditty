@@ -183,7 +183,7 @@ module WikiCrawler
  				end
  				author_name = "@"+author.human_profile.name.downcase.gsub(" ","").gsub("'", "")
  				clause = "START author=node:node_auto_index('indexed_main_author_name:"+author_name+"') SET"+set_clause+", author.about=\""+about+"\", author.image_url=\""+image_url.to_s+"\", author.signature_pic=\""+signature_pic.to_s+"\", author.official_website=\""+official_website.to_s+"\""
- 				puts clause.blue.on_red
+ 				# puts clause.blue.on_red
  				@neo.execute_query(clause)["data"]
  				# puts about.to_s.strip.green
  				# puts signature_pic.to_s.strip.green

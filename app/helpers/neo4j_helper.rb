@@ -499,7 +499,7 @@ module Neo4jHelper
 
 	def self.add_genres
 		@neo ||= self.init
-		ShelfariBooksTags.all.find_each do |book_tag|
+		ShelfariBooksTags.where(:genre_flag => nil).find_each do |book_tag|
 			begin
 				book_id = book_tag.shelfari_book_id
 				book = ShelfariBook.find book_id
@@ -533,7 +533,7 @@ module Neo4jHelper
 
 	def self.add_categories
 		@neo ||= self.init
-		ShelfariBooksCategories.all.find_each do |book_category|
+		ShelfariBooksCategories.where(:category_flag => nil).find_each do |book_category|
 			begin
 				book_id = book_category.shelfari_book_id
 				book = ShelfariBook.find book_id
