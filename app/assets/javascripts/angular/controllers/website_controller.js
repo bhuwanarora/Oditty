@@ -24,13 +24,14 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		var swipe_time = 2000;
 		var clientWidth = document.body["scrollWidth"];
 		var current_x = $window.pageXOffset;
+		var delta_x = screen.width*(0.35);
 		if(angular.isDefined(event)){
 			if(event.type == "click"){
 				if(angular.isDefined($scope.delta_x)){
-					$scope.delta_x = $scope.delta_x + screen.width*(0.35);
+					$scope.delta_x = $scope.delta_x + delta_x;
 				}
 				else{
-					$scope.delta_x = screen.width*(0.35);	
+					$scope.delta_x = delta_x;
 				}
 				var timeout_event = $timeout(function(){
 					scroller.scrollTo(current_x - $scope.delta_x, 0, swipe_time);
@@ -39,12 +40,10 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 				}, 400);
 			}
 			else{
-				var delta_x = screen.width*(0.35);
 				scroller.scrollTo(current_x - delta_x, 0, swipe_time);
 			}
 		}
 		else{
-			var delta_x = screen.width*(0.35);
 			scroller.scrollTo(current_x - delta_x, 0, swipe_time);
 		}
 	}
@@ -54,6 +53,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		var swipe_time = 2000;
 		var clientWidth = document.body["scrollWidth"];
 		var current_x = $window.pageXOffset;
+		var delta_x = screen.width*(0.35);
 		var lessThanOnePageLeft = current_x + (2.5)*screen.width > clientWidth;
 		if(lessThanOnePageLeft){
 			if(!$rootScope.loading){
@@ -66,10 +66,10 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		if(angular.isDefined(event)){
 			if(event.type == "click"){
 				if(angular.isDefined($scope.delta_x)){
-					$scope.delta_x = $scope.delta_x + screen.width*(0.35);
+					$scope.delta_x = $scope.delta_x + delta_x;
 				}
 				else{
-					$scope.delta_x = screen.width*(0.35);	
+					$scope.delta_x = delta_x;
 				}
 				var timeout_event = $timeout(function(){
 					scroller.scrollTo(current_x + $scope.delta_x, 0, swipe_time);
@@ -78,12 +78,10 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 				}, 400);
 			}
 			else{
-				var delta_x = screen.width*(0.35);
 				scroller.scrollTo(current_x + delta_x, 0, swipe_time);
 			}
 		}
 		else{
-			var delta_x = screen.width*(0.35);
 			scroller.scrollTo(current_x + delta_x, 0, swipe_time);
 		}
 
@@ -119,7 +117,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 
 
 	$scope.showFeebackForm = function(){
-		// console.log("showFeebackForm")
+		// console.log("showFeebackForm");
 	}
 
   	$scope.show_uploader = function(){
