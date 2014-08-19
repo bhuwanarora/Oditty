@@ -581,6 +581,7 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 	        }
 	        
 			$scope.goto_info_card = function(){
+				$rootScope.compressed_info = false;
 				scroller.scrollTo(0, 0, 2000);
 			}
 
@@ -830,14 +831,12 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 				$scope.goto_info_card();
 				$rootScope.user.profile_status = 3;
 				$scope.get_popular_books();
-				$scope.compressed_info = false;
 			}
 
 			$scope.edit_authors_read = function(){
 				$scope.goto_info_card();
 				$rootScope.user.profile_status = 4;
 				$scope.get_popular_authors();
-				$scope.compressed_info = false;	
 			}
 
 			$scope.get_popular_authors = function(){
@@ -996,7 +995,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 					{"name": "Publisher"},
 					{"name": "Editor"}
 				]
-				$scope.compressed_info = false;
+				$rootScope.compressed_info = false;
 				$scope.profileSelected = {"name": "Reader"};
 				$scope.info_card_width = 350; //in px
 				$scope.info_card_ratio = 1.34;

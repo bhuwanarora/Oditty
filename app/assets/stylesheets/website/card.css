@@ -121,11 +121,6 @@
 	border-bottom-right-radius: 4px;
 }
 
-.right_action_active{
-	color: #3cb878 !important;
-	/*color: white !important;*/
-}
-
 .label_dropdown{
 	position: absolute;
 	bottom: 73%;

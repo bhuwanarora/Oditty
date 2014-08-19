@@ -23,55 +23,38 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		_hide_popups();
 		var swipe_time = 2000;
 		var clientWidth = document.body["scrollWidth"];
-		if(event){
-			if(event.type == "keydown" || event.type == "wheel"){
-				var current_x = $window.pageXOffset;
-				var progression_width = (current_x*screen.width)/clientWidth;
+		var current_x = $window.pageXOffset;
+		if(angular.isDefined(event)){
+			if(event.type == "click"){
+				if(angular.isDefined($scope.delta_x)){
+					$scope.delta_x = $scope.delta_x + screen.width*(0.35);
+				}
+				else{
+					$scope.delta_x = screen.width*(0.35);	
+				}
+				var timeout_event = $timeout(function(){
+					scroller.scrollTo(current_x - $scope.delta_x, 0, swipe_time);
+					delete $scope.delta_x;
+					$timeout.cancel(timeout_event);
+				}, 400);
 			}
 			else{
-				// debugger
-				var current_x = event.pageX - (event.screenX);
-				// var current_x = event.pageX - ($('.scroller').position().left + $('.scroller-left').position().left);
+				var delta_x = screen.width*(0.35);
+				scroller.scrollTo(current_x - delta_x, 0, swipe_time);
 			}
 		}
 		else{
-			var current_x = $window.pageXOffset;
-			swipe_time = 1000;
+			var delta_x = screen.width*(0.35);
+			scroller.scrollTo(current_x - delta_x, 0, swipe_time);
 		}
-
-		// $scope.progression_state = {"width": progression_width+"px"};
-		
-		var delta_x = screen.width*(0.35);
-		// var delta_x = screen.width;
-		scroller.scrollTo(current_x - delta_x, 0, swipe_time);
 	}
 
 	$scope.move_right = function(event){
 		_hide_popups();
 		var swipe_time = 2000;
 		var clientWidth = document.body["scrollWidth"];
-		if(event){
-			var pageX = event.pageX;
-			if(event.type == "keydown" || event.type == "wheel"){
-				var current_x = $window.pageXOffset;
-				var lessThanOnePageLeft = current_x + (2.5)*screen.width > clientWidth;
-				var progression_width = (current_x*screen.width)/clientWidth;
-			}
-			else{
-				// var current_x = pageX - ($('.scroller').position().left+$('.scroller-right').position().left);
-				var current_x = event.pageX - (event.screenX - event.offsetX);
-				var lessThanOnePageLeft = pageX + screen.width > clientWidth;
-			}
-		}
-		else{
-			var current_x = $window.pageXOffset;
-			// var pageX = $('.scroller').position().left+$('.scroller-right').position().left;
-			var lessThanOnePageLeft = current_x + 2.5*screen.width > clientWidth;
-			swipe_time = 1000;
-		}
-
-		// $scope.progression_state = {"width": progression_width+"px"};
-
+		var current_x = $window.pageXOffset;
+		var lessThanOnePageLeft = current_x + (2.5)*screen.width > clientWidth;
 		if(lessThanOnePageLeft){
 			if(!$rootScope.loading){
 				console.debug("%c lessThanOnePageLeft", "color:green");
@@ -79,9 +62,30 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 				$rootScope.$broadcast('loadRecommendations');
 			}
 		}
-		var delta_x = screen.width*(0.35);
-		// var delta_x = screen.width;
-		scroller.scrollTo(current_x + delta_x, 0, swipe_time);
+		if(angular.isDefined(event)){
+			if(event.type == "click"){
+				if(angular.isDefined($scope.delta_x)){
+					$scope.delta_x = $scope.delta_x + screen.width*(0.35);
+				}
+				else{
+					$scope.delta_x = screen.width*(0.35);	
+				}
+				var timeout_event = $timeout(function(){
+					scroller.scrollTo(current_x + $scope.delta_x, 0, swipe_time);
+					delete $scope.delta_x;
+					$timeout.cancel(timeout_event);
+				}, 400);
+			}
+			else{
+				var delta_x = screen.width*(0.35);
+				scroller.scrollTo(current_x + delta_x, 0, swipe_time);
+			}
+		}
+		else{
+			var delta_x = screen.width*(0.35);
+			scroller.scrollTo(current_x + delta_x, 0, swipe_time);
+		}
+
 	}
 
 	$scope.scroll_one_page_right = function(event){
@@ -193,9 +197,15 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    });
 
 	    get_notifications_event = $scope.$on('getNotifications', function(){
-	    	websiteService.get_notifications().then(function(data){
+	    	if(angular.isDefined($scope.notifications)){
+	    		var existing_notifications_count = $scope.notifications.length;
+	    	}
+	    	else{
+	    		var existing_notifications_count = 0;
+	    	}
+	    	websiteService.get_notifications(existing_notifications_count).then(function(data){
 	    		_intro_notifications();
-				$scope.notifications = $scope.notifications.concat(data.notifications);
+				$scope.notifications = data.notifications.concat($scope.notifications);
 			});
 	    });
 
@@ -207,8 +217,9 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	_intro_notifications = function(){
-		
-		$scope.notifications = [];
+		if(angular.isUndefined($scope.notifications)){
+			$scope.notifications = [];
+		}
 	}
 
 	$scope.toggle_login_panel = function(){

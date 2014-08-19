@@ -12,6 +12,20 @@
 	top: 95px;
 }
 
+
+.info_cards.ng-enter,
+.info_cards.ng-leave.ng-leave-active{
+	max-width: 10vh;
+	left: 20px;
+	position: fixed;
+	opacity: 0;
+}
+
+.info_cards.ng-leave,
+.info_cards.ng-enter-active{
+	max-width: 38vh;
+}
+
 .main_header .count.ng-enter,
 .main_header .count.ng-leave-active{
 	opacity: 0.5;

@@ -14,8 +14,8 @@ module Api
 				labels
 			end
 
-			def self.get_news_feed user_id
-				news_feed = UsersGraphHelper.get_news_feed user_id
+			def self.get_news_feed(user_id, skip_count)
+				news_feed = UsersGraphHelper.get_news_feed(user_id, skip_count)
 				begin
 					notifications = NotificationHelper.structure_feed news_feed["data"]
 				rescue Exception => e

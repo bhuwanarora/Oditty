@@ -36,16 +36,16 @@
   </div> -->
 </div>
 <div class="tabs">
-  <div ng-click="show_info = true; show_buy = false;"
-        class="tab"
-        ng-class="{'black_blue_background': show_info}">
-      <span>Info</span><span class=""></span>
+  <div ng-click="show_buy = false;"
+       ng-class="{'black_blue_background': !show_buy}"
+        class="tab">
+      <span>Overview</span><span class=""></span>
   </div>
-  <div ng-click="show_info = false; show_buy = false;"
+ <!--  <div ng-click="show_buy = false;"
         class="tab"
         ng-class="{'black_blue_background': !show_info && !show_buy}">
       <span>Actions</span><span class=""></span>
-  </div>
+  </div> -->
   <div class="tab">
       <span>About Author</span><span class=""></span>
   </div>
@@ -55,46 +55,47 @@
       <span>Buy this book</span><span class=""></span>
   </div>
 </div>
-  <div class="book_info" ng-if="show_info">
-    <span> · </span>
-    <span ng-click="user.interact = true;" class="book_link">
-      <span class="count">
-        <span>{{focused_book.readers_count | integer}}</span>
-        <span class="icon-users2"></span> 
-      </span>
-      <!-- <span>&nbsp;&nbsp;Readers</span> -->
+<div class="book_info" ng-if="!show_buy">
+  <span> · </span>
+  <span ng-click="user.interact = true;" class="book_link">
+    <span class="count">
+      <span>{{focused_book.readers_count | integer}}</span>
+      <span class="icon-users2"></span> 
     </span>
-    · 
-    <span itemprop="aggregateRating" 
-          itemscope 
-          itemtype="http://schema.org/AggregateRating"
-          ng-click="user.interact = true;" class="book_link">
-      <span class="count">
-        <span>{{focused_book.bookmark_count | integer}}</span>
-        <span class="icon-bookmarks"></span> 
-      </span>
-      <!-- <span>&nbsp;&nbsp;Reviews</span> -->
+    <!-- <span>&nbsp;&nbsp;Readers</span> -->
+  </span>
+  · 
+  <span itemprop="aggregateRating" 
+        itemscope 
+        itemtype="http://schema.org/AggregateRating"
+        ng-click="user.interact = true;" class="book_link">
+    <span class="count">
+      <span>{{focused_book.bookmark_count | integer}}</span>
+      <span class="icon-tags"></span> 
     </span>
-    · 
-    <span ng-click="user.interact = true;" class="book_link">
-      <span class="count">
-        <span>{{focused_book.comment_count | integer}}</span>
-        <span class="icon-pencil2"></span>
-      </span>
-      <!-- <span>&nbsp;&nbsp;Discussions</span> -->
+    <!-- <span>&nbsp;&nbsp;Reviews</span> -->
+  </span>
+  · 
+  <span ng-click="user.interact = true;" class="book_link">
+    <span class="count">
+      <span>{{focused_book.comment_count | integer}}</span>
+      <span class="icon-pencil2"></span>
     </span>
-     · 
-  </div>
-<div ng-if="!show_info && !show_buy" ng-disabled="!focused_book.status">
-  <rate data="focused_book"></rate>
+    <!-- <span>&nbsp;&nbsp;Discussions</span> -->
+  </span>
+   · 
+  <!--  <div ng-if="!show_buy" ng-disabled="!focused_book.status">
+    <rate data="focused_book"></rate>
+  </div> -->
 </div>
-<div class="scrollbar description" msd-wheel="stop_horizontal_scroll($event)" ng-if="show_info">
+
+<div class="scrollbar description" msd-wheel="stop_horizontal_scroll($event)" ng-if="!show_buy">
   <span itemprop="description" ng-bind-html="focused_book.summary | summary"></span>
   <br/>
   <br/>
   <br/>
 </div>
-<div class="time_to_read" ng-if="!show_info && !show_buy">
+<!-- <div class="time_to_read" ng-if="!show_buy">
   <div class="header">Describe the reading length of this book</div>
   <div>
     <span ng-click="record_read_time(0, $event)"
@@ -107,7 +108,7 @@
         ng-class="{'active_read_timer':is_timer(3)}">Long Read</span>
     
   </div>
-</div>
+</div> -->
 <div ng-if="show_buy" class="buy_column">
   <div ng-if="bnn_links">
     <span ng-repeat="link in bnn_links">

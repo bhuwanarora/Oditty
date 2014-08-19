@@ -70,6 +70,10 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
  		// $scope.show_more_filters = false;
 	}
 
+	$scope.get_notifications = function(){
+		$scope.$emit('getNotifications');
+	}
+
 	_load_icon = function(){
 		$scope.drop_icon = true;
 		$timeout(function(){

@@ -11,8 +11,8 @@
 		<main-header></main-header>
 		<recommendation-footer></recommendation-footer>
 		<div class="status animate-slow" ng-click="show_interaction_box()">
-			<span class="icon-pen green_color"></span>
-			<span><input disabled placeholder="What's on your mind?" /></span>
+			<span class="icon-pen black_blue_color"></span>
+			<span><input disabled placeholder="Share something..." /></span>
 		</div>
 
 		<div class="vertical_padder_active"></div>
@@ -187,6 +187,7 @@
 				 ng-if="show_notifications"
 				 ng-hide="user.collapsed_column"
 				 msd-wheel="handle_notification_ticker_size($event)"
+				 check-scroll-bottom="get_notifications()"
 				 check-scroll-down="handle_notification_ticker_size($event, true)">
 				<div class="full_height">
 					<div ng-repeat="notification in notifications | reverse">
@@ -219,7 +220,7 @@
 									<b>Help us recommend you better</b>
 								</div>
 								<div class="notification_message">
-									Rate, bookmark books, create virtual book shelves and tell us what all you have read. 
+									Rate, tag books, create virtual book shelves and tell us what you have read. 
 								</div>
 							</div>
 						</div>
@@ -232,7 +233,7 @@
 							</div>
 							<div class="block">
 								<div class="notification_message">
-									<b>User arrow keys to navigate</b>
+									<b>Use arrow keys to scroll through books</b>
 								</div>
 								<div class="notification_message">
 									<span class="icon-arrow-left keyboard_keys"></span>
@@ -249,7 +250,7 @@
 							</div>
 							<div class="block">
 								<div class="notification_message">
-									<b>Check books on mainstream topics</b>
+									<b>Explore books on trending topics</b>
 								</div>
 								
 							</div>

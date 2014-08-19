@@ -418,10 +418,11 @@ module UsersGraphHelper
 	# MATCH (u:User)-[:FeedNext*0..]->(news_feed)
 	# WHERE (ID)=USER_ID
 	# RETURN news_feed
-	def self.get_news_feed user_id
+	def self.get_news_feed(user_id, skip_count)
 		#FIXME get_news_feed_for_user
 		@neo ||= self.neo_init
-		clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" OPTIONAL MATCH p=(u)-[r:Ego*..]->(friend:User) WHERE all(r2 in relationships(p) WHERE r2.user_id="+user_id.to_s+") WITH friend MATCH (friend)-[:FeedNext*]->(feed) RETURN labels(feed), feed, feed.timestamp ORDER BY feed.timestamp DESC LIMIT 10"
+		skip_count = 0 unless skip_count.present?
+		clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" OPTIONAL MATCH p=(u)-[r:Ego*..]->(friend:User) WHERE all(r2 in relationships(p) WHERE r2.user_id="+user_id.to_s+") WITH friend MATCH (friend)-[:FeedNext*]->(feed) RETURN labels(feed), feed, feed.timestamp ORDER BY feed.timestamp DESC SKIP "+skip_count.to_s+" LIMIT 10 "
 		puts clause.blue.on_red
 		@neo.execute_query clause
 	end

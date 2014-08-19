@@ -383,13 +383,14 @@ websiteApp.directive('searchBar', function(){
 	}
 });
 
-websiteApp.directive('checkScrollBottom', function () {
+websiteApp.directive('checkScrollBottom', function(){
     return {
         restrict: 'A',
-        link: function (scope, element, attrs) {
+        link: function (scope, element, attrs){
             var elem = element[0];
-            element.bind('scroll', function () {
-                if (elem.scrollTop + elem.offsetHeight > elem.scrollHeight) {
+            element.bind('scroll', function(){
+            	var buffer = 20;
+                if(elem.scrollTop + elem.offsetHeight + buffer > elem.scrollHeight) {
                     scope.$apply(attrs.checkScrollBottom);
                 }
             });
@@ -397,7 +398,7 @@ websiteApp.directive('checkScrollBottom', function () {
     };
 });
 
-websiteApp.directive('checkScrollUp', function () {
+websiteApp.directive('checkScrollUp', function(){
     return {
         restrict: 'A',
         link: function(scope, element, attrs){
@@ -552,6 +553,10 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
       	$scope.update_hashtagged_comment = function(){
 
       	}
+
+      	$scope.get_notifications = function(){
+			$scope.$emit('getNotifications');
+		}
 
       	_clear_focus = function(){
 	      	var timeout_event = $timeout(function(){
@@ -1089,10 +1094,10 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
 	        $scope.current_interact_book = 0;
 	        if(angular.isDefined($rootScope.focused_book)){
 	        	$scope.selected_interact_book = $rootScope.focused_book;
-	        	$scope.placeholder = "What do you feel about "+$rootScope.focused_book.title+" by "+$rootScope.focused_book.author_name+"?";
+	        	$scope.placeholder = "Comment on "+$rootScope.focused_book.title+" by "+$rootScope.focused_book.author_name+"...";
 	        }
 	        else{
-	        	$scope.placeholder = "What's on your mind?";
+	        	$scope.placeholder = "Share something...";
 	        }
 	        $scope.user.interact_book = "";
 	        $scope.user.interact_books = [];

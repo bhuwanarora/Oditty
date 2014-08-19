@@ -133,6 +133,9 @@
 	height: 25px;
 	padding-top: 20px;
 	text-align: center;
+	top: 7px;
+	right: 2px;
+	position: absolute;
 }
 
 .focused_tooltip .header{
@@ -166,7 +169,7 @@
 
 .focused_tooltip .tabs{
 	overflow: auto;
-	width: 101%;
+	width: 100%;
 	margin-left: -1px;
 	margin-top: 10px;
 }
@@ -179,7 +182,7 @@
 	cursor: pointer;
 	float: left;
 	display: inline-block;
-	width: 25%;
+	width: 33.3%;
 	text-align: center;
 	font-size: 0.8em;
 }

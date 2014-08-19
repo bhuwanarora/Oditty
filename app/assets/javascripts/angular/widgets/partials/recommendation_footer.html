@@ -55,15 +55,15 @@
 		<div ng-class="{'inactive':!bookmark_selected, 'active':bookmark_selected}"
 			 class="link"
 			 ng-if="$routeParams.type == 'books' || $routeParams.type == 'authors'"
-			 title="Books bookmarked"
+			 title="Books tagged"
 			 ng-click="toggle_bookmarked($event)">
 			 <span ng-if="$routeParams.type == 'books'">
-			 	<span class="icon-bookmarks"></span>
-			 	<span><b>B</b>ooks <b>B</b>ookmarked</span>
+			 	<span class="icon-tags"></span>
+			 	<span><b>B</b>ooks <b>T</b>agged</span>
 		 	 </span>
 			 <span ng-if="$routeParams.type == 'authors'">
-			 	<span class="icon-bookmarks"></span>
-				<span><b>A</b>uthors <b>B</b>ookmarked</span>
+			 	<span class="icon-tags"></span>
+				<span><b>A</b>uthors <b>T</b>agged</span>
 			 </span>
 
 		</div>

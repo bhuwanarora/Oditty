@@ -1,6 +1,6 @@
 angular.module('sticky', [])
 
-.directive('sticky', ['$timeout', function($timeout){
+.directive('sticky', ['$timeout', '$rootScope', function($timeout, $rootScope){
 	return {
 		restrict: 'A',
 		link: function($scope, $elem, $attrs){
@@ -21,7 +21,7 @@ angular.module('sticky', [])
 				// Get the sticky line
 				//
 				function setInitial(){
-					stickyLine = 200;
+					stickyLine = 50;
 					checkSticky();
 				}
 
@@ -30,12 +30,30 @@ angular.module('sticky', [])
 				function checkSticky(){
 					// scrollTop = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
 					scrollLeft = (window.pageXOffset || doc.scrollLeft)  - (doc.clientLeft || 0);
-					if (scrollLeft >= stickyLine ){
-						$scope.compressed_info = true;
-						// $elem.css('position', 'fixed');
-					} else {
-						$scope.compressed_info = false;
-						// $elem.css('position', initialPositionStyle);
+					console.log(window.pageXOffset, doc.scrollLeft, doc.clientLeft, scrollLeft, stickyLine, scrollLeft >= stickyLine);
+					if (scrollLeft >= stickyLine){
+						$elem.css('position', 'fixed');
+						$elem.css('top', '95px');
+						$elem.css('z-index', 5);
+						if($rootScope.user.collapsed_column){
+							$elem.css('left', '20px');
+						}
+						else{
+							$elem.css('left', '260px');
+						}
+						var timeout_event = $timeout(function(){
+							$rootScope.compressed_info = true;
+							$elem.css('position', initialPositionStyle);
+						}, 1000);
+						$scope.$on('destroy', function(){
+							$timeout.cancel(timeout_event);
+						});
+					}
+					else{
+						$rootScope.compressed_info = false;
+						console.log("settig false", $rootScope.compressed_info);
+						$timeout.cancel(timeout_event);
+					 	$elem.css('position', initialPositionStyle);
 					}
 				}
 

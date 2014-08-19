@@ -77,7 +77,7 @@ module Api
 			end
 
 			def notifications
-				news_feed = WebsiteApi.get_news_feed session[:user_id]
+				news_feed = WebsiteApi.get_news_feed(session[:user_id], params[:skip_count])
 				render :json => {:notifications => news_feed}, :status => 200
 			end
 

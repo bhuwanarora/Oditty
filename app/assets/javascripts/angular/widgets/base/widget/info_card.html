@@ -1,4 +1,4 @@
-<div class="animate-fast" ng-class="{'horizontal_padder_active': !user.collapsed_column}">
+<div class="animate-fast horizontal_padder" ng-class="{'horizontal_padder_active': !user.collapsed_column, 'horizontal_padder_inactive': user.collapsed_column}">
 </div>
 
 <div ng-if="user.logged" 
@@ -6,7 +6,7 @@
 	 <div ng-show="compressed_info" class="info_card_placeholder"></div>
      <div ng-show="compressed_info" class="compressed_info_card animate-fast" ng-class="{'compressed_info_card_shifted': user.collapsed_column}">
      	<div class="block"
-     		ng-click="goto_info_card(); user.profile_status=0; compressed_info=false;">
+     		ng-click="goto_info_card(); user.profile_status=0;">
      		<div class="icon-user"></div>
      		<div>Edit</div><div>Profile</div>
      	</div>
@@ -21,13 +21,13 @@
      		<div>Add</div><div>Authors</div>
      	</div>
      	<div class="block"
-     		ng-click="goto_info_card(); user.profile_status=7; compressed_info=false;">
+     		ng-click="goto_info_card(); user.profile_status=7;">
      		<div class="icon-users"></div>
      		<div>Invite</div><div>Friends</div>
      	</div>
      </div>
-     <div ng-hide="compressed_info"
-     		class="info_cards"
+     <div ng-show="!compressed_info"
+     		class="info_cards animate-fast"
  	 		ng-switch on="user.profile_status" 
  	 		ng-model="user.profile_status">
 		<div class="back_color" style="background-color:{{user.profile_status_color}}"></div>
@@ -52,7 +52,7 @@
 	      	       focus-out="set_user_name()"/>
 	      	</div>
 	      	<div class="header">
-	      		<label for="birthday">Born on</label>
+	      		<label for="birthday">Dob</label>
 				 <calendar save-date="set_date_of_birth()"></calendar>
 	      	</div>
 	      	<div class="header">

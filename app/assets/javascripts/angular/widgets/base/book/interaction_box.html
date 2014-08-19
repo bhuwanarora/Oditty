@@ -30,7 +30,7 @@
 						<b>{{selected_interact_book.title | book_tag}}</b>
 					</div>
 				</span>
-				<span ng-if="level2_option.name">{{level2_option.name}} while reading&nbsp;</span>
+				<span ng-if="level2_option.name">{{level2_option.name}} {{level2_option.link}}&nbsp;</span>
 				<span>&nbsp;{{level1_option.name}}&nbsp;</span>
 				<span ng-if="!level2_option.icon" class="{{level1_option.icon}}"></span>
 				<span class="{{level2_option.icon}}"></span>
@@ -105,6 +105,7 @@
 		</div>
 		<div class="scrollbar tweets"
 			ng-if="!focused_book.tweets"
+			check-scroll-bottom="get_notifications()"
 			ng-click="stop_propagation($event)">
 			<div ng-repeat="notification in notifications | reverse" class="tweet">
 				<div class="inline_block_left"><img ng-src="{{notification.thumb | thumb_backup}}"></div>

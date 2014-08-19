@@ -25,7 +25,6 @@
    	left:0px;
    	position:fixed;
    	top:40px;
-   	width:100%;
    	z-index: 6;
 }
 
@@ -153,7 +152,7 @@
 	padding: 7px;
 	cursor: pointer;
 	margin-right: -4px;
-	color: #9B9B9B;
+	color: #7C7C7C;
 	background-color: #F5F5F5;
 	border: 1px solid #FFFFFF;
 	border-radius: 5px;
@@ -1549,7 +1548,7 @@ and (min-width : 1824px) {
 	padding: 4px 7px;
 	background-color: rgba(0, 0, 0, 0.6);
 	border-radius: 2px;
-	top: 55%;
+	top: 50px;
 	font-size: 1.5em;
 	color: white;
 	cursor: pointer;

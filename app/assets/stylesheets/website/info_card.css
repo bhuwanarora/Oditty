@@ -1,5 +1,12 @@
 .horizontal_padder_active{
 	width: 60vh;
+}
+
+.horizontal_padder_inactive{
+	width: 20vh;
+}
+
+.horizontal_padder{
 	height: 80vh;
 	display: inline-block;
 	float: left;
@@ -123,7 +130,6 @@
 .info_cards .header{
 	font-family: Helvetica;
 	font-size: 1em;
-	font-weight: 700;
 	padding: 4px;
 	overflow: auto;
 	background-color: #F5F5F5;
@@ -131,7 +137,7 @@
 	margin-top: 10px;
 	border: 1px solid #EBEBEB;
 	max-height: 45vh;
-	min-width: 220px;
+	min-width: 35vh;
 	overflow-y: scroll;
 	box-shadow: -3px 0 5px -2px #888;
 }

@@ -114,7 +114,7 @@ websiteApp.directive('labelDropdown', ['$rootScope', '$timeout', 'widgetService'
           if(angular.isDefined($rootScope.user.name)){
             name = $rootScope.user.name;
           }
-          var message = "<span>bookmarked&nbsp;</span><span class='site_color'>"+$scope.book.title+"</span><span> to '"+$scope.book.labels[index]["name"]+"'</span>";
+          var message = "<span>tagged&nbsp;</span><span class='site_color'>"+$scope.book.title+"</span><span> to '"+$scope.book.labels[index]["name"]+"'</span>";
           
           var notification = {
             "thumb":$rootScope.user.thumb,
@@ -135,12 +135,12 @@ websiteApp.directive('labelDropdown', ['$rootScope', '$timeout', 'widgetService'
           $scope.$emit('gamifyCount', 10, true);
           $scope.$emit('addToNotifications', notification);
 
-          var message = "SUCCESS-Added to "+$scope.book.labels[index]["name"]+" <span class='icon-bookmarks'></span>.";
+          var message = "SUCCESS-Added to "+$scope.book.labels[index]["name"]+" <span class='icon-tags'></span>.";
         }
         else{
           $rootScope.user.bookmark_count = $rootScope.user.bookmark_count - 1;
           $scope.$emit('gamifyCount', 10, false);
-          var message = "SUCCESS-Removed from "+$scope.book.labels[index]["name"]+" <span class='icon-bookmarks'></span>.";
+          var message = "SUCCESS-Removed from "+$scope.book.labels[index]["name"]+" <span class='icon-tags'></span>.";
         }
         var timeout_event = notify($rootScope, message, $timeout);
         var params = {"id": $scope.book.id, 
@@ -550,7 +550,7 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
         }
         else{
           delete $rootScope.focused_book.display_profile;
-          $rootScope.focused_book.display_tweet = "What do you feel about this book?";
+          $rootScope.focused_book.display_tweet = "Comment on this book...";
         }
       }
 
@@ -697,7 +697,7 @@ function add_custom_bookmark($scope, $rootScope, $timeout){
       var label = labels[i];
       if(label["name"] == custom_bookmark){
         already_exists = true;
-        var message = "ALERT- Bookmark with the name '"+custom_bookmark+"' is already added in the list";
+        var message = "ALERT- Tag with the name '"+custom_bookmark+"' is already added in the list";
         break;
       }
     }

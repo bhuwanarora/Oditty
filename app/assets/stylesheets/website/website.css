@@ -151,11 +151,11 @@ input:focus{
 }
 
 .custom_bookmark_radio:before{
-    content: "\e6c2" !important;
+    content: "\e617" !important;
 }
 
 .custom_bookmark_radio:checked:before{
-    content: "\e6c3" !important;
+    content: "\e618" !important;
 }
 
 .custom_bookmark_radio:checked{
@@ -259,6 +259,10 @@ input:focus{
 .light_grey_color{
     color: #717070 !important;
     font-size: 0.8em !important;
+}
+
+.dark_green_color{
+    color: #3cb878 !important;
 }
 
 .f3_background{
