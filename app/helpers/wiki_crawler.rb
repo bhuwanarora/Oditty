@@ -68,7 +68,7 @@ module WikiCrawler
 
 	def self.get_author_details
 		@neo = Neography::Rest.new
-		Author.where("wiki_url != ?", "").find_each do |author|
+		Author.where("wiki_url != ? and flag = ?", "", false).find_each do |author|
 			begin
 				headings_init = false
 				set_clause = ""
@@ -149,6 +149,11 @@ module WikiCrawler
  				head = ""
  				desc = ""
  				index = 1
+ 				headings = doc.css('tr+ tr th')
+ 				headings_array = []
+ 				for heading in headings do
+ 					headings_array.push heading.content
+ 				end
  				details.split("\n").each do |detail|
  					if detail.present?
  						if head.present?
@@ -164,12 +169,17 @@ module WikiCrawler
  					else
  						if head.present? && desc.present?
  							# puts head+"-"+desc.to_s.blue
- 							head = I18n.transliterate(head).downcase.gsub(" ","_").gsub("?","_").gsub("'", "").gsub("(", "").gsub(")", "")
- 							init_set_clause = " author."+head+"=\""+desc.gsub("\"", "'")+"\""
- 							if set_clause.present?
- 								set_clause = set_clause + "," + init_set_clause
- 							else
- 								set_clause = init_set_clause
+ 							head = I18n.transliterate(head).downcase.gsub(" ","_").gsub("?","_").gsub("'", "").gsub("(", "").gsub(")", "").gsub("/", "_or_")
+ 							bad_data = (head.include? "sorry,_your") || (head.include? "You can download the clip or download")
+ 							unless bad_data
+ 								if headings_array.include? head
+		 							init_set_clause = " author."+head+"=\""+desc.gsub("\"", "'")+"\""
+		 							if set_clause.present?
+		 								set_clause = set_clause + "," + init_set_clause
+		 							else
+		 								set_clause = init_set_clause
+		 							end
+ 								end
  							end
 	 						head = ""
 	 						desc = ""
@@ -182,8 +192,13 @@ module WikiCrawler
  					end
  				end
  				author_name = "@"+author.human_profile.name.downcase.gsub(" ","").gsub("'", "")
- 				clause = "START author=node:node_auto_index('indexed_main_author_name:"+author_name+"') SET"+set_clause+", author.about=\""+about+"\", author.image_url=\""+image_url.to_s+"\", author.signature_pic=\""+signature_pic.to_s+"\", author.official_website=\""+official_website.to_s+"\""
- 				# puts clause.blue.on_red
+ 				if set_clause.present?
+ 					clause = "START author=node:node_auto_index('indexed_main_author_name:"+author_name+"') SET"+set_clause+", author.about=\""+about+"\", author.image_url=\""+image_url.to_s+"\", author.signature_pic=\""+signature_pic.to_s+"\", author.official_website=\""+official_website.to_s+"\""
+ 				else
+ 					clause = "START author=node:node_auto_index('indexed_main_author_name:"+author_name+"') SET author.about=\""+about+"\", author.image_url=\""+image_url.to_s+"\", author.signature_pic=\""+signature_pic.to_s+"\", author.official_website=\""+official_website.to_s+"\""
+ 				end
+ 				puts clause.blue.on_red
+ 				puts wiki_url.green
  				@neo.execute_query(clause)["data"]
  				# puts about.to_s.strip.green
  				# puts signature_pic.to_s.strip.green

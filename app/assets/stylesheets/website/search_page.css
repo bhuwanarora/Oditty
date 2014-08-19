@@ -65,13 +65,13 @@
 
 .search_page .search_typeahead_group{
     position: fixed;
-    left: 50%;
-    top: 20%;
-    width: 406px;
-    height: 37px;
-    margin-left: -200px;
-    margin-top: -20px;
-    z-index: 1;
+	left: 50%;
+	top: 20%;
+	width: 41%;
+	height: 37px;
+	margin-left: -20.5%;
+	margin-top: -20px;
+	z-index: 1;
 }
 
 .search_typeahead_group .search_icon{
@@ -89,13 +89,13 @@
 }
 
 .search_page .search_level2_typeahead_group{
-    width: 332px !important;
-    margin-left: -126px !important;
+    width: 34.5%!important;
+	margin-left: -14%!important;
 }
 
 .search_page .search_level1_typeahead_group{
-    width: 369px !important;
-    margin-left: -163px !important;
+    width: 38%!important;
+	margin-left: -17.5%!important;
 }
 
 
@@ -316,7 +316,7 @@
     top: 20%;
     width: 38px;
     height: 37px;
-    margin-left: -200px;
+    margin-left: -21%;
     margin-top: -20px;
     z-index: 2;
 }
@@ -327,7 +327,7 @@
     top: 20%;
     width: 38px;
     height: 37px;
-    margin-left: -163px;
+    margin-left: -17.5%;
     margin-top: -20px;
     z-index: 2;	
 }

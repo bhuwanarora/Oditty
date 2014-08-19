@@ -60,6 +60,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 				console.debug("%c lessThanOnePageLeft", "color:green");
 				$rootScope.loading = true;
 				$rootScope.$broadcast('loadRecommendations');
+				$rootScope.user.collapsed_column = true;
 			}
 		}
 		if(angular.isDefined(event)){

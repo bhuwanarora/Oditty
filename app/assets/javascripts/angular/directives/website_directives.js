@@ -490,7 +490,7 @@ websiteApp.directive('feedbackPopup', ['$document', 'websiteService', '$rootScop
       // var options = scope.$eval(attrs.feedbackPopup);
       
       element = element.children();
-      var startX = 0, startY = 0, x = 300, y = 50;
+      var startX = 0, startY = 0, x = 350, y = 50;
       
       element.on('mousedown', function(event) {
         // Prevent default dragging of selected content
