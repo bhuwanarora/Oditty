@@ -35,7 +35,11 @@ module Api
 				results = []
 				neo_init
 				q = "@"+q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "")
-				clause = "START author=node:node_auto_index('indexed_main_author_name:"+q+"*') RETURN author.name LIMIT 10"
+				if q.present?
+					clause = "START author=node:node_auto_index('indexed_main_author_name:"+q+"*') RETURN author.name, ID(author) LIMIT 10"
+				else
+					clause = "MATCH (author:Author) RETURN author.name, ID(author) LIMIT "+limit.to_s
+				end
 				puts clause.blue.on_red
 				if q.length >= 4
 					results = @neo.execute_query(clause)["data"]

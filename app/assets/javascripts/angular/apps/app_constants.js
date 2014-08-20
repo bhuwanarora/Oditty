@@ -63,6 +63,7 @@ var constants = {
 		},
 		"SearchUIConstants": {
 			"ComingSoon": "Coming Soon...",
+			"NoResultsFound": "No results found...",
 			"BookSearch": "BOOK",
 			"BookSearchPlaceholder": "Search books...",
 			"SearchingBooks": "Searching books...",
@@ -73,6 +74,8 @@ var constants = {
 			"ReaderSearch": "READER",
 			"ReaderSearchPlaceholder": "Search readers...",
 			"SearchingReaders": "Searching readers...",
+			"SearchingGenres": "Searching genres...",
+			"SearchingAuthors": "Searching authors...",
 			"Year": "YEAR",
 			"YearPlaceholder": "by year...",
 			"List": "LIST",

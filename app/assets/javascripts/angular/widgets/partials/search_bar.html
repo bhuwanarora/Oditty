@@ -23,11 +23,6 @@
          class="search_input" 
          placeholder="{{search_tag.placeholder}}"/>
 
-  <div class="website_search_helpers animate-fast" ng-if="!hide_options">
-        <div ng-show="search_initiated" class="title">{{search_display}}</div>
-        <div ng-show="!search_initiated && search_tag.input" 
-             class="title">No results found.. </div>
-  </div>
 
   <div class="website_search_helpers animate-fast" ng-show="active_nest">
     <div class="compressed_option site_color"
@@ -48,10 +43,15 @@
   <div class="website_search_helpers box-shadow animate-fast" ng-show="show_secondary_input">
     <input placeholder="{{custom_input_placeholder}}" 
            class="search_input"
+           ng-model="search_tag.custom_input"
+           ng-keypress="search_custom($event)"
            ng-keydown="key_down($event)"
            set-focus="website.searching_custom"/>
   </div>
 
+  <div class="website_search_helpers animate-fast" ng-if="!hide_options">
+        <div class="title" ng-show="search_display" ng-bind-html="search_display"></div>
+  </div>
 
   <div class="animate-fast website_search_options scrollbar" ng-if="search_results.length > 0;">
     <div ng-repeat="item in search_results | limitTo: search_tag.result_count+1 track by $index "

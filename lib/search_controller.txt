@@ -1,0 +1,105 @@
+// $scope.search_results = [
+		// {"name": "Popular Readers", "graph_option": true},
+		// {"name": "10 Readers to meet before you die", "graph_option": true},
+		// {"name": "Friends who like a-book-category", "graph_option": true},
+		// {"name": "Friends who are reading author-name-or-a-book-name", "graph_option": true},
+		// {"name": "Friends who own a-book-name", "graph_option": true},
+		// {"name": "Friends who need a-book-name", "graph_option": true},
+		// {"name": "Friends who read a-book-name", "graph_option": true},
+		// {"name": "Friends who bookmarked a-book-name-or-author-name-or-a-reader-name", "graph_option": true},
+		// {"name": "Friends who follow an-author-name and a-friend-name", "graph_option": true},
+		// {"name": "Readers bookmarked by a-friend-name-or-me", "graph_option": true},
+		
+		// {"name": "Popular books", "graph_option": true},
+		// {"name": "10 Books to read before you die", "graph_option": true},
+		// {"name": "100 Books to read before you die", "graph_option": true},
+		// {"name": "Books recommended by a-friend-name-or-me", "graph_option": true},
+		// {"name": "Books by an-author-name", "graph_option": true},
+		// {"name": "Books published in a-year", "graph_option": true},
+		// {"name": "Books published today", "graph_option": true},
+		// {"name": "Books published between a-year and another-year", "graph_option": true},
+		// {"name": "Books published in country a-country-name", "graph_option": true},
+		// {"name": "Books tagged as a-tag", "graph_option": true},
+		// {"name": "Books I own", "graph_option": true},
+		// {"name": "Books I have read", "graph_option": true},
+		// {"name": "Books I have rated", "graph_option": true},
+		// {"name": "Books I have discussed", "graph_option": true},
+		// {"name": "Books discussed by a-friend-name-or-me", "graph_option": true},
+		// {"name": "Books reviewed by a-friend-name-or-me", "graph_option": true},
+		// {"name": "Books read by a-friend-name-or-me", "graph_option": true},
+		// {"name": "Books bookmarked by a-friend-name-or-me", "graph_option": true},
+		// {"name": "Books published this year", "graph_option": true},
+		
+		// {"name": "10 Authors to read before you die", "graph_option": true},
+		// {"name": "Authors bookmarked by a-friend-name-or-me", "graph_option": true},
+		// {"name": "Popular Authors", "graph_option": true},
+		
+
+		// {"name": "Popular Bookmarks", "graph_option": true},
+		// {"name": "a-book-category Books", "graph_option": true},
+		// {"name": "Reviews on a-book-name", "graph_option": true},
+		// {"name": "Discussions on a-book-name", "graph_option": true},
+		// {"name": "Quotes from a-book-name", "graph_option": true},
+		// {"name": "Characters from a-book-name", "graph_option": true},
+		// {"name": "Popular Recommendations", "graph_option": true},
+		// {"name": "Movies based on a-book-name", "graph_option": true}
+
+		// ];
+
+
+		// $scope.search_results = [
+		// 	{"name": "Popular books", "graph_option": true},
+		// 	{"name": "10 Books to read before you die", "graph_option": true},
+		// 	{"name": "100 Books to read before you die", "graph_option": true},
+		// 	{"name": "Books recommended by a-friend-name-or-me", "graph_option": true},
+		// 	{"name": "Books by an-author-name", "graph_option": true},
+		// 	{"name": "Books published in a-year", "graph_option": true},
+		// 	{"name": "Books published today", "graph_option": true},
+		// 	{"name": "Books published between a-year and another-year", "graph_option": true},
+		// 	{"name": "Books published in country a-country-name", "graph_option": true},
+		// 	{"name": "Books tagged as a-tag", "graph_option": true},
+		// 	{"name": "Books I own", "graph_option": true},
+		// 	{"name": "Books I have read", "graph_option": true},
+		// 	{"name": "Books I have rated", "graph_option": true},
+		// 	{"name": "Books I have discussed", "graph_option": true},
+		// 	{"name": "Books discussed by a-friend-name-or-me", "graph_option": true},
+		// 	{"name": "Books reviewed by a-friend-name-or-me", "graph_option": true},
+		// 	{"name": "Books read by a-friend-name-or-me", "graph_option": true},
+		// 	{"name": "Books bookmarked by a-friend-name-or-me", "graph_option": true},
+		// 	{"name": "Books published this year", "graph_option": true}
+		// ];
+
+		// $scope.search_results = [
+		// 	{"name": "10 Authors to read before you die", "graph_option": true},
+		// 	{"name": "Authors bookmarked by a-friend-name-or-me", "graph_option": true},
+		// 	{"name": "Popular Authors", "graph_option": true}
+		// ];
+
+// $scope.search_results = [
+		// 	{"name": "Popular Readers", "graph_option": true},
+		// 	{"name": "10 Readers to meet before you die", "graph_option": true},
+		// 	{"name": "Friends who like a-book-category", "graph_option": true},
+		// 	{"name": "Friends who are reading author-name-or-a-book-name", "graph_option": true},
+		// 	{"name": "Friends who own a-book-name", "graph_option": true},
+		// 	{"name": "Friends who need a-book-name", "graph_option": true},
+		// 	{"name": "Friends who read a-book-name", "graph_option": true},
+		// 	{"name": "Friends who bookmarked a-book-name-or-author-name-or-a-reader-name", "graph_option": true},
+		// 	{"name": "Friends who follow an-author-name and a-friend-name", "graph_option": true},
+		// 	{"name": "Readers bookmarked by a-friend-name-or-me", "graph_option": true},
+		// ]
+
+
+$scope.search_results = [
+			{"name": SearchUIConstants.ReaderByRegionLink, "level1_option": true, "type": SearchUIConstants.Country, "icon": "icon-earth", "icon2": "icon-user22"},
+			{"name": SearchUIConstants.ReaderByTasteLink, "level1_option": true, "type": SearchUIConstants.Genre, "icon": "icon-shapes", "icon2": "icon-user22"},
+			{"name": SearchUIConstants.ReaderByGenderLink, "level1_option": true, "type": SearchUIConstants.Gender, "icon": "icon-male icon-female", "icon2": "icon-user22"},
+			{"name": SearchUIConstants.ReaderListsLink, "level1_option": true, "type": SearchUIConstants.List, "icon": "icon-list", "icon2": "icon-user22"}
+		];
+		
+		$scope.search_results = [
+			{"name": SearchUIConstants.AuthorByYearLink, "level1_option": true, "type": SearchUIConstants.Year, "icon": "icon-clock", "icon2": "icon-pen"},
+			{"name": SearchUIConstants.AuthorByRegionLink, "level1_option": true, "type": SearchUIConstants.Country, "icon": "icon-earth", "icon2": "icon-pen"},
+			{"name": SearchUIConstants.AuthorByAwardsLink, "level1_option": true, "type": SearchUIConstants.Awards, "icon": "icon-trophy", "icon2": "icon-pen"},
+			{"name": SearchUIConstants.AuthorsByGenreLink, "level1_option": true, "type": SearchUIConstants.Genre, "icon": "icon-shapes", "icon2": "icon-pen"},
+			{"name": SearchUIConstants.AuthorListsLink, "level1_option": true, "type": SearchUIConstants.List, "icon": "icon-list", "icon2": "icon-pen"}
+		];
