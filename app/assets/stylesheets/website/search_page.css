@@ -80,7 +80,7 @@
 }
 
 .search_page .tagline{
-	position: absolute;
+	position: fixed;
 	top: 20%;
 	left: 50%;
 	color: #fff;

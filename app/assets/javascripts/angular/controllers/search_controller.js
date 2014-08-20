@@ -66,6 +66,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				$scope.search_results = [];
 				websiteService.search_genres(params).then(function(data){
 					if(data.length > 0){
+						$scope.search_results = [];
 						delete $scope.search_display;
 						angular.forEach(data, function(value){
 							var json = {"name": value[0], "id": value[1], "icon2": "icon-shapes", "custom_option": true, "type": SearchUIConstants.Genre};
