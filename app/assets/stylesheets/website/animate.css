@@ -13,6 +13,16 @@
 }
 
 
+.website_search_options.ng-enter,
+.website_search_options.ng-leave.ng-leave-active{
+	max-height: 38px;
+}
+
+.website_search_options.ng-leave,
+.website_search_options.ng-enter-active{
+	max-height: 150px;
+}
+
 .info_cards.ng-enter,
 .info_cards.ng-leave.ng-leave-active{
 	max-width: 10vh;

@@ -78,14 +78,13 @@ input:focus{
     font-size: 1em;
     color: #717070;
     padding-left: 10px;
-    /*border-radius: 2px;*/
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    background-color: white;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    width: 96%;
-    height: 100%;
+    border: 1px solid rgba(255,255,255,.4);
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,.3);
+    width: 97%;
+    height: 30px;
     content: '';
-    border-top-left-radius: 4px;
+    /*border-bottom: 4px solid #427fed;*/
 }
 
 /*animation*/
@@ -322,4 +321,12 @@ input:focus{
     left: 0px;
     top: 0px;
     background-color: rgba(0, 0, 0, 0.6);
+}
+
+.box_shadow{
+    box-shadow: 0 2px 6px rgba(0,0,0,.3) !important;
+}
+
+.active_border{
+    border-bottom: 4px solid #427fed !important;
 }

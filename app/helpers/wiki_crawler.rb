@@ -68,7 +68,7 @@ module WikiCrawler
 
 	def self.get_author_details
 		@neo = Neography::Rest.new
-		Author.where("wiki_url != ? and flag = ?", "", false).find_each do |author|
+		Author.where("wiki_url != ?", "").where(:flag => nil).find_each do |author|
 			begin
 				headings_init = false
 				set_clause = ""
