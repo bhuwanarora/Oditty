@@ -15,7 +15,7 @@
 
 .website_search_options.ng-enter,
 .website_search_options.ng-leave.ng-leave-active{
-	max-height: 38px;
+	max-height: 0px;
 }
 
 .website_search_options.ng-leave,

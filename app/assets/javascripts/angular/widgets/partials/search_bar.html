@@ -1,6 +1,6 @@
 <div class="wrapper" ng-if="$routeParams.type && !hide_options"></div>
 
-<div class="search_typeahead_group animate-fast" ng-class="{'shift_top': active_nest}">
+<div class="search_typeahead_group animate-fast" ng-class="{'shift_top': filters_added.length > 0}">
   <div class="base_search">
     <div class="base_search_option"
          ng-class="{'site_color active_border':is_active(item)}"
@@ -29,8 +29,9 @@
              class="title">No results found.. </div>
   </div>
 
-  <div class="website_search_helpers box_shadow animate-fast" ng-if="active_nest">
-    <div class="compressed_option site_color">
+  <div class="website_search_helpers animate-fast" ng-show="active_nest">
+    <div class="compressed_option site_color"
+         ng-click="handle_base_selection()">
       <span class="icon-book"></span>
     </div>
     <div class="compressed_option">
@@ -44,15 +45,18 @@
     </div>
   </div>
 
-  <div class="website_search_helpers box-shadow animate-fast" ng-show="show_input_field">
-    <input placeholder="{{custom_input_placeholder}}" class="search_input" set-focus="website.searching_custom"/>
+  <div class="website_search_helpers box-shadow animate-fast" ng-show="show_secondary_input">
+    <input placeholder="{{custom_input_placeholder}}" 
+           class="search_input"
+           ng-keydown="key_down($event)"
+           set-focus="website.searching_custom"/>
   </div>
 
 
   <div class="animate-fast website_search_options scrollbar" ng-if="search_results.length > 0;">
     <div ng-repeat="item in search_results | limitTo: search_tag.result_count+1 track by $index "
          ng-click="handle_selection_option(item)" 
-         ng-class="{'light_gray_background':is_current($index, item), 'graph_option':item.graph_option}" 
+         ng-class="{'light_gray_background':is_current($index, item)}" 
          ng-mouseenter="set_current($index)"
          msd-wheel="stop_horizontal_scroll($event)"
          class="option">
@@ -60,21 +64,21 @@
           <span ng-show="item.icon" class="{{item.icon}}">&nbsp;</span>
           <span ng-bind-html="item.name"></span>
           <span class="{{item.icon2}} right_icon"></span>
-          <span class="right_icon">{{item.label}}</span>
+          <span class="right_icon">{{item.label}}&nbsp;</span>
         </div>
         <div ng-show="item.author_name">by {{item.author_name}}</div>
     </div>
 
   </div>
 
-  <div class="filters website_search_options scrollbar">
+  <div class="filters_added website_search_options scrollbar">
     <div ng-repeat="item in filters_added"
+         ng-click="remove_filter(item)"
          msd-wheel="stop_horizontal_scroll($event)"
-         class="option">
+         class="option site_color">
         <div class="title">
-          <span ng-show="item.icon" class="{{item.icon}}">&nbsp;</span>
+          <span ng-show="item.icon2" class="{{item.icon2}}">&nbsp;</span>
           <span ng-bind-html="item.name"></span>
-          <span class="{{item.icon2}} right_icon"></span>
           <span class="right_icon">{{item.label}}</span>
         </div>
         <div ng-show="item.author_name">by {{item.author_name}}</div>

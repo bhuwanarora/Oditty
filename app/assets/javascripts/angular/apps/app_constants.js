@@ -80,6 +80,8 @@ var constants = {
 			"Country": "COUNTRY",
 			"CountryPlaceholder": "by country...",
 			"Genre": "GENRE",
+			"ReadingTime": "readingTime",
+			"TimeGroup": "timeGroup",
 			"GenrePlaceholder": "Add a genre to filters...",
 			"Time" :"TIME",
 			"TimePlaceholder": "by time...",

@@ -90,7 +90,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 						angular.forEach(data["times"], function(value){
 							var time_data = value[0]["data"];
 				    		var name = time_data["name"];
-				    		var json = {"name": name, "custom_option": true, "type": "timeGroup", "label": time_data["range"]};
+				    		var json = {"name": name, "custom_option": true, "type": SearchUIConstants.TimeGroup, "label": time_data["range"]};
 							this.push(json);
 						}, $scope.search_results);
 				    	$rootScope.time_groups = $scope.search_results;
@@ -188,129 +188,191 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	}
 
 	$scope.handle_selection_option = function(item){
-		if($scope.active_base == SearchUIConstants.BookSearchLink){
-			$scope.show_compressed_base = true;
-			$scope.active_nest = item.name;
-			$scope.search_results = [];
-			$scope.hide_input_field = true;
-			$scope.show_input_field = false;
-			if(item.type == SearchUIConstants.Year){
-				$scope.year_search = true;
-				// var search_placeholder = SearchUIConstants.YearPlaceholder;
-				if($rootScope.time_groups){
-					$scope.search_results = $rootScope.time_groups;
+		if(item.level1_option){
+			if($scope.active_base == SearchUIConstants.BookSearchLink){
+				$scope.show_compressed_base = true;
+				$scope.active_nest = item.name;
+				$scope.search_results = [];
+				$scope.hide_input_field = true;
+				$scope.show_secondary_input = false;
+				if(item.type == SearchUIConstants.Year){
+					// $scope.year_search = true;
+					// var search_placeholder = SearchUIConstants.YearPlaceholder;
+					if($rootScope.time_groups){
+						$scope.search_results = $rootScope.time_groups;
+					}
+					else{
+						recommendationService.get_time_groups().then(function(data){
+							$scope.search_results = [];
+							angular.forEach(data["times"], function(value){
+								var time_data = value[0]["data"];
+					    		var name = time_data["name"];
+					    		var json = {"name": name, "type": "timeGroup", "label": time_data["range"], "icon2": "icon-calendar"};
+								this.push(json);
+							}, $scope.search_results);
+					    	$rootScope.time_groups = $scope.search_results;
+						});
+					}
 				}
-				else{
-					recommendationService.get_time_groups().then(function(data){
-						$scope.search_results = [];
-						angular.forEach(data["times"], function(value){
-							var time_data = value[0]["data"];
-				    		var name = time_data["name"];
-				    		var json = {"name": name, "custom_option": true, "type": "timeGroup", "label": time_data["range"]};
-							this.push(json);
-						}, $scope.search_results);
-				    	$rootScope.time_groups = $scope.search_results;
+				else if(item.type == SearchUIConstants.List){
+					// $scope.list_search = true;	
+					// var search_placeholder = SearchUIConstants.ListPlaceholder;
+					if($rootScope.book_lists){
+						$scope.search_results = $rootScope.book_lists;
+					}
+					else{
+						recommendationService.get_book_lists().then(function(data){
+							$scope.search_results = [];
+							angular.forEach(data, function(value){
+					    		var json = {"name": value[1], "id": value[0], "type": SearchUIConstants.List, "icon2": "icon-list"};
+								this.push(json);
+							}, $scope.search_results);
+							$rootScope.book_lists = $scope.search_results;
+						});
+					}
+				}
+				else if(item.type == SearchUIConstants.Country){
+					// $scope.country_search = true;
+					// var search_placeholder = SearchUIConstants.CountryPlaceholder;
+					if($rootScope.regions){
+						$scope.search_results = $rootScope.regions;
+					}
+					else{
+						recommendationService.get_countries().then(function(data){
+							$scope.search_results = data.countries;
+							$rootScope.regions = $scope.search_results;
+						});
+					}
+				}
+				else if(item.type == SearchUIConstants.Genre){
+					// $scope.genre_search = true;
+					$scope.show_secondary_input = true;
+					$scope.custom_input_placeholder = SearchUIConstants.GenrePlaceholder;
+					$scope.website.searching_custom = true;
+					if(angular.isDefined($rootScope.genres)){
+						$scope.search_results = $rootScope.genres;
+					}
+					else{
+						var params = "q=''&count="+10;
+						websiteService.search_genres(params).then(function(data){
+							$rootScope.genres = [];
+							angular.forEach(data, function(value){
+								var json = {"name": value[0], "id": value[1], "icon2": "icon-shapes", "custom_option": true, "type": SearchUIConstants.Genre};
+								this.push(json);
+							}, $scope.search_results);
+							$rootScope.genres = $scope.search_results;
+					    });
+					}
+					var temout_event = $timeout(function(){
+						$scope.website.searching_custom = false;
+					}, 200);
+					$scope.$on('destroy', function(){
+						$timeout.cancel(timeout_event);
 					});
 				}
-			}
-			else if(item.type == SearchUIConstants.List){
-				$scope.list_search = true;	
-				// var search_placeholder = SearchUIConstants.ListPlaceholder;
-				if($rootScope.book_lists){
-					$scope.search_results = $rootScope.book_lists;
-				}
-				else{
-					recommendationService.get_book_lists().then(function(data){
-						$scope.search_results = [];
-						angular.forEach(data, function(value){
-				    		var json = {"name": value[1], "id": value[0], "custom_option": true, "type": SearchUIConstants.List};
-							this.push(json);
-						}, $scope.search_results);
-						$rootScope.book_lists = $scope.search_results;
+				else if(item.type == SearchUIConstants.AuthorSearch){
+					// $scope.author_search = true;
+					$scope.show_secondary_input = true;
+					$scope.custom_input_placeholder = SearchUIConstants.AuthorPlaceholder;
+					$scope.website.searching_custom = true;
+					var temout_event = $timeout(function(){
+						$scope.website.searching_custom = false;
+					}, 200);
+					$scope.$on('destroy', function(){
+						$timeout.cancel(timeout_event);
 					});
 				}
-			}
-			else if(item.type == SearchUIConstants.Country){
-				$scope.country_search = true;
-				// var search_placeholder = SearchUIConstants.CountryPlaceholder;
-				if($rootScope.regions){
-					$scope.search_results = $rootScope.regions;
+				else if(item.type == SearchUIConstants.Time){
+					// $scope.time_search = true;
+					// var search_placeholder = SearchUIConstants.TimePlaceholder;
+					if($rootScope.read_times){
+						$scope.search_results = $rootScope.read_times;
+					}
+					else{
+						recommendationService.get_read_times().then(function(data){
+							$scope.search_results = [];
+							angular.forEach(data["read_times"], function(value){
+					    		var time_data = value[0]["data"];
+					    		var name = time_data["name"];
+					    		var json = {"name": name, "type": SearchUIConstants.ReadingTime, "icon2": "icon-clock"};
+								this.push(json);
+							}, $scope.search_results);
+							$rootScope.read_times = $scope.search_results;
+						});
+					}
 				}
-				else{
-					recommendationService.get_countries().then(function(data){
-						$scope.search_results = data.countries;
-						$rootScope.regions = $scope.search_results;
-					});
+				else if(item.type == SearchUIConstants.Gender){
+					// $scope.gender_search = true;
+					// var search_placeholder = SearchUIConstants.GenderPlaceholder;
+					$scope.search_results = [
+						{"name": SearchUIConstants.MaleGender, "icon": "icon-male"},
+						{"name": SearchUIConstants.FemaleGender, "icon": "icon-female"},
+						{"name": SearchUIConstants.DontCareGender}
+					];
 				}
-			}
-			else if(item.type == SearchUIConstants.Genre){
-				$scope.genre_search = true;
-				$scope.show_input_field = true;
-				$scope.custom_input_placeholder = SearchUIConstants.GenrePlaceholder;
-				$scope.website.searching_custom = true;
-				var temout_event = $timeout(function(){
-					$scope.website.searching_custom = false;
-				}, 200);
-				$scope.$on('destroy', function(){
-					$timeout.cancel(timeout_event);
-				});
-			}
-			else if(item.type == SearchUIConstants.AuthorSearch){
-				$scope.author_search = true;
-				$scope.show_input_field = true;
-				$scope.custom_input_placeholder = SearchUIConstants.AuthorPlaceholder;
-				$scope.website.searching_custom = true;
-				var temout_event = $timeout(function(){
-					$scope.website.searching_custom = false;
-				}, 200);
-				$scope.$on('destroy', function(){
-					$timeout.cancel(timeout_event);
-				});
-			}
-			else if(item.type == SearchUIConstants.Time){
-				$scope.time_search = true;
-				// var search_placeholder = SearchUIConstants.TimePlaceholder;
-				if($rootScope.read_times){
-					$scope.search_results = $rootScope.read_times;
+				else if(item.type == SearchUIConstants.Awards){
+					// $scope.awards_search = true;
+					// var search_placeholder = SearchUIConstants.AwardsPlaceholder;	
 				}
-				else{
-					recommendationService.get_read_times().then(function(data){
-						$scope.search_results = [];
-						angular.forEach(data["read_times"], function(value){
-				    		var time_data = value[0]["data"];
-				    		var name = time_data["name"];
-				    		var json = {"name": name, "custom_option": true, "type": "readingTime"};
-							this.push(json);
-						}, $scope.search_results);
-						$rootScope.read_times = $scope.search_results;
-					});
+				else if(item.type == SearchUIConstants.ComingSoon){
+					$scope.coming_soon = true;
+					// var search_placeholder = 
 				}
+				$scope.search_tag.placeholder = SearchUIConstants.LevelTwoPlaceHolder;
 			}
-			else if(item.type == SearchUIConstants.Gender){
-				$scope.gender_search = true;
-				// var search_placeholder = SearchUIConstants.GenderPlaceholder;
-				$scope.search_results = [
-					{"name": SearchUIConstants.MaleGender, "custom_option": true, "icon": "icon-male"},
-					{"name": SearchUIConstants.FemaleGender, "custom_option": true, "icon": "icon-female"},
-					{"name": SearchUIConstants.DontCareGender, "custom_option": true}
-				];
-			}
-			else if(item.type == SearchUIConstants.Awards){
-				$scope.awards_search = true;
-				// var search_placeholder = SearchUIConstants.AwardsPlaceholder;	
-			}
-			else if(item.type == SearchUIConstants.ComingSoon){
-				$scope.coming_soon = true;
-				// var search_placeholder = 
-			}
-			$scope.search_tag.placeholder = SearchUIConstants.LevelTwoPlaceHolder;
 		}
+		else{
+			if(angular.isUndefined($scope.filters_added)){
+				$scope.filters_added = [];
+			}
+			if($scope.filters_added.indexOf(item) < 0){
+				$scope.filters_added.push(item);
+				$scope.search_results.splice($scope.search_results.indexOf(item), 1);
+			}
+		}
+	}
+
+	$scope.remove_filter = function(item){
+		if(item.type == SearchUIConstants.ReadingTime){
+			$rootScope.read_times.splice(0, 0, item);
+		}
+		else if(item.type == SearchUIConstants.TimeGroup){
+			$rootScope.time_groups.splice(0, 0, item);
+		}
+		else if(item.type == SearchUIConstants.List){
+			$rootScope.book_lists.splice(0, 0, item);
+		}
+		else if(item.type == SearchUIConstants.Genre){
+			$rootScope.genres.splice(0, 0, item);
+		}
+		$scope.filters_added.splice($scope.filters_added.indexOf(item), 1);
+	}
+
+	_reset_filters = function(){
+		if(angular.isDefined($scope.filters_added)){
+			angular.forEach($scope.filters_added, function(item){
+				$scope.remove_filter(item);
+			});
+		}
+		$scope.filters_added = [];	
 	}
 
 	$scope.handle_base_selection = function(item){
 		$scope.hide_input_field = false;
-		$scope.show_input_field = false;
-		if(angular.isDefined($scope.active_base) && $scope.active_base == item.name){
+		$scope.show_secondary_input = false;
+		_reset_filters();
+		if(angular.isUndefined(item)){
+			if($scope.active_base == SearchUIConstants.BookSearchLink){
+				_init_book_search();
+			}
+			else if($scope.active_base == SearchUIConstants.AuthorSearchLink){
+				_init_author_search();
+			}
+			else if($scope.active_base == SearchUIConstants.ReaderSearchLink){
+				_init_reader_search();
+			}
+		}
+		else if(angular.isDefined($scope.active_base) && $scope.active_base == item.name){
 			$scope.search_tag.placeholder = SearchUIConstants.SearchPlaceholder;
 			$scope.search_results = [];
 			delete $scope.active_base;
@@ -593,56 +655,22 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 
 		// ];
 		$scope.base_search_options = [
-				{
-					"name": SearchUIConstants.BookSearchLink,
-					"icon": "icon-book", 
-					"custom_option": true, 
-					"type": SearchUIConstants.BookSearch,
-					"graph_option": true
-				},
-				{
-					"name": SearchUIConstants.AuthorSearchLink, 
-					"icon": "icon-pen", 
-					"custom_option": true, 
-					"type": SearchUIConstants.AuthorSearch,
-					"graph_option": true
-				},
-				{
-					"name": SearchUIConstants.ReaderSearchLink, 
-					"icon": "icon-users", 
-					"custom_option": true, 
-					"type": SearchUIConstants.ReaderSearch,
-					"graph_option": true
-				}];
-		if(!$scope.search_level1){
-			$scope.search_tag.placeholder = SearchUIConstants.SearchPlaceholder;
-			// $scope.search_results = [
-			// 	{
-			// 		"name": SearchUIConstants.BookSearchLink,
-			// 		"icon": "icon-book", 
-			// 		"custom_option": true, 
-			// 		"type": SearchUIConstants.BookSearch,
-			// 		"graph_option": true
-			// 	},
-			// 	{
-			// 		"name": SearchUIConstants.AuthorSearchLink, 
-			// 		"icon": "icon-pen", 
-			// 		"custom_option": true, 
-			// 		"type": SearchUIConstants.AuthorSearch,
-			// 		"graph_option": true
-			// 	},
-			// 	{
-			// 		"name": SearchUIConstants.ReaderSearchLink, 
-			// 		"icon": "icon-users", 
-			// 		"custom_option": true, 
-			// 		"type": SearchUIConstants.ReaderSearch,
-			// 		"graph_option": true
-			// 	}];
-		}
-		else{
-			$scope.search_level1 = false;
-			_search_by();
-		}
+			{
+				"name": SearchUIConstants.BookSearchLink,
+				"icon": "icon-book", 
+				"type": SearchUIConstants.BookSearch
+			},
+			{
+				"name": SearchUIConstants.AuthorSearchLink, 
+				"icon": "icon-pen", 
+				"type": SearchUIConstants.AuthorSearch
+			},
+			{
+				"name": SearchUIConstants.ReaderSearchLink, 
+				"icon": "icon-users", 
+				"type": SearchUIConstants.ReaderSearch
+			}
+		];
 	}
 
 	_init_book_search = function(){
@@ -668,12 +696,36 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		// 	{"name": "Books published this year", "graph_option": true}
 		// ];
 		$scope.base_book_options = [
-			{"name": SearchUIConstants.BookByGenreLink, "custom_option": true, "type": SearchUIConstants.Genre, "icon":"icon-shapes", "icon2": "icon-book"},
-			{"name": SearchUIConstants.BookByAuthorLink, "custom_option": true, "type": SearchUIConstants.AuthorSearch, "icon":"icon-pen", "icon2": "icon-book"},
-			{"name": SearchUIConstants.BookByReadingTimeLink, "custom_option": true, "type": SearchUIConstants.Time, "icon": "icon-clock", "icon2": "icon-book"},
-			{"name": SearchUIConstants.BookByYearLink, "custom_option": true, "type": SearchUIConstants.Year, "icon":"icon-calendar", "icon2": "icon-book"},
-			{"name": SearchUIConstants.BookByRegionLink, "custom_option": true, "type": SearchUIConstants.Country, "icon": "icon-earth", "icon2": "icon-book"},
-			{"name": SearchUIConstants.BookListsLink, "custom_option": true, "type": SearchUIConstants.List, "icon": "icon-list", "icon2": "icon-book"}
+			{"name": SearchUIConstants.BookByGenreLink, 
+				"level1_option": true, 
+				"type": SearchUIConstants.Genre, 
+				"icon":"icon-shapes", 
+				"icon2": "icon-book"},
+			{"name": SearchUIConstants.BookByAuthorLink, 
+				"level1_option": true, 
+				"type": SearchUIConstants.AuthorSearch, 
+				"icon":"icon-pen", 
+				"icon2": "icon-book"},
+			{"name": SearchUIConstants.BookByReadingTimeLink, 
+				"level1_option": true, 
+				"type": SearchUIConstants.Time, 
+				"icon": "icon-clock", 
+				"icon2": "icon-book"},
+			{"name": SearchUIConstants.BookByYearLink, 
+				"level1_option": true, 
+				"type": SearchUIConstants.Year, 
+				"icon":"icon-calendar", 
+				"icon2": "icon-book"},
+			{"name": SearchUIConstants.BookByRegionLink, 
+				"level1_option": true, 
+				"type": SearchUIConstants.Country, 
+				"icon": "icon-earth", 
+				"icon2": "icon-book"},
+			{"name": SearchUIConstants.BookListsLink, 
+				"level1_option": true, 
+				"type": SearchUIConstants.List, 
+				"icon": "icon-list", 
+				"icon2": "icon-book"}
 		];
 		$scope.search_results = $scope.base_book_options;
 		$scope.search_tag.placeholder = SearchUIConstants.BookSearchPlaceholder;
@@ -687,15 +739,15 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		// ];
 
 		$scope.search_results = [
-			{"name": SearchUIConstants.AuthorByYearLink, "custom_option": true, "type": SearchUIConstants.Year, "icon": "icon-clock", "icon2": "icon-pen"},
-			{"name": SearchUIConstants.AuthorByRegionLink, "custom_option": true, "type": SearchUIConstants.Country, "icon": "icon-earth", "icon2": "icon-pen"},
-			{"name": SearchUIConstants.AuthorByAwardsLink, "custom_option": true, "type": SearchUIConstants.Awards, "icon": "icon-trophy", "icon2": "icon-pen"},
-			{"name": SearchUIConstants.AuthorsByGenreLink, "custom_option": true, "type": SearchUIConstants.Genre, "icon": "icon-shapes", "icon2": "icon-pen"},
-			{"name": SearchUIConstants.AuthorListsLink, "custom_option": true, "type": SearchUIConstants.List, "icon": "icon-list", "icon2": "icon-pen"}
+			{"name": SearchUIConstants.AuthorByYearLink, "level1_option": true, "type": SearchUIConstants.Year, "icon": "icon-clock", "icon2": "icon-pen"},
+			{"name": SearchUIConstants.AuthorByRegionLink, "level1_option": true, "type": SearchUIConstants.Country, "icon": "icon-earth", "icon2": "icon-pen"},
+			{"name": SearchUIConstants.AuthorByAwardsLink, "level1_option": true, "type": SearchUIConstants.Awards, "icon": "icon-trophy", "icon2": "icon-pen"},
+			{"name": SearchUIConstants.AuthorsByGenreLink, "level1_option": true, "type": SearchUIConstants.Genre, "icon": "icon-shapes", "icon2": "icon-pen"},
+			{"name": SearchUIConstants.AuthorListsLink, "level1_option": true, "type": SearchUIConstants.List, "icon": "icon-list", "icon2": "icon-pen"}
 		];
 
 		$scope.search_results = [
-			{"name": SearchUIConstants.ComingSoon, "custom_option": true, "type": SearchUIConstants.ComingSoon, "icon2": "icon-pen"}
+			{"name": SearchUIConstants.ComingSoon, "level1_option": true, "type": SearchUIConstants.ComingSoon, "icon2": "icon-pen"}
 		];
 
 		$scope.search_tag.placeholder = SearchUIConstants.AuthorSearchPlaceholder;
@@ -716,13 +768,13 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		// ]
 
 		$scope.search_results = [
-			{"name": SearchUIConstants.ReaderByRegionLink, "custom_option": true, "type": SearchUIConstants.Country, "icon": "icon-earth", "icon2": "icon-user22"},
-			{"name": SearchUIConstants.ReaderByTasteLink, "custom_option": true, "type": SearchUIConstants.Genre, "icon": "icon-shapes", "icon2": "icon-user22"},
-			{"name": SearchUIConstants.ReaderByGenderLink, "custom_option": true, "type": SearchUIConstants.Gender, "icon": "icon-male icon-female", "icon2": "icon-user22"},
-			{"name": SearchUIConstants.ReaderListsLink, "custom_option": true, "type": SearchUIConstants.List, "icon": "icon-list", "icon2": "icon-user22"}
+			{"name": SearchUIConstants.ReaderByRegionLink, "level1_option": true, "type": SearchUIConstants.Country, "icon": "icon-earth", "icon2": "icon-user22"},
+			{"name": SearchUIConstants.ReaderByTasteLink, "level1_option": true, "type": SearchUIConstants.Genre, "icon": "icon-shapes", "icon2": "icon-user22"},
+			{"name": SearchUIConstants.ReaderByGenderLink, "level1_option": true, "type": SearchUIConstants.Gender, "icon": "icon-male icon-female", "icon2": "icon-user22"},
+			{"name": SearchUIConstants.ReaderListsLink, "level1_option": true, "type": SearchUIConstants.List, "icon": "icon-list", "icon2": "icon-user22"}
 		];
 		$scope.search_results = [
-			{"name": SearchUIConstants.ComingSoon, "custom_option": true, "type": SearchUIConstants.ComingSoon, "icon2": "icon-user22"}
+			{"name": SearchUIConstants.ComingSoon, "level1_option": true, "type": SearchUIConstants.ComingSoon, "icon2": "icon-user22"}
 		];
 		$scope.search_tag.placeholder = SearchUIConstants.ReaderSearchPlaceholder;
 	}
@@ -838,7 +890,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			else{
         		var keyEnter = event.keyCode == WebsiteUIConstants.Enter;
 				if(keyEnter){
-					$scope.handle_selection($scope.search_tag.currentItem);
+					$scope.handle_selection_option($scope.search_tag.currentItem);
 				}
 				else{
 					_init_graph_search();
