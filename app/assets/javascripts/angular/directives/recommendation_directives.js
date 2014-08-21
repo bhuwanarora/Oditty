@@ -570,7 +570,7 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 					var increase_tab_size = scroll_down;
 				}
 				if(increase_tab_size){
-					$scope.column_heights = {"notifications_style": {"max-height": "350px"},
+					$scope.column_heights = {"notifications_style": {"max-height": RecommendationUIConstants.NotificationsMaxHeight},
 											"friends_grid_style": {"height": RecommendationUIConstants.FriendsGridMinHeight},
 											"show_filters": false};
 				}
@@ -730,7 +730,6 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 				else{
 					websiteService.search_authors($scope.info.search_author).then(function(data){
 						$scope.popular_authors = [];
-						data = data.results;
 						if(data.length != 0){
 							angular.forEach(data, function(value){
 								var json = {"name": value[0]};

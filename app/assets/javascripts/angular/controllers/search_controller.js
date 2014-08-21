@@ -50,7 +50,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		if($scope.custom_search == SearchUIConstants.Genre){
 			var keyEnter = event.keyCode == WebsiteUIConstants.Enter;
 			if(keyEnter){
-
+				$scope.handle_selection_option($scope.search_tag.currentItem);
 			}
 			else{
 				var backspace_or_delete = event.keyCode == WebsiteUIConstants.Backspace || WebsiteUIConstants.Delete;
@@ -79,8 +79,36 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			    });
 			}
 		}
-		else if(type == SearchUIConstants.AuthorSearch){
+		else if($scope.custom_search == SearchUIConstants.AuthorSearch){
+			var keyEnter = event.keyCode == WebsiteUIConstants.Enter;
+			if(keyEnter){
+				$scope.handle_selection_option($scope.search_tag.currentItem);
+			}
+			else{
+				var backspace_or_delete = event.keyCode == WebsiteUIConstants.Backspace || WebsiteUIConstants.Delete;
+				if(backspace_or_delete){
+					var input = $scope.search_tag.custom_input;
+				}
+				else{
+					var input = $scope.search_tag.custom_input + String.fromCharCode(event.keyCode);
+				}
 
+				$scope.search_display = SearchUIConstants.SearchingAuthor;
+				$scope.search_results = [];
+				websiteService.search_authors(input).then(function(data){
+					if(data.length > 0){
+						$scope.search_results = [];
+						delete $scope.search_display;
+						angular.forEach(data, function(value){
+							var json = {"name": value[0], "id": value[1], "icon2": "icon-pen", "custom_option": true, "type": SearchUIConstants.AuthorSearch};
+							this.push(json);
+						}, $scope.search_results);
+					}
+					else{
+						$scope.search_display = SearchUIConstants.NoResultsFound;
+					}
+			    });
+			}
 		}
 	}
 
@@ -91,6 +119,26 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope.$on('destroy', function(){
 			$timeout.cancel(timeout_event);
 		});
+	}
+
+	$scope.select_next_option = function(type){
+		if($scope.active_base == SearchUIConstants.BookSearch){
+			var parent_found = false;
+			var next_link_executed = false;
+			angular.forEach($scope.base_book_options, function(item){
+				if(parent_found){
+					$scope.handle_selection_option(item);
+					next_link_executed = true;
+					parent_found = false;
+				}
+				else if(item.type == type && !next_link_executed){
+					parent_found = true;
+				}
+			});
+			if(!next_link_executed){
+				alert("CREATE REQUEST");
+			}
+		}
 	}
 
 	$scope.handle_selection_option = function(item){
@@ -120,7 +168,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 							angular.forEach(data["times"], function(value){
 								var time_data = value[0]["data"];
 					    		var name = time_data["name"];
-					    		var json = {"name": name, "type": "timeGroup", "label": time_data["range"], "icon2": "icon-calendar"};
+					    		var json = {"name": name, "type": SearchUIConstants.Year, "label": time_data["range"], "icon2": "icon-calendar"};
 								this.push(json);
 							}, $scope.search_results);
 					    	$rootScope.time_groups = $scope.search_results;
@@ -164,7 +212,11 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 					}
 					else{
 						recommendationService.get_countries().then(function(data){
-							$scope.search_results = data.countries;
+							$scope.search_results = [];
+							angular.forEach(data.countries, function(value){
+								var json = angular.extend(value, {"type": SearchUIConstants.Country});
+								this.push(json);
+							}, $scope.search_results);
 							$rootScope.regions = $scope.search_results;
 						});
 					}
@@ -199,12 +251,30 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 					$scope.reset_secondary_input_focus();
 				}
 				else if(item.type == SearchUIConstants.AuthorSearch){
-					// $scope.author_search = true;
 					$scope.search_tag.custom_input = "";
 					$scope.show_secondary_input = true;
 					$scope.custom_input_placeholder = SearchUIConstants.AuthorPlaceholder;
 					$scope.custom_search = SearchUIConstants.AuthorSearch;
 					$scope.website.searching_custom = true;
+					if(angular.isDefined($rootScope.authors)){
+						$scope.search_results = [];
+						var results_timeout_event = $timeout(function(){
+							$scope.search_results = $rootScope.authors;
+						}, 200);
+						$scope.$on('destroy', function(){
+							$timeout.cancel(results_timeout_event);
+						});
+					}
+					else{
+						websiteService.search_authors("").then(function(data){
+							$rootScope.authors = [];
+							angular.forEach(data, function(value){
+								var json = {"name": value[0], "id": value[1], "icon2": "icon-pen", "custom_option": true, "type": SearchUIConstants.AuthorSearch};
+								this.push(json);
+							}, $scope.search_results);
+							$rootScope.authors = $scope.search_results;
+					    });
+					}
 					$scope.reset_secondary_input_focus();
 				}
 				else if(item.type == SearchUIConstants.Time){
@@ -222,7 +292,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 							angular.forEach(data["read_times"], function(value){
 					    		var time_data = value[0]["data"];
 					    		var name = time_data["name"];
-					    		var json = {"name": name, "type": SearchUIConstants.ReadingTime, "icon2": "icon-clock"};
+					    		var json = {"name": name, "type": SearchUIConstants.Time, "icon2": "icon-clock"};
 								this.push(json);
 							}, $scope.search_results);
 							$rootScope.read_times = $scope.search_results;
@@ -254,18 +324,32 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				$scope.filters_added = [];
 			}
 			if($scope.filters_added.indexOf(item) < 0){
-				$scope.filters_added.push(item);
-				$scope.search_results.splice($scope.search_results.indexOf(item), 1);
+				$scope.add_filters(item);
 			}
 		}
 	}
 
+	$scope.add_filters = function(item){
+		var only_single_filter = true;
+		if(only_single_filter){
+			angular.forEach($scope.filters_added, function(value){
+				if(value.type == item.type){
+					$scope.filters_added.splice($scope.filters_added.indexOf(value), 1);
+					$scope.search_results.splice(0, 0, value);
+				}
+			});
+		}
+		$scope.filters_added.splice(0, 0, item);
+		$scope.search_results.splice($scope.search_results.indexOf(item), 1);
+		$scope.select_next_option(item.type);
+	}
+
 	$scope._reset_filter = function(item){
 		console.debug("reset_filter", item.type, item.name, $scope.filters_added.length);
-		if(item.type == SearchUIConstants.ReadingTime){
+		if(item.type == SearchUIConstants.Time){
 			$rootScope.read_times.splice(0, 0, item);
 		}
-		else if(item.type == SearchUIConstants.TimeGroup){
+		else if(item.type == SearchUIConstants.Year){
 			$rootScope.time_groups.splice(0, 0, item);
 		}
 		else if(item.type == SearchUIConstants.List){
@@ -273,6 +357,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		}
 		else if(item.type == SearchUIConstants.Genre){
 			$rootScope.genres.splice(0, 0, item);
+		}
+		else if(item.type == SearchUIConstants.Country){
+			$rootScope.regions.splice(0, 0, item);	
 		}
 	}
 
@@ -412,6 +499,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
         	var currentValue = $scope.search_tag.input.trim();
         	var custom_search = angular.isDefined($scope.search_tag.custom_input);
         	console.debug("currentValue, custom_search", currentValue, custom_search, currentValue.length <= 1);
+        	delete $scope.search_display;
         	if(custom_search){
         		if($scope.search_tag.custom_input.length > 1){
         			$scope.search_custom(event);
@@ -421,12 +509,11 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
         				$scope.search_results = $rootScope.genres;
         			}
         			else if($scope.custom_search == SearchUIConstants.AuthorSearch){
-
+        				$scope.search_results = $rootScope.authors;
         			}
         		}
         	}
         	else if(currentValue.length <= 1){
-        		delete $scope.search_display;
         		$scope.search_tag.input = "";
         		$scope.search_results = [];
         		$scope.search_ready = false;
@@ -507,12 +594,12 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				"level1_option": true, 
 				"type": SearchUIConstants.Country, 
 				"icon": "icon-earth", 
-				"icon2": "icon-book"},
-			{"name": SearchUIConstants.BookListsLink, 
-				"level1_option": true, 
-				"type": SearchUIConstants.List, 
-				"icon": "icon-list", 
 				"icon2": "icon-book"}
+			// {"name": SearchUIConstants.BookListsLink, 
+				// "level1_option": true, 
+				// "type": SearchUIConstants.List, 
+				// "icon": "icon-list", 
+				// "icon2": "icon-book"}
 		];
 		$scope.search_results = $scope.base_book_options;
 		$scope.search_tag.placeholder = SearchUIConstants.BookSearchPlaceholder;
@@ -693,7 +780,6 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$scope.search_tag.input = "";	
 		}
 		$scope.search_tag.result_count = 100;
-	    $scope.website.searching = false;
 		$scope.website.show_search_page = true;
 		websiteService.get_background_image().then(function(data){
 			$scope.search_style = {'background-image': 'url("'+data.url+'")'};
@@ -720,7 +806,15 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	}
 
 	_init = function(){
-		$scope.website.searching = true;
+		$scope.website.searching = false;
+		var focus_timeout = $timeout(function(){
+			$scope.website.searching = true;
+			// $scope.website.searching = false;
+		}, 3000);
+		$scope.$on('destroy', function(){
+			$timeout.cancel(focus_timeout);
+		});
+
 		_handle_search_page();
 		_init_book_search();
 		$scope.active_base = SearchUIConstants.BookSearch;

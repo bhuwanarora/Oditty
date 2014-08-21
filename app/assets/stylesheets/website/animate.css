@@ -12,6 +12,25 @@
 	top: 95px;
 }
 
+.filters_added .option.ng-enter,
+.filters_added .option.ng-leave.ng-leave-active{
+	margin-bottom: -30px;
+}
+
+.filters_added .option.ng-leave,
+.filters_added .option.ng-enter-active{
+	margin-bottom: 0px;
+}
+
+..notifications .notification_stable.ng-enter,
+..notifications .notification_stable.ng-leave.ng-leave-active{
+	margin-bottom: -70px;
+}
+
+..notifications .notification_stable.ng-leave,
+..notifications .notification_stable.ng-enter-active{
+	margin-bottom: 0px;
+}
 
 .website_search_options.ng-enter,
 .website_search_options.ng-leave.ng-leave-active{

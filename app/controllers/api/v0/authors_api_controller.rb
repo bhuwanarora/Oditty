@@ -31,6 +31,11 @@ module Api
 				render :json => authors, :status => 200
 			end
 
+			def details
+				info = AuthorApi.get_author_details_for_book params[:book_id]
+				render :json => info, :status => 200
+			end
+
 
 		end
 	end

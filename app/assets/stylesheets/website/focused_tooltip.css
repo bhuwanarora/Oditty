@@ -19,10 +19,6 @@
 	padding: 10px;
 }
 
-.focused_tooltip a{
-	color: #136CB2;
-}
-
 .focused_tooltip .rating_star{
 	position: absolute;
 	right: 40px;
@@ -35,13 +31,19 @@
 
 .focused_tooltip .book_info{
 	padding: 10px;
-	background-color: #F5F5F5;
 	border-top: 1px solid #E2E2E2;
 	border-bottom: 1px solid #E2E2E2;
+	position: relative;
+	width: 96%;
+	overflow-y: scroll;
+	max-height: 30vh;
+}
+
+.focused_tooltip .author_book_info{
+	background-color: #F5F5F5;
 }
 
 .focused_tooltip .book_info .book_link .count{
-	background-color: #918FB5;
 	color: white;
 	cursor: pointer;
 	padding: 5px;
@@ -79,12 +81,32 @@
 }
 
 .focused_tooltip .description{
-	font-family: Proxima Nova, sans-serif;
-	font-size: 0.93em;
+	font-family: Proxima Nova,sans-serif;
+	font-size: .93em;
 	height: 20vh;
 	line-height: 1.3em;
 	padding: 12px;
 	border-bottom: 1px solid #D3D3D3;
+	width: 93%;
+	background-color: #F5F5F5;
+}
+
+.focused_tooltip .book_info img{
+	width: 10%;
+	border-radius: 2px;
+	position: fixed;
+}
+
+.focused_tooltip .book_info .text{
+	display: inline-block;
+	float: right;
+	width: 68%;
+	padding: 8px;
+	word-wrap: break-word;
+}
+
+.focused_tooltip .signature_thumb{
+	float: right;
 }
 
 .focused_tooltip .description b{
@@ -131,11 +153,11 @@
 
 .rate{
 	height: 25px;
-	padding-top: 20px;
 	text-align: center;
-	top: 7px;
-	right: 2px;
+	top: 20px;
+	right: 0px;
 	position: absolute;
+	width: 240px;
 }
 
 .focused_tooltip .header{
@@ -143,7 +165,6 @@
 }
 
 .focused_tooltip .header .title{
-	color: #136CB2;
 	font-size: 1em;
 	font-weight: bold;
 	width: 70%;
@@ -158,7 +179,7 @@
 	bottom: 100px;
 	position: absolute;
 	background-color: white;
-	width: 96%;
+	width: 92%;
 	padding-top: 5px;
 }
 
@@ -175,8 +196,7 @@
 }
 
 .focused_tooltip .tabs .tab{
-	background-color: #485057;
-	color: white;
+	background-color: #E6E6E6;
 	padding-top: 8px;
 	padding-bottom: 8px;
 	cursor: pointer;
@@ -193,7 +213,6 @@
 	letter-spacing: -5px;
 	padding: 5px;
 	padding-bottom: 20px;
-	position: absolute;
 	right: 0px;
 	text-align: center;
 	border-top: 1px solid #E2E2E2;

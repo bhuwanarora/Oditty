@@ -407,6 +407,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     _get_recommendations = function(){
     	$rootScope.loading = true;
         recommendationService.get_recommendations().then(function(data){
+        	if($scope.recommendations.books.length == 0){
+        		$scope.$emit('moveRight');
+        	}
         	_update_recommendations(data);
 	    });
 	    var no_filters = (angular.isUndefined($rootScope.filters.more_filters) || $rootScope.filters.more_filters.length == 0) && (angular.isUndefined($rootScope.filters.other_filters) || JSON.stringify($rootScope.filters.other_filters) == '{}');
@@ -501,7 +504,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         // _handle_focused_book();
         _get_friends();
         $scope.$emit('getNotifications');
-    	// $scope.$emit('moveRight');    
 	}
 
 	var push_books_timer_event = "";

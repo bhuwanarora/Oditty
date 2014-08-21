@@ -35,8 +35,8 @@
 
 .profile_thumb{
 	display: inline-block;
-	float: left;
-	margin-right: 2px;
+	float: right;
+	margin-right: 15px;
 	margin-left: 25px;
 	cursor: pointer;
 	height: 35px;
@@ -111,7 +111,6 @@
 	outline: none;
 	border: 1px solid #F1F1F1;
 	border-radius: 4px;
-	font-family: Consolas,Monaco,monospace;
 }
 
 .interaction_box_options [class^="icon-"],
@@ -172,7 +171,7 @@
 }
 
 .comment_box:focus{
-	border: 1px solid #136CB2;	
+	border: 1px solid #136CB2;
 }
 
 .msd-wheel.ng-move{
@@ -491,8 +490,9 @@
 .interaction_group{
 	position: fixed;
 	left: 50%;
-	margin-left: -250px;
+	margin-left: -30%;
 	top: 50px;
+	width: 60%;
 }
 
 .interaction_box,
@@ -537,7 +537,7 @@
 	background-color: #F5F5F5;
 	height: 15px;
 	padding: 11px;
-	width: 480px;
+	width: 94%;
 	border-radius: 4px;
 	overflow-x: hidden;
 }
@@ -922,7 +922,7 @@ and (min-width : 1824px) {
 .notifications{
 	font-size: .9em;
 	z-index: 3;
-	max-height: 170px;
+	max-height: 30vh;
 	border-radius: 4px;
 	overflow-y: hidden; 
 }
@@ -1185,6 +1185,7 @@ and (min-width : 1824px) {
 	letter-spacing: -3.2px;
 	margin-left: 20px;
 	margin-top: 7px;
+	text-shadow: 0 2px 3px rgba(223, 223, 223, 1);
 }
 
 
@@ -1280,7 +1281,7 @@ and (min-width : 1824px) {
 }
 
 .tweets{
-	width: 550px;
+	width: 102%;
 	overflow-y: scroll;
 	max-height: 55vh;
 	margin-top: 5px;
@@ -1416,11 +1417,11 @@ and (min-width : 1824px) {
 
 .ticker_popup .ticker_overflow{
 	height: 35vh;
-	width: 57vh;
+	width: 53vh;
 }
 
 .ticker_popup .bottom_widget{
-	height: 65px;
+	height: 50px;
 	z-index: 1;
 }
 
@@ -1525,7 +1526,7 @@ and (min-width : 1824px) {
 	border-radius: 2px;
 	cursor: move;
 	z-index: 10;
-	color: white;
+	background-color: white;
 }
 
 .feedback textarea{
@@ -1578,4 +1579,22 @@ and (min-width : 1824px) {
 
 .left_column .collapsed_column:hover{
 	background-color: #F3F3F3;
+}
+
+
+.recommendations_page .search_typeahead_group{
+    top: 15px;
+    margin-top: 0px;
+}
+
+.recommendations_page .search_input{
+    color: #717070;
+    background-color: white;
+    border: 1px solid #D8D8D8;
+}
+
+.recommendations_page .search_input:focus{
+    /*outline: 0.5px solid #4d90fe;*/
+    border-color: #4d90fe !important;
+    box-shadow: 0 0 10px #9ecaed;
 }

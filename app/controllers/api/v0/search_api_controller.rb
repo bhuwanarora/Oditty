@@ -16,7 +16,7 @@ module Api
 
 			def search_authors
 				results = SearchApi.search_authors(params[:q].strip, session[:user_id])
-				render :json => {:results => results}, :status => 200
+				render :json => results, :status => 200
 			end
 
 			def search_genres

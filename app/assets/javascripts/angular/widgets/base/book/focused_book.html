@@ -23,7 +23,7 @@
 </ul>
 <div class="arrow" ng-class="{'arrow_left': on_left, 'arrow_right': !on_left}"></div>
 <!-- <div class="close button_effect" ng-click="close_focused_tooltip()">x</div> -->
-<div class="header">
+<div class="header site_color">
   <div class="title">{{focused_book.title | book_title}} by {{focused_book.author_name}} </div>
   <div class="author">
     <span ng-if="focused_book.published_year">
@@ -36,29 +36,35 @@
   </div> -->
 </div>
 <div class="tabs">
-  <div ng-click="show_buy = false;"
-       ng-class="{'black_blue_background': !show_buy}"
+  <div ng-click="show_buy = false; show_author = false;"
+       ng-class="{'dark_grey_background': !show_buy && !show_author}"
         class="tab">
       <span>Overview</span><span class=""></span>
   </div>
  <!--  <div ng-click="show_buy = false;"
         class="tab"
-        ng-class="{'black_blue_background': !show_info && !show_buy}">
+        ng-class="{'dark_grey_background': !show_info && !show_buy}">
       <span>Actions</span><span class=""></span>
   </div> -->
-  <div class="tab">
-      <span>About Author</span><span class=""></span>
+  <div class="tab"
+       ng-click="get_author_details();"
+       ng-class="{'dark_grey_background': show_author && !show_buy}">
+      <span>About author</span><span class=""></span>
   </div>
   <div ng-click="get_buy_links();"
        class="tab"
-       ng-class="{'black_blue_background': show_buy}">
+       ng-class="{'dark_grey_background': show_buy && !show_author}">
       <span>Buy this book</span><span class=""></span>
   </div>
 </div>
-<div class="book_info" ng-if="!show_buy">
+
+
+
+
+<div class="book_info" ng-if="!show_buy && !show_author">
   <span> · </span>
   <span ng-click="user.interact = true;" class="book_link">
-    <span class="count">
+    <span class="count site">
       <span>{{focused_book.readers_count | integer}}</span>
       <span class="icon-users2"></span> 
     </span>
@@ -69,7 +75,7 @@
         itemscope 
         itemtype="http://schema.org/AggregateRating"
         ng-click="user.interact = true;" class="book_link">
-    <span class="count">
+    <span class="count site">
       <span>{{focused_book.bookmark_count | integer}}</span>
       <span class="icon-tags"></span> 
     </span>
@@ -77,25 +83,53 @@
   </span>
   · 
   <span ng-click="user.interact = true;" class="book_link">
-    <span class="count">
+    <span class="count site">
       <span>{{focused_book.comment_count | integer}}</span>
       <span class="icon-pencil2"></span>
     </span>
     <!-- <span>&nbsp;&nbsp;Discussions</span> -->
   </span>
    · 
-  <!--  <div ng-if="!show_buy" ng-disabled="!focused_book.status">
+   <div ng-if="!show_buy && !show_author" ng-disabled="!focused_book.status">
     <rate data="focused_book"></rate>
-  </div> -->
+  </div>
 </div>
 
-<div class="scrollbar description" msd-wheel="stop_horizontal_scroll($event)" ng-if="!show_buy">
+<div class="scrollbar description" msd-wheel="stop_horizontal_scroll($event)" ng-if="!show_buy && !show_author">
   <span itemprop="description" ng-bind-html="focused_book.summary | summary"></span>
   <br/>
   <br/>
   <br/>
 </div>
-<!-- <div class="time_to_read" ng-if="!show_buy">
+
+<div class="user_box" ng-if="!show_author && !show_buy">
+  <div class="users_count">{{focused_book.users_count}} friends have read this</div>
+  <div class="users">
+    <div ng-repeat="user in focused_book.users">
+      <img ng-src="{{user.thumb}}" />
+    </div>
+  </div>
+</div>
+
+<div class="book_info scrollbar author_book_info"
+     ng-if="show_author && !show_buy">
+      <img ng-src="{{focused_book.author_details.image_url}}"/>
+      <div class="text"
+          msd-wheel="stop_horizontal_scroll($event)">
+          {{focused_book.author_details.about}}
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+      </div>
+</div>
+
+<div class="user_box"
+     ng-if="show_author && !show_buy">
+    <img class="signature_thumb" ng-src="{{focused_book.author_details.signature_pic}}"/>
+</div>
+
+<div class="time_to_read" ng-if="show_buy && !show_author">
   <div class="header">Describe the reading length of this book</div>
   <div>
     <span ng-click="record_read_time(0, $event)"
@@ -108,25 +142,22 @@
         ng-class="{'active_read_timer':is_timer(3)}">Long Read</span>
     
   </div>
-</div> -->
-<div ng-if="show_buy" class="buy_column">
-  <div ng-if="bnn_links">
-    <span ng-repeat="link in bnn_links">
-      <a ng-href="{{link}}" target="_blank"><em>Barnes & Nobles</em></a>
+</div>
+
+<div ng-if="show_buy && !show_author" class="buy_column">
+  <div ng-if="focused_book.bnn_links">
+    <span ng-repeat="link in focused_book.bnn_links">
+      <a ng-href="{{link}}" target="_blank" class="site_color"><em>Barnes & Nobles</em></a>
     </span>
   </div>
-  <div ng-if="!bnn_links">
+  <div ng-if="!focused_book.bnn_links">
     Sorry! Could find this book on <em>Barnes & Nobles</em>.
   </div>
 </div>
-<div class="user_box">
-  <div class="users_count">{{focused_book.users_count}} friends have read this</div>
-  <div class="users">
-    <div ng-repeat="user in focused_book.users">
-      <img ng-src="{{user.thumb}}" />
-    </div>
-  </div>
-</div>
+
+
+
+
 <div class="tweet_link site_color" ng-click="user.interact = true;">
   <span><img ng-src="{{focused_book.display_profile}}"></span>
   <span ng-model="focused_book.display_tweet" ng-bind-html="focused_book.display_tweet | display_tweet"></span>

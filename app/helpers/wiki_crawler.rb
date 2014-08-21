@@ -68,8 +68,8 @@ module WikiCrawler
 
 	def self.get_author_details
 		@neo = Neography::Rest.new
-		Author.where("wiki_url != ?", "").where(:flag => nil).find_each do |author|
-			begin
+		begin
+			Author.where("wiki_url != ?", "").where(:flag => nil).find_each do |author|
 				headings_init = false
 				set_clause = ""
 				wiki_url = author.wiki_url
@@ -206,10 +206,10 @@ module WikiCrawler
  				# puts image_url.to_s.strip.green
  				puts "----------------".green
  				author.update_column('flag', true)
-			rescue Exception => e
-				author.update_column('flag', false)
-				puts e.to_s.red
 			end
+		rescue Exception => e
+			author.update_column('flag', false)
+			puts e.to_s.red
 		end
 	end
 end

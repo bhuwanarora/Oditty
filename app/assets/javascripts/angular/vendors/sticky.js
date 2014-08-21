@@ -41,13 +41,8 @@ angular.module('sticky', [])
 							else{
 								$elem.css('left', '260px');
 							}
-							var timeout_event = $timeout(function(){
-								$rootScope.compressed_info = true;
-								$elem.css('position', initialPositionStyle);
-							}, 1000);
-							$scope.$on('destroy', function(){
-								$timeout.cancel(timeout_event);
-							});
+							$rootScope.compressed_info = true;
+							$elem.css('position', initialPositionStyle);
 						}
 					}
 					else{

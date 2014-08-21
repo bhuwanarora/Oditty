@@ -56,12 +56,12 @@
   <div class="animate-fast website_search_options scrollbar" ng-if="search_results.length > 0;">
     <div ng-repeat="item in search_results | limitTo: search_tag.result_count+1 track by $index "
          ng-click="handle_selection_option(item)" 
-         ng-class="{'light_gray_background':is_current($index, item)}" 
+         ng-class="{'light_gray_background':is_current($index, item)}"
          ng-mouseenter="set_current($index)"
          msd-wheel="stop_horizontal_scroll($event)"
          class="option">
         <div class="title">
-          <span ng-show="item.icon" class="{{item.icon}}">&nbsp;</span>
+          <span ng-show="item.icon" class="{{item.icon}} grey_color">&nbsp;</span>
           <span ng-bind-html="item.name"></span>
           <span class="{{item.icon2}} right_icon"></span>
           <span class="right_icon">{{item.label}}&nbsp;</span>
@@ -71,13 +71,13 @@
 
   </div>
 
-  <div class="filters_added website_search_options scrollbar">
+  <div class="filters_added website_search_options">
     <div ng-repeat="item in filters_added"
          ng-click="remove_filter(item)"
          msd-wheel="stop_horizontal_scroll($event)"
-         class="option site_color">
+         class="option site_color animate-fast">
         <div class="title">
-          <span ng-show="item.icon2" class="{{item.icon2}}">&nbsp;</span>
+          <span ng-show="item.icon2" class="{{item.icon2}} faded_site_color">&nbsp;</span>
           <span ng-bind-html="item.name"></span>
           <span class="right_icon">{{item.label}}</span>
         </div>

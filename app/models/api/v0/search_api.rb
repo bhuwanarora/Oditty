@@ -31,19 +31,21 @@ module Api
 				results
 			end
 
-			def self.search_authors(q)
+			def self.search_authors(q, user_id)
 				results = []
 				neo_init
-				q = "@"+q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "")
+				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "")
 				if q.present?
+					q = "@"+q
 					clause = "START author=node:node_auto_index('indexed_main_author_name:"+q+"*') RETURN author.name, ID(author) LIMIT 10"
+					if q.length >= 4
+						results = @neo.execute_query(clause)["data"]
+					end
 				else
-					clause = "MATCH (author:Author) RETURN author.name, ID(author) LIMIT "+limit.to_s
-				end
-				puts clause.blue.on_red
-				if q.length >= 4
+					clause = "MATCH (author:Author) RETURN author.name, ID(author) LIMIT 10"
 					results = @neo.execute_query(clause)["data"]
 				end
+				puts clause.blue.on_red
 				results
 			end
 

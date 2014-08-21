@@ -70,6 +70,9 @@ ReadersDoor::Application.routes.draw do
       match 'books_bookmarked'                        => 'users_api#books_bookmarked',                  :via => [:put, :get, :post]
       match 'fb'                                      => 'users_api#fb',                                :via => [:put, :get, :post]
       match 'google'                                  => 'users_api#google',                            :via => [:put, :get, :post]
+
+      match 'author_details'                          => 'authors_api#details',                         :via => [:put, :get, :post]
+      
     end
   end
 end

@@ -6,9 +6,12 @@
 	<!-- <category track widget="book"></category> -->
 	<div ng-model="book" 
 		ng-click="show_focused_tooltip($event)"
-		ng-class="{'discovered': hovered, 'undiscovered': !hovered}" class="card animate-fast">
+		class="card animate-fast">
 		<book-interact data="book" track></book-interact>
 		<widget-thumb track></widget-thumb>
+		<div class="card_summary">
+			{{book.summary | reduced_summary}}
+		</div>
 		<!-- <book-navbar track></book-navbar> -->
 	</div>
 </div>

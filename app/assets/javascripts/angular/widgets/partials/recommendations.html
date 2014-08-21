@@ -157,7 +157,7 @@
 				<div>
 					<img ng-src="{{user.thumb | thumb_backup}}" class="thumb">
 				</div>
-				<div class="f3_background">
+				<!-- <div class="f3_background">
 					<span class="icon-filter2 light_grey_color"></span>
 				</div>
 				<div>
@@ -177,7 +177,7 @@
 				</div>
 				<div class="f3_background">
 					<span class="icon-menu2 light_grey_color"></span>
-				</div>
+				</div> -->
 				<div class="f3_background">
 					<span class="icon-users2 light_grey_color"></span>
 				</div>
@@ -190,9 +190,7 @@
 				 check-scroll-bottom="get_notifications()"
 				 check-scroll-down="handle_notification_ticker_size($event, true)">
 				<div class="full_height">
-					<div ng-repeat="notification in notifications | reverse">
-						<notification data="notification"></notification>
-					</div>
+					<notification data="notification" ng-repeat="notification in notifications | reverse"></notification>
 					
 					<div class="relative_position">
 						<div class="notification_stable animate-fast">
@@ -263,7 +261,7 @@
 					</div>
 				</div>
 			</div>
-			<more-filters></more-filters>
+			<!-- <more-filters></more-filters> -->
 			<div class="scrollbar friends_grid" 
 				 ng-hide="user.collapsed_column"
 				 ng-style="column_heights.friends_grid_style"

@@ -1,6 +1,15 @@
+include AuthorsGraphHelper
 module Api
 	module V0
 		class AuthorApi
+			def self.get_author_details_for_book book_id
+				@neo = Neography::Rest.new
+				clause = "MATCH (book:Book)<-[:Wrote]-(author:Author) WHERE ID(book)="+book_id.to_s+" RETURN author.about, author.image_url, author.signature_pic, ID(author)"
+				puts clause.blue.on_red
+				info = @neo.execute_query(clause)["data"][0]
+				info
+			end
+
 			def self.bookmarked_authors
 				# self.recommendations.map do |s|
 				# 	s['authormark_status'] = 1

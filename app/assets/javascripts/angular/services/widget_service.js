@@ -80,6 +80,10 @@ websiteApp.service('widgetService', ['$http', '$q', '$rootScope', function ($htt
         return _deferred_post_request('/api/v0/add_thumbnail', params);
     }
 
+    this.get_author_details = function(book_id){
+        return _deferred_request('/api/v0/author_details?book_id='+book_id);
+    }
+
     _deferred_request = function(url){
         var deferred = $q.defer();
         var success_callback = function(result) {

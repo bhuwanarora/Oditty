@@ -415,12 +415,25 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
         }
       }
 
+      $scope.get_author_details = function(){
+        $scope.show_author = true;
+        $scope.show_buy = false;
+        if(angular.isUndefined($rootScope.focused_book.author_details)){
+          widgetService.get_author_details($rootScope.focused_book.id).then(function(data){
+            $rootScope.focused_book.author_details = {"about": data[0], "image_url": data[1], "signature_pic": data[2], "id": data[3]};
+            debugger
+          });
+        }
+      }
+
       $scope.get_buy_links = function(){
-        $scope.show_info = false; 
+        $scope.show_author = false;
         $scope.show_buy = true;
-        widgetService.get_affiliate_links($rootScope.focused_book.id).then(function(results){
-          $scope.bnn_links = results.bnn.links;
-        });
+        if(angular.isUndefined($rootScope.focused_book.bnn_links)){
+          widgetService.get_affiliate_links($rootScope.focused_book.id).then(function(results){
+            $rootScope.focused_book.bnn_links = results.bnn.links;
+          });
+        }
       }
 
       $scope.stop_propagation = function(event){
@@ -555,7 +568,8 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
       }
 
       _open_tab = function(){
-        $scope.show_info = true;
+        $scope.show_author = false;
+        $scope.show_buy = false;
       }
 
       _init = function(){
@@ -620,7 +634,7 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', 'w
         var author_name = $scope.recommend_object.author_name;
         if($scope.recommend_object.recommended){
           $scope.recommend_object.recommended = false;
-          var message = "SUCCESS-"+book_title+" by "+author_name+" has been recommended to selected friends.";
+          var message = "SUCCESS-Recommended to selected friends.";
           var timeout_event = notify($rootScope, message, $timeout);
           $scope.$on('destroy', function(){
             $timeout.cancel(timeout_event);

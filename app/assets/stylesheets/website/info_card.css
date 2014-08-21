@@ -45,20 +45,21 @@
 	position: fixed;
 	z-index: 3;
 	left: 289px;
+	box-shadow: 8px 0 43px 0 rgba(66,66,66,.47);
 }
 
 .compressed_info_card_shifted{
-	left: 50px !important;
+	left: 5px;
+	top: 180px;
 }
 
 .compressed_info_card .block{
-	border-radius: 3px;
+	border-radius: 1px;
 	padding: 10px;
 	background-color: white;
 	border-bottom: 1px solid #E9E9E9;
 	cursor: pointer;
 	text-align: center;
-	box-shadow: 1px 0 1px 0 rgba(66,66,66,.47);
 }
 
 .compressed_info_card .block:hover{
