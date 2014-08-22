@@ -45,7 +45,7 @@ module NotificationHelper
 
 	def self._bookmark_notification data
 		name = self._get_name data
-		message = "<span> tagged </span><span class='site_color'><em>"+data["title"]+"</em></span><span>&nbsp; to &nbsp;</span><span>'"+data["label"]+"'.</span>"
+		message = "<span> saved </span><span class='site_color'><em>"+data["title"]+"</em></span><span>&nbsp; to &nbsp;</span><span>'"+data["label"]+"'.</span>"
 		self.notification(message, data)
 	end
 

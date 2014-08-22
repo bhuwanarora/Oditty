@@ -64,7 +64,7 @@ module Api
 				filter_type = (JSON.parse params[:q])["filter_type"]
 				filters = JSON.parse(params[:q])
 				if filter_type == "BOOK"
-					reading_time_filter = filters["other_filters"]["readingTime"].present?
+					reading_time_filter = filters["other_filters"][Constants::Time].present?
 					if reading_time_filter
 						if filters["reset"]
 							$redis.set 'last_filter_book', nil
@@ -87,7 +87,7 @@ module Api
 					end
 					
 					recommendations =  {:books => books}
-				elsif filter_type == "AUTHOR"
+				elsif filter_type == Constants::Author
 					authors = AuthorApi.recommendations
 					recommendations = {:authors => authors}
 				else

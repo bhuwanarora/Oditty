@@ -11,7 +11,6 @@
 		<main-header></main-header>
 		<recommendation-footer></recommendation-footer>
 		<div class="status animate-slow" ng-click="show_interaction_box()">
-			<span class="icon-pen black_blue_color"></span>
 			<span><input disabled placeholder="Share something..." /></span>
 		</div>
 
@@ -184,8 +183,7 @@
 			</div>
 			<div class="scrollbar notifications animate-fast" 
 				 ng-style="column_heights.notifications_style"
-				 ng-if="show_notifications"
-				 ng-hide="user.collapsed_column"
+				 ng-if="show_notifications && !user.collapsed_column"
 				 msd-wheel="handle_notification_ticker_size($event)"
 				 check-scroll-bottom="get_notifications()"
 				 check-scroll-down="handle_notification_ticker_size($event, true)">
@@ -263,7 +261,7 @@
 			</div>
 			<!-- <more-filters></more-filters> -->
 			<div class="scrollbar friends_grid" 
-				 ng-hide="user.collapsed_column"
+				 ng-if="!user.collapsed_column"
 				 ng-style="column_heights.friends_grid_style"
 				 msd-wheel="handle_friends_grid_size($event)"
 				 check-scroll-down="handle_friends_grid_size($event, true)">

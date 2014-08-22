@@ -103,7 +103,7 @@
 </div>
 
 <div class="user_box" ng-if="!show_author && !show_buy">
-  <div class="users_count">{{focused_book.users_count}} friends have read this</div>
+  <div class="heading">{{focused_book.users_count}} friends have read this</div>
   <div class="users">
     <div ng-repeat="user in focused_book.users">
       <img ng-src="{{user.thumb}}" />
@@ -124,9 +124,18 @@
       </div>
 </div>
 
+<div class="user_box_wrapper animate-fast"
+    ng-click="get_book_from_author()"
+    ng-if="show_author && !show_buy">
+    <div class="text">{{focused_book.author_name | uppercase}} BOOKS</div>
+</div>
 <div class="user_box"
      ng-if="show_author && !show_buy">
-    <img class="signature_thumb" ng-src="{{focused_book.author_details.signature_pic}}"/>
+     <div class="heading">{{focused_book.author_details.book_isbns.length}} more books from author</div>
+      <img ng-src="{{book_isbn | small_thumb}}" 
+           ng-repeat="book_isbn in focused_book.author_details.book_isbns track by $index" 
+           class="book_thumb">
+    <!-- <img class="signature_thumb" ng-src="{{focused_book.author_details.signature_pic}}"/> -->
 </div>
 
 <div class="time_to_read" ng-if="show_buy && !show_author">

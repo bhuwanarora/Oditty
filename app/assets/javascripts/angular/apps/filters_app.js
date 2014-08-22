@@ -189,27 +189,42 @@ angular.module('filtersApp', [])
     return function(isbn_string){
       if(isbn_string){
         var isbn = isbn_string.split(",");
-        var thumb = "http://covers.openlibrary.org/b/isbn/"+isbn[0]+"-L.jpg"
+        var thumb = "http://covers.openlibrary.org/b/isbn/"+isbn[0]+"-L.jpg";
         return thumb;
       }
     }
   })
   .filter('medium_thumb', function(){
     return function(isbn_string){
+      var output = ""
       if(isbn_string){
         var isbn = isbn_string.split(",");
-        var thumb = "http://covers.openlibrary.org/b/isbn/"+isbn[0]+"-M.jpg"
-        return thumb;
+        angular.forEach(isbn, function(value){
+          var img = new Image();
+          img.src = "http://covers.openlibrary.org/b/isbn/"+value+"-M.jpg";
+          if(img.height > 20 && output == ""){
+            output = img.src;
+          }
+        });
+        return output;
       }
     }
   })
   .filter('small_thumb', function(){
     return function(isbn_string){
+      var output = ""
       if(isbn_string){
         var isbn = isbn_string.split(",");
-        var thumb = "http://covers.openlibrary.org/b/isbn/"+isbn[0]+"-S.jpg"
-        return thumb;
+        angular.forEach(isbn, function(value){
+          var img = new Image();
+          img.src = "http://covers.openlibrary.org/b/isbn/"+value+"-S.jpg";
+          if(img.height > 20 && output == ""){
+            output = img.src;
+          }
+        });
+        return output;
       }
+
     }
   })
   .filter('thumb_backup', function(){

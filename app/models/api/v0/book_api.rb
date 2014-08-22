@@ -385,27 +385,27 @@ module Api
 				skip_clause = ""
 				book_ids = ($redis.get 'book_ids').split(",")
 				random = Random.new.rand(1..100)
-				read_time = filters["other_filters"]["readingTime"].downcase.gsub(" ", "") rescue ""
+				read_time = filters["other_filters"][Constants::Time]
 				only_read_time = filters["other_filters"].keys.length == 1 && read_time.present?
 
 				if only_read_time
 					if read_time == Constants::TinyRead
 						last_book = Constants::BestTinyRead unless last_book.present?
-						relation = "NextTinyRead"
+						relation = Constants::TinyReadRelation
 					elsif read_time == Constants::SmallRead
 						last_book = Constants::BestSmallRead unless last_book.present?
-						relation = "NextSmallRead"
+						relation = Constants::SmallReadRelation
 					elsif read_time == Constants::NormalRead
 						last_book = Constants::BestNormalRead unless last_book.present?
-						relation = "NextNormalRead"
+						relation = Constants::NormalReadRelation
 					elsif read_time == Constants::LongRead
 						last_book = Constants::BestLongRead unless last_book.present?
-						relation = "NextLongRead"
+						relation = Constants::LongReadRelation
 					end
 					init_match_clause = "MATCH (b:Book) WHERE ID(b)="+last_book.to_s+" "
 					match_clause = "MATCH p=(b)-[:"+relation+"*..5]->(next_book) WITH last(nodes(p)) as book MATCH(book) "
 				else
-					time_group = filters["other_filters"]["timeGroup"].split("(")[0].gsub(" " , "").downcase rescue ""
+					time_group = filters["other_filters"][Constants::Year].split("(")[0].gsub(" " , "").downcase rescue ""
 					if time_group.present?
 						case time_group
 						when Constants::OldEnglishLiterature
@@ -448,14 +448,14 @@ module Api
 				
 				# distinct_clause = "ALL (id in "+book_ids.to_s+" WHERE toInt(id) <> ID(book)) "
 
-				if filters["other_filters"]["country"].present?
+				if filters["other_filters"][Constants::Country].present?
 					where_clause = where_clause + ""
 					match_clause = match_clause + ""
 				end
 				
 
-				if filters["other_filters"]["author"].present?
-					author_id =  filters["other_filters"]["author"]
+				if filters["other_filters"][Constants::Author].present?
+					author_id =  filters["other_filters"][Constants::Author]
 					match_clause = match_clause + ", (author:Author)-[:Wrote]->(book) "
 					next_Where_clause = " ID(author) = "+author_id.to_s+" "
 					if where_clause.present?
@@ -466,8 +466,8 @@ module Api
 				end
 
 
-				if filters["other_filters"]["genre"].present?
-					genre = filters["other_filters"]["genre"]
+				if filters["other_filters"][Constants::Genre].present?
+					genre = filters["other_filters"][Constants::Genre]
 					match_clause = match_clause + ", (genre:Genre)-[r:Belongs_to]->(book) "
 					next_Where_clause = " ID(genre) = "+genre.to_s+" AND r.weight IS NOT NULL "
 					
@@ -481,7 +481,7 @@ module Api
 				end
 
 
-				if !only_read_time && filters["other_filters"]["readingTime"].present?
+				if !only_read_time && filters["other_filters"][Constants::Time].present?
 					if read_time == Constants::TinyRead
 						next_Where_clause = " toInt(book.page_count) <= 50 "
 					elsif read_time == Constants::SmallRead

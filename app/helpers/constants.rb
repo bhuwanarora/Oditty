@@ -25,10 +25,15 @@ module Constants
 	BestBook					= 395152 #"thehungergames"
 	BestGrid					= 2571211
 
-	TinyRead 					= "foraflightjourney"
-	SmallRead 					= "foraweekendgetaway"
-	NormalRead 					= "foraweekholiday"
-	LongRead 					= "foramonthvacation"
+	TinyRead 					= "tinyread"
+	SmallRead 					= "smallread"
+	NormalRead 					= "normalread"
+	LongRead 					= "longread"
+
+	TinyReadRelation 			= "NextTinyRead"
+	SmallReadRelation 			= "NextSmallRead"
+	NormalReadRelation 			= "NextNormalRead"
+	LongReadRelation 			= "NextLongRead"
 
 	OldEnglishLiterature		= "oldenglish"
 	MiddleEnglishLiterature		= "middleenglish"
@@ -39,4 +44,10 @@ module Constants
 	Modernism 					= "modern"
 	PostModernLiterature 		= "postmodern"
 	TwentiethCenturyLiterature	= "20thcenturygenre"
+
+	Time 						= "TIME"
+	Year 						= "YEAR"
+	Country 					= "COUNTRY"
+	Author 						= "AUTHOR"
+	Genre 						= "GENRE"
 end

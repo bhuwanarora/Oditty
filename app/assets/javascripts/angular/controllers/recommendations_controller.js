@@ -48,12 +48,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
 	$scope.reset = function(){
-		var searching = angular.isDefined($scope.filters.other_filters) && (angular.isDefined($scope.filters.other_filters.id) || angular.isDefined($scope.filters.other_filters.title))
-		if(searching){
-			$scope.panel_selected = "";
-			$scope.bookmark_selected = false;
-			$scope.read_selected = false;
-		}
+		$scope.panel_selected = "";
+		$scope.bookmark_selected = false;
+		$scope.read_selected = false;
 		_init_recommendations();
     	_get_recommendations();
 	}
@@ -64,7 +61,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
 	$scope.hide_popups = function(){
-		$rootScope.hide_options = true;
 		delete $rootScope.focused_book;
 		delete $rootScope.ticker_popup;
  		// $scope.show_more_filters = false;
@@ -407,10 +403,11 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     _get_recommendations = function(){
     	$rootScope.loading = true;
         recommendationService.get_recommendations().then(function(data){
-        	if($scope.recommendations.books.length == 0){
+        	_update_recommendations(data);
+        	var move_right = angular.isDefined(data.recommendations.book) && $scope.recommendations.books.length == 0 && data.recommendations.book.length > 2;
+        	if(move_right){
         		$scope.$emit('moveRight');
         	}
-        	_update_recommendations(data);
 	    });
 	    var no_filters = (angular.isUndefined($rootScope.filters.more_filters) || $rootScope.filters.more_filters.length == 0) && (angular.isUndefined($rootScope.filters.other_filters) || JSON.stringify($rootScope.filters.other_filters) == '{}');
 	    

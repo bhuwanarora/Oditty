@@ -1,30 +1,42 @@
-<div class="wrapper" ng-if="$routeParams.type && !hide_options"></div>
+<div class="wrapper" 
+     ng-click="reset_search_bar($event)"
+     ng-if="$routeParams.type && !hide_options"></div>
 
 <div class="search_typeahead_group animate-fast" ng-class="{'shift_top': filters_added.length > 0}">
   <div class="base_search">
     <div class="base_search_option"
          ng-class="{'site_color active_border':is_active(item)}"
          ng-click="handle_base_selection(item)"
+         ng-hide="$routeParams.type && hide_options"
          ng-repeat="item in base_search_options">
       <span class="{{item.icon}}">&nbsp;</span><span ng-bind-html="item.name"></span>
     </div>
     <div class="search_icon">
       <span class="icon-search"></span>
     </div>
-    
   </div>
+
+  <div class="compressed_filters" ng-show="$routeParams.type && hide_options && filters_added.length > 0">
+    <div ng-repeat="item in filters_added"
+          class="compressed_filter_icon" 
+         ng-click="remove_filter(item, $event)">
+        <span ng-show="item.icon2" class="{{item.icon2}} faded_site_color"></span>
+    </div>
+  </div>
+
   <input set-focus="website.searching" 
          ng-keypress="get_search_results($event)"
          ng-keydown="key_down($event)"
          ng-model="search_tag.input"
          id="searchInput"
          ng-hide="hide_input_field"
-         ng-click="handle_options()"
-         class="search_input" 
+         ng-click="handle_options($event)"
+         class="search_input"
+         ng-class="{'search_input_shifted': $routeParams.type && hide_options}"
          placeholder="{{search_tag.placeholder}}"/>
 
 
-  <div class="website_search_helpers animate-fast" ng-show="active_nest">
+  <div class="website_search_helpers animate-fast" ng-show="active_nest && !($routeParams.type && hide_options)">
     <div class="compressed_option site_color"
          ng-click="handle_base_selection()">
       <span class="icon-book"></span>
@@ -33,14 +45,14 @@
       <span class="icon-angle-right"></span>
     </div>
     <div class="compressed_option" 
-         ng-click="handle_selection_option(item)"
+         ng-click="handle_selection_option(item, $event)"
          ng-repeat="item in base_book_options"
          ng-class="{'site_color active_border': is_active_nest(item)}">
       <span class="{{item.icon}}"></span>
     </div>
   </div>
 
-  <div class="website_search_helpers box-shadow animate-fast" ng-show="show_secondary_input">
+  <div class="website_search_helpers box-shadow animate-fast" ng-show="show_secondary_input && !($routeParams.type && hide_options)">
     <input placeholder="{{custom_input_placeholder}}" 
            class="search_input"
            ng-model="search_tag.custom_input"
@@ -49,13 +61,13 @@
            set-focus="website.searching_custom"/>
   </div>
 
-  <div class="website_search_helpers animate-fast" ng-if="!hide_options">
+  <div class="website_search_helpers animate-fast" ng-show="!($routeParams.type && hide_options)">
         <div class="title" ng-show="search_display" ng-bind-html="search_display"></div>
   </div>
 
-  <div class="animate-fast website_search_options scrollbar" ng-if="search_results.length > 0;">
+  <div class="animate-fast website_search_options scrollbar" ng-if="search_results.length > 0 && !($routeParams.type && hide_options)">
     <div ng-repeat="item in search_results | limitTo: search_tag.result_count+1 track by $index "
-         ng-click="handle_selection_option(item)" 
+         ng-click="handle_selection_option(item, $event)" 
          ng-class="{'light_gray_background':is_current($index, item)}"
          ng-mouseenter="set_current($index)"
          msd-wheel="stop_horizontal_scroll($event)"
@@ -71,9 +83,9 @@
 
   </div>
 
-  <div class="filters_added website_search_options">
+  <div class="filters_added website_search_options" ng-hide="$routeParams.type && hide_options">
     <div ng-repeat="item in filters_added"
-         ng-click="remove_filter(item)"
+         ng-click="remove_filter(item, $event)"
          msd-wheel="stop_horizontal_scroll($event)"
          class="option site_color animate-fast">
         <div class="title">

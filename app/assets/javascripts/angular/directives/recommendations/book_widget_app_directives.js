@@ -114,7 +114,7 @@ websiteApp.directive('labelDropdown', ['$rootScope', '$timeout', 'widgetService'
           if(angular.isDefined($rootScope.user.name)){
             name = $rootScope.user.name;
           }
-          var message = "<span>tagged&nbsp;</span><span class='site_color'>"+$scope.book.title+"</span><span> to '"+$scope.book.labels[index]["name"]+"'</span>";
+          var message = "<span>saved&nbsp;</span><span class='site_color'>"+$scope.book.title+"</span><span> to '"+$scope.book.labels[index]["name"]+"'</span>";
           
           var notification = {
             "thumb":$rootScope.user.thumb,
@@ -420,10 +420,19 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
         $scope.show_buy = false;
         if(angular.isUndefined($rootScope.focused_book.author_details)){
           widgetService.get_author_details($rootScope.focused_book.id).then(function(data){
-            $rootScope.focused_book.author_details = {"about": data[0], "image_url": data[1], "signature_pic": data[2], "id": data[3]};
-            debugger
+            $rootScope.focused_book.author_details = {"about": data[0], "image_url": data[1], "signature_pic": data[2], "id": data[3], "book_ids": data[4], "book_isbns": data[5]};
           });
         }
+      }
+
+      $scope.get_book_from_author = function(){
+        // if(angular.isUndefined($rootScope.filters.other_filters)){
+          // $rootScope.filters = {"other_filters": {}};
+        // }
+        // $rootScope.filters.other_filters["AUTHOR"] = $rootScope.focused_book.author_details.id;
+        // $rootScope.filters.other_filters["reset"] = true;
+        // $rootScope.filters.other_filters["reset_count"] = 0;
+        $rootScope.$broadcast('updateFilters', "AUTHOR", $rootScope.focused_book.author_details.id);
       }
 
       $scope.get_buy_links = function(){

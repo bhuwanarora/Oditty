@@ -171,7 +171,7 @@
 }
 
 .comment_box:focus{
-	border: 1px solid #136CB2;
+	border: 1px solid #427fed;
 }
 
 .msd-wheel.ng-move{
@@ -327,7 +327,7 @@
 	cursor: default;
 	background-color: #F0F0F0;
 	color: #427fed;
-	border-radius: 3px;
+	border-radius: 1px;
 }
 
 .shelf_nav_links{
@@ -337,7 +337,7 @@
    	box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
    	position: fixed;
    	top: 50px;
-   	border-radius: 3px;
+   	border-radius: 1px;
 }
 
 .push_notification{
@@ -1189,85 +1189,6 @@ and (min-width : 1824px) {
 }
 
 
-
-.main_header .search_typeahead_group{
-    position: fixed;
-    right:10%;
-    top: 3px;
-    width: 350px;
-    height: 37px;
-    z-index: 1;
-}
-
-.main_header input{
-	height: 70%;
-	box-shadow: none;
-	margin-top: 2px;
-	border: 1px solid #E7E7E7;	
-}
-
-.main_header .search_typeahead_group input{
-	border-top-left-radius: 3px;
-}
-
-.main_header .search_level1_typeahead_group input,
-.main_header .search_level2_typeahead_group input{
-	border-top-left-radius: 0px;
-}
-
-.main_header .search_typeahead_group .search_icon{
-	box-shadow: none;
-	padding: 9px 11px 5px;
-	top: 2px;
-	border-top-right-radius: 3px;
-}
-
-.main_header .website_search_helpers, 
-.main_header .website_search_options{
-	top: 32px;
-}
-
-.main_header .search_level1_typeahead_group{
-	width: 316px;
-}
-
-
-.main_header .input_handler .custom_icon{
-	border-top-left-radius: 3px;
-	border-bottom-left-radius: 3px;
-}
-
-.main_header .input_handler .custom_icon, 
-.main_header .input_handler_level2 .custom_icon{
-	padding: 9px;
-}
-
-.main_header .search_level2_typeahead_group{
-	width: 283px;
-}
-
-.main_header .input_handler{
-	position: fixed;
-	z-index: 2;
-	top: 3px;
-	width: 34px;
-	height: 34px;
-	margin-top: 0px;
-	right: 10%;
-	margin-right: 315px;
-}
-
-.main_header .input_handler_level2{
-	position: fixed;
-	z-index: 2;
-	top: 3px;
-	width: 34px;
-	height: 34px;
-	margin-top: 0px;
-	right: 10%;
-	margin-right: 282px;
-}
-
 .button_effect {
 	border: 1px solid #F3F3F3;
 	background-color: white;
@@ -1386,7 +1307,7 @@ and (min-width : 1824px) {
 	left: 289px;
 	white-space: initial;
 	background-color: white;
-	border-radius: 4px;
+	border-radius: 2px;
 	border: 1px solid #FFF;
 	box-shadow: 0 7px 15px rgba(0,0,0,.25);
 	height: 42vh;
@@ -1463,8 +1384,8 @@ and (min-width : 1824px) {
 	left: 50%;
 	margin-left: -250px;
 	padding: 2px;
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
 	box-shadow: -3px 0 5px -2px #888;
 }
 
@@ -1582,19 +1503,54 @@ and (min-width : 1824px) {
 }
 
 
-.recommendations_page .search_typeahead_group{
-    top: 15px;
-    margin-top: 0px;
+.main_header .search_typeahead_group{
+   	position: fixed;
+	left: 170px;
+	top: 3px;
+	width: 50%;
+	height: 37px;
+	z-index: 1;
 }
 
-.recommendations_page .search_input{
-    color: #717070;
-    background-color: white;
-    border: 1px solid #D8D8D8;
+.main_header .search_input_shifted{
+    background-color: #fff;
+	border: 1px solid #D8D8D8;
+	position: fixed;
+	width: 48%;
+	height: 28px;
+	top: 4px;
+	left: 170px;
+	box-shadow: none;
 }
 
-.recommendations_page .search_input:focus{
+.main_header .base_search{
+	box-shadow: none;
+}
+
+.main_header .search_typeahead_group .search_icon{
+	z-index: 3;
+	padding: 9px 30px 8px;
+}
+
+.main_header .search_input:focus{
     /*outline: 0.5px solid #4d90fe;*/
-    border-color: #4d90fe !important;
+    border-color: #427fed !important;
     box-shadow: 0 0 10px #9ecaed;
+}
+
+.main_header .compressed_filters{
+	background-color: white;
+	top: 4px;
+	position: fixed;
+	z-index: 2;
+	width: 50%;
+	height: 30px;
+	border: 1px solid #D8D8D8;
+	border-radius: 2px;
+}
+
+.main_header .compressed_filters .compressed_filter_icon{
+	display: inline-block;
+	float: left;
+	padding: 8px;
 }
