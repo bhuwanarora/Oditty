@@ -145,6 +145,8 @@ GEM
     girl_friday (0.11.2)
       connection_pool (~> 1.0)
       rubinius-actor
+    google-search (1.0.3)
+      json
     haml (4.0.5)
       tilt
     haml-rails (0.5.3)
@@ -450,6 +452,7 @@ DEPENDENCIES
   faye
   fb_graph
   freebase-api
+  google-search
   hirb
   hirb-unicode
   jbuilder (~> 1.2)

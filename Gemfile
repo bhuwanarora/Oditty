@@ -88,6 +88,7 @@ gem 'capistrano'
 gem 'capistrano-bundler'
 gem 'capistrano-rails'
 gem 'capistrano-rbenv'
+gem 'google-search'
 
 group :development do
 	gem "byebug", "~> 2.5.0"

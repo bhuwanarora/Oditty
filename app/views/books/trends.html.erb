@@ -1,6 +1,11 @@
 <table>
 	<tr>
 		<th>Trending</th>
+		<th>Title</th>
+		<th>Content</th>
+		<th>Location</th>
+		<th>Publisher</th>
+		<th>Thumb</th>
 		<th>Timestamp</th>
 		<th>Search Books</th>
 		<th>Books</th>
@@ -9,7 +14,12 @@
 	</tr>
 	<% @trends.sort_by!{|s| Time.at(s[1])}.reverse.each do |trend|%>
 		<tr>
-			<td><%= trend[0] %></td>
+			<td><a href="<%= trend[9] %>" target="_blank"><%= trend[0] %></a></td>
+			<td><a href="<%= trend[11] %>" target="_blank"><%= trend[6] %></a></td>
+			<td><%= trend[7] %></td>
+			<td><%= trend[8] %></td>
+			<td><%= trend[12] %></td>
+			<td><img src="<%= trend[10] %>"></td>
 			<td><%= Time.at(trend[1]).strftime("%d-%m-%y") %></td>
 			<td>
 				<input class="search_box" />

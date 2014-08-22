@@ -58,7 +58,7 @@
 		  			TRENDING
 		  		</span>
 		  		<span> · &nbsp;&nbsp;&nbsp;&nbsp;</span>
-		  		<span ng-repeat="trend in trends" class="trend">
+		  		<span ng-repeat="trend in trends | limitTo : 6" class="trend">
 		  			<a ng-href="#user/{{user.id}}/trending/books/id/{{trend.id}}/name/{{trend.name}}"
 		  				class="animate-fast">
 		  				<span class="icon-bars"></span>

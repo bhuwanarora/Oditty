@@ -3,95 +3,6 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 		restrict: 'E',
 		controller: ['$scope', 'recommendationService', 'websiteService', 'RecommendationUIConstants',
 			function($scope, recommendationService, websiteService, RecommendationUIConstants){
-			_init = function(){
-				console.debug("%c init moreFilters ", "color: purple");
-				// $scope.$on('initPage', function(event, type){
-				// 	_reload_page(type=="BOOK", type=="AUTHOR", type=="READER");
-				// });
-				// $scope.active_book_filter = true;
-				// $scope.active_author_filter = false;
-				// $scope.active_reader_filter = false;
-				$scope.show_menu = false;
-				$scope.countryOptions = [];
-				$scope.show_lists = false;
-				$scope.handle_left_columns();
-				$scope.$on('filterChange', function(scope, selected, type){
-					if(type == "country"){
-						$scope.countrySelected = selected;
-					}
-					else if(type == "timeGroup"){
-						$scope.timeSelected = selected;
-					}
-					else if(type == "readingTime"){
-						$scope.readTimeSelected = selected;
-					}
-					$scope.advance_filter_changed(selected, type)
-				});
-				recommendationService.get_countries().then(function(data){
-			    	$scope.countryOptions = _reset_json();
-			    	$scope.countryOptions = $scope.countryOptions.concat(data["countries"]);
-			    	$scope.countryOptions = [];
-			    });
-			    recommendationService.get_time_groups().then(function(data){
-			    	$scope.timeOptions = _reset_json();
-			    	angular.forEach(data["times"], function(value){
-			    		var time_data = value[0]["data"];
-			    		var name = time_data["name"]+" ("+time_data["range"]+")";
-			    		var json = {"name": name};
-			    		this.push(json);
-			    	}, $scope.timeOptions);
-			    });
-			    recommendationService.get_read_times().then(function(data){
-			    	$scope.readTimeOptions = _reset_json();
-			    	angular.forEach(data["read_times"], function(value){
-			    		var time_data = value[0]["data"];
-			    		var name = time_data["name"];
-			    		var json = {"name": name, "custom_option": true, "type": "readingTime"};
-			    		this.push(json);
-			    	}, $scope.readTimeOptions);
-			    });
-			    _init_dropdown_filters();
-			    _collapse_dropdown_menu();
-			    // _get_filters();
-			}
-
-			_get_filters = function(){
-		    	recommendationService.get_filters().then(function(data){
-		    		$scope.more_filters = $scope.more_filters.concat(data["filters"]);
-		    	});
-		    }
-
-			_reset_json = function(){
-				return [{"name": "<span class='icon-loop'></span><span>&nbsp;Reset</span>"}];
-			}
-
-			_collapse_dropdown_menu = function(){
-				$scope.filter_expanded = true;
-				var timeout_event = $timeout(function(){
-					$scope.filter_expanded = false;
-				}, 3000);
-			}
-
-			_country_init = function(){
-				return {"name": "<span class='icon-earth filter_icon yellow_color'></span>"+
-						"<span>&nbsp;&nbsp;&nbsp;Books by Region (Coming Soon)</span>"};
-			}
-
-			_time_init = function(){
-				return {"name": "<span class='icon-calendar filter_icon'></span>"+
-						"<span>&nbsp;&nbsp;&nbsp;Books by Era</span>"};
-			}
-
-			_read_time_init = function(){
-				return {"name": "<span class='icon-clock filter_icon orange_color'></span>"+
-						"<span>&nbsp;&nbsp;&nbsp;Books by Reading Time</span>"};
-			}
-
-			_init_dropdown_filters = function(){
-				$scope.countrySelected = _country_init();
-				$scope.timeSelected = _time_init();
-				$scope.readTimeSelected = _read_time_init();
-			}
 
 			$scope.handle_left_columns = function(){
 				$scope.column_heights = {"show_filters": true,
@@ -99,153 +10,8 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 										"friends_grid_style": {"height": RecommendationUIConstants.FriendsGridMinHeight}};
 			}
 
-			$scope.clear_filter = function(main_filter, type){
-				delete $rootScope.filters.other_filters[type];
-				// $rootScope.filters["other_filters"][type] = null;
-				var message = "SUCCESS-"+type+" filter removed";
-				var timeout_event = notify($rootScope, message, $timeout);
-				$scope.$on('destroy', function(){
-					$timeout.cancel(timeout_event);
-				});
-				$scope.$emit('reloadRecommendations');
-			}
-
-			$scope.advance_filter_changed = function(selected, type){
-				if(selected.name == "<span class='icon-loop'></span><span>&nbsp;Reset</span>"){
-					var message = "SUCCESS-"+type+" filter has been reset."
-					delete $rootScope.filters.other_filters[type];
-					if(type == "country"){
-						$scope.countrySelected = _country_init();
-					}
-					else if(type == "timeGroup"){
-						$scope.timeSelected = _time_init();
-					}
-					else if(type == "readingTime"){
-						$scope.readTimeSelected = _read_time_init();
-					}
-				}
-				else{
-					var message = "SUCCESS-"+selected.name+" added to filters."
-					$rootScope.filters.other_filters[type] = selected.name;
-				}
-				var timeout_event = notify($rootScope, message, $timeout);
-				$scope.$on('destroy', function(){
-					$timeout.cancel(timeout_event);
-				});
-				$scope.$emit('reloadRecommendations');
-				// $('.inline_block_left').removeClass('active');
-			}
-
-			$scope.reset_filters = function(){
-				_init_dropdown_filters();
-				$scope.$broadcast('resetFilter');
-				$rootScope.filters.more_filters = [];
-				$rootScope.filters.other_filters = {};
-				$scope.$emit('reloadRecommendations');
-				var message = "SUCCESS-All filters removed.<br/> You can add filters to look for particular books.";
-				var timeout_event = notify($rootScope, message, $timeout);
-				$scope.$on('destroy', function(){
-					$timeout.cancel(timeout_event);
-				});
-			}
-
 			$scope.stop_click_propagation = function(event){
 				event.stopPropagation();
-			}
-
-			_reload_page = function(isBook, isAuthor, isReader){
-				// if(isBook){
-				// 	$scope.active_book_filter = true;
-				// 	$scope.active_author_filter = false;
-				// 	$scope.active_reader_filter = false;
-				// 	$rootScope.filters["filter_type"] = "BOOK";
-				// }
-				// else if(isAuthor){
-				// 	$scope.active_book_filter = false;
-				// 	$scope.active_author_filter = true;
-				// 	$scope.active_reader_filter = false;
-				// 	$rootScope.filters["filter_type"] = "AUTHOR";
-				// }
-				// else if(isReader){
-				// 	$scope.active_book_filter = false;
-				// 	$scope.active_author_filter = false;
-				// 	$scope.active_reader_filter = true;
-				// 	$rootScope.filters["filter_type"] = "READER";
-				// }
-				// $scope.$emit('reloadRecommendations');
-				// $scope.$emit('moveRight');
-			}
-
-			// $scope.toggle_active_filter = function(){
-			// 	var elementText = event.currentTarget.innerText.trim();
-			// 	var isBook = elementText == "BOOK" || event.currentTarget.className.indexOf("main_book_icon")!=-1;
-			// 	var isAuthor = elementText == "AUTHOR" || event.currentTarget.className.indexOf("main_author_icon")!=-1;
-			// 	var isReader = elementText == "READER" || event.currentTarget.className.indexOf("main_reader_icon")!=-1;
-			// 	$scope.show_menu = false;
-			// 	// _reload_page(isBook, isAuthor, isReader);
-			// }
-
-			$scope.show_genre_options = function(filter, genre){
-				if(genre){
-					var genre = genre+String.fromCharCode(event.keyCode);
-				}
-				else{
-					var genre = String.fromCharCode(event.keyCode);
-				}
-				var count = 3;
-				if(genre == ""){
-					count = 2;
-				}
-				var params = "q="+genre+"&filter="+filter+"&count="+count;
-				websiteService.search_genres(params).then(function(data){
-					$scope.genres = [];
-					angular.forEach(data, function(value){
-						var json = {"name": value[0], "id": value[1]};
-						this.push(json);
-					}, $scope.genres);
-			    });
-			}
-
-			$scope.on_genre_selection = function(genre){
-				$scope.genre = genre;
-				$rootScope.filters["other_filters"]["genre"] = genre;
-				var message = "SUCCESS-'"+genre+"' added to filters.";
-				var timeout_event = notify($rootScope, message, $timeout);
-				$scope.$emit('reloadRecommendations');
-
-
-				$scope.$on('destroy', function(){
-					$timeout.cancel(timeout_event);
-				});
-			}
-
-			$scope.show_author_options = function(filter, author){
-				if(author){
-					var params = author+String.fromCharCode(event.keyCode);
-				}
-				else{
-					var params = String.fromCharCode(event.keyCode);
-				}
-				websiteService.search(params, "AUTHOR", 3).then(function(data){
-					$scope.authors = [];
-					angular.forEach(data.results.data, function(value){
-						var json = {"name": value[0], "id": value[1]};
-						this.push(json);
-					}, $scope.authors);
-			    });
-			}
-
-			$scope.on_author_selection = function(author){
-				$scope.author = author;
-				$rootScope.filters["other_filters"]["author"] = author;
-				var message = "SUCCESS-'"+author+"' added to filters.";
-				var timeout_event = notify($rootScope, message, $timeout);
-				$scope.$emit('reloadRecommendations');
-
-
-				$scope.$on('destroy', function(){
-					$timeout.cancel(timeout_event);
-				});
 			}
 
 			$scope.toggle_menu = function(){
@@ -258,8 +24,6 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 					$scope.filter_expanded = true;
 				}
 			}
-
-			_init();
 		}],
 		templateUrl: "/assets/angular/widgets/partials/more_filters.html"
 	}
@@ -284,34 +48,7 @@ websiteApp.directive('filter', ['$rootScope', '$timeout', '$routeParams', functi
 		restrict: 'E',
 		scope: { 'filter': '=data' },
 		controller: ['$scope', function($scope){
-			// $scope.toggle_filter = function(){
-			// 	type = "more_filters";
-			// 	var filter_id = $scope.filter["id"];
-			// 	var filter_name = $scope.filter["name"];
-			// 	var index = $rootScope.filters[type].indexOf(filter_id);
-				
-			// 	if($scope.active == true){
-			// 		$scope.active = false;
-			// 		if(index != -1){
-			// 			$rootScope.filters[type].splice(index, 1);
-			// 		}
-			// 		var message = "SUCCESS-'"+filter_name+"' removed from filters.";
-			// 	}
-			// 	else{
-			// 		$scope.active = true;
-			// 		if(index == -1){
-			// 			$rootScope.filters[type].push(filter_id);
-			// 		}
-			// 		var message = "SUCCESS-'"+filter_name+"' added to filters.";
-			// 	}
-			// 	$scope.$emit('reloadRecommendations');
-			// 	var timeout_event = notify($rootScope, message, $timeout);
-
-			// 	$scope.$on('destroy', function(){
-			// 		$timeout.cancel(timeout_event);
-			// 	})
-			// }
-
+			
 			_initialise_filters = function(type){
 				if($scope.filter){
 					var filter_id = $scope.filter.id;
@@ -330,26 +67,6 @@ websiteApp.directive('filter', ['$rootScope', '$timeout', '$routeParams', functi
 					else{
 						$scope.active = false;
 					}
-					// var index = $rootScope.filters[type].indexOf(filter_id);
-					// var already_selected = index != -1;
-					// if (!already_selected){
-					// 	if($scope.filter["priority"] == 100){
-					// 		$scope.active = true;
-					// 		$rootScope.filters[type].push(filter_id);
-					// 	}
-					// 	else{
-					// 		$scope.active = false;
-					// 	}
-					// }
-					// else{
-					// 	if($rootScope.filters[type][filter_id]){
-					// 		$scope.active = true;
-					// 	}
-					// 	else{
-					// 		$scope.active = false;
-					// 		$rootScope.filters[type].splice(index, 1);
-					// 	}
-					// }
 				}
 			}
 
@@ -474,20 +191,6 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 					// $('body').css('background-image', '');
 				}
 			}
-
- 		// 	$scope.toggle_more_filters = function(event){
-			// 	if($scope.show_more_filters == true){
-			// 		$scope.show_more_filters = false;
-			// 		// $('.recommendation_block').css('margin-top', '40px');
-			// 		// $('.info_cards').css('margin-top', '40px');
-			// 	}
-			// 	else{
-			// 		$scope.show_more_filters = true;		
-			// 		// $('.recommendation_block').css('margin-top', '0px');
-			// 		// $('.info_cards').css('margin-top', '0px');
-			// 	}
-			// 	event.stopPropagation();
-			// }
 
 			$scope.toggle_read = function(){
 				if(!$scope.read_selected){
@@ -923,20 +626,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 			$scope.add_author = function(){
 
 			}
-
-			// $scope.get_search_results = function(event, type, searchResults){
-			// 	if(searchResults){
-			// 		searchResults = searchResults + String.fromCharCode(event.keyCode);
-			// 	}
-			// 	else{
-			// 		searchResults = String.fromCharCode(event.keyCode);	
-			// 	}
-			// 	websiteService.search(searchResults, type, 3)
-		 //        .then(function(result) {
-		 //            $scope.search_results = $scope.search_results.concat(result.results);
-		 //        });
-			// }
-
+	
 			$scope.set_user_name = function(){
 				if($rootScope.user.name.length > 0){
 					var params = {"name": $rootScope.user.name};

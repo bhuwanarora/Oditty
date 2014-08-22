@@ -871,7 +871,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$scope.trends = [];
 			websiteService.get_trending_topics().then(function(data){
 				angular.forEach(data, function(value){
-					var json = {"name": value[0], "id": value[1]};
+					var json = {"name": value[0], "id": value[1], "content": value[2]};
 					this.push(json);
 				}, $scope.trends);
 			});

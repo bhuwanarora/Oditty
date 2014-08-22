@@ -220,7 +220,7 @@ class BooksController < ApplicationController
       neo.execute_query clause
     end
 
-    clause = "MATCH (t:Trending) OPTIONAL MATCH (t)-[:RelatedBooks]->(b:Book) RETURN t.name, t.timestamp, ID(t), COLLECT(b.title), t.status, COLLECT(ID(b))"
+    clause = "MATCH (t:Trending) OPTIONAL MATCH (t)-[:RelatedBooks]->(b:Book) RETURN t.name, t.timestamp, ID(t), COLLECT(b.title), t.status, COLLECT(ID(b)), t.title, t.content, t.location, t.url, t.thumbnail_url, t.redirect_url, t.publisher"
     puts clause.blue.on_red
     @trends = neo.execute_query(clause)["data"]
 
