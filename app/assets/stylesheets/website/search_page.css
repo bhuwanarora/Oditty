@@ -14,6 +14,22 @@
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
+.search_button{
+	background-color: #4d90fe;
+	background-image: -webkit-linear-gradient(top,#4d90fe,#4787ed);
+	color: white;
+	padding: 10px 0px;
+	cursor: pointer;
+}
+
+.filters_added .close_icon{
+	margin-top: 2px;
+}
+
+.filters_added .option:hover .close_icon{
+	color: rgba(216, 57, 30, 0.5);
+}
+
 .search_input{
     font-size: 1em;
     color: #717070;

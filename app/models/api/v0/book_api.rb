@@ -468,7 +468,7 @@ module Api
 
 				if filters["other_filters"][Constants::Genre].present?
 					genre = filters["other_filters"][Constants::Genre]
-					match_clause = match_clause + ", (genre:Genre)-[r:Belongs_to]->(book) "
+					match_clause = match_clause + ", (genre:StarGenre)-[r:Belongs_to]->(book) "
 					next_Where_clause = " ID(genre) = "+genre.to_s+" AND r.weight IS NOT NULL "
 					
 					with_clause = with_clause + " ,r.weight as genre_weight " if with_clause.present?
@@ -506,7 +506,7 @@ module Api
 				order_clause = init_order_clause + base_order_clause 	if init_order_clause.present?
 				clause = init_match_clause				
 				clause = clause + match_clause 							if match_clause.present?
-				clause = clause + "WHERE "+where_clause 				if where_clause.present?
+				clause = clause + "WHERE book:ActiveBook AND "+where_clause 				if where_clause.present?
 				clause = clause + with_clause 							if with_clause.present?
 				clause = clause + return_clause 						if return_clause.present?
 				clause = clause + order_clause 							if order_clause.present?

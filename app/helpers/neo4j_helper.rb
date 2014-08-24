@@ -997,5 +997,20 @@ module Neo4jHelper
 		@neo.execute_query clause
 	end
 
+	def self.set_active_books
+		@neo ||= self.init
+		skip = 10000
+		start_id = 384293 #MIN ID
+		end_id = 2655796 #MAX ID
+		# limit = 100
+		while start_id <= end_id
+			puts "set_active_books..."+start_id.to_s.green
+			limit = start_id + skip
+			clause = 'MATCH (book:Book) WHERE ID(book) >= '+start_id.to_s+' AND ID(book) < '+limit.to_s+'  AND book.description <> "" AND book.description IS NOT NULL SET book :ActiveBook RETURN COUNT(book)'
+			puts @neo.execute_query(clause)["data"][0]
+			start_id = start_id + skip
+		end	
+	end
+
 
 end

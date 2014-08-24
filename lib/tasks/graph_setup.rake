@@ -6,6 +6,12 @@ namespace :graph do
     Neo4jHelper.set_star_genres
   end
 
+  desc "set_active_books"
+  task :set_active_books => :environment do
+    include Neo4jHelper
+    Neo4jHelper.set_active_books
+  end
+
   desc "set_year_labels"
   task :set_year_labels => :environment do
     include Neo4jHelper
