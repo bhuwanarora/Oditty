@@ -6,7 +6,7 @@
     <th>Active</th>
     <th>Submit</th>
   </tr>
-  <% @genres.each_with_index do |genre, index|%>
+  <% @genres.sort_by!{|s| s[2]}.reverse.each_with_index do |genre, index|%>
     <tr>
       <td><%= index %></td>
       <td><%= genre[1] %></td>

@@ -1,15 +1,22 @@
 <div class="relative_position">
 	<div class="arrow_left ng-scope" ng-style="ticker_position" ng-if="ticker_popup"></div>
 	<div ng-if="!seen"
-		 ng-click="toggle_ticker_popup($event)"
-		 ng-class="{'notification': notification.book.id != null}"
+		 ng-click="toggle_ticker_popup($event, notification)"
+		 ng-class="{'notification': notification.book.id != null || notification.title, 'selected_notification': ($routeParams.trend_id == notification.id) && notification.id}"
 	     class="notification_stable animate-fast">
+	     <div class="trending_background site_color" ng-show="notification.title">
+			<span class="icon-bars"></span><span>Trending: </span>
+			<b><span>{{notification.keywords}}</span></b>
+		</div>
 		<div class="float_left">
 			<img ng-src="{{notification.thumb | thumb_backup}}">
 		</div>
 		<div class="block">
 			<div class="notification_message">
 				<b><div ng-bind-html="notification.user.name"></div></b>
+				<b><a ng-href="{{notification.url}}" target="_blank" class="site_color">
+					<div ng-bind-html="notification.title"></div></a>
+				</b>
 				<div ng-bind-html="notification.tag"></div>
 			</div>
 			<div class="notification_message" ng-bind-html="notification.message"></div>

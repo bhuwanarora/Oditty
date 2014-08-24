@@ -1,5 +1,11 @@
 namespace :graph do
 
+  desc "set_star_genres"
+  task :set_star_genres => :environment do
+    include Neo4jHelper
+    Neo4jHelper.set_star_genres
+  end
+
   desc "set_year_labels"
   task :set_year_labels => :environment do
     include Neo4jHelper

@@ -95,7 +95,7 @@ websiteApp.directive('follow', ['$rootScope', '$timeout', 'widgetService', funct
   }
 }]);
 
-websiteApp.directive('widgetThumb', ['$timeout', '$rootScope', '$filter', function ($timeout, $rootScope, $filter) {
+websiteApp.directive('widgetThumb', ['$timeout', '$rootScope', '$filter', 'ColorConstants', function ($timeout, $rootScope, $filter, ColorConstants) {
   return {
     restrict: 'E',
     controller: ['$scope', function($scope){
@@ -156,6 +156,8 @@ websiteApp.directive('widgetThumb', ['$timeout', '$rootScope', '$filter', functi
         if(obj && obj.isbn){
           $scope.thumb_style = {'background': "url('"+_get_thumb(obj)+"')"};
         }
+        var random_color = ColorConstants.value[Math.floor(Math.random() * ColorConstants.value.length)];
+        $scope.random_background = {"background-color": random_color};
         // $scope.$on('showImages', function(){
         //   $scope.show_images();
         // });

@@ -5,7 +5,7 @@ class TagsController < ApplicationController
   # GET /tags.json
   def index
     neo = Neography::Rest.new
-    clause = "MATCH (g:Genre) RETURN ID(g), g.name, g.books_count LIMIT 100"
+    clause = "MATCH (g:StarGenre) RETURN ID(g), g.name, g.books_count"
     puts clause.blue.on_red
     @genres = neo.execute_query(clause)["data"]
   end

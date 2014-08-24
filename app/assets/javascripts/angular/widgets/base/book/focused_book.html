@@ -126,12 +126,12 @@
 
 <div class="user_box_wrapper animate-fast"
     ng-click="get_book_from_author()"
-    ng-if="show_author && !show_buy">
+    ng-show="show_author && !show_buy">
     <div class="text">{{focused_book.author_name | uppercase}} BOOKS</div>
 </div>
 <div class="user_box"
      ng-if="show_author && !show_buy">
-     <div class="heading">{{focused_book.author_details.book_isbns.length}} more books from author</div>
+     <div class="heading">{{focused_book.author_details.book_ids.length}} more books from author</div>
       <img ng-src="{{book_isbn | small_thumb}}" 
            ng-repeat="book_isbn in focused_book.author_details.book_isbns track by $index" 
            class="book_thumb">

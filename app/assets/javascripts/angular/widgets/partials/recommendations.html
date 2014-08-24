@@ -10,7 +10,7 @@
    ng-click="hide_popups()">
 		<main-header></main-header>
 		<recommendation-footer></recommendation-footer>
-		<div class="status animate-slow" ng-click="show_interaction_box()">
+		<div class="status animate-fast" ng-click="show_interaction_box()">
 			<span><input disabled placeholder="Share something..." /></span>
 		</div>
 
@@ -157,29 +157,8 @@
 					<img ng-src="{{user.thumb | thumb_backup}}" class="thumb">
 				</div>
 				<!-- <div class="f3_background">
-					<span class="icon-filter2 light_grey_color"></span>
-				</div>
-				<div>
-					<span class="icon-shapes green_color"></span>
-				</div>
-				<div>
-					<span class="icon-pen purple_color"></span>
-				</div>
-				<div>
-					<span class="icon-earth yellow_color"></span>
-				</div>
-				<div>
-					<span class="icon-clock orange_color"></span>
-				</div>
-				<div>
-					<span class="icon-calendar site_color"></span>
-				</div>
-				<div class="f3_background">
-					<span class="icon-menu2 light_grey_color"></span>
-				</div> -->
-				<div class="f3_background">
 					<span class="icon-users2 light_grey_color"></span>
-				</div>
+				</div> -->
 			</div>
 			<div class="scrollbar notifications animate-fast" 
 				 ng-style="column_heights.notifications_style"
@@ -190,7 +169,7 @@
 				<div class="full_height">
 					<notification data="notification" ng-repeat="notification in notifications | reverse"></notification>
 					
-					<div class="relative_position">
+					<div class="relative_position" ng-if="notifications.length == 0">
 						<div class="notification_stable animate-fast">
 							<div class="float_left instruct_block site">
 								<span class="icon-book"></span>
@@ -206,7 +185,7 @@
 						</div>
 					</div>
 					
-					<div class="relative_position">
+					<div class="relative_position" ng-if="notifications.length == 0">
 						<div class="notification_stable animate-fast">
 							<div class="float_left instruct_block green">
 								<span class="icon-user22"></span>
@@ -222,7 +201,7 @@
 						</div>
 					</div>
 				
-					<div class="relative_position">
+					<div class="relative_position" ng-if="notifications.length == 0">
 						<div class="notification_stable animate-fast">
 							<div class="float_left instruct_icon purple_color">
 								<span class="icon-cool2"></span>
@@ -239,7 +218,7 @@
 						</div>
 					</div>
 				
-					<div class="relative_position">
+					<div class="relative_position" ng-if="notifications.length == 0">
 						<div class="notification_stable animate-fast">
 							<div class="float_left instruct_icon red_color">
 								<span class="icon-bars"></span>

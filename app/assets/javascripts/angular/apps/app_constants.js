@@ -135,6 +135,9 @@ var constants = {
 			"Escape": 27,
 			"StatusPosted": "Shared"
 		},
+		"ColorConstants":{
+			"value": ["#695447", "#d1d2de", "#c4c2b5", "#675850", "#83817f", "#b3b2b1", "#839baa", "#4867a4", "#423b34", "#e4bc7e", "#987c4e", "#8c7971", "#ad9894", "#565240", "#5d2726"]
+		},
 		"StatusUIConstants":{
 			"EmotionConstants":{
 				"icon": "icon-happy",

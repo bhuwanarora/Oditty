@@ -16,6 +16,14 @@ angular.module('filtersApp', [])
       return output;
     };
   })
+  .filter('trending_name', function(){
+    return function(input){
+      if(angular.isDefined(input)){
+        input = "#"+input.replace(" ", "")
+      }
+      return input;
+    }
+  })
   .filter('reduced_summary', function(){
     return function(input){
       if(angular.isDefined(input)){
@@ -45,7 +53,7 @@ angular.module('filtersApp', [])
     return function(input) {
       var output = input;
       if(angular.isDefined(input) && input != "" && input != null){
-        output = "<span><b>"+input[0]+"</b></span><span class='grey_color'>"+input.substring(1, 80)+"</span><span>"+input.substring(80, input.length)+"</span>"
+        output = "<span><b>"+input[0]+"</b></span><span class='light_grey_color'>"+input.substring(1, 80)+"</span><span>"+input.substring(80, input.length)+"</span>"
       }
       return output;
     };

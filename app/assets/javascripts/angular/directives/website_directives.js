@@ -279,36 +279,42 @@ websiteApp.directive('message', function(){
 	}
 });
 
-websiteApp.directive('notification', ['$rootScope', '$timeout', function($rootScope, $timeout){
+websiteApp.directive('notification', ['$rootScope', '$timeout', '$location', '$routeParams', function($rootScope, $timeout, $location, $routeParams){
 	return{
 		restrict: 'E',
 		scope: {"notification": "=data"},
 		controller: ['$scope', function($scope){
 			$scope.toggle_ticker_popup = function(event, notification){
-				var ticker_popup_absent = $rootScope.ticker_popup == null;
-				if(ticker_popup_absent){
-					if(angular.isDefined($scope.notification.book) && $scope.notification.book.id != null){
-						$rootScope.ticker_popup = $scope.notification.book;
-						delete $rootScope.focused_book;
-					}
-					// var top = _get_arrow_position(event);
-					// $rootScope.ticker_position = {"top": top+"px"};
+				var is_trending_news = angular.isDefined(notification.title);
+				if(is_trending_news){
+					$location.path("/user/"+$rootScope.user.id+"/trending/books/id/"+notification.id+"/name/"+notification.name);
 				}
 				else{
-					if($rootScope.ticker_popup == $scope.notification.book){
-						delete $rootScope.ticker_popup;
+					var ticker_popup_absent = $rootScope.ticker_popup == null;
+					if(ticker_popup_absent){
+						if(angular.isDefined($scope.notification.book) && $scope.notification.book.id != null){
+							$rootScope.ticker_popup = $scope.notification.book;
+							delete $rootScope.focused_book;
+						}
+						// var top = _get_arrow_position(event);
+						// $rootScope.ticker_position = {"top": top+"px"};
 					}
 					else{
-						delete $rootScope.ticker_popup;
-						var timeout_event = $timeout(function(){
-							if(angular.isDefined($scope.notification.book.id) && $scope.notification.book.id != null){
-								$rootScope.ticker_popup = $scope.notification.book;
-							}
-						}, 200);
+						if($rootScope.ticker_popup == $scope.notification.book){
+							delete $rootScope.ticker_popup;
+						}
+						else{
+							delete $rootScope.ticker_popup;
+							var timeout_event = $timeout(function(){
+								if(angular.isDefined($scope.notification.book.id) && $scope.notification.book.id != null){
+									$rootScope.ticker_popup = $scope.notification.book;
+								}
+							}, 200);
 
-						$scope.$on('destroy', function(){
-							$timeout.cancel(timeout_event);
-						});
+							$scope.$on('destroy', function(){
+								$timeout.cancel(timeout_event);
+							});
+						}
 					}
 				}
 				event.stopPropagation();
@@ -347,6 +353,12 @@ websiteApp.directive('notification', ['$rootScope', '$timeout', function($rootSc
 				$rootScope.ticker_popup = $scope.notification.book;	
 				// $rootScope.ticker_position = {"top": top+"px"};
 			}
+
+			_init = function(){
+				$scope.$routeParams = $routeParams;
+			}
+
+			_init();
 		}],
 		templateUrl: '/assets/angular/widgets/partials/notification.html'
 	}

@@ -159,28 +159,6 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 
 	_add_listeners = function(){
 
-	    // add_to_bookmarks_event = $scope.$on('addToBookmarks', function(event, type, data){
-	    // 	if(type == "BOOK"){
-	    // 		$rootScope.user.books['bookmarked'].push(data);
-	    // 	}
-	    // 	else if(type == "AUTHOR"){
-	    // 		$rootScope.user.authors['bookmarked'].push(data);
-	    // 	}
-	    // 	event.stopPropagation();
-	    // });
-
-	    // remove_from_bookmarks_event = $scope.$on('removeFromBookmarks', function(event, type, data){
-	    // 	if(type == "BOOK"){
-		   //  	var index = $rootScope.user.books['bookmarked'].indexOf(data);
-		   //  	$rootScope.user.books['bookmarked'].splice(index, 1);
-	    // 	}
-	    // 	else if(type == "AUTHOR"){
-	    // 		var index = $rootScope.user.authors['bookmarked'].indexOf(data);
-		   //  	$rootScope.user.authors['bookmarked'].splice(index, 1);	
-	    // 	}
-	    // 	event.stopPropagation();
-	    // });
-
 	    move_right_listener_event = $scope.$on('moveRight', function(event){
 	    	move_right_event = $timeout(function(){
 				$scope.move_right();
@@ -188,10 +166,21 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    });
 
 	    add_to_notifications = $scope.$on('addToNotifications', function(event, notification){
-	    	if(angular.isUndefined($scope.notifications)){
-	    		_intro_notifications();
+	    	_intro_notifications();
+	    	if(notification instanceof Array){
+	    		var notification_already_added = false;
+	    		angular.forEach($scope.notifications, function(value){
+	    			if(value.id == notification[0].id){
+	    				notification_already_added = true;
+	    			}
+	    		});
+	    		if(!notification_already_added){
+	    			$scope.notifications = $scope.notifications.concat(notification);
+	    		}
 	    	}
-	    	$scope.notifications.push(notification);
+	    	else{
+	    		$scope.notifications.push(notification);
+	    	}
 	    	event.stopPropagation();
 	    });
 

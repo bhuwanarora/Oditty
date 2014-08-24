@@ -871,10 +871,20 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$scope.trends = [];
 			websiteService.get_trending_topics().then(function(data){
 				angular.forEach(data, function(value){
-					var json = {"name": value[0], "id": value[1], "content": value[2]};
+					var json = {"name": value[0], "id": value[1], "thumb": value[6], "keywords": value[8]};
 					this.push(json);
 				}, $scope.trends);
 			});
+		}
+		else{
+			websiteService.get_trending_topics().then(function(data){
+				var notifications = [];
+				angular.forEach(data, function(value){
+					var json = {"name": value[0], "id": value[1], "message": value[2], "url": value[3], "title":value[4], "thumb": value[7], "large_image": value[5], "keywords": value[8]};
+					this.push(json);
+				}, notifications);
+				$scope.$emit('addToNotifications', notifications);
+			});	
 		}
 	}
 

@@ -990,4 +990,12 @@ module Neo4jHelper
 	end
 
 
+	def self.set_star_genres
+		@neo ||= self.init
+		clause="MATCH (genre:Genre)<-[r:Belongs_to]-(b:Book) WHERE r.weight IS NOT NULL AND genre.books_count > 1000 WITH DISTINCT(genre) as genre SET genre :StarGenre, genre.indexed_star_genre_name = genre.indexed_genre_name"
+		puts clause.blue.on_red
+		@neo.execute_query clause
+	end
+
+
 end

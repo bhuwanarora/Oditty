@@ -30,7 +30,7 @@ hr{
 
 /*anchor tags*/
 a{
-    color: #717070;
+    color: inherit;
     text-decoration: none;
 }
 
@@ -228,11 +228,11 @@ input:focus{
 
 .light_grey_color{
     color: #717070 !important;
-    font-size: 0.8em !important;
+    /*font-size: 0.8em !important;*/
 }
 
 .grey_color{
-    color: #858585 !important;
+    color: #424242 !important;
 }
 
 .dark_green_color{
@@ -308,4 +308,8 @@ input:focus{
 
 .active_border{
     border-bottom: 4px solid #427fed !important;
+}
+
+.float_right{
+    float: right;
 }

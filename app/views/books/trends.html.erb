@@ -1,9 +1,10 @@
 <table>
 	<tr>
+		<th>#Books</th>
 		<th>Trending</th>
 		<th>Title</th>
 		<th>Content</th>
-		<th>Location</th>
+		<th>Searched Words</th>
 		<th>Publisher</th>
 		<th>Thumb</th>
 		<th>Timestamp</th>
@@ -13,11 +14,17 @@
 		<th>Submit</th>
 	</tr>
 	<% @trends.sort_by!{|s| Time.at(s[1])}.reverse.each do |trend|%>
-		<tr>
+		<tr class="<% if trend[4].present? && trend[4] == 1 %>active<% end %>">
+			<td><%= trend[3].length %></td>
 			<td><a href="<%= trend[9] %>" target="_blank"><%= trend[0] %></a></td>
 			<td><a href="<%= trend[11] %>" target="_blank"><%= trend[6] %></a></td>
-			<td><%= trend[7] %></td>
-			<td><%= trend[8] %></td>
+			<td><div class="limit_height"><%= trend[7] %></div></td>
+			<td class="keywords">
+				<span><%= trend[8] %></span>
+				<textarea class="hidden_input" ><%= trend[8] %></textarea>
+				<button class="hidden_input add_books">Go</button>
+				<input type="hidden" value="<%= trend[2] %>" class="trending_id"/>
+			</td>
 			<td><%= trend[12] %></td>
 			<td><img src="<%= trend[10] %>"></td>
 			<td><%= Time.at(trend[1]).strftime("%d-%m-%y") %></td>
@@ -27,9 +34,11 @@
 
 			<form action="<%= trends_path %>">
 				<td class="books" name="books">
-					<% trend[3].each.with_index do |book, index| %>
-						<div data-id="<%= trend[5][index] %>" class="book_name"><span> · </span><span><%= book %></span></div>
-					<% end %>
+					<div class="limit_height">
+						<% trend[3].each.with_index do |book, index| %>
+							<div data-id="<%= trend[5][index] %>" class="book_name"><span> · </span><span><%= book %></span></div>
+						<% end %>
+					</div>
 				</td>
 				<input type="hidden" value="<%= trend[2] %>" name="trending_id"/>
 				<input type="hidden" value="<%= trend[5] %>" name="book_ids" />
@@ -43,6 +52,10 @@
 		</tr>
 	<% end %>
 </table>
+<div class="main_footer">
+	<span type="status" class="footer_status"></span>
+</div>
+<div class="vertical_padder"></div>
 <script>
 	$(document).ready(function(){
 		var search_on = false;
@@ -113,6 +126,36 @@
 			$this.parent().siblings('input[name=book_ids]').val(new_book_ids.join(","));
 			$this.remove();
 		});
+
+		var link_new_books = function(){
+			$('.keywords').on('click', function(){
+				var $this = $(this);
+				$this.children('span').hide();
+				$this.children('textarea').show();
+				$this.children('button').show();
+			});
+		}
+
+		var add_new_books = function(){
+			$('.add_books').on('click', function(){
+				var data = "q="+$(this).siblings('textarea').val()+"&id="+$(this).siblings('.trending_id').val();
+				$('.footer_status').html('Updating...');
+				$.ajax({
+					url: "<%= trending_new_books_path %>",
+					data: data,
+					success: function(data, textStatus, jqxhr){
+						window.location.reload();
+					},
+					error: function(jqxhr, textStatus, errorThrown){
+						$('.footer_status').html('Error in updating..');
+					}
+				});
+			});
+		}
+
+		link_new_books();
+		add_new_books();
+
 
 	});
 </script>

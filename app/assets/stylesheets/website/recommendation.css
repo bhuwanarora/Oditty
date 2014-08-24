@@ -154,7 +154,7 @@
 	color: #7C7C7C;
 	background-color: #F5F5F5;
 	border: 1px solid #FFFFFF;
-	border-radius: 5px;
+	border-radius: 2px;
 }
 
 .interaction_box .interact_book{
@@ -523,7 +523,7 @@
 .interaction_box_book_options{
 	width: 207px;
 	top: 44px;
-	right: 30px;
+	right: 7.3%;
 	margin-left: 0px;
 }
 
@@ -953,13 +953,6 @@ and (min-width : 1824px) {
 	color: white;
 }
 
-
-.notifications a{
-	cursor: pointer;
-	color: #3D79A1;
-	font-weight: bold;
-}
-
 .notifications .notification_message{
 	white-space: initial;
 	padding: 0px 5px;
@@ -1012,6 +1005,15 @@ and (min-width : 1824px) {
 	cursor: pointer;
 }
 
+.notifications .selected_notification{
+	background-color: rgba(66, 127, 237, 0.18);
+	cursor: default;
+}
+
+.notifications .selected_notification:hover{
+	background-color: rgba(66, 127, 237, 0.18);
+}
+
 .notifications .block{
 	display: inline-block;
 	float: left;
@@ -1021,6 +1023,7 @@ and (min-width : 1824px) {
 
 .notifications img{
 	width: 30px;
+	height: 30px;
 	margin: 5px;
 	border-radius: 5px; 
 }
@@ -1204,7 +1207,7 @@ and (min-width : 1824px) {
 .tweets{
 	width: 102%;
 	overflow-y: scroll;
-	max-height: 55vh;
+	max-height: 64vh;
 	margin-top: 5px;
 }
 
@@ -1231,21 +1234,31 @@ and (min-width : 1824px) {
 	padding: 10px 20px 30px 20px;
 }
 
-.tweets a{
-	color: #136CB2;
-	cursor: pointer;
-}
-
 .tweets .tweet img{
 	width: 30px;
 	border-radius: 2px;
+}
+
+.trending_background{
+	background-image: url('/assets/trending.png');
+	background-repeat: repeat-x;
+	border-radius: 5px;
+	padding-left: 5px;
+	margin-bottom: 10px;
+}
+
+.tweets .tweet .large_thumb{
+	width: 80%;
+	border-radius: 2px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 .tweets .tweet .tweet_text{
 	display: inline-block;
 	float: left;
 	padding: 0px 10px 0px 10px;
-	width: 440px;
+	width: 90%;
 	white-space: normal;
 	word-break: break-word;
 }
@@ -1276,8 +1289,7 @@ and (min-width : 1824px) {
 }
 
 .expand_notifications_shift{
-	top: 66px !important;
-	left: 17px !important;
+	display: none;
 }
 
 .expand_notifications:hover{
@@ -1389,6 +1401,22 @@ and (min-width : 1824px) {
 	box-shadow: -3px 0 5px -2px #888;
 }
 
+.recommendations .status ::-webkit-input-placeholder {
+   color: black;
+}
+
+.recommendations .status :-moz-placeholder { /* Firefox 18- */
+   color: black;  
+}
+
+.recommendations .status ::-moz-placeholder {  /* Firefox 19+ */
+   color: black;  
+}
+
+.recommendations .status :-ms-input-placeholder {  
+   color: black;
+}
+
 .recommendations .status:hover{
 	height: 50px;
 }
@@ -1487,6 +1515,7 @@ and (min-width : 1824px) {
 
 .left_column_collapsed{
 	width: 40px!important;
+	top: 95px;
 }
 
 .left_column .collapsed_column{

@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
+  include TrendsHelper
 
   # GET /books
   # GET /books.json
@@ -185,6 +186,15 @@ class BooksController < ApplicationController
     @labels = neo.execute_query(clause)["data"]
   end
 
+  def trending_new_books
+      TrendsHelper.link_new_books(params[:id], params[:q])
+      render :json => {:message => "Success"}, :status => 200
+    begin
+    rescue Exception => e
+      render :json => {:message => e}, :status => 500
+    end
+  end
+
   def trends
     neo = Neography::Rest.new
 
@@ -220,7 +230,7 @@ class BooksController < ApplicationController
       neo.execute_query clause
     end
 
-    clause = "MATCH (t:Trending) OPTIONAL MATCH (t)-[:RelatedBooks]->(b:Book) RETURN t.name, t.timestamp, ID(t), COLLECT(b.title), t.status, COLLECT(ID(b)), t.title, t.content, t.location, t.url, t.thumbnail_url, t.redirect_url, t.publisher"
+    clause = "MATCH (t:Trending) OPTIONAL MATCH (t)-[:RelatedBooks]->(b:Book) RETURN t.name, t.timestamp, ID(t), COLLECT(b.title), t.status, COLLECT(ID(b)), t.title, t.content, t.searched_words, t.url, t.thumbnail_url, t.redirect_url, t.publisher, t.thumb ORDER BY t.timestamp DESC LIMIT 15 "
     puts clause.blue.on_red
     @trends = neo.execute_query(clause)["data"]
 

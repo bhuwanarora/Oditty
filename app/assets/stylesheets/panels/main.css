@@ -15,6 +15,10 @@
 	height: 20px;
 }
 
+.active{
+	background-color: rgba(62, 122, 229, 0.15);
+}
+
 .delete{
 	cursor: pointer;
 }

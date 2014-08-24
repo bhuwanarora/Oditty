@@ -31,6 +31,7 @@
 }
 
 .card_summary{
+	color: black;
 	position: absolute;
 	top: 2px;
 	left: 1px;
@@ -82,6 +83,22 @@
 	height: 100%;
 }
 
+.tag_bookmark ::-webkit-input-placeholder {
+   color: #6F6F6F;
+}
+
+.tag_bookmark :-moz-placeholder { /* Firefox 18- */
+   color: #6F6F6F;  
+}
+
+.tag_bookmark ::-moz-placeholder {  /* Firefox 19+ */
+   color: #6F6F6F;  
+}
+
+.tag_bookmark :-ms-input-placeholder {  
+   color: #6F6F6F;
+}
+
 .tag_bookmark:hover{
 	background-color: #F1F1F1;
 	border-bottom: 1px solid !important;
@@ -114,7 +131,7 @@
 
 .action_button{
 	text-align: center;
-	color: #D8D8D8;
+	color: #6F6F6F;
 	font-size: 1.2em;
 	width: 12%;
 	position: absolute;
@@ -149,6 +166,7 @@
 	overflow-y: scroll;
 	box-shadow: 0 7px 15px rgba(0,0,0,.25);
 	padding: 10px 20px 10px 20px;
+	text-transform: capitalize;
 }
 
 .label_dropdown li{
@@ -178,10 +196,11 @@
 
 .card .description{
 	position: absolute;
-	left: 0px;
-	right: 0px;
-	top: 0px;
-	bottom: 10%;
+	left: 1px;
+	right: 1px;
+	top: 50px;
+	bottom: 40px;
+	color: white;
 	/*color: #817C65;*/
 	/*background-color: #f9edbe;*/
 	font-size: 0.9em;
