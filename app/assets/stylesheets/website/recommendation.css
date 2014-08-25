@@ -611,12 +611,12 @@
 
 .mark_as_read_instruct{
 	background-image: url("/assets/base_case/markasread.png");
-	background-size: contain;
+	background-size: cover;
 }
 
 .bookmark_instruct{
 	background-image: url("/assets/base_case/bookmark.png");
-	background-size: contain;
+	background-size: cover;
 }
 
 .recommendation_box .friend_grid .friend_thumb{
