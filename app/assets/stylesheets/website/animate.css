@@ -22,13 +22,13 @@
 	margin-bottom: 0px;
 }
 
-..notifications .notification_stable.ng-enter,
-..notifications .notification_stable.ng-leave.ng-leave-active{
+.notifications .notification_stable.ng-enter,
+.notifications .notification_stable.ng-leave.ng-leave-active{
 	margin-bottom: -70px;
 }
 
-..notifications .notification_stable.ng-leave,
-..notifications .notification_stable.ng-enter-active{
+.notifications .notification_stable.ng-leave,
+.notifications .notification_stable.ng-enter-active{
 	margin-bottom: 0px;
 }
 
