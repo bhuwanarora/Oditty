@@ -3,13 +3,13 @@
 	border: 1px solid #FFF;
 	border-radius: 2px;
 	box-shadow: 0 7px 15px rgba(0,0,0,.5);
-	height: 70vh;
-	min-width: 380px;
+	height: 77vh;
+	min-width: 390px;
 	position: fixed;
 	top: 95px;
 	white-space: initial;
 	z-index: 3;
-	width: 62vh;
+	width: 35%;
 	padding-left: 15px;
 	padding-right: 15px;
 	/* for big screens */
@@ -30,13 +30,11 @@
 }
 
 .focused_tooltip .book_info{
-	padding: 10px;
-	border-top: 1px solid #E2E2E2;
-	border-bottom: 1px solid #E2E2E2;
+	padding: 15px 10px 5px;
 	position: relative;
-	width: 96%;
+	width: 97%;
 	overflow-y: scroll;
-	max-height: 22vh;
+	max-height: 32vh;
 }
 
 .focused_tooltip .author_book_info{
@@ -45,7 +43,6 @@
 
 .focused_tooltip .book_info .book_link .count{
 	color: white;
-	cursor: pointer;
 	padding: 5px;
 	border-radius: 4px;
 	text-shadow: 0 2px 3px rgba(0,0,0,0.5);
@@ -81,14 +78,16 @@
 }
 
 .focused_tooltip .description{
-	font-family: Proxima Nova,sans-serif;
 	font-size: .93em;
 	height: 20vh;
 	line-height: 1.3em;
 	padding: 12px;
-	border-bottom: 1px solid #D3D3D3;
-	width: 93%;
+	width: 97%;
 	background-color: #F5F5F5;
+}
+
+.focused_tooltip .long_description{
+	height: 30vh;
 }
 
 .focused_tooltip .book_info img{
@@ -127,23 +126,11 @@
 
 .focused_tooltip .footer .recommend{
 	cursor: pointer;
-	float: left;
+	float: right;
 	font-size: .7em;
-	margin-right: 10px;
 	padding: 10px 15px 10px 15px;
 	color: #fff;
 	border-radius: 2px;
-}
-
-.focused_tooltip .footer .recommended{
-	background-color: #B8B8B8;
-	border: 1px solid #B8B8B8;
-	color: white;
-	cursor: pointer;	
-	float: left;
-	font-size: 0.7em;
-	margin-right: 10px;
-	padding: 5px;
 }
 
 .focused_tooltip .users{
@@ -156,12 +143,30 @@
 	text-align: center;
 	top: 20px;
 	right: 0px;
-	position: absolute;
 	width: 240px;
+}
+
+.rate_radio{
+	font-size: 0.9em;
+}
+
+.rate_radio:active{
+	color: #E2B503 !important;
+}
+
+.rate_radio_buttons{
+	padding: 3px 15px;
+	width: 275px;
+	text-align: left;
+}
+
+.focused_tooltip .instruct_block{
+	height: 35px;
 }
 
 .focused_tooltip .header{
 	padding: 10px 10px 0px 10px;
+	cursor: default;
 }
 
 .focused_tooltip .header .title{
@@ -180,7 +185,7 @@
 	bottom: 100px;
 	position: absolute;
 	background-color: white;
-	width: 95%;
+	width: 93%;
 	padding-top: 5px;
 	height: 10vh;
 	overflow-y: hidden;
@@ -213,11 +218,6 @@
 	border-radius: 2px;
 }
 
-.focused_tooltip .header .title:hover,
-.focused_tooltip .header .author:hover{
-	text-decoration: underline;
-}
-
 .focused_tooltip .tabs{
 	overflow: auto;
 	width: 100%;
@@ -245,8 +245,6 @@
 	padding-bottom: 20px;
 	right: 0px;
 	text-align: center;
-	border-top: 1px solid #E2E2E2;
-	border-bottom: 1px solid #E2E2E2;
 }
 
 .focused_tooltip .popup_icon{

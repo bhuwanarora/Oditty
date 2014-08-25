@@ -58,6 +58,13 @@ input:focus{
     transition:all linear 0.2s;
 }
 
+.animate-faster{
+    -webkit-transition:all linear 0.1s;
+    -moz-transition:all linear 0.1s;
+    -o-transition:all linear 0.1s;
+    transition:all linear 0.1s;
+}
+
 .animate-slow{
     -webkit-transition:all linear 0.5s;
     -moz-transition:all linear 0.5s;

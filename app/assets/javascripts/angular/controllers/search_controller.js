@@ -357,72 +357,74 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 
 	$scope.add_filters = function(item){
 		console.debug("add_filters", item);
-		var only_single_filter = true;
-		if(only_single_filter){
-			angular.forEach($scope.filters_added, function(value){
-				if(value.type == item.type){
-					$scope.filters_added.splice($scope.filters_added.indexOf(value), 1);
-					$scope.search_results.splice(0, 0, value);
-				}
-			});
-			if(!on_search_page){
-				if(angular.isUndefined($rootScope.filters)){
-		  			$rootScope.filters = {"other_filters": {}};
-		  		}
+		angular.forEach($scope.filters_added, function(value){
+			if(value.type == item.type){
+				$scope.filters_added.splice($scope.filters_added.indexOf(value), 1);
+				$scope.search_results.splice(0, 0, value);
 			}
-			switch(item.type){
-				case SearchUIConstants.Genre:
-					var data = item.id;
-					break;
-				case SearchUIConstants.AuthorSearch:
-					var data = item.id;
-					break;
-				case SearchUIConstants.Time:
-					var data = item.tag;
-					break;
-				case SearchUIConstants.Year:
-					var data = item.name;
-					break;
-				case SearchUIConstants.Country:
-					var data = item.name;
-					break;
-				case SearchUIConstants.BookSearch:
-					if(on_search_page){
-						var user_id = $rootScope.user.id;
-						if(angular.isDefined(item.show_all) && item.show_all){
-			  				$location.path("/user/"+user_id+"/book/"+item.name+"/all/"+true);
-						}
-						else{
-							$location.path("/user/"+user_id+"/book/"+item.name+"/author/"+item.author_name+"/id/"+item.id);
-						}
+		});
+		if(!on_search_page){
+			if(angular.isUndefined($rootScope.filters)){
+	  			$rootScope.filters = {"other_filters": {}};
+	  		}
+		}
+		switch(item.type){
+			case SearchUIConstants.Genre:
+				var data = item.id;
+				break;
+			case SearchUIConstants.AuthorSearch:
+				var data = item.id;
+				break;
+			case SearchUIConstants.Time:
+				var data = item.tag;
+				break;
+			case SearchUIConstants.Year:
+				var data = item.name;
+				break;
+			case SearchUIConstants.Country:
+				var data = item.name;
+				break;
+			case SearchUIConstants.BookSearch:
+				if(on_search_page){
+					var user_id = $rootScope.user.id;
+					if(angular.isDefined(item.show_all) && item.show_all){
+		  				$location.path("/user/"+user_id+"/book/"+item.name+"/all/"+true);
 					}
 					else{
-						if(angular.isDefined(item.show_all) && item.show_all){
-			  				$rootScope.filters.other_filters["show_all"] = true;
-						}
-						else{
-							$rootScope.filters.other_filters["id"] = item.id;
-							$rootScope.filters.other_filters["author_name"] = item.author_name;
-						}
-						$rootScope.filters.other_filters["title"] = item.name;
-						var data_set = true;
+						$location.path("/user/"+user_id+"/book/"+item.id);
 					}
-				default:
-					break;
-			}
-			if(on_search_page){
-				$cookieStore.put(item.type, item);
-			}
-			else{
-				if(angular.isUndefined(data_set)){
-					$rootScope.filters.other_filters[item.type] = data;
 				}
-				$rootScope.filters["reset_count"] = 0;
-				$rootScope.filters["reset"] = true;
-				$scope.$emit('reloadRecommendations');
-			}
+				else{
+					if(angular.isDefined(item.show_all) && item.show_all){
+		  				$rootScope.filters.other_filters["show_all"] = true;
+						$rootScope.filters.other_filters["title"] = item.name;
+					}
+					else{
+						$rootScope.filters.other_filters["id"] = item.id;
+					}
+					$rootScope.hide_options = true;
+				}
+			default:
+				break;
 		}
-		if(angular.isUndefined(data_set)){
+		var custom_filters_added = !(item.type == SearchUIConstants.BookSearch);
+
+		if(on_search_page){
+			$cookieStore.put(item.type, item);
+		}
+		else if(on_trending_page || on_grids_page || on_specific_list_page){
+			$cookieStore.put(item.type, item);
+			$scope.show_books();
+		}
+		else{
+			if(custom_filters_added){
+				$rootScope.filters.other_filters[item.type] = data;
+			}
+			$rootScope.filters["reset_count"] = 0;
+			$rootScope.filters["reset"] = true;
+			$scope.$emit('reloadRecommendations');
+		}
+		if(custom_filters_added){
 			$scope.filters_added.splice(0, 0, item);
 			$scope.search_results.splice($scope.search_results.indexOf(item), 1);
 			$scope.select_next_option(item.type);
@@ -445,6 +447,11 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			case SearchUIConstants.List:
 				if(angular.isDefined($rootScope.book_lists)){
 					$rootScope.book_lists.splice(0, 0, item);
+				}
+				break;
+			case SearchUIConstants.AuthorSearch:
+				if(angular.isDefined($rootScope.authors)){
+					$rootScope.authors.splice(0, 0, item);
 				}
 				break;
 			case SearchUIConstants.Genre:
@@ -908,7 +915,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	}
 
 	_get_trends = function(){
-		if(angular.isUndefined($scope.$routeParams) && angular.isUndefined($scope.trends)){
+		if(on_search_page){
 			$scope.trends = [];
 			websiteService.get_trending_topics().then(function(data){
 				angular.forEach(data, function(value){
@@ -987,6 +994,14 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		}
 	}
 
+	_clear_filter_cookies = function(){
+		$cookieStore.remove(SearchUIConstants.Genre);
+		$cookieStore.remove(SearchUIConstants.AuthorSearch);
+		$cookieStore.remove(SearchUIConstants.Time);
+		$cookieStore.remove(SearchUIConstants.Year);
+		$cookieStore.remove(SearchUIConstants.Country);
+	}
+
 	_init = function(){
 		$scope.website.searching = false;
 		$scope.filters_added = [];
@@ -1002,11 +1017,20 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$scope.update_filters(type, value);
 			event.preventDefault();
 		});
-
-		_add_init_filters();
+		if(on_recommendation_page || on_search_page){
+			_add_init_filters();
+		}
+		else{
+			_clear_filter_cookies();
+		}
 	}
 	
 	var search_typing_timeout = "";
 	var on_search_page = angular.isUndefined($routeParams.type);
+	var on_specific_list_page = angular.isDefined($routeParams.filter_id);
+	var on_grids_page = angular.isDefined($routeParams.grid_id);
+	var on_trending_page = angular.isDefined($routeParams.trend_id);
+	var on_recommendation_page = !(on_search_page || on_specific_list_page || on_grids_page || on_trending_page);
+
 	_init();
 }]);

@@ -653,6 +653,20 @@
 	padding: 10px;
 	width: 70px;
 	text-align: center;
+	float: right;
+	color: white;
+	font-size: 1em;
+	border-radius: 2px;
+	margin: 0px;
+}
+
+.recommendation_box .footer .done:disabled{
+	cursor: default;
+	background-color: rgba(66, 127, 237, 0.64)!important;
+}
+
+.recommendation_box .footer .done:disabled:hover{
+	background-color: rgba(66, 127, 237, 0.64)!important;
 }
 
 .recommendation_box .friend_grid{
@@ -721,19 +735,7 @@
 	border-radius: 2px;
 }
 
-.rate_radio{
-	font-size: 0.9em;
-}
 
-.rate_radio:active{
-	color: #E2B503 !important;
-}
-
-.rate_radio_buttons{
-	padding: 3px 15px;
-	width: 275px;
-	text-align: left;
-}
 
 .result_count{
     display: inline-block;

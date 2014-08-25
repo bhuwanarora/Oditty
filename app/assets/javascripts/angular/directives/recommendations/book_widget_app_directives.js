@@ -477,7 +477,7 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
         }
 
         $rootScope.focused_book.time_index = read_timer;
-        var message = "SUCCESS-Thanks we have recorded your approximate time to read "+$rootScope.focused_book.title+". <br/> This will help us to recommend you books according to your reading skills."
+        var message = "SUCCESS-Recorded approximate time to read <br/>."
         var timeout_event = notify($rootScope, message, $timeout);
         if(!$rootScope.focused_book.status){
           sharedService.mark_as_read($rootScope, $rootScope.focused_book, event);
@@ -628,7 +628,7 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', 'w
           event.currentTarget.style.border = "5px solid #427fed";
         }
         else{
-          $scope.user.selected_friends.slice($scope.user.selected_friends.indexOf(friend_id), 1);
+          $scope.user.selected_friends.splice($scope.user.selected_friends.indexOf(friend_id), 1);
           event.currentTarget.dataset.selected = false;
           event.currentTarget.style.border = "5px solid transparent";
         }

@@ -836,41 +836,6 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
 	          event.preventDefault();
 	          $scope.handle_selection($scope.currentItem);
 	        }
-	        else if(keyEnter && !$scope.hash_tags){
-	          	var tweet_text = $rootScope.user.hash_tagged_comment
-	                                .replace(/<b>/, "<a>")
-	                                .replace(/<\/b>/, "<\/a>");
-	          	if($rootScope.user.thumb){
-	            	var thumb = $rootScope.user.thumb;
-	            	var tweet = {"message": tweet_text, 
-	            				 "user": {
-	            				 	"name": $rootScope.user.name
-	            				 },
-	            				 "thumb": thumb};
-	          	}
-	          	else{
-	            	var tweet = {"message": tweet_text,
-	            				 "user": {
-	            				 	"name": $rootScope.user.name
-	            				 }}; 
-	          	}
-	          	tweet = _add_labels_to_tweet(tweet);
-	          	if(angular.isDefined($scope.selected_interact_book)){
-	      			var book = $scope.selected_interact_book;
-	      		}
-	      		else if(angular.isDefined($rootScope.focused_book)){
-	      			var book = $rootScope.focused_book;
-	      		}
-	          	var tag = _get_tag_for_tweet(tweet, book);
-	          	tweet = angular.extend(tweet, {"tag": tag})
-	          	if(angular.isDefined($rootScope.focused_book)){
-		          	$rootScope.focused_book.tweets.push(tweet);
-		      		$rootScope.user.current_comment = "";
-		          	$rootScope.user.hash_tagged_comment = "";
-		          	_add_comment(tweet);
-	          	}
-	          	event.preventDefault();
-	        }
 	        else{
 	          	if(is_new_word_initiation && chr == "#"){
 	            	var html = "<b>"+chr+"</b>";
@@ -942,10 +907,15 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
       		var message = $rootScope.user.hash_tagged_comment
 	                                .replace(/<b>/, "<a>")
 	                                .replace(/<\/b>/, "<\/a>");
-	        var tweet = {"message": message};
+	        var tweet = {"message": message,
+        				 "user": {
+        				 	"name": $rootScope.user.name,
+        				 	"thumb": $rootScope.user.thumb
+        				 }};
 	        tweet = _add_labels_to_tweet(tweet);
       		var book = $scope.selected_interact_book;
-      		_add_comment(tweet, book);
+      		tweet = _add_comment(tweet, book);
+      		$rootScope.focused_book.tweets.push(tweet);
       	}
 
       	_add_labels_to_tweet = function(tweet){
@@ -975,7 +945,7 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
       	_reset_interact_box = function(){
       		delete $scope.level1_option;
       		delete $scope.level2_option;
-      		delete $scope.selected_interact_book;
+      		// delete $scope.selected_interact_book;
       		$rootScope.user.interact_book = "";
       		$rootScope.user.current_comment = "";
       		$rootScope.user.hash_tagged_comment = "";
@@ -1066,6 +1036,8 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
 	        widgetService.comment(params);
 	        $scope.$emit('addToNotifications', notification);
 	        _reset_interact_box();
+	        tweet = angular.extend(tweet, {"tag": tag});
+	        return tweet;
       	}
 
       	$scope.is_current = function(index, selectedItem) {

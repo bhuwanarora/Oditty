@@ -58,51 +58,50 @@
   </div>
 </div>
 
-
-
-
 <div class="book_info" ng-if="!show_buy && !show_author">
-  <span> · </span>
-  <span ng-click="user.interact = true;" class="book_link">
-    <span class="count site">
-      <span>{{focused_book.readers_count | integer}}</span>
-      <span class="icon-users2"></span> 
+  <div class="instruct_block">
+    <span class="book_link">
+      <span class="count site">
+        <span>{{focused_book.readers_count | integer}}</span>
+        <span>Readers</span>
+        <span class="icon-users2"></span> 
+      </span>
     </span>
-    <!-- <span>&nbsp;&nbsp;Readers</span> -->
-  </span>
-  · 
-  <span itemprop="aggregateRating" 
-        itemscope 
-        itemtype="http://schema.org/AggregateRating"
-        ng-click="user.interact = true;" class="book_link">
-    <span class="count site">
-      <span>{{focused_book.bookmark_count | integer}}</span>
-      <span class="icon-tags"></span> 
+    <span itemprop="aggregateRating" 
+          itemscope 
+          itemtype="http://schema.org/AggregateRating"
+          class="book_link">
+      <span>&nbsp;&nbsp;</span>
+      <span class="count site">
+        <span>{{focused_book.bookmark_count | integer}}</span>
+        <span>Tags</span>
+        <span class="icon-tags"></span> 
+      </span>
     </span>
-    <!-- <span>&nbsp;&nbsp;Reviews</span> -->
-  </span>
-  · 
-  <span ng-click="user.interact = true;" class="book_link">
-    <span class="count site">
-      <span>{{focused_book.comment_count | integer}}</span>
-      <span class="icon-pencil2"></span>
+    <span class="book_link">
+      <span>&nbsp;&nbsp;</span>
+      <span class="count site">
+        <span>{{focused_book.comment_count | integer}}</span>
+        <span>Comments</span>
+        <span class="icon-pencil2"></span>
+      </span>
     </span>
-    <!-- <span>&nbsp;&nbsp;Discussions</span> -->
-  </span>
-   · 
+  </div>
    <div ng-if="!show_buy && !show_author" ng-disabled="!focused_book.status">
     <rate data="focused_book"></rate>
   </div>
 </div>
 
-<div class="scrollbar description" msd-wheel="stop_horizontal_scroll($event)" ng-if="!show_buy && !show_author">
+<div class="scrollbar description" 
+     ng-class="{'long_description': !focused_book.users_count || focused_book.users_count == 0}"
+     msd-wheel="stop_horizontal_scroll($event)" ng-if="!show_buy && !show_author">
   <span itemprop="description" ng-bind-html="focused_book.summary | summary"></span>
   <br/>
   <br/>
   <br/>
 </div>
 
-<div class="user_box" ng-if="!show_author && !show_buy">
+<div class="user_box" ng-if="!show_author && !show_buy && focused_book.users_count && focused_book.users_count > 0">
   <div class="heading">{{focused_book.users_count}} friends have read this</div>
   <div class="users">
     <div ng-repeat="user in focused_book.users">
@@ -155,11 +154,12 @@
 
 <div ng-if="show_buy && !show_author" class="buy_column">
   <div ng-if="focused_book.bnn_links">
-    <span ng-repeat="link in focused_book.bnn_links">
-      <a ng-href="{{link}}" target="_blank" class="site_color"><em>Barnes & Nobles</em></a>
+    <span>Buy from </span><em><span>Barnes & Nobles</span></em>
+    <span ng-repeat="link in focused_book.bnn_links track by $index">
+      <a ng-href="{{link}}" target="_blank" class="site_color">Link {{$index+1}}</a>
     </span>
   </div>
-  <div ng-if="!focused_book.bnn_links">
+  <div ng-if="!focused_book.bnn_links || focused_book.bnn_links.length == 0">
     Sorry! Could find this book on <em>Barnes & Nobles</em>.
   </div>
 </div>

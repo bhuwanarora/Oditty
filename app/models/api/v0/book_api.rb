@@ -165,6 +165,15 @@ module Api
 						mark_as_read = true
 					end
 					book = book[0]["data"]
+
+					friends_who_have_read = []
+					if book[6].present?
+						book[6].each do |id, index|
+							friends_who_have_read.push({:id => id, :thumb => book[7][index]})
+						end
+					end
+
+					friends_who_have_read_count = book[8]
 					
 				end
 				info = {
@@ -180,45 +189,8 @@ module Api
 							:external_thumb => book["external_thumb"],
 							:status => mark_as_read,
 							:labels => structured_labels,
-							:users => [
-								{
-									:id => 1,
-									:url => "",
-									:name => "test user",
-									:thumb => "assets/profile_pic.jpeg"
-								},
-								{
-									:id => 2,
-									:url => "",
-									:name => "test user",
-									:thumb => "assets/profile_pic.jpeg"
-								},
-								{
-									:id => 3,
-									:url => "",
-									:name => "test user",
-									:thumb => "assets/profile_pic.jpeg"
-								},
-								{
-									:id => 4,
-									:url => "",
-									:name => "test user",
-									:thumb => "assets/profile_pic.jpeg"
-								},
-								{
-									:id => 5,
-									:url => "",
-									:name => "test user",
-									:thumb => "assets/profile_pic.jpeg"
-								},
-								{
-									:id => 6,
-									:url => "",
-									:name => "test user",
-									:thumb => "assets/profile_pic.jpeg"
-								}
-							],
-							:users_count => 15
+							:users => friends_who_have_read,
+							:users_count => friends_who_have_read_count
 						}
 				if user_id
 					info.merge!(:user_rating => rating, :time_index => time_index)
@@ -250,8 +222,8 @@ module Api
 						puts "get_books_by_id".green
 						clause = self._get_books_by_id filters
 					elsif book_name.present?
-						puts "get_books_by_title".green
-						clause = self._get_books_by_title filters
+						puts "_get_all_book_for_title_query".green
+						clause = self._get_all_book_for_title_query filters
 					else
 						puts "get_filtered_books".green
 						clause = self._get_filtered_books(filters, last_book)
@@ -364,18 +336,11 @@ module Api
 				clause
 			end
 
-			def self._get_books_by_title filters
-				book_name = filters["other_filters"]["title"].gsub(" ", "").gsub(":", "")
-				author_name = filters["other_filters"]["author_name"].gsub(" ", "").gsub!(":", "") rescue ""
-				show_all = filters["other_filters"]["show_all"]
-				if show_all
-					puts "book_name "+book_name+" show_all ".green
-					skip_count = filters["reset_count"]
-					clause = "START book=node:node_auto_index(\"indexed_title:"+book_name.downcase+"*\") WITH book, toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) as weight RETURN book.isbn as isbn, ID(book), book.external_thumb ORDER BY weight DESC SKIP "+skip_count.to_s+" LIMIT 10"
-				else
-					puts "book_name "+book_name+" author_name "+author_name+" ".green
-					# clause = "START book=node:node_auto_index(\"indexed_title:"+book_name.downcase+"\") WHERE book.indexed_author_name=\""+author_name.downcase+"\" RETURN book.isbn as isbn, ID(book), book.external_thumb"
-				end
+			def self._get_all_book_for_title_query filters
+				book_title_query = filters["other_filters"]["title"].gsub(" ", "").gsub(":", "")
+				puts "book_title_query "+book_title_query+" show_all ".green
+				skip_count = filters["reset_count"]
+				clause = "START book=node:node_auto_index(\"indexed_title:"+book_title_query.downcase+"*\") WITH book, toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) as weight RETURN book.isbn as isbn, ID(book), book.external_thumb ORDER BY weight DESC SKIP "+skip_count.to_s+" LIMIT 10"
 				clause
 			end
 
@@ -402,7 +367,7 @@ module Api
 						last_book = Constants::BestLongRead unless last_book.present?
 						relation = Constants::LongReadRelation
 					end
-					init_match_clause = "MATCH (b:Book) WHERE ID(b)="+last_book.to_s+" "
+					init_match_clause = "MATCH (b:ActiveBook) WHERE ID(b)="+last_book.to_s+" "
 					match_clause = "MATCH p=(b)-[:"+relation+"*..5]->(next_book) WITH last(nodes(p)) as book MATCH(book) "
 				else
 					time_group = filters["other_filters"][Constants::Year].split("(")[0].gsub(" " , "").downcase rescue ""

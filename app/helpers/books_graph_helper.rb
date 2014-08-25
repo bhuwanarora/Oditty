@@ -58,7 +58,7 @@
 	def self.get_details(book_id, user_id=nil)
 		@neo = Neography::Rest.new
 		if user_id
-			clause = "MATCH (b:Book), (u:User) WHERE ID(b)="+book_id.to_s+" AND ID(u)="+user_id.to_s+" WITH u, b OPTIONAL MATCH (u)-[:RatingAction]->(rn:RatingNode)-[:Rate]->(b) OPTIONAL MATCH (u)-[:TimingAction]->(tm:TimingNode)-[:Timer]->(b) OPTIONAL MATCH (u)-[:Labelled]->(l1:Label) OPTIONAL MATCH (u)-[:Labelled]->(l2:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(b) OPTIONAL MATCH (u)-[:MarkAsReadAction]->(m)-[:MarkAsRead]->(b) RETURN b, rn.rating, tm.time_index, COLLECT(DISTINCt l1.name) as labels, COLLECT(DISTINCT l2.name) as selected_labels, m.timestamp as mark_as_read"
+			clause = "MATCH (b:Book), (u:User) WHERE ID(b)="+book_id.to_s+" AND ID(u)="+user_id.to_s+" WITH u, b OPTIONAL MATCH (u)-[:RatingAction]->(rn:RatingNode)-[:Rate]->(b) OPTIONAL MATCH (u)-[:TimingAction]->(tm:TimingNode)-[:Timer]->(b) OPTIONAL MATCH (u)-[:Labelled]->(l1:Label) OPTIONAL MATCH (u)-[:Labelled]->(l2:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(b) OPTIONAL MATCH (u)-[:MarkAsReadAction]->(m)-[:MarkAsRead]->(b), (u)-[:Follow]->(friend:User)-[:MarkAsReadAction]->(m_friend)-[:MarkAsRead]->(b) RETURN b, rn.rating, tm.time_index, COLLECT(DISTINCt l1.name) as labels, COLLECT(DISTINCT l2.name) as selected_labels, m.timestamp as mark_as_read, COLLECT(ID(friend)), COLLECT(friend.thumb), COUNT(friend)"
 			puts clause.blue.on_red
 			book = @neo.execute_query(clause)["data"][0]
 		else

@@ -162,11 +162,10 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         $rootScope.filters["other_filters"] = {};
         if($routeParams.type == "books"){
         	$rootScope.filters["filter_type"] = RecommendationUIConstants.BookTab;
-        	var specific_list = angular.isDefined($routeParams.filter_id);
-        	var grids = angular.isDefined($routeParams.grid_id);
-        	var trends = angular.isDefined($routeParams.trend_id);
-        	var broadcast_required = angular.isDefined($cookieStore.get('broadcast'));
-        	if(specific_list){
+        	var on_specific_list_page = angular.isDefined($routeParams.filter_id);
+        	var on_grids_page = angular.isDefined($routeParams.grid_id);
+        	var on_trending_page = angular.isDefined($routeParams.trend_id);
+        	if(on_specific_list_page){
         		if($cookieStore.get('tab') == RecommendationUIConstants.BookmarkPanel){
         			_show_bookmark_tab();
         			$rootScope.filters["label_id"] = $routeParams.filter_id;
@@ -177,29 +176,15 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         			$rootScope.main_header = $routeParams.name;
         		}
         	}
-        	else if(trends){
+        	else if(on_trending_page){
         		$rootScope.filters["reset"] = true;
 	    		$rootScope.filters["reset_count"] = 0;
         		$rootScope.filters["trend_id"] = $routeParams.trend_id;
         		$rootScope.main_header = $routeParams.name;
         	}
-        	else if(grids){
+        	else if(on_grids_page){
         		$rootScope.filters["filter_id"] = $routeParams.grid_id;
         		$rootScope.main_header = $routeParams.name;
-        	}
-        	else if(broadcast_required){
-        		var broadcast = $cookieStore.get('broadcast');
-        		var selectedItem = $cookieStore.get('selectedItem');
-        		var type = $cookieStore.get('type');
-        		// $rootScope.$broadcast(broadcast, {"name": selectedItem}, type);
-        		$rootScope.filters["reset"] = true;
-	    		$rootScope.filters["reset_count"] = 0;
-        		$rootScope.filters.other_filters[type] = selectedItem;
-				$rootScope.hide_options = true;
-
-        		$cookieStore.remove('broadcast');
-        		$cookieStore.remove('selectedItem');
-        		$cookieStore.remove('type');
         	}
         	else{
         		delete $rootScope.main_header;
@@ -211,22 +196,23 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         else if($routeParams.type == "readers"){
         	$rootScope.filters["filter_type"] = RecommendationUIConstants.ReaderTab;
         }
+        else if($routeParams.book_id){
+        	$scope.$routeParams.type = 'books';
+        	$rootScope.filters["reset"] = true;
+        	$rootScope.filters["filter_type"] = RecommendationUIConstants.BookTab;
+        	$rootScope.filters.other_filters["id"] = $scope.$routeParams.book_id;
+        }
         else if($routeParams.title){
 			$scope.$routeParams.type = 'books';
         	$rootScope.filters["reset"] = true;
         	$rootScope.filters["filter_type"] = RecommendationUIConstants.BookTab;
         	$rootScope.filters.other_filters["title"] = $scope.$routeParams.title;
         	$rootScope.main_header = $scope.$routeParams.title;
-			$rootScope.filters.other_filters["author_name"] = $scope.$routeParams.author;
-			var id_defined = angular.isDefined($scope.$routeParams.book_id);
 			var show_all = angular.isDefined($scope.$routeParams.status);
 			if(show_all){
 				$rootScope.filters.other_filters["show_all"] = $scope.$routeParams.status;
 				$rootScope.filters["reset"] = true;
 	    		$rootScope.filters["reset_count"] = 0;
-			}
-			if(id_defined){
-				$rootScope.filters.other_filters["id"] = $scope.$routeParams.book_id;
 			}
         }
         else{
@@ -409,9 +395,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         		$scope.$emit('moveRight');
         	}
 	    });
-	    var no_filters = (angular.isUndefined($rootScope.filters.more_filters) || $rootScope.filters.more_filters.length == 0) && (angular.isUndefined($rootScope.filters.other_filters) || JSON.stringify($rootScope.filters.other_filters) == '{}');
-	    
-	    if(no_filters){
+	    // var no_filters = (angular.isUndefined($rootScope.filters.more_filters) || $rootScope.filters.more_filters.length == 0) && (angular.isUndefined($rootScope.filters.other_filters) || JSON.stringify($rootScope.filters.other_filters) == '{}');
+	    var not_specific_book_page = angular.isUndefined($rootScope.filters.other_filters["title"]) && angular.isUndefined($rootScope.filters.other_filters["id"]);
+	    if(not_specific_book_page){
 	    	_get_grids();
 	    }
     }

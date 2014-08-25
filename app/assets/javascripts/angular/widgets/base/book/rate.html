@@ -7,7 +7,7 @@
 			   class="rate_radio"
 			   ng-class="{'yellow_color icon-star22':is_active($index) && !rate_object.rated,
 			   'icon-star':!is_active($index),
-			   'dark_blue_color icon-star22':ready_to_rate && is_active($index),
+			   'site_color icon-star22':ready_to_rate && is_active($index),
 			   'purple_color icon-star22':rate_object.rated && is_active($index) && !ready_to_rate}"
 			   ng-mouseenter="show_if_rated($index)"
 			   ng-mouseleave="reset_rating()"

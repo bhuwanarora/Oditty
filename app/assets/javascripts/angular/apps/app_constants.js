@@ -86,7 +86,7 @@ var constants = {
 			"Genre": "GENRE",
 			"GenrePlaceholder": "Add a genre to filters...",
 			"Time" :"TIME",
-			"TimePlaceholder": "Add a reading time to fitlers...",
+			"TimePlaceholder": "Add a reading time to filters...",
 			"Gender": "GENDER",
 			"GenderPlaceholder": "by gender...",
 			"MaleGender": "Male",
