@@ -204,15 +204,15 @@ angular.module('filtersApp', [])
   })
   .filter('medium_thumb', function(){
     return function(isbn_string){
-      var output = ""
+      var output = "";
       if(isbn_string){
         var isbn = isbn_string.split(",");
         angular.forEach(isbn, function(value){
-          var img = new Image();
-          img.src = "http://covers.openlibrary.org/b/isbn/"+value+"-M.jpg";
-          if(img.height > 20 && output == ""){
-            output = img.src;
-          }
+          // var img = new Image();
+          output = "http://covers.openlibrary.org/b/isbn/"+value+"-M.jpg";
+          // if(img.height > 20 && output == ""){
+          //   output = img.src;
+          // }
         });
         return output;
       }

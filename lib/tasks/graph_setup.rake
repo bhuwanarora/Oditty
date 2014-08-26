@@ -1,5 +1,17 @@
 namespace :graph do
 
+  desc "remove_less"
+  task :remove_less => :environment do
+    include Neo4jHelper
+    Neo4jHelper.remove_less
+  end
+  
+  desc "set_total_weight"
+  task :set_total_weight => :environment do
+    include Neo4jHelper
+    Neo4jHelper.set_total_weight
+  end
+  
   desc "set_star_genres"
   task :set_star_genres => :environment do
     include Neo4jHelper

@@ -37,22 +37,17 @@
 		  	<a ng-href="#user/{{user.id}}/recommendations/books" class="nav_menu_wrapper animate-fast">
 		  		<div>EXPLORE YOUR READING COMPANION</div>
 		    </a>
-	    	<div class="nav_menu"> 
-	    		<img src="assets/grids/grid.png">
-		 		<!--  <ul class="nav" ng-if="user.logged"> 
-		    	<li><a ng-href="#user/{{user.id}}/recommendations/books">
-		    		<span class="icon-book"></span><span>&nbsp;&nbsp;Book Recommendation Engine</span>
-		    		
-		    		</a></li> 
-		    	<li><a>
-		    		<span class="icon-pen"></span><span>&nbsp;&nbsp;Book Reading Timeline </span><br/>
-		    		<span>Coming Soon...</span>
-		    	</a></li> 
-		    	<li><a>
-		    		<span class="icon-users"></span><span>&nbsp;&nbsp;Barter System</span><br/><span>Coming Soon...</span>
-		    	</a></li> 
-		  	</ul>  -->
-			</div>
+	    	<!-- <div class="nav_menu"> 
+	    		<div class="relative_position">
+		    		<div class="grid_thumb" ng-repeat="book in random_books">
+		    		<a ng-href="#user/{{user.id}}/book/{{book.id}}">
+		    			<img ng-src="{{book.isbn | medium_thumb}}" 
+		    				 ng-style="set_book_width(book)" 
+		    				 class="animate-fast"/>
+		    		</a>
+		    		</div>
+	    		</div>
+			</div> -->
 		  	<div class="trends">
 		  		<span class="trend">
 		  			TRENDING

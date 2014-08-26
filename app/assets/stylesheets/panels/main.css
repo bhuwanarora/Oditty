@@ -48,8 +48,11 @@ td{
 	cursor: default;
 }
 
-img{
+table img{
 	width: 50px;
+}
+.cover_photos{
+	width: 100px;
 }
 
 .main-header{

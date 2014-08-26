@@ -4,11 +4,11 @@ module Api
 			def self.search_books(q, user_id=nil)
 				results = []
 				neo_init
-				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "")
+				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "")
 				unless user_id.present?
-					clause = "START book=node:node_auto_index('indexed_title:"+q+"*') WITH book, toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) as weight RETURN book.isbn, ID(book), book.title as name, book.author_name, weight ORDER BY weight DESC LIMIT 10"
+					clause = "START book=node:node_auto_index('indexed_title:"+q+"*') WITH book RETURN book.isbn, ID(book), book.title as name, book.author_name ORDER BY book.total_weight DESC LIMIT 10"
 				else
-					clause = "START book=node:node_auto_index('indexed_title:"+q+"*') WITH book, toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) as weight ORDER BY weight DESC OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" RETURN book.isbn, ID(book), book.title as name, book.author_name, ID(m) LIMIT 10"
+					clause = "START book=node:node_auto_index('indexed_title:"+q+"*') WITH book ORDER BY weight DESC OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" RETURN book.isbn, ID(book), book.title as name, book.author_name, ID(m) LIMIT 10"
 				end
 				puts clause.blue.on_red
 				if q.length >= 3
@@ -20,7 +20,7 @@ module Api
 			def self.search_genres(q, limit)
 				results = []
 				neo_init
-				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "") rescue ""
+				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "") rescue ""
 				if q.present?
 					clause = "START genre=node:node_auto_index('indexed_star_genre_name:"+q+"*') RETURN genre.name, ID(genre) ORDER BY genre.books_count DESC LIMIT "+limit.to_s
 				else
@@ -34,7 +34,7 @@ module Api
 			def self.search_authors(q, user_id)
 				results = []
 				neo_init
-				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "")
+				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "")
 				if q.present?
 					q = "@"+q
 					clause = "START author=node:node_auto_index('indexed_main_author_name:"+q+"*') RETURN author.name, ID(author) LIMIT 10"
@@ -55,9 +55,9 @@ module Api
 
 			def self.search(q, count, type)
 				neo_init
-				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "")
+				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "")
 				if (type.include? 'BOOK')
-					clause = "START book=node:node_auto_index('indexed_title:"+q+"*') WITH book, toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) as weight RETURN book.title as name, book.author_name, ID(book), weight ORDER by weight DESC LIMIT "+count.to_s
+					clause = "START book=node:node_auto_index('indexed_title:"+q+"*') RETURN book.title as name, book.author_name, ID(book) ORDER by book.weight DESC LIMIT "+count.to_s
 					puts clause.blue.on_red
 					tester = {:name => "BOOK:"+q.upcase}
 				elsif (type.include? 'AUTHOR') || (type.include? 'READER')

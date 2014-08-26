@@ -72,7 +72,12 @@ module Api
 			end
 
 			def image
-				image_url = SearchPage.all(:order => "RANDOM()").first.background_image_url
+				# image_url = SearchPage.all(:order => "RANDOM()").first.background_image_url
+				neo = Neography::Rest.new
+				r = Random.new
+				random = r.rand(1...99)
+				clause = "MATCH (c:CoverPhoto) RETURN c.url SKIP "+random.to_s+" LIMIT 1"
+				image_url = neo.execute_query(clause)["data"]
 				render :json => {:url => image_url}, :status => 200
 			end
 

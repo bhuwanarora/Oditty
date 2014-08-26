@@ -14,6 +14,11 @@
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
+.search_page .grid_thumb{
+	float: left;
+	display: inline-block;
+}
+
 .search_button{
 	background-color: #4d90fe;
 	background-image: -webkit-linear-gradient(top,#4d90fe,#4787ed);
@@ -381,7 +386,7 @@
 	position: fixed;
 	vertical-align: middle;
 	z-index: 2;
-	padding: 50px;
+	padding: 15px;
 	background-color: rgba(0, 0, 0, 0.6);
 	color: white;
 	font-weight: 100;
@@ -400,8 +405,15 @@
 }
 
 .nav_menu img{
-	height: 220px;
-	width: 100%;
+	bottom: 0px;
+	position: absolute;
+	border-radius: 1px;
+	cursor: pointer;
+}
+
+.nav_menu img:hover{
+	bottom: 40px;
+	z-index: 2;
 }
 
 .nav {

@@ -63,6 +63,7 @@ var constants = {
 			"ZeroBooksFound": "ALERT- Reset the filters couldn't find more books."
 		},
 		"SearchUIConstants": {
+			"TypeMore": "Type more characters...",
 			"ComingSoon": "Coming Soon...",
 			"NoResultsFound": "No results found...",
 			"BookSearch": "BOOK",

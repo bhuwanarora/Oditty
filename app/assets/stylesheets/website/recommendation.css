@@ -340,6 +340,16 @@
    	border-radius: 1px;
 }
 
+.toggle_elements{
+	left: 240px;
+	background-color: #fff;
+	-webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
+	position: fixed;
+	top: 50px;
+	border-radius: 1px;
+}
+
 .push_notification{
 	display: table;
 	background-color: #fff;

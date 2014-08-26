@@ -82,6 +82,8 @@ ReadersDoor::Application.routes.draw do
   get "reset_grid_links"                => "books#reset_grid_links",            :as => "reset_grid_links"
   get "book_detail"                     => "books#book_detail",                 :as => "book_detail"
   get "trending_new_books"              => "books#trending_new_books",          :as => "trending_new_books"
+  get "cover_photos"                    => "books#cover_photos",                :as => "cover_photos"
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

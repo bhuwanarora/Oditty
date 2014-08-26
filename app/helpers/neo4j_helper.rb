@@ -1012,5 +1012,36 @@ module Neo4jHelper
 		end	
 	end
 
+	def self.set_total_weight
+		@neo ||= self.init
+		skip = 10000
+		start_id = 384293 #MIN ID
+		end_id = 2655796 #MAX ID
+		# limit = 100
+		while start_id <= end_id
+			puts "set_total_weight..."+start_id.to_s.green
+			limit = start_id + skip
+			clause = 'MATCH (book:Book) WHERE ID(book) >= '+start_id.to_s+' AND ID(book) < '+limit.to_s+'  SET book.total_weight = toFloat(book.gr_rating) * toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count)'
+			puts @neo.execute_query(clause)["data"][0]
+			start_id = start_id + skip
+		end
+	end
+
+	def self.remove_less
+		@neo ||= self.init
+		skip = 10000
+		start_id = 384293 #MIN ID
+		end_id = 2655796 #MAX ID
+		# limit = 100
+		while start_id <= end_id
+			puts "set_total_weight..."+start_id.to_s.green
+			limit = start_id + skip
+			clause = 'MATCH (book:Book) WHERE ID(book) >= '+start_id.to_s+' AND ID(book) < '+limit.to_s+'  SET book.description = REPLACE(book.description, "(less)", "")'
+			puts @neo.execute_query(clause)["data"][0]
+			start_id = start_id + skip
+		end	
+	end
+
+
 
 end

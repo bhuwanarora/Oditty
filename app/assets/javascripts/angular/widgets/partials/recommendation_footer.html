@@ -3,6 +3,9 @@
 	<!-- <div class="website-title">
 		<span class="icon glyphicon-home"></span> Reader's Door
 	</div> -->
+	<!-- <div class="toggle_elements">
+		<div ng-class="{'icon-radio-unchecked': !grid_view, 'icon-checkbox-unchecked': grid_view}" class="link" ng-click="grid_view = !grid_view"></div>
+	</div> -->
 	
  	<div class="shelf_nav_links">
  		
@@ -60,7 +63,7 @@
 			 ng-click="toggle_bookmarked($event)">
 			 <span ng-if="$routeParams.type == 'books'">
 			 	<span class="icon-tags" ng-class="{'light_grey_color': !bookmark_selected}"></span>
-			 	<span><b>B</b>ooks <b>S</b>aved</span>
+			 	<span><b>M</b>y <b>L</b>ibrary</span>
 		 	 </span>
 			 <span ng-if="$routeParams.type == 'authors'">
 			 	<span class="icon-tags" ng-class="{'light_grey_color': !bookmark_selected}"></span>

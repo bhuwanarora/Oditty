@@ -144,8 +144,8 @@ module Api
 			def self.get_book_details(id, user_id=nil)
 				book = BooksGraphHelper.get_details(id, user_id)
 				if user_id
-					rating = book[1]
-					time_index = book[2]
+					user_rating = book[1]
+					user_time_index = book[2]
 					labels = book[3]
 					selected_labels = book[4]
 					structured_labels = []
@@ -179,21 +179,24 @@ module Api
 				info = {
 							:title => book["title"],
 							:author_name => book["author_name"],
-							:rating => book["gr_rating"].to_f*2,
 							:readers_count => book["readers_count"],
 							:bookmark_count => book["bookmark_count"],
 							:comment_count => book["comment_count"],
 							:published_year => book["published_year"],
 							:page_count => book["page_count"],
 							:summary => book["description"],
-							:external_thumb => book["external_thumb"],
-							:status => mark_as_read,
-							:labels => structured_labels,
-							:users => friends_who_have_read,
-							:users_count => friends_who_have_read_count
+							:external_thumb => book["external_thumb"]
 						}
 				if user_id
-					info.merge!(:user_rating => rating, :time_index => time_index)
+					info.merge!(:user_rating => user_rating, 
+								:status => mark_as_read,
+								:labels => structured_labels,
+								:users => friends_who_have_read,
+								:users_count => friends_who_have_read_count,
+							    :time_index => user_time_index)
+				end
+				unless book["linked"].present?
+					Resque.enqueue(SummaryWorker, book["isbn"], id, book["title"])
 				end
 				info
 			end
@@ -326,7 +329,7 @@ module Api
 			end
 
 			def self._get_basic_recommendations(filters, last_book)
-				clause = "MATCH (book:Book) WHERE ID(book)="+last_book.to_s+" MATCH p=(book)-[:Next_book*..5]->(b) WITH last(nodes(p)) as b RETURN b.isbn, ID(b), b.external_thumb"
+				clause = "MATCH (book:Book) WHERE ID(book)="+last_book.to_s+" MATCH p=(book)-[:Next_book*..4]->(b) WITH last(nodes(p)) as b RETURN b.isbn, ID(b), b.external_thumb"
 				clause
 			end
 
@@ -399,7 +402,7 @@ module Api
 					with_clause = "WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight "
 					init_order_clause = " ORDER BY "
 					base_order_clause = " rating_weight DESC, total_weight DESC, book.gr_rating DESC "
-					limit_clause = " LIMIT 5 "
+					limit_clause = " LIMIT 4 "
 
 					unless filters["reset"]
 						if filters["reset_count"]

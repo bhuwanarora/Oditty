@@ -1,11 +1,19 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
   include TrendsHelper
+  include FlickrHelper
 
   # GET /books
   # GET /books.json
   def index
     @books = Book.all.limit(10)
+  end
+
+  def cover_photos
+    neo = Neography::Rest.new
+    clause  = "MATCH (c:CoverPhoto) RETURN c.url"
+    @urls = neo.execute_query(clause)["data"]
+    # @urls = FlickrHelper.get_cover_photos
   end
 
   # GET /books/1

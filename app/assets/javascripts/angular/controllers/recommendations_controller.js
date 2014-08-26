@@ -452,6 +452,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	_init = function(){
 		//oneMin = 60000
+		$scope.grid_view = false;
 		$scope.$routeParams = $routeParams;
 		// console.debug("%crouteparams "+$routeParams+" ", "color: yellow");
 		// $scope.$emit('reloadRecommendations');

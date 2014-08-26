@@ -7,6 +7,10 @@ websiteApp.service('recommendationService', ['$http', '$q', '$rootScope', functi
         return _deferred_request('/api/v0/recommendations?count=5&q='+filters);
     }
 
+    this.get_random_books = function(){
+        return _deferred_request('/api/v0/random_books');
+    }
+
     this.get_grid_books = function(){
         return _deferred_request('/api/v0/grid');
     }
@@ -58,4 +62,6 @@ websiteApp.service('recommendationService', ['$http', '$q', '$rootScope', functi
         $http.get(url).then(successCallback, errorCallback);
         return deferred.promise;
     }
+
+    
 }]);

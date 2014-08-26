@@ -70,7 +70,7 @@ module WikiCrawler
 		@neo = Neography::Rest.new
 		Author.where("wiki_url != ?", "").where(:flag => nil).find_each do |author|
 			begin
-				unless author.id == 388596 || author.id == 417878
+				unless author.id == 388596 || author.id == 417878 || author.id == 475881
 					headings_init = false
 					set_clause = ""
 					wiki_url = author.wiki_url

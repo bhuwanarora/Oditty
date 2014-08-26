@@ -9,6 +9,14 @@ module Api
 				# publish
 			end
 
+			def random_books
+				@neo = Neography::Rest.new
+				clause = "MATCH (book:ActiveBook) RETURN ID(book), book.isbn LIMIt 15"
+				puts clause.blue.on_red
+				info = @neo.execute_query(clause)["data"]
+				render :json => info, :status => 200
+			end
+
 
 			def grid
 				@neo = Neography::Rest.new
