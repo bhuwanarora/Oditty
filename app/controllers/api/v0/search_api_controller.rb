@@ -10,17 +10,17 @@ module Api
 			end
 
 			def search_books
-				results = SearchApi.search_books(params[:q].strip, session[:user_id])
+				results = SearchApi.search_books(params[:q].to_s.strip, session[:user_id])
 				render :json => {:results => results}, :status => 200
 			end
 
 			def search_authors
-				results = SearchApi.search_authors(params[:q].strip, session[:user_id])
+				results = SearchApi.search_authors(params[:q].to_s.strip, session[:user_id], params[:genre_id])
 				render :json => results, :status => 200
 			end
 
 			def search_genres
-				results = SearchApi.search_genres(params[:q].strip, params[:count])
+				results = SearchApi.search_genres(params[:q].to_s.strip, params[:count])
 				render :json => results, :status => 200
 			end
 

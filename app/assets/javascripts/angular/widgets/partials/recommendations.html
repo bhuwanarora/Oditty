@@ -10,16 +10,16 @@
    ng-click="hide_popups()">
 		<main-header></main-header>
 		<recommendation-footer></recommendation-footer>
-		<div class="status animate-fast" ng-click="show_interaction_box()">
+		<!-- <div class="status animate-fast" ng-click="show_interaction_box()">
 			<span><input disabled placeholder="Share something..." /></span>
-		</div>
+		</div> -->
 
 		<div class="vertical_padder_active"></div>
 
 		<!-- <div class="recommendations_page"><search-bar></search-bar></div> -->
 		
-		<info-card></info-card>
 		
+		<div class="info_card_placeholder"></div>
 		<div ng-switch on="panel_selected" class="full_height">
 			<div ng-switch-when="BOOKMARK" class="full_height">
 				<div ng-if="$routeParams.type == 'books'" ng-model="user.books.bookmarked">
@@ -161,7 +161,7 @@
 			<div class="collapse_icon" ng-click="user.collapsed_column = !user.collapsed_column;" ng-if="!user.collapsed_column">
 				<span class="icon-angle-left"></span>
 			</div>
-			<div ng-if="user.collapsed_column" class="animate-slow collapsed_column"
+			<div ng-if="user.collapsed_column" class="animate-fast collapsed_column"
 				ng-click="user.collapsed_column = false;">
 				<div>
 					<img ng-src="{{user.thumb | thumb_backup}}" class="thumb">
@@ -285,13 +285,15 @@
 		<div class="focused_tooltip animate-faster"
 		     ng-style="focused_book.reposition_tooltip"
 		     ng-click="stop_propagation($event)"
-		     ng-if="focused_book"><focused-book></focused-book></div>
+		     ng-if="focused_book">
+		    <focused-book></focused-book>
+		</div>
 		<div class="ticker_popup" 
 			 ng-if="ticker_popup"
 			 ng-style="ticker_popup_style"
 			 msd-wheel="handle_height_of_popup($event)"
 			 check-scroll-down="handle_height_of_popup($event, true)">
-			 <div class="scrollbar shift_right">
+			<div class="scrollbar shift_right">
 				<ticker-popup></ticker-popup>
 			</div>
 			<!-- <book-interact track></book-interact> -->
@@ -306,18 +308,18 @@
 		<div class="top_hover_detector"></div>
 	
 		<div class="scroller">
-			<span class="scroller-left icon-angle-left"
+			<span class="scroller-left icon-angle-left blue_button"
 			      ng-mouseover="move_left($event)"
 			      ng-click="move_left($event)"
 			      title="Scroll left">
 			</span>
-			<span class="scroller-right icon-angle-right"
+			<span class="scroller-right icon-angle-right blue_button"
 				  ng-mouseover="move_right($event)"
 				  ng-click="move_right($event)"
 				  title="Scroll right">
 			</span>
 		</div>
-	 	<!-- </type-ahead> -->
-		
+
+		<info-card></info-card>
 </div>
 <interaction-box ng-if="user.interact"></interaction-box>

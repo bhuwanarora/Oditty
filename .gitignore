@@ -65,3 +65,8 @@ app/assets/javascripts/min/**/*
 app/assets/stylesheets/min/*.css
 neo4j/conf/neo4j-wrapper.conf
 neo4j/conf/neo4j.properties
+*.jpg
+*.gz
+*.sql
+*.out
+*.zip

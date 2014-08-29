@@ -8,7 +8,7 @@
 	position: fixed;
 	top: 95px;
 	white-space: initial;
-	z-index: 3;
+	z-index: 8;
 	width: 35%;
 	padding-left: 15px;
 	padding-right: 15px;
@@ -39,13 +39,6 @@
 
 .focused_tooltip .author_book_info{
 	background-color: #F5F5F5;
-}
-
-.focused_tooltip .book_info .book_link .count{
-	color: white;
-	padding: 5px;
-	border-radius: 4px;
-	text-shadow: 0 2px 3px rgba(0,0,0,0.5);
 }
 
 .focused_tooltip .book_thumb{
@@ -80,7 +73,7 @@
 .focused_tooltip .description{
 	font-size: .93em;
 	height: 20vh;
-	line-height: 1.3em;
+	line-height: 1.5em;
 	padding: 12px;
 	width: 97%;
 	background-color: #F5F5F5;
@@ -113,10 +106,6 @@
 }
 
 .focused_tooltip .footer{
-	background-color: #E6E6E6;
-	border-bottom-left-radius: 2px;
-	border-bottom-right-radius: 2px;
-	border-top: 1px solid #D5D5D5;
 	bottom: 0px;
 	left: 0px;
 	margin-top: 5px;
@@ -126,11 +115,10 @@
 
 .focused_tooltip .footer .recommend{
 	cursor: pointer;
-	float: right;
 	font-size: .7em;
-	padding: 10px 15px 10px 15px;
-	color: #fff;
-	border-radius: 2px;
+	padding: 10px 15px;
+	float: right;
+	margin-right: 18px;
 }
 
 .focused_tooltip .users{
@@ -155,13 +143,14 @@
 }
 
 .rate_radio_buttons{
-	padding: 3px 15px;
+	padding: 3px 15px 2px 0px;
 	width: 275px;
 	text-align: left;
 }
 
 .focused_tooltip .instruct_block{
 	height: 35px;
+	font-size: 0.9em;
 }
 
 .focused_tooltip .header{
@@ -172,12 +161,10 @@
 .focused_tooltip .header .title{
 	font-size: 1em;
 	font-weight: bold;
-	width: 70%;
 }
 
 .focused_tooltip .header .author{
 	font-size: 0.9em;
- 	width: 70%;
 }
 
 .focused_tooltip .user_box,
@@ -229,11 +216,7 @@
 	background-color: #E6E6E6;
 	padding-top: 8px;
 	padding-bottom: 8px;
-	cursor: pointer;
-	float: left;
-	display: inline-block;
-	width: 33.3%;
-	text-align: center;
+	width: 33%;
 	font-size: 0.8em;
 }
 
@@ -245,6 +228,7 @@
 	padding-bottom: 20px;
 	right: 0px;
 	text-align: center;
+	overflow-y:	auto; 
 }
 
 .focused_tooltip .popup_icon{
@@ -288,21 +272,11 @@
 
 .time_to_read span{
 	background-color: white;
-	border: 1px solid #DFDFDF;
 	cursor: pointer;
 	font-size: 0.8em;
 	letter-spacing: 0px;
 	padding: 2px 15px 2px 15px;
 	text-align: center;
-}
-.time_to_read .active_read_timer{
-	background-color: #918FB5;
-	color: white;
-}
-
-.time_to_read span:hover{
-	background-color: #417FF0;
-	color: white;
 }
 
 .focused_tooltip .arrow{

@@ -189,7 +189,7 @@ class BooksController < ApplicationController
       neo.execute_query clause
     end
 
-    clause = "MATCH (l:Label) OPTIONAL MATCH (l)-[:BookmarkedOn]->(b:Book) RETURN l.name, l.timestamp, ID(l), COLLECT(b.title), l.status, COLLECT(ID(b))"
+    clause = "MATCH (l:Label) OPTIONAL MATCH (l)-[:BookmarkedOn]->(b:Book) RETURN l.name, l.timestamp, ID(l), COLLECT(b.title), l.status, COLLECT(ID(b)), l.primary_label"
     puts clause.blue.on_red
     @labels = neo.execute_query(clause)["data"]
   end
@@ -238,7 +238,7 @@ class BooksController < ApplicationController
       neo.execute_query clause
     end
 
-    clause = "MATCH (t:Trending) OPTIONAL MATCH (t)-[:RelatedBooks]->(b:Book) RETURN t.name, t.timestamp, ID(t), COLLECT(b.title), t.status, COLLECT(ID(b)), t.title, t.content, t.searched_words, t.url, t.thumbnail_url, t.redirect_url, t.publisher, t.thumb ORDER BY t.timestamp DESC LIMIT 15 "
+    clause = "MATCH (t:Trending) OPTIONAL MATCH (t)-[:RelatedBooks]->(b:Book) RETURN t.name, t.timestamp, ID(t), COLLECT(b.title), t.status, COLLECT(ID(b)), t.title, t.content, t.searched_words, t.url, t.thumbnail_url, t.redirect_url, t.publisher, t.thumb ORDER BY t.timestamp DESC LIMIT 30 "
     puts clause.blue.on_red
     @trends = neo.execute_query(clause)["data"]
 

@@ -3,6 +3,10 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
     restrict: 'E',
     scope: { 'book': '=data' },
     controller: ['$scope', function($scope){
+      $scope.show_interaction_box = function(event){
+        $rootScope.user.interact = true;
+      }
+
       $scope.show_focused_tooltip = function(event){
         if($rootScope.focused_book != $scope.book){
           // $rootScope.show_more_filters = false;
@@ -58,12 +62,14 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
         console.debug("%c _init book"+book_id, "color: purple");
         $scope.book.tweets = [];
         $scope.book.show_labels = false;
+        
         // if(!angular.isArray($scope.book.labels)){
         //   $scope.book.labels = [];
         //   angular.forEach($rootScope.labels, function(value){
         //     this.push({"name": value.name});
         //   }, $scope.book.labels);
         // }
+
         websiteService.get_book_details("id="+book_id).then(function(data){
           angular.extend($scope.book, data);
           angular.forEach($scope.book.labels, function(value){
@@ -72,6 +78,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
             }
           });
         });
+
         // var margin_right = (Math.floor(Math.random() * 20) + 1)+"px";
         // var margin_top = (Math.floor(Math.random() * 50) + 1)+"px";
         // var margin_right_neg = (Math.random() < 0.5);
@@ -378,7 +385,7 @@ websiteApp.directive('rate', ['$rootScope', '$timeout', 'widgetService', 'shared
   }
 }]);
 
-websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 'sharedService', 'WebsiteUIConstants', function($rootScope, $timeout, widgetService, sharedService, WebsiteUIConstants){
+websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 'sharedService', 'WebsiteUIConstants', '$cookieStore', function($rootScope, $timeout, widgetService, sharedService, WebsiteUIConstants, $cookieStore){
   return{
     restrict: 'E',
     controller: ['$scope', function($scope){
@@ -418,6 +425,8 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
       $scope.get_author_details = function(){
         $scope.show_author = true;
         $scope.show_buy = false;
+        $cookieStore.put('show_author', true);
+        $cookieStore.put('show_buy', false);
         if(angular.isUndefined($rootScope.focused_book.author_details)){
           widgetService.get_author_details($rootScope.focused_book.id).then(function(data){
             $rootScope.focused_book.author_details = {"about": data[0], "image_url": data[1], "signature_pic": data[2], "id": data[3], "book_ids": data[4], "book_isbns": data[5]};
@@ -438,9 +447,25 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
       $scope.get_buy_links = function(){
         $scope.show_author = false;
         $scope.show_buy = true;
+        $cookieStore.put('show_author', false);
+        $cookieStore.put('show_buy', true);
         if(angular.isUndefined($rootScope.focused_book.bnn_links)){
           widgetService.get_affiliate_links($rootScope.focused_book.id).then(function(results){
             $rootScope.focused_book.bnn_links = results.bnn.links;
+          });
+        }
+      }
+
+      $scope.get_book_overview = function(){
+        $scope.show_buy = false; 
+        $scope.show_author = false;
+        $cookieStore.put('show_author', false);
+        $cookieStore.put('show_buy', false);
+        if(angular.isUndefined($rootScope.focused_book.tweets) || $rootScope.focused_book.tweets.length == 0){
+          widgetService.get_book_feed($rootScope.focused_book.id).then(function(data){
+            if($rootScope.focused_book != null){
+              $rootScope.focused_book.tweets = data;
+            }
           });
         }
       }
@@ -577,23 +602,33 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
       }
 
       _open_tab = function(){
-        $scope.show_author = false;
-        $scope.show_buy = false;
+        if(angular.isDefined($cookieStore.get('show_author'))){
+          $scope.show_author = $cookieStore.get('show_author');
+        }
+        else{
+          $scope.show_author = false;
+        }
+        if(angular.isDefined($cookieStore.get('show_buy'))){
+          $scope.show_buy = $cookieStore.get('show_buy');
+        }
+        else{
+          $scope.show_buy = false;
+        }
       }
 
       _init = function(){
-        // var book_name = $rootScope.focused_book.title;
-        // var author_name = $rootScope.focused_book.author_name;
-        var book_id = $rootScope.focused_book.id;
-        if(angular.isUndefined($rootScope.focused_book.tweets) || $rootScope.focused_book.tweets.length == 0){
-          widgetService.get_book_feed(book_id).then(function(data){
-            if($rootScope.focused_book != null){
-              $rootScope.focused_book.tweets = data;
-            }
-          });
+        _open_tab();
+
+        if($scope.show_author){
+          $scope.get_author_details();
+        }
+        else if($scope.show_buy){
+          $scope.get_buy_links();
+        }
+        else{
+          $scope.get_book_overview();
         }
         _display_tweet(0);
-        _open_tab();
       }
 
       _init();

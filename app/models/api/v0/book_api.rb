@@ -399,9 +399,9 @@ module Api
 						init_match_clause = "MATCH (book:Book) "
 					end
 					# random_clause = "ID(book)%"+random.to_s+"=0 AND rand() > 0.3 "
-					with_clause = "WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight "
+					with_clause = "WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight "
 					init_order_clause = " ORDER BY "
-					base_order_clause = " rating_weight DESC, total_weight DESC, book.gr_rating DESC "
+					base_order_clause = " rating_weight DESC, book.total_weight DESC, book.gr_rating DESC "
 					limit_clause = " LIMIT 4 "
 
 					unless filters["reset"]

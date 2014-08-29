@@ -37,18 +37,18 @@ websiteApp.directive('toggle', function(){
 websiteApp.directive('track', ['$rootScope', function($rootScope){
 	return{
 		restrict: 'A',
-		link: ['scope', 'element', 'attrs', function(scope, element, attrs){
-			element.bind('mouseleave', function(event){
-				_record_details(event)
-			})
+		link: function(scope, element, attrs){
+			// element.bind('mouseleave', function(event){
+			// 	_record_details(event)
+			// })
 
-			element.bind('mouseenter', function(event){
-				_record_details(event)
-			})
+			// element.bind('mouseenter', function(event){
+			// 	_record_details(event)
+			// })
 
-			element.bind('click', function(event){
-				_record_details(event)
-			})
+			// element.bind('click', function(event){
+			// 	_record_details(event)
+			// })
 
 			_record_details = function(event){
 				node_name = event.currentTarget.nodeName
@@ -80,7 +80,7 @@ websiteApp.directive('track', ['$rootScope', function($rootScope){
 							"book_id": book_id}]
 				$rootScope.data = $rootScope.data.concat(data_json)
 			}
-		}]
+		}
 	}
 }]);
 
@@ -1095,3 +1095,34 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
     templateUrl: "/assets/angular/widgets/base/book/interaction_box.html"
   }
 }]);
+
+websiteApp.directive('tooltip', function(){
+	return{
+	    restrict: 'E',
+	    scope: {"text": "=data"},
+	    link: function(scope, element, attrs){
+
+			// element.parent().css('position', 'relative');
+			// element.parent().bind('mouseenter', function(event){
+			// 	element.show();
+			// });
+			// element.parent().bind('mouseenter', function(event){
+			// 	element.css('display', 'none');
+			// });
+			// function offset(elm) { 
+			//   	try {return elm.offset();} catch(e) {} 
+			//   	var rawDom = elm[0]; 
+			//   	var _x = 0; 
+			//   	var _y = 0; 
+			//   	var body = document.documentElement || document.body; 
+			//   	var scrollX = window.pageXOffset || body.scrollLeft; 
+			//   	var scrollY = window.pageYOffset || body.scrollTop; 
+			//   	_x = rawDom.getBoundingClientRect().left + scrollX; 
+			//   	_y = rawDom.getBoundingClientRect().top + scrollY; 
+			//   	return { left: _x, top:_y }; 
+			// }
+			
+		},
+		templateUrl: "/assets/angular/widgets/base/widget/tooltip.html"
+	}
+});

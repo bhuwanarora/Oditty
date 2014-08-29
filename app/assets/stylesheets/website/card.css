@@ -1,17 +1,19 @@
 .recommendation_block{
 	display: inline-block;
 	height: 78vh;
-	margin-right: 20px;
+	margin-right: 5px;
 	position: relative;
-	width: 54vh;
+	width: 56vh;
+	padding-left: 5px;
+	padding-right: 5px;
 }
 
 .widget{
 	bottom: 0px;
 	display: inline-block;
-	left: 0px;
+	left: 6px;
 	position: absolute;
-	right: 0px;
+	right: 6px;
 	top: 0px;
 }
 
@@ -34,8 +36,8 @@
 	color: black;
 	position: absolute;
 	top: 2px;
-	left: 1px;
-	right: 1px;
+	left: 6px;
+	right: 6px;
 	height: 30px;
 	padding: 8px;
 	white-space: initial;
@@ -74,9 +76,10 @@
 .bottom_widget{
 	height: 40px;
 	bottom: 0px;
-	left: 0px;
-	right: 0px;
+	left: 6px;
+	right: 6px;
 	position: absolute;
+	background-color: white;
 }
 
 .tag_bookmark{
@@ -99,15 +102,10 @@
    color: #6F6F6F;
 }
 
-.tag_bookmark:hover{
-	background-color: #F1F1F1;
-	border-bottom: 1px solid !important;
-	color: white;
-}
 
 /*mark as read*/
 .input_bookmark{
-	width: 73%;
+	width: 72%;
 	left: 0px;
 	position: absolute;
 	bottom: 0px;
@@ -117,7 +115,11 @@
 	margin: 0px;
 	cursor: default;
 	padding-left: 10px;
-	border-bottom-left-radius: 4px;
+	border: 1px solid transparent;
+}
+
+.input_bookmark:focus{
+	border: 1px solid #427fed;
 }
 
 .left_action_active{
@@ -131,19 +133,24 @@
 
 .action_button{
 	text-align: center;
-	color: #6F6F6F;
+	color: #B4B4B4;
 	font-size: 1.2em;
 	width: 12%;
 	position: absolute;
 	bottom: 0px;
 	top: 0px;
+	height: 40px;
+	display: table;
 }
 
-.action_button:before{
-    content: '';
-    display: inline-block;
-    height: 100%;
-    vertical-align: middle;
+.action_button:hover{
+	background: #f5f5f5;
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#f5f5f5),to(#f1f1f1));
+	background-image: -webkit-linear-gradient(top,#f5f5f5,#f1f1f1);
+	background-image: -moz-linear-gradient(top,#f5f5f5,#f1f1f1);
+	background-image: -ms-linear-gradient(top,#f5f5f5,#f1f1f1);
+	background-image: -o-linear-gradient(top,#f5f5f5,#f1f1f1);
+	background-image: linear-gradient(top,#f5f5f5,#f1f1f1);
 }
 
 .right_action{
@@ -155,23 +162,23 @@
 	position: absolute;
 	bottom: 28px;
 	background-color: white;
-	z-index: 2;
+	z-index: 3;
 	list-style-type: none;
 	padding: 2px;
-	width: 64%;
+	width: 55%;
 	font-size: 0.8em;
 	border-top-right-radius: 3px;
 	border-left: 1px solid #F0F0F0;
 	max-height: 30vh;
 	overflow-y: scroll;
 	box-shadow: 0 7px 15px rgba(0,0,0,.25);
-	padding: 10px 20px 10px 20px;
+	padding: 10px 0px 10px 0px;
 	text-transform: capitalize;
 }
 
 .label_dropdown li{
-	padding: 8px;
-	border-bottom: 1px solid #F0F0F0;
+	padding: 10px;
+	/*border-bottom: 1px solid #F0F0F0;*/
 }
 
 .label_dropdown li:hover{
@@ -186,9 +193,9 @@
 	background: rgba(113, 112, 112, 0.25);
 	background-size: 100% 100% !important;
 	position: absolute;
-	left: 1px;
 	top: 50px;
-	right: 1px;
+	left: 6px;
+	right: 6px;
 	bottom: 40px;
 	cursor: pointer;
 	z-index: 1;
@@ -196,18 +203,14 @@
 
 .card .description{
 	position: absolute;
-	left: 1px;
-	right: 1px;
+	left: 6px;
+	right: 6px;
 	top: 50px;
 	bottom: 40px;
 	color: white;
-	/*color: #817C65;*/
-	/*background-color: #f9edbe;*/
 	font-size: 0.9em;
 	text-align: center;
 	white-space: initial;
-	border-top-right-radius: 4px;
-	border-top-left-radius: 4px;
 }
 
 .card .description p{
@@ -216,7 +219,5 @@
 }
 
 .table_cell_icon{
-    display: inline-block;
-    vertical-align: middle;
     margin-right: 6px;
 }

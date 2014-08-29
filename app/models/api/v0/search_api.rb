@@ -24,26 +24,37 @@ module Api
 				if q.present?
 					clause = "START genre=node:node_auto_index('indexed_star_genre_name:"+q+"*') RETURN genre.name, ID(genre) ORDER BY genre.books_count DESC LIMIT "+limit.to_s
 				else
-					clause = "MATCH(genre:StarGenre) RETURN genre.name, ID(genre) ORDER BY genre.books_count DESC LIMIT "+limit.to_s
+					clause = "MATCH(genre:Genre) WHERE genre.root_genre=true RETURN genre.name, ID(genre), genre.icon ORDER BY genre.books_count DESC"
 				end
 				puts clause.blue.on_red
 				results = @neo.execute_query(clause)["data"]
 				results
 			end
 
-			def self.search_authors(q, user_id)
+			def self.search_authors(q, user_id, genre_id)
 				results = []
 				neo_init
 				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "")
-				if q.present?
-					q = "@"+q
-					clause = "START author=node:node_auto_index('indexed_main_author_name:"+q+"*') RETURN author.name, ID(author) LIMIT 10"
-					if q.length >= 4
+				if genre_id.present? && genre_id != "0"
+					if q.present?
+						clause = "START author=node:node_auto_index('indexed_main_author_name:"+q+"*') RETURN author.name, ID(author) LIMIT 10"
+						if q.length >= 4
+							results = @neo.execute_query(clause)["data"]
+						end
+					else
+						clause = "MATCH (g:Genre)-[:Belongs_to]->(:Book)<-[:Wrote]-(author:Author) WHERE ID(g)="+genre_id.to_s+" RETURN author.name, ID(author) LIMIT 10"
 						results = @neo.execute_query(clause)["data"]
 					end
 				else
-					clause = "MATCH (author:Author) RETURN author.name, ID(author) LIMIT 10"
-					results = @neo.execute_query(clause)["data"]
+					if q.present?
+						clause = "START author=node:node_auto_index('indexed_main_author_name:"+q+"*') RETURN author.name, ID(author) LIMIT 10"
+						if q.length >= 4
+							results = @neo.execute_query(clause)["data"]
+						end
+					else
+						clause = "MATCH (author:Author) RETURN author.name, ID(author) LIMIT 10"
+						results = @neo.execute_query(clause)["data"]
+					end
 				end
 				puts clause.blue.on_red
 				results
@@ -55,24 +66,25 @@ module Api
 
 			def self.search(q, count, type)
 				neo_init
-				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "")
+				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "").gsub("@", "")
 				if (type.include? 'BOOK')
 					clause = "START book=node:node_auto_index('indexed_title:"+q+"*') RETURN book.title as name, book.author_name, ID(book) ORDER by book.weight DESC LIMIT "+count.to_s
 					puts clause.blue.on_red
-					tester = {:name => "BOOK:"+q.upcase}
-				elsif (type.include? 'AUTHOR') || (type.include? 'READER')
-					q = "@"+q
+					
+				elsif type.include? 'AUTHOR'
 					clause = "START author=node:node_auto_index('indexed_main_author_name:"+q+"*') RETURN DISTINCT author.name as name, ID(author) LIMIT "+count.to_s
 					puts clause.blue.on_red
-					tester = {:name => "HUMAN:"+q.upcase}
-				elsif (type.include? 'TAG')
+				elsif type.include? 'READER'
+					clause = "START user=node:node_auto_index('indexed_user_name:"+q+"*') RETURN DISTINCT user.name as name, ID(user) LIMIT "+count.to_s
+					puts clause.blue.on_red
+				elsif type.include? 'TAG'
 					clause = "START genre=node:node_auto_index('indexed_genre_name:"+q+"*') RETURN genre.name as name, ID(genre) LIMIT "+count.to_s
 					puts clause.blue.on_red
-					tester = {:name => "TAG:"+q.upcase}
+					
 				else
-					clause = "START search_node=node:node_auto_index('search_index:"+q+"*') RETURN search_node.title, search_node.author_name, ID(search_node), labels(search_node) LIMIT "+count.to_s
+					clause = "START search_node=node:node_auto_index('search_index:"+q+"*') RETURN CASE WHEN search_node.title IS NULL THEN search_node.name ELSE search_node.title END, search_node.author_name, ID(search_node), labels(search_node) LIMIT "+count.to_s
 					puts clause.blue.on_red
-					tester = {:name => "RD:"+q.upcase}
+					
 				end
 				results = @neo.execute_query clause
 				if results.present?

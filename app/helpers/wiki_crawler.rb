@@ -70,7 +70,7 @@ module WikiCrawler
 		@neo = Neography::Rest.new
 		Author.where("wiki_url != ?", "").where(:flag => nil).find_each do |author|
 			begin
-				unless author.id == 388596 || author.id == 417878 || author.id == 475881
+				unless author.id == 388596 || author.id == 417878 || author.id == 475881 || author.id == 510977
 					headings_init = false
 					set_clause = ""
 					wiki_url = author.wiki_url
@@ -192,7 +192,7 @@ module WikiCrawler
 	 						end
 	 					end
 	 				end
-	 				author_name = "@"+author.human_profile.name.downcase.gsub(" ","").gsub("'", "")
+	 				author_name = author.human_profile.name.downcase.gsub(" ","").gsub("'", "")
 	 				if set_clause.present?
 	 					clause = "START author=node:node_auto_index('indexed_main_author_name:"+author_name+"') SET"+set_clause+", author.about=\""+about+"\", author.image_url=\""+image_url.to_s+"\", author.signature_pic=\""+signature_pic.to_s+"\", author.official_website=\""+official_website.to_s+"\""
 	 				else

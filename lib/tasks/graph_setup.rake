@@ -1,5 +1,17 @@
 namespace :graph do
 
+  desc "set_author_rating"
+  task :set_author_rating => :environment do
+    include Neo4jHelper
+    Neo4jHelper.set_author_rating
+  end
+
+  desc "remove_attherate"
+  task :remove_attherate => :environment do
+    include Neo4jHelper
+    Neo4jHelper.remove_attherate
+  end
+
   desc "remove_less"
   task :remove_less => :environment do
     include Neo4jHelper

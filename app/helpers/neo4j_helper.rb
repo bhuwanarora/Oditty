@@ -1042,6 +1042,32 @@ module Neo4jHelper
 		end	
 	end
 
+	def self.remove_attherate
+		@neo ||= self.init
+		skip = 10000
+		start_id = 384295 #MIN ID
+		end_id = 2655788 #MAX ID
+		while start_id <= end_id
+			puts "remove_attherate..."+start_id.to_s.green
+			limit = start_id + skip
+			clause = "MATCH (a:Author) WHERE ID(a) > "+start_id.to_s+" AND ID(a) < "+limit.to_s+" SET a.indexed_main_author_name=REPLACE(a.indexed_main_author_name, '@', ''), a.search_index = a.indexed_main_author_name"
+			@neo.execute_query clause
+			start_id = start_id + skip
+		end
+	end
 
+	def self.set_author_rating
+		@neo ||= self.init
+		skip = 10000
+		start_id = 384295 #MIN ID
+		end_id = 2655788 #MAX ID
+		while start_id <= end_id
+			puts "set_author_rating..."+start_id.to_s.green
+			limit = start_id + skip
+			clause = "MATCH (a:Author)-[:Wrote]->(b:Book) WHERE ID(a) > "+start_id.to_s+" AND ID(a) < "+limit.to_s+" SET a.rating = AVG(toFloat(b.gr_rating))"
+			@neo.execute_query clause
+			start_id = start_id + skip
+		end
+	end
 
 end

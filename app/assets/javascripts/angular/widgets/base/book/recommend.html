@@ -1,5 +1,5 @@
 <span ng-click="recommend()"
-	  class='site recommend'
+	  class='blue_button recommend'
       title="Recommend book to friends">
 	<span ng-show="!recommend_object.recommended">RECOMMEND TO FRIENDS</span>
 	<!-- <span ng-show="recommend_object.recommended">Cancel</span> -->
@@ -26,7 +26,7 @@
 			</div>
 		</div>
 		<div class="footer">
-			<button class="button_effect done site" ng-click="recommend()" ng-disabled="!user.selected_friends || user.selected_friends.length == 0">Done</button>
+			<button class="done blue_button" ng-click="recommend()" ng-disabled="!user.selected_friends || user.selected_friends.length == 0">Done</button>
 		</div>
 	</div>
 </div>

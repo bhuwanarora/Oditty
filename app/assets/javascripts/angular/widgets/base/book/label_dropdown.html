@@ -1,10 +1,12 @@
 <form ng-if="book.show_labels">
   <div class="arrow_down"></div>
-	<ul class="label_dropdown animate-fast" 
+	<ul class="label_dropdown scrollbar" 
 		ng-click="stop_propagation($event)"
 		msd-wheel="stop_horizontal_scroll($event)"
 		ng-model="book.labels">
-		<li ng-repeat="label in book.labels track by $index"  ng-click="select_label($index);">
+		<li ng-repeat="label in book.labels track by $index"  
+        class="animate-fast" 
+        ng-click="select_label($index);">
   			<label>
   				<span class="bookmark_label">
   					<!-- <span class="icon-bookmark3"></span>&nbsp; -->

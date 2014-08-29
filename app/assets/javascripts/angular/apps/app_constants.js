@@ -63,6 +63,9 @@ var constants = {
 			"ZeroBooksFound": "ALERT- Reset the filters couldn't find more books."
 		},
 		"SearchUIConstants": {
+			"BookLabel": "Book",
+			"AuthorLabel": "Author",
+			"ReaderLabel": "User",
 			"TypeMore": "Type more characters...",
 			"ComingSoon": "Coming Soon...",
 			"NoResultsFound": "No results found...",
@@ -78,6 +81,7 @@ var constants = {
 			"SearchingReaders": "Searching readers...",
 			"SearchingGenres": "Searching genres...",
 			"SearchingAuthors": "Searching authors...",
+			"SearchingUsers": "Searching users...",
 			"Year": "YEAR",
 			"YearPlaceholder": "Add a published year to filters...",
 			"List": "LIST",

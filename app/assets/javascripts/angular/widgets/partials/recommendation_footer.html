@@ -9,15 +9,15 @@
 	
  	<div class="shelf_nav_links">
  		
-		<a class="link"
+		<a class="link tab"
 			 title="Recommendations"
 			 ng-href="#user/{{user.id}}/recommendations/books"
 			 ng-if="$routeParams.trend_id || $routeParams.grid_id || $routeParams.filter_id"
 			 style="margin-left:0px;">
 			<span class="icon-feed2 light_grey_color"></span>
 		</a>
-		<div ng-class="{'inactive':read_selected || bookmark_selected, 'active':!read_selected && !bookmark_selected}"
-			 class="link"
+		<div ng-class="{'inactive':read_selected || bookmark_selected, 'active_tab':!read_selected && !bookmark_selected}"
+			 class="link tab"
 			 ng-if="(!$routeParams.trend_id && !$routeParams.grid_id && !$routeParams.filter_id) || ($routeParams.trend_id || $routeParams.grid_id)"
 			 title="{{main_header | header_title}}"
 			 style="margin-left:0px;" 
@@ -39,8 +39,8 @@
 			<span ng-if="$routeParams.trend_id || $routeParams.grid_id || $routeParams.filter_id" ng-bind-html="main_header | heading">
 			</span>
 		</div>
-		<div ng-class="{'inactive':!read_selected, 'active':read_selected}"
-			 class="link"
+		<div ng-class="{'inactive':!read_selected, 'active_tab':read_selected}"
+			 class="link tab"
 			 title="Books marked as read" 
 			 ng-click="toggle_read()">
 		 	<span ng-if="$routeParams.type == 'books'">
@@ -56,8 +56,8 @@
 				<span><b>F</b>ollowing <b>R</b>eaders</span>
 			</span>
 		</div>
-		<div ng-class="{'inactive':!bookmark_selected, 'active':bookmark_selected}"
-			 class="link"
+		<div ng-class="{'inactive':!bookmark_selected, 'active_tab':bookmark_selected}"
+			 class="link tab"
 			 ng-if="$routeParams.type == 'books' || $routeParams.type == 'authors'"
 			 title="Books saved"
 			 ng-click="toggle_bookmarked($event)">

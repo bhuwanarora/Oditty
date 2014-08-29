@@ -13,18 +13,21 @@
 }
 
 .info_cards{
-	background-color: white;
-	display: inline-block;
-	float: left;
+	background-color: #fff;
 	border: 1px solid #F1F1F1;
 	margin-right: 50px;
 	margin-left: 30px;
 	padding: 3%;
 	white-space: normal;
-	position: relative;
-	width: 38vh;
 	height: 68vh;
 	border-radius: 3px;
+	position: fixed;
+	z-index: 9;
+	left: 50%;
+	width: 70%;
+	margin-left: -35%;
+	box-shadow: 0 4px 60px rgba(0, 0, 0, 0.61);
+	top: 100px;
 }
 
 .info_card_placeholder{
@@ -43,8 +46,8 @@
 	position: fixed;
 	top: 95px;
 	position: fixed;
-	z-index: 3;
-	left: 289px;
+	z-index: 7;
+	left: 29%;
 	box-shadow: 8px 0 43px 0 rgba(66,66,66,.47);
 }
 
@@ -139,8 +142,8 @@
 	border: 1px solid #EBEBEB;
 	max-height: 45vh;
 	min-width: 35vh;
+	width: 100%;
 	overflow-y: scroll;
-	box-shadow: -3px 0 5px -2px #888;
 }
 
 .info_cards .profile_pic{
@@ -155,11 +158,13 @@
 	left: 0px;
 	right: 0px;
 	height: 10px;
-	top: 0px;
+	top: -2px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
 }
 
 .info_cards input{
-	width: 90%;
+	width: 100%;
 	padding: 6px;
 	font-size: 1em;
 	outline: 1px solid #D3D3D3;

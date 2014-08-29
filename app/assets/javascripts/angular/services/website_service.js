@@ -41,7 +41,7 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
     }
 
     this.search_authors = function(data){
-        return _deferred_request('/api/v0/search_authors?q='+data);
+        return _deferred_request('/api/v0/search_authors?'+data);
     }
 
     this.search_genres = function(data){

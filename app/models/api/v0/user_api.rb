@@ -26,7 +26,7 @@ module Api
 			def self.save_info(user_id, params)
 				@neo = Neography::Rest.new
 				
-				clause = " SET u.name = \""+params[:name]+"\"" 	if params[:name]
+				clause = " SET u.name = \""+params[:name]+"\", u.indexed_user_name=\""+params[:name].downcase.gsub(" ","")+"\"" 	if params[:name]
 				clause = " SET u.latitude="+params[:latitude].to_s+", u.longitude="+params[:longitude].to_s if params[:latitude]
 				clause = " SET u.init_book_read_count=\""+params[:init_book_read_count]+"\"" if params[:init_book_read_count]
 				clause = " SET u.gender=\""+params[:gender]+"\"" if params[:gender]
@@ -135,10 +135,13 @@ module Api
 			end
 
 			def self.get_most_connected_friends user_id
-				@neo = Neography::Rest.new
-				clause = "MATCH (u:User)-[:Follow]->(friend:User) WHERE ID(u)="+user_id.to_s+" OPTIONAL MATCH (friend)-[:Likes]->(category:Category) RETURN ID(friend), friend.name, friend.thumb, friend.init_book_read_count, friend.total_count, friend.book_read_count, friend.bookmark_count, COLLECT(category.name)"
-				puts clause.blue.on_red
-				friends = @neo.execute_query(clause)["data"]
+				friends = []
+				if user_id.present?
+					@neo = Neography::Rest.new
+					clause = "MATCH (u:User)-[:Follow]->(friend:User) WHERE ID(u)="+user_id.to_s+" OPTIONAL MATCH (friend)-[:Likes]->(category:Category) RETURN ID(friend), friend.name, friend.thumb, friend.init_book_read_count, friend.total_count, friend.book_read_count, friend.bookmark_count, COLLECT(category.name)"
+					puts clause.blue.on_red
+					friends = @neo.execute_query(clause)["data"]
+				end
 				friends
 			end
 

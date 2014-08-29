@@ -4,8 +4,8 @@
 
 <div class="search_typeahead_group animate-fast" ng-class="{'shift_top': filters_added.length > 0}">
   <div class="base_search">
-    <div class="base_search_option"
-         ng-class="{'site_color active_border':is_active(item)}"
+    <div class="tab base_search_option"
+         ng-class="{'active_tab':is_active(item)}"
          ng-click="handle_base_selection(item)"
          ng-hide="$routeParams.type && hide_options"
          ng-repeat="item in base_search_options">
@@ -18,7 +18,7 @@
 
   <div class="compressed_filters" ng-show="$routeParams.type && hide_options && filters_added.length > 0">
     <div ng-repeat="item in filters_added"
-          class="compressed_filter_icon" 
+          class="compressed_filter_icon"
          ng-click="remove_filter(item, $event)">
         <span ng-show="item.icon2" class="{{item.icon2}} faded_site_color"></span>
     </div>
@@ -36,23 +36,25 @@
          placeholder="{{search_tag.placeholder}}"/>
 
 
-  <div class="website_search_helpers animate-fast" ng-show="active_nest && !($routeParams.type && hide_options)">
-    <div class="compressed_option site_color"
+  <div class="website_search_helpers animate-fast" 
+       ng-show="active_nest && !($routeParams.type && hide_options)">
+    <div class="compressed_option tab"
          ng-click="handle_base_selection()">
       <span class="icon-book"></span>
     </div>
-    <div class="compressed_option">
+    <div class="compressed_option tab">
       <span class="icon-angle-right"></span>
     </div>
-    <div class="compressed_option" 
+    <div class="compressed_option tab" 
          ng-click="handle_selection_option(item, $event)"
          ng-repeat="item in base_book_options"
-         ng-class="{'site_color active_border': is_active_nest(item)}">
+         ng-class="{'active_tab': is_active_nest(item)}">
       <span class="{{item.icon}}"></span>
     </div>
   </div>
 
-  <div class="website_search_helpers box-shadow animate-fast" ng-show="show_secondary_input && !($routeParams.type && hide_options)">
+  <div class="website_search_helpers box-shadow animate-fast" 
+       ng-show="show_secondary_input && !($routeParams.type && hide_options)">
     <input placeholder="{{custom_input_placeholder}}" 
            class="search_input"
            ng-model="search_tag.custom_input"
@@ -67,19 +69,19 @@
 
   <div class="animate-fast website_search_options scrollbar" 
        ng-if="search_results.length > 0 && !($routeParams.type && hide_options)">
-    <div ng-repeat="item in search_results | limitTo: search_tag.result_count+1 track by $index | filter:filter_by(item.name)"
+    <div ng-repeat="item in search_results | limitTo: search_tag.result_count+1 track by $index | filter:filter_by(item.name) | orderBy: item.name"
          ng-click="handle_selection_option(item, $event)" 
          ng-class="{'light_gray_background':is_current($index, item)}"
          ng-mouseenter="set_current($index)"
          msd-wheel="stop_horizontal_scroll($event)"
          class="option">
         <div class="title">
-          <span ng-show="item.icon" class="{{item.icon}} grey_color">&nbsp;</span>
+          <span ng-show="item.icon" class="{{item.icon}} light_grey_color">&nbsp;</span>
           <span ng-bind-html="item.name"></span>
           <span class="{{item.icon2}} right_icon"></span>
           <span class="right_icon">{{item.label}}&nbsp;</span>
         </div>
-        <div ng-show="item.author_name">by {{item.author_name}}</div>
+        <div ng-show="item.author_name" class="light_grey_color">Book by {{item.author_name}}</div>
     </div>
 
   </div>
@@ -89,7 +91,7 @@
        ng-hide="($routeParams.type) || (filters_added.length == 0)">
     <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
     <span class="icon-search"></span>
-    <span>&nbsp;Find books relevant to following filters </span><span class='icon-arrow-down'></span>
+    <span>&nbsp;Search </span>
   </div>
 
   <div class="filters_added website_search_options" ng-hide="$routeParams.type && hide_options">

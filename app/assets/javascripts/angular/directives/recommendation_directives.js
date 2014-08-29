@@ -285,7 +285,7 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 	        
 			$scope.goto_info_card = function(){
 				$rootScope.compressed_info = false;
-				scroller.scrollTo(0, 0, 2000);
+				// scroller.scrollTo(0, 0, 2000);
 			}
 
 			$scope.toggle_footer = function(){
@@ -357,12 +357,16 @@ websiteApp.directive('bookGrid', ['recommendationService', '$rootScope', functio
 	}
 }]);
 
-websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'websiteService', 'WebsiteUIConstants', function($rootScope, $timeout, sharedService, websiteService, WebsiteUIConstants){
+websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'websiteService', 'WebsiteUIConstants', 'scroller', function($rootScope, $timeout, sharedService, websiteService, WebsiteUIConstants, scroller){
 	return{
 		restrict: 'E',
 		controller: ['$scope', 'websiteService', function($scope, websiteService){
 			$scope.mark_as_read = function(book, event){
 		        sharedService.mark_as_read($scope, book, event);
+			}
+
+			$scope.stop_propagation = function(event){
+				event.stopPropagation();
 			}
 
 			$scope.save_genre = function(genre){
@@ -431,7 +435,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 					});
 				}
 				else{
-					websiteService.search_authors($scope.info.search_author).then(function(data){
+					websiteService.search_authors("q="+$scope.info.search_author).then(function(data){
 						$scope.popular_authors = [];
 						if(data.length != 0){
 							angular.forEach(data, function(value){
@@ -683,8 +687,9 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 					{"name": "Author"},
 					{"name": "Publisher"},
 					{"name": "Editor"}
-				]
-				$rootScope.compressed_info = false;
+				];
+				
+				$rootScope.compressed_info = true;
 				$scope.profileSelected = {"name": "Reader"};
 				$scope.info_card_width = 350; //in px
 				$scope.info_card_ratio = 1.34;

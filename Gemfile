@@ -74,6 +74,7 @@ gem "whenever"
 gem "flickraw"
 gem "wikipedia-client"
 gem "mediawiki-gateway"
+gem "aws-sdk"
 # gem 'amazon-ecs'
 # gem 'rubber'
 # gem 'rails_admin_example_theme', :git => 'git://github.com/bbenezech/rails_admin_example_theme.git'

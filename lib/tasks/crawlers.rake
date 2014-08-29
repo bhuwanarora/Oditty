@@ -1,5 +1,17 @@
 namespace :crawl do
 
+  desc "get_images"
+  task :get_images => :environment do
+    include S3UploaderHelper
+    S3UploaderHelper.get_images
+  end
+
+  desc "get_images"
+  task :get_images2 => :environment do
+    include S3UploaderHelper
+    S3UploaderHelper.get_images2
+  end
+
   desc "facebook emotions"
   task :facebook_emotions => :environment do
     include ShelfariCrawler

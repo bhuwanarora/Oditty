@@ -389,11 +389,11 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     _get_recommendations = function(){
     	$rootScope.loading = true;
         recommendationService.get_recommendations().then(function(data){
+        	// var move_right = angular.isDefined(data.recommendations.book) && $scope.recommendations.books.length == 0 && data.recommendations.book.length > 2;
         	_update_recommendations(data);
-        	var move_right = angular.isDefined(data.recommendations.book) && $scope.recommendations.books.length == 0 && data.recommendations.book.length > 2;
-        	if(move_right){
-        		$scope.$emit('moveRight');
-        	}
+        	// if(move_right){
+        		// scroller.scrollTo(500, 0, 100);
+        	// }
 	    });
 	    // var no_filters = (angular.isUndefined($rootScope.filters.more_filters) || $rootScope.filters.more_filters.length == 0) && (angular.isUndefined($rootScope.filters.other_filters) || JSON.stringify($rootScope.filters.other_filters) == '{}');
 	    var not_specific_book_page = angular.isUndefined($rootScope.filters.other_filters["title"]) && angular.isUndefined($rootScope.filters.other_filters["id"]);

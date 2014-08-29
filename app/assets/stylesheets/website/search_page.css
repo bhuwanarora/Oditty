@@ -76,24 +76,13 @@
 }
 
 .base_search .base_search_option{
-	display: inline-block;
-	float: left;
 	width: 21%;
 	padding: 9px;
-	cursor: pointer;
 }
 
 .website_search_helpers .compressed_option{
-	float: left;
-	display: inline-block;
 	padding: 12px 14px 5px;
 	font-size: 1.2em;
-	border-bottom: 4px solid white;
-}
-
-.website_search_helpers .compressed_option:hover,
-.base_search .base_search_option:hover{
-	border-bottom: 4px solid rgba(66, 127, 237, 0.4);
 }
 
 .login_box .logo{
@@ -280,6 +269,7 @@
 
 .filters_added{
 	background-color: transparent !important;
+	margin-top: 0px;
 }
 
 .filters_added .option{

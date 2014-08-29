@@ -25,7 +25,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		var swipe_time = 2000;
 		var clientWidth = document.body["scrollWidth"];
 		var current_x = $window.pageXOffset;
-		var delta_x = screen.width*(0.35);
+		var delta_x = screen.height*(0.56);
 		if(angular.isDefined(event)){
 			if(event.type == "click"){
 				if(angular.isDefined($scope.delta_x)){
@@ -54,7 +54,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		var swipe_time = 2000;
 		var clientWidth = document.body["scrollWidth"];
 		var current_x = $window.pageXOffset;
-		var delta_x = screen.width*(0.35);
+		var delta_x = screen.height*(0.56);
 		var lessThanOnePageLeft = current_x + (2.5)*screen.width > clientWidth;
 		if(lessThanOnePageLeft){
 			if(!$rootScope.loading){

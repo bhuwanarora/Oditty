@@ -15,6 +15,10 @@
    	box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
 }
 
+.main_header:hover{
+	color: 333;
+}
+
 .main_header a:hover{
 	text-decoration: none;
 }
@@ -34,17 +38,16 @@
 }
 
 .profile_thumb{
-	display: inline-block;
 	float: right;
-	margin-right: 15px;
-	margin-left: 25px;
-	cursor: pointer;
+	margin-right: 5px;
+	margin-left: 5px;
 	height: 35px;
 	margin-top: 2px;
-	border-radius: 5px;
-	padding-left: 5px;
-	padding-right: 5px;
-	background-color: #E6E6E6;
+	border-radius: 2px;
+	padding-left: 15px;
+	padding-right: 15px;
+	display: table;
+	cursor: default;
 }
 
 .profile_thumb:hover{
@@ -188,12 +191,9 @@
 }
 
 .link{
-	cursor: pointer;
-	display: inline-block;
-	height: 10px;
-	text-align: center;
-	padding: 8px 15px 20px;
-	margin-left: -5px;
+	height: 6px;
+	padding: 8px 4px 20px;
+	margin-left: 15px;
 }
 
 .link:hover{
@@ -338,6 +338,8 @@
    	position: fixed;
    	top: 50px;
    	border-radius: 1px;
+   	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .toggle_elements{
@@ -368,7 +370,7 @@
 }
 
 .push_notification .type{
-	display: inline-block;
+	display: table;
 	float: left;
 	background: #427fed;
 	color: #fff;
@@ -377,6 +379,7 @@
 	border-bottom-left-radius: 3px;
 	border-bottom-left-radius: 3px;
 	margin-right: 10px;
+	height: 100%;
 }
 
 .push_notification .content{
@@ -389,20 +392,19 @@
 }
 
 .scroller{
-	right: 10px;
+	left: 50%;
 	color: #3D79A1;
 	height: 35px;
-	bottom: -5px;
+	bottom: 2px;
+	margin-left: -36px;
 	position: fixed;
 }
 
 
 .scroller .scroller-left,
 .scroller .scroller-right{
-	font-size: 1em;
-	background-color: #427fed;
-	border: 1px solid #F0F0F0;
-	color: white;
+	font-size: 1.5em;
+	text-align: center;
 }
 
 .scroller .scroller-left:active,
@@ -416,16 +418,16 @@
 
 .scroller .scroller-left{
 	margin-left: 3px;
-	padding: 6px 25px 9px 25px;
-	border-top-left-radius: 4px;
-	border-bottom-left-radius: 4px;
+	padding: 2px 2px 5px 10px;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
 }
 
 .scroller .scroller-right{
 	margin-right: 3px;
-	padding: 6px 25px 9px 25px;
-	border-top-right-radius: 4px;
-	border-bottom-right-radius: 4px;
+	padding: 2px 10px 5px 15px;
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
 }
 
 .scroller .scroller-left:hover,
@@ -664,15 +666,14 @@
 	width: 70px;
 	text-align: center;
 	float: right;
-	color: white;
-	font-size: 1em;
-	border-radius: 2px;
-	margin: 0px;
+	margin: 0;
+	font-size: .8em;
 }
 
 .recommendation_box .footer .done:disabled{
 	cursor: default;
 	background-color: rgba(66, 127, 237, 0.64)!important;
+	background-image: none;
 }
 
 .recommendation_box .footer .done:disabled:hover{
@@ -1030,7 +1031,7 @@ and (min-width : 1824px) {
 	display: inline-block;
 	float: left;
 	min-height: 45px;
-	width: 210px;
+	width: 80%;
 }
 
 .notifications img{
@@ -1209,20 +1210,21 @@ and (min-width : 1824px) {
 
 .left_column{
 	overflow: auto;
-	z-index: 2;
+	z-index: 6;
 	box-shadow: 8px 0 43px 0 rgba(66,66,66,.47);
 	position: fixed;
 	top: 50px;
-	width: 280px;
+	width: 28%;
+	/*min-width: 280px;*/
 	left: 5px;
 	background-color: white;
 }
 
 .expand_notifications{
 	position: fixed;
-	z-index: 6;
+	z-index: 7;
 	font-size: 1em;
-	left: 265px;
+	left: 26%;
 	top: 57px;
 }
 
@@ -1254,7 +1256,7 @@ and (min-width : 1824px) {
 
 .ticker_popup{
 	top: 95px;
-	left: 289px;
+	left: 29%;
 	white-space: initial;
 	background-color: white;
 	border-radius: 2px;
@@ -1262,8 +1264,8 @@ and (min-width : 1824px) {
 	box-shadow: 0 7px 15px rgba(0,0,0,.25);
 	height: 42vh;
 	position: fixed;
-	z-index: 3;
-	padding: 4px 0px 4px 15px;
+	z-index: 7;
+	padding: 4px 0px 4px 0px;
 }
 
 .relative_position{
@@ -1292,8 +1294,10 @@ and (min-width : 1824px) {
 }
 
 .ticker_popup .bottom_widget{
-	height: 50px;
+	height: 40px;
 	z-index: 1;
+	left: 0px;
+	right: 0px;
 }
 
 .shift_right{
@@ -1338,6 +1342,7 @@ and (min-width : 1824px) {
 	border-top-right-radius: 2px;
 	box-shadow: -3px 0 5px -2px #888;
 	border-left: 2px solid #427fed;
+	width: 50%;
 }
 
 .recommendations .status ::-webkit-input-placeholder {
@@ -1357,11 +1362,11 @@ and (min-width : 1824px) {
 }
 
 .recommendations .status:hover{
-	height: 50px;
+	height: 40px;
 }
 
 .recommendations .status:hover input{
-	height: 35px;
+	height: 30px;
 }
 
 .recommendations .status [class^="icon-"]{
@@ -1370,7 +1375,7 @@ and (min-width : 1824px) {
 }
 
 .recommendations .status input{
-	width: 480px;
+	width: 97%;
 	font-size: 1.1em;
 	padding: 5px;
 	border-top-right-radius: 10px;
@@ -1433,7 +1438,7 @@ and (min-width : 1824px) {
 
 .left_column .collapse_icon{
 	position: fixed;
-	left: 285px;
+	left: 29%;
 	padding: 4px 7px;
 	background-color: rgba(0, 0, 0, 0.6);
 	border-radius: 2px;
@@ -1498,6 +1503,7 @@ and (min-width : 1824px) {
 .main_header .search_typeahead_group .search_icon{
 	z-index: 3;
 	padding: 9px 30px 8px;
+	box-shadow: none;
 }
 
 .main_header .search_input:focus{

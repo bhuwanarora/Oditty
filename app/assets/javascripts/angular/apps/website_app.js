@@ -1,7 +1,7 @@
 var websiteApp = angular.module('websiteApp', ['ngRoute', 'ngAnimate', 
                   'monospaced.mousewheel', 'facebook', 
                   'directive.g+signin', 'ngMap', 'cropme',
-                  'duScroll', 'ngDropdowns', 'sticky', 'filtersApp', 'ngCookies', 
+                  'duScroll', 'ngDropdowns', 'filtersApp', 'ngCookies', 
                   'appConstants']);
 
 websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
