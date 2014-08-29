@@ -6,6 +6,14 @@ namespace :crawl do
     S3UploaderHelper.get_images
   end
 
+  desc "upload_author_images"
+  task :upload_author_images => :environment do
+    include S3UploaderHelper
+    S3UploaderHelper.upload_author_images
+  end
+
+  
+
   desc "get_images"
   task :get_images2 => :environment do
     include S3UploaderHelper

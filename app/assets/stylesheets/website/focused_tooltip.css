@@ -37,10 +37,6 @@
 	max-height: 32vh;
 }
 
-.focused_tooltip .author_book_info{
-	background-color: #F5F5F5;
-}
-
 .focused_tooltip .book_thumb{
 	display: inline-block;
 	float: left;
@@ -76,7 +72,16 @@
 	line-height: 1.5em;
 	padding: 12px;
 	width: 97%;
-	background-color: #F5F5F5;
+}
+
+.focused_tooltip .book_info .text{
+	display: inline-block;
+	float: right;
+	width: 68%;
+	padding: 8px;
+	word-wrap: break-word;
+	font-size: 0.93em;
+	line-height: 1.5em;
 }
 
 .focused_tooltip .long_description{
@@ -87,14 +92,6 @@
 	width: 10%;
 	border-radius: 2px;
 	position: fixed;
-}
-
-.focused_tooltip .book_info .text{
-	display: inline-block;
-	float: right;
-	width: 68%;
-	padding: 8px;
-	word-wrap: break-word;
 }
 
 .focused_tooltip .signature_thumb{
@@ -115,7 +112,7 @@
 
 .focused_tooltip .footer .recommend{
 	cursor: pointer;
-	font-size: .7em;
+	font-size: .9em;
 	padding: 10px 15px;
 	float: right;
 	margin-right: 18px;
