@@ -70,3 +70,4 @@ neo4j/conf/neo4j.properties
 *.sql
 *.out
 *.zip
+neo4j/conf/neo4j-wrapper.conf

@@ -14,12 +14,12 @@ module S3UploaderHelper
 		@s3 = AWS::S3.new
 		@neo = Neography::Rest.new
 		skip = 1000
-		start_id = 387125 #MIN ID
+		start_id = 391745 #MIN ID
 		end_id = 2655788 #MAX ID
 		while start_id <= end_id
 			puts "upload_author_images..."+start_id.to_s.green
 			limit = start_id + skip
-			clause = "MATCH (a:Author) WHERE ID(a) > "+start_id.to_s+" AND ID(a) < "+limit.to_s+" AND a.image_url IS NOT NULL AND a.image_url != \"\" RETURN COLLECT(a.image_url), COLLECT(ID(a))"
+			clause = "MATCH (a:Author) WHERE ID(a) > "+start_id.to_s+" AND ID(a) < "+limit.to_s+" AND a.image_url IS NOT NULL AND a.image_url <> \"\" RETURN COLLECT(a.image_url), COLLECT(ID(a))"
 			data = @neo.execute_query(clause)["data"][0]
 			image_urls = data[0]
 			ids = data[1]
@@ -30,6 +30,10 @@ module S3UploaderHelper
 					url = "http://m.c.lnkd.licdn.com/mpr/pub/image-LLrYD_OR6VUsqtXEJ1KmnXPy1zFtUth6LLkg8t_f1FLg2PVXLLrgU47R1Yz2n_vH6Ee8/nancy-ohlin.jpg"
 				elsif id == 386942
 					url ="http://m.c.lnkd.licdn.com/mpr/pub/image-24YYLlk7VOVyx4vHbB2m_YZnMmAuogEVUqYgfSnSM2GfoWjj24YgfwS7MnuZogh7RUrJ/lisa-marie-klein.jpg"
+				elsif id == 388800
+					url = "http://www.csu.edu.au/__data/assets/image/0005/585374/M-Daniel.jpg"
+				elsif id == 391746
+					url = "http://m.c.lnkd.licdn.com/mpr/pub/image-pgbUP81FFrcM1GmgfbslxdiqAqMf5ILC0gsAxkjDAhLZV5QmpgbAi0nFAT8BV7o4-1RT/tiffany-king.jpg"
 				end
 
 				name = id.to_s+"-O.png"
