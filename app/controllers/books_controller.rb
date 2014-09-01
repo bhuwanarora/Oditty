@@ -11,9 +11,21 @@ class BooksController < ApplicationController
 
   def cover_photos
     neo = Neography::Rest.new
-    clause  = "MATCH (c:CoverPhoto) RETURN c.url"
+    clause  = "MATCH (c:CoverPhoto) RETURN c.url, ID(c), c.status"
     @urls = neo.execute_query(clause)["data"]
     # @urls = FlickrHelper.get_cover_photos
+  end
+
+  def set_active_cover_photo
+    begin
+      neo = Neography::Rest.new
+      clause = "MATCH (c:CoverPhoto) WHERE ID(c)="+params[:id].to_s+" SET c.status=true"
+      puts clause.blue.on_red
+      neo.execute_query clause
+      render :json => {:message => "Success"}, :status => 200
+    rescue Exception => e
+      render :json => {:message => e.to_s}, :status => 500
+    end
   end
 
   # GET /books/1
@@ -68,7 +80,7 @@ class BooksController < ApplicationController
       puts clause.blue.on_red
       @neo.execute_query clause
 
-      clause = "MATCH (grid:BookGrid) WITH grid ORDER BY grid.priority DESC WITH collect(grid) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] | FOREACH(p2 in [p[i+1]] | CREATE UNIQUE (p1)-[:NextGrid]->(p2))))"
+      clause = "MATCH (grid:BookGrid) WHERE grid.status = 1 WITH grid ORDER BY grid.priority DESC WITH collect(grid) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] | FOREACH(p2 in [p[i+1]] | CREATE UNIQUE (p1)-[:NextGrid]->(p2))))"
       puts clause.blue.on_red
       @neo.execute_query clause  
 

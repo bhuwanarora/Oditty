@@ -9,7 +9,7 @@
 	top: 95px;
 	white-space: initial;
 	z-index: 8;
-	width: 35%;
+	width: 56vh;
 	padding-left: 15px;
 	padding-right: 15px;
 	/* for big screens */
@@ -309,7 +309,7 @@
 	padding: 10px;
 	word-wrap: break-word;
 	background-color: #F5F5F5;
-	cursor: pointer;
+	cursor: text;
 	border-radius: 2px;
 	padding: 5px;
 }

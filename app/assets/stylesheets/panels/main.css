@@ -51,8 +51,16 @@ td{
 table img{
 	width: 50px;
 }
-.cover_photos{
-	width: 100px;
+
+.cover_photo{
+	width: 150px;
+	margin: 5px;
+	cursor: pointer;
+	border: 4px solid transparent;
+}
+
+.active_photo{
+	border: 4px solid #427def;
 }
 
 .main-header{

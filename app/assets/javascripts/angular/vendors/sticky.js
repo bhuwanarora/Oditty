@@ -31,7 +31,7 @@ angular.module('sticky', [])
 					// scrollTop = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
 					scrollLeft = (window.pageXOffset || doc.scrollLeft)  - (doc.clientLeft || 0);
 					if(scrollLeft >= stickyLine){
-						if(!$rootScope.compressed_info){
+						if(!$rootScope.user.compressed_info){
 							$elem.css('position', 'fixed');
 							$elem.css('top', '95px');
 							$elem.css('z-index', 5);
@@ -41,13 +41,13 @@ angular.module('sticky', [])
 							else{
 								$elem.css('left', '260px');
 							}
-							$rootScope.compressed_info = true;
+							$rootScope.user.compressed_info = true;
 							$elem.css('position', initialPositionStyle);
 						}
 					}
 					else{
-						$rootScope.compressed_info = false;
-						console.log("settig false", $rootScope.compressed_info);
+						$rootScope.user.compressed_info = false;
+						console.log("settig false", $rootScope.user.compressed_info);
 					 	$elem.css('position', initialPositionStyle);
 					}
 				}

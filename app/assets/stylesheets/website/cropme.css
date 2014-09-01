@@ -18,25 +18,12 @@ cropme input[type=file] {
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/standup75\/Code\/cropme\/styles\/cropme\.scss}line{font-family:\0000344}}
 cropme .cropme-button {
   font-weight: bold;
-  font-size: 1em;
-  cursor: pointer;
+  padding: 10px;
+  width: 160px;
   text-align: center;
-  background: #918FB5;
-  color: white;
-  height: 50px;
-  top: 18%;
-  width: 75%;
-  line-height: 50px;
-  position: absolute;
-  -webkit-box-shadow: #cccccc 2px 2px 1px 0, #918FB5 0 0 2px 2px inset;
-  -moz-box-shadow: #cccccc 2px 2px 1px 0, #918FB5 0 0 2px 2px inset;
-  box-shadow: #cccccc 2px 2px 1px 0, #918FB5 0 0 2px 2px inset;
+  margin-top: 10px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/standup75\/Code\/cropme\/styles\/cropme\.scss}line{font-family:\0000355}}
-cropme .cropme-button:hover {
-  background: #918FB5;
-}
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/standup75\/Code\/cropme\/styles\/cropme\.scss}line{font-family:\0000398}}
 cropme .overlay-tile {

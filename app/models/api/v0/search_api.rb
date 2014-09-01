@@ -8,7 +8,7 @@ module Api
 				unless user_id.present?
 					clause = "START book=node:node_auto_index('indexed_title:"+q+"*') WITH book RETURN book.isbn, ID(book), book.title as name, book.author_name ORDER BY book.total_weight DESC LIMIT 10"
 				else
-					clause = "START book=node:node_auto_index('indexed_title:"+q+"*') WITH book ORDER BY weight DESC OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" RETURN book.isbn, ID(book), book.title as name, book.author_name, ID(m) LIMIT 10"
+					clause = "START book=node:node_auto_index('indexed_title:"+q+"*') WITH book ORDER BY book.total_weight DESC OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" RETURN book.isbn, ID(book), book.title as name, book.author_name, ID(m) LIMIT 10"
 				end
 				puts clause.blue.on_red
 				if q.length >= 3
@@ -38,19 +38,15 @@ module Api
 				if genre_id.present? && genre_id != "0"
 					if q.present?
 						clause = "START author=node:node_auto_index('indexed_main_author_name:"+q+"*') RETURN author.name, ID(author) LIMIT 10"
-						if q.length >= 4
-							results = @neo.execute_query(clause)["data"]
-						end
+						results = @neo.execute_query(clause)["data"]
 					else
-						clause = "MATCH (g:Genre)-[:Belongs_to]->(:Book)<-[:Wrote]-(author:Author) WHERE ID(g)="+genre_id.to_s+" RETURN author.name, ID(author) LIMIT 10"
+						clause = "MATCH (g:Genre)-[:Belongs_to]->(:Book)<-[:Wrote]-(author:Author) WHERE ID(g)="+genre_id.to_s+" WITH DISTINCT author as author RETURN author.name, ID(author) LIMIT 10"
 						results = @neo.execute_query(clause)["data"]
 					end
 				else
 					if q.present?
 						clause = "START author=node:node_auto_index('indexed_main_author_name:"+q+"*') RETURN author.name, ID(author) LIMIT 10"
-						if q.length >= 4
-							results = @neo.execute_query(clause)["data"]
-						end
+						results = @neo.execute_query(clause)["data"]
 					else
 						clause = "MATCH (author:Author) RETURN author.name, ID(author) LIMIT 10"
 						results = @neo.execute_query(clause)["data"]

@@ -24,8 +24,8 @@
 <div class="arrow" ng-class="{'arrow_left': on_left, 'arrow_right': !on_left}"></div>
 <!-- <div class="close button_effect" ng-click="close_focused_tooltip()">x</div> -->
 <div class="header">
-  <div class="title site_color">{{focused_book.title | book_title}} </div>
-  <div class="author site_color">Book by {{focused_book.author_name}} </div>
+  <div class="title site_color" title="{{focused_book.title}}">{{focused_book.title | book_title}} </div>
+  <div class="author site_color">Book by <b>{{focused_book.author_name}}</b></div>
   <div class="author">
     <span ng-if="focused_book.published_year">
       {{focused_book.published_year | published_year}}</span>
@@ -133,7 +133,7 @@
      ng-if="show_author && !show_buy">
      <div class="heading">{{focused_book.author_details.book_ids.length}} more books from author</div>
       <img ng-src="{{book_isbn | small_thumb}}" 
-           ng-repeat="book_isbn in focused_book.author_details.book_isbns track by $index" 
+           ng-repeat="book_isbn in focused_book.author_details.book_isbns | limitTo: 7 track by $index" 
            class="book_thumb">
     <!-- <img class="signature_thumb" ng-src="{{focused_book.author_details.signature_pic}}"/> -->
 </div>

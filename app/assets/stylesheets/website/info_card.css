@@ -1,9 +1,9 @@
 .horizontal_padder_active{
-	width: 60vh;
+	width: 38vh;
 }
 
 .horizontal_padder_inactive{
-	width: 20vh;
+	width: 10vh;
 }
 
 .horizontal_padder{
@@ -38,7 +38,6 @@
 	padding: 3%;
 	white-space: normal;
 	position: relative;
-	width: 38vh;
 	height: 66vh;
 }
 
@@ -104,12 +103,12 @@
 }
 
 .info_cards .selected{
-	background-color: #918FB5;
+	background-color: #427fed;
 	color: white;
 }
 
 .info_cards .selected:hover{
-	background-color: rgba(145, 143, 181, 0.7) !important;	
+	color: rgba(66, 127, 237, 0.6) !important;
 }
 
 .info_cards .book_column:hover{
@@ -147,16 +146,15 @@
 }
 
 .info_cards .profile_pic{
-	width: 70%;
-	max-height: 300px;
-	border: 4px solid;
-	border-bottom: 40px solid;
+	width: 20vh;
+	margin-top: 10px;
+	border-radius: 3px;
 }
 
 .info_cards .back_color{
 	position: absolute;
-	left: 0px;
-	right: 0px;
+	left: -1px;
+	right: -1px;
 	height: 10px;
 	top: -2px;
 	border-top-left-radius: 3px;
@@ -171,6 +169,7 @@
 	float: left;
 	border-radius: 4px;
 	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 .info_cards .custom_radio{

@@ -133,3 +133,22 @@ function notify($rootScope, message, $timeout){
   }, 7000);
   return timeout_event;
 }
+
+function get_size() {
+  if(typeof(window.innerWidth) == 'number'){
+    //Non-IE
+    window_width = window.innerWidth;
+    window_height = window.innerHeight;
+  }else if(document.documentElement && (document.documentElement.clientWidth || document.documentElement.clientHeight)){
+    //IE 6+ in 'standards compliant mode'
+    window_width = document.documentElement.clientWidth;
+    window_height = document.documentElement.clientHeight;
+  }else if(document.body && (document.body.clientWidth || document.body.clientHeight)){
+    //IE 4 compatible
+    window_width = document.body.clientWidth;
+    window_height = document.body.clientHeight;
+  }
+}
+
+var window_width = 0, window_height = 0;
+get_size();

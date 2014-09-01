@@ -1,6 +1,6 @@
-var screen_width = screen.width;
+var screen_width = window_width;
 var width = screen_width*(1220/1320)-150; //1220-2*padding on sides
-var height = screen.height*(864/1064)-100; //864
+var height = window_height*(864/1064)-100; //864
 var page_numbers = {
   content: 1,
   first_sentence: 2, 

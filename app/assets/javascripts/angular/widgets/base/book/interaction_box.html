@@ -1,8 +1,9 @@
-<div class="wrapper" 
+<div class="wrapper animate-slow"
+	 ng-class="{'white': website.blur_wrapper}"
 	 ng-click="close_interaction_box()"
 	 msd-wheel="stop_horizontal_scroll($event)"
 	 style="z-index: 8;">
-	<div class="interaction_group">
+	<div class="interaction_group" ng-mouseenter="website.blur_wrapper=true;" ng-mouseleave="website.blur_wrapper=false;">
 		<div class="interaction_box animate-fast"
 			 ng-click="stop_propagation($event)">
 
@@ -37,7 +38,7 @@
 				<span>-&nbsp;</span>
 			</div>
 			<div class="relative">
-				<div class="interaction_box_options">
+				<div class="interaction_box_options" ng-if="hash_tags">
 					<div ng-repeat="item in hash_tags track by $index" 
 			    		 ng-click="handle_selection(item.name)" 
 			    		 ng-class="{active:is_current($index, item.name)}" 
@@ -93,6 +94,7 @@
 			</div>
 		</div>
 		<div class="scrollbar tweets"
+			 ng-if="focused_book.tweets"
 		 	 ng-click="stop_propagation($event)">
 			<div class="tweet" ng-repeat="tweet in focused_book.tweets | reverse">
 				<div class="inline_block_left"><img ng-src="{{tweet.user.thumb | thumb_backup}}"></div>

@@ -519,14 +519,14 @@ websiteApp.directive('feedbackPopup', ['$document', 'websiteService', '$rootScop
         if(y < 0){
         	y = 0
         }
-        else if(y > screen.height){
-        	y = screen.height;
+        else if(y > window_height){
+        	y = window_height;
         }
         if(x < 0){
         	x = 0
         }
-        else if(x > screen.width){
-        	x = screen.width;
+        else if(x > window_width){
+        	x = window_width;
         }
         element.css({
           top: y + 'px',
@@ -766,48 +766,56 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
 	        var chr = String.fromCharCode(event.keyCode);
 	        var len = string_array.length;
 	        if(len == 1){
-	          var old_string = string_array.slice(0, len-1).join(" ");
-	          var old_html = html_array.slice(0, len-1).join(" ");  
+	          	var old_string = string_array.slice(0, len-1).join(" ");
+	          	var old_html = html_array.slice(0, len-1).join(" ");  
 	        }
 	        else{
-	          var old_string = string_array.slice(0, len-1).join(" ")+" ";
-	          var old_html = html_array.slice(0, len-1).join(" ")+" ";
+	          	var old_string = string_array.slice(0, len-1).join(" ")+" ";
+	          	var old_html = html_array.slice(0, len-1).join(" ")+" ";
 	        }
 	        var current_element = string_array.pop();
 	        var current_html = html_array.pop();
 	        var is_backspace = event.keyCode == WebsiteUIConstants.Backspace;
 	        var hash_tagging = $scope.hash_tagging;
 	        if(is_backspace){
-	          if(current_element == "#"){
-	            $scope.hash_tagging = false;
-	            $scope.hash_tags = [];
-	            $rootScope.user.hash_tagged_comment = old_html;	
-	          }
-	          else{
-	            var hash_tagging_breaking_in_betwen = old_html.split("<b>").length != old_html.split("</b>").length;
-	            var inside_a_hashtag = current_html[current_html.length - 1] == ">";
-	            if(hash_tagging_breaking_in_betwen){
-	              	html_array = old_html.split("<b>");
-	              	len = html_array.length;
-	              	old_html = html_array.slice(0, len-1).join("<b>");
-	              	old_string = old_html.replace(/<b>/, "").replace(/<\/b>/, "");
-	            }
-	            if(hash_tagging || inside_a_hashtag){
-	        		$rootScope.user.hash_tagged_comment = old_html;
-	              	$rootScope.user.current_comment = old_string;	
-	              	$scope.is_new_word_initiation = true;
-	              	$scope.hash_tagging = false;
-	              	$scope.hash_tags = [];
-	              	event.preventDefault();
-	            }
-	            else{
-	        		var html = $rootScope.user.hash_tagged_comment;
-	              	$rootScope.user.hash_tagged_comment = html.substring(0, html.length-1);	
-	            }
-	          }
-	      		if(!$rootScope.user.current_comment || $rootScope.user.current_comment == ""){
-	            	$rootScope.user.hash_tagged_comment = "";
+	          	if(current_element == "#"){
+	            	$scope.hash_tagging = false;
+	            	delete $scope.hash_tags;
+	            	$rootScope.user.hash_tagged_comment = old_html;	
 	          	}
+	          	else{
+	            	var hash_tagging_breaking_in_betwen = old_html.split("<b>").length != old_html.split("</b>").length;
+	            	var inside_a_hashtag = current_html[current_html.length - 1] == ">";
+	            	var has_next_line_character = current_html.indexOf("<br/>") >= 0;
+	            	console.debug("handle_backspace ", hash_tagging_breaking_in_betwen, inside_a_hashtag, has_next_line_character);
+	            	if(has_next_line_character){
+	            		html_array = old_html.split("<br/>");
+		              	len = html_array.length;
+		              	old_html = html_array.slice(0, len-1).join("<br/>");
+		              	old_string = old_html.replace(/<br\/>/, "");
+	            	}
+	            	if(hash_tagging_breaking_in_betwen){
+		              	html_array = old_html.split("<b>");
+		              	len = html_array.length;
+		              	old_html = html_array.slice(0, len-1).join("<b>");
+		              	old_string = old_html.replace(/<b>/, "").replace(/<\/b>/, "");
+	            	}
+	            	if(hash_tagging || inside_a_hashtag){
+		        		$rootScope.user.hash_tagged_comment = old_html;
+		              	$rootScope.user.current_comment = old_string;	
+		              	$scope.is_new_word_initiation = true;
+		              	$scope.hash_tagging = false;
+		              	delete $scope.hash_tags;
+		              	event.preventDefault();
+	            	}
+	            	else{
+	        			var html = $rootScope.user.hash_tagged_comment;
+	              		$rootScope.user.hash_tagged_comment = html.substring(0, html.length-1);	
+	            	}
+	          	}
+      			if(!$rootScope.user.current_comment || $rootScope.user.current_comment == ""){
+            		$rootScope.user.hash_tagged_comment = "";
+          		}
 
 	        }
 	        event.stopPropagation();
@@ -831,10 +839,19 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
 	                        "len": len,
 	                        "old_string": old_string,
 	                        "current_element": current_element,
-	                        "under_a_tag": under_a_tag}]);
-	        if(keyEnter && $scope.hash_tags){
-	          event.preventDefault();
-	          $scope.handle_selection($scope.currentItem);
+	                        "under_a_tag": under_a_tag,
+	                    	"$scope.hash_tags": $scope.hash_tags,
+	                    	"keyEnter": keyEnter}]);
+	        if(keyEnter){
+	        	if($scope.hash_tags){
+		          	event.preventDefault();
+		          	$scope.handle_selection($scope.currentItem);
+	        	}
+	        	else{
+	        		$scope.hash_tagging = false;
+	        		$scope.is_new_word_initiation = true;
+	        		$rootScope.user.hash_tagged_comment = $rootScope.user.hash_tagged_comment+"<br/>";
+	        	}
 	        }
 	        else{
 	          	if(is_new_word_initiation && chr == "#"){
@@ -915,7 +932,14 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
 	        tweet = _add_labels_to_tweet(tweet);
       		var book = $scope.selected_interact_book;
       		tweet = _add_comment(tweet, book);
-      		$rootScope.focused_book.tweets.push(tweet);
+      		if(angular.isDefined($rootScope.focused_book)){
+	      		if($rootScope.focused_book.tweets.length == 0){
+	      			$rootScope.focused_book.tweets = $rootScope.focused_book.tweets.concat([tweet]);
+	      		}
+	      		else{
+	      			$rootScope.focused_book.tweets.push(tweet);
+	      		}
+      		}
       	}
 
       	_add_labels_to_tweet = function(tweet){
@@ -1126,3 +1150,10 @@ websiteApp.directive('tooltip', function(){
 		templateUrl: "/assets/angular/widgets/base/widget/tooltip.html"
 	}
 });
+
+websiteApp.directive('profileLink', function(){
+	return{
+		restrict: "E",
+		templateUrl: "/assets/angular/widgets/partials/profile_link.html"
+	}	
+})

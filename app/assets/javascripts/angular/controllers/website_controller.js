@@ -25,7 +25,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		var swipe_time = 2000;
 		var clientWidth = document.body["scrollWidth"];
 		var current_x = $window.pageXOffset;
-		var delta_x = screen.height*(0.56);
+		var delta_x = window_height*(0.56);
 		if(angular.isDefined(event)){
 			if(event.type == "click"){
 				if(angular.isDefined($scope.delta_x)){
@@ -54,8 +54,8 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		var swipe_time = 2000;
 		var clientWidth = document.body["scrollWidth"];
 		var current_x = $window.pageXOffset;
-		var delta_x = screen.height*(0.56);
-		var lessThanOnePageLeft = current_x + (2.5)*screen.width > clientWidth;
+		var delta_x = window_height*(0.56);
+		var lessThanOnePageLeft = current_x + (2.5)*window_width > clientWidth;
 		if(lessThanOnePageLeft){
 			if(!$rootScope.loading){
 				console.debug("%c lessThanOnePageLeft", "color:green");
@@ -90,28 +90,28 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	$scope.scroll_one_page_right = function(event){
 		var clientWidth = document.body["scrollWidth"];
 		if(event){
-			var current_x = event.pageX - screen.width/2;
-			var lessThanOnePageLeft = event.pageX + screen.width > clientWidth;
+			var current_x = event.pageX - window_width/2;
+			var lessThanOnePageLeft = event.pageX + window_width > clientWidth;
 		}
 		else{
-			var current_x = $window.pageXOffset; - screen.width/2;
-			var lessThanOnePageLeft = $window.pageXOffset; + screen.width > clientWidth;
+			var current_x = $window.pageXOffset; - window_width/2;
+			var lessThanOnePageLeft = $window.pageXOffset; + window_width > clientWidth;
 		}
 		if(lessThanOnePageLeft){
 			$rootScope.$broadcast('loadRecommendations');
 		}
-		var delta_x = screen.width;
+		var delta_x = window_width;
 		scroller.scrollTo(current_x + delta_x, 0, 2000);	
 	}
 
 	$scope.scroll_one_page_left = function(event){
 		if(event){
-			var current_x = event.pageX - screen.width/2;
+			var current_x = event.pageX - window_width/2;
 		}
 		else{
-			var current_x = $window.pageXOffset - screen.width/2;
+			var current_x = $window.pageXOffset - window_width/2;
 		}
-		var delta_x = screen.width;
+		var delta_x = window_width;
 		scroller.scrollTo(current_x - delta_x, 0, 2000);
 	}
 
@@ -132,7 +132,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 
 	_load_recommendations = function(){
 		var currentWidth = document.body["scrollWidth"];
-		var lessThanOnePageLeft = event.pageX + screen.width > currentWidth;
+		var lessThanOnePageLeft = event.pageX + window_width > currentWidth;
 		if (lessThanOnePageLeft){
 			$rootScope.$broadcast('loadRecommendations');
 		}

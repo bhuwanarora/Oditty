@@ -2,32 +2,38 @@
 <!-- </div> -->
 
 <div ng-if="user.logged">
-     <div class="compressed_info_card animate-fast grey_color" ng-class="{'compressed_info_card_shifted': user.collapsed_column}">
+     <div class="compressed_info_card animate-fast grey_color" 
+     	  ng-class="{'compressed_info_card_shifted': user.collapsed_column}">
      	<div class="block"
-     		ng-click="goto_info_card(); user.profile_status=0;">
-     		<div class="icon-cogs"></div>
-     		<!-- <div>Edit</div><div>Profile</div> -->
+     		ng-click="edit_genres_like();"
+     		title="Edit genres you like">
+     		<div class="icon-tags"></div>
      	</div>
      	<div class="block"
-     		ng-click="edit_books_read();">
+     		ng-click="edit_books_read();"
+     		title="Edit books you have read">
      		<div class="icon-books"></div>
-     		<!-- <div>Add</div><div>Books</div> -->
      	</div>
      	<div class="block"
-     		ng-click="edit_authors_read();">
+     		ng-click="edit_authors_read();"
+     		title="Edit authors you like">
      		<div class="icon-pen"></div>
-     		<!-- <div>Add</div><div>Authors</div> -->
      	</div>
      	<div class="block"
-     		ng-click="goto_info_card(); user.profile_status=7;">
+     		ng-click="goto_info_card(); user.profile_status=7;"
+     		title="Invite friends">
      		<div class="icon-users"></div>
-     		<!-- <div>Invite</div><div>Friends</div> -->
+     	</div>
+     	<div class="block"
+     		ng-click="goto_info_card(); user.profile_status=0;"
+     		title="Edit personal details">
+     		<div class="icon-cogs"></div>
      	</div>
      </div>
      <div class="wrapper" 
      	  msd-wheel="stop_propagation($event);"
-     	  ng-click="compressed_info = true;"
-          ng-show="!compressed_info">
+     	  ng-click="user.compressed_info = true;"
+          ng-show="!user.compressed_info">
 	     <div ng-click="stop_propagation($event);"
 	     		class="info_cards animate-fast"
 	 	 		ng-switch on="user.profile_status" 
@@ -141,14 +147,16 @@
 							<div class="book_details">
 								<div>
 									<span>{{book.title}}</span>
-									<span>by {{book.author_name}}</span>
+									<span ng-show="book.author_name">by {{book.author_name}}</span>
 								</div>
 								<div>&nbsp;</div>
-								<div ng-show="book.status">Added</div>
-								<div ng-show="!book.status">
-									<span>Add to</span>
-									<span class='icon-books'></span>
-									<span>Books Read</span>
+								<div ng-show="book.id">
+									<div ng-show="book.status">Added</div>
+									<div ng-show="!book.status">
+										<span>Add to</span>
+										<span class='icon-books'></span>
+										<span>Books Read</span>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -182,12 +190,6 @@
 				</div> -->
 			</div>
 			<div ng-switch-when="5">
-				<div class="header thumb">Add a profile pic</div>
-		      	<div class="description">Help your friends recognise you across Reader's Door.</div>
-		      	<div ng-if="user.thumb">
-		      		<div class="header thumb">Change your profile pic</div>
-			    	<img ng-src="{{user.thumb}}" class="profile_pic">
-		      	</div>
 	      	 	<cropme
 			        width="info_card_width"
 			        max-height="470"
@@ -196,13 +198,16 @@
 			        type="png"
 			        destination-width="350">
 			    </cropme>
+		      	<div ng-if="user.thumb">
+			    	<img ng-src="{{user.thumb}}" class="profile_pic">
+		      	</div>
 			</div>
 			<div ng-switch-when="6">
 				<div class="header">
 					Meet readers in your area...
 				</div>
-				<map style="display:block; height:50vh">
-					<marker position="current" animation="Animation.BOUNCE" centered="true"></marker>
+				<map style="display:block; height:50vh; width: 101%; margin-top: 10px;">
+					<marker position="current" centered="true"></marker>
 				</map>
 			</div>
 			<div ng-switch-when="7">

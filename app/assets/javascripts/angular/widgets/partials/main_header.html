@@ -17,20 +17,8 @@
 	<div class="profile_thumb" ng-click="show_interaction_box()">
 		<span class="table_cell">Share</span>
 	</div>
- 	<div class="profile_thumb" ng-click="goto_info_card()">
-		<img ng-src="{{user | blob_backup}}" class="profile_small_thumb" ng-if="user">
-		<div class="user_details">
-			<div class="animate-slow count" ng-class="{'green': is_additive, 'magenta': !is_additive}" ng-show="count && !initiate_counting">
-				<span ng-if="is_additive">+</span><span ng-if="!is_additive">-</span>{{count}}
-			</div>
-			<span class="table_cell">
-				<span class="site_color">{{user.name}}</span><span> · </span>
-				<span class="site_color">{{user.total_count | integer}}</span><span> · </span>
-				<span class="green_color">{{user.book_read_count | integer}}&nbsp;</span><span class='green_color icon-books'></span><span> · </span>
-				<span class="purple_color">{{user.bookmark_count | integer}}&nbsp;</span><span class='purple_color icon-bookmarks'></span><span> · </span>
-			</span>
-		</div>
-	</div>
+	<profile-link></profile-link>
+ 
 	<!-- <div class="menu_group" 
  		 ng-class="{'menu_group_active':show_menu}"
  		 ng-mouseenter="toggle_menu()"

@@ -63,6 +63,7 @@
 	display: inline-block;
 	padding-left: 5px;
 	position: relative;
+	color: #427fed;
 }
 
 .profile_thumb .user_details .count{
@@ -514,7 +515,6 @@
 	z-index: 5;
 	padding: 10px;
 	background-color: #fff;
-	border-left: 3px solid #427fed;
 	border-radius: 4px;
 	padding-right: 20px;
 	padding-left: 20px;
@@ -584,9 +584,9 @@
 .interaction_box .highlighter{
 	position: absolute;
 	top: 8px;
-	left: 45px;
-	color: transparent;
-	letter-spacing: 0.04em;
+	left: 47px;
+	/*color: transparent;*/
+	letter-spacing: 0.059em;
 	width: 100%;
 	white-space: initial;
 }
@@ -720,7 +720,7 @@
 
 .active_filter{
 	color: white;
-	background-color: #918FB5;
+	background-color: #427fed;
 }
 
 .inactive_filter{
@@ -1265,7 +1265,7 @@ and (min-width : 1824px) {
 	box-shadow: 0 7px 15px rgba(0,0,0,.25);
 	height: 42vh;
 	position: fixed;
-	z-index: 7;
+	z-index: 8;
 	padding: 4px 0px 4px 0px;
 }
 
@@ -1483,7 +1483,7 @@ and (min-width : 1824px) {
 	top: 3px;
 	width: 50%;
 	height: 37px;
-	z-index: 1;
+	z-index: 10;
 }
 
 .main_header .search_input_shifted{
@@ -1503,14 +1503,9 @@ and (min-width : 1824px) {
 
 .main_header .search_typeahead_group .search_icon{
 	z-index: 3;
-	padding: 9px 30px 8px;
+	padding: 8px 30px 8px;
 	box-shadow: none;
-}
-
-.main_header .search_input:focus{
-    /*outline: 0.5px solid #4d90fe;*/
-    border-color: #427fed !important;
-    box-shadow: 0 0 10px #9ecaed;
+	right: -1px;
 }
 
 .main_header .compressed_filters{
@@ -1528,4 +1523,19 @@ and (min-width : 1824px) {
 	display: inline-block;
 	float: left;
 	padding: 8px;
+	background-color: white;
+	border: 1px solid #F5F5F5;
+	cursor: default;
+	height: 12px;
+	font-size: 0.9em;
+	max-width: 10%;
+}
+
+.main_header .compressed_filters .compressed_filter_icon:hover{
+	color: #427fed !important;
+}
+
+.main_header .compressed_filters .compressed_filter_icon:hover [class^="icon-"]:before{
+	content: "\e694";
+	color: rgba(216, 57, 30, 0.5);
 }

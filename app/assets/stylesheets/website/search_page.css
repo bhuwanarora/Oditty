@@ -20,12 +20,65 @@
 }
 
 .search_button{
-	background-color: #4d90fe;
-	background-image: -webkit-linear-gradient(top,#4d90fe,#4787ed);
-	color: white;
 	padding: 10px 0px;
+}
+
+.search_page .profile_thumb:hover{
+	background-color: transparent;
 	cursor: pointer;
 }
+
+.search_page .profile_thumb .user_details{
+	color: white;
+	text-shadow: 0 2px 3px rgba(0,0,0,.5);
+}
+
+.search_page .profile_thumb .user_details:hover{
+	text-decoration: underline;
+}
+
+.search_page .profile_thumb img{
+	box-shadow: 0 2px 3px rgba(0,0,0,.5);
+	border-radius: 3px;
+}
+
+.website_search_helpers ::-webkit-input-placeholder {
+   color: rgba(66, 127, 237, 0.6);
+}
+
+.website_search_helpers :-moz-placeholder { /* Firefox 18- */
+   color: rgba(66, 127, 237, 0.6);
+}
+
+.website_search_helpers ::-moz-placeholder {  /* Firefox 19+ */
+   color: rgba(66, 127, 237, 0.6);
+}
+
+.website_search_helpers :-ms-input-placeholder {  
+   color: rgba(66, 127, 237, 0.6);
+}
+
+
+/*.search_page .trend_doodle{
+	position: fixed;
+	left: 50%;
+	width: 40%;
+	margin-left: -20%;
+	top: 50%;
+	margin-top: -31%;
+	color: white;
+}
+
+.search_page .trend_doodle img{
+	width: 100%;
+	border-radius: 2px;
+	max-height: 40%;
+}
+
+.search_page .trend_doodle span{
+	left: 10px;
+	bottom: 10px;
+}*/
 
 .filters_added .close_icon{
 	margin-top: 2px;
@@ -49,10 +102,10 @@
     /*border-bottom: 4px solid #427fed;*/
 }
 
-.search_input:focus{
+/*#searchInput:focus{
     border: 2px solid #427fed;
 }
-
+*/
 
 .search_typeahead_options{
     bottom: 40px;
@@ -66,8 +119,9 @@
 	text-align: center;
 	height: 35px;
 	box-shadow: 0 2px 6px rgba(0,0,0,.3);
-	margin-bottom: 5px;
+	/*margin-bottom: 7px;*/
 	border-radius: 2px;
+	overflow-y: auto;
 }
 
 .search_page .shift_top{
@@ -81,8 +135,18 @@
 }
 
 .website_search_helpers .compressed_option{
-	padding: 12px 14px 5px;
+	padding: 12px 15px 5px;
 	font-size: 1.2em;
+}
+
+.website_search_helpers .direction_option{
+	font-size: 2em;
+	padding: 5px 10px 0px 10px;
+	display: inline-block;
+    float: left;
+    cursor: default;
+    text-align: center;
+    background-color: white;
 }
 
 .login_box .logo{
@@ -115,9 +179,13 @@
 	text-shadow: 0 2px 3px rgba(0,0,0,.5);
 }
 
+.search_page .logo a:hover{
+	text-decoration: none;
+}
+
 .search_page .tagline{
 	position: fixed;
-	top: 20%;
+	top: 25%;
 	left: 50%;
 	color: #fff;
 	font-size: 1.5em;
@@ -137,22 +205,18 @@
 .search_page .search_typeahead_group{
     position: fixed;
 	left: 50%;
-	top: 20%;
+	top: 25%;
 	width: 50%;
 	height: 37px;
 	margin-left: -25%;
 	margin-top: -20px;
-	z-index: 10;
+	z-index: 1;
 }
 
 .search_typeahead_group .search_icon{
     position: absolute;
 	right: 0px;
-	color: #fff;
-	padding: 10px 30px 9px;
-	background-color: #4d90fe;
-	background-image: -webkit-linear-gradient(top,#4d90fe,#4787ed);
-	border: 0;
+	padding: 10px 30px 7px;
 	box-shadow: 0 2px 6px rgba(0,0,0,.3);
 	text-shadow: 1px 0 0 rgba(0,0,0,.5);
 	border-bottom-right-radius: 2px;
@@ -200,7 +264,7 @@
 }
 
 .search_page hr{
-	top: 60px;
+	top: 45px;
 	position: absolute;
 	width: 90%;
 	left: 40px;
@@ -335,7 +399,10 @@
 	border: 1px solid #F1F1F1;
 	margin: 0px;
 	color: #717070;
+	width: 40%;
+	font-size: 1em;
 }
+
 .login_form input.ng-invalid.ng-dirty {
   border-color: #FA787E;
 }
@@ -355,13 +422,13 @@
 	text-align: center;
 	color: #fff;
 	cursor: pointer;
-	width: 104px;
+	width: 21%;
 	display: inline-block;
 }
 
 .login_form .authenticate_left{
 	border-right: 1px solid;
-	margin-right: -3px;
+	margin-right: -4px;
 }
 
 .login_form .authenticate:active{
@@ -473,31 +540,4 @@
 	cursor: pointer;
 	padding: 8px;
 	font-size: 1.2em;
-}
-
-/* Desktops and laptops ----------- */
-@media only screen
-and (min-width : 400px) {
-	/* Styles */
-
-   .login_form input{
-           width: 200px;
-           font-size: 1em;
-   }
-}
-
-@media only screen
-and (min-width : 1280px){
-   .login_form input{
-           width: 250px;
-           font-size: 1em;
-   }
-}
-
-@media only screen
-and (min-width : 1366px){
-           .login_form input{
-           width: 210px;
-           font-size: 1em;
-   }
 }

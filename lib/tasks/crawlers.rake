@@ -1,5 +1,12 @@
 namespace :crawl do
 
+  
+  desc "upload_cover_photos"
+  task :upload_cover_photos => :environment do
+    include S3UploaderHelper
+    S3UploaderHelper.upload_cover_photos
+  end
+
   desc "get_images"
   task :get_images => :environment do
     include S3UploaderHelper

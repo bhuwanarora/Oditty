@@ -34,16 +34,29 @@ angular.module('filtersApp', [])
       return input;
     }
   })
+  .filter('compressed_filter', function(){
+    return function(input){
+      if(angular.isDefined(input)){
+        if(input != null && input.length > 7){
+          input = input.slice(0, 7)+"..";
+        }
+      }
+      return input;
+    }
+  })
   .filter('choose_medium_thumb', function() {
     return function(input) {
-      var external_thumb = angular.isDefined(input.external_thumb) && input.external_thumb != null;
-      if(external_thumb){
-        output = input.external_thumb;
-      }
-      else{
-        if(input.isbn){
-          var isbn = input.isbn.split(",");
-          output = "http://covers.openlibrary.org/b/isbn/"+isbn[0]+"-M.jpg"
+      var output = "";
+      if(angular.isDefined(input)){
+        var external_thumb = angular.isDefined(input.external_thumb) && input.external_thumb != null;
+        if(external_thumb){
+          output = input.external_thumb;
+        }
+        else{
+          if(input.isbn){
+            var isbn = input.isbn.split(",");
+            output = "http://covers.openlibrary.org/b/isbn/"+isbn[0]+"-M.jpg"
+          }
         }
       }
       return output;
@@ -95,8 +108,8 @@ angular.module('filtersApp', [])
   .filter('book_title', function(){
     return function(input){
       if(angular.isDefined(input)){
-        if(input.length > 55){
-          input = input.slice(0, 53)+"...";
+        if(input.length > 50){
+          input = input.slice(0, 47)+"...";
         }
       }
       return input;
@@ -187,8 +200,8 @@ angular.module('filtersApp', [])
   })
   .filter('display_tweet', function(){
     return function(input){
-      if(input && input.length > 70){
-        input = input.slice(0, 70)+"...";
+      if(input && input.length > 100){
+        input = input.slice(0, 97)+"...";
       }
       return input; 
     }

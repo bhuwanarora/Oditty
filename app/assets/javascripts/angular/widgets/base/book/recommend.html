@@ -15,7 +15,7 @@
 			<span class="site_color"> {{recommend_object.title}} by {{recommend_object.author_name}}</span>
 		</div>
 		<div class="friend_grid">
-			<div ng-repeat="friend in user.friends" class="friend_block">
+			<div ng-repeat="friend in user.followers" class="friend_block">
 				<div class="friend_name">{{friend.name}}</div>
 				<img ng-src="{{friend | blob_backup}}" 
 					 title="{{friend.name}}" 
@@ -25,7 +25,7 @@
 			</div>
 		</div>
 		<div class="footer">
-			<button class="done blue_button" ng-click="recommend()" ng-disabled="!user.selected_friends || user.selected_friends.length == 0">Done</button>
+			<button class="done blue_button" ng-click="recommend()" ng-disabled="!user.selected_followers || user.selected_followers.length == 0">Done</button>
 		</div>
 	</div>
 </div>

@@ -284,7 +284,7 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 	        }
 	        
 			$scope.goto_info_card = function(){
-				$rootScope.compressed_info = false;
+				$rootScope.user.compressed_info = false;
 				// scroller.scrollTo(0, 0, 2000);
 			}
 
@@ -362,7 +362,9 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 		restrict: 'E',
 		controller: ['$scope', 'websiteService', function($scope, websiteService){
 			$scope.mark_as_read = function(book, event){
-		        sharedService.mark_as_read($scope, book, event);
+				if(angular.isDefined(book.id)){
+		        	sharedService.mark_as_read($scope, book, event);
+				}
 			}
 
 			$scope.stop_propagation = function(event){
@@ -393,18 +395,25 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 						var has_minimum_length = $scope.info.search_author.length > 3;	
 					}
 					if(has_minimum_length){
+						$scope.popular_books = [{"title": "Searching..."}];
 						search_input_timeout = $timeout(function(){
 							$scope.handle_search_input(type);
-						}, 500);
+						}, 300);
 					}
-					else if(backspace){
-						if(type == "BOOK"){
-							$scope.popular_books = [];
-							$scope.get_popular_books();
+					else {
+						if(backspace){
+							if(type == "BOOK"){
+								$scope.popular_books = [];
+								$scope.get_popular_books();
+							}
+							else{
+								$scope.popular_authors = [];
+								$scope.get_popular_authors();
+							
+							}
 						}
 						else{
-							$scope.popular_authors = [];
-							$scope.get_popular_authors();
+							$scope.popular_books = [{"title": "Type more characters..."}];
 						}
 					}
 				}
@@ -452,7 +461,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 				}
 			}
 
-			_get_genres = function(){
+			$scope._get_genres = function(){
 				if(angular.isUndefined($scope.info.genres) || $scope.info.genres.length == 0){
 					$scope.info.genres = [];
 			    	websiteService.get_genres().then(function(data){
@@ -504,7 +513,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 					$scope.get_popular_books();
 				}
 				else if($rootScope.user.profile_status == 2){
-					_get_genres();
+					$scope._get_genres();
 				}
 				else if($rootScope.user.profile_status == 4){
 					$scope.get_popular_authors();
@@ -537,6 +546,12 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 				$scope.goto_info_card();
 				$rootScope.user.profile_status = 3;
 				$scope.get_popular_books();
+			}
+
+			$scope.edit_genres_like = function(){
+				$scope.goto_info_card();
+				$rootScope.user.profile_status = 2;
+				$scope._get_genres();
 			}
 
 			$scope.edit_authors_read = function(){
@@ -689,7 +704,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 					{"name": "Editor"}
 				];
 				
-				$rootScope.compressed_info = true;
+				$rootScope.user.compressed_info = true;
 				$scope.profileSelected = {"name": "Reader"};
 				$scope.info_card_width = 350; //in px
 				$scope.info_card_ratio = 1.34;

@@ -23,7 +23,7 @@ module Constants
 	BestNormalRead				= 1171522 #"harrypotterandthephilosophersstone"
 	BestLongRead				= 395152 #"thehungergames"
 	BestBook					= 395152 #"thehungergames"
-	BestGrid					= 2571211
+	BestGrid					= 2672800
 
 	TinyRead 					= "tinyread"
 	SmallRead 					= "smallread"

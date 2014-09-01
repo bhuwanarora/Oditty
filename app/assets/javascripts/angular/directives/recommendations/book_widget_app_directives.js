@@ -13,8 +13,9 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
           delete $rootScope.ticker_popup;
           $rootScope.focused_book = $scope.book;
           var posX = event.currentTarget.offsetParent.offsetParent.offsetLeft - event.pageX + event.clientX;
-          var display_right_width =  screen.width - (posX + event.currentTarget.offsetParent.scrollWidth);
+          var display_right_width =  window_width - (posX + event.currentTarget.offsetParent.scrollWidth);
           var display_left_width = posX;
+          var card_width = window_height*0.56;
           console.table([{
             "offsetLeft":event.currentTarget.offsetParent.offsetParent.offsetLeft,
             "pageX":event.pageX, 
@@ -24,7 +25,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
             "display_left_width":display_left_width,
             "display_right_width":display_right_width}]);
           if(display_right_width > display_left_width){
-            if(display_right_width > 410){
+            if(display_right_width > card_width){
               posX = posX + event.currentTarget.offsetParent.scrollWidth - event.currentTarget.offsetLeft;
               $rootScope.focused_book.reposition_tooltip = {"left": posX+"px"};
             }
@@ -34,8 +35,8 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
             $rootScope.on_left = true;
           }
           else{
-            if(display_left_width > 410){
-              posX = screen.width - posX;
+            if(display_left_width > card_width){
+              posX = window_width - posX;
               $rootScope.focused_book.reposition_tooltip = {"right": posX+"px"}; 
             }
             else{
@@ -60,7 +61,6 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
         // $scope.active_book_filter = true;
         var book_id = $scope.book.id;
         console.debug("%c _init book"+book_id, "color: purple");
-        $scope.book.tweets = [];
         $scope.book.show_labels = false;
         
         // if(!angular.isArray($scope.book.labels)){
@@ -69,15 +69,17 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
         //     this.push({"name": value.name});
         //   }, $scope.book.labels);
         // }
-
-        websiteService.get_book_details("id="+book_id).then(function(data){
-          angular.extend($scope.book, data);
-          angular.forEach($scope.book.labels, function(value){
-            if(value.checked){
-              $scope.book.bookmark_status = 1;
-            }
+        if(angular.isUndefined($scope.book.title)){
+          websiteService.get_book_details("id="+book_id).then(function(data){
+            angular.extend($scope.book, data);
+            angular.forEach($scope.book.labels, function(value){
+              if(value.checked){
+                $scope.book.bookmark_status = 1;
+              }
+            });
+            $scope.book.data_fetched = true;
           });
-        });
+        }
 
         // var margin_right = (Math.floor(Math.random() * 20) + 1)+"px";
         // var margin_top = (Math.floor(Math.random() * 50) + 1)+"px";
@@ -435,13 +437,8 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
       }
 
       $scope.get_book_from_author = function(){
-        // if(angular.isUndefined($rootScope.filters.other_filters)){
-          // $rootScope.filters = {"other_filters": {}};
-        // }
-        // $rootScope.filters.other_filters["AUTHOR"] = $rootScope.focused_book.author_details.id;
-        // $rootScope.filters.other_filters["reset"] = true;
-        // $rootScope.filters.other_filters["reset_count"] = 0;
-        $rootScope.$broadcast('updateFilters', "AUTHOR", $rootScope.focused_book.author_details.id);
+        var json = {"name": $rootScope.focused_book.author_name, "id": $rootScope.focused_book.author_details.id};
+        $rootScope.$broadcast('updateFilters', "AUTHOR", json);
       }
 
       $scope.get_buy_links = function(){
@@ -461,13 +458,6 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
         $scope.show_author = false;
         $cookieStore.put('show_author', false);
         $cookieStore.put('show_buy', false);
-        if(angular.isUndefined($rootScope.focused_book.tweets) || $rootScope.focused_book.tweets.length == 0){
-          widgetService.get_book_feed($rootScope.focused_book.id).then(function(data){
-            if($rootScope.focused_book != null){
-              $rootScope.focused_book.tweets = data;
-            }
-          });
-        }
       }
 
       $scope.stop_propagation = function(event){
@@ -570,35 +560,9 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
         event.stopPropagation();
       }
 
-      _display_tweet = function(index){
-        // console.log("%c display_tweet", "color: red;");
-        var tweets_defined = $rootScope.focused_book != null && angular.isDefined($rootScope.focused_book.tweets) && $rootScope.focused_book.tweets.length > 0
-        if(tweets_defined){
-          var tweets = $rootScope.focused_book.tweets;
-          var timeout_event = $timeout(function(){
-            if(index < tweets.length){
-              $rootScope.focused_book.display_tweet = $rootScope.focused_book.tweets[index]["message"];
-              if($rootScope.focused_book.tweets[index]["message"]){
-                $rootScope.focused_book.display_profile = $rootScope.focused_book.tweets[index]["thumb"];
-              }
-              else{
-                $rootScope.focused_book.display_profile = "/assets/profile_pic.jpeg"; 
-              }
-              index++;
-              _display_tweet(index);
-            }
-            else{
-              _display_tweet(0);
-            }
-          }, 2000);
-          $scope.$on('destroy', function(){
-            $timeout.cancel(timeout_event);
-          });
-        }
-        else{
-          delete $rootScope.focused_book.display_profile;
-          $rootScope.focused_book.display_tweet = "Comment on this book...";
-        }
+      _display_tweet = function(){
+        $rootScope.focused_book.display_profile = $rootScope.user.thumb; 
+        $rootScope.focused_book.display_tweet = "Comment on this book...";
       }
 
       _open_tab = function(){
@@ -616,19 +580,33 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
         }
       }
 
+      $scope._get_book_feed = function(){
+        if(angular.isUndefined($rootScope.focused_book.tweets)){
+          $rootScope.focused_book.tweets = [];
+          widgetService.get_book_feed($rootScope.focused_book.id).then(function(data){
+            if($rootScope.focused_book != null){
+              $rootScope.focused_book.tweets = data;
+              _display_tweet();
+            }
+          });
+        }
+      }
+
       _init = function(){
         _open_tab();
 
-        if($scope.show_author){
-          $scope.get_author_details();
+        if(angular.isDefined($rootScope.focused_book)){
+          $scope._get_book_feed();
+          if($scope.show_author){
+            $scope.get_author_details();
+          }
+          else if($scope.show_buy){
+            $scope.get_buy_links();
+          }
+          else{
+            $scope.get_book_overview();
+          }
         }
-        else if($scope.show_buy){
-          $scope.get_buy_links();
-        }
-        else{
-          $scope.get_book_overview();
-        }
-        _display_tweet(0);
       }
 
       _init();
@@ -658,12 +636,12 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', 'w
       $scope.select_thumb = function(event, friend_id){
         var selected = event.currentTarget.dataset.selected == "true";
         if(!selected){
-          $scope.user.selected_friends.push(friend_id);
+          $scope.user.selected_followers.push(friend_id);
           event.currentTarget.dataset.selected = true;
           event.currentTarget.style.border = "5px solid #427fed";
         }
         else{
-          $scope.user.selected_friends.splice($scope.user.selected_friends.indexOf(friend_id), 1);
+          $scope.user.selected_followers.splice($scope.user.selected_followers.indexOf(friend_id), 1);
           event.currentTarget.dataset.selected = false;
           event.currentTarget.style.border = "5px solid transparent";
         }
@@ -684,7 +662,7 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', 'w
             $timeout.cancel(timeout_event);
           });
           // $('body').css('cursor', 'default');
-          var params = {"friend_ids": $scope.user.selected_friends, "book_id": $scope.recommend_object.id};
+          var params = {"friend_ids": $scope.user.selected_followers, "book_id": $scope.recommend_object.id};
           widgetService.recommend(params);
           $scope.$emit('gamifyCount', 10, true);
         }
@@ -694,20 +672,28 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', 'w
         }
       }
 
-      _init = function(){
-        $scope.user = {};
-        websiteService.get_followed_by().then(function(data){
-          $scope.user.friends = [];
-          angular.forEach(data, function(value){
-            var json = {"name": value[1], "id": value[0], "thumb": value[2]};
-            this.push(json);
-          }, $scope.user.friends);
-
-        });
-        $scope.user.selected_friends = [];
+      $scope._init = function(){
+        if(angular.isUndefined($rootScope.user.followers)){
+          $rootScope.user.selected_followers = [];
+          websiteService.get_followed_by().then(function(data){
+            $rootScope.user.followers = [];
+            angular.forEach(data, function(value){
+              var json = {"name": value[1], "id": value[0], "thumb": value[2]};
+              this.push(json);
+            }, $rootScope.user.followers);
+            $scope.user = {};
+            $scope.user.followers = $rootScope.user.followers;
+            $scope.user.selected_followers = $rootScope.user.selected_followers;
+          });
+        }
+        else{
+          $scope.user = {};
+          $scope.user.followers = $rootScope.user.followers;
+          $scope.user.selected_followers = $rootScope.user.selected_followers;
+        }
       }
 
-      _init();
+      $scope._init();
     }],
     templateUrl: "/assets/angular/widgets/base/book/recommend.html"
   }

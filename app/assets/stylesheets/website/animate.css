@@ -46,11 +46,19 @@
 	margin-bottom: 0px;
 }
 
+.base_search.ng-enter,
+.base_search.ng-leave.ng-leave-active,
+.website_search_helpers.ng-enter,
+.website_search_helpers.ng-leave.ng-leave-active,
 .website_search_options.ng-enter,
 .website_search_options.ng-leave.ng-leave-active{
 	max-height: 0px;
 }
 
+.base_search.ng-leave,
+.base_search.ng-enter-active,
+.website_search_helpers.ng-leave,
+.website_search_helpers.ng-enter-active,
 .website_search_options.ng-leave,
 .website_search_options.ng-enter-active{
 	max-height: 150px;
