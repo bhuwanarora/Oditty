@@ -357,7 +357,7 @@ websiteApp.directive('bookGrid', ['recommendationService', '$rootScope', functio
 	}
 }]);
 
-websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'websiteService', 'WebsiteUIConstants', 'scroller', function($rootScope, $timeout, sharedService, websiteService, WebsiteUIConstants, scroller){
+websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'websiteService', 'WebsiteUIConstants', 'scroller', '$cookieStore', function($rootScope, $timeout, sharedService, websiteService, WebsiteUIConstants, scroller, $cookieStore){
 	return{
 		restrict: 'E',
 		controller: ['$scope', 'websiteService', function($scope, websiteService){
@@ -704,7 +704,13 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 					{"name": "Editor"}
 				];
 				
-				$rootScope.user.compressed_info = true;
+				if(angular.isUndefined($cookieStore.get('ask_info'))){
+					$rootScope.user.compressed_info = false;
+					$cookieStore.put('ask_info', true);
+				}
+				else{
+					$rootScope.user.compressed_info = true;
+				}
 				$scope.profileSelected = {"name": "Reader"};
 				$scope.info_card_width = 350; //in px
 				$scope.info_card_ratio = 1.34;

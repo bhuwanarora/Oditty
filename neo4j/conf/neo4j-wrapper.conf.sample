@@ -42,8 +42,8 @@ wrapper.java.additional=-XX:+PrintTenuringDistribution
 # calculated based on available system resources.
 # Uncomment these lines to set specific initial and maximum
 # heap size in MB.
-wrapper.java.initmemory=1024
-wrapper.java.maxmemory=1200
+wrapper.java.initmemory=5000
+wrapper.java.maxmemory=7000
 
 #********************************************************************
 # Wrapper settings

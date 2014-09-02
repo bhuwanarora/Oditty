@@ -114,7 +114,7 @@
 	max-height: 90px;
 	outline: none;
 	border: 1px solid #F1F1F1;
-	border-radius: 4px;
+	border-radius: 2px;
 }
 
 .interaction_box_options [class^="icon-"],
@@ -163,7 +163,7 @@
 
 .interaction_box .interact_book{
 	position: absolute;
-	top: 18px;
+	top: 28px;
 	background-color: #f5F5F5;
 	padding: 4px;
 	width: 200px;
@@ -505,19 +505,18 @@
 	position: fixed;
 	left: 50%;
 	margin-left: -30%;
-	top: 50px;
+	top: 10px;
 	width: 60%;
 }
 
 .interaction_box,
 .message_box{
-	box-shadow: 8px 10px 54px 0 #424242;
 	z-index: 5;
 	padding: 10px;
 	background-color: #fff;
-	border-radius: 4px;
-	padding-right: 20px;
-	padding-left: 20px;
+	border-radius: 2px;
+	padding: 20px;
+	box-shadow: 8px 10px 54px 0 #424242;
 }
 
 .interaction_box_options,
@@ -535,15 +534,17 @@
 
 .interaction_box_book_options{
 	width: 207px;
-	top: 44px;
+	top: 54px;
 	right: 7.3%;
 	margin-left: 0px;
 }
 
 
 .interaction_box img{
-	width: 40px;
+	width: 35px;
 	margin-bottom: 20px;
+	margin-right: 4px;
+	border-radius: 2px;
 }
 
 .interaction_box .second_input{

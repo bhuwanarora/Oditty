@@ -3,6 +3,21 @@
 	 ng-click="close_interaction_box()"
 	 msd-wheel="stop_horizontal_scroll($event)"
 	 style="z-index: 8;">
+	 <div class="site_logo" ng-show="website.blur_wrapper">
+ 		<span>r</span>
+		<span>e</span>
+		<span>a</span>
+		<span>d</span>
+		<span>e</span>
+		<span>r</span>
+		<span>'</span>
+		<span>s</span>
+		<span>&nbsp;</span>
+		<span>d</span>
+		<span>o</span>
+		<span>o</span>
+		<span>r</span>
+ 	</div>
 	<div class="interaction_group" ng-mouseenter="website.blur_wrapper=true;" ng-mouseleave="website.blur_wrapper=false;">
 		<div class="interaction_box animate-fast"
 			 ng-click="stop_propagation($event)">
@@ -94,15 +109,18 @@
 			</div>
 		</div>
 		<div class="scrollbar tweets"
-			 ng-if="focused_book.tweets"
+			 ng-if="focused_book"
 		 	 ng-click="stop_propagation($event)">
-			<div class="tweet" ng-repeat="tweet in focused_book.tweets | reverse">
+			<div class="tweet animate-fast" ng-repeat="tweet in focused_book.tweets | reverse">
 				<div class="inline_block_left"><img ng-src="{{tweet.user.thumb | thumb_backup}}"></div>
 				<div class="tweet_text">
 					<b><div ng-bind-html="tweet.user.name"></div></b>
 					<div ng-bind-html="tweet.tag"></div>
 					<div ng-bind-html="tweet.message"></div>
 				</div>
+			</div>
+			<div class="tweet animate-fast">
+				No new notifications.
 			</div>
 		</div>
 		<div class="scrollbar tweets"
@@ -125,10 +143,8 @@
 					<div ng-bind-html="notification.message"></div>
 					<img ng-show="notification.large_image" ng-src="{{notification.large_image}}" class="large_thumb">
 				</div>
-
-				
 			</div>
-			<div class="tweet">
+			<div class="tweet animate-fast">
 				No new notifications.
 			</div>
 		</div>

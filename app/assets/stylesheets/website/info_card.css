@@ -27,7 +27,8 @@
 	width: 70%;
 	margin-left: -35%;
 	box-shadow: 0 4px 60px rgba(0, 0, 0, 0.61);
-	top: 100px;
+	top: 50%;
+	margin-top: -40vh;
 }
 
 .info_card_placeholder{
