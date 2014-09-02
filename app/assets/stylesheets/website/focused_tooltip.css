@@ -191,7 +191,11 @@
 }
 
 .focused_tooltip .user_box_wrapper:hover{
-	background-color: rgba(0, 0, 0, 0.5);
+	background-image: -webkit-linear-gradient(top,rgba(255, 255, 255, 0),rgba(71, 135, 237, 0.79));
+    background-image: -moz-linear-gradient(top,rgba(255, 255, 255, 0),rgba(71, 135, 237, 0.79));
+    background-image: -ms-linear-gradient(top,rgba(255, 255, 255, 0),rgba(71, 135, 237, 0.79));
+    background-image: -o-linear-gradient(top,rgba(255, 255, 255, 0),rgba(71, 135, 237, 0.79));
+    background-image: linear-gradient(top,rgba(255, 255, 255, 0),rgba(71, 135, 237, 0.79));
 	color: white;
 }
 
