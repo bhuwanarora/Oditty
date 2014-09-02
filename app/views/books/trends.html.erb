@@ -13,7 +13,7 @@
 		<th>Active</th>
 		<th>Submit</th>
 	</tr>
-	<% @trends.sort_by!{|s| Time.at(s[1])}.reverse.each do |trend|%>
+	<% @trends.each do |trend|%>
 		<tr class="<% if trend[4].present? && trend[4] == 1 %>active<% end %>">
 			<td><%= trend[3].length %></td>
 			<td><a href="<%= trend[9] %>" target="_blank"><%= trend[0] %></a></td>

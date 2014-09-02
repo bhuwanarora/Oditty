@@ -9,7 +9,7 @@
 	<% @feedbacks.each do |feedback|%>
 		<tr>
 			<td><%= feedback[2] %></td>
-			<td><%= Time.at(feedback[4]).strftime("%d-%m-%y") %></td>
+			
 			<td><div class="highlighter"><%= feedback[3] %></div></td>
 			<td>
 				<select>
