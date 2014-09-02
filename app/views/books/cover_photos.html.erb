@@ -1,7 +1,6 @@
 <% @urls.each do |url| %>
 <span>
 	<img src="http://rd-images.readersdoor.netdna-cdn.com/cp/<%= url[1] %>.jpg" class="cover_photo <% if url[2].present? %>active_photo<% end %>" data-id="<%= url[1] %>"/>
-	<img src="<%= url[0] %>" />
 	<div><%= url[1] %></div>
 </span>
 
