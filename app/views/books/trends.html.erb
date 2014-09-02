@@ -27,7 +27,7 @@
 			</td>
 			<td><%= trend[12] %></td>
 			<td><img src="<%= trend[10] %>"></td>
-			<td><%= Time.at(trend[1]).strftime("%d-%m-%y") %></td>
+			<td><%= Time.at(trend[1].to_i).strftime("%d-%m-%y") %></td>
 			<td>
 				<input class="search_box" />
 			</td>
