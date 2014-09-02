@@ -151,6 +151,7 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 					$cookieStore.put("tab", $scope.panel_selected);
 					$scope.bookmark_selected = true;
 					$scope.read_selected = false;
+					delete $rootScope.user.books['read'];
 					// $scope.glowBookmark = false;
 					var skip_count = 0;
 					websiteService.get_books_bookmarked(skip_count).then(function(data){
@@ -195,6 +196,8 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 			$scope.toggle_read = function(){
 				if(!$scope.read_selected){
 					// _load_icon();
+					delete $rootScope.user.books['bookmarked'];
+
 					$scope.glowShelf = false;
 					$scope.bookmark_selected = false;
 					$scope.read_selected = true;		
