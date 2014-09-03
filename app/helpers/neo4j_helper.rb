@@ -514,7 +514,7 @@ module Neo4jHelper
 
 				main_clause = "MATCH (book:Book{indexed_title:\""+book_title+"\"})"
 				clause = " MERGE (shelfari_tag:Genre{indexed_genre_name:\""+lower_case+"\"}) CREATE UNIQUE (book)-[r:Belongs_to]->(shelfari_tag) SET r.weight="+weight.to_s+", shelfari_tag.name=\""+genre_name+"\""
-				puts "adding genres...".yellow
+				
 				main_clause = main_clause + clause
 				@neo.execute_query main_clause
 				book_tag.update_column("genre_flag", true)

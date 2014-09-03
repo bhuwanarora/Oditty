@@ -11,7 +11,7 @@
 		<div class="card_summary animate-fast">
 			<span ng-if="book.summary">{{book.summary | reduced_summary}}</span>
 			<span ng-if="!book.summary && book.title">
-				<b><span>{{book.title}}</span></b><br/>
+				<b><span>{{book.title | reduced_title}}</span></b><br/>
 				<span>Book by {{book.author_name}}</span>
 			</span>
 		</div>

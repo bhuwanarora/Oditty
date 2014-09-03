@@ -32,7 +32,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/base/book/book_widget.html',
-    "<div itemscope=\"\" itemtype=\"http://schema.org/Book\" ng-style=\"randomise_position\" class=\"animate-fast widget\"><div ng-model=\"book\" ng-click=\"show_focused_tooltip($event)\" class=\"card animate-slow\"><book-interact data=\"book\" track=\"\"></book-interact><widget-thumb track=\"\"></widget-thumb><div class=\"card_summary animate-fast\"><span ng-if=\"book.summary\">{{book.summary | reduced_summary}}</span> <span ng-if=\"!book.summary && book.title\"><b><span>{{book.title}}</span></b><br><span>Book by {{book.author_name}}</span></span></div></div></div><div class=\"base\" ng-click=\"show_book(3)\"></div>"
+    "<div itemscope=\"\" itemtype=\"http://schema.org/Book\" ng-style=\"randomise_position\" class=\"animate-fast widget\"><div ng-model=\"book\" ng-click=\"show_focused_tooltip($event)\" class=\"card animate-slow\"><book-interact data=\"book\" track=\"\"></book-interact><widget-thumb track=\"\"></widget-thumb><div class=\"card_summary animate-fast\"><span ng-if=\"book.summary\">{{book.summary | reduced_summary}}</span> <span ng-if=\"!book.summary && book.title\"><b><span>{{book.title | reduced_title}}</span></b><br><span>Book by {{book.author_name}}</span></span></div></div></div><div class=\"base\" ng-click=\"show_book(3)\"></div>"
   );
 
 

@@ -1,5 +1,5 @@
 .vertical_padder_active{
-	height: 95px;
+	height: 105px;
 	width: 100%;
 }
 
@@ -111,7 +111,6 @@
 	width: 98%;
 	height: 60px;
 	max-width: 89%;
-	max-height: 90px;
 	outline: none;
 	border: 1px solid #F1F1F1;
 	border-radius: 2px;
@@ -164,7 +163,7 @@
 .interaction_box .interact_book{
 	position: absolute;
 	top: 28px;
-	background-color: #f5F5F5;
+	background-color: white;
 	padding: 4px;
 	width: 200px;
 	border-radius: 2px;
@@ -337,7 +336,7 @@
 	-webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
    	box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
    	position: fixed;
-   	top: 50px;
+   	top: 55px;
    	border-radius: 1px;
    	padding-left: 10px;
 	padding-right: 10px;
@@ -357,7 +356,7 @@
 	display: table;
 	background-color: #fff;
 	right: 1px;
-	top: 95px;
+	top: 110px;
 	position: fixed;
 	max-width: 240px;
 	width: auto;
@@ -548,7 +547,6 @@
 }
 
 .interaction_box .second_input{
-	background-color: #F5F5F5;
 	height: 15px;
 	padding: 11px;
 	width: 94%;
@@ -586,7 +584,7 @@
 	position: absolute;
 	top: 8px;
 	left: 47px;
-	/*color: transparent;*/
+	color: transparent;
 	letter-spacing: 0.059em;
 	width: 100%;
 	white-space: initial;

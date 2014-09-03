@@ -1,20 +1,20 @@
 .recommendation_block{
 	display: inline-block;
-	height: 78vh;
-	margin-right: 5px;
+	height: 76vh;
+	margin-right: 15px;
 	position: relative;
-	width: 56vh;
-	padding-left: 5px;
-	padding-right: 5px;
+	width: 54vh;
+	/*background-image: url("/assets/book_back.png");*/
+	/*background-size: 100% 100%;*/
 }
 
 .widget{
-	bottom: 0px;
+	bottom: 0;
 	display: inline-block;
-	left: 6px;
+	left: 0px;
 	position: absolute;
-	right: 6px;
-	top: 0px;
+	right: 5px;
+	top: 7px;
 }
 
 .undiscovered{ 
@@ -35,11 +35,10 @@
 .card_summary{
 	color: black;
 	position: absolute;
-	top: 2px;
-	left: 6px;
-	right: 6px;
-	height: 30px;
-	padding: 8px;
+	top: 2vh;
+	left: 2vh;
+	right: 2vh;
+	height: 5vh;
 	white-space: initial;
 	background-color: #FAFAFA;
 	font-size: .9em;
@@ -74,10 +73,10 @@
 }
 
 .bottom_widget{
-	height: 40px;
+	height: 6vh;
 	bottom: 0px;
-	left: 6px;
-	right: 6px;
+	left: 2vh;
+	right: 2vh;
 	position: absolute;
 	background-color: white;
 }
@@ -110,7 +109,7 @@
 	position: absolute;
 	bottom: 0px;
 	padding: 0px;
-	font-size: 1em;
+	font-size: 0.8em;
 	top: 0px;
 	margin: 0px;
 	cursor: default;
@@ -139,7 +138,7 @@
 	position: absolute;
 	bottom: 0px;
 	top: 0px;
-	height: 40px;
+	height: 6vh;
 	display: table;
 }
 
@@ -165,7 +164,7 @@
 	z-index: 3;
 	list-style-type: none;
 	padding: 2px;
-	width: 55%;
+	width: 62%;
 	font-size: 0.8em;
 	border-top-right-radius: 3px;
 	border-left: 1px solid #F0F0F0;
@@ -192,25 +191,25 @@
 .card .widget_thumb{
 	background: rgba(113, 112, 112, 0.25);
 	background-size: 100% 100% !important;
-	position: absolute;
-	top: 50px;
-	left: 6px;
-	right: 6px;
-	bottom: 40px;
 	cursor: pointer;
 	z-index: 1;
 }
 
 .card .description{
-	position: absolute;
-	left: 6px;
-	right: 6px;
-	top: 50px;
-	bottom: 40px;
 	color: white;
-	font-size: 0.9em;
+	font-size: 0.7em;
 	text-align: center;
 	white-space: initial;
+}
+
+.card .widget_thumb,
+.card .description{
+	position: absolute;
+	top: 7vh;
+	left: 2vh;
+	right: 2vh;
+	bottom: 7vh;
+	border-radius: 3px;
 }
 
 .card .description p{

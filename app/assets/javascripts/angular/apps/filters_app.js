@@ -24,6 +24,16 @@ angular.module('filtersApp', [])
       return input;
     }
   })
+  .filter('reduced_title', function(){
+    return function(input){
+      if(angular.isDefined(input)){
+        if(input != null && input.length > 50){
+          input = input.slice(0, 47)+"...";
+        }
+      }
+      return input;
+    }
+  })
   .filter('reduced_summary', function(){
     return function(input){
       if(angular.isDefined(input)){
