@@ -465,6 +465,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		if($rootScope.user.logged){
 			$scope.grid_view = false;
 			$scope.$routeParams = $routeParams;
+			$rootScope.user.settings_popup = false;
 			// console.debug("%crouteparams "+$routeParams+" ", "color: yellow");
 			// $scope.$emit('reloadRecommendations');
 
