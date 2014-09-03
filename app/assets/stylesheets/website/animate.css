@@ -1,7 +1,7 @@
 .focused_tooltip.ng-enter,
 .focused_tooltip.ng-leave.ng-leave-active{
 	height: 60vh;
-	opacity: 0.5;
+	opacity: 0;
 	top: 130px;
 }
 
@@ -11,21 +11,18 @@
 	opacity: 1;
 	top: 95px;
 }
-/*
-.focused_tooltip.ng-enter,
-.focused_tooltip.ng-leave.ng-leave-active{
-	height: 60vh;
-	opacity: 0.5;
-	top: 130px;
+
+
+.ticker_popup.ng-enter,
+.ticker_popup.ng-leave.ng-leave-active{
+	opacity: 0;
 }
 
-.focused_tooltip.ng-leave,
-.focused_tooltip.ng-enter-active{
-	height: 77vh;
+.ticker_popup.ng-leave,
+.ticker_popup.ng-enter-active{
 	opacity: 1;
-	top: 95px;
 }
-*/
+
 .filters_added .option.ng-enter,
 .filters_added .option.ng-leave.ng-leave-active{
 	margin-bottom: -30px;

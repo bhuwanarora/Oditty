@@ -48,7 +48,7 @@ input{
 input:focus{
     /*border: 1px solid #717070;*/
     /*border: 1px solid #DBDBDB;*/
-    outline:none;
+    outline: 2px solid #427fed;
 }
 
 
@@ -143,6 +143,18 @@ input:focus{
     width: 0; 
     height: 0;
     z-index: 4;
+}
+
+.arrow_up{
+    border-bottom: 10px solid white;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    position: absolute;
+    top: -10px;
+    width: 0; 
+    height: 0;
+    right: 2px;
+    z-index: 10;   
 }
 
 .full_height{

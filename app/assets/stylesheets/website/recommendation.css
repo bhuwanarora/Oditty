@@ -4,7 +4,7 @@
 }
 
 .main_header{
-   	background-color: white;
+   	background-color: #FCFCFC;
    	height: 40px;
    	left: 0px;
 	position: fixed;
@@ -37,36 +37,33 @@
 	overflow-y: scroll;
 }
 
-.profile_thumb{
+.header_navbar{
 	float: right;
-	margin-right: 5px;
-	margin-left: 5px;
 	height: 35px;
-	margin-top: 2px;
-	border-radius: 2px;
+	margin-top: 3px;
 	padding-left: 15px;
 	padding-right: 15px;
 	display: table;
 	cursor: default;
 }
 
-.profile_thumb:hover{
+.header_navbar:hover{
 	background-color: #E2E2E2;
 }
 
-.profile_thumb img{
+.header_navbar img{
 	height: 30px;
 	margin-top: 2px;
 }
 
-.profile_thumb .user_details{
+.header_navbar .user_details{
 	display: inline-block;
 	padding-left: 5px;
 	position: relative;
 	color: #427fed;
 }
 
-.profile_thumb .user_details .count{
+.header_navbar .user_details .count{
 	position: absolute;
 	color: white;
 	left: 0px;
@@ -1480,16 +1477,16 @@ and (min-width : 1824px) {
    	position: fixed;
 	left: 170px;
 	top: 3px;
-	width: 50%;
+	width: 44%;
 	height: 37px;
 	z-index: 10;
 }
 
 .main_header .search_input_shifted{
     background-color: #fff;
-	border: 1px solid #D8D8D8;
+	border: 1px solid #F6F6F6;
 	position: fixed;
-	width: 48%;
+	width: 43%;
 	height: 28px;
 	top: 4px;
 	left: 170px;
@@ -1502,9 +1499,10 @@ and (min-width : 1824px) {
 
 .main_header .search_typeahead_group .search_icon{
 	z-index: 3;
-	padding: 8px 30px 8px;
+	padding: 7px 26px;
 	box-shadow: none;
 	right: -1px;
+	border-radius: 1px;
 }
 
 .main_header .compressed_filters{
@@ -1537,4 +1535,28 @@ and (min-width : 1824px) {
 .main_header .compressed_filters .compressed_filter_icon:hover [class^="icon-"]:before{
 	content: "\e694";
 	color: rgba(216, 57, 30, 0.5);
+}
+
+.settings_popup{
+	position: fixed;
+	background-color: white;
+	list-style: none;
+	right: 10px;
+	top: 27px;
+	text-align: center;
+	padding: 10px 0px;
+	z-index: 9;
+	border: 1px solid #ccc;
+	border-color: rgba(0,0,0,.2);
+	box-shadow: 0 2px 10px rgba(0,0,0,.2);
+}
+
+.settings_popup li{
+	padding: 5px;
+	width: 150px;
+	cursor: pointer;
+}
+
+.settings_popup li:hover{
+	background-color: #F1F1F1;
 }

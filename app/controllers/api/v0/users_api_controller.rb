@@ -165,6 +165,11 @@ module Api
 				render :json => {:logged_in => logged_in, :id => session[:user_id]}, :status => 200
 			end
 
+			def logout
+				session[:user_id] = nil
+				render :json => {:logged_out => true}, :status => 200
+			end
+
 			# def get_news_feed
 			# 	user_id = session[:user_id]
 			# 	debugger

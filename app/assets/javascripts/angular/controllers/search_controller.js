@@ -1046,6 +1046,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				$scope.show_secondary_input = false;
 				$rootScope.hide_options = false;
 				$rootScope.user.collapsed_column = true;
+				delete $rootScope.focused_book;
 				delete $scope.active_nest;
 				delete $scope.active_base;
 				delete $scope.search_tag.custom_input;
@@ -1215,7 +1216,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		_handle_search_page();
 
 		if(on_search_page){
-			$scope.set_focus(3000);
+			if($rootScope.user.logged){
+				$scope.set_focus(3000);
+			}
 			switch($cookieStore.get('base_search')){
 				case SearchUIConstants.BookSearchLink:
 					_init_book_search();

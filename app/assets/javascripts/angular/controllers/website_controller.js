@@ -14,14 +14,15 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		event.stopPropagation();
 	}
 
-	_hide_popups = function(){
+	$scope._hide_popups = function(){
 		$rootScope.user.collapsed_column = true;
+		$rootScope.user.settings_popup = false;
 		delete $rootScope.focused_book;
 		delete $rootScope.ticker_popup;
 	}
 
 	$scope.move_left = function(event){
-		_hide_popups();
+		$scope._hide_popups();
 		var swipe_time = 2000;
 		var clientWidth = document.body["scrollWidth"];
 		var current_x = $window.pageXOffset;
@@ -50,7 +51,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	$scope.move_right = function(event){
-		_hide_popups();
+		$scope._hide_popups();
 		var swipe_time = 2000;
 		var clientWidth = document.body["scrollWidth"];
 		var current_x = $window.pageXOffset;

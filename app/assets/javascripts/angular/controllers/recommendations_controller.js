@@ -1,4 +1,4 @@
-websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', 'scroller', 'websiteService', 'sharedService', '$cookieStore', 'RecommendationUIConstants', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService, scroller, websiteService, sharedService, $cookieStore, RecommendationUIConstants){
+websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', 'scroller', 'websiteService', 'sharedService', '$cookieStore', 'RecommendationUIConstants', '$location', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService, scroller, websiteService, sharedService, $cookieStore, RecommendationUIConstants, $location){
 
 	$scope.handle_height_of_popup = function(event, scroll_down){
 		var event_defined = angular.isDefined(event);
@@ -14,6 +14,20 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		if(event_defined){
 			event.stopPropagation();
 		}
+	}
+
+	$scope.show_settings_popup = function(event){
+		if(angular.isUndefined($rootScope.user.settings_popup)){
+			$rootScope.user.settings_popup = true;
+		}
+		else{
+			$rootScope.user.settings_popup = !$rootScope.user.settings_popup;
+		}
+		event.stopPropagation();
+	}
+
+	$scope.logout = function(){
+		sharedService.logout();
 	}
 
 	$scope.show_interaction_box = function(){
@@ -448,42 +462,51 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	_init = function(){
 		//oneMin = 60000
-		$scope.grid_view = false;
-		$scope.$routeParams = $routeParams;
-		// console.debug("%crouteparams "+$routeParams+" ", "color: yellow");
-		// $scope.$emit('reloadRecommendations');
+		if($rootScope.user.logged){
+			$scope.grid_view = false;
+			$scope.$routeParams = $routeParams;
+			// console.debug("%crouteparams "+$routeParams+" ", "color: yellow");
+			// $scope.$emit('reloadRecommendations');
 
-		var oneSec = 10000;
-		$scope.drop_icon = false;
-		// $rootScope.show_book = false;
-		$rootScope.user.interact = false;
+			var oneSec = 10000;
+			$scope.drop_icon = false;
+			// $rootScope.show_book = false;
+			$rootScope.user.interact = false;
 
-		user_behaviour_timer_event = $timeout(function(){
-			_recordUserBehaviour();
-		}, oneSec);
+			user_behaviour_timer_event = $timeout(function(){
+				_recordUserBehaviour();
+			}, oneSec);
 
-		$scope.searching = false;
-    	_get_labels();
-		_initialize_filters();
-		_init_recommendations();
-		// if($scope.$routeParams.title){
-		// 	_get_recommendations();
-		// }
-    	_add_listeners();
-        _init_analytics();
-        // _init_shelf();
-        var timeout_event = $timeout(function(){
-        	_get_recommendations();
-        }, 1000);
-        $scope.$on('destroy', function(){
-        	$timeout.cancel(timeout_event);
-        });
-        // _push_recommendations();
-        _bind_destroy();
-        _init_user();
-        // _handle_focused_book();
-        _get_friends();
-        $scope.$emit('getNotifications');
+			$scope.searching = false;
+	    	_get_labels();
+			_initialize_filters();
+			_init_recommendations();
+			// if($scope.$routeParams.title){
+			// 	_get_recommendations();
+			// }
+	    	_add_listeners();
+	        _init_analytics();
+	        // _init_shelf();
+	        var timeout_event = $timeout(function(){
+	        	_get_recommendations();
+	        }, 1000);
+	        $scope.$on('destroy', function(){
+	        	$timeout.cancel(timeout_event);
+	        });
+	        // _push_recommendations();
+	        _bind_destroy();
+	        _init_user();
+	        // _handle_focused_book();
+	        _get_friends();
+	        $scope.$emit('getNotifications');
+		}
+		else{
+			$rootScope.user = {'books': {'bookmarked':[], 'read': []},
+						'authors': {'bookmarked': [], 'follow': []},
+						'readers': {'follow': []},
+						'logged': false};
+        	$location.path("/search");
+		}
 	}
 
 	var push_books_timer_event = "";

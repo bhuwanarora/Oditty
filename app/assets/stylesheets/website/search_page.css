@@ -23,21 +23,21 @@
 	padding: 10px 0px;
 }
 
-.search_page .profile_thumb:hover{
+.search_page .header_navbar:hover{
 	background-color: transparent;
 	cursor: pointer;
 }
 
-.search_page .profile_thumb .user_details{
+.search_page .header_navbar .user_details{
 	color: white;
 	text-shadow: 0 2px 3px rgba(0,0,0,.5);
 }
 
-.search_page .profile_thumb .user_details:hover{
+.search_page .header_navbar .user_details:hover{
 	text-decoration: underline;
 }
 
-.search_page .profile_thumb img{
+.search_page .header_navbar img{
 	box-shadow: 0 2px 3px rgba(0,0,0,.5);
 	border-radius: 3px;
 }
@@ -120,7 +120,7 @@
 	height: 35px;
 	box-shadow: 0 2px 6px rgba(0,0,0,.3);
 	/*margin-bottom: 7px;*/
-	border-radius: 2px;
+	/*border-radius: 2px;*/
 	overflow-y: auto;
 }
 
@@ -376,7 +376,7 @@
 	border-radius: 2px;
 	width: 500px;
 	left: 50%;
-	top: 50%;
+	top: 40%;
 	margin-left: -285px;
 	margin-top: -170px;
 	text-align: center;

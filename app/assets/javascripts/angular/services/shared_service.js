@@ -1,4 +1,4 @@
-websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 'websiteService', 'stropheService', function ($timeout, $rootScope, widgetService, websiteService, stropheService) {
+websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 'websiteService', 'stropheService', '$location', function ($timeout, $rootScope, widgetService, websiteService, stropheService, $location) {
     this.is_logged_in = function($scope){
       websiteService.get_user().then(function(data){
         if(data["logged_in"]){
@@ -10,6 +10,16 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
             });
           stropheService.start_connection();
         }
+      });
+    }
+
+    this.logout = function(){
+      websiteService.logout().then(function(){
+        $rootScope.user = {'books': {'bookmarked':[], 'read': []},
+            'authors': {'bookmarked': [], 'follow': []},
+            'readers': {'follow': []},
+            'logged': false};
+        $location.path("/search");
       });
     }
 

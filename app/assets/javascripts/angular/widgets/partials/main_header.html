@@ -14,10 +14,16 @@
 		<span>o</span>
 		<span>r</span>
  	</a>
-	<div class="profile_thumb" ng-click="show_interaction_box()">
-		<span class="table_cell">Share</span>
+	<div class="header_navbar" ng-click="show_settings_popup($event)">
+		<span class="icon-cog table_cell"></span>
 	</div>
 	<profile-link></profile-link>
+ 	<div ng-controller="searchController">
+ 		<search-bar></search-bar>
+ 	</div>
+	<div class="header_navbar" ng-click="show_interaction_box()">
+		<span class="table_cell">Share</span>
+	</div>
  
 	<!-- <div class="menu_group" 
  		 ng-class="{'menu_group_active':show_menu}"
@@ -67,9 +73,7 @@
 		 	<span class="icon-angle-up" ng-if="show_menu"></span>
 		</div>
  	</div> -->
- 	<div ng-controller="searchController">
- 		<search-bar></search-bar>
- 	</div>
+ 	
 
 
  	<!-- <input placeholder="Search..."/> -->
