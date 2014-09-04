@@ -84,7 +84,7 @@ websiteApp.run(['$rootScope', '$location', '$cookieStore', function($rootScope, 
         // already going to #login, no redirect needed
       }else{
         // not going to #login, we should redirect now
-        $location.path( "/search" );
+        $location.path( "/search");
       }
     }
   });

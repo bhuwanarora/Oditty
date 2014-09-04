@@ -18,7 +18,7 @@ cropme input[type=file] {
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/standup75\/Code\/cropme\/styles\/cropme\.scss}line{font-family:\0000344}}
 cropme .cropme-button {
   font-weight: bold;
-  padding: 10px;
+  padding: 7px 10px;
   width: 160px;
   text-align: center;
   margin-top: 10px;

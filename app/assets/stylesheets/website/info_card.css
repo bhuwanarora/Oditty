@@ -96,11 +96,13 @@
 
 .info_cards .book_column{
 	overflow: auto;
-	width: 100%;
+	width: 48%;
 	margin-top: 10px;
 	border-bottom: 1px solid #E4E4E4;
 	cursor: pointer;
 	border-radius: 3px;
+	float: left;
+	margin-left: 1%;
 }
 
 .info_cards .selected{
@@ -108,12 +110,13 @@
 	color: white;
 }
 
-.info_cards .selected:hover{
-	color: rgba(66, 127, 237, 0.6) !important;
-}
 
 .info_cards .book_column:hover{
 	background-color: #ECECEC;
+}
+
+.info_cards .selected:hover{
+	background-color: rgba(66, 127, 237, 0.85);
 }
 
 .info_cards .wrap_header{
@@ -278,7 +281,7 @@
 }
 
 .invite_friends{
-	width: 300px;
-	padding: 10px 20px;
+	width: 95px;
+	padding: 7px 20px;
 	margin: 5px;
 }
