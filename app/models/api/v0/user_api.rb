@@ -84,7 +84,7 @@ module Api
 							new_string = self.get_string_from_array params[key]
 							set_clause = set_clause + connector + new_string
 						else
-							set_clause = set_clause + connector + " fu."+key+"=\""+params[key]+"\""
+							set_clause = set_clause + connector + " fu."+key+"=\""+params[key].to_s+"\""
 						end
 					end
 				end
@@ -220,7 +220,7 @@ module Api
 						string = string + connector + new_string
 					else
 						key = param.keys[0]
-						string = string + connector + " fu."+key+"= \""+param[key]+"\""
+						string = string + connector + " fu."+key+"= \""+param[key].to_s+"\""
 					end
 				end
 				string
