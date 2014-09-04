@@ -210,6 +210,29 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('/assets/angular/widgets/partials/invite.html',
+    "<div id=\"facebook_invite\"></div><a href=\"#\" onclick=\"FBInvite()\">Invite Facebook Friends</a><script src=\"http://connect.facebook.net/en_US/all.js\"></script><script>FB.init({\n" +
+    "  appId:'app_id',\n" +
+    "  cookie:true,\n" +
+    "  status:true,\n" +
+    "  xfbml:true\n" +
+    " });\n" +
+    "\n" +
+    " function FBInvite(){\n" +
+    "  FB.ui({\n" +
+    "   method: 'apprequests',\n" +
+    "   message: 'Invite your Facebook Friends'\n" +
+    "  },function(response) {\n" +
+    "   if (response) {\n" +
+    "    alert('Successfully Invited');\n" +
+    "   } else {\n" +
+    "    alert('Failed To Invite');\n" +
+    "   }\n" +
+    "  });\n" +
+    " }</script>"
+  );
+
+
   $templateCache.put('/assets/angular/widgets/partials/login_form.html',
     "<div class=\"wrapper\" ng-if=\"!user.logged && show_login_form\" ng-controller=\"loginController\"><div class=\"login_box animate-fast\" ng-if=\"!user.logged && show_login_form\"><div class=\"header\"><div class=\"logo\"><span>r</span> <span>e</span> <span>a</span> <span>d</span> <span>e</span> <span>r</span> <span>'</span> <span>s</span> <span>&nbsp;</span> <span>d</span> <span>o</span> <span>o</span> <span>r</span> <span class=\"beta_label\">BETA</span></div><div class=\"tagline\"><span>LIVE AND BUILD THE YEARS WITH BOOKS.</span> </div><hr><div>Login to explore your reading companion.</div></div><div class=\"fb\" ng-show=\"!user.logged\" ng-disabled=\"!facebookReady\" ng-click=\"intent_login()\">Sign in with Facebook</div><div class=\"google\"><google-plus-signin clientid=\"88213598927-9fij1u8tf2ldf4apf6qob4hgu0supj54.apps.googleusercontent.com\" ng-show=\"!user.logged\"></google-plus-signin></div><form class=\"login_form\"><input class=\"email\" type=\"email\" ng-keydown=\"submit($event)\" value=\"test@gmail.com\" ng-model=\"user.email\" placeholder=\"Email\" spellcheck=\"false\" required=\"\"><br><input class=\"password\" type=\"password\" ng-model=\"user.password\" placeholder=\"Password\" spellcheck=\"false\" ng-keydown=\"submit($event)\" required=\"\"><br><div class=\"authenticate authenticate_left blue_button\" ng-click=\"authenticate(true)\" type=\"button\"><span>LOG IN</span></div><div class=\"authenticate blue_button\" ng-click=\"authenticate(false)\" type=\"button\"><span>SIGN UP</span></div><div class=\"site_color link\"><span ng-click=\"recover_password()\">Forgot Password?</span></div></form><div class=\"login_status\"><span ng-if=\"error_message\">{{error_message}}</span> <img src=\"assets/loader2.gif\" width=\"20px\" ng-show=\"loading_icon\"></div></div></div>"
   );

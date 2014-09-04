@@ -1,9 +1,10 @@
-websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteService', 'Facebook', 'stropheService', '$timeout', '$cookieStore', 'LoginConstants', function($scope, $rootScope, websiteService, Facebook, stropheService, $timeout, $cookieStore, LoginConstants){
+websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteService', 'Facebook', 'stropheService', '$timeout', '$cookieStore', 'LoginConstants', 'WebsiteUIConstants', function($scope, $rootScope, websiteService, Facebook, stropheService, $timeout, $cookieStore, LoginConstants, WebsiteUIConstants){
 	$scope.submit = function(event){
-		var enter_pressed = event.keyCode == 13;
+		var enter_pressed = event.keyCode == WebsiteUIConstants;
 		if(enter_pressed){
 			$scope.authenticate(true);
 		}
+		event.stopPropagation();
 	}
 
 	$scope.recover_password = function(){
