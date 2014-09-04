@@ -98,6 +98,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 
 
 	    $scope.$on('Facebook:statusChange', function(ev, data){
+	    	console.log('Status: ', data);
 	        if (data.status == LoginConstants.FacebookLoginStatusCheck) {
 	        	$scope.$apply(function() {
 	          	});
@@ -110,22 +111,21 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 	     * Watch for Facebook to be ready.
 	     * There's also the event that could be used
 	    */
-	    $scope.$watch(
-	        function(){
-	          return Facebook.isReady();
-	        },
-	        function(newVal){
-	          if(newVal){
-	            $scope.facebookReady = true;
-	          }
-	        }
-	    );
+	    // var callback1 = function(){
+     //      	return Facebook.isReady();
+     //    }
+     //    var callback2 = function(newVal){
+     //      	if(newVal){
+     //        	$scope.facebookReady = true;
+     //      	}
+     //    }
+	    // $scope.$watch(callback1, callback2);
 	}
 
 
     $scope.intent_login = function() {
         Facebook.getLoginStatus(function(response){
-          	if (response.status == LoginConstants.FacebookLoginStatusCheck){
+          	if(response.status == LoginConstants.FacebookLoginStatusCheck){
             	$rootScope.logged = true;
             	$scope.me(); 
           	}

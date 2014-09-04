@@ -330,6 +330,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		console.timeEnd("websiteAppController");
 	}
 
+
 	_detect_browser = function(){
 		var nVer = navigator.appVersion;
 		var nAgt = navigator.userAgent;

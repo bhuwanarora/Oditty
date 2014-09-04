@@ -72,7 +72,7 @@ websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvid
   // $locationProvider.html5Mode(true);
 }]);
 
-websiteApp.constant('facebookAppId', 667868653261167);
+websiteApp.constant('facebookAppId', "667868653261167");
 // websiteApp.constant('facebookAppId', 742659549115410);
 
 websiteApp.run(['$rootScope', '$location', '$cookieStore', function($rootScope, $location, $cookieStore){
@@ -97,18 +97,10 @@ angular.element(document).ready(function() {
 });
 
 websiteApp.config(['FacebookProvider', 'facebookAppId',
-    function(FacebookProvider, facebookAppId){
-      // $motionProvider.setTreshold({
-      //   'rgb': 150,
-      //   'move': 1,
-      //   'bright': 300
-      // });
-      var myAppId = facebookAppId;
-      // var myAppId = '667868653261167'; #PRODUCTION
-     
-     // FacebookProvider.setAppId('myAppId');
-     FacebookProvider.init(myAppId);
-    }
+  function(FacebookProvider, facebookAppId){
+    var myAppId = facebookAppId;
+    FacebookProvider.init(myAppId);
+  }
 ]);
 
 function notify($rootScope, message, $timeout){

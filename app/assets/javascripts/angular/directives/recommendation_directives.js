@@ -690,6 +690,22 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 							  "selectedDay": $rootScope.user.selectedDay};
 				websiteService.save_user_info(params);
 			}
+
+			_facebook_invite = function(){
+				FB.init({
+					appId: 667868653261167,
+					cookie: true,
+					status: true,
+					xfbml: true
+				});
+
+			}
+			$scope.facebook_invite = function(){
+				FB.ui({
+					method: 'apprequests',
+					message: 'Your Message diaolog'
+				});
+			}
 			
 			_init = function(){
 				var search_input_timeout = "";
@@ -721,6 +737,8 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 					var params = {"blob": canvasEl};
 					websiteService.save_user_info(params);
 				});
+
+				_facebook_invite();
 			}
 
 			_init();
