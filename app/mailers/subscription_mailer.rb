@@ -25,7 +25,7 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
 
   def verify_email(invitation)
     mandrill_mail template: invitation[:template],
-                  subject: 'Reader\'s Door: Verify Email',
+                  subject: 'Verify Email: Reader\'s Door',
                   to: { email: invitation[:email] },
                   vars: {
                     'LINK' => invitation[:link]
@@ -36,7 +36,7 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
 
   def recover_password invitation
     mandrill_mail template: invitation[:template],
-                  subject: 'Reader\'s Door: Recover Password',
+                  subject: 'Recover Password: Reader\'s Door',
                   to: { email: invitation[:email] },
                   vars: {
                     'LINK' => invitation[:link]

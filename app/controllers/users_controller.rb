@@ -181,7 +181,7 @@ class UsersController < ApplicationController
     user = @neo.execute_query clause
     if user["data"].present?
       @user_exists = true 
-      @user_id = user["data"]
+      @user_id = user["data"][0][0]
     else
       @user_exists = false
       @message = Constants::InvalidLink
@@ -192,7 +192,7 @@ class UsersController < ApplicationController
   def save_password
     begin
       @neo = Neography::Rest.new
-      clause = "MATCH (user:User) WHERE ID(user)=\""+params[:id]+"\" AND user.password=\""+params[:p]+"\"  RETURN user"
+      clause = "MATCH (user:User) WHERE ID(user)="+params[:id].to_s+" SET user.password=\""+params[:p]+"\"  RETURN user"
       puts clause.blue.on_red
       user = @neo.execute_query clause
       render :json => {:message => Constants::PasswordChangedSuccess}, :status => 200
