@@ -73,7 +73,7 @@ websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvid
 }]);
 
 websiteApp.constant('facebookAppId', "667868653261167");
-// websiteApp.constant('facebookAppId', 742659549115410);
+// websiteApp.constant('facebookAppId', "742659549115410");
 
 websiteApp.run(['$rootScope', '$location', '$cookieStore', function($rootScope, $location, $cookieStore){
   $rootScope.$on("$routeChangeStart", function(event, next, current){

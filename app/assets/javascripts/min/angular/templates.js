@@ -211,7 +211,10 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/partials/invite.html',
-    "<div id=\"fb-root\"></div><a href=\"#\" onclick=\"facebook_invite()\">Facebook Invite Friends Link</a>"
+    "<script src=\"http://connect.facebook.net/en_US/all.js\"></script><div id=\"fb-root\"></div><a href=\"#\" onclick=\"facebook_invite()\">Facebook Invite Friends Link</a><script type=\"text/javascript\">if (top.location!= self.location)\n" +
+    "{\n" +
+    "top.location = self.location\n" +
+    "}</script>"
   );
 
 

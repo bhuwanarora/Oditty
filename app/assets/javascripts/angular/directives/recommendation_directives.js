@@ -693,7 +693,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 
 			_facebook_invite = function(){
 				FB.init({
-					appId: 667868653261167,
+					appId: "667868653261167",
 					cookie: true,
 					status: true,
 					xfbml: true
