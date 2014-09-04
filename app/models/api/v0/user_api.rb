@@ -69,7 +69,25 @@ module Api
 
 			def self.handle_facebook_user params
 				@neo = Neography::Rest.new	
-				set_clause = self.get_string_from_array params
+				set_clause = ""
+				if params.class == Array
+					new_string = self.get_string_from_array params
+					set_clause = set_clause + new_string
+				else
+					for key in params.keys
+						if set_clause.present?
+							connector = ","
+						else
+							connector = ""
+						end
+						if params[key].class == Array
+							new_string = self.get_string_from_array params[key]
+							set_clause = set_clause + connector + new_string
+						else
+							set_clause = set_clause + connector + " fu."+key+"=\""+params[key]+"\""
+						end
+					end
+				end
 				set_clause = " SET " + set_clause
 				
 				return_clause = " RETURN ID(user)"
