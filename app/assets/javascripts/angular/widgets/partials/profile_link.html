@@ -7,7 +7,7 @@
 			<span ng-if="is_additive">+</span><span ng-if="!is_additive">-</span>{{count}}
 		</div>
 		<span class="table_cell">
-			<span><b>{{user.name}}</b></span>
+			<span><b>{{user.name | first_name}}</b></span>
 			<span> · </span>
 			<span>{{user.total_count | integer}}</span><span> · </span>
 			<span ng-class="{'green_color': $routeParams.type}">{{user.book_read_count | integer}}</span>

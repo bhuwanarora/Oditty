@@ -1,4 +1,4 @@
-angular.module('filtersApp', [])
+reduced_titleangular.module('filtersApp', [])
   .filter('integer', function() {
     return function(input) {
     	var output = input;
@@ -24,11 +24,19 @@ angular.module('filtersApp', [])
       return input;
     }
   })
+  .filter('first_name', function(){
+    return function(input){
+      if(angular.isDefined(input)){
+        input = input.split(" ")[0]
+      }
+      return input;
+    }
+  })
   .filter('reduced_title', function(){
     return function(input){
       if(angular.isDefined(input)){
-        if(input != null && input.length > 50){
-          input = input.slice(0, 47)+"...";
+        if(input != null && input.length > 45){
+          input = input.slice(0, 42)+"...";
         }
       }
       return input;
