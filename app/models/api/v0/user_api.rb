@@ -69,23 +69,19 @@ module Api
 
 			def self.handle_facebook_user params
 				@neo = Neography::Rest.new	
+				puts params.to_s.red
 				set_clause = ""
-				if params.class == Array
-					new_string = self.get_string_from_array params
-					set_clause = set_clause + new_string
-				else
-					for key in params.keys
-						if set_clause.present?
-							connector = ","
-						else
-							connector = ""
-						end
-						if params[key].class == Array
-							new_string = self.get_string_from_array params[key]
-							set_clause = set_clause + connector + new_string
-						else
-							set_clause = set_clause + connector + " fu."+key+"=\""+params[key].to_s+"\""
-						end
+				for key in params.keys
+					if set_clause.present?
+						connector = ","
+					else
+						connector = ""
+					end
+					if params[key].class == Array
+						new_string = self.get_string_from_array(key, params[key])
+						set_clause = set_clause + connector + new_string
+					else
+						set_clause = set_clause + connector + " fu."+key+"=\""+params[key].to_s+"\""
 					end
 				end
 				set_clause = " SET " + set_clause
@@ -206,22 +202,19 @@ module Api
 			end
 
 			private
-			def self.get_string_from_array array
+			def self.get_string_from_array(key, array)
 				string = ""
-				for param in array
-					if string.present?
-						connector = ","
-					else
-						connector = ""
-					end
+				label = key.camelcase
 
-					if param.class == Array
-						new_string = self.get_string_from_array param
-						string = string + connector + new_string
-					else
-						key = param.keys[0]
-						string = string + connector + " fu."+key+"= \""+param[key].to_s+"\""
-					end
+				for param in array
+					# if param.class == Array
+					# 	new_string = self.get_string_from_array(key, param)
+					# 	string = string + new_string
+					# else
+					# 	# string = string + connector + " fu."+new_key+"= \""+param[new_key].to_s+"\""
+					# end
+					new_key = param.keys[0]
+					string = " CREATE UNIQUE (u)-[:"+label+"]->(:"+label+"{"+new_key+": \""+param[new_key].to_s+"\"}) "
 				end
 				string
 			end
