@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  
 
   # GET /users
   # GET /users.json
@@ -170,6 +171,33 @@ class UsersController < ApplicationController
       @message = Constants::EmailConfirmed
     else
       @message = Constants::EmailConfirmationFailed
+    end
+  end
+
+  def recover_password
+    @neo = Neography::Rest.new
+    clause = "MATCH (user:User) WHERE user.email=\""+params[:e]+"\" AND user.password_token=\""+params[:p]+"\"  RETURN ID(user)"
+    puts clause.blue.on_red
+    user = @neo.execute_query clause
+    if user["data"].present?
+      @user_exists = true 
+      @user_id = user["data"]
+    else
+      @user_exists = false
+      @message = Constants::InvalidLink
+    end
+    render :layout => "clean"
+  end
+
+  def save_password
+    begin
+      @neo = Neography::Rest.new
+      clause = "MATCH (user:User) WHERE ID(user)=\""+params[:id]+"\" AND user.password=\""+params[:p]+"\"  RETURN user"
+      puts clause.blue.on_red
+      user = @neo.execute_query clause
+      render :json => {:message => Constants::PasswordChangedSuccess}, :status => 200
+    rescue Exception => e
+      render :json => {:message => Constants::PasswordChangedFailure}, :status => 500
     end
   end
 

@@ -7,6 +7,7 @@ module Constants
 	ThumbSuggest				= 10
 	RecommendationPoints		= 10
 
+	InvalidLink					= "Invalid Link"
 	LoginSuccess				= "Logged in successfully."
 	AuthenticationFailed		= "Email and password doesn't match."
 	VerifyEmail					= "Please verify your email address."
@@ -17,6 +18,9 @@ module Constants
 	EmailConfirmed				= "Email Verified. We have recieved your request and will soon be able give access. Please bear with us."
 	EmailConfirmationFailed		= "Email Confirmation Failed."
 	PendingActivation			= "We will soon give access to your account. Please bear with us."
+	PasswordRecoveryInitiated	= "A link to recover your password has been sent to the given email id."
+	PasswordChangedSuccess	 	= "Password saved. Redirecting to home page."
+	PasswordChangedFailure		= "Error while saving the new password. Please try again."
 
 	BestTinyRead				= 395910 #"thelosthero"
 	BestSmallRead				= 390071 #"thelittleprince"
@@ -45,9 +49,16 @@ module Constants
 	PostModernLiterature 		= "postmodern"
 	TwentiethCenturyLiterature	= "20thcenturygenre"
 
+
+
 	Time 						= "TIME"
 	Year 						= "YEAR"
 	Country 					= "COUNTRY"
 	Author 						= "AUTHOR"
 	Genre 						= "GENRE"
+
+	module EmailTemplate
+		PasswordReset			= "PasswordReset"
+		EmailVerification		= "email_verification"
+	end
 end

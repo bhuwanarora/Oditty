@@ -46,6 +46,8 @@ ReadersDoor::Application.routes.draw do
       match "trends"                                 => 'website_api#trends',                           :via => [:put, :get, :post]
       match "save_feedback"                          => 'website_api#save_feedback',                    :via => [:put, :get, :post]
 
+      
+      match "recover_password"                        => 'users_api#recover_password',                  :via => [:put, :get, :post]
       match "logout"                                  => 'users_api#logout',                            :via => [:put, :get, :post]
       match 'save_info'                               => 'users_api#save_info',                         :via => [:put, :get, :post]
       match 'mar'                                     => 'users_api#mark_as_read',                      :via => [:put, :get, :post]

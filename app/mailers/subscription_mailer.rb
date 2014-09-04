@@ -25,7 +25,18 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
 
   def verify_email(invitation)
     mandrill_mail template: invitation[:template],
-                  subject: 'Welcome To Reader\'s Door',
+                  subject: 'Reader\'s Door: Verify Email',
+                  to: { email: invitation[:email] },
+                  vars: {
+                    'LINK' => invitation[:link]
+                  },
+                  important: true,
+                  inline_css: true
+  end
+
+  def recover_password invitation
+    mandrill_mail template: invitation[:template],
+                  subject: 'Reader\'s Door: Recover Password',
                   to: { email: invitation[:email] },
                   vars: {
                     'LINK' => invitation[:link]

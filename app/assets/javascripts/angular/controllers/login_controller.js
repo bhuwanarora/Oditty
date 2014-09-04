@@ -6,17 +6,40 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		}
 	}
 
+	$scope.recover_password = function(){
+		delete $scope.error_message;
+		var success_callback = function(data){
+			$scope.loading_icon = false;
+			$scope.error_message = data.message;
+			$rootScope.user.password = null;
+		}
+
+		var error_callback = function(data){
+			$scope.loading_icon = false;
+			$scope.error_message = data.message;
+			$rootScope.user.password = null;
+		}
+		if(!$rootScope.user.email){
+			$scope.error_message = LoginConstants.EmailNotPresent;
+		}
+		else{
+			$scope.loading_icon = true;
+			websiteService.recover_password("email="+$rootScope.user.email).then(success_callback, error_callback);
+		}
+	}
+
 	$scope.authenticate = function(old_user){
 		var email = $rootScope.user.email;
 		var password = $rootScope.user.password;		
 		var min_length_pattern = new RegExp("^.{8,}$");
 		var not_repeat_pattern = new RegExp("^(.)\\1{7,16}$");
 		var max_length_pattern = new RegExp("^.{100,}$");
-		$scope.error_message = "";
+		delete $scope.error_message;
 		// var email = "bhuwanarora67@gmail.com";
 		// var password = "test";
 		var data_json = {"email": email, "password": password, "old_user": old_user};
 		$scope.loading_icon = false;
+		
 		var success_callback = function(data){
 			$scope.error_message = data.message;
 			$rootScope.user.profile_status = data.profile_status;
@@ -37,6 +60,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 			$scope.error_message = reason.data.message;
 			$rootScope.user.password = null;
 		}
+
 		if(!$rootScope.user.email){
 			$scope.error_message = LoginConstants.EmailNotPresent;
 		}
@@ -55,7 +79,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		else{
 			$scope.loading_icon = true;
 			websiteService.authenticate(data_json).then(success_callback, error_callback);
-			stropheService.start_connection();
+			// stropheService.start_connection();
 		}
 	}
 
@@ -147,12 +171,11 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
   			if(data["logged_in"]){
   				$rootScope.user.logged = true;
   				$rootScope.user.id = data["id"];
-  				// $scope.$emit('getNotifications');
   				websiteService.get_user_details().then(function(data){
 	  		  		angular.extend($rootScope.user, data);
 	  	   		});
 	  	   		$cookieStore.put('logged', true);
-  				stropheService.start_connection();
+  				// stropheService.start_connection();
   			}
   		});
   	}

@@ -170,6 +170,11 @@ module Api
 				render :json => {:logged_out => true}, :status => 200
 			end
 
+			def recover_password
+				email_sent = UserApi.recover_password(params[:email])
+				render :json => {:message => Constants::PasswordRecoveryInitiated}, :status => 200
+			end
+
 			# def get_news_feed
 			# 	user_id = session[:user_id]
 			# 	debugger

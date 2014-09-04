@@ -1,5 +1,9 @@
 websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
 	
+    this.recover_password = function(data){
+        return _deferred_request('/api/v0/recover_password?'+data);
+    }
+
     this.get_user = function(){
         return _deferred_request('/api/v0/user');
     }

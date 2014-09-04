@@ -3,6 +3,24 @@ module Api
 	module V0
 		class UserApi
 
+			def self.recover_password email
+				@neo = Neography::Rest.new
+				clause = "MATCH (user:User{email:\""+email+"\"}) RETURN user, ID(user) as id"
+				puts clause.blue.on_red
+				user_id = @neo.execute_query clause
+				user_exists = user_id["data"].present?
+				if user_exists
+					verification_token = SecureRandom.hex
+					link = Rails.application.config.home+'recover_password?p='+verification_token.to_s+"&e="+email
+					invitation = {:email => email, :template => Constants::EmailTemplate::PasswordReset, :link => link}
+					SubscriptionMailer.recover_password(invitation).deliver
+					clause =  "MATCH (user:User{email:\""+email+"\"}) SET user.password_token = \""+verification_token+"\""
+					puts clause.blue.on_red
+					@neo.execute_query clause
+				end
+				user_exists
+			end
+
 			def self.recommend_book(user_id, friend_ids, book_id)
 				for friend_id in friend_ids
 					UsersGraphHelper.recommend_book(user_id, friend_id, book_id)
@@ -113,7 +131,7 @@ module Api
 				else
 					verification_token = SecureRandom.hex
 					link = Rails.application.config.home+'verify?p='+verification_token.to_s+"&e="+email
-					invitation = {:email => email, :template => 'email_verification', :link => link}
+					invitation = {:email => email, :template => Constants::EmailTemplate::EmailVerification, :link => link}
 					if user.present?
 						if user[0][0]["data"]["verified"]
 							message = Constants::EmailAlreadyRegistered
@@ -126,7 +144,7 @@ module Api
 					else
 						#FIXME: create new user in the graph
 						UsersGraphHelper.create_user(email, params[:password], verification_token)
-						SubscriptionMailer.invite(invitation).deliver
+						SubscriptionMailer.verify_email(invitation).deliver
 						message = Constants::ActivateAccount
 					end
 				end

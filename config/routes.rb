@@ -85,6 +85,8 @@ ReadersDoor::Application.routes.draw do
   get "cover_photos"                    => "books#cover_photos",                :as => "cover_photos"
   get "set_active_cover_photo"          => "books#set_active_cover_photo",      :as => "set_active_cover_photo"
   
+  get "recover_password"                => "users#recover_password",            :as => "recover_password"
+  get "save_password"                   => "users#save_password",               :as => "save_password"
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
