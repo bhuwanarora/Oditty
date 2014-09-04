@@ -112,13 +112,14 @@ a{
 	cursor: pointer;
 }
 
-ul{
+.user_grid{
 	list-style: none;
 	padding: 10px;
 	background-color: #F5F5F5;
-	width: 300px;
+	width: 47%;
 	display: block;
 	float: left;
 	overflow-x: scroll;
 	margin: 3px;
+	height: 300px;
 }

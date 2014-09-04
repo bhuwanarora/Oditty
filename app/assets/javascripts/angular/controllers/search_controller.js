@@ -472,6 +472,8 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	  			$rootScope.filters = {"other_filters": {}};
 	  		}
 		}
+
+
 		$scope._set_active_type(item.type);
 		switch(item.type){
 			case SearchUIConstants.Genre:
@@ -605,6 +607,11 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			});
 			$scope.filters_added = [];
 		}
+		if(angular.isDefined($rootScope.filters) && angular.isDefined($rootScope.filters.other_filters)){
+			delete $rootScope.filters.other_filters.title;
+			delete $rootScope.filters.other_filters.id;
+			delete $rootScope.filters.other_filters.show_all;
+		}
 	}
 
 	$scope.set_base_search = function(){
@@ -627,6 +634,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope.reset_filters();
 		$scope.search_tag.input = "";
 		delete $scope.search_display;
+
 		if(angular.isUndefined(item)){
 			$scope.set_base_search();
 		}
@@ -654,9 +662,11 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		var temout_event = $timeout(function(){
 			$scope.website.searching = false;
 		}, 200);
+
 		$scope.$on('destroy', function(){
 			$timeout.cancel(timeout_event);
 		});
+
 		delete $scope.active_nest;
 		delete $scope.search_tag.custom_input;
 	}
@@ -1135,6 +1145,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		if(angular.isDefined($cookieStore.get(SearchUIConstants.Genre))){
 			var item = $cookieStore.get(SearchUIConstants.Genre);
 			if(!on_search_page){
+				if(angular.isUndefined($rootScope.filters)){
+					$rootScope.filters = {"other_filters": {}};
+				}
 				$rootScope.filters.other_filters[SearchUIConstants.Genre] = item.id;
 			}
 			$scope._set_active_type(item.type);
@@ -1143,6 +1156,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		if(angular.isDefined($cookieStore.get(SearchUIConstants.AuthorSearch))){
 			var item = $cookieStore.get(SearchUIConstants.AuthorSearch);
 			if(!on_search_page){
+				if(angular.isUndefined($rootScope.filters)){
+					$rootScope.filters = {"other_filters": {}};
+				}
 				$rootScope.filters.other_filters[SearchUIConstants.AuthorSearch] = item.id;
 			}
 			$scope._set_active_type(item.type);
@@ -1151,6 +1167,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		if(angular.isDefined($cookieStore.get(SearchUIConstants.Time))){
 			var item = $cookieStore.get(SearchUIConstants.Time);
 			if(!on_search_page){
+				if(angular.isUndefined($rootScope.filters)){
+					$rootScope.filters = {"other_filters": {}};
+				}
 				$rootScope.filters.other_filters[SearchUIConstants.Time] = item.tag;
 			}
 			$scope._set_active_type(item.type);
@@ -1159,6 +1178,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		if(angular.isDefined($cookieStore.get(SearchUIConstants.Year))){
 			var item = $cookieStore.get(SearchUIConstants.Year);
 			if(!on_search_page){
+				if(angular.isUndefined($rootScope.filters)){
+					$rootScope.filters = {"other_filters": {}};
+				}
 				$rootScope.filters.other_filters[SearchUIConstants.Year] = item.name;
 			}
 			$scope._set_active_type(item.type);
@@ -1167,6 +1189,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		if(angular.isDefined($cookieStore.get(SearchUIConstants.Country))){
 			var item = $cookieStore.get(SearchUIConstants.Country);
 			if(!on_search_page){
+				if(angular.isUndefined($rootScope.filters)){
+					$rootScope.filters = {"other_filters": {}};
+				}
 				$rootScope.filters.other_filters[SearchUIConstants.Country] = item.name;
 			}
 			$scope._set_active_type(item.type);

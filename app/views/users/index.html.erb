@@ -2,26 +2,26 @@
 <div style="overflow: auto;">
   <% @users.each_with_index do |user, index| %>
     <span>
-      <ul>
+      <ul class="user_grid">
         <table>
           <tr><td><b>#<%= user[3] %></b></td></tr>
-          <tr><td><b>Name</b></td><td><%= user[0]["data"]["name"] %></td></tr>
-          <tr><td><b>Email</b></td><td><%= user[0]["data"]["email"] %></td></tr>
-          <tr><td><b>#total</b></td><td><%= user[0]["data"]["total_count"] %></td></tr>
-          <tr><td><b>Birthday</b></td><td><%= user[0]["data"]["selectedDay"] %>-<%= user[0]["data"]["selectedMonth"] %>-<%= user[0]["data"]["selectedYear"] %></td></tr>
-          <tr><td><b>Profile</b></td><td><%= user[0]["data"]["profile"] %></td></tr>
-          <tr><td><b>Position</b></td><td><%= user[0]["data"]["latitude"] %>-<%= user[0]["data"]["longitude"] %></td></tr>
-          <tr><td><b>#init_books_read</b></td><td><%= user[0]["data"]["init_book_read_count"] %></td></tr>
-          <tr><td><b>#books_read</b></td><td><%= user[0]["data"]["book_read_count"] %></td></tr>
-          <tr><td><b>Genre</b></td><td><%= user[0]["data"]["gender"] %></td></tr>
-          <tr><td><b>Verified</b></td><td><%= user[0]["data"]["verified"] %></td></tr>
-          <tr><td><b>#rating</b></td><td><%= user[0]["data"]["rating_count"] %></td></tr>
-          <tr><td><b>#bookmark</b></td><td><%= user[0]["data"]["bookmark_count"] %></td></tr>
+          <% user[0]["data"].keys.each do |key| %>
+            <tr><td><b><%= key %></b></td><td><%= user[0]["data"][key] %></td></tr>
+          <% end %>
           <form action="<%= users_path %>">
             <input type="hidden"  value="<%= user[3] %>" name="id" />
             <tr><td><b>Active</b></td><td><input type="checkbox" name="active" <% if user[0]["data"]["active"] %>checked<% end %>/></td></tr>
+            <tr><td><hr/></td></tr>
             <tr><td><button type="submit">Sumbit</button></td></tr>
           </form>
+          <% if user[1] %>
+            <tr><td><hr/></td></tr>
+            <tr><td><b>Facebook</b></td></tr>
+            <% user[1]["data"].keys.each do |key| %>
+              <tr><td><b><%= key %></b></td><td><%= user[1]["data"][key] %></td></tr>
+            <% end %>
+          <% end %>
+          
         </table>
       </ul>
     </span>

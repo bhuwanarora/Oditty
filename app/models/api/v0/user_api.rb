@@ -69,9 +69,16 @@ module Api
 
 			def self.handle_facebook_user params
 				@neo = Neography::Rest.new	
-				set_clause = " SET fu.first_name = \""+params[:first_name].to_s+"\", fu.last_name = \""+params[:last_name].to_s+"\", fu.link = \""+params[:link].to_s+"\", fu.locale = \""+params[:locale].to_s+"\", fu.name = \""+params[:name].to_s+"\", fu.timezone = \""+params[:timezone].to_s+"\", fu.updated_time = \""+params[:updated_time].to_s+"\", fu.verified = "+params[:verified].to_s+", fu.profile_status = "+params[:profile_status].to_s+", fu.thumb = \""+params[:thumb].to_s+"\", fu.logged = "+params[:logged].to_s
+				for key in params.keys
+					if set_clause.present?
+						set_clause = set_clause + ", fu."+key.to_s+" = "+params[key].to_s+" "
+					else
+						set_clause = " SET fu."+key.to_s+" = "+params[key].to_s+" "
+					end
+				end
 				return_clause = " RETURN ID(user)"
 				if params[:email]
+					puts "email exits".green
 					clause = "MATCH (user:User{email:\""+email+"\"}) RETURN ID(user)"
 					puts clause.blue.on_red
 					user_id = @neo.execute_query clause
@@ -83,6 +90,7 @@ module Api
 
 					end
 				else
+					puts "email does not exits".green
 					clause = "MATCH (user:User{fb_id:"+params[:id]+"}) RETURN ID(user)"
 					puts clause.blue.on_red
 					user_id = @neo.execute_query clause
