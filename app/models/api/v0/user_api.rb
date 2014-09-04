@@ -72,14 +72,17 @@ module Api
 				params = params[:users_api]
 				puts params.to_s.red
 				set_clause = ""
+				property_clause = ""
 				for key in params.keys
 					if params[key].class == Array
 						new_string = self.get_string_from_array(key, params[key])
-						set_clause = set_clause + new_string
+						property_clause = property_clause + new_string
 					else
 						set_clause = set_clause + " SET fu."+key+"=\""+params[key].to_s+"\""
 					end
 				end
+
+				set_clause = set_clause + property_clause
 				
 				return_clause = " RETURN ID(user)"
 				if params[:email]
@@ -209,7 +212,16 @@ module Api
 					# 	# string = string + connector + " fu."+new_key+"= \""+param[new_key].to_s+"\""
 					# end
 					new_key = param.keys[0]
-					string = " CREATE UNIQUE (u)-[:"+label+"]->(:"+label+"{"+new_key+": \""+param[new_key].to_s+"\"}) "
+					object_string = ""
+					for object_key in param.keys
+						if object_string.present?
+							connector = ","
+						else
+							connector = ""
+						end
+						object_string = object_string + connector + new_key+": \""+param[new_key].to_s+"\""
+					end
+					string = string + " CREATE UNIQUE (user)-[:"+label+"]->(:"+label.singularize+"{"+object_string+"}) "
 				end
 				string
 			end
