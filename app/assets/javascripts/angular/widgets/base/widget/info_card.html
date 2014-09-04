@@ -146,11 +146,11 @@
 								 class="book_thumb"/>
 							<div class="book_details">
 								<div>
-									<span>{{book.title}}</span>
-									<span ng-show="book.author_name">by {{book.author_name}}</span>
+									<span class="site_color"><b>{{book.title}}</b></span><br/>
+									<span ng-show="book.author_name" class="site_color">Book by {{book.author_name}}</span>
 								</div>
 								<div>&nbsp;</div>
-								<div ng-show="book.id">
+								<div ng-show="book.id" class="light_grey_color">
 									<div ng-show="book.status">Added</div>
 									<div ng-show="!book.status">
 										<span>Add to</span>
@@ -220,8 +220,8 @@
 			<div ng-switch-when="8">
 			</div>
 			<div class="footer">
-				<span class="prev icon-angle-left" ng-click="prev_profile_state()"></span>
-				<span class="next icon-angle-right" ng-click="next_profile_state()"></span>
+				<span class="prev icon-angle-left grey_button" ng-click="prev_profile_state()"></span>
+				<span class="next icon-angle-right grey_button" ng-click="next_profile_state()"></span>
 			</div>
 	     </div>
      	

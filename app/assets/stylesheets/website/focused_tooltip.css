@@ -37,13 +37,6 @@
 	max-height: 32vh;
 }
 
-.focused_tooltip .book_thumb{
-	display: inline-block;
-	float: left;
-	height: 50px;
-	padding: 2px;
-}
-
 .focused_tooltip .rating_star .rating_text{
 	color: black;
 	font-size: 0.7em;
@@ -191,12 +184,13 @@
 }
 
 .focused_tooltip .user_box_wrapper:hover{
-	background-image: -webkit-linear-gradient(top,rgba(255, 255, 255, 0),rgba(71, 135, 237, 0.79));
+	/*background-image: -webkit-linear-gradient(top,rgba(255, 255, 255, 0),rgba(71, 135, 237, 0.79));
     background-image: -moz-linear-gradient(top,rgba(255, 255, 255, 0),rgba(71, 135, 237, 0.79));
     background-image: -ms-linear-gradient(top,rgba(255, 255, 255, 0),rgba(71, 135, 237, 0.79));
     background-image: -o-linear-gradient(top,rgba(255, 255, 255, 0),rgba(71, 135, 237, 0.79));
-    background-image: linear-gradient(top,rgba(255, 255, 255, 0),rgba(71, 135, 237, 0.79));
-	color: white;
+    background-image: linear-gradient(top,rgba(255, 255, 255, 0),rgba(71, 135, 237, 0.79));*/
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #717070;
 }
 
 .focused_tooltip .user_box .book_thumb{
@@ -204,6 +198,7 @@
 	float: left;
 	width: 40px;
 	border-radius: 2px;
+	margin-right: 2px;
 }
 
 .focused_tooltip .tabs{

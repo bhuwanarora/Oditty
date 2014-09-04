@@ -98,7 +98,6 @@
 	overflow: auto;
 	width: 48%;
 	margin-top: 10px;
-	border-bottom: 1px solid #E4E4E4;
 	cursor: pointer;
 	border-radius: 3px;
 	float: left;
@@ -106,17 +105,11 @@
 }
 
 .info_cards .selected{
-	background-color: #427fed;
-	color: white;
+	background-color: #E4E4E4;
 }
-
 
 .info_cards .book_column:hover{
 	background-color: #ECECEC;
-}
-
-.info_cards .selected:hover{
-	background-color: rgba(66, 127, 237, 0.85);
 }
 
 .info_cards .wrap_header{
@@ -139,10 +132,8 @@
 	font-size: 1em;
 	padding: 4px;
 	overflow: auto;
-	background-color: #F5F5F5;
 	border-radius: 5px;
 	margin-top: 10px;
-	border: 1px solid #EBEBEB;
 	max-height: 45vh;
 	min-width: 35vh;
 	width: 100%;

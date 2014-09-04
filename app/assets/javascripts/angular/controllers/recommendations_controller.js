@@ -406,7 +406,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         	_update_recommendations(data);
 	    });
 	    var not_specific_book_page = angular.isUndefined($rootScope.filters.other_filters["title"]) && angular.isUndefined($rootScope.filters.other_filters["id"]);
-	    var enough_books_on_page = $scope.recommendations.books.length > 4;
+	    var enough_books_on_page = $scope.recommendations.books.length >= 4;
+	    console.debug("_get_grids ", not_specific_book_page, enough_books_on_page);
 	    if(not_specific_book_page && enough_books_on_page){
 	    	_get_grids();
 	    }
