@@ -69,6 +69,7 @@ module Api
 
 			def self.handle_facebook_user params
 				@neo = Neography::Rest.new	
+				set_clause = ""
 				for key in params.keys
 					if set_clause.present?
 						set_clause = set_clause + ", fu."+key.to_s+" = "+params[key].to_s+" "
