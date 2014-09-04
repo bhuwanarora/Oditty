@@ -1,5 +1,11 @@
 namespace :graph do
 
+  desc "remove rubbish labels"
+  task :delete_labels => :environment do
+    include Neo4jHelper
+    Neo4jHelper.delete_labels
+  end
+
   desc "set_author_rating"
   task :set_author_rating => :environment do
     include Neo4jHelper
