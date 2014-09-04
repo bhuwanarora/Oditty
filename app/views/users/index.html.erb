@@ -1,62 +1,43 @@
-<table>
-  <thead>
-    <tr>
-      <th>S.No</th>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Total Count</th>
-      <th>Date of Birth</th>
-      <th>Profile</th>
-      <th>Location</th>
-      <th>Init Book Read Count</th>
-      <th>Book Read Count</th>
-      <th>Gender</th>
-      <th>Verified</th>
-      <th>Rating Count</th>
-      <th>Bookmark Count</th>
-      <th>Active</th>
-      <th>Update</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @users.each_with_index do |user, index| %>
-      <tr>
-        <td><%= index %></td>
-        <td><%= user[0]["data"]["name"] %></td>
-        <td><%= user[0]["data"]["email"] %></td>
-        <td><%= user[0]["data"]["total_count"] %></td>
-        <td><%= user[0]["data"]["selectedDay"] %>-<%= user[0]["data"]["selectedMonth"] %>-<%= user[0]["data"]["selectedYear"] %></td>
-        <td><%= user[0]["data"]["profile"] %></td>
-        <td><%= user[0]["data"]["latitude"] %>-<%= user[0]["data"]["longitude"] %></td>
-        <td><%= user[0]["data"]["init_book_read_count"] %></td>
-        <td><%= user[0]["data"]["book_read_count"] %></td>
-        <td><%= user[0]["data"]["gender"] %></td>
-        <td><%= user[0]["data"]["verified"] %></td>
-        <td><%= user[0]["data"]["rating_count"] %></td>
-        <td><%= user[0]["data"]["bookmark_count"] %></td>
-        <form action="<%= users_path %>">
-          <input type="hidden"  value="<%= user[1] %>" name="id" />
-          <td><input type="checkbox" name="active" <% if user[0]["data"]["active"] %>checked<% end %>/></td>
-          <td><button type="submit">Sumbit</button></td>
-        </form>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<div class="hidden_input modal">
-  <form id="newUser">
-    <input name="email" type="email" placeholder="email"/>
-    <input name="password" type="password" placeholder="password"/>
-    <input name="thumb" type="thumb" placeholder="thumb url"/>
-    <div class="submit">Add</div>
-  </form>
+<div class="header"><b><%= @users.count %> Users</b></div>
+<div style="overflow: auto;">
+  <% @users.each_with_index do |user, index| %>
+    <span>
+      <ul>
+        <table>
+          <tr><td><b>#<%= user[3] %></b></td></tr>
+          <tr><td><b>Name</b></td><td><%= user[0]["data"]["name"] %></td></tr>
+          <tr><td><b>Email</b></td><td><%= user[0]["data"]["email"] %></td></tr>
+          <tr><td><b>#total</b></td><td><%= user[0]["data"]["total_count"] %></td></tr>
+          <tr><td><b>Birthday</b></td><td><%= user[0]["data"]["selectedDay"] %>-<%= user[0]["data"]["selectedMonth"] %>-<%= user[0]["data"]["selectedYear"] %></td></tr>
+          <tr><td><b>Profile</b></td><td><%= user[0]["data"]["profile"] %></td></tr>
+          <tr><td><b>Position</b></td><td><%= user[0]["data"]["latitude"] %>-<%= user[0]["data"]["longitude"] %></td></tr>
+          <tr><td><b>#init_books_read</b></td><td><%= user[0]["data"]["init_book_read_count"] %></td></tr>
+          <tr><td><b>#books_read</b></td><td><%= user[0]["data"]["book_read_count"] %></td></tr>
+          <tr><td><b>Genre</b></td><td><%= user[0]["data"]["gender"] %></td></tr>
+          <tr><td><b>Verified</b></td><td><%= user[0]["data"]["verified"] %></td></tr>
+          <tr><td><b>#rating</b></td><td><%= user[0]["data"]["rating_count"] %></td></tr>
+          <tr><td><b>#bookmark</b></td><td><%= user[0]["data"]["bookmark_count"] %></td></tr>
+          <form action="<%= users_path %>">
+            <input type="hidden"  value="<%= user[3] %>" name="id" />
+            <tr><td><b>Active</b></td><td><input type="checkbox" name="active" <% if user[0]["data"]["active"] %>checked<% end %>/></td></tr>
+            <tr><td><button type="submit">Sumbit</button></td></tr>
+          </form>
+        </table>
+      </ul>
+    </span>
+  <% end %>
+  
 </div>
+
+<div class="vertical_padder"></div>
+
 <div class="main_footer">
   <a class="clear_data">Clear Dummy User Data</a>
   <button class="add_user">Add test user</button>
   <div class="footer_status"></div>
 </div>
+
+
 <script>
   $(document).ready(function(){
     var clear_data = function(){

@@ -47,6 +47,8 @@ ReadersDoor::Application.routes.draw do
   get "add_tag_to_subcategory"   => "tags#map",                :as => "add_tag_to_subcategory"
   get "remove_tag_from_subcategory" => "tags#unmap",           :as => "remove_tag_from_subcategory"
   get "test"                     => "users#test",              :as => "test"
+  get "activate"                 => "users#activate",          :as => "activate"
+  
 
   get "new_child_category"      => "categories#new_child_category", :as => "new_child_category"
   post "add_child_category"     => "categories#add_child_category", :as => "add_child_category"

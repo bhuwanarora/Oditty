@@ -405,7 +405,6 @@ input:focus{
     background-image: -ms-linear-gradient(top,#FFFFFF,#E0E0E0);
     background-image: -o-linear-gradient(top,#FFFFFF,#E0E0E0);
     background-image: linear-gradient(top,#FFFFFF,#E0E0E0);
-    border: 1px solid #E0E0E0;
     cursor: pointer;
 }
 

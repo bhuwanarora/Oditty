@@ -1,3 +1,7 @@
+.header{
+	margin-top: 50px;
+}
+
 .books{
 	width: 400px;
 }
@@ -104,5 +108,17 @@ table{
 }
 
 a{
-	color: #717070;
+	color: #427fed;
+	cursor: pointer;
+}
+
+ul{
+	list-style: none;
+	padding: 10px;
+	background-color: #F5F5F5;
+	width: 300px;
+	display: block;
+	float: left;
+	overflow-x: scroll;
+	margin: 3px;
 }

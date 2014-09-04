@@ -6,20 +6,31 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     neo = Neography::Rest.new
-    if params[:id].present?
-      if params[:active].present?
-        clause = "MATCH (u:User) WHERE ID(u)="+params[:id].to_s+" SET u.active=true "
-      else
-        clause = "MATCH (u:User) WHERE ID(u)="+params[:id].to_s+" SET u.active=false "
-      end
-
-      puts clause.blue.on_red
-      neo.execute_query clause
-    end
-
-    clause = "MATCH (u:User) RETURN u, ID(u)"
+    clause = "MATCH (u:User) OPTIONAL MATCH (u)-[:FacebookAuth]->(f) OPTIONAL MATCH (u)-[:Likes]->(l) RETURN DISTINCT(u), f, l, ID(u)"
     @users = neo.execute_query(clause)["data"]
     render :index
+  end
+
+  def activate
+    begin
+      neo = Neography::Rest.new
+      if params[:id].present?
+        if params[:active].present?
+          clause = "MATCH (u:User) WHERE ID(u)="+params[:id].to_s+" SET u.active=true "
+        else
+          clause = "MATCH (u:User) WHERE ID(u)="+params[:id].to_s+" SET u.active=false "
+        end
+
+        puts clause.blue.on_red
+        neo.execute_query clause
+      end
+
+      clause = "MATCH (u:User) RETURN u, ID(u)"
+      @users = neo.execute_query(clause)["data"]
+      render :json => {:message => "Success"}, :status => 200
+    rescue Exception => e
+      render :json => {:message => e.to_s}, :status => 500
+    end
   end
 
   def clear_data

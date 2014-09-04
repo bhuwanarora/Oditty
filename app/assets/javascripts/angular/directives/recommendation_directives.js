@@ -156,6 +156,9 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 					var skip_count = 0;
 					websiteService.get_books_bookmarked(skip_count).then(function(data){
 						if(angular.isArray(data)){
+							if(angular.isUnefined($rootScope.user.books)){
+								$rootScope.user.books = {};
+							}
 							$rootScope.user.books['bookmarked'] = [];
 							angular.forEach(data, function(data){
 								var labels = [];
@@ -205,6 +208,9 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 					$cookieStore.put("tab", $scope.panel_selected);
 					var skip_count = 0;
 					websiteService.get_books_read(skip_count).then(function(data){
+						if(angular.isUnefined($rootScope.user.books)){
+							$rootScope.user.books = {};
+						}
 						$rootScope.user.books['read'] = [];
 						angular.forEach(data, function(value){
 							var json = {"isbn": value[0], "id": value[1], "status": true};
