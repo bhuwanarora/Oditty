@@ -211,7 +211,6 @@ module Api
 					# else
 					# 	# string = string + connector + " fu."+new_key+"= \""+param[new_key].to_s+"\""
 					# end
-					new_key = param.keys[0]
 					object_string = ""
 					for object_key in param.keys
 						if object_string.present?
@@ -219,7 +218,7 @@ module Api
 						else
 							connector = ""
 						end
-						object_string = object_string + connector + new_key+": \""+param[new_key].to_s+"\""
+						object_string = object_string + connector + object_key+": \""+param[object_key].to_s+"\""
 					end
 					string = string + " CREATE UNIQUE (user)-[:"+label+"]->(:"+label.singularize+"{"+object_string+"}) "
 				end
