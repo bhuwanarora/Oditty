@@ -205,8 +205,9 @@ module Api
 			def self.get_string_from_array(key, array)
 				string = ""
 				label = key.camelcase
-
+				count = 0
 				for param in array
+					count = count + 1
 					# if param.class == Array
 					# 	new_string = self.get_string_from_array(key, param)
 					# 	string = string + new_string
@@ -215,6 +216,7 @@ module Api
 					# end
 					object_string = ""
 					node_string = ""
+					new_label = label.downcase+count.to_s
 					for object_key in param.keys
 						if object_string.present?
 							connector = ","
@@ -226,14 +228,14 @@ module Api
 							object_string = object_string + connector + new_string
 						elsif param[object_key].class == Array
 							for hash_object in param[object_key]
-								node_string = node_string + self.handle_hash(hash_object, object_key)		
+								node_string = node_string + self.handle_hash(hash_object, object_key, new_label)		
 							end
 						elsif param[object_key].class == Hash
-							node_string = node_string + self.handle_hash(param, object_key)
+							node_string = node_string + self.handle_hash(param, object_key, new_label)
 						end
 					end
 					
-					string = string + " CREATE UNIQUE (user)-[:"+label+"]->("+label.downcase+":"+label.singularize+"{"+object_string+"}) "+node_string
+					string = string + " CREATE UNIQUE (user)-[:"+label+"]->("+new_label+":"+label.singularize+"{"+object_string+"}) "+node_string
 				end
 				string
 			end
@@ -254,7 +256,7 @@ module Api
 					new_string = self.handle_string(new_object_key, new_param[new_object_key])
 					new_object_string = new_object_string + connector + new_string
 				end
-				new_object_string = " CREATE UNIQUE (l)-[]->(:"+object_key.singularize+"{"+new_object_string+"})"
+				new_object_string = " CREATE UNIQUE ("+new_label+")-[]->(:"+object_key.singularize+"{"+new_object_string+"})"
 				new_object_string
 			end
 
