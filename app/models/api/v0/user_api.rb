@@ -258,8 +258,8 @@ module Api
 						new_object_string = new_object_string + connector + new_string
 					end
 					new_object_string = " CREATE UNIQUE ("+new_label+")-[]->(:"+object_key.singularize+"{"+new_object_string+"})"
-					new_object_string
 				end
+				new_object_string
 			end
 
 		end
