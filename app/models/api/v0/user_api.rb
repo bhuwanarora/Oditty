@@ -42,21 +42,23 @@ module Api
 			end
 
 			def self.save_info(user_id, params)
-				@neo = Neography::Rest.new
-				
-				clause = " SET u.name = \""+params[:name]+"\", u.indexed_user_name=\""+params[:name].downcase.gsub(" ","")+"\"" 	if params[:name]
-				clause = " SET u.latitude="+params[:latitude].to_s+", u.longitude="+params[:longitude].to_s if params[:latitude]
-				clause = " SET u.init_book_read_count=\""+params[:init_book_read_count]+"\"" if params[:init_book_read_count]
-				clause = " SET u.gender=\""+params[:gender]+"\"" if params[:gender]
-				clause = " SET u.selectedYear="+params[:selectedYear].to_s+", u.selectedMonth=\""+params[:selectedMonth].to_s+"\", u.selectedDay="+params[:selectedDay].to_s if params[:selectedDay]
-				clause = " SET u.profile=\""+params[:profile]+"\"" if params[:profile]
-				clause = " SET u.profile_picture="+params[:profile_picture] if params[:profile_picture]
-				clause = " SET u.thumb_blob=\""+params[:blob]+"\"" if params[:blob]
-				clause = " WITH u MATCH (g:Category) WHERE ID(g)="+params[:genre].to_s+" CREATE UNIQUE (u)-[:Likes]->(g)" if params[:genre] && params[:status]
-				clause = " WITH u MATCH (u)-[r:Likes]->(g:Category) WHERE ID(g)="+params[:genre].to_s+" DELETE r" if params[:genre] && !params[:status]
-				clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+clause
-				puts clause.blue.on_red
-				@neo.execute_query clause
+				if user_id.present?
+					@neo = Neography::Rest.new
+					
+					clause = " SET u.name = \""+params[:name]+"\", u.indexed_user_name=\""+params[:name].downcase.gsub(" ","")+"\"" 	if params[:name]
+					clause = " SET u.latitude="+params[:latitude].to_s+", u.longitude="+params[:longitude].to_s if params[:latitude]
+					clause = " SET u.init_book_read_count=\""+params[:init_book_read_count]+"\"" if params[:init_book_read_count]
+					clause = " SET u.gender=\""+params[:gender]+"\"" if params[:gender]
+					clause = " SET u.selectedYear="+params[:selectedYear].to_s+", u.selectedMonth=\""+params[:selectedMonth].to_s+"\", u.selectedDay="+params[:selectedDay].to_s if params[:selectedDay]
+					clause = " SET u.profile=\""+params[:profile]+"\"" if params[:profile]
+					clause = " SET u.profile_picture="+params[:profile_picture] if params[:profile_picture]
+					clause = " SET u.thumb_blob=\""+params[:blob]+"\"" if params[:blob]
+					clause = " WITH u MATCH (g:Category) WHERE ID(g)="+params[:genre].to_s+" CREATE UNIQUE (u)-[:Likes]->(g)" if params[:genre] && params[:status]
+					clause = " WITH u MATCH (u)-[r:Likes]->(g:Category) WHERE ID(g)="+params[:genre].to_s+" DELETE r" if params[:genre] && !params[:status]
+					clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+clause
+					puts clause.blue.on_red
+					@neo.execute_query clause
+				end
 			end
 
 			def self.get_details user_id
@@ -212,18 +214,49 @@ module Api
 					# 	# string = string + connector + " fu."+new_key+"= \""+param[new_key].to_s+"\""
 					# end
 					object_string = ""
+					node_string = ""
 					for object_key in param.keys
 						if object_string.present?
 							connector = ","
 						else
 							connector = ""
 						end
-						object_string = object_string + connector + object_key+": \""+param[object_key].to_s+"\""
+						if param[object_key].class == String
+							new_string = self.handle_string(object_key, params[object_key])
+							object_string = object_string + connector + new_string
+						elsif param[object_key].class == Array
+							for hash_object in param[object_key]
+								node_string = node_string + self.handle_hash(hash_object, object_key)		
+							end
+						elsif param[object_key].class == Hash
+							node_string = node_string + self.handle_hash(param, object_key)
+						end
 					end
-					string = string + " CREATE UNIQUE (user)-[:"+label+"]->(:"+label.singularize+"{"+object_string+"}) "
+					string = string + " CREATE UNIQUE (user)-[:"+label+"]->(l:"+label.singularize+"{"+object_string+"}) "+node_string
 				end
 				string
 			end
+
+			def self.handle_string(key, value)
+				key+": \""+value.to_s+"\""
+			end
+
+			def self.handle_hash(param, object_key)
+				new_param = param[object_key]
+				new_object_string = ""
+				for new_object_key in new_param.keys
+					if new_object_string.present?
+						connector = ","
+					else
+						connector = ""
+					end
+					new_string = self.handle_string(new_object_key, new_param[new_object_key])
+					new_object_string = new_object_string + connector + new_string
+				end
+				new_object_string = " CREATE UNIQUE (l)-[]->(:"+object_key.singularize+"{"+new_object_string+"})"
+				new_object_string
+			end
+
 		end
 	end
 end
