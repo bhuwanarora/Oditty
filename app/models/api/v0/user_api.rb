@@ -232,7 +232,8 @@ module Api
 							node_string = node_string + self.handle_hash(param, object_key)
 						end
 					end
-					string = string + " CREATE UNIQUE (user)-[:"+label+"]->(l:"+label.singularize+"{"+object_string+"}) "+node_string
+					
+					string = string + " CREATE UNIQUE (user)-[:"+label+"]->("+label.downcase+":"+label.singularize+"{"+object_string+"}) "+node_string
 				end
 				string
 			end
