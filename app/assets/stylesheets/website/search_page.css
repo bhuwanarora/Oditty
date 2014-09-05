@@ -367,6 +367,11 @@
 	background: linear-gradient(#5678bc,#1B2E53);
 }
 
+.fb:active{
+	background: -webkit-linear-gradient(#1B2E53,#1B2E53);
+	background: linear-gradient(#1B2E53,#1B2E53);
+}
+
 .google{
 	cursor: pointer;
 	text-align: center;
