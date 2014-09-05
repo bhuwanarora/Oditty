@@ -228,7 +228,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		$timeout(function(){
 			$scope.loading = false;
 			// $scope.drop_icon = false;
-		}, 3000);
+		}, 2000);
 
 		$timeout(function(){
 			$scope.drop_icon = true;
