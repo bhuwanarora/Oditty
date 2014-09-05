@@ -30,7 +30,7 @@ module S3UploaderHelper
 		@s3 = AWS::S3.new
 		@neo = Neography::Rest.new
 		skip = 1000
-		start_id = 421061 #MIN ID
+		start_id = 1059390 #MIN ID
 		end_id = 2655788 #MAX ID
 		while start_id <= end_id
 			puts "upload_author_images..."+start_id.to_s.green
