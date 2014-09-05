@@ -362,3 +362,36 @@
 
 	SET u.total_count = CASE WHEN u.total_count IS NULL THEN 1 ELSE u.total_count + 10 END, 
 	b.recommended_count = CASE WHEN b.recommended_count IS NULL THEN 1 ELSE b.recommended_count + 1 END
+
+
+#FB
+MERGE (user:User{fb_id:100001789393216}) 
+MERGE (user)-[:FacebookAuth]->(fu:FacebookUser) 
+SET user.thumb = CASE WHEN user.thumb IS NULL THEN "" ELSE user.thumb END 
+SET user.name = CASE WHEN user.name IS NULL THEN "Bhuwan Arora" ELSE user.name END  
+SET fu.id="100001789393216" 
+SET fu.first_name="Bhuwan" 
+SET fu.gender="male" 
+SET fu.last_name="Arora" 
+SET fu.link="https://www.facebook.com/bhuwanarora67" 
+SET fu.locale="en_US" 
+SET fu.name="Bhuwan Arora" 
+SET fu.timezone="5.5" 
+SET fu.updated_time="2014-09-01T21:26:58+0000" 
+SET fu.username="bhuwanarora67" 
+SET fu.verified="true" 
+SET fu.profile_status="0" 
+SET fu.logged="true" 
+CREATE UNIQUE (user)-[:FavoriteAthletes]->(:FavoriteAthlete{id: "20242388857",name: "Usain Bolt"})
+CREATE UNIQUE (user)-[:FavoriteAthletes]->(:FavoriteAthlete{id: "210372585775323",name: "Mukteshwar Marathon"}) 
+CREATE UNIQUE (user)-[:InspirationalPeople]->(:InspirationalPerson{id: "119624318086241",name: "Christopher Johnson McCandless"})
+CREATE UNIQUE (user)-[:InspirationalPeople]->(:InspirationalPerson{id: "103742866330458",name: "A. C. Bhaktivedanta Swami Prabhupada"})
+CREATE UNIQUE (user)-[:InspirationalPeople]->(:InspirationalPerson{id: "190367266432",name: "Radhanath Swami [Official]"})
+CREATE UNIQUE (user)-[:InspirationalPeople]->(:InspirationalPerson{id: "107974492563164",name: "Socrates"})
+CREATE UNIQUE (user)-[:InspirationalPeople]->(:InspirationalPerson{id: "103795519659023",name: "Plato"})
+CREATE UNIQUE (user)-[:InspirationalPeople]->(:InspirationalPerson{id: "112442595433810",name: "Hermann Hesse"})
+CREATE UNIQUE (user)-[:InspirationalPeople]->(:InspirationalPerson{id: "511713478850955",name: "Emily Dickinson"})
+CREATE UNIQUE (user)-[:InspirationalPeople]->(:InspirationalPerson{id: "112442595433810",name: "Hermann Hesse"})
+CREATE UNIQUE (user)-[:InspirationalPeople]->(:InspirationalPerson{id: "511713478850955",name: "Emily Dickinson"})
+CREATE UNIQUE (user)-[:Sports]->(:Sport{id: "218503464833351",name: "athletics"})  
+RETURN ID(user)

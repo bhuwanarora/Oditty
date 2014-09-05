@@ -140,7 +140,7 @@
 
 <div ng-if="show_buy && !show_author" class="buy_column">
   <div ng-if="focused_book.bnn_links">
-    <span>Buy from </span><em><span>Barnes & Nobles</span></em>
+    <span>Buy from&nbsp;</span><em><span>Barnes & Nobles</span></em>
     <span ng-repeat="link in focused_book.bnn_links track by $index">
       <a ng-href="{{link}}" target="_blank" class="site_color">Link{{$index+1}}</a>&nbsp;
     </span>
