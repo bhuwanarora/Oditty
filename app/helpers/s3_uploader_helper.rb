@@ -75,7 +75,7 @@ module S3UploaderHelper
 	def self.get_images2
 		@neo = Neography::Rest.new
 		skip = 1000
-		start_id = 1389715 #MIN ID 
+		start_id = 1389752 #MIN ID 
 		end_id = 2655796 #MAX ID
 		while start_id <= end_id
 			puts "get_images2..."+start_id.to_s.green
@@ -87,32 +87,23 @@ module S3UploaderHelper
 				if isbn[0].present?
 					isbn_array = isbn[0].split(",")
 					for each_isbn in isbn_array
-						key = each_isbn.to_s+"/L.jpg"
-						name = each_isbn.to_s+"-L.jpg"
-						url = "http://covers.openlibrary.org/b/isbn/"+name
-						open(name, 'wb') do |file|
-							file << open(url).read
+						begin
+							self.upload_image(each_isbn, name)
+						rescue Exception => e
+							begin
+								self.upload_image(each_isbn, name)
+							rescue Exception => e
+								begin
+								self.upload_image(each_isbn, name)
+								rescue Exception => e
+									begin
+										self.upload_image(each_isbn, name)
+									rescue Exception => e
+										puts e.to_s.red	
+									end	
+								end	
+							end
 						end
-						self.upload_file(name, key)
-						File::delete(name)
-
-						key = each_isbn.to_s+"/M.jpg"
-						name = each_isbn.to_s+"-M.jpg"
-						url = "http://covers.openlibrary.org/b/isbn/"+name
-						open(name, 'wb') do |file|
-							file << open(url).read
-						end
-						self.upload_file(name, key)
-						File::delete(name)
-
-						key = each_isbn.to_s+"/S.jpg"
-						name = each_isbn.to_s+"-S.jpg"
-						url = "http://covers.openlibrary.org/b/isbn/"+name
-						open(name, 'wb') do |file|
-							file << open(url).read
-						end
-						self.upload_file(name, key)
-						File::delete(name)
 
 					end
 				end
@@ -125,7 +116,7 @@ module S3UploaderHelper
 	def self.get_images
 		@neo = Neography::Rest.new
 		skip = 1000
-		start_id = 388886 #MIN ID
+		start_id = 388934 #MIN ID
 		end_id = 2655796 #MAX ID
 		while start_id <= end_id
 			puts "get_images..."+start_id.to_s.green
@@ -137,39 +128,59 @@ module S3UploaderHelper
 				if isbn[0].present?
 					isbn_array = isbn[0].split(",")
 					for each_isbn in isbn_array
-						key = each_isbn.to_s+"/L.jpg"
-						name = each_isbn.to_s+"-L.jpg"
-						url = "http://covers.openlibrary.org/b/isbn/"+name
-						open(name, 'wb') do |file|
-							file << open(url).read
+						begin
+							self.upload_image(each_isbn, name)
+						rescue Exception => e
+							begin
+								self.upload_image(each_isbn, name)
+							rescue Exception => e
+								begin
+								self.upload_image(each_isbn, name)
+								rescue Exception => e
+									begin
+										self.upload_image(each_isbn, name)
+									rescue Exception => e
+										puts e.to_s.red	
+									end	
+								end	
+							end
 						end
-						self.upload_file(name, key)
-						File::delete(name)
-
-						key = each_isbn.to_s+"/M.jpg"
-						name = each_isbn.to_s+"-M.jpg"
-						url = "http://covers.openlibrary.org/b/isbn/"+name
-						open(name, 'wb') do |file|
-							file << open(url).read
-						end
-						self.upload_file(name, key)
-						File::delete(name)
-
-						key = each_isbn.to_s+"/S.jpg"
-						name = each_isbn.to_s+"-S.jpg"
-						url = "http://covers.openlibrary.org/b/isbn/"+name
-						open(name, 'wb') do |file|
-							file << open(url).read
-						end
-						self.upload_file(name, key)
-						File::delete(name)
-
 					end
 				end
 			end
 
 			start_id = start_id + skip
 		end
+	end
+
+	private
+	def self.upload_image(each_isbn, name)
+		key = each_isbn.to_s+"/L.jpg"
+		name = each_isbn.to_s+"-L.jpg"
+		url = "http://covers.openlibrary.org/b/isbn/"+name
+		open(name, 'wb') do |file|
+			file << open(url).read
+		end
+		self.upload_file(name, key)
+		File::delete(name)
+
+		key = each_isbn.to_s+"/M.jpg"
+		name = each_isbn.to_s+"-M.jpg"
+		url = "http://covers.openlibrary.org/b/isbn/"+name
+		open(name, 'wb') do |file|
+			file << open(url).read
+		end
+		self.upload_file(name, key)
+		File::delete(name)
+
+		key = each_isbn.to_s+"/S.jpg"
+		name = each_isbn.to_s+"-S.jpg"
+		url = "http://covers.openlibrary.org/b/isbn/"+name
+		open(name, 'wb') do |file|
+			file << open(url).read
+		end
+		self.upload_file(name, key)
+		File::delete(name)
 	end
 
 end
