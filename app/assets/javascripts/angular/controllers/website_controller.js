@@ -226,7 +226,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		$scope.show_login_form = false;
 
 		$timeout(function(){
-			// $scope.loading = false;
+			$scope.loading = false;
 			// $scope.drop_icon = false;
 		}, 3000);
 
