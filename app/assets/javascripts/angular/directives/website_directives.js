@@ -588,6 +588,7 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
 
       	$scope.remove_selected_book = function(){
       		$rootScope.user.interact_books = [];
+      		$scope.placeholder = WebsiteUIConstants.ShareSomething;
       		delete $scope.selected_interact_book;
       	}
 
@@ -1105,7 +1106,7 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
 	        	$scope.placeholder = "Comment on "+$rootScope.focused_book.title+" by "+$rootScope.focused_book.author_name+"...";
 	        }
 	        else{
-	        	$scope.placeholder = "Share something...";
+	        	$scope.placeholder =  WebsiteUIConstants.ShareSomething;
 	        }
 	        $scope.user.interact_book = "";
 	        $scope.user.interact_books = [];

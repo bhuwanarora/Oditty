@@ -1,4 +1,4 @@
-reduced_titleangular.module('filtersApp', [])
+angular.module('filtersApp', [])
   .filter('integer', function() {
     return function(input) {
     	var output = input;
@@ -27,7 +27,7 @@ reduced_titleangular.module('filtersApp', [])
   .filter('first_name', function(){
     return function(input){
       if(angular.isDefined(input)){
-        input = input.split(" ")[0]
+        input = input.split(" ")[0];
       }
       return input;
     }
