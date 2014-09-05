@@ -151,13 +151,15 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 					$cookieStore.put("tab", $scope.panel_selected);
 					$scope.bookmark_selected = true;
 					$scope.read_selected = false;
-					delete $rootScope.user.books['read'];
 					// $scope.glowBookmark = false;
 					var skip_count = 0;
 					websiteService.get_books_bookmarked(skip_count).then(function(data){
 						if(angular.isArray(data)){
 							if(angular.isUndefined($rootScope.user.books)){
 								$rootScope.user.books = {};
+							}
+							else{
+								delete $rootScope.user.books['read'];
 							}
 							$rootScope.user.books['bookmarked'] = [];
 							angular.forEach(data, function(data){
@@ -199,7 +201,6 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 			$scope.toggle_read = function(){
 				if(!$scope.read_selected){
 					// _load_icon();
-					delete $rootScope.user.books['bookmarked'];
 
 					$scope.glowShelf = false;
 					$scope.bookmark_selected = false;
@@ -210,6 +211,9 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 					websiteService.get_books_read(skip_count).then(function(data){
 						if(angular.isUndefined($rootScope.user.books)){
 							$rootScope.user.books = {};
+						}
+						else{
+							delete $rootScope.user.books['bookmarked'];
 						}
 						$rootScope.user.books['read'] = [];
 						angular.forEach(data, function(value){
