@@ -222,7 +222,7 @@ module Api
 							connector = ""
 						end
 						if param[object_key].class == String
-							new_string = self.handle_string(object_key, params[object_key])
+							new_string = self.handle_string(object_key, param[object_key])
 							object_string = object_string + connector + new_string
 						elsif param[object_key].class == Array
 							for hash_object in param[object_key]
