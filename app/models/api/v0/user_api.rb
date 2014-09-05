@@ -245,20 +245,17 @@ module Api
 			end
 
 			def self.handle_hash(param, object_key, new_label)
-				new_param = param[object_key]
 				new_object_string = ""
-				if new_param.present?
-					for new_object_key in new_param.keys
-						if new_object_string.present?
-							connector = ","
-						else
-							connector = ""
-						end
-						new_string = self.handle_string(new_object_key, new_param[new_object_key])
-						new_object_string = new_object_string + connector + new_string
+				for new_object_key in param.keys
+					if new_object_string.present?
+						connector = ","
+					else
+						connector = ""
 					end
-					new_object_string = " CREATE UNIQUE ("+new_label+")-[]->(:"+object_key.singularize+"{"+new_object_string+"})"
+					new_string = self.handle_string(new_object_key, new_param[new_object_key])
+					new_object_string = new_object_string + connector + new_string
 				end
+				new_object_string = " CREATE UNIQUE ("+new_label+")-[]->(:"+object_key.singularize+"{"+new_object_string+"})"
 				new_object_string
 			end
 
