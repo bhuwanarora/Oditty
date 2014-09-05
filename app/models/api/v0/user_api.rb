@@ -244,7 +244,7 @@ module Api
 				key+": \""+value.to_s+"\""
 			end
 
-			def self.handle_hash(param, object_key)
+			def self.handle_hash(param, object_key, new_label)
 				new_param = param[object_key]
 				new_object_string = ""
 				for new_object_key in new_param.keys
