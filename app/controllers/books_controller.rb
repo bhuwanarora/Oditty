@@ -10,10 +10,14 @@ class BooksController < ApplicationController
   end
 
   def data
-    neo = Neography::Rest.new
-    clause = params[:q]
-    puts clause.blue.on_red
-    neo.execute_query clause
+    begin
+      neo = Neography::Rest.new
+      clause = params[:q]
+      neo.execute_query clause
+      puts "Success".green
+    rescue Exception => e
+      puts e.to_s.blue.on_red
+    end
   end
 
   def cover_photos

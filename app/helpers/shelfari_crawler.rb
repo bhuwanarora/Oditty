@@ -446,7 +446,7 @@ module ShelfariCrawler
           note = note_for_parents[index].children[5].content
           # note = NoteForParent.find_or_create_by(:name => note,
                                                 # :url => note_url)
-          clause = clause + " CREATE UNIQUE (n:"+index.to_s+":ReadingLevel{type:\""+note.to_s+"\", url: \""+note_url.to_s+"\"})<-[:ReadingLevel]-(b) "
+          clause = clause + " CREATE UNIQUE (n"+index.to_s+":ReadingLevel{type:\""+note.to_s+"\", url: \""+note_url.to_s+"\"})<-[:ReadingLevel]-(b) "
           # NoteForParentsShelfariBooks.find_or_create_by(:note_for_parent_id => note.id,
                                                         # :shelfari_book_id => id)
           index = index + 1
@@ -536,14 +536,14 @@ module ShelfariCrawler
           end
           # ShelfariBooksCategories.find_or_create_by(:shelfari_category_id => parent.id,
                                                     # :shelfari_book_id => id)
-          clause = clause + " CREATE UNIQUE (ca"+index.to_s+":Category{uuid:"+parent.id.to_s+"})<-[:FromCategory]-(b) "
+          clause = clause + " CREATE UNIQUE (ca"+index.to_s+":Category{uuid:"+parent.id.to_s+"})<-[:FromCategory]-(b) SET ca"+index.to_s+".name=\""+category_name+"\""
           parent = ShelfariCategory.first
           index = index + 1
         end
         puts clause.blue.on_red
         # @neo.execute_query clause
         Resque.enqueue(LinodeNeoWorker, clause)
-        book.data_flag = true
+        # book.data_flag = true
         book.save
       end
     rescue Exception => e
