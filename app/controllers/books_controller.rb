@@ -14,7 +14,7 @@ class BooksController < ApplicationController
       neo = Neography::Rest.new
       clause = params[:q]
       neo.execute_query clause
-      ShelfariBook.find(id.to_i).update_column("data_flag", true)
+      ShelfariBook.find(params[:id].to_i).update_column("data_flag", true)
       puts "Success".green
       render :json => {:message => "Success"}, :status => 200
     rescue Exception => e
