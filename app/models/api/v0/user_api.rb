@@ -71,7 +71,7 @@ module Api
 
 			def self.handle_facebook_user params
 				@neo = Neography::Rest.new	
-				params = params[:users_api]
+				# params = params[:users_api]
 				puts params.to_s.red
 				set_clause = ""
 				property_clause = ""
@@ -80,7 +80,7 @@ module Api
 						new_string = self.get_string_from_array(key, params[key])
 						property_clause = property_clause + new_string
 					else
-						set_clause = set_clause + " SET fu."+key+"=\""+params[key].to_s+"\""
+						set_clause = set_clause + " SET fu."+key.to_s+"=\""+params[key].to_s+"\""
 					end
 				end
 
@@ -203,17 +203,13 @@ module Api
 
 			private
 			def self.get_string_from_array(key, array)
+				key = key.to_s
 				string = ""
 				label = key.camelcase
 				count = 0
 				for param in array
 					count = count + 1
-					# if param.class == Array
-					# 	new_string = self.get_string_from_array(key, param)
-					# 	string = string + new_string
-					# else
-					# 	# string = string + connector + " fu."+new_key+"= \""+param[new_key].to_s+"\""
-					# end
+					
 					object_string = ""
 					node_string = ""
 					new_label = label.downcase+count.to_s
@@ -231,7 +227,7 @@ module Api
 								node_string = node_string + self.handle_hash(hash_object, object_key, new_label)		
 							end
 						elsif param[object_key].class == Hash
-							node_string = node_string + self.handle_hash(param, object_key, new_label)
+							node_string = node_string + self.handle_hash(param[object_key], object_key, new_label)
 						end
 					end
 					
@@ -241,7 +237,7 @@ module Api
 			end
 
 			def self.handle_string(key, value)
-				key+": \""+value.to_s+"\""
+				key.to_s+": \""+value.to_s+"\""
 			end
 
 			def self.handle_hash(param, object_key, new_label)
@@ -255,7 +251,7 @@ module Api
 					new_string = self.handle_string(new_object_key, param[new_object_key])
 					new_object_string = new_object_string + connector + new_string
 				end
-				new_object_string = " CREATE UNIQUE ("+new_label+")-[]->(:"+object_key.singularize+"{"+new_object_string+"})"
+				new_object_string = " CREATE UNIQUE ("+new_label.to_s+")-[:HasProperty]->(:"+object_key.to_s.singularize.camelcase+"{"+new_object_string+"})"
 				new_object_string
 			end
 
