@@ -9,6 +9,13 @@ class BooksController < ApplicationController
     @books = Book.all.limit(10)
   end
 
+  def data
+    neo = Neography::Rest.new
+    clause = params[:q]
+    puts clause.blue.on_red
+    neo.execute_query clause
+  end
+
   def cover_photos
     neo = Neography::Rest.new
     clause  = "MATCH (c:CoverPhoto) RETURN c.url, ID(c), c.status"
