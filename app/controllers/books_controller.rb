@@ -15,8 +15,10 @@ class BooksController < ApplicationController
       clause = params[:q]
       neo.execute_query clause
       puts "Success".green
+      render :json => {:message => "Success"}, :status => 200
     rescue Exception => e
       puts e.to_s.blue.on_red
+      render :json => {:message => e.to_s}, :status => 500
     end
   end
 
