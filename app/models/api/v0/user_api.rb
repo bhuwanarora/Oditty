@@ -252,7 +252,7 @@ module Api
 					else
 						connector = ""
 					end
-					new_string = self.handle_string(new_object_key, new_param[new_object_key])
+					new_string = self.handle_string(new_object_key, param[new_object_key])
 					new_object_string = new_object_string + connector + new_string
 				end
 				new_object_string = " CREATE UNIQUE ("+new_label+")-[]->(:"+object_key.singularize+"{"+new_object_string+"})"
