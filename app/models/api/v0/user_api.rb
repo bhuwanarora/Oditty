@@ -71,7 +71,7 @@ module Api
 
 			def self.handle_facebook_user params
 				@neo = Neography::Rest.new	
-				# params = params[:users_api]
+				params = params[:users_api]
 				puts params.to_s.red
 				set_clause = ""
 				property_clause = ""
