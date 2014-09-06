@@ -3,7 +3,7 @@
 		ng-if="!user.logged && show_login_form">
 		<!-- <div class="close button_effect" ng-click="close_login_box()">x</div> -->
 		<div class="header">
-			<div class="logo">
+			<div class="logo site_color">
 			    <span>r</span>
 			    <span>e</span>
 			    <span>a</span>
@@ -25,9 +25,7 @@
 				<!-- <span class="icon-quote-right"></span> -->
 			</div>
 			<hr>
-			<div>
-				Login to explore your reading companion.
-			</div>
+			
 		</div>
 		<div class="fb" 
 			 ng-show="!user.logged"
@@ -35,11 +33,14 @@
 		     Sign in with Facebook
 		     
 		</div>
-		<div class="google">
+		<a class="site_color" ng-click="show_other_options=true;"  ng-hide="show_other_options">
+			Don't have a facebook account
+		</a>
+		<div class="google" ng-show="show_other_options">
 			<google-plus-signin clientid="88213598927-9fij1u8tf2ldf4apf6qob4hgu0supj54.apps.googleusercontent.com"
 			ng-show="!user.logged"></google-plus-signin>
 		</div>
-		<form class="login_form">
+		<form class="login_form"  ng-show="show_other_options">
 	      	<input class="email" 
 	      	       type="email" 
 	      	       ng-keydown="submit($event)"
@@ -66,7 +67,7 @@
 	      		<span ng-click="recover_password()">Forgot Password?</span>
 	      	</div>
 	    </form>
-      	<div class="login_status">
+      	<div class="login_status" ng-show="show_other_options">
       		<span ng-if="error_message">{{error_message}}</span>
       		<img src="assets/loader2.gif" width="20px" ng-show="loading_icon"/>
       	</div>
