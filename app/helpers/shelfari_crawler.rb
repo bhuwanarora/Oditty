@@ -379,7 +379,7 @@ module ShelfariCrawler
           # character = Character.find_or_create_by(:name => name, 
                                                   # :shelfari_url => character_url, 
                                                   # :description => character_description)
-          clause = clause + " CREATE UNIQUE (c"+index.to_s+":Character{name: \""+name.to_s+"\", url: \""+character_url.to_s+"\", description: \""+description.to_s.gsub("\"", "'")+"\"})<-[:HasCharacter]-(b) "
+          clause = clause + " CREATE UNIQUE (c"+index.to_s+":Character{name: \""+name.to_s+"\", url: \""+character_url.to_s+"\", description: \""+description.to_s.gsub("\"", "'").gsub("  ","").gsub("read more", "")+"\"})<-[:HasCharacter]-(b) "
           # CharactersShelfariBooks.find_or_create_by(:shelfari_book_id => id,
                                                     # :character_id => character.id)
         end
@@ -396,7 +396,7 @@ module ShelfariCrawler
           location_href = locations[index].children[0].attr("href") rescue nil 
           # location = Location.find_or_create_by(:name => location_name, 
                                                 # :url => location_href)
-          clause = clause + " CREATE UNIQUE (l"+index.to_s+":Location{name:\""+location_name.to_s+"\", url:\""+location_href.to_s+"\", description: \""+location_description.to_s.gsub("\"", "'")+"\"})<-[:OnLocation]-(b) "
+          clause = clause + " CREATE UNIQUE (l"+index.to_s+":Location{name:\""+location_name.to_s+"\", url:\""+location_href.to_s+"\", description: \""+location_description.to_s.gsub("\"", "'").gsub("  ","").gsub("read more", "")+"\"})<-[:OnLocation]-(b) "
           # LocationsShelfariBooks.find_or_create_by(:location_id => location.id,
                                                   # :shelfari_book_id => id,
                                                   # :description => location_description  )
@@ -419,7 +419,7 @@ module ShelfariCrawler
           theme_url = themes[index].children[0].attr("href")
           # theme = Theme.find_or_create_by(:name => theme_name,
                                           # :url => theme_url)
-          clause = clause + " CREATE UNIQUE (t"+index.to_s+":Theme{name: \""+theme_name.to_s+"\", url: \""+url.to_s+"\"})<-[:HasTheme]-(b) "
+          clause = clause + " CREATE UNIQUE (t"+index.to_s+":Theme{name: \""+theme_name.to_s+"\", url: \""+url.to_s+"\", description: \""+theme_description.to_s.gsub("'","").gsub("  ","").gsub("read more", "")+"\"})<-[:HasTheme]-(b) "
           # ShelfariBooksThemes.find_or_create_by(:theme_id => theme.id,
                                                 # :shelfari_book_id => id,
                                                 # :description => theme_description)
@@ -464,7 +464,7 @@ module ShelfariCrawler
           end
           # movie = Movie.find_or_create_by(:imdb_url => movies_url,
                                           # :name => movie_name)
-          clause = clause + " CREATE UNIQUE (m"+index.to_s+":Movie{name: \""+movie_name+"\", imdb_url: \""+movies_url+"\", description: \""+movie_description.gsub("\"", "'")+"\"})<-[:MovieBased]-(b) "
+          clause = clause + " CREATE UNIQUE (m"+index.to_s+":Movie{name: \""+movie_name+"\", imdb_url: \""+movies_url+"\", description: \""+movie_description.gsub("\"", "'").gsub("  ","").gsub("read more", "")+"\"})<-[:MovieBased]-(b) "
           # MoviesShelfariBooks.find_or_create_by(:movie_id => movie.id,
                                                 # :shelfari_book_id => id,
                                                 # :description => movie_description)
@@ -542,7 +542,7 @@ module ShelfariCrawler
         end
         puts clause.blue.on_red
         # @neo.execute_query clause
-        Resque.enqueue(LinodeNeoWorker, clause)
+        Resque.enqueue(LinodeNeoWorker, clause, id)
         # book.data_flag = true
         book.save
       end
