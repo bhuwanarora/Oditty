@@ -201,6 +201,13 @@ module Api
 
 			end
 
+			def self.handle_google_user params
+				@neo = Neography::Rest.new
+				# clause = "MATCH ()"
+				debugger
+				# @neo.execute_query clause
+			end
+
 			private
 			def self.get_string_from_array(key, array)
 				key = key.to_s

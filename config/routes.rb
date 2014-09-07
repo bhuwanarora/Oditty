@@ -2,9 +2,9 @@ require 'resque/server'
 ReadersDoor::Application.routes.draw do
   resources :facebooks
 
-  mount Resque::Server, :at => "/resque"
-#  mount MadChatter::RailsEngine => "/chat"
-  
+  # mount Resque::Server.new, :at => "/resque"
+  mount SecureResqueServer.new, :at => '/resque'
+
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   

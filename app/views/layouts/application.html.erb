@@ -8,7 +8,12 @@
     <%= stylesheet_link_tag "/assets/panels/main"%>
   </head>
   <body>
-    <%= render 'shared/header' %>
-    <%= yield %>
+
+    <% if @is_admin %>
+      <%= render 'shared/header' %>
+      <%= yield %>
+    <% else %>
+      <div>Access Denied</div>
+    <% end %>
   </body>
  </html>

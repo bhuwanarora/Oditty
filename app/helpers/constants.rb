@@ -7,6 +7,8 @@ module Constants
 	ThumbSuggest				= 10
 	RecommendationPoints		= 10
 
+	Admin						= 1633203
+
 	InvalidLink					= "Invalid Link"
 	LoginSuccess				= "Logged in successfully."
 	AuthenticationFailed		= "Email and password doesn't match."

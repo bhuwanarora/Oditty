@@ -87,13 +87,13 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		
 	_bind_auth_listeners = function(){
 		$scope.$on('event:google-plus-signin-success', function (event, authResult){
-			
-			// websiteService.handle_google_user(authResult);
-		    // console.log("google login", authResult);
+			websiteService.handle_google_user(authResult);
+		    console.log("google login", authResult);
+		    $scope._init_user();
 		});
 
 		$scope.$on('event:google-plus-signin-failure', function (event, authResult){
-		    // console.log("google login", authResult);
+		    console.log("google login", authResult);
 		});
 
 
@@ -138,7 +138,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
    	$scope.login = function() {
      	Facebook.login(function(response) {
       		if (response.status == LoginConstants.FacebookLoginStatusCheck) {
-        		$rootScope.logged = true;
+        		// $rootScope.logged = true;
         		$scope.me();
       		}
     	});
@@ -149,23 +149,26 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
         	// console.log(response);
         	websiteService.handle_facebook_user(response);
 		    $scope.$apply(function(){
-		        $rootScope.user = response;
-		        $rootScope.user.profile_status = 0;
-		        $rootScope.user.thumb = response["thumb"];
-		        // _profile_status_colors();
-		        $rootScope.user.logged = true;
+    			$rootScope.user = response;
+        		$rootScope.user.thumb = response["thumb"];
+		        $scope._init_user();
 		    });
         });
     };
+
+    $scope._init_user = function(){
+        $rootScope.user.profile_status = 0;
+        $rootScope.user.logged = true;
+    }
       
-  	$scope.logout = function() {
-    	Facebook.logout(function() {
-      		$scope.$apply(function() {
-        		$rootScope.user   = {};
-        		$rootScope.logged = false;
-      		});
-    	});
-  	}
+  	// $scope.logout = function() {
+   //  	Facebook.logout(function() {
+   //    		$scope.$apply(function() {
+   //      		$rootScope.user   = {};
+   //      		// $rootScope.logged = false;
+   //    		});
+   //  	});
+  	// }
 
   	_is_logged_in = function(){
   		websiteService.get_user().then(function(data){

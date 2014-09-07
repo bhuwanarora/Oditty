@@ -3,8 +3,10 @@ module Api
 		class UsersApiController < ApplicationController
 
 			def google
-				# params[:result]
-				debugger
+				user_id = UserApi.handle_google_user params
+				puts user_id.to_s.red
+				session[:user_id] = user_id
+				render :json => {:message => "Success"}, :status => 200
 			end
 
 			def save_info

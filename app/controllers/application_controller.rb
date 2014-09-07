@@ -16,6 +16,10 @@ class ApplicationController < ActionController::Base
     unless ($redis.get 'book_ids').present?
       $redis.set 'book_ids', ""
     end
+    session["init"] = true
+    if session[:user_id] == Constants::Admin
+      @is_admin = true
+    end
     # private_access = ["panel/labels", "freebase", "freebase_search", "freebase_resource", "trends", "users", "grids", "panel/thumbs", "delete_grid", "add_grid", "update_grid"]
     # unaccessible_page = private_access.include? params[:action]
     # debugger
