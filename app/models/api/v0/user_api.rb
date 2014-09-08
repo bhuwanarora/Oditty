@@ -69,10 +69,10 @@ module Api
 					begin
 						info = @neo.execute_query(clause)["data"][0][0]["data"]
 					rescue Exception => e
-						info = []
+						info = {}
 					end
 				else
-					info = []
+					info = {}
 				end
 				info
 			end
