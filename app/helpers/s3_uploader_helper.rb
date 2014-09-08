@@ -75,7 +75,7 @@ module S3UploaderHelper
 	def self.get_images2
 		@neo = Neography::Rest.new
 		skip = 1000
-		start_id = 1389752 #MIN ID 
+		start_id = 1419752 #MIN ID 
 		end_id = 2655796 #MAX ID
 		while start_id <= end_id
 			puts "get_images2..."+start_id.to_s.green
@@ -116,7 +116,7 @@ module S3UploaderHelper
 	def self.get_images
 		@neo = Neography::Rest.new
 		skip = 1000
-		start_id = 388934 #MIN ID
+		start_id = 418934 #MIN ID
 		end_id = 2655796 #MAX ID
 		while start_id <= end_id
 			puts "get_images..."+start_id.to_s.green
