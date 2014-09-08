@@ -504,10 +504,10 @@ module Neo4jHelper
 				book_id = book_tag.shelfari_book_id
 				book = ShelfariBook.find book_id
 				book_title = book.name.downcase.gsub(" ", "").gsub("\"", "").gsub("'", "").gsub(":", "")
-				puts book_title.green
 				weight = book_tag.weight
 
 				shelfari_tag_id = book_tag.shelfari_tag_id
+				puts "#{book_title.green} #{book_id} #{shelfari_tag_id} #{weight}"
 				shelfari_tag = ShelfariTag.find shelfari_tag_id
 				genre_name = shelfari_tag.name.gsub("\"", "'").to_s rescue ""
 				lower_case = genre_name.downcase.gsub(" ", "").to_s rescue ""
