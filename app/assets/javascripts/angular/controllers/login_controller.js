@@ -8,20 +8,20 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 	}
 
 	$scope.recover_password = function(){
-		delete $scope.error_message;
+		delete $rootScope.user.error_message;
 		var success_callback = function(data){
 			$scope.loading_icon = false;
-			$scope.error_message = data.message;
+			$rootScope.user.error_message = data.message;
 			$rootScope.user.password = null;
 		}
 
 		var error_callback = function(data){
 			$scope.loading_icon = false;
-			$scope.error_message = data.message;
+			$rootScope.user.error_message = data.message;
 			$rootScope.user.password = null;
 		}
 		if(!$rootScope.user.email){
-			$scope.error_message = LoginConstants.EmailNotPresent;
+			$rootScope.user.error_message = LoginConstants.EmailNotPresent;
 		}
 		else{
 			$scope.loading_icon = true;
@@ -35,14 +35,14 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		var min_length_pattern = new RegExp("^.{8,}$");
 		var not_repeat_pattern = new RegExp("^(.)\\1{7,16}$");
 		var max_length_pattern = new RegExp("^.{100,}$");
-		delete $scope.error_message;
+		delete $rootScope.user.error_message;
 		// var email = "bhuwanarora67@gmail.com";
 		// var password = "test";
 		var data_json = {"email": email, "password": password, "old_user": old_user};
 		$scope.loading_icon = false;
 		
 		var success_callback = function(data){
-			$scope.error_message = data.message;
+			$rootScope.user.error_message = data.message;
 			$rootScope.user.profile_status = data.profile_status;
 			$rootScope.user.logged = true;
 			$rootScope.user.id = data.user_id;
@@ -58,24 +58,24 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 
 		var error_callback = function(reason){
 			$scope.loading_icon = false;
-			$scope.error_message = reason.data.message;
+			$rootScope.user.error_message = reason.data.message;
 			$rootScope.user.password = null;
 		}
 
 		if(!$rootScope.user.email){
-			$scope.error_message = LoginConstants.EmailNotPresent;
+			$rootScope.user.error_message = LoginConstants.EmailNotPresent;
 		}
 		else if (!$rootScope.user.password) {
-			$scope.error_message = LoginConstants.PasswordNotPresent;
+			$rootScope.user.error_message = LoginConstants.PasswordNotPresent;
 		}
 		else if(!min_length_pattern.test($rootScope.user.password) && (!old_user)){
-			$scope.error_message = LoginConstants.PasswordLengthError;
+			$rootScope.user.error_message = LoginConstants.PasswordLengthError;
 		}
 		else if((not_repeat_pattern.test($rootScope.user.password)) && (!old_user)){
-			$scope.error_message = LoginConstants.ChooseAMoreSecurePassword;
+			$rootScope.user.error_message = LoginConstants.ChooseAMoreSecurePassword;
 		}
 		else if((max_length_pattern.test($rootScope.user.password)) && (!old_user)){
-			$scope.error_message = LoginConstants.MaximumPasswordLengthError;	
+			$rootScope.user.error_message = LoginConstants.MaximumPasswordLengthError;	
 		}
 		else{
 			$scope.loading_icon = true;

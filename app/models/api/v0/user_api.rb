@@ -145,7 +145,7 @@ module Api
 					if user_exists
 						clause = "START user=node:node_auto_index('indexed_email:"+params[:email]+"') MERGE (user)-[:FacebookAuth]->(fu:FacebookUser) SET user.thumb = CASE WHEN user.thumb IS NULL THEN \""+params[:thumb].to_s+"\" ELSE user.thumb END SET user.name = CASE WHEN user.name IS NULL THEN \""+params[:name].to_s+"\" ELSE user.name END SET user.fb_id = "+params[:id].to_s+set_clause+return_clause
 					else
-						clause = "MATCH (all_user:User) CREATE (user:User{fb_id:"+params[:id]+" email:\""+params[:email]+"\", indexed_email: \""+params[:email]+"\", thumb:\""+params[:thumb].to_s+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, name:\""+params[:name].to_s+"\"}), (user)-[:FacebookAuth]->(fu:FacebookUser), (user)-[fn:FeedNext{user_id:ID(user)}]->(user), (user)-[:Ego{user_id:ID(user)}]->(user), (user)<-[:Follow]-(all_user), (user)-[:Follow]->(all_user) WITH user, fu MATCH(bm:Label{primary_label:true}) CREATE (user)-[:Labelled{user_id:ID(user)}]->(bm)"+set_clause+return_clause
+						clause = "CREATE (user:User{fb_id:"+params[:id]+" email:\""+params[:email]+"\", indexed_email: \""+params[:email]+"\", thumb:\""+params[:thumb].to_s+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, name:\""+params[:name].to_s+"\"}), (user)-[:FacebookAuth]->(fu:FacebookUser), (user)-[fn:FeedNext{user_id:ID(user)}]->(user), (user)-[:Ego{user_id:ID(user)}]->(user) WITH user, fu MATCH(bm:Label{primary_label:true}) CREATE (user)-[:Labelled{user_id:ID(user)}]->(bm) WITH user MATCH (all_user:User) CREATE (user)-[:Follow]->(all_user), (user)<-[:Follow]-(all_user) WHERE all_user <> user "+set_clause+return_clause
 
 					end
 				else
@@ -157,7 +157,7 @@ module Api
 					if user_exists
 						clause = "MERGE (user:User{fb_id:"+params[:id]+"}) MERGE (user)-[:FacebookAuth]->(fu:FacebookUser) SET user.thumb = CASE WHEN user.thumb IS NULL THEN \""+params[:thumb].to_s+"\" ELSE user.thumb END SET user.name = CASE WHEN user.name IS NULL THEN \""+params[:name].to_s+"\" ELSE user.name END "+set_clause+return_clause
 					else
-						clause = "MATCH (all_user:User) CREATE (user:User{fb_id:"+params[:id]+", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, name:\""+params[:name].to_s+"\"}), (user)-[:FacebookAuth]->(fu:FacebookUser), (user)-[fn:FeedNext{user_id:ID(user)}]->(user), (user)-[:Ego{user_id:ID(user)}]->(user), (user)<-[:Follow]-(all_user), (user)-[:Follow]->(all_user) WITH user, fu MATCH(bm:Label{primary_label:true}) CREATE (user)-[:Labelled{user_id:ID(user)}]->(bm) SET user.thumb=\""+params[:thumb].to_s+"\" "+set_clause+return_clause
+						clause = "CREATE (user:User{fb_id:"+params[:id]+", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, name:\""+params[:name].to_s+"\"}), (user)-[:FacebookAuth]->(fu:FacebookUser), (user)-[fn:FeedNext{user_id:ID(user)}]->(user), (user)-[:Ego{user_id:ID(user)}]->(user) WITH user, fu MATCH(bm:Label{primary_label:true}) CREATE (user)-[:Labelled{user_id:ID(user)}]->(bm) SET user.thumb=\""+params[:thumb].to_s+"\" WITH user MATCH (all_user:User) CREATE (user)-[:Follow]->(all_user), (user)<-[:Follow]-(all_user) WHERE all_user <> user "+set_clause+return_clause
 					end
 				end
 				puts clause.blue.on_red
@@ -175,6 +175,7 @@ module Api
 				puts clause.blue.on_red
 				user = @neo.execute_query(clause)["data"]
 				if signin
+					puts "signin".red
 					begin
 						active_user_authenticated = user[0][0]["data"]["password"] == params[:password] && user[0][0]["data"]["verified"] && user[0][0]["data"]["active"] == true
 						user_authenticated = user[0][0]["data"]["password"] == params[:password] && user[0][0]["data"]["verified"]
