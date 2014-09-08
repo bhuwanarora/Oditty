@@ -1,6 +1,6 @@
 websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteService', 'Facebook', 'stropheService', '$timeout', '$cookieStore', 'LoginConstants', 'WebsiteUIConstants', function($scope, $rootScope, websiteService, Facebook, stropheService, $timeout, $cookieStore, LoginConstants, WebsiteUIConstants){
 	$scope.submit = function(event){
-		var enter_pressed = event.keyCode == WebsiteUIConstants;
+		var enter_pressed = event.keyCode == WebsiteUIConstants.Enter;
 		if(enter_pressed){
 			$scope.authenticate(true);
 		}
