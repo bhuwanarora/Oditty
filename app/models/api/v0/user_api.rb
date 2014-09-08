@@ -22,8 +22,34 @@ module Api
 			end
 
 			def self.recommend_book(user_id, friend_ids, book_id)
+				@neo = Neography::Rest.new
 				for friend_id in friend_ids
 					UsersGraphHelper.recommend_book(user_id, friend_id, book_id)
+					clause = "MATCH (b:Book), (u:User), (f:User) WHERE ID(b)="+book_id.to_s+" AND ID(u)="+user_id.to_s+" AND ID(f)="+friend_id.to_s+" RETURN b, u, f"
+					data = @neo.execute_query(clause)["data"][0]
+					book = data[0]["data"]
+					user = data[1]["data"]
+					friend = data[2]["data"]
+					isbn = book["isbn"].split(",")[0] rescue ""
+					params = {
+								:template => Constants::EmailTemplate::RecommendBooks, 
+							  	:user => {
+							  		:thumb => user["thumb"], 
+							  		:id => user_id,
+							  		:name => user["name"]
+							  	},
+							  	:friend =>{
+							  		:name => friend["name"],
+							  		:email => friend["email"]
+							  	},
+							  	:book => {
+							  		:id => book_id,
+							  		:title => book["title"],
+							  		:author_name => book["author_name"],
+							  		:isbn => isbn
+							  	}
+							}
+					SubscriptionMailer.recommend_book(params).deliver
 				end
 			end
 

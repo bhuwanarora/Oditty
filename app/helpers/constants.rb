@@ -66,5 +66,6 @@ module Constants
 	module EmailTemplate
 		PasswordReset			= "PasswordReset"
 		EmailVerification		= "email_verification"
+		RecommendBooks			= "RecommendBooks"
 	end
 end
