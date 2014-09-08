@@ -62,10 +62,14 @@ module Api
 			end
 
 			def self.get_details user_id
-				@neo = Neography::Rest.new
-				clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" RETURN u"
-				puts clause.blue.on_red
-				info = @neo.execute_query(clause)["data"][0][0]["data"]
+				if user_id.present?
+					@neo = Neography::Rest.new
+					clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" RETURN u"
+					puts clause.blue.on_red
+					info = @neo.execute_query(clause)["data"][0][0]["data"]
+				else
+					info = []
+				end
 				info
 			end
 

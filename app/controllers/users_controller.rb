@@ -84,7 +84,7 @@ class UsersController < ApplicationController
       neo.execute_query clause
       render :json => {:message => "Success"}, :status => 200
     rescue Exception => e
-      render :json => {:message => e}, :status => 500
+      render :json => {:message => e.to_s}, :status => 500
     end
   end
 
