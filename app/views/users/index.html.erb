@@ -8,12 +8,13 @@
           <% user[0]["data"].keys.each do |key| %>
             <tr><td><b><%= key %></b></td><td><%= user[0]["data"][key] %></td></tr>
           <% end %>
-          <form action="<%= users_path %>">
+          <tr>
             <input type="hidden"  value="<%= user[3] %>" name="id" />
-            <tr><td><b>Active</b></td><td><input type="checkbox" name="active" <% if user[0]["data"]["active"] %>checked<% end %>/></td></tr>
-            <tr><td><hr/></td></tr>
-            <tr><td><button type="submit">Sumbit</button></td></tr>
-          </form>
+            <td><b>Active</b></td>
+            <td><input type="checkbox" name="active" <% if user[0]["data"]["active"] %>checked<% end %>/></td>
+          </tr>
+          <tr><td><hr/></td></tr>
+          <tr><td><button type="submit">Sumbit</button></td></tr>
           <% if user[1] %>
             <tr><td><hr/></td></tr>
             <tr><td><b>Facebook</b></td></tr>
