@@ -44,7 +44,8 @@ module Api
 			def self.save_info(user_id, params)
 				if user_id.present?
 					@neo = Neography::Rest.new
-					
+
+					clause = " SET u.email = \""+params[:email]+"\""	if params[:email]
 					clause = " SET u.name = \""+params[:name]+"\", u.indexed_user_name=\""+params[:name].downcase.gsub(" ","")+"\"" 	if params[:name]
 					clause = " SET u.latitude="+params[:latitude].to_s+", u.longitude="+params[:longitude].to_s if params[:latitude]
 					clause = " SET u.init_book_read_count=\""+params[:init_book_read_count]+"\"" if params[:init_book_read_count]

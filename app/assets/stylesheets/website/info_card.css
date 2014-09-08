@@ -157,6 +157,16 @@
 	border-top-right-radius: 3px;
 }
 
+.info_cards .input_30{
+    width: 30% !important;
+    margin-right: 10px;
+}
+
+.info_cards .input_50{
+    width: 50% !important;
+    margin-right: 10px;
+}
+
 .info_cards input{
 	width: 100%;
 	padding: 6px;
@@ -166,6 +176,11 @@
 	border-radius: 4px;
 	margin-top: 10px;
 	margin-bottom: 10px;
+}
+
+.info_cards input[type="radio"]{
+	padding: 0px;
+	margin: 5px;
 }
 
 .info_cards .custom_radio{

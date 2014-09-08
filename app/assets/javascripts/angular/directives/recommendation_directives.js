@@ -522,17 +522,17 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 			}
 
 			_handle_info_card_bindings = function($scope){
-				if($rootScope.user.profile_status == 3){
-					$scope.get_popular_books();
-				}
-				else if($rootScope.user.profile_status == 2){
+				if($rootScope.user.profile_status == 1){
 					$scope._get_genres();
 				}
-				else if($rootScope.user.profile_status == 4){
+				else if($rootScope.user.profile_status == 2){
+					$scope.get_popular_books();
+				}
+				else if($rootScope.user.profile_status == 3){
 					$scope.get_popular_authors();
 					// $rootScope.$broadcast('showBookReadShelf');
 				}
-				else if($rootScope.user.profile_status == 6){
+				else if($rootScope.user.profile_status == 5){
 					if(navigator.geolocation){
 						navigator.geolocation.getCurrentPosition(function(position){
 							var latitude = position.coords.latitude;
@@ -557,19 +557,19 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 
 			$scope.edit_books_read = function(){
 				$scope.goto_info_card();
-				$rootScope.user.profile_status = 3;
+				$rootScope.user.profile_status = 2;
 				$scope.get_popular_books();
 			}
 
 			$scope.edit_genres_like = function(){
 				$scope.goto_info_card();
-				$rootScope.user.profile_status = 2;
+				$rootScope.user.profile_status = 1;
 				$scope._get_genres();
 			}
 
 			$scope.edit_authors_read = function(){
 				$scope.goto_info_card();
-				$rootScope.user.profile_status = 4;
+				$rootScope.user.profile_status = 3;
 				$scope.get_popular_authors();
 			}
 
@@ -613,14 +613,14 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 					$rootScope.user.profile_status = $rootScope.user.profile_status - 1;
 				}
 				else{
-					$rootScope.user.profile_status = 8;
+					$rootScope.user.profile_status = 6;
 				}
 				_handle_info_card_bindings($scope);
 				_profile_status_colors();
 			}
 
 			$scope.next_profile_state = function(){
-				if($rootScope.user.profile_status != 8){
+				if($rootScope.user.profile_status != 6){
 					$rootScope.user.profile_status = $rootScope.user.profile_status + 1;
 				}
 				else{
@@ -632,18 +632,6 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 
 			$scope.stop_horizontal_scroll = function(event){
 				event.stopPropagation();
-			}
-
-			$scope.update_profile = function(){
-				var enter_pressed = event.keyCode == WebsiteUIConstants.Enter;
-				if(enter_pressed){
-					var profile_status = $rootScope.user.profile_status;
-					if(profile_status == 0){
-						websiteService.update_profile($rootScope.user);
-						$rootScope.user.profile_status = $rootScope.user.profile_status + 1;
-						_profile_status_colors();
-					}
-				}
 			}
 
 			$scope.user_profile_changed = function(selected){
@@ -664,6 +652,13 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 					var params = {"name": $rootScope.user.name};
 					websiteService.save_user_info(params);
 				}
+			}
+
+			$scope.set_email = function(){
+				if($rootScope.user.email.length > 0){
+					var params = {"email": $rootScope.user.email};
+					websiteService.save_user_info(params);
+				}	
 			}
 
 			$scope.set_gender = function(){
