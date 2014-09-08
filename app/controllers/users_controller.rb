@@ -183,6 +183,7 @@ class UsersController < ApplicationController
     else
       @message = Constants::EmailConfirmationFailed
     end
+    render :layout => "clean"
   end
 
   def recover_password
