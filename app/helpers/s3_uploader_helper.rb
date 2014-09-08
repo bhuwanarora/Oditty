@@ -3,11 +3,18 @@ module S3UploaderHelper
 	# require 'aws-sdk'
 	# require 'open-uri'
 	
-	def self.upload_file(file_name, key)
+	def self.upload_file(input_file, output_key)
 		@s3 ||= AWS::S3.new
-		# Upload a file.
-		# key = File.basename(file_name)
-		@s3.buckets['rd-images'].objects[key].write(:file => file_name)
+		# output_key = File.basename(input_file)
+		@s3.buckets['rd-images'].objects[output_key].write(:file => input_file)
+	end
+
+	def self.delete_file(bucket_name, key)
+		@s3 ||= AWS::S3.new
+		bucket = @s3.bucket('rd-images')
+		if bucket.objects[key].exists?
+			bucket.delete_key(key)
+		end
 	end
 
 	def self.upload_cover_photos

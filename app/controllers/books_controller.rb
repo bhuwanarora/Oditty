@@ -2,6 +2,7 @@ class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
   include TrendsHelper
   include FlickrHelper
+  include S3UploaderHelper
 
   # GET /books
   # GET /books.json
@@ -30,10 +31,15 @@ class BooksController < ApplicationController
     # @urls = FlickrHelper.get_cover_photos
   end
 
+
   def set_active_cover_photo
     begin
       neo = Neography::Rest.new
-      clause = "MATCH (c:CoverPhoto) WHERE ID(c)="+params[:id].to_s+" SET c.status=true"
+      if params[:active]
+        clause = "MATCH (c:CoverPhoto) WHERE ID(c)="+params[:id].to_s+" SET c.status=false"
+      else
+        clause = "MATCH (c:CoverPhoto) WHERE ID(c)="+params[:id].to_s+" SET c.status=true"
+      end
       puts clause.blue.on_red
       neo.execute_query clause
       render :json => {:message => "Success"}, :status => 200

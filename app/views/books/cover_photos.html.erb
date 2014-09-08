@@ -16,12 +16,17 @@
 			$('.cover_photo').on('click', function(){
 				var $this = $(this);
 				$('.footer_status').html('Updating...');
-				var data = "id="+$this.attr('data-id');
+				var data = "id="+$this.attr('data-id')+"&active="+$this.hasClass('active_photo');
 				$.ajax({
 					url: "<%= set_active_cover_photo_path %>",
 					data: data,
 					success: function(){
-						$this.addClass('active_photo');
+						if($(this).hasClass('active_photo')){
+							$this.removeClass('active_photo');
+						}
+						else{
+							$this.addClass('active_photo');
+						}
 						$('.footer_status').html('');
 					},
 					error: function(){
