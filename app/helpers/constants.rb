@@ -7,7 +7,11 @@ module Constants
 	ThumbSuggest				= 10
 	RecommendationPoints		= 10
 
-	Admin						= 1633203
+	if Rails.env.development?
+		Admin						= 1633203
+	else
+		Admin						= 1633200
+	end
 
 	InvalidLink					= "Invalid Link"
 	LoginSuccess				= "Logged in successfully."
