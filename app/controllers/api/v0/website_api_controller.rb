@@ -78,8 +78,9 @@ module Api
 				random = r.rand(1...22)
 				clause = "MATCH (c:CoverPhoto) WHERE c.status = true RETURN ID(c) SKIP "+random.to_s+" LIMIT 1"
 				puts clause.blue.on_red
-				image_url = neo.execute_query(clause)["data"]
-				render :json => image_url, :status => 200
+				id = neo.execute_query(clause)["data"]
+				puts id.to_s.green
+				render :json => id, :status => 200
 			end
 
 			def notifications

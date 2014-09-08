@@ -287,7 +287,7 @@ module Api
 							node_string = node_string + self.handle_hash(param[object_key], object_key, new_label)
 						end
 
-						puts "#{param[object_key].to_s.green} #{object_key.to_s}"
+						puts "#{param[object_key].to_s.green} #{object_key.to_s} #{key} #{param[object_key].class}"
 						puts object_string.to_s.blue
 						puts node_string.to_s.red
 

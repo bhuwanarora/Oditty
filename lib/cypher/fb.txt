@@ -1,0 +1,46 @@
+{"id"=>"100002688874653", "education"=>[{"concentration"=>[{"id"=>"108384569189012", "name"=>"Sociology"}], "school"=>{"id"=>"131419803557231", "name"=>"Maitreyi College"}, "type"=>"College", "year"=>{"id"=>"143641425651920", "name"=>"2014"}}], "first_name"=>"Prachi", "gender"=>"female", "last_name"=>"Jain", "profile"=>"https://www.facebook.com/prachi.jain.31", "locale"=>"en_US", "name"=>"Prachi Jain", "political"=>"Communism", "religion"=>"Monotheism", "quotes"=>"world is web of words\ncommon sense is not so common", "timezone"=>5.5, "updated_time"=>"2014-08-27T12:30:41+0000", "username"=>"prachi.jain.31", "verified"=>true, "work"=>[{"description"=>"Internship", "employer"=>{"id"=>"508530545841089", "name"=>"Anand Foundation"}, "location"=>{"id"=>"102161913158207", "name"=>"Delhi, India"}, "position"=>{"id"=>"102167983158778", "name"=>"Internship"}, "start_date"=>"2014-08-26"}, {"employer"=>{"id"=>"452244444871895", "name"=>"Student"}}], "profile_status"=>0, "logged"=>true}
+
+
+[{"id"=>"108384569189012", "name"=>"Sociology"}] concentration
+CREATE UNIQUE (education1)-[:HasProperty]->(:Concentration{id: "108384569189012",name: "Sociology"})
+
+
+
+{"id"=>"131419803557231", "name"=>"Maitreyi College"} school
+CREATE UNIQUE (education1)-[:HasProperty]->(:Concentration{id: "108384569189012",name: "Sociology"})
+
+
+College type
+type: "College"
+
+CREATE UNIQUE (education1)-[:HasProperty]->(:Concentration{id: "108384569189012",name: "Sociology"})
+
+
+
+{"id"=>"143641425651920", "name"=>"2014"} year
+type: "College"
+ CREATE UNIQUE (education1)-[:HasProperty]->(:Concentration{id: "108384569189012",name: "Sociology"})
+
+
+Internship description
+description: "Internship"
+
+{"id"=>"508530545841089", "name"=>"Anand Foundation"} employer
+description: "Internship"
+
+{"id"=>"102161913158207", "name"=>"Delhi, India"} location
+description: "Internship"
+
+{"id"=>"102167983158778", "name"=>"Internship"} position
+description: "Internship"
+
+2014-08-26 start_date
+description: "Internship",start_date: "2014-08-26"
+
+{"id"=>"452244444871895", "name"=>"Student"} employer
+
+
+CREATE UNIQUE (user)-[:Education]->(education1:Education{type: "College"}) 
+CREATE UNIQUE (education1)-[:HasProperty]->(:Concentration{id: "108384569189012",name: "Sociology"}) 
+CREATE UNIQUE (user)-[:Work]->(work1:Work{description: "Internship",start_date: "2014-08-26"})  
+CREATE UNIQUE (user)-[:Work]->(work2:Work{})  RETURN DISTINCT(ID(user))

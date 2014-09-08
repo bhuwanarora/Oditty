@@ -3,12 +3,14 @@
     <div
       class="cropme-button grey_button"
       ng-click="browseFiles()">
-      <span ng-if="!set">
-        Upload Profile Picture
-      </span>
-      <span ng-if="set">
-        Change profile Picture
-	  </span> 
+      <b>
+	      <span ng-if="!set">
+	        Upload Profile Picture
+	      </span>
+	      <span ng-if="set">
+	        Change profile Picture
+		  </span> 
+      </b>
     </div>
     <div ng-if="error" class="error">{{error}}</div>
 </div>

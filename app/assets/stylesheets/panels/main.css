@@ -107,7 +107,7 @@ table{
 	margin-top: 40px;
 }
 
-a{
+a, .site_color{
 	color: #427fed;
 	cursor: pointer;
 }
@@ -121,5 +121,5 @@ a{
 	float: left;
 	overflow-x: scroll;
 	margin: 3px;
-	height: 300px;
+	max-height: 300px;
 }

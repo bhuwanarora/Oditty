@@ -3,8 +3,8 @@
   <% @users.each_with_index do |user, index| %>
     <span>
       <ul class="user_grid">
-        <table>
-          <tr><td><b>#<%= user[3] %></b></td></tr>
+          <b class="site_color user">#<%= user[3] %> <%= user[0]["data"]["email"] %> <%= user[0]["data"]["name"] %></b>
+        <table style="display:none;">
           <% user[0]["data"].keys.each do |key| %>
             <tr><td><b><%= key %></b></td><td><%= user[0]["data"][key] %></td></tr>
           <% end %>
@@ -53,6 +53,10 @@
         }
       })
     }
+
+    $('.user').on('click', function(){
+      $(this).siblings('table').toggle();
+    });
 
     $('.clear_data').on('click', function(){
       clear_data();
