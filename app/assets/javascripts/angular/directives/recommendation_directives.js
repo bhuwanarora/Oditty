@@ -648,14 +648,14 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 			}
 	
 			$scope.set_user_name = function(){
-				if($rootScope.user.name.length > 0){
+				if(angular.isDefined($rootScope.user.name) && $rootScope.user.name.length > 0){
 					var params = {"name": $rootScope.user.name};
 					websiteService.save_user_info(params);
 				}
 			}
 
 			$scope.set_email = function(){
-				if($rootScope.user.email.length > 0){
+				if(angular.isDefined($rootScope.user.email) && $rootScope.user.email.length > 0){
 					var params = {"email": $rootScope.user.email};
 					websiteService.save_user_info(params);
 				}	
