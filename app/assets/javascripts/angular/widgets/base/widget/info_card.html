@@ -20,7 +20,7 @@
      		<div class="icon-pen"></div>
      	</div>
      	<div class="block"
-     		ng-click="goto_info_card(); user.profile_status=7;"
+     		ng-click="goto_info_card(); user.profile_status=4;"
      		title="Invite friends">
      		<div class="icon-users"></div>
      	</div>
@@ -62,7 +62,6 @@
 		      	       spellcheck="false"
 		      	       focus-out="set_email()"/>
 				</div>
-	      	     <hr/>
 		      	<div class="header">
 		      		<label for="birthday">Born on</label>
 					 <calendar save-date="set_date_of_birth()"></calendar>
@@ -73,12 +72,12 @@
 		      		<form name="gender_form">
 				  		<input type="radio" ng-model="user.gender" value="Male" id="male"
 				  				ng-change="set_gender()"
-				  				class="custom_radio icon-checkbox-unchecked">&nbsp;&nbsp;
+				  				class="custom_radio icon-checkbox-unchecked">&nbsp;
 		      			<label for="male">Male&nbsp;&nbsp;&nbsp;</label>
 
 				  		<input type="radio" ng-model="user.gender" value="Female" id="female"
 				  				ng-change="set_gender()"
-				  				class="custom_radio icon-checkbox-unchecked">&nbsp;&nbsp;
+				  				class="custom_radio icon-checkbox-unchecked">&nbsp;
 				  		<label for="female">Female&nbsp;&nbsp;&nbsp;</label>
 
 				  		<input type="radio" ng-model="user.gender" value="Other" id="other" 
@@ -102,6 +101,18 @@
 	      			</form>
       			</div>
       			<hr/>
+      				<cropme
+			        width="info_card_width"
+			        max-height="470"
+			        ratio="info_card_ratio"
+			        icon-class=""
+			        type="png"
+			        destination-width="350">
+			    </cropme>
+		      	<div ng-if="user.thumb">
+			    	<img ng-src="{{user.thumb}}" class="profile_pic">
+		      	</div>
+		      	<hr/>
 			</div>
 			<!-- <div ng-switch-when="1">
 				<div class="wrap_header header">
@@ -212,33 +223,15 @@
 				</div> -->
 			</div>
 			<div ng-switch-when="4">
-	      	 	<cropme
-			        width="info_card_width"
-			        max-height="470"
-			        ratio="info_card_ratio"
-			        icon-class=""
-			        type="png"
-			        destination-width="350">
-			    </cropme>
-		      	<div ng-if="user.thumb">
-			    	<img ng-src="{{user.thumb}}" class="profile_pic">
-		      	</div>
-			</div>
-			<div ng-switch-when="5">
 				<div class="header">
-					Meet readers in your area...
+					Meet readers in your area(Coming Soon)...
 				</div>
+				<div ng-include src="'/assets/angular/widgets/partials/invite.html'"></div>
 				<map style="display:block; height:50vh; width: 101%; margin-top: 10px;">
 					<marker position="current" centered="true"></marker>
 				</map>
 			</div>
-			<div ng-switch-when="6">
-				<!-- <div class="header">Invite your friends</div> -->
-				<div class="description">
-					Know what your friends are reading...
-				</div>
-				<div ng-include src="'/assets/angular/widgets/partials/invite.html'"></div>
-			</div>
+			
 			
 			<div class="footer">
 				<span class="prev icon-angle-left grey_button" ng-click="prev_profile_state()"></span>

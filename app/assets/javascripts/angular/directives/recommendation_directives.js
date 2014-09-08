@@ -532,7 +532,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 					$scope.get_popular_authors();
 					// $rootScope.$broadcast('showBookReadShelf');
 				}
-				else if($rootScope.user.profile_status == 5){
+				else if($rootScope.user.profile_status == 4){
 					if(navigator.geolocation){
 						navigator.geolocation.getCurrentPosition(function(position){
 							var latitude = position.coords.latitude;
@@ -613,14 +613,14 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 					$rootScope.user.profile_status = $rootScope.user.profile_status - 1;
 				}
 				else{
-					$rootScope.user.profile_status = 6;
+					$rootScope.user.profile_status = 4;
 				}
 				_handle_info_card_bindings($scope);
 				_profile_status_colors();
 			}
 
 			$scope.next_profile_state = function(){
-				if($rootScope.user.profile_status != 6){
+				if($rootScope.user.profile_status != 4){
 					$rootScope.user.profile_status = $rootScope.user.profile_status + 1;
 				}
 				else{
