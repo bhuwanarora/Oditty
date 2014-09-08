@@ -534,30 +534,32 @@ module Neo4jHelper
 	def self.add_categories
 		@neo ||= self.init
 		ShelfariBooksCategories.where(:category_flag => nil).find_each do |book_category|
-			begin
-				book_id = book_category.shelfari_book_id
-				book = ShelfariBook.find book_id
-				book_title = book.name.downcase.gsub(" ", "").gsub("\"", "").gsub("'", "").gsub(":", "")
+			if book_category.id != 543718
+				begin
+					book_id = book_category.shelfari_book_id
+					book = ShelfariBook.find book_id
+					book_title = book.name.downcase.gsub(" ", "").gsub("\"", "").gsub("'", "").gsub(":", "")
 
-				shelfari_category_id = book_category.shelfari_category_id
-				shelfari_category = ShelfariCategory.find shelfari_category_id
-				category_name = shelfari_category.name.downcase.gsub(" ", "").gsub("\"", "'").to_s rescue ""
-				puts "#{book_title.green} #{book_id} #{shelfari_category_id}"
+					shelfari_category_id = book_category.shelfari_category_id
+					shelfari_category = ShelfariCategory.find shelfari_category_id
+					category_name = shelfari_category.name.downcase.gsub(" ", "").gsub("\"", "'").to_s rescue ""
+					puts "#{book_title.green} #{book_id} #{shelfari_category_id}"
 
-				main_clause = "MATCH (book:Book{indexed_title:\""+book_title+"\"})"
-				clause = " MERGE (shelfari_category:Category{uuid:"+shelfari_category_id.to_s+"}) CREATE UNIQUE (book)-[:FromCategory]->(shelfari_category)"
-				main_clause = main_clause + clause
-				@neo.execute_query main_clause
-				book_category.update_column("category_flag", true)
-			rescue Neography::SyntaxException
-				book_category.update_column("category_flag", false)
-				puts "Neography::SyntaxException".blue.on_red
-			rescue Neography::UniquePathNotUniqueException
-				book_category.update_column("category_flag", false)
-				puts "Neography::UniquePathNotUniqueException".blue.on_red
-			rescue Neography::NeographyError
-				book_category.update_column("category_flag", false)
-				puts "Neography::NeographyError".blue.on_red
+					main_clause = "MATCH (book:Book{indexed_title:\""+book_title+"\"})"
+					clause = " MERGE (shelfari_category:Category{uuid:"+shelfari_category_id.to_s+"}) CREATE UNIQUE (book)-[:FromCategory]->(shelfari_category)"
+					main_clause = main_clause + clause
+					@neo.execute_query main_clause
+					book_category.update_column("category_flag", true)
+				rescue Neography::SyntaxException
+					book_category.update_column("category_flag", false)
+					puts "Neography::SyntaxException".blue.on_red
+				rescue Neography::UniquePathNotUniqueException
+					book_category.update_column("category_flag", false)
+					puts "Neography::UniquePathNotUniqueException".blue.on_red
+				rescue Neography::NeographyError
+					book_category.update_column("category_flag", false)
+					puts "Neography::NeographyError".blue.on_red
+				end
 			end
 		end
 
