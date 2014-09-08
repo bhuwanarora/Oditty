@@ -63,13 +63,13 @@
 		      	       focus-out="set_email()"/>
 				</div>
 		      	<div class="header">
-		      		<label for="birthday">Born on</label>
+		      		<label for="birthday">Born on</label>&nbsp;&nbsp;
 					 <calendar save-date="set_date_of_birth()"></calendar>
 		      	</div>
 		      	<hr/>
 		      	<div class="header">
-		  			<label for="gender">Gender</label>
 		      		<form name="gender_form">
+		  				<label for="gender">Gender</label>&nbsp;&nbsp;
 				  		<input type="radio" ng-model="user.gender" value="Male" id="male"
 				  				ng-change="set_gender()"
 				  				class="custom_radio icon-checkbox-unchecked">&nbsp;
@@ -88,8 +88,8 @@
 		      	</div>
 		      	<hr/>
 		      	<div class="header">
-	      				I have read
 	      			<form name="book_count_form">
+	      				<label>I have read</label>&nbsp;&nbsp;
 		      			<label ng-repeat="book_count in book_counts">
 		      				<input type="radio" 
 		      					   ng-model="user.init_book_read_count" 
