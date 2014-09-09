@@ -168,6 +168,14 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		      }
 		    }
 		);
+		FB.api(
+		    "/me/books.read",
+		    function(response) {
+		      if (response && !response.error) {
+		        websiteService.test(response);
+		      }
+		    }
+		);
     }
 
     $scope._init_user = function(){
