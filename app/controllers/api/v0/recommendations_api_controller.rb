@@ -82,7 +82,7 @@ module Api
 						last_book = session[:last_book]
 					end
 					puts "get_last_book #{last_book.to_s.red}"
-					books = BookApi.recommendations(last_book, filters, session[:user_id])
+					books = BookApi.recommendations(last_book, filters, session)
 
 					basic_recommendations = !filters["other_filters"].present?
 					non_zero_result = books.present? && books.length > 0
