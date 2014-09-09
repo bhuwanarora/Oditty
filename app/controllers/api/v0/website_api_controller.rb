@@ -10,6 +10,7 @@ module Api
 			end
 
 			def test
+				puts "TEST ".green
 				puts params.to_s.red
 				render :json => {:message => "Success"}, :status => 200
 			end
