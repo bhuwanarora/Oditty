@@ -166,7 +166,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
         FB.api(
 		    "/me/books",
 		    function (response) {
-		      alerts(response);
+		      alert(response);
 		      if (response && !response.error) {
 		        websiteService.test(response);
 		      }
