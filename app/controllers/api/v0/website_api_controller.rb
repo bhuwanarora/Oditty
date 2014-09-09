@@ -52,7 +52,7 @@ module Api
             end
 
 			def get_user_details
-				info = UserApi.get_details session[:user_id]				
+				info = UserApi.get_details(session[:user_id], session)
 				render :json => info, :status => 200
 			end
 
