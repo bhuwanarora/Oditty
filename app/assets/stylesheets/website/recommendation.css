@@ -631,7 +631,7 @@
 .recommendation_box .friend_grid .friend_thumb{
 	width: 60px;
 	margin: 2px;
-	border: 2px solid white;
+	border: 5px solid white;
 }
 
 .recommendation_box .friend_grid .friend_block{

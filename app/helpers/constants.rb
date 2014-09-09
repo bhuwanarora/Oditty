@@ -8,9 +8,9 @@ module Constants
 	RecommendationPoints		= 10
 
 	if Rails.env.development?
-		Admin						= 2707283
+		Admin						= 2707306
 	else
-		Admin						= 3907405
+		Admin						= 3952772
 	end
 
 	InvalidLink					= "Invalid Link"
