@@ -5,7 +5,7 @@
  	<select ng-model="selectedMonth" ng-options="selectedMonth for selectedMonth in months" ng-change="date_check()" ng-disabled="!selectedYear">
  		<option value="">Month</option>
  	</select>
- 	<select ng-model="selectedDay" ng-options="selectedDay for selectedDay in days" ng-change="date_check()" ng-disabled="!selectedYear || !selectedMonth">
+ 	<select ng-model="selectedDay" ng-options="selectedDay for selectedDay in days" ng-change="date_check(); save_date(selectedYear, selectedMonth, selectedDay);" ng-disabled="!selectedYear || !selectedMonth">
  		<option value="">Day</option>
  	</select>
  </span>

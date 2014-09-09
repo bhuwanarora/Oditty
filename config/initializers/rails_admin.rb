@@ -59,7 +59,7 @@ RailsAdmin.config do |config|
     'Book::PublishingDetails', 'Book::SubjectPeople', 'Book::SubjectPlace', 'Book::SubjectTime', 'BookSeries',
     'Category', 'Edge', 'Gender', 'HumanProfile', 'HumanProfile::Address', 'Language', 
     'Prize', 'Profession', 'Publisher', 'ReadingStatus', 'RelationType', 'Tag', 'User',
-    'ReadersDoorAdmin', 'GoodReadsGenre', 'GoodReadsBook', 'ShelfariBook', 'NoteForParent',
+    'ReadersDoorAdmin', 'ShelfariBook', 'NoteForParent',
     'ShelfariCategory', 'ShelfariTag', 'Quote', 'Location', 'Theme', 'Character', 'Ebook', 'Movie',
     'ComingSoonPageQuotes', 'FacebookUserAuthentication', 'GoogleUserAuthentication', 'Genre', 'FileParserState']
 
@@ -198,25 +198,25 @@ RailsAdmin.config do |config|
     show do; end
   end
 
-  config.model 'GoodReadsBook' do
-    configure :title, :string
-    configure :description, :text
-    configure :rating, :string
-    configure :authorName, :string
-    configure :isbn, :string
-    configure :url, :string
+  # config.model 'GoodReadsBook' do
+  #   configure :title, :string
+  #   configure :description, :text
+  #   configure :rating, :string
+  #   configure :authorName, :string
+  #   configure :isbn, :string
+  #   configure :url, :string
 
-    show do; end
-    edit do; end
-  end
+  #   show do; end
+  #   edit do; end
+  # end
 
-  config.model 'GoodReadsGenre' do
-    configure :name, :string
-    configure :book_count, :integer
-    configure :tags, :has_and_belongs_to_many_association
-    show do; end
-    edit do; end
-  end
+  # config.model 'GoodReadsGenre' do
+  #   configure :name, :string
+  #   configure :book_count, :integer
+  #   configure :tags, :has_and_belongs_to_many_association
+  #   show do; end
+  #   edit do; end
+  # end
 
   config.model 'Admin' do
 

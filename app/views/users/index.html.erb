@@ -1,25 +1,78 @@
-<h1>Listing users</h1>
+<div class="header"><b><%= @users.count %> Users</b></div>
+<div style="overflow: auto;">
+  <% @users.each_with_index do |user, index| %>
+    <span>
+      <ul class="user_grid">
+          <b class="site_color user">#<%= user[3] %> <%= user[0]["data"]["email"] %> <%= user[0]["data"]["name"] %></b>
+        <table style="display:none;">
+          <% user[0]["data"].keys.each do |key| %>
+            <tr><td><b><%= key %></b></td><td><%= user[0]["data"][key] %></td></tr>
+          <% end %>
+          <tr>
+            <input type="hidden"  value="<%= user[3] %>" name="id" />
+            <td><b>Active</b></td>
+            <td><input type="checkbox" name="active" <% if user[0]["data"]["active"] %>checked<% end %>/></td>
+          </tr>
+          <tr><td><hr/></td></tr>
+          <tr><td><button type="submit">Sumbit</button></td></tr>
+          <% if user[1] %>
+            <tr><td><hr/></td></tr>
+            <tr><td><b>Facebook</b></td></tr>
+            <% user[1]["data"].keys.each do |key| %>
+              <tr><td><b><%= key %></b></td><td><%= user[1]["data"][key] %></td></tr>
+            <% end %>
+          <% end %>
+          
+        </table>
+      </ul>
+    </span>
+  <% end %>
+  
+</div>
 
-<table>
-  <thead>
-    <tr>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+<div class="vertical_padder"></div>
 
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="main_footer">
+  <a class="clear_data">Clear Dummy User Data</a>
+  <button class="add_user">Add test user</button>
+  <div class="footer_status"></div>
+</div>
 
-<br>
 
-<%= link_to 'New User', new_user_path %>
+<script>
+  $(document).ready(function(){
+    var clear_data = function(){
+      $('.footer_status').html("Processing request...");
+      $.ajax({
+        url: "<%= clear_data_path %>",
+        success: function(){
+          $('.footer_status').html('Data cleaned..');
+        },
+        error: function(){
+          $('.footer_status').html('Error in cleaning data');
+        }
+      })
+    }
+
+    $('.user').on('click', function(){
+      $(this).siblings('table').toggle();
+    });
+
+    $('.clear_data').on('click', function(){
+      clear_data();
+    });
+
+    function add_user(){
+      $('.add_user').on('click', function(){
+        $('.modal').removeClass('hidden_input');
+      });
+    }
+
+    function submit_user(){
+      $('.submit').on('click', function(){
+        var data = $('#newUser').serialise();
+         
+      });
+    }
+  });
+</script>

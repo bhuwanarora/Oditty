@@ -1,20 +1,23 @@
 <form ng-if="book.show_labels">
   <div class="arrow_down"></div>
-	<ul class="label_dropdown animate-fast" 
+	<ul class="label_dropdown scrollbar" 
 		ng-click="stop_propagation($event)"
 		msd-wheel="stop_horizontal_scroll($event)"
 		ng-model="book.labels">
-		<li ng-repeat="label in book.labels track by $index"  ng-click="select_label($index);">
+		<li ng-repeat="label in book.labels track by $index"  
+        class="animate-fast" 
+        ng-click="select_label($index);">
   			<label>
   				<span class="bookmark_label">
-  					<span class="icon-bookmark3"></span>&nbsp;
-  					<span>{{label.name}}</span>
+  					<!-- <span class="icon-bookmark3"></span>&nbsp; -->
+  					<span>{{label.name | lowercase}}</span>
   				</span>
         </label>
   			<input type="checkbox" 
   					   ng-checked="label.checked"
   					   ng-value="label.name"
-  					   class="custom_radio icon-checkbox-unchecked">
+  					   class="custom_bookmark_radio icon-checkbox-unchecked">
 		</li>
+    <li ng-if="book.labels.length == 0"><span class="bookmark_label">Add a shelf...</span></li>
 	</ul>
 </form>

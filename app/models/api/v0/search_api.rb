@@ -1,57 +1,88 @@
 module Api
 	module V0
 		class SearchApi
-			def search_book
-
+			def self.search_books(q, user_id=nil)
+				results = []
+				neo_init
+				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "")
+				unless user_id.present?
+					clause = "START book=node:node_auto_index('indexed_title:"+q+"*') WITH book RETURN book.isbn, ID(book), book.title as name, book.author_name ORDER BY book.total_weight DESC LIMIT 10"
+				else
+					clause = "START book=node:node_auto_index('indexed_title:"+q+"*') WITH book ORDER BY book.total_weight DESC OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" RETURN book.isbn, ID(book), book.title as name, book.author_name, ID(m) LIMIT 10"
+				end
+				puts clause.blue.on_red
+				if q.length >= 3
+					results = @neo.execute_query(clause)["data"]
+				end
+				results
 			end
 
-			def search_author
+			def self.search_genres(q, limit)
+				results = []
+				neo_init
+				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "") rescue ""
+				if q.present?
+					clause = "START genre=node:node_auto_index('indexed_star_genre_name:"+q+"*') RETURN genre.name, ID(genre) ORDER BY genre.books_count DESC LIMIT "+limit.to_s
+				else
+					clause = "MATCH(genre:Genre) WHERE genre.root_genre=true RETURN genre.name, ID(genre), genre.icon ORDER BY genre.books_count DESC"
+				end
+				puts clause.blue.on_red
+				results = @neo.execute_query(clause)["data"]
+				results
+			end
+
+			def self.search_authors(q, user_id, genre_id)
+				results = []
+				neo_init
+				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "")
+				if genre_id.present? && genre_id != "0"
+					if q.present?
+						clause = "START author=node:node_auto_index('indexed_main_author_name:"+q+"*') RETURN author.name, ID(author) LIMIT 10"
+						results = @neo.execute_query(clause)["data"]
+					else
+						clause = "MATCH (g:Genre)-[:Belongs_to]->(:Book)<-[:Wrote]-(author:Author) WHERE ID(g)="+genre_id.to_s+" WITH DISTINCT author as author RETURN author.name, ID(author) LIMIT 10"
+						results = @neo.execute_query(clause)["data"]
+					end
+				else
+					if q.present?
+						clause = "START author=node:node_auto_index('indexed_main_author_name:"+q+"*') RETURN author.name, ID(author) LIMIT 10"
+						results = @neo.execute_query(clause)["data"]
+					else
+						clause = "MATCH (author:Author) RETURN author.name, ID(author) LIMIT 10"
+						results = @neo.execute_query(clause)["data"]
+					end
+				end
+				puts clause.blue.on_red
+				results
 			end
 
 			def search_reader
 
 			end
 
-			def self.search_genres filter
-				neo_init
-				match_clause = "MATCH (g:Genre) "
-				return_clause = "RETURN g 
-                                 ORDER BY g.gr_book_count DESC "
-				if filter && filter.chop.present?
-					where_clause = "WHERE g.name =~ '(?i)"+filter+".*'"
-                    limit_clause = "LIMIT 5"
-                	genres = @neo.execute_query(match_clause+where_clause+return_clause+limit_clause)
-                else
-                	limit_clause = "LIMIT 2"
-                	genres = @neo.execute_query(match_clause+return_clause+limit_clause)
-                end
-			end
-
 			def self.search(q, count, type)
 				neo_init
+				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "").gsub("@", "")
 				if (type.include? 'BOOK')
-					results = GoodReadsBook.where("UPPER(title) LIKE ?", "#{q.upcase}%")
-									   	   .select([:id, :author_name])
-									   	   .select("title as name")
-									       .limit(count)
-					tester = {:name => "BOOK:"+q.upcase}
-				elsif (type.include? 'AUTHOR') || (type.include? 'READER')
-					q = "@"+q
-					clause = "MATCH (author:Author) WHERE author.name =~ '(?i)"+q+".*' 
-								RETURN author.name LIMIT "+count.to_s
-					results = @neo.execute_query(clause)
-					tester = {:name => "HUMAN:"+q.upcase}
-				elsif (type.include? 'TAG')
-					results = GoodReadsGenre.where("UPPER(name) LIKE ?", "#{q.upcase}%")
-											.select([:id, :name])
-											.limit(count)
-					tester = {:name => "TAG:"+q.upcase}
-				else
-					clause = "MATCH (book:Book) WHERE book.title =~ '(?i)"+q+".*' RETURN book.title as name, book.author_name ORDER BY toFloat(book.gr_rating) DESC LIMIT 5"
+					clause = "START book=node:node_auto_index('indexed_title:"+q+"*') RETURN book.title as name, book.author_name, ID(book) ORDER by book.weight DESC LIMIT "+count.to_s
 					puts clause.blue.on_red
-					results = @neo.execute_query(clause)
-					tester = {:name => "RD:"+q.upcase}	
+					
+				elsif type.include? 'AUTHOR'
+					clause = "START author=node:node_auto_index('indexed_main_author_name:"+q+"*') RETURN DISTINCT author.name as name, ID(author) LIMIT "+count.to_s
+					puts clause.blue.on_red
+				elsif type.include? 'READER'
+					clause = "START user=node:node_auto_index('indexed_user_name:"+q+"*') RETURN DISTINCT user.name as name, ID(user) LIMIT "+count.to_s
+					puts clause.blue.on_red
+				elsif type.include? 'TAG'
+					clause = "START genre=node:node_auto_index('indexed_genre_name:"+q+"*') RETURN genre.name as name, ID(genre) LIMIT "+count.to_s
+					puts clause.blue.on_red
+					
+				else
+					clause = "START search_node=node:node_auto_index('search_index:"+q+"*') RETURN CASE WHEN search_node.title IS NULL THEN search_node.name ELSE search_node.title END, search_node.author_name, ID(search_node), labels(search_node) LIMIT "+count.to_s
+					puts clause.blue.on_red
+					
 				end
+				results = @neo.execute_query clause
 				if results.present?
 					results
 					# results.push tester

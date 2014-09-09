@@ -1,63 +1,82 @@
-<div ng-if="show_more_filters"
-	 class="more_filters animate-fast"
+<div class="more_filters animate-fast"
+	 ng-hide="user.collapsed_column"
 	 ng-click="stop_click_propagation($event)">	
 
 	<div ng-if="!bookmark_selected && !read_selected">
 		<!-- BOOK FILTERS -->
-		<div class="filters" ng-if="$routeParams.type == 'books'">
-			<div ng-click="show_lists = false; handle_left_columns();" class="filter_header">
-				<span class="icon-filter"></span><span>&nbsp;&nbsp;Main Filters</span>
+		<div class="full_width" ng-if="$routeParams.type == 'books'">
+			<div class="filter_header" ng-click="show_lists = false; handle_left_columns();">
+				<span>
+					<span class="icon-filter2"></span>
+					<span>&nbsp;&nbsp;Filter Books</span>
+				</span>
+				 <a ng-href="#/user/{{$routeParams.id}}/recommendations/{{$routeParams.type}}" ng-click="reset_filters()" class="reset_filters">
+				 	<!-- <span class="icon-loop"></span> -->
+				 	<span>RESET</span>
+				 </a>
 			</div>
-			<div class="filters_panel" ng-if="!show_lists && column_heights.show_filters">
-			 	<type-ahead items="genres" 
-			 				prompt="Filter by a Genre" 
-			 				title="name"
-			 				custom-options="genre_z_index genre_typeahead_options"
-			 				custom="input_filter"
-			 				model="genre" 
-			 				on-select="on_genre_selection(genre, $event)"
-			 				auto-populate="show_genre_options('BOOK', genre)"
-			 				on-clear="clear_filter('BOOK', 'genre')"
-			 				ng-keypress="show_genre_options('BOOK', genre)">
-			 	</type-ahead>
-				<type-ahead items="authors" 
-			 				prompt="Filter by Author Name"
-			 				title="name"
-			 				custom-options = "author_typeahead_options"
-			 				custom="input_filter"
-			 				model="author"
-			 				on-clear="clear_filter('BOOK', 'author')"
-			 				on-select="on_author_selection(author)"
-			 				ng-keypress="show_author_options('BOOK', author)">
-			 	</type-ahead>
-			</div>
-			
-			<div class="filters_panel_right" ng-if="!show_lists && column_heights.show_filters">
-			 	<div class="position_dropdown"
-				 	  dropdown-select="countryOptions" 
-				 	  dropdown-onchange="advance_filter_changed(selected, 'country')"
-				 	  dropdown-model="countrySelected"
-				 	  dropdown-item-label="name"></div>
-			 	<div class="position_dropdown"
-			 		  dropdown-select="readTimeOptions" 
-			 		  dropdown-onchange="advance_filter_changed(selected, 'readingTime')"
-			 		  dropdown-model="readTimeSelected"
-			 		  dropdown-item-label="name"></div>
-			 	<div class="position_dropdown"
-			 		  dropdown-select="timeOptions" 
-			 		  dropdown-onchange="advance_filter_changed(selected, 'timeGroup')"
-			 		  dropdown-model="timeSelected"
-			 		  dropdown-item-label="name"></div>
+			<div class="filter_group" ng-if="!show_lists && column_heights.show_filters">
+				<div class="filters_panel" >
+				 	<type-ahead items="genres" 
+				 				prompt="Books by Genre" 
+				 				title="name"
+				 				icon-class="icon-shapes filter_icon green_color"
+				 				custom-options="z_index_two genre_typeahead_options"
+				 				custom="input_filter"
+				 				model="genre" 
+				 				item-id="itemId"
+				 				on-clear="clear_filter('BOOK', 'genre')"
+				 				on-select="on_genre_selection(itemId)"
+				 				auto-populate="show_genre_options('BOOK', genre)"
+				 				ng-keypress="show_genre_options('BOOK', genre)"
+				 				focus-when="genre_selected">
+				 	</type-ahead>
+					<type-ahead items="authors" 
+				 				prompt="Books from Author"
+				 				title="name"
+				 				icon-class="icon-pen filter_icon purple_color"
+				 				custom-options = "author_typeahead_options"
+				 				custom="input_filter"
+				 				model="author"
+				 				item-id="itemId"
+				 				on-clear="clear_filter('BOOK', 'author')"
+				 				on-select="on_author_selection(itemId)"
+				 				ng-keypress="show_author_options('BOOK', author)"
+				 				focus-when="author_selected">
+				 	</type-ahead>
+				</div>
+				
+				<div class="filters_panel_right">
+				 	<div class="inline_block_left"
+					 	  dropdown-select="countryOptions" 
+					 	  dropdown-onchange="advance_filter_changed(selected, 'country')"
+					 	  dropdown-model="countrySelected"
+					 	  dropdown-item-label="name"></div>
+				 	<div class="inline_block_left"
+				 		  dropdown-select="readTimeOptions" 
+				 		  dropdown-onchange="advance_filter_changed(selected, 'readingTime')"
+				 		  dropdown-model="readTimeSelected"
+				 		  dropdown-item-label="name"></div>
+				 	<div class="inline_block_left"
+				 		  dropdown-select="timeOptions" 
+				 		  dropdown-onchange="advance_filter_changed(selected, 'timeGroup')"
+				 		  dropdown-model="timeSelected"
+				 		  dropdown-item-label="name"></div>
+				</div>
+				
 			</div>
 
 			<div ng-click="show_lists = true; handle_left_columns();" class="filter_header">
-				<span class="icon-list3"></span><span>&nbsp;&nbsp;Show Lists</span>
+				<span class="icon-menu2"></span><span>&nbsp;&nbsp;&nbsp;Show Lists</span>
 			</div>
 			<div class="filters_panel_large" ng-if="show_lists && column_heights.show_filters">
-				<div class="filters_group">
+				<div class="filters_group" ng-if="more_filters[0]['book']">
 					<div ng-repeat="filter in more_filters[0]['book']">
 						<filter data="filter"></filter>
 					</div>
+				</div>
+				<div class="filters_group" ng-if="!more_filters[0]['book']">
+					Coming Soon...
 				</div>
 			</div>
 
@@ -65,7 +84,7 @@
 
 
 		<!-- AUTHOR FILTERS -->
-		<div class="filters" ng-if="$routeParams.type == 'authors'">
+		<div class="full_width" ng-if="$routeParams.type == 'authors'">
 			<div class="filters_panel_large">
 				<div class="filters_group">
 					<div ng-repeat="filter in more_filters[0]['author']">
@@ -92,7 +111,7 @@
 		</div>
 
 		<!-- READER FILTERS -->
-		<div class="filters" ng-if="$routeParams.type == 'readers'">
+		<div class="full_width" ng-if="$routeParams.type == 'readers'">
 			<div class="filters_panel_large">
 				<div class="filters_group">
 					<div ng-repeat="filter in more_filters[0]['reader']">
@@ -118,28 +137,33 @@
 				</div>
 			</div>
 		</div>
-		<div class="main_filters">
-			<div class="reset_filters">
-				 <a ng-href="#/user/{{$routeParams.id}}/recommendations/{{$routeParams.type}}" ng-click="reset_filters()">
-				 	<span class="icon-loop"></span>
-				 	<span>RESET FILTERS </span>
-				 </a>
-			</div>
-		</div>
+		
 	</div>
 
 	<div ng-if="bookmark_selected">
-		<div class="filters" ng-if="$routeParams.type == 'books'">
-			<div class="filters_panel_large">
-				<div ng-repeat="filter in labels">
-					<filter data="filter"></filter>
+		<div class="filter_header" ng-click="show_lists = false; handle_left_columns();">
+			<span>
+				<span class="icon-bookmark3"></span>
+				<span>&nbsp;&nbsp;Bookmark Tags</span>
+			</span>
+		</div>
+		<div class="full_width" ng-if="$routeParams.type == 'books'">
+			<div class="filter_group" ng-if="!show_lists && column_heights.show_filters">
+				<div class="filters_panel_large">
+					<div class="filters_group restrict_height scrollbar" 
+						 msd-wheel="stop_horizontal_scroll($event)">
+						<div ng-repeat="filter in labels">
+							<filter data="filter"></filter>
+						</div>
+					</div>
 				</div>
+				
 			</div>
 		</div>
-		<div class="filters" ng-if="$routeParams.type == 'authors'">
+		<div class="full_width" ng-if="$routeParams.type == 'authors'">
 			{{labels}}
 		</div>
-		<div class="filters" ng-if="$routeParams.type == 'readers'">
+		<div class="full_width" ng-if="$routeParams.type == 'readers'">
 			{{labels}}
 		</div>
 	</div>

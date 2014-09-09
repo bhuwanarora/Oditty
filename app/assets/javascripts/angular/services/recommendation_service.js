@@ -1,9 +1,22 @@
 //This handles retrieving data and is used by controllers. 3 options (server, factory, provider) with 
 //each doing the same thing just structuring the functions/data differently.
 websiteApp.service('recommendationService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
-    this.get_recommendations = function () {
+
+    this.get_recommendations = function(){
         var filters = angular.toJson($rootScope.filters);
         return _deferred_request('/api/v0/recommendations?count=5&q='+filters);
+    }
+
+    this.get_random_books = function(){
+        return _deferred_request('/api/v0/random_books');
+    }
+
+    this.get_grid_books = function(){
+        return _deferred_request('/api/v0/grid');
+    }
+
+    this.get_book_lists = function(){
+        return _deferred_request('/api/v0/book_lists');   
     }
 
     this.push_recommendations = function(){
@@ -49,4 +62,6 @@ websiteApp.service('recommendationService', ['$http', '$q', '$rootScope', functi
         $http.get(url).then(successCallback, errorCallback);
         return deferred.promise;
     }
+
+    
 }]);

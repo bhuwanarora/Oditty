@@ -15,7 +15,7 @@ websiteApp.directive('reader', ['$rootScope', 'widgetService', function ($rootSc
         if($rootScope.focused_reader != $scope.reader){
           $rootScope.focused_reader = $scope.reader;
           var posX = event.currentTarget.offsetParent.offsetParent.offsetLeft - event.pageX + event.clientX;
-          var display_right_width =  screen.width - (posX + event.currentTarget.offsetParent.scrollWidth);
+          var display_right_width =  window_width - (posX + event.currentTarget.offsetParent.scrollWidth);
           var display_left_width = posX;
 
           if(display_right_width > display_left_width){
@@ -29,7 +29,7 @@ websiteApp.directive('reader', ['$rootScope', 'widgetService', function ($rootSc
           }
           else{
             if(display_left_width > 400){
-              posX = screen.width - posX;
+              posX = window_width - posX;
               $rootScope.focused_reader.reposition_tooltip = {"right": posX+"px", "top": "60px"}; 
             }
             else{

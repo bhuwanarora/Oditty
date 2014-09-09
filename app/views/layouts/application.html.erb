@@ -3,8 +3,17 @@
   <head>
     <title>ReadersDoor</title>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "/assets/jquery-ui.min.js" %>
+    <link rel="stylesheet" type="text/css" href="/assets/jquery-ui.min.css">
+    <%= stylesheet_link_tag "/assets/panels/main"%>
   </head>
   <body>
-    <%= yield %>
+
+    <% if @is_admin %>
+      <%= render 'shared/header' %>
+      <%= yield %>
+    <% else %>
+      <div>Access Denied</div>
+    <% end %>
   </body>
  </html>

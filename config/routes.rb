@@ -2,15 +2,17 @@ require 'resque/server'
 ReadersDoor::Application.routes.draw do
   resources :facebooks
 
-  mount Resque::Server, :at => "/resque"
-#  mount MadChatter::RailsEngine => "/chat"
-  
+  # mount Resque::Server.new, :at => "/resque"
+  mount SecureResqueServer.new, :at => '/resque'
+
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   
   resources :tags
 
   resources :categories
+
+  resources :movies
 
   resources :prizes
 
@@ -45,6 +47,8 @@ ReadersDoor::Application.routes.draw do
   get "add_tag_to_subcategory"   => "tags#map",                :as => "add_tag_to_subcategory"
   get "remove_tag_from_subcategory" => "tags#unmap",           :as => "remove_tag_from_subcategory"
   get "test"                     => "users#test",              :as => "test"
+  get "activate"                 => "users#activate",          :as => "activate"
+  
 
   get "new_child_category"      => "categories#new_child_category", :as => "new_child_category"
   post "add_child_category"     => "categories#add_child_category", :as => "add_child_category"
@@ -57,12 +61,35 @@ ReadersDoor::Application.routes.draw do
   get "angular_test"             => "tests#angular_test",              :as => "angular_test"
 
   get "verify"                   => "users#verify",                     :as => "verify"   
-  get "thumbs"                   => "books#thumbs",                     :as => "thumbs"
+  get "book_count"               => "books#count",                      :as => "get_book_count"
   # root :to => "website#coming_soon"
   root :to => "recommendations#index"
 
-  get 'tree'                      => "categories#show_tree",  :as => "show_tree"
+  get 'tree'                      => "categories#show_tree",    :as => "show_tree"
+  get 'search_tag'                => "tags#search_tag",         :as => "search_tag"
+  get 'search_book'               => "books#search_book",       :as => "search_book"
 
+  get "panel/feedbacks"                 => "users#feedbacks",                   :as => "feedbacks"   
+  get "panel/labels"                    => "books#labels",                      :as => "labels"   
+  get "panel/trends"                    => "books#trends",                      :as => "trends"   
+  get "panel/grids"                     => "books#grids",                       :as => "grids"   
+  get "panel/thumbs"                    => "books#thumbs",                      :as => "thumbs"
+  get "delete_grid"                     => "books#delete_grid",                 :as => "delete_grid"
+  get "add_grid"                        => "books#add_grid",                    :as => "add_grid"
+  get "update_grid"                     => "books#update_grid",                 :as => "update_grid"
+  get "update_thumb_status"             => "books#update_thumb_status",         :as => "update_thumb_status"
+  get "add_label"                       => "books#add_label",                   :as => "add_label"
+  get "remove_label"                    => "books#remove_label",                :as => "remove_label"
+  get "clear_data"                      => "users#clear_data",                  :as => "clear_data"
+  get "reset_grid_links"                => "books#reset_grid_links",            :as => "reset_grid_links"
+  get "book_detail"                     => "books#book_detail",                 :as => "book_detail"
+  get "trending_new_books"              => "books#trending_new_books",          :as => "trending_new_books"
+  get "cover_photos"                    => "books#cover_photos",                :as => "cover_photos"
+  get "set_active_cover_photo"          => "books#set_active_cover_photo",      :as => "set_active_cover_photo"
+  
+  get "recover_password"                => "users#recover_password",            :as => "recover_password"
+  get "save_password"                   => "users#save_password",               :as => "save_password"
+  post "data"                           => "books#data",                        :as => "data"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

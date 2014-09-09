@@ -7,6 +7,16 @@ module ShelfariCrawler
   require 'open-uri'
   puts "Shelfari crawler..."
 
+  def self.facebook_crawl
+    begin
+      base_url = "https://www.facebook.com/"
+      doc = Nokogiri::HTML(open(base_url))
+      emotions = doc.css('.page')
+    rescue Exception => e
+      
+    end
+  end
+
   def self.parse
     begin
       @root = ShelfariCategory.find_or_create_by(:name => "ROOT")
@@ -128,7 +138,7 @@ module ShelfariCrawler
     end
   end
 
-  def self.get_book_details(id, url)
+  def self.get_book_details_old(id, url)
     begin
       book = ShelfariBook.find(id)
       unless book.flag
@@ -319,6 +329,221 @@ module ShelfariCrawler
         end
 
         book.data_flag = true
+        book.save
+      end
+    rescue Exception => e
+      puts "DEBUG #{id} #{book.url} #{e}"
+      ELogger.log_info "DEBUG #{id} #{book.url} #{e}"
+      # initialize_player
+    end
+  end
+
+  def self.get_book_details(id, url)
+    @neo = Neography::Rest.new
+    begin
+      book = ShelfariBook.find(id)
+      unless book.flag
+        clause = "MERGE(b:Book{indexed_title:\""+book.name.to_s.gsub(" ", "").gsub(",", "").gsub("_", "").gsub("\"", "").gsub("'", "")+"\"}) SET b.name=\""+book.name.to_s+"\" "
+        puts "#{book.name}"
+        doc = Nokogiri::HTML(open(url))
+        description = doc.css('#WikiModule_Description p')[0].content rescue nil
+        book.description = description
+
+        summary = doc.css('#WikiModule_PlotSummaryFull p')
+        short_version = ""
+        complete_version = ""
+        if summary
+          index = 0
+          while summary[index]!=nil
+            if index == 0
+              short_version = summary[index].content
+            else
+              complete_version = complete_version+"\n"+summary[index].content
+            end
+            index = index + 1
+          end
+          unless complete_version.blank?
+            summary = complete_version
+          else
+            summary = short_version
+          end
+          book.summary = summary
+        end
+        characters = doc.css('#WikiModule_Characters li')
+        index = 0
+        while characters && characters[index]!=nil
+          character_description = characters[index].children[1].content rescue nil
+          name = characters[index].children[0].content rescue nil
+          character_url = characters[index].children[0].attr("href") rescue nil
+          index = index + 1
+          # character = Character.find_or_create_by(:name => name, 
+                                                  # :shelfari_url => character_url, 
+                                                  # :description => character_description)
+          clause = clause + " CREATE UNIQUE (c"+index.to_s+":Character{name: \""+name.to_s+"\", url: \""+character_url.to_s+"\", description: \""+description.to_s.gsub("\"", "'").gsub("  ","").gsub("read more", "")+"\"})<-[:HasCharacter]-(b) "
+          # CharactersShelfariBooks.find_or_create_by(:shelfari_book_id => id,
+                                                    # :character_id => character.id)
+        end
+        locations = doc.css('#WikiModule_Settings li')
+        index = 0
+        while locations && locations[index]!=nil
+          if locations[index].content.include? ":"
+            location_name = locations[index].content.split(":")[0]
+            location_description = locations[index].content.split(":")[1]
+          else
+            location_name = locations[index].content rescue nil
+            location_description = nil
+          end
+          location_href = locations[index].children[0].attr("href") rescue nil 
+          # location = Location.find_or_create_by(:name => location_name, 
+                                                # :url => location_href)
+          clause = clause + " CREATE UNIQUE (l"+index.to_s+":Location{name:\""+location_name.to_s+"\", url:\""+location_href.to_s+"\", description: \""+location_description.to_s.gsub("\"", "'").gsub("  ","").gsub("read more", "")+"\"})<-[:OnLocation]-(b) "
+          # LocationsShelfariBooks.find_or_create_by(:location_id => location.id,
+                                                  # :shelfari_book_id => id,
+                                                  # :description => location_description  )
+          index = index + 1
+        end
+        first_sentence = doc.css('#WikiModule_FirstWords .ugc')[0].content rescue nil
+        book.first_sentence = first_sentence
+        index = 0
+        themes = doc.css('#WikiModule_Themes li')
+        while themes && themes[index]!=nil
+          if themes[index].content.include? ":"
+            theme_name = themes[index].content.split(":")[0]
+            theme_description = themes[index].content.split(":")[1]
+          else
+            theme_name = themes[index].content rescue nil
+            theme_description = nil
+          end
+          # theme_name = themes[index].content rescue nil
+          # theme_name.slice!(": Describe this theme.") if theme_name
+          theme_url = themes[index].children[0].attr("href")
+          # theme = Theme.find_or_create_by(:name => theme_name,
+                                          # :url => theme_url)
+          clause = clause + " CREATE UNIQUE (t"+index.to_s+":Theme{name: \""+theme_name.to_s+"\", url: \""+url.to_s+"\", description: \""+theme_description.to_s.gsub("'","").gsub("  ","").gsub("read more", "")+"\"})<-[:HasTheme]-(b) "
+          # ShelfariBooksThemes.find_or_create_by(:theme_id => theme.id,
+                                                # :shelfari_book_id => id,
+                                                # :description => theme_description)
+          index = index + 1
+        end
+
+        index = 0
+        quotes = doc.css('#WikiModule_Quotations li')
+        while quotes && quotes[index]!=nil
+           person_url = quotes[index].children[3].children[0].attr("href") rescue nil
+           name = quotes[index].children[1].content rescue nil
+           person = quotes[index].children[3].content rescue nil
+           # quote = Quote.find_or_create_by(:name => name)
+           clause = clause + "CREATE UNIQUE (q"+index.to_s+":Quote{name:\""+name.to_s+"\", person: \""+person.to_s+"\", person_url:\""+person_url.to_s+"\"})<-[:HasQuote]-(b) "
+           # quote.update_attributes(:person => person, :person_url => person_url)
+           # QuotesShelfariBooks.find_or_create_by(:quote_id =>  quote.id,
+                                                # :shelfari_book_id => id)
+           index = index + 1
+        end
+        note_for_parents = doc.css('#WikiModule_Parents .editable')
+        index = 0
+        while note_for_parents && note_for_parents[index]!=nil
+          note_url = note_for_parents[index].children[5].attr("href")
+          note = note_for_parents[index].children[5].content
+          # note = NoteForParent.find_or_create_by(:name => note,
+                                                # :url => note_url)
+          clause = clause + " CREATE UNIQUE (n"+index.to_s+":ReadingLevel{type:\""+note.to_s+"\", url: \""+note_url.to_s+"\"})<-[:ReadingLevel]-(b) "
+          # NoteForParentsShelfariBooks.find_or_create_by(:note_for_parent_id => note.id,
+                                                        # :shelfari_book_id => id)
+          index = index + 1
+        end
+        index = 0
+        movies = doc.css('#WikiModule_Movies li')
+        while movies && movies[index]!=nil
+          movies_url = movies[index].children[0].attr("href")
+          if movies[index].content.include? ":"
+            movie_name = movies[index].content.split(":")[0]
+            movie_description = movies[index].content.split(":")[1]
+          else
+            movie_name = movies[index].content
+            movie_description = nil
+          end
+          # movie = Movie.find_or_create_by(:imdb_url => movies_url,
+                                          # :name => movie_name)
+          clause = clause + " CREATE UNIQUE (m"+index.to_s+":Movie{name: \""+movie_name+"\", imdb_url: \""+movies_url+"\", description: \""+movie_description.gsub("\"", "'").gsub("  ","").gsub("read more", "")+"\"})<-[:MovieBased]-(b) "
+          # MoviesShelfariBooks.find_or_create_by(:movie_id => movie.id,
+                                                # :shelfari_book_id => id,
+                                                # :description => movie_description)
+          index = index + 1
+        end
+
+        index = 0
+        authors = doc.css('.primary a')
+        while authors && authors[index]!=nil
+          name = authors[index].content
+          authors_url = authors[index].attr("href")
+          # human_profile = HumanProfile.find_or_create_by(:name => name)
+          # author = Author.find_or_create_by(:human_profile_id => human_profile.id)
+          clause = clause + " CREATE UNIQUE (a"+index.to_s+":Author{name:\""+name+"\", url:\""+authors_url+"\"})-[:Wrote]->(b) "
+          # AuthorsShelfariBooks.find_or_create_by(:author_id => author.id,
+                                                  # :shelfari_book_id => id)
+          # author.update_column(:shelfari_url, authors_url)
+          index = index + 1
+        end
+
+        index = 0
+        tags = doc.css('.tags')
+        if tags && tags[0]
+          tags[0].children.each do |tag|
+            name = tag.children[0]
+            if name
+              name = name.content
+              children_url = tag.children[0].attr("href") rescue nil
+              value = tag.children[0].attr("class")
+              value.slice!("tag") rescue nil
+              # shelfari_tag = ShelfariTag.find_or_create_by(:name => name,
+                                                           # :url => children_url)
+              clause = clause + " CREATE UNIQUE (g"+index.to_s+":Genre{name:\""+name.to_s+"\", url:\""+children_url.to_s+"\"})<-[r"+index.to_s+":Belongs_to]-(b) SET r"+index.to_s+".weight="+value.to_s+" "
+              # ShelfariBooksTags.find_or_create_by(:shelfari_book_id => id,
+                                                  # :shelfari_tag_id => shelfari_tag.id,
+                                                  # :weight => value)
+            else
+              break
+            end
+          end
+        end
+
+        index = 0
+        ebooks = doc.css('#WikiModule_SupplementalMaterial li')
+        while ebooks && ebooks[index] != nil
+          notes = ebooks[index].content
+          ebook_url = ebooks[index].children[0].attr("href")
+          name = book.name
+          # ebook = Ebook.find_or_create_by(:url => ebook_url, 
+                                          # :notes => notes, 
+                                          # :name => name)
+          clause = clause + " CREATE UNIQUE (e"+index.to_s+":EBook{url: \""+ebook_url.to_s+"\", notes: \""+notes.to_s+"\", name: \""+name.to_s+"\"})<-[:Eversion]-(b) "
+          # EbooksShelfariBooks.find_or_create_by(:ebook_id => ebook.id,
+                                                # :shelfari_book_id => id)
+
+          index = index + 1
+        end
+
+        categories = doc.css('#WikiModule_Subjects li')
+        index = 0
+        parent = ShelfariCategory.first
+        while categories && categories[index]!=nil
+          tree_index = 3
+          while categories[index].children[tree_index]!=nil
+            category_name = categories[index].children[tree_index].content
+            new_parent = parent.children.where(:name => category_name).first
+            parent = new_parent unless new_parent.nil?
+            tree_index = tree_index + 2
+          end
+          # ShelfariBooksCategories.find_or_create_by(:shelfari_category_id => parent.id,
+                                                    # :shelfari_book_id => id)
+          clause = clause + " CREATE UNIQUE (ca"+index.to_s+":Category{uuid:"+parent.id.to_s+"})<-[:FromCategory]-(b) SET ca"+index.to_s+".name=\""+category_name+"\""
+          parent = ShelfariCategory.first
+          index = index + 1
+        end
+        puts clause.blue.on_red
+        # @neo.execute_query clause
+        Resque.enqueue(LinodeNeoWorker, clause, id)
+        # book.data_flag = true
         book.save
       end
     rescue Exception => e

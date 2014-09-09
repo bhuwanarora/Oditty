@@ -9,7 +9,7 @@ gem 'sass-rails', '~> 4.0.0'
 #for attr accessibel in rails4
 gem 'protected_attributes'
 gem 'activerecord-postgis-adapter'
-# gem 'rack-cors', :require => 'rack/cors'
+gem 'rack-cors', :require => 'rack/cors'
 gem "omniauth-google-oauth2"
 gem 'omniauth-facebook'
 gem 'devise'
@@ -70,6 +70,11 @@ gem 'treetop'
 gem 'polyglot'
 gem 'blather'
 gem "eventmachine"
+gem "whenever"
+gem "flickraw"
+gem "wikipedia-client"
+gem "mediawiki-gateway"
+gem "aws-sdk"
 # gem 'amazon-ecs'
 # gem 'rubber'
 # gem 'rails_admin_example_theme', :git => 'git://github.com/bbenezech/rails_admin_example_theme.git'
@@ -87,6 +92,7 @@ gem 'capistrano'
 gem 'capistrano-bundler'
 gem 'capistrano-rails'
 gem 'capistrano-rbenv'
+gem 'google-search'
 
 group :development do
 	gem "byebug", "~> 2.5.0"

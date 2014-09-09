@@ -1,11 +1,38 @@
+include AuthorsGraphHelper
 module Api
 	module V0
 		class AuthorApi
+			def self.get_author_details_for_book book_id
+				@neo = Neography::Rest.new
+				clause = "MATCH (book:Book)<-[:Wrote]-(author:Author)-[:Wrote]->(b:Book) WHERE ID(book)="+book_id.to_s+" RETURN author.about, author.image_url, author.signature_pic, ID(author), COLLECT(ID(b)), COLLECT(b.isbn)"
+				puts clause.blue.on_red
+				info = @neo.execute_query(clause)["data"][0]
+				info
+			end
+
 			def self.bookmarked_authors
 				# self.recommendations.map do |s|
 				# 	s['authormark_status'] = 1
 				# 	s
 				# end
+			end
+
+			def self.get_popular_authors params
+				skip_count = params[:skip_count]
+				unless skip_count
+					skip_count = 0
+				end
+				@neo = Neography::Rest.new
+				clause = "MATCH (author:Author) RETURN author.name SKIP "+(10*skip_count.to_i).to_s+" LIMIT 10"
+				puts clause.blue.on_red
+				begin
+					authors =  @neo.execute_query(clause)["data"]
+				rescue Exception => e
+					puts e.to_s.red
+					authors = [{:message => "Error in finding authors"}]
+					# books =  @neo.execute_query(clause)["data"]
+				end
+				authors
 			end
 
 			def self.push_recommendations

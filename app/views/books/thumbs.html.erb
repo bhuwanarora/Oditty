@@ -1,6 +1,5 @@
 <table>
 	<tr>
-		<th></th>
 		<th>User</th>
 		<th>Book</th>
 		<th>Image</th>
@@ -9,19 +8,45 @@
 	</tr>
 	<% @requests.each do |request| %>
 		<tr>
-			<td><img src="<%= request.user_thumb %>" class=""/></td>
-			<td><a href="<%= request.user_link %>" target="_blank">
-				<%= request.username %></a></td>
-			<td><a href="<%= request.book_url %>" target="_blank">
-				<%= request.title %></a></td>
-			<td><a href="<%= request.thumb_url %>" target="_blank">
-				<img src="<%= request.thumb_url %>"/></a></td>
-			<td><select>
-					<option>Status</option>
-					<option>Approve</option>
-					<option>Deny</option>
+			<td><a href="">
+				<%= request[2] %></a></td>
+			<td><a href="">
+				<%= request[3] %></a></td>
+			<td><a href="<%= request[5] %>" target="_blank">
+				<img src="<%= request[5] %>"/></a></td>
+			<td class="status"><select>
+					<option>Pending</option>
+					<option value="1" <% if request[7] == 1 %>selected<% end %>>Approved</option>
+					<option value="0" <% if request[7] == 0 %>selected<% end %>>Denied</option>
 				</select></td>
-			<td><button>Submit</button></td>
+			<td>
+				<input type="hidden" value="<%= request[6] %>" name="id"/>
+				<button class="submit">Submit</button>
+			</td>
 		</tr>
 	<% end %>
 </table>
+<script>
+	$(document).ready(function(){
+		update_status();
+
+		function update_status(){
+			$('.submit').on('click', function(){
+				var $this = $(this);
+				var status = $this.parent().siblings('.status').children().val();
+				var id = $this.siblings('input').val();
+
+				$.ajax({
+					url: "<%= update_thumb_status_path %>",
+					data: "id="+id+"&status="+status,
+					success: function(data, textStatus, jqxhr){
+						window.location.reload();
+					},
+					error: function(jqxhr, textStatus, error){
+						alert(error);
+					}
+				});
+			});
+		}
+	});
+</script>

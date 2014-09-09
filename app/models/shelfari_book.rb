@@ -1,5 +1,5 @@
 class ShelfariBook < ActiveRecord::Base
-	attr_accessible :name, :url, :summary, :flag, :description, :first_sentence, :data_flag
+	attr_accessible :name, :url, :summary, :flag, :description, :first_sentence, :data_flag, :movie_flag, :category_flag, :genre_flag, :ebook_flag, :note_flag 
 	has_and_belongs_to_many :shelfari_tags
 	has_and_belongs_to_many :shelfari_categories
 	has_and_belongs_to_many :locations

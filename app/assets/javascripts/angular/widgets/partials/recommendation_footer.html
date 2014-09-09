@@ -3,102 +3,108 @@
 	<!-- <div class="website-title">
 		<span class="icon glyphicon-home"></span> Reader's Door
 	</div> -->
+	<!-- <div class="toggle_elements">
+		<div ng-class="{'icon-radio-unchecked': !grid_view, 'icon-checkbox-unchecked': grid_view}" class="link" ng-click="grid_view = !grid_view"></div>
+	</div> -->
 	
  	<div class="shelf_nav_links">
-
-		<div ng-class="{'inactive':read_selected || bookmark_selected, 'active':!read_selected && !bookmark_selected}"
-			 class="link"
+ 		
+		<a class="link tab"
 			 title="Recommendations"
+			 ng-href="#user/{{user.id}}/recommendations/books"
+			 ng-if="$routeParams.trend_id || $routeParams.grid_id || $routeParams.filter_id"
+			 style="margin-left:0px;">
+			<span class="icon-feed2 light_grey_color"></span>
+			<span><b>R</b>ecommendations</span>
+		</a>
+		<div ng-class="{'inactive':read_selected || bookmark_selected, 'active_tab':!read_selected && !bookmark_selected}"
+			 class="link tab"
+			 ng-if="(!$routeParams.trend_id && !$routeParams.grid_id && !$routeParams.filter_id) || ($routeParams.trend_id || $routeParams.grid_id)"
+			 title="{{main_header | header_title}}"
 			 style="margin-left:0px;" 
 			 ng-click="toggle_recommendations()">
-			<span class="icon-dice"></span>
-			<span>
+			<span ng-class="{
+			'icon-feed2':!$routeParams.trend_id && !$routeParams.grid_id && !$routeParams.filter_id, 
+			'icon-bars':$routeParams.trend_id, 
+			'icon-paragraph-justify': $routeParams.grid_id,
+			'light_grey_color': read_selected || bookmark_selected}"></span>
+			<span ng-if="!$routeParams.trend_id && !$routeParams.grid_id && !$routeParams.filter_id">
 				<span ng-if="$routeParams.type == 'books'">
 					{{recommendations.books.count}} </span>
 				<span ng-if="$routeParams.type == 'authors'">
 					{{recommendations.authors.count}} </span>
 				<span ng-if="$routeParams.type == 'readers'">
 					{{recommendations.readers.count}} </span>	
-				<span>Recommendations</span>
+				<span><b>R</b>ecommendations</span>
+			</span>
+			<span ng-if="$routeParams.trend_id || $routeParams.grid_id || $routeParams.filter_id" ng-bind-html="main_header | heading">
 			</span>
 		</div>
-		<div ng-class="{'inactive':!read_selected, 'active':read_selected}"
-			 class="link"
+		<div ng-class="{'inactive':!read_selected, 'active_tab':read_selected}"
+			 class="link tab"
 			 title="Books marked as read" 
 			 ng-click="toggle_read()">
 		 	<span ng-if="$routeParams.type == 'books'">
-		 		<span class="icon-books"></span>
-		 		<span>Books Read</span>
+		 		<span class="icon-books" ng-class="{'light_grey_color': !read_selected}"></span>
+		 		<span><b>B</b>ooks <b>R</b>ead</span>
 		 	</span>
 			<span ng-if="$routeParams.type == 'authors'">
-				<span class="icon-users"></span>
-				<span>Following Authors</span>
+				<span class="icon-users" ng-class="{'light_grey_color': !read_selected}"></span>
+				<span><b>F</b>ollowing <b>A</b>uthors</span>
 			</span>
 			<span ng-if="$routeParams.type == 'readers'">
-				<span class="icon-users"></span>
-				<span>Following Readers</span>
+				<span class="icon-users" ng-class="{'light_grey_color': !read_selected}"></span>
+				<span><b>F</b>ollowing <b>R</b>eaders</span>
 			</span>
 		</div>
-		<div ng-class="{'inactive':!bookmark_selected, 'active':bookmark_selected}"
-			 class="link"
+		<div ng-class="{'inactive':!bookmark_selected, 'active_tab':bookmark_selected}"
+			 class="link tab"
 			 ng-if="$routeParams.type == 'books' || $routeParams.type == 'authors'"
-			 title="Books bookmarked"
+			 title="Books saved"
 			 ng-click="toggle_bookmarked($event)">
 			 <span ng-if="$routeParams.type == 'books'">
-			 	<span class="icon-bookmarks"></span>
-			 	<span>Books Bookmarked</span>
+			 	<span class="icon-tags" ng-class="{'light_grey_color': !bookmark_selected}"></span>
+			 	<span><b>M</b>y <b>L</b>ibrary</span>
 		 	 </span>
 			 <span ng-if="$routeParams.type == 'authors'">
-			 	<span class="icon-bookmarks"></span>
-				<span>Authors Bookmarked</span>
+			 	<span class="icon-tags" ng-class="{'light_grey_color': !bookmark_selected}"></span>
+				<span><b>A</b>uthors <b>S</b>aved</span>
 			 </span>
 
 		</div>
+ 			
 	</div>
-	<notification-link></notification-link>
- 	<div class="filter_link"
+	<!-- <notification-link></notification-link> -->
+ 	<!-- <div class="filter_link"
  		 ng-if="!bookmark_selected && !read_selected"
- 		 ng-class="{'compact_filter_link': compact_footer}" 
-		 ng-click="toggle_more_filters($event)">
-		<span ng-if="filters.filter_type == 'BOOK'" 
-			class="selected_filter icon-book"></span>
-		<span class="icon-angle-right"></span>
+ 		 ng-class="{'compact_filter_link': compact_footer}">
+		 
 		<span class="icon-pen" 
 			title="author filter"
+			ng-click="reset_filter($event, filters.other_filters.author, 'author', 'BOOK')"
 			ng-class="{'selected_filter':filters.other_filters.author}"></span>
 		<span class="icon-shapes" 
 			title="genre filter"
+			ng-click="reset_filter($event, filters.other_filters.genre, 'genre', 'BOOK')"
 			ng-class="{'selected_filter':filters.other_filters.genre}"></span>
 		<span class="icon-calendar" 
 			title="time group filter"
+			ng-click="reset_filter($event, filters.other_filters.timeGroup, 'timeGroup', 'BOOK')"
 			ng-class="{'selected_filter':filters.other_filters.timeGroup}"></span>
 		<span class="icon-clock" 
 			title="reading time filter"
+			ng-click="reset_filter($event, filters.other_filters.readingTime, 'readingTime', 'BOOK')"
 			ng-class="{'selected_filter':filters.other_filters.readingTime}"></span>
 		<span class="icon-earth" 
 			title="region filter"
+			ng-click="reset_filter($event, filters.other_filters.country, 'country', 'BOOK')"
 			ng-class="{'selected_filter':filters.other_filters.country}"></span>
-		<span class="selected_filter" 
-			title="list filter"
-			ng-if="filters.more_filters">
-			{{filters.more_filters}}
-		</span>
 		
-		 <span class="icon-filter2 selected_filter" ng-class="{'filter_link_icon': !show_more_filters}"></span>
-		 <span ng-if="!compact_footer">
-		 	<!-- <span>&nbsp;Add filters</span> -->
-		 	<!-- <span ng-if="$routeParams.type == 'books'">for Books</span> -->
-		 	<!-- <span ng-if="$routeParams.type == 'authors'">for Authors</span> -->
-		 	<!-- <span ng-if="$routeParams.type == 'readers'">for Readers</span> -->
-		 </span>
-		 <span class="selected_filter icon-angle-down" ng-if="!show_more_filters"></span>
-		 <span class="selected_filter icon-angle-up" ng-if="show_more_filters"></span>
 	</div>
 	<div class="filter_link"
- 		 ng-if="bookmark_selected"
-		 ng-click="toggle_more_filters($event)">
+ 		 ng-if="bookmark_selected">
 		 <span>Bookmarks</span><span class="icon-bookmark3"></span>
-	</div>
+	</div> -->
 
 	<div class="filter_status">
 		<span class="selected_filters">

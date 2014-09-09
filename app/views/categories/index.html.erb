@@ -1,24 +1,21 @@
-<h1>Listing categories</h1>
-
 <table>
-  <thead>
+  <tr>
+    <th>S.No.</th>
+    <th>Name</th>
+    <th>#Children</th>
+    <th>Active</th>
+    <th>Submit</th>
+  </tr>
+  <% @categories.each_with_index do |category, index|%>
     <tr>
-      <th></th>
-      <th></th>
-      <th></th>
+      <td><%= index %></td>
+      <td><%= category[0] %></td>
+      <td><%= category[2] %></td>
     </tr>
-  </thead>
-
-  <tbody>
-    <% @categories.each do |category| %>
-      <tr>
-        <td><%= link_to 'Show', category %></td>
-        <td><%= link_to 'Edit', edit_category_path(category) %></td>
-      </tr>
-    <% end %>
-  </tbody>
+  <% end %>
 </table>
+<div class="main_footer">
+  CATEGORIES
+</div>
 
-<br>
-
-<%= link_to 'New Category', new_category_path %>
+<div class="vertical_padder"></div>

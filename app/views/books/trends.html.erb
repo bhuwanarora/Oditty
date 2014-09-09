@@ -1,0 +1,161 @@
+<table>
+	<tr>
+		<th>#Books</th>
+		<th>Trending</th>
+		<th>Title</th>
+		<th>Content</th>
+		<th>Searched Words</th>
+		<th>Publisher</th>
+		<th>Thumb</th>
+		<th>Timestamp</th>
+		<th>Search Books</th>
+		<th>Books</th>
+		<th>Active</th>
+		<th>Submit</th>
+	</tr>
+	<% @trends.sort_by!{|s| Time.at(s[1].to_i)}.reverse.each do |trend|%>
+		<tr class="<% if trend[4].present? && trend[4] == 1 %>active<% end %>">
+			<td><%= trend[3].length %></td>
+			<td><a href="<%= trend[9] %>" target="_blank"><%= trend[0] %></a></td>
+			<td><a href="<%= trend[11] %>" target="_blank"><%= trend[6] %></a></td>
+			<td><div class="limit_height"><%= trend[7] %></div></td>
+			<td class="keywords">
+				<span><%= trend[8] %></span>
+				<textarea class="hidden_input" ><%= trend[8] %></textarea>
+				<button class="hidden_input add_books">Go</button>
+				<input type="hidden" value="<%= trend[2] %>" class="trending_id"/>
+			</td>
+			<td><%= trend[12] %></td>
+			<td><img src="<%= trend[10] %>"></td>
+			<td><%= Time.at(trend[1].to_i).strftime("%d-%m-%y") %></td>
+			<td>
+				<input class="search_box" />
+			</td>
+
+			<form action="<%= trends_path %>">
+				<td class="books" name="books">
+					<div class="limit_height">
+						<% trend[3].each.with_index do |book, index| %>
+							<div data-id="<%= trend[5][index] %>" class="book_name"><span> · </span><span><%= book %></span></div>
+						<% end %>
+					</div>
+				</td>
+				<input type="hidden" value="<%= trend[2] %>" name="trending_id"/>
+				<input type="hidden" value="<%= trend[5] %>" name="book_ids" />
+				<% if trend[4].present? && trend[4] == 1 %>
+					<td><input type="checkbox" name="status" checked></td>
+				<% else %>
+					<td><input type="checkbox" name="status"></td>
+				<% end %>
+				<td><input type="submit" value="Submit"></td>
+			</form>
+		</tr>
+	<% end %>
+</table>
+<div class="main_footer">
+	<span type="status" class="footer_status"></span>
+</div>
+<div class="vertical_padder"></div>
+<script>
+	$(document).ready(function(){
+		var search_on = false;
+		var search = function($this, search_for){
+			$.ajax({
+				url: "<%= search_book_path %>",
+				data: "q="+search_for,
+				success: function(data, textStatus, jqXHR){
+					var books = [];
+					for(var i=0; i < data.length; i++){
+						var book = {"label": data[i][2]+" by "+data[i][3], "value": data[i][1]};
+						books.push(book);
+					}
+					if(books.length == 0){
+						books = "No results found...";
+					}
+
+
+					$this.autocomplete({
+				      source: books,
+				      select: function(event, ui){
+				      	var html = "<div class='book_name'><span> · </span><span>"+ui.item.label+" <span></div>"
+				      	$this.parent().siblings('.books').append(html);
+				      	var current_val = $this.parent().siblings('input[name=book_ids]').val();
+				      	
+				      	if(current_val == ""){
+				      		var new_val = ui.item.value;
+				      	}
+				      	else{
+				      		var new_val = current_val + ", "+ui.item.value;
+				      	}
+				      	$this.parent().siblings('input[name=book_ids]').val(new_val);
+				      	$this.val("");
+				      	
+				      	event.preventDefault();
+				      }
+				    });
+				}
+			});
+		}
+
+		$('.search_box').on('keypress', function(event){
+			search_on = false;
+			var $this = $(this);
+			var search_for = $this.val()+String.fromCharCode(event.charCode);
+			if(search_for.length > 2){
+				setTimeout(function(){
+					search_on = true;
+					search_for = $this.val();
+					if(search_on){
+						search($this, search_for);
+					}
+				}, 1000);
+				
+			}
+		});
+
+		$('.book_name').on('click', function(){
+			var $this = $(this);
+			var id = $this.attr('data-id');
+			var book_ids = $this.parent().siblings('input[name=book_ids]').val().split(",");
+			var new_book_ids = []
+			for(var i=0; i < book_ids.length; i++){
+				if(book_ids[i].indexOf(id) < 0){
+					new_book_ids.push(book_ids[i])
+				}
+			}
+			$this.parent().siblings('input[name=book_ids]').val(new_book_ids.join(","));
+			$this.remove();
+		});
+
+		var link_new_books = function(){
+			$('.keywords').on('click', function(){
+				var $this = $(this);
+				$this.children('span').hide();
+				$this.children('textarea').show();
+				$this.children('button').show();
+			});
+		}
+
+		var add_new_books = function(){
+			$('.add_books').on('click', function(){
+				var data = "q="+$(this).siblings('textarea').val()+"&id="+$(this).siblings('.trending_id').val();
+				$('.footer_status').html('Updating...');
+				$.ajax({
+					url: "<%= trending_new_books_path %>",
+					data: data,
+					success: function(data, textStatus, jqxhr){
+						window.location.reload();
+					},
+					error: function(jqxhr, textStatus, errorThrown){
+						$('.footer_status').html('Error in updating..');
+					}
+				});
+			});
+		}
+
+		link_new_books();
+		add_new_books();
+
+
+	});
+</script>

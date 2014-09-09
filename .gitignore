@@ -1,7 +1,6 @@
 *.sassc
 *.lessc
 *.swp
-shared/
 .sass-cache
 .less-cache
 capybara-*.html
@@ -28,9 +27,7 @@ pickle-email-*.html
 nbproject/private
 nbproject/
 config/database.yml
-config/housing/local.rb
 config/environments/overrides/*.rb
-config/housing/environments/overrides/*.rb
 config/application.yml
 private/pano_image_processing/tmp*
 db/schema.rb
@@ -66,3 +63,10 @@ app/assets/javascripts/min/**/*
 app/assets/stylesheets/min/*.css
 neo4j/conf/neo4j-wrapper.conf
 neo4j/conf/neo4j.properties
+*.jpg
+*.gz
+*.sql
+*.out
+*.zip
+*.png
+neo4j/conf/neo4j-wrapper.conf

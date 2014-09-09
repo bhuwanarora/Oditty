@@ -1,0 +1,21 @@
+<div class="header_navbar" 
+	 ng-click="goto_info_card()" 
+	 ng-if="user.logged">
+	<img ng-src="{{user | blob_backup}}" class="profile_small_thumb" ng-if="user">
+	<div class="user_details">
+		<div class="animate-slow count" ng-class="{'green': is_additive, 'magenta': !is_additive}" ng-show="count && !initiate_counting">
+			<span ng-if="is_additive">+</span><span ng-if="!is_additive">-</span>{{count}}
+		</div>
+		<span class="table_cell">
+			<span><b>{{user.name | first_name}}</b></span>
+			<span> · </span>
+			<span>{{user.total_count | integer}}</span><span> · </span>
+			<span ng-class="{'green_color': $routeParams.type}">{{user.book_read_count | integer}}</span>
+			<span ng-class="{'green_color': $routeParams.type}" class='icon-books'></span>
+			<span> · </span>
+			<span ng-class="{'purple_color': $routeParams.type}">{{user.bookmark_count | integer}}</span>
+			<span ng-class="{'purple_color': $routeParams.type}" class='icon-bookmarks'></span>
+			<span> · </span>
+		</span>
+	</div>
+</div>

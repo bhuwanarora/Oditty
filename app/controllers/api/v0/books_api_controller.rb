@@ -15,7 +15,7 @@ module Api
 			end
 
 			def get_popular_books
-				books = BookApi.get_popular_books params
+				books = BookApi.get_popular_books(params, session[:user_id])
 				render :json => books, :status => 200
 			end
 
@@ -26,7 +26,8 @@ module Api
 
 			def get_book_details
 				id = params[:id]
-				info = BookApi.detailed_book(id)
+				user_id = session[:user_id]
+				info = BookApi.get_book_details(id, user_id)
 				render :json => info, :status => 200
 			end
 
@@ -37,7 +38,7 @@ module Api
 			end
 
 			def affiliate_links
-				book = BookApi.get_book(params[:title], params[:author_name])
+				book = BookApi.get_book(params[:id])
 				isbn =  book[0][0]["data"]["isbn"] rescue ""
 				bnn_links = []
 				if isbn
@@ -51,8 +52,13 @@ module Api
 			end
 
 			def add_thumbnail
-				status = BookApi.create_thumb_request params
+				status = BookApi.create_thumb_request(params, session[:user_id])
 				render :json => {:message => "Request Initiated...", :status => 200}
+			end
+
+			def get_feed
+				feed = BookApi.get_feed params[:id]
+				render :json => feed, :status => 200
 			end
 
 		end

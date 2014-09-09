@@ -1,22 +1,31 @@
 websiteApp.service('widgetService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
+    
+    this.get_book_feed = function(id){
+        return _deferred_request('/api/v0/book_feed?id='+id);
+    }
+
+    this.save_genre = function(params){
+        return _deferred_post_request('/api/v0/save_genre', params);
+    }
+
     this.populate_tooltips = function(id){
     	return _deferred_request('/api/v0/tooltip?id='+id);
-    };
+    }
 
     this.mark_as_read = function(id, data){
     	return _deferred_post_request('/api/v0/mar', {"book_id":id, "data":data});
     }
 
-    this.recommend = function(type, id, data){
-    	return _deferred_post_request('/api/v0/recommend', {"id":id, "type":type, "data":data});
+    this.recommend = function(params){
+    	return _deferred_post_request('/api/v0/recommend', params);
     }
 
-    this.bookmark = function(type, id, data){
-    	return _deferred_post_request('/api/v0/bookmark', {"id":id, "type":type, "data":data});
+    this.bookmark = function(params){
+    	return _deferred_post_request('/api/v0/bookmark', params);
     }
 
-    this.comment = function(id, type, data){
-    	return _deferred_post_request('/api/v0/comment', {"id":id, "type":type, "data":data});
+    this.comment = function(params){
+    	return _deferred_post_request('/api/v0/comment', params);
     }
 
     this.what_do_you_feel = function(id, type, data){
@@ -27,8 +36,8 @@ websiteApp.service('widgetService', ['$http', '$q', '$rootScope', function ($htt
     	return _deferred_post_request('/api/v0/time', {"id":id, "data":data});
     }
 
-    this.rate_this_book = function(id, data){
-    	return _deferred_post_request('/api/v0/rate', {"id":id, "data":data});
+    this.rate_this_book = function(params){
+    	return _deferred_post_request('/api/v0/rate', params);
     }
 
     this.own_this_book = function(id, data){
@@ -63,12 +72,16 @@ websiteApp.service('widgetService', ['$http', '$q', '$rootScope', function ($htt
         return _deferred_request('/api/v0/labels');   
     }
 
-    this.get_affiliate_links = function(book_name, author_name){
-        return _deferred_request('/api/v0/affiliate_links?title='+book_name+"&author_name="+author_name);
+    this.get_affiliate_links = function(book_id){
+        return _deferred_request('/api/v0/affiliate_links?id='+book_id);
     }
 
     this.add_thumbnail = function(params){
         return _deferred_post_request('/api/v0/add_thumbnail', params);
+    }
+
+    this.get_author_details = function(book_id){
+        return _deferred_request('/api/v0/author_details?book_id='+book_id);
     }
 
     _deferred_request = function(url){

@@ -1,0 +1,41 @@
+<% @urls.each do |url| %>
+<span>
+	<img src="http://rd-images.readersdoor.netdna-cdn.com/cp/<%= url[1] %>.jpg" class="cover_photo <% if url[2].present? %>active_photo<% end %>" data-id="<%= url[1] %>"/>
+	<div><%= url[1] %></div>
+</span>
+
+<% end %>
+
+<div class="main_footer">
+	<span type="status" class="footer_status"></span>
+</div>
+<script>
+	$(document).ready(function(){
+
+		var set_active = function(){
+			$('.cover_photo').on('click', function(){
+				var $this = $(this);
+				$('.footer_status').html('Updating...');
+				var data = "id="+$this.attr('data-id')+"&active="+$this.hasClass('active_photo');
+				$.ajax({
+					url: "<%= set_active_cover_photo_path %>",
+					data: data,
+					success: function(){
+						if($(this).hasClass('active_photo')){
+							$this.removeClass('active_photo');
+						}
+						else{
+							$this.addClass('active_photo');
+						}
+						$('.footer_status').html('');
+					},
+					error: function(){
+						$('.footer_status').html('Error in updating...');
+					}
+				})
+			});
+		}
+
+		set_active();
+	});
+</script>

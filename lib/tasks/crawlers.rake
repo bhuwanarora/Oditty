@@ -1,5 +1,38 @@
 namespace :crawl do
 
+  
+  desc "upload_cover_photos"
+  task :upload_cover_photos => :environment do
+    include S3UploaderHelper
+    S3UploaderHelper.upload_cover_photos
+  end
+
+  desc "get_images"
+  task :get_images => :environment do
+    include S3UploaderHelper
+    S3UploaderHelper.get_images
+  end
+
+  desc "upload_author_images"
+  task :upload_author_images => :environment do
+    include S3UploaderHelper
+    S3UploaderHelper.upload_author_images
+  end
+
+  
+
+  desc "get_images"
+  task :get_images2 => :environment do
+    include S3UploaderHelper
+    S3UploaderHelper.get_images2
+  end
+
+  desc "facebook emotions"
+  task :facebook_emotions => :environment do
+    include ShelfariCrawler
+    ShelfariCrawler.facebook_crawl
+  end
+
   desc "shelfari books list"
   task :shelfari_books_list => :environment do
     include ShelfariCrawler

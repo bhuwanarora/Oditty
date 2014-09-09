@@ -1,0 +1,92 @@
+{"id"=>"100002688874653", "education"=>[{"concentration"=>[{"id"=>"108384569189012", "name"=>"Sociology"}], "school"=>{"id"=>"131419803557231", "name"=>"Maitreyi College"}, "type"=>"College", "year"=>{"id"=>"143641425651920", "name"=>"2014"}}], "first_name"=>"Prachi", "gender"=>"female", "last_name"=>"Jain", "profile"=>"https://www.facebook.com/prachi.jain.31", "locale"=>"en_US", "name"=>"Prachi Jain", "political"=>"Communism", "religion"=>"Monotheism", "quotes"=>"world is web of words\ncommon sense is not so common", "timezone"=>5.5, "updated_time"=>"2014-08-27T12:30:41+0000", "username"=>"prachi.jain.31", "verified"=>true, "work"=>[{"description"=>"Internship", "employer"=>{"id"=>"508530545841089", "name"=>"Anand Foundation"}, "location"=>{"id"=>"102161913158207", "name"=>"Delhi, India"}, "position"=>{"id"=>"102167983158778", "name"=>"Internship"}, "start_date"=>"2014-08-26"}, {"employer"=>{"id"=>"452244444871895", "name"=>"Student"}}], "profile_status"=>0, "logged"=>true}
+
+
+[{"id"=>"108384569189012", "name"=>"Sociology"}] concentration
+CREATE UNIQUE (education1)-[:HasProperty]->(:Concentration{id: "108384569189012",name: "Sociology"})
+
+
+
+{"id"=>"131419803557231", "name"=>"Maitreyi College"} school
+CREATE UNIQUE (education1)-[:HasProperty]->(:Concentration{id: "108384569189012",name: "Sociology"})
+
+
+College type
+type: "College"
+
+CREATE UNIQUE (education1)-[:HasProperty]->(:Concentration{id: "108384569189012",name: "Sociology"})
+
+
+
+{"id"=>"143641425651920", "name"=>"2014"} year
+type: "College"
+ CREATE UNIQUE (education1)-[:HasProperty]->(:Concentration{id: "108384569189012",name: "Sociology"})
+
+
+Internship description
+description: "Internship"
+
+{"id"=>"508530545841089", "name"=>"Anand Foundation"} employer
+description: "Internship"
+
+{"id"=>"102161913158207", "name"=>"Delhi, India"} location
+description: "Internship"
+
+{"id"=>"102167983158778", "name"=>"Internship"} position
+description: "Internship"
+
+2014-08-26 start_date
+description: "Internship",start_date: "2014-08-26"
+
+{"id"=>"452244444871895", "name"=>"Student"} employer
+
+
+CREATE UNIQUE (user)-[:Education]->(education1:Education{type: "College"}) 
+CREATE UNIQUE (education1)-[:HasProperty]->(:Concentration{id: "108384569189012",name: "Sociology"}) 
+CREATE UNIQUE (user)-[:Work]->(work1:Work{description: "Internship",start_date: "2014-08-26"})  
+CREATE UNIQUE (user)-[:Work]->(work2:Work{})  RETURN DISTINCT(ID(user))
+
+
+
+{"data"=>[
+	{"category"=>"Book", 
+		"name"=>"Free Ebooks for Nook & Kindle", 
+		"created_time"=>"2014-05-09T20:14:39+0000", 
+		"id"=>"428424837206042"
+	}, 
+	{
+		"category"=>"Book", 
+		"name"=>"The Journey Home book", 
+		"created_time"=>"2012-11-09T15:12:24+0000", 
+		"id"=>"132561343872"
+	}, 
+	{
+		"category"=>"Book", 
+		"name"=>"The Republic", 
+		"created_time"=>"2012-10-09T19:00:59+0000", 
+		"id"=>"109498922409632"
+	}, 
+	{
+		"category"=>"Book", 
+		"name"=>"Bhagavad-gita As It Is", 
+		"created_time"=>"2012-09-04T09:53:20+0000", 
+		"id"=>"163397093712421"
+	}, 
+	{
+		"category"=>"Book", 
+		"name"=>"Demian", 
+		"created_time"=>"2012-09-04T09:52:01+0000", 
+		"id"=>"105519126147736"
+	}, 
+	{
+		"category"=>"Book", 
+		"name"=>"Siddhartha de Herman Hesse", 
+		"created_time"=>"2012-09-04T09:49:36+0000", 
+		"id"=>"171044192943170"
+	}], 
+	"paging"=>{
+		"next"=>"https://graph.facebook.com/v1.0/100001789393216/bo
+oks?access_token=CAAJfbEnVkW8BAK1U5am4jig4DmdZCdd4KzH31bP3qLqBFuXeF35ZCf1LgUpeIvfRS1bNsGtQ23mCxH3Gq99ucV9IJFEK4ldzzTyN4DDeaxuZBMCxZCv4WfjvfGRwTpMSFefV86U0r2iXI5ZAwnHh
+diU5SAsLrM1Ubmfa0gDEQf1cdpGiGz1jGoaZAgrZCZAhNjxXpf8NZB1bPedUrxVi64ad895Wbk4Vh1gMZD&limit=25&offset=25&__after_id=enc_AexskFCjd6uIc-IJG_g6l-2fX7bVEwOoxup56-W0wL3_A9wKD
+eV4T2Sd-qini54kz4wPP6oe0QFG9xP5ouZ11lQA"
+}
+}

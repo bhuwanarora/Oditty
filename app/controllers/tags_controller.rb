@@ -4,12 +4,20 @@ class TagsController < ApplicationController
   # GET /tags
   # GET /tags.json
   def index
-    @tags = Tag.all
+    neo = Neography::Rest.new
+    clause = "MATCH (g:StarGenre) RETURN ID(g), g.name, g.books_count"
+    puts clause.blue.on_red
+    @genres = neo.execute_query(clause)["data"]
   end
 
   # GET /tags/1
   # GET /tags/1.json
   def show
+  end
+
+  def search_tag
+    tags = Api::V0::SearchApi.search_genres params[:q]
+    render :json => tags, :status => 200
   end
 
   # GET /tags/new

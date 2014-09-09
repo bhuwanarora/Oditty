@@ -1,25 +1,21 @@
-websiteApp.directive('book', ['widgetService', '$rootScope', function (widgetService, $rootScope){
+websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', function (websiteService, $rootScope, widgetService){
   return {
     restrict: 'E',
     scope: { 'book': '=data' },
     controller: ['$scope', function($scope){
-      // $scope.hover = function(event){
-      //   $scope.hovered = true;
-      // };
-
-      // $scope.mouseout = function() {
-      //   $scope.hovered = false;
-      //   // $rootScope.focused_book = null;
-      // };
+      $scope.show_interaction_box = function(event){
+        $rootScope.user.interact = true;
+      }
 
       $scope.show_focused_tooltip = function(event){
         if($rootScope.focused_book != $scope.book){
           // $rootScope.show_more_filters = false;
-          $rootScope.ticker_popup = null;
+          delete $rootScope.ticker_popup;
           $rootScope.focused_book = $scope.book;
           var posX = event.currentTarget.offsetParent.offsetParent.offsetLeft - event.pageX + event.clientX;
-          var display_right_width =  screen.width - (posX + event.currentTarget.offsetParent.scrollWidth);
+          var display_right_width =  window_width - (posX + event.currentTarget.offsetParent.scrollWidth);
           var display_left_width = posX;
+          var card_width = window_height*0.6;
           console.table([{
             "offsetLeft":event.currentTarget.offsetParent.offsetParent.offsetLeft,
             "pageX":event.pageX, 
@@ -29,7 +25,7 @@ websiteApp.directive('book', ['widgetService', '$rootScope', function (widgetSer
             "display_left_width":display_left_width,
             "display_right_width":display_right_width}]);
           if(display_right_width > display_left_width){
-            if(display_right_width > 400){
+            if(display_right_width > card_width){
               posX = posX + event.currentTarget.offsetParent.scrollWidth - event.currentTarget.offsetLeft;
               $rootScope.focused_book.reposition_tooltip = {"left": posX+"px"};
             }
@@ -39,8 +35,8 @@ websiteApp.directive('book', ['widgetService', '$rootScope', function (widgetSer
             $rootScope.on_left = true;
           }
           else{
-            if(display_left_width > 400){
-              posX = screen.width - posX;
+            if(display_left_width > card_width){
+              posX = window_width - posX;
               $rootScope.focused_book.reposition_tooltip = {"right": posX+"px"}; 
             }
             else{
@@ -48,13 +44,14 @@ websiteApp.directive('book', ['widgetService', '$rootScope', function (widgetSer
             }
             $rootScope.on_left = false;
           }
+          
           // event.currentTarget.offsetParent.offsetParent.scrollWidth;
           // var test = event.currentTarget.offsetParent.offsetParent.offsetLeft -event.currentTarget.offsetLeft;
           // var test2 = event.currentTarget.offsetParent.offsetParent.scrollWidth;
           // var left = event.currentTarget.offsetParent.offsetParent.scrollWidth + event.screenX;
         }
         else{
-          $rootScope.focused_book = null;
+          delete $rootScope.focused_book;
         }
         event.stopPropagation();
         // body...
@@ -62,34 +59,38 @@ websiteApp.directive('book', ['widgetService', '$rootScope', function (widgetSer
 
       _init = function(){
         // $scope.active_book_filter = true;
-        // var book_id = $scope.book.id;
-        console.debug("%c _init book", "color: purple");
-        $scope.book.tweets = [];
-        var labels_length = $rootScope.labels.length;
-        $scope.book.labels = [];
-        for(var i=0; i<labels_length; i++){
-          $scope.book.labels.push({
-            name: $rootScope.labels[i].name
+        var book_id = $scope.book.id;
+        console.debug("%c _init book"+book_id, "color: purple");
+        $scope.book.show_labels = false;
+        
+        // if(!angular.isArray($scope.book.labels)){
+        //   $scope.book.labels = [];
+        //   angular.forEach($rootScope.labels, function(value){
+        //     this.push({"name": value.name});
+        //   }, $scope.book.labels);
+        // }
+        if(angular.isUndefined($scope.book.title)){
+          websiteService.get_book_details("id="+book_id).then(function(data){
+            angular.extend($scope.book, data);
+            angular.forEach($scope.book.labels, function(value){
+              if(value.checked){
+                $scope.book.bookmark_status = 1;
+              }
+            });
+            $scope.book.data_fetched = true;
           });
         }
-        $scope.book.show_labels = false;
-        // widgetService.populate_tooltips(book_id).then(function(data){
-          // $scope.book.title = data.title;
-          // $scope.book.author_name = data.author_name;
-          // $scope.book.users = data.users;
-          // $scope.book.summary = data.summary;
-          // $scope.book.users_count = data.users_count;
-        // });
-        var margin_right = (Math.floor(Math.random() * 20) + 1)+"px";
-        var margin_top = (Math.floor(Math.random() * 50) + 1)+"px";
-        var margin_right_neg = (Math.random() < 0.5);
-        var margin_top_neg = (Math.random() < 0.5);
-        if(margin_top_neg){
-          margin_top = "-"+margin_top;
-        }
-        if(margin_right_neg){
-          margin_right = "-"+margin_right;
-        }
+
+        // var margin_right = (Math.floor(Math.random() * 20) + 1)+"px";
+        // var margin_top = (Math.floor(Math.random() * 50) + 1)+"px";
+        // var margin_right_neg = (Math.random() < 0.5);
+        // var margin_top_neg = (Math.random() < 0.5);
+        // if(margin_top_neg){
+        //   margin_top = "-"+margin_top;
+        // }
+        // if(margin_right_neg){
+        //   margin_right = "-"+margin_right;
+        // }
         // $scope.randomise_position = {"margin-left": margin_right, "margin-bottom":margin_top};
         // $scope.book_tilt = {"transform":"rotate("+tilt_angle+")",
         //                   "-ms-transform":"rotate("+tilt_angle+")",
@@ -103,7 +104,7 @@ websiteApp.directive('book', ['widgetService', '$rootScope', function (widgetSer
   };
 }]);
 
-websiteApp.directive('labelDropdown', function(){
+websiteApp.directive('labelDropdown', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
   return{
     restrict: 'E',
     controller: ['$scope', function($scope){
@@ -114,8 +115,53 @@ websiteApp.directive('labelDropdown', function(){
       $scope.select_label = function(index){
         var atleast_one_label_checked = false;
         var labels = $scope.book.labels;
-        // labels["name"]
-          $scope.book.labels[index]["checked"] = !$scope.book.labels[index]["checked"];
+        
+        $scope.book.labels[index]["checked"] = !$scope.book.labels[index]["checked"];
+        if($scope.book.labels[index]["checked"]){
+          //add to notifications
+          var name = $rootScope.user.email;
+          if(angular.isDefined($rootScope.user.name)){
+            name = $rootScope.user.name;
+          }
+          var message = "<span>saved&nbsp;</span><span class='site_color'>"+$scope.book.title+"</span><span> to '"+$scope.book.labels[index]["name"]+"'</span>";
+          
+          var notification = {
+            "thumb":$rootScope.user.thumb,
+            "message":message,
+            "timestamp":new Date().getTime(),
+            "book":{
+              "id":$scope.book.id,
+              "title":$scope.book.title,
+              "author_name":$scope.book.author_name,
+              "isbn":$scope.book.isbn
+            },
+            "user":{
+              "id":$rootScope.user.id,
+              "name":name
+            }
+          }
+          $rootScope.user.bookmark_count = $rootScope.user.bookmark_count + 1;
+          $scope.$emit('gamifyCount', 10, true);
+          $scope.$emit('addToNotifications', notification);
+
+          var message = "SUCCESS-Added to "+$scope.book.labels[index]["name"]+" <span class='icon-tags'></span>.";
+        }
+        else{
+          $rootScope.user.bookmark_count = $rootScope.user.bookmark_count - 1;
+          $scope.$emit('gamifyCount', 10, false);
+          var message = "SUCCESS-Removed from "+$scope.book.labels[index]["name"]+" <span class='icon-tags'></span>.";
+        }
+        var timeout_event = notify($rootScope, message, $timeout);
+        var params = {"id": $scope.book.id, 
+                    "type": "BOOK",
+                    "name": $scope.book.labels[index]["name"],
+                    "data": $scope.book.labels[index]["checked"]};
+
+        widgetService.bookmark(params);
+        $scope.$on('destroy', function(){
+          $timeout.cancel(timeout_event);
+        });
+
         for(var i=0; i<labels.length; i++){
           if(labels[i]["checked"]){
             atleast_one_label_checked = true;
@@ -136,7 +182,7 @@ websiteApp.directive('labelDropdown', function(){
     }],
     templateUrl: '/assets/angular/widgets/base/book/label_dropdown.html'    
   }
-});
+}]);
 
 websiteApp.directive('bookNavbar', ['$rootScope', '$timeout', function ($rootScope, $timeout) {
   return {
@@ -175,27 +221,19 @@ websiteApp.directive('bookBookmark', ['$rootScope', '$timeout', 'widgetService',
           var book_title = $scope.book.title;
           var author_name = $scope.book.author_name;
           if($scope.book.custom_bookmark){
-            add_custom_bookmark($scope, $rootScope, $timeout);
+            var already_exists = add_custom_bookmark($scope, $rootScope, $timeout);
+            if(!already_exists){
+              var params = {"id": $scope.book.id, 
+                    "type": "BOOK",
+                    "name": $scope.book.custom_bookmark,
+                    "data": true};
+              widgetService.bookmark(params);
+            }
           }
           else{
             $scope.book.show_labels = false;
             // alert("custom_bookmark not present");
           }
-          // if(bookmark_status == 1){
-          //   $scope.book.bookmark_status = 0;
-          //   var message = "SUCCESS-"+book_title+" by "+author_name+" has been removed from your bookmark shelf.";
-          //   $scope.$emit('removeFromBookmarks', "BOOK", $scope.book);
-          // }
-          // else{
-          //   $scope.book.bookmark_status = 1;
-          //   var message = "SUCCESS-"+book_title+" by "+author_name+" has been added to your bookmark shelf.";
-          //   $scope.$emit('addToBookmarks', "BOOK", $scope.book);
-          //   $rootScope.$broadcast('glowBookmark');
-          // }
-          // var timeout_event = notify($rootScope, message, $timeout);
-          // $scope.$on('destroy', function(){
-          //   $timeout.cancel(timeout_event);
-          // });
           // widgetService.bookmark("BOOK", $scope.book.id, $scope.book.bookmark_status);
         }
         else{
@@ -208,10 +246,11 @@ websiteApp.directive('bookBookmark', ['$rootScope', '$timeout', 'widgetService',
   };
 }]);
 
-websiteApp.directive('bookInteract', ['$rootScope', '$timeout', 
-  function ($rootScope, $timeout) {
+websiteApp.directive('bookInteract', ['$rootScope', '$timeout', 'widgetService', 'WebsiteUIConstants',
+  function ($rootScope, $timeout, widgetService, WebsiteUIConstants){
   return {
     restrict: 'E',
+    scope: {"book": "=data"},
     controller: ['$scope', function($scope){
       _init = function(){
         $scope.setStatus();
@@ -235,9 +274,17 @@ websiteApp.directive('bookInteract', ['$rootScope', '$timeout',
       }
 
       $scope.handle_enter = function(event){
-        var is_enter = event.keyCode == 13;
+        var is_enter = event.keyCode == WebsiteUIConstants.Enter;
         if(is_enter){
-          add_custom_bookmark($scope, $rootScope, $timeout);
+          var already_exists = add_custom_bookmark($scope, $rootScope, $timeout);
+          if(!already_exists){
+            var params = {"id": $scope.book.id, 
+                  "type": "BOOK",
+                  "name": $scope.book.custom_bookmark,
+                  "data": true};
+            widgetService.bookmark(params);
+            $scope.book.custom_bookmark = "";
+          }
         }
       }
 
@@ -257,7 +304,7 @@ websiteApp.directive('bookInteract', ['$rootScope', '$timeout',
   };
 }]);
 
-websiteApp.directive('rate', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
+websiteApp.directive('rate', ['$rootScope', '$timeout', 'widgetService', 'sharedService', function($rootScope, $timeout, widgetService, sharedService){
   return{
     restrict: 'E',
     scope: {'rate_object': '=data'},
@@ -273,7 +320,38 @@ websiteApp.directive('rate', ['$rootScope', '$timeout', 'widgetService', functio
         $scope.rate_object.user_rating = $scope.temp_rating;
       }
 
+      _add_notification = function(){
+        var name = $rootScope.user.email;
+        if(angular.isDefined($rootScope.user.name)){
+          name = $rootScope.user.name;
+        }
+        var message = "<span>gave "+$scope.rate_object.user_rating+"/10 stars to&nbsp;</span><span class='site_color'>"+$scope.rate_object.title+"</span>";
+        var notification = {
+          "thumb":$rootScope.user.thumb,
+          "message":message,
+          "timestamp":new Date().getTime(),
+          "book":{
+            "id":$scope.rate_object.id,
+            "title":$scope.rate_object.title,
+            "author_name":$scope.rate_object.author_name,
+            "isbn":$scope.rate_object.isbn
+          },
+          "user":{
+            "id":$rootScope.user.id,
+            "name":name
+          }
+        }
+        $scope.$emit('addToNotifications', notification);
+      }
+
+      _gamify = function(){
+        if(!$scope.rate_object.rated){
+          $scope.$emit('gamifyCount', 10, true);
+        }
+      }
+
       $scope.mark_as_rated = function(index, event){
+        _gamify();
         $scope.rate_object.rated = true;
         $scope.rate_object.user_rating = parseInt(index) + 1;
         $scope.temp_rating = parseInt(index) + 1;
@@ -282,8 +360,14 @@ websiteApp.directive('rate', ['$rootScope', '$timeout', 'widgetService', functio
         $scope.$on('destroy', function(){
           $timeout.cancel(timeout_event);
         });
+        var params = {"id":$scope.rate_object.id, "data":$scope.rate_object.user_rating};
 
-        widgetService.rate_this_book($scope.rate_object.id, $scope.rate_object.user_rating);
+        //ONLY FOR BOOKS
+        if(angular.isUndefined($scope.rate_object.status) || !$scope.rate_object.status){
+          sharedService.mark_as_read($scope, $scope.rate_object, event);
+        }
+        widgetService.rate_this_book(params);
+        _add_notification();
         event.stopPropagation();
       }
 
@@ -303,29 +387,31 @@ websiteApp.directive('rate', ['$rootScope', '$timeout', 'widgetService', functio
   }
 }]);
 
-websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
+websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 'sharedService', 'WebsiteUIConstants', '$cookieStore', function($rootScope, $timeout, widgetService, sharedService, WebsiteUIConstants, $cookieStore){
   return{
     restrict: 'E',
     controller: ['$scope', function($scope){
       // $scope.show_book = function(page){
       //   zoomin_book($scope, $timeout, $rootScope, page);
       // }
+      $scope.stop_keyboard_navigation = function(event){
+        var keyLeft = event.keyCode == WebsiteUIConstants.KeyLeft;
+        var keyUp = event.keyCode == WebsiteUIConstants.KeyUp;
+        var keyRight = event.keyCode == WebsiteUIConstants.KeyRight;
+        var keyDown = event.keyCode == WebsiteUIConstants.KeyDown;
+        if(keyLeft || keyRight || keyUp || keyDown){
+          event.stopPropagation();
+        }
+      }
+
       $scope.handle_enter = function(event, new_thumb){
-        var enter_key = event.keyCode == 13;
+        var enter_key = event.keyCode == WebsiteUIConstants.Enter;
         if(enter_key){
-          $scope.add_thumb = false;
-          var title = $rootScope.focused_book.title;
-          var author_name = $rootScope.focused_book.author_name;
-          var book_url = "/#/user/1/book/"+title+"/author/"+author_name;
+          $rootScope.focused_book.add_thumb = false;
+          var id = $rootScope.focused_book.id;
           var params = {"thumb_url": new_thumb, 
-                        "title": title,
-                        "book_url": book_url,
-                        "username": $rootScope.user.name,
-                        "user_thumb": $rootScope.user.thumb,
-                        "user_link": ""}
-          widgetService.add_thumbnail(params).then(function(data){
-            
-          });
+                        "book_id": id}
+          widgetService.add_thumbnail(params);
         }
       }
 
@@ -338,12 +424,48 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
         }
       }
 
+      $scope.get_author_details = function(){
+        $scope.show_author = true;
+        $scope.show_buy = false;
+        $cookieStore.put('show_author', true);
+        $cookieStore.put('show_buy', false);
+        if(angular.isUndefined($rootScope.focused_book.author_details)){
+          widgetService.get_author_details($rootScope.focused_book.id).then(function(data){
+            $rootScope.focused_book.author_details = {"about": data[0], "image_url": data[1], "signature_pic": data[2], "id": data[3], "book_ids": data[4], "book_isbns": data[5]};
+          });
+        }
+      }
+
+      $scope.get_book_from_author = function(){
+        var json = {"name": $rootScope.focused_book.author_name, "id": $rootScope.focused_book.author_details.id};
+        $rootScope.$broadcast('updateFilters', "AUTHOR", json);
+      }
+
+      $scope.get_buy_links = function(){
+        $scope.show_author = false;
+        $scope.show_buy = true;
+        $cookieStore.put('show_author', false);
+        $cookieStore.put('show_buy', true);
+        if(angular.isUndefined($rootScope.focused_book.bnn_links)){
+          widgetService.get_affiliate_links($rootScope.focused_book.id).then(function(results){
+            $rootScope.focused_book.bnn_links = results.bnn.links;
+          });
+        }
+      }
+
+      $scope.get_book_overview = function(){
+        $scope.show_buy = false; 
+        $scope.show_author = false;
+        $cookieStore.put('show_author', false);
+        $cookieStore.put('show_buy', false);
+      }
+
       $scope.stop_propagation = function(event){
         event.stopPropagation();
       }
 
       $scope.close_focused_tooltip = function(){
-        $rootScope.focused_book = null;
+        delete $rootScope.focused_book;
       }
 
       $scope.own_this_book = function(){
@@ -363,10 +485,58 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
         });
       }
 
-      $scope.record_read_time = function(read_timer){
-        $rootScope.focused_book.read_timer = read_timer;
-        var message = "SUCCESS-Thanks we have recorded your approximate time to read "+$rootScope.focused_book.title+". <br/> This will help us to recommend you books according to your reading skills."
+      $scope.record_read_time = function(read_timer, event){
+        var recording_time_first_time = angular.isUndefined($rootScope.focused_book.time_index) || $rootScope.focused_book.time_index == null;
+        if(recording_time_first_time){
+          $scope.$emit('gamifyCount', 10, true);
+        }
+
+        $rootScope.focused_book.time_index = read_timer;
+        var message = "SUCCESS-Recorded approximate time to read <br/>."
         var timeout_event = notify($rootScope, message, $timeout);
+        if(!$rootScope.focused_book.status){
+          sharedService.mark_as_read($rootScope, $rootScope.focused_book, event);
+        }
+
+        switch($rootScope.focused_book.time_index){
+            case 0:
+                var reading_length = "Tiny Read";
+                break;
+            case 1:
+                var reading_length = "Small Read";
+                break;
+            case 2:
+                var reading_length = "Normal Read";
+                break;
+            case 3:
+                var reading_length = "Long Read";
+                break;
+        }
+        var name = $rootScope.user.email;
+        if(angular.isDefined($rootScope.user.name)){
+          name = $rootScope.user.name;
+        }
+        var message = "<span>described reading length of <span class='site_color'>"+$rootScope.focused_book.title+"</span><span>&nbsp; as a&nbsp;'"+reading_length+"'</span>";
+        
+        var notification = {
+          "thumb":$rootScope.user.thumb,
+          "message":message,
+          "timestamp":new Date().getTime(),
+          "book":{
+            "id":$rootScope.focused_book.id,
+            "title":$rootScope.focused_book.title,
+            "author_name":$rootScope.focused_book.author_name,
+            "isbn":$rootScope.focused_book.isbn
+          },
+          "user":{
+            "id":$rootScope.user.id,
+            "name":name
+          }
+        };
+        
+        $scope.$emit('addToNotifications', notification);
+
+
         widgetService.record_time($rootScope.focused_book.id, read_timer);
         $scope.$on('destroy', function(){
           $timeout.cancel('timeout_event');
@@ -375,7 +545,7 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
 
       $scope.is_timer = function(read_timer){
         var is_timer = false;
-        if($rootScope.focused_book.read_timer == read_timer){
+        if($rootScope.focused_book.time_index == read_timer){
           is_timer = true;
         }
         return is_timer;
@@ -390,270 +560,59 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
         event.stopPropagation();
       }
 
-      _display_tweet = function(index){
-        // console.log("%c display_tweet", "color: red;");
-        if($rootScope.focused_book.tweets.length != 0){
-          var tweets = $rootScope.focused_book.tweets;
-          var timeout_event = $timeout(function(){
-            if(index < tweets.length){
-              $rootScope.focused_book.display_tweet = $rootScope.focused_book.tweets[index]["tweet"];
-              if($rootScope.focused_book.tweets[index]["tweet"]){
-                $rootScope.focused_book.display_profile = $rootScope.focused_book.tweets[index]["thumb"];
-              }
-              else{
-                $rootScope.focused_book.display_profile = "/assets/profile_pic.jpeg"; 
-              }
-              index++;
-              _display_tweet(index);
-            }
-            else{
-              _display_tweet(0);
-            }
-          }, 2000);
-          $scope.$on('destroy', function(){
-            $timeout.cancel(timeout_event);
-          });
-        }
-        else{
-          $rootScope.focused_book.display_profile = null;
-          $rootScope.focused_book.display_tweet = "What do you feel about this book?";
-        }
+      _display_tweet = function(){
+        $rootScope.focused_book.display_profile = $rootScope.user.thumb; 
+        $rootScope.focused_book.display_tweet = "Comment on this book...";
       }
 
       _open_tab = function(){
-        $scope.show_info = true;
+        if(angular.isDefined($cookieStore.get('show_author'))){
+          $scope.show_author = $cookieStore.get('show_author');
+        }
+        else{
+          $scope.show_author = false;
+        }
+        if(angular.isDefined($cookieStore.get('show_buy'))){
+          $scope.show_buy = $cookieStore.get('show_buy');
+        }
+        else{
+          $scope.show_buy = false;
+        }
+      }
+
+      $scope._get_book_feed = function(){
+        if(angular.isUndefined($rootScope.focused_book.tweets)){
+          $rootScope.focused_book.tweets = [];
+          widgetService.get_book_feed($rootScope.focused_book.id).then(function(data){
+            if($rootScope.focused_book != null){
+              $rootScope.focused_book.tweets = data;
+              _display_tweet();
+            }
+          });
+        }
       }
 
       _init = function(){
-        var book_name = $rootScope.focused_book.title;
-        var author_name = $rootScope.focused_book.author_name;
-        widgetService.get_affiliate_links(book_name, author_name).then(function(results){
-          $scope.bnn_links = results.bnn.links;
-        });
-        _display_tweet(0);
         _open_tab();
-        $scope.add_thumb = false;
+
+        if(angular.isDefined($rootScope.focused_book)){
+          $scope._get_book_feed();
+          if($scope.show_author){
+            $scope.get_author_details();
+          }
+          else if($scope.show_buy){
+            $scope.get_buy_links();
+          }
+          else{
+            $scope.get_book_overview();
+          }
+        }
       }
 
       _init();
 
     }],
     templateUrl: "/assets/angular/widgets/base/book/focused_book.html"
-  }
-}]);
-
-websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteService', function($rootScope, $timeout, websiteService){
-  return{
-    restrict: 'E',
-    controller: ['$scope', function($scope){
-      $scope.update_hashtagged_comment = function(){
-
-      }
-
-      $scope.stop_propagation = function(event){
-        event.stopPropagation();
-      }
-
-      $scope.close_interaction_box = function(){
-        $rootScope.focused_book.interact = false;
-        $scope.hash_tags = [];
-      }
-
-      $scope.stop_horizontal_scroll = function(event){
-        event.stopPropagation();
-      }
-
-      $scope.handle_selection = function(selected_item){
-        var string_array = $rootScope.focused_book.current_comment.split(" ");
-        var html_array = $rootScope.focused_book.hash_tagged_comment.split(" ");
-        var chr = String.fromCharCode(event.keyCode);
-        var len = string_array.length;
-        if(len == 1){
-          var old_string = string_array.slice(0, len-1).join(" ").trim();
-          var old_html = html_array.slice(0, len-1).join(" ").trim();
-        }
-        else{
-          var old_string = string_array.slice(0, len-1).join(" ")+" ";
-          var old_html = html_array.slice(0, len-1).join(" ")+" ";
-        }
-        var current_element = string_array.pop();
-        var current_html = html_array.pop();
-        var is_backspace = event.keyCode == 8;
-        var hash_tagging = $scope.hash_tagging;
-        $rootScope.focused_book.hash_tagged_comment = old_html+"<b>"+selected_item+"</b>";
-        $rootScope.focused_book.current_comment = old_string+selected_item;
-        $scope.hash_tags = null;
-        event.stopPropagation();
-        //TODO: SET FOCUS ON CLICK
-      }
-
-      $scope.set_current = function(index){
-
-      }
-
-      $scope.handle_backspace = function(event){
-        var string_array = $rootScope.focused_book.current_comment.split(" ");
-        var html_array = $rootScope.focused_book.hash_tagged_comment.split(" ");
-        var chr = String.fromCharCode(event.keyCode);
-        var len = string_array.length;
-        if(len == 1){
-          var old_string = string_array.slice(0, len-1).join(" ");
-          var old_html = html_array.slice(0, len-1).join(" ");  
-        }
-        else{
-          var old_string = string_array.slice(0, len-1).join(" ")+" ";
-          var old_html = html_array.slice(0, len-1).join(" ")+" ";
-        }
-        var current_element = string_array.pop();
-        var current_html = html_array.pop();
-        var is_backspace = event.keyCode == 8;
-        var hash_tagging = $scope.hash_tagging;
-        if(is_backspace){
-          if(current_element == "#"){
-            $scope.hash_tagging = false;
-            $scope.hash_tags = [];
-            $rootScope.focused_book.hash_tagged_comment = old_html;
-          }
-          else{
-            var hash_tagging_breaking_in_betwen = old_html.split("<b>").length != old_html.split("</b>").length
-            var inside_a_hashtag = current_html[current_html.length - 1] == ">";
-            if(hash_tagging_breaking_in_betwen){
-              html_array = old_html.split("<b>");
-              len = html_array.length;
-              old_html = html_array.slice(0, len-1).join("<b>");
-              old_string = old_html.replace(/<b>/, "").replace(/<\/b>/, "");
-            }
-            if(hash_tagging || inside_a_hashtag){
-              $rootScope.focused_book.hash_tagged_comment = old_html;
-              $rootScope.focused_book.current_comment = old_string;
-              $scope.is_new_word_initiation = true;
-              $scope.hash_tagging = false;
-              $scope.hash_tags = [];
-              event.preventDefault();
-            }
-            else{
-              var html = $rootScope.focused_book.hash_tagged_comment;
-              $rootScope.focused_book.hash_tagged_comment = html.substring(0, html.length-1);
-            }
-          }
-          if(!$rootScope.focused_book.current_comment || $rootScope.focused_book.current_comment == ""){
-            $rootScope.focused_book.hash_tagged_comment = "";
-          }
-        }
-        event.stopPropagation();
-      }
-
-      $scope.handle_hash_tags = function(event){
-        if($rootScope.focused_book.current_comment.trim() == ""){
-          $scope.is_new_word_initiation = true;
-        }
-        var string_array = $rootScope.focused_book.current_comment.split(" ");
-        var chr = String.fromCharCode(event.keyCode);
-        var len = string_array.length;
-        var old_string = string_array.slice(0, len-1).join(" ");
-        var current_element = string_array.pop();
-        var is_new_word_initiation = $scope.is_new_word_initiation;
-        var under_a_tag = $scope.hash_tagging;
-        console.table([{"is_new_word_initiation":  is_new_word_initiation,
-                        "chr": chr,
-                        "len": len,
-                        "old_string": old_string,
-                        "current_element": current_element,
-                        "current_comment": $rootScope.focused_book.current_comment,
-                        "under_a_tag": under_a_tag}]);
-        if(event.keyCode == 13){
-          var tweet_text = $rootScope.focused_book.hash_tagged_comment
-                                .replace(/<b>/, "<a>")
-                                .replace(/<\/b>/, "<\/a>");
-          if($rootScope.user.thumb){
-            var thumb = $rootScope.user.thumb;
-            var tweet = {"tweet": tweet_text, "thumb": thumb};
-          }
-          else{
-            var tweet = {"tweet": tweet_text}; 
-          }
-          $rootScope.focused_book.current_comment = "";
-          $rootScope.focused_book.hash_tagged_comment = "";
-          $rootScope.focused_book.tweets.push(tweet);
-          event.preventDefault();
-        }
-        else{
-          if(is_new_word_initiation && chr == "#"){
-            var html = "<b>"+chr+"</b>";
-            $scope.hash_tagging = true;
-            $rootScope.focused_book.hash_tagged_comment = $rootScope.focused_book.hash_tagged_comment+html;
-          }
-          else if(is_new_word_initiation && chr == "+"){
-            var html = "<b>"+chr+"</b>";
-            $scope.hash_tagging = true;
-            $rootScope.focused_book.hash_tagged_comment = $rootScope.focused_book.hash_tagged_comment+html;
-            $scope.search_for = "TAGS";
-          }
-          else if(is_new_word_initiation && chr == "@"){
-            var html = "<b>"+chr+"</b>";
-            $scope.hash_tagging = true;
-            $rootScope.focused_book.hash_tagged_comment = $rootScope.focused_book.hash_tagged_comment+html;
-            $scope.search_for = "[AUTHORS, READERS]";
-          }
-          else{
-            if(chr == " "){
-              $scope.hash_tagging = false;
-              $rootScope.focused_book.hash_tagged_comment = $rootScope.focused_book.hash_tagged_comment+chr;
-              $scope.search_for = null;
-            }
-            else{
-              if($scope.hash_tagging){
-                var hash_tagged = $rootScope.focused_book.hash_tagged_comment.split("</b>");
-                var length = hash_tagged.length;
-                if(length > 2){
-                  var last = hash_tagged[length - 2]+chr+"</b>"+hash_tagged[length - 1];
-                  $rootScope.focused_book.hash_tagged_comment = hash_tagged.slice(0, length - 2).join("</b>")+"</b>"+last;
-                }
-                else{
-                  var last = hash_tagged[length - 2]+chr+"</b>"+hash_tagged[length - 1];
-                  $rootScope.focused_book.hash_tagged_comment = last;
-                }
-              }
-              else{
-                $rootScope.focused_book.hash_tagged_comment = $rootScope.focused_book.hash_tagged_comment+chr;
-              }
-            }
-          }
-          if($scope.search_for){
-            if(current_element.length > 2){
-              string_to_be_searched = current_element.slice(1, current_element.length)+""+chr;
-              websiteService.search(string_to_be_searched.trim(), $scope.search_for, 3).then(function(result) {
-                  $scope.hash_tags = [];
-                  var data = result.results.data;
-                  for(var i=0; i < data.length; i++){
-                    var json = {"name": data[i][0]};
-                    $scope.hash_tags.push(json);
-                  }
-              });
-            }
-          }
-
-          if(chr == " "){
-            $scope.is_new_word_initiation = true;
-          }
-          else{
-            $scope.is_new_word_initiation = false; 
-          }
-        }
-
-        event.stopPropagation();
-      }
-
-      _init = function(){
-        $scope.is_new_word_initiation = true;
-        $rootScope.focused_book.current_comment = "";
-        $rootScope.focused_book.hash_tagged_comment = "";
-      }
-
-      _init();
-
-    }],
-    templateUrl: "/assets/angular/widgets/base/book/interaction_box.html"
   }
 }]);
 
@@ -669,24 +628,26 @@ websiteApp.directive('bookTags', ['$rootScope', '$timeout', function($rootScope,
   };
 }]);
 
-websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
+websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', 'websiteService', function($rootScope, $timeout, widgetService, websiteService){
   return{
     restrict: 'E',
     scope: {'recommend_object': '=data'},
     controller: ['$scope', function($scope){
-      $scope.select_thumb = function(event){
+      $scope.select_thumb = function(event, friend_id){
         var selected = event.currentTarget.dataset.selected == "true";
         if(!selected){
+          $scope.user.selected_followers.push(friend_id);
           event.currentTarget.dataset.selected = true;
-          event.currentTarget.style.border = "2px solid";
+          event.currentTarget.style.border = "5px solid #427fed";
         }
         else{
+          $scope.user.selected_followers.splice($scope.user.selected_followers.indexOf(friend_id), 1);
           event.currentTarget.dataset.selected = false;
-          event.currentTarget.style.border = "2px solid transparent";
+          event.currentTarget.style.border = "5px solid transparent";
         }
       }
 
-      $scope.stop_horizontal_scroll = function(event){
+      $scope.stop_propagation = function(event){
         event.stopPropagation();
       }
 
@@ -695,13 +656,15 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', fu
         var author_name = $scope.recommend_object.author_name;
         if($scope.recommend_object.recommended){
           $scope.recommend_object.recommended = false;
-          var message = "SUCCESS-"+book_title+" by "+author_name+" has been recommended to selected friends.";
+          var message = "SUCCESS-Recommended to selected friends.";
           var timeout_event = notify($rootScope, message, $timeout);
           $scope.$on('destroy', function(){
             $timeout.cancel(timeout_event);
           });
           // $('body').css('cursor', 'default');
-          widgetService.recommend("BOOK", $scope.recommend_object.id, $scope.recommend_object.recommended);
+          var params = {"friend_ids": $scope.user.selected_followers, "book_id": $scope.recommend_object.id};
+          widgetService.recommend(params);
+          $scope.$emit('gamifyCount', 10, true);
         }
         else{
           $scope.recommend_object.recommended = true;
@@ -709,47 +672,44 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', fu
         }
       }
 
-      _init = function(){
-        $scope.user = {};
-        $scope.user.friends = $rootScope.user.friends;
+      $scope._init = function(){
+        if(angular.isUndefined($rootScope.user.followers)){
+          $rootScope.user.selected_followers = [];
+          websiteService.get_followed_by().then(function(data){
+            $rootScope.user.followers = [];
+            angular.forEach(data, function(value){
+              var json = {"name": value[1], "id": value[0], "thumb": value[2]};
+              this.push(json);
+            }, $rootScope.user.followers);
+            $scope.user = {};
+            $scope.user.followers = $rootScope.user.followers;
+            $scope.user.selected_followers = $rootScope.user.selected_followers;
+          });
+        }
+        else{
+          $scope.user = {};
+          $scope.user.followers = $rootScope.user.followers;
+          $scope.user.selected_followers = $rootScope.user.selected_followers;
+        }
       }
 
-      _init();
+      $scope._init();
     }],
     templateUrl: "/assets/angular/widgets/base/book/recommend.html"
   }
 }]);
 
 
-websiteApp.directive('markAsRead', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
+websiteApp.directive('markAsRead', ['$rootScope', '$timeout', 'widgetService', 'sharedService', 'stropheService', function($rootScope, $timeout, widgetService, sharedService, stropheService){
 	return {
 		restrict: 'E',
 		controller: ['$scope', function($scope){
-      $scope.markAsRead = function(event){
-        var book_title = $scope.book.title;
-        var author_name = $scope.book.author_name;
-        if($scope.book.status){
-          $scope.book.status = 0;
-          $scope.$emit('removeFromShelf', "BOOK", $scope.book);
-          var message = "SUCCESS-Removed from <span class='icon-books'></span> Books Read. ";
-        }
-        else{
-          $scope.book.status = 1;
-          $scope.$emit('addToShelf', "BOOK", $scope.book);
-          $rootScope.$broadcast('glowShelf');
-          var message = "SUCCESS-Added to <span class='icon-books'></span> Books Read. ";
-
-          $scope.$on('destroy', function(){
-            $timeout.cancel(timeout_event);
-            $timeout.cancel(glow_event);
-          });
-
-        }
-        var timeout_event = notify($rootScope, message, $timeout);
-        widgetService.mark_as_read($scope.book.id, $scope.read);
-        event.stopPropagation();
+      $scope.mark_as_read = function(event){
+        var username = $rootScope.user.name;
+        var message = username + "added " + $scope.book.title + " to Books Read."
+        sharedService.mark_as_read($scope, $scope.book, event);
+        stropheService.send_notification(message);
       }
-
     }],
     templateUrl: "/assets/angular/widgets/base/book/mark_as_read.html"
   }
@@ -774,13 +734,14 @@ function zoomin_book($scope, $timeout, $rootScope, page){
 function add_custom_bookmark($scope, $rootScope, $timeout){
   var custom_bookmark = $scope.book.custom_bookmark;
   if(custom_bookmark){
+    custom_bookmark = custom_bookmark.trim().toUpperCase();
     var labels = $scope.book.labels;
     var already_exists = false;
     for(var i = 0; i < labels.length; i++){
       var label = labels[i];
       if(label["name"] == custom_bookmark){
         already_exists = true;
-        var message = "ALERT- Bookmark with the name "+custom_bookmark+" is already added in the list";
+        var message = "ALERT- Tag with the name '"+custom_bookmark+"' is already added in the list";
         break;
       }
     }
@@ -789,7 +750,8 @@ function add_custom_bookmark($scope, $rootScope, $timeout){
       $scope.book.bookmark_status = 1;
       $rootScope.labels = $rootScope.labels.concat([{"name": custom_bookmark}]);
       $scope.book.labels = $scope.book.labels.concat([{"name": custom_bookmark, "checked": true}]);
-      $scope.book.custom_bookmark = "";
+      $rootScope.user.bookmark_count = $rootScope.user.bookmark_count + 1;
+      $scope.$emit('gamifyCount', 10, true);
       var message = "SUCCESS-Custom Bookmark "+custom_bookmark+" added to book "+$scope.book.title;
     }
 
@@ -797,6 +759,7 @@ function add_custom_bookmark($scope, $rootScope, $timeout){
     $scope.$on('destroy', function(){
       $timeout.cancel(timeout_event);
     });
+    return already_exists;
   }
 }
 

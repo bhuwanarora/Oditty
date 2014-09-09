@@ -1,0 +1,3 @@
+START book=node:node_auto_index('indexed_title:LAST_BOOK')
+MATCH p=(book)-[:Next_book*..1000]->(next_book)
+WITH [x in nodes(p) MATCH (x)-[:WithReadingTime]->(r:ReadingTime{name:'ReadTime'}) | x.isbn]

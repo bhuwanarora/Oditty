@@ -15,7 +15,7 @@ websiteApp.directive('author', ['$rootScope', 'widgetService', function ($rootSc
         if($rootScope.focused_author != $scope.author){
           $rootScope.focused_author = $scope.author;
           var posX = event.currentTarget.offsetParent.offsetParent.offsetLeft - event.pageX + event.clientX;
-          var display_right_width =  screen.width - (posX + event.currentTarget.offsetParent.scrollWidth);
+          var display_right_width =  window_width - (posX + event.currentTarget.offsetParent.scrollWidth);
           var display_left_width = posX;
 
           if(display_right_width > display_left_width){
@@ -29,7 +29,7 @@ websiteApp.directive('author', ['$rootScope', 'widgetService', function ($rootSc
           }
           else{
             if(display_left_width > 400){
-              posX = screen.width - posX;
+              posX = window_width - posX;
               $rootScope.focused_author.reposition_tooltip = {"right": posX+"px", "top": "60px"}; 
             }
             else{
@@ -42,7 +42,7 @@ websiteApp.directive('author', ['$rootScope', 'widgetService', function ($rootSc
           // var left = event.currentTarget.offsetParent.offsetParent.scrollWidth + event.screenX;
         }
         else{
-          $rootScope.focused_author = null;
+          delete $rootScope.focused_author;
         }
         event.stopPropagation();
         // body...
@@ -80,7 +80,7 @@ websiteApp.directive('focusedAuthor', ['$rootScope', '$timeout', 'widgetService'
       }
 
       $scope.close_focused_tooltip = function(){
-        $rootScope.focused_author = null;
+        delete $rootScope.focused_author;
       }
 
       $scope.close_interaction_box = function(){
@@ -107,12 +107,12 @@ websiteApp.directive('authorBookmark', ['$rootScope', '$timeout', 'widgetService
         if(bookmark_status == 1){
           $scope.author.bookmark_status = 0;
           var message = "SUCCESS-Author "+author_name+" has been removed from your bookmark shelf.";
-          $scope.$emit('removeFromBookmarks', "AUTHOR", $scope.author);
+          // $scope.$emit('removeFromBookmarks', "AUTHOR", $scope.author);
         }
         else{
           $scope.author.bookmark_status = 1;
           var message = "SUCCESS-AUTHOR "+author_name+" has been added to your bookmark shelf.";
-          $scope.$emit('addToBookmarks', "AUTHOR", $scope.author);
+          // $scope.$emit('addToBookmarks', "AUTHOR", $scope.author);
           $rootScope.$broadcast('glowBookmark');
         }
         var timeout_event = notify($rootScope, message, $timeout);
@@ -127,7 +127,7 @@ websiteApp.directive('authorBookmark', ['$rootScope', '$timeout', 'widgetService
   };
 }]);
 
-websiteApp.directive('authorInteract', ['websiteService', function (websiteService) {
+websiteApp.directive('authorInteract', ['websiteService', 'WebsiteUIConstants', function (websiteService, WebsiteUIConstants) {
   return {
     restrict: 'E',
     controller: ['$scope', function($scope){
@@ -168,7 +168,7 @@ websiteApp.directive('authorInteract', ['websiteService', function (websiteServi
         }
         var current_element = string_array.pop();
         var current_html = html_array.pop();
-        var is_backspace = event.keyCode == 8;
+        var is_backspace = event.keyCode == WebsiteUIConstants.Backspace;
         var hash_tagging = $scope.hash_tagging;
         if(is_backspace){
           if(current_element == "#"){
@@ -235,7 +235,7 @@ websiteApp.directive('authorInteract', ['websiteService', function (websiteServi
           if(chr == " "){
             $scope.hash_tagging = false;
             $(event.currentTarget).siblings().append(chr);
-            $scope.search_for = null;
+            delete $scope.search_for;
           }
           else{
             if($scope.hash_tagging){

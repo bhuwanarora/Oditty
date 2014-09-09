@@ -1,12 +1,13 @@
 var websiteApp = angular.module('websiteApp', ['ngRoute', 'ngAnimate', 
                   'monospaced.mousewheel', 'facebook', 
                   'directive.g+signin', 'ngMap', 'cropme',
-                  'duScroll', 'ngDropdowns', 'sticky', 'filtersApp']);
+                  'duScroll', 'ngDropdowns', 'filtersApp', 'ngCookies', 
+                  'appConstants']);
 
 websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
   $routeProvider
   .when('/search', {
-      templateUrl: '/assets/angular/widgets/partials/search.html'
+    templateUrl: '/assets/angular/widgets/partials/search.html'
   })
   .when('/user/:id', {
     templateUrl: '/assets/angular/widgets/partials/search.html'
@@ -17,7 +18,22 @@ websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvid
   .when('/user/:id/recommendations/:type/filter/:filter_id', {
     templateUrl: '/assets/angular/widgets/partials/recommendations.html'
   })
+  .when('/user/:id/grid/:type/id/:grid_id/name/:name', {
+    templateUrl: '/assets/angular/widgets/partials/recommendations.html'
+  })
+  .when('/user/:id/trending/:type/id/:trend_id/name/:name', {
+    templateUrl: '/assets/angular/widgets/partials/recommendations.html'
+  })
   .when('/user/:id/book/:title/author/:author', {
+    templateUrl: '/assets/angular/widgets/partials/recommendations.html'
+  })
+  .when('/user/:id/book/:title/all/:status', {
+    templateUrl: '/assets/angular/widgets/partials/recommendations.html'
+  })
+  .when('/user/:id/book/:book_id', {
+    templateUrl: '/assets/angular/widgets/partials/recommendations.html'
+  })
+  .when('/user/:id/book/:title/author/:author/id/:book_id', {
     templateUrl: '/assets/angular/widgets/partials/recommendations.html'
   })
   // .when('/user/:id/timeline', {
@@ -56,17 +72,21 @@ websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvid
   // $locationProvider.html5Mode(true);
 }]);
 
-websiteApp.run(['$rootScope', '$location', function($rootScope, $location){
-  $rootScope.$on("$routeChangeStart", function(event, next, current) {
-    if(!$rootScope.user.logged){
+websiteApp.constant('facebookAppId', "667868653261167");
+// websiteApp.constant('facebookAppId', "742659549115410");
+
+websiteApp.run(['$rootScope', '$location', '$cookieStore', function($rootScope, $location, $cookieStore){
+  $rootScope.$on("$routeChangeStart", function(event, next, current){
+    var unauthenticated_user = !$rootScope.user.logged && !$cookieStore.get('logged');
+    if(unauthenticated_user){
       // no logged user, we should be going to #login
       if(next.templateUrl == "/assets/angular/widgets/partials/search.html"){
         // already going to #login, no redirect needed
       }else{
         // not going to #login, we should redirect now
-        $location.path( "/search" );
+        $location.path( "/search");
       }
-    }         
+    }
   });
 }]);
 
@@ -76,18 +96,11 @@ angular.element(document).ready(function() {
   console.timeEnd('bootstrap');
 });
 
-websiteApp.config(['FacebookProvider',
-    function(FacebookProvider){
-      // $motionProvider.setTreshold({
-      //   'rgb': 150,
-      //   'move': 1,
-      //   'bright': 300
-      // });
-      var myAppId = '667868653261167';
-     
-     // FacebookProvider.setAppId('myAppId');
-     FacebookProvider.init(myAppId);
-    }
+websiteApp.config(['FacebookProvider', 'facebookAppId',
+  function(FacebookProvider, facebookAppId){
+    var myAppId = facebookAppId;
+    FacebookProvider.init(myAppId);
+  }
 ]);
 
 function notify($rootScope, message, $timeout){
@@ -113,3 +126,22 @@ function notify($rootScope, message, $timeout){
   }, 7000);
   return timeout_event;
 }
+
+function get_size() {
+  if(typeof(window.innerWidth) == 'number'){
+    //Non-IE
+    window_width = window.innerWidth;
+    window_height = window.innerHeight;
+  }else if(document.documentElement && (document.documentElement.clientWidth || document.documentElement.clientHeight)){
+    //IE 6+ in 'standards compliant mode'
+    window_width = document.documentElement.clientWidth;
+    window_height = document.documentElement.clientHeight;
+  }else if(document.body && (document.body.clientWidth || document.body.clientHeight)){
+    //IE 4 compatible
+    window_width = document.body.clientWidth;
+    window_height = document.body.clientHeight;
+  }
+}
+
+var window_width = 0, window_height = 0;
+get_size();

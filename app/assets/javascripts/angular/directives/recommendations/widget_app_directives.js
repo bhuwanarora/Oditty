@@ -55,12 +55,13 @@ websiteApp.directive('follow', ['$rootScope', '$timeout', 'widgetService', funct
           var reader_name = $scope.reader.name;
           if($scope.reader.follow){
             $scope.reader.follow = false;
-            $scope.$emit('removeFromShelf', "READER", $scope.reader);
+            var index = $rootScope.user.readers['follow'].indexOf(data);
+            $rootScope.user.readers['follow'].splice(index, 1);
             var message = "SUCCESS-Reader "+reader_name+" has been removed from your follow list.";
           }
           else{
             $scope.reader.follow = true;
-            $scope.$emit('addToShelf', "READER", $scope.reader);
+            $rootScope.user.readers['follow'].push($scope.reader);
             var message = "SUCCESS-You are now following "+reader_name+".";
           }
           var timeout_event = notify($rootScope, message, $timeout);
@@ -70,13 +71,14 @@ websiteApp.directive('follow', ['$rootScope', '$timeout', 'widgetService', funct
           var author = $scope.author.name;
           if($scope.author.follow){
             $scope.author.follow = false;
-            $scope.$emit('removeFromShelf', "AUTHOR", $scope.author);
+            var index = $rootScope.user.authors['follow'].indexOf(data);
+            $rootScope.user.authors['follow'].splice(index, 1);
             widgetService.follow($scope.author.id, "AUTHOR", $scope.author.follow);
             var message = "SUCCESS-Author "+author+" has been removed from your follow list."; 
           }
           else{
             $scope.author.follow = true;
-            $scope.$emit('addToShelf', "AUTHOR", $scope.author);
+            $rootScope.user.authors['follow'].push($scope.author);
             var message = "SUCCESS-You are now following Author "+author+"."; 
           }
           var timeout_event = notify($rootScope, message, $timeout);
@@ -93,32 +95,32 @@ websiteApp.directive('follow', ['$rootScope', '$timeout', 'widgetService', funct
   }
 }]);
 
-websiteApp.directive('widgetThumb', ['$timeout', '$rootScope', function ($timeout, $rootScope) {
+websiteApp.directive('widgetThumb', ['$timeout', '$rootScope', '$filter', 'ColorConstants', function ($timeout, $rootScope, $filter, ColorConstants) {
   return {
     restrict: 'E',
     controller: ['$scope', function($scope){
       $scope.show_images = function(){
-        var delay = 500;
-        if(global_display_timer == 2500){
-          global_display_timer = delay;
+        // var delay = 0;
+        // if(global_display_timer == 2500){
+        //   global_display_timer = delay;
+        // }
+        // else{
+        //   global_display_timer = global_display_timer + delay;
+        // }
+        if(angular.isDefined($scope.book)){
+          var obj = $scope.book;
+          if(angular.isDefined(obj.isbn)){
+            $scope.thumb_style = {'background': "url('"+_get_thumb(obj)+"')"};
+          }
         }
-        else{
-          global_display_timer = global_display_timer + delay;
+        else if(angular.isDefined($scope.author)){
+          var obj = $scope.author;
         }
-        var timeout_event = $timeout(function(){
-          if($scope.book){
-            var obj = $scope.book;
-          }
-          else if($scope.author){
-            var obj = $scope.author;
-          }
-          else if($scope.reader){
-            var obj = $scope.reader;
-          }
-          if(obj){
-            $scope.thumb_style = {'background': "url('"+obj.thumb.url+"')"};
-          }
-        }, global_display_timer);
+        else if(angular.isDefined($scope.reader)){
+          var obj = $scope.reader;
+        }
+        // var timeout_event = $timeout(function(){
+        // }, global_display_timer);
 
         $scope.$on('destroy', function(){
           $timeout.cancel(timeout_event);
@@ -138,11 +140,24 @@ websiteApp.directive('widgetThumb', ['$timeout', '$rootScope', function ($timeou
         return obj;
       }
 
+      _get_thumb = function(obj){
+        var external_thumb = angular.isDefined(obj.external_thumb) && obj.external_thumb != null;
+        if(external_thumb){
+          var thumb = obj.external_thumb;
+        }
+        else{
+          var thumb = $filter('thumb')(obj.isbn);
+        }
+        return thumb;
+      }
+
       _init = function(){
         var obj = _get_obj();
-        if(obj){
-          $scope.thumb_style = {'background-color': obj.thumb.background_color};
+        if(obj && obj.isbn){
+          $scope.thumb_style = {'background': "url('"+_get_thumb(obj)+"')"};
         }
+        var random_color = ColorConstants.value[Math.floor(Math.random() * ColorConstants.value.length)];
+        $scope.random_background = {"background-color": random_color};
         // $scope.$on('showImages', function(){
         //   $scope.show_images();
         // });

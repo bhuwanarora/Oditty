@@ -1,10 +1,97 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  
 
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    neo = Neography::Rest.new
+    clause = "MATCH (u:User) OPTIONAL MATCH (u)-[:FacebookAuth]->(f) OPTIONAL MATCH (u)-[:Likes]->(l) RETURN DISTINCT(u), f, COLLECT(l.name), ID(u)"
+    @users = neo.execute_query(clause)["data"]
+    render :index
+  end
+
+  def activate
+    begin
+      neo = Neography::Rest.new
+      if params[:id].present?
+        if params[:active].present?
+          clause = "MATCH (u:User) WHERE ID(u)="+params[:id].to_s+" SET u.active=true "
+        else
+          clause = "MATCH (u:User) WHERE ID(u)="+params[:id].to_s+" SET u.active=false "
+        end
+
+        puts clause.blue.on_red
+        neo.execute_query clause
+      end
+
+      clause = "MATCH (u:User) RETURN u, ID(u)"
+      @users = neo.execute_query(clause)["data"]
+      render :json => {:message => "Success"}, :status => 200
+    rescue Exception => e
+      render :json => {:message => e.to_s}, :status => 500
+    end
+  end
+
+  def clear_data
+    begin
+      neo = Neography::Rest.new
+
+      clause = "MATCH (a)-[r:FeedNext]->(b) WHERE a <> b DELETE r"
+      puts "Feednext...".green
+      neo.execute_query clause
+
+      clause = "MATCH (a)-[r:Ego]->(b) DELETE r"
+      puts "Ego...".green
+      neo.execute_query clause
+
+      clause = "MATCH (a)-[r:BookFeed]->(b) WHERE a <> b DELETE r"
+      puts "Bookfeed...".green
+      neo.execute_query clause
+
+      clause = "MATCH (:User)-[r1:RatingAction]->(r2:RatingNode)-[r3:Rate]->(:Book) DELETE r1, r2, r3"
+      puts "Rating...".green
+      neo.execute_query clause    
+
+      clause = "MATCH (:User)-[r1:TimingAction]->(r2:TimingNode)-[r3:Timer]->(:Book) DELETE r1, r2, r3"
+      puts "Timing...".green
+      neo.execute_query clause
+
+      clause = "MATCH (:User)-[r1:Labelled]-(r2:Label)-[r3:BookmarkedOn]->(r4:BookmarkNode)-[r5:BookmarkAction]-(:Book) DELETE r3, r4, r5"
+      puts "Bookmark...".green
+      neo.execute_query clause
+
+      clause = "MATCH (:User)-[r1:MarkAsReadAction]->(r2:MarkAsReadNode)-[r3:MarkAsRead]->(:Book) DELETE r1, r2, r3"
+      puts "MarkAsRead...".green
+      neo.execute_query clause
+
+      clause = "MATCH (:User)-[r1:Commented]->(r2:Tweet)-[r3:CommentedOn]->(:Book) DELETE r1, r2, r3"
+      puts "Comment...".green
+      neo.execute_query clause
+
+      clause = "MATCH (:User)-[r1:RecommendedTo]->()-[r2:RecommendedAction]->(r3:RecommendNode)-[r4:Recommended]->() DELETE r1, r2, r3, r4"
+      puts "Recommended...".green
+      neo.execute_query clause
+
+      # clause = " MATCH (:User)-[r1:DataEdit]->(r2:ThumbRequest)-[r3:DataEditRequest]->(:Book) DELETE r1, r2, r3"
+
+      clause = "MATCH  (b:Book) CREATE UNIQUE (b)-[:BookFeed]->(b)"
+      puts "Create bookfeed...".green
+      neo.execute_query clause
+
+      clause = "MATCH (u:User) CREATE UNIQUE (u)-[:FeedNext]->(u) CREATE UNIQUE (u)-[:Ego{user_id:ID(u)}]->(u) SET u.total_count = 0, u.bookmark_count = 0, u.book_read_count = 0, u.rating_count = 0"
+      puts "handle user...".green
+      neo.execute_query clause
+      render :json => {:message => "Success"}, :status => 200
+    rescue Exception => e
+      render :json => {:message => e.to_s}, :status => 500
+    end
+  end
+
+  def feedbacks
+    neo = Neography::Rest.new
+    clause = "MATCH (u:User)-[:GaveFeedback]->(f:Feedback) RETURN ID(u), ID(f), u.name, f.feedback_text, f.timestamp"
+    @feedbacks = neo.execute_query(clause)["data"]
   end
 
   # GET /users/1
@@ -24,6 +111,8 @@ class UsersController < ApplicationController
   def test
     render 'test_layout'
   end
+
+  
 
   # POST /users
   # POST /users.json
@@ -90,9 +179,37 @@ class UsersController < ApplicationController
     puts clause.blue.on_red
     user = @neo.execute_query clause
     if user["data"]
-      @message = "Email Confirmed."
+      @message = Constants::EmailConfirmed
     else
-      @message = "Email Confirmation Failed."
+      @message = Constants::EmailConfirmationFailed
+    end
+    render :layout => "clean"
+  end
+
+  def recover_password
+    @neo = Neography::Rest.new
+    clause = "MATCH (user:User) WHERE user.email=\""+params[:e]+"\" AND user.password_token=\""+params[:p]+"\"  RETURN ID(user)"
+    puts clause.blue.on_red
+    user = @neo.execute_query clause
+    if user["data"].present?
+      @user_exists = true 
+      @user_id = user["data"][0][0]
+    else
+      @user_exists = false
+      @message = Constants::InvalidLink
+    end
+    render :layout => "clean"
+  end
+
+  def save_password
+    begin
+      @neo = Neography::Rest.new
+      clause = "MATCH (user:User) WHERE ID(user)="+params[:id].to_s+" SET user.password=\""+params[:p]+"\"  RETURN user"
+      puts clause.blue.on_red
+      user = @neo.execute_query clause
+      render :json => {:message => Constants::PasswordChangedSuccess}, :status => 200
+    rescue Exception => e
+      render :json => {:message => Constants::PasswordChangedFailure}, :status => 500
     end
   end
 

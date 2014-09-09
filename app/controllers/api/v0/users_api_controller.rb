@@ -1,8 +1,36 @@
 module Api
 	module V0
 		class UsersApiController < ApplicationController
-			def authenticate
 
+			def google
+				user_id = UserApi.handle_google_user params
+				puts user_id.to_s.red
+				session[:user_id] = user_id
+				render :json => {:message => "Success"}, :status => 200
+			end
+
+			def save_info
+				user_id = UserApi.save_info(session[:user_id], params)
+				render :json => {:message => "Success"}, :status => 200
+			end
+
+			def fb
+				user_id = UserApi.handle_facebook_user params
+				puts user_id.to_s.red
+				session[:user_id] = user_id
+				render :json => {:message => "Success"}, :status => 200
+			end
+
+			def books_read
+				user_id = session[:user_id]
+				info = UsersGraphHelper.get_books_read(user_id, params[:skip_count])
+				render :json => info, :status => 200
+			end
+
+			def books_bookmarked
+				user_id = session[:user_id]
+				info = UsersGraphHelper.get_books_bookmarked(user_id, params[:skip_count])
+				render :json => info, :status => 200
 			end
 
 			def own
@@ -10,38 +38,53 @@ module Api
 			end
 
 			def recommend
+				UserApi.recommend_book(session[:user_id], params[:friend_ids], params[:book_id])
 				render :json => {:message => "Success"}, :status => 200
 			end
 
 			def time
+				user_id = session[:user_id]
+				book_id = params[:id]
+				time = params[:data]
+				UsersGraphHelper.record_time(user_id, book_id, time)
 				render :json => {:message => "Success"}, :status => 200
 			end
 
 			def rate
+				user_id = session[:user_id]
+				book_id = params[:id]
+				rating = params[:data]
+				UsersGraphHelper.rate_book(user_id, book_id, rating)
 				render :json => {:message => "Success"}, :status => 200
 			end
 
 			def bookmark
-				# bookmark_action = params[:q]
-				# user_id = session[:user_id]
-				# book_id = params[:book_id]
-				# if bookmark_action
-				# 	UsersGraphHelper.mark_as_read(user_id, book_id)
-				# else
-				# 	UsersGraphHelper.mark_as_unread(user_id, book_id)
-				# end
+				type = params[:type]
+				bookmark_action = params[:data]
+				user_id = session[:user_id]
+				book_id = params[:id]
+				name = params[:name]
+				if type == "BOOK"
+					if bookmark_action
+						UsersGraphHelper.bookmark_book(user_id, book_id, name)
+					else
+						UsersGraphHelper.remove_bookmark(user_id, book_id, name)
+					end
+				elsif type == "AUTHOR"
+				elsif type == "READER"
+				end
 				render :json => {:message => "Success"}, :status => 200
 			end
 
 			def mark_as_read
-				# mark_as_read_action = params[:q]
-				# user_id = session[:user_id]
-				# book_id = params[:book_id]
-				# if mark_as_read_action
-				# 	UsersGraphHelper.mark_as_read(user_id, book_id)
-				# else
-				# 	UsersGraphHelper.mark_as_unread(user_id, book_id)
-				# end
+				mark_as_read_action = params[:data]
+				user_id = session[:user_id]
+				book_id = params[:book_id]
+				if mark_as_read_action
+					UsersGraphHelper.mark_as_read(user_id, book_id)
+				else
+					UsersGraphHelper.mark_as_unread(user_id, book_id)
+				end
 				render :json => {:message => "Success"}, :status => 200
 			end
 
@@ -58,10 +101,8 @@ module Api
 			end
 
 			def comment
-				# discussion_id = params[:discussion_id]
-				# comment = params[:comment]
-				# user_id = session[:user_id]
-				# UsersGraphHelper.comment_on_discussion(discussion_id, comment)
+ 				user_id = session[:user_id]
+ 				UserApi.comment_on_book(user_id, params)
 				render :json => {:message => "Success"}, :status => 200
 			end
 
@@ -118,14 +159,39 @@ module Api
 				render :json => {:message => "Success"}, :status => 200
 			end
 
-			def get_news_feed
-				user_id = session[:user_id]
-				UsersGraphHelper.get_news_feed_for_user(user_id)
-				render :json => {:message => "Success"}, :status => 200
+			def user
+				# session[:user_id] = nil
+				logged_in = false
+				if session[:user_id]
+					logged_in = true
+				end
+				render :json => {:logged_in => logged_in, :id => session[:user_id]}, :status => 200
 			end
 
+			def logout
+				session[:user_id] = nil
+				render :json => {:logged_out => true}, :status => 200
+			end
+
+			def recover_password
+				email_sent = UserApi.recover_password(params[:email])
+				render :json => {:message => Constants::PasswordRecoveryInitiated}, :status => 200
+			end
+
+			# def get_news_feed
+			# 	user_id = session[:user_id]
+			# 	debugger
+			# 	UsersGraphHelper.get_news_feed_for_user(user_id)
+			# 	render :json => {:message => "Success"}, :status => 200
+			# end
+
 			def get_most_connected_friends
-				info = UserApi.get_most_connected_friends
+				info = UserApi.get_most_connected_friends session[:user_id]
+				render :json => info, :status => 200
+			end
+
+			def get_followed_by
+				info = UserApi.get_followed_by session[:user_id]
 				render :json => info, :status => 200
 			end
 
