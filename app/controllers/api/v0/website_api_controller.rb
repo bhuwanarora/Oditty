@@ -11,7 +11,7 @@ module Api
 
 			def test
 				puts "TEST ".green
-				puts params.to_s.red
+				puts params[:website_api].to_s.red
 				render :json => {:message => "Success"}, :status => 200
 			end
 			
