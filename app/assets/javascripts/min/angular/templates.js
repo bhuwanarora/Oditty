@@ -267,6 +267,11 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('/assets/angular/widgets/partials/s3_upload.html',
+    ""
+  );
+
+
   $templateCache.put('/assets/angular/widgets/partials/search.html',
     "<div class=\"home_page_base\"><div class=\"search_animate animate-very-slow\" ng-click=\"stopSearching($event)\" ng-controller=\"searchController\"><div class=\"search_page\" ng-style=\"search_style\"><div class=\"logo\"><a ng-href=\"#user/{{user.id}}/recommendations/books\"><span>r</span> <span>e</span> <span>a</span> <span>d</span> <span>e</span> <span>r</span> <span>'</span> <span>s</span> <span>&nbsp;</span> <span>d</span> <span>o</span> <span>o</span> <span>r</span></a></div><div class=\"beta_tag\">BETA</div><div class=\"tagline\"><span>LIVE AND BUILD THE YEARS WITH BOOKS.</span></div><hr><a ng-href=\"#user/{{user.id}}/recommendations/books\"><profile-link></profile-link></a><search-bar></search-bar><div class=\"secondary_login animate-fast\" ng-click=\"toggle_login_panel()\" ng-if=\"!user.logged && !show_login_form\">Login to explore recommendations.</div><div class=\"trends\"><span class=\"trend\">TRENDING </span> <span>· &nbsp;&nbsp;&nbsp;&nbsp;</span> <span ng-repeat=\"trend in trends | limitTo : 6\" class=\"trend\"><a ng-href=\"#user/{{user.id}}/trending/books/id/{{trend.id}}/name/{{trend.name}}\" class=\"animate-fast\"><span class=\"icon-bars\"></span> <span>{{trend.name}}</span> </a> <span>&nbsp;·&nbsp;</span></span></div></div><div ng-include=\"'/assets/angular/widgets/partials/login_form.html'\"></div></div></div>"
   );
