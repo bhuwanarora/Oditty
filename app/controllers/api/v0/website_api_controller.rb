@@ -8,6 +8,11 @@ module Api
                 
 				render :json => genres, :status => 200
 			end
+
+			def test
+				puts params.to_s.red
+				render :json => {:message => "Success"}, :status => 200
+			end
 			
 			def book_lists
 				@neo = Neography::Rest.new

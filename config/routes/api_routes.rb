@@ -31,6 +31,7 @@ ReadersDoor::Application.routes.draw do
       match "search_authors"                         => 'search_api#search_authors',                    :via => [:put, :get, :post]
       match "search_genres"                          => 'search_api#search_genres',                     :via => [:put, :get, :post]
 
+      match "test"                                   => 'website_api#test',                             :via => [:put, :get, :post]
       match "book_lists"                             => 'website_api#book_lists',                       :via => [:put, :get, :post]
       match "genres"                                 => 'website_api#genres',                           :via => [:put, :get, :post]
       match "countries"                              => 'website_api#countries',                        :via => [:put, :get, :post]
