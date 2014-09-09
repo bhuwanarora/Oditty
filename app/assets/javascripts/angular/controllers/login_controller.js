@@ -156,7 +156,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		        $scope._init_user();
 		    });
         });
-        $scope.fb_books();
+        // $scope.fb_books();
     };
 
     $scope.fb_books = function(){

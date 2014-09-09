@@ -46,6 +46,7 @@ ReadersDoor::Application.routes.draw do
       match "latest_notification"                    => 'website_api#latest_notification',              :via => [:put, :get, :post]
       match "trends"                                 => 'website_api#trends',                           :via => [:put, :get, :post]
       match "save_feedback"                          => 'website_api#save_feedback',                    :via => [:put, :get, :post]
+      match 'fb_books'                               => 'website_api#fb_books',                         :via => [:put, :get, :post]
 
       
       match "recover_password"                        => 'users_api#recover_password',                  :via => [:put, :get, :post]
@@ -77,7 +78,6 @@ ReadersDoor::Application.routes.draw do
       match 'google'                                  => 'users_api#google',                            :via => [:put, :get, :post]
 
       match 'author_details'                          => 'authors_api#details',                         :via => [:put, :get, :post]
-      
     end
   end
 end

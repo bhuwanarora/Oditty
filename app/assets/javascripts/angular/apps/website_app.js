@@ -2,7 +2,7 @@ var websiteApp = angular.module('websiteApp', ['ngRoute', 'ngAnimate',
                   'monospaced.mousewheel', 'facebook', 
                   'directive.g+signin', 'ngMap', 'cropme',
                   'duScroll', 'ngDropdowns', 'filtersApp', 'ngCookies', 
-                  'appConstants']);
+                  'appConstants', 'ngS3upload']);
 
 websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
   $routeProvider

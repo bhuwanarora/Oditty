@@ -492,32 +492,16 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				var data = item.name;
 				break;
 			case SearchUIConstants.BookSearch:
-				if(on_search_page){
-					var user_id = $rootScope.user.id;
-					if(angular.isDefined(item.show_all) && item.show_all){
-		  				$location.path("/user/"+user_id+"/book/"+item.name+"/all/"+true);
-					}
-					else{
-						$location.path("/user/"+user_id+"/book/"+item.id);
-					}
-				}
-				else{
-					if(angular.isDefined(item.show_all) && item.show_all){
-		  				$rootScope.filters.other_filters["show_all"] = true;
-						$rootScope.filters.other_filters["title"] = item.name;
-					}
-					else{
-						$rootScope.filters.other_filters["id"] = item.id;
-					}
-					$rootScope.hide_options = true;
-				}
+				$rootScope.hide_options = true;
 			default:
 				break;
 		}
-		var custom_filters_added = !(item.type == SearchUIConstants.BookSearch);
-
+		var custom_filters_added = item.type != SearchUIConstants.BookSearch;
 		if(on_search_page){
 			$cookieStore.put(item.type, item);
+			if(item.type == SearchUIConstants.BookSearch){
+				$scope.handle_search_request();
+			}
 		}
 		else if(on_trending_page || on_grids_page || on_specific_list_page){
 			$cookieStore.put(item.type, item);
@@ -528,6 +512,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				$rootScope.filters.other_filters[item.type] = data;
 				$cookieStore.put(item.type, item);
 			}
+			else{
+				$scope._set_filter_for_book_search(item);
+			}
 			$rootScope.filters["reset_count"] = 0;
 			$rootScope.filters["reset"] = true;
 			$scope.$emit('reloadRecommendations');
@@ -536,6 +523,21 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$scope.filters_added.splice(0, 0, item);
 			$scope.search_results.splice($scope.search_results.indexOf(item), 1);
 			$scope.select_next_option(item.type);
+		}
+	}
+
+	$scope._set_filter_for_book_search = function(item){
+		if(angular.isUndefined($rootScope.filters)){
+			$rootScope.filters = {"other_filters": {}};
+		}
+		$rootScope.filters["reset_count"] = 0;
+		$rootScope.filters["reset"] = true;
+		if(angular.isDefined(item.show_all) && item.show_all){
+			$rootScope.filters.other_filters["show_all"] = true;
+			$rootScope.filters.other_filters["title"] = item.name;
+		}
+		else{
+			$rootScope.filters.other_filters["id"] = item.id;
 		}
 	}
 
@@ -575,6 +577,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 					$rootScope.regions.splice(0, 0, item);
 				}
 				break;
+			case SearchUIConstants.BookSearch:
+				$scope._clear_book_search_filters();
+				break;
 		}
 		$cookieStore.remove(item.type);
 		if(!on_search_page){
@@ -608,9 +613,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$scope.filters_added = [];
 		}
 		if(angular.isDefined($rootScope.filters) && angular.isDefined($rootScope.filters.other_filters)){
-			delete $rootScope.filters.other_filters.title;
-			delete $rootScope.filters.other_filters.id;
-			delete $rootScope.filters.other_filters.show_all;
+			$scope._clear_book_search_filters();
 		}
 	}
 
@@ -702,6 +705,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		var keyDown = event.keyCode == WebsiteUIConstants.KeyDown;
 		var keyLeft = event.keyCode == WebsiteUIConstants.KeyLeft;
 		var keyRight = event.keyCode == WebsiteUIConstants.KeyRight;
+		if(!on_search_page){
+        	$scope.handle_options(event);
+        }
 		if(keyUp){
 			if(angular.isUndefined($scope.search_tag.current)){
 				$scope.search_tag.current = 0;
@@ -763,9 +769,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 					}
 					var displaying_search_results = angular.isDefined($rootScope.filters.other_filters) && (angular.isDefined($rootScope.filters.other_filters.title) || angular.isDefined($rootScope.filters.other_filters.id)) && !on_search_page
 					if(displaying_search_results){
-						delete $rootScope.filters.other_filters.title;
-						delete $rootScope.filters.other_filters.show_all;
-			  			delete $rootScope.filters.other_filters.id;
+						$scope._clear_book_search_filters();
 			  			$scope.$emit('reloadRecommendations');
 					}
         		}
@@ -777,6 +781,14 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
         else if(keyLeft || keyRight){
         	event.stopPropagation();
         }
+
+
+	}
+
+	$scope._clear_book_search_filters = function(){
+		delete $rootScope.filters.other_filters.title;
+		delete $rootScope.filters.other_filters.show_all;
+		delete $rootScope.filters.other_filters.id;
 	}
 
 	$scope.close_login_box = function(){
@@ -815,11 +827,6 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				"type": SearchUIConstants.Genre, 
 				"icon":"icon-tag", 
 				"icon2": "icon-book"},
-			{"name": SearchUIConstants.BookByAuthorLink, 
-				"level1_option": true, 
-				"type": SearchUIConstants.AuthorSearch, 
-				"icon":"icon-pen", 
-				"icon2": "icon-book"},
 			{"name": SearchUIConstants.BookByReadingTimeLink, 
 				"level1_option": true, 
 				"type": SearchUIConstants.Time, 
@@ -829,6 +836,11 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				"level1_option": true, 
 				"type": SearchUIConstants.Year, 
 				"icon":"icon-calendar", 
+				"icon2": "icon-book"},
+			{"name": SearchUIConstants.BookByAuthorLink, 
+				"level1_option": true, 
+				"type": SearchUIConstants.AuthorSearch, 
+				"icon":"icon-pen", 
 				"icon2": "icon-book"},
 			{"name": SearchUIConstants.BookByRegionLink, 
 				"level1_option": true, 
@@ -1142,8 +1154,8 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		if(angular.isUndefined($scope.filters_added)){
 			$scope.filters_added = [];
 		}
-		if(angular.isDefined($cookieStore.get(SearchUIConstants.Genre))){
-			var item = $cookieStore.get(SearchUIConstants.Genre);
+		var item = $cookieStore.get(SearchUIConstants.Genre);
+		if(angular.isDefined(item)){
 			if(!on_search_page){
 				if(angular.isUndefined($rootScope.filters)){
 					$rootScope.filters = {"other_filters": {}};
@@ -1153,8 +1165,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$scope._set_active_type(item.type);
 			$scope.filters_added.push(item);
 		}
-		if(angular.isDefined($cookieStore.get(SearchUIConstants.AuthorSearch))){
-			var item = $cookieStore.get(SearchUIConstants.AuthorSearch);
+
+		item = $cookieStore.get(SearchUIConstants.AuthorSearch);
+		if(angular.isDefined(item)){
 			if(!on_search_page){
 				if(angular.isUndefined($rootScope.filters)){
 					$rootScope.filters = {"other_filters": {}};
@@ -1164,8 +1177,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$scope._set_active_type(item.type);
 			$scope.filters_added.push(item);
 		}
-		if(angular.isDefined($cookieStore.get(SearchUIConstants.Time))){
-			var item = $cookieStore.get(SearchUIConstants.Time);
+
+		item = $cookieStore.get(SearchUIConstants.Time);
+		if(angular.isDefined(item)){
 			if(!on_search_page){
 				if(angular.isUndefined($rootScope.filters)){
 					$rootScope.filters = {"other_filters": {}};
@@ -1175,8 +1189,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$scope._set_active_type(item.type);
 			$scope.filters_added.push(item);
 		}
-		if(angular.isDefined($cookieStore.get(SearchUIConstants.Year))){
-			var item = $cookieStore.get(SearchUIConstants.Year);
+
+		item = $cookieStore.get(SearchUIConstants.Year);
+		if(angular.isDefined(item)){
 			if(!on_search_page){
 				if(angular.isUndefined($rootScope.filters)){
 					$rootScope.filters = {"other_filters": {}};
@@ -1186,8 +1201,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$scope._set_active_type(item.type);
 			$scope.filters_added.push(item);
 		}
-		if(angular.isDefined($cookieStore.get(SearchUIConstants.Country))){
-			var item = $cookieStore.get(SearchUIConstants.Country);
+
+		item = $cookieStore.get(SearchUIConstants.Country);
+		if(angular.isDefined(item)){
 			if(!on_search_page){
 				if(angular.isUndefined($rootScope.filters)){
 					$rootScope.filters = {"other_filters": {}};
@@ -1197,8 +1213,21 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$scope._set_active_type(item.type);
 			$scope.filters_added.push(item);
 		}
+
+		item = $cookieStore.get(SearchUIConstants.BookSearch);
+		if(angular.isDefined(item)){
+			if(!on_search_page){
+				$scope._set_filter_for_book_search(item);
+				$scope._set_active_type(item.type);
+				$scope.filters_added.push(item);
+			}
+			else{
+				$cookieStore.remove(SearchUIConstants.BookSearch);
+			}
+		}
+
 		if(!on_search_page && $scope.filters_added.length > 0){
-			$scope.$emit('reloadRecommendations');
+			// $scope.$emit('reloadRecommendations');
 		}
 	}
 
@@ -1208,6 +1237,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$cookieStore.remove(SearchUIConstants.Time);
 		$cookieStore.remove(SearchUIConstants.Year);
 		$cookieStore.remove(SearchUIConstants.Country);
+		$cookieStore.remove(SearchUIConstants.BookSearch);
 	}
 
 	_get_ten_random_books = function(){

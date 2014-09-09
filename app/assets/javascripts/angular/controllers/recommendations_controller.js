@@ -491,7 +491,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	        // _init_shelf();
 	        var timeout_event = $timeout(function(){
 	        	_get_recommendations();
-	        }, 1000);
+	        });
 	        $scope.$on('destroy', function(){
 	        	$timeout.cancel(timeout_event);
 	        });

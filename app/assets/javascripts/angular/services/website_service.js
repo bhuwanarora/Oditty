@@ -4,6 +4,10 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         return _deferred_request('/api/v0/recover_password?'+data);
     }
 
+    this.handle_facebook_books = function(params){
+        return _deferred_post_request('/api/v0/fb_books', params);
+    }
+
     this.test = function(params){
         return _deferred_post_request('/api/v0/test', params);
     }

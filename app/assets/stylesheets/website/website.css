@@ -463,3 +463,8 @@ input:focus{
     display: table-cell;
     vertical-align: middle;
 }
+
+.block3{
+    width: 33%;
+    min-width: 220px;
+}
