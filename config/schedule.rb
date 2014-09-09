@@ -13,8 +13,12 @@ set :output, "../dev/log/cron.log"
 #   rake "some:great:rake:task"
 # end
 #
-every 1.min, :at => '5:25 am' do
+every 1.day, :at => '5:25 am' do
   runner "TrendsHelper.social_mention"
+end
+
+every 1.second do
+	puts "schedule.rb"
 end
 
 # Learn more: http://github.com/javan/whenever
