@@ -13,7 +13,7 @@ set :output, "../dev/log/cron.log"
 #   rake "some:great:rake:task"
 # end
 #
-every 1.day, :at => '5:25 am' do
+every 1.day, :at => '11:10 pm' do
   runner "TrendsHelper.social_mention"
 end
 
