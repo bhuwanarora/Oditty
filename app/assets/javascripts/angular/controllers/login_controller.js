@@ -160,9 +160,17 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
     };
 
     $scope.books = function(){
-    	Facebook.api('/me/books', function(response){
-    		websiteService.test(response);
-        });	
+    	// Facebook.api('/me/books', function(response){
+    	// 	websiteService.test(response);
+     //    });	
+        FB.api(
+		    "/me/books.reads",
+		    function (response) {
+		      if (response && !response.error) {
+		        websiteService.test(response);
+		      }
+		    }
+		);
     }
 
     $scope._init_user = function(){
