@@ -631,10 +631,10 @@
 .recommendation_box .friend_grid .friend_thumb{
 	width: 60px;
 	margin: 2px;
-	border: 5px solid white;
 }
 
 .recommendation_box .friend_grid .friend_block{
+	border: 5px solid white;
 	position: relative;
 	float: left;
 }
@@ -642,8 +642,11 @@
 .recommendation_box .friend_grid .friend_block .friend_name{
 	position: absolute;
 	bottom: 10px;
-	left: 12px;
-	color: white;
+	left: 7px;
+	background-color: rgba(255, 255, 255, 0.56);
+	right: 7px;
+	padding: 4px;
+	font-size: .8em;
 }
 
 .recommendation_box .header{

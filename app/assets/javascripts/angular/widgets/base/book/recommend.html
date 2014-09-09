@@ -15,13 +15,14 @@
 			<span class="site_color"> {{recommend_object.title}} by {{recommend_object.author_name}}</span>
 		</div>
 		<div class="friend_grid">
-			<div ng-repeat="friend in user.followers" class="friend_block">
-				<div class="friend_name">{{friend.name}}</div>
+			<div ng-repeat="friend in user.followers" 
+				 class="friend_block" 
+				 data-selected="false"
+				 title="{{friend.name}}" 
+				 ng-click="select_thumb($event, friend.id)">
+				<div class="friend_name" ng-show="friend.name">{{friend.name}}</div>
 				<img ng-src="{{friend | blob_backup}}" 
-					 title="{{friend.name}}" 
-				     class="friend_thumb" 
-				     data-selected="false"
-				     ng-click="select_thumb($event, friend.id)"/>
+				     class="friend_thumb"/>
 			</div>
 		</div>
 		<div class="footer">
