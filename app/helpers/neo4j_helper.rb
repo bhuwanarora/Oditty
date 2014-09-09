@@ -534,7 +534,7 @@ module Neo4jHelper
 	def self.add_categories
 		@neo ||= self.init
 		ShelfariBooksCategories.where(:category_flag => nil).find_each do |book_category|
-			if book_category.id != 543718
+			if (book_category.id != 543718) && (book_category.id != 544353)	
 				begin
 					book_id = book_category.shelfari_book_id
 					book = ShelfariBook.find book_id
