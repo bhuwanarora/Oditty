@@ -156,6 +156,18 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
         });
     };
 
+    $scope.books = function(){
+    	Facebook.api('/me', function(response){
+        	// console.log(response);
+        	websiteService.handle_facebook_user(response);
+		    $scope.$apply(function(){
+    			$rootScope.user = response;
+        		$rootScope.user.thumb = response["thumb"];
+		        $scope._init_user();
+		    });
+        });	
+    }
+
     $scope._init_user = function(){
         $rootScope.user.profile_status = 0;
         $rootScope.user.logged = true;
