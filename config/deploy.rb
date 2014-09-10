@@ -64,7 +64,7 @@ namespace :deploy do
     desc "Update the crontab file"
     puts "Update the crontab file".blue.on_red
     task :update_crontab, :roles => :db do
-      run "cd #{latest_release} && bundle exec whenever --update-crontab readers_door_production"
+      run "bundle exec whenever --update-crontab readers_door_production"
     end
   end
 
