@@ -52,8 +52,8 @@ var constants = {
 		},
 		"RecommendationUIConstants": {
 			"TickerPopupMaxHeight": "62vh",
-			"FriendsGridMaxHeight": "500px",
-			"FriendsGridMinHeight": "250px",
+			"FriendsGridMaxHeight": "60vh",
+			"FriendsGridMinHeight": "30vh",
 			"NotificationsMinHeight": "30vh",
 			"NotificationsMaxHeight": "70vh",
 			"BookmarkPanel": 'BOOKMARK',
@@ -139,7 +139,8 @@ var constants = {
 			"Delete": 46,
 			"Escape": 27,
 			"StatusPosted": "Shared",
-			"ShareSomething": "Share something..."
+			"ShareSomething": "Share something...",
+			"CoverPhotoCDN": "http://rd-images.readersdoor.netdna-cdn.com/cp/"
 		},
 		"ColorConstants":{
 			"value": ["#695447", "#d1d2de", "#c4c2b5", "#675850", "#83817f", "#b3b2b1", "#839baa", "#4867a4", "#423b34", "#e4bc7e", "#987c4e", "#8c7971", "#ad9894", "#565240", "#5d2726"]

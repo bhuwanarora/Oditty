@@ -641,9 +641,9 @@
 .recommendation_box .friend_grid .friend_block .friend_name{
 	position: absolute;
 	bottom: 10px;
-	left: 7px;
+	left: 0px;
 	background-color: rgba(255, 255, 255, 0.56);
-	right: 7px;
+	right: 0px;
 	padding: 4px;
 	font-size: .8em;
 }
