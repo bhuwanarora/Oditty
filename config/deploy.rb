@@ -50,7 +50,7 @@ set :default_env, { path: "~/.rbenv/shims:~/.rbenv/bin:$PATH" }
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
-set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+set :whenever_identifier, ->{ "readers_door_production" }
 
 namespace :deploy do
 
@@ -62,10 +62,11 @@ namespace :deploy do
     end
   end
 
-  # desc "Update the crontab file"
-  # task :update_crontab, :roles => :db do
-  #   run "cd #{latest_release} && bundle exec whenever --update-crontab #{application}"
-  # end
+  desc "Update the crontab file"
+  puts "Update the crontab file".blue.on_red
+  task :update_crontab, :roles => :db do
+    run "cd #{latest_release} && bundle exec whenever --update-crontab readers_door_production"
+  end
 
 
   after :publishing, :restart
