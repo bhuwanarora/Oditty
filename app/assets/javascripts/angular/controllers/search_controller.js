@@ -1265,6 +1265,26 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
     	return {"width": book.width+"px", "left": book.left+"px"};
     }
 
+    $scope._set_base_search = function(){
+		switch($cookieStore.get('base_search')){
+			case SearchUIConstants.BookSearchLink:
+				_init_book_search();
+				$scope.active_base = SearchUIConstants.BookSearch;
+				break;
+			case SearchUIConstants.AuthorSearchLink:
+				_init_author_search();
+				$scope.active_base = SearchUIConstants.AuthorSearch;
+				break;
+			case SearchUIConstants.ReaderSearchLink:
+				_init_reader_search();
+				$scope.active_base = SearchUIConstants.ReaderSearch;
+				break;
+			default:
+				$scope.search_tag.placeholder = SearchUIConstants.SearchPlaceholder;
+				break;
+		}
+    }
+
 	_init = function(){
 		$scope.website.searching = false;
 		$scope.filters_added = [];
@@ -1274,23 +1294,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			if($rootScope.user.logged){
 				$scope.set_focus(3000);
 			}
-			switch($cookieStore.get('base_search')){
-				case SearchUIConstants.BookSearchLink:
-					_init_book_search();
-					$scope.active_base = SearchUIConstants.BookSearch;
-					break;
-				case SearchUIConstants.AuthorSearchLink:
-					_init_author_search();
-					$scope.active_base = SearchUIConstants.AuthorSearch;
-					break;
-				case SearchUIConstants.ReaderSearchLink:
-					_init_reader_search();
-					$scope.active_base = SearchUIConstants.ReaderSearch;
-					break;
-				default:
-					$scope.search_tag.placeholder = SearchUIConstants.SearchPlaceholder;
-					break;
-			}
+			$scope._set_base_search();
 		}
 		else{
 			_init_book_search();
