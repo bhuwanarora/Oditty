@@ -1083,4 +1083,17 @@ module Neo4jHelper
 		end
 	end
 
+	def self.set_book_active
+		ShelfariBook.update_all(:data_flag => true)
+		File.open("/Users/bhuwan/Documents/library/ids2.txt", "r") do |infile|
+		    while (line = infile.gets)
+		        ids = line.gsub("[", "").gsub("]", "").split(",")
+		        for id in ids
+		        	puts id.red
+		        	ShelfariBook.find(id).update_column("data_flag", nil)
+		        end
+		    end
+		end
+	end
+
 end

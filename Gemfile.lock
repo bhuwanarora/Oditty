@@ -31,6 +31,8 @@ GEM
     addressable (2.3.6)
     ancestry (2.1.0)
       activerecord (>= 3.0.0)
+    angular_rails_csrf (1.0.1)
+      rails (>= 3, < 5)
     annotate (2.6.5)
       activerecord (>= 2.3.0)
       rake (>= 0.8.7)
@@ -443,6 +445,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord-postgis-adapter
   ancestry
+  angular_rails_csrf
   annotate
   aws-sdk
   better_errors

@@ -162,6 +162,7 @@ module Api
 			def user
 				# session[:user_id] = nil
 				logged_in = false
+				puts "SESSION USER ID "+session[:user_id].to_s.blue.on_red
 				if session[:user_id]
 					logged_in = true
 				end

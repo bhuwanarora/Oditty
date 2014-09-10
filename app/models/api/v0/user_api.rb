@@ -218,6 +218,7 @@ module Api
 					end
 				end
 				info = info.merge(:message => message, :authenticate => authenticate)
+				puts "SESSION USER ID "+session[:user_id].to_s.blue.on_red
 				info
 			end
 

@@ -5,40 +5,26 @@ class ApplicationController < ActionController::Base
   
   before_filter :check_permission
 
-  after_filter :set_csrf_cookie_for_ng
+  after_filter :set_csrf_cookie_for_angular
 
-  def set_csrf_cookie_for_ng
+  def set_csrf_cookie_for_angular
     cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
   end
 
   def check_permission
-    # session[:user_id] = nil
-    unless ($redis.get 'book_ids').present?
-      $redis.set 'book_ids', ""
-    end
+    # unless ($redis.get 'book_ids').present?
+    #   $redis.set 'book_ids', ""
+    # end
     session["init"] = true
     if session[:user_id] == Constants::Admin
       @is_admin = true
     end
-    # private_access = ["panel/labels", "freebase", "freebase_search", "freebase_resource", "trends", "users", "grids", "panel/thumbs", "delete_grid", "add_grid", "update_grid"]
-    # unaccessible_page = private_access.include? params[:action]
-    # debugger
-    # if unaccessible_page
-    #   email = session[:email]
-    #   # email = "bhuwanarora67@gmail.com"
-    #   valid_admin = ReadersDoorAdmin.pluck(:email).include? email
-    #   if valid_admin
-    #     @user = User.where(:email => email).first
-    #   else
-    #     redirect_to "#{Rails.application.config.home}"
-    #   end
-    # end
   end
 
-  # protected
+  protected
 
-  # def verified_request?
-  #   super || form_authenticity_token == request.headers['X-XSRF-TOKEN']
-  # end
+  def verified_request?
+    super || (form_authenticity_token == request.headers['X-XSRF-TOKEN'])
+  end
 
 end

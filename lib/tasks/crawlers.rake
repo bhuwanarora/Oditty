@@ -1,5 +1,11 @@
 namespace :crawl do
 
+  desc "set_book_active"
+  task :set_book_active => :environment do
+    include Neo4jHelper
+    Neo4jHelper.set_book_active
+  end
+
   
   desc "upload_cover_photos"
   task :upload_cover_photos => :environment do
