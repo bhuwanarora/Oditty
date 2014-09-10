@@ -741,18 +741,19 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 }]);
 
 var facebook_invite = function(){
-				FB.ui({
-					method: 'apprequests',
-					message: 'Your Message diaolog'
-				});
-			}
+	_facebook_init();
+	FB.ui({
+		method: 'apprequests',
+		message: 'Your Message diaolog'
+	});
+}
 
-			_facebook_invite = function(){
-				FB.init({
-					appId: "667868653261167",
-					cookie: true,
-					status: true,
-					xfbml: true
-				});
+var _facebook_init = function(){
+	FB.init({
+		appId: "667868653261167",
+		cookie: true,
+		status: true,
+		xfbml: true
+	});
 
-			}
+}

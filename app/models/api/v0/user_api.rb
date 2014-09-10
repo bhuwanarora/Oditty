@@ -285,7 +285,7 @@ module Api
 							for hash_object in param[object_key]
 								node_string = node_string + self.handle_hash(hash_object, object_key, new_label)		
 							end
-						elsif param[object_key].class == Hash
+						elsif (param[object_key].class == Hash) || (param[object_key].class == ActiveSupport::HashWithIndifferentAccess)
 							node_string = node_string + self.handle_hash(param[object_key], object_key, new_label)
 						end
 

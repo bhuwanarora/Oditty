@@ -5,6 +5,7 @@ module TrendsHelper
 	require 'google-search'
 
 	def self.social_mention
+		puts "socialmention".red
 		url = "http://socialmention.com/"
 		doc = Nokogiri::HTML(open(url))
 		trends = doc.css('.clearfix a')

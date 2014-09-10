@@ -103,6 +103,7 @@
 	cursor: pointer;
 	border-radius: 3px;
 	float: left;
+	min-width: 320px;
 }
 
 .info_cards .selected{
@@ -275,12 +276,6 @@
 	left: 0px;
 	padding-left: 10px;
 	border-left-color: white;
-}
-
-.info_cards .toggle_filter{
-	text-align: left;
-	margin-top: 5px;
-	padding: 5px;
 }
 
 .info_cards .toggle_filter [class^="icon-"]{

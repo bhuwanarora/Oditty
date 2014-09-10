@@ -65,7 +65,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		if(!$rootScope.user.email){
 			$rootScope.user.error_message = LoginConstants.EmailNotPresent;
 		}
-		else if (!$rootScope.user.password) {
+		else if(!$rootScope.user.password) {
 			$rootScope.user.error_message = LoginConstants.PasswordNotPresent;
 		}
 		else if(!min_length_pattern.test($rootScope.user.password) && (!old_user)){
@@ -99,7 +99,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 
 	    $scope.$on('Facebook:statusChange', function(ev, data){
 	    	console.log('Status: ', data);
-	        if (data.status == LoginConstants.FacebookLoginStatusCheck) {
+	        if(data.status == LoginConstants.FacebookLoginStatusCheck) {
 	        	$scope.$apply(function() {
 	          	});
 	        } 
@@ -127,7 +127,8 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
         Facebook.getLoginStatus(function(response){
           	if(response.status == LoginConstants.FacebookLoginStatusCheck){
             	$rootScope.logged = true;
-            	$scope.me(); 
+            	$scope.me();
+            	
           	}
           	else{
            		$scope.login();
@@ -140,6 +141,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
       		if (response.status == LoginConstants.FacebookLoginStatusCheck) {
         		// $rootScope.logged = true;
         		$scope.me();
+        		
       		}
     	});
    	};
@@ -154,7 +156,51 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		        $scope._init_user();
 		    });
         });
+        // $scope.fb_books();
     };
+
+    $scope.fb_books = function(){
+        FB.api(
+		    "/me/books",
+		    function(response) {
+		      if(response && !response.error) {
+		        websiteService.handle_facebook_books(response);
+		      }
+		    }
+		);
+		FB.api(
+		    "/me/books.reads",
+		    function(response) {
+		      if(response && !response.error) {
+		        websiteService.handle_facebook_books(response);
+		      }
+		    }
+		);
+		FB.api(
+		    "/me/books.rates",
+		    function(response) {
+		      if(response && !response.error) {
+		        websiteService.handle_facebook_books(response);
+		      }
+		    }
+		);
+		FB.api(
+		    "/me/books.quotes",
+		    function(response) {
+		      if(response && !response.error) {
+		        websiteService.handle_facebook_books(response);
+		      }
+		    }
+		);
+		FB.api(
+		    "/me/books.wants_to_read",
+		    function(response) {
+		      if(response && !response.error) {
+		        websiteService.handle_facebook_books(response);
+		      }
+		    }
+		);
+    }
 
     $scope._init_user = function(){
         $rootScope.user.profile_status = 0;

@@ -31,6 +31,7 @@ ReadersDoor::Application.routes.draw do
       match "search_authors"                         => 'search_api#search_authors',                    :via => [:put, :get, :post]
       match "search_genres"                          => 'search_api#search_genres',                     :via => [:put, :get, :post]
 
+      match "test"                                   => 'website_api#test',                             :via => [:put, :get, :post]
       match "book_lists"                             => 'website_api#book_lists',                       :via => [:put, :get, :post]
       match "genres"                                 => 'website_api#genres',                           :via => [:put, :get, :post]
       match "countries"                              => 'website_api#countries',                        :via => [:put, :get, :post]
@@ -45,6 +46,7 @@ ReadersDoor::Application.routes.draw do
       match "latest_notification"                    => 'website_api#latest_notification',              :via => [:put, :get, :post]
       match "trends"                                 => 'website_api#trends',                           :via => [:put, :get, :post]
       match "save_feedback"                          => 'website_api#save_feedback',                    :via => [:put, :get, :post]
+      match 'fb_books'                               => 'website_api#fb_books',                         :via => [:put, :get, :post]
 
       
       match "recover_password"                        => 'users_api#recover_password',                  :via => [:put, :get, :post]
@@ -76,7 +78,6 @@ ReadersDoor::Application.routes.draw do
       match 'google'                                  => 'users_api#google',                            :via => [:put, :get, :post]
 
       match 'author_details'                          => 'authors_api#details',                         :via => [:put, :get, :post]
-      
     end
   end
 end

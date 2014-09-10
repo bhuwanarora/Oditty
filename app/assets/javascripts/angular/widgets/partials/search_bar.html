@@ -9,11 +9,11 @@
          ng-click="handle_base_selection(item)"
          ng-hide="$routeParams.type && hide_options"
          ng-repeat="item in base_search_options">
-      <span class="{{item.icon}}">&nbsp;</span><span ng-bind-html="item.name"></span>
+      <span class="table_cell {{item.icon}}">&nbsp;{{item.name}}</span>
     </div>
     <div class="search_icon blue_button animate-fast" 
          ng-click="handle_search_request($event)">
-      <span class="icon-search"></span>
+      <span class="icon-search table_cell"></span>
     </div>
   </div>
 
