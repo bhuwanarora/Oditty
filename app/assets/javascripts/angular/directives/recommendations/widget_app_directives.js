@@ -110,7 +110,10 @@ websiteApp.directive('widgetThumb', ['$timeout', '$rootScope', '$filter', 'Color
         if(angular.isDefined($scope.book)){
           var obj = $scope.book;
           if(angular.isDefined(obj.isbn)){
-            $scope.thumb_style = {'background': "url('"+_get_thumb(obj)+"')"};
+            var thumb = _get_thumb(obj);
+            if(angular.isDefined(thumb)){
+              $scope.thumb_style = {'background': "url('"+thumb+"')"};
+            }
           }
         }
         else if(angular.isDefined($scope.author)){
@@ -154,7 +157,10 @@ websiteApp.directive('widgetThumb', ['$timeout', '$rootScope', '$filter', 'Color
       _init = function(){
         var obj = _get_obj();
         if(obj && obj.isbn){
-          $scope.thumb_style = {'background': "url('"+_get_thumb(obj)+"')"};
+          var thumb = _get_thumb(obj);
+          if(angular.isDefined(thumb)){
+            $scope.thumb_style = {'background': "url('"+thumb+"')"};
+          }
         }
         var random_color = ColorConstants.value[Math.floor(Math.random() * ColorConstants.value.length)];
         $scope.random_background = {"background-color": random_color};

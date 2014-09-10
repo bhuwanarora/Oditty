@@ -210,7 +210,7 @@ module Api
 					puts "RESET TRUE".red.on_yellow.blink
 				end
 				# book_ids = ($redis.get 'book_ids').split(",")
-				book_ids = session[:book_ids].split(",")
+				book_ids = session[:book_ids].to_s.split(",")
 				
 				# puts book_ids.sort
 				@neo = Neography::Rest.new

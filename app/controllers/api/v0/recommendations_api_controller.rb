@@ -2,6 +2,7 @@ module Api
 	module V0
 		class RecommendationsApiController < ApplicationController
 			# include 'Pubnub'
+			skip_before_filter :verify_authenticity_token, :only => [:recommendations]
 
 			def initiate_push
 				# init

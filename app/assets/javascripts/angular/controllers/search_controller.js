@@ -1359,7 +1359,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope._init_country_filter();
 		$scope._init_book_filter();
 
-		if(!on_search_page && $scope.filters_added.length > 0){
+		if(!on_search_page){
 			$scope.$emit('reloadRecommendations');
 		}
 	}
