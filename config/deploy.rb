@@ -61,11 +61,12 @@ namespace :deploy do
       execute :touch, release_path.join('tmp/restart.txt')
     end
 
-    desc "Update the crontab file"
-    puts "Update the crontab file".blue.on_red
-    task :update_crontab do
-      run "bundle exec whenever --update-crontab readers_door_production"
-    end
+  end
+  
+  desc "Update the crontab file"
+  puts "Update the crontab file".blue.on_red
+  task :update_crontab do
+    run "bundle exec whenever --update-crontab readers_door_production"
   end
 
   after :publishing, :restart
