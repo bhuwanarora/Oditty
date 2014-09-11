@@ -1,6 +1,5 @@
-set :output, "../dev/log/cron.log"
+# set :output, "../dev/log/cron.log"
 
-every 1.minute  do
-  # runner "TrendsHelper.social_mention"
-  runner "SubscriptionMailer.test_email.deliver"
+every 1.day, :at => '3:20pm'  do
+  runner "TrendsHelper.social_mention"
 end
