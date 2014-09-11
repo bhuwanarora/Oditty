@@ -741,7 +741,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 }]);
 
 var facebook_invite = function(){
-	_facebook_init();
+	// _facebook_init();
 	FB.ui({
 		method: 'apprequests',
 		message: 'Your Message diaolog'
