@@ -22,11 +22,10 @@
 	height: 71vh;
 	color: transparent;
 	text-decoration: none;
-	font-weight: bold;
 }
 
 .grid .header:hover{
-	color: black;
+	color: #717070;
 	text-decoration: none;
 	background-color: rgba(255, 255, 255, 0.8);
 	border: 2vh solid white;
@@ -39,7 +38,7 @@
 	top: 0px;
 	position: absolute;
 	left: 0px;
-	font-weight: 400;
+	font-weight: bold;
 }
 
 .grid1 .first{
