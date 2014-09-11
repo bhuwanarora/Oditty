@@ -22,6 +22,7 @@
 	height: 71vh;
 	color: transparent;
 	text-decoration: none;
+	border: 2vh solid transparent;
 }
 
 .grid .header:hover{
