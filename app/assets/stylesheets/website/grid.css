@@ -45,8 +45,9 @@
 	top: 0px;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 28vh;
-	height: 44vh;
+	width: 26vh;
+	height: 42vh;
+	border: 1vh solid white;
 }
 
 .grid1 .second{
@@ -55,8 +56,9 @@
 	top: 0;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 17vh;
-	height: 27vh;
+	width: 15vh;
+	height: 25vh;
+	border: 1vh solid white;
 }
 
 .grid1 .third{
@@ -65,8 +67,9 @@
 	top: 0;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 17vh;
-	height: 27vh;
+	width: 15vh;
+	height: 25vh;
+	border: 1vh solid white;
 }
 
 .grid1 .fourth{
@@ -75,8 +78,9 @@
 	top: 28vh;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 17vh;
-	height: 27vh;
+	width: 15vh;
+	height: 25vh;
+	border: 1vh solid white;
 }
 
 .grid1 .fifth{
@@ -85,8 +89,9 @@
 	top: 28vh;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 17vh;
-	height: 27vh;
+	width: 15vh;
+	height: 25vh;
+	border: 1vh solid white;
 }
 
 .grid1 .sixth{
@@ -95,8 +100,9 @@
 	left: 11vh;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 17vh;
-	height: 27vh;
+	width: 15vh;
+	height: 25vh;
+	border: 1vh solid white;
 }
 
 .grid2 .first{
@@ -106,8 +112,9 @@
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
 	max-width: 180px;
-	width: 20vh;
-	height: 32vh;
+	width: 18vh;
+	height: 30vh;
+	border: 1vh solid white;
 }
 
 .grid2 .second{
@@ -116,8 +123,9 @@
 	top: 0;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 25vh;
-	height: 44vh;
+	width: 23vh;
+	height: 42vh;
+	border: 1vh solid white;
 }
 
 .grid2 .third{
@@ -126,8 +134,9 @@
 	top: 0;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 17vh;
-	height: 27vh;
+	width: 15vh;
+	height: 25vh;
+	border: 1vh solid white;
 }
 
 .grid2 .fourth{
@@ -136,8 +145,9 @@
 	top: 32vh;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 20vh;
-	height: 32vh;
+	width: 18vh;
+	height: 30vh;
+	border: 1vh solid white;
 }
 
 .grid2 .fifth{
@@ -146,8 +156,9 @@
 	top: 28vh;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 17vh;
-	height: 27vh;
+	width: 15vh;
+	height: 25vh;
+	border: 1vh solid white;
 }
 
 .grid2 .sixth{
@@ -156,6 +167,7 @@
 	left: 11vh;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 17vh;
-	height: 27vh;
+	width: 15vh;
+	height: 25vh;
+	border: 1vh solid white;
 }
