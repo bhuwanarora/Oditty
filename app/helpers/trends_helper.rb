@@ -2,7 +2,7 @@ module TrendsHelper
 
 	require 'nokogiri'
 	require 'open-uri'
-	require 'google-search'
+	# require 'google-search'
 
 	def self.social_mention
 		puts "socialmention".red
