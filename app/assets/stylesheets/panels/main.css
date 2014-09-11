@@ -123,3 +123,8 @@ a, .site_color{
 	margin: 3px;
 	max-height: 300px;
 }
+
+.remove_trend{
+	color: red;
+	cursor: pointer;
+}

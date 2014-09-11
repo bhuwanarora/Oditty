@@ -276,6 +276,18 @@ class BooksController < ApplicationController
 
   end
 
+  def remove_trend
+    begin
+      @neo = Neography::Rest.new
+      clause = "MATCH (t:Trending)-[r]-() WHERE ID(t)="+params[:id].to_s+" DELETE t, r"
+      @neo.execute_query clause
+      render :json => {:message => "Success"}, :status => 200
+    rescue Exception => e
+      render :json => {:message => e.to_s}, :status => 500
+    end
+
+  end
+
   def search_book
     tags = Api::V0::SearchApi.search_books params[:q]
     render :json => tags, :status => 200
