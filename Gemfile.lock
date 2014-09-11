@@ -467,7 +467,7 @@ DEPENDENCIES
   fb_graph
   flickraw
   freebase-api
-  google-search
+  google-search (~> 1.0.3)
   hirb
   hirb-unicode
   jbuilder (~> 1.2)
