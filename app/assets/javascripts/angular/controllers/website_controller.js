@@ -23,7 +23,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 
 	$scope.move_left = function(event){
 		$scope._hide_popups();
-		var swipe_time = 2000;
+		var swipe_time = 1000;
 		var clientWidth = document.body["scrollWidth"];
 		var current_x = $window.pageXOffset;
 		var delta_x = window_height*(0.56);
@@ -52,7 +52,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 
 	$scope.move_right = function(event){
 		$scope._hide_popups();
-		var swipe_time = 2000;
+		var swipe_time = 1000;
 		var clientWidth = document.body["scrollWidth"];
 		var current_x = $window.pageXOffset;
 		var delta_x = window_height*(0.56);
