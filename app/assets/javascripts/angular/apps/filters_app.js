@@ -106,7 +106,7 @@ angular.module('filtersApp', [])
           input = input.slice(0, 37)+"...";
         }
         input = input.split(" ");
-        output = "";
+        output = "<span>&nbsp;</span>";
         for(var i=0; i<input.length; i++){
           var value = input[i];
           output = output + "<span><b>"+value[0]+"</b><span>"+value.substring(1, value.length)+"</span> "

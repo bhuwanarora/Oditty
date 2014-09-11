@@ -14,8 +14,8 @@
 			 ng-href="#user/{{user.id}}/recommendations/books"
 			 ng-if="$routeParams.trend_id || $routeParams.grid_id || $routeParams.filter_id"
 			 style="margin-left:0px;">
-			<span class="icon-feed2 light_grey_color"></span>
-			<span><b>R</b>ecommendations</span>
+			<span class="icon-feed2 light_grey_color table_cell"></span>
+			<span class="table_cell">&nbsp;<b>R</b>ecommendations</span>
 		</a>
 		<div ng-class="{'inactive':read_selected || bookmark_selected, 'active_tab':!read_selected && !bookmark_selected}"
 			 class="link tab"

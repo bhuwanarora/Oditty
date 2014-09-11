@@ -974,6 +974,10 @@ and (min-width : 1824px) {
 	width: auto;
 }
 
+.notifications .notification_message a:hover{
+	text-decoration: none;
+}
+
 .notifications .instruct_block{
 	padding: 10px;
 	color: white;
