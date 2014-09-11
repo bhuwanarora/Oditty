@@ -320,7 +320,7 @@
 	width: 100%;
 	background-color: white;
 	margin-left: 0px;
-	max-height: 150px;
+	max-height: 50vh;
 	overflow-y: scroll;
 	margin-top: 3px;
 	border-radius: 2px;

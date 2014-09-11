@@ -52,7 +52,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/base/book/interact_widget.html',
-    "<div class=\"bottom_widget\"><div ng-init=\"setStatus(book.status)\"></div><div class=\"tag_bookmark\"><input placeholder=\"Add to my library\" class=\"input_bookmark\" ng-model=\"book.custom_bookmark\" ng-keypress=\"handle_enter($event)\" ng-click=\"show_bookmark_options($event)\"><book-bookmark></book-bookmark></div><mark-as-read track=\"\"></mark-as-read><label-dropdown></label-dropdown></div>"
+    "<div class=\"bottom_widget\" ng-click=\"stop_propagation($event)\"><div ng-init=\"setStatus(book.status)\"></div><div class=\"tag_bookmark\"><input placeholder=\"Add to my library\" class=\"input_bookmark\" ng-model=\"book.custom_bookmark\" ng-keypress=\"handle_enter($event)\" ng-click=\"show_bookmark_options($event)\"><book-bookmark></book-bookmark></div><mark-as-read track=\"\"></mark-as-read><label-dropdown></label-dropdown></div>"
   );
 
 
@@ -86,7 +86,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/base/book/recommend.html',
-    "<span ng-click=\"recommend()\" class=\"grey_button recommend\" title=\"Recommend book to friends\"><b>Recommend to friends</b></span><div class=\"wrapper\" ng-if=\"recommend_object.recommended\" style=\"z-index:1\" ng-click=\"recommend_object.recommended = false;\" msd-wheel=\"stop_propagation($event)\"><div class=\"recommendation_box animate-slow\" ng-click=\"stop_propagation($event)\"><div class=\"header\"><span>Select friends whom you want to recommend</span><br><span class=\"site_color\">{{recommend_object.title}} by {{recommend_object.author_name}}</span></div><div class=\"friend_grid\"><div ng-repeat=\"friend in user.followers\" class=\"friend_block\" data-selected=\"false\" title=\"{{friend.name}}\" ng-click=\"select_thumb($event, friend.id)\"><div class=\"friend_name\" ng-show=\"friend.name\">{{friend.name}}</div><img ng-src=\"{{friend | blob_backup}}\" class=\"friend_thumb\"></div></div><div class=\"footer\"><button class=\"done blue_button\" ng-click=\"recommend()\" ng-disabled=\"!user.selected_followers || user.selected_followers.length == 0\">Done</button></div></div></div>"
+    "<span ng-click=\"recommend()\" class=\"grey_button recommend\" title=\"Recommend book to friends\"><b>Recommend to friends</b></span><div class=\"wrapper\" ng-if=\"recommend_object.recommended\" style=\"z-index:1\" ng-click=\"recommend_object.recommended = false;\" msd-wheel=\"stop_propagation($event)\"><div class=\"recommendation_box animate-slow\" ng-click=\"stop_propagation($event)\"><div class=\"header\"><span><b>Select friends whom you want to recommend</b></span><br><span class=\"site_color\">{{recommend_object.title}} by {{recommend_object.author_name}}</span></div><div class=\"friend_grid\"><div ng-repeat=\"friend in user.followers\" class=\"friend_block\" data-selected=\"false\" title=\"{{friend.name}}\" ng-click=\"select_thumb($event, friend.id)\"><div class=\"friend_name\" ng-show=\"friend.name\">{{friend.name}}</div><img ng-src=\"{{friend | blob_backup}}\" class=\"friend_thumb\"></div></div><div class=\"footer\"><button class=\"done blue_button\" ng-click=\"recommend()\" ng-disabled=\"!user.selected_followers || user.selected_followers.length == 0\">Done</button></div></div></div>"
   );
 
 

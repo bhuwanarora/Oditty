@@ -15,7 +15,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
           var posX = event.currentTarget.offsetParent.offsetParent.offsetLeft - event.pageX + event.clientX;
           var display_right_width =  window_width - (posX + event.currentTarget.offsetParent.scrollWidth);
           var display_left_width = posX;
-          var card_width = window_height*0.6;
+          var card_width = window_height*0.78;
           console.table([{
             "offsetLeft":event.currentTarget.offsetParent.offsetParent.offsetLeft,
             "pageX":event.pageX, 
@@ -288,6 +288,9 @@ websiteApp.directive('bookInteract', ['$rootScope', '$timeout', 'widgetService',
         }
       }
 
+      $scope.stop_propagation = function(event){
+        event.stopPropagation()
+      }
 
       $scope.setStatus = function(status){
         if(status == 1){

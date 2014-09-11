@@ -3,7 +3,7 @@
 	height: 76vh;
 	margin-right: 10px;
 	position: relative;
-	width: 54vh;
+	width: 52vh;
 	/*background-image: url("/assets/book_back.png");*/
 	/*background-size: 100% 100%;*/
 }
@@ -14,7 +14,7 @@
 	left: 0px;
 	position: absolute;
 	right: 5px;
-	top: 7px;
+	top: 0px;
 }
 
 .undiscovered{ 
@@ -35,7 +35,7 @@
 .card_summary{
 	color: black;
 	position: absolute;
-	top: 2vh;
+	top: 3vh;
 	left: 2vh;
 	right: 2vh;
 	height: 5vh;
@@ -203,7 +203,7 @@
 .card .widget_thumb,
 .card .description{
 	position: absolute;
-	top: 8vh;
+	top: 10vh;
 	left: 2vh;
 	right: 2vh;
 	bottom: 7vh;

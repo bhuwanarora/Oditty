@@ -1,5 +1,5 @@
 .vertical_padder_active{
-	height: 100px;
+	height: 110px;
 	width: 100%;
 }
 
@@ -1291,7 +1291,7 @@ and (min-width : 1824px) {
 
 .ticker_popup .ticker_overflow{
 	height: 35vh;
-	width: 53vh;
+	width: 48vh;
 }
 
 .ticker_popup .bottom_widget{
@@ -1299,6 +1299,7 @@ and (min-width : 1824px) {
 	z-index: 1;
 	left: 0px;
 	right: 0px;
+	box-shadow: 0 -1px 4px 0 rgba(0,0,0,.21);
 }
 
 .shift_right{
