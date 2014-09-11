@@ -58,7 +58,7 @@
 .website_search_helpers.ng-enter-active,
 .website_search_options.ng-leave,
 .website_search_options.ng-enter-active{
-	max-height: 150px;
+	max-height: 50vh;
 }
 
 .info_cards.ng-enter,
