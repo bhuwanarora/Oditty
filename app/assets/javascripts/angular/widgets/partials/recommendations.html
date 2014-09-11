@@ -26,14 +26,14 @@
 				<div ng-if="$routeParams.type == 'books'" ng-model="user.books.bookmarked">
 					<div ng-switch on="user.books.bookmarked.length">
 						<div ng-switch-when="0">
-							<div class="recommendation_block animate-fast">
+							<div class="recommendation_block">
 								<div class="widget bookmark_instruct">
 									
 								</div>
 							</div>
 						</div>
 						<div ng-switch-default>
-							<div ng-repeat="user_book in user.books.bookmarked" class="recommendation_block animate-fast">
+							<div ng-repeat="user_book in user.books.bookmarked" class="recommendation_block">
 								<book track id="{{user_book.category.name | lowercase}}-{{user_book.id}}" data="user_book"></book>
 							</div>
 						</div>
@@ -45,7 +45,7 @@
 							Bookmark authors
 						</div>
 						<div ng-switch-default>
-							<div ng-repeat="author in user.authors.bookmarked" class="recommendation_block animate-fast">
+							<div ng-repeat="author in user.authors.bookmarked" class="recommendation_block">
 								<author track id="{{author.category.name | lowercase}}-{{author.id}}" data="author"></author>
 							</div>
 						</div>
@@ -56,14 +56,14 @@
 				<div ng-if="$routeParams.type == 'books'" ng-model="user.books.read">
 					<div ng-switch on="user.books.read.length">
 						<div ng-switch-when="0">
-							<div class="recommendation_block animate-fast">
+							<div class="recommendation_block">
 								<div class="widget mark_as_read_instruct">
 									
 								</div>
 							</div>
 						</div>
 						<div ng-switch-default>
-							<div ng-repeat="user_book in user.books.read" class="recommendation_block animate-fast">
+							<div ng-repeat="user_book in user.books.read" class="recommendation_block">
 								<book track id="{{user_book.category.name | lowercase}}-{{user_book.id}}" data="user_book"></book>
 							</div>
 						</div>
@@ -75,7 +75,7 @@
 							Follow authors
 						</div>
 						<div ng-switch-default>
-							<div ng-repeat="author in user.authors.follow" class="recommendation_block animate-fast">
+							<div ng-repeat="author in user.authors.follow" class="recommendation_block">
 								<author track id="{{author.category.name | lowercase}}-{{author.id}}" data="author"></author>
 							</div>
 						</div>
@@ -87,7 +87,7 @@
 							Add Some readers to follow				
 						</div>
 						<div ng-switch-default>
-							<div ng-repeat="reader in user.readers.follow" class="recommendation_block animate-fast">
+							<div ng-repeat="reader in user.readers.follow" class="recommendation_block">
 								<reader track id="{{reader.category.name | lowercase}}-{{reader.id}}" data="reader"></reader>
 							</div>
 						</div>
@@ -101,8 +101,7 @@
 					<!-- <div class="recommendation_block"></div> -->
 					<div ng-if="!grid_view">
 						<div ng-repeat="recommendation in recommendations.books"
-							 ng-class="{'recommendation_block': !recommendation.is_grid, 'grid': recommendation.is_grid}"
-							 class="animate-fast">
+							 ng-class="{'recommendation_block': !recommendation.is_grid, 'grid': recommendation.is_grid}">
 								<book track
 									  id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" 
 									  data="recommendation"
@@ -136,13 +135,13 @@
 				</div>
 				<div ng-if="$routeParams.type == 'readers'" 
 					class="full_height">
-					<div ng-repeat="recommendation in recommendations.readers" class="recommendation_block"animate-fast >
+					<div ng-repeat="recommendation in recommendations.readers" class="recommendation_block" >
 						<reader track id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></reader>
 					</div>
 				</div>
 				<div ng-if="$routeParams.type == 'authors'" 
 					class="full_height">
-					<div ng-repeat="recommendation in recommendations.authors" class="recommendation_block"animate-fast >
+					<div ng-repeat="recommendation in recommendations.authors" class="recommendation_block">
 						<author track id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></author>
 					</div>
 				</div>

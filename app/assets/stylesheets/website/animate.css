@@ -106,8 +106,8 @@
 
 .recommendation_block.ng-enter{
 	margin-left: 100px;
-    /*transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2.5s;*/
-    /*-webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2.5s;*/
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s;
+    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s;
 }
 
 .recommendation_block.ng-enter.ng-enter-active{
