@@ -1588,7 +1588,7 @@ and (max-width : 900px) {
 		font-variant: normal;
 		text-transform: none;
 		line-height: 1;
-		-webkit-font-smoothing:
+		/*-webkit-font-smoothing:*/
 	}
 
 	.shelf_nav_links{
