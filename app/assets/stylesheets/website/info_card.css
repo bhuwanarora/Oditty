@@ -290,3 +290,22 @@
 	top: 35px;
 	right: 20px;
 }
+
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen
+and (min-width : 320px)
+and (max-width : 500px) {
+/* Styles */
+	.info_cards{
+		left: 1vh;
+		right: 1vh;
+		top: 1vh;
+		bottom: 1vh;
+		margin: 0px;
+		width: initial;
+		height: initial;
+	}
+
+	
+}

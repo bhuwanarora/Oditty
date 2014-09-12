@@ -423,6 +423,7 @@
 	color: #717070;
 	width: 40%;
 	font-size: 1em;
+	min-width: 175px;
 }
 
 .login_form input.ng-invalid.ng-dirty {
@@ -446,6 +447,7 @@
 	cursor: pointer;
 	width: 21%;
 	display: inline-block;
+	min-width: 91px;
 }
 
 .login_form .authenticate_left{
@@ -572,4 +574,29 @@
 
 .login_box .link:hover{
 	text-decoration: underline;
+}
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen
+and (min-width : 320px)
+and (max-width : 500px) {
+/* Styles */
+	.login_box{
+		left: 1vh;
+		right: 1vh;
+		top: 1vh;
+		bottom: 1vh;
+		margin: 0px;
+		width: initial;
+		height: initial;
+	}
+
+	.login_box .tagline{
+		white-space: initial;
+		font-size: 1em;
+	}
+
+	.login_box .fb{
+		margin-left: 25%;
+	}
 }

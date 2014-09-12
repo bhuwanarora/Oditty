@@ -47,6 +47,10 @@
 	cursor: default;
 }
 
+.header_navbar .share:before{
+	content: 'Share';
+}
+
 .header_navbar:hover{
 	background-color: #E2E2E2;
 }
@@ -1483,12 +1487,13 @@ and (min-width : 1824px) {
 
 
 .main_header .search_typeahead_group{
-	position: relative;
+	position: fixed;
 	width: 44%;
 	height: 33px;
 	z-index: 10;
-	float: left;
+	/*float: left;*/
 	top: 4px;
+	left: 174px;
 }
 
 .main_header .search_input_shifted{
@@ -1568,4 +1573,56 @@ and (min-width : 1824px) {
 
 .settings_popup li:hover{
 	background-color: #F1F1F1;
+}
+
+@media only screen
+and (min-width : 320px)
+and (max-width : 900px) {
+/* Styles */
+	.header_navbar .share:before{
+		content: "\e620";
+		font-family: icomoon;
+		speak: none;
+		font-style: normal;
+		font-weight: 400;
+		font-variant: normal;
+		text-transform: none;
+		line-height: 1;
+		-webkit-font-smoothing:
+	}
+
+	.shelf_nav_links{
+		font-size: 0.8em;
+	}
+
+	.left_column{
+		right: 45px;
+		left: 1vh;
+		bottom: 1vh;
+		width: initial;
+		height: initial;
+	}
+
+	.left_column_collapsed{
+		height: 40px;
+	}
+
+	.compressed_info_card{
+		right: 2px;
+		left: initial !important;
+	}
+
+	.compressed_info_card_shifted{
+		right: initial;
+	}
+
+	.left_column .collapse_icon{
+		right: 17px;
+		left: initial;
+	}
+
+	.loading_widget{
+		display: none;
+	}
+
 }

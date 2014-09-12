@@ -151,16 +151,27 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
         Facebook.api('/me', function(response){
         	// console.log(response);
         	websiteService.handle_facebook_user(response);
-		    $scope.$apply(function(){
-    			$rootScope.user = response;
-        		$rootScope.user.thumb = response["thumb"];
-		        $scope._init_user();
-		    });
+			$rootScope.user = response;
+    		$rootScope.user.thumb = response["thumb"];
+	        $scope._init_user();
+		    // $scope.$apply(function(){
+		    // });
         });
         // $scope.fb_books();
     };
 
     $scope.fb_books = function(){
+    	var _facebook_init = function(){
+			FB.init({
+				appId: "667868653261167",
+				cookie: true,
+				status: true,
+				xfbml: true
+			});
+
+		}
+		_facebook_init();
+		
         FB.api(
 		    "/me/books",
 		    function(response) {

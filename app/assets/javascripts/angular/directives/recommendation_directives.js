@@ -739,12 +739,3 @@ var facebook_invite = function(){
 	});
 }
 
-var _facebook_init = function(){
-	FB.init({
-		appId: "667868653261167",
-		cookie: true,
-		status: true,
-		xfbml: true
-	});
-
-}
