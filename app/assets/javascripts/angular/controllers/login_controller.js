@@ -124,6 +124,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 
 
     $scope.intent_login = function() {
+    	$scope.loading_icon = true;
         Facebook.getLoginStatus(function(response){
           	if(response.status == LoginConstants.FacebookLoginStatusCheck){
             	$rootScope.logged = true;
