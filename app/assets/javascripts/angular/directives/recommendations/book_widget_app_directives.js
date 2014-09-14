@@ -21,6 +21,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
             "pageX":event.pageX, 
             "clientX":event.clientX, 
             "posX": posX,
+            "card_width": card_width,
             "scrollWidth":event.currentTarget.offsetParent.scrollWidth,
             "display_left_width":display_left_width,
             "display_right_width":display_right_width}]);

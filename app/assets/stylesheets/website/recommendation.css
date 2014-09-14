@@ -1438,6 +1438,10 @@ and (min-width : 1824px) {
 	margin-top: 10px;
 }
 
+.feedback textarea:focus{
+	outline: none;
+}
+
 .feedback_sumbit{
 	padding: 5px;
 }

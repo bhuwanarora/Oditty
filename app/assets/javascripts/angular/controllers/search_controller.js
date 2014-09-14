@@ -408,6 +408,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				$scope.show_secondary_input = true;
 				$scope.search_tag.custom_input = "";
 				$scope.website.searching_custom = true;
+				$scope.search_results = [];
 
 				delete $scope.custom_search;
 				delete $scope.search_display;
