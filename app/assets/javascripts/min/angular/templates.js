@@ -201,7 +201,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/partials/feedback_popup.html',
-    "<div class=\"feedback\" ng-class=\"{'feedback_box': get_feedback}\"><div ng-click=\"get_feedback = !get_feedback\">{{feedback_text}}</div><div ng-if=\"get_feedback\"><textarea placeholder=\"Please give your valuable feedback...\" ng-model=\"user.feedback\"></textarea><div class=\"feedback_sumbit blue_button\" ng-click=\"handle_feedback($event)\">Submit</div></div></div>"
+    "<div class=\"feedback\" ng-class=\"{'feedback_box': get_feedback}\"><div ng-click=\"get_feedback = !get_feedback\" class=\"site_color\"><b>{{feedback_text}}</b></div><div ng-if=\"get_feedback\"><textarea placeholder=\"Please give your valuable feedback...\" ng-model=\"user.feedback\"></textarea><div class=\"feedback_sumbit blue_button\" ng-click=\"handle_feedback($event)\">Submit</div></div></div>"
   );
 
 
