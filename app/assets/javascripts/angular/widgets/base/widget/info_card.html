@@ -183,12 +183,12 @@
 								 class="book_thumb"/>
 							<div class="book_details">
 								<div>
-									<span class="site_color"><b>{{book.title}}</b></span><br/>
-									<span ng-show="book.author_name" class="site_color">Book by {{book.author_name}}</span>
+									<span><b>{{book.title}}</b></span><br/>
+									<span ng-show="book.author_name">Book by {{book.author_name}}</span>
 								</div>
 								<div>&nbsp;</div>
 								<div ng-show="book.id" class="light_grey_color">
-									<div ng-show="book.status">Added</div>
+									<div ng-show="book.status" class="site_color">Added</div>
 									<div ng-show="!book.status">
 										<span>Add to</span>
 										<span class='icon-books'></span>
