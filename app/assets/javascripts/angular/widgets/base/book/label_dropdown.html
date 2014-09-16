@@ -6,11 +6,12 @@
 		ng-model="book.labels">
 		<li ng-repeat="label in book.labels track by $index"  
         class="animate-fast" 
+        title="{{label.name | lowercase}}"
         ng-click="select_label($index);">
   			<label>
   				<span class="bookmark_label">
   					<!-- <span class="icon-bookmark3"></span>&nbsp; -->
-  					<span>{{label.name | lowercase}}</span>
+  					<span>{{label.name | lowercase | reduced_label}}</span>
   				</span>
         </label>
   			<input type="checkbox" 

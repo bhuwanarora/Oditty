@@ -24,7 +24,7 @@
 			 ng-if="$routeParams.trend_id || $routeParams.grid_id || $routeParams.filter_id"
 			 style="margin-left:0px;">
 			<span class="icon-feed2 light_grey_color table_cell"></span>
-			<span class="table_cell">&nbsp;<b>R</b>ecommendations</span>
+			<span class="table_cell">&nbsp;<b>Recommendations</b></span>
 		</a>
 		<div ng-class="{'inactive':read_selected || bookmark_selected, 'active_tab':!read_selected && !bookmark_selected}"
 			 class="link tab"
@@ -43,7 +43,7 @@
 					{{recommendations.authors.count}} </span>
 				<span ng-if="$routeParams.type == 'readers'">
 					{{recommendations.readers.count}} </span>	
-				<span>&nbsp;<b>R</b>ecommendations</span>
+				<span>&nbsp;<b>Recommendations</b></span>
 			</span>
 			<!-- <span ng-if="$routeParams.trend_id || $routeParams.grid_id || $routeParams.filter_id" ng-bind-html="main_header | heading" class="table_cell">
 			</span> -->
@@ -54,15 +54,15 @@
 			 ng-click="toggle_read()">
 		 	<span ng-if="$routeParams.type == 'books'" class="table_cell">
 		 		<span class="icon-books" ng-class="{'light_grey_color': !read_selected}"></span>
-		 		<span>&nbsp;<b>B</b>ooks <b>R</b>ead</span>
+		 		<span>&nbsp;<b>Books Read</b></span>
 		 	</span>
 			<span ng-if="$routeParams.type == 'authors'" class="table_cell">
 				<span class="icon-users" ng-class="{'light_grey_color': !read_selected}"></span>
-				<span>&nbsp;<b>F</b>ollowing <b>A</b>uthors</span>
+				<span>&nbsp;<b>Following Authors</b></span>
 			</span>
 			<span ng-if="$routeParams.type == 'readers'" class="table_cell">
 				<span class="icon-users" ng-class="{'light_grey_color': !read_selected}"></span>
-				<span>&nbsp;<b>F</b>ollowing <b>R</b>eaders</span>
+				<span>&nbsp;<b>Following Readers</b></span>
 			</span>
 		</div>
 		<div ng-class="{'inactive':!bookmark_selected, 'active_tab':bookmark_selected}"
@@ -72,11 +72,11 @@
 			 ng-click="toggle_bookmarked($event)">
 			 <span ng-if="$routeParams.type == 'books'" class="table_cell">
 			 	<span class="icon-tags" ng-class="{'light_grey_color': !bookmark_selected}"></span>
-			 	<span>&nbsp;<b>M</b>y <b>L</b>ibrary</span>
+			 	<span>&nbsp;<b>My Library</b></span>
 		 	 </span>
 			 <span ng-if="$routeParams.type == 'authors'" class="table_cell">
 			 	<span class="icon-tags" ng-class="{'light_grey_color': !bookmark_selected}"></span>
-				<span>&nbsp;<b>A</b>uthors <b>S</b>aved</span>
+				<span>&nbsp;<b>Authors Saved</b></span>
 			 </span>
 
 		</div>

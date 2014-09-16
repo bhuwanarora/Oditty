@@ -51,6 +51,10 @@
 	content: 'Share';
 }
 
+.header_navbar .share{
+	font-weight: 700;
+}
+
 .header_navbar:hover{
 	background-color: #E2E2E2;
 }

@@ -250,7 +250,11 @@ input:focus{
 
 .light_grey_color{
     color: #717070 !important;
-    /*font-size: 0.8em !important;*/
+}
+
+.normal_text{
+    color: #717070 !important;
+    font-size: 0.9em !important;
 }
 
 .grey_color{

@@ -3,6 +3,8 @@
 <!-- <horizontal-scroller></horizontal-scroller> -->
 <div feedback-popup></div>
 <div msd-wheel="bindHorizontalScroll($event, $delta, $deltaX, $deltaY)" 
+   ng-swipe-left="move_right($event)"
+   ng-swipe-right="move_left($event)"
    ng-animate="msd-wheel"
    class="recommendations"
    style="height:100%; white-space:nowrap;"

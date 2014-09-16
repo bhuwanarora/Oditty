@@ -167,6 +167,7 @@ module.exports = function(grunt) {
             'app/assets/javascripts/min/angular/vendors/socket.io.js',
             'app/assets/javascripts/min/angular/vendors/socket.js',
             'app/assets/javascripts/min/angular/vendors/sticky.js',
+            'app/assets/javascripts/min/angular/vendors/angular_touch.min.js',
             'app/assets/javascripts/min/angular/vendors/strophe.min.js',
             'app/assets/javascripts/min/angular/vendors/strophe.flxhr.min.js'],
 

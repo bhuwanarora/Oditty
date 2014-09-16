@@ -24,6 +24,14 @@ angular.module('filtersApp', [])
       return input;
     }
   })
+  .filter('reduced_label', function(){
+    return function(input){
+      if(angular.isDefined(input) && input.length > 20){
+        input = input.slice(0, 20)+"...";
+      }
+      return input;
+    }
+  })
   .filter('first_name', function(){
     return function(input){
       if(angular.isDefined(input)){
