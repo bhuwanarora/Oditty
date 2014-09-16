@@ -167,8 +167,12 @@
 				<span class="icon-angle-left"></span>
 			</div>
 			<div class="collapsed_filters table"
+				 ng-hide="!user.collapsed_filters"
 			 	 ng-click="user.collapsed_filters = false; user.collapsed_column = true;">
-				<span class="icon-bookmark2 table_cell" ng-if="user.collapsed_filters" ></span>
+			 	 <span class="table_cell">
+					<span class="icon-bookmark2" ng-if="user.collapsed_filters" ></span>
+					<span ng-show="user.collapsed_column && user.collapsed_filters">Shelves</span>
+			 	 </span>
 			</div>
 			<div class="header" ng-if="!user.collapsed_filters">
 				<span class="icon-tags light_grey_color"></span>
@@ -189,9 +193,10 @@
 			</div>
 			<div ng-if="user.collapsed_column" class="animate-fast collapsed_column"
 				ng-click="user.collapsed_column = false; user.collapsed_filters = true;">
-				<div>
-					<img ng-src="{{user.thumb | thumb_backup}}" class="thumb">
-				</div>
+				<span class="table_cell">
+					<span><img ng-src="{{user.thumb | thumb_backup}}" class="thumb"></span>
+					<span class="shelves" ng-show="user.collapsed_column && user.collapsed_filters">New Feed</span>
+				</span>
 				<!-- <div class="f3_background">
 					<span class="icon-users2 light_grey_color"></span>
 				</div> -->

@@ -84,21 +84,37 @@
 }
 
 .tag_bookmark ::-webkit-input-placeholder {
-   color: #6F6F6F;
+   color: #427fed;
 }
 
 .tag_bookmark :-moz-placeholder { /* Firefox 18- */
-   color: #6F6F6F;  
+   color: #427fed;  
 }
 
 .tag_bookmark ::-moz-placeholder {  /* Firefox 19+ */
-   color: #6F6F6F;  
+   color: #427fed;  
 }
 
 .tag_bookmark :-ms-input-placeholder {  
-   color: #6F6F6F;
+   color: #427fed;
 }
 
+
+.tag_bookmark:hover ::-webkit-input-placeholder {
+   text-decoration: underline;
+}
+
+.tag_bookmark:hover :-moz-placeholder { /* Firefox 18- */
+   text-decoration: underline; 
+}
+
+.tag_bookmark:hover ::-moz-placeholder {  /* Firefox 19+ */
+   text-decoration: underline; 
+}
+
+.tag_bookmark:hover :-ms-input-placeholder {  
+   text-decoration: underline;
+}
 
 /*mark as read*/
 .input_bookmark{

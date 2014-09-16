@@ -1230,7 +1230,7 @@ and (min-width : 1824px) {
 
 .left_column{
 	overflow: auto;
-	z-index: 6;
+	z-index: 7;
 	box-shadow: 8px 0 43px 0 rgba(66,66,66,.47);
 	position: fixed;
 	top: 50px;
@@ -1246,7 +1246,7 @@ and (min-width : 1824px) {
 
 .expand_notifications{
 	position: fixed;
-	z-index: 7;
+	z-index: 8;
 	font-size: 1em;
 	left: 26%;
 	top: 57px;
@@ -1482,41 +1482,48 @@ and (min-width : 1824px) {
 }
 
 .left_column .collapsed_column img{
-	width: 38px;
+	width: 20px;
 	border-radius: 3px;
 }
 
 .left_column_collapsed{
-	width: 40px!important;
+	width: 100px!important;
 	top: 95px;
 	height: 40px;
 }
 
 .filters_collapsed{
-	width: 40px!important;
+	width: 100px!important;
 	top: 145px;	
 	z-index: 7;
 }
 
 .collapsed_filters{
 	height: 40px;
-	text-align: center;
+	padding-left: 10px;
 	cursor: pointer;
 	width: 100%;
+	font-size: 0.9em;
 }
 
 .filters_collapsed_shifted{
 	left: 298px;
 	top: 95px;
+	width: 40px !important;
 }
 
 .left_column_shifted{
 	left: 298px !important;
+	width: 40px !important;
 }
 
 .left_column .collapsed_column{
-	font-size: 1.4em;
 	cursor: pointer;
+	height: 40px;
+	display: table;
+	width: 100%;
+	padding-left: 10px;
+	font-size: 0.9em;
 }
 
 .left_column .collapsed_column div{

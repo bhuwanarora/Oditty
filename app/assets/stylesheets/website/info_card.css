@@ -46,7 +46,7 @@
 	position: fixed;
 	top: 165px;
 	position: fixed;
-	z-index: 7;
+	z-index: 11;
 	left: 29%;
 	box-shadow: 8px 0 43px 0 rgba(66,66,66,.47);
 }
@@ -62,7 +62,7 @@
 	background-color: white;
 	border-bottom: 1px solid #E9E9E9;
 	cursor: pointer;
-	text-align: center;
+	font-size: 0.9em;
 }
 
 .compressed_info_card .block:hover{
