@@ -6,6 +6,16 @@
 	<!-- <div class="toggle_elements">
 		<div ng-class="{'icon-radio-unchecked': !grid_view, 'icon-checkbox-unchecked': grid_view}" class="link" ng-click="grid_view = !grid_view"></div>
 	</div> -->
+	<div class="shelf_nav_links right_links" ng-if="$routeParams.trend_id || $routeParams.grid_id || $routeParams.filter_id">
+		<div class="link tab"
+			 title="{{main_header | header_title}}">
+			<span class="table_cell"
+				  ng-class="{
+			'icon-bars':$routeParams.trend_id, 
+			'icon-paragraph-justify': $routeParams.grid_id}"></span>
+			<span ng-bind-html="main_header | heading" class="table_cell"></span>
+		</div>
+	</div>
 	
  	<div class="shelf_nav_links">
  		
@@ -20,14 +30,12 @@
 		<div ng-class="{'inactive':read_selected || bookmark_selected, 'active_tab':!read_selected && !bookmark_selected}"
 			 class="link tab"
 			 ng-if="(!$routeParams.trend_id && !$routeParams.grid_id && !$routeParams.filter_id) || ($routeParams.trend_id || $routeParams.grid_id)"
-			 title="{{main_header | header_title}}"
+			 title="{{main_header}}"
 			 style="margin-left:0px;" 
 			 ng-click="toggle_recommendations()">
 			<span class="table_cell"
 				ng-class="{
 			'icon-feed2':!$routeParams.trend_id && !$routeParams.grid_id && !$routeParams.filter_id, 
-			'icon-bars':$routeParams.trend_id, 
-			'icon-paragraph-justify': $routeParams.grid_id,
 			'light_grey_color': read_selected || bookmark_selected}"></span>
 			<span ng-if="!$routeParams.trend_id && !$routeParams.grid_id && !$routeParams.filter_id" class="table_cell">
 				<span ng-if="$routeParams.type == 'books'">
@@ -38,8 +46,8 @@
 					{{recommendations.readers.count}} </span>	
 				<span>&nbsp;<b>R</b>ecommendations</span>
 			</span>
-			<span ng-if="$routeParams.trend_id || $routeParams.grid_id || $routeParams.filter_id" ng-bind-html="main_header | heading" class="table_cell">
-			</span>
+			<!-- <span ng-if="$routeParams.trend_id || $routeParams.grid_id || $routeParams.filter_id" ng-bind-html="main_header | heading" class="table_cell">
+			</span> -->
 		</div>
 		<div ng-class="{'inactive':!read_selected, 'active_tab':read_selected}"
 			 class="link tab"

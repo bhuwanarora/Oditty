@@ -345,6 +345,11 @@
 	height: 40px;
 }
 
+.right_links{
+	left: 60px;
+	right: inherit;
+}
+
 .toggle_elements{
 	left: 240px;
 	background-color: #fff;
