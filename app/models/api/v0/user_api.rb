@@ -81,7 +81,7 @@ module Api
 							clause = " SET u.email = \""+params[:email]+"\""
 						end
 					end
-					clause = " SET u.thumb = \""+params[:data][:url]+"\"" if params[:data][:url]
+					clause = " SET u.thumb = \""+params[:data][:url]+"\"" if params[:data] && params[:data][:url]
 					clause = " SET u.name = \""+params[:name]+"\", u.indexed_user_name=\""+params[:name].downcase.gsub(" ","")+"\"" 	if params[:name]
 					clause = " SET u.latitude="+params[:latitude].to_s+", u.longitude="+params[:longitude].to_s if params[:latitude]
 					clause = " SET u.init_book_read_count=\""+params[:init_book_read_count]+"\"" if params[:init_book_read_count]
