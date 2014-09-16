@@ -31,7 +31,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
               $rootScope.focused_book.reposition_tooltip = {"left": posX+"px"};
             }
             else{
-              $rootScope.focused_book.reposition_tooltip = {"right": "0px"}; 
+              $rootScope.focused_book.reposition_tooltip = {"right": "0px"};
             }
             $rootScope.on_left = true;
           }
@@ -105,7 +105,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
   };
 }]);
 
-websiteApp.directive('labelDropdown', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
+websiteApp.directive('labelDropdown', ['$rootScope', '$timeout', 'widgetService', 'RecommendationUIConstants', 'sharedService', function($rootScope, $timeout, widgetService, RecommendationUIConstants, sharedService){
   return{
     restrict: 'E',
     controller: ['$scope', function($scope){
@@ -152,6 +152,10 @@ websiteApp.directive('labelDropdown', ['$rootScope', '$timeout', 'widgetService'
           $scope.$emit('gamifyCount', 10, false);
           var message = "SUCCESS-Removed from "+$scope.book.labels[index]["name"]+" <span class='icon-tags'></span>.";
         }
+        if($scope.book.labels[index]["name"] == RecommendationUIConstants.MarkAsRead){
+          sharedService.mark_as_read($scope, $scope.book, event);
+        }
+
         var timeout_event = notify($rootScope, message, $timeout);
         var params = {"id": $scope.book.id, 
                     "type": "BOOK",

@@ -48,6 +48,20 @@
 			<!-- <span ng-if="$routeParams.trend_id || $routeParams.grid_id || $routeParams.filter_id" ng-bind-html="main_header | heading" class="table_cell">
 			</span> -->
 		</div>
+		<div ng-class="{'inactive':!bookmark_selected, 'active_tab':bookmark_selected}"
+			 class="link tab"
+			 ng-if="$routeParams.type == 'books' || $routeParams.type == 'authors'"
+			 title="Books saved"
+			 ng-click="toggle_bookmarked($event)">
+			 <span ng-if="$routeParams.type == 'books'" class="table_cell">
+			 	<span class="icon-tags" ng-class="{'light_grey_color': !bookmark_selected}"></span>
+			 	<span>&nbsp;<b>My Library</b></span>
+		 	 </span>
+			 <span ng-if="$routeParams.type == 'authors'" class="table_cell">
+			 	<span class="icon-tags" ng-class="{'light_grey_color': !bookmark_selected}"></span>
+				<span>&nbsp;<b>Authors Saved</b></span>
+			 </span>
+		</div>
 		<div ng-class="{'inactive':!read_selected, 'active_tab':read_selected}"
 			 class="link tab"
 			 title="Books marked as read" 
@@ -64,21 +78,6 @@
 				<span class="icon-users" ng-class="{'light_grey_color': !read_selected}"></span>
 				<span>&nbsp;<b>Following Readers</b></span>
 			</span>
-		</div>
-		<div ng-class="{'inactive':!bookmark_selected, 'active_tab':bookmark_selected}"
-			 class="link tab"
-			 ng-if="$routeParams.type == 'books' || $routeParams.type == 'authors'"
-			 title="Books saved"
-			 ng-click="toggle_bookmarked($event)">
-			 <span ng-if="$routeParams.type == 'books'" class="table_cell">
-			 	<span class="icon-tags" ng-class="{'light_grey_color': !bookmark_selected}"></span>
-			 	<span>&nbsp;<b>My Library</b></span>
-		 	 </span>
-			 <span ng-if="$routeParams.type == 'authors'" class="table_cell">
-			 	<span class="icon-tags" ng-class="{'light_grey_color': !bookmark_selected}"></span>
-				<span>&nbsp;<b>Authors Saved</b></span>
-			 </span>
-
 		</div>
  			
 	</div>

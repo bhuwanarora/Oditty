@@ -40,7 +40,7 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
             points = points + 10;
           }
           if(remove_read_time){
-            delete book.time_index ;
+            delete book.time_index;
             points = points + 10;
           }
           $rootScope.$broadcast('gamifyCount', points, false);
