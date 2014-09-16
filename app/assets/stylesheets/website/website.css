@@ -468,6 +468,10 @@ input:focus{
     vertical-align: middle;
 }
 
+.table{
+    display: table;
+}
+
 .block3{
     width: 33%;
     min-width: 220px;

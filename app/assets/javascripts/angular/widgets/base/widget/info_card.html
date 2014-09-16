@@ -1,8 +1,8 @@
-<div class="animate-fast horizontal_padder horizontal_padder_active" ng-class="{'horizontal_padder_active': !user.collapsed_column, 'horizontal_padder_inactive': user.collapsed_column}"></div>
+
 
 <div ng-if="user.logged">
      <div class="compressed_info_card animate-fast grey_color" 
-     	  ng-class="{'compressed_info_card_shifted': user.collapsed_column}">
+     	  ng-class="{'compressed_info_card_shifted': user.collapsed_column && user.collapsed_filters}">
      	<div class="block"
      		ng-click="edit_genres_like();"
      		title="Edit genres you like">
@@ -45,9 +45,9 @@
 				<div class="arrow_box arrow_box_type2" style="z-index:3">Authors</div>
 				<div class="arrow_box arrow_box_type2" style="z-index:2">More</div>
 			</div> -->
-			<div class="sub_header"><b>Tell us about yourself, <span class="site_color">{{user.name}}</span></b></div>
 			<div class="profile_status_logo"></div>
 			<div ng-switch-when="0">
+				<div class="sub_header"><b>Tell us about yourself, <span class="site_color">{{user.name}}</span></b></div>
 				<div>
 					<input class="input_30" 
 		      	       ng-model="user.name" 
@@ -155,8 +155,9 @@
 		      	<div class="description">Know what people from your age and gender are reading..</div>
 			</div> -->
 			<div ng-switch-when="1">
+				<div class="sub_header"><b>Which genres do you like, <span class="site_color">{{user.name}}</span></b></div>
 				<div class="header">
-					Which genres do you like
+					This will help us to recommend you better books...
 				</div>
 				<div class="header center scrollbar" msd-wheel="stop_horizontal_scroll($event)">
 					<div ng-repeat="genre in info.genres  | orderBy:genre.name" class="block3">
@@ -165,8 +166,12 @@
 					</div>
 				</div>
 			</div>
-			<div ng-switch-when="2" class="center">
-				<input ng-keydown="search_info_card($event, 'BOOK')" ng-model="info.search_book" placeholder="Add books you have read..."/>
+			<div ng-switch-when="2">
+				<div class="sub_header"><b>Add books you've read, <span class="site_color">{{user.name}}</span></b></div>
+				<div class="header">
+					We will notify you with any activity on these books...
+				</div>
+				<input ng-keydown="search_info_card($event, 'BOOK')" ng-model="info.search_book" placeholder="Search books..."/>
 		      	
 				<div class="scrollbar header" 
 					msd-wheel="stop_horizontal_scroll($event)" check-scroll-bottom="get_popular_books()">
@@ -196,12 +201,11 @@
 							<img src="assets/loader2.gif" width="20px" ng-show="loading" class="loading_icon"/>
 						</div>
 				</div>
-				<!-- <div class="description">
-					Tell us about your taste..
-				</div> -->
 			</div>
-			<div ng-switch-when="3" class="center">
-				<input ng-keydown="search_info_card($event, 'AUTHOR')" ng-model="info.search_author" placeholder="Add authors you like..."/>
+			<div ng-switch-when="3">
+				<div class="sub_header"><b>Add authors you like (Coming Soon)..., <span class="site_color">{{user.name}}</span></b></div>
+				<div class="header">Follow authors and their lives...</div>
+				<input ng-keydown="search_info_card($event, 'AUTHOR')" ng-model="info.search_author" placeholder="Search authors..."/>
 				<div class="scrollbar header" 
 					msd-wheel="stop_horizontal_scroll($event)" check-scroll-bottom="get_popular_authors()">
 						<div class="book_column"
@@ -217,14 +221,10 @@
 							<img src="assets/loader2.gif" width="20px" ng-show="loading" class="loading_icon"/>
 						</div>
 				</div>
-				<!-- <div class="description">
-					Follow authors and their lives...
-				</div> -->
 			</div>
 			<div ng-switch-when="4">
-				<div class="header">
-					Meet readers in your area(Coming Soon)...
-				</div>
+				<div class="sub_header"><b>Share and borrow books from readers in your area (Coming Soon)..., <span class="site_color">{{user.name}}</span></b></div>
+				<div class="header">Let's create a new kind of barter system for books...</div>
 				<div ng-include src="'/assets/angular/widgets/partials/invite.html'"></div>
 				<map style="display:block; height:50vh; width: 101%; margin-top: 10px;">
 					<marker position="current" centered="true"></marker>

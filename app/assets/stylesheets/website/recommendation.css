@@ -473,6 +473,7 @@
 .filters_panel_large,
 .filters_panel_right{
 	text-align: center;
+	max-height: 80vh;
 }
 
 .filters_group{
@@ -480,7 +481,7 @@
 	overflow: auto;
 }
 
-.filters_panel,
+/*.filters_panel,
 .filters_group,
 .filters_panel_right{
 	display: flex;
@@ -490,7 +491,7 @@
     align-items: center;
     padding: 5px;
 }
-
+*/
 .filters_panel_right .header{
 	font-size: 0.8em;
 }
@@ -501,12 +502,13 @@
 }
 
 .filter{
-	padding: 5px 4px;
+	padding: 15px;
 	font-size: .8em;
 	text-align: left;
 	min-width: 200px;
 	border-radius: 3px;
 	margin: 5px;
+	color: #717070;
 }
 
 .interaction_group{
@@ -1238,6 +1240,10 @@ and (min-width : 1824px) {
 	background-color: white;
 }
 
+.left_column a:hover{
+	text-decoration: none;
+}
+
 .expand_notifications{
 	position: fixed;
 	z-index: 7;
@@ -1323,7 +1329,7 @@ and (min-width : 1824px) {
 	padding-right: 15px;
 }
 
-.left_column .friends_grid .friends_grid_header{
+.left_column .header{
 	padding: 15px;
 	background-color: #F3F3F3;
 	margin-bottom: 5px;
@@ -1483,6 +1489,29 @@ and (min-width : 1824px) {
 .left_column_collapsed{
 	width: 40px!important;
 	top: 95px;
+	height: 40px;
+}
+
+.filters_collapsed{
+	width: 40px!important;
+	top: 145px;	
+	z-index: 7;
+}
+
+.collapsed_filters{
+	height: 40px;
+	text-align: center;
+	cursor: pointer;
+	width: 100%;
+}
+
+.filters_collapsed_shifted{
+	left: 298px;
+	top: 95px;
+}
+
+.left_column_shifted{
+	left: 298px !important;
 }
 
 .left_column .collapsed_column{
@@ -1616,11 +1645,7 @@ and (max-width : 900px) {
 		height: initial;
 	}
 
-	.left_column_collapsed{
-		height: 40px;
-	}
-
-	.compressed_info_card{
+l	.compressed_info_card{
 		right: 2px;
 		left: initial !important;
 	}

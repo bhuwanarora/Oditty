@@ -44,7 +44,7 @@
 
 .compressed_info_card{
 	position: fixed;
-	top: 95px;
+	top: 165px;
 	position: fixed;
 	z-index: 7;
 	left: 29%;
@@ -53,7 +53,7 @@
 
 .compressed_info_card_shifted{
 	left: 5px;
-	top: 160px;
+	top: 240px;
 }
 
 .compressed_info_card .block{
@@ -96,22 +96,22 @@
 
 .info_cards .book_column{
 	overflow: auto;
-	width: 48%;
-	margin-top: 10px;
-	margin-bottom: 10px;
+	width: 44%;
+	padding: 10px;
 	margin-left: 1%;
 	cursor: pointer;
 	border-radius: 3px;
 	float: left;
 	min-width: 320px;
+	box-shadow: 0 1px 4px 0 #DDDCDC,inset 0 0 40px #FCFCFC;
 }
 
 .info_cards .selected{
-	background-color: #E4E4E4;
+	border-bottom: 4px solid #427fed;
 }
 
 .info_cards .book_column:hover{
-	background-color: #ECECEC;
+	border-bottom: 4px solid rgba(66, 127, 237, 0.4);
 }
 
 .info_cards .wrap_header{
@@ -130,7 +130,6 @@
 }
 
 .info_cards .header{
-	font-family: Helvetica;
 	font-size: 1em;
 	padding: 4px;
 	overflow: auto;
@@ -140,6 +139,7 @@
 	min-width: 35vh;
 	width: 100%;
 	overflow-y: scroll;
+	color: #717070;
 }
 
 .info_cards .profile_pic{

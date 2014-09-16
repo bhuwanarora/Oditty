@@ -21,7 +21,7 @@
 		<!-- <div class="recommendations_page"><search-bar></search-bar></div> -->
 		
 		
-		<div ng-class="{'horizontal_padder_active': !user.collapsed_column, 'horizontal_padder_inactive': user.collapsed_column}" 
+		<div ng-class="{'horizontal_padder_active': !user.collapsed_column || !user.collapsed_filters, 'horizontal_padder_inactive': user.collapsed_column && user.collapsed_filters}" 
 			 class="info_card_placeholder animate-fast"></div>
 		<div ng-switch on="panel_selected" class="full_height">
 			<div ng-switch-when="BOOKMARK" class="full_height">
@@ -160,13 +160,35 @@
 		<div class="expand_notifications" ng-class="{'expand_notifications_shift': user.collapsed_column}" ng-click="show_interaction_box()">
 			<span class="icon-expand2"></span>
 		</div>
+		<div class="left_column animate-fast scrollbar"
+		     msd-wheel="stop_propagation($event)"
+			 ng-class="{'filters_collapsed': user.collapsed_filters, 'filters_collapsed_shifted': !user.collapsed_column}">
+			<div class="collapse_icon" ng-click="user.collapsed_filters = !user.collapsed_filters;" ng-if="!user.collapsed_filters">
+				<span class="icon-angle-left"></span>
+			</div>
+			<div class="collapsed_filters table"
+			 	 ng-click="user.collapsed_filters = false; user.collapsed_column = true;">
+				<span class="icon-bookmark2 table_cell" ng-if="user.collapsed_filters" ></span>
+			</div>
+			<div class="header" ng-if="!user.collapsed_filters">
+				<span class="icon-tags light_grey_color"></span>
+				<span>&nbsp;Explore Shelves</span>
+			</div>
+			<div class="filters_panel_large" ng-if="!user.collapsed_filters">
+				<div class="filters_group">
+					<div ng-repeat="filter in labels">
+						<filter data="filter"></filter>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="left_column animate-fast"
-			 ng-class="{'left_column_collapsed': user.collapsed_column}">
+			 ng-class="{'left_column_collapsed': user.collapsed_column, 'left_column_shifted': !user.collapsed_filters && user.collapsed_column}">
 			<div class="collapse_icon" ng-click="user.collapsed_column = !user.collapsed_column;" ng-if="!user.collapsed_column">
 				<span class="icon-angle-left"></span>
 			</div>
 			<div ng-if="user.collapsed_column" class="animate-fast collapsed_column"
-				ng-click="user.collapsed_column = false;">
+				ng-click="user.collapsed_column = false; user.collapsed_filters = true;">
 				<div>
 					<img ng-src="{{user.thumb | thumb_backup}}" class="thumb">
 				</div>
@@ -252,13 +274,14 @@
 					</div>
 				</div>
 			</div>
+			
 			<!-- <more-filters></more-filters> -->
 			<div class="scrollbar friends_grid" 
 				 ng-if="!user.collapsed_column"
 				 ng-style="column_heights.friends_grid_style"
 				 msd-wheel="handle_friends_grid_size($event)"
 				 check-scroll-down="handle_friends_grid_size($event, true)">
-				<div class="friends_grid_header"
+				<div class="header"
 					 ng-click="handle_friends_grid_size(undefined, true)">
 					<span class="icon-users2"></span>
 					<span>&nbsp;&nbsp;{{user.friends.length}} Friends</span>

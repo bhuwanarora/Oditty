@@ -13,7 +13,7 @@
 				  ng-class="{
 			'icon-bars':$routeParams.trend_id, 
 			'icon-paragraph-justify': $routeParams.grid_id}"></span>
-			<span ng-bind-html="main_header | heading" class="table_cell"></span>
+			<span ng-bind-html="main_header | heading | lowercase" class="table_cell"></span>
 		</div>
 	</div>
 	
@@ -28,7 +28,7 @@
 		</a>
 		<div ng-class="{'inactive':read_selected || bookmark_selected, 'active_tab':!read_selected && !bookmark_selected}"
 			 class="link tab"
-			 ng-hide="$routeParams.trend_id || $routeParams.grid_id"
+			 ng-hide="$routeParams.trend_id || $routeParams.grid_id || $routeParams.filter_id"
 			 title="{{main_header}}"
 			 style="margin-left:0px;" 
 			 ng-click="toggle_recommendations()">
@@ -54,11 +54,11 @@
 			 title="Books saved"
 			 ng-click="toggle_bookmarked($event)">
 			 <span ng-if="$routeParams.type == 'books'" class="table_cell">
-			 	<span class="icon-tags" ng-class="{'light_grey_color': !bookmark_selected}"></span>
+			 	<span class="icon-bookmark2" ng-class="{'light_grey_color': !bookmark_selected}"></span>
 			 	<span>&nbsp;<b>My Library</b></span>
 		 	 </span>
 			 <span ng-if="$routeParams.type == 'authors'" class="table_cell">
-			 	<span class="icon-tags" ng-class="{'light_grey_color': !bookmark_selected}"></span>
+			 	<span class="icon-bookmark2" ng-class="{'light_grey_color': !bookmark_selected}"></span>
 				<span>&nbsp;<b>Authors Saved</b></span>
 			 </span>
 		</div>
