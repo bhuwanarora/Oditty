@@ -154,12 +154,11 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 			$rootScope.user = response;
     		$rootScope.user.thumb = response["thumb"];
 	        $scope._init_user();
-		    
+	        Facebook.api('me/picture?redirect=false&type=large', function(response){
+	        	websiteService.save_user_info(response);
+	        });
         });
         // $scope.fb_books();
-        Facebook.api('me/picture?redirect=false&type=large', function(response){
-        	websiteService.save_user_info(response);
-        });
     };
 
     $scope.fb_books = function(){
