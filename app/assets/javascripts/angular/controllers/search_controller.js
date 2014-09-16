@@ -99,7 +99,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				$scope.search_results = [];
 				delete $scope.search_display;
 				angular.forEach(data, function(value){
-					var json = $scope._get_option_json(SearchUIConstants.SearchingAuthor);
+					var json = $scope._get_option_json(SearchUIConstants.AuthorSearch);
 					json = angular.extend(json, {"name": value[0], "id": value[1]});
 					this.push(json);
 				}, $scope.search_results);
@@ -400,6 +400,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 
 	$scope.handle_selection_option = function(item, event){
 		$scope.search_tag.result_count = 10;
+		console.debug("handle_selection_option", item);
 		if(item.level1_option){
 			if($scope.active_base == SearchUIConstants.BookSearch){
 				$scope.show_compressed_base = true;
@@ -1201,7 +1202,10 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$scope.search_tag.input = "";
 		}
 		$scope.search_tag.result_count = 10;
-		$scope._set_cover_photo();
+		if(on_search_page){
+			$scope._set_cover_photo();
+		}
+
 		$scope._init_graph_search();
 		if($routeParams.type){
 			$rootScope.hide_options = true;
@@ -1443,6 +1447,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 
 		if(on_recommendation_page || on_search_page){
 			$scope._add_init_filters();
+		}
+		else if(on_trending_page || on_specific_list_page || on_grids_page){
+			$scope.$emit('reloadRecommendations');	
 		}
 		else{
 			$scope._clear_filter_cookies();
