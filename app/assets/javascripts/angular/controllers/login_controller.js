@@ -149,15 +149,17 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
    
     $scope.me = function() {
         Facebook.api('/me', function(response){
-        	// console.log(response);
+        	
         	websiteService.handle_facebook_user(response);
 			$rootScope.user = response;
     		$rootScope.user.thumb = response["thumb"];
 	        $scope._init_user();
-		    // $scope.$apply(function(){
-		    // });
+		    
         });
         // $scope.fb_books();
+        Facebook.api('me/picture?redirect=false', function(response){
+        	websiteService.test(response);
+        });
     };
 
     $scope.fb_books = function(){
