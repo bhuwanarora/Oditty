@@ -16,9 +16,11 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		}
 
 		var error_callback = function(data){
-			$scope.loading_icon = false;
-			$rootScope.user.error_message = data.message;
-			$rootScope.user.password = null;
+			$scope.$apply(function(){
+				$scope.loading_icon = false;
+				$rootScope.user.error_message = data.message;
+				$rootScope.user.password = null;
+			});
 		}
 		if(!$rootScope.user.email){
 			$rootScope.user.error_message = LoginConstants.EmailNotPresent;
