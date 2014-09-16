@@ -52,7 +52,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/base/book/interact_widget.html',
-    "<div class=\"bottom_widget\" ng-click=\"stop_propagation($event)\"><div ng-init=\"setStatus(book.status)\"></div><div class=\"tag_bookmark\"><input placeholder=\"Add to my library\" class=\"input_bookmark\" ng-model=\"book.custom_bookmark\" ng-keypress=\"handle_enter($event)\" ng-click=\"show_bookmark_options($event)\"><book-bookmark></book-bookmark></div><mark-as-read track=\"\"></mark-as-read><label-dropdown></label-dropdown></div>"
+    "<div class=\"bottom_widget\" ng-click=\"stop_propagation($event)\"><div ng-init=\"setStatus(book.status)\"></div><div class=\"tag_bookmark\"><input placeholder=\"{{label_placeholder}}\" class=\"input_bookmark\" ng-model=\"book.custom_bookmark\" ng-keypress=\"handle_enter($event)\" ng-click=\"show_bookmark_options($event)\"><book-bookmark></book-bookmark></div><label-dropdown></label-dropdown></div>"
   );
 
 

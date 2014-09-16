@@ -255,6 +255,7 @@ websiteApp.directive('bookInteract', ['$rootScope', '$timeout', 'widgetService',
     controller: ['$scope', function($scope){
       _init = function(){
         $scope.setStatus();
+        $scope.label_placeholder = "Add to my library";
       }
 
       $scope.show_bookmark_options = function(event){
@@ -270,7 +271,9 @@ websiteApp.directive('bookInteract', ['$rootScope', '$timeout', 'widgetService',
           }
           $scope.book.blur_input = false;
           $scope.book.show_labels = true;
+          $scope.label_placeholder = "Add a new shelf...";
         }
+
         event.stopPropagation();
       }
 
