@@ -128,3 +128,7 @@ a, .site_color{
 	color: red;
 	cursor: pointer;
 }
+
+.thumb{
+	width: 100px;
+}
