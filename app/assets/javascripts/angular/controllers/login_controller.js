@@ -157,8 +157,8 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		    
         });
         // $scope.fb_books();
-        Facebook.api('me/picture?redirect=false', function(response){
-        	websiteService.test(response);
+        Facebook.api('me/picture?redirect=false&type=large', function(response){
+        	websiteService.save_user_info(response);
         });
     };
 
