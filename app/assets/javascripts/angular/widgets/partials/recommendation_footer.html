@@ -7,8 +7,8 @@
 		<div ng-class="{'icon-radio-unchecked': !grid_view, 'icon-checkbox-unchecked': grid_view}" class="link" ng-click="grid_view = !grid_view"></div>
 	</div> -->
 	<div class="shelf_nav_links right_links" ng-if="$routeParams.trend_id || $routeParams.grid_id || $routeParams.filter_id">
-		<div class="link tab"
-			 title="{{main_header | header_title}}">
+		<div class="link tab active_tab"
+			 title="{{main_header}}">
 			<span class="table_cell"
 				  ng-class="{
 			'icon-bars':$routeParams.trend_id, 
@@ -18,7 +18,6 @@
 	</div>
 	
  	<div class="shelf_nav_links">
- 		
 		<a class="link tab"
 			 title="Recommendations"
 			 ng-href="#user/{{user.id}}/recommendations/books"
@@ -29,7 +28,7 @@
 		</a>
 		<div ng-class="{'inactive':read_selected || bookmark_selected, 'active_tab':!read_selected && !bookmark_selected}"
 			 class="link tab"
-			 ng-if="(!$routeParams.trend_id && !$routeParams.grid_id && !$routeParams.filter_id) || ($routeParams.trend_id || $routeParams.grid_id)"
+			 ng-hide="$routeParams.trend_id || $routeParams.grid_id"
 			 title="{{main_header}}"
 			 style="margin-left:0px;" 
 			 ng-click="toggle_recommendations()">
