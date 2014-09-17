@@ -297,7 +297,7 @@
 and (min-width : 320px)
 and (max-width : 500px) {
 /* Styles */
-	.info_cards{
+	/*.info_cards{
 		left: 1vh;
 		right: 1vh;
 		top: 1vh;
@@ -305,7 +305,7 @@ and (max-width : 500px) {
 		margin: 0px;
 		width: initial;
 		height: initial;
-	}
+	}*/
 
 	
 }

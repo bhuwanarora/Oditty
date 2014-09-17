@@ -1627,7 +1627,7 @@ and (min-width : 1824px) {
 and (min-width : 320px)
 and (max-width : 900px) {
 /* Styles */
-	.header_navbar .share:before{
+	/*.header_navbar .share:before{
 		content: "\e620";
 		font-family: icomoon;
 		speak: none;
@@ -1636,7 +1636,6 @@ and (max-width : 900px) {
 		font-variant: normal;
 		text-transform: none;
 		line-height: 1;
-		/*-webkit-font-smoothing:*/
 	}
 
 	.shelf_nav_links{
@@ -1669,6 +1668,6 @@ l	.compressed_info_card{
 
 	.loading_widget{
 		display: none;
-	}
+	}*/
 
 }

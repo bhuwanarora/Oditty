@@ -238,12 +238,12 @@
 @media only screen
 and (min-width : 320px)
 and (max-width : 900px) {
-	.recommendation_block{
+	/*.recommendation_block{
 		left: 60px;
 		position: absolute;
 		z-index: 2;
 		width: initial;
 		margin-right: 0px;
 		right: 2px;
-	}
+	}*/
 }
