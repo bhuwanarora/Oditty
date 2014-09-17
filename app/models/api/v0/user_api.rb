@@ -120,7 +120,7 @@ module Api
 				info
 			end
 
-			def self.handle_facebook_user params
+			def self.handle_facebook_user(params, session)
 				@neo = Neography::Rest.new	
 				params = params[:users_api]
 				puts params.to_s.red
@@ -163,8 +163,10 @@ module Api
 					end
 				end
 				puts clause.blue.on_red
-				user_id = @neo.execute_query clause
-				user_id["data"][0][0]
+				user_id = @neo.execute_query(clause)["data"][0][0]
+				puts user_id.to_s.red
+				session[:user_id] = user_id
+				user_id
 			end
 
 			def self.authenticate(session, params)

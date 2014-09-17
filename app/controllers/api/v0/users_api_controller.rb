@@ -15,9 +15,7 @@ module Api
 			end
 
 			def fb
-				user_id = UserApi.handle_facebook_user params
-				puts user_id.to_s.red
-				session[:user_id] = user_id
+				user_id = UserApi.handle_facebook_user(params, session)
 				render :json => {:message => "Success"}, :status => 200
 			end
 
