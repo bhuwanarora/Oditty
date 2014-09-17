@@ -54,7 +54,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 			$scope.$on('destroy', function(){
 				$timeout.cancel(timeout_event);
 			});
-			_is_logged_in();
+			$scope._is_logged_in();
 			// $scope.$emit('getNotifications');
 		}
 
@@ -131,7 +131,6 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
           	if(response.status == LoginConstants.FacebookLoginStatusCheck){
             	$rootScope.logged = true;
             	$scope.me();
-            	
           	}
           	else{
            		$scope.login();
@@ -144,20 +143,17 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
       		if (response.status == LoginConstants.FacebookLoginStatusCheck) {
         		// $rootScope.logged = true;
         		$scope.me();
-        		
       		}
     	});
    	};
    
     $scope.me = function() {
         Facebook.api('/me', function(response){
-        	
-        	websiteService.handle_facebook_user(response);
-        	$scope.$apply(function(){
-				$rootScope.user = response;
-	    		$rootScope.user.thumb = response["thumb"];
-		        $scope._init_user();
+        	websiteService.handle_facebook_user(response).then(function(){
+	        	$scope._is_logged_in();
         	});
+			$rootScope.user = response;
+		    $scope._init_user();
 	        Facebook.api('me/picture?redirect=false&type=large', function(response){
 	        	websiteService.save_user_info(response);
 	        });
@@ -233,7 +229,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
    //  	});
   	// }
 
-  	_is_logged_in = function(){
+  	$scope._is_logged_in = function(){
   		websiteService.get_user().then(function(data){
   			if(data["logged_in"]){
   				$rootScope.user.logged = true;
@@ -249,7 +245,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 
 	_init = function(){
 		$cookieStore.remove('tab');
-		_is_logged_in();
+		$scope._is_logged_in();
 		_bind_auth_listeners();
 		// $scope.authenticate(true);
 	}
