@@ -153,9 +153,11 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
         Facebook.api('/me', function(response){
         	
         	websiteService.handle_facebook_user(response);
-			$rootScope.user = response;
-    		$rootScope.user.thumb = response["thumb"];
-	        $scope._init_user();
+        	$scope.$apply(function(){
+				$rootScope.user = response;
+	    		$rootScope.user.thumb = response["thumb"];
+		        $scope._init_user();
+        	});
 	        Facebook.api('me/picture?redirect=false&type=large', function(response){
 	        	websiteService.save_user_info(response);
 	        });
