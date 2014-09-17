@@ -504,14 +504,14 @@ websiteApp.directive('feedbackPopup', ['$document', 'websiteService', '$rootScop
       element = element.children();
       var startX = 0, startY = 0, x = 350, y = 50;
       
-      element.on('mousedown', function(event) {
-        // Prevent default dragging of selected content
-        // event.preventDefault();
-        startX = event.screenX - x;
-        startY = event.screenY - y;
-        $document.on('mousemove', mousemove);
-        $document.on('mouseup', mouseup);
-      });
+      // element.on('mousedown', function(event) {
+      //   // Prevent default dragging of selected content
+      //   // event.preventDefault();
+      //   startX = event.screenX - x;
+      //   startY = event.screenY - y;
+      //   $document.on('mousemove', mousemove);
+      //   $document.on('mouseup', mouseup);
+      // });
 
       function mousemove(event) {
         y = event.screenY - startY;
@@ -528,10 +528,10 @@ websiteApp.directive('feedbackPopup', ['$document', 'websiteService', '$rootScop
         else if(x > window_width){
         	x = window_width;
         }
-        element.css({
-          top: y + 'px',
-          left:  x + 'px'
-        });
+        // element.css({
+        //   top: y + 'px',
+        //   left:  x + 'px'
+        // });
       }
 
       function mouseup() {
@@ -540,7 +540,7 @@ websiteApp.directive('feedbackPopup', ['$document', 'websiteService', '$rootScop
       }
     },
     controller: ['$scope', function($scope){
-    	$scope.get_feedback = false;
+    	$scope.get_feedback = true;
     	$scope.feedback_text = "Feedback";
     	$scope.handle_feedback = function(event){
     		if($rootScope.user.feedback.length > 8){
