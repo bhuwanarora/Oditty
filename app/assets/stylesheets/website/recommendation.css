@@ -37,14 +37,19 @@
 	overflow-y: scroll;
 }
 
-.header_navbar{
+.header_navbar,
+.header_icon{
 	float: right;
 	height: 35px;
 	margin-top: 3px;
-	padding-left: 15px;
-	padding-right: 15px;
+	padding-left: 10px;
+	padding-right: 10px;
 	display: table;
 	cursor: default;
+}
+
+.header_icon:hover [class^="icon-"]{
+	color: #333;
 }
 
 .header_navbar .share:before{
@@ -979,6 +984,7 @@ and (min-width : 1824px) {
 	color: white;
 }
 
+.notifications_popup .notification_message,
 .notifications .notification_message{
 	white-space: initial;
 	padding: 0px 5px;
@@ -988,38 +994,42 @@ and (min-width : 1824px) {
 	width: auto;
 }
 
+.notifications_popup .notification_message a:hover,
 .notifications .notification_message a:hover{
 	text-decoration: none;
 }
 
-.notifications .instruct_block{
+.notifications_popup .instruct_block{
 	padding: 10px;
 	color: white;
 	border-radius: 2px;
-	margin: 4px;
+	margin: 10px;
 }
 
-.notifications .instruct_icon{
+.notifications_popup .instruct_icon{
 	font-size: 2em;
 	padding: 3px;
-	margin: 4px;
+	margin: 10px;
 }
 
-.notifications .keyboard_keys{
+.notifications_popup .keyboard_keys{
 	border: 1px solid #C9C9C9;
 	padding: 5px;
 	border-radius: 4px;
 	line-height: 2em;
 }
 
+.notifications_popup .notification_message [class^="icon-"],
 .notifications .notification_message [class^="icon-"]{
 	font-size: 1.4em !important;
 }
 
+.notifications_popup .notification:hover,
 .notifications .notification:hover{
 	background-color: #F1F1F1;
 }
 
+.notifications_popup .notification_stable,
 .notifications .notification_stable{
 	background-color: #fff;
 	overflow: auto;
@@ -1051,6 +1061,7 @@ and (min-width : 1824px) {
 	width: 80%;
 }
 
+.notifications_popup img,
 .notifications img{
 	width: 30px;
 	height: 30px;
@@ -1063,11 +1074,12 @@ and (min-width : 1824px) {
 	color: white;
 	text-align: center;
 	min-width: 12px;
-	margin-top: 10px;
+	margin-top: 15px;
 	font-size: 0.7em;
 	padding: 4px;
-	margin-left: 10px;
+	border-radius: 1px;
 	position: absolute;
+	margin-left: -5px;
 }
 
 /* only needed for this sample */
@@ -1621,6 +1633,23 @@ and (min-width : 1824px) {
 
 .settings_popup li:hover{
 	background-color: #F1F1F1;
+}
+
+.notifications_popup{
+	position: fixed;
+	background-color: white;
+	width: 35%;
+	max-height: 30vh;
+	right: 10px;
+	overflow-y: scroll;
+	top: 41px;
+	min-width: 350px;
+	padding: 10px 15px;
+	z-index: 9;
+	border: 1px solid #ccc;
+	border-color: rgba(0,0,0,.2);
+	box-shadow: 0 2px 10px rgba(0,0,0,.2);
+	font-size: 0.9em;
 }
 
 @media only screen

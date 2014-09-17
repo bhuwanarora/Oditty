@@ -495,7 +495,7 @@ websiteApp.directive('calendar', ['$rootScope', function($rootScope){
 	}
 }]);
 
-websiteApp.directive('feedbackPopup', ['$document', 'websiteService', '$rootScope', function($document, websiteService, $rootScope) {
+websiteApp.directive('feedbackPopup', ['$document', 'websiteService', '$rootScope', '$timeout', function($document, websiteService, $rootScope, $timeout){
   return {
     restrict: 'A',
     link: function(scope, element, attrs) {
@@ -548,8 +548,18 @@ websiteApp.directive('feedbackPopup', ['$document', 'websiteService', '$rootScop
 				$scope.feedback_text = "Sent! :)";
 				websiteService.save_feedback(params);
 				$rootScope.user.feedback = "";
+				var timeout_event = $timeout(function(){
+					_reset_feedback_header();
+				}, 3000);
+				$scope.$on('destroy', function(){
+					$timeout.cancel(timeout_event);
+				});
     		}
     		else{
+    			_reset_feedback_header();
+    		}
+
+    		var _reset_feedback_header = function(){
     			$scope.feedback_text = "Please elaborate a bit more..";
     		}
     	}

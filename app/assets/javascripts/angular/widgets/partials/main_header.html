@@ -14,17 +14,26 @@
 		<span>o</span>
 		<span>r</span>
  	</a>
-	<div class="header_navbar" ng-click="show_settings_popup($event)">
-		<span class="icon-cog table_cell"></span>
+	<div class="header_icon" ng-click="show_settings_popup($event)">
+		<span class="icon-cog table_cell light_grey_color"></span>
+	</div>
+	<div class="header_icon" 
+	     ng-class="{'site_color': show_notifications_popup, 'light_grey_color':!show_notifications_popup}"
+	     ng-click="show_notifications_popup=!show_notifications_popup;">
+		<span class="icon-earth table_cell"></span>
+		<div class="notification_circle table_cell" >4</div>
 	</div>
 	<profile-link></profile-link>
  	<div ng-controller="searchController">
  		<search-bar></search-bar>
  	</div>
+
 	<div class="header_navbar site_color" ng-click="show_interaction_box()">
 		<span class="table_cell share"></span>
 	</div>
- 
+	<!-- <div ng-include src="'/assets/angular/widgets/partials/invite.html'"></div> -->
+ 	<div ng-if="show_notifications_popup" 
+ 	     ng-include src="'/assets/angular/widgets/partials/notifications.html'"></div>
 	<!-- <div class="menu_group" 
  		 ng-class="{'menu_group_active':show_menu}"
  		 ng-mouseenter="toggle_menu()"
