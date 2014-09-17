@@ -547,6 +547,7 @@ websiteApp.directive('feedbackPopup', ['$document', 'websiteService', '$rootScop
 				var params = {"feedback": $rootScope.user.feedback};
 				$scope.feedback_text = "Sent! :)";
 				websiteService.save_feedback(params);
+				$rootScope.user.feedback = "";
     		}
     		else{
     			$scope.feedback_text = "Please elaborate a bit more..";
