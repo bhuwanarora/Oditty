@@ -1135,16 +1135,54 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
 websiteApp.directive('tooltip', function(){
 	return{
 	    restrict: 'E',
-	    scope: {"text": "=data"},
+	    scope: {"text": "=", 
+	    		"prependText": "@",
+	    		"appendText": "@",
+	    		"position": "@",
+	    		"pluralize": "@",
+	    		"addRelative": "@"},
 	    link: function(scope, element, attrs){
+	    	if(angular.isDefined(scope.addRelative)){
+				element.parent().css('position', 'relative');
+	    	}
+			element.parent().bind('mouseenter', function(event){
+				element.children().css('display', 'block');
+				var width = element.children()[0].scrollWidth;
+				var height = element.children()[0].scrollHeight;
 
-			// element.parent().css('position', 'relative');
-			// element.parent().bind('mouseenter', function(event){
-			// 	element.show();
-			// });
-			// element.parent().bind('mouseenter', function(event){
-			// 	element.css('display', 'none');
-			// });
+				var show_left = scope.position == "left";
+				var show_right = scope.position == "right";
+				var show_top = scope.position == "top";
+				var show_bottom = scope.position == "bottom";
+
+				if(show_left){
+					element.children().css('left', "-"+width+"px");
+					element.children().children('.tooltip_arrow').css('left', width+'px');
+				}
+				else if(show_right){
+					element.children().css('right', "-"+width+"px");
+					element.children().children('.tooltip_arrow').css('right', width+'px');
+				}
+				else if(show_bottom){
+					element.children().css('bottom', "-"+height+"px");
+					element.children().children('.tooltip_arrow').css('bottom', height+'px');
+				}
+				else if(show_top){
+					element.children().css('top', "-"+height+"px");
+					element.children().children('.tooltip_arrow').css('top', height+'px');
+				}
+				element.children().children().css('border-top-color', '#333');
+
+				
+			});
+			element.parent().bind('mouseleave', function(event){
+				element.children().css('display', 'none');
+				element.children().children('.tooltip_arrow').css('top', 'inherit')
+															 .css('left', 'inherit')
+															 .css('right', 'inherit')
+															 .css('bottom', 'inherit');
+			});
+
 			// function offset(elm) { 
 			//   	try {return elm.offset();} catch(e) {} 
 			//   	var rawDom = elm[0]; 

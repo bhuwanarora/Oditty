@@ -40,7 +40,9 @@
 		  	<hr>
 			<!-- <select ng-options="type for type in ['R.D.', 'Books', 'Authors', 'Readers']"> -->
 			<!-- </select> -->
-			<a ng-href="#user/{{user.id}}/recommendations/books"><profile-link></profile-link></a>
+			<a ng-href="#user/{{user.id}}/recommendations/books" class="relative_position">
+				<profile-link></profile-link>
+			</a>
 		  	<search-bar></search-bar>
 		  	<div class="secondary_login animate-fast" 
 		       ng-click="toggle_login_panel()"
@@ -68,6 +70,10 @@
 		  		</span>
 		  		<span> · &nbsp;&nbsp;&nbsp;&nbsp;</span>
 		  		<span ng-repeat="trend in trends | limitTo : 6" class="trend">
+		  			<tooltip prepend-text="Checkout books related to" 
+		  					 text="trend.name" 
+		  					 add-relative="true"
+		  					 position="top"></tooltip>
 		  			<a ng-href="#user/{{user.id}}/trending/books/id/{{trend.id}}/name/{{trend.name}}"
 		  				class="animate-fast">
 		  				<!-- <span><img ng-src="{{trend.thumb}}"></span> -->
