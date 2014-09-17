@@ -1230,7 +1230,7 @@ and (min-width : 1824px) {
 .left_column{
 	overflow: auto;
 	z-index: 7;
-	box-shadow: 8px 0 43px 0 rgba(66,66,66,.47);
+	box-shadow: 3px 0 10px 0 rgba(66,66,66,0.47);
 	position: fixed;
 	top: 50px;
 	width: 28%;
