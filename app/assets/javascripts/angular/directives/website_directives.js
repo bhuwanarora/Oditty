@@ -540,8 +540,9 @@ websiteApp.directive('feedbackPopup', ['$document', 'websiteService', '$rootScop
       }
     },
     controller: ['$scope', function($scope){
-    	$scope.get_feedback = true;
+    	$scope.get_feedback = false;
     	$scope.feedback_text = "Feedback";
+    	$rootScope.user.feedback = "";
     	$scope.handle_feedback = function(event){
     		if($rootScope.user.feedback.length > 8){
 				var params = {"feedback": $rootScope.user.feedback};
