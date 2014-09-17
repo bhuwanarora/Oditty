@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
     if session[:user_id] == Constants::Admin
       @is_admin = true
     end
-    puts "check_permission is_admin #{@is_admin} user_id #{session[:user_id]}"
+    puts "check_permission is_admin #{@is_admin} user_id #{session[:user_id]}".green
   end
 
   protected
