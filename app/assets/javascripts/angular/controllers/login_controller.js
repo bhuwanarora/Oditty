@@ -164,16 +164,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
     };
 
     $scope.fb_books = function(){
-    	var _facebook_init = function(){
-			FB.init({
-				appId: "667868653261167",
-				cookie: true,
-				status: true,
-				xfbml: true
-			});
-
-		}
-		_facebook_init();
+    	
 		
         FB.api(
 		    "/me/books",
@@ -254,3 +245,14 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 
 	_init();
 }]);
+
+var _facebook_init = function(){
+	FB.init({
+		appId: "667868653261167",
+		cookie: true,
+		status: true,
+		xfbml: true
+	});
+
+}
+_facebook_init();
