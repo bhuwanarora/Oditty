@@ -541,7 +541,7 @@ websiteApp.directive('feedbackPopup', ['$document', 'websiteService', '$rootScop
     },
     controller: ['$scope', function($scope){
     	$scope.get_feedback = false;
-    	$scope.feedback_text = "Feedback";
+    	_reset_feedback_header();
     	$scope.handle_feedback = function(event){
     		if($rootScope.user.feedback.length > 8){
 				var params = {"feedback": $rootScope.user.feedback};
@@ -556,11 +556,11 @@ websiteApp.directive('feedbackPopup', ['$document', 'websiteService', '$rootScop
 				});
     		}
     		else{
-    			_reset_feedback_header();
+    			$scope.feedback_text = "Please elaborate a bit more..";
     		}
 
     		var _reset_feedback_header = function(){
-    			$scope.feedback_text = "Please elaborate a bit more..";
+    			$scope.feedback_text = "Feedback";
     		}
     	}
     }],
