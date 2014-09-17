@@ -113,7 +113,7 @@
 	border: 1px solid #D6D5D5;
 	font-size: 1em;
 	margin: 5px 0px 5px 0px;
-	width: 98%;
+	width: 80%;
 	height: 60px;
 	max-width: 89%;
 	outline: none;
@@ -532,8 +532,8 @@
 .interaction_box_options,
 .interaction_box_book_options{
 	width: 250px;
-	top: 71px;
-	margin-left: 45px;
+	top: 84px;
+	margin-left: 75px;
 	box-shadow: 0 1px 4px 0 #99A3AD,inset 0 0 40px #EEE;
 	font-size: 1em;
 	z-index: 6;
@@ -551,7 +551,7 @@
 
 
 .interaction_box img{
-	width: 35px;
+	width: 70px;
 	margin-bottom: 20px;
 	margin-right: 4px;
 	border-radius: 2px;
@@ -584,7 +584,7 @@
 
 .interaction_box .interaction_links{
 	padding: 2px;
-	margin-left: 40px;
+	margin-left: 70px;
 }
 
 .interaction_box .interaction_links .status_message{
