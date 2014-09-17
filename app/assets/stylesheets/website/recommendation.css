@@ -1194,16 +1194,14 @@ and (min-width : 1824px) {
 }
 
 .tweets .tweet img{
-	width: 30px;
+	width: 70px;
 	border-radius: 2px;
 }
 
 .trending_background{
-	background-image: url('/assets/trending.png');
-	background-repeat: repeat-x;
 	border-radius: 5px;
-	padding-left: 5px;
 	margin-bottom: 10px;
+	display: table-cell;
 }
 
 .tweets .tweet .large_thumb{
@@ -1217,9 +1215,10 @@ and (min-width : 1824px) {
 	display: inline-block;
 	float: left;
 	padding: 0px 10px 0px 10px;
-	width: 90%;
+	width: 80%;
 	white-space: normal;
 	word-break: break-word;
+	font-size: 0.9em;
 }
 
 .column_wrapper{
@@ -1659,6 +1658,8 @@ l	.compressed_info_card{
 
 	.compressed_info_card_shifted{
 		right: initial;
+		bottom: 0px;
+		top: inherit !important;
 	}
 
 	.left_column .collapse_icon{

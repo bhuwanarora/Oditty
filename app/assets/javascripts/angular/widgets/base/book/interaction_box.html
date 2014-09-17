@@ -129,17 +129,17 @@
 			ng-click="stop_propagation($event)">
 			<div ng-repeat="notification in notifications | reverse" 
 			     class="tweet animate-fast">
-				<div class="trending_background site_color" ng-show="notification.title">
-					<span class="icon-bars"></span><span>Trending</span>
-					<a class="float_right" ng-href="#user/{{user.id}}/trending/books/id/{{notification.id}}/name/{{notification.name}}">Check out books related to  <b>{{notification.keywords}}</b></a>
-				</div>
 				<div class="inline_block_left"><img ng-src="{{notification.thumb | thumb_backup}}"></div>
 				<div class="tweet_text">
 					<b><div ng-bind-html="notification.user.name"></div></b>
-					<b><a ng-href="{{notification.url}}" target="_blank" class="site_color">
+					<b><a ng-href="{{notification.url}}" target="_blank">
 						<div ng-bind-html="notification.title"></div></a>
 					</b>
+					<div class="trending_background site_color" ng-show="notification.title">
+						<a ng-href="#user/{{user.id}}/trending/books/id/{{notification.id}}/name/{{notification.name}}">Check out books related to  <b>{{notification.keywords}}</b></a>
+					</div>
 					<div ng-bind-html="notification.tag"></div>
+					<br/>
 					<div ng-bind-html="notification.message"></div>
 					<img ng-show="notification.large_image" ng-src="{{notification.large_image}}" class="large_thumb">
 				</div>
