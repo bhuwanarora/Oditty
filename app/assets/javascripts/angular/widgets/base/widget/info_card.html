@@ -2,13 +2,13 @@
 
 <div ng-if="user.logged">
      <div class="compressed_info_card animate-fast grey_color" 
-     	  ng-class="{'compressed_info_card_shifted': user.collapsed_column && user.collapsed_filters}">
+     	  ng-class="{'compressed_info_card_shifted': user.collapsed_column && user.collapsed_filters && user.collapsed_friends}">
      	<div class="block"
      		ng-click="edit_genres_like();"
      		title="Edit genres you like">
      		<span ng-class="{'site_color': user.profile_status==1}">
 	     		<span class="icon-tags"></span>
-	     		<span ng-show="user.collapsed_column && user.collapsed_filters">&nbsp;Genres</span>
+	     		<span ng-show="user.collapsed_column && user.collapsed_filters && user.collapsed_friends">&nbsp;Genres</span>
 	     	</span>
      	</div>
      	<div class="block"
@@ -16,7 +16,7 @@
      		title="Edit books you have read">
      		<span ng-class="{'site_color': user.profile_status==2}">
 	     		<span class="icon-books"></span>
-	     		<span ng-show="user.collapsed_column && user.collapsed_filters">&nbsp;Books Read</span>
+	     		<span ng-show="user.collapsed_column && user.collapsed_filters && user.collapsed_friends">&nbsp;Books Read</span>
 	     	</span>
      	</div>
      	<div class="block"
@@ -24,7 +24,7 @@
      		title="Edit authors you like">
      		<span ng-class="{'site_color': user.profile_status==3}">
 	     		<span class="icon-pen"></span>
-	     		<span ng-show="user.collapsed_column && user.collapsed_filters">&nbsp;Follow Authors</span>
+	     		<span ng-show="user.collapsed_column && user.collapsed_filters && user.collapsed_friends">&nbsp;Follow Authors</span>
 	     	</span>
      	</div>
      	<div class="block"
@@ -32,7 +32,7 @@
      		title="Invite friends">
      		<span ng-class="{'site_color': user.profile_status==4}">
 	     		<span class="icon-users"></span>
-	     		<span ng-show="user.collapsed_column && user.collapsed_filters">&nbsp;Barter</span>
+	     		<span ng-show="user.collapsed_column && user.collapsed_filters && user.collapsed_friends">&nbsp;Barter</span>
      		</span>
      	</div>
      	<div class="block"
@@ -40,7 +40,7 @@
      		title="Edit personal details">
      		<span ng-class="{'site_color': user.profile_status==0}">
 	     		<span class="icon-cogs"></span>
-	     		<span ng-show="user.collapsed_column && user.collapsed_filters">&nbsp;Settings</span>
+	     		<span ng-show="user.collapsed_column && user.collapsed_filters && user.collapsed_friends">&nbsp;Settings</span>
 	     	</span>
      	</div>
      </div>

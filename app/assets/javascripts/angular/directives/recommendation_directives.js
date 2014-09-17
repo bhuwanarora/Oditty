@@ -291,6 +291,7 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 				$rootScope.user.compressed_info = false;
 				$rootScope.user.collapsed_column = true;
 				$rootScope.user.collapsed_filters = true;
+				$rootScope.user.collapsed_friends = true;
 				// scroller.scrollTo(0, 0, 2000);
 			}
 

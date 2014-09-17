@@ -17,6 +17,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	$scope._hide_popups = function(){
 		$rootScope.user.collapsed_column = true;
 		$rootScope.user.collapsed_filters = true;
+		$rootScope.user.collapsed_friends = true;
 		$rootScope.user.settings_popup = false;
 		delete $rootScope.focused_book;
 		delete $rootScope.ticker_popup;
@@ -327,6 +328,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		$scope.$on('destroy', function(){
 			$timeout.cancel(collapsed_column);
 		});
+		
 		
 		_detect_browser();
 		console.timeEnd("websiteAppController");

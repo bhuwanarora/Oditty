@@ -1170,6 +1170,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				$rootScope.hide_options = false;
 				$rootScope.user.collapsed_column = true;
 				$rootScope.user.collapsed_filters = true;
+				$rootScope.user.collapsed_friends = true;
 				delete $rootScope.focused_book;
 				delete $scope.active_nest;
 				delete $scope.active_base;

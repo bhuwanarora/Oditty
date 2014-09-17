@@ -475,6 +475,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			// $rootScope.show_book = false;
 			$rootScope.user.interact = false;
 			$rootScope.user.collapsed_filters = true;
+			$rootScope.user.collapsed_friends = true;
 
 			user_behaviour_timer_event = $timeout(function(){
 				_recordUserBehaviour();

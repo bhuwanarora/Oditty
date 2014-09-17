@@ -478,7 +478,7 @@
 .filters_panel_large,
 .filters_panel_right{
 	text-align: center;
-	max-height: 80vh;
+	max-height: 60vh;
 }
 
 .filters_group{
@@ -1271,6 +1271,20 @@ and (min-width : 1824px) {
 	color: #427fed;
 }
 
+.left_column .friends_grid{
+	max-height: 60vh;
+	white-space: normal;
+	background-color: #fff;
+	border-radius: 4px;
+}
+
+.left_column .friends_grid img{
+	width: 55px;
+	margin: 2px;
+	float: left;
+	border-radius: 3px;
+}
+
 .left_column .friends_grid .friend_block{
 	width: auto;
 	overflow-y: auto;
@@ -1347,20 +1361,6 @@ and (min-width : 1824px) {
 	border-radius: 3px;
 	border-bottom: 1px solid #DDD;
 	cursor: pointer;
-}
-
-.left_column .friends_grid{
-	max-height: 120px;
-	white-space: normal;
-	background-color: #fff;
-	border-radius: 4px;
-}
-
-.left_column .friends_grid img{
-	width: 55px;
-	margin: 2px;
-	float: left;
-	border-radius: 3px;
 }
 
 .recommendations .status{
@@ -1453,7 +1453,7 @@ and (min-width : 1824px) {
 	right: 0px;
 	padding: 10px;
 	border-radius: 2px;
-	/*cursor: move;*/
+	cursor: pointer;
 	box-shadow: -4px 0 25px 0 rgba(66,66,66,.47);
 	z-index: 10;
 	background-color: white;
@@ -1510,6 +1510,21 @@ and (min-width : 1824px) {
 	z-index: 8;
 }
 
+.friends_collapsed{
+	width: 100px!important;
+	top: 185px;	
+	z-index: 8;
+}
+
+.filters_collapsed_shifted2,
+.friends_collapsed_shifted{
+	left: 298px;
+	top: 142px;
+	width: 40px !important;
+}
+
+
+.collapsed_friends,
 .collapsed_filters{
 	height: 40px;
 	padding-left: 10px;
