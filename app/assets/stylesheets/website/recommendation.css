@@ -1493,7 +1493,7 @@ and (min-width : 1824px) {
 
 .filters_collapsed{
 	width: 100px!important;
-	top: 145px;	
+	top: 140px;	
 	z-index: 8;
 }
 
