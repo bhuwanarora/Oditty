@@ -18,6 +18,9 @@ websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvid
   .when('/user/:id/recommendations/:type/filter/:filter_id/name/:name', {
     templateUrl: '/assets/angular/widgets/partials/recommendations.html'
   })
+  .when('/user/:id/recommendations/:type/label/:label_id/name/:name', {
+    templateUrl: '/assets/angular/widgets/partials/recommendations.html'
+  })
   .when('/user/:id/grid/:type/id/:grid_id/name/:name', {
     templateUrl: '/assets/angular/widgets/partials/recommendations.html'
   })

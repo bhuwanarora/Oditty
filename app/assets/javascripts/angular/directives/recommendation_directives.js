@@ -53,7 +53,7 @@ websiteApp.directive('filter', ['$rootScope', '$timeout', '$routeParams', functi
 				if($scope.filter){
 					var filter_id = $scope.filter.id;
 					var filter_name = $scope.filter.name;
-					if(filter_id == parseInt($scope.$routeParams.filter_id)){
+					if(filter_id == parseInt($scope.$routeParams.label_id)){
 						$scope.active = true;
 						if($rootScope.filters[type].indexOf(filter_id) == -1){
 							$rootScope.filters[type].push(filter_id);

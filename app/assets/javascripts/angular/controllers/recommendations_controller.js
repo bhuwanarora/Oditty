@@ -164,12 +164,12 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		});
 	}
 
-	_show_bookmark_tab = function(){
+	$scope._show_bookmark_tab = function(){
 		$scope.bookmark_selected  = true;
         $scope.panel_selected = RecommendationUIConstants.BookmarkPanel;
 	}
 
-	_initialize_filters = function(){
+	$scope._initialize_filters = function(){
 		// $scope.show_more_filters = true;
 		$rootScope.filters = {};
         $rootScope.filters["more_filters"] = [];
@@ -177,18 +177,18 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         if($routeParams.type == "books"){
         	$rootScope.filters["filter_type"] = RecommendationUIConstants.BookTab;
         	var on_specific_list_page = angular.isDefined($routeParams.filter_id);
+        	var on_specific_shelf = angular.isDefined($routeParams.label_id);
         	var on_grids_page = angular.isDefined($routeParams.grid_id);
         	var on_trending_page = angular.isDefined($routeParams.trend_id);
         	if(on_specific_list_page){
-        		if($cookieStore.get('tab') == RecommendationUIConstants.BookmarkPanel){
-        			_show_bookmark_tab();
-        			$rootScope.filters["label_id"] = $routeParams.filter_id;
-        			$rootScope.main_header = $routeParams.name;
-        		}
-        		else{
-        			$rootScope.filters["filter_id"] = $routeParams.filter_id;
-        			$rootScope.main_header = $routeParams.name;
-        		}
+    			$rootScope.filters["filter_id"] = $routeParams.filter_id;
+    			$rootScope.main_header = $routeParams.name;
+        	}
+        	else if(on_specific_shelf){
+    			// $scope._show_bookmark_tab();
+    			$rootScope.filters["label_id"] = $routeParams.label_id;
+    			$rootScope.main_header = $routeParams.name;
+        		$rootScope.user.collapsed_filters = false;
         	}
         	else if(on_trending_page){
         		$rootScope.filters["reset"] = true;
@@ -482,7 +482,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 			$scope.searching = false;
 	    	_get_labels();
-			_initialize_filters();
+			$scope._initialize_filters();
 			_init_recommendations();
 			// if($scope.$routeParams.title){
 			// 	_get_recommendations();

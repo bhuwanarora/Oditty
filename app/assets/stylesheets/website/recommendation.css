@@ -1236,6 +1236,7 @@ and (min-width : 1824px) {
 	/*min-width: 280px;*/
 	left: 5px;
 	background-color: white;
+	border-radius: 2px;
 }
 
 .left_column a:hover{

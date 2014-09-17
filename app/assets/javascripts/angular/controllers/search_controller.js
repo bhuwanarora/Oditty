@@ -563,7 +563,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				$scope.handle_search_request();
 			}
 		}
-		else if(on_trending_page || on_grids_page || on_specific_list_page){
+		else if(on_custom_page){
 			$cookieStore.put(item.type, item);
 			$scope.show_books();
 		}
@@ -1449,7 +1449,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		if(on_recommendation_page || on_search_page){
 			$scope._add_init_filters();
 		}
-		else if(on_trending_page || on_specific_list_page || on_grids_page){
+		else if(on_custom_page){
 			$scope.$emit('reloadRecommendations');	
 		}
 		else{
@@ -1464,9 +1464,11 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	var search_typing_timeout = "";
 	var on_search_page = angular.isUndefined($routeParams.type);
 	var on_specific_list_page = angular.isDefined($routeParams.filter_id);
+	var on_specific_shelf = angular.isDefined($routeParams.label_id);
 	var on_grids_page = angular.isDefined($routeParams.grid_id);
 	var on_trending_page = angular.isDefined($routeParams.trend_id);
-	var on_recommendation_page = !(on_search_page || on_specific_list_page || on_grids_page || on_trending_page);
+	var on_custom_page = on_specific_list_page || on_grids_page || on_trending_page || on_specific_shelf;
+	var on_recommendation_page = !(on_search_page || on_custom_page);
 
 	$scope._init();
 }]);
