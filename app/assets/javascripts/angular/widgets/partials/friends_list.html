@@ -26,8 +26,8 @@
 			     class="friend_thumb" />
 			<div class="friend_details">
 				<div><b>{{friend.name}}</b></div>
-				<div class="light_grey_color" ng-show="friend.init_book_read_count">Reader of {{friend.init_book_read_count}}</div>
-				<div class="light_grey_color">
+				<div ng-show="friend.init_book_read_count">Reader of {{friend.init_book_read_count}}</div>
+				<div>
 					<span>{{friend.total_count | integer}}</span>
 					<span> · </span>
 					<span>{{friend.book_read_count | integer}}</span>
