@@ -65,6 +65,7 @@
 	line-height: 1.5em;
 	padding: 12px;
 	width: 97%;
+	color: black;
 }
 
 .focused_tooltip .book_info .text{
@@ -75,6 +76,7 @@
 	word-wrap: break-word;
 	font-size: 0.93em;
 	line-height: 1.5em;
+	color: black;
 }
 
 .focused_tooltip .long_description{
@@ -148,11 +150,6 @@
 	padding: 3vh 0px 1vh 0px;
 	cursor: default;
 	line-height: 1.3em;
-}
-
-.focused_tooltip .header .title{
-	font-size: 1em;
-	font-weight: bold;
 }
 
 .focused_tooltip .header .author{
