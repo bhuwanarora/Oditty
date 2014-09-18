@@ -149,15 +149,16 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
    
     $scope.me = function() {
         Facebook.api('/me', function(response){
-        	websiteService.handle_facebook_user(response).then(function(){
-	        	$scope._is_logged_in();
-        	});
-			$rootScope.user = response;
-		    $scope._init_user();
-	        Facebook.api('me/picture?redirect=false&type=large', function(response){
-	        	websiteService.save_user_info(response);
-	        });
-        	$scope.fb_books();
+        	
+   //      	websiteService.handle_facebook_user(response).then(function(){
+	  //       	$scope._is_logged_in();
+   //      	});
+			// $rootScope.user = response;
+		 //    $scope._init_user();
+	  //       Facebook.api('me/picture?redirect=false&type=large', function(response){
+	  //       	websiteService.save_user_info(response);
+	  //       });
+        	// $scope.fb_books();
         });
     };
 

@@ -496,7 +496,13 @@
               'edge.create': 'like',
               'edge.remove': 'unlike',
               'comment.create': 'comment',
-              'comment.remove': 'uncomment'
+              'comment.remove': 'uncomment',
+              'books': 'books',
+              'books.reads': 'books_read',
+              'books.rates': 'books_rate',
+              'books.quotes': 'books_quotes',
+              'books.wants_to_read': 'wants_to_read',
+              'picture': 'picture'
             }, function(mapped, name) {
               FB.Event.subscribe(name, function(response) {
                 $timeout(function() {
