@@ -171,7 +171,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 			});
 
 		}
-		_facebook_init();
+		// _facebook_init();
 		
         FB.api(
 		    "/me/books",
