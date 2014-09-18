@@ -154,6 +154,30 @@ input:focus{
     top: -10px;
     width: 0; 
     height: 0;
+    left: 6px;
+    z-index: 10;   
+}
+
+.arrow_left{
+    border-right: 10px solid white;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    position: absolute;
+    top: 6px;
+    width: 0; 
+    height: 0;
+    right: 2px;
+    z-index: 10;   
+}
+
+.arrow_right{
+    border-left: 10px solid white;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    position: absolute;
+    top: 6px;
+    width: 0; 
+    height: 0;
     right: 2px;
     z-index: 10;   
 }
@@ -351,9 +375,10 @@ input:focus{
     color: white;
     border-radius: 2px;
     font-size: .9em !important;
-    z-index: 1;
-    max-width: 300px;
+    z-index: 12;
+    max-width: 41vh;
     white-space: initial;
+    box-shadow: 3px 0 10px 0 rgba(66,66,66,.47);
 }
 
 .active_tab{

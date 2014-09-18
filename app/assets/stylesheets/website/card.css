@@ -41,6 +41,7 @@
 	height: 5vh;
 	white-space: initial;
 	font-size: .9em;
+	cursor: default;
 }
 
 .category_hovered{

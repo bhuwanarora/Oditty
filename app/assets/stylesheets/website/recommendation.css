@@ -589,6 +589,7 @@
 .interaction_box .interaction_links{
 	padding: 2px;
 	margin-left: 70px;
+	width: 82%;
 }
 
 .interaction_box .interaction_links .status_message{
@@ -1615,7 +1616,6 @@ and (min-width : 1824px) {
 	cursor: default;
 	height: 12px;
 	font-size: 0.9em;
-	max-width: 10%;
 }
 
 .main_header .compressed_filters .compressed_filter_icon:hover{

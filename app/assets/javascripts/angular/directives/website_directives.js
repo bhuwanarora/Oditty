@@ -1140,6 +1140,7 @@ websiteApp.directive('tooltip', function(){
 	    		"appendText": "@",
 	    		"position": "@",
 	    		"pluralize": "@",
+	    		"scroll": "@",
 	    		"addRelative": "@"},
 	    link: function(scope, element, attrs){
 	    	if(angular.isDefined(scope.addRelative)){
@@ -1147,40 +1148,49 @@ websiteApp.directive('tooltip', function(){
 	    	}
 			element.parent().bind('mouseenter', function(event){
 				element.children().css('display', 'block');
-				var width = element.children()[0].scrollWidth;
-				var height = element.children()[0].scrollHeight;
+				var width = element.children()[0].clientWidth;
+				var height = element.children()[0].clientHeight;
+				if(angular.isDefined(scope.scroll)){
+					height = height + 25;
+					element.children().css('max-height', '54vh');
+					element.children().css('overflow-y', 'scroll');
+				}
 
 				var show_left = scope.position == "left";
 				var show_right = scope.position == "right";
 				var show_top = scope.position == "top";
 				var show_bottom = scope.position == "bottom";
 
+				element.children().children().css('font-size', '12px');
+				element.children().children().css('text-shadow', 'none');
+				element.children().children().css('font-weight', '200');
+				element.children().children().css('letter-spacing', '1px');
+				element.children().children().css('font-family', 'helvetica neue');
+				element.children().children().css('color', 'white');
 				if(show_left){
 					element.children().css('left', "-"+width+"px");
+					element.children().children().css('border-left-color', '#333');
 					element.children().children('.tooltip_arrow').css('left', width+'px');
 				}
 				else if(show_right){
 					element.children().css('right', "-"+width+"px");
+					element.children().children().css('border-right-color', '#333');
 					element.children().children('.tooltip_arrow').css('right', width+'px');
 				}
 				else if(show_bottom){
 					element.children().css('bottom', "-"+height+"px");
+					element.children().children().css('border-bottom-color', '#333');
 					element.children().children('.tooltip_arrow').css('bottom', height+'px');
 				}
 				else if(show_top){
 					element.children().css('top', "-"+height+"px");
+					element.children().children().css('border-top-color', '#333');
 					element.children().children('.tooltip_arrow').css('top', height+'px');
 				}
-				element.children().children().css('border-top-color', '#333');
-
-				
 			});
 			element.parent().bind('mouseleave', function(event){
 				element.children().css('display', 'none');
-				element.children().children('.tooltip_arrow').css('top', 'inherit')
-															 .css('left', 'inherit')
-															 .css('right', 'inherit')
-															 .css('bottom', 'inherit');
+				
 			});
 
 			// function offset(elm) { 
@@ -1197,6 +1207,11 @@ websiteApp.directive('tooltip', function(){
 			// }
 			
 		},
+		controller: ['$scope', function($scope){
+			$scope.stop_horizontal_scroll = function(event){
+				event.stopPropagation();
+			}
+		}],
 		templateUrl: "/assets/angular/widgets/base/widget/tooltip.html"
 	}
 });
