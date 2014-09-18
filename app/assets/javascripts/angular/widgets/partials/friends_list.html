@@ -1,9 +1,10 @@
 <div class="left_column animate-fast scrollbar"
      msd-wheel="stop_propagation($event)"
-	 ng-class="{'left_column_collapsed left_column_collapsed4': user.collapsed_friends, 
-	            'left_column_shifted left_column_shifted1': !user.collapsed_trends,
-	            'left_column_shifted left_column_shifted2': !user.collapsed_filters,
-	            'left_column_shifted left_column_shifted3': !user.collapsed_column}">
+	 ng-class="{'left_column_collapsed left_column_collapsed5': user.collapsed_friends, 
+	 			'left_column_shifted left_column_shifted1': !user.collapsed_lists,
+	            'left_column_shifted left_column_shifted2': !user.collapsed_trends,
+	            'left_column_shifted left_column_shifted3': !user.collapsed_filters,
+	            'left_column_shifted left_column_shifted4': !user.collapsed_column}">
 	<div class="collapse_icon" 
 	     ng-click="user.collapsed_friends = true; user.collapsed_left_column = true;" 
 	     ng-if="!user.collapsed_friends">
@@ -14,6 +15,7 @@
 	 	 ng-click="user.collapsed_friends = false; 
 	 	 		   user.collapsed_left_column = false;
 	 	 		   user.collapsed_column = true; 
+	 	 		   user.collapsed_lists = true;
 	 	 		   user.collapsed_filters = true;
 	 	 		   user.collapsed_trends = true;">
 	 	 <span class="table_cell">

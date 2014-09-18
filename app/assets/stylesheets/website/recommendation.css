@@ -517,6 +517,11 @@
 	white-space: initial;
 }
 
+.filter:active{
+	background-color: rgba(66, 127, 237, 0.6) !important;
+	color: white;
+}
+
 .interaction_group{
 	position: fixed;
 	left: 50%;
@@ -1519,6 +1524,10 @@ and (min-width : 1824px) {
 	top: 230px;
 }
 
+.left_column_collapsed5{
+	top: 275px;
+}
+
 .left_column_shifted{
 	left: 298px !important;
 	width: 40px !important;
@@ -1538,6 +1547,10 @@ and (min-width : 1824px) {
 
 .left_column_shifted4{
 	top: 236px;
+}
+
+.left_column_shifted5{
+	top: 283px;
 }
 
 .main_header .search_typeahead_group{

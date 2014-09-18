@@ -191,6 +191,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         		$rootScope.user.collapsed_filters = false;
         		$rootScope.user.collapsed_friends = true;
         		$rootScope.user.collapsed_trends = true;
+        		$rootScope.user.collapsed_lists = true;
         		$rootScope.user.collapsed_column = true;
         		$rootScope.user.collapsed_left_column = false;
         	}
@@ -202,12 +203,19 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         		$rootScope.user.collapsed_filters = true;
         		$rootScope.user.collapsed_friends = true;
         		$rootScope.user.collapsed_trends = false;
+        		$rootScope.user.collapsed_lists = true;
         		$rootScope.user.collapsed_column = true;
         		$rootScope.user.collapsed_left_column = false;
         	}
         	else if(on_grids_page){
         		$rootScope.filters["filter_id"] = $routeParams.grid_id;
         		$rootScope.main_header = $routeParams.name;
+        		$rootScope.user.collapsed_filters = true;
+        		$rootScope.user.collapsed_friends = true;
+        		$rootScope.user.collapsed_trends = true;
+        		$rootScope.user.collapsed_lists = false;
+        		$rootScope.user.collapsed_column = true;
+        		$rootScope.user.collapsed_left_column = false;
         	}
         	else{
         		delete $rootScope.main_header;
@@ -483,7 +491,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			$scope.drop_icon = false;
 			// $rootScope.show_book = false;
 			$rootScope.user = {"collapsed_trends": true, "collapsed_friends": true, 
-								"collapsed_filters": true, "interact": false};
+								"collapsed_filters": true, "collapsed_lists": true,
+								"interact": false};
 
 			user_behaviour_timer_event = $timeout(function(){
 				_recordUserBehaviour();
