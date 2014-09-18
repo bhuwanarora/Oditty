@@ -368,7 +368,7 @@ input:focus{
 }
 
 .tooltip{
-    display: none;
+    visibility: hidden;
     position: absolute;
     background-color: #333;
     padding: 10px 20px;

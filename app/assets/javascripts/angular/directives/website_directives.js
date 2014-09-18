@@ -1147,7 +1147,14 @@ websiteApp.directive('tooltip', function(){
 				element.parent().css('position', 'relative');
 	    	}
 			element.parent().bind('mouseenter', function(event){
-				element.children().css('display', 'block');
+				element.children().css('visibility', 'visible');
+				element.children().children().css('font-size', '12px');
+				element.children().children().css('text-shadow', 'none');
+				element.children().children().css('font-weight', '200');
+				element.children().children().css('letter-spacing', '1px');
+				element.children().children().css('font-family', 'helvetica neue');
+				element.children().children().css('color', 'white');
+
 				var width = element.children()[0].clientWidth;
 				var height = element.children()[0].clientHeight;
 				if(angular.isDefined(scope.scroll)){
@@ -1161,12 +1168,6 @@ websiteApp.directive('tooltip', function(){
 				var show_top = scope.position == "top";
 				var show_bottom = scope.position == "bottom";
 
-				element.children().children().css('font-size', '12px');
-				element.children().children().css('text-shadow', 'none');
-				element.children().children().css('font-weight', '200');
-				element.children().children().css('letter-spacing', '1px');
-				element.children().children().css('font-family', 'helvetica neue');
-				element.children().children().css('color', 'white');
 				if(show_left){
 					element.children().css('left', "-"+width+"px");
 					element.children().children().css('border-left-color', '#333');
@@ -1189,7 +1190,7 @@ websiteApp.directive('tooltip', function(){
 				}
 			});
 			element.parent().bind('mouseleave', function(event){
-				element.children().css('display', 'none');
+				element.children().css('visibility', 'hidden');
 				
 			});
 
