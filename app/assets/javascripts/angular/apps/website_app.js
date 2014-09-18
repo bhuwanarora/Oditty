@@ -158,3 +158,14 @@ function get_size() {
 
 var window_width = 0, window_height = 0;
 get_size();
+
+var _facebook_init = function(){
+  FB.init({
+    appId: "667868653261167",
+    cookie: true,
+    status: true,
+    xfbml: true
+  });
+
+}
+_facebook_init();
