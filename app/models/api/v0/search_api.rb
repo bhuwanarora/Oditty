@@ -62,81 +62,50 @@ module Api
 
 			def self.search(q, count, type)
 				neo_init
-				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "").gsub("@", "")
-				if (type.include? 'BOOK')
-					clause = "START book=node:node_auto_index('indexed_title:"+q+"*') RETURN book.title as name, book.author_name, ID(book) ORDER by book.weight DESC LIMIT "+count.to_s
-					puts clause.blue.on_red
-					
-				elsif type.include? 'AUTHOR'
-					clause = "START author=node:node_auto_index('indexed_main_author_name:"+q+"*') RETURN DISTINCT author.name as name, ID(author) LIMIT "+count.to_s
-					puts clause.blue.on_red
-				elsif type.include? 'READER'
-					clause = "START user=node:node_auto_index('indexed_user_name:"+q+"*') RETURN DISTINCT user.name as name, ID(user) LIMIT "+count.to_s
-					puts clause.blue.on_red
-				elsif type.include? 'TAG'
-					clause = "START genre=node:node_auto_index('indexed_genre_name:"+q+"*') RETURN genre.name as name, ID(genre) LIMIT "+count.to_s
-					puts clause.blue.on_red
-					
-				else
-					clause = "START search_node=node:node_auto_index('search_index:"+q+"*') RETURN CASE WHEN search_node.title IS NULL THEN search_node.name ELSE search_node.title END, search_node.author_name, ID(search_node), labels(search_node) LIMIT "+count.to_s
-					puts clause.blue.on_red
-					
-				end
+				clause = self._get_search_clause(q, count, type)
 				results = @neo.execute_query clause
-				if results.present?
+				if results["data"].present?
 					results
 					# results.push tester
 				else
-					results = []
-					# results = did_you_mean(q, type)
+					clause = self._get_search_clause(q, count, type, true)
+					results = @neo.execute_query clause
+					results.merge({:fuzzy => true})
 				end
-			end
-
-
-			private
-			def self.did_you_mean(q, type)
-				results = [{:name => "No results found."}]
-				if((type.include? 'AUTHOR') || (type.include? 'READER'))
-					s = SpellingBee.new :source_text => 'authors.txt'
-				 	did_you_mean = s.correct q
-				 	if did_you_mean[0] != q
-				 		did_you_mean = HumanProfile.where("UPPER(name) LIKE ?", "%#{did_you_mean[0].upcase}%")
-				 								   .select([:id, :name])
-				 								   .limit(1)
-
-				 		results = [{:name =>  "Did you mean? "+did_you_mean[0].name,
-									:id => did_you_mean[0].id}]
-					end
-				elsif type.include? 'TAG'
-					s = SpellingBee.new :source_text => 'tags.txt'
-					did_you_mean = s.correct q
-					if did_you_mean[0] != q
-						did_you_mean = GoodReadsGenre.where("UPPER(name) LIKE ?", "%#{did_you_mean[0].upcase}%")
-													.select([:id, :name])
-													.limit(1)
-						results = [{:name =>  "Did you mean? "+did_you_mean[0].name,
-									:id => did_you_mean[0].id}]
-					end
-				else
-					s = SpellingBee.new :source_text => 'books.txt'
-					did_you_mean = s.correct q
-					if did_you_mean[0] != q
-						did_you_mean = GoodReadsBook.where("UPPER(title) LIKE ?", "%#{did_you_mean[0].upcase}%")
-													.select([:id, :author_name])
-													.select("title as name")
-													.limit(1)
-						results = [{:name =>  "Did you mean? "+did_you_mean[0].name,
-									:id => did_you_mean[0].id,
-									:author_name => did_you_mean[0].author_name}]
-					end
-				end
-
-				results
 			end
 
 			private
 			def self.neo_init
                 @neo = Neography::Rest.new
+            end
+
+            def self._get_search_clause(q, count, type, fuzzy=nil)
+				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "").gsub("@", "")
+				if fuzzy.present?
+					connector = "~0.7"
+				else
+					connector = "*"
+				end
+				if (type.include? 'BOOK')
+					clause = "START book=node:node_auto_index('indexed_title:"+q+connector+"') RETURN book.title as name, book.author_name, ID(book) LIMIT "+count.to_s
+					puts clause.blue.on_red
+					
+				elsif type.include? 'AUTHOR'
+					clause = "START author=node:node_auto_index('indexed_main_author_name:"+q+connector+"') RETURN DISTINCT author.name as name, ID(author) LIMIT "+count.to_s
+					puts clause.blue.on_red
+				elsif type.include? 'READER'
+					clause = "START user=node:node_auto_index('indexed_user_name:"+q+connector+"') RETURN DISTINCT user.name as name, ID(user) LIMIT "+count.to_s
+					puts clause.blue.on_red
+				elsif type.include? 'TAG'
+					clause = "START genre=node:node_auto_index('indexed_genre_name:"+q+connector+"') RETURN genre.name as name, ID(genre) LIMIT "+count.to_s
+					puts clause.blue.on_red
+					
+				else
+					clause = "START search_node=node:node_auto_index('search_index:"+q+connector+"') RETURN CASE WHEN search_node.title IS NULL THEN search_node.name ELSE search_node.title END, search_node.author_name, ID(search_node), labels(search_node) LIMIT "+count.to_s
+					puts clause.blue.on_red
+					
+				end
+				clause
             end
 
 		end

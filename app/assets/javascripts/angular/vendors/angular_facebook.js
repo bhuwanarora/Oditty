@@ -20,7 +20,6 @@
    * @description
    * An Angularjs module to take approach of Facebook javascript sdk.
    *
-   * @author Luis Carlos Osorio Jayk <luiscarlosjayk@gmail.com>
    */
   angular.module('facebook', []).
 
