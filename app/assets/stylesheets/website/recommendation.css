@@ -514,6 +514,7 @@
 	border-radius: 3px;
 	margin: 5px;
 	color: #717070;
+	white-space: initial;
 }
 
 .interaction_group{
@@ -1358,6 +1359,7 @@ and (min-width : 1824px) {
 	border-radius: 3px;
 	border-bottom: 1px solid #DDD;
 	cursor: pointer;
+	white-space: initial;
 }
 
 .recommendations .status{
@@ -1470,10 +1472,6 @@ and (min-width : 1824px) {
 	padding: 5px;
 }
 
-.float_left{
-	float: left;
-}
-
 .left_column .collapse_icon{
 	position: fixed;
 	left: 29%;
@@ -1490,58 +1488,8 @@ and (min-width : 1824px) {
 	background-color: rgba(0, 0, 0, 0.8);
 }
 
-.left_column .collapsed_column img{
-	width: 20px;
-	border-radius: 3px;
-}
 
-.left_column_collapsed{
-	width: 100px!important;
-	top: 95px;
-	height: 40px;
-}
-
-.filters_collapsed{
-	width: 100px!important;
-	top: 140px;	
-	z-index: 8;
-}
-
-.friends_collapsed{
-	width: 100px!important;
-	top: 185px;	
-	z-index: 8;
-}
-
-.filters_collapsed_shifted2,
-.friends_collapsed_shifted{
-	left: 298px;
-	top: 142px;
-	width: 40px !important;
-}
-
-
-.collapsed_friends,
-.collapsed_filters{
-	height: 40px;
-	padding-left: 10px;
-	cursor: pointer;
-	width: 100%;
-	font-size: 0.9em;
-}
-
-.filters_collapsed_shifted{
-	left: 298px;
-	top: 95px;
-	width: 40px !important;
-}
-
-.left_column_shifted{
-	left: 298px !important;
-	width: 40px !important;
-}
-
-.left_column .collapsed_column{
+.left_column_tab{
 	cursor: pointer;
 	height: 40px;
 	display: table;
@@ -1550,14 +1498,47 @@ and (min-width : 1824px) {
 	font-size: 0.9em;
 }
 
-.left_column .collapsed_column div{
-	padding: 1px;
+.left_column_collapsed{
+	width: 100px!important;
+	height: 40px;
 }
 
-.left_column .collapsed_column:hover{
-	background-color: #F3F3F3;
+.left_column_collapsed1{
+	top: 95px;
 }
 
+.left_column_collapsed2{
+	top: 140px;
+}
+
+.left_column_collapsed3{
+	top: 185px;
+}
+
+.left_column_collapsed4{
+	top: 230px;
+}
+
+.left_column_shifted{
+	left: 298px !important;
+	width: 40px !important;
+}
+
+.left_column_shifted1{
+	top: 95px;
+}
+
+.left_column_shifted2{
+	top: 142px;
+}
+
+.left_column_shifted3{
+	top: 189px;
+}
+
+.left_column_shifted4{
+	top: 236px;
+}
 
 .main_header .search_typeahead_group{
 	position: fixed;

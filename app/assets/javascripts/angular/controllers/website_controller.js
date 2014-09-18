@@ -324,6 +324,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 						'logged': false};
 		var collapsed_column = $timeout(function(){
 			$rootScope.user.collapsed_column = true;
+			$rootScope.user.collapsed_left_column = true;
 		}, 6000);
 		$scope.$on('destroy', function(){
 			$timeout.cancel(collapsed_column);

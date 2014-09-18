@@ -367,6 +367,10 @@ input:focus{
     float: right;
 }
 
+.float_left{
+    float: left;
+}
+
 .tooltip{
     visibility: hidden;
     position: absolute;

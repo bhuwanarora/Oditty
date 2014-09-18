@@ -46,14 +46,15 @@ websiteApp.directive('tickerPopup', function(){
 websiteApp.directive('filter', ['$rootScope', '$timeout', '$routeParams', function($rootScope, $timeout, $routeParams){
 	return{
 		restrict: 'E',
-		scope: { 'filter': '=data' },
+		scope: { 'filter': '=data',
+				 'url': '@',
+				 'iconClass': '@' },
 		controller: ['$scope', function($scope){
-			
 			_initialise_filters = function(type){
 				if($scope.filter){
 					var filter_id = $scope.filter.id;
 					var filter_name = $scope.filter.name;
-					if(filter_id == parseInt($scope.$routeParams.label_id)){
+					if(filter_id == parseInt($scope.$routeParams.label_id) || filter_id == parseInt($scope.$routeParams.trend_id)){
 						$scope.active = true;
 						if($rootScope.filters[type].indexOf(filter_id) == -1){
 							$rootScope.filters[type].push(filter_id);
@@ -292,6 +293,8 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 				$rootScope.user.collapsed_column = true;
 				$rootScope.user.collapsed_filters = true;
 				$rootScope.user.collapsed_friends = true;
+				$rootScope.user.collapsed_trends = true;
+				$rootScope.user.collapsed_left_column = true;
 				// scroller.scrollTo(0, 0, 2000);
 			}
 

@@ -1,15 +1,24 @@
 <div class="left_column animate-fast scrollbar"
      msd-wheel="stop_propagation($event)"
-	 ng-class="{'filters_collapsed': user.collapsed_filters, 'filters_collapsed_shifted': !user.collapsed_column && user.collapsed_filters, 'filters_collapsed_shifted2': !user.collapsed_friends && user.collapsed_filters}">
-	<div class="collapse_icon" ng-click="user.collapsed_filters = !user.collapsed_filters;" ng-if="!user.collapsed_filters">
+	 ng-class="{'left_column_collapsed left_column_collapsed2': user.collapsed_filters, 
+	            'left_column_shifted left_column_shifted1': !user.collapsed_column,
+	            'left_column_shifted left_column_shifted2': !user.collapsed_friends,
+	            'left_column_shifted left_column_shifted3': !user.collapsed_trends}">
+	<div class="collapse_icon" 
+	     ng-click="user.collapsed_filters = true; user.collapsed_left_column = true;" 
+	     ng-if="!user.collapsed_filters">
 		<span class="icon-angle-left"></span>
 	</div>
-	<div class="collapsed_filters table"
+	<div class="left_column_tab"
 		 ng-hide="!user.collapsed_filters"
-	 	 ng-click="user.collapsed_filters = false; user.collapsed_column = true; user.collapsed_friends = true;">
+	 	 ng-click="user.collapsed_filters = false; 
+	 	 		   user.collapsed_left_column = false;
+	 	           user.collapsed_column = true; 
+	 	           user.collapsed_trends = true;
+	 	           user.collapsed_friends = true;">
 	 	 <span class="table_cell">
 			<span class="icon-bookmark2 light_grey_color" ng-if="user.collapsed_filters" ></span>
-			<span ng-show="user.collapsed_column && user.collapsed_filters && user.collapsed_friends">Shelves</span>
+			<span ng-show="user.collapsed_left_column">Shelves</span>
 	 	 </span>
 	</div>
 	<div class="header" ng-if="!user.collapsed_filters">
@@ -19,7 +28,7 @@
 	<div class="filters_panel_large" ng-if="!user.collapsed_filters">
 		<div class="filters_group">
 			<div ng-repeat="filter in labels">
-				<filter data="filter"></filter>
+				<filter data="filter" icon-class="icon-bookmark3" url="recommendations/{{$routeParams.type}}/label/{{filter.id}}/name/{{filter.name}}"></filter>
 			</div>
 		</div>
 	</div>

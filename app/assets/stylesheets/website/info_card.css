@@ -44,7 +44,7 @@
 
 .compressed_info_card{
 	position: fixed;
-	top: 210px;
+	top: 270px;
 	position: fixed;
 	z-index: 11;
 	left: 29%;
@@ -53,7 +53,7 @@
 
 .compressed_info_card_shifted{
 	left: 5px;
-	top: 240px;
+	top: 350px;
 }
 
 .compressed_info_card .block{

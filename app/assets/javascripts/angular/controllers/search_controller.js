@@ -1243,6 +1243,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			if(notifications.length > 0){
 				$scope.$emit('addToNotifications', notifications);
 			}
+			$rootScope.trends = notifications;
 		});
 	}
 
