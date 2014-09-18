@@ -21,6 +21,17 @@ module Api
 				user_exists
 			end
 
+			def self.add_books_from_fb(params, user_id)
+				puts "#{params[:type].to_s.green}"
+				for book in params[:data]
+					title = book[:name].gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "").downcase rescue ""
+					if title
+						id = SearchApi.search(title, 1, 'BOOK')
+						puts id.to_s.green
+					end
+				end
+			end
+
 			def self.recommend_book(user_id, friend_ids, book_id)
 				@neo = Neography::Rest.new
 				for friend_id in friend_ids

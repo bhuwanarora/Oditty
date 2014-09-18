@@ -157,8 +157,8 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 	        Facebook.api('me/picture?redirect=false&type=large', function(response){
 	        	websiteService.save_user_info(response);
 	        });
+        	$scope.fb_books();
         });
-        // $scope.fb_books();
     };
 
     $scope.fb_books = function(){
@@ -175,40 +175,45 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		
         FB.api(
 		    "/me/books",
-		    function(response) {
-		      if(response && !response.error) {
+		    function(response){
+		      if(response && !response.error){
+		      	response = angular.extend(response, {"type": "books"});
 		        websiteService.handle_facebook_books(response);
 		      }
 		    }
 		);
 		FB.api(
 		    "/me/books.reads",
-		    function(response) {
-		      if(response && !response.error) {
+		    function(response){
+		      if(response && !response.error){
+		      	response = angular.extend(response, {"type": "books.read"});
 		        websiteService.handle_facebook_books(response);
 		      }
 		    }
 		);
 		FB.api(
 		    "/me/books.rates",
-		    function(response) {
-		      if(response && !response.error) {
+		    function(response){
+		      if(response && !response.error){
+		      	response = angular.extend(response, {"type": "books.rates"});
 		        websiteService.handle_facebook_books(response);
 		      }
 		    }
 		);
 		FB.api(
 		    "/me/books.quotes",
-		    function(response) {
-		      if(response && !response.error) {
+		    function(response){
+		      if(response && !response.error){
+		      	response = angular.extend(response, {"type": "books.quotes"});
 		        websiteService.handle_facebook_books(response);
 		      }
 		    }
 		);
 		FB.api(
 		    "/me/books.wants_to_read",
-		    function(response) {
-		      if(response && !response.error) {
+		    function(response){
+		      if(response && !response.error){
+		      	response = angular.extend(response, {"type": "books.wants_to_read"});
 		        websiteService.handle_facebook_books(response);
 		      }
 		    }

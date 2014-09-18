@@ -25,6 +25,7 @@ module Api
 			end
 
 			def fb_books
+				UserApi.add_books_from_fb(params, session[:user_id])
 				render :json => {:message => "Success"}, :status => 200
 			end
 			

@@ -48,7 +48,8 @@ CREATE UNIQUE (user)-[:Work]->(work2:Work{})  RETURN DISTINCT(ID(user))
 
 
 {"data"=>[
-	{"category"=>"Book", 
+	{
+		"category"=>"Book", 
 		"name"=>"Free Ebooks for Nook & Kindle", 
 		"created_time"=>"2014-05-09T20:14:39+0000", 
 		"id"=>"428424837206042"
