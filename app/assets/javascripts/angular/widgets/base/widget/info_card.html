@@ -170,7 +170,7 @@
 		      	<div class="description">Know what people from your age and gender are reading..</div>
 			</div> -->
 			<div ng-switch-when="1">
-				<div class="sub_header"><b>Which genres do you like, <span class="site_color">{{user.name}}</span></b></div>
+				<div class="sub_header"><b>Which genres do you like</b></div>
 				<div class="header">
 					This will help us to recommend you better books...
 				</div>
@@ -182,7 +182,7 @@
 				</div>
 			</div>
 			<div ng-switch-when="2">
-				<div class="sub_header"><b>Add books you've read, <span class="site_color">{{user.name}}</span></b></div>
+				<div class="sub_header"><b>Add books you've read</b></div>
 				<div class="header">
 					We will notify you with any activity on these books...
 				</div>
@@ -218,7 +218,7 @@
 				</div>
 			</div>
 			<div ng-switch-when="3">
-				<div class="sub_header"><b>Add authors you like (Coming Soon)..., <span class="site_color">{{user.name}}</span></b></div>
+				<div class="sub_header"><b>Add authors you like (Coming Soon)...</b></div>
 				<div class="header">Follow authors and their lives...</div>
 				<input ng-keydown="search_info_card($event, 'AUTHOR')" ng-model="info.search_author" placeholder="Search authors..."/>
 				<div class="scrollbar header" 
@@ -238,7 +238,7 @@
 				</div>
 			</div>
 			<div ng-switch-when="4">
-				<div class="sub_header"><b>Share and borrow books from readers in your area (Coming Soon)..., <span class="site_color">{{user.name}}</span></b></div>
+				<div class="sub_header"><b>Share and borrow books from readers in your area (Coming Soon)...</b></div>
 				<div class="header">Let's create a new kind of barter system for books...</div>
 				<div ng-include src="'/assets/angular/widgets/partials/invite.html'"></div>
 				<map style="display:block; height:50vh; width: 101%; margin-top: 10px;">

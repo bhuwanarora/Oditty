@@ -21,7 +21,7 @@
 		<!-- <div class="recommendations_page"><search-bar></search-bar></div> -->
 		
 		
-		<div ng-class="{'horizontal_padder_active': user.collapsed_left_column, 'horizontal_padder_inactive': !user.collapsed_left_column}" 
+		<div ng-class="{'horizontal_padder_inactive': !user.collapsed_left_column}" 
 			 class="info_card_placeholder animate-fast"></div>
 		<div ng-switch on="panel_selected" class="full_height">
 			<div ng-switch-when="BOOKMARK" class="full_height">

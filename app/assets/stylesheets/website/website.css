@@ -507,3 +507,7 @@ input:focus{
     width: 33%;
     min-width: 220px;
 }
+
+.header_font{
+    font-size: 1.2em;
+}

@@ -1,24 +1,9 @@
 <div class="wrapper animate-slow"
  	 style="z-index:12;" 
-	 ng-class="{'white': website.blur_wrapper}"
 	 ng-click="close_interaction_box()"
 	 msd-wheel="stop_horizontal_scroll($event)">
-	 <div class="site_logo" ng-show="website.blur_wrapper">
- 		<span>r</span>
-		<span>e</span>
-		<span>a</span>
-		<span>d</span>
-		<span>e</span>
-		<span>r</span>
-		<span>'</span>
-		<span>s</span>
-		<span>&nbsp;</span>
-		<span>d</span>
-		<span>o</span>
-		<span>o</span>
-		<span>r</span>
- 	</div>
-	<div class="interaction_group" ng-mouseenter="website.blur_wrapper=true;" ng-mouseleave="website.blur_wrapper=false;">
+	 
+	<div class="interaction_group">
 		<div class="interaction_box animate-fast"
 			 ng-click="stop_propagation($event)">
 
@@ -104,7 +89,7 @@
 				<span class="icon-feed interaction_icons" ng-click="show_interaction_options('Shout', $event)"></span>
 				<!-- <span class="icon-quote-right interaction_icons" ng-click="show_interaction_options('Quote', $event)"></span> -->
 				<!-- <div class="character_count">{{user.current_comment.length}} characters</div> -->
-				<button class="share_status green" ng-click="share_post()" ng-disabled="!((level1_option && selected_interact_book) || (user.current_comment.length > 0 && !level1_option))">Share</button>
+				<button class="share_status blue_button" ng-click="share_post()" ng-disabled="!((level1_option && selected_interact_book) || (user.current_comment.length > 0 && !level1_option))">Share</button>
 				<span class="site_color status_message">{{status_message}}</span>
 			</div>
 		</div>

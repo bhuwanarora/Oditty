@@ -397,7 +397,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				var grid = {"grid_text": "Books becoming movies", 
 				"grid_books": data, "is_grid": true};
 				$scope.recommendations.books.splice(3, 0, grid);
-				var message = "INFO-Checkout Books becoming movies...";
+				var message = "INFO-Check out Books becoming movies...";
 				notify($rootScope, message, $timeout);
 			});
 		}, fiveMinute);

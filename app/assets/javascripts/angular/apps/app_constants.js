@@ -110,7 +110,7 @@ var constants = {
 			"BookByRegionLink": "Find books by region",
 			"BookByGenreLink": "Find books by genre",
 			"BookListsLink": "Get popular lists of books",
-			"BookByAuthorLink": "Get books by author",
+			"BookByAuthorLink": "Find books by author",
 			"AuthorByYearLink": "Find authors by era",
 			"AuthorByRegionLink": "Find authors by region",
 			"AuthorByAwardsLink": "Find authors by awards",

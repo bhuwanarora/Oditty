@@ -123,7 +123,7 @@
 	max-width: 89%;
 	outline: none;
 	border: 1px solid #F1F1F1;
-	border-radius: 2px;
+	border-radius: 1px;
 }
 
 .interaction_box_options [class^="icon-"],
@@ -148,11 +148,12 @@
 
 .interaction_box .share_status{
 	float: right;
-	color: white;
-	padding: 5px 15px;
-	border-radius: 3px;
+	color: #fff;
+	padding: 8px 20px;
+	border-radius: 1px;
 	cursor: pointer;
 	border: none;
+	font-size: 1em;
 }
 
 .interaction_box .share_status:disabled{
@@ -184,7 +185,7 @@
 }
 
 .comment_box:focus{
-	border: 1px solid #427fed;
+	border: 2px solid #427fed;
 }
 
 .msd-wheel.ng-move{
@@ -543,8 +544,8 @@
 .interaction_box_options,
 .interaction_box_book_options{
 	width: 250px;
-	top: 84px;
-	margin-left: 75px;
+	top: 90px;
+	margin-left: 80px;
 	box-shadow: 0 1px 4px 0 #99A3AD,inset 0 0 40px #EEE;
 	font-size: 1em;
 	z-index: 6;
@@ -594,7 +595,7 @@
 
 .interaction_box .interaction_links{
 	padding: 2px;
-	margin-left: 70px;
+	margin-left: 75px;
 	width: 82%;
 }
 
