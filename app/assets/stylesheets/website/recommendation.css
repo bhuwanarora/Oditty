@@ -1291,11 +1291,7 @@ and (min-width : 1824px) {
 	overflow-y: auto;
 	padding: 5px;
 	border-bottom: 1px solid #E9E9E9;
-	cursor: pointer;
-}
-
-.left_column .friends_grid .friend_block:hover{
-	background-color: #F1F1F1;
+	cursor: default;
 }
 
 .left_column .friends_grid .friend_block .friend_details{
