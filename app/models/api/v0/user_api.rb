@@ -23,11 +23,13 @@ module Api
 
 			def self.add_books_from_fb(params, user_id)
 				puts "#{params[:type].to_s.green}"
-				for book in params[:data]
-					title = book[:name].gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "").downcase rescue ""
-					if title
-						id = SearchApi.search(title, 1, 'BOOK')
-						puts id.to_s.green
+				if params[:data].present?
+					for book in params[:data]
+						title = book[:name].gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "").downcase rescue ""
+						if title
+							id = SearchApi.search(title, 1, 'BOOK')
+							puts id.to_s.green
+						end
 					end
 				end
 			end
