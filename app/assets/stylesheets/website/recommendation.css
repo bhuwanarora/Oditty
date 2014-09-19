@@ -1295,10 +1295,10 @@ and (min-width : 1824px) {
 }
 
 .left_column .friends_grid img{
-	width: 55px;
+	width: 60px;
 	margin: 2px;
 	float: left;
-	border-radius: 3px;
+	min-height: 60px;
 }
 
 .left_column .friends_grid .friend_block{
