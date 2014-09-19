@@ -3,7 +3,7 @@
 	height: 76vh;
 	margin-right: 10px;
 	position: relative;
-	width: 50vh;
+	width: 51vh;
 	/*background-image: url("/assets/book_back.png");*/
 	/*background-size: 100% 100%;*/
 }
@@ -220,7 +220,7 @@
 .card .widget_thumb,
 .card .description{
 	position: absolute;
-	top: 12vh;
+	top: 15vh;
 	left: 2vh;
 	right: 2vh;
 	bottom: 7vh;
