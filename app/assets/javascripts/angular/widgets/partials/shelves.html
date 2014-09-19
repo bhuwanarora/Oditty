@@ -19,12 +19,12 @@
 	 	           user.collapsed_lists = true;
 	 	           user.collapsed_friends = true;">
 	 	 <span class="table_cell">
-			<span class="icon-bookmark2 light_grey_color" ng-if="user.collapsed_filters" ></span>
-			<span ng-show="user.collapsed_left_column">Shelves</span>
+			<span class="icon-bookmark2 yellow_color header_font" ng-if="user.collapsed_filters" ></span>
+			<span ng-show="user.collapsed_left_column">&nbsp;&nbsp;Shelves</span>
 	 	 </span>
 	</div>
 	<div class="header" ng-if="!user.collapsed_filters">
-		<span class="icon-tags light_grey_color"></span>
+		<span class="icon-tags yellow_color header_font"></span>
 		<span>&nbsp;Explore Shelves</span>
 	</div>
 	<div class="filters_panel_large" ng-if="!user.collapsed_filters">

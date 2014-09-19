@@ -20,8 +20,8 @@
 		          user.collapsed_lists = true;
 		          user.collapsed_friends = true;">
 		<span class="table_cell">
-			<span class="icon-newspaper light_grey_color"></span>
-			<span class="shelves" ng-show="user.collapsed_left_column">News Feed</span>
+			<span class="icon-newspaper site_color header_font"></span>
+			<span class="shelves" ng-show="user.collapsed_left_column">&nbsp;&nbsp;News Feed</span>
 		</span>
 		<!-- <div class="f3_background">
 			<span class="icon-users2 light_grey_color"></span>
@@ -36,7 +36,7 @@
 		<div class="full_height">
 			<div class="header"
 				 ng-if="!user.collapsed_column">
-				<span class="icon-newspaper"></span>
+				<span class="icon-newspaper site_color header_font"></span>
 				<span>&nbsp;&nbsp;News Feed</span>
 			</div>
 			<notification data="notification" ng-repeat="notification in notifications | reverse"></notification>

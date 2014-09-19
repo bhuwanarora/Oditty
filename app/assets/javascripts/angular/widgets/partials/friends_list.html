@@ -19,14 +19,14 @@
 	 	 		   user.collapsed_filters = true;
 	 	 		   user.collapsed_trends = true;">
 	 	 <span class="table_cell">
-			<span class="icon-users light_grey_color" ng-if="user.collapsed_friends" ></span>
-			<span ng-show="user.collapsed_left_column">Friends</span>
+			<span class="icon-users green_color header_font" ng-if="user.collapsed_friends" ></span>
+			<span ng-show="user.collapsed_left_column">&nbsp;&nbsp;Friends</span>
 	 	 </span>
 	</div>
 	<div class="header"
 		 ng-if="!user.collapsed_friends"
 		 ng-click="handle_friends_grid_size(undefined, true)">
-		<span class="icon-users2"></span>
+		<span class="icon-users2 green_color header_font"></span>
 		<span>&nbsp;&nbsp;{{user.friends.length}} Friends</span>
 	</div>
 	<div ng-if="!user.collapsed_friends" class="friends_grid">

@@ -20,12 +20,12 @@
 	 	           user.collapsed_lists = true;
 	 	           user.collapsed_friends = true;">
 	 	 <span class="table_cell">
-			<span class="icon-bars light_grey_color" ng-if="user.collapsed_trends" ></span>
-			<span ng-show="user.collapsed_left_column">Trending</span>
+			<span class="icon-bars red_color header_font" ng-if="user.collapsed_trends" ></span>
+			<span ng-show="user.collapsed_left_column">&nbsp;&nbsp;Trending</span>
 	 	 </span>
 	</div>
 	<div class="header" ng-if="!user.collapsed_trends">
-		<span class="icon-bars light_grey_color"></span>
+		<span class="icon-bars red_color header_font"></span>
 		<span>&nbsp;Check out books related to Trending topics</span>
 	</div>
 	<div class="filters_panel_large" ng-if="!user.collapsed_trends">

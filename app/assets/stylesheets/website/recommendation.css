@@ -74,6 +74,7 @@
 	padding-left: 5px;
 	position: relative;
 	color: #427fed;
+	top: -7px;
 }
 
 .header_navbar .user_details .count{
@@ -117,7 +118,7 @@
 .comment_box{
 	border: 1px solid #D6D5D5;
 	font-size: 1em;
-	margin: 5px 0px 5px 0px;
+	margin: 0px 0px 5px 0px;
 	width: 80%;
 	height: 60px;
 	max-width: 89%;
@@ -537,14 +538,14 @@
 	padding: 10px;
 	background-color: #fff;
 	border-radius: 2px;
-	padding: 20px;
+	padding: 3vh;
 	box-shadow: 8px 10px 54px 0 #424242;
 }
 
 .interaction_box_options,
 .interaction_box_book_options{
 	width: 250px;
-	top: 90px;
+	top: 71px;
 	margin-left: 80px;
 	box-shadow: 0 1px 4px 0 #99A3AD,inset 0 0 40px #EEE;
 	font-size: 1em;
@@ -564,12 +565,21 @@
 
 .interaction_box img{
 	width: 70px;
-	margin-right: 4px;
+	min-height: 70px;
+}
+
+.tweets .thumb,
+.interaction_box .thumb{
+	width: 70px;
+	height: 70px;
+	float: left;
+	overflow: hidden;
+	margin-right: 10px;
 	border-radius: 2px;
 }
 
 .interaction_box .second_input{
-	height: 15px;
+	height: 25px;
 	padding: 11px;
 	width: 94%;
 	border-radius: 4px;
@@ -1217,12 +1227,12 @@ and (min-width : 1824px) {
 	margin-top: 2px;
 	border-radius: 2px;
 	overflow: auto;
-	padding: 10px 20px 30px 20px;
+	padding: 3vh;
 }
 
 .tweets .tweet img{
 	width: 70px;
-	border-radius: 2px;
+	min-height: 70px;
 }
 
 .trending_background{
@@ -1241,7 +1251,6 @@ and (min-width : 1824px) {
 .tweets .tweet .tweet_text{
 	display: inline-block;
 	float: left;
-	padding: 0px 10px 0px 10px;
 	width: 80%;
 	white-space: normal;
 	word-break: break-word;
@@ -1515,13 +1524,29 @@ and (min-width : 1824px) {
 
 .left_column_collapsed{
 	width: 120px!important;
-	height: 36px;
+	height: 40px;
 	border-bottom: 4px solid transparent;
 	overflow: hidden;
 }
 
-.left_column_collapsed:hover{
+.left_column_collapsed1:hover{
 	border-bottom: 4px solid #427fed;
+}
+
+.left_column_collapsed2:hover{
+	border-bottom: 4px solid #E2B503;
+}
+
+.left_column_collapsed3:hover{
+	border-bottom: 4px solid #DD4B39;
+}
+
+.left_column_collapsed4:hover{
+	border-bottom: 4px solid #918FB5;
+}
+
+.left_column_collapsed5:hover{
+	border-bottom: 4px solid #65b045;
 }
 
 .left_column_collapsed1{
@@ -1529,19 +1554,19 @@ and (min-width : 1824px) {
 }
 
 .left_column_collapsed2{
-	top: 140px;
+	top: 144px;
 }
 
 .left_column_collapsed3{
-	top: 185px;
+	top: 193px;
 }
 
 .left_column_collapsed4{
-	top: 230px;
+	top: 242px;
 }
 
 .left_column_collapsed5{
-	top: 275px;
+	top: 291px;
 }
 
 .left_column_shifted{
@@ -1554,19 +1579,19 @@ and (min-width : 1824px) {
 }
 
 .left_column_shifted2{
-	top: 142px;
+	top: 146px;
 }
 
 .left_column_shifted3{
-	top: 189px;
+	top: 197px;
 }
 
 .left_column_shifted4{
-	top: 236px;
+	top: 248px;
 }
 
 .left_column_shifted5{
-	top: 283px;
+	top: 299px;
 }
 
 .main_header .search_typeahead_group{

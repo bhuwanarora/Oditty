@@ -69,7 +69,7 @@
 					</div>
 				</div>
 				<span class="highlighter" ng-bind-html="user.hash_tagged_comment"></span>
-				<span class="thumb"><img ng-src="{{user | blob_backup}}"></span>
+				<div class="thumb"><img ng-src="{{user | blob_backup}}"></div>
 				<textarea itemprop= "commentText"
 				   itemtype= "http://schema.org/UserComments"
 				   set-focus="user.interact"
@@ -97,7 +97,7 @@
 			 ng-if="focused_book"
 		 	 ng-click="stop_propagation($event)">
 			<div class="tweet animate-fast" ng-repeat="tweet in focused_book.tweets | reverse">
-				<div class="inline_block_left"><img ng-src="{{tweet.user.thumb | thumb_backup}}"></div>
+				<div class="thumb"><img ng-src="{{tweet.user.thumb | thumb_backup}}"></div>
 				<div class="tweet_text">
 					<b><div ng-bind-html="tweet.user.name"></div></b>
 					<div ng-bind-html="tweet.tag"></div>
@@ -114,7 +114,7 @@
 			ng-click="stop_propagation($event)">
 			<div ng-repeat="notification in notifications | reverse" 
 			     class="tweet animate-fast">
-				<div class="inline_block_left"><img ng-src="{{notification.thumb | thumb_backup}}"></div>
+				<div class="thumb"><img ng-src="{{notification.thumb | thumb_backup}}"></div>
 				<div class="tweet_text">
 					<b><div ng-bind-html="notification.user.name"></div></b>
 					<b><a ng-href="{{notification.url}}" target="_blank">
