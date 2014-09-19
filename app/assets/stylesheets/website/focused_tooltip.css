@@ -158,7 +158,7 @@
 
 .focused_tooltip .user_box,
 .focused_tooltip .user_box_wrapper{
-	bottom: 100px;
+	bottom: 110px;
 	position: absolute;
 	background-color: white;
 	width: 93%;

@@ -509,7 +509,7 @@
 
 .filter{
 	padding: 15px;
-	font-size: .8em;
+	font-size: .9em;
 	text-align: left;
 	min-width: 200px;
 	border-radius: 3px;
@@ -656,23 +656,27 @@
 
 .recommendation_box .friend_grid .friend_thumb{
 	width: 60px;
-	margin: 2px;
+	min-height: 60px;
 }
 
 .recommendation_box .friend_grid .friend_block{
-	border: 5px solid white;
+	border: 5px solid #fff;
 	position: relative;
 	float: left;
+	overflow: hidden;
+	width: 60px;
+	height: 80px;
 }
 
 .recommendation_box .friend_grid .friend_block .friend_name{
 	position: absolute;
-	bottom: 10px;
+	bottom: 5px;
 	left: 0px;
 	background-color: rgba(255, 255, 255, 0.56);
 	right: 0px;
 	padding: 4px;
 	font-size: .8em;
+	cursor: default;
 }
 
 .recommendation_box .header{
@@ -968,6 +972,10 @@ and (min-width : 1824px) {
 
 .notifications:hover{
 	overflow-y: auto; 
+}
+
+.notifications .notification:hover .delay_site_color{
+    color: #427fed;
 }
 
 .notification_link{
@@ -1303,7 +1311,7 @@ and (min-width : 1824px) {
 
 .left_column .friends_grid .friend_block .friend_details{
 	float: left;
-	margin: 10px;
+	margin: 0px 10px 10px 10px;
 	width: 180px;
 }
 
@@ -1500,13 +1508,20 @@ and (min-width : 1824px) {
 	height: 40px;
 	display: table;
 	width: 100%;
-	padding-left: 10px;
 	font-size: 0.9em;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .left_column_collapsed{
-	width: 100px!important;
-	height: 40px;
+	width: 120px!important;
+	height: 36px;
+	border-bottom: 4px solid transparent;
+	overflow: hidden;
+}
+
+.left_column_collapsed:hover{
+	border-bottom: 4px solid #427fed;
 }
 
 .left_column_collapsed1{
@@ -1531,7 +1546,7 @@ and (min-width : 1824px) {
 
 .left_column_shifted{
 	left: 29% !important;
-	width: 40px !important;
+	width: inherit !important;
 }
 
 .left_column_shifted1{

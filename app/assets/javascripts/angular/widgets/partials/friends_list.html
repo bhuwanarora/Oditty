@@ -31,8 +31,10 @@
 	</div>
 	<div ng-if="!user.collapsed_friends" class="friends_grid">
 		<div ng-repeat="friend in user.friends" class="friend_block animate-fast">
-			<img ng-src="{{friend.thumb}}" 
-			     class="friend_thumb" />
+			<div class="image_wrapper">
+				<img ng-src="{{friend.thumb}}" 
+				     class="friend_thumb" />
+			</div>
 			<div class="friend_details">
 				<div><b>{{friend.name}}</b></div>
 				<div ng-show="friend.init_book_read_count">Reader of {{friend.init_book_read_count}}</div>

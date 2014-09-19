@@ -462,6 +462,39 @@ input:focus{
     background-image: linear-gradient(top,#E0E0E0,#DADADA);
 }
 
+.red_button{
+    background-color: #d14836;
+    background-image: -webkit-linear-gradient(top,#dd4b39,#d14836);
+    background-image: linear-gradient(top,#dd4b39,#d14836);
+    color: #fff;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-shadow: 0 1px rgba(0,0,0,0.1);
+    border-radius: 2px;
+}
+
+.red_button:hover{
+    background-color: #d14836;
+    background-image: -webkit-linear-gradient(top,#dd4b39,#B64132);
+    background-image: linear-gradient(top,#dd4b39,#B64132);
+    color: #fff;
+    border: 1px solid #B64132;
+    cursor: pointer;
+    text-shadow: 0 1px rgba(0,0,0,0.1);
+    border-radius: 2px;
+}
+
+.red_button:active{
+    background-color: #d14836;
+    background-image: -webkit-linear-gradient(top,#B64132,#B64132);
+    background-image: linear-gradient(top,#B64132,#B64132);
+    color: #fff;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-shadow: 0 1px rgba(0,0,0,0.1);
+    border-radius: 2px;
+}
+
 .blue_button{
     color: #fff;
     border-radius: 2px;
@@ -510,4 +543,10 @@ input:focus{
 
 .header_font{
     font-size: 1.2em;
+}
+
+.image_wrapper{
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
 }
