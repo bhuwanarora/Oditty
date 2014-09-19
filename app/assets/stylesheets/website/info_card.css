@@ -53,7 +53,7 @@
 
 .compressed_info_card_shifted{
 	left: 5px;
-	top: 350px;
+	top: 100px;
 }
 
 .compressed_info_card .block{
@@ -83,6 +83,7 @@
 
 .info_cards .sub_header{
 	margin-top: 5px;
+	font-size: 1.2em;
 }
 
 .info_cards .book_details{

@@ -32,10 +32,9 @@
 			 title="{{main_header}}"
 			 style="margin-left:0px;" 
 			 ng-click="toggle_recommendations()">
-			<span class="table_cell"
-				ng-class="{
-			'icon-feed2':!$routeParams.trend_id && !$routeParams.grid_id && !$routeParams.filter_id && !$routeParams.label_id, 
-			'light_grey_color': read_selected || bookmark_selected}"></span>
+			<span ng-class="{
+			'icon-feed2 table_cell':!$routeParams.trend_id && !$routeParams.grid_id && !$routeParams.filter_id && !$routeParams.label_id, 
+			'light_grey_color table_cell': read_selected || bookmark_selected}"></span>
 			<span ng-if="!$routeParams.trend_id && !$routeParams.grid_id && !$routeParams.filter_id && !$routeParams.label_id" class="table_cell">
 				<span ng-if="$routeParams.type == 'books'">
 					{{recommendations.books.count}} </span>

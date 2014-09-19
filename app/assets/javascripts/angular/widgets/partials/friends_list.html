@@ -27,7 +27,7 @@
 		 ng-if="!user.collapsed_friends"
 		 ng-click="handle_friends_grid_size(undefined, true)">
 		<span class="icon-users2 green_color header_font"></span>
-		<span>&nbsp;&nbsp;{{user.friends.length}} Friends</span>
+		<span><b>&nbsp;&nbsp;{{user.friends.length}} Friends</b></span>
 	</div>
 	<div ng-if="!user.collapsed_friends" class="friends_grid">
 		<div ng-repeat="friend in user.friends" class="friend_block animate-fast">

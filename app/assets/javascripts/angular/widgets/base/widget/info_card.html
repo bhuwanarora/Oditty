@@ -1,5 +1,3 @@
-
-
 <div ng-if="!user.compressed_info">
      <div class="compressed_info_card animate-fast grey_color" 
      	  ng-class="{'compressed_info_card_shifted': user.collapsed_left_column}">
@@ -46,7 +44,7 @@
      </div>
      <div class="wrapper" 
      	  msd-wheel="stop_propagation($event);"
-     	  ng-click="user.compressed_info = true; user.profile_status = null;"
+     	  ng-click="user.compressed_info = true;"
           ng-show="!user.compressed_info">
 	     <div ng-click="stop_propagation($event);"
 	     		class="info_cards animate-fast"
@@ -218,7 +216,7 @@
 				</div>
 			</div>
 			<div ng-switch-when="3">
-				<div class="sub_header"><b>Add authors you like (Coming Soon)...</b></div>
+				<div class="sub_header"><b>Add authors you like <span class="red_color">(Coming Soon)</span>...</b></div>
 				<div class="header">Follow authors and their lives...</div>
 				<input ng-keydown="search_info_card($event, 'AUTHOR')" ng-model="info.search_author" placeholder="Search authors..."/>
 				<div class="scrollbar header" 
@@ -238,7 +236,7 @@
 				</div>
 			</div>
 			<div ng-switch-when="4">
-				<div class="sub_header"><b>Share and borrow books from readers in your area (Coming Soon)...</b></div>
+				<div class="sub_header"><b>Share and borrow books from readers in your area  <span class="red_color">(Coming Soon)</span>...</b></div>
 				<div class="header">Let's create a new kind of barter system for books...</div>
 				<div ng-include src="'/assets/angular/widgets/partials/invite.html'"></div>
 				<map style="display:block; height:50vh; width: 101%; margin-top: 10px;">
