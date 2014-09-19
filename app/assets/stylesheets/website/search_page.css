@@ -156,20 +156,20 @@
 }
 
 .login_box .logo{
-	font-size: 2em;
+	font-size: 26px;
 	font-weight: bold;
 	font-family: Helvetica;
 	letter-spacing: -4.2px;
 }
 
 .login_box .logo .beta_label{
-	font-size: 0.5em;
+	font-size: 12px;
 	letter-spacing: 0px;
 	margin-left: 5px;
 }
 
 .login_box .tagline{
-	font-size: 1.5em;
+	font-size: 22px;
 	font-weight: 200;
 }
 
@@ -194,7 +194,7 @@
 	top: 25%;
 	left: 50%;
 	color: #fff;
-	font-size: 1.5em;
+	font-size: 22px;
 	text-shadow: 0 1px 1px rgba(0,0,0,.5);
 	margin-left: -215px;
 	margin-top: -50px;
