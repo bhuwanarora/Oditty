@@ -1168,9 +1168,14 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				}
 				$scope.show_secondary_input = false;
 				$rootScope.hide_options = false;
+				
 				$rootScope.user.collapsed_column = true;
 				$rootScope.user.collapsed_filters = true;
 				$rootScope.user.collapsed_friends = true;
+				$rootScope.user.collapsed_trends = true;
+				$rootScope.user.collapsed_lists = true;
+				$rootScope.user.collapsed_left_column = true;
+
 				delete $rootScope.focused_book;
 				delete $scope.active_nest;
 				delete $scope.active_base;

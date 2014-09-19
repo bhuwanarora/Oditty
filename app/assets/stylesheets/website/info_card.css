@@ -43,11 +43,10 @@
 }
 
 .compressed_info_card{
-	position: fixed;
-	top: 300px;
+	top: 100px;
 	position: fixed;
 	z-index: 11;
-	left: 29%;
+	left: 5px;
 	box-shadow: 8px 0 43px 0 rgba(66,66,66,.47);
 }
 

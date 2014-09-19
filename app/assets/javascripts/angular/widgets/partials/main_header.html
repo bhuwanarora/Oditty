@@ -20,9 +20,9 @@
 	</div>
 	<div class="header_icon" 
 	     ng-class="{'site_color': show_notifications_popup, 'light_grey_color':!show_notifications_popup}"
-	     ng-click="show_notifications_popup=!show_notifications_popup;">
+	     ng-click="show_notifications_popup=!show_notifications_popup; hide_notification_circle=true;">
 		<span class="icon-earth table_cell"></span>
-		<div class="notification_circle table_cell" >4</div>
+		<div class="notification_circle table_cell" ng-hide="hide_notification_circle">4</div>
 	</div>
 	<profile-link></profile-link>
  	<div ng-controller="searchController">
