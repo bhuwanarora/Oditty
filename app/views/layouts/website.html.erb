@@ -38,10 +38,9 @@
       <%= javascript_include_tag Rails.root.join("/assets/min/angular/main.js") %>
     <% end %>
 
-    <div push-notification="notification_active" 
-      class="push_notification" 
+    <div class="push_notification" 
       ng-if="notification_active">
-      <div class="icon-close-popup" ng-click="notification_active = null;"></div>
+      <div class="icon-close-popup" ng-click="notification_active = false;"></div>
       <div class="type table_cell" ng-style="message_style">
         <span class="icon-thumbs-up" ng-if="message_type == 0"></span>
         <span class="icon-bolt" ng-if="message_type == 1"></span>

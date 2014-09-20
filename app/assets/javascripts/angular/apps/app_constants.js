@@ -45,9 +45,9 @@ var constants = {
 		"IntroConstants":{
 			"NewsFeed": "Keep track of what your friends are doing on Reader's Door.",
 			"Shelves": "Create virtual book shelves.",
-			"Trending": "Checkout books related to trending topics in media",
-			"Listopia": "Checkout lists from your friends",
-			"Friends": "Checkout your friend list",
+			"Trending": "Check out books related to trending topics in media",
+			"Listopia": "Check out lists from your friends",
+			"Friends": "Check out your friend list",
 			"Share": "Share your book reading insights, feelings and emotions...",
 			"Profile": "Edit your profile",
 			"RecommendationTab": "Recommendations Tab",

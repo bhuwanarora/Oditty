@@ -345,7 +345,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/partials/settings_popup.html',
-    "<ul class=\"settings_popup\"><div class=\"icon-close-popup\" ng-click=\"toggle_settings_popup($event)\"></div><li ng-click=\"goto_info_card()\">Edit profile</li><li ng-click=\"CallMe()\">Getting started</li><li ng-click=\"logout()\">Logout</li></ul>"
+    "<ul class=\"settings_popup\"><div class=\"icon-close-popup\" ng-click=\"toggle_settings_popup($event)\"></div><li ng-click=\"goto_info_card()\">Edit profile</li><li ng-click=\"CallMe()\">Getting started</li><hr><li ng-click=\"logout()\">Logout</li></ul>"
   );
 
 

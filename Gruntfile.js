@@ -165,7 +165,7 @@ module.exports = function(grunt) {
             'app/assets/javascripts/min/angular/vendors/angular_router.min.js',
             'app/assets/javascripts/min/angular/vendors/cropme.js',
             'app/assets/javascripts/min/angular/vendors/hamster.min.js',
-            'app/assets/javascripts/min/angular/vendors/intro.min.js',
+            'app/assets/javascripts/min/angular/vendors/intro.js',
             'app/assets/javascripts/min/angular/vendors/angular_touch.min.js'],
 
           'app/assets/javascripts/min/angular/main.js': [
