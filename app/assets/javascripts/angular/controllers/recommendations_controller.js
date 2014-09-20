@@ -542,6 +542,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				var url = WebsiteUIConstants.CoverPhotoCDN+data+".jpg"
 				$scope.cover_image = {'background-image': 'url("'+url+'")'};
 			});
+
+			$scope.placeholder = WebsiteUIConstants.ShareSomething;
 		}
 		else{
 			$rootScope.user = {'books': {'bookmarked':[], 'read': []},

@@ -158,7 +158,6 @@
 }
 
 .interaction_box .share_status:disabled{
-	background-color: rgba(101, 176, 69, 0.51) !important;
 	cursor: default;
 }
 
@@ -375,7 +374,7 @@
 	display: table;
 	background-color: #fff;
 	right: 1px;
-	top: 110px;
+	top: 50px;
 	position: fixed;
 	max-width: 240px;
 	width: auto;
@@ -480,7 +479,7 @@
 .filters_panel_large,
 .filters_panel_right{
 	text-align: center;
-	max-height: 54vh;
+	max-height: 52vh;
 }
 
 .filters_group{
@@ -1285,7 +1284,7 @@ and (min-width : 1824px) {
 	z-index: 8;
 	font-size: 1em;
 	left: 26%;
-	top: 65px;
+	top: 245px;
 }
 
 .expand_notifications_shift{
@@ -1444,9 +1443,9 @@ and (min-width : 1824px) {
 }
 
 .loading_widget{
-	width: 52vh;
+	width: 40vh;
 	background-color: #fff;
-	height: 75vh;
+	height: 62vh;
 	border-radius: 2px;
 }
 
@@ -1778,15 +1777,23 @@ l	.compressed_info_card{
 }
 
 .share_postioner{
-	width: 60%;
+	width: 70%;
 	left: 50%;
 	position: fixed;
 	top: 50px;
-	margin-left: -30%;
+	margin-left: -35%;
 }
 
 .share_postioner .thumb,
 .share_postioner img{
-	width: 100px;
-	height: 100px;
+	width: 120px;
+	height: 120px;
+}
+
+.share_postioner .share_status{
+	display: none;
+}
+
+.share_postioner .interaction_box{
+	height: 120px;
 }

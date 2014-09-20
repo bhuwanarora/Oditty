@@ -71,7 +71,7 @@
 		   ng-paste="update_hashtagged_comment()"
 		   ng-model="user.current_comment"
 		   ng-keydown="handle_backspace($event)"
-		   placeholder="Share something..."
+		   placeholder="{{placeholder}}"
 		   class="comment_box animate-fast"
 		   ng-keypress="handle_hash_tags($event)"
 		   ng-keyup="key_up()"
