@@ -1,0 +1,89 @@
+<div class="interaction_box animate-fast"
+	 ng-click="stop_propagation($event)">
+
+	<div ng-if="level1_option || level2_option || selected_interact_book" class="second_input site_color">
+		<span ng-if="show_search || selected_interact_book">
+			<input set-focus="start_searching" 
+				   ng-keydown="search_interact_books($event)"
+				   ng-model="user.interact_book"
+				   placeholder="Add the book..."/>
+			<div class="interaction_box_book_options">
+				<div ng-repeat="item in user.interact_books track by $index" 
+		    		 ng-click="handle_interact_book_selection(item)" 
+		    		 ng-class="{active:is_current_interact_book($index, item)}" 
+		    		 ng-mouseenter="set_current_interact_book($index)"
+		    		 class="option">
+			  		<div class="title">{{item.title}}</div>
+			      	<div ng-show="item.author_name">by {{item.author_name}}</div>
+				</div>
+				<div ng-if="user.interact_book.length != 0 && !loading && !selected_interact_book" class="option">No results found {{selected_interact_book}}</div>
+			</div>
+			<div class="interact_book" 
+				ng-click="remove_selected_book()"
+				ng-model="selected_interact_book" 
+				ng-if="selected_interact_book">
+				<b>{{selected_interact_book.title | book_tag}}</b>
+			</div>
+		</span>
+		<span ng-if="level2_option.name">{{level2_option.name}} {{level2_option.link}}&nbsp;</span>
+		<span>&nbsp;{{level1_option.name}}&nbsp;</span>
+		<span ng-if="!level2_option.icon" class="{{level1_option.icon}}"></span>
+		<span class="{{level2_option.icon}}"></span>
+		<span>-&nbsp;</span>
+	</div>
+	<div class="relative">
+		<div class="interaction_box_options" ng-if="hash_tags">
+			<div ng-repeat="item in hash_tags track by $index" 
+	    		 ng-click="handle_selection(item.name)" 
+	    		 ng-class="{active:is_current($index, item.name)}" 
+	    		 ng-mouseenter="set_current($index)"
+	    		 class="option">
+		  		<div class="title">{{item.name}}</div>
+		      	<div ng-show="item.author_name">by {{item.author_name}}</div>
+			</div>
+		</div>
+		<div class="interaction_box_options" ng-if="level1_options">
+			<div ng-repeat="option in level1_options"
+				 ng-click="select_level1(option, $event)"
+				 ng-if="!option.SearchBook"
+				 class="option">
+				<span class="{{option.icon}}"></span>
+				<span>{{option.name}}</span>
+				<span class="right_icon {{option.icon2}}"></span>
+			</div>
+		</div>
+		<div class="interaction_box_options interaction_box_options_level2 scrollbar" ng-if="level2_options">
+			<div ng-repeat="option in level2_options"
+				 ng-if="!option.SearchBook"
+				 ng-click="select_level2(option, $event)"
+				 class="option">
+				<span class="{{option.icon}}"></span>
+				<span>{{option.name}}</span>
+				<span class="right_icon {{option.icon2}}"></span>
+			</div>
+		</div>
+		<span class="highlighter" ng-bind-html="user.hash_tagged_comment"></span>
+		<div class="thumb"><img ng-src="{{user | blob_backup}}"></div>
+		<textarea itemprop= "commentText"
+		   itemtype= "http://schema.org/UserComments"
+		   set-focus="user.interact"
+		   type="text"
+		   ng-paste="update_hashtagged_comment()"
+		   ng-model="user.current_comment"
+		   ng-keydown="handle_backspace($event)"
+		   placeholder="Share something..."
+		   class="comment_box animate-fast"
+		   ng-keypress="handle_hash_tags($event)"
+		   ng-keyup="key_up()"
+		   rows="1">
+		</textarea>
+	</div>
+	<div class="interaction_links">
+		<span class="icon-happy interaction_icons" ng-click="show_interaction_options('Emotion', $event)"></span>
+		<span class="icon-feed interaction_icons" ng-click="show_interaction_options('Shout', $event)"></span>
+		<!-- <span class="icon-quote-right interaction_icons" ng-click="show_interaction_options('Quote', $event)"></span> -->
+		<!-- <div class="character_count">{{user.current_comment.length}} characters</div> -->
+		<button class="share_status blue_button" ng-click="share_post()" ng-disabled="!((level1_option && selected_interact_book) || (user.current_comment.length > 0 && !level1_option))">Share</button>
+		<span class="site_color status_message">{{status_message}}</span>
+	</div>
+</div>

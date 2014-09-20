@@ -1,4 +1,4 @@
-websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', 'scroller', 'websiteService', 'sharedService', '$cookieStore', 'RecommendationUIConstants', '$location', 'IntroConstants', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService, scroller, websiteService, sharedService, $cookieStore, RecommendationUIConstants, $location, IntroConstants){
+websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', 'scroller', 'websiteService', 'sharedService', '$cookieStore', 'RecommendationUIConstants', '$location', 'IntroConstants', 'WebsiteUIConstants', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService, scroller, websiteService, sharedService, $cookieStore, RecommendationUIConstants, $location, IntroConstants, WebsiteUIConstants){
 
 	$scope.handle_height_of_popup = function(event, scroll_down){
 		var event_defined = angular.isDefined(event);
@@ -537,6 +537,11 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	        // _handle_focused_book();
 	        _get_friends();
 	        $scope.$emit('getNotifications');
+
+	        websiteService.get_background_image().then(function(data){
+				var url = WebsiteUIConstants.CoverPhotoCDN+data+".jpg"
+				$scope.cover_image = {'background-image': 'url("'+url+'")'};
+			});
 		}
 		else{
 			$rootScope.user = {'books': {'bookmarked':[], 'read': []},

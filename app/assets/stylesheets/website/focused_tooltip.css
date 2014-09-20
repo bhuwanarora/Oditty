@@ -276,7 +276,7 @@
 
 .focused_tooltip .arrow{
 	position: absolute;
-	top: 10vh;	
+	top: 230px;	
 	border-top: 10px solid transparent;
 	border-bottom: 10px solid transparent;
 	width: 0; 
