@@ -145,7 +145,7 @@ module.exports = function(grunt) {
 
           'app/assets/javascripts/min/angular/libs.js': [
             'app/assets/javascripts/min/lib/angular_scroll.min.js',
-            'app/assets/javascripts/min/lib/hash.js',
+            
             'app/assets/javascripts/min/lib/text_angular.min.js'],
 
           'app/assets/javascripts/min/angular/apps.js': [
@@ -163,6 +163,7 @@ module.exports = function(grunt) {
             'app/assets/javascripts/min/angular/vendors/google_map.js',
             'app/assets/javascripts/min/angular/vendors/angular_mousewheel.min.js',
             'app/assets/javascripts/min/angular/vendors/angular_router.min.js',
+            'app/assets/javascripts/min/angular/vendors/cropme.js',
             'app/assets/javascripts/min/angular/vendors/hamster.min.js',
             'app/assets/javascripts/min/angular/vendors/intro.min.js',
             'app/assets/javascripts/min/angular/vendors/angular_touch.min.js'],

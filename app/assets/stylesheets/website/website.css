@@ -366,11 +366,6 @@ input:focus{
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#66000000', endColorstr='#e6000000', GradientType=1);
     -ms-filter: "alpha(Opacity=50)";
     filter: alpha(opacity=50);
-    -webkit-transition: all .3s ease-out;
-    -moz-transition: all .3s ease-out;
-    -ms-transition: all .3s ease-out;
-    -o-transition: all .3s ease-out;
-    transition: all .3s ease-out;
 }
 
 .box_shadow{

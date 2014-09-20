@@ -8,7 +8,7 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
           websiteService.get_user_details().then(function(data){
               angular.extend($rootScope.user, data);
             });
-          stropheService.start_connection();
+          // stropheService.start_connection();
         }
       });
     }

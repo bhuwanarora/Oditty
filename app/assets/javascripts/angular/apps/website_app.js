@@ -1,5 +1,5 @@
 var websiteApp = angular.module('websiteApp', ['ngRoute', 'ngAnimate', 
-                  'monospaced.mousewheel', 'facebook', 'ngMap', 
+                  'monospaced.mousewheel', 'facebook', 'ngMap', 'cropme',
                   'duScroll', 'filtersApp', 'ngCookies', 'ngTouch', 'angular-intro',
                   'appConstants']);
 
