@@ -90,8 +90,19 @@ class UsersController < ApplicationController
 
   def feedbacks
     neo = Neography::Rest.new
-    clause = "MATCH (u:User)-[:GaveFeedback]->(f:Feedback) RETURN ID(u), ID(f), u.name, f.feedback_text, f.timestamp"
+    clause = "MATCH (u:User)-[:GaveFeedback]->(f:Feedback) RETURN ID(u), ID(f), u.name, f.feedback_text, f.timestamp, f.status"
     @feedbacks = neo.execute_query(clause)["data"]
+  end
+
+  def change_feedback_status
+    begin
+      neo = Neography::Rest.new
+      clause = "MATCH (f:Feedback) WHERE ID(f)="+params[:id].to_s+" SET f.status="+params[:status].to_s
+      neo.execute_query clause
+      render :json => {:message => "Success"}, :status => 200
+    rescue Exception => e
+      render :json => {:message => e.to_s}, :status => 500
+    end
   end
 
   # GET /users/1
