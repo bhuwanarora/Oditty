@@ -1474,6 +1474,23 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		}
 	}
 
+	// $scope.search_tour_options = {
+ //        steps:[
+	//         {
+	//             element: '#baseSearchTabs',
+	//             intro: "TEST",
+	//             position: 'bottom'
+	//         }
+ //        ],
+ //        showStepNumbers: false,
+ //        exitOnOverlayClick: true,
+ //        exitOnEsc: true,
+ //        nextLabel: '<strong>Next</strong>',
+ //        prevLabel: '<span>Previous</span>',
+ //        skipLabel: 'Exit',
+ //        doneLabel: 'Thanks'
+ //    };
+
 	
 	var search_typing_timeout = "";
 	var on_search_page = angular.isUndefined($routeParams.type);

@@ -545,7 +545,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		}
 	}
 
-   	$scope.IntroOptions = {
+   	$scope.getting_started_tour_options = {
         steps:[
 	        {
 	            element: '#newsFeed',

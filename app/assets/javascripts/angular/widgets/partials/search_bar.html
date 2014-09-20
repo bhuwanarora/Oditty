@@ -2,7 +2,8 @@
      ng-click="reset_search_bar($event)"
      ng-if="$routeParams.type && !hide_options"></div>
 <div class="search_typeahead_group animate-fast" ng-class="{'shift_top': filters_added.length > 0}">
-  <div class="base_search animate-fast" 
+  <div class="base_search animate-fast"
+       id="baseSearchTabs" 
        ng-class="{'light_grey_color': active_nest && !($routeParams.type && hide_options)}">
     <div class="tab base_search_option"
          ng-class="{'active_tab':is_active(item)}"

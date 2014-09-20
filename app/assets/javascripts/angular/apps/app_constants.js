@@ -48,7 +48,7 @@ var constants = {
 			"Trending": "Check out books related to trending topics in media",
 			"Listopia": "Check out lists from your friends",
 			"Friends": "Check out your friend list",
-			"Share": "Share your book reading insights, feelings and emotions...",
+			"Share": "Share your book reading memories, insights, feelings and emotions...",
 			"Profile": "Edit your profile",
 			"RecommendationTab": "Recommendations Tab",
 			"MyLibraryTab": "My Library Tab",
