@@ -325,18 +325,6 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 						'authors': {'bookmarked': [], 'follow': []},
 						'readers': {'follow': []},
 						'logged': false};
-		var collapsed_column = $timeout(function(){
-			$rootScope.user.collapsed_column = true;
-			$rootScope.user.collapsed_left_column = true;
-			$rootScope.user.collapsed_filters = true;
-			$rootScope.user.collapsed_lists = true;
-			$rootScope.user.collapsed_friends = true;
-			$rootScope.user.collapsed_filters = true;
-		}, 6000);
-		$scope.$on('destroy', function(){
-			$timeout.cancel(collapsed_column);
-		});
-		
 		
 		_detect_browser();
 		console.timeEnd("websiteAppController");

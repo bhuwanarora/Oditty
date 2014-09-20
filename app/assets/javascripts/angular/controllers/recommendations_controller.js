@@ -507,6 +507,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			// $rootScope.show_book = false;
 			$rootScope.user = {"collapsed_trends": true, "collapsed_friends": true, 
 								"collapsed_filters": true, "collapsed_lists": true,
+								'collapsed_column': true,
+								'collapsed_left_column': true,
 								"interact": false};
 
 			user_behaviour_timer_event = $timeout(function(){
