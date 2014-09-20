@@ -33,7 +33,7 @@
 	<div ng-if="!user.collapsed_friends" class="friends_grid">
 		<div ng-repeat="friend in user.friends" class="friend_block animate-fast">
 			<div class="image_wrapper">
-				<img ng-src="{{friend.thumb}}" 
+				<img ng-src="{{friend.thumb | thumb_backup}}" 
 				     class="friend_thumb" />
 			</div>
 			<div class="friend_details">
