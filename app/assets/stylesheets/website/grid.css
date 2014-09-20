@@ -5,7 +5,7 @@
 	white-space: normal;
 	position: relative;
 	width: 64vh;
-	height: 64vh;
+	height: 62vh;
 	border-bottom-right-radius: 3px;
 	border-bottom-left-radius: 3px;
 	cursor: pointer;
@@ -19,7 +19,7 @@
 	position: absolute;
 	width: 59vh;
 	z-index: 1;
-	height: 60vh;
+	height: 58vh;
 	color: transparent;
 	text-decoration: none;
 	border: 2vh solid transparent;
