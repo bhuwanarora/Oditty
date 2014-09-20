@@ -50,7 +50,7 @@ set :default_env, { path: "~/.rbenv/shims:~/.rbenv/bin:$PATH" }
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
-set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+set :whenever_identifier, ->{ "readers_door_production" }
 
 namespace :deploy do
 
@@ -60,7 +60,15 @@ namespace :deploy do
       # Your restart mechanism here, for example:
       execute :touch, release_path.join('tmp/restart.txt')
     end
+
   end
+  
+  desc "Update the crontab file"
+  puts "Update the crontab file".blue.on_red
+  task :update_crontab do
+    run "whenever --update-crontab readers_door_production"
+  end
+
   after :publishing, :restart
   after :finishing, 'deploy:cleanup'
 

@@ -11,16 +11,18 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
         if($rootScope.focused_book != $scope.book){
           // $rootScope.show_more_filters = false;
           delete $rootScope.ticker_popup;
+          $rootScope.popups = {};
           $rootScope.focused_book = $scope.book;
           var posX = event.currentTarget.offsetParent.offsetParent.offsetLeft - event.pageX + event.clientX;
           var display_right_width =  window_width - (posX + event.currentTarget.offsetParent.scrollWidth);
           var display_left_width = posX;
-          var card_width = window_height*0.6;
+          var card_width = window_height*0.8;
           console.table([{
             "offsetLeft":event.currentTarget.offsetParent.offsetParent.offsetLeft,
             "pageX":event.pageX, 
             "clientX":event.clientX, 
             "posX": posX,
+            "card_width": card_width,
             "scrollWidth":event.currentTarget.offsetParent.scrollWidth,
             "display_left_width":display_left_width,
             "display_right_width":display_right_width}]);
@@ -30,7 +32,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
               $rootScope.focused_book.reposition_tooltip = {"left": posX+"px"};
             }
             else{
-              $rootScope.focused_book.reposition_tooltip = {"right": "0px"}; 
+              $rootScope.focused_book.reposition_tooltip = {"right": "0px"};
             }
             $rootScope.on_left = true;
           }
@@ -104,7 +106,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
   };
 }]);
 
-websiteApp.directive('labelDropdown', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
+websiteApp.directive('labelDropdown', ['$rootScope', '$timeout', 'widgetService', 'RecommendationUIConstants', 'sharedService', function($rootScope, $timeout, widgetService, RecommendationUIConstants, sharedService){
   return{
     restrict: 'E',
     controller: ['$scope', function($scope){
@@ -151,6 +153,10 @@ websiteApp.directive('labelDropdown', ['$rootScope', '$timeout', 'widgetService'
           $scope.$emit('gamifyCount', 10, false);
           var message = "SUCCESS-Removed from "+$scope.book.labels[index]["name"]+" <span class='icon-tags'></span>.";
         }
+        if($scope.book.labels[index]["name"] == RecommendationUIConstants.MarkAsRead){
+          sharedService.mark_as_read($scope, $scope.book, event);
+        }
+
         var timeout_event = notify($rootScope, message, $timeout);
         var params = {"id": $scope.book.id, 
                     "type": "BOOK",
@@ -254,6 +260,7 @@ websiteApp.directive('bookInteract', ['$rootScope', '$timeout', 'widgetService',
     controller: ['$scope', function($scope){
       _init = function(){
         $scope.setStatus();
+        $scope.label_placeholder = "Add to my library";
       }
 
       $scope.show_bookmark_options = function(event){
@@ -269,7 +276,9 @@ websiteApp.directive('bookInteract', ['$rootScope', '$timeout', 'widgetService',
           }
           $scope.book.blur_input = false;
           $scope.book.show_labels = true;
+          $scope.label_placeholder = "Add a new shelf...";
         }
+
         event.stopPropagation();
       }
 
@@ -288,6 +297,9 @@ websiteApp.directive('bookInteract', ['$rootScope', '$timeout', 'widgetService',
         }
       }
 
+      $scope.stop_propagation = function(event){
+        event.stopPropagation()
+      }
 
       $scope.setStatus = function(status){
         if(status == 1){

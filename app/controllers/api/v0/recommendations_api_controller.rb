@@ -2,6 +2,7 @@ module Api
 	module V0
 		class RecommendationsApiController < ApplicationController
 			# include 'Pubnub'
+			# skip_before_filter :verify_authenticity_token, :only => [:recommendations]
 
 			def initiate_push
 				# init
@@ -69,28 +70,42 @@ module Api
 			end
 
 			def recommendations
+				@neo = Neography::Rest.new
 				filter_type = (JSON.parse params[:q])["filter_type"]
 				filters = JSON.parse(params[:q])
 				if filter_type == "BOOK"
 					reading_time_filter = filters["other_filters"][Constants::Time].present?
+					clause = "MATCH (u:User) WHERE ID(u)="+session[:user_id].to_s+" RETURN "
 					if reading_time_filter
 						if filters["reset"]
-							$redis.set 'last_filter_book', nil
+							# session.delete(:last_filter_book)
 						end
-						last_book = $redis.get 'last_filter_book'
+						clause = clause + "u.last_filter_book"
+						# last_book = session[:last_filter_book]
 					else
-						last_book = $redis.get 'last_book'
+						# last_book = session[:last_book]
+						clause = clause + "u.last_book"
 					end
-					books = BookApi.recommendations(last_book, filters, session[:user_id])
+					last_book = @neo.execute_query(clause)["data"][0][0]
+					# puts "get_last_book #{last_book.to_s.red}"
+					books = BookApi.recommendations(last_book, filters, session)
 
 					basic_recommendations = !filters["other_filters"].present?
 					non_zero_result = books.present? && books.length > 0
 					if non_zero_result
 						if basic_recommendations
-							$redis.set 'last_book', books[books.length-1][1]
-							$redis.set 'last_filter_book', nil
+							# session[:last_book] = books[books.length-1][1]
+							# session.delete(:last_filter_book)
+
+							clause = "MATCH (u:User) WHERE ID(u)="+session[:user_id].to_s+" SET u.last_book="+books[books.length-1][1].to_s+" REMOVE u.last_filter_book"
+							puts clause.blue.on_red
+							@neo.execute_query clause
 						elsif reading_time_filter
-							$redis.set 'last_filter_book', books[books.length-1][1]
+							# session[:last_filter_book] = books[books.length-1][1]
+
+							clause = "MATCH (u:User) WHERE ID(u)="+session[:user_id].to_s+" SET u.last_filter_book="+books[books.length-1][1].to_s
+							puts clause.blue.on_red
+							@neo.execute_query clause
 						end
 					end
 					
@@ -102,8 +117,8 @@ module Api
 					readers = ReaderApi.recommendations
 					recommendations = {:readers => readers}
 				end
-				last_book = $redis.get 'last_book'
-				puts last_book.to_s.blue.on_red
+				# last_book = $redis.get 'last_book'
+				# puts "set_last_book #{session[:last_book].to_s.red}"
 				render :json => {:recommendations => recommendations}, :status => 200
 			end
 		end

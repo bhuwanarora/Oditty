@@ -16,14 +16,19 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 
 	$scope._hide_popups = function(){
 		$rootScope.user.collapsed_column = true;
-		$rootScope.user.settings_popup = false;
+		$rootScope.user.collapsed_filters = true;
+		$rootScope.user.collapsed_friends = true;
+		$rootScope.user.collapsed_trends = true;
+		$rootScope.user.collapsed_lists = true;
+		$rootScope.user.collapsed_left_column = true;
+		$rootScope.popups = {};
 		delete $rootScope.focused_book;
 		delete $rootScope.ticker_popup;
 	}
 
 	$scope.move_left = function(event){
 		$scope._hide_popups();
-		var swipe_time = 2000;
+		var swipe_time = 1000;
 		var clientWidth = document.body["scrollWidth"];
 		var current_x = $window.pageXOffset;
 		var delta_x = window_height*(0.56);
@@ -52,7 +57,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 
 	$scope.move_right = function(event){
 		$scope._hide_popups();
-		var swipe_time = 2000;
+		var swipe_time = 1000;
 		var clientWidth = document.body["scrollWidth"];
 		var current_x = $window.pageXOffset;
 		var delta_x = window_height*(0.56);
@@ -322,10 +327,17 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 						'logged': false};
 		var collapsed_column = $timeout(function(){
 			$rootScope.user.collapsed_column = true;
+			$rootScope.user.collapsed_left_column = true;
+			$rootScope.user.collapsed_filters = true;
+			$rootScope.user.collapsed_lists = true;
+			$rootScope.user.collapsed_friends = true;
+			$rootScope.user.collapsed_filters = true;
 		}, 6000);
 		$scope.$on('destroy', function(){
 			$timeout.cancel(collapsed_column);
 		});
+		
+		
 		_detect_browser();
 		console.timeEnd("websiteAppController");
 	}

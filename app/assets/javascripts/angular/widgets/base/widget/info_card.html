@@ -1,33 +1,44 @@
-<div class="animate-fast horizontal_padder horizontal_padder_active" ng-class="{'horizontal_padder_active': !user.collapsed_column, 'horizontal_padder_inactive': user.collapsed_column}"> -->
-<!-- </div> -->
-
-<div ng-if="user.logged">
-     <div class="compressed_info_card animate-fast grey_color" 
-     	  ng-class="{'compressed_info_card_shifted': user.collapsed_column}">
+<div ng-if="!user.compressed_info">
+     <div class="compressed_info_card animate-fast grey_color">
      	<div class="block"
      		ng-click="edit_genres_like();"
      		title="Edit genres you like">
-     		<div class="icon-tags"></div>
+     		<span ng-class="{'site_color': user.profile_status==1}">
+	     		<span class="icon-tags"></span>
+	     		<span>&nbsp;Genres</span>
+	     	</span>
      	</div>
      	<div class="block"
      		ng-click="edit_books_read();"
      		title="Edit books you have read">
-     		<div class="icon-books"></div>
+     		<span ng-class="{'site_color': user.profile_status==2}">
+	     		<span class="icon-books"></span>
+	     		<span>&nbsp;Books Read</span>
+	     	</span>
      	</div>
      	<div class="block"
      		ng-click="edit_authors_read();"
      		title="Edit authors you like">
-     		<div class="icon-pen"></div>
+     		<span ng-class="{'site_color': user.profile_status==3}">
+	     		<span class="icon-pen"></span>
+	     		<span>&nbsp;Follow Authors</span>
+	     	</span>
      	</div>
      	<div class="block"
      		ng-click="goto_info_card(); user.profile_status=4;"
      		title="Invite friends">
-     		<div class="icon-users"></div>
+     		<span ng-class="{'site_color': user.profile_status==4}">
+	     		<span class="icon-users"></span>
+	     		<span>&nbsp;Barter</span>
+     		</span>
      	</div>
      	<div class="block"
      		ng-click="goto_info_card(); user.profile_status=0;"
      		title="Edit personal details">
-     		<div class="icon-cogs"></div>
+     		<span ng-class="{'site_color': user.profile_status==0}">
+	     		<span class="icon-cogs"></span>
+	     		<span>&nbsp;Settings</span>
+	     	</span>
      	</div>
      </div>
      <div class="wrapper" 
@@ -38,7 +49,8 @@
 	     		class="info_cards animate-fast"
 	 	 		ng-switch on="user.profile_status" 
 	 	 		ng-model="user.profile_status">
-			<div class="back_color" style="background-color:{{user.profile_status_color}}"></div>
+	 	 		<div class="icon-close-popup" ng-click="user.compressed_info = true;"></div>
+			<!-- <div class="back_color" style="background-color:{{user.profile_status_color}}"></div> -->
 			<!-- <div>
 				<div class="arrow_box" style="z-index:6">Basic</div>
 				<div class="arrow_box arrow_box_type2" style="z-index:5">Genres</div>
@@ -46,9 +58,9 @@
 				<div class="arrow_box arrow_box_type2" style="z-index:3">Authors</div>
 				<div class="arrow_box arrow_box_type2" style="z-index:2">More</div>
 			</div> -->
-			<div class="sub_header"><b>Tell us about yourself, <span class="site_color">{{user.name}}</span></b></div>
 			<div class="profile_status_logo"></div>
 			<div ng-switch-when="0">
+				<div class="sub_header"><b>Tell us about yourself, <span class="site_color">{{user.name}}</span></b></div>
 				<div>
 					<input class="input_30" 
 		      	       ng-model="user.name" 
@@ -101,18 +113,19 @@
 	      			</form>
       			</div>
       			<hr/>
-      				<cropme
+      				<!-- <cropme
 			        width="info_card_width"
 			        max-height="470"
 			        ratio="info_card_ratio"
 			        icon-class=""
 			        type="png"
 			        destination-width="350">
-			    </cropme>
+			    </cropme> -->
 		      	<div ng-if="user.thumb">
 			    	<img ng-src="{{user.thumb}}" class="profile_pic">
 		      	</div>
-		      	<hr/>
+		      	<div class="red_button button1" ng-click="getting_started_tour()">Getting started</div>
+		      	<!-- <hr/> -->
 			</div>
 			<!-- <div ng-switch-when="1">
 				<div class="wrap_header header">
@@ -156,18 +169,23 @@
 		      	<div class="description">Know what people from your age and gender are reading..</div>
 			</div> -->
 			<div ng-switch-when="1">
+				<div class="sub_header"><b>Which genres do you like</b></div>
 				<div class="header">
-					Which genres do you like
+					This will help us to recommend you better books...
 				</div>
 				<div class="header center scrollbar" msd-wheel="stop_horizontal_scroll($event)">
-					<div ng-repeat="genre in info.genres  | orderBy:genre.name">
+					<div ng-repeat="genre in info.genres  | orderBy:genre.name" class="block3">
 						<toggle data="genre" on-select="save_genre(genre)" on-deselect="remove_genre(genre)"></toggle>
 						<!-- <div class="filter inactive_filter">{{genre.name}}</div> -->
 					</div>
 				</div>
 			</div>
-			<div ng-switch-when="2" class="center">
-				<input ng-keydown="search_info_card($event, 'BOOK')" ng-model="info.search_book" placeholder="Add books you have read..."/>
+			<div ng-switch-when="2">
+				<div class="sub_header"><b>Add books you've read</b></div>
+				<div class="header">
+					We will notify you with any activity on these books...
+				</div>
+				<input ng-keydown="search_info_card($event, 'BOOK')" ng-model="info.search_book" placeholder="Search books..."/>
 		      	
 				<div class="scrollbar header" 
 					msd-wheel="stop_horizontal_scroll($event)" check-scroll-bottom="get_popular_books()">
@@ -179,12 +197,12 @@
 								 class="book_thumb"/>
 							<div class="book_details">
 								<div>
-									<span class="site_color"><b>{{book.title}}</b></span><br/>
-									<span ng-show="book.author_name" class="site_color">Book by {{book.author_name}}</span>
+									<span><b>{{book.title}}</b></span><br/>
+									<span ng-show="book.author_name">Book by {{book.author_name}}</span>
 								</div>
 								<div>&nbsp;</div>
 								<div ng-show="book.id" class="light_grey_color">
-									<div ng-show="book.status">Added</div>
+									<div ng-show="book.status" class="site_color">Added</div>
 									<div ng-show="!book.status">
 										<span>Add to</span>
 										<span class='icon-books'></span>
@@ -197,12 +215,11 @@
 							<img src="assets/loader2.gif" width="20px" ng-show="loading" class="loading_icon"/>
 						</div>
 				</div>
-				<!-- <div class="description">
-					Tell us about your taste..
-				</div> -->
 			</div>
-			<div ng-switch-when="3" class="center">
-				<input ng-keydown="search_info_card($event, 'AUTHOR')" ng-model="info.search_author" placeholder="Add authors you like..."/>
+			<div ng-switch-when="3">
+				<div class="sub_header"><b>Add authors you like <span class="red_color">(Coming Soon)</span>...</b></div>
+				<div class="header">Follow authors and their lives...</div>
+				<input ng-keydown="search_info_card($event, 'AUTHOR')" ng-model="info.search_author" placeholder="Search authors..."/>
 				<div class="scrollbar header" 
 					msd-wheel="stop_horizontal_scroll($event)" check-scroll-bottom="get_popular_authors()">
 						<div class="book_column"
@@ -218,14 +235,10 @@
 							<img src="assets/loader2.gif" width="20px" ng-show="loading" class="loading_icon"/>
 						</div>
 				</div>
-				<!-- <div class="description">
-					Follow authors and their lives...
-				</div> -->
 			</div>
 			<div ng-switch-when="4">
-				<div class="header">
-					Meet readers in your area(Coming Soon)...
-				</div>
+				<div class="sub_header"><b>Share and borrow books from readers in your area  <span class="red_color">(Coming Soon)</span>...</b></div>
+				<div class="header">Let's create a new kind of barter system for books...</div>
 				<div ng-include src="'/assets/angular/widgets/partials/invite.html'"></div>
 				<map style="display:block; height:50vh; width: 101%; margin-top: 10px;">
 					<marker position="current" centered="true"></marker>

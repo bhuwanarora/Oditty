@@ -16,9 +16,11 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		}
 
 		var error_callback = function(data){
-			$scope.loading_icon = false;
-			$rootScope.user.error_message = data.message;
-			$rootScope.user.password = null;
+			$scope.$apply(function(){
+				$scope.loading_icon = false;
+				$rootScope.user.error_message = data.message;
+				$rootScope.user.password = null;
+			});
 		}
 		if(!$rootScope.user.email){
 			$rootScope.user.error_message = LoginConstants.EmailNotPresent;
@@ -52,7 +54,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 			$scope.$on('destroy', function(){
 				$timeout.cancel(timeout_event);
 			});
-			_is_logged_in();
+			$scope._is_logged_in();
 			// $scope.$emit('getNotifications');
 		}
 
@@ -65,7 +67,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		if(!$rootScope.user.email){
 			$rootScope.user.error_message = LoginConstants.EmailNotPresent;
 		}
-		else if (!$rootScope.user.password) {
+		else if(!$rootScope.user.password) {
 			$rootScope.user.error_message = LoginConstants.PasswordNotPresent;
 		}
 		else if(!min_length_pattern.test($rootScope.user.password) && (!old_user)){
@@ -99,7 +101,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 
 	    $scope.$on('Facebook:statusChange', function(ev, data){
 	    	console.log('Status: ', data);
-	        if (data.status == LoginConstants.FacebookLoginStatusCheck) {
+	        if(data.status == LoginConstants.FacebookLoginStatusCheck) {
 	        	$scope.$apply(function() {
 	          	});
 	        } 
@@ -124,11 +126,11 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 
 
     $scope.intent_login = function() {
+    	$scope.loading_icon = true;
         Facebook.getLoginStatus(function(response){
           	if(response.status == LoginConstants.FacebookLoginStatusCheck){
             	$rootScope.logged = true;
             	$scope.me();
-            	
           	}
           	else{
            		$scope.login();
@@ -141,38 +143,78 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
       		if (response.status == LoginConstants.FacebookLoginStatusCheck) {
         		// $rootScope.logged = true;
         		$scope.me();
-        		
       		}
     	});
    	};
    
     $scope.me = function() {
         Facebook.api('/me', function(response){
-        	// console.log(response);
-        	websiteService.handle_facebook_user(response);
-		    $scope.$apply(function(){
-    			$rootScope.user = response;
-        		$rootScope.user.thumb = response["thumb"];
-		        $scope._init_user();
-		    });
+        	websiteService.handle_facebook_user(response).then(function(){
+	        	$scope._is_logged_in();
+        	});
+			$rootScope.user = response;
+		    $scope._init_user();
+	        Facebook.api('me/picture?redirect=false&type=large', function(response){
+	        	websiteService.save_user_info(response);
+	        });
+        	$scope.fb_books();
         });
-        $scope.fb_books();
     };
 
     $scope.fb_books = function(){
-  //       FB.api(
-		//     "/me/books",
-		//     function(response) {
-		//       if (response && !response.error) {
-		//         websiteService.test(response);
-		//       }
-		//     }
-		// );
+    	var _facebook_init = function(){
+			FB.init({
+				appId: "667868653261167",
+				cookie: true,
+				status: true,
+				xfbml: true
+			});
+
+		}
+		// _facebook_init();
+		
+        FB.api(
+		    "/me/books",
+		    function(response){
+		      if(response && !response.error){
+		      	response = angular.extend(response, {"type": "books"});
+		        websiteService.handle_facebook_books(response);
+		      }
+		    }
+		);
 		FB.api(
 		    "/me/books.reads",
-		    function(response) {
-		      if (response && !response.error) {
-		        websiteService.test(response);
+		    function(response){
+		      if(response && !response.error){
+		      	response = angular.extend(response, {"type": "books.read"});
+		        websiteService.handle_facebook_books(response);
+		      }
+		    }
+		);
+		FB.api(
+		    "/me/books.rates",
+		    function(response){
+		      if(response && !response.error){
+		      	response = angular.extend(response, {"type": "books.rates"});
+		        websiteService.handle_facebook_books(response);
+		      }
+		    }
+		);
+		FB.api(
+		    "/me/books.quotes",
+		    function(response){
+		      if(response && !response.error){
+		      	response = angular.extend(response, {"type": "books.quotes"});
+		        websiteService.handle_facebook_books(response);
+		      }
+		    }
+		);
+		FB.api(
+		    "/me/books.wants_to_read",
+		    function(response){
+		      if(response && !response.error){
+		      	response = angular.extend(response, {"type": "books.wants_to_read"});
+		        websiteService.handle_facebook_books(response);
 		      }
 		    }
 		);
@@ -192,7 +234,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
    //  	});
   	// }
 
-  	_is_logged_in = function(){
+  	$scope._is_logged_in = function(){
   		websiteService.get_user().then(function(data){
   			if(data["logged_in"]){
   				$rootScope.user.logged = true;
@@ -208,7 +250,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 
 	_init = function(){
 		$cookieStore.remove('tab');
-		_is_logged_in();
+		$scope._is_logged_in();
 		_bind_auth_listeners();
 		// $scope.authenticate(true);
 	}

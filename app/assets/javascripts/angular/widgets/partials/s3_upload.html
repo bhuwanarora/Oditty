@@ -1,0 +1,66 @@
+<!--   <div class='content'>
+  	<form accept-charset="UTF-8" action="<%= @post_url %>" enctype="multipart/form-data" method="post" id="upload_floorplan">
+		<div class="modal-body form-inputs">
+		    <input id="key" name="key" type="hidden" value="new_projects/<%= @project.id %>/floor_plan/<%= flat_configuration.id %>/"/>
+		    <input id="AWSAccessKeyId" name="AWSAccessKeyId" type="hidden" value="<%= @access_key %>"/>
+		    <input id="acl" name="acl" type="hidden" value="<%= @acl %>"/>
+		    <input id="success_action_redirect" name="success_action_redirect" type="hidden" value="<%= @success_action_redirect%>"/>
+		    <input id="policy" name="policy" type="hidden" value="<%= @policy%>"/>
+		    <input id="signature" name="signature" type="hidden" value="<%= @signature%>"/>
+		    <input type="file" name="file" id="file" class="floorplan_to_s3" multiple="true"/>
+		</div>
+		<div class="form-actions modal-footer">
+	    	<input type="submit" value="Upload"/>
+	    </div>
+	</form>
+  </div>  	
+</div>
+<script>
+	$('#upload_floorplan input#file').on('change', function(){
+		var filename = $('#upload_floorplan input#file').attr('value');
+		var is_jpeg = filename.lastIndexOf("jpeg")===filename.length-4
+		var is_jpg = filename.lastIndexOf("jpg")===filename.length-3
+		var is_gif = filename.lastIndexOf("gif")===filename.length-3
+		var is_png = filename.lastIndexOf("png")===filename.length-3
+		if(!is_png && !is_gif && !is_jpg && !is_jpeg){
+			alert("Invalid Image Format");
+			('#upload_floorplan input#file').attr('value',"");
+		}
+		else{
+			handleFiles(this.files, is_jpeg, is_png, is_gif, is_jpg);
+			// $('#add_master_plan_modal').modal('hide');
+		}
+	})
+	function handleFiles(files, is_jpeg, is_png, is_gif, is_jpg) {
+	    for (var i=0; i<files.length; i++) {
+	        var reader = new FileReader();
+        	reader.onload = function() {
+		        var md5 = CryptoJS.algo.MD5.create();
+				md5.update(CryptoJS.lib.WordArray.create(reader.result));
+				var hash = md5.finalize();
+				new_name = $('#upload_floorplan input#key').attr('value').concat(hash);
+				if(is_jpeg){
+					new_name = new_name.concat('.jpeg');
+				}
+				else if(is_png){
+					new_name = new_name.concat('.png');
+				}else if(is_gif){
+					new_name = new_name.concat('.gif');
+				}else if(is_jpg){
+					new_name = new_name.concat('.jpg');
+				}
+				if(hash){
+					$('#upload_floorplan input#key').attr('value',new_name);
+				}
+        	};
+	        reader.onerror = function() {
+	            console.error("Could not read the file");
+	        };
+	        reader.readAsArrayBuffer(files.item(i));
+	     }
+ 	}
+
+</script>
+
+
+ -->

@@ -1,7 +1,6 @@
 var websiteApp = angular.module('websiteApp', ['ngRoute', 'ngAnimate', 
-                  'monospaced.mousewheel', 'facebook', 
-                  'directive.g+signin', 'ngMap', 'cropme',
-                  'duScroll', 'ngDropdowns', 'filtersApp', 'ngCookies', 
+                  'monospaced.mousewheel', 'facebook', 'ngMap', 'cropme',
+                  'duScroll', 'filtersApp', 'ngCookies', 'ngTouch', 'angular-intro',
                   'appConstants']);
 
 websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
@@ -15,7 +14,10 @@ websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvid
   .when('/user/:id/recommendations/:type', {
     templateUrl: '/assets/angular/widgets/partials/recommendations.html'
   })
-  .when('/user/:id/recommendations/:type/filter/:filter_id', {
+  .when('/user/:id/recommendations/:type/filter/:filter_id/name/:name', {
+    templateUrl: '/assets/angular/widgets/partials/recommendations.html'
+  })
+  .when('/user/:id/recommendations/:type/label/:label_id/name/:name', {
     templateUrl: '/assets/angular/widgets/partials/recommendations.html'
   })
   .when('/user/:id/grid/:type/id/:grid_id/name/:name', {
@@ -75,9 +77,19 @@ websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvid
 websiteApp.constant('facebookAppId', "667868653261167");
 // websiteApp.constant('facebookAppId', "742659549115410");
 
-websiteApp.run(['$rootScope', '$location', '$cookieStore', function($rootScope, $location, $cookieStore){
+websiteApp.run(['$rootScope', '$location', '$cookieStore', '$cookies', '$http', function($rootScope, $location, $cookieStore, $cookies, $http){
   $rootScope.$on("$routeChangeStart", function(event, next, current){
     var unauthenticated_user = !$rootScope.user.logged && !$cookieStore.get('logged');
+
+    // var csrf_token = $cookies['XSRF-TOKEN'];
+    // console.debug("csrftoken ", csrf_token);
+    // $http.defaults.headers.common['X-XSRF-TOKEN'] = csrf_token;
+    // $http.defaults.headers.post['X-CSRFToken'] = $cookies['csrftoken'];
+    // $http.defaults.headers.post['X-CSRF-Token'] = csrf_token
+    // $http.defaults.headers.put['X-CSRF-Token'] = csrf_token
+    // $http.defaults.headers.patch['X-CSRF-Token'] = csrf_token
+    // $http.defaults.headers.delete['X-CSRF-Token'] = csrf_token
+
     if(unauthenticated_user){
       // no logged user, we should be going to #login
       if(next.templateUrl == "/assets/angular/widgets/partials/search.html"){

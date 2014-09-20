@@ -42,6 +42,20 @@ var emotions = [
 
 
 var constants = {
+		"IntroConstants":{
+			"NewsFeed": "Keep track of what your friends are doing on Reader's Door.",
+			"Shelves": "Create virtual book shelves.",
+			"Trending": "Check out books related to trending topics in media",
+			"Listopia": "Check out lists from your friends",
+			"Friends": "Check out your friend list",
+			"Share": "Share your book reading memories, insights, feelings and emotions...",
+			"Profile": "Edit your profile",
+			"RecommendationTab": "Recommendations Tab",
+			"MyLibraryTab": "My Library Tab",
+			"BooksReadTab": "Books Read Tab",
+			"ShelvesTab": "Shelves Tab",
+			"Scroller": "Try these scrollers"
+		},
 		"LoginConstants": {
 			"EmailNotPresent": "Enter your email address",
 			"PasswordNotPresent": "Enter your password",
@@ -52,15 +66,16 @@ var constants = {
 		},
 		"RecommendationUIConstants": {
 			"TickerPopupMaxHeight": "62vh",
-			"FriendsGridMaxHeight": "500px",
-			"FriendsGridMinHeight": "250px",
+			"FriendsGridMaxHeight": "60vh",
+			"FriendsGridMinHeight": "30vh",
 			"NotificationsMinHeight": "30vh",
 			"NotificationsMaxHeight": "70vh",
 			"BookmarkPanel": 'BOOKMARK',
 			"BookTab": "BOOK",
 			"AuthorTab": "AUTHOR",
 			"ReaderTab": "READER",
-			"ZeroBooksFound": "ALERT- Reset the filters couldn't find more books."
+			"ZeroBooksFound": "ALERT- Reset the filters couldn't find more books.",
+			"MarkAsRead": "I HAVE READ"
 		},
 		"SearchUIConstants": {
 			"BookLabel": "Book",
@@ -74,7 +89,7 @@ var constants = {
 			"SearchingBooks": "Searching books...",
 			"AuthorSearch": "AUTHOR",
 			"AuthorSearchPlaceholder": "Search authors...",
-			"AuthorPlaceholder": "Add an author to filters...",
+			"AuthorPlaceholder": "Search and add an author to filters...",
 			"SearchingAuthors": "Searching authors...",
 			"ReaderSearch": "READER",
 			"ReaderSearchPlaceholder": "Search readers...",
@@ -83,15 +98,15 @@ var constants = {
 			"SearchingAuthors": "Searching authors...",
 			"SearchingUsers": "Searching users...",
 			"Year": "YEAR",
-			"YearPlaceholder": "Add a published year to filters...",
+			"YearPlaceholder": "Search and add a published year to filters...",
 			"List": "LIST",
 			"ListPlaceholder": "by list...",
 			"Country": "COUNTRY",
-			"CountryPlaceholder": "Add a country to filters...",
+			"CountryPlaceholder": "Search and add a country to filters...",
 			"Genre": "GENRE",
-			"GenrePlaceholder": "Add a genre to filters...",
+			"GenrePlaceholder": "Search and add a genre to filters...",
 			"Time" :"TIME",
-			"TimePlaceholder": "Add a reading time to filters...",
+			"TimePlaceholder": "Search and add a reading time to filters...",
 			"Gender": "GENDER",
 			"GenderPlaceholder": "by gender...",
 			"MaleGender": "Male",
@@ -109,7 +124,7 @@ var constants = {
 			"BookByRegionLink": "Find books by region",
 			"BookByGenreLink": "Find books by genre",
 			"BookListsLink": "Get popular lists of books",
-			"BookByAuthorLink": "Get books by author",
+			"BookByAuthorLink": "Find books by author",
 			"AuthorByYearLink": "Find authors by era",
 			"AuthorByRegionLink": "Find authors by region",
 			"AuthorByAwardsLink": "Find authors by awards",
@@ -139,7 +154,8 @@ var constants = {
 			"Delete": 46,
 			"Escape": 27,
 			"StatusPosted": "Shared",
-			"ShareSomething": "Share something..."
+			"ShareSomething": "Share something...",
+			"CoverPhotoCDN": "http://rd-images.readersdoor.netdna-cdn.com/cp/"
 		},
 		"ColorConstants":{
 			"value": ["#695447", "#d1d2de", "#c4c2b5", "#675850", "#83817f", "#b3b2b1", "#839baa", "#4867a4", "#423b34", "#e4bc7e", "#987c4e", "#8c7971", "#ad9894", "#565240", "#5d2726"]

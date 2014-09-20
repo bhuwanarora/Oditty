@@ -92,7 +92,8 @@ gem 'capistrano'
 gem 'capistrano-bundler'
 gem 'capistrano-rails'
 gem 'capistrano-rbenv'
-gem 'google-search'
+gem 'google-search', '~> 1.0.3'
+gem 'angular_rails_csrf'
 
 group :development do
 	gem "byebug", "~> 2.5.0"

@@ -201,13 +201,16 @@ module Api
 				info
 			end
 
-			def self.recommendations(last_book, filters={}, user_id=nil)
+			def self.recommendations(last_book, filters={}, session)
 				#FIXME only output isbns
+				user_id = session[:user_id]
 				if filters["reset"]
-					$redis.set 'book_ids', ""
+					# $redis.set 'book_ids', ""
+					session[:book_ids] = ""
 					puts "RESET TRUE".red.on_yellow.blink
 				end
-				book_ids = ($redis.get 'book_ids').split(",")
+				# book_ids = ($redis.get 'book_ids').split(",")
+				book_ids = session[:book_ids].to_s.split(",")
 				
 				# puts book_ids.sort
 				@neo = Neography::Rest.new
@@ -262,7 +265,8 @@ module Api
 					books = @neo.execute_query(clause)["data"]
 				rescue Exception => e
 					puts "ERROR "+e.to_s.blue.on_red.blink
-					$redis.set 'book_ids', ""
+					# $redis.set 'book_ids', ""
+					session[:book_ids] = ""
 					books = @neo.execute_query(clause)["data"]
 				end
 				# puts books.length.to_s.red.on_blue
@@ -273,11 +277,13 @@ module Api
 						book_sent = book_ids.include? node_id
 						unless book_sent
 							if book_ids.present?
-								book_ids = ($redis.get 'book_ids')+","+node_id
+								# book_ids = ($redis.get 'book_ids')+","+node_id
+								book_ids = session[:book_ids].to_s+","+node_id
 							else
 								book_ids = node_id
 							end
-							$redis.set 'book_ids', book_ids
+							session[:book_ids] = book_ids
+							# $redis.set 'book_ids', book_ids
 							results.push book
 						end
 					end

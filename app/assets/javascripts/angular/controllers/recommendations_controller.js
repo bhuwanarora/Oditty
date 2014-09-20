@@ -1,4 +1,4 @@
-websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', 'scroller', 'websiteService', 'sharedService', '$cookieStore', 'RecommendationUIConstants', '$location', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService, scroller, websiteService, sharedService, $cookieStore, RecommendationUIConstants, $location){
+websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', 'scroller', 'websiteService', 'sharedService', '$cookieStore', 'RecommendationUIConstants', '$location', 'IntroConstants', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService, scroller, websiteService, sharedService, $cookieStore, RecommendationUIConstants, $location, IntroConstants){
 
 	$scope.handle_height_of_popup = function(event, scroll_down){
 		var event_defined = angular.isDefined(event);
@@ -16,13 +16,26 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		}
 	}
 
-	$scope.show_settings_popup = function(event){
-		if(angular.isUndefined($rootScope.user.settings_popup)){
-			$rootScope.user.settings_popup = true;
+	$scope.toggle_settings_popup = function(event){
+		var _show_settings_popup = function(){
+			$rootScope.popups = {};
+			delete $rootScope.focused_book;
+			$rootScope.popups.settings_popup = true;
+		}
+
+		if(angular.isUndefined($rootScope.popups.settings_popup)){
+			_show_settings_popup();
 		}
 		else{
-			$rootScope.user.settings_popup = !$rootScope.user.settings_popup;
+			if(!$rootScope.popups.settings_popup){
+				_show_settings_popup();
+			}
+			else{
+				$rootScope.popups.settings_popup = false;
+			}
 		}
+
+
 		event.stopPropagation();
 	}
 
@@ -164,12 +177,13 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		});
 	}
 
-	_show_bookmark_tab = function(){
+	$scope._show_bookmark_tab = function(){
 		$scope.bookmark_selected  = true;
         $scope.panel_selected = RecommendationUIConstants.BookmarkPanel;
 	}
 
-	_initialize_filters = function(){
+
+	$scope._initialize_filters = function(){
 		// $scope.show_more_filters = true;
 		$rootScope.filters = {};
         $rootScope.filters["more_filters"] = [];
@@ -177,28 +191,45 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         if($routeParams.type == "books"){
         	$rootScope.filters["filter_type"] = RecommendationUIConstants.BookTab;
         	var on_specific_list_page = angular.isDefined($routeParams.filter_id);
+        	var on_specific_shelf = angular.isDefined($routeParams.label_id);
         	var on_grids_page = angular.isDefined($routeParams.grid_id);
         	var on_trending_page = angular.isDefined($routeParams.trend_id);
         	if(on_specific_list_page){
-        		if($cookieStore.get('tab') == RecommendationUIConstants.BookmarkPanel){
-        			_show_bookmark_tab();
-        			$rootScope.filters["label_id"] = $routeParams.filter_id;
-        			$rootScope.main_header = $routeParams.name;
-        		}
-        		else{
-        			$rootScope.filters["filter_id"] = $routeParams.filter_id;
-        			$rootScope.main_header = $routeParams.name;
-        		}
+    			$rootScope.filters["filter_id"] = $routeParams.filter_id;
+    			$rootScope.main_header = $routeParams.name;
+        	}
+        	else if(on_specific_shelf){
+    			// $scope._show_bookmark_tab();
+    			$rootScope.filters["label_id"] = $routeParams.label_id;
+    			$rootScope.main_header = $routeParams.name;
+        		$rootScope.user.collapsed_filters = false;
+        		$rootScope.user.collapsed_friends = true;
+        		$rootScope.user.collapsed_trends = true;
+        		$rootScope.user.collapsed_lists = true;
+        		$rootScope.user.collapsed_column = true;
+        		$rootScope.user.collapsed_left_column = false;
         	}
         	else if(on_trending_page){
         		$rootScope.filters["reset"] = true;
 	    		$rootScope.filters["reset_count"] = 0;
         		$rootScope.filters["trend_id"] = $routeParams.trend_id;
         		$rootScope.main_header = $routeParams.name;
+        		$rootScope.user.collapsed_filters = true;
+        		$rootScope.user.collapsed_friends = true;
+        		$rootScope.user.collapsed_trends = false;
+        		$rootScope.user.collapsed_lists = true;
+        		$rootScope.user.collapsed_column = true;
+        		$rootScope.user.collapsed_left_column = false;
         	}
         	else if(on_grids_page){
         		$rootScope.filters["filter_id"] = $routeParams.grid_id;
         		$rootScope.main_header = $routeParams.name;
+        		$rootScope.user.collapsed_filters = true;
+        		$rootScope.user.collapsed_friends = true;
+        		$rootScope.user.collapsed_trends = true;
+        		$rootScope.user.collapsed_lists = false;
+        		$rootScope.user.collapsed_column = true;
+        		$rootScope.user.collapsed_left_column = false;
         	}
         	else{
         		delete $rootScope.main_header;
@@ -241,7 +272,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	_update_recommendations = function(data){
 		if($rootScope.filters["filter_type"] == RecommendationUIConstants.BookTab){
 			if(data.recommendations.books.length > 0){
-				var message = "INFO- "+data.recommendations.books.length+" books found.";
+				var message = "INFO- "+data.recommendations.books.length+" books found. Scroll to see more books.";
 			}
 			else if(data.recommendations.books.length == 0){
 				var message = "INFO- "+data.recommendations.books.length+" book found.";	
@@ -380,7 +411,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				var grid = {"grid_text": "Books becoming movies", 
 				"grid_books": data, "is_grid": true};
 				$scope.recommendations.books.splice(3, 0, grid);
-				var message = "INFO-Checkout Books becoming movies...";
+				var message = "INFO-Check out Books becoming movies...";
 				notify($rootScope, message, $timeout);
 			});
 		}, fiveMinute);
@@ -466,14 +497,17 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		if($rootScope.user.logged){
 			$scope.grid_view = false;
 			$scope.$routeParams = $routeParams;
-			$rootScope.user.settings_popup = false;
+			
+			$rootScope.popups = {"settings_popup": false, "show_notifications_popup": false};
 			// console.debug("%crouteparams "+$routeParams+" ", "color: yellow");
 			// $scope.$emit('reloadRecommendations');
 
 			var oneSec = 10000;
 			$scope.drop_icon = false;
 			// $rootScope.show_book = false;
-			$rootScope.user.interact = false;
+			$rootScope.user = {"collapsed_trends": true, "collapsed_friends": true, 
+								"collapsed_filters": true, "collapsed_lists": true,
+								"interact": false};
 
 			user_behaviour_timer_event = $timeout(function(){
 				_recordUserBehaviour();
@@ -481,7 +515,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 			$scope.searching = false;
 	    	_get_labels();
-			_initialize_filters();
+			$scope._initialize_filters();
 			_init_recommendations();
 			// if($scope.$routeParams.title){
 			// 	_get_recommendations();
@@ -489,9 +523,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	    	_add_listeners();
 	        _init_analytics();
 	        // _init_shelf();
-	        var timeout_event = $timeout(function(){
-	        	_get_recommendations();
-	        }, 1000);
+	        // var timeout_event = $timeout(function(){
+	        // 	_get_recommendations();
+	        // });
 	        $scope.$on('destroy', function(){
 	        	$timeout.cancel(timeout_event);
 	        });
@@ -510,6 +544,62 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         	$location.path("/search");
 		}
 	}
+
+   	$scope.getting_started_tour_options = {
+        steps:[
+	        {
+	            element: '#newsFeed',
+	            intro: IntroConstants.NewsFeed,
+	            position: 'right'
+	        },
+	        {
+	            element: '#shelves',
+	            intro: IntroConstants.Shelves,
+	            position: 'right'
+	        },
+	        {
+	            element: '#trendingList',
+	            intro: IntroConstants.Trending,
+	            position: 'right'
+	        },
+	        {
+	            element: '#listopia',
+	            intro: IntroConstants.Listopia,
+	            position: 'right'
+	        },
+	        {
+	            element: '#friendsList',
+	            intro: IntroConstants.Friends,
+	            position: 'right'
+	        },
+	        {
+	            element: '#share',
+	            intro: IntroConstants.Share,
+	            position: 'bottom'
+	        },
+	        {
+	            element: '#editProfile',
+	            intro: IntroConstants.Profile,
+	            position: 'bottom'
+	        },
+	        {
+	            element: '#shelvesTab',
+	            intro: IntroConstants.ShelvesTab,
+	            position: 'bottom'
+	        }
+        ],
+        showStepNumbers: false,
+        exitOnOverlayClick: true,
+        exitOnEsc: true,
+        nextLabel: '<strong>Next</strong>',
+        prevLabel: '<span>Previous</span>',
+        skipLabel: 'Exit',
+        doneLabel: 'Thanks'
+    };
+
+    $scope.should_auto_start = function() {
+        return false;
+    }
 
 	var push_books_timer_event = "";
 	var load_recommendations_event = "";

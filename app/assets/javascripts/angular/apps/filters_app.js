@@ -24,6 +24,14 @@ angular.module('filtersApp', [])
       return input;
     }
   })
+  .filter('reduced_label', function(){
+    return function(input){
+      if(angular.isDefined(input) && input.length > 20){
+        input = input.slice(0, 20)+"...";
+      }
+      return input;
+    }
+  })
   .filter('first_name', function(){
     return function(input){
       if(angular.isDefined(input)){
@@ -35,8 +43,8 @@ angular.module('filtersApp', [])
   .filter('reduced_title', function(){
     return function(input){
       if(angular.isDefined(input)){
-        if(input != null && input.length > 45){
-          input = input.slice(0, 42)+"...";
+        if(input != null && input.length > 32){
+          input = input.slice(0, 29)+"...";
         }
       }
       return input;
@@ -106,7 +114,7 @@ angular.module('filtersApp', [])
           input = input.slice(0, 37)+"...";
         }
         input = input.split(" ");
-        output = "";
+        output = "<span>&nbsp;</span>";
         for(var i=0; i<input.length; i++){
           var value = input[i];
           output = output + "<span><b>"+value[0]+"</b><span>"+value.substring(1, value.length)+"</span> "

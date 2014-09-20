@@ -9,11 +9,15 @@
 		<book-interact data="book" track></book-interact>
 		<widget-thumb track></widget-thumb>
 		<div class="card_summary animate-fast">
-			<span ng-if="book.summary">{{book.summary | reduced_summary}}</span>
-			<span ng-if="!book.summary && book.title">
-				<b><span>{{book.title | reduced_title}}</span></b><br/>
-				<span>Book by {{book.author_name}}</span>
-			</span>
+			<div>
+				<tooltip text="book.title" position="top"></tooltip>
+				<b><span class="header_font">{{book.title | reduced_title}}</span></b><br/>
+				<span>by {{book.author_name}}</span>
+			</div>
+			<div>
+				<tooltip text="book.summary" position="bottom" scroll="true"></tooltip>
+				<span ng-if="book.summary" class="normal_text">{{book.summary | reduced_summary}}</span>
+			</div>
 		</div>
 		<!-- <book-navbar track></book-navbar> -->
 	</div>

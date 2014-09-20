@@ -1,6 +1,15 @@
 module Api
 	module V0
 		class WebsiteApiController < ApplicationController
+			def s3
+				begin
+					info = S3WebsiteHelper.s3_access_token
+					render :json => info, :status => 200
+				rescue Exception => e
+					render :json => e.to_s, :status => 500
+				end
+			end
+
 			def genres
                 @neo ||= neo_init
 				filter = params[:q]
@@ -12,6 +21,11 @@ module Api
 			def test
 				puts "TEST ".green
 				puts params[:website_api].to_s.red
+				render :json => {:message => "Success"}, :status => 200
+			end
+
+			def fb_books
+				UserApi.add_books_from_fb(params, session[:user_id])
 				render :json => {:message => "Success"}, :status => 200
 			end
 			
@@ -58,7 +72,7 @@ module Api
             end
 
 			def get_user_details
-				info = UserApi.get_details session[:user_id]				
+				info = UserApi.get_details(session[:user_id], session)
 				render :json => info, :status => 200
 			end
 

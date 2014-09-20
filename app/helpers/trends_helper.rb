@@ -5,6 +5,7 @@ module TrendsHelper
 	require 'google-search'
 
 	def self.social_mention
+		puts "socialmention".red
 		url = "http://socialmention.com/"
 		doc = Nokogiri::HTML(open(url))
 		trends = doc.css('.clearfix a')
@@ -21,6 +22,17 @@ module TrendsHelper
 		for trend in trends
 			results.push trend.children.text
 		end
+
+		url = "https://news.google.com/"
+		doc = Nokogiri::HTML(open(url))
+		trends = doc.css('.titletext')
+		
+		for trend in trends
+			trend = trend.children.text.gsub("\"", "'") rescue ""
+			if trend
+				results.push trend
+			end
+		end
 		
 		count = 0
 	    neo = Neography::Rest.new 
@@ -28,7 +40,7 @@ module TrendsHelper
 	    neo.execute_query clause
 
 	    for trend in results
-	    	# begin
+	    	begin
 		      	trend_index = trend.downcase.gsub(" ", "").gsub("\"", "'").to_s rescue ""
 		      	news = Google::Search::News.new(:query => trend).first
 		      	if news.present?
@@ -49,9 +61,9 @@ module TrendsHelper
 						end
 					end
 				end
-	    	# rescue Exception => e
+	    	rescue Exception => e
 	    		
-	    	# end
+	    	end
 	      count = count + 1
 	    end
 	end

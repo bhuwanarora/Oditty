@@ -12,21 +12,24 @@
 }
 
 .grid .header{
+	text-decoration: none;
 	border-bottom: 1px solid #DDD;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 	position: absolute;
-	width: 100%;
+	width: 59vh;
 	z-index: 1;
-	height: 100%;
+	height: 71vh;
 	color: transparent;
 	text-decoration: none;
+	border: 2vh solid transparent;
 }
 
 .grid .header:hover{
-	color: black;
+	color: #717070;
 	text-decoration: none;
 	background-color: rgba(255, 255, 255, 0.8);
+	border: 2vh solid white;
 }
 
 .grid .header .text{
@@ -36,7 +39,7 @@
 	top: 0px;
 	position: absolute;
 	left: 0px;
-	font-weight: 400;
+	font-weight: bold;
 }
 
 .grid1 .first{
@@ -45,8 +48,9 @@
 	top: 0px;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 28vh;
-	height: 44vh;
+	width: 26vh;
+	height: 42vh;
+	border: 1vh solid white;
 }
 
 .grid1 .second{
@@ -55,8 +59,9 @@
 	top: 0;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 17vh;
-	height: 27vh;
+	width: 15vh;
+	height: 25vh;
+	border: 1vh solid white;
 }
 
 .grid1 .third{
@@ -65,8 +70,9 @@
 	top: 0;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 17vh;
-	height: 27vh;
+	width: 15vh;
+	height: 25vh;
+	border: 1vh solid white;
 }
 
 .grid1 .fourth{
@@ -75,8 +81,9 @@
 	top: 28vh;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 17vh;
-	height: 27vh;
+	width: 15vh;
+	height: 25vh;
+	border: 1vh solid white;
 }
 
 .grid1 .fifth{
@@ -85,8 +92,9 @@
 	top: 28vh;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 17vh;
-	height: 27vh;
+	width: 15vh;
+	height: 25vh;
+	border: 1vh solid white;
 }
 
 .grid1 .sixth{
@@ -95,8 +103,9 @@
 	left: 11vh;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 17vh;
-	height: 27vh;
+	width: 15vh;
+	height: 25vh;
+	border: 1vh solid white;
 }
 
 .grid2 .first{
@@ -106,8 +115,9 @@
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
 	max-width: 180px;
-	width: 20vh;
-	height: 32vh;
+	width: 18vh;
+	height: 30vh;
+	border: 1vh solid white;
 }
 
 .grid2 .second{
@@ -116,8 +126,9 @@
 	top: 0;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 25vh;
-	height: 44vh;
+	width: 23vh;
+	height: 42vh;
+	border: 1vh solid white;
 }
 
 .grid2 .third{
@@ -126,8 +137,9 @@
 	top: 0;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 17vh;
-	height: 27vh;
+	width: 15vh;
+	height: 25vh;
+	border: 1vh solid white;
 }
 
 .grid2 .fourth{
@@ -136,8 +148,9 @@
 	top: 32vh;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 20vh;
-	height: 32vh;
+	width: 18vh;
+	height: 30vh;
+	border: 1vh solid white;
 }
 
 .grid2 .fifth{
@@ -146,8 +159,9 @@
 	top: 28vh;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 17vh;
-	height: 27vh;
+	width: 15vh;
+	height: 25vh;
+	border: 1vh solid white;
 }
 
 .grid2 .sixth{
@@ -156,6 +170,7 @@
 	left: 11vh;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 17vh;
-	height: 27vh;
+	width: 15vh;
+	height: 25vh;
+	border: 1vh solid white;
 }

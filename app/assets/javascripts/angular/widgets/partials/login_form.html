@@ -64,10 +64,10 @@
 	      		<span>SIGN UP</span>
 	      	</div>
 	      	<div class="site_color link">
-	      		<span ng-click="recover_password()">Forgot Password?</span>
+	      		<span ng-click="recover_password()" class="table_cell">Forgot Password?</span>
 	      	</div>
 	    </form>
-      	<div class="login_status" ng-show="show_other_options">
+      	<div class="login_status">
       		<span ng-if="user.error_message" ng-bind-html="user.error_message"></span>
       		<img src="assets/loader2.gif" width="20px" ng-show="loading_icon"/>
       	</div>

@@ -270,9 +270,21 @@ class BooksController < ApplicationController
       neo.execute_query clause
     end
 
-    clause = "MATCH (t:Trending) OPTIONAL MATCH (t)-[:RelatedBooks]->(b:Book) RETURN t.name, t.timestamp, ID(t), COLLECT(b.title), t.status, COLLECT(ID(b)), t.title, t.content, t.searched_words, t.url, t.thumbnail_url, t.redirect_url, t.publisher, t.thumb ORDER BY t.timestamp DESC LIMIT 50 "
+    clause = "MATCH (t:Trending) OPTIONAL MATCH (t)-[:RelatedBooks]->(b:Book) RETURN t.name, t.timestamp, ID(t), COLLECT(b.title), t.status, COLLECT(ID(b)), t.title, t.content, t.searched_words, t.url, t.thumbnail_url, t.redirect_url, t.publisher, t.thumb ORDER BY toInt(t.timestamp) DESC LIMIT 50 "
     puts clause.blue.on_red
     @trends = neo.execute_query(clause)["data"]
+
+  end
+
+  def remove_trend
+    begin
+      @neo = Neography::Rest.new
+      clause = "MATCH (t:Trending), (t)-[r]-() WHERE ID(t)="+params[:id].to_s+" DELETE t, r"
+      @neo.execute_query clause
+      render :json => {:message => "Success"}, :status => 200
+    rescue Exception => e
+      render :json => {:message => e.to_s}, :status => 500
+    end
 
   end
 

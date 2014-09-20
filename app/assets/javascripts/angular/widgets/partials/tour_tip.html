@@ -1,0 +1,7 @@
+<div class="tour_tip" ng-class="{'scrollbar': scroll}" msd-wheel="stop_horizontal_scroll($event)">
+	<div>{{prependText}}&nbsp;{{text}}{{pluralize}}&nbsp;{{appendText}}</div>
+	<div class="arrow_down tour_tip_arrow" ng-show="position == 'top'"></div>
+	<div class="arrow_up tour_tip_arrow" ng-show="position == 'bottom'"></div>
+	<div class="arrow_left tour_tip_arrow" ng-show="position == 'right'"></div>
+	<div class="arrow_right tour_tip_arrow" ng-show="position == 'left'"></div>
+</div>

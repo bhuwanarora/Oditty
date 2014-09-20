@@ -3,7 +3,11 @@
   <% @users.each_with_index do |user, index| %>
     <span>
       <ul class="user_grid">
-          <b class="site_color user">#<%= user[3] %> <%= user[0]["data"]["email"] %> <%= user[0]["data"]["name"] %></b>
+          <b class="site_color user">#<%= user[3] %> 
+                                    <%= user[0]["data"]["email"] %> 
+                                    <%= user[0]["data"]["name"] %>
+                                    <%= user[0]["data"]["last_login"] %>
+                                    <img class="thumb" src="<%= user[0]['data']['thumb'] %>"/></b>
         <table style="display:none;">
           <% user[0]["data"].keys.each do |key| %>
             <tr><td><b><%= key %></b></td><td><%= user[0]["data"][key] %></td></tr>

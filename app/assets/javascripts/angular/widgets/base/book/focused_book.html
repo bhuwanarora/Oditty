@@ -22,10 +22,11 @@
   <li><span>Make Recommendations Better</span></li>
 </ul> -->
 <div class="arrow" ng-class="{'arrow_left': on_left, 'arrow_right': !on_left}"></div>
+<div class="icon-close-popup" ng-click="hide_popups()"></div>
 <!-- <div class="close button_effect" ng-click="close_focused_tooltip()">x</div> -->
 <div class="header">
-  <div class="title site_color" title="{{focused_book.title}}">{{focused_book.title | book_title}} </div>
-  <div class="author site_color">Book by <b>{{focused_book.author_name}}</b></div>
+  <div class="title site_color header_font" title="{{focused_book.title}}"><b>{{focused_book.title | book_title}} </b></div>
+  <div class="author site_color">by <b>{{focused_book.author_name}}</b></div>
   <div class="author">
     <span ng-if="focused_book.published_year">
       {{focused_book.published_year | published_year}}</span>
@@ -152,21 +153,18 @@
 
 <div class="time_to_read" ng-if="show_buy && !show_author">
   <div class="header">Describe the reading length of this book</div>
-  <div>
-    <span ng-click="record_read_time(0, $event)"
-        class="tab"
-        ng-class="{'active_tab':is_timer(0)}">Tiny Read</span>
-    <span ng-click="record_read_time(1, $event)"
-        class="tab"
-        ng-class="{'active_tab':is_timer(1)}">Small Read</span>
-    <span ng-click="record_read_time(2, $event)"
-        class="tab"
-        ng-class="{'active_tab':is_timer(2)}">Normal Read</span>
-    <span ng-click="record_read_time(3, $event)"
-        class="tab"
-        ng-class="{'active_tab':is_timer(3)}">Long Read</span>
-    
-  </div>
+  <div ng-click="record_read_time(0, $event)"
+      class="tab read_block"
+      ng-class="{'active_tab':is_timer(0)}">Tiny Read</div>
+  <div ng-click="record_read_time(1, $event)"
+      class="tab read_block"
+      ng-class="{'active_tab':is_timer(1)}">Small Read</div>
+  <div ng-click="record_read_time(2, $event)"
+      class="tab read_block"
+      ng-class="{'active_tab':is_timer(2)}">Normal Read</div>
+  <div ng-click="record_read_time(3, $event)"
+      class="tab read_block"
+      ng-class="{'active_tab':is_timer(3)}">Long Read</div>
 </div>
 
 <div class="tweet_link site_color" ng-click="user.interact = true;">

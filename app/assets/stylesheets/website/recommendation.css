@@ -1,5 +1,5 @@
 .vertical_padder_active{
-	height: 100px;
+	height: 110px;
 	width: 100%;
 }
 
@@ -11,8 +11,8 @@
    	top: 0px;
    	width:100%;
    	z-index: 7;
-   	-webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
-   	box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
+   	-webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,.21);
+   	box-shadow: 0 2px 4px 0 rgba(0,0,0,.21);
 }
 
 .main_header:hover{
@@ -37,14 +37,27 @@
 	overflow-y: scroll;
 }
 
-.header_navbar{
+.header_navbar,
+.header_icon{
 	float: right;
 	height: 35px;
 	margin-top: 3px;
-	padding-left: 15px;
-	padding-right: 15px;
+	padding-left: 10px;
+	padding-right: 10px;
 	display: table;
 	cursor: default;
+}
+
+.header_icon:hover [class^="icon-"]{
+	color: #333;
+}
+
+.header_navbar .share:before{
+	content: 'Share';
+}
+
+.header_navbar .share{
+	font-weight: 700;
 }
 
 .header_navbar:hover{
@@ -61,6 +74,7 @@
 	padding-left: 5px;
 	position: relative;
 	color: #427fed;
+	top: -7px;
 }
 
 .header_navbar .user_details .count{
@@ -104,13 +118,13 @@
 .comment_box{
 	border: 1px solid #D6D5D5;
 	font-size: 1em;
-	margin: 5px 0px 5px 0px;
-	width: 98%;
+	margin: 0px 0px 5px 0px;
+	width: 80%;
 	height: 60px;
 	max-width: 89%;
 	outline: none;
 	border: 1px solid #F1F1F1;
-	border-radius: 2px;
+	border-radius: 1px;
 }
 
 .interaction_box_options [class^="icon-"],
@@ -135,11 +149,12 @@
 
 .interaction_box .share_status{
 	float: right;
-	color: white;
-	padding: 5px 15px;
-	border-radius: 3px;
+	color: #fff;
+	padding: 8px 20px;
+	border-radius: 1px;
 	cursor: pointer;
 	border: none;
+	font-size: 1em;
 }
 
 .interaction_box .share_status:disabled{
@@ -171,7 +186,7 @@
 }
 
 .comment_box:focus{
-	border: 1px solid #427fed;
+	border: 2px solid #427fed;
 }
 
 .msd-wheel.ng-move{
@@ -188,9 +203,10 @@
 }
 
 .link{
-	height: 6px;
-	padding: 8px 4px 20px;
-	margin-left: 15px;
+	display: table;
+	height: 100%;
+	vertical-align: middle;
+	padding: 0px 10px;
 }
 
 .link:hover{
@@ -337,6 +353,12 @@
    	border-radius: 1px;
    	padding-left: 10px;
 	padding-right: 10px;
+	height: 40px;
+}
+
+.right_links{
+	left: 130px;
+	right: inherit;
 }
 
 .toggle_elements{
@@ -458,6 +480,7 @@
 .filters_panel_large,
 .filters_panel_right{
 	text-align: center;
+	max-height: 60vh;
 }
 
 .filters_group{
@@ -465,7 +488,7 @@
 	overflow: auto;
 }
 
-.filters_panel,
+/*.filters_panel,
 .filters_group,
 .filters_panel_right{
 	display: flex;
@@ -475,7 +498,7 @@
     align-items: center;
     padding: 5px;
 }
-
+*/
 .filters_panel_right .header{
 	font-size: 0.8em;
 }
@@ -486,15 +509,19 @@
 }
 
 .filter{
-	float: left;
-	margin: 2px;
-	display: inline-block;
-	padding: 5px 4px 5px 4px;
-	font-size: 0.8em;
-	cursor: pointer;
+	padding: 15px;
+	font-size: .8em;
 	text-align: left;
-	min-width: 220px;
+	min-width: 200px;
 	border-radius: 3px;
+	margin: 5px;
+	color: #717070;
+	white-space: initial;
+}
+
+.filter:active{
+	background-color: rgba(66, 127, 237, 0.6) !important;
+	color: white;
 }
 
 .interaction_group{
@@ -511,7 +538,7 @@
 	padding: 10px;
 	background-color: #fff;
 	border-radius: 2px;
-	padding: 20px;
+	padding: 3vh;
 	box-shadow: 8px 10px 54px 0 #424242;
 }
 
@@ -519,7 +546,7 @@
 .interaction_box_book_options{
 	width: 250px;
 	top: 71px;
-	margin-left: 45px;
+	margin-left: 80px;
 	box-shadow: 0 1px 4px 0 #99A3AD,inset 0 0 40px #EEE;
 	font-size: 1em;
 	z-index: 6;
@@ -537,14 +564,22 @@
 
 
 .interaction_box img{
-	width: 35px;
-	margin-bottom: 20px;
-	margin-right: 4px;
+	width: 70px;
+	min-height: 70px;
+}
+
+.tweets .thumb,
+.interaction_box .thumb{
+	width: 70px;
+	height: 70px;
+	float: left;
+	overflow: hidden;
+	margin-right: 10px;
 	border-radius: 2px;
 }
 
 .interaction_box .second_input{
-	height: 15px;
+	height: 25px;
 	padding: 11px;
 	width: 94%;
 	border-radius: 4px;
@@ -570,7 +605,8 @@
 
 .interaction_box .interaction_links{
 	padding: 2px;
-	margin-left: 40px;
+	margin-left: 75px;
+	width: 82%;
 }
 
 .interaction_box .interaction_links .status_message{
@@ -630,20 +666,27 @@
 
 .recommendation_box .friend_grid .friend_thumb{
 	width: 60px;
-	margin: 2px;
-	border: 5px solid white;
+	min-height: 60px;
 }
 
 .recommendation_box .friend_grid .friend_block{
+	border: 5px solid #fff;
 	position: relative;
 	float: left;
+	overflow: hidden;
+	width: 60px;
+	height: 60px;
 }
 
 .recommendation_box .friend_grid .friend_block .friend_name{
 	position: absolute;
-	bottom: 10px;
-	left: 12px;
-	color: white;
+	bottom: 5px;
+	left: 0px;
+	background-color: rgba(255, 255, 255, 0.56);
+	right: 0px;
+	padding: 4px;
+	font-size: .8em;
+	cursor: default;
 }
 
 .recommendation_box .header{
@@ -941,6 +984,10 @@ and (min-width : 1824px) {
 	overflow-y: auto; 
 }
 
+.notifications .notification:hover .delay_site_color{
+    color: #427fed;
+}
+
 .notification_link{
 	left: 5px;
 	top: 50px;
@@ -963,6 +1010,7 @@ and (min-width : 1824px) {
 	color: white;
 }
 
+.notifications_popup .notification_message,
 .notifications .notification_message{
 	white-space: initial;
 	padding: 0px 5px;
@@ -972,34 +1020,42 @@ and (min-width : 1824px) {
 	width: auto;
 }
 
-.notifications .instruct_block{
+.notifications_popup .notification_message a:hover,
+.notifications .notification_message a:hover{
+	text-decoration: none;
+}
+
+.notifications_popup .instruct_block{
 	padding: 10px;
 	color: white;
 	border-radius: 2px;
-	margin: 4px;
+	margin: 10px;
 }
 
-.notifications .instruct_icon{
+.notifications_popup .instruct_icon{
 	font-size: 2em;
 	padding: 3px;
-	margin: 4px;
+	margin: 10px;
 }
 
-.notifications .keyboard_keys{
+.notifications_popup .keyboard_keys{
 	border: 1px solid #C9C9C9;
 	padding: 5px;
 	border-radius: 4px;
 	line-height: 2em;
 }
 
+.notifications_popup .notification_message [class^="icon-"],
 .notifications .notification_message [class^="icon-"]{
 	font-size: 1.4em !important;
 }
 
+.notifications_popup .notification:hover,
 .notifications .notification:hover{
 	background-color: #F1F1F1;
 }
 
+.notifications_popup .notification_stable,
 .notifications .notification_stable{
 	background-color: #fff;
 	overflow: auto;
@@ -1031,6 +1087,7 @@ and (min-width : 1824px) {
 	width: 80%;
 }
 
+.notifications_popup img,
 .notifications img{
 	width: 30px;
 	height: 30px;
@@ -1043,11 +1100,12 @@ and (min-width : 1824px) {
 	color: white;
 	text-align: center;
 	min-width: 12px;
-	margin-top: 10px;
+	margin-top: 15px;
 	font-size: 0.7em;
 	padding: 4px;
-	margin-left: 10px;
+	border-radius: 1px;
 	position: absolute;
+	margin-left: -5px;
 }
 
 /* only needed for this sample */
@@ -1118,13 +1176,15 @@ and (min-width : 1824px) {
 .site_logo{
     float: left;
     color: #427fed;
-	font-size: 1.5em;
+	font-size: 22px;
 	font-weight: 700;
 	font-family: Helvetica;
-	letter-spacing: -3.2px;
+	letter-spacing: -3.4px;
 	margin-left: 20px;
 	margin-top: 7px;
 	text-shadow: 0 2px 3px rgba(223, 223, 223, 1);
+	padding-right: 20px;
+	display: inline-block;
 }
 
 
@@ -1167,20 +1227,18 @@ and (min-width : 1824px) {
 	margin-top: 2px;
 	border-radius: 2px;
 	overflow: auto;
-	padding: 10px 20px 30px 20px;
+	padding: 3vh;
 }
 
 .tweets .tweet img{
-	width: 30px;
-	border-radius: 2px;
+	width: 70px;
+	min-height: 70px;
 }
 
 .trending_background{
-	background-image: url('/assets/trending.png');
-	background-repeat: repeat-x;
 	border-radius: 5px;
-	padding-left: 5px;
 	margin-bottom: 10px;
+	display: table-cell;
 }
 
 .tweets .tweet .large_thumb{
@@ -1193,10 +1251,10 @@ and (min-width : 1824px) {
 .tweets .tweet .tweet_text{
 	display: inline-block;
 	float: left;
-	padding: 0px 10px 0px 10px;
-	width: 90%;
+	width: 80%;
 	white-space: normal;
 	word-break: break-word;
+	font-size: 0.9em;
 }
 
 .column_wrapper{
@@ -1207,22 +1265,27 @@ and (min-width : 1824px) {
 
 .left_column{
 	overflow: auto;
-	z-index: 6;
-	box-shadow: 8px 0 43px 0 rgba(66,66,66,.47);
+	z-index: 7;
+	box-shadow: 3px 0 10px 0 rgba(66,66,66,0.47);
 	position: fixed;
 	top: 50px;
 	width: 28%;
 	/*min-width: 280px;*/
 	left: 5px;
 	background-color: white;
+	border-radius: 2px;
+}
+
+.left_column a:hover{
+	text-decoration: none;
 }
 
 .expand_notifications{
 	position: fixed;
-	z-index: 7;
+	z-index: 8;
 	font-size: 1em;
 	left: 26%;
-	top: 57px;
+	top: 65px;
 }
 
 .expand_notifications_shift{
@@ -1233,21 +1296,31 @@ and (min-width : 1824px) {
 	color: #427fed;
 }
 
+.left_column .friends_grid{
+	max-height: 60vh;
+	white-space: normal;
+	background-color: #fff;
+	border-radius: 4px;
+}
+
+.left_column .friends_grid img{
+	width: 60px;
+	margin: 2px;
+	float: left;
+	min-height: 60px;
+}
+
 .left_column .friends_grid .friend_block{
 	width: auto;
 	overflow-y: auto;
 	padding: 5px;
 	border-bottom: 1px solid #E9E9E9;
-	cursor: pointer;
-}
-
-.left_column .friends_grid .friend_block:hover{
-	background-color: #F1F1F1;
+	cursor: default;
 }
 
 .left_column .friends_grid .friend_block .friend_details{
 	float: left;
-	margin: 10px;
+	margin: 0px 10px 10px 10px;
 	width: 180px;
 }
 
@@ -1261,7 +1334,7 @@ and (min-width : 1824px) {
 	box-shadow: 0 7px 15px rgba(0,0,0,.25);
 	height: 42vh;
 	position: fixed;
-	z-index: 8;
+	z-index: 12;
 	padding: 4px 0px 4px 0px;
 }
 
@@ -1287,7 +1360,7 @@ and (min-width : 1824px) {
 
 .ticker_popup .ticker_overflow{
 	height: 35vh;
-	width: 53vh;
+	width: 48vh;
 }
 
 .ticker_popup .bottom_widget{
@@ -1295,33 +1368,21 @@ and (min-width : 1824px) {
 	z-index: 1;
 	left: 0px;
 	right: 0px;
+	box-shadow: 0 -1px 4px 0 rgba(0,0,0,.21);
 }
 
 .shift_right{
 	padding-right: 15px;
 }
 
-.left_column .friends_grid .friends_grid_header{
+.left_column .header{
 	padding: 15px;
 	background-color: #F3F3F3;
 	margin-bottom: 5px;
 	border-radius: 3px;
 	border-bottom: 1px solid #DDD;
 	cursor: pointer;
-}
-
-.left_column .friends_grid{
-	max-height: 120px;
-	white-space: normal;
-	background-color: #fff;
-	border-radius: 4px;
-}
-
-.left_column .friends_grid img{
-	width: 55px;
-	margin: 2px;
-	float: left;
-	border-radius: 3px;
+	white-space: initial;
 }
 
 .recommendations .status{
@@ -1410,11 +1471,12 @@ and (min-width : 1824px) {
 
 .feedback{
 	position: fixed;
-	top: 50px;
-	left: 350px;
+	bottom: 0px;
+	right: 0px;
 	padding: 10px;
 	border-radius: 2px;
-	cursor: move;
+	cursor: pointer;
+	box-shadow: -4px 0 25px 0 rgba(66,66,66,.47);
 	z-index: 10;
 	background-color: white;
 }
@@ -1425,61 +1487,118 @@ and (min-width : 1824px) {
 	margin-top: 10px;
 }
 
-.feedback_sumbit{
-	padding: 5px;
+.feedback textarea:focus{
+	outline: none;
 }
 
-.float_left{
-	float: left;
+.feedback_sumbit{
+	padding: 5px;
 }
 
 .left_column .collapse_icon{
 	position: fixed;
 	left: 29%;
 	padding: 4px 7px;
-	background-color: rgba(0, 0, 0, 0.6);
 	border-radius: 2px;
 	top: 50px;
 	font-size: 1.5em;
-	color: white;
-	cursor: pointer;
 }
 
 .left_column .collapse_icon:hover{
 	background-color: rgba(0, 0, 0, 0.8);
 }
 
-.left_column .collapsed_column img{
-	width: 20px;
-	border-radius: 3px;
+
+.left_column_tab{
+	cursor: pointer;
+	height: 40px;
+	display: table;
+	width: 100%;
+	font-size: 0.9em;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .left_column_collapsed{
-	width: 40px!important;
+	width: 120px!important;
+	height: 40px;
+	border-bottom: 4px solid transparent;
+	overflow: hidden;
+}
+
+.left_column_collapsed1:hover{
+	border-bottom: 4px solid #427fed;
+}
+
+.left_column_collapsed2:hover{
+	border-bottom: 4px solid #E2B503;
+}
+
+.left_column_collapsed3:hover{
+	border-bottom: 4px solid #DD4B39;
+}
+
+.left_column_collapsed4:hover{
+	border-bottom: 4px solid #918FB5;
+}
+
+.left_column_collapsed5:hover{
+	border-bottom: 4px solid #65b045;
+}
+
+.left_column_collapsed1{
 	top: 95px;
 }
 
-.left_column .collapsed_column{
-	font-size: 1.4em;
-	cursor: pointer;
+.left_column_collapsed2{
+	top: 144px;
 }
 
-.left_column .collapsed_column div{
-	padding: 10px;
+.left_column_collapsed3{
+	top: 193px;
 }
 
-.left_column .collapsed_column:hover{
-	background-color: #F3F3F3;
+.left_column_collapsed4{
+	top: 242px;
 }
 
+.left_column_collapsed5{
+	top: 291px;
+}
+
+.left_column_shifted{
+	left: 29% !important;
+	width: inherit !important;
+}
+
+.left_column_shifted1{
+	top: 95px;
+}
+
+.left_column_shifted2{
+	top: 146px;
+}
+
+.left_column_shifted3{
+	top: 197px;
+}
+
+.left_column_shifted4{
+	top: 248px;
+}
+
+.left_column_shifted5{
+	top: 299px;
+}
 
 .main_header .search_typeahead_group{
-   	position: fixed;
-	left: 170px;
-	top: 3px;
+	position: fixed;
 	width: 44%;
-	height: 37px;
+	height: 33px;
 	z-index: 10;
+	/*float: left;*/
+	top: 4px;
+	left: 174px;
 }
 
 .main_header .search_input_shifted{
@@ -1487,9 +1606,9 @@ and (min-width : 1824px) {
 	border: 1px solid #E2E2E2;
 	position: fixed;
 	width: 43%;
-	height: 28px;
+	height: 32px;
 	top: 4px;
-	left: 170px;
+	left: 174px;
 	box-shadow: none;
 }
 
@@ -1506,11 +1625,11 @@ and (min-width : 1824px) {
 }
 
 .main_header .compressed_filters{
-	background-color: white;
-	top: 4px;
-	position: fixed;
+	background-color: #fff;
+	top: 0px;
+	position: absolute;
 	z-index: 2;
-	width: 44%;
+	width: 100%;
 	height: 30px;
 	border: 1px solid #D8D8D8;
 	border-radius: 2px;
@@ -1525,7 +1644,6 @@ and (min-width : 1824px) {
 	cursor: default;
 	height: 12px;
 	font-size: 0.9em;
-	max-width: 10%;
 }
 
 .main_header .compressed_filters .compressed_filter_icon:hover{
@@ -1541,9 +1659,8 @@ and (min-width : 1824px) {
 	position: fixed;
 	background-color: white;
 	list-style: none;
-	right: 10px;
+	right: 5px;
 	top: 27px;
-	text-align: center;
 	padding: 10px 0px;
 	z-index: 9;
 	border: 1px solid #ccc;
@@ -1552,11 +1669,77 @@ and (min-width : 1824px) {
 }
 
 .settings_popup li{
-	padding: 5px;
+	padding: 5px 15px;
 	width: 150px;
 	cursor: pointer;
 }
 
 .settings_popup li:hover{
 	background-color: #F1F1F1;
+}
+
+.notifications_popup{
+	position: fixed;
+	background-color: white;
+	width: 35%;
+	max-height: 30vh;
+	right: 10px;
+	overflow-y: scroll;
+	top: 41px;
+	min-width: 350px;
+	padding: 10px 15px;
+	z-index: 9;
+	border: 1px solid #ccc;
+	border-color: rgba(0,0,0,.2);
+	box-shadow: 0 2px 10px rgba(0,0,0,.2);
+	font-size: 0.9em;
+}
+
+@media only screen
+and (min-width : 320px)
+and (max-width : 900px) {
+/* Styles */
+	/*.header_navbar .share:before{
+		content: "\e620";
+		font-family: icomoon;
+		speak: none;
+		font-style: normal;
+		font-weight: 400;
+		font-variant: normal;
+		text-transform: none;
+		line-height: 1;
+	}
+
+	.shelf_nav_links{
+		font-size: 0.8em;
+	}
+
+	.left_column{
+		right: 45px;
+		left: 1vh;
+		bottom: 1vh;
+		width: initial;
+		height: initial;
+	}
+
+l	.compressed_info_card{
+		right: 2px;
+		left: initial !important;
+	}
+
+	.compressed_info_card_shifted{
+		right: initial;
+		bottom: 0px;
+		top: inherit !important;
+	}
+
+	.left_column .collapse_icon{
+		right: 17px;
+		left: initial;
+	}
+
+	.loading_widget{
+		display: none;
+	}*/
+
 }

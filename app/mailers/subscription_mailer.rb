@@ -64,4 +64,12 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
                   important: true,
                   inline_css: true
   end
+
+  def test_email
+    mandrill_mail template: "TestEmail",
+                  subject: 'TEST EMAIL',
+                  to: { email: "bhuwanarora67@gmail.com" },
+                  important: true,
+                  inline_css: true 
+  end
 end

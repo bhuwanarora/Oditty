@@ -43,17 +43,17 @@
 }
 
 .compressed_info_card{
+	bottom: 20px;
 	position: fixed;
-	top: 95px;
-	position: fixed;
-	z-index: 7;
-	left: 29%;
+	z-index: 11;
+	left: 50%;
+	margin-left: -277px;
 	box-shadow: 8px 0 43px 0 rgba(66,66,66,.47);
 }
 
 .compressed_info_card_shifted{
 	left: 5px;
-	top: 160px;
+	top: 100px;
 }
 
 .compressed_info_card .block{
@@ -62,6 +62,11 @@
 	background-color: white;
 	border-bottom: 1px solid #E9E9E9;
 	cursor: pointer;
+	font-size: 0.9em;
+	float: left;
+	display: inline-block;
+	margin: 1px;
+	width: 110px;
 	text-align: center;
 }
 
@@ -83,6 +88,7 @@
 
 .info_cards .sub_header{
 	margin-top: 5px;
+	font-size: 1.2em;
 }
 
 .info_cards .book_details{
@@ -96,21 +102,22 @@
 
 .info_cards .book_column{
 	overflow: auto;
-	width: 48%;
-	margin-top: 10px;
-	margin-bottom: 10px;
+	width: 44%;
+	padding: 10px;
 	margin-left: 1%;
 	cursor: pointer;
 	border-radius: 3px;
 	float: left;
+	min-width: 320px;
+	box-shadow: 0 1px 4px 0 #DDDCDC,inset 0 0 40px #FCFCFC;
 }
 
 .info_cards .selected{
-	background-color: #E4E4E4;
+	border-bottom: 4px solid #427fed;
 }
 
 .info_cards .book_column:hover{
-	background-color: #ECECEC;
+	border-bottom: 4px solid rgba(66, 127, 237, 0.4);
 }
 
 .info_cards .wrap_header{
@@ -129,7 +136,6 @@
 }
 
 .info_cards .header{
-	font-family: Helvetica;
 	font-size: 1em;
 	padding: 4px;
 	overflow: auto;
@@ -139,6 +145,7 @@
 	min-width: 35vh;
 	width: 100%;
 	overflow-y: scroll;
+	color: #717070;
 }
 
 .info_cards .profile_pic{
@@ -277,21 +284,33 @@
 	border-left-color: white;
 }
 
-.info_cards .toggle_filter{
-	text-align: left;
-	margin-top: 5px;
-	padding: 5px;
-}
-
 .info_cards .toggle_filter [class^="icon-"]{
 	font-size: 1.5em;
 }
 
 .invite_friends{
-	width: 95px;
 	padding: 7px 20px;
 	margin: 5px;
 	position: absolute;
 	top: 35px;
 	right: 20px;
+}
+
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen
+and (min-width : 320px)
+and (max-width : 500px) {
+/* Styles */
+	/*.info_cards{
+		left: 1vh;
+		right: 1vh;
+		top: 1vh;
+		bottom: 1vh;
+		margin: 0px;
+		width: initial;
+		height: initial;
+	}*/
+
+	
 }

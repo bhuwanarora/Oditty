@@ -543,7 +543,7 @@ module ShelfariCrawler
         puts clause.blue.on_red
         # @neo.execute_query clause
         Resque.enqueue(LinodeNeoWorker, clause, id)
-        # book.data_flag = true
+        book.data_flag = true
         book.save
       end
     rescue Exception => e

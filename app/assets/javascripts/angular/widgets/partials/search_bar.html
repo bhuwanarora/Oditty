@@ -2,18 +2,24 @@
      ng-click="reset_search_bar($event)"
      ng-if="$routeParams.type && !hide_options"></div>
 <div class="search_typeahead_group animate-fast" ng-class="{'shift_top': filters_added.length > 0}">
-  <div class="base_search animate-fast" 
+  <div class="base_search animate-fast"
+       id="baseSearchTabs" 
        ng-class="{'light_grey_color': active_nest && !($routeParams.type && hide_options)}">
     <div class="tab base_search_option"
          ng-class="{'active_tab':is_active(item)}"
          ng-click="handle_base_selection(item)"
          ng-hide="$routeParams.type && hide_options"
          ng-repeat="item in base_search_options">
-      <span class="{{item.icon}}">&nbsp;</span><span ng-bind-html="item.name"></span>
+      <tooltip text="item.name" prepend-text="Explore" position="top" pluralize="s" ng-if="!$routeParams.type && filters_added.length == 0"></tooltip>
+      <span class="table_cell {{item.icon}}">&nbsp;{{item.name}}</span>
     </div>
     <div class="search_icon blue_button animate-fast" 
          ng-click="handle_search_request($event)">
-      <span class="icon-search"></span>
+        <!-- <tooltip prepend-text="Show search results" position="right" ng-if="filters_added.length > 0 && !$routeParams.type"></tooltip>
+        <tooltip prepend-text="Go to home page" position="right" ng-if="filters_added.length == 0 && !$routeParams.type"></tooltip> -->
+        <tooltip prepend-text="Add filters" position="right" ng-if="$routeParams.type && filters_added.length == 0"></tooltip>
+        <tooltip prepend-text="Add more filters" position="bottom" ng-if="$routeParams.type && filters_added.length > 0"></tooltip>
+        <span class="icon-search table_cell"></span>
     </div>
   </div>
 
@@ -42,7 +48,8 @@
        ng-show="active_nest && !($routeParams.type && hide_options)">
     <div class="direction_option faded_site_color"
          ng-click="handle_base_selection()">
-      <span class="icon-book"></span>
+        <tooltip prepend-text="Search books" position="left"></tooltip>
+        <span class="icon-book"></span>
     </div>
     <div class="direction_option light_grey_color">
       <span class="icon-angle-right"></span>
@@ -51,6 +58,9 @@
          ng-click="handle_selection_option(item, $event)"
          ng-repeat="item in base_book_options"
          ng-class="{'active_tab': is_active_nest(item), 'faded_site_color': item.active}">
+         <tooltip text="item.name" position="top" ng-if="!$routeParams.type && filters_added.length == 0"></tooltip>
+         <tooltip text="item.name" position="left" ng-if="!$routeParams.type && filters_added.length > 0"></tooltip>
+         <tooltip text="item.name" position="right" ng-if="$routeParams.type"></tooltip>
       <span class="{{item.icon}}"></span>
     </div>
   </div>
@@ -99,6 +109,8 @@
          ng-click="remove_filter(item, $event)"
          msd-wheel="stop_horizontal_scroll($event)"
          class="option site_color animate-fast">
+        <tooltip prepend-text="Remove filter" position="left" ng-if="!$routeParams.type"></tooltip>
+        <tooltip prepend-text="Remove filter" position="right" ng-if="$routeParams.type"></tooltip>
         <div class="title">
           <span ng-show="item.icon2" class="{{item.icon2}} faded_site_color">&nbsp;</span>
           <b><span ng-bind-html="item.name"></span></b>

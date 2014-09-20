@@ -12,6 +12,7 @@
 		<th>Books</th>
 		<th>Active</th>
 		<th>Submit</th>
+		<th></th>
 	</tr>
 	<% @trends.sort_by!{|s| Time.at(s[1].to_i)}.reverse.each do |trend|%>
 		<tr class="<% if trend[4].present? && trend[4] == 1 %>active<% end %>">
@@ -49,6 +50,8 @@
 				<% end %>
 				<td><input type="submit" value="Submit"></td>
 			</form>
+			<td class="remove_trend">x
+			<input type="hidden" value="<%= trend[2] %>" class="trending_id"/></td>
 		</tr>
 	<% end %>
 </table>
@@ -153,8 +156,26 @@
 			});
 		}
 
+		var bind_remove_trend = function(){
+			$('.remove_trend').on('click', function(){
+				$('.footer_status').html('Removing..');
+				var data = "id="+$(this).children('input').val();
+				$.ajax({
+					url: "<%= remove_trend_path %>",
+					data: data,
+					success: function(data, textStatus, jqxhr){
+						window.location.reload();	
+					},
+					error: function(jqxhr, textStatus, errorThrown){
+						$('.footer_status').html('Error in removing..');
+					}
+				});
+			});
+		}
+
 		link_new_books();
 		add_new_books();
+		bind_remove_trend();
 
 
 	});

@@ -1,4 +1,5 @@
 <div class="header_navbar" 
+	 id="editProfile"
 	 ng-click="goto_info_card()" 
 	 ng-if="user.logged">
 	<img ng-src="{{user | blob_backup}}" class="profile_small_thumb" ng-if="user">
@@ -6,7 +7,7 @@
 		<div class="animate-slow count" ng-class="{'green': is_additive, 'magenta': !is_additive}" ng-show="count && !initiate_counting">
 			<span ng-if="is_additive">+</span><span ng-if="!is_additive">-</span>{{count}}
 		</div>
-		<span class="table_cell">
+		<span>
 			<span><b>{{user.name | first_name}}</b></span>
 			<span> · </span>
 			<span>{{user.total_count | integer}}</span><span> · </span>

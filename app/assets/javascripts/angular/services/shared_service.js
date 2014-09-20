@@ -8,7 +8,7 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
           websiteService.get_user_details().then(function(data){
               angular.extend($rootScope.user, data);
             });
-          stropheService.start_connection();
+          // stropheService.start_connection();
         }
       });
     }
@@ -40,7 +40,7 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
             points = points + 10;
           }
           if(remove_read_time){
-            delete book.time_index ;
+            delete book.time_index;
             points = points + 10;
           }
           $rootScope.$broadcast('gamifyCount', points, false);

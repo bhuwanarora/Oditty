@@ -46,14 +46,18 @@ websiteApp.directive('tickerPopup', function(){
 websiteApp.directive('filter', ['$rootScope', '$timeout', '$routeParams', function($rootScope, $timeout, $routeParams){
 	return{
 		restrict: 'E',
-		scope: { 'filter': '=data' },
+		scope: { 'filter': '=data',
+				 'url': '@',
+				 'iconClass': '@' },
 		controller: ['$scope', function($scope){
-			
 			_initialise_filters = function(type){
 				if($scope.filter){
 					var filter_id = $scope.filter.id;
 					var filter_name = $scope.filter.name;
-					if(filter_id == parseInt($scope.$routeParams.filter_id)){
+					var shelf_selected = filter_id == parseInt($scope.$routeParams.label_id);
+					var trend_selected = filter_id == parseInt($scope.$routeParams.trend_id);
+					var grid_selected = filter_id == parseInt($scope.$routeParams.grid_id);
+					if(shelf_selected || trend_selected || grid_selected){
 						$scope.active = true;
 						if($rootScope.filters[type].indexOf(filter_id) == -1){
 							$rootScope.filters[type].push(filter_id);
@@ -95,6 +99,24 @@ websiteApp.directive('mainHeader', ['$timeout', '$rootScope', function($timeout,
 	return{
 		restrict: 'E',
 		controller: ['$scope', function($scope){
+			$scope.toggle_notification_popup = function(){
+				if(angular.isDefined($rootScope.popups.show_notifications_popup)){
+					if($rootScope.popups.show_notifications_popup){
+						$rootScope.popups.show_notifications_popup = false;
+					}
+					else{
+						$rootScope.popups = {};
+						$rootScope.popups.show_notifications_popup = true;
+					}
+				}
+				else{
+					$rootScope.popups = {};
+					$rootScope.popups.show_notifications_popup = true;
+				}
+				
+				$scope.hide_notification_circle = true;
+			}
+
 			_add_listeners = function(){
 				$scope.$on('gamifyCount', function(event, data, is_additive){
 					if($scope.initiate_counting){
@@ -155,12 +177,7 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 					var skip_count = 0;
 					websiteService.get_books_bookmarked(skip_count).then(function(data){
 						if(angular.isArray(data)){
-							if(angular.isUndefined($rootScope.user.books)){
-								$rootScope.user.books = {};
-							}
-							else{
-								delete $rootScope.user.books['read'];
-							}
+							$rootScope.user.books = {};
 							$rootScope.user.books['bookmarked'] = [];
 							angular.forEach(data, function(data){
 								var labels = [];
@@ -209,12 +226,8 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 					$cookieStore.put("tab", $scope.panel_selected);
 					var skip_count = 0;
 					websiteService.get_books_read(skip_count).then(function(data){
-						if(angular.isUndefined($rootScope.user.books)){
-							$rootScope.user.books = {};
-						}
-						else{
-							delete $rootScope.user.books['bookmarked'];
-						}
+						$rootScope.user.books = {};
+						
 						$rootScope.user.books['read'] = [];
 						angular.forEach(data, function(value){
 							var json = {"isbn": value[0], "id": value[1], "status": true};
@@ -298,6 +311,12 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 	        
 			$scope.goto_info_card = function(){
 				$rootScope.user.compressed_info = false;
+				$rootScope.user.collapsed_column = true;
+				$rootScope.user.collapsed_filters = true;
+				$rootScope.user.collapsed_friends = true;
+				$rootScope.user.collapsed_trends = true;
+				$rootScope.user.collapsed_lists = true;
+				$rootScope.user.collapsed_left_column = true;
 				// scroller.scrollTo(0, 0, 2000);
 			}
 
@@ -741,19 +760,10 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 }]);
 
 var facebook_invite = function(){
-	_facebook_init();
+	// _facebook_init();
 	FB.ui({
 		method: 'apprequests',
 		message: 'Your Message diaolog'
 	});
 }
 
-var _facebook_init = function(){
-	FB.init({
-		appId: "667868653261167",
-		cookie: true,
-		status: true,
-		xfbml: true
-	});
-
-}

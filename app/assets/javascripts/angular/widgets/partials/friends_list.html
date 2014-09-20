@@ -1,0 +1,56 @@
+<div class="left_column animate-fast scrollbar"
+	 id="friendsList"
+     msd-wheel="stop_propagation($event)"
+	 ng-class="{'left_column_collapsed left_column_collapsed5': user.collapsed_friends, 
+	 			'left_column_shifted left_column_shifted1': !user.collapsed_lists,
+	            'left_column_shifted left_column_shifted2': !user.collapsed_trends,
+	            'left_column_shifted left_column_shifted3': !user.collapsed_filters,
+	            'left_column_shifted left_column_shifted4': !user.collapsed_column}">
+	<div class="collapse_icon red_button" 
+	     ng-click="user.collapsed_friends = true; user.collapsed_left_column = true;" 
+	     ng-if="!user.collapsed_friends">
+		<span class="icon-angle-left"></span>
+	</div>
+	<div class="left_column_tab"
+		 ng-hide="!user.collapsed_friends"
+	 	 ng-click="user.collapsed_friends = false; 
+	 	 		   user.collapsed_left_column = false;
+	 	 		   user.collapsed_column = true; 
+	 	 		   user.collapsed_lists = true;
+	 	 		   user.collapsed_filters = true;
+	 	 		   user.collapsed_trends = true;">
+	 	 <span class="table_cell">
+			<span class="icon-users green_color header_font" ng-if="user.collapsed_friends" ></span>
+			<span ng-show="user.collapsed_left_column">&nbsp;&nbsp;Friends</span>
+	 	 </span>
+	</div>
+	<div class="header"
+		 ng-if="!user.collapsed_friends"
+		 ng-click="handle_friends_grid_size(undefined, true)">
+		<span class="icon-users2 green_color header_font"></span>
+		<span><b>&nbsp;&nbsp;{{user.friends.length}} Friends</b></span>
+	</div>
+	<div ng-if="!user.collapsed_friends" class="friends_grid">
+		<div ng-repeat="friend in user.friends" class="friend_block animate-fast">
+			<div class="image_wrapper">
+				<img ng-src="{{friend.thumb}}" 
+				     class="friend_thumb" />
+			</div>
+			<div class="friend_details">
+				<div><b>{{friend.name}}</b></div>
+				<div ng-show="friend.init_book_read_count">Reader of {{friend.init_book_read_count}}</div>
+				<div>
+					<span>{{friend.total_count | integer}}</span>
+					<span> · </span>
+					<span>{{friend.book_read_count | integer}}</span>
+					<span class="icon-books"></span>
+					<span> · </span>
+					<span>{{friend.bookmark_count| integer}}</span>
+					<span class="icon-bookmarks"></span>
+					<span> · </span>
+				</div>
+				<div class="normal_text site_color" ng-show="friend.fav_categories">Likes {{friend.fav_categories}} books</div>
+			</div>
+		</div>
+	</div>
+</div>
