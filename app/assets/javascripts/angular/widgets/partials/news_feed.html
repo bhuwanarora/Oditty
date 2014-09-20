@@ -2,17 +2,19 @@
 	<span class="icon-expand2"></span>
 </div>
 <div class="left_column animate-fast"
+	 id="newsFeed"
 	 ng-class="{'left_column_collapsed left_column_collapsed1': user.collapsed_column, 
 	            'left_column_shifted left_column_shifted1': !user.collapsed_friends,
 	            'left_column_shifted left_column_shifted2': !user.collapsed_lists,
 	            'left_column_shifted left_column_shifted3': !user.collapsed_trends,
 	            'left_column_shifted left_column_shifted4': !user.collapsed_filters}">
-	<div class="collapse_icon" 
+	<div class="collapse_icon red_button" 
 	     ng-click="user.collapsed_column = true; user.collapsed_left_column = true;" 
 	     ng-if="!user.collapsed_column">
 		<span class="icon-angle-left"></span>
 	</div>
-	<div ng-if="user.collapsed_column" class="animate-fast left_column_tab"
+	<div ng-if="user.collapsed_column" 
+	     class="animate-fast left_column_tab"
 		 ng-click="user.collapsed_column = false; 
 		 		  user.collapsed_left_column = false;
 		          user.collapsed_filters = true; 

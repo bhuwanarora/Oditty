@@ -21,7 +21,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		$rootScope.user.collapsed_trends = true;
 		$rootScope.user.collapsed_lists = true;
 		$rootScope.user.collapsed_left_column = true;
-		$rootScope.user.settings_popup = false;
+		$rootScope.popups = {};
 		delete $rootScope.focused_book;
 		delete $rootScope.ticker_popup;
 	}

@@ -1,11 +1,12 @@
 <div class="left_column animate-fast scrollbar"
+	 id="friendsList"
      msd-wheel="stop_propagation($event)"
 	 ng-class="{'left_column_collapsed left_column_collapsed5': user.collapsed_friends, 
 	 			'left_column_shifted left_column_shifted1': !user.collapsed_lists,
 	            'left_column_shifted left_column_shifted2': !user.collapsed_trends,
 	            'left_column_shifted left_column_shifted3': !user.collapsed_filters,
 	            'left_column_shifted left_column_shifted4': !user.collapsed_column}">
-	<div class="collapse_icon" 
+	<div class="collapse_icon red_button" 
 	     ng-click="user.collapsed_friends = true; user.collapsed_left_column = true;" 
 	     ng-if="!user.collapsed_friends">
 		<span class="icon-angle-left"></span>

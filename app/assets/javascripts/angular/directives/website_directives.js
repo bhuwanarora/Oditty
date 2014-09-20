@@ -1132,6 +1132,80 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
   }
 }]);
 
+websiteApp.directive('tourTip', function(){
+	return{
+	    restrict: 'E',
+	    scope: {"text": "=", 
+	    		"prependText": "@",
+	    		"appendText": "@",
+	    		"position": "@",
+	    		"pluralize": "@",
+	    		"scroll": "@",
+	    		"addRelative": "@",
+	    		"x": "@",
+	    		"y": "@"},
+	    link: function(scope, element, attrs){
+	    	if(angular.isDefined(scope.addRelative)){
+				element.parent().css('position', 'relative');
+	    	}
+			element.parent().bind('mouseenter', function(event){
+				element.children().css('visibility', 'visible');
+				element.children().children().css('font-size', '12px');
+				element.children().children().css('text-shadow', 'none');
+				element.children().children().css('font-weight', '200');
+				element.children().children().css('letter-spacing', '1px');
+				element.children().children().css('font-family', 'helvetica neue');
+				element.children().children().css('color', 'white');
+
+				var width = element.children()[0].clientWidth;
+				var height = element.children()[0].clientHeight;
+				if(angular.isDefined(scope.scroll)){
+					height = height + 25;
+					element.children().css('max-height', '54vh');
+					element.children().css('overflow-y', 'scroll');
+				}
+
+				var show_left = scope.position == "left";
+				var show_right = scope.position == "right";
+				var show_top = scope.position == "top";
+				var show_bottom = scope.position == "bottom";
+
+				if(show_left){
+					element.children().css('left', "-"+width+"px");
+					element.children().children().css('border-left-color', '#333');
+					element.children().children('.tooltip_arrow').css('left', width+'px');
+				}
+				else if(show_right){
+					element.children().css('right', "-"+width+"px");
+					element.children().children().css('border-right-color', '#333');
+					element.children().children('.tooltip_arrow').css('right', width+'px');
+				}
+				else if(show_bottom){
+					element.children().css('bottom', "-"+height+"px");
+					element.children().children().css('border-bottom-color', '#333');
+					element.children().children('.tooltip_arrow').css('bottom', height+'px');
+				}
+				else if(show_top){
+					element.children().css('top', "-"+height+"px");
+					element.children().children().css('border-top-color', '#333');
+					element.children().children('.tooltip_arrow').css('top', height+'px');
+				}
+			});
+			element.parent().bind('mouseleave', function(event){
+				element.children().css('visibility', 'hidden');
+				
+			});
+
+		},
+		controller: ['$scope', function($scope){
+			$scope.stop_horizontal_scroll = function(event){
+				event.stopPropagation();
+			}
+		}],
+		templateUrl: "/assets/angular/widgets/base/widget/tour_tip.html"
+	}
+});
+
 websiteApp.directive('tooltip', function(){
 	return{
 	    restrict: 'E',
@@ -1194,19 +1268,6 @@ websiteApp.directive('tooltip', function(){
 				
 			});
 
-			// function offset(elm) { 
-			//   	try {return elm.offset();} catch(e) {} 
-			//   	var rawDom = elm[0]; 
-			//   	var _x = 0; 
-			//   	var _y = 0; 
-			//   	var body = document.documentElement || document.body; 
-			//   	var scrollX = window.pageXOffset || body.scrollLeft; 
-			//   	var scrollY = window.pageYOffset || body.scrollTop; 
-			//   	_x = rawDom.getBoundingClientRect().left + scrollX; 
-			//   	_y = rawDom.getBoundingClientRect().top + scrollY; 
-			//   	return { left: _x, top:_y }; 
-			// }
-			
 		},
 		controller: ['$scope', function($scope){
 			$scope.stop_horizontal_scroll = function(event){

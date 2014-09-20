@@ -356,8 +356,21 @@ input:focus{
     height: 100%;
     left: 0px;
     top: 0px;
-    background-color: rgba(0, 0, 0, 0.6);
     z-index: 10;
+    background: -moz-radial-gradient(center,ellipse cover,rgba(0,0,0,.4)0,rgba(0,0,0,.9)100%);
+    background: -webkit-gradient(radial,center center,0,center center,100%,color-stop(0%,rgba(0,0,0,.4)),color-stop(100%,rgba(0,0,0,.9)));
+    background: -webkit-radial-gradient(center,ellipse cover,rgba(0,0,0,.4)0,rgba(0,0,0,.9)100%);
+    background: -o-radial-gradient(center,ellipse cover,rgba(0,0,0,.4)0,rgba(0,0,0,.9)100%);
+    background: -ms-radial-gradient(center,ellipse cover,rgba(0,0,0,.4)0,rgba(0,0,0,.9)100%);
+    background: radial-gradient(center,ellipse cover,rgba(0,0,0,.4)0,rgba(0,0,0,.9)100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#66000000', endColorstr='#e6000000', GradientType=1);
+    -ms-filter: "alpha(Opacity=50)";
+    filter: alpha(opacity=50);
+    -webkit-transition: all .3s ease-out;
+    -moz-transition: all .3s ease-out;
+    -ms-transition: all .3s ease-out;
+    -o-transition: all .3s ease-out;
+    transition: all .3s ease-out;
 }
 
 .box_shadow{
@@ -556,4 +569,28 @@ input:focus{
     overflow: hidden;
     border-radius: 3px;
     float: left;
+}
+
+.button1{
+    position: absolute;
+    padding: 10px 15px;
+    left: 5vh;
+    bottom: 5vh;
+}
+
+.icon-close-popup:before{
+    content: "\e694";
+}
+
+.icon-close-popup{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: #E5E5E5;
+    font-size: 1em;
+    z-index: 1;
+}
+
+.icon-close-popup:hover{
+    color: #717070;
 }

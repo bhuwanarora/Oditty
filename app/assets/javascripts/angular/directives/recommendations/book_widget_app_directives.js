@@ -11,6 +11,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
         if($rootScope.focused_book != $scope.book){
           // $rootScope.show_more_filters = false;
           delete $rootScope.ticker_popup;
+          $rootScope.popups = {};
           $rootScope.focused_book = $scope.book;
           var posX = event.currentTarget.offsetParent.offsetParent.offsetLeft - event.pageX + event.clientX;
           var display_right_width =  window_width - (posX + event.currentTarget.offsetParent.scrollWidth);

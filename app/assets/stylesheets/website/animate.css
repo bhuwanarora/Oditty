@@ -13,11 +13,15 @@
 }
 
 
+.tolltip.ng-enter,
+.tolltip.ng-leave.ng-leave-active,
 .ticker_popup.ng-enter,
 .ticker_popup.ng-leave.ng-leave-active{
 	opacity: 0;
 }
 
+.tooltip.ng-leave,
+.tooltip.ng-enter-active,
 .ticker_popup.ng-leave,
 .ticker_popup.ng-enter-active{
 	opacity: 1;

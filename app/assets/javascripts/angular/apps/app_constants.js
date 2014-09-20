@@ -42,6 +42,20 @@ var emotions = [
 
 
 var constants = {
+		"IntroConstants":{
+			"NewsFeed": "Keep track of what your friends are doing on Reader's Door.",
+			"Shelves": "Create virtual book shelves.",
+			"Trending": "Checkout books related to trending topics in media",
+			"Listopia": "Checkout lists from your friends",
+			"Friends": "Checkout your friend list",
+			"Share": "Share your book reading insights, feelings and emotions...",
+			"Profile": "Edit your profile",
+			"RecommendationTab": "Recommendations Tab",
+			"MyLibraryTab": "My Library Tab",
+			"BooksReadTab": "Books Read Tab",
+			"ShelvesTab": "Shelves Tab",
+			"Scroller": "Try these scrollers"
+		},
 		"LoginConstants": {
 			"EmailNotPresent": "Enter your email address",
 			"PasswordNotPresent": "Enter your password",

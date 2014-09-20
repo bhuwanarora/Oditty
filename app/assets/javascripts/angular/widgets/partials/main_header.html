@@ -15,12 +15,13 @@
 		<span>o</span>
 		<span>r</span>
  	</a>
-	<div class="header_icon" ng-click="show_settings_popup($event)">
+	<div class="header_icon" ng-click="toggle_settings_popup($event)">
 		<span class="icon-cog table_cell light_grey_color"></span>
 	</div>
+	
 	<div class="header_icon" 
-	     ng-class="{'site_color': show_notifications_popup, 'light_grey_color':!show_notifications_popup}"
-	     ng-click="show_notifications_popup=!show_notifications_popup; hide_notification_circle=true;">
+	     ng-class="{'site_color': popups.show_notifications_popup, 'light_grey_color':!popups.show_notifications_popup}"
+	     ng-click="toggle_notification_popup()">
 		<span class="icon-earth table_cell"></span>
 		<div class="notification_circle table_cell" ng-hide="hide_notification_circle">4</div>
 	</div>
@@ -29,11 +30,13 @@
  		<search-bar></search-bar>
  	</div>
 
-	<div class="header_navbar site_color" ng-click="show_interaction_box()">
+	<div class="header_navbar site_color" 
+		 id="share" 
+		 ng-click="show_interaction_box()">
 		<span class="table_cell share"></span>
 	</div>
 	<!-- <div ng-include src="'/assets/angular/widgets/partials/invite.html'"></div> -->
- 	<div ng-if="show_notifications_popup" 
+ 	<div ng-if="popups.show_notifications_popup" 
  	     ng-include src="'/assets/angular/widgets/partials/notifications.html'"></div>
 	<!-- <div class="menu_group" 
  		 ng-class="{'menu_group_active':show_menu}"

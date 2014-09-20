@@ -99,6 +99,24 @@ websiteApp.directive('mainHeader', ['$timeout', '$rootScope', function($timeout,
 	return{
 		restrict: 'E',
 		controller: ['$scope', function($scope){
+			$scope.toggle_notification_popup = function(){
+				if(angular.isDefined($rootScope.popups.show_notifications_popup)){
+					if($rootScope.popups.show_notifications_popup){
+						$rootScope.popups.show_notifications_popup = false;
+					}
+					else{
+						$rootScope.popups = {};
+						$rootScope.popups.show_notifications_popup = true;
+					}
+				}
+				else{
+					$rootScope.popups = {};
+					$rootScope.popups.show_notifications_popup = true;
+				}
+				
+				$scope.hide_notification_circle = true;
+			}
+
 			_add_listeners = function(){
 				$scope.$on('gamifyCount', function(event, data, is_additive){
 					if($scope.initiate_counting){

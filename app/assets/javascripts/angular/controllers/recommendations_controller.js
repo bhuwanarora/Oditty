@@ -1,4 +1,4 @@
-websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', 'scroller', 'websiteService', 'sharedService', '$cookieStore', 'RecommendationUIConstants', '$location', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService, scroller, websiteService, sharedService, $cookieStore, RecommendationUIConstants, $location){
+websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', 'scroller', 'websiteService', 'sharedService', '$cookieStore', 'RecommendationUIConstants', '$location', 'IntroConstants', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService, scroller, websiteService, sharedService, $cookieStore, RecommendationUIConstants, $location, IntroConstants){
 
 	$scope.handle_height_of_popup = function(event, scroll_down){
 		var event_defined = angular.isDefined(event);
@@ -16,13 +16,26 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		}
 	}
 
-	$scope.show_settings_popup = function(event){
-		if(angular.isUndefined($rootScope.user.settings_popup)){
-			$rootScope.user.settings_popup = true;
+	$scope.toggle_settings_popup = function(event){
+		var _show_settings_popup = function(){
+			$rootScope.popups = {};
+			delete $rootScope.focused_book;
+			$rootScope.popups.settings_popup = true;
+		}
+
+		if(angular.isUndefined($rootScope.popups.settings_popup)){
+			_show_settings_popup();
 		}
 		else{
-			$rootScope.user.settings_popup = !$rootScope.user.settings_popup;
+			if(!$rootScope.popups.settings_popup){
+				_show_settings_popup();
+			}
+			else{
+				$rootScope.popups.settings_popup = false;
+			}
 		}
+
+
 		event.stopPropagation();
 	}
 
@@ -169,6 +182,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         $scope.panel_selected = RecommendationUIConstants.BookmarkPanel;
 	}
 
+
 	$scope._initialize_filters = function(){
 		// $scope.show_more_filters = true;
 		$rootScope.filters = {};
@@ -258,7 +272,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	_update_recommendations = function(data){
 		if($rootScope.filters["filter_type"] == RecommendationUIConstants.BookTab){
 			if(data.recommendations.books.length > 0){
-				var message = "INFO- "+data.recommendations.books.length+" books found.";
+				var message = "INFO- "+data.recommendations.books.length+" books found. Scroll to see more books.";
 			}
 			else if(data.recommendations.books.length == 0){
 				var message = "INFO- "+data.recommendations.books.length+" book found.";	
@@ -483,7 +497,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		if($rootScope.user.logged){
 			$scope.grid_view = false;
 			$scope.$routeParams = $routeParams;
-			$rootScope.user.settings_popup = false;
+			
+			$rootScope.popups = {"settings_popup": false, "show_notifications_popup": false};
 			// console.debug("%crouteparams "+$routeParams+" ", "color: yellow");
 			// $scope.$emit('reloadRecommendations');
 
@@ -529,6 +544,62 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         	$location.path("/search");
 		}
 	}
+
+   	$scope.IntroOptions = {
+        steps:[
+	        {
+	            element: '#newsFeed',
+	            intro: IntroConstants.NewsFeed,
+	            position: 'right'
+	        },
+	        {
+	            element: '#shelves',
+	            intro: IntroConstants.Shelves,
+	            position: 'right'
+	        },
+	        {
+	            element: '#trendingList',
+	            intro: IntroConstants.Trending,
+	            position: 'right'
+	        },
+	        {
+	            element: '#listopia',
+	            intro: IntroConstants.Listopia,
+	            position: 'right'
+	        },
+	        {
+	            element: '#friendsList',
+	            intro: IntroConstants.Friends,
+	            position: 'right'
+	        },
+	        {
+	            element: '#share',
+	            intro: IntroConstants.Share,
+	            position: 'bottom'
+	        },
+	        {
+	            element: '#editProfile',
+	            intro: IntroConstants.Profile,
+	            position: 'bottom'
+	        },
+	        {
+	            element: '#shelvesTab',
+	            intro: IntroConstants.ShelvesTab,
+	            position: 'bottom'
+	        }
+        ],
+        showStepNumbers: false,
+        exitOnOverlayClick: true,
+        exitOnEsc: true,
+        nextLabel: '<strong>Next</strong>',
+        prevLabel: '<span>Previous</span>',
+        skipLabel: 'Exit',
+        doneLabel: 'Thanks'
+    };
+
+    $scope.should_auto_start = function() {
+        return false;
+    }
 
 	var push_books_timer_event = "";
 	var load_recommendations_event = "";

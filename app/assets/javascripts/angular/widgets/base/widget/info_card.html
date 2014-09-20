@@ -49,6 +49,7 @@
 	     		class="info_cards animate-fast"
 	 	 		ng-switch on="user.profile_status" 
 	 	 		ng-model="user.profile_status">
+	 	 		<div class="icon-close-popup" ng-click="user.compressed_info = true;"></div>
 			<!-- <div class="back_color" style="background-color:{{user.profile_status_color}}"></div> -->
 			<!-- <div>
 				<div class="arrow_box" style="z-index:6">Basic</div>
@@ -123,6 +124,7 @@
 		      	<div ng-if="user.thumb">
 			    	<img ng-src="{{user.thumb}}" class="profile_pic">
 		      	</div>
+		      	<div class="red_button button1" ng-click="CallMe()">Getting started</div>
 		      	<!-- <hr/> -->
 			</div>
 			<!-- <div ng-switch-when="1">

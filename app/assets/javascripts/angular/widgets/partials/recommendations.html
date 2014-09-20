@@ -8,6 +8,9 @@
    ng-animate="msd-wheel"
    class="recommendations"
    style="height:100%; white-space:nowrap;"
+   ng-intro-options="IntroOptions" 
+   ng-intro-method="CallMe"
+   ng-intro-autostart="should_auto_start()"
    ng-controller="recommendationsController"
    ng-click="hide_popups()">
 		<main-header></main-header>
@@ -23,6 +26,7 @@
 		
 		<div ng-class="{'horizontal_padder_inactive': !user.collapsed_left_column}" 
 			 class="info_card_placeholder animate-fast"></div>
+
 		<div ng-switch on="panel_selected" class="full_height">
 			<div ng-switch-when="BOOKMARK" class="full_height">
 				<div ng-include src="'/assets/angular/widgets/partials/library.html'"></div>
@@ -75,7 +79,7 @@
 		</div> -->
 		<div class="top_hover_detector"></div>
 	
-		<div class="scroller">
+		<div class="scroller" id="scroller">
 			<span class="scroller-left icon-angle-left blue_button"
 			      ng-mouseover="move_left($event)"
 			      ng-click="move_left($event)"
@@ -90,6 +94,6 @@
 
 		<info-card></info-card>
 		<div ng-include src="'/assets/angular/widgets/partials/settings_popup.html'" 
-			 ng-show="user.settings_popup"></div>
+			 ng-show="popups.settings_popup"></div>
 </div>
 <interaction-box ng-if="user.interact"></interaction-box>

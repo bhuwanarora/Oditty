@@ -43,10 +43,11 @@
 }
 
 .compressed_info_card{
-	top: 100px;
+	bottom: 20px;
 	position: fixed;
 	z-index: 11;
-	left: 5px;
+	left: 50%;
+	margin-left: -277px;
 	box-shadow: 8px 0 43px 0 rgba(66,66,66,.47);
 }
 
@@ -62,6 +63,11 @@
 	border-bottom: 1px solid #E9E9E9;
 	cursor: pointer;
 	font-size: 0.9em;
+	float: left;
+	display: inline-block;
+	margin: 1px;
+	width: 110px;
+	text-align: center;
 }
 
 .compressed_info_card .block:hover{
@@ -283,7 +289,6 @@
 }
 
 .invite_friends{
-	width: 95px;
 	padding: 7px 20px;
 	margin: 5px;
 	position: absolute;

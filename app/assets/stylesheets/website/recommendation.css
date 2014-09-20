@@ -1499,12 +1499,9 @@ and (min-width : 1824px) {
 	position: fixed;
 	left: 29%;
 	padding: 4px 7px;
-	background-color: rgba(0, 0, 0, 0.6);
 	border-radius: 2px;
 	top: 50px;
 	font-size: 1.5em;
-	color: white;
-	cursor: pointer;
 }
 
 .left_column .collapse_icon:hover{
@@ -1664,7 +1661,6 @@ and (min-width : 1824px) {
 	list-style: none;
 	right: 5px;
 	top: 27px;
-	text-align: center;
 	padding: 10px 0px;
 	z-index: 9;
 	border: 1px solid #ccc;
@@ -1673,7 +1669,7 @@ and (min-width : 1824px) {
 }
 
 .settings_popup li{
-	padding: 5px;
+	padding: 5px 15px;
 	width: 150px;
 	cursor: pointer;
 }

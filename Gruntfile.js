@@ -23,7 +23,9 @@ module.exports = function(grunt) {
             'app/assets/stylesheets/min/focused_tooltip.min.css',
             'app/assets/stylesheets/min/info_card.min.css',
             'app/assets/stylesheets/min/card.min.css',
-            'app/assets/stylesheets/min/grid.min.css'
+            'app/assets/stylesheets/min/grid.min.css',
+            'app/assets/stylesheets/min/introjs-rtl.min.css',
+            'app/assets/stylesheets/min/introjs.min.css'
           ]
         }
       }
@@ -155,21 +157,15 @@ module.exports = function(grunt) {
           'app/assets/javascripts/min/angular/vendors.js': [
             'app/assets/javascripts/min/angular/vendors/angular_animate.min.js',
             'app/assets/javascripts/min/angular/vendors/angular_cookies.min.js',
-            'app/assets/javascripts/min/angular/vendors/angular_dropdown.js',
             'app/assets/javascripts/min/angular/vendors/angular_google_map.js',
+            'app/assets/javascripts/min/angular/vendors/angular_intro.js',
             'app/assets/javascripts/min/angular/vendors/angular_facebook.js',
             'app/assets/javascripts/min/angular/vendors/google_map.js',
             'app/assets/javascripts/min/angular/vendors/angular_mousewheel.min.js',
             'app/assets/javascripts/min/angular/vendors/angular_router.min.js',
-            'app/assets/javascripts/min/angular/vendors/cropme.js',
-            'app/assets/javascripts/min/angular/vendors/google_plus_signin.js',
             'app/assets/javascripts/min/angular/vendors/hamster.min.js',
-            'app/assets/javascripts/min/angular/vendors/socket.io.js',
-            'app/assets/javascripts/min/angular/vendors/socket.js',
-            'app/assets/javascripts/min/angular/vendors/sticky.js',
-            'app/assets/javascripts/min/angular/vendors/angular_touch.min.js',
-            'app/assets/javascripts/min/angular/vendors/strophe.min.js',
-            'app/assets/javascripts/min/angular/vendors/strophe.flxhr.min.js'],
+            'app/assets/javascripts/min/angular/vendors/intro.min.js',
+            'app/assets/javascripts/min/angular/vendors/angular_touch.min.js'],
 
           'app/assets/javascripts/min/angular/main.js': [
             'app/assets/javascripts/angular/vendors/angular.min.js',
