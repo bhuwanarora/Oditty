@@ -7,20 +7,51 @@
 		<th>Submit</th>
 	</tr>
 	<% @feedbacks.each do |feedback|%>
-		<tr>
+		<tr class="<% if feedback[5] == 2 || feedback[5] == 1%>inactive<% end %>">
 			<td><%= feedback[2] %></td>
 			<td><% begin %><%= Time.at(feedback[4].to_i).strftime("%d-%m-%y") %><% rescue %><% end %></td>
 			<td><div class="highlighter"><%= feedback[3] %></div></td>
-			<td>
+			<td class="status">
 				<select>
-					<option>Pending</option>
-					<option value="0">Dont Publish</option>
-					<option value="1">Publish</option>
+					<option value="0">Pending</option>
+					<option value="1" <% if feedback[5] == 1 %>selected<% end %>>Resolved</option>
+					<option value="2" <% if feedback[5] == 2 %>selected<% end %>>Not Important</option>
 				</select>
 			</td>
 			<td>
-				<button>Submit</button>
+				<input type="hidden" value="<%= feedback[1] %>"/>
+				<button class="submit">Submit</button>
 			</td>
 		</tr>
 	<% end %>
 </table>
+
+<div class="vertical_padder"></div>
+
+<div class="main_footer">
+  <div class="footer_status"></div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		var update_status = function(){
+			$('.submit').on('click', function(){
+				$('.footer_status').html("Updating...");
+				var status = $(this).parent().siblings('.status').children().val();
+				var id = $(this).siblings('input').val();
+				$.ajax({
+					url: "<%= change_feedback_status_path %>",
+					data: "status="+status+"&id="+id,
+					success: function(data, textStatus, jqxhr){
+						window.location.reload();
+					},
+					error: function(jqxhr, textStatus, errorThrown){
+						$('.footer_status').html("Error in updating...");
+					}
+				});
+			})
+		};
+
+		update_status();
+	});
+</script>

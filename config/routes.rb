@@ -70,6 +70,8 @@ ReadersDoor::Application.routes.draw do
   get 'search_book'               => "books#search_book",       :as => "search_book"
 
   get "panel/feedbacks"                 => "users#feedbacks",                   :as => "feedbacks"   
+  get "change_feedback_status"          => "users#change_feedback_status",      :as => "change_feedback_status"   
+  
   get "panel/labels"                    => "books#labels",                      :as => "labels"   
   get "panel/trends"                    => "books#trends",                      :as => "trends"   
   get "panel/grids"                     => "books#grids",                       :as => "grids"   
