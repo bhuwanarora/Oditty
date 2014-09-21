@@ -52,7 +52,11 @@ module Api
 			end
 
             def labels
-                labels = WebsiteApi.get_labels session[:user_id]
+            	if params[:id]
+            		labels = WebsiteApi.get_labels params[:id]
+            	else
+                	labels = WebsiteApi.get_labels session[:user_id]
+            	end
                 render :json => labels, :status => 200
             end
 
@@ -72,7 +76,11 @@ module Api
             end
 
 			def get_user_details
-				info = UserApi.get_details(session[:user_id], session)
+				if params[:id]
+					info = UserApi.get_details(params[:id], session)
+				else
+					info = UserApi.get_details(session[:user_id], session)
+				end
 				render :json => info, :status => 200
 			end
 

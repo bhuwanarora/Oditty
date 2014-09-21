@@ -1807,3 +1807,13 @@ l	.compressed_info_card{
 	padding-left: 10px;
 	padding-top: 10px;
 }
+
+.user_name{
+	position: fixed;
+	top: 185px;
+	left: 170px;
+	color: white;
+	z-index: 1;
+	font-size: 25px;
+	font-weight: 700;
+}

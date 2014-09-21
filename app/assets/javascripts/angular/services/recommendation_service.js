@@ -43,8 +43,13 @@ websiteApp.service('recommendationService', ['$http', '$q', '$rootScope', functi
         return _deferred_request('/api/v0/read_times');   
     }
 
-    this.get_labels = function(){
-        return _deferred_request('/api/v0/labels');   
+    this.get_labels = function(id){
+        if(angular.isDefined(id)){
+            return _deferred_request('/api/v0/labels?id='+id);
+        }
+        else{
+            return _deferred_request('/api/v0/labels');
+        }
     }
 
     _deferred_request = function(url){

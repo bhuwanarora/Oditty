@@ -185,7 +185,7 @@ module Api
 			# end
 
 			def get_most_connected_friends
-				info = UserApi.get_most_connected_friends session[:user_id]
+				info = UserApi.get_most_connected_friends params[:id]
 				render :json => info, :status => 200
 			end
 

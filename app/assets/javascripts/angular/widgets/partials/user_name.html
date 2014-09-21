@@ -1,0 +1,8 @@
+<div ng-if="$routeParams.type != 'profile'">
+	<div class="user_name" ng-show="user.name">{{user.name}}</div>
+	<div class="user_name" ng-show="!user.name">{{user.email}}</div>
+</div>
+<div ng-if="$routeParams.type == 'profile'">
+	<div class="user_name" ng-show="reader.name">{{reader.name}}</div>
+	<div class="user_name" ng-show="!reader.name">{{reader.email}}</div>
+</div>

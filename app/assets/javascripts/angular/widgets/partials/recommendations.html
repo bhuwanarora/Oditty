@@ -15,6 +15,8 @@
    ng-click="hide_popups()">
 		<main-header></main-header>
 		<recommendation-footer></recommendation-footer>
+		<div ng-include src="'/assets/angular/widgets/partials/user_name.html'"></div>
+		
 		<!-- <div class="status animate-fast" ng-click="show_interaction_box()">
 			<span><input disabled placeholder="Share something..." /></span>
 		</div> -->
@@ -53,10 +55,10 @@
 		
 		<!-- <message></message> -->
 		
-		<div ng-include src="'/assets/angular/widgets/partials/news_feed.html'"></div>
+		<div ng-include src="'/assets/angular/widgets/partials/news_feed.html'" ng-if="$routeParams.type != 'profile'"></div>
+		<div ng-include src="'/assets/angular/widgets/partials/trending_list.html'" ng-if="$routeParams.type != 'profile'"></div>
+		<div ng-include src="'/assets/angular/widgets/partials/listopia.html'" ng-if="$routeParams.type != 'profile'"></div>
 		<div ng-include src="'/assets/angular/widgets/partials/shelves.html'"></div>
-		<div ng-include src="'/assets/angular/widgets/partials/trending_list.html'"></div>
-		<div ng-include src="'/assets/angular/widgets/partials/listopia.html'"></div>
 		<div ng-include src="'/assets/angular/widgets/partials/friends_list.html'"></div>
 		<!-- <div class="wrapper" ng-if="focused_book"></div> -->
 		<div class="focused_tooltip animate-faster"

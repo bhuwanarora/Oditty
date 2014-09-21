@@ -1,0 +1,20 @@
+<div class="image_wrapper">
+	<img ng-src="{{friend.thumb | thumb_backup}}" 
+	     class="friend_thumb" />
+</div>
+<div class="friend_details">
+	<div class="site_color" ng-show="friend.name"><b><a ng-href="#reader/{{friend.id}}/profile">{{friend.name}}</a></b></div>
+	<div class="site_color" ng-show="!friend.name"><b><a ng-href="#reader/{{friend.id}}/profile">{{friend.email}}</a></b></div>
+	<div ng-show="friend.init_book_read_count">Reader of {{friend.init_book_read_count}}</div>
+	<div>
+		<span>{{friend.total_count | integer}}</span>
+		<span> · </span>
+		<span>{{friend.book_read_count | integer}}</span>
+		<span class="icon-books"></span>
+		<span> · </span>
+		<span>{{friend.bookmark_count| integer}}</span>
+		<span class="icon-bookmarks"></span>
+		<span> · </span>
+	</div>
+	<div class="normal_text site_color" ng-show="friend.fav_categories">Likes {{friend.fav_categories}} books</div>
+</div>

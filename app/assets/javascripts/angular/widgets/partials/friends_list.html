@@ -28,29 +28,17 @@
 		 ng-if="!user.collapsed_friends"
 		 ng-click="handle_friends_grid_size(undefined, true)">
 		<span class="icon-users2 green_color header_font"></span>
-		<span><b>&nbsp;&nbsp;{{user.friends.length}} Friends</b></span>
+		<span ng-if="!$routeParams.type != 'profile'"><b>&nbsp;&nbsp;{{user.friends.length}} Friends</b></span>
+		<span ng-if="!$routeParams.type == 'profile'"><b>&nbsp;&nbsp;{{reader.friends.length}} Friends</b></span>
 	</div>
-	<div ng-if="!user.collapsed_friends" class="friends_grid">
+	<div ng-if="!user.collapsed_friends && $routeParams.type != 'profile'" class="friends_grid">
 		<div ng-repeat="friend in user.friends" class="friend_block animate-fast">
-			<div class="image_wrapper">
-				<img ng-src="{{friend.thumb | thumb_backup}}" 
-				     class="friend_thumb" />
-			</div>
-			<div class="friend_details">
-				<div><b>{{friend.name}}</b></div>
-				<div ng-show="friend.init_book_read_count">Reader of {{friend.init_book_read_count}}</div>
-				<div>
-					<span>{{friend.total_count | integer}}</span>
-					<span> · </span>
-					<span>{{friend.book_read_count | integer}}</span>
-					<span class="icon-books"></span>
-					<span> · </span>
-					<span>{{friend.bookmark_count| integer}}</span>
-					<span class="icon-bookmarks"></span>
-					<span> · </span>
-				</div>
-				<div class="normal_text site_color" ng-show="friend.fav_categories">Likes {{friend.fav_categories}} books</div>
-			</div>
+			<div ng-include src="'/assets/angular/widgets/partials/friend_grid.html'"></div>
+		</div>
+	</div>
+	<div ng-if="!user.collapsed_friends && $routeParams.type == 'profile'" class="friends_grid">
+		<div ng-repeat="friend in reader.friends" class="friend_block animate-fast">
+			<div ng-include src="'/assets/angular/widgets/partials/friend_grid.html'"></div>
 		</div>
 	</div>
 </div>

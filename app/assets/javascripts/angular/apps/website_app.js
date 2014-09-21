@@ -38,6 +38,9 @@ websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvid
   .when('/user/:id/book/:title/author/:author/id/:book_id', {
     templateUrl: '/assets/angular/widgets/partials/recommendations.html'
   })
+  .when('/reader/:id/:type', {
+    templateUrl: '/assets/angular/widgets/partials/recommendations.html'
+  })
   // .when('/user/:id/timeline', {
   //   templateUrl: '/assets/angular/widgets/partials/recommendations.html'
   // })

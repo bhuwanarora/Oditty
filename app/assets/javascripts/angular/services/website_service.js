@@ -76,8 +76,13 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         return _deferred_post_request('/api/v0/profile', data);
     }
     
-    this.get_user_details = function(){
-        return _deferred_request('/api/v0/user_details');
+    this.get_user_details = function(id){
+        if(angular.isDefined(id)){
+            return _deferred_request('/api/v0/user_details?id='+id);
+        }
+        else{
+            return _deferred_request('/api/v0/user_details');
+        }
     }
 
     this.get_genres = function(){
