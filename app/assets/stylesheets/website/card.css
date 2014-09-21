@@ -1,9 +1,9 @@
 .recommendation_block{
 	display: inline-block;
-	height: 76vh;
-	margin-right: 10px;
+	height: 62vh;
+	margin-right: 5px;
 	position: relative;
-	width: 51vh;
+	width: 39vh;
 	/*background-image: url("/assets/book_back.png");*/
 	/*background-size: 100% 100%;*/
 }
@@ -33,11 +33,11 @@
 }
 
 .card_summary{
-	color: black;
+	color: #000;
 	position: absolute;
-	top: 2vh;
-	left: 2vh;
-	right: 2vh;
+	top: 1vh;
+	left: 1vh;
+	right: 1vh;
 	height: 5vh;
 	white-space: initial;
 	font-size: .9em;
@@ -74,8 +74,8 @@
 .bottom_widget{
 	height: 6vh;
 	bottom: 0px;
-	left: 2vh;
-	right: 2vh;
+	left: 1vh;
+	right: 1vh;
 	position: absolute;
 	background-color: white;
 }
@@ -188,6 +188,7 @@
 	box-shadow: 0 7px 15px rgba(0,0,0,.25);
 	padding: 10px 0px 10px 0px;
 	text-transform: capitalize;
+	min-width: 180px;
 }
 
 .label_dropdown li{
@@ -220,9 +221,9 @@
 .card .widget_thumb,
 .card .description{
 	position: absolute;
-	top: 15vh;
-	left: 2vh;
-	right: 2vh;
+	top: 14vh;
+	left: 1vh;
+	right: 1vh;
 	bottom: 7vh;
 	border-radius: 3px;
 }

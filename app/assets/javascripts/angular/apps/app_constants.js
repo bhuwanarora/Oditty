@@ -65,11 +65,11 @@ var constants = {
 			"FacebookLoginStatusCheck" :"connected"
 		},
 		"RecommendationUIConstants": {
-			"TickerPopupMaxHeight": "62vh",
-			"FriendsGridMaxHeight": "60vh",
+			"TickerPopupMaxHeight": "54vh",
+			"FriendsGridMaxHeight": "54vh",
 			"FriendsGridMinHeight": "30vh",
 			"NotificationsMinHeight": "30vh",
-			"NotificationsMaxHeight": "70vh",
+			"NotificationsMaxHeight": "62vh",
 			"BookmarkPanel": 'BOOKMARK',
 			"BookTab": "BOOK",
 			"AuthorTab": "AUTHOR",
@@ -144,6 +144,7 @@ var constants = {
 			"TagSearch": "TAG"
 		},
 		"WebsiteUIConstants":{
+			"Share": "Share your book reading journey...",
 			"BrowserIncompatible": "Please use latest version of Chrome for now...",
 			"Enter": 13,
 			"Backspace": 8,

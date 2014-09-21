@@ -4,8 +4,8 @@
 	/*margin-left: 10px;*/
 	white-space: normal;
 	position: relative;
-	width: 64vh;
-	height: 75vh;
+	width: 60vh;
+	height: 62vh;
 	border-bottom-right-radius: 3px;
 	border-bottom-left-radius: 3px;
 	cursor: pointer;
@@ -17,9 +17,9 @@
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 	position: absolute;
-	width: 59vh;
+	width: 55vh;
 	z-index: 1;
-	height: 71vh;
+	height: 58vh;
 	color: transparent;
 	text-decoration: none;
 	border: 2vh solid transparent;
@@ -35,7 +35,7 @@
 .grid .header .text{
 	text-align: right;
 	font-size: 1.2em;
-	padding: 20px;
+	padding: 10px;
 	top: 0px;
 	position: absolute;
 	left: 0px;
@@ -48,14 +48,14 @@
 	top: 0px;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 26vh;
-	height: 42vh;
+	width: 21vh;
+	height: 35vh;
 	border: 1vh solid white;
 }
 
 .grid1 .second{
 	position: absolute;
-	left: 28.6vh;
+	left: 23.6vh;
 	top: 0;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
@@ -66,7 +66,7 @@
 
 .grid1 .third{
 	position: absolute;
-	left: 46vh;
+	left: 41vh;
 	top: 0;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
@@ -77,7 +77,7 @@
 
 .grid1 .fourth{
 	position: absolute;
-	left: 28.6vh;
+	left: 23.6vh;
 	top: 28vh;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
@@ -88,7 +88,7 @@
 
 .grid1 .fifth{
 	position: absolute;
-	left: 46vh;
+	left: 41vh;
 	top: 28vh;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
@@ -99,12 +99,12 @@
 
 .grid1 .sixth{
 	position: absolute;
-	top: 45vh;
-	left: 11vh;
+	top: 38vh;
+	left: 8vh;
 	box-shadow: -3px 0 5px -2px #888;
 	border-radius: 2px;
-	width: 15vh;
-	height: 25vh;
+	width: 13vh;
+	height: 22vh;
 	border: 1vh solid white;
 }
 

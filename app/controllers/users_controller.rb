@@ -6,7 +6,10 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     neo = Neography::Rest.new
-    clause = "MATCH (u:User) OPTIONAL MATCH (u)-[:FacebookAuth]->(f) OPTIONAL MATCH (u)-[:Likes]->(l) RETURN DISTINCT(u), f, COLLECT(l.name), ID(u)"
+    clause = "MATCH (u:User) OPTIONAL MATCH (u)-[:FacebookAuth]->(f) OPTIONAL MATCH (u)-[:Likes]->(l) OPTIONAL MATCH p=(u)-[:Ego*..]->(friend:User) WITH DISTINCT(friend) as friend, u, f, l RETURN DISTINCT(u), f, COLLECT(l.name), ID(u), COLLECT(friend.email), COLLECT(friend.name), COLLECT(friend.thumb)"
+
+
+    
     @users = neo.execute_query(clause)["data"]
     render :index
   end
@@ -90,8 +93,19 @@ class UsersController < ApplicationController
 
   def feedbacks
     neo = Neography::Rest.new
-    clause = "MATCH (u:User)-[:GaveFeedback]->(f:Feedback) RETURN ID(u), ID(f), u.name, f.feedback_text, f.timestamp"
+    clause = "MATCH (u:User)-[:GaveFeedback]->(f:Feedback) RETURN ID(u), ID(f), u.name, f.feedback_text, f.timestamp, f.status"
     @feedbacks = neo.execute_query(clause)["data"]
+  end
+
+  def change_feedback_status
+    begin
+      neo = Neography::Rest.new
+      clause = "MATCH (f:Feedback) WHERE ID(f)="+params[:id].to_s+" SET f.status="+params[:status].to_s
+      neo.execute_query clause
+      render :json => {:message => "Success"}, :status => 200
+    rescue Exception => e
+      render :json => {:message => e.to_s}, :status => 500
+    end
   end
 
   # GET /users/1

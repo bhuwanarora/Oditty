@@ -1,4 +1,4 @@
-websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', 'scroller', 'websiteService', 'sharedService', '$cookieStore', 'RecommendationUIConstants', '$location', 'IntroConstants', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService, scroller, websiteService, sharedService, $cookieStore, RecommendationUIConstants, $location, IntroConstants){
+websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', 'scroller', 'websiteService', 'sharedService', '$cookieStore', 'RecommendationUIConstants', '$location', 'IntroConstants', 'WebsiteUIConstants', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService, scroller, websiteService, sharedService, $cookieStore, RecommendationUIConstants, $location, IntroConstants, WebsiteUIConstants){
 
 	$scope.handle_height_of_popup = function(event, scroll_down){
 		var event_defined = angular.isDefined(event);
@@ -448,9 +448,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	$rootScope.focused_book = $scope.recommendations.books.first;
     }
 
-    _get_friends = function(){
-    	widgetService.get_friends($scope.$routeParams.id).then(function(data){
-    		$rootScope.user.friends = [];
+    $scope._get_friends = function(user_id){
+    	var _set_friends_for = function(user_array, data){
     		angular.forEach(data, function(value){
     			if(value[2] == null){
     				thumb = "/assets/profile_pic.jpeg"
@@ -468,13 +467,27 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			    			"bookmark_count": value[6],
 			    			"fav_categories": value[7].join(", ")};
     			this.push(json);
-    		}, $rootScope.user.friends);
-    	});
+    		}, user_array);
+
+    	}
+
+    	if(angular.isDefined(user_id)){
+    		widgetService.get_friends(user_id).then(function(data){
+	    		$rootScope.reader.friends = [];
+	    		_set_friends_for($rootScope.reader.friends, data);
+	    	});
+    	}
+    	else{
+	    	widgetService.get_friends($scope.$routeParams.id).then(function(data){
+	    		$rootScope.user.friends = [];
+	    		_set_friends_for($rootScope.user.friends, data);
+	    	});
+    	}
     }
 
-    _get_labels = function(){
+    $scope._get_labels = function(user_id){
     	$rootScope.labels = [];
-      	recommendationService.get_labels().then(function(data){
+      	recommendationService.get_labels(user_id).then(function(data){
         	console.debug("%c labels"+data, "color: green");
         	if(angular.isArray(data) && data.length > 0){
 	        	angular.forEach(data, function(value){
@@ -486,55 +499,64 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
       	});
     }
 
-    _init_user = function(){
+    $scope._init_user = function(){
     	if(angular.isUndefined($rootScope.user) || angular.isUndefined($rootScope.user.id)){
     		sharedService.is_logged_in($scope);
     	}
     }
 
+    $scope._init_reader = function(){
+    	sharedService.get_user($scope.$routeParams.id);
+    }
+
+    $scope._basic_init = function(){
+		$scope.grid_view = false;
+		$rootScope.popups = {"settings_popup": false, "show_notifications_popup": false};
+		var oneSec = 10000;
+		$scope.drop_icon = false;
+		// $rootScope.show_book = false;
+		$rootScope.user = {"collapsed_trends": true, "collapsed_friends": true, 
+							"collapsed_filters": true, "collapsed_lists": true,
+							'collapsed_column': true,
+							'collapsed_left_column': true,
+							"interact": false};
+
+		user_behaviour_timer_event = $timeout(function(){
+			_recordUserBehaviour();
+		}, oneSec);
+		$scope.searching = false;
+    	
+		_add_listeners();
+		_init_analytics();
+		_bind_destroy();
+		$scope.cover_image = {'background-image': 'url("'+$cookieStore.get('coverImage')+'")'};
+		$scope._init_user();
+    }
+
 	_init = function(){
 		//oneMin = 60000
 		if($rootScope.user.logged){
-			$scope.grid_view = false;
+			$scope._basic_init();
 			$scope.$routeParams = $routeParams;
-			
-			$rootScope.popups = {"settings_popup": false, "show_notifications_popup": false};
-			// console.debug("%crouteparams "+$routeParams+" ", "color: yellow");
-			// $scope.$emit('reloadRecommendations');
+			if($scope.$routeParams.type == "profile"){
+				var reader_id = $scope.$routeParams.id;
+				$rootScope.reader = {};
+				$scope._init_reader();
+				$scope._get_friends(reader_id);
+				$scope._get_labels(reader_id);
+				$scope.placeholder = "Write on timeline...";
+			}
+			else{
+				$scope._get_labels();
+				$scope._initialize_filters();
+				_init_recommendations();
 
-			var oneSec = 10000;
-			$scope.drop_icon = false;
-			// $rootScope.show_book = false;
-			$rootScope.user = {"collapsed_trends": true, "collapsed_friends": true, 
-								"collapsed_filters": true, "collapsed_lists": true,
-								"interact": false};
+		        // _handle_focused_book();
+		        $scope._get_friends();
+		        $scope.$emit('getNotifications');
 
-			user_behaviour_timer_event = $timeout(function(){
-				_recordUserBehaviour();
-			}, oneSec);
-
-			$scope.searching = false;
-	    	_get_labels();
-			$scope._initialize_filters();
-			_init_recommendations();
-			// if($scope.$routeParams.title){
-			// 	_get_recommendations();
-			// }
-	    	_add_listeners();
-	        _init_analytics();
-	        // _init_shelf();
-	        // var timeout_event = $timeout(function(){
-	        // 	_get_recommendations();
-	        // });
-	        $scope.$on('destroy', function(){
-	        	$timeout.cancel(timeout_event);
-	        });
-	        // _push_recommendations();
-	        _bind_destroy();
-	        _init_user();
-	        // _handle_focused_book();
-	        _get_friends();
-	        $scope.$emit('getNotifications');
+				$scope.placeholder = WebsiteUIConstants.Share;
+			}
 		}
 		else{
 			$rootScope.user = {'books': {'bookmarked':[], 'read': []},
@@ -583,7 +605,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	            position: 'bottom'
 	        },
 	        {
-	            element: '#shelvesTab',
+	            element: '#recommendationFooter',
 	            intro: IntroConstants.ShelvesTab,
 	            position: 'bottom'
 	        }
@@ -594,7 +616,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         nextLabel: '<strong>Next</strong>',
         prevLabel: '<span>Previous</span>',
         skipLabel: 'Exit',
-        doneLabel: 'Thanks'
+        doneLabel: '<strong>Thanks</strong>'
     };
 
     $scope.should_auto_start = function() {

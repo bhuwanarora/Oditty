@@ -132,3 +132,7 @@ a, .site_color{
 .thumb{
 	width: 30px;
 }
+
+.inactive{
+	opacity: 0.4;
+}

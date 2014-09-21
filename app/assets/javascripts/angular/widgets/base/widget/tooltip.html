@@ -1,6 +1,8 @@
 <div class="tooltip animate-fast" 
      ng-class="{'scrollbar': scroll}" msd-wheel="stop_horizontal_scroll($event)">
-	<div>{{prependText}}&nbsp;{{text}}{{pluralize}}&nbsp;{{appendText}}</div>
+	<div><span ng-show="prependText">{{prependText}}&nbsp;</span>
+	     <span ng-show="text">{{text}}{{pluralize}}&nbsp;</span>
+	     <span>{{appendText}}</span></div>
 	<div class="arrow_down tooltip_arrow" ng-show="position == 'top'"></div>
 	<div class="arrow_up tooltip_arrow" ng-show="position == 'bottom'"></div>
 	<div class="arrow_left tooltip_arrow" ng-show="position == 'right'"></div>

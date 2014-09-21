@@ -4,12 +4,17 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
         if(data["logged_in"]){
           $rootScope.user.logged = true;
           $rootScope.user.id = data["id"];
-          // $scope.$emit('getNotifications');
           websiteService.get_user_details().then(function(data){
-              angular.extend($rootScope.user, data);
-            });
+            angular.extend($rootScope.user, data);
+          });
           // stropheService.start_connection();
         }
+      });
+    }
+
+    this.get_user = function(reader_id){
+      websiteService.get_user_details(reader_id).then(function(data){
+        $rootScope.reader = data;
       });
     }
 

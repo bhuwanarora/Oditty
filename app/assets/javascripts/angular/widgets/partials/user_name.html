@@ -1,0 +1,28 @@
+<div ng-if="$routeParams.type != 'profile'">
+	<div class="user_name">
+		<span ng-show="user.name">{{user.name}}</span>
+		<span ng-show="!user.name">{{user.email}}</span>
+		<span> · </span>
+		<span>{{user.total_count | integer}}</span><span> · </span>
+		<span ng-class="{'green_color': $routeParams.type}">{{user.book_read_count | integer}}</span>
+		<span ng-class="{'green_color': $routeParams.type}" class='icon-books'></span>
+		<span> · </span>
+		<span ng-class="{'purple_color': $routeParams.type}">{{user.bookmark_count | integer}}</span>
+		<span ng-class="{'purple_color': $routeParams.type}" class='icon-bookmarks'></span>
+		<span> · </span>
+	</div>
+</div>
+<div ng-if="$routeParams.type == 'profile'">
+	<div class="user_name">
+		<span ng-show="reader.name">{{reader.name}}</span>
+		<span ng-show="!reader.name">{{reader.email}}</span>
+		<span> · </span>
+		<span>{{reader.total_count | integer}}</span><span> · </span>
+		<span ng-class="{'green_color': $routeParams.type}">{{reader.book_read_count | integer}}</span>
+		<span ng-class="{'green_color': $routeParams.type}" class='icon-books'></span>
+		<span> · </span>
+		<span ng-class="{'purple_color': $routeParams.type}">{{reader.bookmark_count | integer}}</span>
+		<span ng-class="{'purple_color': $routeParams.type}" class='icon-bookmarks'></span>
+		<span> · </span>
+	</div>
+</div>

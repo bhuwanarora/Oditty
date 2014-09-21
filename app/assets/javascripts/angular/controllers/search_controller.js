@@ -1224,8 +1224,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 
 	$scope._set_cover_photo = function(){
 		websiteService.get_background_image().then(function(data){
-			var url = WebsiteUIConstants.CoverPhotoCDN+data+".jpg"
+			var url = WebsiteUIConstants.CoverPhotoCDN+data+".jpg";
 			$scope.search_style = {'background-image': 'url("'+url+'")'};
+			$cookieStore.put('coverImage', url);
 		});
 	}
 

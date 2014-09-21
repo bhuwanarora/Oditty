@@ -43,8 +43,8 @@ angular.module('filtersApp', [])
   .filter('reduced_title', function(){
     return function(input){
       if(angular.isDefined(input)){
-        if(input != null && input.length > 32){
-          input = input.slice(0, 29)+"...";
+        if(input != null && input.length > 28){
+          input = input.slice(0, 25)+"...";
         }
       }
       return input;

@@ -33,7 +33,7 @@
 	padding: 15px 10px 5px;
 	position: relative;
 	width: 97%;
-	overflow-y: scroll;
+	/*overflow-y: scroll;*/
 	max-height: 32vh;
 }
 
@@ -158,7 +158,7 @@
 
 .focused_tooltip .user_box,
 .focused_tooltip .user_box_wrapper{
-	bottom: 110px;
+	bottom: 145px;
 	position: absolute;
 	background-color: white;
 	width: 93%;
@@ -276,7 +276,7 @@
 
 .focused_tooltip .arrow{
 	position: absolute;
-	top: 10vh;	
+	top: 230px;	
 	border-top: 10px solid transparent;
 	border-bottom: 10px solid transparent;
 	width: 0; 
