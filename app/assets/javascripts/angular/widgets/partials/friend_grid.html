@@ -3,8 +3,16 @@
 	     class="friend_thumb" />
 </div>
 <div class="friend_details">
-	<div class="site_color" ng-show="friend.name"><b><a ng-href="#reader/{{friend.id}}/profile">{{friend.name}}</a></b></div>
-	<div class="site_color" ng-show="!friend.name"><b><a ng-href="#reader/{{friend.id}}/profile">{{friend.email}}</a></b></div>
+	<div class="site_color" ng-show="friend.name && friend.id == user.id"><b>
+		<a ng-href="#user/{{user.id}}/recommendations/books">{{friend.name}}</a></b></div>
+	</div>
+	<div class="site_color" ng-show="!friend.name && friend.id == user.id"><b>
+		<a ng-href="#user/{{user.id}}/recommendations/books">{{friend.email}}</a></b></div>
+	</div>
+	<div class="site_color" ng-show="friend.name && friend.id != user.id"><b>
+		<a ng-href="#reader/{{friend.id}}/profile">{{friend.name}}</a></b></div>
+	<div class="site_color" ng-show="!friend.name && friend.id != user.id"><b>
+		<a ng-href="#reader/{{friend.id}}/profile">{{friend.email}}</a></b></div>
 	<div ng-show="friend.init_book_read_count">Reader of {{friend.init_book_read_count}}</div>
 	<div>
 		<span>{{friend.total_count | integer}}</span>

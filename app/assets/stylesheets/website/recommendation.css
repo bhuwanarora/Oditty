@@ -1296,7 +1296,7 @@ and (min-width : 1824px) {
 }
 
 .left_column .friends_grid{
-	max-height: 60vh;
+	max-height: 54vh;
 	white-space: normal;
 	background-color: #fff;
 	border-radius: 4px;
@@ -1546,23 +1546,23 @@ and (min-width : 1824px) {
 }
 
 .left_column_collapsed1{
-	top: 193px;
-}
-
-.left_column_collapsed2{
 	top: 242px;
 }
 
-.left_column_collapsed3{
+.left_column_collapsed2{
 	top: 291px;
 }
 
-.left_column_collapsed4{
+.left_column_collapsed3{
 	top: 340px;
 }
 
-.left_column_collapsed5{
+.left_column_collapsed4{
 	top: 389px;
+}
+
+.left_column_collapsed5{
+	top: 438px;
 }
 
 .left_column_shifted{
@@ -1811,7 +1811,7 @@ l	.compressed_info_card{
 .user_name{
 	position: fixed;
 	top: 185px;
-	left: 170px;
+	left: 20px;
 	color: white;
 	z-index: 1;
 	font-size: 25px;
