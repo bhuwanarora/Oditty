@@ -1150,10 +1150,11 @@ websiteApp.directive('tooltip', function(){
 				element.children().css('visibility', 'visible');
 				element.children().children().css('font-size', '12px');
 				element.children().children().css('text-shadow', 'none');
-				element.children().children().css('font-weight', '200');
+				element.children().children().css('font-weight', '400');
 				element.children().children().css('letter-spacing', '1px');
 				element.children().children().css('font-family', 'helvetica neue');
-				element.children().children().css('color', 'white');
+				element.children().children().css('color', '#333');
+				element.children().children().css('line-height', '17px');
 
 				var width = element.children()[0].clientWidth;
 				var height = element.children()[0].clientHeight;
@@ -1170,22 +1171,22 @@ websiteApp.directive('tooltip', function(){
 
 				if(show_left){
 					element.children().css('left', "-"+width+"px");
-					element.children().children().css('border-left-color', '#333');
+					element.children().children().css('border-left-color', '#fff');
 					element.children().children('.tooltip_arrow').css('left', width+'px');
 				}
 				else if(show_right){
 					element.children().css('right', "-"+width+"px");
-					element.children().children().css('border-right-color', '#333');
+					element.children().children().css('border-right-color', '#fff');
 					element.children().children('.tooltip_arrow').css('right', width+'px');
 				}
 				else if(show_bottom){
 					element.children().css('bottom', "-"+height+"px");
-					element.children().children().css('border-bottom-color', '#333');
+					element.children().children().css('border-bottom-color', '#fff');
 					element.children().children('.tooltip_arrow').css('bottom', height+'px');
 				}
 				else if(show_top){
 					element.children().css('top', "-"+height+"px");
-					element.children().children().css('border-top-color', '#333');
+					element.children().children().css('border-top-color', '#fff');
 					element.children().children('.tooltip_arrow').css('top', height+'px');
 				}
 			});

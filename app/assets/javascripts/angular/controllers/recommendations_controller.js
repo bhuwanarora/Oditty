@@ -538,10 +538,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	        _get_friends();
 	        $scope.$emit('getNotifications');
 
-	        websiteService.get_background_image().then(function(data){
-				var url = WebsiteUIConstants.CoverPhotoCDN+data+".jpg"
-				$scope.cover_image = {'background-image': 'url("'+url+'")'};
-			});
+			$scope.cover_image = {'background-image': 'url("'+$cookieStore.get('coverImage')+'")'};
 
 			$scope.placeholder = WebsiteUIConstants.ShareSomething;
 		}
@@ -603,7 +600,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         nextLabel: '<strong>Next</strong>',
         prevLabel: '<span>Previous</span>',
         skipLabel: 'Exit',
-        doneLabel: 'Thanks'
+        doneLabel: '<strong>Thanks</strong>'
     };
 
     $scope.should_auto_start = function() {

@@ -42,8 +42,8 @@
 	float: right;
 	height: 35px;
 	margin-top: 3px;
-	padding-left: 10px;
-	padding-right: 10px;
+	padding-left: 15px;
+	padding-right: 15px;
 	display: table;
 	cursor: default;
 }
@@ -413,7 +413,7 @@
 	left: 50%;
 	color: #3D79A1;
 	height: 35px;
-	bottom: 2px;
+	top: 180px;
 	margin-left: -36px;
 	position: fixed;
 	letter-spacing: -2px;
@@ -1777,11 +1777,11 @@ l	.compressed_info_card{
 }
 
 .share_postioner{
-	width: 70%;
+	width: 72%;
 	left: 50%;
 	position: fixed;
 	top: 50px;
-	margin-left: -35%;
+	margin-left: -36%;
 }
 
 .share_postioner .thumb,
@@ -1790,10 +1790,20 @@ l	.compressed_info_card{
 	height: 120px;
 }
 
-.share_postioner .share_status{
+.share_postioner .thumb{
+	border: 4px solid white;
+}
+
+.share_postioner .interaction_links{
 	display: none;
 }
 
 .share_postioner .interaction_box{
 	height: 120px;
+	background-color: rgba(255, 255, 255, 0.48);
+}
+
+.share_postioner .comment_box{
+	padding-left: 10px;
+	padding-top: 10px;
 }

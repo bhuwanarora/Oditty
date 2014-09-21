@@ -65,8 +65,8 @@ var constants = {
 			"FacebookLoginStatusCheck" :"connected"
 		},
 		"RecommendationUIConstants": {
-			"TickerPopupMaxHeight": "62vh",
-			"FriendsGridMaxHeight": "60vh",
+			"TickerPopupMaxHeight": "54vh",
+			"FriendsGridMaxHeight": "54vh",
 			"FriendsGridMinHeight": "30vh",
 			"NotificationsMinHeight": "30vh",
 			"NotificationsMaxHeight": "62vh",

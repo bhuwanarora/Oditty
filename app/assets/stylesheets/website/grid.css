@@ -4,7 +4,7 @@
 	/*margin-left: 10px;*/
 	white-space: normal;
 	position: relative;
-	width: 64vh;
+	width: 60vh;
 	height: 62vh;
 	border-bottom-right-radius: 3px;
 	border-bottom-left-radius: 3px;
@@ -19,7 +19,7 @@
 	position: absolute;
 	width: 59vh;
 	z-index: 1;
-	height: 58vh;
+	height: 56vh;
 	color: transparent;
 	text-decoration: none;
 	border: 2vh solid transparent;
@@ -35,7 +35,7 @@
 .grid .header .text{
 	text-align: right;
 	font-size: 1.2em;
-	padding: 20px;
+	padding: 10px;
 	top: 0px;
 	position: absolute;
 	left: 0px;
