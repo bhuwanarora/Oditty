@@ -125,6 +125,7 @@
 	outline: none;
 	border: 1px solid #F1F1F1;
 	border-radius: 1px;
+	resize: none;
 }
 
 .interaction_box_options [class^="icon-"],
@@ -1776,7 +1777,7 @@ l	.compressed_info_card{
 	height: 180px;
 }
 
-.share_postioner{
+.share_positioner{
 	width: 72%;
 	left: 50%;
 	position: fixed;
@@ -1784,26 +1785,26 @@ l	.compressed_info_card{
 	margin-left: -36%;
 }
 
-.share_postioner .thumb,
-.share_postioner img{
+.share_positioner .thumb,
+.share_positioner img{
 	width: 120px;
 	height: 120px;
 }
 
-.share_postioner .thumb{
+.share_positioner .thumb{
 	border: 4px solid white;
 }
 
-.share_postioner .interaction_links{
+.share_positioner .interaction_links{
 	display: none;
 }
 
-.share_postioner .interaction_box{
+.share_positioner .interaction_box{
 	height: 120px;
-	background-color: rgba(255, 255, 255, 0.48);
+	background-color: rgba(255,255,255,0.48);
 }
 
-.share_postioner .comment_box{
+.share_positioner .comment_box{
 	padding-left: 10px;
 	padding-top: 10px;
 }
@@ -1816,4 +1817,11 @@ l	.compressed_info_card{
 	z-index: 1;
 	font-size: 25px;
 	font-weight: 700;
+}
+
+.share_positioner .bubble_pointer{
+	position: absolute;
+	border-top: 15px solid white;
+	border-left: 15px solid transparent;
+	left: 128px;
 }

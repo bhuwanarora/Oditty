@@ -555,7 +555,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		        $scope._get_friends();
 		        $scope.$emit('getNotifications');
 
-				$scope.placeholder = WebsiteUIConstants.ShareSomething;
+				$scope.placeholder = WebsiteUIConstants.Share;
 			}
 		}
 		else{

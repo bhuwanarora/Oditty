@@ -65,6 +65,7 @@
 		<span class="highlighter" ng-bind-html="user.hash_tagged_comment"></span>
 		<div class="thumb" ng-if="$routeParams.type != 'profile'"><img ng-src="{{user | blob_backup}}"></div>
 		<div class="thumb" ng-if="$routeParams.type == 'profile'"><img ng-src="{{reader | blob_backup}}"></div>
+		<div class="bubble_pointer"></div>
 		<textarea itemprop= "commentText"
 		   itemtype= "http://schema.org/UserComments"
 		   set-focus="user.interact"

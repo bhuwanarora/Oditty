@@ -144,6 +144,7 @@ var constants = {
 			"TagSearch": "TAG"
 		},
 		"WebsiteUIConstants":{
+			"Share": "Share your book reading journey...",
 			"BrowserIncompatible": "Please use latest version of Chrome for now...",
 			"Enter": 13,
 			"Backspace": 8,
