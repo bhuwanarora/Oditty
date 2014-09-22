@@ -9,6 +9,9 @@
 		<div class="scrollbar tweets"
 			 ng-if="focused_book"
 		 	 ng-click="stop_propagation($event)">
+		 	<div class="tweet">
+				<b><div class="tweet_text">Book Timeline</div></b>
+			</div>
 			<div class="tweet animate-fast" ng-repeat="tweet in focused_book.tweets | reverse">
 				<div class="thumb"><img ng-src="{{tweet.user.thumb | thumb_backup}}"></div>
 				<div class="tweet_text">
@@ -22,25 +25,47 @@
 			</div>
 		</div>
 		<div class="scrollbar tweets"
-			ng-if="!focused_book.tweets"
+			ng-if="!focused_book.tweets && notifications"
 			check-scroll-bottom="get_notifications()"
 			ng-click="stop_propagation($event)">
+			<div class="tweet">
+				<b><div class="tweet_text">News Feed</div></b>
+			</div>
 			<div ng-repeat="notification in notifications | reverse" 
 			     class="tweet animate-fast">
-				<div class="thumb"><img ng-src="{{notification.thumb | thumb_backup}}"></div>
-				<div class="tweet_text">
-					<b><div ng-bind-html="notification.user.name"></div></b>
-					<b><a ng-href="{{notification.url}}" target="_blank">
-						<div ng-bind-html="notification.title"></div></a>
-					</b>
-					<div class="trending_background site_color" ng-show="notification.title">
-						<a ng-href="#user/{{user.id}}/trending/books/id/{{notification.id}}/name/{{notification.name}}">Check out books related to  <b>{{notification.keywords}}</b></a>
-					</div>
-					<div ng-bind-html="notification.tag"></div>
-					<br/>
-					<div ng-bind-html="notification.message"></div>
-					<img ng-show="notification.large_image" ng-src="{{notification.large_image}}" class="large_thumb">
-				</div>
+				<div ng-include src="'/assets/angular/widgets/partials/notification_block.html'"></div>
+			</div>
+			<div class="tweet animate-fast">
+				No new notifications.
+			</div>
+		</div>
+
+		<div class="scrollbar tweets"
+			ng-if="!focused_book.tweets && personal_notifications && reader"
+			check-scroll-bottom="get_notifications(reader.id)"
+			ng-click="stop_propagation($event)">
+			<div class="tweet">
+				<b><div class="tweet_text">{{reader.name}}'s timeline</div></b>
+			</div>
+			<div ng-repeat="notification in personal_notifications | reverse" 
+			     class="tweet animate-fast">
+				<div ng-include src="'/assets/angular/widgets/partials/notification_block.html'"></div>
+			</div>
+			<div class="tweet animate-fast">
+				No new notifications.
+			</div>
+		</div>
+
+		<div class="scrollbar tweets"
+			ng-if="!focused_book.tweets && personal_notifications && !reader"
+			check-scroll-bottom="get_notifications(user.id)"
+			ng-click="stop_propagation($event)">
+			<div class="tweet">
+				<b><div class="tweet_text">Profile</div></b>
+			</div>
+			<div ng-repeat="notification in personal_notifications | reverse" 
+			     class="tweet animate-fast">
+				<div ng-include src="'/assets/angular/widgets/partials/notification_block.html'"></div>
 			</div>
 			<div class="tweet animate-fast">
 				No new notifications.

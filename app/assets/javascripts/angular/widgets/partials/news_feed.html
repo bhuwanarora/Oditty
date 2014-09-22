@@ -5,11 +5,11 @@
 	 id="newsFeed"
 	 ng-class="{'left_column_collapsed left_column_collapsed1': user.collapsed_column, 
 	            'left_column_shifted left_column_shifted1': !user.collapsed_friends,
-	            'left_column_shifted left_column_shifted2': !user.collapsed_lists,
+	            'left_column_shifted left_column_shifted2': !user.collapsed_filters,
 	            'left_column_shifted left_column_shifted3': !user.collapsed_trends,
-	            'left_column_shifted left_column_shifted4': !user.collapsed_filters}">
+	            'left_column_shifted left_column_shifted4': !user.collapsed_lists}">
 	<div class="collapse_icon red_button" 
-	     ng-click="user.collapsed_column = true; user.collapsed_left_column = true;" 
+	     ng-click="user.collapsed_column = true; user.collapsed_left_column = true; collapse_left_panel();" 
 	     ng-if="!user.collapsed_column">
 		<span class="icon-angle-left"></span>
 	</div>
@@ -20,7 +20,9 @@
 		          user.collapsed_filters = true; 
 		          user.collapsed_trends = true;
 		          user.collapsed_lists = true;
-		          user.collapsed_friends = true;">
+		          user.collapsed_friends = true;
+		          expand_left_panel();
+		          get_news_feed();">
 		<span class="table_cell">
 			<span class="icon-newspaper site_color header_font"></span>
 			<span class="shelves" ng-show="user.collapsed_left_column">&nbsp;&nbsp;News Feed</span>

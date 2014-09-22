@@ -578,7 +578,7 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
       	}
 
       	$scope.get_notifications = function(){
-			$scope.$emit('getNotifications');
+			$scope.$emit('getNotifications', $rootScope.user.id);
 		}
 
       	_clear_focus = function(){

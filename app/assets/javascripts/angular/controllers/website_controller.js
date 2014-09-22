@@ -186,24 +186,33 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    	}
 	    	else{
 	    		$scope.notifications.push(notification);
+	    		if(angular.isDefined($scope.personal_notifications)){
+	    			$scope.personal_notifications.push(notification);
+	    		}
 	    	}
 	    	event.stopPropagation();
 	    });
 
 	    get_notifications_event = $scope.$on('getNotifications', function(event, user_id){
-	    	if(angular.isDefined($scope.notifications)){
-	    		var existing_notifications_count = $scope.notifications.length;
-	    	}
-	    	else{
-	    		var existing_notifications_count = 0;
-	    	}
 	    	if(angular.isDefined(user_id)){
+	    		if(angular.isDefined($scope.personal_notifications)){
+		    		var existing_notifications_count = $scope.personal_notifications.length;
+		    	}
+		    	else{
+		    		var existing_notifications_count = 0;
+		    	}
 	    		websiteService.get_notifications(existing_notifications_count, user_id).then(function(data){
-		    		_intro_notifications();
-					$scope.notifications = data.notifications.concat($scope.notifications);
+		    		_intro_notifications(user_id);
+					$scope.personal_notifications = data.notifications.concat($scope.personal_notifications);
 				});
 	    	}
 	    	else{
+		    	if(angular.isDefined($scope.notifications)){
+		    		var existing_notifications_count = $scope.notifications.length;
+		    	}
+		    	else{
+		    		var existing_notifications_count = 0;
+		    	}
 		    	websiteService.get_notifications(existing_notifications_count).then(function(data){
 		    		_intro_notifications();
 					$scope.notifications = data.notifications.concat($scope.notifications);
@@ -218,9 +227,18 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    });
 	}
 
-	_intro_notifications = function(){
-		if(angular.isUndefined($scope.notifications)){
-			$scope.notifications = [];
+	_intro_notifications = function(user_id){
+		if(angular.isUndefined(user_id)){
+			if(angular.isUndefined($scope.notifications)){
+				$scope.notifications = $rootScope.trends;
+				delete $scope.personal_notifications;
+			}
+		}
+		else{
+			if(angular.isUndefined($scope.personal_notifications)){
+				$scope.personal_notifications = [];
+				delete $scope.notifications;
+			}
 		}
 	}
 

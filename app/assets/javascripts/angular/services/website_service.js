@@ -94,7 +94,12 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
     }
 
     this.get_notifications = function(skip_count, user_id){
-        return _deferred_request('/api/v0/notifications?skip_count='+skip_count+"&id="+user_id);
+        if(angular.isDefined(user_id)){
+            return _deferred_request('/api/v0/notifications?skip_count='+skip_count+"&id="+user_id);
+        }
+        else{
+            return _deferred_request('/api/v0/notifications?skip_count='+skip_count);
+        }
     }
 
     this.get_latest_notification = function(){

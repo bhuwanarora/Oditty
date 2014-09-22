@@ -16,7 +16,7 @@
 	     		<span>&nbsp;Books Read</span>
 	     	</span>
      	</div>
-     	<div class="block"
+     	<!-- <div class="block"
      		ng-click="edit_authors_read();"
      		title="Edit authors you like">
      		<span ng-class="{'site_color': user.profile_status==3}">
@@ -31,7 +31,7 @@
 	     		<span class="icon-users"></span>
 	     		<span>&nbsp;Barter</span>
      		</span>
-     	</div>
+     	</div> -->
      	<div class="block"
      		ng-click="goto_info_card(); user.profile_status=0;"
      		title="Edit personal details">
@@ -216,7 +216,7 @@
 						</div>
 				</div>
 			</div>
-			<div ng-switch-when="3">
+			<!-- <div ng-switch-when="3">
 				<div class="sub_header"><b>Add authors you like <span class="red_color">(Coming Soon)</span>...</b></div>
 				<div class="header">Follow authors and their lives...</div>
 				<input ng-keydown="search_info_card($event, 'AUTHOR')" ng-model="info.search_author" placeholder="Search authors..."/>
@@ -235,15 +235,15 @@
 							<img src="assets/loader2.gif" width="20px" ng-show="loading" class="loading_icon"/>
 						</div>
 				</div>
-			</div>
-			<div ng-switch-when="4">
+			</div> -->
+			<!-- <div ng-switch-when="4">
 				<div class="sub_header"><b>Share and borrow books from readers in your area  <span class="red_color">(Coming Soon)</span>...</b></div>
 				<div class="header">Let's create a new kind of barter system for books...</div>
 				<div ng-include src="'/assets/angular/widgets/partials/invite.html'"></div>
 				<map style="display:block; height:50vh; width: 101%; margin-top: 10px;">
 					<marker position="current" centered="true"></marker>
 				</map>
-			</div>
+			</div> -->
 			
 			
 			<div class="footer">
