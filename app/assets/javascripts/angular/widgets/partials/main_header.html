@@ -30,10 +30,12 @@
  	<div ng-controller="searchController">
  		<search-bar></search-bar>
  	</div>
-
+ 	<a ng-href="#user/{{user.id}}/recommendations/books" class="header_navbar site_color">
+		<span class="table_cell"><b>Home</b></span>
+	</a>
 	<!-- <div class="header_navbar site_color" 
 		 id="share" 
-		 ng-click="show_interaction_box()">
+		 ng-click="show_interaction_box(user.id)">
 		<span class="table_cell share"></span>
 	</div> -->
 	<!-- <div ng-include src="'/assets/angular/widgets/partials/invite.html'"></div> -->

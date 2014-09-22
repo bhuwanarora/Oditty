@@ -23,11 +23,14 @@
 
 		<div class="vertical_padder_active"></div>
 		<div class="share_wrapper" ng-style="cover_image">
-			<div class="share_positioner"  id="share">
+			<!-- <div class="share_positioner"  id="share">
 				<div ng-include src="'/assets/angular/widgets/partials/interaction_box.html'"></div>
 			</div>
 			<div class="share_positioner" ng-click="show_interaction_box(user.id)" ng-if="$routeParams.type != 'profile'"  id="share">
 				<div ng-include src="'/assets/angular/widgets/partials/interaction_box.html'"></div>
+			</div> -->
+			<div class="thumb_wrapper">
+				<img ng-src="{{user.thumb | thumb_backup}}" />
 			</div>
 			<div class="share_fade" ></div>
 		</div>

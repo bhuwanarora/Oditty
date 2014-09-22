@@ -1,13 +1,12 @@
-<a ng-href="#user/{{user.id}}/recommendations/books" class="relative_position">
-	<div class="header_navbar" 
-		 id="editProfile"
-		 ng-if="user.logged">
-		<img ng-src="{{user | blob_backup}}" class="profile_small_thumb" ng-if="user">
-		<div class="user_details">
-			<div class="animate-slow count" ng-class="{'green': is_additive, 'magenta': !is_additive}" ng-show="count && !initiate_counting">
-				<span ng-if="is_additive">+</span><span ng-if="!is_additive">-</span>{{count}}
-			</div>
-			<span><b>{{user.name | first_name}}</b></span>
+<div class="header_navbar" 
+	 id="editProfile"
+	 ng-click="show_interaction_box(user.id)"
+	 ng-if="user.logged">
+	<img ng-src="{{user | blob_backup}}" class="profile_small_thumb" ng-if="user">
+	<div class="user_details">
+		<div class="animate-slow count" ng-class="{'green': is_additive, 'magenta': !is_additive}" ng-show="count && !initiate_counting">
+			<span ng-if="is_additive">+</span><span ng-if="!is_additive">-</span>{{count}}
 		</div>
+		<span><b>{{user.name | first_name}}</b></span>
 	</div>
-</a>
+</div>

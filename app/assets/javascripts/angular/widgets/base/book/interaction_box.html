@@ -13,7 +13,7 @@
 				<b><div class="tweet_text">Book Timeline</div></b>
 			</div>
 			<div class="tweet animate-fast" ng-repeat="tweet in focused_book.tweets | reverse">
-				<div class="thumb"><img ng-src="{{tweet.user.thumb | thumb_backup}}"></div>
+				<div class="thumb"><img ng-src="{{tweet.user.thumb | thumb_backup}}"/></div>
 				<div class="tweet_text">
 					<b><div ng-bind-html="tweet.user.name"></div></b>
 					<div ng-bind-html="tweet.tag"></div>
@@ -41,13 +41,13 @@
 		</div>
 
 		<div class="scrollbar tweets"
-			ng-if="!focused_book.tweets && personal_notifications && reader"
+			ng-if="!focused_book.tweets && readers_notifications && reader"
 			check-scroll-bottom="get_notifications(reader.id)"
 			ng-click="stop_propagation($event)">
 			<div class="tweet">
 				<b><div class="tweet_text">{{reader.name}}'s timeline</div></b>
 			</div>
-			<div ng-repeat="notification in personal_notifications | reverse" 
+			<div ng-repeat="notification in readers_notifications | reverse" 
 			     class="tweet animate-fast">
 				<div ng-include src="'/assets/angular/widgets/partials/notification_block.html'"></div>
 			</div>

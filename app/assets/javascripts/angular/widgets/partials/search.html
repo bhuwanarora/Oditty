@@ -40,7 +40,10 @@
 		  	<hr>
 			<!-- <select ng-options="type for type in ['R.D.', 'Books', 'Authors', 'Readers']"> -->
 			<!-- </select> -->
-			<profile-link></profile-link>
+			<a ng-href="#user/{{user.id}}/recommendations/books" class="relative_position">
+				<profile-link></profile-link>
+			</a>
+
 		  	<search-bar></search-bar>
 		  	<div class="secondary_login animate-fast" 
 		       ng-click="toggle_login_panel()"

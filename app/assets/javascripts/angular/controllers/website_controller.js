@@ -199,16 +199,30 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 
 	    get_notifications_event = $scope.$on('getNotifications', function(event, user_id){
 	    	if(angular.isDefined(user_id)){
-	    		if(angular.isDefined($scope.personal_notifications)){
-		    		var existing_notifications_count = $scope.personal_notifications.length;
-		    	}
-		    	else{
-		    		var existing_notifications_count = 0;
-		    	}
-	    		websiteService.get_notifications(existing_notifications_count, user_id).then(function(data){
-		    		_intro_notifications(user_id);
-					$scope.personal_notifications = data.notifications.concat($scope.personal_notifications);
-				});
+	    		if(angular.isDefined($rootScope.reader)){
+	    			if(angular.isDefined($scope.readers_notifications)){
+			    		var existing_notifications_count = $scope.readers_notifications.length;
+			    	}
+			    	else{
+			    		var existing_notifications_count = 0;
+			    	}
+		    		websiteService.get_notifications(existing_notifications_count, user_id).then(function(data){
+			    		_intro_notifications(user_id);
+						$scope.readers_notifications = data.notifications.concat($scope.readers_notifications);
+					});
+	    		}
+	    		else{
+		    		if(angular.isDefined($scope.personal_notifications)){
+			    		var existing_notifications_count = $scope.personal_notifications.length;
+			    	}
+			    	else{
+			    		var existing_notifications_count = 0;
+			    	}
+		    		websiteService.get_notifications(existing_notifications_count, user_id).then(function(data){
+			    		_intro_notifications(user_id);
+						$scope.personal_notifications = data.notifications.concat($scope.personal_notifications);
+					});
+	    		}
 	    	}
 	    	else{
 		    	if(angular.isDefined($scope.notifications)){
@@ -236,12 +250,23 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 			if(angular.isUndefined($scope.notifications)){
 				$scope.notifications = [];
 				delete $scope.personal_notifications;
+				delete $scope.readers_notifications;
 			}
 		}
 		else{
-			if(angular.isUndefined($scope.personal_notifications)){
-				$scope.personal_notifications = [];
-				delete $scope.notifications;
+			if(angular.isDefined($rootScope.reader)){
+				if(angular.isUndefined($scope.readers_notifications)){
+					$scope.readers_notifications = [];
+					delete $scope.notifications;
+					delete $scope.personal_notifications;
+				}
+			}
+			else{
+				if(angular.isUndefined($scope.personal_notifications)){
+					$scope.personal_notifications = [];
+					delete $scope.notifications;
+					delete $scope.readers_notifications;
+				}
 			}
 		}
 	}

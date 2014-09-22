@@ -1809,16 +1809,25 @@ l	.compressed_info_card{
 	cursor: pointer;
 }
 
-.share_positioner .thumb,
-.share_positioner img{
-	width: 60px;
-	height: 60px;
+.share_wrapper .thumb_wrapper,
+.share_wrapper img{
+	width: 100px;
+	height: 100px;
 }
 
-.share_positioner .thumb{
+.share_wrapper .thumb_wrapper{
+	position: fixed;
+	left: 20px;
+	top: 70px;
+	border: 3px solid white;
+	border-radius: 3px;
+}
+
+
+/*.share_positioner .thumb{
 	border: 4px solid white;
-}
-
+}*/
+/*
 .share_positioner .interaction_links{
 	display: none;
 }
@@ -1835,7 +1844,7 @@ l	.compressed_info_card{
 	padding-left: 10px;
 	padding-top: 10px;
 }
-
+*/
 .user_name{
 	position: fixed;
 	top: 185px;
@@ -1845,10 +1854,10 @@ l	.compressed_info_card{
 	font-size: 25px;
 	font-weight: 700;
 }
-
+/*
 .share_positioner .bubble_pointer{
 	position: absolute;
 	border-top: 15px solid white;
 	border-left: 15px solid transparent;
 	left: 64px;
-}
+}*/
