@@ -208,6 +208,7 @@
 	height: 100%;
 	vertical-align: middle;
 	padding: 0px 10px;
+	font-size: 0.9em;
 }
 
 .link:hover{
@@ -358,8 +359,8 @@
 }
 
 .right_links{
-	left: 130px;
-	right: inherit;
+	right: 10px;
+	top: 50px;
 }
 
 .toggle_elements{
@@ -1269,7 +1270,7 @@ and (min-width : 1824px) {
 
 .left_panel{
 	top: 220px;
-	width: 142px;
+	width: 15%;
 	height: 70vh;
 	background-color: white;
 	left: 0px;
@@ -1546,7 +1547,7 @@ and (min-width : 1824px) {
 }
 
 .left_column_collapsed2:hover{
-	border-bottom: 4px solid #E2B503;
+	border-bottom: 4px solid #918FB5;
 }
 
 .left_column_collapsed3:hover{
@@ -1554,7 +1555,7 @@ and (min-width : 1824px) {
 }
 
 .left_column_collapsed4:hover{
-	border-bottom: 4px solid #918FB5;
+	border-bottom: 4px solid #E2B503;
 }
 
 .left_column_collapsed5:hover{
@@ -1570,15 +1571,15 @@ and (min-width : 1824px) {
 }
 
 .left_column_collapsed3{
-	top: 340px;
+	top: 350px;
 }
 
 .left_column_collapsed4{
-	top: 389px;
+	top: 399px;
 }
 
 .left_column_collapsed5{
-	top: 438px;
+	top: 448px;
 }
 
 .left_column_shifted{

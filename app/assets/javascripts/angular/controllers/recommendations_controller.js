@@ -21,11 +21,11 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
 	$scope.collapse_left_panel = function(){
-		$scope.left_panel_width = {'width': '142px'};
+		$rootScope.popups.left_panel_width = {'width': '15%'};
 	}
 
 	$scope.expand_left_panel = function(){
-		$scope.left_panel_width = {'width': '34%'};
+		$rootScope.popups.left_panel_width = {'width': '34%'};
 	}
 
 	$scope.toggle_settings_popup = function(event){
@@ -60,6 +60,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		delete $rootScope.focused_book;
 		$rootScope.user.collapsed_column = true; 
 		$rootScope.user.collapsed_left_column = true;
+		$rootScope.popups.left_panel_width = {'width': '15%'};
 		$scope.get_notifications(user_id);
 	}
 
@@ -223,6 +224,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         		$rootScope.user.collapsed_trends = true;
         		$rootScope.user.collapsed_lists = true;
         		$rootScope.user.collapsed_column = true;
+        		$scope.expand_left_panel();
         		$rootScope.user.collapsed_left_column = false;
         	}
         	else if(on_trending_page){
@@ -235,6 +237,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         		$rootScope.user.collapsed_trends = false;
         		$rootScope.user.collapsed_lists = true;
         		$rootScope.user.collapsed_column = true;
+        		$scope.expand_left_panel();
         		$rootScope.user.collapsed_left_column = false;
         	}
         	else if(on_grids_page){
@@ -245,6 +248,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         		$rootScope.user.collapsed_trends = true;
         		$rootScope.user.collapsed_lists = false;
         		$rootScope.user.collapsed_column = true;
+        		$scope.expand_left_panel();
         		$rootScope.user.collapsed_left_column = false;
         	}
         	else{
