@@ -1204,10 +1204,17 @@ and (min-width : 1824px) {
 }
 
 .tweets{
-	width: 102%;
 	/*overflow-y: scroll;*/
 	max-height: 64vh;
 	margin-top: 5px;
+}
+
+.tweets .scrollbar{
+	width: 101%;
+}
+
+.tweets .scrollbar:hover{
+	width: 100%;
 }
 
 .tweets::-webkit-scrollbar-track{
@@ -1767,7 +1774,7 @@ l	.compressed_info_card{
 	background-color: rgba(255,255,255,0);
 	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba(255,255,255,.1)),color-stop(100% #E5E5E5));
 	background-image: -webkit-linear-gradient(top,rgba(255, 255, 255, 0) 36%,rgba(29, 29, 29, 0.83) 100%);
-	background-image: -moz-linear-gradient(top,rgba(255,255,255,.1) 28%,rgba(29, 29, 29, 0.83) 100%);
+	background-image: -moz-linear-gradient(top,rgba(255,255,255,.1)0,#E5E5E5 100%);
 	background-image: -webkit-gradient(linear,0,100%,from(rgba(255,255,255,.1)),to(#E5E5E5));
 	background-image: -ms-linear-gradient(top,rgba(255,255,255,.1)0,#E5E5E5 100%);
 	background-image: -o-linear-gradient(top,rgba(255,255,255,.1)0,#E5E5E5 100%);
