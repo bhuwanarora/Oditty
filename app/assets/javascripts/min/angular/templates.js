@@ -238,7 +238,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/partials/friends_list.html',
-    "<div class=\"left_column animate-fast scrollbar\" id=\"friendsList\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed5': user.collapsed_friends, \r" +
+    "<div class=\"left_column animate-fast scrollbar\" id=\"friendsList\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed2': user.collapsed_friends, \r" +
     "\n" +
     "\t \t\t\t'left_column_shifted left_column_shifted1': !user.collapsed_filters,\r" +
     "\n" +
@@ -291,7 +291,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/partials/listopia.html',
-    "<div class=\"left_column animate-fast scrollbar\" id=\"listopia\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed2': user.collapsed_lists, \r" +
+    "<div class=\"left_column animate-fast scrollbar\" id=\"listopia\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed4': user.collapsed_lists, \r" +
     "\n" +
     "\t            'left_column_shifted left_column_shifted1': !user.collapsed_column,\r" +
     "\n" +
@@ -336,7 +336,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/partials/news_feed.html',
-    "<div class=\"expand_notifications\" ng-class=\"{'expand_notifications_shift': user.collapsed_column}\" ng-click=\"show_interaction_box()\"><span class=\"icon-expand2\"></span></div><div class=\"left_column animate-fast scrollbar\" id=\"newsFeed\" ng-class=\"{'left_column_collapsed left_column_collapsed1': user.collapsed_column, \r" +
+    "<div class=\"expand_notifications\" ng-class=\"{'expand_notifications_shift': user.collapsed_column}\" ng-click=\"show_interaction_box()\"><span class=\"icon-expand2\"></span></div><div class=\"left_column animate-fast\" id=\"newsFeed\" ng-class=\"{'left_column_collapsed left_column_collapsed3': user.collapsed_column, \r" +
     "\n" +
     "\t            'left_column_shifted left_column_shifted1': !user.collapsed_friends,\r" +
     "\n" +
@@ -358,7 +358,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
     "\n" +
     "\t\t          expand_left_panel();\r" +
     "\n" +
-    "\t\t          get_news_feed();\"><span class=\"table_cell\"><span class=\"icon-newspaper site_color header_font\"></span> <span class=\"shelves\" ng-show=\"user.collapsed_left_column\">&nbsp;&nbsp;News Feed</span></span> </div><div class=\"notifications animate-fast\" ng-style=\"column_heights.notifications_style\" ng-if=\"show_notifications && !user.collapsed_column\" msd-wheel=\"handle_notification_ticker_size($event)\" check-scroll-bottom=\"get_notifications()\" check-scroll-down=\"handle_notification_ticker_size($event, true)\"><div class=\"full_height\"><div class=\"header\" ng-if=\"!user.collapsed_column\"><span class=\"icon-newspaper site_color header_font\"></span> <span><b>&nbsp;&nbsp;News Feed</b></span></div><notification data=\"notification\" ng-repeat=\"notification in notifications | reverse\"></notification><div class=\"notification_stable\">No new notifications.</div></div></div></div>"
+    "\t\t          get_news_feed();\"><span class=\"table_cell\"><span class=\"icon-newspaper site_color header_font\"></span> <span class=\"shelves\" ng-show=\"user.collapsed_left_column\">&nbsp;&nbsp;News Feed</span></span> </div><div class=\"scrollbar notifications animate-fast\" ng-style=\"column_heights.notifications_style\" ng-if=\"show_notifications && !user.collapsed_column\" msd-wheel=\"handle_notification_ticker_size($event)\" check-scroll-bottom=\"get_notifications()\" check-scroll-down=\"handle_notification_ticker_size($event, true)\"><div class=\"full_height\"><div class=\"header\" ng-if=\"!user.collapsed_column\"><span class=\"icon-newspaper site_color header_font\"></span> <span><b>&nbsp;&nbsp;News Feed</b></span></div><notification data=\"notification\" ng-repeat=\"notification in notifications | reverse\"></notification><div class=\"notification_stable\">No new notifications.</div></div></div></div>"
   );
 
 
@@ -431,7 +431,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/partials/shelves.html',
-    "<div class=\"left_column animate-fast scrollbar\" id=\"shelves\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed4': user.collapsed_filters, \r" +
+    "<div class=\"left_column animate-fast scrollbar\" id=\"shelves\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed1': user.collapsed_filters, \r" +
     "\n" +
     "\t            'left_column_shifted left_column_shifted1': !user.collapsed_trends,\r" +
     "\n" +
@@ -476,7 +476,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/partials/trending_list.html',
-    "<div class=\"left_column animate-fast scrollbar\" id=\"trendingList\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed3': user.collapsed_trends, \r" +
+    "<div class=\"left_column animate-fast scrollbar\" id=\"trendingList\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed5': user.collapsed_trends, \r" +
     "\n" +
     "\t            'left_column_shifted left_column_shifted1': !user.collapsed_lists,\r" +
     "\n" +

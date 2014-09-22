@@ -399,7 +399,7 @@
 	border-bottom-left-radius: 3px;
 	border-bottom-left-radius: 3px;
 	margin-right: 10px;
-	height: 50%;
+	height: 100%;
 }
 
 .push_notification .content{
@@ -1646,7 +1646,7 @@ and (min-width : 1824px) {
 	box-shadow: none;
 	right: -1px;
 	border-radius: 1px;
-	height: 50%;
+	height: 100%;
 }
 
 .main_header .compressed_filters{
