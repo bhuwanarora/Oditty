@@ -569,6 +569,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		if($rootScope.user.logged){
 			$scope._basic_init();
 			$scope.$routeParams = $routeParams;
+			delete $rootScope.reader;
 			if($scope.$routeParams.type == "profile"){
 				var reader_id = $scope.$routeParams.id;
 				$rootScope.reader = {};
@@ -579,7 +580,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				$scope.placeholder = "Write on timeline...";
 			}
 			else{
-				delete $rootScope.reader;
 				_init_recommendations();
 				$scope._get_labels();
 				$scope._initialize_filters();
