@@ -349,7 +349,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		var message = WebsiteUIConstants.BrowserIncompatible;
 		// In Opera, the true version is after "Opera" or after "Version"
 		if ((verOffset=nAgt.indexOf("Opera"))!=-1) {
-			alert(message);
+			
 		 	browserName = "Opera";
 		 	fullVersion = nAgt.substring(verOffset+6);
 		 	if ((verOffset=nAgt.indexOf("Version"))!=-1) 
@@ -357,7 +357,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		}
 		// In MSIE, the true version is after "MSIE" in userAgent
 		else if ((verOffset=nAgt.indexOf("MSIE"))!=-1) {
-			alert(message);
+			
 		 	browserName = "Microsoft Internet Explorer";
 		 	fullVersion = nAgt.substring(verOffset+5);
 		}
@@ -368,7 +368,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		}
 		// In Safari, the true version is after "Safari" or after "Version" 
 		else if ((verOffset=nAgt.indexOf("Safari"))!=-1) {
-			alert(message);
+			
 		 	browserName = "Safari";
 		 	fullVersion = nAgt.substring(verOffset+7);
 		 	if ((verOffset=nAgt.indexOf("Version"))!=-1) 
@@ -376,7 +376,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		}
 		// In Firefox, the true version is after "Firefox" 
 		else if ((verOffset=nAgt.indexOf("Firefox"))!=-1) {
-			alert(message);
+			
 		 	browserName = "Firefox";
 		 	fullVersion = nAgt.substring(verOffset+8);
 		}
@@ -384,7 +384,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) < 
 		          (verOffset=nAgt.lastIndexOf('/')) ) 
 		{
-			alert(message);
+			
 		 	browserName = nAgt.substring(nameOffset,verOffset);
 		 	fullVersion = nAgt.substring(verOffset+1);
 		 	if (browserName.toLowerCase()==browserName.toUpperCase()) {

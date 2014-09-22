@@ -313,6 +313,10 @@
 	background-color: rgba(0, 0, 0, .6);
 }
 
+.website_search_helpers{
+	overflow-y: auto; 
+}
+
 .website_search_options,
 .website_search_helpers{
 	font-size: 1em;
@@ -321,7 +325,7 @@
 	background-color: white;
 	margin-left: 0px;
 	max-height: 50vh;
-	overflow-y: scroll;
+	/*overflow-y: scroll;*/
 	margin-top: 3px;
 	border-radius: 2px;
 	box-shadow: 0 3px 8px rgba(0,0,0,.5);

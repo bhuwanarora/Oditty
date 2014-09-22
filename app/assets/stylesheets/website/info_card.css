@@ -138,13 +138,13 @@
 .info_cards .header{
 	font-size: 1em;
 	padding: 4px;
-	overflow: auto;
+	/*overflow: auto;*/
 	border-radius: 5px;
 	margin-top: 10px;
 	max-height: 45vh;
 	min-width: 35vh;
 	width: 100%;
-	overflow-y: scroll;
+	/*overflow-y: auto;*/
 	color: #717070;
 }
 
@@ -179,7 +179,7 @@
 	padding: 6px;
 	font-size: 1em;
 	outline: 1px solid #D3D3D3;
-	float: left;
+	/*float: left;*/
 	border-radius: 4px;
 	margin-top: 10px;
 	margin-bottom: 10px;

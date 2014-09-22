@@ -33,7 +33,7 @@
 	padding: 15px 10px 5px;
 	position: relative;
 	width: 97%;
-	overflow-y: scroll;
+	/*overflow-y: scroll;*/
 	max-height: 32vh;
 }
 
