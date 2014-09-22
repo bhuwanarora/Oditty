@@ -429,6 +429,15 @@ module UsersGraphHelper
 		@neo.execute_query clause
 	end
 
+
+	def self.get_personal_feed(user_id, skip_count)
+		@neo ||= self.neo_init
+		skip_count = 0 unless skip_count.present?
+		clause = match_user(user_id)+" MATCH (u)-[:FeedNext*]->(feed) RETURN labels(feed), feed, feed.timestamp ORDER BY feed.timestamp DESC SKIP "+skip_count.to_s+" LIMIT 10 "
+		puts clause.blue.on_red
+		@neo.execute_query clause
+	end
+
 	# ************************************************
 	
 	# MATCH (u:User)-[:FeedNext]->(news_feed)

@@ -632,14 +632,14 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 					$rootScope.user.profile_status = $rootScope.user.profile_status - 1;
 				}
 				else{
-					$rootScope.user.profile_status = 4;
+					$rootScope.user.profile_status = 2;
 				}
 				_handle_info_card_bindings($scope);
 				_profile_status_colors();
 			}
 
 			$scope.next_profile_state = function(){
-				if($rootScope.user.profile_status != 4){
+				if($rootScope.user.profile_status != 2){
 					$rootScope.user.profile_status = $rootScope.user.profile_status + 1;
 				}
 				else{

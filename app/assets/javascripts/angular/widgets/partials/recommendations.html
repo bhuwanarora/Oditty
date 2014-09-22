@@ -22,8 +22,9 @@
 		</div> -->
 
 		<div class="vertical_padder_active"></div>
-		<div class="share_wrapper" ng-style="cover_image" ng-click="show_interaction_box()" id="share">
-			<div class="share_fade"></div>
+		<div class="share_wrapper" ng-style="cover_image" id="share">
+			<div class="share_fade" ng-click="show_interaction_box(reader.id)" ng-if="$routeParams.type == 'profile'"></div>
+			<div class="share_fade" ng-click="show_interaction_box(user.id)" ng-if="$routeParams.type != 'profile'"></div>
 			<div class="share_positioner">
 				<div ng-include src="'/assets/angular/widgets/partials/interaction_box.html'"></div>
 			</div>
@@ -54,12 +55,13 @@
 		
 		
 		<!-- <message></message> -->
-		
-		<div ng-include src="'/assets/angular/widgets/partials/news_feed.html'" ng-if="$routeParams.type != 'profile'"></div>
-		<div ng-include src="'/assets/angular/widgets/partials/trending_list.html'" ng-if="$routeParams.type != 'profile'"></div>
-		<div ng-include src="'/assets/angular/widgets/partials/listopia.html'" ng-if="$routeParams.type != 'profile'"></div>
-		<div ng-include src="'/assets/angular/widgets/partials/shelves.html'"></div>
-		<div ng-include src="'/assets/angular/widgets/partials/friends_list.html'"></div>
+		<div class="left_panel animate-fast" ng-style="left_panel_width">
+			<div ng-include src="'/assets/angular/widgets/partials/news_feed.html'" ng-if="$routeParams.type != 'profile'"></div>
+			<div ng-include src="'/assets/angular/widgets/partials/trending_list.html'" ng-if="$routeParams.type != 'profile'"></div>
+			<div ng-include src="'/assets/angular/widgets/partials/listopia.html'" ng-if="$routeParams.type != 'profile'"></div>
+			<div ng-include src="'/assets/angular/widgets/partials/shelves.html'"></div>
+			<div ng-include src="'/assets/angular/widgets/partials/friends_list.html'"></div>
+		</div>
 		<!-- <div class="wrapper" ng-if="focused_book"></div> -->
 		<div class="focused_tooltip animate-faster"
 		     ng-style="focused_book.reposition_tooltip"

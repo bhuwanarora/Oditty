@@ -3,7 +3,7 @@
 	height: 62vh;
 	margin-right: 5px;
 	position: relative;
-	width: 39vh;
+	width: 41vh;
 	/*background-image: url("/assets/book_back.png");*/
 	/*background-size: 100% 100%;*/
 }
@@ -36,8 +36,8 @@
 	color: #000;
 	position: absolute;
 	top: 1vh;
-	left: 1vh;
-	right: 1vh;
+	left: 2vh;
+	right: 2vh;
 	height: 5vh;
 	white-space: initial;
 	font-size: .9em;
@@ -74,8 +74,8 @@
 .bottom_widget{
 	height: 6vh;
 	bottom: 0px;
-	left: 1vh;
-	right: 1vh;
+	left: 2vh;
+	right: 2vh;
 	position: absolute;
 	background-color: white;
 }
@@ -222,8 +222,8 @@
 .card .description{
 	position: absolute;
 	top: 14vh;
-	left: 1vh;
-	right: 1vh;
+	left: 2vh;
+	right: 2vh;
 	bottom: 7vh;
 	border-radius: 3px;
 }

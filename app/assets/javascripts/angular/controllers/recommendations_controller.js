@@ -16,6 +16,18 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		}
 	}
 
+	$scope.get_news_feed = function(){
+		$scope.$emit('getNotifications');	
+	}
+
+	$scope.collapse_left_panel = function(){
+		$scope.left_panel_width = {'width': '142px'};
+	}
+
+	$scope.expand_left_panel = function(){
+		$scope.left_panel_width = {'width': '34%'};
+	}
+
 	$scope.toggle_settings_popup = function(event){
 		var _show_settings_popup = function(){
 			$rootScope.popups = {};
@@ -43,9 +55,12 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		sharedService.logout();
 	}
 
-	$scope.show_interaction_box = function(){
-		$rootScope.user.interact = true; 
+	$scope.show_interaction_box = function(user_id){
+		$rootScope.user.interact = true;
 		delete $rootScope.focused_book;
+		$rootScope.user.collapsed_column = true; 
+		$rootScope.user.collapsed_left_column = true;
+		$scope.get_notifications(user_id);
 	}
 
 	$scope.handle_friends_grid_size = function(event, scroll_down){
@@ -93,8 +108,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
  		// $scope.show_more_filters = false;
 	}
 
-	$scope.get_notifications = function(){
-		$scope.$emit('getNotifications');
+	$scope.get_notifications = function(user_id){
+		console.debug("get_notifications", user_id);
+		$scope.$emit('getNotifications', user_id);
 	}
 
 	_load_icon = function(){
@@ -541,6 +557,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			if($scope.$routeParams.type == "profile"){
 				var reader_id = $scope.$routeParams.id;
 				$rootScope.reader = {};
+				$rootScope.reader.id = reader_id;
 				$scope._init_reader();
 				$scope._get_friends(reader_id);
 				$scope._get_labels(reader_id);
@@ -553,7 +570,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 		        // _handle_focused_book();
 		        $scope._get_friends();
-		        $scope.$emit('getNotifications');
+		        // $scope.get_notifications();
 
 				$scope.placeholder = WebsiteUIConstants.Share;
 			}
