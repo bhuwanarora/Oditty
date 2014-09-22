@@ -579,6 +579,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				$scope.placeholder = "Write on timeline...";
 			}
 			else{
+				delete $rootScope.reader;
 				_init_recommendations();
 				$scope._get_labels();
 				$scope._initialize_filters();

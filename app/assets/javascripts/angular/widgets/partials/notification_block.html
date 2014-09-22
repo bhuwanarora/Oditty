@@ -8,7 +8,6 @@
 		<a ng-href="#user/{{user.id}}/trending/books/id/{{notification.id}}/name/{{notification.name}}">Check out books related to  <b>{{notification.keywords}}</b></a>
 	</div>
 	<div ng-bind-html="notification.tag"></div>
-	<br/>
 	<div ng-bind-html="notification.message"></div>
 	<img ng-show="notification.large_image" ng-src="{{notification.large_image}}" class="large_thumb">
 </div>
