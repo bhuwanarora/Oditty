@@ -55,13 +55,23 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		sharedService.logout();
 	}
 
-	$scope.show_interaction_box = function(user_id){
+	$scope._expanded_notifications = function(){
 		$rootScope.user.interact = true;
 		delete $rootScope.focused_book;
 		$rootScope.user.collapsed_column = true; 
+		$rootScope.user.collapsed_trends = true; 
 		$rootScope.user.collapsed_left_column = true;
 		$rootScope.popups.left_panel_width = {'width': '15%'};
-		$scope.get_notifications(user_id);
+	}
+
+	$scope.show_interaction_box = function(user_id){
+		$scope._expanded_notifications();
+		$scope.$emit('getNotifications', user_id);
+	}
+
+	$scope.show_trending_options = function(){
+		$scope._expanded_notifications();
+		$scope.$emit('getNotifications');
 	}
 
 	$scope.handle_friends_grid_size = function(event, scroll_down){
@@ -106,12 +116,13 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	$scope.hide_popups = function(){
 		delete $rootScope.focused_book;
 		delete $rootScope.ticker_popup;
- 		// $scope.show_more_filters = false;
-	}
-
-	$scope.get_notifications = function(user_id){
-		console.debug("get_notifications", user_id);
-		$scope.$emit('getNotifications', user_id);
+		$rootScope.user.collapsed_column = true;
+		$rootScope.user.collapsed_filters = true;
+		$rootScope.user.collapsed_friends = true;
+		$rootScope.user.collapsed_trends = true;
+		$rootScope.user.collapsed_lists = true;
+		$rootScope.user.collapsed_left_column = true;
+		$rootScope.popups = {};
 	}
 
 	_load_icon = function(){
@@ -171,14 +182,14 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	    	}
 	    });
 
-	    reload_recommendations_event = $scope.$on('reloadRecommendations', function(){
+	    reload_recommendations_event = $scope.$on('reloadRecommendations', function(event){
 	    	console.debug("%creloadRecommendations", "color: orange;");
 	    	console.debug("%c reset count", "color: purple");
 	    	$rootScope.filters["reset"] = true;
 	    	$rootScope.filters["reset_count"] = 0;
 	    	$scope.reset();
 	    	console.log("%c reload_recommendations_event", "color: green;");
-	    	// event.stopPropagation();
+	    	event.stopPropagation();
 	    });
 	    
 	}
@@ -535,11 +546,11 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		var oneSec = 10000;
 		$scope.drop_icon = false;
 		// $rootScope.show_book = false;
-		$rootScope.user = {"collapsed_trends": true, "collapsed_friends": true, 
+		$rootScope.user = angular.extend($rootScope.user, {"collapsed_trends": true, "collapsed_friends": true, 
 							"collapsed_filters": true, "collapsed_lists": true,
 							'collapsed_column': true,
 							'collapsed_left_column': true,
-							"interact": false};
+							"interact": false});
 
 		user_behaviour_timer_event = $timeout(function(){
 			_recordUserBehaviour();
@@ -568,9 +579,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				$scope.placeholder = "Write on timeline...";
 			}
 			else{
+				_init_recommendations();
 				$scope._get_labels();
 				$scope._initialize_filters();
-				_init_recommendations();
 
 		        // _handle_focused_book();
 		        $scope._get_friends();
@@ -591,18 +602,18 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
    	$scope.getting_started_tour_options = {
         steps:[
 	        {
-	            element: '#newsFeed',
-	            intro: IntroConstants.NewsFeed,
-	            position: 'right'
-	        },
-	        {
 	            element: '#shelves',
 	            intro: IntroConstants.Shelves,
 	            position: 'right'
 	        },
 	        {
-	            element: '#trendingList',
-	            intro: IntroConstants.Trending,
+	            element: '#friendsList',
+	            intro: IntroConstants.Friends,
+	            position: 'right'
+	        },
+	        {
+	            element: '#newsFeed',
+	            intro: IntroConstants.NewsFeed,
 	            position: 'right'
 	        },
 	        {
@@ -611,8 +622,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	            position: 'right'
 	        },
 	        {
-	            element: '#friendsList',
-	            intro: IntroConstants.Friends,
+	            element: '#trendingList',
+	            intro: IntroConstants.Trending,
 	            position: 'right'
 	        },
 	        {

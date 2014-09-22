@@ -69,7 +69,7 @@ var constants = {
 			"FriendsGridMaxHeight": "54vh",
 			"FriendsGridMinHeight": "30vh",
 			"NotificationsMinHeight": "30vh",
-			"NotificationsMaxHeight": "62vh",
+			"NotificationsMaxHeight": "54vh",
 			"BookmarkPanel": 'BOOKMARK',
 			"BookTab": "BOOK",
 			"AuthorTab": "AUTHOR",

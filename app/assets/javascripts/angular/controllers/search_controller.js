@@ -1246,9 +1246,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				var json = {"name": value[0], "id": value[1], "message": value[2], "url": value[3], "title":value[4], "thumb": value[7], "large_image": value[5], "keywords": value[8]};
 				this.push(json);
 			}, notifications);
-			if(notifications.length > 0){
-				$scope.$emit('addToNotifications', notifications);
-			}
+			// if(notifications.length > 0){
+			// 	$scope.$emit('addToNotifications', notifications);
+			// }
 			$rootScope.trends = notifications;
 		});
 	}

@@ -230,7 +230,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	_intro_notifications = function(user_id){
 		if(angular.isUndefined(user_id)){
 			if(angular.isUndefined($scope.notifications)){
-				$scope.notifications = $rootScope.trends;
+				$scope.notifications = [];
 				delete $scope.personal_notifications;
 			}
 		}

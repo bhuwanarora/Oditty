@@ -1,15 +1,5 @@
 .horizontal_padder_active{
-	width: 38vh;
-}
-
-.horizontal_padder_inactive{
-	width: 10vh;
-}
-
-.horizontal_padder{
-	height: 80vh;
-	display: inline-block;
-	float: left;
+	width: 37% !important;
 }
 
 .info_cards{
@@ -34,9 +24,7 @@
 .info_card_placeholder{
 	display: inline-block;
 	float: left;
-	margin-right: 50px;
-	margin-left: 30px;
-	padding: 3%;
+	width: 17%;
 	white-space: normal;
 	position: relative;
 	height: 54vh;

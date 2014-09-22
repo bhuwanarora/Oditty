@@ -21,10 +21,11 @@
 	
 	<div class="header_icon" 
 	     ng-class="{'site_color': popups.show_notifications_popup, 'light_grey_color':!popups.show_notifications_popup}"
-	     ng-click="toggle_notification_popup()">
+	     ng-click="toggle_notification_popup($event)">
 		<span class="icon-earth table_cell"></span>
 		<div class="notification_circle table_cell" ng-hide="hide_notification_circle">4</div>
 	</div>
+	
 	<profile-link></profile-link>
  	<div ng-controller="searchController">
  		<search-bar></search-bar>

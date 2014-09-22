@@ -1,7 +1,10 @@
-<div class="left_column animate-fast scrollbar"
+<!-- <tooltip prepend-text="Listopia" 
+		 ng-show="!user.collapsed_left_column"
+		 position="right"></tooltip> -->
+<div class="left_column animate-fast"
 	 id="listopia"
      msd-wheel="stop_propagation($event)"
-	 ng-class="{'left_column_collapsed left_column_collapsed2': user.collapsed_lists, 
+	 ng-class="{'left_column_collapsed left_column_collapsed4': user.collapsed_lists, 
 	            'left_column_shifted left_column_shifted1': !user.collapsed_column,
 	            'left_column_shifted left_column_shifted2': !user.collapsed_friends,
 	            'left_column_shifted left_column_shifted3': !user.collapsed_filters,
@@ -30,7 +33,7 @@
 		<span class="icon-list purple_color header_font"></span>
 		<span><b>&nbsp;Explore Listopia</b></span>
 	</div>
-	<div class="filters_panel_large" ng-if="!user.collapsed_lists">
+	<div class="filters_panel_large scrollbar" ng-if="!user.collapsed_lists">
 		<div class="filters_group">
 			<div ng-repeat="filter in book_lists">
 				<filter data="filter" icon-class="icon-list" url="grid/{{$routeParams.type}}/id/{{filter.id}}/name/{{filter.name}}"></filter>

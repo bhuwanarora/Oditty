@@ -99,7 +99,7 @@ websiteApp.directive('mainHeader', ['$timeout', '$rootScope', function($timeout,
 	return{
 		restrict: 'E',
 		controller: ['$scope', function($scope){
-			$scope.toggle_notification_popup = function(){
+			$scope.toggle_notification_popup = function($event){
 				if(angular.isDefined($rootScope.popups.show_notifications_popup)){
 					if($rootScope.popups.show_notifications_popup){
 						$rootScope.popups.show_notifications_popup = false;
@@ -115,6 +115,7 @@ websiteApp.directive('mainHeader', ['$timeout', '$rootScope', function($timeout,
 				}
 				
 				$scope.hide_notification_circle = true;
+				event.stopPropagation();
 			}
 
 			_add_listeners = function(){
@@ -317,6 +318,7 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 				$rootScope.user.collapsed_trends = true;
 				$rootScope.user.collapsed_lists = true;
 				$rootScope.user.collapsed_left_column = true;
+				$rootScope.popups.left_panel_width = {'width': '15%'};
 				// scroller.scrollTo(0, 0, 2000);
 			}
 

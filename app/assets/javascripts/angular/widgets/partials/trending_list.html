@@ -1,7 +1,13 @@
+<!-- <tooltip prepend-text="Trending" 
+		 ng-show="!user.collapsed_left_column"
+		 position="right"></tooltip> -->
+<div class="expand_notifications" ng-class="{'expand_notifications_shift': user.collapsed_trends}" ng-click="show_trending_options()">
+	<span class="icon-expand2"></span>
+</div>
 <div class="left_column animate-fast scrollbar"
 	 id="trendingList"
      msd-wheel="stop_propagation($event)"
-	 ng-class="{'left_column_collapsed left_column_collapsed3': user.collapsed_trends, 
+	 ng-class="{'left_column_collapsed left_column_collapsed5': user.collapsed_trends, 
 	            'left_column_shifted left_column_shifted1': !user.collapsed_lists,
 	            'left_column_shifted left_column_shifted2': !user.collapsed_column,
 	            'left_column_shifted left_column_shifted3': !user.collapsed_friends,
@@ -30,11 +36,11 @@
 		<span class="icon-bars red_color header_font"></span>
 		<span><b>&nbsp;Check out books related to Trending topics</b></span>
 	</div>
-	<div class="filters_panel_large" ng-if="!user.collapsed_trends">
-		<div class="filters_group">
-			<div ng-repeat="filter in trends">
-				<filter data="filter" icon-class="icon-bars" url="trending/{{$routeParams.type}}/id/{{filter.id}}/name/{{filter.name}}"></filter>
-			</div>
+	<div class="notifications" ng-if="!user.collapsed_trends">
+		<notification data="notification" ng-repeat="notification in trends"></notification>
+		<div class="notification_stable">
+			You have reached end of the list.
 		</div>
 	</div>
+
 </div>

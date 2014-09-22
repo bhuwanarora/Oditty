@@ -770,11 +770,11 @@
 	cursor: pointer;
 	background-color: #FFFFFF;
 	box-shadow: 0px 1px 4px 0px #DDDCDC, inset 0px 0px 40px #FCFCFC;
-	border: 1px solid transparent;
+	border-bottom: 4px solid transparent;
 }
 
 .inactive_filter:hover{
-	border: 1px solid #427fed;
+	border-bottom: 4px solid #427fed;
 }
 
 .main_filters a:hover{
@@ -980,7 +980,7 @@ and (min-width : 1824px) {
 .notifications{
 	font-size: .9em;
 	z-index: 3;
-	max-height: 30vh;
+	max-height: 54vh;
 	border-radius: 4px;
 	overflow-y: hidden; 
 }
@@ -1206,10 +1206,17 @@ and (min-width : 1824px) {
 }
 
 .tweets{
-	width: 102%;
 	/*overflow-y: scroll;*/
 	max-height: 64vh;
 	margin-top: 5px;
+}
+
+.tweets .scrollbar{
+	width: 101%;
+}
+
+.tweets .scrollbar:hover{
+	width: 100%;
 }
 
 .tweets::-webkit-scrollbar-track{
@@ -1543,23 +1550,23 @@ and (min-width : 1824px) {
 }
 
 .left_column_collapsed1:hover{
-	border-bottom: 4px solid #427fed;
-}
-
-.left_column_collapsed2:hover{
-	border-bottom: 4px solid #918FB5;
-}
-
-.left_column_collapsed3:hover{
-	border-bottom: 4px solid #DD4B39;
-}
-
-.left_column_collapsed4:hover{
 	border-bottom: 4px solid #E2B503;
 }
 
-.left_column_collapsed5:hover{
+.left_column_collapsed2:hover{
 	border-bottom: 4px solid #65b045;
+}
+
+.left_column_collapsed3:hover{
+	border-bottom: 4px solid #427fed;
+}
+
+.left_column_collapsed4:hover{
+	border-bottom: 4px solid #918FB5;
+}
+
+.left_column_collapsed5:hover{
+	border-bottom: 4px solid #DD4B39;
 }
 
 .left_column_collapsed1{
@@ -1789,17 +1796,17 @@ l	.compressed_info_card{
 	background-repeat: repeat-x;
 	position: fixed;
 	width: 100%;
-	cursor: pointer;
-	z-index: 1;
 	height: 180px;
 }
 
 .share_positioner{
-	width: 50%;
-	left: 50%;
+	width: 44%;
 	position: fixed;
-	top: 50px;
-	margin-left: -25%;
+	top: 40px;
+	z-index: 1;
+	height: 115px;
+	left: 10px;
+	cursor: pointer;
 }
 
 .share_positioner .thumb,

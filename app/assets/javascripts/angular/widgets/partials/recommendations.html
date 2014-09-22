@@ -22,18 +22,20 @@
 		</div> -->
 
 		<div class="vertical_padder_active"></div>
-		<div class="share_wrapper" ng-style="cover_image" id="share">
-			<div class="share_fade" ng-click="show_interaction_box(reader.id)" ng-if="$routeParams.type == 'profile'"></div>
-			<div class="share_fade" ng-click="show_interaction_box(user.id)" ng-if="$routeParams.type != 'profile'"></div>
-			<div class="share_positioner">
+		<div class="share_wrapper" ng-style="cover_image">
+			<div class="share_positioner"  id="share">
 				<div ng-include src="'/assets/angular/widgets/partials/interaction_box.html'"></div>
 			</div>
+			<div class="share_positioner" ng-click="show_interaction_box(user.id)" ng-if="$routeParams.type != 'profile'"  id="share">
+				<div ng-include src="'/assets/angular/widgets/partials/interaction_box.html'"></div>
+			</div>
+			<div class="share_fade" ></div>
 		</div>
 
 		<!-- <div class="recommendations_page"><search-bar></search-bar></div> -->
 		
 		
-		<div class="info_card_placeholder animate-fast"></div>
+		<div class="info_card_placeholder animate-fast" ng-class="{'horizontal_padder_active': !user.collapsed_left_column}"></div>
 
 		<div ng-switch on="panel_selected" class="full_height">
 			<div ng-switch-when="BOOKMARK" class="full_height">
@@ -55,7 +57,10 @@
 		
 		
 		<!-- <message></message> -->
-		<div class="left_panel animate-fast" ng-style="popups.left_panel_width">
+		<div class="left_panel animate-fast" 
+			 ng-style="popups.left_panel_width" 
+			 msd-wheel="stop_propagation($event)"
+			 ng-click="stop_propagation($event)">
 			<div ng-include src="'/assets/angular/widgets/partials/news_feed.html'" ng-if="$routeParams.type != 'profile'"></div>
 			<div ng-include src="'/assets/angular/widgets/partials/trending_list.html'" ng-if="$routeParams.type != 'profile'"></div>
 			<div ng-include src="'/assets/angular/widgets/partials/listopia.html'" ng-if="$routeParams.type != 'profile'"></div>
