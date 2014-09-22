@@ -40,7 +40,7 @@
 
     <div class="push_notification" 
       ng-if="notification_active">
-      <div class="icon-close-popup" ng-click="notification_active = false;"></div>
+      <div class="icon-close-popup" ng-click="close_notification();"></div>
       <div class="type table_cell" ng-style="message_style">
         <span class="icon-thumbs-up" ng-if="message_type == 0"></span>
         <span class="icon-bolt" ng-if="message_type == 1"></span>

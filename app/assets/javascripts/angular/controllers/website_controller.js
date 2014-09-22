@@ -130,6 +130,10 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
   		$scope.uploader = true;	
   	}
 
+  	$scope.close_notification =function(){
+  		$rootScope.notification_active = false;
+  	}
+
 	_bind_feedback_form = function(){
 		$window.onmouseleave = function(){
 			console.log('move');
