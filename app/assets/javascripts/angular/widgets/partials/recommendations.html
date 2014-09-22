@@ -22,8 +22,9 @@
 		</div> -->
 
 		<div class="vertical_padder_active"></div>
-		<div class="share_wrapper" ng-style="cover_image" ng-click="show_interaction_box()" id="share">
-			<div class="share_fade"></div>
+		<div class="share_wrapper" ng-style="cover_image" id="share">
+			<div class="share_fade" ng-click="show_interaction_box(reader.id)" ng-if="$routeParams.type == 'profile'"></div>
+			<div class="share_fade" ng-click="show_interaction_box(user.id)" ng-if="$routeParams.type != 'profile'"></div>
 			<div class="share_positioner">
 				<div ng-include src="'/assets/angular/widgets/partials/interaction_box.html'"></div>
 			</div>

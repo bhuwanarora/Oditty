@@ -93,8 +93,8 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         return _deferred_request('/api/v0/image');
     }
 
-    this.get_notifications = function(skip_count){
-        return _deferred_request('/api/v0/notifications?skip_count='+skip_count);
+    this.get_notifications = function(skip_count, user_id){
+        return _deferred_request('/api/v0/notifications?skip_count='+skip_count+"&id="+user_id);
     }
 
     this.get_latest_notification = function(){

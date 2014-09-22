@@ -190,17 +190,25 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    	event.stopPropagation();
 	    });
 
-	    get_notifications_event = $scope.$on('getNotifications', function(){
+	    get_notifications_event = $scope.$on('getNotifications', function(event, user_id){
 	    	if(angular.isDefined($scope.notifications)){
 	    		var existing_notifications_count = $scope.notifications.length;
 	    	}
 	    	else{
 	    		var existing_notifications_count = 0;
 	    	}
-	    	websiteService.get_notifications(existing_notifications_count).then(function(data){
-	    		_intro_notifications();
-				$scope.notifications = data.notifications.concat($scope.notifications);
-			});
+	    	if(angular.isDefined(user_id)){
+	    		websiteService.get_notifications(existing_notifications_count, user_id).then(function(data){
+		    		_intro_notifications();
+					$scope.notifications = data.notifications.concat($scope.notifications);
+				});
+	    	}
+	    	else{
+		    	websiteService.get_notifications(existing_notifications_count).then(function(data){
+		    		_intro_notifications();
+					$scope.notifications = data.notifications.concat($scope.notifications);
+				});
+	    	}
 	    });
 
 	    get_latest_notification = $scope.$on('getLatestNotification', function(){

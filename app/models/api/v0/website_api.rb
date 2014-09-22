@@ -27,6 +27,16 @@ module Api
 				notifications
 			end
 
+			def self.get_personal_feed(user_id, skip_count)
+				news_feed = UsersGraphHelper.get_personal_feed(user_id, skip_count)
+				begin
+					notifications = NotificationHelper.structure_feed news_feed["data"]
+				rescue Exception => e
+					notifications = []
+				end
+				notifications
+			end
+
 			def self.get_latest_notification user_id
 
 			end

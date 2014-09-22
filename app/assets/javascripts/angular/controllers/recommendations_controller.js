@@ -43,9 +43,15 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		sharedService.logout();
 	}
 
-	$scope.show_interaction_box = function(){
-		$rootScope.user.interact = true; 
+	$scope.show_interaction_box = function(user_id){
+		$rootScope.user.interact = true;
 		delete $rootScope.focused_book;
+		if(angular.isDefined(user_id)){
+			$scope.get_notifications(user_id);
+		}
+		else{
+			$scope.get_notifications();	
+		}
 	}
 
 	$scope.handle_friends_grid_size = function(event, scroll_down){
@@ -93,8 +99,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
  		// $scope.show_more_filters = false;
 	}
 
-	$scope.get_notifications = function(){
-		$scope.$emit('getNotifications');
+	$scope.get_notifications = function(user_id){
+		$scope.$emit('getNotifications', user_id);
 	}
 
 	_load_icon = function(){
@@ -541,6 +547,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			if($scope.$routeParams.type == "profile"){
 				var reader_id = $scope.$routeParams.id;
 				$rootScope.reader = {};
+				$rootScope.reader.id = reader_id;
 				$scope._init_reader();
 				$scope._get_friends(reader_id);
 				$scope._get_labels(reader_id);
@@ -553,7 +560,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 		        // _handle_focused_book();
 		        $scope._get_friends();
-		        $scope.$emit('getNotifications');
+		        // $scope.get_notifications();
+		        
 
 				$scope.placeholder = WebsiteUIConstants.Share;
 			}
