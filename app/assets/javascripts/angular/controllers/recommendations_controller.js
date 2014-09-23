@@ -16,37 +16,37 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		}
 	}
 
-	$scope.show_profile = function(user_id, event, delta){
-		var _set_likes = function(array, data){
-			angular.forEach(data, function(value){
-				this.push({"id": value[1], "name": value[0], "icon": value[2]});
-			}, array);
-		}
+	$scope._set_likes = function(array, data){
+		angular.forEach(data, function(value){
+			this.push({"id": value[1], "name": value[0], "icon": value[2]});
+		}, array);
+	}
 
-		var _get_user_profile_info = function(user_id){
-			if(user_id == $rootScope.user.id){
-				if(angular.isUndefined($rootScope.user.detailed_info)){
-					websiteService.get_detailed_info(user_id).then(function(data){
-						$rootScope.user.detailed_info = true;
-						$rootScope.user.likes = [];
-						_set_likes($rootScope.user.likes, data);
-					});
-				}
-			}
-			else{
-				if(angular.isUndefined($rootScope.reader.detailed_info)){
-					websiteService.get_detailed_info(user_id).then(function(data){
-						$rootScope.reader.detailed_info = true;
-						$rootScope.reader.likes = [];
-						_set_likes($rootScope.reader.likes, data);
-					});
-				}
+	$scope._get_user_profile_info = function(user_id){
+		if(user_id == $rootScope.user.id){
+			if(angular.isUndefined($rootScope.user.detailed_info)){
+				websiteService.get_detailed_info(user_id).then(function(data){
+					$rootScope.user.detailed_info = true;
+					$rootScope.user.likes = [];
+					$scope._set_likes($rootScope.user.likes, data);
+				});
 			}
 		}
+		else{
+			if(angular.isUndefined($rootScope.reader.detailed_info)){
+				websiteService.get_detailed_info(user_id).then(function(data){
+					$rootScope.reader.detailed_info = true;
+					$rootScope.reader.likes = [];
+					$scope._set_likes($rootScope.reader.likes, data);
+				});
+			}
+		}
+	}
+	$scope.show_profile = function(user_id, event, delta){
 		if(angular.isDefined(delta)){
-			if(delta <= 0){
+			if(delta > 0){
 				$rootScope.user.show_profile = true;
-				_get_user_profile_info(user_id);
+				$scope._get_user_profile_info(user_id);
 			}
 			else{
 				$rootScope.user.show_profile = false;
@@ -55,7 +55,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		else{
 			if(angular.isUndefined($rootScope.user.show_profile) || !$rootScope.user.show_profile){
 				$rootScope.user.show_profile = true;
-				_get_user_profile_info(user_id);
+				$scope._get_user_profile_info(user_id);
 			}
 			else{
 				$rootScope.user.show_profile = false;
@@ -620,7 +620,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			$scope.$routeParams = $routeParams;
 			delete $rootScope.reader;
 			if($scope.$routeParams.type == "profile"){
-				$rootScope.user.show_profile = true;
+				$scope.show_profile();
 				var reader_id = $scope.$routeParams.id;
 				$rootScope.reader = {};
 				$rootScope.reader.id = reader_id;

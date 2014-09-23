@@ -1,5 +1,17 @@
 <div class="user_profile" ng-if="user.show_profile">
-	<div>
+	<div ng-if="reader">
+		<div class="header">
+			<b>Likes</b>
+		</div>
+		<div ng-repeat="like in reader.likes" class="category_block table">
+			<div class="{{like.icon}} table_cell"></div><br/>
+			<div class="table_cell">{{like.name}}</div>
+		</div>
+		<map class="map" zoom="11">
+			<marker position="[{{reader.latitude}}, {{reader.longitude}}]" centered="true"></marker>
+		</map>
+	</div>
+	<div ng-if="!reader">
 		<div class="header">
 			<b>Likes</b>
 		</div>
@@ -7,12 +19,10 @@
 			<div class="{{like.icon}} table_cell"></div><br/>
 			<div class="table_cell">{{like.name}}</div>
 		</div>
-		<map class="map" ng-if="!reader" zoom="11">
-			<marker position="[{{reader.latitude}}, {{reader.longitude}}]" centered="true"></marker>
-		</map>
-		<map class="map" ng-if="reader" zoom="11">
-			<marker position="[{{reader.latitude}}, {{reader.longitude}}]" centered="true"></marker>
+		<map class="map" zoom="11">
+			<marker position="[{{user.latitude}}, {{user.longitude}}]" centered="true"></marker>
 		</map>
 	</div>
+
 
 </div>
