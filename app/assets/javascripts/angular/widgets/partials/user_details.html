@@ -1,6 +1,11 @@
 <div class="user_profile" ng-if="user.show_profile">
-	<div ng-if="reader">
-		<div class="header">
+	<div ng-if="reader" class="user_profile_block">
+		<div class="header" ng-show="reader.selectedDay || reader.init_book_read_count">
+			<b>About</b><br/>
+			<span ng-show="reader.init_book_read_count">Reader of {{reader.init_book_read_count}}<br/></span>
+			<span ng-show="reader.selectedDay">Birthday: {{reader.selectedDay}} {{reader.selectedMonth}}</span>
+		</div>
+		<div class="header" ng-show="reader.likes.length > 0">
 			<b>Likes</b>
 		</div>
 		<div ng-repeat="like in reader.likes" class="category_block table">
@@ -11,8 +16,13 @@
 			<marker position="[{{reader.latitude}}, {{reader.longitude}}]" centered="true"></marker>
 		</map>
 	</div>
-	<div ng-if="!reader">
-		<div class="header">
+	<div ng-if="!reader" class="user_profile_block">
+		<div class="header" ng-show="user.selectedDay || user.init_book_read_count">
+			<b>About</b><br/>
+			<span ng-show="user.init_book_read_count">Reader of {{user.init_book_read_count}}<br/></span>
+			<span ng-show="user.selectedDay">Birthday: {{user.selectedDay}} {{user.selectedMonth}}</span>
+		</div>
+		<div class="header" ng-show="user.likes.length > 0">
 			<b>Likes</b>
 		</div>
 		<div ng-repeat="like in user.likes" class="category_block table">
@@ -23,6 +33,6 @@
 			<marker position="[{{user.latitude}}, {{user.longitude}}]" centered="true"></marker>
 		</map>
 	</div>
-
+	
 
 </div>

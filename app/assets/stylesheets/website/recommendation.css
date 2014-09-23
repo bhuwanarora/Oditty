@@ -1904,6 +1904,7 @@ l	.compressed_info_card{
 	z-index: 1;
 	padding: 10px 15px;
 	height: 50vh;
+	border-radius: 2px;
 }
 
 .category_block [class^="icon-"]{
@@ -1936,4 +1937,8 @@ l	.compressed_info_card{
 	position: absolute;
 	right: 15px;
 	top: 25px;
+}
+
+.user_profile .user_profile_block{
+	width: 70%;
 }
