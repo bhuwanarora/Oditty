@@ -3,6 +3,10 @@
 	width: 100%;
 }
 
+.vertical_padder_shifted{
+	height: 100vh;
+}
+
 .main_header{
    	background-color: #FCFCFC;
    	height: 40px;
@@ -1813,6 +1817,7 @@ l	.compressed_info_card{
 .share_wrapper img{
 	width: 100px;
 	height: 100px;
+	z-index: 1;
 }
 
 .share_wrapper .thumb_wrapper{
@@ -1853,6 +1858,7 @@ l	.compressed_info_card{
 	z-index: 2;
 	font-size: 25px;
 	font-weight: 700;
+	cursor: pointer;
 }
 /*
 .share_positioner .bubble_pointer{
@@ -1861,3 +1867,73 @@ l	.compressed_info_card{
 	border-left: 15px solid transparent;
 	left: 64px;
 }*/
+
+.share_wrapper_shifted{
+	bottom: 50px;
+	height: initial;
+}
+
+.share_fade_shifted{
+	height: 100vh;
+	bottom: 50px;	
+}
+
+.shelf_nav_links_shifted{
+	bottom: 5px;
+	top: initial;
+}
+
+.user_name_shifted{
+	bottom: 55px;
+	top: initial;
+}
+
+.thumb_wrapper_shifted{
+	bottom: 100px;
+	top: initial !important;
+}	
+
+.user_profile{
+	top: 100px;
+	position: fixed;
+	width: 60%;
+	left: 50%;
+	margin-left: -30%;
+	white-space: initial;
+	background-color: white;
+	z-index: 1;
+	padding: 10px 15px;
+	height: 50vh;
+}
+
+.category_block [class^="icon-"]{
+	border-radius: 15px;
+	background-color: #E9E9E9;
+	color: #717070;
+	border: 1px solid #DBDBDB;
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	font-size: 1.3em;
+}
+
+.category_block{
+	float: left;
+	display: inline-block;
+	margin: 4px;
+	font-size: 0.8em;
+	padding: 0px 7px;
+	width: 50px;
+}
+
+.user_profile .header{
+	padding: 20px 0px;
+}
+
+.user_profile .map{
+	height: 170px;
+	width: 170px;
+	position: absolute;
+	right: 15px;
+	top: 25px;
+}

@@ -16,24 +16,29 @@
 		<main-header></main-header>
 		<recommendation-footer></recommendation-footer>
 		<div ng-include src="'/assets/angular/widgets/partials/user_name.html'"></div>
-		
 		<!-- <div class="status animate-fast" ng-click="show_interaction_box()">
 			<span><input disabled placeholder="Share something..." /></span>
 		</div> -->
 
-		<div class="vertical_padder_active"></div>
-		<div class="share_wrapper" ng-style="cover_image">
+		<div class="vertical_padder_active animate-fast" 
+			 ng-class="{'vertical_padder_shifted': user.show_profile}"></div>
+		<div class="share_wrapper animate-slow" 
+			 ng-class="{'share_wrapper_shifted': user.show_profile}"
+			 ng-style="cover_image"
+			 msd-wheel="show_profile(user.id, $event, $delta)">
 			<!-- <div class="share_positioner"  id="share">
 				<div ng-include src="'/assets/angular/widgets/partials/interaction_box.html'"></div>
 			</div>
 			<div class="share_positioner" ng-click="show_interaction_box(user.id)" ng-if="$routeParams.type != 'profile'"  id="share">
 				<div ng-include src="'/assets/angular/widgets/partials/interaction_box.html'"></div>
 			</div> -->
-			<div class="thumb_wrapper">
+			<div class="thumb_wrapper animate-fast"
+				 ng-class="{'thumb_wrapper_shifted': user.show_profile}">
 				<img ng-src="{{user.thumb | thumb_backup}}" ng-show="!reader"/>
 				<img ng-src="{{reader.thumb | thumb_backup}}" ng-show="reader"/>
 			</div>
-			<div class="share_fade" ></div>
+			<div class="share_fade animate-fast" ng-class="{'share_fade_shifted': user.show_profile}"></div>
+			<div ng-include src="'/assets/angular/widgets/partials/user_details.html'"></div>
 		</div>
 
 		<!-- <div class="recommendations_page"><search-bar></search-bar></div> -->
@@ -54,14 +59,15 @@
 			</div>
 		</div>
 
-		<div class="load_icon animate-slow"
+		<!-- <div class="load_icon animate-slow"
 		     ng-if="drop_icon">
 			<img src="assets/preloader.gif" />
-		</div>
+		</div> -->
 		
 		
 		<!-- <message></message> -->
-		<div class="left_panel animate-fast" 
+		<div class="left_panel animate-fast"
+			 ng-class="{'hidden': user.show_profile}" 
 			 ng-style="popups.left_panel_width" 
 			 msd-wheel="stop_propagation($event)"
 			 ng-click="stop_propagation($event)">
@@ -97,7 +103,9 @@
 		</div> -->
 		<div class="top_hover_detector"></div>
 	
-		<div class="scroller" id="scroller">
+		<div class="scroller animate-fast" 
+			 ng-class="{'hidden': user.show_profile}"
+			 id="scroller">
 			<span class="scroller-left icon-angle-left blue_button"
 			      ng-mouseover="move_left($event)"
 			      ng-click="move_left($event)"

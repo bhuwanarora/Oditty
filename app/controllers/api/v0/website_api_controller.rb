@@ -133,6 +133,11 @@ module Api
 				render :json => {:message => "Success"}, :status => 200
 			end
 
+			def user_profile_info
+				info = UserApi.get_profile_info(params[:id])
+				render :json => info, :status => 200
+			end
+
             private
             def neo_init
                 @neo = Neography::Rest.new

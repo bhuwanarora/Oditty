@@ -596,3 +596,7 @@ input:focus{
 .icon-close-popup:hover{
     color: #717070;
 }
+
+.hidden{
+    display: none;
+}

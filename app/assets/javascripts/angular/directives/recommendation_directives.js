@@ -168,6 +168,7 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 		controller: ['$scope', function($scope){
 
 			$scope.toggle_bookmarked = function(event){
+				$rootScope.user.show_profile = false;
 				if(!$scope.bookmark_selected){
 					// _load_icon();
 					$scope.panel_selected = 'BOOKMARK';
@@ -205,6 +206,7 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 			}
 
 			$scope.toggle_recommendations = function(){
+				$rootScope.user.show_profile = false;
 				if($scope.bookmark_selected || $scope.read_selected){
 					// _load_icon();
 					$scope.read_selected = false;
@@ -217,6 +219,7 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 			}
 
 			$scope.toggle_read = function(){
+				$rootScope.user.show_profile = false;
 				if(!$scope.read_selected){
 					// _load_icon();
 
@@ -549,11 +552,11 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 				else if($rootScope.user.profile_status == 2){
 					$scope.get_popular_books();
 				}
+				// else if($rootScope.user.profile_status == 3){
+				// 	$scope.get_popular_authors();
+				// 	// $rootScope.$broadcast('showBookReadShelf');
+				// }
 				else if($rootScope.user.profile_status == 3){
-					$scope.get_popular_authors();
-					// $rootScope.$broadcast('showBookReadShelf');
-				}
-				else if($rootScope.user.profile_status == 4){
 					if(navigator.geolocation){
 						navigator.geolocation.getCurrentPosition(function(position){
 							var latitude = position.coords.latitude;
@@ -634,14 +637,14 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 					$rootScope.user.profile_status = $rootScope.user.profile_status - 1;
 				}
 				else{
-					$rootScope.user.profile_status = 2;
+					$rootScope.user.profile_status = 3;
 				}
 				_handle_info_card_bindings($scope);
 				_profile_status_colors();
 			}
 
 			$scope.next_profile_state = function(){
-				if($rootScope.user.profile_status != 2){
+				if($rootScope.user.profile_status != 3){
 					$rootScope.user.profile_status = $rootScope.user.profile_status + 1;
 				}
 				else{
@@ -746,10 +749,10 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 				$scope.profileSelected = {"name": "Reader"};
 				$scope.info_card_width = 350; //in px
 				$scope.info_card_ratio = 1.34;
-				$scope.$on('cropme:done', function(event, canvasEl){
-					var params = {"blob": canvasEl};
-					websiteService.save_user_info(params);
-				});
+				// $scope.$on('cropme:done', function(event, canvasEl){
+				// 	var params = {"blob": canvasEl};
+				// 	websiteService.save_user_info(params);
+				// });
 
 				// _facebook_invite();
 			}

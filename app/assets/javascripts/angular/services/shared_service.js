@@ -15,6 +15,16 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
     this.get_user = function(reader_id){
       websiteService.get_user_details(reader_id).then(function(data){
         $rootScope.reader = angular.extend($rootScope.reader, data);
+        if(angular.isDefined($rootScope.reader.gender)){
+          if($rootScope.reader.gender == "Male"){
+            $rootScope.reader.gender_prefix = "His";
+            $rootScope.reader.gender_suffix = "him";
+          }
+          else{
+            $rootScope.reader.gender_prefix = "Her";
+            $rootScope.reader.gender_suffix = "her";
+          }
+        }
       });
     }
 

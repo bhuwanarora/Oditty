@@ -21,6 +21,13 @@ module Api
 				user_exists
 			end
 
+			def self.get_profile_info id
+				@neo = Neography::Rest.new
+				clause = "MATCH (u:User) WHERE ID(u)="+id.to_s+" OPTIONAL MATCH (u)-[:Likes]->(c) RETURN c.name, ID(c), c.icon"
+				puts clause.blue.on_red
+				info = @neo.execute_query(clause)["data"]
+			end
+
 			def self.add_books_from_fb(params, user_id)
 				puts "#{params[:type].to_s.green}"
 				if params[:data].present?
