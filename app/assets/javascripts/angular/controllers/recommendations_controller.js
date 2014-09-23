@@ -626,6 +626,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				$rootScope.reader = {};
 				$rootScope.reader.id = reader_id;
 				$scope.show_profile($rootScope.reader.id);
+				$rootScope.user.show_profile = true;
 				$scope._init_reader();
 				$scope._get_friends(reader_id);
 				$scope._get_labels(reader_id);
