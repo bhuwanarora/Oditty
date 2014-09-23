@@ -61,8 +61,10 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				$rootScope.user.show_profile = false;
 			}
 		}
-		event.preventDefault();
-		event.stopPropagation();
+		if(angular.isDefined(event)){
+			event.preventDefault();
+			event.stopPropagation();
+		}
 	}
 
 	$scope.get_news_feed = function(){
@@ -620,7 +622,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			$scope.$routeParams = $routeParams;
 			delete $rootScope.reader;
 			if($scope.$routeParams.type == "profile"){
-				$scope.show_profile();
+				$scope.show_profile($scope.reader.id);
 				var reader_id = $scope.$routeParams.id;
 				$rootScope.reader = {};
 				$rootScope.reader.id = reader_id;
