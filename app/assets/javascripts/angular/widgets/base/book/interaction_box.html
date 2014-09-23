@@ -29,7 +29,8 @@
 			check-scroll-bottom="get_notifications()"
 			ng-click="stop_propagation($event)">
 			<div class="tweet">
-				<b><div class="tweet_text">News Feed</div></b>
+				<b><div class="tweet_text" ng-if="!show_trending">News Feed</div></b>
+				<b><div class="tweet_text" ng-if="show_trending">Trending</div></b>
 			</div>
 			<div ng-repeat="notification in notifications | reverse" 
 			     class="tweet animate-fast">

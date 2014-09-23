@@ -526,11 +526,6 @@
 	white-space: initial;
 }
 
-.filter:active{
-	background-color: rgba(66, 127, 237, 0.6) !important;
-	color: white;
-}
-
 .interaction_group{
 	position: absolute;
 	left: 50%;
@@ -765,20 +760,14 @@
 	padding: 5px 4px 5px 4px;
 }
 
-.active_filter{
-	color: white;
-	background-color: #427fed;
-}
-
 .inactive_filter{
 	cursor: pointer;
 	background-color: #FFFFFF;
-	box-shadow: 0px 1px 4px 0px #DDDCDC, inset 0px 0px 40px #FCFCFC;
-	border-bottom: 4px solid transparent;
+	border-bottom: 1px solid #E9E9E9;
 }
 
 .inactive_filter:hover{
-	border-bottom: 4px solid #427fed;
+	background-color: #F1F1F1 !important;
 }
 
 .main_filters a:hover{
@@ -1352,8 +1341,8 @@ and (min-width : 1824px) {
 }
 
 .ticker_popup{
-	top: 95px;
-	left: 29%;
+	top: 230px;
+	left: 29.5%;
 	white-space: initial;
 	background-color: white;
 	border-radius: 2px;
@@ -1387,7 +1376,7 @@ and (min-width : 1824px) {
 
 .ticker_popup .ticker_overflow{
 	height: 35vh;
-	width: 35vh;
+	width: 39vh;
 }
 
 .ticker_popup .bottom_widget{
@@ -1896,13 +1885,12 @@ l	.compressed_info_card{
 .user_profile{
 	top: 100px;
 	position: fixed;
-	width: 60%;
-	left: 50%;
-	margin-left: -30%;
+	right: 150px;
+	left: 150px;
 	white-space: initial;
-	background-color: white;
+	background-color: #fff;
 	z-index: 1;
-	padding: 10px 15px;
+	padding: 20px 60px;
 	height: 50vh;
 	border-radius: 2px;
 }
@@ -1935,7 +1923,7 @@ l	.compressed_info_card{
 	height: 170px;
 	width: 170px;
 	position: absolute;
-	right: 15px;
+	right: 60px;
 	top: 25px;
 }
 

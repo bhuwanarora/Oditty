@@ -197,32 +197,38 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    	event.stopPropagation();
 	    });
 
-	    get_notifications_event = $scope.$on('getNotifications', function(event, user_id){
+	    get_notifications_event = $scope.$on('getNotifications', function(event, user_id, trending){
 	    	if(angular.isDefined(user_id)){
-	    		if(angular.isDefined($rootScope.reader)){
-	    			if(angular.isDefined($scope.readers_notifications)){
-			    		var existing_notifications_count = $scope.readers_notifications.length;
-			    	}
-			    	else{
-			    		var existing_notifications_count = 0;
-			    	}
-		    		websiteService.get_notifications(existing_notifications_count, user_id).then(function(data){
-			    		_intro_notifications(user_id);
-						$scope.readers_notifications = data.notifications.concat($scope.readers_notifications);
-					});
-	    		}
-	    		else{
-		    		if(angular.isDefined($scope.personal_notifications)){
-			    		var existing_notifications_count = $scope.personal_notifications.length;
-			    	}
-			    	else{
-			    		var existing_notifications_count = 0;
-			    	}
-		    		websiteService.get_notifications(existing_notifications_count, user_id).then(function(data){
-			    		_intro_notifications(user_id);
-						$scope.personal_notifications = data.notifications.concat($scope.personal_notifications);
-					});
-	    		}
+	    		if(angular.isUndefined(trending)){
+		    		if(angular.isDefined($rootScope.reader)){
+		    			if(angular.isDefined($scope.readers_notifications)){
+				    		var existing_notifications_count = $scope.readers_notifications.length;
+				    	}
+				    	else{
+				    		var existing_notifications_count = 0;
+				    	}
+			    		websiteService.get_notifications(existing_notifications_count, user_id).then(function(data){
+				    		_intro_notifications(user_id);
+							$scope.readers_notifications = data.notifications.concat($scope.readers_notifications);
+						});
+		    		}
+		    		else{
+			    		if(angular.isDefined($scope.personal_notifications)){
+				    		var existing_notifications_count = $scope.personal_notifications.length;
+				    	}
+				    	else{
+				    		var existing_notifications_count = 0;
+				    	}
+			    		websiteService.get_notifications(existing_notifications_count, user_id).then(function(data){
+				    		_intro_notifications(user_id);
+							$scope.personal_notifications = data.notifications.concat($scope.personal_notifications);
+						});
+		    		}
+	     		}
+	     		else{
+	     			$scope.notifications = $rootScope.trends;
+	     			$scope.show_trending = true;
+	     		}
 	    	}
 	    	else{
 		    	if(angular.isDefined($scope.notifications)){
@@ -246,6 +252,13 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	_intro_notifications = function(user_id){
+		if(angular.isDefined($scope.show_trending)){
+			delete $scope.personal_notifications;
+			delete $scope.readers_notifications;
+			delete $scope.show_trending;
+			$scope.notifications = [];
+		}
+		
 		if(angular.isUndefined(user_id)){
 			if(angular.isUndefined($scope.notifications)){
 				$scope.notifications = [];

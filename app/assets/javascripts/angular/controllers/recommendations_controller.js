@@ -109,6 +109,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	$scope._expanded_notifications = function(){
 		$rootScope.user.interact = true;
 		delete $rootScope.focused_book;
+		delete $rootScope.ticker_popup;
 		$rootScope.user.collapsed_column = true; 
 		$rootScope.user.collapsed_trends = true; 
 		$rootScope.user.collapsed_left_column = true;
@@ -122,7 +123,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	$scope.show_trending_options = function(){
 		$scope._expanded_notifications();
-		$scope.$emit('getNotifications');
+		$scope.$emit('getNotifications', $rootScope.user.id, true);
 	}
 
 	$scope.handle_friends_grid_size = function(event, scroll_down){

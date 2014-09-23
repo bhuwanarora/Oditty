@@ -45,8 +45,14 @@
 		 msd-wheel="handle_notification_ticker_size($event)"
 		 check-scroll-bottom="get_notifications()"
 		 check-scroll-down="handle_notification_ticker_size($event, true)">
-		<div class="full_height">
+		<div class="full_height" ng-if="!reader">
 			<notification data="notification" ng-repeat="notification in notifications | reverse"></notification>
+			<div class="notification_stable">
+				No new notifications.
+			</div>
+		</div>
+		<div class="full_height" ng-if="reader">
+			<notification data="notification" ng-repeat="notification in personal_notifications | reverse"></notification>
 			<div class="notification_stable">
 				No new notifications.
 			</div>

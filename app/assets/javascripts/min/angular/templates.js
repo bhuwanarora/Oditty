@@ -205,7 +205,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/partials/filter.html',
-    "<a ng-href=\"#/user/{{$routeParams.id}}/{{url}}\"><div ng-class=\"{'active_filter':active, 'inactive_filter':!active}\" class=\"filter\"><span>{{filter.name | lowercase}}</span> <span class=\"{{iconClass}} float_right\"></span></div></a>"
+    "<a ng-href=\"#/user/{{$routeParams.id}}/{{url}}\"><div ng-class=\"{'site_color':active, 'inactive_filter':!active}\" class=\"filter\"><span>{{filter.name | lowercase}}</span> <span class=\"{{iconClass}} float_right\"></span></div></a>"
   );
 
 
@@ -225,7 +225,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
     "\t \t \t\t   user.collapsed_lists = true;\n" +
     "\t \t \t\t   user.collapsed_filters = true;\n" +
     "\t \t \t\t   user.collapsed_trends = true;\n" +
-    "\t \t \t\t   expand_left_panel();\"><span class=\"table_cell\"><span class=\"icon-users green_color header_font\" ng-if=\"user.collapsed_friends\"></span> <span ng-show=\"user.collapsed_left_column\">&nbsp;&nbsp;Friends</span></span></div><div class=\"header\" ng-if=\"!user.collapsed_friends\" ng-click=\"handle_friends_grid_size(undefined, true)\"><span class=\"icon-users2 green_color header_font\"></span> <span ng-if=\"!$routeParams.type != 'profile'\"><b>&nbsp;&nbsp;{{user.friends.length}} Friends</b></span> <span ng-if=\"!$routeParams.type == 'profile'\"><b>&nbsp;&nbsp;{{reader.friends.length}} Friends</b></span></div><div ng-if=\"!user.collapsed_friends && $routeParams.type != 'profile'\" class=\"friends_grid scrollbar\"><div ng-repeat=\"friend in user.friends\" class=\"friend_block animate-fast\"><div ng-include=\"\" src=\"'/assets/angular/widgets/partials/friend_grid.html'\"></div></div></div><div ng-if=\"!user.collapsed_friends && $routeParams.type == 'profile'\" class=\"friends_grid scrollbar\"><div ng-repeat=\"friend in reader.friends\" class=\"friend_block animate-fast\"><div ng-include=\"\" src=\"'/assets/angular/widgets/partials/friend_grid.html'\"></div></div></div></div>"
+    "\t \t \t\t   expand_left_panel();\"><span class=\"table_cell\"><span class=\"icon-users green_color header_font\" ng-if=\"user.collapsed_friends\"></span> <span ng-show=\"user.collapsed_left_column\">&nbsp;&nbsp;Friends</span></span></div><div class=\"header\" ng-if=\"!user.collapsed_friends\" ng-click=\"handle_friends_grid_size(undefined, true)\"><span class=\"icon-users2 green_color header_font\"></span> <span ng-if=\"!$routeParams.type != 'profile'\"><b>&nbsp;&nbsp;{{user.friends.length}} Friends</b></span> <span ng-if=\"!$routeParams.type == 'profile'\"><b>&nbsp;&nbsp;{{reader.friends.length}} Friends</b></span></div><div ng-if=\"!user.collapsed_friends && $routeParams.type != 'profile'\" class=\"friends_grid scrollbar\"><div ng-repeat=\"friend in user.friends\" class=\"friend_block inactive_filter animate-fast\"><div ng-include=\"\" src=\"'/assets/angular/widgets/partials/friend_grid.html'\"></div></div></div><div ng-if=\"!user.collapsed_friends && $routeParams.type == 'profile'\" class=\"friends_grid scrollbar\"><div ng-repeat=\"friend in reader.friends\" class=\"friend_block inactive_filter animate-fast\"><div ng-include=\"\" src=\"'/assets/angular/widgets/partials/friend_grid.html'\"></div></div></div></div>"
   );
 
 
