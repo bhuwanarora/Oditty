@@ -2,8 +2,11 @@
 	<div class="search_animate animate-very-slow" 
 	    ng-click="stopSearching($event)"
 	    ng-controller="searchController">
-		<div class="search_page"
+	    <div class="translucent search_page" 
 		     ng-style="search_style">
+	    	
+	    </div>
+		<div class="search_page">
 			<div class="logo">
 				<a ng-href="#user/{{user.id}}/recommendations/books">
 			    <span>r</span>

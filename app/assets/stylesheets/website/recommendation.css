@@ -8,7 +8,7 @@
 }
 
 .main_header{
-   	background-color: #FCFCFC;
+   	background-color: white;
    	height: 40px;
    	left: 0px;
 	position: fixed;
@@ -420,7 +420,7 @@
 	left: 50%;
 	color: #3D79A1;
 	height: 35px;
-	top: 180px;
+	top: 185px;
 	margin-left: -36px;
 	position: fixed;
 	letter-spacing: -2px;
@@ -1276,7 +1276,7 @@ and (min-width : 1824px) {
 	left: 0px;
 	position: fixed;
 	z-index: 1;
-	box-shadow: 8px 0 43px 0 rgba(66,66,66,.47);
+	box-shadow: 8px 0 43px 0 rgba(66,66,66,.24);
 }
 
 .left_column{
@@ -1329,7 +1329,7 @@ and (min-width : 1824px) {
 .left_column .friends_grid .friend_block{
 	width: auto;
 	overflow-y: auto;
-	padding: 5px;
+	padding: 15px 5px;
 	border-bottom: 1px solid #E9E9E9;
 	cursor: default;
 }
@@ -1384,7 +1384,7 @@ and (min-width : 1824px) {
 	z-index: 1;
 	left: 0px;
 	right: 0px;
-	box-shadow: 0 -1px 4px 0 rgba(0,0,0,.21);
+	/*box-shadow: 0 -1px 4px 0 rgba(0,0,0,.21);*/
 }
 
 .shift_right{

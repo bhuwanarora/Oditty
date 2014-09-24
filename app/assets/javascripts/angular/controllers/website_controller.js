@@ -198,6 +198,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    });
 
 	    get_notifications_event = $scope.$on('getNotifications', function(event, user_id, trending){
+	    	console.debug("getNotifications ", user_id, trending, angular.isDefined(reader));
 	    	if(angular.isDefined(user_id)){
 	    		if(angular.isUndefined(trending)){
 		    		if(angular.isDefined($rootScope.reader)){

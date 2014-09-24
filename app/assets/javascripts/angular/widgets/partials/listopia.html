@@ -30,13 +30,15 @@
 	 	 </span>
 	</div>
 	<div class="header" ng-if="!user.collapsed_lists">
-		<span class="icon-list purple_color header_font"></span>
-		<span><b>&nbsp;Explore Listopia</b></span>
+		<span><b>Explore Listopia</b></span>
 	</div>
 	<div class="filters_panel_large scrollbar" ng-if="!user.collapsed_lists">
 		<div class="filters_group">
 			<div ng-repeat="filter in book_lists">
-				<filter data="filter" icon-class="icon-list" url="grid/{{$routeParams.type}}/id/{{filter.id}}/name/{{filter.name}}"></filter>
+				<filter data="filter" 
+						hide-icon="true"
+						icon-class="icon-list" 
+						url="grid/{{$routeParams.type}}/id/{{filter.id}}/name/{{filter.name}}"></filter>
 			</div>
 		</div>
 	</div>

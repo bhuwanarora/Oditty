@@ -31,9 +31,9 @@
 	<div class="header"
 		 ng-if="!user.collapsed_friends"
 		 ng-click="handle_friends_grid_size(undefined, true)">
-		<span class="icon-users2 green_color header_font"></span>
-		<span ng-if="!$routeParams.type != 'profile'"><b>&nbsp;&nbsp;{{user.friends.length}} Friends</b></span>
-		<span ng-if="!$routeParams.type == 'profile'"><b>&nbsp;&nbsp;{{reader.friends.length}} Friends</b></span>
+		
+		<span ng-if="!$routeParams.type != 'profile'"><b>{{user.friends.length}} Friends</b></span>
+		<span ng-if="!$routeParams.type == 'profile'"><b>{{reader.friends.length}} Friends</b></span>
 	</div>
 	<div ng-if="!user.collapsed_friends && $routeParams.type != 'profile'" class="friends_grid scrollbar">
 		<div ng-repeat="friend in user.friends" class="friend_block inactive_filter animate-fast">
