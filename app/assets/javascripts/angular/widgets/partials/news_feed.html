@@ -51,7 +51,7 @@
 		 msd-wheel="handle_notification_ticker_size($event)"
 		 check-scroll-bottom="get_notifications(reader.id)">
 		<div class="full_height">
-			<notification data="notification" ng-repeat="notification in personal_notifications | reverse"></notification>
+			<notification data="notification" ng-repeat="notification in readers_notifications | reverse"></notification>
 			<div class="notification_stable">
 				No new notifications from {{reader.name | first_name}}.
 			</div>
