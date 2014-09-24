@@ -58,7 +58,7 @@
 		</div>
 
 		<div class="scrollbar tweets"
-			ng-if="!focused_book.tweets && readers_notifications && reader && !show_trending"
+			ng-if="!focused_book.tweets && readers_notifications && reader && !show_trending && !personal_notifications"
 			check-scroll-bottom="get_notifications(false, reader.id)"
 			ng-click="stop_propagation($event)">
 			<div class="tweet">
