@@ -362,8 +362,9 @@
 }
 
 .right_links{
-	right: 10px;
-	top: 50px;
+	left: 140px;
+	top: 135px;
+	right: initial;
 }
 
 .toggle_elements{
@@ -617,8 +618,8 @@
 
 .interaction_box .highlighter{
 	position: absolute;
-	top: 8px;
-	left: 47px;
+	top: 3px;
+	left: 3px;
 	color: transparent;
 	letter-spacing: 0.059em;
 	width: 100%;
@@ -1928,4 +1929,9 @@ l	.compressed_info_card{
 
 .user_profile .user_profile_block{
 	width: 70%;
+}
+
+.right_links_shifted{
+	top: initial;
+	bottom: 102px;
 }

@@ -4,6 +4,7 @@
 			<b>About</b><br/>
 			<span ng-show="reader.init_book_read_count">Reader of {{reader.init_book_read_count}}<br/></span>
 			<span ng-show="reader.selectedDay">Birthday: {{reader.selectedDay}} {{reader.selectedMonth}}</span>
+			<span ng-show="reader.last_login">Last Login: {{reader.last_login}}</span>
 		</div>
 		<div class="header" ng-show="reader.likes.length > 0">
 			<b>Likes</b>
@@ -21,6 +22,7 @@
 			<b>About</b><br/>
 			<span ng-show="user.init_book_read_count">Reader of {{user.init_book_read_count}}<br/></span>
 			<span ng-show="user.selectedDay">Birthday: {{user.selectedDay}} {{user.selectedMonth}}</span>
+			<span ng-show="user.last_login">Last Login: {{user.last_login}}</span>
 		</div>
 		<div class="header" ng-show="user.likes.length > 0">
 			<b>Likes</b>
