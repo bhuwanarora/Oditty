@@ -3,10 +3,9 @@
 	border: 1px solid #FFF;
 	border-radius: 2px;
 	box-shadow: 0 7px 15px rgba(0,0,0,.5);
-	height: 88vh;
-	/*min-width: 390px;*/
 	position: fixed;
-	top: 55px;
+	top: 41px;
+	bottom: 1px;
 	white-space: initial;
 	z-index: 12;
 	width: 72vh;

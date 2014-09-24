@@ -361,10 +361,10 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	_update_recommendations = function(data){
 		if($rootScope.filters["filter_type"] == RecommendationUIConstants.BookTab){
-			if(data.recommendations.books.length > 0){
+			if(data.recommendations.books.length > 1){
 				var message = "INFO- "+data.recommendations.books.length+" books found. Scroll to see more books.";
 			}
-			else if(data.recommendations.books.length == 0){
+			else if(data.recommendations.books.length >= 0){
 				var message = "INFO- "+data.recommendations.books.length+" book found.";	
 			}
 			var timeout_event = notify($rootScope, message, $timeout);
@@ -576,8 +576,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     }
 
     $scope._get_labels = function(user_id){
-    	$rootScope.labels = [];
       	recommendationService.get_labels(user_id).then(function(data){
+    		$rootScope.labels = [];
         	console.debug("%c labels"+data, "color: green");
         	if(angular.isArray(data) && data.length > 0){
 	        	angular.forEach(data, function(value){
