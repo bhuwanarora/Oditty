@@ -427,6 +427,13 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 
 	_init_notifications = function(){
 		$rootScope.notification_active = false;
+		if(angular.isDefined($rootScope.reader)){
+			$scope.readers_notifications = [];
+		}
+		else{
+			$scope.notifications = [];
+		}
+		$scope.personal_notifications = [];
 	}
 
 	_init = function(){
@@ -442,7 +449,8 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		if(angular.isDefined($rootScope.focused_book)){
 			$rootScope.focused_book.level2_option = "";
 		}
-		
+
+
 		$scope.website = {};
 		$scope.website.searching = false;
 		$scope.website.show_search_page = true;
@@ -451,7 +459,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		// _bind_auth_listeners();
 		_add_listeners();
 		_handle_socket_error();
-		_init_notifications();
+		$scope._init_notifications();
 		// $('body').css('white-space', 'normal');
 		// $speechRecognition.onstart(function(){
 		//   $speechSynthetis.speak("You're at Reader's Door. How can I help you?", 'en-UK');
