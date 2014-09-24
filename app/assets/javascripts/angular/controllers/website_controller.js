@@ -201,7 +201,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    	console.debug("getNotifications ", user_id, trending, angular.isDefined($rootScope.reader));
     		if(angular.isUndefined(trending) || !trending){
     			if(angular.isDefined(user_id)){
-		    		if(angular.isDefined($rootScope.reader)){
+		    		if(angular.isDefined($rootScope.reader) && (user_id == $rootScope.reader.id)){
 		    			if(angular.isDefined($scope.readers_notifications)){
 				    		var existing_notifications_count = $scope.readers_notifications.length;
 				    	}

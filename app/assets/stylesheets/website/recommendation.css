@@ -1320,7 +1320,6 @@ and (min-width : 1824px) {
 
 .left_column .friends_grid img{
 	width: 50px;
-	margin: 2px;
 	float: left;
 	min-height: 50px;
 }

@@ -10,12 +10,12 @@
 		<widget-thumb track></widget-thumb>
 		<div class="card_summary animate-fast">
 			<div>
-				<tooltip text="book.title" position="top"></tooltip>
+				<tooltip text="book.title" position="top" ng-hide="ticker_popup"></tooltip>
 				<b><span class="header_font">{{book.title | reduced_title}}</span></b><br/>
 				<span ng-show="book.author_name">by {{book.author_name}}</span>
 			</div>
 			<div>
-				<tooltip text="book.summary" position="bottom" scroll="true"></tooltip>
+				<tooltip text="book.summary" position="bottom" scroll="true" ng-hide="ticker_popup"></tooltip>
 				<span ng-if="book.summary" class="normal_text">{{book.summary | reduced_summary}}</span>
 			</div>
 		</div>
