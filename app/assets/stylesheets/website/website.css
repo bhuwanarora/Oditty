@@ -279,6 +279,10 @@ input:focus{
     color: #DD4B39 !important;
 }
 
+.red{
+    background-color: #DD4B39 !important;
+}
+
 .light_grey_color{
     color: #717070 !important;
 }

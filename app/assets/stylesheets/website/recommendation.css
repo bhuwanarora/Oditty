@@ -83,11 +83,11 @@
 
 .header_navbar .user_details .count{
 	position: absolute;
-	color: white;
-	left: 0px;
-	top: -17px;
-	right: 0px;
-	bottom: 0px;
+	color: #fff;
+	left: 3px;
+	top: -10px;
+	right: 0;
+	bottom: -4px;
 	text-align: center;
 	display: table-cell;
 	vertical-align: middle;

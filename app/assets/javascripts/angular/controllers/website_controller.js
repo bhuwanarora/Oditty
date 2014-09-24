@@ -26,6 +26,72 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		delete $rootScope.ticker_popup;
 	}
 
+	$scope.toggle_left_columns = function(){
+		var _show_friends = function(){
+			$rootScope.user.collapsed_filters = true;
+			$rootScope.user.collapsed_friends = false;
+			$rootScope.user.collapsed_column = true;
+			$rootScope.user.collapsed_lists = true;
+			$rootScope.user.collapsed_trends = true;
+			$rootScope.user.collapsed_left_column = false;
+		}
+
+		var _show_news_feed = function(){
+			$rootScope.user.collapsed_filters = true;
+			$rootScope.user.collapsed_friends = true;
+			$rootScope.user.collapsed_column = false;
+			$rootScope.user.collapsed_lists = true;
+			$rootScope.user.collapsed_trends = true;
+			$rootScope.user.collapsed_left_column = false;
+		}
+
+		var _show_lists = function(){
+			$rootScope.user.collapsed_filters = true;
+			$rootScope.user.collapsed_friends = true;
+			$rootScope.user.collapsed_column = true;
+			$rootScope.user.collapsed_lists = false;
+			$rootScope.user.collapsed_trends = true;
+			$rootScope.user.collapsed_left_column = false;
+		}
+
+		var _show_trends = function(){
+			$rootScope.user.collapsed_filters = true;
+			$rootScope.user.collapsed_friends = true;
+			$rootScope.user.collapsed_column = true;
+			$rootScope.user.collapsed_lists = true;
+			$rootScope.user.collapsed_trends = false;
+			$rootScope.user.collapsed_left_column = false;
+		}
+
+		var _show_shelves = function(){
+			$rootScope.user.collapsed_filters = false;
+			$rootScope.user.collapsed_friends = true;
+			$rootScope.user.collapsed_column = true;
+			$rootScope.user.collapsed_lists = true;
+			$rootScope.user.collapsed_trends = true;
+			$rootScope.user.collapsed_left_column = false;
+		}
+
+		if(!$rootScope.user.collapsed_filters){
+			_show_friends();
+		}
+		else if(!$rootScope.user.collapsed_friends){
+			_show_news_feed();
+		}
+		else if(!$rootScope.user.collapsed_column){
+			_show_lists();
+		}
+		else if(!$rootScope.user.collapsed_lists){
+			_show_trends();
+		}
+		else if(!$rootScope.user.collapsed_trends){
+			_show_shelves();
+		}
+		else{
+			_show_news_feed();
+		}
+	}
+
 	$scope.move_left = function(event){
 		$scope._hide_popups();
 		var swipe_time = 1000;
@@ -56,6 +122,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	$scope.move_right = function(event){
+		// $scope.toggle_left_columns();
 		$scope._hide_popups();
 		var swipe_time = 1000;
 		var clientWidth = document.body["scrollWidth"];

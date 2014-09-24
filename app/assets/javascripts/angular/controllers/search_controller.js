@@ -68,6 +68,11 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		}
 	}
 
+	$scope.hide_popups = function(event){
+		$rootScope.popups = {};
+		event.stopPropagation();
+	}
+
 	$scope._reset_results = function(){
 		$scope.search_results = [];
 		delete $scope.search_display;
