@@ -78,14 +78,14 @@
 			check-scroll-bottom="get_notifications(false, user.id)"
 			ng-click="stop_propagation($event)">
 			<div class="tweet">
-				<b><div class="tweet_text">Profile</div></b>
+				<b><div class="tweet_text">Personal Feed</div></b>
 			</div>
 			<div ng-repeat="notification in personal_notifications | reverse" 
 			     class="tweet animate-fast">
 				<div ng-include src="'/assets/angular/widgets/partials/notification_block.html'"></div>
 			</div>
 			<div class="tweet animate-fast">
-				No new notifications.
+				You've reached the end of your personal feed.
 			</div>
 		</div>
 		
