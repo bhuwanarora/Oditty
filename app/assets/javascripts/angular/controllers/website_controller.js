@@ -430,7 +430,6 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	$scope._init_notifications = function(){
-		$rootScope.notification_active = false;
 		if(angular.isDefined($rootScope.reader)){
 			$scope.readers_notifications = [];
 		}
@@ -463,7 +462,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		// _bind_auth_listeners();
 		_add_listeners();
 		_handle_socket_error();
-		$scope._init_notifications();
+		$rootScope.notification_active = false;
 		// $('body').css('white-space', 'normal');
 		// $speechRecognition.onstart(function(){
 		//   $speechSynthetis.speak("You're at Reader's Door. How can I help you?", 'en-UK');
@@ -475,12 +474,12 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 						'readers': {'follow': []},
 						'logged': false};
 		
-		_detect_browser();
+		$scope._detect_browser();
 		console.timeEnd("websiteAppController");
 	}
 
 
-	_detect_browser = function(){
+	$scope._detect_browser = function(){
 		var nVer = navigator.appVersion;
 		var nAgt = navigator.userAgent;
 		var browserName  = navigator.appName;
@@ -490,7 +489,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		var message = WebsiteUIConstants.BrowserIncompatible;
 		// In Opera, the true version is after "Opera" or after "Version"
 		if ((verOffset=nAgt.indexOf("Opera"))!=-1) {
-			
+			alert(message);
 		 	browserName = "Opera";
 		 	fullVersion = nAgt.substring(verOffset+6);
 		 	if ((verOffset=nAgt.indexOf("Version"))!=-1) 
@@ -498,7 +497,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		}
 		// In MSIE, the true version is after "MSIE" in userAgent
 		else if ((verOffset=nAgt.indexOf("MSIE"))!=-1) {
-			
+			alert(message);
 		 	browserName = "Microsoft Internet Explorer";
 		 	fullVersion = nAgt.substring(verOffset+5);
 		}
@@ -509,7 +508,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		}
 		// In Safari, the true version is after "Safari" or after "Version" 
 		else if ((verOffset=nAgt.indexOf("Safari"))!=-1) {
-			
+			alert(message);
 		 	browserName = "Safari";
 		 	fullVersion = nAgt.substring(verOffset+7);
 		 	if ((verOffset=nAgt.indexOf("Version"))!=-1) 
@@ -517,7 +516,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		}
 		// In Firefox, the true version is after "Firefox" 
 		else if ((verOffset=nAgt.indexOf("Firefox"))!=-1) {
-			
+			alert(message);
 		 	browserName = "Firefox";
 		 	fullVersion = nAgt.substring(verOffset+8);
 		}
