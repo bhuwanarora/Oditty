@@ -2,9 +2,9 @@
 	<div ng-if="reader" class="user_profile_block">
 		<div class="header" ng-show="reader.selectedDay || reader.init_book_read_count">
 			<b>About</b><br/>
-			<span ng-show="reader.init_book_read_count">Reader of {{reader.init_book_read_count}}<br/></span>
-			<span ng-show="reader.selectedDay">Birthday: {{reader.selectedDay}} {{reader.selectedMonth}}</span>
-			<span ng-show="reader.last_login">Last Login: {{reader.last_login}}</span>
+			<span ng-show="reader.init_book_read_count">Reader of {{reader.init_book_read_count}}</span><br/>
+			<span ng-show="reader.selectedDay">Birthday: {{reader.selectedDay}} {{reader.selectedMonth}}</span><br/>
+			<span ng-show="reader.last_login">Last Login: {{reader.last_login}}</span><br/>
 		</div>
 		<div class="header" ng-show="reader.likes.length > 0">
 			<b>Likes</b>
@@ -20,9 +20,9 @@
 	<div ng-if="!reader" class="user_profile_block">
 		<div class="header" ng-show="user.selectedDay || user.init_book_read_count">
 			<b>About</b><br/>
-			<span ng-show="user.init_book_read_count">Reader of {{user.init_book_read_count}}<br/></span>
-			<span ng-show="user.selectedDay">Birthday: {{user.selectedDay}} {{user.selectedMonth}}</span>
-			<span ng-show="user.last_login">Last Login: {{user.last_login}}</span>
+			<span ng-show="user.init_book_read_count">Reader of {{user.init_book_read_count}}</span><br/>
+			<span ng-show="user.selectedDay">Birthday: {{user.selectedDay}} {{user.selectedMonth}}</span><br/>
+			<span ng-show="user.last_login">Last Login: {{user.last_login}}</span><br/>
 		</div>
 		<div class="header" ng-show="user.likes.length > 0">
 			<b>Likes</b>
