@@ -75,7 +75,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
       	$rootScope.user.collapsed_lists = true;
       	$rootScope.user.collapsed_friends = true;
       	$scope.expand_left_panel();
-		$scope.$emit('getNotifications', false, user_id);
+      	var init_notification = true;
+      	var trending = false;
+		$scope.$emit('getNotifications', trending, user_id, init_notification);
 	}
 
 	$scope.collapse_left_panel = function(){

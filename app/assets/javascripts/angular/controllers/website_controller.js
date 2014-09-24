@@ -264,8 +264,12 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    	event.stopPropagation();
 	    });
 
-	    get_notifications_event = $scope.$on('getNotifications', function(event, trending, user_id){
-	    	console.debug("getNotifications ", user_id, trending, angular.isDefined($rootScope.reader));
+	    get_notifications_event = $scope.$on('getNotifications', function(event, trending, user_id, init){
+	    	console.debug("getNotifications ", user_id, trending, angular.isDefined($rootScope.reader), init);
+	    	if(angular.isDefined(init) && init){
+	    		$scope._init_notifications();
+	    	}
+
     		if(angular.isUndefined(trending) || !trending){
     			if(angular.isDefined(user_id)){
 		    		if(angular.isDefined($rootScope.reader) && (user_id == $rootScope.reader.id)){
