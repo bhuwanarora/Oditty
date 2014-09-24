@@ -49,11 +49,11 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
     }
 
     this.get_books_bookmarked = function(skip_count){
-        return _deferred_request('/api/v0/books_bookmarked?skip_count='+skip_count);
+        return _deferred_request('/api/v0/books_bookmarked?skip_count='+skip_count+'&id='+_user_id());
     }
 
     this.get_books_read = function(skip_count){
-        return _deferred_request('/api/v0/books_read?skip_count='+skip_count);
+        return _deferred_request('/api/v0/books_read?skip_count='+skip_count+'&id='+_user_id());
     }
 
     this.search_books = function(data){
@@ -124,6 +124,16 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
 
     this.get_popular_authors = function(skip_count){
         return _deferred_request('/api/v0/popular_authors?skip_count='+skip_count);   
+    }
+
+    _user_id = function(){
+        if(angular.isDefined($rootScope.reader)){
+            var user_id = $rootScope.reader.id;
+        }
+        else{
+            var user_id = $rootScope.user.id;   
+        }
+        return user_id;
     }
 
     _deferred_request = function(url){

@@ -249,7 +249,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/partials/library.html',
-    "<div ng-if=\"$routeParams.type == 'books'\" ng-model=\"user.books.bookmarked\"><div ng-switch=\"\" on=\"user.books.bookmarked.length\"><div ng-switch-when=\"0\"><div class=\"recommendation_block\"><div class=\"widget bookmark_instruct\"></div></div></div><div ng-switch-default=\"\"><div ng-repeat=\"user_book in user.books.bookmarked\" class=\"recommendation_block\"><book track=\"\" id=\"{{user_book.category.name | lowercase}}-{{user_book.id}}\" data=\"user_book\"></book></div></div></div></div><div ng-if=\"$routeParams.type == 'authors'\" ng-model=\"user.authors.bookmarked\"><div ng-switch=\"\" on=\"user.authors.bookmarked.length\"><div ng-switch-when=\"0\">Bookmark authors</div><div ng-switch-default=\"\"><div ng-repeat=\"author in user.authors.bookmarked\" class=\"recommendation_block\"><author track=\"\" id=\"{{author.category.name | lowercase}}-{{author.id}}\" data=\"author\"></author></div></div></div></div>"
+    "<div ng-model=\"user.books.bookmarked\"><div ng-switch=\"\" on=\"user.books.bookmarked.length\"><div ng-switch-when=\"0\"><div class=\"recommendation_block\"><div class=\"widget bookmark_instruct\"></div></div></div><div ng-switch-default=\"\"><div ng-repeat=\"user_book in user.books.bookmarked\" class=\"recommendation_block\"><book track=\"\" id=\"{{user_book.category.name | lowercase}}-{{user_book.id}}\" data=\"user_book\"></book></div></div></div></div>"
   );
 
 
@@ -323,7 +323,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/widgets/partials/read.html',
-    "<div ng-if=\"$routeParams.type == 'books'\" ng-model=\"user.books.read\"><div ng-switch=\"\" on=\"user.books.read.length\"><div ng-switch-when=\"0\"><div class=\"recommendation_block\"><div class=\"widget mark_as_read_instruct\"></div></div></div><div ng-switch-default=\"\"><div ng-repeat=\"user_book in user.books.read\" class=\"recommendation_block\"><book track=\"\" id=\"{{user_book.category.name | lowercase}}-{{user_book.id}}\" data=\"user_book\"></book></div></div></div></div><div ng-if=\"$routeParams.type == 'authors'\" ng-model=\"user.authors.follow\"><div ng-switch=\"\" on=\"user.authors.follow.length\"><div ng-switch-when=\"0\">Follow authors</div><div ng-switch-default=\"\"><div ng-repeat=\"author in user.authors.follow\" class=\"recommendation_block\"><author track=\"\" id=\"{{author.category.name | lowercase}}-{{author.id}}\" data=\"author\"></author></div></div></div></div><div ng-if=\"$routeParams.type == 'readers'\" ng-model=\"user.readers.follow\"><div ng-switch=\"\" on=\"user.readers.follow.length\"><div ng-switch-when=\"0\">Add Some readers to follow</div><div ng-switch-default=\"\"><div ng-repeat=\"reader in user.readers.follow\" class=\"recommendation_block\"><reader track=\"\" id=\"{{reader.category.name | lowercase}}-{{reader.id}}\" data=\"reader\"></reader></div></div></div></div>"
+    "<div ng-model=\"user.books.read\"><div ng-switch=\"\" on=\"user.books.read.length\"><div ng-switch-when=\"0\"><div class=\"recommendation_block\"><div class=\"widget mark_as_read_instruct\"></div></div></div><div ng-switch-default=\"\"><div ng-repeat=\"user_book in user.books.read\" class=\"recommendation_block\"><book track=\"\" id=\"{{user_book.category.name | lowercase}}-{{user_book.id}}\" data=\"user_book\"></book></div></div></div></div>"
   );
 
 

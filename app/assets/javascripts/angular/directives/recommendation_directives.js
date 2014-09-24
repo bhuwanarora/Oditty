@@ -178,6 +178,7 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 					$scope.read_selected = false;
 					// $scope.glowBookmark = false;
 					var skip_count = 0;
+					
 					websiteService.get_books_bookmarked(skip_count).then(function(data){
 						if(angular.isArray(data)){
 							$rootScope.user.books = {};

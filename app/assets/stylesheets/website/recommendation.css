@@ -1699,12 +1699,12 @@ and (min-width : 1824px) {
 .notifications_popup{
 	position: fixed;
 	background-color: white;
-	width: 35%;
+	/*width: 35%;*/
 	max-height: 30vh;
 	right: 10px;
 	/*overflow-y: scroll;*/
 	top: 41px;
-	min-width: 350px;
+	width: 350px;
 	padding: 10px 15px;
 	z-index: 9;
 	border: 1px solid #ccc;
