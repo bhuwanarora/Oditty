@@ -1,4 +1,13 @@
-<div class="expand_notifications" ng-class="{'expand_notifications_shift': user.collapsed_column}" ng-click="show_interaction_box()">
+<div class="expand_notifications" 
+	 ng-if="reader"
+	 ng-class="{'expand_notifications_shift': user.collapsed_column}" 
+	 ng-click="show_interaction_box(reader.id)">
+	<span class="icon-expand2"></span>
+</div>
+<div class="expand_notifications" 
+	 ng-if="!reader"
+	 ng-class="{'expand_notifications_shift': user.collapsed_column}" 
+	 ng-click="show_interaction_box()">
 	<span class="icon-expand2"></span>
 </div>
 <!-- <tooltip prepend-text="News Feed" 
@@ -28,30 +37,41 @@
 		          get_news_feed();">
 		<span class="table_cell">
 			<span class="icon-newspaper site_color header_font"></span>
-			<span class="shelves" ng-show="user.collapsed_left_column">&nbsp;&nbsp;News Feed</span>
+			<span class="shelves" ng-show="user.collapsed_left_column && !reader">&nbsp;&nbsp;News Feed</span>
+			<span class="shelves" ng-show="user.collapsed_left_column && reader">&nbsp;&nbsp;{{reader.gender_prefix}} Timeline</span>
 		</span>
 		<!-- <div class="f3_background">
 			<span class="icon-users2 light_grey_color"></span>
 		</div> -->
 	</div>
 	<div class="header"
-		 ng-if="!user.collapsed_column">
-		<span><b>&nbsp;&nbsp;News Feed</b></span>
+		 ng-if="!user.collapsed_column && reader">
+		<span><b>&nbsp;&nbsp;{{reader.name | first_name}}'s Timeline</b></span>
 	</div>
 	<div class="notifications animate-fast scrollbar" 
 		 ng-style="column_heights.notifications_style"
-		 ng-if="show_notifications && !user.collapsed_column"
+		 ng-if="show_notifications && !user.collapsed_column && reader"
 		 msd-wheel="handle_notification_ticker_size($event)"
-		 check-scroll-bottom="get_notifications()"
-		 check-scroll-down="handle_notification_ticker_size($event, true)">
-		<div class="full_height" ng-if="!reader">
-			<notification data="notification" ng-repeat="notification in notifications | reverse"></notification>
+		 check-scroll-bottom="get_notifications(reader.id)">
+		<div class="full_height">
+			<notification data="notification" ng-repeat="notification in personal_notifications | reverse"></notification>
 			<div class="notification_stable">
 				No new notifications.
 			</div>
 		</div>
-		<div class="full_height" ng-if="reader">
-			<notification data="notification" ng-repeat="notification in personal_notifications | reverse"></notification>
+	</div>
+
+	<div class="header"
+		 ng-if="!user.collapsed_column && !reader">
+		<span><b>&nbsp;&nbsp;News Feed</b></span>
+	</div>
+	<div class="notifications animate-fast scrollbar" 
+		 ng-style="column_heights.notifications_style"
+		 ng-if="show_notifications && !user.collapsed_column && !reader"
+		 msd-wheel="handle_notification_ticker_size($event)"
+		 check-scroll-bottom="get_notifications()">
+		<div class="full_height">
+			<notification data="notification" ng-repeat="notification in notifications | reverse"></notification>
 			<div class="notification_stable">
 				No new notifications.
 			</div>

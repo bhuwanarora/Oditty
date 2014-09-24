@@ -197,10 +197,10 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    	event.stopPropagation();
 	    });
 
-	    get_notifications_event = $scope.$on('getNotifications', function(event, user_id, trending){
-	    	console.debug("getNotifications ", user_id, trending, angular.isDefined(reader));
-	    	if(angular.isDefined(user_id)){
-	    		if(angular.isUndefined(trending)){
+	    get_notifications_event = $scope.$on('getNotifications', function(event, trending, user_id){
+	    	console.debug("getNotifications ", user_id, trending, angular.isDefined($rootScope.reader));
+    		if(angular.isUndefined(trending) || !trending){
+    			if(angular.isDefined(user_id)){
 		    		if(angular.isDefined($rootScope.reader)){
 		    			if(angular.isDefined($scope.readers_notifications)){
 				    		var existing_notifications_count = $scope.readers_notifications.length;
@@ -225,24 +225,25 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 							$scope.personal_notifications = data.notifications.concat($scope.personal_notifications);
 						});
 		    		}
-	     		}
-	     		else{
-	     			$scope.notifications = $rootScope.trends;
-	     			$scope.show_trending = true;
-	     		}
-	    	}
-	    	else{
-		    	if(angular.isDefined($scope.notifications)){
-		    		var existing_notifications_count = $scope.notifications.length;
-		    	}
-		    	else{
-		    		var existing_notifications_count = 0;
-		    	}
-		    	websiteService.get_notifications(existing_notifications_count).then(function(data){
-		    		_intro_notifications();
-					$scope.notifications = data.notifications.concat($scope.notifications);
-				});
-	    	}
+	    		}
+	    		else{
+			    	if(angular.isDefined($scope.notifications)){
+			    		var existing_notifications_count = $scope.notifications.length;
+			    	}
+			    	else{
+			    		var existing_notifications_count = 0;
+			    	}
+			    	websiteService.get_notifications(existing_notifications_count).then(function(data){
+			    		_intro_notifications();
+						$scope.notifications = data.notifications.concat($scope.notifications);
+					});
+	    		}
+     		}
+     		else{
+     			$scope.notifications = $rootScope.trends;
+     			$scope.show_trending = true;
+     		}
+	    	
 	    });
 
 	    get_latest_notification = $scope.$on('getLatestNotification', function(){

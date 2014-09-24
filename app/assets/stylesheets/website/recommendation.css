@@ -123,9 +123,8 @@
 	border: 1px solid #D6D5D5;
 	font-size: 1em;
 	margin: 0px 0px 5px 0px;
-	width: 80%;
+	width: 97%;
 	height: 60px;
-	max-width: 89%;
 	outline: none;
 	border: 1px solid #F1F1F1;
 	border-radius: 1px;
@@ -548,7 +547,7 @@
 .interaction_box_book_options{
 	width: 250px;
 	top: 71px;
-	margin-left: 80px;
+	margin-left: 0px;
 	box-shadow: 0 1px 4px 0 #99A3AD,inset 0 0 40px #EEE;
 	font-size: 1em;
 	z-index: 6;
@@ -572,8 +571,8 @@
 
 .tweets .thumb,
 .interaction_box .thumb{
-	width: 70px;
-	height: 70px;
+	width: 50px;
+	height: 50px;
 	float: left;
 	overflow: hidden;
 	margin-right: 10px;
@@ -607,8 +606,8 @@
 
 .interaction_box .interaction_links{
 	padding: 2px;
-	margin-left: 75px;
-	width: 82%;
+	margin-left: 0px;
+	width: 97%;
 	overflow: auto;
 }
 
@@ -1236,8 +1235,8 @@ and (min-width : 1824px) {
 }
 
 .tweets .tweet img{
-	width: 70px;
-	min-height: 70px;
+	width: 50px;
+	min-height: 50px;
 }
 
 .trending_background{
