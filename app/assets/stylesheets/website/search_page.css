@@ -6,6 +6,11 @@
 	background-size: cover;
 }
 
+.input_wrapper{
+	position: relative;
+	height: 38px;
+}
+
 .search_page .grid_thumb{
 	float: left;
 	display: inline-block;
@@ -237,6 +242,7 @@
 	border-top-right-radius: 2px;
 	display: table;
 	height: 100%;
+	top: 0px;
 }
 
 

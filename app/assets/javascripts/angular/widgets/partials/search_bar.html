@@ -13,14 +13,7 @@
       <!-- <tooltip text="item.name" prepend-text="Explore" position="top" pluralize="s" ng-if="!$routeParams.type && filters_added.length == 0"></tooltip> -->
       <span class="table_cell">&nbsp;{{item.name}}</span>
     </div>
-    <div class="search_icon blue_button animate-fast" 
-         ng-click="handle_search_request($event)">
-        <!-- <tooltip prepend-text="Show search results" position="right" ng-if="filters_added.length > 0 && !$routeParams.type"></tooltip>
-        <tooltip prepend-text="Go to home page" position="right" ng-if="filters_added.length == 0 && !$routeParams.type"></tooltip> -->
-        <tooltip prepend-text="Add filters" position="right" ng-if="$routeParams.type && filters_added.length == 0"></tooltip>
-        <tooltip prepend-text="Add more filters" position="bottom" ng-if="$routeParams.type && filters_added.length > 0"></tooltip>
-        <span class="icon-search table_cell"></span>
-    </div>
+    <div ng-include="'/assets/angular/widgets/partials/search_icon.html'" ng-show="hide_input_field && $routeParams.type && !(show_secondary_input && !($routeParams.type && hide_options))"></div>
   </div>
 
   <div class="compressed_filters" ng-show="$routeParams.type && hide_options && filters_added.length > 0">
@@ -32,17 +25,19 @@
     </div>
   </div>
 
-  <input set-focus="website.searching" 
-         ng-keypress="get_search_results($event)"
-         ng-keydown="key_down($event)"
-         ng-model="search_tag.input"
-         id="searchInput"
-         ng-hide="hide_input_field"
-         ng-click="handle_options($event)"
-         class="search_input"
-         ng-class="{'search_input_shifted': $routeParams.type && hide_options}"
-         placeholder="{{search_tag.placeholder}}"/>
-
+  <div class="input_wrapper" 
+       ng-class="{'search_input_shifted': $routeParams.type && hide_options}"
+       ng-hide="hide_input_field">
+    <input set-focus="website.searching" 
+           ng-keypress="get_search_results($event)"
+           ng-keydown="key_down($event)"
+           ng-model="search_tag.input"
+           id="searchInput"
+           ng-click="handle_options($event)"
+           class="search_input"
+           placeholder="{{search_tag.placeholder}}"/>
+    <div ng-include="'/assets/angular/widgets/partials/search_icon.html'"></div>
+  </div>
 
   <div class="website_search_helpers animate-fast" 
        ng-show="active_nest && !($routeParams.type && hide_options)">
@@ -65,13 +60,15 @@
     </div>
   </div>
 
-  <input placeholder="{{custom_input_placeholder}}" 
-         ng-show="show_secondary_input && !($routeParams.type && hide_options)"
-         class="search_input box-shadow animate-fast"
-         ng-model="search_tag.custom_input"
-         ng-keypress="search_custom($event)"
-         ng-keydown="key_down($event)"
-         set-focus="website.searching_custom"/>
+  <div class="input_wrapper" ng-show="show_secondary_input && !($routeParams.type && hide_options)">
+    <input placeholder="{{custom_input_placeholder}}" 
+           class="search_input box-shadow animate-fast"
+           ng-model="search_tag.custom_input"
+           ng-keypress="search_custom($event)"
+           ng-keydown="key_down($event)"
+           set-focus="website.searching_custom"/>
+    <div ng-include="'/assets/angular/widgets/partials/search_icon.html'"></div>
+  </div>
 
   <div class="website_search_helpers animate-fast" ng-show="!($routeParams.type && hide_options)">
         <div class="title" ng-show="search_display" ng-bind-html="search_display"></div>
