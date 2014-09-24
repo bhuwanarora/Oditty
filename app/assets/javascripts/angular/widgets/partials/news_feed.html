@@ -25,24 +25,21 @@
 	     ng-if="!user.collapsed_column">
 		<span class="icon-angle-left"></span>
 	</div>
-	<div ng-if="user.collapsed_column" 
+	<div ng-if="user.collapsed_column && !reader" 
 	     class="animate-fast left_column_tab"
-		 ng-click="user.collapsed_column = false; 
-		 		  user.collapsed_left_column = false;
-		          user.collapsed_filters = true; 
-		          user.collapsed_trends = true;
-		          user.collapsed_lists = true;
-		          user.collapsed_friends = true;
-		          expand_left_panel();
-		          get_news_feed();">
+		 ng-click="get_news_feed();">
 		<span class="table_cell">
 			<span class="icon-newspaper site_color header_font"></span>
-			<span class="shelves" ng-show="user.collapsed_left_column && !reader">&nbsp;&nbsp;News Feed</span>
-			<span class="shelves" ng-show="user.collapsed_left_column && reader">&nbsp;&nbsp;{{reader.gender_prefix}} Timeline</span>
+			<span class="shelves" ng-show="user.collapsed_left_column">&nbsp;&nbsp;News Feed</span>
 		</span>
-		<!-- <div class="f3_background">
-			<span class="icon-users2 light_grey_color"></span>
-		</div> -->
+	</div>
+	<div ng-if="user.collapsed_column && reader" 
+	     class="animate-fast left_column_tab"
+		 ng-click="get_news_feed(reader.id);">
+		<span class="table_cell">
+			<span class="icon-newspaper site_color header_font"></span>
+			<span class="shelves" ng-show="user.collapsed_left_column">&nbsp;&nbsp;{{reader.gender_prefix}} Timeline</span>
+		</span>
 	</div>
 	<div class="header"
 		 ng-if="!user.collapsed_column && reader">
@@ -56,7 +53,7 @@
 		<div class="full_height">
 			<notification data="notification" ng-repeat="notification in personal_notifications | reverse"></notification>
 			<div class="notification_stable">
-				No new notifications.
+				No new notifications from {{reader.name | first_name}}.
 			</div>
 		</div>
 	</div>
