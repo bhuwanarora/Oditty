@@ -425,7 +425,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    // });
 	}
 
-	_init_notifications = function(){
+	$scope._init_notifications = function(){
 		$rootScope.notification_active = false;
 		if(angular.isDefined($rootScope.reader)){
 			$scope.readers_notifications = [];
