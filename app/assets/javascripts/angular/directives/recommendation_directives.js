@@ -101,7 +101,7 @@ websiteApp.directive('mainHeader', ['$timeout', '$rootScope', function($timeout,
 		restrict: 'E',
 		controller: ['$scope', function($scope){
 			$scope.toggle_notification_popup = function($event){
-				if(angular.isDefined($rootScope.popups.show_notifications_popup)){
+				if(angular.isDefined($rootScope.popups) && angular.isDefined($rootScope.popups.show_notifications_popup)){
 					if($rootScope.popups.show_notifications_popup){
 						$rootScope.popups.show_notifications_popup = false;
 					}

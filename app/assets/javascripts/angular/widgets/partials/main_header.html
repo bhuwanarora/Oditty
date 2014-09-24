@@ -1,5 +1,5 @@
 <div class="main_header">
-	<a class="site_logo" ng-href="#/user/{{$routeParams.id}}/search">
+	<a class="site_logo" ng-href="#/user/{{$routeParams.id}}/search" ng-if="$routeParams.type">
 		<tooltip prepend-text="Back to search page" position="bottom"></tooltip>
  		<span>r</span>
 		<span>e</span>
@@ -15,7 +15,24 @@
 		<span>o</span>
 		<span>r</span>
  	</a>
-	<div class="header_icon" ng-click="toggle_settings_popup($event)">
+ 	<div class="table_cell header_wrapper"  ng-if="!$routeParams.type">
+	 	<a class="site_logo" ng-href="#/user/{{user.id}}/recommendations/books">
+	 		<span>r</span>
+			<span>e</span>
+			<span>a</span>
+			<span>d</span>
+			<span>e</span>
+			<span>r</span>
+			<span>'</span>
+			<span>s</span>
+			<span>&nbsp;</span>
+			<span>d</span>
+			<span>o</span>
+			<span>o</span>
+			<span>r</span>
+	 	</a>
+ 	</div>
+	<div class="header_icon" ng-click="toggle_settings_popup($event)" ng-if="$routeParams.type">
 		<span class="icon-angle-down table_cell light_grey_color"></span>
 	</div>
 	
@@ -26,12 +43,17 @@
 		<div class="notification_circle table_cell" ng-hide="hide_notification_circle">4</div>
 	</div>
 	
-	<profile-link></profile-link>
- 	<div ng-controller="searchController">
+	
+	<a ng-href="#/user/{{user.id}}/recommendations/books">
+		<profile-link></profile-link>
+	</a>
+ 	<div ng-controller="searchController" ng-if="$routeParams.type">
  		<search-bar></search-bar>
  	</div>
- 	<a ng-href="#user/{{user.id}}/recommendations/books" class="header_navbar site_color">
-		<span class="table_cell"><b>Home</b></span>
+ 	<a class="header_navbar site_color"
+ 	   ng-click="show_interaction_box(user.id)"
+ 	   ng-if="$routeParams.type">
+		<span class="table_cell"><b>Share</b></span>
 	</a>
 	<!-- <div class="header_navbar site_color" 
 		 id="share" 

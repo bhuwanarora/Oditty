@@ -1180,7 +1180,7 @@ and (min-width : 1824px) {
 	margin-left: 20px;
 	margin-top: 7px;
 	text-shadow: 0 2px 3px rgba(223, 223, 223, 1);
-	padding-right: 20px;
+	margin-right: 20px;
 	display: inline-block;
 }
 
@@ -1614,7 +1614,7 @@ and (min-width : 1824px) {
 	z-index: 10;
 	/*float: left;*/
 	top: 4px;
-	left: 174px;
+	left: 200px;
 }
 
 .main_header .search_input_shifted{
@@ -1624,7 +1624,7 @@ and (min-width : 1824px) {
 	width: 43%;
 	height: 32px;
 	top: 4px;
-	left: 174px;
+	left: 200px;
 	box-shadow: none;
 }
 
