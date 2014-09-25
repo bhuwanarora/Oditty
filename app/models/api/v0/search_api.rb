@@ -8,7 +8,8 @@ module Api
 				unless user_id.present?
 					clause = "START book=node:node_auto_index('indexed_title:"+q+"*') WITH book RETURN book.isbn, ID(book), book.title as name, book.author_name ORDER BY book.total_weight DESC LIMIT 10"
 				else
-					clause = "START book=node:node_auto_index('indexed_title:"+q+"*') WITH book ORDER BY book.total_weight DESC OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" RETURN book.isbn, ID(book), book.title as name, book.author_name, ID(m) LIMIT 10"
+					
+					clause = "START book=node:node_auto_index('indexed_title:"+q+"*') WITH book ORDER BY book.total_weight DESC OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" WITH user, book, m OPTIONAL MATCH (user)-[:RatingAction]->(z:RatingNode{book_id:ID(book), user_id:"+user_id.to_s+"})-[:Rate]->(book) RETURN book.isbn, ID(book), book.title as name, book.author_name, ID(m), z.rating LIMIT 10"
 				end
 				puts clause.blue.on_red
 				if q.length >= 3
@@ -81,31 +82,51 @@ module Api
 
             def self._get_search_clause(q, count, type, fuzzy=nil)
 				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "").gsub("@", "")
-				if fuzzy.present?
-					connector = "~0.7"
-				else
-					connector = "*"
-				end
+
+				connector = fuzzy.present? ? "~0.7" : "*"
+				
 				if (type.include? 'BOOK')
-					clause = "START book=node:node_auto_index('indexed_title:"+q+connector+"') RETURN book.title as name, book.author_name, ID(book) LIMIT "+count.to_s
-					puts clause.blue.on_red
-					
+					clause = self._get_search_clause_for_book(q, connector, count)
 				elsif type.include? 'AUTHOR'
-					clause = "START author=node:node_auto_index('indexed_main_author_name:"+q+connector+"') RETURN DISTINCT author.name as name, ID(author) LIMIT "+count.to_s
-					puts clause.blue.on_red
+					clause = self._get_search_clause_for_author(q, connector, count)
 				elsif type.include? 'READER'
-					clause = "START user=node:node_auto_index('indexed_user_name:"+q+connector+"') RETURN DISTINCT user.name as name, ID(user) LIMIT "+count.to_s
-					puts clause.blue.on_red
+					clause = self._get_search_clause_for_reader(q, connector, count)
 				elsif type.include? 'TAG'
-					clause = "START genre=node:node_auto_index('indexed_genre_name:"+q+connector+"') RETURN genre.name as name, ID(genre) LIMIT "+count.to_s
-					puts clause.blue.on_red
-					
+					clause = self._get_search_clause_for_tag(q, connector, count)
 				else
-					clause = "START search_node=node:node_auto_index('search_index:"+q+connector+"') RETURN CASE WHEN search_node.title IS NULL THEN search_node.name ELSE search_node.title END, search_node.author_name, ID(search_node), labels(search_node) LIMIT "+count.to_s
-					puts clause.blue.on_red
-					
+					clause = self._get_basic_search_clause(q, connector, count)
 				end
 				clause
+            end
+
+            def self._get_search_clause_for_book(q, connector, count)
+				clause = "START book=node:node_auto_index('indexed_title:"+q+connector+"') RETURN book.title as name, book.author_name, ID(book) LIMIT "+count.to_s
+				puts clause.blue.on_red
+				clause
+            end
+
+            def self._get_search_clause_for_author(q, connector, count)
+				clause = "START author=node:node_auto_index('indexed_main_author_name:"+q+connector+"') RETURN DISTINCT author.name as name, ID(author) LIMIT "+count.to_s
+				puts clause.blue.on_red
+				clause
+            end
+
+            def self._get_search_clause_for_reader(q, connector, count)
+				clause = "START user=node:node_auto_index('indexed_user_name:"+q+connector+"') RETURN DISTINCT user.name as name, ID(user) LIMIT "+count.to_s
+				puts clause.blue.on_red
+				clause
+            end
+
+            def self._get_search_clause_for_tag(q, connector, count)
+            	clause = "START genre=node:node_auto_index('indexed_genre_name:"+q+connector+"') RETURN genre.name as name, ID(genre) LIMIT "+count.to_s
+				puts clause.blue.on_red
+				clause
+            end
+
+            def self._get_basic_search_clause(q, connector, count)
+				clause = "START search_node=node:node_auto_index('search_index:"+q+connector+"') RETURN CASE WHEN search_node.title IS NULL THEN search_node.name ELSE search_node.title END, search_node.author_name, ID(search_node), labels(search_node) LIMIT "+count.to_s
+				puts clause.blue.on_red
+            	clause
             end
 
 		end

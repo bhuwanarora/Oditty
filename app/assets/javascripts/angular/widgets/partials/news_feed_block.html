@@ -1,0 +1,10 @@
+<div class="notifications animate-fast scrollbar" 
+	 ng-if="show_notifications && !user.collapsed_column && !reader"
+	 check-scroll-bottom="get_notifications()">
+	<div class="full_height">
+		<notification data="notification" ng-repeat="notification in notifications | reverse"></notification>
+		<div class="notification_stable">
+			No new notifications.
+		</div>
+	</div>
+</div>

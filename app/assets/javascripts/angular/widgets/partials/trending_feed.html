@@ -1,0 +1,6 @@
+<div class="notifications scrollbar" ng-if="!user.collapsed_trends">
+	<notification data="notification" ng-repeat="notification in trends"></notification>
+	<div class="notification_stable">
+		You have reached end of the trending list.
+	</div>
+</div>

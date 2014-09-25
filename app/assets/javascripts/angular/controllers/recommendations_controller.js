@@ -54,6 +54,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				});
 			}
 		}
+		
+		$scope.get_news_feed(user_id);
 	}
 	$scope.show_profile = function(user_id, event, delta){
 		if(angular.isDefined(delta)){

@@ -2,7 +2,7 @@ angular.module('filtersApp', [])
   .filter('integer', function() {
     return function(input) {
     	var output = input;
-      if(angular.isDefined(input)){
+      if(angular.isDefined(input) && input != null){
         if(input >= 1000000){
         	output = (input/1000000).toFixed(0)+"m";
         }

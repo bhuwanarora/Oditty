@@ -47,7 +47,7 @@
 	<a ng-href="#/user/{{user.id}}/recommendations/books">
 		<profile-link></profile-link>
 	</a>
- 	<div ng-controller="searchController" ng-if="$routeParams.type">
+ 	<div ng-controller="searchController" ng-if="$routeParams.type && !reader">
  		<search-bar></search-bar>
  	</div>
  	<a class="header_navbar site_color"

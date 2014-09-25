@@ -123,21 +123,6 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
      //    }
 	    // $scope.$watch(callback1, callback2);
 	}
-
-
-    // $scope.intent_login = function() {
-    // 	$scope.loading_icon = true;
-    //     Facebook.getLoginStatus(function(response){
-    //       	if(response.status == LoginConstants.FacebookLoginStatusCheck){
-    //         	$rootScope.logged = true;
-    //         	$scope.me();
-    //       	}
-    //       	else{
-    //        		$scope.login();
-    //       	}
-    //     });
-    // };
-
    
 	$scope.intent_login = function(){
 		$scope.loading_icon = true;

@@ -2,6 +2,26 @@
 	 ng-if="user.show_profile"
 	 msd-wheel="stop_propagation($event)">
 	<div ng-if="reader" class="user_profile_block scrollbar">
+		<div class="block">
+			<div class="category_block">
+				<div><b>{{reader.total_count | integer}}</b></div>
+				<div>Points</div>
+			</div>
+			<div class="category_block">
+				<div>
+					<span><b>{{reader.book_read_count | integer}}</b></span>
+					<span class="icon-books"></span>
+				</div>
+				<div>Books Read</div>
+			</div>
+			<div class="category_block">
+				<div>
+					<span><b>{{reader.bookmark_count | integer}}</b></span>
+					<span class="icon-bookmarks"></span>
+				</div>
+				<div>Books in Shelves</div>
+			</div>
+		</div>
 		<div class="header" ng-show="reader.selectedDay || reader.init_book_read_count">
 			<b class="header_font">About</b><br/>
 			<span ng-show="reader.init_book_read_count">Reader of {{reader.init_book_read_count}}</span><br/>
@@ -24,16 +44,38 @@
 				<div><b>{{book.title}}</b>, Book by {{book.author_name}}</div>
 			</div>
 		</div>
-		<map class="map" zoom="11">
+		<!-- <map class="map" zoom="11">
 			<marker position="[{{reader.latitude}}, {{reader.longitude}}]" centered="true"></marker>
-		</map>
+		</map> -->
 	</div>
 	<div ng-if="!reader" class="user_profile_block scrollbar">
+		<div class="block">
+			<div class="category_block">
+				<div><b>{{user.total_count | integer}}</b></div>
+				<div>Points</div>
+			</div>
+			<div class="category_block">
+				<div>
+					<span><b>{{user.book_read_count | integer}}</b></span>
+					<span class="icon-books"></span>
+				</div>
+				<div>Books Read</div>
+			</div>
+			<div class="category_block">
+				<div>
+					<span><b>{{user.bookmark_count | integer}}</b></span>
+					<span class="icon-bookmarks"></span>
+				</div>
+				<div>Books in Shelves</div>
+			</div>
+		</div>
 		<div class="header" ng-show="user.selectedDay || user.init_book_read_count">
 			<b class="header_font">About</b><span class="click" ng-click="goto_info_card(0)">&nbsp;&nbsp;Edit</span><br/>
-			<span ng-show="user.init_book_read_count">Reader of {{user.init_book_read_count}}</span><br/>
-			<span ng-show="user.selectedDay">Birthday: {{user.selectedDay}} {{user.selectedMonth}}</span><br/>
-			<span ng-show="user.last_login">Last Login: {{user.last_login}}</span><br/>
+			<div>
+				<span ng-show="user.init_book_read_count">Reader of {{user.init_book_read_count}}</span><br/>
+				<span ng-show="user.selectedDay">Birthday: {{user.selectedDay}} {{user.selectedMonth}}</span><br/>
+				<span ng-show="user.last_login">Last Login: {{user.last_login}}</span><br/>
+			</div>
 		</div>
 		<div class="header">
 			<b class="header_font">Likes</b>
@@ -41,7 +83,7 @@
 		</div>
 		<div class="block">
 			<div ng-repeat="like in user.likes" class="category_block table">
-				<div class="{{like.icon}} table_cell"></div><br/>
+				<div class="{{like.icon}} table_cell category_icon"></div><br/>
 				<div class="table_cell">{{like.name}}</div>
 			</div>
 			<div ng-show="user.likes.length == 0">
@@ -61,9 +103,9 @@
 				We will notify you with any activity on these books...
 			</div>
 		</div>
-		<map class="map" zoom="11">
+		<!-- <map class="map" zoom="11">
 			<marker position="[{{user.latitude}}, {{user.longitude}}]" centered="true"></marker>
-		</map>
+		</map> -->
 	</div>
 	
 

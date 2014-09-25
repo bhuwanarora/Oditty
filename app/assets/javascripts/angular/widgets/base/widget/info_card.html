@@ -43,7 +43,7 @@
      </div>
      <div class="wrapper" 
      	  msd-wheel="stop_propagation($event);"
-     	  ng-click="user.compressed_info = true;"
+     	  ng-click="close_edit_profile();"
           ng-show="!user.compressed_info">
 	     <div ng-click="stop_propagation($event);"
 	     		class="info_cards animate-fast"
@@ -202,7 +202,11 @@
 								</div>
 								<div>&nbsp;</div>
 								<div ng-show="book.id" class="light_grey_color">
-									<div ng-show="book.status" class="site_color">Added</div>
+									<div ng-show="book.status">
+										<rate data="book"></rate>
+										<span class="site_color">Added. </span>
+										<span ng-hide="book.user_rating" class="site_color">Also rate this book.</span>
+									</div>
 									<div ng-show="!book.status">
 										<span>Add to</span>
 										<span class='icon-books'></span>

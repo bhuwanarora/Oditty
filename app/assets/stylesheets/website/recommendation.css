@@ -1800,7 +1800,7 @@ l	.compressed_info_card{
 }
 
 .share_wrapper .thumb_wrapper,
-.share_wrapper img{
+.share_wrapper .thumb_wrapper img{
 	width: 100px;
 	height: 100px;
 	z-index: 1;
@@ -1880,19 +1880,19 @@ l	.compressed_info_card{
 }	
 
 .user_profile{
-	top: 42px;
+	top: 50px;
 	position: fixed;
-	right: 150px;
-	left: 150px;
 	white-space: initial;
-	background-color: rgba(255, 255, 255, 0.94);
+	background-color: white;
 	z-index: 1;
-	padding: 20px 60px;
-	height: 65vh;
+	height: 50vh;
 	border-radius: 2px;
+	left: 9%;
+	width: 40%;
+	padding: 20px 0px;
 }
 
-.category_block [class^="icon-"]{
+.category_block .category_icon{
 	border-radius: 15px;
 	background-color: #E9E9E9;
 	color: #717070;
@@ -1907,10 +1907,8 @@ l	.compressed_info_card{
 	float: left;
 	display: inline-block;
 	margin: 4px;
-	font-size: 0.8em;
-	padding: 0px 7px;
-	width: 50px;
-	height: 80px;
+	font-size: .8em;
+	padding: 10px 0px;
 }
 
 .user_profile .header{
@@ -1926,9 +1924,10 @@ l	.compressed_info_card{
 }
 
 .user_profile .user_profile_block{
-	width: 70%;
-	height: 100%;
+	height: 84%;
 	overflow-y: scroll;
+	white-space: nowrap;
+	padding: 20px;
 }
 
 .right_links_shifted{
@@ -1940,3 +1939,19 @@ l	.compressed_info_card{
 	overflow: auto;
 }
 
+
+.feed_block{
+	width: 40%;
+	left: 50%;
+	position: fixed;
+	top: 50px;
+	height: 80vh;
+	border-radius: 2px;
+	padding: 20px 0px;
+	background-color: white;
+}
+
+.ticker_popup_shifted{
+	top: 50px;
+	left: 22%;
+}

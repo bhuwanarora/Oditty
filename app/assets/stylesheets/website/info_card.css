@@ -80,7 +80,7 @@
 }
 
 .info_cards .book_details{
-	width: 76%;
+	width: 70%;
  	float: left;
  	display: inline-block;
 	font-weight: normal;
@@ -98,6 +98,7 @@
 	float: left;
 	min-width: 320px;
 	box-shadow: 0 1px 4px 0 #DDDCDC,inset 0 0 40px #FCFCFC;
+	border-bottom: 4px solid transparent;
 }
 
 .info_cards .selected{

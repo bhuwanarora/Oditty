@@ -45,35 +45,13 @@
 		 ng-if="!user.collapsed_column && reader">
 		<span><b>&nbsp;&nbsp;{{reader.name | first_name}}'s Timeline</b></span>
 	</div>
-	<div class="notifications animate-fast scrollbar" 
-		 ng-style="column_heights.notifications_style"
-		 ng-if="show_notifications && !user.collapsed_column && reader"
-		 msd-wheel="handle_notification_ticker_size($event)"
-		 check-scroll-bottom="get_notifications(reader.id)">
-		<div class="full_height">
-			<notification data="notification" ng-repeat="notification in readers_notifications | reverse"></notification>
-			<div class="notification_stable">
-				No new notifications from {{reader.name | first_name}}.
-			</div>
-		</div>
-	</div>
+	<div ng-include src="'/assets/angular/widgets/partials/readers_feed.html'"></div>
 
 	<div class="header"
 		 ng-if="!user.collapsed_column && !reader">
 		<span><b>&nbsp;&nbsp;News Feed</b></span>
 	</div>
-	<div class="notifications animate-fast scrollbar" 
-		 ng-style="column_heights.notifications_style"
-		 ng-if="show_notifications && !user.collapsed_column && !reader"
-		 msd-wheel="handle_notification_ticker_size($event)"
-		 check-scroll-bottom="get_notifications()">
-		<div class="full_height">
-			<notification data="notification" ng-repeat="notification in notifications | reverse"></notification>
-			<div class="notification_stable">
-				No new notifications.
-			</div>
-		</div>
-	</div>
+	<div ng-include src="'/assets/angular/widgets/partials/news_feed_block.html'"></div>
 	
 	<!-- <more-filters></more-filters> -->
 	<!-- <div class="scrollbar friends_grid" 

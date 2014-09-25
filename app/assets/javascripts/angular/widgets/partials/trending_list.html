@@ -35,11 +35,6 @@
 	<div class="header" ng-if="!user.collapsed_trends">
 		<span><b>Trending</b></span>
 	</div>
-	<div class="notifications scrollbar" ng-if="!user.collapsed_trends">
-		<notification data="notification" ng-repeat="notification in trends"></notification>
-		<div class="notification_stable">
-			You have reached end of the trending list.
-		</div>
-	</div>
+	<div ng-include src="'/assets/angular/widgets/partials/trending_feed.html'"></div>
 
 </div>
