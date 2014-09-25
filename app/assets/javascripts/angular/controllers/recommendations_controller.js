@@ -17,8 +17,17 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
 	$scope._set_likes = function(array, data){
-		angular.forEach(data, function(value){
-			this.push({"id": value[1], "name": value[0], "icon": value[2]});
+		angular.forEach(data[0], function(value, index){
+			this.push({"id": data[1][index], "name": value, "icon": data[2][index]});
+		}, array);
+	}
+
+	$scope._set_influential_books = function(array, data){
+		angular.forEach(data[4], function(value, index){
+			this.push({"isbn": data[3][index], 
+					"id": value, 
+					"title": data[5][index], 
+					"author_name":data[6][index]});
 		}, array);
 	}
 
@@ -28,7 +37,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				websiteService.get_detailed_info(user_id).then(function(data){
 					$rootScope.user.detailed_info = true;
 					$rootScope.user.likes = [];
+					$rootScope.user.influential_books = [];
 					$scope._set_likes($rootScope.user.likes, data);
+					$scope._set_influential_books($rootScope.user.influential_books, data);
 				});
 			}
 		}
@@ -37,7 +48,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				websiteService.get_detailed_info(user_id).then(function(data){
 					$rootScope.reader.detailed_info = true;
 					$rootScope.reader.likes = [];
+					$rootScope.reader.influential_books = [];
 					$scope._set_likes($rootScope.reader.likes, data);
+					$scope._set_influential_books($rootScope.reader.influential_books, data);
 				});
 			}
 		}

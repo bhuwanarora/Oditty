@@ -1237,7 +1237,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 
 	$scope._get_trends = function(){
 		if(on_search_page){
-			$scope._add_trends_on_search_page();
+			// $scope._add_trends_on_search_page();
 		}
 		else{
 			$scope._add_trends_as_notifications();

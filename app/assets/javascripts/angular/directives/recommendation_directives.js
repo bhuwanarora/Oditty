@@ -170,6 +170,8 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 
 			$scope.toggle_bookmarked = function(event){
 				$rootScope.user.show_profile = false;
+				delete $rootScope.focused_book;
+				delete $rootScope.ticker_popup;
 				if(!$scope.bookmark_selected){
 					// _load_icon();
 					$scope.panel_selected = 'BOOKMARK';
@@ -208,6 +210,8 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 			}
 
 			$scope.toggle_recommendations = function(){
+				delete $rootScope.focused_book;
+				delete $rootScope.ticker_popup;
 				$rootScope.user.show_profile = false;
 				if($scope.bookmark_selected || $scope.read_selected){
 					// _load_icon();
@@ -222,6 +226,8 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 
 			$scope.toggle_read = function(){
 				$rootScope.user.show_profile = false;
+				delete $rootScope.focused_book;
+				delete $rootScope.ticker_popup;
 				if(!$scope.read_selected){
 					// _load_icon();
 
@@ -396,13 +402,14 @@ websiteApp.directive('bookGrid', ['recommendationService', '$rootScope', functio
 	}
 }]);
 
-websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'websiteService', 'WebsiteUIConstants', 'scroller', '$cookieStore', function($rootScope, $timeout, sharedService, websiteService, WebsiteUIConstants, scroller, $cookieStore){
+websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'websiteService', 'WebsiteUIConstants', 'scroller', '$cookieStore', 'RecommendationUIConstants', function($rootScope, $timeout, sharedService, websiteService, WebsiteUIConstants, scroller, $cookieStore, RecommendationUIConstants){
 	return{
 		restrict: 'E',
 		controller: ['$scope', 'websiteService', function($scope, websiteService){
 			$scope.mark_as_read = function(book, event){
 				if(angular.isDefined(book.id)){
-		        	sharedService.mark_as_read($scope, book, event);
+					sharedService.bookmark_book($scope, book, event, RecommendationUIConstants.InfluentialBooks);
+					sharedService.mark_as_read($scope, book, event);
 				}
 			}
 

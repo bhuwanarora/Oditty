@@ -23,9 +23,9 @@ module Api
 
 			def self.get_profile_info id
 				@neo = Neography::Rest.new
-				clause = "MATCH (u:User) WHERE ID(u)="+id.to_s+" OPTIONAL MATCH (u)-[:Likes]->(c) RETURN c.name, ID(c), c.icon"
+				clause = "MATCH (u:User) WHERE ID(u)="+id.to_s+" OPTIONAL MATCH (u)-[:Likes]->(c) WITH u, c OPTIONAL MATCH (u)-[:Labelled]->(l:Label{indexed_label_name:\""+Constants::InfluentialBooks+"\"})-[:BookmarkedOn]->(z:BookmarkNode)-[:BookmarkAction]->(b:Book) WHERE z.user_id = "+id.to_s+" RETURN COLLECT(DISTINCT(c.name)), COLLECT(DISTINCT(ID(c))), COLLECT(DISTINCT(c.icon)), COLLECT(DISTINCT(b.isbn)), COLLECT(DISTINCT(ID(b))), COLLECT(DISTINCT(b.title)), COLLECT(DISTINCT(b.author_name))"
 				puts clause.blue.on_red
-				info = @neo.execute_query(clause)["data"]
+				info = @neo.execute_query(clause)["data"][0]
 			end
 
 			def self.add_books_from_fb(params, user_id)

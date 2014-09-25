@@ -115,71 +115,7 @@ websiteApp.directive('labelDropdown', ['$rootScope', '$timeout', 'widgetService'
       }
 
       $scope.select_label = function(index){
-        var atleast_one_label_checked = false;
-        var labels = $scope.book.labels;
-        
-        $scope.book.labels[index]["checked"] = !$scope.book.labels[index]["checked"];
-        if($scope.book.labels[index]["checked"]){
-          //add to notifications
-          var name = $rootScope.user.email;
-          if(angular.isDefined($rootScope.user.name)){
-            name = $rootScope.user.name;
-          }
-          var message = "<span>saved&nbsp;</span><span class='site_color'>"+$scope.book.title+"</span><span> to '"+$scope.book.labels[index]["name"]+"'</span>";
-          
-          var notification = {
-            "thumb":$rootScope.user.thumb,
-            "message":message,
-            "timestamp":new Date().getTime(),
-            "book":{
-              "id":$scope.book.id,
-              "title":$scope.book.title,
-              "author_name":$scope.book.author_name,
-              "isbn":$scope.book.isbn
-            },
-            "user":{
-              "id":$rootScope.user.id,
-              "name":name
-            }
-          }
-          $rootScope.user.bookmark_count = $rootScope.user.bookmark_count + 1;
-          $scope.$emit('gamifyCount', 10, true);
-          $scope.$emit('addToNotifications', notification);
-
-          var message = "SUCCESS-Added to "+$scope.book.labels[index]["name"]+" <span class='icon-tags'></span>.";
-        }
-        else{
-          $rootScope.user.bookmark_count = $rootScope.user.bookmark_count - 1;
-          $scope.$emit('gamifyCount', 10, false);
-          var message = "SUCCESS-Removed from "+$scope.book.labels[index]["name"]+" <span class='icon-tags'></span>.";
-        }
-        if($scope.book.labels[index]["name"] == RecommendationUIConstants.MarkAsRead){
-          sharedService.mark_as_read($scope, $scope.book, event);
-        }
-
-        var timeout_event = notify($rootScope, message, $timeout);
-        var params = {"id": $scope.book.id, 
-                    "type": "BOOK",
-                    "name": $scope.book.labels[index]["name"],
-                    "data": $scope.book.labels[index]["checked"]};
-
-        widgetService.bookmark(params);
-        $scope.$on('destroy', function(){
-          $timeout.cancel(timeout_event);
-        });
-
-        for(var i=0; i<labels.length; i++){
-          if(labels[i]["checked"]){
-            atleast_one_label_checked = true;
-            break;
-          }
-        }
-        if(atleast_one_label_checked){
-          $scope.book.bookmark_status = 1;
-        }
-        else{
-          $scope.book.bookmark_status = 0; 
-        }
+        sharedService.bookmark_book($scope, index, event);
       }
 
       $scope.stop_horizontal_scroll = function(event){

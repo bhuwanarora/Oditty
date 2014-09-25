@@ -35,7 +35,7 @@
 	position: fixed;
 	z-index: 11;
 	left: 50%;
-	margin-left: -224px;
+	margin-left: -284px;
 	box-shadow: 8px 0 43px 0 rgba(66,66,66,.47);
 }
 
@@ -54,7 +54,7 @@
 	float: left;
 	display: inline-block;
 	margin: 1px;
-	width: 110px;
+	width: 140px;
 	text-align: center;
 }
 

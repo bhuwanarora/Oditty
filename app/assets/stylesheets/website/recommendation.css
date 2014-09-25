@@ -1704,7 +1704,7 @@ and (min-width : 1824px) {
 	right: 10px;
 	/*overflow-y: scroll;*/
 	top: 41px;
-	width: 350px;
+	width: 430px;
 	padding: 10px 15px;
 	z-index: 9;
 	border: 1px solid #ccc;
@@ -1929,9 +1929,16 @@ l	.compressed_info_card{
 
 .user_profile .user_profile_block{
 	width: 70%;
+	height: 100%;
+	overflow-y: scroll;
 }
 
 .right_links_shifted{
 	top: initial;
 	bottom: 102px;
 }
+
+.user_profile .block{
+	overflow: auto;
+}
+

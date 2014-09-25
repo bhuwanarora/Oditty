@@ -75,7 +75,8 @@ var constants = {
 			"AuthorTab": "AUTHOR",
 			"ReaderTab": "READER",
 			"ZeroBooksFound": "ALERT- Reset the filters couldn't find more books.",
-			"MarkAsRead": "I HAVE READ"
+			"MarkAsRead": "I HAVE READ",
+			"InfluentialBooks": "INFLUENTIAL BOOKS"
 		},
 		"SearchUIConstants": {
 			"BookLabel": "Book",
