@@ -43,6 +43,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				});
 			}
 			$scope._fetch_new_feed();
+			$scope._fetch_trending_options();
 		}
 		else{
 			if(angular.isUndefined($rootScope.reader.detailed_info)){
@@ -55,8 +56,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				});
 			}
 			$scope._fetch_new_feed($rootScope.reader.id);
+			$scope._fetch_new_feed();
 		}
-		$scope._fetch_trending_options();
 	}
 
 	$scope.show_profile = function(user_id, event, delta){

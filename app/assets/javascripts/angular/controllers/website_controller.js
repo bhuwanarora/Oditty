@@ -266,16 +266,29 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	$scope._show_news_feed = function(){
+		var _set_feed = function(data){
+			$scope._intro_notifications();
+			$scope.notifications = data.notifications.concat($scope.notifications);
+		}
+
 		if(angular.isDefined($scope.notifications)){
     		var existing_notifications_count = $scope.notifications.length;
     	}
     	else{
     		var existing_notifications_count = 0;
     	}
-    	websiteService.get_notifications(existing_notifications_count).then(function(data){
-    		$scope._intro_notifications();
-			$scope.notifications = data.notifications.concat($scope.notifications);
-		});
+    	if(angular.isDefined($rootScope.reader)){
+    		var user_id = $rootScope.reader.id;
+    		var debug_feed = true;
+    		websiteService.get_notifications(existing_notifications_count, user_id, debug_feed).then(function(data){
+	    		_set_feed(data);
+			});
+    	}
+    	else{
+	    	websiteService.get_notifications(existing_notifications_count).then(function(data){
+	    		_set_feed(data);
+			});
+    	}
 	}
 
 	_add_listeners = function(){
