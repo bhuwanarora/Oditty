@@ -127,28 +127,28 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 
     $scope.intent_login = function() {
     	$scope.loading_icon = true;
-        // Facebook.getLoginStatus(function(response){
-        //   	if(response.status == LoginConstants.FacebookLoginStatusCheck){
-        //     	$rootScope.logged = true;
-        //     	$scope.me();
-        //   	}
-        //   	else{
-        //    		$scope.login();
-        //   	}
-        // });
+        Facebook.getLoginStatus(function(response){
+          	if(response.status == LoginConstants.FacebookLoginStatusCheck){
+            	$rootScope.logged = true;
+            	$scope.me();
+          	}
+          	else{
+           		$scope.login();
+          	}
+        });
 
-        var uri = encodeURI('http://www.readersdoor.com');
-		FB.getLoginStatus(function(response){
-	      	if(response.status === 'connected'){
-	      		$rootScope.logged = true;
-	            $scope.me();
-	            window.location.href=uri;
-	      	}
-	      	else{
-	      		$scope.login();
-	        	window.location = encodeURI("https://www.facebook.com/dialog/oauth?client_id=667868653261167&redirect_uri="+uri+"&response_type=token");
-	      	}
-      	});
+  //       var uri = encodeURI('http://www.readersdoor.com');
+		// FB.getLoginStatus(function(response){
+	 //      	if(response.status === 'connected'){
+	 //      		$rootScope.logged = true;
+	 //            $scope.me();
+	 //            window.location.href=uri;
+	 //      	}
+	 //      	else{
+	 //      		$scope.login();
+	 //        	window.location = encodeURI("https://www.facebook.com/dialog/oauth?client_id=667868653261167&redirect_uri="+uri+"&response_type=token");
+	 //      	}
+  //     	});
     };
       
    	$scope.login = function() {
