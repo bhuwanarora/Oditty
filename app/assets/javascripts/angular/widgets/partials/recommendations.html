@@ -34,9 +34,7 @@
 			<div class="share_fade animate-fast" ng-class="{'share_fade_shifted': user.show_profile}"></div>
 			<div ng-include src="'/assets/angular/widgets/partials/user_details.html'"></div>
 			<div ng-include src="'/assets/angular/widgets/partials/feed.html'" 
-				 ng-if="user.show_profile" 
-				 msd-wheel="stop_propagation($event)"
-				 class="feed_block notifications"></div>
+				 ng-if="user.show_profile"></div>
 		</div>
 
 		<!-- <div class="recommendations_page"><search-bar></search-bar></div> -->

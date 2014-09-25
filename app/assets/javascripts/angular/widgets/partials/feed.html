@@ -1,3 +1,12 @@
-<div ng-include src="'/assets/angular/widgets/partials/news_feed_block.html'"></div>
-<div ng-include src="'/assets/angular/widgets/partials/readers_feed.html'"></div>
-<div ng-include src="'/assets/angular/widgets/partials/trending_feed.html'" ng-if="$routeParams.type != 'profile'"></div>
+<div ng-include src="'/assets/angular/widgets/partials/news_feed_block.html'"
+	 ng-if="!reader"
+	 msd-wheel="stop_propagation($event)"
+     class="feed_block notifications"></div>
+<div ng-include src="'/assets/angular/widgets/partials/readers_feed.html'"
+	 ng-if="reader"
+	 msd-wheel="stop_propagation($event)"
+     class="feed_block notifications"></div>
+<div ng-include src="'/assets/angular/widgets/partials/trending_feed.html'" 
+     ng-if="!reader"
+	 msd-wheel="stop_propagation($event)"
+     class="feed_block notifications trending_block"></div>

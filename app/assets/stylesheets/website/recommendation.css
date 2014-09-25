@@ -1961,6 +1961,11 @@ l	.compressed_info_card{
 	background-color: white;
 }
 
+.trending_block{
+	top: 69vh;
+	height: 15vh;
+}
+
 .ticker_popup_shifted{
 	top: 50px;
 	left: 22%;

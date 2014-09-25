@@ -317,17 +317,21 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
     		if(angular.isUndefined(trending) || !trending){
     			if(angular.isDefined(user_id)){
 		    		if(angular.isDefined($rootScope.reader) && (user_id == $rootScope.reader.id)){
+		    			console.debug("_show_reader_feed", user_id);
 		    			$scope._show_reader_feed(user_id);
 		    		}
 		    		else{
+		    			console.debug("_show_personal_feed", user_id);
 			    		$scope._show_personal_feed(user_id);
 		    		}
 	    		}
 	    		else{
+	    			console.debug("_show_news_feed");
 			    	$scope._show_news_feed();
 	    		}
      		}
      		else{
+     			console.debug("_show_trending_feed");
      			$scope._show_trending_feed();
      		}
 	    	

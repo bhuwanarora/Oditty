@@ -54,9 +54,10 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				});
 			}
 		}
-		
-		$scope.get_news_feed(user_id);
+		$scope._fetch_new_feed();
+		$scope._fetch_trending_options();
 	}
+
 	$scope.show_profile = function(user_id, event, delta){
 		if(angular.isDefined(delta)){
 			if(delta > 0){
@@ -90,6 +91,10 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
       	$rootScope.user.collapsed_lists = true;
       	$rootScope.user.collapsed_friends = true;
       	$scope.expand_left_panel();
+      	$scope._fetch_new_feed(user_id);
+	}
+
+	$scope._fetch_new_feed = function(user_id){
       	var init_notification = true;
       	var trending = false;
 		$scope.$emit('getNotifications', trending, user_id, init_notification);
@@ -147,7 +152,11 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	$scope.show_trending_options = function(){
 		$scope._expanded_notifications();
-		$scope.$emit('getNotifications', true, $rootScope.user.id);
+		$scope._fetch_trending_options();
+	}
+
+	$scope._fetch_trending_options = function(){
+		$scope.$emit('getNotifications', true, $rootScope.user.id);	
 	}
 
 	$scope.handle_friends_grid_size = function(event, scroll_down){
@@ -325,6 +334,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         		$rootScope.user.collapsed_lists = true;
         		$rootScope.user.collapsed_column = true;
         		$scope.expand_left_panel();
+        		$rootScope.user.show_profile = false;
         		$rootScope.user.collapsed_left_column = false;
         	}
         	else if(on_grids_page){
@@ -656,7 +666,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				$scope._get_friends(reader_id);
 				$scope._get_labels(reader_id);
 				$scope.placeholder = "Write on timeline...";
-				$scope.get_news_feed(reader_id);
+				$scope._fetch_new_feed(reader_id);
 			}
 			else{
 				_init_recommendations();

@@ -1,5 +1,4 @@
 <div class="notifications animate-fast scrollbar" 
-	 ng-if="show_notifications && !user.collapsed_column && reader"
 	 check-scroll-bottom="get_notifications(reader.id)">
 	<div class="full_height">
 		<notification data="notification" ng-repeat="notification in readers_notifications | reverse"></notification>
