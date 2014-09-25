@@ -125,31 +125,30 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 	}
 
 
-    $scope.intent_login = function() {
-    	$scope.loading_icon = true;
-        Facebook.getLoginStatus(function(response){
-          	if(response.status == LoginConstants.FacebookLoginStatusCheck){
-            	$rootScope.logged = true;
-            	$scope.me();
-          	}
-          	else{
-           		$scope.login();
-          	}
-        });
+    // $scope.intent_login = function() {
+    // 	$scope.loading_icon = true;
+    //     Facebook.getLoginStatus(function(response){
+    //       	if(response.status == LoginConstants.FacebookLoginStatusCheck){
+    //         	$rootScope.logged = true;
+    //         	$scope.me();
+    //       	}
+    //       	else{
+    //        		$scope.login();
+    //       	}
+    //     });
+    // };
 
-  //       var uri = encodeURI('http://www.readersdoor.com');
-		// FB.getLoginStatus(function(response){
-	 //      	if(response.status === 'connected'){
-	 //      		$rootScope.logged = true;
-	 //            $scope.me();
-	 //            window.location.href=uri;
-	 //      	}
-	 //      	else{
-	 //      		$scope.login();
-	 //        	window.location = encodeURI("https://www.facebook.com/dialog/oauth?client_id=667868653261167&redirect_uri="+uri+"&response_type=token");
-	 //      	}
-  //     	});
-    };
+   
+	$scope.intent_login = function(){
+		$scope.loading_icon = true;
+	  	if(!$rootScope.user.fb_connect){
+	      	$scope.login();
+	  	}
+	  	else{
+	  		$rootScope.logged = true;
+            $scope.me();
+	  	}
+	}; 
       
    	$scope.login = function() {
      	Facebook.login(function(response) {
@@ -265,8 +264,14 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		$cookieStore.remove('tab');
 		$scope._is_logged_in();
 		_bind_auth_listeners();
-		// $scope.authenticate(true);
+		$rootScope.user.fb_connect = false;
+		Facebook.getLoginStatus(function(response){
+		    if(response.status === LoginConstants.FacebookLoginStatusCheck){
+		       $rootScope.user.fb_connect = true;
+		    }
+		});
 	}
+
 
 	_init();
 }]);
