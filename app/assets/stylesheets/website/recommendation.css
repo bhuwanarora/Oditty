@@ -1949,20 +1949,22 @@ l	.compressed_info_card{
 	margin: 0px 0px 20px 0px;
 }
 
-
-.feed_block{
-	width: 40%;
+.feed_group{
+	top: 50px;
 	left: 50%;
 	position: fixed;
-	top: 50px;
-	height: 80vh;
+	width: 40%;
+}
+
+.feed_block{
+	max-height: 80vh;
 	border-radius: 2px;
 	padding: 20px 0px;
 	background-color: white;
 }
 
 .trending_block{
-	top: 69vh;
+	margin-top: 10px;
 	height: 15vh;
 }
 

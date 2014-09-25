@@ -42,6 +42,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 					$scope._set_influential_books($rootScope.user.influential_books, data);
 				});
 			}
+			$scope._fetch_new_feed();
 		}
 		else{
 			if(angular.isUndefined($rootScope.reader.detailed_info)){
@@ -53,8 +54,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 					$scope._set_influential_books($rootScope.reader.influential_books, data);
 				});
 			}
+			$scope._fetch_new_feed($rootScope.reader.id);
 		}
-		$scope._fetch_new_feed();
 		$scope._fetch_trending_options();
 	}
 
