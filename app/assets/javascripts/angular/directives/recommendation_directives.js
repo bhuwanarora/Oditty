@@ -501,7 +501,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 
 			$scope.close_edit_profile = function(event){
 				$rootScope.user.compressed_info = true;
-				delete $scope.popular_books;
+				$scope.popular_books = [];
 				event.stopPropagation();
 			}
 

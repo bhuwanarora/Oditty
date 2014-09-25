@@ -650,12 +650,13 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				var reader_id = $scope.$routeParams.id;
 				$rootScope.reader = {};
 				$rootScope.reader.id = reader_id;
-				$scope.show_profile($rootScope.reader.id);
+				$scope.show_profile(reader_id);
 				$rootScope.user.show_profile = true;
 				$scope._init_reader();
 				$scope._get_friends(reader_id);
 				$scope._get_labels(reader_id);
 				$scope.placeholder = "Write on timeline...";
+				$scope.get_news_feed(reader_id);
 			}
 			else{
 				_init_recommendations();
