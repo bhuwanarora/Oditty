@@ -3,20 +3,20 @@
 	 msd-wheel="stop_propagation($event)">
 	<div ng-if="reader" class="user_profile_block scrollbar">
 		<div class="header" ng-show="reader.selectedDay || reader.init_book_read_count">
-			<b>About</b><br/>
+			<b class="header_font">About</b><br/>
 			<span ng-show="reader.init_book_read_count">Reader of {{reader.init_book_read_count}}</span><br/>
 			<span ng-show="reader.selectedDay">Birthday: {{reader.selectedDay}} {{reader.selectedMonth}}</span><br/>
 			<span ng-show="reader.last_login">Last Login: {{reader.last_login}}</span><br/>
 		</div>
 		<div class="header" ng-show="reader.likes.length > 0">
-			<b>Likes</b>
+			<b class="header_font">Likes</b>
 		</div>
 		<div ng-repeat="like in reader.likes" class="category_block table">
 			<div class="{{like.icon}} table_cell"></div><br/>
 			<div class="table_cell">{{like.name}}</div>
 		</div>
 		<div class="header" ng-show="reader.influential_books.length > 0">
-			<b>Books that left a mark on {{reader.name | first_name}}</b>
+			<b class="header_font">Books that left a mark on {{reader.name | first_name}}</b>
 		</div>
 		<div class="block">
 			<div ng-repeat="book in reader.influential_books">
@@ -30,27 +30,35 @@
 	</div>
 	<div ng-if="!reader" class="user_profile_block scrollbar">
 		<div class="header" ng-show="user.selectedDay || user.init_book_read_count">
-			<b>About</b><br/>
+			<b class="header_font">About</b><span class="click" ng-click="goto_info_card(0)">&nbsp;&nbsp;Edit</span><br/>
 			<span ng-show="user.init_book_read_count">Reader of {{user.init_book_read_count}}</span><br/>
 			<span ng-show="user.selectedDay">Birthday: {{user.selectedDay}} {{user.selectedMonth}}</span><br/>
 			<span ng-show="user.last_login">Last Login: {{user.last_login}}</span><br/>
 		</div>
-		<div class="header" ng-show="user.likes.length > 0">
-			<b>Likes</b>
+		<div class="header">
+			<b class="header_font">Likes</b>
+			<span class="click" ng-click="edit_genres_like()">&nbsp;&nbsp;Edit</span>
 		</div>
 		<div class="block">
 			<div ng-repeat="like in user.likes" class="category_block table">
 				<div class="{{like.icon}} table_cell"></div><br/>
 				<div class="table_cell">{{like.name}}</div>
 			</div>
+			<div ng-show="user.likes.length == 0">
+				This will help us to recommend you better books...
+			</div>
 		</div>
-		<div class="header" ng-show="user.influential_books.length > 0">
-			<b>Books that left a mark on {{user.name | first_name}}</b>
+		<div class="header">
+			<b class="header_font">Books that left a mark on {{user.name | first_name}}</b>
+			<span class="click" ng-click="edit_books_read()">&nbsp;&nbsp;Edit</span>
 		</div>
 		<div class="block">
 			<div ng-repeat="book in user.influential_books">
 				<!-- <img src="{{book.isbn | small_thumb}}"/> -->
 				<div><b>{{book.title}}</b>, Book by {{book.author_name}}</div>
+			</div>
+			<div ng-show="user.influential_books.length == 0">
+				We will notify you with any activity on these books...
 			</div>
 		</div>
 		<map class="map" zoom="11">

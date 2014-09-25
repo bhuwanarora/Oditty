@@ -616,3 +616,8 @@ input:focus{
 .translucent{
     opacity: 0.6;
 }
+
+.click{
+    color: #427fed;
+    cursor: pointer;
+}

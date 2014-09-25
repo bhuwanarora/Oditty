@@ -321,7 +321,10 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 				}
 	        }
 	        
-			$scope.goto_info_card = function(){
+			$scope.goto_info_card = function(page_number){
+				if(angular.isDefined(page_number)){
+					$rootScope.user.profile_status = page_number;
+				}
 				$rootScope.user.compressed_info = false;
 				$rootScope.user.collapsed_column = true;
 				$rootScope.user.collapsed_filters = true;
