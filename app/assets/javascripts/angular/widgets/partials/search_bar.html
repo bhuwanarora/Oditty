@@ -20,8 +20,8 @@
     <div ng-repeat="item in filters_added"
           class="compressed_filter_icon"
          ng-click="remove_filter(item, $event)">
-        <span ng-show="item.icon2" class="{{item.icon2}} faded_site_color"></span>
-        <span class="faded_site_color">{{item.name | compressed_filter}}</span>
+        <span ng-show="item.icon2" class="{{item.icon2}}"></span>
+        <span>{{item.name}}</span>
     </div>
   </div>
 
