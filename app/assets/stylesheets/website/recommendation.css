@@ -1908,7 +1908,7 @@ l	.compressed_info_card{
 	height: 50vh;
 	border-radius: 2px;
 	left: 9%;
-	width: 40%;
+	width: 35%;
 	padding: 20px 0px;
 }
 
@@ -1925,6 +1925,7 @@ l	.compressed_info_card{
 .user_profile .category_block{
 	width: 60px;
 	height: 80px;
+	font-size: .8em;
 	white-space: initial;
 }
 
@@ -1933,7 +1934,6 @@ l	.compressed_info_card{
 	float: left;
 	display: inline-block;
 	margin: 4px;
-	font-size: .8em;
 	padding: 10px 0px;
 }
 
@@ -1970,9 +1970,9 @@ l	.compressed_info_card{
 
 .feed_group{
 	top: 50px;
-	left: 50%;
+	left: 45%;
 	position: fixed;
-	width: 40%;
+	width: 45%;
 }
 
 .feed_block{

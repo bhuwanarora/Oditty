@@ -32,29 +32,25 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
 	$scope._get_user_profile_info = function(user_id){
-		if(user_id == $rootScope.user.id){
-			if(angular.isUndefined($rootScope.user.detailed_info)){
+		var _get_user_profile_info = function(user){
+			if(angular.isUndefined(user.detailed_info)){
 				websiteService.get_detailed_info(user_id).then(function(data){
-					$rootScope.user.detailed_info = true;
-					$rootScope.user.likes = [];
-					$rootScope.user.influential_books = [];
-					$scope._set_likes($rootScope.user.likes, data);
-					$scope._set_influential_books($rootScope.user.influential_books, data);
+					user.detailed_info = true;
+					user.likes = [];
+					user.influential_books = [];
+					$scope._set_likes(user.likes, data);
+					$scope._set_influential_books(user.influential_books, data);
 				});
 			}
+		}
+
+		if(user_id == $rootScope.user.id){
+			_get_user_profile_info($rootScope.user);
 			$scope._fetch_new_feed();
 			$scope._fetch_trending_options();
 		}
 		else{
-			if(angular.isUndefined($rootScope.reader.detailed_info)){
-				websiteService.get_detailed_info(user_id).then(function(data){
-					$rootScope.reader.detailed_info = true;
-					$rootScope.reader.likes = [];
-					$rootScope.reader.influential_books = [];
-					$scope._set_likes($rootScope.reader.likes, data);
-					$scope._set_influential_books($rootScope.reader.influential_books, data);
-				});
-			}
+			_get_user_profile_info($rootScope.reader);
 			$scope._fetch_new_feed($rootScope.reader.id);
 			$scope._fetch_new_feed();
 		}
@@ -131,7 +127,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			}
 		}
 
-
 		event.stopPropagation();
 	}
 
@@ -179,11 +174,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			"overflow": "auto"},
 			"show_filters": false};
 		}
-		// else{
-		// 	$scope.column_heights = {"notifications_style" : {"max-height": "110px"}, 
-		// 							"friends_grid_style": {"height": "75px"},
-		// 							"show_filters": false};
-		// }
 		if(event_defined){
 			event.stopPropagation();
 		}
@@ -223,7 +213,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	_add_listeners = function(){
 	    load_recommendations_event = $scope.$on('loadRecommendations', function(){
-	    	if(!$scope.read_selected && !$scope.bookmark_selected){
+	    	var _set_recommendations = function(){
 		    	console.debug("%c loadRecommendations", "color: purple;");
 		    	$rootScope.filters["reset"] = false;
 		    	if(angular.isUndefined($rootScope.filters["reset_count"])){
@@ -237,9 +227,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		    	
 		    	console.log("%c load_recommendations_event", "color: green;");
 		    	_get_recommendations();
-		    	// event.stopPropagation();
 	    	}
-	    	else if($scope.bookmark_selected){
+
+	    	var _set_books_bookmarked = function(){
 	    		websiteService.get_books_bookmarked($rootScope.user.books.bookmarked.length)
 	    			.then(function(data){
 					angular.forEach(data, function(data){
@@ -261,13 +251,25 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 					},  $rootScope.user.books['bookmarked']);
 				});
 	    	}
-	    	else if($scope.read_selected){
+
+	    	var _set_books_read = function(){
 	    		websiteService.get_books_read($rootScope.user.books.read.length).then(function(data){
 	    			angular.forEach(data, function(value){
 						var json = {"isbn": value[0], "id": value[1], "status": true};
 						this.push(json);
 					},  $rootScope.user.books.read);
 	    		});
+	    	}
+
+	    	
+	    	if(!$scope.read_selected && !$scope.bookmark_selected){
+		    	_set_recommendations();
+	    	}
+	    	else if($scope.bookmark_selected){
+	    		_set_books_bookmarked();	
+	    	}
+	    	else if($scope.read_selected){
+	    		_set_books_read();
 	    	}
 	    });
 

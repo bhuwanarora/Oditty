@@ -189,6 +189,7 @@ input:focus{
 
 .full_width{
     width: 100%;
+    overflow-y: auto;
 }
 
 .scrollbar{
@@ -566,7 +567,7 @@ input:focus{
 }
 
 .header_font{
-    font-size: 1.2em !important;
+    font-size: 15px !important;
 }
 
 .image_wrapper{

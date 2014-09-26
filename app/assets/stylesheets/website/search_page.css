@@ -140,7 +140,7 @@
 
 .website_search_helpers .compressed_option{
 	padding: 12px 15px 5px;
-	font-size: 1.2em;
+	font-size: 15px;
 }
 
 .website_search_helpers .direction_option{
@@ -581,7 +581,7 @@
 	top: 0px;
 	cursor: pointer;
 	padding: 8px;
-	font-size: 1.2em;
+	font-size: 15px;
 }
 
 .login_box .link{
