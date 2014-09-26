@@ -522,9 +522,11 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 			$scope.search_info_card = function(event, type){
 				var keyUp = event.keyCode == WebsiteUIConstants.KeyUp;
 				var keyDown = event.keyCode == WebsiteUIConstants.KeyDown;
+				var keyLeft = event.keyCode == WebsiteUIConstants.KeyLeft;
+				var keyRight = event.keyCode == WebsiteUIConstants.KeyRight;
 				var enter_pressed = event.keyCode == WebsiteUIConstants.Enter;
 				var backspace = event.keyCode == WebsiteUIConstants.Backspace;
-				var char_pressed = !(keyUp || keyDown || enter_pressed);
+				var char_pressed = !(keyUp || keyDown || enter_pressed || keyLeft || keyRight);
 				if(char_pressed){
 					if(type == 'BOOK'){
 						var has_minimum_length = $scope.info.search_book.length > 3;
@@ -555,32 +557,45 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 						}
 					}
 				}
+				event.stopPropagation();
+			}
+
+			$scope._fetch_book_results = function(){
+				var skip_count = $scope.popular_books.length;
+				websiteService.search_books($scope.info.search_book, skip_count).then(function(data){
+					data = data.results;
+					if(data.length != 0){
+						angular.forEach(data, function(value){
+							var status = value[4] != null;
+							var json = {"isbn": value[0], 
+									"id": value[1], 
+									"title": value[2], 
+									"author_name": value[3], 
+									"status": status,
+									"user_rating": value[5]};
+							this.push(json);
+						},  $scope.popular_books);
+					}
+					else{
+						if($scope.popular_books.length == 0){
+							$scope.popular_books = [{"title": "No results found..."}];
+						}
+						else{
+							$scope.all_results_found = true;
+							$scope.popular_books.push({"title": "All results fecthed. "+$scope.popular_books.length+" books found for <span class='site_color'>"+$scope.info.search_book+"</span>"});
+						}
+					}
+					$scope.loading = false;
+					$timeout.cancel(search_input_timeout);
+				});
 			}
 
 			$scope.handle_search_input = function(type){
 				$scope.loading = true;
 				if(type == "BOOK"){
-					websiteService.search_books($scope.info.search_book).then(function(data){
-						$scope.popular_books = [];
-						data = data.results;
-						if(data.length != 0){
-							angular.forEach(data, function(value){
-								var status = value[4] != null;
-								var json = {"isbn": value[0], 
-										"id": value[1], 
-										"title": value[2], 
-										"author_name": value[3], 
-										"status": status,
-										"user_rating": value[5]};
-								this.push(json);
-							},  $scope.popular_books);
-						}
-						else{
-							$scope.popular_books = [{"title": "No results found..."}];
-						}
-						$scope.loading = false;
-						$timeout.cancel(search_input_timeout);
-					});
+					$scope.popular_books = [];
+					$scope.all_results_found = false;
+					$scope._fetch_book_results();
 				}
 				else{
 					websiteService.search_authors("q="+$scope.info.search_author).then(function(data){
@@ -615,37 +630,6 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 			    	});
 				}
 		    }
-
-		    _profile_status_colors = function(){
-				var profile_status = $rootScope.user.profile_status;
-				if(profile_status == 0){
-					$rootScope.user.profile_status_color = "#4374e0";
-				}
-				else if(profile_status == 1){
-					$rootScope.user.profile_status_color = "#65b045";
-				}
-				else if(profile_status == 2){
-					$rootScope.user.profile_status_color = "#d73d32";
-				}
-				else if(profile_status == 3){
-					$rootScope.user.profile_status_color = "#11a9cc";
-				}
-				else if(profile_status == 4){
-					$rootScope.user.profile_status_color = "#981b48";
-				}
-				else if(profile_status == 5){
-					$rootScope.user.profile_status_color = "#7e3794";
-				}
-				else if(profile_status == 6){
-					$rootScope.user.profile_status_color = "#4374e0";
-				}
-				else if(profile_status == 7){
-					$rootScope.user.profile_status_color = "#981b48";	
-				}
-				else if(profile_status == 8){
-					$rootScope.user.profile_status_color = "#981b48";
-				}
-			}
 
 			_handle_info_card_bindings = function($scope){
 				if($rootScope.user.profile_status == 1){
@@ -716,7 +700,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 
 			$scope.get_popular_books = function(){
 				var skip_count = $scope.popular_books.length;
-				var get_popular_books = !$scope.loading;
+				var get_popular_books = !$scope.loading && (angular.isUndefined($scope.info.search_book) || $scope.info.search_book.length < 1);
 				if(get_popular_books){
 					$scope.loading = true;
 					websiteService.get_popular_books(skip_count).then(function(data){
@@ -733,6 +717,11 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 						$scope.loading = false;
 					});
 				}
+				else{
+					if(!$scope.all_results_found){
+						$scope._fetch_book_results();
+					}
+				}
 			}
 
 			$scope.prev_profile_state = function(){
@@ -743,7 +732,6 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 					$rootScope.user.profile_status = 3;
 				}
 				_handle_info_card_bindings($scope);
-				_profile_status_colors();
 			}
 
 			$scope.next_profile_state = function(){
@@ -754,7 +742,6 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 					$rootScope.user.profile_status = 0;
 				}
 				_handle_info_card_bindings($scope);
-				_profile_status_colors();
 			}
 
 			$scope.stop_horizontal_scroll = function(event){
@@ -829,7 +816,6 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 			_init = function(){
 				var search_input_timeout = "";
 				$rootScope.user.profile_status = 0;
-	    		_profile_status_colors();
 	    		_get_info_data();
 	    		$scope.popular_books = [];
 	    		$scope.popular_authors = [];

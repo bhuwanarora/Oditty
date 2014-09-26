@@ -1086,12 +1086,26 @@ and (min-width : 1824px) {
 	width: 80%;
 }
 
+.notifications .compressed_block{
+	width: 65%;	
+}
+
 .notifications_popup img,
 .notifications img{
 	width: 30px;
 	height: 30px;
 	margin: 5px;
 	border-radius: 5px; 
+}
+
+.notifications .book_thumb,
+.tweets .book_thumb{
+	width: 40px;
+	height: inherit;
+	margin: 5px 5px 0px 0px;
+	border-radius: 1px;
+	display: inline-block;
+	float: left;
 }
 
 .notification_circle {
@@ -1965,7 +1979,7 @@ l	.compressed_info_card{
 
 .trending_block{
 	margin-top: 10px;
-	height: 15vh;
+	max-height: 15vh;
 }
 
 .ticker_popup_shifted{

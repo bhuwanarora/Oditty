@@ -185,7 +185,9 @@
 				<div class="header">
 					We will notify you with any activity on these books...
 				</div>
-				<input ng-keydown="search_info_card($event, 'BOOK')" ng-model="info.search_book" placeholder="Search books..."/>
+				<input ng-keydown="search_info_card($event, 'BOOK')" 
+					   ng-model="info.search_book" 
+					   placeholder="Search books..."/>
 		      	
 				<div class="scrollbar header" 
 					msd-wheel="stop_horizontal_scroll($event)" check-scroll-bottom="get_popular_books()">
@@ -197,7 +199,7 @@
 								 class="book_thumb"/>
 							<div class="book_details">
 								<div>
-									<span><b>{{book.title}}</b></span><br/>
+									<span><b ng-bind-html="book.title"></b></span><br/>
 									<span ng-show="book.author_name">Book by {{book.author_name}}</span>
 								</div>
 								<div>&nbsp;</div>

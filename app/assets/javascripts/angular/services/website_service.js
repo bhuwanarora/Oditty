@@ -56,8 +56,8 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         return _deferred_request('/api/v0/books_read?skip_count='+skip_count+'&id='+_user_id());
     }
 
-    this.search_books = function(data){
-        return _deferred_request('/api/v0/search_books?q='+data);
+    this.search_books = function(data, skip_count){
+        return _deferred_request('/api/v0/search_books?q='+data+"&skip="+skip_count);
     }
 
     this.search_authors = function(data){

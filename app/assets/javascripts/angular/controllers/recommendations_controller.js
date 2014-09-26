@@ -68,6 +68,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			}
 			else{
 				$rootScope.user.show_profile = false;
+				delete $rootScope.ticker_popup;
 			}
 		}
 		else{
@@ -77,6 +78,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			}
 			else{
 				$rootScope.user.show_profile = false;
+				delete $rootScope.ticker_popup;
 			}
 		}
 		if(angular.isDefined(event)){
