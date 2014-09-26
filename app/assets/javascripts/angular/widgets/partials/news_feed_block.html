@@ -1,0 +1,9 @@
+<div class="notifications animate-fast scrollbar" 
+	 check-scroll-bottom="get_notifications()">
+	<div class="full_height">
+		<notification data="notification" ng-repeat="notification in notifications | reverse"></notification>
+		<div class="notification_stable">
+			You've reached the end of your news feed.
+		</div>
+	</div>
+</div>

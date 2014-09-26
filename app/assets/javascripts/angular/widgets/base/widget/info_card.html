@@ -13,21 +13,21 @@
      		title="Edit books you have read">
      		<span ng-class="{'site_color': user.profile_status==2}">
 	     		<span class="icon-books"></span>
-	     		<span>&nbsp;Books Read</span>
+	     		<span>&nbsp;Influential Books</span>
 	     	</span>
      	</div>
-     	<div class="block"
+     	<!-- <div class="block"
      		ng-click="edit_authors_read();"
      		title="Edit authors you like">
      		<span ng-class="{'site_color': user.profile_status==3}">
 	     		<span class="icon-pen"></span>
 	     		<span>&nbsp;Follow Authors</span>
 	     	</span>
-     	</div>
+     	</div> -->
      	<div class="block"
-     		ng-click="goto_info_card(); user.profile_status=4;"
+     		ng-click="goto_info_card(); user.profile_status=3;"
      		title="Invite friends">
-     		<span ng-class="{'site_color': user.profile_status==4}">
+     		<span ng-class="{'site_color': user.profile_status==3}">
 	     		<span class="icon-users"></span>
 	     		<span>&nbsp;Barter</span>
      		</span>
@@ -43,7 +43,7 @@
      </div>
      <div class="wrapper" 
      	  msd-wheel="stop_propagation($event);"
-     	  ng-click="user.compressed_info = true;"
+     	  ng-click="close_edit_profile($event);"
           ng-show="!user.compressed_info">
 	     <div ng-click="stop_propagation($event);"
 	     		class="info_cards animate-fast"
@@ -124,7 +124,7 @@
 		      	<div ng-if="user.thumb">
 			    	<img ng-src="{{user.thumb}}" class="profile_pic">
 		      	</div>
-		      	<div class="red_button button1" ng-click="getting_started_tour()">Getting started</div>
+		      	<!-- <div class="red_button button1" ng-click="getting_started_tour()">Getting started</div> -->
 		      	<!-- <hr/> -->
 			</div>
 			<!-- <div ng-switch-when="1">
@@ -181,11 +181,13 @@
 				</div>
 			</div>
 			<div ng-switch-when="2">
-				<div class="sub_header"><b>Add books you've read</b></div>
+				<div class="sub_header"><b>Add books which've left a mark on you</b></div>
 				<div class="header">
 					We will notify you with any activity on these books...
 				</div>
-				<input ng-keydown="search_info_card($event, 'BOOK')" ng-model="info.search_book" placeholder="Search books..."/>
+				<input ng-keydown="search_info_card($event, 'BOOK')" 
+					   ng-model="info.search_book" 
+					   placeholder="Search books..."/>
 		      	
 				<div class="scrollbar header" 
 					msd-wheel="stop_horizontal_scroll($event)" check-scroll-bottom="get_popular_books()">
@@ -197,12 +199,16 @@
 								 class="book_thumb"/>
 							<div class="book_details">
 								<div>
-									<span><b>{{book.title}}</b></span><br/>
+									<span><b ng-bind-html="book.title"></b></span><br/>
 									<span ng-show="book.author_name">Book by {{book.author_name}}</span>
 								</div>
 								<div>&nbsp;</div>
 								<div ng-show="book.id" class="light_grey_color">
-									<div ng-show="book.status" class="site_color">Added</div>
+									<div ng-show="book.status">
+										<rate data="book"></rate>
+										<span class="site_color">Added. </span>
+										<span ng-hide="book.user_rating" class="site_color">Also rate this book.</span>
+									</div>
 									<div ng-show="!book.status">
 										<span>Add to</span>
 										<span class='icon-books'></span>
@@ -216,7 +222,7 @@
 						</div>
 				</div>
 			</div>
-			<div ng-switch-when="3">
+			<!-- <div ng-switch-when="3">
 				<div class="sub_header"><b>Add authors you like <span class="red_color">(Coming Soon)</span>...</b></div>
 				<div class="header">Follow authors and their lives...</div>
 				<input ng-keydown="search_info_card($event, 'AUTHOR')" ng-model="info.search_author" placeholder="Search authors..."/>
@@ -235,10 +241,10 @@
 							<img src="assets/loader2.gif" width="20px" ng-show="loading" class="loading_icon"/>
 						</div>
 				</div>
-			</div>
-			<div ng-switch-when="4">
+			</div> -->
+			<div ng-switch-when="3">
 				<div class="sub_header"><b>Share and borrow books from readers in your area  <span class="red_color">(Coming Soon)</span>...</b></div>
-				<div class="header">Let's create a new kind of barter system for books...</div>
+				<div class="header">Please share your location...</div>
 				<div ng-include src="'/assets/angular/widgets/partials/invite.html'"></div>
 				<map style="display:block; height:50vh; width: 101%; margin-top: 10px;">
 					<marker position="current" centered="true"></marker>

@@ -1,13 +1,16 @@
-<div class="left_column animate-fast scrollbar"
+<!-- <tooltip prepend-text="Listopia" 
+		 ng-show="!user.collapsed_left_column"
+		 position="right"></tooltip> -->
+<div class="left_column animate-fast"
 	 id="listopia"
      msd-wheel="stop_propagation($event)"
 	 ng-class="{'left_column_collapsed left_column_collapsed4': user.collapsed_lists, 
-	            'left_column_shifted left_column_shifted1': !user.collapsed_trends,
-	            'left_column_shifted left_column_shifted2': !user.collapsed_filters,
-	            'left_column_shifted left_column_shifted3': !user.collapsed_column,
-	            'left_column_shifted left_column_shifted4': !user.collapsed_friends}">
+	            'left_column_shifted left_column_shifted1': !user.collapsed_column,
+	            'left_column_shifted left_column_shifted2': !user.collapsed_friends,
+	            'left_column_shifted left_column_shifted3': !user.collapsed_filters,
+	            'left_column_shifted left_column_shifted4': !user.collapsed_trends}">
 	<div class="collapse_icon red_button"
-	     ng-click="user.collapsed_lists = true; user.collapsed_left_column = true;" 
+	     ng-click="user.collapsed_lists = true; user.collapsed_left_column = true; collapse_left_panel();" 
 	     ng-if="!user.collapsed_lists">
 		<span class="icon-angle-left"></span>
 	</div>
@@ -19,20 +22,23 @@
 	 	           user.collapsed_column = true; 
 	 	           user.collapsed_trends = true;
 	 	           user.collapsed_filters = true;
-	 	           user.collapsed_friends = true;">
+	 	           user.collapsed_friends = true;
+	 	           expand_left_panel();">
 	 	 <span class="table_cell">
 			<span class="icon-list purple_color header_font" ng-if="user.collapsed_lists" ></span>
 			<span ng-show="user.collapsed_left_column">&nbsp;&nbsp;Listopia</span>
 	 	 </span>
 	</div>
 	<div class="header" ng-if="!user.collapsed_lists">
-		<span class="icon-list purple_color header_font"></span>
-		<span><b>&nbsp;Explore Listopia</b></span>
+		<span><b>Explore Listopia</b></span>
 	</div>
-	<div class="filters_panel_large" ng-if="!user.collapsed_lists">
+	<div class="filters_panel_large scrollbar" ng-if="!user.collapsed_lists">
 		<div class="filters_group">
 			<div ng-repeat="filter in book_lists">
-				<filter data="filter" icon-class="icon-list" url="grid/{{$routeParams.type}}/id/{{filter.id}}/name/{{filter.name}}"></filter>
+				<filter data="filter" 
+						hide-icon="true"
+						icon-class="icon-list" 
+						url="grid/{{$routeParams.type}}/id/{{filter.id}}/name/{{filter.name}}"></filter>
 			</div>
 		</div>
 	</div>

@@ -15,17 +15,32 @@
    ng-click="hide_popups()">
 		<main-header></main-header>
 		<recommendation-footer></recommendation-footer>
+		<div ng-include src="'/assets/angular/widgets/partials/user_name.html'"></div>
 		<!-- <div class="status animate-fast" ng-click="show_interaction_box()">
 			<span><input disabled placeholder="Share something..." /></span>
 		</div> -->
 
-		<div class="vertical_padder_active"></div>
+		<div class="vertical_padder_active animate-fast" 
+			 ng-class="{'vertical_padder_shifted': user.show_profile}"></div>
+		<div class="share_wrapper animate-slow" 
+			 ng-class="{'share_wrapper_shifted': user.show_profile}"
+			 ng-style="cover_image"
+			 msd-wheel="show_profile(user.id, $event, $delta)">
+			<div class="thumb_wrapper animate-fast"
+				 ng-class="{'thumb_wrapper_shifted': user.show_profile}">
+				<img ng-src="{{user.thumb | thumb_backup}}" ng-show="!reader"/>
+				<img ng-src="{{reader.thumb | thumb_backup}}" ng-show="reader"/>
+			</div>
+			<div class="share_fade animate-fast" ng-class="{'share_fade_shifted': user.show_profile}"></div>
+			<div ng-include src="'/assets/angular/widgets/partials/user_details.html'"></div>
+			<div ng-include src="'/assets/angular/widgets/partials/feed.html'" 
+				 ng-if="user.show_profile"></div>
+		</div>
 
 		<!-- <div class="recommendations_page"><search-bar></search-bar></div> -->
 		
 		
-		<div ng-class="{'horizontal_padder_inactive': !user.collapsed_left_column}" 
-			 class="info_card_placeholder animate-fast"></div>
+		<div class="info_card_placeholder animate-fast" ng-class="{'horizontal_padder_active': !user.collapsed_left_column}"></div>
 
 		<div ng-switch on="panel_selected" class="full_height">
 			<div ng-switch-when="BOOKMARK" class="full_height">
@@ -40,19 +55,24 @@
 			</div>
 		</div>
 
-		<div class="load_icon animate-slow"
+		<!-- <div class="load_icon animate-slow"
 		     ng-if="drop_icon">
 			<img src="assets/preloader.gif" />
-		</div>
+		</div> -->
 		
 		
 		<!-- <message></message> -->
-		
-		<div ng-include src="'/assets/angular/widgets/partials/news_feed.html'"></div>
-		<div ng-include src="'/assets/angular/widgets/partials/shelves.html'"></div>
-		<div ng-include src="'/assets/angular/widgets/partials/trending_list.html'"></div>
-		<div ng-include src="'/assets/angular/widgets/partials/listopia.html'"></div>
-		<div ng-include src="'/assets/angular/widgets/partials/friends_list.html'"></div>
+		<div class="left_panel animate-fast"
+			 ng-class="{'hidden': user.show_profile}" 
+			 ng-style="popups.left_panel_width" 
+			 msd-wheel="stop_propagation($event)"
+			 ng-click="stop_propagation($event)">
+			<div ng-include src="'/assets/angular/widgets/partials/shelves.html'"></div>
+			<div ng-include src="'/assets/angular/widgets/partials/friends_list.html'"></div>
+			<div ng-include src="'/assets/angular/widgets/partials/news_feed.html'"></div>
+			<div ng-include src="'/assets/angular/widgets/partials/trending_list.html'" ng-if="$routeParams.type != 'profile'"></div>
+			<div ng-include src="'/assets/angular/widgets/partials/listopia.html'" ng-if="$routeParams.type != 'profile'"></div>
+		</div>
 		<!-- <div class="wrapper" ng-if="focused_book"></div> -->
 		<div class="focused_tooltip animate-faster"
 		     ng-style="focused_book.reposition_tooltip"
@@ -60,8 +80,9 @@
 		     ng-if="focused_book">
 		    <focused-book></focused-book>
 		</div>
-		<div class="ticker_popup animate-fast" 
+		<div class="ticker_popup" 
 			 ng-if="ticker_popup"
+			 ng-class="{'ticker_popup_shifted': user.show_profile}"
 			 ng-style="ticker_popup_style"
 			 msd-wheel="handle_height_of_popup($event)"
 			 check-scroll-down="handle_height_of_popup($event, true)">
@@ -79,7 +100,9 @@
 		</div> -->
 		<div class="top_hover_detector"></div>
 	
-		<div class="scroller" id="scroller">
+		<div class="scroller animate-fast" 
+			 ng-class="{'hidden': user.show_profile}"
+			 id="scroller">
 			<span class="scroller-left icon-angle-left blue_button"
 			      ng-mouseover="move_left($event)"
 			      ng-click="move_left($event)"

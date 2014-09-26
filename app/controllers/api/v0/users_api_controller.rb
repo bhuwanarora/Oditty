@@ -20,13 +20,13 @@ module Api
 			end
 
 			def books_read
-				user_id = session[:user_id]
+				user_id = params[:id]
 				info = UsersGraphHelper.get_books_read(user_id, params[:skip_count])
 				render :json => info, :status => 200
 			end
 
 			def books_bookmarked
-				user_id = session[:user_id]
+				user_id = params[:id]
 				info = UsersGraphHelper.get_books_bookmarked(user_id, params[:skip_count])
 				render :json => info, :status => 200
 			end
@@ -185,7 +185,7 @@ module Api
 			# end
 
 			def get_most_connected_friends
-				info = UserApi.get_most_connected_friends session[:user_id]
+				info = UserApi.get_most_connected_friends params[:id]
 				render :json => info, :status => 200
 			end
 

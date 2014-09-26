@@ -1,0 +1,14 @@
+<div class="thumb"><img ng-src="{{notification.thumb | thumb_backup}}"></div>
+<img ng-src="{{notification.book.isbn | small_thumb}}" class="book_thumb" ng-show="notification.book.isbn"/>
+<div class="tweet_text" ng-class="{'compressed_tweet_text': notification.book.isbn}">
+	<b><div ng-bind-html="notification.user.name"></div></b>
+	<b><a ng-href="{{notification.url}}" target="_blank">
+		<div ng-bind-html="notification.title"></div></a>
+	</b>
+	<div class="trending_background site_color" ng-show="notification.title">
+		<a ng-href="#user/{{user.id}}/trending/books/id/{{notification.id}}/name/{{notification.name}}">Check out books related to  <b>{{notification.keywords}}</b></a>
+	</div>
+	<div ng-bind-html="notification.tag"></div>
+	<div ng-bind-html="notification.message"></div>
+	<img ng-show="notification.large_image" ng-src="{{notification.large_image}}" class="large_thumb">
+</div>

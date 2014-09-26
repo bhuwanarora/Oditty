@@ -1,0 +1,19 @@
+<div class="feed_group"
+	 ng-if="!reader">
+	<div ng-include src="'/assets/angular/widgets/partials/news_feed_block.html'"
+		 msd-wheel="stop_propagation($event)"
+	     class="feed_block notifications"></div>
+	<div ng-include src="'/assets/angular/widgets/partials/trending_feed.html'" 
+		 msd-wheel="stop_propagation($event)"
+	     class="feed_block notifications trending_block"></div>
+</div>
+<div class="feed_group"
+	 ng-if="reader">
+	<div ng-include src="'/assets/angular/widgets/partials/readers_feed.html'"
+		 msd-wheel="stop_propagation($event)"
+	     class="feed_block notifications"></div>
+	<div ng-include src="'/assets/angular/widgets/partials/news_feed_block.html'"
+		 msd-wheel="stop_propagation($event)"
+		 ng-if="user.id == 4084079"
+	     class="feed_block notifications trending_block"></div>
+</div>

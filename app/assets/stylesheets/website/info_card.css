@@ -1,15 +1,5 @@
 .horizontal_padder_active{
-	width: 38vh;
-}
-
-.horizontal_padder_inactive{
-	width: 10vh;
-}
-
-.horizontal_padder{
-	height: 80vh;
-	display: inline-block;
-	float: left;
+	width: 37% !important;
 }
 
 .info_cards{
@@ -34,12 +24,10 @@
 .info_card_placeholder{
 	display: inline-block;
 	float: left;
-	margin-right: 50px;
-	margin-left: 30px;
-	padding: 3%;
+	width: 17%;
 	white-space: normal;
 	position: relative;
-	height: 66vh;
+	height: 54vh;
 }
 
 .compressed_info_card{
@@ -47,7 +35,7 @@
 	position: fixed;
 	z-index: 11;
 	left: 50%;
-	margin-left: -277px;
+	margin-left: -284px;
 	box-shadow: 8px 0 43px 0 rgba(66,66,66,.47);
 }
 
@@ -66,7 +54,7 @@
 	float: left;
 	display: inline-block;
 	margin: 1px;
-	width: 110px;
+	width: 140px;
 	text-align: center;
 }
 
@@ -92,7 +80,7 @@
 }
 
 .info_cards .book_details{
-	width: 76%;
+	width: 70%;
  	float: left;
  	display: inline-block;
 	font-weight: normal;
@@ -110,6 +98,7 @@
 	float: left;
 	min-width: 320px;
 	box-shadow: 0 1px 4px 0 #DDDCDC,inset 0 0 40px #FCFCFC;
+	border-bottom: 4px solid transparent;
 }
 
 .info_cards .selected{
@@ -138,13 +127,13 @@
 .info_cards .header{
 	font-size: 1em;
 	padding: 4px;
-	overflow: auto;
+	/*overflow: auto;*/
 	border-radius: 5px;
 	margin-top: 10px;
 	max-height: 45vh;
 	min-width: 35vh;
 	width: 100%;
-	overflow-y: scroll;
+	/*overflow-y: auto;*/
 	color: #717070;
 }
 
@@ -179,7 +168,7 @@
 	padding: 6px;
 	font-size: 1em;
 	outline: 1px solid #D3D3D3;
-	float: left;
+	/*float: left;*/
 	border-radius: 4px;
 	margin-top: 10px;
 	margin-bottom: 10px;

@@ -26,7 +26,13 @@
               <tr><td><b><%= key %></b></td><td><%= user[1]["data"][key] %></td></tr>
             <% end %>
           <% end %>
-          
+          <% if user[2] %>
+            <tr><td><hr/></td></tr>
+            <tr><td><b>Likes</b></td></tr>
+            <% user[2].each do |like| %>
+              <tr><td><%= like %></td></tr>
+            <% end %>
+          <% end %>
         </table>
       </ul>
     </span>

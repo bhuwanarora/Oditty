@@ -65,17 +65,18 @@ var constants = {
 			"FacebookLoginStatusCheck" :"connected"
 		},
 		"RecommendationUIConstants": {
-			"TickerPopupMaxHeight": "62vh",
-			"FriendsGridMaxHeight": "60vh",
+			"TickerPopupMaxHeight": "54vh",
+			"FriendsGridMaxHeight": "54vh",
 			"FriendsGridMinHeight": "30vh",
 			"NotificationsMinHeight": "30vh",
-			"NotificationsMaxHeight": "70vh",
+			"NotificationsMaxHeight": "54vh",
 			"BookmarkPanel": 'BOOKMARK',
 			"BookTab": "BOOK",
 			"AuthorTab": "AUTHOR",
 			"ReaderTab": "READER",
 			"ZeroBooksFound": "ALERT- Reset the filters couldn't find more books.",
-			"MarkAsRead": "I HAVE READ"
+			"MarkAsRead": "I HAVE READ",
+			"InfluentialBooks": "INFLUENTIAL BOOKS"
 		},
 		"SearchUIConstants": {
 			"BookLabel": "Book",
@@ -144,6 +145,7 @@ var constants = {
 			"TagSearch": "TAG"
 		},
 		"WebsiteUIConstants":{
+			"Share": "Share your book reading journey...",
 			"BrowserIncompatible": "Please use latest version of Chrome for now...",
 			"Enter": 13,
 			"Backspace": 8,

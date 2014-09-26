@@ -1,4 +1,4 @@
-websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', 'scroller', 'websiteService', 'sharedService', '$cookieStore', 'RecommendationUIConstants', '$location', 'IntroConstants', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService, scroller, websiteService, sharedService, $cookieStore, RecommendationUIConstants, $location, IntroConstants){
+websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$timeout', 'recommendationService', '$route', '$routeParams', '$interval', 'widgetService', 'scroller', 'websiteService', 'sharedService', '$cookieStore', 'RecommendationUIConstants', '$location', 'IntroConstants', 'WebsiteUIConstants', function($scope, $rootScope, $timeout, recommendationService, $route, $routeParams, $interval, widgetService, scroller, websiteService, sharedService, $cookieStore, RecommendationUIConstants, $location, IntroConstants, WebsiteUIConstants){
 
 	$scope.handle_height_of_popup = function(event, scroll_down){
 		var event_defined = angular.isDefined(event);
@@ -14,6 +14,102 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		if(event_defined){
 			event.stopPropagation();
 		}
+	}
+
+	$scope._set_likes = function(array, data){
+		angular.forEach(data[0], function(value, index){
+			this.push({"id": data[1][index], "name": value, "icon": data[2][index]});
+		}, array);
+	}
+
+	$scope._set_influential_books = function(array, data){
+		angular.forEach(data[4], function(value, index){
+			this.push({"isbn": data[3][index], 
+					"id": value, 
+					"title": data[5][index], 
+					"author_name":data[6][index]});
+		}, array);
+	}
+
+	$scope._get_user_profile_info = function(user_id){
+		if(user_id == $rootScope.user.id){
+			if(angular.isUndefined($rootScope.user.detailed_info)){
+				websiteService.get_detailed_info(user_id).then(function(data){
+					$rootScope.user.detailed_info = true;
+					$rootScope.user.likes = [];
+					$rootScope.user.influential_books = [];
+					$scope._set_likes($rootScope.user.likes, data);
+					$scope._set_influential_books($rootScope.user.influential_books, data);
+				});
+			}
+			$scope._fetch_new_feed();
+			$scope._fetch_trending_options();
+		}
+		else{
+			if(angular.isUndefined($rootScope.reader.detailed_info)){
+				websiteService.get_detailed_info(user_id).then(function(data){
+					$rootScope.reader.detailed_info = true;
+					$rootScope.reader.likes = [];
+					$rootScope.reader.influential_books = [];
+					$scope._set_likes($rootScope.reader.likes, data);
+					$scope._set_influential_books($rootScope.reader.influential_books, data);
+				});
+			}
+			$scope._fetch_new_feed($rootScope.reader.id);
+			$scope._fetch_new_feed();
+		}
+	}
+
+	$scope.show_profile = function(user_id, event, delta){
+		if(angular.isDefined(delta)){
+			if(delta > 0){
+				$rootScope.user.show_profile = true;
+				$scope._get_user_profile_info(user_id);
+			}
+			else{
+				$rootScope.user.show_profile = false;
+				delete $rootScope.ticker_popup;
+			}
+		}
+		else{
+			if(angular.isUndefined($rootScope.user.show_profile) || !$rootScope.user.show_profile){
+				$rootScope.user.show_profile = true;
+				$scope._get_user_profile_info(user_id);
+			}
+			else{
+				$rootScope.user.show_profile = false;
+				delete $rootScope.ticker_popup;
+			}
+		}
+		if(angular.isDefined(event)){
+			event.preventDefault();
+			event.stopPropagation();
+		}
+	}
+
+	$scope.get_news_feed = function(user_id){
+		$rootScope.user.collapsed_column = false; 
+		$rootScope.user.collapsed_left_column = false;
+      	$rootScope.user.collapsed_filters = true; 
+      	$rootScope.user.collapsed_trends = true;
+      	$rootScope.user.collapsed_lists = true;
+      	$rootScope.user.collapsed_friends = true;
+      	$scope.expand_left_panel();
+      	$scope._fetch_new_feed(user_id);
+	}
+
+	$scope._fetch_new_feed = function(user_id){
+      	var init_notification = true;
+      	var trending = false;
+		$scope.$emit('getNotifications', trending, user_id, init_notification);
+	}
+
+	$scope.collapse_left_panel = function(){
+		$rootScope.popups.left_panel_width = {'width': '15%'};
+	}
+
+	$scope.expand_left_panel = function(){
+		$rootScope.popups.left_panel_width = {'width': '34%'};
 	}
 
 	$scope.toggle_settings_popup = function(event){
@@ -43,9 +139,28 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		sharedService.logout();
 	}
 
-	$scope.show_interaction_box = function(){
-		$rootScope.user.interact = true; 
+	$scope._expanded_notifications = function(){
+		$rootScope.user.interact = true;
 		delete $rootScope.focused_book;
+		delete $rootScope.ticker_popup;
+		$rootScope.user.collapsed_column = true; 
+		$rootScope.user.collapsed_trends = true; 
+		$rootScope.user.collapsed_left_column = true;
+		$rootScope.popups.left_panel_width = {'width': '15%'};
+	}
+
+	$scope.show_interaction_box = function(user_id){
+		$scope._expanded_notifications();
+		$scope.$emit('getNotifications', false, user_id);
+	}
+
+	$scope.show_trending_options = function(){
+		$scope._expanded_notifications();
+		$scope._fetch_trending_options();
+	}
+
+	$scope._fetch_trending_options = function(){
+		$scope.$emit('getNotifications', true, $rootScope.user.id);	
 	}
 
 	$scope.handle_friends_grid_size = function(event, scroll_down){
@@ -90,11 +205,13 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	$scope.hide_popups = function(){
 		delete $rootScope.focused_book;
 		delete $rootScope.ticker_popup;
- 		// $scope.show_more_filters = false;
-	}
-
-	$scope.get_notifications = function(){
-		$scope.$emit('getNotifications');
+		$rootScope.user.collapsed_column = true;
+		$rootScope.user.collapsed_filters = true;
+		$rootScope.user.collapsed_friends = true;
+		$rootScope.user.collapsed_trends = true;
+		$rootScope.user.collapsed_lists = true;
+		$rootScope.user.collapsed_left_column = true;
+		$rootScope.popups = {};
 	}
 
 	_load_icon = function(){
@@ -154,14 +271,14 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	    	}
 	    });
 
-	    reload_recommendations_event = $scope.$on('reloadRecommendations', function(){
+	    reload_recommendations_event = $scope.$on('reloadRecommendations', function(event){
 	    	console.debug("%creloadRecommendations", "color: orange;");
 	    	console.debug("%c reset count", "color: purple");
 	    	$rootScope.filters["reset"] = true;
 	    	$rootScope.filters["reset_count"] = 0;
 	    	$scope.reset();
 	    	console.log("%c reload_recommendations_event", "color: green;");
-	    	// event.stopPropagation();
+	    	event.stopPropagation();
 	    });
 	    
 	}
@@ -207,6 +324,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         		$rootScope.user.collapsed_trends = true;
         		$rootScope.user.collapsed_lists = true;
         		$rootScope.user.collapsed_column = true;
+        		$scope.expand_left_panel();
         		$rootScope.user.collapsed_left_column = false;
         	}
         	else if(on_trending_page){
@@ -219,6 +337,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         		$rootScope.user.collapsed_trends = false;
         		$rootScope.user.collapsed_lists = true;
         		$rootScope.user.collapsed_column = true;
+        		$scope.expand_left_panel();
+        		$rootScope.user.show_profile = false;
         		$rootScope.user.collapsed_left_column = false;
         	}
         	else if(on_grids_page){
@@ -229,6 +349,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         		$rootScope.user.collapsed_trends = true;
         		$rootScope.user.collapsed_lists = false;
         		$rootScope.user.collapsed_column = true;
+        		$scope.expand_left_panel();
         		$rootScope.user.collapsed_left_column = false;
         	}
         	else{
@@ -271,10 +392,10 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	_update_recommendations = function(data){
 		if($rootScope.filters["filter_type"] == RecommendationUIConstants.BookTab){
-			if(data.recommendations.books.length > 0){
+			if(data.recommendations.books.length > 1){
 				var message = "INFO- "+data.recommendations.books.length+" books found. Scroll to see more books.";
 			}
-			else if(data.recommendations.books.length == 0){
+			else if(data.recommendations.books.length >= 0){
 				var message = "INFO- "+data.recommendations.books.length+" book found.";	
 			}
 			var timeout_event = notify($rootScope, message, $timeout);
@@ -448,9 +569,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	$rootScope.focused_book = $scope.recommendations.books.first;
     }
 
-    _get_friends = function(){
-    	widgetService.get_friends($scope.$routeParams.id).then(function(data){
-    		$rootScope.user.friends = [];
+    $scope._get_friends = function(user_id){
+    	var _set_friends_for = function(user_array, data){
     		angular.forEach(data, function(value){
     			if(value[2] == null){
     				thumb = "/assets/profile_pic.jpeg"
@@ -468,13 +588,27 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			    			"bookmark_count": value[6],
 			    			"fav_categories": value[7].join(", ")};
     			this.push(json);
-    		}, $rootScope.user.friends);
-    	});
+    		}, user_array);
+
+    	}
+
+    	if(angular.isDefined(user_id)){
+    		widgetService.get_friends(user_id).then(function(data){
+	    		$rootScope.reader.friends = [];
+	    		_set_friends_for($rootScope.reader.friends, data);
+	    	});
+    	}
+    	else{
+	    	widgetService.get_friends($scope.$routeParams.id).then(function(data){
+	    		$rootScope.user.friends = [];
+	    		_set_friends_for($rootScope.user.friends, data);
+	    	});
+    	}
     }
 
-    _get_labels = function(){
-    	$rootScope.labels = [];
-      	recommendationService.get_labels().then(function(data){
+    $scope._get_labels = function(user_id){
+      	recommendationService.get_labels(user_id).then(function(data){
+    		$rootScope.labels = [];
         	console.debug("%c labels"+data, "color: green");
         	if(angular.isArray(data) && data.length > 0){
 	        	angular.forEach(data, function(value){
@@ -486,55 +620,69 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
       	});
     }
 
-    _init_user = function(){
+    $scope._init_user = function(){
     	if(angular.isUndefined($rootScope.user) || angular.isUndefined($rootScope.user.id)){
     		sharedService.is_logged_in($scope);
     	}
     }
 
+    $scope._init_reader = function(){
+    	sharedService.get_user($scope.$routeParams.id);
+    }
+
+    $scope._basic_init = function(){
+		$scope.grid_view = false;
+		$rootScope.popups = {"settings_popup": false, "show_notifications_popup": false};
+		var oneSec = 10000;
+		$scope.drop_icon = false;
+		// $rootScope.show_book = false;
+		$rootScope.user = angular.extend($rootScope.user, {"collapsed_trends": true, "collapsed_friends": true, 
+							"collapsed_filters": true, "collapsed_lists": true,
+							'collapsed_column': true,
+							'collapsed_left_column': true,
+							"interact": false});
+
+		user_behaviour_timer_event = $timeout(function(){
+			_recordUserBehaviour();
+		}, oneSec);
+		$scope.searching = false;
+    	
+		_add_listeners();
+		_init_analytics();
+		_bind_destroy();
+		$scope.cover_image = {'background-image': 'url("'+$cookieStore.get('coverImage')+'")'};
+		$scope._init_user();
+    }
+
 	_init = function(){
 		//oneMin = 60000
 		if($rootScope.user.logged){
-			$scope.grid_view = false;
+			$scope._basic_init();
 			$scope.$routeParams = $routeParams;
-			
-			$rootScope.popups = {"settings_popup": false, "show_notifications_popup": false};
-			// console.debug("%crouteparams "+$routeParams+" ", "color: yellow");
-			// $scope.$emit('reloadRecommendations');
+			delete $rootScope.reader;
+			if($scope.$routeParams.type == "profile"){
+				var reader_id = $scope.$routeParams.id;
+				$rootScope.reader = {};
+				$rootScope.reader.id = reader_id;
+				$scope.show_profile(reader_id);
+				$rootScope.user.show_profile = true;
+				$scope._init_reader();
+				$scope._get_friends(reader_id);
+				$scope._get_labels(reader_id);
+				$scope.placeholder = "Write on timeline...";
+				$scope._fetch_new_feed(reader_id);
+			}
+			else{
+				_init_recommendations();
+				$scope._get_labels();
+				$scope._initialize_filters();
 
-			var oneSec = 10000;
-			$scope.drop_icon = false;
-			// $rootScope.show_book = false;
-			$rootScope.user = {"collapsed_trends": true, "collapsed_friends": true, 
-								"collapsed_filters": true, "collapsed_lists": true,
-								"interact": false};
+		        // _handle_focused_book();
+		        $scope._get_friends();
+		        // $scope.get_notifications();
 
-			user_behaviour_timer_event = $timeout(function(){
-				_recordUserBehaviour();
-			}, oneSec);
-
-			$scope.searching = false;
-	    	_get_labels();
-			$scope._initialize_filters();
-			_init_recommendations();
-			// if($scope.$routeParams.title){
-			// 	_get_recommendations();
-			// }
-	    	_add_listeners();
-	        _init_analytics();
-	        // _init_shelf();
-	        // var timeout_event = $timeout(function(){
-	        // 	_get_recommendations();
-	        // });
-	        $scope.$on('destroy', function(){
-	        	$timeout.cancel(timeout_event);
-	        });
-	        // _push_recommendations();
-	        _bind_destroy();
-	        _init_user();
-	        // _handle_focused_book();
-	        _get_friends();
-	        $scope.$emit('getNotifications');
+				$scope.placeholder = WebsiteUIConstants.Share;
+			}
 		}
 		else{
 			$rootScope.user = {'books': {'bookmarked':[], 'read': []},
@@ -548,18 +696,18 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
    	$scope.getting_started_tour_options = {
         steps:[
 	        {
-	            element: '#newsFeed',
-	            intro: IntroConstants.NewsFeed,
-	            position: 'right'
-	        },
-	        {
 	            element: '#shelves',
 	            intro: IntroConstants.Shelves,
 	            position: 'right'
 	        },
 	        {
-	            element: '#trendingList',
-	            intro: IntroConstants.Trending,
+	            element: '#friendsList',
+	            intro: IntroConstants.Friends,
+	            position: 'right'
+	        },
+	        {
+	            element: '#newsFeed',
+	            intro: IntroConstants.NewsFeed,
 	            position: 'right'
 	        },
 	        {
@@ -568,8 +716,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	            position: 'right'
 	        },
 	        {
-	            element: '#friendsList',
-	            intro: IntroConstants.Friends,
+	            element: '#trendingList',
+	            intro: IntroConstants.Trending,
 	            position: 'right'
 	        },
 	        {
@@ -583,7 +731,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	            position: 'bottom'
 	        },
 	        {
-	            element: '#shelvesTab',
+	            element: '#recommendationFooter',
 	            intro: IntroConstants.ShelvesTab,
 	            position: 'bottom'
 	        }
@@ -594,7 +742,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         nextLabel: '<strong>Next</strong>',
         prevLabel: '<span>Previous</span>',
         skipLabel: 'Exit',
-        doneLabel: 'Thanks'
+        doneLabel: '<strong>Thanks</strong>'
     };
 
     $scope.should_auto_start = function() {

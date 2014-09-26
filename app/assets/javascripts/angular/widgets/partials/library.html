@@ -1,4 +1,4 @@
-<div ng-if="$routeParams.type == 'books'" ng-model="user.books.bookmarked">
+<div ng-model="user.books.bookmarked">
 	<div ng-switch on="user.books.bookmarked.length">
 		<div ng-switch-when="0">
 			<div class="recommendation_block">
@@ -14,7 +14,7 @@
 		</div>
 	</div>
 </div>
-<div ng-if="$routeParams.type == 'authors'" ng-model="user.authors.bookmarked">
+<!-- <div ng-if="$routeParams.type == 'authors'" ng-model="user.authors.bookmarked">
 	<div ng-switch on="user.authors.bookmarked.length">
 		<div ng-switch-when="0">
 			Bookmark authors
@@ -25,4 +25,4 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->

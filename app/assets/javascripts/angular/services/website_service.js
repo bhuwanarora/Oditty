@@ -16,6 +16,10 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         return _deferred_request('/api/v0/user');
     }
 
+    this.get_detailed_info = function(id){
+        return _deferred_request('/api/v0/user_profile_info?id='+id);
+    }
+
     this.logout = function(){
         return _deferred_request('/api/v0/logout');
     }
@@ -45,15 +49,15 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
     }
 
     this.get_books_bookmarked = function(skip_count){
-        return _deferred_request('/api/v0/books_bookmarked?skip_count='+skip_count);
+        return _deferred_request('/api/v0/books_bookmarked?skip_count='+skip_count+'&id='+_user_id());
     }
 
     this.get_books_read = function(skip_count){
-        return _deferred_request('/api/v0/books_read?skip_count='+skip_count);
+        return _deferred_request('/api/v0/books_read?skip_count='+skip_count+'&id='+_user_id());
     }
 
-    this.search_books = function(data){
-        return _deferred_request('/api/v0/search_books?q='+data);
+    this.search_books = function(data, skip_count){
+        return _deferred_request('/api/v0/search_books?q='+data+"&skip="+skip_count);
     }
 
     this.search_authors = function(data){
@@ -76,8 +80,13 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         return _deferred_post_request('/api/v0/profile', data);
     }
     
-    this.get_user_details = function(){
-        return _deferred_request('/api/v0/user_details');
+    this.get_user_details = function(id){
+        if(angular.isDefined(id)){
+            return _deferred_request('/api/v0/user_details?id='+id);
+        }
+        else{
+            return _deferred_request('/api/v0/user_details');
+        }
     }
 
     this.get_genres = function(){
@@ -88,8 +97,18 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         return _deferred_request('/api/v0/image');
     }
 
-    this.get_notifications = function(skip_count){
-        return _deferred_request('/api/v0/notifications?skip_count='+skip_count);
+    this.get_notifications = function(skip_count, user_id, debug_feed){
+        if(angular.isDefined(user_id)){
+            if(angular.isDefined(debug_feed)){
+                return _deferred_request('/api/v0/notifications?skip_count='+skip_count+"&id="+user_id+"&debug="+true);
+            }
+            else{
+                return _deferred_request('/api/v0/notifications?skip_count='+skip_count+"&id="+user_id);
+            }
+        }
+        else{
+            return _deferred_request('/api/v0/notifications?skip_count='+skip_count);
+        }
     }
 
     this.get_latest_notification = function(){
@@ -110,6 +129,16 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
 
     this.get_popular_authors = function(skip_count){
         return _deferred_request('/api/v0/popular_authors?skip_count='+skip_count);   
+    }
+
+    _user_id = function(){
+        if(angular.isDefined($rootScope.reader)){
+            var user_id = $rootScope.reader.id;
+        }
+        else{
+            var user_id = $rootScope.user.id;   
+        }
+        return user_id;
     }
 
     _deferred_request = function(url){

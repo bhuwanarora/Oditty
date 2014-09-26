@@ -1,5 +1,5 @@
-<div ng-class="{'active_filter':obj.status, 'inactive_filter':!obj.status}"
-	 class="filter toggle_filter"
+<div ng-class="{'site_color':obj.status}"
+	 class="filter toggle_filter inactive_filter"
 	 ng-click="toggle()">
 	 <span class="{{obj.icon}}" ng-class="{'light_grey_color':!obj.status}"></span>&nbsp;
 	 <span>{{obj.name | uppercase}}</span>

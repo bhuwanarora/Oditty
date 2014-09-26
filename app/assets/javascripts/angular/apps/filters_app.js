@@ -2,7 +2,7 @@ angular.module('filtersApp', [])
   .filter('integer', function() {
     return function(input) {
     	var output = input;
-      if(angular.isDefined(input)){
+      if(angular.isDefined(input) && input != null){
         if(input >= 1000000){
         	output = (input/1000000).toFixed(0)+"m";
         }
@@ -43,8 +43,8 @@ angular.module('filtersApp', [])
   .filter('reduced_title', function(){
     return function(input){
       if(angular.isDefined(input)){
-        if(input != null && input.length > 32){
-          input = input.slice(0, 29)+"...";
+        if(input != null && input.length > 28){
+          input = input.slice(0, 25)+"...";
         }
       }
       return input;

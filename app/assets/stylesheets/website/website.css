@@ -2,6 +2,7 @@ html{
 	height: 100%;
 	overflow-y: hidden;
 	overflow-x: auto;
+    overflow: -moz-scrollbars-none;
 }
 
 body{
@@ -14,7 +15,7 @@ body{
   	-ms-user-select: none;
     user-select: none;
     color: #333;
-    background-color: #E5E5E5;
+    background-color: white;
     font-size: 0.9em;
     /*background-image: url('bg.png');*/
     margin: 0px;
@@ -191,8 +192,14 @@ input:focus{
 }
 
 .scrollbar{
-    overflow-y: scroll;
-    overflow-x: hidden !important;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overflow: -moz-scrollbars-none;
+    /*height: 100px;*/
+}
+
+.scrollbar:hover{
+    overflow-y: auto; 
 }
 
 .scrollbar::-webkit-scrollbar {
@@ -270,6 +277,10 @@ input:focus{
 
 .red_color{
     color: #DD4B39 !important;
+}
+
+.red{
+    background-color: #DD4B39 !important;
 }
 
 .light_grey_color{
@@ -387,15 +398,15 @@ input:focus{
 .tooltip{
     visibility: hidden;
     position: absolute;
-    background-color: #333;
+    background-color: white;
     padding: 10px 20px;
-    color: white;
     border-radius: 2px;
     font-size: .9em !important;
     z-index: 12;
     max-width: 41vh;
     white-space: initial;
     box-shadow: 3px 0 10px 0 rgba(66,66,66,.47);
+    border: 1px solid #D6D6D6;
 }
 
 .active_tab{
@@ -555,12 +566,12 @@ input:focus{
 }
 
 .header_font{
-    font-size: 1.2em;
+    font-size: 1.2em !important;
 }
 
 .image_wrapper{
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     overflow: hidden;
     border-radius: 3px;
     float: left;
@@ -582,10 +593,31 @@ input:focus{
     right: 10px;
     top: 10px;
     color: #E5E5E5;
-    font-size: 1em;
+    font-size: 0.7em;
     z-index: 1;
 }
 
 .icon-close-popup:hover{
     color: #717070;
+}
+
+.hidden{
+    display: none;
+}
+
+.desaturate{
+    -moz-filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+    -o-filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+    -webkit-filter: grayscale(100%);
+    filter: gray;
+    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+}
+
+.translucent{
+    opacity: 0.6;
+}
+
+.click{
+    color: #427fed;
+    cursor: pointer;
 }

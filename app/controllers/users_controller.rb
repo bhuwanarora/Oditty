@@ -7,6 +7,7 @@ class UsersController < ApplicationController
   def index
     neo = Neography::Rest.new
     clause = "MATCH (u:User) OPTIONAL MATCH (u)-[:FacebookAuth]->(f) OPTIONAL MATCH (u)-[:Likes]->(l) RETURN DISTINCT(u), f, COLLECT(l.name), ID(u)"
+    
     @users = neo.execute_query(clause)["data"]
     render :index
   end

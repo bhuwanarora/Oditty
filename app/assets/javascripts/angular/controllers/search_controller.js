@@ -68,6 +68,11 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		}
 	}
 
+	$scope.hide_popups = function(event){
+		$rootScope.popups = {};
+		event.stopPropagation();
+	}
+
 	$scope._reset_results = function(){
 		$scope.search_results = [];
 		delete $scope.search_display;
@@ -1224,14 +1229,15 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 
 	$scope._set_cover_photo = function(){
 		websiteService.get_background_image().then(function(data){
-			var url = WebsiteUIConstants.CoverPhotoCDN+data+".jpg"
+			var url = WebsiteUIConstants.CoverPhotoCDN+data+".jpg";
 			$scope.search_style = {'background-image': 'url("'+url+'")'};
+			$cookieStore.put('coverImage', url);
 		});
 	}
 
 	$scope._get_trends = function(){
 		if(on_search_page){
-			$scope._add_trends_on_search_page();
+			// $scope._add_trends_on_search_page();
 		}
 		else{
 			$scope._add_trends_as_notifications();
@@ -1245,9 +1251,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				var json = {"name": value[0], "id": value[1], "message": value[2], "url": value[3], "title":value[4], "thumb": value[7], "large_image": value[5], "keywords": value[8]};
 				this.push(json);
 			}, notifications);
-			if(notifications.length > 0){
-				$scope.$emit('addToNotifications', notifications);
-			}
+			// if(notifications.length > 0){
+			// 	$scope.$emit('addToNotifications', notifications);
+			// }
 			$rootScope.trends = notifications;
 		});
 	}

@@ -2,9 +2,13 @@
 	<div class="search_animate animate-very-slow" 
 	    ng-click="stopSearching($event)"
 	    ng-controller="searchController">
-		<div class="search_page"
+	    <div class="desaturate search_page" 
 		     ng-style="search_style">
-			<div class="logo">
+	    </div>
+		<div class="search_page"
+	    	 ng-click="hide_popups($event)">
+			<main-header></main-header>
+			<!-- <div class="logo">
 				<a ng-href="#user/{{user.id}}/recommendations/books">
 			    <span>r</span>
 			    <span>e</span>
@@ -21,7 +25,7 @@
 			    <span>r</span>
 			    </a>
 		  	</div>
-		  	<div class="beta_tag">BETA</div>
+		  	<div class="beta_tag">BETA</div> -->
 		    <!-- <div class="logo">reader's door</div> -->
 			<div class="tagline">
 				<span>LIVE AND BUILD THE YEARS WITH BOOKS.</span>
@@ -40,9 +44,10 @@
 		  	<hr>
 			<!-- <select ng-options="type for type in ['R.D.', 'Books', 'Authors', 'Readers']"> -->
 			<!-- </select> -->
-			<a ng-href="#user/{{user.id}}/recommendations/books" class="relative_position">
+			<!-- <a ng-href="#user/{{user.id}}/recommendations/books" class="relative_position">
 				<profile-link></profile-link>
-			</a>
+			</a> -->
+
 		  	<search-bar></search-bar>
 		  	<div class="secondary_login animate-fast" 
 		       ng-click="toggle_login_panel()"
@@ -63,10 +68,9 @@
 		    		</div>
 	    		</div>
 			</div> -->
-		  	<div class="trends">
+		  	<!-- <div class="trends">
 		  		<span class="trend">
 		  			TRENDING
-		  			<!-- <tooltip data="Trending"></tooltip> -->
 		  		</span>
 		  		<span> · &nbsp;&nbsp;&nbsp;&nbsp;</span>
 		  		<span ng-repeat="trend in trends | limitTo : 6" class="trend">
@@ -76,14 +80,12 @@
 		  					 position="top"></tooltip>
 		  			<a ng-href="#user/{{user.id}}/trending/books/id/{{trend.id}}/name/{{trend.name}}"
 		  				class="animate-fast">
-		  				<!-- <span><img ng-src="{{trend.thumb}}"></span> -->
 		  				<span class="icon-bars"></span>
 		  				<span>{{trend.name}}</span>
-		  				<!-- <span>{{trend.name | trending_name | lowercase}}</span> -->
 		  			</a>
 		  			<span>&nbsp;·&nbsp;</span>
 		  		</span>
-		  	</div>
+		  	</div> -->
 		</div>
 		<div ng-include="'/assets/angular/widgets/partials/login_form.html'"></div>
 	</div>

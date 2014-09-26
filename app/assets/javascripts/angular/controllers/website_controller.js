@@ -26,12 +26,78 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		delete $rootScope.ticker_popup;
 	}
 
+	$scope.toggle_left_columns = function(){
+		var _show_friends = function(){
+			$rootScope.user.collapsed_filters = true;
+			$rootScope.user.collapsed_friends = false;
+			$rootScope.user.collapsed_column = true;
+			$rootScope.user.collapsed_lists = true;
+			$rootScope.user.collapsed_trends = true;
+			$rootScope.user.collapsed_left_column = false;
+		}
+
+		var _show_news_feed = function(){
+			$rootScope.user.collapsed_filters = true;
+			$rootScope.user.collapsed_friends = true;
+			$rootScope.user.collapsed_column = false;
+			$rootScope.user.collapsed_lists = true;
+			$rootScope.user.collapsed_trends = true;
+			$rootScope.user.collapsed_left_column = false;
+		}
+
+		var _show_lists = function(){
+			$rootScope.user.collapsed_filters = true;
+			$rootScope.user.collapsed_friends = true;
+			$rootScope.user.collapsed_column = true;
+			$rootScope.user.collapsed_lists = false;
+			$rootScope.user.collapsed_trends = true;
+			$rootScope.user.collapsed_left_column = false;
+		}
+
+		var _show_trends = function(){
+			$rootScope.user.collapsed_filters = true;
+			$rootScope.user.collapsed_friends = true;
+			$rootScope.user.collapsed_column = true;
+			$rootScope.user.collapsed_lists = true;
+			$rootScope.user.collapsed_trends = false;
+			$rootScope.user.collapsed_left_column = false;
+		}
+
+		var _show_shelves = function(){
+			$rootScope.user.collapsed_filters = false;
+			$rootScope.user.collapsed_friends = true;
+			$rootScope.user.collapsed_column = true;
+			$rootScope.user.collapsed_lists = true;
+			$rootScope.user.collapsed_trends = true;
+			$rootScope.user.collapsed_left_column = false;
+		}
+
+		if(!$rootScope.user.collapsed_filters){
+			_show_friends();
+		}
+		else if(!$rootScope.user.collapsed_friends){
+			_show_news_feed();
+		}
+		else if(!$rootScope.user.collapsed_column){
+			_show_lists();
+		}
+		else if(!$rootScope.user.collapsed_lists){
+			_show_trends();
+		}
+		else if(!$rootScope.user.collapsed_trends){
+			_show_shelves();
+		}
+		else{
+			_show_news_feed();
+		}
+	}
+
 	$scope.move_left = function(event){
 		$scope._hide_popups();
 		var swipe_time = 1000;
 		var clientWidth = document.body["scrollWidth"];
 		var current_x = $window.pageXOffset;
-		var delta_x = window_height*(0.56);
+		var delta_x = window_height*(0.4);
 		if(angular.isDefined(event)){
 			if(event.type == "click"){
 				if(angular.isDefined($scope.delta_x)){
@@ -56,11 +122,12 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	$scope.move_right = function(event){
+		// $scope.toggle_left_columns();
 		$scope._hide_popups();
 		var swipe_time = 1000;
 		var clientWidth = document.body["scrollWidth"];
 		var current_x = $window.pageXOffset;
-		var delta_x = window_height*(0.56);
+		var delta_x = window_height*(0.4);
 		var lessThanOnePageLeft = current_x + (2.5)*window_width > clientWidth;
 		if(lessThanOnePageLeft){
 			if(!$rootScope.loading){
@@ -130,6 +197,10 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
   		$scope.uploader = true;	
   	}
 
+  	$scope.close_notification =function(){
+  		$rootScope.notification_active = false;
+  	}
+
 	_bind_feedback_form = function(){
 		$window.onmouseleave = function(){
 			console.log('move');
@@ -163,6 +234,63 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    });
 	}
 
+	$scope._show_trending_feed = function(){
+		$scope.notifications = $rootScope.trends;
+     	$scope.show_trending = true;
+	}
+
+	$scope._show_reader_feed = function(user_id){
+		if(angular.isDefined($scope.readers_notifications)){
+    		var existing_notifications_count = $scope.readers_notifications.length;
+    	}
+    	else{
+    		var existing_notifications_count = 0;
+    	}
+		websiteService.get_notifications(existing_notifications_count, user_id).then(function(data){
+    		$scope._intro_notifications(user_id);
+			$scope.readers_notifications = data.notifications.concat($scope.readers_notifications);
+		});
+	}
+
+	$scope._show_personal_feed = function(user_id){
+		if(angular.isDefined($scope.personal_notifications)){
+    		var existing_notifications_count = $scope.personal_notifications.length;
+    	}
+    	else{
+    		var existing_notifications_count = 0;
+    	}
+		websiteService.get_notifications(existing_notifications_count, user_id).then(function(data){
+    		$scope._intro_notifications(user_id);
+			$scope.personal_notifications = data.notifications.concat($scope.personal_notifications);
+		});
+	}
+
+	$scope._show_news_feed = function(){
+		var _set_feed = function(data){
+			$scope._intro_notifications();
+			$scope.notifications = data.notifications.concat($scope.notifications);
+		}
+
+		if(angular.isDefined($scope.notifications)){
+    		var existing_notifications_count = $scope.notifications.length;
+    	}
+    	else{
+    		var existing_notifications_count = 0;
+    	}
+    	if(angular.isDefined($rootScope.reader)){
+    		var user_id = $rootScope.reader.id;
+    		var debug_feed = true;
+    		websiteService.get_notifications(existing_notifications_count, user_id, debug_feed).then(function(data){
+	    		_set_feed(data);
+			});
+    	}
+    	else{
+	    	websiteService.get_notifications(existing_notifications_count).then(function(data){
+	    		_set_feed(data);
+			});
+    	}
+	}
+
 	_add_listeners = function(){
 
 	    move_right_listener_event = $scope.$on('moveRight', function(event){
@@ -172,7 +300,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    });
 
 	    add_to_notifications = $scope.$on('addToNotifications', function(event, notification){
-	    	_intro_notifications();
+	    	$scope._intro_notifications();
 	    	if(notification instanceof Array){
 	    		var notification_already_added = false;
 	    		angular.forEach($scope.notifications, function(value){
@@ -186,21 +314,40 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    	}
 	    	else{
 	    		$scope.notifications.push(notification);
+	    		if(angular.isDefined($scope.personal_notifications)){
+	    			$scope.personal_notifications.push(notification);
+	    		}
 	    	}
 	    	event.stopPropagation();
 	    });
 
-	    get_notifications_event = $scope.$on('getNotifications', function(){
-	    	if(angular.isDefined($scope.notifications)){
-	    		var existing_notifications_count = $scope.notifications.length;
+	    get_notifications_event = $scope.$on('getNotifications', function(event, trending, user_id, init){
+	    	console.debug("getNotifications ", user_id, trending, angular.isDefined($rootScope.reader), init);
+	    	if(angular.isDefined(init) && init){
+	    		$scope._init_notifications();
 	    	}
-	    	else{
-	    		var existing_notifications_count = 0;
-	    	}
-	    	websiteService.get_notifications(existing_notifications_count).then(function(data){
-	    		_intro_notifications();
-				$scope.notifications = data.notifications.concat($scope.notifications);
-			});
+
+    		if(angular.isUndefined(trending) || !trending){
+    			if(angular.isDefined(user_id)){
+		    		if(angular.isDefined($rootScope.reader) && (user_id == $rootScope.reader.id)){
+		    			console.debug("_show_reader_feed", user_id);
+		    			$scope._show_reader_feed(user_id);
+		    		}
+		    		else{
+		    			console.debug("_show_personal_feed", user_id);
+			    		$scope._show_personal_feed(user_id);
+		    		}
+	    		}
+	    		else{
+	    			console.debug("_show_news_feed");
+			    	$scope._show_news_feed();
+	    		}
+     		}
+     		else{
+     			console.debug("_show_trending_feed");
+     			$scope._show_trending_feed();
+     		}
+	    	
 	    });
 
 	    get_latest_notification = $scope.$on('getLatestNotification', function(){
@@ -210,9 +357,36 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    });
 	}
 
-	_intro_notifications = function(){
-		if(angular.isUndefined($scope.notifications)){
+	$scope._intro_notifications = function(user_id){
+		if(angular.isDefined($scope.show_trending)){
+			delete $scope.personal_notifications;
+			delete $scope.readers_notifications;
+			delete $scope.show_trending;
 			$scope.notifications = [];
+		}
+		
+		if(angular.isUndefined(user_id)){
+			if(angular.isUndefined($scope.notifications)){
+				$scope.notifications = [];
+			}
+			delete $scope.personal_notifications;
+			delete $scope.readers_notifications;
+		}
+		else{
+			if(angular.isDefined($rootScope.reader)){
+				if(angular.isUndefined($scope.readers_notifications)){
+					$scope.readers_notifications = [];
+				}
+				delete $scope.notifications;
+				delete $scope.personal_notifications;
+			}
+			else{
+				if(angular.isUndefined($scope.personal_notifications)){
+					$scope.personal_notifications = [];
+				}
+				delete $scope.notifications;
+				delete $scope.readers_notifications;
+			}
 		}
 	}
 
@@ -288,8 +462,14 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    // });
 	}
 
-	_init_notifications = function(){
-		$rootScope.notification_active = false;
+	$scope._init_notifications = function(){
+		if(angular.isDefined($rootScope.reader)){
+			$scope.readers_notifications = [];
+		}
+		else{
+			$scope.notifications = [];
+		}
+		$scope.personal_notifications = [];
 	}
 
 	_init = function(){
@@ -305,7 +485,8 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		if(angular.isDefined($rootScope.focused_book)){
 			$rootScope.focused_book.level2_option = "";
 		}
-		
+
+
 		$scope.website = {};
 		$scope.website.searching = false;
 		$scope.website.show_search_page = true;
@@ -314,7 +495,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		// _bind_auth_listeners();
 		_add_listeners();
 		_handle_socket_error();
-		_init_notifications();
+		$rootScope.notification_active = false;
 		// $('body').css('white-space', 'normal');
 		// $speechRecognition.onstart(function(){
 		//   $speechSynthetis.speak("You're at Reader's Door. How can I help you?", 'en-UK');
@@ -325,25 +506,13 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 						'authors': {'bookmarked': [], 'follow': []},
 						'readers': {'follow': []},
 						'logged': false};
-		var collapsed_column = $timeout(function(){
-			$rootScope.user.collapsed_column = true;
-			$rootScope.user.collapsed_left_column = true;
-			$rootScope.user.collapsed_filters = true;
-			$rootScope.user.collapsed_lists = true;
-			$rootScope.user.collapsed_friends = true;
-			$rootScope.user.collapsed_filters = true;
-		}, 6000);
-		$scope.$on('destroy', function(){
-			$timeout.cancel(collapsed_column);
-		});
 		
-		
-		_detect_browser();
+		$scope._detect_browser();
 		console.timeEnd("websiteAppController");
 	}
 
 
-	_detect_browser = function(){
+	$scope._detect_browser = function(){
 		var nVer = navigator.appVersion;
 		var nAgt = navigator.userAgent;
 		var browserName  = navigator.appName;
@@ -388,7 +557,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) < 
 		          (verOffset=nAgt.lastIndexOf('/')) ) 
 		{
-			alert(message);
+			
 		 	browserName = nAgt.substring(nameOffset,verOffset);
 		 	fullVersion = nAgt.substring(verOffset+1);
 		 	if (browserName.toLowerCase()==browserName.toUpperCase()) {

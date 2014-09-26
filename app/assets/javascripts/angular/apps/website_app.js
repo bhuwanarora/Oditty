@@ -38,6 +38,9 @@ websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvid
   .when('/user/:id/book/:title/author/:author/id/:book_id', {
     templateUrl: '/assets/angular/widgets/partials/recommendations.html'
   })
+  .when('/reader/:id/:type', {
+    templateUrl: '/assets/angular/widgets/partials/recommendations.html'
+  })
   // .when('/user/:id/timeline', {
   //   templateUrl: '/assets/angular/widgets/partials/recommendations.html'
   // })
@@ -80,7 +83,7 @@ websiteApp.constant('facebookAppId', "667868653261167");
 websiteApp.run(['$rootScope', '$location', '$cookieStore', '$cookies', '$http', function($rootScope, $location, $cookieStore, $cookies, $http){
   $rootScope.$on("$routeChangeStart", function(event, next, current){
     var unauthenticated_user = !$rootScope.user.logged && !$cookieStore.get('logged');
-
+    console.debug($location.url(), unauthenticated_user, next.templateUrl);
     // var csrf_token = $cookies['XSRF-TOKEN'];
     // console.debug("csrftoken ", csrf_token);
     // $http.defaults.headers.common['X-XSRF-TOKEN'] = csrf_token;
@@ -89,7 +92,6 @@ websiteApp.run(['$rootScope', '$location', '$cookieStore', '$cookies', '$http', 
     // $http.defaults.headers.put['X-CSRF-Token'] = csrf_token
     // $http.defaults.headers.patch['X-CSRF-Token'] = csrf_token
     // $http.defaults.headers.delete['X-CSRF-Token'] = csrf_token
-
     if(unauthenticated_user){
       // no logged user, we should be going to #login
       if(next.templateUrl == "/assets/angular/widgets/partials/search.html"){

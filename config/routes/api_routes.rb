@@ -39,6 +39,7 @@ ReadersDoor::Application.routes.draw do
       match "labels"                                 => 'website_api#labels',                           :via => [:put, :get, :post]
       match "read_times"                             => 'website_api#read_times',                       :via => [:put, :get, :post]
       match "user_details"                           => 'website_api#get_user_details',                 :via => [:put, :get, :post]
+      match "user_profile_info"                      => 'website_api#user_profile_info',                 :via => [:put, :get, :post]
       match "authenticate"                           => 'website_api#authenticate',                     :via => [:put, :get, :post]
       match "profile"                                => 'website_api#update_profile',                   :via => [:put, :get, :post]
       match "image"                                  => 'website_api#image',                            :via => [:put, :get, :post]

@@ -52,7 +52,11 @@ module Api
 			end
 
             def labels
-                labels = WebsiteApi.get_labels session[:user_id]
+            	if params[:id]
+            		labels = WebsiteApi.get_labels params[:id]
+            	else
+                	labels = WebsiteApi.get_labels session[:user_id]
+            	end
                 render :json => labels, :status => 200
             end
 
@@ -72,7 +76,11 @@ module Api
             end
 
 			def get_user_details
-				info = UserApi.get_details(session[:user_id], session)
+				if params[:id]
+					info = UserApi.get_details(params[:id], session)
+				else
+					info = UserApi.get_details(session[:user_id], session)
+				end
 				render :json => info, :status => 200
 			end
 
@@ -105,8 +113,14 @@ module Api
 
 			def notifications
 				news_feed = []
-				if session[:user_id].present?
-					news_feed = WebsiteApi.get_news_feed(session[:user_id], params[:skip_count])
+				if params[:id] && !params[:debug]
+					news_feed = WebsiteApi.get_personal_feed(params[:id], params[:skip_count])
+				else
+					if session[:user_id].present?
+						news_feed = WebsiteApi.get_news_feed(session[:user_id], params[:skip_count])
+					elsif params[:debug].present?
+						news_feed = WebsiteApi.get_news_feed(params[:id], params[:skip_count])
+					end
 				end
 				render :json => {:notifications => news_feed}, :status => 200
 			end
@@ -119,6 +133,11 @@ module Api
 			def save_feedback
 				WebsiteApi.save_feedback(params[:feedback], session[:user_id])
 				render :json => {:message => "Success"}, :status => 200
+			end
+
+			def user_profile_info
+				info = UserApi.get_profile_info(params[:id])
+				render :json => info, :status => 200
 			end
 
             private
