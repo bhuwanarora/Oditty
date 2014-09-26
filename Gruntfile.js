@@ -71,7 +71,7 @@ module.exports = function(grunt) {
     // },
     ngtemplates:{
       app:{
-        src: 'app/assets/javascripts/angular/widgets/**/*.html',
+        src: 'app/assets/javascripts/angular/views/**/*.html',
         dest: 'app/assets/javascripts/min/angular/templates.js',
         options:{
           module: 'websiteApp',
