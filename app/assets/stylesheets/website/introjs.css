@@ -134,7 +134,7 @@ tr.introjs-showElement > th {
   border-left-color:transparent;
 }
 
-.introjs-tooltip {
+.introjs-tooltip{
   position: absolute;
   padding: 20px;
   background-color: white;

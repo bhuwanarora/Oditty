@@ -622,3 +622,7 @@ input:focus{
     color: #427fed;
     cursor: pointer;
 }
+
+.capitalise{
+    text-transform: capitalize;
+}

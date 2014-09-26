@@ -10,7 +10,10 @@
 			 ng-if="focused_book"
 		 	 ng-click="stop_propagation($event)">
 		 	<div class="tweet">
-				<b><div class="tweet_text">Book Timeline</div></b><br/>
+				<div class="tweet_text">
+					<b><div>Book Timeline</div></b>
+					<div><span class="site_color">{{focused_book.title}}</span> by {{focused_book.author_name}}</div>
+				</div><br/>
 				<div ng-include src="'/assets/angular/views/shared/partials/book_info.html'"></div>
 			</div>
 			<div class="tweet animate-fast" ng-repeat="tweet in focused_book.tweets | reverse">

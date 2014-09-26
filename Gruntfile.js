@@ -25,7 +25,8 @@ module.exports = function(grunt) {
             'app/assets/stylesheets/min/card.min.css',
             'app/assets/stylesheets/min/grid.min.css',
             'app/assets/stylesheets/min/introjs-rtl.min.css',
-            'app/assets/stylesheets/min/introjs.min.css'
+            'app/assets/stylesheets/min/introjs.min.css',
+            'app/assets/stylesheets/min/icons.min.css',
           ]
         }
       }

@@ -525,7 +525,6 @@
 	margin: 5px;
 	color: #717070;
 	white-space: initial;
-	text-transform: capitalize;
 }
 
 .interaction_group{
@@ -643,6 +642,16 @@
 	white-space: normal;
 	border-bottom: 1px solid #f5f5f5;
 }
+
+.interaction_box_options .option [class^="i-"],
+.interaction_box_book_options .option [class^="i-"]{
+	float: left;
+	display: block;
+	margin-right: 5px;
+	margin-top: -5px;
+}
+
+
 
 .recommendation_box{
 	position: relative;
@@ -1065,6 +1074,7 @@ and (min-width : 1824px) {
 	padding-right: 0px;
 	padding-bottom: 10px;
 	padding-top: 5px;
+	white-space: initial;
 }
 
 .notifications .notification{

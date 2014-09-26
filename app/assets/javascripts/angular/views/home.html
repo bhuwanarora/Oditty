@@ -70,7 +70,8 @@
 			<div ng-include src="'/assets/angular/views/left_panel/shelves.html'"></div>
 			<div ng-include src="'/assets/angular/views/left_panel/friends_list.html'"></div>
 			<div ng-include src="'/assets/angular/views/left_panel/news_feed.html'"></div>
-			<div ng-include src="'/assets/angular/views/left_panel/trending_list.html'" ng-if="$routeParams.type != 'profile'"></div>
+			<div ng-include src="'/assets/angular/views/left_panel/trending_list.html'" 
+				 ng-if="$routeParams.type != 'profile'"></div>
 			<div ng-include src="'/assets/angular/views/left_panel/listopia.html'" ng-if="$routeParams.type != 'profile'"></div>
 		</div>
 		<!-- <div class="wrapper" ng-if="focused_book"></div> -->

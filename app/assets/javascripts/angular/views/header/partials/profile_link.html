@@ -6,6 +6,6 @@
 		<div class="animate-slow count" ng-class="{'green': is_additive, 'magenta': !is_additive}" ng-show="count && !initiate_counting">
 			<span ng-if="is_additive">+</span><span ng-if="!is_additive">-</span>{{count}}
 		</div>
-		<span><b>{{user.name | first_name}}</b></span>
+		<span class="capitalise"><b>{{user.name | first_name}}</b></span>
 	</div>
 </div>

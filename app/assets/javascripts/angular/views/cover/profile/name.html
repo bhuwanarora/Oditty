@@ -2,7 +2,7 @@
 	<div class="user_name animate-fast"  
 		 ng-class="{'user_name_shifted': user.show_profile}"
 	     ng-click="show_profile(user.id, $event)">
-		<span ng-show="user.name">{{user.name}}</span>
+		<span ng-show="user.name" class="capitalise">{{user.name}}</span>
 		<span ng-show="!user.name">{{user.email}}</span>
 		<span> · </span>
 		<span>{{user.total_count | integer}}</span><span> · </span>
@@ -18,7 +18,7 @@
 	<div class="user_name animate-fast" 
 		 ng-class="{'user_name_shifted': user.show_profile}"
 		 ng-click="show_profile(reader.id, $event)">
-		<span ng-show="reader.name">{{reader.name}}</span>
+		<span ng-show="reader.name" class="capitalise">{{reader.name}}</span>
 		<span ng-show="!reader.name">{{reader.email}}</span>
 		<span> · </span>
 		<span>{{reader.total_count | integer}}</span><span> · </span>
