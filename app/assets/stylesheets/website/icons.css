@@ -23,7 +23,7 @@
 }
 
 .i-happy{
-	background: url(/assets/icons.jpg) -61px -7px
+	background: url(/assets/icons.jpg) -61px -7px;
 	width: 30px;
 	height: 30px;	
 }
@@ -237,6 +237,7 @@
 	width: 30px;
 	height: 30px;
 }
+
 .i-counting{
 	background: url(/assets/icons.jpg) -20px -7px;
 	width: 30px;
