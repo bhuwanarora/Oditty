@@ -102,11 +102,11 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
       _init();
 
     }],
-    templateUrl: "/assets/angular/widgets/base/book/book_widget.html"
+    templateUrl: "/assets/angular/views/book_widget/show.html"
   };
 }]);
 
-websiteApp.directive('labelDropdown', ['$rootScope', '$timeout', 'widgetService', 'RecommendationUIConstants', 'sharedService', function($rootScope, $timeout, widgetService, RecommendationUIConstants, sharedService){
+websiteApp.directive('labelPopup', ['$rootScope', '$timeout', 'widgetService', 'RecommendationUIConstants', 'sharedService', function($rootScope, $timeout, widgetService, RecommendationUIConstants, sharedService){
   return{
     restrict: 'E',
     controller: ['$scope', function($scope){
@@ -122,7 +122,7 @@ websiteApp.directive('labelDropdown', ['$rootScope', '$timeout', 'widgetService'
         event.stopPropagation();
       }
     }],
-    templateUrl: '/assets/angular/widgets/base/book/label_dropdown.html'    
+    templateUrl: '/assets/angular/views/book_widget/partials/label_popup.html'    
   }
 }]);
 
@@ -134,7 +134,7 @@ websiteApp.directive('bookNavbar', ['$rootScope', '$timeout', function ($rootSco
         zoomin_book($scope, $timeout, $rootScope, page);
       }
     }],
-    templateUrl: "/assets/angular/widgets/base/book/book_navbar.html"
+    templateUrl: "/assets/angular/views/unused/book_navbar.html"
   };
 }]);
 
@@ -184,7 +184,7 @@ websiteApp.directive('bookBookmark', ['$rootScope', '$timeout', 'widgetService',
         event.stopPropagation();
       }
     }],
-    templateUrl: "/assets/angular/widgets/base/book/bookmark.html"
+    templateUrl: "/assets/angular/views/book_widget/partials/bookmark.html"
   };
 }]);
 
@@ -248,11 +248,11 @@ websiteApp.directive('bookInteract', ['$rootScope', '$timeout', 'widgetService',
 
       _init();
     }],
-    templateUrl: "/assets/angular/widgets/base/book/interact_widget.html"
+    templateUrl: "/assets/angular/views/book_widget/footer.html"
   };
 }]);
 
-websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 'sharedService', 'WebsiteUIConstants', '$cookieStore', function($rootScope, $timeout, widgetService, sharedService, WebsiteUIConstants, $cookieStore){
+websiteApp.directive('bookInfo', ['$rootScope', '$timeout', 'widgetService', 'sharedService', 'WebsiteUIConstants', '$cookieStore', function($rootScope, $timeout, widgetService, sharedService, WebsiteUIConstants, $cookieStore){
   return{
     restrict: 'E',
     controller: ['$scope', function($scope){
@@ -477,7 +477,7 @@ websiteApp.directive('focusedBook', ['$rootScope', '$timeout', 'widgetService', 
       _init();
 
     }],
-    templateUrl: "/assets/angular/widgets/base/book/focused_book.html"
+    templateUrl: "/assets/angular/views/home/shared/book_info.html"
   }
 }]);
 
@@ -489,7 +489,7 @@ websiteApp.directive('bookTags', ['$rootScope', '$timeout', function($rootScope,
         zoomin_book($scope, $timeout, $rootScope, page);
       }
     }],
-    templateUrl: "/assets/angular/widgets/base/book/book_tags.html"
+    templateUrl: "/assets/angular/views/unused/book_tags.html"
   };
 }]);
 
@@ -560,7 +560,7 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', 'w
 
       $scope._init();
     }],
-    templateUrl: "/assets/angular/widgets/base/book/recommend.html"
+    templateUrl: "/assets/angular/views/home/shared/recommend.html"
   }
 }]);
 
@@ -576,7 +576,7 @@ websiteApp.directive('markAsRead', ['$rootScope', '$timeout', 'widgetService', '
         stropheService.send_notification(message);
       }
     }],
-    templateUrl: "/assets/angular/widgets/base/book/mark_as_read.html"
+    templateUrl: "/assets/angular/views/unused/mark_as_read.html"
   }
 }]);
 

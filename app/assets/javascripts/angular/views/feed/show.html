@@ -5,7 +5,7 @@
 	 
 	<div class="interaction_group">
 		<div class="icon-close-popup" ng-click="close_interaction_box();"></div>
-		<div ng-include src="'/assets/angular/widgets/partials/interaction_box.html'"></div>
+		<div ng-include src="'/assets/angular/views/feed/comment_box.html'"></div>
 		<div class="scrollbar tweets"
 			 ng-if="focused_book"
 		 	 ng-click="stop_propagation($event)">
@@ -34,7 +34,7 @@
 			</div>
 			<div ng-repeat="notification in notifications | reverse" 
 			     class="tweet animate-fast">
-				<div ng-include src="'/assets/angular/widgets/partials/notification_block.html'"></div>
+				<div ng-include src="'/assets/angular/views/feed/partials/notification_block.html'"></div>
 			</div>
 			<div class="tweet animate-fast">
 				You've reached end of the trending list.
@@ -50,7 +50,7 @@
 			</div>
 			<div ng-repeat="notification in notifications | reverse" 
 			     class="tweet animate-fast">
-				<div ng-include src="'/assets/angular/widgets/partials/notification_block.html'"></div>
+				<div ng-include src="'/assets/angular/views/feed/partials/notification_block.html'"></div>
 			</div>
 			<div class="tweet animate-fast">
 				You've reached end of the news feed.
@@ -66,7 +66,7 @@
 			</div>
 			<div ng-repeat="notification in readers_notifications | reverse" 
 			     class="tweet animate-fast">
-				<div ng-include src="'/assets/angular/widgets/partials/notification_block.html'"></div>
+				<div ng-include src="'/assets/angular/views/feed/partials/notification_block.html'"></div>
 			</div>
 			<div class="tweet animate-fast">
 				No new notifications from {{reader.name | first_name}}.
@@ -82,7 +82,7 @@
 			</div>
 			<div ng-repeat="notification in personal_notifications | reverse" 
 			     class="tweet animate-fast">
-				<div ng-include src="'/assets/angular/widgets/partials/notification_block.html'"></div>
+				<div ng-include src="'/assets/angular/views/feed/partials/notification_block.html'"></div>
 			</div>
 			<div class="tweet animate-fast">
 				You've reached the end of your personal feed.

@@ -13,9 +13,9 @@
    ng-intro-autostart="should_auto_start()"
    ng-controller="recommendationsController"
    ng-click="hide_popups()">
-		<main-header></main-header>
-		<recommendation-footer></recommendation-footer>
-		<div ng-include src="'/assets/angular/widgets/partials/user_name.html'"></div>
+		<header></header>
+		<navbar></navbar>
+		<div ng-include src="'/assets/angular/views/cover/profile/name.html'"></div>
 		<!-- <div class="status animate-fast" ng-click="show_interaction_box()">
 			<span><input disabled placeholder="Share something..." /></span>
 		</div> -->
@@ -32,8 +32,8 @@
 				<img ng-src="{{reader.thumb | thumb_backup}}" ng-show="reader"/>
 			</div>
 			<div class="share_fade animate-fast" ng-class="{'share_fade_shifted': user.show_profile}"></div>
-			<div ng-include src="'/assets/angular/widgets/partials/user_details.html'"></div>
-			<div ng-include src="'/assets/angular/widgets/partials/feed.html'" 
+			<div ng-include src="'/assets/angular/views/cover/profile/show.html'"></div>
+			<div ng-include src="'/assets/angular/views/cover/feed.html'" 
 				 ng-if="user.show_profile"></div>
 		</div>
 
@@ -44,14 +44,14 @@
 
 		<div ng-switch on="panel_selected" class="full_height">
 			<div ng-switch-when="BOOKMARK" class="full_height">
-				<div ng-include src="'/assets/angular/widgets/partials/library.html'"></div>
+				<div ng-include src="'/assets/angular/views/home/library.html'"></div>
 			</div>
 			<div ng-switch-when="READ" class="full_height">
-				<div ng-include src="'/assets/angular/widgets/partials/read.html'"></div>
+				<div ng-include src="'/assets/angular/views/home/read.html'"></div>
 			</div>
 
 			<div ng-switch-default class="full_height">
-				<div ng-include src="'/assets/angular/widgets/partials/home.html'"></div>
+				<div ng-include src="'/assets/angular/views/home/recommendations.html'"></div>
 			</div>
 		</div>
 
@@ -67,18 +67,18 @@
 			 ng-style="popups.left_panel_width" 
 			 msd-wheel="stop_propagation($event)"
 			 ng-click="stop_propagation($event)">
-			<div ng-include src="'/assets/angular/widgets/partials/shelves.html'"></div>
-			<div ng-include src="'/assets/angular/widgets/partials/friends_list.html'"></div>
-			<div ng-include src="'/assets/angular/widgets/partials/news_feed.html'"></div>
-			<div ng-include src="'/assets/angular/widgets/partials/trending_list.html'" ng-if="$routeParams.type != 'profile'"></div>
-			<div ng-include src="'/assets/angular/widgets/partials/listopia.html'" ng-if="$routeParams.type != 'profile'"></div>
+			<div ng-include src="'/assets/angular/views/left_panel/shelves.html'"></div>
+			<div ng-include src="'/assets/angular/views/left_panel/friends_list.html'"></div>
+			<div ng-include src="'/assets/angular/views/left_panel/news_feed.html'"></div>
+			<div ng-include src="'/assets/angular/views/left_panel/trending_list.html'" ng-if="$routeParams.type != 'profile'"></div>
+			<div ng-include src="'/assets/angular/views/left_panel/listopia.html'" ng-if="$routeParams.type != 'profile'"></div>
 		</div>
 		<!-- <div class="wrapper" ng-if="focused_book"></div> -->
 		<div class="focused_tooltip animate-faster"
 		     ng-style="focused_book.reposition_tooltip"
 		     ng-click="stop_propagation($event)"
 		     ng-if="focused_book">
-		    <focused-book></focused-book>
+		    <book-info></book-info>
 		</div>
 		<div class="ticker_popup" 
 			 ng-if="ticker_popup"
@@ -115,8 +115,8 @@
 			</span>
 		</div>
 
-		<info-card></info-card>
-		<div ng-include src="'/assets/angular/widgets/partials/settings_popup.html'" 
+		<getting-started></getting-started>
+		<div ng-include src="'/assets/angular/views/header/modals/settings.html'" 
 			 ng-show="popups.settings_popup"></div>
 </div>
-<interaction-box ng-if="user.interact"></interaction-box>
+<feed ng-if="user.interact"></feed>

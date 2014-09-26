@@ -25,21 +25,21 @@ websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootSco
 				}
 			}
 		}],
-		templateUrl: "/assets/angular/widgets/partials/more_filters.html"
+		templateUrl: "/assets/angular/views/unused/more_filters.html"
 	}
 }]);
 
 websiteApp.directive('notificationLink', function(){
 	return{
 		restrict: 'E',
-		templateUrl: '/assets/angular/widgets/partials/notification_link.html'
+		templateUrl: '/assets/angular/views/unused/notification_link.html'
 	}
 });
 
 websiteApp.directive('tickerPopup', function(){
 	return{
 		restrict: 'E',
-		templateUrl: '/assets/angular/widgets/partials/ticker_popup.html'
+		templateUrl: '/assets/angular/views/left_panel/shared/ticker_popup.html'
 	}
 });
 
@@ -92,11 +92,11 @@ websiteApp.directive('filter', ['$rootScope', '$timeout', '$routeParams', functi
 
 			_init();
 		}],
-		templateUrl: "/assets/angular/widgets/partials/filter.html"
+		templateUrl: "/assets/angular/views/left_panel/partials/filter.html"
 	}
 }]);
 
-websiteApp.directive('mainHeader', ['$timeout', '$rootScope', function($timeout, $rootScope){
+websiteApp.directive('header', ['$timeout', '$rootScope', function($timeout, $rootScope){
 	return{
 		restrict: 'E',
 		controller: ['$scope', function($scope){
@@ -159,11 +159,11 @@ websiteApp.directive('mainHeader', ['$timeout', '$rootScope', function($timeout,
 
 			_init();
 		}],
-		templateUrl: "/assets/angular/widgets/partials/main_header.html"
+		templateUrl: "/assets/angular/views/header/show.html"
 	}
 }]);
 
-websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'websiteService', '$timeout', '$cookieStore', 'RecommendationUIConstants', function(scroller, $rootScope, websiteService, $timeout, $cookieStore, RecommendationUIConstants){
+websiteApp.directive('navbar', ['scroller', '$rootScope', 'websiteService', '$timeout', '$cookieStore', 'RecommendationUIConstants', function(scroller, $rootScope, websiteService, $timeout, $cookieStore, RecommendationUIConstants){
 	return{
 		restrict: 'E',
 		controller: ['$scope', function($scope){
@@ -379,7 +379,7 @@ websiteApp.directive('recommendationFooter', ['scroller', '$rootScope', 'website
 
 			_init();
 		}],
-		templateUrl: "/assets/angular/widgets/partials/recommendation_footer.html"
+		templateUrl: "/assets/angular/views/cover/navbar.html"
 	}
 }]);
 
@@ -462,7 +462,7 @@ websiteApp.directive('rate', ['$rootScope', '$timeout', 'widgetService', 'shared
       }
 
     }],
-    templateUrl: '/assets/angular/widgets/base/book/rate.html'
+    templateUrl: '/assets/angular/views/shared/rate.html'
   }
 }]);
 
@@ -484,11 +484,11 @@ websiteApp.directive('bookGrid', ['recommendationService', '$rootScope', functio
 
 			_init();
 		}],
-		templateUrl: '/assets/angular/widgets/partials/book_grid.html'
+		templateUrl: '/assets/angular/views/home/partials/book_grid.html'
 	}
 }]);
 
-websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'websiteService', 'WebsiteUIConstants', 'scroller', '$cookieStore', 'RecommendationUIConstants', function($rootScope, $timeout, sharedService, websiteService, WebsiteUIConstants, scroller, $cookieStore, RecommendationUIConstants){
+websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService', 'websiteService', 'WebsiteUIConstants', 'scroller', '$cookieStore', 'RecommendationUIConstants', function($rootScope, $timeout, sharedService, websiteService, WebsiteUIConstants, scroller, $cookieStore, RecommendationUIConstants){
 	return{
 		restrict: 'E',
 		controller: ['$scope', 'websiteService', function($scope, websiteService){
@@ -862,7 +862,7 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 			_init();
 
 		}],
-		templateUrl: "/assets/angular/widgets/base/widget/info_card.html"
+		templateUrl: "/assets/angular/views/getting_started/show.html"
 	}
 }]);
 

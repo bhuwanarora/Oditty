@@ -50,7 +50,7 @@ websiteApp.directive('reader', ['$rootScope', 'widgetService', function ($rootSc
       _init();
 
     }],
-    templateUrl: "/assets/angular/widgets/base/reader/reader_widget.html"
+    templateUrl: "/assets/angular/views/unused/reader/reader_widget.html"
   };
 }]);
 
@@ -76,7 +76,7 @@ websiteApp.directive('focusedReader', ['$rootScope', '$timeout', 'widgetService'
       }
 
     }],
-    templateUrl: "/assets/angular/widgets/base/reader/focused_reader.html"
+    templateUrl: "/assets/angular/views/unused/reader/focused_reader.html"
   }
 }]);
 
@@ -88,7 +88,7 @@ websiteApp.directive('messageBox', function(){
         $scope.reader.show_message_box = false;
       }
     }],
-    templateUrl: "/assets/angular/widgets/base/reader/message_box.html"
+    templateUrl: "/assets/angular/views/unused/reader/message_box.html"
   }
 });
 
@@ -106,6 +106,6 @@ websiteApp.directive('readerInteract', ['websiteService', function (websiteServi
         }
       }
     }],
-    templateUrl: "/assets/angular/widgets/base/reader/reader_interact.html"
+    templateUrl: "/assets/angular/views/unused/reader/reader_interact.html"
   };
 }]);

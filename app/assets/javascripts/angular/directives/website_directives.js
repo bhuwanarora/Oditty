@@ -1,14 +1,14 @@
 websiteApp.directive('siteLogo', [function(){
 	return{
 		restrict: 'E',
-		templateUrl: "/assets/angular/widgets/partials/site_logo.html"
+		templateUrl: "/assets/angular/views/unused/site_logo.html"
 	}
 }]);
 
 websiteApp.directive('userThumb', [function(){
 	return{
 		restrict: 'E',
-		templateUrl: '/assets/angular/widgets/partials/user_thumb.html'
+		templateUrl: '/assets/angular/views/unused/user_thumb.html'
 	}
 }]);
 
@@ -30,7 +30,7 @@ websiteApp.directive('toggle', function(){
 				}
 			}
 		}],
-		templateUrl: "/assets/angular/widgets/partials/toggle.html"
+		templateUrl: "/assets/angular/views/getting_started/shared/toggle.html"
 	}
 });
 
@@ -87,7 +87,7 @@ websiteApp.directive('track', ['$rootScope', function($rootScope){
 websiteApp.directive('horizontalScroller', function(){
 	return{
 		restrict: 'E',
-		templateUrl: "/assets/angular/widgets/base/horizontal_scroller.html"
+		templateUrl: "/assets/angular/views/unused/horizontal_scroller.html"
 	}
 });
 
@@ -237,7 +237,7 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', '$document', function($ti
 
 		  	_init();
 		}],
-		templateUrl: '/assets/angular/widgets/partials/type_ahead.html'
+		templateUrl: '/assets/angular/views/unused/type_ahead.html'
 	}
 }]);
 
@@ -275,7 +275,7 @@ websiteApp.directive('message', function(){
 
 			_init();
 		}],
-		templateUrl: '/assets/angular/widgets/partials/message.html'
+		templateUrl: '/assets/angular/views/unused/message.html'
 	}
 });
 
@@ -360,7 +360,7 @@ websiteApp.directive('notification', ['$rootScope', '$timeout', '$location', '$r
 
 			_init();
 		}],
-		templateUrl: '/assets/angular/widgets/partials/notification.html'
+		templateUrl: '/assets/angular/views/left_panel/partials/notification.html'
 	}
 }]);
 
@@ -391,7 +391,7 @@ websiteApp.directive('compile', ['$compile', function($compile){
 websiteApp.directive('searchBar', function(){
 	return{
 		restrict: 'E',
-		templateUrl: '/assets/angular/widgets/partials/search_bar.html'
+		templateUrl: '/assets/angular/views/search/partials/search_bar.html'
 	}
 });
 
@@ -491,7 +491,7 @@ websiteApp.directive('calendar', ['$rootScope', function($rootScope){
 
 			_init();
 		}],
-		templateUrl: '/assets/angular/widgets/partials/calendar.html'
+		templateUrl: '/assets/angular/views/getting_started/shared/calendar.html'
 	}
 }]);
 
@@ -565,11 +565,11 @@ websiteApp.directive('feedbackPopup', ['$document', 'websiteService', '$rootScop
     		}
     	}
     }],
-    templateUrl: '/assets/angular/widgets/partials/feedback_popup.html'
+    templateUrl: '/assets/angular/views/footer/feedback_popup.html'
   };
 }]);
 
-websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteService', 'widgetService', 'WebsiteUIConstants', 'StatusUIConstants', function($rootScope, $timeout, websiteService, widgetService, WebsiteUIConstants, StatusUIConstants){
+websiteApp.directive('feed', ['$rootScope', '$timeout', 'websiteService', 'widgetService', 'WebsiteUIConstants', 'StatusUIConstants', function($rootScope, $timeout, websiteService, widgetService, WebsiteUIConstants, StatusUIConstants){
   return{
     restrict: 'E',
     controller: ['$scope', function($scope){
@@ -1128,7 +1128,7 @@ websiteApp.directive('interactionBox', ['$rootScope', '$timeout', 'websiteServic
       	_init();
 
     }],
-    templateUrl: "/assets/angular/widgets/base/book/interaction_box.html"
+    templateUrl: "/assets/angular/views/feed/show.html"
   }
 }]);
 
@@ -1201,13 +1201,13 @@ websiteApp.directive('tooltip', function(){
 				event.stopPropagation();
 			}
 		}],
-		templateUrl: "/assets/angular/widgets/base/widget/tooltip.html"
+		templateUrl: "/assets/angular/views/shared/tooltip.html"
 	}
 });
 
 websiteApp.directive('profileLink', function(){
 	return{
 		restrict: "E",
-		templateUrl: "/assets/angular/widgets/partials/profile_link.html"
+		templateUrl: "/assets/angular/views/header/partials/profile_link.html"
 	}	
 })

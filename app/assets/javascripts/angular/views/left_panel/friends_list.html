@@ -37,12 +37,12 @@
 	</div>
 	<div ng-if="!user.collapsed_friends && $routeParams.type != 'profile'" class="friends_grid scrollbar">
 		<div ng-repeat="friend in user.friends" class="friend_block inactive_filter animate-fast">
-			<div ng-include src="'/assets/angular/widgets/partials/friend_grid.html'"></div>
+			<div ng-include src="'/assets/angular/views/left_panel/shared/friend_grid.html'"></div>
 		</div>
 	</div>
 	<div ng-if="!user.collapsed_friends && $routeParams.type == 'profile'" class="friends_grid scrollbar">
 		<div ng-repeat="friend in reader.friends" class="friend_block inactive_filter animate-fast">
-			<div ng-include src="'/assets/angular/widgets/partials/friend_grid.html'"></div>
+			<div ng-include src="'/assets/angular/views/left_panel/shared/friend_grid.html'"></div>
 		</div>
 	</div>
 </div>
