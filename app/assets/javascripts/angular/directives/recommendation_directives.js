@@ -560,9 +560,18 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 				event.stopPropagation();
 			}
 
-			$scope._fetch_book_results = function(){
+			$scope._fetch_book_results = function(reset_required){
 				var skip_count = $scope.popular_books.length;
+				var _all_results_fetched = function(){
+					$scope.all_results_found = true;
+					$scope.popular_books.push({"title": "All results fetched. "+$scope.popular_books.length+" books found for <span class='site_color'>"+$scope.info.search_book+"</span>"});
+				}
+
 				websiteService.search_books($scope.info.search_book, skip_count).then(function(data){
+					if(angular.isDefined(reset_required)){
+						$scope.popular_books = [];
+					}
+
 					data = data.results;
 					if(data.length != 0){
 						angular.forEach(data, function(value){
@@ -575,14 +584,18 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 									"user_rating": value[5]};
 							this.push(json);
 						},  $scope.popular_books);
+
+						if(data.length != 10){
+							_all_results_fetched();
+						}
 					}
 					else{
 						if($scope.popular_books.length == 0){
+							$scope.all_results_found = true;
 							$scope.popular_books = [{"title": "No results found..."}];
 						}
 						else{
-							$scope.all_results_found = true;
-							$scope.popular_books.push({"title": "All results fecthed. "+$scope.popular_books.length+" books found for <span class='site_color'>"+$scope.info.search_book+"</span>"});
+							_all_results_fetched();
 						}
 					}
 					$scope.loading = false;
@@ -593,9 +606,9 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 			$scope.handle_search_input = function(type){
 				$scope.loading = true;
 				if(type == "BOOK"){
-					$scope.popular_books = [];
 					$scope.all_results_found = false;
-					$scope._fetch_book_results();
+					$scope.popular_books = [];
+					$scope._fetch_book_results(true);
 				}
 				else{
 					websiteService.search_authors("q="+$scope.info.search_author).then(function(data){
@@ -811,10 +824,10 @@ websiteApp.directive('infoCard', ['$rootScope', '$timeout', 'sharedService', 'we
 			}
 
 			
+			var search_input_timeout = "";
 			
 			
 			_init = function(){
-				var search_input_timeout = "";
 				$rootScope.user.profile_status = 0;
 	    		_get_info_data();
 	    		$scope.popular_books = [];

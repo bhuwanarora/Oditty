@@ -8,11 +8,15 @@ module Api
 				unless user_id.present?
 					clause = "START book=node:node_auto_index('indexed_title:"+q+"*') WITH book RETURN book.isbn, ID(book), book.title as name, book.author_name ORDER BY book.total_weight DESC LIMIT 10"
 				else
-					clause = "START book=node:node_auto_index('indexed_title:"+q+"*') WITH book ORDER BY book.total_weight DESC OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" WITH user, book, m OPTIONAL MATCH (user)-[:RatingAction]->(z:RatingNode{book_id:ID(book), user_id:"+user_id.to_s+"})-[:Rate]->(book) RETURN book.isbn, ID(book), book.title as name, book.author_name, ID(m), z.rating SKIP "+skip.to_s+" LIMIT 10"
+					clause = _search_with_details(q, "*", skip, user_id)
 				end
 				puts clause.blue.on_red
 				if q.length >= 3
 					results = @neo.execute_query(clause)["data"]
+					if results.length == 0
+						clause = _search_with_details(q, "~0.7", skip, user_id)
+						results = @neo.execute_query(clause)["data"]
+					end
 				end
 				results
 			end
@@ -62,6 +66,7 @@ module Api
 
 			def self.search(q, count, type)
 				neo_init
+				count = 10 if count > 10
 				clause = self._get_search_clause(q, count, type)
 				results = @neo.execute_query clause
 				if results["data"].present?
@@ -125,6 +130,11 @@ module Api
             def self._get_basic_search_clause(q, connector, count)
 				clause = "START search_node=node:node_auto_index('search_index:"+q+connector+"') RETURN CASE WHEN search_node.title IS NULL THEN search_node.name ELSE search_node.title END, search_node.author_name, ID(search_node), labels(search_node) LIMIT "+count.to_s
 				puts clause.blue.on_red
+            	clause
+            end
+
+            def self._search_with_details(q, connector, skip, user_id)
+            	clause = "START book=node:node_auto_index('indexed_title:"+q+connector+"') WITH book ORDER BY book.total_weight DESC OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" WITH user, book, m OPTIONAL MATCH (user)-[:RatingAction]->(z:RatingNode{book_id:ID(book), user_id:"+user_id.to_s+"})-[:Rate]->(book) RETURN book.isbn, ID(book), book.title as name, book.author_name, ID(m), z.rating SKIP "+skip.to_s+" LIMIT 10"
             	clause
             end
 
