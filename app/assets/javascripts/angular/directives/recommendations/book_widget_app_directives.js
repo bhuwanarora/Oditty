@@ -296,7 +296,9 @@ websiteApp.directive('bookInfo', ['$rootScope', '$timeout', 'widgetService', 'sh
         $cookieStore.put('show_buy', false);
         if(angular.isUndefined($rootScope.focused_book.author_details)){
           widgetService.get_author_details($rootScope.focused_book.id).then(function(data){
-            $rootScope.focused_book.author_details = {"about": data[0], "image_url": data[1], "signature_pic": data[2], "id": data[3], "book_ids": data[4], "book_isbns": data[5]};
+            if(angular.isDefined($rootScope.focused_book)){
+              $rootScope.focused_book.author_details = {"about": data[0], "image_url": data[1], "signature_pic": data[2], "id": data[3], "book_ids": data[4], "book_isbns": data[5]};
+            }
           });
         }
       }

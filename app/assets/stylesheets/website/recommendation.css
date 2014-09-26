@@ -525,6 +525,7 @@
 	margin: 5px;
 	color: #717070;
 	white-space: initial;
+	text-transform: capitalize;
 }
 
 .interaction_group{

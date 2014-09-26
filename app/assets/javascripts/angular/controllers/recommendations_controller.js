@@ -57,26 +57,35 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
 	$scope.show_profile = function(user_id, event, delta){
+		_hide_profile = function(){
+			$rootScope.user.show_profile = false;
+			delete $rootScope.ticker_popup;
+		}
+
+		_show_profile = function(){
+			$rootScope.user.show_profile = true;
+			$scope._get_user_profile_info(user_id);
+			delete $rootScope.focused_book;
+			delete $rootScope.ticker_popup;
+		}
+		
 		if(angular.isDefined(delta)){
 			if(delta > 0){
-				$rootScope.user.show_profile = true;
-				$scope._get_user_profile_info(user_id);
+				_show_profile();	
 			}
 			else{
-				$rootScope.user.show_profile = false;
-				delete $rootScope.ticker_popup;
+				_hide_profile();
 			}
 		}
 		else{
 			if(angular.isUndefined($rootScope.user.show_profile) || !$rootScope.user.show_profile){
-				$rootScope.user.show_profile = true;
-				$scope._get_user_profile_info(user_id);
+				_show_profile();
 			}
 			else{
-				$rootScope.user.show_profile = false;
-				delete $rootScope.ticker_popup;
+				_hide_profile();
 			}
 		}
+
 		if(angular.isDefined(event)){
 			event.preventDefault();
 			event.stopPropagation();

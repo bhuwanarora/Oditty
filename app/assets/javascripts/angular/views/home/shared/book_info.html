@@ -61,35 +61,8 @@
 </div>
 
 <div class="book_info" ng-if="!show_buy && !show_author">
-  <div class="instruct_block">
-    <span>
-      <span class="site_color">
-        <span>{{focused_book.readers_count | integer}}</span>
-        <span>Readers</span>
-        <span class="icon-users2"></span> 
-      </span>
-    </span>
-    <span itemprop="aggregateRating" 
-          itemscope 
-          itemtype="http://schema.org/AggregateRating"
-         >
-      <span>&nbsp;</span>
-      <span class="site_color">
-        <span>{{focused_book.bookmark_count | integer}}</span>
-        <span>Tags</span>
-        <span class="icon-tags"></span> 
-      </span>
-    </span>
-    <span>
-      <span>&nbsp;</span>
-      <span class="site_color">
-        <span>{{focused_book.comment_count | integer}}</span>
-        <span>Comments</span>
-        <span class="icon-bubbles2"></span>
-      </span>
-    </span>
-  </div>
-   <div ng-if="!show_buy && !show_author" ng-disabled="!focused_book.status">
+  <div ng-include src="'/assets/angular/views/shared/partials/book_info.html'"></div>
+  <div ng-if="!show_buy && !show_author" ng-disabled="!focused_book.status">
     <rate data="focused_book"></rate>
   </div>
 </div>
