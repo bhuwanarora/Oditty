@@ -11,7 +11,7 @@
 		<div class="float_left">
 			<img ng-src="{{notification.thumb | thumb_backup}}">
 		</div>
-		<img ng-src="{{notification.book.isbn | small_thumb}}" class="book_thumb" />
+		<img ng-src="{{notification.book.isbn | small_thumb}}" class="book_thumb" ng-show="notification.book.isbn"/>
 		<div class="block" ng-class="{'compressed_block': notification.book.isbn}">
 			<div class="notification_message">
 				<b><div ng-bind-html="notification.user.name"></div></b>

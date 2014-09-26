@@ -1088,7 +1088,7 @@ and (min-width : 1824px) {
 
 .notifications .compressed_block,
 .tweets .tweet .compressed_tweet_text{
-	width: 65%;	
+	width: 65% !important;	
 }
 
 .notifications_popup img,
@@ -1905,7 +1905,7 @@ l	.compressed_info_card{
 	white-space: initial;
 	background-color: white;
 	z-index: 1;
-	height: 50vh;
+	max-height: 50vh;
 	border-radius: 2px;
 	left: 9%;
 	width: 40%;
