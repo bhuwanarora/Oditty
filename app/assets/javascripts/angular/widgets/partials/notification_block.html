@@ -1,6 +1,6 @@
 <div class="thumb"><img ng-src="{{notification.thumb | thumb_backup}}"></div>
 <img ng-src="{{notification.book.isbn | small_thumb}}" class="book_thumb" />
-<div class="tweet_text">
+<div class="tweet_text" ng-class="{'compressed_tweet_text': notification.book.isbn}">
 	<b><div ng-bind-html="notification.user.name"></div></b>
 	<b><a ng-href="{{notification.url}}" target="_blank">
 		<div ng-bind-html="notification.title"></div></a>
