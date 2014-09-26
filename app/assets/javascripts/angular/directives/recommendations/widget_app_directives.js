@@ -30,7 +30,7 @@ websiteApp.directive('category', function () {
         }
       }
     }],
-    templateUrl: "/assets/angular/widgets/base/widget/category.html"
+    templateUrl: "/assets/angular/widgets/views/unused/category.html"
   };
 });
 
@@ -42,7 +42,7 @@ websiteApp.directive('messageApp', ['websiteService', function (websiteService) 
 
       }
     }],
-    templateUrl: "/assets/angular/widgets/base/widget/message_app.html"
+    templateUrl: "/assets/angular/views/unused/message_app.html"
   }
 }]);
 
@@ -91,7 +91,7 @@ websiteApp.directive('follow', ['$rootScope', '$timeout', 'widgetService', funct
         }
       }
     }],
-    templateUrl: "/assets/angular/widgets/base/widget/follow.html"
+    templateUrl: "/assets/angular/views/unused/follow.html"
   }
 }]);
 
@@ -173,6 +173,6 @@ websiteApp.directive('widgetThumb', ['$timeout', '$rootScope', '$filter', 'Color
 
       _init();
     }],
-    templateUrl: "/assets/angular/widgets/base/widget/widget_thumb.html"
+    templateUrl: "/assets/angular/views/book_widget/thumb.html"
   };
 }]);

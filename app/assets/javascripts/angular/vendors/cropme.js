@@ -43,7 +43,7 @@
         };
       };
       return {
-        templateUrl: "/assets/angular/widgets/base/widget/cropme.html",
+        templateUrl: "/assets/angular/views/getting_started/shared/cropme.html",
         restrict: "E",
         scope: {
           width: "=",

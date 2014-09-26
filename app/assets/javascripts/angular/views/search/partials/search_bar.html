@@ -13,7 +13,7 @@
       <!-- <tooltip text="item.name" prepend-text="Explore" position="top" pluralize="s" ng-if="!$routeParams.type && filters_added.length == 0"></tooltip> -->
       <span class="table_cell">&nbsp;{{item.name}}</span>
     </div>
-    <div ng-include="'/assets/angular/widgets/partials/search_icon.html'" ng-show="hide_input_field && $routeParams.type && !(show_secondary_input && !($routeParams.type && hide_options))"></div>
+    <div ng-include="'/assets/angular/views/search/partials/search_icon.html'" ng-show="hide_input_field && $routeParams.type && !(show_secondary_input && !($routeParams.type && hide_options))"></div>
   </div>
 
   <div class="compressed_filters" ng-show="$routeParams.type && hide_options && filters_added.length > 0">
@@ -36,7 +36,7 @@
            ng-click="handle_options($event)"
            class="search_input"
            placeholder="{{search_tag.placeholder}}"/>
-    <div ng-include="'/assets/angular/widgets/partials/search_icon.html'"></div>
+    <div ng-include="'/assets/angular/views/search/partials/search_icon.html'"></div>
   </div>
 
   <div class="website_search_helpers animate-fast" 
@@ -67,7 +67,7 @@
            ng-keypress="search_custom($event)"
            ng-keydown="key_down($event)"
            set-focus="website.searching_custom"/>
-    <div ng-include="'/assets/angular/widgets/partials/search_icon.html'"></div>
+    <div ng-include="'/assets/angular/views/search/partials/search_icon.html'"></div>
   </div>
 
   <div class="website_search_helpers animate-fast" ng-show="!($routeParams.type && hide_options)">

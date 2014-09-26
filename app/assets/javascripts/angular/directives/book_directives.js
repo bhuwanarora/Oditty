@@ -25,7 +25,7 @@ websiteApp.directive('dock', ['$rootScope', '$timeout', function($rootScope, $ti
         $scope.$emit('turnPage', page);
       }
     }],
-    templateUrl: "/assets/angular/widgets/partials/dock.html"
+    templateUrl: "/assets/angular/views/unused/dock.html"
   }
 }]);
 
@@ -463,7 +463,7 @@ websiteApp.directive('flipbook', ['$rootScope', '$timeout', 'scroller', function
 
       _init();
     }],
-    templateUrl: "/assets/angular/widgets/partials/book.html"
+    templateUrl: "/assets/angular/views/unused/book.html"
   }
 }]);
 
@@ -487,7 +487,7 @@ websiteApp.directive('discussion', function(){
       }
 
     }],
-    templateUrl: "/assets/angular/widgets/partials/book/discussion.html"
+    templateUrl: "/assets/angular/views/unused/discussion.html"
   }
 });
 
@@ -535,6 +535,6 @@ websiteApp.directive('angularte', function() {
 websiteApp.directive('reviews', function(){
   return{
     restrict: 'E',
-    templateUrl: "/assets/angular/widgets/partials/book/reviews.html"
+    templateUrl: "/assets/angular/views/unused/reviews.html"
   }
 });

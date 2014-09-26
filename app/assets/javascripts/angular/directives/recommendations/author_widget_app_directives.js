@@ -67,7 +67,7 @@ websiteApp.directive('author', ['$rootScope', 'widgetService', function ($rootSc
       _init();
 
     }],
-    templateUrl: "/assets/angular/widgets/base/author/author_widget.html"
+    templateUrl: "/assets/angular/views/unused/author/author_widget.html"
   };
 }]);
 
@@ -93,7 +93,7 @@ websiteApp.directive('focusedAuthor', ['$rootScope', '$timeout', 'widgetService'
       }
 
     }],
-    templateUrl: "/assets/angular/widgets/base/author/focused_author.html"
+    templateUrl: "/assets/angular/views/unused/author/focused_author.html"
   }
 }]);
 
@@ -123,7 +123,7 @@ websiteApp.directive('authorBookmark', ['$rootScope', '$timeout', 'widgetService
         event.stopPropagation();
       }
     }],
-    templateUrl: "/assets/angular/widgets/base/author/bookmark.html"
+    templateUrl: "/assets/angular/views/unused/author/bookmark.html"
   };
 }]);
 
@@ -257,7 +257,7 @@ websiteApp.directive('authorInteract', ['websiteService', 'WebsiteUIConstants', 
 
       // _init();
     }],
-    templateUrl: "/assets/angular/widgets/base/author/author_interact.html"
+    templateUrl: "/assets/angular/views/unused/author/author_interact.html"
   };
 }]);
 
