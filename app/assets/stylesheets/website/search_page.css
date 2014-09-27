@@ -48,7 +48,6 @@
 }
 
 .search_page .notifications_popup{
-	top: 50px;
 	border: none;
 }
 
@@ -62,7 +61,6 @@
 	display: table;
 	box-shadow: none;
 	width: 97%;
-	top: 10px;
 }
 
 /*.search_page .header_navbar:hover{
@@ -268,7 +266,7 @@
 }
 
 .search_page .shift_top{
-	top: 2px !important;
+	top: 12px !important;
 	margin-top: 0px !important;
 	z-index: 6;
 }

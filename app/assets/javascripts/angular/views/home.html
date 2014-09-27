@@ -24,14 +24,13 @@
 			 ng-class="{'vertical_padder_shifted': user.show_profile}"></div>
 		<div class="share_wrapper animate-slow" 
 			 ng-class="{'share_wrapper_shifted': user.show_profile}"
-			 ng-style="cover_image"
 			 msd-wheel="show_profile(user.id, $event, $delta)">
 			<div class="thumb_wrapper animate-fast"
 				 ng-class="{'thumb_wrapper_shifted': user.show_profile}">
 				<img ng-src="{{user.thumb | thumb_backup}}" ng-show="!reader"/>
 				<img ng-src="{{reader.thumb | thumb_backup}}" ng-show="reader"/>
 			</div>
-			<div class="share_fade animate-fast" ng-class="{'share_fade_shifted': user.show_profile}"></div>
+			<!-- <div class="share_fade animate-fast" ng-class="{'share_fade_shifted': user.show_profile}"></div> -->
 			<div ng-include src="'/assets/angular/views/cover/profile/show.html'"></div>
 			<div ng-include src="'/assets/angular/views/cover/feed.html'" 
 				 ng-if="user.show_profile"></div>

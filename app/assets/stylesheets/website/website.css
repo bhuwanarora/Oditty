@@ -628,3 +628,7 @@ input:focus{
 .capitalise{
     text-transform: capitalize;
 }
+
+.large_font{
+    font-size: 21px;
+}
