@@ -19,13 +19,13 @@
 	width: 40%;
 	min-width: 400px;
 	position: fixed;
-	left: 50%;
+	left: 40%;
 	margin-left: -20%;
-	top: 50%;
+	top: 30%;
 	overflow-y: hidden;
 	border-radius: 0;
 	background-color: #fff;
-	margin-top: -230px;
+	margin-top: 80px;
 }
 
 .search_page .shift_bottom{
@@ -257,11 +257,10 @@
 .search_page .search_typeahead_group{
     position: fixed;
 	left: 50%;
-	top: 50%;
+	top: 30%;
 	width: 60%;
 	height: 37px;
 	margin-left: -30%;
-	margin-top: -20px;
 	z-index: 5;
 }
 
@@ -394,6 +393,7 @@
 .search_page .website_search_helpers{
 	box-shadow: none;
 	background-color: white !important;
+	max-height: 30vh;
 }
 
 .website_search_options .option:hover{
