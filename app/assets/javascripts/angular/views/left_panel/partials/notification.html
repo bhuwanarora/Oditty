@@ -14,7 +14,7 @@
 		<img ng-src="{{notification.book.isbn | small_thumb}}" class="book_thumb" ng-show="notification.book.isbn"/>
 		<div class="block" ng-class="{'compressed_block': notification.book.isbn}">
 			<div class="notification_message">
-				<b><div ng-bind-html="notification.user.name"></div></b>
+				<b><div class="capitalise" ng-bind-html="notification.user.name"></div></b>
 				<div ng-show="notification.title">
 					<b><div ng-bind-html="notification.title"></div></b>
 					<span class="delay_site_color animate-fast">Check out related books</span>

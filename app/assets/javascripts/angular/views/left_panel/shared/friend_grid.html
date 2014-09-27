@@ -3,13 +3,13 @@
 	     class="friend_thumb" />
 </div>
 <div class="friend_details">
-	<div class="site_color" ng-if="friend.name && friend.id == user.id"><b>
+	<div class="site_color capitalise" ng-if="friend.name && friend.id == user.id"><b>
 		<a ng-href="#user/{{user.id}}/recommendations/books">{{friend.name}}</a></b>
 	</div>
 	<div class="site_color" ng-if="!friend.name && friend.id == user.id"><b>
 		<a ng-href="#user/{{user.id}}/recommendations/books">{{friend.email}}</a></b>
 	</div>
-	<div class="site_color" ng-if="friend.name && friend.id != user.id"><b>
+	<div class="site_color capitalise" ng-if="friend.name && friend.id != user.id"><b>
 		<a ng-href="#reader/{{friend.id}}/profile">{{friend.name}}</a></b>
 	</div>
 	<div class="site_color" ng-if="!friend.name && friend.id != user.id"><b>

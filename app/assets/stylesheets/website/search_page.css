@@ -6,9 +6,40 @@
 	background-size: cover;
 }
 
+.search_page_wrapper{
+	position: fixed;
+	left: 50px;
+	right: 50px;
+	top: 50px;
+	bottom: 50px;
+	border-radius: 2px;
+}
+
+.trending_panel{
+	width: 40%;
+	min-width: 400px;
+	position: fixed;
+	left: 50%;
+	margin-left: -20%;
+	top: 50%;
+	overflow-y: hidden;
+	border-radius: 0;
+	background-color: #fff;
+	margin-top: -230px;
+}
+
+.search_page .shift_bottom{
+	bottom: 10px;
+	top: inherit;
+}
+
+.trending_panel .notifications{
+	height: 200px;
+}
+
 .input_wrapper{
 	position: relative;
-	height: 38px;
+	height: 35px;
 }
 
 .search_page .grid_thumb{
@@ -16,14 +47,20 @@
 	display: inline-block;
 }
 
+.search_page .notifications_popup{
+	border: none;
+}
+
 .search_button{
 	padding: 10px 0px;
 }
 
 .search_page .main_header{
-	background-color: rgba(255, 255, 255, 0.87);
+	background-color: white;
 	z-index: 6;
 	display: table;
+	box-shadow: none;
+	width: 97%;
 }
 
 /*.search_page .header_navbar:hover{
@@ -97,7 +134,7 @@
     padding-left: 10px;
     border: 1px solid rgba(255,255,255,.4);
     background-color: #fff;
-    box-shadow: 0 2px 6px rgba(0,0,0,.3);
+    /*box-shadow: 0 2px 6px rgba(0,0,0,.3);*/
     width: 97.5%;
     height: 30px;
     content: '';
@@ -105,6 +142,7 @@
     box-sizing: border-box;
 	width: 100%;
 	height: 100%;
+	border: 1px solid #C5C5C5;
     /*border-bottom: 4px solid #427fed;*/
 }
 
@@ -124,7 +162,7 @@
 	background-color: #fff;
 	text-align: center;
 	height: 100%;
-	box-shadow: 0 2px 6px rgba(0,0,0,.3);
+	/*box-shadow: 0 2px 6px rgba(0,0,0,.3);*/
 	/*margin-bottom: 7px;*/
 	/*border-radius: 2px;*/
 	overflow-y: auto;
@@ -133,14 +171,14 @@
 }
 
 .base_search .base_search_option{
-	width: 29%;
+	padding: 0px 20px;
 	height: 100%;
 	display: table;
 }
 
 .website_search_helpers .compressed_option{
 	padding: 12px 15px 5px;
-	font-size: 1.2em;
+	font-size: 15px;
 }
 
 .website_search_helpers .direction_option{
@@ -169,6 +207,7 @@
 .login_box .tagline{
 	font-size: 22px;
 	font-weight: 200;
+	color: white;
 }
 
 .search_page .site_logo{
@@ -218,16 +257,16 @@
 .search_page .search_typeahead_group{
     position: fixed;
 	left: 50%;
-	top: 25%;
-	width: 50%;
+	top: 50%;
+	width: 60%;
 	height: 37px;
-	margin-left: -25%;
+	margin-left: -30%;
 	margin-top: -20px;
 	z-index: 5;
 }
 
 .search_page .shift_top{
-	top: 2px !important;
+	top: 12px !important;
 	margin-top: 0px !important;
 	z-index: 6;
 }
@@ -235,14 +274,20 @@
 .search_typeahead_group .search_icon{
     position: absolute;
 	right: 0px;
-	padding: 0px 30px;
-	box-shadow: 0 2px 6px rgba(0,0,0,.3);
+	padding: 0px 15px;
+	cursor: pointer;
+	/*box-shadow: 0 2px 6px rgba(0,0,0,.3);*/
 	text-shadow: 1px 0 0 rgba(0,0,0,.5);
 	border-bottom-right-radius: 2px;
 	border-top-right-radius: 2px;
 	display: table;
 	height: 100%;
 	top: 0px;
+	color: #717070;
+}
+
+.search_typeahead_group .search_icon:hover{
+	color: #333;
 }
 
 
@@ -345,6 +390,12 @@
 	box-shadow: 0 3px 8px rgba(0,0,0,.5);
 }
 
+.search_page .website_search_options,
+.search_page .website_search_helpers{
+	box-shadow: none;
+	background-color: white !important;
+}
+
 .website_search_options .option:hover{
 	background-color: #F1F1F1;
 }
@@ -405,10 +456,10 @@
 
 .login_box{
 	position: fixed;
-	box-shadow: 8px 10px 54px 0 #424242;
+	/*box-shadow: 8px 10px 54px 0 #424242;*/
 	z-index: 5;
 	padding: 35px;
-	background-color: rgba(255, 255, 255, 0.95);
+	/*background-color: rgba(255, 255, 255, 0.95);*/
 	border-radius: 2px;
 	width: 500px;
 	left: 50%;
@@ -425,9 +476,10 @@
 .login_box .login_status{
 	width: 250px;
 	padding: 10px;
-	color: #d73d32;
+	color: white;
 	white-space: initial;
 	margin-left: 24%;
+	font-weight: 700;
 }
 
 .login_form{
@@ -581,7 +633,7 @@
 	top: 0px;
 	cursor: pointer;
 	padding: 8px;
-	font-size: 1.2em;
+	font-size: 15px;
 }
 
 .login_box .link{

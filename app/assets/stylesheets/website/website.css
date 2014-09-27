@@ -189,6 +189,7 @@ input:focus{
 
 .full_width{
     width: 100%;
+    overflow-y: auto;
 }
 
 .scrollbar{
@@ -410,8 +411,9 @@ input:focus{
 }
 
 .active_tab{
-    border-bottom: 4px solid #427fed!important;
+    /*border-bottom: 4px solid #427fed!important;*/
     color: #427fed!important;
+    font-weight: 700 !important;
 }
 
 .tab{
@@ -423,7 +425,8 @@ input:focus{
 }
 
 .tab:hover{
-    border-bottom: 4px solid rgba(66, 127, 237, 0.4);
+    background-color: #f5f5f5;
+    /*border-bottom: 4px solid rgba(66, 127, 237, 0.4);*/
 }
 
 .tab2{
@@ -566,7 +569,7 @@ input:focus{
 }
 
 .header_font{
-    font-size: 1.2em !important;
+    font-size: 15px !important;
 }
 
 .image_wrapper{
@@ -620,4 +623,12 @@ input:focus{
 .click{
     color: #427fed;
     cursor: pointer;
+}
+
+.capitalise{
+    text-transform: capitalize;
+}
+
+.large_font{
+    font-size: 21px;
 }

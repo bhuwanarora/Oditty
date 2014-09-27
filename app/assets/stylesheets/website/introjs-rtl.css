@@ -7,7 +7,7 @@
 .introjs-tooltip {
   /*direction: rtl;*/
   font-size: 1.2em;
-  font-family: initial;
+  /*font-family: initial;*/
 }
 .introjs-prevbutton {
   border: 1px solid #d4d4d4;
