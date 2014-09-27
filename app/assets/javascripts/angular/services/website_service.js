@@ -148,7 +148,7 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         }
         var error_callback = function(reason){
             if(reason.status == 500){
-                alert("internal server error");
+                alert(WebsiteUIConstants.ServerError);
             }
         }
         $http.get(url).then(success_callback, error_callback);
@@ -162,7 +162,7 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         }
         var error_callback = function(reason){
             if(reason.status == 500){
-                alert("internal server error");
+                alert(WebsiteUIConstants.ServerError);
             }
             else if(reason.status == 403){
                 return deferred.reject(reason);

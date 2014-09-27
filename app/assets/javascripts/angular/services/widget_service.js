@@ -91,7 +91,7 @@ websiteApp.service('widgetService', ['$http', '$q', '$rootScope', function ($htt
         }
         var error_callback = function(reason){
             if(reason.status == 500){
-                alert("internal server error");
+                alert(WebsiteUIConstants.ServerError);
             }
         }
         $http.get(url).then(success_callback, error_callback);
@@ -105,7 +105,7 @@ websiteApp.service('widgetService', ['$http', '$q', '$rootScope', function ($htt
         }
         var error_callback = function(reason){
             if(reason.status == 500){
-                alert("internal server error");
+                alert(WebsiteUIConstants.ServerError);
             }
         }
         $http.post(url, params).then(success_callback, error_callback);

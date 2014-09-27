@@ -1,6 +1,6 @@
 //This handles retrieving data and is used by controllers. 3 options (server, factory, provider) with 
 //each doing the same thing just structuring the functions/data differently.
-websiteApp.service('recommendationService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
+websiteApp.service('recommendationService', ['$http', '$q', '$rootScope', 'WebsiteUIConstants', function($http, $q, $rootScope, WebsiteUIConstants){
 
     this.get_recommendations = function(){
         var filters = angular.toJson($rootScope.filters);
@@ -60,7 +60,7 @@ websiteApp.service('recommendationService', ['$http', '$q', '$rootScope', functi
         var errorCallback = function(reason){
             $rootScope.loading = false;
             if(reason.status == 500){
-                alert("internal server error");
+                alert(WebsiteUIConstants.ServerError);
             }
         }
 

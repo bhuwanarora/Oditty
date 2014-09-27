@@ -536,6 +536,7 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 					}
 					if(has_minimum_length){
 						$scope.popular_books = [{"title": "Searching..."}];
+						$timeout.cancel(search_input_timeout);
 						search_input_timeout = $timeout(function(){
 							$scope.handle_search_input(type);
 						}, 300);
@@ -599,7 +600,6 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 						}
 					}
 					$scope.loading = false;
-					$timeout.cancel(search_input_timeout);
 				});
 			}
 
@@ -623,7 +623,6 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 							$scope.popular_authors = [{"title": "No results found..."}];
 						}
 						$scope.loading = false;
-						$timeout.cancel(search_input_timeout);
 					});
 				}
 			}
