@@ -7,6 +7,10 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
         $rootScope.user.interact = true;
       }
 
+      $scope.stop_propagation = function(event){
+        event.stopPropagation();
+      }
+
       $scope.show_focused_tooltip = function(event){
         if($rootScope.focused_book != $scope.book){
           // $rootScope.show_more_filters = false;

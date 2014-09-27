@@ -45,6 +45,12 @@
 	cursor: default;
 }
 
+.summary{
+	height: 45vh;
+	overflow: scroll;
+	margin-top: 3vh;
+}
+
 .category_hovered{
 	padding-top: 1px;
 }
@@ -227,7 +233,7 @@
 	left: 2vh;
 	right: 2vh;
 	bottom: 7vh;
-	border-radius: 3px;
+	border-radius: 1px;
 }
 
 .card .description p{

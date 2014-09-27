@@ -144,6 +144,7 @@ var constants = {
 			"TagSearch": "TAG"
 		},
 		"WebsiteUIConstants":{
+			"Server Error": "Something went wrong. Please refresh the page and try again.",
 			"Share": "Share your book reading journey...",
 			"BrowserIncompatible": "Please use latest version of Chrome for now...",
 			"Enter": 13,
