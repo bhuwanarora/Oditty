@@ -22,7 +22,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/book_widget/thumb.html',
-    "<div class=\"animate-fast widget_thumb\" ng-class=\"{'widget_thumb_focus': hovered}\" ng-style=\"thumb_style\"></div><div class=\"description\" ng-style=\"random_background\"><p><b>{{book.title}}</b><br><br><span ng-show=\"book.author_name\">by</span><span>{{book.author_name}}</span></p></div>"
+    "<div class=\"animate-fast widget_thumb\" ng-class=\"{'widget_thumb_focus': hovered}\" ng-style=\"thumb_style\"></div><div class=\"description\" ng-style=\"random_background\"></div>"
   );
 
 
