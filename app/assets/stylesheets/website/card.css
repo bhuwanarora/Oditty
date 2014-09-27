@@ -45,6 +45,12 @@
 	cursor: default;
 }
 
+.summary{
+	height: 45vh;
+	overflow: scroll;
+	margin-top: 3vh;
+}
+
 .category_hovered{
 	padding-top: 1px;
 }

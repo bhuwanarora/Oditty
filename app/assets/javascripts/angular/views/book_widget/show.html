@@ -7,16 +7,21 @@
 		ng-click="show_focused_tooltip($event)"
 		class="card animate-slow">
 		<book-interact data="book" track></book-interact>
-		<widget-thumb track></widget-thumb>
+		<widget-thumb track ng-show="book.isbn"></widget-thumb>
 		<div class="card_summary animate-fast">
 			<div>
 				<tooltip text="book.title" position="top" ng-hide="ticker_popup"></tooltip>
 				<b><span class="header_font">{{book.title | reduced_title}}</span></b><br/>
 				<span ng-show="book.author_name">by {{book.author_name}}</span>
 			</div>
-			<div>
+			<div ng-if="book.isbn">
 				<tooltip text="book.summary" position="bottom" scroll="true" ng-hide="ticker_popup"></tooltip>
 				<span ng-if="book.summary" class="normal_text">{{book.summary | reduced_summary}}</span>
+			</div>
+			<div ng-if="!book.isbn" 
+				 class="scrollbar summary" 
+				 msd-wheel="stop_propagation($event)">
+				<span ng-if="book.summary" class="normal_text" >{{book.summary}}</span>
 			</div>
 		</div>
 		<!-- <book-navbar track></book-navbar> -->
