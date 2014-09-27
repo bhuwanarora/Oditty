@@ -49,18 +49,26 @@
 	float: right;
 	height: 35px;
 	margin-top: 3px;
-	padding-left: 15px;
-	padding-right: 15px;
+	padding-left: 10px;
+	padding-right: 10px;
 	display: table;
 	cursor: default;
 }
 
-.header_icon:hover [class^="icon-"]{
+.header_icon{
+	color: #717070;
+}
+
+.header_icon:hover{
 	color: #333;
 }
 
 .header_navbar .share:before{
 	content: 'Share';
+}
+
+.header_navbar:hover{
+	text-decoration: underline;
 }
 
 .header_navbar .share{
@@ -76,7 +84,6 @@
 	display: inline-block;
 	padding-left: 5px;
 	position: relative;
-	color: #427fed;
 	top: -7px;
 }
 
@@ -348,7 +355,7 @@
 }
 
 .shelf_nav_links{
-	right: 10px;
+	right: 20px;
 	background-color: #fff;
 	-webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
 	box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
@@ -387,7 +394,7 @@
 	padding-right: 10px;
 	white-space: normal;
 	height: 55px;
-	box-shadow: 1px 1px 6px 0 #424242;
+	box-shadow: 1px 1px 6px 0 #A5A5A5;
 	z-index: 10;
 	border-top-left-radius: 3px;
 	border-bottom-left-radius: 3px;
@@ -1315,7 +1322,7 @@ and (min-width : 1824px) {
 	top: 230px;
 	width: 28%;
 	/*min-width: 280px;*/
-	left: 0px;
+	left: 15px;
 	background-color: white;
 	border-radius: 2px;
 }
@@ -1539,15 +1546,17 @@ and (min-width : 1824px) {
 
 .left_column .collapse_icon{
 	position: fixed;
-	left: 29.5%;
+	left: 30%;
 	padding: 4px 7px;
 	border-radius: 2px;
 	top: 230px;
 	font-size: 1.5em;
+	color: #717070;
+	cursor: pointer;
 }
 
 .left_column .collapse_icon:hover{
-	background-color: rgba(0, 0, 0, 0.8);
+	color: #333;
 }
 
 
@@ -1562,12 +1571,18 @@ and (min-width : 1824px) {
 }
 
 .left_column_collapsed{
-	width: inherit !important;
 	height: 40px;
-	border-bottom: 4px solid transparent;
 	overflow: hidden;
-	padding-right: 10px;
+	z-index: 7;
+	position: fixed;
+	left: 0px;
+	background-color: white;
+	width: 15%;
+}
+
+.left_column_tab_compressed{
 	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .left_column_collapsed:hover{
@@ -1856,9 +1871,9 @@ l	.compressed_info_card{
 	position: fixed;
 	top: 185px;
 	left: 20px;
-	color: #427fed;
 	z-index: 2;
 	cursor: pointer;
+	color: #717070;
 }
 
 .user_name:hover .large_font{

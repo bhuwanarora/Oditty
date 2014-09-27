@@ -1,20 +1,22 @@
 <!-- <tooltip prepend-text="Shelves" 
 		 ng-show="!user.collapsed_left_column"
 		 position="right"></tooltip> -->
-<div class="left_column animate-fast"
+<div class="animate-fast"
 	 id="shelves"
      msd-wheel="stop_propagation($event)"
      ng-class="{'left_column_collapsed left_column_collapsed1': user.collapsed_filters, 
 	            'left_column_shifted left_column_shifted1': !user.collapsed_trends,
 	            'left_column_shifted left_column_shifted2': !user.collapsed_lists,
 	            'left_column_shifted left_column_shifted3': !user.collapsed_column,
-	            'left_column_shifted left_column_shifted4': !user.collapsed_friends}">
-	<div class="collapse_icon red_button" 
+	            'left_column_shifted left_column_shifted4': !user.collapsed_friends,
+	            'left_column': !user.collapsed_filters}">
+	<div class="collapse_icon" 
 	     ng-click="user.collapsed_filters = true; user.collapsed_left_column = true; collapse_left_panel();" 
 	     ng-if="!user.collapsed_filters">
 		<span class="icon-angle-left"></span>
 	</div>
 	<div class="left_column_tab"
+		 ng-class="{'left_column_tab_compressed': !user.collapsed_left_column}"
 		 ng-hide="!user.collapsed_filters"
 	 	 ng-click="user.collapsed_filters = false; 
 	 	 		   user.collapsed_left_column = false;

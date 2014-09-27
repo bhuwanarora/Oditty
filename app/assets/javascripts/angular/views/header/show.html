@@ -33,11 +33,11 @@
 	 	</a>
  	</div>
 	<div class="header_icon" ng-click="toggle_settings_popup($event)" ng-if="$routeParams.type">
-		<span class="icon-angle-down table_cell light_grey_color"></span>
+		<span class="icon-angle-down table_cell"></span>
 	</div>
 	
 	<div class="header_icon" 
-	     ng-class="{'site_color': popups.show_notifications_popup, 'light_grey_color':!popups.show_notifications_popup}"
+	     ng-class="{'site_color': popups.show_notifications_popup}"
 	     ng-click="toggle_notification_popup($event)">
 		<span class="icon-earth table_cell"></span>
 		<div class="notification_circle table_cell" ng-hide="hide_notification_circle">4</div>
