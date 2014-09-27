@@ -8,6 +8,13 @@
 	background-color: #E9E9E9;
 }
 
+.grey_wrapper{
+	height: 100vh;
+	width: 100vw;
+	position: fixed;
+	background-color: #E9E9E9;
+}
+
 .main_header{
    	background-color: white;
    	height: 40px;
@@ -1888,32 +1895,33 @@ l	.compressed_info_card{
 }*/
 
 .share_wrapper_shifted{
-	bottom: 50px;
+	bottom: 80px;
 	height: initial;
+	border-bottom: 1px solid #D8D8D8;
 }
 
 .share_fade_shifted{
 	height: 100vh;
-	bottom: 50px;	
+	bottom: 80px;	
 }
 
 .shelf_nav_links_shifted{
-	bottom: 5px;
+	bottom: 35px;
 	top: initial;
 }
 
 .user_name_shifted{
-	bottom: 55px;
+	bottom: 85px;
 	top: initial;
 }
 
 .thumb_wrapper_shifted{
-	bottom: 100px;
+	bottom: 130px;
 	top: initial !important;
 }	
 
 .user_profile{
-	top: 50px;
+	top: 60px;
 	position: fixed;
 	white-space: initial;
 	background-color: white;
@@ -1982,7 +1990,7 @@ l	.compressed_info_card{
 }
 
 .feed_group{
-	top: 50px;
+	top: 60px;
 	left: 45%;
 	position: fixed;
 	width: 45%;
