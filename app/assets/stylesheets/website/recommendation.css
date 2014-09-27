@@ -8,6 +8,13 @@
 	background-color: #E9E9E9;
 }
 
+.grey_wrapper{
+	height: 100vh;
+	width: 100vw;
+	position: fixed;
+	background-color: #E9E9E9;
+}
+
 .main_header{
    	background-color: white;
    	height: 40px;
@@ -1793,15 +1800,13 @@ l	.compressed_info_card{
 
 .share_wrapper{
 	position: fixed;
-	top: 50px;
+	top: 60px;
 	width: 100%;
-	height: 180px;
+	height: 160px;
 	overflow-y: hidden;
-	/* background-image: url(data:image/jpeg;base64,%2F9j%2F4AAQSkZJRgABAQEASABIAAD%2F2wBDAAYEBAQFBAYFBQ…2B9DKb9n9mSpfTy7ig%2BjMkGcRxGpXuv8FN9P0U1h2RBiPqUnhmreWI4%2F8APP8A%2F9k%3D); */
 	background-repeat: no-repeat;
 	background-size: cover;
-	background-color: white;
-	/*background-image: url(https://assets-1.housingcdn.com/website/login/profile_bg-5751cae38e5f014c5e0d6eaf7d2997ee.jpg);*/
+	background-color: #F5F5F5;
 }
 
 .share_fade{
@@ -1888,32 +1893,33 @@ l	.compressed_info_card{
 }*/
 
 .share_wrapper_shifted{
-	bottom: 50px;
+	bottom: 80px;
 	height: initial;
+	border-bottom: 1px solid #D8D8D8;
 }
 
 .share_fade_shifted{
 	height: 100vh;
-	bottom: 50px;	
+	bottom: 80px;	
 }
 
 .shelf_nav_links_shifted{
-	bottom: 5px;
+	bottom: 35px;
 	top: initial;
 }
 
 .user_name_shifted{
-	bottom: 55px;
+	bottom: 85px;
 	top: initial;
 }
 
 .thumb_wrapper_shifted{
-	bottom: 100px;
+	bottom: 130px;
 	top: initial !important;
 }	
 
 .user_profile{
-	top: 50px;
+	top: 60px;
 	position: fixed;
 	white-space: initial;
 	background-color: white;
@@ -1973,7 +1979,7 @@ l	.compressed_info_card{
 
 .right_links_shifted{
 	top: initial;
-	bottom: 102px;
+	bottom: 132px;
 }
 
 .user_profile .block{
@@ -1982,7 +1988,7 @@ l	.compressed_info_card{
 }
 
 .feed_group{
-	top: 50px;
+	top: 60px;
 	left: 45%;
 	position: fixed;
 	width: 45%;
