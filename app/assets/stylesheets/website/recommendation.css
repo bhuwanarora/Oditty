@@ -1896,6 +1896,7 @@ l	.compressed_info_card{
 	bottom: 80px;
 	height: initial;
 	border-bottom: 1px solid #D8D8D8;
+	background-color: white;
 }
 
 .share_fade_shifted{
