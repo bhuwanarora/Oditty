@@ -2,7 +2,8 @@
 	<div class="search_animate animate-very-slow" 
 	    ng-click="stopSearching($event)"
 	    ng-controller="searchController">
-	    <div class="desaturate search_page" 
+	    <div class="desaturate" 
+	    	 ng-class="{'search_page_wrapper': !user.logged}"
 		     ng-style="search_style">
 	    </div>
 		<div class="search_page"
@@ -12,7 +13,8 @@
 		  	<hr>
 		  	<search-bar></search-bar>
 		  	<div ng-include="'/assets/angular/views/search/trending.html'" 
-		  		 class="trending_panel"></div>
+		  		 class="trending_panel animate-fast"
+		  		 ng-class="{'shift_bottom': active_base}"></div>
 		</div>
 		<div ng-include="'/assets/angular/views/search/login_form.html'"></div>
 	</div>

@@ -6,6 +6,15 @@
 	background-size: cover;
 }
 
+.search_page_wrapper{
+	position: fixed;
+	left: 50px;
+	right: 50px;
+	top: 50px;
+	bottom: 50px;
+	border-radius: 2px;
+}
+
 .trending_panel{
 	width: 40%;
 	min-width: 400px;
@@ -19,13 +28,18 @@
 	margin-top: -230px;
 }
 
+.search_page .shift_bottom{
+	bottom: 10px;
+	top: inherit;
+}
+
 .trending_panel .notifications{
 	height: 200px;
 }
 
 .input_wrapper{
 	position: relative;
-	height: 38px;
+	height: 35px;
 }
 
 .search_page .grid_thumb{
@@ -33,14 +47,22 @@
 	display: inline-block;
 }
 
+.search_page .notifications_popup{
+	top: 50px;
+	border: none;
+}
+
 .search_button{
 	padding: 10px 0px;
 }
 
 .search_page .main_header{
-	background-color: rgba(255, 255, 255, 0.87);
+	background-color: white;
 	z-index: 6;
 	display: table;
+	box-shadow: none;
+	width: 97%;
+	top: 10px;
 }
 
 /*.search_page .header_navbar:hover{
@@ -114,7 +136,7 @@
     padding-left: 10px;
     border: 1px solid rgba(255,255,255,.4);
     background-color: #fff;
-    box-shadow: 0 2px 6px rgba(0,0,0,.3);
+    /*box-shadow: 0 2px 6px rgba(0,0,0,.3);*/
     width: 97.5%;
     height: 30px;
     content: '';
@@ -122,6 +144,7 @@
     box-sizing: border-box;
 	width: 100%;
 	height: 100%;
+	border: 1px solid #C5C5C5;
     /*border-bottom: 4px solid #427fed;*/
 }
 
@@ -141,7 +164,7 @@
 	background-color: #fff;
 	text-align: center;
 	height: 100%;
-	box-shadow: 0 2px 6px rgba(0,0,0,.3);
+	/*box-shadow: 0 2px 6px rgba(0,0,0,.3);*/
 	/*margin-bottom: 7px;*/
 	/*border-radius: 2px;*/
 	overflow-y: auto;
@@ -150,7 +173,7 @@
 }
 
 .base_search .base_search_option{
-	width: 29%;
+	padding: 0px 20px;
 	height: 100%;
 	display: table;
 }
@@ -262,6 +285,11 @@
 	display: table;
 	height: 100%;
 	top: 0px;
+	color: #717070;
+}
+
+.search_typeahead_group .search_icon:hover{
+	color: #333;
 }
 
 
@@ -362,6 +390,12 @@
 	margin-top: 3px;
 	border-radius: 2px;
 	box-shadow: 0 3px 8px rgba(0,0,0,.5);
+}
+
+.search_page .website_search_options,
+.search_page .website_search_helpers{
+	box-shadow: none;
+	background-color: white !important;
 }
 
 .website_search_options .option:hover{
