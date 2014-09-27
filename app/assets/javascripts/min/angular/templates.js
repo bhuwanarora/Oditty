@@ -263,7 +263,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/search/show.html',
-    "<div class=\"home_page_base\"><div class=\"search_animate animate-very-slow\" ng-click=\"stopSearching($event)\" ng-controller=\"searchController\"><div class=\"desaturate\" ng-class=\"{'search_page_wrapper': !user.logged}\" ng-style=\"search_style\"></div><div class=\"search_page\" ng-if=\"user.logged\" ng-click=\"hide_popups($event)\"><header></header><hr><search-bar></search-bar><div ng-include=\"'/assets/angular/views/search/trending.html'\" class=\"trending_panel animate-fast\" ng-hide=\"active_base || filters_added.length > 0\"></div></div><div ng-include=\"'/assets/angular/views/search/login_form.html'\"></div></div></div>"
+    "<div class=\"home_page_base\"><div class=\"search_animate animate-very-slow\" ng-click=\"stopSearching($event)\" ng-controller=\"searchController\"><div class=\"desaturate\" ng-class=\"{'search_page_wrapper': !user.logged}\" ng-style=\"search_style\"></div><div class=\"search_page\" ng-if=\"user.logged\" ng-click=\"hide_popups($event)\"><header></header><search-bar></search-bar><div ng-include=\"'/assets/angular/views/search/trending.html'\" class=\"trending_panel animate-fast\" ng-hide=\"active_base || filters_added.length > 0\"></div></div><div ng-include=\"'/assets/angular/views/search/login_form.html'\"></div></div></div>"
   );
 
 

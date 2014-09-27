@@ -1800,15 +1800,13 @@ l	.compressed_info_card{
 
 .share_wrapper{
 	position: fixed;
-	top: 50px;
+	top: 60px;
 	width: 100%;
-	height: 180px;
+	height: 160px;
 	overflow-y: hidden;
-	/* background-image: url(data:image/jpeg;base64,%2F9j%2F4AAQSkZJRgABAQEASABIAAD%2F2wBDAAYEBAQFBAYFBQ…2B9DKb9n9mSpfTy7ig%2BjMkGcRxGpXuv8FN9P0U1h2RBiPqUnhmreWI4%2F8APP8A%2F9k%3D); */
 	background-repeat: no-repeat;
 	background-size: cover;
-	background-color: white;
-	/*background-image: url(https://assets-1.housingcdn.com/website/login/profile_bg-5751cae38e5f014c5e0d6eaf7d2997ee.jpg);*/
+	background-color: #F5F5F5;
 }
 
 .share_fade{
@@ -1981,7 +1979,7 @@ l	.compressed_info_card{
 
 .right_links_shifted{
 	top: initial;
-	bottom: 102px;
+	bottom: 132px;
 }
 
 .user_profile .block{

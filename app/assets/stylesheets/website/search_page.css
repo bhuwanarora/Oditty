@@ -428,7 +428,6 @@
 	cursor: pointer;
 	text-align: center;
 	padding: 12px;
-	width: 155px;
 	background: -webkit-linear-gradient(#5678bc,#314a7b);
 	background: linear-gradient(#5678bc,#314a7b);
 	border: 1px solid #293f69;
@@ -436,7 +435,8 @@
 	color: #fff;
 	border-radius: 2px;
 	margin-bottom: 4px;
-	margin-left: 160px;
+	margin-left: 22.5%;
+	width: 50%;
 }
 
 .fb:hover{
@@ -489,11 +489,11 @@
 .login_form input{
 	padding: 10px;
 	border: 1px solid #F1F1F1;
-	margin: 0px;
+	margin: 0;
 	color: #717070;
-	width: 40%;
+	width: 50%;
 	font-size: 1em;
-	min-width: 175px;
+	min-width: 250px
 }
 
 .login_form input.ng-invalid.ng-dirty {
@@ -510,19 +510,20 @@
 }
 
 .login_form .authenticate{
-	padding: 10px 0 10px 5px;
+	padding: 7px 0 7px 5px;
 	background-color: #427fed;
 	text-align: center;
 	color: #fff;
 	cursor: pointer;
-	width: 21%;
+	width: 26%;
 	display: inline-block;
 	min-width: 91px;
+	margin-top: 5px;
 }
 
 .login_form .authenticate_left{
 	border-right: 1px solid;
-	margin-right: -4px;
+	margin-right: -6px;
 }
 
 .login_form .authenticate:active{
