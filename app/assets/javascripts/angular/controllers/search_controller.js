@@ -1235,15 +1235,6 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		});
 	}
 
-	$scope._get_trends = function(){
-		if(on_search_page){
-			// $scope._add_trends_on_search_page();
-		}
-		else{
-			$scope._add_trends_as_notifications();
-		}
-	}
-
 	$scope._add_trends_as_notifications = function(){
 		websiteService.get_trending_topics().then(function(data){
 			var notifications = [];
@@ -1418,23 +1409,23 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
     }
 
     $scope._set_base_search = function(){
-		switch($cookieStore.get('base_search')){
-			case SearchUIConstants.BookSearchLink:
-				$scope._init_book_search();
-				$scope.active_base = SearchUIConstants.BookSearch;
-				break;
-			case SearchUIConstants.AuthorSearchLink:
-				$scope._init_author_search();
-				$scope.active_base = SearchUIConstants.AuthorSearch;
-				break;
-			case SearchUIConstants.ReaderSearchLink:
-				$scope._init_reader_search();
-				$scope.active_base = SearchUIConstants.ReaderSearch;
-				break;
-			default:
-				$scope.search_tag.placeholder = SearchUIConstants.SearchPlaceholder;
-				break;
-		}
+		// switch($cookieStore.get('base_search')){
+		// 	case SearchUIConstants.BookSearchLink:
+		// 		$scope._init_book_search();
+		// 		$scope.active_base = SearchUIConstants.BookSearch;
+		// 		break;
+		// 	case SearchUIConstants.AuthorSearchLink:
+		// 		$scope._init_author_search();
+		// 		$scope.active_base = SearchUIConstants.AuthorSearch;
+		// 		break;
+		// 	case SearchUIConstants.ReaderSearchLink:
+		// 		$scope._init_reader_search();
+		// 		$scope.active_base = SearchUIConstants.ReaderSearch;
+		// 		break;
+		// 	default:
+		// 		break;
+		// }
+		$scope.search_tag.placeholder = SearchUIConstants.SearchPlaceholder;
     }
 
 	$scope._init = function(){
@@ -1447,12 +1438,13 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				$scope.set_focus(3000);
 			}
 			$scope._set_base_search();
+			$scope._add_trends_as_notifications();
 		}
 		else{
 			$scope._init_book_search();
 			$scope.active_base = SearchUIConstants.BookSearch;
 		}
-		$scope._get_trends();
+		
 
 		$scope.$on('updateFilters', function(event, type, value){
 			$scope._update_filters(type, value);

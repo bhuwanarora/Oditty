@@ -645,18 +645,14 @@ websiteApp.directive('feed', ['$rootScope', '$timeout', 'websiteService', 'widge
 				if(has_minimum_length){
 					var search_input_timeout = $timeout(function(){
 						$scope.loading = true;
-						websiteService.search_books($scope.user.interact_book).then(function(data){
+						websiteService.search($scope.user.interact_book, "BOOK", 10).then(function(data){
 							$scope.user.interact_books = [];
-							data = data.results;
+							data = data.results.data;
 							if(data.length != 0){
 								angular.forEach(data, function(value){
-									var status = value[4] != null;
-									var json = {"isbn": value[0], 
-											"id": value[1], 
-											"title": value[2], 
-											"author_name": value[3]};
-									this.push(json);
-								},  $scope.user.interact_books);
+						    		var json = {"title": value[0], "author_name": value[1], "id": value[2]};
+						    		this.push(json);
+						    	},  $scope.user.interact_books);
 							}
 							else{
 								$scope.user.interact_books = [];
