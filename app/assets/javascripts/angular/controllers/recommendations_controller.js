@@ -52,7 +52,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		else{
 			_get_user_profile_info($rootScope.reader);
 			$scope._fetch_new_feed($rootScope.reader.id);
-			$scope._fetch_new_feed();
+			// $scope._fetch_new_feed();
 		}
 	}
 
