@@ -717,6 +717,7 @@
 	cursor: default;
 	font-weight: 700;
 	width: 70px;
+	padding: 10px;
 }
 
 .recommendation_box .header{
