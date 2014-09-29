@@ -377,7 +377,7 @@ module Api
 						relation = Constants::LongReadRelation
 					end
 					init_match_clause = "MATCH (b:ActiveBook) WHERE ID(b)="+last_book.to_s+" "
-					match_clause = "MATCH p=(b)-[:"+relation+"*..5]->(next_book) WITH last(nodes(p)) as book MATCH(book) "
+					match_clause = "MATCH p=(b)-[:"+relation+"*..5]->(next_book) WITH last(nodes(p)) as book "
 				else
 					time_group = filters["other_filters"][Constants::Year].split("(")[0].gsub(" " , "").downcase rescue ""
 					if time_group.present?
