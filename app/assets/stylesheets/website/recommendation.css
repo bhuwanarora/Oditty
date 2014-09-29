@@ -385,6 +385,7 @@
 	left: 140px;
 	top: 135px;
 	right: initial;
+	cursor: default;
 }
 
 .toggle_elements{

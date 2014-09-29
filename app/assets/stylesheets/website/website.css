@@ -638,3 +638,7 @@ input:focus{
 .large_font{
     font-size: 21px;
 }
+
+.light_red_color{
+    color: rgba(216, 57, 30, 0.5) !important;
+}
