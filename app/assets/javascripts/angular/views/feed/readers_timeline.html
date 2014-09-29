@@ -1,0 +1,16 @@
+<img ng-src="{{reader.thumb}}" class="profile_thumb" />
+<div class="scrollbar tweets"
+	ng-if="!focused_book.tweets && readers_notifications && !show_trending && !personal_notifications"
+	check-scroll-bottom="get_notifications(false, reader.id)"
+	ng-click="stop_propagation($event)">
+	<div class="tweet">
+		<b><div>{{reader.name | first_name}}'s timeline</div></b>
+	</div>
+	<div ng-repeat="notification in readers_notifications | reverse" 
+	     class="tweet animate-fast">
+		<div ng-include src="'/assets/angular/views/feed/partials/notification_block.html'"></div>
+	</div>
+	<div class="tweet animate-fast">
+		No new notifications from {{reader.name | first_name}}.
+	</div>
+</div>

@@ -1,0 +1,23 @@
+<img ng-src="{{focused_book.isbn | thumb}}" class="profile_thumb" />
+<div class="scrollbar tweets"
+	 ng-if="focused_book"
+ 	 ng-click="stop_propagation($event)">
+ 	<div class="tweet">
+		<div>
+			<b><div>Book Timeline</div></b>
+			<div><span class="site_color">{{focused_book.title}}</span> by {{focused_book.author_name}}</div>
+		</div>
+		<div ng-include src="'/assets/angular/views/shared/partials/book_info.html'"></div>
+	</div>
+	<div class="tweet animate-fast" ng-repeat="tweet in focused_book.tweets | reverse">
+		<div class="thumb"><img ng-src="{{tweet.user.thumb | thumb_backup}}"/></div>
+		<div class="tweet_text">
+			<b><div ng-bind-html="tweet.user.name"></div></b>
+			<div ng-bind-html="tweet.tag"></div>
+			<div ng-bind-html="tweet.message"></div>
+		</div>
+	</div>
+	<div class="tweet animate-fast">
+		You've reached end of the Book Timeline.
+	</div>
+</div>

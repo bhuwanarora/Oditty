@@ -1286,6 +1286,7 @@ and (min-width : 1824px) {
 	border-radius: 2px;
 	overflow: auto;
 	padding: 3vh;
+	white-space: initial;
 }
 
 .tweets .tweet img{
@@ -2026,5 +2027,13 @@ l	.compressed_info_card{
 
 .ticker_popup_shifted{
 	top: 61px;
-	left: 22%;
+	left: 18%;
+}
+
+.profile_thumb{
+    position: fixed;
+    left: 50%;
+    top: 10px;
+    width: 140px;
+    margin-left: -44%;
 }
