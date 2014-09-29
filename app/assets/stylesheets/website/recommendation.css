@@ -1989,7 +1989,7 @@ l	.compressed_info_card{
 }
 
 .user_profile .user_profile_block{
-	height: 84%;
+	height: 44vh;
 	overflow-y: scroll;
 	white-space: nowrap;
 	padding: 20px;

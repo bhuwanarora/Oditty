@@ -1,6 +1,6 @@
 <div ng-if="reader" class="user_profile_block scrollbar">
-	<div class="header" ng-show="reader.selectedDay || reader.init_book_read_count">
-		<b>About</b>
+	<div class="header">
+		<b>About {{reader.name | first_name}}</b>
 	</div>
 	<div class="content">
 		<div class="init_block">
