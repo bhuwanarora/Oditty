@@ -681,7 +681,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				$scope._get_friends(reader_id);
 				$scope._get_labels(reader_id);
 				$scope.placeholder = "Write on timeline...";
-				$scope._fetch_new_feed(reader_id);
 			}
 			else{
 				_init_recommendations();
