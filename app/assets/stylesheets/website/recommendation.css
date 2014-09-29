@@ -1390,6 +1390,10 @@ and (min-width : 1824px) {
 	max-height: none;
 }
 
+.user_profile .padder{
+	height: 200px;
+}
+
 .user_profile .friends_grid img,
 .left_column .friends_grid img{
 	width: 50px;
