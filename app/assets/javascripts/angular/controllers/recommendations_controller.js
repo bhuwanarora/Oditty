@@ -17,7 +17,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
 	$scope.show_all_friends = function(){
-		$scope._get_friends(10);
+		$scope._get_friends(30);
 	}
 
 	$scope._set_likes = function(array, data){
@@ -56,7 +56,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		else{
 			_get_user_profile_info($rootScope.reader);
 			$scope.fetch_new_feed($rootScope.reader.id);
-			// $scope.fetch_new_feed();
 		}
 	}
 
@@ -83,7 +82,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			}
 		}
 		else{
-			if(angular.isUndefined($rootScope.user.show_profile) || !$rootScope.user.show_profile){
+			var home_page_redirect = angular.isUndefined($rootScope.user.show_profile) && user_id != $rootScope.user.id;
+			if(!home_page_redirect && (!$rootScope.user.show_profile || angular.isUndefined($rootScope.user.show_profile))){
 				_show_profile();
 			}
 			else{
@@ -601,6 +601,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
     $scope._get_friends = function(count){
     	var _set_friends_for = function(user_array, data){
+    		user_array = [];
     		angular.forEach(data, function(value){
     			if(value[2] == null){
     				thumb = "/assets/profile_pic.jpeg"
@@ -619,14 +620,13 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			    			"fav_categories": value[7].join(", ")};
     			this.push(json);
     		}, user_array);
-
     	}
 
     	if(angular.isUndefined($rootScope.reader)){
     		if(angular.isUndefined($rootScope.user.friends) || count != $rootScope.user.friends.length){
 		    	widgetService.get_friends($rootScope.user.id, count).then(function(data){
 		    		$rootScope.user.friends_count = data[0][8];
-		    		$rootScope.user.friends = [];
+		    		delete $rootScope.user.friends;
 		    		_set_friends_for($rootScope.user.friends, data);
 		    	});
     		}
@@ -634,7 +634,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	else{
     		if(angular.isUndefined($rootScope.reader.friends) || count != $rootScope.reader.friends.length){
 	    		widgetService.get_friends($rootScope.reader.id, count).then(function(data){
-		    		$rootScope.reader.friends = [];
+		    		delete $rootScope.reader.friends;
 		    		$rootScope.reader.friends_count = data[0][8];
 		    		_set_friends_for($rootScope.reader.friends, data);
 		    	});

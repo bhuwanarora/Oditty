@@ -243,6 +243,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	$scope._show_reader_feed = function(user_id, init){
 		$scope.show_feed = {"readers": true};
 		if(angular.isDefined(init) && init){
+			delete $scope.readers_notifications;
 			$scope.readers_notifications = [];
 		}
 
