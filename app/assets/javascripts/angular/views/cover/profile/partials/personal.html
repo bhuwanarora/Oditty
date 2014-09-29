@@ -1,6 +1,6 @@
 <div ng-if="!reader" class="user_profile_block scrollbar">
 	<div class="header">
-		<b>About {{user.name | first_name}}&nbsp;&nbsp;</b><span class="click" ng-click="goto_info_card(0)">Edit</span>
+		<b>About {{user.name | first_name}}&nbsp;&nbsp;</b><span class="click float_right" ng-click="goto_info_card(0)">Edit</span>
 	</div>
 	<div class="content">
 		<div class="init_block">
@@ -29,7 +29,7 @@
 	</div>
 	<div class="header">
 		<b>Likes&nbsp;&nbsp;</b>
-		<span class="click" ng-click="edit_genres_like()">Edit</span>
+		<span class="click float_right" ng-click="edit_genres_like()">Edit</span>
 	</div>
 	<div class="content">
 		<div ng-repeat="like in user.likes" class="category_block table">
@@ -42,7 +42,7 @@
 	</div>
 	<div class="header">
 		<b>Books that left a mark on you&nbsp;&nbsp;</b>
-		<span class="click" ng-click="edit_books_read()">Edit</span>
+		<span class="click float_right" ng-click="edit_books_read()">Edit</span>
 	</div>
 	<div class="content">
 		<div ng-repeat="book in user.influential_books">

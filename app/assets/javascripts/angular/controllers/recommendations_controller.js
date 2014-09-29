@@ -56,7 +56,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		}
 	}
 
-	$scope.show_profile = function(user_id, event, delta){
+	$scope.toggle_profile = function(user_id, event, delta){
 		_hide_profile = function(){
 			$rootScope.user.show_profile = false;
 			delete $rootScope.ticker_popup;
@@ -675,7 +675,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				var reader_id = $scope.$routeParams.id;
 				$rootScope.reader = {};
 				$rootScope.reader.id = reader_id;
-				$scope.show_profile(reader_id);
+				$scope.toggle_profile(reader_id);
 				$rootScope.user.show_profile = true;
 				$scope._init_reader();
 				$scope._get_friends(reader_id);

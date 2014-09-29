@@ -19,12 +19,12 @@
 		<!-- <div class="status animate-fast" ng-click="show_interaction_box()">
 			<span><input disabled placeholder="Share something..." /></span>
 		</div> -->
-		<div class="grey_wrapper" ng-show="user.show_profile"></div>
+		<div class="grey_wrapper click" ng-show="user.show_profile" ng-click="toggle_profile(user.id, $event)"></div>
 		<div class="vertical_padder_active animate-fast" 
 			 ng-class="{'vertical_padder_shifted': user.show_profile}"></div>
 		<div class="share_wrapper animate-slow" 
 			 ng-class="{'share_wrapper_shifted': user.show_profile}"
-			 msd-wheel="show_profile(user.id, $event, $delta)">
+			 msd-wheel="toggle_profile(user.id, $event, $delta)">
 			<div class="thumb_wrapper animate-fast"
 				 ng-class="{'thumb_wrapper_shifted': user.show_profile}">
 				<img ng-src="{{user.thumb | thumb_backup}}" ng-show="!reader"/>

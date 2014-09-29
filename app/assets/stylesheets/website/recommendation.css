@@ -716,12 +716,11 @@
 	font-size: .8em;
 	cursor: default;
 	font-weight: 700;
-	width: 70px;
+	max-width: 70px;
 	padding: 10px;
 }
 
 .recommendation_box .header{
-	border-bottom: 1px solid rgba(113, 112, 112, 0.14);
 	width: 95%;
 	padding: 12px !important;
 }
@@ -757,6 +756,8 @@
 	white-space: normal;
 	overflow-y: scroll;
 	background-color: #F5F5F5;
+	border-top: 1px solid #E4E4E4;
+	border-bottom: 1px solid #E4E4E4;
 }
 
 .recommendation_box .friend_grid .block{
@@ -1989,6 +1990,7 @@ l	.compressed_info_card{
 	padding: 10px 10px;
 	background-color: #f5f5f5;
 	margin-bottom: 5px;
+	border: 1px solid #F0F0F0;
 }
 
 .user_profile .map{
