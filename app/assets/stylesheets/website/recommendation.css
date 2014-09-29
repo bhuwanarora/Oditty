@@ -1017,7 +1017,7 @@ and (min-width : 1824px) {
 	overflow-y: hidden; 
 }
 
-.feed_bloxk .notifications{
+.feed_block .notifications{
 	max-height: none;
 }
 
