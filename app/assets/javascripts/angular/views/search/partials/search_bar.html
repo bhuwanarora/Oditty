@@ -89,10 +89,9 @@
         </div>
         <div ng-show="item.author_name" class="light_grey_color">Book by {{item.author_name}}</div>
     </div>
-
   </div>
 
- <!--  <div class="website_search_options search_button blue_button"
+  <!--  <div class="website_search_options search_button blue_button"
        ng-click="show_books()"
        ng-hide="($routeParams.type) || (filters_added.length == 0)">
     <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -100,7 +99,8 @@
     <span>&nbsp;Search Books</span>
   </div> -->
 
-  <div class="filters_added website_search_options" ng-hide="$routeParams.type && hide_options">
+  <div class="filters_added website_search_options"
+       ng-hide="$routeParams.type && hide_options">
     <div ng-repeat="item in filters_added"
          ng-click="remove_filter(item, $event)"
          msd-wheel="stop_horizontal_scroll($event)"

@@ -43,7 +43,7 @@ module Api
 					clause = _get_search_clause_for_author(q, "*", 10)
 					puts clause.blue.on_red
 					results = @neo.execute_query(clause)["data"]
-					unless results["data"].present?
+					unless results.present?
 						clause = _get_search_clause_for_author(q, "~0.7", 10)
 						puts clause.blue.on_red
 						results = @neo.execute_query(clause)["data"]

@@ -295,6 +295,11 @@ angular.module('filtersApp', [])
       return output;
     }
   })
+  .filter('html', function($sce){
+    return function(input){
+      return $sce.trustAsHtml(input);
+    }
+  })
   .filter('is_present', function(){
     return function(input){
       var is_present = false;

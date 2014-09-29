@@ -25,8 +25,8 @@
 <div class="icon-close-popup" ng-click="hide_popups()"></div>
 <!-- <div class="close button_effect" ng-click="close_focused_tooltip()">x</div> -->
 <div class="header">
-  <div class="title site_color header_font" title="{{focused_book.title}}"><b>{{focused_book.title | book_title}} </b></div>
-  <div class="author site_color">by <b>{{focused_book.author_name}}</b></div>
+  <div class="title site_color header_font" title="{{focused_book.title}}"><b>{{focused_book.title | html | book_title}} </b></div>
+  <div class="author site_color">by <b>{{focused_book.author_name | html}}</b></div>
   <div class="author">
     <span ng-if="focused_book.published_year">
       {{focused_book.published_year | published_year}}</span>
@@ -70,7 +70,7 @@
 <div class="scrollbar description" 
      ng-class="{'long_description': !focused_book.users_count || focused_book.users_count == 0}"
      msd-wheel="stop_horizontal_scroll($event)" ng-if="!show_buy && !show_author">
-  <span itemprop="description" ng-bind-html="focused_book.summary | summary"></span>
+  <span itemprop="description" ng-bind-html="focused_book.summary | summary | html"></span>
   <br/>
   <br/>
   <br/>
@@ -90,7 +90,7 @@
       <img ng-src="{{focused_book.author_details.image_url}}"/>
       <div class="text"
           msd-wheel="stop_horizontal_scroll($event)">
-          {{focused_book.author_details.about}}
+          {{focused_book.author_details.about | html}}
           <br/>
           <br/>
           <br/>
