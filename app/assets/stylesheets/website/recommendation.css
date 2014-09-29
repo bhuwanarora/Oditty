@@ -96,6 +96,11 @@
 	top: -7px;
 }
 
+.header_navbar:hover .user_details,
+.header_navbar:hover .table_cell{
+	text-decoration: underline;
+}
+
 .header_navbar .user_details .count{
 	position: absolute;
 	color: #fff;
@@ -1110,9 +1115,12 @@ and (min-width : 1824px) {
 	width: 80%;
 }
 
-.notifications .compressed_block,
+.notifications .compressed_block{
+	width: 65% !important;
+}
+
 .tweets .tweet .compressed_tweet_text{
-	width: 65% !important;	
+	width: 40% !important;	
 }
 
 .notifications_popup img,
@@ -1135,6 +1143,7 @@ and (min-width : 1824px) {
 
 .tweets .book_thumb{
 	margin: 0px 10px 0px 0px;
+	width: 200px !important;
 }
 
 .notification_circle {
@@ -1883,7 +1892,7 @@ l	.compressed_info_card{
 	color: #717070;
 }
 
-.user_name:hover .large_font{
+.user_name:hover .capitalise{
 	text-decoration: underline;
 }
 /*
@@ -1932,6 +1941,11 @@ l	.compressed_info_card{
 	left: 9%;
 	width: 35%;
 	padding: 20px 0px;
+}
+
+.user_profile .content{
+	white-space: initial;
+	margin-bottom: 20px;
 }
 
 .category_block .category_icon{
@@ -2010,6 +2024,6 @@ l	.compressed_info_card{
 }
 
 .ticker_popup_shifted{
-	top: 50px;
+	top: 61px;
 	left: 22%;
 }

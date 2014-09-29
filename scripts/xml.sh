@@ -1,0 +1,1 @@
+xmllint --valid --encode utf-8 TEST.xml

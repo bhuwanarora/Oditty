@@ -1,4 +1,4 @@
-websiteApp.service('widgetService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
+websiteApp.service('widgetService', ['$http', '$q', '$rootScope', 'WebsiteUIConstants', function ($http, $q, $rootScope, WebsiteUIConstants){
     
     this.get_book_feed = function(id){
         return _deferred_request('/api/v0/book_feed?id='+id);

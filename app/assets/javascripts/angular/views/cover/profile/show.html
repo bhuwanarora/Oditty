@@ -81,7 +81,7 @@
 			<b>Likes</b>
 			<span class="click" ng-click="edit_genres_like()">&nbsp;&nbsp;Edit</span>
 		</div>
-		<div class="full_width">
+		<div class="content">
 			<div ng-repeat="like in user.likes" class="category_block table">
 				<div class="{{like.icon}} table_cell category_icon"></div><br/>
 				<div class="table_cell">{{like.name}}</div>
@@ -94,7 +94,7 @@
 			<b>Books that left a mark on you</b>
 			<span class="click" ng-click="edit_books_read()">&nbsp;&nbsp;Edit</span>
 		</div>
-		<div class="block">
+		<div class="content">
 			<div ng-repeat="book in user.influential_books">
 				<!-- <img src="{{book.isbn | small_thumb}}"/> -->
 				<div><b class="site_color">{{book.title}}</b>, Book by {{book.author_name}}</div>

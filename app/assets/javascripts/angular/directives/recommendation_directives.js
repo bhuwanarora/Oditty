@@ -592,11 +592,15 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 					}
 					else{
 						if($scope.popular_books.length == 0){
-							$scope.all_results_found = true;
-							$scope.popular_books = [{"title": "No results found..."}];
+							if(!all_results_found){
+								$scope.all_results_found = true;
+								$scope.popular_books = [{"title": "No results found..."}];
+							}
 						}
 						else{
-							_all_results_fetched();
+							if(!all_results_found){
+								_all_results_fetched();
+							}
 						}
 					}
 					$scope.loading = false;

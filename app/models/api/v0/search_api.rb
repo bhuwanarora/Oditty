@@ -4,7 +4,7 @@ module Api
 			def self.search_books(q, skip, user_id=nil)
 				results = []
 				neo_init
-				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "")
+				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("]", "").gsub("\\", "")
 				unless user_id.present?
 					clause = "START book=node:node_auto_index('indexed_title:"+q+"*') WITH book RETURN book.isbn, ID(book), book.title as name, book.author_name ORDER BY book.total_weight DESC LIMIT 10"
 				else
@@ -24,7 +24,7 @@ module Api
 			def self.search_genres(q, limit)
 				results = []
 				neo_init
-				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "") rescue ""
+				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("]", "").gsub("\\", "") rescue ""
 				if q.present?
 					clause = "START genre=node:node_auto_index('indexed_star_genre_name:"+q+"*') RETURN genre.name, ID(genre) ORDER BY genre.books_count DESC LIMIT "+limit.to_s
 				else
@@ -38,25 +38,27 @@ module Api
 			def self.search_authors(q, user_id, genre_id)
 				results = []
 				neo_init
-				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "")
-				if genre_id.present? && genre_id != "0"
-					if q.present?
-						clause = "START author=node:node_auto_index('indexed_main_author_name:"+q+"*') RETURN author.name, ID(author) LIMIT 10"
-						results = @neo.execute_query(clause)["data"]
-					else
-						clause = "MATCH (g:Genre)-[:Belongs_to]->(:Book)<-[:Wrote]-(author:Author) WHERE ID(g)="+genre_id.to_s+" WITH DISTINCT author as author RETURN author.name, ID(author) LIMIT 10"
+				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("]", "").gsub("\\", "")
+				if q.present?
+					clause = _get_search_clause_for_author(q, "*", 10)
+					puts clause.blue.on_red
+					results = @neo.execute_query(clause)["data"]
+					unless results["data"].present?
+						clause = _get_search_clause_for_author(q, "~0.7", 10)
+						puts clause.blue.on_red
 						results = @neo.execute_query(clause)["data"]
 					end
 				else
-					if q.present?
-						clause = "START author=node:node_auto_index('indexed_main_author_name:"+q+"*') RETURN author.name, ID(author) LIMIT 10"
+					if genre_id.present? && genre_id != "0"
+						clause = "MATCH (g:Genre)-[:Belongs_to]->(:Book)<-[:Wrote]-(author:Author) WHERE ID(g)="+genre_id.to_s+" WITH DISTINCT author as author RETURN author.name, ID(author) LIMIT 10"
+						puts clause.blue.on_red
 						results = @neo.execute_query(clause)["data"]
 					else
 						clause = "MATCH (author:Author) RETURN author.name, ID(author) LIMIT 10"
+						puts clause.blue.on_red
 						results = @neo.execute_query(clause)["data"]
 					end
-				end
-				puts clause.blue.on_red
+				else
 				results
 			end
 
