@@ -627,12 +627,10 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     		}
     	}
     	else{
-    		if(angular.isUndefined($rootScope.reader.friends) || $rootScope.reader.friends.length == 0){
-	    		widgetService.get_friends($rootScope.reader.id).then(function(data){
-		    		$rootScope.reader.friends = [];
-		    		_set_friends_for($rootScope.reader.friends, data);
-		    	});
-    		}
+    		widgetService.get_friends($rootScope.reader.id).then(function(data){
+	    		$rootScope.reader.friends = [];
+	    		_set_friends_for($rootScope.reader.friends, data);
+	    	});
     	}
     }
 

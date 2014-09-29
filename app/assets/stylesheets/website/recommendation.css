@@ -1948,8 +1948,11 @@ l	.compressed_info_card{
 }
 
 .user_name_shifted{
-	bottom: 98px;
+	bottom: 81px;
+	left: 0px;
 	top: initial;
+	background-color: white;
+	padding: 20px;
 }
 
 .thumb_wrapper_shifted{
@@ -2019,7 +2022,6 @@ l	.compressed_info_card{
 
 .user_profile .user_profile_block{
 	white-space: nowrap;
-	max-height: 40vh;
 }
 
 .right_links_shifted{
