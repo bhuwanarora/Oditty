@@ -253,7 +253,7 @@ module Api
 				if user_id.present?
 					@neo = Neography::Rest.new
 					limit_clause = count.present? ? "LIMIT "+count.to_s : ""
-					clause = "MATCH (u:User)-[:Follow]->(friend:User) WHERE ID(u)="+user_id.to_s+" OPTIONAL MATCH (friend)-[:Likes]->(category:Category) RETURN ID(friend), friend.name, friend.thumb, friend.init_book_read_count, friend.total_count, friend.book_read_count, friend.bookmark_count, COLLECT(category.name) "+limit_clause
+					clause = "MATCH (u:User)-[:Follow]->(friend:User) WHERE ID(u)="+user_id.to_s+" OPTIONAL MATCH (friend)-[:Likes]->(category:Category) RETURN ID(friend), friend.name, friend.thumb, friend.init_book_read_count, friend.total_count, friend.book_read_count, friend.bookmark_count, COLLECT(category.name), COUNT(friend) "+limit_clause
 					puts clause.blue.on_red
 					friends = @neo.execute_query(clause)["data"]
 				end

@@ -57,12 +57,15 @@
 		<marker position="[{{user.latitude}}, {{user.longitude}}]" centered="true"></marker>
 	</map> -->
 	<div class="header">
-		<b>{{user.friends.length}} Friends</b>
+		<b>{{user.friends_count}} Friends</b>
 	</div>
 	<div class="friends_grid scrollbar">
 		<div ng-repeat="friend in user.friends" class="friend_block animate-fast">
 			<div ng-include src="'/assets/angular/views/left_panel/shared/friend_grid.html'"></div>
 		</div>
+	</div>
+	<div class="content click" ng-click="show_all_friends()" ng-if="user.friends.length != user.friends_count">
+		Show all friends
 	</div>
 	<div class="padder content">
 		

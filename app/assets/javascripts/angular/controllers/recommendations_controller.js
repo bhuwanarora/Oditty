@@ -16,6 +16,10 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		}
 	}
 
+	$scope.show_all_friends = function(){
+		$scope._get_friends(10);
+	}
+
 	$scope._set_likes = function(array, data){
 		angular.forEach(data[0], function(value, index){
 			this.push({"id": data[1][index], "name": value, "icon": data[2][index]});
@@ -621,6 +625,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	if(angular.isUndefined($rootScope.reader)){
     		if(angular.isUndefined($rootScope.user.friends) || count != $rootScope.user.friends.length){
 		    	widgetService.get_friends($rootScope.user.id, count).then(function(data){
+		    		$rootScope.user.friends_count = data[0][8];
 		    		$rootScope.user.friends = [];
 		    		_set_friends_for($rootScope.user.friends, data);
 		    	});
@@ -630,6 +635,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     		if(angular.isUndefined($rootScope.reader.friends) || count != $rootScope.reader.friends.length){
 	    		widgetService.get_friends($rootScope.reader.id, count).then(function(data){
 		    		$rootScope.reader.friends = [];
+		    		$rootScope.reader.friends_count = data[0][8];
 		    		_set_friends_for($rootScope.reader.friends, data);
 		    	});
     		}
