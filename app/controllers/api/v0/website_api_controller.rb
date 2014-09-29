@@ -113,8 +113,10 @@ module Api
 
 			def notifications
 				news_feed = []
-				if params[:id]
+				if params[:id] && ((params[:debug] == "false") || !params[:debug])
 					news_feed = WebsiteApi.get_personal_feed(params[:id], params[:skip_count])
+				elsif params[:debug].present? && params[:debug] == "true"
+					news_feed = WebsiteApi.get_news_feed(params[:id], params[:skip_count])
 				else
 					news_feed = WebsiteApi.get_news_feed(session[:user_id], params[:skip_count])
 				end
