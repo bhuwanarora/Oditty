@@ -23,7 +23,8 @@
 		<div class="vertical_padder_active animate-fast" 
 			 ng-class="{'vertical_padder_shifted': user.show_profile}"></div>
 		<div class="share_wrapper animate-slow" 
-			 ng-class="{'share_wrapper_shifted scrollbar': user.show_profile}">
+			 ng-class="{'share_wrapper_shifted scrollbar': user.show_profile}"
+			 msd-wheel="stop_propagation($event)">
 			<div class="thumb_wrapper animate-fast"
 				 ng-class="{'thumb_wrapper_shifted': user.show_profile}">
 				<img ng-src="{{user.thumb | thumb_backup}}" ng-show="!reader"/>
