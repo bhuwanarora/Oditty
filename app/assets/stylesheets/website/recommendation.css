@@ -439,7 +439,6 @@
 
 .scroller{
 	left: 50%;
-	color: #3D79A1;
 	height: 35px;
 	top: 185px;
 	margin-left: -36px;
@@ -453,35 +452,27 @@
 .scroller .scroller-right{
 	font-size: 1.5em;
 	text-align: center;
-}
-
-.scroller .scroller-left:active,
-.scroller .scroller-right:active{
-	background-color: #315E7C; 
-}
-
-.scroller span:active{
-	background-color: black;
+	background-color: white;
+	border: 1px solid #717070;
 }
 
 .scroller .scroller-left{
 	margin-left: 3px;
 	padding: 2px 12px 5px 10px;
-	border-top-right-radius: 0px;
-	border-bottom-right-radius: 0px;
+	border-top-left-radius: 2px;
+	border-bottom-left-radius: 2px;
 }
 
 .scroller .scroller-right{
 	margin-right: 3px;
 	padding: 2px 10px 5px 12px;
-	border-top-left-radius: 0px;
-	border-bottom-left-radius: 0px;
+	border-top-right-radius: 2px;
+	border-bottom-right-radius: 2px;
 }
 
 .scroller .scroller-left:hover,
 .scroller .scroller-right:hover{
-	background-color: #3769C2;
-	cursor: pointer;
+	color: #333;
 }
 
 .more_filters{
@@ -2032,7 +2023,7 @@ l	.compressed_info_card{
 .feed_group{
 	float: left;
 	display: inline-block;
-	width: 56%;
+	width: 54%;
 	margin-left: 2%;
 }
 
