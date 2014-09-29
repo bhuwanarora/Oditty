@@ -427,6 +427,7 @@ input:focus{
 
 .tab:hover{
     background-color: #f5f5f5;
+    color: black;
     /*border-bottom: 4px solid rgba(66, 127, 237, 0.4);*/
 }
 
