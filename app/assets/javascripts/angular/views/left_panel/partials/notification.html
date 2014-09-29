@@ -15,7 +15,7 @@
 		<div class="block" ng-class="{'compressed_block': notification.book.isbn}">
 			<div class="notification_message">
 				<b><div class="capitalise" ng-bind-html="notification.user.name"></div></b>
-				<div><span>{{notification.timestamp | date:'MMMM d'}}</span><span> at {{notification.timestamp | shortTime}}</span></div>
+				<div class="light_grey_color"><span>{{notification.timestamp | date:'MMMM d'}}</span><span> at {{notification.timestamp | date:'h:mm a'}}</span></div>
 				<div ng-show="notification.title">
 					<b><div ng-bind-html="notification.title"></div></b>
 					<span class="delay_site_color animate-fast">Check out related books</span>

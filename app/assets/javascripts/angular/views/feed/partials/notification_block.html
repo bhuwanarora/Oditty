@@ -5,7 +5,7 @@
 	<b><a ng-href="{{notification.url}}" target="_blank">
 		<div ng-bind-html="notification.title"></div></a>
 	</b>
-	<div><span>{{notification.timestamp | date:'MMMM d'}}</span><span> at {{notification.timestamp | shortTime}}</span></div>
+	<div class="light_grey_color"><span>{{notification.timestamp | date:'MMMM d'}}</span><span> at {{notification.timestamp | date:'h:mm a'}}</span></div>
 	<div class="trending_background site_color" ng-show="notification.title">
 		<a ng-href="#user/{{user.id}}/trending/books/id/{{notification.id}}/name/{{notification.name}}">Check out books related to  <b>{{notification.keywords}}</b></a>
 	</div>

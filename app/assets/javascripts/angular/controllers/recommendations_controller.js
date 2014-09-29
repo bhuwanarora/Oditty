@@ -155,7 +155,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	$scope.show_interaction_box = function(user_id){
 		$scope._expanded_notifications();
-		$scope.$emit('getNotifications', false, user_id);
+		var show_trending = false;
+		var init_notification = true;
+		$scope.$emit('getNotifications', show_trending, user_id, init_notification);
 	}
 
 	$scope.show_trending_options = function(){
@@ -164,7 +166,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
 	$scope._fetch_trending_options = function(){
-		$scope.$emit('getNotifications', true, $rootScope.user.id);	
+		var show_trending = true;
+		$scope.$emit('getNotifications', show_trending, $rootScope.user.id);	
 	}
 
 	$scope.handle_friends_grid_size = function(event, scroll_down){
