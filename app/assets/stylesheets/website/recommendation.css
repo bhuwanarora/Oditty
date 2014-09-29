@@ -718,6 +718,7 @@
 	font-weight: 700;
 	max-width: 70px;
 	padding: 10px;
+	text-transform: capitalize;
 }
 
 .recommendation_box .header{
@@ -1991,6 +1992,7 @@ l	.compressed_info_card{
 	background-color: #f5f5f5;
 	margin-bottom: 5px;
 	border: 1px solid #F0F0F0;
+	font-size: 0.9em;
 }
 
 .user_profile .map{

@@ -87,7 +87,7 @@
 			</span>
 			<span ng-if="$routeParams.type == 'profile'" class="table_cell">
 				<!-- <span class="icon-users" ng-class="{'light_grey_color': !read_selected}"></span> -->
-				<span>&nbsp;<b>Books Read by {{reader.gender_suffix}}</b></b></span>
+				<span>&nbsp;<b>Books Read </span><span ng-show="reader.gender_suffix">by {{reader.gender_suffix}}</b></b></span>
 			</span>
 		</div>
  			
