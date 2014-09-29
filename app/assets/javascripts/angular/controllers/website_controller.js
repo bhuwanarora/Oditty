@@ -235,7 +235,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	$scope._show_trending_feed = function(){
-		$scope.notifications = $rootScope.trends;
+		$scope.trending_feed = $rootScope.trends;
      	$scope.show_trending = true;
 	}
 
@@ -247,7 +247,9 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
     		var existing_notifications_count = 0;
     	}
 		websiteService.get_notifications(existing_notifications_count, user_id).then(function(data){
-    		$scope._intro_notifications(user_id);
+    		if(angular.isUndefined($scope.readers_notifications)){
+    			$scope.readers_notifications = [];
+    		}
 			$scope.readers_notifications = data.notifications.concat($scope.readers_notifications);
 		});
 	}
@@ -260,19 +262,23 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
     		var existing_notifications_count = 0;
     	}
 		websiteService.get_notifications(existing_notifications_count, user_id).then(function(data){
-    		$scope._intro_notifications(user_id);
+    		if(angular.isUndefined($scope.personal_notifications)){
+    			$scope.personal_notifications = [];
+    		}
 			$scope.personal_notifications = data.notifications.concat($scope.personal_notifications);
 		});
 	}
 
 	$scope._show_news_feed = function(){
 		var _set_feed = function(data){
-			$scope._intro_notifications();
-			$scope.notifications = data.notifications.concat($scope.notifications);
+			if(angular.isUndefined($scope.news_feed)){
+    			$scope.news_feed = [];
+    		}
+			$scope.news_feed = data.notifications.concat($scope.news_feed);
 		}
 
-		if(angular.isDefined($scope.notifications)){
-    		var existing_notifications_count = $scope.notifications.length;
+		if(angular.isDefined($scope.news_feed)){
+    		var existing_notifications_count = $scope.news_feed.length;
     	}
     	else{
     		var existing_notifications_count = 0;
@@ -300,7 +306,6 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    });
 
 	    add_to_notifications = $scope.$on('addToNotifications', function(event, notification){
-	    	$scope._intro_notifications();
 	    	if(notification instanceof Array){
 	    		var notification_already_added = false;
 	    		angular.forEach($scope.notifications, function(value){
@@ -355,39 +360,6 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 				$scope.notifications.push(data.notification);
 			});
 	    });
-	}
-
-	$scope._intro_notifications = function(user_id){
-		if(angular.isDefined($scope.show_trending)){
-			delete $scope.personal_notifications;
-			delete $scope.readers_notifications;
-			delete $scope.show_trending;
-			$scope.notifications = [];
-		}
-		
-		if(angular.isUndefined(user_id)){
-			if(angular.isUndefined($scope.notifications)){
-				$scope.notifications = [];
-			}
-			delete $scope.personal_notifications;
-			delete $scope.readers_notifications;
-		}
-		else{
-			if(angular.isDefined($rootScope.reader)){
-				if(angular.isUndefined($scope.readers_notifications)){
-					$scope.readers_notifications = [];
-				}
-				delete $scope.notifications;
-				delete $scope.personal_notifications;
-			}
-			else{
-				if(angular.isUndefined($scope.personal_notifications)){
-					$scope.personal_notifications = [];
-				}
-				delete $scope.notifications;
-				delete $scope.readers_notifications;
-			}
-		}
 	}
 
 	$scope.toggle_login_panel = function(){

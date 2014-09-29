@@ -70,7 +70,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/feed/news_feed.html',
-    "<div class=\"scrollbar tweets\" ng-if=\"!focused_book.tweets && notifications && !show_trending\" check-scroll-bottom=\"get_notifications()\" ng-click=\"stop_propagation($event)\"><div class=\"tweet\"><b><div>News Feed</div></b></div><div ng-repeat=\"notification in notifications | reverse\" class=\"tweet animate-fast\"><div ng-include=\"\" src=\"'/assets/angular/views/feed/partials/notification_block.html'\"></div></div><div class=\"tweet animate-fast\">You've reached end of the news feed.</div></div>"
+    "<div class=\"scrollbar tweets\" ng-if=\"!focused_book.tweets && news_feed && !show_trending\" check-scroll-bottom=\"get_notifications()\" ng-click=\"stop_propagation($event)\"><div class=\"tweet\"><b><div>News Feed</div></b></div><div ng-repeat=\"notification in news_feed | reverse\" class=\"tweet animate-fast\"><div ng-include=\"\" src=\"'/assets/angular/views/feed/partials/notification_block.html'\"></div></div><div class=\"tweet animate-fast\">You've reached end of the news feed.</div></div>"
   );
 
 
@@ -95,7 +95,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/feed/trending.html',
-    "<div class=\"scrollbar tweets\" ng-if=\"!focused_book.tweets && notifications && show_trending\" check-scroll-bottom=\"get_notifications(true)\" ng-click=\"stop_propagation($event)\"><div class=\"tweet\"><b><div>Trending</div></b></div><div ng-repeat=\"notification in notifications | reverse\" class=\"tweet animate-fast\"><div ng-include=\"\" src=\"'/assets/angular/views/feed/partials/notification_block.html'\"></div></div><div class=\"tweet animate-fast\">You've reached end of the trending list.</div></div>"
+    "<div class=\"scrollbar tweets\" ng-if=\"!focused_book.tweets && trending_feed && show_trending\" check-scroll-bottom=\"get_notifications(true)\" ng-click=\"stop_propagation($event)\"><div class=\"tweet\"><b><div>Trending</div></b></div><div ng-repeat=\"notification in trending_feed | reverse\" class=\"tweet animate-fast\"><div ng-include=\"\" src=\"'/assets/angular/views/feed/partials/notification_block.html'\"></div></div><div class=\"tweet animate-fast\">You've reached end of the trending list.</div></div>"
   );
 
 

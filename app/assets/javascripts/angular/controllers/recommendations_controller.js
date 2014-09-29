@@ -65,7 +65,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		_show_profile = function(){
 			$rootScope.user.show_profile = true;
 			$scope._get_user_profile_info(user_id);
-			$scope._get_friends();
+			$scope._get_friends(2);
 			delete $rootScope.focused_book;
 			delete $rootScope.ticker_popup;
 		}
@@ -112,7 +112,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	   	$rootScope.user.collapsed_filters = true;
 	   	$rootScope.user.collapsed_trends = true;
 	   	$scope.expand_left_panel();
-	   	$scope._get_friends();
+	   	$scope._get_friends(2);
 	}
 
 	$scope.fetch_new_feed = function(user_id){
@@ -595,7 +595,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	$rootScope.focused_book = $scope.recommendations.books.first;
     }
 
-    $scope._get_friends = function(){
+    $scope._get_friends = function(count){
     	var _set_friends_for = function(user_array, data){
     		angular.forEach(data, function(value){
     			if(value[2] == null){
@@ -619,15 +619,13 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	}
 
     	if(angular.isUndefined($rootScope.reader)){
-    		if(angular.isUndefined($rootScope.user.friends) || $rootScope.user.friends.length == 0){
-		    	widgetService.get_friends($rootScope.user.id).then(function(data){
-		    		$rootScope.user.friends = [];
-		    		_set_friends_for($rootScope.user.friends, data);
-		    	});
-    		}
+	    	widgetService.get_friends($rootScope.user.id, count).then(function(data){
+	    		$rootScope.user.friends = [];
+	    		_set_friends_for($rootScope.user.friends, data);
+	    	});
     	}
     	else{
-    		widgetService.get_friends($rootScope.reader.id).then(function(data){
+    		widgetService.get_friends($rootScope.reader.id, count).then(function(data){
 	    		$rootScope.reader.friends = [];
 	    		_set_friends_for($rootScope.reader.friends, data);
 	    	});
@@ -697,6 +695,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				$scope._init_reader();
 				$scope._get_labels(reader_id);
 				$scope.placeholder = "Write on timeline...";
+				$scope._get_friends(2);
 			}
 			else{
 				_init_recommendations();

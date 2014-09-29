@@ -591,14 +591,15 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 						}
 					}
 					else{
+						var all_results_not_found = angular.isUndefined(all_results_found) || !all_results_found;
 						if($scope.popular_books.length == 0){
-							if(!all_results_found){
+							if(all_results_not_found){
 								$scope.all_results_found = true;
 								$scope.popular_books = [{"title": "No results found..."}];
 							}
 						}
 						else{
-							if(!all_results_found){
+							if(all_results_not_found){
 								_all_results_fetched();
 							}
 						}
@@ -734,7 +735,7 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 					});
 				}
 				else{
-					if(!$scope.all_results_found){
+					if(angular.isUndefined(all_results_found) || !all_results_found){
 						$scope._fetch_book_results();
 					}
 				}

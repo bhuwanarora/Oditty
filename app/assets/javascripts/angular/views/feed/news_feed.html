@@ -1,11 +1,11 @@
 <div class="scrollbar tweets"
-	ng-if="!focused_book.tweets && notifications && !show_trending"
+	ng-if="!focused_book.tweets && news_feed && !show_trending"
 	check-scroll-bottom="get_notifications()"
 	ng-click="stop_propagation($event)">
 	<div class="tweet">
 		<b><div>News Feed</div></b>
 	</div>
-	<div ng-repeat="notification in notifications | reverse" 
+	<div ng-repeat="notification in news_feed | reverse" 
 	     class="tweet animate-fast">
 		<div ng-include src="'/assets/angular/views/feed/partials/notification_block.html'"></div>
 	</div>
