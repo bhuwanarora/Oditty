@@ -113,14 +113,10 @@ module Api
 
 			def notifications
 				news_feed = []
-				if params[:id] && !params[:debug]
+				if params[:id]
 					news_feed = WebsiteApi.get_personal_feed(params[:id], params[:skip_count])
 				else
-					if session[:user_id].present?
-						news_feed = WebsiteApi.get_news_feed(session[:user_id], params[:skip_count])
-					elsif params[:debug].present?
-						news_feed = WebsiteApi.get_news_feed(params[:id], params[:skip_count])
-					end
+					news_feed = WebsiteApi.get_news_feed(session[:user_id], params[:skip_count])
 				end
 				render :json => {:notifications => news_feed}, :status => 200
 			end
