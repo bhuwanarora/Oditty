@@ -642,3 +642,8 @@ input:focus{
 .light_red_color{
     color: rgba(216, 57, 30, 0.5) !important;
 }
+
+.inline_block{
+    float: left;
+    display: inline-block;
+}

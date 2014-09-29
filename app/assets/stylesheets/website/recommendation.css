@@ -385,7 +385,7 @@
 	left: 140px;
 	top: 135px;
 	right: initial;
-	cursor: default;
+	cursor: default !important;
 }
 
 .toggle_elements{
@@ -703,24 +703,23 @@
 	min-height: 60px;
 }
 
-.recommendation_box .friend_grid .friend_block{
+.recommendation_box .friend_grid .friend_thumb_wrapper{
 	border: 5px solid #fff;
 	position: relative;
 	float: left;
 	overflow: hidden;
 	width: 60px;
-	height: 60px;
+	height: 110px;
+	display: inline-block;
+	float: left;
+	border-radius: 4px;
 }
 
 .recommendation_box .friend_grid .friend_block .friend_name{
-	position: absolute;
-	bottom: 5px;
-	left: 0px;
-	background-color: rgba(255, 255, 255, 0.56);
-	right: 0px;
-	padding: 4px;
 	font-size: .8em;
 	cursor: default;
+	font-weight: 700;
+	float: left;
 }
 
 .recommendation_box .header{
@@ -2025,7 +2024,7 @@ l	.compressed_info_card{
 
 .trending_block{
 	margin-top: 10px;
-	max-height: 15vh;
+	max-height: 4vh;
 }
 
 .ticker_popup_shifted{

@@ -17,13 +17,15 @@
 		</div>
 		<div class="friend_grid">
 			<div ng-repeat="friend in user.followers" 
-				 class="friend_block" 
+				 class="inline_block" 
 				 data-selected="false"
 				 title="{{friend.name}}" 
 				 ng-click="select_thumb($event, friend.id)">
-				<div class="friend_name" ng-show="friend.name">{{friend.name}}</div>
-				<img ng-src="{{friend | blob_backup}}" 
-				     class="friend_thumb"/>
+				 <div class="friend_block">
+					<img ng-src="{{friend | blob_backup}}" 
+					     class="friend_thumb"/>
+				 </div>
+				<div class="friend_name table_cell" ng-show="friend.name">{{friend.name}}</div>
 			</div>
 		</div>
 		<div class="footer">
