@@ -626,6 +626,10 @@ input:focus{
     cursor: pointer;
 }
 
+.click:hover{
+    text-decoration: underline;
+}
+
 .capitalise{
     text-transform: capitalize;
 }

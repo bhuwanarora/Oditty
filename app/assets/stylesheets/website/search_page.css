@@ -28,6 +28,10 @@
 	margin-top: 80px;
 }
 
+.trending_panel_shift{
+	margin-top: 40vh;
+}
+
 .search_page .shift_bottom{
 	bottom: 10px;
 	top: inherit;

@@ -696,6 +696,13 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		}		
 	}
 
+	$scope.reset_base_selection = function(){
+		$scope.search_tag.placeholder = SearchUIConstants.SearchPlaceholder;
+		$scope.search_results = [];
+		delete $scope.active_base;
+		$cookieStore.remove('base_search');
+	}
+
 	$scope.handle_base_selection = function(item){
 		$scope.hide_input_field = false;
 		$scope.show_secondary_input = false;
@@ -707,10 +714,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$scope.set_base_search();
 		}
 		else if(angular.isDefined($scope.active_base) && $scope.active_base == item.type){
-			$scope.search_tag.placeholder = SearchUIConstants.SearchPlaceholder;
-			$scope.search_results = [];
-			delete $scope.active_base;
-			$cookieStore.remove('base_search');
+			$scope.reset_base_selection();
 		}
 		else{
 			switch(item.name){

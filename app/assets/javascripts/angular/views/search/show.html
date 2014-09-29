@@ -11,9 +11,8 @@
 	    	 ng-click="hide_popups($event)">
 			<header></header>
 		  	<search-bar></search-bar>
-		  	<div ng-include="'/assets/angular/views/search/trending.html'" 
-		  		 class="trending_panel animate-fast"
-		  		 ng-hide="active_base || filters_added.length > 0"></div>
+		  	<div ng-include="'/assets/angular/views/search/trending.html'"></div>
+		  	
 		</div>
 		<div ng-include="'/assets/angular/views/search/login_form.html'"></div>
 	</div>
