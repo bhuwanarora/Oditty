@@ -601,7 +601,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
     $scope._get_friends = function(count){
     	var _set_friends_for = function(user_array, data){
-    		user_array = [];
     		angular.forEach(data, function(value){
     			if(value[2] == null){
     				thumb = "/assets/profile_pic.jpeg"
@@ -626,7 +625,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     		if(angular.isUndefined($rootScope.user.friends) || count != $rootScope.user.friends.length){
 		    	widgetService.get_friends($rootScope.user.id, count).then(function(data){
 		    		$rootScope.user.friends_count = data[0][8];
-		    		delete $rootScope.user.friends;
 		    		_set_friends_for($rootScope.user.friends, data);
 		    	});
     		}
@@ -634,7 +632,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	else{
     		if(angular.isUndefined($rootScope.reader.friends) || count != $rootScope.reader.friends.length){
 	    		widgetService.get_friends($rootScope.reader.id, count).then(function(data){
-		    		delete $rootScope.reader.friends;
 		    		$rootScope.reader.friends_count = data[0][8];
 		    		_set_friends_for($rootScope.reader.friends, data);
 		    	});
