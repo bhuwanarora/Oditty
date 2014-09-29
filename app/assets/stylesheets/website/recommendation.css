@@ -1907,6 +1907,7 @@ l	.compressed_info_card{
 	bottom: 80px;
 	height: initial;
 	border-bottom: 1px solid #D8D8D8;
+	border-top: 1px solid #D8D8D8;
 	background-color: white;
 }
 
@@ -1931,7 +1932,7 @@ l	.compressed_info_card{
 }	
 
 .user_profile{
-	top: 60px;
+	top: 62px;
 	position: fixed;
 	white-space: initial;
 	background-color: white;
@@ -2006,7 +2007,7 @@ l	.compressed_info_card{
 }
 
 .feed_group{
-	top: 60px;
+	top: 62px;
 	left: 45%;
 	position: fixed;
 	width: 45%;
