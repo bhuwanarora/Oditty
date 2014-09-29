@@ -235,11 +235,13 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	$scope._show_trending_feed = function(){
+		$scope.show_feed = {"trending": true};
 		$scope.trending_feed = $rootScope.trends;
      	$scope.show_trending = true;
 	}
 
 	$scope._show_reader_feed = function(user_id, init){
+		$scope.show_feed = {"readers": true};
 		if(angular.isDefined(init) && init){
 			$scope.readers_notifications = [];
 		}
@@ -259,6 +261,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	$scope._show_personal_feed = function(user_id, init){
+		$scope.show_feed = {"personal": true};
 		if(angular.isDefined(init) && init){
 			$scope.personal_notifications = [];
 		}
@@ -278,6 +281,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	$scope._show_news_feed = function(init){
+		$scope.show_feed = {"news": true};
 		var _set_feed = function(data){
 			if(angular.isUndefined($scope.news_feed)){
     			$scope.news_feed = [];

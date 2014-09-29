@@ -619,16 +619,20 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	}
 
     	if(angular.isUndefined($rootScope.reader)){
-	    	widgetService.get_friends($rootScope.user.id, count).then(function(data){
-	    		$rootScope.user.friends = [];
-	    		_set_friends_for($rootScope.user.friends, data);
-	    	});
+    		if(count != $rootScope.user.friends.length){
+		    	widgetService.get_friends($rootScope.user.id, count).then(function(data){
+		    		$rootScope.user.friends = [];
+		    		_set_friends_for($rootScope.user.friends, data);
+		    	});
+    		}
     	}
     	else{
-    		widgetService.get_friends($rootScope.reader.id, count).then(function(data){
-	    		$rootScope.reader.friends = [];
-	    		_set_friends_for($rootScope.reader.friends, data);
-	    	});
+    		if(count != $rootScope.reader.friends.length){
+	    		widgetService.get_friends($rootScope.reader.id, count).then(function(data){
+		    		$rootScope.reader.friends = [];
+		    		_set_friends_for($rootScope.reader.friends, data);
+		    	});
+    		}
     	}
     }
 
