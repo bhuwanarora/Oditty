@@ -74,6 +74,7 @@
   </div>
 
   <div class="animate-fast website_search_options scrollbar" 
+       ng-mouseleave="remove_active_state()"
        ng-if="search_results.length > 0 && !($routeParams.type && hide_options)">
     <div ng-repeat="item in search_results | limitTo: search_tag.result_count+1 | filter:search_tag.custom_input | orderBy: item.name track by $index "
          ng-click="handle_selection_option(item, $event)" 

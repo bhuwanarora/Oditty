@@ -82,7 +82,7 @@ var constants = {
 			"AuthorLabel": "Author",
 			"ReaderLabel": "User",
 			"TypeMore": "Type more characters...",
-			"ComingSoon": "Coming Soon...",
+			"ComingSoon": "Coming soon with exhaustive filters...",
 			"NoResultsFound": "No results found...",
 			"BookSearch": "BOOK",
 			"BookSearchPlaceholder": "Search books...",

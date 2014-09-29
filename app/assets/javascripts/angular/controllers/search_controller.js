@@ -418,7 +418,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 
 				delete $scope.custom_search;
 				delete $scope.search_display;
-        		delete $scope.search_tag.current;
+        		$scope.remove_active_state();
 
 				switch(item.type){
 					case SearchUIConstants.Year:
@@ -846,7 +846,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
     	console.debug("current_value, custom_search", current_value, custom_search);
     	
     	delete $scope.search_display;
-    	delete $scope.search_tag.current;
+    	$scope.remove_active_state();
     	if(custom_search){
     		$scope._handle_backspace_or_delete_in_custom_search(current_value);
     	}
@@ -887,6 +887,10 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	$scope.highlight = function(searchItem, textToSearchThrough){
 		var html = '<span><i><b>$&</b></i></span>';
     	return $sce.trustAsHtml(textToSearchThrough.replace(new RegExp(searchItem, 'gi'), html));
+	}
+
+	$scope.remove_active_state = function(){
+		delete $scope.search_tag.current;
 	}
 
 	$scope._init_graph_search = function(){
@@ -930,12 +934,12 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				"level1_option": true, 
 				"type": SearchUIConstants.AuthorSearch, 
 				"icon":"icon-pen", 
-				"icon2": "icon-book"},
-			{"name": SearchUIConstants.BookByRegionLink, 
-				"level1_option": true, 
-				"type": SearchUIConstants.Country, 
-				"icon": "icon-earth", 
 				"icon2": "icon-book"}
+			// {"name": SearchUIConstants.BookByRegionLink, 
+			// 	"level1_option": true, 
+			// 	"type": SearchUIConstants.Country, 
+			// 	"icon": "icon-earth", 
+			// 	"icon2": "icon-book"}
 			// {"name": SearchUIConstants.BookListsLink, 
 				// "level1_option": true, 
 				// "type": SearchUIConstants.List, 
