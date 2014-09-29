@@ -1378,6 +1378,7 @@ and (min-width : 1824px) {
 	color: #427fed;
 }
 
+.user_profile .friends_grid,
 .left_column .friends_grid{
 	max-height: 54vh;
 	white-space: normal;
@@ -1385,12 +1386,14 @@ and (min-width : 1824px) {
 	border-radius: 4px;
 }
 
+.user_profile .friends_grid img,
 .left_column .friends_grid img{
 	width: 50px;
 	float: left;
 	min-height: 50px;
 }
 
+.user_profile .friends_grid .friend_block,
 .left_column .friends_grid .friend_block{
 	width: auto;
 	overflow-y: auto;
@@ -1399,6 +1402,7 @@ and (min-width : 1824px) {
 	cursor: default;
 }
 
+.user_profile .friends_grid .friend_block .friend_details,
 .left_column .friends_grid .friend_block .friend_details{
 	float: left;
 	margin: 0px 10px 10px 10px;

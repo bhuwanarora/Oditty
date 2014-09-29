@@ -65,6 +65,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		_show_profile = function(){
 			$rootScope.user.show_profile = true;
 			$scope._get_user_profile_info(user_id);
+			$scope._get_friends();
 			delete $rootScope.focused_book;
 			delete $rootScope.ticker_popup;
 		}
