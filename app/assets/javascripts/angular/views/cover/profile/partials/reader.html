@@ -1,4 +1,13 @@
 <div ng-if="reader" class="user_profile_block scrollbar">
+	<div class="header" ng-show="reader.influential_books.length > 0">
+		<b>Books that left a mark on {{reader.name | first_name}}</b>
+	</div>
+	<div class="block">
+		<div ng-repeat="book in reader.influential_books">
+			<!-- <img src="{{book.isbn | small_thumb}}"/> -->
+			<div><b class="site_color">{{book.title}}</b>, Book by {{book.author_name}}</div>
+		</div>
+	</div>
 	<div class="header">
 		<b>About {{reader.name | first_name}}</b>
 	</div>
@@ -30,17 +39,10 @@
 	<div class="header" ng-show="reader.likes.length > 0">
 		<b>Likes</b>
 	</div>
-	<div ng-repeat="like in reader.likes" class="category_block table">
-		<div class="{{like.icon}} table_cell category_icon"></div><br/>
-		<div class="table_cell">{{like.name}}</div>
-	</div>
-	<div class="header" ng-show="reader.influential_books.length > 0">
-		<b>Books that left a mark on {{reader.name | first_name}}</b>
-	</div>
-	<div class="block">
-		<div ng-repeat="book in reader.influential_books">
-			<!-- <img src="{{book.isbn | small_thumb}}"/> -->
-			<div><b class="site_color">{{book.title}}</b>, Book by {{book.author_name}}</div>
+	<div class="content">
+		<div ng-repeat="like in reader.likes" class="category_block table">
+			<div class="{{like.icon}} table_cell category_icon"></div><br/>
+			<div class="table_cell">{{like.name}}</div>
 		</div>
 	</div>
 	<!-- <map class="map" zoom="11">
