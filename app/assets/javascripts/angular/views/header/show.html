@@ -50,12 +50,12 @@
  	<div ng-controller="searchController" ng-if="$routeParams.type && !reader">
  		<search-bar></search-bar>
  	</div>
- 	<a class="header_navbar site_color"
+ 	<div class="header_navbar click"
  	   ng-click="show_interaction_box(user.id)"
  	   ng-if="$routeParams.type"
  	   id="share">
 		<span class="table_cell"><b>Share</b></span>
-	</a>
+	</div>
 	<!-- <div class="header_navbar site_color" 
 		 id="share" 
 		 ng-click="show_interaction_box(user.id)">

@@ -239,7 +239,11 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
      	$scope.show_trending = true;
 	}
 
-	$scope._show_reader_feed = function(user_id){
+	$scope._show_reader_feed = function(user_id, init){
+		if(angular.isDefined(init) && init){
+			$scope.readers_notifications = [];
+		}
+
 		if(angular.isDefined($scope.readers_notifications)){
     		var existing_notifications_count = $scope.readers_notifications.length;
     	}
@@ -254,7 +258,11 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		});
 	}
 
-	$scope._show_personal_feed = function(user_id){
+	$scope._show_personal_feed = function(user_id, init){
+		if(angular.isDefined(init) && init){
+			$scope.personal_notifications = [];
+		}
+
 		if(angular.isDefined($scope.personal_notifications)){
     		var existing_notifications_count = $scope.personal_notifications.length;
     	}
@@ -269,12 +277,16 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		});
 	}
 
-	$scope._show_news_feed = function(){
+	$scope._show_news_feed = function(init){
 		var _set_feed = function(data){
 			if(angular.isUndefined($scope.news_feed)){
     			$scope.news_feed = [];
     		}
 			$scope.news_feed = data.notifications.concat($scope.news_feed);
+		}
+
+		if(angular.isDefined(init) && init){
+			$scope.news_feed = [];
 		}
 
 		if(angular.isDefined($scope.news_feed)){
@@ -328,24 +340,21 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 
 	    get_notifications_event = $scope.$on('getNotifications', function(event, trending, user_id, init){
 	    	console.debug("getNotifications ", user_id, trending, angular.isDefined($rootScope.reader), init);
-	    	if(angular.isDefined(init) && init){
-	    		$scope._init_notifications();
-	    	}
-
+	    	
     		if(angular.isUndefined(trending) || !trending){
     			if(angular.isDefined(user_id)){
 		    		if(angular.isDefined($rootScope.reader) && (user_id == $rootScope.reader.id)){
 		    			console.debug("_show_reader_feed", user_id);
-		    			$scope._show_reader_feed(user_id);
+		    			$scope._show_reader_feed(user_id, init);
 		    		}
 		    		else{
 		    			console.debug("_show_personal_feed", user_id);
-			    		$scope._show_personal_feed(user_id);
+			    		$scope._show_personal_feed(user_id, init);
 		    		}
 	    		}
 	    		else{
 	    			console.debug("_show_news_feed");
-			    	$scope._show_news_feed();
+			    	$scope._show_news_feed(init);
 	    		}
      		}
      		else{
@@ -432,16 +441,6 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    // $scope.$on('socket:someEvent', function (ev, data) {
 	    //   $scope.theData = data;
 	    // });
-	}
-
-	$scope._init_notifications = function(){
-		if(angular.isDefined($rootScope.reader)){
-			$scope.readers_notifications = [];
-		}
-		else{
-			$scope.notifications = [];
-		}
-		$scope.personal_notifications = [];
 	}
 
 	_init = function(){
