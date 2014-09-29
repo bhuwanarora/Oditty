@@ -1017,6 +1017,10 @@ and (min-width : 1824px) {
 	overflow-y: hidden; 
 }
 
+.feed_bloxk .notifications{
+	max-height: none;
+}
+
 .notifications:hover{
 	overflow-y: auto; 
 }
@@ -2028,6 +2032,7 @@ l	.compressed_info_card{
 	float: left;
 	display: inline-block;
 	width: 56%;
+	margin-left: 2%;
 }
 
 .feed_block{
