@@ -103,6 +103,17 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
       	$scope.fetch_new_feed(user_id);
 	}
 
+	$scope.show_friends_list = function(){
+		$rootScope.user.collapsed_friends = false; 
+	   	$rootScope.user.collapsed_left_column = false;
+	   	$rootScope.user.collapsed_column = true; 
+	   	$rootScope.user.collapsed_lists = true;
+	   	$rootScope.user.collapsed_filters = true;
+	   	$rootScope.user.collapsed_trends = true;
+	   	$scope.expand_left_panel();
+	   	$scope._get_friends();
+	}
+
 	$scope.fetch_new_feed = function(user_id){
       	var init_notification = true;
       	var trending = false;
@@ -583,7 +594,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	$rootScope.focused_book = $scope.recommendations.books.first;
     }
 
-    $scope._get_friends = function(user_id){
+    $scope._get_friends = function(){
     	var _set_friends_for = function(user_array, data){
     		angular.forEach(data, function(value){
     			if(value[2] == null){
@@ -606,17 +617,21 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
     	}
 
-    	if(angular.isDefined(user_id)){
-    		widgetService.get_friends(user_id).then(function(data){
-	    		$rootScope.reader.friends = [];
-	    		_set_friends_for($rootScope.reader.friends, data);
-	    	});
+    	if(angular.isUndefined($rootScope.reader)){
+    		if(angular.isUndefined($rootScope.user.friends) || $rootScope.user.friends.length == 0){
+		    	widgetService.get_friends($rootScope.user.id).then(function(data){
+		    		$rootScope.user.friends = [];
+		    		_set_friends_for($rootScope.user.friends, data);
+		    	});
+    		}
     	}
     	else{
-	    	widgetService.get_friends($scope.$routeParams.id).then(function(data){
-	    		$rootScope.user.friends = [];
-	    		_set_friends_for($rootScope.user.friends, data);
-	    	});
+    		if(angular.isUndefined($rootScope.reader.friends) || $rootScope.reader.friends.length == 0){
+	    		widgetService.get_friends($rootScope.reader.id).then(function(data){
+		    		$rootScope.reader.friends = [];
+		    		_set_friends_for($rootScope.reader.friends, data);
+		    	});
+    		}
     	}
     }
 
@@ -681,7 +696,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				$scope.toggle_profile(reader_id);
 				$rootScope.user.show_profile = true;
 				$scope._init_reader();
-				$scope._get_friends(reader_id);
 				$scope._get_labels(reader_id);
 				$scope.placeholder = "Write on timeline...";
 			}
@@ -691,7 +705,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				$scope._initialize_filters();
 
 		        // _handle_focused_book();
-		        $scope._get_friends();
 		        // $scope.get_notifications();
 
 				$scope.placeholder = WebsiteUIConstants.Share;

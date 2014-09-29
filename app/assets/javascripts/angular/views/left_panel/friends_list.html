@@ -18,13 +18,7 @@
 	<div class="left_column_tab"
 		 ng-class="{'left_column_tab_compressed': !user.collapsed_left_column}"
 		 ng-hide="!user.collapsed_friends"
-	 	 ng-click="user.collapsed_friends = false; 
-	 	 		   user.collapsed_left_column = false;
-	 	 		   user.collapsed_column = true; 
-	 	 		   user.collapsed_lists = true;
-	 	 		   user.collapsed_filters = true;
-	 	 		   user.collapsed_trends = true;
-	 	 		   expand_left_panel();">
+	 	 ng-click="show_friends_list();">
 	 	 <span class="table_cell">
 			<span class="icon-users green_color header_font" ng-if="user.collapsed_friends" ></span>
 			<span ng-show="user.collapsed_left_column">&nbsp;&nbsp;Friends</span>

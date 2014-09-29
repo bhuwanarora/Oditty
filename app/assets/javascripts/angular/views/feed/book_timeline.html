@@ -13,6 +13,7 @@
 		<div class="thumb"><img ng-src="{{tweet.user.thumb | thumb_backup}}"/></div>
 		<div class="tweet_text">
 			<b><div ng-bind-html="tweet.user.name"></div></b>
+			<timestamp data="notification.timestamp"></timestamp>
 			<div ng-bind-html="tweet.tag"></div>
 			<div ng-bind-html="tweet.message"></div>
 		</div>

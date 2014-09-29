@@ -1206,4 +1206,14 @@ websiteApp.directive('profileLink', function(){
 		restrict: "E",
 		templateUrl: "/assets/angular/views/header/partials/profile_link.html"
 	}	
-})
+});
+
+websiteService.directive('timestamp', function(){
+	return{
+		restrict: 'E',
+		scope: {
+			"timestamp": "=data"
+		},
+		templateUrl: "/assets/angular/views/shared/timestamp.html"
+	}
+});

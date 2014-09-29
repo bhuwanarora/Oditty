@@ -477,6 +477,11 @@
 	color: #333;
 }
 
+.scroller .scroller-left:active,
+.scroller .scroller-right:active{
+	color: #427fed;
+}
+
 .more_filters{
 	z-index: 2;
 	background-color: #fff;

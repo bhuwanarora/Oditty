@@ -47,3 +47,8 @@
 		<marker position="[{{reader.latitude}}, {{reader.longitude}}]" centered="true"></marker>
 	</map> -->
 </div>
+<div class="friends_grid scrollbar">
+	<div ng-repeat="friend in reader.friends" class="friend_block animate-fast">
+		<div ng-include src="'/assets/angular/views/left_panel/shared/friend_grid.html'"></div>
+	</div>
+</div>
