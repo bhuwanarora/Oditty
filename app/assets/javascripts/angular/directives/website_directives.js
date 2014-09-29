@@ -1208,7 +1208,7 @@ websiteApp.directive('profileLink', function(){
 	}	
 });
 
-websiteService.directive('timestamp', function(){
+websiteApp.directive('timestamp', function(){
 	return{
 		restrict: 'E',
 		scope: {
