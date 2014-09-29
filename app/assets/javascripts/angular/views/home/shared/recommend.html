@@ -15,17 +15,19 @@
 			<span><b>Select friends whom you want to recommend</span></b><br/>
 			<span class="site_color"> {{recommend_object.title}} by {{recommend_object.author_name}}</span>
 		</div>
-		<div class="friend_grid">
+		<div class="friend_grid scrollbar">
 			<div ng-repeat="friend in user.followers" 
 				 class="inline_block" 
 				 data-selected="false"
 				 title="{{friend.name}}" 
 				 ng-click="select_thumb($event, friend.id)">
-				 <div class="friend_thumb_wrapper">
-					<img ng-src="{{friend | blob_backup}}" 
-					     class="friend_thumb"/>
+				 <div class="table">
+					<div class="friend_thumb_wrapper">
+						<img ng-src="{{friend | blob_backup}}" 
+						     class="friend_thumb"/>
+					</div>
+					<div class="friend_name table_cell" ng-show="friend.name">{{friend.name}}</div>
 				 </div>
-				<div class="friend_name table_cell" ng-show="friend.name">{{friend.name}}</div>
 			</div>
 		</div>
 		<div class="footer">

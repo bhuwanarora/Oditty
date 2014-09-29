@@ -675,17 +675,15 @@
 
 .recommendation_box{
 	position: relative;
-	background-color: white;
-	width: 500px;
-	max-width: 90%;
-	height: 500px;
+	background-color: #fff;
+	width: 70%;
+	height: 70vh;
 	left: 50%;
-	margin-left: -250px;
 	top: 50%;
-	margin-top: -225px;
-	box-shadow: 0 7px 15px rgba(0, 0, 0, 0.25);
+	margin-top: -35vh;
+	border-radius: 2px;
+	margin-left: -35%;
 	z-index: 1;
-	border-radius: 4px;
 }
 
 .mark_as_read_instruct{
@@ -715,11 +713,11 @@
 	border-radius: 4px;
 }
 
-.recommendation_box .friend_grid .friend_block .friend_name{
+.recommendation_box .friend_grid .friend_name{
 	font-size: .8em;
 	cursor: default;
 	font-weight: 700;
-	float: left;
+	width: 70px;
 }
 
 .recommendation_box .header{
@@ -754,7 +752,7 @@
 }
 
 .recommendation_box .friend_grid{
-	height: 380px;
+	height: 40vh;
 	padding: 20px;
 	white-space: normal;
 	overflow-y: scroll;
