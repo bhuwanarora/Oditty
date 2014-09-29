@@ -11,17 +11,17 @@
 		<div class="card_summary animate-fast">
 			<div>
 				<tooltip text="book.title" position="top" ng-if="!user.show_profile"></tooltip>
-				<b><span class="header_font">{{book.title | reduced_title | html}}</span></b><br/>
-				<span ng-show="book.author_name">by {{book.author_name | html}}</span>
+				<b><span class="header_font">{{book.title | reduced_title}}</span></b><br/>
+				<span ng-show="book.author_name">by {{book.author_name}}</span>
 			</div>
 			<div ng-if="book.isbn">
 				<tooltip text="book.summary" position="bottom" scroll="true" ng-if="!user.show_profile"></tooltip>
-				<span ng-if="book.summary" class="normal_text">{{book.summary | reduced_summary | html}}</span>
+				<span ng-if="book.summary" class="normal_text">{{book.summary | reduced_summary}}</span>
 			</div>
 			<div ng-if="!book.isbn" 
 				 class="scrollbar summary" 
 				 msd-wheel="stop_propagation($event)">
-				<span ng-if="book.summary" class="normal_text" >{{book.summary | html}}</span>
+				<span ng-if="book.summary" class="normal_text" >{{book.summary}}</span>
 			</div>
 		</div>
 		<!-- <book-navbar track></book-navbar> -->
