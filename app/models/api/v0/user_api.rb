@@ -184,6 +184,7 @@ module Api
 				end
 				puts clause.blue.on_red
 				user_id = @neo.execute_query(clause)["data"][0][0]
+				puts "fb execute_query done...".green
 				puts "FB LOGIN USER_ID #{user_id.to_s.red}"
 				session[:user_id] = user_id
 				user_id

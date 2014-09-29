@@ -16,7 +16,11 @@ module Api
 
 			def fb
 				user_id = UserApi.handle_facebook_user(params, session)
-				render :json => {:message => "Success"}, :status => 200
+				if user_id.present?
+					render :json => {:message => "Success"}, :status => 200
+				else
+					render :json => {:message => "Login Failure"}, :status => 500
+				end
 			end
 
 			def books_read
