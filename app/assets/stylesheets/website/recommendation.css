@@ -1386,6 +1386,10 @@ and (min-width : 1824px) {
 	border-radius: 4px;
 }
 
+.user_profile .friends_grid{
+	max-height: none;
+}
+
 .user_profile .friends_grid img,
 .left_column .friends_grid img{
 	width: 50px;
@@ -1953,11 +1957,16 @@ l	.compressed_info_card{
 	top: initial;
 	background-color: white;
 	padding: 20px;
+	padding-right: 22%;
 }
 
 .thumb_wrapper_shifted{
-	bottom: 130px;
+	bottom: 137px;
 	top: initial !important;
+	padding: 20px;
+	background-color: white;
+	left: 0px !important;
+	padding-right: 32%;
 }	
 
 .user_profile{
