@@ -1820,6 +1820,8 @@ l	.compressed_info_card{
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-color: #F5F5F5;
+	border-top: 1px solid #EBEBEB;
+	border-bottom: 1px solid #EBEBEB;
 }
 
 .share_fade{
@@ -2007,7 +2009,7 @@ l	.compressed_info_card{
 }
 
 .feed_group{
-	top: 62px;
+	top: 100px;
 	left: 45%;
 	position: fixed;
 	width: 45%;
