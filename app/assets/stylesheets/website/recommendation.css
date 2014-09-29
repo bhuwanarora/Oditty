@@ -1942,7 +1942,7 @@ l	.compressed_info_card{
 }
 
 .user_name_shifted{
-	bottom: 85px;
+	bottom: 98px;
 	top: initial;
 }
 
@@ -2012,10 +2012,7 @@ l	.compressed_info_card{
 }
 
 .user_profile .user_profile_block{
-	height: 44vh;
-	overflow-y: scroll;
 	white-space: nowrap;
-	padding: 20px;
 }
 
 .right_links_shifted{
@@ -2025,7 +2022,6 @@ l	.compressed_info_card{
 
 .user_profile .block{
 	overflow: auto;
-	margin: 0px 0px 20px 0px;
 }
 
 .feed_group{
@@ -2035,10 +2031,10 @@ l	.compressed_info_card{
 }
 
 .feed_block{
-	max-height: 80vh;
 	border-radius: 2px;
-	padding: 20px 0px;
-	background-color: white;
+	padding: 20px 0;
+	background-color: #fff;
+	max-height: none;
 }
 
 .trending_block{
