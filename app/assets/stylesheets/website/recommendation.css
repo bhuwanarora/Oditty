@@ -1946,6 +1946,7 @@ l	.compressed_info_card{
 .user_profile .content{
 	white-space: initial;
 	margin-bottom: 20px;
+	overflow: auto;
 }
 
 .category_block .category_icon{
