@@ -46,13 +46,13 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 		if(user_id == $rootScope.user.id){
 			_get_user_profile_info($rootScope.user);
-			$scope._fetch_new_feed();
+			$scope.fetch_new_feed();
 			$scope._fetch_trending_options();
 		}
 		else{
 			_get_user_profile_info($rootScope.reader);
-			$scope._fetch_new_feed($rootScope.reader.id);
-			// $scope._fetch_new_feed();
+			$scope.fetch_new_feed($rootScope.reader.id);
+			// $scope.fetch_new_feed();
 		}
 	}
 
@@ -100,10 +100,10 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
       	$rootScope.user.collapsed_lists = true;
       	$rootScope.user.collapsed_friends = true;
       	$scope.expand_left_panel();
-      	$scope._fetch_new_feed(user_id);
+      	$scope.fetch_new_feed(user_id);
 	}
 
-	$scope._fetch_new_feed = function(user_id){
+	$scope.fetch_new_feed = function(user_id){
       	var init_notification = true;
       	var trending = false;
 		$scope.$emit('getNotifications', trending, user_id, init_notification);

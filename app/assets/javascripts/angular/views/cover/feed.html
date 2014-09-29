@@ -6,9 +6,6 @@
 	<div ng-include src="'/assets/angular/views/shared/feed/news.html'"
 		 msd-wheel="stop_propagation($event)"
 	     class="feed_block notifications"></div>
-	<!-- <div ng-include src="'/assets/angular/views/shared/feed/trending.html'" 
-		 msd-wheel="stop_propagation($event)"
-	     class="feed_block notifications trending_block"></div> -->
 </div>
 <div class="feed_group"
 	 ng-if="reader">
@@ -22,4 +19,11 @@
 		 msd-wheel="stop_propagation($event)"
 		 ng-if="user.id == 4084079"
 	     class="feed_block notifications trending_block"></div>
+	<div ng-if="user.id == 4084079"
+	     class="notifications">
+	     <div class="notification_stable">
+	     	<span class="click" ng-click="fetch_new_feed()">Show {{reader.name | first_name}}'s  News Feed</span><br/>
+	     	<span class="click" ng-click="fetch_new_feed(reader.id)">Show {{reader.name | first_name}}'s  Personal Feed</span><br/>
+	     </div>
+	</div>
 </div>
