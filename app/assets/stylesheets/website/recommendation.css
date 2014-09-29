@@ -458,14 +458,14 @@
 
 .scroller .scroller-left{
 	margin-left: 3px;
-	padding: 2px 12px 5px 10px;
+	padding: 2px 15px 5px 14px;
 	border-top-left-radius: 2px;
 	border-bottom-left-radius: 2px;
 }
 
 .scroller .scroller-right{
 	margin-right: 3px;
-	padding: 2px 10px 5px 12px;
+	padding: 2px 14px 5px 15px;
 	border-top-right-radius: 2px;
 	border-bottom-right-radius: 2px;
 }
