@@ -17,7 +17,7 @@
 		</div>
 		<div class="friend_grid scrollbar">
 			<div ng-repeat="friend in user.followers" 
-				 class="inline_block" 
+				 class="block" 
 				 data-selected="false"
 				 title="{{friend.name}}" 
 				 ng-click="select_thumb($event, friend.id)">

@@ -702,12 +702,11 @@
 }
 
 .recommendation_box .friend_grid .friend_thumb_wrapper{
-	border: 5px solid #fff;
 	position: relative;
 	float: left;
 	overflow: hidden;
 	width: 60px;
-	height: 110px;
+	height: 60px;
 	display: inline-block;
 	float: left;
 	border-radius: 4px;
@@ -756,6 +755,16 @@
 	padding: 20px;
 	white-space: normal;
 	overflow-y: scroll;
+	background-color: #F5F5F5;
+}
+
+.recommendation_box .friend_grid .block{
+	background-color: white;
+	border: 1px solid #E7E7E7;
+	display: inline-block;
+	float: left;
+	margin: 4px;
+	border: 5px solid #fff;
 }
 
 .reset_filters{
