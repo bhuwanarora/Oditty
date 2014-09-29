@@ -58,7 +58,7 @@ module Api
 						puts clause.blue.on_red
 						results = @neo.execute_query(clause)["data"]
 					end
-				else
+				end
 				results
 			end
 
