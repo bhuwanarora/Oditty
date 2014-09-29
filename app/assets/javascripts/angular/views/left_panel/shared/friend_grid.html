@@ -3,16 +3,16 @@
 	     class="friend_thumb" />
 </div>
 <div class="friend_details">
-	<div class="site_color capitalise" ng-if="friend.name && friend.id == user.id"><b>
+	<div class="click capitalise" ng-if="friend.name && friend.id == user.id"><b>
 		<a ng-href="#user/{{user.id}}/recommendations/books">{{friend.name}}</a></b>
 	</div>
-	<div class="site_color" ng-if="!friend.name && friend.id == user.id"><b>
+	<div class="click" ng-if="!friend.name && friend.id == user.id"><b>
 		<a ng-href="#user/{{user.id}}/recommendations/books">{{friend.email}}</a></b>
 	</div>
-	<div class="site_color capitalise" ng-if="friend.name && friend.id != user.id"><b>
+	<div class="click capitalise" ng-if="friend.name && friend.id != user.id"><b>
 		<a ng-href="#reader/{{friend.id}}/profile">{{friend.name}}</a></b>
 	</div>
-	<div class="site_color" ng-if="!friend.name && friend.id != user.id"><b>
+	<div class="click" ng-if="!friend.name && friend.id != user.id"><b>
 		<a ng-href="#reader/{{friend.id}}/profile">{{friend.email}}</a></b>
 	</div>
 	<div ng-if="friend.init_book_read_count">Reader of {{friend.init_book_read_count}}</div>
@@ -26,5 +26,5 @@
 		<span class="icon-bookmarks"></span>
 		<span> · </span>
 	</div>
-	<div class="normal_text site_color" ng-if="friend.fav_categories">Likes {{friend.fav_categories}} books</div>
+	<div class="normal_text" ng-if="friend.fav_categories">Likes {{friend.fav_categories}} books</div>
 </div>
