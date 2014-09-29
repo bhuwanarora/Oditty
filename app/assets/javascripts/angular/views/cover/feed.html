@@ -1,5 +1,8 @@
 <div class="feed_group"
 	 ng-if="!reader">
+	<div class="notifications">
+		<div class="notification_stable"><b>News Feed</b></div>
+	</div>
 	<div ng-include src="'/assets/angular/views/shared/feed/news.html'"
 		 msd-wheel="stop_propagation($event)"
 	     class="feed_block notifications"></div>
@@ -9,6 +12,9 @@
 </div>
 <div class="feed_group"
 	 ng-if="reader">
+	<div ng-show="reader.name" class="notifications">
+		<div class="notification_stable"><b>{{reader.name | first_name}}'s Timeline</b></div>
+	</div>
 	<div ng-include src="'/assets/angular/views/shared/feed/readers.html'"
 		 msd-wheel="stop_propagation($event)"
 	     class="feed_block notifications"></div>
