@@ -623,6 +623,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
     	if(angular.isUndefined($rootScope.reader)){
     		var length = angular.isDefined($rootScope.user.friends) ? $rootScope.user.friends.length : 0;
+
     		if(angular.isUndefined($rootScope.user.friends) || !$rootScope.user.all_friends_shown){
 		    	widgetService.get_friends($rootScope.user.id, count, length).then(function(data){
 		    		if(count > data.length){
@@ -637,7 +638,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	}
     	else{
     		var length = angular.isDefined($rootScope.reader.friends) ? $rootScope.reader.friends.length : 0;
-    		if(angular.isUndefined($rootScope.reader.friends) || !$rootScope.reade.all_friends_shown){
+    		if(angular.isUndefined($rootScope.reader.friends) || !$rootScope.reader.all_friends_shown){
 	    		widgetService.get_friends($rootScope.reader.id, count, length).then(function(data){
 	    			if(count > data.length){
 		    			$rootScope.reader.all_friends_shown = true;
@@ -710,11 +711,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				$rootScope.reader = {};
 				$rootScope.reader.id = reader_id;
 				$scope.toggle_profile(reader_id);
-				$rootScope.user.show_profile = true;
 				$scope._init_reader();
 				$scope._get_labels(reader_id);
 				$scope.placeholder = "Write on timeline...";
-				$scope._get_friends(2);
 			}
 			else{
 				_init_recommendations();
