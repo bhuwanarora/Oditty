@@ -82,8 +82,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			}
 		}
 		else{
-			var home_page_redirect = angular.isUndefined($rootScope.user.show_profile) && user_id != $rootScope.user.id;
-			if(!home_page_redirect && (!$rootScope.user.show_profile || angular.isUndefined($rootScope.user.show_profile))){
+			if(!$rootScope.user.show_profile || angular.isUndefined($rootScope.user.show_profile)){
 				_show_profile();
 			}
 			else{
@@ -727,7 +726,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			$scope._basic_init();
 			$scope.$routeParams = $routeParams;
 			delete $rootScope.reader;
-			alert($scope.$routeParams.type == "profile", "INIT");
 			if($scope.$routeParams.type == "profile"){
 				var reader_id = $scope.$routeParams.id;
 				$rootScope.reader = {};
