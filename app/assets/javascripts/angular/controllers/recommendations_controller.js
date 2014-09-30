@@ -331,7 +331,57 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 
 	$scope._initialize_filters = function(){
-		// $scope.show_more_filters = true;
+		var _handle_specific_list_page = function(){
+			$rootScope.filters["filter_id"] = $routeParams.filter_id;
+			$rootScope.main_header = $routeParams.name;
+		}
+
+		var _handle_specific_shelf_page = function(){
+			$rootScope.filters["label_id"] = $routeParams.label_id;
+			$rootScope.main_header = $routeParams.name;
+    		$rootScope.user.collapsed_filters = false;
+    		$rootScope.user.collapsed_friends = true;
+    		$rootScope.user.collapsed_trends = true;
+    		$rootScope.user.collapsed_lists = true;
+    		$rootScope.user.collapsed_column = true;
+    		$scope.expand_left_panel();
+    		$rootScope.user.collapsed_left_column = false;
+		}
+
+		var _handle_grids_page = function(){
+    		$rootScope.filters["filter_id"] = $routeParams.grid_id;
+    		$rootScope.main_header = $routeParams.name;
+    		$rootScope.user.collapsed_filters = true;
+    		$rootScope.user.collapsed_friends = true;
+    		$rootScope.user.collapsed_trends = true;
+    		$rootScope.user.collapsed_lists = false;
+    		$rootScope.user.collapsed_column = true;
+    		$scope.expand_left_panel();
+    		$rootScope.user.collapsed_left_column = false;
+		}
+
+		var _handle_trending_page = function(){
+    		$rootScope.filters["reset"] = true;
+    		$rootScope.filters["reset_count"] = 0;
+    		$rootScope.filters["trend_id"] = $routeParams.trend_id;
+    		$rootScope.main_header = $routeParams.name;
+    		$rootScope.user.collapsed_filters = true;
+    		$rootScope.user.collapsed_friends = true;
+    		$rootScope.user.collapsed_trends = false;
+    		$rootScope.user.collapsed_lists = true;
+    		$rootScope.user.collapsed_column = true;
+    		$scope.expand_left_panel();
+    		$rootScope.user.show_profile = false;
+    		$rootScope.user.collapsed_left_column = false;
+		}
+		
+        var _handle_recommendations_page = function(){
+    		delete $rootScope.main_header;
+    		delete $rootScope.filters.filter_id;
+    		delete $rootScope.filters.trend_id;
+    		delete $rootScope.filters.label_id;
+        }
+        
 		$rootScope.filters = {};
         $rootScope.filters["more_filters"] = [];
         $rootScope.filters["other_filters"] = {};
@@ -342,48 +392,19 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         	var on_grids_page = angular.isDefined($routeParams.grid_id);
         	var on_trending_page = angular.isDefined($routeParams.trend_id);
         	if(on_specific_list_page){
-    			$rootScope.filters["filter_id"] = $routeParams.filter_id;
-    			$rootScope.main_header = $routeParams.name;
+        		_handle_specific_list_page();
         	}
         	else if(on_specific_shelf){
-    			// $scope._show_bookmark_tab();
-    			$rootScope.filters["label_id"] = $routeParams.label_id;
-    			$rootScope.main_header = $routeParams.name;
-        		$rootScope.user.collapsed_filters = false;
-        		$rootScope.user.collapsed_friends = true;
-        		$rootScope.user.collapsed_trends = true;
-        		$rootScope.user.collapsed_lists = true;
-        		$rootScope.user.collapsed_column = true;
-        		$scope.expand_left_panel();
-        		$rootScope.user.collapsed_left_column = false;
+        		_handle_specific_shelf_page();
         	}
         	else if(on_trending_page){
-        		$rootScope.filters["reset"] = true;
-	    		$rootScope.filters["reset_count"] = 0;
-        		$rootScope.filters["trend_id"] = $routeParams.trend_id;
-        		$rootScope.main_header = $routeParams.name;
-        		$rootScope.user.collapsed_filters = true;
-        		$rootScope.user.collapsed_friends = true;
-        		$rootScope.user.collapsed_trends = false;
-        		$rootScope.user.collapsed_lists = true;
-        		$rootScope.user.collapsed_column = true;
-        		$scope.expand_left_panel();
-        		$rootScope.user.show_profile = false;
-        		$rootScope.user.collapsed_left_column = false;
+        		_handle_trending_page();
         	}
         	else if(on_grids_page){
-        		$rootScope.filters["filter_id"] = $routeParams.grid_id;
-        		$rootScope.main_header = $routeParams.name;
-        		$rootScope.user.collapsed_filters = true;
-        		$rootScope.user.collapsed_friends = true;
-        		$rootScope.user.collapsed_trends = true;
-        		$rootScope.user.collapsed_lists = false;
-        		$rootScope.user.collapsed_column = true;
-        		$scope.expand_left_panel();
-        		$rootScope.user.collapsed_left_column = false;
+        		_handle_grids_page();
         	}
         	else{
-        		delete $rootScope.main_header;
+        		_handle_recommendations_page();
         	}
         }
         else if($routeParams.type == "authors"){
