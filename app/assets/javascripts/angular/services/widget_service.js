@@ -64,13 +64,8 @@ websiteApp.service('widgetService', ['$http', '$q', '$rootScope', 'WebsiteUICons
         return _deferred_request('/api/v0/moments?id='+1);
     }
 
-    this.get_friends = function(id, count){
-        if(angular.isDefined(count)){
-            return _deferred_request('/api/v0/friends?id='+id+"&count="+count);
-        }
-        else{
-            return _deferred_request('/api/v0/friends?id='+id);   
-        }
+    this.get_friends = function(id, count, skip){
+        return _deferred_request('/api/v0/friends?id='+id+"&count="+count+"&skip="+skip);
     }
 
     this.get_labels = function(){

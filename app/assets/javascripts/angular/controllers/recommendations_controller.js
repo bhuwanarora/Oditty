@@ -116,7 +116,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	   	$rootScope.user.collapsed_filters = true;
 	   	$rootScope.user.collapsed_trends = true;
 	   	$scope.expand_left_panel();
-	   	$scope._get_friends(2);
+	   	$scope._get_friends(20);
 	}
 
 	$scope.fetch_new_feed = function(user_id){
@@ -622,19 +622,23 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	}
 
     	if(angular.isUndefined($rootScope.reader)){
-    		if(angular.isUndefined($rootScope.user.friends) || count != $rootScope.user.friends.length){
-		    	widgetService.get_friends($rootScope.user.id, count).then(function(data){
-		    		$rootScope.user.friends_count = data[0][8];
-		    		$rootScope.user.friends = [];
+    		var length = angular.isDefined($rootScope.user.friends) ? $rootScope.user.friends.length : 0;
+    		if(angular.isUndefined($rootScope.user.friends) || !$rootScope.user.all_friends_shown){
+		    	widgetService.get_friends($rootScope.user.id, count, length).then(function(data){
+		    		if(count > data.length){
+		    			$rootScope.user.all_friends_shown = true;
+		    		}
 		    		_set_friends_for($rootScope.user.friends, data);
 		    	});
     		}
     	}
     	else{
-    		if(angular.isUndefined($rootScope.reader.friends) || count != $rootScope.reader.friends.length){
-	    		widgetService.get_friends($rootScope.reader.id, count).then(function(data){
-		    		$rootScope.reader.friends = [];
-		    		$rootScope.reader.friends_count = data[0][8];
+    		var length = angular.isDefined($rootScope.reader.friends) ? $rootScope.reader.friends.length : 0;
+    		if(angular.isUndefined($rootScope.reader.friends) || !$rootScope.reade.all_friends_shown){
+	    		widgetService.get_friends($rootScope.reader.id, count, length).then(function(data){
+	    			if(count > data.length){
+		    			$rootScope.reader.all_friends_shown = true;
+		    		}
 		    		_set_friends_for($rootScope.reader.friends, data);
 		    	});
     		}
