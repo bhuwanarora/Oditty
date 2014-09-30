@@ -727,6 +727,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			$scope._basic_init();
 			$scope.$routeParams = $routeParams;
 			delete $rootScope.reader;
+			alert($scope.$routeParams.type == "profile", "INIT");
 			if($scope.$routeParams.type == "profile"){
 				var reader_id = $scope.$routeParams.id;
 				$rootScope.reader = {};
