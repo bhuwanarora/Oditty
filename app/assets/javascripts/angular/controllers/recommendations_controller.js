@@ -628,6 +628,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		    		if(count > data.length){
 		    			$rootScope.user.all_friends_shown = true;
 		    		}
+		    		if(angular.isUndefined($rootScope.user.friends)){
+		    			$rootScope.user.friends = [];
+		    		}
 		    		_set_friends_for($rootScope.user.friends, data);
 		    	});
     		}
@@ -638,6 +641,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	    		widgetService.get_friends($rootScope.reader.id, count, length).then(function(data){
 	    			if(count > data.length){
 		    			$rootScope.reader.all_friends_shown = true;
+		    		}
+		    		if(angular.isUndefined($rootScope.reader.friends)){
+		    			$rootScope.reader.friends = [];
 		    		}
 		    		_set_friends_for($rootScope.reader.friends, data);
 		    	});
