@@ -1854,6 +1854,7 @@ l	.compressed_info_card{
 	background-color: #F5F5F5;
 	border-top: 1px solid #EBEBEB;
 	border-bottom: 1px solid #EBEBEB;
+	background-blend-mode: luminosity;
 }
 
 .share_fade{
@@ -1924,7 +1925,7 @@ l	.compressed_info_card{
 	left: 20px;
 	z-index: 2;
 	cursor: pointer;
-	color: #717070;
+	color: white;
 }
 
 .user_name:hover .capitalise{
