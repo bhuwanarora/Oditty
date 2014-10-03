@@ -22,24 +22,9 @@
 		<div class="grey_wrapper click" ng-show="user.show_profile" ng-click="toggle_profile(user.id, $event)"></div>
 		<div class="vertical_padder_active animate-fast" 
 			 ng-class="{'vertical_padder_shifted': user.show_profile}"></div>
-		<div class="share_wrapper animate-slow" 
-			 ng-style="cover_image"
-			 ng-class="{'share_wrapper_shifted scrollbar': user.show_profile}"
-			 msd-wheel="stop_propagation($event)">
-			<div class="thumb_wrapper animate-fast"
-				 ng-class="{'thumb_wrapper_shifted': user.show_profile}">
-				<img ng-src="{{user.thumb | thumb_backup}}" ng-show="!reader"/>
-				<img ng-src="{{reader.thumb | thumb_backup}}" ng-show="reader"/>
-			</div>
-			<!-- <div class="share_fade animate-fast" ng-class="{'share_fade_shifted': user.show_profile}"></div> -->
-			<div ng-include src="'/assets/angular/views/cover/profile/show.html'"></div>
-			<div ng-include src="'/assets/angular/views/cover/feed.html'" 
-				 ng-if="user.show_profile"></div>
-		</div>
+		
 
-		<!-- <div class="recommendations_page"><search-bar></search-bar></div> -->
-		
-		
+		<div ng-include src="'/assets/angular/views/cover/show.html'"></div>
 		<div class="info_card_placeholder animate-fast" ng-class="{'horizontal_padder_active': !user.collapsed_left_column}"></div>
 
 		<div ng-switch on="panel_selected" class="full_height">
