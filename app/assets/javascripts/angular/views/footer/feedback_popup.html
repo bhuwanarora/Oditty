@@ -1,20 +1,19 @@
-<div class="feedback_popup"
-	ng-show="get_feedback"
-	ng-class="{'feedback_box': get_feedback, 'hidden': user.show_profile}">
-	<div class="icon-close-popup" ng-click="get_feedback=false;"></div>
-	<div ng-click="get_feedback = !get_feedback" class="site_color">
+<div class="feedback_popup animate-fast"
+	ng-if="popups.get_feedback"
+	ng-class="{'feedback_box': popups.get_feedback}">
+	<div class="icon-close-popup" ng-click="popups.get_feedback=false;"></div>
+	<div ng-click="popups.get_feedback = !popups.get_feedback" class="site_color">
 		<b>{{feedback_text}}</b>
 	</div>
-	<div ng-if="get_feedback">
+	<div>
 		<textarea placeholder="Please give your valuable feedback..." 
 				  ng-model="user.feedback"></textarea>
 		<div class="feedback_sumbit blue_button"
 			 ng-click="handle_feedback($event)">Submit</div>
 	</div>
 </div>
-<div class="feedback floating_icon"
-	ng-class="{'hidden': user.show_profile}">
-	<div ng-click="get_feedback = !get_feedback" class="table_cell">
+<div class="feedback floating_icon">
+	<div ng-click="popups.get_feedback = !popups.get_feedback" class="table_cell">
 		<b>F</b>
 	</div>
 </div>

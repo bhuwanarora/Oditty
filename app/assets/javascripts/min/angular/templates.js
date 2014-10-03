@@ -105,7 +105,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/footer/feedback_popup.html',
-    "<div class=\"feedback_popup\" ng-show=\"get_feedback\" ng-class=\"{'feedback_box': get_feedback, 'hidden': user.show_profile}\"><div class=\"icon-close-popup\" ng-click=\"get_feedback=false;\"></div><div ng-click=\"get_feedback = !get_feedback\" class=\"site_color\"><b>{{feedback_text}}</b></div><div ng-if=\"get_feedback\"><textarea placeholder=\"Please give your valuable feedback...\" ng-model=\"user.feedback\"></textarea><div class=\"feedback_sumbit blue_button\" ng-click=\"handle_feedback($event)\">Submit</div></div></div><div class=\"feedback floating_icon\" ng-class=\"{'hidden': user.show_profile}\"><div ng-click=\"get_feedback = !get_feedback\" class=\"table_cell\"><b>F</b></div></div>"
+    "<div class=\"feedback_popup animate-fast\" ng-if=\"popups.get_feedback\" ng-class=\"{'feedback_box': popups.get_feedback}\"><div class=\"icon-close-popup\" ng-click=\"popups.get_feedback=false;\"></div><div ng-click=\"popups.get_feedback = !popups.get_feedback\" class=\"site_color\"><b>{{feedback_text}}</b></div><div><textarea placeholder=\"Please give your valuable feedback...\" ng-model=\"user.feedback\"></textarea><div class=\"feedback_sumbit blue_button\" ng-click=\"handle_feedback($event)\">Submit</div></div></div><div class=\"feedback floating_icon\"><div ng-click=\"popups.get_feedback = !popups.get_feedback\" class=\"table_cell\"><b>F</b></div></div>"
   );
 
 
@@ -193,7 +193,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/home/shared/user_add.html',
-    "<ul class=\"user_add_popup\" ng-show=\"add_popup\"><div class=\"icon-close-popup\" ng-click=\"add_popup=false;\"></div><li>Share your book reading journey</li><li ng-click=\"facebook_invite();\">Invite Friends</li></ul><div class=\"user_add floating_icon\"><div ng-click=\"add_popup = !add_popup\" class=\"table_cell\"><span class=\"icon-plus\"></span></div></div>"
+    "<ul class=\"user_add_popup animate-fast\" ng-if=\"popups.add_popup\"><div class=\"icon-close-popup\" ng-click=\"popups.add_popup=false;\"></div><li ng-click=\"show_interaction_box(user.id)\">Share your book reading journey</li><li onclick=\"facebook_invite()\">Invite Friends</li></ul><div class=\"user_add floating_icon\"><div ng-click=\"popups.add_popup = !popups.add_popup\" class=\"table_cell\"><span class=\"icon-plus\"></span></div></div>"
   );
 
 

@@ -1219,9 +1219,24 @@ websiteApp.directive('timestamp', function(){
 });
 
 
-websiteApp.directive('userAdd', function(){
+websiteApp.directive('userAdd', ['$rootScope', function($rootScope){
 	return{
 		restrict: 'E',
+		controller: ['$scope', function($scope){
+
+			$scope.show_interaction_box = function(user_id){
+				$rootScope.user.interact = true;
+				delete $rootScope.focused_book;
+				delete $rootScope.ticker_popup;
+				$rootScope.user.collapsed_column = true; 
+				$rootScope.user.collapsed_trends = true; 
+				$rootScope.user.collapsed_left_column = true;
+				$rootScope.popups.left_panel_width = {'width': '15%'};
+				var show_trending = false;
+				var init_notification = true;
+				$scope.$emit('getNotifications', show_trending, user_id, init_notification);
+			}
+		}],
 		templateUrl: "/assets/angular/views/home/shared/user_add.html"
 	}
-});
+}]);
