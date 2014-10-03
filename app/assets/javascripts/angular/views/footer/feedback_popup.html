@@ -12,8 +12,8 @@
 			 ng-click="handle_feedback($event)">Submit</div>
 	</div>
 </div>
-<div class="feedback"
-	ng-show="!get_feedback">
+<div class="feedback floating_icon"
+	ng-class="{'hidden': user.show_profile}">
 	<div ng-click="get_feedback = !get_feedback" class="table_cell">
 		<b>F</b>
 	</div>

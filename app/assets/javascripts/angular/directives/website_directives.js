@@ -599,7 +599,7 @@ websiteApp.directive('feed', ['$rootScope', '$timeout', 'websiteService', 'widge
 
       	$scope.remove_selected_book = function(){
       		$rootScope.user.interact_books = [];
-      		$scope.placeholder = WebsiteUIConstants.ShareSomething;
+      		$scope.placeholder = WebsiteUIConstants.Share;
       		delete $scope.selected_interact_book;
       	}
 
@@ -1113,7 +1113,7 @@ websiteApp.directive('feed', ['$rootScope', '$timeout', 'websiteService', 'widge
 	        	$scope.placeholder = "Comment on "+$rootScope.focused_book.title+" by "+$rootScope.focused_book.author_name+"...";
 	        }
 	        else{
-	        	$scope.placeholder =  WebsiteUIConstants.ShareSomething;
+	        	$scope.placeholder =  WebsiteUIConstants.Share;
 	        }
 	        $scope.user.interact_book = "";
 	        $scope.user.interact_books = [];
@@ -1215,5 +1215,13 @@ websiteApp.directive('timestamp', function(){
 			"timestamp": "=data"
 		},
 		templateUrl: "/assets/angular/views/shared/timestamp.html"
+	}
+});
+
+
+websiteApp.directive('userAdd', function(){
+	return{
+		restrict: 'E',
+		templateUrl: "/assets/angular/views/home/shared/user_add.html"
 	}
 });

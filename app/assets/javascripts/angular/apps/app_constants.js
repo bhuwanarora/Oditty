@@ -156,7 +156,6 @@ var constants = {
 			"Delete": 46,
 			"Escape": 27,
 			"StatusPosted": "Shared",
-			"ShareSomething": "Share something...",
 			"CoverPhotoCDN": "http://rd-images.readersdoor.netdna-cdn.com/cp/"
 		},
 		"ColorConstants":{

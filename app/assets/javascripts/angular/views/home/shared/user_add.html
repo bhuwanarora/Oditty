@@ -1,0 +1,11 @@
+<ul class="user_add_popup"
+	ng-show="add_popup">
+	<div class="icon-close-popup" ng-click="add_popup=false;"></div>
+	<li>Share your book reading journey</li>
+	<li ng-click="facebook_invite();">Invite Friends</li>
+</ul>
+<div class="user_add floating_icon">
+	<div ng-click="add_popup = !add_popup" class="table_cell">
+		<span class="icon-plus"></span>
+	</div>
+</div>
