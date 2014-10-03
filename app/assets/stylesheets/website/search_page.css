@@ -13,6 +13,7 @@
 	top: 50px;
 	bottom: 50px;
 	border-radius: 2px;
+	background-size: cover;
 }
 
 .trending_panel{
