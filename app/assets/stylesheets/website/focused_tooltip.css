@@ -299,16 +299,21 @@
 .focused_tooltip .tweet_link{
 	bottom: 11vh;
 	position: absolute;
-	width: 90%;
-	font-size: .8em;
 	padding: 10px;
-	word-wrap: break-word;
-	cursor: text;
-	border-radius: 2px;
-	padding: 5px;
 }
 
-.focused_tooltip .tweet_link:hover{
+.focused_tooltip .comment_link{
+	cursor: text;
+	font-size: .8em;
+	padding: 10px;
+	background-color: #f5f5f5;
+	border: 1px solid #EBEBEB;
+	margin-right: 10px;
+	float: left;
+	display: table;
+}
+
+.focused_tooltip .comment_link:hover{
 	background-color: #E6E6E6;
 }
 
