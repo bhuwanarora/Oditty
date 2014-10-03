@@ -301,7 +301,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/search/trending.html',
-    "<div class=\"notifications trending_header\"><div class=\"notification_stable\"><b>Check out books related to trending topics</b></div></div><div ng-include=\"\" src=\"'/assets/angular/views/shared/feed/trending.html'\" ng-hide=\"active_base || filters_added.length > 0\" class=\"trending_panel animate-fast\"></div><div class=\"trending_panel animate-fast trending_panel_shift\" ng-click=\"reset_base_selection()\" ng-hide=\"!active_base\"><div class=\"notification_stable click\">Check out books related to trending topics</div></div>"
+    "<div class=\"notifications trending_header\" ng-hide=\"active_base || filters_added.length > 0\"><div class=\"notification_stable\"><b>Check out books related to trending topics</b></div></div><div ng-include=\"\" src=\"'/assets/angular/views/shared/feed/trending.html'\" ng-hide=\"active_base || filters_added.length > 0\" class=\"trending_panel animate-fast\"></div><div class=\"trending_panel animate-fast trending_panel_shift\" ng-click=\"reset_base_selection()\" ng-hide=\"!active_base\"><div class=\"notification_stable click\">Check out books related to trending topics</div></div>"
   );
 
 

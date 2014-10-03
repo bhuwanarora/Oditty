@@ -1124,9 +1124,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		// 	$scope.search_display = SearchUIConstants.SearchingTags;
 		// }
 		// else{
-		// 	$scope.search_type = SearchUIConstants.SearchAll;
-		// 	$scope.search_display = SearchUIConstants.SearchingWebsite;
 		// }
+		$scope.search_type = SearchUIConstants.SearchAll;
+		$scope.search_display = SearchUIConstants.SearchingWebsite;
 	}
 
 	$scope.get_search_results = function(event){
