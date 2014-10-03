@@ -1192,6 +1192,8 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				$rootScope.user.collapsed_trends = true;
 				$rootScope.user.collapsed_lists = true;
 				$rootScope.user.collapsed_left_column = true;
+				$rootScope.popups = {};
+				$rootScope.popups.left_panel_width = {'width': '15%'};
 
 				delete $rootScope.focused_book;
 				delete $scope.active_nest;
