@@ -97,21 +97,13 @@
 	font-size: 2em;
 }
 
-.focused_tooltip .footer{
-	bottom: 0px;
-	left: 0px;
-	margin-top: 5px;
-	position: absolute;
-	right: 0px;
-}
-
 .focused_tooltip .footer .recommend{
 	cursor: pointer;
 	font-size: .9em;
 	padding: 10px 15px;
-	float: right;
-	margin-right: 3vh;
-	margin-bottom: 3vh;
+	position: absolute;
+	right: 30px;
+	bottom: 20px;
 }
 
 .focused_tooltip .users{
