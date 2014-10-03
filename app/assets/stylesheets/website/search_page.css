@@ -150,6 +150,10 @@
     /*border-bottom: 4px solid #427fed;*/
 }
 
+.search_input::-ms-clear{
+	display: none;
+}
+
 /*#searchInput:focus{
     border: 2px solid #427fed;
 }
@@ -499,6 +503,15 @@
 	font-size: 1em;
 	min-width: 250px
 }
+
+.login_form input::-ms-clear{
+	display: none;
+}
+
+.login_form input::-ms-reveal{
+	display: none;
+}
+
 
 .login_form input.ng-invalid.ng-dirty {
   border-color: #FA787E;

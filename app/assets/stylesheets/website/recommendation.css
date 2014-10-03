@@ -149,6 +149,7 @@
 	border: 1px solid #F1F1F1;
 	border-radius: 1px;
 	resize: none;
+	-ms-overflow-style: none;
 }
 
 .interaction_box_options [class^="icon-"],
@@ -426,6 +427,11 @@
 	border-bottom-left-radius: 3px;
 	margin-right: 10px;
 	height: 100%;
+}
+
+
+.ie .push_notification .type{
+        height: 50% !important;
 }
 
 .push_notification .content{
@@ -739,6 +745,10 @@
 	font-size: .8em;
 }
 
+.ie .recommendation_box .footer .done{
+	margin:0px 0px 10px;
+}
+
 .recommendation_box .footer .done:disabled{
 	cursor: default;
 	background-color: rgba(66, 127, 237, 0.64)!important;
@@ -753,7 +763,7 @@
 	height: 40vh;
 	padding: 20px;
 	white-space: normal;
-	overflow-y: scroll;
+	/*overflow-y: scroll;*/
 	background-color: #F5F5F5;
 	border-top: 1px solid #E4E4E4;
 	border-bottom: 1px solid #E4E4E4;
@@ -1105,6 +1115,7 @@ and (min-width : 1824px) {
 	padding-bottom: 10px;
 	padding-top: 5px;
 	white-space: initial;
+	-ms-overflow-style: none;
 }
 
 .notifications .notification{

@@ -32,8 +32,10 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/cover/navbar.html',
-    "<div id=\"recommendationFooter\" ng-class=\"{'compact_footer': compact_footer}\"><a class=\"shelf_nav_links right_links animate-fast\" ng-class=\"{'right_links_shifted': user.show_profile}\" ng-href=\"#user/{{user.id}}/recommendations/books\" ng-if=\"$routeParams.trend_id || $routeParams.grid_id || $routeParams.filter_id || $routeParams.label_id\"><div class=\"link tab active_tab\" title=\"{{main_header}}\"><span ng-bind-html=\"main_header | heading | lowercase\" class=\"table_cell\"></span> <span>&nbsp;&nbsp;</span> <span class=\"table_cell icon-close light_red_color\"></span></div></a><div class=\"shelf_nav_links animate-fast\" ng-class=\"{'shelf_nav_links_shifted': user.show_profile}\"><a class=\"link tab\" title=\"Recommendations\" ng-href=\"#user/{{user.id}}/recommendations/books\" ng-if=\"$routeParams.trend_id || $routeParams.grid_id || $routeParams.filter_id || $routeParams.label_id\" style=\"margin-left:0px\"><span class=\"table_cell\">&nbsp;<b>Recommendations</b></span></a><div ng-class=\"{'inactive':read_selected || bookmark_selected || user.show_profile, \n" +
-    "\t\t                'active_tab':!read_selected && !bookmark_selected && !user.show_profile}\" class=\"link tab\" ng-hide=\"$routeParams.trend_id || $routeParams.grid_id || $routeParams.filter_id || $routeParams.label_id || $routeParams.type == 'profile'\" title=\"{{main_header}}\" style=\"margin-left:0px\" ng-click=\"toggle_recommendations()\"><span ng-if=\"!$routeParams.trend_id && !$routeParams.grid_id && !$routeParams.filter_id && !$routeParams.label_id\" class=\"table_cell\"><span ng-if=\"$routeParams.type == 'books'\">{{recommendations.books.count}}</span> <span ng-if=\"$routeParams.type == 'authors'\">{{recommendations.authors.count}}</span> <span ng-if=\"$routeParams.type == 'readers'\">{{recommendations.readers.count}}</span> <span>&nbsp;<b>Recommendations</b></span></span> </div><div ng-class=\"{'inactive':!bookmark_selected, \n" +
+    "<div id=\"recommendationFooter\" ng-class=\"{'compact_footer': compact_footer}\"><a class=\"shelf_nav_links right_links animate-fast\" ng-class=\"{'right_links_shifted': user.show_profile}\" ng-href=\"#user/{{user.id}}/recommendations/books\" ng-if=\"$routeParams.trend_id || $routeParams.grid_id || $routeParams.filter_id || $routeParams.label_id\"><div class=\"link tab active_tab\" title=\"{{main_header}}\"><span ng-bind-html=\"main_header | heading | lowercase\" class=\"table_cell\"></span> <span>&nbsp;&nbsp;</span> <span class=\"table_cell icon-close light_red_color\"></span></div></a><div class=\"shelf_nav_links animate-fast\" ng-class=\"{'shelf_nav_links_shifted': user.show_profile}\"><a class=\"link tab\" title=\"Recommendations\" ng-href=\"#user/{{user.id}}/recommendations/books\" ng-if=\"$routeParams.trend_id || $routeParams.grid_id || $routeParams.filter_id || $routeParams.label_id\" style=\"margin-left:0px\"><span class=\"table_cell\">&nbsp;<b>Recommendations</b></span></a><div ng-class=\"{'inactive':read_selected || bookmark_selected || user.show_profile, \r" +
+    "\n" +
+    "\t\t                'active_tab':!read_selected && !bookmark_selected && !user.show_profile}\" class=\"link tab\" ng-hide=\"$routeParams.trend_id || $routeParams.grid_id || $routeParams.filter_id || $routeParams.label_id || $routeParams.type == 'profile'\" title=\"{{main_header}}\" style=\"margin-left:0px\" ng-click=\"toggle_recommendations()\"><span ng-if=\"!$routeParams.trend_id && !$routeParams.grid_id && !$routeParams.filter_id && !$routeParams.label_id\" class=\"table_cell\"><span ng-if=\"$routeParams.type == 'books'\">{{recommendations.books.count}}</span> <span ng-if=\"$routeParams.type == 'authors'\">{{recommendations.authors.count}}</span> <span ng-if=\"$routeParams.type == 'readers'\">{{recommendations.readers.count}}</span> <span>&nbsp;<b>Recommendations</b></span></span> </div><div ng-class=\"{'inactive':!bookmark_selected, \r" +
+    "\n" +
     "\t\t\t\t\t\t'active_tab':bookmark_selected && !user.show_profile}\" class=\"link tab\" title=\"Books saved\" ng-click=\"toggle_bookmarked($event)\"><span ng-if=\"$routeParams.type == 'books'\" class=\"table_cell\"><span>&nbsp;<b>My Library</b></span></span> <span ng-if=\"$routeParams.type == 'authors'\" class=\"table_cell\"><span>&nbsp;<b>Authors Saved</b></span></span> <span ng-if=\"$routeParams.type == 'profile'\" class=\"table_cell\"><span>&nbsp;<b>{{reader.gender_prefix}} Library</b></span></span></div></div><div class=\"filter_status\"><span class=\"selected_filters\"></span> </div></div>"
   );
 
@@ -64,7 +66,8 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/feed/comment_box.html',
-    "<div class=\"interaction_box animate-fast\" ng-click=\"stop_propagation($event)\"><div ng-if=\"level1_option || level2_option || selected_interact_book\" class=\"second_input site_color\"><span ng-if=\"show_search || selected_interact_book\"><input set-focus=\"start_searching\" ng-keydown=\"search_interact_books($event)\" ng-model=\"user.interact_book\" placeholder=\"Add the book...\"><div class=\"interaction_box_book_options\"><div ng-repeat=\"item in user.interact_books track by $index\" ng-click=\"handle_interact_book_selection(item)\" ng-class=\"{active:is_current_interact_book($index, item)}\" ng-mouseenter=\"set_current_interact_book($index)\" class=\"option\"><div class=\"title\">{{item.title}}</div><div ng-show=\"item.author_name\">by {{item.author_name}}</div></div><div ng-if=\"user.interact_book.length != 0 && !loading && !selected_interact_book\" class=\"option\">No results found {{selected_interact_book}}</div></div><div class=\"interact_book\" ng-click=\"remove_selected_book()\" ng-model=\"selected_interact_book\" ng-if=\"selected_interact_book\"><b>{{selected_interact_book.title | book_tag}}</b></div></span> <span ng-if=\"level2_option.name\">{{level2_option.name}} {{level2_option.link}}&nbsp;</span> <span>&nbsp;{{level1_option.name}}&nbsp;</span> <span ng-if=\"!level2_option.icon\" class=\"{{level1_option.icon}}\"></span> <span class=\"{{level2_option.icon}}\"></span> <span>-&nbsp;</span></div><div class=\"relative\"><div class=\"interaction_box_options\" ng-if=\"hash_tags\"><div ng-repeat=\"item in hash_tags track by $index\" ng-click=\"handle_selection(item.name)\" ng-class=\"{active:is_current($index, item.name)}\" ng-mouseenter=\"set_current($index)\" class=\"option\"><div class=\"title\">{{item.name}}</div><div ng-show=\"item.author_name\">by {{item.author_name}}</div></div></div><div class=\"interaction_box_options\" ng-if=\"level1_options\"><div ng-repeat=\"option in level1_options\" ng-click=\"select_level1(option, $event)\" ng-if=\"!option.SearchBook\" class=\"option\"><span class=\"{{option.icon}}\"></span> <span>{{option.name}}</span> <span class=\"right_icon {{option.icon2}}\"></span></div></div><div class=\"interaction_box_options interaction_box_options_level2 scrollbar\" ng-if=\"level2_options\"><div ng-repeat=\"option in level2_options\" ng-if=\"!option.SearchBook\" ng-click=\"select_level2(option, $event)\" class=\"option\"><span class=\"{{option.icon}}\"></span> <span>{{option.name}}</span> <span class=\"right_icon {{option.icon2}}\"></span></div></div><span class=\"highlighter\" ng-bind-html=\"user.hash_tagged_comment\"></span> <div class=\"bubble_pointer\"></div><textarea itemprop=\"commentText\" itemtype=\"http://schema.org/UserComments\" set-focus=\"user.interact\" type=\"text\" ng-paste=\"update_hashtagged_comment()\" ng-model=\"user.current_comment\" ng-keydown=\"handle_backspace($event)\" placeholder=\"{{placeholder}}\" class=\"comment_box animate-fast\" ng-keypress=\"handle_hash_tags($event)\" ng-keyup=\"key_up()\" rows=\"1\">\n" +
+    "<div class=\"interaction_box animate-fast\" ng-click=\"stop_propagation($event)\"><div ng-if=\"level1_option || level2_option || selected_interact_book\" class=\"second_input site_color\"><span ng-if=\"show_search || selected_interact_book\"><input set-focus=\"start_searching\" ng-keydown=\"search_interact_books($event)\" ng-model=\"user.interact_book\" placeholder=\"Add the book...\"><div class=\"interaction_box_book_options\"><div ng-repeat=\"item in user.interact_books track by $index\" ng-click=\"handle_interact_book_selection(item)\" ng-class=\"{active:is_current_interact_book($index, item)}\" ng-mouseenter=\"set_current_interact_book($index)\" class=\"option\"><div class=\"title\">{{item.title}}</div><div ng-show=\"item.author_name\">by {{item.author_name}}</div></div><div ng-if=\"user.interact_book.length != 0 && !loading && !selected_interact_book\" class=\"option\">No results found {{selected_interact_book}}</div></div><div class=\"interact_book\" ng-click=\"remove_selected_book()\" ng-model=\"selected_interact_book\" ng-if=\"selected_interact_book\"><b>{{selected_interact_book.title | book_tag}}</b></div></span> <span ng-if=\"level2_option.name\">{{level2_option.name}} {{level2_option.link}}&nbsp;</span> <span>&nbsp;{{level1_option.name}}&nbsp;</span> <span ng-if=\"!level2_option.icon\" class=\"{{level1_option.icon}}\"></span> <span class=\"{{level2_option.icon}}\"></span> <span>-&nbsp;</span></div><div class=\"relative\"><div class=\"interaction_box_options\" ng-if=\"hash_tags\"><div ng-repeat=\"item in hash_tags track by $index\" ng-click=\"handle_selection(item.name)\" ng-class=\"{active:is_current($index, item.name)}\" ng-mouseenter=\"set_current($index)\" class=\"option\"><div class=\"title\">{{item.name}}</div><div ng-show=\"item.author_name\">by {{item.author_name}}</div></div></div><div class=\"interaction_box_options\" ng-if=\"level1_options\"><div ng-repeat=\"option in level1_options\" ng-click=\"select_level1(option, $event)\" ng-if=\"!option.SearchBook\" class=\"option\"><span class=\"{{option.icon}}\"></span> <span>{{option.name}}</span> <span class=\"right_icon {{option.icon2}}\"></span></div></div><div class=\"interaction_box_options interaction_box_options_level2 scrollbar\" ng-if=\"level2_options\"><div ng-repeat=\"option in level2_options\" ng-if=\"!option.SearchBook\" ng-click=\"select_level2(option, $event)\" class=\"option\"><span class=\"{{option.icon}}\"></span> <span>{{option.name}}</span> <span class=\"right_icon {{option.icon2}}\"></span></div></div><span class=\"highlighter\" ng-bind-html=\"user.hash_tagged_comment\"></span> <div class=\"bubble_pointer\"></div><textarea itemprop=\"commentText\" itemtype=\"http://schema.org/UserComments\" set-focus=\"user.interact\" type=\"text\" ng-paste=\"update_hashtagged_comment()\" ng-model=\"user.current_comment\" ng-keydown=\"handle_backspace($event)\" placeholder=\"{{placeholder}}\" class=\"comment_box animate-fast\" ng-keypress=\"handle_hash_tags($event)\" ng-keyup=\"key_up()\" rows=\"1\">\r" +
+    "\n" +
     "\t\t</textarea></div><div class=\"interaction_links\"><span class=\"icon-happy interaction_icons\" ng-click=\"show_interaction_options('Emotion', $event)\"></span> <span class=\"icon-feed interaction_icons\" ng-click=\"show_interaction_options('Shout', $event)\"></span>   <button class=\"share_status blue_button\" ng-click=\"share_post()\" ng-disabled=\"!((level1_option && selected_interact_book) || (user.current_comment.length > 0 && !level1_option))\">Share</button> <span class=\"site_color status_message\">{{status_message}}</span></div></div>"
   );
 
@@ -115,9 +118,12 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/getting_started/shared/invite.html',
-    "<script src=\"http://connect.facebook.net/en_US/all.js\"></script><div id=\"fb-root\"></div><div onclick=\"facebook_invite()\" class=\"invite_friends red_button\"><b>Invite Friends</b></div><script type=\"text/javascript\">if (top.location!= self.location)\n" +
-    "{\n" +
-    "top.location = self.location\n" +
+    "<script src=\"http://connect.facebook.net/en_US/all.js\"></script><div id=\"fb-root\"></div><div onclick=\"facebook_invite()\" class=\"invite_friends red_button\"><b>Invite Friends</b></div><script type=\"text/javascript\">if (top.location!= self.location)\r" +
+    "\n" +
+    "{\r" +
+    "\n" +
+    "top.location = self.location\r" +
+    "\n" +
     "}</script>"
   );
 
@@ -178,7 +184,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/home/shared/book_info.html',
-    "<div class=\"arrow\" ng-class=\"{'arrow_left': on_left, 'arrow_right': !on_left}\"></div><div class=\"icon-close-popup\" ng-click=\"hide_popups()\"></div><div class=\"header\"><div class=\"title site_color header_font\" title=\"{{focused_book.title}}\"><b>{{focused_book.title | book_title}}</b></div><div class=\"author site_color\">by <b>{{focused_book.author_name}}</b></div><div class=\"author\"><span ng-if=\"focused_book.published_year\">{{focused_book.published_year | published_year}}</span> <span>{{focused_book.page_count | page_count}}</span></div></div><div class=\"tabs\"><div ng-click=\"get_book_overview();\" ng-class=\"{'active_tab2': !show_buy && !show_author}\" class=\"tab tab2\"><span><b>Overview</b></span><span class=\"\"></span></div><div class=\"tab tab2\" ng-click=\"get_author_details();\" ng-class=\"{'active_tab2': show_author && !show_buy}\"><span><b>About author</b></span><span class=\"\"></span></div><div ng-click=\"get_buy_links();\" class=\"tab tab2\" ng-class=\"{'active_tab2': show_buy && !show_author}\"><span><b>Buy this book</b></span><span class=\"\"></span></div></div><div class=\"book_info\" ng-if=\"!show_buy && !show_author\"><div ng-include=\"\" src=\"'/assets/angular/views/shared/partials/book_info.html'\"></div><div ng-if=\"!show_buy && !show_author\" ng-disabled=\"!focused_book.status\"><rate data=\"focused_book\"></rate></div></div><div class=\"scrollbar description\" ng-class=\"{'long_description': !focused_book.users_count || focused_book.users_count == 0}\" msd-wheel=\"stop_horizontal_scroll($event)\" ng-if=\"!show_buy && !show_author\"><span itemprop=\"description\" ng-bind-html=\"focused_book.summary | summary\"></span><br><br><br></div><div class=\"user_box\" ng-if=\"!show_author && !show_buy && focused_book.users_count && focused_book.users_count > 0\"><div class=\"heading\">{{focused_book.users_count}} friends have read this</div><div class=\"users\"><div ng-repeat=\"user in focused_book.users\"><img ng-src=\"{{user.thumb}}\"></div></div></div><div class=\"book_info scrollbar author_book_info\" ng-if=\"show_author && !show_buy\"><img ng-src=\"{{focused_book.author_details.image_url}}\"><div class=\"text\" msd-wheel=\"stop_horizontal_scroll($event)\">{{focused_book.author_details.about}}<br><br><br><br></div></div><div class=\"user_box_wrapper animate-fast\" ng-click=\"get_book_from_author()\" ng-show=\"show_author && !show_buy\"><div class=\"text\"><b>Books from {{focused_book.author_name}}</b></div></div><div class=\"user_box\" ng-if=\"show_author && !show_buy\"><div class=\"heading\">{{focused_book.author_details.book_ids.length}} more books from author</div><img ng-src=\"{{book_isbn | small_thumb}}\" ng-repeat=\"book_isbn in focused_book.author_details.book_isbns | limitTo: 7 track by $index\" class=\"book_thumb\"> </div><div ng-if=\"show_buy && !show_author\" class=\"buy_column\"><div ng-if=\"focused_book.bnn_links\"><span>Buy from&nbsp;</span><em><span>Barnes & Nobles</span></em> <span ng-repeat=\"link in focused_book.bnn_links track by $index\"><a ng-href=\"{{link}}\" target=\"_blank\" class=\"site_color\">Link{{$index+1}}</a>&nbsp;</span></div><div ng-if=\"!focused_book.bnn_links || focused_book.bnn_links.length == 0\">Sorry! Could find this book on <em>Barnes & Nobles</em>.</div></div><div class=\"time_to_read\" ng-if=\"show_buy && !show_author\"><div class=\"header\">Describe the reading length of this book</div><div ng-click=\"record_read_time(0, $event)\" class=\"tab read_block\" ng-class=\"{'active_tab':is_timer(0)}\">Tiny Read</div><div ng-click=\"record_read_time(1, $event)\" class=\"tab read_block\" ng-class=\"{'active_tab':is_timer(1)}\">Small Read</div><div ng-click=\"record_read_time(2, $event)\" class=\"tab read_block\" ng-class=\"{'active_tab':is_timer(2)}\">Normal Read</div><div ng-click=\"record_read_time(3, $event)\" class=\"tab read_block\" ng-class=\"{'active_tab':is_timer(3)}\">Long Read</div></div><div class=\"tweet_link site_color\" ng-click=\"user.interact = true;\"><span><img ng-src=\"{{focused_book.display_profile}}\"></span> <span ng-model=\"focused_book.display_tweet\" ng-bind-html=\"focused_book.display_tweet | display_tweet\"></span></div><div class=\"footer\"><recommend data=\"focused_book\"></recommend></div>"
+    "<div class=\"arrow\" ng-class=\"{'arrow_left': on_left, 'arrow_right': !on_left}\"></div><div class=\"icon-close-popup\" ng-click=\"hide_popups()\"></div><div class=\"header\"><div class=\"title site_color header_font\" title=\"{{focused_book.title}}\"><b>{{focused_book.title | book_title}}</b></div><div class=\"author site_color\">by <b>{{focused_book.author_name}}</b></div><div class=\"author\"><span ng-if=\"focused_book.published_year\">{{focused_book.published_year | published_year}}</span> <span>{{focused_book.page_count | page_count}}</span></div></div><div class=\"tabs\"><div ng-click=\"get_book_overview();\" ng-class=\"{'active_tab2': !show_buy && !show_author}\" class=\"tab tab2\"><span><b>Overview</b></span><span class=\"\"></span></div><div class=\"tab tab2\" ng-click=\"get_author_details();\" ng-class=\"{'active_tab2': show_author && !show_buy}\"><span><b>About author</b></span><span class=\"\"></span></div><div ng-click=\"get_buy_links();\" class=\"tab tab2\" ng-class=\"{'active_tab2': show_buy && !show_author}\"><span><b>Buy this book</b></span><span class=\"\"></span></div></div><div class=\"book_info\" ng-if=\"!show_buy && !show_author\"><div ng-include=\"\" src=\"'/assets/angular/views/shared/partials/book_info.html'\"></div><div ng-if=\"!show_buy && !show_author\" ng-disabled=\"!focused_book.status\"><rate data=\"focused_book\"></rate></div></div><div class=\"scrollbar description\" ng-class=\"{'long_description': !focused_book.users_count || focused_book.users_count == 0}\" msd-wheel=\"stop_horizontal_scroll($event)\" ng-if=\"!show_buy && !show_author\"><span itemprop=\"description\" ng-bind-html=\"focused_book.summary | summary\"></span><br><br><br></div><div class=\"user_box\" ng-if=\"!show_author && !show_buy && focused_book.users_count && focused_book.users_count > 0\"><div class=\"heading\">{{focused_book.users_count}} friends have read this</div><div class=\"users\"><div ng-repeat=\"user in focused_book.users\"><img ng-src=\"{{user.thumb}}\"></div></div></div><div class=\"book_info scrollbar author_book_info\" ng-if=\"show_author && !show_buy\"><img ng-src=\"{{focused_book.author_details.image_url}}\"><div class=\"text\" msd-wheel=\"stop_horizontal_scroll($event)\">{{focused_book.author_details.about}}<br><br><br><br></div></div><div class=\"user_box_wrapper animate-fast\" ng-click=\"get_book_from_author()\" ng-show=\"show_author && !show_buy\"><div class=\"text\"><b>More Books from {{focused_book.author_name}}</b></div></div><div class=\"user_box\" ng-if=\"show_author && !show_buy\"><div class=\"heading\">{{focused_book.author_details.book_ids.length}} more books from author</div><img ng-src=\"{{book_isbn | small_thumb}}\" ng-repeat=\"book_isbn in focused_book.author_details.book_isbns | limitTo: 7 track by $index\" class=\"book_thumb\"> </div><div ng-if=\"show_buy && !show_author\" class=\"buy_column\"><div ng-if=\"focused_book.bnn_links\"><span>Buy from&nbsp;</span><em><span>Barnes & Nobles</span></em> <span ng-repeat=\"link in focused_book.bnn_links track by $index\"><a ng-href=\"{{link}}\" target=\"_blank\" class=\"site_color\">Link{{$index+1}}</a>&nbsp;</span></div><div ng-if=\"!focused_book.bnn_links || focused_book.bnn_links.length == 0\">Sorry! Could find this book on <em>Barnes & Nobles</em>.</div></div><div class=\"time_to_read\" ng-if=\"show_buy && !show_author\"><div class=\"header\">Describe the reading length of this book</div><div ng-click=\"record_read_time(0, $event)\" class=\"tab read_block\" ng-class=\"{'active_tab':is_timer(0)}\">Tiny Read</div><div ng-click=\"record_read_time(1, $event)\" class=\"tab read_block\" ng-class=\"{'active_tab':is_timer(1)}\">Small Read</div><div ng-click=\"record_read_time(2, $event)\" class=\"tab read_block\" ng-class=\"{'active_tab':is_timer(2)}\">Normal Read</div><div ng-click=\"record_read_time(3, $event)\" class=\"tab read_block\" ng-class=\"{'active_tab':is_timer(3)}\">Long Read</div></div><div class=\"tweet_link site_color\" ng-click=\"user.interact = true;\"><span><img ng-src=\"{{focused_book.display_profile}}\"></span> <span ng-model=\"focused_book.display_tweet\" ng-bind-html=\"focused_book.display_tweet | display_tweet\"></span></div><div class=\"footer\"><recommend data=\"focused_book\"></recommend></div>"
   );
 
 
@@ -188,37 +194,58 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/left_panel/friends_list.html',
-    "<div class=\"animate-fast\" id=\"friendsList\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed2': user.collapsed_friends, \n" +
-    "\t \t\t\t'left_column_shifted left_column_shifted1': !user.collapsed_filters,\n" +
-    "\t            'left_column_shifted left_column_shifted2': !user.collapsed_trends,\n" +
-    "\t            'left_column_shifted left_column_shifted3': !user.collapsed_lists,\n" +
-    "\t            'left_column_shifted left_column_shifted4': !user.collapsed_column,\n" +
+    "<div class=\"animate-fast\" id=\"friendsList\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed2': user.collapsed_friends, \r" +
+    "\n" +
+    "\t \t\t\t'left_column_shifted left_column_shifted1': !user.collapsed_filters,\r" +
+    "\n" +
+    "\t            'left_column_shifted left_column_shifted2': !user.collapsed_trends,\r" +
+    "\n" +
+    "\t            'left_column_shifted left_column_shifted3': !user.collapsed_lists,\r" +
+    "\n" +
+    "\t            'left_column_shifted left_column_shifted4': !user.collapsed_column,\r" +
+    "\n" +
     "\t            'left_column': !user.collapsed_friends}\"><div class=\"collapse_icon\" ng-click=\"user.collapsed_friends = true; user.collapsed_left_column = true; collapse_left_panel();\" ng-if=\"!user.collapsed_friends\"><span class=\"icon-angle-left\"></span></div><div class=\"left_column_tab\" ng-class=\"{'left_column_tab_compressed': !user.collapsed_left_column}\" ng-hide=\"!user.collapsed_friends\" ng-click=\"show_friends_list();\"><span class=\"table_cell\"><span class=\"icon-users green_color header_font\" ng-if=\"user.collapsed_friends\"></span> <span ng-show=\"user.collapsed_left_column\">&nbsp;&nbsp;Friends</span></span></div><div class=\"header\" ng-if=\"!user.collapsed_friends\" ng-click=\"handle_friends_grid_size(undefined, true)\"><span ng-if=\"!$routeParams.type != 'profile'\"><b>Friends</b></span> <span ng-if=\"!$routeParams.type == 'profile'\"><b>Friends</b></span></div><div ng-if=\"!user.collapsed_friends && $routeParams.type != 'profile'\" class=\"friends_grid scrollbar\"><div ng-repeat=\"friend in user.friends\" class=\"friend_block animate-fast\"><div ng-include=\"\" src=\"'/assets/angular/views/left_panel/shared/friend_grid.html'\"></div></div></div><div ng-if=\"!user.collapsed_friends && $routeParams.type == 'profile'\" class=\"friends_grid scrollbar\"><div ng-repeat=\"friend in reader.friends\" class=\"friend_block animate-fast\"><div ng-include=\"\" src=\"'/assets/angular/views/left_panel/shared/friend_grid.html'\"></div></div></div></div>"
   );
 
 
   $templateCache.put('/assets/angular/views/left_panel/listopia.html',
-    "<div class=\"animate-fast\" id=\"listopia\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed4': user.collapsed_lists, \n" +
-    "\t            'left_column_shifted left_column_shifted1': !user.collapsed_column,\n" +
-    "\t            'left_column_shifted left_column_shifted2': !user.collapsed_friends,\n" +
-    "\t            'left_column_shifted left_column_shifted3': !user.collapsed_filters,\n" +
-    "\t            'left_column_shifted left_column_shifted4': !user.collapsed_trends,\n" +
-    "\t            'left_column': !user.collapsed_lists}\"><div class=\"collapse_icon\" ng-click=\"user.collapsed_lists = true; user.collapsed_left_column = true; collapse_left_panel();\" ng-if=\"!user.collapsed_lists\"><span class=\"icon-angle-left\"></span></div><div class=\"left_column_tab\" ng-class=\"{'left_column_tab_compressed': !user.collapsed_left_column}\" ng-hide=\"!user.collapsed_lists\" ng-click=\"user.collapsed_lists = false; \n" +
-    "\t \t           user.collapsed_left_column = false;\n" +
-    "\t \t           user.collapsed_column = true; \n" +
-    "\t \t           user.collapsed_trends = true;\n" +
-    "\t \t           user.collapsed_filters = true;\n" +
-    "\t \t           user.collapsed_friends = true;\n" +
+    "<div class=\"animate-fast\" id=\"listopia\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed4': user.collapsed_lists, \r" +
+    "\n" +
+    "\t            'left_column_shifted left_column_shifted1': !user.collapsed_column,\r" +
+    "\n" +
+    "\t            'left_column_shifted left_column_shifted2': !user.collapsed_friends,\r" +
+    "\n" +
+    "\t            'left_column_shifted left_column_shifted3': !user.collapsed_filters,\r" +
+    "\n" +
+    "\t            'left_column_shifted left_column_shifted4': !user.collapsed_trends,\r" +
+    "\n" +
+    "\t            'left_column': !user.collapsed_lists}\"><div class=\"collapse_icon\" ng-click=\"user.collapsed_lists = true; user.collapsed_left_column = true; collapse_left_panel();\" ng-if=\"!user.collapsed_lists\"><span class=\"icon-angle-left\"></span></div><div class=\"left_column_tab\" ng-class=\"{'left_column_tab_compressed': !user.collapsed_left_column}\" ng-hide=\"!user.collapsed_lists\" ng-click=\"user.collapsed_lists = false; \r" +
+    "\n" +
+    "\t \t           user.collapsed_left_column = false;\r" +
+    "\n" +
+    "\t \t           user.collapsed_column = true; \r" +
+    "\n" +
+    "\t \t           user.collapsed_trends = true;\r" +
+    "\n" +
+    "\t \t           user.collapsed_filters = true;\r" +
+    "\n" +
+    "\t \t           user.collapsed_friends = true;\r" +
+    "\n" +
     "\t \t           expand_left_panel();\"><span class=\"table_cell\"><span class=\"icon-list purple_color header_font\" ng-if=\"user.collapsed_lists\"></span> <span ng-show=\"user.collapsed_left_column\">&nbsp;&nbsp;Listopia</span></span></div><div class=\"header\" ng-if=\"!user.collapsed_lists\"><span><b>Explore Listopia</b></span></div><div class=\"filters_panel_large scrollbar\" ng-if=\"!user.collapsed_lists\"><div class=\"filters_group\"><div ng-repeat=\"filter in book_lists\"><filter data=\"filter\" hide-icon=\"true\" icon-class=\"icon-list\" url=\"grid/{{$routeParams.type}}/id/{{filter.id}}/name/{{filter.name}}\"></filter></div></div></div></div>"
   );
 
 
   $templateCache.put('/assets/angular/views/left_panel/news_feed.html',
-    "<div class=\"expand_notifications\" ng-if=\"reader\" ng-class=\"{'expand_notifications_shift': user.collapsed_column}\" ng-click=\"show_interaction_box(reader.id)\"><span class=\"icon-expand2\"></span></div><div class=\"expand_notifications\" ng-if=\"!reader\" ng-class=\"{'expand_notifications_shift': user.collapsed_column}\" ng-click=\"show_interaction_box()\"><span class=\"icon-expand2\"></span></div><div class=\"animate-fast\" id=\"newsFeed\" ng-class=\"{'left_column_collapsed left_column_collapsed3': user.collapsed_column, \n" +
-    "\t            'left_column_shifted left_column_shifted1': !user.collapsed_friends,\n" +
-    "\t            'left_column_shifted left_column_shifted2': !user.collapsed_filters,\n" +
-    "\t            'left_column_shifted left_column_shifted3': !user.collapsed_trends,\n" +
-    "\t            'left_column_shifted left_column_shifted4': !user.collapsed_lists,\n" +
+    "<div class=\"expand_notifications\" ng-if=\"reader\" ng-class=\"{'expand_notifications_shift': user.collapsed_column}\" ng-click=\"show_interaction_box(reader.id)\"><span class=\"icon-expand2\"></span></div><div class=\"expand_notifications\" ng-if=\"!reader\" ng-class=\"{'expand_notifications_shift': user.collapsed_column}\" ng-click=\"show_interaction_box()\"><span class=\"icon-expand2\"></span></div><div class=\"animate-fast\" id=\"newsFeed\" ng-class=\"{'left_column_collapsed left_column_collapsed3': user.collapsed_column, \r" +
+    "\n" +
+    "\t            'left_column_shifted left_column_shifted1': !user.collapsed_friends,\r" +
+    "\n" +
+    "\t            'left_column_shifted left_column_shifted2': !user.collapsed_filters,\r" +
+    "\n" +
+    "\t            'left_column_shifted left_column_shifted3': !user.collapsed_trends,\r" +
+    "\n" +
+    "\t            'left_column_shifted left_column_shifted4': !user.collapsed_lists,\r" +
+    "\n" +
     "\t            'left_column': !user.collapsed_column}\"><div class=\"collapse_icon\" ng-click=\"user.collapsed_column = true; user.collapsed_left_column = true; collapse_left_panel();\" ng-if=\"!user.collapsed_column\"><span class=\"icon-angle-left\"></span></div><div ng-if=\"user.collapsed_column && !reader\" class=\"animate-fast left_column_tab\" ng-class=\"{'left_column_tab_compressed': !user.collapsed_left_column}\" ng-click=\"get_news_feed();\"><span class=\"table_cell\"><span class=\"icon-newspaper site_color header_font\"></span> <span class=\"shelves\" ng-show=\"user.collapsed_left_column\">&nbsp;&nbsp;News Feed</span></span></div><div ng-if=\"user.collapsed_column && reader\" class=\"animate-fast left_column_tab\" ng-class=\"{'left_column_tab_compressed': !user.collapsed_left_column}\" ng-click=\"get_news_feed(reader.id);\"><span class=\"table_cell\"><span class=\"icon-newspaper site_color header_font\"></span> <span class=\"shelves\" ng-show=\"user.collapsed_left_column\">&nbsp;&nbsp;{{reader.gender_prefix}} Timeline</span></span></div><div class=\"header\" ng-if=\"!user.collapsed_column && reader\"><span><b>&nbsp;&nbsp;{{reader.name | first_name}}'s Timeline</b></span></div><div ng-include=\"\" src=\"'/assets/angular/views/shared/feed/readers.html'\" ng-if=\"show_notifications && !user.collapsed_column && reader\"></div><div class=\"header\" ng-if=\"!user.collapsed_column && !reader\"><span><b>&nbsp;&nbsp;News Feed</b></span></div><div ng-include=\"\" src=\"'/assets/angular/views/shared/feed/news.html'\" ng-if=\"show_notifications && !user.collapsed_column && !reader\"></div></div>"
   );
 
@@ -244,33 +271,55 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/left_panel/shelves.html',
-    "<div class=\"animate-fast\" id=\"shelves\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed1': user.collapsed_filters, \n" +
-    "\t            'left_column_shifted left_column_shifted1': !user.collapsed_trends,\n" +
-    "\t            'left_column_shifted left_column_shifted2': !user.collapsed_lists,\n" +
-    "\t            'left_column_shifted left_column_shifted3': !user.collapsed_column,\n" +
-    "\t            'left_column_shifted left_column_shifted4': !user.collapsed_friends,\n" +
-    "\t            'left_column': !user.collapsed_filters}\"><div class=\"collapse_icon\" ng-click=\"user.collapsed_filters = true; user.collapsed_left_column = true; collapse_left_panel();\" ng-if=\"!user.collapsed_filters\"><span class=\"icon-angle-left\"></span></div><div class=\"left_column_tab\" ng-class=\"{'left_column_tab_compressed': !user.collapsed_left_column}\" ng-hide=\"!user.collapsed_filters\" ng-click=\"user.collapsed_filters = false; \n" +
-    "\t \t \t\t   user.collapsed_left_column = false;\n" +
-    "\t \t           user.collapsed_column = true; \n" +
-    "\t \t           user.collapsed_trends = true;\n" +
-    "\t \t           user.collapsed_lists = true;\n" +
-    "\t \t           user.collapsed_friends = true;\n" +
+    "<div class=\"animate-fast\" id=\"shelves\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed1': user.collapsed_filters, \r" +
+    "\n" +
+    "\t            'left_column_shifted left_column_shifted1': !user.collapsed_trends,\r" +
+    "\n" +
+    "\t            'left_column_shifted left_column_shifted2': !user.collapsed_lists,\r" +
+    "\n" +
+    "\t            'left_column_shifted left_column_shifted3': !user.collapsed_column,\r" +
+    "\n" +
+    "\t            'left_column_shifted left_column_shifted4': !user.collapsed_friends,\r" +
+    "\n" +
+    "\t            'left_column': !user.collapsed_filters}\"><div class=\"collapse_icon\" ng-click=\"user.collapsed_filters = true; user.collapsed_left_column = true; collapse_left_panel();\" ng-if=\"!user.collapsed_filters\"><span class=\"icon-angle-left\"></span></div><div class=\"left_column_tab\" ng-class=\"{'left_column_tab_compressed': !user.collapsed_left_column}\" ng-hide=\"!user.collapsed_filters\" ng-click=\"user.collapsed_filters = false; \r" +
+    "\n" +
+    "\t \t \t\t   user.collapsed_left_column = false;\r" +
+    "\n" +
+    "\t \t           user.collapsed_column = true; \r" +
+    "\n" +
+    "\t \t           user.collapsed_trends = true;\r" +
+    "\n" +
+    "\t \t           user.collapsed_lists = true;\r" +
+    "\n" +
+    "\t \t           user.collapsed_friends = true;\r" +
+    "\n" +
     "\t \t           expand_left_panel();\"><span class=\"table_cell\"><span class=\"icon-bookmark2 yellow_color header_font\" ng-if=\"user.collapsed_filters\"></span> <span ng-show=\"user.collapsed_left_column\">&nbsp;&nbsp;Shelves</span></span></div><div class=\"header\" ng-if=\"!user.collapsed_filters\"><span><b>&nbsp;Explore Shelves</b></span></div><div class=\"filters_panel_large scrollbar\" ng-if=\"!user.collapsed_filters\"><div class=\"filters_group\"><div ng-repeat=\"filter in labels\"><filter data=\"filter\" icon-class=\"icon-bookmark3\" url=\"recommendations/{{$routeParams.type}}/label/{{filter.id}}/name/{{filter.name}}\"></filter></div></div></div></div>"
   );
 
 
   $templateCache.put('/assets/angular/views/left_panel/trending_list.html',
-    "<div class=\"expand_notifications\" ng-class=\"{'expand_notifications_shift': user.collapsed_trends}\" ng-click=\"show_trending_options()\"><span class=\"icon-expand2\"></span></div><div class=\"animate-fast scrollbar\" id=\"trendingList\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed5': user.collapsed_trends, \n" +
-    "\t            'left_column_shifted left_column_shifted1': !user.collapsed_lists,\n" +
-    "\t            'left_column_shifted left_column_shifted2': !user.collapsed_column,\n" +
-    "\t            'left_column_shifted left_column_shifted3': !user.collapsed_friends,\n" +
-    "\t            'left_column_shifted left_column_shifted4': !user.collapsed_filters,\n" +
-    "\t            'left_column': !user.collapsed_trends}\"><div class=\"collapse_icon\" ng-click=\"user.collapsed_trends = true; user.collapsed_left_column = true; collapse_left_panel();\" ng-if=\"!user.collapsed_trends\"><span class=\"icon-angle-left\"></span></div><div class=\"left_column_tab\" ng-class=\"{'left_column_tab_compressed': !user.collapsed_left_column}\" ng-hide=\"!user.collapsed_trends\" ng-click=\"user.collapsed_trends = false; \n" +
-    "\t \t           user.collapsed_left_column = false;\n" +
-    "\t \t           user.collapsed_column = true; \n" +
-    "\t \t           user.collapsed_filters = true;\n" +
-    "\t \t           user.collapsed_lists = true;\n" +
-    "\t \t           user.collapsed_friends = true;\n" +
+    "<div class=\"expand_notifications\" ng-class=\"{'expand_notifications_shift': user.collapsed_trends}\" ng-click=\"show_trending_options()\"><span class=\"icon-expand2\"></span></div><div class=\"animate-fast scrollbar\" id=\"trendingList\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed5': user.collapsed_trends, \r" +
+    "\n" +
+    "\t            'left_column_shifted left_column_shifted1': !user.collapsed_lists,\r" +
+    "\n" +
+    "\t            'left_column_shifted left_column_shifted2': !user.collapsed_column,\r" +
+    "\n" +
+    "\t            'left_column_shifted left_column_shifted3': !user.collapsed_friends,\r" +
+    "\n" +
+    "\t            'left_column_shifted left_column_shifted4': !user.collapsed_filters,\r" +
+    "\n" +
+    "\t            'left_column': !user.collapsed_trends}\"><div class=\"collapse_icon\" ng-click=\"user.collapsed_trends = true; user.collapsed_left_column = true; collapse_left_panel();\" ng-if=\"!user.collapsed_trends\"><span class=\"icon-angle-left\"></span></div><div class=\"left_column_tab\" ng-class=\"{'left_column_tab_compressed': !user.collapsed_left_column}\" ng-hide=\"!user.collapsed_trends\" ng-click=\"user.collapsed_trends = false; \r" +
+    "\n" +
+    "\t \t           user.collapsed_left_column = false;\r" +
+    "\n" +
+    "\t \t           user.collapsed_column = true; \r" +
+    "\n" +
+    "\t \t           user.collapsed_filters = true;\r" +
+    "\n" +
+    "\t \t           user.collapsed_lists = true;\r" +
+    "\n" +
+    "\t \t           user.collapsed_friends = true;\r" +
+    "\n" +
     "\t \t           expand_left_panel();\"><span class=\"table_cell\"><span class=\"icon-bars red_color header_font\" ng-if=\"user.collapsed_trends\"></span> <span ng-show=\"user.collapsed_left_column\">&nbsp;&nbsp;Trending</span></span></div><div class=\"header\" ng-if=\"!user.collapsed_trends\"><span><b>Trending</b></span></div><div ng-include=\"\" src=\"'/assets/angular/views/shared/feed/trending.html'\" ng-if=\"!user.collapsed_trends\"></div></div>"
   );
 
@@ -321,9 +370,12 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/shared/rate.html',
-    "<div itemprop=\"review\" itemscope=\"\" itemtype=\"http://schema.org/Review\" class=\"rate\"><div class=\"rate_radio_buttons\"><span type=\"radio\" class=\"rate_radio\" ng-class=\"{'yellow_color icon-star22':is_active($index) && !rate_object.rated,\n" +
-    "\t\t\t   'icon-star':!is_active($index),\n" +
-    "\t\t\t   'site_color icon-star22':ready_to_rate && is_active($index),\n" +
+    "<div itemprop=\"review\" itemscope=\"\" itemtype=\"http://schema.org/Review\" class=\"rate\"><div class=\"rate_radio_buttons\"><span type=\"radio\" class=\"rate_radio\" ng-class=\"{'yellow_color icon-star22':is_active($index) && !rate_object.rated,\r" +
+    "\n" +
+    "\t\t\t   'icon-star':!is_active($index),\r" +
+    "\n" +
+    "\t\t\t   'site_color icon-star22':ready_to_rate && is_active($index),\r" +
+    "\n" +
     "\t\t\t   'purple_color icon-star22':rate_object.rated && is_active($index) && !ready_to_rate}\" ng-mouseenter=\"show_if_rated($index)\" ng-mouseleave=\"reset_rating()\" ng-click=\"mark_as_rated($index, $event)\" ng-repeat=\"i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\"></span>  <span ng-model=\"rate_object.user_rating\">{{rate_object.user_rating}}/10</span></div></div>"
   );
 
@@ -379,25 +431,44 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/unused/discussion.html',
-    "<div class=\"discussion\" ng-class=\"{'grey_background':!is_even({{index}})}\"><div class=\"user\" ns-popover=\"\" ns-popover-template=\"userPopover\" ns-popover-trigger=\"mouseover\" ns-popover-timeout=\"0\" hide-on-click=\"false\" ns-popover-ns-popover-placement=\"bottom|left\"><img ng-src=\"{{discussion.user.thumb}}\" class=\"thumb\"></div><div class=\"comment\" itemscope=\"\" itemtype=\"http://schema.org/UserComments\"><div class=\"username\"><div itemprop=\"creator \" itemscope=\"\" itemtype=\"http://schema.org/Person\"><span itemprop=\"name\">{{discussion.user.name}}</span> {{index}}</div></div><div class=\"comment_text\"><span itemprop=\"commentText\">{{discussion.comment}}</span></div><div class=\"footer\"><span class=\"like\">Like</span> <span class=\"dislike\">Dislike</span> <span class=\"post_comment\"><u>Comment</u></span> <span itemprop=\"commentTime\">{{discussion.timestamp}}</span></div><div class=\"comment_big_box\" style=\"display:none\"><input class=\"comment_box\" placeholder=\"Press enter to send...\"></div></div></div><script type=\"text/ng-template\" id=\"userPopover\"><div class=\"triangle\"></div>\n" +
-    "  \t<div class=\"tooltip user_tooltip\">\n" +
-    "    \t<div class=\"header\">\n" +
-    "    \t\tUsername from Country or state\n" +
-    "    \t</div>\n" +
-    "    \t<hr>\n" +
-    "    \t<div class=\"details\">\n" +
-    "    \t\t<span class=\"count\">N </span><span>books read</span> · \n" +
-    "    \t\t<span class=\"count\">N </span><span>profile views</span> · \n" +
-    "    \t\t<span class=\"count\">N </span><span>followers</span> · \n" +
-    "    \t\t<span>Following</span><span class=\"count\"> N</span><span> readers</span>\n" +
-    "    \t</div>\n" +
-    "    \t<div class=\"recommends\">\n" +
-    "    \t</div>\n" +
-    "    \t<div class=\"footer\">\n" +
-    "    \t\t<span class=\"timestamp\">Member Since</span>\n" +
-    "    \t\t<span class=\"follow\">Follow</span>\n" +
-    "    \t\t<span class=\"send_message\">Message</span>\n" +
-    "    \t</div>\n" +
+    "<div class=\"discussion\" ng-class=\"{'grey_background':!is_even({{index}})}\"><div class=\"user\" ns-popover=\"\" ns-popover-template=\"userPopover\" ns-popover-trigger=\"mouseover\" ns-popover-timeout=\"0\" hide-on-click=\"false\" ns-popover-ns-popover-placement=\"bottom|left\"><img ng-src=\"{{discussion.user.thumb}}\" class=\"thumb\"></div><div class=\"comment\" itemscope=\"\" itemtype=\"http://schema.org/UserComments\"><div class=\"username\"><div itemprop=\"creator \" itemscope=\"\" itemtype=\"http://schema.org/Person\"><span itemprop=\"name\">{{discussion.user.name}}</span> {{index}}</div></div><div class=\"comment_text\"><span itemprop=\"commentText\">{{discussion.comment}}</span></div><div class=\"footer\"><span class=\"like\">Like</span> <span class=\"dislike\">Dislike</span> <span class=\"post_comment\"><u>Comment</u></span> <span itemprop=\"commentTime\">{{discussion.timestamp}}</span></div><div class=\"comment_big_box\" style=\"display:none\"><input class=\"comment_box\" placeholder=\"Press enter to send...\"></div></div></div><script type=\"text/ng-template\" id=\"userPopover\"><div class=\"triangle\"></div>\r" +
+    "\n" +
+    "  \t<div class=\"tooltip user_tooltip\">\r" +
+    "\n" +
+    "    \t<div class=\"header\">\r" +
+    "\n" +
+    "    \t\tUsername from Country or state\r" +
+    "\n" +
+    "    \t</div>\r" +
+    "\n" +
+    "    \t<hr>\r" +
+    "\n" +
+    "    \t<div class=\"details\">\r" +
+    "\n" +
+    "    \t\t<span class=\"count\">N </span><span>books read</span> · \r" +
+    "\n" +
+    "    \t\t<span class=\"count\">N </span><span>profile views</span> · \r" +
+    "\n" +
+    "    \t\t<span class=\"count\">N </span><span>followers</span> · \r" +
+    "\n" +
+    "    \t\t<span>Following</span><span class=\"count\"> N</span><span> readers</span>\r" +
+    "\n" +
+    "    \t</div>\r" +
+    "\n" +
+    "    \t<div class=\"recommends\">\r" +
+    "\n" +
+    "    \t</div>\r" +
+    "\n" +
+    "    \t<div class=\"footer\">\r" +
+    "\n" +
+    "    \t\t<span class=\"timestamp\">Member Since</span>\r" +
+    "\n" +
+    "    \t\t<span class=\"follow\">Follow</span>\r" +
+    "\n" +
+    "    \t\t<span class=\"send_message\">Message</span>\r" +
+    "\n" +
+    "    \t</div>\r" +
+    "\n" +
     "  </div></script>"
   );
 
@@ -448,7 +519,8 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/unused/reader/message_box.html',
-    "<div class=\"message_box animate-fast action_button\" ng-if=\"reader.show_message_box\"><div class=\"close_button button_effect\" ng-click=\"close_message_box()\">x</div><textarea type=\"text\" placeholder=\"type and enter to send message..\" class=\"comment_box animate-fast\" rows=\"1\">\n" +
+    "<div class=\"message_box animate-fast action_button\" ng-if=\"reader.show_message_box\"><div class=\"close_button button_effect\" ng-click=\"close_message_box()\">x</div><textarea type=\"text\" placeholder=\"type and enter to send message..\" class=\"comment_box animate-fast\" rows=\"1\">\r" +
+    "\n" +
     "</div>"
   );
 

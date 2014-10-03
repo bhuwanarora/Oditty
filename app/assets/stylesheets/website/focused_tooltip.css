@@ -64,6 +64,7 @@
 	line-height: 1.5em;
 	padding: 12px;
 	width: 97%;
+	white-space: normal;
 }
 
 .focused_tooltip .book_info .text{

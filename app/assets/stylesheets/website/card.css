@@ -40,14 +40,14 @@
 	left: 2vh;
 	right: 2vh;
 	height: 5vh;
-	white-space: initial;
+	white-space: normal;
 	font-size: .9em;
 	cursor: default;
 }
 
 .summary{
 	height: 45vh;
-	overflow-y: scroll;
+	/*overflow-y: scroll;*/
 	margin-top: 3vh;
 	padding-right: 10px;
 }
@@ -139,6 +139,7 @@
 	cursor: default;
 	padding-left: 10px;
 	border: 1px solid transparent;
+	height: 100%;
 }
 
 .input_bookmark:focus{
