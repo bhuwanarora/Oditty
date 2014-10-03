@@ -750,15 +750,19 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		return is_active;
 	}
 
-	$scope.is_current = function(index, selectedItem) {
-		if($scope.search_tag.current == index){
-			$scope.search_tag.currentItem = selectedItem;
+	$scope.is_current = function(index, selectedItem){
+		_set_input_field = function(){
 			if(selectedItem.show_all){
 				$scope.search_tag.input = selectedItem.value;
 			}
 			else if(selectedItem.type != SearchUIConstants.ComingSoon && !selectedItem.level1_option && !selectedItem.custom_option){
 				$scope.search_tag.input = selectedItem.name;
 			}
+		}
+		
+		if($scope.search_tag.current == index){
+			$scope.search_tag.currentItem = selectedItem;
+			// _set_input_field();
 		} 
 	    return $scope.search_tag.current == index;
 	};

@@ -382,10 +382,15 @@
 }
 
 .right_links{
-	left: 140px;
-	top: 135px;
+	left: 50%;
+	top: 70px;
 	right: initial;
 	cursor: default !important;
+	margin-left: -170px;
+	position: fixed;
+	height: 40px;
+	text-transform: capitalize;
+	font-size: 18px;
 }
 
 .toggle_elements{
