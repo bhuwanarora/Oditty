@@ -1046,6 +1046,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
     			$scope.search_display = SearchUIConstants.TypeMore;
     		}
     		else{
+				$scope.search_type = SearchUIConstants.SearchAll;
 		        websiteService.search(currentValue, $scope.search_type, $scope.search_tag.result_count)
 		        .then(function(result){
 		        	if($scope.search_ready){

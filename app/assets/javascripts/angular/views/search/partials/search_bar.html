@@ -54,7 +54,8 @@
          ng-class="{'active_tab': is_active_nest(item), 'faded_site_color': item.active}">
          <tooltip text="item.name" position="top" ng-if="!$routeParams.type"></tooltip>
          <tooltip text="item.name" position="right" ng-if="$routeParams.type"></tooltip>
-      <span class="{{item.icon}}"></span>
+      <span class="capitalise">{{item.type | lowercase}}</span>
+      <!-- <span class="{{item.icon}}"></span> -->
     </div>
   </div>
 
