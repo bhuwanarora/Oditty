@@ -2122,6 +2122,7 @@ l	.compressed_info_card{
 	background-color: white;
 	border-color: rgba(0,0,0,.2);
 	box-shadow: 0 2px 10px rgba(0,0,0,.2);
+	z-index: 1;
 }
 
 .user_add_popup li{
