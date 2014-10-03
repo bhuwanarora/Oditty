@@ -255,3 +255,12 @@
 	opacity: 1;
 }
 
+.feedback .tweet.ng-enter,
+.feedback .tweet.ng-leave.ng-leave-active{
+	bottom: -20px;
+}
+
+.feedback .tweet.ng-leave,
+.feedback .tweet.ng-enter.ng-enter-active{
+	bottom: 20px;
+}

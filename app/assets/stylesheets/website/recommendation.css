@@ -1586,7 +1586,7 @@ and (min-width : 1824px) {
 	width: 40px;
 	border-radius: 20px;
 	cursor: pointer;
-	box-shadow: -4px 0 25px 0 rgba(66,66,66,0.47);
+	box-shadow: -4px 0 25px 0 rgba(66, 66, 66, 0.25);
 	z-index: 10;
 	background-color: #fff;
 	color: #717070;
@@ -1595,13 +1595,17 @@ and (min-width : 1824px) {
 	display: table;
 }
 
-.feedback textarea{
+.feedback:hover{
+	background-color: #F5F5F5;
+}
+
+.feedback_popup textarea{
 	width: 250px;
 	height: 100px;
 	margin-top: 10px;
 }
 
-.feedback textarea:focus{
+.feedback_popup textarea:focus{
 	outline: none;
 }
 
