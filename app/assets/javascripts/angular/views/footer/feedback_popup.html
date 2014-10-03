@@ -1,5 +1,5 @@
 <div class="feedback_popup"
-	ng-if="get_feedback"
+	ng-show="get_feedback"
 	ng-class="{'feedback_box': get_feedback, 'hidden': user.show_profile}">
 	<div class="icon-close-popup" ng-click="get_feedback=false;"></div>
 	<div ng-click="get_feedback = !get_feedback" class="site_color">
@@ -13,7 +13,7 @@
 	</div>
 </div>
 <div class="feedback"
-	ng-if="!get_feedback">
+	ng-show="!get_feedback">
 	<div ng-click="get_feedback = !get_feedback" class="table_cell">
 		<b>F</b>
 	</div>

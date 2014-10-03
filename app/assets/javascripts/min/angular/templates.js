@@ -105,7 +105,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/footer/feedback_popup.html',
-    "<div class=\"feedback_popup\" ng-if=\"get_feedback\" ng-class=\"{'feedback_box': get_feedback, 'hidden': user.show_profile}\"><div class=\"icon-close-popup\" ng-click=\"get_feedback=false;\"></div><div ng-click=\"get_feedback = !get_feedback\" class=\"site_color\"><b>{{feedback_text}}</b></div><div ng-if=\"get_feedback\"><textarea placeholder=\"Please give your valuable feedback...\" ng-model=\"user.feedback\"></textarea><div class=\"feedback_sumbit blue_button\" ng-click=\"handle_feedback($event)\">Submit</div></div></div><div class=\"feedback\" ng-if=\"!get_feedback\"><div ng-click=\"get_feedback = !get_feedback\" class=\"table_cell\"><b>F</b></div></div>"
+    "<div class=\"feedback_popup\" ng-show=\"get_feedback\" ng-class=\"{'feedback_box': get_feedback, 'hidden': user.show_profile}\"><div class=\"icon-close-popup\" ng-click=\"get_feedback=false;\"></div><div ng-click=\"get_feedback = !get_feedback\" class=\"site_color\"><b>{{feedback_text}}</b></div><div ng-if=\"get_feedback\"><textarea placeholder=\"Please give your valuable feedback...\" ng-model=\"user.feedback\"></textarea><div class=\"feedback_sumbit blue_button\" ng-click=\"handle_feedback($event)\">Submit</div></div></div><div class=\"feedback\" ng-show=\"!get_feedback\"><div ng-click=\"get_feedback = !get_feedback\" class=\"table_cell\"><b>F</b></div></div>"
   );
 
 
