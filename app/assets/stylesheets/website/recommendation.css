@@ -1096,7 +1096,7 @@ and (min-width : 1824px) {
 
 .notifications_popup .notification_stable,
 .notifications .notification_stable{
-	background-color: #fff;
+	background-color: #F5F5F5;
 	overflow: auto;
 	border-bottom: 1px solid #E9E9E9;
 	border-radius: 2px;

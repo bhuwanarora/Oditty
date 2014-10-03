@@ -310,7 +310,6 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 						this.push(json);
 					}
 				}, $rootScope.genres);
-
 				$scope._add_genres();
 		    });
 		}
@@ -405,7 +404,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 
 	$scope.handle_selection_option = function(item, event){
 		$scope.search_tag.result_count = 10;
-		console.debug("handle_selection_option", item);
+		console.debug("handle_selection_option", item, $scope.active_base);
 		if(item.level1_option){
 			if($scope.active_base == SearchUIConstants.BookSearch){
 				$scope.show_compressed_base = true;
@@ -951,7 +950,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				// "icon2": "icon-book"}
 		];
 		$scope.search_results = $scope.base_book_options;
-		$scope.search_tag.placeholder = SearchUIConstants.BookSearchPlaceholder;
+		// $scope.search_tag.placeholder = SearchUIConstants.BookSearchPlaceholder;
 		if(on_search_page){
 			$cookieStore.put('base_search', SearchUIConstants.BookSearchLink);
 		}
@@ -1173,7 +1172,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	}
 
 	$scope.handle_options = function(event){
-		if($routeParams.type){
+		if(!on_search_page){
 			if($rootScope.hide_options){
 				if(angular.isUndefined($scope.search_tag.input) || $scope.search_tag.input.length == 0){
 					$scope.hide_input_field = false;
@@ -1196,6 +1195,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				$scope.active_base = SearchUIConstants.BookSearch;
 			}
 			event.stopPropagation();
+		}
+		if(angular.isUndefined($scope.active_base)){
+			$scope.handle_base_selection($scope.base_search_options[0]);
 		}
 	}
 
