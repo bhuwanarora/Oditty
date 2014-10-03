@@ -1890,6 +1890,11 @@ l	.compressed_info_card{
 	z-index: 1;
 }
 
+.share_wrapper .thumb_wrapper img{
+	padding: 3px;
+	background-color: white;
+}
+
 .share_wrapper .thumb_wrapper{
 	position: fixed;
 	left: 20px;
@@ -1926,6 +1931,7 @@ l	.compressed_info_card{
 	z-index: 2;
 	cursor: pointer;
 	color: white;
+	text-shadow: 0 2px 3px #7C7C7C;
 }
 
 .user_name:hover .capitalise{
@@ -1965,29 +1971,22 @@ l	.compressed_info_card{
 	bottom: 81px;
 	left: 0px;
 	top: initial;
-	background-color: white;
 	padding: 20px;
-	padding-right: 22%;
 }
 
 .thumb_wrapper_shifted{
 	bottom: 137px;
 	top: initial !important;
-	padding: 20px;
-	background-color: white;
-	left: 0px !important;
-	padding-right: 32%;
 }	
 
 .user_profile{
 	white-space: initial;
 	background-color: #fff;
 	z-index: 1;
-	height: 50vh;
 	border-radius: 2px;
 	left: 9%;
-	width: 42%;
-	padding: 20px 0;
+	width: 39%;
+	padding: 20px;
 	float: left;
 	display: inline-block;
 }
