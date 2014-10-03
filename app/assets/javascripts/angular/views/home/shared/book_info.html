@@ -141,8 +141,12 @@
 </div>
 
 <div class="tweet_link site_color" ng-click="user.interact = true;">
-  <span><img ng-src="{{focused_book.display_profile}}"></span>
-  <span ng-model="focused_book.display_tweet" ng-bind-html="focused_book.display_tweet | display_tweet"></span>
+  <img ng-src="{{focused_book.display_profile}}">
+  <div class="inline_block">
+    <span ng-model="focused_book.display_tweet" 
+          class="table_cell"
+          ng-bind-html="focused_book.display_tweet | display_tweet"></span>
+  </div>
 </div>
 <div class="footer">
   <recommend data="focused_book"></recommend>
