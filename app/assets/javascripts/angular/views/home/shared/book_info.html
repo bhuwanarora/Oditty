@@ -87,7 +87,10 @@
 
 <div class="book_info scrollbar author_book_info"
      ng-if="show_author && !show_buy">
-      <img ng-src="{{focused_book.author_details.image_url}}"/>
+     <div class="image_wrapper">
+        <img ng-src="{{focused_book.author_details.image_url}}"/> 
+     </div>
+      
       <div class="text"
           msd-wheel="stop_horizontal_scroll($event)">
           {{focused_book.author_details.about}}

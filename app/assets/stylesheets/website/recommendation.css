@@ -1962,6 +1962,7 @@ l	.compressed_info_card{
 	cursor: pointer;
 	color: white;
 	text-shadow: 0 2px 3px #7C7C7C;
+	font-size: 20px;
 }
 
 .user_name:hover .capitalise{

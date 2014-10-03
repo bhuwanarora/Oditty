@@ -80,10 +80,13 @@
 	height: 35vh;
 }
 
+.focused_tooltip .book_info .image_wrapper{
+	width: 18vh;
+	height: 18vh;
+}
+
 .focused_tooltip .book_info img{
-	width: 8%;
-	border-radius: 2px;
-	position: fixed;
+	width: 18vh;
 }
 
 .focused_tooltip .signature_thumb{
@@ -297,7 +300,7 @@
 }
 
 .focused_tooltip .tweet_link{
-	bottom: 11vh;
+	bottom: 10px;
 	position: absolute;
 	padding: 10px;
 }
