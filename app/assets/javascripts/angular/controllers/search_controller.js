@@ -1106,27 +1106,27 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				customUserSearch = true;
 			}
 		}
-		console.debug("$scope._set_custom_search", customAuthorSearch, customBookSearch, customUserSearch, customTagSearch);
-		if(customAuthorSearch){
-			$scope.search_type = SearchUIConstants.AuthorSearch;
-			$scope.search_display = SearchUIConstants.SearchingAuthorsAndReaders;
-		}
-		else if(customBookSearch){
-			$scope.search_type = SearchUIConstants.BookSearch;
-			$scope.search_display = SearchUIConstants.SearchingBooks;
-		}
-		else if(customUserSearch){
-			$scope.search_type = SearchUIConstants.ReaderSearch;
-			$scope.search_display = SearchUIConstants.SearchingUsers;
-		}
-		else if(customTagSearch){
-			$scope.search_type = SearchUIConstants.TagSearch;
-			$scope.search_display = SearchUIConstants.SearchingTags;
-		}
-		else{
-			$scope.search_type = SearchUIConstants.SearchAll;
-			$scope.search_display = SearchUIConstants.SearchingWebsite;
-		}
+		// console.debug("$scope._set_custom_search", customAuthorSearch, customBookSearch, customUserSearch, customTagSearch);
+		// if(customAuthorSearch){
+		// 	$scope.search_type = SearchUIConstants.AuthorSearch;
+		// 	$scope.search_display = SearchUIConstants.SearchingAuthorsAndReaders;
+		// }
+		// else if(customBookSearch){
+		// 	$scope.search_type = SearchUIConstants.BookSearch;
+		// 	$scope.search_display = SearchUIConstants.SearchingBooks;
+		// }
+		// else if(customUserSearch){
+		// 	$scope.search_type = SearchUIConstants.ReaderSearch;
+		// 	$scope.search_display = SearchUIConstants.SearchingUsers;
+		// }
+		// else if(customTagSearch){
+		// 	$scope.search_type = SearchUIConstants.TagSearch;
+		// 	$scope.search_display = SearchUIConstants.SearchingTags;
+		// }
+		// else{
+		// 	$scope.search_type = SearchUIConstants.SearchAll;
+		// 	$scope.search_display = SearchUIConstants.SearchingWebsite;
+		// }
 	}
 
 	$scope.get_search_results = function(event){
