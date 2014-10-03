@@ -203,6 +203,7 @@
 	padding: 4px;
 	width: 200px;
 	border-radius: 2px;
+	border: 1px solid;
 }
 
 .interaction_box .interaction_icons:hover{
