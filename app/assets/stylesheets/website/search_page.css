@@ -676,3 +676,11 @@ and (max-width : 500px) {
 		margin-left: 25%;
 	}
 }
+
+.trending_header{
+	position: fixed;
+	left: 40%;
+	margin-left: -20%;
+	top: 30%;
+	margin-top: 45px;
+}
