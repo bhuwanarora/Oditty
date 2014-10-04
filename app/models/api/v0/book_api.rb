@@ -398,8 +398,8 @@ module Api
 							init_match_clause = "MATCH (book:Modernism) "
 						when Constants::PostModernLiterature
 							init_match_clause = "MATCH (book:PostModernLiterature) "
-						when Constants::TwentiethCenturyLiterature
-							init_match_clause = "MATCH (book:TwentiethCenturyLiterature) "
+						when Constants::Contemporary
+							init_match_clause = "MATCH (book:Contemporary) "
 						end
 					else
 						init_match_clause = "MATCH (book:Book) "
