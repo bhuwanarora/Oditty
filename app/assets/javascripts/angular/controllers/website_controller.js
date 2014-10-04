@@ -1,17 +1,20 @@
 websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout', 'websiteService', '$document', 'scroller', '$window', 'WebsiteUIConstants', function($scope, $rootScope, $timeout, websiteService, $document, scroller, $window, WebsiteUIConstants){
 	$scope.bindHorizontalScroll = function(event, delta, deltaX, deltaY){
 		event.preventDefault();
-		if(delta > 0){
-			$scope.move_left(event);
-	        // event.view.window.scrollBy(-80, 0);
+		if($rootScope.user.collapsed_left_column  || 
+			(!$rootScope.user.collapsed_left_column && !$rootScope.user.locked)){
+			if(delta > 0){
+				$scope.move_left(event);
+		        // event.view.window.scrollBy(-80, 0);
+			}
+			else{
+				$scope.move_right(event);
+				// _load_recommendations();
+				//move forward
+				// event.view.window.scrollBy(80, 0);
+			}
+			event.stopPropagation();
 		}
-		else{
-			$scope.move_right(event);
-			// _load_recommendations();
-			//move forward
-			// event.view.window.scrollBy(80, 0);
-		}
-		event.stopPropagation();
 	}
 
 	$scope._hide_popups = function(){
