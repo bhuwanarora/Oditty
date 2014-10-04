@@ -599,7 +599,7 @@ websiteApp.directive('feed', ['$rootScope', '$timeout', 'websiteService', 'widge
 
       	$scope.remove_selected_book = function(){
       		$rootScope.user.interact_books = [];
-      		$scope.placeholder = WebsiteUIConstants.ShareSomething;
+      		$scope.placeholder = WebsiteUIConstants.Share;
       		delete $scope.selected_interact_book;
       	}
 
@@ -1113,7 +1113,7 @@ websiteApp.directive('feed', ['$rootScope', '$timeout', 'websiteService', 'widge
 	        	$scope.placeholder = "Comment on "+$rootScope.focused_book.title+" by "+$rootScope.focused_book.author_name+"...";
 	        }
 	        else{
-	        	$scope.placeholder =  WebsiteUIConstants.ShareSomething;
+	        	$scope.placeholder =  WebsiteUIConstants.Share;
 	        }
 	        $scope.user.interact_book = "";
 	        $scope.user.interact_books = [];
@@ -1217,3 +1217,26 @@ websiteApp.directive('timestamp', function(){
 		templateUrl: "/assets/angular/views/shared/timestamp.html"
 	}
 });
+
+
+websiteApp.directive('userAdd', ['$rootScope', function($rootScope){
+	return{
+		restrict: 'E',
+		controller: ['$scope', function($scope){
+
+			$scope.show_interaction_box = function(user_id){
+				$rootScope.user.interact = true;
+				delete $rootScope.focused_book;
+				delete $rootScope.ticker_popup;
+				$rootScope.user.collapsed_column = true; 
+				$rootScope.user.collapsed_trends = true; 
+				$rootScope.user.collapsed_left_column = true;
+				$rootScope.popups.left_panel_width = {'width': '15%'};
+				var show_trending = false;
+				var init_notification = true;
+				$scope.$emit('getNotifications', show_trending, user_id, init_notification);
+			}
+		}],
+		templateUrl: "/assets/angular/views/home/shared/user_add.html"
+	}
+}]);

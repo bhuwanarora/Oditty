@@ -418,7 +418,8 @@
 
 .filters_added{
 	background-color: transparent !important;
-	margin-top: 0px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 
 .filters_added .option{
@@ -687,4 +688,12 @@ and (max-width : 500px) {
 	.login_box .fb{
 		margin-left: 25%;
 	}
+}
+
+.trending_header{
+	position: fixed;
+	left: 40%;
+	margin-left: -20%;
+	top: 30%;
+	margin-top: 45px;
 }

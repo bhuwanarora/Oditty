@@ -288,6 +288,10 @@ input:focus{
     background-color: #DD4B39 !important;
 }
 
+.light_grey{
+    background-color: #f5f5f5 !important;
+}
+
 .light_grey_color{
     color: #717070 !important;
 }

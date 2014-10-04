@@ -310,7 +310,6 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 						this.push(json);
 					}
 				}, $rootScope.genres);
-
 				$scope._add_genres();
 		    });
 		}
@@ -405,7 +404,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 
 	$scope.handle_selection_option = function(item, event){
 		$scope.search_tag.result_count = 10;
-		console.debug("handle_selection_option", item);
+		console.debug("handle_selection_option", item, $scope.active_base);
 		if(item.level1_option){
 			if($scope.active_base == SearchUIConstants.BookSearch){
 				$scope.show_compressed_base = true;
@@ -751,15 +750,19 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		return is_active;
 	}
 
-	$scope.is_current = function(index, selectedItem) {
-		if($scope.search_tag.current == index){
-			$scope.search_tag.currentItem = selectedItem;
+	$scope.is_current = function(index, selectedItem){
+		_set_input_field = function(){
 			if(selectedItem.show_all){
 				$scope.search_tag.input = selectedItem.value;
 			}
 			else if(selectedItem.type != SearchUIConstants.ComingSoon && !selectedItem.level1_option && !selectedItem.custom_option){
 				$scope.search_tag.input = selectedItem.name;
 			}
+		}
+		
+		if($scope.search_tag.current == index){
+			$scope.search_tag.currentItem = selectedItem;
+			// _set_input_field();
 		} 
 	    return $scope.search_tag.current == index;
 	};
@@ -951,7 +954,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				// "icon2": "icon-book"}
 		];
 		$scope.search_results = $scope.base_book_options;
-		$scope.search_tag.placeholder = SearchUIConstants.BookSearchPlaceholder;
+		// $scope.search_tag.placeholder = SearchUIConstants.BookSearchPlaceholder;
 		if(on_search_page){
 			$cookieStore.put('base_search', SearchUIConstants.BookSearchLink);
 		}
@@ -1047,6 +1050,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
     			$scope.search_display = SearchUIConstants.TypeMore;
     		}
     		else{
+				$scope.search_type = SearchUIConstants.SearchAll;
 		        websiteService.search(currentValue, $scope.search_type, $scope.search_tag.result_count)
 		        .then(function(result){
 		        	if($scope.search_ready){
@@ -1102,27 +1106,27 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				customUserSearch = true;
 			}
 		}
-		console.debug("$scope._set_custom_search", customAuthorSearch, customBookSearch, customUserSearch, customTagSearch);
-		if(customAuthorSearch){
-			$scope.search_type = SearchUIConstants.AuthorSearch;
-			$scope.search_display = SearchUIConstants.SearchingAuthorsAndReaders;
-		}
-		else if(customBookSearch){
-			$scope.search_type = SearchUIConstants.BookSearch;
-			$scope.search_display = SearchUIConstants.SearchingBooks;
-		}
-		else if(customUserSearch){
-			$scope.search_type = SearchUIConstants.ReaderSearch;
-			$scope.search_display = SearchUIConstants.SearchingUsers;
-		}
-		else if(customTagSearch){
-			$scope.search_type = SearchUIConstants.TagSearch;
-			$scope.search_display = SearchUIConstants.SearchingTags;
-		}
-		else{
-			$scope.search_type = SearchUIConstants.SearchAll;
-			$scope.search_display = SearchUIConstants.SearchingWebsite;
-		}
+		// console.debug("$scope._set_custom_search", customAuthorSearch, customBookSearch, customUserSearch, customTagSearch);
+		// if(customAuthorSearch){
+		// 	$scope.search_type = SearchUIConstants.AuthorSearch;
+		// 	$scope.search_display = SearchUIConstants.SearchingAuthorsAndReaders;
+		// }
+		// else if(customBookSearch){
+		// 	$scope.search_type = SearchUIConstants.BookSearch;
+		// 	$scope.search_display = SearchUIConstants.SearchingBooks;
+		// }
+		// else if(customUserSearch){
+		// 	$scope.search_type = SearchUIConstants.ReaderSearch;
+		// 	$scope.search_display = SearchUIConstants.SearchingUsers;
+		// }
+		// else if(customTagSearch){
+		// 	$scope.search_type = SearchUIConstants.TagSearch;
+		// 	$scope.search_display = SearchUIConstants.SearchingTags;
+		// }
+		// else{
+		// }
+		$scope.search_type = SearchUIConstants.SearchAll;
+		$scope.search_display = SearchUIConstants.SearchingWebsite;
 	}
 
 	$scope.get_search_results = function(event){
@@ -1173,7 +1177,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	}
 
 	$scope.handle_options = function(event){
-		if($routeParams.type){
+		if(!on_search_page){
 			if($rootScope.hide_options){
 				if(angular.isUndefined($scope.search_tag.input) || $scope.search_tag.input.length == 0){
 					$scope.hide_input_field = false;
@@ -1188,6 +1192,8 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				$rootScope.user.collapsed_trends = true;
 				$rootScope.user.collapsed_lists = true;
 				$rootScope.user.collapsed_left_column = true;
+				$rootScope.popups = {};
+				$rootScope.popups.left_panel_width = {'width': '15%'};
 
 				delete $rootScope.focused_book;
 				delete $scope.active_nest;
@@ -1196,6 +1202,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				$scope.active_base = SearchUIConstants.BookSearch;
 			}
 			event.stopPropagation();
+		}
+		if(angular.isUndefined($scope.active_base)){
+			$scope.handle_base_selection($scope.base_search_options[0]);
 		}
 	}
 
