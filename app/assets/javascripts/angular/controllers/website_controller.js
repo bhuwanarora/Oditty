@@ -1,20 +1,17 @@
 websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout', 'websiteService', '$document', 'scroller', '$window', 'WebsiteUIConstants', function($scope, $rootScope, $timeout, websiteService, $document, scroller, $window, WebsiteUIConstants){
 	$scope.bindHorizontalScroll = function(event, delta, deltaX, deltaY){
 		event.preventDefault();
-		if($rootScope.user.collapsed_left_column  || 
-			(!$rootScope.user.collapsed_left_column && !$rootScope.user.locked)){
-			if(delta > 0){
-				$scope.move_left(event);
-		        // event.view.window.scrollBy(-80, 0);
-			}
-			else{
-				$scope.move_right(event);
-				// _load_recommendations();
-				//move forward
-				// event.view.window.scrollBy(80, 0);
-			}
-			event.stopPropagation();
+		if(delta > 0){
+			$scope.move_left(event);
+	        // event.view.window.scrollBy(-80, 0);
 		}
+		else{
+			$scope.move_right(event);
+			// _load_recommendations();
+			//move forward
+			// event.view.window.scrollBy(80, 0);
+		}
+		event.stopPropagation();
 	}
 
 	$scope._hide_popups = function(){
@@ -96,7 +93,9 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	}
 
 	$scope.move_left = function(event){
-		$scope._hide_popups();
+		if($rootScope.user.collapsed_left_column || (!$rootScope.user.collapsed_left_column && !$rootScope.user.locked)){
+			$scope._hide_popups();
+		}
 		var swipe_time = 1000;
 		var clientWidth = document.body["scrollWidth"];
 		var current_x = $window.pageXOffset;
@@ -126,7 +125,9 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 
 	$scope.move_right = function(event){
 		// $scope.toggle_left_columns();
-		$scope._hide_popups();
+		if($rootScope.user.collapsed_left_column || (!$rootScope.user.collapsed_left_column && !$rootScope.user.locked)){
+			$scope._hide_popups();
+		}
 		var swipe_time = 1000;
 		var clientWidth = document.body["scrollWidth"];
 		var current_x = $window.pageXOffset;
@@ -160,7 +161,6 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		else{
 			scroller.scrollTo(current_x + delta_x, 0, swipe_time);
 		}
-
 	}
 
 	$scope.scroll_one_page_right = function(event){
