@@ -8,6 +8,9 @@ websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvid
   .when('/search', {
     templateUrl: '/assets/angular/views/search/show.html'
   })
+  .when('/search/url/:url', {
+    templateUrl: '/assets/angular/views/search/show.html'
+  })
   .when('/user/:id', {
     templateUrl: '/assets/angular/views/search/show.html'
   })
@@ -24,6 +27,9 @@ websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvid
     templateUrl: '/assets/angular/views/home.html'
   })
   .when('/user/:id/trending/:type/id/:trend_id/name/:name', {
+    templateUrl: '/assets/angular/views/home.html'
+  })
+  .when('/book/:id', {
     templateUrl: '/assets/angular/views/home.html'
   })
   .when('/user/:id/book/:title/author/:author', {
@@ -83,7 +89,9 @@ websiteApp.constant('facebookAppId', "667868653261167");
 websiteApp.run(['$rootScope', '$location', '$cookieStore', '$cookies', '$http', function($rootScope, $location, $cookieStore, $cookies, $http){
   $rootScope.$on("$routeChangeStart", function(event, next, current){
     var unauthenticated_user = !$rootScope.user.logged && !$cookieStore.get('logged');
-    console.debug($location.url(), unauthenticated_user, next.templateUrl);
+    console.debug("RUN", $location.url(), unauthenticated_user, next.templateUrl, book_redirect);
+    var book_redirect = $location.url().match(/^\/book\//) != null;
+    var redirect = $location.url().match(/^\/search\/url\//) != null;
     // var csrf_token = $cookies['XSRF-TOKEN'];
     // console.debug("csrftoken ", csrf_token);
     // $http.defaults.headers.common['X-XSRF-TOKEN'] = csrf_token;
@@ -94,11 +102,27 @@ websiteApp.run(['$rootScope', '$location', '$cookieStore', '$cookies', '$http', 
     // $http.defaults.headers.delete['X-CSRF-Token'] = csrf_token
     if(unauthenticated_user){
       // no logged user, we should be going to #login
-      if(next.templateUrl == "/assets/angular/views/search/show.html"){
-        // already going to #login, no redirect needed
-      }else{
-        // not going to #login, we should redirect now
-        $location.path( "/search");
+      if(book_redirect){
+        $location.path( "/search/url/"+encodeURIComponent($location.url()));
+      }
+      else{
+        if(next.templateUrl == "/assets/angular/views/search/show.html"){
+          // already going to #login, no redirect needed
+        }else{
+          // not going to #login, we should redirect now
+          $location.path( "/search");
+        }
+      }
+    }
+    else{
+      if(redirect){
+        // $location.path($location.url());
+      }
+      else{
+        if(book_redirect){
+          var book_redirect_url = "/user/"+$rootScope.user.id+$location.url();
+          $location.path(book_redirect_url);
+        }
       }
     }
   });

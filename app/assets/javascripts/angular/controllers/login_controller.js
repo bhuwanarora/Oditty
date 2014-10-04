@@ -1,4 +1,4 @@
-websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteService', 'Facebook', 'stropheService', '$timeout', '$cookieStore', 'LoginConstants', 'WebsiteUIConstants', function($scope, $rootScope, websiteService, Facebook, stropheService, $timeout, $cookieStore, LoginConstants, WebsiteUIConstants){
+websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteService', 'Facebook', 'stropheService', '$timeout', '$cookieStore', 'LoginConstants', 'WebsiteUIConstants', '$location', '$routeParams', function($scope, $rootScope, websiteService, Facebook, stropheService, $timeout, $cookieStore, LoginConstants, WebsiteUIConstants, $location, $routeParams){
 	$scope.submit = function(event){
 		var enter_pressed = event.keyCode == WebsiteUIConstants.Enter;
 		if(enter_pressed){
@@ -55,6 +55,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 				$timeout.cancel(timeout_event);
 			});
 			$scope._is_logged_in();
+			$scope._redirect();
 			// $scope.$emit('getNotifications');
 		}
 
@@ -243,6 +244,13 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
   				// stropheService.start_connection();
   			}
   		});
+  	}
+
+  	$scope._redirect = function(){
+  		var routeParams = $routeParams;
+  		if(angular.isDefined($routeParams.url)){
+  			$location.path("/user/"+$rootScope.user.id+$routeParams.url);
+  		}
   	}
 
 	_init = function(){
