@@ -741,7 +741,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 						'authors': {'bookmarked': [], 'follow': []},
 						'readers': {'follow': []},
 						'logged': false};
-        	$location.path("/search");
+        	// $location.path("/search");
 		}
 	}
 
