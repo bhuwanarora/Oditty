@@ -1,4 +1,4 @@
-websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 'websiteService', 'stropheService', '$location', 'RecommendationUIConstants', function ($timeout, $rootScope, widgetService, websiteService, stropheService, $location, RecommendationUIConstants) {
+websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 'websiteService', 'stropheService', '$location', 'RecommendationUIConstants', '$cookieStore', function ($timeout, $rootScope, widgetService, websiteService, stropheService, $location, RecommendationUIConstants, $cookieStore){
     this.is_logged_in = function($scope){
         websiteService.get_user().then(function(data){
             if(data["logged_in"]){
@@ -34,6 +34,7 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
                 'authors': {'bookmarked': [], 'follow': []},
                 'readers': {'follow': []},
                 'logged': false};
+            $cookieStore.remove('logged');
             $location.path("/search");
         });
     }

@@ -13,6 +13,7 @@
 	top: 50px;
 	bottom: 50px;
 	border-radius: 2px;
+	background-size: cover;
 }
 
 .trending_panel{
@@ -696,4 +697,14 @@ and (max-width : 500px) {
 	margin-left: -20%;
 	top: 30%;
 	margin-top: 45px;
+}
+
+.left_icon{
+	padding: 15px;
+	background-color: #f5f5f5;
+	border: 1px solid #E6E6E6;
+}
+
+.right_tab{
+	padding: 7px 0px 0px 15px;
 }

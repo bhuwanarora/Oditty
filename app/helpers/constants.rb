@@ -54,7 +54,7 @@ module Constants
 	VictorianLiterature 		= "victorian"
 	Modernism 					= "modern"
 	PostModernLiterature 		= "postmodern"
-	TwentiethCenturyLiterature	= "20thcenturygenre"
+	Contemporary				= "contemporary"
 
 
 

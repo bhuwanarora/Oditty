@@ -62,7 +62,7 @@ module Api
 
             def times
                 time_groups = WebsiteApi.get_time_groups
-                results = {:times => time_groups}
+                results = {:times => time_groups.reverse!}
                 render :json => results, :status => 200
             end
 

@@ -370,6 +370,27 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     		delete $rootScope.filters.trend_id;
     		delete $rootScope.filters.label_id;
         }
+
+        var _handle_specific_book_page = function(){
+        	$scope.$routeParams.type = 'books';
+        	$rootScope.filters["reset"] = true;
+        	$rootScope.filters["filter_type"] = RecommendationUIConstants.BookTab;
+        	$rootScope.filters.other_filters["id"] = $scope.$routeParams.book_id;
+        }
+
+        var _handle_specific_title_page = function(){
+			$scope.$routeParams.type = 'books';
+        	$rootScope.filters["reset"] = true;
+        	$rootScope.filters["filter_type"] = RecommendationUIConstants.BookTab;
+        	$rootScope.filters.other_filters["title"] = $scope.$routeParams.title;
+        	$rootScope.main_header = $scope.$routeParams.title;
+			var show_all = angular.isDefined($scope.$routeParams.status);
+			if(show_all){
+				$rootScope.filters.other_filters["show_all"] = $scope.$routeParams.status;
+				$rootScope.filters["reset"] = true;
+	    		$rootScope.filters["reset_count"] = 0;
+			}
+        }
         
 		$rootScope.filters = {};
         $rootScope.filters["more_filters"] = [];
@@ -403,23 +424,10 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         	$rootScope.filters["filter_type"] = RecommendationUIConstants.ReaderTab;
         }
         else if($routeParams.book_id){
-        	$scope.$routeParams.type = 'books';
-        	$rootScope.filters["reset"] = true;
-        	$rootScope.filters["filter_type"] = RecommendationUIConstants.BookTab;
-        	$rootScope.filters.other_filters["id"] = $scope.$routeParams.book_id;
+        	_handle_specific_book_page();
         }
         else if($routeParams.title){
-			$scope.$routeParams.type = 'books';
-        	$rootScope.filters["reset"] = true;
-        	$rootScope.filters["filter_type"] = RecommendationUIConstants.BookTab;
-        	$rootScope.filters.other_filters["title"] = $scope.$routeParams.title;
-        	$rootScope.main_header = $scope.$routeParams.title;
-			var show_all = angular.isDefined($scope.$routeParams.status);
-			if(show_all){
-				$rootScope.filters.other_filters["show_all"] = $scope.$routeParams.status;
-				$rootScope.filters["reset"] = true;
-	    		$rootScope.filters["reset_count"] = 0;
-			}
+        	_handle_specific_title_page();
         }
         else{
 			$rootScope.filters["filter_type"] = RecommendationUIConstants.BookTab;
@@ -741,7 +749,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 						'authors': {'bookmarked': [], 'follow': []},
 						'readers': {'follow': []},
 						'logged': false};
-        	$location.path("/search");
+        	// $location.path("/search");
 		}
 	}
 

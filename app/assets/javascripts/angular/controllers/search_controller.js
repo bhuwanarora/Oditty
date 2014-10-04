@@ -210,8 +210,8 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			recommendationService.get_time_groups().then(function(data){
 				$scope.search_results = [];
 				$rootScope.time_groups = [];
-
-				angular.forEach(data["times"], function(value){
+				data = data["times"];
+				angular.forEach(data, function(value){
 					var time_data = value[0]["data"];
 		    		var name = time_data["name"];
 		    		var json = $scope._get_option_json(SearchUIConstants.Year);

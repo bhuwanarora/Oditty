@@ -90,9 +90,29 @@
   <div class="website_search_helpers animate-fast" ng-show="!($routeParams.type && hide_options)">
         <div class="title" ng-show="search_display" ng-bind-html="search_display"></div>
   </div>
+  <div class="animate-fast website_search_options scrollbar init_filter"
+       ng-if="search_results.length > 0 && !($routeParams.type && hide_options) && !show_compressed_base">
+    <div class="large_font inline_block green_color left_icon">
+      <span class="icon-books"></span>
+    </div>
+    <div class="inline_block right_tab">
+      <div class="large_font light_grey_color">
+        Add Filters
+      </div>
+      <div>
+        <span ng-repeat="item in search_results | limitTo: search_tag.result_count+1 | filter:search_tag.custom_input | orderBy: item.name track by $index "
+             ng-click="handle_selection_option(item, $event)" 
+             ng-mouseenter="set_current($index)"
+             msd-wheel="stop_horizontal_scroll($event)">
+            <span ng-bind-html="item.type | lowercase" class="capitalise click"></span><span>&nbsp;</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
   <div class="animate-fast website_search_options scrollbar" 
        ng-mouseleave="remove_active_state()"
-       ng-if="search_results.length > 0 && !($routeParams.type && hide_options)">
+       ng-if="search_results.length > 0 && !($routeParams.type && hide_options) && show_compressed_base">
     <div ng-repeat="item in search_results | limitTo: search_tag.result_count+1 | filter:search_tag.custom_input | orderBy: item.name track by $index "
          ng-click="handle_selection_option(item, $event)" 
          ng-class="{'light_gray_background':is_current($index, item)}"
