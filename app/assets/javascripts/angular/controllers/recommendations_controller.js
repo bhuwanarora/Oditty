@@ -696,6 +696,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 							"collapsed_filters": true, "collapsed_lists": true,
 							'collapsed_column': true,
 							'collapsed_left_column': true,
+							"locked": false,
 							"interact": false});
 
 		user_behaviour_timer_event = $timeout(function(){

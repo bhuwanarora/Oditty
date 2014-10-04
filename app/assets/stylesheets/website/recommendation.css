@@ -1368,6 +1368,12 @@ and (min-width : 1824px) {
 	box-shadow: -5px 50px 43px 0px rgba(66,66,66,.24);
 }
 
+.lock{
+	position: relative;
+	top: 376px;
+	left: 89.5%;
+}
+
 .left_column{
 	/*overflow: auto;*/
 	z-index: 7;
