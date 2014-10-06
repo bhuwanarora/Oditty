@@ -58,8 +58,8 @@
 			<div ng-include src="'/assets/angular/views/left_panel/trending_list.html'" 
 				 ng-if="$routeParams.type != 'profile'"></div>
 			<div ng-include src="'/assets/angular/views/left_panel/listopia.html'" ng-if="$routeParams.type != 'profile'"></div>
-			<span class="icon-lock lock" ng-if="!user.collapsed_left_column && user.locked" ng-click="user.locked = false"></span>
-			<span class="icon-unlocked lock" ng-if="!user.collapsed_left_column && !user.locked" ng-click="user.locked = true"></span>
+			<!-- <span class="icon-lock lock" ng-if="!user.collapsed_left_column && user.locked" ng-click="user.locked = false"></span>
+			<span class="icon-unlocked lock" ng-if="!user.collapsed_left_column && !user.locked" ng-click="user.locked = true"></span> -->
 		</div>
 		<!-- <div class="wrapper" ng-if="focused_book"></div> -->
 		<div class="focused_tooltip animate-faster"

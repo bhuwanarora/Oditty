@@ -51,7 +51,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		if(user_id == $rootScope.user.id){
 			_get_user_profile_info($rootScope.user);
 			$scope.fetch_new_feed();
-			$scope._fetch_trending_options();
+			// $scope._fetch_trending_options();
 		}
 		else{
 			_get_user_profile_info($rootScope.reader);

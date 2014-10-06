@@ -1,10 +1,26 @@
 <div class="share_wrapper animate-slow" 
+	 ng-if="!reader"
+	 check-scroll-bottom="get_notifications(user.id)"
 	 ng-style="cover_image"
 	 ng-class="{'share_wrapper_shifted scrollbar': user.show_profile}"
 	 msd-wheel="stop_propagation($event)">
 	<div class="thumb_wrapper animate-fast"
 		 ng-class="{'thumb_wrapper_shifted': user.show_profile}">
 		<img ng-src="{{user.thumb | thumb_backup}}" ng-show="!reader"/>
+	</div>
+	<!-- <div class="share_fade animate-fast" ng-class="{'share_fade_shifted': user.show_profile}"></div> -->
+	<div ng-include src="'/assets/angular/views/cover/left_panel.html'"></div>
+	<div ng-include src="'/assets/angular/views/cover/right_panel.html'" 
+		 ng-if="user.show_profile"></div>
+</div>
+<div class="share_wrapper animate-slow" 
+	 ng-if="reader"
+	 check-scroll-bottom="get_notifications(reader.id)"
+	 ng-style="cover_image"
+	 ng-class="{'share_wrapper_shifted scrollbar': user.show_profile}"
+	 msd-wheel="stop_propagation($event)">
+	<div class="thumb_wrapper animate-fast"
+		 ng-class="{'thumb_wrapper_shifted': user.show_profile}">
 		<img ng-src="{{reader.thumb | thumb_backup}}" ng-show="reader"/>
 	</div>
 	<!-- <div class="share_fade animate-fast" ng-class="{'share_fade_shifted': user.show_profile}"></div> -->

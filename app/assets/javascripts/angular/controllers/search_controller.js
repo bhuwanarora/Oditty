@@ -1251,11 +1251,16 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$scope.search_tag.input = "";
 		}
 		$scope.search_tag.result_count = 10;
+		$scope._init_graph_search();
 		if(on_search_page){
 			$scope._set_cover_photo();
+			if($rootScope.user.logged){
+				$scope.set_focus(3000);
+			}
+			$scope._set_base_search();
+			$scope._add_trends_as_notifications();
 		}
 
-		$scope._init_graph_search();
 		if($routeParams.type){
 			$rootScope.hide_options = true;
 		}
@@ -1275,15 +1280,11 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	$scope._add_trends_as_notifications = function(){
 		if(angular.isUndefined($rootScope.trending_feed) || $rootScope.trending_feed.length == 0){
 			websiteService.get_trending_topics().then(function(data){
-				var notifications = [];
+				$rootScope.trending_feed = [];
 				angular.forEach(data, function(value){
 					var json = {"name": value[0], "id": value[1], "message": value[2], "url": value[3], "title":value[4], "thumb": value[7], "large_image": value[5], "keywords": value[8]};
 					this.push(json);
-				}, notifications);
-				// if(notifications.length > 0){
-				// 	$scope.$emit('addToNotifications', notifications);
-				// }
-				$rootScope.trending_feed = notifications;
+				}, $rootScope.trending_feed);
 			});
 		}
 	}
@@ -1478,14 +1479,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope.website.searching = false;
 		$scope.filters_added = [];
 		$scope._handle_search_page();
-		if(on_search_page){
-			if($rootScope.user.logged){
-				$scope.set_focus(3000);
-			}
-			$scope._set_base_search();
-			$scope._add_trends_as_notifications();
-		}
-		else{
+		if(!on_search_page){
 			$scope._init_book_search();
 			// $scope.active_base = SearchUIConstants.BookSearch;
 		}
