@@ -149,6 +149,7 @@
 	border: 1px solid #F1F1F1;
 	border-radius: 1px;
 	resize: none;
+	-ms-overflow-style: none;
 }
 
 .interaction_box_options [class^="icon-"],
@@ -421,6 +422,10 @@
 	border-bottom-left-radius: 3px;
 }
 
+.ie .push_notification{
+	height: 54px;
+}
+
 .push_notification .type{
 	display: table;
 	float: left;
@@ -432,6 +437,11 @@
 	border-bottom-left-radius: 3px;
 	margin-right: 10px;
 	height: 100%;
+}
+
+
+.ie .push_notification .type{
+        height: 50% !important;
 }
 
 .push_notification .content{
@@ -745,6 +755,10 @@
 	font-size: .8em;
 }
 
+.ie .recommendation_box .footer .done{
+	margin:0px 0px 10px;
+}
+
 .recommendation_box .footer .done:disabled{
 	cursor: default;
 	background-color: rgba(66, 127, 237, 0.64)!important;
@@ -759,7 +773,7 @@
 	height: 40vh;
 	padding: 20px;
 	white-space: normal;
-	overflow-y: scroll;
+	/*overflow-y: scroll;*/
 	background-color: #F5F5F5;
 	border-top: 1px solid #E4E4E4;
 	border-bottom: 1px solid #E4E4E4;
@@ -1110,7 +1124,8 @@ and (min-width : 1824px) {
 	padding-right: 0px;
 	padding-bottom: 10px;
 	padding-top: 5px;
-	white-space: initial;
+	white-space: normal;
+	-ms-overflow-style: none;
 }
 
 .notifications .notification{
@@ -1351,6 +1366,12 @@ and (min-width : 1824px) {
 	position: fixed;
 	z-index: 1;
 	box-shadow: -5px 50px 43px 0px rgba(66,66,66,.24);
+}
+
+.lock{
+	position: relative;
+	top: 376px;
+	left: 89.5%;
 }
 
 .left_column{
@@ -1979,6 +2000,7 @@ l	.compressed_info_card{
 .share_wrapper_shifted{
 	bottom: 80px;
 	height: initial;
+	height: auto;
 	border-bottom: 1px solid #D8D8D8;
 	background-color: white;
 	overflow-y: scroll;
@@ -1996,18 +2018,21 @@ l	.compressed_info_card{
 .shelf_nav_links_shifted{
 	bottom: 35px;
 	top: initial;
+	top: auto;
 }
 
 .user_name_shifted{
 	bottom: 81px;
 	left: 0px;
 	top: initial;
+	top: auto;
 	padding: 20px;
 }
 
 .thumb_wrapper_shifted{
 	bottom: 137px;
 	top: initial !important;
+	top: auto !important;
 }	
 
 .user_profile{
@@ -2075,6 +2100,7 @@ l	.compressed_info_card{
 
 .right_links_shifted{
 	top: initial;
+	top: auto;
 	bottom: 132px;
 }
 

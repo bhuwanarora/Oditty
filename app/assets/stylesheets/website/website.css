@@ -8,7 +8,7 @@ html{
 body{
 	width: 100%;
 	height: 100%;
-	white-space: nowrap;
+	white-space: normal;
     /*remove selection*/
  	-webkit-user-select: none;
  	-moz-user-select: -moz-none;
@@ -21,6 +21,7 @@ body{
     margin: 0px;
     font-family: helvetica neue;
     -webkit-font-smoothing: antialiased;
+    -ms-overflow-style: none;
 }
 
 :not(.scrollbar)::-webkit-scrollbar { 
@@ -196,11 +197,13 @@ input:focus{
     overflow-x: hidden;
     overflow-y: auto;
     overflow: -moz-scrollbars-none;
+    -ms-overflow-style: none;
     /*height: 100px;*/
 }
 
 .scrollbar:hover{
     overflow-y: auto; 
+    -ms-overflow-style: auto;
 }
 
 .scrollbar::-webkit-scrollbar {
@@ -650,4 +653,38 @@ input:focus{
 .inline_block{
     float: left;
     display: inline-block;
+}
+
+@-moz-document url-prefix() {
+    .tweets {
+        width: 100% !important;
+    }
+
+    .push_notification{
+        height: 54px !important;
+    }
+
+    .push_notification .type{
+        height: 50% !important;
+    }
+
+    .focused_tooltip .arrow_left{
+        left: -10px !important;
+    }
+
+    .focused_tooltip .arrow_right{
+        right: -10px !important;
+    }
+
+    .recommendation_box .footer .done{
+        margin: 0px 0px 7px !important;
+    }
+
+    .user_profile .user_profile_block{
+        white-space: initial !important;
+    }
+
+    .arrow_down{
+        top: -8px !important;
+    }
 }
