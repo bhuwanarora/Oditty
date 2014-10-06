@@ -1204,7 +1204,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			event.stopPropagation();
 		}
 		else{
-			$scope.trending_panel_style = {"max-height": "26%"};
+			$scope.trending_panel_style = {"max-height": "26vh"};
 			$scope.search_panel_style = {"top": "26%"};
 		}
 		if(angular.isUndefined($scope.active_base)){
@@ -1432,7 +1432,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 
     $scope.increase_height = function(event){
     	if(on_search_page){
-    		$scope.trending_panel_style = {"max-height": "50%"};
+    		$scope.trending_panel_style = {"max-height": "50vh"};
     		$scope.search_panel_style = {"top": "50%"};
     	}
     	event.stopPropagation();
