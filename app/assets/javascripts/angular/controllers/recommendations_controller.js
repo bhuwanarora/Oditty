@@ -617,7 +617,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	    var enough_books_on_page = $scope.recommendations.books.length >= 4;
 	    console.debug("_get_grids ", not_specific_book_page, enough_books_on_page);
 	    if(not_specific_book_page && enough_books_on_page){
-	    	_get_grids();
+	    	// _get_grids();
 	    }
     }
 
