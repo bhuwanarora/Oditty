@@ -49,6 +49,7 @@ websiteApp.directive('filter', ['$rootScope', '$timeout', '$routeParams', functi
 		scope: { 'filter': '=data',
 				 'url': '@',
 				 'hideIcon': '@',
+				 'textClass': '@',
 				 'iconClass': '@' },
 		controller: ['$scope', function($scope){
 			_initialise_filters = function(type){

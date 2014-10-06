@@ -31,7 +31,7 @@ module Api
 			
 			def book_lists
 				@neo = Neography::Rest.new
-				clause = "MATCH (bg:BookGrid) WHERE bg.status=1 RETURN ID(bg), bg.name"
+				clause = "MATCH (bg:BookGrid)-[:RelatedBooks]->(b:Book) WHERE bg.status=1 RETURN ID(bg), bg.name, COUNT(b)"
 				puts clause.blue.on_red
 				info = @neo.execute_query(clause)["data"]
 				render :json => info, :status => 200

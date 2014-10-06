@@ -219,7 +219,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
     "\t \t           user.collapsed_trends = true;\n" +
     "\t \t           user.collapsed_filters = true;\n" +
     "\t \t           user.collapsed_friends = true;\n" +
-    "\t \t           expand_left_panel();\"><span class=\"table_cell\"><span class=\"icon-list purple_color header_font\" ng-if=\"user.collapsed_lists\"></span> <span ng-show=\"user.collapsed_left_column\">&nbsp;&nbsp;Listopia</span></span></div><div class=\"header\" ng-if=\"!user.collapsed_lists\"><span><b>Explore Listopia</b></span></div><div class=\"filters_panel_large scrollbar\" ng-if=\"!user.collapsed_lists\"><div class=\"filters_group\"><div ng-repeat=\"filter in book_lists\"><filter data=\"filter\" hide-icon=\"true\" icon-class=\"icon-list\" url=\"grid/{{$routeParams.type}}/id/{{filter.id}}/name/{{filter.name}}\"></filter></div></div></div></div>"
+    "\t \t           expand_left_panel();\"><span class=\"table_cell\"><span class=\"icon-list purple_color header_font\" ng-if=\"user.collapsed_lists\"></span> <span ng-show=\"user.collapsed_left_column\">&nbsp;&nbsp;Listopia</span></span></div><div class=\"header\" ng-if=\"!user.collapsed_lists\"><span><b>Explore Listopia</b></span></div><div class=\"filters_panel_large scrollbar\" ng-if=\"!user.collapsed_lists\"><div class=\"filters_group\"><div ng-repeat=\"filter in book_lists\"><filter data=\"filter\" hide-icon=\"true\" icon-class=\"icon-list\" text-class=\"icon-text\" url=\"grid/{{$routeParams.type}}/id/{{filter.id}}/name/{{filter.name}}\"></filter></div></div></div></div>"
   );
 
 
@@ -234,7 +234,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/left_panel/partials/filter.html',
-    "<a ng-href=\"#/user/{{$routeParams.id}}/{{url}}\"><div ng-class=\"{'site_color':active, 'inactive_filter':!active}\" class=\"filter capitalise\"><span>{{filter.name | lowercase}}</span> <span class=\"{{iconClass}} float_right\" ng-hide=\"hideIcon\"></span></div></a>"
+    "<a ng-href=\"#/user/{{$routeParams.id}}/{{url}}\"><div ng-class=\"{'site_color':active, 'inactive_filter':!active}\" class=\"filter capitalise\"><div><span class=\"{{textClass}}\">{{filter.name | lowercase}}</span> <span class=\"{{iconClass}} float_right\" ng-hide=\"hideIcon\"></span></div><div ng-show=\"filter.count\"><span>{{filter.count}} books</span></div></div></a>"
   );
 
 

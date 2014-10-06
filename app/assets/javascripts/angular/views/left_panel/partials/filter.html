@@ -1,7 +1,12 @@
 <a ng-href="#/user/{{$routeParams.id}}/{{url}}">
 	<div ng-class="{'site_color':active, 'inactive_filter':!active}"
 		 class="filter capitalise">
-		 <span>{{filter.name | lowercase}}</span>
-		 <span class="{{iconClass}} float_right" ng-hide="hideIcon"></span>
+		 <div>
+			 <span class="{{textClass}}">{{filter.name | lowercase}}</span>
+			 <span class="{{iconClass}} float_right" ng-hide="hideIcon"></span>
+		 </div>
+		<div ng-show="filter.count">
+			<span>{{filter.count}} books</span>	
+		</div>
 	</div>
 </a>
