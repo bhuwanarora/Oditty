@@ -100,7 +100,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/feed/trending.html',
-    "<div class=\"scrollbar tweets\" check-scroll-bottom=\"get_notifications(true)\" ng-click=\"stop_propagation($event)\"><div class=\"tweet\"><b><div>Trending</div></b></div><div ng-repeat=\"notification in trending_feed | reverse\" class=\"tweet animate-fast\"><div ng-include=\"\" src=\"'/assets/angular/views/feed/partials/notification_block.html'\"></div></div><div class=\"tweet animate-fast\">You've reached end of the trending list.</div></div>"
+    "<div class=\"scrollbar tweets\" check-scroll-bottom=\"get_notifications(true)\" ng-click=\"stop_propagation($event)\"><div class=\"tweet custom_hidden\"><b><div>Trending</div></b></div><div ng-repeat=\"notification in trending_feed | reverse\" class=\"tweet animate-fast\"><div ng-include=\"\" src=\"'/assets/angular/views/feed/partials/notification_block.html'\"></div></div><div class=\"tweet animate-fast\">You've reached end of the trending list.</div></div>"
   );
 
 

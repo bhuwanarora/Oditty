@@ -1,7 +1,7 @@
 <div class="scrollbar tweets"
 	check-scroll-bottom="get_notifications(true)"
 	ng-click="stop_propagation($event)">
-	<div class="tweet">
+	<div class="tweet custom_hidden">
 		<b><div>Trending</div></b>
 	</div>
 	<div ng-repeat="notification in trending_feed | reverse" 

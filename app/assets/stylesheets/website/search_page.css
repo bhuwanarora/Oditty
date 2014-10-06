@@ -350,8 +350,16 @@
 }
 
 .search_page .trending_panel{
-	top: 60px;
-	max-height: 40%;
+	top: 0px;
+	max-height: 22%;
+}
+
+.search_page .tweets{
+	max-height: 22vh;
+}
+
+.search_page .custom_hidden{
+	display: none;
 }
 
 .search_page .trends{
