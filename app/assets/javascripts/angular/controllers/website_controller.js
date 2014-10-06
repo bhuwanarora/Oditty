@@ -239,7 +239,6 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 
 	$scope._show_trending_feed = function(){
 		$scope.show_feed = {"trending": true};
-		$scope.trending_feed = $rootScope.trends;
      	$scope.show_trending = true;
 	}
 
