@@ -82,6 +82,7 @@
            class="search_input box-shadow animate-fast"
            ng-model="search_tag.custom_input"
            ng-keypress="search_custom($event)"
+           ng-click="shift_search_to_top()"
            ng-keydown="key_down($event)"
            set-focus="website.searching_custom"/>
     <div ng-include="'/assets/angular/views/search/partials/search_icon.html'"></div>
