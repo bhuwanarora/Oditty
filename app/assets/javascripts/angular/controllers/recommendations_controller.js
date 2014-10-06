@@ -73,6 +73,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			delete $rootScope.ticker_popup;
 		}
 		
+
 		if(angular.isUndefined($rootScope.user.show_profile) || !$rootScope.user.show_profile){
 			_show_profile();
 		}
@@ -740,6 +741,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			$scope.$routeParams = $routeParams;
 			delete $rootScope.reader;
 			if($scope.$routeParams.type == "profile"){
+				$rootScope.user.show_profile = false;
 				var reader_id = $scope.$routeParams.id;
 				$rootScope.reader = {};
 				$rootScope.reader.id = reader_id;
