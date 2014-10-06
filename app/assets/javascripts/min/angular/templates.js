@@ -219,7 +219,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
     "\t \t           user.collapsed_trends = true;\n" +
     "\t \t           user.collapsed_filters = true;\n" +
     "\t \t           user.collapsed_friends = true;\n" +
-    "\t \t           expand_left_panel();\"><span class=\"table_cell\"><span class=\"icon-list purple_color header_font\" ng-if=\"user.collapsed_lists\"></span> <span ng-show=\"user.collapsed_left_column\">&nbsp;&nbsp;Listopia</span></span></div><div class=\"header\" ng-if=\"!user.collapsed_lists\"><span><b>Explore Listopia</b></span></div><div class=\"filters_panel_large scrollbar\" ng-if=\"!user.collapsed_lists\"><div class=\"filters_group\"><div ng-repeat=\"filter in book_lists\"><filter data=\"filter\" hide-icon=\"true\" icon-class=\"icon-list\" text-class=\"icon-text\" url=\"grid/{{$routeParams.type}}/id/{{filter.id}}/name/{{filter.name}}\"></filter></div></div></div></div>"
+    "\t \t           expand_left_panel();\"><span class=\"table_cell\"><span class=\"icon-list purple_color header_font\" ng-if=\"user.collapsed_lists\"></span> <span ng-show=\"user.collapsed_left_column\">&nbsp;&nbsp;Listopia</span></span></div><div class=\"header\" ng-if=\"!user.collapsed_lists\"><span><b>Explore Listopia</b></span></div><div class=\"filters_panel_large scrollbar\" ng-if=\"!user.collapsed_lists\"><div class=\"filters_group\"><div ng-repeat=\"filter in book_lists\"><filter data=\"filter\" hide-icon=\"true\" icon-class=\"icon-list\" text-class=\"large_font\" url=\"grid/{{$routeParams.type}}/id/{{filter.id}}/name/{{filter.name}}\"></filter></div></div></div></div>"
   );
 
 
