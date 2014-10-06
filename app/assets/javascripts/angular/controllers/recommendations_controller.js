@@ -515,6 +515,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     			_set_books(data["recommendations"]["books"]);
 			}
     	}
+
+    	$rootScope.website.faded_wrapper = {"opacity": "0.5"};
 	}
 	
 	_set_books = function(data){
@@ -784,11 +786,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	        {
 	            element: '#share',
 	            intro: IntroConstants.Share,
-	            position: 'bottom'
-	        },
-	        {
-	            element: '#editProfile',
-	            intro: IntroConstants.Profile,
 	            position: 'bottom'
 	        },
 	        {

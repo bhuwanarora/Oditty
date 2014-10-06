@@ -147,7 +147,7 @@ tr.introjs-showElement > th {
        -o-transition: opacity 0.1s ease-out;
           transition: opacity 0.1s ease-out;
   white-space: initial;
-  min-height: 130px;
+  min-height: 160px;
 }
 
 .introjs-tooltipbuttons {

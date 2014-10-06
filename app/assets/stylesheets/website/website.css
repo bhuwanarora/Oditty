@@ -655,36 +655,12 @@ input:focus{
     display: inline-block;
 }
 
-@-moz-document url-prefix() {
-    .tweets {
-        width: 100% !important;
-    }
-
-    .push_notification{
-        height: 54px !important;
-    }
-
-    .push_notification .type{
-        height: 50% !important;
-    }
-
-    .focused_tooltip .arrow_left{
-        left: -10px !important;
-    }
-
-    .focused_tooltip .arrow_right{
-        right: -10px !important;
-    }
-
-    .recommendation_box .footer .done{
-        margin: 0px 0px 7px !important;
-    }
-
-    .user_profile .user_profile_block{
-        white-space: initial !important;
-    }
-
+@-moz-document url-prefix(){
     .arrow_down{
         top: -8px !important;
     }
+}
+
+.larger_font{
+    font-size: 30px;
 }

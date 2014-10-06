@@ -42,18 +42,29 @@ var emotions = [
 
 var constants = {
 		"IntroConstants":{
-			"NewsFeed": "Keep track of what your friends are doing on Reader's Door.",
-			"Shelves": "Create virtual book shelves.",
-			"Trending": "Check out books related to trending topics in media",
-			"Listopia": "Check out lists from your friends",
-			"Friends": "Check out your friend list",
-			"Share": "Share your book reading memories, insights, feelings and emotions...",
-			"Profile": "Edit your profile",
-			"RecommendationTab": "Recommendations Tab",
-			"MyLibraryTab": "My Library Tab",
-			"BooksReadTab": "Books Read Tab",
-			"ShelvesTab": "Shelves Tab",
-			"Scroller": "Try these scrollers"
+			"NewsFeed": "<div class='tooltip_header'><span class='larger_font icon-newspaper site_color'></span>&nbsp;<span>Keep track of what your friends are doing on Reader's Door.</span></div>",
+
+			"Shelves": "<div class='tooltip_header'><span class='larger_font icon-bookmark2 yellow_color'></span>&nbsp;&nbsp;Create virtual book shelves.</div>",
+
+			"Trending": "<div class='tooltip_header'><span class='larger_font icon-bars red_color'></span>&nbsp;&nbsp;Check out books related to trending topics in media</div>",
+
+			"Listopia": "<div class='tooltip_header'><span class='larger_font icon-list purple_color'></span>&nbsp;&nbsp;Check out customised lists of books from different magazines.</div>",
+
+			"Friends": "<div class='tooltip_header'><span class='larger_font icon-users green_color'></span>&nbsp;&nbsp;Explore your friends profile.</div>",
+
+			"Share": "<div class='tooltip_header'>&nbsp;&nbsp;Share your book reading memories, insights, feelings and emotions...</div>",
+
+			"Profile": "<div class='tooltip_header'>&nbsp;&nbsp;Edit your profile</div>",
+
+			"RecommendationTab": "<div class='tooltip_header'>&nbsp;&nbsp;Recommendations Tab</div>",
+
+			"MyLibraryTab": "<div class='tooltip_header'>&nbsp;&nbsp;My Library Tab</div>",
+
+			"BooksReadTab": "<div class='tooltip_header'>&nbsp;&nbsp;Books Read Tab</div>",
+
+			"ShelvesTab": "<div class='tooltip_header'>&nbsp;&nbsp;Your personalised recommendations and library of books.</div>",
+
+			"Scroller": "<div class='tooltip_header'>&nbsp;&nbsp;Try these scrollers</div>"
 		},
 		"LoginConstants": {
 			"EmailNotPresent": "Enter your email address",

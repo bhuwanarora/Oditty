@@ -1211,6 +1211,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	$scope.reset_search_bar = function(event){
 		$rootScope.hide_options = true;
 		$scope.hide_input_field = false;
+		delete $rootScope.website.faded_wrapper;
 		event.stopPropagation();
 	}
 

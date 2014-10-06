@@ -330,4 +330,12 @@ and (max-width : 900px){
 		bottom: 1vh;
 		height: initial;
 	}
+
+    .focused_tooltip .arrow_left{
+        left: -10px !important;
+    }
+
+    .focused_tooltip .arrow_right{
+        right: -10px !important;
+    }
 }
