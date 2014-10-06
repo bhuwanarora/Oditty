@@ -403,6 +403,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	}
 
 	$scope.handle_selection_option = function(item, event){
+		$scope._shift_search_to_top();
 		$scope.search_tag.result_count = 10;
 		console.debug("handle_selection_option", item, $scope.active_base);
 		if(item.level1_option){
@@ -1133,10 +1134,8 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		var time_delay = 350;
 		console.debug("get_search_results", $scope.search_initiated, String.fromCharCode(event.keyCode));
 		$scope.search_results = [];
-		if(on_search_page){
-			$scope._shift_search_to_top();
-		}
-		
+		$scope._shift_search_to_top();
+
 		if($scope.search_initiated){
     		$timeout.cancel(search_typing_timeout);
     		search_typing_timeout = $timeout(function(){
@@ -1216,8 +1215,10 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	}
 
 	$scope._shift_search_to_top = function(){
-		$scope.trending_panel_style = {"max-height": "26"};
-		$scope.search_panel_style = {"top": "26%"};
+		if(on_search_page){
+			$scope.trending_panel_style = {"max-height": "26"};
+			$scope.search_panel_style = {"top": "26%"};
+		}
 	}
 
 	$scope.reset_search_bar = function(event){
@@ -1447,9 +1448,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
     }
 
     $scope._set_base_search = function(){
+		$scope._init_book_search();
 		// switch($cookieStore.get('base_search')){
 		// 	case SearchUIConstants.BookSearchLink:
-		// 		$scope._init_book_search();
 		// 		$scope.active_base = SearchUIConstants.BookSearch;
 		// 		break;
 		// 	case SearchUIConstants.AuthorSearchLink:

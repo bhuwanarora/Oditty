@@ -267,7 +267,7 @@
 .search_page .search_typeahead_group{
     position: fixed;
 	left: 50%;
-	top: 26%;
+	top: 50%;
 	width: 60%;
 	height: 37px;
 	margin-left: -30%;
@@ -355,7 +355,7 @@
 }
 
 .search_page .tweets{
-	max-height: 26vh;
+	max-height: 50vh;
 }
 
 .search_page .custom_hidden{
