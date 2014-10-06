@@ -7,7 +7,6 @@
 		<div ng-class="{'icon-radio-unchecked': !grid_view, 'icon-checkbox-unchecked': grid_view}" class="link" ng-click="grid_view = !grid_view"></div>
 	</div> -->
 	<a class="right_links animate-fast" 
-		 ng-class="{'right_links_shifted': user.show_profile}"
 		 ng-href="#user/{{user.id}}/recommendations/books"
 		 ng-if="$routeParams.trend_id || $routeParams.grid_id || $routeParams.filter_id || $routeParams.label_id">
 		<div class="link"
