@@ -1784,16 +1784,13 @@ and (min-width : 1824px) {
 	display: inline-block;
 	float: left;
 	padding: 15px;
-	background-color: rgba(255, 255, 255, 0.96);
+	background-color: #427fed;
 	border: 1px solid #F5F5F5;
 	cursor: default;
 	height: 12px;
 	font-size: 0.9em;
 	margin: 1px;
-}
-
-.main_header .compressed_filters .compressed_filter_icon:hover{
-	color: #427fed !important;
+	color: white;
 }
 
 .main_header .compressed_filters .compressed_filter_icon:hover [class^="icon-"]:before{

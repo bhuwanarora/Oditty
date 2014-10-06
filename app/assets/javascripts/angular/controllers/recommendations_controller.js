@@ -516,7 +516,12 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			}
     	}
 
-    	$rootScope.website.faded_wrapper = {"opacity": "0.5"};
+    	if(angular.isDefined($rootScope.website)){
+    		$rootScope.website.faded_wrapper = {"opacity": "0.5"};
+    	}
+    	else{
+    		$rootScope.website = {"faded_wrapper": {"opacity": "0.5"}};
+    	}
 	}
 	
 	_set_books = function(data){
