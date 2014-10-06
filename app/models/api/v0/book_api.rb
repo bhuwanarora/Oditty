@@ -325,7 +325,7 @@ module Api
 			end
 
 			def self._get_bookmark_lists(filter_id, user_id)
-				clause = "MATCH (l:Label), (u:User) WHERE ID(l)="+filter_id.to_s+" AND ID(u)="+user_id.to_s+" WITH u, l MATCH (u)-[:Labelled]->(l)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(b:Book) RETURN b.isbn, ID(b), b.external_thumb"
+				clause = "MATCH (l:Label), (u:User) WHERE ID(l)="+filter_id.to_s+" AND ID(u)="+user_id.to_s+" WITH u, l MATCH (u)-[:Labelled]->(l)-[:BookmarkedOn]->(z:BookmarkNode)-[:BookmarkAction]->(b:Book) WHERE z.user_id="+user_id.to_s+" RETURN b.isbn, ID(b), b.external_thumb"
 				clause
 			end
 
