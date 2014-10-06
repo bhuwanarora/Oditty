@@ -184,6 +184,7 @@
 .website_search_helpers .compressed_option{
 	padding: 12px 15px;
 	font-size: 15px;
+	cursor: default;
 }
 
 .website_search_helpers .direction_option{
@@ -406,7 +407,6 @@
 }
 
 .website_search_options .option{
-	cursor: pointer;
 	padding: 10px 20px;
 	background-color: white;
 	white-space: normal;
@@ -694,4 +694,16 @@ and (max-width : 500px) {
 
 .right_tab{
 	padding: 7px 0px 0px 15px;
+}
+
+.close_filters{
+	color: #BBBBBB;
+	height: 40px;
+	width: 40px;
+	text-align: center;
+	cursor: default;
+}
+
+.close_filters:hover{
+	color: #868686;
 }

@@ -394,11 +394,11 @@ input:focus{
 }
 
 .float_right{
-    float: right;
+    float: right !important;
 }
 
 .float_left{
-    float: left;
+    float: left !important;
 }
 
 .tooltip{
