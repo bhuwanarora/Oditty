@@ -1263,12 +1263,12 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			// if(notifications.length > 0){
 			// 	$scope.$emit('addToNotifications', notifications);
 			// }
-			$rootScope.trends = notifications;
+			$rootScope.trending_feed = notifications;
 		});
 	}
 
 	$scope._add_trends_on_search_page = function(){
-		$scope.trends = [];
+		$scope.trending_feed = [];
 		websiteService.get_trending_topics().then(function(data){
 			angular.forEach(data, function(value){
 				var json = {"name": value[0], "id": value[1], "thumb": value[6], "keywords": value[8], "large_image": value[5]};
