@@ -1444,7 +1444,6 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
     		$scope.trending_panel_style = {"max-height": "50vh"};
     		$scope.search_panel_style = {"top": "50%"};
     	}
-    	event.stopPropagation();
     }
 
     $scope._set_base_search = function(){
