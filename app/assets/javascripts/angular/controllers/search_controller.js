@@ -46,6 +46,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	}
 
 	$scope.search_custom = function(event){
+		$scope.shift_search_to_top();
 		var key = $scope._detect_key(event);
 		if(key.keyEnter){
 			$scope.handle_selection_option($scope.search_tag.currentItem, event);
