@@ -469,7 +469,8 @@
 
 
 .scroller .scroller-left,
-.scroller .scroller-right{
+.scroller .scroller-right,
+.scroller .scroller-up{
 	font-size: 1.5em;
 	text-align: center;
 	background-color: white;
@@ -478,28 +479,42 @@
 	cursor: pointer;
 }
 
+.scroller .scroller-up{
+	margin-bottom: 3px;
+	padding: 2px 12px 5px 8px;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	margin-bottom: 3px;
+	width: 10px;
+	height: 22px;
+	left: 50%;
+	position: absolute;
+	top: -35px;
+	margin-left: -15px;
+}
+
 .scroller .scroller-left{
-	margin-left: 3px;
-	padding: 2px 15px 5px 14px;
+	padding: 2px 12px 5px 8px;
 	border-top-left-radius: 2px;
 	border-bottom-left-radius: 2px;
 }
 
 .scroller .scroller-right{
-	margin-right: 3px;
-	padding: 2px 14px 5px 15px;
+	padding: 2px 8px 5px 12px;
 	border-top-right-radius: 2px;
 	border-bottom-right-radius: 2px;
 }
 
 .scroller .scroller-left:hover,
-.scroller .scroller-right:hover{
+.scroller .scroller-right:hover,
+.scroller .scroller-up:hover{
 	color: #333;
 }
 
 .scroller .scroller-left:active,
-.scroller .scroller-right:active{
-	color: #427fed;
+.scroller .scroller-right:active,
+.scroller .scroller-up:active{
+	color: black;
 }
 
 .more_filters{
@@ -2003,8 +2018,7 @@ l	.compressed_info_card{
 
 .share_wrapper_shifted{
 	bottom: 80px;
-	height: initial;
-	height: auto;
+	height: 75vh;
 	border-bottom: 1px solid #D8D8D8;
 	background-color: white;
 	overflow-y: scroll;

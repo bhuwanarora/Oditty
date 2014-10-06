@@ -20,7 +20,7 @@
 			<span><input disabled placeholder="Share something..." /></span>
 		</div> -->
 		<div class="grey_wrapper click" ng-show="user.show_profile" ng-click="toggle_profile(user.id, $event)"></div>
-		<div class="vertical_padder_active animate-fast" 
+		<div class="vertical_padder_active animate-faster" 
 			 ng-class="{'vertical_padder_shifted': user.show_profile}"></div>
 		
 
@@ -91,16 +91,21 @@
 		<div class="scroller animate-fast" 
 			 ng-class="{'hidden': user.show_profile}"
 			 id="scroller">
-			<span class="scroller-left icon-angle-left"
-			      ng-mouseover="move_left($event)"
-			      ng-click="move_left($event)"
-			      title="Scroll left">
-			</span>
-			<span class="scroller-right icon-angle-right"
-				  ng-mouseover="move_right($event)"
-				  ng-click="move_right($event)"
-				  title="Scroll right">
-			</span>
+		 	<div class="scroller-up" ng-click="toggle_profile(user.id, $event)">
+		 		<span class="icon-angle-double-up"></span>
+		 	</div>
+		 	<div>
+				<span class="scroller-left icon-angle-left"
+				      ng-mouseover="move_left($event)"
+				      ng-click="move_left($event)"
+				      title="Scroll left">
+				</span>
+				<span class="scroller-right icon-angle-right"
+					  ng-mouseover="move_right($event)"
+					  ng-click="move_right($event)"
+					  title="Scroll right">
+				</span>
+		 	</div>
 		</div>
 
 		<getting-started></getting-started>
