@@ -10,11 +10,13 @@
 		 ng-class="{'right_links_shifted': user.show_profile}"
 		 ng-href="#user/{{user.id}}/recommendations/books"
 		 ng-if="$routeParams.trend_id || $routeParams.grid_id || $routeParams.filter_id || $routeParams.label_id">
-		<div class="link tab active_tab"
+		<div class="link"
 			 title="{{main_header}}">
 			<span ng-bind-html="main_header | heading | lowercase" class="table_cell"></span>
 			<span>&nbsp;&nbsp;</span>
-			<span class="table_cell icon-close light_red_color"></span>
+			<span>|</span>
+			<span>&nbsp;&nbsp;</span>
+			<span class="table_cell icon-close"></span>
 		</div>
 	</a>
 	

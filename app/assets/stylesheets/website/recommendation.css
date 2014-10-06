@@ -384,15 +384,15 @@
 }
 
 .right_links{
-	left: 50%;
-	top: 70px;
+	left: 140px;
+	top: 61px;
 	right: initial;
 	cursor: default !important;
-	margin-left: -170px;
 	position: fixed;
 	height: 40px;
 	text-transform: capitalize;
-	font-size: 18px;
+	background-color: rgba(0, 0, 0, 0.81);
+	color: white;
 }
 
 .toggle_elements{
