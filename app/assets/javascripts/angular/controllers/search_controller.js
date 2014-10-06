@@ -1056,18 +1056,18 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		        	if($scope.search_ready){
 		        		$scope.search_results = [];
 			        	var results = result.results.data;
-			        	if($scope.active_base == SearchUIConstants.BookSearch){
-			        		$scope._add_book_in_results(results);
-			        	}
-			        	else if($scope.active_base == SearchUIConstants.AuthorSearch){
-			        		$scope._add_author_in_results(results);
-			        	}
-			        	else if($scope.active_base == SearchUIConstants.ReaderSearch){
-			        		$scope._add_reader_in_results(results);
-			        	}
-			        	else{
-			        		$scope._add_mixed_type_results(results);
-			        	}
+			        	$scope._add_mixed_type_results(results);
+			        	// if($scope.active_base == SearchUIConstants.BookSearch){
+			        	// 	$scope._add_book_in_results(results);
+			        	// }
+			        	// else if($scope.active_base == SearchUIConstants.AuthorSearch){
+			        	// 	$scope._add_author_in_results(results);
+			        	// }
+			        	// else if($scope.active_base == SearchUIConstants.ReaderSearch){
+			        	// 	$scope._add_reader_in_results(results);
+			        	// }
+			        	// else{
+			        	// }
 
 			        	if($scope.search_results.length == $scope.search_tag.result_count){
 				        	var show_all = {"name": "<span class='icon-list'></span><span>&nbsp;&nbsp;Show all results for '<em>"+$scope.search_tag.input+"</em>'</span>", "show_all": true, "value":$scope.search_tag.input};
