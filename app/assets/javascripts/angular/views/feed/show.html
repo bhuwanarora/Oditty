@@ -1,20 +1,20 @@
-<div class="wrapper animate-slow"
+<div class="interaction_group animate-fast" ng-if="user.interact">
+	<div class="icon-close-popup" ng-click="close_interaction_box();"></div>
+	<div ng-include src="'/assets/angular/views/feed/comment_box.html'"></div>
+	<div ng-include src="'/assets/angular/views/feed/book_timeline.html'" 
+		 ng-if="focused_book"></div>
+	<div ng-include src="'/assets/angular/views/feed/trending.html'" 
+	     ng-if="!focused_book && show_feed.trending"></div>
+	<div ng-include src="'/assets/angular/views/feed/news_feed.html'"
+		 ng-if="!focused_book && show_feed.news"></div>
+	<div ng-include src="'/assets/angular/views/feed/readers_timeline.html'"
+		 ng-if="!focused_book && show_feed.readers"></div>
+	<div ng-include src="'/assets/angular/views/feed/personal_feed.html'"
+		 ng-if="!focused_book && show_feed.personal"></div>
+</div>
+<div class="wrapper"
  	 style="z-index:12;" 
+ 	 ng-if="user.interact"
 	 ng-click="close_interaction_box()"
 	 msd-wheel="stop_horizontal_scroll($event)">
-	 
-	<div class="interaction_group">
-		<div class="icon-close-popup" ng-click="close_interaction_box();"></div>
-		<div ng-include src="'/assets/angular/views/feed/comment_box.html'"></div>
-		<div ng-include src="'/assets/angular/views/feed/book_timeline.html'" 
-			 ng-if="focused_book"></div>
-		<div ng-include src="'/assets/angular/views/feed/trending.html'" 
-		     ng-if="!focused_book && show_feed.trending"></div>
-		<div ng-include src="'/assets/angular/views/feed/news_feed.html'"
-			 ng-if="!focused_book && show_feed.news"></div>
-		<div ng-include src="'/assets/angular/views/feed/readers_timeline.html'"
-			 ng-if="!focused_book && show_feed.readers"></div>
-		<div ng-include src="'/assets/angular/views/feed/personal_feed.html'"
-			 ng-if="!focused_book && show_feed.personal"></div>
-	</div>
 </div>

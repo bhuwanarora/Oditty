@@ -395,6 +395,10 @@
 	color: white;
 }
 
+.right_links:hover .icon-close{
+	color: white;
+}
+
 .toggle_elements{
 	left: 240px;
 	background-color: #fff;
@@ -567,6 +571,7 @@
 	margin-left: -30%;
 	top: 10px;
 	width: 60%;
+	z-index: 13;
 }
 
 .interaction_box,
@@ -1590,7 +1595,7 @@ and (min-width : 1824px) {
 }
 
 .user_add{
-	bottom: 70px;
+	bottom: 60px;
 }
 
 .feedback_popup{
@@ -1607,18 +1612,18 @@ and (min-width : 1824px) {
 
 .floating_icon{
 	position: fixed;
-	width: 36px;
-	border-radius: 18px;
+	width: 24px;
+	border-radius: 12px;
 	cursor: pointer;
-	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+	box-shadow: 0 1px 2px rgba(0,0,0,0.22);
 	z-index: 10;
-	background-color: #fff;
-	color: #A8A8A8;
-	height: 36px;
+	background-color: #717070;
+	color: white;
+	height: 24px;
 	text-align: center;
 	display: table;
 	right: 20px;
-	font-size: 15px;
+	font-size: 10px;
 }
 
 .feedback{
@@ -1626,7 +1631,7 @@ and (min-width : 1824px) {
 }
 
 .floating_icon:hover{
-	background-color: #F5F5F5;
+	background-color: #333;
 }
 
 .feedback_popup textarea{

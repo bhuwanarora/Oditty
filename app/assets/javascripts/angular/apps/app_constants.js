@@ -178,6 +178,13 @@ var constants = {
 				"name": "Emotion",
 				"value": [
 					{
+						"name": "Currently reading",
+						"icon": "i-reading",
+						"label": "Reading",
+						"icon2": "icon-book",
+						"value": [{"SearchBook": true}]
+					},
+					{
 						"name": "Feeling", 
 						"icon": "i-feeling",
 						"label": "Feeling", 
@@ -204,18 +211,6 @@ var constants = {
 						"label": "Counting",
 						"icon2": "icon-book",
 						"value": [{"SearchBook": true}]
-					},
-					{
-						"name": "Reading",
-						"icon": "i-reading",
-						"label": "Reading",
-						"icon2": "icon-book",
-						"value": [
-							{"SearchBook": true},
-							{"name": "on mountains", "icon": "", "value": [{"SearchBook": true}]},
-							{"name": "on bed", "icon": "", "value": [{"SearchBook": true}]},
-							{"name": "on train", "icon": "", "value": [{"SearchBook": true}]}
-						]
 					}
 				]
 			},
