@@ -267,11 +267,12 @@
 .search_page .search_typeahead_group{
     position: fixed;
 	left: 50%;
-	top: 30%;
+	top: 42%;
 	width: 60%;
 	height: 37px;
 	margin-left: -30%;
 	z-index: 5;
+	margin-top: 100px;
 }
 
 .search_page .shift_top{
@@ -346,6 +347,11 @@
 	left: 40px;
 	border-color: rgba(255, 255, 255, 0.4);
 	color: rgba(255, 255, 255, 0.4);
+}
+
+.search_page .trending_panel{
+	top: 60px;
+	max-height: 40%;
 }
 
 .search_page .trends{
