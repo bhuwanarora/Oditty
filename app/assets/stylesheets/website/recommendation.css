@@ -1791,11 +1791,11 @@ and (min-width : 1824px) {
 	font-size: 0.9em;
 	margin: 1px;
 	color: white;
+	font-weight: 700;
 }
 
 .main_header .compressed_filters .compressed_filter_icon:hover [class^="icon-"]:before{
 	content: "\e694";
-	color: rgba(216, 57, 30, 0.5);
 }
 
 .settings_popup{

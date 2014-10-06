@@ -516,11 +516,11 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			}
     	}
 
-    	if(angular.isDefined($rootScope.website)){
-    		$rootScope.website.faded_wrapper = {"opacity": "0.5"};
+    	if(angular.isDefined($rootScope.user)){
+    		$rootScope.user.faded_wrapper = {"opacity": "0.5"};
     	}
     	else{
-    		$rootScope.website = {"faded_wrapper": {"opacity": "0.5"}};
+    		$rootScope.user = {"faded_wrapper": {"opacity": "0.5"}};
     	}
 	}
 	

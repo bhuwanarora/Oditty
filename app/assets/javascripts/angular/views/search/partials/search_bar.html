@@ -1,5 +1,5 @@
 <div class="wrapper" 
-     ng-style="website.faded_wrapper"
+     ng-style="user.faded_wrapper"
      ng-click="reset_search_bar($event)"
      ng-if="$routeParams.type && !hide_options"></div>
 <div class="search_typeahead_group animate-fast">
@@ -66,8 +66,6 @@
          ng-click="remove_filter(item, $event)"
          msd-wheel="stop_horizontal_scroll($event)"
          class="option site_color animate-fast">
-        <tooltip prepend-text="Remove filter" position="left" ng-if="!$routeParams.type"></tooltip>
-        <tooltip prepend-text="Remove filter" position="right" ng-if="$routeParams.type"></tooltip>
         <div class="title">
           <span ng-show="item.icon2" class="{{item.icon2}} faded_site_color">&nbsp;</span>
           <b><span ng-bind-html="item.name"></span></b>
