@@ -165,6 +165,7 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
                 alert(WebsiteUIConstants.ServerError);
             }
             else if(reason.status == 403){
+                console.debug("403 authenticate");
                 return deferred.reject(reason);
             }
         }

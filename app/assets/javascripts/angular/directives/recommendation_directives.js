@@ -488,7 +488,7 @@ websiteApp.directive('bookGrid', ['recommendationService', '$rootScope', functio
 	}
 }]);
 
-websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService', 'websiteService', 'WebsiteUIConstants', 'scroller', '$cookieStore', 'RecommendationUIConstants', function($rootScope, $timeout, sharedService, websiteService, WebsiteUIConstants, scroller, $cookieStore, RecommendationUIConstants){
+websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService', 'websiteService', 'WebsiteUIConstants', 'scroller', 'RecommendationUIConstants', function($rootScope, $timeout, sharedService, websiteService, WebsiteUIConstants, scroller, RecommendationUIConstants){
 	return{
 		restrict: 'E',
 		controller: ['$scope', 'websiteService', function($scope, websiteService){
@@ -746,7 +746,7 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 					$rootScope.user.profile_status = $rootScope.user.profile_status - 1;
 				}
 				else{
-					$rootScope.user.profile_status = 3;
+					$rootScope.user.compressed_info = true;
 				}
 				_handle_info_card_bindings($scope);
 			}
@@ -756,7 +756,7 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 					$rootScope.user.profile_status = $rootScope.user.profile_status + 1;
 				}
 				else{
-					$rootScope.user.profile_status = 0;
+					$rootScope.user.compressed_info = true;
 				}
 				_handle_info_card_bindings($scope);
 			}
@@ -845,9 +845,10 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 					{"name": "Editor"}
 				];
 				
-				if(angular.isUndefined($cookieStore.get('ask_info'))){
+				if(angular.isUndefined($rootScope.user.ask_info) && $rootScope.user.ask_info){
 					$rootScope.user.compressed_info = false;
-					$cookieStore.put('ask_info', true);
+					var params = {"ask_info": false};
+					websiteService.save_user_info(params);
 				}
 				else{
 					$rootScope.user.compressed_info = true;

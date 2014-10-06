@@ -109,6 +109,7 @@ module Api
 					clause = " SET u.selectedYear="+params[:selectedYear].to_s+", u.selectedMonth=\""+params[:selectedMonth].to_s+"\", u.selectedDay="+params[:selectedDay].to_s if params[:selectedDay]
 					clause = " SET u.profile=\""+params[:profile]+"\"" if params[:profile]
 					clause = " SET u.profile_picture="+params[:profile_picture] if params[:profile_picture]
+					clause = " SET u.ask_info = "+params[:ask_info].to_s if params[:ask_info]
 					clause = " SET u.thumb_blob=\""+params[:blob]+"\"" if params[:blob]
 					clause = " WITH u MATCH (g:Category) WHERE ID(g)="+params[:genre].to_s+" CREATE UNIQUE (u)-[:Likes]->(g)" if params[:genre] && params[:status]
 					clause = " WITH u MATCH (u)-[r:Likes]->(g:Category) WHERE ID(g)="+params[:genre].to_s+" DELETE r" if params[:genre] && !params[:status]
