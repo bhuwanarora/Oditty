@@ -1273,17 +1273,19 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	}
 
 	$scope._add_trends_as_notifications = function(){
-		websiteService.get_trending_topics().then(function(data){
-			var notifications = [];
-			angular.forEach(data, function(value){
-				var json = {"name": value[0], "id": value[1], "message": value[2], "url": value[3], "title":value[4], "thumb": value[7], "large_image": value[5], "keywords": value[8]};
-				this.push(json);
-			}, notifications);
-			// if(notifications.length > 0){
-			// 	$scope.$emit('addToNotifications', notifications);
-			// }
-			$rootScope.trending_feed = notifications;
-		});
+		if(angular.isUndefined($rootScope.trending_feed) || $rootScope.trending_feed.length == 0){
+			websiteService.get_trending_topics().then(function(data){
+				var notifications = [];
+				angular.forEach(data, function(value){
+					var json = {"name": value[0], "id": value[1], "message": value[2], "url": value[3], "title":value[4], "thumb": value[7], "large_image": value[5], "keywords": value[8]};
+					this.push(json);
+				}, notifications);
+				// if(notifications.length > 0){
+				// 	$scope.$emit('addToNotifications', notifications);
+				// }
+				$rootScope.trending_feed = notifications;
+			});
+		}
 	}
 
 	$scope._add_trends_on_search_page = function(){
@@ -1476,7 +1478,6 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope.website.searching = false;
 		$scope.filters_added = [];
 		$scope._handle_search_page();
-
 		if(on_search_page){
 			if($rootScope.user.logged){
 				$scope.set_focus(3000);
