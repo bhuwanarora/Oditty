@@ -272,7 +272,7 @@
 	height: 37px;
 	margin-left: -30%;
 	z-index: 5;
-	margin-top: 65px;
+	margin-top: 70px;
 }
 
 .search_page .shift_top{
@@ -351,7 +351,6 @@
 
 .search_page .trending_panel{
 	top: 60px;
-	max-height: 26%;
 	margin-top: 0px;
 }
 

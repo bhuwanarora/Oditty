@@ -1203,6 +1203,10 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			}
 			event.stopPropagation();
 		}
+		else{
+			$scope.trending_panel_style = {"max-height": "26%"};
+			$scope.search_panel_style = {"top": "26%"};
+		}
 		if(angular.isUndefined($scope.active_base)){
 			$scope.handle_base_selection($scope.base_search_options[0]);
 		}
@@ -1424,6 +1428,14 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 
     $scope.set_book_width = function(book){
     	return {"width": book.width+"px", "left": book.left+"px"};
+    }
+
+    $scope.increase_height = function(event){
+    	if(on_search_page){
+    		$scope.trending_panel_style = {"max-height": "50%"};
+    		$scope.search_panel_style = {"top": "50%"};
+    	}
+    	event.stopPropagation();
     }
 
     $scope._set_base_search = function(){
