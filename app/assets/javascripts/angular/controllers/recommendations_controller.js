@@ -624,6 +624,13 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	$rootScope.focused_book = $scope.recommendations.books.first;
     }
 
+    $scope.get_notifications = function(user_id){
+    	if($rootScope.user.show_profile){
+    		var trending = false;
+  			$scope.$emit('getNotifications', trending, user_id);
+    	}
+	}
+
     $scope._get_friends = function(count){
     	var _set_friends_for = function(user_array, data){
     		angular.forEach(data, function(value){
