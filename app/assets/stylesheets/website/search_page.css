@@ -267,12 +267,12 @@
 .search_page .search_typeahead_group{
     position: fixed;
 	left: 50%;
-	top: 22%;
+	top: 26%;
 	width: 60%;
 	height: 37px;
 	margin-left: -30%;
 	z-index: 5;
-	margin-top: 100px;
+	margin-top: 65px;
 }
 
 .search_page .shift_top{
@@ -350,16 +350,25 @@
 }
 
 .search_page .trending_panel{
-	top: 0px;
-	max-height: 22%;
+	top: 60px;
+	max-height: 26%;
+	margin: 0px;
 }
 
 .search_page .tweets{
-	max-height: 22vh;
+	max-height: 26vh;
 }
 
 .search_page .custom_hidden{
 	display: none;
+}
+
+.search_page .tweets .tweet{
+	padding: 0px;
+}
+
+.search_page .tweets .tweet .tweet_text{
+	width: 100%;
 }
 
 .search_page .trends{
