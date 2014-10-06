@@ -279,3 +279,8 @@ tr.introjs-showElement > th {
   left: 50%;
   top: 50%;
 }
+
+.header_text{
+  width: 280px;
+  padding-left: 10px;
+}

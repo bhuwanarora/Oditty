@@ -109,6 +109,14 @@
         </span>
       </div>
     </div>
+    <div class="inline_block float_right" ng-show="!$routeParams.type">
+      <div class="larger_font inline_block line_separator">|</div>
+      <div class="inline_block padding">
+        <div class="click">
+          <a ng-href="#/user/{{user.id}}/recommendations/books">Recommendations</a>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="animate-fast website_search_options scrollbar" 

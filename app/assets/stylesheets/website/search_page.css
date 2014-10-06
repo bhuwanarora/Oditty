@@ -746,3 +746,9 @@ and (max-width : 500px) {
 .close_filters:hover{
 	color: #868686;
 }
+
+
+.line_separator{
+	margin: 10px 0px;
+	color: #D8D8D8;
+}

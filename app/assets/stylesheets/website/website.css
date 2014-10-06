@@ -664,3 +664,12 @@ input:focus{
 .larger_font{
     font-size: 30px;
 }
+
+.padding{
+    padding: 20px;
+    text-align: center;
+}
+
+.small_thumb{
+    width: 30px;
+}
