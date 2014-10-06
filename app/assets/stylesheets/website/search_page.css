@@ -352,7 +352,7 @@
 .search_page .trending_panel{
 	top: 60px;
 	max-height: 26%;
-	margin: 0px;
+	margin-top: 0px;
 }
 
 .search_page .tweets{
