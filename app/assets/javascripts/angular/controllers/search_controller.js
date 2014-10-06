@@ -1133,6 +1133,10 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		var time_delay = 350;
 		console.debug("get_search_results", $scope.search_initiated, String.fromCharCode(event.keyCode));
 		$scope.search_results = [];
+		if(on_search_page){
+			$scope._shift_search_to_top();
+		}
+		
 		if($scope.search_initiated){
     		$timeout.cancel(search_typing_timeout);
     		search_typing_timeout = $timeout(function(){
@@ -1204,12 +1208,16 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			event.stopPropagation();
 		}
 		else{
-			$scope.trending_panel_style = {"max-height": "26vh"};
-			$scope.search_panel_style = {"top": "26%"};
+			$scope._shift_search_to_top();
 		}
 		if(angular.isUndefined($scope.active_base)){
 			$scope.handle_base_selection($scope.base_search_options[0]);
 		}
+	}
+
+	$scope._shift_search_to_top = function(){
+		$scope.trending_panel_style = {"max-height": "26"};
+		$scope.search_panel_style = {"top": "26%"};
 	}
 
 	$scope.reset_search_bar = function(event){
