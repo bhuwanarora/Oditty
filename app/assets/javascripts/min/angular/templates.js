@@ -306,7 +306,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/search/trending.html',
-    "<div ng-include=\"\" src=\"'/assets/angular/views/feed/trending.html'\" ng-hide=\"active_base || filters_added.length > 0\" class=\"trending_panel animate-fast\"></div>"
+    "<div ng-include=\"\" src=\"'/assets/angular/views/feed/trending.html'\" class=\"trending_panel animate-fast\"></div>"
   );
 
 
