@@ -227,21 +227,7 @@ var constants = {
 						]
 					},
 					{
-						"name": "Looking to give",
-						"icon": "",
-						"value": [
-							{"SearchBook": true}
-						]
-					},
-					{
-						"name": "Looking to read",
-						"icon": "",
-						"value": [
-							{"SearchBook": true}
-						]
-					},
-					{
-						"name": "Gifted",
+						"name": "Willing to lend",
 						"icon": "",
 						"value": [
 							{"SearchBook": true}

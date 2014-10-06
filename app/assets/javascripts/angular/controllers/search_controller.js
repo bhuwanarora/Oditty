@@ -1459,7 +1459,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		}
 		else{
 			$scope._init_book_search();
-			$scope.active_base = SearchUIConstants.BookSearch;
+			// $scope.active_base = SearchUIConstants.BookSearch;
 		}
 		
 
