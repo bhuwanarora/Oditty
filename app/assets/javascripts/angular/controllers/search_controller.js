@@ -404,6 +404,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 
 	$scope.handle_selection_option = function(item, event){
 		$scope._shift_search_to_top();
+		$scope._set_base_selection();
 		$scope.search_tag.result_count = 10;
 		console.debug("handle_selection_option", item, $scope.active_base);
 		if(item.level1_option){
@@ -1209,6 +1210,10 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		else{
 			$scope._shift_search_to_top();
 		}
+		$scope._set_base_selection();
+	}
+
+	$scope._set_base_selection = function(){
 		if(angular.isUndefined($scope.active_base)){
 			$scope.handle_base_selection($scope.base_search_options[0]);
 		}
