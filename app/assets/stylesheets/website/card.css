@@ -93,6 +93,7 @@
 	border: 1px solid #F1F1F1;
 	z-index: 2;
 	visibility: hidden;
+	background-color: rgba(0, 0, 0, 0.58);
 }
 
 .tag_bookmark{
@@ -100,36 +101,19 @@
 }
 
 .tag_bookmark ::-webkit-input-placeholder {
-   color: #427fed;
+   color: white;
 }
 
 .tag_bookmark :-moz-placeholder { /* Firefox 18- */
-   color: #427fed;  
+   color: white;  
 }
 
 .tag_bookmark ::-moz-placeholder {  /* Firefox 19+ */
-   color: #427fed;  
+   color: white;  
 }
 
 .tag_bookmark :-ms-input-placeholder {  
-   color: #427fed;
-}
-
-
-.tag_bookmark:hover ::-webkit-input-placeholder {
-   text-decoration: underline;
-}
-
-.tag_bookmark:hover :-moz-placeholder { /* Firefox 18- */
-   text-decoration: underline; 
-}
-
-.tag_bookmark:hover ::-moz-placeholder {  /* Firefox 19+ */
-   text-decoration: underline; 
-}
-
-.tag_bookmark:hover :-ms-input-placeholder {  
-   text-decoration: underline;
+   color: white;
 }
 
 /*mark as read*/
@@ -146,6 +130,7 @@
 	padding-left: 10px;
 	border: 1px solid transparent;
 	height: 100%;
+	background-color: transparent;
 }
 
 .input_bookmark:focus{
@@ -174,13 +159,7 @@
 }
 
 .action_button:hover{
-	background: #f5f5f5;
-	background-image: -webkit-gradient(linear,left top,left bottom,from(#f5f5f5),to(#f1f1f1));
-	background-image: -webkit-linear-gradient(top,#f5f5f5,#f1f1f1);
-	background-image: -moz-linear-gradient(top,#f5f5f5,#f1f1f1);
-	background-image: -ms-linear-gradient(top,#f5f5f5,#f1f1f1);
-	background-image: -o-linear-gradient(top,#f5f5f5,#f1f1f1);
-	background-image: linear-gradient(top,#f5f5f5,#f1f1f1);
+	color: white;
 }
 
 .right_action{
