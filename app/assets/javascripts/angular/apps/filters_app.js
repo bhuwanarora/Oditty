@@ -308,4 +308,9 @@ angular.module('filtersApp', [])
       }
       return is_present;
     }
+  })
+  .filter('timestamp', function(){
+    return function(utcSeconds){
+      return new Date(utcSeconds);
+    }
   });

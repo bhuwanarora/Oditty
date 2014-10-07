@@ -339,7 +339,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/shared/timestamp.html',
-    "<div class=\"light_grey_color\" ng-show=\"timestamp\"><span>{{timestamp | date:'MMMM d'}}</span> <span ng-show=\"timestamp\">at {{timestamp | date:'h:mm a'}}</span></div>"
+    "<div class=\"light_grey_color\" ng-show=\"timestamp\"><span>{{timestamp | timestamp | date:'MMMM d'}}</span> <span ng-show=\"timestamp\">at {{timestamp | timestamp | date:'h:mm a'}}</span></div>"
   );
 
 
