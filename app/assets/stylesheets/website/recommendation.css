@@ -1611,13 +1611,14 @@ and (min-width : 1824px) {
 }
 
 .user_add{
-	bottom: 60px;
+	bottom: 20px;
+	right: 50px !important;
 }
 
 .feedback_popup{
 	position: fixed;
-	bottom: 10px;
-	right: 65px;
+	bottom: 60px;
+	right: 10px;
 	padding: 10px;
 	border-radius: 2px;
 	cursor: pointer;
@@ -2161,8 +2162,8 @@ l	.compressed_info_card{
 
 .user_add_popup{
 	position: fixed;
-	right: 65px;
-	bottom: 65px;
+	right: 10px;
+	bottom: 60px;
 	list-style: none;
 	padding: 10px;
 	background-color: white;

@@ -256,23 +256,17 @@
 }
 
 .user_add_popup.ng-enter,
-.user_add_popup.ng-leave.ng-leave-active{
-	bottom: 85px;
+.user_add_popup.ng-leave.ng-leave-active,
+.feedback_popup.ng-enter,
+.feedback_popup.ng-leave.ng-leave-active{
+	bottom: 100px;
 }
 
 .user_add_popup.ng-leave,
-.user_add_popup.ng-enter.ng-enter-active{
-	bottom: 65px;
-}
-
-.feedback_popup.ng-enter,
-.feedback_popup.ng-leave.ng-leave-active{
-	bottom: 40px;
-}
-
+.user_add_popup.ng-enter.ng-enter-active,
 .feedback_popup.ng-leave,
 .feedback_popup.ng-enter.ng-enter-active{
-	bottom: 10px;
+	bottom: 60px;
 }
 
 .interaction_group.ng-enter,
