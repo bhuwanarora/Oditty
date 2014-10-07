@@ -173,7 +173,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		// _facebook_init();
 		
         FB.api(
-		    "/me/books",
+		    "/me/book",
 		    function(response){
 		      if(response && !response.error){
 		      	response = angular.extend(response, {"type": "books"});
@@ -182,7 +182,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		    }
 		);
 		FB.api(
-		    "/me/books.reads",
+		    "/me/book.reads",
 		    function(response){
 		      if(response && !response.error){
 		      	response = angular.extend(response, {"type": "books.read"});
@@ -191,7 +191,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		    }
 		);
 		FB.api(
-		    "/me/books.rates",
+		    "/me/book.rates",
 		    function(response){
 		      if(response && !response.error){
 		      	response = angular.extend(response, {"type": "books.rates"});
@@ -200,7 +200,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		    }
 		);
 		FB.api(
-		    "/me/books.quotes",
+		    "/me/book.quotes",
 		    function(response){
 		      if(response && !response.error){
 		      	response = angular.extend(response, {"type": "books.quotes"});
@@ -209,7 +209,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		    }
 		);
 		FB.api(
-		    "/me/books.wants_to_read",
+		    "/me/book.wants_to_read",
 		    function(response){
 		      if(response && !response.error){
 		      	response = angular.extend(response, {"type": "books.wants_to_read"});

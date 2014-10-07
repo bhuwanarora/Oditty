@@ -373,11 +373,9 @@
             /**
              * Map Facebook sdk XFBML.parse() to NgFacebook.
              */
-            NgFacebook.prototype.parseXFBML = function() {
-
+            NgFacebook.prototype.parseXFBML = function(){
               var d = $q.defer();
-
-              $timeout(function() {
+              $timeout(function(){
                 // Call when loadDeferred be resolved, meaning Service is ready to be used
                 loadDeferred.promise.then(function() {
                   $window.FB.XFBML.parse();
@@ -396,7 +394,7 @@
             angular.forEach([
               'subscribe',
               'unsubscribe',
-            ], function(name) {
+            ], function(name){
 
               NgFacebook.prototype[name] = function() {
 
@@ -517,7 +515,7 @@
         (function addFBRoot() {
           var fbroot = document.getElementById('fb-root');
 
-          if (!fbroot) {
+          if(!fbroot){
             fbroot = document.createElement('div');
             fbroot.id = 'fb-root';
             document.body.insertBefore(fbroot, document.body.childNodes[0]);
@@ -530,7 +528,7 @@
          * SDK script injecting
          */
          if(loadSDK) {
-          (function injectScript() {
+          (function injectScript(){
             var src           = '//connect.facebook.net/' + settings.locale + '/sdk.js',
                 script        = document.createElement('script');
                 script.id     = 'facebook-jssdk';
@@ -540,7 +538,7 @@
             // for sure we don't want to ignore things, but this tests exists,
             // but it isn't recognized by istanbul, so we give it a 'ignore if'
             /* istanbul ignore if */
-            if ($window.location.protocol.indexOf('file:') !== -1) {
+            if($window.location.protocol.indexOf('file:') !== -1) {
               src = 'https:' + src;
             }
 
