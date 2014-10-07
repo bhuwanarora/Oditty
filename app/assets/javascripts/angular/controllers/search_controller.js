@@ -653,6 +653,8 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$cookieStore.remove(item.type);
 		if(!on_search_page){
 			delete $rootScope.filters.other_filters[item.type];
+			delete $rootScope.filters.other_filters["show_all"];
+			delete $rootScope.filters.other_filters["title"];
 			$scope.$emit('reloadRecommendations');
 		}
 	}
