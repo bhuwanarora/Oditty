@@ -98,13 +98,13 @@ module Api
 							# session[:last_book] = books[books.length-1][1]
 							# session.delete(:last_filter_book)
 
-							clause = "MATCH (u:User) WHERE ID(u)="+session[:user_id].to_s+" SET u.last_book="+books[books.length-1][1].to_s+" REMOVE u.last_filter_book"
+							clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" SET u.last_book="+books[books.length-1][1].to_s+" REMOVE u.last_filter_book"
 							puts clause.blue.on_red
 							@neo.execute_query clause
 						elsif reading_time_filter
 							# session[:last_filter_book] = books[books.length-1][1]
 
-							clause = "MATCH (u:User) WHERE ID(u)="+session[:user_id].to_s+" SET u.last_filter_book="+books[books.length-1][1].to_s
+							clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" SET u.last_filter_book="+books[books.length-1][1].to_s
 							puts clause.blue.on_red
 							@neo.execute_query clause
 						end
