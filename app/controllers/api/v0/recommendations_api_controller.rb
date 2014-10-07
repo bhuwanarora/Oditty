@@ -73,10 +73,9 @@ module Api
 				@neo = Neography::Rest.new
 				filter_type = (JSON.parse params[:q])["filter_type"]
 				filters = JSON.parse(params[:q])
-				unless session[:user_id].present?
-					user_id = params[:id]
-				end
-				puts "recommendations session #{session[:user_id]} user_id #{params[:id]}"
+				# unless session[:user_id].present?
+				# end
+				user_id = session[:user_id].present? ? session[:user_id] : params[:id]
 				if filter_type == "BOOK"
 					reading_time_filter = filters["other_filters"][Constants::Time].present?
 					clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" RETURN "
