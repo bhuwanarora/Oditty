@@ -143,7 +143,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
         		// $rootScope.logged = true;
         		$scope.me();
       		}
-    	}, {scope: 'public_profile, email, user_actions.books, user_birthday, user_location'});
+    	}, {scope: 'email'});
    	};
    
     $scope.me = function() {
