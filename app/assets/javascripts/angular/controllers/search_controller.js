@@ -540,7 +540,6 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	  		}
 		}
 
-
 		$scope._set_active_type(item.type);
 		switch(item.type){
 			case SearchUIConstants.Genre:
@@ -564,14 +563,19 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			case SearchUIConstants.ReaderSearch:
 				$location.path("/reader/"+item.id+"/profile");
 				break;
+			case SearchUIConstants.TextSearch:
+				$rootScope.hide_options = true;
+				break;
 			default:
 				break;
 		}
 		var custom_filters_added = item.type != SearchUIConstants.BookSearch;
 		if(on_search_page){
-			$cookieStore.put(item.type, item);
-			if(item.type == SearchUIConstants.BookSearch){
-				$scope.handle_search_request();
+			if(angular.isDefined(item.type)){
+				$cookieStore.put(item.type, item);
+				if(item.type == SearchUIConstants.BookSearch || item.type == SearchUIConstants.TextSearch){
+					$scope.handle_search_request();
+				}
 			}
 		}
 		else if(on_custom_page){
@@ -598,18 +602,27 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	}
 
 	$scope._set_filter_for_book_search = function(item){
+		if(angular.isDefined(item.show_all) && item.show_all){
+			$scope._all_text_search_results(item);
+		}
+		else{
+			$scope._reset_recommendations();
+			$rootScope.filters.other_filters["id"] = item.id;
+		}
+	}
+
+	$scope._reset_recommendations = function(){
 		if(angular.isUndefined($rootScope.filters)){
 			$rootScope.filters = {"other_filters": {}};
 		}
 		$rootScope.filters["reset_count"] = 0;
 		$rootScope.filters["reset"] = true;
-		if(angular.isDefined(item.show_all) && item.show_all){
-			$rootScope.filters.other_filters["show_all"] = true;
-			$rootScope.filters.other_filters["title"] = item.value;
-		}
-		else{
-			$rootScope.filters.other_filters["id"] = item.id;
-		}
+	}
+
+	$scope._all_text_search_results = function(item){
+		$scope._reset_recommendations();
+		$rootScope.filters.other_filters["show_all"] = true;
+		$rootScope.filters.other_filters["title"] = item.value;
 	}
 
 	$scope._reset_filter = function(item){
@@ -1079,7 +1092,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			        	// }
 
 			        	if($scope.search_results.length == $scope.search_tag.result_count){
-				        	var show_all = {"name": "<span class='icon-list'></span><span>&nbsp;&nbsp;Show all results for '<em>"+$scope.search_tag.input+"</em>'</span>", "show_all": true, "value":$scope.search_tag.input};
+				        	var show_all = $scope._get_search_text_item();
 							$scope.search_results.push(show_all);
 							delete $scope.search_display;
 			        	}
@@ -1100,6 +1113,10 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
     		$scope.set_base_search();
 			// $timeout.cancel(search_typing_timeout);
     	}
+	}
+
+	$scope._get_search_text_item = function(){
+		return {"name": "<span class='icon-list'></span><span>&nbsp;&nbsp;Show all results for '<em>"+$scope.search_tag.input+"</em>'</span>", "show_all": true, "value":$scope.search_tag.input, "type": SearchUIConstants.TextSearch};
 	}
 
 	$scope._set_custom_search = function(customAuthorSearch, customBookSearch, customUserSearch, customTagSearch){
@@ -1154,7 +1171,15 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		else{
     		var keyEnter = event.keyCode == WebsiteUIConstants.Enter;
 			if(keyEnter){
-				$scope.handle_selection_option($scope.search_tag.currentItem, event);
+				var searching_for_text = angular.isUndefined($scope.search_tag.currentItem);
+				if(searching_for_text){
+					var item = $scope._get_search_text_item();
+					$scope._all_text_search_results(item);
+					$scope.$emit('reloadRecommendations');
+				}
+				else{
+					$scope.handle_selection_option($scope.search_tag.currentItem, event);
+				}
 			}
 			else{
         		var firstInput = String.fromCharCode(event.keyCode);
@@ -1403,6 +1428,19 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		}
 	}
 
+	$scope._init_text_filter = function(){
+		var item = $cookieStore.get(SearchUIConstants.TextSearch);
+		if(angular.isDefined(item)){
+			if(!on_search_page){
+				$scope._set_filter_for_book_search(item);
+				$scope.filters_added.push(item);
+			}
+			else{
+				$cookieStore.remove(SearchUIConstants.TextSearch);
+			}
+		}
+	}
+
 	$scope._add_init_filters = function(){
 		if(angular.isUndefined($scope.filters_added)){
 			$scope.filters_added = [];
@@ -1414,6 +1452,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope._init_year_filter();
 		$scope._init_country_filter();
 		$scope._init_book_filter();
+		$scope._init_text_filter();
 
 		if(!on_search_page){
 			$scope.$emit('reloadRecommendations');

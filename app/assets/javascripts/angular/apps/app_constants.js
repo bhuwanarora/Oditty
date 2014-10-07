@@ -96,6 +96,7 @@ var constants = {
 			"ComingSoon": "Coming soon with exhaustive filters...",
 			"NoResultsFound": "No results found...",
 			"BookSearch": "BOOK",
+			"TextSearch": "TEXT",
 			"BookSearchPlaceholder": "Search books...",
 			"SearchingBooks": "Searching books...",
 			"AuthorSearch": "AUTHOR",
