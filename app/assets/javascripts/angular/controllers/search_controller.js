@@ -577,7 +577,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$scope.show_books();
 		}
 		else{
-			if(custom_filters_added){
+			if(custom_filters_added && angular.isDefined(item.type)){
 				$rootScope.filters["reset_count"] = 0;
 				$rootScope.filters["reset"] = true;
 				$rootScope.filters.other_filters[item.type] = data;
