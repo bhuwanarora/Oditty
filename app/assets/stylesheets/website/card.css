@@ -131,10 +131,11 @@
 	border: 1px solid transparent;
 	height: 100%;
 	background-color: transparent;
+	color: white;
 }
 
 .input_bookmark:focus{
-	border: 1px solid #427fed;
+	border: 1px solid white;
 }
 
 .left_action_active{
