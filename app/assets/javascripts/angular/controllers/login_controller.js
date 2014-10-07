@@ -156,8 +156,8 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 	        Facebook.api('me/picture?redirect=false&type=large', function(response){
 	        	websiteService.save_user_info(response);
 	        });
-        	$scope.fb_books();
         });
+        $scope.fb_books();
     };
 
     $scope.fb_books = function(){
@@ -172,8 +172,8 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		}
 		// _facebook_init();
 		
-        FB.api(
-		    "/me/book",
+        Facebook.api(
+		    "/me/books",
 		    function(response){
 		      if(response && !response.error){
 		      	response = angular.extend(response, {"type": "books"});
@@ -181,8 +181,8 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		      }
 		    }
 		);
-		FB.api(
-		    "/me/book.reads",
+		Facebook.api(
+		    "/me/books.reads",
 		    function(response){
 		      if(response && !response.error){
 		      	response = angular.extend(response, {"type": "books.read"});
@@ -190,8 +190,8 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		      }
 		    }
 		);
-		FB.api(
-		    "/me/book.rates",
+		Facebook.api(
+		    "/me/books.rates",
 		    function(response){
 		      if(response && !response.error){
 		      	response = angular.extend(response, {"type": "books.rates"});
@@ -199,8 +199,8 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		      }
 		    }
 		);
-		FB.api(
-		    "/me/book.quotes",
+		Facebook.api(
+		    "/me/books.quotes",
 		    function(response){
 		      if(response && !response.error){
 		      	response = angular.extend(response, {"type": "books.quotes"});
@@ -208,8 +208,8 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		      }
 		    }
 		);
-		FB.api(
-		    "/me/book.wants_to_read",
+		Facebook.api(
+		    "/me/books.wants_to_read",
 		    function(response){
 		      if(response && !response.error){
 		      	response = angular.extend(response, {"type": "books.wants_to_read"});
