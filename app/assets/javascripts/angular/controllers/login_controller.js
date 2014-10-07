@@ -60,6 +60,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		}
 
 		var error_callback = function(reason){
+			console.debug("error_callback", reason);
 			$scope.loading_icon = false;
 			$rootScope.user.error_message = reason.data.message;
 			$rootScope.user.password = null;

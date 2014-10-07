@@ -161,6 +161,7 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
             return deferred.resolve(result.data); 
         }
         var error_callback = function(reason){
+            console.debug("403 error_callback service");
             if(reason.status == 500){
                 alert(WebsiteUIConstants.ServerError);
             }

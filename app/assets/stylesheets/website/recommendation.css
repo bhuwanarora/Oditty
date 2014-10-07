@@ -480,16 +480,14 @@
 }
 
 .scroller .scroller-up{
-	margin-bottom: 3px;
-	padding: 2px 12px 5px 8px;
 	border-top-left-radius: 2px;
 	border-top-right-radius: 2px;
 	margin-top: 2px;
-	width: 10px;
-	height: 22px;
+	width: 26px;
+	height: 28px;
 	left: 50%;
 	position: absolute;
-	top: -35px;
+	top: -34px;
 	margin-left: -15px;
 }
 
@@ -498,12 +496,14 @@
 	border-top-left-radius: 2px;
 	border-bottom-left-radius: 2px;
 	margin-right: -3px;
+	border-right: none;
 }
 
 .scroller .scroller-right{
 	padding: 2px 8px 5px 12px;
 	border-top-right-radius: 2px;
 	border-bottom-right-radius: 2px;
+	border-left: none;
 }
 
 .scroller .scroller-left:hover,
@@ -1385,7 +1385,7 @@ and (min-width : 1824px) {
 	background-color: white;
 	left: 0px;
 	position: fixed;
-	z-index: 1;
+	z-index: 2;
 	box-shadow: -5px 50px 43px 0px rgba(66,66,66,.24);
 }
 

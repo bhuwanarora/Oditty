@@ -509,7 +509,7 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', 'w
         if(!selected){
           $scope.user.selected_followers.push(friend_id);
           event.currentTarget.dataset.selected = true;
-          event.currentTarget.style.border = "5px solid #427fed";
+          event.currentTarget.style.border = "5px solid #FEBF00";
         }
         else{
           $scope.user.selected_followers.splice($scope.user.selected_followers.indexOf(friend_id), 1);
