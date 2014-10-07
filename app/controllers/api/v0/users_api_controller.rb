@@ -16,6 +16,7 @@ module Api
 
 			def fb
 				user_id = UserApi.handle_facebook_user(params, session)
+				session[:user_id] = user_id
 				if user_id.present?
 					render :json => {:message => "Success"}, :status => 200
 				else

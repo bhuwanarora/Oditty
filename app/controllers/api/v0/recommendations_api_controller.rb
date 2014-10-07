@@ -75,7 +75,6 @@ module Api
 				filters = JSON.parse(params[:q])
 				unless session[:user_id].present?
 					user_id = params[:id]
-					session[:user_id] = params[:id]
 				end
 				if filter_type == "BOOK"
 					reading_time_filter = filters["other_filters"][Constants::Time].present?

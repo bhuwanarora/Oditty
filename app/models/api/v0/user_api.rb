@@ -188,6 +188,7 @@ module Api
 				puts "fb execute_query done...".green
 				puts "FB LOGIN USER_ID #{user_id.to_s.red}"
 				session[:user_id] = user_id
+				puts "session #{session[:user_id]}".red
 				user_id
 			end
 
