@@ -4,7 +4,7 @@ websiteApp.service('recommendationService', ['$http', '$q', '$rootScope', 'Websi
 
     this.get_recommendations = function(){
         var filters = angular.toJson($rootScope.filters);
-        return _deferred_request('/api/v0/recommendations?count=5&q='+filters);
+        return _deferred_request('/api/v0/recommendations?count=5&id='+$rootScope.user.id+'&q='+filters);
     }
 
     this.get_random_books = function(){

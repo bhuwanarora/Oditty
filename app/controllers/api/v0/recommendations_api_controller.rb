@@ -73,9 +73,10 @@ module Api
 				@neo = Neography::Rest.new
 				filter_type = (JSON.parse params[:q])["filter_type"]
 				filters = JSON.parse(params[:q])
+				user_id = params[:id] unless session[:user_id].present?
 				if filter_type == "BOOK"
 					reading_time_filter = filters["other_filters"][Constants::Time].present?
-					clause = "MATCH (u:User) WHERE ID(u)="+session[:user_id].to_s+" RETURN "
+					clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" RETURN "
 					if reading_time_filter
 						if filters["reset"]
 							# session.delete(:last_filter_book)
