@@ -614,6 +614,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		if(angular.isUndefined($rootScope.filters)){
 			$rootScope.filters = {"other_filters": {}};
 		}
+		delete $rootScope.filters.other_filters["show_all"];
+		delete $rootScope.filters.other_filters["title"];
+		delete $rootScope.filters.other_filters["id"];
 		$rootScope.filters["reset_count"] = 0;
 		$rootScope.filters["reset"] = true;
 	}
@@ -669,6 +672,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			delete $rootScope.filters.other_filters[item.type];
 			delete $rootScope.filters.other_filters["show_all"];
 			delete $rootScope.filters.other_filters["title"];
+			delete $rootScope.filters.other_filters["id"];
 			$scope.$emit('reloadRecommendations');
 		}
 	}
