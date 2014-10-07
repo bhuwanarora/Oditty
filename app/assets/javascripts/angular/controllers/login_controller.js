@@ -138,12 +138,12 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 	}; 
       
    	$scope.login = function() {
-     	Facebook.login(function(response) {
+     	Facebook.login(function(response){
       		if (response.status == LoginConstants.FacebookLoginStatusCheck) {
         		// $rootScope.logged = true;
         		$scope.me();
       		}
-    	});
+    	}, {scope: 'public_profile, email, user_actions.books, user_birthday, user_location'});
    	};
    
     $scope.me = function() {
@@ -157,7 +157,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 	        	websiteService.save_user_info(response);
 	        });
         });
-        $scope.fb_books();
+        // $scope.fb_books();
     };
 
     $scope.fb_books = function(){
