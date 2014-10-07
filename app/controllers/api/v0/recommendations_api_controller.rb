@@ -76,6 +76,7 @@ module Api
 				unless session[:user_id].present?
 					user_id = params[:id]
 				end
+				puts "recommendations session #{session[:user_id]} user_id #{params[:id]}"
 				if filter_type == "BOOK"
 					reading_time_filter = filters["other_filters"][Constants::Time].present?
 					clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" RETURN "
