@@ -584,8 +584,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		}
 		else{
 			if(custom_filters_added && angular.isDefined(item.type)){
-				$rootScope.filters["reset_count"] = 0;
-				$rootScope.filters["reset"] = true;
+				$scope._reset_recommendations();
 				$rootScope.filters.other_filters[item.type] = data;
 				$cookieStore.put(item.type, item);
 			}
@@ -1174,8 +1173,14 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				var searching_for_text = angular.isUndefined($scope.search_tag.currentItem);
 				if(searching_for_text){
 					var item = $scope._get_search_text_item();
-					$scope._all_text_search_results(item);
-					$scope.$emit('reloadRecommendations');
+					if(on_search_page){
+						$cookieStore.put(item.type, item);
+						$scope.handle_search_request();
+					}
+					else{
+						$scope._all_text_search_results(item);
+						$scope.$emit('reloadRecommendations');
+					}
 				}
 				else{
 					$scope.handle_selection_option($scope.search_tag.currentItem, event);
