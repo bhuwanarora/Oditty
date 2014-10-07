@@ -22,7 +22,7 @@
           class="compressed_filter_icon"
          ng-click="remove_filter(item, $event)">
         <span ng-show="item.icon2" class="{{item.icon2}}"></span>
-        <span>{{item.name}}</span>
+        <span ng-bind-html="item.name"></span>
     </div>
   </div>
 

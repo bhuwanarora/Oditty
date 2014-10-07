@@ -578,14 +578,14 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		}
 		else{
 			if(custom_filters_added){
+				$rootScope.filters["reset_count"] = 0;
+				$rootScope.filters["reset"] = true;
 				$rootScope.filters.other_filters[item.type] = data;
 				$cookieStore.put(item.type, item);
 			}
 			else{
 				$scope._set_filter_for_book_search(item);
 			}
-			$rootScope.filters["reset_count"] = 0;
-			$rootScope.filters["reset"] = true;
 			$scope.$emit('reloadRecommendations');
 		}
 		if(custom_filters_added){
