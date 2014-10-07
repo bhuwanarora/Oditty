@@ -948,7 +948,28 @@
 @media only screen
 and (min-device-width : 320px)
 and (max-device-width : 480px) {
-/* Styles */
+	.left_column_collapsed{
+		width: 50px;
+		text-align: center;
+		color: transparent;
+	}
+
+	.left_column{
+		left: 0px;
+		right: 60px;
+		width: inherit;
+	}
+
+	.left_column_shifted{
+		right: 15px;
+		width: 40px !important;
+		left: inherit;
+	}
+
+	.left_column .collapse_icon{
+		right: 20px;
+		left: initial;
+	}
 }
 
 /* Smartphones (landscape) ----------- */

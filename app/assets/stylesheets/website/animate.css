@@ -282,3 +282,13 @@
 	top: 10px;
 	width: 60%;
 }
+
+.bottom_widget.ng-enter,
+.bottom_widget.ng-leave.ng-leave-active{
+	height: 0vh;
+}
+
+.bottom_widget.ng-leave,
+.bottom_widget.ng-enter.ng-enter-active{
+	height: 6vh;
+}

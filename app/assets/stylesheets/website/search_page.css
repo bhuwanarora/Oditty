@@ -715,6 +715,18 @@ and (max-width : 500px) {
 	.login_box .fb{
 		margin-left: 25%;
 	}
+
+	.search_page .search_typeahead_group,
+	.search_page .trending_panel{
+		left: 5px;
+		right: 5px;
+		width: inherit;
+		margin-left: 0px;
+	}
+
+	.left_icon{
+		display: none;
+	}
 }
 
 .trending_header{
