@@ -7,7 +7,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/book_widget/partials/bookmark.html',
-    "<div itemscope=\"\" itemtype=\"http://schema.org/BookmarkAction\" class=\"left_action action_button\" ng-click=\"toggle_bookmarked($event)\" ng-class=\"{'left_action_active':book.bookmark_status}\" ng-model=\"book.bookmark_status\" title=\"bookmark\"><tooltip prepend-text=\"Add \" text=\"book.title\" append-text=\" to a shelf.\" position=\"top\"></tooltip><span class=\"icon-bookmark3 table_cell table_cell_icon\"></span><div></div></div>"
+    "<div itemscope=\"\" itemtype=\"http://schema.org/BookmarkAction\" class=\"left_action action_button\" ng-click=\"toggle_bookmarked($event)\" ng-class=\"{'left_action_active':book.bookmark_status}\" ng-model=\"book.bookmark_status\" title=\"bookmark\"><span class=\"icon-bookmark3 table_cell table_cell_icon\"></span><div></div></div>"
   );
 
 
