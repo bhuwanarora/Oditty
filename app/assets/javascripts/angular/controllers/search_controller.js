@@ -560,8 +560,10 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				break;
 			case SearchUIConstants.BookSearch:
 				$rootScope.hide_options = true;
+				break;
 			case SearchUIConstants.ReaderSearch:
 				$location.path("/reader/"+item.id+"/profile");
+				break;
 			default:
 				break;
 		}
