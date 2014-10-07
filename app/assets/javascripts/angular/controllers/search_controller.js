@@ -1160,34 +1160,34 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope.search_results = [];
 		$scope.shift_search_to_top();
 
-		if($scope.search_initiated){
-    		$timeout.cancel(search_typing_timeout);
-    		search_typing_timeout = $timeout(function(){
-    			console.debug("get_search_results search_typing_timeout");
-				$scope._handle_search_input(event);
-			}, time_delay);
-		}
-		else{
-    		var keyEnter = event.keyCode == WebsiteUIConstants.Enter;
-			if(keyEnter){
-				var searching_for_text = angular.isUndefined($scope.search_tag.currentItem);
-				if(searching_for_text){
-					var item = $scope._get_search_text_item();
-					if(on_search_page){
-						$cookieStore.put(item.type, item);
-						$scope.handle_search_request();
-					}
-					else{
-						$scope._all_text_search_results(item);
-						$scope.$emit('reloadRecommendations');
-					}
+    	var keyEnter = event.keyCode == WebsiteUIConstants.Enter;
+		if(keyEnter){
+			var searching_for_text = angular.isUndefined($scope.search_tag.currentItem);
+			if(searching_for_text){
+				var item = $scope._get_search_text_item();
+				if(on_search_page){
+					$cookieStore.put(item.type, item);
+					$scope.handle_search_request();
 				}
 				else{
-					$scope.handle_selection_option($scope.search_tag.currentItem, event);
+					$scope._all_text_search_results(item);
+					$scope.$emit('reloadRecommendations');
 				}
 			}
 			else{
-        		var firstInput = String.fromCharCode(event.keyCode);
+				$scope.handle_selection_option($scope.search_tag.currentItem, event);
+			}
+		}
+		else{
+			if($scope.search_initiated){
+	    		$timeout.cancel(search_typing_timeout);
+	    		search_typing_timeout = $timeout(function(){
+	    			console.debug("get_search_results search_typing_timeout");
+					$scope._handle_search_input(event);
+				}, time_delay);
+			}
+			else{
+	    		var firstInput = String.fromCharCode(event.keyCode);
 	        	var currentValue = $scope.search_tag.input.trim();
 	        	if(currentValue && currentValue.length > 1){
 	        		var customBookSearch = currentValue.indexOf(SearchUIConstants.Hash) == 0;
