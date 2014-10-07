@@ -2019,7 +2019,7 @@ l	.compressed_info_card{
 
 .share_wrapper_shifted{
 	bottom: 80px;
-	height: 75vh;
+	height: auto;
 	border-bottom: 1px solid #D8D8D8;
 	background-color: white;
 	overflow-y: scroll;
