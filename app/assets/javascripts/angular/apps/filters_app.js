@@ -311,6 +311,7 @@ angular.module('filtersApp', [])
   })
   .filter('timestamp', function(){
     return function(utcSeconds){
-      return new Date(utcSeconds);
+      var date = new Date(0);
+      return date.setUTCSeconds(utcSeconds);
     }
   });
