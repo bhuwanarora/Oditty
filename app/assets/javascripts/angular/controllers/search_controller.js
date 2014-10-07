@@ -603,7 +603,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$rootScope.filters["reset"] = true;
 		if(angular.isDefined(item.show_all) && item.show_all){
 			$rootScope.filters.other_filters["show_all"] = true;
-			$rootScope.filters.other_filters["title"] = item.name;
+			$rootScope.filters.other_filters["title"] = item.value;
 		}
 		else{
 			$rootScope.filters.other_filters["id"] = item.id;
