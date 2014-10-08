@@ -2215,7 +2215,22 @@ l	.compressed_info_card{
 .book_thumb,
 .profile_thumb{
 	width: 100% !important;
-	min-height: 100%;
+	min-height: 100% !important;
+}
+
+.notifications .small_book_thumb,
+.tweets .small_book_thumb{
+	width: 40px;
+	height: inherit;
+	margin: 5px 5px 0px 0px;
+	border-radius: 1px;
+	display: inline-block;
+	float: left;
+}
+
+.tweets .small_book_thumb{
+	margin: 0px 10px 0px 0px;
+	width: 200px !important;
 }
 
 .user_add_popup{
