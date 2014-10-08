@@ -1215,7 +1215,7 @@
 	height: 85vh;
 }
 
-.tweets .scrollbar{
+/*.tweets .scrollbar{
 	width: 101%;
 }
 
@@ -1235,7 +1235,7 @@
     opacity: 1;
     width: 10px;
     background-color: #D5D5D5;
-}
+}*/
 
 .tweets .tweet{
 	background: white;
