@@ -299,6 +299,7 @@
 	max-height: 20vh;
 	min-width: 100px;
 	box-shadow: none;
+	color: transparent;
 }
 
 .label_dropdown.ng-leave,
@@ -307,4 +308,5 @@
 	max-height: 30vh;
 	min-width: 180px;
 	box-shadow: 0 7px 15px rgba(0,0,0,0.25);
+	color: #717070;
 }
