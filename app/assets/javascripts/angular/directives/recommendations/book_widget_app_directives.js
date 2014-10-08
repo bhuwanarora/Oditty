@@ -51,6 +51,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
             $rootScope.on_left = false;
           }
           $rootScope.popups.left_panel_width = {"background-color": "#333"};
+          $rootScope.style = {};
           $rootScope.style.main_header = {"background-color": "#333", "color": "white"};
           $rootScope.style.header_icon = {"color": "white"};
           $rootScope.style.site_logo = {"color": "white"};
@@ -61,7 +62,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
         }
         else{
           delete $rootScope.focused_book;
-          
+
         }
         event.stopPropagation();
         // body...
