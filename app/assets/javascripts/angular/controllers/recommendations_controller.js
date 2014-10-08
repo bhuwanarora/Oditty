@@ -69,10 +69,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			$rootScope.user.show_profile = true;
 			$scope._get_user_profile_info(user_id);
 			$scope._get_friends(2);
-			delete $rootScope.focused_book;
 			delete $rootScope.ticker_popup;
-			$rootScope.popups.left_panel_width = {};
-          	$rootScope.style = {};
+			$scope._delete_focused_book();
 		}
 		
 
@@ -122,15 +120,20 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
 	$scope.expand_left_panel = function(){
+		$scope._delete_focused_book();
 		$rootScope.popups.left_panel_width = {'width': '34%'};
+	}
+
+	$scope._delete_focused_book = function(){
+		delete $rootScope.focused_book;
+		$rootScope.popups.left_panel_width = {};
+      	$rootScope.style = {};
 	}
 
 	$scope.toggle_settings_popup = function(event){
 		var _show_settings_popup = function(){
 			$rootScope.popups = {};
-			delete $rootScope.focused_book;
-			$rootScope.popups.left_panel_width = {};
-          	$rootScope.style = {};
+			$scope._delete_focused_book();
 			$rootScope.popups.settings_popup = true;
 		}
 
@@ -155,9 +158,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	$scope._expanded_notifications = function(){
 		$rootScope.user.interact = true;
-		delete $rootScope.focused_book;
+		$scope._delete_focused_book();
 		delete $rootScope.ticker_popup;
-        $rootScope.style = {};
 		$rootScope.user.collapsed_column = true; 
 		$rootScope.user.collapsed_trends = true; 
 		$rootScope.user.collapsed_left_column = true;
@@ -216,9 +218,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
 	$scope.hide_popups = function(){
-		delete $rootScope.focused_book;
+		$scope._delete_focused_book();
 		delete $rootScope.ticker_popup;
-        $rootScope.style = {};
 		$rootScope.user.collapsed_column = true;
 		$rootScope.user.collapsed_filters = true;
 		$rootScope.user.collapsed_friends = true;
@@ -468,9 +469,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 					});
 				}
 				else{
-					delete $rootScope.focused_book;
-					$rootScope.popups.left_panel_width = {};
-          			$rootScope.style = {};
+					$scope._delete_focused_book();
 					if($scope.recommendations.books.length >= max_limit){
 						$scope.recommendations.books = [$scope.recommendations.books[max_limit-2], $scope.recommendations.books[max_limit-1]];
 						var timeout_event = $timeout(function(){
