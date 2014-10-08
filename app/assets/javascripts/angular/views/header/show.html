@@ -1,5 +1,8 @@
-<div class="main_header">
-	<a class="site_logo" ng-href="#/user/{{$routeParams.id}}/search" ng-if="$routeParams.type">
+<div class="main_header"
+	 ng-style="style.main_header">
+	<a class="site_logo" 
+		ng-style="style.site_logo"
+		ng-href="#/user/{{$routeParams.id}}/search" ng-if="$routeParams.type">
 		<tooltip prepend-text="Back to search page" position="bottom"></tooltip>
  		<span>r</span>
 		<span>e</span>
@@ -16,7 +19,9 @@
 		<span>r</span>
  	</a>
  	<div class="table_cell header_wrapper"  ng-if="!$routeParams.type">
-	 	<a class="site_logo" ng-href="#/user/{{user.id}}/recommendations/books">
+	 	<a class="site_logo" 
+	 		ng-style="style.site_logo"
+	 		ng-href="#/user/{{user.id}}/recommendations/books">
 	 		<span>r</span>
 			<span>e</span>
 			<span>a</span>
@@ -32,11 +37,14 @@
 			<span>r</span>
 	 	</a>
  	</div>
-	<div class="header_icon" ng-click="toggle_settings_popup($event)" ng-if="$routeParams.type">
+	<div class="header_icon" 
+		 ng-style="style.header_icon"
+		 ng-click="toggle_settings_popup($event)" ng-if="$routeParams.type">
 		<span class="icon-angle-down table_cell"></span>
 	</div>
 	
 	<div class="header_icon" 
+		 ng-style="style.header_icon"
 	     ng-class="{'site_color': popups.show_notifications_popup}"
 	     ng-click="toggle_notification_popup($event)">
 		<span class="icon-earth table_cell"></span>

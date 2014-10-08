@@ -50,7 +50,10 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
             }
             $rootScope.on_left = false;
           }
-          
+          $rootScope.popups.left_panel_width = {"background-color": "#333"};
+          $rootScope.style.main_header = {"background-color": "#333", "color": "white"};
+          $rootScope.style.header_icon = {"color": "white"};
+          $rootScope.style.site_logo = {"color": "white"};
           // event.currentTarget.offsetParent.offsetParent.scrollWidth;
           // var test = event.currentTarget.offsetParent.offsetParent.offsetLeft -event.currentTarget.offsetLeft;
           // var test2 = event.currentTarget.offsetParent.offsetParent.scrollWidth;
@@ -58,6 +61,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
         }
         else{
           delete $rootScope.focused_book;
+          
         }
         event.stopPropagation();
         // body...
