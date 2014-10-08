@@ -1,6 +1,6 @@
 .recommendation_block{
 	display: inline-block;
-	height: 55vh;
+	height: 57vh;
 	margin-right: 15px;
 	position: relative;
 	width: 41vh;
@@ -85,7 +85,7 @@
 
 .bottom_widget{
 	height: 6vh;
-	bottom: 0vh;
+	bottom: 2vh;
 	left: 2vh;
 	right: 2vh;
 	position: absolute;
@@ -220,7 +220,7 @@
 	top: 14vh;
 	left: 2vh;
 	right: 2vh;
-	bottom: 0vh;
+	bottom: 2vh;
 	border-radius: 1px;
 }
 
