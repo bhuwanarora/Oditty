@@ -588,6 +588,12 @@
 	z-index: 13;
 }
 
+.interaction_group .icon-close-popup{
+	position: fixed;
+	top: 70px;
+	font-size: 30px;
+}
+
 .interaction_box,
 .message_box{
 	z-index: 5;
@@ -1395,7 +1401,7 @@ and (min-width : 1824px) {
 
 .tweets .tweet .large_thumb_color_wrapper{
 	position: absolute;
-	box-shadow: 0 0 25px 10px rgba(0, 0, 0, 0.36) inset;
+	box-shadow: 0 0 25px 1px rgba(0, 0, 0, 1) inset;
 	margin-top: 0px;
 	margin-bottom: 0px;
 }
@@ -1754,18 +1760,19 @@ and (min-width : 1824px) {
 
 .left_column_collapsed2{
 	top: 282px;
+	border-bottom: 1px solid #E6E6E6;
 }
 
 .left_column_collapsed3{
-	top: 350px;
+	top: 323px;
 }
 
 .left_column_collapsed4{
-	top: 390px;
+	top: 363px;
 }
 
 .left_column_collapsed5{
-	top: 430px;
+	top: 403px;
 }
 
 .left_column_shifted{
@@ -2197,13 +2204,13 @@ l	.compressed_info_card{
 	width: 32vh;
 	height: 41vh;
 	overflow: hidden;
-	border-radius: 4px;
+	border-radius: 1px;
 }
 
 .profile_thumb_color_wrapper{
 	z-index: 1;
-	box-shadow: 0 0 22px 7px rgba(0, 0, 0, 1) inset;
-	border-radius: 4px;
+	box-shadow: 0 0 15px 1px rgba(0, 0, 0, 1) inset;
+	border-radius: 1px;
 }
 
 .white_wrapper{
@@ -2314,7 +2321,7 @@ l	.compressed_info_card{
 	position: fixed !important;
 	width: 56%;
 	height: 50px;
-	background-color: #f2f2f2;
+	background-color: #f2f2f2 !important;
 	border: 1px solid #D8D8D8;
 	border-radius: 0px !important;
 }

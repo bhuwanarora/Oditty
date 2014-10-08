@@ -195,7 +195,7 @@
     color: #717070;
 }
 
-.focused_tooltip .user_box .book_thumb{
+.focused_tooltip .user_box .author_book_thumb{
 	display: inline-block;
 	float: left;
 	width: 40px;

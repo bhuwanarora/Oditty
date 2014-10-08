@@ -118,6 +118,7 @@ websiteApp.directive('header', ['$timeout', '$rootScope', function($timeout, $ro
 		            $rootScope.user.collapsed_lists = true;
 		            $rootScope.user.collapsed_filters = true;
 		            $rootScope.user.collapsed_trends = true;
+		            $rootScope.user.interact = false;
 				}
 
 				var _show_notification_popup = function(){

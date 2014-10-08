@@ -111,7 +111,7 @@
      <div class="heading">{{focused_book.author_details.book_ids.length}} more books from author</div>
       <img ng-src="{{book_isbn | small_thumb}}" 
            ng-repeat="book_isbn in focused_book.author_details.book_isbns | limitTo: 7 track by $index" 
-           class="book_thumb">
+           class="author_book_thumb">
     <!-- <img class="signature_thumb" ng-src="{{focused_book.author_details.signature_pic}}"/> -->
 </div>
 

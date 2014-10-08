@@ -134,6 +134,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	$scope.toggle_settings_popup = function(event){
 		var _show_settings_popup = function(){
 			$rootScope.popups = {};
+			$rootScope.user.interact = false;
 			$scope._delete_focused_book();
 			$rootScope.popups.settings_popup = true;
 		}

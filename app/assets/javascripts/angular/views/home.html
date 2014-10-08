@@ -114,6 +114,7 @@
 		<div ng-include src="'/assets/angular/views/header/modals/settings.html'" 
 			 ng-show="popups.settings_popup"></div>
 </div>
-<feed ng-if="user.interact"></feed>
+<feed ng-if="user.interact"
+      class="interaction_group animate-fast"></feed>
 <div feedback-popup></div>
 <user-add></user-add>
