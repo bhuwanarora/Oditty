@@ -96,14 +96,14 @@ module NotificationHelper
 		name = self._get_name data
 		message = "<span>"+data["tweet"]+".</span>";
 
-		tag = "<span class='"+data["icon"]+"'></span>" rescue ""
-		clause = "<span> "+data["label1"] rescue "<span> "
+		tag = "<div class='"+data["icon"]+" inline_block'></div>" rescue ""
+		clause = "<div class='inline_block'> "+data["label1"] rescue "<div class='inline_block'> "
 		tag = tag + clause
 
 		clause = " "+data["label2"]+" " rescue " "
 		tag = tag + clause
 
-		clause = data["title"]+"</span>" rescue "</span>"
+		clause = data["title"]+"</div>" rescue "</div>"
 		tag = tag + clause
 
 		tag = "<span class='site_color'>"+tag+"</span>"
