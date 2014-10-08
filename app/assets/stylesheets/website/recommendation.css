@@ -1336,7 +1336,7 @@ and (min-width : 1824px) {
 
 .tweets{
 	/*overflow-y: scroll;*/
-	max-height: 64vh;
+	max-height: 48vh;
 	margin-top: 5px;
 }
 
