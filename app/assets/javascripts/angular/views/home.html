@@ -50,7 +50,7 @@
 		
 		<!-- <message></message> -->
 		<div class="left_panel animate-fast"
-			 ng-class="{'hidden': user.show_profile}" 
+			 ng-class="{'hidden': user.show_profile, 'left_panel_expanded': !user.left_column_collapsed}" 
 			 ng-style="popups.left_panel_width" 
 			 msd-wheel="stop_propagation($event)"
 			 ng-click="stop_propagation($event)">
