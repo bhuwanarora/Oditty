@@ -1,5 +1,9 @@
 <div class="thumb custom_hidden"><img ng-src="{{notification.thumb | thumb_backup}}"></div>
-<img ng-src="{{notification.book.isbn | thumb}}" class="book_thumb" ng-show="notification.book.isbn"/>
+
+<div class="book_thumb_color_wrapper" ng-show="notification.book.isbn"></div>
+<div class="book_thumb_wrapper" ng-show="notification.book.isbn">
+	<img ng-src="{{notification.book.isbn | thumb}}" class="book_thumb"/>
+</div>
 <div class="tweet_text" ng-class="{'compressed_tweet_text': notification.book.isbn}">
 	<b><div class="capitalise" ng-bind-html="notification.user.name"></div></b>
 	<b><a ng-href="{{notification.url}}" target="_blank">

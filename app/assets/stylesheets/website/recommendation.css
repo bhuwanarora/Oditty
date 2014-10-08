@@ -1206,19 +1206,21 @@ and (min-width : 1824px) {
 	border-radius: 5px; 
 }
 
-.notifications .book_thumb,
-.tweets .book_thumb{
-	width: 40px;
-	height: inherit;
-	margin: 5px 5px 0px 0px;
+
+.book_thumb_color_wrapper,
+.book_thumb_wrapper{
+	width: 200px;
+	height: 310px;
+	margin: 5px 5px 0 0;
 	border-radius: 1px;
 	display: inline-block;
 	float: left;
+	overflow: hidden;
 }
 
-.tweets .book_thumb{
-	margin: 0px 10px 0px 0px;
-	width: 200px !important;
+.book_thumb_color_wrapper{
+	position: absolute;
+	box-shadow: 0 0 22px 2px rgba(0, 0, 0, 1) inset;
 }
 
 .notification_circle {
@@ -2210,9 +2212,10 @@ l	.compressed_info_card{
 	background-color: white;
 }
 
+.book_thumb,
 .profile_thumb{
 	width: 100%;
-	height: 100%;
+	max-height: 100%;
 }
 
 .user_add_popup{
