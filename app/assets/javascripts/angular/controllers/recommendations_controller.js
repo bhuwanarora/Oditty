@@ -51,7 +51,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		if(user_id == $rootScope.user.id){
 			_get_user_profile_info($rootScope.user);
 			$scope.fetch_new_feed();
-			// $scope._fetch_trending_options();
 		}
 		else{
 			_get_user_profile_info($rootScope.reader);
@@ -112,12 +111,14 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	$scope.expand_left_panel = function(){
 		$scope.hide_popups();
+		$rootScope.user.interact = false;
 		$rootScope.popups.left_panel_width = {'width': '34%'};
 	}
 
 	$scope.toggle_settings_popup = function(event){
 		var _show_settings_popup = function(){
 			$scope.hide_popups();
+			$rootScope.user.interact = false;
 			$rootScope.popups.settings_popup = true;
 		}
 
@@ -140,13 +141,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		sharedService.logout();
 	}
 
-	$scope._expanded_notifications = function(){
-		$scope.hide_popups();
-		$rootScope.user.interact = true;
-	}
-
 	$scope.show_interaction_box = function(user_id){
-		$scope._expanded_notifications();
+		$scope.hide_popups();
 		$rootScope.user.interact = true;
 		var show_trending = false;
 		var init_notification = true;
@@ -154,11 +150,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
 	$scope.show_trending_options = function(){
-		$scope._expanded_notifications();
-		$scope._fetch_trending_options();
-	}
-
-	$scope._fetch_trending_options = function(){
+		$scope.hide_popups();
+		$rootScope.user.interact = true;
 		var show_trending = true;
 		$scope.$emit('getNotifications', show_trending, $rootScope.user.id);	
 	}
@@ -206,7 +199,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		$rootScope.user.collapsed_trends = true;
 		$rootScope.user.collapsed_lists = true;
 		$rootScope.user.collapsed_left_column = true;
-		$rootScope.user.interact = false;
 		$rootScope.popups = {};
 		$rootScope.popups.left_panel_width = {'width': WebsiteUIConstants.LeftPanelMinWidth};
 	}
@@ -452,6 +444,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				}
 				else{
 					$scope.hide_popups();
+					$rootScope.user.interact = false;
 					if($scope.recommendations.books.length >= max_limit){
 						$scope.recommendations.books = [$scope.recommendations.books[max_limit-2], $scope.recommendations.books[max_limit-1]];
 						var timeout_event = $timeout(function(){
