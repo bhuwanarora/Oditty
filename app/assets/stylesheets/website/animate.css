@@ -272,14 +272,14 @@
 .interaction_group.ng-enter,
 .interaction_group.ng-leave.ng-leave-active{
 	left: 40vh;
-	top: 160px;
+	top: 80px;
 	width: 55%;
 }
 
 .interaction_group.ng-leave,
 .interaction_group.ng-enter.ng-enter-active{
 	left: 36vh;
-	top: 150px;
+	top: 70px;
 	width: 60%;
 }
 
