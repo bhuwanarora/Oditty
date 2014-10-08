@@ -13,9 +13,27 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
 
       $scope.show_focused_tooltip = function(event){
         if($rootScope.focused_book != $scope.book){
-          // $rootScope.show_more_filters = false;
-          delete $rootScope.ticker_popup;
-          $rootScope.popups = {};
+          var _set_dark_wrapper = function(){
+            $rootScope.popups.left_panel_width = {"background-color": "#333"};
+            $rootScope.style = {};
+            $rootScope.style.main_header = {"background-color": "#333", "color": "white"};
+            $rootScope.style.header_icon = {"color": "white"};
+            $rootScope.style.site_logo = {"color": "white"};
+            $rootScope.style.dark_wrapper = {"background-color": "#333"};
+          }
+
+          var _hide_other_popups = function(){
+            delete $rootScope.ticker_popup;
+            $rootScope.popups = {};
+            $rootScope.user.collapsed_friends = true; 
+            $rootScope.user.collapsed_left_column = true;
+            $rootScope.user.collapsed_column = true; 
+            $rootScope.user.collapsed_lists = true;
+            $rootScope.user.collapsed_filters = true;
+            $rootScope.user.collapsed_trends = true;
+          }
+
+          _hide_other_popups();
           $rootScope.focused_book = $scope.book;
           var posX = event.currentTarget.offsetParent.offsetParent.offsetLeft - event.pageX + event.clientX;
           var display_right_width =  window_width - (posX + event.currentTarget.offsetParent.scrollWidth);
@@ -50,16 +68,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
             }
             $rootScope.on_left = false;
           }
-          $rootScope.popups.left_panel_width = {"background-color": "#333"};
-          $rootScope.style = {};
-          $rootScope.style.main_header = {"background-color": "#333", "color": "white"};
-          $rootScope.style.header_icon = {"color": "white"};
-          $rootScope.style.site_logo = {"color": "white"};
-          $rootScope.style.dark_wrapper = {"background-color": "#333"};
-          // event.currentTarget.offsetParent.offsetParent.scrollWidth;
-          // var test = event.currentTarget.offsetParent.offsetParent.offsetLeft -event.currentTarget.offsetLeft;
-          // var test2 = event.currentTarget.offsetParent.offsetParent.scrollWidth;
-          // var left = event.currentTarget.offsetParent.offsetParent.scrollWidth + event.screenX;
+          _set_dark_wrapper();
         }
         else{
           delete $rootScope.focused_book;
@@ -67,21 +76,13 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
           $rootScope.style = {};
         }
         event.stopPropagation();
-        // body...
       }
 
       _init = function(){
-        // $scope.active_book_filter = true;
         var book_id = $scope.book.id;
         console.debug("%c _init book"+book_id, "color: purple");
         $scope.book.show_labels = false;
         
-        // if(!angular.isArray($scope.book.labels)){
-        //   $scope.book.labels = [];
-        //   angular.forEach($rootScope.labels, function(value){
-        //     this.push({"name": value.name});
-        //   }, $scope.book.labels);
-        // }
         if(angular.isUndefined($scope.book.title)){
           websiteService.get_book_details("id="+book_id).then(function(data){
             angular.extend($scope.book, data);
@@ -93,21 +94,6 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
             $scope.book.data_fetched = true;
           });
         }
-
-        // var margin_right = (Math.floor(Math.random() * 20) + 1)+"px";
-        // var margin_top = (Math.floor(Math.random() * 50) + 1)+"px";
-        // var margin_right_neg = (Math.random() < 0.5);
-        // var margin_top_neg = (Math.random() < 0.5);
-        // if(margin_top_neg){
-        //   margin_top = "-"+margin_top;
-        // }
-        // if(margin_right_neg){
-        //   margin_right = "-"+margin_right;
-        // }
-        // $scope.randomise_position = {"margin-left": margin_right, "margin-bottom":margin_top};
-        // $scope.book_tilt = {"transform":"rotate("+tilt_angle+")",
-        //                   "-ms-transform":"rotate("+tilt_angle+")",
-        //                   "-webkit-transform":"rotate("+tilt_angle+")";
       }
 
       _init();
