@@ -341,8 +341,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     		$rootScope.user.collapsed_trends = true;
     		$rootScope.user.collapsed_lists = true;
     		$rootScope.user.collapsed_column = true;
-    		$scope.expand_left_panel();
     		$rootScope.user.collapsed_left_column = false;
+    		$scope.expand_left_panel();
 		}
 
 		var _handle_grids_page = function(){
@@ -353,8 +353,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     		$rootScope.user.collapsed_trends = true;
     		$rootScope.user.collapsed_lists = false;
     		$rootScope.user.collapsed_column = true;
-    		$scope.expand_left_panel();
     		$rootScope.user.collapsed_left_column = false;
+    		$scope.expand_left_panel();
 		}
 
 		var _handle_trending_page = function(){
@@ -367,9 +367,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     		$rootScope.user.collapsed_trends = false;
     		$rootScope.user.collapsed_lists = true;
     		$rootScope.user.collapsed_column = true;
-    		$scope.expand_left_panel();
     		$rootScope.user.show_profile = false;
     		$rootScope.user.collapsed_left_column = false;
+    		$scope.expand_left_panel();
 		}
 		
         var _handle_recommendations_page = function(){

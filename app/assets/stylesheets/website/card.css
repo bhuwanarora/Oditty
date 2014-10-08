@@ -88,6 +88,12 @@
 	background-color: rgba(0,0,0,0.58);
 }
 
+.card .widget_thumb,
+.card .description{
+	box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.27) inset;
+	border: 1px solid #D6D6D6;	
+}
+
 .bottom_widget,
 .card .widget_thumb,
 .card .description{

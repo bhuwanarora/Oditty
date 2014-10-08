@@ -64,11 +64,13 @@
 			<span class="icon-unlocked lock" ng-if="!user.collapsed_left_column && !user.locked" ng-click="user.locked = true"></span> -->
 		</div>
 		<!-- <div class="wrapper" ng-if="focused_book"></div> -->
-		<div class="focused_tooltip animate-faster"
-		     ng-style="focused_book.reposition_tooltip"
-		     ng-click="stop_propagation($event)"
-		     ng-if="focused_book">
-		    <book-info></book-info>
+		<div>
+			<div class="focused_tooltip animate-faster"
+			     ng-style="focused_book.reposition_tooltip"
+			     ng-click="stop_propagation($event)"
+			     ng-if="focused_book">
+			    <book-info></book-info>
+			</div>
 		</div>
 		<div class="ticker_popup" 
 			 ng-if="ticker_popup"

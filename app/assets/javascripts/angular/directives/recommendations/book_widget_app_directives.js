@@ -68,7 +68,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
             }
             $rootScope.on_left = false;
           }
-          _set_dark_wrapper();
+          // _set_dark_wrapper();
         }
         else{
           delete $rootScope.focused_book;
