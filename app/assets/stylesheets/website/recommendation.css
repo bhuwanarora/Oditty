@@ -1084,7 +1084,7 @@
 	width: 30px;
 	height: 30px;
 	margin: 5px;
-	border-radius: 5px; 
+	border-radius: 2px; 
 }
 
 
@@ -2264,7 +2264,8 @@ and (max-width : 500px) {
 	.profile_thumb_wrapper,
 	.thumb_wrapper_shifted,
 	.header_navbar .user_details,
-	.header_navbar img{
+	.header_navbar img,
+	.expand_notifications{
 		display: none;
 	}
 
@@ -2316,10 +2317,6 @@ and (max-width : 500px) {
 		width: 60px;
 	}
 
-	.expand_notifications{
-		left: inherit;
-		right: 70px;
-	}
 }
 
 /* Smartphones (landscape) ----------- */
