@@ -724,8 +724,17 @@ and (max-width : 500px) {
 		margin-left: 0px;
 	}
 
-	.left_icon{
+	.left_icon,
+	.website_search_helpers .direction_option{
 		display: none;
+	}
+
+	.website_search_helpers .compressed_option{
+		padding: 12px 10px;
+	}
+
+	.right_tab{
+		padding: 7px 0px 7px 15px;
 	}
 }
 

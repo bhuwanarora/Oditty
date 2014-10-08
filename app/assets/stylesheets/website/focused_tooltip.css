@@ -334,11 +334,13 @@
 and (min-width : 320px)
 and (max-width : 900px){
 	.focused_tooltip{
-		left: 1vh !important;
-		right: 1vh;
+		left: 0vh !important;
+		right: 0vh;
 		width: initial;
-		bottom: 1vh;
+		bottom: 0vh;
 		height: initial;
+		padding-left: 1vh;
+		padding-right: 1vh;
 	}
 
     .focused_tooltip .arrow_left{

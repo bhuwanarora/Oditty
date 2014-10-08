@@ -2262,7 +2262,8 @@ and (max-width : 500px) {
 	}
 
 	.profile_thumb_color_wrapper,
-	.profile_thumb_wrapper{
+	.profile_thumb_wrapper,
+	.thumb_wrapper_shifted{
 		display: none;
 	}
 
@@ -2281,10 +2282,34 @@ and (max-width : 500px) {
 		font-size: 14px;
 	}
 
-	.left_panel_expanded{
+	.left_panel_expanded,
+	.notifications_popup{
 		left: 0px;
 		right: 0px;
 		width: inherit;
+	}
+
+	.share_wrapper_shifted{
+		width: 100%;
+		padding: 0px;
+	}
+
+	.recommendation_box{
+		left: 0px;
+		right: 0px;
+		width: inherit;
+		margin: 0px;
+		top: 0px;
+		bottom: 0px;
+		height: inherit;
+	}
+
+	.recommendation_box .friend_grid{
+		height: 75vh;
+	}
+
+	.recommendation_box .friend_grid .friend_name{
+		width: 60px;
 	}
 }
 
