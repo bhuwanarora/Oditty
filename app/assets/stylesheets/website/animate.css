@@ -266,7 +266,7 @@
 .user_add_popup.ng-enter.ng-enter-active,
 .feedback_popup.ng-leave,
 .feedback_popup.ng-enter.ng-enter-active{
-	bottom: 60px;
+	bottom: 50px;
 }
 
 .interaction_group.ng-enter,
@@ -291,4 +291,18 @@
 .bottom_widget.ng-leave,
 .bottom_widget.ng-enter.ng-enter-active{
 	height: 6vh;
+}
+
+.label_dropdown.ng-enter,
+.label_dropdown.ng-leave.ng-leave-active{
+	width: 40%;
+	max-height: 20vh;
+	min-width: 100px;
+}
+
+.label_dropdown.ng-leave,
+.label_dropdown.ng-enter.ng-enter-active{
+	width: 62%;
+	max-height: 30vh;
+	min-width: 180px;
 }

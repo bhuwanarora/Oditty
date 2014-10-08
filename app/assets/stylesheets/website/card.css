@@ -47,8 +47,7 @@
 }
 
 .summary{
-	height: 45vh;
-	/*overflow-y: scroll;*/
+	height: 42vh;
 	margin-top: 3vh;
 	padding-right: 10px;
 }
