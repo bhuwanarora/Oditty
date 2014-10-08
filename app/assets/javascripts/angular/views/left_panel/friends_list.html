@@ -4,6 +4,7 @@
 <div class="animate-fast"
 	 id="friendsList"
      msd-wheel="stop_propagation($event)"
+     ng-style="style.main_header"
 	 ng-class="{'left_column_collapsed left_column_collapsed2': user.collapsed_friends, 
 	 			'left_column_shifted left_column_shifted1': !user.collapsed_filters,
 	            'left_column_shifted left_column_shifted2': !user.collapsed_trends,

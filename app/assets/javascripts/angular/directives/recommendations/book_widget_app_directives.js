@@ -55,6 +55,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
           $rootScope.style.main_header = {"background-color": "#333", "color": "white"};
           $rootScope.style.header_icon = {"color": "white"};
           $rootScope.style.site_logo = {"color": "white"};
+          $rootScope.style.dark_wrapper = {"background-color": "#333"};
           // event.currentTarget.offsetParent.offsetParent.scrollWidth;
           // var test = event.currentTarget.offsetParent.offsetParent.offsetLeft -event.currentTarget.offsetLeft;
           // var test2 = event.currentTarget.offsetParent.offsetParent.scrollWidth;

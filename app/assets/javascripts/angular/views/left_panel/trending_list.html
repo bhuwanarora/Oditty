@@ -6,6 +6,7 @@
 <div class="animate-fast scrollbar"
 	 id="trendingList"
      msd-wheel="stop_propagation($event)"
+     ng-style="style.main_header"
 	 ng-class="{'left_column_collapsed left_column_collapsed5': user.collapsed_trends, 
 	            'left_column_shifted left_column_shifted1': !user.collapsed_lists,
 	            'left_column_shifted left_column_shifted2': !user.collapsed_column,
