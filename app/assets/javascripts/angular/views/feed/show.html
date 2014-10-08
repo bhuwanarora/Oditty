@@ -11,8 +11,3 @@
 	 ng-if="!focused_book && show_feed.readers"></div>
 <div ng-include src="'/assets/angular/views/feed/personal_feed.html'"
 	 ng-if="!focused_book && show_feed.personal"></div>
-<div class="wrapper white_wrapper"
- 	 ng-if="user.interact"
-	 ng-click="close_interaction_box()"
-	 msd-wheel="stop_horizontal_scroll($event)">
-</div>
