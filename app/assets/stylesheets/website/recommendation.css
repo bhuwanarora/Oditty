@@ -2214,7 +2214,7 @@ l	.compressed_info_card{
 
 .book_thumb,
 .profile_thumb{
-	width: 100%;
+	width: 100% !important;
 	min-height: 100%;
 }
 
