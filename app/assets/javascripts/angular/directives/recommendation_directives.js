@@ -108,10 +108,22 @@ websiteApp.directive('header', ['$timeout', '$rootScope', function($timeout, $ro
 			      	$rootScope.style = {};
 				}
 
+				var _close_all_popups = function(){
+					_delete_focused_book();
+					delete $rootScope.ticker_popup;
+		            $rootScope.popups = {};
+		            $rootScope.user.collapsed_friends = true; 
+		            $rootScope.user.collapsed_left_column = true;
+		            $rootScope.user.collapsed_column = true; 
+		            $rootScope.user.collapsed_lists = true;
+		            $rootScope.user.collapsed_filters = true;
+		            $rootScope.user.collapsed_trends = true;
+				}
+
 				var _show_notification_popup = function(){
 					$rootScope.popups = {};
 					$rootScope.popups.show_notifications_popup = true;
-					_delete_focused_book();
+					_close_all_popups();
 				}
 
 				if(angular.isDefined($rootScope.popups) && angular.isDefined($rootScope.popups.show_notifications_popup)){
