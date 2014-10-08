@@ -1,7 +1,6 @@
 <div class="main_header"
 	 ng-style="style.main_header">
 	<a class="site_logo" 
-		ng-style="style.site_logo"
 		ng-href="#/user/{{$routeParams.id}}/search" ng-if="$routeParams.type">
 		<tooltip prepend-text="Back to search page" position="bottom"></tooltip>
  		<span>r</span>
@@ -18,9 +17,16 @@
 		<span>o</span>
 		<span>r</span>
  	</a>
+ 	<a class="compressed_site_logo" 
+		ng-href="#/user/{{$routeParams.id}}/search" ng-if="$routeParams.type">
+		<span class="icon-books"></span>
+	</a>
  	<div class="table_cell header_wrapper"  ng-if="!$routeParams.type">
+ 		<a class="compressed_site_logo" 
+	 		ng-href="#/user/{{user.id}}/recommendations/books">
+	 		<span class="icon-books"></span>
+	 	</a>
 	 	<a class="site_logo" 
-	 		ng-style="style.site_logo"
 	 		ng-href="#/user/{{user.id}}/recommendations/books">
 	 		<span>r</span>
 			<span>e</span>
