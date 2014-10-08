@@ -692,6 +692,43 @@
 	text-decoration: underline;
 }
 
+.trending_header{
+	position: fixed;
+	left: 40%;
+	margin-left: -20%;
+	top: 30%;
+	margin-top: 45px;
+}
+
+.left_icon{
+	padding: 15px;
+	background-color: #f5f5f5;
+	border: 1px solid #E6E6E6;
+}
+
+.right_tab{
+	padding: 7px 0px 0px 15px;
+}
+
+.close_filters{
+	color: #BBBBBB;
+	height: 40px;
+	width: 40px;
+	text-align: center;
+	cursor: default;
+}
+
+.close_filters:hover{
+	color: #868686;
+}
+
+
+.line_separator{
+	margin: 10px 0px;
+	color: #D8D8D8;
+}
+
+
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen
 and (min-width : 320px)
@@ -736,40 +773,4 @@ and (max-width : 500px) {
 	.right_tab{
 		padding: 7px 0px 7px 15px;
 	}
-}
-
-.trending_header{
-	position: fixed;
-	left: 40%;
-	margin-left: -20%;
-	top: 30%;
-	margin-top: 45px;
-}
-
-.left_icon{
-	padding: 15px;
-	background-color: #f5f5f5;
-	border: 1px solid #E6E6E6;
-}
-
-.right_tab{
-	padding: 7px 0px 0px 15px;
-}
-
-.close_filters{
-	color: #BBBBBB;
-	height: 40px;
-	width: 40px;
-	text-align: center;
-	cursor: default;
-}
-
-.close_filters:hover{
-	color: #868686;
-}
-
-
-.line_separator{
-	margin: 10px 0px;
-	color: #D8D8D8;
 }

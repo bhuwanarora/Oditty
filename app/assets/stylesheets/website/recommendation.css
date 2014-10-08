@@ -2263,7 +2263,9 @@ and (max-width : 500px) {
 
 	.profile_thumb_color_wrapper,
 	.profile_thumb_wrapper,
-	.thumb_wrapper_shifted{
+	.thumb_wrapper_shifted,
+	.header_navbar .user_details,
+	.header_navbar img{
 		display: none;
 	}
 
