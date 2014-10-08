@@ -199,7 +199,8 @@
 
 .interaction_box .interact_book{
 	position: absolute;
-	top: 6px;
+	top: 28px;
+	margin-left: 1px;
 	background-color: white;
 	padding: 4px;
 	width: 200px;
@@ -600,7 +601,7 @@
 	background-color: #fff;
 	border-radius: 2px;
 	padding: 3vh;
-	/*box-shadow: 8px 10px 54px 0 #424242;*/
+	position: relative;
 }
 
 .interaction_box_options,
@@ -645,7 +646,6 @@
 	width: 94%;
 	border-radius: 4px;
 	overflow-x: hidden;
-	position: relative;
 }
 
 .interaction_box .second_input span{
@@ -1212,7 +1212,7 @@
 
 .tweets{
 	margin-top: 5px;
-	max-height: 85vh;
+	height: 85vh;
 }
 
 .tweets .scrollbar{
@@ -2211,6 +2211,10 @@ and (max-width : 500px) {
 		color: transparent;
 	}
 
+	.left_column_collapsed:hover{
+		color: transparent;
+	}
+
 	.left_column{
 		left: 0px;
 		right: 60px;
@@ -2244,10 +2248,12 @@ and (max-width : 500px) {
 
 	.user_profile,
 	.feed_group{
-		left: 0px;
-		margin: 0px;
-		right: 0px;
-		width: inherit;
+		left: 0;
+		margin: 0;
+		right: 0;
+		width: 96%;
+		padding: 2%;
+		background-color: white;
 	}
 
 	.shelf_nav_links{

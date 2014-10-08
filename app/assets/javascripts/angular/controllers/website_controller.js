@@ -337,10 +337,15 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    		}
 	    	}
 	    	else{
-	    		$scope.notifications.push(notification);
-	    		if(angular.isDefined($scope.personal_notifications)){
-	    			$scope.personal_notifications.push(notification);
+	    		if(angular.isUndefined(notification)){
+	    			$scope.notifications = [];	
 	    		}
+	    		if(angular.isUndefined($scope.personal_notifications)){
+	    			$scope.personal_notifications = [];
+	    		}
+	    		
+	    		$scope.notifications.push(notification);
+	    		$scope.personal_notifications.push(notification);
 	    	}
 	    	event.stopPropagation();
 	    });
