@@ -11,5 +11,8 @@
 	</div>
 	<div ng-bind-html="notification.tag"></div>
 	<div ng-bind-html="notification.message"></div>
-	<img ng-show="notification.large_image" ng-src="{{notification.large_image}}" class="large_thumb">
+	<div class="large_thumb_color_wrapper"></div>
+	<div class="large_thumb_wrapper">
+		<img ng-show="notification.large_image" ng-src="{{notification.large_image}}" class="large_thumb">
+	</div>
 </div>

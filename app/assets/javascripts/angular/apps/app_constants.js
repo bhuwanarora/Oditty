@@ -156,7 +156,7 @@ var constants = {
 			"TagSearch": "TAG"
 		},
 		"WebsiteUIConstants":{
-			"LeftPanelMinWidth": "20%",
+			"LeftPanelMinWidth": "16%",
 			"ServerError": "Something went wrong. Please refresh the page and try again.",
 			"Share": "Share your book reading journey...",
 			"BrowserIncompatible": "Please use latest version of Chrome for now...",

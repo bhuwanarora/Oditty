@@ -1,8 +1,18 @@
+.focused_tooltip_wrapper{
+	position: fixed;
+	z-index: 11;
+	left: 0px;
+	right: 0px;
+	top: 60px;
+	bottom: 0px;
+	background-color: white;
+}
+
 .focused_tooltip{
 	background-color: #fff;
 	border: 1px solid #FFF;
 	border-radius: 2px;
-	box-shadow: 0 7px 15px rgba(0,0,0,.5);
+	/*box-shadow: 0 7px 15px rgba(0,0,0,.5);*/
 	position: fixed;
 	top: 61px;
 	bottom: 1px;
