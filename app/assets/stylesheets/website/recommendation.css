@@ -1211,25 +1211,26 @@
 
 .tweets{
 	margin-top: 5px;
+	max-height: 85vh;
 }
 
-.interaction_group .scrollbar{
+.tweets .scrollbar{
 	width: 101%;
 }
 
-.interaction_group .scrollbar:hover{
+.tweets .scrollbar:hover{
 	width: 100%;
 }
 
-.interaction_group::-webkit-scrollbar-track{
+.tweets::-webkit-scrollbar-track{
 	background-color: rgba(0,0,0,0);
 }
 
-.interaction_group:hover::-webkit-scrollbar-track{
+.tweets:hover::-webkit-scrollbar-track{
 	background-color: rgba(0,0,0,0);
 }
 
-.interaction_group::-webkit-scrollbar-track:hover {
+.tweets::-webkit-scrollbar-track:hover {
     opacity: 1;
     width: 10px;
     background-color: #D5D5D5;
