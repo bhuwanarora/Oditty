@@ -8,6 +8,7 @@
 	<div class="tweet feed_header">
 		<b><div>Personal Feed</div></b>
 	</div>
+	<div ng-include src="'/assets/angular/views/feed/comment_box.html'"></div>
 	<div ng-repeat="notification in personal_notifications | reverse" 
 	     class="tweet animate-fast">
 		<div ng-include src="'/assets/angular/views/feed/partials/notification_block.html'"></div>

@@ -312,3 +312,23 @@
 	color: #717070;
 	left: 0px;
 }
+
+.profile_thumb_color_wrapper.ng-enter,
+.profile_thumb_color_wrapper.ng-leave.ng-leave-active,
+.profile_thumb_wrapper.ng-enter,
+.profile_thumb_wrapper.ng-leave.ng-leave-active{
+	left: 20px;
+	top: 100px;
+	width: 28vh;
+	height: 35vh;
+}
+
+.profile_thumb_color_wrapper.ng-leave,
+.profile_thumb_color_wrapper.ng-enter.ng-enter-active,
+.profile_thumb_wrapper.ng-leave,
+.profile_thumb_wrapper.ng-enter.ng-enter-active{
+	left: 10px;
+	top: 70px;
+	width: 32vh;
+	height: 41vh;
+}

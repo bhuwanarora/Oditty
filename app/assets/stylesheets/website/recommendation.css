@@ -204,7 +204,6 @@
 	padding: 4px;
 	width: 200px;
 	border-radius: 2px;
-	border: 1px solid;
 }
 
 .interaction_box .interaction_icons:hover{
@@ -2288,7 +2287,10 @@ and (max-width : 500px) {
 	.notifications_popup{
 		left: 0px;
 		right: 0px;
-		width: inherit;
+		width: inherit !important;
+		bottom: 0px;
+		height: inherit;
+		max-height: none;
 	}
 
 	.share_wrapper_shifted{
@@ -2312,6 +2314,11 @@ and (max-width : 500px) {
 
 	.recommendation_box .friend_grid .friend_name{
 		width: 60px;
+	}
+
+	.expand_notifications{
+		left: inherit;
+		right: 70px;
 	}
 }
 
