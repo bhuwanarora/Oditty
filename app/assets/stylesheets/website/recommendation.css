@@ -199,7 +199,7 @@
 
 .interaction_box .interact_book{
 	position: absolute;
-	top: 28px;
+	top: 6px;
 	background-color: white;
 	padding: 4px;
 	width: 200px;
@@ -645,6 +645,7 @@
 	width: 94%;
 	border-radius: 4px;
 	overflow-x: hidden;
+	position: relative;
 }
 
 .interaction_box .second_input span{
