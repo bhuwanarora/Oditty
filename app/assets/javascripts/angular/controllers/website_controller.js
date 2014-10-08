@@ -337,14 +337,17 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    		}
 	    	}
 	    	else{
-	    		if(angular.isUndefined(notification)){
+	    		if(angular.isUndefined($scope.notifications)){
 	    			$scope.notifications = [];	
 	    		}
 	    		if(angular.isUndefined($scope.personal_notifications)){
 	    			$scope.personal_notifications = [];
 	    		}
+
+	    		if(angular.isDefined(notification)){
+	    			$scope.notifications.push(notification);
+	    		}
 	    		
-	    		$scope.notifications.push(notification);
 	    		$scope.personal_notifications.push(notification);
 	    	}
 	    	event.stopPropagation();
