@@ -2193,7 +2193,7 @@ l	.compressed_info_card{
 	left: 10px;
 	top: 10px;
 	width: 32vh;
-	height: 45vh;
+	height: 41vh;
 	overflow: hidden;
 	border-radius: 4px;
 }
@@ -2212,6 +2212,7 @@ l	.compressed_info_card{
 
 .profile_thumb{
 	width: 100%;
+	height: 100%;
 }
 
 .user_add_popup{
