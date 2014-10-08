@@ -434,7 +434,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			});
 
 			if($rootScope.loading){
-				var max_limit = 10;
+				var max_limit = 100;
 				if(data.recommendations.books.length == 0){
 					var message = RecommendationUIConstants.ZeroBooksFound;
 					var timeout_event = notify($rootScope, message, $timeout);
