@@ -87,24 +87,16 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
 	$scope.get_news_feed = function(user_id){
+      	$scope.expand_left_panel();
 		$rootScope.user.collapsed_column = false; 
 		$rootScope.user.collapsed_left_column = false;
-      	$rootScope.user.collapsed_filters = true; 
-      	$rootScope.user.collapsed_trends = true;
-      	$rootScope.user.collapsed_lists = true;
-      	$rootScope.user.collapsed_friends = true;
-      	$scope.expand_left_panel();
       	$scope.fetch_new_feed(user_id);
 	}
 
 	$scope.show_friends_list = function(){
+	   	$scope.expand_left_panel();
 		$rootScope.user.collapsed_friends = false; 
 	   	$rootScope.user.collapsed_left_column = false;
-	   	$rootScope.user.collapsed_column = true; 
-	   	$rootScope.user.collapsed_lists = true;
-	   	$rootScope.user.collapsed_filters = true;
-	   	$rootScope.user.collapsed_trends = true;
-	   	$scope.expand_left_panel();
 	   	$scope._get_friends(20);
 	}
 
@@ -334,29 +326,32 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		}
 
 		var _handle_specific_shelf_page = function(){
+    		$scope.expand_left_panel();
 			$rootScope.filters["label_id"] = $routeParams.label_id;
 			$rootScope.main_header = $routeParams.name;
 			_collapse_every_left_panel();
     		$rootScope.user.collapsed_filters = false;
-    		$scope.expand_left_panel();
+    		$rootScope.user.collapsed_left_column = false;
 		}
 
 		var _handle_grids_page = function(){
+    		$scope.expand_left_panel();
     		$rootScope.filters["filter_id"] = $routeParams.grid_id;
     		$rootScope.main_header = $routeParams.name;
     		_collapse_every_left_panel();
     		$rootScope.user.collapsed_lists = false;
-    		$scope.expand_left_panel();
+    		$rootScope.user.collapsed_left_column = false;
 		}
 
 		var _handle_trending_page = function(){
+    		$scope.expand_left_panel();
     		$rootScope.filters["reset"] = true;
     		$rootScope.filters["reset_count"] = 0;
     		$rootScope.filters["trend_id"] = $routeParams.trend_id;
     		$rootScope.main_header = $routeParams.name;
     		_collapse_every_left_panel();
     		$rootScope.user.collapsed_trends = false;
-    		$scope.expand_left_panel();
+    		$rootScope.user.collapsed_left_column = false;
 		}
 		
         var _handle_recommendations_page = function(){
