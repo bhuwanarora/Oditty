@@ -33,38 +33,38 @@ module NotificationHelper
 
 	def self._recommend_notification data
 		name = self._get_name data
-		message = "<span> recommended </span><span class='site_color'>"+data["title"]+" by "+data["author_name"]+"</span><span> to "+data["friend_name"]+".</span>"
+		message = "<span> recommended </span><span class='site_color'>"+data["title"]+"</span><span> to "+data["friend_name"]+".</span>"
 		self.notification(message, data)
 	end
 
 	def self._thumb_request_notification data
 		name = self._get_name data
-		message = "<span> suggested thumbnail for </span><span class='site_color'>"+data["title"]+" by "+data["author_name"]+".</span>"
+		message = "<span> suggested thumbnail for </span><span class='site_color'>"+data["title"]+".</span>"
 		self.notification(message, data)
 	end
 
 	def self._bookmark_notification data
 		name = self._get_name data
-		message = "<span> saved </span><span class='site_color'>"+data["title"]+" by "+data["author_name"]+"</span><span>&nbsp; to &nbsp;</span><span class='header_font'>"+data["label"].downcase.camelcase+".</span>"
+		message = "<span> saved </span><span class='site_color'>"+data["title"]+"</span><span>&nbsp; to &nbsp;</span><span class='header_font'>"+data["label"].downcase.camelcase+".</span>"
 		self.notification(message, data)
 	end
 
 	def self._rating_notification data
 		name = self._get_name data
-		message = "<span class='header_font'> gave "+data["rating"].to_s+"/10 stars to </span><span class='site_color'>"+data["title"]+" by "+data["author_name"]+".</span>"
+		message = "<span class='header_font'> gave "+data["rating"].to_s+"/10 stars to </span><span class='site_color'>"+data["title"]+".</span>"
 		self.notification(message, data)
 	end
 
 	def self._timing_node_notification data
 		name = self._get_name data
 		book_length_string = self._get_time_index data["time_index"]
-		message = "<span> described reading length of <span class='site_color'>"+data["title"]+" by "+data["author_name"]+"</span>&nbsp; as a '"+book_length_string+"'. </span>"
+		message = "<span> described reading length of <span class='site_color'>"+data["title"]+"</span>&nbsp; as a '"+book_length_string+"'. </span>"
 		self.notification(message, data)
 	end
 
 	def self._mark_as_read_notification data
 		name = self._get_name data
-		message = "<span> added </span><span class='site_color'>"+data["title"]+" by "+data["author_name"]+"</span><span> to &nbsp;</span><span class='icon-books'></span><span class='header_font'>&nbsp;Books Read.</span>"
+		message = "<span> added </span><span class='site_color'>"+data["title"]+"</span><span> to &nbsp;</span><span class='icon-books'></span><span class='header_font'>&nbsp;Books Read.</span>"
 		self.notification(message, data)
 	end
 
@@ -103,7 +103,7 @@ module NotificationHelper
 		clause = " "+data["label2"]+" " rescue " "
 		tag = tag + clause
 
-		clause = data["title"]+" by "+data["author_name"]+".</div>" rescue "</div>"
+		clause = data["title"]+".</div>" rescue "</div>"
 		tag = tag + clause
 
 
