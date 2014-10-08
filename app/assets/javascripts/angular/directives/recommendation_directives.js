@@ -102,18 +102,28 @@ websiteApp.directive('header', ['$timeout', '$rootScope', function($timeout, $ro
 		restrict: 'E',
 		controller: ['$scope', function($scope){
 			$scope.toggle_notification_popup = function($event){
+				var _delete_focused_book = function(){
+					delete $rootScope.focused_book;
+					$rootScope.popups.left_panel_width = {};
+			      	$rootScope.style = {};
+				}
+
+				var _show_notification_popup = function(){
+					$rootScope.popups = {};
+					$rootScope.popups.show_notifications_popup = true;
+					_delete_focused_book();
+				}
+
 				if(angular.isDefined($rootScope.popups) && angular.isDefined($rootScope.popups.show_notifications_popup)){
 					if($rootScope.popups.show_notifications_popup){
 						$rootScope.popups.show_notifications_popup = false;
 					}
 					else{
-						$rootScope.popups = {};
-						$rootScope.popups.show_notifications_popup = true;
+						_show_notification_popup();
 					}
 				}
 				else{
-					$rootScope.popups = {};
-					$rootScope.popups.show_notifications_popup = true;
+					_show_notification_popup();
 				}
 				
 				$scope.hide_notification_circle = true;

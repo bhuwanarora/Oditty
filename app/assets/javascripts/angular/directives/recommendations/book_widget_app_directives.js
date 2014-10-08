@@ -18,7 +18,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
             $rootScope.style = {};
             $rootScope.style.main_header = {"background-color": "#333", "color": "white"};
             $rootScope.style.header_icon = {"color": "white"};
-            $rootScope.style.site_logo = {"color": "white"};
+            $rootScope.style.site_logo = {"color": "white", "text-shadow": "none"};
             $rootScope.style.dark_wrapper = {"background-color": "#333"};
           }
 
