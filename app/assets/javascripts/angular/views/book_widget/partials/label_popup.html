@@ -1,4 +1,5 @@
 <ul class="label_dropdown scrollbar animate-fast" 
+  ng-if="book.show_labels"
   ng-click="stop_propagation($event)"
   msd-wheel="stop_horizontal_scroll($event)"
   ng-model="book.labels">

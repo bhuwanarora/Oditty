@@ -12,7 +12,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/book_widget/partials/label_popup.html',
-    "<ul class=\"label_dropdown scrollbar animate-fast\" ng-click=\"stop_propagation($event)\" msd-wheel=\"stop_horizontal_scroll($event)\" ng-model=\"book.labels\"><div class=\"icon-close-popup\" ng-click=\"book.show_labels=false;\"></div><li ng-repeat=\"label in book.labels track by $index\" class=\"animate-fast\" title=\"{{label.name | lowercase}}\" ng-click=\"select_label($index);\"><label><span class=\"bookmark_label\"><span>{{label.name | lowercase | reduced_label}}</span></span></label><input type=\"checkbox\" ng-checked=\"label.checked\" ng-value=\"label.name\" class=\"custom_bookmark_radio icon-checkbox-unchecked\"></li><li ng-if=\"book.labels.length == 0\"><span class=\"bookmark_label\">Add a shelf...</span></li></ul>"
+    "<ul class=\"label_dropdown scrollbar animate-fast\" ng-if=\"book.show_labels\" ng-click=\"stop_propagation($event)\" msd-wheel=\"stop_horizontal_scroll($event)\" ng-model=\"book.labels\"><div class=\"icon-close-popup\" ng-click=\"book.show_labels=false;\"></div><li ng-repeat=\"label in book.labels track by $index\" class=\"animate-fast\" title=\"{{label.name | lowercase}}\" ng-click=\"select_label($index);\"><label><span class=\"bookmark_label\"><span>{{label.name | lowercase | reduced_label}}</span></span></label><input type=\"checkbox\" ng-checked=\"label.checked\" ng-value=\"label.name\" class=\"custom_bookmark_radio icon-checkbox-unchecked\"></li><li ng-if=\"book.labels.length == 0\"><span class=\"bookmark_label\">Add a shelf...</span></li></ul>"
   );
 
 
