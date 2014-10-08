@@ -1,11 +1,8 @@
 .recommendation_block{
 	display: inline-block;
-	height: 57vh;
-	margin-right: 15px;
+	height: 55vh;
 	position: relative;
 	width: 41vh;
-	/*background-image: url("/assets/book_back.png");*/
-	/*background-size: 100% 100%;*/
 }
 
 .recommendation_block:hover .bottom_widget{
@@ -85,15 +82,14 @@
 
 .bottom_widget{
 	height: 6vh;
-	bottom: 2vh;
+	bottom: 7vh;
 	left: 2vh;
-	right: 2vh;
+	right: 6vh;
 	position: absolute;
-	background-color: #fff;
 	border: 1px solid #F1F1F1;
 	z-index: 2;
 	visibility: hidden;
-	background-color: rgba(0, 0, 0, 0.58);
+	background-color: rgba(0,0,0,0.58);
 }
 
 .tag_bookmark{
@@ -135,7 +131,7 @@
 }
 
 .input_bookmark:focus{
-	border: 1px solid white;
+	outline: none !important;
 }
 
 .left_action_active{
@@ -219,8 +215,8 @@
 	position: absolute;
 	top: 14vh;
 	left: 2vh;
-	right: 2vh;
-	bottom: 2vh;
+	right: 6vh;
+	bottom: 5vh;
 	border-radius: 1px;
 }
 

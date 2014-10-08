@@ -460,7 +460,7 @@
 .scroller{
 	left: 50%;
 	height: 35px;
-	top: 185px;
+	bottom: 4px;
 	margin-left: -36px;
 	position: fixed;
 	letter-spacing: -2px;
@@ -1632,8 +1632,7 @@ and (min-width : 1824px) {
 }
 
 .user_add{
-	bottom: 20px;
-	right: 50px !important;
+	right: 50px;
 }
 
 .feedback_popup{
@@ -1660,12 +1659,12 @@ and (min-width : 1824px) {
 	height: 24px;
 	text-align: center;
 	display: table;
-	right: 20px;
+	bottom: 10px;
 	font-size: 10px;
 }
 
 .feedback{
-	bottom: 20px;
+	right: 20px;
 }
 
 .floating_icon:hover{
@@ -2243,4 +2242,15 @@ l	.compressed_info_card{
 	right: 0px;
 	top: 0px;
 	bottom: 0px;
+}
+
+.footer{
+	position: fixed;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	height: 50px;
+	background-color: #F2F2F2;
+	border-top: 1px solid #E2E2E2;
+	z-index: 1;
 }
