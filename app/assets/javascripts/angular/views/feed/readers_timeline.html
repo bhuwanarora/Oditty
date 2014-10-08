@@ -1,7 +1,9 @@
 <div class="scrollbar tweets"
 	check-scroll-bottom="get_notifications(false, reader.id)"
 	ng-click="stop_propagation($event)">
-	<img ng-src="{{reader.thumb}}" class="profile_thumb" />
+	<div class="profile_thumb_wrapper">
+		<img ng-src="{{reader.thumb}}" class="profile_thumb" />
+ 	</div>
 	<div class="tweet">
 		<b><div>{{reader.name | first_name}}'s timeline</div></b>
 	</div>

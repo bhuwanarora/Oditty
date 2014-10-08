@@ -64,7 +64,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/feed/book_timeline.html',
-    "<div class=\"scrollbar tweets\" ng-click=\"stop_propagation($event)\"><img ng-src=\"{{focused_book.isbn | thumb}}\" class=\"profile_thumb\"><div class=\"tweet\"><div><b><div>Book Timeline</div></b><div><span class=\"site_color\">{{focused_book.title}}</span> by {{focused_book.author_name}}</div></div><div ng-include=\"\" src=\"'/assets/angular/views/shared/partials/book_info.html'\"></div></div><div class=\"tweet animate-fast\" ng-repeat=\"tweet in focused_book.tweets | reverse\"><div class=\"thumb\"><img ng-src=\"{{tweet.user.thumb | thumb_backup}}\"></div><div class=\"tweet_text\"><b><div ng-bind-html=\"tweet.user.name\"></div></b><timestamp data=\"notification.timestamp\"></timestamp><div ng-bind-html=\"tweet.tag\"></div><div ng-bind-html=\"tweet.message\"></div></div></div><div class=\"tweet animate-fast\">You've reached the end of Book Timeline.</div></div>"
+    "<div class=\"scrollbar tweets\" ng-click=\"stop_propagation($event)\"><div class=\"profile_thumb_wrapper\"><img ng-src=\"{{focused_book.isbn | thumb}}\" class=\"profile_thumb\"></div><div class=\"tweet\"><div><b><div>Book Timeline</div></b><div><span class=\"site_color\">{{focused_book.title}}</span> by {{focused_book.author_name}}</div></div><div ng-include=\"\" src=\"'/assets/angular/views/shared/partials/book_info.html'\"></div></div><div class=\"tweet animate-fast\" ng-repeat=\"tweet in focused_book.tweets | reverse\"><div class=\"thumb\"><img ng-src=\"{{tweet.user.thumb | thumb_backup}}\"></div><div class=\"tweet_text\"><b><div ng-bind-html=\"tweet.user.name\"></div></b><timestamp data=\"notification.timestamp\"></timestamp><div ng-bind-html=\"tweet.tag\"></div><div ng-bind-html=\"tweet.message\"></div></div></div><div class=\"tweet animate-fast\">You've reached the end of Book Timeline.</div></div>"
   );
 
 
@@ -85,12 +85,12 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/feed/personal_feed.html',
-    "<div class=\"scrollbar tweets\" check-scroll-bottom=\"get_notifications(false, user.id)\" ng-click=\"stop_propagation($event)\"><img ng-src=\"{{user.thumb}}\" class=\"profile_thumb\"><div class=\"tweet\"><b><div>Personal Feed</div></b></div><div ng-repeat=\"notification in personal_notifications | reverse\" class=\"tweet animate-fast\"><div ng-include=\"\" src=\"'/assets/angular/views/feed/partials/notification_block.html'\"></div></div><div class=\"tweet animate-fast\">You've reached the end of your personal feed.</div></div>"
+    "<div class=\"scrollbar tweets\" check-scroll-bottom=\"get_notifications(false, user.id)\" ng-click=\"stop_propagation($event)\"><div class=\"profile_thumb_wrapper\"><img ng-src=\"{{user.thumb}}\" class=\"profile_thumb\"></div><div class=\"tweet\"><b><div>Personal Feed</div></b></div><div ng-repeat=\"notification in personal_notifications | reverse\" class=\"tweet animate-fast\"><div ng-include=\"\" src=\"'/assets/angular/views/feed/partials/notification_block.html'\"></div></div><div class=\"tweet animate-fast\">You've reached the end of your personal feed.</div></div>"
   );
 
 
   $templateCache.put('/assets/angular/views/feed/readers_timeline.html',
-    "<div class=\"scrollbar tweets\" check-scroll-bottom=\"get_notifications(false, reader.id)\" ng-click=\"stop_propagation($event)\"><img ng-src=\"{{reader.thumb}}\" class=\"profile_thumb\"><div class=\"tweet\"><b><div>{{reader.name | first_name}}'s timeline</div></b></div><div ng-repeat=\"notification in readers_notifications | reverse\" class=\"tweet animate-fast\"><div ng-include=\"\" src=\"'/assets/angular/views/feed/partials/notification_block.html'\"></div></div><div class=\"tweet animate-fast\">No new notifications from {{reader.name | first_name}}.</div></div>"
+    "<div class=\"scrollbar tweets\" check-scroll-bottom=\"get_notifications(false, reader.id)\" ng-click=\"stop_propagation($event)\"><div class=\"profile_thumb_wrapper\"><img ng-src=\"{{reader.thumb}}\" class=\"profile_thumb\"></div><div class=\"tweet\"><b><div>{{reader.name | first_name}}'s timeline</div></b></div><div ng-repeat=\"notification in readers_notifications | reverse\" class=\"tweet animate-fast\"><div ng-include=\"\" src=\"'/assets/angular/views/feed/partials/notification_block.html'\"></div></div><div class=\"tweet animate-fast\">No new notifications from {{reader.name | first_name}}.</div></div>"
   );
 
 

@@ -1,7 +1,9 @@
 <div class="scrollbar tweets"
 	check-scroll-bottom="get_notifications(false, user.id)"
 	ng-click="stop_propagation($event)">
-	<img ng-src="{{user.thumb}}" class="profile_thumb" />
+	<div class="profile_thumb_wrapper">
+		<img ng-src="{{user.thumb}}" class="profile_thumb" />
+ 	</div>
 	<div class="tweet">
 		<b><div>Personal Feed</div></b>
 	</div>
