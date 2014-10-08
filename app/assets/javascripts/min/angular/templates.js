@@ -213,13 +213,9 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
     "\t            'left_column_shifted left_column_shifted2': !user.collapsed_friends,\n" +
     "\t            'left_column_shifted left_column_shifted3': !user.collapsed_filters,\n" +
     "\t            'left_column_shifted left_column_shifted4': !user.collapsed_trends,\n" +
-    "\t            'left_column': !user.collapsed_lists}\"><div class=\"collapse_icon\" ng-click=\"user.collapsed_lists = true; user.collapsed_left_column = true; collapse_left_panel();\" ng-if=\"!user.collapsed_lists\"><span class=\"icon-angle-left\"></span></div><div class=\"left_column_tab\" ng-class=\"{'left_column_tab_compressed': !user.collapsed_left_column}\" ng-hide=\"!user.collapsed_lists\" ng-click=\"user.collapsed_lists = false; \n" +
-    "\t \t           user.collapsed_left_column = false;\n" +
-    "\t \t           user.collapsed_column = true; \n" +
-    "\t \t           user.collapsed_trends = true;\n" +
-    "\t \t           user.collapsed_filters = true;\n" +
-    "\t \t           user.collapsed_friends = true;\n" +
-    "\t \t           expand_left_panel();\"><span class=\"table_cell\"><span class=\"icon-list purple_color header_font\" ng-if=\"user.collapsed_lists\"></span> <span ng-show=\"user.collapsed_left_column\">&nbsp;&nbsp;Listopia</span></span></div><div class=\"header\" ng-if=\"!user.collapsed_lists\"><span><b>Explore Listopia</b></span></div><div class=\"filters_panel_large scrollbar\" ng-if=\"!user.collapsed_lists\"><div class=\"filters_group\"><div ng-repeat=\"filter in book_lists\"><filter data=\"filter\" hide-icon=\"true\" icon-class=\"icon-list\" text-class=\"large_font\" url=\"grid/{{$routeParams.type}}/id/{{filter.id}}/name/{{filter.name}}\"></filter></div></div></div></div>"
+    "\t            'left_column': !user.collapsed_lists}\"><div class=\"collapse_icon\" ng-click=\"user.collapsed_lists = true; user.collapsed_left_column = true; collapse_left_panel();\" ng-if=\"!user.collapsed_lists\"><span class=\"icon-angle-left\"></span></div><div class=\"left_column_tab\" ng-class=\"{'left_column_tab_compressed': !user.collapsed_left_column}\" ng-hide=\"!user.collapsed_lists\" ng-click=\"expand_left_panel();\n" +
+    "\t \t \t\t   user.collapsed_lists = false; \n" +
+    "\t \t           user.collapsed_left_column = false;\"><span class=\"table_cell\"><span class=\"icon-list purple_color header_font\" ng-if=\"user.collapsed_lists\"></span> <span ng-show=\"user.collapsed_left_column\">&nbsp;&nbsp;Listopia</span></span></div><div class=\"header\" ng-if=\"!user.collapsed_lists\"><span><b>Explore Listopia</b></span></div><div class=\"filters_panel_large scrollbar\" ng-if=\"!user.collapsed_lists\"><div class=\"filters_group\"><div ng-repeat=\"filter in book_lists\"><filter data=\"filter\" hide-icon=\"true\" icon-class=\"icon-list\" text-class=\"large_font\" url=\"grid/{{$routeParams.type}}/id/{{filter.id}}/name/{{filter.name}}\"></filter></div></div></div></div>"
   );
 
 
@@ -259,13 +255,9 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
     "\t            'left_column_shifted left_column_shifted2': !user.collapsed_lists,\n" +
     "\t            'left_column_shifted left_column_shifted3': !user.collapsed_column,\n" +
     "\t            'left_column_shifted left_column_shifted4': !user.collapsed_friends,\n" +
-    "\t            'left_column': !user.collapsed_filters}\"><div class=\"collapse_icon\" ng-click=\"user.collapsed_filters = true; user.collapsed_left_column = true; collapse_left_panel();\" ng-if=\"!user.collapsed_filters\"><span class=\"icon-angle-left\"></span></div><div class=\"left_column_tab\" ng-class=\"{'left_column_tab_compressed': !user.collapsed_left_column}\" ng-hide=\"!user.collapsed_filters\" ng-click=\"user.collapsed_filters = false; \n" +
-    "\t \t \t\t   user.collapsed_left_column = false;\n" +
-    "\t \t           user.collapsed_column = true; \n" +
-    "\t \t           user.collapsed_trends = true;\n" +
-    "\t \t           user.collapsed_lists = true;\n" +
-    "\t \t           user.collapsed_friends = true;\n" +
-    "\t \t           expand_left_panel();\"><span class=\"table_cell\"><span class=\"icon-bookmark2 yellow_color header_font\" ng-if=\"user.collapsed_filters\"></span> <span ng-show=\"user.collapsed_left_column\">&nbsp;&nbsp;Shelves</span></span></div><div class=\"header\" ng-if=\"!user.collapsed_filters\"><span><b>&nbsp;Explore Shelves</b></span></div><div class=\"filters_panel_large scrollbar\" ng-if=\"!user.collapsed_filters\"><div class=\"filters_group\"><div ng-repeat=\"filter in labels\"><filter data=\"filter\" icon-class=\"icon-bookmark3\" url=\"recommendations/{{$routeParams.type}}/label/{{filter.id}}/name/{{filter.name}}\"></filter></div></div></div></div>"
+    "\t            'left_column': !user.collapsed_filters}\"><div class=\"collapse_icon\" ng-click=\"user.collapsed_filters = true; user.collapsed_left_column = true; collapse_left_panel();\" ng-if=\"!user.collapsed_filters\"><span class=\"icon-angle-left\"></span></div><div class=\"left_column_tab\" ng-class=\"{'left_column_tab_compressed': !user.collapsed_left_column}\" ng-hide=\"!user.collapsed_filters\" ng-click=\"expand_left_panel();\n" +
+    "\t \t \t\t   user.collapsed_filters = false; \n" +
+    "\t \t \t\t   user.collapsed_left_column = false;\"><span class=\"table_cell\"><span class=\"icon-bookmark2 yellow_color header_font\" ng-if=\"user.collapsed_filters\"></span> <span ng-show=\"user.collapsed_left_column\">&nbsp;&nbsp;Shelves</span></span></div><div class=\"header\" ng-if=\"!user.collapsed_filters\"><span><b>&nbsp;Explore Shelves</b></span></div><div class=\"filters_panel_large scrollbar\" ng-if=\"!user.collapsed_filters\"><div class=\"filters_group\"><div ng-repeat=\"filter in labels\"><filter data=\"filter\" icon-class=\"icon-bookmark3\" url=\"recommendations/{{$routeParams.type}}/label/{{filter.id}}/name/{{filter.name}}\"></filter></div></div></div></div>"
   );
 
 
@@ -275,13 +267,9 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
     "\t            'left_column_shifted left_column_shifted2': !user.collapsed_column,\n" +
     "\t            'left_column_shifted left_column_shifted3': !user.collapsed_friends,\n" +
     "\t            'left_column_shifted left_column_shifted4': !user.collapsed_filters,\n" +
-    "\t            'left_column': !user.collapsed_trends}\"><div class=\"collapse_icon\" ng-click=\"user.collapsed_trends = true; user.collapsed_left_column = true; collapse_left_panel();\" ng-if=\"!user.collapsed_trends\"><span class=\"icon-angle-left\"></span></div><div class=\"left_column_tab\" ng-class=\"{'left_column_tab_compressed': !user.collapsed_left_column}\" ng-hide=\"!user.collapsed_trends\" ng-click=\"user.collapsed_trends = false; \n" +
-    "\t \t           user.collapsed_left_column = false;\n" +
-    "\t \t           user.collapsed_column = true; \n" +
-    "\t \t           user.collapsed_filters = true;\n" +
-    "\t \t           user.collapsed_lists = true;\n" +
-    "\t \t           user.collapsed_friends = true;\n" +
-    "\t \t           expand_left_panel();\"><span class=\"table_cell\"><span class=\"icon-bars red_color header_font\" ng-if=\"user.collapsed_trends\"></span> <span ng-show=\"user.collapsed_left_column\">&nbsp;&nbsp;Trending</span></span></div><div class=\"header\" ng-if=\"!user.collapsed_trends\"><span><b>Trending</b></span></div><div ng-include=\"\" src=\"'/assets/angular/views/shared/feed/trending.html'\" ng-if=\"!user.collapsed_trends\"></div></div>"
+    "\t            'left_column': !user.collapsed_trends}\"><div class=\"collapse_icon\" ng-click=\"user.collapsed_trends = true; user.collapsed_left_column = true; collapse_left_panel();\" ng-if=\"!user.collapsed_trends\"><span class=\"icon-angle-left\"></span></div><div class=\"left_column_tab\" ng-class=\"{'left_column_tab_compressed': !user.collapsed_left_column}\" ng-hide=\"!user.collapsed_trends\" ng-click=\"expand_left_panel();\n" +
+    "\t \t \t\t   user.collapsed_trends = false; \n" +
+    "\t \t           user.collapsed_left_column = false;\"><span class=\"table_cell\"><span class=\"icon-bars red_color header_font\" ng-if=\"user.collapsed_trends\"></span> <span ng-show=\"user.collapsed_left_column\">&nbsp;&nbsp;Trending</span></span></div><div class=\"header\" ng-if=\"!user.collapsed_trends\"><span><b>Trending</b></span></div><div ng-include=\"\" src=\"'/assets/angular/views/shared/feed/trending.html'\" ng-if=\"!user.collapsed_trends\"></div></div>"
   );
 
 
