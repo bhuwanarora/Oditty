@@ -271,15 +271,15 @@
 
 .interaction_group.ng-enter,
 .interaction_group.ng-leave.ng-leave-active{
-	top: 60px;
-	width: 40%;
-	margin-left: -20%;
+	left: 40vh;
+	top: 160px;
+	width: 55%;
 }
 
 .interaction_group.ng-leave,
 .interaction_group.ng-enter.ng-enter-active{
-	margin-left: -30%;
-	top: 10px;
+	left: 36vh;
+	top: 150px;
 	width: 60%;
 }
 

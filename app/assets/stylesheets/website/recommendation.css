@@ -2324,4 +2324,6 @@ l	.compressed_info_card{
 	background-color: #f2f2f2 !important;
 	border: 1px solid #D8D8D8;
 	border-radius: 0px !important;
+	left: 50%;
+	margin-left: -25%;
 }
