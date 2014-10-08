@@ -583,7 +583,7 @@
 .interaction_group{
 	position: fixed;
 	left: 36vh;
-	top: 200px;
+	top: 150px;
 	width: 60%;
 	z-index: 13;
 }
@@ -2310,8 +2310,11 @@ l	.compressed_info_card{
 }
 
 .feed_header{
-	top: 70px;
-	position: fixed;
+	top: 58px;
+	position: fixed !important;
 	width: 56%;
-	height: 75px;
+	height: 50px;
+	background-color: #f2f2f2;
+	border: 1px solid #D8D8D8;
+	border-radius: 0px !important;
 }

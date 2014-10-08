@@ -70,6 +70,7 @@
 		   itemtype= "http://schema.org/UserComments"
 		   set-focus="user.interact"
 		   type="text"
+		   ng-click="show_interaction_links = true;"
 		   ng-paste="update_hashtagged_comment()"
 		   ng-model="user.current_comment"
 		   ng-keydown="handle_backspace($event)"
@@ -80,7 +81,7 @@
 		   rows="1">
 		</textarea>
 	</div>
-	<div class="interaction_links">
+	<div class="interaction_links" ng-show="show_interaction_links">
 		<span class="icon-happy interaction_icons" ng-click="show_interaction_options('Emotion', $event)"></span>
 		<span class="icon-feed interaction_icons" ng-click="show_interaction_options('Shout', $event)"></span>
 		<!-- <span class="icon-quote-right interaction_icons" ng-click="show_interaction_options('Quote', $event)"></span> -->
