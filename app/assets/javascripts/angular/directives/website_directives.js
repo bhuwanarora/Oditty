@@ -1221,7 +1221,7 @@ websiteApp.directive('timestamp', function(){
 });
 
 
-websiteApp.directive('userAdd', ['$rootScope', function($rootScope){
+websiteApp.directive('userAdd', ['$rootScope', 'WebsiteUIConstants', function($rootScope, WebsiteUIConstants){
 	return{
 		restrict: 'E',
 		controller: ['$scope', function($scope){
@@ -1234,7 +1234,7 @@ websiteApp.directive('userAdd', ['$rootScope', function($rootScope){
 				$rootScope.user.collapsed_column = true; 
 				$rootScope.user.collapsed_trends = true; 
 				$rootScope.user.collapsed_left_column = true;
-				$rootScope.popups.left_panel_width = {'width': '15%'};
+				$rootScope.popups.left_panel_width = {'width': WebsiteUIConstants.LeftPanelMinWidth};
 				var show_trending = false;
 				var init_notification = true;
 				$scope.$emit('getNotifications', show_trending, user_id, init_notification);

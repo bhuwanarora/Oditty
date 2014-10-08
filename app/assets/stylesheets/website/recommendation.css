@@ -1401,7 +1401,7 @@ and (min-width : 1824px) {
 
 .left_panel{
 	top: 220px;
-	width: 15%;
+	width: 20%;
 	height: 70vh;
 	background-color: white;
 	left: 0px;
@@ -1706,7 +1706,7 @@ and (min-width : 1824px) {
 	height: 40px;
 	display: table;
 	width: 100%;
-	font-size: 0.9em;
+	font-size: 14px;
 	padding-left: 20px;
 	padding-right: 20px;
 }
@@ -1719,7 +1719,7 @@ and (min-width : 1824px) {
 	position: fixed;
 	left: 0px;
 	background-color: white;
-	width: 15%;
+	width: 20%;
 }
 
 .left_column_tab_compressed{
@@ -1737,7 +1737,7 @@ and (min-width : 1824px) {
 }
 
 .left_column_collapsed2{
-	top: 291px;
+	top: 282px;
 }
 
 .left_column_collapsed3{
@@ -1745,11 +1745,11 @@ and (min-width : 1824px) {
 }
 
 .left_column_collapsed4{
-	top: 399px;
+	top: 390px;
 }
 
 .left_column_collapsed5{
-	top: 448px;
+	top: 430px;
 }
 
 .left_column_shifted{
@@ -1764,15 +1764,15 @@ and (min-width : 1824px) {
 }
 
 .left_column_shifted2{
-	top: 350px;
+	top: 339px;
 }
 
 .left_column_shifted3{
-	top: 401px;
+	top: 379px;
 }
 
 .left_column_shifted4{
-	top: 452px;
+	top: 419px;
 }
 
 .left_column_shifted5{

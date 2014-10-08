@@ -185,7 +185,7 @@ websiteApp.directive('header', ['$timeout', '$rootScope', function($timeout, $ro
 	}
 }]);
 
-websiteApp.directive('navbar', ['scroller', '$rootScope', 'websiteService', '$timeout', '$cookieStore', 'RecommendationUIConstants', function(scroller, $rootScope, websiteService, $timeout, $cookieStore, RecommendationUIConstants){
+websiteApp.directive('navbar', ['scroller', '$rootScope', 'websiteService', '$timeout', '$cookieStore', 'RecommendationUIConstants', 'WebsiteUIConstants', function(scroller, $rootScope, websiteService, $timeout, $cookieStore, RecommendationUIConstants, WebsiteUIConstants){
 	return{
 		restrict: 'E',
 		controller: ['$scope', function($scope){
@@ -360,7 +360,7 @@ websiteApp.directive('navbar', ['scroller', '$rootScope', 'websiteService', '$ti
 				$rootScope.user.collapsed_trends = true;
 				$rootScope.user.collapsed_lists = true;
 				$rootScope.user.collapsed_left_column = true;
-				$rootScope.popups.left_panel_width = {'width': '15%'};
+				$rootScope.popups.left_panel_width = {'width': WebsiteUIConstants.LeftPanelMinWidth};
 				// scroller.scrollTo(0, 0, 2000);
 			}
 

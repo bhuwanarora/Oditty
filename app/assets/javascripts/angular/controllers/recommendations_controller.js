@@ -116,7 +116,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
 	$scope.collapse_left_panel = function(){
-		$rootScope.popups.left_panel_width = {'width': '15%'};
+		$rootScope.popups.left_panel_width = {'width': WebsiteUIConstants.LeftPanelMinWidth};
 	}
 
 	$scope.expand_left_panel = function(){
@@ -163,7 +163,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		$rootScope.user.collapsed_column = true; 
 		$rootScope.user.collapsed_trends = true; 
 		$rootScope.user.collapsed_left_column = true;
-		$rootScope.popups.left_panel_width = {'width': '15%'};
+		$rootScope.popups.left_panel_width = {'width': WebsiteUIConstants.LeftPanelMinWidth};
 	}
 
 	$scope.show_interaction_box = function(user_id){

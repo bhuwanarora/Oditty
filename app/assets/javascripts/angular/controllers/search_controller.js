@@ -1238,7 +1238,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				$rootScope.user.collapsed_lists = true;
 				$rootScope.user.collapsed_left_column = true;
 				$rootScope.popups = {};
-				$rootScope.popups.left_panel_width = {'width': '15%'};
+				$rootScope.popups.left_panel_width = {'width': WebsiteUIConstants.LeftPanelMinWidth};
 
 				delete $rootScope.focused_book;
 				$rootScope.popups.left_panel_width = {};
