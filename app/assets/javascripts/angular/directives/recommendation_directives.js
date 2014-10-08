@@ -121,9 +121,8 @@ websiteApp.directive('header', ['$timeout', '$rootScope', function($timeout, $ro
 				}
 
 				var _show_notification_popup = function(){
-					$rootScope.popups = {};
-					$rootScope.popups.show_notifications_popup = true;
 					_close_all_popups();
+					$rootScope.popups.show_notifications_popup = true;
 				}
 
 				if(angular.isDefined($rootScope.popups) && angular.isDefined($rootScope.popups.show_notifications_popup)){

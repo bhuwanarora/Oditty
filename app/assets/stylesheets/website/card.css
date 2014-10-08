@@ -82,14 +82,19 @@
 
 .bottom_widget{
 	height: 6vh;
-	bottom: 7vh;
-	left: 2vh;
-	right: 6vh;
 	position: absolute;
 	border: 1px solid #F1F1F1;
 	z-index: 2;
 	visibility: hidden;
 	background-color: rgba(0,0,0,0.58);
+}
+
+.bottom_widget,
+.card .widget_thumb,
+.card .description{
+	right: 6vh;
+	left: 2vh;
+	bottom: 5vh;
 }
 
 .tag_bookmark{
@@ -214,9 +219,6 @@
 .card .description{
 	position: absolute;
 	top: 14vh;
-	left: 2vh;
-	right: 6vh;
-	bottom: 5vh;
 	border-radius: 1px;
 }
 
