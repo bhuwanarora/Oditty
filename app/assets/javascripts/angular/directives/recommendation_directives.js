@@ -171,6 +171,8 @@ websiteApp.directive('navbar', ['scroller', '$rootScope', 'websiteService', '$ti
 
 			$scope.toggle_bookmarked = function(event){
 				$rootScope.user.show_profile = false;
+				$rootScope.popups.left_panel_width = {};
+          		$rootScope.style = {};
 				delete $rootScope.focused_book;
 				delete $rootScope.ticker_popup;
 				if(!$scope.bookmark_selected){
@@ -212,6 +214,8 @@ websiteApp.directive('navbar', ['scroller', '$rootScope', 'websiteService', '$ti
 
 			$scope.toggle_recommendations = function(){
 				delete $rootScope.focused_book;
+				$rootScope.popups.left_panel_width = {};
+          		$rootScope.style = {};
 				delete $rootScope.ticker_popup;
 				$rootScope.user.show_profile = false;
 				if($scope.bookmark_selected || $scope.read_selected){
@@ -228,6 +232,8 @@ websiteApp.directive('navbar', ['scroller', '$rootScope', 'websiteService', '$ti
 			$scope.toggle_read = function(){
 				$rootScope.user.show_profile = false;
 				delete $rootScope.focused_book;
+				$rootScope.popups.left_panel_width = {};
+          		$rootScope.style = {};
 				delete $rootScope.ticker_popup;
 				if(!$scope.read_selected){
 					// _load_icon();

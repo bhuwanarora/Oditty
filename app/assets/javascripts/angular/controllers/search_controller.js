@@ -1241,6 +1241,8 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				$rootScope.popups.left_panel_width = {'width': '15%'};
 
 				delete $rootScope.focused_book;
+				$rootScope.popups.left_panel_width = {};
+          		$rootScope.style = {};
 				delete $scope.active_nest;
 				delete $scope.active_base;
 				delete $scope.search_tag.custom_input;

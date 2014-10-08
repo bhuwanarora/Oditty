@@ -295,6 +295,8 @@ websiteApp.directive('notification', ['$rootScope', '$timeout', '$location', '$r
 						if(angular.isDefined($scope.notification.book) && $scope.notification.book.id != null){
 							$rootScope.ticker_popup = $scope.notification.book;
 							delete $rootScope.focused_book;
+							$rootScope.popups.left_panel_width = {};
+          					$rootScope.style = {};
 						}
 						// var top = _get_arrow_position(event);
 						// $rootScope.ticker_position = {"top": top+"px"};
@@ -1227,6 +1229,7 @@ websiteApp.directive('userAdd', ['$rootScope', function($rootScope){
 			$scope.show_interaction_box = function(user_id){
 				$rootScope.user.interact = true;
 				delete $rootScope.focused_book;
+          		$rootScope.style = {};
 				delete $rootScope.ticker_popup;
 				$rootScope.user.collapsed_column = true; 
 				$rootScope.user.collapsed_trends = true; 

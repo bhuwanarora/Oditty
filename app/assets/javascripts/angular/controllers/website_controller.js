@@ -23,6 +23,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		$rootScope.user.collapsed_left_column = true;
 		$rootScope.popups = {};
 		delete $rootScope.focused_book;
+        $rootScope.style = {};
 		delete $rootScope.ticker_popup;
 	}
 
