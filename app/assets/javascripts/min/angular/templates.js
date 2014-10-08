@@ -193,7 +193,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/home/shared/user_add.html',
-    "<ul class=\"user_add_popup animate-fast\" ng-if=\"popups.add_popup\"><div class=\"icon-close-popup\" ng-click=\"popups.add_popup=false;\"></div><li ng-click=\"show_interaction_box(user.id)\">Share your book reading journey</li><li onclick=\"facebook_invite()\">Invite Friends</li><li onclick=\"user.show_covered_books = !user.show_covered_books\"><span ng-show=\"user.show_covered_books\">Show all books</span> <span ng-show=\"!user.show_covered_books\">Hide books which don't have covers</span></li></ul><div class=\"user_add floating_icon\"><div ng-click=\"popups.add_popup = !popups.add_popup\" class=\"table_cell\"><span class=\"icon-plus\"></span></div></div>"
+    "<ul class=\"user_add_popup animate-fast\" ng-if=\"popups.add_popup\"><div class=\"icon-close-popup\" ng-click=\"popups.add_popup=false;\"></div><li ng-click=\"show_interaction_box(user.id)\">Share your book reading journey</li><li onclick=\"facebook_invite()\">Invite Friends</li><li ng-click=\"user.show_covered_books = !user.show_covered_books\"><span ng-show=\"user.show_covered_books\">Show all books</span> <span ng-show=\"!user.show_covered_books\">Hide books which don't have covers</span></li></ul><div class=\"user_add floating_icon\"><div ng-click=\"popups.add_popup = !popups.add_popup\" class=\"table_cell\"><span class=\"icon-plus\"></span></div></div>"
   );
 
 
