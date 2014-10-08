@@ -155,6 +155,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	$scope.show_interaction_box = function(user_id){
 		$scope._expanded_notifications();
+		$rootScope.user.interact = true;
 		var show_trending = false;
 		var init_notification = true;
 		$scope.$emit('getNotifications', show_trending, user_id, init_notification);
