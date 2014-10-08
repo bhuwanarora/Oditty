@@ -61,16 +61,15 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	$scope.toggle_profile = function(user_id, event, delta){
 		var _hide_profile = function(){
+			$scope.hide_popups();
 			$rootScope.user.show_profile = false;
-			delete $rootScope.ticker_popup;
 		}
 
 		var _show_profile = function(){
+			$scope.hide_popups();
 			$rootScope.user.show_profile = true;
 			$scope._get_user_profile_info(user_id);
 			$scope._get_friends(2);
-			delete $rootScope.ticker_popup;
-			$scope._delete_focused_book();
 		}
 		
 
@@ -120,22 +119,13 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
 	$scope.expand_left_panel = function(){
-		$scope._delete_focused_book();
-		$rootScope.popups = {};
+		$scope.hide_popups();
 		$rootScope.popups.left_panel_width = {'width': '34%'};
-	}
-
-	$scope._delete_focused_book = function(){
-		delete $rootScope.focused_book;
-		$rootScope.popups.left_panel_width = {};
-      	$rootScope.style = {};
 	}
 
 	$scope.toggle_settings_popup = function(event){
 		var _show_settings_popup = function(){
-			$rootScope.popups = {};
-			$rootScope.user.interact = false;
-			$scope._delete_focused_book();
+			$scope.hide_popups();
 			$rootScope.popups.settings_popup = true;
 		}
 
@@ -159,13 +149,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
 	$scope._expanded_notifications = function(){
+		$scope.hide_popups();
 		$rootScope.user.interact = true;
-		$scope._delete_focused_book();
-		delete $rootScope.ticker_popup;
-		$rootScope.user.collapsed_column = true; 
-		$rootScope.user.collapsed_trends = true; 
-		$rootScope.user.collapsed_left_column = true;
-		$rootScope.popups.left_panel_width = {'width': WebsiteUIConstants.LeftPanelMinWidth};
 	}
 
 	$scope.show_interaction_box = function(user_id){
@@ -220,15 +205,17 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
 	$scope.hide_popups = function(){
-		$scope._delete_focused_book();
 		delete $rootScope.ticker_popup;
+		delete $rootScope.focused_book;
 		$rootScope.user.collapsed_column = true;
 		$rootScope.user.collapsed_filters = true;
 		$rootScope.user.collapsed_friends = true;
 		$rootScope.user.collapsed_trends = true;
 		$rootScope.user.collapsed_lists = true;
 		$rootScope.user.collapsed_left_column = true;
+		$rootScope.user.interact = false;
 		$rootScope.popups = {};
+		$rootScope.popups.left_panel_width = {'width': WebsiteUIConstants.LeftPanelMinWidth};
 	}
 
 	_load_icon = function(){
@@ -468,7 +455,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 					});
 				}
 				else{
-					$scope._delete_focused_book();
+					$scope.hide_popups();
 					if($scope.recommendations.books.length >= max_limit){
 						$scope.recommendations.books = [$scope.recommendations.books[max_limit-2], $scope.recommendations.books[max_limit-1]];
 						var timeout_event = $timeout(function(){

@@ -102,14 +102,9 @@ websiteApp.directive('header', ['$timeout', '$rootScope', function($timeout, $ro
 		restrict: 'E',
 		controller: ['$scope', function($scope){
 			$scope.toggle_notification_popup = function($event){
-				var _delete_focused_book = function(){
-					delete $rootScope.focused_book;
-					$rootScope.popups.left_panel_width = {};
-			      	$rootScope.style = {};
-				}
 
 				var _close_all_popups = function(){
-					_delete_focused_book();
+					delete $rootScope.focused_book;
 					delete $rootScope.ticker_popup;
 		            $rootScope.popups = {};
 		            $rootScope.user.collapsed_friends = true; 
@@ -192,11 +187,13 @@ websiteApp.directive('navbar', ['scroller', '$rootScope', 'websiteService', '$ti
 		controller: ['$scope', function($scope){
 
 			$scope.toggle_bookmarked = function(event){
-				$rootScope.user.show_profile = false;
-				$rootScope.popups.left_panel_width = {};
-          		$rootScope.style = {};
-				delete $rootScope.focused_book;
-				delete $rootScope.ticker_popup;
+				var _close_all_popups = function(){
+					$rootScope.user.show_profile = false;
+					delete $rootScope.focused_book;
+					delete $rootScope.ticker_popup;
+				}
+				
+				_close_all_popups();
 				if(!$scope.bookmark_selected){
 					// _load_icon();
 					$scope.panel_selected = 'BOOKMARK';
@@ -235,11 +232,13 @@ websiteApp.directive('navbar', ['scroller', '$rootScope', 'websiteService', '$ti
 			}
 
 			$scope.toggle_recommendations = function(){
-				delete $rootScope.focused_book;
-				$rootScope.popups.left_panel_width = {};
-          		$rootScope.style = {};
-				delete $rootScope.ticker_popup;
-				$rootScope.user.show_profile = false;
+				var _close_all_popups = function(){
+					delete $rootScope.focused_book;
+					delete $rootScope.ticker_popup;
+					$rootScope.user.show_profile = false;
+				}
+
+				_close_all_popups();
 				if($scope.bookmark_selected || $scope.read_selected){
 					// _load_icon();
 					$scope.read_selected = false;
@@ -252,11 +251,13 @@ websiteApp.directive('navbar', ['scroller', '$rootScope', 'websiteService', '$ti
 			}
 
 			$scope.toggle_read = function(){
-				$rootScope.user.show_profile = false;
-				delete $rootScope.focused_book;
-				$rootScope.popups.left_panel_width = {};
-          		$rootScope.style = {};
-				delete $rootScope.ticker_popup;
+				_close_all_popups = function(){
+					$rootScope.user.show_profile = false;
+					delete $rootScope.focused_book;
+					delete $rootScope.ticker_popup;
+				}
+				
+				_close_all_popups();
 				if(!$scope.read_selected){
 					// _load_icon();
 

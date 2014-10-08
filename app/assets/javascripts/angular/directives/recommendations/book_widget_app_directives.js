@@ -72,8 +72,6 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
         }
         else{
           delete $rootScope.focused_book;
-          $rootScope.popups.left_panel_width = {};
-          $rootScope.style = {};
         }
         event.stopPropagation();
       }
@@ -330,8 +328,6 @@ websiteApp.directive('bookInfo', ['$rootScope', '$timeout', 'widgetService', 'sh
 
       $scope.close_focused_tooltip = function(){
         delete $rootScope.focused_book;
-        $rootScope.popups.left_panel_width = {};
-        $rootScope.style = {};
       }
 
       $scope.own_this_book = function(){
