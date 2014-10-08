@@ -295,11 +295,12 @@
 
 .label_dropdown.ng-enter,
 .label_dropdown.ng-leave.ng-leave-active{
-	width: 40%;
-	max-height: 20vh;
-	min-width: 100px;
+	width: 58%;
+	max-height: 28vh;
+	min-width: 160px;
 	box-shadow: none;
 	color: transparent;
+	left: 10px;
 }
 
 .label_dropdown.ng-leave,
@@ -309,4 +310,5 @@
 	min-width: 180px;
 	box-shadow: 0 7px 15px rgba(0,0,0,0.25);
 	color: #717070;
+	left: 0px;
 }

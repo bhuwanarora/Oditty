@@ -121,6 +121,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	$scope.expand_left_panel = function(){
 		$scope._delete_focused_book();
+		$rootScope.popups = {};
 		$rootScope.popups.left_panel_width = {'width': '34%'};
 	}
 
@@ -328,6 +329,16 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 
 	$scope._initialize_filters = function(){
+		var _collapse_every_left_panel = function(){
+			$rootScope.user.collapsed_filters = true;
+    		$rootScope.user.collapsed_friends = true;
+    		$rootScope.user.collapsed_trends = true;
+    		$rootScope.user.collapsed_lists = true;
+    		$rootScope.user.collapsed_column = true;
+    		$rootScope.user.collapsed_left_column = false;
+    		$rootScope.user.show_profile = false;
+		}
+
 		var _handle_specific_list_page = function(){
 			$rootScope.filters["filter_id"] = $routeParams.filter_id;
 			$rootScope.main_header = $routeParams.name;
@@ -336,24 +347,16 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		var _handle_specific_shelf_page = function(){
 			$rootScope.filters["label_id"] = $routeParams.label_id;
 			$rootScope.main_header = $routeParams.name;
+			_collapse_every_left_panel();
     		$rootScope.user.collapsed_filters = false;
-    		$rootScope.user.collapsed_friends = true;
-    		$rootScope.user.collapsed_trends = true;
-    		$rootScope.user.collapsed_lists = true;
-    		$rootScope.user.collapsed_column = true;
-    		$rootScope.user.collapsed_left_column = false;
     		$scope.expand_left_panel();
 		}
 
 		var _handle_grids_page = function(){
     		$rootScope.filters["filter_id"] = $routeParams.grid_id;
     		$rootScope.main_header = $routeParams.name;
-    		$rootScope.user.collapsed_filters = true;
-    		$rootScope.user.collapsed_friends = true;
-    		$rootScope.user.collapsed_trends = true;
+    		_collapse_every_left_panel();
     		$rootScope.user.collapsed_lists = false;
-    		$rootScope.user.collapsed_column = true;
-    		$rootScope.user.collapsed_left_column = false;
     		$scope.expand_left_panel();
 		}
 
@@ -362,13 +365,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     		$rootScope.filters["reset_count"] = 0;
     		$rootScope.filters["trend_id"] = $routeParams.trend_id;
     		$rootScope.main_header = $routeParams.name;
-    		$rootScope.user.collapsed_filters = true;
-    		$rootScope.user.collapsed_friends = true;
+    		_collapse_every_left_panel();
     		$rootScope.user.collapsed_trends = false;
-    		$rootScope.user.collapsed_lists = true;
-    		$rootScope.user.collapsed_column = true;
-    		$rootScope.user.show_profile = false;
-    		$rootScope.user.collapsed_left_column = false;
     		$scope.expand_left_panel();
 		}
 		

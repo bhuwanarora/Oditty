@@ -90,7 +90,7 @@
 
 .card .widget_thumb,
 .card .description{
-	box-shadow: 0 0 22px 2px rgba(255, 255, 255, 1) inset;
+	box-shadow: 0 0 22px 2px rgba(255, 255, 255, 0.57) inset;
 }
 
 .bottom_widget,
@@ -183,7 +183,7 @@
 	width: 62%;
 	font-size: 0.8em;
 	border-top-right-radius: 3px;
-	border-left: 1px solid #F0F0F0;
+	border: 1px solid #999999;
 	max-height: 30vh;
 	overflow-y: scroll;
 	box-shadow: 0 7px 15px rgba(0,0,0,.25);
