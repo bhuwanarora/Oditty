@@ -5,7 +5,7 @@
 	<div class="profile_thumb_wrapper">
 		<img ng-src="{{reader.thumb}}" class="profile_thumb" />
  	</div>
-	<div class="tweet">
+	<div class="tweet feed_header">
 		<b><div>{{reader.name | first_name}}'s timeline</div></b>
 	</div>
 	<div ng-repeat="notification in readers_notifications | reverse" 

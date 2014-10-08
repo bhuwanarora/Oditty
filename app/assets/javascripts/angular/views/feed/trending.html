@@ -3,7 +3,7 @@
 	check-scroll-down="increase_height($event)"
 	check-scroll-bottom="get_notifications(true)"
 	ng-click="stop_propagation($event)">
-	<div class="tweet custom_hidden">
+	<div class="tweet custom_hidden feed_header">
 		<b><div>Trending</div></b>
 	</div>
 	<div ng-repeat="notification in trending_feed | reverse" 

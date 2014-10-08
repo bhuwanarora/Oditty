@@ -583,7 +583,7 @@
 .interaction_group{
 	position: fixed;
 	left: 36vh;
-	top: 10px;
+	top: 200px;
 	width: 60%;
 	z-index: 13;
 }
@@ -2193,7 +2193,7 @@ l	.compressed_info_card{
 .profile_thumb_color_wrapper{
 	position: fixed;
 	left: 10px;
-	top: 10px;
+	top: 70px;
 	width: 32vh;
 	height: 41vh;
 	overflow: hidden;
@@ -2210,6 +2210,7 @@ l	.compressed_info_card{
 	z-index: 12;
 	background-image: none;
 	background-color: white;
+	top: 61px;
 }
 
 .book_thumb,
@@ -2306,4 +2307,11 @@ l	.compressed_info_card{
 	height: 40px;
 	background-color: #F2F2F2;
 	border-top: 1px solid #E2E2E2;
+}
+
+.feed_header{
+	top: 70px;
+	position: fixed;
+	width: 56%;
+	height: 75px;
 }

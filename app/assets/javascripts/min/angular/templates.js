@@ -64,7 +64,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/feed/book_timeline.html',
-    "<div class=\"scrollbar tweets\" ng-click=\"stop_propagation($event)\"><div class=\"profile_thumb_color_wrapper\"></div><div class=\"profile_thumb_wrapper\"><img ng-src=\"{{focused_book.isbn | thumb}}\" class=\"profile_thumb\"></div><div class=\"tweet\"><div><b><div>Book Timeline</div></b><div><span class=\"site_color\">{{focused_book.title}}</span> by {{focused_book.author_name}}</div></div><div ng-include=\"\" src=\"'/assets/angular/views/shared/partials/book_info.html'\"></div></div><div class=\"tweet animate-fast\" ng-repeat=\"tweet in focused_book.tweets | reverse\"><div class=\"thumb\"><img ng-src=\"{{tweet.user.thumb | thumb_backup}}\"></div><div class=\"tweet_text\"><b><div ng-bind-html=\"tweet.user.name\"></div></b><timestamp data=\"notification.timestamp\"></timestamp><div ng-bind-html=\"tweet.tag\"></div><div ng-bind-html=\"tweet.message\"></div></div></div><div class=\"tweet animate-fast\">You've reached the end of Book Timeline.</div></div>"
+    "<div class=\"scrollbar tweets\" ng-click=\"stop_propagation($event)\"><div class=\"profile_thumb_color_wrapper\"></div><div class=\"profile_thumb_wrapper\"><img ng-src=\"{{focused_book.isbn | thumb}}\" class=\"profile_thumb\"></div><div class=\"tweet feed_header\"><div><b><div>Book Timeline</div></b><div><span class=\"site_color\">{{focused_book.title}}</span> by {{focused_book.author_name}}</div></div><div ng-include=\"\" src=\"'/assets/angular/views/shared/partials/book_info.html'\"></div></div><div class=\"tweet animate-fast\" ng-repeat=\"tweet in focused_book.tweets | reverse\"><div class=\"thumb\"><img ng-src=\"{{tweet.user.thumb | thumb_backup}}\"></div><div class=\"tweet_text\"><b><div ng-bind-html=\"tweet.user.name\"></div></b><timestamp data=\"notification.timestamp\"></timestamp><div ng-bind-html=\"tweet.tag\"></div><div ng-bind-html=\"tweet.message\"></div></div></div><div class=\"tweet animate-fast\">You've reached the end of Book Timeline.</div></div>"
   );
 
 
@@ -75,7 +75,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/feed/news_feed.html',
-    "<div class=\"scrollbar tweets\" check-scroll-bottom=\"get_notifications()\" ng-click=\"stop_propagation($event)\"><div class=\"tweet\"><b><div>News Feed</div></b></div><div ng-repeat=\"notification in news_feed | reverse\" class=\"tweet animate-fast\"><div ng-include=\"\" src=\"'/assets/angular/views/feed/partials/notification_block.html'\"></div></div><div class=\"tweet animate-fast\">You've reached end of the news feed.</div></div>"
+    "<div class=\"scrollbar tweets\" check-scroll-bottom=\"get_notifications()\" ng-click=\"stop_propagation($event)\"><div class=\"tweet feed_header\"><b><div>News Feed</div></b></div><div ng-repeat=\"notification in news_feed | reverse\" class=\"tweet animate-fast\"><div ng-include=\"\" src=\"'/assets/angular/views/feed/partials/notification_block.html'\"></div></div><div class=\"tweet animate-fast\">You've reached end of the news feed.</div></div>"
   );
 
 
@@ -85,12 +85,12 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/feed/personal_feed.html',
-    "<div class=\"scrollbar tweets\" check-scroll-bottom=\"get_notifications(false, user.id)\" ng-click=\"stop_propagation($event)\"><div class=\"profile_thumb_color_wrapper\"></div><div class=\"profile_thumb_wrapper\"><img ng-src=\"{{user.thumb}}\" class=\"profile_thumb\"></div><div class=\"tweet\"><b><div>Personal Feed</div></b></div><div ng-repeat=\"notification in personal_notifications | reverse\" class=\"tweet animate-fast\"><div ng-include=\"\" src=\"'/assets/angular/views/feed/partials/notification_block.html'\"></div></div><div class=\"tweet animate-fast\">You've reached the end of your personal feed.</div></div>"
+    "<div class=\"scrollbar tweets\" check-scroll-bottom=\"get_notifications(false, user.id)\" ng-click=\"stop_propagation($event)\"><div class=\"profile_thumb_color_wrapper\"></div><div class=\"profile_thumb_wrapper\"><img ng-src=\"{{user.thumb}}\" class=\"profile_thumb\"></div><div class=\"tweet feed_header\"><b><div>Personal Feed</div></b></div><div ng-repeat=\"notification in personal_notifications | reverse\" class=\"tweet animate-fast\"><div ng-include=\"\" src=\"'/assets/angular/views/feed/partials/notification_block.html'\"></div></div><div class=\"tweet animate-fast\">You've reached the end of your personal feed.</div></div>"
   );
 
 
   $templateCache.put('/assets/angular/views/feed/readers_timeline.html',
-    "<div class=\"scrollbar tweets\" check-scroll-bottom=\"get_notifications(false, reader.id)\" ng-click=\"stop_propagation($event)\"><div class=\"profile_thumb_color_wrapper\"></div><div class=\"profile_thumb_wrapper\"><img ng-src=\"{{reader.thumb}}\" class=\"profile_thumb\"></div><div class=\"tweet\"><b><div>{{reader.name | first_name}}'s timeline</div></b></div><div ng-repeat=\"notification in readers_notifications | reverse\" class=\"tweet animate-fast\"><div ng-include=\"\" src=\"'/assets/angular/views/feed/partials/notification_block.html'\"></div></div><div class=\"tweet animate-fast\">No new notifications from {{reader.name | first_name}}.</div></div>"
+    "<div class=\"scrollbar tweets\" check-scroll-bottom=\"get_notifications(false, reader.id)\" ng-click=\"stop_propagation($event)\"><div class=\"profile_thumb_color_wrapper\"></div><div class=\"profile_thumb_wrapper\"><img ng-src=\"{{reader.thumb}}\" class=\"profile_thumb\"></div><div class=\"tweet feed_header\"><b><div>{{reader.name | first_name}}'s timeline</div></b></div><div ng-repeat=\"notification in readers_notifications | reverse\" class=\"tweet animate-fast\"><div ng-include=\"\" src=\"'/assets/angular/views/feed/partials/notification_block.html'\"></div></div><div class=\"tweet animate-fast\">No new notifications from {{reader.name | first_name}}.</div></div>"
   );
 
 
@@ -100,7 +100,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/feed/trending.html',
-    "<div class=\"scrollbar tweets animate-fast\" ng-style=\"trending_panel_style\" check-scroll-down=\"increase_height($event)\" check-scroll-bottom=\"get_notifications(true)\" ng-click=\"stop_propagation($event)\"><div class=\"tweet custom_hidden\"><b><div>Trending</div></b></div><div ng-repeat=\"notification in trending_feed | reverse\" class=\"tweet animate-fast\"><div ng-include=\"\" src=\"'/assets/angular/views/feed/partials/notification_block.html'\"></div></div><div class=\"tweet animate-fast\">You've reached end of the trending list.</div></div>"
+    "<div class=\"scrollbar tweets animate-fast\" ng-style=\"trending_panel_style\" check-scroll-down=\"increase_height($event)\" check-scroll-bottom=\"get_notifications(true)\" ng-click=\"stop_propagation($event)\"><div class=\"tweet custom_hidden feed_header\"><b><div>Trending</div></b></div><div ng-repeat=\"notification in trending_feed | reverse\" class=\"tweet animate-fast\"><div ng-include=\"\" src=\"'/assets/angular/views/feed/partials/notification_block.html'\"></div></div><div class=\"tweet animate-fast\">You've reached end of the trending list.</div></div>"
   );
 
 
