@@ -12,7 +12,7 @@
 	background-color: #fff;
 	border: 1px solid #FFF;
 	border-radius: 2px;
-	/*box-shadow: 0 7px 15px rgba(0,0,0,.5);*/
+	box-shadow: 0 7px 15px rgba(0,0,0,.5);
 	position: fixed;
 	top: 61px;
 	bottom: 1px;
