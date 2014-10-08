@@ -97,7 +97,7 @@ module NotificationHelper
 		message = "<span>"+data["tweet"]+".</span>";
 
 		tag = "<div class='"+data["icon"]+" inline_block'></div>" rescue ""
-		clause = "<div class='inline_block'> "+data["label1"] rescue "<div class='inline_block'> "
+		clause = "<div class='inline_block site_color'> "+data["label1"] rescue "<div class='inline_block'> "
 		tag = tag + clause
 
 		clause = " "+data["label2"]+" " rescue " "
@@ -106,7 +106,6 @@ module NotificationHelper
 		clause = data["title"]+"</div>" rescue "</div>"
 		tag = tag + clause
 
-		tag = "<span class='site_color'>"+tag+"</span>"
 
 		self.notification(message, data, tag)
 	end

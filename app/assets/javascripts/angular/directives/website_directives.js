@@ -998,10 +998,10 @@ websiteApp.directive('feed', ['$rootScope', '$timeout', 'websiteService', 'widge
 		        else{
 		        	var icon = tweet["label1"]["icon"];
 		        }
-	        	var tag = "<span class='site_color'><div class='"+icon+" inline_block'></div><div class='inline_block'> "+tweet["label1"]["name"]+" "+tweet["label2"]["name"]+" "+book.title+"</div></span>";
+	        	var tag = "<span class='site_color'><div class='"+icon+" inline_block'></div><div class='inline_block site_color'> "+tweet["label1"]["name"]+" "+tweet["label2"]["name"]+" "+book.title+"</div></span>";
 	        }
 	        else if(angular.isDefined(tweet["label1"])){
-	        	var tag = "<span class='site_color'><div class='"+tweet["label1"]["icon"]+" inline_block'></div><div class='inline_block'> "+tweet["label1"]["name"]+" "+book.title+"</div></span>";
+	        	var tag = "<span class='site_color'><div class='"+tweet["label1"]["icon"]+" inline_block'></div><div class='inline_block site_color'> "+tweet["label1"]["name"]+" "+book.title+"</div></span>";
 	        }
 	        else{
 	        	if(angular.isDefined(book)){
