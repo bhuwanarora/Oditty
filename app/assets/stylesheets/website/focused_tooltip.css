@@ -171,15 +171,21 @@
 	border: 1px solid #fff;
 }
 
-.focused_tooltip .heading_block{
+.focused_tooltip .heading_block,
+.focused_tooltip .main_block{
 	margin-top: 1px;
 	padding-top: 5px;
 	padding-bottom: 3px;
 	color: #717070;
-	cursor: pointer;
 	position: relative;
 }
 
+.focused_tooltip .heading_block,
+.focused_tooltip .main_block span{
+	cursor: pointer;
+}
+
+.focused_tooltip .main_block span:hover,
 .focused_tooltip .heading_block:hover{
 	color: #333;
 }

@@ -66,8 +66,8 @@
 		<!-- <div class="wrapper" ng-if="focused_book"></div> -->
 		<div class="focused_tooltip animate-faster"
 		     ng-style="focused_book.reposition_tooltip"
-		     ng-mouseleave="focused_book.collapse_blocks=true;"
-		     ng-mouseenter="focused_book.collapse_blocks=false;"
+		     ng-mouseleave="focused_book.collapse=true;"
+		     ng-mouseenter="focused_book.collapse=false;"
 		     ng-click="stop_propagation($event)"
 		     ng-if="focused_book">
 		    <book-info></book-info>

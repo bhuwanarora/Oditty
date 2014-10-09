@@ -7,6 +7,7 @@
 <div class="recommendation_box animate-slow"
 	 msd-wheel="stop_propagation($event)"
 	 ng-show="recommend_object.recommended"
+	 ng-hide="focused_book.collapse"
 	 ng-click="stop_propagation($event)">
 	<div class="icon-close-popup" ng-click="close_friends_list();"></div>
 	<div class="header">
