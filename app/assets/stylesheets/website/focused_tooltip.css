@@ -168,6 +168,7 @@
 	padding-top: 5px;
 	height: 10vh;
 	overflow-y: hidden;
+	background-color: white;
 }
 
 .focused_tooltip .user_box_wrapper{
@@ -177,6 +178,8 @@
 	background-color: transparent;
 	display: table;
 	cursor: pointer;
+	padding-left: 0px;
+	padding-right: 0px;
 }
 
 .focused_tooltip .user_box_wrapper .text{
