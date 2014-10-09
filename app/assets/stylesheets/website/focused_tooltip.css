@@ -35,9 +35,6 @@
 	padding: 15px 10px 5px;
 	position: relative;
 	max-height: 32vh;
-	box-shadow: 0 7px 15px rgba(0,0,0,0.5);
-	background-color: white;
-	border: 1px solid #fff;
 }
 
 .focused_tooltip .rating_star .rating_text{
@@ -145,6 +142,7 @@
 	line-height: 1.3em;
 }
 
+.focused_tooltip .book_info,
 .focused_tooltip .buy_column,
 .focused_tooltip .description,
 .focused_tooltip .header,
@@ -152,7 +150,7 @@
 .focused_tooltip .footer .recommend,
 .time_to_read,
 .focused_tooltip .user_box_wrapper{
-	box-shadow: 0 7px 15px rgba(0,0,0,0.5);
+	box-shadow: 0 4px 3px rgba(0, 0, 0, 0.16);
 	background-color: white;
 	padding-left: 3vh;
 	padding-right: 3vh;
