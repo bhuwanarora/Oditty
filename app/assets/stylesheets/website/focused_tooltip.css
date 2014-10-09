@@ -176,6 +176,7 @@
 	padding-bottom: 3px;
 	color: #717070;
 	cursor: pointer;
+	position: relative;
 }
 
 .focused_tooltip .heading_block:hover{
