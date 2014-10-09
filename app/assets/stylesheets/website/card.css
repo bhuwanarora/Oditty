@@ -101,6 +101,10 @@
 	bottom: 5vh;
 }
 
+.card .widget_thumb:hover{
+	background-blend-mode: luminosity;
+}
+
 .tag_bookmark{
 	height: 100%;
 }

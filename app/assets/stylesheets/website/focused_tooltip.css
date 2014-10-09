@@ -14,6 +14,7 @@
 	white-space: initial;
 	z-index: 12;
 	width: 72vh;
+	box-shadow: 0 4px 3px rgba(0, 0, 0, 0.16);
 	/* for big screens */
 }
 
@@ -44,7 +45,7 @@
 .focused_tooltip .book_info{
 	padding: 15px 10px 5px;
 	position: relative;
-	max-height: 32vh;
+	max-height: 20vh;
 	border-bottom: 1px solid #F2F2F2;
 }
 
@@ -89,7 +90,7 @@
 }
 
 .focused_tooltip .long_description{
-	max-height: 35vh;
+	max-height: 25vh;
 }
 
 .focused_tooltip .book_info .image_wrapper{
