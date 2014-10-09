@@ -1008,6 +1008,14 @@
 	overflow: hidden;
 }
 
+.trending_thumb_wrapper{
+	width: 93%;
+	height: 170px;
+	margin: 5px;
+	border-radius: 2px;
+	overflow: hidden;
+}
+
 .book_thumb_color_wrapper{
 	position: absolute;
 	box-shadow: 0 0 22px 2px rgba(0, 0, 0, 1) inset;
@@ -1942,6 +1950,7 @@
 	border-radius: 1px;
 }
 
+.trending_thumb_color_wrapper,
 .profile_thumb_color_wrapper{
 	z-index: 1;
 	box-shadow: 0 0 15px 1px rgba(0, 0, 0, 1) inset;
@@ -1956,7 +1965,8 @@
 }
 
 .book_thumb,
-.profile_thumb{
+.profile_thumb,
+.trending_thumb{
 	width: 100% !important;
 	min-height: 100% !important;
 }
@@ -2116,6 +2126,7 @@ and (max-width : 500px) {
 		right: 5px;
 	}
 
+	.trending_thumb_color_wrapper,
 	.profile_thumb_color_wrapper,
 	.profile_thumb_wrapper,
 	.thumb_wrapper_shifted,

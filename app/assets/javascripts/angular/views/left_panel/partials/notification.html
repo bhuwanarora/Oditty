@@ -12,7 +12,10 @@
 			<img ng-src="{{notification.thumb | thumb_backup}}">
 		</div>
 		<div ng-show="notification.title">
-			<img ng-src="{{notification.large_image}}">
+			<div class="trending_thumb_color_wrapper"></div>
+			<div class="trending_thumb_wrapper">
+				<img ng-src="{{notification.large_image}}" class="trending_thumb">
+			</div>
 		</div>
 		<img ng-src="{{notification.book.isbn | small_thumb}}" 
 			 class="small_book_thumb" 
