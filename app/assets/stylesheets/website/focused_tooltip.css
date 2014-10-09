@@ -83,7 +83,7 @@
 	display: inline-block;
 	float: right;
 	width: 68%;
-	padding: 8px;
+	padding: 0px 8px;
 	word-wrap: break-word;
 	font-size: 0.93em;
 	line-height: 1.5em;
@@ -188,41 +188,16 @@
 	font-size: 0.9em;
 }
 
-.focused_tooltip .user_box,
-.focused_tooltip .user_box_wrapper{
+.focused_tooltip .user_box{
 	padding: 10px 3vh;
 	height: 15vh;
 	overflow-y: hidden;
 	background-color: white;
-}
-
-.focused_tooltip .user_box_wrapper{
-	position: absolute;
-	z-index: 1;
-	color: transparent;
-	background-color: transparent;
-	display: table;
 	cursor: pointer;
-	width: 100%;
-	padding-left: 0px;
-	padding-right: 0px;
 }
 
-.focused_tooltip .user_box_wrapper .text{
-	display: table-cell;
-	vertical-align: middle;
-	text-align: center;
-	border-radius: 2px;
-}
-
-.focused_tooltip .user_box_wrapper:hover{
-	/*background-image: -webkit-linear-gradient(top,rgba(255, 255, 255, 0),rgba(71, 135, 237, 0.79));
-    background-image: -moz-linear-gradient(top,rgba(255, 255, 255, 0),rgba(71, 135, 237, 0.79));
-    background-image: -ms-linear-gradient(top,rgba(255, 255, 255, 0),rgba(71, 135, 237, 0.79));
-    background-image: -o-linear-gradient(top,rgba(255, 255, 255, 0),rgba(71, 135, 237, 0.79));
-    background-image: linear-gradient(top,rgba(255, 255, 255, 0),rgba(71, 135, 237, 0.79));*/
-    background-color: rgba(255, 255, 255, 0.8);
-    color: #717070;
+.focused_tooltip .user_box:hover{
+	opacity: 0.8;
 }
 
 .focused_tooltip .user_box .author_book_thumb{

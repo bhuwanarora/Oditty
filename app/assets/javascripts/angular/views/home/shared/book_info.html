@@ -100,12 +100,8 @@
 <div class="relative_position" 
      ng-hide="focused_book.collapse_blocks"
      ng-if="show_author && !show_buy">
-  <div class="user_box_wrapper"
-      ng-click="get_book_from_author()"
-      ng-show="show_author && !show_buy">
-      <div class="text"><b>More Books from {{focused_book.author_name}} </b></div>
-  </div>
-  <div class="user_box">
+  <div class="user_box animate-fast"
+       ng-click="get_book_from_author()">
        <div class="heading">{{focused_book.author_details.book_ids.length}} more books from author</div>
         <img ng-src="{{book_isbn | small_thumb}}" 
              ng-repeat="book_isbn in focused_book.author_details.book_isbns | limitTo: 7 track by $index" 

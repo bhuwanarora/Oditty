@@ -555,20 +555,15 @@
 }
 
 .login_form .authenticate{
-	padding: 7px 0 7px 5px;
+	padding: 7px 10px 7px 10px;
 	background-color: #427fed;
 	text-align: center;
 	color: #fff;
 	cursor: pointer;
-	width: 26%;
+	width: 50%;
 	display: inline-block;
-	min-width: 91px;
+	min-width: 250px;
 	margin-top: 5px;
-}
-
-.login_form .authenticate_left{
-	border-right: 1px solid;
-	margin-right: -6px;
 }
 
 .login_form .authenticate:active{

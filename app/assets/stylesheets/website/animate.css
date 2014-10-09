@@ -1,20 +1,18 @@
 .focused_tooltip.ng-enter,
 .focused_tooltip.ng-leave.ng-leave-active{
 	opacity: 0;
-	top: 100px;
-	height: 50vh;
+	height: 0px;
 }
 
 .focused_tooltip.ng-leave,
 .focused_tooltip.ng-enter-active{
 	opacity: 1;
-	width: 72vh;
 	height: auto;
 }
 
 
-.tolltip.ng-enter,
-.tolltip.ng-leave.ng-leave-active,
+.tooltip.ng-enter,
+.tooltip.ng-leave.ng-leave-active,
 .ticker_popup.ng-enter,
 .ticker_popup.ng-leave.ng-leave-active{
 	opacity: 0;
