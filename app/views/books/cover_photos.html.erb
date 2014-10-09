@@ -2,9 +2,11 @@
 	<% @urls.each do |url| %>
 		<tr>
 			<td>
-				<img src="http://rd-images.readersdoor.netdna-cdn.com/cp/<%= url[1] %>.jpg" 
-					 class="cover_photo <% if url[2] && url[2].present? %>active_photo<% else %> hidden_input <% end %>" 
-					 data-id="<%= url[1] %>"/>
+				<% if url[2] && url[2].present? %>
+					<img src="http://rd-images.readersdoor.netdna-cdn.com/cp/<%= url[1] %>.jpg" 
+						 class="cover_photo <% if url[2] && url[2].present? %>active_photo<% else %> hidden_input <% end %>" 
+					 	 data-id="<%= url[1] %>"/>
+				<% end %>
 			</td>
 			<td><%= url[1] %></td>
 			<td class="site_color show_cover">
