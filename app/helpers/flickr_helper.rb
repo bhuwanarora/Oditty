@@ -12,6 +12,7 @@ module FlickrHelper
 			url = "https://c2.staticflickr.com/"+photo.farm.to_s+"/"+photo.server.to_s+"/"+photo.id.to_s+"_"+photo.secret.to_s+"_c.jpg"
 			
 			# url = flickr.photos.getInfo(:photo_id => photo.id).urls[0]._content
+			puts url.to_s.red
 			clause = 'MERGE (c:CoverPhoto{url:"'+url+'"})'
 			@neo.execute_query(clause)
 

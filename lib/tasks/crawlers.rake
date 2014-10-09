@@ -13,6 +13,12 @@ namespace :crawl do
     S3UploaderHelper.upload_cover_photos
   end
 
+  desc "get_cover_photos"
+  task :get_cover_photos => :environment do
+    include FlickrHelper
+    FlickrHelper.get_cover_photos
+  end
+
   desc "get_images"
   task :get_images => :environment do
     include S3UploaderHelper
@@ -24,7 +30,6 @@ namespace :crawl do
     include S3UploaderHelper
     S3UploaderHelper.upload_author_images
   end
-
   
 
   desc "get_images"
