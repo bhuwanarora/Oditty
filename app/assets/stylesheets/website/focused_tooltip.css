@@ -178,6 +178,7 @@
 	background-color: transparent;
 	display: table;
 	cursor: pointer;
+	width: 100%;
 	padding-left: 0px;
 	padding-right: 0px;
 }
