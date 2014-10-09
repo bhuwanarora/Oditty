@@ -32,35 +32,16 @@
       {{focused_book.published_year | published_year}}</span>
     <span>{{focused_book.page_count | page_count}}</span>
   </div>
- <!--  <div class="rating_star">
-    <img src="assets/star.png"/>
-    <div class="rating_text">{{focused_book.rating | rating }}</div>
-  </div> -->
+
 </div>
-<div class="tabs"
-     ng-hide="focused_book.collapse_blocks">
-  <div ng-click="get_book_overview();"
-       ng-class="{'active_tab2': !show_buy && !show_author}"
-        class="tab tab2">
-      <span><b>Overview</b></span><span class=""></span>
-  </div>
- <!--  <div ng-click="show_buy = false;"
-        class="tab"
-        ng-class="{'active_tab2': !show_info && !show_buy}">
-      <span>Actions</span><span class=""></span>
-  </div> -->
-  <div class="tab tab2"
-       ng-click="get_author_details();"
-       ng-class="{'active_tab2': show_author && !show_buy}">
-      <span><b>About author</b></span><span class=""></span>
-  </div>
-  <div ng-click="get_buy_links();"
-       class="tab tab2"
-       ng-class="{'active_tab2': show_buy && !show_author}">
-      <span><b>Buy this book</b></span><span class=""></span>
-  </div>
+<div ng-click="get_book_overview();"
+     ng-class="{'active_tab2': !show_buy && !show_author}">
+    <span><b>Overview</b></span><span class=""></span>
 </div>
 
+
+
+<!-- OVERVIEw -->
 <div class="book_info" 
      ng-hide="focused_book.collapse_blocks"
      ng-if="!show_buy && !show_author">
@@ -91,6 +72,12 @@
   </div>
 </div>
 
+<div ng-click="get_author_details();"
+     ng-class="{'active_tab2': show_author && !show_buy}">
+    <span><b>About author</b></span><span class=""></span>
+</div>
+
+<!-- ABOUT AUTHOR -->
 <div class="book_info scrollbar author_book_info"
      ng-hide="focused_book.collapse_blocks"
      ng-if="show_author && !show_buy">
@@ -123,6 +110,13 @@
              class="author_book_thumb">
       <!-- <img class="signature_thumb" ng-src="{{focused_book.author_details.signature_pic}}"/> -->
   </div>
+</div>
+
+
+<!-- BUY THIS BOOK -->
+<div ng-click="get_buy_links();"
+     ng-class="{'active_tab2': show_buy && !show_author}">
+    <span><b>Buy this book</b></span><span class=""></span>
 </div>
 
 <div ng-if="show_buy && !show_author" 

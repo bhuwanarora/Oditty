@@ -71,7 +71,7 @@
 	color: #333;
 }
 
-.header_navbar .share:before{
+.share:before{
 	content: 'Share';
 }
 
@@ -80,8 +80,9 @@
 	cursor: pointer;
 }
 
-.header_navbar .share{
+.share{
 	font-weight: 700;
+	padding-top: 10px;
 }
 
 .header_navbar img{
@@ -1688,55 +1689,6 @@
 	font-size: 0.9em;
 }
 
-@media only screen
-and (min-width : 320px)
-and (max-width : 900px) {
-/* Styles */
-	/*.header_navbar .share:before{
-		content: "\e620";
-		font-family: icomoon;
-		speak: none;
-		font-style: normal;
-		font-weight: 400;
-		font-variant: normal;
-		text-transform: none;
-		line-height: 1;
-	}
-
-	.shelf_nav_links{
-		font-size: 0.8em;
-	}
-
-	.left_column{
-		right: 45px;
-		left: 1vh;
-		bottom: 1vh;
-		width: initial;
-		height: initial;
-	}
-
-l	.compressed_info_card{
-		right: 2px;
-		left: initial !important;
-	}
-
-	.compressed_info_card_shifted{
-		right: initial;
-		bottom: 0px;
-		top: inherit !important;
-	}
-
-	.left_column .collapse_icon{
-		right: 17px;
-		left: initial;
-	}
-
-	.loading_widget{
-		display: none;
-	}*/
-
-}
-
 .share_wrapper{
 	position: fixed;
 	top: 60px;
@@ -2202,23 +2154,33 @@ and (max-width : 500px) {
 		padding: 0px;
 	}
 
-	/*.recommendation_box{
-		left: 0px;
-		right: 0px;
-		width: inherit;
-		margin: 0px;
-		top: 0px;
-		bottom: 0px;
-		height: inherit;
-	}*/
-
-	/*.recommendation_box .friend_grid{
-		height: 75vh;
+	.share{
+		position: fixed;
+		bottom: 10px;
+		background-color: #427fed;
+		color: #fff;
+		width: initial;
+		height: initial;
+		border-radius: 20px;
+		padding: 10px;
+		left: 10px;
 	}
 
-	.recommendation_box .friend_grid .friend_name{
-		width: 60px;
-	}*/
+	.share:hover{
+		text-decoration: none;
+		padding: 11px;
+	}
+
+	.share:before{
+		content: "\e620";
+		font-family: icomoon;
+		speak: none;
+		font-style: normal;
+		font-weight: 400;
+		font-variant: normal;
+		text-transform: none;
+		line-height: 1;
+	}
 
 }
 
