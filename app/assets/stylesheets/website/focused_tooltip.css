@@ -19,6 +19,7 @@
 
 .focused_tooltip .buy_column{
 	padding: 10px;
+	position: relative;
 }
 
 .focused_tooltip .rating_star{
@@ -65,6 +66,7 @@
 	line-height: 1.5em;
 	padding: 12px;
 	white-space: normal;
+	position: relative;
 }
 
 .focused_tooltip .book_info .text{
@@ -228,6 +230,7 @@
 	right: 0px;
 	text-align: center;
 	overflow-y:	auto; 
+	position: relative;
 }
 
 .focused_tooltip .popup_icon{

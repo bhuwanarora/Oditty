@@ -25,8 +25,8 @@
 <div class="icon-close-popup" ng-click="hide_popups()"></div>
 <!-- <div class="close button_effect" ng-click="close_focused_tooltip()">x</div> -->
 <div class="header">
-  <div class="title site_color header_font" title="{{focused_book.title}}"><b>{{focused_book.title | book_title}} </b></div>
-  <div class="author site_color">by <b>{{focused_book.author_name}}</b></div>
+  <div class="title header_font" title="{{focused_book.title}}"><b>{{focused_book.title | book_title}} </b></div>
+  <div class="author">by <b>{{focused_book.author_name}}</b></div>
   <div class="author">
     <span ng-if="focused_book.published_year">
       {{focused_book.published_year | published_year}}</span>
@@ -60,14 +60,14 @@
   </div>
 </div>
 
-<div class="book_info" ng-if="!show_buy && !show_author">
+<div class="book_info animate-fast" ng-if="!show_buy && !show_author">
   <div ng-include src="'/assets/angular/views/shared/partials/book_info.html'"></div>
   <div ng-if="!show_buy && !show_author" ng-disabled="!focused_book.status">
     <rate data="focused_book"></rate>
   </div>
 </div>
 
-<div class="scrollbar description" 
+<div class="scrollbar description animate-fast" 
      ng-class="{'long_description': !focused_book.users_count || focused_book.users_count == 0}"
      msd-wheel="stop_horizontal_scroll($event)" ng-if="!show_buy && !show_author">
   <span itemprop="description" ng-bind-html="focused_book.summary | summary"></span>
@@ -76,7 +76,8 @@
   <br/>
 </div>
 
-<div class="user_box" ng-if="!show_author && !show_buy && focused_book.users_count && focused_book.users_count > 0">
+<div class="user_box animate-fast" 
+     ng-if="!show_author && !show_buy && focused_book.users_count && focused_book.users_count > 0">
   <div class="heading">{{focused_book.users_count}} friends have read this</div>
   <div class="users">
     <div ng-repeat="user in focused_book.users">
@@ -85,7 +86,7 @@
   </div>
 </div>
 
-<div class="book_info scrollbar author_book_info"
+<div class="book_info scrollbar author_book_info animate-fast"
      ng-if="show_author && !show_buy">
      <div class="image_wrapper">
         <img ng-src="{{focused_book.author_details.image_url}}"/> 
@@ -101,14 +102,13 @@
       </div>
 </div>
 
-<div class="relative_position">
+<div class="relative_position animate-fast" ng-if="show_author && !show_buy">
   <div class="user_box_wrapper animate-fast"
       ng-click="get_book_from_author()"
       ng-show="show_author && !show_buy">
       <div class="text"><b>More Books from {{focused_book.author_name}} </b></div>
   </div>
-  <div class="user_box"
-       ng-if="show_author && !show_buy">
+  <div class="user_box">
        <div class="heading">{{focused_book.author_details.book_ids.length}} more books from author</div>
         <img ng-src="{{book_isbn | small_thumb}}" 
              ng-repeat="book_isbn in focused_book.author_details.book_isbns | limitTo: 7 track by $index" 
@@ -117,7 +117,7 @@
   </div>
 </div>
 
-<div ng-if="show_buy && !show_author" class="buy_column">
+<div ng-if="show_buy && !show_author" class="buy_column animate-fast">
   <div ng-if="focused_book.bnn_links">
     <span>Buy from&nbsp;</span><em><span>Barnes & Nobles</span></em>
     <span ng-repeat="link in focused_book.bnn_links track by $index">
@@ -129,7 +129,7 @@
   </div>
 </div>
 
-<div class="time_to_read" ng-if="show_buy && !show_author">
+<div class="time_to_read animate-fast" ng-if="show_buy && !show_author">
   <div class="header">Describe the reading length of this book</div>
   <div ng-click="record_read_time(0, $event)"
       class="tab read_block"
