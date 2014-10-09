@@ -151,6 +151,7 @@
 .focused_tooltip .tweet_link,
 .focused_tooltip .recommend,
 .time_to_read,
+.recommendation_box,
 .focused_tooltip .user_box_wrapper{
 	box-shadow: 0 4px 3px rgba(0, 0, 0, 0.16);
 	background-color: white;
@@ -339,6 +340,7 @@
 	height: 50vh;
 	border-radius: 2px;
 	z-index: 1;
+	padding: 0px;
 }
 
 

@@ -9,8 +9,7 @@
 	 ng-click="stop_propagation($event)">
 	<div class="icon-close-popup" ng-click="recommend_object.recommended = false;"></div>
 	<div class="header">
-		<span><b>Select friends whom you want to recommend</span></b><br/>
-		<span class="site_color"> {{recommend_object.title}} by {{recommend_object.author_name}}</span>
+		<span><b>Select friends whom you want to recommend</span></b>
 	</div>
 	<div class="friend_grid scrollbar">
 		<div ng-repeat="friend in user.followers" 
