@@ -232,7 +232,7 @@
 .card .description{
 	position: absolute;
 	top: 14vh;
-	border-radius: 1px;
+	border-radius: 4px;
 }
 
 .card .description p{
