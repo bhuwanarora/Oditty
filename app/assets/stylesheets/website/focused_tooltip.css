@@ -22,6 +22,10 @@
 	position: relative;
 }
 
+.focused_tooltip .buy_column img{
+	width: 100px;
+}
+
 .focused_tooltip .rating_star{
 	position: absolute;
 	right: 40px;
