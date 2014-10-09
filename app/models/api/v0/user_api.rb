@@ -161,7 +161,7 @@ module Api
 				return_clause = " RETURN DISTINCT(ID(user))"
 				if params[:email]
 					puts "email exits".green
-					clause = "MATCH (user:User{email:\""+email+"\"}) RETURN ID(user)"
+					clause = "MATCH (user:User{email:\""+params[:email]+"\"}) RETURN ID(user)"
 					puts clause.blue.on_red
 					user_id = @neo.execute_query clause
 					user_exists = user_id["data"].present?
