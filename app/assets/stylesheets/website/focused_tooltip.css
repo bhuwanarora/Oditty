@@ -402,7 +402,7 @@
 }
 
 .recommendation_box .friend_grid{
-	height: 40vh;
+	height: 20vh;
 	padding: 20px;
 	white-space: normal;
 	/*overflow-y: scroll;*/

@@ -174,18 +174,12 @@
 
 .recommendation_box.ng-leave,
 .recommendation_box.ng-enter.ng-enter-active{
-	height: 500px;
-	margin-top: -250px;
-	opacity: 1;
-	width: 500px;	
+	height: 0px;
 }
 
 .recommendation_box.ng-enter,
 .recommendation_box.ng-leave.ng-leave-active{
-	height: 50px;
-	margin-top: 0px;
-	opacity: 0;
-	width: 200px;
+	height: 50vh;
 }
 
 .news.ng-enter{

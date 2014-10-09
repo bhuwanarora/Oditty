@@ -4,6 +4,7 @@
 	<b>Recommend to friends</b>
 </div>
 <div class="recommendation_box animate-slow"
+	 msd-wheel="stop_propagation($event)"
 	 ng-if="recommend_object.recommended" 
 	 ng-click="stop_propagation($event)">
 	<div class="icon-close-popup" ng-click="recommend_object.recommended = false;"></div>
