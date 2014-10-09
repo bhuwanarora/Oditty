@@ -556,6 +556,7 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', 'w
       }
 
       $scope._init = function(){
+        $scope.collapse = $rootScope.focused_book.collapse;
         if(angular.isUndefined($rootScope.user.followers)){
           $rootScope.user.selected_followers = [];
           websiteService.get_followed_by().then(function(data){
