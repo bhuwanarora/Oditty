@@ -150,7 +150,8 @@
 .focused_tooltip .header,
 .focused_tooltip .tweet_link,
 .focused_tooltip .footer .recommend,
-.time_to_read{
+.time_to_read,
+.focused_tooltip .user_box_wrapper{
 	box-shadow: 0 7px 15px rgba(0,0,0,0.5);
 	background-color: white;
 	padding-left: 3vh;
@@ -164,16 +165,13 @@
 
 .focused_tooltip .user_box,
 .focused_tooltip .user_box_wrapper{
-	bottom: 145px;
-	position: absolute;
-	background-color: white;
-	width: 93%;
 	padding-top: 5px;
 	height: 10vh;
 	overflow-y: hidden;
 }
 
 .focused_tooltip .user_box_wrapper{
+	position: absolute;
 	z-index: 1;
 	color: transparent;
 	background-color: transparent;
