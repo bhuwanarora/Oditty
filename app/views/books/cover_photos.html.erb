@@ -3,7 +3,7 @@
 		<tr>
 			<td>
 				<img src="http://rd-images.readersdoor.netdna-cdn.com/cp/<%= url[1] %>.jpg" 
-					 class="cover_photo <% if url[2].present? %>active_photo<% end %>" 
+					 class="cover_photo <% if url[2] && url[2].present? %>active_photo<% else %> hidden_input <% end %>" 
 					 data-id="<%= url[1] %>"/>
 			</td>
 			<td><%= url[1] %></td>
@@ -12,7 +12,7 @@
 				Show
 			</td>
 
-			<td class="upload_cover">
+			<td class="upload_cover site_color">
 				Upload
 				<input type="hidden" value="<%= url[0] %>" class="url"/>
 				<input type="hidden" value="<%= url[1] %>" class="id"/>
