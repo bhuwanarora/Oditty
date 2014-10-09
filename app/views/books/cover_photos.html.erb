@@ -10,7 +10,8 @@
 			</td>
 			<td><%= url[1] %></td>
 			<td class="site_color show_cover">
-				<img src="<%= url[0] %>" class="cover_photo hidden_input"/>
+				<img class="cover_photo" class="hidden_input" />
+				<input type="hidden" value="<%= url[0] %>" class="url"/>
 				Show
 			</td>
 
@@ -57,7 +58,9 @@
 		var show_cover =  function(){
 			$('.show_cover').on('click', function(){
 				var $this = $(this);
+				var src = $this.children('.url').val();
 				$this.children('.cover_photo').removeClass('hidden_input');
+				$this.children('.cover_photo').attr('src', src);
 			});
 		}
 
