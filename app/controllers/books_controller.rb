@@ -51,6 +51,11 @@ class BooksController < ApplicationController
   def upload_cover_photo
     begin
       S3UploaderHelper.upload_cover_photo([params[:url], params[:id]])
+      clause = "MATCH (c:CoverPhoto) WHERE ID(c)="+params[:id].to_s+" SET c.status=true" 
+      neo = Neography::Rest.new
+      neo.execute_query clause
+      puts clause.blue.on_red
+      
       render :json => {:message => "Success"}, :status => 200
     rescue Exception => e
       render :json => {:message => e.to_s}, :status => 500
