@@ -513,6 +513,11 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', 'w
         event.stopPropagation();
       }
 
+      $scope.close_friends_list = function(){
+        $rootScope.recommend_object.recommended = false; 
+        $rootScope.focused_book.collapse_blocks = false;
+      }
+
       $scope.recommend = function(){
         $rootScope.focused_book.collapse_blocks = true;
         var book_title = $scope.recommend_object.title;
