@@ -514,7 +514,7 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', 'w
       }
 
       $scope.close_friends_list = function(){
-        $rootScope.recommend_object.recommended = false; 
+        $scope.recommend_object.recommended = false; 
         $rootScope.user.collapse_blocks = false;
       }
 
