@@ -22,15 +22,19 @@ module S3UploaderHelper
 		clause = "MATCH (c:CoverPhoto) WHERE c.status=true RETURN c.url, ID(c)"
 		urls = @neo.execute_query(clause)["data"]
 		for url in urls
-			name = url[1].to_s+".jpg"
-			key = "cp/"+name
-			puts "#{name}".green
-			open(name, 'wb') do |file|
-				file << open(url[0]).read
-			end
-			self.upload_file(name, key)
-			File::delete(name)
+			self.upload_cover_photo url
 		end
+	end
+
+	def self.upload_cover_photo data
+		name = data[1].to_s+".jpg"
+		key = "cp/"+name
+		puts "#{name}".green
+		open(name, 'wb') do |file|
+			file << open(data[0]).read
+		end
+		self.upload_file(name, key)
+		File::delete(name)
 	end
 
 	def self.upload_author_images

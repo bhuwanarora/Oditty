@@ -48,6 +48,15 @@ class BooksController < ApplicationController
     end
   end
 
+  def upload_cover_photo
+    begin
+      S3UploaderHelper.upload_cover_photo([params[:url], params[:id]])
+      render :json => {:message => "Success"}, :status => 200
+    rescue Exception => e
+      render :json => {:message => e.to_s}, :status => 500
+    end
+  end
+
   # GET /books/1
   # GET /books/1.json
   def show

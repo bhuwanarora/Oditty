@@ -1,11 +1,27 @@
-<% @urls.each do |url| %>
-<span>
-	<img src="http://rd-images.readersdoor.netdna-cdn.com/cp/<%= url[1] %>.jpg" class="cover_photo <% if url[2].present? %>active_photo<% end %>" data-id="<%= url[1] %>"/>
-	<div><%= url[1] %></div>
-</span>
+<table>
+	<% @urls.each do |url| %>
+		<tr>
+			<td>
+				<img src="http://rd-images.readersdoor.netdna-cdn.com/cp/<%= url[1] %>.jpg" 
+					 class="cover_photo <% if url[2].present? %>active_photo<% end %>" 
+					 data-id="<%= url[1] %>"/>
+			</td>
+			<td><%= url[1] %></td>
+			<td class="site_color show_cover">
+				<img src="<%= url[0] %>" class="cover_photo hidden_input"/>
+				Show
+			</td>
 
-<% end %>
+			<td class="upload_cover">
+				Upload
+				<input type="hidden" value="<%= url[0] %>" class="url"/>
+				<input type="hidden" value="<%= url[1] %>" class="id"/>
+			</td>
 
+		</tr>
+	<% end %>
+</table>
+<div class="vertical_padder"></div>
 <div class="main_footer">
 	<span type="status" class="footer_status"></span>
 </div>
@@ -35,6 +51,37 @@
 				})
 			});
 		}
+
+		var show_cover =  function(){
+			$('.show_cover').on('click', function(){
+				var $this = $(this);
+				$this.children('.cover_photo').removeClass('hidden_input');
+			});
+		}
+
+		var upload_cover = function(){
+			$('.upload_cover').on('click', function(){
+				var $this = $(this);
+				var id = $this.children('.id').val();
+				var url = $this.children('.url').val();
+				var data = "id="+id+"&url="+url;
+				$('.footer_status').html("Uploading....");
+				$.ajax({
+					url: "<%= upload_cover_photo_path %>",
+					data: data,
+					success: function(){
+						$('.footer_status').html("Done....");
+					},
+					error: function(){
+						$('.footer_status').html("Error in uploading....");
+					}
+				})
+			});
+		}
+
+		upload_cover();
+
+		show_cover();
 
 		set_active();
 	});
