@@ -2,14 +2,12 @@
 .focused_tooltip.ng-leave.ng-leave-active{
 	opacity: 0;
 	top: 100px;
-	width: 60vh;
 	height: 50vh;
 }
 
 .focused_tooltip.ng-leave,
 .focused_tooltip.ng-enter-active{
 	opacity: 1;
-	top: 61px;
 	width: 72vh;
 	height: auto;
 }
