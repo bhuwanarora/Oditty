@@ -36,7 +36,7 @@
 </div>
 <div class="heading_block" 
      ng-click="get_book_overview();"
-     ng-class="{'active_tab2': !show_buy && !show_author}">
+     ng-class="{'bold': !show_buy && !show_author}">
     <span>Overview</span>
 </div>
 
@@ -75,7 +75,7 @@
 
 <div class="heading_block" 
      ng-click="get_author_details();"
-     ng-class="{'active_tab2': show_author && !show_buy}">
+     ng-class="{'bold': show_author && !show_buy}">
     <span>About author</span>
 </div>
 
@@ -118,7 +118,7 @@
 <!-- BUY THIS BOOK -->
 <div class="heading_block" 
      ng-click="get_buy_links();"
-     ng-class="{'active_tab2': show_buy && !show_author}">
+     ng-class="{'bold': show_buy && !show_author}">
     <span>Buy this book</span>
 </div>
 
