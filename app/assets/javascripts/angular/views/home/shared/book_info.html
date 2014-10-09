@@ -60,14 +60,14 @@
   </div>
 </div>
 
-<div class="book_info animate-fast" ng-if="!show_buy && !show_author">
+<div class="book_info" ng-if="!show_buy && !show_author">
   <div ng-include src="'/assets/angular/views/shared/partials/book_info.html'"></div>
   <div ng-if="!show_buy && !show_author" ng-disabled="!focused_book.status">
     <rate data="focused_book"></rate>
   </div>
 </div>
 
-<div class="scrollbar description animate-fast" 
+<div class="scrollbar description" 
      ng-class="{'long_description': !focused_book.users_count || focused_book.users_count == 0}"
      msd-wheel="stop_horizontal_scroll($event)" ng-if="!show_buy && !show_author">
   <span itemprop="description" ng-bind-html="focused_book.summary | summary"></span>
@@ -76,7 +76,7 @@
   <br/>
 </div>
 
-<div class="user_box animate-fast" 
+<div class="user_box" 
      ng-if="!show_author && !show_buy && focused_book.users_count && focused_book.users_count > 0">
   <div class="heading">{{focused_book.users_count}} friends have read this</div>
   <div class="users">
@@ -86,7 +86,7 @@
   </div>
 </div>
 
-<div class="book_info scrollbar author_book_info animate-fast"
+<div class="book_info scrollbar author_book_info"
      ng-if="show_author && !show_buy">
      <div class="image_wrapper">
         <img ng-src="{{focused_book.author_details.image_url}}"/> 
@@ -102,8 +102,8 @@
       </div>
 </div>
 
-<div class="relative_position animate-fast" ng-if="show_author && !show_buy">
-  <div class="user_box_wrapper animate-fast"
+<div class="relative_position" ng-if="show_author && !show_buy">
+  <div class="user_box_wrapper"
       ng-click="get_book_from_author()"
       ng-show="show_author && !show_buy">
       <div class="text"><b>More Books from {{focused_book.author_name}} </b></div>
@@ -117,7 +117,7 @@
   </div>
 </div>
 
-<div ng-if="show_buy && !show_author" class="buy_column animate-fast">
+<div ng-if="show_buy && !show_author" class="buy_column">
   <div ng-if="focused_book.bnn_links">
     <span>Buy from&nbsp;</span><em><span>Barnes & Nobles</span></em>
     <span ng-repeat="link in focused_book.bnn_links track by $index">
@@ -129,7 +129,7 @@
   </div>
 </div>
 
-<div class="time_to_read animate-fast" ng-if="show_buy && !show_author">
+<div class="time_to_read" ng-if="show_buy && !show_author">
   <div class="header">Describe the reading length of this book</div>
   <div ng-click="record_read_time(0, $event)"
       class="tab read_block"
@@ -152,7 +152,7 @@
           class="table_cell">Share your reading journey...</span>
   </div>
 </div>
-<div class="footer">
+<div>
   <recommend data="focused_book"></recommend>
   <!-- <span class="interact" ng-click="user.interact = true;">Tweet</span> -->
   <!-- <div class="own_this_book"
