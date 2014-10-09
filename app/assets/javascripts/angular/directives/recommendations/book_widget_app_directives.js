@@ -514,6 +514,7 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', 'w
       }
 
       $scope.recommend = function(){
+        $rootScope.focused_book.collapse_blocks = true;
         var book_title = $scope.recommend_object.title;
         var author_name = $scope.recommend_object.author_name;
         if($scope.recommend_object.recommended){

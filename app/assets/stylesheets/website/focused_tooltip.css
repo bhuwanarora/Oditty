@@ -36,6 +36,7 @@
 	padding: 15px 10px 5px;
 	position: relative;
 	max-height: 32vh;
+	border-bottom: 1px solid #F2F2F2;
 }
 
 .focused_tooltip .rating_star .rating_text{
@@ -55,9 +56,8 @@
 }
 
 .focused_tooltip .user_box .heading{
-	color: #9E9E9E;
 	font-size: 0.8em;
-	padding-left: 10px;
+	margin: 10px 0px;
 }
 
 .focused_tooltip .description{
@@ -165,8 +165,8 @@
 
 .focused_tooltip .user_box,
 .focused_tooltip .user_box_wrapper{
-	padding-top: 5px;
-	height: 10vh;
+	padding: 10px 3vh;
+	height: 15vh;
 	overflow-y: hidden;
 	background-color: white;
 }
@@ -210,17 +210,16 @@
 
 .focused_tooltip .tabs{
 	overflow: auto;
-	width: 100%;
 	box-shadow: 0 7px 15px rgba(0,0,0,0.5);
-	background-color: white;
+	background-color: #fff;
+	padding-left: 3vh;
+	padding-right: 3vh;
 }
 
 .focused_tooltip .tabs .tab{
 	background-color: #E6E6E6;
-	padding-top: 8px;
-	padding-bottom: 8px;
-	width: 33%;
-	font-size: 0.8em;
+	padding: 8px 20px;
+	font-size: .8em;
 }
 
 .time_to_read{
@@ -308,7 +307,7 @@
 }
 
 .focused_tooltip .tweet_link{
-	padding: 10px;
+	padding: 15px 3vh;
 	overflow: auto;
 }
 
@@ -332,6 +331,100 @@
 	padding: 4px;
 	box-shadow: 0 3px 8px rgba(0,0,0,.3);
 	width: 100%;
+}
+
+.recommendation_box{
+	position: relative;
+	background-color: #fff;
+	height: 50vh;
+	border-radius: 2px;
+	z-index: 1;
+}
+
+
+.recommendation_box .friend_grid .friend_thumb{
+	width: 60px;
+	min-height: 60px;
+}
+
+.recommendation_box .friend_grid .friend_thumb_wrapper{
+	position: relative;
+	float: left;
+	overflow: hidden;
+	width: 60px;
+	height: 60px;
+	display: inline-block;
+	float: left;
+	border-radius: 4px;
+}
+
+.recommendation_box .friend_grid .friend_name{
+	font-size: .8em;
+	cursor: default;
+	font-weight: 700;
+	width: 100px;
+	padding: 10px;
+	text-transform: capitalize;
+}
+
+.recommendation_box .header{
+	width: 95%;
+	padding: 12px !important;
+}
+
+.recommendation_box .footer{
+	position: absolute;
+	bottom: 0px;
+	width: 96%;
+}
+
+.recommendation_box .footer .done{
+	padding: 10px;
+	width: 70px;
+	text-align: center;
+	float: right;
+	margin: 0px 0px 15px 0px;
+	font-size: .8em;
+}
+
+.ie .recommendation_box .footer .done{
+	margin:0px 0px 10px;
+}
+
+.recommendation_box .footer .done:disabled{
+	cursor: default;
+	background-color: rgba(66, 127, 237, 0.64)!important;
+	background-image: none;
+}
+
+.recommendation_box .footer .done:disabled:hover{
+	background-color: rgba(66, 127, 237, 0.64)!important;
+}
+
+.recommendation_box .friend_grid{
+	height: 40vh;
+	padding: 20px;
+	white-space: normal;
+	/*overflow-y: scroll;*/
+	background-color: #F5F5F5;
+	border-top: 1px solid #E4E4E4;
+	border-bottom: 1px solid #E4E4E4;
+}
+
+.recommendation_box .friend_grid .block{
+	background-color: white;
+	border: 1px solid #E7E7E7;
+	display: inline-block;
+	float: left;
+	margin: 4px;
+	border: 5px solid #fff;
+}
+
+@-moz-document url-prefix() {
+
+    .recommendation_box .footer .done{
+        margin: 0px 0px 7px !important;
+    }
 }
 
 @media only screen

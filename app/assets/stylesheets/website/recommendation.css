@@ -710,21 +710,6 @@
 	margin-top: -5px;
 }
 
-
-
-.recommendation_box{
-	position: relative;
-	background-color: #fff;
-	width: 70%;
-	height: 70vh;
-	left: 50%;
-	top: 50%;
-	margin-top: -35vh;
-	border-radius: 2px;
-	margin-left: -35%;
-	z-index: 1;
-}
-
 .mark_as_read_instruct{
 	background-image: url("/assets/base_case/markasread.png");
 	background-size: cover;
@@ -733,84 +718,6 @@
 .bookmark_instruct{
 	background-image: url("/assets/base_case/bookmark.png");
 	background-size: cover;
-}
-
-.recommendation_box .friend_grid .friend_thumb{
-	width: 60px;
-	min-height: 60px;
-}
-
-.recommendation_box .friend_grid .friend_thumb_wrapper{
-	position: relative;
-	float: left;
-	overflow: hidden;
-	width: 60px;
-	height: 60px;
-	display: inline-block;
-	float: left;
-	border-radius: 4px;
-}
-
-.recommendation_box .friend_grid .friend_name{
-	font-size: .8em;
-	cursor: default;
-	font-weight: 700;
-	width: 100px;
-	padding: 10px;
-	text-transform: capitalize;
-}
-
-.recommendation_box .header{
-	width: 95%;
-	padding: 12px !important;
-}
-
-.recommendation_box .footer{
-	position: absolute;
-	bottom: 0px;
-	width: 96%;
-}
-
-.recommendation_box .footer .done{
-	padding: 10px;
-	width: 70px;
-	text-align: center;
-	float: right;
-	margin: 0px 0px 15px 0px;
-	font-size: .8em;
-}
-
-.ie .recommendation_box .footer .done{
-	margin:0px 0px 10px;
-}
-
-.recommendation_box .footer .done:disabled{
-	cursor: default;
-	background-color: rgba(66, 127, 237, 0.64)!important;
-	background-image: none;
-}
-
-.recommendation_box .footer .done:disabled:hover{
-	background-color: rgba(66, 127, 237, 0.64)!important;
-}
-
-.recommendation_box .friend_grid{
-	height: 40vh;
-	padding: 20px;
-	white-space: normal;
-	/*overflow-y: scroll;*/
-	background-color: #F5F5F5;
-	border-top: 1px solid #E4E4E4;
-	border-bottom: 1px solid #E4E4E4;
-}
-
-.recommendation_box .friend_grid .block{
-	background-color: white;
-	border: 1px solid #E7E7E7;
-	display: inline-block;
-	float: left;
-	margin: 4px;
-	border: 5px solid #fff;
 }
 
 .reset_filters{
@@ -2164,10 +2071,6 @@ l	.compressed_info_card{
         height: 50% !important;
     }
 
-    .recommendation_box .footer .done{
-        margin: 0px 0px 7px !important;
-    }
-
     .user_profile .user_profile_block{
         white-space: initial !important;
     }
@@ -2299,7 +2202,7 @@ and (max-width : 500px) {
 		padding: 0px;
 	}
 
-	.recommendation_box{
+	/*.recommendation_box{
 		left: 0px;
 		right: 0px;
 		width: inherit;
@@ -2307,15 +2210,15 @@ and (max-width : 500px) {
 		top: 0px;
 		bottom: 0px;
 		height: inherit;
-	}
+	}*/
 
-	.recommendation_box .friend_grid{
+	/*.recommendation_box .friend_grid{
 		height: 75vh;
 	}
 
 	.recommendation_box .friend_grid .friend_name{
 		width: 60px;
-	}
+	}*/
 
 }
 
