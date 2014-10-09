@@ -287,7 +287,9 @@ websiteApp.directive('bookInfo', ['$rootScope', '$timeout', 'widgetService', 'sh
       $scope.get_author_details = function(){
         $scope.show_author = true;
         $scope.show_buy = false;
-        $rootScope.focused_book.collapse_blocks = false;
+        if(angular.isDefined($rootScope.focused_book)){
+          $rootScope.focused_book.collapse_blocks = false;
+        }
         $cookieStore.put('show_author', true);
         $cookieStore.put('show_buy', false);
         if(angular.isUndefined($rootScope.focused_book.author_details)){
@@ -305,7 +307,9 @@ websiteApp.directive('bookInfo', ['$rootScope', '$timeout', 'widgetService', 'sh
       }
 
       $scope.get_buy_links = function(){
-        $rootScope.focused_book.collapse_blocks = false;
+        if(angular.isDefined($rootScope.focused_book)){
+          $rootScope.focused_book.collapse_blocks = false;
+        }
         $scope.show_author = false;
         $scope.show_buy = true;
         $cookieStore.put('show_author', false);
@@ -318,7 +322,9 @@ websiteApp.directive('bookInfo', ['$rootScope', '$timeout', 'widgetService', 'sh
       }
 
       $scope.get_book_overview = function(){
-        $rootScope.focused_book.collapse_blocks = false;
+        if(angular.isDefined($rootScope.focused_book)){
+          $rootScope.focused_book.collapse_blocks = false;
+        }
         $scope.show_buy = false; 
         $scope.show_author = false;
         $cookieStore.put('show_author', false);
