@@ -100,7 +100,7 @@
 	font-size: 2em;
 }
 
-.focused_tooltip .footer .recommend{
+.focused_tooltip .recommend{
 	cursor: pointer;
 	font-size: .9em;
 	padding: 10px 15px;
@@ -149,7 +149,7 @@
 .focused_tooltip .description,
 .focused_tooltip .header,
 .focused_tooltip .tweet_link,
-.focused_tooltip .footer .recommend,
+.focused_tooltip .recommend,
 .time_to_read,
 .focused_tooltip .user_box_wrapper{
 	box-shadow: 0 4px 3px rgba(0, 0, 0, 0.16);
