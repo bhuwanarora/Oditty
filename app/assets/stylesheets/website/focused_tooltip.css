@@ -9,18 +9,11 @@
 }
 
 .focused_tooltip{
-	background-color: #fff;
-	border: 1px solid #FFF;
-	border-radius: 2px;
-	box-shadow: 0 7px 15px rgba(0,0,0,.5);
 	position: fixed;
 	top: 61px;
-	bottom: 1px;
 	white-space: initial;
 	z-index: 12;
 	width: 72vh;
-	padding-left: 3vh;
-	padding-right: 3vh;
 	/* for big screens */
 }
 
@@ -41,9 +34,10 @@
 .focused_tooltip .book_info{
 	padding: 15px 10px 5px;
 	position: relative;
-	width: 97%;
-	/*overflow-y: scroll;*/
 	max-height: 32vh;
+	box-shadow: 0 7px 15px rgba(0,0,0,0.5);
+	background-color: white;
+	border: 1px solid #fff;
 }
 
 .focused_tooltip .rating_star .rating_text{
@@ -70,10 +64,9 @@
 
 .focused_tooltip .description{
 	font-size: .93em;
-	height: 20vh;
+	max-height: 20vh;
 	line-height: 1.5em;
 	padding: 12px;
-	width: 97%;
 	white-space: normal;
 }
 
@@ -88,7 +81,7 @@
 }
 
 .focused_tooltip .long_description{
-	height: 35vh;
+	max-height: 35vh;
 }
 
 .focused_tooltip .book_info .image_wrapper{
@@ -112,9 +105,6 @@
 	cursor: pointer;
 	font-size: .9em;
 	padding: 10px 15px;
-	position: absolute;
-	right: 30px;
-	bottom: 20px;
 }
 
 .focused_tooltip .users{
@@ -153,6 +143,19 @@
 	padding: 3vh 0px 1vh 0px;
 	cursor: default;
 	line-height: 1.3em;
+}
+
+.focused_tooltip .buy_column,
+.focused_tooltip .description,
+.focused_tooltip .header,
+.focused_tooltip .tweet_link,
+.focused_tooltip .footer .recommend.
+.time_to_read{
+	box-shadow: 0 7px 15px rgba(0,0,0,0.5);
+	background-color: white;
+	padding-left: 3vh;
+	padding-right: 3vh;
+	border: 1px solid #fff;
 }
 
 .focused_tooltip .header .author{
@@ -206,8 +209,8 @@
 .focused_tooltip .tabs{
 	overflow: auto;
 	width: 100%;
-	margin-left: -1px;
-	margin-top: 10px;
+	box-shadow: 0 7px 15px rgba(0,0,0,0.5);
+	background-color: white;
 }
 
 .focused_tooltip .tabs .tab{
@@ -221,7 +224,6 @@
 .time_to_read{
 	left: 0px;
 	letter-spacing: -5px;
-	padding: 5px;
 	padding-bottom: 20px;
 	right: 0px;
 	text-align: center;
@@ -303,9 +305,8 @@
 }
 
 .focused_tooltip .tweet_link{
-	bottom: 10px;
-	position: absolute;
 	padding: 10px;
+	overflow: auto;
 }
 
 .focused_tooltip .comment_link{
