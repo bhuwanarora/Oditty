@@ -20,10 +20,15 @@
 .focused_tooltip .buy_column{
 	padding: 10px;
 	position: relative;
+	overflow: auto;
 }
 
 .focused_tooltip .buy_column img{
 	width: 100px;
+}
+
+.focused_tooltip .buy_column img:hover{
+	border: 1px solid #D2D2D2;
 }
 
 .focused_tooltip .rating_star{
