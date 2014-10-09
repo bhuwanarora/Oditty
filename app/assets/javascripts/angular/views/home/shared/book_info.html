@@ -37,7 +37,8 @@
     <div class="rating_text">{{focused_book.rating | rating }}</div>
   </div> -->
 </div>
-<div class="tabs">
+<div class="tabs"
+     ng-hide="focused_book.collapse_blocks">
   <div ng-click="get_book_overview();"
        ng-class="{'active_tab2': !show_buy && !show_author}"
         class="tab tab2">
@@ -61,7 +62,7 @@
 </div>
 
 <div class="book_info" 
-     ng-hide="user.collapse_blocks"
+     ng-hide="focused_book.collapse_blocks"
      ng-if="!show_buy && !show_author">
   <div ng-include src="'/assets/angular/views/shared/partials/book_info.html'"></div>
   <div ng-if="!show_buy && !show_author" ng-disabled="!focused_book.status">
@@ -70,7 +71,7 @@
 </div>
 
 <div class="scrollbar description" 
-     ng-hide="user.collapse_blocks"
+     ng-hide="focused_book.collapse_blocks"
      ng-class="{'long_description': !focused_book.users_count || focused_book.users_count == 0}"
      msd-wheel="stop_horizontal_scroll($event)" ng-if="!show_buy && !show_author">
   <span itemprop="description" ng-bind-html="focused_book.summary | summary"></span>
@@ -80,7 +81,7 @@
 </div>
 
 <div class="user_box" 
-     ng-hide="user.collapse_blocks"
+     ng-hide="focused_book.collapse_blocks"
      ng-if="!show_author && !show_buy && focused_book.users_count && focused_book.users_count > 0">
   <div class="heading">{{focused_book.users_count}} friends have read this</div>
   <div class="users">
@@ -91,7 +92,7 @@
 </div>
 
 <div class="book_info scrollbar author_book_info"
-     ng-hide="user.collapse_blocks"
+     ng-hide="focused_book.collapse_blocks"
      ng-if="show_author && !show_buy">
      <div class="image_wrapper">
         <img ng-src="{{focused_book.author_details.image_url}}"/> 
@@ -108,7 +109,7 @@
 </div>
 
 <div class="relative_position" 
-     ng-hide="user.collapse_blocks"
+     ng-hide="focused_book.collapse_blocks"
      ng-if="show_author && !show_buy">
   <div class="user_box_wrapper"
       ng-click="get_book_from_author()"
@@ -125,7 +126,7 @@
 </div>
 
 <div ng-if="show_buy && !show_author" 
-     ng-hide="user.collapse_blocks"
+     ng-hide="focused_book.collapse_blocks"
      class="buy_column">
   <div ng-if="focused_book.bnn_links">
     <span ng-repeat="link in focused_book.bnn_links track by $index">
@@ -139,7 +140,7 @@
 </div>
 
 <div class="time_to_read" 
-     ng-hide="user.collapse_blocks"
+     ng-hide="focused_book.collapse_blocks"
      ng-if="show_buy && !show_author">
   <div class="header">Describe the reading length of this book</div>
   <div ng-click="record_read_time(0, $event)"

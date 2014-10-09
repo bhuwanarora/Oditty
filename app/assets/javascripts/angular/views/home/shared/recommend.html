@@ -1,17 +1,19 @@
 <div ng-click="recommend()"
 	  class='recommend'
-      title="Recommend book to friends">
+      title="Recommend book to friends"
+      ng-if="!recommend_object.recommended" >
 	<b>Recommend to friends</b>
 </div>
 <div class="recommendation_box animate-slow"
 	 msd-wheel="stop_propagation($event)"
-	 ng-if="recommend_object.recommended" 
+	 ng-show="recommend_object.recommended" 
 	 ng-click="stop_propagation($event)">
 	<div class="icon-close-popup" ng-click="close_friends_list();"></div>
 	<div class="header">
 		<span><b>Select friends whom you want to recommend</span></b>
 	</div>
-	<div class="friend_grid scrollbar">
+	<div class="friend_grid scrollbar animate-fast"
+		 ng-if="recommend_object.recommended" >
 		<div ng-repeat="friend in user.followers" 
 			 class="block" 
 			 data-selected="false"

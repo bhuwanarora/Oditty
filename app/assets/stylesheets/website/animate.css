@@ -172,14 +172,14 @@
 	margin-top: -130px;
 }
 
-.recommendation_box.ng-enter,
-.recommendation_box.ng-leave.ng-leave-active{
+.recommendation_box .friend_grid.ng-enter,
+.recommendation_box .friend_grid.ng-leave.ng-leave-active{
 	height: 0px;
 }
 
-.recommendation_box.ng-leave,
-.recommendation_box.ng-enter.ng-enter-active{
-	height: 50vh;
+.recommendation_box .friend_grid.ng-leave,
+.recommendation_box .friend_grid.ng-enter.ng-enter-active{
+	height: 27vh;
 }
 
 .news.ng-enter{
