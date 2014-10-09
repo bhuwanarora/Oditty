@@ -101,8 +101,9 @@
 	bottom: 5vh;
 }
 
+.card .description:hover,
 .card .widget_thumb:hover{
-	background-blend-mode: luminosity;
+	box-shadow: 0 0 22px 2px rgba(0, 0, 0, 0.99) inset;
 }
 
 .tag_bookmark{

@@ -1704,7 +1704,7 @@
 	background-color: #F5F5F5;
 	border-top: 1px solid #EBEBEB;
 	border-bottom: 1px solid #EBEBEB;
-	background-blend-mode: luminosity;
+	/*background-blend-mode: luminosity;*/
 	box-shadow: 0 0 46px 31px rgba(0, 0, 0, 0.31) inset;
 }
 

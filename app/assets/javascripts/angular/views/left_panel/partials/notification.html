@@ -8,10 +8,15 @@
 			<span class="icon-bars"></span><span>Trending: </span>
 			<b><span>{{notification.keywords}}</span></b>
 		</div> -->
-		<div class="float_left">
+		<div class="float_left" ng-show="!notification.title">
 			<img ng-src="{{notification.thumb | thumb_backup}}">
 		</div>
-		<img ng-src="{{notification.book.isbn | small_thumb}}" class="small_book_thumb" ng-show="notification.book.isbn"/>
+		<div ng-show="notification.title">
+			<img ng-src="{{notification.large_image}}">
+		</div>
+		<img ng-src="{{notification.book.isbn | small_thumb}}" 
+			 class="small_book_thumb" 
+			 ng-show="notification.book.isbn"/>
 		<div class="block" ng-class="{'compressed_block': notification.book.isbn}">
 			<div class="notification_message">
 				<b><div class="capitalise" ng-bind-html="notification.user.name"></div></b>
