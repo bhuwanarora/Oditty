@@ -197,7 +197,8 @@
 }
 
 .focused_tooltip .user_box:hover{
-	opacity: 0.8;
+	background-color: #F5F5F5;
+	border-top: 1px solid #D2D2D2;
 }
 
 .focused_tooltip .user_box .author_book_thumb{

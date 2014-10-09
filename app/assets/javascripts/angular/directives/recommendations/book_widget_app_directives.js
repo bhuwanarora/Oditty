@@ -316,7 +316,9 @@ websiteApp.directive('bookInfo', ['$rootScope', '$timeout', 'widgetService', 'sh
         $cookieStore.put('show_buy', true);
         if(angular.isUndefined($rootScope.focused_book.bnn_links)){
           widgetService.get_affiliate_links($rootScope.focused_book.id).then(function(results){
-            $rootScope.focused_book.bnn_links = results.bnn.links;
+            if(angular.isDefined($rootScope.focused_book)){
+              $rootScope.focused_book.bnn_links = results.bnn.links;
+            }
           });
         }
       }
@@ -524,11 +526,15 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', 'w
 
       $scope.close_friends_list = function(){
         $scope.recommend_object.recommended = false; 
-        $rootScope.focused_book.collapse_blocks = false;
+        if(angular.isDefined($rootScope.focused_book)){
+          $rootScope.focused_book.collapse_blocks = false;
+        }
       }
 
       $scope.recommend = function(){
-        $rootScope.focused_book.collapse_blocks = true;
+        if(angular.isDefined($rootScope.focused_book)){
+          $rootScope.focused_book.collapse_blocks = true;
+        }
         var book_title = $scope.recommend_object.title;
         var author_name = $scope.recommend_object.author_name;
         if($scope.recommend_object.recommended){

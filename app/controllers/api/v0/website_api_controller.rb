@@ -103,7 +103,7 @@ module Api
 				# image_url = SearchPage.all(:order => "RANDOM()").first.background_image_url
 				neo = Neography::Rest.new
 				r = Random.new
-				random = r.rand(1...10)
+				random = r.rand(1...8)
 				clause = "MATCH (c:CoverPhoto) WHERE c.status = true RETURN ID(c) SKIP "+random.to_s+" LIMIT 1"
 				puts clause.blue.on_red
 				id = neo.execute_query(clause)["data"]
