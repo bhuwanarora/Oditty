@@ -1661,25 +1661,24 @@
 }
 
 .main_header .compressed_filters{
-	top: 45px;
+	top: 35px;
 	position: absolute;
 	z-index: 2;
-	height: 30px;
 	border-radius: 2px;
+	background-color: white;
+	box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+	height: auto;
+	width: 100%;
+	min-height: 50px;
 }
 
 .main_header .compressed_filters .compressed_filter_icon{
 	display: inline-block;
 	float: left;
-	padding: 15px;
-	background-color: #427fed;
 	border: 1px solid #F5F5F5;
 	cursor: default;
 	height: 12px;
-	font-size: 0.9em;
-	margin: 1px;
-	color: white;
-	font-weight: 700;
+	margin: 10px;
 }
 
 .main_header .compressed_filters .compressed_filter_icon:hover [class^="icon-"]:before{
