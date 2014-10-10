@@ -426,7 +426,7 @@
 }
 
 .recommendation_box .friend_grid .block:hover{
-	box-shadow: 5px solid rgba(254, 191, 0, 0.45);
+	box-shadow: 5px solid rgba(254, 191, 0, 0.45) !important;
 }
 
 @-moz-document url-prefix() {

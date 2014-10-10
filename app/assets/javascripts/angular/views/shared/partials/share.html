@@ -1,8 +1,8 @@
 <div class="tweet_link site_color" 
      ng-click="user.interact = true;">
-  <img ng-src="{{focused_book.display_profile}}" class="inline_block">
+  <img ng-src="{{focused_book.display_profile}}" class="inline_block" ng-if="focused_book">
+  <img ng-src="{{user.thumb | blob_backup}}" class="inline_block" ng-if="!focused_book">
   <div class="comment_link">
-    <span ng-model="focused_book.display_tweet" 
-          class="table_cell">Share your reading journey...</span>
+    <span class="table_cell">Share your reading journey...</span>
   </div>
 </div>
