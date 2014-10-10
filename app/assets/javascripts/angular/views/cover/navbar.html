@@ -14,15 +14,7 @@
 	      	<div class="large_font">
 	        	<span ng-bind-html="main_header | lowercase" class="table_cell"></span>
 	      	</div>
-	        <span ng-repeat="item in search_results | limitTo: search_tag.result_count+1 | filter:search_tag.custom_input | orderBy: item.name track by $index "
-	             ng-click="handle_selection_option(item, $event)" 
-	             ng-mouseenter="set_current($index)"
-	             msd-wheel="stop_horizontal_scroll($event)">
-	            <b><span ng-bind-html="item.type | lowercase" class="capitalise click"></span></b><span>&nbsp;</span>
-	        </span>
-	      </div>
 	    </div>
-
 	    <div class="inline_block float_right">
 	      	<div class="larger_font inline_block line_separator">|</div>
 	      	<div class="inline_block padding">
