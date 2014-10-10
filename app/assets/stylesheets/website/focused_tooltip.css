@@ -156,7 +156,6 @@
 .focused_tooltip .user_box_wrapper,
 .focused_tooltip .heading_block,
 .focused_tooltip .main_block{
-	box-shadow: 0 4px 3px rgba(0, 0, 0, 0.16);
 	background-color: white;
 	padding-left: 3vh;
 	padding-right: 3vh;
