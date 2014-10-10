@@ -27,7 +27,8 @@
 <div class="header">
   <div class="title large_font" title="{{focused_book.title}}"><b>{{focused_book.title | book_title}} </b></div>
   <div class="author">by <b>{{focused_book.author_name}}</b></div>
-  <div class="author">
+  <div class="author"
+       ng-hide="focused_book.collapse_blocks || focused_book.collapse">
     <span ng-if="focused_book.published_year">
       {{focused_book.published_year | published_year}}</span>
     <span>{{focused_book.page_count | page_count}}</span>
@@ -161,14 +162,7 @@
       ng-class="{'active_tab':is_timer(3)}">Long Read</div>
 </div>
 
-<div class="tweet_link site_color" 
-     ng-click="user.interact = true;">
-  <img ng-src="{{focused_book.display_profile}}" class="inline_block">
-  <div class="comment_link">
-    <span ng-model="focused_book.display_tweet" 
-          class="table_cell">Share your reading journey...</span>
-  </div>
-</div>
+<div ng-include="'/assets/angular/views/shared/partials/share.html'"></div>
 <div>
   <recommend data="focused_book"></recommend>
   <!-- <span class="interact" ng-click="user.interact = true;">Tweet</span> -->

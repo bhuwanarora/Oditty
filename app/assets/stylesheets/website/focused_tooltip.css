@@ -105,6 +105,11 @@
 	cursor: pointer;
 	font-size: .9em;
 	padding: 10px 15px;
+	margin-top: 1px;
+}
+
+.focused_tooltip .recommend:hover{
+	text-decoration: underline;
 }
 
 .focused_tooltip .users{
@@ -338,6 +343,7 @@
 	border-radius: 2px;
 	z-index: 1;
 	padding: 0px;
+	margin-top: 1px;
 }
 
 
@@ -361,7 +367,7 @@
 	font-size: .8em;
 	cursor: default;
 	font-weight: 700;
-	width: 100px;
+	width: 90px;
 	padding: 10px;
 	text-transform: capitalize;
 }
@@ -417,6 +423,10 @@
 	float: left;
 	margin: 4px;
 	border: 5px solid #fff;
+}
+
+.recommendation_box .friend_grid .block:hover{
+	box-shadow: 5px solid rgba(254, 191, 0, 0.45);
 }
 
 @-moz-document url-prefix() {
