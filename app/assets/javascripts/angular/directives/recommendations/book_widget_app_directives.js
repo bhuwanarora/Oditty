@@ -33,8 +33,23 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
             $rootScope.user.collapsed_trends = true;
           }
 
+          var _set_focused_book = function(){
+            if(angular.isDefined($rootScope.focused_book)){
+              delete $rootScope.focused_book;
+              var timeout_event = $timeout(function(){
+                $rootScope.focused_book = $scope.book;
+              }, 200);
+              $scope.$on('destroy', function(){
+                $timeout.cancel(timeout_event);
+              });
+            }
+            else{
+              $rootScope.focused_book = $scope.book;
+            }
+          }
+
           _hide_other_popups();
-          $rootScope.focused_book = $scope.book;
+          _set_focused_book();
           var posX = event.currentTarget.offsetParent.offsetParent.offsetLeft - event.pageX + event.clientX;
           var display_right_width =  window_width - (posX + event.currentTarget.offsetParent.scrollWidth);
           var display_left_width = posX;

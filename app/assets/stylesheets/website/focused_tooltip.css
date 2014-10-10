@@ -4,7 +4,7 @@
 	white-space: initial;
 	z-index: 12;
 	width: 43%;
-	box-shadow: 0 4px 3px rgba(0,0,0,0.16);
+	box-shadow: 0 3px 8px rgba(0,0,0,0.5);
 	left: 200px;
 	overflow: hidden;
 }
@@ -85,8 +85,8 @@
 }
 
 .focused_tooltip .book_info .image_wrapper{
-	width: 18vh;
-	height: 18vh;
+	width: 26%;
+	height: 26%;
 }
 
 .focused_tooltip .book_info img{
