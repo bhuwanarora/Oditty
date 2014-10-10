@@ -389,6 +389,7 @@
 	top: 48px;
 	position: fixed;
 	width: 43%;
+	overflow: auto;
 }
 
 .main_topic .info{
