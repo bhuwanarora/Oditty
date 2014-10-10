@@ -385,15 +385,18 @@
 }
 
 .right_links{
-	left: 140px;
-	top: 61px;
-	right: initial;
+	left: 200px;
+	top: 48px;
 	cursor: default !important;
 	position: fixed;
 	height: 40px;
 	text-transform: capitalize;
-	background-color: rgba(0, 0, 0, 0.81);
-	color: white;
+	background-color: white;
+	width: 43%;
+	z-index: 27;
+	box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+	padding: 10px 0px;
+	border-radius: 2px;
 }
 
 .right_links:hover .icon-close{
