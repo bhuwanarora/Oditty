@@ -494,6 +494,7 @@ websiteApp.directive('bookInfo', ['$rootScope', '$timeout', 'widgetService', 'sh
           else{
             $scope.get_book_overview();
           }
+          $rootScope.focused_book.collapse_blocks = false;
         }
       }
 
