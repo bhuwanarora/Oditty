@@ -1,4 +1,4 @@
-websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', function (websiteService, $rootScope, widgetService){
+websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', '$timeout', function (websiteService, $rootScope, widgetService, $timeout){
   return {
     restrict: 'E',
     scope: { 'book': '=data' },
