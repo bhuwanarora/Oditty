@@ -398,6 +398,7 @@
 	background-color: white;
 	text-transform: capitalize;
 	cursor: default !important;
+	margin-top: 2px;
 }
 
 .main_topic:hover .custom_hidden{
