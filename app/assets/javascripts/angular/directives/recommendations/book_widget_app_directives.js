@@ -63,6 +63,11 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', '
             "scrollWidth":event.currentTarget.offsetParent.scrollWidth,
             "display_left_width":display_left_width,
             "display_right_width":display_right_width}]);
+
+          if(angular.isDefined($rootScope.main_header)){
+            $rootScope.focused_book.reposition_tooltip = {"top": "110px"}; 
+          }
+
           if(display_right_width > display_left_width){
             if(display_right_width > card_width){
               posX = posX + event.currentTarget.offsetParent.scrollWidth - event.currentTarget.offsetLeft;
