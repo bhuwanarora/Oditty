@@ -1595,7 +1595,7 @@
 
 .main_header .search_typeahead_group{
 	position: fixed;
-	width: 44%;
+	width: 43%;
 	height: 33px;
 	z-index: 10;
 	/*float: left;*/

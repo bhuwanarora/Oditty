@@ -539,35 +539,18 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', 'w
         event.stopPropagation();
       }
 
-      $scope.close_friends_list = function(){
-        $scope.recommend_object.recommended = false; 
-        if(angular.isDefined($rootScope.focused_book)){
-          $rootScope.focused_book.collapse_blocks = false;
-        }
-      }
-
       $scope.recommend = function(){
-        if(angular.isDefined($rootScope.focused_book)){
-          $rootScope.focused_book.collapse_blocks = true;
-        }
         var book_title = $scope.recommend_object.title;
         var author_name = $scope.recommend_object.author_name;
-        if($scope.recommend_object.recommended){
-          $scope.recommend_object.recommended = false;
-          var message = "SUCCESS-Recommended to selected friends.";
-          var timeout_event = notify($rootScope, message, $timeout);
-          $scope.$on('destroy', function(){
-            $timeout.cancel(timeout_event);
-          });
-          // $('body').css('cursor', 'default');
-          var params = {"friend_ids": $scope.user.selected_followers, "book_id": $scope.recommend_object.id};
-          widgetService.recommend(params);
-          $scope.$emit('gamifyCount', 10, true);
-        }
-        else{
-          $scope.recommend_object.recommended = true;
-          // $('body').css('cursor', 'copy');
-        }
+        var message = "SUCCESS-Recommended to selected friends.";
+        var timeout_event = notify($rootScope, message, $timeout);
+        $scope.$on('destroy', function(){
+          $timeout.cancel(timeout_event);
+        });
+
+        var params = {"friend_ids": $scope.user.selected_followers, "book_id": $scope.recommend_object.id};
+        widgetService.recommend(params);
+        $scope.$emit('gamifyCount', 10, true);
       }
 
       $scope._init = function(){

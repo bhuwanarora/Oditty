@@ -163,12 +163,11 @@
 </div>
 
 <div ng-include="'/assets/angular/views/shared/partials/share.html'"></div>
-<div>
-  <recommend data="focused_book"></recommend>
-  <!-- <span class="interact" ng-click="user.interact = true;">Tweet</span> -->
-  <!-- <div class="own_this_book"
-     ng-click="own_this_book()">
-     <span ng-show="!have_this_book">I have this Book</span>
-     <span ng-show="have_this_book">I don't have this Book</span>
-  </div> -->
+
+<div ng-click="focused_book.collapse_blocks = true;"
+     class='recommend'
+     title="Recommend book to friends"
+     ng-if="!show_buy && !show_author && !focused_book.collapse_blocks" >
+  <b>Recommend this book to friends</b>
 </div>
+<recommend data="focused_book" ng-if="focused_book.collapse_blocks"></recommend>
