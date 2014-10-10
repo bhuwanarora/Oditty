@@ -167,9 +167,9 @@
 <div ng-click="focused_book.collapse_blocks = true;"
      class='recommend'
      title="Recommend book to friends"
-     ng-if="!focused_book.collapse_blocks" >
+     ng-show="!focused_book.collapse_blocks || focused_book.collapse">
   <b>Recommend this book to friends</b>
 </div>
 <recommend data="focused_book" 
-           ng-show="focused_book.collapse_blocks">
+           ng-show="focused_book.collapse_blocks && !focused_book.collapse">
 </recommend>
