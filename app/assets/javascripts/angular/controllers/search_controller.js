@@ -1330,16 +1330,6 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		}
 	}
 
-	$scope._add_trends_on_search_page = function(){
-		$scope.trending_feed = [];
-		websiteService.get_trending_topics().then(function(data){
-			angular.forEach(data, function(value){
-				var json = {"name": value[0], "id": value[1], "thumb": value[6], "keywords": value[8], "large_image": value[5]};
-				this.push(json);
-			}, $scope.trends);
-		});
-	}
-
 	$scope.set_focus = function(timer){
 		var focus_timeout = $timeout(function(){
 			$scope.website.searching = true;
