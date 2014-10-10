@@ -402,7 +402,7 @@
 }
 
 .main_topic:hover .custom_hidden{
-	display: initial;
+	display: list-item;
 }
 
 .main_topic .custom_hidden{
