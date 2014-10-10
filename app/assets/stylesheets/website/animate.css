@@ -324,14 +324,3 @@
 	width: 32vh;
 	height: 41vh;
 }
-
-.focused_tooltip .buy_column.ng-enter,
-.focused_tooltip .buy_column.ng-leave.ng-leave-active{
-	max-height: 0px;
-	overflow: hidden;
-}
-
-.focused_tooltip .buy_column.ng-leave,
-.focused_tooltip .buy_column.ng-enter.ng-enter-active{
-	max-height: none;
-}
