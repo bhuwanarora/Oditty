@@ -109,12 +109,11 @@
         </span>
       </div>
     </div>
-    <div class="inline_block float_right" >
+    <div class="inline_block float_right" ng-show="!$routeParams.type">
       <div class="larger_font inline_block line_separator">|</div>
       <div class="inline_block padding">
         <div class="click">
-          <a ng-show="!$routeParams.type" ng-href="#/user/{{user.id}}/recommendations/books">Recommendations</a>
-          <div ng-show="$routeParams.type" class="click" ng-click="user.interact = true;">Share</div>
+          <a ng-href="#/user/{{user.id}}/recommendations/books">Recommendations</a>
         </div>
       </div>
     </div>
