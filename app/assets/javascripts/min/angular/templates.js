@@ -319,7 +319,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/shared/partials/share.html',
-    "<div class=\"tweet_link site_color\" ng-click=\"user.interact = true;\"><img ng-src=\"{{focused_book.display_profile}}\" class=\"inline_block\" ng-if=\"focused_book\"> <img ng-src=\"{{user.thumb | blob_backup}}\" class=\"inline_block\" ng-if=\"!focused_book\"><div class=\"comment_link\"><span class=\"table_cell\">Share your reading journey...</span></div></div>"
+    "<div class=\"tweet_link site_color\" ng-click=\"user.interact = true;\"><img ng-src=\"{{focused_book.display_profile}}\" class=\"inline_block\" ng-if=\"focused_book\" class=\"small_thumb\"> <img ng-src=\"{{user | blob_backup}}\" class=\"inline_block\" ng-if=\"!focused_book\" class=\"small_thumb\"><div class=\"comment_link\"><span class=\"table_cell\">Share your reading journey...</span></div></div>"
   );
 
 
