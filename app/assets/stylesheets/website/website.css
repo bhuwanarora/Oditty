@@ -696,3 +696,12 @@ input:focus{
 .comment_link:hover{
     background-color: #E6E6E6;
 }
+
+.light_link{
+    color: #717070;
+}
+
+.light_link:hover{
+    color: #333;
+    text-decoration: none;
+}

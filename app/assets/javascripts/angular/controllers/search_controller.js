@@ -1455,6 +1455,8 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope._init_book_filter();
 		$scope._init_text_filter();
 
+		$scope.hide_input_field = false;
+
 		if(!on_search_page){
 			$scope.$emit('reloadRecommendations');
 		}
