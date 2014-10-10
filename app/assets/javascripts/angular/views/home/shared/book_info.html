@@ -170,4 +170,4 @@
      ng-if="!show_buy && !show_author && !focused_book.collapse_blocks" >
   <b>Recommend this book to friends</b>
 </div>
-<recommend data="focused_book" ng-if="focused_book.collapse_blocks"></recommend>
+<recommend data="focused_book" ng-show="focused_book.collapse_blocks && focused_book.collapse"></recommend>
