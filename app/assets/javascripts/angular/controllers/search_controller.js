@@ -688,7 +688,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		angular.forEach($scope.base_book_options, function(parent_item){
 			if(parent_item.type == item.type){
 				$scope.handle_selection_option(parent_item, event);
-				$scope.hide_input_field = false;
+				if($scope.hide_options){
+					$scope.hide_input_field = false;
+				}
 				delete parent_item.active;
 			}
 		});
