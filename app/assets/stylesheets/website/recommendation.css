@@ -408,6 +408,26 @@
 	display: none;
 }
 
+.main_topic .image_wrapper{
+	overflow: hidden;
+	border-radius: 3px;
+	margin: 5px;
+	width: 50%;
+	height: auto;
+	float: left;
+}
+
+.main_topic .right_info{
+	float: left;
+	display: inline-block;
+	width: 45%;
+	white-space: initial;
+	color: #717070;
+	font-size: 12px;
+	padding: 5px;
+}
+
+
 .toggle_elements{
 	left: 240px;
 	background-color: #fff;

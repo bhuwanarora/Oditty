@@ -1,9 +1,13 @@
+.main_topic.ng-enter,
+.main_topic.ng-leave.ng-leave-active,
 .focused_tooltip.ng-enter,
 .focused_tooltip.ng-leave.ng-leave-active{
 	opacity: 0;
 	max-height: 0px;
 }
 
+.main_topic.ng-leave,
+.main_topic.ng-enter-active,
 .focused_tooltip.ng-leave,
 .focused_tooltip.ng-enter-active{
 	opacity: 1;
