@@ -51,22 +51,22 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', f
           if(display_right_width > display_left_width){
             if(display_right_width > card_width){
               posX = posX + event.currentTarget.offsetParent.scrollWidth - event.currentTarget.offsetLeft;
-              $rootScope.focused_book.reposition_tooltip = {"left": posX+"px"};
+              // $rootScope.focused_book.reposition_tooltip = {"left": posX+"px"};
             }
             else{
-              $rootScope.focused_book.reposition_tooltip = {"right": "0px"};
+              // $rootScope.focused_book.reposition_tooltip = {"right": "0px"};
             }
-            $rootScope.on_left = true;
+            // $rootScope.on_left = true;
           }
           else{
             if(display_left_width > card_width){
               posX = window_width - posX;
-              $rootScope.focused_book.reposition_tooltip = {"right": posX+"px"}; 
+              // $rootScope.focused_book.reposition_tooltip = {"right": posX+"px"}; 
             }
             else{
-              $rootScope.focused_book.reposition_tooltip = {"left": "0px"};  
+              // $rootScope.focused_book.reposition_tooltip = {"left": "0px"};  
             }
-            $rootScope.on_left = false;
+            // $rootScope.on_left = false;
           }
           // _set_dark_wrapper();
         }

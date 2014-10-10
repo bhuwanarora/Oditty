@@ -10,12 +10,12 @@
 
 .focused_tooltip{
 	position: fixed;
-	top: 61px;
+	top: 48px;
 	white-space: initial;
 	z-index: 12;
-	width: 72vh;
-	box-shadow: 0 4px 3px rgba(0, 0, 0, 0.16);
-	/* for big screens */
+	width: 43%;
+	box-shadow: 0 4px 3px rgba(0,0,0,0.16);
+	left: 200px;
 }
 
 .focused_tooltip .buy_column{
@@ -177,7 +177,7 @@
 	margin-top: 1px;
 	padding-top: 5px;
 	padding-bottom: 3px;
-	color: #717070;
+	color: #333;
 	position: relative;
 }
 
@@ -188,7 +188,7 @@
 
 .focused_tooltip .main_block span:hover,
 .focused_tooltip .heading_block:hover{
-	color: #333;
+	text-decoration: underline;
 }
 
 .focused_tooltip .header .author{
