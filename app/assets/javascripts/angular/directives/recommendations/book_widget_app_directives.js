@@ -12,6 +12,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', '
       }
 
       $scope.show_share_options = function(event){
+        var show_share_options = true;
         $scope.show_focused_tooltip(event, show_share_options);
         event.stopPropagation();
       }
