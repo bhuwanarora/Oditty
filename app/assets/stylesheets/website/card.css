@@ -92,12 +92,26 @@
 	box-shadow: 0 0 22px 2px rgba(255, 255, 255, 0.57) inset;
 }
 
-.bottom_widget,
-.card .widget_thumb,
+.widget_thumb_wrapper,
 .card .description{
 	right: 6vh;
 	left: 2vh;
 	bottom: 5vh;
+}
+
+.card .widget_thumb,
+.card .description{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	border-radius: 4px;
+}
+
+.widget_thumb_wrapper{
+	position: absolute;
+	top: 12vh;
 }
 
 .card .description:hover,
@@ -228,12 +242,6 @@
 	white-space: initial;
 }
 
-.card .widget_thumb,
-.card .description{
-	position: absolute;
-	top: 14vh;
-	border-radius: 4px;
-}
 
 .card .description p{
 	margin-top: 10%;

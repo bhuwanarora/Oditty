@@ -3,24 +3,24 @@
  	  ng-style="randomise_position"
  	  class="animate-fast widget">
 	<!-- <category track widget="book"></category> -->
-	<div ng-model="book" 
-		ng-click="show_focused_tooltip($event)"
+	<div ng-model="book"
 		class="card animate-slow">
 		<book-interact data="book" track></book-interact>
-		<widget-thumb track ng-show="book.isbn"></widget-thumb>
+		<div class="widget_thumb_wrapper" ng-click="show_share_options($event)">
+			<widget-thumb track ng-show="book.isbn"></widget-thumb>
+		</div>
 		<div class="card_summary animate-fast">
-			<div>
-				<tooltip text="book.title" position="top" ng-if="!user.show_profile"></tooltip>
+			<div class="basic_link"
+				 ng-click="show_focused_tooltip($event)">
 				<b><span class="header_font">{{book.title | reduced_title}}</span></b><br/>
 				<span ng-show="book.author_name">by {{book.author_name}}</span>
 			</div>
 			<div>
-				<tooltip text="book.summary" position="bottom" scroll="true" ng-if="!user.show_profile"></tooltip>
+				<!-- <tooltip text="book.summary" position="bottom" scroll="true" ng-if="!user.show_profile"></tooltip> -->
 				<span ng-if="book.summary" class="normal_text">{{book.summary | reduced_summary}}</span>
 			</div>
-			
 		</div>
 		<!-- <book-navbar track></book-navbar> -->
 	</div>
 </div>
-<div class="base" ng-click="show_book(3)"></div>
+<!-- <div class="base" ng-click="show_book(3)"></div> -->

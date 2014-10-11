@@ -11,7 +11,12 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', '
         event.stopPropagation();
       }
 
-      $scope.show_focused_tooltip = function(event){
+      $scope.show_share_options = function(event){
+        $scope.show_focused_tooltip(event, show_share_options);
+        event.stopPropagation();
+      }
+
+      $scope.show_focused_tooltip = function(event, show_share_options){
         if($rootScope.focused_book != $scope.book){
           var _set_dark_wrapper = function(){
             $rootScope.popups.left_panel_width = {"background-color": "#333"};
@@ -38,6 +43,9 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', '
               delete $rootScope.focused_book;
               var timeout_event = $timeout(function(){
                 $rootScope.focused_book = $scope.book;
+                if(show_share_options){
+                  $rootScope.user.interact = true;
+                }
               }, 200);
               $scope.$on('destroy', function(){
                 $timeout.cancel(timeout_event);
@@ -45,6 +53,9 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', '
             }
             else{
               $rootScope.focused_book = $scope.book;
+              if(show_share_options){
+                $rootScope.user.interact = true;
+              }
             }
           }
 

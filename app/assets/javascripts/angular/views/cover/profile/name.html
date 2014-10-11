@@ -5,7 +5,7 @@
 		<span ng-show="user.name" class="capitalise animate-fast"><b>{{user.name}}</b></span>
 		<span ng-show="!user.name">{{user.email}}</span>
 		<span>&nbsp;</span>
-		<span>{{user.total_count | integer}}</span><span>&nbsp;</span>
+		<span>+{{user.total_count | integer}}</span><span>&nbsp;</span>
 		<span>{{user.book_read_count | integer}}</span>
 		<span class='icon-books'></span>
 		<span>&nbsp;</span>
@@ -21,7 +21,7 @@
 		<span ng-show="reader.name" class="capitalise animate-fast"><b>{{reader.name}}</b></span>
 		<span ng-show="!reader.name">{{reader.email}}</span>
 		<span>&nbsp;</span>
-		<span>{{reader.total_count | integer}}</span><span>&nbsp;</span>
+		<span>+{{reader.total_count | integer}}</span><span>&nbsp;</span>
 		<span>{{reader.book_read_count | integer}}</span>
 		<span class='icon-books'></span>
 		<span>&nbsp;</span>

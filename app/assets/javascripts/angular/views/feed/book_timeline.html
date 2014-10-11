@@ -6,8 +6,11 @@
  	 </div>
  	<div class="tweet feed_header">
 		<div>
-			<b><div>Book Timeline</div></b>
-			<div><span class="site_color large_font">{{focused_book.title}}</span> by {{focused_book.author_name}}</div>
+			<div>Book Timeline</div>
+			<div>
+				<b><span class="large_font">{{focused_book.title}}</span></b>
+				<span>by {{focused_book.author_name}}</span>
+			</div>
 		</div>
 		<div ng-include src="'/assets/angular/views/shared/partials/book_info.html'"></div>
 	</div>

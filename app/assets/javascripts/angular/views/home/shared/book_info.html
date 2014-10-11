@@ -25,7 +25,9 @@
 <div class="icon-close-popup" ng-click="hide_popups()"></div>
 <!-- <div class="close button_effect" ng-click="close_focused_tooltip()">x</div> -->
 <div class="header">
-  <div class="title large_font" title="{{focused_book.title}}"><b>{{focused_book.title | book_title}} </b></div>
+  <div class="title large_font click"
+       ng-click="user.interact = true;"
+       title="{{focused_book.title}}"><b>{{focused_book.title | book_title}}</b></div>
   <div class="author">by <b>{{focused_book.author_name}}</b></div>
   <div ng-disabled="!focused_book.status">
     <rate data="focused_book"></rate>

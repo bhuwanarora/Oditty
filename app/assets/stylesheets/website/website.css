@@ -705,3 +705,7 @@ input:focus{
     color: #333;
     text-decoration: none;
 }
+
+.basic_link:hover{
+    text-decoration: underline;
+}
