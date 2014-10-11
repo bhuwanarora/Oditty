@@ -6,7 +6,6 @@ namespace :crawl do
     Neo4jHelper.set_book_active
   end
 
-  
   desc "upload_cover_photos"
   task :upload_cover_photos => :environment do
     include S3UploaderHelper

@@ -6,14 +6,25 @@ module S3UploaderHelper
 	def self.upload_file(input_file, output_key)
 		@s3 ||= AWS::S3.new
 		# output_key = File.basename(input_file)
-		@s3.buckets['rd-images'].objects[output_key].write(:file => input_file)
+		@s3.buckets['rd-images'].objects[output_key].write(:file => input_file, :acl => :public_read)
 	end
 
 	def self.delete_file(bucket_name, key)
 		@s3 ||= AWS::S3.new
-		bucket = @s3.bucket('rd-images')
+		bucket = @s3.buckets['rd-images']
 		if bucket.objects[key].exists?
 			bucket.delete_key(key)
+		end
+	end
+
+	def self.set_cp_public
+		@s3 ||= AWS::S3.new
+		bucket = @s3.buckets['rd-images']
+		bucket.objects.each do |object|
+			if object.key == "cp/*"
+			    puts object.key
+			    object.acl = :public_read
+			end
 		end
 	end
 
