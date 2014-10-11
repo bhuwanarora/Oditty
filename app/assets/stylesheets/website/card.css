@@ -2,7 +2,7 @@
 	display: inline-block;
 	height: 55vh;
 	position: relative;
-	width: 41vh;
+	width: 39vh;
 }
 
 .recommendation_block:hover .bottom_widget{
@@ -38,8 +38,8 @@
 .card_summary{
 	position: absolute;
 	top: 1vh;
-	left: 2vh;
-	right: 2vh;
+	left: 1vh;
+	right: 1vh;
 	height: 5vh;
 	white-space: normal;
 	font-size: .9em;
@@ -95,8 +95,8 @@
 .widget_thumb_wrapper,
 .card .description,
 .bottom_widget{
-	right: 6vh;
-	left: 2vh;
+	right: 5vh;
+	left: 1vh;
 	bottom: 5vh;
 }
 

@@ -11,7 +11,7 @@
 	</b>
 	<timestamp data="notification.timestamp"></timestamp>
 	<div class="trending_background site_color" ng-show="notification.title">
-		<a ng-href="#user/{{user.id}}/trending/books/id/{{notification.id}}/name/{{notification.name}}">Check out books related to  <b>{{notification.keywords}}</b></a>
+		<a ng-href="#user/{{user.id}}/trending/books/id/{{notification.id}}/name/{{notification.name}}">Check out books related to  <b class="larger_font">{{notification.keywords}}</b></a>
 	</div>
 	<div ng-bind-html="notification.tag"></div>
 	<div ng-bind-html="notification.message"></div>

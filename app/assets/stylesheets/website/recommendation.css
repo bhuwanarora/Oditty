@@ -1643,6 +1643,7 @@
 	top: 14px;
 	left: 200px;
 	box-shadow: none;
+	border-radius: 2px;
 }
 
 .main_header .search_input{
@@ -1837,7 +1838,7 @@
 .share_wrapper_shifted{
 	bottom: 80px;
 	height: auto;
-	border-bottom: 1px solid #D8D8D8;
+	border-bottom: 1px solid #B6B6B6;
 	background-color: white;
 	overflow-y: scroll;
 	padding-left: 10%;
@@ -1911,7 +1912,10 @@
 	float: left;
 	display: inline-block;
 	margin: 4px;
-	padding: 10px 0px;
+	padding: 10px;
+	background-color: #F4F4F4;
+	height: initial;
+	border: 1px solid #EFEFEF;
 }
 
 .user_profile .header{

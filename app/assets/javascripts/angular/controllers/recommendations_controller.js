@@ -192,7 +192,10 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	$scope.hide_popups = function(){
 		delete $rootScope.ticker_popup;
-		delete $rootScope.focused_book;
+		if(!$rootScope.user.interact){
+			delete $rootScope.focused_book;
+		}
+		
 		$rootScope.user.collapsed_column = true;
 		$rootScope.user.collapsed_filters = true;
 		$rootScope.user.collapsed_friends = true;
