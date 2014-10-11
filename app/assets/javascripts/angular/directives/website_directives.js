@@ -722,21 +722,22 @@ websiteApp.directive('feed', ['$rootScope', '$timeout', 'websiteService', 'widge
       	}
 
       	$scope.close_interaction_box = function(){
-	      	if(angular.isDefined($scope.hash_tags) && $scope.hash_tags.length > 0){
-	        	$scope.hash_tags = [];
-	      	}
-	      	else if(angular.isDefined($scope.level1_options) && $scope.level1_options.length > 0){
-	      		$scope.level1_options = [];
-	      	}
-	      	else if(angular.isDefined($scope.level2_options) && $scope.level2_options.length > 0){
-	      		$scope.level2_options = [];
-	      	}
-	      	else if(angular.isDefined($rootScope.user.interact_books) && $rootScope.user.interact_books.length > 0){
-	      		$rootScope.user.interact_books = [];
-	      	}
-	      	else{
-	      		$rootScope.user.interact = false;
-	      	}
+	      	// if(angular.isDefined($scope.hash_tags) && $scope.hash_tags.length > 0){
+	       //  	$scope.hash_tags = [];
+	      	// }
+	      	// else if(angular.isDefined($scope.level1_options) && $scope.level1_options.length > 0){
+	      	// 	$scope.level1_options = [];
+	      	// }
+	      	// else if(angular.isDefined($scope.level2_options) && $scope.level2_options.length > 0){
+	      	// 	$scope.level2_options = [];
+	      	// }
+	      	// else if(angular.isDefined($rootScope.user.interact_books) && $rootScope.user.interact_books.length > 0){
+	      	// 	$rootScope.user.interact_books = [];
+	      	// }
+	      	// else{
+	      	// }
+      		$rootScope.user.interact = false;
+      		delete $rootScope.focused_book;
       	}
 
       	$scope.stop_horizontal_scroll = function(event){

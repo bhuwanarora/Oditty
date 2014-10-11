@@ -297,8 +297,7 @@ input:focus{
 }
 
 .normal_text{
-    color: #717070 !important;
-    font-size: 0.9em !important;
+    font-size: 11px !important;
 }
 
 .grey_color{

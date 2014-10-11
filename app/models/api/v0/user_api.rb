@@ -145,20 +145,7 @@ module Api
 				@neo = Neography::Rest.new	
 				params = params[:users_api]
 				puts params.to_s.red
-				set_clause = ""
-				property_clause = ""
-				for key in params.keys
-					if params[key].class == Array
-						new_string = self.get_string_from_array(key, params[key])
-						property_clause = property_clause + new_string
-					else
-						set_clause = set_clause + " SET fu."+key.to_s+"=\""+params[key].to_s+"\""
-					end
-				end
-
-				set_clause = set_clause + property_clause
 				
-				return_clause = " RETURN DISTINCT(ID(user))"
 				if params[:email]
 					puts "email exits".green
 					clause = "MATCH (user:User{email:\""+params[:email]+"\"}) RETURN ID(user)"
@@ -166,21 +153,20 @@ module Api
 					user_id = @neo.execute_query clause
 					user_exists = user_id["data"].present?
 					if user_exists
-						clause = "START user=node:node_auto_index('email:"+params[:email]+"') MERGE (user)-[:FacebookAuth]->(fu:FacebookUser) SET user.thumb = CASE WHEN user.thumb IS NULL THEN \""+params[:thumb].to_s+"\" ELSE user.thumb END SET user.name = CASE WHEN user.name IS NULL THEN \""+params[:name].to_s+"\" ELSE user.name END SET user.last_login = \""+Time.now.strftime("%Y-%m-%d")+"\" SET user.fb_id = "+params[:id].to_s+set_clause+return_clause
+						clause = self._update_user_with_email params
 					else
-						clause = "CREATE (user:User{fb_id:"+params[:id]+" email:\""+params[:email]+"\", thumb:\""+params[:thumb].to_s+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, name:\""+params[:name].to_s+"\", last_book: "+Constants::BestBook.to_s+", amateur: true}), (user)-[:FacebookAuth]->(fu:FacebookUser), (user)-[fn:FeedNext{user_id:ID(user)}]->(user), (user)-[:Ego{user_id:ID(user)}]->(user) WITH user, fu MATCH(bm:Label{primary_label:true}) CREATE (user)-[:Labelled{user_id:ID(user)}]->(bm) WITH DISTINCT(user) as user, fu MATCH (all_user:User) WHERE all_user <> user CREATE (user)-[:Follow]->(all_user), (user)<-[:Follow]-(all_user) WITH user, fu SET user.last_login = \""+Time.now.strftime("%Y-%m-%d")+"\" "+set_clause+return_clause
-
+						clause = self._create_user_with_email params
 					end
 				else
 					puts "email does not exits".green
 					clause = "MATCH (user:User{fb_id:"+params[:id]+"}) RETURN ID(user)"
 					puts clause.blue.on_red
 					user_id = @neo.execute_query clause
-						user_exists = user_id["data"].present?
+					user_exists = user_id["data"].present?
 					if user_exists
-						clause = "MERGE (user:User{fb_id:"+params[:id]+"}) MERGE (user)-[:FacebookAuth]->(fu:FacebookUser) SET user.thumb = CASE WHEN user.thumb IS NULL THEN \""+params[:thumb].to_s+"\" ELSE user.thumb END SET user.name = CASE WHEN user.name IS NULL THEN \""+params[:name].to_s+"\" ELSE user.name END SET user.last_login = \""+Time.now.strftime("%Y-%m-%d")+"\" "+set_clause+return_clause
+						clause = self._update_user_without_email params
 					else
-						clause = "CREATE (user:User{fb_id:"+params[:id]+", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, name:\""+params[:name].to_s+"\", last_book:"+Constants::BestBook.to_s+", amateur: true}), (user)-[:FacebookAuth]->(fu:FacebookUser), (user)-[fn:FeedNext{user_id:ID(user)}]->(user), (user)-[:Ego{user_id:ID(user)}]->(user) WITH user, fu MATCH(bm:Label{primary_label:true}) CREATE (user)-[:Labelled{user_id:ID(user)}]->(bm) SET user.thumb=\""+params[:thumb].to_s+"\" WITH DISTINCT(user) as user, fu MATCH (all_user:User) WHERE all_user <> user CREATE (user)-[:Follow]->(all_user), (user)<-[:Follow]-(all_user) WITH user, fu SET user.last_login = \""+Time.now.strftime("%Y-%m-%d")+"\" "+set_clause+return_clause
+						clause = self._create_user_without_email params
 					end
 				end
 				puts clause.blue.on_red
@@ -292,7 +278,62 @@ module Api
 			end
 
 			private
-			def self.get_string_from_array(key, array)
+			def self._fb_set_clause params
+				set_clause = ""
+				property_clause = ""
+				for key in params.keys
+					if params[key].class == Array
+						new_string = self._get_string_from_array(key, params[key])
+						property_clause = property_clause + new_string
+					else
+						set_clause = set_clause + " SET fu."+key.to_s+"=\""+params[key].to_s+"\""
+					end
+				end
+
+				set_clause = set_clause + property_clause
+				set_clause
+			end
+
+			def self._fb_return_clause
+				" RETURN DISTINCT(ID(user))"
+			end
+
+			def self._update_user_with_email params
+				match_clause =  "MATCH (user:User) WHERE user.email=\""+params[:email]+"\" "
+				merge_clause = "MERGE (user)-[:FacebookAuth]->(fu:FacebookUser) "
+				set_thumb = "SET user.thumb = CASE WHEN user.thumb IS NULL THEN \""+params[:thumb].to_s+"\" ELSE user.thumb END "
+				set_name = "SET user.name = CASE WHEN user.name IS NULL THEN \""+params[:name].to_s+"\" ELSE user.name END "
+				set_last_login = "SET user.last_login = \""+Time.now.strftime("%Y-%m-%d")+"\" SET user.fb_id = "+params[:id].to_s
+				clause = match_clause + merge_clause + set_thumb + set_name + set_last_login + self._fb_set_clause(params) + self._fb_return_clause
+				clause
+			end
+
+			def self._create_user_with_email params
+				create_clause = "CREATE (user:User{fb_id:"+params[:id]+" email:\""+params[:email]+"\", thumb:\""+params[:thumb].to_s+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, name:\""+params[:name].to_s+"\", last_book: "+Constants::BestBook.to_s+", amateur: true}), (user)-[:FacebookAuth]->(fu:FacebookUser), (user)-[fn:FeedNext{user_id:ID(user)}]->(user), (user)-[:Ego{user_id:ID(user)}]->(user) WITH user, fu "
+				label_clause = "MATCH(bm:Label{primary_label:true}) CREATE (user)-[:Labelled{user_id:ID(user)}]->(bm) WITH DISTINCT(user) as user, fu "
+				follow_clause = "MATCH (all_user:User) WHERE all_user <> user CREATE (user)-[:Follow]->(all_user), (user)<-[:Follow]-(all_user) WITH user, fu "
+				set_clause = "SET user.last_login = \""+Time.now.strftime("%Y-%m-%d")+"\" "
+				clause = create_clause + label_clause + follow_clause + set_clause + self._fb_set_clause(params)+self._fb_return_clause
+				clause
+			end
+
+			def self._update_user_without_email params
+				merge_clause = "MERGE (user:User{fb_id:"+params[:id]+"}) MERGE (user)-[:FacebookAuth]->(fu:FacebookUser) "
+				set_clause = "SET user.thumb = CASE WHEN user.thumb IS NULL THEN \""+params[:thumb].to_s+"\" ELSE user.thumb END SET user.name = CASE WHEN user.name IS NULL THEN \""+params[:name].to_s+"\" ELSE user.name END SET user.last_login = \""+Time.now.strftime("%Y-%m-%d")+"\" "
+				clause = merge_clause + set_clause + self._fb_set_clause(params) + self._fb_return_clause
+				clause
+			end
+
+			def self._create_user_without_email params
+				create_clause = "CREATE (user:User{fb_id:"+params[:id]+", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, name:\""+params[:name].to_s+"\", last_book:"+Constants::BestBook.to_s+", amateur: true}), (user)-[:FacebookAuth]->(fu:FacebookUser), (user)-[fn:FeedNext{user_id:ID(user)}]->(user), (user)-[:Ego{user_id:ID(user)}]->(user) WITH user, fu "
+				label_clause = "MATCH(bm:Label{primary_label:true}) CREATE (user)-[:Labelled{user_id:ID(user)}]->(bm) SET user.thumb=\""+params[:thumb].to_s+"\" WITH DISTINCT(user) as user, fu "
+				follow_clause = "MATCH (all_user:User) WHERE all_user <> user CREATE (user)-[:Follow]->(all_user), (user)<-[:Follow]-(all_user) WITH user, fu "
+				set_clause = "SET user.last_login = \""+Time.now.strftime("%Y-%m-%d")+"\" "
+				clause = create_clause + label_clause + follow_clause + set_clause + self._fb_set_clause(params)+self._fb_return_clause
+				clause
+			end
+
+			def self._get_string_from_array(key, array)
 				key = key.to_s
 				string = ""
 				label = key.camelcase
@@ -310,14 +351,14 @@ module Api
 							connector = ""
 						end
 						if param[object_key].class == String
-							new_string = self.handle_string(object_key, param[object_key])
+							new_string = self._handle_string(object_key, param[object_key])
 							object_string = object_string + connector + new_string
 						elsif param[object_key].class == Array
 							for hash_object in param[object_key]
-								node_string = node_string + self.handle_hash(hash_object, object_key, new_label)		
+								node_string = node_string + self._handle_hash(hash_object, object_key, new_label)		
 							end
 						elsif (param[object_key].class == Hash) || (param[object_key].class == ActiveSupport::HashWithIndifferentAccess)
-							node_string = node_string + self.handle_hash(param[object_key], object_key, new_label)
+							node_string = node_string + self._handle_hash(param[object_key], object_key, new_label)
 						end
 
 						puts "#{param[object_key].to_s.green} #{object_key.to_s} #{key} #{param[object_key].class}"
@@ -331,11 +372,11 @@ module Api
 				string
 			end
 
-			def self.handle_string(key, value)
+			def self._handle_string(key, value)
 				key.to_s+": \""+value.to_s+"\""
 			end
 
-			def self.handle_hash(param, object_key, new_label)
+			def self._handle_hash(param, object_key, new_label)
 				new_object_string = ""
 				for new_object_key in param.keys
 					if new_object_string.present?
@@ -343,12 +384,14 @@ module Api
 					else
 						connector = ""
 					end
-					new_string = self.handle_string(new_object_key, param[new_object_key])
+					new_string = self._handle_string(new_object_key, param[new_object_key])
 					new_object_string = new_object_string + connector + new_string
 				end
 				new_object_string = " CREATE UNIQUE ("+new_label.to_s+")-[:HasProperty]->(:"+object_key.to_s.singularize.camelcase+"{"+new_object_string+"})"
 				new_object_string
 			end
+
+
 
 		end
 	end
