@@ -678,12 +678,13 @@
 }
 
 .login_box .link{
-	cursor: pointer;
-	width: 100%;
+	width: 60%;
 	height: 35px;
+	margin-left: 20%;
 }
 
-.login_box .link:hover{
+.login_box .link span:hover{
+	cursor: pointer;
 	text-decoration: underline;
 }
 

@@ -430,80 +430,76 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 	_update_recommendations = function(data){
 		if($rootScope.filters["filter_type"] == RecommendationUIConstants.BookTab){
-			if(data.recommendations.books.length > 1){
-				var message = "INFO- "+data.recommendations.books.length+" books found. Scroll to see more books.";
-			}
-			else if(data.recommendations.books.length >= 0){
-				var message = "INFO- "+data.recommendations.books.length+" book found.";	
-			}
-			var timeout_event = notify($rootScope, message, $timeout);
-			$scope.$on('destroy', function(){
-				$timeout.cancel(timeout_event);
-			});
+			var _push_notification = function(){
+				if(data.recommendations.books.length > 1){
+					var message = "INFO- "+data.recommendations.books.length+" books found. Scroll to see more books.";
+				}
+				else if(data.recommendations.books.length >= 0){
+					var message = "INFO- "+data.recommendations.books.length+" book found.";	
+				}
+				var timeout_event = notify($rootScope, message, $timeout);
+				$scope.$on('destroy', function(){
+					$timeout.cancel(timeout_event);
+				});
+			};
 
+			var _zero_notification = function(){
+				var message = RecommendationUIConstants.ZeroBooksFound;
+				var timeout_event = notify($rootScope, message, $timeout);
+				$scope.$on('destroy', function(){
+					$timeout.cancel(timeout_event);
+				});
+			};
+
+			var _max_limit_reached = function(max_limit){
+				$scope.recommendations.books = [$scope.recommendations.books[max_limit-2], $scope.recommendations.books[max_limit-1]];
+				var timeout_event = $timeout(function(){
+					scroller.scrollTo(window_width/4, 0, 200);
+				}, 200);
+				$scope.$on('destroy', function(){
+					$timeout.cancel(timeout_event);
+				});
+			};
+
+			var _on_title_search = function(){
+				$scope.bookmark_selected  = false;
+				$scope.read_selected = false;
+				$rootScope.hide_options = true;
+				$scope._set_books(data["recommendations"]["books"]);
+				$rootScope.focused_book = $scope.recommendations.books[0];
+			}
+
+			_push_notification();
 			if($rootScope.loading){
 				var max_limit = 20;
 				if(data.recommendations.books.length == 0){
-					var message = RecommendationUIConstants.ZeroBooksFound;
-					var timeout_event = notify($rootScope, message, $timeout);
-					$scope.$on('destroy', function(){
-						$timeout.cancel(timeout_event);
-					});
+					_zero_notification();
 				}
 				else{
 					$scope.hide_popups();
 					$rootScope.user.interact = false;
-					if($scope.recommendations.books.length >= max_limit){
-						$scope.recommendations.books = [$scope.recommendations.books[max_limit-2], $scope.recommendations.books[max_limit-1]];
-						var timeout_event = $timeout(function(){
-							scroller.scrollTo(window_width/4, 0, 2000);
-						}, 200);
-						$scope.$on('destroy', function(){
-							$timeout.cancel(timeout_event);
-						});
+					var max_limit_reached = $scope.recommendations.books.length >= max_limit;
+					var on_title_search = $rootScope.filters.other_filters["title"];
+
+					if(max_limit_reached){
+						_max_limit_reached(max_limit);
 					}
-					if($rootScope.filters.other_filters["title"]){
-						$scope.bookmark_selected  = false;
-						$scope.read_selected = false;
-						// $scope.$emit('moveRight');
-						$rootScope.hide_options = true;
-						// $scope.recommendations.books = data["recommendations"]["books"];
-						_set_books(data["recommendations"]["books"]);
-						// $rootScope.focused_book = $scope.recommendations.books[0];
-						// $rootScope.focused_book.tweets = [];
+					if(on_title_search){
+						_on_title_search();
 					}
 					else{
-		    			// $scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);
-		    			_set_books(data["recommendations"]["books"]);
+		    			$scope._set_books(data["recommendations"]["books"]);
 					}
 				}
 		    	$rootScope.loading = false;
 			}
     	}
-    	else if($rootScope.filters["filter_type"] == RecommendationUIConstants.AuthorTab){
-    		if($scope.recommendations.authors.length >= max_limit){
-				$scope.recommendations.authors = data["recommendations"]["authors"];
-			}
-			else{
-    			$scope.recommendations.authors = $scope.recommendations.authors.concat(data["recommendations"]["authors"]);
-			}
-    	}
-    	else if($rootScope.filters["filter_type"] == RecommendationUIConstants.ReaderTab){
-    		if($scope.recommendations.readers.length >= max_limit){
-				$scope.recommendations.readers = data["recommendations"]["readers"];
-			}
-			else{
-    			$scope.recommendations.readers = $scope.recommendations.readers.concat(data["recommendations"]["readers"]);
-			}
-    	}
     	else{
     		if($scope.recommendations.books.length >= max_limit){
-    			_set_books(data["recommendations"]["books"]);
-				// $scope.recommendations.books = data["recommendations"]["books"];
+    			$scope._set_books(data["recommendations"]["books"]);
 			}
 			else{
-    			// $scope.recommendations.books = $scope.recommendations.books.concat(data["recommendations"]["books"]);
-    			_set_books(data["recommendations"]["books"]);
+    			$scope._set_books(data["recommendations"]["books"]);
 			}
     	}
 
@@ -515,8 +511,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	}
 	}
 	
-	_set_books = function(data){
-		if($scope.bookmark_selected){
+	$scope._set_books = function(data){
+		var _bookmarked_books = function(){
 			$rootScope.user.books['bookmarked'] = [];
 			angular.forEach(data, function(value){
 				var json = {"isbn": value[0], "id": value[1], "external_thumb": value[2]};
@@ -524,14 +520,32 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			},  $rootScope.user.books['bookmarked']);
 			var width = window_width/$rootScope.user.books['bookmarked'].length;
 			$scope.block_style = {"width": width+"px"};
+		};
+
+		var _is_undefined = function(value){
+			return angular.isUndefined(value) || (value == null) || value
+  == "";
 		}
-		else{
+
+		var _recommended_books = function(){
 			angular.forEach(data, function(value){
 				var json = {"isbn": value[0], "id": value[1], "external_thumb": value[2]};
-				this.push(json);
+				var data_missing = _is_undefined(value[0]);
+
+				if(data_missing){
+					json = angular.extend(json, {"no_thumb": true});
+				}
+  				this.push(json);
 			},  $scope.recommendations.books);
 			var width = window_width/($scope.recommendations.books.length + 6);
 			$scope.block_style = {"width": width+"px"};
+		};
+		
+		if($scope.bookmark_selected){
+			_bookmarked_books();
+		}
+		else{
+			_recommended_books();
 		}
 	}
 
@@ -562,7 +576,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			}
 			if(book_grid.length > 4){
 				var grid = {"grid_text": grid_name, 
-							"grid_books": book_grid, 
+							"grid_books": book_grid,
 							"is_grid": true, 
 							"id": grid_id};
 				var index = $scope.recommendations.books.length - 2;

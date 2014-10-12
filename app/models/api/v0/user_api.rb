@@ -299,12 +299,12 @@ module Api
 			end
 
 			def self._update_user_with_email params
-				match_clause =  "MATCH (user:User) WHERE user.email=\""+params[:email]+"\" "
-				merge_clause = "MERGE (user)-[:FacebookAuth]->(fu:FacebookUser) "
+				merge_clause = "MERGE (user:User{fb_id:"+params[:id]+"}) MERGE (user)-[:FacebookAuth]->(fu:FacebookUser) "
 				set_thumb = "SET user.thumb = CASE WHEN user.thumb IS NULL THEN \""+params[:thumb].to_s+"\" ELSE user.thumb END "
 				set_name = "SET user.name = CASE WHEN user.name IS NULL THEN \""+params[:name].to_s+"\" ELSE user.name END "
-				set_last_login = "SET user.last_login = \""+Time.now.strftime("%Y-%m-%d")+"\" SET user.fb_id = "+params[:id].to_s
-				clause = match_clause + merge_clause + set_thumb + set_name + set_last_login + self._fb_set_clause(params) + self._fb_return_clause
+				set_last_login = "SET user.last_login = \""+Time.now.strftime("%Y-%m-%d")+"\" "
+				set_email = "SET user.email = "+params[:email].to_s
+				clause = merge_clause + set_thumb + set_name + set_last_login + set_email + self._fb_set_clause(params) + self._fb_return_clause
 				clause
 			end
 
@@ -319,8 +319,10 @@ module Api
 
 			def self._update_user_without_email params
 				merge_clause = "MERGE (user:User{fb_id:"+params[:id]+"}) MERGE (user)-[:FacebookAuth]->(fu:FacebookUser) "
-				set_clause = "SET user.thumb = CASE WHEN user.thumb IS NULL THEN \""+params[:thumb].to_s+"\" ELSE user.thumb END SET user.name = CASE WHEN user.name IS NULL THEN \""+params[:name].to_s+"\" ELSE user.name END SET user.last_login = \""+Time.now.strftime("%Y-%m-%d")+"\" "
-				clause = merge_clause + set_clause + self._fb_set_clause(params) + self._fb_return_clause
+				set_thumb = "SET user.thumb = CASE WHEN user.thumb IS NULL THEN \""+params[:thumb].to_s+"\" ELSE user.thumb END "
+				set_name = "SET user.name = CASE WHEN user.name IS NULL THEN \""+params[:name].to_s+"\" ELSE user.name END "
+				set_last_login = "SET user.last_login = \""+Time.now.strftime("%Y-%m-%d")+"\" "
+				clause = merge_clause + set_thumb + set_name + set_last_login + self._fb_set_clause(params) + self._fb_return_clause
 				clause
 			end
 

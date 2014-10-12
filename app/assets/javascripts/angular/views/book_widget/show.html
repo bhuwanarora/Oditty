@@ -5,10 +5,6 @@
 	<!-- <category track widget="book"></category> -->
 	<div ng-model="book"
 		class="card animate-slow">
-		<book-interact data="book" track></book-interact>
-		<div class="widget_thumb_wrapper" ng-click="show_share_options($event)">
-			<widget-thumb track ng-show="book.isbn"></widget-thumb>
-		</div>
 		<div class="card_summary animate-fast">
 			<div class="basic_link"
 				 ng-click="show_focused_tooltip($event)">
@@ -16,11 +12,14 @@
 				<span ng-show="book.author_name">by {{book.author_name}}</span>
 			</div>
 			<div>
-				<!-- <tooltip text="book.summary" position="bottom" scroll="true" ng-if="!user.show_profile"></tooltip> -->
 				<span ng-if="book.summary" class="normal_text">{{book.summary | reduced_summary}}</span>
 			</div>
 		</div>
-		<!-- <book-navbar track></book-navbar> -->
+		<div class="widget_thumb_wrapper" 
+			 ng-hide="book.no_thumb"
+			 ng-click="show_share_options($event)">
+			<widget-thumb track ng-show="book.isbn"></widget-thumb>
+		</div>
+		<book-interact data="book" track></book-interact>
 	</div>
 </div>
-<!-- <div class="base" ng-click="show_book(3)"></div> -->

@@ -770,6 +770,7 @@ websiteApp.directive('feed', ['$rootScope', '$timeout', 'websiteService', 'widge
       	}
 
       	$scope.handle_backspace = function(event){
+      		$scope.show_interaction_links = true;
 	  		var string_array = $rootScope.user.current_comment.split(" ");
 	        var html_array = $rootScope.user.hash_tagged_comment.split(" ");
 	        var chr = String.fromCharCode(event.keyCode);
