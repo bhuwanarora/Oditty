@@ -22,7 +22,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/book_widget/show.html',
-    "<div itemscope=\"\" itemtype=\"http://schema.org/Book\" ng-style=\"randomise_position\" class=\"animate-fast widget\"><div ng-model=\"book\" class=\"card animate-slow\"><div class=\"card_summary animate-fast\"><div class=\"basic_link\" ng-click=\"show_focused_tooltip($event)\"><b><span class=\"header_font site_color\">{{book.title | reduced_title}}</span></b><br><span ng-show=\"book.author_name\">by {{book.author_name}}</span></div><div><span ng-if=\"book.summary\" class=\"normal_text\">{{book.summary | reduced_summary}}</span></div></div><div class=\"widget_thumb_wrapper\" ng-hide=\"book.no_thumb\" ng-click=\"show_share_options($event)\"><widget-thumb track=\"\" ng-show=\"book.isbn\"></widget-thumb></div><book-interact data=\"book\" track=\"\"></book-interact></div></div>"
+    "<div itemscope=\"\" itemtype=\"http://schema.org/Book\" class=\"animate-fast widget\"><div ng-model=\"book\" ng-style=\"card_style\" class=\"card animate-slow\"><div class=\"card_summary animate-fast\"><div class=\"basic_link\" ng-click=\"show_focused_tooltip($event)\"><b><span class=\"header_font site_color\">{{book.title | reduced_title}}</span></b><br><span ng-show=\"book.author_name\">by {{book.author_name}}</span></div><div><span ng-if=\"book.summary\" class=\"normal_text\">{{book.summary | reduced_summary}}</span></div></div><div class=\"widget_thumb_wrapper\" ng-hide=\"book.no_thumb\" ng-click=\"show_share_options($event)\"><widget-thumb track=\"\" ng-show=\"book.isbn\"></widget-thumb></div><book-interact data=\"book\" track=\"\"></book-interact></div></div>"
   );
 
 

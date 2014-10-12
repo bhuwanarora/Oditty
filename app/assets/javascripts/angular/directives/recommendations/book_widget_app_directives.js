@@ -112,6 +112,9 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', '
         var book_id = $scope.book.id;
         console.debug("%c _init book"+book_id, "color: purple");
         $scope.book.show_labels = false;
+        if(angular.isDefined($scope.book.no_thumb) && $scope.book.no_thumb){
+          $scope.card_style = {"background-color": "#f5f5f5"};
+        }
         
         if(angular.isUndefined($scope.book.title)){
           websiteService.get_book_details("id="+book_id).then(function(data){
@@ -234,7 +237,7 @@ websiteApp.directive('bookInteract', ['$rootScope', '$timeout', 'widgetService',
         if(angular.isDefined($scope.book.no_thumb) && $scope.book.no_thumb){
           $scope.interact_style = {"margin-top": "1vh", 
                                   "visibility": "visible", 
-                                  "margin-bottom": "1vh",
+                                  "border-radius": "4px",
                                   "background-color": "rgba(0, 0, 0, 0.15)"};
         }
         $scope.setStatus();

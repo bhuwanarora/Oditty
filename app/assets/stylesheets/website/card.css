@@ -6,7 +6,8 @@
 	margin-right: 10px;
 }
 
-.card:hover .bottom_widget{
+.card:hover .bottom_widget,
+.card:hover .label_dropdown{
 	visibility: visible;
 }
 
@@ -22,9 +23,7 @@
 	height: 100%;
 	position: relative;
 	width: 100%;
-	/*box-shadow: -3px 0 5px -2px #B4B4B4;*/
-	/*border-left: 1px solid #F1F1F1;*/
-	/*border-right: 1px solid #F1F1F1;*/
+	margin-bottom: 2vh;
 }
 
 .card_summary{
@@ -190,6 +189,7 @@
 	padding: 10px 0px 10px 0px;
 	text-transform: capitalize;
 	min-width: 180px;
+	visibility: hidden;
 }
 
 .label_dropdown li{
