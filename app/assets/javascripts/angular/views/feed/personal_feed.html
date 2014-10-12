@@ -13,7 +13,12 @@
 	     class="tweet animate-fast">
 		<div ng-include src="'/assets/angular/views/feed/partials/notification_block.html'"></div>
 	</div>
-	<div class="tweet animate-fast">
+	<div class="tweet animate-fast" ng-if="personal_notifications && personal_notifications.length > 0">
 		You've reached the end of your personal feed.
+	</div>
+	<div class="tweet animate-fast click" 
+		 ng-click="user.interact = true;"
+		 ng-if="!personal_notifications || personal_notifications.length == 0">
+		Start sharing your book reading journey.
 	</div>
 </div>
