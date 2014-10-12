@@ -11,6 +11,8 @@
 			 		  ng-if="!recommendation.is_grid"></book>
 				<book-grid data="recommendation"
 						   ng-if="recommendation.is_grid"></book-grid>
+				<book-group data="recommendation"
+							ng-if="recommendation.is_book_array"></book-group>
 				<div ng-if="recommendation.padding"></div>
 		</div>
 		

@@ -133,6 +133,14 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', '
   };
 }]);
 
+websiteApp.directive('bookArray', [, function(){
+  return{
+    restrict: 'E',
+    scope: {'recommendation': '=data'},
+    templateUrl: '/assets/angular/views/book_widget/array.html'
+  }
+}]);
+
 websiteApp.directive('labelPopup', ['$rootScope', '$timeout', 'widgetService', 'RecommendationUIConstants', 'sharedService', function($rootScope, $timeout, widgetService, RecommendationUIConstants, sharedService){
   return{
     restrict: 'E',
@@ -149,7 +157,7 @@ websiteApp.directive('labelPopup', ['$rootScope', '$timeout', 'widgetService', '
         event.stopPropagation();
       }
     }],
-    templateUrl: '/assets/angular/views/book_widget/partials/label_popup.html'    
+    templateUrl: '/assets/angular/views/book_widget/partials/label_popup.html'
   }
 }]);
 
@@ -221,7 +229,11 @@ websiteApp.directive('bookInteract', ['$rootScope', '$timeout', 'widgetService',
     restrict: 'E',
     scope: {"book": "=data"},
     controller: ['$scope', function($scope){
+
       _init = function(){
+        if(angular.isDefined(book.no_thumb) && book.no_thumb){
+          $scope.interact_style = {"margin-top": "1vh", "visibility": "visible"};
+        }
         $scope.setStatus();
         $scope.label_placeholder = "Add to my library";
       }

@@ -3,6 +3,7 @@
 	height: 55vh;
 	position: relative;
 	width: 39vh;
+	margin-right: 5px;
 }
 
 .recommendation_block:hover .bottom_widget{
@@ -81,6 +82,7 @@
 	visibility: hidden;
 	background-color: rgba(0,0,0,0.58);
 	position: relative;
+	width: 85%;
 }
 
 .card .widget_thumb,
@@ -136,7 +138,7 @@
 
 /*mark as read*/
 .input_bookmark{
-	width: 83%;
+	width: 80%;
 	padding: 0px;
 	font-size: 0.8em;
 	cursor: default;

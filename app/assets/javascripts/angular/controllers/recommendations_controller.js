@@ -528,15 +528,26 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		}
 
 		var _recommended_books = function(){
+			var group_of_three = [];
 			angular.forEach(data, function(value){
 				var json = {"isbn": value[0], "id": value[1], "external_thumb": value[2]};
 				var data_missing = _is_undefined(value[0]);
 
 				if(data_missing){
 					json = angular.extend(json, {"no_thumb": true});
+					if(group_of_three.length == 3){
+						this.push({"book_array": group_of_three, "is_book_array": true});
+						group_of_three = [];
+					}
+					group_of_three.push(json);
 				}
-  				this.push(json);
+				else{
+  					this.push(json);
+				}
 			},  $scope.recommendations.books);
+			if(group_of_three.length != 0){
+				$scope.recommendations.books.push({"book_array": group_of_three, "is_book_array": true});
+			}
 			var width = window_width/($scope.recommendations.books.length + 6);
 			$scope.block_style = {"width": width+"px"};
 		};
