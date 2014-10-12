@@ -303,7 +303,7 @@ module Api
 				set_thumb = "SET user.thumb = CASE WHEN user.thumb IS NULL THEN \""+params[:thumb].to_s+"\" ELSE user.thumb END "
 				set_name = "SET user.name = CASE WHEN user.name IS NULL THEN \""+params[:name].to_s+"\" ELSE user.name END "
 				set_last_login = "SET user.last_login = \""+Time.now.strftime("%Y-%m-%d")+"\" "
-				set_email = "SET user.email = "+params[:email].to_s
+				set_email = "SET user.email = \""+params[:email].to_s+"\""
 				clause = merge_clause + set_thumb + set_name + set_last_login + set_email + self._fb_set_clause(params) + self._fb_return_clause
 				clause
 			end
