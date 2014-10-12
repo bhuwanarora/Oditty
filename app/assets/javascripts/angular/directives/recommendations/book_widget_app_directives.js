@@ -231,7 +231,7 @@ websiteApp.directive('bookInteract', ['$rootScope', '$timeout', 'widgetService',
     controller: ['$scope', function($scope){
 
       _init = function(){
-        if(angular.isDefined(book.no_thumb) && book.no_thumb){
+        if(angular.isDefined($scope.book.no_thumb) && $scope.book.no_thumb){
           $scope.interact_style = {"margin-top": "1vh", "visibility": "visible"};
         }
         $scope.setStatus();
