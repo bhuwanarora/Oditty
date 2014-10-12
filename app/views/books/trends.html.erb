@@ -147,7 +147,7 @@
 					url: "<%= trending_new_books_path %>",
 					data: data,
 					success: function(data, textStatus, jqxhr){
-						window.location.reload();
+						$('.footer_status').html('Done..');
 					},
 					error: function(jqxhr, textStatus, errorThrown){
 						$('.footer_status').html('Error in updating..');
@@ -164,7 +164,7 @@
 					url: "<%= remove_trend_path %>",
 					data: data,
 					success: function(data, textStatus, jqxhr){
-						window.location.reload();	
+						$('.footer_status').html('Done..');
 					},
 					error: function(jqxhr, textStatus, errorThrown){
 						$('.footer_status').html('Error in removing..');

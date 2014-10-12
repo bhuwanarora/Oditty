@@ -492,7 +492,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			}
 
 			_push_notification();
-			if($rootScope.loading){
+			if($rootscope.user.loading){
 				var max_limit = 20;
 				if(data.recommendations.books.length == 0){
 					_zero_notification();
@@ -513,7 +513,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		    			$scope._set_books(data["recommendations"]["books"]);
 					}
 				}
-		    	$rootScope.loading = false;
+		    	$rootscope.user.loading = false;
 			}
     	}
     	else{
@@ -649,7 +649,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 
     _get_recommendations = function(){
-    	$rootScope.loading = true;
+    	$rootscope.user.loading = true;
         recommendationService.get_recommendations().then(function(data){
         	_update_recommendations(data);
 	    });

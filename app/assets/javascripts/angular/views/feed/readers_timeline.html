@@ -6,13 +6,13 @@
 		<img ng-src="{{reader.thumb}}" class="profile_thumb" />
  	</div>
 	<div class="tweet feed_header">
-		<b><div>{{reader.name | first_name}}'s timeline</div></b>
+		<b><div>{{reader.name | first_name}}'s Reading Journey</div></b>
 	</div>
 	<div ng-repeat="notification in readers_notifications | reverse" 
 	     class="tweet animate-fast">
 		<div ng-include src="'/assets/angular/views/feed/partials/notification_block.html'"></div>
 	</div>
 	<div class="tweet animate-fast">
-		No new notifications from {{reader.name | first_name}}.
+		You've reached the end of {{reader.name | first_name}}'s reading journey.
 	</div>
 </div>

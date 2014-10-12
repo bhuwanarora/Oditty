@@ -434,26 +434,115 @@ AzNLnVzkZAkeRNWCFZCduDV3pJWgTH33tCRT0jGCF6ukZA1GyLcQQxK1oFmmyeA1P74e2Ehz7pVIVlge
 Kgt7Mcnt4F5INt0FAi4oNB_LtQMY6beKKCXlt0xjOSYGqePXzDtvJW7Zur-q33tCb3_nu9tBuuAR0E4-tM"}, "type"=>"books.rates"}}
 
 
- {"data"=>[{"id"=>"538865169546441", "from"=>{"id"=>"100002688874653", "name"=>"Prachi Jain"}, "start_time"=>"2014-08-31T15:4[798/1828]
-, "end_time"=>"2014-08-31T15:49:53+0000", "publish_time"=>"2014-08-31T15:49:53+0000", "application"=>{"name"=>"Goodreads", "namespace"=>"good_reads", "id"=>"241507177
-2"}, "data"=>{"book"=>{"id"=>"139913092838807", "url"=>"http://www.goodreads.com/book/show/17262100-the-lowland", "type"=>"good_reads:book", "title"=>"The Lowland"}},
- "type"=>"books.wants_to_read", "no_feed_story"=>false, "likes"=>{"count"=>0, "can_like"=>true, "user_likes"=>false}, "comments"=>{"count"=>0, "can_comment"=>true, "c
-omment_order"=>"chronological"}}, {"id"=>"538384406261184", "from"=>{"id"=>"100002688874653", "name"=>"Prachi Jain"}, "start_time"=>"2014-08-30T11:28:10+0000", "end_t
-ime"=>"2014-08-30T11:28:10+0000", "publish_time"=>"2014-08-30T11:28:10+0000", "application"=>{"name"=>"Goodreads", "namespace"=>"good_reads", "id"=>"2415071772"}, "da
-ta"=>{"book"=>{"id"=>"432535703542539", "url"=>"http://www.goodreads.com/book/show/20468610-amu", "type"=>"good_reads:book", "title"=>"Amu"}}, "type"=>"books.wants_to
-_read", "no_feed_story"=>false, "likes"=>{"count"=>0, "can_like"=>true, "user_likes"=>false}, "comments"=>{"count"=>0, "can_comment"=>true, "comment_order"=>"chronolo
-gical"}}, {"id"=>"538384272927864", "from"=>{"id"=>"100002688874653", "name"=>"Prachi Jain"}, "start_time"=>"2014-08-30T11:27:39+0000", "end_time"=>"2014-08-30T11:27:
-39+0000", "publish_time"=>"2014-08-30T11:27:39+0000", "application"=>{"name"=>"Goodreads", "namespace"=>"good_reads", "id"=>"2415071772"}, "data"=>{"book"=>{"id"=>"73
-4080026634433", "url"=>"http://www.goodreads.com/book/show/19304966-there-is-not-god-but-god-and-muhammad-was-a-messenger-of-god", "type"=>"good_reads:book", "title"=
->"There is not God but God and Muhammad was a Messenger of God"}}, "type"=>"books.wants_to_read", "no_feed_story"=>false, "likes"=>{"count"=>0, "can_like"=>true, "use
-r_likes"=>false}, "comments"=>{"count"=>0, "can_comment"=>true, "comment_order"=>"chronological"}}, {"id"=>"538382842928007", "from"=>{"id"=>"100002688874653", "name"
-=>"Prachi Jain"}, "start_time"=>"2014-08-30T11:21:32+0000", "end_time"=>"2014-08-30T11:21:32+0000", "publish_time"=>"2014-08-30T11:21:34+0000", "application"=>{"name"
-=>"Goodreads", "namespace"=>"good_reads", "id"=>"2415071772"}, "data"=>{"book"=>{"id"=>"396751776573", "url"=>"http://www.goodreads.com/book/show/7613.Animal_Farm", "
-type"=>"good_reads:book", "title"=>"Animal Farm"}}, "type"=>"books.wants_to_read", "no_feed_story"=>false, "likes"=>{"count"=>0, "can_like"=>true, "user_likes"=>false
-}, "comments"=>{"count"=>0, "can_comment"=>true, "comment_order"=>"chronological"}}, {"id"=>"538115439621414", "from"=>{"id"=>"100002688874653", "name"=>"Prachi Jain"
-}, "start_time"=>"2014-08-29T13:57:50+0000", "end_time"=>"2014-08-29T13:57:50+0000", "publish_time"=>"2014-08-29T13:57:50+0000", "application"=>{"name"=>"Goodreads", 
-"namespace"=>"good_reads", "id"=>"2415071772"}, "data"=>{"book"=>{"id"=>"10150281968795406", "url"=>"http://www.goodreads.com/book/show/36004.In_Custody", "type"=>"go
-od_reads:book", "title"=>"In Custody"}}, "type"=>"books.wants_to_read", "no_feed_story"=>false, "likes"=>{"count"=>0, "can_like"=>true, "user_likes"=>false}, "comment
+ {"data"=>[
+ 	{
+ 		"id"=>"538865169546441", 
+ 		"from"=>{"id"=>"100002688874653", "name"=>"Prachi Jain"}, 
+ 		"start_time"=>"2014-08-31T15:4[798/1828", 
+ 		"end_time"=>"2014-08-31T15:49:53+0000", 
+ 		"publish_time"=>"2014-08-31T15:49:53+0000", 
+ 		"application"=>{"name"=>"Goodreads", "namespace"=>"good_reads", "id"=>"2415071772"}, 
+ 		"data"=>{
+ 			"book"=>{
+ 				"id"=>"139913092838807", 
+ 				"url"=>"http://www.goodreads.com/book/show/17262100-the-lowland", 
+ 				"type"=>"good_reads:book", 
+ 				"title"=>"The Lowland"
+ 				}
+ 			},
+	 	"type"=>"books.wants_to_read", 
+	 	"no_feed_story"=>false, 
+	 	"likes"=>{
+	 		"count"=>0, 
+	 		"can_like"=>true, 
+	 		"user_likes"=>false
+	 	}, 
+	 	"comments"=>{
+	 		"count"=>0, 
+	 		"can_comment"=>true, 
+	 		"comment_order"=>"chronological"
+	 	}
+	 }, 
+	 {
+	 	"id"=>"538384406261184", 
+	 	"from"=>{"id"=>"100002688874653", "name"=>"Prachi Jain"}, 
+	 		"start_time"=>"2014-08-30T11:28:10+0000", 
+	 		"end_time"=>"2014-08-30T11:28:10+0000", 
+	 		"publish_time"=>"2014-08-30T11:28:10+0000", 
+	 		"application"=>{"name"=>"Goodreads", "namespace"=>"good_reads", "id"=>"2415071772"}, 
+	 		"data"=>{
+	 			"book"=>{
+	 				"id"=>"432535703542539", 
+	 				"url"=>"http://www.goodreads.com/book/show/20468610-amu", 
+	 				"type"=>"good_reads:book", 
+	 				"title"=>"Amu"
+	 			}
+	 		}, 
+	 		"type"=>"books.wants_to_read", 
+	 		"no_feed_story"=>false, 
+	 		"likes"=>{"count"=>0, "can_like"=>true, "user_likes"=>false}, 
+	 		"comments"=>{"count"=>0, "can_comment"=>true, "comment_order"=>"chronological"}}, 
+	 		{
+	 			"id"=>"538384272927864", 
+	 			"from"=>{"id"=>"100002688874653", "name"=>"Prachi Jain"}, 
+	 			"start_time"=>"2014-08-30T11:27:39+0000", 
+	 			"end_time"=>"2014-08-30T11:27:39+0000", 
+	 			"publish_time"=>"2014-08-30T11:27:39+0000", 
+	 			"application"=>{"name"=>"Goodreads", "namespace"=>"good_reads", "id"=>"2415071772"}, 
+	 			"data"=>{"book"=>{
+	 				"id"=>"734080026634433", 
+	 				"url"=>"http://www.goodreads.com/book/show/19304966-there-is-not-god-but-god-and-muhammad-was-a-messenger-of-god", 
+	 				"type"=>"good_reads:book", 
+	 				"title"=>"There is not God but God and Muhammad was a Messenger of God"
+	 			}
+	 		}, 
+	 		"type"=>"books.wants_to_read", 
+	 		"no_feed_story"=>false, 
+	 		"likes"=>{
+	 			"count"=>0, 
+	 			"can_like"=>true, 
+	 			"user_likes"=>false
+	 		}, 
+	 		"comments"=>{
+	 			"count"=>0, 
+	 			"can_comment"=>true, 
+	 			"comment_order"=>"chronological"
+	 		}
+	 	}, 
+	 	{
+	 		"id"=>"538382842928007", 
+	 		"from"=>{"id"=>"100002688874653", "name"=>"Prachi Jain"}, 
+	 		"start_time"=>"2014-08-30T11:21:32+0000", 
+	 		"end_time"=>"2014-08-30T11:21:32+0000", 
+	 		"publish_time"=>"2014-08-30T11:21:34+0000", 
+	 		"application"=>{"name"=>"Goodreads", "namespace"=>"good_reads", "id"=>"2415071772"}, 
+	 		"data"=>{"book"=>{
+	 			"id"=>"396751776573", 
+	 			"url"=>"http://www.goodreads.com/book/show/7613.Animal_Farm", 
+	 			"type"=>"good_reads:book", 
+	 			"title"=>"Animal Farm"
+	 		}
+	 	}, 
+	 	"type"=>"books.wants_to_read", 
+	 	"no_feed_story"=>false, 
+	 	"likes"=>{"count"=>0, "can_like"=>true, "user_likes"=>false}, 
+	 	"comments"=>{"count"=>0, "can_comment"=>true, "comment_order"=>"chronological"}
+	 }, 
+	 {
+	 	"id"=>"538115439621414", 
+	 	"from"=>{"id"=>"100002688874653", "name"=>"Prachi Jain"}, 
+	 	"start_time"=>"2014-08-29T13:57:50+0000", 
+	 	"end_time"=>"2014-08-29T13:57:50+0000", 
+	 	"publish_time"=>"2014-08-29T13:57:50+0000", 
+	 	"application"=>{"name"=>"Goodreads", "namespace"=>"good_reads", "id"=>"2415071772"}, 
+	 	"data"=>{"book"=>{
+	 		"id"=>"10150281968795406", 
+	 		"url"=>"http://www.goodreads.com/book/show/36004.In_Custody", 
+	 		"type"=>"good_reads:book", 
+	 		"title"=>"In Custody"
+	 	}
+	 }, 
+	 "type"=>"books.wants_to_read", "no_feed_story"=>false, "likes"=>{"count"=>0, "can_like"=>true, "user_likes"=>false}, "comment
 s"=>{"count"=>0, "can_comment"=>true, "comment_order"=>"chronological"}}, {"id"=>"535258516573773", "from"=>{"id"=>"100002688874653", "name"=>"Prachi Jain"}, "start_t
 ime"=>"2014-08-21T14:11:40+0000", "end_time"=>"2014-08-21T14:11:40+0000", "publish_time"=>"2014-08-21T14:11:41+0000", "application"=>{"name"=>"Goodreads", "namespace"
 =>"good_reads", "id"=>"2415071772"}, "data"=>{"book"=>{"id"=>"10150214985201594", "url"=>"http://www.goodreads.com/book/show/83007.The_Other_Side_of_Silence", "type"=
@@ -506,17 +595,57 @@ t"=>"https://graph.facebook.com/v1.0/100002688874653/books.wants_to_read?access_
 xuZBwdlpFuwDPWnj9m5BAhFxAzNLnVzkZAkeRNWCFZCduDV3pJWgTH33tCRT0jGCF6ukZA1GyLcQQxK1oFmmyeA1P74e2Ehz7pVIVlge61EJNRQb06VoHSuZAYpUJyAEJxldR5hBDfw6OEHUaJAZD&limit=25&offset=
 25&__after_id=enc_AeyZRh0U-9qOT8U8Xq7ntDn85pKeKb9XXEkHfWxI8p57c_q6ymyi8rrl5u5IR8nKIDtEX72KCHiq2ti44n0L_BgI"}, "type"=>"books.wants_to_read"}}
 
+
+
  {"data"=>[{"id"=>"538382342928057", "from"=>{"id"=>"100002688874653", "name"=>"Prachi Jain"}, "start_time"=>"2014-08-30T11:20:10+0000"
 , "end_time"=>"2014-08-30T11:20:24+0000", "publish_time"=>"2014-08-30T11:20:12+0000", "application"=>{"name"=>"Goodreads", "namespace"=>"good_reads", "id"=>"241507177
-2"}, "ref"=>"Default", "data"=>{"progress"=>[{"timestamp"=>1409320669, "percent_complete"=>0}, {"timestamp"=>1409397624, "percent_complete"=>100}], "book"=>{"id"=>"10
-150281968795406", "url"=>"http://www.goodreads.com/book/show/36004.In_Custody", "type"=>"good_reads:book", "title"=>"In Custody"}}, "type"=>"books.reads", "no_feed_st
-ory"=>false, "likes"=>{"data"=>[{"id"=>"100000963107311", "name"=>"Sanchit Malik"}], "paging"=>{"cursors"=>{"after"=>"MTAwMDAwOTYzMTA3MzEx", "before"=>"MTAwMDAwOTYzMT
-A3MzEx"}}, "count"=>1, "can_like"=>true, "user_likes"=>false}, "comments"=>{"count"=>0, "can_comment"=>true, "comment_order"=>"chronological"}}, {"id"=>"5352580599071
-52", "from"=>{"id"=>"100002688874653", "name"=>"Prachi Jain"}, "start_time"=>"2014-08-21T14:09:48+0000", "end_time"=>"2014-08-21T14:09:48+0000", "publish_time"=>"2014
--08-21T14:09:49+0000", "application"=>{"name"=>"Goodreads", "namespace"=>"good_reads", "id"=>"2415071772"}, "data"=>{"progress"=>[{"timestamp"=>1406896686, "percent_c
-omplete"=>0}, {"timestamp"=>1407324455, "percent_complete"=>32}, {"timestamp"=>1408630188, "percent_complete"=>100}], "book"=>{"id"=>"450632606416", "url"=>"http://ww
-w.goodreads.com/book/show/151740.The_Lemon_Tree", "type"=>"good_reads:book", "title"=>"The Lemon Tree"}}, "type"=>"books.reads", "no_feed_story"=>false, "likes"=>{"co
-unt"=>0, "can_like"=>true, "user_likes"=>false}, "comments"=>{"count"=>0, "can_comment"=>true, "comment_order"=>"chronological"}}, {"id"=>"529652607134364", "from"=>{
+2"}, "ref"=>"Default", 
+	
+	"data"=>{
+		"progress"=>[
+			{"timestamp"=>1409320669, "percent_complete"=>0}, 
+			{"timestamp"=>1409397624, "percent_complete"=>100}
+		], 
+		"book"=>{"id"=>"10150281968795406", 
+			"url"=>"http://www.goodreads.com/book/show/36004.In_Custody", 
+			"type"=>"good_reads:book", 
+			"title"=>"In Custody"
+			}
+		}, 
+		"type"=>"books.reads", 
+		"no_feed_story"=>false, 
+		"likes"=>{"data"=>[{"id"=>"100000963107311", "name"=>"Sanchit Malik"}], 
+			"paging"=>{"cursors"=>{"after"=>"MTAwMDAwOTYzMTA3MzEx", 
+									"before"=>"MTAwMDAwOTYzMTA3MzEx"
+								}
+					}, 
+			"count"=>1, 
+			"can_like"=>true, "user_likes"=>false}, 
+			"comments"=>{"count"=>0, "can_comment"=>true, "comment_order"=>"chronological"}}, 
+			{"id"=>"535258059907152", 
+				"from"=>{"id"=>"100002688874653", "name"=>"Prachi Jain"}, 
+				"start_time"=>"2014-08-21T14:09:48+0000", 
+				"end_time"=>"2014-08-21T14:09:48+0000", 
+				"publish_time"=>"2014-08-21T14:09:49+0000", 
+				"application"=>{"name"=>"Goodreads", "namespace"=>"good_reads", "id"=>"2415071772"}, 
+				"data"=>{"progress"=>[
+					{"timestamp"=>1406896686, "percent_complete"=>0}, 
+					{"timestamp"=>1407324455, "percent_complete"=>32}, 
+					{"timestamp"=>1408630188, "percent_complete"=>100}
+				], 
+				"book"=>{"id"=>"450632606416", 
+					"url"=>"http://www.goodreads.com/book/show/151740.The_Lemon_Tree", 
+					"type"=>"good_reads:book", 
+					"title"=>"The Lemon Tree"
+				}
+			}, 
+			"type"=>"books.reads", 
+			"no_feed_story"=>false, 
+			"likes"=>{
+				"count"=>0, 
+				"can_like"=>true, 
+				"user_likes"=>false
+			}, "comments"=>{"count"=>0, "can_comment"=>true, "comment_order"=>"chronological"}}, {"id"=>"529652607134364", "from"=>{
 "id"=>"100002688874653", "name"=>"Prachi Jain"}, "start_time"=>"2014-08-06T11:24:45+0000", "end_time"=>"2014-08-06T11:24:45+0000", "publish_time"=>"2014-08-06T11:24:4
 7+0000", "application"=>{"name"=>"Goodreads", "namespace"=>"good_reads", "id"=>"2415071772"}, "data"=>{"progress"=>[{"timestamp"=>1404228308, "percent_complete"=>0}, 
 {"timestamp"=>1407324285, "percent_complete"=>100}], "book"=>{"id"=>"135511099927622", "url"=>"http://www.goodreads.com/book/show/15811545-a-tale-for-the-time-being",

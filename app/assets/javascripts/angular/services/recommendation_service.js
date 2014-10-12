@@ -58,7 +58,7 @@ websiteApp.service('recommendationService', ['$http', '$q', '$rootScope', 'Websi
             return deferred.resolve(result.data); 
         }
         var errorCallback = function(reason){
-            $rootScope.loading = false;
+            $rootscope.user.loading = false;
             if(reason.status == 500){
                 alert(WebsiteUIConstants.ServerError);
             }

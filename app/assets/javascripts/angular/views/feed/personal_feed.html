@@ -6,7 +6,7 @@
 		<img ng-src="{{user.thumb}}" class="profile_thumb" />
  	</div>
 	<div class="tweet feed_header">
-		<b><div>Personal Feed</div></b>
+		<b><div>Your Reading Journey</div></b>
 	</div>
 	<div ng-include src="'/assets/angular/views/feed/comment_box.html'"></div>
 	<div ng-repeat="notification in personal_notifications | reverse" 
@@ -14,9 +14,9 @@
 		<div ng-include src="'/assets/angular/views/feed/partials/notification_block.html'"></div>
 	</div>
 	<div class="tweet animate-fast" ng-if="personal_notifications && personal_notifications.length > 0">
-		You've reached the end of your personal feed.
+		You've reached the end of your reading journey.
 	</div>
-	<div class="tweet animate-fast click" 
+	<div class="tweet animate-fast" 
 		 ng-click="user.interact = true;"
 		 ng-if="!personal_notifications || personal_notifications.length == 0">
 		Start sharing your book reading journey.

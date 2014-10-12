@@ -2,13 +2,13 @@
 	check-scroll-bottom="get_notifications()"
 	ng-click="stop_propagation($event)">
 	<div class="tweet feed_header">
-		<b><div>News Feed</div></b>
+		<b><div>Reading Journeys</div></b>
 	</div>
 	<div ng-repeat="notification in news_feed | reverse" 
 	     class="tweet animate-fast">
 		<div ng-include src="'/assets/angular/views/feed/partials/notification_block.html'"></div>
 	</div>
 	<div class="tweet animate-fast">
-		You've reached end of the news feed.
+		You've reached end of your friend's book reading journeys.
 	</div>
 </div>
