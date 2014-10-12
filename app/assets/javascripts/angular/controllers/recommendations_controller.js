@@ -361,16 +361,16 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     		$rootScope.filters["reset_count"] = 0;
     		$rootScope.filters["trend_id"] = $routeParams.trend_id;
     		$rootScope.main_header = $routeParams.name;
-    		var index = 0;
+    		var trend_index = 0;
     		if(angular.isDefined($rootScope.trending_feed)){
     			angular.forEach($rootScope.trending_feed, function(trend, index){
     				if(trend["id"] == $routeParams.trend_id){
     					$rootScope.main_topic = trend;
-    					index = index;
+    					trend_index = index;
     				}
     			});
     		}
-    		_set_nav_links(index);
+    		_set_nav_links(trend_index);
     		_collapse_every_left_panel();
     		$rootScope.user.collapsed_trends = false;
 		}

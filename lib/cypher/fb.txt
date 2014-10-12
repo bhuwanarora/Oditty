@@ -597,10 +597,14 @@ xuZBwdlpFuwDPWnj9m5BAhFxAzNLnVzkZAkeRNWCFZCduDV3pJWgTH33tCRT0jGCF6ukZA1GyLcQQxK1
 
 
 
- {"data"=>[{"id"=>"538382342928057", "from"=>{"id"=>"100002688874653", "name"=>"Prachi Jain"}, "start_time"=>"2014-08-30T11:20:10+0000"
-, "end_time"=>"2014-08-30T11:20:24+0000", "publish_time"=>"2014-08-30T11:20:12+0000", "application"=>{"name"=>"Goodreads", "namespace"=>"good_reads", "id"=>"241507177
-2"}, "ref"=>"Default", 
-	
+ {"data"=>[{
+ 	"id"=>"538382342928057", 
+ 	"from"=>{"id"=>"100002688874653", "name"=>"Prachi Jain"}, 
+ 	"start_time"=>"2014-08-30T11:20:10+0000", 
+	"end_time"=>"2014-08-30T11:20:24+0000", 
+	"publish_time"=>"2014-08-30T11:20:12+0000", 
+	"application"=>{"name"=>"Goodreads", "namespace"=>"good_reads", "id"=>"2415071772"}, 
+	"ref"=>"Default",
 	"data"=>{
 		"progress"=>[
 			{"timestamp"=>1409320669, "percent_complete"=>0}, 
@@ -621,8 +625,10 @@ xuZBwdlpFuwDPWnj9m5BAhFxAzNLnVzkZAkeRNWCFZCduDV3pJWgTH33tCRT0jGCF6ukZA1GyLcQQxK1
 					}, 
 			"count"=>1, 
 			"can_like"=>true, "user_likes"=>false}, 
-			"comments"=>{"count"=>0, "can_comment"=>true, "comment_order"=>"chronological"}}, 
-			{"id"=>"535258059907152", 
+			"comments"=>{"count"=>0, "can_comment"=>true, "comment_order"=>"chronological"}
+		}, 
+			
+	{"id"=>"535258059907152", 
 				"from"=>{"id"=>"100002688874653", "name"=>"Prachi Jain"}, 
 				"start_time"=>"2014-08-21T14:09:48+0000", 
 				"end_time"=>"2014-08-21T14:09:48+0000", 
@@ -684,8 +690,7 @@ oks.book", "title"=>"QURAN High Quality"}}, "type"=>"books.reads", "no_feed_stor
 284125", "url"=>"https://www.facebook.com/pages/Hansel-and-Gretel/113933745284125", "type"=>"books.book", "title"=>"Hansel and Gretel"}}, "type"=>"books.reads", "no_f
 eed_story"=>false, "likes"=>{"count"=>0, "can_like"=>true, "user_likes"=>false}, "comments"=>{"count"=>0, "can_comment"=>true, "comment_order"=>"chronological"}}, {"i
 d"=>"475158359250456", "from"=>{"id"=>"100002688874653", "name"=>"Prachi Jain"}, "start_time"=>"2014-03-09T22:26:26+0000", "publish_time"=>"2014-03-09T22:26:26+0000",
- "application"=>{"name"=>"Books", "id"=>"174275722710475"}, "data"=>{"book"=
-App 16678 stdout: >{"id"=>"114787338536966", "url"=>"https://www.facebook.com/pages/NIV/114787338536966", "type"=>"books.book", "title"=>"NIV"}}, "type"=>"books.reads
+ "application"=>{"name"=>"Books", "id"=>"174275722710475"}, "data"=>{"book"=>{"id"=>"114787338536966", "url"=>"https://www.facebook.com/pages/NIV/114787338536966", "type"=>"books.book", "title"=>"NIV"}}, "type"=>"books.reads
 ", "no_feed_story"=>false, "likes"=>{"count"=>0, "can_like"=>true, "user_likes"=>false}, "comments"=>{"count"=>0, "can_comment"=>true, "comment_order"=>"chronological
 "}}, {"id"=>"475158355917123", "from"=>{"id"=>"100002688874653", "name"=>"Prachi Jain"}, "start_time"=>"2014-03-09T22:26:26+0000", "publish_time"=>"2014-03-09T22:26:2
 6+0000", "application"=>{"name"=>"Books", "id"=>"174275722710475"}, "data"=>{"book"=>{"id"=>"358731394223159", "url"=>"https://www.facebook.com/pages/The-Kite-Runner/
