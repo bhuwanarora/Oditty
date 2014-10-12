@@ -282,13 +282,16 @@ module Api
 				set_clause = ""
 				property_clause = ""
 				for key in params.keys
+					puts "_fb_set_clause #{params.keys.class} #{key}".blue
 					if params[key].class == Array
 						new_string = self._get_string_from_array(key, params[key])
 						property_clause = property_clause + new_string
 					elsif params[key].class == ActiveSupport::HashWithIndifferentAccess
 						puts "TO ADD #{params[key].class}".red
-					else
+					elsif params[key].class == String
 						set_clause = set_clause + " SET fu."+key.to_s+"=\""+params[key].to_s+"\""
+					else
+						puts "TO ADD #{params[key].class}".red
 					end
 				end
 
