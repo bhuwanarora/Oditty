@@ -7,7 +7,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/book_widget/footer.html',
-    "<div class=\"bottom_widget animate-fast\" ng-click=\"stop_propagation($event)\"><div ng-init=\"setStatus(book.status)\"></div><div class=\"tag_bookmark\"><input placeholder=\"{{label_placeholder}}\" class=\"input_bookmark\" ng-model=\"book.custom_bookmark\" ng-keypress=\"handle_enter($event)\" ng-click=\"show_bookmark_options($event)\"><book-bookmark></book-bookmark></div><label-popup></label-popup></div>"
+    "<div class=\"bottom_widget animate-fast\" ng-click=\"stop_propagation($event)\" ng-style=\"interact_style\"><div ng-init=\"setStatus(book.status)\"></div><div class=\"tag_bookmark\"><input placeholder=\"{{label_placeholder}}\" class=\"input_bookmark\" ng-model=\"book.custom_bookmark\" ng-keypress=\"handle_enter($event)\" ng-click=\"show_bookmark_options($event)\"><book-bookmark></book-bookmark></div><label-popup></label-popup></div>"
   );
 
 
@@ -22,7 +22,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/book_widget/show.html',
-    "<div itemscope=\"\" itemtype=\"http://schema.org/Book\" ng-style=\"randomise_position\" class=\"animate-fast widget\"><div ng-model=\"book\" class=\"card animate-slow\"><div class=\"card_summary animate-fast\"><div class=\"basic_link\" ng-click=\"show_focused_tooltip($event)\"><b><span class=\"header_font\">{{book.title | reduced_title}}</span></b><br><span ng-show=\"book.author_name\">by {{book.author_name}}</span></div><div><span ng-if=\"book.summary\" class=\"normal_text\">{{book.summary | reduced_summary}}</span></div></div><div class=\"widget_thumb_wrapper\" ng-hide=\"book.no_thumb\" ng-click=\"show_share_options($event)\"><widget-thumb track=\"\" ng-show=\"book.isbn\"></widget-thumb></div><book-interact data=\"book\" track=\"\" ng-style=\"interact_style\"></book-interact></div></div>"
+    "<div itemscope=\"\" itemtype=\"http://schema.org/Book\" ng-style=\"randomise_position\" class=\"animate-fast widget\"><div ng-model=\"book\" class=\"card animate-slow\"><div class=\"card_summary animate-fast\"><div class=\"basic_link\" ng-click=\"show_focused_tooltip($event)\"><b><span class=\"header_font\">{{book.title | reduced_title}}</span></b><br><span ng-show=\"book.author_name\">by {{book.author_name}}</span></div><div><span ng-if=\"book.summary\" class=\"normal_text\">{{book.summary | reduced_summary}}</span></div></div><div class=\"widget_thumb_wrapper\" ng-hide=\"book.no_thumb\" ng-click=\"show_share_options($event)\"><widget-thumb track=\"\" ng-show=\"book.isbn\"></widget-thumb></div><book-interact data=\"book\" track=\"\"></book-interact></div></div>"
   );
 
 
