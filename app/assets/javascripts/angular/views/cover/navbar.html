@@ -4,7 +4,16 @@
 		 ng-if="$routeParams.trend_id || $routeParams.grid_id || $routeParams.filter_id || $routeParams.label_id">
 		 <div class="info">
 			<div class="inline_block right_tab large_font">
-		        <span ng-bind-html="main_header | lowercase" class="table_cell"></span>
+				<div>
+		        	<span ng-bind-html="main_header | lowercase" class="table_cell"></span>
+				</div>
+				<div>
+		        	<a class="normal_font click" ng-show="$routeParams.trend_id" 
+		        	   ng-href="{{prev_link}}">Prev</a>
+		        	<span>&nbsp;</span>
+					<a class="normal_font click" ng-show="$routeParams.trend_id" 
+						ng-href="{{next_link}}">Next</a>
+				</div>
 		    </div>
 		    <div class="inline_block float_right">
 		      	<div class="larger_font inline_block line_separator">|</div>

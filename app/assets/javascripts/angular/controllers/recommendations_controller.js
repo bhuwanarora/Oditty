@@ -337,18 +337,40 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		}
 
 		var _handle_trending_page = function(){
+			var _get_link = function(trend){
+				return "#user/"+$rootScope.user.id+"/trending/books/id/"+trend.id+"/name/"+trend.name;
+			}
+
+			var _set_nav_links = function(index){
+				if(index == 0){
+					$rootScope.prev_link = _get_link($rootScope.trending_feed[$rootScope.trending_feed.length - 1]);
+					$rootScope.next_link = _get_link($rootScope.trending_feed[index + 1]);
+				}
+				else if(index == $rootScope.trending_feed.length - 1){
+					$rootScope.prev_link = _get_link($rootScope.trending_feed[index - 1]);
+					$rootScope.next_link = _get_link($rootScope.trending_feed[0]);
+				}
+				else{
+					$rootScope.prev_link = _get_link($rootScope.trending_feed[index - 1]);
+					$rootScope.next_link = _get_link($rootScope.trending_feed[index + 1]);
+				}
+			}
+
     		$scope.expand_left_panel();
     		$rootScope.filters["reset"] = true;
     		$rootScope.filters["reset_count"] = 0;
     		$rootScope.filters["trend_id"] = $routeParams.trend_id;
     		$rootScope.main_header = $routeParams.name;
+    		var index = 0;
     		if(angular.isDefined($rootScope.trending_feed)){
-    			angular.forEach($rootScope.trending_feed, function(trend){
+    			angular.forEach($rootScope.trending_feed, function(trend, index){
     				if(trend["id"] == $routeParams.trend_id){
     					$rootScope.main_topic = trend;
+    					index = index;
     				}
     			});
     		}
+    		_set_nav_links(index);
     		_collapse_every_left_panel();
     		$rootScope.user.collapsed_trends = false;
 		}
