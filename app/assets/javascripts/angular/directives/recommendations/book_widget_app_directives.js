@@ -133,13 +133,13 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', '
   };
 }]);
 
-websiteApp.directive('bookArray', [, function(){
+websiteApp.directive('bookArray', function(){
   return{
     restrict: 'E',
-    scope: {'recommendation': '=data'},
+    scope: {'recommendations': '=data'},
     templateUrl: '/assets/angular/views/book_widget/array.html'
   }
-}]);
+});
 
 websiteApp.directive('labelPopup', ['$rootScope', '$timeout', 'widgetService', 'RecommendationUIConstants', 'sharedService', function($rootScope, $timeout, widgetService, RecommendationUIConstants, sharedService){
   return{
