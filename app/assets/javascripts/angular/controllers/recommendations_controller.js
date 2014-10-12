@@ -512,11 +512,14 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	}
 	
 	$scope._set_books = function(data){
+		var _get_json = function(value){
+			return {"isbn": value[0], "id": value[1], "external_thumb": value[2]};
+		}
+		
 		var _bookmarked_books = function(){
 			$rootScope.user.books['bookmarked'] = [];
 			angular.forEach(data, function(value){
-				var json = {"isbn": value[0], "id": value[1], "external_thumb": value[2]};
-				this.push(json);
+				this.push(_get_json(value));
 			},  $rootScope.user.books['bookmarked']);
 			var width = window_width/$rootScope.user.books['bookmarked'].length;
 			$scope.block_style = {"width": width+"px"};
@@ -530,24 +533,25 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		var _recommended_books = function(){
 			var group_of_three = [];
 			angular.forEach(data, function(value){
-				var json = {"isbn": value[0], "id": value[1], "external_thumb": value[2]};
-				var data_missing = _is_undefined(value[0]);
+				// var json = {"isbn": value[0], "id": value[1], "external_thumb": value[2]};
+				// var data_missing = _is_undefined(value[0]);
 
-				if(data_missing){
-					json = angular.extend(json, {"no_thumb": true});
-					if(group_of_three.length == 3){
-						this.push({"book_array": group_of_three, "is_book_array": true});
-						group_of_three = [];
-					}
-					group_of_three.push(json);
-				}
-				else{
-  					this.push(json);
-				}
+				// if(data_missing){
+				// 	json = angular.extend(json, {"no_thumb": true});
+				// 	if(group_of_three.length == 3){
+				// 		this.push({"book_array": group_of_three, "is_book_array": true});
+				// 		group_of_three = [];
+				// 	}
+				// 	group_of_three.push(json);
+				// }
+				// else{
+  		// 			this.push(json);
+				// }
+				this.push(_get_json(value));
 			},  $scope.recommendations.books);
-			if(group_of_three.length != 0){
-				$scope.recommendations.books.push({"book_array": group_of_three, "is_book_array": true});
-			}
+			// if(group_of_three.length != 0){
+			// 	$scope.recommendations.books.push({"book_array": group_of_three, "is_book_array": true});
+			// }
 			var width = window_width/($scope.recommendations.books.length + 6);
 			$scope.block_style = {"width": width+"px"};
 		};
