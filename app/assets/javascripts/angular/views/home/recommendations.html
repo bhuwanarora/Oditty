@@ -9,6 +9,7 @@
 					  id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" 
 					  data="recommendation"
 			 		  ng-if="!recommendation.is_grid && !recommendation.is_book_array"></book>
+				{{recommendation}}
 				<book-grid data="recommendation"
 						   ng-if="recommendation.is_grid && !recommendation.is_book_array"></book-grid>
 				<book-group data="recommendation"
