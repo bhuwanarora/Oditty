@@ -134,9 +134,9 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		var delta_x = window_height*(0.4);
 		var lessThanOnePageLeft = current_x + (2.5)*window_width > clientWidth;
 		if(lessThanOnePageLeft){
-			if(!$rootscope.user.loading){
+			if(!$rootScope.user.loading){
 				console.debug("%c lessThanOnePageLeft", "color:green");
-				$rootscope.user.loading = true;
+				$rootScope.user.loading = true;
 				$rootScope.$broadcast('loadRecommendations');
 			}
 		}
