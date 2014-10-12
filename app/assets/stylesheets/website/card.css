@@ -36,13 +36,8 @@
 }
 
 .card_summary{
-	position: absolute;
-	top: 1vh;
-	left: 1vh;
-	right: 1vh;
-	height: 5vh;
 	white-space: normal;
-	font-size: .9em;
+	font-size: 13px;
 	cursor: default;
 }
 
@@ -81,7 +76,7 @@
 
 .bottom_widget{
 	height: 6vh;
-	position: absolute;
+	margin-top: -6vh;
 	z-index: 2;
 	visibility: hidden;
 	background-color: rgba(0,0,0,0.58);
@@ -90,14 +85,6 @@
 .card .widget_thumb,
 .card .description{
 	box-shadow: 0 0 22px 2px rgba(255, 255, 255, 0.57) inset;
-}
-
-.widget_thumb_wrapper,
-.card .description,
-.bottom_widget{
-	right: 5vh;
-	left: 1vh;
-	bottom: 5vh;
 }
 
 .card .widget_thumb,
@@ -111,8 +98,9 @@
 }
 
 .widget_thumb_wrapper{
-	position: absolute;
-	top: 12vh;
+	position: relative;
+	height: 46vh;
+	margin-top: 1vh;
 }
 
 .card .description:hover,
@@ -149,8 +137,7 @@
 .input_bookmark{
 	width: 83%;
 	left: 0px;
-	position: absolute;
-	bottom: 0px;
+.input_bookmark	bottom: 0px;
 	padding: 0px;
 	font-size: 0.8em;
 	top: 0px;
