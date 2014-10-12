@@ -282,7 +282,7 @@ module Api
 				set_clause = ""
 				property_clause = ""
 				for key in params.keys
-					puts "_fb_set_clause #{params[keys].class} #{key}".blue
+					puts "_fb_set_clause #{params[key].class} #{key}".blue
 					if params[key].class == Array
 						new_string = self._get_string_from_array(key, params[key])
 						property_clause = property_clause + new_string
