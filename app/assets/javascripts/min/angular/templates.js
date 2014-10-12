@@ -2,7 +2,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
   'use strict';
 
   $templateCache.put('/assets/angular/views/book_widget/array.html',
-    "<book track=\"\" data=\"recommendations.book_array[0]\"></book><book track=\"\" data=\"recommendations.book_array[1]\"></book><book track=\"\" data=\"recommendations.book_array[2]\"></book>"
+    "<book track=\"\" data=\"recommendation\" ng-repeat=\"recommendation in recommendations.book_array\"></book>"
   );
 
 
