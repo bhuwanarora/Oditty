@@ -147,7 +147,7 @@ module Api
 				puts params.to_s.red
 				
 				if params[:email]
-					puts "email exits".green
+					puts "email exists".green
 					clause = "MATCH (user:User{email:\""+params[:email]+"\"}) RETURN ID(user)"
 					puts clause.blue.on_red
 					user_id = @neo.execute_query clause
@@ -285,6 +285,8 @@ module Api
 					if params[key].class == Array
 						new_string = self._get_string_from_array(key, params[key])
 						property_clause = property_clause + new_string
+					elsif params[key].class == ActiveSupport::HashWithIndifferentAccess
+						puts "TO ADD #{params[key].class}".red
 					else
 						set_clause = set_clause + " SET fu."+key.to_s+"=\""+params[key].to_s+"\""
 					end
