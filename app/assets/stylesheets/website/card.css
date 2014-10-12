@@ -3,7 +3,7 @@
 	height: 55vh;
 	position: relative;
 	width: 39vh;
-	margin-right: 5px;
+	margin-right: 10px;
 }
 
 .card:hover .bottom_widget{
@@ -73,7 +73,7 @@
 	visibility: hidden;
 	background-color: rgba(0,0,0,0.58);
 	position: relative;
-	width: 85%;
+	width: 100%;
 }
 
 .card .widget_thumb,

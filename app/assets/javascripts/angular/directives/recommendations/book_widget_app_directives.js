@@ -232,7 +232,10 @@ websiteApp.directive('bookInteract', ['$rootScope', '$timeout', 'widgetService',
 
       _init = function(){
         if(angular.isDefined($scope.book.no_thumb) && $scope.book.no_thumb){
-          $scope.interact_style = {"margin-top": "1vh", "visibility": "visible"};
+          $scope.interact_style = {"margin-top": "1vh", 
+                                  "visibility": "visible", 
+                                  "margin-bottom": "1vh",
+                                  "background-color": "rgba(0, 0, 0, 0.15)"};
         }
         $scope.setStatus();
         $scope.label_placeholder = "Add to my library";
