@@ -226,7 +226,7 @@
 
 .search_page .header_wrapper{
 	background-color: white;
-	width: 200px
+	width: auto;
 }
 /*
 .search_page .logo{

@@ -324,16 +324,16 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     		$scope.expand_left_panel();
 			$rootScope.filters["label_id"] = $routeParams.label_id;
 			$rootScope.main_header = $routeParams.name;
-			_collapse_every_left_panel();
-    		$rootScope.user.collapsed_filters = false;
+			// _collapse_every_left_panel();
+    		// $rootScope.user.collapsed_filters = false;
 		}
 
 		var _handle_grids_page = function(){
     		$scope.expand_left_panel();
     		$rootScope.filters["filter_id"] = $routeParams.grid_id;
     		$rootScope.main_header = $routeParams.name;
-    		_collapse_every_left_panel();
-    		$rootScope.user.collapsed_lists = false;
+    		// _collapse_every_left_panel();
+    		// $rootScope.user.collapsed_lists = false;
 		}
 
 		var _handle_trending_page = function(){
@@ -371,8 +371,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     			});
     		}
     		_set_nav_links(trend_index);
-    		_collapse_every_left_panel();
-    		$rootScope.user.collapsed_trends = false;
+    		// _collapse_every_left_panel();
+    		// $rootScope.user.collapsed_trends = false;
 		}
 		
         var _handle_recommendations_page = function(){

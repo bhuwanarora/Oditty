@@ -1,0 +1,40 @@
+<div class="sub_header"><b>Add books which've left a mark on you</b></div>
+<div class="header">
+	We will notify you with any activity on these books...
+</div>
+<input ng-keydown="search_info_card($event, 'BOOK')" 
+	   ng-model="info.search_book" 
+	   placeholder="Search books..."/>
+	
+<div class="scrollbar header" 
+	msd-wheel="stop_horizontal_scroll($event)" check-scroll-bottom="get_popular_books()">
+	<div class="book_column"
+		 ng-repeat="book in popular_books" 
+		 ng-class="{'selected': book.status}"
+		 ng-click="mark_as_read(book, $event);">
+		<img ng-src="{{book.isbn | small_thumb}}" 
+			 class="grid_thumb"/>
+		<div class="book_details">
+			<div>
+				<span><b ng-bind-html="book.title"></b></span><br/>
+				<span ng-show="book.author_name">Book by {{book.author_name}}</span>
+			</div>
+			<div>&nbsp;</div>
+			<div ng-show="book.id" class="light_grey_color">
+				<div ng-show="book.status">
+					<rate data="book"></rate>
+					<span class="site_color">Added. </span>
+					<span ng-hide="book.user_rating" class="site_color">Also rate this book.</span>
+				</div>
+				<div ng-show="!book.status">
+					<span>Add to</span>
+					<span class='icon-books'></span>
+					<span>Books Read</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="book_column">
+		<img src="assets/loader2.gif" width="20px" ng-show="loading" class="loading_icon"/>
+	</div>
+</div>

@@ -1,0 +1,42 @@
+<div class="compressed_info_card animate-fast grey_color">
+	<div class="block"
+		ng-click="edit_genres_like();"
+		title="Edit genres you like">
+		<span ng-class="{'site_color': user.profile_status==1}">
+     		<span class="icon-tags"></span>
+     		<span>&nbsp;Genres</span>
+     	</span>
+	</div>
+	<div class="block"
+		ng-click="edit_books_read();"
+		title="Edit books you have read">
+		<span ng-class="{'site_color': user.profile_status==2}">
+     		<span class="icon-books"></span>
+     		<span>&nbsp;Influential Books</span>
+     	</span>
+	</div>
+	<!-- <div class="block"
+		ng-click="edit_authors_read();"
+		title="Edit authors you like">
+		<span ng-class="{'site_color': user.profile_status==3}">
+     		<span class="icon-pen"></span>
+     		<span>&nbsp;Follow Authors</span>
+     	</span>
+	</div> -->
+	<div class="block"
+		ng-click="goto_info_card(); user.profile_status=3;"
+		title="Invite friends">
+		<span ng-class="{'site_color': user.profile_status==3}">
+     		<span class="icon-users"></span>
+     		<span>&nbsp;Barter</span>
+		</span>
+	</div>
+	<div class="block"
+		ng-click="goto_info_card(); user.profile_status=0;"
+		title="Edit personal details">
+		<span ng-class="{'site_color': user.profile_status==0}">
+     		<span class="icon-cogs"></span>
+     		<span>&nbsp;Settings</span>
+     	</span>
+	</div>
+</div>
