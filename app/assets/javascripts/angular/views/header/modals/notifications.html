@@ -9,10 +9,18 @@
 	</div>
 
 	<div ng-repeat="notification in user.push_notifications">
-		<div>UNDER CONSTRUCTION AREA</div>
-		<div>
-			{{notification}}
+		<div class="inline_block">
+			<img ng-src="{{friend.thumb | thumb_backup}}" class="small_thumb" />
 		</div>
+		<div class="inline_block">
+			<img ng-src="{{notification.isbn | small_thumb}}" />
+		</div>
+		<div class="inline_block">
+			<a ng-href="#reader/{{notification.friend_id}}/profile" class="click">{{notification.friend_name | first_name}}</a>
+			<span> recommended you </span>
+			<a ng-href="#user/{{user.id}}/book/{{notification.book_id}}"  class="click">{{notification.title}}</a>.
+		</div>
+		<timestamp data="notification.timestamp"></timestamp>
 	</div>
 
 	<div class="relative_position">

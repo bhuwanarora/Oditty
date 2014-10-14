@@ -54,7 +54,7 @@
 	     ng-class="{'site_color': popups.show_notifications_popup}"
 	     ng-click="toggle_notification_popup($event)">
 		<span class="icon-earth table_cell"></span>
-		<div class="notification_circle table_cell" ng-hide="hide_notification_circle">4</div>
+		<div class="notification_circle table_cell" ng-hide="hide_notification_circle">{{user.push_notifications.length}}</div>
 	</div>
 	
 	
