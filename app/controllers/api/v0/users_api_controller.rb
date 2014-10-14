@@ -11,7 +11,7 @@ module Api
 
 			def notifications
 				if session[:user_id]
-					info = UserApi.get_notifications
+					info = UserApi.get_notifications session[:user_id]
 				else
 					info = {:message => Constants::SessionNotSet}
 				end
