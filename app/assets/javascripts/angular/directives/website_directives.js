@@ -1253,14 +1253,14 @@ websiteApp.directive('follow', ['$rootScope', '$timeout', 'widgetService', funct
       	$scope.toggle_follow = function(event){
       		if(!$scope.status){
       			$scope.status = true;
-        		var message = "SUCCESS-Reader "+friend_name+" has been removed from your follow list.";
+        		var message = "SUCCESS-Reader "+$scope.friend.name+" has been removed from your follow list.";
       		}
       		else{
       			$scope.status = false;
-        		var message = "SUCCESS-You are now following "+reader_name+".";
+        		var message = "SUCCESS-You are now following "+$scope.friend.name+".";
       		}
       		var timeout_event = notify($rootScope, message, $timeout);
-      		params = {"id": friend_id, "q": follow};
+      		params = {"id": $scope.friend.id, "q": $scope.status};
 
       		widgetService.follow(params);
 
