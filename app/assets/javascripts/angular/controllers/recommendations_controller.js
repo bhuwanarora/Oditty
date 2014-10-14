@@ -317,7 +317,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     		$rootScope.user.collapsed_lists = true;
     		$rootScope.user.collapsed_column = true;
     		$rootScope.user.show_profile = false;
-    		$rootScope.user.collapsed_left_column = false;
+    		$rootScope.user.collapsed_left_column = true;
 		}
 
 		var _handle_specific_list_page = function(){
@@ -329,7 +329,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     		$scope.expand_left_panel();
 			$rootScope.filters["label_id"] = $routeParams.label_id;
 			$rootScope.main_header = $routeParams.name;
-			// _collapse_every_left_panel();
+			_collapse_every_left_panel();
     		// $rootScope.user.collapsed_filters = false;
 		}
 
@@ -337,7 +337,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     		$scope.expand_left_panel();
     		$rootScope.filters["filter_id"] = $routeParams.grid_id;
     		$rootScope.main_header = $routeParams.name;
-    		// _collapse_every_left_panel();
+    		_collapse_every_left_panel();
     		// $rootScope.user.collapsed_lists = false;
 		}
 
@@ -376,7 +376,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     			});
     		}
     		_set_nav_links(trend_index);
-    		// _collapse_every_left_panel();
+    		_collapse_every_left_panel();
     		// $rootScope.user.collapsed_trends = false;
 		}
 		
@@ -541,6 +541,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	else{
     		$rootScope.user = {"faded_wrapper": {"opacity": "0.5"}};
     	}
+    	$rootScope.user.loading = false;
 	}
 	
 	$scope._set_books = function(data){

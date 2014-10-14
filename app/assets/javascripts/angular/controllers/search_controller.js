@@ -33,6 +33,10 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		return item;
 	}
 
+	$scope.get_notifications = function(){
+  		$scope.$emit('getNotifications', true);
+	}
+
 	$scope.stop_horizontal_scroll = function(event){
 		event.stopPropagation();
 	}
