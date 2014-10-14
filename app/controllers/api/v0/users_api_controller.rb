@@ -13,7 +13,7 @@ module Api
 				if session[:user_id]
 					info = UserApi.get_notifications
 				else
-					info = {"message": Constants::SessionNotSet}
+					info = {:message => Constants::SessionNotSet}
 				end
 				render :json => info, :status => 200
 			end
