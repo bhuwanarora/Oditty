@@ -16,8 +16,12 @@
 			<img ng-src="{{notification.isbn | small_thumb}}" />
 		</div>
 		<div class="inline_block content">
-			<a ng-href="#reader/{{notification.friend_id}}/profile" class="click">{{notification.friend_name}}</a>
+			<a ng-href="#reader/{{notification.user_id}}/profile" class="click">
+				<span ng-show="notification.name">{{notification.name}}</span>
+				<span ng-show="notification.name">Someone</span>
+			</a>
 			<span> recommended you </span>
+			<span>{{notification.author}}'s </span>
 			<a ng-href="#user/{{user.id}}/book/{{notification.book_id}}"  class="click">{{notification.title}}</a>.
 			<timestamp data="notification.timestamp"></timestamp>
 		</div>
