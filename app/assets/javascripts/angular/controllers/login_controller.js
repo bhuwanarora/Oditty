@@ -176,8 +176,10 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
   	$scope._is_logged_in = function(){
   		var _handle_push_notifications = function(){
   			websiteService.get_personal_notifications().then(function(data){
+  				$rootScope.user.push_notifications = [];
   	   		 	angular.forEach(data, function(value){
   	   		 		var json = angular.extend({"id": value[1]}, value[0]["data"]);
+  	   		 		this.push(json);
   	   		 	}, $rootScope.user.push_notifications);
 	        });
   		}
