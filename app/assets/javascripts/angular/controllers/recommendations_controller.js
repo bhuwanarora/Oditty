@@ -391,7 +391,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         var _handle_specific_book_page = function(){
         	$scope.$routeParams.type = 'books';
         	$rootScope.filters["reset"] = true;
+        	$rootScope.filters["reset_count"] = 0;
         	$rootScope.filters["filter_type"] = RecommendationUIConstants.BookTab;
+        	$rootScope.main_header = "Back to recommendations";
         	$rootScope.filters.other_filters["id"] = $scope.$routeParams.book_id;
         }
 
@@ -522,12 +524,15 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			}
     	}
     	else{
-    		if($scope.recommendations.books.length >= max_limit){
-    			$scope._set_books(data["recommendations"]["books"]);
-			}
-			else{
-    			$scope._set_books(data["recommendations"]["books"]);
-			}
+    		if($rootScope.user.loading){
+	    		if($scope.recommendations.books.length >= max_limit){
+	    			$scope._set_books(data["recommendations"]["books"]);
+				}
+				else{
+	    			$scope._set_books(data["recommendations"]["books"]);
+				}
+    			$rootScope.user.loading = false;
+    		}
     	}
 
     	if(angular.isDefined($rootScope.user)){

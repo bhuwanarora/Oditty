@@ -46,55 +46,6 @@ websiteApp.directive('messageApp', ['websiteService', function (websiteService) 
   }
 }]);
 
-websiteApp.directive('follow', ['$rootScope', '$timeout', 'widgetService', function ($rootScope, $timeout, widgetService) {
-  return{
-    restrict: 'E',
-    controller: ['$scope', function($scope){
-      $scope.toggle_follow = function(){
-        if($scope.reader){
-          var reader_name = $scope.reader.name;
-          if($scope.reader.follow){
-            $scope.reader.follow = false;
-            var index = $rootScope.user.readers['follow'].indexOf(data);
-            $rootScope.user.readers['follow'].splice(index, 1);
-            var message = "SUCCESS-Reader "+reader_name+" has been removed from your follow list.";
-          }
-          else{
-            $scope.reader.follow = true;
-            $rootScope.user.readers['follow'].push($scope.reader);
-            var message = "SUCCESS-You are now following "+reader_name+".";
-          }
-          var timeout_event = notify($rootScope, message, $timeout);
-          widgetService.follow($scope.reader.id, "READER", $scope.reader.follow);
-        }
-        else if($scope.author){
-          var author = $scope.author.name;
-          if($scope.author.follow){
-            $scope.author.follow = false;
-            var index = $rootScope.user.authors['follow'].indexOf(data);
-            $rootScope.user.authors['follow'].splice(index, 1);
-            widgetService.follow($scope.author.id, "AUTHOR", $scope.author.follow);
-            var message = "SUCCESS-Author "+author+" has been removed from your follow list."; 
-          }
-          else{
-            $scope.author.follow = true;
-            $rootScope.user.authors['follow'].push($scope.author);
-            var message = "SUCCESS-You are now following Author "+author+"."; 
-          }
-          var timeout_event = notify($rootScope, message, $timeout);
-          widgetService.follow($scope.author.id, "AUTHOR", $scope.author.follow);
-        }
-        if(timeout_event){
-          $scope.$on('destroy', function(){
-            $timeout.cancel(timeout_event);
-          });
-        }
-      }
-    }],
-    templateUrl: "/assets/angular/views/unused/follow.html"
-  }
-}]);
-
 websiteApp.directive('widgetThumb', ['$timeout', '$rootScope', '$filter', 'ColorConstants', function ($timeout, $rootScope, $filter, ColorConstants) {
   return {
     restrict: 'E',

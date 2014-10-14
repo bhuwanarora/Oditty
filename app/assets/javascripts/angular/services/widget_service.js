@@ -56,8 +56,8 @@ websiteApp.service('widgetService', ['$http', '$q', '$rootScope', 'WebsiteUICons
     	return _deferred_post_request('/api/v0/post_review', {"book_id":id, "data":data});
     }
 
-    this.follow = function(id, type, data){
-    	return _deferred_post_request('/api/v0/follow', {"id":id, "type":type, "data":data});
+    this.follow = function(params){
+    	return _deferred_post_request('/api/v0/follow', params);
     }
 
     this.get_moments = function(){

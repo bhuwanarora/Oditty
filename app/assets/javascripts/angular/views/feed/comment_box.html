@@ -4,7 +4,8 @@
 	<div ng-if="level1_option || level2_option || selected_interact_book" 
 		 class="second_input site_color"
 		 ng-show="show_interaction_links">
-		<span ng-if="show_search || selected_interact_book">
+		<span ng-if="show_search || selected_interact_book"
+			  ng-hide="focused_book">
 			<input set-focus="start_searching" 
 				   ng-keydown="search_interact_books($event)"
 				   ng-model="user.interact_book"

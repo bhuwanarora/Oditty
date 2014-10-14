@@ -1242,3 +1242,34 @@ websiteApp.directive('userAdd', ['$rootScope', 'WebsiteUIConstants', function($r
 		templateUrl: "/assets/angular/views/home/shared/user_add.html"
 	}
 }]);
+
+
+websiteApp.directive('follow', ['$rootScope', '$timeout', 'widgetService', function ($rootScope, $timeout, widgetService) {
+  return{
+    restrict: 'E',
+    scope: {"friend": "=data",
+			"status": "@"},
+    controller: ['$scope', function($scope){
+      	$scope.toggle_follow = function(event){
+      		if(!$scope.status){
+      			$scope.status = true;
+        		var message = "SUCCESS-Reader "+friend_name+" has been removed from your follow list.";
+      		}
+      		else{
+      			$scope.status = false;
+        		var message = "SUCCESS-You are now following "+reader_name+".";
+      		}
+      		var timeout_event = notify($rootScope, message, $timeout);
+      		params = {"id": friend_id, "q": follow};
+
+      		widgetService.follow(params);
+
+      		$scope.$on('destroy', function(){
+        		$timeout.cancel(timeout_event);
+      		});
+      		event.stopPropagation();
+      	}
+    }],
+    templateUrl: "/assets/angular/views/shared/follow.html"
+  }
+}]);

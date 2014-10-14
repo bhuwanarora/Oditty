@@ -1209,6 +1209,7 @@
 
 .tweets .tweet .large_thumb{
 	width: 100%;
+	min-height: 45vh;
 }
 
 

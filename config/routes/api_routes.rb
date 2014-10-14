@@ -67,7 +67,7 @@ ReadersDoor::Application.routes.draw do
       match 'post_review'                             => 'users_api#post_review',                       :via => [:put, :get, :post]
       match 'edit_review'                             => 'users_api#edit_review',                       :via => [:put, :get, :post]
       match 'follow'                                  => 'users_api#follow',                            :via => [:put, :get, :post]
-      match 'unfollow'                                => 'users_api#unfollow',                          :via => [:put, :get, :post]
+      
       match 'user_info'                               => 'users_api#user_info',                         :via => [:put, :get, :post]
       match 'user'                                    => 'users_api#user',                              :via => [:put, :get, :post]
       match 'friends'                                 => 'users_api#get_most_connected_friends',        :via => [:put, :get, :post]
