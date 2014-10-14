@@ -541,7 +541,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	else{
     		$rootScope.user = {"faded_wrapper": {"opacity": "0.5"}};
     	}
-    	$rootScope.user.loading = false;
 	}
 	
 	$scope._set_books = function(data){
