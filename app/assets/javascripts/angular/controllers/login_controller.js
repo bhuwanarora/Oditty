@@ -182,6 +182,9 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 	  		  		angular.extend($rootScope.user, data);
 	  	   		});
 	  	   		$cookieStore.put('logged', true);
+	  	   		 websiteService.get_personal_notifications().then(function(data){
+		            $rootScope.user.push_notifications = data;
+		        });
   				// stropheService.start_connection();
   			}
   		});
