@@ -312,7 +312,7 @@ module UsersGraphHelper
 		total_count = "SET u.total_count = CASE WHEN u.total_count IS NULL THEN 1 ELSE u.total_count + "+Constants::RecommendationPoints.to_s+" END "
 		recommended_count = "SET b.recommended_count = CASE WHEN b.recommended_count IS NULL THEN 1 ELSE toInt(b.recommended_count) + 1 END"
 
-		clause = _recommend_clause(user_id, book_id, friend_id) + _feednext_clause user_id + _bookfeed_clause user_id + _existing_ego_clause + _ego_clause + total_count + recommended_count
+		clause = _recommend_clause(user_id, book_id, friend_id) + _feednext_clause(user_id) + _bookfeed_clause(user_id) + _existing_ego_clause + _ego_clause + total_count + recommended_count
 		puts clause.blue.on_red
 		@neo.execute_query clause
 	end
