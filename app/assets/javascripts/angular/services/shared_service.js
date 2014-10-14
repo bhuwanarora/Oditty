@@ -26,6 +26,9 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
                 }
             }
         });
+        websiteService.get_personal_notifications().then(function(data){
+            $rootScope.user.push_notifications = data;
+        });
     }
 
     this.logout = function(){

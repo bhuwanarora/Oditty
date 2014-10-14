@@ -530,6 +530,40 @@ input:focus{
     border-radius: 2px;
 }
 
+
+.green_button{
+    background-color: #65b045;
+    background-image: -webkit-linear-gradient(top,#6AD03E,#65b045);
+    background-image: linear-gradient(top,#6AD03E,#65b045);
+    color: #fff;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-shadow: 0 1px rgba(0,0,0,0.1);
+    border-radius: 2px;
+}
+
+.green_button:hover{
+    background-color: #65b045;
+    background-image: -webkit-linear-gradient(top,#6AD03E,#57993B);
+    background-image: linear-gradient(top,#6AD03E,#57993B);
+    color: #fff;
+    border: 1px solid #57993B;
+    cursor: pointer;
+    text-shadow: 0 1px rgba(0,0,0,0.1);
+    border-radius: 2px;
+}
+
+.green_button:active{
+    background-color: #65b045;
+    background-image: -webkit-linear-gradient(top,#57993B,#57993B);
+    background-image: linear-gradient(top,#57993B,#57993B);
+    color: #fff;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-shadow: 0 1px rgba(0,0,0,0.1);
+    border-radius: 2px;
+}
+
 .blue_button{
     color: #fff;
     border-radius: 2px;
@@ -707,4 +741,11 @@ input:focus{
 
 .basic_link:hover{
     text-decoration: underline;
+}
+
+.thin_button{
+    padding: 4px;
+    margin-top: 10px;
+    width: 110px;
+    text-align: center;
 }

@@ -518,10 +518,61 @@ websiteApp.directive('bookGrid', ['recommendationService', '$rootScope', functio
 	}
 }]);
 
-websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService', 'websiteService', 'WebsiteUIConstants', 'scroller', 'RecommendationUIConstants', function($rootScope, $timeout, sharedService, websiteService, WebsiteUIConstants, scroller, RecommendationUIConstants){
+websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService', 'websiteService', 'WebsiteUIConstants', 'scroller', 'RecommendationUIConstants', 'Facebook', function($rootScope, $timeout, sharedService, websiteService, WebsiteUIConstants, scroller, RecommendationUIConstants, Facebook){
 	return{
 		restrict: 'E',
 		controller: ['$scope', 'websiteService', function($scope, websiteService){
+			 $scope.fb_books = function(){
+			 	websiteService.handle_facebook_books().then(function(data){
+			 		$scope.fb_data = data;
+			 	});
+		  		// Facebook.api(
+				//     "/me/books",
+				//     function(response){
+				//       if(response && !response.error){
+				//       	response = angular.extend(response, {"type": "books"});
+				//         websiteService.handle_facebook_books(response);
+				//       }
+				//     }
+				// );
+				// Facebook.api(
+				//     "/me/books.reads",
+				//     function(response){
+				//       if(response && !response.error){
+				//       	response = angular.extend(response, {"type": "books.read"});
+				//         websiteService.handle_facebook_books(response);
+				//       }
+				//     }
+				// );
+				// Facebook.api(
+				//     "/me/books.rates",
+				//     function(response){
+				//       if(response && !response.error){
+				//       	response = angular.extend(response, {"type": "books.rates"});
+				//         websiteService.handle_facebook_books(response);
+				//       }
+				//     }
+				// );
+				// Facebook.api(
+				//     "/me/books.quotes",
+				//     function(response){
+				//       if(response && !response.error){
+				//       	response = angular.extend(response, {"type": "books.quotes"});
+				//         websiteService.handle_facebook_books(response);
+				//       }
+				//     }
+				// );
+				// Facebook.api(
+				//     "/me/books.wants_to_read",
+				//     function(response){
+				//       if(response && !response.error){
+				//       	response = angular.extend(response, {"type": "books.wants_to_read"});
+				//         websiteService.handle_facebook_books(response);
+				//       }
+				//     }
+				// );
+		    }
+
 			$scope.mark_as_read = function(book, event){
 				if(angular.isDefined(book.id)){
 					sharedService.bookmark_book($scope, book, event, RecommendationUIConstants.InfluentialBooks);

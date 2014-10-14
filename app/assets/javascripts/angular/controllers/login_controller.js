@@ -156,68 +156,8 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 	        Facebook.api('me/picture?redirect=false&type=large', function(response){
 	        	websiteService.save_user_info(response);
 	        });
-        	$scope.fb_books();
         });
     };
-
-    $scope.fb_books = function(){
-  //   	var _facebook_init = function(){
-		// 	FB.init({
-		// 		appId: "667868653261167",
-		// 		cookie: true,
-		// 		status: true,
-		// 		xfbml: true
-		// 	});
-
-		// }
-		// _facebook_init();
-		
-        Facebook.api(
-		    "/me/books",
-		    function(response){
-		      if(response && !response.error){
-		      	response = angular.extend(response, {"type": "books"});
-		        websiteService.handle_facebook_books(response);
-		      }
-		    }
-		);
-		Facebook.api(
-		    "/me/books.reads",
-		    function(response){
-		      if(response && !response.error){
-		      	response = angular.extend(response, {"type": "books.read"});
-		        websiteService.handle_facebook_books(response);
-		      }
-		    }
-		);
-		Facebook.api(
-		    "/me/books.rates",
-		    function(response){
-		      if(response && !response.error){
-		      	response = angular.extend(response, {"type": "books.rates"});
-		        websiteService.handle_facebook_books(response);
-		      }
-		    }
-		);
-		Facebook.api(
-		    "/me/books.quotes",
-		    function(response){
-		      if(response && !response.error){
-		      	response = angular.extend(response, {"type": "books.quotes"});
-		        websiteService.handle_facebook_books(response);
-		      }
-		    }
-		);
-		Facebook.api(
-		    "/me/books.wants_to_read",
-		    function(response){
-		      if(response && !response.error){
-		      	response = angular.extend(response, {"type": "books.wants_to_read"});
-		        websiteService.handle_facebook_books(response);
-		      }
-		    }
-		);
-    }
 
     $scope._init_user = function(){
         $rootScope.user.profile_status = 0;

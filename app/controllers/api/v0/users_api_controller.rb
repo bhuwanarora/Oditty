@@ -9,6 +9,15 @@ module Api
 				render :json => {:message => "Success"}, :status => 200
 			end
 
+			def notifications
+				if session[:user_id]
+					info = UserApi.get_notifications
+				else
+					info = {"message": Constants::SessionNotSet}
+				end
+				render :json => info, :status => 200
+			end
+
 			def save_info
 				user_id = UserApi.save_info(session[:user_id], params)
 				render :json => {:message => "Success"}, :status => 200

@@ -56,6 +56,8 @@ module Constants
 	PostModernLiterature 		= "postmodern"
 	Contemporary				= "contemporary"
 
+	SessionNotSet				= "Session not set properly error..."
+
 
 
 	Time 						= "TIME"

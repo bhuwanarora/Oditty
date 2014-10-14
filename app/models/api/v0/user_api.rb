@@ -277,6 +277,11 @@ module Api
 				# @neo.execute_query clause
 			end
 
+			def self.get_notifications user_id
+				info = UsersGraphHelper.get_notifications user_id
+				info
+			end
+
 			private
 			def self._fb_set_clause params
 				set_clause = ""

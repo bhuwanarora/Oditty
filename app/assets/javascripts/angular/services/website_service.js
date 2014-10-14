@@ -97,6 +97,10 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         return _deferred_request('/api/v0/image');
     }
 
+    this.get_personal_notifications = function(){
+        return _deferred_request('/api/v0/personal_notifications');
+    }
+
     this.get_notifications = function(skip_count, user_id, debug_feed){
         if(angular.isDefined(user_id)){
             if(angular.isDefined(debug_feed)){
