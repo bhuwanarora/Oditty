@@ -12,6 +12,22 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
         });
     }
 
+    this.get_trends = function(){
+        if(angular.isUndefined($rootScope.trending_feed)){
+            $rootScope.trending_feed = [];
+            var skip_count = 0;
+        }
+        else{
+            var skip_count = $rootScope.trending_feed.length;
+        }
+        websiteService.get_trending_topics(skip_count).then(function(data){
+            angular.forEach(data, function(value){
+                var json = {"name": value[0], "id": value[1], "message": value[2], "url": value[3], "title":value[4], "thumb": value[7], "large_image": value[5], "keywords": value[8], "timestamp": value[9]};
+                this.push(json);
+            }, $rootScope.trending_feed);
+        });
+    }
+
     this.get_user = function(reader_id){
         websiteService.get_user_details(reader_id).then(function(data){
             $rootScope.reader = angular.extend($rootScope.reader, data);

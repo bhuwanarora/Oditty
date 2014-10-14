@@ -68,8 +68,8 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         return _deferred_request('/api/v0/search_genres?'+data);
     }
 
-    this.get_trending_topics = function(){
-        return _deferred_request('/api/v0/trends');
+    this.get_trending_topics = function(skip_count){
+        return _deferred_request('/api/v0/trends?skip='+skip_count);
     }
 
     this.authenticate = function(data){

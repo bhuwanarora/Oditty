@@ -1323,13 +1323,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 
 	$scope._add_trends_as_notifications = function(){
 		if(angular.isUndefined($rootScope.trending_feed) || $rootScope.trending_feed.length == 0){
-			websiteService.get_trending_topics().then(function(data){
-				$rootScope.trending_feed = [];
-				angular.forEach(data, function(value){
-					var json = {"name": value[0], "id": value[1], "message": value[2], "url": value[3], "title":value[4], "thumb": value[7], "large_image": value[5], "keywords": value[8], "timestamp": value[9]};
-					this.push(json);
-				}, $rootScope.trending_feed);
-			});
+			sharedService.get_trends();
 		}
 	}
 

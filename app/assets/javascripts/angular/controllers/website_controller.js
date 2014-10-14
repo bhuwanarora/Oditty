@@ -1,4 +1,4 @@
-websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout', 'websiteService', '$document', 'scroller', '$window', 'WebsiteUIConstants', function($scope, $rootScope, $timeout, websiteService, $document, scroller, $window, WebsiteUIConstants){
+websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout', 'websiteService', '$document', 'scroller', '$window', 'WebsiteUIConstants', 'sharedService', function($scope, $rootScope, $timeout, websiteService, $document, scroller, $window, WebsiteUIConstants, sharedService){
 	$scope.bindHorizontalScroll = function(event, delta, deltaX, deltaY){
 		event.preventDefault();
 		if(delta > 0){
@@ -240,6 +240,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	$scope._show_trending_feed = function(){
 		$scope.show_feed = {"trending": true};
      	$scope.show_trending = true;
+     	sharedService.get_trends();
 	}
 
 	$scope._show_reader_feed = function(user_id, init){
