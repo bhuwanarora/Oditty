@@ -319,7 +319,7 @@ module UsersGraphHelper
 
 	def self.get_notifications user_id
 		@neo || self.neo_init
-		match_clause = "MATCH (u)-[r*2]->(n:Notification) "
+		match_clause = "MATCH (u)-[r]->(n:Notification) "
 		return_clause = "RETURN n, ID(n)"
 		clause = _match_user(user_id) + match_clause + return_clause
 		puts clause.blue.on_red

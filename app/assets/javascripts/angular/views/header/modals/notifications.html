@@ -19,8 +19,8 @@
 			<a ng-href="#reader/{{notification.friend_id}}/profile" class="click">{{notification.friend_name}}</a>
 			<span> recommended you </span>
 			<a ng-href="#user/{{user.id}}/book/{{notification.book_id}}"  class="click">{{notification.title}}</a>.
+			<timestamp data="notification.timestamp"></timestamp>
 		</div>
-		<timestamp data="notification.timestamp"></timestamp>
 	</div>
 
 	<div class="relative_position">
