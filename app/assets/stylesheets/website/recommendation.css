@@ -2102,6 +2102,15 @@
 	display: none;
 }
 
+.notifications_popup .notification{
+	overflow: auto;
+	margin: 10px 0px;
+}
+
+.notifications_popup .notification .content{
+	width: 80%;
+}
+
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen
 and (min-width : 320px)

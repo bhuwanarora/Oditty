@@ -8,15 +8,15 @@
 		</div>
 	</div>
 
-	<div ng-repeat="notification in user.push_notifications">
+	<div ng-repeat="notification in user.push_notifications" class="notification">
 		<div class="inline_block">
 			<img ng-src="{{friend.thumb | thumb_backup}}" class="small_thumb" />
 		</div>
 		<div class="inline_block">
 			<img ng-src="{{notification.isbn | small_thumb}}" />
 		</div>
-		<div class="inline_block">
-			<a ng-href="#reader/{{notification.friend_id}}/profile" class="click">{{notification.friend_name | first_name}}</a>
+		<div class="inline_block content">
+			<a ng-href="#reader/{{notification.friend_id}}/profile" class="click">{{notification.friend_name}}</a>
 			<span> recommended you </span>
 			<a ng-href="#user/{{user.id}}/book/{{notification.book_id}}"  class="click">{{notification.title}}</a>.
 		</div>
