@@ -341,7 +341,7 @@ module UsersGraphHelper
 		where_clause = "WHERE ID(u)="+user_id.to_s+
 						" AND ID(b)="+book_id.to_s+
 						" AND ID(friend)="+friend_id.to_s+" "
-		create_clause = "CREATE UNIQUE (u)-[:RecommendedTo]->(friend)-[:RecommendedAction]->(rn:RecommendNode{book_id:"+book_id.to_s+", title:b.title, author:b.author_name, user_id:"+user_id.to_s+", friend_id:"+friend_id.to_s+", timestamp:"+Time.now.to_i.to_s+", email:u.email, friend_email:friend.email, name:u.name})-[:Recommended]->(b) "
+		create_clause = "CREATE UNIQUE (u)-[:RecommendedTo]->(friend)-[:RecommendedAction]->(rn:RecommendNode{book_id:"+book_id.to_s+", title:b.title, author:b.author_name, user_id:"+user_id.to_s+", friend_id:"+friend_id.to_s+", timestamp:"+Time.now.to_i.to_s+", email:u.email, friend_email:friend.email})-[:Recommended]->(b) "
 		set_notification_label = "SET rn :Notification "
 		set_clause = "SET rn.name=u.name, rn.friend_name=friend.name, rn.isbn=b.isbn, rn.thumb = CASE WHEN u.thumb IS NULL THEN '' ELSE u.thumb END WITH u, b, rn "
 		clause = match_clause + where_clause + create_clause + set_notification_label + set_clause
