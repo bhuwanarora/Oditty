@@ -1,5 +1,5 @@
 <div class="notifications scrollbar">
-	<notification data="notification" ng-repeat="notification in trending_feed"></notification>
+	<notification data="notification" ng-repeat="notification in trending_feed | reverse"></notification>
 	<div class="notification_stable">
 		You have reached end of the trending list.
 	</div>

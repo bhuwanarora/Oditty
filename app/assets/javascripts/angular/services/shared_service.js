@@ -24,7 +24,7 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
             angular.forEach(data, function(value){
                 var json = {"name": value[0], "id": value[1], "message": value[2], "url": value[3], "title":value[4], "thumb": value[7], "large_image": value[5], "keywords": value[8], "timestamp": value[9]};
                 this.push(json);
-            }, $rootScope.trending_feed.reverse());
+            }, $rootScope.trending_feed);
         });
     }
 

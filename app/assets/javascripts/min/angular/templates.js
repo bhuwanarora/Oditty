@@ -349,7 +349,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/shared/feed/trending.html',
-    "<div class=\"notifications scrollbar\"><notification data=\"notification\" ng-repeat=\"notification in trending_feed\"></notification><div class=\"notification_stable\">You have reached end of the trending list.</div></div>"
+    "<div class=\"notifications scrollbar\"><notification data=\"notification\" ng-repeat=\"notification in trending_feed | reverse\"></notification><div class=\"notification_stable\">You have reached end of the trending list.</div></div>"
   );
 
 
