@@ -328,7 +328,7 @@ module UsersGraphHelper
 
 	def self.follow_user(user_id, friend_id)
 		@neo || self.neo_init
-		match_clause = "MATCH (u:User), (friend:User) WHERE ID(u)="+user_id.to_s+" AND ID(friend)="+friend_id.to_s+" "
+		match_clause = "MATCH (u:User), (f:User) WHERE ID(u)="+user_id.to_s+" AND ID(f)="+friend_id.to_s+" "
 
 		ego_clause = " MATCH (u)-[old:Ego{user_id:ID(u)}]->(old_ego) CREATE (u)-[:Ego{user_id:ID(u)}]->(f)-[:Ego{user_id:ID(u)}]->(old_ego) DELETE old WITH u, f "
 
@@ -341,7 +341,7 @@ module UsersGraphHelper
 
 	def self.unfollow_user(user_id, friend_id)
 		@neo || self.neo_init
-		match_clause = "MATCH (u:User), (friend:User) WHERE ID(u)="+user_id.to_s+" AND ID(friend)="+friend_id.to_s+" "
+		match_clause = "MATCH (u:User), (f:User) WHERE ID(u)="+user_id.to_s+" AND ID(f)="+friend_id.to_s+" "
 
 		existing_ego_clause = "MATCH (x1)-[r1:Ego{user_id:ID(u)}]->(f)-[r2:Ego{user_id:ID(u)}]->(x2) FOREACH (s IN CASE WHEN r1 IS NULL THEN [] ELSE [r1] END | FOREACH (t IN CASE WHEN r2 IS NULL THEN [] ELSE [r2] END | CREATE (x1)-[:Ego{user_id:ID(u)}]->(x2) DELETE s, t)) WITH u, f "
 

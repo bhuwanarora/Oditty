@@ -1269,6 +1269,17 @@ websiteApp.directive('follow', ['$rootScope', '$timeout', 'widgetService', funct
       		});
       		event.stopPropagation();
       	}
+
+      	var _init = function(){
+      		if(angular.isDefined($scope.status)){
+      			$scope.status = true;
+      		}
+      		else{
+      			$scope.status = false;	
+      		}
+      	}
+
+      	_init();
     }],
     templateUrl: "/assets/angular/views/shared/follow.html"
   }
