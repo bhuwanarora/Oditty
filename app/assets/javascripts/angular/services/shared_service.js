@@ -23,7 +23,7 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
         websiteService.get_trending_topics(skip_count).then(function(data){
             angular.forEach(data, function(value){
                 var json = {"name": value[0], "id": value[1], "message": value[2], "url": value[3], "title":value[4], "thumb": value[7], "large_image": value[5], "keywords": value[8], "timestamp": value[9]};
-                this.push(json);
+                this.splice(0, 0, json);
             }, $rootScope.trending_feed);
         });
     }

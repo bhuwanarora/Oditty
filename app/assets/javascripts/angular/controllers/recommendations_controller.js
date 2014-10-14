@@ -675,10 +675,11 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	$rootScope.focused_book = $scope.recommendations.books.first;
     }
 
-    $scope.get_notifications = function(user_id){
+    $scope.get_notifications = function(user_id, event){
     	if($rootScope.user.show_profile){
     		var trending = false;
   			$scope.$emit('getNotifications', trending, user_id);
+  			event.stopPropagation();
     	}
 	}
 
