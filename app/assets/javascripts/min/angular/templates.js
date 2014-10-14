@@ -280,7 +280,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/left_panel/shared/friend_grid.html',
-    "<div class=\"image_wrapper\"><img ng-src=\"{{friend.thumb | thumb_backup}}\" class=\"friend_thumb\"></div><div class=\"friend_details\"><div class=\"click capitalise\" ng-if=\"friend.name && friend.id == user.id\"><b><a ng-href=\"#user/{{user.id}}/recommendations/books\">{{friend.name}}</a></b></div><div class=\"click\" ng-if=\"!friend.name && friend.id == user.id\"><b><a ng-href=\"#user/{{user.id}}/recommendations/books\">{{friend.email}}</a></b></div><div class=\"click capitalise\" ng-if=\"friend.name && friend.id != user.id\"><b><a ng-href=\"#reader/{{friend.id}}/profile\">{{friend.name}}</a></b></div><div class=\"click\" ng-if=\"!friend.name && friend.id != user.id\"><b><a ng-href=\"#reader/{{friend.id}}/profile\">{{friend.email}}</a></b></div><div ng-if=\"friend.init_book_read_count\">Reader of {{friend.init_book_read_count}}</div><div><span>+{{friend.total_count | integer}}</span> <span>·</span> <span>{{friend.book_read_count | integer}}</span> <span class=\"icon-books\"></span> <span>·</span> <span>{{friend.bookmark_count| integer}}</span> <span class=\"icon-bookmarks\"></span> <span>·</span></div><div class=\"normal_text\" ng-if=\"friend.fav_categories\">Likes {{friend.fav_categories}} books</div><follow data=\"friend\"></follow></div>"
+    "<div class=\"image_wrapper\"><img ng-src=\"{{friend.thumb | thumb_backup}}\" class=\"friend_thumb\"></div><div class=\"friend_details\"><div class=\"click capitalise\" ng-if=\"friend.name && friend.id == user.id\"><b><a ng-href=\"#user/{{user.id}}/recommendations/books\">{{friend.name}}</a></b></div><div class=\"click\" ng-if=\"!friend.name && friend.id == user.id\"><b><a ng-href=\"#user/{{user.id}}/recommendations/books\">{{friend.email}}</a></b></div><div class=\"click capitalise\" ng-if=\"friend.name && friend.id != user.id\"><b><a ng-href=\"#reader/{{friend.id}}/profile\">{{friend.name}}</a></b></div><div class=\"click\" ng-if=\"!friend.name && friend.id != user.id\"><b><a ng-href=\"#reader/{{friend.id}}/profile\">{{friend.email}}</a></b></div><div ng-if=\"friend.init_book_read_count\">Reader of {{friend.init_book_read_count}}</div><div><span>+{{friend.total_count | integer}}</span> <span>·</span> <span>{{friend.book_read_count | integer}}</span> <span class=\"icon-books\"></span> <span>·</span> <span>{{friend.bookmark_count| integer}}</span> <span class=\"icon-bookmarks\"></span> <span>·</span></div><div class=\"normal_text\" ng-if=\"friend.fav_categories\">Likes {{friend.fav_categories}} books</div><follow data=\"friend\" follow=\"false\"></follow></div>"
   );
 
 
@@ -354,7 +354,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/shared/follow.html',
-    "<div class=\"thin_button\" ng-class=\"{'green_button': !status, 'red_button': status}\" ng-click=\"toggle_follow($event)\"><span ng-show=\"!status\">Follow</span> <span ng-show=\"status\">Unfollow</span></div>"
+    "<div class=\"thin_button\" ng-class=\"{'green_button': !follow, 'red_button': follow}\" ng-click=\"toggle_follow($event)\"><span ng-show=\"!follow\">Follow</span> <span ng-show=\"follow\">Unfollow</span></div>"
   );
 
 

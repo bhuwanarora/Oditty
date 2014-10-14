@@ -1248,19 +1248,19 @@ websiteApp.directive('follow', ['$rootScope', '$timeout', 'widgetService', funct
   return{
     restrict: 'E',
     scope: {"friend": "=data",
-			"status": "@"},
+			"follow": "@"},
     controller: ['$scope', function($scope){
       	$scope.toggle_follow = function(event){
-      		if(!$scope.status){
-      			$scope.status = true;
-        		var message = "SUCCESS-Reader "+$scope.friend.name+" has been removed from your follow list.";
-      		}
-      		else{
-      			$scope.status = false;
+      		if(!$scope.follow){
+      			$scope.follow = true;
         		var message = "SUCCESS-You are now following "+$scope.friend.name+".";
       		}
+      		else{
+      			$scope.follow = false;
+        		var message = "SUCCESS-Reader "+$scope.friend.name+" has been removed from your follow list.";
+      		}
       		var timeout_event = notify($rootScope, message, $timeout);
-      		params = {"id": $scope.friend.id, "q": $scope.status};
+      		params = {"id": $scope.friend.id, "q": $scope.follow};
 
       		widgetService.follow(params);
 
@@ -1270,16 +1270,6 @@ websiteApp.directive('follow', ['$rootScope', '$timeout', 'widgetService', funct
       		event.stopPropagation();
       	}
 
-      	var _init = function(){
-      		if(angular.isDefined($scope.status)){
-      			$scope.status = true;
-      		}
-      		else{
-      			$scope.status = false;	
-      		}
-      	}
-
-      	_init();
     }],
     templateUrl: "/assets/angular/views/shared/follow.html"
   }
