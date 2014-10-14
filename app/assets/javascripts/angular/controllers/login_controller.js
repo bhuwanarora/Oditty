@@ -174,6 +174,14 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
   	// }
 
   	$scope._is_logged_in = function(){
+  		var _handle_push_notifications = function(){
+  			websiteService.get_personal_notifications().then(function(data){
+  	   		 	angular.forEach(data, function(value){
+  	   		 		var json = angular.extend({"id": value[1]}, value[0]["data"]);
+  	   		 	}, $rootScope.user.push_notifications);
+	        });
+  		}
+
   		websiteService.get_user().then(function(data){
   			if(data["logged_in"]){
   				$rootScope.user.logged = true;
@@ -182,9 +190,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 	  		  		angular.extend($rootScope.user, data);
 	  	   		});
 	  	   		$cookieStore.put('logged', true);
-	  	   		 websiteService.get_personal_notifications().then(function(data){
-		            $rootScope.user.push_notifications = data;
-		        });
+	  			_handle_push_notifications();   		
   				// stropheService.start_connection();
   			}
   		});
