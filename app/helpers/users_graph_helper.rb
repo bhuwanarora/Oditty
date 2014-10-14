@@ -322,6 +322,7 @@ module UsersGraphHelper
 		match_clause = "MATCH (u)-[r*2]->(n:Notification) "
 		return_clause = "RETURN n, ID(n)"
 		clause = _match_user(user_id) + match_clause + return_clause
+		puts clause.blue.on_red
 		info = @neo.execute_query(clause)["data"]
 	end
 
