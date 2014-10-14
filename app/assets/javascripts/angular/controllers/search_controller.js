@@ -35,7 +35,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 
 	$scope.get_notifications = function(trending, event){
   		$scope.$emit('getNotifications', trending);
-  		event.stopPropagation();
+  		// event.stopPropagation();
 	}
 
 	$scope.stop_horizontal_scroll = function(event){

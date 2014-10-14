@@ -679,7 +679,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	if($rootScope.user.show_profile){
     		var trending = false;
   			$scope.$emit('getNotifications', trending, user_id);
-  			event.stopPropagation();
+  			// event.stopPropagation();
     	}
 	}
 

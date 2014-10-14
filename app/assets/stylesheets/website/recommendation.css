@@ -2105,11 +2105,11 @@
 
 .notifications_popup .notification{
 	overflow: auto;
-	padding: 10px 0px;
+	padding: 12px 20px;
 }
 
 .notifications_popup .notification .content{
-	width: 80%;
+	width: 73%;
 	white-space: initial;
 }
 
@@ -2139,6 +2139,10 @@ and (max-height : 500px){
 	.user_name,
 	.scroller{
 		display: none;
+	}
+
+	.left_panel{
+		top: 115px;
 	}
 }
 
