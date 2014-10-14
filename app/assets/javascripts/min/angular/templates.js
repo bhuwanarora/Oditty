@@ -354,7 +354,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/shared/follow.html',
-    "<div class=\"green_button thin_button\" ng-if=\"!follow\" ng-click=\"toggle_follow($event)\">Follow</div><div class=\"red_button thin_button\" ng-if=\"follow\" ng-click=\"toggle_follow($event)\">Unfollow</div>"
+    "<div class=\"green_button thin_button\" ng-if=\"status\" ng-click=\"toggle_follow($event)\">Follow</div><div class=\"red_button thin_button\" ng-if=\"!status\" ng-click=\"toggle_follow($event)\">Unfollow</div>"
   );
 
 
