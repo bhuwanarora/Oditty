@@ -36,8 +36,8 @@ module TrendsHelper
 		
 		count = 0
 	    neo = Neography::Rest.new 
-	    clause = "MATCH (t:Trending) WHERE t.status=1 SET t.status=0 "
-	    neo.execute_query clause
+	    # clause = "MATCH (t:Trending) WHERE t.status=1 SET t.status=0 "
+	    # neo.execute_query clause
 
 	    for trend in results
 	    	begin
