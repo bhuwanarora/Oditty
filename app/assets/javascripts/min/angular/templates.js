@@ -27,7 +27,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/book_widget/thumb.html',
-    "<div class=\"thumb_wrapper\"></div><div class=\"animate-fast widget_thumb\" ng-class=\"{'widget_thumb_focus': hovered}\" ng-style=\"thumb_style\"></div><div class=\"animate-fast description\" ng-style=\"random_background\"></div>"
+    "<div class=\"thumb_wrapper\"></div><div class=\"animate-fast widget_thumb\" ng-class=\"{'widget_thumb_focus': hovered}\" ng-style=\"thumb_style\"></div><div class=\"animate-fast description\" ng-style=\"random_background\"><div class=\"groove\"></div><div class=\"binding\"></div></div>"
   );
 
 
@@ -115,7 +115,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/getting_started/partials/app_data.html',
-    "<div class=\"sub_header\"><b>Under Construction Area</b></div><div class=\"header\">This will give you a head start at Reader's Door...</div><div class=\"header center scrollbar\" msd-wheel=\"stop_horizontal_scroll($event)\"><div>Books Read</div><div ng-repeat=\"book in fb_books\"><div class=\"inline_block\"><img ng-src=\"{{book.isbn | small_thumb}}\"></div><div class=\"inline_block\"><div><span>{{book.title}} by</span> <span>{{book.author_name}}</span></div><div>Shelves</div><div></div></div></div></div>"
+    "<div class=\"sub_header\"><b>Under Construction Area</b></div><div class=\"header\">This will give you a head start at Reader's Door...</div><div class=\"header center scrollbar\" msd-wheel=\"stop_horizontal_scroll($event)\"><div>{{fb_status}}</div><div ng-repeat=\"book in fb_books\"><div class=\"inline_block\"><img ng-src=\"{{book.isbn | small_thumb}}\"></div><div class=\"inline_block\"><div><span>{{book.title}} by</span> <span>{{book.author_name}}</span></div><div>Shelves</div><div></div></div></div></div>"
   );
 
 
@@ -173,7 +173,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/getting_started/show.html',
-    "<div ng-if=\"!user.compressed_info\"><div ng-include=\"\" src=\"'/assets/angular/views/getting_started/partials/navbar.html'\"></div><div class=\"wrapper\" msd-wheel=\"stop_propagation($event);\" ng-click=\"close_edit_profile($event);\" ng-show=\"!user.compressed_info\"><div ng-click=\"stop_propagation($event);\" class=\"info_cards animate-fast\" ng-switch=\"\" on=\"user.profile_status\" ng-model=\"user.profile_status\"><div class=\"icon-close-popup\" ng-click=\"user.compressed_info = true;\"></div><div class=\"profile_status_logo\"></div><div ng-switch-when=\"0\"><div ng-include=\"\" src=\"'/assets/angular/views/getting_started/partials/basic_info.html'\"></div></div><div ng-switch-when=\"1\"><div ng-include=\"\" src=\"'/assets/angular/views/getting_started/partials/genres.html'\"></div></div><div ng-switch-when=\"2\"><div ng-include=\"\" src=\"'/assets/angular/views/getting_started/partials/books.html'\"></div></div><div ng-switch-when=\"3\"><div ng-include=\"\" src=\"'/assets/angular/views/getting_started/partials/barter.html'\"></div></div><div class=\"footer\"><span class=\"prev icon-angle-left grey_button\" ng-click=\"prev_profile_state()\"></span> <span class=\"next icon-angle-right grey_button\" ng-click=\"next_profile_state()\"></span></div></div></div></div>"
+    "<div ng-if=\"!user.compressed_info\"><div ng-include=\"\" src=\"'/assets/angular/views/getting_started/partials/navbar.html'\"></div><div class=\"wrapper\" msd-wheel=\"stop_propagation($event);\" ng-click=\"close_edit_profile($event);\" ng-show=\"!user.compressed_info\"><div ng-click=\"stop_propagation($event);\" class=\"info_cards animate-fast\" ng-switch=\"\" on=\"user.profile_status\" ng-model=\"user.profile_status\"><div class=\"icon-close-popup\" ng-click=\"user.compressed_info = true;\"></div><div class=\"profile_status_logo\"></div><div ng-switch-when=\"0\"><div ng-include=\"\" src=\"'/assets/angular/views/getting_started/partials/basic_info.html'\"></div></div><div ng-switch-when=\"1\"><div ng-include=\"\" src=\"'/assets/angular/views/getting_started/partials/genres.html'\"></div></div><div ng-switch-when=\"2\"><div ng-include=\"\" src=\"'/assets/angular/views/getting_started/partials/books.html'\"></div></div><div ng-switch-when=\"3\"><div ng-include=\"\" src=\"'/assets/angular/views/getting_started/partials/barter.html'\"></div></div><div ng-switch-when=\"4\"><div ng-include=\"\" src=\"'/assets/angular/views/getting_started/partials/app_data.html'\"></div></div><div class=\"footer\"><span class=\"prev icon-angle-left grey_button\" ng-click=\"prev_profile_state()\"></span> <span class=\"next icon-angle-right grey_button\" ng-click=\"next_profile_state()\"></span></div></div></div></div>"
   );
 
 
@@ -313,6 +313,11 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('/assets/angular/views/search/footer.html',
+    "<ul class=\"footer\"><li><a href=\"/privacy\">Privacy</a></li><li><a href=\"/terms\">Terms</a></li><li><a href=\"/advertising\">Advertising</a></li><li><a href=\"/about\">About</a></li></ul>"
+  );
+
+
   $templateCache.put('/assets/angular/views/search/login_form.html',
     "<div class=\"wrapper\" ng-if=\"!user.logged && show_login_form\" ng-controller=\"loginController\"><div class=\"login_box animate-fast\" ng-if=\"!user.logged && show_login_form\"><div class=\"header\"><div class=\"logo white_color\"><span>r</span> <span>e</span> <span>a</span> <span>d</span> <span>e</span> <span>r</span> <span>'</span> <span>s</span> <span>&nbsp;</span> <span>d</span> <span>o</span> <span>o</span> <span>r</span> <span class=\"beta_label\">BETA</span></div><div class=\"tagline\"><span>LIVE AND BUILD THE YEARS WITH BOOKS.</span> </div><hr></div><div class=\"fb\" ng-show=\"!user.logged\" ng-click=\"intent_login()\">Sign in with Facebook</div><a class=\"white_color\" ng-click=\"show_other_options=true;\" ng-hide=\"show_other_options\">Don't have a facebook account</a> <form class=\"login_form\" ng-show=\"show_other_options\"><input class=\"email\" type=\"email\" ng-keydown=\"submit($event)\" value=\"test@gmail.com\" ng-model=\"user.email\" placeholder=\"Email\" spellcheck=\"false\" required=\"\"><br><input class=\"password\" type=\"password\" ng-model=\"user.password\" placeholder=\"Password\" spellcheck=\"false\" ng-keydown=\"submit($event)\" required=\"\"><br><div class=\"authenticate authenticate_left blue_button\" ng-click=\"authenticate(true)\" type=\"button\"><span>LOG IN</span></div><div class=\"white_color link\"><span class=\"table_cell\" ng-click=\"authenticate(false)\">Sign up</span> <span ng-click=\"recover_password()\" class=\"table_cell\">Forgot Password?</span></div></form><div class=\"login_status\"><span ng-if=\"user.error_message\" ng-bind-html=\"user.error_message\"></span> <img src=\"assets/loader2.gif\" width=\"20px\" ng-show=\"loading_icon\"></div></div></div>"
   );
@@ -329,7 +334,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/search/show.html',
-    "<div class=\"home_page_base\"><div class=\"search_animate animate-very-slow\" ng-click=\"stopSearching($event)\" ng-controller=\"searchController\"><div class=\"desaturate\" ng-class=\"{'search_page_wrapper': !user.logged}\" ng-style=\"search_style\"></div><div class=\"search_page\" ng-if=\"user.logged\" ng-click=\"hide_popups($event)\"><header></header><search-bar></search-bar><div ng-include=\"'/assets/angular/views/search/trending.html'\"></div></div><div ng-include=\"'/assets/angular/views/search/login_form.html'\"></div></div></div>"
+    "<div class=\"home_page_base\"><div class=\"search_animate animate-very-slow\" ng-click=\"stopSearching($event)\" ng-controller=\"searchController\"><div class=\"desaturate\" ng-class=\"{'search_page_wrapper': !user.logged}\" ng-style=\"search_style\"></div><div class=\"search_page\" ng-if=\"user.logged\" ng-click=\"hide_popups($event)\"><header></header><search-bar></search-bar><div ng-include=\"'/assets/angular/views/search/trending.html'\"></div></div><div ng-include=\"'/assets/angular/views/search/login_form.html'\"></div><div ng-include=\"'/assets/angular/views/search/footer.html'\"></div></div></div>"
   );
 
 

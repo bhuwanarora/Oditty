@@ -34,4 +34,16 @@ class WebsiteController < ApplicationController
 
 	def index
 	end
+
+	def about
+	end
+
+	def privacy
+	end
+
+	def terms
+	end
+
+	def advertising
+	end
 end

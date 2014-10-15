@@ -229,6 +229,30 @@
     margin-right: 6px;
 }
 
+.groove{
+	box-shadow: 0 0 22px 2px rgba(255,255,255,0.57) inset; 
+	position: absolute; 
+	top: 0; 
+	left: 0; 
+    width: 5px; bottom: 0; 
+    background-color: rgba(0, 0, 0, 0.28);
+    z-index: 1;
+    border-style: groove;
+    border-top: none;    
+    border-bottom: none;
+}
+
+.binding{
+	box-shadow: 0 0 22px 2px rgba(255,255,255,0.57) inset; 
+	position: absolute; 
+	top: 0; 
+	left: 0; 
+    width: 30px; 
+    bottom: 0; 
+    background-color: rgba(0, 0, 0, 0.28);
+    z-index: 1;
+}
+
 @media only screen
 and (min-width : 320px)
 and (max-width : 900px) {

@@ -86,7 +86,11 @@ var constants = {
 			"ReaderTab": "READER",
 			"ZeroBooksFound": "ALERT- Reset the filters couldn't find more books.",
 			"MarkAsRead": "I HAVE READ",
-			"InfluentialBooks": "INFLUENTIAL BOOKS"
+			"InfluentialBooks": "INFLUENTIAL BOOKS",
+			"FetchingData": "Fetching data from your apps on facebook...",
+			"FetchingError": "Error in fetching data from the database...",
+			"DatabaseConnect": "Connecting to Reader's Door database...",
+			"BooksFound": "Please review your books..."
 		},
 		"SearchUIConstants": {
 			"BookLabel": "Book",

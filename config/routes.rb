@@ -30,6 +30,11 @@ ReadersDoor::Application.routes.draw do
 
   resources :website
 
+  get 'about'                       => 'website#about',         :as => "about"
+  get 'privacy'                     => 'website#privacy',       :as => "privacy"
+  get 'terms'                       => 'website#terms',         :as => "terms"
+  get 'advertising'                 => 'website#advertising',   :as => "advertising"
+
   get 'recommended_books'     => "recommendations#books",    :as => "recommended_books"
   get 'recommendations'          => "recommendations#index",    :as => "recommendations"
 
