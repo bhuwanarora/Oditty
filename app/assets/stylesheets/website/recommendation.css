@@ -1846,6 +1846,7 @@
 	padding-right: 10%;
 	padding-top: 20px;
 	width: 80%;
+	background-position: 0px -300px;
 }
 
 .share_fade_shifted{
@@ -2242,6 +2243,7 @@ and (max-width : 500px){
 	.share_wrapper_shifted{
 		width: 100%;
 		padding: 0px;
+		background-position: 0px 0px;
 	}
 
 	.share{
