@@ -171,3 +171,8 @@ apt-get install redis-server
 
 # ln -nfs /etc/nginx/sites-available/readersdoor.com /etc/nginx/sites-enabled/readersdoor.com
 # /etc/init.d/thin restart && /etc/init.d/nginx reload; tail -f log/*.log
+# sed -i '2542885s/<node id="n2479060" labels=":Genre"><data key="labels">:Genre<\/data><data key="name">series: myron bolitar<\/data><data key="indexed_genre_na
+# me">series:myronbolitar<\/data><\/node>/<node id="n2479060" labels=":Genre"><data key="labels">:Genre<\/data><data key="name">series: myron bolitar<\/data><data key="
+# indexed_genre_name">series:myronbolitar<\/data><\/node>/' out.graphml 
+
+# sed -i.bak '2545907d' rdz.graphml
