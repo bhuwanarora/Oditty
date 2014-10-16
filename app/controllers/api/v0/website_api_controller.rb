@@ -28,6 +28,18 @@ module Api
 				# UserApi.add_books_from_fb(params, session[:user_id])
 				render :json => {:message => "Success"}, :status => 200
 			end
+
+			def fb_books_map
+				begin
+					@neo = Neography::Rest.new
+					clause = "MATCH (b:Book) WHERE b.url=~'.*"+params[:id].to_s+".*' RETURN ID(b), b.title, b.author_name, b.isbn"
+					puts clause.blue.on_red
+					info = @neo.execute_query(clause)["data"]
+					render :json => info, :status => 200
+				rescue Exception => e
+					render :json => {:message => e.to_s}, :status => 500
+				end
+			end
 			
 			def book_lists
 				@neo = Neography::Rest.new

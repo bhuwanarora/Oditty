@@ -115,7 +115,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/getting_started/partials/app_data.html',
-    "<div class=\"sub_header\"><b>Under Construction Area</b></div><div class=\"header\">This will give you a head start at Reader's Door...</div><div class=\"header scrollbar\" msd-wheel=\"stop_horizontal_scroll($event)\"><div>{{fb_status}}</div><div ng-repeat=\"book in app_books\" class=\"full_width\"><div><b>{{book.title}}</b></div><div ng-repeat=\"expected_book in book.books\"><div><span>{{expected_book.name}} by</span> <span>{{expected_book.author_name}}</span></div></div><br></div></div><div class=\"header scrollbar\" msd-wheel=\"stop_horizontal_scroll($event)\"><div>Books Read</div><div ng-repeat=\"book in app_books_read\" class=\"full_width\"><div><b>{{book.title}}</b></div><div ng-repeat=\"expected_book in book.books\"><div><span>{{expected_book.name}} by</span> <span>{{expected_book.author_name}}</span></div></div><br></div></div>"
+    "<div class=\"sub_header\"><b>Under Construction Area</b></div><div class=\"header\">This will give you a head start at Reader's Door...</div><div class=\"header scrollbar\" msd-wheel=\"stop_horizontal_scroll($event)\"><div>{{fb_status}}</div><div ng-repeat=\"book in app_books\" class=\"full_width\"><div><b>{{book.title}}</b></div><div ng-repeat=\"expected_book in book.books\"><div><span>{{expected_book.name}} by</span> <span>{{expected_book.author_name}}</span></div></div><br></div></div><hr><div class=\"header scrollbar\" msd-wheel=\"stop_horizontal_scroll($event)\"><div>Books read</div><div ng-repeat=\"book in app_books_read\" class=\"full_width\"><div><b>{{book.title}}</b></div><div ng-repeat=\"expected_book in book.books\"><div><span>{{expected_book.name}} by</span> <span>{{expected_book.author_name}}</span></div></div><br></div></div><hr><div class=\"header scrollbar\" msd-wheel=\"stop_horizontal_scroll($event)\"><div>Books rated</div><div ng-repeat=\"book in app_books_rated\" class=\"full_width\"><div><b>{{book.title}}</b> <span>{{book.rating}}</span></div><div ng-repeat=\"expected_book in book.books\"><div><span>{{expected_book.name}} by</span> <span>{{expected_book.author_name}}</span></div></div><br></div></div><hr><div class=\"header scrollbar\" msd-wheel=\"stop_horizontal_scroll($event)\"><div>Wants to read</div><div ng-repeat=\"book in app_books_wants_to_read\" class=\"full_width\"><div><b>{{book.title}}</b></div><div ng-repeat=\"expected_book in book.books\"><div><span>{{expected_book.name}} by</span> <span>{{expected_book.author_name}}</span></div></div><br></div></div><hr>"
   );
 
 
@@ -314,7 +314,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/search/footer.html',
-    "<ul class=\"footer\"><li><a href=\"/privacy\">Privacy</a></li><li><a href=\"/terms\">Terms</a></li><li><a href=\"/advertising\">Advertising</a></li><li><a href=\"/about\">About</a></li></ul>"
+    "<ul class=\"footer\"><li><a href=\"/privacy\">Privacy</a></li><li><a href=\"/terms\">Terms</a></li><li><a href=\"/advertising\">Advertising</a></li><li><a href=\"/about\">Jobs</a></li><li><a href=\"/about\">About</a></li></ul>"
   );
 
 

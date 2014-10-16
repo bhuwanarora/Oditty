@@ -47,6 +47,10 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
         return _deferred_request('/api/v0/recover_password?'+data);
     }
 
+    this.fb_books_map = function(id){
+        return _deferred_request('/api/v0/fb_books_map?id='+id);   
+    }
+
     this.handle_facebook_books = function(params){
         return _deferred_post_request('/api/v0/fb_books', params);
     }

@@ -533,11 +533,11 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 		        		var data_array = [];
 		        		data = data.results.data;
 		        		angular.forEach(data, function(value){
-		        			var data_json = {"name": value[0], "author_name": value[1], "id": value[2], "type": SearchUIConstants.BookSearch, "label": SearchUIConstants.BookSearch};
+		        			var data_json = {"name": value[0], "author_name": value[1], "id": value[2]};
 		        			this.push(data_json);
 		        		}, data_array);
 		        		return data_array;
-			 		}
+			 		};
 
 			 		var _fetch_book_results = function(value){
 		      			websiteService.search(value["name"], RecommendationUIConstants.BookTab, 10).then(function(data){
@@ -547,6 +547,42 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 			        		json = angular.extend(json, {"books": data_array});
 			        		$scope.app_books.push(json);
 			        	});
+			 		};
+
+			 		var _set_books = function(array){
+			 			var url_split = value.data.book.split("/");
+			 			var id = url_split[url_split.length - 1];
+			 			var json = {"title": value.data.book.title};
+			 			websiteService.fb_books_map(id).then(function(data){
+			        		var data_array = [];
+			 				angular.forEach(data, function(val){
+		        				var data_json = {"id": val[0], "title": val[1], "author_name": val[2], "isbn": val[3]};
+		        				this.push(data_json);
+			        		}, data_array);
+			        		array.push(angular.extend(json, {"books": data_array}));
+			 			});
+			 		}
+
+			 		var _fetch_book_read = function(value){
+			 			_set_books($scope.app_books_read);
+			 		};
+
+			 		var _fetch_book_wants_to_read = function(value){
+			 			_set_books($scope.app_books_wants_to_read);
+			 		}
+
+			 		var _fetch_book_rated = function(value){
+			 			var url_split = value.data.book.split("/");
+			 			var id = url_split[url_split.length - 1];
+			 			var json = {"title": value.data.book.title, "rating": value.data.rating.value};
+			 			websiteService.fb_books_map(id).then(function(data){
+			        		var data_array = [];
+			 				angular.forEach(data, function(val){
+		        				var data_json = {"id": val[0], "title": val[1], "author_name": val[2], "isbn": val[3]};
+		        				this.push(data_json);
+			        		}, data_array);
+			        		$scope.app_books_rated.push(angular.extend(json, {"books": data_array}));
+			 			});
 			 		}
 			 		
 			  		Facebook.api(
@@ -564,30 +600,31 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 					      	}
 					    }
 					);
-					// Facebook.api(
-					//     "/me/books.reads",
-					//     function(response){
-					//       	if(response && !response.error){
-					//     		$scope.fb_status = RecommendationUIConstants.DatabaseConnect;
-					//     		$scope.app_books_read = [];
-					//       		angular.forEach(response["data"], function(value){
-					//       			_fetch_book_results(value);
-					//       		});
-					//       	}
-					//       	else{
-					//       		$scope.fb_status = RecommendationUIConstants.FetchingError;
-					//       	}
-					//     }
-					// );
-					// Facebook.api(
-					//     "/me/books.rates",
-					//     function(response){
-					//       if(response && !response.error){
-					//       	response = angular.extend(response, {"type": "books.rates"});
-					//         websiteService.handle_facebook_books(response);
-					//       }
-					//     }
-					// );
+
+					Facebook.api(
+					    "/me/books.reads",
+					    function(response){
+					      	if(response && !response.error){
+					    		$scope.app_books_read = [];
+					      		angular.forEach(response["data"], function(value){
+					      			_fetch_book_read(value);
+					      		});
+					      	}
+					    }
+					);
+
+					Facebook.api(
+					    "/me/books.rates",
+					    function(response){
+					      if(response && !response.error){
+					    		$scope.app_books_rated = [];
+					      		angular.forEach(response["data"], function(value){
+					      			_fetch_book_rated(value);
+					      		});
+					      	}
+					    }
+					);
+
 					// Facebook.api(
 					//     "/me/books.quotes",
 					//     function(response){
@@ -597,15 +634,17 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 					//       }
 					//     }
 					// );
-					// Facebook.api(
-					//     "/me/books.wants_to_read",
-					//     function(response){
-					//       if(response && !response.error){
-					//       	response = angular.extend(response, {"type": "books.wants_to_read"});
-					//         websiteService.handle_facebook_books(response);
-					//       }
-					//     }
-					// );
+					Facebook.api(
+					    "/me/books.wants_to_read",
+					    function(response){
+					      	if(response && !response.error){
+					    		$scope.app_books_wants_to_read = [];
+					      		angular.forEach(response["data"], function(value){
+					      			_fetch_book_wants_to_read(value);
+					      		});
+					      	}
+					    }
+					);
 			 	}
 		    }
 
