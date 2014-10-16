@@ -538,21 +538,25 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 		        		}, data_array);
 		        		return data_array;
 			 		}
+
+			 		var _fetch_book_results = function(value){
+		      			websiteService.search(value["name"], RecommendationUIConstants.BookTab, 10).then(function(data){
+			        		var json = {"title": value["name"], "created_time": value["created_time"]};
+			        		$scope.fb_status = RecommendationUIConstants.BooksFound;
+			        		var data_array = _get_book_array(data);
+			        		json = angular.extend(json, {"books": data_array});
+			        		$scope.app_books.push(json);
+			        	});
+			 		}
 			 		
 			  		Facebook.api(
 					    "/me/books",
 					    function(response){
 					      	if(response && !response.error){
 					    		$scope.fb_status = RecommendationUIConstants.DatabaseConnect;
-					      		// response = angular.extend(response, {"type": "books"});
+					    		$scope.app_books = [];
 					      		angular.forEach(response["data"], function(value){
-					      			websiteService.search(value["name"], RecommendationUIConstants.BookTab, 10).then(function(data){
-						        		var json = {"title": value["name"], "created_time": value["created_time"]};
-						        		$scope.fb_status = RecommendationUIConstants.BooksFound;
-						        		var data_array = _get_book_array(data);
-						        		json = angular.extend(json, {"books": data_array});
-						        		$scope.fb_books.push(json);
-						        	});
+					      			_fetch_book_results(value);
 					      		});
 					      	}
 					      	else{
@@ -563,12 +567,16 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 					// Facebook.api(
 					//     "/me/books.reads",
 					//     function(response){
-					//       if(response && !response.error){
-					//       	response = angular.extend(response, {"type": "books.read"});
-					//         websiteService.handle_facebook_books(response).then(function(data){
-					//         	$scope.fb_books = data;
-					//         });
-					//       }
+					//       	if(response && !response.error){
+					//     		$scope.fb_status = RecommendationUIConstants.DatabaseConnect;
+					//     		$scope.app_books_read = [];
+					//       		angular.forEach(response["data"], function(value){
+					//       			_fetch_book_results(value);
+					//       		});
+					//       	}
+					//       	else{
+					//       		$scope.fb_status = RecommendationUIConstants.FetchingError;
+					//       	}
 					//     }
 					// );
 					// Facebook.api(
