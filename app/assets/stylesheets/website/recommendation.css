@@ -1745,6 +1745,7 @@
 	border-bottom: 1px solid #EBEBEB;
 	/*background-blend-mode: luminosity;*/
 	box-shadow: 0 0 46px 31px rgba(0, 0, 0, 0.31) inset;
+	background-position: 0px -300px;
 }
 
 .share_fade{
@@ -1846,7 +1847,7 @@
 	padding-right: 10%;
 	padding-top: 20px;
 	width: 80%;
-	background-position: 0px -300px;
+	background-position: 0px 0px;
 }
 
 .share_fade_shifted{
