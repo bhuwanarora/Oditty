@@ -36,14 +36,18 @@ class WebsiteController < ApplicationController
 	end
 
 	def about
+		render :layout => "clean"
 	end
 
 	def privacy
+		render :layout => "clean"
 	end
 
 	def terms
+		render :layout => "clean"
 	end
 
 	def advertising
+		render :layout => "clean"
 	end
 end

@@ -15,6 +15,15 @@
 							ng-if="recommendation.is_book_array && !recommendation.is_grid"></book-array>
 				<div ng-if="recommendation.padding"></div>
 		</div>
+
+		<div class="recommendation_block animate-fast" ng-if="recommendations.books.length == 0 || !recommendations.books">
+			<div class="widget loading_widget">
+				<div class="loading_thumb">
+					Sorry! Couldn't find books for you right now...<br/>
+					Please reset the filters.
+				</div>
+			</div>
+		</div>
 		
 		<div class="recommendation_block animate-fast" ng-if="user.loading">
 			<div class="widget loading_widget">
