@@ -581,6 +581,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				if(item.type == SearchUIConstants.BookSearch || item.type == SearchUIConstants.TextSearch){
 					$scope.handle_search_request();
 				}
+				$scope.show_books();
 			}
 		}
 		else if(on_custom_page){
