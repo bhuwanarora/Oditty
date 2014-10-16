@@ -486,7 +486,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/unused/notification_link.html',
-    "<div class=\"notification_link\" ng-class=\"{'site_color':show_notifications}\" title=\"Notifications\" ng-click=\"toggle_notifications()\"><div class=\"notification_circle\" ng-show=\"!notifications_seen\">{{notifications.length}}</div><span class=\"icon-bell\"></span></div>"
+    "<div class=\"notification_link\" ng-class=\"{'site_color':show_notifications}\" title=\"Notifications\" ng-click=\"toggle_notifications()\"><div class=\"notification_circle\" ng-show=\"!notifications_seen\"><span ng-show=\"notifications\">{{notifications.length}}</span> <span ng-show=\"!notifications\">0</span></div><span class=\"icon-bell\"></span></div>"
   );
 
 
