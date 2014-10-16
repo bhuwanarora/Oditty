@@ -1,5 +1,32 @@
 websiteApp.service('widgetService', ['$http', '$q', '$rootScope', 'WebsiteUIConstants', function ($http, $q, $rootScope, WebsiteUIConstants){
-    
+    var _deferred_request = function(url){
+        var deferred = $q.defer();
+        var success_callback = function(result) {
+            return deferred.resolve(result.data); 
+        }
+        var error_callback = function(reason){
+            if(reason.status == 500){
+                alert(WebsiteUIConstants.ServerError);
+            }
+        }
+        $http.get(url).then(success_callback, error_callback);
+        return deferred.promise;
+    }
+
+    var _deferred_post_request = function(url, params){
+        var deferred = $q.defer();
+        var success_callback = function(result){
+            return deferred.resolve(result.data); 
+        }
+        var error_callback = function(reason){
+            if(reason.status == 500){
+                alert(WebsiteUIConstants.ServerError);
+            }
+        }
+        $http.post(url, params).then(success_callback, error_callback);
+        return deferred.promise;
+    }
+
     this.get_book_feed = function(id){
         return _deferred_request('/api/v0/book_feed?id='+id);
     }
@@ -83,33 +110,4 @@ websiteApp.service('widgetService', ['$http', '$q', '$rootScope', 'WebsiteUICons
     this.get_author_details = function(book_id){
         return _deferred_request('/api/v0/author_details?book_id='+book_id);
     }
-
-    _deferred_request = function(url){
-        var deferred = $q.defer();
-        var success_callback = function(result) {
-            return deferred.resolve(result.data); 
-        }
-        var error_callback = function(reason){
-            if(reason.status == 500){
-                alert(WebsiteUIConstants.ServerError);
-            }
-        }
-        $http.get(url).then(success_callback, error_callback);
-        return deferred.promise;
-    }
-
-    _deferred_post_request = function(url, params){
-        var deferred = $q.defer();
-        var success_callback = function(result){
-            return deferred.resolve(result.data); 
-        }
-        var error_callback = function(reason){
-            if(reason.status == 500){
-                alert(WebsiteUIConstants.ServerError);
-            }
-        }
-        $http.post(url, params).then(success_callback, error_callback);
-        return deferred.promise;
-    }
-
 }]);

@@ -528,6 +528,17 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 			 	}
 			 	else{
 			 		$scope.fb_status = RecommendationUIConstants.FetchingData;
+
+			 		var _get_book_array = function(data){
+		        		var data_array = [];
+		        		data = data.results.data;
+		        		angular.forEach(data, function(value){
+		        			var data_json = {"name": value[0], "author_name": value[1], "id": value[2], "type": SearchUIConstants.BookSearch, "label": SearchUIConstants.BookSearch};
+		        			this.push(data_json);
+		        		}, data_array);
+		        		return data_array;
+			 		}
+			 		
 			  		Facebook.api(
 					    "/me/books",
 					    function(response){
@@ -535,15 +546,10 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 					    		$scope.fb_status = RecommendationUIConstants.DatabaseConnect;
 					      		// response = angular.extend(response, {"type": "books"});
 					      		angular.forEach(response["data"], function(value){
-						        	var json = {"title": value["name"], "created_time": value["created_time"]};
 					      			websiteService.search(value["name"], RecommendationUIConstants.BookTab, 10).then(function(data){
+						        		var json = {"title": value["name"], "created_time": value["created_time"]};
 						        		$scope.fb_status = RecommendationUIConstants.BooksFound;
-						        		var data_array = [];
-						        		data = data.results.data;
-						        		angular.forEach(data, function(value){
-						        			var data_json = {"name": value[0], "author_name": value[1], "id": value[2], "type": SearchUIConstants.BookSearch, "label": SearchUIConstants.BookSearch};
-						        			this.push(data_json);
-						        		}, data_array);
+						        		var data_array = _get_book_array(data);
 						        		json = angular.extend(json, {"books": data_array});
 						        		this.push(json);
 						        	});

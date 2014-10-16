@@ -1,5 +1,48 @@
 websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
 	
+    var _user_id = function(){
+        if(angular.isDefined($rootScope.reader)){
+            var user_id = $rootScope.reader.id;
+        }
+        else{
+            var user_id = $rootScope.user.id;   
+        }
+        return user_id;
+    }
+
+    var _deferred_request = function(url){
+        var deferred = $q.defer();
+        var success_callback = function(result){
+            return deferred.resolve(result.data); 
+        }
+        var error_callback = function(reason){
+            if(reason.status == 500){
+                alert(WebsiteUIConstants.ServerError);
+            }
+        }
+        $http.get(url).then(success_callback, error_callback);
+        return deferred.promise;   
+    }
+
+    var _deferred_post_request = function(url, params){
+        var deferred = $q.defer();
+        var success_callback = function(result){
+            return deferred.resolve(result.data); 
+        }
+        var error_callback = function(reason){
+            console.debug("error_callback service", reason);
+            if(reason.status == 500){
+                alert(WebsiteUIConstants.ServerError);
+            }
+            else if(reason.status == 403){
+                console.debug("403 authenticate");
+                return deferred.reject(reason);
+            }
+        }
+        $http.post(url, params).then(success_callback, error_callback);
+        return deferred.promise;
+    }
+
     this.recover_password = function(data){
         return _deferred_request('/api/v0/recover_password?'+data);
     }
@@ -134,50 +177,5 @@ websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($ht
     this.get_popular_authors = function(skip_count){
         return _deferred_request('/api/v0/popular_authors?skip_count='+skip_count);   
     }
-
-    _user_id = function(){
-        if(angular.isDefined($rootScope.reader)){
-            var user_id = $rootScope.reader.id;
-        }
-        else{
-            var user_id = $rootScope.user.id;   
-        }
-        return user_id;
-    }
-
-    _deferred_request = function(url){
-        var deferred = $q.defer();
-        var success_callback = function(result){
-            return deferred.resolve(result.data); 
-        }
-        var error_callback = function(reason){
-            if(reason.status == 500){
-                alert(WebsiteUIConstants.ServerError);
-            }
-        }
-        $http.get(url).then(success_callback, error_callback);
-        return deferred.promise;   
-    }
-
-    _deferred_post_request = function(url, params){
-        var deferred = $q.defer();
-        var success_callback = function(result){
-            return deferred.resolve(result.data); 
-        }
-        var error_callback = function(reason){
-            console.debug("403 error_callback service");
-            if(reason.status == 500){
-                alert(WebsiteUIConstants.ServerError);
-            }
-            else if(reason.status == 403){
-                console.debug("403 authenticate");
-                return deferred.reject(reason);
-            }
-        }
-        $http.post(url, params).then(success_callback, error_callback);
-        return deferred.promise;
-    }
-
-   
 
 }]);

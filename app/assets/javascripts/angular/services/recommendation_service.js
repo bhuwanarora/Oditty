@@ -2,6 +2,22 @@
 //each doing the same thing just structuring the functions/data differently.
 websiteApp.service('recommendationService', ['$http', '$q', '$rootScope', 'WebsiteUIConstants', function($http, $q, $rootScope, WebsiteUIConstants){
 
+    var _deferred_request = function(url){
+        var deferred = $q.defer();
+        var successCallback = function(result) {
+            return deferred.resolve(result.data); 
+        }
+        var errorCallback = function(reason){
+            $rootScope.user.loading = false;
+            if(reason.status == 500){
+                alert(WebsiteUIConstants.ServerError);
+            }
+        }
+
+        $http.get(url).then(successCallback, errorCallback);
+        return deferred.promise;
+    }
+
     this.get_recommendations = function(){
         var filters = angular.toJson($rootScope.filters);
         return _deferred_request('/api/v0/recommendations?count=5&id='+$rootScope.user.id+'&q='+filters);
@@ -50,22 +66,6 @@ websiteApp.service('recommendationService', ['$http', '$q', '$rootScope', 'Websi
         else{
             return _deferred_request('/api/v0/labels');
         }
-    }
-
-    _deferred_request = function(url){
-        var deferred = $q.defer();
-        var successCallback = function(result) {
-            return deferred.resolve(result.data); 
-        }
-        var errorCallback = function(reason){
-            $rootScope.user.loading = false;
-            if(reason.status == 500){
-                alert(WebsiteUIConstants.ServerError);
-            }
-        }
-
-        $http.get(url).then(successCallback, errorCallback);
-        return deferred.promise;
     }
 
     
