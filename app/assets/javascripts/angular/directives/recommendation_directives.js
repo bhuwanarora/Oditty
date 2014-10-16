@@ -518,7 +518,7 @@ websiteApp.directive('bookGrid', ['recommendationService', '$rootScope', functio
 	}
 }]);
 
-websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService', 'websiteService', 'WebsiteUIConstants', 'scroller', 'RecommendationUIConstants', 'Facebook', function($rootScope, $timeout, sharedService, websiteService, WebsiteUIConstants, scroller, RecommendationUIConstants, Facebook){
+websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService', 'websiteService', 'WebsiteUIConstants', 'scroller', 'RecommendationUIConstants', 'Facebook', 'SearchUIConstants', function($rootScope, $timeout, sharedService, websiteService, WebsiteUIConstants, scroller, RecommendationUIConstants, Facebook, SearchUIConstants){
 	return{
 		restrict: 'E',
 		controller: ['$scope', 'websiteService', function($scope, websiteService){
