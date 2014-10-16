@@ -551,9 +551,9 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 						        		$scope.fb_status = RecommendationUIConstants.BooksFound;
 						        		var data_array = _get_book_array(data);
 						        		json = angular.extend(json, {"books": data_array});
-						        		this.push(json);
+						        		$scope.fb_books.push(json);
 						        	});
-					      		}, $scope.fb_books);
+					      		});
 					      	}
 					      	else{
 					      		$scope.fb_status = RecommendationUIConstants.FetchingError;
