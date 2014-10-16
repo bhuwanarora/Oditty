@@ -1,4 +1,4 @@
-websiteApp.service('websiteService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
+websiteApp.service('websiteService', ['$http', '$q', '$rootScope', 'WebsiteUIConstants', function ($http, $q, $rootScope, WebsiteUIConstants){
 	
     var _user_id = function(){
         if(angular.isDefined($rootScope.reader)){
