@@ -203,6 +203,9 @@
 	position: absolute;
 	bottom: 25px;
 	right: 25px;
+	background-color: transparent;
+	border-top: none;
+	left: initial;
 }
 
 .info_cards .thumb{

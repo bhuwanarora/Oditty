@@ -539,7 +539,8 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 					      			websiteService.search(value["name"], RecommendationUIConstants.BookTab, 10).then(function(data){
 						        		$scope.fb_status = RecommendationUIConstants.BooksFound;
 						        		var data_array = [];
-						        		angular.forEach(data.results.data, function(){
+						        		data = data.results.data;
+						        		angular.forEach(data, function(value){
 						        			var data_json = {"name": value[0], "author_name": value[1], "id": value[2], "type": SearchUIConstants.BookSearch, "label": SearchUIConstants.BookSearch};
 						        			this.push(data_json);
 						        		}, data_array);
