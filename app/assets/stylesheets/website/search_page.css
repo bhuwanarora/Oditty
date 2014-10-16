@@ -202,10 +202,10 @@
 }
 
 .login_box .logo{
-	font-size: 26px;
-	font-weight: bold;
+	font-size: 40px;
+	font-weight: 700;
 	font-family: Helvetica;
-	letter-spacing: -4.2px;
+	letter-spacing: -6.2px;
 }
 
 .login_box .logo .beta_label{
