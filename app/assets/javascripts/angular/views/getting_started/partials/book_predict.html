@@ -13,12 +13,12 @@
 		Sorry! We couldn't find related books in our database...
 	</div>
 </div>
-<div class="full_width animate-fast" ng-show="hide_books_list">
+<div class="full_width animate-fast block" ng-show="hide_books_list">
 	<div class="padding">
 		<span>{{selected_book.author_name}}'s <b>{{selected_book.name}}</b></span>
 		<span class="click" ng-click="remove_selected_book()">Undo</span>
 	</div>
-	<div class="block">
+	<div>
 		<div>
 			<div>Rate this book...</div>
 			<rate data="selected_book"></rate>

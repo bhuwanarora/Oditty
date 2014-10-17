@@ -299,9 +299,8 @@
 	cursor: default;
 	margin-top: 5px;
 	background-color: white;
-	padding: 20px;
+	padding: 10px;
 	min-width: 160px;
-	float: left;
 	margin: 4px;
 	border-radius: 3px;
 }
