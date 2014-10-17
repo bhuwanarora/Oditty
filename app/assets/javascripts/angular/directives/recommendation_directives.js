@@ -531,6 +531,7 @@ websiteApp.directive('bookPredict', ['$rootScope', function($rootScope){
 
 			$scope.set_selected_book = function(book){
 				$scope.selected_book = book;
+				$scope.selected_book.labels = $rootScope.labels;
 			}
 
 			$scope.remove_selected_book = function(){
