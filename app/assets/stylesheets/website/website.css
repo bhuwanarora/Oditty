@@ -750,6 +750,10 @@ input:focus{
     text-align: center;
 }
 
+.blue_hover{
+    cursor: default;
+}
+
 .blue_hover:hover{
     color: #427fed;
 }

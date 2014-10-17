@@ -115,7 +115,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/getting_started/partials/app_data.html',
-    "<div class=\"sub_header\"><b>Under Construction Area</b></div><div class=\"header\">This will give you a head start at Reader's Door...</div><div class=\"header scrollbar\" msd-wheel=\"stop_horizontal_scroll($event)\"><div class=\"header_font\">{{fb_status}}</div><book-predict data=\"book\" ng-repeat=\"book in app_books\"></book-predict><hr><div class=\"header_font\">Books read</div><book-predict data=\"book\" ng-repeat=\"book in app_books_read\"></book-predict><hr><div class=\"header_font\">Books rated</div><book-predict data=\"book\" ng-repeat=\"book in app_books_rated\"></book-predict><hr><div class=\"header_font\">Wants to read</div><book-predict data=\"book\" ng-repeat=\"book in app_books_wants_to_read\"></book-predict></div>"
+    "<div class=\"sub_header\"><b>Under Construction Area</b></div><div class=\"header\">This will give you a head start at Reader's Door...</div><div class=\"header scrollbar\" msd-wheel=\"stop_horizontal_scroll($event)\"><div class=\"header_font\">{{fb_status}}</div><br><book-predict data=\"book\" ng-repeat=\"book in app_books\"></book-predict><hr><div class=\"header_font\">Books read</div><book-predict data=\"book\" ng-repeat=\"book in app_books_read\"></book-predict><hr><div class=\"header_font\">Books rated</div><book-predict data=\"book\" ng-repeat=\"book in app_books_rated\"></book-predict><hr><div class=\"header_font\">Wants to read</div><book-predict data=\"book\" ng-repeat=\"book in app_books_wants_to_read\"></book-predict></div>"
   );
 
 
@@ -135,7 +135,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/getting_started/partials/book_predict.html',
-    "<div class=\"full_width animate-fast\" ng-click=\"hide_list()\" ng-hide=\"hide_books_list\"><div><div><b>{{book.title}}</b></div><div ng-show=\"book.rating\">You gave {{book.rating}}/5 rating to this book.</div></div><div ng-repeat=\"expected_book in book.books\"><div class=\"blue_hover animate-fast\" ng-click=\"set_selected_book(expected_book)\"><div class=\"header_font\">{{expected_book.author_name}}'s</div><div>{{expected_book.name}}</div></div></div><br></div><div class=\"full_width site_color animate-fast\" ng-show=\"hide_books_list\"><div><span>{{selected_book.author_name}}'s {{selected_book.title}}</span> <span class=\"click\" ng-click=\"remove_selected_book()\">Undo</span></div><div></div></div>"
+    "<div class=\"full_width animate-fast\" ng-click=\"hide_list()\" ng-hide=\"hide_books_list\"><div><div><b>{{book.title}}</b></div><div ng-show=\"book.rating\">You gave {{book.rating}}/5 rating to this book.</div></div><div ng-repeat=\"expected_book in book.books\"><div class=\"blue_hover animate-fast\" ng-click=\"set_selected_book(expected_book)\"><span class=\"header_font\">{{expected_book.author_name}}'s</span> <span>{{expected_book.name}}</span></div></div></div><div class=\"full_width animate-fast\" ng-show=\"hide_books_list\"><div><span>{{selected_book.author_name}}'s <b>{{selected_book.name}}</b></span> <span class=\"click\" ng-click=\"remove_selected_book()\">Undo</span></div><div></div></div><br>"
   );
 
 

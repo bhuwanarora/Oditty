@@ -5,18 +5,18 @@
 	</div>
 	<div ng-repeat="expected_book in book.books">
 		<div class="blue_hover animate-fast" ng-click="set_selected_book(expected_book)">
-			<div class="header_font">{{expected_book.author_name}}'s</div>
-			<div>{{expected_book.name}}</div>
+			<span class="header_font">{{expected_book.author_name}}'s</span>
+			<span>{{expected_book.name}}</span>
 		</div>
 	</div>
-	<br/>
 </div>
-<div class="full_width site_color animate-fast" ng-show="hide_books_list">
+<div class="full_width animate-fast" ng-show="hide_books_list">
 	<div>
-		<span>{{selected_book.author_name}}'s {{selected_book.title}}</span>
+		<span>{{selected_book.author_name}}'s <b>{{selected_book.name}}</b></span>
 		<span class="click" ng-click="remove_selected_book()">Undo</span>
 	</div>
 	<div>
 		
 	</div>
 </div>
+<br/>
