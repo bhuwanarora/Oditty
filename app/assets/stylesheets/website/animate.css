@@ -328,3 +328,16 @@
 	width: 32vh;
 	height: 41vh;
 }
+
+
+.book_predict .block.ng-enter,
+.book_predict .block.ng-leave.ng-leave-active{
+	max-height: 0px;
+	padding: 0px;
+}
+
+.book_predict .block.ng-leave,
+.book_predict .block.ng-enter.ng-enter-active{
+	max-height: none;
+	padding: 20px;
+}
