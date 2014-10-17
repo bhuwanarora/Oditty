@@ -1,10 +1,10 @@
-<div class="block full_width animate-fast" ng-click="hide_list()" ng-if="!hide_books_list">
+<div class="block full_width animate-fast" ng-click="hide_list()" ng-show="!hide_books_list">
 	<div>
-		<div><b>{{book.title}}</b></div>
+		<div class="padding"><b>{{book.title}}</b></div>
 		<div ng-show="book.rating">You gave {{book.rating}}/5 rating to this book.</div>
 	</div>
 	<div ng-repeat="expected_book in book.books" ng-if="book.books">
-		<div class="blue_hover animate-fast" ng-click="set_selected_book(expected_book)">
+		<div class="blue_hover content_block animate-fast" ng-click="set_selected_book(expected_book)">
 			<span><b>{{expected_book.author_name}}'s</b></span>
 			<span>{{expected_book.name}}</span>
 		</div>
@@ -13,7 +13,7 @@
 		Sorry! We couldn't find related books in our database...
 	</div>
 </div>
-<div class="full_width animate-fast" ng-if="hide_books_list">
+<div class="full_width animate-fast" ng-show="hide_books_list">
 	<div>
 		<span>{{selected_book.author_name}}'s <b>{{selected_book.name}}</b></span>
 		<span class="click" ng-click="remove_selected_book()">Undo</span>
