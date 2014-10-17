@@ -3,7 +3,7 @@
 <div class="header">
 	This will give you a head start at Reader's Door...
 </div>
-<div class="header scrollbar" msd-wheel="stop_horizontal_scroll($event)">
+<div class="header scrollbar book_predict" msd-wheel="stop_horizontal_scroll($event)">
 	<div class="header_font" ng-show="app_books && app_books.length > 0">{{fb_status}}</div><br/>
 	<book-predict data="book" ng-repeat="book in app_books"></book-predict>	
 	<hr/>
