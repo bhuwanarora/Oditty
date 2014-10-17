@@ -1,0 +1,22 @@
+<div class="full_width animate-fast" ng-click="hide_list()" ng-hide="hide_books_list">
+	<div>
+		<div><b>{{book.title}}</b></div>
+		<div ng-show="book.rating">You gave {{book.rating}}/5 rating to this book.</div>
+	</div>
+	<div ng-repeat="expected_book in book.books">
+		<div class="blue_hover animate-fast" ng-click="set_selected_book(expected_book)">
+			<div class="header_font">{{expected_book.author_name}}'s</div>
+			<div>{{expected_book.name}}</div>
+		</div>
+	</div>
+	<br/>
+</div>
+<div class="full_width site_color animate-fast" ng-show="hide_books_list">
+	<div>
+		<span>{{selected_book.author_name}}'s {{selected_book.title}}</span>
+		<span class="click" ng-click="remove_selected_book()">Undo</span>
+	</div>
+	<div>
+		
+	</div>
+</div>

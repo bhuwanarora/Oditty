@@ -518,6 +518,33 @@ websiteApp.directive('bookGrid', ['recommendationService', '$rootScope', functio
 	}
 }]);
 
+websiteApp.directive('bookPredict', [, function(){
+	return{
+		restrict: 'E',
+		controller: ['$scope', function($scope){
+			$scope.hide_list = function(){
+				$scope.hide_books_list = true;
+			}
+
+			$scope.set_selected_book = function(book){
+				$scope.selected_book = book;
+			}
+
+			$scope.remove_selected_book = function(){
+				delete $scope.selected_book;
+				$scope.hide_books_list = false;
+			}
+
+			_init = function(){
+				$scope.hide_books_list = false;
+			}
+
+			_init();
+		}],
+		templateUrl: "/assets/angular/views/getting_started/partials/book_predict.html"
+	}
+}]);
+
 websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService', 'websiteService', 'WebsiteUIConstants', 'scroller', 'RecommendationUIConstants', 'Facebook', 'SearchUIConstants', function($rootScope, $timeout, sharedService, websiteService, WebsiteUIConstants, scroller, RecommendationUIConstants, Facebook, SearchUIConstants){
 	return{
 		restrict: 'E',

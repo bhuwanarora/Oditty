@@ -749,3 +749,7 @@ input:focus{
     width: 110px;
     text-align: center;
 }
+
+.blue_hover:hover{
+    color: #427fed;
+}

@@ -90,7 +90,7 @@ var constants = {
 			"FetchingData": "Fetching data from your apps on facebook...",
 			"FetchingError": "Error in fetching data from the database...",
 			"DatabaseConnect": "Connecting to Reader's Door database...",
-			"BooksFound": "Please review your books..."
+			"BooksFound": "Please choose the right book for the title you've read..."
 		},
 		"SearchUIConstants": {
 			"BookLabel": "Book",
