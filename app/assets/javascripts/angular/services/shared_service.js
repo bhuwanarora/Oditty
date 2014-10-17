@@ -56,27 +56,33 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
     }
 
     this.bookmark_book = function($scope, index, event, label_name){
+        if(angular.isUndefined($scope.book)){
+            var book = $scope.selected_book;
+        }
+        else{
+            var book = $scope.book;
+        }
         var atleast_one_label_checked = false;
         var _basic_bookmark = function(){
-            var labels = $scope.book.labels;
-            $scope.book.labels[index]["checked"] = !$scope.book.labels[index]["checked"];
-            if($scope.book.labels[index]["checked"]){
+            var labels = book.labels;
+            book.labels[index]["checked"] = !book.labels[index]["checked"];
+            if(book.labels[index]["checked"]){
                 //add to notifications
                 var name = $rootScope.user.email;
                 if(angular.isDefined($rootScope.user.name)){
                     name = $rootScope.user.name;
                 }
-                var message = "<span>saved&nbsp;</span><span class='site_color'>"+$scope.book.title+"</span><span> to '"+$scope.book.labels[index]["name"]+"'</span>";
+                var message = "<span>saved&nbsp;</span><span class='site_color'>"+book.title+"</span><span> to '"+book.labels[index]["name"]+"'</span>";
             
                 var notification = {
                     "thumb":$rootScope.user.thumb,
                     "message":message,
                     "timestamp":new Date().getTime(),
                     "book":{
-                        "id":$scope.book.id,
-                        "title":$scope.book.title,
-                        "author_name":$scope.book.author_name,
-                        "isbn":$scope.book.isbn
+                        "id":book.id,
+                        "title":book.title,
+                        "author_name":book.author_name,
+                        "isbn":book.isbn
                     },
                     "user":{
                         "id":$rootScope.user.id,
@@ -87,23 +93,23 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
                 $scope.$emit('gamifyCount', 10, true);
                 $scope.$emit('addToNotifications', notification);
 
-                var message = "SUCCESS-Added to "+$scope.book.labels[index]["name"]+" <span class='icon-tags'></span>.";
+                var message = "SUCCESS-Added to "+book.labels[index]["name"]+" <span class='icon-tags'></span>.";
             }
             else{
                 $rootScope.user.bookmark_count = $rootScope.user.bookmark_count - 1;
                 $scope.$emit('gamifyCount', 10, false);
-                var message = "SUCCESS-Removed from "+$scope.book.labels[index]["name"]+" <span class='icon-tags'></span>.";
+                var message = "SUCCESS-Removed from "+book.labels[index]["name"]+" <span class='icon-tags'></span>.";
             }
 
-            if($scope.book.labels[index]["name"] == RecommendationUIConstants.MarkAsRead){
-                this.mark_as_read($scope, $scope.book, event);
+            if(book.labels[index]["name"] == RecommendationUIConstants.MarkAsRead){
+                this.mark_as_read($scope, book, event);
             }
 
             var timeout_event = notify($rootScope, message, $timeout);
-            var params = {"id": $scope.book.id, 
+            var params = {"id": book.id, 
                             "type": "BOOK",
-                            "name": $scope.book.labels[index]["name"],
-                            "data": $scope.book.labels[index]["checked"]};
+                            "name": book.labels[index]["name"],
+                            "data": book.labels[index]["checked"]};
             for(var i=0; i<labels.length; i++){
                 if(labels[i]["checked"]){
                     atleast_one_label_checked = true;
@@ -111,10 +117,10 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
                 }
             }
             if(atleast_one_label_checked){
-                $scope.book.bookmark_status = 1;
+                book.bookmark_status = 1;
             }
             else{
-                $scope.book.bookmark_status = 0; 
+                book.bookmark_status = 0; 
             }
             return params;
         }

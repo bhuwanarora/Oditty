@@ -518,7 +518,7 @@ websiteApp.directive('bookGrid', ['recommendationService', '$rootScope', functio
 	}
 }]);
 
-websiteApp.directive('bookPredict', ['$rootScope', function($rootScope){
+websiteApp.directive('bookPredict', ['$rootScope', 'sharedService', function($rootScope, sharedService){
 	return{
 		restrict: 'E',
 		scope: {"book": "=data"},
@@ -537,6 +537,10 @@ websiteApp.directive('bookPredict', ['$rootScope', function($rootScope){
 			$scope.remove_selected_book = function(){
 				delete $scope.selected_book;
 				$scope.hide_books_list = false;
+			}
+
+			$scope.selected_label = function(index){
+				sharedService.bookmark_book($scope, index, event);
 			}
 
 			_init = function(){

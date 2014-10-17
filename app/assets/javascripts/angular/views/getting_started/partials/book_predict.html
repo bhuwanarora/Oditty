@@ -20,7 +20,11 @@
 	</div>
 	<div>
 		<div>
-			<span ng-repeat="label in selected_book.labels">{{label.name}}</span>
+			<div>Add this books to personal shelves</div>
+			<div ng-repeat="label in selected_book.labels track by $index" 
+				 class="capitalise inline_block light_link" 
+				 ng-class="{'site_color': label.checked}"
+				 ng-click="selected_label($index)">{{label.name | lowercse}}</div>
 		</div>
 		<rate data="selected_book"></rate>
 	</div>
