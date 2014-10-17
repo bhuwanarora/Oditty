@@ -524,7 +524,9 @@ websiteApp.directive('bookPredict', ['$rootScope', function($rootScope){
 		scope: {"book": "=data"},
 		controller: ['$scope', function($scope){
 			$scope.hide_list = function(){
-				$scope.hide_books_list = true;
+				if(angular.isDefined($scope.selected_book)){
+					$scope.hide_books_list = true;
+				}
 			}
 
 			$scope.set_selected_book = function(book){
