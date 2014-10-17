@@ -518,7 +518,7 @@ websiteApp.directive('bookGrid', ['recommendationService', '$rootScope', functio
 	}
 }]);
 
-websiteApp.directive('bookPredict', function(){
+websiteApp.directive('bookPredict', ['$rootScope', function($rootScope){
 	return{
 		restrict: 'E',
 		scope: {"book": "=data"},
@@ -537,14 +537,20 @@ websiteApp.directive('bookPredict', function(){
 			}
 
 			_init = function(){
-				$scope.hide_books_list = false;
+				if($scope.book.books.length == 1){
+					$scope.hide_books_list = true;
+					$scope.selected_book = $scope.book.books[0];
+				}
+				else{
+					$scope.hide_books_list = false;
+				}
 			}
 
 			_init();
 		}],
 		templateUrl: "/assets/angular/views/getting_started/partials/book_predict.html"
 	}
-});
+}]);
 
 websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService', 'websiteService', 'WebsiteUIConstants', 'scroller', 'RecommendationUIConstants', 'Facebook', 'SearchUIConstants', function($rootScope, $timeout, sharedService, websiteService, WebsiteUIConstants, scroller, RecommendationUIConstants, Facebook, SearchUIConstants){
 	return{

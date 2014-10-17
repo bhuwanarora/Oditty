@@ -3,11 +3,14 @@
 		<div><b>{{book.title}}</b></div>
 		<div ng-show="book.rating">You gave {{book.rating}}/5 rating to this book.</div>
 	</div>
-	<div ng-repeat="expected_book in book.books">
+	<div ng-repeat="expected_book in book.books" ng-if="book.books">
 		<div class="blue_hover animate-fast" ng-click="set_selected_book(expected_book)">
-			<span class="header_font">{{expected_book.author_name}}'s</span>
+			<span><b>{{expected_book.author_name}}'s</b></span>
 			<span>{{expected_book.name}}</span>
 		</div>
+	</div>
+	<div ng-if="!book.books || book.books.length = 0">
+		Sorry! We couldn't find related books in our database...
 	</div>
 </div>
 <div class="full_width animate-fast" ng-show="hide_books_list">
@@ -16,7 +19,10 @@
 		<span class="click" ng-click="remove_selected_book()">Undo</span>
 	</div>
 	<div>
-		
+		<div>
+			<span ng-repeat="label in labels">{{label.name}}</span>
+		</div>
+		<rate data="selected_book"></rate>
 	</div>
 </div>
 <br/>
