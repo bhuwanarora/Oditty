@@ -2,7 +2,7 @@
 <div class="header">
 	This will help us to recommend you better books...
 </div>
-<div class="header center scrollbar" msd-wheel="stop_horizontal_scroll($event)">
+<div class="header center scrollbar light_grey" msd-wheel="stop_horizontal_scroll($event)">
 	<div ng-repeat="genre in info.genres  | orderBy:genre.name" class="block3">
 		<toggle data="genre" on-select="save_genre(genre)" on-deselect="remove_genre(genre)"></toggle>
 		<!-- <div class="filter inactive_filter">{{genre.name}}</div> -->
