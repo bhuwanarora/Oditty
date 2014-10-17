@@ -546,7 +546,7 @@ websiteApp.directive('bookPredict', ['$rootScope', 'sharedService', function($ro
 			_init = function(){
 				if($scope.book.books.length == 1){
 					$scope.hide_books_list = true;
-					$scope.selected_book = $scope.book.books[0];
+					$scope.set_selected_book($scope.book.books[0]);
 				}
 				else{
 					$scope.hide_books_list = false;

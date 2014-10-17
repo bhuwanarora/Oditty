@@ -1,4 +1,4 @@
-<div class="full_width animate-fast" ng-click="hide_list()" ng-hide="hide_books_list">
+<div class="big_block full_width animate-fast" ng-click="hide_list()" ng-if="!hide_books_list">
 	<div>
 		<div><b>{{book.title}}</b></div>
 		<div ng-show="book.rating">You gave {{book.rating}}/5 rating to this book.</div>
@@ -13,7 +13,7 @@
 		Sorry! We couldn't find related books in our database...
 	</div>
 </div>
-<div class="full_width animate-fast" ng-show="hide_books_list">
+<div class="full_width animate-fast" ng-if="hide_books_list">
 	<div>
 		<span>{{selected_book.author_name}}'s <b>{{selected_book.name}}</b></span>
 		<span class="click" ng-click="remove_selected_book()">Undo</span>
@@ -22,6 +22,7 @@
 		<div>
 			<div>Rate this book...</div>
 			<rate data="selected_book"></rate>
+			<hr/>
 			<div>Add this books to personal shelves</div>
 			<div ng-repeat="label in selected_book.labels track by $index" 
 				 class="capitalise inline_block light_link label" 
