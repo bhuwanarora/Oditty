@@ -294,7 +294,7 @@ module Api
 					elsif (params[key].class == ActiveSupport::HashWithIndifferentAccess) || (params[key].class == ActionController::Parameters)
 						puts "TO ADD #{params[key].class}".red
 					else
-						set_clause = set_clause + " SET fu."+key.to_s+"=\""+params[key].to_s+"\""
+						set_clause = set_clause + " SET fu."+key.to_s+"=\""+params[key].gsub("\"","'").to_s+"\""
 					end
 				end
 
