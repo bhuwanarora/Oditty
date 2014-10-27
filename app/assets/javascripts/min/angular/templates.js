@@ -193,7 +193,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/header/partials/profile_link.html',
-    "<div class=\"header_navbar\" id=\"editProfile\" ng-click=\"user.interact = false;\" ng-if=\"user.logged\"><img ng-src=\"{{user | blob_backup}}\" class=\"profile_small_thumb\" ng-if=\"user\"><div class=\"user_details\"><div class=\"animate-slow count\" ng-class=\"{'green': is_additive, 'magenta': !is_additive}\" ng-show=\"count && !initiate_counting\"><span ng-if=\"is_additive\">+</span><span ng-if=\"!is_additive\">-</span>{{count}}</div><span class=\"capitalise\"><b>{{user.name | first_name}}</b></span></div></div>"
+    "<div class=\"header_navbar\" id=\"editProfile\" ng-style=\"user.main_header\" ng-click=\"user.interact = false;\" ng-if=\"user.logged\"><img ng-src=\"{{user | blob_backup}}\" class=\"profile_small_thumb\" ng-if=\"user\"><div class=\"user_details\"><div class=\"animate-slow count\" ng-class=\"{'green': is_additive, 'magenta': !is_additive}\" ng-show=\"count && !initiate_counting\"><span ng-if=\"is_additive\">+</span><span ng-if=\"!is_additive\">-</span>{{count}}</div><span class=\"capitalise\"><b>{{user.name | first_name}}</b></span></div></div>"
   );
 
 
