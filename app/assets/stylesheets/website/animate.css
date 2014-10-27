@@ -157,7 +157,7 @@
 .interaction_box.ng-leave.ng-leave-active,
 .message_box.ng-enter,
 .message_box.ng-leave.ng-leave-active{
-	width: 400px;
+	width: 60%;
 	height: 100px;
 	margin-left: -200px;
 	margin-top: -65px;
@@ -168,7 +168,7 @@
 .interaction_box.ng-enter.ng-enter-active,
 .message_box.ng-leave,
 .message_box.ng-enter.ng-enter-active{
-	width: 500px;
+	width: 75%;
 	height: 200px;
 	margin-left: -250px;
 	margin-top: -130px;
@@ -276,7 +276,7 @@
 .interaction_group.ng-enter.ng-enter-active{
 	left: 36vh;
 	top: 70px;
-	width: 60%;
+	width: 75%;
 }
 
 .bottom_widget.ng-enter,

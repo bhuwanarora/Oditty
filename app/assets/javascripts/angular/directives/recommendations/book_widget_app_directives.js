@@ -103,7 +103,7 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', '
         console.debug("%c _init book"+book_id, "color: purple");
         $scope.book.show_labels = false;
         if(angular.isDefined($scope.book.no_thumb) && $scope.book.no_thumb){
-          $scope.card_style = {"background-color": "#f5f5f5"};
+          $scope.card_style = {"background-color": "#f5f5f5", "padding": "10px"};
         }
         
         if(angular.isUndefined($scope.book.title)){
@@ -494,6 +494,7 @@ websiteApp.directive('bookInfo', ['$rootScope', '$timeout', 'widgetService', 'sh
       }
 
       $scope._get_book_feed = function(){
+        console.debug("_get_book_feed", $rootScope.focused_book);
         if(angular.isUndefined($rootScope.focused_book.tweets)){
           $rootScope.focused_book.tweets = [];
           widgetService.get_book_feed($rootScope.focused_book.id).then(function(data){
@@ -507,7 +508,6 @@ websiteApp.directive('bookInfo', ['$rootScope', '$timeout', 'widgetService', 'sh
 
       _init = function(){
         _open_tab();
-
         if(angular.isDefined($rootScope.focused_book)){
           $scope._get_book_feed();
           if($scope.show_author){

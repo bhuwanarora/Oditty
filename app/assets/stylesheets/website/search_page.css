@@ -367,6 +367,7 @@
 
 .search_page .tweets .tweet{
 	border-bottom: 2px solid #ECECEC;
+	width: 100%;
 }
 
 .search_page .tweets .tweet .tweet_text{

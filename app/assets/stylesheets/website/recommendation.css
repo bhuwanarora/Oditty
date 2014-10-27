@@ -617,7 +617,7 @@
 	position: fixed;
 	left: 36vh;
 	top: 70px;
-	width: 60%;
+	width: 75%;
 	z-index: 13;
 }
 
@@ -632,9 +632,11 @@
 	z-index: 5;
 	padding: 10px;
 	background-color: #fff;
+	width: 75%;
 	border-radius: 2px;
 	padding: 3vh;
 	position: relative;
+	box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
 }
 
 .interaction_box_options,
@@ -1193,7 +1195,9 @@
 	overflow: auto;
 	padding: 3vh;
 	white-space: initial;
+	width: 75%;
 	position: relative;
+	box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
 }
 
 .tweets .tweet img{
@@ -1465,6 +1469,8 @@
 	top: 3px;
 	right: 3px;
 	bottom: 10%;
+	padding: 10px;
+	white-space: initial;
 }
 
 .loading_widget .loading_interaction_box{
@@ -2000,7 +2006,7 @@
 .white_wrapper{
 	z-index: 12;
 	background-image: none;
-	background-color: white;
+	background-color: #ECECEC;
 	top: 61px;
 }
 
@@ -2100,9 +2106,8 @@
 }
 
 .feed_header{
-	background-color: #f2f2f2!important;
-	border: 1px solid #D8D8D8;
-	border-radius: 0!important;
+	background-color: transparent!important;
+	box-shadow: none!important;
 }
 
 .compressed_site_logo{
@@ -2225,6 +2230,17 @@ and (max-width : 500px){
 		left: 5px;
 		right: 5px;
 		width: inherit;
+	}
+
+	.interaction_box,
+	.message_box,
+	.tweets .tweet{
+		width: 88%;
+	}
+
+	.book_thumb_color_wrapper, .book_thumb_wrapper{
+		width: 100px;
+		height: 155px;
 	}
 
 	.feed_header{

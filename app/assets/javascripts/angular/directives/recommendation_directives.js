@@ -243,6 +243,8 @@ websiteApp.directive('navbar', ['scroller', '$rootScope', 'websiteService', '$ti
 				_close_all_popups();
 				if($scope.bookmark_selected || $scope.read_selected){
 					// _load_icon();
+					delete $rootScope.user.main_header;
+					delete $rootScope.user.main_header_background;
 					$scope.read_selected = false;
 					$scope.bookmark_selected = false;
 					$scope.panel_selected = '';

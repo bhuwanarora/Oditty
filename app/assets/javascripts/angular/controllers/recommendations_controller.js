@@ -509,7 +509,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				$scope.read_selected = false;
 				$rootScope.hide_options = true;
 				$scope._set_books(data["recommendations"]["books"]);
-				$rootScope.focused_book = $scope.recommendations.books[0];
 			}
 
 			_push_notification();
@@ -522,11 +521,12 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 					$scope.hide_popups();
 					$rootScope.user.interact = false;
 					var max_limit_reached = $scope.recommendations.books.length >= max_limit;
-					var on_title_search = $rootScope.filters.other_filters["title"];
+					var on_title_search = angular.isDefined($rootScope.filters.other_filters["id"] || $rootScope.filters.other_filters["title"]);
 
 					if(max_limit_reached){
 						_max_limit_reached(max_limit);
 					}
+					
 					if(on_title_search){
 						_on_title_search();
 					}
@@ -703,8 +703,19 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	    }
     }
 
-    _handle_focused_book = function(){
-    	$rootScope.focused_book = $scope.recommendations.books.first;
+    $scope._handle_focused_book = function(){
+		var _get_json = function(value){
+			return {"isbn": value[0], "id": value[1], "external_thumb": value[2]};
+		}
+
+    	if(angular.isDefined($scope.recommendations.books.is_book_array) && $scope.recommendations.books.is_book_array){
+    		if($scope.recommendations.books.book_array.length == 1){
+    			$rootScope.focused_book = _get_json($scope.recommendations.books.first);
+    		}
+    	}
+    	else{
+    		$rootScope.focused_book = _get_json($scope.recommendations.books.first);	
+    	}
     }
 
     $scope.get_notifications = function(user_id, event){
@@ -832,13 +843,15 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				$scope._init_reader();
 				$scope._get_labels(reader_id);
 				$scope.placeholder = "Write on timeline...";
+				$rootScope.user.main_header = {"color": "white", "text-shadow": "none"};
+    			$rootScope.user.main_header_background = {"background-color": "#65b045"};
 			}
 			else{
 				_init_recommendations();
 				$scope._get_labels();
 				$scope._initialize_filters();
 
-		        // _handle_focused_book();
+		        // $scope._handle_focused_book();
 		        // $scope.get_notifications();
 
 				$scope.placeholder = WebsiteUIConstants.Share;

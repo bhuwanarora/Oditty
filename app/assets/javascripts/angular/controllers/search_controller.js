@@ -620,9 +620,11 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		if(angular.isUndefined($rootScope.filters)){
 			$rootScope.filters = {"other_filters": {}};
 		}
-		delete $rootScope.filters.other_filters["show_all"];
-		delete $rootScope.filters.other_filters["title"];
-		delete $rootScope.filters.other_filters["id"];
+		$scope._reset_text_search();
+	}
+
+	$scope._reset_text_search = function(){
+		$rootScope.filters.other_filters = {};
 		$rootScope.filters["reset_count"] = 0;
 		$rootScope.filters["reset"] = true;
 	}
@@ -676,9 +678,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$cookieStore.remove(item.type);
 		if(!on_search_page){
 			delete $rootScope.filters.other_filters[item.type];
-			delete $rootScope.filters.other_filters["show_all"];
-			delete $rootScope.filters.other_filters["title"];
-			delete $rootScope.filters.other_filters["id"];
+			$scope._reset_text_search();
 			$scope.$emit('reloadRecommendations');
 		}
 	}
@@ -710,9 +710,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			});
 			$scope.filters_added = [];
 		}
-		if(angular.isDefined($rootScope.filters) && angular.isDefined($rootScope.filters.other_filters)){
-			$scope._clear_book_search_filters();
-		}
+		$scope._clear_book_search_filters();
 	}
 
 	$scope.set_base_search = function(){
@@ -742,9 +740,10 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope.reset_filters();
 		$scope.search_tag.input = "";
 		delete $scope.search_display;
-
+		console.debug("handle_base_selection ", item, $scope.active_base);
 		if(angular.isUndefined(item)){
 			$scope.set_base_search();
+			$scope._clear_book_search_filters();
 		}
 		else if(angular.isDefined($scope.active_base) && $scope.active_base == item.type){
 			$scope.reset_base_selection();
@@ -913,12 +912,36 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
         else if(key.keyLeft || key.keyRight){
         	event.stopPropagation();
         }
+        else if(key.keyEnter){
+        	$scope._handle_enter(event);
+        }
+	}
+
+	$scope._handle_enter = function(event){
+		var searching_for_text = angular.isUndefined($scope.search_tag.currentItem);
+		if(searching_for_text){
+			var item = $scope._get_search_text_item();
+			if(on_search_page){
+				$cookieStore.put(item.type, item);
+				$scope.handle_search_request();
+			}
+			else{
+				console.debug("Full TextSearch");
+				$scope._all_text_search_results(item);
+				$scope.$emit('reloadRecommendations');
+			}
+		}
+		else{
+			$scope.handle_selection_option($scope.search_tag.currentItem, event);
+		}
 	}
 
 	$scope._clear_book_search_filters = function(){
-		delete $rootScope.filters.other_filters.title;
-		delete $rootScope.filters.other_filters.show_all;
-		delete $rootScope.filters.other_filters.id;
+		if(angular.isDefined($rootScope.filters) && angular.isDefined($rootScope.filters.other_filters)){
+			$rootScope.filters.other_filters = {};
+		}
+		delete $scope.search_tag.currentItem;
+		$scope._clear_filter_cookies();
 	}
 
 	$scope.close_login_box = function(){
@@ -1173,51 +1196,31 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope.search_results = [];
 		$scope.shift_search_to_top();
 
-    	var keyEnter = event.keyCode == WebsiteUIConstants.Enter;
-		if(keyEnter){
-			var searching_for_text = angular.isUndefined($scope.search_tag.currentItem);
-			if(searching_for_text){
-				var item = $scope._get_search_text_item();
-				if(on_search_page){
-					$cookieStore.put(item.type, item);
-					$scope.handle_search_request();
-				}
-				else{
-					$scope._all_text_search_results(item);
-					$scope.$emit('reloadRecommendations');
-				}
-			}
-			else{
-				$scope.handle_selection_option($scope.search_tag.currentItem, event);
-			}
+		if($scope.search_initiated){
+    		$timeout.cancel(search_typing_timeout);
+    		search_typing_timeout = $timeout(function(){
+    			console.debug("get_search_results search_typing_timeout");
+				$scope._handle_search_input(event);
+			}, time_delay);
 		}
 		else{
-			if($scope.search_initiated){
-	    		$timeout.cancel(search_typing_timeout);
-	    		search_typing_timeout = $timeout(function(){
-	    			console.debug("get_search_results search_typing_timeout");
-					$scope._handle_search_input(event);
-				}, time_delay);
-			}
-			else{
-	    		var firstInput = String.fromCharCode(event.keyCode);
-	        	var currentValue = $scope.search_tag.input.trim();
-	        	if(currentValue && currentValue.length > 1){
-	        		var customBookSearch = currentValue.indexOf(SearchUIConstants.Hash) == 0;
-	        		var customAuthorSearch = currentValue.indexOf(SearchUIConstants.AtTheRate) == 0;
-	        		var customTagSearch = currentValue.indexOf(SearchUIConstants.Plus) == 0;
-	        	}
-	        	else{
-	        		var customBookSearch = firstInput == SearchUIConstants.Hash;
-	        		var customAuthorSearch = firstInput == SearchUIConstants.AtTheRate;
-	        		var customTagSearch = firstInput == SearchUIConstants.Plus;
-	        	}
-				$scope.search_initiated = true;
-				console.debug("$scope._set_custom_search get_search_results");
-				search_typing_timeout = $timeout(function(){
-					$scope._handle_search_input(event);
-				}, time_delay);
-			}
+    		var firstInput = String.fromCharCode(event.keyCode);
+        	var currentValue = $scope.search_tag.input.trim();
+        	if(currentValue && currentValue.length > 1){
+        		var customBookSearch = currentValue.indexOf(SearchUIConstants.Hash) == 0;
+        		var customAuthorSearch = currentValue.indexOf(SearchUIConstants.AtTheRate) == 0;
+        		var customTagSearch = currentValue.indexOf(SearchUIConstants.Plus) == 0;
+        	}
+        	else{
+        		var customBookSearch = firstInput == SearchUIConstants.Hash;
+        		var customAuthorSearch = firstInput == SearchUIConstants.AtTheRate;
+        		var customTagSearch = firstInput == SearchUIConstants.Plus;
+        	}
+			$scope.search_initiated = true;
+			console.debug("$scope._set_custom_search get_search_results");
+			search_typing_timeout = $timeout(function(){
+				$scope._handle_search_input(event);
+			}, time_delay);
 		}
 	}
 

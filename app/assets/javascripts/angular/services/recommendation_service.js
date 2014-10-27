@@ -20,6 +20,7 @@ websiteApp.service('recommendationService', ['$http', '$q', '$rootScope', 'Websi
 
     this.get_recommendations = function(){
         var filters = angular.toJson($rootScope.filters);
+        console.debug("get_recommendations", filters);
         return _deferred_request('/api/v0/recommendations?count=5&id='+$rootScope.user.id+'&q='+filters);
     }
 
