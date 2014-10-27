@@ -385,7 +385,7 @@
 
 .main_topic{
 	left: 200px;
-	top: 48px;
+	top: 59px;
 	position: fixed;
 	width: 43%;
 	overflow: auto;
@@ -573,7 +573,7 @@
 .filters_panel_large,
 .filters_panel_right{
 	text-align: center;
-	max-height: 52vh;
+	max-height: 75vh;
 }
 
 .filters_group{
@@ -890,7 +890,7 @@
 .notifications{
 	font-size: .9em;
 	z-index: 3;
-	max-height: 54vh;
+	max-height: 75vh;
 	border-radius: 4px;
 	overflow-y: hidden; 
 }
@@ -1245,9 +1245,9 @@
 }
 
 .left_panel{
-	top: 221px;
+	top: 61px;
 	width: 16%;
-	height: 70vh;
+	height: 100vh;
 	background-color: white;
 	left: 0px;
 	position: fixed;
@@ -1266,7 +1266,7 @@
 	z-index: 7;
 	/*box-shadow: 3px 0 10px 0 rgba(66,66,66,0.47);*/
 	position: fixed;
-	top: 230px;
+	top: 61px;
 	width: 28%;
 	/*min-width: 280px;*/
 	left: 15px;
@@ -1283,7 +1283,7 @@
 	z-index: 8;
 	font-size: 1em;
 	left: 26%;
-	top: 245px;
+	top: 78px;
 }
 
 .expand_notifications_shift{
@@ -1296,7 +1296,7 @@
 
 .user_profile .friends_grid,
 .left_column .friends_grid{
-	max-height: 54vh;
+	max-height: 75vh;
 	white-space: normal;
 	background-color: #fff;
 	border-radius: 4px;
@@ -1792,7 +1792,7 @@
 
 .share_wrapper .thumb_wrapper{
 	position: fixed;
-	left: 20px;
+	left: 170px;
 	top: 60px;
 	border-radius: 3px;
 }
@@ -1822,7 +1822,7 @@
 .user_name{
 	position: fixed;
 	top: 185px;
-	left: 20px;
+	left: 170px;
 	z-index: 2;
 	cursor: pointer;
 	color: white;
@@ -1866,11 +1866,16 @@
 }
 
 .user_name_shifted{
-	top: 65px;
+	top: inherit;
+	bottom: 40px;
+	text-shadow: none;
+	color: #427fed;
 }
 
 .thumb_wrapper_shifted{
-	top: 100px !important;
+	top: initial!important;
+	bottom: 18px;
+	left: 50px !important;
 }	
 
 .user_profile{

@@ -19,15 +19,6 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', '
 
       $scope.show_focused_tooltip = function(event, show_share_options){
         if($rootScope.focused_book != $scope.book){
-          var _set_dark_wrapper = function(){
-            $rootScope.popups.left_panel_width = {"background-color": "#333"};
-            $rootScope.style = {};
-            $rootScope.style.main_header = {"background-color": "#333", "color": "white"};
-            $rootScope.style.header_icon = {"color": "white"};
-            $rootScope.style.site_logo = {"color": "white", "text-shadow": "none"};
-            $rootScope.style.dark_wrapper = {"background-color": "#333"};
-          }
-
           var _hide_other_popups = function(){
             delete $rootScope.ticker_popup;
             $rootScope.popups = {};
@@ -100,7 +91,6 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', '
             }
             // $rootScope.on_left = false;
           }
-          // _set_dark_wrapper();
         }
         else{
           delete $rootScope.focused_book;

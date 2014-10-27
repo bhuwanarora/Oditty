@@ -198,7 +198,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/header/show.html',
-    "<div class=\"main_header fx-fade-down fx-speed-900\" ng-if=\"show_header\" ng-style=\"style.main_header\"><a class=\"site_logo\" ng-href=\"#/user/{{$routeParams.id}}/search\" ng-if=\"$routeParams.type\"><tooltip prepend-text=\"Back to search page\" position=\"bottom\"></tooltip><span>r</span> <span>e</span> <span>a</span> <span>d</span> <span>e</span> <span>r</span> <span>'</span> <span>s</span> <span>&nbsp;</span> <span>d</span> <span>o</span> <span>o</span> <span>r</span></a> <a class=\"compressed_site_logo\" ng-href=\"#/user/{{$routeParams.id}}/search\" ng-if=\"$routeParams.type\"><span class=\"icon-books\"></span></a><div class=\"table_cell header_wrapper\" ng-if=\"!$routeParams.type\"><a class=\"compressed_site_logo\" ng-href=\"#/user/{{user.id}}/recommendations/books\"><span class=\"icon-books\"></span></a> <a class=\"site_logo\" ng-href=\"#/user/{{user.id}}/recommendations/books\"><span>r</span> <span>e</span> <span>a</span> <span>d</span> <span>e</span> <span>r</span> <span>'</span> <span>s</span> <span>&nbsp;</span> <span>d</span> <span>o</span> <span>o</span> <span>r</span></a></div><div class=\"header_icon\" ng-style=\"style.header_icon\" ng-click=\"toggle_settings_popup($event)\" ng-if=\"$routeParams.type\"><span class=\"icon-angle-down table_cell\"></span></div><div class=\"header_icon\" ng-style=\"style.header_icon\" ng-class=\"{'site_color': popups.show_notifications_popup}\" ng-click=\"toggle_notification_popup($event)\"><span class=\"icon-earth table_cell\"></span><div class=\"notification_circle table_cell\" ng-hide=\"hide_notification_circle\">{{user.push_notifications.length}}</div></div><a ng-href=\"#/user/{{user.id}}/recommendations/books\"><profile-link></profile-link></a><div ng-controller=\"searchController\" ng-if=\"$routeParams.type && !reader\"><search-bar></search-bar></div><div class=\"header_navbar click share animate-fast\" ng-style=\"style.header_icon\" ng-click=\"show_interaction_box(user.id)\" ng-if=\"$routeParams.type\" id=\"share\"></div><div ng-if=\"popups.show_notifications_popup\" ng-include=\"\" src=\"'/assets/angular/views/header/modals/notifications.html'\"></div></div>"
+    "<div class=\"main_header fx-fade-down fx-speed-900\" ng-if=\"show_header\" ng-style=\"user.main_header\"><a class=\"site_logo\" ng-style=\"user.main_header\" ng-href=\"#/user/{{$routeParams.id}}/search\" ng-if=\"$routeParams.type\"><tooltip prepend-text=\"Back to search page\" position=\"bottom\"></tooltip><span>r</span> <span>e</span> <span>a</span> <span>d</span> <span>e</span> <span>r</span> <span>'</span> <span>s</span> <span>&nbsp;</span> <span>d</span> <span>o</span> <span>o</span> <span>r</span></a> <a class=\"compressed_site_logo\" ng-style=\"user.main_header\" ng-href=\"#/user/{{$routeParams.id}}/search\" ng-if=\"$routeParams.type\"><span class=\"icon-books\"></span></a><div class=\"table_cell header_wrapper\" ng-if=\"!$routeParams.type\"><a class=\"compressed_site_logo\" ng-style=\"user.main_header\" ng-href=\"#/user/{{user.id}}/recommendations/books\"><span class=\"icon-books\"></span></a> <a class=\"site_logo\" ng-style=\"user.main_header\" ng-href=\"#/user/{{user.id}}/recommendations/books\"><span>r</span> <span>e</span> <span>a</span> <span>d</span> <span>e</span> <span>r</span> <span>'</span> <span>s</span> <span>&nbsp;</span> <span>d</span> <span>o</span> <span>o</span> <span>r</span></a></div><div class=\"header_icon\" ng-style=\"user.main_header\" ng-click=\"toggle_settings_popup($event)\" ng-if=\"$routeParams.type\"><span class=\"icon-angle-down table_cell\"></span></div><div class=\"header_icon\" ng-style=\"user.main_header\" ng-class=\"{'site_color': popups.show_notifications_popup}\" ng-click=\"toggle_notification_popup($event)\"><span class=\"icon-earth table_cell\"></span><div class=\"notification_circle table_cell\" ng-hide=\"hide_notification_circle\">{{user.push_notifications.length}}</div></div><a ng-href=\"#/user/{{user.id}}/recommendations/books\"><profile-link></profile-link></a><div ng-controller=\"searchController\" ng-if=\"$routeParams.type && !reader\"><search-bar></search-bar></div><div class=\"header_navbar click share animate-fast\" ng-click=\"show_interaction_box(user.id)\" ng-if=\"$routeParams.type\" ng-style=\"user.main_header\" id=\"share\"></div><div ng-if=\"popups.show_notifications_popup\" ng-include=\"\" src=\"'/assets/angular/views/header/modals/notifications.html'\"></div></div>"
   );
 
 
@@ -243,7 +243,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/left_panel/friends_list.html',
-    "<div class=\"animate-fast\" id=\"friendsList\" msd-wheel=\"stop_propagation($event)\" ng-style=\"style.main_header\" ng-class=\"{'left_column_collapsed left_column_collapsed2': user.collapsed_friends, \n" +
+    "<div class=\"animate-fast\" id=\"friendsList\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed2': user.collapsed_friends, \n" +
     "\t \t\t\t'left_column_shifted left_column_shifted1': !user.collapsed_filters,\n" +
     "\t            'left_column_shifted left_column_shifted2': !user.collapsed_trends,\n" +
     "\t            'left_column_shifted left_column_shifted3': !user.collapsed_lists,\n" +
@@ -253,7 +253,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/left_panel/listopia.html',
-    "<div class=\"animate-fast\" id=\"listopia\" msd-wheel=\"stop_propagation($event)\" ng-style=\"style.main_header\" ng-class=\"{'left_column_collapsed left_column_collapsed4': user.collapsed_lists, \n" +
+    "<div class=\"animate-fast\" id=\"listopia\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed4': user.collapsed_lists, \n" +
     "\t            'left_column_shifted left_column_shifted1': !user.collapsed_column,\n" +
     "\t            'left_column_shifted left_column_shifted2': !user.collapsed_friends,\n" +
     "\t            'left_column_shifted left_column_shifted3': !user.collapsed_filters,\n" +
@@ -265,7 +265,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/left_panel/news_feed.html',
-    "<div class=\"expand_notifications\" ng-if=\"reader\" ng-class=\"{'expand_notifications_shift': user.collapsed_column}\" ng-click=\"show_interaction_box(reader.id)\"><span class=\"icon-expand2\"></span></div><div class=\"expand_notifications\" ng-if=\"!reader\" ng-class=\"{'expand_notifications_shift': user.collapsed_column}\" ng-click=\"show_interaction_box()\"><span class=\"icon-expand2\"></span></div><div class=\"animate-fast\" id=\"newsFeed\" ng-style=\"style.main_header\" ng-class=\"{'left_column_collapsed left_column_collapsed3': user.collapsed_column, \n" +
+    "<div class=\"expand_notifications\" ng-if=\"reader\" ng-class=\"{'expand_notifications_shift': user.collapsed_column}\" ng-click=\"show_interaction_box(reader.id)\"><span class=\"icon-expand2\"></span></div><div class=\"expand_notifications\" ng-if=\"!reader\" ng-class=\"{'expand_notifications_shift': user.collapsed_column}\" ng-click=\"show_interaction_box()\"><span class=\"icon-expand2\"></span></div><div class=\"animate-fast\" id=\"newsFeed\" ng-class=\"{'left_column_collapsed left_column_collapsed3': user.collapsed_column, \n" +
     "\t            'left_column_shifted left_column_shifted1': !user.collapsed_friends,\n" +
     "\t            'left_column_shifted left_column_shifted2': !user.collapsed_filters,\n" +
     "\t            'left_column_shifted left_column_shifted3': !user.collapsed_trends,\n" +
@@ -295,7 +295,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/left_panel/shelves.html',
-    "<div class=\"animate-fast\" id=\"shelves\" msd-wheel=\"stop_propagation($event)\" ng-style=\"style.main_header\" ng-class=\"{'left_column_collapsed left_column_collapsed1': user.collapsed_filters, \n" +
+    "<div class=\"animate-fast\" id=\"shelves\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed1': user.collapsed_filters, \n" +
     "\t            'left_column_shifted left_column_shifted1': !user.collapsed_trends,\n" +
     "\t            'left_column_shifted left_column_shifted2': !user.collapsed_lists,\n" +
     "\t            'left_column_shifted left_column_shifted3': !user.collapsed_column,\n" +
@@ -307,7 +307,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/left_panel/trending_list.html',
-    "<div class=\"expand_notifications\" ng-class=\"{'expand_notifications_shift': user.collapsed_trends}\" ng-click=\"show_trending_options()\"><span class=\"icon-expand2\"></span></div><div class=\"animate-fast scrollbar\" id=\"trendingList\" msd-wheel=\"stop_propagation($event)\" ng-style=\"style.main_header\" ng-class=\"{'left_column_collapsed left_column_collapsed5': user.collapsed_trends, \n" +
+    "<div class=\"expand_notifications\" ng-class=\"{'expand_notifications_shift': user.collapsed_trends}\" ng-click=\"show_trending_options()\"><span class=\"icon-expand2\"></span></div><div class=\"animate-fast scrollbar\" id=\"trendingList\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed5': user.collapsed_trends, \n" +
     "\t            'left_column_shifted left_column_shifted1': !user.collapsed_lists,\n" +
     "\t            'left_column_shifted left_column_shifted2': !user.collapsed_column,\n" +
     "\t            'left_column_shifted left_column_shifted3': !user.collapsed_friends,\n" +

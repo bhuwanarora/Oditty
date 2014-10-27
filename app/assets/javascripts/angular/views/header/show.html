@@ -1,7 +1,8 @@
 <div class="main_header fx-fade-down fx-speed-900"
 	 ng-if="show_header"
-	 ng-style="style.main_header">
+	 ng-style="user.main_header">
 	<a class="site_logo" 
+		ng-style="user.main_header"
 		ng-href="#/user/{{$routeParams.id}}/search" ng-if="$routeParams.type">
 		<tooltip prepend-text="Back to search page" position="bottom"></tooltip>
  		<span>r</span>
@@ -19,15 +20,18 @@
 		<span>r</span>
  	</a>
  	<a class="compressed_site_logo" 
+ 		ng-style="user.main_header"
 		ng-href="#/user/{{$routeParams.id}}/search" ng-if="$routeParams.type">
 		<span class="icon-books"></span>
 	</a>
  	<div class="table_cell header_wrapper"  ng-if="!$routeParams.type">
  		<a class="compressed_site_logo" 
+ 			ng-style="user.main_header"
 	 		ng-href="#/user/{{user.id}}/recommendations/books">
 	 		<span class="icon-books"></span>
 	 	</a>
 	 	<a class="site_logo" 
+	 		ng-style="user.main_header"
 	 		ng-href="#/user/{{user.id}}/recommendations/books">
 	 		<span>r</span>
 			<span>e</span>
@@ -45,13 +49,13 @@
 	 	</a>
  	</div>
 	<div class="header_icon" 
-		 ng-style="style.header_icon"
+		 ng-style="user.main_header"
 		 ng-click="toggle_settings_popup($event)" ng-if="$routeParams.type">
 		<span class="icon-angle-down table_cell"></span>
 	</div>
 	
 	<div class="header_icon" 
-		 ng-style="style.header_icon"
+		 ng-style="user.main_header"
 	     ng-class="{'site_color': popups.show_notifications_popup}"
 	     ng-click="toggle_notification_popup($event)">
 		<span class="icon-earth table_cell"></span>
@@ -66,9 +70,9 @@
  		<search-bar></search-bar>
  	</div>
  	<div class="header_navbar click share animate-fast"
- 	   ng-style="style.header_icon"
  	   ng-click="show_interaction_box(user.id)"
  	   ng-if="$routeParams.type"
+ 	   ng-style="user.main_header"
  	   id="share">
 		<!-- <span class="table_cell"><b>Share</b></span> -->
 	</div>

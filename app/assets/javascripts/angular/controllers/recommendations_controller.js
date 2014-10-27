@@ -323,6 +323,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		var _handle_specific_list_page = function(){
 			$rootScope.filters["filter_id"] = $routeParams.filter_id;
 			$rootScope.main_header = $routeParams.name;
+			$rootScope.user.main_header = {"background-color": "#918fb5", "color": "white", "text-shadow": "none"};
 		}
 
 		var _handle_specific_shelf_page = function(){
@@ -330,6 +331,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			$rootScope.filters["label_id"] = $routeParams.label_id;
 			$rootScope.main_header = $routeParams.name;
 			_collapse_every_left_panel();
+			$rootScope.user.main_header = {"background-color": "#E2B503", "color": "white", "text-shadow": "none"};
     		// $rootScope.user.collapsed_filters = false;
 		}
 
@@ -338,6 +340,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     		$rootScope.filters["filter_id"] = $routeParams.grid_id;
     		$rootScope.main_header = $routeParams.name;
     		_collapse_every_left_panel();
+    		$rootScope.user.main_header = {"background-color": "#E2B503", "color": "white", "text-shadow": "none"};
     		// $rootScope.user.collapsed_lists = false;
 		}
 
@@ -377,6 +380,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     		}
     		_set_nav_links(trend_index);
     		_collapse_every_left_panel();
+    		$rootScope.user.main_header = {"background-color": "#dd4b39", "color": "white", "text-shadow": "none"};
     		// $rootScope.user.collapsed_trends = false;
 		}
 		
@@ -562,10 +566,16 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
   == "";
 		}
 
+		var _destroy_event = function(timeout_event){
+			$scope.$on('destroy', function(){
+				$timeout.cancel(timeout_event);
+			});
+		}
+
 		var _recommended_books = function(){
 			var group_of_three = [];
 			var book_array = [];
-			var timer = 0;
+			var timer = 500;
 
 			angular.forEach(data, function(value){
 				var json = {"isbn": value[0], "id": value[1], "external_thumb": value[2]};
@@ -576,9 +586,10 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 					if(group_of_three.length == 3){
 						// this.push({"book_array": group_of_three, "is_book_array": true});
 						timer = timer + 500;
-						$timeout(function(){
+						var timeout_event = $timeout(function(){
 							$scope.recommendations.books.push({"book_array": group_of_three, "is_book_array": true});
 						}, timer);
+						_destroy_event(timeout_event);
 						group_of_three = [];
 					}
 					group_of_three.push(json);
@@ -588,6 +599,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 					$timeout(function(){
 						$scope.recommendations.books.push(json);
 					}, timer);
+					_destroy_event(timeout_event);
 				}
 			});
 			if(group_of_three.length != 0){
