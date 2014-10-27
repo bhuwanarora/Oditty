@@ -4,6 +4,7 @@
 	height: 100%;
 	background-repeat: no-repeat;
 	background-size: cover;
+	background-color: #ECECEC;
 }
 
 .search_page_wrapper{
@@ -61,7 +62,7 @@
 }
 
 .search_page .main_header{
-	background-color: white;
+	background-color: transparent;
 	z-index: 6;
 	display: table;
 	box-shadow: none;
@@ -131,6 +132,10 @@
 
 .filters_added .option:hover .close_icon{
 	color: rgba(216, 57, 30, 0.5);
+}
+
+.search_page .search_input{
+	box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
 }
 
 .search_input{
@@ -225,7 +230,6 @@
 }
 
 .search_page .header_wrapper{
-	background-color: white;
 	width: auto;
 }
 /*
@@ -363,7 +367,8 @@
 }
 
 .search_page .tweets .tweet{
-	padding: 0px;
+	border-bottom: 2px solid #ECECEC;
+	box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
 }
 
 .search_page .tweets .tweet .tweet_text{
@@ -423,7 +428,6 @@
 
 .search_page .website_search_options,
 .search_page .website_search_helpers{
-	box-shadow: none;
 	background-color: white !important;
 	max-height: 30vh;
 }
@@ -731,7 +735,7 @@
 	list-style: none;
 	left: 0px;
 	right: 0px;
-	background-color: #F2F2F2;
+	background-color: white;
 	margin: 0px;
 	padding: 10px;
 	list-style-position: inside;

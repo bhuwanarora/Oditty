@@ -387,28 +387,19 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 	    });
 	}
 
-	$scope.toggle_login_panel = function(){
-		if($scope.show_login_form){
-			$scope.show_login_form = false;
-		}
-		else{
-			$scope.show_login_form = true;
-		}
-	}
+	// $scope.toggle_login_panel = function(){
+	// 	if($scope.show_login_form){
+	// 		$scope.show_login_form = false;
+	// 	}
+	// 	else{
+	// 		$scope.show_login_form = true;
+	// 	}
+	// }
 
 	_initiate_loading_page = function(){
-		$scope.loading = true;
-		$scope.drop_icon = false;
 		$scope.show_login_form = false;
-
-		$timeout(function(){
-			$scope.loading = false;
-			// $scope.drop_icon = false;
-		}, 2000);
-
-		$timeout(function(){
-			$scope.drop_icon = true;
-		}, 1000);
+		$scope.loading = false;
+		
 	}
 
 	$scope.toggle_notifications = function(){
@@ -496,6 +487,13 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		
 		$scope._detect_browser();
 		console.timeEnd("websiteAppController");
+		var timeout_event = $timeout(function(){
+			$scope.show_header = true;
+		}, 2000);
+
+		$scope.$on('destroy', function(){
+			$timeout.cancel(timeout_event);
+		});
 	}
 
 

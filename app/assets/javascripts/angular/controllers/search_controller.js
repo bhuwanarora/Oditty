@@ -1221,14 +1221,14 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		}
 	}
 
-	$scope.toggle_login_panel = function(){
-		if($scope.show_login_form){
-			$scope.show_login_form = false;
-		}
-		else{
-			$scope.show_login_form = true;	
-		}
-	}
+	// $scope.toggle_login_panel = function(){
+	// 	if($scope.show_login_form){
+	// 		$scope.show_login_form = false;
+	// 	}
+	// 	else{
+	// 		$scope.show_login_form = true;	
+	// 	}
+	// }
 
 	$scope.handle_options = function(event){
 		if(!on_search_page){
@@ -1559,6 +1559,13 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				}, $rootScope.book_lists);
 			});
 		}
+		$scope.shift_search_to_top();
+		var timeout_event = $timeout(function(){
+			$scope.increase_height();
+		}, 2300);
+		$scope.$on('destroy', function(){
+			$timeout.cancel(timeout_event);
+		});
 	}
 
 	// $scope.search_tour_options = {
