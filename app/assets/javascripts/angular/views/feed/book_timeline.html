@@ -15,7 +15,7 @@
 		<div ng-include src="'/assets/angular/views/shared/partials/book_info.html'"></div>
 	</div>
 	<div ng-include src="'/assets/angular/views/feed/comment_box.html'"></div>
-	<div class="tweet animate-fast" ng-repeat="tweet in focused_book.tweets | reverse">
+	<div class="tweet fx-fade-down" ng-repeat="tweet in focused_book.tweets | reverse">
 		<div class="thumb"><img ng-src="{{tweet.user.thumb | thumb_backup}}"/></div>
 		<div class="tweet_text">
 			<b><div ng-bind-html="tweet.user.name"></div></b>

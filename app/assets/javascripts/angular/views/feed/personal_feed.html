@@ -10,7 +10,7 @@
 	</div>
 	<div ng-include src="'/assets/angular/views/feed/comment_box.html'"></div>
 	<div ng-repeat="notification in personal_notifications | reverse" 
-	     class="tweet animate-fast">
+	     class="tweet fx-fade-down">
 		<div ng-include src="'/assets/angular/views/feed/partials/notification_block.html'"></div>
 	</div>
 	<div class="tweet animate-fast" ng-if="personal_notifications && personal_notifications.length > 0">

@@ -156,7 +156,7 @@ module.exports = function(grunt) {
 
 
           'app/assets/javascripts/min/angular/vendors.js': [
-            'app/assets/javascripts/min/angular/vendors/angular_animate.min.js',
+            'app/assets/javascripts/min/angular/vendors/ngFx.js',
             'app/assets/javascripts/min/angular/vendors/angular_cookies.min.js',
             'app/assets/javascripts/min/angular/vendors/angular_google_map.js',
             'app/assets/javascripts/min/angular/vendors/angular_intro.js',

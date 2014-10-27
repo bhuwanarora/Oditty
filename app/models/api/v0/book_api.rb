@@ -335,7 +335,7 @@ module Api
 			end
 
 			def self._get_basic_recommendations(filters, last_book)
-				clause = "MATCH (book:Book) WHERE ID(book)="+last_book.to_s+" MATCH p=(book)-[:Next_book*..4]->(b) WITH last(nodes(p)) as b RETURN b.isbn, ID(b), b.external_thumb"
+				clause = "MATCH (book:Book) WHERE ID(book)="+last_book.to_s+" MATCH p=(book)-[:Next_book*..10]->(b) WITH last(nodes(p)) as b RETURN b.isbn, ID(b), b.external_thumb"
 				clause
 			end
 

@@ -9,7 +9,7 @@
 		<b><div>{{reader.name | first_name}}'s Reading Journey</div></b>
 	</div>
 	<div ng-repeat="notification in readers_notifications | reverse" 
-	     class="tweet animate-fast">
+	     class="tweet fx-fade-down">
 		<div ng-include src="'/assets/angular/views/feed/partials/notification_block.html'"></div>
 	</div>
 	<div class="tweet animate-fast">

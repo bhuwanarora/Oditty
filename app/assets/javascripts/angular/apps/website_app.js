@@ -1,4 +1,4 @@
-var websiteApp = angular.module('websiteApp', ['ngRoute', 'ngAnimate', 
+var websiteApp = angular.module('websiteApp', ['ngRoute', 'ngAnimate', 'fx.animations',
                   'monospaced.mousewheel', 'facebook', 'ngMap', 'cropme',
                   'duScroll', 'filtersApp', 'ngCookies', 'ngTouch', 'angular-intro',
                   'appConstants']);

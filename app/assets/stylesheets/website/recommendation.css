@@ -1862,17 +1862,11 @@
 }
 
 .user_name_shifted{
-	bottom: 81px;
-	left: 0px;
-	top: initial;
-	top: auto;
-	padding: 20px;
+	top: 65px;
 }
 
 .thumb_wrapper_shifted{
-	bottom: 137px;
-	top: initial !important;
-	top: auto !important;
+	top: 100px !important;
 }	
 
 .user_profile{
