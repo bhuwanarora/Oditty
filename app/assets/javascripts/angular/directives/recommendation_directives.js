@@ -196,7 +196,8 @@ websiteApp.directive('navbar', ['scroller', '$rootScope', 'websiteService', '$ti
 				_close_all_popups();
 				if(!$scope.bookmark_selected){
 					// _load_icon();
-					$rootScope.user.main_header = {"background-color": "#427fed", "color": "white", "text-shadow": "none"};
+					$rootScope.user.main_header = {"color": "white", "text-shadow": "none"};
+					$rootScope.user.main_header_background = {"background-color": "#427fed"};
 					$scope.panel_selected = 'BOOKMARK';
 					$cookieStore.put("tab", $scope.panel_selected);
 					$scope.bookmark_selected = true;

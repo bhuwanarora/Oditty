@@ -323,7 +323,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		var _handle_specific_list_page = function(){
 			$rootScope.filters["filter_id"] = $routeParams.filter_id;
 			$rootScope.main_header = $routeParams.name;
-			$rootScope.user.main_header = {"background-color": "#918fb5", "color": "white", "text-shadow": "none"};
+			$rootScope.user.main_header = {"color": "white", "text-shadow": "none"};
+			$rootScope.user.main_header_background = {"background-color": "#918fb5"};
 		}
 
 		var _handle_specific_shelf_page = function(){
@@ -331,7 +332,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			$rootScope.filters["label_id"] = $routeParams.label_id;
 			$rootScope.main_header = $routeParams.name;
 			_collapse_every_left_panel();
-			$rootScope.user.main_header = {"background-color": "#E2B503", "color": "white", "text-shadow": "none"};
+			$rootScope.user.main_header = {"color": "white", "text-shadow": "none"};
+    		$rootScope.user.main_header_background = {"background-color": "#E2B503"};
     		// $rootScope.user.collapsed_filters = false;
 		}
 
@@ -340,7 +342,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     		$rootScope.filters["filter_id"] = $routeParams.grid_id;
     		$rootScope.main_header = $routeParams.name;
     		_collapse_every_left_panel();
-    		$rootScope.user.main_header = {"background-color": "#918fb5", "color": "white", "text-shadow": "none"};
+    		$rootScope.user.main_header = {"color": "white", "text-shadow": "none"};
+    		$rootScope.user.main_header_background = {"background-color": "#918fb5"};
     		// $rootScope.user.collapsed_lists = false;
 		}
 
@@ -380,12 +383,14 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     		}
     		_set_nav_links(trend_index);
     		_collapse_every_left_panel();
-    		$rootScope.user.main_header = {"background-color": "#dd4b39", "color": "white", "text-shadow": "none"};
+    		$rootScope.user.main_header = {"color": "white", "text-shadow": "none"};
+    		$rootScope.user.main_header_background = {"background-color": "#dd4b39"};
     		// $rootScope.user.collapsed_trends = false;
 		}
 		
         var _handle_recommendations_page = function(){
         	delete $rootScope.user.main_header;
+        	delete $rootScope.user.main_header_background;
     		delete $rootScope.main_header;
     		delete $rootScope.main_topic;
     		delete $rootScope.filters.filter_id;
@@ -394,7 +399,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         }
 
         var _handle_specific_book_page = function(){
-        	$rootScope.user.main_header = {"background-color": "#427fed", "color": "white", "text-shadow": "none"};
+        	$rootScope.user.main_header = {"color": "white", "text-shadow": "none"};
+        	$rootScope.user.main_header_background = {"background-color": "#427fed"};
         	$scope.$routeParams.type = 'books';
         	$rootScope.filters["reset"] = true;
         	$rootScope.filters["reset_count"] = 0;
@@ -404,7 +410,8 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         }
 
         var _handle_specific_title_page = function(){
-        	$rootScope.user.main_header = {"background-color": "#427fed", "color": "white", "text-shadow": "none"};
+        	$rootScope.user.main_header = {"color": "white", "text-shadow": "none"};
+        	$rootScope.user.main_header_background = {"background-color": "#427fed"};
 			$scope.$routeParams.type = 'books';
         	$rootScope.filters["reset"] = true;
         	$rootScope.filters["filter_type"] = RecommendationUIConstants.BookTab;
