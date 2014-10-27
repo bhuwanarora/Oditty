@@ -340,7 +340,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     		$rootScope.filters["filter_id"] = $routeParams.grid_id;
     		$rootScope.main_header = $routeParams.name;
     		_collapse_every_left_panel();
-    		$rootScope.user.main_header = {"background-color": "#E2B503", "color": "white", "text-shadow": "none"};
+    		$rootScope.user.main_header = {"background-color": "#918fb5", "color": "white", "text-shadow": "none"};
     		// $rootScope.user.collapsed_lists = false;
 		}
 
@@ -385,6 +385,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		}
 		
         var _handle_recommendations_page = function(){
+        	delete $rootScope.user.main_header;
     		delete $rootScope.main_header;
     		delete $rootScope.main_topic;
     		delete $rootScope.filters.filter_id;
@@ -393,6 +394,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         }
 
         var _handle_specific_book_page = function(){
+        	$rootScope.user.main_header = {"background-color": "#427fed", "color": "white", "text-shadow": "none"};
         	$scope.$routeParams.type = 'books';
         	$rootScope.filters["reset"] = true;
         	$rootScope.filters["reset_count"] = 0;
@@ -402,6 +404,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
         }
 
         var _handle_specific_title_page = function(){
+        	$rootScope.user.main_header = {"background-color": "#427fed", "color": "white", "text-shadow": "none"};
 			$scope.$routeParams.type = 'books';
         	$rootScope.filters["reset"] = true;
         	$rootScope.filters["filter_type"] = RecommendationUIConstants.BookTab;

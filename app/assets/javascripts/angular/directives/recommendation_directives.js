@@ -196,6 +196,7 @@ websiteApp.directive('navbar', ['scroller', '$rootScope', 'websiteService', '$ti
 				_close_all_popups();
 				if(!$scope.bookmark_selected){
 					// _load_icon();
+					$rootScope.user.main_header = {"background-color": "#427fed", "color": "white", "text-shadow": "none"};
 					$scope.panel_selected = 'BOOKMARK';
 					$cookieStore.put("tab", $scope.panel_selected);
 					$scope.bookmark_selected = true;
@@ -250,35 +251,35 @@ websiteApp.directive('navbar', ['scroller', '$rootScope', 'websiteService', '$ti
 				}
 			}
 
-			$scope.toggle_read = function(){
-				_close_all_popups = function(){
-					$rootScope.user.show_profile = false;
-					delete $rootScope.focused_book;
-					delete $rootScope.ticker_popup;
-				}
+			// $scope.toggle_read = function(){
+			// 	_close_all_popups = function(){
+			// 		$rootScope.user.show_profile = false;
+			// 		delete $rootScope.focused_book;
+			// 		delete $rootScope.ticker_popup;
+			// 	}
 				
-				_close_all_popups();
-				if(!$scope.read_selected){
-					// _load_icon();
+			// 	_close_all_popups();
+			// 	if(!$scope.read_selected){
+			// 		// _load_icon();
 
-					$scope.glowShelf = false;
-					$scope.bookmark_selected = false;
-					$scope.read_selected = true;		
-					$scope.panel_selected = 'READ';
-					$cookieStore.put("tab", $scope.panel_selected);
-					var skip_count = 0;
-					websiteService.get_books_read(skip_count).then(function(data){
-						$rootScope.user.books = {};
+			// 		$scope.glowShelf = false;
+			// 		$scope.bookmark_selected = false;
+			// 		$scope.read_selected = true;		
+			// 		$scope.panel_selected = 'READ';
+			// 		$cookieStore.put("tab", $scope.panel_selected);
+			// 		var skip_count = 0;
+			// 		websiteService.get_books_read(skip_count).then(function(data){
+			// 			$rootScope.user.books = {};
 						
-						$rootScope.user.books['read'] = [];
-						angular.forEach(data, function(value){
-							var json = {"isbn": value[0], "id": value[1], "status": true};
-							this.push(json);
-						},  $rootScope.user.books['read']);
-					});
-					// $('body').css('background-image', 'url("assets/wood_shelf.jpg")');
-				}
-			}
+			// 			$rootScope.user.books['read'] = [];
+			// 			angular.forEach(data, function(value){
+			// 				var json = {"isbn": value[0], "id": value[1], "status": true};
+			// 				this.push(json);
+			// 			},  $rootScope.user.books['read']);
+			// 		});
+			// 		// $('body').css('background-image', 'url("assets/wood_shelf.jpg")');
+			// 	}
+			// }
 
 			$scope.reset_filter =  function(event, selectedFilter, type, main_filter){
 				var is_dropdown_filter = type == "timeGroup" || type == "readingTime" || type == "country";
