@@ -489,7 +489,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 		console.timeEnd("websiteAppController");
 		var timeout_event = $timeout(function(){
 			$scope.show_header = true;
-		}, 2000);
+		}, 3000);
 
 		$scope.$on('destroy', function(){
 			$timeout.cancel(timeout_event);

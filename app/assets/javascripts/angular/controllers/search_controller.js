@@ -1562,7 +1562,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope.shift_search_to_top();
 		var timeout_event = $timeout(function(){
 			$scope.increase_height();
-		}, 2300);
+		}, 3300);
 		$scope.$on('destroy', function(){
 			$timeout.cancel(timeout_event);
 		});

@@ -564,6 +564,9 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 
 		var _recommended_books = function(){
 			var group_of_three = [];
+			var book_array = [];
+			var timer = 0;
+
 			angular.forEach(data, function(value){
 				var json = {"isbn": value[0], "id": value[1], "external_thumb": value[2]};
 				var data_missing = _is_undefined(value[0]);
@@ -571,15 +574,22 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				if(data_missing){
 					json = angular.extend(json, {"no_thumb": true});
 					if(group_of_three.length == 3){
-						this.push({"book_array": group_of_three, "is_book_array": true});
+						// this.push({"book_array": group_of_three, "is_book_array": true});
+						timer = timer + 500;
+						$timeout(function(){
+							$scope.recommendations.books.push({"book_array": group_of_three, "is_book_array": true});
+						}, timer);
 						group_of_three = [];
 					}
 					group_of_three.push(json);
 				}
 				else{
-  					this.push(json);
+					timer = timer + 500;
+					$timeout(function(){
+						$scope.recommendations.books.push(json);
+					}, timer);
 				}
-			},  $scope.recommendations.books);
+			});
 			if(group_of_three.length != 0){
 				$scope.recommendations.books.push({"book_array": group_of_three, "is_book_array": true});
 			}

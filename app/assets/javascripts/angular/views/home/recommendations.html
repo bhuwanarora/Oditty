@@ -3,7 +3,7 @@
 	<!-- <div class="recommendation_block"></div> -->
 	<div ng-if="!grid_view">
 		<div ng-if="!user.show_covered_books || (user.show_covered_books && recommendation.summary && recommendation.isbn)"
-			 class="fx-zoom-up"
+			 class="fx-zoom-up fx-speed-1000"
 			 ng-repeat="recommendation in recommendations.books"
 			 ng-class="{'recommendation_block': !recommendation.is_grid, 'grid': recommendation.is_grid}">
 				<book track
