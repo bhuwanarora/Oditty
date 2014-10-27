@@ -400,7 +400,7 @@
 	text-transform: capitalize;
 	cursor: default !important;
 	margin-top: 2px;
-	padding: 20px 15px;
+	padding: 10px 15px;
 }
 
 .main_topic:hover .custom_hidden{

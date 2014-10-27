@@ -327,7 +327,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		}
 
 		var _handle_specific_shelf_page = function(){
-    		$scope.expand_left_panel();
+    		// $scope.expand_left_panel();
 			$rootScope.filters["label_id"] = $routeParams.label_id;
 			$rootScope.main_header = $routeParams.name;
 			_collapse_every_left_panel();
@@ -336,7 +336,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		}
 
 		var _handle_grids_page = function(){
-    		$scope.expand_left_panel();
+    		// $scope.expand_left_panel();
     		$rootScope.filters["filter_id"] = $routeParams.grid_id;
     		$rootScope.main_header = $routeParams.name;
     		_collapse_every_left_panel();
@@ -364,7 +364,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				}
 			}
 
-    		$scope.expand_left_panel();
+    		// $scope.expand_left_panel();
     		$rootScope.filters["reset"] = true;
     		$rootScope.filters["reset_count"] = 0;
     		$rootScope.filters["trend_id"] = $routeParams.trend_id;

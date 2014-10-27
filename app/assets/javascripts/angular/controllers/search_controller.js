@@ -1559,7 +1559,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				}, $rootScope.book_lists);
 			});
 		}
-		delete $rootScope.user.main_header;
+		else{
+			delete $rootScope.user.main_header;
+		}
 		$scope.shift_search_to_top();
 		var timeout_event = $timeout(function(){
 			$scope.increase_height();
