@@ -611,6 +611,7 @@
 	margin: 5px;
 	color: #717070;
 	white-space: initial;
+	box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
 }
 
 .interaction_group{
@@ -996,12 +997,13 @@
 }
 
 .notifications .selected_notification{
-	background-color: rgba(66, 127, 237, 0.18);
+	background-color: transparent;
 	cursor: default;
+	box-shadow: none !important;
 }
 
 .notifications .selected_notification:hover{
-	background-color: rgba(66, 127, 237, 0.18);
+	box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
 }
 
 .notifications .block{
@@ -1253,11 +1255,11 @@
 	top: 61px;
 	width: 16%;
 	height: 100vh;
-	background-color: white;
+	background-color: #ECECEC;
 	left: 0px;
 	position: fixed;
 	z-index: 2;
-	box-shadow: -5px 50px 43px 0px rgba(66,66,66,.24);
+	box-shadow: 0 0 6px rgba(0,0,0,.16),0 6px 12px rgba(0,0,0,.32);
 }
 
 .lock{
@@ -1275,7 +1277,7 @@
 	width: 28%;
 	/*min-width: 280px;*/
 	left: 15px;
-	background-color: white;
+	background-color: #ECECEC;
 	border-radius: 2px;
 }
 
@@ -1326,16 +1328,16 @@
 .left_column .friends_grid .friend_block{
 	width: auto;
 	overflow-y: auto;
-	padding: 15px 5px;
-	border-bottom: 1px solid #E9E9E9;
+	padding: 15px;
 	cursor: default;
+	box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
 }
 
 .user_profile .friends_grid .friend_block .friend_details,
 .left_column .friends_grid .friend_block .friend_details{
 	float: left;
 	margin: 0px 10px 10px 10px;
-	width: 180px;
+	width: 160px;
 }
 
 .ticker_popup{
@@ -1576,6 +1578,7 @@
 	left: 0px;
 	background-color: white;
 	width: 16%;
+	box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
 }
 
 .left_column_tab_compressed{
@@ -1701,7 +1704,7 @@
 
 .settings_popup{
 	position: fixed;
-	background-color: white;
+	background-color: #ECECEC;
 	list-style: none;
 	right: 15px;
 	top: 60px;
@@ -1717,6 +1720,8 @@
 	padding: 5px 15px;
 	width: 150px;
 	cursor: pointer;
+	background-color: white;
+	box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
 }
 
 .settings_popup li:hover{
@@ -1725,7 +1730,7 @@
 
 .notifications_popup{
 	position: fixed;
-	background-color: white;
+	background-color: #ECECEC;
 	/*width: 35%;*/
 	max-height: 30vh;
 	right: 20px;
@@ -2117,6 +2122,8 @@
 .notifications_popup .notification{
 	overflow: auto;
 	padding: 12px 20px;
+	background-color: white;
+	box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
 }
 
 .notifications_popup .notification .content{

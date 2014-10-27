@@ -40,6 +40,7 @@
 
 	<div ng-if="grid_view">
 		<div ng-repeat="recommendation in recommendations.books"
+			 class="fx-zoom-up fx-speed-700"
 			 ng-class="{'small_block': !recommendation.is_grid}">
 				<img ng-src="{{recommendation.isbn | medium_thumb}}" class="" />
 		</div>
@@ -47,12 +48,14 @@
 
 </div>
 <div ng-if="$routeParams.type == 'readers'" 
+	class="fx-zoom-up fx-speed-700"
 	class="full_height">
 	<div ng-repeat="recommendation in recommendations.readers" class="recommendation_block" >
 		<reader track id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></reader>
 	</div>
 </div>
 <div ng-if="$routeParams.type == 'authors'" 
+	class="fx-zoom-up fx-speed-700"
 	class="full_height">
 	<div ng-repeat="recommendation in recommendations.authors" class="recommendation_block">
 		<author track id="{{recommendation.category.name | lowercase}}-{{recommendation.id}}" data="recommendation"></author>
