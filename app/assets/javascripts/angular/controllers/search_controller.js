@@ -1561,6 +1561,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		}
 		else{
 			delete $rootScope.user.main_header;
+			delete $rootScope.user.main_header_background;
 		}
 		$scope.shift_search_to_top();
 		var timeout_event = $timeout(function(){
