@@ -7,6 +7,7 @@
 		<span ng-show="user.show_covered_books">Show all books</span>
 		<span ng-show="!user.show_covered_books">Hide books which don't have covers</span>
 	</li>
+	<li ng-click="popups.get_feedback = !popups.get_feedback">Feedback</li>
 </ul>
 <div class="user_add floating_icon">
 	<div ng-click="popups.add_popup = !popups.add_popup" class="table_cell">

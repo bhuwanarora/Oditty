@@ -70,6 +70,7 @@
 		     ng-style="focused_book.reposition_tooltip"
 		     ng-mouseleave="focused_book.collapse=true;"
 		     ng-mouseenter="focused_book.collapse=false;"
+		     ng-hide="user.interact"
 		     ng-click="stop_propagation($event)"
 		     ng-if="focused_book">
 		    <book-info></book-info>

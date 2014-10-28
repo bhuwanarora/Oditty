@@ -1015,7 +1015,7 @@
 }
 
 .notifications .compressed_block{
-	width: 65% !important;
+	width: 64% !important;
 }
 
 .tweets .tweet .compressed_tweet_text{
@@ -1485,7 +1485,7 @@
 }
 
 .user_add{
-	right: 75px;
+	right: 10px;
 }
 
 .feedback_popup{
@@ -1614,7 +1614,7 @@
 }
 
 .left_column_shifted{
-	left: 29.5% !important;
+	left: 30% !important;
 	width: inherit !important;
 }
 
