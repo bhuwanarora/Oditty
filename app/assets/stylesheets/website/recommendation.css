@@ -140,16 +140,32 @@
 }
 
 .comment_box{
-	border: 1px solid #D6D5D5;
 	font-size: 1em;
-	margin: 0px 0px 5px 0px;
-	width: 97%;
+	margin: 0 0 5px;
+	width: 92%;
 	height: 60px;
-	outline: none;
+	outline: 0;
 	border: 1px solid #F1F1F1;
 	border-radius: 1px;
 	resize: none;
 	-ms-overflow-style: none;
+	padding: 3%;
+}
+
+.comment_box ::-webkit-input-placeholder {
+   font-weight: bold;
+}
+
+.comment_box :-moz-placeholder { /* Firefox 18- */
+   font-weight: bold;
+}
+
+.comment_box ::-moz-placeholder {  /* Firefox 19+ */
+   font-weight: bold;
+}
+
+.comment_box :-ms-input-placeholder {  
+   font-weight: bold;
 }
 
 .interaction_box_options [class^="icon-"],
