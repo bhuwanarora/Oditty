@@ -399,7 +399,7 @@ module UsersGraphHelper
 		clause
 	end
 
-	def _ego_clause(without_book=true)
+	def _ego_clause(without_book=false)
 		friends_old_ego_clause = "OPTIONAL MATCH (f)-[old:Ego{user_id:ID(f)}]->(old_ego) "
 		create_new_and_delete_old_ego_clause = "FOREACH(p IN CASE WHEN old_ego IS NULL THEN [] ELSE [old_ego] END | FOREACH (q IN CASE WHEN f IS NULL THEN [] ELSE [f] END | CREATE (q)-[:Ego{user_id:ID(q)}]->(u)-[:Ego{user_id:ID(q)}]->(p) DELETE old)) "
 		if without_book

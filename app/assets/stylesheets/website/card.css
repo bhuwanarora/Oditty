@@ -3,7 +3,8 @@
 	height: 55vh;
 	position: relative;
 	width: 39vh;
-	margin-right: 20px;
+	margin-right: 15px;
+	margin-left: 15px;
 }
 
 .active_recommendation_block{

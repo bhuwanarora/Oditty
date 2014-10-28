@@ -20,7 +20,10 @@
 		<!-- <div class="status animate-fast" ng-click="show_interaction_box()">
 			<span><input disabled placeholder="Share something..." /></span>
 		</div> -->
-		<div class="grey_wrapper click" ng-show="user.show_profile" ng-click="toggle_profile(user.id, $event)"></div>
+		<div class="dark_wrapper"></div>
+		<div class="grey_wrapper click" 	
+			 ng-show="user.show_profile" 
+			 ng-click="toggle_profile(user.id, $event)"></div>
 		<div class="vertical_padder_active animate-faster" 
 			 ng-class="{'vertical_padder_shifted': user.show_profile}"></div>
 		

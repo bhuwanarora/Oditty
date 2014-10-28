@@ -8,7 +8,9 @@
 			</div>
 		</div>
 		<div ng-switch-default>
-			<div ng-repeat="user_book in user.books.read" class="recommendation_block">
+			<div ng-repeat="user_book in user.books.read" 
+				 ng-class="{'active_recommendation_block': recommendation == focused_book}"
+				 class="recommendation_block">
 				<book track id="{{user_book.category.name | lowercase}}-{{user_book.id}}" data="user_book"></book>
 			</div>
 		</div>
