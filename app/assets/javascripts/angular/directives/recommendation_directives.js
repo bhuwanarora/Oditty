@@ -209,6 +209,7 @@ websiteApp.directive('navbar', ['scroller', '$rootScope', 'websiteService', '$ti
 						if(angular.isArray(data)){
 							$rootScope.user.books = {};
 							$rootScope.user.books['bookmarked'] = [];
+							var timer = 500;
 							angular.forEach(data, function(data){
 								var labels = [];
 								angular.forEach($rootScope.labels, function(value){
@@ -224,8 +225,15 @@ websiteApp.directive('navbar', ['scroller', '$rootScope', 'websiteService', '$ti
 											"id": data[1], 
 											"bookmark_status": true, 
 											"labels": labels};
-								this.push(json);
-							},  $rootScope.user.books['bookmarked']);
+								// this.push(json);
+								timer = timer + 500;
+								var timeout_event = $timeout(function(){
+									$rootScope.user.books['bookmarked'].push(json);
+								}, timer);
+								$scope.$on('destroy', function(){
+									$timeout.cancel(timeout_event);
+								});
+							});
 						}
 					});
 					// $('body').css('background-image', $scope.search_style['background-image']);

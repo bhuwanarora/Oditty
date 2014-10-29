@@ -208,7 +208,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/home/library.html',
-    "<div ng-model=\"user.books.bookmarked\"><div ng-switch=\"\" on=\"user.books.bookmarked.length\"><div ng-switch-when=\"0\"><div class=\"recommendation_block\"><div class=\"widget bookmark_instruct\"></div></div></div><div ng-switch-default=\"\"><div ng-repeat=\"user_book in user.books.bookmarked\" ng-class=\"{'active_recommendation_block': user_book == focused_book}\" class=\"recommendation_block\"><book track=\"\" id=\"{{user_book.category.name | lowercase}}-{{user_book.id}}\" data=\"user_book\"></book></div></div></div></div>"
+    "<div ng-model=\"user.books.bookmarked\"><div ng-switch=\"\" on=\"user.books.bookmarked.length\"><div ng-switch-when=\"0\"><div class=\"recommendation_block\"><div class=\"widget bookmark_instruct\"></div></div></div><div ng-switch-default=\"\"><div ng-repeat=\"user_book in user.books.bookmarked\" ng-class=\"{'active_recommendation_block': user_book == focused_book}\" class=\"recommendation_block fx-zoom-up fx-speed-700\"><book track=\"\" id=\"{{user_book.category.name | lowercase}}-{{user_book.id}}\" data=\"user_book\"></book></div></div></div></div>"
   );
 
 
@@ -341,7 +341,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/search/show.html',
-    "<div class=\"home_page_base\"><div class=\"search_animate animate-very-slow\" ng-click=\"stopSearching($event)\" ng-controller=\"searchController\"><div class=\"desaturate\" ng-class=\"{'search_page_wrapper': !user.logged}\" ng-style=\"search_style\"></div><div class=\"search_page\" ng-if=\"user.logged\" ng-click=\"hide_popups($event)\"><header></header><search-bar></search-bar><div ng-include=\"'/assets/angular/views/search/trending.html'\"></div></div><div ng-include=\"'/assets/angular/views/search/login_form.html'\"></div><div ng-include=\"'/assets/angular/views/search/footer.html'\"></div></div></div>"
+    "<div class=\"home_page_base\"><div class=\"search_animate animate-very-slow\" ng-click=\"stopSearching($event)\" ng-controller=\"searchController\"><div ng-class=\"{'search_page_wrapper': !user.logged}\" ng-style=\"search_style\"></div><div class=\"search_page\" ng-if=\"user.logged\" ng-click=\"hide_popups($event)\"><header></header><search-bar></search-bar><div ng-include=\"'/assets/angular/views/search/trending.html'\"></div></div><div ng-include=\"'/assets/angular/views/search/login_form.html'\"></div><div ng-include=\"'/assets/angular/views/search/footer.html'\"></div></div></div>"
   );
 
 

@@ -10,7 +10,7 @@
 		<div ng-switch-default>
 			<div ng-repeat="user_book in user.books.bookmarked" 
 				 ng-class="{'active_recommendation_block': user_book == focused_book}"
-				 class="recommendation_block">
+				 class="recommendation_block fx-zoom-up fx-speed-700">
 				<book track id="{{user_book.category.name | lowercase}}-{{user_book.id}}" data="user_book"></book>
 			</div>
 		</div>

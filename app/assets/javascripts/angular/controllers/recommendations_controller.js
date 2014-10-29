@@ -239,6 +239,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 	    	var _set_books_bookmarked = function(){
 	    		websiteService.get_books_bookmarked($rootScope.user.books.bookmarked.length)
 	    			.then(function(data){
+	    			var timer = 500;
 					angular.forEach(data, function(data){
 						var labels = [];
 						angular.forEach($rootScope.labels, function(value){
@@ -254,8 +255,13 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 									"id": data[1], 
 									"bookmark_status": true, 
 									"labels": labels};
-						this.push(json);
-					},  $rootScope.user.books['bookmarked']);
+						timer = timer + 500;
+						var timeout_event = $timeout(function(){
+							$rootScope.user.books['bookmarked'].push(json);
+						}, timer);
+						$scope._destroy_event(timeout_event);
+						// this.push(json);
+					});
 				});
 	    	}
 
@@ -556,6 +562,12 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     		$rootScope.user = {"faded_wrapper": {"opacity": "0.5"}};
     	}
 	}
+
+	$scope._destroy_event = function(timeout_event){
+		$scope.$on('destroy', function(){
+			$timeout.cancel(timeout_event);
+		});
+	}
 	
 	$scope._set_books = function(data){
 		var _get_json = function(value){
@@ -564,9 +576,14 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		
 		var _bookmarked_books = function(){
 			$rootScope.user.books['bookmarked'] = [];
+			var timer = 500;
 			angular.forEach(data, function(value){
-				this.push(_get_json(value));
-			},  $rootScope.user.books['bookmarked']);
+				timer = timer + 500;
+				var timeout_event = $timeout(function(){
+					$rootScope.user.books['bookmarked'].push(_get_json(value));
+				}, timer);
+				$scope._destroy_event(timeout_event);
+			});
 			var width = window_width/$rootScope.user.books['bookmarked'].length;
 			$scope.block_style = {"width": width+"px"};
 		};
@@ -574,12 +591,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		var _is_undefined = function(value){
 			return angular.isUndefined(value) || (value == null) || value
   == "";
-		}
-
-		var _destroy_event = function(timeout_event){
-			$scope.$on('destroy', function(){
-				$timeout.cancel(timeout_event);
-			});
 		}
 
 		var _recommended_books = function(){
@@ -599,7 +610,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 						var timeout_event = $timeout(function(){
 							$scope.recommendations.books.push({"book_array": group_of_three, "is_book_array": true});
 						}, timer);
-						_destroy_event(timeout_event);
+						$scope._destroy_event(timeout_event);
 						group_of_three = [];
 					}
 					group_of_three.push(json);
@@ -609,7 +620,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 					$timeout(function(){
 						$scope.recommendations.books.push(json);
 					}, timer);
-					_destroy_event(timeout_event);
+					$scope._destroy_event(timeout_event);
 				}
 			});
 			if(group_of_three.length != 0){

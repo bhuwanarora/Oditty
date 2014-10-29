@@ -2,8 +2,7 @@
 	<div class="search_animate animate-very-slow" 
 	    ng-click="stopSearching($event)"
 	    ng-controller="searchController">
-	    <div class="desaturate" 
-	    	 ng-class="{'search_page_wrapper': !user.logged}"
+	    <div ng-class="{'search_page_wrapper': !user.logged}"
 		     ng-style="search_style">
 	    </div>
 		<div class="search_page"

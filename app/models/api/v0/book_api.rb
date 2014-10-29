@@ -408,7 +408,7 @@ module Api
 					with_clause = "WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight "
 					init_order_clause = " ORDER BY "
 					base_order_clause = " rating_weight DESC, book.total_weight DESC, book.gr_rating DESC "
-					limit_clause = " LIMIT 4 "
+					limit_clause = " LIMIT 10 "
 
 					unless filters["reset"]
 						if filters["reset_count"]

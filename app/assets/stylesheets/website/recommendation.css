@@ -1821,7 +1821,7 @@
 
 .share_wrapper .thumb_wrapper{
 	position: fixed;
-	left: 170px;
+	left: 17%;
 	top: 60px;
 	border-radius: 3px;
 }
@@ -1851,7 +1851,7 @@
 .user_name{
 	position: fixed;
 	top: 75px;
-	left: 290px;
+	left: 30%;
 	z-index: 2;
 	cursor: pointer;
 	color: #fff;
