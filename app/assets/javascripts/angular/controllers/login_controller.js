@@ -215,6 +215,27 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		       $rootScope.user.fb_connect = true;
 		    }
 		});
+
+		var index = 0;
+		var timer = 500;
+		var _update_description = function(index){
+	  		$scope.description = [];	
+	  		$scope.description.splice(0, 0, LoginConstants.Description[index]);
+	  	}
+
+		angular.forEach(LoginConstants.Description, function(){
+			if(index == 0){
+				_update_description(index);
+				index = index + 1;
+			}
+			else{
+				$timeout(function(){
+					_update_description(index);
+					index = index + 1;
+				}, timer);
+			}
+			timer = timer + 1500;
+		});
 	}
 
 

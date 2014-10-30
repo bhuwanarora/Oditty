@@ -18,14 +18,18 @@
 .tooltip.ng-enter,
 .tooltip.ng-leave.ng-leave-active,
 .ticker_popup.ng-enter,
-.ticker_popup.ng-leave.ng-leave-active{
+.ticker_popup.ng-leave.ng-leave-active,
+.content_box li.ng-enter,
+.content_box li.ng-leave.ng-leave-active{
 	opacity: 0;
 }
 
 .tooltip.ng-leave,
 .tooltip.ng-enter-active,
 .ticker_popup.ng-leave,
-.ticker_popup.ng-enter-active{
+.ticker_popup.ng-enter-active,
+.content_box li.ng-leave,
+.content_box li.ng-enter-active{
 	opacity: 1;
 }
 

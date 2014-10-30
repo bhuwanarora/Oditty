@@ -1749,7 +1749,7 @@
 	position: fixed;
 	background-color: #ECECEC;
 	/*width: 35%;*/
-	max-height: 30vh;
+	max-height: 45vh;
 	right: 20px;
 	/*overflow-y: scroll;*/
 	top: 60px;
@@ -1859,9 +1859,6 @@
 	font-size: 20px;
 }
 
-.user_name:hover .capitalise{
-	text-decoration: underline;
-}
 /*
 .share_positioner .bubble_pointer{
 	position: absolute;
@@ -1896,7 +1893,7 @@
 
 .user_name_shifted{
 	top: inherit;
-	bottom: 40px;
+	bottom: 10px;
 	text-shadow: none;
 	color: #427fed;
 }
@@ -2099,6 +2096,13 @@
 
 .color_bar div{
 	height: 5px;
+}
+
+.edit_profile{
+	font-size: 13px;
+	padding: 5px;
+	width: 100px;
+	margin: 5px;
 }
 
 

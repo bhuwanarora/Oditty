@@ -68,4 +68,7 @@
       		<img src="assets/loader2.gif" width="20px" ng-show="loading_icon"/>
       	</div>
 	</div>
+	<ul class="content_box">
+		<li ng-repeat="content in description" ng-bind-html="content" class="animate-super-slow"></li>
+	</ul>
 </div>
