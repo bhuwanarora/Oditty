@@ -1609,24 +1609,24 @@
 }
 
 .left_column_collapsed1{
-	top: 242px;
+	top: 61px;
 }
 
 .left_column_collapsed2{
-	top: 282px;
+	top: 101px;
 	border-bottom: 1px solid #E6E6E6;
 }
 
 .left_column_collapsed3{
-	top: 323px;
+	top: 142px;
 }
 
 .left_column_collapsed4{
-	top: 363px;
+	top: 182px;
 }
 
 .left_column_collapsed5{
-	top: 403px;
+	top: 222px;
 }
 
 .left_column_shifted{
@@ -1637,11 +1637,11 @@
 
 
 .left_column_shifted1{
-	top: 299px;
+	top: 61px;
 }
 
 .left_column_shifted2{
-	top: 339px;
+	top: 101;
 }
 
 .left_column_shifted3{
@@ -1703,7 +1703,6 @@
 	box-shadow: 0 3px 8px rgba(0,0,0,0.5);
 	height: auto;
 	width: 100%;
-	min-height: 50px;
 }
 
 .main_header .compressed_filters .compressed_filter_icon{
