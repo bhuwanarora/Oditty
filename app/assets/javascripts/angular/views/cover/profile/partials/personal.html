@@ -4,22 +4,22 @@
 	</div>
 	<div class="content">
 		<div class="init_block">
-			<div><b>+{{user.total_count | integer}}</b></div>
-			<div>Cookies</div>
+			<span><b>+{{user.total_count | integer}}</b></span>
+			<span>&nbsp;Cookies</span>
 		</div>
 		<div class="init_block">
-			<div>
+			<span>
 				<span><b>{{user.book_read_count | integer}}</b></span>
 				<span class="icon-books"></span>
-			</div>
-			<div>Books Read</div>
+			</span>
+			<span>&nbsp;Books Read</span>
 		</div>
 		<div class="init_block">
-			<div>
+			<span>
 				<span><b>{{user.bookmark_count | integer}}</b></span>
 				<span class="icon-bookmarks"></span>
-			</div>
-			<div>Books in Shelves</div>
+			</span>
+			<span>&nbsp;Books in Shelves</span>
 		</div>
 	</div>
 	<div class="content">
@@ -33,8 +33,8 @@
 	</div>
 	<div class="content">
 		<div ng-repeat="like in user.likes" class="category_block table">
-			<div class="{{like.icon}} table_cell category_icon"></div><br/>
-			<div class="table_cell">{{like.name}}</div>
+			<span class="{{like.icon}} table_cell category_icon"></span>
+			<span class="table_cell">&nbsp;&nbsp;{{like.name}}</span>
 		</div>
 		<div ng-show="user.likes.length == 0">
 			This will help us to recommend you better books...
