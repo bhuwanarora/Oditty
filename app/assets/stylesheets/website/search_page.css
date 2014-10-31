@@ -7,6 +7,15 @@
 	background-color: #ECECEC;
 }
 
+.search_page .search_description{
+	position: fixed;
+	left: 2%;
+	top: 30%;
+	width: 16%;
+	color: #717070;
+	font-size: 13px;
+}
+
 .search_page_wrapper{
 	position: fixed;
 	left: 50px;
@@ -768,7 +777,7 @@
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen
 and (min-width : 320px)
-and (max-width : 500px) {
+and (max-width : 800px) {
 /* Styles */
 	.login_box{
 		left: 1vh;

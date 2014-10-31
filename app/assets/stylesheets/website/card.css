@@ -263,7 +263,12 @@
 
 @media only screen
 and (min-width : 320px)
-and (max-width : 900px) {
+and (max-width : 800px) {
+	.card .description,
+	.card .widget_thumb{
+		box-shadow: 0 0 22px 2px rgba(0, 0, 0, 0.99) inset;
+	}
+
 	/*.recommendation_block{
 		left: 60px;
 		position: absolute;

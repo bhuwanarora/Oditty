@@ -650,7 +650,7 @@ input:focus{
     position: absolute;
     right: 10px;
     top: 10px;
-    color: white;
+    color: #f5f5f5;
     font-size: 0.7em;
     z-index: 1;
 }
