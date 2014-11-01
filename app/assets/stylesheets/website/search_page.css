@@ -182,6 +182,23 @@
 	box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
 }
 
+.search_page .search_input::-webkit-input-placeholder {
+   font-weight: bold;
+}
+
+.search_page .search_input:-moz-placeholder { /* Firefox 18- */
+   font-weight: bold;
+}
+
+.search_page .search_input::-moz-placeholder {  /* Firefox 19+ */
+   font-weight: bold;
+}
+
+.search_page .search_input:-ms-input-placeholder {  
+   font-weight: bold;
+}
+
+
 .search_input{
     font-size: 1em;
     color: #717070;
