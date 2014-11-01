@@ -10,11 +10,11 @@
 		<div ng-bind-html="notification.title"></div></a>
 	</b>
 	<timestamp data="notification.timestamp"></timestamp>
+	<div ng-bind-html="notification.tag"></div>
+	<div ng-bind-html="notification.message"></div>
 	<div class="trending_background site_color" ng-show="notification.title">
 		<a ng-href="#user/{{user.id}}/trending/books/id/{{notification.id}}/name/{{notification.name}}">Check out books related to  <b class="larger_font">{{notification.keywords}}</b></a>
 	</div>
-	<div ng-bind-html="notification.tag"></div>
-	<div ng-bind-html="notification.message"></div>
 	<div class="relative_position" ng-show="notification.large_image">
 		<div class="large_thumb_color_wrapper"></div>
 		<div class="large_thumb_wrapper">
