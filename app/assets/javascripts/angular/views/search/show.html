@@ -6,6 +6,7 @@
 		     ng-style="search_style">
 	    </div>
 		<div class="search_page scrollbar"
+			 check-scroll-down="increase_height($event)"
 			 check-scroll-bottom="get_notifications(true, $event)"
 			 ng-if="user.logged"
 	    	 ng-click="hide_popups($event)">
