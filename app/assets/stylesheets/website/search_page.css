@@ -29,7 +29,6 @@
 	width: 60%;
 	position: fixed;
 	left: 40%;
-	margin-left: -20%;
 	top: 30%;
 	overflow-y: hidden;
 	border-radius: 0;
@@ -38,7 +37,8 @@
 }
 
 .search_page .listopia,
-.search_page .shelves{
+.search_page .shelves,
+.search_page .friends_list{
 	margin-top: 61px;	
 	width: 20%!important;
 	display: inline-block;
@@ -46,8 +46,23 @@
 	position: inherit;
 }
 
-.search_page .listopia{
-	float: left;
+.search_page .left_column .friends_grid .friend_block, 
+.search_page .user_profile .friends_grid .friend_block{
+	padding: 5px;
+}
+
+.search_page .left_column .friends_grid .friend_block .friend_details, 
+.search_page .user_profile .friends_grid .friend_block .friend_details{
+	width: 70%;
+	font-size: 12px;
+}
+
+.search_page .image_wrapper,
+.search_page .left_column .friends_grid img, 
+.search_page .user_profile .friends_grid img{
+	width: 30px;
+	height: 30px;
+	min-height: 30px;
 }
 
 .search_page .left_column .collapse_icon{
@@ -847,7 +862,8 @@ and (max-width : 800px) {
 	}
 
 	.search_page .listopia,
-	.search_page .shelves{
-		width: 96vw;
+	.search_page .shelves,
+	.search_page .friends_list{
+		width: 96vw !important;
 	}
 }

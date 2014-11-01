@@ -203,7 +203,12 @@ module Api
 			# end
 
 			def get_most_connected_friends
-				info = UserApi.get_most_connected_friends(params[:id], params[:count], params[:skip])
+				if (params[:id] == "undefined") || !params[:id].present?
+					user_id = session[:user_id]
+				else
+					user_id = params[:id]
+				end
+				info = UserApi.get_most_connected_friends(user_id, params[:count], params[:skip])
 				render :json => info, :status => 200
 			end
 

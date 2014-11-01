@@ -1233,6 +1233,9 @@ websiteApp.directive('userAdd', ['$rootScope', 'WebsiteUIConstants', function($r
 				$rootScope.user.collapsed_column = true; 
 				$rootScope.user.collapsed_trends = true; 
 				$rootScope.user.collapsed_left_column = true;
+				if(angular.isUndefined($rootScope.popups)){
+					$rootScope.popups = {};
+				}
 				$rootScope.popups.left_panel_width = {'width': WebsiteUIConstants.LeftPanelMinWidth};
 				var show_trending = false;
 				var init_notification = true;

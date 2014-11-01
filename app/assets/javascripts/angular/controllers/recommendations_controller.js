@@ -154,11 +154,12 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		$scope.$emit('getNotifications', show_trending, user_id, init_notification);
 	}
 
-	$scope.show_trending_options = function(){
+	$scope.show_trending_options = function(event){
 		$scope.hide_popups();
 		$rootScope.user.interact = true;
 		var show_trending = true;
-		$scope.$emit('getNotifications', show_trending, $rootScope.user.id);	
+		$scope.$emit('getNotifications', show_trending, $rootScope.user.id);
+		event.stopPropagation();
 	}
 
 	$scope.handle_friends_grid_size = function(event, scroll_down){

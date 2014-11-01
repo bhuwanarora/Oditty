@@ -245,7 +245,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/left_panel/friends_list.html',
-    "<div class=\"animate-fast\" id=\"friendsList\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed2': user.collapsed_friends, \n" +
+    "<div class=\"animate-fast friends_list\" id=\"friendsList\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed2': user.collapsed_friends, \n" +
     "\t \t\t\t'left_column_shifted left_column_shifted1': !user.collapsed_filters,\n" +
     "\t            'left_column_shifted left_column_shifted2': !user.collapsed_trends,\n" +
     "\t            'left_column_shifted left_column_shifted3': !user.collapsed_lists,\n" +
@@ -309,7 +309,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/left_panel/trending_list.html',
-    "<div class=\"expand_notifications\" ng-class=\"{'expand_notifications_shift': user.collapsed_trends}\" ng-click=\"show_trending_options()\"><span class=\"icon-expand2\"></span></div><div class=\"animate-fast scrollbar\" id=\"trendingList\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed5': user.collapsed_trends, \n" +
+    "<div class=\"expand_notifications\" ng-class=\"{'expand_notifications_shift': user.collapsed_trends}\" ng-click=\"show_trending_options($event)\"><span class=\"icon-expand2\"></span></div><div class=\"animate-fast scrollbar\" id=\"trendingList\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed5': user.collapsed_trends, \n" +
     "\t            'left_column_shifted left_column_shifted1': !user.collapsed_lists,\n" +
     "\t            'left_column_shifted left_column_shifted2': !user.collapsed_column,\n" +
     "\t            'left_column_shifted left_column_shifted3': !user.collapsed_friends,\n" +
@@ -341,7 +341,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/search/show.html',
-    "<div class=\"home_page_base\"><div class=\"search_animate animate-very-slow\" ng-click=\"stopSearching($event)\" ng-controller=\"searchController\"><div ng-class=\"{'search_page_wrapper': !user.logged}\" ng-style=\"search_style\"></div><div class=\"search_page scrollbar\" check-scroll-down=\"increase_height($event)\" check-scroll-bottom=\"get_notifications(true, $event)\" ng-if=\"user.logged\" ng-click=\"hide_popups($event)\"><header></header><search-bar></search-bar><div ng-include=\"\" src=\"'/assets/angular/views/left_panel/shelves.html'\"></div><div ng-include=\"'/assets/angular/views/search/trending.html'\"></div><div ng-include=\"\" src=\"'/assets/angular/views/left_panel/listopia.html'\"></div></div><div ng-include=\"'/assets/angular/views/search/login_form.html'\"></div><div ng-include=\"'/assets/angular/views/search/footer.html'\"></div></div><feed ng-if=\"user.interact\" class=\"interaction_group animate-fast\"></feed><div class=\"wrapper white_wrapper\" ng-if=\"user.interact\"></div><div feedback-popup=\"\"></div><user-add></user-add></div>"
+    "<div class=\"home_page_base\"><div class=\"search_animate animate-very-slow\" ng-click=\"stopSearching($event)\" ng-controller=\"searchController\"><div ng-class=\"{'search_page_wrapper': !user.logged}\" ng-style=\"search_style\"></div><div class=\"search_page scrollbar\" check-scroll-down=\"increase_height($event)\" check-scroll-bottom=\"get_notifications(true, $event)\" ng-if=\"user.logged\" ng-click=\"hide_popups($event)\"><header></header><search-bar></search-bar><div ng-include=\"\" src=\"'/assets/angular/views/left_panel/shelves.html'\"></div><div ng-include=\"'/assets/angular/views/search/trending.html'\"></div><div ng-include=\"\" src=\"'/assets/angular/views/left_panel/listopia.html'\"></div><div ng-include=\"\" src=\"'/assets/angular/views/left_panel/friends_list.html'\"></div></div><div ng-include=\"'/assets/angular/views/search/login_form.html'\"></div><div ng-include=\"'/assets/angular/views/search/footer.html'\"></div></div></div>"
   );
 
 
