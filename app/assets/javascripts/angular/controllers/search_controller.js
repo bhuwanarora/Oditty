@@ -1275,8 +1275,8 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 
 	$scope.shift_search_to_top = function(){
 		if(on_search_page){
-			$scope.trending_panel_style = {"max-height": "26vh"};
-			$scope.search_panel_style = {"bottom": "100px"};
+			// $scope.trending_panel_style = {"max-height": "26vh"};
+			$scope.search_panel_style = {"bottom": "60%"};
 		}
 	}
 
@@ -1504,7 +1504,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
     $scope.increase_height = function(event){
     	if(on_search_page){
     		$scope.trending_panel_style = {"max-height": "60vh"};
-    		$scope.search_panel_style = {"bottom": "60%"};
+    		$scope.search_panel_style = {"bottom": "100px"};
     	}
     }
 
