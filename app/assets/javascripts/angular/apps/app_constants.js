@@ -143,7 +143,7 @@ var constants = {
 			"BookSearchLink": "Book",
 			"AuthorSearchLink": "Author",
 			"ReaderSearchLink": "Reader",
-			"SearchPlaceholder": "",
+			"SearchPlaceholder": "Add filters or start searching books and authors...",
 			"BookByYearLink": "Find books by era",
 			"BookByReadingTimeLink": "Find books by reading time",
 			"BookByRegionLink": "Find books by region",

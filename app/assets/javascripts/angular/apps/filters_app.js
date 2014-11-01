@@ -325,4 +325,27 @@ angular.module('filtersApp', [])
       }
       return output;
     }
+  })
+  .filter('web_header', function(){
+    return function(input){
+      if(angular.isDefined(input.name)){
+        input = input.name.split(" ")[0];
+        if(angular.isDefined(input) || input == ""){
+          var output = "";
+          for(var i=0; i<input.length; i++){
+            var character = input.charAt(i);
+            output = output + "<span>"+character+"</span>";
+          }
+        }
+        else{
+          var output = "<span>r</span><span>e</span><span>a</span><span>d</span><span>e</span><span>r</span><span>'</span><span>s</span>";
+        }
+      }
+      else{
+        var output = "<span>r</span><span>e</span><span>a</span><span>d</span><span>e</span><span>r</span><span>'</span><span>s</span>";
+      }
+      output = output + "<span>&nbsp;</span><span>d</span><span>o</span><span>o</span><span>r</span>";
+      console.error(output);
+      return output;
+    }
   });

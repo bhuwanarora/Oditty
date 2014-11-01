@@ -776,4 +776,6 @@ input:focus{
     padding: 10px;
     text-transform: capitalize;
     background-color: pink;
+    border-radius: 4px;
+    border: 1px solid rgb(229, 170, 180);
 }

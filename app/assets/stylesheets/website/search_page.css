@@ -312,12 +312,11 @@
 }
 
 .search_page .search_typeahead_group{
-    position: fixed;
-	left: 50%;
+   position: fixed;
+	left: 10px;
 	bottom: 100px;
-	width: 60%;
+	width: 45%;
 	height: 37px;
-	margin-left: -30%;
 	z-index: 5;
 	margin-top: 70px;
 }
