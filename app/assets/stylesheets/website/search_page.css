@@ -55,6 +55,10 @@
 	display: none;
 }
 
+.search_page .filters_panel, .filters_panel_large, .filters_panel_right{
+	max-height: inherit;
+}
+
 .search_page .filter{
 	min-width: 100px;
 }
@@ -388,7 +392,7 @@
 }
 
 .search_page .tweets{
-	max-height: 50vh;
+	max-height: inherit;
 }
 
 .search_page .custom_hidden{

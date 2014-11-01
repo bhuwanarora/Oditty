@@ -1503,8 +1503,8 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 
     $scope.increase_height = function(event){
     	if(on_search_page){
-    		$scope.trending_panel_style = {"max-height": "65vh"};
-    		$scope.search_panel_style = {"top": "65%"};
+    		$scope.trending_panel_style = {"max-height": "66vh"};
+    		$scope.search_panel_style = {"top": "66%"};
     	}
     }
 
@@ -1561,11 +1561,14 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			}, $rootScope.book_lists);
 		});
 		if(!on_search_page){
+			$rootScope.user.collapsed_left_column = true;
+			$rootScope.user.collapsed_lists = true;
+			$rootScope.user.collapsed_filters = true;
+		}
+		else{
 			$rootScope.user.collapsed_left_column = false;
 			$rootScope.user.collapsed_lists = false;
 			$rootScope.user.collapsed_filters = false;
-		}
-		else{
 			delete $rootScope.user.main_header;
 			delete $rootScope.user.main_header_background;
 			var user_id = $rootScope.user.id;
