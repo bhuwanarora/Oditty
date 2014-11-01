@@ -38,6 +38,11 @@
 	margin-top: 80px;
 }
 
+.search_page .left_column{
+	left: 0px !important;
+	top: 61px;
+}
+
 .trending_panel_shift{
 	margin-top: 49vh;
 }
