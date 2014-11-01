@@ -1503,8 +1503,8 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 
     $scope.increase_height = function(event){
     	if(on_search_page){
-    		$scope.trending_panel_style = {"max-height": "50vh"};
-    		$scope.search_panel_style = {"top": "50%"};
+    		$scope.trending_panel_style = {"max-height": "65vh"};
+    		$scope.search_panel_style = {"top": "65%"};
     	}
     }
 

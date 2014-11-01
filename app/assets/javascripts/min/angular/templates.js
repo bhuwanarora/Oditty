@@ -341,7 +341,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/search/show.html',
-    "<div class=\"home_page_base\"><div class=\"search_animate animate-very-slow\" ng-click=\"stopSearching($event)\" ng-controller=\"searchController\"><div ng-class=\"{'search_page_wrapper': !user.logged}\" ng-style=\"search_style\"></div><div class=\"search_page\" ng-if=\"user.logged\" ng-click=\"hide_popups($event)\"><header></header><search-bar></search-bar><div class=\"search_description\"><p class=\"large_font\"><span class=\"icon-quote-left\"></span> <span>So many books, so little time.</span> <span class=\"icon-quote-right\"></span><br><b>Frank Zappa</b></p>Check out books related to topics been talked in news and media.</div><div ng-include=\"'/assets/angular/views/search/trending.html'\"></div></div><div ng-include=\"'/assets/angular/views/search/login_form.html'\"></div><div ng-include=\"'/assets/angular/views/search/footer.html'\"></div></div></div>"
+    "<div class=\"home_page_base\"><div class=\"search_animate animate-very-slow\" ng-click=\"stopSearching($event)\" ng-controller=\"searchController\"><div ng-class=\"{'search_page_wrapper': !user.logged}\" ng-style=\"search_style\"></div><div class=\"search_page\" ng-if=\"user.logged\" ng-click=\"hide_popups($event)\"><header></header><search-bar></search-bar><div ng-include=\"'/assets/angular/views/search/trending.html'\"></div><div ng-include=\"\" src=\"'/assets/angular/views/left_panel/listopia.html'\"></div></div><div ng-include=\"'/assets/angular/views/search/login_form.html'\"></div><div ng-include=\"'/assets/angular/views/search/footer.html'\"></div></div></div>"
   );
 
 
