@@ -108,12 +108,14 @@ websiteApp.directive('header', ['$timeout', '$rootScope', function($timeout, $ro
 					delete $rootScope.focused_book;
 					delete $rootScope.ticker_popup;
 		            $rootScope.popups = {};
-		            $rootScope.user.collapsed_friends = true; 
-		            $rootScope.user.collapsed_left_column = true;
-		            $rootScope.user.collapsed_column = true; 
-		            $rootScope.user.collapsed_lists = true;
-		            $rootScope.user.collapsed_filters = true;
-		            $rootScope.user.collapsed_trends = true;
+		            if(!on_search_page){
+			            $rootScope.user.collapsed_friends = true; 
+			            $rootScope.user.collapsed_left_column = true;
+			            $rootScope.user.collapsed_column = true; 
+			            $rootScope.user.collapsed_lists = true;
+			            $rootScope.user.collapsed_filters = true;
+			            $rootScope.user.collapsed_trends = true;
+		            }
 		            $rootScope.user.interact = false;
 				}
 
