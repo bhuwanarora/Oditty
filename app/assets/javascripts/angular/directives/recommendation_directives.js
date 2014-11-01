@@ -87,6 +87,7 @@ websiteApp.directive('filter', ['$rootScope', '$timeout', '$routeParams', functi
 			_init = function(){
 				console.debug("%c filters : "+$scope.filter.name, "color:green");
 				$scope.$routeParams = $routeParams;
+				$scope.user_id = $rootScope.user.id;
 				_initialise_filters("more_filters");
 				_add_listeners();
 			}

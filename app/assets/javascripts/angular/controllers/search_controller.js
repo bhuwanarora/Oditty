@@ -1561,6 +1561,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			}, $rootScope.book_lists);
 		});
 		if(!on_search_page){
+			$rootScope.user.collapsed_left_column = false;
 			$rootScope.user.collapsed_lists = false;
 			$rootScope.user.collapsed_filters = false;
 		}
