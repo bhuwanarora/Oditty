@@ -1564,6 +1564,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$rootScope.user.collapsed_left_column = false;
 			$rootScope.user.collapsed_lists = false;
 			$rootScope.user.collapsed_filters = false;
+			$rootScope.user.collapsed_friends = false;
 			delete $rootScope.user.main_header;
 			delete $rootScope.user.main_header_background;
 			var user_id = $rootScope.user.id;
@@ -1624,6 +1625,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$rootScope.user.collapsed_left_column = true;
 			$rootScope.user.collapsed_lists = true;
 			$rootScope.user.collapsed_filters = true;
+			$rootScope.user.collapsed_friends = true;
 		}
 		$scope.shift_search_to_top();
 		var timeout_event = $timeout(function(){
