@@ -3,7 +3,7 @@
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-color: #ECECEC;
-	overflow-y: auto;
+	height: 100vh;
 }
 
 .search_page .search_description{
@@ -44,6 +44,10 @@
 	display: inline-block;
 	float: right;
 	position: inherit;
+}
+
+.search_page .listopia{
+	float: left;
 }
 
 .search_page .left_column .collapse_icon{
@@ -298,7 +302,7 @@
 .search_page .search_typeahead_group{
     position: fixed;
 	left: 50%;
-	top: 50%;
+	bottom: 100px;
 	width: 60%;
 	height: 37px;
 	margin-left: -30%;
