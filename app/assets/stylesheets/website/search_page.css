@@ -845,4 +845,9 @@ and (max-width : 800px) {
 	.right_tab{
 		padding: 7px 0px 7px 15px;
 	}
+
+	.search_page .listopia,
+	.search_page .shelves{
+		width: 96vw;
+	}
 }

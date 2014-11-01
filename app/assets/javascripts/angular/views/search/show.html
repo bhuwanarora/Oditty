@@ -19,4 +19,11 @@
 		<div ng-include="'/assets/angular/views/search/login_form.html'"></div>
 		<div ng-include="'/assets/angular/views/search/footer.html'"></div>
 	</div>
+	<feed ng-if="user.interact"
+      class="interaction_group animate-fast"></feed>
+	<div class="wrapper white_wrapper"
+	 	 ng-if="user.interact">
+	</div>
+	<div feedback-popup></div>
+	<user-add></user-add>
 </div>
