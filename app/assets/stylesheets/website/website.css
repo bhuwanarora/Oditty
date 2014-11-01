@@ -771,3 +771,9 @@ input:focus{
     display: inline-block;
     float: left;
 }
+
+.alphabet_initial{
+    padding: 10px;
+    text-transform: capitalize;
+    background-color: pink;
+}

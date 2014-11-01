@@ -1584,7 +1584,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 
 			var _set_friends = function(){
 				var length = angular.isDefined($rootScope.user.friends) ? $rootScope.user.friends.length : 0;
-		      	var count = 4;
+		      	var count = 12;
 	    		if(angular.isUndefined($rootScope.user.friends) || !$rootScope.user.all_friends_shown){
 	    			var _set_friends_for = function(user_array, data){
 			    		angular.forEach(data, function(value){

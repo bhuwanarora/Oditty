@@ -314,4 +314,15 @@ angular.module('filtersApp', [])
       var date = new Date(0);
       return date.setUTCSeconds(utcSeconds);
     }
+  })
+  .filter('initial', function(){
+    return function(input){
+      try{
+        var output = input.name.charAt(0);
+      }
+      catch(err){
+        var output = "X";
+      }
+      return output;
+    }
   });
