@@ -5,14 +5,14 @@
 	    <div ng-class="{'search_page_wrapper': !user.logged}"
 		     ng-style="search_style">
 	    </div>
-		<div class="search_page"
+		<div class="search_page scrollbar"
 			 ng-if="user.logged"
 	    	 ng-click="hide_popups($event)">
 			<header></header>
 		  	<search-bar></search-bar>
+		  	<div ng-include src="'/assets/angular/views/left_panel/shelves.html'"></div>
 		  	<div ng-include="'/assets/angular/views/search/trending.html'"></div>
 		  	<div ng-include src="'/assets/angular/views/left_panel/listopia.html'"></div>
-		  	<div ng-include src="'/assets/angular/views/left_panel/shelves.html'"></div>
 		</div>
 		<div ng-include="'/assets/angular/views/search/login_form.html'"></div>
 		<div ng-include="'/assets/angular/views/search/footer.html'"></div>
