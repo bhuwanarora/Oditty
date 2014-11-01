@@ -98,7 +98,7 @@ websiteApp.directive('filter', ['$rootScope', '$timeout', '$routeParams', functi
 	}
 }]);
 
-websiteApp.directive('header', ['$timeout', '$rootScope', function($timeout, $rootScope){
+websiteApp.directive('header', ['$timeout', '$rootScope', '$routeParams', function($timeout, $rootScope, $routeParams){
 	return{
 		restrict: 'E',
 		controller: ['$scope', function($scope){
@@ -108,6 +108,7 @@ websiteApp.directive('header', ['$timeout', '$rootScope', function($timeout, $ro
 					delete $rootScope.focused_book;
 					delete $rootScope.ticker_popup;
 		            $rootScope.popups = {};
+		            var on_search_page = angular.isUndefined($routeParams.type);
 		            if(!on_search_page){
 			            $rootScope.user.collapsed_friends = true; 
 			            $rootScope.user.collapsed_left_column = true;

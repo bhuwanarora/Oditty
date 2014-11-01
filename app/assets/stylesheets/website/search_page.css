@@ -46,14 +46,9 @@
 	position: inherit;
 }
 
-.search_page .left_column .friends_grid .friend_block, 
-.search_page .user_profile .friends_grid .friend_block{
-	padding: 5px;
-}
-
-.search_page .left_column .friends_grid .friend_block .friend_details, 
-.search_page .user_profile .friends_grid .friend_block .friend_details{
-	width: 70%;
+.search_page .left_column .friends_grid .friend_details, 
+.search_page .user_profile .friends_grid .friend_details{
+	width: 67%;
 	font-size: 12px;
 }
 
