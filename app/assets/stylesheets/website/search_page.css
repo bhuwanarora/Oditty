@@ -64,7 +64,10 @@
 	display: none;
 }
 
-.search_page .filters_panel, .filters_panel_large, .filters_panel_right{
+.search_page .filters_panel, 
+.search_page .filters_panel_large, 
+.search_page .filters_panel_right,
+.search_page .left_column .friends_grid, .user_profile .friends_grid{
 	max-height: inherit !important;
 }
 

@@ -73,7 +73,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			$scope.hide_popups();
 			$rootScope.user.show_profile = true;
 			$scope._get_user_profile_info(user_id);
-			$scope._get_friends(2);
+			// $scope._get_friends(2);
 		}
 		
 
