@@ -255,7 +255,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/left_panel/listopia.html',
-    "<div class=\"animate-fast\" id=\"listopia\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed4': user.collapsed_lists, \n" +
+    "<div class=\"animate-fast listopia\" id=\"listopia\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed4': user.collapsed_lists, \n" +
     "\t            'left_column_shifted left_column_shifted1': !user.collapsed_column,\n" +
     "\t            'left_column_shifted left_column_shifted2': !user.collapsed_friends,\n" +
     "\t            'left_column_shifted left_column_shifted3': !user.collapsed_filters,\n" +
@@ -297,7 +297,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/left_panel/shelves.html',
-    "<div class=\"animate-fast\" id=\"shelves\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed1': user.collapsed_filters, \n" +
+    "<div class=\"animate-fast shelves\" id=\"shelves\" msd-wheel=\"stop_propagation($event)\" ng-class=\"{'left_column_collapsed left_column_collapsed1': user.collapsed_filters, \n" +
     "\t            'left_column_shifted left_column_shifted1': !user.collapsed_trends,\n" +
     "\t            'left_column_shifted left_column_shifted2': !user.collapsed_lists,\n" +
     "\t            'left_column_shifted left_column_shifted3': !user.collapsed_column,\n" +
@@ -341,7 +341,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/search/show.html',
-    "<div class=\"home_page_base\"><div class=\"search_animate animate-very-slow\" ng-click=\"stopSearching($event)\" ng-controller=\"searchController\"><div ng-class=\"{'search_page_wrapper': !user.logged}\" ng-style=\"search_style\"></div><div class=\"search_page\" ng-if=\"user.logged\" ng-click=\"hide_popups($event)\"><header></header><search-bar></search-bar><div ng-include=\"'/assets/angular/views/search/trending.html'\"></div><div ng-include=\"\" src=\"'/assets/angular/views/left_panel/listopia.html'\"></div></div><div ng-include=\"'/assets/angular/views/search/login_form.html'\"></div><div ng-include=\"'/assets/angular/views/search/footer.html'\"></div></div></div>"
+    "<div class=\"home_page_base\"><div class=\"search_animate animate-very-slow\" ng-click=\"stopSearching($event)\" ng-controller=\"searchController\"><div ng-class=\"{'search_page_wrapper': !user.logged}\" ng-style=\"search_style\"></div><div class=\"search_page\" ng-if=\"user.logged\" ng-click=\"hide_popups($event)\"><header></header><search-bar></search-bar><div ng-include=\"'/assets/angular/views/search/trending.html'\"></div><div ng-include=\"\" src=\"'/assets/angular/views/left_panel/listopia.html'\"></div><div ng-include=\"\" src=\"'/assets/angular/views/left_panel/shelves.html'\"></div></div><div ng-include=\"'/assets/angular/views/search/login_form.html'\"></div><div ng-include=\"'/assets/angular/views/search/footer.html'\"></div></div></div>"
   );
 
 

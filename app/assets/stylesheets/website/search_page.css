@@ -38,9 +38,25 @@
 	margin-top: 80px;
 }
 
-.search_page .left_column{
+.search_page .listopia{
 	left: 0px !important;
 	top: 61px;
+	width: 20% !important;
+}
+
+.search_page .shelves{
+	right: 0px !important;
+	top: 61px;
+	width: 20% !important;
+	left: initial !important;
+}
+
+.search_page .left_column .collapse_icon{
+	display: none;
+}
+
+.search_page .filter{
+	min-width: 100px;
 }
 
 .trending_panel_shift{

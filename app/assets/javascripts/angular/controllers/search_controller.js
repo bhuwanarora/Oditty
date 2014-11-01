@@ -1560,9 +1560,25 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				this.push(json);
 			}, $rootScope.book_lists);
 		});
-		if(on_search_page){
+		if(!on_search_page){
+			$rootScope.user.collapsed_lists = false;
+			$rootScope.user.collapsed_filters = false;
+		}
+		else{
 			delete $rootScope.user.main_header;
 			delete $rootScope.user.main_header_background;
+			var user_id = $rootScope.user.id;
+	      	recommendationService.get_labels(user_id).then(function(data){
+	    		$rootScope.labels = [];
+	        	console.debug("%c labels"+data, "color: green");
+	        	if(angular.isArray(data) && data.length > 0){
+		        	angular.forEach(data, function(value){
+		        		if(value[0]!=null){
+		        			this.push({"name": value[0].replace("\"", ""), "id": value[1]});
+		        		}
+		        	}, $rootScope.labels);
+	        	}
+	      	});
 		}
 		$scope.shift_search_to_top();
 		var timeout_event = $timeout(function(){
