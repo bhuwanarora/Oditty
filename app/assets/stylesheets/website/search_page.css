@@ -44,6 +44,7 @@
 	display: inline-block;
 	float: right;
 	position: inherit;
+	margin-right: 1%;
 }
 
 .search_page .left_column .friends_grid .friend_details, 
@@ -400,6 +401,8 @@
 	position: inherit;
 	display: inline-block;
 	float: right;
+	width: 55% !important;
+	margin-right: 1%;
 }
 
 .search_page .tweets{
