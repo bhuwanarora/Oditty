@@ -17,12 +17,13 @@
 			</div>
 		</div>
 		<img ng-src="{{notification.book.isbn | small_thumb}}" 
+			 ng-show="$routeParams.type"
 			 class="small_book_thumb" 
 			 ng-show="notification.book.isbn"/>
 		<div class="block" ng-class="{'compressed_block': notification.book.isbn}">
 			<div class="notification_message">
 				<b><div class="capitalise" ng-bind-html="notification.user.name"></div></b>
-				<timestamp data="notification.timestamp"></timestamp>
+				<timestamp data="notification.timestamp" ng-show="$routeParams.type"></timestamp>
 				<div ng-show="notification.title">
 					<b><div ng-bind-html="notification.title"></div></b>
 					<span class="delay_site_color animate-fast">Check out related books</span>

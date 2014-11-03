@@ -57,7 +57,16 @@
 }
 
 .search_page .center_column{
-	width: 56%;
+	width: 50%;
+}
+
+.search_page .right_column{
+	width: 26%;
+}
+
+.search_page .notifications{
+	max-height: 30vh;
+	margin: 20px 0px;
 }
 
 .search_page .left_column{
@@ -103,7 +112,7 @@
 	top: inherit;
 }
 
-.trending_panel .notifications{
+.search_page .trending_panel .notifications{
 	height: 200px;
 }
 
