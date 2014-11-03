@@ -1,4 +1,4 @@
-websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 'websiteService', 'stropheService', '$location', 'RecommendationUIConstants', '$cookieStore', function ($timeout, $rootScope, widgetService, websiteService, stropheService, $location, RecommendationUIConstants, $cookieStore){
+websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 'websiteService', 'stropheService', '$location', 'RecommendationUIConstants', '$cookieStore', 'recommendationService', function ($timeout, $rootScope, widgetService, websiteService, stropheService, $location, RecommendationUIConstants, $cookieStore, recommendationService){
     this.is_logged_in = function($scope){
         websiteService.get_user().then(function(data){
             if(data["logged_in"]){
@@ -8,6 +8,58 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
                     angular.extend($rootScope.user, data);
                 });
             // stropheService.start_connection();
+            }
+        });
+    }
+
+    this.set_friends = function(){
+        var length = angular.isDefined($rootScope.user.friends) ? $rootScope.user.friends.length : 0;
+        var count = 12;
+        if(angular.isUndefined($rootScope.user.friends) || !$rootScope.user.all_friends_shown){
+            var _set_friends_for = function(user_array, data){
+                angular.forEach(data, function(value){
+                    if(value[2] == null){
+                        thumb = "/assets/profile_pic.jpeg"
+                    }
+                    else{
+                        thumb = value[2];
+                    }
+                    
+                    var json = {"id": value[0], 
+                                "name": value[1], 
+                                "thumb": thumb, 
+                                "init_book_read_count": value[3],
+                                "total_count": value[4],
+                                "book_read_count": value[5],
+                                "bookmark_count": value[6],
+                                "fav_categories": value[7].join(", ")};
+                    this.push(json);
+                }, user_array);
+            }
+            widgetService.get_friends($rootScope.user.id, count, length).then(function(data){
+                if(count > data.length){
+                    $rootScope.user.all_friends_shown = true;
+                }
+                if(angular.isUndefined($rootScope.user.friends)){
+                    $rootScope.user.friends = [];
+                }
+                _set_friends_for($rootScope.user.friends, data);
+            });
+        }
+    }
+
+    this.set_labels = function(user_id){
+        if(angular.isUndefined(user_id) || user_id == null){
+            user_id = $rootScope.user.id;
+        }
+        recommendationService.get_labels(user_id).then(function(data){
+            $rootScope.labels = [];
+            if(angular.isArray(data) && data.length > 0){
+                angular.forEach(data, function(value){
+                    if(value[0]!=null){
+                        this.push({"name": value[0].replace("\"", ""), "id": value[1]});
+                    }
+                }, $rootScope.labels);
             }
         });
     }

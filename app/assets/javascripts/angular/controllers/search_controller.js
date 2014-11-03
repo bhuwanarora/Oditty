@@ -1567,59 +1567,10 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$rootScope.user.collapsed_friends = false;
 			delete $rootScope.user.main_header;
 			delete $rootScope.user.main_header_background;
-			var user_id = $rootScope.user.id;
-			var _set_labels = function(){
-		      	recommendationService.get_labels(user_id).then(function(data){
-		    		$rootScope.labels = [];
-		        	console.debug("%c labels"+data, "color: green");
-		        	if(angular.isArray(data) && data.length > 0){
-			        	angular.forEach(data, function(value){
-			        		if(value[0]!=null){
-			        			this.push({"name": value[0].replace("\"", ""), "id": value[1]});
-			        		}
-			        	}, $rootScope.labels);
-		        	}
-		      	});
-			}
-
-			var _set_friends = function(){
-				var length = angular.isDefined($rootScope.user.friends) ? $rootScope.user.friends.length : 0;
-		      	var count = 12;
-	    		if(angular.isUndefined($rootScope.user.friends) || !$rootScope.user.all_friends_shown){
-	    			var _set_friends_for = function(user_array, data){
-			    		angular.forEach(data, function(value){
-			    			if(value[2] == null){
-			    				thumb = "/assets/profile_pic.jpeg"
-			    			}
-			    			else{
-			    				thumb = value[2];
-			    			}
-			    			
-			    			var json = {"id": value[0], 
-						    			"name": value[1], 
-						    			"thumb": thumb, 
-						    			"init_book_read_count": value[3],
-						    			"total_count": value[4],
-						    			"book_read_count": value[5],
-						    			"bookmark_count": value[6],
-						    			"fav_categories": value[7].join(", ")};
-			    			this.push(json);
-			    		}, user_array);
-			    	}
-			    	widgetService.get_friends($rootScope.user.id, count, length).then(function(data){
-			    		if(count > data.length){
-			    			$rootScope.user.all_friends_shown = true;
-			    		}
-			    		if(angular.isUndefined($rootScope.user.friends)){
-			    			$rootScope.user.friends = [];
-			    		}
-			    		_set_friends_for($rootScope.user.friends, data);
-			    	});
-	    		}
-			}
-			_set_labels();
-			_set_friends();
-	      	
+			if(angular.isDefined($rootScope.user.id)){
+				sharedService.set_friends();
+				sharedService.set_labels();
+			}	      	
 		}
 		else{
 			$rootScope.user.collapsed_left_column = true;

@@ -58,17 +58,17 @@
 	      	       ng-keydown="submit($event)"
 	      	       required/><br />
 	      	
-	      	<div class="authenticate authenticate_left blue_button" ng-click="authenticate(true)" type="button">
-	      		<span>LOG IN</span>
+	      	<div ng-class="{'authenticate authenticate_left blue_button': !show_sign_up, 'click small_padding': show_sign_up}"
+	      		 ng-click="authenticate(true)" 
+	      		 type="button">
+	      		<span>Log in</span>
 	      	</div>
-	      	<br/>
-	      	<br/>
-	      	<div class="click" ng-click="authenticate(false)">
-	      		<span class="padding">Sign up</span>
+	      	<div ng-class="{'authenticate authenticate_left blue_button': show_sign_up, 'click small_padding': !show_sign_up}"
+	      		 ng-click="authenticate(false);">
+	      		<span>Sign up</span>
 	      	</div>
-	      	<br/>
-	      	<div class="click" ng-click="recover_password()" >
-	      		<span class="padding">Forgot Password?</span>
+	      	<div class="click small_padding" ng-click="recover_password()" >
+	      		<span>Forgot Password?</span>
 	      	</div>
 	    </form>
       	<div class="login_status">

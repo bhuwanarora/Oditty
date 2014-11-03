@@ -761,19 +761,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
     	}
 
     	if(angular.isUndefined($rootScope.reader)){
-    		var length = angular.isDefined($rootScope.user.friends) ? $rootScope.user.friends.length : 0;
-
-    		if(angular.isUndefined($rootScope.user.friends) || !$rootScope.user.all_friends_shown){
-		    	widgetService.get_friends($rootScope.user.id, count, length).then(function(data){
-		    		if(count > data.length){
-		    			$rootScope.user.all_friends_shown = true;
-		    		}
-		    		if(angular.isUndefined($rootScope.user.friends)){
-		    			$rootScope.user.friends = [];
-		    		}
-		    		_set_friends_for($rootScope.user.friends, data);
-		    	});
-    		}
+    		sharedService.set_friends();
     	}
     	else{
     		var length = angular.isDefined($rootScope.reader.friends) ? $rootScope.reader.friends.length : 0;
@@ -789,20 +777,6 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 		    	});
     		}
     	}
-    }
-
-    $scope._get_labels = function(user_id){
-      	recommendationService.get_labels(user_id).then(function(data){
-    		$rootScope.labels = [];
-        	console.debug("%c labels"+data, "color: green");
-        	if(angular.isArray(data) && data.length > 0){
-	        	angular.forEach(data, function(value){
-	        		if(value[0]!=null){
-	        			this.push({"name": value[0].replace("\"", ""), "id": value[1]});
-	        		}
-	        	}, $rootScope.labels);
-        	}
-      	});
     }
 
     $scope._init_user = function(){
@@ -853,14 +827,14 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 				$rootScope.reader.id = reader_id;
 				$scope.toggle_profile(reader_id);
 				$scope._init_reader();
-				$scope._get_labels(reader_id);
+				sharedService.set_labels(reader_id);
 				$scope.placeholder = "Write on timeline...";
 				$rootScope.user.main_header = {"color": "white", "text-shadow": "none"};
     			$rootScope.user.main_header_background = {"background-color": "#65b045"};
 			}
 			else{
 				_init_recommendations();
-				$scope._get_labels();
+				sharedService.set_labels();
 				$scope._initialize_filters();
 
 		        // $scope._handle_focused_book();

@@ -1,4 +1,4 @@
-websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteService', 'Facebook', 'stropheService', '$timeout', '$cookieStore', 'LoginConstants', 'WebsiteUIConstants', '$location', '$routeParams', function($scope, $rootScope, websiteService, Facebook, stropheService, $timeout, $cookieStore, LoginConstants, WebsiteUIConstants, $location, $routeParams){
+websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteService', 'Facebook', 'stropheService', '$timeout', '$cookieStore', 'LoginConstants', 'WebsiteUIConstants', '$location', '$routeParams', 'sharedService', function($scope, $rootScope, websiteService, Facebook, stropheService, $timeout, $cookieStore, LoginConstants, WebsiteUIConstants, $location, $routeParams, sharedService){
 	$scope.submit = function(event){
 		var enter_pressed = event.keyCode == WebsiteUIConstants.Enter;
 		if(enter_pressed){
@@ -31,7 +31,18 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 		}
 	}
 
+	$scope._on_authenticate = function(){
+		sharedService.set_labels();
+		sharedService.set_friends();
+	}
+
 	$scope.authenticate = function(old_user){
+		if(!old_user){
+			$scope.show_sign_up = true;
+		}
+		else{
+			$scope.show_sign_up = false;	
+		}
 		var email = $rootScope.user.email;
 		var password = $rootScope.user.password;		
 		var min_length_pattern = new RegExp("^.{8,}$");
@@ -56,6 +67,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 			});
 			$scope._is_logged_in();
 			$scope._redirect();
+			$scope._on_authenticate();
 			// $scope.$emit('getNotifications');
 		}
 
@@ -162,6 +174,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
     $scope._init_user = function(){
         $rootScope.user.profile_status = 0;
         $rootScope.user.logged = true;
+        $scope._on_authenticate();
     }
       
   	// $scope.logout = function() {
