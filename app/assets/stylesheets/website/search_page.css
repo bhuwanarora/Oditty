@@ -15,6 +15,18 @@
 	font-size: 13px;
 }
 
+.search_page .share_box{
+	position: absolute;
+	right: 22%;
+	top: 75px;
+	width: 56%;
+}
+
+.search_page .share_box .interaction_box{
+	width: 94%;
+	padding: 3%;
+}
+
 .search_page_wrapper{
 	position: fixed;
 	left: 0px;

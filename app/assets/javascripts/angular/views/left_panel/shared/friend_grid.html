@@ -20,7 +20,7 @@
 	<div class="click" ng-if="!friend.name && friend.id != user.id"><b>
 		<a ng-href="#reader/{{friend.id}}/profile">{{friend.email}}</a></b>
 	</div>
-	<div ng-if="friend.init_book_read_count">Reader of {{friend.init_book_read_count}}</div>
+	<div ng-if="friend.init_book_read_count">{{friend.init_book_read_count}}</div>
 	<div>
 		<span>+{{friend.total_count | integer}}</span>
 		<span> · </span>

@@ -2,9 +2,9 @@
 	<div class="filters_group">
 		<div ng-repeat="option in interaction_options" 
 			 class="filter inactive_filter"
-			 ng-click="show_interaction_box(user.id)">
+			 ng-click="user.share_box=!user.share_box;">
 			<div class="inline_block {{option.icon}}"></div>
-			<div class="inline_block">{{option.name}}</div>
+			<div class="inline_block">&nbsp;&nbsp;{{option.name}}</div>
 			<div class="float_right inline_block {{option.icon2}}"></div>
 		</div>
 	</div>
