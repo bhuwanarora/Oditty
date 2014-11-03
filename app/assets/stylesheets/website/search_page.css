@@ -39,9 +39,19 @@
 .search_page .column{
 	margin-top: 61px;	
 	display: inline-block;
-	float: left;
+	float: right;
 	position: inherit;
 	margin-right: 1%;
+}
+
+.search_page .center_column{
+	width: 56%;
+}
+
+.search_page .left_column{
+	display: inline-block;
+	position: inherit;
+	width: 100% !important;
 }
 
 .search_page .left_column .friends_grid .friend_details, 
@@ -410,13 +420,11 @@
 }
 
 .search_page .trending_panel{
-	margin-top: 61px;
-	box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
-	position: inherit;
+	box-shadow: 0 0 2px rgba(0,0,0,0.12),0 2px 4px rgba(0,0,0,0.24);
 	display: inline-block;
-	float: right;
-	width: 56%;
-	margin-right: 1%;
+	width: 100%;
+	margin-top: 10px;
+	position: inherit;
 }
 
 .search_page .tweets{
