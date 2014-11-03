@@ -1,7 +1,10 @@
-<div class="wrapper" ng-if="!user.logged && show_login_form" ng-controller="loginController">
-	<div class="login_box animate-fast">
-		<!-- <div class="close button_effect" ng-click="close_login_box()">x</div> -->
+<div ng-if="!user.logged && show_login_form" ng-controller="loginController">
+	<header></header>
+	<div class="site_description">
 		<div class="header">
+			<div class="site_color larger_font">
+				Welcome to
+			</div>
 			<div class="logo site_color">
 			    <span>r</span>
 			    <span>e</span>
@@ -29,6 +32,8 @@
 			<hr>
 			
 		</div>
+	</div>
+	<div class="login_box animate-fast">
 		<div class="fb" 
 			 ng-show="!user.logged"
 		     ng-click="intent_login()">

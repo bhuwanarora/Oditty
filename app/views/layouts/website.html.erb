@@ -55,7 +55,7 @@
          ng-if="user.interact">
     </div>
     <div feedback-popup></div>
-    <user-add></user-add>
+    <user-add ng-if="user.logged"></user-add>
 
     
     <div ng-show="!loading" style="height:100%;">
@@ -73,5 +73,6 @@
         ga('send', 'pageview');
       </script>
     </div>
+    <div ng-include="'/assets/angular/views/search/footer.html'"></div>
   </body>
 </html>
