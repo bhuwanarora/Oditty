@@ -69,6 +69,10 @@
 	margin: 20px 0px;
 }
 
+.search_page .notifications .compressed_block{
+	width: 80% !important;
+}
+
 .search_page .left_column{
 	display: inline-block;
 	position: inherit;
@@ -101,6 +105,8 @@
 
 .search_page .filter{
 	min-width: 100px;
+	box-shadow: none;
+	margin: 5px 0px;
 }
 
 .trending_panel_shift{
