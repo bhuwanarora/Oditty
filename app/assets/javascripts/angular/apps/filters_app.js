@@ -53,8 +53,8 @@ angular.module('filtersApp', [])
   .filter('reduced_summary', function(){
     return function(input){
       if(angular.isDefined(input)){
-        if(input != null && input.length > 85){
-          input = input.slice(0, 80)+"...";
+        if(input != null && input.length > 63){
+          input = input.slice(0, 60)+"...";
         }
       }
       return input;
