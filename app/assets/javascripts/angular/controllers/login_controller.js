@@ -162,6 +162,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
         Facebook.api('/me', function(response){
         	websiteService.handle_facebook_user(response).then(function(){
 	        	$scope._is_logged_in();
+        		$scope._on_authenticate();
         	});
 			$rootScope.user = response;
 		    $scope._init_user();
@@ -174,7 +175,6 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
     $scope._init_user = function(){
         $rootScope.user.profile_status = 0;
         $rootScope.user.logged = true;
-        $scope._on_authenticate();
     }
       
   	// $scope.logout = function() {

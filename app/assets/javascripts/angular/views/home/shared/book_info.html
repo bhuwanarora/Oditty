@@ -24,24 +24,7 @@
 <div class="arrow" ng-class="{'arrow_left': on_left, 'arrow_right': !on_left}"></div>
 <div class="icon-close-popup" ng-click="hide_popups()"></div>
 <!-- <div class="close button_effect" ng-click="close_focused_tooltip()">x</div> -->
-<div class="header fx-zoom-up fx-speed-300">
-  <div class="title large_font click"
-       ng-click="user.interact = true;"
-       title="{{focused_book.title}}"><b>{{focused_book.title | book_title}}</b></div>
-  <div class="author">by <b>{{focused_book.author_name}}</b></div>
-  <div ng-disabled="!focused_book.status">
-    <rate data="focused_book"></rate>
-  </div>
-  <div class="author"
-       ng-hide="focused_book.collapse_blocks || focused_book.collapse">
-    <span ng-if="focused_book.published_year">
-      {{focused_book.published_year | published_year}}</span>
-    <span>{{focused_book.page_count | page_count}}</span>
-  </div>
-  <div ng-include src="'/assets/angular/views/shared/partials/book_info.html'"></div>
-</div>
 
-<div ng-include="'/assets/angular/views/shared/partials/share.html'"></div>
 
 <div class="main_block small_font fx-zoom-up fx-speed-300">
     <span ng-click="get_book_overview();" 
@@ -152,3 +135,21 @@
 <recommend data="focused_book" 
            ng-show="focused_book.collapse_blocks && !focused_book.collapse">
 </recommend>
+<div class="header fx-zoom-up fx-speed-300">
+  <div class="title large_font click"
+       ng-click="user.interact = true;"
+       title="{{focused_book.title}}"><b>{{focused_book.title | book_title}}</b></div>
+  <div class="author">by <b>{{focused_book.author_name}}</b></div>
+  <div ng-disabled="!focused_book.status">
+    <rate data="focused_book"></rate>
+  </div>
+  <div class="author"
+       ng-hide="focused_book.collapse_blocks || focused_book.collapse">
+    <span ng-if="focused_book.published_year">
+      {{focused_book.published_year | published_year}}</span>
+    <span>{{focused_book.page_count | page_count}}</span>
+  </div>
+  <div ng-include src="'/assets/angular/views/shared/partials/book_info.html'"></div>
+</div>
+
+<div ng-include="'/assets/angular/views/shared/partials/share.html'"></div>

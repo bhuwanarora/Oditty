@@ -38,7 +38,8 @@
 
 .search_page .listopia,
 .search_page .shelves,
-.search_page .friends_list{
+.search_page .friends_list,
+.search_page .interacter{
 	margin-top: 61px;	
 	width: 20%!important;
 	display: inline-block;
@@ -884,7 +885,8 @@ and (max-width : 800px) {
 
 	.search_page .listopia,
 	.search_page .shelves,
-	.search_page .friends_list{
+	.search_page .friends_list,
+	.search_page .interacter{
 		width: 96vw !important;
 	}
 }

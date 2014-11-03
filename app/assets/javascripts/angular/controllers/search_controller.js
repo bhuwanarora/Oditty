@@ -1,4 +1,4 @@
-websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteService', '$timeout', '$sce', 'recommendationService', '$routeParams', '$location', 'SearchUIConstants', 'WebsiteUIConstants', '$cookieStore', 'sharedService', 'widgetService', function($scope, $rootScope, websiteService, $timeout, $sce, recommendationService, $routeParams, $location, SearchUIConstants, WebsiteUIConstants, $cookieStore, sharedService, widgetService){
+websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteService', '$timeout', '$sce', 'recommendationService', '$routeParams', '$location', 'SearchUIConstants', 'WebsiteUIConstants', '$cookieStore', 'sharedService', 'widgetService', 'StatusUIConstants', function($scope, $rootScope, websiteService, $timeout, $sce, recommendationService, $routeParams, $location, SearchUIConstants, WebsiteUIConstants, $cookieStore, sharedService, widgetService, StatusUIConstants){
 	$scope._update_filters = function(type, value){
 		var item = $scope._get_option_json(type, value);
 		if(type == SearchUIConstants.AuthorSearch){
@@ -1528,6 +1528,19 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$scope.search_tag.placeholder = SearchUIConstants.SearchPlaceholder;
     }
 
+    $scope._set_interaction_options = function(){
+    	if(angular.isUndefined($scope.interaction_options)){
+    		$scope.interaction_options = [];
+	    	angular.forEach(StatusUIConstants.EmotionConstants.value, function(value){
+	    		this.push(value);
+	    	}, $scope.interaction_options);
+	    	
+	    	angular.forEach(StatusUIConstants.OwnershipConstants.value, function(value){
+	    		this.push(value);
+	    	}, $scope.interaction_options);
+    	}
+    }
+
 	$scope._init = function(){
 		$scope.website.searching = false;
 		$scope.filters_added = [];
@@ -1569,6 +1582,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			delete $rootScope.user.main_header_background;
 			sharedService.set_friends();
 			sharedService.set_labels();
+			$scope._set_interaction_options();
 		}
 		else{
 			$rootScope.user.collapsed_left_column = true;
