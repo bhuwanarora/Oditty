@@ -356,7 +356,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/shared/feed/news.html',
-    "<div class=\"notifications animate-fast scrollbar\" check-scroll-bottom=\"get_notifications()\"><div class=\"full_height\"><notification data=\"notification\" ng-repeat=\"notification in notifications | reverse\"></notification><div class=\"notification_stable\">You've reached the end of your news feed.</div></div></div>"
+    "<div class=\"notifications animate-fast scrollbar\" check-scroll-bottom=\"get_notifications()\"><div class=\"full_height\"><notification data=\"notification\" ng-repeat=\"notification in news_feed | reverse\"></notification><div class=\"notification_stable\">You've reached end of your friend's book reading journeys.</div></div></div>"
   );
 
 
