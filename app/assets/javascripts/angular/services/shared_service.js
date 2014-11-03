@@ -13,6 +13,14 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
     }
 
     this.get_news_feed = function($scope){
+        $scope.show_feed = {"news": true};
+        if(angular.isDefined($scope.news_feed)){
+            var existing_notifications_count = $scope.news_feed.length;
+        }
+        else{
+            $scope.news_feed = [];
+            var existing_notifications_count = 0;
+        }
         websiteService.get_notifications(existing_notifications_count).then(function(data){
             if(angular.isUndefined($scope.news_feed)){
                 $scope.news_feed = [];
