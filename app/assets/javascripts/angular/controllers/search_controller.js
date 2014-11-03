@@ -1567,10 +1567,8 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$rootScope.user.collapsed_friends = false;
 			delete $rootScope.user.main_header;
 			delete $rootScope.user.main_header_background;
-			if(angular.isDefined($rootScope.user.id)){
-				sharedService.set_friends();
-				sharedService.set_labels();
-			}	      	
+			sharedService.set_friends();
+			sharedService.set_labels();
 		}
 		else{
 			$rootScope.user.collapsed_left_column = true;
