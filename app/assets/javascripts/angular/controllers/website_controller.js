@@ -311,9 +311,7 @@ websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout
 			});
     	}
     	else{
-	    	websiteService.get_notifications(existing_notifications_count).then(function(data){
-	    		_set_feed(data);
-			});
+    		sharedService.get_news_feed($scope);
     	}
 	}
 

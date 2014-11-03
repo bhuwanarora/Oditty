@@ -1582,6 +1582,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			delete $rootScope.user.main_header_background;
 			sharedService.set_friends();
 			sharedService.set_labels();
+			sharedService.get_news_feed($scope);
 			$scope._set_interaction_options();
 		}
 		else{

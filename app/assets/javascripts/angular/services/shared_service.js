@@ -12,6 +12,15 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
         });
     }
 
+    this.get_news_feed = function($scope){
+        websiteService.get_notifications(existing_notifications_count).then(function(data){
+            if(angular.isUndefined($scope.news_feed)){
+                $scope.news_feed = [];
+            }
+            $scope.news_feed = data.notifications.concat($scope.news_feed);
+        });
+    }
+
     this.set_friends = function(){
         var length = angular.isDefined($rootScope.user.friends) ? $rootScope.user.friends.length : 0;
         var count = 12;
