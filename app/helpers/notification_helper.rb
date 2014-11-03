@@ -51,7 +51,7 @@ module NotificationHelper
 
 	def self._rating_notification data
 		name = self._get_name data
-		message = "<span class='header_font'> gave "+data["rating"].to_s+"/10 stars to </span><span class='site_color'>"+data["title"]+".</span>"
+		message = "<span> gave "+data["rating"].to_s+"/10 stars to </span><span class='site_color'>"+data["title"]+".</span>"
 		self.notification(message, data)
 	end
 
@@ -64,7 +64,7 @@ module NotificationHelper
 
 	def self._mark_as_read_notification data
 		name = self._get_name data
-		message = "<span> added </span><span class='site_color'>"+data["title"]+"</span><span> to &nbsp;</span><span class='icon-books'></span><span class='header_font'>&nbsp;Books Read.</span>"
+		message = "<span> added </span><span class='site_color'>"+data["title"]+"</span><span> to &nbsp;</span><span class='icon-books'></span><span>&nbsp;Books Read.</span>"
 		self.notification(message, data)
 	end
 
@@ -97,13 +97,13 @@ module NotificationHelper
 		message = "<span>"+data["tweet"]+".</span>";
 
 		tag = "<div class='"+data["icon"]+" inline_block'></div>" rescue ""
-		clause = "<div class='inline_block site_color header_font'> "+data["label1"] rescue "<div class='inline_block'> "
+		clause = "<div class='inline_block'> is "+data["label1"] rescue "<div class='inline_block'> "
 		tag = tag + clause
 
 		clause = " "+data["label2"]+" " rescue " "
 		tag = tag + clause
 
-		clause = data["title"]+".</div>" rescue "</div>"
+		clause = "<span class='site_color'>"+data["title"]+"</span>.</div>" rescue "</div>"
 		tag = tag + clause
 
 
