@@ -63,6 +63,7 @@
 	</div>
 	
 	<div class="header_icon" 
+		 ng-if="user.logged"
 		 ng-style="user.main_header"
 	     ng-class="{'site_color': popups.show_notifications_popup}"
 	     ng-click="toggle_notification_popup($event)">

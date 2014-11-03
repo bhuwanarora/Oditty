@@ -17,10 +17,10 @@
 
 .search_page_wrapper{
 	position: fixed;
-	left: 50px;
-	right: 50px;
-	top: 50px;
-	bottom: 50px;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 100px;
 	border-radius: 2px;
 	background-size: cover;
 }
@@ -562,14 +562,14 @@
 .login_box{
 	position: fixed;
 	z-index: 5;
-	padding: 2%;
-	border-radius: 2px;
+	padding: 4% 0%;
 	width: 46%;
 	left: 50%;
 	top: 61px;
 	text-align: center;
-	background-color: rgba(255, 255, 255, 0.8);
-	bottom: 0px;
+	background-color: rgba(255,255,255,0.8);
+	overflow: auto;
+	border-radius: 0px 0px 4px 4px;
 }
 
 .site_description{
