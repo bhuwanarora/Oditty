@@ -152,19 +152,19 @@
 	padding: 3%;
 }
 
-.comment_box ::-webkit-input-placeholder {
+.comment_box::-webkit-input-placeholder {
    font-weight: bold;
 }
 
-.comment_box :-moz-placeholder { /* Firefox 18- */
+.comment_box:-moz-placeholder { /* Firefox 18- */
    font-weight: bold;
 }
 
-.comment_box ::-moz-placeholder {  /* Firefox 19+ */
+.comment_box::-moz-placeholder {  /* Firefox 19+ */
    font-weight: bold;
 }
 
-.comment_box :-ms-input-placeholder {  
+.comment_box:-ms-input-placeholder {  
    font-weight: bold;
 }
 
