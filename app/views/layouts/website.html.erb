@@ -73,6 +73,6 @@
         ga('send', 'pageview');
       </script>
     </div>
-    <div ng-include="'/assets/angular/views/search/footer.html'"></div>
+    <div ng-show="!user.show_profile" ng-include="'/assets/angular/views/search/footer.html'"></div>
   </body>
 </html>

@@ -182,21 +182,20 @@
 .label_dropdown{
 	position: absolute;
 	bottom: 28px;
-	background-color: white;
+	background-color: #fff;
 	z-index: 3;
 	list-style-type: none;
-	padding: 2px;
-	width: 62%;
-	font-size: 0.8em;
+	font-size: 12px;
 	border-top-right-radius: 3px;
-	border: 1px solid #999999;
-	max-height: 30vh;
+	border: 1px solid #999;
 	overflow-y: scroll;
-	box-shadow: 0 7px 15px rgba(0,0,0,.25);
-	padding: 10px 0px 10px 0px;
+	box-shadow: 0 7px 15px rgba(0,0,0,0.25);
+	padding: 10px 0;
 	text-transform: capitalize;
-	min-width: 180px;
 	visibility: hidden;
+	right: 0px;
+	left: 0px;
+	top: -42vh;
 }
 
 .label_dropdown li{

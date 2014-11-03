@@ -62,7 +62,7 @@
 }
 
 .focused_tooltip .description{
-	max-height: 20vh;
+	max-height: 25vh;
 	line-height: 1.5em;
 	padding: 12px;
 	white-space: normal;
@@ -80,7 +80,7 @@
 }
 
 .focused_tooltip .long_description{
-	max-height: 25vh;
+	max-height: 40vh;
 }
 
 .focused_tooltip .book_info .image_wrapper{
@@ -143,12 +143,6 @@
 	font-size: 0.9em;
 }
 
-.focused_tooltip .header{
-	padding: 3vh 0px 1vh 0px;
-	cursor: default;
-	line-height: 1.3em;
-}
-
 .focused_tooltip .book_info,
 .focused_tooltip .buy_column,
 .focused_tooltip .description,
@@ -165,6 +159,14 @@
 	padding-right: 3vh;
 	border: 1px solid #fff;
 	box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+}
+
+.focused_tooltip .header{
+	padding: 3vh;
+	cursor: default;
+	line-height: 1.3em;
+	background-color: #F5F5F5;
+	border: 1px solid #ececec;
 }
 
 .focused_tooltip .heading_block,

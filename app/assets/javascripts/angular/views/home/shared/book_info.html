@@ -24,7 +24,7 @@
 <div class="arrow" ng-class="{'arrow_left': on_left, 'arrow_right': !on_left}"></div>
 <div class="icon-close-popup" ng-click="hide_popups()"></div>
 <!-- <div class="close button_effect" ng-click="close_focused_tooltip()">x</div> -->
-<div class="header">
+<div class="header fx-zoom-up fx-speed-300">
   <div class="title large_font click"
        ng-click="user.interact = true;"
        title="{{focused_book.title}}"><b>{{focused_book.title | book_title}}</b></div>
@@ -38,32 +38,29 @@
       {{focused_book.published_year | published_year}}</span>
     <span>{{focused_book.page_count | page_count}}</span>
   </div>
-</div>
-
-<div class="main_block small_font" 
-     ng-show="focused_book.collapse_blocks || focused_book.collapse">
-    <span ng-click="get_book_overview();">Overview</span><span>&nbsp;</span>
-    <span ng-click="get_author_details();">About author</span><span>&nbsp;</span>
-    <span ng-click="get_buy_links();">Buy this book</span><span>&nbsp;</span>
-</div>
-
-<div class="heading_block" 
-     ng-hide="focused_book.collapse_blocks || focused_book.collapse"
-     ng-click="get_book_overview();"
-     ng-class="{'bold': !show_buy && !show_author}">
-    <span>Overview</span>
-</div>
-
-
-
-<!-- OVERVIEw -->
-<div class="book_info" 
-     ng-hide="focused_book.collapse_blocks || focused_book.collapse"
-     ng-if="!show_buy && !show_author">
   <div ng-include src="'/assets/angular/views/shared/partials/book_info.html'"></div>
 </div>
 
-<div class="scrollbar description" 
+<div ng-include="'/assets/angular/views/shared/partials/share.html'"></div>
+
+<div class="main_block small_font fx-zoom-up fx-speed-300">
+    <span ng-click="get_book_overview();" 
+          ng-class="{'bold': !show_buy && !show_author && !focused_book.collapse_blocks}">Overview</span>
+    <span>&nbsp;</span>
+    <span ng-click="get_author_details();" 
+          ng-class="{'bold': show_author && !show_buy}">About Author</span>
+    <span>&nbsp;</span>
+    <span ng-click="get_buy_links();"
+          ng-class="{'bold': show_buy && !show_author}">Buy</span>
+    <span>&nbsp;</span>
+    <span ng-click="recommend_to_friends();"
+          ng-class="{'bold': focused_book.collapse_blocks}">Recommend</span>
+    <span>&nbsp;</span>
+</div>
+
+<!-- OVERVIEw -->
+
+<div class="scrollbar description fx-zoom-up fx-speed-300" 
      ng-hide="focused_book.collapse_blocks || focused_book.collapse"
      ng-class="{'long_description': !focused_book.users_count || focused_book.users_count == 0}"
      msd-wheel="stop_horizontal_scroll($event)" ng-if="!show_buy && !show_author">
@@ -73,7 +70,7 @@
   <br/>
 </div>
 
-<div class="user_box" 
+<div class="user_box fx-zoom-up fx-speed-300" 
      ng-hide="focused_book.collapse_blocks || focused_book.collapse"
      ng-if="!show_author && !show_buy && focused_book.users_count && focused_book.users_count > 0">
   <div class="heading">{{focused_book.users_count}} friends have read this</div>
@@ -84,15 +81,8 @@
   </div>
 </div>
 
-<div class="heading_block" 
-     ng-hide="focused_book.collapse_blocks || focused_book.collapse"
-     ng-click="get_author_details();"
-     ng-class="{'bold': show_author && !show_buy}">
-    <span>About author</span>
-</div>
-
 <!-- ABOUT AUTHOR -->
-<div class="book_info scrollbar author_book_info"
+<div class="book_info scrollbar author_book_info fx-zoom-up fx-speed-300"
      ng-hide="focused_book.collapse_blocks || focused_book.collapse"
      ng-if="show_author && !show_buy"
      msd-wheel="stop_horizontal_scroll($event)">
@@ -109,7 +99,7 @@
       </div>
 </div>
 
-<div class="relative_position" 
+<div class="relative_position fx-zoom-up fx-speed-300" 
      ng-hide="focused_book.collapse_blocks || focused_book.collapse"
      ng-if="show_author && !show_buy">
   <div class="user_box animate-fast"
@@ -124,16 +114,10 @@
 
 
 <!-- BUY THIS BOOK -->
-<div class="heading_block" 
-     ng-click="get_buy_links();"
-     ng-hide="focused_book.collapse_blocks || focused_book.collapse"
-     ng-class="{'bold': show_buy && !show_author}">
-    <span>Buy this book</span>
-</div>
 
 <div ng-if="show_buy && !show_author" 
      ng-hide="focused_book.collapse_blocks || focused_book.collapse"
-     class="buy_column">
+     class="buy_column fx-zoom-up fx-speed-300">
   <div ng-if="focused_book.bnn_links">
     <span ng-repeat="link in focused_book.bnn_links track by $index">
       <a ng-href="{{link}}" target="_blank" >
@@ -145,7 +129,7 @@
   </div>
 </div>
 
-<div class="time_to_read" 
+<div class="time_to_read fx-zoom-up fx-speed-300" 
      ng-hide="focused_book.collapse_blocks || focused_book.collapse"
      ng-if="show_buy && !show_author">
   <div class="header">Describe the reading length of this book</div>
@@ -163,14 +147,8 @@
       ng-class="{'active_tab':is_timer(3)}">Long Read</div>
 </div>
 
-<div ng-include="'/assets/angular/views/shared/partials/share.html'"></div>
 
-<div ng-click="focused_book.collapse_blocks = true;"
-     class='recommend'
-     title="Recommend book to friends"
-     ng-show="!focused_book.collapse_blocks || focused_book.collapse">
-  <b>Recommend this book to friends</b>
-</div>
+
 <recommend data="focused_book" 
            ng-show="focused_book.collapse_blocks && !focused_book.collapse">
 </recommend>

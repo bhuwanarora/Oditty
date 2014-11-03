@@ -229,7 +229,6 @@ module UsersGraphHelper
 		@neo.execute_query clause
 	end
 
-
 	def self.get_personal_feed(user_id, skip_count)
 		@neo ||= self.neo_init
 		skip_count = 0 unless skip_count.present?
@@ -335,7 +334,6 @@ module UsersGraphHelper
 		puts clause.blue.on_red
 		@neo.execute_query clause
 	end
-
 
 	private
 	def _match_user(user_id)
