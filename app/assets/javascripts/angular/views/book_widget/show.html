@@ -4,7 +4,7 @@
 	<!-- <category track widget="book"></category> -->
 	<div ng-model="book"
 		ng-style="card_style"
-		class="card animate-slow">
+		class="card animate-slow text">
 		<div class="card_summary animate-fast">
 			<div class="basic_link"
 				 ng-click="show_share_options($event)">
@@ -12,7 +12,7 @@
 				<span ng-show="book.author_name">by {{book.author_name}}</span>
 			</div>
 			<div>
-				<span ng-if="book.summary" class="normal_text">{{book.summary | reduced_summary}}</span>
+				<span ng-if="book.summary">{{book.summary | reduced_summary}}</span>
 			</div>
 		</div>
 		<div class="widget_thumb_wrapper" 

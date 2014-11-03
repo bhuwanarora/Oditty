@@ -62,7 +62,6 @@
 }
 
 .focused_tooltip .description{
-	font-size: .93em;
 	max-height: 20vh;
 	line-height: 1.5em;
 	padding: 12px;

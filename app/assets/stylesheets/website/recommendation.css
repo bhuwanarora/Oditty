@@ -441,10 +441,7 @@
 	display: inline-block;
 	width: 45%;
 	white-space: initial;
-	color: #717070;
-	font-size: 12px;
 	padding: 10px 5px;
-	line-height: 18px;
 }
 
 
@@ -1260,7 +1257,6 @@
 	width: 80%;
 	white-space: normal;
 	word-break: break-word;
-	font-size: 0.9em;
 }
 
 .column_wrapper{
