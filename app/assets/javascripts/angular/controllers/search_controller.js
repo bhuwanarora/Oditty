@@ -1276,7 +1276,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	$scope.shift_search_to_top = function(){
 		if(on_search_page){
 			// $scope.trending_panel_style = {"max-height": "26vh"};
-			$scope.search_panel_style = {"bottom": "80%"};
+			$scope.search_panel_style = {"bottom": "84%"};
 		}
 	}
 
