@@ -1344,6 +1344,15 @@
 	width: 160px;
 }
 
+.user_profile .friends_grid .friend_details .categories,
+.left_column .friends_grid .friend_details .categories{
+	padding: 5px;
+	background-color: #f5f5f5;
+	margin: 5px 0px;
+	border: 1px solid #ddd;
+	border-radius: 1px;
+}
+
 .ticker_popup{
 	top: 230px;
 	left: 29.5%;

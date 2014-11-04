@@ -755,7 +755,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			    			"total_count": value[4],
 			    			"book_read_count": value[5],
 			    			"bookmark_count": value[6],
-			    			"fav_categories": value[7].join(", ")};
+			    			"fav_categories": value[7]};
     			this.push(json);
     		}, user_array);
     	}

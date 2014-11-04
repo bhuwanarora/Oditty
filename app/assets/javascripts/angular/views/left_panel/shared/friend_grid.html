@@ -31,6 +31,8 @@
 		<span class="icon-bookmarks"></span>
 		<span> · </span>
 	</div>
-	<div class="normal_text" ng-if="friend.fav_categories">Likes {{friend.fav_categories}} books</div>
+	<div class="categories" ng-if="friend.fav_categories">
+		 <span ng-repeat="icon in friend.fav_categories track by $index" class="larger_font {{icon}}"></span>
+	</div>
 	<!-- <follow data="friend" follow="false"></follow> -->
 </div>
