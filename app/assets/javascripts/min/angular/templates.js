@@ -321,7 +321,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/search/footer.html',
-    "<ul class=\"footer\"><li style=\"margin-right: 60px\"><a target=\"_blank\" href=\"/privacy\">Privacy</a></li><li><a target=\"_blank\" href=\"/terms\">Terms</a></li><li><a target=\"_blank\" href=\"/advertising\">Advertising</a></li><li><a target=\"_blank\" href=\"/about\">Jobs</a></li><li><a target=\"_blank\" href=\"/about\">About</a></li></ul>"
+    "<ul class=\"footer\"><li style=\"margin-right: 60px\"><a target=\"_blank\" href=\"/privacy\">Privacy</a></li><li><a target=\"_blank\" href=\"/terms\">Terms</a></li><li><a target=\"_blank\" href=\"/advertising\">Advertising</a></li><li><a target=\"_blank\" href=\"/jobs\">Jobs</a></li><li><a target=\"_blank\" href=\"/about\">About Us</a></li></ul>"
   );
 
 

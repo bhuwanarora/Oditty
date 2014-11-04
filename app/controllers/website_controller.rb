@@ -39,6 +39,10 @@ class WebsiteController < ApplicationController
 		render :layout => "clean"
 	end
 
+	def jobs
+		render :layout => "clean"
+	end
+
 	def privacy
 		render :layout => "clean"
 	end

@@ -5,8 +5,113 @@
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= javascript_include_tag "/assets/jquery-ui.min.js" %>
     <link rel="stylesheet" type="text/css" href="/assets/jquery-ui.min.css">
+    <style type="text/css">
+
+		.main_header{
+		   	background-color: white;
+		   	height: 40px;
+		   	left: 0px;
+			position: fixed;
+		   	top: 0px;
+		   	right: 0px;
+		   	z-index: 7;
+		   	padding-top: 10px;
+		   	padding-right: 10px;
+		   	padding-bottom: 10px;
+		   	box-shadow: 0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28);
+		}
+		.color_bar{
+			position: absolute;
+			bottom: 0px;
+			left: 0px;
+			right: 0px;
+			height: 5px;
+		}
+
+		.color_bar div{
+			height: 5px;
+		}
+
+		.site_logo{
+			float: left;
+		    color: #427fed;
+			font-size: 22px;
+			font-weight: 700;
+			font-family: Helvetica;
+			letter-spacing: -3.4px;
+			margin-left: 20px;
+			margin-top: 7px;
+			text-shadow: 0 2px 3px rgba(223, 223, 223, 1);
+			margin-right: 20px;
+			display: inline-block;
+		}
+
+		a{
+			text-decoration: none;
+			color: #333;
+		}
+
+
+		.footer{
+			position: fixed;
+			bottom: 0px;
+			list-style: none;
+			left: 0px;
+			right: 0px;
+			background-color: white;
+			margin: 0px;
+			padding: 10px;
+			list-style-position: inside;
+			border-top: 1px solid #E0E0E0;
+			font-size: 12px;
+		}
+
+		.footer li{
+			display: inline;
+			float: right;
+			margin-right: 10px;
+			cursor: pointer;
+		}
+
+		.footer li:hover{
+			text-decoration: underline;
+		}
+
+	</style>
   </head>
   <body>
+  	<div class="main_header">
+			<a class="site_logo" 
+			 	href="http://www.readersdoor.com">
+		 		<span>r</span>
+				<span>e</span>
+				<span>a</span>
+				<span>d</span>
+				<span>e</span>
+				<span>r</span>
+				<span>'</span>
+				<span>s</span>
+				<span>&nbsp;</span>
+				<span>d</span>
+				<span>o</span>
+				<span>o</span>
+				<span>r</span>
+ 			</a>
+ 			<div class="color_bar" ng-hide="user.main_header_background">
+		 		<div class="span2 yellow"></div>
+		 		<div class="span2 green"></div>
+		 		<div class="span2 site"></div>
+		 		<div class="span2 purple"></div>
+		 		<div class="span2 red"></div>
+		 	</div>
+ 	</div>
     <%= yield %>
+	<ul class="footer">
+		<li style="margin-right: 60px;"><a href="/privacy">Privacy</a></li>
+		<li><a href="/terms">Terms</li>
+		<li><a href="/advertising">Advertising</li>
+		<li><a href="/jobs">Jobs</li>
+		<li><a href="/about">About Us</li>
+	</ul>
   </body>
  </html>

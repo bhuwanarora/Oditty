@@ -30,6 +30,7 @@ ReadersDoor::Application.routes.draw do
 
   resources :website
 
+  get 'jobs'                        => 'website#jobs',          :as => "jobs"
   get 'about'                       => 'website#about',         :as => "about"
   get 'privacy'                     => 'website#privacy',       :as => "privacy"
   get 'terms'                       => 'website#terms',         :as => "terms"

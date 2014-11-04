@@ -843,31 +843,6 @@
 	color: #D8D8D8;
 }
 
-.footer{
-	position: fixed;
-	bottom: 0px;
-	list-style: none;
-	left: 0px;
-	right: 0px;
-	background-color: white;
-	margin: 0px;
-	padding: 10px;
-	list-style-position: inside;
-	border-top: 1px solid #E0E0E0;
-	font-size: 12px;
-}
-
-.footer li{
-	display: inline;
-	float: right;
-	margin-right: 10px;
-	cursor: pointer;
-}
-
-.footer li:hover{
-	text-decoration: underline;
-}
-
 .content_box{
 	position: fixed;
 	left: 10px;
