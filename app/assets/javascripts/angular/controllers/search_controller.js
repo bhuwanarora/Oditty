@@ -1544,9 +1544,24 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
     }
 
     $scope.show_interaction_box = function(option, event){
-    	$rootScope.user.option = option;
-    	$rootScope.user.show_share_box = true;
-    	$rootScope.user.interact = true;
+    	if(angular.isDefined($rootScope.user.option)){
+    		delete $rootScope.user.option;
+    		$rootScope.user.show_share_box = false;
+    		$rootScope.user.interact = false;
+    		var timeout_event = $timeout(function(){
+    			$rootScope.user.option = option;
+    			$rootScope.user.show_share_box = true;
+    			$rootScope.user.interact = true;
+    		}, 200);
+    		$scope.$on('destroy', function(){
+    			$timeout.cancel(timeout_event);
+    		});
+    	}
+    	else{
+    		$rootScope.user.option = option;
+	    	$rootScope.user.show_share_box = true;
+	    	$rootScope.user.interact = true;
+    	}
     	event.stopPropagation();
     }
 
