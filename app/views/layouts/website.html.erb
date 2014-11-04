@@ -50,9 +50,10 @@
       </div>
     </div>
     <feed ng-if="user.interact"
-      class="interaction_group animate-fast"></feed>
+          ng-class="{'search_interaction_group':user.show_share_box}"
+          class="interaction_group animate-fast"></feed>
     <div class="wrapper white_wrapper"
-         ng-if="user.interact">
+         ng-if="user.interact && !user.show_share_box">
     </div>
     <div feedback-popup></div>
     <user-add ng-if="user.logged"></user-add>

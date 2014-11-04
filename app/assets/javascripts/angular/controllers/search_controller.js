@@ -76,6 +76,8 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 
 	$scope.hide_popups = function(event){
 		$rootScope.popups = {};
+		$rootScope.user.interact = false;
+		$rootScope.user.show_share_box = false;
 		event.stopPropagation();
 	}
 
@@ -1539,6 +1541,13 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	    		this.push(value);
 	    	}, $scope.interaction_options);
     	}
+    }
+
+    $scope.show_interaction_box = function(option, event){
+    	$rootScope.user.option = option;
+    	$rootScope.user.show_share_box = true;
+    	$rootScope.user.interact = true;
+    	event.stopPropagation();
     }
 
 	$scope._init = function(){

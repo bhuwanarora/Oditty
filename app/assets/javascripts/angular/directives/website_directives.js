@@ -679,7 +679,9 @@ websiteApp.directive('feed', ['$rootScope', '$timeout', 'websiteService', 'widge
 	      	$scope.start_searching = $scope.show_search;
 	      	_clear_focus();
 
-	      	event.stopPropagation();
+	      	if(angular.isDefined(event)){
+	      		event.stopPropagation();
+	      	}
       	}
 
       	$scope.select_level2 = function(option, event){
@@ -1121,6 +1123,12 @@ websiteApp.directive('feed', ['$rootScope', '$timeout', 'websiteService', 'widge
 	        $scope.user.interact_books = [];
 	    	$rootScope.user.hash_tagged_comment = "";
 	    	$rootScope.user.current_comment = "";
+	    	if(angular.isDefined($rootScope.user.show_share_box)){
+	    		$scope.show_interaction_links = true;
+	    	}
+	    	if(angular.isDefined($rootScope.user.option)){
+	    		$scope.select_level1($rootScope.user.option);
+	    	}
       	}
 
       	_init();

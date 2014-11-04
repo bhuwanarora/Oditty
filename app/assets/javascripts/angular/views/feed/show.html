@@ -1,11 +1,18 @@
-<div class="icon-close-popup" ng-click="close_interaction_box();"></div>
-<div ng-include src="'/assets/angular/views/feed/book_timeline.html'" 
+<div ng-hide="user.show_share_box" class="icon-close-popup" ng-click="close_interaction_box();"></div>
+<div ng-show="user.show_share_box"
+	 ng-include src="'/assets/angular/views/feed/comment_box.html'"></div>
+<div ng-hide="user.show_share_box" 
+	 ng-include src="'/assets/angular/views/feed/book_timeline.html'" 
 	 ng-if="focused_book"></div>
-<div ng-include src="'/assets/angular/views/feed/trending.html'" 
+<div ng-hide="user.show_share_box" 
+	 ng-include src="'/assets/angular/views/feed/trending.html'" 
      ng-if="!focused_book && show_feed.trending"></div>
-<div ng-include src="'/assets/angular/views/feed/news_feed.html'"
+<div ng-hide="user.show_share_box" 
+	 ng-include src="'/assets/angular/views/feed/news_feed.html'"
 	 ng-if="!focused_book && show_feed.news"></div>
-<div ng-include src="'/assets/angular/views/feed/readers_timeline.html'"
+<div ng-hide="user.show_share_box" 
+	 ng-include src="'/assets/angular/views/feed/readers_timeline.html'"
 	 ng-if="!focused_book && show_feed.readers"></div>
-<div ng-include src="'/assets/angular/views/feed/personal_feed.html'"
+<div ng-hide="user.show_share_box"
+	 ng-include src="'/assets/angular/views/feed/personal_feed.html'"
 	 ng-if="!focused_book && show_feed.personal"></div>
