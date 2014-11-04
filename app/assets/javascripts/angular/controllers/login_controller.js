@@ -34,6 +34,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 	$scope._on_authenticate = function(){
 		sharedService.set_labels();
 		sharedService.set_friends();
+		sharedService.get_news_feed($scope);
 	}
 
 	$scope.authenticate = function(old_user){
@@ -174,8 +175,6 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
     $scope._init_user = function(){
         $rootScope.user.profile_status = 0;
         $rootScope.user.logged = true;
-        $cookieStore.put('logged', true);
-        $scope._on_authenticate();
     }
       
   	// $scope.logout = function() {
@@ -206,6 +205,7 @@ websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteServic
 	  		  		angular.extend($rootScope.user, data);
 	  	   		});
 	  	   		$cookieStore.put('logged', true);
+        		$scope._on_authenticate();
 	  			_handle_push_notifications();   		
   				// stropheService.start_connection();
   			}
