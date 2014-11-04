@@ -1589,9 +1589,12 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$rootScope.user.collapsed_friends = false;
 			delete $rootScope.user.main_header;
 			delete $rootScope.user.main_header_background;
-			sharedService.set_friends();
-			sharedService.set_labels();
-			sharedService.get_news_feed($scope);
+			var user_logged_in = angular.isDefined($rootScope.user.id);
+			if(user_logged_in){
+				sharedService.set_friends();
+				sharedService.set_labels();
+				sharedService.get_news_feed($scope);
+			}
 			$scope._set_interaction_options();
 		}
 		else{
