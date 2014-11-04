@@ -622,6 +622,7 @@
 	left: 0px;
 	top: 61px;
 	text-align: center;
+	text-shadow: 0 2px 3px #2F2F2F;
 }
 
 .site_description .header{
@@ -846,11 +847,15 @@
 .content_box{
 	position: fixed;
 	left: 10px;
-	bottom: 10px;
+	bottom: 40px;
 	text-align: left;
 	list-style: none;
 	max-width: 350px;
 	font-size: 13px;
+	color: white;
+	font-size: 15px;
+	font-weight: bold;
+	text-shadow: 0 2px 3px #2F2F2F;
 }
 
 

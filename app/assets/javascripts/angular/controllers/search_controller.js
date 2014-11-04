@@ -1589,7 +1589,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$rootScope.user.collapsed_friends = false;
 			delete $rootScope.user.main_header;
 			delete $rootScope.user.main_header_background;
-			var user_logged_in = angular.isDefined($rootScope.user.id);
+			var user_logged_in = angular.isDefined($rootScope.user.logged);
 			if(user_logged_in){
 				sharedService.set_friends();
 				sharedService.set_labels();
