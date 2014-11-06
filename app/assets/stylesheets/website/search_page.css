@@ -221,12 +221,12 @@
 .filters_added .option:hover .close_icon{
 	color: rgba(216, 57, 30, 0.5);
 }
-
+/*
 .search_page .search_input{
 	box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
 }
 
-.search_page .search_input::-webkit-input-placeholder {
+*/.search_page .search_input::-webkit-input-placeholder {
    font-weight: bold;
 }
 
@@ -372,7 +372,7 @@
 	font-size: 12px;
 }
 
-.search_page .search_typeahead_group{
+/*.search_page .search_typeahead_group{
    position: fixed;
 	left: 10px;
 	bottom: 100px;
@@ -380,13 +380,13 @@
 	height: 37px;
 	z-index: 5;
 	margin-top: 70px;
-}
+}*/
 
-.search_page .shift_top{
+/*.search_page .shift_top{
 	top: 12px !important;
 	margin-top: 0px !important;
 	z-index: 6;
-}
+}*/
 
 .search_typeahead_group .search_icon{
     position: absolute;
@@ -408,13 +408,13 @@
 }
 
 
-.search_page select option{
+/*.search_page select option{
 	color: white;
     margin:40px;
     background: black !important;
     color:#fff;
     text-shadow:0 1px 0 rgba(0,0,0,0.4);
-}
+}*/
 
 .search_page .secondary_login{
 	color: #717070;
@@ -535,7 +535,6 @@
 .search_page .website_search_options,
 .search_page .website_search_helpers{
 	background-color: white !important;
-	max-height: 30vh;
 	box-shadow: 0 2px 40px 0 rgba(0,0,0,.4);
 }
 

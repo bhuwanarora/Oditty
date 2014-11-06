@@ -77,7 +77,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	$scope.hide_popups = function(event){
 		$rootScope.popups = {};
 		$rootScope.user.interact = false;
+		$rootScope.hide_options = true;
 		$rootScope.user.show_share_box = false;
+		// $scope.handle_base_selection();
 		event.stopPropagation();
 	}
 
@@ -1236,15 +1238,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 	// }
 
 	$scope.handle_options = function(event){
+		event.stopPropagation();
 		if(!on_search_page){
 			if($rootScope.hide_options){
-				if(angular.isUndefined($scope.search_tag.input) || $scope.search_tag.input.length == 0){
-					$scope.hide_input_field = false;
-					$scope._init_book_search();
-				}
-				$scope.show_secondary_input = false;
-				$rootScope.hide_options = false;
-				
 				$rootScope.user.collapsed_column = true;
 				$rootScope.user.collapsed_filters = true;
 				$rootScope.user.collapsed_friends = true;
@@ -1256,17 +1252,23 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 				$rootScope.popups.left_panel_width = {'width': WebsiteUIConstants.LeftPanelMinWidth};
 
 				delete $rootScope.focused_book;
-				delete $scope.active_nest;
-				delete $scope.active_base;
-				delete $scope.search_tag.custom_input;
-				$scope.active_base = SearchUIConstants.BookSearch;
 			}
-			event.stopPropagation();
 		}
-		else{
-			$scope.shift_search_to_top();
+		if($rootScope.hide_options){
+			if(angular.isUndefined($scope.search_tag.input) || $scope.search_tag.input.length == 0){
+				$scope.hide_input_field = false;
+				$scope._init_book_search();
+			}
+			$scope.show_secondary_input = false;
+			$rootScope.hide_options = false;
+			
+			delete $scope.active_nest;
+			delete $scope.active_base;
+			delete $scope.search_tag.custom_input;
+			$scope.active_base = SearchUIConstants.BookSearch;
 		}
 		$scope._set_base_selection();
+		console.debug("ISSUE", $scope.search_results.length > 0, $scope.search_results == $scope.base_book_options, !$rootScope.hide_options);
 	}
 
 	$scope._set_base_selection = function(){
@@ -1316,12 +1318,12 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			$scope._add_trends_as_notifications();
 		}
 
-		if($routeParams.type){
-			$rootScope.hide_options = true;
-		}
-		else{
-			$rootScope.hide_options = false;
-		}
+		$rootScope.hide_options = true;
+		// if($routeParams.type){
+		// }
+		// else{
+		// 	$rootScope.hide_options = false;
+		// }
 	}
 
 	$scope._set_cover_photo = function(){

@@ -1,29 +1,6 @@
 <div class="main_header fx-fade-down fx-speed-900"
 	 ng-style="user.main_header_background"
 	 ng-if="show_header">
-	<a class="site_logo" 
-		ng-style="user.main_header"
-		ng-href="#/user/{{$routeParams.id}}/search" ng-if="$routeParams.type">
-		<tooltip prepend-text="Back to search page" position="bottom"></tooltip>
- 		<span>r</span>
-		<span>e</span>
-		<span>a</span>
-		<span>d</span>
-		<span>e</span>
-		<span>r</span>
-		<span>'</span>
-		<span>s</span>
-		<span>&nbsp;</span>
-		<span>d</span>
-		<span>o</span>
-		<span>o</span>
-		<span>r</span>
- 	</a>
- 	<a class="compressed_site_logo" 
- 		ng-style="user.main_header"
-		ng-href="#/user/{{$routeParams.id}}/search" ng-if="$routeParams.type">
-		<span class="icon-books"></span>
-	</a>
  	<div class="table_cell header_wrapper"  ng-if="!$routeParams.type">
  		<a class="compressed_site_logo" 
  			ng-style="user.main_header"
@@ -48,6 +25,29 @@
 			<span>r</span>
 	 	</a>
  	</div>
+	<a class="site_logo" 
+		ng-style="user.main_header"
+		ng-href="#/user/{{$routeParams.id}}/search" ng-if="$routeParams.type">
+		<tooltip prepend-text="Back to search page" position="bottom"></tooltip>
+ 		<span>r</span>
+		<span>e</span>
+		<span>a</span>
+		<span>d</span>
+		<span>e</span>
+		<span>r</span>
+		<span>'</span>
+		<span>s</span>
+		<span>&nbsp;</span>
+		<span>d</span>
+		<span>o</span>
+		<span>o</span>
+		<span>r</span>
+ 	</a>
+ 	<a class="compressed_site_logo" 
+ 		ng-style="user.main_header"
+		ng-href="#/user/{{$routeParams.id}}/search" ng-if="$routeParams.type">
+		<span class="icon-books"></span>
+	</a>
 	<div class="header_icon" 
 		 ng-style="user.main_header"
 		 ng-click="toggle_settings_popup($event)" ng-if="$routeParams.type">
@@ -67,7 +67,7 @@
 	<a ng-href="#/user/{{user.id}}/recommendations/books">
 		<profile-link></profile-link>
 	</a>
- 	<div ng-controller="searchController" ng-if="$routeParams.type && !reader">
+ 	<div ng-controller="searchController" ng-if="!reader">
  		<search-bar></search-bar>
  	</div>
  	<div class="header_navbar click share animate-fast"

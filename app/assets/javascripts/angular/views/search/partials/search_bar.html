@@ -92,7 +92,7 @@
         <div class="title" ng-show="search_display" ng-bind-html="search_display"></div>
   </div>
   <div class="animate-fast website_search_options scrollbar init_filter"
-       ng-if="search_results.length > 0 && search_results == base_book_options && !($routeParams.type && hide_options)">
+       ng-if="search_results.length > 0 && search_results == base_book_options && !hide_options">
     <div class="large_font inline_block green_color left_icon">
       <span class="icon-book"></span>
     </div>
@@ -109,14 +109,14 @@
         </span>
       </div>
     </div>
-    <div class="inline_block float_right" ng-show="!$routeParams.type">
+    <!-- <div class="inline_block float_right" ng-show="!$routeParams.type">
       <div class="larger_font inline_block line_separator">|</div>
       <div class="inline_block padding">
         <div class="click">
           <a ng-href="#/user/{{user.id}}/recommendations/books">Recommendations</a>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 
   <div class="animate-fast website_search_options scrollbar" 
