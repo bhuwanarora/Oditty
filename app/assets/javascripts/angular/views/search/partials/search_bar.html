@@ -26,9 +26,8 @@
     </div>
   </div>
 
-  <div class="input_wrapper" 
-       ng-class="{'search_input_shifted': $routeParams.type && hide_options}"
-       ng-hide="hide_input_field">
+  <div class="input_wrapper"
+       ng-hide="hide_input_field || !user.id">
     <input set-focus="website.searching" 
            ng-keypress="get_search_results($event)"
            ng-keydown="key_down($event)"
