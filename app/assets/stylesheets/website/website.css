@@ -782,4 +782,6 @@ input:focus{
     background-color: pink;
     border-radius: 4px;
     border: 1px solid rgb(229, 170, 180);
+    min-height: 50px;
+    font-size: 16px;
 }

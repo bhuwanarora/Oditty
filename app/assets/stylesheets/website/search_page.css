@@ -91,15 +91,8 @@
 
 .search_page .left_column .friends_grid .friend_details, 
 .search_page .user_profile .friends_grid .friend_details{
-	width: 67%;
+	width: 55%;
 	font-size: 12px;
-}
-
-.search_page .image_wrapper,
-.search_page .left_column .friends_grid img, 
-.search_page .user_profile .friends_grid img{
-	width: 30px;
-	min-height: 30px;
 }
 
 .search_page .left_column .collapse_icon{
