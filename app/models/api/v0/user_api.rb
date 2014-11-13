@@ -294,7 +294,7 @@ module Api
 					elsif (params[key].class == ActiveSupport::HashWithIndifferentAccess) || (params[key].class == ActionController::Parameters)
 						puts "TO ADD #{params[key].class}".red
 					else
-						set_clause = set_clause + " SET fu."+key.to_s+"=\""+params[key].to_s.gsub("\"","")+"\""
+						set_clause = set_clause + " SET fu."+key.to_s+"=\""+params[key].to_s.gsub("\"","'")+"\""
 					end
 				end
 
@@ -383,7 +383,7 @@ module Api
 			end
 
 			def self._handle_string(key, value)
-				key.to_s+": \""+value.to_s+"\""
+				key.to_s+": \""+value.to_s.gsub("\"", "'")+"\""
 			end
 
 			def self._handle_hash(param, object_key, new_label)
