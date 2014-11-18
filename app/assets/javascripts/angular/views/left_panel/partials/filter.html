@@ -17,6 +17,11 @@
 			 <span class="{{textClass}}">{{filter.name | lowercase}}</span>
 			 <span class="{{iconClass}} float_right" ng-hide="hideIcon"></span>
 		 </div>
+		<div class="full_width">
+			<img ng-repeat="isbn in filter.book_isbns | limitTo: 3" 
+				 class="inline_block margin2"
+				 ng-src="{{isbn | small_thumb}}"/>
+		</div>
 		<div ng-show="filter.count">
 			<span>{{filter.count}} books</span>	
 		</div>

@@ -19,6 +19,13 @@
 		</div>
 	</div>
 	<div class="trending_background site_color" ng-show="notification.title">
-		<a ng-href="#user/{{user.id}}/trending/books/id/{{notification.id}}/name/{{notification.name}}">Check out books related to  <b class="larger_font">{{notification.keywords}}</b></a>
+		<a ng-href="#user/{{user.id}}/trending/books/id/{{notification.id}}/name/{{notification.name}}">
+			<div class="full_width">
+				<img ng-repeat="isbn in notification.book_isbns | limitTo: 7" 
+					 class="inline_block small_thumb"
+					 ng-src="{{isbn | small_thumb}}"/>
+			</div>
+			Check out books related to  <b>{{notification.keywords}}</b>
+		</a>
 	</div>
 </div>

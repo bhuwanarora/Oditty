@@ -1595,7 +1595,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		recommendationService.get_book_lists().then(function(data){
 			angular.forEach(data, function(value){
 	    		var json = $scope._get_option_json(SearchUIConstants.List);
-				json = angular.extend(json, {"name": value[1], "id": value[0], "count": value[2]});
+				json = angular.extend(json, {"name": value[1], "id": value[0], "count": value[2], "book_isbns": value[3]});
 				this.push(json);
 			}, $rootScope.book_lists);
 		});
