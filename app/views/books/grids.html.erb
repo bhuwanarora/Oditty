@@ -31,7 +31,7 @@
 					<option>Select</option>
 					<% for i in 1..@grids.length do %>
 						<option value="<%= i %>"
-							<% if grid[6] == i %>selected<% end %>><%= i %></option>
+							<% if grid[6].to_s == i.to_s %>selected<% end %>><%= i %></option>
 					<% end %>
 				</select>
 			</td>
