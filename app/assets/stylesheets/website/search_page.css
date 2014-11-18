@@ -33,9 +33,10 @@
 
 .search_page .interact_icon{
 	display: inline-block;
-	padding: 4px;
+	padding: 5px 15px;
 	background-color: transparent;
 	cursor: pointer;
+	width: 100%;
 }
 
 .search_page .interact_icon:hover{

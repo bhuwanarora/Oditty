@@ -1,11 +1,17 @@
 <div class="filters_panel_large light_grey relative_position" ng-if="!user.collapsed_lists">
+	<div>
+		<br/>
+		<b>Share your reading journey</b>
+		<br/>
+		<br/>
+	</div>
 	<div class="filters_group">
 		<div ng-repeat="option in interaction_options" 
 			 class="interact_icon relative_position"
 			 ng-click="show_interaction_box(option, $event)">
-			<tooltip text="option.name" position="bottom" ng-show="option.icon"></tooltip>
+			<!-- <tooltip text="option.name" position="bottom" ng-show="option.icon"></tooltip> -->
 			<div class="inline_block {{option.icon}}"></div>
-			<div class="inline_block" ng-hide="option.icon">&nbsp;&nbsp;{{option.name}}</div>
+			<div class="inline_block">&nbsp;&nbsp;{{option.name}}</div>
 		</div>
 	</div>
 </div>

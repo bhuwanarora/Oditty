@@ -1,5 +1,7 @@
 <div class="notifications animate-fast scrollbar" 
 	 check-scroll-bottom="get_notifications()">
+	 <div class="header"><b>Happenings in your network</b></div>
+	 <br/>
 	<div class="full_height">
 		<notification data="notification" ng-repeat="notification in news_feed | reverse"></notification>
 		<div class="notification_stable">

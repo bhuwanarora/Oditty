@@ -277,7 +277,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/left_panel/partials/filter.html',
-    "<a ng-href=\"#/user/{{$routeParams.id}}/{{url}}\" ng-if=\"reader\"><div ng-class=\"{'site_color':active, 'inactive_filter':!active}\" class=\"filter capitalise\"><div><span class=\"{{textClass}}\">{{filter.name | lowercase}}</span> <span class=\"{{iconClass}} float_right\" ng-hide=\"hideIcon\"></span></div><div ng-show=\"filter.count\"><span>{{filter.count}} books</span></div></div></a> <a ng-href=\"#/user/{{user_id}}/{{url}}\" ng-if=\"!reader\"><div ng-class=\"{'site_color':active, 'inactive_filter':!active}\" class=\"filter capitalise\"><div><span class=\"{{textClass}}\">{{filter.name | lowercase}}</span> <span class=\"{{iconClass}} float_right\" ng-hide=\"hideIcon\"></span></div><div ng-show=\"filter.count\"><span>{{filter.count}} books</span></div><div class=\"full_width\"><img ng-repeat=\"isbn in filter.book_isbns | limitTo: 4\" class=\"inline_block margin2\" ng-src=\"{{isbn | small_thumb}}\"></div></div></a>"
+    "<a ng-href=\"#/user/{{$routeParams.id}}/{{url}}\" ng-if=\"reader\"><div ng-class=\"{'site_color':active, 'inactive_filter':!active}\" class=\"filter capitalise\"><div><span class=\"{{textClass}}\">{{filter.name | lowercase}}</span> <span class=\"{{iconClass}} float_right\" ng-hide=\"hideIcon\"></span></div><div ng-show=\"filter.count\"><span>{{filter.count}} books</span></div></div></a> <a ng-href=\"#/user/{{user_id}}/{{url}}\" ng-if=\"!reader\"><div ng-class=\"{'site_color':active, 'inactive_filter':!active}\" class=\"filter capitalise\"><div><span class=\"{{textClass}}\">{{filter.name | lowercase}}</span> <span class=\"{{iconClass}} float_right\" ng-hide=\"hideIcon\"></span></div><div class=\"full_width\"><img ng-repeat=\"isbn in filter.book_isbns | limitTo: 3\" class=\"inline_block margin2\" ng-src=\"{{isbn | small_thumb}}\"></div><div ng-show=\"filter.count\"><span>{{filter.count}} books</span></div></div></a>"
   );
 
 
@@ -326,7 +326,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/search/interact.html',
-    "<div class=\"filters_panel_large light_grey relative_position\" ng-if=\"!user.collapsed_lists\"><div class=\"filters_group\"><div ng-repeat=\"option in interaction_options\" class=\"interact_icon relative_position\" ng-click=\"show_interaction_box(option, $event)\"><tooltip text=\"option.name\" position=\"bottom\" ng-show=\"option.icon\"></tooltip><div class=\"inline_block {{option.icon}}\"></div><div class=\"inline_block\" ng-hide=\"option.icon\">&nbsp;&nbsp;{{option.name}}</div></div></div></div>"
+    "<div class=\"filters_panel_large light_grey relative_position\" ng-if=\"!user.collapsed_lists\"><div><br><b>Share your reading journey</b><br><br></div><div class=\"filters_group\"><div ng-repeat=\"option in interaction_options\" class=\"interact_icon relative_position\" ng-click=\"show_interaction_box(option, $event)\"><div class=\"inline_block {{option.icon}}\"></div><div class=\"inline_block\">&nbsp;&nbsp;{{option.name}}</div></div></div></div>"
   );
 
 
