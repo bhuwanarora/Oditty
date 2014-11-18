@@ -18,7 +18,7 @@
 			 <span class="{{iconClass}} float_right" ng-hide="hideIcon"></span>
 		 </div>
 		<div class="full_width">
-			<img ng-repeat="isbn in filter.book_isbns | limitTo: 3" 
+			<img ng-repeat="isbn in filter.book_isbns | limitTo: 3 track by $index " 
 				 class="inline_block margin2"
 				 ng-src="{{isbn | small_thumb}}"/>
 		</div>

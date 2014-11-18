@@ -21,7 +21,7 @@
 	<div class="trending_background site_color" ng-show="notification.title">
 		<a ng-href="#user/{{user.id}}/trending/books/id/{{notification.id}}/name/{{notification.name}}">
 			<div class="full_width">
-				<img ng-repeat="isbn in notification.book_isbns | limitTo: 7" 
+				<img ng-repeat="isbn in notification.book_isbns | limitTo: 7 track by $index " 
 					 class="inline_block small_thumb"
 					 ng-src="{{isbn | small_thumb}}"/>
 			</div>

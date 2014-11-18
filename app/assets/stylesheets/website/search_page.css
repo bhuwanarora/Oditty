@@ -15,6 +15,11 @@
 	font-size: 13px;
 }
 
+.search_page .extended_header{
+	position: relative;
+	margin-bottom: -50px;
+}
+
 .search_interaction_box{
 	box-shadow: 0 2px 40px 0 rgba(0,0,0,.4) !important;
 	width: 94% !important;

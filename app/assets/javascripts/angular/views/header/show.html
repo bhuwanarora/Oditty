@@ -1,7 +1,10 @@
 <div class="main_header fx-fade-down fx-speed-900"
 	 ng-style="user.main_header_background"
+	 ng-class="{'extended_header': !user.stick_header}"
 	 ng-if="show_header">
- 	<div class="table_cell header_wrapper"  ng-if="!$routeParams.type">
+ 	<div class="table_cell header_wrapper"  
+ 		 ng-style="search_style"
+ 		 ng-if="!$routeParams.type">
  		<a class="compressed_site_logo" 
  			ng-style="user.main_header"
 	 		ng-href="#/user/{{user.id}}/recommendations/books">
