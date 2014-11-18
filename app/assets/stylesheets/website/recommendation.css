@@ -1653,7 +1653,7 @@
 }
 
 .main_header .search_typeahead_group{
-	position: fixed;
+	position: absolute;
 	width: 43%;
 	height: 33px;
 	z-index: 10;
@@ -1672,10 +1672,6 @@
 	left: 200px;
 	box-shadow: none;
 	border-radius: 2px;
-}
-
-.main_header .search_input{
-	border: none;
 }
 
 .main_header .base_search{
