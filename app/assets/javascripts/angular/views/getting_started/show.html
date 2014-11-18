@@ -1,4 +1,4 @@
-<div ng-if="!user.compressed_info">
+<div ng-if="!user.compressed_info && user.logged">
      <div ng-include src="'/assets/angular/views/getting_started/partials/navbar.html'"></div>
      <div class="wrapper" 
      	  msd-wheel="stop_propagation($event);"

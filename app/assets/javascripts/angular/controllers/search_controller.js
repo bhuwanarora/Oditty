@@ -1608,7 +1608,9 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			delete $rootScope.user.main_header_background;
 			var user_logged_in = $cookieStore.get('logged');
 			if(user_logged_in){
-				sharedService.set_friends();
+				if(angular.isUndefined($rootScope.user.friends)){
+					sharedService.set_friends();
+				}
 				sharedService.set_labels();
 				sharedService.get_news_feed($scope);
 			}
