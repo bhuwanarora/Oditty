@@ -201,7 +201,7 @@ module UsersGraphHelper
 
 	def self.create_user(email, password=nil, verification_token=nil)
 		@neo ||= self.neo_init
-		create_new_user = "CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, last_book: "+Constants::BestBook.to_s+", amateur: true}), "
+		create_new_user = "CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, last_book: "+Constants::BestBook.to_s+", amateur: true, ask_info: true}), "
 		create_feednext_relation = "(user)-[fn:FeedNext{user_id:ID(user)}]->(user), "
 		create_ego_relation = "(user)-[:Ego{user_id:ID(user)}]->(user) WITH user "
 		get_labels = "MATCH(bm:Label{primary_label:true}) "

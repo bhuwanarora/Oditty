@@ -1060,9 +1060,9 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 					{"name": "Publisher"},
 					{"name": "Editor"}
 				];
-				
-				if(angular.isUndefined($rootScope.user.ask_info) && $rootScope.user.ask_info){
+				if(angular.isUndefined($rootScope.user.ask_info) || $rootScope.user.ask_info){
 					$rootScope.user.compressed_info = false;
+					$rootScope.user.ask_info = false;
 					var params = {"ask_info": false};
 					websiteService.save_user_info(params);
 				}
