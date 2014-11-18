@@ -8,7 +8,7 @@
 		<th>Active</th>
 		<th>Submit</th>
 	</tr>
-	<% @grids.sort_by!{|s| s[6]}.reverse.each do |grid|%>
+	<% @grids.sort_by!{|s| s[6].to_s}.reverse.each do |grid|%>
 		<tr>
 			<td><%= grid[5].length %></td>
 			<td class="grid_edit_name">

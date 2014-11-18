@@ -9,7 +9,7 @@ module Constants
 	RecommendationPoints		= 10
 
 	if Rails.env.development?
-		Admin						= 2707306
+		Admin						= 1633200
 	else
 		Admin						= 4084079
 	end
