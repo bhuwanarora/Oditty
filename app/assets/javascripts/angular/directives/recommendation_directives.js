@@ -817,12 +817,12 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 							}
 						}
 					}
-					$scope.loading = false;
+					$scope._loading = false;
 				});
 			}
 
 			$scope.handle_search_input = function(type){
-				$scope.loading = true;
+				$scope._loading = true;
 				if(type == "BOOK"){
 					$scope.all_results_found = false;
 					$scope.popular_books = [];
@@ -840,7 +840,7 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 						else{
 							$scope.popular_authors = [{"title": "No results found..."}];
 						}
-						$scope.loading = false;
+						$scope._loading = false;
 					});
 				}
 			}
@@ -918,24 +918,24 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 
 			$scope.get_popular_authors = function(){
 				var skip_count = $scope.popular_authors.length;
-				var get_popular_authors = !$scope.loading;
+				var get_popular_authors = !$scope._loading;
 				if(get_popular_authors){
-					$scope.loading = true;
+					$scope._loading = true;
 					websiteService.get_popular_authors(skip_count).then(function(data){
 						angular.forEach(data, function(value){
 							var json = {"name": value[0]};
 							this.push(json);
 						},  $scope.popular_authors);
-						$scope.loading = false;
+						$scope._loading = false;
 					});
 				}
 			}			
 
 			$scope.get_popular_books = function(){
 				var skip_count = $scope.popular_books.length;
-				var get_popular_books = !$scope.loading && (angular.isUndefined($scope.info.search_book) || $scope.info.search_book.length < 1);
+				var get_popular_books = !$scope._loading && (angular.isUndefined($scope.info.search_book) || $scope.info.search_book.length < 1);
 				if(get_popular_books){
-					$scope.loading = true;
+					$scope._loading = true;
 					websiteService.get_popular_books(skip_count).then(function(data){
 						angular.forEach(data, function(value){
 							var status = value[4] != null;
@@ -947,7 +947,7 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 									"status": status};
 							this.push(json);
 						},  $scope.popular_books);
-						$scope.loading = false;
+						$scope._loading = false;
 					});
 				}
 				else{
@@ -1052,7 +1052,7 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 	    		_get_info_data();
 	    		$scope.popular_books = [];
 	    		$scope.popular_authors = [];
-	    		$scope.loading = false;
+	    		$scope._loading = false;
 	    		$scope.info = {"search_book": "", "search_author": "", "genres": []};
 				$scope.profileOptions = [
 					{"name": "Reader"},
