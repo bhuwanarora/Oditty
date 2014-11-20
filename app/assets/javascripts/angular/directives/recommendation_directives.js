@@ -185,7 +185,7 @@ websiteApp.directive('header', ['$timeout', '$rootScope', '$routeParams', functi
 	}
 }]);
 
-websiteApp.directive('navbar', ['scroller', '$rootScope', 'websiteService', '$timeout', '$cookieStore', 'RecommendationUIConstants', 'WebsiteUIConstants', function(scroller, $rootScope, websiteService, $timeout, $cookieStore, RecommendationUIConstants, WebsiteUIConstants){
+websiteApp.directive('navbar', ['scroller', '$rootScope', 'websiteService', '$timeout', '$cookieStore', 'RecommendationUIConstants', 'WebsiteUIConstants', 'sharedService', function(scroller, $rootScope, websiteService, $timeout, $cookieStore, RecommendationUIConstants, WebsiteUIConstants, sharedService){
 	return{
 		restrict: 'E',
 		controller: ['$scope', function($scope){
@@ -207,39 +207,9 @@ websiteApp.directive('navbar', ['scroller', '$rootScope', 'websiteService', '$ti
 					$scope.bookmark_selected = true;
 					$scope.read_selected = false;
 					// $scope.glowBookmark = false;
-					var skip_count = 0;
 					
-					websiteService.get_books_bookmarked(skip_count).then(function(data){
-						if(angular.isArray(data)){
-							$rootScope.user.books = {};
-							$rootScope.user.books['bookmarked'] = [];
-							var timer = 500;
-							angular.forEach(data, function(data){
-								var labels = [];
-								angular.forEach($rootScope.labels, function(value){
-									if(data[2].indexOf(value.name) >= 0){
-										var json = {"name": value.name, "checked": true};
-									}
-									else{
-										var json = {"name": value.name, "checked": false};
-									}
-									labels.push(json);	
-								}, labels);
-								var json = {"isbn": data[0], 
-											"id": data[1], 
-											"bookmark_status": true, 
-											"labels": labels};
-								// this.push(json);
-								timer = timer + 500;
-								var timeout_event = $timeout(function(){
-									$rootScope.user.books['bookmarked'].push(json);
-								}, timer);
-								$scope.$on('destroy', function(){
-									$timeout.cancel(timeout_event);
-								});
-							});
-						}
-					});
+					sharedService.get_books_bookmarked($scope);
+					
 					// $('body').css('background-image', $scope.search_style['background-image']);
 				}
 				event.stopPropagation();
@@ -914,6 +884,14 @@ websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService
 				$scope.goto_info_card();
 				$rootScope.user.profile_status = 3;
 				$scope.get_popular_authors();
+			}
+
+			$scope.goto_info_card = function(page_number){
+				if(angular.isDefined(page_number)){
+					$rootScope.user.profile_status = page_number;
+				}
+				$rootScope.user.compressed_info = false;
+				// scroller.scrollTo(0, 0, 2000);
 			}
 
 			$scope.get_popular_authors = function(){

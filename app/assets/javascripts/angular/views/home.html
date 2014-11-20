@@ -75,17 +75,7 @@
 		     ng-if="focused_book">
 		    <book-info></book-info>
 		</div>
-		<div class="ticker_popup" 
-			 ng-if="ticker_popup"
-			 ng-class="{'ticker_popup_shifted': user.show_profile}"
-			 ng-style="ticker_popup_style"
-			 msd-wheel="handle_height_of_popup($event)"
-			 check-scroll-down="handle_height_of_popup($event, true)">
-			<div class="scrollbar shift_right">
-				<ticker-popup></ticker-popup>
-			</div>
-			<!-- <book-interact track></book-interact> -->
-		</div>
+		
 		<div ng-if="focused_author"><focused-author></focused-author></div>
 		<div ng-if="focused_reader"><focused-reader></focused-reader></div>
 

@@ -12,6 +12,41 @@ websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 
         });
     }
 
+    this.get_books_bookmarked = function($scope){
+        var skip_count = 0;
+        websiteService.get_books_bookmarked(skip_count).then(function(data){
+            if(angular.isArray(data)){
+                $rootScope.user.books = {};
+                $rootScope.user.books['bookmarked'] = [];
+                var timer = 500;
+                angular.forEach(data, function(data){
+                    var labels = [];
+                    angular.forEach($rootScope.labels, function(value){
+                        if(data[2].indexOf(value.name) >= 0){
+                            var json = {"name": value.name, "checked": true};
+                        }
+                        else{
+                            var json = {"name": value.name, "checked": false};
+                        }
+                        labels.push(json);  
+                    }, labels);
+                    var json = {"isbn": data[0], 
+                                "id": data[1], 
+                                "bookmark_status": true, 
+                                "labels": labels};
+                    // this.push(json);
+                    timer = timer + 500;
+                    var timeout_event = $timeout(function(){
+                        $rootScope.user.books['bookmarked'].push(json);
+                    }, timer);
+                    $scope.$on('destroy', function(){
+                        $timeout.cancel(timeout_event);
+                    });
+                });
+            }
+        });
+    }
+
     this.get_news_feed = function($scope){
         $scope.show_feed = {"news": true};
         if(angular.isDefined($scope.news_feed)){

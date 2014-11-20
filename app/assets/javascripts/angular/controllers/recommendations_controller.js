@@ -73,6 +73,7 @@ websiteApp.controller('recommendationsController', ['$scope', '$rootScope', '$ti
 			$scope.hide_popups();
 			$rootScope.user.show_profile = true;
 			$scope._get_user_profile_info(user_id);
+			// sharedService.get_books_bookmarked($scope);
 			// $scope._get_friends(2);
 		}
 		

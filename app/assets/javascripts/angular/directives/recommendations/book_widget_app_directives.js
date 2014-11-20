@@ -1,4 +1,4 @@
-websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', '$timeout', function (websiteService, $rootScope, widgetService, $timeout){
+websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', '$timeout', '$routeParams', function (websiteService, $rootScope, widgetService, $timeout, $routeParams){
   return {
     restrict: 'E',
     scope: { 'book': '=data' },
@@ -21,13 +21,16 @@ websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', '
         if($rootScope.focused_book != $scope.book){
           var _hide_other_popups = function(){
             delete $rootScope.ticker_popup;
-            $rootScope.popups = {};
-            $rootScope.user.collapsed_friends = true; 
-            $rootScope.user.collapsed_left_column = true;
-            $rootScope.user.collapsed_column = true; 
-            $rootScope.user.collapsed_lists = true;
-            $rootScope.user.collapsed_filters = true;
-            $rootScope.user.collapsed_trends = true;
+            var on_search_page = angular.isDefined($routeParams.type);
+            if(on_search_page){
+              $rootScope.popups = {};
+              $rootScope.user.collapsed_friends = true; 
+              $rootScope.user.collapsed_left_column = true;
+              $rootScope.user.collapsed_column = true; 
+              $rootScope.user.collapsed_lists = true;
+              $rootScope.user.collapsed_filters = true;
+              $rootScope.user.collapsed_trends = true;
+            }
           }
 
           var _set_focused_book = function(){

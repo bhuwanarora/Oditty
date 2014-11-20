@@ -1,4 +1,15 @@
 <div ng-if="!reader" class="user_profile_block scrollbar">
+	<div>Reading Journeys</div>
+	<div ng-repeat="book in user.books.bookmarked" class="journey_block small_font">
+		<img ng-src="{{book.isbn | small_thumb}}" class="inline_block" />
+		<div class="content_block">
+			<div><b>{{book.title}}</b></div>
+			<div>by {{book.author_name}}</div>
+			<div><rate data="book"></rate></div>
+		</div>
+	</div>
+</div>
+<div ng-if="!reader" class="user_profile_block scrollbar">
 	<div class="header">
 		<b>About {{user.name | first_name}}&nbsp;&nbsp;</b><span class="click float_right" ng-click="goto_info_card(0)">Edit</span>
 	</div>

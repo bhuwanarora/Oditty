@@ -79,6 +79,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 		$rootScope.user.interact = false;
 		$rootScope.hide_options = true;
 		$rootScope.user.show_share_box = false;
+		delete $rootScope.ticker_popup;
 		// $scope.handle_base_selection();
 		event.stopPropagation();
 	}
@@ -1600,6 +1601,7 @@ websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteServi
 			}, $rootScope.book_lists);
 		});
 		if(on_search_page){
+			$rootScope.user.show_profile = false;
 			$rootScope.user.collapsed_left_column = false;
 			$rootScope.user.collapsed_lists = false;
 			$rootScope.user.collapsed_filters = false;

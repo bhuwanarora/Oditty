@@ -1353,17 +1353,34 @@
 	border-radius: 1px;
 }
 
+.user_profile .journey_block{
+	background-color: #f5f5f5;
+	padding: 5px;
+	margin: 5px 0px;
+	cursor: pointer;
+}
+
+.user_profile .journey_block:hover{
+	background-color: #F1F1F1;
+}
+
+.user_profile .journey_block .content_block{
+	display: inline-block;
+	margin: 0px 5px;
+	white-space: initial;
+}
+
 .ticker_popup{
-	top: 230px;
-	left: 29.5%;
+	top: 80px;
+	right: 29.5%;
 	white-space: initial;
 	background-color: white;
 	border-radius: 2px;
 	border: 1px solid #FFF;
 	box-shadow: 0 7px 15px rgba(0,0,0,.25);
 	height: 42vh;
-	position: fixed;
-	z-index: 12;
+	position: absolute;
+	z-index: 19;
 	padding: 4px 0px 4px 0px;
 }
 
@@ -1390,6 +1407,7 @@
 .ticker_popup .ticker_overflow{
 	height: 35vh;
 	width: 39vh;
+	overflow: scroll;
 }
 
 .ticker_popup .bottom_widget{
@@ -1737,7 +1755,7 @@
 }
 
 .notifications_popup{
-	position: fixed;
+	position: absolute;
 	background-color: #ECECEC;
 	/*width: 35%;*/
 	max-height: 45vh;
@@ -1986,6 +2004,7 @@
 .ticker_popup_shifted{
 	top: 61px;
 	left: 18%;
+	right: inherit;
 }
 
 .profile_thumb_wrapper,
@@ -2173,6 +2192,7 @@
 .footer li:hover{
 	text-decoration: underline;
 }
+
 
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen

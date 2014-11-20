@@ -290,7 +290,7 @@ websiteApp.directive('notification', ['$rootScope', '$timeout', '$location', '$r
 					$location.path("/user/"+$rootScope.user.id+"/trending/books/id/"+notification.id+"/name/"+notification.name);
 				}
 				else{
-					var ticker_popup_absent = $rootScope.ticker_popup == null;
+					var ticker_popup_absent = $rootScope.ticker_popup == null || angular.isUndefined($rootScope.ticker_popup);
 					if(ticker_popup_absent){
 						if(angular.isDefined($scope.notification.book) && $scope.notification.book.id != null){
 							$rootScope.ticker_popup = $scope.notification.book;
