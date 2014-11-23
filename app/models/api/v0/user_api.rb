@@ -373,10 +373,10 @@ module Api
 						puts "#{param[object_key].to_s.green} #{object_key.to_s} #{key} #{param[object_key].class}"
 						puts object_string.to_s.blue
 						puts node_string.to_s.red
-
 					end
-					
-					string = string + " CREATE UNIQUE (user)-[:"+label+"]->("+new_label+":"+label.singularize+"{"+object_string+"}) "+node_string
+					if object_string
+						string = string + " CREATE UNIQUE (user)-[:"+label+"]->("+new_label+":"+label.singularize+"{"+object_string+"}) "+node_string
+					end
 				end
 				string
 			end
@@ -399,9 +399,6 @@ module Api
 				new_object_string = " CREATE UNIQUE ("+new_label.to_s+")-[:HasProperty]->(:"+object_key.to_s.singularize.camelcase+"{"+new_object_string+"})"
 				new_object_string
 			end
-
-
-
 		end
 	end
 end
