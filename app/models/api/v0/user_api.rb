@@ -374,7 +374,7 @@ module Api
 						puts object_string.to_s.blue
 						puts node_string.to_s.red
 					end
-					if object_string
+					if object_string.present?
 						string = string + " CREATE UNIQUE (user)-[:"+label+"]->("+new_label+":"+label.singularize+"{"+object_string+"}) "+node_string
 					end
 				end
