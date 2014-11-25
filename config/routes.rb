@@ -70,6 +70,7 @@ ReadersDoor::Application.routes.draw do
   get "book_count"               => "books#count",                      :as => "get_book_count"
   # root :to => "website#coming_soon"
   root :to => "website#about"
+  get 'dev'                       => "recommendations#index",    :as => "dev"
 
   get 'tree'                      => "categories#show_tree",    :as => "show_tree"
   get 'search_tag'                => "tags#search_tag",         :as => "search_tag"
