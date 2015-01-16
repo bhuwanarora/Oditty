@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.1'
 
-gem 'pg'
+gem 'pg', '~> 0.17.1'
 gem 'sass-rails', '~> 4.0.0'
 
 #for attr accessibel in rails4
@@ -30,7 +30,7 @@ gem 'jquery-ui-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # gem 'isbndb', '~> 2.0.2'
-gem 'rmagick', '2.13.2'
+# gem 'rmagick', '2.13.2'
 gem 'openlibrary'
 gem 'simple_form'
 gem 'jquery-tokeninput-rails'
@@ -104,7 +104,7 @@ group :development do
 	gem 'better_errors'
 	gem 'binding_of_caller'
 	gem 'meta_request'
-	gem 'did_you_mean'
+	# gem 'did_you_mean'
 	gem 'net-http-spy'
 	gem 'rspec'
 end

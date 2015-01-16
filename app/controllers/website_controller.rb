@@ -39,6 +39,10 @@ class WebsiteController < ApplicationController
 		render :layout => "clean"
 	end
 
+	def landing_page
+		render :layout => "landing_page"
+	end
+
 	def jobs
 		render :layout => "clean"
 	end
@@ -54,4 +58,5 @@ class WebsiteController < ApplicationController
 	def advertising
 		render :layout => "clean"
 	end
+
 end

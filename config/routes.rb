@@ -1,5 +1,7 @@
 require 'resque/server'
 ReadersDoor::Application.routes.draw do
+  root :to => "website#landing_page"
+
   resources :facebooks
 
   # mount Resque::Server.new, :at => "/resque"
@@ -69,7 +71,6 @@ ReadersDoor::Application.routes.draw do
   get "verify"                   => "users#verify",                     :as => "verify"   
   get "book_count"               => "books#count",                      :as => "get_book_count"
   # root :to => "website#coming_soon"
-  root :to => "website#about"
   get 'dev'                       => "recommendations#index",    :as => "dev"
 
   get 'tree'                      => "categories#show_tree",    :as => "show_tree"

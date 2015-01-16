@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+    <head>
+        <meta charset="utf-8" />
+        <title>ReadersDoor</title>
+        <script>document.write('<base href="' + document.location + '" />');</script>
+
+        <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,100italic,400italic|Roboto+Condensed&amp;lang=en' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="assets/angular_material.css" />
+        <link rel="stylesheet" href="assets/landing_page/style.css" />
+
+        <script src="http://cdn.jsdelivr.net/hammerjs/2.0.4/hammer.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-animate.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-aria.js"></script>
+        <script src="assets/lib/angular_scroll.min.js"></script>
+        <script src="https://code.angularjs.org/1.2.3/angular-route.min.js"></script>
+        
+        <script src="http://rawgit.com/angular/bower-material/master/angular-material.js"></script>
+        <script src="assets/angular/apps/landing_page_app.js"></script>
+        <script src="assets/angular/controllers/landing_page_controller.js"></script>
+    </head>
+
+    <body ng-controller="MainCtrl">
+        <div layout="row" layout-fill>
+            <div flex>
+                <header class="main-header">
+                    <a class="title-btn"><h1>ReadersDoor</h1></a>
+                    <!-- <div class="h-btn-right">
+                        <md-button md-no-ink class="md-warn">Sign in</md-button>
+                        <md-button class="md-raised md-warn md-hue-2">Signup</md-button>
+                    </div> -->
+                </header>
+
+                <md-whiteframe class="md-whiteframe-z1 tab-main" layout layout-align="center center">
+                    <md-tabs class="md-accent" md-selected="data.selectedIndex">
+                        <md-tab aria-controls="tab1-content" ng-click="scroll_page('tab0')">
+                            <a>{{data.tabLabel0}}</a>
+                        </md-tab>
+                        <md-tab aria-controls="tab1-content" ng-click="scroll_page('tab1')">
+                            <a>{{data.tabLabel1}}</a>
+                        </md-tab>
+                        <md-tab aria-controls="tab1-content" ng-click="scroll_page('tab2')">
+                             <a>{{data.tabLabel2}}</a>
+                        </md-tab>
+                        <md-tab aria-controls="tab1-content" ng-click="scroll_page('tab3')">
+                            <a>{{data.tabLabel3}}</a>
+                        </md-tab>
+                        <md-tab aria-controls="tab1-content" ng-click="scroll_page('tab4')">
+                            <a>{{data.tabLabel4}}</a>
+                        </md-tab>
+                        <md-tab aria-controls="tab1-content" ng-click="scroll_page('tab5')">
+                            <a>{{data.tabLabel5}}</a>
+                        </md-tab>
+                    </md-tabs>
+                </md-whiteframe>
+                <div ng-view ng-fadein class="view-cont"></div>
+
+                <md-button class="md-fab btn-arrow" 
+                           aria-label="Comment" 
+                           ng-style="down_button_style"
+                           style="position: fixed!important">
+                    <md-icon icon="assets/arrow-down.png" style="width: 24px; height: 24px;"></md-icon>
+                </md-button>
+            </div>
+        </div>
+    </body>
+</html>
