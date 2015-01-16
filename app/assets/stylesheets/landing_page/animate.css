@@ -1,0 +1,17 @@
+.main-header.ng-enter,
+.main-header.ng-leave.ng-leave-active,
+.tab-main.ng-enter,
+.tab-main.ng-leave.ng-leave-active,
+.inbox-area.ng-enter,
+.inbox-area.ng-leave.ng-leave-active{
+	opacity: 0;
+}
+
+.main-header.ng-leave,
+.main-header.ng-enter-active,
+.tab-main.ng-leave,
+.tab-main.ng-enter-active,
+.inbox-area.ng-leave,
+.inbox-area.ng-enter-active{
+	opacity: 1;
+}

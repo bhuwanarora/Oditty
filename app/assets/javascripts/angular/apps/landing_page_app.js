@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ngAnimate', 'ngMaterial', 'ngRoute', 'duScroll']);
+var app = angular.module('myApp', ['ngAnimate', 'ngMaterial', 'ngRoute', 'duScroll', 'monospaced.mousewheel']);
 
 app.config(
 function($routeProvider) {

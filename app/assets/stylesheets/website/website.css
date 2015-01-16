@@ -21,7 +21,7 @@ body{
     line-height: 1.38;
     font-size: 14px;
     color: #141823;
-    font-family: Helvetica, Arial, 'lucida grande',tahoma,verdana,arial,sans-serif;
+    /*font-family: Helvetica, Arial, 'lucida grande',tahoma,verdana,arial,sans-serif;*/
 }
 
 :not(.scrollbar)::-webkit-scrollbar { 
@@ -40,7 +40,7 @@ a{
 }
 
 a:hover{
-    text-decoration:underline;
+    /*text-decoration:underline;*/
 }
 
 input{
