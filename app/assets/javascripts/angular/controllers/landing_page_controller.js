@@ -1,4 +1,4 @@
-app.controller('MainCtrl', ['$scope', 'scroller', '$document', '$timeout', function($scope, scroller, $document, $timeout){
+app.controller('MainCtrl', ['$scope', 'scroller', '$document', '$timeout', 'WebsiteUIConstants', function($scope, scroller, $document, $timeout, WebsiteUIConstants){
 	function _init(){
 	    $scope.data = [
 	    	"Intro",
@@ -68,6 +68,17 @@ app.controller('MainCtrl', ['$scope', 'scroller', '$document', '$timeout', funct
 			var page_id = $scope.current_page_id + 1;
 			$scope.scroll_page(page_id);
 		}
+	}
+
+	$scope.scroll_on_keypress = function(event){
+		debugger
+		if(event.keyCode == WebsiteUIConstants.keyUp){
+
+		}
+		else if(event.keyCode == WebsiteUIConstants.keyDown){
+			$scope.scroll_next_state();
+		}
+		event.stopPropagation();
 	}
 
 	$scope.bind_mousewheel_scroll = function(event){

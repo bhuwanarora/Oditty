@@ -12,21 +12,25 @@
         <link rel="stylesheet" href="assets/website/website.css" />
         <link rel="stylesheet" href="assets/landing_page/animate.css" />
 
-        <script src="http://cdn.jsdelivr.net/hammerjs/2.0.4/hammer.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-animate.js"></script>
+        <script src="assets/angular/vendors/angular13.min.js"></script>
+        <script src="assets/angular/vendors/angular_animate13.min.js"></script>
+        <script src="assets/angular/vendors/hammer.js"></script>
         <script src="assets/angular/vendors/angular-aria.js"></script>
         <script src="assets/lib/angular_scroll.min.js"></script>
         <script src="assets/angular/vendors/angular_mousewheel.min.js"></script>
-        <script src="https://code.angularjs.org/1.2.3/angular-route.min.js"></script>
+        <script src="assets/angular/vendors/angular_router.min.js"></script>
         
-        <script src="http://rawgit.com/angular/bower-material/master/angular-material.js"></script>
+        <script src="assets/lib/angular_scroll.min.js"></script>
+        <script src="assets/angular/vendors/angular-material.min.js"></script>
+        
+
         <script src="assets/angular/apps/landing_page_app.js"></script>
         <script src="assets/angular/controllers/landing_page_controller.js"></script>
+        <script src="assets/angular/apps/app_constants.js"></script>
     </head>
 
     <body ng-controller="MainCtrl">
-        <div msd-wheel="bind_mousewheel_scroll($event)" layout="row" layout-fill>
+        <div msd-wheel="bind_mousewheel_scroll($event)" layout="row" layout-fill ng-keypress="scroll_on_keypress($event)">
             <div flex>
                 <header class="main-header animate-very-slow" ng-if="show_content">
                     <a class="title-btn" ng-click="scroll_page(0)"><h1>ReadersDoor</h1></a>
