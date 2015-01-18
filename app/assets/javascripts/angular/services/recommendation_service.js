@@ -1,6 +1,6 @@
 //This handles retrieving data and is used by controllers. 3 options (server, factory, provider) with 
 //each doing the same thing just structuring the functions/data differently.
-websiteApp.service('recommendationService', ['$http', '$q', '$rootScope', 'WebsiteUIConstants', function($http, $q, $rootScope, WebsiteUIConstants){
+websiteApp.service('recommendationService', ["$http", "$q", "$rootScope", "WebsiteUIConstants", function($http, $q, $rootScope, WebsiteUIConstants){
 
     var _deferred_request = function(url){
         var deferred = $q.defer();

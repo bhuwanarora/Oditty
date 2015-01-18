@@ -1,4 +1,4 @@
-websiteApp.service('widgetService', ['$http', '$q', '$rootScope', 'WebsiteUIConstants', function ($http, $q, $rootScope, WebsiteUIConstants){
+websiteApp.service('widgetService', ["$http", "$q", "$rootScope", "WebsiteUIConstants", function ($http, $q, $rootScope, WebsiteUIConstants){
     var _deferred_request = function(url){
         var deferred = $q.defer();
         var success_callback = function(result) {

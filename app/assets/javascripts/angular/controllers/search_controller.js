@@ -1,4 +1,4 @@
-websiteApp.controller('searchController', ['$scope', '$rootScope', 'websiteService', '$timeout', '$sce', 'recommendationService', '$routeParams', '$location', 'SearchUIConstants', 'WebsiteUIConstants', '$cookieStore', 'sharedService', 'widgetService', 'StatusUIConstants', function($scope, $rootScope, websiteService, $timeout, $sce, recommendationService, $routeParams, $location, SearchUIConstants, WebsiteUIConstants, $cookieStore, sharedService, widgetService, StatusUIConstants){
+websiteApp.controller('searchController', ["$scope", "$rootScope", "websiteService", "$timeout", "$sce", "recommendationService", "$routeParams", "$location", "SearchUIConstants", "WebsiteUIConstants", "$cookieStore", "sharedService", "widgetService", "StatusUIConstants", function($scope, $rootScope, websiteService, $timeout, $sce, recommendationService, $routeParams, $location, SearchUIConstants, WebsiteUIConstants, $cookieStore, sharedService, widgetService, StatusUIConstants){
 	$scope._update_filters = function(type, value){
 		var item = $scope._get_option_json(type, value);
 		if(type == SearchUIConstants.AuthorSearch){

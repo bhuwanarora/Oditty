@@ -1,8 +1,8 @@
-websiteApp.directive('reader', ['$rootScope', 'widgetService', function ($rootScope, widgetService) {
+websiteApp.directive('reader', ["$rootScope", "widgetService", function ($rootScope, widgetService) {
   return {
     restrict: 'E',
     scope: { 'reader': '=data' },
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
       $scope.hover = function() {
         $scope.hovered = true;
       }
@@ -54,10 +54,10 @@ websiteApp.directive('reader', ['$rootScope', 'widgetService', function ($rootSc
   };
 }]);
 
-websiteApp.directive('focusedReader', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
+websiteApp.directive('focusedReader', ["$rootScope", "$timeout", "widgetService", function($rootScope, $timeout, widgetService){
   return{
     restrict: 'E',
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
       $scope.stop_propagation = function(event){
         event.stopPropagation();
       }
@@ -83,7 +83,7 @@ websiteApp.directive('focusedReader', ['$rootScope', '$timeout', 'widgetService'
 websiteApp.directive('messageBox', function(){
   return{
     restrict: 'E',
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
       $scope.close_message_box = function(){
         $scope.reader.show_message_box = false;
       }
@@ -92,10 +92,10 @@ websiteApp.directive('messageBox', function(){
   }
 });
 
-websiteApp.directive('readerInteract', ['websiteService', function (websiteService) {
+websiteApp.directive('readerInteract', ["websiteService", function (websiteService) {
   return {
     restrict: 'E',
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
 
       $scope.toggle_message_box = function(){
         if($scope.reader.show_message_box){

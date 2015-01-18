@@ -3,7 +3,7 @@ var websiteApp = angular.module('websiteApp', ['ngRoute', 'ngAnimate', 'fx.anima
                   'duScroll', 'filtersApp', 'ngCookies', 'ngTouch', 'angular-intro',
                   'appConstants']);
 
-websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+websiteApp.config(["$routeProvider", "$locationProvider", function ($routeProvider, $locationProvider) {
   $routeProvider
   .when('/search', {
     templateUrl: '/assets/angular/views/search/show.html'
@@ -86,7 +86,7 @@ websiteApp.config(['$routeProvider', '$locationProvider', function ($routeProvid
 websiteApp.constant('facebookAppId', "667868653261167");
 // websiteApp.constant('facebookAppId', "742659549115410");
 
-websiteApp.run(['$rootScope', '$location', '$cookieStore', '$cookies', '$http', function($rootScope, $location, $cookieStore, $cookies, $http){
+websiteApp.run(["$rootScope", "$location", "$cookieStore", "$cookies", "$http", function($rootScope, $location, $cookieStore, $cookies, $http){
   $rootScope.$on("$routeChangeStart", function(event, next, current){
     var unauthenticated_user = !$rootScope.user.logged && !$cookieStore.get('logged');
     console.debug("RUN", $location.url(), unauthenticated_user, next.templateUrl, book_redirect);
@@ -134,8 +134,7 @@ angular.element(document).ready(function() {
   console.timeEnd('bootstrap');
 });
 
-websiteApp.config(['FacebookProvider', 'facebookAppId',
-  function(FacebookProvider, facebookAppId){
+websiteApp.config(["FacebookProvider", "facebookAppId", function(FacebookProvider, facebookAppId){
     var myAppId = facebookAppId;
     FacebookProvider.init(myAppId);
   }

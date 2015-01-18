@@ -1,4 +1,4 @@
-websiteApp.service('sharedService', ['$timeout', '$rootScope', 'widgetService', 'websiteService', 'stropheService', '$location', 'RecommendationUIConstants', '$cookieStore', 'recommendationService', function ($timeout, $rootScope, widgetService, websiteService, stropheService, $location, RecommendationUIConstants, $cookieStore, recommendationService){
+websiteApp.service('sharedService', ["$timeout", "$rootScope", "widgetService", "websiteService", "stropheService", "$location", "RecommendationUIConstants", "$cookieStore", "recommendationService", function ($timeout, $rootScope, widgetService, websiteService, stropheService, $location, RecommendationUIConstants, $cookieStore, recommendationService){
     this.is_logged_in = function($scope){
         websiteService.get_user().then(function(data){
             if(data["logged_in"]){

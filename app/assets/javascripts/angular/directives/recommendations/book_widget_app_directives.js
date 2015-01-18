@@ -1,8 +1,8 @@
-websiteApp.directive('book', ['websiteService', '$rootScope', 'widgetService', '$timeout', '$routeParams', function (websiteService, $rootScope, widgetService, $timeout, $routeParams){
+websiteApp.directive('book', ["websiteService", "$rootScope", "widgetService", "$timeout", "$routeParams", function (websiteService, $rootScope, widgetService, $timeout, $routeParams){
   return {
     restrict: 'E',
     scope: { 'book': '=data' },
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
       $scope.show_interaction_box = function(event){
         $rootScope.user.interact = true;
       }
@@ -137,10 +137,10 @@ websiteApp.directive('bookArray', function(){
   }
 });
 
-websiteApp.directive('labelPopup', ['$rootScope', '$timeout', 'widgetService', 'RecommendationUIConstants', 'sharedService', function($rootScope, $timeout, widgetService, RecommendationUIConstants, sharedService){
+websiteApp.directive('labelPopup', ["$rootScope", "$timeout", "widgetService", "RecommendationUIConstants", "sharedService", function($rootScope, $timeout, widgetService, RecommendationUIConstants, sharedService){
   return{
     restrict: 'E',
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
       $scope.stop_propagation = function(event){
         event.stopPropagation();
       }
@@ -157,10 +157,10 @@ websiteApp.directive('labelPopup', ['$rootScope', '$timeout', 'widgetService', '
   }
 }]);
 
-websiteApp.directive('bookNavbar', ['$rootScope', '$timeout', function ($rootScope, $timeout) {
+websiteApp.directive('bookNavbar', ["$rootScope", "$timeout", function ($rootScope, $timeout) {
   return {
     restrict: 'E',
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
       $scope.show_book = function(page){
         zoomin_book($scope, $timeout, $rootScope, page);
       }
@@ -172,17 +172,17 @@ websiteApp.directive('bookNavbar', ['$rootScope', '$timeout', function ($rootSco
 websiteApp.directive('listDropdown', function(){
   return{
     restrict: 'E',
-    controller: function($scope){
+    controller: ["$scope", function($scope){
       
-    },
+    }],
     templateUrl: "app/assets/javascripts/angular/widgets/base/book/list_dropdown.html"
   }
 });
 
-websiteApp.directive('bookBookmark', ['$rootScope', '$timeout', 'widgetService', function ($rootScope, $timeout, widgetService) {
+websiteApp.directive('bookBookmark', ["$rootScope", "$timeout", "widgetService", function ($rootScope, $timeout, widgetService) {
   return {
     restrict: 'E',
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
       $scope.toggle_bookmarked = function(event){
         var book_scope_length = $scope.book.labels.length;
         var rootScope_length = $rootScope.labels.length;
@@ -219,12 +219,11 @@ websiteApp.directive('bookBookmark', ['$rootScope', '$timeout', 'widgetService',
   };
 }]);
 
-websiteApp.directive('bookInteract', ['$rootScope', '$timeout', 'widgetService', 'WebsiteUIConstants',
-  function ($rootScope, $timeout, widgetService, WebsiteUIConstants){
+websiteApp.directive('bookInteract', ["$rootScope", "$timeout", "widgetService", "WebsiteUIConstants", function ($rootScope, $timeout, widgetService, WebsiteUIConstants){
   return {
     restrict: 'E',
     scope: {"book": "=data"},
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
 
       _init = function(){
         if(angular.isDefined($scope.book.no_thumb) && $scope.book.no_thumb){
@@ -290,10 +289,10 @@ websiteApp.directive('bookInteract', ['$rootScope', '$timeout', 'widgetService',
   };
 }]);
 
-websiteApp.directive('bookInfo', ['$rootScope', '$timeout', 'widgetService', 'sharedService', 'WebsiteUIConstants', '$cookieStore', function($rootScope, $timeout, widgetService, sharedService, WebsiteUIConstants, $cookieStore){
+websiteApp.directive('bookInfo', ["$rootScope", "$timeout", "widgetService", "sharedService", "WebsiteUIConstants", "$cookieStore", function($rootScope, $timeout, widgetService, sharedService, WebsiteUIConstants, $cookieStore){
   return{
     restrict: 'E',
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
       // $scope.show_book = function(page){
       //   zoomin_book($scope, $timeout, $rootScope, page);
       // }
@@ -541,10 +540,10 @@ websiteApp.directive('bookInfo', ['$rootScope', '$timeout', 'widgetService', 'sh
   }
 }]);
 
-websiteApp.directive('bookTags', ['$rootScope', '$timeout', function($rootScope, $timeout) {
+websiteApp.directive('bookTags', ["$rootScope", "$timeout", function($rootScope, $timeout) {
   return {
     restrict: 'E',
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
       $scope.show_book = function(page){
         zoomin_book($scope, $timeout, $rootScope, page);
       }
@@ -553,11 +552,11 @@ websiteApp.directive('bookTags', ['$rootScope', '$timeout', function($rootScope,
   };
 }]);
 
-websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', 'websiteService', function($rootScope, $timeout, widgetService, websiteService){
+websiteApp.directive('recommend', ["$rootScope", "$timeout", "widgetService", "websiteService", function($rootScope, $timeout, widgetService, websiteService){
   return{
     restrict: 'E',
     scope: {'recommend_object': '=data'},
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
       $scope.select_thumb = function(event, friend_id){
         var selected = event.currentTarget.dataset.selected == "true";
         if(!selected){
@@ -618,10 +617,10 @@ websiteApp.directive('recommend', ['$rootScope', '$timeout', 'widgetService', 'w
 }]);
 
 
-websiteApp.directive('markAsRead', ['$rootScope', '$timeout', 'widgetService', 'sharedService', 'stropheService', function($rootScope, $timeout, widgetService, sharedService, stropheService){
+websiteApp.directive('markAsRead', ["$rootScope", "$timeout", "widgetService", "sharedService", "stropheService", function($rootScope, $timeout, widgetService, sharedService, stropheService){
 	return {
 		restrict: 'E',
-		controller: ['$scope', function($scope){
+		controller: ["$scope", function($scope){
       $scope.mark_as_read = function(event){
         var username = $rootScope.user.name;
         var message = username + "added " + $scope.book.title + " to Books Read."

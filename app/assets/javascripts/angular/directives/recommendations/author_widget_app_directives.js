@@ -1,8 +1,8 @@
-websiteApp.directive('author', ['$rootScope', 'widgetService', function ($rootScope, widgetService) {
+websiteApp.directive('author', ["$rootScope", "widgetService", function ($rootScope, widgetService) {
   return {
     restrict: 'E',
     scope: { 'author': '=data' },
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
       $scope.hover = function() {
         $scope.hovered = true;
       };
@@ -71,10 +71,10 @@ websiteApp.directive('author', ['$rootScope', 'widgetService', function ($rootSc
   };
 }]);
 
-websiteApp.directive('focusedAuthor', ['$rootScope', '$timeout', 'widgetService', function($rootScope, $timeout, widgetService){
+websiteApp.directive('focusedAuthor', ["$rootScope", "$timeout", "widgetService", function($rootScope, $timeout, widgetService){
   return{
     restrict: 'E',
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
       $scope.stop_propagation = function(event){
         event.stopPropagation();
       }
@@ -97,10 +97,10 @@ websiteApp.directive('focusedAuthor', ['$rootScope', '$timeout', 'widgetService'
   }
 }]);
 
-websiteApp.directive('authorBookmark', ['$rootScope', '$timeout', 'widgetService', function ($rootScope, $timeout, widgetService) {
+websiteApp.directive('authorBookmark', ["$rootScope", "$timeout", "widgetService", function ($rootScope, $timeout, widgetService) {
   return {
     restrict: 'E',
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
       $scope.toggle_bookmarked = function(event){
         var bookmark_status = $scope.author.bookmark_status;
         var author_name = $scope.author.name;
@@ -127,10 +127,10 @@ websiteApp.directive('authorBookmark', ['$rootScope', '$timeout', 'widgetService
   };
 }]);
 
-websiteApp.directive('authorInteract', ['websiteService', 'WebsiteUIConstants', function (websiteService, WebsiteUIConstants) {
+websiteApp.directive('authorInteract', ["websiteService", "WebsiteUIConstants", function (websiteService, WebsiteUIConstants) {
   return {
     restrict: 'E',
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
       _init = function(){
         $scope.setStatus();
       }

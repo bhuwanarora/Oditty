@@ -32,8 +32,7 @@
     /**
      * Facebook provider
      */
-    provider('Facebook', [
-      function() {
+    provider('Facebook', function() {
 
         /**
          * Facebook appId
@@ -247,12 +246,7 @@
         /**
          * This defined the Facebook service
          */
-        this.$get = [
-          '$q',
-          '$rootScope',
-          '$timeout',
-          '$window',
-          function($q, $rootScope, $timeout, $window) {
+        this.$get = ["$q", "$rootScope", "$timeout", "$window", function($q, $rootScope, $timeout, $window) {
             /**
              * This is the NgFacebook class to be retrieved on Facebook Service request.
              */
@@ -447,18 +441,12 @@
           }
         ];
 
-      }
-    ]).
+      }).
 
     /**
      * Module initialization
      */
-    run([
-      '$rootScope',
-      '$q',
-      '$window',
-      '$timeout',
-      function($rootScope, $q, $window, $timeout) {
+    run(["$rootScope", "$q", "$window", "$timeout", function($rootScope, $q, $window, $timeout) {
         // Define global loadDeffered to notify when Service callbacks are safe to use
         loadDeferred = $q.defer();
 

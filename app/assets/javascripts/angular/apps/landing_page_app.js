@@ -1,7 +1,7 @@
 var app = angular.module('myApp', ['ngAnimate', 'ngMaterial', 'duScroll', 'ngRoute', 'monospaced.mousewheel', 'appConstants']);
 
 app.config(
-function($routeProvider) {
+["$routeProvider", function($routeProvider) {
     $routeProvider.when('/discover', {
         templateUrl : 'assets/angular/views/landing_page/discover.html',
     })
@@ -26,4 +26,4 @@ function($routeProvider) {
     .otherwise({
          templateUrl : 'assets/angular/views/landing_page/main.html'
     });
-});
+}]);

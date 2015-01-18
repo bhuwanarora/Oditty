@@ -1,4 +1,4 @@
-websiteApp.service('stropheService', ['$rootScope', function ($rootScope) {
+websiteApp.service('stropheService', ["$rootScope", function ($rootScope) {
   // this.start_connection = function(){
   //   var on_status = function(status){
   //     console.log(status, Strophe.Status);
