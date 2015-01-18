@@ -107,26 +107,31 @@ md-tab.active a{
 }
 
 .inbox-area h2{
-    font-size: 3.6em;
+    font-size: 4.6em;
     font-weight: 100;
     margin: 0;
 }
 
+.inbox-area p{
+    font-size: 1.4em;
+    line-height: 1.4;
+}
+
 .inbox-area .inbox-cont{
-    float: right;
+    margin-left: 25%;
     width: 50%;
    
 }
 
 .inbox-area .inbox-img{
-    width:80%;
+    width: 125%;
 }
 
 .btn-arrow{
     background: #fff !important;
     position: absolute !important;
     right: 20px  !important;
-    bottom: 20px  !important;
+    bottom: 20px;
     z-index: 9;
 }
 
@@ -177,6 +182,7 @@ md-tab.active a{
     float: left;
     width: 22%;
     position: absolute;
+    height: 60vh;
 }
 
 .nav-container{
@@ -188,6 +194,7 @@ md-tab.active a{
 .nav-container li{
     list-style-type: none;
     padding: 20px 0;
+    font-weight: bold;
 }
 
 .right-container{
@@ -212,4 +219,16 @@ md-tab.active a{
 
 .site_color{
     color: #BD3109;
+}
+
+.md-fab{
+    position: fixed !important;
+}
+
+#Search, 
+#ConnectInner,
+#ExploreInner,
+#PersonaliseInner{
+    margin-top: 90px;
+    position: absolute;
 }
