@@ -1,4 +1,4 @@
-websiteApp.controller('websiteAppController', ['$scope', '$rootScope', '$timeout', 'websiteService', '$document', 'scroller', '$window', 'WebsiteUIConstants', 'sharedService', function($scope, $rootScope, $timeout, websiteService, $document, scroller, $window, WebsiteUIConstants, sharedService){
+websiteApp.controller('websiteAppController', ["$scope", "$rootScope", "$timeout", "websiteService", "$document", "scroller", "$window", "WebsiteUIConstants", "sharedService", function($scope, $rootScope, $timeout, websiteService, $document, scroller, $window, WebsiteUIConstants, sharedService){
 	$scope.bindHorizontalScroll = function(event, delta, deltaX, deltaY){
 		event.preventDefault();
 		if(delta > 0){

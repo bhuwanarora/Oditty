@@ -1,8 +1,7 @@
-websiteApp.directive('moreFilters', ['$rootScope', '$timeout', function($rootScope, $timeout){
+websiteApp.directive('moreFilters', ["$rootScope", "$timeout", function($rootScope, $timeout){
 	return{
 		restrict: 'E',
-		controller: ['$scope', 'recommendationService', 'websiteService', 'RecommendationUIConstants',
-			function($scope, recommendationService, websiteService, RecommendationUIConstants){
+		controller: ["$scope", "recommendationService", "websiteService", "RecommendationUIConstants", function($scope, recommendationService, websiteService, RecommendationUIConstants){
 
 			$scope.handle_left_columns = function(){
 				$scope.column_heights = {"show_filters": true,
@@ -43,7 +42,7 @@ websiteApp.directive('tickerPopup', function(){
 	}
 });
 
-websiteApp.directive('filter', ['$rootScope', '$timeout', '$routeParams', function($rootScope, $timeout, $routeParams){
+websiteApp.directive('filter', ["$rootScope", "$timeout", "$routeParams", function($rootScope, $timeout, $routeParams){
 	return{
 		restrict: 'E',
 		scope: { 'filter': '=data',
@@ -51,7 +50,7 @@ websiteApp.directive('filter', ['$rootScope', '$timeout', '$routeParams', functi
 				 'hideIcon': '@',
 				 'textClass': '@',
 				 'iconClass': '@' },
-		controller: ['$scope', function($scope){
+		controller: ["$scope", function($scope){
 			_initialise_filters = function(type){
 				if($scope.filter){
 					var filter_id = $scope.filter.id;
@@ -98,10 +97,10 @@ websiteApp.directive('filter', ['$rootScope', '$timeout', '$routeParams', functi
 	}
 }]);
 
-websiteApp.directive('header', ['$timeout', '$rootScope', '$routeParams', function($timeout, $rootScope, $routeParams){
+websiteApp.directive('header', ["$timeout", "$rootScope", "$routeParams", function($timeout, $rootScope, $routeParams){
 	return{
 		restrict: 'E',
-		controller: ['$scope', function($scope){
+		controller: ["$scope", function($scope){
 			$scope.toggle_notification_popup = function($event){
 
 				var _close_all_popups = function(){
@@ -185,10 +184,10 @@ websiteApp.directive('header', ['$timeout', '$rootScope', '$routeParams', functi
 	}
 }]);
 
-websiteApp.directive('navbar', ['scroller', '$rootScope', 'websiteService', '$timeout', '$cookieStore', 'RecommendationUIConstants', 'WebsiteUIConstants', 'sharedService', function(scroller, $rootScope, websiteService, $timeout, $cookieStore, RecommendationUIConstants, WebsiteUIConstants, sharedService){
+websiteApp.directive('navbar', ["scroller", "$rootScope", "websiteService", "$timeout", "$cookieStore", "RecommendationUIConstants", "WebsiteUIConstants", "sharedService", function(scroller, $rootScope, websiteService, $timeout, $cookieStore, RecommendationUIConstants, WebsiteUIConstants, sharedService){
 	return{
 		restrict: 'E',
-		controller: ['$scope', function($scope){
+		controller: ["$scope", function($scope){
 
 			$scope.toggle_bookmarked = function(event){
 				var _close_all_popups = function(){
@@ -399,11 +398,11 @@ websiteApp.directive('navbar', ['scroller', '$rootScope', 'websiteService', '$ti
 	}
 }]);
 
-websiteApp.directive('rate', ['$rootScope', '$timeout', 'widgetService', 'sharedService', function($rootScope, $timeout, widgetService, sharedService){
+websiteApp.directive('rate', ["$rootScope", "$timeout", "widgetService", "sharedService", function($rootScope, $timeout, widgetService, sharedService){
   return{
     restrict: 'E',
     scope: {'rate_object': '=data'},
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
       $scope.show_if_rated = function(index){
         $scope.temp_rating = $scope.rate_object.user_rating;
         $scope.rate_object.user_rating = parseInt(index) + 1;
@@ -482,11 +481,11 @@ websiteApp.directive('rate', ['$rootScope', '$timeout', 'widgetService', 'shared
   }
 }]);
 
-websiteApp.directive('bookGrid', ['recommendationService', '$rootScope', function(recommendationService, $rootScope){
+websiteApp.directive('bookGrid', ["recommendationService", "$rootScope", function(recommendationService, $rootScope){
 	return{
 		restrict: 'E',
 		scope: {'grid': '=data'},
-		controller: ['$scope', function($scope){
+		controller: ["$scope", function($scope){
 			_init = function(){
 				$scope.user_id = $rootScope.user.id;
 				// recommendationService.get_grid_books().then(function(data){
@@ -504,11 +503,11 @@ websiteApp.directive('bookGrid', ['recommendationService', '$rootScope', functio
 	}
 }]);
 
-websiteApp.directive('bookPredict', ['$rootScope', 'sharedService', function($rootScope, sharedService){
+websiteApp.directive('bookPredict', ["$rootScope", "sharedService", function($rootScope, sharedService){
 	return{
 		restrict: 'E',
 		scope: {"book": "=data"},
-		controller: ['$scope', function($scope){
+		controller: ["$scope", function($scope){
 			$scope.hide_list = function(){
 				if(angular.isDefined($scope.selected_book)){
 					$scope.hide_books_list = true;
@@ -545,10 +544,10 @@ websiteApp.directive('bookPredict', ['$rootScope', 'sharedService', function($ro
 	}
 }]);
 
-websiteApp.directive('gettingStarted', ['$rootScope', '$timeout', 'sharedService', 'websiteService', 'WebsiteUIConstants', 'scroller', 'RecommendationUIConstants', 'Facebook', 'SearchUIConstants', function($rootScope, $timeout, sharedService, websiteService, WebsiteUIConstants, scroller, RecommendationUIConstants, Facebook, SearchUIConstants){
+websiteApp.directive('gettingStarted', ["$rootScope", "$timeout", "sharedService", "websiteService", "WebsiteUIConstants", "scroller", "RecommendationUIConstants", "Facebook", "SearchUIConstants", function($rootScope, $timeout, sharedService, websiteService, WebsiteUIConstants, scroller, RecommendationUIConstants, Facebook, SearchUIConstants){
 	return{
 		restrict: 'E',
-		controller: ['$scope', 'websiteService', function($scope, websiteService){
+		controller: ["$scope", "websiteService", function($scope, websiteService){
 			 $scope.fb_books = function(){
 			 	if($rootScope.user.fb_data_fetched){
 			 		$rootScope.user.interact = false;

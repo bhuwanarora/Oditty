@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="myApp">
+<html ng-app="myApp" ng-strict-di>
     <head>
         <meta charset="utf-8" />
         <title>ReadersDoor</title>
@@ -7,7 +7,10 @@
 
         <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,100italic,400italic|Roboto+Condensed&amp;lang=en' rel='stylesheet' type='text/css'>
 
-        <link rel="stylesheet" href="assets/angular_material.min.css" />
+        <!--<link rel="stylesheet" href="assets/min/landing_page_site.min.css" />
+        <script src="assets/min/angular/landing_page_main.js"></script>
+        -->
+        <link rel="stylesheet" href="assets/angular_material.css" />
         <link rel="stylesheet" href="assets/landing_page/style.css" />
         <link rel="stylesheet" href="assets/website/website.css" />
         <link rel="stylesheet" href="assets/landing_page/animate.css" />
@@ -16,17 +19,13 @@
         <script src="assets/angular/vendors/angular_animate13.min.js"></script>
         <script src="assets/angular/vendors/hammer.js"></script>
         <script src="assets/angular/vendors/angular-aria.js"></script>
-        <script src="assets/lib/angular_scroll.min.js"></script>
         <script src="assets/angular/vendors/angular_mousewheel.min.js"></script>
         <script src="assets/angular/vendors/angular_router.min.js"></script>
-        
-        <script src="assets/lib/angular_scroll.min.js"></script>
         <script src="assets/angular/vendors/angular-material.min.js"></script>
-        
-
+        <script src="assets/lib/angular_scroll.min.js"></script>
         <script src="assets/angular/apps/landing_page_app.js"></script>
-        <script src="assets/angular/controllers/landing_page_controller.js"></script>
         <script src="assets/angular/apps/app_constants.js"></script>
+        <script src="assets/angular/controllers/landing_page_controller.js"></script> 
     </head>
 
     <body ng-controller="MainCtrl">

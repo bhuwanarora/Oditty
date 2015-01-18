@@ -1,7 +1,7 @@
 var ngIntroDirective = angular.module('angular-intro', []);
 
 
-ngIntroDirective.directive('ngIntroOptions', ['$timeout', function ($timeout) {
+ngIntroDirective.directive('ngIntroOptions', ["$timeout", function ($timeout) {
 
     return {
         restrict: 'A',

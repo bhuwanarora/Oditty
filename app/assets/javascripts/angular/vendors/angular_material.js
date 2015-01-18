@@ -1,9 +1,3 @@
-/*!
- * Angular Material Design
- * https://github.com/angular/material
- * @license MIT
- * v0.7.0-rc3-master-ec53d1a
- */
 angular.module('ngMaterial', ["ng","ngAnimate","ngAria","material.core","material.core.theming.palette","material.core.theming","material.components.backdrop","material.components.bottomSheet","material.components.button","material.components.card","material.components.checkbox","material.components.content","material.components.dialog","material.components.divider","material.components.icon","material.components.input","material.components.list","material.components.progressCircular","material.components.progressLinear","material.components.radioButton","material.components.sidenav","material.components.slider","material.components.sticky","material.components.subheader","material.components.swipe","material.components.switch","material.components.tabs","material.components.textField","material.components.toast","material.components.toolbar","material.components.tooltip","material.components.whiteframe"]);
 /*!
  * Angular Material Design
@@ -75,6 +69,7 @@ function MdCoreConfigure($provide, $mdThemingProvider) {
   }
 
 }
+
 MdCoreConfigure.$inject = ["$provide", "$mdThemingProvider"];
 
 })();
@@ -132,6 +127,7 @@ function MdConstantFactory($$rAF, $sniffer) {
     }
   };
 }
+
 MdConstantFactory.$inject = ["$$rAF", "$sniffer"];
 
 })();
@@ -147,7 +143,7 @@ MdConstantFactory.$inject = ["$$rAF", "$sniffer"];
   angular
     .module('material.core')
     .config( ["$provide", function($provide){
-       $provide.decorator('$mdUtil', ['$delegate', function ($delegate){
+       $provide.decorator('$mdUtil', ["$delegate", function ($delegate){
            /**
             * Inject the iterator facade to easily support iteration and accessors
             * @see iterator below
@@ -433,6 +429,7 @@ function mdMediaFactory($mdConstant, $mdUtil, $rootScope, $window) {
     }
   }
 }
+
 mdMediaFactory.$inject = ["$mdConstant", "$mdUtil", "$rootScope", "$window"];
 
 /*!
@@ -870,6 +867,7 @@ function AriaService($$rAF, $log, $window) {
     return hasAttr;
   }
 }
+
 AriaService.$inject = ["$$rAF", "$log", "$window"];
 })();
 
@@ -1016,6 +1014,7 @@ function mdCompilerService($q, $http, $injector, $compile, $controller, $templat
 
   };
 }
+
 mdCompilerService.$inject = ["$q", "$http", "$injector", "$compile", "$controller", "$templateCache"];
 })();
 
@@ -1057,6 +1056,7 @@ angular.module('material.core')
 
 function InterimElementProvider() {
   createInterimElementProvider.$get = InterimElementFactory;
+  
   InterimElementFactory.$inject = ["$document", "$q", "$rootScope", "$timeout", "$rootElement", "$animate", "$interpolate", "$mdCompiler", "$mdTheming"];
   return createInterimElementProvider;
 
@@ -1084,6 +1084,7 @@ function InterimElementProvider() {
         'template', 'templateUrl', 'themable', 'transformTemplate', 'parent']
     });
 
+    
     factory.$inject = ["$$interimElement", "$animate", "$injector"];
     return provider;
 
@@ -1544,6 +1545,7 @@ function InterimElementProvider() {
     }
 
   }
+  
   ComponentRegistry.$inject = ["$log", "$q"];
 
 
@@ -1577,6 +1579,7 @@ function InkRippleDirective($mdInkRipple) {
     }
   };
 }
+
 InkRippleDirective.$inject = ["$mdInkRipple"];
 
 function InkRippleService($window, $timeout) {
@@ -1915,6 +1918,7 @@ function InkRippleService($window, $timeout) {
     }
   }
 }
+
 InkRippleService.$inject = ["$window", "$timeout"];
 
 /**
@@ -2424,6 +2428,7 @@ function ThemingProvider($mdColorPalette) {
 
   // Default theme defined in core.js
 
+  
   ThemingService.$inject = ["$rootScope"];
   return themingProvider = {
     definePalette: definePalette,
@@ -2635,6 +2640,7 @@ function ThemingProvider($mdColorPalette) {
     }
   }
 }
+
 ThemingProvider.$inject = ["$mdColorPalette"];
 
 function ThemingDirective($interpolate) {
@@ -2654,11 +2660,13 @@ function ThemingDirective($interpolate) {
     }
   };
 }
+
 ThemingDirective.$inject = ["$interpolate"];
 
 function ThemableDirective($mdTheming) {
   return $mdTheming;
 }
+
 ThemableDirective.$inject = ["$mdTheming"];
 
 function parseRules(theme, colorType, rules) {
@@ -2811,6 +2819,7 @@ function generateThemes($injector) {
   }
 
 }
+
 generateThemes.$inject = ["$injector"];
 
 function checkValidPalette(theme, colorType) {
@@ -2892,6 +2901,7 @@ angular.module('material.components.backdrop', [
 function BackdropDirective($mdTheming) {
   return $mdTheming;
 }
+
 BackdropDirective.$inject = ["$mdTheming"];
 })();
 
@@ -3015,6 +3025,7 @@ function MdBottomSheetDirective() {
 
 function MdBottomSheetProvider($$interimElementProvider) {
 
+  
   bottomSheetDefaults.$inject = ["$animate", "$mdConstant", "$timeout", "$$rAF", "$compile", "$mdTheming", "$mdBottomSheet", "$rootElement"];
   return $$interimElementProvider('$mdBottomSheet')
     .setDefaults({
@@ -3185,6 +3196,7 @@ function MdBottomSheetProvider($$interimElementProvider) {
   }
 
 }
+
 MdBottomSheetProvider.$inject = ["$$interimElementProvider"];
 
 })();
@@ -3281,6 +3293,7 @@ function MdButtonDirective($mdInkRipple, $mdTheming, $mdAria) {
   }
 
 }
+
 MdButtonDirective.$inject = ["$mdInkRipple", "$mdTheming", "$mdAria"];
 })();
 
@@ -3340,6 +3353,7 @@ function mdCardDirective($mdTheming) {
     }
   };
 }
+
 mdCardDirective.$inject = ["$mdTheming"];
 })();
 
@@ -3473,6 +3487,7 @@ function MdCheckboxDirective(inputDirective, $mdInkRipple, $mdAria, $mdConstant,
     };
   }
 }
+
 MdCheckboxDirective.$inject = ["inputDirective", "$mdInkRipple", "$mdAria", "$mdConstant", "$mdTheming", "$mdUtil"];
 
 })();
@@ -3535,6 +3550,7 @@ function mdContentDirective($mdTheming) {
     this.$element = $element;
   }
 }
+
 mdContentDirective.$inject = ["$mdTheming"];
 })();
 
@@ -3572,6 +3588,7 @@ function MdDialogDirective($$rAF, $mdTheming) {
     }
   };
 }
+
 MdDialogDirective.$inject = ["$$rAF", "$mdTheming"];
 
 /**
@@ -3801,7 +3818,9 @@ function MdDialogProvider($$interimElementProvider) {
 
   var alertDialogMethods = ['title', 'content', 'ariaLabel', 'ok'];
 
+  
   advancedDialogOptions.$inject = ["$mdDialog"];
+  
   dialogDefaultOptions.$inject = ["$timeout", "$rootElement", "$compile", "$animate", "$mdAria", "$document", "$mdUtil", "$mdConstant", "$mdTheming", "$$rAF", "$q", "$mdDialog"];
   return $$interimElementProvider('$mdDialog')
     .setDefaults({
@@ -4030,6 +4049,7 @@ function MdDialogProvider($$interimElementProvider) {
 
   }
 }
+
 MdDialogProvider.$inject = ["$$interimElementProvider"];
 
 })();
@@ -4080,6 +4100,7 @@ function MdDividerDirective($mdTheming) {
     controller: [MdDividerController]
   };
 }
+
 MdDividerDirective.$inject = ["$mdTheming"];
 })();
 
@@ -4185,6 +4206,7 @@ angular.module('material.components.input', [
  * </hljs>
  */
 function mdInputContainerDirective($mdTheming) {
+  
   ContainerCtrl.$inject = ["$scope", "$element", "$mdUtil"];
   return {
     restrict: 'E',
@@ -4218,6 +4240,7 @@ function mdInputContainerDirective($mdTheming) {
     });
   }
 }
+
 mdInputContainerDirective.$inject = ["$mdTheming"];
 
 function labelDirective() {
@@ -4405,6 +4428,7 @@ function inputTextareaDirective($mdUtil, $window, $compile, $animate) {
     }
   }
 }
+
 inputTextareaDirective.$inject = ["$mdUtil", "$window", "$compile", "$animate"];
 
 function mdMaxlengthDirective($animate) {
@@ -4457,6 +4481,7 @@ function mdMaxlengthDirective($animate) {
     }
   }
 }
+
 mdMaxlengthDirective.$inject = ["$animate"];
 
 })();
@@ -4681,6 +4706,7 @@ function MdProgressCircularDirective($$rAF, $mdConstant, $mdTheming) {
     return Math.ceil(value || 0);
   }
 }
+
 MdProgressCircularDirective.$inject = ["$$rAF", "$mdConstant", "$mdTheming"];
 })();
 
@@ -4790,6 +4816,7 @@ function MdProgressLinearDirective($$rAF, $mdConstant, $mdTheming) {
     return Math.ceil(value || 0);
   }
 }
+
 MdProgressLinearDirective.$inject = ["$$rAF", "$mdConstant", "$mdTheming"];
 
 
@@ -4988,6 +5015,7 @@ function mdRadioGroupDirective($mdUtil, $mdConstant, $mdTheming) {
   }
 
 }
+
 mdRadioGroupDirective.$inject = ["$mdUtil", "$mdConstant", "$mdTheming"];
 
 /**
@@ -5106,6 +5134,7 @@ function mdRadioButtonDirective($mdAria, $mdUtil, $mdTheming) {
     }
   }
 }
+
 mdRadioButtonDirective.$inject = ["$mdAria", "$mdUtil", "$mdTheming"];
 
 })();
@@ -5184,6 +5213,7 @@ function SidenavService($mdComponentRegistry, $q) {
     };
   };
 }
+
 SidenavService.$inject = ["$mdComponentRegistry", "$q"];
 
 /**
@@ -5384,6 +5414,7 @@ function SidenavDirective($timeout, $animate, $parse, $mdMedia, $mdConstant, $co
 
   }
 }
+
 SidenavDirective.$inject = ["$timeout", "$animate", "$parse", "$mdMedia", "$mdConstant", "$compile", "$mdTheming", "$q", "$document"];
 
 /*
@@ -5407,6 +5438,7 @@ function SidenavController($scope, $element, $attrs, $mdComponentRegistry, $q) {
 
   self.destroy = $mdComponentRegistry.register(self, $attrs.mdComponentId);
 }
+
 SidenavController.$inject = ["$scope", "$element", "$attrs", "$mdComponentRegistry", "$q"];
 
 
@@ -5506,6 +5538,7 @@ function SliderDirective($mdTheming) {
     sliderCtrl.init(ngModelCtrl);
   }
 }
+
 SliderDirective.$inject = ["$mdTheming"];
 
 /**
@@ -5822,6 +5855,7 @@ function SliderController($scope, $element, $attrs, $$rAF, $window, $mdAria, $md
 
   };
 }
+
 SliderController.$inject = ["$scope", "$element", "$attrs", "$$rAF", "$window", "$mdAria", "$mdUtil", "$mdConstant"];
 })();
 
@@ -6132,6 +6166,7 @@ function MdSticky($document, $mdConstant, $compile, $$rAF, $mdUtil) {
   }
 
 }
+
 MdSticky.$inject = ["$document", "$mdConstant", "$compile", "$$rAF", "$mdUtil"];
 })();
 
@@ -6219,6 +6254,7 @@ function MdSubheaderDirective($mdSticky, $compile, $mdTheming) {
     }
   };
 }
+
 MdSubheaderDirective.$inject = ["$mdSticky", "$compile", "$mdTheming"];
 })();
 
@@ -6368,6 +6404,7 @@ function MdSwipeLeftDirective($parse, $mdSwipe) {
     link :  swipePostLink( $parse, $mdSwipe, "SwipeLeft" )
   };
 }
+
 MdSwipeLeftDirective.$inject = ["$parse", "$mdSwipe"];
 
 /**
@@ -6402,6 +6439,7 @@ function MdSwipeRightDirective($parse, $mdSwipe) {
     link :  swipePostLink( $parse, $mdSwipe, "SwipeRight" )
   };
 }
+
 MdSwipeRightDirective.$inject = ["$parse", "$mdSwipe"];
 
 /**
@@ -6577,6 +6615,7 @@ function MdSwitch(mdCheckboxDirective, $mdTheming, $mdUtil, $document, $mdConsta
 
 
 }
+
 MdSwitch.$inject = ["mdCheckboxDirective", "$mdTheming", "$mdUtil", "$document", "$mdConstant", "$parse", "$$rAF"];
 
 })();
@@ -6678,12 +6717,13 @@ function mdTextFloatDirective($mdTheming, $mdUtil, $parse, $log) {
     '</md-input-group>'
   };
 }
+
 mdTextFloatDirective.$inject = ["$mdTheming", "$mdUtil", "$parse", "$log"];
 
 function mdInputGroupDirective($log) {
   return {
     restrict: 'CE',
-    controller: ['$element', function($element) {
+    controller: ["$element", function($element) {
 
       $log.warn('<md-input-group> is deprecated. Please use `<md-input-container>` and `<input>`.' + 
                 'More information at http://material.angularjs.org/#/api/material.components.input/directive/mdInputContainer');
@@ -6697,6 +6737,7 @@ function mdInputGroupDirective($log) {
   };
 
 }
+
 mdInputGroupDirective.$inject = ["$log"];
 
 function mdInputDirective($mdUtil, $log) {
@@ -6758,6 +6799,7 @@ function mdInputDirective($mdUtil, $log) {
     }
   };
 }
+
 mdInputDirective.$inject = ["$mdUtil", "$log"];
 
 })();
@@ -6924,6 +6966,7 @@ function MdToastDirective() {
 
 function MdToastProvider($$interimElementProvider) {
 
+  
   toastDefaultOptions.$inject = ["$timeout", "$animate", "$mdSwipe", "$mdTheming", "$mdToast"];
   return $$interimElementProvider('$mdToast')
     .setDefaults({
@@ -6994,6 +7037,7 @@ function MdToastProvider($$interimElementProvider) {
   }
 
 }
+
 MdToastProvider.$inject = ["$$interimElementProvider"];
 
 })();
@@ -7154,6 +7198,7 @@ function mdToolbarDirective($$rAF, $mdConstant, $mdUtil, $mdTheming) {
   };
 
 }
+
 mdToolbarDirective.$inject = ["$$rAF", "$mdConstant", "$mdUtil", "$mdTheming"];
 })();
 
@@ -7352,6 +7397,7 @@ function MdTooltipDirective($timeout, $window, $$rAF, $document, $mdUtil, $mdThe
   }
 
 }
+
 MdTooltipDirective.$inject = ["$timeout", "$window", "$$rAF", "$document", "$mdUtil", "$mdTheming", "$rootElement"];
 })();
 
@@ -7433,6 +7479,7 @@ function MdTabInkDirective($$rAF) {
     }
   }
 }
+
 MdTabInkDirective.$inject = ["$$rAF"];
 })();
 
@@ -7687,6 +7734,7 @@ function TabPaginationDirective($mdConstant, $window, $$rAF, $$q, $timeout, $mdM
   }
 
 }
+
 TabPaginationDirective.$inject = ["$mdConstant", "$window", "$$rAF", "$$q", "$timeout", "$mdMedia"];
 })();
 
@@ -7784,6 +7832,7 @@ function TabItemController($scope, $element, $attrs, $compile, $animate, $mdUtil
   }
 
 }
+
 TabItemController.$inject = ["$scope", "$element", "$attrs", "$compile", "$animate", "$mdUtil", "$parse", "$timeout"];
 
 })();
@@ -8036,6 +8085,7 @@ function MdTabDirective($mdInkRipple, $compile, $mdUtil, $mdConstant, $timeout) 
   }
 
 }
+
 MdTabDirective.$inject = ["$mdInkRipple", "$compile", "$mdUtil", "$mdConstant", "$timeout"];
 
 })();
@@ -8183,6 +8233,7 @@ function MdTabsController($scope, $element, $mdUtil, $timeout) {
   }
 
 }
+
 MdTabsController.$inject = ["$scope", "$element", "$mdUtil", "$timeout"];
 })();
 
@@ -8360,6 +8411,7 @@ function TabsDirective($mdTheming) {
     }
   }
 }
+
 TabsDirective.$inject = ["$mdTheming"];
 })();
 

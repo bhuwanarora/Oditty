@@ -1,4 +1,4 @@
-app.controller('MainCtrl', ['$scope', 'scroller', '$document', '$timeout', 'WebsiteUIConstants', function($scope, scroller, $document, $timeout, WebsiteUIConstants){
+app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "WebsiteUIConstants", function($scope, scroller, $document, $timeout, WebsiteUIConstants){
 	function _init(){
 	    $scope.data = [
 	    	"Intro",

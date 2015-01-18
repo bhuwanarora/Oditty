@@ -1,16 +1,16 @@
-websiteApp.directive('siteLogo', [function(){
+websiteApp.directive('siteLogo', function(){
 	return{
 		restrict: 'E',
 		templateUrl: "/assets/angular/views/unused/site_logo.html"
 	}
-}]);
+});
 
-websiteApp.directive('userThumb', [function(){
+websiteApp.directive('userThumb', function(){
 	return{
 		restrict: 'E',
 		templateUrl: '/assets/angular/views/unused/user_thumb.html'
 	}
-}]);
+});
 
 websiteApp.directive('toggle', function(){
 	return{
@@ -18,7 +18,7 @@ websiteApp.directive('toggle', function(){
 		scope: {"obj": "=data", 
 				"onSelect": "&",
 				"onDeselect": "&"},
-		controller: ['$scope', function($scope){
+		controller: ["$scope", function($scope){
 			$scope.toggle = function(){
 				if($scope.obj.status){
 					$scope.obj.status = false;
@@ -34,7 +34,7 @@ websiteApp.directive('toggle', function(){
 	}
 });
 
-websiteApp.directive('track', ['$rootScope', function($rootScope){
+websiteApp.directive('track', ["$rootScope", function($rootScope){
 	return{
 		restrict: 'A',
 		link: function(scope, element, attrs){
@@ -91,7 +91,7 @@ websiteApp.directive('horizontalScroller', function(){
 	}
 });
 
-websiteApp.directive('setFocus', ['$timeout', '$parse' , '$rootScope', function($timeout, $parse, $rootScope) {
+websiteApp.directive('setFocus', ["$timeout", "$parse", "$rootScope", function($timeout, $parse, $rootScope) {
   return {
     link: function(scope, element, attrs) {
       var model = $parse(attrs.setFocus);
@@ -110,7 +110,7 @@ websiteApp.directive('setFocus', ['$timeout', '$parse' , '$rootScope', function(
   };
 }]);
 
-websiteApp.directive('typeAhead', ['$timeout', '$sce', '$document', function($timeout, $sce, $document){
+websiteApp.directive('typeAhead', ["$timeout", "$sce", "$document", function($timeout, $sce, $document){
 	return{
 		restrict: 'E',
 		scope: {
@@ -144,7 +144,7 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', '$document', function($ti
 
 		},
 
-		controller: ['$scope', '$sce', 'recommendationService', 'WebsiteUIConstants', function($scope, $sce, recommendationService, WebsiteUIConstants){
+		controller: ["$scope", "$sce", "recommendationService", "WebsiteUIConstants", function($scope, $sce, recommendationService, WebsiteUIConstants){
 			$scope.is_current = function(index, selectedItem) {
 				if($scope.current == index){
 					$scope.currentItem = selectedItem.name;
@@ -244,7 +244,7 @@ websiteApp.directive('typeAhead', ['$timeout', '$sce', '$document', function($ti
 websiteApp.directive('message', function(){
 	return{
 		restrict: 'E',
-		controller: ['$scope', function($scope){
+		controller: ["$scope", function($scope){
 			$scope.close_message = function(){
 				if($scope.message == 'Allow your webcam. Swipe Left|Right to look for more books.'){
 					$scope.message = 'Just "START TYPING" anytime to search.'
@@ -279,11 +279,11 @@ websiteApp.directive('message', function(){
 	}
 });
 
-websiteApp.directive('notification', ['$rootScope', '$timeout', '$location', '$routeParams', function($rootScope, $timeout, $location, $routeParams){
+websiteApp.directive('notification', ["$rootScope", "$timeout", "$location", "$routeParams", function($rootScope, $timeout, $location, $routeParams){
 	return{
 		restrict: 'E',
 		scope: {"notification": "=data"},
-		controller: ['$scope', function($scope){
+		controller: ["$scope", function($scope){
 			$scope.toggle_ticker_popup = function(event, notification){
 				var is_trending_news = angular.isDefined(notification.title);
 				if(is_trending_news){
@@ -365,7 +365,7 @@ websiteApp.directive('notification', ['$rootScope', '$timeout', '$location', '$r
 }]);
 
 
-websiteApp.directive('compile', ['$compile', function($compile){
+websiteApp.directive('compile', ["$compile", function($compile){
 	return ['scope', 'element', 'attrs', function(scope, element, attrs){
 				var ensureCompileRunsOnce = scope.$watch(function(scope){
 	            	// watch the 'compile' expression for changes
@@ -450,11 +450,11 @@ websiteApp.directive('focusOut',function(){
 	};
 });
 
-websiteApp.directive('calendar', ['$rootScope', function($rootScope){
+websiteApp.directive('calendar', ["$rootScope", function($rootScope){
 	return{
 		restrict: 'E',
 		scope : {saveDate: '&'},
-		controller: ['$scope', function($scope){
+		controller: ["$scope", function($scope){
 			$scope.date_check = function(){
 				var month = $scope.months.indexOf($scope.selectedMonth) + 1;
 				var no_days = new Date($scope.selectedYear, month, 0).getDate();
@@ -495,7 +495,7 @@ websiteApp.directive('calendar', ['$rootScope', function($rootScope){
 	}
 }]);
 
-websiteApp.directive('feedbackPopup', ['$document', 'websiteService', '$rootScope', '$timeout', function($document, websiteService, $rootScope, $timeout){
+websiteApp.directive('feedbackPopup', ["$document", "websiteService", "$rootScope", "$timeout", function($document, websiteService, $rootScope, $timeout){
   return {
     restrict: 'A',
     link: function(scope, element, attrs) {
@@ -539,7 +539,7 @@ websiteApp.directive('feedbackPopup', ['$document', 'websiteService', '$rootScop
         $document.off('mouseup', mouseup);
       }
     },
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
     	$scope.get_feedback = false;
     	$scope.feedback_text = "Feedback";
     	$rootScope.user.feedback = "";
@@ -569,10 +569,10 @@ websiteApp.directive('feedbackPopup', ['$document', 'websiteService', '$rootScop
   };
 }]);
 
-websiteApp.directive('feed', ['$rootScope', '$timeout', 'websiteService', 'widgetService', 'WebsiteUIConstants', 'StatusUIConstants', function($rootScope, $timeout, websiteService, widgetService, WebsiteUIConstants, StatusUIConstants){
+websiteApp.directive('feed', ["$rootScope", "$timeout", "websiteService", "widgetService", "WebsiteUIConstants", "StatusUIConstants", function($rootScope, $timeout, websiteService, widgetService, WebsiteUIConstants, StatusUIConstants){
   return{
     restrict: 'E',
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
       	$scope.update_hashtagged_comment = function(){
 
       	}
@@ -1202,7 +1202,7 @@ websiteApp.directive('tooltip', function(){
 			});
 
 		},
-		controller: ['$scope', function($scope){
+		controller: ["$scope", function($scope){
 			$scope.stop_horizontal_scroll = function(event){
 				event.stopPropagation();
 			}
@@ -1229,10 +1229,10 @@ websiteApp.directive('timestamp', function(){
 });
 
 
-websiteApp.directive('userAdd', ['$rootScope', 'WebsiteUIConstants', function($rootScope, WebsiteUIConstants){
+websiteApp.directive('userAdd', ["$rootScope", "WebsiteUIConstants", function($rootScope, WebsiteUIConstants){
 	return{
 		restrict: 'E',
-		controller: ['$scope', function($scope){
+		controller: ["$scope", function($scope){
 
 			$scope.show_interaction_box = function(user_id){
 				$rootScope.user.interact = true;
@@ -1255,12 +1255,12 @@ websiteApp.directive('userAdd', ['$rootScope', 'WebsiteUIConstants', function($r
 }]);
 
 
-websiteApp.directive('follow', ['$rootScope', '$timeout', 'widgetService', function ($rootScope, $timeout, widgetService) {
+websiteApp.directive('follow', ["$rootScope", "$timeout", "widgetService", function ($rootScope, $timeout, widgetService) {
   return{
     restrict: 'E',
     scope: {"friend": "=data",
 			"follow": "@"},
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
       	$scope.toggle_follow = function(event){
       		if(!$scope.follow){
       			$scope.follow = true;

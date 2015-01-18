@@ -17,10 +17,10 @@ var page_numbers = {
   about_author: 13
 };
 
-websiteApp.directive('dock', ['$rootScope', '$timeout', function($rootScope, $timeout){
+websiteApp.directive('dock', ["$rootScope", "$timeout", function($rootScope, $timeout){
   return{
     restrict: 'E',
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
       $scope.turn_page = function(page){
         $scope.$emit('turnPage', page);
       }
@@ -29,7 +29,7 @@ websiteApp.directive('dock', ['$rootScope', '$timeout', function($rootScope, $ti
   }
 }]);
 
-websiteApp.directive('flipbook', ['$rootScope', '$timeout', 'scroller', function($rootScope, $timeout, scroller){
+websiteApp.directive('flipbook', ["$rootScope", "$timeout", "scroller", function($rootScope, $timeout, scroller){
 	return{
 		restrict: 'E',
     replace: true,
@@ -381,7 +381,7 @@ websiteApp.directive('flipbook', ['$rootScope', '$timeout', 'scroller', function
           }
         }
     }],
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
       $scope.is_even = function(index){
         var isEven = false;
         if(index%2==0){
@@ -477,7 +477,7 @@ websiteApp.directive('discussion', function(){
         var discussion_id = scope.discussion.id;
       }
     }],
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
       $scope.is_even = function(index){
         var isEven = false;
         if(index%2==0){

@@ -5,11 +5,28 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     cssmin: {
       minify: {
-        expand: true,
-        cwd: 'app/assets/stylesheets/website/',
-        src: ['*.css', '!*.min.css', '*.css.scss'],
-        dest: 'app/assets/stylesheets/min/',
-        ext: '.min.css'
+        files: [{
+            expand: true,
+            cwd: 'app/assets/stylesheets/website/',
+            src: ['*.css', '!*.min.css', '*.css.scss'],
+            dest: 'app/assets/stylesheets/min/',
+            ext: '.min.css'
+          },
+          {
+            expand: true,
+            cwd: 'app/assets/stylesheets/landing_page/',
+            src: ['*.css', '!*.min.css', '*.css.scss'],
+            dest: 'app/assets/stylesheets/min/landing_page/',
+            ext: '.min.css'
+          },
+          {
+            expand: true,
+            cwd: 'app/assets/stylesheets/',
+            src: ['angular_material.css'],
+            dest: 'app/assets/stylesheets/min/',
+            ext: '.min.css'
+          }            
+        ]
       },
       combine: {
         files: {
@@ -27,6 +44,13 @@ module.exports = function(grunt) {
             'app/assets/stylesheets/min/introjs-rtl.min.css',
             'app/assets/stylesheets/min/introjs.min.css',
             'app/assets/stylesheets/min/icons.min.css',
+          ],
+
+          'app/assets/stylesheets/min/landing_page_site.min.css': [
+            'app/assets/stylesheets/min/angular_material.min.css',
+            'app/assets/stylesheets/min/landing_page/style.min.css',
+            'app/assets/stylesheets/min/landing_page/animate.min.css',
+            'app/assets/stylesheets/min/website.min.css',
           ]
         }
       }
@@ -178,7 +202,27 @@ module.exports = function(grunt) {
             'app/assets/javascripts/min/angular/directives.js',
             'app/assets/javascripts/min/angular/controllers.js',
             'app/assets/javascripts/min/angular/services.js',
-            'app/assets/javascripts/min/angular/templates.min.js'
+            'app/assets/javascripts/min/angular/templates.min.js'],
+
+          'app/assets/javascripts/min/angular/landing_page_vendors.js': [
+            'app/assets/javascripts/min/angular/vendors/angular13.min.js',
+            'app/assets/javascripts/min/angular/vendors/angular_animate13.min.js',
+            'app/assets/javascripts/min/angular/vendors/hammer.js',
+            'app/assets/javascripts/min/angular/vendors/angular-aria.js',
+            'app/assets/javascripts/min/angular/vendors/angular_mousewheel.min.js',
+            'app/assets/javascripts/min/angular/vendors/angular_router.min.js',
+            'app/assets/javascripts/min/angular/vendors/angular-material.min.js'],
+
+          'app/assets/javascripts/min/angular/landing_page_apps.js': [
+            'app/assets/javascripts/min/angular/apps/landing_page_app.js',
+            'app/assets/javascripts/min/angular/apps/app_constants.js'],
+
+          'app/assets/javascripts/min/angular/landing_page_main.js': [
+            'app/assets/javascripts/angular/vendors/angular.min.js',
+            'app/assets/javascripts/min/angular/landing_page_apps.js',
+            'app/assets/javascripts/min/angular/landing_page_vendors.js',
+            'app/assets/javascripts/min/angular/controllers/landing_page_controller.js',
+            'app/assets/javascripts/min/lib/angular_scroll.min.js'
           ]
         },
       },

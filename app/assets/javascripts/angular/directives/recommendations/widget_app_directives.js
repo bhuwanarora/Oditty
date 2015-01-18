@@ -4,7 +4,7 @@ websiteApp.directive('category', function () {
     scope: {
       widget : '@'
     },
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
       $scope.initVerticalText = function(){
         var isBook = $scope.widget == "book";
         var isReader = $scope.widget == "reader";
@@ -34,10 +34,10 @@ websiteApp.directive('category', function () {
   };
 });
 
-websiteApp.directive('messageApp', ['websiteService', function (websiteService) {
+websiteApp.directive('messageApp', ["websiteService", function (websiteService) {
   return{
     restrict: 'E',
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
       $scope.send_message = function(){
 
       }
@@ -46,10 +46,10 @@ websiteApp.directive('messageApp', ['websiteService', function (websiteService) 
   }
 }]);
 
-websiteApp.directive('widgetThumb', ['$timeout', '$rootScope', '$filter', 'ColorConstants', function ($timeout, $rootScope, $filter, ColorConstants) {
+websiteApp.directive('widgetThumb', ["$timeout", "$rootScope", "$filter", "ColorConstants", function ($timeout, $rootScope, $filter, ColorConstants) {
   return {
     restrict: 'E',
-    controller: ['$scope', function($scope){
+    controller: ["$scope", function($scope){
       $scope.show_images = function(){
         // var delay = 0;
         // if(global_display_timer == 2500){

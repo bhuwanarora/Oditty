@@ -1,4 +1,4 @@
-websiteApp.controller('loginController', ['$scope', '$rootScope', 'websiteService', 'Facebook', 'stropheService', '$timeout', '$cookieStore', 'LoginConstants', 'WebsiteUIConstants', '$location', '$routeParams', 'sharedService', function($scope, $rootScope, websiteService, Facebook, stropheService, $timeout, $cookieStore, LoginConstants, WebsiteUIConstants, $location, $routeParams, sharedService){
+websiteApp.controller('loginController', ["$scope", "$rootScope", "websiteService", "Facebook", "stropheService", "$timeout", "$cookieStore", "LoginConstants", "WebsiteUIConstants", "$location", "$routeParams", "sharedService", function($scope, $rootScope, websiteService, Facebook, stropheService, $timeout, $cookieStore, LoginConstants, WebsiteUIConstants, $location, $routeParams, sharedService){
 	$scope.submit = function(event){
 		var enter_pressed = event.keyCode == WebsiteUIConstants.Enter;
 		if(enter_pressed){
