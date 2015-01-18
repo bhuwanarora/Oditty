@@ -7,7 +7,7 @@
 
         <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,100italic,400italic|Roboto+Condensed&amp;lang=en' rel='stylesheet' type='text/css'>
 
-        <link rel="stylesheet" href="assets/angular_material.css" />
+        <link rel="stylesheet" href="assets/angular_material.min.css" />
         <link rel="stylesheet" href="assets/landing_page/style.css" />
         <link rel="stylesheet" href="assets/website/website.css" />
         <link rel="stylesheet" href="assets/landing_page/animate.css" />
@@ -64,11 +64,11 @@
                 </md-whiteframe>
                 <div ng-view ng-fadein class="view-cont"></div>
 
-                <md-button class="md-fab btn-arrow" 
+                <md-button class="md-fab btn-arrow animate-fast" 
                            aria-label="Comment" 
+                           ng-if="show_content"
                            ng-click="scroll_next_state()"
-                           ng-style="down_button_style"
-                           style="position: fixed!important">
+                           ng-style="down_button_style">
                     <md-icon icon="assets/arrow-down.png" style="width: 24px; height: 24px;"></md-icon>
                 </md-button>
             </div>
