@@ -23,16 +23,24 @@
 }
 
 .w-box.ng-leave.ng-leave-active{
-	margin-top: -5px;	
 	opacity: 1;
 }
 
 .w-box.ng-leave{
-	margin-top: 0px;
 	opacity: 1;
 }
 
 .w-box.ng-enter-active{
-	margin-top: 100px;
+	margin-top: 70px;
 	opacity: 0;
+}
+
+.header-title.ng-enter,
+.header-title.ng-leave.ng-leave-active{
+	opacity: 0;
+}
+
+.header-title.ng-leave,
+.header-title.ng-enter-active{
+	opacity: 1;
 }

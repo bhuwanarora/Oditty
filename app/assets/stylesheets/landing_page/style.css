@@ -150,7 +150,7 @@ md-tab.active a{
 }
 
 .header-image h2{
-    font-size: 3.4em;
+    font-size: 5.4em;
     font-weight: 100;
     line-height: 1.15em;
     margin: 0;
@@ -167,7 +167,6 @@ md-tab.active a{
     background:#ececec;
     min-height: 100%;
     width: 100%;
-    color: #fff;
 }    
 
 .bundles-header{
@@ -207,7 +206,7 @@ md-tab.active a{
     padding: 0 3em;
     position: absolute;
     margin: auto;
-    max-width: 62em;
+    /*max-width: 62em;*/
 }
 .w-box{
     background: #fff;
@@ -223,6 +222,20 @@ md-tab.active a{
 
 .md-fab{
     position: fixed !important;
+}
+
+.feature-description{
+    border-bottom: 1px solid #cfcfcf;
+    color: #616161;
+    font-size: 1.3em;
+    -webkit-font-smoothing: antialiased;
+    -moz-font-smoothing: antialiased;
+    -ms-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+    line-height: 1.3em;
+    margin-bottom: 1em;
+    padding: 1em;
+    text-align: center;
 }
 
 #Search, 

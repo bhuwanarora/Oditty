@@ -39,6 +39,9 @@ app.controller('MainCtrl', ['$scope', 'scroller', '$document', '$timeout', 'Webs
 		var offset = 0;
 		var duration = 2000;
 		var someElement = angular.element(document.getElementById(id));
+		var easeInQuad = function(t){ 
+			return t*t; 
+		};
     	scroller.scrollToElement(someElement, offset, duration);
 	}
 
@@ -61,6 +64,7 @@ app.controller('MainCtrl', ['$scope', 'scroller', '$document', '$timeout', 'Webs
 		var personalise = $scope.current_page_id == 5;
 
 		var _next_page = function(){
+			$scope.hide_text = false;
 			var page_id = $scope.current_page_id + 1;
 			$scope.scroll_page(page_id);
 		}
@@ -155,7 +159,6 @@ app.controller('MainCtrl', ['$scope', 'scroller', '$document', '$timeout', 'Webs
 		}
 		event.stopPropagation();
 	}
-
 
 	_init();
     
