@@ -1,10 +1,10 @@
 <div class="discover-area" style="padding-top: 130px;">
 	<div id="Search"></div>
 	<div class="header-image bundles-header">
-		<h2 class="header-title" ng-hide="hide_text">
-			<span>Discover books,</span> 
-			<span>because finding your next read</span>
-			<span>is precious for us.<span>
+		<h2 class="header-title animate-fast" ng-if="!hide_text">
+			<span>Discover yourself</span> 
+			<span>through books, friends </span>
+			<span>and the world.<span>
 		</h2>
 	</div>
 	<div style="height: 500px;">
@@ -23,48 +23,53 @@
 						<span class='icon-'></span>
 						<span>Suggestions</span>
 					</li>
-					<li class="icon create" ng-class="{'site_color': nested_page_id == 4}">
-						<span class='icon-'></span>
-						<span>Listopia</span>
-					</li>
 				</ul>
 			</div>
 		</div>
 
 		<div class="right-container">
 			<div class="h-center-container">
-				<md-whiteframe class="md-whiteframe-z1 w-box animate-slow" 
-								layout="row" 
-								layout-align="left left" 
-								ng-if="nested_page_id == 1">
-	    			<p>
-	    				Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-	    			</p>
-	  			</md-whiteframe>
-	  			<md-whiteframe class="md-whiteframe-z1 w-box animate-slow" 
-	  							layout="row" 
-	  							layout-align="left left" 
-	  							ng-if="nested_page_id == 2">
-	    			<p>
-	    				a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-	    			</p>
-	  			</md-whiteframe>
-	  			<md-whiteframe class="md-whiteframe-z1 w-box animate-slow" 
-	  							layout="row" 
-	  							layout-align="left left" 
-	  							ng-if="nested_page_id == 3">
-	    			<p>
-	    				a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-	    			</p>
-	  			</md-whiteframe>
-	  			<md-whiteframe class="md-whiteframe-z1 w-box animate-slow" 
-	  							layout="row" 
-	  							layout-align="left left" 
-	  							ng-if="nested_page_id == 4">
-	    			<p>
-	    				a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-	    			</p>
-	  			</md-whiteframe>
+				<div ng-if="nested_page_id == 1" class="animate-fast content-box">
+					<div class="feature-description">
+						Search for books, authors and communities.
+					</div>
+					<md-whiteframe class="md-whiteframe-z1 w-box" 
+									layout="row" 
+									layout-align="left left">
+		    			<p>
+		    				Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+		    			</p>
+		  			</md-whiteframe>
+				</div>
+
+
+				<div ng-if="nested_page_id == 2" class="animate-fast content-box">
+		  			<div class="feature-description">
+						Filters - your personal librarian.
+					</div>
+		  			<md-whiteframe class="md-whiteframe-z1 w-box" 
+		  							layout="row" 
+		  							layout-align="left left">
+		    			<p>
+		    				a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+		    			</p>
+		  			</md-whiteframe>
+				</div>
+
+
+				<div ng-if="nested_page_id == 3" class="animate-fast content-box">
+		  			<div class="feature-description">
+						Enhance your reading journey through personalised suggestions.
+					</div>
+		  			<md-whiteframe class="md-whiteframe-z1 w-box" 
+		  							layout="row" 
+		  							layout-align="left left">
+		    			<p>
+		    				a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+		    			</p>
+		  			</md-whiteframe>
+				</div>
+				
 			</div>
 		</div>
 	</div>

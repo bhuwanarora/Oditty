@@ -17,22 +17,30 @@
 }
 
 
-.w-box.ng-enter{
+.content-box.ng-enter{
 	margin-top: 0px;
 	opacity: 0;
 }
 
-.w-box.ng-leave.ng-leave-active{
-	margin-top: -5px;	
+.content-box.ng-leave.ng-leave-active{
 	opacity: 1;
 }
 
-.w-box.ng-leave{
-	margin-top: 0px;
+.content-box.ng-leave{
 	opacity: 1;
 }
 
-.w-box.ng-enter-active{
-	margin-top: 100px;
+.content-box.ng-enter-active{
+	margin-top: 70px;
 	opacity: 0;
+}
+
+.header-title.ng-enter,
+.header-title.ng-leave.ng-leave-active{
+	opacity: 0;
+}
+
+.header-title.ng-leave,
+.header-title.ng-enter-active{
+	opacity: 1;
 }

@@ -63,9 +63,9 @@
                 </md-whiteframe>
                 <div ng-view ng-fadein class="view-cont"></div>
 
-                <md-button class="md-fab btn-arrow animate-fast" 
+                <md-button class="md-fab btn-arrow" 
                            aria-label="Comment" 
-                           ng-if="show_content"
+                           ng-show="show_content"
                            ng-click="scroll_next_state()"
                            ng-style="down_button_style">
                     <md-icon icon="assets/arrow-down.png" style="width: 24px; height: 24px;"></md-icon>
