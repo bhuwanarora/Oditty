@@ -1,4 +1,4 @@
-app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "WebsiteUIConstants", function($scope, scroller, $document, $timeout, WebsiteUIConstants){
+app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "WebsiteUIConstants", '$interval', function($scope, scroller, $document, $timeout, WebsiteUIConstants, $interval){
 	function _init(){
 	    $scope.data = [
 	    	"Intro",
@@ -19,6 +19,9 @@ app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "Webs
 		}, 3000);
 
 		$scope.down_button_style = {"bottom": "110px"};
+		$scope.scroll_active = true;
+		$scope.text_index = 1;
+		$scope.current_text = "";
 	}
 
 	$scope.scroll_page = function(page_id){
@@ -58,6 +61,23 @@ app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "Webs
     	}
 	}
 
+	$scope.search_animate = function(){
+		debugger
+		var text = ["H", "i", "t", "c", "h", "h", "i", "k", "e"];
+		if($scope.text_index < text.length){
+			$scope.current_text = $scope.current_text + text[$scope.text_index];
+			$scope.text_index = $scope.text_index + 1;
+		}
+		else{
+			$scope.typing_active = false;
+		}
+		
+	}
+
+	$scope.$on('timer-tick', function(){
+		$scope.search_animate();
+	});
+
 	$scope.scroll_next_state = function(){
 		var discover = $scope.current_page_id == 2;
 		var connect = $scope.current_page_id == 3;
@@ -80,6 +100,9 @@ app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "Webs
 			if($scope.nested_page_id == 1){
 				$scope._scroll_page_to_id("Search");
 				$scope.hide_text = true;
+				// $scope.typing_active = true;
+				$scope.$broadcast('timer-start');
+				$scope.search_animated = "<span>"+$scope.current_text+"</span>";
 			}
 			else if($scope.nested_page_id == 2){
 			}
@@ -135,11 +158,10 @@ app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "Webs
 	}
 
 	$scope.scroll_on_keypress = function(event){
-		debugger
-		if(event.keyCode == WebsiteUIConstants.keyUp){
-
+		if(event.keyCode == WebsiteUIConstants.KeyUp){
+			$scope.scroll_previous_state();
 		}
-		else if(event.keyCode == WebsiteUIConstants.keyDown){
+		else if(event.keyCode == WebsiteUIConstants.KeyDown){
 			$scope.scroll_next_state();
 		}
 		event.stopPropagation();
@@ -148,18 +170,31 @@ app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "Webs
 	$scope.bind_mousewheel_scroll = function(event){
 		event.preventDefault();
 		var delta = event.wheelDelta;
-		if(delta > 0){
-			if($scope.current_page_id > 0){
-				// var page_id = $scope.current_page_id - 1;
-				// $scope.scroll_page(page_id);
-				$scope.scroll_previous_state();
+		var handle_scroll = function(){
+			if(delta > 0){
+				if($scope.current_page_id > 0){
+					$scope.scroll_previous_state();
+				}
+			}
+			else{
+				if($scope.current_page_id < $scope.data.length){
+					$scope.scroll_next_state();
+				}
 			}
 		}
-		else{
-			if($scope.current_page_id < $scope.data.length){
-				$scope.scroll_next_state();
-			}
+
+
+		if($scope.scroll_active){
+			$scope.scroll_active = false;
+			handle_scroll();
+			var timeout_event = $timeout(function(){
+				$scope.scroll_active = true;
+			}, 500);
+			$scope.$on('destroy', function(){
+				$timeout.cancel(timeout_event);
+			});
 		}
+
 		event.stopPropagation();
 	}
 
