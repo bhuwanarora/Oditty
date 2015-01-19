@@ -43,14 +43,14 @@ module.exports = function(grunt) {
             'app/assets/stylesheets/min/grid.min.css',
             'app/assets/stylesheets/min/introjs-rtl.min.css',
             'app/assets/stylesheets/min/introjs.min.css',
-            'app/assets/stylesheets/min/icons.min.css',
+            'app/assets/stylesheets/min/icons.min.css'
           ],
 
           'app/assets/stylesheets/min/landing_page_site.min.css': [
             'app/assets/stylesheets/min/angular_material.min.css',
             'app/assets/stylesheets/min/landing_page/style.min.css',
-            'app/assets/stylesheets/min/landing_page/animate.min.css',
             'app/assets/stylesheets/min/website.min.css',
+            'app/assets/stylesheets/min/landing_page/animate.min.css'
           ]
         }
       }
@@ -205,8 +205,6 @@ module.exports = function(grunt) {
             'app/assets/javascripts/min/angular/templates.min.js'],
 
           'app/assets/javascripts/min/angular/landing_page_vendors.js': [
-            'app/assets/javascripts/min/angular/vendors/angular13.min.js',
-            'app/assets/javascripts/min/angular/vendors/angular_animate13.min.js',
             'app/assets/javascripts/min/angular/vendors/hammer.js',
             'app/assets/javascripts/min/angular/vendors/angular-aria.js',
             'app/assets/javascripts/min/angular/vendors/angular_mousewheel.min.js',
@@ -218,11 +216,12 @@ module.exports = function(grunt) {
             'app/assets/javascripts/min/angular/apps/app_constants.js'],
 
           'app/assets/javascripts/min/angular/landing_page_main.js': [
-            'app/assets/javascripts/angular/vendors/angular.min.js',
-            'app/assets/javascripts/min/angular/landing_page_apps.js',
+            'app/assets/javascripts/min/angular/vendors/angular13.min.js',
+            'app/assets/javascripts/min/angular/vendors/angular_animate13.min.js',
             'app/assets/javascripts/min/angular/landing_page_vendors.js',
-            'app/assets/javascripts/min/angular/controllers/landing_page_controller.js',
-            'app/assets/javascripts/min/lib/angular_scroll.min.js'
+            'app/assets/javascripts/min/lib/angular_scroll.min.js',
+            'app/assets/javascripts/min/angular/landing_page_apps.js',
+            'app/assets/javascripts/min/angular/controllers/landing_page_controller.js'
           ]
         },
       },
