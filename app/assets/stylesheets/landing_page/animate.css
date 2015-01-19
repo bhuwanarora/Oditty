@@ -17,20 +17,20 @@
 }
 
 
-.w-box.ng-enter{
+.content-box.ng-enter{
 	margin-top: 0px;
 	opacity: 0;
 }
 
-.w-box.ng-leave.ng-leave-active{
+.content-box.ng-leave.ng-leave-active{
 	opacity: 1;
 }
 
-.w-box.ng-leave{
+.content-box.ng-leave{
 	opacity: 1;
 }
 
-.w-box.ng-enter-active{
+.content-box.ng-enter-active{
 	margin-top: 70px;
 	opacity: 0;
 }

@@ -23,6 +23,7 @@ app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "Webs
 
 	$scope.scroll_page = function(page_id){
 		$scope.nested_page_id = 0;
+		$scope.hide_text = false;
 		if(page_id <=  $scope.data.length-1){
 	    	$scope.current_page_id = page_id;
 			$scope._scroll_page_to(page_id);
@@ -84,19 +85,21 @@ app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "Webs
 			}
 			else if($scope.nested_page_id == 3){
 			}
-			else if($scope.nested_page_id == 4){
-			}
 			else{
 				_next_page();
 			}
 		}
 		else if(connect){
-			if($scope.nested_page_id == 0){
+			$scope.nested_page_id = $scope.nested_page_id + 1;
+			if($scope.nested_page_id == 1){
 				$scope._scroll_page_to_id("ConnectInner");
-				_next_nested_page();
+				$scope.hide_text = true;
+			}
+			else if($scope.nested_page_id == 2){
+			}
+			else if($scope.nested_page_id == 3){
 			}
 			else{
-				$scope.nested_page_id = 0;
 				_next_page();
 			}
 		}
