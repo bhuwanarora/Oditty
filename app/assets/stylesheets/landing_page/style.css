@@ -120,7 +120,7 @@ md-tab.active a{
 .inbox-area .inbox-cont{
     margin-left: 25%;
     width: 50%;
-   
+    margin-top: -39%;
 }
 
 .inbox-area .inbox-img{
@@ -145,7 +145,7 @@ md-tab.active a{
 }
 
 .header-image{
-    height: 50vh;
+    height: 42vh;
     width: 100%;
 }
 
@@ -244,4 +244,14 @@ md-tab.active a{
 #PersonaliseInner{
     margin-top: 90px;
     position: absolute;
+}
+
+@-moz-document url-prefix() {
+    .inbox-area h2{
+        font-size: 3.6em !important;
+    }
+
+    .inbox-area .inbox-cont{
+        margin-top: -63% !important;
+    }
 }
