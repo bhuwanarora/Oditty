@@ -117,7 +117,7 @@ md-tab.active a{
     line-height: 1.4;
 }
 
-.inbox-area .inbox-cont{
+.inbox-cont{
     margin-left: 25%;
     width: 50%;
    
@@ -170,7 +170,7 @@ md-tab.active a{
 }    
 
 .bundles-header{
-    background: url("/assets/bundles-header.jpg") no-repeat 30% 40%;
+    background-color: #E6580B;
 
 }
 
