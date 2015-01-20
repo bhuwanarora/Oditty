@@ -120,11 +120,10 @@ md-tab.active a{
 .inbox-area .inbox-cont{
     margin-left: 25%;
     width: 50%;
-    margin-top: -39%;
 }
 
 .inbox-area .inbox-img{
-    width: 125%;
+    width: 80%;
 }
 
 .btn-arrow{
@@ -254,4 +253,37 @@ md-tab.active a{
     .inbox-area .inbox-cont{
         margin-top: -63% !important;
     }
+}
+
+.purple-background{
+    background: #A953BF;
+}
+
+.orange-background{
+    background: #E6580B;
+}
+
+.green-background{
+    background: #008200;
+}
+
+.blue-background{
+    background: #0082DF;
+}
+
+.img-header{
+    margin-top: 24%;
+}
+
+.img-wrapped{
+    width: 37%;
+    margin-left: 30%;
+}
+
+.enlarge-width{
+    width: 163%;
+}
+
+.shift-right{
+    margin-left: 21%;
 }
