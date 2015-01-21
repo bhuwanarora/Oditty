@@ -1,17 +1,48 @@
-<div class="discover-area orange-background" style="padding-top: 130px;">
-	<div id="Search"></div>
-	<div layout="row" layout-margin layout-align="center center" class="header-image bundles-header">
+<div class="animate-fast orange-background" ng-if="show_content" style="padding-top: 130px;">
+		<div id="Search"></div>
+		<div layout="row" layout-margin layout-align="center center" class="header-image">
+			<div flex>
+				<h2 class="header-title enlarge-width">
+					<span>Discover yourself</span> 
+					<span>through books, friends </span>
+					<span>and the world.<span>
+				</h2>
+			</div>
+			<div flex>
+				<img src="assets/Discover.png" class="img-discover">
+			</div>
+		</div>
+	<!-- </div> -->
+
+<!-- <div class="discover-area" style="padding-top: 130px;"> -->
+<!-- <div class= "orange-background">
+	<div layout="row" class="inbox-area animate-fast" ng-if="show_content">	
+		<div id="Search"></div>
 		<div flex>
-			<h2 class="header-title animate-fast enlarge-width" ng-if="!hide_text">
+			<div layout="row" layout-margin layout-align="center center">
+				<div flex class="inbox-cont">
+					<h2>
+						<span>Discover yourself</span> 
+						<span>through books, friends </span>
+						<span>and the world.<span>
+					<h2>
+				</div>
+				<div flex>
+					<img src="assets/Discover.png" class="inbox-img">
+				</div>
+			</div>
+		</div>
+		<!-- <div class="header-image bundles-header">
+			<h2 class="inbox-cont animate-fast" ng-if="!hide_text">
 				<span>Discover yourself</span> 
 				<span>through books, friends </span>
 				<span>and the world.<span>
 			</h2>
-		</div>
-		<div flex>
-			<img src="assets/Discover.png" class="img-header shift-right">
-		</div>
-	</div>
+			<div flex>
+				<img src="assets/discover.png" class="inbox-img">
+			</div>
+		</div> -->
+	<!-- </div>  -->
 	<div style="height: 500px;">
 		<div class="aside-bg">
 			<div class="nav-container">
@@ -41,9 +72,10 @@
 					<md-whiteframe class="md-whiteframe-z1 w-box" 
 									layout="row" 
 									layout-align="left left">
-		    			<p>
-		    				Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-		    			</p>
+		    			<timer interval="1000" 
+		    				   autostart="false"
+		    				   stop="!timer_active"/>
+		    			<!-- <p ng-bind="search_animated"></p> -->
 		  			</md-whiteframe>
 				</div>
 
