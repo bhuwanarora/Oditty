@@ -290,8 +290,8 @@ md-tab.active a{
 }
 
 .img-discover{
-    margin-top: 24%;
-    margin-left: 21%;
+    width: 55%;
+    margin-left: 30%;
 }
 
 .img-wrapped{
@@ -304,6 +304,5 @@ md-tab.active a{
 }
 
 .img-connect{
-    margin-left: -42%;
-    margin-top: 34%;
+    width: 79%;
 }
