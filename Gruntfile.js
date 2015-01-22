@@ -209,7 +209,8 @@ module.exports = function(grunt) {
             'app/assets/javascripts/min/angular/vendors/angular-aria.js',
             'app/assets/javascripts/min/angular/vendors/angular_mousewheel.min.js',
             'app/assets/javascripts/min/angular/vendors/angular_router.min.js',
-            'app/assets/javascripts/min/angular/vendors/angular-material.min.js'],
+            'app/assets/javascripts/min/angular/vendors/angular-material.min.js',
+            'app/assets/javascripts/min/angular/vendors/angular-timer.min.js'],
 
           'app/assets/javascripts/min/angular/landing_page_apps.js': [
             'app/assets/javascripts/min/angular/apps/landing_page_app.js',

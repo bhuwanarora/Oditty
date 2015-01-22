@@ -120,11 +120,10 @@ md-tab.active a{
 .inbox-cont{
     margin-left: 25%;
     width: 50%;
-   
 }
 
 .inbox-area .inbox-img{
-    width: 125%;
+    width: 80%;
 }
 
 .btn-arrow{
@@ -145,8 +144,10 @@ md-tab.active a{
 }
 
 .header-image{
-    height: 50vh;
+    height: 42vh;
     width: 100%;
+    margin-left: auto;
+    margin-bottom: auto;
 }
 
 .header-image h2{
@@ -206,6 +207,7 @@ md-tab.active a{
     padding: 0 3em;
     position: absolute;
     margin: auto;
+    width: 100%;
     /*max-width: 62em;*/
 }
 .w-box{
@@ -225,7 +227,7 @@ md-tab.active a{
 }
 
 .feature-description{
-    border-bottom: 1px solid #cfcfcf;
+    /*border-bottom: 1px solid #cfcfcf;*/
     color: #616161;
     font-size: 1.3em;
     -webkit-font-smoothing: antialiased;
@@ -233,9 +235,10 @@ md-tab.active a{
     -ms-font-smoothing: antialiased;
     font-smoothing: antialiased;
     line-height: 1.3em;
-    margin-bottom: 1em;
-    padding: 1em;
+    /*margin-bottom: 1em;
+    padding: 1em;*/
     text-align: center;
+    margin-top: 1%;
 }
 
 #Search, 
@@ -244,4 +247,66 @@ md-tab.active a{
 #PersonaliseInner{
     margin-top: 90px;
     position: absolute;
+}
+
+@-moz-document url-prefix() {
+    body{
+        font-size: 11px !important;
+    }
+
+    .img-discover{
+        width: 75%;
+    }
+
+    .nav-container li{
+        padding: 16px 0px !important;
+    }
+
+    .img-connect{
+        margin-left: -21% !important;
+        width: 105% !important;
+        margin-top: 15% !important;
+    }
+
+    .header-image h2{
+        font-size: 5em;
+    }
+
+    .inbox-area .inbox-img {
+        width: 71% !important;
+    }
+}
+
+.purple-background{
+    background: #A953BF;
+}
+
+.orange-background{
+    background: #E6580B;
+}
+
+.green-background{
+    background: #008200;
+}
+
+.blue-background{
+    background: #0082DF;
+}
+
+.img-discover{
+    width: 55%;
+    margin-left: 30%;
+}
+
+.img-wrapped{
+    width: 37%;
+    margin-left: 30%;
+}
+
+.enlarge-width{
+    width: 163%;
+}
+
+.img-connect{
+    width: 79%;
 }

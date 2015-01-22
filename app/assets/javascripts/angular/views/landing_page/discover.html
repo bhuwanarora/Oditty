@@ -1,28 +1,48 @@
-<!-- <div class="discover-area" style="padding-top: 130px;"> -->
-<div layout="row" class="inbox-area animate-fast" ng-if="show_content">	
-	<div id="Search"></div>
-	<div flex>
-		<div layout="row" layout-margin layout-align="center center">
+<div class="animate-fast" ng-if="show_content" style="padding-top: 121px;">
+		<div id="Search"></div>
+		<div layout="row" layout-margin layout-align="center center" class="header-image orange-background">
 			<div flex>
+				<h2 class="header-title enlarge-width">
+					<span>Discover yourself</span> 
+					<span>through books, friends </span>
+					<span>and the world.<span>
+				</h2>
+			</div>
+			<div flex>
+				<img src="assets/Discover.png" class="img-discover">
+			</div>
+		</div>
+	<!-- </div> -->
+
+<!-- <div class="discover-area" style="padding-top: 130px;"> -->
+<!-- <div class= "orange-background">
+	<div layout="row" class="inbox-area animate-fast" ng-if="show_content">	
+		<div id="Search"></div>
+		<div flex>
+			<div layout="row" layout-margin layout-align="center center">
+				<div flex class="inbox-cont">
+					<h2>
+						<span>Discover yourself</span> 
+						<span>through books, friends </span>
+						<span>and the world.<span>
+					<h2>
+				</div>
+				<div flex>
+					<img src="assets/Discover.png" class="inbox-img">
+				</div>
+			</div>
+		</div>
+		<!-- <div class="header-image bundles-header">
+			<h2 class="inbox-cont animate-fast" ng-if="!hide_text">
 				<span>Discover yourself</span> 
 				<span>through books, friends </span>
 				<span>and the world.<span>
-			</div>
+			</h2>
 			<div flex>
 				<img src="assets/discover.png" class="inbox-img">
 			</div>
-		</div>
-	</div>
-	<!-- <div class="header-image bundles-header">
-		<h2 class="inbox-cont animate-fast" ng-if="!hide_text">
-			<span>Discover yourself</span> 
-			<span>through books, friends </span>
-			<span>and the world.<span>
-		</h2>
-		<div flex>
-			<img src="assets/discover.png" class="inbox-img">
-		</div>
-	</div> -->
+		</div> -->
+	<!-- </div>  -->
 	<div style="height: 500px;">
 		<div class="aside-bg">
 			<div class="nav-container">
@@ -44,7 +64,7 @@
 		</div>
 
 		<div class="right-container">
-			<div class="h-center-container">
+			<div class="h-center-container" ng-if="current_page_id == 2">
 				<div ng-if="nested_page_id == 1" class="animate-fast content-box">
 					<div class="feature-description">
 						Search for books, authors and communities.
@@ -67,9 +87,7 @@
 		  			<md-whiteframe class="md-whiteframe-z1 w-box" 
 		  							layout="row" 
 		  							layout-align="left left">
-		    			<p>
-		    				a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-		    			</p>
+		  							<img src="assets/filters.png">
 		  			</md-whiteframe>
 				</div>
 
@@ -81,9 +99,7 @@
 		  			<md-whiteframe class="md-whiteframe-z1 w-box" 
 		  							layout="row" 
 		  							layout-align="left left">
-		    			<p>
-		    				a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-		    			</p>
+		    			<img src= "assets/suggestions.png"/>
 		  			</md-whiteframe>
 				</div>
 				
