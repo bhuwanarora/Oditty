@@ -146,6 +146,8 @@ md-tab.active a{
 .header-image{
     height: 42vh;
     width: 100%;
+    margin-left: auto;
+    margin-bottom: auto;
 }
 
 .header-image h2{
@@ -205,6 +207,7 @@ md-tab.active a{
     padding: 0 3em;
     position: absolute;
     margin: auto;
+    width: 100%;
     /*max-width: 62em;*/
 }
 .w-box{
@@ -235,6 +238,7 @@ md-tab.active a{
     /*margin-bottom: 1em;
     padding: 1em;*/
     text-align: center;
+    margin-top: 1%;
 }
 
 #Search, 
