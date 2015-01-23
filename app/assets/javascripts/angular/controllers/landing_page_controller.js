@@ -98,6 +98,7 @@ app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "Webs
 		if(discover){
 			$scope.nested_page_id = $scope.nested_page_id + 1;
 			if($scope.nested_page_id == 1){
+				$scope.nested_page_id = 2;
 				$scope._scroll_page_to_id("Search");
 				$scope.hide_text = true;
 				// $scope.typing_active = true;
