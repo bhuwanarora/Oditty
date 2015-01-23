@@ -337,3 +337,8 @@ md-tab.active a{
     height: auto;
     width: auto\9;
 }
+
+.arrow-icon{
+    width: 24px;
+    padding-top: 15%;
+}
