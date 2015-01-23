@@ -47,10 +47,10 @@
 		<div class="aside-bg">
 			<div class="nav-container">
 				<ul>
-					<li class="icon promos" ng-class="{'site_color': nested_page_id == 1}">
+					<!-- <li class="icon promos" ng-class="{'site_color': nested_page_id == 1}">
 						<span class='icon-'></span>
 						<span>Search</span>
-					</li>
+					</li> -->
 					<li class="icon purchases" ng-class="{'site_color': nested_page_id == 2}">
 						<span class='icon-'></span>
 						<span>Filters</span>
@@ -65,7 +65,7 @@
 
 		<div class="right-container">
 			<div class="h-center-container" ng-if="current_page_id == 2">
-				<div ng-if="nested_page_id == 1" class="animate-fast content-box">
+				<!-- <div ng-if="nested_page_id == 1" class="animate-fast content-box">
 					<div class="feature-description">
 						Search for books, authors and communities.
 					</div>
@@ -74,17 +74,17 @@
 									layout-align="left left">
 		    			<timer interval="1000" 
 		    				   autostart="false"
-		    				   stop="!timer_active"/>
+		    				   stop="!timer_active"/> -->
 		    			<!-- <p ng-bind="search_animated"></p> -->
-		  			</md-whiteframe>
-				</div>
+		  			<!-- </md-whiteframe>
+				</div> -->
 
 
 				<div ng-if="nested_page_id == 2" class="animate-fast content-box">
 		  			<div class="feature-description">
 						Filters - your personal librarian.
 					</div>
-		  			<md-whiteframe class="md-whiteframe-z1 w-box" 
+		  			<md-whiteframe class="w-box img-resize" 
 		  							layout="row" 
 		  							layout-align="left left">
 		  							<img src="assets/filters.png">
@@ -96,7 +96,7 @@
 		  			<div class="feature-description">
 						Enhance your reading journey through personalised suggestions.
 					</div>
-		  			<md-whiteframe class="md-whiteframe-z1 w-box" 
+		  			<md-whiteframe class="w-box img-resize" 
 		  							layout="row" 
 		  							layout-align="left left">
 		    			<img src= "assets/suggestions.png"/>
