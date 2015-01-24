@@ -342,3 +342,7 @@ md-tab.active a{
     width: 24px;
     padding-top: 15%;
 }
+
+.gray_background{
+    background: #ececec;
+}
