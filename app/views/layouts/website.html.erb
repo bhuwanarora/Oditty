@@ -15,7 +15,11 @@
     <!-- jquery -->
     <!-- angular vendors -->
     <% if Rails.env.development? %>
-      <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/angular/vendors/*.js")] %>
+      <%#= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/angular/vendors/*.js")] %>
+      
+      <%= javascript_include_tag Rails.root.join("/assets/angular/vendors/angular.min.js") %>
+      <%= javascript_include_tag Rails.root.join("/assets/min/angular/vendors.js") %>
+
       <!-- angular libs -->
       <%= javascript_include_tag *Dir[Rails.root.join("app/assets/javascripts/lib/*.js")] %>
       <!-- angular apps -->
