@@ -59,4 +59,12 @@ class WebsiteController < ApplicationController
 		render :layout => "clean"
 	end
 
+	def home
+		render :layout => "material"
+	end
+
+	def library
+		render :layout => "material"
+	end
+
 end

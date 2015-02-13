@@ -11,7 +11,8 @@
         <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,100italic,400italic|Roboto+Condensed&amp;lang=en' rel='stylesheet' type='text/css'>
 
         <link rel="stylesheet" href="assets/min/landing_page_site.min.css" />
-        <script src="assets/min/angular/landing_page_main.js"></script> 
+        <script src="assets/min/angular/website.min.js"></script> 
+        <script src="assets/min/angular/landing_page.min.js"></script>
 
         <!--<link rel="stylesheet" href="assets/angular_material.css" />
         <link rel="stylesheet" href="assets/landing_page/style.css" />
@@ -34,53 +35,7 @@
     </head>
 
     <body ng-controller="MainCtrl" ng-keydown="scroll_on_keypress($event)">
-        <div msd-wheel="bind_mousewheel_scroll($event)" layout="row" layout-fill>
-            <div flex>
-                <header class="main-header animate-fast" ng-if="show_content">
-                    <a class="title-btn" ng-click="scroll_page(0)">
-                        <img src="assets/rd_logo.png">
-                    </a>
-                    <div class="h-btn-right">
-                        <!-- <md-button md-no-ink class="md-warn">Sign in</md-button> -->
-                        <md-button class="md-raised md-warn md-hue-2"  
-                                   ng-click="scroll_page(6)">Request Invite</md-button>
-                    </div>
-                </header>
-
-                <md-whiteframe class="md-whiteframe-z1 tab-main animate-fast" layout layout-align="center" ng-if="show_content">
-                    <md-tabs class="md-accent" md-selected="data.selectedIndex">
-                        <md-tab ng-click="scroll_page(1)" ng-class="{'active': current_page_id == 1}">
-                            <a>{{data[1]}}</a>
-                        </md-tab>
-                        <md-tab ng-click="scroll_page(2)" ng-class="{'active': current_page_id == 2}">
-                            <a>{{data[2]}}</a>
-                        </md-tab>
-                        <md-tab ng-click="scroll_page(3)" ng-class="{'active': current_page_id == 3}">
-                             <a>{{data[3]}}</a>
-                        </md-tab>
-                        <md-tab ng-click="scroll_page(4)" ng-class="{'active': current_page_id == 4}">
-                            <a>{{data[4]}}</a>
-                        </md-tab>
-                        <md-tab ng-click="scroll_page(5)" ng-class="{'active': current_page_id == 5}">
-                            <a>{{data[5]}}</a>
-                        </md-tab>
-                        <md-tab ng-click="scroll_page(6)" ng-class="{'active': current_page_id == 6}">
-                            <a>{{data[6]}}</a>
-                        </md-tab>
-                    </md-tabs>
-                </md-whiteframe>
-                <div ng-view ng-fadein class="view-cont"></div>
-
-                <md-button class="md-fab btn-arrow" 
-                           aria-label="Comment" 
-                           ng-show="show_content"
-                           ng-click="scroll_next_state()"
-                           ng-style="down_button_style">
-                    <!-- <md-icon icon="assets/arrow-down.png" style="width: 24px; height: 24px;"></md-icon> -->
-                    <img src="assets/arrow-down.png" class="arrow-icon" />
-                </md-button>
-            </div>
-        </div>
+        <%= yield %>
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
