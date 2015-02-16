@@ -1,5 +1,4 @@
 angular.module('sticky', [])
-
 .directive('sticky', ['$timeout', '$rootScope', function($timeout, $rootScope){
 	return {
 		restrict: 'A',

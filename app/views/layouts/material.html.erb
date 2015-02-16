@@ -13,7 +13,19 @@
         <link rel="stylesheet" href="assets/min/landing_page_site.min.css" />
         <link rel="stylesheet" href="assets/website/home.css" />
         <script src="assets/min/angular/website.min.js"></script> 
-        <script src="assets/min/angular/home.min.js"></script> 
+        <% if Rails.env.development? %>
+            
+            <script src="assets/angular/vendors/angular_sticky.js"></script>
+            <script src="assets/angular/apps/home_app.js"></script>
+            <script src="assets/angular/apps/app_constants.js"></script>
+            <script src="assets/angular/controllers/home/home_controller.js"></script>
+            <script src="assets/angular/controllers/home/left_controller.js"></script>
+            <script src="assets/angular/controllers/home/right_controller.js"></script>
+            <script src="assets/angular/controllers/home/list_bottom_sheet_controller.js"></script>
+            <script src="assets/angular/controllers/home/share_controller.js"></script>
+        <% else %>
+            <script src="assets/min/angular/home.min.js"></script> 
+        <% end %>
     </head>
 
     <body ng-controller="homeController" ng-keydown="scroll_on_keypress($event)">

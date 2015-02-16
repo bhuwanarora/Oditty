@@ -1,3 +1,22 @@
+<section layout="row" layout-sm="column" layout-align="center center" layout-wrap ng-if="constant.show_book">
+    <div flex="25" hide-sm flex-md="10"></div>
+    <div flex="50" flex-md="80" layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+        <div class="book" ng-style="book_style">
+            <section class="md-whiteframe-z1 subheader" layout="row" layout-wrap>
+                <div flex="70" layout="wrap" layout-align="start center">
+                    Nineteen Eighty-Four(1949)
+                </div>
+                <div flex="30" layout="wrap" layout-align="end center">
+                    <div flex><h5>News</h5></div>
+                    <div flex><h5>Discussions</h5></div>
+                    <div flex><h5>Buy</h5></div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div flex="25" hide-sm flex-md="10"></div>
+</section>
+
 <md-content>
     <md-subheader class="md-primary filters_header">
         <!-- <div layout="row" class="filters"> -->
@@ -54,37 +73,96 @@
 
         <!-- </div> -->
     </md-subheader>
-    <section layout="row" layout-wrap>
-        <div flex="25" hide-sm flex-md="10"></div>
-        <div flex="50" flex-sm="100" flex-md="80" layout="column" class="white">
-            <section layout="row" layout-wrap>
-                <div flex="25">
-                    <img src="http://upload.wikimedia.org/wikipedia/commons/7/7e/George_Orwell_press_photo.jpg" width="160px"></div>
-                <div flex="75" class="md-padding" class="white">
-                    Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell, was an English novelist, essayist, journalist and critic. His work is marked by lucid prose, awareness of social injustice, opposition to totalitarianism, and commitment to democratic socialism.[2][3]
-                </div>
-            </section>
-            <md-divider></md-divider>
-            <md-subheader>Recommendations for you</md-subheader>
-          <md-content class="md-padding">
-            <md-grid-list
-                md-cols-gt-md="12" md-cols-sm="3" md-cols-md="8"
-                md-row-height-gt-md="1:1" md-row-height="4:3"
-                md-gutter-gt-md="16px" md-gutter-gt-sm="8px" md-gutter="4px">
-              <md-grid-tile
-                  ng-repeat="tile in colorTiles"
-                  ng-style="{
-                    'background': tile.color
-                  }"
-                  md-colspan-gt-sm="{{tile.colspan}}"
-                  md-rowspan-gt-sm="{{tile.rowspan}}">
-              </md-grid-tile>
-            </md-grid-list>
-          </md-content>
-            <md-subheader>Serendipitous Reads</md-subheader>
-            
-        </div>
-        <div flex="25" hide-sm flex-md="10"></div>
+    <section>
+        
+        <section layout="row" layout-wrap>
+            <div flex="25" hide-sm flex-md="10"></div>
+            <div flex="50" flex-sm="100" flex-md="80" layout="column" class="white">
+                <section layout="row" layout-wrap>
+                    <div flex="25">
+                        <img src="http://upload.wikimedia.org/wikipedia/commons/7/7e/George_Orwell_press_photo.jpg" width="160px"></div>
+                    <md-whiteframe flex="75" layout-fill>
+                        <p>
+                            <h4>George Orwell</h4>
+                            <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell, was an English novelist, essayist, journalist and critic. His work is marked by lucid prose, awareness of social injustice, opposition to totalitarianism, and commitment to democratic socialism.[2][3]</div>
+                        </p>
+                    </md-whiteframe>
+                </section>
+            </div>
+            <div flex="25" hide-sm flex-md="10"></div>
+        </section>
+        <section layout="row" layout-wrap>
+            <div flex="25" hide-sm flex-md="10">
+                <md-content layout="column" class="md-padding" layout-align="start end">
+                    <h3>Sort by</h3>
+                    <div>Genre</div>
+                    <div>Year</div>
+                    <div>Author</div>
+                    <div>Duration</div>
+                </md-content>
+            </div>
+            <div flex="50" flex-sm="100" flex-md="80" layout="column" class="white"  ng-style="grid_style">
+                <md-divider></md-divider>
+                <md-whiteframe layout-fill>
+                    <h4>Recommendations for you</h4>
+                </md-whiteframe>
+                <md-whiteframe layout-fill>
+                    <md-grid-list
+                        md-cols-sm="1" md-cols-md="2" md-cols-gt-md="5"
+                        md-row-height-gt-md="1:1"
+                        md-gutter="1px" md-gutter-gt-sm="1px" >
+                        <md-grid-tile ng-repeat="tile in colorTiles"
+                            md-rowspan="2"
+                            md-colspan="1"
+                            ng-style="{'background': tile.color}" 
+                            id="{{tile.color}}"
+                            ng-class="tile.color" >
+                            <md-button aria-label="" ng-click="show_book($event)">
+                                <md-icon md-svg-icon="{{tile.icon}}"></md-icon>
+                            </md-button>
+                            <!-- <md-grid-tile-footer><h3>{{tile.title}}</h3></md-grid-tile-footer> -->
+                        </md-grid-tile>
+                    </md-grid-list>
+                </md-whiteframe>
+                <md-whiteframe layout-fill>
+                    <h4>Serendipitous Reads
+                    </h4>
+                </md-whiteframe>
+            </div>
+
+
+            <div flex="25" hide-sm flex-md="10">
+                <md-content layout="column" class="md-padding" >
+                    <div> | A</div>
+                    <div> | B</div>
+                    <div> | C</div>
+                    <div> | D</div>
+                    <div> | E</div>
+                    <div> | F</div>
+                    <div> | G</div>
+                    <div> | H</div>
+                    <div> | I</div>
+                    <div> | J</div>
+                    <div> | K</div>
+                    <div> | L</div>
+                    <div> | M</div>
+                    <div> | N</div>
+                    <div> | O</div>
+                    <div> | P</div>
+                    <div> | Q</div>
+                    <div> | R</div>
+                    <div> | S</div>
+                    <div> | T</div>
+                    <div> | U</div>
+                    <div> | V</div>
+                    <div> | W</div>
+                    <div> | X</div>
+                    <div> | Y</div>
+                    <div> | Z</div>
+
+                </md-content>
+            </div>
+        </section>
     </section>
 </md-content>
 
@@ -114,6 +192,26 @@
 
     .autocompletedemoBasicUsage md-content{
         min-height: 500px; 
+    }
+
+    .sticky_header{
+        background-color: transparent !important;
+        box-shadow: none;
+        -webkit-animation: none !important;
+        animation: none !important;
+    }
+
+    .book{
+        position: fixed;
+        height: 5000px;
+        width: 50%;
+        background-color: white;
+        z-index: 6;
+        margin-left: -25%;
+    }
+
+    .book .subheader{
+        height: 50px;
     }
 
 </style>

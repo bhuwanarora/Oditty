@@ -1,4 +1,30 @@
-homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSidenav", "$log", '$q', '$mdBottomSheet', '$mdDialog', function($scope, $rootScope, $timeout, $mdSidenav, $log, $q, $mdBottomSheet, $mdDialog){
+homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSidenav", "$log", '$q', '$mdBottomSheet', '$mdDialog', 'scroller', '$document', function($scope, $rootScope, $timeout, $mdSidenav, $log, $q, $mdBottomSheet, $mdDialog, scroller, $document){
+    $scope.stopPropagation = function(){
+        if($scope.constant.show_book){
+            // event.stopPropagation();
+            // event.preventDefault();
+
+        }
+    }
+
+    $scope.show_book = function(event){
+        // $scope.constant = {"show_book": false};
+        var offsetTop = event.currentTarget.parentElement.parentElement.parentElement.offsetTop;
+        var clientHeight = event.currentTarget.parentElement.parentElement.clientHeight;
+        var marginTop = offsetTop + 1*clientHeight/3;
+        $scope.book_style = {"margin-top": marginTop+"px"};
+        $scope.constant = {"show_book": true};
+        $scope.grid_style = {"height": marginTop+"px", "overflow-y": "hidden"};
+
+        // var offset = 100;
+        // var duration = 1000;
+        // var someElement = angular.element(document.getElementById(id));
+        // alert(id);
+        // scrollBy(0, 1000, duration);
+    }
+
+    $scope.constant = {"show_book": false};
+
 	var item = {
     	face: '/img/list/60.jpeg',
     	what: 'Brunch this weekend?',
@@ -213,4 +239,6 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
       return 3;
     }
   }
+
+
 }]);
