@@ -1,0 +1,118 @@
+md-content.md-default-theme{
+	background-color: #ececec;
+}
+
+a:hover,
+a:visited,
+a:active{
+	text-decoration: none !important;
+}
+
+.toolbardemoScrollShrink .face {
+  	width: 48px;
+  	margin: 16px;
+  	border-radius: 48px;
+  	border: 1px solid #ddd; 
+}
+
+.header{
+	background-color: #5f698c !important;
+	color: white !important;
+	min-height: 50px !important;
+}
+
+
+.carddemoBasicUsage md-card {
+	min-height: 150px; 
+}
+
+md-card{
+	margin-top: 25px !important;
+	background-color: white;
+}
+
+md-content{
+	height: 100vh !important;
+	/*margin-top: 0px !important;*/
+	margin-bottom: 100px !important;
+}
+
+.burger{
+	background-color: #242736;
+	/*padding-top: 15px;*/
+	/*padding-bottom: 15px;*/
+	color: white;
+}
+
+md-tabs a{
+	color: white !important;
+}
+
+.logo{
+	padding-left: 50px;
+	font-size: 1.2em;
+}
+
+.logo img{
+	position: absolute;
+    z-index: 99999999;
+    left: 45px;
+    top: 0px;
+}
+
+.search{
+	background-color: rgba(255, 255, 255, 0.82) !important;
+	width: 50vw;
+	height: 35px;
+}
+
+.search input:focus{
+	outline: none;
+}
+
+.search_container{
+	position: absolute;
+    left: 25%;
+    height: 50px;
+}
+
+.search_container label{
+	font-size: 15px;
+  	padding-left: 40px;
+}
+
+.library{
+	text-transform: inherit;
+	color: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+	padding: 0px;
+	height: 50px;
+}
+
+.library a{
+	padding: 8px 16px;
+}
+
+.header section{
+	justify-content: initial;
+}
+
+.right_links{
+	position: absolute;
+  	justify-content: flex-end !important;
+  	right: 0px;
+  	margin-top: 17px;
+}
+
+.right_links div{
+	padding: 0px 10px;
+}
+
+md-card>img{
+ 	order: 1;
+}
+
+.card .footer{
+ 	order: 2;
+}

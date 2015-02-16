@@ -1,0 +1,36 @@
+<md-toolbar md-scroll-shrink class="md-whiteframe-z1 header">
+	<div layout="row">
+		<md-button class="burger" ng-click="toggleLeft()">
+      	<a><span class="icon-menu2"></span></a>
+		</md-button>
+		<div layout="row" layout-align-lg="center center">
+          <a class="logo">
+          	<img src="assets/rd_icon.png"/>
+          	<span>ReadersDoor</span>
+          </a>
+		</div>
+		<div class="search_container" layout="row">
+      	<md-input-container class="md-default-theme">
+    			<label for="input_010">Search for topics, books and more...</label>
+    			<input ng-model="user.firstName" 
+    				   class="ng-pristine ng-valid md-input ng-touched search" 
+    				   tabindex="0" 
+    				   aria-invalid="false">
+  			<!-- <div class="md-placeholder">Search</div> -->
+  		</md-input-container>
+  		<md-button class="library">
+  			Library
+  		</md-button>
+		</div>
+		<div>
+			<span class="icon-bell"></span>
+		</div>
+		<div>
+			<span class="icon-checkbox-unchecked"></span>
+		</div>
+		<div>
+			<span class="icon-angle-down"></span>
+		</div>
+	</div>
+	
+</md-toolbar>

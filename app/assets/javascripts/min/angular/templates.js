@@ -260,7 +260,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/landing_page/intro.html',
-    "<div layout=\"row\" class=\"inbox-area animate-fast\" ng-if=\"show_content\"><div flex=\"\"><div layout=\"row\" layout-margin=\"\" layout-align=\"center center\"><div flex=\"\"><div class=\"inbox-cont\"><h2>Infect with bibliophilia.</h2><p>Built on everything we learnt from the journeys of several book lovers, ReadersDoor is a fresh start to help spread the love of books.</p><p>Read on to know more</p></div></div><div flex=\"\"><img src=\"assets/intro-product.png\" class=\"inbox-img\"></div></div></div></div>"
+    "<div layout=\"row\" class=\"inbox-area animate-fast\" ng-if=\"show_content\" layout-sm=\"column\"><div flex=\"\"><div class=\"inbox-cont\"><h2>Infect with bibliophilia.</h2><p>Built on everything we learnt from the journeys of several book lovers, ReadersDoor is a fresh start to help spread the love of books.</p><p>Read on to know more</p></div></div><div flex=\"\"><img src=\"assets/intro-product.png\" class=\"inbox-img\"></div></div>"
   );
 
 

@@ -1,0 +1,119 @@
+<md-content>
+    <md-subheader class="md-primary filters_header">
+        <!-- <div layout="row" class="filters"> -->
+            <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+                <div flex="25" hide-sm flex-md="10"></div>
+                <div flex="50" flex-md="80" layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+                    <md-autocomplete
+                        flex="20"
+                        flex-sm="100"
+                        md-selected-item="selectedItem1"
+                        md-search-text="searchText"
+                        md-items="item in querySearch(searchText)"
+                        md-item-text="display"
+                        placeholder="Genre">
+                        <span md-highlight-text="searchText">{{item.display}}</span>
+                    </md-autocomplete>
+                    <md-autocomplete
+                        flex="20"
+                        flex-sm="100"
+                        md-selected-item="selectedItem2"
+                        md-search-text="searchText"
+                        md-items="item in querySearch(searchText)"
+                        md-item-text="display"
+                        placeholder="Author">
+                        <span md-highlight-text="searchText">{{item.display}}</span>
+                    </md-autocomplete>
+                    <md-autocomplete
+                        flex="20"
+                        flex-sm="100"
+                        md-selected-item="selectedItem3"
+                        md-search-text="searchText"
+                        md-items="item in querySearch(searchText)"
+                        md-item-text="display"
+                        placeholder="Year">
+                        <span md-highlight-text="searchText">{{item.display}}</span>
+                    </md-autocomplete>
+                    <md-autocomplete
+                        flex="20"
+                        flex-sm="100"
+                        md-selected-item="selectedItem4"
+                        md-search-text="searchText"
+                        md-items="item in querySearch(searchText)"
+                        md-item-text="display"
+                        placeholder="Duration">
+                        <span md-highlight-text="searchText">{{item.display}}</span>
+                    </md-autocomplete>
+                    <md-button class="md-raised" flex="10" flex-sm="100">
+                        Reset
+                    </md-button>
+                </div>
+                <div flex="25" hide-sm flex-md="10"></div>
+            </section>
+        
+
+        <!-- </div> -->
+    </md-subheader>
+    <section layout="row" layout-wrap>
+        <div flex="25" hide-sm flex-md="10"></div>
+        <div flex="50" flex-sm="100" flex-md="80" layout="column" class="white">
+            <section layout="row" layout-wrap>
+                <div flex="25">
+                    <img src="http://upload.wikimedia.org/wikipedia/commons/7/7e/George_Orwell_press_photo.jpg" width="160px"></div>
+                <div flex="75" class="md-padding" class="white">
+                    Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell, was an English novelist, essayist, journalist and critic. His work is marked by lucid prose, awareness of social injustice, opposition to totalitarianism, and commitment to democratic socialism.[2][3]
+                </div>
+            </section>
+            <md-divider></md-divider>
+            <md-subheader>Recommendations for you</md-subheader>
+          <md-content class="md-padding">
+            <md-grid-list
+                md-cols-gt-md="12" md-cols-sm="3" md-cols-md="8"
+                md-row-height-gt-md="1:1" md-row-height="4:3"
+                md-gutter-gt-md="16px" md-gutter-gt-sm="8px" md-gutter="4px">
+              <md-grid-tile
+                  ng-repeat="tile in colorTiles"
+                  ng-style="{
+                    'background': tile.color
+                  }"
+                  md-colspan-gt-sm="{{tile.colspan}}"
+                  md-rowspan-gt-sm="{{tile.rowspan}}">
+              </md-grid-tile>
+            </md-grid-list>
+          </md-content>
+            <md-subheader>Serendipitous Reads</md-subheader>
+            
+        </div>
+        <div flex="25" hide-sm flex-md="10"></div>
+    </section>
+</md-content>
+
+<style>
+    .subheaderdemoBasicUsage .face {
+        border-radius: 30px;
+        border: 1px solid #ddd;
+        width: 48px;
+        margin: 16px; 
+    }
+
+    .filters_header{
+        background-color: white !important;
+        margin: 0px;
+    }
+
+    .md-sticky-clone{
+        top: 0px !important;
+    }
+
+    md-autocomplete{
+        /*min-width: 120px;*/
+        box-shadow: none;
+        border: 1px solid #E8E8E8;
+        margin-right: 4px;
+    }
+
+    .autocompletedemoBasicUsage md-content{
+        min-height: 500px; 
+    }
+
+</style>
