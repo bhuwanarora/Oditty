@@ -29,12 +29,14 @@ Please feel free to use a different markup language if you do not plan to run
 
 
 MAC
-# sudo ARCHFLAGS="-arch x86_64" gem install pg
+
+<tt>sudo ARCHFLAGS="-arch x86_64" gem install pg</tt>
 
 Gruntfile
-npm install
-npm install grunt@0.4 --save-dev
-npm install -g grunt-cli
-npm install grunt-contrib-uglify --save-dev
-npm install grunt-contrib-conca --save-dev
-npm install grunt-contrib-cssmin --save-dev
+
+<tt>npm install</tt>
+<tt>npm install grunt@0.4 --save-dev</tt>
+<tt>npm install -g grunt-cli</tt>
+<tt>npm install grunt-contrib-uglify --save-dev</tt>
+<tt>npm install grunt-contrib-concat --save-dev</tt>
+<tt>npm install grunt-contrib-cssmin --save-dev</tt>

@@ -34,7 +34,7 @@ md-card{
 md-content{
 	height: 100vh !important;
 	/*margin-top: 0px !important;*/
-	margin-bottom: 100px !important;
+	/*margin-bottom: 100px !important;*/
 }
 
 .burger{
@@ -115,4 +115,8 @@ md-card>img{
 
 .card .footer{
  	order: 2;
+}
+
+.padding{
+	padding: 16px;
 }
