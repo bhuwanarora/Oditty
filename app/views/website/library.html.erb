@@ -119,26 +119,67 @@
                         </md-content>
                     </div>
                     <section>
-                        <div class="book" ng-style="book_style" flex="100" ng-if="constant.show_book">
-
-                                <md-tabs class="md-whiteframe-z1">
-                                    <md-tab class="padding">Nineteen Eighty-Four(1949)</md-tab>
-                                    <md-tab class="padding">News</md-tab>
-                                    <md-tab class="padding">Discussions</md-tab>
-                                    <md-tab class="padding">Buy</md-tab>
-                                    <md-subheader></md-subheader>
-                                </md-tabs>
+                        <div class="book animate-fast" ng-style="book_style" flex="100" ng-if="constant.show_book">
+                            <md-tabs class="md-whiteframe-z1">
+                                <md-tab class="padding">Nineteen Eighty-Four(1949)</md-tab>
+                                <md-tab class="padding">News</md-tab>
+                                <md-tab class="padding">Discussions</md-tab>
+                                <md-tab class="padding">Buy</md-tab>
+                                <md-subheader></md-subheader>
+                            </md-tabs>
                             
                             <md-content ng-if="constant.show_book" class="white">
                                 <section layout="row" layout-wrap>
-                                    <div flex="45" class="padding" style="background-color: #939071">
-                                        <h4>Nineteen Eighty-Four</h4>
-                                        <div>George Orwell</div>
-                                        <div>Nineteen Eighty-Four, sometimes published as 1984, is a dystopian novel by George Orwell published in 1949. The novel is set in Airstrip One (formerly known as Great Britain), a province of the superstate Oceania in a world of perpetual war</div>
-                                        <p>Thriller, Suspense, Terrorism</p>
+                                    <div flex="45" class="padding" style="background-color: #939071" layout="column" layout-align="space-between">
+                                        <section>
+                                            <p>
+                                                <h4>Nineteen Eighty-Four</h4>
+                                                <div>George Orwell</div>
+                                            </p>
+                                            
+                                            <div>Nineteen Eighty-Four, sometimes published as 1984, is a dystopian novel by George Orwell published in 1949. The novel is set in Airstrip One (formerly known as Great Britain), a province of the superstate Oceania in a world of perpetual war</div>
+                                            <p>
+                                                <a href="">Thriller</a>, 
+                                                <a href="">Suspense</a>, 
+                                                <a href="">Terrorism</a>
+                                            </p>
+                                        </section>
+                                        <section layout="column" layout-align="space-between">
+                                            <div>
+                                                7.5 from 52 readers
+                                            </div>
+                                            <div>
+                                                <section layout="row" layout-sm="column" layout-align="space-between">
+                                                    <md-button>Rate book</md-button>
+                                                    <md-button>Endorse book</md-button>
+                                                </section>
+                                                 <section layout="row" layout-sm="column" layout-align="space-between">
+                                                    <div layout="row" layout-align="start center">
+                                                        <md-button ng-click="show_shelf_bottom_sheet()">Bookmark</md-button>&nbsp;
+                                                        <div><span class="icon-bookmark3"></span></div>&nbsp;
+                                                        <div>12</div>&nbsp;&nbsp;
+                                                        <div><span class="icon-bubbles2"></span></div>&nbsp;
+                                                        <div>1</div>&nbsp;
+                                                    </div>
+                                                    <div layout="row" layout-align="end center">
+                                                        <md-button ng-click="show_share_bottom_sheet()">Share</md-button>&nbsp;
+                                                        <div><span class="icon-share"></span></div>&nbsp;
+                                                        <div>45</div>
+                                                    </div>
+                                                </section>
+
+                                            </div>
+                                        </section>
                                     </div>
-                                    <div flex="5" style="background-color: #646347">
-                                        
+                                    <div flex="5">
+                                        <div class="vertical-text" 
+                                             layout="row"
+                                             layout-align="space-between"
+                                             style="background-color: #646347; width: 500px; margin-left: 31px;" >
+                                            <div>Nineteen Eighty Four(1949)</div>
+                                            <div>George Orwell</div>
+                                        </div>
+                                            
                                     </div>
                                     <div flex="50">
                                         <img src="http://www.robinmalau.com/wp-content/uploads/2008/04/1984.jpg">
@@ -146,60 +187,92 @@
                                 </section>
                                 <div class="padding">
                                      <h4>News</h4>
-                                     <section layout="row" layout-wrap>
+                                     <section layout="row" layout-wrap class="padding">
                                          <div flex="10"></div>
-                                         <div flex="10" class="grey">2015</div>
+                                         <div flex="10" class="light_grey small-padding" layout-align="center center" layout="row">
+                                            2015
+                                        </div>
                                          <div flex="80">
                                      </section>
-                                     <section layout="row" layout-wrap>
-                                         <div flex="10">29Feb</div>
-                                         <div flex="10"><img src=""></div>
-                                         <div flex="80">
+                                     <section layout="row" layout-wrap class="padding">
+                                         <div flex="10" layout-align="center center" layout="row">
+                                            <div>29Feb</div>
+                                        </div>
+                                         <div flex="10" layout-align="center center" layout="row">
+                                                <img class="circular"
+                                                     src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
+                                        </div>
+                                         <div flex="80" layout-align="start start" layout="column" class="small-padding">
                                             <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell 
                                             </div>
                                             <div>Terrorism community</div>
                                          </div>
                                      </section>
-                                     <section layout="row" layout-wrap>
-                                         <div flex="10">29Feb</div>
-                                         <div flex="10"><img src=""></div>
-                                         <div flex="80">
+                                     <section layout="row" layout-wrap class="padding">
+                                         <div flex="10" layout-align="center center" layout="row">
+                                            <div>29Feb</div>
+                                        </div>
+                                        <div flex="10" layout-align="center center" layout="row">
+                                                <img class="circular"
+                                                     src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
+                                        </div>
+                                         <div flex="80" layout-align="start start" layout="column" class="small-padding">
                                             <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell 
                                             </div>
                                             <div>Terrorism community</div>
                                          </div>
                                      </section>
-                                     <section layout="row" layout-wrap>
-                                         <div flex="10">29Feb</div>
-                                         <div flex="10"><img src=""></div>
-                                         <div flex="80">
+                                     <section layout="row" layout-wrap class="padding">
+                                         <div flex="10" layout-align="center center" layout="row">
+                                            <div>29Feb</div>
+                                        </div>
+                                        <div flex="10" layout-align="center center" layout="row">
+                                                <img class="circular"
+                                                     src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
+                                        </div>
+                                         <div flex="80" layout-align="start start" layout="column" class="small-padding">
                                             <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell 
                                             </div>
                                             <div>Terrorism community</div>
                                          </div>
                                      </section>
-                                     <section layout="row" layout-wrap>
-                                         <div flex="10">29Feb</div>
-                                         <div flex="10"><img src=""></div>
-                                         <div flex="80">
+                                     <section layout="row" layout-wrap class="padding">
+                                         <div flex="10" layout-align="center center" layout="row">
+                                            <div>29Feb</div>
+                                        </div>
+                                        <div flex="10" layout-align="center center" layout="row">
+                                                <img class="circular"
+                                                     src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
+                                        </div>
+                                         <div flex="80" layout-align="start start" layout="column" class="small-padding">
                                             <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell 
                                             </div>
                                             <div>Terrorism community</div>
                                          </div>
                                      </section>
-                                     <section layout="row" layout-wrap>
-                                         <div flex="10">29Feb</div>
-                                         <div flex="10"><img src=""></div>
-                                         <div flex="80">
+                                     <section layout="row" layout-wrap class="padding">
+                                         <div flex="10" layout-align="center center" layout="row">
+                                            <div>29Feb</div>
+                                        </div>
+                                        <div flex="10" layout-align="center center" layout="row">
+                                                <img class="circular"
+                                                     src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
+                                        </div>
+                                         <div flex="80" layout-align="start start" layout="column" class="small-padding">
                                             <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell 
                                             </div>
                                             <div>Terrorism community</div>
                                          </div>
                                      </section>
-                                     <section layout="row" layout-wrap>
-                                         <div flex="10">29Feb</div>
-                                         <div flex="10"><img src=""></div>
-                                         <div flex="80">
+                                     <section layout="row" layout-wrap class="padding">
+                                         <div flex="10" layout-align="center center" layout="row">
+                                            <div>29Feb</div>
+                                        </div>
+                                        <div flex="10" layout-align="center center" layout="row">
+                                                <img class="circular"
+                                                     src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
+                                        </div>
+                                         <div flex="80" layout-align="start start" layout="column" class="small-padding">
                                             <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell 
                                             </div>
                                             <div>Terrorism community</div>
@@ -346,6 +419,16 @@
         text-transform: none !important;
         color: inherit;
 
+    }
+
+    .circular{
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+    }
+
+    .md-header-items-container .md-header-items{
+        border-bottom: 1px solid #EFEFEF;
     }
 
 </style>

@@ -64,6 +64,11 @@ md-tabs a{
 	background-color: rgba(255, 255, 255, 0.82) !important;
 	width: 50vw;
 	height: 35px;
+	padding-left: 37px;
+}
+
+.search input{
+	padding-left: 0px;
 }
 
 .search input:focus{
@@ -119,4 +124,35 @@ md-card>img{
 
 .padding{
 	padding: 16px;
+}
+
+.small-padding{
+	padding: 10px;
+}
+
+
+.book.ng-enter,
+.book.ng-leave.ng-leave-active{
+	margin-top: 100px;
+}
+
+.book.ng-leave,
+.book.ng-enter-active{
+	margin-top: 0px;	
+}
+
+md-backdrop.md-opaque.md-default-theme{
+	background-color: rgba(0,0,0,0.24);
+}
+
+.md-button-left{
+	text-align: left;
+}
+
+.search_icon{
+	color: grey;
+	position: absolute;
+	z-index: 1;
+	top: 18px;
+	margin-left: 10px;
 }
