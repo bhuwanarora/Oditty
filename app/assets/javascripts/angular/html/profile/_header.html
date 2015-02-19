@@ -1,0 +1,80 @@
+<md-toolbar class="profile_header md-whiteframe">
+    <section layout="column" layout-wrap>
+        <div layout="row" layout-align="end start" class="padding">
+            <md-button class="md-raised md-primary">Follow Me</md-button>
+        </div>
+        <div layout="row" layout-wrap>
+            <div flex="25" hide-sm flex-md="10" layout="row" layout-align="end end">
+                <img src="http://www.chicagonow.com/avatar/blog-108-128.png" class="circular profile_pic">
+                <a href="/profile"><div layout="column" layout-wrap layout-align="end end">
+                    <h3 style="margin: 0px !important;">Tehzeeb Khan</h3>
+                    <h5>Mumbai</h5>
+                </div></a>
+            </div>
+            <div flex="50" flex-md="80" layout="row" 
+                 layout-sm="column" layout-align="center center" layout-wrap>
+               
+            </div>
+            <div flex="25" hide-sm flex-md="10" layout="row" layout-column>
+                <md-button class="small-padding">
+                    <div layout="column" layout-align="end end">
+                        <div class="grey_color">BOOKS</div>
+                        <h2 class="green_color">28</h2>
+                    </div>
+                </md-button>
+                
+                <a href="/network">
+                     <md-button class="small-padding">
+                        <div layout="column" layout-align="end end">
+                            <div class="grey_color">FOLLOWERS</div>
+                            <h2 class="green_color">12</h2>
+                        </div>
+                    </md-button>
+                </a>
+                
+                 <a href="/network">
+                    <md-button class="small-padding">
+                        <div layout="column" layout-align="end end">
+                            <div class="grey_color">FOLLOWING</div>
+                            <h2 class="green_color">12</h2>
+                        </div>
+                    </md-button>
+                </a>
+                <div></div>
+            </div>
+        </div>
+    </section>
+</md-toolbar>
+
+<style>
+    .grey_color{
+        font-weight: 400;
+    }
+    .profile_header{
+        color: grey !important;
+        background-color: white !important;
+        /*box-shadow: none;*/
+        border-bottom: 1px solid #ECECEC;
+        /*padding-top: 60px;*/
+        /*padding-bottom: 0px;*/
+    }
+
+    .profile_header h2{
+        padding: 0px;
+        margin: 8px 0px !important;
+    }
+
+    .profile_header h5{
+        margin: 5px 0px;
+    }
+
+    .profile_pic{
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+        position: absolute;
+        left: 30px;
+        border: 5px solid #ECECEC;
+        margin-top: -25px;
+    }
+</style>

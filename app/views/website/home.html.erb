@@ -1,37 +1,9 @@
-<md-content>
-    <section layout="row" layout-wrap>
-        <div flex="25" hide-sm flex-md="10"></div>
-        <div flex="50" flex-sm="100" flex-md="80">
-            <md-list>
-                <md-card ng-repeat="item in todos">
-                    <md-card-content>
-                        <h2>ReadersDoor Blog</h2>
-                        <p>Shared on 10Feb</p>
-                        <p>
-                            The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-                            two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                        </p>
-                    </md-card-content>
-                    <img src="https://material.angularjs.org/img/washedout.png" alt="Washed Out">
-                    <md-card-content class="footer">
-                        <section layout="row" layout-sm="column" layout-align="space-between">
-                            <div layout="row" layout-align="start center">
-                                <md-button ng-click="show_shelf_bottom_sheet()">Bookmark</md-button>&nbsp;
-                                <div><span class="icon-bookmark3"></span></div>&nbsp;
-                                <div>12</div>&nbsp;&nbsp;
-                                <div><span class="icon-bubbles2"></span></div>&nbsp;
-                                <div>1</div>&nbsp;
-                            </div>
-                            <div layout="row" layout-align="end center">
-                                <md-button ng-click="show_share_bottom_sheet()">Share</md-button>&nbsp;
-                                <div><span class="icon-share"></span></div>&nbsp;
-                                <div>45</div>
-                            </div>
-                        </section>
-                    </md-card-content>
-                </md-card>
-            </md-list>
-        </div>
-        <div flex="25" hide-sm flex-md="10"></div>
-    </section>
-</md-content>
+<section layout="row" layout-wrap>
+    <div flex="20" hide-sm flex-md="10"></div>
+    <div flex="60" flex-sm="100" flex-md="80">
+    	<md-content>
+        	<div ng-include src="'/assets/angular/html/home/show.html'"></div>
+    	</md-content>
+    </div>
+    <div flex="20" hide-sm flex-md="10"></div>
+</section>

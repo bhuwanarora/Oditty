@@ -1,0 +1,39 @@
+<md-whiteframe layout-fill>
+    <div>
+        <div class="gradient animate-very-fast"
+             flex="60"
+             flex-md="80"
+             flex-sm="100"
+             ng-if="constant.show_book"
+             ng-click="show_grid($event)"
+             layout="row"
+             layout-align="start center">
+            <div class="padding">George Orwell Books</div>
+        </div>
+        <md-content  ng-style="grid_style" class="white">
+            <md-grid-list
+                md-cols-sm="1"
+                md-cols-md="2" 
+                md-cols-gt-md="5"
+                md-row-height="1:1.3"
+                md-gutter="2px" 
+                md-gutter-gt-sm="1px" >
+                <md-grid-tile ng-repeat="tile in colorTiles"
+                    md-rowspan="{{tile.rowspan}}"
+                    md-colspan="{{tile.colspan}}"
+                    ng-style="{'background': tile.color}" 
+                    id="{{tile.color}}" 
+                    layout-align="start start"
+                    layout="row"
+                    class="md-button grid"
+                    ng-class="{'book': tile.isBook}" 
+                    ng-click="show_book($event, $index)">
+                        
+                </md-grid-tile>
+            </md-grid-list>
+        </md-content>
+    </div>
+    <section>
+        <div ng-include src="'/assets/angular/html/book/show.html'" ng-if="constant.show_book" class="animate-fast book"></div>
+    </section>
+</md-whiteframe>

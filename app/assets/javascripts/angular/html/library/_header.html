@@ -1,0 +1,68 @@
+<md-subheader class="md-primary filters_header">
+    <section layout="row" show-sm hide layout-align="space-between center" layout-wrap>
+        <md-button>Sort by</md-button>
+        <div layout="row" layout-align="end center" layout-wrap>
+            <md-button class="md-raised">
+                Add Filters
+            </md-button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div layout="column">
+                <div>A</div>
+                <div>Z</div>
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+    </section>
+    <section layout="row" hide-sm layout-align="center center" layout-wrap>
+        <div flex="20" hide-sm flex-md="10"></div>
+        <div flex="60" flex-md="80" layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+            <md-autocomplete
+                flex="20"
+                flex-sm="100"
+                md-selected-item="selectedItem1"
+                md-search-text="searchText"
+                md-items="item in querySearch(searchText)"
+                md-item-text="display"
+                placeholder="Genre">
+                <span md-highlight-text="searchText">{{item.display}}</span>
+                <div>
+                    <span class="icon-arrow-down"></span>
+                </div>
+            </md-autocomplete>
+            <md-autocomplete
+                flex="20"
+                flex-sm="100"
+                md-selected-item="selectedItem2"
+                md-search-text="searchText"
+                md-items="item in querySearch(searchText)"
+                md-item-text="display"
+                placeholder="Author">
+                <span md-highlight-text="searchText">{{item.display}}</span>
+            </md-autocomplete>
+            <md-autocomplete
+                flex="20"
+                flex-sm="100"
+                md-selected-item="selectedItem3"
+                md-search-text="searchText"
+                md-items="item in querySearch(searchText)"
+                md-item-text="display"
+                placeholder="Year">
+                <span md-highlight-text="searchText">{{item.display}}</span>
+            </md-autocomplete>
+            <md-autocomplete
+                flex="20"
+                flex-sm="100"
+                md-selected-item="selectedItem4"
+                md-search-text="searchText"
+                md-items="item in querySearch(searchText)"
+                md-item-text="display"
+                placeholder="Duration">
+                <span md-highlight-text="searchText">{{item.display}}</span>
+            </md-autocomplete>
+            <md-button class="md-raised" flex="10" flex-sm="100">
+                Reset
+            </md-button>
+        </div>
+        <div flex="20" hide-sm flex-md="10"></div>
+    </section>
+</md-subheader>

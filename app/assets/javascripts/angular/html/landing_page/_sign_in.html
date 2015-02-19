@@ -1,0 +1,50 @@
+<md-dialog aria-label="" class="sigin_dialog" flex="50" flex-sm="100" flex-md="100">
+    <section layout="row" layout-wrap>
+        <div flex="45" class="left_panel" hide-sm>
+            <div class="sign_in_backdrop">
+                
+            </div>
+            <img src="assets/Optimized-7H.jpg">
+        </div>
+        <div flex="55" class="padding" layout="column" flex-sm="100">
+            <md-button layout="row">
+                <div><span class=""></span></div>
+                <div>LOGIN WITH GOOGLE</div>
+            </md-button>
+            <md-button layout="row">
+                <div><span class=""></span></div>
+                <div>LOGIN WITH FACEBOOK</div>
+            </md-button>
+            <br/>
+            <div>Or Login with email</div>
+            <md-input-container>
+                <label>Email</label>
+                <input>
+            </md-input-container>
+            <md-input-container>
+                <label>Password</label>
+                <input>
+            </md-input-container>
+            <md-button>LOGIN</md-button>
+            <a href="">Forgot Password?</a>
+        </div>
+    </section>
+</md-dialog>
+
+<style>
+    .sign_in_backdrop{
+
+    }
+
+    .sigin_dialog{
+        /*width: 50%;*/
+    }
+
+    .left_panel{
+        overflow: hidden;
+    }
+
+    .md-dialog-container{
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+</style>

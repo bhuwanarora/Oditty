@@ -59,11 +59,38 @@ class WebsiteController < ApplicationController
 		render :layout => "clean"
 	end
 
+
+	### WEBSITE NEW 
 	def home
 		render :layout => "material"
 	end
 
 	def library
+		render :layout => "material"
+	end
+
+	def search
+		@search_for = "Terror"
+		render :layout => "material"
+	end
+
+	def room
+		render :layout => "material"
+	end
+
+	def book
+		render :layout => "material"
+	end
+
+	def profile
+		render :layout => "material"
+	end
+
+	def network
+		render :layout => "material"
+	end
+
+	def journey
 		render :layout => "material"
 	end
 

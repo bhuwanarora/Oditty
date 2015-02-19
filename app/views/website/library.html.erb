@@ -1,347 +1,16 @@
-
 <md-content>
-    <md-subheader class="md-primary filters_header">
-        <!-- <div layout="row" class="filters"> -->
-            <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-                <div flex="25" hide-sm flex-md="10"></div>
-                <div flex="50" flex-md="80" layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-                    <md-autocomplete
-                        flex="20"
-                        flex-sm="100"
-                        md-selected-item="selectedItem1"
-                        md-search-text="searchText"
-                        md-items="item in querySearch(searchText)"
-                        md-item-text="display"
-                        placeholder="Genre">
-                        <span md-highlight-text="searchText">{{item.display}}</span>
-                    </md-autocomplete>
-                    <md-autocomplete
-                        flex="20"
-                        flex-sm="100"
-                        md-selected-item="selectedItem2"
-                        md-search-text="searchText"
-                        md-items="item in querySearch(searchText)"
-                        md-item-text="display"
-                        placeholder="Author">
-                        <span md-highlight-text="searchText">{{item.display}}</span>
-                    </md-autocomplete>
-                    <md-autocomplete
-                        flex="20"
-                        flex-sm="100"
-                        md-selected-item="selectedItem3"
-                        md-search-text="searchText"
-                        md-items="item in querySearch(searchText)"
-                        md-item-text="display"
-                        placeholder="Year">
-                        <span md-highlight-text="searchText">{{item.display}}</span>
-                    </md-autocomplete>
-                    <md-autocomplete
-                        flex="20"
-                        flex-sm="100"
-                        md-selected-item="selectedItem4"
-                        md-search-text="searchText"
-                        md-items="item in querySearch(searchText)"
-                        md-item-text="display"
-                        placeholder="Duration">
-                        <span md-highlight-text="searchText">{{item.display}}</span>
-                    </md-autocomplete>
-                    <md-button class="md-raised" flex="10" flex-sm="100">
-                        Reset
-                    </md-button>
-                </div>
-                <div flex="25" hide-sm flex-md="10"></div>
-            </section>
-        
-
-        <!-- </div> -->
-    </md-subheader>
+    <div ng-include src="'/assets/angular/html/library/_header.html'"></div>
     <section>
+       <!-- <div ng-include src="'/assets/angular/html/library/_description.html'"></div> -->
         <section layout="row" layout-wrap>
-            <div flex="25" hide-sm flex-md="10"></div>
-            <div flex="50" flex-sm="100" flex-md="80" layout="column" class="white">
-                <section layout="row" layout-wrap>
-                    <div flex="25">
-                        <img src="http://upload.wikimedia.org/wikipedia/commons/7/7e/George_Orwell_press_photo.jpg" width="160px"></div>
-                    <md-whiteframe flex="75" layout-fill>
-                        <div class="padding">
-                            <h4>George Orwell</h4>
-                            <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell, was an English novelist, essayist, journalist and critic. His work is marked by lucid prose, awareness of social injustice, opposition to totalitarianism, and commitment to democratic socialism.[2][3]</div>
-                        </div>
-                    </md-whiteframe>
-                </section>
+            <div flex="20" hide-sm flex-md="10" 
+                 ng-include src="'/assets/angular/html/library/_left_panel.html'"></div>
+            <div flex="60" flex-sm="100" flex-md="80" layout="column" class="white"
+                 ng-include src="'/assets/angular/html/library/show.html'">
             </div>
-            <div flex="25" hide-sm flex-md="10"></div>
-        </section>
-        <section layout="row" layout-wrap>
-            <div flex="25" hide-sm flex-md="10">
-                <md-content layout="column" class="md-padding" layout-align="start end">
-                    <h3>Sort by</h3>
-                    <div><a>Genre</a></div>
-                    <div><a>Year</a></div>
-                    <div><a>Author</a></div>
-                    <div><a>Duration</a></div>
-                </md-content>
-            </div>
-            <div flex="50" flex-sm="100" flex-md="80" layout="column" class="white">
-                <md-divider></md-divider>
-                <md-whiteframe layout-fill class="padding">
-                    <h4>Recommendations for you</h4>
-                </md-whiteframe>
-                <md-whiteframe layout-fill>
-                    <div>
-                        <div class="gradient" ng-if="constant.show_book" ng-click="show_grid($event)" layout-align-lg="center start">
-                            <div>George Orwell Books</div>
-                        </div>
-                        <md-content  ng-style="grid_style">
-                            <md-grid-list
-                                md-cols-sm="1" 
-                                md-cols-md="2" 
-                                md-cols-gt-md="5"
-                                md-row-height="1:1.3"
-                                md-gutter="10px" 
-                                md-gutter-gt-sm="10px" >
-                                <md-grid-tile ng-repeat="tile in colorTiles"
-                                    md-rowspan="{{tile.rowspan}}"
-                                    md-colspan="{{tile.colspan}}"
-                                    ng-style="{'background': tile.color}" 
-                                    id="{{tile.color}}" 
-                                    layout-align="start start"
-                                    layout="row"
-                                    ng-class="{'book': tile.isBook}">
-                                    <md-button aria-label="" 
-                                               ng-click="show_book($event, $index)">
-                                        {{$index}}
-                                        <md-icon md-svg-icon="{{tile.text}}"></md-icon>
-                                    </md-button>
-                                    <!-- <md-grid-tile-footer><h3>{{tile.title}}</h3></md-grid-tile-footer> -->
-                                </md-grid-tile>
-                            </md-grid-list>
-                        </md-content>
-                    </div>
-                    <section>
-                        <div class="book animate-fast" ng-style="book_style" flex="100" ng-if="constant.show_book">
-                            <md-tabs class="md-whiteframe-z1">
-                                <md-tab class="padding">Nineteen Eighty-Four(1949)</md-tab>
-                                <md-tab class="padding">News</md-tab>
-                                <md-tab class="padding">Discussions</md-tab>
-                                <md-tab class="padding">Buy</md-tab>
-                                <md-subheader></md-subheader>
-                            </md-tabs>
-                            
-                            <md-content ng-if="constant.show_book" class="white">
-                                <section layout="row" layout-wrap>
-                                    <div flex="45" class="padding" style="background-color: #939071" layout="column" layout-align="space-between">
-                                        <section>
-                                            <p>
-                                                <h4>Nineteen Eighty-Four</h4>
-                                                <div>George Orwell</div>
-                                            </p>
-                                            
-                                            <div>Nineteen Eighty-Four, sometimes published as 1984, is a dystopian novel by George Orwell published in 1949. The novel is set in Airstrip One (formerly known as Great Britain), a province of the superstate Oceania in a world of perpetual war</div>
-                                            <p>
-                                                <a href="">Thriller</a>, 
-                                                <a href="">Suspense</a>, 
-                                                <a href="">Terrorism</a>
-                                            </p>
-                                        </section>
-                                        <section layout="column" layout-align="space-between">
-                                            <div>
-                                                7.5 from 52 readers
-                                            </div>
-                                            <div>
-                                                <section layout="row" layout-sm="column" layout-align="space-between">
-                                                    <md-button>Rate book</md-button>
-                                                    <md-button>Endorse book</md-button>
-                                                </section>
-                                                 <section layout="row" layout-sm="column" layout-align="space-between">
-                                                    <div layout="row" layout-align="start center">
-                                                        <md-button ng-click="show_shelf_bottom_sheet()">Bookmark</md-button>&nbsp;
-                                                        <div><span class="icon-bookmark3"></span></div>&nbsp;
-                                                        <div>12</div>&nbsp;&nbsp;
-                                                        <div><span class="icon-bubbles2"></span></div>&nbsp;
-                                                        <div>1</div>&nbsp;
-                                                    </div>
-                                                    <div layout="row" layout-align="end center">
-                                                        <md-button ng-click="show_share_bottom_sheet()">Share</md-button>&nbsp;
-                                                        <div><span class="icon-share"></span></div>&nbsp;
-                                                        <div>45</div>
-                                                    </div>
-                                                </section>
-
-                                            </div>
-                                        </section>
-                                    </div>
-                                    <div flex="5">
-                                        <div class="vertical-text" 
-                                             layout="row"
-                                             layout-align="space-between"
-                                             style="background-color: #646347; width: 500px; margin-left: 31px;" >
-                                            <div>Nineteen Eighty Four(1949)</div>
-                                            <div>George Orwell</div>
-                                        </div>
-                                            
-                                    </div>
-                                    <div flex="50">
-                                        <img src="http://www.robinmalau.com/wp-content/uploads/2008/04/1984.jpg">
-                                    </div>
-                                </section>
-                                <div class="padding">
-                                     <h4>News</h4>
-                                     <section layout="row" layout-wrap class="padding">
-                                         <div flex="10"></div>
-                                         <div flex="10" class="light_grey small-padding" layout-align="center center" layout="row">
-                                            2015
-                                        </div>
-                                         <div flex="80">
-                                     </section>
-                                     <section layout="row" layout-wrap class="padding">
-                                         <div flex="10" layout-align="center center" layout="row">
-                                            <div>29Feb</div>
-                                        </div>
-                                         <div flex="10" layout-align="center center" layout="row">
-                                                <img class="circular"
-                                                     src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
-                                        </div>
-                                         <div flex="80" layout-align="start start" layout="column" class="small-padding">
-                                            <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell 
-                                            </div>
-                                            <div>Terrorism community</div>
-                                         </div>
-                                     </section>
-                                     <section layout="row" layout-wrap class="padding">
-                                         <div flex="10" layout-align="center center" layout="row">
-                                            <div>29Feb</div>
-                                        </div>
-                                        <div flex="10" layout-align="center center" layout="row">
-                                                <img class="circular"
-                                                     src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
-                                        </div>
-                                         <div flex="80" layout-align="start start" layout="column" class="small-padding">
-                                            <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell 
-                                            </div>
-                                            <div>Terrorism community</div>
-                                         </div>
-                                     </section>
-                                     <section layout="row" layout-wrap class="padding">
-                                         <div flex="10" layout-align="center center" layout="row">
-                                            <div>29Feb</div>
-                                        </div>
-                                        <div flex="10" layout-align="center center" layout="row">
-                                                <img class="circular"
-                                                     src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
-                                        </div>
-                                         <div flex="80" layout-align="start start" layout="column" class="small-padding">
-                                            <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell 
-                                            </div>
-                                            <div>Terrorism community</div>
-                                         </div>
-                                     </section>
-                                     <section layout="row" layout-wrap class="padding">
-                                         <div flex="10" layout-align="center center" layout="row">
-                                            <div>29Feb</div>
-                                        </div>
-                                        <div flex="10" layout-align="center center" layout="row">
-                                                <img class="circular"
-                                                     src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
-                                        </div>
-                                         <div flex="80" layout-align="start start" layout="column" class="small-padding">
-                                            <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell 
-                                            </div>
-                                            <div>Terrorism community</div>
-                                         </div>
-                                     </section>
-                                     <section layout="row" layout-wrap class="padding">
-                                         <div flex="10" layout-align="center center" layout="row">
-                                            <div>29Feb</div>
-                                        </div>
-                                        <div flex="10" layout-align="center center" layout="row">
-                                                <img class="circular"
-                                                     src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
-                                        </div>
-                                         <div flex="80" layout-align="start start" layout="column" class="small-padding">
-                                            <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell 
-                                            </div>
-                                            <div>Terrorism community</div>
-                                         </div>
-                                     </section>
-                                     <section layout="row" layout-wrap class="padding">
-                                         <div flex="10" layout-align="center center" layout="row">
-                                            <div>29Feb</div>
-                                        </div>
-                                        <div flex="10" layout-align="center center" layout="row">
-                                                <img class="circular"
-                                                     src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
-                                        </div>
-                                         <div flex="80" layout-align="start start" layout="column" class="small-padding">
-                                            <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell 
-                                            </div>
-                                            <div>Terrorism community</div>
-                                         </div>
-                                     </section>
-                                     <p>
-                                        <h4>George Orwell</h4>
-                                        <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell, was an English novelist, essayist, journalist and critic. His work is marked by lucid prose, awareness of social injustice, opposition to totalitarianism, and commitment to democratic socialism.[2][3]</div>
-                                    </p> <p>
-                                        <h4>George Orwell</h4>
-                                        <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell, was an English novelist, essayist, journalist and critic. His work is marked by lucid prose, awareness of social injustice, opposition to totalitarianism, and commitment to democratic socialism.[2][3]</div>
-                                    </p> <p>
-                                        <h4>George Orwell</h4>
-                                        <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell, was an English novelist, essayist, journalist and critic. His work is marked by lucid prose, awareness of social injustice, opposition to totalitarianism, and commitment to democratic socialism.[2][3]</div>
-                                    </p> <p>
-                                        <h4>George Orwell</h4>
-                                        <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell, was an English novelist, essayist, journalist and critic. His work is marked by lucid prose, awareness of social injustice, opposition to totalitarianism, and commitment to democratic socialism.[2][3]</div>
-                                    </p> <p>
-                                        <h4>George Orwell</h4>
-                                        <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell, was an English novelist, essayist, journalist and critic. His work is marked by lucid prose, awareness of social injustice, opposition to totalitarianism, and commitment to democratic socialism.[2][3]</div>
-                                    </p> <p>
-                                        <h4>George Orwell</h4>
-                                        <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell, was an English novelist, essayist, journalist and critic. His work is marked by lucid prose, awareness of social injustice, opposition to totalitarianism, and commitment to democratic socialism.[2][3]</div>
-                                    </p> <p>
-                                        <h4>George Orwell</h4>
-                                        <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell, was an English novelist, essayist, journalist and critic. His work is marked by lucid prose, awareness of social injustice, opposition to totalitarianism, and commitment to democratic socialism.[2][3]</div>
-                                    </p>
-                                </div>
-                            </md-content>
-                    </section>
-                </md-whiteframe>
-                <md-whiteframe layout-fill class="padding">
-                    <h4>Serendipitous Reads
-                    </h4>
-                </md-whiteframe>
-            </div>
-
-
-            <div flex="25" hide-sm flex-md="10">
-                <md-content layout="column" class="md-padding" >
-                    <div><a> | A</a></div>
-                    <div><a> | B</a></div>
-                    <div><a> | C</a></div>
-                    <div><a> | D</a></div>
-                    <div><a> | E</a></div>
-                    <div><a> | F</a></div>
-                    <div><a> | G</a></div>
-                    <div><a> | H</a></div>
-                    <div><a> | I</a></div>
-                    <div><a> | J</a></div>
-                    <div><a> | K</a></div>
-                    <div><a> | L</a></div>
-                    <div><a> | M</a></div>
-                    <div><a> | N</a></div>
-                    <div><a> | O</a></div>
-                    <div><a> | P</a></div>
-                    <div><a> | Q</a></div>
-                    <div><a> | R</a></div>
-                    <div><a> | S</a></div>
-                    <div><a> | T</a></div>
-                    <div><a> | U</a></div>
-                    <div><a> | V</a></div>
-                    <div><a> | W</a></div>
-                    <div><a> | X</a></div>
-                    <div><a> | Y</a></div>
-                    <div><a> | Z</a></div>
-
-                </md-content>
-            </div>
+            <div ng-include src="'/assets/angular/html/library/_right_panel.html'" 
+                 flex="20" hide-sm 
+                 flex-md="10"></div>
         </section>
     </section>
 </md-content>
@@ -401,10 +70,28 @@
         background-color: rgba(0, 0, 0, 0.31);
         position: absolute;
         z-index: 1;
-        width: 50%;
+        width: 60%;
         color: white;
         text-align: center;
         cursor: pointer;
+        background-color: rgba(0,0,0,0);
+        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0 0%, rgba(0,0,0,0)), color-stop(0 100% rgba(0,0,0,0.5)));
+        background-image: -webkit-linear-gradient(top, rgba(0,0,0,0) 0 0%, rgba(0,0,0,0.5) 0 100%);
+        background-image: -moz-linear-gradient(top, rgba(0,0,0,0) 0 0%, rgba(0,0,0,0.5) 0 100%);
+        background-image: -webkit-gradient(linear, 0 0%, 0 100%, from(rgba(0,0,0,0)), to(rgba(0,0,0,0.5)));
+        background-image: -ms-linear-gradient(top, rgba(0,0,0,0) 0 0%, rgba(0,0,0,0.5) 0 100%);
+        background-image: -o-linear-gradient(top, rgba(0,0,0,0) 0 0%, rgba(0,0,0,0.5) 0 100%);
+        background-image: linear-gradient(top, rgba(0,0,0,0) 0 0%, rgba(0,0,0,0.5) 0 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#80000000', GradientType=0);
+        background-repeat: repeat-x;
+    }
+
+    .gradient:hover{
+        font-size: 1.2em;
+    }
+
+    .grid{
+        position: absolute;
     }
 
     .md-subheader:not(.md-sticky-no-effect).md-sticky-clone{
@@ -421,14 +108,5 @@
 
     }
 
-    .circular{
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-    }
-
-    .md-header-items-container .md-header-items{
-        border-bottom: 1px solid #EFEFEF;
-    }
 
 </style>

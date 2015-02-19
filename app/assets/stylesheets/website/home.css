@@ -156,3 +156,31 @@ md-backdrop.md-opaque.md-default-theme{
 	top: 18px;
 	margin-left: 10px;
 }
+
+md-toolbar{
+	min-height: 48px;
+}
+
+.notifications{
+	position: fixed;
+	right: 0px;
+	top: 50px;
+	max-height: 300px;
+	width: 300px;
+}
+
+.circular{
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.profile_link{
+	padding: 4px 8px;
+}
+
+.md-button-clear{
+	text-transform: none !important;
+	font-weight: inherit !important
+	text-align: inherit !important;
+}

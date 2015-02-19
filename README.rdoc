@@ -29,7 +29,7 @@ Please feel free to use a different markup language if you do not plan to run
 
 
 MAC
-
+Installing pg
 <tt>sudo ARCHFLAGS="-arch x86_64" gem install pg</tt>
 
 Gruntfile

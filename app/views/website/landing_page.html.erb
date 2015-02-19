@@ -1,18 +1,26 @@
 <div msd-wheel="bind_mousewheel_scroll($event)" layout="row" layout-fill>
     <div flex>
         <header class="main-header animate-fast" ng-if="show_content">
+            <md-button class="padding" hide show-sm>
+                <a><span class="icon-menu2"></span></a>
+            </md-button>
             <a class="title-btn" ng-click="scroll_page(0)">
                 <img src="assets/rd_logo.png">
             </a>
             <div class="h-btn-right">
                 <!-- <md-button md-no-ink class="md-warn">Sign in</md-button> -->
+                <md-button ng-click="show_signin_options($event)">
+                    Sign In
+                </md-button>
                 <md-button class="md-raised md-warn md-hue-2"  
                            ng-click="scroll_page(6)">Request Invite</md-button>
             </div>
         </header>
 
-        <md-whiteframe class="md-whiteframe-z1 tab-main animate-fast" layout layout-align="center" ng-if="show_content">
-            <md-tabs class="md-accent" md-selected="data.selectedIndex">
+        <md-whiteframe class="md-whiteframe-z1 tab-main animate-fast" 
+                        hide-sm
+                       layout layout-align="center" ng-if="show_content">
+            <md-tabs class="md-accent" md-selected="data.selectedIndex" hide-sm>
                 <md-tab ng-click="scroll_page(1)" ng-class="{'active': current_page_id == 1}">
                     <a>{{data[1]}}</a>
                 </md-tab>
