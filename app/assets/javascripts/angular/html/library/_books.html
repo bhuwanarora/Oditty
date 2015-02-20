@@ -26,9 +26,9 @@
                     layout-align="start start"
                     layout="row"
                     class="md-button grid"
-                    ng-class="{'book': tile.isBook}" 
-                    ng-click="show_book($event, $index)">
-                        
+                    ng-class="{'book': tile.isBook}" >
+                    <md-button class="book_grid_link"
+                            ng-click="show_book($event, $index)"></md-button>
                 </md-grid-tile>
             </md-grid-list>
         </md-content>
@@ -37,3 +37,11 @@
         <div ng-include src="'/assets/angular/html/book/show.html'" ng-if="constant.show_book" class="animate-fast book"></div>
     </section>
 </md-whiteframe>
+<style>
+    .book_grid_link{
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        left: 0px;
+    }
+</style>

@@ -1,4 +1,33 @@
 homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSidenav", "$log", '$q', '$mdBottomSheet', '$mdDialog', 'scroller', '$document', function($scope, $rootScope, $timeout, $mdSidenav, $log, $q, $mdBottomSheet, $mdDialog, scroller, $document){
+
+    $scope.next = function(){
+        if(angular.isDefined($scope.data.selectedIndex)){
+            if($scope.data.selectedIndex == 3){
+                window.location.href = "/library";
+            }
+            else{
+                $scope.data.selectedIndex = $scope.data.selectedIndex + 1;
+            }
+        }
+        else{
+            $scope.data.selectedIndex = 0;
+        }
+    }
+
+    $scope.previous = function(){
+        if(angular.isDefined($scope.data.selectedIndex)){
+            if($scope.data.selectedIndex == 0){
+                $scope.data.selectedIndex = 3;
+            }
+            else{
+                $scope.data.selectedIndex = $scope.data.selectedIndex - 1;
+            }
+        }
+        else{
+            $scope.data.selectedIndex = 0;
+        }
+    }
+
     $scope.stopPropagation = function(){
         if($scope.constant.show_book){
             // $scope.constant = {"show_book": true};
@@ -8,7 +37,7 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
     $scope.show_rating = function(event){
         $mdDialog.show({
             templateUrl: 'assets/angular/html/shared/share.html',
-            targetEvent: $event,
+            targetEvent: event,
         });
         event.stopPropagation();
     }
@@ -229,31 +258,31 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
       },
     ];
 
-    $scope.show_shelf_bottom_sheet = function($event){
+    $scope.show_shelf_bottom_sheet = function(event){
         $mdBottomSheet.show({
             templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
             controller: 'listBottomSheetController',
-            targetEvent: $event
+            targetEvent: event
         }).then(function(clickedItem) {
             $scope.alert = clickedItem.name + ' clicked!';
         });
     };
 
-    $scope.show_share_bottom_sheet = function($event){
+    $scope.show_share_bottom_sheet = function(event){
         $mdBottomSheet.show({
             templateUrl: 'assets/angular/html/shared/social_bottom_sheet.html',
             controller: 'listBottomSheetController',
-            targetEvent: $event
+            targetEvent: event
         }).then(function(clickedItem) {
             $scope.alert = clickedItem.name + ' clicked!';
         });
     };
 
-    $scope.showAdvanced = function($event) {
+    $scope.showAdvanced = function(event) {
         $mdDialog.show({
           controller: 'shareController',
           templateUrl: 'assets/angular/html/shared/share.html',
-          targetEvent: $event,
+          targetEvent: event,
         })
         .then(function(answer) {
           $scope.alert = 'You said the information was "' + answer + '".';
@@ -277,6 +306,8 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
 
             return tiles;
         })();
+
+        $scope.data = {"selectedIndex" : 0};
 
         function randomColor() {
             return COLORS[Math.floor(Math.random() * COLORS.length)];

@@ -1,50 +1,67 @@
-<md-dialog aria-label="" class="sigin_dialog" flex="50" flex-sm="100" flex-md="100">
-    <section layout="row" layout-wrap>
-        <div flex="45" class="left_panel" hide-sm>
-            <div class="sign_in_backdrop">
-                
-            </div>
-            <img src="assets/Optimized-7H.jpg">
-        </div>
-        <div flex="55" class="padding" layout="column" flex-sm="100">
-            <md-button layout="row">
-                <div><span class=""></span></div>
-                <div>LOGIN WITH GOOGLE</div>
-            </md-button>
-            <md-button layout="row">
-                <div><span class=""></span></div>
-                <div>LOGIN WITH FACEBOOK</div>
-            </md-button>
-            <br/>
-            <div>Or Login with email</div>
-            <md-input-container>
-                <label>Email</label>
-                <input>
-            </md-input-container>
-            <md-input-container>
-                <label>Password</label>
-                <input>
-            </md-input-container>
-            <md-button>LOGIN</md-button>
-            <a href="">Forgot Password?</a>
-        </div>
-    </section>
-</md-dialog>
+<md-sidenav class="md-sidenav-right md-whiteframe-z2 sigin_dialog" md-component-id="right">
+    <div flex class="padding" layout="column">
+        <md-button layout="row" class="md-button-clear google">
+            <div flex="10"><span class="icon-googleplus"></span></div>
+            <div flex="90" class="google-right">LOGIN WITH GOOGLE</div>
+        </md-button>
+        <md-button layout="row" class="md-button-clear fb">
+            <div flex="10"><span class="icon-facebook"></span></div>
+            <div flex="90" class="fb-right">LOGIN WITH FACEBOOK</div>
+        </md-button>
+        <br/>
+        <div>Or Login with email</div>
+        <md-input-container>
+            <label>Email</label>
+            <input>
+        </md-input-container>
+        <md-input-container>
+            <label>Password</label>
+            <input>
+        </md-input-container>
+        <md-button class="login md-button-clear">LOGIN</md-button>
+        <a href="">Forgot Password?</a>
+    </div>
+</md-sidenav>
 
 <style>
     .sign_in_backdrop{
 
     }
 
-    .sigin_dialog{
-        /*width: 50%;*/
+    .sigin_dialog md-input-container{
+        padding: 2px !important;
     }
 
-    .left_panel{
-        overflow: hidden;
+    .google, .google:hover{
+        background-color: #DC4B39 !important;
+        color: white !important;
+        margin-bottom: 5px !important;
+        margin-top: 5px !important;
     }
 
-    .md-dialog-container{
-        background-color: rgba(0, 0, 0, 0.7);
+    .google-right:before, 
+    .fb-right:before{
+        content: '';
+        background: rgba(255,255,255,0.1);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
     }
+
+    .fb, .fb:hover{
+        background-color: #3B5998 !important;
+        color: white !important;
+        margin-bottom: 5px !important;
+        margin-top: 5px !important;
+    }
+
+    .login, .login:hover{
+        background-color: #5F698C !important;
+        color: white !important;
+        margin-bottom: 5px !important;
+        margin-top: 5px !important;
+    }
+
 </style>

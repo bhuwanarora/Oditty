@@ -94,4 +94,8 @@ class WebsiteController < ApplicationController
 		render :layout => "material"
 	end
 
+	def customise
+		render :layout => "material"
+	end
+
 end

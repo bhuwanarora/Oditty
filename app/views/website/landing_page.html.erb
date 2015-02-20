@@ -9,11 +9,11 @@
             </a>
             <div class="h-btn-right">
                 <!-- <md-button md-no-ink class="md-warn">Sign in</md-button> -->
-                <md-button ng-click="show_signin_options($event)">
+                <md-button ng-click="show_signin_options($event)" class="md-raised md-primary md-hue-2">
                     Sign In
                 </md-button>
-                <md-button class="md-raised md-warn md-hue-2"  
-                           ng-click="scroll_page(6)">Request Invite</md-button>
+                <!-- <md-button class="md-raised md-warn md-hue-2"  / -->
+                           <!-- ng-click="scroll_page(6)">Sign Up</md-button> -->
             </div>
         </header>
 
@@ -53,3 +53,4 @@
         </md-button>
     </div>
 </div>
+<div ng-include src="'/assets/angular/html/landing_page/_sign_in.html'"></div>

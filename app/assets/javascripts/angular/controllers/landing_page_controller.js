@@ -1,4 +1,4 @@
-app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "WebsiteUIConstants", '$interval', '$mdDialog', function($scope, scroller, $document, $timeout, WebsiteUIConstants, $interval, $mdDialog){
+app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "WebsiteUIConstants", '$interval', '$mdDialog', '$mdSidenav', function($scope, scroller, $document, $timeout, WebsiteUIConstants, $interval, $mdDialog, $mdSidenav){
 	function _init(){
 	    $scope.data = [
 	    	"Intro",
@@ -200,10 +200,10 @@ app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "Webs
 	}
 
 	$scope.show_signin_options = function(event){
-		debugger
-		$mdDialog.show({
-            templateUrl: 'assets/angular/html/landing_page/_sign_in.html'
-        });
+		$mdSidenav('right').toggle();
+		// $mdDialog.show({
+            // templateUrl: 'assets/angular/html/landing_page/_sign_in.html'
+        // });
 		event.stopPropagation();
 	}
 

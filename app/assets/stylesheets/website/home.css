@@ -178,9 +178,3 @@ md-toolbar{
 .profile_link{
 	padding: 4px 8px;
 }
-
-.md-button-clear{
-	text-transform: none !important;
-	font-weight: inherit !important;
-	text-align: inherit !important;
-}

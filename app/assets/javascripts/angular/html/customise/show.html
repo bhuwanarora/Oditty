@@ -1,0 +1,108 @@
+<md-content>
+	<md-card class="customise_card">
+		<md-card-content>
+			<ng-switch on="data.selectedIndex" class="tabpanel-container">
+			    <div role="tabpanel"
+			         id="tab1-content"
+			         aria-labelledby="tab1"
+			         ng-switch-when="0"
+			         md-swipe-left="next()"
+			         md-swipe-right="previous()" >
+					<div ng-include src="'/assets/angular/html/customise/_info.html'"></div>
+			    </div>
+			    <div role="tabpanel"
+			         id="tab2-content"
+			         aria-labelledby="tab2"
+			         ng-switch-when="1"
+			         md-swipe-left="next()"
+			         md-swipe-right="previous()" >
+			        <div ng-include src="'/assets/angular/html/customise/_genres.html'"></div>
+			    </div>
+			    <div role="tabpanel"
+			         id="tab3-content"
+			         aria-labelledby="tab3"
+			         ng-switch-when="2"
+			         md-swipe-left="next()"
+			         md-swipe-right="previous()" >
+			         <div ng-include src="'/assets/angular/html/customise/_books.html'"></div>
+			    </div>
+			    <div role="tabpanel"
+			         id="tab4-content"
+			         aria-labelledby="tab4"
+			         ng-switch-when="3"
+			         md-swipe-left="next()"
+			         md-swipe-right="previous()" >
+			        <div ng-include src="'/assets/angular/html/customise/_authors.html'"></div>
+			    </div>
+			</ng-switch>
+		</md-card-content>
+		<md-progress-linear class="md-warn progress" 
+					value="0.1" >
+		</md-progress-linear>
+		<div class="footer">
+			<section layout="row">
+				<md-button class="md-button-clear padding" 
+						ng-click="previous()"
+						ng-disabled="data.selectedIndex == 0"
+						flex="50" layout="row" layout-align="start">
+					<div><span class="icon-angle-left"></span></div>&nbsp;&nbsp;
+					<div ng-switch on="data.selectedIndex">
+						<div ng-switch-when="0"></div>
+						<div ng-switch-when="1">Personal Info</div>
+						<div ng-switch-when="2">Select Genres</div>
+						<div ng-switch-when="3">Select Books</div>
+					</div>
+				</md-button>
+				<md-button class="md-button-clear padding" 
+							ng-click="next()"
+							flex="50" layout="row" layout-align="end">
+					<div ng-switch on="data.selectedIndex">
+						<div ng-switch-when="0">Select Genres</div>
+						<div ng-switch-when="1">Select Books</div>
+						<div ng-switch-when="2">Add famous Writers and People</div>
+						<div ng-switch-when="3">Go to Library</div>
+					</div>&nbsp;&nbsp;
+					<div><span class="icon-angle-right"></span></div>
+				</md-button>
+			</section>
+		</div>
+	</md-card>
+</md-content>
+
+
+<style>
+	.book_cover{
+		width: 130px;
+		height: 180px;
+	}
+
+	.footer{
+		order: 3;
+	}
+
+	.customise_card{
+		margin: 0px !important;
+	}
+
+	.customise_card md-card-content{
+		max-height: 74vh;
+		overflow: scroll;
+	}
+
+	.card_content{
+		height: 310px !important;
+	}
+
+	.progress{
+		order: 2;
+	}
+
+	.book_cover_gradient{
+		width: 130px;
+		height: 180px;
+		position: absolute;
+		z-index: 1;
+		color: white !important;
+		background-color: rgba(0, 0, 0, 0.39);
+	}
+</style>

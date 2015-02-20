@@ -1,0 +1,59 @@
+<h3>Tell us about you</h3>
+<section layout="row" layout-sm="column">
+	<div flex="20">
+		<img src="assets/profile_thumb.png" width="100%">
+		<div layout="row" layout-align="center">
+			<div>Upload Image</div>
+		</div>
+	</div>
+	<div flex="80" layout="column">
+		<div layout="row" layout-sm="column">
+			<md-input-container flex>
+                <label>First Name</label>
+                <input>
+            </md-input-container>
+            <md-input-container flex>
+                <label>Last Name</label>
+                <input>
+            </md-input-container>
+		</div>
+		<div layout="row" layout-sm="column">
+			<md-input-container flex>
+                <label type="date">Birth Date</label>
+                <input>
+            </md-input-container>
+            <md-select multiple placeholder="Gender" ng-model="Gender" >
+                <md-option-group label="Gender">
+                    <md-option ng-value="Female">Female</md-option>
+                    <md-option ng-value="Male">Male</md-option>
+                </md-option-group>
+            </md-select>
+		</div>
+		<div>
+			<md-input-container>
+                <label>About me</label>
+                <input>
+            </md-input-container>
+		</div>
+		<div>
+			<div>Number of books read</div>
+            <md-radio-group layout="row" layout-sm="column">
+				<md-radio-button aria-label="" class="md-warn" value="">
+                	0-20
+            	</md-radio-button>
+            	<md-radio-button aria-label="" class="md-warn" value="">
+                	20-50
+            	</md-radio-button>
+            	<md-radio-button aria-label="" class="md-warn" value="">
+                	50-100
+            	</md-radio-button>
+            	<md-radio-button aria-label="" class="md-warn" value="">
+                	100-250
+            	</md-radio-button>
+            	<md-radio-button aria-label="" class="md-warn" value="">
+                	250+
+            	</md-radio-button>
+            </md-radio-group>
+		</div>
+	</div>
+</section>

@@ -80,6 +80,7 @@ ReadersDoor::Application.routes.draw do
   get 'book'                      => "website#book",             :as => "dev_book"
   get 'network'                   => "website#network",             :as => "network"
   get 'journey'                   => "website#journey",             :as => "journey"
+  get 'customise'                   => "website#customise",             :as => "customise"
 
   get 'tree'                      => "categories#show_tree",    :as => "show_tree"
   get 'search_tag'                => "tags#search_tag",         :as => "search_tag"
