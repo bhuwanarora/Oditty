@@ -837,3 +837,15 @@ input:focus{
 md-input-container .md-input{
     border-bottom: 1px solid;
 }
+
+md-backdrop{
+    display: none;
+}
+
+md-sidenav section{
+    margin-top: 50px;
+}
+
+md-sidenav{
+    z-index: 1;
+}
