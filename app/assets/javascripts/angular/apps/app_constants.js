@@ -187,6 +187,48 @@ var constants = {
 		"ColorConstants":{
 			"value": ["#695447", "#d1d2de", "#c4c2b5", "#675850", "#83817f", "#b3b2b1", "#839baa", "#4867a4", "#423b34", "#e4bc7e", "#987c4e", "#8c7971", "#ad9894", "#565240", "#5d2726"]
 		},
+		"ShareOptions":{
+			"ReadingStage":[
+				{
+					"name": "Planning to read",
+					"nested_options": [
+						{	
+							"name": "Looking to buy",
+							"search_book": true	
+						},
+						{	
+							"name": "Looking to borrow",
+							"search_book": true	
+						},
+						{	
+							"name": "Looking to lend",
+							"search_book": true	
+						}
+					]
+				},
+				{
+					"name": "Reading",
+					"nested_options": [
+						{	
+							"name": "Select place"
+						},
+						{	
+							"name": "Feeling",
+							"value": emotions
+						}
+					]
+				},
+				{
+					"name": "Finished reading",
+					"nested_options": [
+						{
+							"name": "Feeling",
+							"value": emotions
+						}
+					]
+				}
+			]
+		},
 		"StatusUIConstants":{
 			"EmotionConstants":{
 				"icon": "icon-happy",
@@ -260,7 +302,6 @@ var constants = {
 				"icon": "icon-quote-right",
 				"name": "Quote"
 			}
-
 		}
 	}
 

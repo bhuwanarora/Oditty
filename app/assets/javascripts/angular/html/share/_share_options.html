@@ -1,0 +1,31 @@
+<md-bottom-sheet class="options" layout="column">
+    <div>
+
+    </div>
+    <div layout="row" >
+        <div flex="20" layout="column" layout-padding>
+            <div>Select</div>
+            <md-button ng-repeat="option in share_options.ReadingStage" 
+                    ng-click="show_nested_options(option, $event)"
+                    layout-padding 
+                    class="md-button-clear">
+                {{option.name}}
+            </md-button>
+        </div>
+        <div flex="20" layout="column" layout-padding>
+            <md-button ng-repeat="option in nested_options"
+                    layout-padding 
+                    class="md-button-clear">
+                {{option.name}}
+            </md-button>
+        </div>
+        <div flex="20">
+            
+        </div>
+    </div>
+</md-bottom-sheet>
+<style>
+    .options{
+        height: 50vh;
+    }
+</style>

@@ -1,5 +1,5 @@
 <md-content ng-controller="libraryController" check-scroll-bottom="get_popular_books()">
-    <div ng-include src="'/assets/angular/html/library/_header.html'"></div>
+    <div ng-include src="'/assets/angular/html/library/_header.html'" ng-hide="constant.show_book"></div>
     <section>
        <!-- <div ng-include src="'/assets/angular/html/library/_description.html'"></div> -->
         <section layout="row" layout-wrap>
@@ -24,7 +24,12 @@
     }
 
     .filters_header{
-        background-color: white !important;
+        background-color: #ececec !important;
+        z-index: 2;
+        width: 100vw;
+        box-shadow: none;
+        padding: 7px;
+        border-bottom: 1px solid #DDDDDD;
     }
 
     .md-sticky-clone{

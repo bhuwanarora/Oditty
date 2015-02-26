@@ -1,12 +1,78 @@
-<div class="share" ng-if="show_share">
-	
+<div ng-controller="shareController" class="share animate-fast" layout="row" 
+	 ng-if="info.show_share"
+	 layout-align="start start" layout-padding>
+	<div flex="10">
+		<md-button ng-click="back($event)" layout="row" layout-align="center center">
+			<h1 layout-padding>
+				<span class="icon-angle-left"></span>
+			</h1>
+		</md-button>
+	</div>
+	<div flex="80" layout="column">
+		<img class="circular user_image" src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
+		<div >
+		</div>
+		<md-input-container flex layout-margin>
+	        <label>Share your reading journey...</label>
+	        <textarea></textarea>
+	    </md-input-container>
+		<md-button class="select_mood" 
+				ng-click="show_share_options($event)"><span class='icon-happy'></span></md-button>
+	</div>
+    <div flex="10">
+    </div>
 </div>
+
 <style>
+	.user_image{
+		position: absolute;
+		margin-top: 60px;
+		width: 100px;
+		height: 100px;
+		z-index: 1;
+		/*margin-right: -20px;*/
+	}
+
 	.share{
 		position: fixed;
 		left: 0px;
 		right: 0px;
 		top: 0px;
 		bottom: 0px;
+		background-color: white;
+		z-index: 3;
 	}
+
+	.share md-input-container{
+		font-size: 40px;
+	}
+
+	.select_mood{
+		font-size: 40px;
+		color: rgba(197, 197, 197, 0.46);
+		width: 70px;
+		height: 70px;
+		padding: 0px;
+	}
+
+	textarea::-webkit-input-placeholder {
+	   font-weight: bold !important;
+	   margin-top: -10px !important;
+	}
+
+	textarea:-moz-placeholder { /* Firefox 18- */
+	   font-weight: bold !important;
+	   margin-top: -10px !important;
+	}
+
+	textarea::-moz-placeholder {  /* Firefox 19+ */
+	   font-weight: bold !important;
+	   margin-top: -10px !important;
+	}
+
+	textarea:-ms-input-placeholder {  
+	   font-weight: bold !important;
+	   margin-top: -10px !important;
+	}
+
 </style>

@@ -160,19 +160,16 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
         });
     };
 
-    $scope.showAdvanced = function(event) {
-        $mdDialog.show({
-            controller: 'shareController',
-            templateUrl: 'assets/angular/html/shared/share.html',
-            targetEvent: event,
-        });
+    $scope.show_share_page = function(event) {
+        $scope.info.show_share = true;  
     };
 
     $scope._init = function(){
         $scope.info = {};
+        $scope.info.show_share = true;
         $scope.data = {"selectedIndex" : 0};
         $rootScope.user = {};
-    }
+    };
 
     $scope._init();
 
