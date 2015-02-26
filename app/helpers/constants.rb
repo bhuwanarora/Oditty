@@ -9,9 +9,21 @@ module Constants
 	RecommendationPoints		= 10
 
 	if Rails.env.development?
-		Admin						= 1633200
+		Admin						= 0
+		BestTinyRead				= 395910 #"thelosthero"
+		BestSmallRead				= 390072 #"thelittleprince"
+		BestNormalRead				= 1171520 #"harrypotterandthephilosophersstone"
+		BestLongRead				= 395153 #"thehungergames"
+		BestBook					= 395153 #"thehungergames"
+		BestGrid					= 2594148
 	else
 		Admin						= 4084079
+		BestTinyRead				= 395910 #"thelosthero"
+		BestSmallRead				= 390071 #"thelittleprince"
+		BestNormalRead				= 1171522 #"harrypotterandthephilosophersstone"
+		BestLongRead				= 395152 #"thehungergames"
+		BestBook					= 395152 #"thehungergames"
+		BestGrid					= 2594148
 	end
 
 	InvalidLink					= "Invalid Link"
@@ -28,13 +40,6 @@ module Constants
 	PasswordRecoveryInitiated	= "A link to recover your password has been sent to the given email id."
 	PasswordChangedSuccess	 	= "Password saved. Redirecting to home page."
 	PasswordChangedFailure		= "Error while saving the new password. Please try again."
-
-	BestTinyRead				= 395910 #"thelosthero"
-	BestSmallRead				= 390071 #"thelittleprince"
-	BestNormalRead				= 1171522 #"harrypotterandthephilosophersstone"
-	BestLongRead				= 395152 #"thehungergames"
-	BestBook					= 395152 #"thehungergames"
-	BestGrid					= 2594148
 
 	TinyRead 					= "tinyread"
 	SmallRead 					= "smallread"

@@ -1,4 +1,45 @@
-<md-content>
+<style>
+	.book_cover{
+		width: 130px;
+		height: 180px;
+	}
+
+	.footer{
+		order: 3;
+	}
+
+	.customise_card{
+		margin: 0px !important;
+	}
+
+	.customise_card md-card-content{
+		max-height: 74vh;
+		overflow: scroll;
+	}
+
+	.card_content{
+		height: 310px !important;
+	}
+
+	.progress{
+		order: 2;
+	}
+
+	md-content{
+		height: inherit !important;
+	}
+
+	.book_cover_gradient{
+		width: 130px;
+		height: 180px;
+		position: absolute;
+		z-index: 1;
+		color: white !important;
+		background-color: rgba(0, 0, 0, 0.39);
+	}
+</style>
+
+<md-content ng-controller="customiseController">
 	<md-card class="customise_card">
 		<md-card-content>
 			<ng-switch on="data.selectedIndex" class="tabpanel-container">
@@ -36,9 +77,12 @@
 			    </div>
 			</ng-switch>
 		</md-card-content>
+
 		<md-progress-linear class="md-warn progress" 
-					value="0.1" >
+					ng-value="data.selectedIndex*25"
+					md-mode="buffer">
 		</md-progress-linear>
+
 		<div class="footer">
 			<section layout="row">
 				<md-button class="md-button-clear padding" 
@@ -68,41 +112,3 @@
 		</div>
 	</md-card>
 </md-content>
-
-
-<style>
-	.book_cover{
-		width: 130px;
-		height: 180px;
-	}
-
-	.footer{
-		order: 3;
-	}
-
-	.customise_card{
-		margin: 0px !important;
-	}
-
-	.customise_card md-card-content{
-		max-height: 74vh;
-		overflow: scroll;
-	}
-
-	.card_content{
-		height: 310px !important;
-	}
-
-	.progress{
-		order: 2;
-	}
-
-	.book_cover_gradient{
-		width: 130px;
-		height: 180px;
-		position: absolute;
-		z-index: 1;
-		color: white !important;
-		background-color: rgba(0, 0, 0, 0.39);
-	}
-</style>

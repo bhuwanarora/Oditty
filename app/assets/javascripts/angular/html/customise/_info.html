@@ -1,5 +1,5 @@
 <h3>Tell us about you</h3>
-<section layout="row" layout-sm="column">
+<section layout="row" layout-sm="column" ng-controller="infoController">
 	<div flex="20">
 		<img src="assets/profile_thumb.png" width="100%">
 		<div layout="row" layout-align="center">
@@ -10,19 +10,18 @@
 		<div layout="row" layout-sm="column">
 			<md-input-container flex>
                 <label>First Name</label>
-                <input>
+                <input ng-model="user.first_name" 
+                       focus-out="set_first_name()"/>
             </md-input-container>
             <md-input-container flex>
                 <label>Last Name</label>
-                <input>
+                <input ng-model="user.last_name" 
+                       focus-out="set_last_name()"/>
             </md-input-container>
 		</div>
 		<div layout="row" layout-sm="column">
-			<md-input-container flex>
-                <label type="date">Birth Date</label>
-                <input>
-            </md-input-container>
-            <md-select multiple placeholder="Gender" ng-model="Gender" >
+			<calendar save-date="set_date_of_birth()"></calendar>
+            <md-select multiple placeholder="Gender" ng-model="user.gender">
                 <md-option-group label="Gender">
                     <md-option ng-value="Female">Female</md-option>
                     <md-option ng-value="Male">Male</md-option>
@@ -32,26 +31,20 @@
 		<div>
 			<md-input-container>
                 <label>About me</label>
-                <input>
+                <input ng-model="user.about" focus-out="set_about()">
             </md-input-container>
+            <div layout="row" layout-align="end end">{{user.about.length || 0}}/160</div>
 		</div>
 		<div>
 			<div>Number of books read</div>
-            <md-radio-group layout="row" layout-sm="column">
-				<md-radio-button aria-label="" class="md-warn" value="">
-                	0-20
-            	</md-radio-button>
-            	<md-radio-button aria-label="" class="md-warn" value="">
-                	20-50
-            	</md-radio-button>
-            	<md-radio-button aria-label="" class="md-warn" value="">
-                	50-100
-            	</md-radio-button>
-            	<md-radio-button aria-label="" class="md-warn" value="">
-                	100-250
-            	</md-radio-button>
-            	<md-radio-button aria-label="" class="md-warn" value="">
-                	250+
+            <md-radio-group layout="row" 
+                            layout-sm="column" 
+                            ng-model="user.init_book_read_count" 
+                            ng-change="set_init_book_read_count()">
+				<md-radio-button ng-repeat="book_count in book_counts"
+                                class="md-warn" 
+                                ng-value="book_count.name">
+                	{{book_count.name}}
             	</md-radio-button>
             </md-radio-group>
 		</div>

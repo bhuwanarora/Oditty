@@ -220,6 +220,7 @@ module.exports = function(grunt) {
 
           'app/assets/javascripts/min/angular/home.min.js': [
             'app/assets/javascripts/min/angular/vendors/angular_sticky.js',
+            'app/assets/javascripts/min/angular/apps/filters_app.js',
             'app/assets/javascripts/min/angular/apps/home_app.js',
             'app/assets/javascripts/min/angular/apps/app_constants.js',
             'app/assets/javascripts/min/angular/controllers/home/home_controller.js',

@@ -178,3 +178,25 @@ md-toolbar{
 .profile_link{
 	padding: 4px 8px;
 }
+
+.left_panel{
+	z-index: 1;
+	min-width: 250px;
+	width: 250px;
+}
+
+.left_panel section{
+	margin-top: 60px;
+}
+
+.loader{
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	height: 10px;
+}
+
+.left_panel_container md-backdrop{
+	z-index: 0;
+}

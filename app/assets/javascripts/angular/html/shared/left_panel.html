@@ -1,31 +1,46 @@
-<section layout="row" flex>
-	<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
-  		<section ng-controller="leftController" class="md-padding" layout="column">
-    		<md-button class="md-button-left">
-      			Home
-    		</md-button>
+<md-sidenav class="md-sidenav-left md-whiteframe-z2 left_panel" md-component-id="left" ng-click="stop_propagation($event);">
+		<section ng-controller="leftController" class="md-padding" layout="column">
+		<a href="/home">
+            <md-button class="md-button-left">
+  			   Home
+		  </md-button>
+        </a>
+        <a href="/library">
             <md-button class="md-button-left">
                 Library
             </md-button>
+        </a>
+        <a href="/profile">
             <md-button class="md-button-left">
                 Profile
             </md-button>
+        </a>
+        <a href="/room">
             <md-button class="md-button-left">
                 Room
             </md-button>
-            <md-divider></md-divider>
+        </a>
+        <md-divider></md-divider>
+        
+        <a href="">
             <md-button class="md-button-left">
                 Communities
             </md-button>
+        </a>
+        <a href="">
             <md-button class="md-button-left">
                 Social Feed
             </md-button>
+        </a>
+        <a href="">
             <md-button class="md-button-left">
                 Listopia
             </md-button>
+        </a>
+        <a href="">
             <md-button class="md-button-left">
                 Blog
             </md-button>
-        </section>
-	</md-sidenav>
-</section>
+        </a>
+    </section>
+</md-sidenav>

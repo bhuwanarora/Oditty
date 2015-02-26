@@ -30,7 +30,8 @@ Please feel free to use a different markup language if you do not plan to run
 
 MAC
 Installing pg
-<tt>sudo ARCHFLAGS="-arch x86_64" gem install pg</tt>
+<tt>sudo xcodebuild -license</tt>
+<tt>env ARCHFLAGS="-arch x86_64" gem install pg -v '0.17.1' -- --with-pg-config=/Applications/Postgres.app/Contents/MacOS/bin/pg_config</tt>
 
 Gruntfile
 

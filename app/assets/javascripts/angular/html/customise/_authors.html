@@ -1,122 +1,17 @@
 <h3>Select famous Writers and People</h3>
-<md-content class="card_content white">
+<md-content class="card_content white" ng-controller="authorsController">
 	<section layout="row">
-		<div layout="column" class="padding">
-			<div class="genre_cover_gradient" layout="column" layout-align="center center">
+		<div layout="column" class="padding" ng-repeat="person in people">
+			<div class="genre_cover_gradient" layout="column" layout-align="center center" ng-if="person.status">
 				<div layout="row" layout-align="center center">
 					<div><span class="icon-checkmark"></span></div>
 				</div>
 			</div>
-				<md-button class="genre_button animate-fast">
-				</md-button>
-				<img src="https://assets-0.housingcdn.com/website/login/login_image@2x-2ed7b17ab0cb2b35dceef58e89c900d5.jpg" class="genre_cover">
-				<br/>
-				<div layout="row" layout-align="center center"><div>George Orwell</div></div>
-			<div></div>
-		</div>
-		<div layout="column" class="padding">
 			<md-button class="genre_button animate-fast">
 			</md-button>
 			<img src="https://assets-0.housingcdn.com/website/login/login_image@2x-2ed7b17ab0cb2b35dceef58e89c900d5.jpg" class="genre_cover">
 			<br/>
-			<div layout="row" layout-align="center center"><div>George Orwell</div></div>
-		</div>
-		<div layout="column" class="padding">
-			<md-button class="genre_button animate-fast">
-			</md-button>
-			<img src="https://assets-0.housingcdn.com/website/login/login_image@2x-2ed7b17ab0cb2b35dceef58e89c900d5.jpg" class="genre_cover">
-			<br/>
-			<div layout="row" layout-align="center center"><div>George Orwell</div></div>
-		</div>
-		<div layout="column" class="padding">
-			<md-button class="genre_button animate-fast">
-			</md-button>
-			<img src="https://assets-0.housingcdn.com/website/login/login_image@2x-2ed7b17ab0cb2b35dceef58e89c900d5.jpg" class="genre_cover">
-			<br/>
-			<div layout="row" layout-align="center center"><div>George Orwell</div></div>
-		</div>
-		<div layout="column" class="padding">
-			<md-button class="genre_button animate-fast">
-			</md-button>
-			<img src="https://assets-0.housingcdn.com/website/login/login_image@2x-2ed7b17ab0cb2b35dceef58e89c900d5.jpg" class="genre_cover">
-			<br/>
-			<div layout="row" layout-align="center center"><div>George Orwell</div></div>
-		</div>
-
-	</section>
-	<section layout="row">
-		<div layout="column" class="padding">
-			<md-button class="genre_button animate-fast">
-			</md-button>
-			<img src="https://assets-0.housingcdn.com/website/login/login_image@2x-2ed7b17ab0cb2b35dceef58e89c900d5.jpg" class="genre_cover">
-			<br/>
-			<div layout="row" layout-align="center center"><div>George Orwell</div></div>
-		</div>
-		<div layout="column" class="padding">
-			<md-button class="genre_button animate-fast">
-			</md-button>
-			<img src="https://assets-0.housingcdn.com/website/login/login_image@2x-2ed7b17ab0cb2b35dceef58e89c900d5.jpg" class="genre_cover">
-			<br/>
-			<div layout="row" layout-align="center center"><div>George Orwell</div></div>
-		</div>
-		<div layout="column" class="padding">
-			<md-button class="genre_button animate-fast">
-			</md-button>
-			<img src="https://assets-0.housingcdn.com/website/login/login_image@2x-2ed7b17ab0cb2b35dceef58e89c900d5.jpg" class="genre_cover">
-			<br/>
-			<div layout="row" layout-align="center center"><div>George Orwell</div></div>
-		</div>
-		<div layout="column" class="padding">
-			<md-button class="genre_button animate-fast">
-			</md-button>
-			<img src="https://assets-0.housingcdn.com/website/login/login_image@2x-2ed7b17ab0cb2b35dceef58e89c900d5.jpg" class="genre_cover">
-			<br/>
-			<div layout="row" layout-align="center center"><div>George Orwell</div></div>
-		</div>
-		<div layout="column" class="padding">
-			<md-button class="genre_button animate-fast">
-			</md-button>
-			<img src="https://assets-0.housingcdn.com/website/login/login_image@2x-2ed7b17ab0cb2b35dceef58e89c900d5.jpg" class="genre_cover">
-			<br/>
-			<div layout="row" layout-align="center center"><div>George Orwell</div></div>
-		</div>
-
-	</section>
-	<section layout="row">
-		<div layout="column" class="padding">
-			<md-button class="genre_button animate-fast">
-			</md-button>
-			<img src="https://assets-0.housingcdn.com/website/login/login_image@2x-2ed7b17ab0cb2b35dceef58e89c900d5.jpg" class="genre_cover">
-			<br/>
-			<div layout="row" layout-align="center center"><div>George Orwell</div></div>
-		</div>
-		<div layout="column" class="padding">
-			<md-button class="genre_button animate-fast">
-			</md-button>
-			<img src="https://assets-0.housingcdn.com/website/login/login_image@2x-2ed7b17ab0cb2b35dceef58e89c900d5.jpg" class="genre_cover">
-			<br/>
-			<div layout="row" layout-align="center center"><div>George Orwell</div></div>
-		</div>
-		<div layout="column" class="padding">
-			<md-button class="genre_button animate-fast">
-			</md-button>
-			<img src="https://assets-0.housingcdn.com/website/login/login_image@2x-2ed7b17ab0cb2b35dceef58e89c900d5.jpg" class="genre_cover">
-			<br/>
-			<div layout="row" layout-align="center center"><div>George Orwell</div></div>
-		</div>
-		<div layout="column" class="padding">
-			<md-button class="genre_button animate-fast">
-			</md-button>
-			<img src="https://assets-0.housingcdn.com/website/login/login_image@2x-2ed7b17ab0cb2b35dceef58e89c900d5.jpg" class="genre_cover">
-			<br/>
-			<div layout="row" layout-align="center center"><div>George Orwell</div></div>
-		</div>
-		<div layout="column" class="padding">
-			<md-button class="genre_button animate-fast">
-			</md-button>
-			<img src="https://assets-0.housingcdn.com/website/login/login_image@2x-2ed7b17ab0cb2b35dceef58e89c900d5.jpg" class="genre_cover">
-			<br/>
-			<div layout="row" layout-align="center center"><div>George Orwell</div></div>
+			<div layout="row" layout-align="center center"><div>{{person.name}}</div></div>
 		</div>
 
 	</section>

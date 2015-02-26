@@ -1,4 +1,4 @@
-var homeApp = angular.module('homeApp', ['ngAnimate', 'ngMaterial', 'ngMessages', 'duScroll', 'ngRoute', 'monospaced.mousewheel', 'appConstants', 'timer', 'sticky', 'duScroll']);
+var homeApp = angular.module('homeApp', ['ngAnimate', 'ngMaterial', 'ngMessages', 'duScroll', 'ngRoute', 'monospaced.mousewheel', 'appConstants', 'timer', 'sticky', 'duScroll', 'filtersApp']);
 
 homeApp.config(["$routeProvider", function($routeProvider){
     $routeProvider.when('/discover', {

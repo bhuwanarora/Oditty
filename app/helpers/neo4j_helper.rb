@@ -544,8 +544,7 @@ module Neo4jHelper
 					shelfari_category = ShelfariCategory.find shelfari_category_id
 					category_name = shelfari_category.name.downcase.gsub(" ", "").gsub("\"", "'").to_s rescue ""
 					puts "#{book_title.green} #{book_id} #{shelfari_category_id}"
-
-					main_clause = "MATCH (book:Book{indexed_title:\""+book_title+"\"})"
+					main_clause = "START book=node:node_auto_index('indexed_title:"+book_title+"*')"
 					clause = " MERGE (shelfari_category:Category{uuid:"+shelfari_category_id.to_s+"}) CREATE UNIQUE (book)-[:FromCategory]->(shelfari_category)"
 					main_clause = main_clause + clause
 					@neo.execute_query main_clause
@@ -562,7 +561,6 @@ module Neo4jHelper
 				end
 			end
 		end
-
 	end
 
 	def self.delete_book_nodes

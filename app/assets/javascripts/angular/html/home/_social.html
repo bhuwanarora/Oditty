@@ -1,31 +1,31 @@
-<md-card>
+<md-card class="social">
     <md-card-content>
         <section layout="row" layout-align="start">
             <div layout="row">
                 <img src="http://www.chicagonow.com/avatar/blog-108-128.png" class="profile_thumb circular">
                 <div layout="column" layout-align="start start">
                     <h2>Shekhar Sahu</h2>
-                    <p>Shared on 10Feb</p>
+                    <div>Shared on 10Feb</div>
                 </div>
             </div>
         </section>
-        <div>
-            Tastiest Books in recent times...
+        <div class="side_padding">
+            Tastiest Books in recent times...hed Out's breakthrough song and the first single from Paracosm share the
+        </div>
+        <div class="social_content" layout="row">
+            <div class="padding" flex="30">
+                <img src="https://s-media-cache-ak0.pinimg.com/236x/8f/af/5e/8faf5e39ee67c2c8e6c073a3f0af6ddf.jpg" class="book_thumb">
+            </div>
+            <div flex="70">
+                <h3>To Kill a Mocking bird</h3>
+                <div>By Harper Lee</div>
+                <p>
+                    The titles of Washed Out's breakthrough song and the first single from Paracosm share the
+                    two most important words in Ernest Greene's musical language: feel it. It's a simple request, as    well...
+                </p>
+            </div>
         </div>
     </md-card-content>
-    <div class="social_content" layout="row">
-        <div class="padding">
-            <img src="https://s-media-cache-ak0.pinimg.com/236x/8f/af/5e/8faf5e39ee67c2c8e6c073a3f0af6ddf.jpg">
-        </div>
-        <div>
-            <h3>To Kill a Mocking bird</h3>
-            <div>By Harper Lee</div>
-            <p>
-                The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-                two most important words in Ernest Greene's musical language: feel it. It's a simple request, as    well...
-            </p>
-        </div>
-    </div>
     <md-card-content class="footer">
         <section layout="row" layout-sm="column" layout-align="space-between">
             <div layout="row" layout-align="start center">
@@ -47,9 +47,18 @@
     .profile_thumb{
         width: 70px;
         height: 70px;
+        padding: 10px;
     }
 
     .social_content{
         order: 1;
+    }
+
+    .social h2{
+        margin: 16px 0px 0px 0px !important;
+    }
+
+    .social .book_thumb{
+        width: 100%;
     }
 </style>

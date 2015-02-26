@@ -66,6 +66,7 @@ class WebsiteController < ApplicationController
 	end
 
 	def library
+		@library = true
 		render :layout => "material"
 	end
 
@@ -95,6 +96,7 @@ class WebsiteController < ApplicationController
 	end
 
 	def customise
+		@customise = true
 		render :layout => "material"
 	end
 

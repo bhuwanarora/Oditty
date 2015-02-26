@@ -258,15 +258,14 @@ module Api
 
 			def self.get_info_card_data
 				reading_count_list = [
-					{"name"=> "0-10 Books"},
-					{"name"=> "10-30 Books"},
-					{"name"=> "30-50 Books"},
-					{"name"=> "50-100 Books"},
-					{"name"=> "100+ Books"}
+					{"name"=> "0-20"},
+					{"name"=> "20-50"},
+					{"name"=> "50-100"},
+					{"name"=> "100-250"},
+					{"name"=> "250+"}
 				]
 
 				info = {"reading_count_list" => reading_count_list}
-
 			end
 
 			def self.handle_google_user params

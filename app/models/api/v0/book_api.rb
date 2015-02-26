@@ -117,7 +117,7 @@ module Api
 					skip_count = 0
 				end
 				@neo = Neography::Rest.new
-				clause = "MATCH (b:Book) WHERE ID(b)="+Constants::BestBook.to_s+" MATCH p=(b)-[:Next_book*.."+(10+skip_count.to_i).to_s+"]->(b_next) WITH last(nodes(p)) as book OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" WITH user, book, m OPTIONAL MATCH (user)-[:RatingAction]->(z:RatingNode{book_id:ID(book), user_id:"+user_id.to_s+"})-[:Rate]->(book) RETURN book.isbn as isbn, ID(book), book.title, book.author_name, ID(m), z.rating SKIP "+(skip_count.to_i).to_s
+				clause = "MATCH (b:Book) WHERE ID(b)="+Constants::BestBook.to_s+" MATCH p=(b)-[:Next_book*.."+(20+skip_count.to_i).to_s+"]->(b_next) WITH last(nodes(p)) as book OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" WITH user, book, m OPTIONAL MATCH (user)-[:RatingAction]->(z:RatingNode{book_id:ID(book), user_id:"+user_id.to_s+"})-[:Rate]->(book) RETURN book.isbn as isbn, ID(book), book.title, book.author_name, ID(m), z.rating SKIP "+(skip_count.to_i).to_s
 				puts clause.blue.on_red
 				begin
 					books =  @neo.execute_query(clause)["data"]

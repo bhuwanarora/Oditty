@@ -73,7 +73,7 @@ angular.module('filtersApp', [])
   .filter('choose_medium_thumb', function() {
     return function(input) {
       var output = "";
-      if(angular.isDefined(input)){
+      if(angular.isDefined(input) && input){
         var external_thumb = angular.isDefined(input.external_thumb) && input.external_thumb != null;
         if(external_thumb){
           output = input.external_thumb;

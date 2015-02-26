@@ -839,13 +839,5 @@ md-input-container .md-input{
 }
 
 md-backdrop{
-    display: none;
-}
-
-md-sidenav section{
-    margin-top: 50px;
-}
-
-md-sidenav{
-    z-index: 1;
+    background-color: transparent !important;
 }

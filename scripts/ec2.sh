@@ -181,3 +181,7 @@ apt-get install redis-server
 # 	secret_access_key: 'CoKHcRq3z5vIqyCz4ltShhljXg66KXoVHL6hwAFA', 
 # 	region: 'us-west-2',
 # 	:s3_endpoint => 's3-ap-southeast-1.amazonaws.com')
+
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java7-installer
