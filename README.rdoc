@@ -41,3 +41,4 @@ Gruntfile
 <tt>npm install grunt-contrib-uglify --save-dev</tt>
 <tt>npm install grunt-contrib-concat --save-dev</tt>
 <tt>npm install grunt-contrib-cssmin --save-dev</tt>
+<tt>npm install grunt-angular-templates --save-dev</tt>

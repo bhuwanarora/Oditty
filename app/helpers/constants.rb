@@ -76,4 +76,6 @@ module Constants
 		EmailVerification		= "email_verification"
 		RecommendBooks			= "RecommendBooks"
 	end
+
+	NLPService = "http://52.11.31.102/api/v0/parser?q="
 end

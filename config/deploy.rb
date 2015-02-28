@@ -67,6 +67,7 @@ namespace :deploy do
   puts "Update the crontab file".blue.on_red
   task :update_crontab do
     run "whenever --update-crontab readers_door_production"
+    # _cset(:whenever_update_flags) { "–update-crontab #{fetch :whenever_identifier} –set #{fetch :whenever_variables} –user www-data" }
   end
 
   after :publishing, :restart

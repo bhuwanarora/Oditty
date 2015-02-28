@@ -5,35 +5,49 @@ module TrendsHelper
 	require 'google-search'
 
 	def self.social_mention
-		puts "socialmention".red
-		url = "http://socialmention.com/"
-		doc = Nokogiri::HTML(open(url))
-		trends = doc.css('.clearfix a')
-		results = []
+		# puts "socialmention".red
+		# url = "http://socialmention.com/"
+		# doc = Nokogiri::HTML(open(url))
+		# trends = doc.css('.clearfix a')
+		# results = []
 
-		for trend in trends
-			results.push trend.children.text
-		end
+		# for trend in trends
+		# 	results.push trend.children.text
+		# end
 
-		url = "http://www.google.com/trends/?geo=IN"
-		doc = Nokogiri::HTML(open(url))
-		trends = doc.css('.hottrends-single-trend-title')
+		# url = "http://www.google.com/trends/?geo=IN"
+		# doc = Nokogiri::HTML(open(url))
+		# trends = doc.css('.hottrends-single-trend-title')
 		
-		for trend in trends
-			results.push trend.children.text
-		end
-
-		url = "https://news.google.com/"
-		doc = Nokogiri::HTML(open(url))
-		trends = doc.css('.titletext')
+		# for trend in trends
+		# 	results.push trend.children.text
+		# end
 		
-		for trend in trends
-			trend = trend.children.text.gsub("\"", "'") rescue ""
-			if trend
-				results.push trend
+		# url = "https://news.google.com/news"
+		# doc = Nokogiri::HTML(open(url))
+		# trends = doc.css('.titletext')
+		
+		@news_sources ||= self.get_news_sources
+		for news_source in @news_sources
+			news_links = self.get_news news_source["url"]
+			
+			for news_link in news_links
+				tags = self.get_tags news_link
+				puts tags
 			end
-		end
 		
+		end
+
+
+		# for trend in trends
+		# 	trend = trend.children.text.gsub("\"", "'") rescue ""
+		# 	if trend
+		# 		results.push trend
+		# 	end
+		# end
+		
+
+
 		count = 0
 	    neo = Neography::Rest.new 
 	    # clause = "MATCH (t:Trending) WHERE t.status=1 SET t.status=0 "
@@ -42,8 +56,9 @@ module TrendsHelper
 	    for trend in results
 	    	begin
 		      	trend_index = trend.downcase.gsub(" ", "").gsub("\"", "'").to_s rescue ""
-		      	news = Google::Search::News.new(:query => trend).first
+		      	# news = Google::Search::News.new(:query => trend).first
 		      	if news.present?
+			      	
 			      	thumb = Google::Search::Image.new(:query => trend).first
 			      	publisher_thumb = Google::Search::Image.new(:query => news.publisher.to_s).first.thumbnail_uri rescue ""
 			      	if trend_index.present?
@@ -89,4 +104,31 @@ module TrendsHelper
 		end
 	end
 
+	def self.get_news news_source
+		news_links = []
+		doc = Nokogiri::HTML(open(URI(news_source))).css('.esc .esc-lead-article-title a')
+		for news_link in doc
+			news_links << news_link["href"]
+		end
+		news_links
+	end
+
+	def self.get_news_sources
+		@news_sources = []
+		google_news_edition_url = "https://support.google.com/news/answer/40237?hl=en"
+		doc = Nokogiri::HTML(open(google_news_edition_url)).css('.i a')
+		for news_source in doc
+			if (news_source.children.text =~ /^[a-zA-Z]+$/) == 0 and !news_source.nil?
+				@news_sources << {"url" => news_source["href"], "region" => news_source.children.text}
+			end
+		end
+		@news_sources
+	end
+
+	def self.get_tags news_link
+		query = Constants::NLPService + news_link rescue debugger
+		uri = URI(query)
+		response = Net::HTTP.get(uri)
+	end
+		
 end
