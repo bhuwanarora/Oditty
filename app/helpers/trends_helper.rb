@@ -10,20 +10,19 @@ module TrendsHelper
 			
 			for news_link in news_links
 				tags = self.get_tags news_link
-				self.set_tags_on_books tags 
+				self.set_tags_on_books(tags, news_link, news_source["region"]) 
 			end
 		end
 	end
 
-	def self.set_tags_on_books results
+	def self.set_tags_on_books results, news_link, region
 	    for trend in results
 	    	begin
-	        	big_clause = " MERGE (t"+count.to_s+":Trending{indexed_trending_topic:\""+trend_index+"\"}) ON CREATE SET t"+count.to_s+".searched_words = \""+trend.gsub("\"", "").to_s+"\", t"+count.to_s+".status = 1, t"+count.to_s+".name=\""+trend+"\", t"+count.to_s+".timestamp="+Time.now.to_i.to_s+", t"+count.to_s+".title=\""+news.title.gsub("\"", "").to_s+"\", t"+count.to_s+".content=\""+news.content.gsub("\"", "").to_s+"\", t"+count.to_s+".url=\""+news.uri.to_s+"\", t"+count.to_s+".publisher_thumb=\""+publisher_thumb.to_s+"\", t"+count.to_s+".thumbnail_url=\""+thumb.thumbnail_uri.to_s+"\", t"+count.to_s+".thumb=\""+thumb.uri.to_s+"\", t"+count.to_s+".location=\""+news.location.to_s+"\", t"+count.to_s+".publisher=\""+news.publisher.to_s+"\", t"+count.to_s+".redirect_url=\""+news.redirect_uri.to_s+"\" ON MATCH SET t"+count.to_s+".status = 1 WITH t"+count.to_s
-				self.map_books_to_news trend
+	        	merge_clause = " MERGE (t:Trending{name: " + trend.to_s + "}) ON CREATE SET t.status = 1, t.name = " +  trend.to_s + ", t.timestamp=" + Time.now.to_i.to_s + ", t.url = " + news_link.to_s + ", t.location = " + region.to_s + " ON MATCH SET t.status = 1 WITH t "
+				self.map_books_to_news(merge_clause, trend)
 	    	rescue Exception => e
 	    		
 	    	end
-	      count = count + 1
 	    end
 	end
 
@@ -58,13 +57,13 @@ module TrendsHelper
 		tags
 	end
 
-	def self.map_news_to_book
+	def self.map_books_to_news merge_clause, tag
 		Google::Search::Book.new(:query => trend).each do |book|
 			indexed_title = book.title.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\"", "")
-			clause = " START book=node:node_auto_index('indexed_title:\""+indexed_title+"\"') MERGE (t"+count.to_s+")-[:RelatedBooks]->(book) "
-			puts (big_clause + clause).blue.on_red
+			map_clause = " START book=node:node_auto_index('indexed_title:\""+indexed_title+"\"') MERGE (t)-[:RelatedBooks]->(book) "
+			puts (merge_clause + map_clause).blue.on_red
 			begin
-	    		neo.execute_query (big_clause + clause)
+	    		neo.execute_query (merge_clause + map_clause)
 				puts ""
 			rescue Exception => e
 				puts e.to_s
