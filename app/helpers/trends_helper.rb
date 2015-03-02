@@ -90,5 +90,18 @@ module TrendsHelper
 		uri = URI(query)
 		response = Net::HTTP.get(uri)
 	end
-		
+
+	def self.map_news_to_book
+		Google::Search::Book.new(:query => trend).each do |book|
+			indexed_title = book.title.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\"", "")
+			clause = " START book=node:node_auto_index('indexed_title:\""+indexed_title+"\"') MERGE (t"+count.to_s+")-[:RelatedBooks]->(book) "
+			puts (big_clause + clause).blue.on_red
+			begin
+	    		neo.execute_query (big_clause + clause)
+				puts ""
+			rescue Exception => e
+				puts e.to_s
+			end
+		end
+	end
 end
