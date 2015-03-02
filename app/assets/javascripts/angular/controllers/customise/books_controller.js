@@ -1,4 +1,4 @@
-homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'bookService', function($scope, $rootScope, $timeout, bookService){
+homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'bookService', 'ColorConstants', function($scope, $rootScope, $timeout, bookService, ColorConstants){
 
     $scope.get_popular_books = function(){
         $scope.info.loading = true;
@@ -8,13 +8,16 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
             $scope._loading = true;
             bookService.get_popular_books(skip_count).then(function(data){
                 angular.forEach(data, function(value){
+                    var random_int = Math.floor(Math.random()*ColorConstants.value.length);
                     var status = value[4] != null;
                     var json = {"isbn": value[0], 
                             "id": value[1], 
                             "title": value[2], 
                             "author_name": value[3], 
                             "user_rating": value[5],
-                            "status": status};
+                            "status": status,
+                            "color": ColorConstants.value[random_int]
+                        };
                     this.push(json);
                 },  $scope.popular_books);
                 $scope._loading = false;

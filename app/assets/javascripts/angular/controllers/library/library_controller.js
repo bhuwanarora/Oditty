@@ -1,4 +1,4 @@
-homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'WebsiteUIConstants', 'SearchUIConstants', 'bookService', '$routeParams', '$location', function($scope, $rootScope, $timeout, WebsiteUIConstants, SearchUIConstants, bookService, $routeParams, $location){
+homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'WebsiteUIConstants', 'SearchUIConstants', 'bookService', '$routeParams', '$location', 'ColorConstants', function($scope, $rootScope, $timeout, WebsiteUIConstants, SearchUIConstants, bookService, $routeParams, $location, ColorConstants){
 
     $scope.get_popular_books = function(){
         if(!$scope.info.loading && !$scope.constant.show_book){
@@ -11,6 +11,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         var skip_count = $scope.books.length;
         bookService.get_popular_books(skip_count).then(function(data){
             angular.forEach(data, function(value){
+                var random_int = Math.floor(Math.random()*ColorConstants.value.length);
                 var status = value[4] != null;
                 var json = {"isbn": value[0], 
                         "id": value[1], 
@@ -20,6 +21,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
                         "status": status,
                         "isBook": true,
                         "colspan": 1,
+                        "color": ColorConstants.value[random_int],
                         "rowspan": 1};
                 this.push(json);
             },  $scope.books);
@@ -40,7 +42,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         var offsetTop = event.currentTarget.parentElement.parentElement.parentElement.offsetTop;
         var clientHeight = event.currentTarget.parentElement.parentElement.clientHeight;
         var marginTop = offsetTop + 1*clientHeight/3;
-        $scope.grid_style = {"max-height": "10vh", "overflow-y": "hidden"};
+        $scope.grid_style = {"max-height": "35px", "overflow-y": "hidden"};
 
         var offset = 100;
         var duration = 3000;

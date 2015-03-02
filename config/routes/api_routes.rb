@@ -82,6 +82,9 @@ ReadersDoor::Application.routes.draw do
       match 'google'                                  => 'users_api#google',                            :via => [:put, :get, :post]
 
       match 'author_details'                          => 'authors_api#details',                         :via => [:put, :get, :post]
+
+
+      match 'feed'                                    => 'feeds_api#get_feed',                           :via => [:put, :get, :post]
     end
   end
 end

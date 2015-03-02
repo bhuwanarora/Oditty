@@ -1,31 +1,61 @@
 <md-bottom-sheet class="options" layout="column">
-    <div>
-
+    <div layout-padding layout-align="start center" layout="row">
+        <h3 layout-padding>
+            <span>{{first_option.name}}</span>
+            <span>{{second_option.name}}</span>
+        </h3>
     </div>
-    <div layout="row" >
-        <div flex="20" layout="column" layout-padding>
-            <div>Select</div>
+    <div layout="row" layout-sm="column">
+        <div flex="20" layout="column" 
+             flex-sm="100"
+             layout-padding style="background-color: #e5e5e5;" class="full_height">
+            <div layout-padding>Select</div>
             <md-button ng-repeat="option in share_options.ReadingStage" 
-                    ng-click="show_nested_options(option, $event)"
+                    ng-click="show_level1_options(option, $event)"
                     layout-padding 
+                    ng-class="{'site_color': option == first_option}"
                     class="md-button-clear">
                 {{option.name}}
             </md-button>
         </div>
-        <div flex="20" layout="column" layout-padding>
+        <div flex="20" layout="column" 
+             flex-sm="100"
+             layout-padding style="background-color: #f5f5f5;" ng-if="nested_options" class="full_height">
             <md-button ng-repeat="option in nested_options"
-                    layout-padding 
+                    layout-padding
+                    ng-click="show_level2_options(option, $event)" 
+                    ng-class="{'site_color': option == second_option}"
                     class="md-button-clear">
                 {{option.name}}
             </md-button>
         </div>
-        <div flex="20">
-            
+       <div flex="60" layout="column" 
+            flex-sm="100"
+            class="full_height">
+            <md-content ng-if="level2_nested_options" class="white">
+                <md-button ng-repeat="option in level2_nested_options"
+                        layout-padding
+                        ng-click="post_status(option, $event)" 
+                        ng-class="{'site_color': option == second_option}"
+                        class="md-button-clear">
+                    <span class="icon {{option.icon}}"></span>
+                    <span>{{option.name}}</span>
+                </md-button>
+            </md-content>
+            <md-content ng-if="add_books" layout="column" layout-padding class="white">
+                <md-input-container>
+                    <label>Search Books</label>
+                    <input/>
+                </md-input-container>
+                <div layout="row" layout-padding>
+
+                </div>
+            </md-content>
         </div>
     </div>
 </md-bottom-sheet>
 <style>
     .options{
-        height: 50vh;
+        height: 75vh;
     }
 </style>

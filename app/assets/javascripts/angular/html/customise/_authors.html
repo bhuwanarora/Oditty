@@ -1,5 +1,7 @@
-<h3>Select famous Writers and People</h3>
-<md-content class="card_content white" ng-controller="authorsController">
+<div layout="row" layout-align="center center">
+    <h3>Select famous Writers and People</h3>
+</div>
+<md-content ng-controller="authorsController">
 	<section layout="row">
 		<div layout="column" class="padding" ng-repeat="person in people">
 			<div class="genre_cover_gradient" layout="column" layout-align="center center" ng-if="person.status">

@@ -139,6 +139,7 @@ md-tabs a{
 
 md-card>img{
  	order: 1;
+ 	max-height: 50vh;
 }
 
 .card .footer{
@@ -226,7 +227,7 @@ md-toolbar{
 }
 
 .md-fab-custom-right{
-	top: 14% !important;
+	top: 70% !important;
 	right: 10% !important;
 }
 
@@ -236,6 +237,16 @@ md-toolbar{
 	width: 71px !important;
 	height: 70px !important;
 	background-color: transparent !important;
+}
+
+.fixed_share.ng-enter,
+.fixed_share.ng-leave.ng-leave-active{
+	margin-right: 50%;
+}
+
+.fixed_share.ng-leave,
+.fixed_share.ng-enter-active{
+	margin-right: 0%;
 }
 
 .share.ng-enter,

@@ -1,12 +1,14 @@
-<h3>Tell us about you</h3>
-<section layout="row" layout-sm="column" ng-controller="infoController">
+<h3 layout="row" layout-align="center center">
+    <div>Tell us about you</div>
+</h3>
+<section layout="row" layout-sm="column" ng-controller="infoController" layout-padding>
 	<div flex="20">
 		<img src="assets/profile_thumb.png" width="100%">
 		<div layout="row" layout-align="center">
 			<div>Upload Image</div>
 		</div>
 	</div>
-	<div flex="80" layout="column">
+	<div flex="80" layout="column" layout-padding>
 		<div layout="row" layout-sm="column">
 			<md-input-container flex>
                 <label>First Name</label>

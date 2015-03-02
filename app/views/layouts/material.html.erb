@@ -33,6 +33,8 @@
             <script src="assets/angular/controllers/share/options_controller.js"></script>
             <script src="assets/angular/directives/site_directives.js"></script>
 
+            <script src="assets/angular/services/feed_service.js"></script>
+
             <% if @customise %>
                 <script src="assets/angular/controllers/customise/customise_controller.js"></script>
                 <script src="assets/angular/controllers/customise/info_controller.js"></script>
@@ -52,7 +54,15 @@
         <% end %>
     </head>
 
-    <body ng-controller="homeController" ng-keydown="scroll_on_keypress($event)" ng-click="close_popups()" msd-wheel="close_popups()">
+    <body ng-controller="homeController" 
+        ng-keydown="scroll_on_keypress($event)" 
+        ng-click="close_popups()" 
+        ng-keypress="play_type_key($event)"
+        msd-wheel="close_popups()">
+        <audio id="audiotag1" src="assets/typewriter2.m4a" preload="auto"></audio>
+        <audio id="audiotag2" src="assets/typewriter2.m4a" preload="auto"></audio>
+        <audio id="audiotag3" src="assets/typewriter3.m4a" preload="auto"></audio>
+
         <div layout="column" layout-fill>
             <!-- <div ng-include src="'/assets/angular/html/shared/header.html'"></div> -->
             <md-toolbar md-scroll-shrink class="header <% if !@library %>'no_shadow'<% end %>">

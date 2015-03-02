@@ -1,20 +1,25 @@
 <div class="book animate-fast" ng-style="book_style" flex="100">
     <!-- <div>TEST</div> -->
     <md-toolbar class="light_grey">
-        <md-tabs md-selected="data.selectedIndex">
-            <md-tab id="tab1" aria-controls="tab1-content" class="padding">
-                Nineteen Eighty-Four(1949)
-            </md-tab>
-            <md-tab id="tab2" aria-controls="tab2-content" class="padding">
-                News
-            </md-tab>
-            <md-tab id="tab3" aria-controls="tab3-content" class="padding">
-                Discussions
-            </md-tab>
-            <md-tab id="tab4" aria-controls="tab4-content" class="padding">
-                Get this book
-            </md-tab>
-        </md-tabs>
+        <div layout="row">
+            <md-tabs md-selected="data.selectedIndex">
+                <md-tab id="tab1" aria-controls="tab1-content" class="padding">
+                    Nineteen Eighty-Four(1949)
+                </md-tab>
+                <md-tab id="tab2" aria-controls="tab2-content" class="padding">
+                    News
+                </md-tab>
+                <md-tab id="tab3" aria-controls="tab3-content" class="padding">
+                    Discussions
+                </md-tab>
+                <md-tab id="tab4" aria-controls="tab4-content" class="padding">
+                    Get this book
+                </md-tab>
+            </md-tabs>
+             <md-button class="rating md-primary" ng-click="show_rating($event)">
+                7.5
+            </md-button>
+        </div>
     </md-toolbar>
     <ng-switch on="data.selectedIndex" class="tabpanel-container">
         <div role="tabpanel"

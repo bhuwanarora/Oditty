@@ -37,7 +37,11 @@ var emotions = [
 	{"name": "guilty", "icon": "i-guilty", "value": [{"SearchBook": true}], "icon2": "icon-book", "link": "while reading"},
 	{"name": "low", "icon": "i-low", "value": [{"SearchBook": true}], "icon2": "icon-book", "link": "while reading"},
 	{"name": "excited", "icon": "i-excited","value": [{"SearchBook": true}], "icon2": "icon-book"}
-]
+];
+
+var places = [
+
+];
 
 
 var constants = {
@@ -210,7 +214,8 @@ var constants = {
 					"name": "Reading",
 					"nested_options": [
 						{	
-							"name": "Select place"
+							"name": "Select place",
+							"value": places
 						},
 						{	
 							"name": "Feeling",
