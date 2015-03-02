@@ -1,18 +1,58 @@
 module TrendsHelper
 
 	def self.social_mention
-		count = 0
-	    neo = Neography::Rest.new 
-
+		tags = []
 		@news_sources ||= self.get_news_sources
 		for news_source in @news_sources
 			news_links = self.get_news news_source["url"]
 			
 			for news_link in news_links
-				tags = self.get_tags news_link
+				
+				merge_clause = "MERGE (news:Trending), (region:Region)-[original_relation:From]->(trending_news)"
+				where_clause = " WHERE region.name =" + news_link["region"].to_s + " AND news.url = " + news_link["url"].to_s
+				with_clause_first = " WITH news, region, original_relation"
+				optional_match_clause = " OPTIONAL MATCH (news)-[relation:From*1.." + Constants::UniqueNewsCount.to_s + "]->(region:Region)"
+				with_clause_second = " WITH news, region, original_relation. relation"
+
+				create_conditional = " CASE relation = NULL THEN [1] ELSE [] END AS dummyarray
+				FOREACH (variable in dummyarray | MERGE (region)-[:From]->(news)-[:From]->(original_news) WITH relation DELETE relation  RETURN ID(news))"
+				clause = create_new_news_node = merge_clause + where_clause + with_clause_first + optional_match_clause + with_clause_second + create_conditional
+				news_id = neo.execute_query clause["data"][0]
+
+				tags_topics = self.get_tags news_link
+				response["social_tags"].each do |social_tag|
+				if social_tag["importance"] == 1 then tags << social_tag["originalValue"] end
+				
+
+				self.map_region_to_news news_source["region"], news_id
+				self.map_news_with_topics news_id, response["topics"] 				
+				self.map_tags_to_news news_id, tags
 				self.set_tags_on_books(tags, news_link, news_source["region"]) 
+
 			end
 		end
+	end
+
+	def self.map_news_with_topics news_id, topic
+		merge_clause = " MERGE (topic:Topic{name:" + topic.to_s + "})<-[:HasTopic]-(news:News) WHERE ID(news) = " + news_id.to_s
+		self.execute_query merge_clause
+	end
+
+	def self.map_region_to_news region, news_id
+		merge_clause = " MERGE (region:Region{name:" + region.to_s + "})-[:HasNews]->(news:News) WHERE ID(news) = " + news_id.to_s
+		self.execute_query merge_clause
+	end
+
+	def self.map_tags_to_news news_id, tags
+		for tag in tags
+			merge_clause = " MERGE (news)-[:HasTags]->(tag:Tag{name: " + tag.to_s +"}) WHERE ID(news) = " + news_id.to_s
+			self.execute_query merge_clause
+		end
+	end
+
+	def self.execute_query clause
+		neo = Neography::Rest.new
+		response = neo.execute_query clause	
 	end
 
 	def self.set_tags_on_books results, news_link, region
@@ -48,13 +88,9 @@ module TrendsHelper
 	end
 
 	def self.get_tags news_link
-		tags = []
 		query = Constants::NLPService + news_link rescue debugger
 		uri = URI(query)
 		response = Net::HTTP.get(uri)
-		response["social_tags"].each do |social_tag|
-		if social_tag["importance"] == 1 then tags << social_tag["originalValue"] end
-		tags
 	end
 
 	def self.map_books_to_news merge_clause, tag
@@ -70,5 +106,4 @@ module TrendsHelper
 			end
 		end
 	end
-
 end
