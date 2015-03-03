@@ -1,4 +1,4 @@
-homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSidenav", "$log", '$q', '$mdBottomSheet', '$mdDialog', 'scroller', '$document', 'feedService', function($scope, $rootScope, $timeout, $mdSidenav, $log, $q, $mdBottomSheet, $mdDialog, scroller, $document, feedService){
+homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSidenav", "$log", '$q', '$mdBottomSheet', '$mdDialog', 'scroller', '$document', 'feedService', '$mdToast', function($scope, $rootScope, $timeout, $mdSidenav, $log, $q, $mdBottomSheet, $mdDialog, scroller, $document, feedService, $mdToast){
 
     $scope.next = function(){
         if(angular.isDefined($scope.data.selectedIndex)){
@@ -188,7 +188,7 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
         $scope.data = {"selectedIndex" : 0};
         $rootScope.user = {};
         feedService.get_feed(0).then(function(data){
-            debugger
+            // debugger
         });
     };
 

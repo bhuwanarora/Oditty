@@ -1,4 +1,4 @@
-homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'WebsiteUIConstants', 'SearchUIConstants', 'bookService', '$routeParams', '$location', 'ColorConstants', function($scope, $rootScope, $timeout, WebsiteUIConstants, SearchUIConstants, bookService, $routeParams, $location, ColorConstants){
+homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'WebsiteUIConstants', 'SearchUIConstants', 'bookService', '$routeParams', '$location', 'ColorConstants', '$mdToast', function($scope, $rootScope, $timeout, WebsiteUIConstants, SearchUIConstants, bookService, $routeParams, $location, ColorConstants, $mdToast){
 
     $scope.get_popular_books = function(){
         if(!$scope.info.loading && !$scope.constant.show_book){
@@ -31,7 +31,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
 
     $scope.show_grid = function(event){
         if($scope.constant.show_book){
-            $scope.grid_style = {"max-height": "initial", "overflow-y": "scroll"};
+            $scope.grid_style = {"max-height": "initial", "overflow-y": "scroll", "padding-bottom": "100px"};
             $scope.constant = {"show_book": false};
             // $scope._init();
             $scope.books = $scope.tempBooks;
@@ -42,7 +42,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         var offsetTop = event.currentTarget.parentElement.parentElement.parentElement.offsetTop;
         var clientHeight = event.currentTarget.parentElement.parentElement.clientHeight;
         var marginTop = offsetTop + 1*clientHeight/3;
-        $scope.grid_style = {"max-height": "35px", "overflow-y": "hidden"};
+        $scope.grid_style = {"max-height": "35px", "overflow-y": "hidden", "padding-bottom": "0px"};
 
         var offset = 100;
         var duration = 3000;
@@ -71,6 +71,29 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
             $scope.active_endorse = true;
         }
     }
+
+    $scope.toast_position = {
+        bottom: false,
+        top: true,
+        left: false,
+        right: true
+    };
+
+    $scope.getToastPosition = function() {
+        return Object.keys($scope.toast_position)
+          .filter(function(pos) { return $scope.toast_position[pos]; })
+          .join(' ');
+          
+    };
+
+    $scope.show_custom_toast = function() {
+        $mdToast.show({
+            controller: 'toastController',
+            templateUrl: 'assets/angular/html/shared/toast/endorse_action.html',
+            hideDelay: 6000,
+            position: $scope.getToastPosition()
+        });
+    };
 
     var _init = function(){
         $scope.$routeParams = $routeParams;

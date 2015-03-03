@@ -102,7 +102,6 @@ sudo -u postgres psql -c "GRANT ALL ON postgis.spatial_ref_sys TO PUBLIC"
 sudo -u postgres psql -c "ALTER USER bhuwan WITH SUPERUSER;"
 rake db:create
 # psql -d readers_door_development -f /usr/share/postgresql/9.3/contrib/postgis-2.1/postgis.sql
-# 
 
 rake db:migrate
 

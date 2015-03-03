@@ -31,6 +31,7 @@
             <script src="assets/angular/controllers/home/share_controller.js"></script>
             <script src="assets/angular/controllers/share/share_controller.js"></script>
             <script src="assets/angular/controllers/share/options_controller.js"></script>
+            <script src="assets/angular/controllers/toast_controller.js"></script>
             <script src="assets/angular/directives/site_directives.js"></script>
 
             <script src="assets/angular/services/feed_service.js"></script>
@@ -119,11 +120,14 @@
             </md-toolbar>
 
             <%= yield %>
-            <md-button class="md-fab md-fab-bottom-right animate-fast fixed_share" 
-                        aria-label="Eat cake" 
-                        ng-class="{'md-fab-custom-right': info.show_share}"
-                        ng-click="show_share_page($event)"
-                        style="background-image: url('assets/type.png')">
+            <% unless @customise %>
+                <md-button class="md-fab md-fab-bottom-right animate-fast fixed_share" 
+                            aria-label="Eat cake" 
+                            ng-class="{'md-fab-custom-right': info.show_share}"
+                            ng-click="show_share_page($event)"
+                            style="background-image: url('assets/type.png')">
+            <% end %>
+            
             </md-button>
             <md-progress-linear class="md-primary loader" 
                     ng-show="info.loading"

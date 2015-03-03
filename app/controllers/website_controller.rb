@@ -100,4 +100,8 @@ class WebsiteController < ApplicationController
 		render :layout => "material"
 	end
 
+	def author
+		render :layout => "material"	
+	end
+
 end

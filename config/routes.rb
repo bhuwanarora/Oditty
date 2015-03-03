@@ -22,7 +22,7 @@ ReadersDoor::Application.routes.draw do
 
   resources :users
 
-  resources :authors
+  # resources :authors
 
   resources :edges
 
@@ -81,6 +81,7 @@ ReadersDoor::Application.routes.draw do
   get 'network'                   => "website#network",             :as => "network"
   get 'journey'                   => "website#journey",             :as => "journey"
   get 'customise'                   => "website#customise",             :as => "customise"
+  get 'author'                   => "website#author",             :as => "author"
 
   get 'tree'                      => "categories#show_tree",    :as => "show_tree"
   get 'search_tag'                => "tags#search_tag",         :as => "search_tag"

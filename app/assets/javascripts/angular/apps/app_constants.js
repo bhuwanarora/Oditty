@@ -186,7 +186,8 @@ var constants = {
 			"Delete": 46,
 			"Escape": 27,
 			"StatusPosted": "Shared",
-			"CoverPhotoCDN": "http://rd-images.readersdoor.netdna-cdn.com/cp/"
+			"CoverPhotoCDN": "http://rd-images.readersdoor.netdna-cdn.com/cp/",
+			"GenreAWS": "https://s3-ap-southeast-1.amazonaws.com/rd-genres/"
 		},
 		"ColorConstants":{
 			"value": ["#695447", "#d1d2de", "#c4c2b5", "#675850", "#83817f", "#b3b2b1", "#839baa", "#4867a4", "#423b34", "#e4bc7e", "#987c4e", "#8c7971", "#ad9894", "#565240", "#5d2726"]

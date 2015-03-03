@@ -13,7 +13,7 @@
 			</div>
 			<md-button class="info_button animate-fast" ng-click="select_genre(genre)">
 			</md-button>
-			<img src="https://assets-0.housingcdn.com/website/login/login_image@2x-2ed7b17ab0cb2b35dceef58e89c900d5.jpg" class="cover">
+			<img ng-src="{{genre.url}}" class="cover">
 			<br/>
 			<div layout="row" layout-align="center center"><div>{{genre.name}}</div></div>
 				<!-- <toggle data="genre" on-select="save_genre(genre)" on-deselect="remove_genre(genre)"></toggle> -->
@@ -48,13 +48,7 @@
 	.info_button:hover{
 		border-radius: 50%;
 	}
-
-	/*.cover:hover{
-		zoom: 115%;
-		width: 130px;
-		height: 130px;
-	}
-*/
+	
 	.info_button:active{
 		border-radius: 50%;
 	}

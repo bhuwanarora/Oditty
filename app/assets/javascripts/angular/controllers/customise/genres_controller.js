@@ -1,4 +1,4 @@
-homeApp.controller('genresController', ["$scope", "$rootScope", "$timeout", 'userService', 'genreService', function($scope, $rootScope, $timeout, userService, genreService){
+homeApp.controller('genresController', ["$scope", "$rootScope", "$timeout", 'userService', 'genreService', 'WebsiteUIConstants', function($scope, $rootScope, $timeout, userService, genreService, WebsiteUIConstants){
 
     $scope.save_genre = function(genre){
         var params = {"genre": genre.id, "status": true};
@@ -25,6 +25,7 @@ homeApp.controller('genresController', ["$scope", "$rootScope", "$timeout", 'use
                     var status = value[3] != null;
                     var json = {"name": value[0], 
                                 "id": value[1], 
+                                "url": WebsiteUIConstants.GenreAWS+value[4],
                                 "icon": value[2], 
                                 "status": status};
                     this.push(json);
