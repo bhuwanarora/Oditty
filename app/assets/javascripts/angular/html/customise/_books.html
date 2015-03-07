@@ -1,7 +1,14 @@
-<h3>Select books which have left a mark on you</h3>
-<md-content class="card_content white" ng-controller="booksController" check-scroll-bottom="get_popular_books()">
-	<section layout="row" layout-wrap>
-		<div layout="column" class="padding" ng-repeat="book in popular_books" flex="20">
+<div layout="row" layout-align="center center">
+    <h3>Select books which have left a mark on you</h3>
+</div>
+<md-input-container flex>
+    <label>Search books...</label>
+    <input/>
+</md-input-container>
+<md-content ng-controller="booksController" check-scroll-bottom="get_popular_books()" class="white">
+	<section layout="row" layout-wrap layout-align="center">
+		<div layout="column" class="padding" ng-repeat="book in popular_books"
+			 style="width: 170px;">
 			<div class="cover_gradient" layout="column" layout-align="space-between" ng-if="book.status">
 				<div layout="row" layout-align="end center" class="padding">
 					<md-button class="bookmark_link" ng-click="show_shelf_bottom_sheet($event)">
@@ -10,15 +17,22 @@
 					<div>{{book.bookmark_count}}</div>
 				</div>
 				<div layout="row" layout-align="center center">
-					<div><span class="icon-checkmark"></span></div>
+					<div class="circular_icon white padding">
+						<span class="icon-checkmark"></span>
+					</div>
 				</div>
-				<div layout="row" layout-align="center" class="padding">
+				<div layout="row" layout-align="center" class="relative">
 					<rate data="book"></rate>
 				</div>
 			</div>
 
 			<md-button class="info_button animate-fast" ng-click="select_book(book)">
 			</md-button>
+			<div ng-style="{background:'{{book.color}}'}" class="book_backup_cover" 
+                    layout="column" layout-padding layout-align="space-between">
+                <h3>{{book.title}}</h3>
+                <h5>{{book.author_name}}</h5>
+            </div>
 			<img ng-src="{{book | choose_medium_thumb}}" class="cover">
 			<br/>
 			<div layout="column" layout-align="start start">
@@ -44,13 +58,13 @@
 	.cover_gradient{
 		width: 130px;
 		height: 180px;
+		z-index: 1;
 	}
 
 	.cover_gradient{
 		position: absolute;
-		z-index: 1;
+		z-index: 2;
 		background-color: rgba(0, 0, 0, 0.5);
-		color: white !important;
 	}
 
 	.info_button{
@@ -59,11 +73,29 @@
 		height: 180px;
 		position: absolute;
 		/*box-shadow: inset 0 3px 8px #000000;*/
-		z-index: 1;
+		z-index: 3;
 	}
 
 	.info_button:hover{
 		border: 5px solid #ececec;
+	}
+
+	.book_backup_cover{
+		width: 130px;
+		height: 180px;
+        position: absolute;
+        color: white;
+        white-space: normal;
+	}
+
+	.circular_icon .icon-checkmark{
+		font-size: 2em;
+	}
+
+	.circular_icon{
+		width: 60px;
+		border-radius: 50%;
+		height: 60px;
 	}
 
 </style>

@@ -1,19 +1,50 @@
-<md-content>
+<md-content class="white">
     <div ng-include src="'/assets/angular/html/profile/_header.html'" hide-sm></div>
-    <section layout="row" layout-wrap>
+    <!-- <section layout="row" layout-wrap>
         <div flex="25" hide-sm flex-md="10"></div>
         <div flex="50" flex-sm="100" flex-md="80" layout="column"
              ng-include src="'/assets/angular/html/customise/_sub_header.html'">
         </div>
         <div flex="25" hide-sm 
              flex-md="10"></div>
-    </section>
-    <section layout="row" layout-wrap>
-        <div flex="20" hide-sm flex-md="10"></div>
-        <div flex="60" flex-sm="100" flex-md="80" layout="column"
+    </section> -->
+    <section layout="column" layout-wrap>
+        <div layout="column" layout-align="center center"
              ng-include src="'/assets/angular/html/customise/show.html'">
         </div>
-        <div ng-include flex="20" hide-sm 
-             flex-md="10"></div>
     </section>
 </md-content>
+<md-progress-linear class="md-warn progress" 
+            ng-value="data.selectedIndex*25"
+            md-mode="buffer">
+</md-progress-linear>
+<div class="footer md-whiteframe-z1">
+    <section layout="row">
+        <md-button ng-click="previous()" class="footer_button"
+                ng-disabled="data.selectedIndex == 0"
+                flex="50" layout="row" layout-align="start">
+            <div><span class="icon-angle-left"></span></div>&nbsp;&nbsp;
+            <div ng-switch on="data.selectedIndex">
+                <div ng-switch-when="0"></div>
+                <div ng-switch-when="1">Personal Info</div>
+                <div ng-switch-when="2">Select Genres</div>
+                <div ng-switch-when="3">Select Books</div>
+            </div>
+        </md-button>
+        <md-button ng-click="next()" class="footer_button"
+                    flex="50" layout="row" layout-align="end">
+            <div ng-switch on="data.selectedIndex">
+                <div ng-switch-when="0">Select Genres</div>
+                <div ng-switch-when="1">Select Books</div>
+                <div ng-switch-when="2">Add famous Writers and People</div>
+                <div ng-switch-when="3">Go to Library</div>
+            </div>&nbsp;&nbsp;
+            <div><span class="icon-angle-right"></span></div>
+        </md-button>
+    </section>
+</div>
+<style>
+    .footer_button{
+        height: 48px;
+    }
+</style>

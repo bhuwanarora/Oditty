@@ -1,4 +1,4 @@
- module BooksGraphHelper
+module BooksGraphHelper
 
 	def self.neo_init
 		@neo = Neography::Rest.new
@@ -58,7 +58,7 @@
 	def self.get_details(book_id, user_id=nil)
 		@neo = Neography::Rest.new
 		if user_id
-			clause = "MATCH (b:Book), (u:User) WHERE ID(b)="+book_id.to_s+" AND ID(u)="+user_id.to_s+" WITH u, b OPTIONAL MATCH (u)-[:RatingAction]->(rn:RatingNode)-[:Rate]->(b) OPTIONAL MATCH (u)-[:TimingAction]->(tm:TimingNode)-[:Timer]->(b) OPTIONAL MATCH (u)-[:Labelled]->(l1:Label) OPTIONAL MATCH (u)-[:Labelled]->(l2:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(b) OPTIONAL MATCH (u)-[:MarkAsReadAction]->(m)-[:MarkAsRead]->(b) OPTIONAL MATCH (u)-[:Follow]->(friend:User)-[:MarkAsReadAction]->(m_friend)-[:MarkAsRead]->(b) RETURN b as book, rn.rating as rating, tm.time_index as time_index, COLLECT(DISTINCT l1.name) as labels, COLLECT(DISTINCT l2.name) as selected_labels, m.timestamp as mark_as_read, COLLECT(ID(friend)) as friend_ids, COLLECT(friend.thumb) as friend_thumb, COUNT(friend) as friends_count"
+			clause = "MATCH (b:Book), (u:User) WHERE ID(b)="+book_id.to_s+" AND ID(u)="+user_id.to_s+" WITH u, b OPTIONAL MATCH (u)-[:RatingAction]->(rn:RatingNode)-[:Rate]->(b) OPTIONAL MATCH (u)-[:TimingAction]->(tm:TimingNode)-[:Timer]->(b) OPTIONAL MATCH (u)-[:Labelled]->(l1:Label) OPTIONAL MATCH (u)-[:Labelled]->(l2:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(b) OPTIONAL MATCH (u)-[:MarkAsReadAction]->(m)-[:MarkAsRead]->(b) OPTIONAL MATCH (u)-[:Follow]->(friend:User)-[:MarkAsReadAction]->(m_friend)-[:MarkAsRead]->(b) OPTIONAL MATCH (b)-[bt:Belongs_to]->(g:Genre) RETURN b as book, rn.rating as rating, tm.time_index as time_index, COLLECT(DISTINCT l1.name) as labels, COLLECT(DISTINCT l2.name) as selected_labels, m.timestamp as mark_as_read, COLLECT(ID(friend)) as friend_ids, COLLECT(friend.thumb) as friend_thumb, COUNT(friend) as friends_count, COLLECT(g.name) as genres, COLLECT(bt.weight) as weights"
 			puts clause.blue.on_red
 			book = @neo.execute_query(clause)["data"][0]
 		else
@@ -67,6 +67,10 @@
 			book = @neo.execute_query(clause)["data"][0][0]["data"]
 		end
 		book
+	end
+
+	def self.get_basic_details(book_id, user_id)
+		clause = "MATCH (b:Book), (u:User) WHERE ID(b)="+book_id.to_s+" AND ID(u)="+user_id.to_s+" WITH u, b OPTIONAL MATCH (b)-[bt:Belongs_to]->(g:Genre) RETURN b as book, rn.rating as rating, tm.time_index as time_index, COLLECT(DISTINCT l1.name) as labels, COLLECT(DISTINCT l2.name) as selected_labels, m.timestamp as mark_as_read, COLLECT(ID(friend)) as friend_ids, COLLECT(friend.thumb) as friend_thumb, COUNT(friend) as friends_count, COLLECT(g.name) as genres, COLLECT(bt.weight) as weights"
 	end
 
 	def self.get_quick_reads(book_id, user_id=nil)

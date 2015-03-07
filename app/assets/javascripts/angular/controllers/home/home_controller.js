@@ -1,4 +1,4 @@
-homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSidenav", "$log", '$q', '$mdBottomSheet', '$mdDialog', 'scroller', '$document', function($scope, $rootScope, $timeout, $mdSidenav, $log, $q, $mdBottomSheet, $mdDialog, scroller, $document){
+homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSidenav", "$log", '$q', '$mdBottomSheet', '$mdDialog', 'scroller', '$document', 'feedService', '$mdToast', function($scope, $rootScope, $timeout, $mdSidenav, $log, $q, $mdBottomSheet, $mdDialog, scroller, $document, feedService, $mdToast){
 
     $scope.next = function(){
         if(angular.isDefined($scope.data.selectedIndex)){
@@ -11,6 +11,24 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
         }
         else{
             $scope.data.selectedIndex = 0;
+        }
+    }
+
+    $scope.play_type_key = function(event){
+        if($scope.info.show_share){
+            if(angular.isUndefined($scope.current_track) || $scope.current_track == 0){
+                $scope.current_track = 1;
+                document.getElementById('audiotag1').play();
+            }
+            else if($scope.current_track == 1){
+                $scope.current_track = 2;
+                document.getElementById('audiotag2').play();
+            }
+            else{
+                $scope.current_track = 0;
+                document.getElementById('audiotag3').play();
+            }
+            event.stopPropagation();
         }
     }
 
@@ -166,9 +184,12 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
 
     $scope._init = function(){
         $scope.info = {};
-        $scope.info.show_share = true;
+        $scope.info.show_share = false;
         $scope.data = {"selectedIndex" : 0};
         $rootScope.user = {};
+        feedService.get_feed(0).then(function(data){
+            // debugger
+        });
     };
 
     $scope._init();

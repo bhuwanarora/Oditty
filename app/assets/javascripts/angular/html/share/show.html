@@ -2,22 +2,35 @@
 	 ng-if="info.show_share"
 	 layout-align="start start" layout-padding>
 	<div flex="10">
-		<md-button ng-click="back($event)" layout="row" layout-align="center center">
+		<div ng-click="back($event)" layout="row" layout-align="center center" class="custom_button">
 			<h1 layout-padding>
 				<span class="icon-angle-left"></span>
 			</h1>
-		</md-button>
-	</div>
-	<div flex="80" layout="column">
-		<img class="circular user_image" src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
-		<div >
 		</div>
-		<md-input-container flex layout-margin>
-	        <label>Share your reading journey...</label>
-	        <textarea></textarea>
+	</div>
+	<div flex="80" layout="column" layout-align="center">
+		<img class="circular user_image" src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
+		<!-- <div > -->
+		<!-- </div> -->
+		<md-input-container flex layout-margin style="font-family: 'Inconsolata', 'Courier New', serif;">
+			<!-- <label>Share your reading journey...</label> -->
+	        <textarea style="::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #909 !important;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #909 !important;
+   opacity:  1 !important;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #909 !important;
+   opacity:  1 !important;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+   color:    #909 !important;
+}"></textarea>
 	    </md-input-container>
-		<md-button class="select_mood" 
-				ng-click="show_share_options($event)"><span class='icon-happy'></span></md-button>
+		<div class="select_mood custom_button" 
+				ng-click="show_share_options($event)"><span class='icon-happy'></span></div>
 	</div>
     <div flex="10">
     </div>
@@ -26,9 +39,9 @@
 <style>
 	.user_image{
 		position: absolute;
-		margin-top: 60px;
-		width: 100px;
-		height: 100px;
+		margin-top: 36%;
+		width: 72px;
+		height: 72px;
 		z-index: 1;
 		/*margin-right: -20px;*/
 	}
@@ -45,14 +58,31 @@
 
 	.share md-input-container{
 		font-size: 40px;
+		margin-top: 44%;
 	}
 
 	.select_mood{
-		font-size: 40px;
-		color: rgba(197, 197, 197, 0.46);
+		font-size: 29px;
+		color: rgba(197, 197, 197, 1);
 		width: 70px;
 		height: 70px;
 		padding: 0px;
+		margin-top: -25px;
+		margin-left: 80px;
+		z-index: 2;
+	}
+
+	.custom_button:hover{
+		cursor: pointer;
+		font-weight: bold;
+		color: black;
+	}
+
+	textarea{
+		font-family: 'Inconsolata', 'Courier New', serif;
+		line-height: 45px !important;
+		text-align: center;
+		height: 55px !important;
 	}
 
 	textarea::-webkit-input-placeholder {

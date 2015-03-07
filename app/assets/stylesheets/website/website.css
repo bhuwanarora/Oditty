@@ -23,6 +23,10 @@ body{
     font-family: Helvetica, Arial, 'lucida grande',tahoma,verdana,arial,sans-serif;
 }*/
 
+body{
+    font-family: 'Din';
+}
+
 :not(.scrollbar)::-webkit-scrollbar { 
     display: none; 
 }

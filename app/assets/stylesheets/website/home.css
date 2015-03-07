@@ -53,6 +53,7 @@ md-card{
 
 md-content{
 	height: 100vh !important;
+	padding-bottom: 10px;
 	/*margin-top: 0px !important;*/
 	/*margin-bottom: 100px !important;*/
 }
@@ -139,6 +140,7 @@ md-tabs a{
 
 md-card>img{
  	order: 1;
+ 	max-height: 50vh;
 }
 
 .card .footer{
@@ -187,7 +189,7 @@ md-toolbar{
 .notifications{
 	position: fixed;
 	right: 0px;
-	top: 50px;
+	top: 55px;
 	max-height: 300px;
 	width: 300px;
 	z-index: 2;
@@ -226,7 +228,7 @@ md-toolbar{
 }
 
 .md-fab-custom-right{
-	top: 14% !important;
+	top: 70% !important;
 	right: 10% !important;
 }
 
@@ -238,6 +240,16 @@ md-toolbar{
 	background-color: transparent !important;
 }
 
+.fixed_share.ng-enter,
+.fixed_share.ng-leave.ng-leave-active{
+	margin-right: 50%;
+}
+
+.fixed_share.ng-leave,
+.fixed_share.ng-enter-active{
+	margin-right: 0%;
+}
+
 .share.ng-enter,
 .share.ng-leave.ng-leave-active{
 	opacity: 0;
@@ -246,4 +258,29 @@ md-toolbar{
 .share.ng-leave,
 .share.ng-enter-active{
 	opacity: 1;
+}
+
+
+.rate{
+	height: 25px;
+	text-align: center;
+	top: 20px;
+	right: 0px;
+	color: white;
+	width: 240px;
+}
+
+.rate_radio{
+	font-size: 0.9em;
+	letter-spacing: -3px;
+}
+
+.rate_radio:active{
+	color: white !important;
+}
+
+.rate_radio_buttons{
+	padding: 3px 15px 2px 0px;
+	width: 275px;
+	text-align: left;
 }

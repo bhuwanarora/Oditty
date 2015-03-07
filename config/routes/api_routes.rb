@@ -8,6 +8,7 @@ ReadersDoor::Application.routes.draw do
 
       match "get_similar_books"                      => 'books_api#get_similar_books',                  :via => [:put, :get, :post]
       match "book"                                   => 'books_api#get_book_details',                   :via => [:put, :get, :post]
+      match "basic_book"                             => 'books_api#get_basic_book_details',             :via => [:put, :get, :post]
       match "book_feed"                              => 'books_api#get_feed',                           :via => [:put, :get, :post]
       match "tooltip"                                => 'books_api#tooltip',                            :via => [:put, :get, :post]
       match "moments"                                => 'books_api#moments',                            :via => [:put, :get, :post]
@@ -82,6 +83,9 @@ ReadersDoor::Application.routes.draw do
       match 'google'                                  => 'users_api#google',                            :via => [:put, :get, :post]
 
       match 'author_details'                          => 'authors_api#details',                         :via => [:put, :get, :post]
+
+
+      match 'feed'                                    => 'feeds_api#get_feed',                           :via => [:put, :get, :post]
     end
   end
 end

@@ -1,0 +1,95 @@
+<md-toolbar class="author_header">
+    <section layout="column" layout-wrap>
+        <div layout="row" layout-align="end start" class="small-padding">
+            <md-button class="md-primary">Follow Me</md-button>
+        </div>
+        <div layout="row" layout-wrap class="bottom_header">
+            <div flex="50" hide-sm flex-md="10" layout="row" layout-align="start start">
+                <img src="http://upload.wikimedia.org/wikipedia/commons/7/7a/George-orwell-BBC.jpg" class="circular author_pic">
+                <a href="/author" layout-margin>
+                    <div layout="column" layout-wrap layout-align="start start">
+                        <div layout="row">
+                            <h3 style="margin: 0px !important;">
+                                <span>George Well</span>
+                            </h3>
+                            <h5 style="margin: 0px !important;">
+                                <span class="icon-star"></span>
+                                <span>9.3/10</span>
+                            </h5>
+                        </div>
+                        <h5>Novelist</h5>
+                    </div>
+                </a>
+            </div>
+
+            <div flex="50" hide-sm flex-md="10" layout="row" layout-column layout-align="end end">
+                <a>
+                    <md-button class="nav_links">
+                        <div layout="column" layout-align="end end">
+                            <div><b>BOOKS</b></div>
+                            <h2 class="green_color">28</h2>
+                        </div>
+                    </md-button>
+                </a>
+                <a href="/network">
+                     <md-button class="nav_links">
+                        <div layout="column" layout-align="end end">
+                            <div><b>FOLLOWERS</b></div>
+                            <h2 class="green_color">12</h2>
+                        </div>
+                    </md-button>
+                </a>
+                
+                 <a href="/network">
+                    <md-button class="nav_links">
+                        <div layout="column" layout-align="end end">
+                            <div><b>FOLLOWING</b></div>
+                            <h2 class="green_color">12</h2>
+                        </div>
+                    </md-button>
+                </a>
+                <div></div>
+            </div>
+        </div>
+    </section>
+</md-toolbar>
+
+<style>
+    .author_header{
+        color: grey !important;
+        background-color: #f5f5f5 !important;
+        box-shadow: none;
+        border-bottom: 1px solid #dddddd;
+        /*padding-top: 60px;*/
+        /*padding-bottom: 0px;*/
+    }
+
+    .author_header h2{
+        padding: 0px;
+        margin: 0px 0px !important;
+    }
+
+    .author_header h5{
+        margin: 5px 0px;
+    }
+
+    .author_pic{
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+        left: 30px;
+        border: 5px solid #E5E5E5;
+        margin-top: -25px;
+        margin-left: 40px;
+    }
+
+    .author_header .nav_links{
+        padding: 4px 8px !important;
+        color: inherit !important;
+        font-size: 0.8em;
+    }
+
+    .author_header .bottom_header{
+        height: 60px;
+    }
+</style>
