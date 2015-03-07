@@ -22,12 +22,10 @@
             </md-input-container>
 		</div>
 		<div layout="row" layout-sm="column">
-			<calendar save-date="set_date_of_birth()"></calendar>
-            <md-select multiple placeholder="Gender" ng-model="user.gender">
-                <md-option-group label="Gender">
-                    <md-option ng-value="Female">Female</md-option>
-                    <md-option ng-value="Male">Male</md-option>
-                </md-option-group>
+			<calendar save-date="set_date_of_birth()" flex></calendar>
+            <md-select placeholder="Gender" ng-model="user.gender" flex layout-padding>
+                <md-option ng-value="Female">Female</md-option>
+                <md-option ng-value="Male">Male</md-option>
             </md-select>
 		</div>
 		<div>
