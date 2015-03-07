@@ -193,6 +193,7 @@ module.exports = function(grunt) {
             'app/assets/javascripts/min/angular/vendors/cropme.js',
             'app/assets/javascripts/min/angular/vendors/hamster.min.js',
             'app/assets/javascripts/min/angular/vendors/intro.js',
+            'app/assets/javascripts/min/angular/vendors/angular_filters.min.js',
             'app/assets/javascripts/min/angular/vendors/angular_touch.min.js'],
 
           'app/assets/javascripts/min/angular/main.js': [
@@ -234,7 +235,8 @@ module.exports = function(grunt) {
             'app/assets/javascripts/min/angular/vendors/angular_messages.min.js',
             'app/assets/javascripts/min/angular/vendors/angular_animate13.min.js',
             'app/assets/javascripts/min/angular/landing_page_vendors.js',
-            'app/assets/javascripts/min/lib/angular_scroll.min.js'
+            'app/assets/javascripts/min/lib/angular_scroll.min.js',
+            'app/assets/javascripts/min/angular/vendors/angular_filters.min.js'
           ]
         },
       },

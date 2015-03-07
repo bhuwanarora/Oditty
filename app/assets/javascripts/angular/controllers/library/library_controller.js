@@ -1,10 +1,47 @@
 homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'WebsiteUIConstants', 'SearchUIConstants', 'bookService', '$routeParams', '$location', 'ColorConstants', '$mdToast', function($scope, $rootScope, $timeout, WebsiteUIConstants, SearchUIConstants, bookService, $routeParams, $location, ColorConstants, $mdToast){
 
     $scope.get_popular_books = function(){
-        if(!$scope.info.loading && !$scope.constant.show_book){
+        if(!$scope.info.loading && !$scope.constant.show_book && !
+            $scope.info.author_filter && !$scope.info.sort_by_alphabet &&
+            !$scope.info.reading_time_filter && !$scope.info.published_era_filter){
             $scope.info.loading = true;
             $scope._get_popular_books();
         }
+    }
+
+    $scope.init_book = function(index){
+        var book_id = $scope.books[index];
+        bookService.get_basic_details(book_id).then(function(data){
+            $scope.books[index] = angular.extend($scope.books[index], data);
+        });
+    }
+
+    $scope.sort_by_author = function(){
+        $scope.info.author_filter = true;
+        $scope.info.sort_by_alphabet = false;
+        $scope.info.reading_time_filter = false;
+        $scope.info.published_era_filter = false;   
+    }
+
+    $scope.sort_by_alphabet = function(){
+        $scope.info.author_filter = false;
+        $scope.info.sort_by_alphabet = true;
+        $scope.info.reading_time_filter = false;
+        $scope.info.published_era_filter = false;   
+    }
+
+    $scope.sort_by_reading_time = function(){
+        $scope.info.author_filter = false;
+        $scope.info.sort_by_alphabet = false;
+        $scope.info.reading_time_filter = true;
+        $scope.info.published_era_filter = false;   
+    }
+
+    $scope.sort_by_published_era = function(){
+        $scope.info.author_filter = false;
+        $scope.info.sort_by_alphabet = false;
+        $scope.info.reading_time_filter = false;
+        $scope.info.published_era_filter = true;      
     }
 
     $scope._get_popular_books = function(){
@@ -13,16 +50,39 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
             angular.forEach(data, function(value){
                 var random_int = Math.floor(Math.random()*ColorConstants.value.length);
                 var status = value[4] != null;
+                if(value[7] < 50){
+                    var reading_time = "For a flight journey";
+                }
+                else if(value[7] < 100){
+                    var reading_time = "For a weekend getaway";
+                }
+                else if(value[7] <= 250){
+                    var reading_time = "For a week holiday";
+                }
+                else{
+                    var reading_time = "For a month vacation";
+                }
+
+                if(value[6] > 2000){
+                    var published_era = "Contemporary";
+                }
+                else{
+                    var published_era = "Remaining";
+                }
+
                 var json = {"isbn": value[0], 
                         "id": value[1], 
                         "title": value[2], 
                         "author_name": value[3], 
                         "user_rating": value[5],
+                        "published_era": published_era,
+                        "reading_time": reading_time,
                         "status": status,
                         "isBook": true,
                         "colspan": 1,
                         "color": ColorConstants.value[random_int],
-                        "rowspan": 1};
+                        "rowspan": 1,
+                        "alphabet": value[2][0]};
                 this.push(json);
             },  $scope.books);
             $scope.info.loading = false;
@@ -31,7 +91,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
 
     $scope.show_grid = function(event){
         if($scope.constant.show_book){
-            $scope.grid_style = {"max-height": "initial", "overflow-y": "scroll", "padding-bottom": "100px"};
+            $scope.grid_style = {"height": "initial", "padding-bottom": "100px"};
             $scope.constant = {"show_book": false};
             // $scope._init();
             $scope.books = $scope.tempBooks;
@@ -39,27 +99,28 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
     }
 
     $scope.show_book = function(event, index){
-        var offsetTop = event.currentTarget.parentElement.parentElement.parentElement.offsetTop;
-        var clientHeight = event.currentTarget.parentElement.parentElement.clientHeight;
-        var marginTop = offsetTop + 1*clientHeight/3;
-        $scope.grid_style = {"max-height": "35px", "overflow-y": "hidden", "padding-bottom": "0px"};
+        // var offsetTop = event.currentTarget.parentElement.parentElement.parentElement.offsetTop;
+        // var clientHeight = event.currentTarget.parentElement.parentElement.clientHeight;
+        // var marginTop = offsetTop + 1*clientHeight/3;
+        $scope.grid_style = {"height": "35px", "overflow-y": "hidden", "padding-bottom": "0px"};
 
-        var offset = 100;
-        var duration = 3000;
-        var bookBoundingRectangle = event.currentTarget.parentElement.parentElement.getBoundingClientRect();
+        // var offset = 100;
+        // var duration = 3000;
+        // var bookBoundingRectangle = event.currentTarget.parentElement.parentElement.getBoundingClientRect();
 
         var insertIndex = (Math.floor(index/5) + 1)*5
 
-        var item = {
-          color: "#fffff",
-          colspan: 5,
-          rowspan: 5,
-          isBook: true
-        }
+        // var item = {
+        //   color: "#fffff",
+        //   colspan: 5,
+        //   rowspan: 5,
+        //   isBook: true
+        // }
         
         $scope.tempBooks = $scope.books;
         $scope.books = $scope.books.slice(0, insertIndex);
         $scope.constant = {"show_book": true};
+        $rootScope.active_book = $scope.books[index];
         event.stopPropagation();
     }
 
@@ -70,6 +131,12 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         else{
             $scope.active_endorse = true;
         }
+        $mdToast.show({
+            controller: 'toastController',
+            templateUrl: 'assets/angular/html/shared/toast/endorse_action.html',
+            hideDelay: 6000,
+            position: $scope.getToastPosition()
+        });
     }
 
     $scope.toast_position = {
@@ -83,19 +150,10 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         return Object.keys($scope.toast_position)
           .filter(function(pos) { return $scope.toast_position[pos]; })
           .join(' ');
-          
-    };
-
-    $scope.show_custom_toast = function() {
-        $mdToast.show({
-            controller: 'toastController',
-            templateUrl: 'assets/angular/html/shared/toast/endorse_action.html',
-            hideDelay: 6000,
-            position: $scope.getToastPosition()
-        });
     };
 
     var _init = function(){
+        // $scope.info.author_filter = true;
         $scope.$routeParams = $routeParams;
         // var genre = (/genre=(\d+)/.exec($location.absUrl())[1]);
         // var year = (/year=(\d+)/.exec($location.absUrl())[1]);

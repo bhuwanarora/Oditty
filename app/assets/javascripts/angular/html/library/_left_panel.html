@@ -1,30 +1,20 @@
 <md-content layout="column" class="md-padding" layout-align="start end" 
 			ng-if="!constant.show_book">
     <h3>Sort by</h3>
-    <div><a>Genre</a></div>
-    <div><a>Year</a></div>
-    <div><a>Author</a></div>
-    <div><a>Duration</a></div>
+    <div class="thin_margin"><a class="right_anchored">Genre</a></div>
+    <div class="thin_margin" ng-click="sort_by_published_era()"><a class="right_anchored">Year</a></div>
+    <div class="thin_margin" ng-click="sort_by_author()" ng-disabled="info.author_filter"><a class="right_anchored">Author</a></div>
+    <div class="thin_margin" ng-click="sort_by_reading_time()"><a class="right_anchored">Duration</a></div>
 </md-content>
 <md-content	ng-if="constant.show_book" layout="column" layout-align="start end" class="padding">
 	<div class="padding"></div>
 	<div class="padding"></div>
-	<div layout="row" layout-align="center center" layout-margin>
-		<div>Thriller&nbsp;&nbsp;</div>
+	<div layout="row" layout-align="center center" layout-margin 
+		 class="genre" 
+		 ng-repeat="genre in active_book.genres | limitTo:5">
+		<div>{{genre}}&nbsp;&nbsp;</div>
 		<div class="grey_circle" layout-align="center center" layout="center">
-			<div>Th</div>
-		</div>
-	</div>
-	<div layout="row" layout-align="center center" layout-margin>
-		<div>Suspense&nbsp;&nbsp;</div>
-		<div class="grey_circle" layout-align="center center" layout="center">
-			<div>Su</div>
-		</div>
-	</div>
-	<div layout="row" layout-align="center center" layout-margin>
-		<div>Suspense&nbsp;&nbsp;</div>
-		<div class="grey_circle" layout-align="center center" layout="center">
-			<div>Su</div>
+			<div>{{genre | first_two | uppercase}}</div>
 		</div>
 	</div>
 </md-content>
@@ -37,4 +27,33 @@
 		border-radius: 50%;
 		box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
 	}
+
+	.right_anchored{
+		border-right: 5px solid;
+      	border-radius: 1px;
+      	padding-right: 5px;
+      	border-color: #d0d0d0;
+	}
+
+	.right_anchored:hover{
+        text-decoration: underline !important;
+        border-color: #404040;
+    }
+
+    .thin_margin{
+        margin-top: 2px;
+    }
+
+    .genre:hover{
+    	/*text-decoration: underline;*/
+    	cursor: pointer;
+    }
+
+    .genre:hover .grey_circle{
+    	/*background-color: white;*/
+    	box-shadow: none;
+    	/*color: white;*/
+    	text-decoration: none !important;
+    }
+
 </style>

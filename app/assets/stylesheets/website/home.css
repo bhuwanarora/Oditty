@@ -53,7 +53,7 @@ md-card{
 
 md-content{
 	height: 100vh !important;
-	padding-bottom: 100px;
+	padding-bottom: 10px;
 	/*margin-top: 0px !important;*/
 	/*margin-bottom: 100px !important;*/
 }
@@ -189,7 +189,7 @@ md-toolbar{
 .notifications{
 	position: fixed;
 	right: 0px;
-	top: 50px;
+	top: 55px;
 	max-height: 300px;
 	width: 300px;
 	z-index: 2;
@@ -258,4 +258,29 @@ md-toolbar{
 .share.ng-leave,
 .share.ng-enter-active{
 	opacity: 1;
+}
+
+
+.rate{
+	height: 25px;
+	text-align: center;
+	top: 20px;
+	right: 0px;
+	color: white;
+	width: 240px;
+}
+
+.rate_radio{
+	font-size: 0.9em;
+	letter-spacing: -3px;
+}
+
+.rate_radio:active{
+	color: white !important;
+}
+
+.rate_radio_buttons{
+	padding: 3px 15px 2px 0px;
+	width: 275px;
+	text-align: left;
 }

@@ -418,10 +418,10 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/shared/rate.html',
-    "<div itemprop=\"review\" itemscope itemtype=\"http://schema.org/Review\" class=\"rate\"><div class=\"rate_radio_buttons\"><span type=\"radio\" class=\"rate_radio\" ng-class=\"{'yellow_color icon-star22':is_active($index) && !rate_object.rated,\n" +
+    "<div itemprop=\"review\" itemscope itemtype=\"http://schema.org/Review\" class=\"rate\"><div><span ng-model=\"rate_object.user_rating\" ng-show=\"!rate_object.user_rating\">0/5</span></div><div class=\"rate_radio_buttons\"><span type=\"radio\" class=\"rate_radio\" ng-class=\"{'yellow_color icon-star22':is_active($index) && !rate_object.rated,\n" +
     "\t\t\t   'icon-star':!is_active($index),\n" +
-    "\t\t\t   'site_color icon-star22':ready_to_rate && is_active($index),\n" +
-    "\t\t\t   'purple_color icon-star22':rate_object.rated && is_active($index) && !ready_to_rate}\" ng-mouseenter=\"show_if_rated($index)\" ng-mouseleave=\"reset_rating()\" ng-click=\"mark_as_rated($index, $event)\" ng-repeat=\"i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\"></span> <span ng-model=\"rate_object.user_rating\" ng-show=\"rate_object.user_rating\">{{rate_object.user_rating/2}}/5</span> <span ng-model=\"rate_object.user_rating\" ng-show=\"!rate_object.user_rating\">0/5</span></div></div>"
+    "\t\t\t   'white_color icon-star22':ready_to_rate && is_active($index),\n" +
+    "\t\t\t   'purple_color icon-star22':rate_object.rated && is_active($index) && !ready_to_rate}\" ng-mouseenter=\"show_if_rated($index)\" ng-mouseleave=\"reset_rating()\" ng-click=\"mark_as_rated($index, $event)\" ng-repeat=\"i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\"></span> <span ng-model=\"rate_object.user_rating\" ng-show=\"rate_object.user_rating\">{{rate_object.user_rating/2}}/5</span></div></div>"
   );
 
 

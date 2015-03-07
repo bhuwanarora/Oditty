@@ -1,4 +1,4 @@
-<md-content>
+<md-content class="white">
     <div ng-include src="'/assets/angular/html/profile/_header.html'" hide-sm></div>
     <!-- <section layout="row" layout-wrap>
         <div flex="25" hide-sm flex-md="10"></div>
@@ -18,10 +18,9 @@
             ng-value="data.selectedIndex*25"
             md-mode="buffer">
 </md-progress-linear>
-<div class="footer">
+<div class="footer md-whiteframe-z1">
     <section layout="row">
-        <md-button class="md-button-clear padding" 
-                ng-click="previous()"
+        <md-button ng-click="previous()" class="footer_button"
                 ng-disabled="data.selectedIndex == 0"
                 flex="50" layout="row" layout-align="start">
             <div><span class="icon-angle-left"></span></div>&nbsp;&nbsp;
@@ -32,8 +31,7 @@
                 <div ng-switch-when="3">Select Books</div>
             </div>
         </md-button>
-        <md-button class="md-button-clear padding" 
-                    ng-click="next()"
+        <md-button ng-click="next()" class="footer_button"
                     flex="50" layout="row" layout-align="end">
             <div ng-switch on="data.selectedIndex">
                 <div ng-switch-when="0">Select Genres</div>
@@ -45,3 +43,8 @@
         </md-button>
     </section>
 </div>
+<style>
+    .footer_button{
+        height: 48px;
+    }
+</style>

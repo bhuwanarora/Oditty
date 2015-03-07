@@ -5,8 +5,8 @@
     <label>Search books...</label>
     <input/>
 </md-input-container>
-<md-content ng-controller="booksController" check-scroll-bottom="get_popular_books()">
-	<section layout="row" layout-wrap>
+<md-content ng-controller="booksController" check-scroll-bottom="get_popular_books()" class="white">
+	<section layout="row" layout-wrap layout-align="center">
 		<div layout="column" class="padding" ng-repeat="book in popular_books"
 			 style="width: 170px;">
 			<div class="cover_gradient" layout="column" layout-align="space-between" ng-if="book.status">
@@ -17,9 +17,11 @@
 					<div>{{book.bookmark_count}}</div>
 				</div>
 				<div layout="row" layout-align="center center">
-					<div><span class="icon-checkmark"></span></div>
+					<div class="circular_icon white padding">
+						<span class="icon-checkmark"></span>
+					</div>
 				</div>
-				<div layout="row" layout-align="center" class="padding">
+				<div layout="row" layout-align="center" class="relative">
 					<rate data="book"></rate>
 				</div>
 			</div>
@@ -63,7 +65,6 @@
 		position: absolute;
 		z-index: 2;
 		background-color: rgba(0, 0, 0, 0.5);
-		color: white !important;
 	}
 
 	.info_button{
@@ -85,6 +86,16 @@
         position: absolute;
         color: white;
         white-space: normal;
+	}
+
+	.circular_icon .icon-checkmark{
+		font-size: 2em;
+	}
+
+	.circular_icon{
+		width: 60px;
+		border-radius: 50%;
+		height: 60px;
 	}
 
 </style>

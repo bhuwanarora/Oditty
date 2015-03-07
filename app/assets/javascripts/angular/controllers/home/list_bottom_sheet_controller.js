@@ -14,13 +14,6 @@ homeApp.controller('listBottomSheetController', ['$scope', '$mdBottomSheet', '$m
         $mdBottomSheet.hide(clickedItem);
     };
 
-    $scope.social_share = [
-        { name: 'Facebook', icon: 'share' },
-        { name: 'Twitter', icon: 'upload' },
-        { name: 'Google+', icon: 'copy' },
-        { name: 'Linkedin', icon: 'copy' }
-    ];
-
     $scope.toast_position = {
         bottom: false,
         top: true,
@@ -43,4 +36,13 @@ homeApp.controller('listBottomSheetController', ['$scope', '$mdBottomSheet', '$m
             position: $scope.getToastPosition()
         });
     };
+
+    $scope.add_new_shelf = function(){
+        $mdToast.show({
+            controller: 'toastController',
+            templateUrl: 'assets/angular/html/shared/toast/new_shelf.html',
+            hideDelay: 6000,
+            position: $scope.getToastPosition()
+        });    
+    }
 }]);

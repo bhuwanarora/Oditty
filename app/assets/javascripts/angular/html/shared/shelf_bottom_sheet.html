@@ -1,5 +1,5 @@
 <md-bottom-sheet class="md-list md-has-header" ng-controller="listBottomSheetController" ng-click="stop_propagation($event)">
-    <md-subheader>Add to</md-subheader>
+    <section layout-padding>Add to</section>
     <md-list>
         <md-item ng-repeat="item in items" ng-click="show_custom_toast()">
             <md-checkbox ng-model="data.cb1" aria-label="{{ item.name }}" class="md-warn">
@@ -8,7 +8,7 @@
         </md-item>
     </md-list>
     <md-divider></md-divider>
-    <md-subheader>Shelves</md-subheader>
+    <section layout-padding>Shelves</section>
     <md-list>
         <md-item ng-repeat="item in personal_shelves" ng-click="show_custom_toast()">
             <md-checkbox ng-model="data.cb1" aria-label="{{ item.name }}" class="md-warn">
@@ -17,5 +17,19 @@
         </md-item>
     </md-list>
     <md-divider></md-divider>
-    <md-subheader>Create New</md-subheader>
+    <section layout="row" layout-padding>
+        <md-input-container class="add_new">
+            <label>Create New...</label>
+            <input/>
+        </md-input-container>
+        <md-button ng-click="add_new_shelf()">
+            <span class="icon-plus"></span>
+        </md-button>
+    </section>
 </md-bottom-sheet>
+
+<style>
+    .add_new{
+        padding-bottom: 0px;
+    }
+</style>

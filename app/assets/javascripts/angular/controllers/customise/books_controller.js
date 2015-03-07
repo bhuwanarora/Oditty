@@ -1,4 +1,4 @@
-homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'bookService', 'ColorConstants', function($scope, $rootScope, $timeout, bookService, ColorConstants){
+homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'bookService', 'ColorConstants', '$mdToast', function($scope, $rootScope, $timeout, bookService, ColorConstants, $mdToast){
 
     $scope.get_popular_books = function(){
         $scope.info.loading = true;
@@ -59,8 +59,27 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
                 }
             }
         });
+        $mdToast.show({
+            controller: 'toastController',
+            templateUrl: 'assets/angular/html/shared/toast/select_book.html',
+            hideDelay: 6000,
+            position: $scope.getToastPosition()
+        });
         // $scope.info.genres[index].status = true;
     }
+
+    $scope.toast_position = {
+        bottom: false,
+        top: true,
+        left: false,
+        right: true
+    };
+
+    $scope.getToastPosition = function() {
+        return Object.keys($scope.toast_position)
+          .filter(function(pos) { return $scope.toast_position[pos]; })
+          .join(' ');
+    };
 
     $scope._fetch_book_results = function(reset_required){
         var skip_count = $scope.popular_books.length;

@@ -1,4 +1,4 @@
-homeApp.controller('genresController', ["$scope", "$rootScope", "$timeout", 'userService', 'genreService', 'WebsiteUIConstants', function($scope, $rootScope, $timeout, userService, genreService, WebsiteUIConstants){
+homeApp.controller('genresController', ["$scope", "$rootScope", "$timeout", 'userService', 'genreService', 'WebsiteUIConstants', '$mdToast', function($scope, $rootScope, $timeout, userService, genreService, WebsiteUIConstants, $mdToast){
 
     $scope.save_genre = function(genre){
         var params = {"genre": genre.id, "status": true};
@@ -46,8 +46,27 @@ homeApp.controller('genresController', ["$scope", "$rootScope", "$timeout", 'use
                 }
             }
         });
+        $mdToast.show({
+            controller: 'toastController',
+            templateUrl: 'assets/angular/html/shared/toast/select_genre.html',
+            hideDelay: 6000,
+            position: $scope.getToastPosition()
+        });
         // $scope.info.genres[index].status = true;
     }
+
+    $scope.toast_position = {
+        bottom: false,
+        top: true,
+        left: false,
+        right: true
+    };
+
+    $scope.getToastPosition = function() {
+        return Object.keys($scope.toast_position)
+          .filter(function(pos) { return $scope.toast_position[pos]; })
+          .join(' ');
+    };
 
     _init = function(){
         $scope._get_genres();

@@ -181,6 +181,10 @@ apt-get install redis-server
 # 	region: 'us-west-2',
 # 	:s3_endpoint => 's3-ap-southeast-1.amazonaws.com')
 
+#Check the cron tasks
+crontab -l
+
+
 sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
 sudo apt-get install oracle-java7-installer

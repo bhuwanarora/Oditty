@@ -97,7 +97,6 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
     }
 
     $scope.select_genres = function(event){
-        debugger
         $scope.info.cirular_loading = true;
     }
 

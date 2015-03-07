@@ -1,13 +1,13 @@
 <div layout="row" layout-align="center center">
     <h3>Select Genres</h3>
 </div>
-<md-content ng-controller="genresController">
-	<section layout="row" layout-wrap>
+<md-content ng-controller="genresController" class="white">
+	<section layout="row" layout-wrap layout-align="center">
 		<div layout="column" class="padding"
 			 style="width: 170px;" 
 			 ng-repeat="genre in info.genres  | orderBy:genre.name">
 			<div class="cover_gradient" layout="column" layout-align="center center" ng-if="genre.status">
-				<div layout="row" layout-align="center center">
+				<div layout="row" layout-align="center center" class="white circular_icon">
 					<div><span class="icon-checkmark"></span></div>
 				</div>
 			</div>
@@ -20,6 +20,7 @@
 		</div>
 	</section>
 </md-content>
+
 <style>
 	.cover,
 	.cover_gradient{
@@ -32,7 +33,6 @@
 		position: absolute;
 		z-index: 1;
 		background-color: rgba(0, 0, 0, 0.5);
-		color: white;
 	}
 
 	.info_button{
@@ -51,6 +51,16 @@
 	
 	.info_button:active{
 		border-radius: 50%;
+	}
+
+	.circular_icon .icon-checkmark{
+		font-size: 2em;
+	}
+
+	.circular_icon{
+		border-radius: 50%;
+		width: 60px;
+		height: 60px;
 	}
 
 	
