@@ -80,6 +80,7 @@ class WebsiteController < ApplicationController
 	end
 
 	def book
+		@book = true
 		render :layout => "material"
 	end
 

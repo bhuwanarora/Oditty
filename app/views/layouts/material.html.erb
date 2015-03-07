@@ -44,6 +44,10 @@
                 <script src="assets/angular/controllers/customise/authors_controller.js"></script>
             <% end %>
 
+            <% if @book %>
+                <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
+            <% end %>
+
             <% if @library %>
                 <script src="assets/angular/controllers/library/library_controller.js"></script>
                 <script src="assets/angular/controllers/library/filters_controller.js"></script>
