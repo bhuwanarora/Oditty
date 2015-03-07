@@ -22,7 +22,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             cwd: 'app/assets/stylesheets/',
-            src: ['angular_material.css'],
+            src: ['angular_material_082.css'],
             dest: 'app/assets/stylesheets/min/',
             ext: '.min.css'
           }            
@@ -47,7 +47,7 @@ module.exports = function(grunt) {
           ],
 
           'app/assets/stylesheets/min/landing_page_site.min.css': [
-            'app/assets/stylesheets/min/angular_material.min.css',
+            'app/assets/stylesheets/min/angular_material_082.min.css',
             'app/assets/stylesheets/min/landing_page/style.min.css',
             'app/assets/stylesheets/min/website.min.css',
             'app/assets/stylesheets/min/landing_page/animate.min.css',
@@ -207,10 +207,10 @@ module.exports = function(grunt) {
 
           'app/assets/javascripts/min/angular/landing_page_vendors.js': [
             'app/assets/javascripts/min/angular/vendors/hammer.js',
-            'app/assets/javascripts/min/angular/vendors/angular-aria.js',
+            'app/assets/javascripts/min/angular/vendors/angular-aria135.min.js',
             'app/assets/javascripts/min/angular/vendors/angular_mousewheel.min.js',
             'app/assets/javascripts/min/angular/vendors/angular_router.min.js',
-            'app/assets/javascripts/min/angular/vendors/angular-material.min.js',
+            'app/assets/javascripts/min/angular/vendors/angular_0.8.2.min.js',
             'app/assets/javascripts/min/angular/vendors/angular-timer.min.js'],
 
           'app/assets/javascripts/min/angular/landing_page.min.js': [
@@ -230,9 +230,9 @@ module.exports = function(grunt) {
             'app/assets/javascripts/min/angular/controllers/home/share_controller.js'],
 
           'app/assets/javascripts/min/angular/website.min.js': [
-            'app/assets/javascripts/min/angular/vendors/angular13.min.js',
+            'app/assets/javascripts/min/angular/vendors/angular136.min.js',
             'app/assets/javascripts/min/angular/vendors/angular_messages.min.js',
-            'app/assets/javascripts/min/angular/vendors/angular_animate13.min.js',
+            'app/assets/javascripts/min/angular/vendors/angular_animate136.min.js',
             'app/assets/javascripts/min/angular/landing_page_vendors.js',
             'app/assets/javascripts/min/lib/angular_scroll.min.js'
           ]
