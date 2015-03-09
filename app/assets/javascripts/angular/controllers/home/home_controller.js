@@ -190,9 +190,9 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
         feedService.get_feed(0).then(function(data){
             // debugger
         });
+
+        
     };
 
     $scope._init();
-
-
 }]);

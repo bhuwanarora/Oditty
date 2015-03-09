@@ -103,7 +103,12 @@ class WebsiteController < ApplicationController
 	end
 
 	def author
-		render :layout => "material"	
+		render :layout => "material"
+	end
+
+	def community
+		@community = true
+		render :layout => "material"
 	end
 
 end
