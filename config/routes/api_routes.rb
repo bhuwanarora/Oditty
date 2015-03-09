@@ -41,11 +41,6 @@ ReadersDoor::Application.routes.draw do
       match "times"                                  => 'website_api#times',                            :via => [:put, :get, :post]
       match "labels"                                 => 'website_api#labels',                           :via => [:put, :get, :post]
       match "read_times"                             => 'website_api#read_times',                       :via => [:put, :get, :post]
-      match "user_details"                           => 'website_api#get_user_details',                 :via => [:put, :get, :post]
-      match "user_profile_info"                      => 'website_api#user_profile_info',                 :via => [:put, :get, :post]
-      match "authenticate"                           => 'website_api#authenticate',                     :via => [:put, :get, :post]
-      match "profile"                                => 'website_api#update_profile',                   :via => [:put, :get, :post]
-      match "image"                                  => 'website_api#image',                            :via => [:put, :get, :post]
       match "notifications"                          => 'website_api#notifications',                    :via => [:put, :get, :post]
       match "latest_notification"                    => 'website_api#latest_notification',              :via => [:put, :get, :post]
       match "trends"                                 => 'website_api#trends',                           :via => [:put, :get, :post]
@@ -53,6 +48,11 @@ ReadersDoor::Application.routes.draw do
       match 'fb_books'                               => 'website_api#fb_books',                         :via => [:put, :get, :post]
 
       
+      match "user_details"                            => 'users_api#get_user_details',                  :via => [:put, :get, :post]
+      match "user_profile_info"                       => 'users_api#user_profile_info',                 :via => [:put, :get, :post]
+      match "authenticate"                            => 'users_api#authenticate',                      :via => [:put, :get, :post]
+      match "profile"                                 => 'users_api#update_profile',                    :via => [:put, :get, :post]
+      match "image"                                   => 'users_api#image',                             :via => [:put, :get, :post]
       match "personal_notifications"                  => 'users_api#notifications',                     :via => [:put, :get, :post]
       match "recover_password"                        => 'users_api#recover_password',                  :via => [:put, :get, :post]
       match "logout"                                  => 'users_api#logout',                            :via => [:put, :get, :post]

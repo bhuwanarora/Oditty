@@ -127,7 +127,7 @@ homeApp.directive('calendar', ["$rootScope", function($rootScope){
 				$scope.selectedDay = $rootScope.user.selectedDay;
 				$scope.selectedMonth = $rootScope.user.selectedMonth;
 				$scope.selectedYear = $rootScope.user.selectedYear;
-
+        
 				var currentYear = new Date().getFullYear();
 				for(var i=currentYear; i>1904; i--){
 					$scope.years.push(i);

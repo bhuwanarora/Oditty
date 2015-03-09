@@ -16,6 +16,7 @@
         <script src="assets/min/angular/website.min.js"></script>
         <% if Rails.env.development? %>
             <script src="assets/angular/vendors/angular_sticky.js"></script>
+            
             <script src="assets/angular/apps/filters_app.js"></script>
             <script src="assets/angular/apps/home_app.js"></script>
             <script src="assets/angular/apps/app_constants.js"></script>
@@ -56,6 +57,12 @@
                 <script src="assets/angular/services/time_group_service.js"></script>
                 <script src="assets/angular/services/reading_time_service.js"></script>
             <% end %>
+
+            <% if @room %>
+                <script src="assets/angular/controllers/room/room_controller.js"></script>
+            <% end %>
+            <script src="assets/angular/vendors/angular_dragdrop.min.js"></script>
+            <script src="assets/angular/vendors/angular-drop.min.js.map"></script>
         <% else %>
             <script src="assets/min/angular/home.min.js"></script> 
         <% end %>
@@ -140,7 +147,8 @@
                     md-mode="indeterminate">
             </md-progress-linear>
 
-            <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" ng-if="info.cirular_loading">
+            <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" 
+                    ng-if="info.cirular_loading">
             </md-progress-circular>
 
             <div ng-include src="'/assets/angular/html/shared/left_panel.html'" class="left_panel_container"></div>

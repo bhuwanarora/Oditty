@@ -1029,8 +1029,8 @@ module Neo4jHelper
 	def self.remove_less
 		@neo ||= self.init
 		skip = 10000
-		start_id = 384293 #MIN ID
-		end_id = 2655796 #MAX ID
+		start_id = 384293 #MIN ID384296
+		end_id = 2655796 #MAX ID2545256
 		# limit = 100
 		while start_id <= end_id
 			puts "set_total_weight..."+start_id.to_s.green

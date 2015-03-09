@@ -88,42 +88,6 @@ module Api
                 render :json => results, :status => 200
             end
 
-			def get_user_details
-				if params[:id]
-					info = UserApi.get_details(params[:id], session)
-				else
-					info = UserApi.get_details(session[:user_id], session)
-				end
-				render :json => info, :status => 200
-			end
-
-			def authenticate
-				authentication_info = UserApi.authenticate(session, params)
-				if authentication_info[:authenticate]
-					render :json => authentication_info, :status => 200
-				else
-					render :json => authentication_info, :status => 403
-				end
-			end
-
-			def update_profile
-				profile_status = params[:user['profile_status']]
-				profile_status = profile_status + 1;
-				render :json => {:message => "success", :profile_status => profile_status, :user_id => 1}, :status => 200
-			end
-
-			def image
-				# image_url = SearchPage.all(:order => "RANDOM()").first.background_image_url
-				neo = Neography::Rest.new
-				r = Random.new
-				random = r.rand(1...8)
-				clause = "MATCH (c:CoverPhoto) WHERE c.status = true RETURN ID(c) SKIP "+random.to_s+" LIMIT 1"
-				puts clause.blue.on_red
-				id = neo.execute_query(clause)["data"]
-				puts id.to_s.green
-				render :json => id, :status => 200
-			end
-
 			def notifications
 				news_feed = []
 				if params[:id] && ((params[:debug] == "false") || !params[:debug])
@@ -144,11 +108,6 @@ module Api
 			def save_feedback
 				WebsiteApi.save_feedback(params[:feedback], session[:user_id])
 				render :json => {:message => "Success"}, :status => 200
-			end
-
-			def user_profile_info
-				info = UserApi.get_profile_info(params[:id])
-				render :json => info, :status => 200
 			end
 
             private

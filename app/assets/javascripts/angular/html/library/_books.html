@@ -14,6 +14,11 @@
         </div>
     </div>
 
+    <md-progress-linear class="md-primary" 
+            ng-show="info.custom_loading"
+            md-mode="indeterminate">
+    </md-progress-linear>
+    
     <div  ng-style="grid_style" class="white" 
             ng-if="!info.author_filter && !info.sort_by_alphabet && !info.published_era_filter && !info.reading_time_filter">
         <md-grid-list
@@ -45,28 +50,28 @@
 
     <div ng-if="info.author_filter && !info.sort_by_alphabet && !info.published_era_filter && !info.reading_time_filter"
         ng-style="grid_style" class="white" >
-        <div ng-repeat="(key, value) in books | groupBy: 'author_name'">
+        <div ng-repeat="(key, value) in books | groupBy: 'author_name'" layout-padding>
             <div ng-include src="'/assets/angular/html/library/shared/_grid.html'"></div>
         </div>
     </div>
    
     <div ng-if="info.sort_by_alphabet && !info.author_filter && !info.published_era_filter && !info.reading_time_filter"
         ng-style="grid_style" class="white" >
-        <div ng-repeat="(key, value) in books | groupBy: 'alphabet'" layout-padding layout-fill>
+        <div ng-repeat="(key, value) in books | groupBy: 'alphabet'" layout-padding>
             <div ng-include src="'/assets/angular/html/library/shared/_grid.html'"></div>
         </div>
     </div>
 
     <div ng-if="!info.sort_by_alphabet && !info.author_filter && !info.published_era_filter && info.reading_time_filter"
         ng-style="grid_style" class="white" >
-        <div ng-repeat="(key, value) in books | groupBy: 'reading_time'" layout-padding layout-fill>
+        <div ng-repeat="(key, value) in books | groupBy: 'reading_time'" layout-padding>
             <div ng-include src="'/assets/angular/html/library/shared/_grid.html'"></div>
         </div>
     </div>
 
     <div ng-if="!info.sort_by_alphabet && !info.author_filter && info.published_era_filter && !info.reading_time_filter"
         ng-style="grid_style" class="white" >
-        <div ng-repeat="(key, value) in books | groupBy: 'published_era'" layout-padding layout-fill>
+        <div ng-repeat="(key, value) in books | groupBy: 'published_era'" layout-padding>
             <div ng-include src="'/assets/angular/html/library/shared/_grid.html'"></div>
         </div>
     </div>

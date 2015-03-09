@@ -1,5 +1,8 @@
 <md-divider></md-divider>
-<md-whiteframe layout-fill class="padding" ng-hide="constant.show_book">
+<md-whiteframe layout-fill ng-hide="constant.show_book" layout-align="space-between" layout-padding layout="row">
     <h4>Recommendations for you</h4>
+    <md-switch ng-model="data.cb1" aria-label="Switch 1">
+        {{ data.cb1 }}
+    </md-switch>
 </md-whiteframe>
 <div ng-include src="'/assets/angular/html/library/_books.html'"></div>

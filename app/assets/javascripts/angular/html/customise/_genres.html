@@ -2,21 +2,32 @@
     <h3>Select Genres</h3>
 </div>
 <md-content ng-controller="genresController" class="white">
-	<section layout="row" layout-wrap layout-align="center">
-		<div layout="column" class="padding"
-			 style="width: 170px;" 
-			 ng-repeat="genre in info.genres  | orderBy:genre.name">
-			<div class="cover_gradient" layout="column" layout-align="center center" ng-if="genre.status">
-				<div layout="row" layout-align="center center" class="white circular_icon">
-					<div><span class="icon-checkmark"></span></div>
+	<section layout="row">
+		<div flex="15" flex-md="10" hide-sm >
+			
+		</div>
+		<div flex="70"
+			 flex-md="80"
+			 flex-sm="100"
+			  layout="row" layout-wrap layout-align="center">
+			<div layout="column" class="padding"
+				 style="width: 170px;" 
+				 ng-repeat="genre in info.genres  | orderBy:genre.name">
+				<div class="cover_gradient" layout="column" layout-align="center center" ng-if="genre.status">
+					<div layout="row" layout-align="center center" class="white circular_icon">
+						<div><span class="icon-checkmark"></span></div>
+					</div>
 				</div>
-			</div>
-			<md-button class="info_button animate-fast" ng-click="select_genre(genre)">
-			</md-button>
-			<img ng-src="{{genre.url}}" class="cover">
-			<br/>
-			<div layout="row" layout-align="center center"><div>{{genre.name}}</div></div>
+				<md-button class="info_button animate-fast" ng-click="select_genre(genre)">
+				</md-button>
+				<img ng-src="{{genre.url}}" class="cover">
+				<br/>
+				<div layout="row" layout-align="center center"><div>{{genre.name}}</div></div>
+		</div>
 				<!-- <toggle data="genre" on-select="save_genre(genre)" on-deselect="remove_genre(genre)"></toggle> -->
+		</div>
+		<div flex="15" flex-md="10" hide-sm >
+			
 		</div>
 	</section>
 </md-content>

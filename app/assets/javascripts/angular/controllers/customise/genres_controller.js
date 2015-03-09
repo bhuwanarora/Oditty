@@ -36,23 +36,32 @@ homeApp.controller('genresController', ["$scope", "$rootScope", "$timeout", 'use
     }
 
     $scope.select_genre = function(genre){
-        angular.forEach($scope.info.genres, function(value){
-            if(angular.equals(value, genre)){
-                if(angular.equals(genre.status, false)){
-                    genre.status = true;
-                }
-                else{
-                    genre.status = false;
-                }
-            }
-        });
+        if(genre.status){
+            genre.status = false;
+            var params = {"genre": genre.id, "status": false};
+        }
+        else{
+            genre.status = true;
+            var params = {"genre": genre.id, "status": true};
+        }
+        // angular.forEach($scope.info.genres, function(value){
+        //     if(angular.equals(value, genre)){
+        //         if(angular.equals(genre.status, false)){
+        //             genre.status = true;
+        //         }
+        //         else{
+        //             genre.status = false;
+        //             var params = {"genre": genre.id, "status": false};
+        //         }
+        //     }
+        // });
         $mdToast.show({
             controller: 'toastController',
             templateUrl: 'assets/angular/html/shared/toast/select_genre.html',
             hideDelay: 6000,
             position: $scope.getToastPosition()
         });
-        // $scope.info.genres[index].status = true;
+        userService.save_user_info(params);
     }
 
     $scope.toast_position = {

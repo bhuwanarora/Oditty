@@ -24,7 +24,7 @@ body{
 }*/
 
 body{
-    font-family: 'Din';
+    /*font-family: 'Din';*/
 }
 
 :not(.scrollbar)::-webkit-scrollbar { 

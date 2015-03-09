@@ -28,7 +28,6 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
     }       
 
     $scope.search_genres = function(input){
-        debugger
         var params = "q="+input+"&count="+10;
         genreService.search_genres(params).then(function(data){
             if(data.length > 0){
@@ -46,7 +45,6 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
     }
 
     $scope.search_authors = function(input){
-        debugger
         var params = "q="+input+"&count="+10;
         authorService.search_authors("q="+input).then(function(data){
             if(data.length > 0){
@@ -88,24 +86,8 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
                 var json = {"icon2": "icon-clock", "type": SearchUIConstants.Time, "custom_option": true};
                 json = angular.extend(json, {"name": name, "tag": tag});
                 this.push(json);
-            }, $scope.info.read_times);            
+            }, $scope.info.read_times);
         });
-    }
-
-    $scope.select_read_times = function(){
-        $scope.info.cirular_loading = true;
-    }
-
-    $scope.select_genres = function(event){
-        $scope.info.cirular_loading = true;
-    }
-
-    $scope.select_authors = function(){
-        $scope.info.cirular_loading = true;
-    }
-
-    $scope.select_time_groups = function(){
-        $scope.info.cirular_loading = true;
     }
 
     $scope._detect_key = function(event){

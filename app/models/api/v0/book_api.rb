@@ -112,12 +112,14 @@ module Api
 			end
 
 			def self.get_popular_books(params, user_id)
-				skip_count = params[:skip_count]
-				unless skip_count
+				params = JSON.parse params["q"]
+				if params.nil? || params["skip_count"].nil?
 					skip_count = 0
+				else
+					skip_count = params["skip_count"]
 				end
 				@neo = Neography::Rest.new
-				clause = "MATCH (b:Book) WHERE ID(b)="+Constants::BestBook.to_s+" MATCH p=(b)-[:Next_book*.."+(20+skip_count.to_i).to_s+"]->(b_next) WITH last(nodes(p)) as book OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" WITH user, book, m OPTIONAL MATCH (user)-[:RatingAction]->(z:RatingNode{book_id:ID(book), user_id:"+user_id.to_s+"})-[:Rate]->(book) RETURN book.isbn as isbn, ID(book), book.title, book.author_name, ID(m), z.rating, book.published_year, book.page_count SKIP "+(skip_count.to_i).to_s
+				clause = "MATCH (b:Book) WHERE ID(b)="+Constants::BestBook.to_s+" MATCH p=(b)-[:Next_book*.."+(20+skip_count.to_i).to_s+"]->(b_next) WITH last(nodes(p)) as book OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" WITH user, book, m OPTIONAL MATCH (user)-[:RatingAction]->(z:RatingNode{book_id:ID(book), user_id:"+user_id.to_s+"})-[:Rate]->(book) RETURN book.isbn as isbn, ID(book), book.title, book.author_name, ID(m), z.rating, book.published_year, book.page_count SKIP "+skip_count.to_s
 				puts clause.blue.on_red
 				begin
 					books =  @neo.execute_query(clause)["data"]
@@ -198,7 +200,6 @@ module Api
 				# image_service_url = "http://54.187.28.104/api/v0/colors?image_url=#{image_url}"
 				# color = Net::HTTP.get(URI.parse(image_service_url))
 				# color = JSON.parse(color)["data"]
-
 
 				if user_id
 					info.merge!(:user_rating => user_rating, 
@@ -469,7 +470,6 @@ module Api
 						where_clause = where_clause + next_Where_clause
 					end
 				end
-
 
 				if !only_read_time && filters["other_filters"][Constants::Time].present?
 					if read_time == Constants::TinyRead

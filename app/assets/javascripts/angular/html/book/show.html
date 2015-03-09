@@ -1,8 +1,10 @@
+<div ng-include src="'/assets/angular/html/book/_left_panel.html'" ></div>
+<div ng-include src="'/assets/angular/html/book/_right_panel.html'" ></div>
 <div class="book animate-fast" ng-style="book_style" flex="100" ng-controller="specificBookController">
     <!-- <div>TEST</div> -->
     <md-toolbar class="light_grey">
         <div layout="row">
-            <md-tabs md-selected="data.selectedIndex">
+            <md-tabs md-selected="data.selectedIndex" flex="70">
                 <md-tab id="tab1" aria-controls="tab1-content" class="padding">
                     <div layout="row" layout-align="center center">
                         <img ng-src="{{book.isbn | small_thumb}}" width="40px" height="50px" layout-padding/>
@@ -21,7 +23,9 @@
                     Get this book
                 </md-tab>
             </md-tabs>
-             <md-button class="rating md-primary" ng-click="show_rating($event)">
+            <md-slider flex="20" md-discrete ng-model="rating1" step="1" min="1" max="10" aria-label="rating">
+            </md-slider>
+             <md-button class="rating md-primary" ng-click="show_rating($event)" flex="10   ">
                 {{book.rating}}
             </md-button>
         </div>

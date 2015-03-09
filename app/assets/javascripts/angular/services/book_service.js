@@ -67,8 +67,8 @@ homeApp.service('bookService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return _deferred_request('/api/v0/search_books?q='+data+"&skip="+skip_count);
     }
 
-    this.get_popular_books = function(skip_count){
-        return _deferred_request('/api/v0/popular_books?skip_count='+skip_count);   
+    this.get_popular_books = function(params){
+        return _deferred_request('/api/v0/popular_books?q='+params);
     }
 
 }]);

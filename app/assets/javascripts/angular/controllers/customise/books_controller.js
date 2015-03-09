@@ -6,7 +6,9 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
         var get_popular_books = !$scope._loading && (angular.isUndefined($scope.info.search_book) || $scope.info.search_book.length < 1);
         if(get_popular_books){
             $scope._loading = true;
-            bookService.get_popular_books(skip_count).then(function(data){
+            var params = {"skip_count": skip_count};
+            params = angular.toJson(params);
+            bookService.get_popular_books(params).then(function(data){
                 angular.forEach(data, function(value){
                     var random_int = Math.floor(Math.random()*ColorConstants.value.length);
                     var status = value[4] != null;
@@ -26,7 +28,7 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
         }
         else{
             if(angular.isUndefined($scope.all_results_found) || !$scope.all_results_found){
-                $scope._fetch_book_results();
+                // $scope._fetch_book_results();
             }
             $scope.info.loading = false;
         }
@@ -82,6 +84,7 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
     };
 
     $scope._fetch_book_results = function(reset_required){
+        debugger
         var skip_count = $scope.popular_books.length;
         var _all_results_fetched = function(){
             $scope.all_results_found = true;

@@ -23,7 +23,8 @@
                         md-search-text="search_tag.genre"
                         md-items="item in info.genres | filter:search_tag.genre"
                         md-search-text-change="search_genres(search_tag.genre)"
-                        md-item-text="name"
+                        md-selected-item-change="select_genre(selected_genre, $event)"
+                        md-item-text="item.name"
                         placeholder="Genre">
                         <span md-highlight-text="search_tag.genre">{{item.name}}</span>
                     </md-autocomplete>
@@ -37,8 +38,8 @@
                         md-items="item in info.authors | filter:search_tag.author"
                         md-search-text="search_tag.author"
                         md-search-text-change="search_authors($event)"
-                        md-selected-item-change="select_authors($event)"
-                        md-item-text="name"
+                        md-selected-item-change="select_author($event)"
+                        md-item-text="item.name"
                         placeholder="Author">
                         <span md-highlight-text="search_tag.author">{{item.name}}</span>
                     </md-autocomplete>
@@ -51,8 +52,8 @@
                         md-search-text="search_tag.time_group"
                         md-items="item in info.time_groups | filter:search_tag.time_group"
                         md-search-text="search_tag.time_group"
-                        md-selected-item-change="select_time_groups($event)"
-                        md-item-text="name"
+                        md-selected-item-change="select_time_group($event)"
+                        md-item-text="item.name"
                         placeholder="Year">
                         <span md-highlight-text="search_tag.time_group">{{item.name}}</span>
                     </md-autocomplete>
@@ -65,8 +66,8 @@
                         md-selected-item="selected_duration"
                         md-search-text="search_tag.read_time"
                         md-items="item in info.read_times | filter:search_tag.read_time"
-                        md-selected-item-change="select_read_times($event)"
-                        md-item-text="name"
+                        md-selected-item-change="select_read_time($event)"
+                        md-item-text="item.name"
                         placeholder="Duration">
                         <span md-highlight-text="search_tag.read_time">{{item.name}}</span>
                     </md-autocomplete>

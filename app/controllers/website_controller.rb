@@ -76,6 +76,7 @@ class WebsiteController < ApplicationController
 	end
 
 	def room
+		@room = true
 		render :layout => "material"
 	end
 
