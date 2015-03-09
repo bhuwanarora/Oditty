@@ -285,3 +285,16 @@ md-toolbar{
 	width: 275px;
 	text-align: left;
 }
+
+.movable:hover{
+	cursor: pointer;
+	border: 5px solid white;
+}
+
+.movable:active{
+	cursor: move;
+}
+
+.droppable:hover{
+	/*background-color: #D3D3D3;*/
+}
