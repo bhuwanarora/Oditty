@@ -86,6 +86,34 @@ homeApp.controller('customiseController', ["$scope", "$rootScope", "$timeout", '
             userService.save_user_info(params);
         }
     }
+
+    $scope.next = function(){
+        if(angular.isDefined($scope.data.selectedIndex)){
+            if($scope.data.selectedIndex == 3){
+                window.location.href = "/infinity";
+            }
+            else{
+                $scope.data.selectedIndex = $scope.data.selectedIndex + 1;
+            }
+        }
+        else{
+            $scope.data.selectedIndex = 0;
+        }
+    }
+
+    $scope.previous = function(){
+        if(angular.isDefined($scope.data.selectedIndex)){
+            if($scope.data.selectedIndex == 0){
+                $scope.data.selectedIndex = 3;
+            }
+            else{
+                $scope.data.selectedIndex = $scope.data.selectedIndex - 1;
+            }
+        }
+        else{
+            $scope.data.selectedIndex = 0;
+        }
+    }
     
     var search_input_timeout = "";
     

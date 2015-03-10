@@ -1,8 +1,10 @@
 <md-divider></md-divider>
 <md-whiteframe layout-fill ng-hide="constant.show_book" layout-align="space-between" layout-padding layout="row">
-    <h4>Recommendations for you</h4>
-    <md-switch ng-model="data.cb1" aria-label="Switch 1">
-        {{ data.cb1 }}
+	<div layout="column">
+		<h4 ng-if="!active_tab.infinity">Personalised Suggestions</h4>
+	</div>
+    <md-switch ng-model="active_tab.infinity" aria-label="Personal Suggestions">
     </md-switch>
 </md-whiteframe>
-<div ng-include src="'/assets/angular/html/library/_books.html'"></div>
+<div ng-include src="'/assets/angular/html/library/_books.html'" ng-if="active_tab.infinity"></div>
+<div ng-include src="'/assets/angular/html/library/_personalised_books.html'" ng-if="!active_tab.infinity"></div>

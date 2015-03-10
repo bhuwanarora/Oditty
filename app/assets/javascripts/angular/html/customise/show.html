@@ -1,4 +1,4 @@
-<md-content ng-controller="customiseController" class="white">
+<md-content ng-controller="customiseController" class="white" flex="100">
 	<ng-switch on="data.selectedIndex" class="tabpanel-container">
 	    <div role="tabpanel"
 	         id="tab1-content"
@@ -33,7 +33,35 @@
 	        <div ng-include src="'/assets/angular/html/customise/_authors.html'" layout-padding></div>
 	    </div>
 	</ng-switch>
-
+	<md-progress-linear class="md-warn progress" 
+	            ng-value="data.selectedIndex*25"
+	            md-mode="buffer">
+	</md-progress-linear>
+	<div class="footer md-whiteframe-z1">
+	    <section layout="row">
+	        <md-button ng-click="previous()" class="footer_button"
+	                ng-disabled="data.selectedIndex == 0"
+	                flex="50" layout="row" layout-align="start">
+	            <div><span class="icon-angle-left"></span></div>&nbsp;&nbsp;
+	            <div ng-switch on="data.selectedIndex">
+	                <div ng-switch-when="0"></div>
+	                <div ng-switch-when="1">Personal Info</div>
+	                <div ng-switch-when="2">Subjects that interest you</div>
+	                <div ng-switch-when="3">Select Books</div>
+	            </div>
+	        </md-button>
+	        <md-button ng-click="next()" class="footer_button"
+	                    flex="50" layout="row" layout-align="end">
+	            <div ng-switch on="data.selectedIndex">
+	                <div ng-switch-when="0">Subjects that interest you</div>
+	                <div ng-switch-when="1">Select Books</div>
+	                <div ng-switch-when="2">Add favourite Writers and People</div>
+	                <div ng-switch-when="3" class="site_color">Go to Infinity</div>
+	            </div>&nbsp;&nbsp;
+	            <div><span class="icon-angle-right"></span></div>
+	        </md-button>
+	    </section>
+	</div>
 	
 </md-content>
 

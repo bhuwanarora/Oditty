@@ -17,16 +17,16 @@
 
         <script src="assets/min/angular/website.min.js"></script>
         <% if Rails.env.development? %>
+            <script src="assets/angular/services/third_party/d3_service.js"></script>
             <% if @community %>
                 <script src="http://phuonghuynh.github.io/js/bower_components/jquery/dist/jquery.min.js"></script>
-                <script src="assets/angular/services/third_party/d3_service.js"></script>
                 <script src="assets/angular/vendors/d3.min.js"></script>
                 <script src="http://phuonghuynh.github.io/js/bower_components/d3-transform/src/d3-transform.js"></script>
                 <script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/extarray.js"></script>
                 <script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/misc.js"></script>
                 <script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/micro-observer.js"></script>
                 <script src="http://phuonghuynh.github.io/js/bower_components/microplugin/src/microplugin.js"></script>
-                <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/bubble-chart.js"></script>
+                <script src="assets/angular/vendors/bubble_chart/bubble-chart.js"></script>
                 <script src="assets/angular/vendors/bubble_chart/central-click.js"></script>
                 <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/plugins/lines/lines.js"></script>
             <% end %>
@@ -70,7 +70,7 @@
                 <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
             <% end %>
 
-            <% if @library %>
+            <% if @infinity %>
                 <script src="assets/angular/controllers/library/library_controller.js"></script>
                 <script src="assets/angular/controllers/library/filters_controller.js"></script>
                 <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
@@ -102,7 +102,7 @@
 
         <div layout="column" layout-fill>
             <!-- <div ng-include src="'/assets/angular/html/shared/header.html'"></div> -->
-            <md-toolbar md-scroll-shrink class="header <% if !@library %>'no_shadow'<% end %>">
+            <md-toolbar md-scroll-shrink class="header <% if !@infinity %>'no_shadow'<% end %>">
                 <section layout="row" layout-wrap>
                     <div flex="25" flex-md="15" layout="row" layout-align="start center">
                         <md-button class="burger padding" ng-click="toggleLeft($event)">
@@ -135,7 +135,7 @@
                                 <span md-highlight-text="searchText">{{item.display}}</span>
                             </md-autocomplete>
                             <md-button class="library">
-                                <a href="/library">Feathers</a>
+                                <a href="/infinity">Infinity</a>
                             </md-button>
                         </div>
                         <div flex layout="row" layout-align="end center">

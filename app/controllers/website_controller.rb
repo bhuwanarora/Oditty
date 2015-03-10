@@ -65,8 +65,8 @@ class WebsiteController < ApplicationController
 		render :layout => "material"
 	end
 
-	def library
-		@library = true
+	def infinity
+		@infinity = true
 		render :layout => "material"
 	end
 

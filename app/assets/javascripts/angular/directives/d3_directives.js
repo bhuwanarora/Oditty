@@ -4,6 +4,7 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
         restrict: 'E',
         scope: {
             electionData: '=',
+            onCenterClick: '&',
             onClick: '&'
         },
         link: function(scope, ele, attrs){
@@ -15,6 +16,9 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
             innerRadius: 600 / 3.5,
             //outerRadius: => use @default
             radiusMin: 50,
+            clickEvent: function(){
+                scope.onClick();
+            },
             //radiusMax: use @default
             //intersectDelta: use @default
             //intersectInc: use @default
@@ -39,7 +43,7 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
                         },
                         attr: {dy: "65px"},
                         centralClick: function() {
-                            scope.onClick();
+                            scope.onCenterClick();
                         }
                     }
                 },
@@ -155,6 +159,9 @@ homeApp.directive('d3Circles', ['$window', '$timeout', 'd3Service',
                   .attr("dy", ".3em")
                   .style("text-anchor", "middle")
                   .text(function(d) { return d.className.substring(0, d.r / 3); });
+
+                /* append image to node */
+                
             });
 
             // Returns a flattened hierarchy containing all leaf nodes under the root.

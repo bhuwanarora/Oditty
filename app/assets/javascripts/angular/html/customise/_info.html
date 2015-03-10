@@ -1,11 +1,11 @@
 <h3 layout="row" layout-align="center center">
-    <div>Tell us about you</div>
+    <div>Help your friends find you on ReadersDoor</div>
 </h3>
 <section layout="row" layout-sm="column" ng-controller="infoController" layout-padding>
 	<div flex="20">
 		<img src="assets/profile_thumb.png" width="100%">
 		<div layout="row" layout-align="center">
-			<div>Upload Image</div>
+			<div>Upload your photo</div>
 		</div>
 	</div>
 	<div flex="80" layout="column" layout-padding>
@@ -36,7 +36,10 @@
             <div layout="row" layout-align="end end">{{user.about.length || 0}}/160</div>
 		</div>
 		<div>
-			<div>Number of books read</div>
+			<div layout="row">
+                <div>How many books have you read? </div>
+                <div style="color: #B5B5B5 !important;">&nbsp;(This information will be kept confidential)</div>
+            </div>
             <md-radio-group layout="row" 
                             layout-sm="column" 
                             ng-model="user.init_book_read_count"

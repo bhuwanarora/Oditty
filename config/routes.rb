@@ -73,7 +73,7 @@ ReadersDoor::Application.routes.draw do
   # root :to => "website#coming_soon"
   get 'dev'                       => "recommendations#index",    :as => "dev"
   get 'home'                      => "website#home",             :as => "home"
-  get 'library'                   => "website#library",          :as => "library"
+  get 'infinity'                   => "website#infinity",          :as => "infinity"
   get 'search'                    => "website#search",           :as => "search"
   get 'profile'                    => "website#profile",           :as => "profile"
   get 'room'                      => "website#room",             :as => "room"

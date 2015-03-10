@@ -25,7 +25,7 @@
                         md-search-text-change="search_genres(search_tag.genre)"
                         md-selected-item-change="select_genre(selected_genre, $event)"
                         md-item-text="item.name"
-                        placeholder="Genre">
+                        placeholder="Subject">
                         <span md-highlight-text="search_tag.genre">{{item.name}}</span>
                     </md-autocomplete>
                     <div class="icon_angle">
@@ -54,7 +54,7 @@
                         md-search-text="search_tag.time_group"
                         md-selected-item-change="select_time_group($event)"
                         md-item-text="item.name"
-                        placeholder="Year">
+                        placeholder="Era">
                         <span md-highlight-text="search_tag.time_group">{{item.name}}</span>
                     </md-autocomplete>
                     <div class="icon_angle">
@@ -68,7 +68,7 @@
                         md-items="item in info.read_times | filter:search_tag.read_time"
                         md-selected-item-change="select_read_time($event)"
                         md-item-text="item.name"
-                        placeholder="Duration">
+                        placeholder="Reading Time">
                         <span md-highlight-text="search_tag.read_time">{{item.name}}</span>
                     </md-autocomplete>
                     <div class="icon_angle">

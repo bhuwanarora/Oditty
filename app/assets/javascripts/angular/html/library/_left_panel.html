@@ -1,18 +1,18 @@
 <md-content layout="column" layout-align="start end" layout-padding
 			ng-if="!constant.show_book"
             class="fixed_left_panel">
-    <h3>Sort by</h3>
+    <h3>Group by</h3>
     <div class="thin_margin">
-        <a class="right_anchored">Genre</a>
+        <a class="right_anchored">Subject</a>
     </div>
     <div class="thin_margin" ng-click="sort_by_published_era()" ng-disabled="info.published_era_filter">
-        <a ng-class="{'inactive_link': info.published_era_filter}" class="right_anchored">Year</a>
+        <a ng-class="{'inactive_link': info.published_era_filter}" class="right_anchored">Era</a>
     </div>
     <div class="thin_margin" ng-click="sort_by_author()" ng-disabled="info.author_filter" >
         <a ng-class="{'inactive_link': info.author_filter}" class="right_anchored">Author</a>
     </div>
     <div class="thin_margin" ng-click="sort_by_reading_time()" ng-disabled="info.reading_time_filter">
-        <a ng-class="{'inactive_link': info.reading_time_filter}" class="right_anchored">Duration</a>
+        <a ng-class="{'inactive_link': info.reading_time_filter}" class="right_anchored">Reading Time</a>
     </div>
 </md-content>
 <style>

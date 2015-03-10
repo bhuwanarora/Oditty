@@ -1,77 +1,15 @@
-<div ng-controller="communityController" layout="row" class="center">
-    <md-content flex="10" layout="column" layout-align="center center" layout-padding class="book_scroller">
-        <div layout-padding layout-margin>
-            <img src="https://s-media-cache-ak0.pinimg.com/originals/21/20/3a/21203a2972eaff672279e64c65238606.jpg" 
-                 class="book_thumb" 
-                 layout-margin/>
+<div layout="column" ng-controller="communityController" >
+    <section layout="row">
+        <div ng-include src="'/assets/angular/html/community/show.html'" 
+             layout="row" layout-align="center"
+             flex></div>
+        <div flex="65" ng-if="show_details" class="animate-fast">
+            
         </div>
-        <div layout-padding layout-margin>
-            <img src="https://s-media-cache-ak0.pinimg.com/originals/21/20/3a/21203a2972eaff672279e64c65238606.jpg" 
-                 class="book_thumb" 
-                 layout-margin/>
-        </div>
-        <div layout-padding layout-margin>
-            <img src="https://s-media-cache-ak0.pinimg.com/originals/21/20/3a/21203a2972eaff672279e64c65238606.jpg" 
-                 class="book_thumb" 
-                 layout-margin/>
-        </div>
-        <div layout-padding layout-margin>
-            <img src="https://s-media-cache-ak0.pinimg.com/originals/21/20/3a/21203a2972eaff672279e64c65238606.jpg" 
-                 class="book_thumb" 
-                 layout-margin/>
-        </div>
-        <div layout-padding layout-margin>
-            <img src="https://s-media-cache-ak0.pinimg.com/originals/21/20/3a/21203a2972eaff672279e64c65238606.jpg" 
-                 class="book_thumb" 
-                 layout-margin/>
-        </div>
-        <div layout-padding layout-margin>
-            <img src="https://s-media-cache-ak0.pinimg.com/originals/21/20/3a/21203a2972eaff672279e64c65238606.jpg" 
-                 class="book_thumb" 
-                 layout-margin/>
-        </div>
-        <div layout-padding layout-margin>
-            <img src="https://s-media-cache-ak0.pinimg.com/originals/21/20/3a/21203a2972eaff672279e64c65238606.jpg" 
-                 class="book_thumb" 
-                 layout-margin/>
-        </div>
-        <div layout-padding layout-margin>
-            <img src="https://s-media-cache-ak0.pinimg.com/originals/21/20/3a/21203a2972eaff672279e64c65238606.jpg" 
-                 class="book_thumb" 
-                 layout-margin/>
-        </div>
-    </md-content>
-    <div flex="80">
-        <d3-click-circles election-data="electionData" on-click="toggle_details()">
-            <div class="bubbleChart animate-fast" ng-class="{'left_shifted': show_details}"/>
-        </d3-click-circles>
-        <div ng-include src="'/assets/angular/html/community/right_panel.html'" class="right_panel_container"></div>
-    </div>
-    <div flex="10"></div>
+    </section>
+    <section layout="row" layout-align="center" layout-padding
+        ng-include src="'/assets/angular/html/community/_footer.html'" >
+    </section>
 </div>
-<style>
-    .bubbleChart {
-        min-width: 100px;
-        max-width: 700px;
-        height: 80vh;
-    }
-
-    .left_shifted{
-        margin: 0;
-    }
-
-    .bubbleChart svg{
-      /*background: #000000;*/
-    }
-
-    .book_thumb{
-        width: 40px;
-        height: 70px;
-    }
-
-    .book_scroller{
-        max-height: 50vh;
-    }
-  </style>
 <!-- <d3-circles></d3-circles> -->
 <!-- <d3-bars data="d3Data"></d3-bars> -->

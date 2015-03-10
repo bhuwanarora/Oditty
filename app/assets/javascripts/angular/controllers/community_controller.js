@@ -4,7 +4,13 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", function($sco
         $scope.show_details = true;
     };
 
+    $scope.refresh_data = function(){
+        alert("refresh_data");
+    }
+
     _init = function(){
+        $scope.show_details = false;
+
         $scope.d3Data = [
             {name: "Greg", score: 98},
             {name: "Ari", score: 96},

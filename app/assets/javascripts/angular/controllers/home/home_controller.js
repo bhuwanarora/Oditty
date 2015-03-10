@@ -1,19 +1,5 @@
 homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSidenav", "$log", '$q', '$mdBottomSheet', '$mdDialog', 'scroller', '$document', 'feedService', '$mdToast', function($scope, $rootScope, $timeout, $mdSidenav, $log, $q, $mdBottomSheet, $mdDialog, scroller, $document, feedService, $mdToast){
 
-    $scope.next = function(){
-        if(angular.isDefined($scope.data.selectedIndex)){
-            if($scope.data.selectedIndex == 3){
-                window.location.href = "/library";
-            }
-            else{
-                $scope.data.selectedIndex = $scope.data.selectedIndex + 1;
-            }
-        }
-        else{
-            $scope.data.selectedIndex = 0;
-        }
-    }
-
     $scope.play_type_key = function(event){
         if($scope.info.show_share){
             if(angular.isUndefined($scope.current_track) || $scope.current_track == 0){
@@ -29,20 +15,6 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
                 document.getElementById('audiotag3').play();
             }
             event.stopPropagation();
-        }
-    }
-
-    $scope.previous = function(){
-        if(angular.isDefined($scope.data.selectedIndex)){
-            if($scope.data.selectedIndex == 0){
-                $scope.data.selectedIndex = 3;
-            }
-            else{
-                $scope.data.selectedIndex = $scope.data.selectedIndex - 1;
-            }
-        }
-        else{
-            $scope.data.selectedIndex = 0;
         }
     }
 
