@@ -1,5 +1,9 @@
 <md-card layout="column" layout-align="start center">
-	<h2>“Mad, bad, and dangerous to know.”</h2>
+	<md-input-container>
+        <label>Share</label>
+        <input ng-model="user.last_name" 
+               focus-out="set_last_name()" value="Mad, bad, and dangerous to know."/>
+    </md-input-container>
 	<md-card-content>
 		<md-content class="white">
 			<md-grid-list

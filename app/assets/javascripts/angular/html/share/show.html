@@ -14,20 +14,7 @@
 		<!-- </div> -->
 		<md-input-container flex layout-margin style="font-family: 'Inconsolata', 'Courier New', serif;">
 			<!-- <label>Share your reading journey...</label> -->
-	        <textarea style="::-webkit-input-placeholder { /* WebKit browsers */
-    color:    #909 !important;
-}
-:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-   color:    #909 !important;
-   opacity:  1 !important;
-}
-::-moz-placeholder { /* Mozilla Firefox 19+ */
-   color:    #909 !important;
-   opacity:  1 !important;
-}
-:-ms-input-placeholder { /* Internet Explorer 10+ */
-   color:    #909 !important;
-}"></textarea>
+	        <textarea set-focus="info.show_share" ng-model="info.status"></textarea>
 	    </md-input-container>
 		<div class="select_mood custom_button" 
 				ng-click="show_share_options($event)"><span class='icon-happy'></span></div>

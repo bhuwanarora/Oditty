@@ -7,8 +7,12 @@
             <div flex="50" hide-sm flex-md="10" layout="row" layout-align="start start">
                 <img src="http://www.chicagonow.com/avatar/blog-108-128.png" class="circular profile_pic">
                 <a href="/profile"><div layout="column" layout-wrap layout-align="start start">
-                    <h3 style="margin: 0px !important;">Tehzeeb Khan</h3>
-                    <h5>Mumbai</h5>
+                    <h3 style="margin: 0px !important;" layout="row" layout-padding>
+                        <div ng-bind="user.first_name"></div>
+                        <div>&nbsp;</div>
+                        <div ng-bind="user.last_name"></div>
+                    </h3>
+                    <!-- <h5>Mumbai</h5> -->
                 </div></a>
             </div>
             <div flex="50" hide-sm flex-md="10" layout="row" layout-column layout-align="end end">
