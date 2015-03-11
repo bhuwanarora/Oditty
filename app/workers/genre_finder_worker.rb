@@ -9,6 +9,5 @@ module GenreFinderWorker
 			clause = start_clause + merge_clause
 			self.execute_query(clause)
 		end
-		genre_count_hash = genres.flatten!.each_with_object(Hash.new(0)) {|genre, count| count[genre] += 1}
 	end
 end
