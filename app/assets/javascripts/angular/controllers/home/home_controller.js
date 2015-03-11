@@ -170,9 +170,9 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
         $scope.info.show_share = false;
         $scope.data = {"selectedIndex" : 0};
         $rootScope.user = {};
-        feedService.get_feed(0).then(function(data){
-            // debugger
-        });
+        // feedService.get_feed(0).then(function(data){
+        //     // debugger
+        // });
 
         
     };
