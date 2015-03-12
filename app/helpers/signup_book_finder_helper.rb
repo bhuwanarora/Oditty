@@ -4,8 +4,8 @@ module SignupBookFinderHelper
 			count_match_clause = " MATCH (user:User) WHERE ID(user) = " + user_id.to_s + " RETURN user.total_count"
 			range = ((neo.execute_query count_match_clause)["data"]).flatten.to_s
 			count = count.to_i
-			general_clause = " MATCH (user:User)--(:MarkAsReadNode)--(book:Book) WHERE ID(user) = " + user_id.to_s + 
-			if ["0-20"] == range
+			general_clause = " OPTIONAL MATCH (user:User)--(:MarkAsReadNode)--(book:Book) WHERE ID(user) = " + user_id.to_s + 
+			if range == ["0-20"] 
 				user_case_clause = " RETURN ID(book)"
 				clause = general_clause + user_case_clause
 				book_ids = (neo.execute_query clause)["data"].flatten
@@ -14,15 +14,15 @@ module SignupBookFinderHelper
 					clause = general_clause + get_ten_small_books_clause
 					book_ids = (neo.execute_query clause)["book_ids"].flatten
 				end
-			elsif ["20-50", "50-100", "100-250"].include? range
-			 	match_book_genre_clause = " WITH user, book MATCH book-[:FromCategory*0..1]-(root_category{is_root:true}) RETURN root_category, book"
-
-
-			 	 20..200
-				Send all user books grouped by genre and sorted by popularity.
-				Not available: Send 30 books grouped by genres selected, sorted 
-				user_case_clause = " WITH user MATCH ("
-			else
+			else ["20-50", "50-100", "100-250"].include? range
+			 	match_book_genre_clause = " WITH user, book MATCH book-[:FromCategory]->()-[HasRoot*0..1]->(root_category{is_root:true}) RETURN book, COUNT(DISTINCT(root_category)) AS genre_count ORDER BY genre_count DESC, ORDER BY book.total_weight DESC LIMIT 250 "
+			 	clause =  general_clause + match_book_genre_clause
+			 	books_and_genres = (neo.execute_query clause)["data"] 
+			 	if books_and_genres.blank?
+			 		find_genre_books = " WITH USER MATCH (user:User)-[:LikesGenre]-(category:Category)-[:HasRoot*0..1]-(root_category) WITH root_category, TOINT(30/COUNT(DISTINCT(root_category))) AS depth MATCH path = (root_category)-[:NextInGenre*depth]-(popular_book) RETURN root_category, (n IN nodes(path)| book) AS book RETURN root_category, book"
+			 		clause = general_clause + find_genre_books
+			 		books_and_genres = ((neo.execute_query clause)["data"])
+			 	end
 			end
 		rescue Exception => e
 			output = e.to_s
