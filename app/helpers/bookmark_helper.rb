@@ -1,7 +1,7 @@
 module BookmarkHelper
+
 	def self.bookmark_book(user_id, book_id, bookmark_name)
 		#FIXME: bookmark book
-		is_books_left_a_mark_on_you = bookmark_name.to_s.strip.upcase == "BOOKSLEFTAMARKONYOU" ? true : false
 
 		@neo ||= self.neo_init
 		bookmark_clause = _match_user_and_book(user_id, book_id) + " WITH user, book MERGE (user)-[labelled:Labelled]->(label:Label{name: \"" + bookmark_name.strip.upcase + "\"}), (label)-[:BookmarkedOn]->(bookmark: BookmarkNode{label:\"" + bookmark_name.strip.upcase + "\", book_id:" + book_id.to_s + ", user_id:" + user_id.to_s + "}), (bookmark)-[:BookmarkAction]->(book) SET bookmark.title = book.title,  bookmark.author = book.author_name, bookmark.name = user.name, bookmark.email = user.email, bookmark.isbn = book.isbn, bookmark.timestamp = " + Time.now.to_i.to_s + ", bookmark.thumb = CASE WHEN user.thumb IS NULL THEN '' ELSE user.thumb END WITH user, book, bookmark, label, labelled "
@@ -14,13 +14,12 @@ module BookmarkHelper
 
 		ego_clause = _ego_clause + ", label, labelled "
 
-
-
+		
 		set_clause = "SET book.bookmark_count = CASE WHEN book.bookmark_count IS NULL THEN 1 ELSE toInt(book.bookmark_count) + 1 END, user.bookmark_count = CASE WHEN user.bookmark_count IS NULL THEN 1 ELSE toInt(user.bookmark_count) + 1 END, label.bookmark_count = CASE WHEN label.bookmark_count IS NULL THEN 1 ELSE toInt(label.bookmark_count) + 1 END, labelled.bookmark_count = CASE WHEN labelled.bookmark_count IS NULL THEN 1 ELSE toInt(labelled.bookmark_count) + 1 END, user.total_count = CASE WHEN user.total_count IS NULL THEN " + Constants::BookmarkPoints.to_s + " ELSE toInt(user.total_count) + " + Constants::BookmarkPoints.to_s + " END"
 
-		update_
+		update_root_category_like_clause = _get_book_left_a_mark_on_you_clause bookmark_name
 
-		clause = bookmark_clause + feednext_clause + bookfeed_next_clause + existing_ego_clause + ego_clause + set_clause
+		clause = bookmark_clause + feednext_clause + bookfeed_next_clause + existing_ego_clause + ego_clause + set_clause + update_root_category_like_clause
 		puts clause.blue.on_red
 		puts "BOOK BOOKMARKED".green
 		@neo.execute_query(clause)
@@ -36,7 +35,30 @@ module BookmarkHelper
 	end
 
 	private
-		def _match_user(user_id)
+
+	def _get_book_left_a_mark_on_you_clause bookmark_name
+		bookmark_name.to_s.strip.upcase!
+		
+		update_root_category_like_clause = " WITH user, label, bookmark, book OPTIONAL MATCH (user)-->(label)--(bookmark)--(book)-[:FromCategory*0..1]-(root_category{is_root:true}) WITH user, root_category MERGE (user)-[likes_Category:LikesCategory]->(root_category) ON CREATE SET likes_Category.weight = 1 ON MATCH SET likes_category.weight = likes_category.weight+1 WITH user, book, COUNT(DISTINCT(book)) as book_count OPTIONAL MATCH (root_category)-[:FromCategory*0..1]-(book) "
+		
+		set_favourite_clause = ", likes_category.favourite = true"
+		
+		case bookmark_name
+
+		when "BOOKSLEFTAMARKONYOU"
+			clause = update_category_like_clause + set_favourite_clause
+		when "FROMFACEBOOK"
+			clause = update_category_like_clause
+		when "MARKASREAD"
+			clause = update_category_like_clause
+		else
+			clause = ""
+		end
+
+		clause	
+	end
+
+	def _match_user(user_id)
 		"MATCH (u:User) WHERE ID(u)="+user_id.to_s+" "
 	end
 
