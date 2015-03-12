@@ -1,6 +1,7 @@
 module SignupBookFinderHelper
 	def find_books_on_count user_id
 		begin
+			limit = 30
 			count_match_clause = " MATCH (user:User) WHERE ID(user) = " + user_id.to_s + " RETURN user.total_count"
 			range = ((neo.execute_query count_match_clause)["data"]).flatten.to_s
 			count = count.to_i
@@ -15,7 +16,7 @@ module SignupBookFinderHelper
 					book_ids = (neo.execute_query clause)["book_ids"].flatten
 				end
 			else ["20-50", "50-100", "100-250"].include? range
-			 	match_book_genre_clause = " WITH user, book MATCH book-[:FromCategory]->()-[HasRoot*0..1]->(root_category{is_root:true}) RETURN book, COUNT(DISTINCT(root_category)) AS genre_count ORDER BY genre_count DESC, ORDER BY book.total_weight DESC LIMIT 250 "
+			 	match_book_genre_clause = "  WITH user, book MATCH book-[:FromCategory]->()-[HasRoot*0..1]->(root_category{is_root:true}) WITH book, root_category ORDER BY book.total_weight DESC LIMIT " + limit.to_s + " RETURN root_category.name, COLLECT(DISTINCT(book.title)) AS books, COUNT(book) AS book_count ORDER BY book_count DESC "
 			 	clause =  general_clause + match_book_genre_clause
 			 	books_and_genres = (neo.execute_query clause)["data"] 
 			 	if books_and_genres.blank?
