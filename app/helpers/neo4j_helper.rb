@@ -991,7 +991,7 @@ module Neo4jHelper
 
 	def self.set_star_genres
 		@neo ||= self.init
-		clause="MATCH (genre:Genre)<-[r:Belongs_to]-(b:Book) WHERE r.weight IS NOT NULL AND genre.books_count > 1000 WITH DISTINCT(genre) as genre SET genre :StarGenre, genre.indexed_star_genre_name = genre.indexed_genre_name"
+		clause = "MATCH (genre:Genre)<-[r:Belongs_to]-(b:Book) WHERE toINT(genre.gr_book_count) > 1000 WITH DISTINCT(genre) as genre SET genre :StarGenre, genre.indexed_star_genre_name = genre.indexed_genre_name"
 		puts clause.blue.on_red
 		@neo.execute_query clause
 	end
@@ -999,13 +999,13 @@ module Neo4jHelper
 	def self.set_active_books
 		@neo ||= self.init
 		skip = 10000
-		start_id = 384293 #MIN ID
-		end_id = 2655796 #MAX ID
+		start_id = 384294 #MIN ID
+		end_id = 2545302 #MAX ID
 		# limit = 100
 		while start_id <= end_id
 			puts "set_active_books..."+start_id.to_s.green
 			limit = start_id + skip
-			clause = 'MATCH (book:Book) WHERE ID(book) >= '+start_id.to_s+' AND ID(book) < '+limit.to_s+'  AND book.description <> "" AND book.description IS NOT NULL SET book :ActiveBook RETURN COUNT(book)'
+			clause = 'MATCH (book:Book) WHERE ID(book) >= '+start_id.to_s+' AND ID(book) < '+limit.to_s+' AND book.description <> "" AND book.description IS NOT NULL SET book :ActiveBook RETURN COUNT(book)'
 			puts @neo.execute_query(clause)["data"][0]
 			start_id = start_id + skip
 		end	

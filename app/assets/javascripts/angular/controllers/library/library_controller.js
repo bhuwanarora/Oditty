@@ -11,9 +11,9 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
     }
 
     $scope.init_book = function(index){
-        var book_id = $scope.books[index];
+        var book_id = $scope.info.books[index];
         bookService.get_basic_details(book_id).then(function(data){
-            $scope.books[index] = angular.extend($scope.books[index], data);
+            $scope.info.books[index] = angular.extend($scope.info.books[index], data);
         });
     }
 
@@ -46,33 +46,33 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
     }
 
     $scope.select_read_time = function(event){
-        delete $scope.books;
+        delete $scope.info.books;
         $scope.info.custom_loading = true;   
     }
 
     $scope.select_genre = function(selected_genre, event){
-        delete $scope.books;
+        delete $scope.info.books;
         $scope.info.custom_loading = true;
         $scope.filters.other  = angular.extend($scope.filters.other, {"genre" : selected_genre.id});
         $scope._get_popular_books();
     }
 
     $scope.select_author = function(event){
-        delete $scope.books;
+        delete $scope.info.books;
         $scope.info.custom_loading = true;
     }
 
     $scope.select_time_group = function(event){
-        delete $scope.books;
+        delete $scope.info.books;
         $scope.info.custom_loading = true;
     }
 
     $scope._get_popular_books = function(){
-        if(angular.isDefined($scope.books)){
-            var skip_count = $scope.books.length;
+        if(angular.isDefined($scope.info.books)){
+            var skip_count = $scope.info.books.length;
         }
         else{
-            $scope.books = [];
+            $scope.info.books = [];
             var skip_count = 0;
         }
         var params = angular.extend($scope.filters, {"skip_count": skip_count});
@@ -116,7 +116,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
                         "rowspan": 1,
                         "alphabet": value[2][0]};
                 this.push(json);
-            },  $scope.books);
+            },  $scope.info.books);
             $scope.info.loading = false;
         });
     }
@@ -126,7 +126,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
             $scope.grid_style = {"height": "initial", "padding-bottom": "100px"};
             $scope.constant = {"show_book": false};
             // $scope._init();
-            $scope.books = $scope.tempBooks;
+            $scope.info.books = $scope.tempBooks;
         }
     }
 
@@ -149,10 +149,10 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         //   isBook: true
         // }
         
-        $scope.tempBooks = $scope.books;
-        $scope.books = $scope.books.slice(0, insertIndex);
+        $scope.tempBooks = $scope.info.books;
+        $scope.info.books = $scope.info.books.slice(0, insertIndex);
         $scope.constant = {"show_book": true};
-        $rootScope.active_book = $scope.books[index];
+        $rootScope.active_book = $scope.info.books[index];
         event.stopPropagation();
     }
 
@@ -197,7 +197,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         $scope.active_share = true;
 
         $scope.constant = {"show_book": false};
-        $scope.books = [];
+        $scope.info.books = [];
         $scope.search_tag = {}
         $scope._get_popular_books();
     }
