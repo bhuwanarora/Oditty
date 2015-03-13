@@ -39,8 +39,8 @@ module BookmarkHelper
 	def _get_book_left_a_mark_on_you_clause bookmark_name
 		bookmark_name.to_s.strip.upcase!
 		
-		update_root_category_like_clause = " WITH user, label, bookmark, book OPTIONAL MATCH (user)-->(label)--(bookmark)--(book)-[:FromCategory*0..1]-(root_category{is_root:true}) WITH user, root_category MERGE (user)-[likes_Category:LikesCategory]->(root_category) ON CREATE SET likes_Category.weight = 1 ON MATCH SET likes_category.weight = likes_category.weight+1 WITH user, book, COUNT(DISTINCT(book)) as book_count OPTIONAL MATCH (root_category)-[:FromCategory*0..1]-(book) "
-		
+		update_root_category_like_clause = " WITH user, label, bookmark, book OPTIONAL MATCH (user)-->(label)--(bookmark)--(book)-[:FromCategory*0..1]-(root_category{is_root:true}) WITH user, root_category MERGE (user)-[likes_Category:LikesCategory]->(root_category) ON CREATE SET likes_Category.weight = 1 ON MATCH SET likes_category.weight = likes_category.weight+1 WITH user, book, COUNT(DISTINCT(book)) as book_count OPTIONAL MATCH (root_category)-[:FromCategory*0..1]-(book) COLLECT root_category as categories UNWIND categories as category MATCH (user)-->(label)--(bookmark)--(category_book)-[:FromCategory*0..1]-(category) WITH COUNT(category_book) as category_book_count MERGE (user)-[likes_category:LikesCategory]->(category) SET likes_category.likeability_index = TOFLOAT(category_book_count/total_book_count)  "
+									
 		set_favourite_clause = ", likes_category.favourite = true"
 		
 		case bookmark_name

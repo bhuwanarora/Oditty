@@ -32,7 +32,7 @@ module SignupBookFinderHelper
 			 	data = (neo.execute_query clause)["data"] 
 			 
 			 	if data.blank?
-			 		find_genre_books = " WITH USER MATCH (user:User)-[:LikesGenre]-(category:Category)-[:HasRoot*0..1]-(root_category) WITH root_category, TOINT(30/COUNT(DISTINCT(root_category)) + 1) AS depth, MATCH initial_path = (root_category)-[:NextInGenre*TOINT(depth*((" + skip_count.to_s + ")/30))]-(popular_book) WITH popular_book MATCH path = (popular_book)-[:NextInGenre*depth]-(popular_book) RETURN root_category, (n IN nodes(path)| book) AS book RETURN root_category, book LIMIT 30"
+			 		find_genre_books = " WITH USER MATCH (user:User)-[:LikesGenre]->(category:Category)-[:HasRoot*0..1]->(root_category) WITH root_category MATCH path = (root_category)-[:NextInGenre*" + skip_count.to_i.to_s + "]->(popular_books) WITH EXTRACT(n IN nodes(path)| book) AS books UNWIND books AS book RETURN root_category, book ORDER BY book.total_weight SKIP " + skip_count.to_i.to_s + " LIMT 30  "
 			 		clause = general_clause + find_genre_books
 			 		
 			 		data = ((neo.execute_query clause)["data"])
