@@ -40,18 +40,18 @@ module BookmarkHelper
 	def _get_book_left_a_mark_on_you_clause bookmark_name
 		bookmark_name.to_s.strip.upcase!
 		
-		update_root_category_like_clause = " WITH user, label, bookmark, book OPTIONAL MATCH (user)-->(label)-->(bookmark)-->(book)-[:FromCategory*0..1]->(root_categories{is_root:true}) WITH user, root_categories, book MERGE (user)-[likes_category:LikesCategory]->(root_categories) ON CREATE SET likes_category.weight = 1 ON MATCH SET likes_category.weight = likes_category.weight+1 WITH user, book, root_categories, COUNT(books) AS total_book_count UNWIND root_categories AS root_category OPTIONAL MATCH  (user)-->(label)-->(bookmark)-->(book_in_category)-[:FromCategory*0..1]->(root_category) COUNT(book_in_category) as book_count OPTIONAL MATCH (user)-[likes_category:LikesCategory]->(root_category) SET likes_category.likeability_index = TOFLOAT(book_count/total_book_count)"
+		update_root_category_likes_clause = " WITH user, label, bookmark, book OPTIONAL MATCH (user)-->(label)-->(bookmark)-->(book) WITH user, COUNT(DISTINCT book) as total_book_count MATCH (user)-->(label)-->(bookmark)-->(book)-[:FromCategory]->()-[:HasRoot*0..1]->(root_category{is_root:true}) WITH total_book_count, user, root_category MERGE (user)-[likes_category:LikesCategory]->(root_category) ON CREATE SET likes_category.weight = 1 ON MATCH SET likes_category.weight = likes_category.weight + 1 WITH user, total_book_count, root_category OPTIONAL MATCH  (user)-->(label)-->(bookmark)-->(book_in_category)-[:FromCategory]->(:Category)-->(root_category) WITH user, root_category, total_book_count, COUNT(book_in_category) as book_count MERGE (user)-[likes_category:LikesCategory]->(root_category) SET likes_category.likeability_index = TOFLOAT(book_count*1.0/total_book_count)"
 									
 		set_favourite_clause = ", likes_category.favourite = true"
 		
 		case bookmark_name
 
 		when "BOOKSLEFTAMARKONYOU"
-			clause = update_category_like_clause + set_favourite_clause
+			clause = update_root_category_likes_clause + set_favourite_clause
 		when "FROMFACEBOOK"
-			clause = update_category_like_clause
+			clause = update_root_category_likes_clause
 		when "MARKASREAD"
-			clause = update_category_like_clause
+			clause = update_root_category_likes_clause
 		else
 			clause = ""
 		end
@@ -60,18 +60,23 @@ module BookmarkHelper
 	end
 
 	def self.get_max_likeability_bookmark
-		get_max_likeabillity = " MATCH (user)-[likes_category:LikesCategory]->(root_category:Category{is_root:true}) WITH COUNT(root_category) AS category_count , SUM(likes_category.likeability_index) AS sum_likeability_index, MAX(likes_category.likeability_index) AS max_likeabillity WITH root_category, category_count, sum_likeability_index, max_likeabillity, TOFLOAT(sum_likeability_index/category_count) AS mean_liakeability_index RETURN root_category, TOFLOAT(max_likeabillity - mean_liakeability_index) AS mean_deviation ORDER BY likes_category.likeability_index LIMIT 1  "
+		get_max_likeabillity = " MATCH (user)-[likes_category:LikesCategory]->(root_category:Category{is_root:true}) WITH COUNT(root_category) AS category_count, user MATCH (user)-[likes_category:LikesCategory]->(root_category:Category{is_root:true}) WITH likes_category, MAX(likes_category.likeability_index) AS max_likeabillity , category_count, TOFLOAT(SUM(likes_category.likeability_index)*1.0/category_count) AS mean_liakeability_index RETURN root_category, TOFLOAT(max_likeabillity*1.0 - mean_liakeability_index) AS mean_deviation ORDER BY likes_category.likeability_index LIMIT 1  "
 		clause = _match_user + get_max_likeabillity
 	end
 
 	def self.get_most_read_author
-		get_max_read_author_clause = " MATCH (user)-->(:BookmarkNode)-->(book:Book)<-[:Wrote]-(author:Author) RETURN author ORDER BY COUNT(book) LIMIT 1 "
+		get_max_read_author_clause = " MATCH (user)-->(:BookmarkNode)-->(book:Book)<-[:Wrote]-(author:Author) WITH author, COUNT(book) RETURN author ORDER BY books "
 		clause = _match_user + get_max_read_author_clause
 	end
 
 	def self.get_most_read_era
-		get_max_read_author_clause = " MATCH (user)-->(:BookmarkNode)-->(book:Book)-[::Published_in]-()-[:FromEra]->(era:Era) WITH COUNT(book) AS books_from_era RETURN era ORDER BY books_from_era LIMIT 1 "
+		get_max_read_author_clause = " MATCH (user)-->(:BookmarkNode)-->(book:Book)-[::Published_in]-()-[:FromEra]->(era:Era) WITH era, COUNT(book) AS books_from_era RETURN era ORDER BY books_from_era LIMIT 1 "
 		clause = _match_user + get_max_read_era_clause
+	end
+
+	def self.books_on_your_friends_shelves
+		get_friends_reads_clause = "(User)-[:Follows]->(friend)-->(:Label{name:CurrentlyReading})-->(:BookmarkNode)--(book:Book) WITH COUNT(book) AS book_count, book RETURN book, book_count ORDER BY book_count DESC"
+		clause = _match_user + get_friends_reads_clause
 	end
 
 	def _match_user(user_id)
