@@ -38,7 +38,7 @@ module PersonalisedSuggestionHelper
 	private
 
 	def self.get_books_from_unexplored_subjects
-		get_books_from_unexplored_subjects_clause = " MATCH (user)-[likes_category:LikesCategory]->(root_category:Category{is_root:true}) WITH COUNT(root_category) AS category_count, user MATCH (user)-[likes_category:LikesCategory]->(root_category:Category{is_root:true}) WITH likes_category, category_count, TOFLOAT(SUM(likes_category.likeability_index)*1.0/category_count) AS mean_liakeability_index RETURN root_category, TOFLOAT(likes_category.likeability_index*1.0 - mean_liakeability_index) AS mean_deviation ORDER BY mean_deviation  "
+		get_books_from_unexplored_subjects_clause = " MATCH (user)-[likes_category:LikesCategory]->(root_category:Category{is_root:true}) WITH TOFLOAT(SUM(likes_category.likeability_index)*1.0/COUNT(root_category)) AS mean_likeability_index, user MATCH (user)-[likes_category:LikesCategory]->(root_category:Category{is_root:true}) WITH likes_category, root_category RETURN root_category, TOFLOAT(likes_category.likeability_index*1.0 - mean_likeability_index) AS mean_deviation ORDER BY mean_deviation  "
 		_match_user 
 	end
 
@@ -49,7 +49,7 @@ module PersonalisedSuggestionHelper
 	def _get_book_left_a_mark_on_you_clause bookmark_name
 		bookmark_name.to_s.strip.upcase!
 		
-		update_root_category_likes_clause = " WITH user, label, bookmark, book OPTIONAL MATCH (user)-->(label)-->(bookmark)-->(book) WITH user, COUNT(DISTINCT book) as total_book_count MATCH (user)-->(label)-->(bookmark)-->(book)-[:FromCategory]->()-[:HasRoot*0..1]->(root_category{is_root:true}) WITH total_book_count, user, root_category MERGE (user)-[likes_category:LikesCategory]->(root_category) ON CREATE SET likes_category.weight = 1 ON MATCH SET likes_category.weight = likes_category.weight + 1 WITH user, total_book_count, root_category OPTIONAL MATCH  (user)-->(label)-->(bookmark)-->(book_in_category)-[:FromCategory]->(:Category)-->(root_category) WITH user, root_category, total_book_count, COUNT(book_in_category) as book_count MERGE (user)-[likes_category:LikesCategory]->(root_category) SET likes_category.likeability_index = TOFLOAT(book_count*1.0/total_book_count)"
+		update_root_category_likes_clause = " WITH user, label, bookmark, book OPTIONAL MATCH (user)-->(label)-->(bookmark)-->(book) WITH user, COUNT(DISTINCT book) as total_book_count MATCH (user)-->(label)-->(bookmark)-->(book)-[:FromCategory]->()-[:HasRoot*0..1]->(root_category{is_root:true}) WITH total_book_count, user, root_category MERGE (user)-[likes_category:LikesCategory]->(root_category) ON CREATE SET likes_category.weight = 1 ON MATCH SET likes_category.weight = likes_category.weight + 1 WITH user, total_book_count, root_category OPTIONAL MATCH  (user)-[likes_category:LikesCategory]->(root_category) WITH user, likes_category, root_category, total_book_count MATCH (user)-[likes_category:LikesCategory]->(root_category) SET likes_category.likeability_index = TOFLOAT(likes_category.weight*1.0/total_book_count)"
 									
 		set_favourite_clause = ", likes_category.favourite = true"
 		
@@ -69,7 +69,7 @@ module PersonalisedSuggestionHelper
 	end
 
 	def self.get_max_likeability_bookmark
-		get_max_likeabillity = " MATCH (user)-[likes_category:LikesCategory]->(root_category:Category{is_root:true}) WITH COUNT(root_category) AS category_count, user MATCH (user)-[likes_category:LikesCategory]->(root_category:Category{is_root:true}) WITH likes_category, category_count, TOFLOAT(SUM(likes_category.likeability_index)*1.0/category_count) AS mean_liakeability_index RETURN root_category, TOFLOAT(likes_category.likeability_index*1.0 - mean_liakeability_index) AS mean_deviation ORDER BY mean_deviation  "
+		get_max_likeabillity = " MATCH (user)-[likes_category:LikesCategory]->(root_category:Category{is_root:true}) WITH TOFLOAT(SUM(likes_category.likeability_index)*1.0/COUNT(root_category)) AS mean_likeability_index, user MATCH (user)-[likes_category:LikesCategory]->(root_category:Category{is_root:true}) WITH likes_category, root_category RETURN root_category, TOFLOAT(likes_category.likeability_index*1.0 - mean_likeability_index) AS mean_deviation ORDER BY mean_deviation  "
 		clause = _match_user + get_max_likeabillity
 	end
 
