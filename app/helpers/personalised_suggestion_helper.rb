@@ -1,4 +1,4 @@
-module BookmarkHelper
+module PersonalisedSuggestionHelper
 
 	def self.bookmark_book(user_id, book_id, bookmark_name)
 		#FIXME: bookmark book
@@ -37,6 +37,15 @@ module BookmarkHelper
 
 	private
 
+	def self.get_books_from_unexplored_subjects
+		get_books_from_unexplored_subjects_clause = " MATCH (user)-[likes_category:LikesCategory]->(root_category:Category{is_root:true}) WITH COUNT(root_category) AS category_count, user MATCH (user)-[likes_category:LikesCategory]->(root_category:Category{is_root:true}) WITH likes_category, category_count, TOFLOAT(SUM(likes_category.likeability_index)*1.0/category_count) AS mean_liakeability_index RETURN root_category, TOFLOAT(likes_category.likeability_index*1.0 - mean_liakeability_index) AS mean_deviation ORDER BY mean_deviation  "
+		_match_user 
+	end
+
+	def self.get_top_ten_tiny_reads
+		get_top_ten_tiny_reads_clause = " MATCH path = (book)-[:NextTinyRead*9]->(tiny_reads) WHERE ID(book) = " + Constants::BestTinyRead.to_s + " RETURN EXTRACT (n IN nodes(path)|n) AS tiny_books "
+	end
+
 	def _get_book_left_a_mark_on_you_clause bookmark_name
 		bookmark_name.to_s.strip.upcase!
 		
@@ -60,7 +69,7 @@ module BookmarkHelper
 	end
 
 	def self.get_max_likeability_bookmark
-		get_max_likeabillity = " MATCH (user)-[likes_category:LikesCategory]->(root_category:Category{is_root:true}) WITH COUNT(root_category) AS category_count, user MATCH (user)-[likes_category:LikesCategory]->(root_category:Category{is_root:true}) WITH likes_category, MAX(likes_category.likeability_index) AS max_likeabillity , category_count, TOFLOAT(SUM(likes_category.likeability_index)*1.0/category_count) AS mean_liakeability_index RETURN root_category, TOFLOAT(max_likeabillity*1.0 - mean_liakeability_index) AS mean_deviation ORDER BY likes_category.likeability_index LIMIT 1  "
+		get_max_likeabillity = " MATCH (user)-[likes_category:LikesCategory]->(root_category:Category{is_root:true}) WITH COUNT(root_category) AS category_count, user MATCH (user)-[likes_category:LikesCategory]->(root_category:Category{is_root:true}) WITH likes_category, category_count, TOFLOAT(SUM(likes_category.likeability_index)*1.0/category_count) AS mean_liakeability_index RETURN root_category, TOFLOAT(likes_category.likeability_index*1.0 - mean_liakeability_index) AS mean_deviation ORDER BY mean_deviation  "
 		clause = _match_user + get_max_likeabillity
 	end
 
