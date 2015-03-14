@@ -1094,4 +1094,57 @@ module Neo4jHelper
 		end
 	end
 
+	def self.set_genre_linked_list
+		neo = self.init
+		starting_node = Constants::Id.to_s
+		is_done = false
+		node_id = starting_node
+		while !is_done
+			match_clause = "MATCH popularity_list = (book:Book)-[:Next_book*0.." + Constants::QueryStep.to_s + "]->(next_book) WHERE ID = " + node_id.to_s 
+			create_list_clause = " WITH EXTRACT(n in nodes(popularity_list)|n) AS books UNWIND books as book OPTIONAL MATCH (book)-[:FromCategory]->(category)-[:HasRoot*0..1]->(root_category:Category{is_root:true}) WITH book, root_category, root_category.uuid AS uuid OPTIONAL MATCH (root_category)-[genre_popularity_list:NextInCategory*1..]->(popular_book:Book) WHERE NOT(popular_book-[:NextInGenre{from_category:uuid}]-()) FOREACH(to_be_ignored IN CASE WHEN genre_popularity_list IS NULL THEN [1] ELSE [] END | MERGE (root_category)-[new_popular:NextInGenre]-(book) ON CREATE SET new_popular.from_category = root_category.uuid) FOREACH(to_be_ignored IN CASE WHEN genre_popularity_list IS NOT NULL THEN [1] ELSE [] END | MERGE (popular_book)-[next_popular:NextInGenre]-(book) ON CREATE SET next_popular.from_category = root_category.uuid) RETURN ID(book)"
+			clause = match_clause + create_list_clause 
+			neo.execute_query clause
+			books_id =neo.execute_query["data"].flatten 
+			if book_id.include? starting_node then is_done = true end	
+		end
+	end
+
+	# def self.set_genre_linked_list
+	# 	query_step = 10
+	# 	neo = self.init
+	# 	clause = " MATCH (root_category:Category{is_root:true}) RETURN ID(root_category), root_category.uuid"
+	# 	categories =  ((neo.execute_query clause)["data"])
+	# 	categories.each do |category|
+	# 		label= "Book"
+	# 		min_max_ids = self.set_min_max_ids label
+	# 		minimum_node_id = min_max_ids["minimum_node_id"]
+	# 		maximum_node_id = min_max_ids["maximum_node_id"]
+	# 		limit_size = ((maximum_node_id - minimum_node_id)/query_step).to_i
+	# 		while minimum_node_id <= maximum_node_id
+	# 			create_sorted_groups = "MATCH (root_category)-[:HasChild*0..]->(child_category) WHERE ID(root_category) = " + category[0].to_s + " WITH root_category, child_category MATCH (child_category)<-[:FromCategory]-(book:Book) WHERE ID(book) >=  " + minimum_node_id.to_s + " AND ID(book) < " + (minimum_node_id + query_step).to_s + " WITH root_category, book, book.total_weight as popularity ORDER BY popularity DESC WITH root_category, COLLECT(book) as books FOREACH(i in RANGE(0, length(books)-2) |  FOREACH(more_popular in [books[i]] |  FOREACH(less_popular in [books[i+1]] |  MERGE (more_popular)-[relation:ToBeSorted]->(less_popular)))) WITH root_category, HEAD(books) as most_popular MERGE (root_category)-[relation:ToBeSorted]->(most_popular)"
+	# 			minimum_node_id += query_step
+	# 			puts create_sorted_groups.white.on_black
+	# 			neo.execute_query create_sorted_groups
+	# 		end
+	# 		is_sorted = false
+
+	# 		while !is_sorted
+	# 			append_groups_genre = "MATCH (root_category)-[:ToBeSorted*1..5]-(book:Book) WHERE ID(root_category) = " + category[0].to_s + " WITH book, root_category, COLLECT(book) as books ORDER BY book.total_weight DESC LIMIT " + limit_size.to_s + " FOREACH(i in RANGE(0, length(books)-2) |  FOREACH(more_popular in [books[i]] |  FOREACH(less_popular in [books[i+1]] |  MERGE (more_popular)-[popularity_list:NextInGenre]->(less_popular) ON CREATE SET popularity_list.uuid = " + category[1].to_s + "))) WITH root_category, books UNWIND books as book OPTIONAL MATCH (more_popular)-[relation_back:ToBeSorted]->(book), (book)-[relation_forward:ToBeSorted]->(less_popular) WITH root_category, more_popular, less_popular, relation_back, relation_forward, books FOREACH (ignore IN CASE WHEN (relation_back IS NOT NULL AND relation_forward IS NOT NULL) THEN [1] ELSE [] END | MERGE (more_popular)-[:ToBeSorted]->(less_popular) DELETE relation_back, relation_forward)  WITH root_category, more_popular, less_popular, relation_back, relation_forward, books DELETE relation_back, relation_forward "
+
+	# 			append_book_to_sorted =	"WITH root_category, books, HEAD(books) as most_popular_in_group OPTIONAL MATCH (root_category)-[sorted_list:NextInGenre*1..]->(tail:Book) FOREACH(ignoreMe IN CASE WHEN sorted_list IS NULL THEN [1] ELSE [] END | MERGE (root_category)-[set_head:NextInGenre]->(most_popular_in_group) ON CREATE SET set_head.uuid = " + category[1].to_s + ")  FOREACH(ignoreMe IN CASE WHEN sorted_list IS NOT NULL THEN [1] ELSE [] END | MERGE (tail)-[next_in_list:NextInGenre]->(most_popular_in_group) ON CREATE SET next_in_list.uuid = " + category[1].to_s + ") WITH root_category MATCH (root_category)-[:ToBeSorted]-(book_in_sort_list) RETURN ID(book_in_sort_list) LIMIT 1"
+	# 			clause = append_groups_genre + append_book_to_sorted	
+	# 			puts clause.white.on_black
+	# 			is_sorted = (((neo.execute_query clause)["data"]).flatten)[0].blank? ? true : false
+	# 			puts is_sorted
+	# 		end
+	# 		debugger
+	# 	end
+	# end
+
+	def self.set_min_max_ids label
+		neo = self.init
+		clause = "MATCH (n:" + label + ") RETURN MIN(ID(n)), MAX(ID(n))"
+		response = neo.execute_query(clause)["data"][0]
+		{"maximum_node_id" => response[1].to_i, "minimum_node_id" => response[0].to_i}
+	end
 end
