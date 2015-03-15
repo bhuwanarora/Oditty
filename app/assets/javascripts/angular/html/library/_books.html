@@ -32,7 +32,7 @@
                 <md-button class="book_grid_link"
                         aria-label=""
                         ng-click="show_book($event, $index)">
-                    <img ng-src="{{book | choose_medium_thumb}}" 
+                    <img ng-src="{{book | choose_medium_thumb}}"/>
                 </md-button>
                 <div ng-style="{background:'{{book.color}}'}" class="book_backup_cover" 
                         layout="column" layout-padding layout-align="space-between">
@@ -43,133 +43,31 @@
         </md-grid-list>
     </div>
 
-
     <div ng-if="info.author_filter && !info.sort_by_alphabet && !info.published_era_filter && !info.reading_time_filter"
         ng-style="grid_style" class="white" >
         <div ng-repeat="(key, value) in books | groupBy: 'author_name'">
-            <h2>{{ key }}</h2>
-            <md-grid-list
-                md-cols-sm="2"
-                md-cols-md="2" 
-                md-cols-gt-md="5"
-                md-row-height="1:1.3"
-                md-gutter="1px">
-                <md-grid-tile ng-repeat="book in value"
-                    md-rowspan="{{book.rowspan}}"
-                    md-colspan="{{book.colspan}}"
-                    layout-align="start start"
-                    layout="row"
-                    class="md-button grid"
-                    ng-class="{'book': book.isBook}" >
-                    <md-button class="book_grid_link"
-                            aria-label=""
-                            ng-click="show_book($event, $index)">
-                        <img ng-src="{{book | choose_medium_thumb}}" 
-                    </md-button>
-                    <div ng-style="{background:'{{book.color}}'}" class="book_backup_cover" 
-                            layout="column" layout-padding layout-align="space-between">
-                        <h3>{{book.title}}</h3>
-                        <h5>{{book.author_name}}</h5>
-                    </div>
-                </md-grid-tile>
-            </md-grid-list>
+            <div ng-include src="'/assets/angular/html/library/shared/_grid.html'"></div>
         </div>
     </div>
-
    
     <div ng-if="info.sort_by_alphabet && !info.author_filter && !info.published_era_filter && !info.reading_time_filter"
         ng-style="grid_style" class="white" >
         <div ng-repeat="(key, value) in books | groupBy: 'alphabet'" layout-padding layout-fill>
-            <h2>{{ key }}</h2>
-            <md-grid-list
-                md-cols-sm="2"
-                md-cols-md="2" 
-                md-cols-gt-md="5"
-                md-row-height="1:1.3"
-                md-gutter="1px">
-                <md-grid-tile ng-repeat="book in value"
-                    md-rowspan="{{book.rowspan}}"
-                    md-colspan="{{book.colspan}}"
-                    layout-align="start start"
-                    layout="row"
-                    class="md-button grid"
-                    ng-class="{'book': book.isBook}" >
-                    <md-button class="book_grid_link"
-                            aria-label=""
-                            ng-click="show_book($event, $index)">
-                        <img ng-src="{{book | choose_medium_thumb}}" 
-                    </md-button>
-                    <div ng-style="{background:'{{book.color}}'}" class="book_backup_cover" 
-                            layout="column" layout-padding layout-align="space-between">
-                        <h3>{{book.title}}</h3>
-                        <h5>{{book.author_name}}</h5>
-                    </div>
-                </md-grid-tile>
-            </md-grid-list>
+            <div ng-include src="'/assets/angular/html/library/shared/_grid.html'"></div>
         </div>
     </div>
 
     <div ng-if="!info.sort_by_alphabet && !info.author_filter && !info.published_era_filter && info.reading_time_filter"
         ng-style="grid_style" class="white" >
         <div ng-repeat="(key, value) in books | groupBy: 'reading_time'" layout-padding layout-fill>
-            <h2>{{ key }}</h2>
-            <md-grid-list
-                md-cols-sm="2"
-                md-cols-md="2" 
-                md-cols-gt-md="5"
-                md-row-height="1:1.3"
-                md-gutter="1px">
-                <md-grid-tile ng-repeat="book in value"
-                    md-rowspan="{{book.rowspan}}"
-                    md-colspan="{{book.colspan}}"
-                    layout-align="start start"
-                    layout="row"
-                    class="md-button grid"
-                    ng-class="{'book': book.isBook}" >
-                    <md-button class="book_grid_link"
-                            aria-label=""
-                            ng-click="show_book($event, $index)">
-                        <img ng-src="{{book | choose_medium_thumb}}" 
-                    </md-button>
-                    <div ng-style="{background:'{{book.color}}'}" class="book_backup_cover" 
-                            layout="column" layout-padding layout-align="space-between">
-                        <h3>{{book.title}}</h3>
-                        <h5>{{book.author_name}}</h5>
-                    </div>
-                </md-grid-tile>
-            </md-grid-list>
+            <div ng-include src="'/assets/angular/html/library/shared/_grid.html'"></div>
         </div>
     </div>
 
     <div ng-if="!info.sort_by_alphabet && !info.author_filter && info.published_era_filter && !info.reading_time_filter"
         ng-style="grid_style" class="white" >
         <div ng-repeat="(key, value) in books | groupBy: 'published_era'" layout-padding layout-fill>
-            <h2>{{ key }}</h2>
-            <md-grid-list
-                md-cols-sm="2"
-                md-cols-md="2" 
-                md-cols-gt-md="5"
-                md-row-height="1:1.3"
-                md-gutter="1px">
-                <md-grid-tile ng-repeat="book in value"
-                    md-rowspan="{{book.rowspan}}"
-                    md-colspan="{{book.colspan}}"
-                    layout-align="start start"
-                    layout="row"
-                    class="md-button grid"
-                    ng-class="{'book': book.isBook}" >
-                    <md-button class="book_grid_link"
-                            aria-label=""
-                            ng-click="show_book($event, $index)">
-                        <img ng-src="{{book | choose_medium_thumb}}" 
-                    </md-button>
-                    <div ng-style="{background:'{{book.color}}'}" class="book_backup_cover" 
-                            layout="column" layout-padding layout-align="space-between">
-                        <h3>{{book.title}}</h3>
-                        <h5>{{book.author_name}}</h5>
-                    </div>
-                </md-grid-tile>
-            </md-grid-list>
+            <div ng-include src="'/assets/angular/html/library/shared/_grid.html'"></div>
         </div>
     </div>
     <section ng-if="constant.show_book">
