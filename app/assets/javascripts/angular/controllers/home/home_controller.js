@@ -54,24 +54,6 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
         // $mdBottomSheet.hide({"test": "test"});
     }
 
-    
-
-	var item = {
-    	face: '/img/list/60.jpeg',
-    	what: 'Brunch this weekend?',
-    	who: 'Min Li Chan',
-    	notes: "I'll be in your neighborhood doing errands."
-  	};
-  	$scope.todos = [];
-  	for (var i = 0; i < 15; i++) {
-    	$scope.todos.push({
-      		face: 'https://pbs.twimg.com/profile_images/551665023399899136/Y6DsU5eJ_400x400.jpeg',
-      		what: "Brunch this weekend?",
-      		who: "Min Li Chan",
-      		notes: "I'll be in your neighborhood doing errands."
-    	});
-  	}
-
 	$scope.toggleLeft = function(event){
 	    $mdSidenav('left').toggle();
       event.stopPropagation();

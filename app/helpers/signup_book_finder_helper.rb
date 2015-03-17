@@ -2,16 +2,13 @@ module SignupBookFinderHelper
 	class SignupBookFinder
 
 		def initialize user_id, skip_count
-			find_books_on_count (user_id, skip_count)
-		end
-
-		def find_books_on_count (user_id, skip_count)
 			limit = Constants::BookCountShownOnSignup
 			range = _get_user_book_count user_id
 			skip_count = skip_count.to_i > limit ? skip_count.to_i : Constants::InitialSkipCount  
 
 			case range
 			when Constants::FewBooksReadCountRange
+				# book.isbn as isbn, ID(book), book.title, book.author_name, ID(m), z.rating, book.published_year, book.page_count
 				user_case_clause = " RETURN ID(book) as book_ids ORDER BY book.total_weight "
 				clause = (_get_user_clause user_id) + user_case_clause
 				data = neo.execute_query clause
@@ -57,3 +54,12 @@ module SignupBookFinderHelper
 		end
 	end
 end
+
+# {
+# 	{
+# 		"genre_id": GENRE_ID,
+# 		"books": [
+			
+# 		]
+# 	}
+# }
