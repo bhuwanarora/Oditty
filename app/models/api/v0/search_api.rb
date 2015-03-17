@@ -21,17 +21,18 @@ module Api
 				results
 			end
 
-			def self.search_genres(q=nil, limit=nil)
+			def self.search_genres(q, limit)
 				results = []
 				neo_init
 				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("]", "").gsub("\\", "") rescue ""
 				if q.present?
 					clause = "START category=node:node_auto_index('indexed_category_name:" + q + "*') RETURN category.name as name, ID(category) as id ORDER BY category.books_count DESC LIMIT " + limit.to_s
 				else
-					clause = "MATCH(category:Category{is_root:true}) RETURN category.name as name, ID(category) as id, category.icon as icon ORDER BY category.books_count DESC"
+					clause = "MATCH (category:Category{is_root:true}) RETURN category.name as name, ID(category) as id, category.icon as icon ORDER BY category.books_count DESC"
 				end
+				
 				puts clause.blue.on_red
-				results = GlobalHelper.execute_query clause
+				results = @neo.execute_query clause
 				results
 			end
 
