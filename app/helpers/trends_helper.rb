@@ -69,12 +69,8 @@ module TrendsHelper
 
 	def self.map_tags_to_books results, news_link, region
 	    for trend in results
-	    	begin
-	        	merge_clause = " MERGE (t:Trending{name: " + trend.to_s + "}) ON CREATE SET t.status = 1, t.name = " +  trend.to_s + ", t.timestamp=" + Time.now.to_i.to_s + ", t.url = " + news_link.to_s + ", t.location = " + region.to_s + " ON MATCH SET t.status = 1 WITH t "
-				self.map_books_to_news(merge_clause, trend)
-	    	rescue Exception => e
-	    		debugger
-	    	end
+        	merge_clause = " MERGE (t:Trending{name: " + trend.to_s + "}) ON CREATE SET t.status = 1, t.name = " +  trend.to_s + ", t.timestamp=" + Time.now.to_i.to_s + ", t.url = " + news_link.to_s + ", t.location = " + region.to_s + " ON MATCH SET t.status = 1 WITH t "
+			self.map_books_to_news(merge_clause, trend)
 	    end
 	end
 
@@ -89,7 +85,7 @@ module TrendsHelper
 
 	def self.get_news_sources
 		@news_sources = []
-		google_news_edition_url = "https://support.google.com/news/answer/40237?hl=en"
+		google_news_edition_url = Rails.Application.config.google_news_sources
 		doc = Nokogiri::HTML(open(google_news_edition_url)).css('.i a')
 		for news_source in doc
 			if (news_source.children.text =~ /^[a-zA-Z]+$/) == 0 and !news_source.nil?

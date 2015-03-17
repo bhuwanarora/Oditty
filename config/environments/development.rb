@@ -29,4 +29,5 @@ ReadersDoor::Application.configure do
   config.assets.debug = true
   config.home = "http://127.0.0.1:3000/"
   config.nlp_service = = "http://52.11.31.102"
+  config.google_news_sources = "https://support.google.com/news/answer/40237?hl=en"
 end

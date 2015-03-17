@@ -69,6 +69,4 @@ neo4j/conf/neo4j.properties
 *.out
 *.zip
 *.png
-neo4j/conf/neo4j-wrapper.conf
-neo4j/
 *.graphml
