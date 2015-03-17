@@ -13,8 +13,9 @@
 			</md-input-container>
 			<div layout="row" layout-wrap layout-align="center">
 				<div ng-repeat="book in popular_books"
+					 layout-margin
 					 layout="column"
-					 style="width: 170px;"
+					 style="width: 140px;"
 					 class="relative">
 					 <div layout="column" layout-align="center" class="relative  upper_slider_wrapper"
 		            		ng-if="book.status">
@@ -51,7 +52,7 @@
 						<img ng-src="{{book | choose_medium_thumb}}" class="cover">
 		            </div>
 					<br/>
-					<div layout="column" layout-align="start start">
+					<div layout="column" layout-align="start start" class="small_font" layout-wrap>
 						<b>{{book.title}}(1947)</b>
 						<div>{{book.author_name}}</div>
 						<div>
