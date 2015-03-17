@@ -1,6 +1,7 @@
 module TrendsHelper
 
 	def self.social_mention
+		@neo = Neography::Rest.new
 		@news_sources ||= self.get_news_sources
 		for news_source in @news_sources
 			news_links = self.get_news news_source["url"]
@@ -13,13 +14,13 @@ module TrendsHelper
 				with_clause = " WITH fresh_news, region, stale_relation, stale_news"
 				optional_match_clause = " OPTIONAL MATCH (fresh_news)<-[relation:HasNews*1.." + Constants::UniqueNewsCount.to_s + "]-(region:Region)"
 
-				create_conditional = " FOREACH(ignoreMe IN CASE WHEN relation is null THEN [1] ELSE [] END | MERGE (region)-[:HasNews]->(fresh_news)-[:HasNews]->(stale_news) DELETE stale_relation) RETURN ID(fresh_news)"
-				clause = create_new_news_node = merge_clause + with_clause + optional_match_clause + create_conditional
-				news_id = self.execute_query clause["data"][0].to_i
+				create_conditional = " FOREACH(ignoreMe IN CASE WHEN relation IS NULL THEN [1] ELSE [] END | MERGE (region)-[:HasNews]->(fresh_news)-[:HasNews]->(stale_news) DELETE stale_relation) RETURN ID(fresh_news) as news_id"
+				clause = merge_clause + with_clause + optional_match_clause + create_conditional
+				news_id = @neo.execute_query clause["news_id"][0]
 				tags_topics = self.get_tags news_link
 				
 				response["social_tags"].each do |social_tag|
-					if social_tag["importance"] == 1 then tags << social_tag["originalValue"] end
+					if social_tag["importance"] == Constants::RelevantSocialTagValue then tags << social_tag["originalValue"] end
 				end
 
 				if self.is_news_fresh news_id
@@ -32,15 +33,15 @@ module TrendsHelper
 		end
 	end
 
-	def self.is_news_fresh
-		clause = " MATCH (region:Region)-[:HasNews]->(news) WHERE ID(news) = " + news_id.to_s
-		data = self.execute_query clause["data"][0]
+	def self.is_news_fresh news_id
+		clause = " MATCH (region:Region)-[relation:HasNews]->(news) WHERE ID(news) = " + news_id.to_s + " RETURN ID(relation) as relation_id"
+		data = (self.execute_query clause)["relation_id"][0]
 		if data.blank?
-			response = false
+			is_news_fresh = false
 		else
-			response = true
+			is_news_fresh = true
 		end
-		response
+		is_news_fresh
 	end
 
 	def self.map_news_with_topics news_id, topic
@@ -99,7 +100,7 @@ module TrendsHelper
 	end
 
 	def self.get_tags news_link
-		query = Constants::NLPService + news_link 
+		query = Rails.application.config.nlp_ervice + "/api/v0?q=" + news_link 
 		uri = URI(query)
 		response = Net::HTTP.get(uri)
 	end

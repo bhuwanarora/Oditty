@@ -77,6 +77,13 @@ module Constants
 		RecommendBooks			= "RecommendBooks"
 	end
 
-	NLPService       = "http://52.11.31.102/api/v0/parser?q="
-	UniqueNewsCount  = 50
+	UniqueNewsCount  			= 50
+	BookCountShownOnSignup  	= 30
+	FewBooksReadCountRange  	= ["0-20"]
+	AverageBooksReadCountRange 	= ["20-50", "50-100", "100-250"]
+	InitialSkipCount        	= 0
+	RelevantSocialTagValue      = 1
+	BookLeftAMarkOnYouUpcase 	= "BOOKSLEFTAMARKONYOU"
+	FromFacebookUpcase   		= "FROMFACEBOOK"
+	MarkAsReadUpcase            = "MARKASREAD"
 end

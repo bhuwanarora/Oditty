@@ -1,54 +1,57 @@
 module SignupBookFinderHelper
-	def _get_user_clause 
-			general_clause = " OPTIONAL MATCH (user:User)--(:MarkAsReadNode)--(book:Book) WHERE ID(user) = " + @user_id.to_s + "  WITH user, book"
-	end
-	def find_books_on_count @user_id, skip_count
-		begin
-			limit = 30
+	class SignupBookFinder
 
-			count = self.get_user_book_count
+		def initialize @user_id, @skip_count
+			find_books_on_count
+		end
 
-			skip_count = skip_count.to_i > 30 ? skip_count.to_i : 0  
+		def find_books_on_count 
+			limit = Constants::BookCountShownOnSignup
+			range = self.get_user_book_count
+			@skip_count = @skip_count.to_i > limit ? @skip_count.to_i : Constants::InitialSkipCount  
 
-			if range == ["0-20"] 
-
-				user_case_clause = " RETURN ID(book) ORDER BY book.total_weight"
-
+			case range
+			when Constants::FewBooksReadCountRange
+				user_case_clause = " RETURN ID(book) as book_ids ORDER BY book.total_weight "
 				clause = _get_user_clause + user_case_clause
+				data = neo.execute_query clause
 
-				data = (neo.execute_query clause)["data"].flatten
+				has_linked_books = data["book_ids"].blank? ? false : true
 
-				if data.blank?
-					
-					get_ten_small_books_clause = " MATCH initial_path = (initial_small_read_book:Book)-[:NextSmallRead*" + skip_count.to_s + "]-(small_read) WITH small_read MATCH small_read_path = (small_read)-[:NextSmallRead*30] WHERE ID(inital_small_read_book) = " + Constants::MostPopularSmallReadID + "  RETURN EXTRACT(n in nodes(small_read_path)|ID(n)) AS book_ids "
+				unless has_linked_books
+					get_ten_small_books_clause = " MATCH initial_path = (initial_small_read_book:Book)-[:NextSmallRead*" + @skip_count.to_s + "]-(small_read) WHERE ID(inital_small_read_book) = " + Constants::MostPopularSmallReadID.to_s + " WITH small_read MATCH small_read_path = (small_read)-[:NextSmallRead*" + limit.to_s + "] RETURN EXTRACT(n in nodes(small_read_path)|ID(n)) AS book_ids "
 
 					clause = get_user_book_count + get_ten_small_books_clause
-					data = (neo.execute_query clause)["book_ids"].flatten
+					data = (neo.execute_query clause)
 				end
-			else ["20-50", "50-100", "100-250"].include? range
+			else 
+				# Constants::AverageBooksReadCountRange.include? range
 			 
-			 	match_book_genre_clause = "  MATCH book-[:FromCategory]->()-[HasRoot*0..1]->(root_category{is_root:true}) WITH book, root_category ORDER BY book.total_weight DESC LIMIT " + limit.to_s + " RETURN root_category.name, COLLECT(DISTINCT(book.title)) AS books, COUNT(book) AS book_count ORDER BY book_count DESC "
-
+			 	match_book_genre_clause = "  MATCH book-[:FromCategory]->(:Category)-[HasRoot*0..1]->(root_category{is_root:true}) WITH book, root_category ORDER BY book.total_weight DESC LIMIT " + limit.to_s + " RETURN root_category.name AS root_category, COLLECT(DISTINCT(book.title)) AS book_title, COUNT(book) AS book_count ORDER BY book_count DESC "
 			 	clause =  _get_user_clause + match_book_genre_clause
-			 	data = (neo.execute_query clause)["data"] 
+			 	data = neo.execute_query clause 
+
+			 	has_linked_books = data["root_category"].blank? ? false : true
 			 
-			 	if data.blank?
-			 		find_genre_books = "  MATCH (user:User)-[:Likes]->(category:Category)-[:HasRoot*0..1]->(root_category{is_root:true}) WITH root_category MATCH path = (root_category)-[:NextInGenre*" + skip_count.to_i.to_s + "]->(popular_books)  WITH EXTRACT(n IN nodes(path)| book) AS books UNWIND books AS book RETURN root_category, book ORDER BY book.total_weight SKIP " + skip_count.to_i.to_s + " LIMIT 30 "
+			 	unless has_linked_books
+			 		find_genre_books = "  MATCH (user:User)-[:Likes]->(root_category{is_root:true}) WITH root_category, root_category.uuid AS root_uuid MATCH path = (root_category)-[:NextInGenre*" + @skip_count.to_i.to_s + "]->(popular_books) WHERE ALL(relation in RELATIONSHIPS(path) WHERE relation.uuid = root_uuid)  WITH EXTRACT(n IN nodes(path)| book) AS books, root_category UNWIND books AS book RETURN root_category, book ORDER BY book.total_weight SKIP " + @skip_count.to_i.to_s + " LIMIT" + Constants::BookCountShownOnSignup.to_s
 			 		clause = _get_user_clause + find_genre_books
 			 		
-			 		data = ((neo.execute_query clause)["data"])
-			 
+			 		data = neo.execute_query clause
 			 	end
 			end
-		rescue Exception => e
-			output = e.to_s
-			status = 500
-	end
+			data
+		end
 
+		private
 
-	def self.get_user_book_count 
-		count_match_clause = " MATCH (user:User) WHERE ID(user) = " + @user_id.to_s + " RETURN user.total_count"
-		range = ((neo.execute_query count_match_clause)["data"]).flatten.to_s
-		count = count.to_i
+		def _get_user_clause 
+				general_clause = " OPTIONAL MATCH (user:User)--(:MarkAsReadNode)--(book:Book) WHERE ID(user) = " + @user_id.to_s + "  WITH user, book"
+		end
+
+		def _get_user_book_count 
+			count_match_clause = " MATCH (user:User) WHERE ID(user) = " + @user_id.to_s + " RETURN user.init_book_read_count as init_book_count"
+			range = (neo.execute_query count_match_clause)["init_book_count"]
+		end
 	end
 end
