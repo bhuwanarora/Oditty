@@ -1,34 +1,3 @@
-<<<<<<< HEAD
-<h3>Select books which have left a mark on you</h3>
-<md-content class="card_content white" ng-controller="booksController" check-scroll-bottom="get_popular_books()">
-	<section layout="row" layout-wrap>
-		<div layout="column" class="padding" ng-repeat="book in popular_books" flex="20">
-			<div class="cover_gradient" layout="column" layout-align="space-between" ng-if="book.status">
-				<div layout="row" layout-align="end center" class="padding">
-					<md-button class="bookmark_link" ng-click="show_shelf_bottom_sheet($event)">
-						<span class="icon-bookmark3"></span>
-					</md-button>
-					<div>{{book.bookmark_count}}</div>
-				</div>
-				<div layout="row" layout-align="center center">
-					<div><span class="icon-checkmark"></span></div>
-				</div>
-				<div layout="row" layout-align="center" class="padding">
-					<rate data="book"></rate>
-				</div>
-			</div>
-
-			<md-button class="info_button animate-fast" ng-click="select_book(book)">
-			</md-button>
-			<img ng-src="{{book | choose_medium_thumb}}" class="cover">
-			<br/>
-			<div layout="column" layout-align="start start">
-				<b>{{book.title}}(1947)</b>
-				<div>{{book.author_name}}</div>
-				<div>
-					<span class="icon-star"></span>
-					<span>{{book.user_rating}}</span>
-=======
 <div layout="row" layout-align="center center">
     <h3>Select books which have left a mark on you</h3>
 </div>
@@ -91,9 +60,11 @@
 							<span>{{book.user_rating}}</span>
 						</div>
 					</div>
->>>>>>> c26565d1740277d8bc83fcdbeb342655b3aa7743
 				</div>
 			</div>
+		</div>
+		<div flex="15" flex-md="10" hide-sm >
+			
 		</div>
 	</section>
 </md-content>
@@ -109,13 +80,15 @@
 	.cover_gradient{
 		width: 130px;
 		height: 180px;
+		z-index: 1;
 	}
 
 	.cover_gradient{
 		position: absolute;
-		z-index: 1;
+		z-index: 2;
 		background-color: rgba(0, 0, 0, 0.5);
-		color: white !important;
+		top: 48px;
+  		height: 132px;
 	}
 
 	.info_button{
@@ -124,11 +97,45 @@
 		height: 180px;
 		position: absolute;
 		/*box-shadow: inset 0 3px 8px #000000;*/
-		z-index: 1;
+		z-index: 2;
 	}
 
 	.info_button:hover{
 		border: 5px solid #ececec;
+	}
+
+	.book_backup_cover{
+		width: 130px;
+		height: 180px;
+        position: absolute;
+        color: white;
+        white-space: normal;
+	}
+
+	.circular_icon .icon-checkmark{
+		font-size: 2em;
+	}
+
+	.circular_icon{
+		width: 60px;
+		border-radius: 50%;
+		height: 60px;
+	}
+
+	.slider_wrapper{
+		width: 130px;
+  		height: 180px;
+  		overflow: hidden;
+  		z-index: 1;
+	}
+
+	.upper_slider_wrapper{
+		z-index: 4;
+		background-color: white;
+		 height: 48px;
+  		position: absolute;
+  		left: 0px;
+  		width: 130px;
 	}
 
 </style>

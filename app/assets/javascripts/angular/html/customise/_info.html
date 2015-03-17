@@ -1,19 +1,14 @@
-<<<<<<< HEAD
-<h3>Tell us about you</h3>
-<section layout="row" layout-sm="column" ng-controller="infoController">
-=======
 <h3 layout="row" layout-align="center center">
     <div>Help your friends notice you on ReadersDoor</div>
 </h3>
 <section layout="row" layout-sm="column" ng-controller="infoController" layout-padding>
->>>>>>> c26565d1740277d8bc83fcdbeb342655b3aa7743
 	<div flex="20">
 		<img src="assets/profile_thumb.png" width="100%">
 		<div layout="row" layout-align="center">
-			<div>Upload Image</div>
+			<div>Upload your photo</div>
 		</div>
 	</div>
-	<div flex="80" layout="column">
+	<div flex="80" layout="column" layout-padding>
 		<div layout="row" layout-sm="column">
 			<md-input-container flex>
                 <label>First Name</label>
@@ -27,12 +22,10 @@
             </md-input-container>
 		</div>
 		<div layout="row" layout-sm="column">
-			<calendar save-date="set_date_of_birth()"></calendar>
-            <md-select multiple placeholder="Gender" ng-model="user.gender">
-                <md-option-group label="Gender">
-                    <md-option ng-value="Female">Female</md-option>
-                    <md-option ng-value="Male">Male</md-option>
-                </md-option-group>
+			<calendar save-date="set_date_of_birth()" flex></calendar>
+            <md-select placeholder="Gender" ng-model="user.gender" flex layout-padding>
+                <md-option ng-value="Female">Female</md-option>
+                <md-option ng-value="Male">Male</md-option>
             </md-select>
 		</div>
 		<div>
@@ -43,10 +36,13 @@
             <div layout="row" layout-align="end end">{{user.about.length || 0}}/160</div>
 		</div>
 		<div>
-			<div>Number of books read</div>
+			<div layout="row">
+                <div>How many books have you read? </div>
+                <div style="color: #B5B5B5 !important;">&nbsp;(This information will be kept confidential)</div>
+            </div>
             <md-radio-group layout="row" 
                             layout-sm="column" 
-                            ng-model="user.init_book_read_count" 
+                            ng-model="user.init_book_read_count"
                             ng-change="set_init_book_read_count()">
 				<md-radio-button ng-repeat="book_count in book_counts"
                                 class="md-warn" 

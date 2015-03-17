@@ -1,11 +1,11 @@
-<span>
- 	<select ng-model="selectedYear" ng-options="selectedYear for selectedYear in years" ng-change="date_check()">
- 	 	<option value="">Year</option>
- 	</select>
- 	<select ng-model="selectedMonth" ng-options="selectedMonth for selectedMonth in months" ng-change="date_check()" ng-disabled="!selectedYear">
- 		<option value="">Month</option>
- 	</select>
- 	<select ng-model="selectedDay" ng-options="selectedDay for selectedDay in days" ng-change="date_check(); save_date(selectedYear, selectedMonth, selectedDay);" ng-disabled="!selectedYear || !selectedMonth">
- 		<option value="">Day</option>
- 	</select>
- </span>
+<div layout="row">
+	<md-select ng-model="selectedYear" placeholder="Year" ng-change="date_check()" layout-padding>
+		<md-option ng-repeat="year in years" ng-value="year">{{year}}</md-option>
+    </md-select>
+    <md-select ng-model="selectedMonth" placeholder="Month" ng-change="date_check()" ng-disabled="!selectedYear" layout-padding>
+		<md-option ng-repeat="month in months" ng-value="month">{{month}}</md-option>
+    </md-select>
+    <md-select ng-model="selectedDay" placeholder="Day" ng-change="date_check(); save_date(selectedYear, selectedMonth, selectedDay);" ng-disabled="!selectedYear || !selectedMonth" layout-padding>
+		<md-option ng-repeat="day in days" ng-value="day">{{day}}</md-option>
+    </md-select>
+ </div>

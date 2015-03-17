@@ -1,12 +1,40 @@
-<md-bottom-sheet class="md-list md-has-header" ng-controller="listBottomSheetController" ng-click="stop_propagation($event)">
-  <md-subheader>Share</md-subheader>
-  <md-list>
-    <md-item ng-repeat="item in social_share">
-      <md-button aria-label="{{item.name}}" ng-click="listItemClick($index)">
-        <!-- Using custom inline icon until md-icon is ready. DONT USE ME! -->
-        <md-inline-list-icon icon="{{item.icon}}"></md-inline-list-icon>
-        <span class="md-inline-list-icon-label">{{ item.name }}</span>
-      </md-button>
-    </md-item>
-  </md-list>
+<md-bottom-sheet class="md-list md-has-header" 
+        ng-controller="listBottomSheetController" ng-click="stop_propagation($event)">
+    <md-subheader>Share</md-subheader>
+    <md-list>
+        <md-item>
+            <md-button aria-label="Facebook" class="md-button-clear">
+                <md-inline-list-icon icon="icon-facebook"></md-inline-list-icon>
+                <span class="md-inline-list-icon-label">Facebook</span>
+            </md-button>
+            <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="link"></div>
+        </md-item>
+        <md-item>
+            <md-button aria-label="Twitter" class="md-button-clear">
+                <md-inline-list-icon icon="icon-twitter"></md-inline-list-icon>
+                <span class="md-inline-list-icon-label">Twitter</span>
+            </md-button>
+        </md-item>
+        <md-item>
+            <md-button aria-label="Google+" class="md-button-clear">
+                <md-inline-list-icon icon="icon-google+"></md-inline-list-icon>
+                <span class="md-inline-list-icon-label">Google+</span>
+            </md-button>
+        </md-item>
+        <md-item>
+            <md-button aria-label="Linkedin" class="md-button-clear">
+                <md-inline-list-icon icon="icon-linkedin"></md-inline-list-icon>
+                <span class="md-inline-list-icon-label">Linkedin</span>
+            </md-button>
+        </md-item>
+    </md-list>
 </md-bottom-sheet>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=667868653261167&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
