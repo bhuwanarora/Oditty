@@ -1,5 +1,5 @@
 module BookmarkHelper
-		def self.bookmark_book(user_id, book_id, bookmark_name)
+	def self.bookmark_book(user_id, book_id, bookmark_name)
 
 		@neo ||= self.neo_init
 		bookmark_clause = _match_user_and_book(user_id, book_id) + " WITH user, book MERGE (user)-[labelled:Labelled]->(label:Label{name: \"" + bookmark_name.strip.upcase + "\"}), (label)-[:BookmarkedOn]->(bookmark: BookmarkNode{label:\"" + bookmark_name.strip.upcase + "\", book_id:" + book_id.to_s + ", user_id:" + user_id.to_s + "}), (bookmark)-[:BookmarkAction]->(book) SET bookmark.title = book.title,  bookmark.author = book.author_name, bookmark.name = user.name, bookmark.email = user.email, bookmark.isbn = book.isbn, bookmark.timestamp = " + Time.now.to_i.to_s + ", bookmark.thumb = CASE WHEN user.thumb IS NULL THEN '' ELSE user.thumb END WITH user, book, bookmark, label, labelled "
@@ -23,17 +23,23 @@ module BookmarkHelper
 		@neo.execute_query(clause)
 	end
 
+	private
 
 	def _get_book_left_a_mark_on_you_clause bookmark_name
 		bookmark_name.to_s.strip.upcase!
 		
-		update_root_category_likes_clause = " WITH user, label, bookmark, book OPTIONAL MATCH (user)-->(label)-->(bookmark)-->(book) WITH user, COUNT(DISTINCT book) as total_book_count MATCH (user)-->(label)-->(bookmark)-->(book)-[:FromCategory]->()-[:HasRoot*0..1]->(root_category{is_root:true}) WITH total_book_count, user, root_category OPTIONAL MATCH  (user)-[likes_category:Likes]->(root_category) WITH user, likes_category, root_category, total_book_count MATCH (user)-[likes_category:Likes]->(root_category) SET likes_category.likeability_index = TOFLOAT(likes_category.weight*1.0/total_book_count)"
-									
+		match_user_to_books_clause = " WITH user, label, bookmark, book OPTIONAL MATCH (user)-->(label)-->(bookmark)-->(book) WITH user, COUNT(DISTINCT book) as total_book_count MATCH (user)-->(label)-->(bookmark)-->(book)-[:FromCategory]->()-[:HasRoot*0..1]->(root_category{is_root:true}) WITH total_book_count, user, root_category "
+		match_user_to_category_clause = "OPTIONAL MATCH  (user)-[likes_category:Likes]->(root_category) WITH user, likes_category, root_category, total_book_count MATCH (user)-[likes_category:Likes]->(root_category) "
+		set_likeability_index_clause = "SET likes_category.likeability_index = TOFLOAT(likes_category.weight*1.0/total_book_count)"
+		clause = match_user_to_books_clause + match_user_to_category_clause + set_likeability_index_clause							
+		
 		set_favourite_clause = ", likes_category.favourite = true"
 		
+
+
 		case bookmark_name
 
-		when BookLeftAMarkOnYouUpcase 
+		when Constants::BookLeftAMarkOnYouUpcase 
 			clause = update_root_category_likes_clause + set_favourite_clause
 		when Constants::FromFacebookUpcase 
 			clause = update_root_category_likes_clause
@@ -45,7 +51,6 @@ module BookmarkHelper
 		clause	
 	end
 
-	private
 
 	def _match_user(user_id)
 		"MATCH (user:User) WHERE ID(user)="+user_id.to_s+" WITH user"

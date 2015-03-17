@@ -19,9 +19,10 @@ module SignupBookFinderHelper
 				has_linked_books = data["book_ids"].blank? ? false : true
 
 				unless has_linked_books
-					get_ten_small_books_clause = " MATCH initial_path = (initial_small_read_book:Book)-[:NextSmallRead*" + @skip_count.to_s + "]-(small_read) WHERE ID(inital_small_read_book) = " + Constants::MostPopularSmallReadID.to_s + " WITH small_read MATCH small_read_path = (small_read)-[:NextSmallRead*" + limit.to_s + "] RETURN EXTRACT(n in nodes(small_read_path)|ID(n)) AS book_ids "
+					get_ten_small_books_clause = " MATCH initial_path = (initial_small_read_book:Book)-[:NextSmallRead*" + @skip_count.to_s + "]-(small_read) WHERE ID(inital_small_read_book) = " + Constants::MostPopularSmallReadID.to_s 
+					sort_books_clause = "WITH small_read MATCH small_read_path = (small_read)-[:NextSmallRead*" + limit.to_s + "] RETURN EXTRACT(n in nodes(small_read_path)|ID(n)) AS book_ids "
 
-					clause = get_user_book_count + get_ten_small_books_clause
+					clause = get_user_book_count + get_ten_small_books_clause + sort_books_clause
 					data = (neo.execute_query clause)
 				end
 			else 
@@ -34,8 +35,9 @@ module SignupBookFinderHelper
 			 	has_linked_books = data["root_category"].blank? ? false : true
 			 
 			 	unless has_linked_books
-			 		find_genre_books = "  MATCH (user:User)-[:Likes]->(root_category{is_root:true}) WITH root_category, root_category.uuid AS root_uuid MATCH path = (root_category)-[:NextInGenre*" + @skip_count.to_i.to_s + "]->(popular_books) WHERE ALL(relation in RELATIONSHIPS(path) WHERE relation.uuid = root_uuid)  WITH EXTRACT(n IN nodes(path)| book) AS books, root_category UNWIND books AS book RETURN root_category, book ORDER BY book.total_weight SKIP " + @skip_count.to_i.to_s + " LIMIT" + Constants::BookCountShownOnSignup.to_s
-			 		clause = _get_user_clause + find_genre_books
+			 		find_genre_clause = "  MATCH (user:User)-[:Likes]->(root_category{is_root:true}) WITH root_category, root_category.uuid AS root_uuid "
+			 		find_books_linked_clause = "MATCH path = (root_category)-[:NextInGenre*" + @skip_count.to_i.to_s + "]->(popular_books) WHERE ALL(relation in RELATIONSHIPS(path) WHERE relation.uuid = root_uuid)  WITH EXTRACT(n IN nodes(path)| book) AS books, root_category UNWIND books AS book RETURN root_category, book ORDER BY book.total_weight SKIP " + @skip_count.to_i.to_s + " LIMIT" + Constants::BookCountShownOnSignup.to_s
+			 		clause = _get_user_clause + find_genre_clause + find_books_linked_clause
 			 		
 			 		data = neo.execute_query clause
 			 	end

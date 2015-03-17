@@ -7,11 +7,13 @@ module PersonalisedBookSuggestionHelper
 
 
 	def self.get_category_by_likeability in_descending = false
-		clause = " MATCH (user)-[likes_category:Likes]->(root_category:Category{is_root:true}) WITH TOFLOAT(SUM(likes_category.likeability_index)*1.0/COUNT(root_category)) AS mean_likeability_index, user MATCH (user)-[likes_category:Likes]->(root_category:Category{is_root:true}) WITH likes_category, root_category, mean_likeability_index RETURN root_category, TOFLOAT(likes_category.likeability_index*1.0 - mean_likeability_index) AS mean_deviation ORDER BY mean_deviation "
+		match_user_to_category_clause = " MATCH (user)-[likes_category:Likes]->(root_category:Category{is_root:true}) "
+		get_mean_deviation_clause = "WITH TOFLOAT(SUM(likes_category.likeability_index)*1.0/COUNT(root_category)) AS mean_likeability_index, user MATCH (user)-[likes_category:Likes]->(root_category:Category{is_root:true}) WITH likes_category, root_category, mean_likeability_index RETURN root_category, TOFLOAT(likes_category.likeability_index*1.0 - mean_likeability_index) AS mean_deviation ORDER BY mean_deviation "
+		
+		clause = _match_user + match_user_to_category_clause + get_mean_deviation_clause
 		unless in_descending
 			clause += " DESC"
 		end
-		clause = _match_user + clause
 	end
 
 	def self.get_most_read_author
