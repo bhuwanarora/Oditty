@@ -1,4 +1,4 @@
-homeApp.controller('genresController', ["$scope", "$rootScope", "$timeout", 'userService', 'genreService', 'WebsiteUIConstants', '$mdToast', function($scope, $rootScope, $timeout, userService, genreService, WebsiteUIConstants, $mdToast){
+homeApp.controller('genresController', ["$scope", "$rootScope", "$timeout", 'userService', 'genreService', function($scope, $rootScope, $timeout, userService, genreService){
 
     $scope.save_genre = function(genre){
         var params = {"genre": genre.id, "status": true};
@@ -25,7 +25,6 @@ homeApp.controller('genresController', ["$scope", "$rootScope", "$timeout", 'use
                     var status = value[3] != null;
                     var json = {"name": value[0], 
                                 "id": value[1], 
-                                "url": WebsiteUIConstants.GenreAWS+value[4],
                                 "icon": value[2], 
                                 "status": status};
                     this.push(json);
@@ -36,46 +35,18 @@ homeApp.controller('genresController', ["$scope", "$rootScope", "$timeout", 'use
     }
 
     $scope.select_genre = function(genre){
-        if(genre.status){
-            genre.status = false;
-            var params = {"genre": genre.id, "status": false};
-        }
-        else{
-            genre.status = true;
-            var params = {"genre": genre.id, "status": true};
-        }
-        // angular.forEach($scope.info.genres, function(value){
-        //     if(angular.equals(value, genre)){
-        //         if(angular.equals(genre.status, false)){
-        //             genre.status = true;
-        //         }
-        //         else{
-        //             genre.status = false;
-        //             var params = {"genre": genre.id, "status": false};
-        //         }
-        //     }
-        // });
-        $mdToast.show({
-            controller: 'toastController',
-            templateUrl: 'assets/angular/html/shared/toast/select_genre.html',
-            hideDelay: 6000,
-            position: $scope.getToastPosition()
+        angular.forEach($scope.info.genres, function(value){
+            if(angular.equals(value, genre)){
+                if(angular.equals(genre.status, false)){
+                    genre.status = true;
+                }
+                else{
+                    genre.status = false;
+                }
+            }
         });
-        userService.save_user_info(params);
+        // $scope.info.genres[index].status = true;
     }
-
-    $scope.toast_position = {
-        bottom: false,
-        top: true,
-        left: false,
-        right: true
-    };
-
-    $scope.getToastPosition = function() {
-        return Object.keys($scope.toast_position)
-          .filter(function(pos) { return $scope.toast_position[pos]; })
-          .join(' ');
-    };
 
     _init = function(){
         $scope._get_genres();

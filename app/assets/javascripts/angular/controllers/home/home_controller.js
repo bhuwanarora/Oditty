@@ -1,20 +1,30 @@
-homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSidenav", "$log", '$q', '$mdBottomSheet', '$mdDialog', 'scroller', '$document', 'feedService', '$mdToast', function($scope, $rootScope, $timeout, $mdSidenav, $log, $q, $mdBottomSheet, $mdDialog, scroller, $document, feedService, $mdToast){
+homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSidenav", "$log", '$q', '$mdBottomSheet', '$mdDialog', 'scroller', '$document', function($scope, $rootScope, $timeout, $mdSidenav, $log, $q, $mdBottomSheet, $mdDialog, scroller, $document){
 
-    $scope.play_type_key = function(event){
-        if($scope.info.show_share){
-            if(angular.isUndefined($scope.current_track) || $scope.current_track == 0){
-                $scope.current_track = 1;
-                document.getElementById('audiotag1').play();
-            }
-            else if($scope.current_track == 1){
-                $scope.current_track = 2;
-                document.getElementById('audiotag2').play();
+    $scope.next = function(){
+        if(angular.isDefined($scope.data.selectedIndex)){
+            if($scope.data.selectedIndex == 3){
+                window.location.href = "/library";
             }
             else{
-                $scope.current_track = 0;
-                document.getElementById('audiotag3').play();
+                $scope.data.selectedIndex = $scope.data.selectedIndex + 1;
             }
-            event.stopPropagation();
+        }
+        else{
+            $scope.data.selectedIndex = 0;
+        }
+    }
+
+    $scope.previous = function(){
+        if(angular.isDefined($scope.data.selectedIndex)){
+            if($scope.data.selectedIndex == 0){
+                $scope.data.selectedIndex = 3;
+            }
+            else{
+                $scope.data.selectedIndex = $scope.data.selectedIndex - 1;
+            }
+        }
+        else{
+            $scope.data.selectedIndex = 0;
         }
     }
 
@@ -150,32 +160,21 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
         });
     };
 
-    $scope.show_share_page = function(event) {
-        if(!$scope.info.show_share){
-            $scope.info.show_share = true;
-        }
-        else{
-            if($scope.info.status.length > 1){
-                $scope.info.status = "";
-                $scope.type_icon_pressed = {"margin-right": "60vw"};
-                $timeout(function(){
-                    $scope.type_icon_pressed = {"margin-right": "0px"};
-                }, 100);
-            }
-        }
+    $scope.showAdvanced = function(event) {
+        $mdDialog.show({
+            controller: 'shareController',
+            templateUrl: 'assets/angular/html/shared/share.html',
+            targetEvent: event,
+        });
     };
 
     $scope._init = function(){
         $scope.info = {};
-        $scope.info.show_share = false;
         $scope.data = {"selectedIndex" : 0};
         $rootScope.user = {};
-        // feedService.get_feed(0).then(function(data){
-        //     // debugger
-        // });
-
-        
-    };
+    }
 
     $scope._init();
+
+
 }]);

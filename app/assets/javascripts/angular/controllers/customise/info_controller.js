@@ -20,6 +20,11 @@ homeApp.controller('infoController', ["$scope", "$rootScope", "$timeout", 'userS
         userService.save_user_info(params);
     }
 
+    $scope.set_about = function(){
+        var params = {"about":$rootScope.user.about};
+        userService.save_user_info(params);
+    }
+
     $scope.set_email = function(){
         if(angular.isDefined($rootScope.user.email) && $rootScope.user.email.length > 0){
             var params = {"email": $rootScope.user.email};
@@ -45,14 +50,7 @@ homeApp.controller('infoController', ["$scope", "$rootScope", "$timeout", 'userS
         if($rootScope.user.init_book_written_count){
             var params = {"init_book_written_count": $rootScope.user.init_book_written_count};
             userService.save_user_info(params);  
-        }
-    }
-
-    $scope.set_about = function(){
-        if($rootScope.user.about){
-            var params = {"about": $rootScope.user.about};
-            userService.save_user_info(params);     
-        }
+        }   
     }
     
     _get_info_data = function(){

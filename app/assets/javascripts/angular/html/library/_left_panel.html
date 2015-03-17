@@ -1,49 +1,32 @@
-<md-content layout="column" layout-align="start end" layout-padding
-			ng-if="!constant.show_book"
-            class="fixed_left_panel">
-    <h3>Group by</h3>
-    <div class="thin_margin">
-        <a class="right_anchored">Subject</a>
-    </div>
-    <div class="thin_margin" ng-click="sort_by_published_era()" ng-disabled="info.published_era_filter">
-        <a ng-class="{'inactive_link': info.published_era_filter}" class="right_anchored">Publishing Era</a>
-    </div>
-    <div class="thin_margin" ng-click="sort_by_author()" ng-disabled="info.author_filter" >
-        <a ng-class="{'inactive_link': info.author_filter}" class="right_anchored">Author</a>
-    </div>
-    <div class="thin_margin" ng-click="sort_by_reading_time()" ng-disabled="info.reading_time_filter">
-        <a ng-class="{'inactive_link': info.reading_time_filter}" class="right_anchored">Reading Time</a>
-    </div>
+<md-content layout="column" class="md-padding" layout-align="start end" 
+			ng-if="!constant.show_book">
+    <h3>Sort by</h3>
+    <div><a>Genre</a></div>
+    <div><a>Year</a></div>
+    <div><a>Author</a></div>
+    <div><a>Duration</a></div>
 </md-content>
+<md-content	ng-if="constant.show_book" layout="column" layout-align="start end" class="padding">
+	<div layout="row" layout-align="center center" layout-margin>
+		<div>Thriller&nbsp;&nbsp;</div>
+		<div class="grey_circle"></div>
+	</div>
+	<div layout="row" layout-align="center center" layout-margin>
+		<div>Suspense&nbsp;&nbsp;</div>
+		<div class="grey_circle"></div>
+	</div>
+	<div layout="row" layout-align="center center" layout-margin>
+		<div>Suspense&nbsp;&nbsp;</div>
+		<div class="grey_circle"></div>
+	</div>
+</md-content>
+
 <style>
-    .fixed_left_panel{
-        position: fixed;
-        top: 100px;
-        left: 0px;
-        width: 20vw;
-    }
-	.right_anchored{
-		border-right: 5px solid;
-      	border-radius: 1px;
-      	padding-right: 5px;
-      	border-color: #d0d0d0;
+	.grey_circle{
+		background-color: rgba(197, 197, 197, 0.46);
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
 	}
-
-	.right_anchored:hover{
-        text-decoration: underline !important;
-        border-color: #404040;
-    }
-
-    .thin_margin{
-        margin-top: 2px;
-    }
-
-    .inactive_link{
-        font-weight: bold;
-        cursor: default;
-    }
-
-    .inactive_link:hover{
-        text-decoration: none !important;
-    }
 </style>

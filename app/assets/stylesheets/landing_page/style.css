@@ -276,20 +276,20 @@ md-tab.active a{
     }
 }
 
-.yellow-background{
-    background: #FFDC00;
+.purple-background{
+    background: #A953BF;
 }
 
-.blue-background{
-    background: #1485CC;
+.orange-background{
+    background: #E6580B;
 }
 
 .green-background{
-    background: #6FA638;
+    background: #008200;
 }
 
-.pink-background{
-    background: #BF213E;
+.blue-background{
+    background: #0082DF;
 }
 
 .img-discover{

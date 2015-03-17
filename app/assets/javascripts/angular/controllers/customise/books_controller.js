@@ -1,4 +1,4 @@
-homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'bookService', 'ColorConstants', '$mdToast', function($scope, $rootScope, $timeout, bookService, ColorConstants, $mdToast){
+homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'bookService', function($scope, $rootScope, $timeout, bookService){
 
     $scope.get_popular_books = function(){
         $scope.info.loading = true;
@@ -6,20 +6,15 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
         var get_popular_books = !$scope._loading && (angular.isUndefined($scope.info.search_book) || $scope.info.search_book.length < 1);
         if(get_popular_books){
             $scope._loading = true;
-            var params = {"skip_count": skip_count};
-            params = angular.toJson(params);
-            bookService.get_popular_books(params).then(function(data){
+            bookService.get_popular_books(skip_count).then(function(data){
                 angular.forEach(data, function(value){
-                    var random_int = Math.floor(Math.random()*ColorConstants.value.length);
                     var status = value[4] != null;
                     var json = {"isbn": value[0], 
                             "id": value[1], 
                             "title": value[2], 
                             "author_name": value[3], 
                             "user_rating": value[5],
-                            "status": status,
-                            "color": ColorConstants.value[random_int]
-                        };
+                            "status": status};
                     this.push(json);
                 },  $scope.popular_books);
                 $scope._loading = false;
@@ -28,7 +23,7 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
         }
         else{
             if(angular.isUndefined($scope.all_results_found) || !$scope.all_results_found){
-                // $scope._fetch_book_results();
+                $scope._fetch_book_results();
             }
             $scope.info.loading = false;
         }
@@ -61,30 +56,10 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
                 }
             }
         });
-        $mdToast.show({
-            controller: 'toastController',
-            templateUrl: 'assets/angular/html/shared/toast/select_book.html',
-            hideDelay: 6000,
-            position: $scope.getToastPosition()
-        });
         // $scope.info.genres[index].status = true;
     }
 
-    $scope.toast_position = {
-        bottom: false,
-        top: true,
-        left: false,
-        right: true
-    };
-
-    $scope.getToastPosition = function() {
-        return Object.keys($scope.toast_position)
-          .filter(function(pos) { return $scope.toast_position[pos]; })
-          .join(' ');
-    };
-
     $scope._fetch_book_results = function(reset_required){
-        debugger
         var skip_count = $scope.popular_books.length;
         var _all_results_fetched = function(){
             $scope.all_results_found = true;
