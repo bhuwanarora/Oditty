@@ -60,6 +60,14 @@
         text-align: center;
     }
 
+    .list{
+        padding-top: 40px;
+        color: #929292;
+        font-size: 1.5em;
+        font-weight: 600;
+        font-style: bold;
+    }
+
 }
 
 
@@ -123,6 +131,13 @@
         text-align: center;
     }
 
+    .list{
+        padding-top: 40px;
+        color: #929292;
+        font-size: 1.3em;
+        font-weight: 600;
+        font-style: bold;
+    }
 }
 
 @media (max-width: 540px)and (max-height:1199px){

@@ -377,13 +377,6 @@ md-tab.active a{
     width: 75%; 
 }
 
-.list{
-    padding-top: 40px;
-    color: #929292;
-    font-size: 1.5em;
-    font-weight: 700;
-    font-style: bold;
-}
 
 .desc{
     font-size: 2.5vh;   
