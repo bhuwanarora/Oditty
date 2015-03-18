@@ -253,19 +253,6 @@ md-tab.active a{
     width: 58%;
 }
 
-.description{
-    line-height: 1.3em;
-    text-align: center;
-    color: #616161;
-    font-size: 1.5em;
-    font-weight: normal;
-    font-style: bold;
-    -webkit-font-smoothing: antialiased;
-    -moz-font-smoothing: antialiased;
-    /*margin-bottom: 1em;*/
-    text-align: center;
-}
-
 .img_fullsize{
     padding:10px;
     height: auto; 

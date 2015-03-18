@@ -47,10 +47,23 @@
         color: #666;
     }
 
+    .description{
+        line-height: 1.3em;
+        text-align: center;
+        color: #616161;
+        font-size: 1.5em;
+        font-weight: normal;
+        font-style: bold;
+        -webkit-font-smoothing: antialiased;
+        -moz-font-smoothing: antialiased;
+        /*margin-bottom: 1em;*/
+        text-align: center;
+    }
+
 }
 
 
-@media (min-width: 400px)and (max-width:1000px){
+@media (min-width: 550px)and (max-width:1000px){
     
     .top_view{
         height: 70vh;
@@ -66,7 +79,7 @@
     }
 
     .title{
-        font-size: 40px;
+        font-size: 45px;
         color: white;    
         font-family: 'Roboto';
         font-weight: lighter; 
@@ -95,6 +108,19 @@
         padding: 15px;
         margin: 15px;
         color: #666;
+    }
+
+    .description{
+        line-height: 1.3em;
+        text-align: center;
+        color: #616161;
+        font-size: 1.2em;
+        font-weight: normal;
+        font-style: bold;
+        -webkit-font-smoothing: antialiased;
+        -moz-font-smoothing: antialiased;
+        /*margin-bottom: 1em;*/
+        text-align: center;
     }
 
 }
@@ -148,5 +174,17 @@
         color: #666;
     }
 
+    .description{
+        line-height: 1.3em;
+        text-align: center;
+        color: #616161;
+        font-size: 1em;
+        font-weight: normal;
+        font-style: bold;
+        -webkit-font-smoothing: antialiased;
+        -moz-font-smoothing: antialiased;
+        /*margin-bottom: 1em;*/
+        text-align: center;
+    }
 
 }
