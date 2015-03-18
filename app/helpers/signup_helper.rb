@@ -63,10 +63,6 @@ module SignupHelper
 			range = (@neo.execute_query count_match_clause)["init_book_count"] rescue 0
 		end
 
-
-  # MATCH (book)-[:FromCategory]->(:Category)-[HasRoot*0..1]->(root_category{is_root:true}) WITH book, mark_as_read, root_category, rating_node ORDER BY book.total_weight DESC @LIMIT 30 RETURN root_category.name AS root_category, ID(book) AS book_ids, book.isbn AS isbn, book.title AS title, book.author_name AS author, book.pages AS pages, book.published_year AS year, ID(mark_as_read) AS mark_as_read_node_id, rating_node.rating AS rating  , COUNT(book) AS book_count ORDER BY book_count DESC
-
-
 		def handle_average_number_books_read user_id, skip_count
 		 	need_rating = true
 		 	match_book_genre_clause = "  MATCH (book)-[:FromCategory]->(:Category)-[HasRoot*0..1]->(root_category{is_root:true}) WITH book, mark_as_read, root_category, rating_node ORDER BY book.total_weight DESC LIMIT " + @limit.to_s + " RETURN root_category.name AS root_category ,"
