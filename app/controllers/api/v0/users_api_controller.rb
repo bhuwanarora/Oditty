@@ -259,6 +259,19 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def endorse_book
+				user_id = params[:user_id]
+				book_id = params[:book_id]
+				if user_id && book_id
+					info = UsersGraphHelper.endorse_book(book_id, user_id)
+					status = 200
+				else
+					info = " Missing information"
+					status = 404
+				end
+				render :json => info, :status => status
+			end
+
 			def get_followed_by
 				info = UserApi.get_followed_by session[:user_id]
 				render :json => info, :status => 200
