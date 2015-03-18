@@ -81,7 +81,7 @@ module SignupHelper
 		 
 		 	unless has_linked_books
 		 		find_genre_clause = "  MATCH (user:User)-[:Likes]->(root_category{is_root:true}) WITH root_category, root_category.uuid AS root_uuid "
-		 		find_books_linked_clause = "MATCH path = (root_category)-[:NextInGenre*" + skip_count.to_i.to_s + "]->(popular_books) WHERE ALL(relation in RELATIONSHIPS(path) WHERE relation.uuid = root_uuid)  WITH EXTRACT(n IN nodes(path)| n) AS books, root_category UNWIND books AS book RETURN root_category AS root_category, "
+		 		find_books_linked_clause = "MATCH path = (root_category)-[:NextInGenre*" + skip_count.to_i.to_s + "]->(popular_books) WHERE ALL(relation in RELATIONSHIPS(path) WHERE relation.uuid = root_uuid)  WITH EXTRACT(n IN nodes(path)| n) AS books, root_category UNWIND books AS book RETURN root_category.name AS root_category, "
 		 		limit_clause = " ORDER BY popularity LIMIT " + Constants::BookCountShownOnSignup.to_s
 		 		clause = _get_user_clause(user_id) + find_genre_clause + find_books_linked_clause + _get_return_book_properties_clause + limit_clause
 		 		data = @neo.execute_query clause
