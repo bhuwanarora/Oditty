@@ -262,12 +262,11 @@ module Api
 			def endorse_book
 				user_id = session[:user_id]
 				book_id = params[:book_id]
-				endorse_id = params[:endorse_id]
-
-				if endorse_id
-					UsersGraphHelper.remove_endorse(endorse_id, user_id)
-				else
+				data = params[:data]
+				if data
 					UsersGraphHelper.endorse_book(book_id, user_id)
+				else
+					UsersGraphHelper.remove_endorse(endorse_id, user_id)
 				end
 			end
 
