@@ -20,7 +20,7 @@ module Api
 			def self.get_news_feed(user_id, skip_count)
 				news_feed = UsersGraphHelper.get_news_feed(user_id, skip_count)
 				begin
-					notifications = NotificationHelper.structure_feed news_feed["data"]
+					notifications = NotificationHelper.structure_feed news_feed
 				rescue Exception => e
 					notifications = []
 				end
@@ -30,7 +30,7 @@ module Api
 			def self.get_personal_feed(user_id, skip_count)
 				news_feed = UsersGraphHelper.get_personal_feed(user_id, skip_count)
 				begin
-					notifications = NotificationHelper.structure_feed news_feed["data"]
+					notifications = NotificationHelper.structure_feed news_feed
 				rescue Exception => e
 					notifications = []
 				end
@@ -43,7 +43,7 @@ module Api
 
 			def self.get_time_groups
 				neo_init
-                time_groups = @neo.execute_query("MATCH (t:Era) RETURN t")["data"]
+                time_groups = @neo.execute_query("MATCH (t:Era) RETURN t.name as name, t.range as range, ID(t) as id")
                 time_groups
 			end
 

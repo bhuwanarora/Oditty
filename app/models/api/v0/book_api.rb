@@ -119,10 +119,10 @@ module Api
 					skip_count = params["skip_count"]
 				end
 				@neo = Neography::Rest.new
-				clause = "MATCH (b:Book) WHERE ID(b)="+Constants::BestBook.to_s+" MATCH p=(b)-[:Next_book*.."+(20+skip_count.to_i).to_s+"]->(b_next) WITH last(nodes(p)) as book OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" WITH user, book, m OPTIONAL MATCH (user)-[:RatingAction]->(z:RatingNode{book_id:ID(book), user_id:"+user_id.to_s+"})-[:Rate]->(book) RETURN book.isbn as isbn, ID(book), book.title, book.author_name, ID(m), z.rating, book.published_year, book.page_count SKIP "+skip_count.to_s
+				clause = "MATCH (b:Book) WHERE ID(b)="+Constants::BestBook.to_s+" MATCH p=(b)-[:Next_book*.."+(20+skip_count.to_i).to_s+"]->(b_next) WITH last(nodes(p)) as book OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" WITH user, book, m OPTIONAL MATCH (user)-[:RatingAction]->(z:RatingNode{book_id:ID(book), user_id:"+user_id.to_s+"})-[:Rate]->(book) RETURN book.isbn as isbn, ID(book) as id, book.title as title, book.author_name as author_name, ID(m) as status, z.rating as user_rating, book.published_year as published_year, book.page_count as page_count SKIP "+skip_count.to_s
 				puts clause.blue.on_red
 				begin
-					books =  @neo.execute_query(clause)["data"]
+					books =  @neo.execute_query(clause)
 				rescue Exception => e
 					puts e.to_s.red
 					books = [{:message => "Error in finding books"}]
@@ -435,7 +435,7 @@ module Api
 					end
 				end
 
-				return_clause = "RETURN book.isbn as isbn, ID(book), book.external_thumb"
+				return_clause = "RETURN book.isbn as isbn, ID(book) as id, book.external_thumb as external_thumb"
 				
 				# distinct_clause = "ALL (id in "+book_ids.to_s+" WHERE toInt(id) <> ID(book)) "
 
@@ -481,6 +481,7 @@ module Api
 					elsif read_time == Constants::LongRead
 						next_Where_clause = " toInt(book.page_count) > 250 "
 					end
+					
 					if where_clause.present?
 						where_clause = where_clause + " AND"+next_Where_clause
 					else
