@@ -20,7 +20,6 @@ h1, h2, h3, h4 {
     height: 80px;
     overflow: hidden;
     width: 100%;
-    padding:10px 20px;
     position: fixed;
     z-index: 2;
 }
@@ -43,8 +42,8 @@ h1, h2, h3, h4 {
     vertical-align: top;
 }
 
-.main-header .h-btn-right{
-    float: right;
+.h-btn-right{
+    float: right !important;
     font-size: .8em;
     padding-top: 5px;
 
@@ -60,7 +59,32 @@ h1, h2, h3, h4 {
     width: 100%;
     top: 80px;
     left: 0;
+    font-weight: normal;
     z-index: 5;
+}
+
+.tab-main .md-header {
+    background-color: white !important; 
+}
+  
+.tab-main md-tab {
+    color: grey !important; 
+}
+
+.tab-main md-tab.active, .tab-main md-tab:focus {
+    color: black !important; 
+}
+
+.tab-main .md-header .md-ripple {
+    border-color: black !important; 
+}
+
+.tab-main md-tabs-ink-bar {
+    background-color: white !important; 
+}
+
+.tab-main md-tabs .md-paginator {
+    color: black; 
 }
 
 md-tabs.md-default-theme.md-accent .md-header{
@@ -86,11 +110,11 @@ md-tabs md-tab{
 md-tabs a{
     color: #444;
     line-height: 30px;
-    font-size: .9em;
+    font-size: 1em;
     text-decoration: none;
     padding: 10px 20px;
     display: block;
-    font-weight: 400;
+    font-weight: normal;
 }
 
 md-tab.active a{
@@ -98,12 +122,9 @@ md-tab.active a{
 }
 
 .inbox-area{
-    padding-top: 170px;
     background:#BD3109;
-    height: 100vh;
     width: 100%;
     color: #fff;
-    position: initial;
 }
 
 .inbox-area h2{
@@ -178,9 +199,7 @@ md-tab.active a{
 .aside-bg {
     background: #dedede;
     box-shadow: -2px 0 2px rgba(0,0,0,.1) inset;
-    display: block;
     float: left;
-    width: 22%;
     position: absolute;
     height: 70vh;
 }
@@ -210,13 +229,16 @@ md-tab.active a{
     width: 100%;
     /*max-width: 62em;*/
 }
-.w-box{
-    background: #fff;
-    text-align: left;
-    padding: 20px;
-    margin: 30px 0; 
-    color: #666;   
+.img_container{
+    color:white;
+    padding: 10px 10px; 
+    background: white;   
 }
+
+.left_container{    
+    background: #dedede;
+    box-shadow: -2px 0 2px rgba(0,0,0,0.1) inset;
+}   
 
 .site_color{
     color: #BD3109;
@@ -226,25 +248,36 @@ md-tab.active a{
     position: fixed !important;
 }
 
-.feature-description{
-    border-bottom: 1px solid #cfcfcf;
+.img_shelf{
+    height: 65%;
+    width: 58%;
+}
+
+.description{
+    line-height: 1.3em;
+    text-align: center;
     color: #616161;
-    font-size: 1.3em;
+    font-size: 1.5em;
+    font-weight: normal;
+    font-style: bold;
     -webkit-font-smoothing: antialiased;
     -moz-font-smoothing: antialiased;
-    -ms-font-smoothing: antialiased;
-    font-smoothing: antialiased;
-    line-height: 1.3em;
     /*margin-bottom: 1em;*/
-    padding: 1em;
     text-align: center;
 }
+
+.img_fullsize{
+    padding:10px;
+    height: auto; 
+    width: 100%;
+}
+
 
 #Search, 
 #ConnectInner,
 #ExploreInner,
 #PersonaliseInner{
-    margin-top: 90px;
+    margin-top: 200px;
     position: absolute;
 }
 
@@ -261,12 +294,6 @@ md-tab.active a{
         padding: 16px 0px !important;
     }
 
-    .img-connect{
-        margin-left: -21% !important;
-        width: 105% !important;
-        margin-top: 15% !important;
-    }
-
     .header-image h2{
         font-size: 5em;
     }
@@ -276,38 +303,24 @@ md-tab.active a{
     }
 }
 
-.yellow-background{
+.yellow_background{
     background: #FFDC00;
 }
 
-.blue-background{
+.blue_background{
     background: #1485CC;
 }
 
-.green-background{
+.green_background{
     background: #6FA638;
 }
 
-.pink-background{
+.pink_background{
     background: #BF213E;
 }
 
-.img-discover{
-    width: 55%;
-    margin-left: 30%;
-}
-
-.img-wrapped{
-    width: 37%;
-    margin-left: 30%;
-}
-
-.enlarge-width{
-    width: 163%;
-}
-
-.img-connect{
-    width: 79%;
+.hex_background{
+    background:#BD3109;
 }
 
 .signup-container {
@@ -332,12 +345,6 @@ md-tab.active a{
     text-decoration: none;
 }
 
-.img-resize{
-    max-width: 100%; 
-    height: auto;
-    width: auto\9;
-}
-
 .arrow-icon{
     width: 24px;
     padding-top: 15%;
@@ -345,4 +352,61 @@ md-tab.active a{
 
 .gray_background{
     background: #ececec;
+}
+
+.full_view{
+    padding-top: 10vh;
+    height: 100vh;
+    color: white;
+}    
+    
+.main_view{
+    height: 100vh;
+}
+    
+.foot_view{
+    height: 90vh;
+    background: #ececec;
+}
+
+.img_resize{
+    height: 100%; 
+    width: 85%;
+}
+
+.img_short{
+    height:70%;
+    width: 60%;
+}
+
+.video_size{
+    height: 60%;
+    width:80%;
+}
+
+.full_img{
+    padding-top: 20px;
+    height: 95%;
+    width: 75%; 
+}
+
+.list{
+    padding-top: 40px;
+    color: #929292;
+    font-size: 1.5em;
+    font-weight: 700;
+    font-style: bold;
+}
+
+.desc{
+    font-size: 2.5vh;   
+    font-family: 'Roboto';
+    color:white; 
+    line-height: 1em;  
+}
+
+.side_panel{
+    margin-top: -1px !important;
+    max-width: 100px !important;
+    position: absolute;
 }
