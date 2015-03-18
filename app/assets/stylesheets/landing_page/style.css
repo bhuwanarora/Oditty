@@ -395,5 +395,5 @@ md-tab.active a{
 .side_panel{
     margin-top: -1px !important;
     max-width: 100px !important;
-    position: absolute;
+    position: fixed;
 }
