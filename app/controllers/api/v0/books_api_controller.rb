@@ -14,12 +14,6 @@ module Api
 				render :json => info, :status => status
 			end
 
-			def endorse_book 
-				book_id = params[:id]
-				user_id = session[:user_id]
-
-			end
-
 			def books_on_signup
 				skip_count = params[:skip_count]
 				user_id = session[:user_id]

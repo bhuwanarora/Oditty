@@ -260,24 +260,21 @@ module Api
 			end
 
 			def endorse_book
-				user_id = params[:user_id]
+				user_id = session[:user_id]
 				book_id = params[:book_id]
-				if user_id && book_id
-					info = UsersGraphHelper.endorse_book(book_id, user_id)
-					status = 200
+				endorse_id = params[:endorse_id]
+
+				if endorse_id
+					UsersGraphHelper.remove_endorse(endorse_id, user_id)
 				else
-					info = " Missing information"
-					status = 404
+					UsersGraphHelper.endorse_book(book_id, user_id)
 				end
-				render :json => info, :status => status
 			end
 
 			def get_followed_by
 				info = UserApi.get_followed_by session[:user_id]
 				render :json => info, :status => 200
 			end
-
-			
 		end
 	end
 end
