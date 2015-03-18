@@ -37,7 +37,7 @@ module SignupHelper
 
 				get_ten_small_books_clause = " MATCH initial_path = (best_small_read_book:Book)-[:NextSmallRead*" + skip_count.to_s + "]-(small_read) WHERE ID(best_small_read_book) = " + Constants::BestSmallRead.to_s 
 				sort_books_clause = " WITH EXTRACT(n in nodes(initial_path)|n) AS books UNWIND books AS book RETURN "
-				order_clause = " ORDER BY popularity LIMIT " + Constants::BookCountShownOnSignup 
+				order_clause = " ORDER BY popularity LIMIT " + Constants::BookCountShownOnSignup.to_s
 
 				clause =  get_ten_small_books_clause + sort_books_clause + _get_return_book_properties_clause + order_clause
 				data = @neo.execute_query clause
