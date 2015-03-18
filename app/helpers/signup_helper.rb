@@ -31,7 +31,7 @@ module SignupHelper
 			clause = _get_user_clause(user_id, need_rating) + return_clause +  _get_return_book_properties_clause(need_rating)
 			data = @neo.execute_query clause
 
-			has_linked_books = data["id"].blank? ? false : true rescue false
+			has_linked_books = data[0]["id"].blank? ? false : true rescue false
 
 			unless has_linked_books
 
@@ -46,7 +46,7 @@ module SignupHelper
 
 		def _get_return_book_properties_clause need_rating = false
 			return_book_properties_clause = " ID(book) AS id, book.isbn AS isbn, book.title AS title, book.author_name AS author_name, book.pages AS pages, book.published_year AS year, book.total_weight as popularity"
-			return_ratings_clause = ", ID(mark_as_read) AS mark_as_read_node_id, rating_node.rating AS rating" 
+			return_ratings_clause = ", ID(mark_as_read) AS status, rating_node.rating AS user_rating" 
 			if need_rating
 				clause = return_book_properties_clause + return_ratings_clause
 			else 
@@ -77,7 +77,7 @@ module SignupHelper
 		 	sort_clause =  ", COUNT(book) AS book_count ORDER BY book_count DESC "
 		 	clause =  _get_user_clause(user_id, need_rating) + match_book_genre_clause + _get_return_book_properties_clause(need_rating) + sort_clause
 		 	data = @neo.execute_query clause 
-		 	has_linked_books = data["root_category"].blank? ? false : true rescue false
+		 	has_linked_books = data[0]["root_category"].blank? ? false : true rescue false
 		 
 		 	unless has_linked_books
 		 		find_genre_clause = "  MATCH (user:User)-[:Likes]->(root_category{is_root:true}) WITH root_category, root_category.uuid AS root_uuid "
