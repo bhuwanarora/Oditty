@@ -11,15 +11,8 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
             bookService.books_on_signup(params).then(function(data){
                 angular.forEach(data, function(value){
                     var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-                    var status = value[4] != null;
-                    var json = {"isbn": value[0], 
-                            "id": value[1], 
-                            "title": value[2], 
-                            "author_name": value[3], 
-                            "user_rating": value[5],
-                            "status": status,
-                            "color": ColorConstants.value[random_int]
-                        };
+                    var status = value.status != null;
+                    var json = angular.extend(value, {"status": status, "color": ColorConstants.value[random_int]});
                     this.push(json);
                 },  $scope.popular_books);
                 $scope._loading = false;
