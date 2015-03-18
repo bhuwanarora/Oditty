@@ -4,6 +4,11 @@ module BooksGraphHelper
 		@neo = Neography::Rest.new
 	end
 
+	def self.endorse_book book_id, user_id
+		match_clause = " MATCH (user:User), (book:Book) WHERE ID(user) = " + user_id.to_s + " AND ID(book) = " + book_id.to_s + " WITH user, book"
+		create_endorse_node = " MERGE (user)-[:EndorsingAction]-(endorsed:EndorseNode{created_at: " + Time.now.to_i.to_s + ", book_id:ID(book), user_id:ID(user), updated_at:  " + Time.now.to_i.to_s + "})-[endorsed:Endorsed]-(book:Book)"
+	end
+
 	def self.create_thumb_request(params, user_id)
 		book_id = params[:book_id]
 		thumb_url = params[:thumb_url]

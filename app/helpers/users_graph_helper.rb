@@ -27,6 +27,39 @@ module UsersGraphHelper
 		#update news feed for the user
 	end
 
+
+	def self.endorse_book book_id, user_id
+		@neo ||= self.neo_init
+		create_endorse_node = _match_user_and_book(user_id, book_id) + " MERGE (user)-[:EndorsingAction]-(endorsed:EndorsedNode{created_at: " + Time.now.to_i.to_s + ", book_id:ID(book), user_id:ID(user), updated_at:  " + Time.now.to_i.to_s + "})-[endorsed:Endorsed]-(book:Book) WITH user, endorsed, book"
+		find_old_feed = " MATCH (user)-[old:FeedNext]->(old_feed)  "
+		create_new_feed = " CREATE UNIQUE (user)-[:FeedNext{user_id:" + user_id.to_s + "}]->(endorsed)-[:FeedNext{user_id:" + user_id.to_s + "}]->(old_feed) DELETE old WITH user, endorsed, book"
+		find_old_book_feed = "MATCH (book)-[old:BookFeed]->(old_feed) "
+		create_new_book_feed = "CREATE UNIQUE (b)-[:BookFeed{user_id:"+user_id.to_s+"}]->(m)-[:BookFeed{user_id:"+user_id.to_s+"}]->(old_feed) "
+
+		bookfeed_next_clause = _bookfeed_clause(user_id)+", l, lr "
+
+		existing_ego_clause = _existing_ego_clause+", l, lr "
+
+		ego_clause = _ego_clause + ", l, lr "
+
+
+		set_clause = "SET b.bookmark_count = CASE WHEN b.bookmark_count IS NULL THEN 1 ELSE toInt(b.bookmark_count) + 1 END, u.bookmark_count = CASE WHEN u.bookmark_count IS NULL THEN 1 ELSE toInt(u.bookmark_count) + 1 END, l.bookmark_count = CASE WHEN l.bookmark_count IS NULL THEN 1 ELSE toInt(l.bookmark_count) + 1 END, lr.bookmark_count = CASE WHEN lr.bookmark_count IS NULL THEN 1 ELSE toInt(lr.bookmark_count) + 1 END, u.total_count = CASE WHEN u.total_count IS NULL THEN "+Constants::BookmarkPoints.to_s+" ELSE toInt(u.total_count) + "+Constants::BookmarkPoints.to_s+" END"
+
+		clause = bookmark_clause + feednext_clause + bookfeed_next_clause + existing_ego_clause + ego_clause + set_clause
+		puts clause.blue.on_red
+		puts "BOOK BOOKMARKED".green
+		@neo.execute_query(clause)
+		#update bookmark cache for the book
+		#update popularity index for the book
+		#update popularity index for the author
+
+		#update bookmark cache for the user
+		#update bookworm index for the user
+
+		#update news feed for the book
+		
+	end
+
 	def self.record_time(user_id, book_id, time)
 		@neo ||= self.neo_init
 		rating_clause = _match_user_and_book(user_id, book_id)+" CREATE UNIQUE (u)-[:TimingAction]->(m:TimingNode{book_id:"+book_id.to_s+", title:b.title, author:b.author_name, user_id:"+user_id.to_s+"})-[:Timer]->(b) SET m.timestamp="+Time.now.to_i.to_s+", m.time_index="+time.to_s+", m.name=u.name, m.email=u.email, m.isbn=b.isbn, m.thumb = CASE WHEN u.thumb IS NULL THEN '' ELSE u.thumb END  WITH u, b, m "

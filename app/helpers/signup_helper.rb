@@ -1,7 +1,7 @@
 module SignupHelper
 	class BooksFinder
 
-		def initialize user_id, skip_count
+		def get_sorted_books user_id, skip_count
 			@neo ||= Neography::Rest.new
 			@limit = Constants::BookCountShownOnSignup
 			range = _get_user_book_count user_id
@@ -16,6 +16,13 @@ module SignupHelper
 			data
 		end
 
+		def get_sorted_genres user_id
+			@neo ||= Neography::Rest.new
+			match_user_clause = " MATCH (user:User)-[likes_category:Category{is_root:true}]->(root_category:Category) WHERE ID(user) =  " + user_id.to_s 
+			sort_genres_clause = " WITH likes_category.weight AS user_likeability, root_category RETURN root_category.name AS category, root_category.id AS category_id ORDER BY user_likeability DESC"
+			clause = match_user_clause + sort_genres_clause
+			@neo.execute_query clause
+		end
 
 		private
 	
@@ -78,6 +85,12 @@ module SignupHelper
 		 		clause = _get_user_clause(user_id) + find_genre_clause + find_books_linked_clause + _get_return_book_properties_clause + limit_clause
 		 		data = @neo.execute_query clause
 		 	end
+		end
+
+		def self.get_book_categories book_id
+			match_book_category_clause = " MATCH (book:Book)-[:FromCategory]-(category:Category) WHERE ID(book) = " + book_id.to_s + " WITH book, category"
+			find_shortest_path_to_root = " OPTIONAL MATCH (category)<-[to_child:HasChild*0..]-(root_category:Category{is_root:true}) WITH category, LENGTH(to_child) AS depth RETURN category ORDER BY depth LIMIT 5"
+
 		end
 	end
 end
