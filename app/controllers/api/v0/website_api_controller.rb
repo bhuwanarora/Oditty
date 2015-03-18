@@ -83,7 +83,6 @@ module Api
                 @neo ||= neo_init
                 clause = "MATCH (r:ReadTime) RETURN r"
                 puts clause.blue.on_red
-                debugger
                 read_times = @neo.execute_query(clause)["data"]
                 results = {:read_times => read_times}
                 render :json => results, :status => 200
