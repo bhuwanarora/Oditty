@@ -71,4 +71,8 @@ homeApp.service('bookService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return _deferred_request('/api/v0/popular_books?q='+params);
     }
 
+    this.books_on_signup = function(params){
+        return _deferred_request('/api/v0/books_on_signup?q='+params);   
+    }
+
 }]);

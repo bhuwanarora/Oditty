@@ -8,18 +8,25 @@ module SignupHelper
 			skip_count = skip_count.to_i > @limit ? skip_count.to_i : Constants::InitialSkipCount  
 
 			case range
-			when Constants::FewBooksReadCountRange
-				data = handle_few_books_read(user_id, skip_count)
-			else 
-				data = handle_average_number_books_read(user_id, skip_count)
+			when Constants::ChildBookCountRange
+				data = _handle_few_books_read(user_id, skip_count)
+			when Constants::AdoloscentBookCountRange
+				data = _handle_average_number_books_read(user_id, skip_count)
+			when Constants::AboutToBeAdultBookCountRange
+				data = _handle_average_number_books_read(user_id, skip_count)
+			when Constants::AdultBookCountRange
+				data = _handle_average_number_books_read(user_id, skip_count)
+			when Constants::AboutToDieBookCountRange
+				data = _handle_average_number_books_read(user_id, skip_count)
 			end
+			debugger
 			data
 		end
 
 
 		private
 	
-		def handle_few_books_read user_id, skip_count
+		def _handle_few_books_read user_id, skip_count
 			need_rating = true
 			return_clause = " RETURN "
 			clause = _get_user_clause(user_id, need_rating) + return_clause +  _get_return_book_properties_clause(need_rating)
@@ -59,11 +66,13 @@ module SignupHelper
 		end
 
 		def _get_user_book_count user_id
-			count_match_clause = " MATCH (user:User) WHERE ID(user) = " + user_id.to_s + " RETURN user.init_book_read_count as init_book_count"
-			range = (@neo.execute_query count_match_clause)["init_book_count"] rescue 0
+			clause = " MATCH (user:User) WHERE ID(user) = " + user_id.to_s + " RETURN user.init_book_read_count as init_book_read_count"
+			puts clause.blue.on_red
+			range = @neo.execute_query(clause)[0]["init_book_read_count"]
+			range
 		end
 
-		def handle_average_number_books_read user_id, skip_count
+		def _handle_average_number_books_read user_id, skip_count
 		 	need_rating = true
 		 	match_book_genre_clause = "  MATCH (book)-[:FromCategory]->(:Category)-[HasRoot*0..1]->(root_category{is_root:true}) WITH book, mark_as_read, root_category, rating_node ORDER BY book.total_weight DESC LIMIT " + @limit.to_s + " RETURN root_category.name AS root_category ,"
 		 	sort_clause =  ", COUNT(book) AS book_count ORDER BY book_count DESC "

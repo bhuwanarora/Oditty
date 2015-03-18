@@ -14,6 +14,14 @@ module Api
 				render :json => info, :status => status
 			end
 
+			def books_on_signup
+				skip_count = params[:skip_count]
+				user_id = session[:user_id]
+				user_id = 0
+				books = SignupHelper::BooksFinder.new(user_id, skip_count)
+				render :json => books, :status => 200
+			end
+
 			def get_popular_books
 				# params = JSON.parse(params["q"])
 				books = BookApi.get_popular_books(params, session[:user_id])

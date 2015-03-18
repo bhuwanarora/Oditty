@@ -49,9 +49,9 @@ module Api
 
 			def self.get_root_categories user_id=nil
 				neo_init
-				clause = "MATCH (category:Category) WHERE category.is_root = true WITH category OPTIONAL MATCH (category)<-[r:Likes]-(u:User) WHERE ID(u)="+user_id.to_s+" RETURN category.name, ID(category), category.icon, ID(r), category.aws_key LIMIT 28"
+				clause = "MATCH (category:Category) WHERE category.is_root = true WITH category OPTIONAL MATCH (category)<-[r:Likes]-(u:User) WHERE ID(u)="+user_id.to_s+" RETURN category.name as name, ID(category) as id, category.icon as icon, ID(r) as likes, category.aws_key as key LIMIT 28"
 				puts clause.blue.on_red
-				info = @neo.execute_query(clause)["data"]
+				info = @neo.execute_query(clause)
 				info
 			end
 

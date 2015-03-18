@@ -1,6 +1,6 @@
 homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'bookService', 'ColorConstants', '$mdToast', function($scope, $rootScope, $timeout, bookService, ColorConstants, $mdToast){
 
-    $scope.get_popular_books = function(){
+    $scope.books_on_signup = function(){
         $scope.info.loading = true;
         var skip_count = $scope.popular_books.length;
         var get_popular_books = !$scope._loading && (angular.isUndefined($scope.info.search_book) || $scope.info.search_book.length < 1);
@@ -8,7 +8,7 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
             $scope._loading = true;
             var params = {"skip_count": skip_count};
             params = angular.toJson(params);
-            bookService.get_popular_books(params).then(function(data){
+            bookService.books_on_signup(params).then(function(data){
                 angular.forEach(data, function(value){
                     var random_int = Math.floor(Math.random()*ColorConstants.value.length);
                     var status = value[4] != null;
@@ -84,7 +84,6 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
     };
 
     $scope._fetch_book_results = function(reset_required){
-        debugger
         var skip_count = $scope.popular_books.length;
         var _all_results_fetched = function(){
             $scope.all_results_found = true;
@@ -181,7 +180,7 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
                 if(backspace){
                     if(type == "BOOK"){
                         $scope.popular_books = [];
-                        $scope.get_popular_books();
+                        $scope.books_on_signup();
                     }
                     else{
                         $scope.popular_authors = [];
@@ -200,14 +199,14 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
     $scope.edit_books_read = function(){
         $scope.goto_info_card();
         $rootScope.user.profile_status = 2;
-        $scope.get_popular_books();
+        $scope.books_on_signup();
     }
 
     _init = function(){
         if(angular.isUndefined($scope.popular_books)){
             $scope.popular_books = [];
         }
-        $scope.get_popular_books();
+        $scope.books_on_signup();
     }
 
     _init();
