@@ -920,16 +920,16 @@ module Neo4jHelper
 	def self.get_best_reads_for_time
 		@neo ||= self.init
 		clause = "MATCH (book)-[r:NextTinyRead]->(:Book) WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight ORDER BY total_weight DESC RETURN ID(book) LIMIT 1"
-		puts @neo.execute_query(clause)["data"][0][0].to_s.green
+		puts @neo.execute_query(clause).to_s.green
 
 		clause = "MATCH (book)-[r:NextSmallRead]->(:Book) WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight ORDER BY total_weight DESC RETURN ID(book) LIMIT 1"
-		puts @neo.execute_query(clause)["data"][0][0].to_s.green
+		puts @neo.execute_query(clause).to_s.green
 
 		clause = "MATCH (book)-[r:NextNormalRead]->(:Book) WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight ORDER BY total_weight DESC RETURN ID(book) LIMIT 1"
-		puts @neo.execute_query(clause)["data"][0][0].to_s.green
+		puts @neo.execute_query(clause).to_s.green
 
 		clause = "MATCH (book)-[r:NextLongRead]->(:Book) WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight ORDER BY total_weight DESC RETURN ID(book) LIMIT 1"
-		puts @neo.execute_query(clause)["data"][0][0].to_s.green
+		puts @neo.execute_query(clause).to_s.green
 	end
 
 	def self.remove_tiny_reads_with_zero_count
