@@ -42,6 +42,7 @@ private/deactivation_log*
 private/broker_map/images/*
 Gemfile.lock.sample
 Gemfile.sample
+Gemfile
 .gitignore
 neo4j/data/graph.db/nioneo_logical.*
 neo4j/data/graph.db/schema/label/lucene/
