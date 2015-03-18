@@ -27,6 +27,23 @@ module UsersGraphHelper
 		#update news feed for the user
 	end
 
+
+	def self.endorse_book book_id, user_id
+		@neo ||= self.neo_init
+		create_endorse_node_clause = _match_user_and_book(user_id, book_id) + " WITH u AS user, b AS book MERGE (user)-[:EndorsingAction]-(endorsed:EndorsedNode{created_at: " + Time.now.to_i.to_s + ", book_id:ID(book), user_id:ID(user), updated_at:  " + Time.now.to_i.to_s + "})-[endorsed:Endorsed]-(book:Book) WITH user, endorsed, book"
+		find_old_feed_clause = " MATCH (user)-[old:FeedNext]->(old_feed)  "
+		create_new_feed_clause = " MERGE (user)-[:FeedNext{user_id:" + user_id.to_s + "}]->(endorsed)-[:FeedNext{user_id:" + user_id.to_s + "}]->(old_feed) DELETE old WITH user, endorsed, book"
+		find_old_book_feed_clause = " MATCH (book)-[old:BookFeed]->(old_feed) "
+		create_new_book_feed_clause = " MERGE (book)-[:BookFeed{user_id:" + user_id.to_s + "}]->(endorsed)-[:BookFeed{user_id:" + user_id.to_s + "}]->(old_feed) DELETE old WITH user AS u"
+
+		existing_ego_clause = _existing_ego_clause
+
+		ego_clause = _ego_clause 
+
+		clause = create_endorse_node_clause + find_old_feed_clause + create_new_feed_clause + find_old_book_feed_clause + create_new_book_feed_clause + existing_ego_clause + ego_clause 
+		@neo.execute_query(clause)
+	end
+
 	def self.record_time(user_id, book_id, time)
 		@neo ||= self.neo_init
 		rating_clause = _match_user_and_book(user_id, book_id)+" CREATE UNIQUE (u)-[:TimingAction]->(m:TimingNode{book_id:"+book_id.to_s+", title:b.title, author:b.author_name, user_id:"+user_id.to_s+"})-[:Timer]->(b) SET m.timestamp="+Time.now.to_i.to_s+", m.time_index="+time.to_s+", m.name=u.name, m.email=u.email, m.isbn=b.isbn, m.thumb = CASE WHEN u.thumb IS NULL THEN '' ELSE u.thumb END  WITH u, b, m "
