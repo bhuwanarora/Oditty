@@ -1,4 +1,4 @@
-homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout", "bookService", function($scope, $rootScope, $timeout, bookService){
+homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout", "bookService", '$mdToast', function($scope, $rootScope, $timeout, bookService, $mdToast){
 
     _init = function(){
         var book_id = $rootScope.active_book.id;
