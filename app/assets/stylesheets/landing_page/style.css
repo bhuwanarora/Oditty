@@ -366,6 +366,15 @@ md-tab.active a{
     width: 60%;
 }
 
+.full_width {
+  width: 100%;
+  overflow-y: auto;
+}
+
+.md-button-left{
+    text-align: left;
+}
+
 .video_size{
     height: 60%;
     width:80%;
@@ -386,7 +395,7 @@ md-tab.active a{
 }
 
 .side_panel{
-    margin-top: -1px !important;
+    margin-top: 0px !important;
     max-width: 100px !important;
     position: fixed;
 }
