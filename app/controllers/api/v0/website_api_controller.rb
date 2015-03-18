@@ -83,8 +83,7 @@ module Api
                 clause = "MATCH (r:ReadTime) RETURN r.name as name, r.page_count_range as page_count_range, ID(r) as id"
                 puts clause.blue.on_red
                 read_times = @neo.execute_query(clause)
-                results = {:read_times => read_times}
-                render :json => results, :status => 200
+                render :json => read_times, :status => 200
             end
 
 			def notifications

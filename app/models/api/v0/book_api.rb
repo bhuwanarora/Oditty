@@ -151,13 +151,9 @@ module Api
 			def self.get_book_details(id, user_id=nil)
 				book = BooksGraphHelper.get_details(id, user_id)
 				if user_id
-					user_rating = book[1]
-					user_time_index = book[2]
-					labels = book[3]
-					selected_labels = book[4]
 					structured_labels = []
-					for label in labels
-						if selected_labels.include? label
+					for label in book["labels"]
+						if book["selected_labels"].include? label
 							json = {"name" => label, "checked" => true}
 						else
 							json = {"name" => label, "checked" => false}
@@ -165,36 +161,14 @@ module Api
 						structured_labels.push json
 					end
 
-					mark_as_read = book[5]
-					if mark_as_read.nil?
-						mark_as_read = false
-					else
-						mark_as_read = true
-					end
-					book_data = book[0]["data"]
-
 					friends_who_have_read = []
-					if book[6].present?
-						book[6].each do |id, index|
-							friends_who_have_read.push({:id => id, :thumb => book[7][index]})
+					if book["friends_id"].present?
+						book["friends_id"].each do |id, index|
+							friends_who_have_read.push({:id => id, :thumb => book["friends_thumb"][index]})
 						end
 					end
 
-					friends_who_have_read_count = book[8]
-					genres = book[9]
-					genre_weights = book[10]
 				end
-				info = {
-							:title => book_data["title"],
-							:author_name => book_data["author_name"],
-							:readers_count => book_data["readers_count"],
-							:bookmark_count => book_data["bookmark_count"],
-							:comment_count => book_data["comment_count"],
-							:published_year => book_data["published_year"],
-							:page_count => book_data["page_count"],
-							:summary => book_data["description"],
-							:external_thumb => book_data["external_thumb"],
-						}
 				# isbn = book["isbn"].split(",")[0]
 				# image_url = "http://covers.openlibrary.org/b/isbn/"+isbn+"-S.jpg";
 				# image_service_url = "http://54.187.28.104/api/v0/colors?image_url=#{image_url}"
@@ -202,20 +176,9 @@ module Api
 				# color = JSON.parse(color)["data"]
 
 				if user_id
-					info.merge!(:user_rating => user_rating, 
-								:status => mark_as_read,
-								:labels => structured_labels,
-								:users => friends_who_have_read,
-								:users_count => friends_who_have_read_count,
-								:genres => genres,
-								:genre_weights => genre_weights,
-							    :time_index => user_time_index)
+					book.merge!(:friends => friends_who_have_read)
 				end
-				# info.merge!(color)
-				# unless book_data["linked"].present?
-				# 	Resque.enqueue(SummaryWorker, book["isbn"], id, book["title"])
-				# end
-				info
+				book
 			end
 
 			def self.recommendations(last_book, filters={}, session)

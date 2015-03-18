@@ -111,7 +111,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
                         "color": ColorConstants.value[random_int],
                         "rowspan": 1,
                         "alphabet": value.title[0]};
-                json = angular.extend(value, status)
+                json = angular.extend(value, json)
                 this.push(json);
             },  $scope.info.books);
             $scope.info.loading = false;

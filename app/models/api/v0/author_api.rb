@@ -6,7 +6,7 @@ module Api
 				@neo = Neography::Rest.new
 				clause = "MATCH (book:Book)<-[:Wrote]-(author:Author) WHERE ID(book)="+book_id.to_s+" WITH book, author MATCH (author)-[:Wrote]->(b:Book) RETURN author.about, author.image_url, author.signature_pic, ID(author), COLLECT(ID(b)), COLLECT(b.isbn)"
 				puts clause.blue.on_red
-				info = @neo.execute_query(clause)["data"][0]
+				info = @neo.execute_query(clause)
 				info
 			end
 
@@ -23,10 +23,10 @@ module Api
 					skip_count = 0
 				end
 				@neo = Neography::Rest.new
-				clause = "MATCH (author:Author) RETURN author.name as author_name SKIP "+(10*skip_count.to_i).to_s+" LIMIT 10"
+				clause = "MATCH (author:Author) RETURN author.name as name SKIP "+(10*skip_count.to_i).to_s+" LIMIT 10"
 				puts clause.blue.on_red
 				begin
-					authors =  @neo.execute_query(clause)["data"]
+					authors =  @neo.execute_query(clause)
 				rescue Exception => e
 					puts e.to_s.red
 					authors = [{:message => "Error in finding authors"}]

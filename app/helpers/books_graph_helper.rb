@@ -19,14 +19,12 @@ module BooksGraphHelper
 		ego_clause = "OPTIONAL MATCH (f)-[old:Ego{user_id:ID(f)}]->(old_ego) FOREACH(p IN CASE WHEN old_ego IS NULL THEN [] ELSE [old_ego] END | FOREACH (q IN CASE WHEN f IS NULL THEN [] ELSE [f] END | CREATE (q)-[:Ego{user_id:ID(q)}]->(u)-[:Ego{user_id:ID(q)}]->(p) DELETE old)) WITH DISTINCT u, b "
 
 		clause = thumb_request_clause + feednext_clause + bookfeed_clause + existing_ego_clause + ego_clause
-		puts clause.blue.on_red
-		@neo.execute_query(clause)["data"]
+		@neo.execute_query(clause)
 	end
 
 	def self.approve_thumb_request(status, id)
 		@neo ||= self.neo_init
 		clause = "MATCH (u:User)-[r1:DataEdit]->(t:ThumbRequest)-[r2:DataEditRequest]->(b:Book) WHERE ID(t)="+id.to_s+" SET t.status = "+status.to_s+", b.external_thumb = CASE WHEN "+status.to_s+" = 1 THEN t.url ELSE null END"
-		puts clause.blue.on_red
 		@neo.execute_query clause
 	end
 
@@ -41,8 +39,7 @@ module BooksGraphHelper
 	def self.get_feed book_id
 		@neo ||= self.neo_init
 		clause = "MATCH (b:Book)-[:BookFeed*0..]->(news_feed) WHERE ID(b)="+book_id.to_s+" RETURN labels(news_feed), news_feed"
-		puts clause.blue.on_red
-		@neo.execute_query(clause)["data"]
+		@neo.execute_query(clause)
 	end
 
 	# ************************************************
@@ -57,14 +54,13 @@ module BooksGraphHelper
 	# ************************************************
 	def self.get_details(book_id, user_id=nil)
 		@neo = Neography::Rest.new
+		return_book_data = "b.title as title, b.author_name as author_name, ID(b) as id, b.readers_count as readers_count, b.bookmark_count as bookmark_count, b.comment_count as comment_count, b.published_year as published_year, b.page_count as page_count, b.description as description, b.external_thumb as external_thumb"
 		if user_id
-			clause = "MATCH (b:Book), (u:User) WHERE ID(b)="+book_id.to_s+" AND ID(u)="+user_id.to_s+" WITH u, b OPTIONAL MATCH (u)-[:RatingAction]->(rn:RatingNode)-[:Rate]->(b) OPTIONAL MATCH (u)-[:TimingAction]->(tm:TimingNode)-[:Timer]->(b) OPTIONAL MATCH (u)-[:Labelled]->(l1:Label) OPTIONAL MATCH (u)-[:Labelled]->(l2:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(b) OPTIONAL MATCH (u)-[:MarkAsReadAction]->(m)-[:MarkAsRead]->(b) OPTIONAL MATCH (u)-[:Follow]->(friend:User)-[:MarkAsReadAction]->(m_friend)-[:MarkAsRead]->(b) OPTIONAL MATCH (b)-[bt:Belongs_to]->(g:Genre) RETURN b as book, rn.rating as rating, tm.time_index as time_index, COLLECT(DISTINCT l1.name) as labels, COLLECT(DISTINCT l2.name) as selected_labels, m.timestamp as mark_as_read, COLLECT(ID(friend)) as friend_ids, COLLECT(friend.thumb) as friend_thumb, COUNT(friend) as friends_count, COLLECT(g.name) as genres, COLLECT(bt.weight) as weights"
-			puts clause.blue.on_red
-			book = @neo.execute_query(clause)["data"][0]
+			clause = "MATCH (b:Book), (u:User) WHERE ID(b)="+book_id.to_s+" AND ID(u)="+user_id.to_s+" WITH u, b OPTIONAL MATCH (u)-[:RatingAction]->(rn:RatingNode)-[:Rate]->(b) OPTIONAL MATCH (u)-[:TimingAction]->(tm:TimingNode)-[:Timer]->(b) OPTIONAL MATCH (u)-[:Labelled]->(l1:Label) OPTIONAL MATCH (u)-[:Labelled]->(l2:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(b) OPTIONAL MATCH (u)-[:MarkAsReadAction]->(m)-[:MarkAsRead]->(b) OPTIONAL MATCH (u)-[:Follow]->(friend:User)-[:MarkAsReadAction]->(m_friend)-[:MarkAsRead]->(b) OPTIONAL MATCH (b)-[bt:Belongs_to]->(g:Genre) RETURN " + return_book_data + ", rn.rating as user_rating, tm.time_index as user_time_index, COLLECT(DISTINCT l1.name) as labels, COLLECT(DISTINCT l2.name) as selected_labels, m.timestamp as status, COLLECT(ID(friend)) as friends_id, COLLECT(friend.thumb) as friends_thumb, COUNT(friend) as friends_count, COLLECT(g.name) as genres, COLLECT(bt.weight) as genres_weight"
+			book = @neo.execute_query(clause)[0]
 		else
-			clause = "MATCH (book:Book) WHERE ID(book)="+book_id.to_s+" RETURN book"
-			puts clause.blue.on_red
-			book = @neo.execute_query(clause)["data"][0][0]["data"]
+			clause = "MATCH (b:Book) WHERE ID(b)="+book_id.to_s+" RETURN " + return_book_data
+			book = @neo.execute_query(clause)[0]
 		end
 		book
 	end
@@ -76,6 +72,6 @@ module BooksGraphHelper
 	def self.get_quick_reads(book_id, user_id=nil)
 		@neo = Neography::Rest.new
 		clause ="MATCH (book:Book)-[:WithReadingTime]->(rt:ReadingTime{page_count_range: '<50'}) RETURN book.isbn, ID(book) LIMIT 10"
-		@neo.execute_query(clause)["data"]
+		@neo.execute_query(clause)
 	end
 end

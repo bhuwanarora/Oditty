@@ -5,11 +5,8 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
 			$scope.info.genres = [];
 	    	genreService.get_genres().then(function(data){
 	    		angular.forEach(data, function(value){
-	    			var status = value[3] != null;
-	    			var json = {"name": value[0], 
-	    						"id": value[1], 
-	    						"icon": value[2], 
-	    						"status": status};
+	    			var status = value.status != null;
+	    			var json = angular.extend(value, {"status": status});
 	    			this.push(json);
 	    		}, $scope.info.genres);
 	    	});
@@ -21,8 +18,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         var skip_count = 0;
         authorService.get_popular_authors(skip_count).then(function(data){
             angular.forEach(data, function(value){
-                var json = {"name": value[0]};
-                this.push(json);
+                this.push(value);
             },  $scope.info.authors);
         });
     }
@@ -76,7 +72,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
                 $scope.info.genres = [];
                 angular.forEach(data, function(value){
                     var json = {"type": SearchUIConstants.Genre, "custom_option": true, "icon2": "icon-tag"};
-                    json = angular.extend(json, {"name": value[0], "id": value[1]});
+                    json = angular.extend(json, value);
                     this.push(json);
                 }, $scope.info.genres);
             }
@@ -95,7 +91,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
                 $scope.info.authors = [];
                 angular.forEach(data, function(value){
                     var json = {"icon2": "icon-pen", "type": SearchUIConstants.AuthorSearch, "custom_option": true};
-                    json = angular.extend(json, {"name": value[0], "id": value[1]});
+                    json = angular.extend(json, value);
                     this.push(json);
                 }, $scope.info.authors);
             }
