@@ -72,7 +72,11 @@ homeApp.service('bookService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
     }
 
     this.books_on_signup = function(params){
-        return _deferred_request('/api/v0/books_on_signup?q='+params);   
+        return _deferred_request('/api/v0/books_on_signup?q='+params);
+    }
+
+    this.endorse_book = function(id){
+        return _deferred_request('/api/v0/endorse_book?id='+id);
     }
 
 }]);

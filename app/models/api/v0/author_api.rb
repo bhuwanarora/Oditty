@@ -23,7 +23,7 @@ module Api
 					skip_count = 0
 				end
 				@neo = Neography::Rest.new
-				clause = "MATCH (author:Author) RETURN author.name SKIP "+(10*skip_count.to_i).to_s+" LIMIT 10"
+				clause = "MATCH (author:Author) RETURN author.name as author_name SKIP "+(10*skip_count.to_i).to_s+" LIMIT 10"
 				puts clause.blue.on_red
 				begin
 					authors =  @neo.execute_query(clause)["data"]
