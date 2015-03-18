@@ -26,6 +26,7 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
         else{
             $scope.active_endorse = true;
         }
+        bookService.endorse_book($rootScope.active_book.id, $scope.active_endorse);
         $mdToast.show({
             controller: 'toastController',
             templateUrl: 'assets/angular/html/shared/toast/endorse_action.html',
