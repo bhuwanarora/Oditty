@@ -31,13 +31,13 @@ module SignupHelper
 			clause = _get_user_clause(user_id, need_rating) + return_clause +  _get_return_book_properties_clause(need_rating)
 			data = @neo.execute_query clause
 
-			has_linked_books = data["book_ids"].blank? ? false : true rescue false
+			has_linked_books = data["id"].blank? ? false : true rescue false
 
 			unless has_linked_books
 
 				get_ten_small_books_clause = " MATCH initial_path = (best_small_read_book:Book)-[:NextSmallRead*" + skip_count.to_s + "]-(small_read) WHERE ID(best_small_read_book) = " + Constants::BestSmallRead.to_s 
 				sort_books_clause = " WITH EXTRACT(n in nodes(initial_path)|n) AS books UNWIND books AS book RETURN "
-				order_clause = " ORDER BY popularity LIMIT " + Constants::BookCountShownOnSignup 
+				order_clause = " ORDER BY popularity LIMIT " + Constants::BookCountShownOnSignup.to_s 
 
 				clause =  get_ten_small_books_clause + sort_books_clause + _get_return_book_properties_clause + order_clause
 				data = @neo.execute_query clause
@@ -45,7 +45,7 @@ module SignupHelper
 		end
 
 		def _get_return_book_properties_clause need_rating = false
-			return_book_properties_clause = " ID(book) AS ids, book.isbn AS isbn, book.title AS title, book.author_name AS author_name, book.pages AS pages, book.published_year AS year, book.total_weight as popularity"
+			return_book_properties_clause = " ID(book) AS id, book.isbn AS isbn, book.title AS title, book.author_name AS author_name, book.pages AS pages, book.published_year AS year, book.total_weight as popularity"
 			return_ratings_clause = ", ID(mark_as_read) AS mark_as_read_node_id, rating_node.rating AS rating" 
 			if need_rating
 				clause = return_book_properties_clause + return_ratings_clause
