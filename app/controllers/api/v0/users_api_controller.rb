@@ -266,7 +266,7 @@ module Api
 				if data
 					UsersGraphHelper.endorse_book(book_id, user_id)
 				else
-					UsersGraphHelper.remove_endorse(endorse_id, user_id)
+					UsersGraphHelper.remove_endorse(book_id, user_id)
 				end
 			end
 
