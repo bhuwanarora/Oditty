@@ -7,7 +7,7 @@
           <div class="counter" layout="row" layout-align="center center">
                <div>{{book.endorse_count}}</div>
           </div>
-          <md-button ng-class="{'inactive_blue_circle': !active_endorse, 'md-raised blue_circle': active_endorse}" 
+          <md-button ng-class="{'inactive_blue_circle': !book.endorse_status, 'md-raised blue_circle': book.endorse_status}" 
                     ng-click="toggle_endorse()">
                <span class="icon-"></span>
           </md-button>

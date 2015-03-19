@@ -278,7 +278,7 @@ module Api
 				user_id = session[:user_id]
 				book_id = params[:id]
 				status = params[:status]
-				if status
+				if status == "true"
 					UsersGraphHelper.endorse_book(book_id, user_id)
 				else
 					UsersGraphHelper.remove_endorse(book_id, user_id)
