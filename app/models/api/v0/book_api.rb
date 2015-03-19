@@ -119,7 +119,7 @@ module Api
 					skip_count = params["skip_count"]
 					clause = "MATCH (b:Book) WHERE ID(b)="+Constants::BestBook.to_s+" MATCH p=(b)-[:Next_book*.."+(20+skip_count.to_i).to_s+"]->(b_next) WITH last(nodes(p)) as book"
 				end
-				clause = clause + +" OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" WITH user, book, m OPTIONAL MATCH (user)-[:RatingAction]->(z:RatingNode{book_id:ID(book), user_id:"+user_id.to_s+"})-[:Rate]->(book) RETURN book.isbn as isbn, ID(book) as id, book.title as title, book.author_name as author_name, ID(m) as status, z.rating as user_rating, book.published_year as published_year, book.page_count as page_count SKIP "+skip_count.to_s
+				clause = clause + " OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" WITH user, book, m OPTIONAL MATCH (user)-[:RatingAction]->(z:RatingNode{book_id:ID(book), user_id:"+user_id.to_s+"})-[:Rate]->(book) RETURN book.isbn as isbn, ID(book) as id, book.title as title, book.author_name as author_name, ID(m) as status, z.rating as user_rating, book.published_year as published_year, book.page_count as page_count SKIP "+skip_count.to_s
 				@neo = Neography::Rest.new
 				begin
 					books =  @neo.execute_query(clause)
