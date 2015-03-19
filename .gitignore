@@ -70,3 +70,5 @@ neo4j/conf/neo4j.properties
 *.zip
 *.png
 *.graphml
+# Ignore application configuration
+/config/application.yml
