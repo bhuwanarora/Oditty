@@ -6,10 +6,9 @@ module Api
 			def self.get_details(user_id, session)
 				if user_id.present?
 					@neo = Neography::Rest.new
-					clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" RETURN u"
-					puts clause.blue.on_red
+					clause = "MATCH (u:User) WHERE ID(u)=" + user_id.to_s + " RETURN" + self._user_return_clause
 					begin
-						info = @neo.execute_query(clause)["data"][0][0]["data"]
+						info = @neo.execute_query(clause)[0]
 						session[:last_book] = info["last_book"]
 					rescue Exception => e
 						info = {}
@@ -22,17 +21,15 @@ module Api
 
 			def self.recover_password email
 				@neo = Neography::Rest.new
-				clause = "MATCH (user:User{email:\""+email+"\"}) RETURN user, ID(user) as id"
-				puts clause.blue.on_red
+				clause = "MATCH (user:User{email:\""+email+"\"}) RETURN" + self._user_return_clause
 				user_id = @neo.execute_query clause
-				user_exists = user_id["data"].present?
+				user_exists = user_id.present?
 				if user_exists
 					verification_token = SecureRandom.hex
 					link = Rails.application.config.home+'recover_password?p='+verification_token.to_s+"&e="+email
 					invitation = {:email => email, :template => Constants::EmailTemplate::PasswordReset, :link => link}
 					SubscriptionMailer.recover_password(invitation).deliver
 					clause =  "MATCH (user:User{email:\""+email+"\"}) SET user.password_token = \""+verification_token+"\""
-					puts clause.blue.on_red
 					@neo.execute_query clause
 				end
 				user_exists
@@ -41,7 +38,6 @@ module Api
 			def self.get_profile_info id
 				@neo = Neography::Rest.new
 				clause = "MATCH (u:User) WHERE ID(u)="+id.to_s+" OPTIONAL MATCH (u)-[:Likes]->(c) WITH u, c OPTIONAL MATCH (u)-[:Labelled]->(l:Label{indexed_label_name:\""+Constants::InfluentialBooks+"\"})-[:BookmarkedOn]->(z:BookmarkNode)-[:BookmarkAction]->(b:Book) WHERE z.user_id = "+id.to_s+" RETURN COLLECT(DISTINCT(c.name)), COLLECT(DISTINCT(ID(c))), COLLECT(DISTINCT(c.icon)), COLLECT(DISTINCT(b.isbn)), COLLECT(DISTINCT(ID(b))), COLLECT(DISTINCT(b.title)), COLLECT(DISTINCT(b.author_name))"
-				puts clause.blue.on_red
 				info = @neo.execute_query(clause)["data"][0]
 			end
 
@@ -136,7 +132,6 @@ module Api
 					clause = " WITH u MATCH (u)-[r:Likes]->(g:Category) WHERE ID(g)="+params[:genre].to_s+" DELETE r" if params[:genre] && !params[:status]
 					if clause
 						clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+clause
-						puts clause.blue.on_red
 						@neo.execute_query clause
 					else
 						duplicate_email
@@ -152,7 +147,6 @@ module Api
 				if params[:email]
 					puts "email exists".green
 					clause = "MATCH (user:User{email:\""+params[:email]+"\"}) RETURN ID(user)"
-					puts clause.blue.on_red
 					user_id = @neo.execute_query clause
 					user_exists = user_id["data"].present?
 					if user_exists
@@ -163,7 +157,6 @@ module Api
 				else
 					puts "email does not exits".green
 					clause = "MATCH (user:User{fb_id:"+params[:id]+"}) RETURN ID(user)"
-					puts clause.blue.on_red
 					user_id = @neo.execute_query clause
 					user_exists = user_id["data"].present?
 					if user_exists
@@ -172,7 +165,6 @@ module Api
 						clause = self._create_user_without_email params
 					end
 				end
-				puts clause.blue.on_red
 				user_id = @neo.execute_query(clause)["data"][0][0]
 				puts "fb execute_query done...".green
 				puts "FB LOGIN USER_ID #{user_id.to_s.red}"
@@ -188,7 +180,6 @@ module Api
 				email = params[:email]
 				@neo = Neography::Rest.new
 				clause = "MATCH (user:User{email:\""+email+"\"}) RETURN user, ID(user) as id"
-				puts clause.blue.on_red
 				user = @neo.execute_query(clause)["data"]
 				if signin
 					puts "signin".red
@@ -246,7 +237,6 @@ module Api
 					limit_clause = " LIMIT "+count.to_s
 					skip_clause = " SKIP "+skip.to_s
 					clause = "MATCH (u:User)-[:Follow]->(friend:User) WHERE ID(u)="+user_id.to_s+" OPTIONAL MATCH (friend)-[:Likes]->(category:Category) RETURN ID(friend), friend.name, friend.thumb, friend.init_book_read_count, friend.total_count, friend.book_read_count, friend.bookmark_count, COLLECT(category.icon)"+skip_clause+limit_clause
-					puts clause.blue.on_red
 					friends = @neo.execute_query(clause)["data"]
 				end
 				friends
@@ -255,7 +245,6 @@ module Api
 			def self.get_followed_by user_id
 				@neo = Neography::Rest.new
 				clause = "MATCH (u:User)<-[:Follow]-(friend:User) WHERE ID(u)="+user_id.to_s+" RETURN ID(friend), friend.name, friend.thumb"
-				puts clause.blue.on_red
 				friends = @neo.execute_query(clause)["data"]
 				friends
 			end
@@ -401,6 +390,11 @@ module Api
 				end
 				new_object_string = " CREATE UNIQUE ("+new_label.to_s+")-[:HasProperty]->(:"+object_key.to_s.singularize.camelcase+"{"+new_object_string+"})"
 				new_object_string
+			end
+
+			def self._user_return_clause
+				clause = " u.init_book_read_count AS init_book_read_count, u.selectedYear AS selectedYear, u.selectedMonth AS selectedMonth, u.selectedDay AS selectedDay, u.first_name AS first_name, u.last_name AS last_name, u.about AS about, ID(u) AS id"
+				clause
 			end
 		end
 	end

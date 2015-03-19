@@ -14,7 +14,6 @@ module UsersGraphHelper
 
 		clause = rating_clause + _delete_existing_feednext_clause(user_id) + _feednext_clause(user_id) + _bookfeed_clause(user_id) + _existing_ego_clause + _ego_clause + set_clause
 		puts "RATE".green
-		puts clause.blue.on_red
 		@neo.execute_query clause
 		#update mark as read cache for the book
 		#update popularity index for the book
@@ -53,7 +52,7 @@ module UsersGraphHelper
 # 		CREATE (q)-[:Ego{user_id:ID(q)}]->(u)-[:Ego{user_id:ID(q)}]->(p) DELETE old))
 	def self.endorse_book book_id, user_id
 		@neo ||= self.neo_init
-		create_endorse_node_clause = _match_user_and_book(user_id, book_id) + " WITH u, b MERGE (u)-[:EndorseAction]->(endorse:EndorseNode)-[endorsed:Endorsed]->(book:Book) ON CREATE SET endorse.created_at = " + Time.now.to_i.to_s + ", endorse.book_id = ID(b), endorse.user_id = ID(u), endorse.updated_at = " + Time.now.to_i.to_s + " WITH u, endorse, b"
+		create_endorse_node_clause = _match_user_and_book(user_id, book_id) + " WITH u, b MERGE (u)-[:EndorseAction]->(endorse:EndorseNode{created_at: " + Time.now.to_i.to_s + ", book_id:ID(b), user_id:ID(u), updated_at:  " + Time.now.to_i.to_s + "})-[endorsed:Endorsed]->(b) WITH u, endorse, b"
 		find_old_feed_clause = " MATCH (u)-[old:FeedNext]->(old_feed)  "
 		create_new_feed_clause = " MERGE (u)-[:FeedNext{user_id:" + user_id.to_s + "}]->(endorse)-[:FeedNext{user_id:" + user_id.to_s + "}]->(old_feed) DELETE old WITH u, endorse, b "
 		find_old_book_feed_clause = " MATCH (b)-[old:BookFeed{book_id:" + book_id.to_s + "}]->(old_feed) "
@@ -64,6 +63,7 @@ module UsersGraphHelper
 		ego_clause = _ego_clause 
 
 		clause = create_endorse_node_clause + find_old_feed_clause + create_new_feed_clause + find_old_book_feed_clause + create_new_book_feed_clause + existing_ego_clause + ego_clause + set_clause
+		puts "ENDORSE".green
 		@neo.execute_query(clause)
 
 		# MATCH (u:User), (b:Book) WHERE ID(u)=37835 AND ID(b)=37892  WITH u, b MERGE (u)-[:EndorseAction]->(endorse:EndorseNode{created_at: 1426755195, book_id:ID(b), user_id:ID(u), updated_at:  1426755195})-[endorsed:Endorsed]->(book:Book) WITH u, endorse, b MATCH (u)-[old:FeedNext]->(old_feed)   MERGE (u)-[:FeedNext{user_id:37835}]->(endorse)-[:FeedNext{user_id:37835}]->(old_feed) DELETE old WITH u, endorse, b  MATCH (b)-[old:BookFeed{book_id:37892}]->(old_feed)  MERGE (b)-[:BookFeed{book_id:37892}]->(endorse)-[:BookFeed{book_id:37892}]->(old_feed) DELETE old WITH u, endorse, b OPTIONAL MATCH (u)<-[:Follow]-(f:User) with u,b,f, endorse OPTIONAL MATCH (x1)-[r1:Ego{user_id:ID(f)}]->(u)-[r2:Ego{user_id:ID(f)}]->(x2) FOREACH (s IN CASE WHEN r1 IS NULL THEN [] ELSE [r1] END | FOREACH (t IN CASE WHEN r2 IS NULL THEN [] ELSE [r2] END | CREATE (x1)-[:Ego{user_id:ID(f)}]->(x2) DELETE s, t)) WITH u, b, f,endorse OPTIONAL MATCH (f)-[old:Ego{user_id:ID(f)}]->(old_ego) FOREACH(p IN CASE WHEN old_ego IS NULL THEN [] ELSE [old_ego] END | FOREACH (q IN CASE WHEN f IS NULL THEN [] ELSE [f] END | CREATE (q)-[:Ego{user_id:ID(q)}]->(u)-[:Ego{user_id:ID(q)}]->(p) DELETE old)) WITH DISTINCT u, b, endorse SET b.endorse_count = CASE WHEN b.endorse_count IS NULL THEN 1 ELSE toInt(b.endorse_count) + 1 END, u.total_count = CASE WHEN u.total_count IS NULL THEN 10 ELSE toInt(u.total_count) + 10 END 
@@ -71,13 +71,25 @@ module UsersGraphHelper
 
 	def self.remove_endorse book_id, user_id
 		@neo ||= self.neo_init
-		get_endorse_user_clause = " MATCH (user:User)-->(endorse:EndorseNode)-->(book:Book) WHERE ID(book) = " + book_id.to_s + " AND ID(user) = " + user_id.to_s + " WITH endorse, book, user "
-		resolve_user_feed_clause = " OPTIONAL MATCH (user)-[endorse_action:EndorseAction]->(endorse)-[endorsed:Endorsed]->(book), (newer_user_feed)-[incoming_user_feed:FeedNext]->(endorse)-[outgoing_user_feed:FeedNext]->(older_user_feed) DELETE endorsed, endorse_action, incoming_user_feed, outgoing_user_feed WITH newer_user_feed, older_user_feed, endorse, book, user MERGE (newer_user_feed)-[:FeedNext{user_id: " + user_id.to_s + "}]->(older_user_feed) WITH endorse, book, user "
-		resolve_book_feed_clause = " OPTIONAL MATCH (newer_book_feed)-[incoming_book_feed:BookFeed]->(endorsed)-[outgoing_book_feed:BookFeed]->(older_book_feed) WITH incoming_book_feed.book_id AS book_id, newer_book_feed, older_book_feed, incoming_book_feed, outgoing_book_feed, endorse, book, user MERGE (newer_book_feed)-[:BookFeed{book_id:book_id}]->(older_book_feed) DELETE incoming_book_feed, outgoing_book_feed WITH endorse, book, user "
-		resolve_other_relations = " OPTIONAL MATCH (node)-[relation]-(endorse) DELETE relation, endorse WITH book, user"
-		set_clause = " SET book.endorse_count = TOINT(book.endorse_count) - 1, user.total_count = TOINT(user.total_count) - " +  Constants::EndorsePoints.to_s 
-		clause = get_endorse_user_clause + resolve_user_feed_clause + resolve_book_feed_clause + resolve_other_relations + set_clause 
-		@neo.execute_query clause
+		# delete mark as read relation
+		remove_endorse_clause = _match_user_and_book(user_id, book_id)+" WITH u, b MATCH (u)-[r1:EndorseAction]->(m:EndorseNode)-[r2:Endorsed]->(b) DELETE r1, r2 WITH u, b, m "
+
+		#delete feed relation
+		feednext_clause = _delete_feed_clause(user_id)
+
+		#delete book feed relation
+		bookfeed_clause = _delete_book_clause(user_id)
+
+		delete_node = " DELETE m WITH u, b "
+
+		#update book and user properties
+		book_readers_count = "SET b.endorse_count = CASE WHEN b.endorse_count IS NULL THEN 0 ELSE toInt(b.endorse_count) - 1 END, "
+		user_total_count = "u.total_count = CASE WHEN u.total_count IS NULL THEN 0 ELSE toInt(u.total_count) - "+Constants::EndorsePoints.to_s+" END"
+
+		clause = remove_endorse_clause + feednext_clause + bookfeed_clause + delete_node + book_readers_count + user_total_count
+		
+		puts "REMOVE ENDORSE".green
+		@neo.execute_query(clause)
 	end
 
 	def self.record_time(user_id, book_id, time)
@@ -88,7 +100,6 @@ module UsersGraphHelper
 
 		clause = rating_clause + _delete_existing_feednext_clause(user_id) + _feednext_clause(user_id) + _bookfeed_clause(user_id) + _existing_ego_clause + _ego_clause + set_clause
 		puts "TIMER".green
-		puts clause.blue.on_red
 		@neo.execute_query clause
 	end
 
@@ -103,14 +114,12 @@ module UsersGraphHelper
 	def self.get_bookmark_labels user_id
 		@neo ||= self.neo_init
 		clause = _match_user(user_id)+" OPTIONAL MATCH (u)-[:Labelled]->(bm:Label) RETURN bm.name, ID(bm)"
-		puts clause.blue.on_red
 		@neo.execute_query(clause)["data"]
 	end
 
 	def self.get_books_read(user_id, skip_count=0)
 		@neo ||= self.neo_init
 		clause = "MATCH (u:User)-[:MarkAsReadAction]->(m:MarkAsReadNode)-[:MarkAsRead]->(b:Book) WHERE ID(u)="+user_id.to_s+" RETURN b.isbn as isbn, ID(b), m.timestamp as timestamp ORDER BY timestamp SKIP "+skip_count.to_s+" LIMIT 10"
-		puts clause.blue.on_red
 		@neo.execute_query(clause)["data"]
 	end
 
@@ -118,7 +127,6 @@ module UsersGraphHelper
 		@neo ||= self.neo_init
 		clause = _match_user(user_id)+" WITH u MATCH (u)-[:Labelled]->(l:Label)-[:BookmarkedOn]->(z:BookmarkNode)-[:BookmarkAction]->(b:Book) WHERE z.user_id = "+user_id.to_s+" RETURN b.isbn as isbn, ID(b), COLLECT(l.name) as labels SKIP "+skip_count.to_s+" LIMIT 10"
 
-		puts clause.blue.on_red
 		@neo.execute_query(clause)["data"]
 	end
 
@@ -140,7 +148,6 @@ module UsersGraphHelper
 		set_clause = "SET b.bookmark_count = CASE WHEN b.bookmark_count IS NULL THEN 1 ELSE toInt(b.bookmark_count) + 1 END, u.bookmark_count = CASE WHEN u.bookmark_count IS NULL THEN 1 ELSE toInt(u.bookmark_count) + 1 END, l.bookmark_count = CASE WHEN l.bookmark_count IS NULL THEN 1 ELSE toInt(l.bookmark_count) + 1 END, lr.bookmark_count = CASE WHEN lr.bookmark_count IS NULL THEN 1 ELSE toInt(lr.bookmark_count) + 1 END, u.total_count = CASE WHEN u.total_count IS NULL THEN "+Constants::BookmarkPoints.to_s+" ELSE toInt(u.total_count) + "+Constants::BookmarkPoints.to_s+" END"
 
 		clause = bookmark_clause + feednext_clause + bookfeed_next_clause + existing_ego_clause + ego_clause + set_clause
-		puts clause.blue.on_red
 		puts "BOOK BOOKMARKED".green
 		@neo.execute_query(clause)
 		#update bookmark cache for the book
@@ -169,7 +176,6 @@ module UsersGraphHelper
 
 		clause = remove_bookmark_node_clause + feednext_clause + bookfeed_next_clause + delete_node + set_clause
 
-		puts clause.blue.on_red
 		puts "REMOVE BOOKMARKED".green
 		@neo.execute_query(clause)
 		
@@ -196,7 +202,6 @@ module UsersGraphHelper
 
 		clause = mark_as_read_clause + _feednext_clause(user_id) + _bookfeed_clause(user_id) + _existing_ego_clause + _ego_clause + set_clause
 		puts "MARK AS READ".green
-		puts clause.blue.on_red
 		@neo.execute_query clause
 		#update mark as read cache for the book
 		#update popularity index for the book
@@ -247,7 +252,6 @@ module UsersGraphHelper
 
 		clause = mark_as_unread_clause + rating_clause + timing_clause + feednext_clause + rating_feed_clause + timing_feed_clause + bookfeed_clause + rating_bookfeed_clause + timing_node_bookfeed_clause + delete_node + book_readers_count + user_book_read_count + user_total_count
 		# WHERE r3.weight = 0 DELETE r3
-		puts clause.blue.on_red
 		puts "MARK AS UNREAD".green
 		@neo.execute_query(clause)
 	end
@@ -263,7 +267,6 @@ module UsersGraphHelper
 		# get_all_users = "MATCH (all_user:User) WHERE all_user <> user "
 		# make_friends = "CREATE (user)-[:Follow]->(all_user), (user)<-[:Follow]-(all_user)"
 		clause = create_new_user + create_feednext_relation + create_ego_relation + get_labels + add_labels + add_categories_to_user
-		puts clause.blue.on_red
 		@neo.execute_query(clause)
 	end
 
@@ -279,7 +282,6 @@ module UsersGraphHelper
 		get_feed_of_my_ego_friends = "MATCH (friend)-[:FeedNext*]->(feed) "
 		return_data = "RETURN labels(feed), feed, feed.timestamp ORDER BY toInt(feed.timestamp) DESC SKIP "+skip_count.to_s+" LIMIT 10 "
 		clause = _match_user(user_id) + get_all_ego_relations_through_me + filter_relations_only_on_me + get_feed_of_my_ego_friends + return_data
-		puts clause.blue.on_red
 		@neo.execute_query clause
 	end
 
@@ -287,7 +289,6 @@ module UsersGraphHelper
 		@neo ||= self.neo_init
 		skip_count = 0 unless skip_count.present?
 		clause = _match_user(user_id)+" MATCH (u)-[:FeedNext*]->(feed) RETURN labels(feed), feed, feed.timestamp ORDER BY toInt(feed.timestamp) DESC SKIP "+skip_count.to_s+" LIMIT 10 "
-		puts clause.blue.on_red
 		@neo.execute_query clause
 	end
 
@@ -311,7 +312,6 @@ module UsersGraphHelper
 		user_delete_clause = "MATCH (u:User)-[r]-() DELETE u, r "
 		mark_as_read_delete_clause = "MATCH (u:MarkAsReadNode)-[r]-() DELETE u, r"
 		clause = user_delete_clause + mark_as_read_delete_clause
-		puts clause.blue.on_red
 		@neo.execute_query clause
 	end
 
@@ -340,7 +340,6 @@ module UsersGraphHelper
 		set_clause = "SET u.comment_count = CASE WHEN u.comment_count IS NULL THEN 1 ELSE toInt(u.comment_count) + 1 END" + set_clause
 		
 		clause = tweet_clause + feednext_clause + bookfeed_clause + existing_ego_clause + ego_clause + set_clause
-		puts clause.blue.on_red
 		@neo.execute_query clause
 	end
 
@@ -350,7 +349,6 @@ module UsersGraphHelper
 		recommended_count = "SET b.recommended_count = CASE WHEN b.recommended_count IS NULL THEN 1 ELSE toInt(b.recommended_count) + 1 END"
 
 		clause = _recommend_clause(user_id, book_id, friend_id) + _feednext_clause(user_id) + _bookfeed_clause(user_id) + _existing_ego_clause + _ego_clause + total_count + recommended_count
-		puts clause.blue.on_red
 		@neo.execute_query clause
 	end
 
@@ -359,7 +357,6 @@ module UsersGraphHelper
 		match_clause = "MATCH (u)-[r]->(n:Notification) "
 		return_clause = "RETURN n, ID(n)"
 		clause = _match_user(user_id) + match_clause + return_clause
-		puts clause.blue.on_red
 		info = @neo.execute_query(clause)["data"]
 	end
 
@@ -372,7 +369,6 @@ module UsersGraphHelper
 		follow_clause = "CREATE UNIQUE (u)-[r:Follow]->(f) SET r.timestamp = "+Time.now.to_i.to_s
 
 		clause = match_clause + ego_clause + follow_clause
-		puts clause.blue.on_red
 		@neo.execute_query clause
 	end
 
@@ -385,7 +381,6 @@ module UsersGraphHelper
 		unfollow_clause = "MATCH (u)-[r:Follow]->(f) DELETE r "
 
 		clause = match_clause + existing_ego_clause + unfollow_clause
-		puts clause.blue.on_red
 		@neo.execute_query clause
 	end
 

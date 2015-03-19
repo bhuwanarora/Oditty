@@ -7,6 +7,21 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def get_tiny_reads
+			end
+
+			def get_books_from_most_read_author
+			end
+
+			def get_books_from_likeable_category
+			end
+
+			def get_books_from_most_read_era
+			end
+
+			def books_on_your_friends_shelves
+			end
+
 			def get_user_details
 				if params[:id]
 					info = UserApi.get_details(params[:id], session)
@@ -263,7 +278,7 @@ module Api
 				user_id = session[:user_id]
 				book_id = params[:id]
 				status = params[:status]
-				if status
+				if status == "true"
 					UsersGraphHelper.endorse_book(book_id, user_id)
 				else
 					UsersGraphHelper.remove_endorse(book_id, user_id)
