@@ -53,7 +53,7 @@ module UsersGraphHelper
 # 		CREATE (q)-[:Ego{user_id:ID(q)}]->(u)-[:Ego{user_id:ID(q)}]->(p) DELETE old))
 	def self.endorse_book book_id, user_id
 		@neo ||= self.neo_init
-		create_endorse_node_clause = _match_user_and_book(user_id, book_id) + " WITH u, b MERGE (u)-[:EndorseAction]->(endorse:EndorseNode{created_at: " + Time.now.to_i.to_s + ", book_id:ID(b), user_id:ID(u), updated_at:  " + Time.now.to_i.to_s + "})-[endorsed:Endorsed]->(book:Book) WITH u, endorse, b"
+		create_endorse_node_clause = _match_user_and_book(user_id, book_id) + " WITH u, b MERGE (u)-[:EndorseAction]->(endorse:EndorseNode)-[endorsed:Endorsed]->(book:Book) ON CREATE SET endorse.created_at = " + Time.now.to_i.to_s + ", endorse.book_id = ID(b), endorse.user_id = ID(u), endorse.updated_at = " + Time.now.to_i.to_s + " WITH u, endorse, b"
 		find_old_feed_clause = " MATCH (u)-[old:FeedNext]->(old_feed)  "
 		create_new_feed_clause = " MERGE (u)-[:FeedNext{user_id:" + user_id.to_s + "}]->(endorse)-[:FeedNext{user_id:" + user_id.to_s + "}]->(old_feed) DELETE old WITH u, endorse, b "
 		find_old_book_feed_clause = " MATCH (b)-[old:BookFeed{book_id:" + book_id.to_s + "}]->(old_feed) "

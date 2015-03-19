@@ -24,7 +24,6 @@ module Api
 			def self.get_book(id)
 				@neo = Neography::Rest.new
 				clause = "MATCH (book:Book) WHERE ID(book)="+id.to_s+" RETURN book"
-				puts clause.blue.on_red
 				book = @neo.execute_query(clause)["data"]
 				book
 			end
@@ -115,12 +114,13 @@ module Api
 				params = JSON.parse params["q"]
 				if params.nil? || params["skip_count"].nil?
 					skip_count = 0
+					clause = "MATCH (book:Book) WHERE ID(book)="+Constants::BestBook.to_s
 				else
 					skip_count = params["skip_count"]
+					clause = "MATCH (b:Book) WHERE ID(b)="+Constants::BestBook.to_s+" MATCH p=(b)-[:Next_book*.."+(20+skip_count.to_i).to_s+"]->(b_next) WITH last(nodes(p)) as book"
 				end
+				clause = clause + +" OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" WITH user, book, m OPTIONAL MATCH (user)-[:RatingAction]->(z:RatingNode{book_id:ID(book), user_id:"+user_id.to_s+"})-[:Rate]->(book) RETURN book.isbn as isbn, ID(book) as id, book.title as title, book.author_name as author_name, ID(m) as status, z.rating as user_rating, book.published_year as published_year, book.page_count as page_count SKIP "+skip_count.to_s
 				@neo = Neography::Rest.new
-				clause = "MATCH (b:Book) WHERE ID(b)="+Constants::BestBook.to_s+" MATCH p=(b)-[:Next_book*.."+(20+skip_count.to_i).to_s+"]->(b_next) WITH last(nodes(p)) as book OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" WITH user, book, m OPTIONAL MATCH (user)-[:RatingAction]->(z:RatingNode{book_id:ID(book), user_id:"+user_id.to_s+"})-[:Rate]->(book) RETURN book.isbn as isbn, ID(book) as id, book.title as title, book.author_name as author_name, ID(m) as status, z.rating as user_rating, book.published_year as published_year, book.page_count as page_count SKIP "+skip_count.to_s
-				puts clause.blue.on_red
 				begin
 					books =  @neo.execute_query(clause)
 				rescue Exception => e
