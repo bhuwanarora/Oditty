@@ -33,7 +33,7 @@ module SignupHelper
 			return_clause = " RETURN "
 			clause = _get_user_clause(need_rating) + return_clause +  _get_return_book_properties_clause(need_rating)
 			data = @neo.execute_query clause
-
+			
 			has_linked_books = data[0]["id"].blank? ? false : true rescue false
 
 			unless has_linked_books
