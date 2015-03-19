@@ -54,6 +54,13 @@ h1, h2, h3, h4 {
     font-weight: bold;
 }
 
+.md-button-clear{
+      text-transform: none!important;
+      font-weight: inherit!important;
+      text-align: inherit!important;
+      border-radius: 0!important;
+}
+
 .tab-main{
     position: fixed;
     width: 100%;
@@ -97,6 +104,11 @@ md-tabs.md-default-theme.md-accent .md-header{
 
 md-tabs{
     padding: 0 ;
+}
+
+md-tabs.md-default-theme md-tabs-ink-bar {
+  color: grey;
+  background: grey;
 }
 
 .md-header-items-container{
@@ -260,14 +272,6 @@ md-tab.active a{
 }
 
 
-#Search, 
-#ConnectInner,
-#ExploreInner,
-#PersonaliseInner{
-    margin-top: 200px;
-    position: absolute;
-}
-
 @-moz-document url-prefix() {
     body{
         font-size: 11px !important;
@@ -386,13 +390,6 @@ md-tab.active a{
     width: 75%; 
 }
 
-
-.desc{
-    font-size: 2.5vh;   
-    font-family: 'Roboto';
-    color:white; 
-    line-height: 1em;  
-}
 
 .side_panel{
     margin-top: 0px !important;
