@@ -268,6 +268,7 @@ module Api
 				else
 					UsersGraphHelper.remove_endorse(book_id, user_id)
 				end
+				render :json => {:message => "Success"}, :status => 200
 			end
 
 			def get_followed_by
