@@ -28,20 +28,42 @@ module UsersGraphHelper
 	end
 
 
+# 		MATCH (u:User), (b:Book) 
+# WHERE ID(u)=0 AND ID(b)=395235  
+# WITH u, b 
+# MERGE (u)-[:EndorseAction]->(endorse:EndorseNode{created_at: 1426740235, book_id:ID(b), user_id:ID(u), updated_at: 1426740235})-[endorsed:Endorsed]->(b) 
+# WITH u, endorse, b 
+# MATCH (u)-[old:FeedNext]->(old_feed)   
+# MERGE (u)-[:FeedNext{user_id:0}]->(endorse)-[:FeedNext{user_id:0}]->(old_feed) 
+# DELETE old 
+# WITH u, endorse, b 
+# MATCH (b)-[old:BookFeed{book_id:395235}]->(old_feed)  
+# MERGE (b)-[:BookFeed{book_id:395235}]->(endorse)-[:BookFeed{book_id:395235}]->(old_feed) 
+# DELETE old 
+# WITH u, b
+# OPTIONAL MATCH (u)<-[:Follow]-(f:User) 
+# OPTIONAL MATCH (x1)-[r1:Ego{user_id:ID(f)}]->(u)-[r2:Ego{user_id:ID(f)}]->(x2) 
+# FOREACH (s IN CASE WHEN r1 IS NULL THEN [] ELSE [r1] END | 
+# 	FOREACH (t IN CASE WHEN r2 IS NULL THEN [] ELSE [r2] END | 
+# 		CREATE (x1)-[:Ego{user_id:ID(f)}]->(x2) DELETE s, t))
+# WITH u, b, f 
+# OPTIONAL MATCH (f)-[old:Ego{user_id:ID(f)}]->(old_ego) 
+# FOREACH(p IN CASE WHEN old_ego IS NULL THEN [] ELSE [old_ego] END | 
+# 	FOREACH (q IN CASE WHEN f IS NULL THEN [] ELSE [f] END | 
+# 		CREATE (q)-[:Ego{user_id:ID(q)}]->(u)-[:Ego{user_id:ID(q)}]->(p) DELETE old))
 	def self.endorse_book book_id, user_id
 		@neo ||= self.neo_init
-		create_endorse_node_clause = _match_user_and_book(user_id, book_id) + " WITH u AS user, b AS book MERGE (user)-[:EndorseAction]->(endorsed:EndorseNode{created_at: " + Time.now.to_i.to_s + ", book_id:ID(book), user_id:ID(user), updated_at:  " + Time.now.to_i.to_s + "})-[endorsed:Endorsed]->(book:Book) WITH user, endorsed, book"
-		find_old_feed_clause = " MATCH (user)-[old:FeedNext]->(old_feed)  "
-		create_new_feed_clause = " MERGE (user)-[:FeedNext{user_id:" + user_id.to_s + "}]->(endorsed)-[:FeedNext{user_id:" + user_id.to_s + "}]->(old_feed) DELETE old WITH user, endorsed, book "
-		find_old_book_feed_clause = " MATCH (book)-[old:BookFeed{book_id:" + book_id.to_s + "}]->(old_feed) "
-		create_new_book_feed_clause = " MERGE (book)-[:BookFeed{book_id:" + book_id.to_s + "}]->(endorsed)-[:BookFeed{book_id:" + book_id.to_s + "}]->(old_feed) DELETE old WITH user AS u, book as b "
-
+		create_endorse_node_clause = _match_user_and_book(user_id, book_id) + " WITH u, b MERGE (u)-[:EndorseAction]->(endorse:EndorseNode{created_at: " + Time.now.to_i.to_s + ", book_id:ID(b), user_id:ID(u), updated_at:  " + Time.now.to_i.to_s + "})-[endorsed:Endorsed]->(book:Book) WITH u, endorse, b"
+		find_old_feed_clause = " MATCH (u)-[old:FeedNext]->(old_feed)  "
+		create_new_feed_clause = " MERGE (u)-[:FeedNext{user_id:" + user_id.to_s + "}]->(endorse)-[:FeedNext{user_id:" + user_id.to_s + "}]->(old_feed) DELETE old WITH u, endorse, b "
+		find_old_book_feed_clause = " MATCH (b)-[old:BookFeed{book_id:" + book_id.to_s + "}]->(old_feed) "
+		create_new_book_feed_clause = " MERGE (b)-[:BookFeed{book_id:" + book_id.to_s + "}]->(endorse)-[:BookFeed{book_id:" + book_id.to_s + "}]->(old_feed) DELETE old WITH u, endorse, b "
+		set_clause = "SET b.endorse_count = CASE WHEN b.endorse_count IS NULL THEN 1 ELSE toInt(b.endorse_count) + 1 END, u.total_count = CASE WHEN u.total_count IS NULL THEN "+Constants::EndorsePoints.to_s+" ELSE toInt(u.total_count) + "+Constants::EndorsePoints.to_s+" END"
 		existing_ego_clause = _existing_ego_clause
 
 		ego_clause = _ego_clause 
-		return_clause = " RETURN u, b"
 
-		clause = create_endorse_node_clause + find_old_feed_clause + create_new_feed_clause + find_old_book_feed_clause + create_new_book_feed_clause + existing_ego_clause + ego_clause + return_clause
+		clause = create_endorse_node_clause + find_old_feed_clause + create_new_feed_clause + find_old_book_feed_clause + create_new_book_feed_clause + existing_ego_clause + ego_clause + set_clause
 		@neo.execute_query(clause)
 	end
 
