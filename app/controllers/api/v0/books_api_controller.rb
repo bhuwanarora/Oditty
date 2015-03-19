@@ -17,7 +17,6 @@ module Api
 			def books_on_signup
 				skip_count = params[:skip_count]
 				user_id = session[:user_id]
-				user_id = 0
 				books = SignupHelper::BooksFinder.new(user_id, skip_count)
 				render :json => books, :status => 200
 			end
