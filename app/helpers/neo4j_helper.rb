@@ -1096,15 +1096,14 @@ module Neo4jHelper
 
 	def self.set_genre_linked_list
 		neo = self.init
-		starting_node = Constants::Id.to_s
-		is_done = false
-		node_id = starting_node
+		is_sorted_list_created = false
+		node_id = Constants::BestBook.to_s
 		while !is_sorted_list_created
-			match_clause = "MATCH popularity_list = (book:Book)-[:Next_book*0.." + Constants::QueryStep.to_s + "]->(next_book) WHERE ID = " + node_id.to_s 
+			match_clause = "MATCH popularity_list = (book:Book)-[:Next_book*0.." + Constants::QueryStep.to_s + "]->(next_book) WHERE ID(book) = " + node_id.to_s 
 			unwind_book_collection_clause = " WITH EXTRACT(n in nodes(popularity_list)|n) AS books UNWIND books as book "
-			match_book_to_root_clause = "OPTIONAL MATCH (book)-[:FromCategory]->(category)-[:HasRoot*0..1]->(root_category:Category{is_root:true}) "
-			get_last_linked_node_clause = "WITH book, root_category, root_category.uuid AS uuid OPTIONAL MATCH (root_category)-[genre_popularity_list:NextInCategory*]->(popular_book:Book) WHERE NOT(popular_book-[:NextInGenre{from_category:uuid}]-()) "
-			conditionally_make_relation_clause = "FOREACH(to_be_ignored IN CASE WHEN genre_popularity_list IS NULL THEN [1] ELSE [] END | MERGE (root_category)-[new_popular:NextInGenre]-(book) ON CREATE SET new_popular.from_category = root_category.uuid) FOREACH(to_be_ignored IN CASE WHEN genre_popularity_list IS NOT NULL THEN [1] ELSE [] END | MERGE (popular_book)-[next_popular:NextInGenre]-(book) ON CREATE SET next_popular.from_category = root_category.uuid) RETURN ID(book) as book_id"
+			match_book_to_root_clause = "OPTIONAL MATCH (book)-[:FromCategory]->(category:Category)-[:HasRoot*0..1]->(root_category:Category{is_root:true}) "
+			get_last_linked_node_clause = "WITH book, root_category, root_category.uuid AS uuid OPTIONAL MATCH (root_category)-[next_in_category:NextInCategory*]->(popular_book:Book) WHERE NOT(popular_book-[:NextInCategory{from_category:uuid}]-()) "
+			conditionally_make_relation_clause = "FOREACH(to_be_ignored IN CASE WHEN next_in_category IS NULL THEN [1] ELSE [] END | MERGE (root_category)-[new_popular:NextInCategory]-(book) ON CREATE SET new_popular.from_category = root_category.uuid) FOREACH(to_be_ignored IN CASE WHEN next_in_category IS NOT NULL THEN [1] ELSE [] END | MERGE (popular_book)-[next_popular:NextInCategory]-(book) ON CREATE SET next_popular.from_category = root_category.uuid) RETURN ID(book) as book_id"
 			clause = match_clause + unwind_book_collection_clause + match_book_to_root_clause + get_last_linked_node_clause + conditionally_make_relation_clause 
 			neo.execute_query clause
 			books_id = neo.execute_query["book_id"].flatten 
