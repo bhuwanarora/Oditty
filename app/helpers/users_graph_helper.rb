@@ -69,11 +69,11 @@ module UsersGraphHelper
 
 	def self.remove_endorse book_id, user_id
 		@neo ||= self.neo_init
-		get_endorse_user_clause = " MATCH (user:User)-->(endorse:EndorseNode)-->(book:Book) WHERE ID(book) = " + book_id.to_s + " AND ID(user) = " + user_id.to_s + " WITH endorse, user "
-		resolve_user_feed_clause = " OPTIONAL MATCH (user)-[endorse_action:EndorseAction]->(endorse)-[endorsed:Endorsed]->(book:Book), (newer_user_feed)-[incoming_user_feed:FeedNext]->(endorse)-[outgoing_user_feed:FeedNext]->(older_user_feed) DELETE endorsed, endorse_action, incoming_user_feed, outgoing_user_feed WITH newer_user_feed, older_user_feed, endorse MERGE (newer_user_feed)-[:FeedNext{user_id: " + user_id.to_s + "}]->(older_user_feed) WITH endorse, book "
-		resolve_book_feed_clause = " OPTIONAL MATCH (newer_book_feed)-[incoming_book_feed:BookFeed]->(endorsed)-[outgoing_book_feed:BookFeed]->(older_book_feed) WITH incoming_book_feed.book_id AS book_id, newer_book_feed, older_book_feed, incoming_book_feed, outgoing_book_feed, endorse, book MERGE (newer_book_feed)-[:BookFeed{book_id:book_id}]->(older_book_feed) DELETE incoming_book_feed, outgoing_book_feed WITH endorse, book "
-		resolve_other_relations = " OPTIONAL MATCH (node)-[relation]-(endorse) DELETE relation, endorse WITH book"
-		set_clause = " SET book.endorse_count = book.endorse_count - 1 "
+		get_endorse_user_clause = " MATCH (user:User)-->(endorse:EndorseNode)-->(book:Book) WHERE ID(book) = " + book_id.to_s + " AND ID(user) = " + user_id.to_s + " WITH endorse, book, user "
+		resolve_user_feed_clause = " OPTIONAL MATCH (user)-[endorse_action:EndorseAction]->(endorse)-[endorsed:Endorsed]->(book), (newer_user_feed)-[incoming_user_feed:FeedNext]->(endorse)-[outgoing_user_feed:FeedNext]->(older_user_feed) DELETE endorsed, endorse_action, incoming_user_feed, outgoing_user_feed WITH newer_user_feed, older_user_feed, endorse, book, user MERGE (newer_user_feed)-[:FeedNext{user_id: " + user_id.to_s + "}]->(older_user_feed) WITH endorse, book, user "
+		resolve_book_feed_clause = " OPTIONAL MATCH (newer_book_feed)-[incoming_book_feed:BookFeed]->(endorsed)-[outgoing_book_feed:BookFeed]->(older_book_feed) WITH incoming_book_feed.book_id AS book_id, newer_book_feed, older_book_feed, incoming_book_feed, outgoing_book_feed, endorse, book, user MERGE (newer_book_feed)-[:BookFeed{book_id:book_id}]->(older_book_feed) DELETE incoming_book_feed, outgoing_book_feed WITH endorse, book, user "
+		resolve_other_relations = " OPTIONAL MATCH (node)-[relation]-(endorse) DELETE relation, endorse WITH book, user"
+		set_clause = " SET book.endorse_count = TOINT(book.endorse_count) - 1, user.total_count = TOINT(user.total_count) - " +  Constants::EndorsePoints.to_s 
 		clause = get_endorse_user_clause + resolve_user_feed_clause + resolve_book_feed_clause + resolve_other_relations 
 		@neo.execute_query clause
 	end
