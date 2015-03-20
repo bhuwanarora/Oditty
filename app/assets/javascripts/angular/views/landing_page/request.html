@@ -1,14 +1,17 @@
-<div layout="row" class="inbox-area">	
-	<div flex>
-		<div layout="column" layout-margin layout-align="center center">
-			<div flex style="text-align: center;">
-	    		<h2>ReadersDoor starts with an invitation.<br>
-	    		Join us</h2>
-	    	</div>
-		</div>
-		<div class="signup-container">
-	   		Send an email to <a class="invite-link" data-href-desktop="https://mail.google.com/mail/u/0/#inbox?compose=new" data-track-action="readersdoor@gmail.com" href="https://mail.google.com/mail/u/0/#inbox?compose=new" target="_blank">readersdoor@gmail.com</a> to 
+<div layout="row" ng-if="show_content" class="main_view top_pad hex_background" layout-margin 
+	layout-align="center center" layout-fill layout-padding>
+	<div flex-sm="15" flex="5"></div>
+	<div layout="column" layout-align="center center" flex-sm="75" flex="90">
+	    <div class="invite" flex="30" layout-wrap>
+	    	ReadersDoor starts with an invitation
+	    </div><br><br>
+	   	<div class="invite" flex="20">
+	   		Join us
+	   	</div><br>
+		<h3 class="desc" flex="40" layout="row" layout-align="center center" layout-wrap>
+	   		Send an email to &nbsp <a class="invite-link" data-href-desktop="https://mail.google.com/mail/u/0/#inbox?compose=new" data-track-action="readersdoor@gmail.com" href="https://mail.google.com/mail/u/0/#inbox?compose=new" target="_blank">readersdoor@gmail.com</a> &nbsp to 
 			request an invitation.
-		</div>
-	</div>		
+		</h3>
+	</div>
+	<div flex-sm="10" flex-gt-sm="5"></div>		
 </div>

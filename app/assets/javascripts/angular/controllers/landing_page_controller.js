@@ -201,11 +201,13 @@ app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "Webs
 
 	$scope.show_signin_options = function(event){
 		$mdSidenav('right').toggle();
-		// $mdDialog.show({
-            // templateUrl: 'assets/angular/html/landing_page/_sign_in.html'
-        // });
 		event.stopPropagation();
 	}
+
+	$scope.left_tab_list = function(event) {
+    	$mdSidenav('left').toggle();
+		event.stopPropagation();
+  	}
 
 	_init();
     
