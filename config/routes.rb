@@ -8,7 +8,7 @@ ReadersDoor::Application.routes.draw do
   mount SecureResqueServer.new, :at => '/resque'
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  # devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   
   resources :tags
 

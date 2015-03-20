@@ -1,4 +1,4 @@
-class Bookmark
+class Bookmark < Neo
 	Read 									= "Read"
 	IntendingToRead 						= "IntendingToRead"
 	DidntFeelLikeReadingItAfterAPoint 		= "DidntFeelLikeReadingItAfterAPoint"
@@ -58,7 +58,7 @@ class Bookmark
 		end
 
 		clause = (add ? self.bookmark_book : self.remove_bookmark) + clause
-		@neo.execute_query(clause)
+		self.execute clause
 	end
 
 	def self.add

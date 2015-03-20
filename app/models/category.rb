@@ -1,9 +1,7 @@
-class Category < ActiveRecord::Base
-	has_ancestry
-	uniquify :uuid, :salt, :length => 12, :chars => 0..9
-	attr_accessible :name
-
-	def name=(value)
-		write_attribute(:name, value.upcase)
+class Category < Neo
+	
+	def self.get_basic_info
+		" ID(root_category) AS id, root_category.icon AS icon, root_category.name AS name, root_category.aws_key AS aws"
 	end
+
 end

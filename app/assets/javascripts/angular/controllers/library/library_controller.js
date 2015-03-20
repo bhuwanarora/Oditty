@@ -156,30 +156,14 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         if($scope.constant.show_book){
             $scope.grid_style = {"height": "initial", "padding-bottom": "100px"};
             $scope.constant = {"show_book": false};
-            // $scope._init();
             $scope.info.books = $scope.tempBooks;
         }
     }
 
     $scope.show_book = function(event, index){
-        // var offsetTop = event.currentTarget.parentElement.parentElement.parentElement.offsetTop;
-        // var clientHeight = event.currentTarget.parentElement.parentElement.clientHeight;
-        // var marginTop = offsetTop + 1*clientHeight/3;
         $scope.grid_style = {"height": "35px", "overflow-y": "hidden", "padding-bottom": "0px"};
-
-        // var offset = 100;
-        // var duration = 3000;
-        // var bookBoundingRectangle = event.currentTarget.parentElement.parentElement.getBoundingClientRect();
-
         var insertIndex = (Math.floor(index/5) + 1)*5
 
-        // var item = {
-        //   color: "#fffff",
-        //   colspan: 5,
-        //   rowspan: 5,
-        //   isBook: true
-        // }
-        
         $scope.tempBooks = $scope.info.books;
         $scope.info.books = $scope.info.books.slice(0, insertIndex);
         $scope.constant = {"show_book": true};
@@ -189,10 +173,9 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
 
     $scope.toggle_infinity_content = function(){
         if(angular.isDefined($scope.active_tab.infinity) && $scope.active_tab.infinity){
-            $scope.active_tab.infinity = false;
+            $scope._get_personalised_suggestions();
         }
         else{
-            $scope.active_tab.infinity = true;
             $scope._get_popular_books();
         }
     }
@@ -238,7 +221,8 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
 
         $scope.constant = {"show_book": false};
         $scope.info.books = [];
-        $scope.search_tag = {}
+        $scope.search_tag = {};
+        $scope.active_tab = {};
         $scope.info.categories = [];
     }
 
