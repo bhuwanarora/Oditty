@@ -23,7 +23,7 @@ homeApp.controller('genresController', ["$scope", "$rootScope", "$timeout", 'use
             genreService.get_genres().then(function(data){
                 angular.forEach(data, function(value){
                     var status = value.likes != null;
-                    var url = WebsiteUIConstants.GenreAWS + value.key;
+                    var url = WebsiteUIConstants.GenreAWS + value.root_category_aws_key;
                     var json = angular.extend({"status": status, "url": url}, value);
                     this.push(json);
                 }, $scope.info.genres);

@@ -47,7 +47,7 @@ class User::Predict::Book < User::Predict
 	def handle_few_books_read 
 		need_rating = true
 		return_clause = " RETURN "
-		clause = _get_user_clause(need_rating) + return_clause +  _get_return_book_properties_clause(need_rating)
+		@user.match_clause + UsersBook.mark_as_read_clause + UsersBook.rating_clause + return_init +  Book.get_basic_info
 
 		has_linked_books = data[0]["id"].blank? ? false : true rescue false
 		unless has_linked_books

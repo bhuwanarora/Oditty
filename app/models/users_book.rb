@@ -26,9 +26,17 @@ class UsersBook < Neo
 		"OPTIONAL MATCH (user)-[:EndorseAction]->(endorse)-[:Endorsed]->(book) "
 	end
 
+	def self.mark_as_read_clause
+		" OPTIONAL MATCH (user)-[mark_as_read:MarkAsReadAction]->(:MarkAsReadNode)--(book:Book)"
+	end
+
+	def self.friends_book_clause
+		"OPTIONAL MATCH (user)-[:Follow]->(friend:User)-[:MarkAsReadAction]->(m_friend)-[:MarkAsRead]->(book) "
+	end
+
 	def self.get_book_details
 		match_clause + UsersBook.rating_clause + UsersBook.timing_node_clause + User.label_clause + 
-		Bookmark.match_clause + "OPTIONAL MATCH (user)-[:MarkAsReadAction]->(mark_as_read)-[:MarkAsRead]->(b) " + UsersBook.endorse_clause + "OPTIONAL MATCH (user)-[:Follow]->(friend:User)-[:MarkAsReadAction]->(m_friend)-[:MarkAsRead]->(book) " + Book.genre_clause + "RETURN " + Book.get_basic_info + ", rating_node.rating as user_rating, timing_node.time_index as user_time_index, COLLECT(DISTINCT user_label.name) as labels, COLLECT(DISTINCT label.name) as selected_labels, mark_as_read.timestamp as status, ID(endorse) as endorse_status, COLLECT(ID(friend)) as friends_id, COLLECT(friend.thumb) as friends_thumb, COUNT(friend) as friends_count, COLLECT(genre.name) as genres, COLLECT(belongs_to.weight) as genres_weight"
+		Bookmark.match_clause + UsersBook.mark_as_read_clause + UsersBook.endorse_clause + UsersBook.friends_book_clause + Book.genre_clause + return_init + Book.get_basic_info + ", rating_node.rating as user_rating, timing_node.time_index as user_time_index, COLLECT(DISTINCT user_label.name) as labels, COLLECT(DISTINCT label.name) as selected_labels, mark_as_read.timestamp as status, ID(endorse) as endorse_status, COLLECT(ID(friend)) as friends_id, COLLECT(friend.thumb) as friends_thumb, COUNT(friend) as friends_count, COLLECT(genre.name) as genres, COLLECT(belongs_to.weight) as genres_weight"
 	end
 
 	def self.rate(rating)
