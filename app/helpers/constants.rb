@@ -89,6 +89,6 @@ module Constants
 	BookLeftAMarkOnYouUpcase 	= "BOOKSLEFTAMARKONYOU"
 	FromFacebookUpcase   		= "FROMFACEBOOK"
 	MarkAsReadUpcase            = "MARKASREAD"
-	PersonalisedBookRecommendationBookCount = 10
+	RecommendationBookCount 	= 10
 	FollowFavoriteAuthorsCount  = 30 
 end
