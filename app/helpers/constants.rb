@@ -1,5 +1,4 @@
 module Constants
-	InfluentialBooks			="influentialbooks"
 	MarkAsReadPoints 			= 5
 	# BookmarkPoints 				= 5
 	RatingPoints				= 10
@@ -86,9 +85,6 @@ module Constants
 	AboutToDieBookCountRange  	= "250+"
 	InitialSkipCount        	= 0
 	RelevantSocialTagValue      = 1
-	BookLeftAMarkOnYouUpcase 	= "BOOKSLEFTAMARKONYOU"
-	FromFacebookUpcase   		= "FROMFACEBOOK"
-	MarkAsReadUpcase            = "MARKASREAD"
 	RecommendationBookCount 	= 10
 	FollowFavoriteAuthorsCount  = 30 
 	QueryStepDuringSorting      = 1000
