@@ -117,12 +117,26 @@ module Api
 					clause = "MATCH (book:Book) WHERE ID(book)="+Constants::BestBook.to_s
 				else
 					skip_count = params["skip_count"]
-					clause = "MATCH (b:Book) WHERE ID(b)="+Constants::BestBook.to_s+" MATCH p=(b)-[:Next_book*.."+(20+skip_count.to_i).to_s+"]->(b_next) WITH last(nodes(p)) as book"
+					clause = "MATCH (b:Book) WHERE ID(b)="+Constants::BestBook.to_s+" MATCH p=(b)-[:Next_book*" + (skip_count.to_i).to_s + ".." + (19+skip_count.to_i).to_s + "]->(b_next) WITH last(nodes(p)) AS book"
 				end
-				clause = clause + " OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" WITH user, book, m OPTIONAL MATCH (user)-[:RatingAction]->(z:RatingNode{book_id:ID(book), user_id:"+user_id.to_s+"})-[:Rate]->(book) RETURN book.isbn as isbn, ID(book) as id, book.title as title, book.author_name as author_name, ID(m) as status, z.rating as user_rating, book.published_year as published_year, book.page_count as page_count SKIP "+skip_count.to_s
+				mark_as_read_clause = " OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" WITH user, book, m"
+				rating_clause = " OPTIONAL MATCH (user)-[:RatingAction]->(z:RatingNode{book_id:ID(book), user_id:"+user_id.to_s+"})-[:Rate]->(book) WITH user, book, m, z"
+				root_category_clause = " OPTIONAL MATCH (book)-[]->(category:Category{is_root: true})"
+				return_clause = " RETURN book.isbn AS isbn, ID(book) AS id, book.title AS title, book.author_name AS author_name, ID(m) AS status, z.rating AS user_rating, book.published_year AS published_year, book.page_count AS page_count, COLLECT(category.id) AS categories_id, COLLECT(category.name) AS categories_name "
+				clause = clause + mark_as_read_clause + rating_clause + root_category_clause + return_clause
 				@neo = Neography::Rest.new
 				begin
 					books =  @neo.execute_query(clause)
+					categories = []
+					for book in books
+						book["categories_name"].each_with_index do |category_name, index|
+							category = {"name" => category_name, "id" => book["categories_id"][index]}
+							categories.push category
+						end
+						book["categories"] = categories
+						book.except!("categories_id")
+						book.except!("categories_name")
+					end
 				rescue Exception => e
 					puts e.to_s.red
 					books = [{:message => "Error in finding books"}]

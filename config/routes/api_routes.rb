@@ -89,10 +89,14 @@ ReadersDoor::Application.routes.draw do
       match 'books_bookmarked'                        => 'users_api#books_bookmarked',                  :via => [:put, :get, :post]
       match 'fb'                                      => 'users_api#fb',                                :via => [:put, :get, :post]
       match 'google'                                  => 'users_api#google',                            :via => [:put, :get, :post]
+      match 'small_reads'                             => 'users_api#get_small_reads',                   :via => [:put, :get, :post]
+      match 'books_from_favourite_author'             => 'users_api#get_books_from_favourite_author',   :via => [:put, :get, :post]
+      match 'books_from_favourite_category'           => 'users_api#get_books_from_favourite_category', :via => [:put, :get, :post]
+      match 'books_from_favourite_era'                => 'users_api#get_books_from_favourite_era',      :via => [:put, :get, :post]
+      match 'books_on_friends_shelves'                => 'users_api#get_books_on_friends_shelves',      :via => [:put, :get, :post]
+      match 'books_from_unexplored_subjects'          => 'users_api#get_books_from_unexplored_subjects',:via => [:put, :get, :post]
 
       match 'author_details'                          => 'authors_api#details',                         :via => [:put, :get, :post]
-
-
       match 'feed'                                    => 'feeds_api#get_feed',                           :via => [:put, :get, :post]
     end
   end
