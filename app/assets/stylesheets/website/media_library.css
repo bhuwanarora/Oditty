@@ -35,6 +35,7 @@
 		position: fixed;
 		top: 110px;
 		width: 20vw;
+		right:0px;
 	}
 
     .left_anchored{
@@ -91,6 +92,7 @@
 		position: fixed;
 		top: 110px;
 		width: 20vw;
+		right:0px; 
 	}
 
     .left_anchored{
