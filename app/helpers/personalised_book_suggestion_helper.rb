@@ -41,8 +41,8 @@ module PersonalisedBookSuggestionHelper
 	end
 
 	def self.get_books_from_favourite_author user_id
-		most_read_author_clause = " OPTIONAL MATCH (user)-->(:BookmarkNode)-->(book:Book)<-[:Wrote]-(author:Author)-[:Wrote]-(books) WHERE NOT (user)-->(:BookmarkNode)-->(books) WITH user, author, books, COUNT(DISTINCT book) AS book_count ORDER BY book_count LIMIT 1 "
-		unread_books_from_author_clause = " WITH author, books ORDER BY books.total_weight DESC LIMIT " + Constants::RecommendationBookCount.to_s
+		most_read_author_clause = " OPTIONAL MATCH (user)-->(:BookmarkNode)-->(read_book:Book)<-[:Wrote]-(author:Author)-[:Wrote]->(book) WHERE NOT (user)-->(:BookmarkNode)-->(book) WITH user, author, book, COUNT(DISTINCT book) AS book_count ORDER BY book_count LIMIT 1 "
+		unread_books_from_author_clause = " WITH author, book ORDER BY book.total_weight DESC LIMIT " + Constants::RecommendationBookCount.to_s
 		return_clause = " RETURN author.name AS name, ID(author) AS id, "
 		clause = self.match_user(user_id) + most_read_author_clause + unread_books_from_author_clause + return_clause + self.get_return_clause
 		data = self.execute_query clause
@@ -50,9 +50,9 @@ module PersonalisedBookSuggestionHelper
 	end
 
 	def self.get_books_from_most_bookmarked_era user_id
-		max_read_era_clause = " OPTIONAL MATCH (user)-->(:BookmarkNode)-->(book:Book)-[:Published_in]-(:Year)-[:FromEra]->(era:Era) WITH era, COUNT(book) AS books_from_era ORDER BY books_from_era DESC LIMIT 1"
+		max_read_era_clause = " OPTIONAL MATCH (user)-->(:BookmarkNode)-->(book:Book)-[:Published_in]-(:Year)-[:FromEra]->(era:Era) WITH user, era, COUNT(book) AS books_from_era ORDER BY books_from_era DESC LIMIT 1"
 		
-		unread_books_from_era_clause = " MATCH (book:Book)-[:Published_in]-(:Year)-[:FromEra]->(era) WHERE NOT (user)-->(:MarkAsReadNode)-->(book) WITH era, book ORDER BY book.total_weight DESC LIMIT " + Constants::RecommendationBookCount.to_s + 
+		unread_books_from_era_clause = " MATCH (book:Book)-[:Published_in]-(:Year)-[:FromEra]->(era) WHERE NOT (user)-->(:MarkAsReadNode)-->(book) WITH era, book ORDER BY book.total_weight DESC LIMIT " + Constants::RecommendationBookCount.to_s 
 		return_clause = " RETURN era.name AS name, ID(era) AS id, "
 		clause = self.match_user(user_id) + max_read_era_clause + unread_books_from_era_clause + return_clause + self.get_return_clause
 		data = self.execute_query clause

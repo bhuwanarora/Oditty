@@ -77,6 +77,12 @@ module Api
 				render :json => feed, :status => 200
 			end
 
+			def get_root_categories
+				book_id = params[:book_id]
+				data = CategoriesHelper.get_categories book_id
+				render :json => data, :status => 200
+			end
+
 		end
 	end
 end

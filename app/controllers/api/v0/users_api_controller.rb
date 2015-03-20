@@ -313,6 +313,12 @@ module Api
 				info = UserApi.get_followed_by session[:user_id]
 				render :json => info, :status => 200
 			end
+
+			def get_sorted_genres
+				user_id = session[:user_id]
+				genres = CategoriesHelper.get_sorted_genres user_id
+				render :json => genres, :status => 200
+			end
 		end
 	end
 end

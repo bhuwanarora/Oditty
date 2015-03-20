@@ -16,6 +16,7 @@ ReadersDoor::Application.routes.draw do
       match "popular_books"                          => 'books_api#get_popular_books',                  :via => [:put, :get, :post]
       match "books_on_signup"                        => 'books_api#books_on_signup',                    :via => [:put, :get, :post]
       match "add_thumbnail"                          => 'books_api#add_thumbnail',                      :via => [:put, :get, :post]
+      match "get_root_categories"                    => 'books_api#get_root_categories',                 :via => [:put, :get, :post]                                              
 
       match "get_similar_authors"                    => 'authors_api#get_similar_authors',              :via => [:put, :get, :post]
       match "get_author_details"                     => 'authors_api#get_author_details',               :via => [:put, :get, :post]
@@ -77,7 +78,7 @@ ReadersDoor::Application.routes.draw do
       match "books_from_most_read_author"             => 'users_api#get_books_from_most_read_author',   :via => [:put, :get, :post]
       match "books_from_most_read_era"                => 'users_api#get_books_from_most_read_era',      :via => [:put, :get, :post]
       match "books_on_your_friends_shelves"           => 'users_api#books_on_your_friends_shelves',     :via => [:put, :get, :post]
-      
+      match "get_sorted_genres"                       => 'users_api#get_sorted_genres',                  :via => [:put, :get, :post] 
 
       match 'user_info'                               => 'users_api#user_info',                         :via => [:put, :get, :post]
       match 'user'                                    => 'users_api#user',                              :via => [:put, :get, :post]
