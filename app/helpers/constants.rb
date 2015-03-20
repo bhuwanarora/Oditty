@@ -87,4 +87,5 @@ module Constants
 	RelevantSocialTagValue      = 1
 	RecommendationBookCount 	= 10
 	FollowFavoriteAuthorsCount  = 30 
+	QueryStepDuringSorting      = 1000
 end
