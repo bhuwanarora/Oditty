@@ -812,7 +812,45 @@ module Neo4jHelper
 	def self.add_labels_to_existing_user
 		@neo ||= self.init
 		clause = "MATCH (user:User), (label:Label{basic:true}) CREATE UNIQUE (user)-[:BookmarkAction{user_id:ID(user)}]->(label)"
+		@neo.execute_query clause
 	end
+
+	def self.add_new_labels
+		@neo ||= self.init
+		# book = 0
+		# articles = 1
+		# listopia = 2
+		# community = 3
+		delete_labels = "MATCH (u:User), (l:Label), (u)-[r1:BookmarkAction]->(l) DELETE r1, l"
+		@neo.execute_query delete_labels
+
+		labels = [{:name => "Read", :key => "Read", :type => [0, 1, 2], :public => true},
+				  {:name => "Intending to read", :key => "IntendingToRead", :type => [0, 1, 2], :public => true},
+				  {:name => "Didn't feel like reading it after a point", :key => "DidntFeelLikeReadingItAfterAPoint", :type => [0, 1, 2], :public => true},
+				  {:name => "Pretend I have read", :key => "PretendIHaveRead", :type => [0, 1, 2], :public => true},
+				  {:name => "Saving for when I have more time", :key => "SavingForWhenIHaveMoreTime", :type => [0, 1, 2], :public => true},
+				  {:name => "Will never read", :key => "WillNeverRead", :type => [0, 1, 2], :public => true},
+				  {:name => "Purely for show", :key => "PurelyForShow", :type => [0, 1, 2], :public => true},
+				  {:name => "Read but can't remember a single thing about it", :key => "ReadButCantRememberASingleThingAboutIt", :type => [0, 1, 2], :public => true},
+				  {:name => "Wish I hadn't read", :key => "WishIHadntRead", :type => [0, 1, 2], :public => true},
+				  {:name => "Currently reading", :key => "CurrentlyReading", :type => [0, 1, 2], :public => true},
+				  {:name => "Have left a mark on me", :key => "HaveLeftAMarkOnMe", :type => [0, 1, 2], :public => true},
+				  {:name => "Not worth reading", :key => "NotWorthReading", :type => [0, 1, 2], :public => true},
+				  {:name => "From facebook", :key => "FromFacebook", :type => [0], :public => false},
+				  {:name => "Plan to buy", :key => "PlanToBuy", :type => [0], :public => true},
+				  {:name => "I own this", :key => "IOwnthis", :type => [0], :public => true},
+				  {:name => "Visited", :key => "Visited", :type => [0, 1, 2], :public => false}]
+		for label in labels
+			clause = " CREATE (label: Label{basic:true, name:\""+label[:name]+"\", key:\""+label[:key]+"\", public:"+label[:public].to_s+"}) "
+			clause = clause + " SET label:BookLabel " 		if label.include? 0
+			clause = clause + " SET label:ArticleLabel " 	if label.include? 1
+			clause = clause + " SET label:ListLabel " 		if label.include? 2
+			@neo.execute_query clause
+		end
+
+		self.add_labels_to_existing_user
+	end
+
 
 	def self.remove_colon_from_indexed_fields
 		@neo ||= self.init

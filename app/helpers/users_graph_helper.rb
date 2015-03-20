@@ -130,67 +130,6 @@ module UsersGraphHelper
 		@neo.execute_query(clause)["data"]
 	end
 
-
-	def self.bookmark_book(user_id, book_id, bookmark_name)
-		#FIXME: bookmark book
-		@neo ||= self.neo_init
-		bookmark_clause = _match_user_and_book(user_id, book_id)+" CREATE UNIQUE (u)-[lr:Labelled]->(l:Label{name: \""+bookmark_name.strip.upcase+"\"}), (l)-[:BookmarkedOn]->(m: BookmarkNode{label:\""+bookmark_name.strip.upcase+"\", book_id:"+book_id.to_s+", user_id:"+user_id.to_s+"}), (m)-[:BookmarkAction]->(b) SET m.title = b.title,  m.author = b.author_name, m.name = u.name, m.email=u.email, m.isbn = b.isbn, m.timestamp = "+Time.now.to_i.to_s+", m.thumb = CASE WHEN u.thumb IS NULL THEN '' ELSE u.thumb END WITH u, b, m, l, lr "
-
-		feednext_clause = _feednext_clause(user_id)+", l, lr "
-
-		bookfeed_next_clause = _bookfeed_clause(user_id)+", l, lr "
-
-		existing_ego_clause = _existing_ego_clause+", l, lr "
-
-		ego_clause = _ego_clause + ", l, lr "
-
-
-		set_clause = "SET b.bookmark_count = CASE WHEN b.bookmark_count IS NULL THEN 1 ELSE toInt(b.bookmark_count) + 1 END, u.bookmark_count = CASE WHEN u.bookmark_count IS NULL THEN 1 ELSE toInt(u.bookmark_count) + 1 END, l.bookmark_count = CASE WHEN l.bookmark_count IS NULL THEN 1 ELSE toInt(l.bookmark_count) + 1 END, lr.bookmark_count = CASE WHEN lr.bookmark_count IS NULL THEN 1 ELSE toInt(lr.bookmark_count) + 1 END, u.total_count = CASE WHEN u.total_count IS NULL THEN "+Constants::BookmarkPoints.to_s+" ELSE toInt(u.total_count) + "+Constants::BookmarkPoints.to_s+" END"
-
-		clause = bookmark_clause + feednext_clause + bookfeed_next_clause + existing_ego_clause + ego_clause + set_clause
-		puts "BOOK BOOKMARKED".green
-		@neo.execute_query(clause)
-		#update bookmark cache for the book
-		#update popularity index for the book
-		#update popularity index for the author
-
-		#update bookmark cache for the user
-		#update bookworm index for the user
-
-		#update news feed for the book
-		#update news feed for the user
-	end
-
-	def self.remove_bookmark(user_id, book_id, bookmark_name)
-		#FIXME: remove_bookmark
-		@neo ||= self.neo_init
-		remove_bookmark_node_clause = "MATCH (u:User), (b:Book), (l:Label) WHERE ID(u)="+user_id.to_s+" AND ID(b)="+book_id.to_s+" AND l.name = \""+bookmark_name.strip.upcase+"\" WITH u, b, l MATCH (u)-[lr:Labelled]->(l)-[r1:BookmarkedOn]->(m:BookmarkNode)-[r3:BookmarkAction]->(b) DELETE r1, r3 WITH u, b, lr, l, m "
-		
-		feednext_clause = _delete_feed_clause(user_id) + ", lr, l "
-
-		bookfeed_next_clause = _delete_book_clause(user_id) + ", lr, l "
-
-		delete_node = "DELETE m WITH u, b, l, lr "
-
-		set_clause = "SET b.bookmark_count = CASE WHEN b.bookmark_count IS NULL THEN 0 ELSE toInt(b.bookmark_count) - 1 END, u.bookmark_count = CASE WHEN u.bookmark_count IS NULL THEN 0 ELSE toInt(u.bookmark_count) - 1 END, l.bookmark_count = CASE WHEN l.bookmark_count IS NULL THEN 0 ELSE toInt(l.bookmark_count) - 1 END, lr.bookmark_count = CASE WHEN lr.bookmark_count IS NULL THEN 0 ELSE toInt(lr.bookmark_count) - 1 END, u.total_count = CASE WHEN u.total_count IS NULL THEN 0 ELSE toInt(u.total_count) - "+Constants::BookmarkPoints.to_s+" END"
-
-		clause = remove_bookmark_node_clause + feednext_clause + bookfeed_next_clause + delete_node + set_clause
-
-		puts "REMOVE BOOKMARKED".green
-		@neo.execute_query(clause)
-		
-		#ego feed update
-		#update bookmark cache for the book
-		#update popularity index for the book
-		#update popularity index for the author
-
-		#update bookmark cache for the user
-		#update bookworm index for the user
-
-		#update news feed for the book
-		#update news feed for the user
-	end
-
 	def self.mark_as_read(user_id, book_id)
 		#FIXME mark_as_read
 		@neo ||= self.neo_init

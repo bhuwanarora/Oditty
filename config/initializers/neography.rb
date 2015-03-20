@@ -25,7 +25,9 @@ module Neography
                 response = []
                 puts query.blue.on_red
                 neo_response = old_execute_query(query, parameters, cypher_options)
-                puts neo_response.to_s.green.on_red
+                if Rails.env.development?
+                  puts neo_response.to_s.green.on_red
+                end
                 neo_response["data"].each do |record|
                     response << Hash[neo_response["columns"].zip(record)]
                 end
