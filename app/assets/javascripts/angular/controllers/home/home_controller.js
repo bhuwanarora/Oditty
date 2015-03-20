@@ -130,6 +130,12 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
             controller: 'listBottomSheetController',
             targetEvent: event
         });
+    }; 
+
+    $scope.visible = true;
+    $scope.show_search_bar = function() {
+        $scope.visible = !$scope.visible;
+    
     };
 
     $scope.show_share_page = function(event) {

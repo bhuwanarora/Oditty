@@ -1,12 +1,15 @@
 <md-bottom-sheet class="bottom_sheet" layout-fill>
-    	<div flex="100" ng-include src="'/assets/angular/html/library/_filters.html'" layout-fill></div> 
+    	<div layout="column" class="bottom_filters" layout-align="space-around center" ng-include src="'/assets/angular/html/library/_filters.html'" layout-fill></div> 
 </md-bottom-sheet>
 
 <style >
 	
 .bottom_sheet{
 	height:100% !important;
-	background-color:#E5E5E5 !important;
+}
+
+.bottom_filters{
+	padding: 50px;
 }
 	
 </style>

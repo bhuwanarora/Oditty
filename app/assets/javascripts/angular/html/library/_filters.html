@@ -1,69 +1,67 @@
-<div layout="row" layout-sm="column" flex="100" layout-align="center center" layout-align-sm="space-around center" layout-fill>
-    <div flex="20" flex-sm="100" class="relative" layout-fill>
-        <md-autocomplete 
-            md-selected-item="selected_genre"
-            md-search-text="search_tag.genre"
-            md-items="item in info.genres | filter:search_tag.genre"
-            md-search-text-change="search_genres(search_tag.genre)"
-            md-selected-item-change="select_genre(selected_genre)"
-            md-item-text="item.name"
-            placeholder="Subject">
-            <span md-highlight-text="search_tag.genre">{{item.name}}</span>
-        </md-autocomplete>
-        <div class="icon_angle">
-            <span class="icon-angle-down"></span>
-        </div>
+
+<div flex="20" flex-sm="100" class="relative" layout-fill>
+    <md-autocomplete 
+        md-selected-item="selected_genre"
+        md-search-text="search_tag.genre"
+        md-items="item in info.genres | filter:search_tag.genre"
+        md-search-text-change="search_genres(search_tag.genre)"
+        md-selected-item-change="select_genre(selected_genre)"
+        md-item-text="item.name"
+        placeholder="Subject">
+        <span md-highlight-text="search_tag.genre">{{item.name}}</span>
+    </md-autocomplete>
+    <div class="icon_angle">
+        <span class="icon-angle-down"></span>
     </div>
-    <div flex-sm="100"></div>
-    <div flex="20" flex-sm="100" class="relative" layout-fill>
-        <md-autocomplete 
-            md-selected-item="selected_author"
-            md-search-text="search_tag.author"
-            md-items="item in info.authors | filter:search_tag.author"
-            md-search-text-change="search_authors(search_tag.author)"
-            md-selected-item-change="select_author(selected_author)"
-            md-item-text="item.name"
-            placeholder="Author">
-            <span md-highlight-text="search_tag.author">{{item.name}}</span>
-        </md-autocomplete>
-        <div class="icon_angle">
-            <span class="icon-angle-down"></span>
-        </div>
+</div>
+<div flex="20" flex-sm="100" class="relative" layout-fill>
+    <md-autocomplete 
+        md-selected-item="selected_author"
+        md-search-text="search_tag.author"
+        md-items="item in info.authors | filter:search_tag.author"
+        md-search-text-change="search_authors(search_tag.author)"
+        md-selected-item-change="select_author(selected_author)"
+        md-item-text="item.name"
+        placeholder="Author">
+        <span md-highlight-text="search_tag.author">{{item.name}}</span>
+    </md-autocomplete>
+    <div class="icon_angle">
+        <span class="icon-angle-down"></span>
     </div>
-    <div flex="20" flex-sm="100" class="relative" layout-fill>
-        <md-autocomplete 
-            md-selected-item="selected_year"
-            md-search-text="search_tag.time_group"
-            md-items="item in info.time_groups | filter:search_tag.time_group"
-            md-selected-item-change="select_time_group(selected_year)"
-            md-item-text="item.name"
-            placeholder="Publishing Era">
-            <span md-highlight-text="search_tag.time_group">{{item.name}}</span>
-        </md-autocomplete>
-        <div class="icon_angle">
-            <span class="icon-angle-down"></span>
-        </div>
+</div>
+<div flex="20" flex-sm="100" class="relative" layout-fill>
+    <md-autocomplete 
+        md-selected-item="selected_year"
+        md-search-text="search_tag.time_group"
+        md-items="item in info.time_groups | filter:search_tag.time_group"
+        md-selected-item-change="select_time_group(selected_year)"
+        md-item-text="item.name"
+        placeholder="Publishing Era">
+        <span md-highlight-text="search_tag.time_group">{{item.name}}</span>
+    </md-autocomplete>
+    <div class="icon_angle">
+        <span class="icon-angle-down"></span>
     </div>
-    <div flex="20" flex-sm="100" class="relative" layout-fill>
-        <md-autocomplete
-            md-selected-item="selected_duration"
-            md-search-text="search_tag.read_time"
-            md-items="item in info.read_times | filter:search_tag.read_time"
-            md-selected-item-change="select_read_time(selected_duration)"
-            md-item-text="item.name"
-            placeholder="Reading Time">
-            <span md-highlight-text="search_tag.read_time">{{item.name}}</span>
-        </md-autocomplete>
-        <div class="icon_angle">
-            <span class="icon-angle-down"></span>
-        </div>
+</div>
+<div flex="20" flex-sm="100" class="relative" layout-fill>
+    <md-autocomplete
+        md-selected-item="selected_duration"
+        md-search-text="search_tag.read_time"
+        md-items="item in info.read_times | filter:search_tag.read_time"
+        md-selected-item-change="select_read_time(selected_duration)"
+        md-item-text="item.name"
+        placeholder="Reading Time">
+        <span md-highlight-text="search_tag.read_time">{{item.name}}</span>
+    </md-autocomplete>
+    <div class="icon_angle">
+        <span class="icon-angle-down"></span>
     </div>
-    <div layout="row" layout-align-sm="space-around center" flex="10" flex-sm="100" layout-fill>
-        <md-button class="white reset_button" flex="100" flex-sm="40" ng-click="reset_filter()">
-            Reset
-        </md-button>
-        <md-button class="white reset_button" flex-sm="40" hide show-sm>
-            GO
-        </md-button>
-    </div>
+</div>
+<div layout="row" layout-align-sm="space-around center" flex="10" flex-sm="100" layout-fill>
+    <md-button class="white reset_button" flex="100" flex-sm="40" ng-click="reset_filter()">
+        Reset
+    </md-button>
+    <md-button class="white reset_button" flex-sm="40" hide show-sm>
+        GO
+    </md-button>
 </div>

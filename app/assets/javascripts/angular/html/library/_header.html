@@ -1,5 +1,5 @@
 <div ng-controller="filtersController">
-    <md-subheader class="md-primary filters_header">
+    <md-subheader class="md-primary filters_header" layout-fill>
         <section layout="row" show-sm hide layout-align="space-between center" layout-fill>
             <md-button ng-click="show_left_nav($event)" class="reset_button">
                 Sort by
@@ -20,16 +20,17 @@
         </section>
         <section layout="row" hide-sm layout-align="center center" layout-wrap>
             <div flex="10" flex-md="5"></div>
-            <div ng-include src="'/assets/angular/html/library/_filters.html'" flex="80" flex-md="90"></div>  
+            <div layout="row" layout-align="center center" ng-include src="'/assets/angular/html/library/_filters.html'" flex="80" flex-md="90"></div>  
             <div flex="10" flex-md="5"></div>
         </section>
     </md-subheader>    
 </div>
+
 <md-sidenav class="md-sidenav-left md-whiteframe-z2 left_nav" md-component-id="sort_by_sidenav">
-<div flex="100" ng-include src="'/assets/angular/html/library/_left_panel.html'" layout-fill></div>
+    <div flex="100" ng-include src="'/assets/angular/html/library/_left_panel.html'" layout-fill></div>
 </md-sidenav>
 <md-sidenav class="md-sidenav-right md-whiteframe-z2 right_nav" md-component-id="alphabets_sidenav">
-<div flex="100" ng-include src="'/assets/angular/html/library/_right_panel.html'" layout-fill></div>
+    <div flex="100" ng-include src="'/assets/angular/html/library/_right_panel.html'" layout-fill></div>
 </md-sidenav>
 
 <style>
@@ -61,17 +62,18 @@
     }
     
     .left_nav{
-        min-width: 200px;
-        width: 200px;
+        min-width: 250px;
+        width: 250px;
         margin-top: -10px !important;
-        position: fixed;
+        position: fixed !important;
     }
 
     .right_nav{
         min-width: 50px;
         width: 50px;
         margin-top: -10px !important;
-        position: fixed;
+        position: fixed !important;
+        margin-right: 50px;
     }
 
 </style>
