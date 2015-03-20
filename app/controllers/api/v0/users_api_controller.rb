@@ -7,19 +7,42 @@ module Api
 				render :json => info, :status => 200
 			end
 
-			def get_tiny_reads
+			def get_small_reads
+				user_id = session[:user_id]
+				books = PersonalisedBookSuggestionHelper.get_small_reads
+				render :json => books, :status => 200
 			end
 
-			def get_books_from_most_read_author
+			def get_books_from_favourite_author
+				user_id = session[:user_id]
+				books = PersonalisedBookSuggestionHelper.get_books_from_favourite_author(user_id)
+				render :json => books, :status => 200
 			end
 
-			def get_books_from_likeable_category
+			def get_books_from_favourite_category
+				user_id = session[:user_id]
+				favourites = true
+				books = PersonalisedBookSuggestionHelper.get_books_from_favourite_category(user_id, favourites)
+				render :json => books, :status => 200
 			end
 
-			def get_books_from_most_read_era
+			def get_books_from_favourite_era
+				user_id = session[:user_id]
+				books = PersonalisedBookSuggestionHelper.get_books_from_most_bookmarked_era(user_id)
+				render :json => books, :status => 200
 			end
 
-			def books_on_your_friends_shelves
+			def get_books_on_friends_shelves
+				user_id = session[:user_id]
+				books = PersonalisedBookSuggestionHelper.get_books_on_friends_shelves(user_id)
+				render :json => books, :status => 200
+			end
+
+			def get_books_from_unexplored_subjects
+				user_id = session[:user_id]
+				favourites = false
+				books = PersonalisedBookSuggestionHelper.get_books_from_favourite_category(user_id, favourites)
+				render :json => books, :status => 200
 			end
 
 			def get_user_details

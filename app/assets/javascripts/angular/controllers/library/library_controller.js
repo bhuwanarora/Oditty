@@ -1,4 +1,4 @@
-homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'WebsiteUIConstants', 'SearchUIConstants', 'bookService', '$routeParams', '$location', 'ColorConstants', '$mdToast', function($scope, $rootScope, $timeout, WebsiteUIConstants, SearchUIConstants, bookService, $routeParams, $location, ColorConstants, $mdToast){
+homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'WebsiteUIConstants', 'SearchUIConstants', 'bookService', '$routeParams', '$location', 'ColorConstants', '$mdToast', 'infinityService', function($scope, $rootScope, $timeout, WebsiteUIConstants, SearchUIConstants, bookService, $routeParams, $location, ColorConstants, $mdToast, infinityService){
 
     $scope.get_popular_books = function(){
         if(!$scope.info.loading && !$scope.constant.show_book && !
@@ -187,7 +187,41 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         event.stopPropagation();
     }
 
-    
+    $scope.toggle_infinity_content = function(){
+        if(angular.isDefined($scope.active_tab.infinity) && $scope.active_tab.infinity){
+            $scope.active_tab.infinity = false;
+        }
+        else{
+            $scope.active_tab.infinity = true;
+            $scope._get_popular_books();
+        }
+    }
+
+    $scope._get_personalised_suggestions = function(){
+        infinityService.get_small_reads().then(function(data){
+            $scope.small_reads = data;
+        });
+
+        infinityService.get_books_from_favourite_author().then(function(data){
+            $scope.books_from_favourite_author = data;
+        });
+
+        infinityService.get_books_from_favourite_category().then(function(data){
+            $scope.books_from_favourite_category = data;
+        });
+
+        infinityService.get_books_from_favourite_era().then(function(data){
+            $scope.books_from_favourite_era = data;
+        });
+
+        infinityService.get_books_on_friends_shelves().then(function(data){
+            $scope.books_on_friends_shelves = data;
+        });
+
+        infinityService.get_books_from_unexplored_subjects().then(function(data){
+            $scope.books_from_unexplored_subjects = data;
+        });
+    }
 
     var _init = function(){
         // $scope.info.author_filter = true;
@@ -200,11 +234,11 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         $scope.active_endorse = false;
         $scope.active_bookmark = true;
         $scope.active_share = true;
+        $scope._get_personalised_suggestions();
 
         $scope.constant = {"show_book": false};
         $scope.info.books = [];
         $scope.search_tag = {}
-        $scope._get_popular_books();
         $scope.info.categories = [];
     }
 
