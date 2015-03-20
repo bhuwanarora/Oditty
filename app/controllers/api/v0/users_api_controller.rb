@@ -9,39 +9,39 @@ module Api
 
 			def get_small_reads
 				user_id = session[:user_id]
-				books = PersonalisedBookSuggestionHelper.get_small_reads
+				books = Book.get_small_reads
 				render :json => books, :status => 200
 			end
 
 			def get_books_from_favourite_author
 				user_id = session[:user_id]
-				books = PersonalisedBookSuggestionHelper.get_books_from_favourite_author(user_id)
+				books = User::Suggest::Book.new(user_id).for_favourite_author(user_id).execute
 				render :json => books, :status => 200
 			end
 
 			def get_books_from_favourite_category
 				user_id = session[:user_id]
 				favourites = true
-				books = PersonalisedBookSuggestionHelper.get_books_from_favourite_category(user_id, favourites)
+				books = User::Suggest::Book.new(user_id).for_favourite_category(user_id, favourites).execute
 				render :json => books, :status => 200
 			end
 
 			def get_books_from_favourite_era
 				user_id = session[:user_id]
-				books = PersonalisedBookSuggestionHelper.get_books_from_most_bookmarked_era(user_id)
+				books = User::Suggest::Book.new(user_id).for_most_bookmarked_era(user_id).execute
 				render :json => books, :status => 200
 			end
 
 			def get_books_on_friends_shelves
 				user_id = session[:user_id]
-				books = PersonalisedBookSuggestionHelper.get_books_on_friends_shelves(user_id)
+				books = User::Suggest::Book.new(user_id).on_friends_shelves(user_id).execute
 				render :json => books, :status => 200
 			end
 
 			def get_books_from_unexplored_subjects
 				user_id = session[:user_id]
 				favourites = false
-				books = PersonalisedBookSuggestionHelper.get_books_from_favourite_category(user_id, favourites)
+				books = User::Suggest::Book.new(user_id).for_favourite_category(user_id, favourites).execute
 				render :json => books, :status => 200
 			end
 

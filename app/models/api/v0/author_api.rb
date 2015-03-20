@@ -1,4 +1,3 @@
-include AuthorsGraphHelper
 module Api
 	module V0
 		class AuthorApi

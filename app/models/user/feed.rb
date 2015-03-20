@@ -1,6 +1,5 @@
 class User::Feed < User
 	def self.get_news_feed(skip_count)
-		#FIXME get_news_feed_for_user
 		skip_count = 0 unless skip_count.present?
 		get_all_ego_relations_through_me = " OPTIONAL MATCH p=(u)-[r:Ego*..1]->(friend:User) "
 		filter_relations_only_on_me = "WHERE all(r2 in relationships(p) WHERE r2.user_id="+@user_id.to_s+") WITH friend "

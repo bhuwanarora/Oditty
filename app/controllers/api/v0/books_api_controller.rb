@@ -15,9 +15,9 @@ module Api
 			end
 
 			def books_on_signup
-				skip_count = params[:skip_count]
 				user_id = session[:user_id]
-				books = User::Predict::Book.new(user_id, skip_count).likely_books_read.execute
+				skip_count = JSON.parse(params["q"])["skip_count"]
+				books = User::Predict::Book.new(user_id, skip_count).likely_books_read
 				render :json => books, :status => 200
 			end
 

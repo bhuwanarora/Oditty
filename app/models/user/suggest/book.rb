@@ -1,5 +1,10 @@
-class User::Suggest::Book < User::Suggestion
-	def self.for_favourite_author
+class User::Suggest::Book < User::Suggest
+	def initialize user_id
+		@user_id = user_id
+		
+	end
+
+	def for_favourite_author
 		most_read_author_clause = " OPTIONAL MATCH (user)-->(:BookmarkNode)-->(read_book:Book)<-[:Wrote]-(author:Author)-[:Wrote]->(book) WHERE NOT (user)-->(:BookmarkNode)-->(book) WITH user, author, book, COUNT(DISTINCT book) AS book_count ORDER BY book_count LIMIT 1 "
 		unread_books_from_author_clause = " WITH author, book ORDER BY book.total_weight DESC LIMIT " + Constants::RecommendationBookCount.to_s
 		return_clause = " RETURN author.name AS name, ID(author) AS id, "
@@ -7,7 +12,7 @@ class User::Suggest::Book < User::Suggestion
 		clause
 	end
 
-	def self.for_most_bookmarked_era
+	def for_most_bookmarked_era
 		max_read_era_clause = " OPTIONAL MATCH (user)-->(:BookmarkNode)-->(book:Book)-[:Published_in]-(:Year)-[:FromEra]->(era:Era) WITH user, era, COUNT(book) AS books_from_era ORDER BY books_from_era DESC LIMIT 1"
 		
 		unread_books_from_era_clause = " MATCH (book:Book)-[:Published_in]-(:Year)-[:FromEra]->(era) WHERE NOT (user)-->(:MarkAsReadNode)-->(book) WITH era, book ORDER BY book.total_weight DESC LIMIT " + Constants::RecommendationBookCount.to_s 
@@ -16,7 +21,7 @@ class User::Suggest::Book < User::Suggestion
 		clause
 	end
 
-	def self.on_friends_shelves
+	def on_friends_shelves
 		friends_reads_clause = " OPTIONAL MATCH (user)-[:Follows]->(friend:User)-->(:Label{name:'CurrentlyReading'})-->(:BookmarkNode)-->(book:Book) WHERE NOT (user)-->(:MarkAsReadNode)-->(book) WITH friend, book ORDER BY book.total_weight DESC LIMIT " + Constants::RecommendationBookCount.to_s
 
 		return_clause =  " RETURN friend.name AS name, ID(friend) AS id, "
@@ -24,7 +29,7 @@ class User::Suggest::Book < User::Suggestion
 		clause
 	end
 
-	def self.for_favourite_category(favourites = true)
+	def for_favourite_category(favourites = true)
 		data = []
 		books_processed_count = 0
 		if favourites

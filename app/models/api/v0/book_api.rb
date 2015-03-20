@@ -196,7 +196,6 @@ module Api
 			end
 
 			def self.recommendations(last_book, filters={}, session)
-				#FIXME only output isbns
 				user_id = session[:user_id]
 				if filters["reset"]
 					# $redis.set 'book_ids', ""

@@ -120,7 +120,6 @@ class UsersBook < Neo
 
 	def get_similar_books
 		#Add category 
-		#FIXME get_similar_books
 		"MATCH (b:Book{id:"+@book_id+"})-[h1:Has]->(t:Tag)<-[h2:Has]-(sb:Book), 
 			(u:User{id:"+@user_id+"})
 			WHERE b <> sb AND

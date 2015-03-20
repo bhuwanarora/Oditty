@@ -218,7 +218,6 @@ module Api
 							message = Constants::AnotherActivationRequest
 						end
 					else
-						#FIXME: create new user in the graph
 						UsersGraphHelper.create_user(email, params[:password], verification_token)
 						SubscriptionMailer.verify_email(invitation).deliver
 						message = Constants::ActivateAccount

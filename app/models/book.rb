@@ -12,7 +12,15 @@ class Book < Neo
 	end
 
 	def self.get_basic_info
-		" ID(book) AS book_id, book.isbn AS isbn, book.title AS title, book.author_name AS author_name, book.pages_count AS pages_count, book.published_year AS published_year, book.total_weight as popularity"
+		" ID(book) AS book_id, book.isbn AS isbn, book.title AS title, book.author_name AS author_name, book.pages_count AS pages_count, book.published_year AS published_year, TOINT(book.total_weight) as popularity"
+	end
+
+	def self.mark_as_read
+		", ID(mark_as_read) AS status"
+	end
+
+	def self.rating
+		", rating_node.rating AS user_rating"
 	end
 
 	def self.genre_clause

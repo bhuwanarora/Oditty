@@ -1,2 +1,2 @@
-class User::Suggestion < User
+class User::Suggest < User
 end
