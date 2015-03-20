@@ -1096,18 +1096,37 @@ module Neo4jHelper
 
 	def self.set_genre_linked_list
 		neo = self.init
-		is_sorted_list_created = false
-		node_id = Constants::BestBook.to_s
-		while !is_sorted_list_created
-			match_clause = "MATCH popularity_list = (book:Book)-[:Next_book*0.." + Constants::QueryStep.to_s + "]->(next_book) WHERE ID(book) = " + node_id.to_s 
-			unwind_book_collection_clause = " WITH EXTRACT(n in nodes(popularity_list)|n) AS books UNWIND books as book "
-			match_book_to_root_clause = "OPTIONAL MATCH (book)-[:FromCategory]->(category:Category)-[:HasRoot*0..1]->(root_category:Category{is_root:true}) "
-			get_last_linked_node_clause = "WITH book, root_category, root_category.uuid AS uuid OPTIONAL MATCH (root_category)-[next_in_category:NextInCategory*]->(popular_book:Book) WHERE NOT(popular_book-[:NextInCategory{from_category:uuid}]-()) "
-			conditionally_make_relation_clause = "FOREACH(to_be_ignored IN CASE WHEN next_in_category IS NULL THEN [1] ELSE [] END | MERGE (root_category)-[new_popular:NextInCategory]-(book) ON CREATE SET new_popular.from_category = root_category.uuid) FOREACH(to_be_ignored IN CASE WHEN next_in_category IS NOT NULL THEN [1] ELSE [] END | MERGE (popular_book)-[next_popular:NextInCategory]-(book) ON CREATE SET next_popular.from_category = root_category.uuid) RETURN ID(book) as book_id"
+		label = " Category{is_root:true}"
+		property = " NextInCategory "
+		is_sorted = false
+		most_popular_book_id = Constants::BestBook.to_i
+		starting_book_id = Constants::BestBook.to_i
+		self.set_circular_linked_list label, property
+		while !is_sorted
+			match_clause = "OPTIONAL MATCH popularity_list = (book:Book)-[:Next_book*" + Constants::QueryStepDuringSorting.to_s + "]->(next_book) WHERE ID(book) = " + starting_book_id.to_s 
+			unwind_book_collection_clause = " WITH next_book AS least_popular_book_in_path, popularity_list ,EXTRACT(n IN nodes(popularity_list)|n) AS books UNWIND books as book  WITH least_popular_book_in_path, popularity_list, book WITH book, least_popular_book_in_path  "
+			match_book_to_root_clause = " OPTIONAL MATCH (book)-[:FromCategory]->(category:Category)-[:HasRoot*0..1]->(root_category:Category{is_root:true}) "
+			get_last_linked_node_clause = "  WITH book, root_category, root_category.uuid AS uuid , least_popular_book_in_path OPTIONAL MATCH (root_category)<-[old:NextInCategory]-(last_node)   "
+			conditionally_make_relation_clause = " FOREACH (ignore IN CASE WHEN last_node IS  NOT NULL AND old IS NOT null  THEN [old] ELSE [] END | MERGE (last_node)-[:NextInCategory{from_category:uuid}]->(book)-[:NextInCategory{from_category:uuid}]->(root_category)  DELETE old ) RETURN ID(book) AS most_popular_book_id, ID(least_popular_book_in_path) AS least_popular_book_id  ORDER BY book.total_weight LIMIT 1"
 			clause = match_clause + unwind_book_collection_clause + match_book_to_root_clause + get_last_linked_node_clause + conditionally_make_relation_clause 
+			data = neo.execute_query clause
+			most_popular_book_id = data[0]["most_popular_book_id"].to_i
+			starting_book_id = data[0]["least_popular_book_id"].to_i
+			if most_popular_book_id  == Constants::BestBook then is_sorted = true end	
+		end
+	end
+
+
+
+	def self.set_circular_linked_list label, property
+		neo = self.init
+		get_ids_clause = " MATCH (node:" + label.to_s + ") RETURN DISTINCT ID(node) AS id "
+		ids = neo.execute_query get_ids_clause
+		ids.each do |id|
+			match_clause = " MATCH (node:" + label.to_s + ") WHERE ID(node) = " + id["id"].to_s + "  WITH node "
+			set_linked_list = " MERGE (node)-[: " + property + "]->(node)"
+			clause = match_clause + set_linked_list
 			neo.execute_query clause
-			books_id = neo.execute_query["book_id"].flatten 
-			if book_id.include? starting_node then is_sorted_list_created = true end	
 		end
 	end
 end

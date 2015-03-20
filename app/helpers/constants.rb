@@ -91,4 +91,5 @@ module Constants
 	MarkAsReadUpcase            = "MARKASREAD"
 	PersonalisedBookRecommendationBookCount = 10
 	FollowFavoriteAuthorsCount  = 30 
+	QueryStepDuringSorting      = 1000
 end
