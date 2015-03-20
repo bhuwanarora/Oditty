@@ -2,8 +2,8 @@
 			ng-if="!constant.show_book"
             class="fixed_left_panel">
     <h3>Group by</h3>
-    <div class="thin_margin">
-        <a class="right_anchored">Subject</a>
+    <div class="thin_margin" ng-click="sort_by_subject()" ng-disabled="info.subject_filter">
+        <a ng-class="{'inactive_link': info.subject_filter}" class="right_anchored">Subject</a>
     </div>
     <div class="thin_margin" ng-click="sort_by_published_era()" ng-disabled="info.published_era_filter">
         <a ng-class="{'inactive_link': info.published_era_filter}" class="right_anchored">Publishing Era</a>
