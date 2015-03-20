@@ -1,9 +1,9 @@
 class User < Neo
 
 	def initialize user_id, skip_count=0
-			@limit = Constants::BookCountShownOnSignup
-			@user_id = user_id
-			@skip_count = skip_count
+		# @limit = Constants::BookCountShownOnSignup
+		@user_id = user_id
+		# @skip_count = skip_count
 	end
 
 	def self.from_facebook params
@@ -26,7 +26,9 @@ class User < Neo
 		end
 	end
 
-	
+	def self.label_clause
+		"OPTIONAL MATCH (user)-[:Labelled]->(user_label:Label) "
+	end
 
 	def self.create(email, password=nil, verification_token=nil)
 		create_new_user = "CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, last_book: "+Constants::BestBook.to_s+", amateur: true, ask_info: true}), "
@@ -63,14 +65,15 @@ class User < Neo
 		clause
 	end
 
-	def match_user
-		clause = " MATCH (user:User) WHERE ID(user) = " + @user_id.to_s + " WITH user"
-		clause
+	def match_clause
+		" MATCH (user:User) WHERE ID(user) = " + @user_id.to_s + " WITH user "
 	end
 
-	def self.get_book_count
-		clause = " MATCH (user:User) WHERE ID(user) = " + @user_id.to_s + " RETURN user.init_book_read_count as init_book_read_count"
-		range = @neo.execute_query(clause)[0]["init_book_read_count"]
-		range
+	def self.root_category_clause
+		" MATCH (user)-[likes:Likes]->(root_category:Category{is_root:true}) "
+	end
+
+	def get_init_book_count_range
+		" MATCH (user:User) WHERE ID(user) = " + @user_id.to_s + " RETURN user.init_book_read_count as init_book_read_count"
 	end
 end

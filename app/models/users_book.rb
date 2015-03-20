@@ -5,21 +5,8 @@ class UsersBook < Neo
 		@user_id = user_id
 	end
 
-	def get_similar_books
-		#Add category 
-		#FIXME get_similar_books
-		"MATCH (b:Book{id:"+@book_id+"})-[h1:Has]->(t:Tag)<-[h2:Has]-(sb:Book), 
-			(u:User{id:"+@user_id+"})
-			WHERE b <> sb AND
-			NOT (u)-[:MarkAsReadAction]->(:MarkAsRead)-[:MarkAsRead]->(sb) AND
-			NOT (u)-[:BookmarkAction]->(:Bookmark)-[:Bookmarked]->(sb)
-			WITH SUM(h1.weight * h2.weight) AS xyDotProduct,
-              SQRT(REDUCE(xDot = 0, a IN COLLECT(h1) | xDot + a.weight^2)) AS xLength,
-              SQRT(REDUCE(yDot = 0, b IN COLLECT(h2) | yDot + b.weight^2)) AS yLength,
-              b, sb
-            RETURN xyDotProduct/(xLength*yLength) as similarity_index
-			LIMIT 5 
-			ORDER BY similarity_index DESC, sb.gr_rating DESC"
+	def match_clause
+		"MATCH (book:Book), (user:User) WHERE ID(book)="+@book_id.to_s+" AND ID(user)="+@user_id.to_s+" WITH user, book "
 	end
 
 	def get_basic_details
@@ -27,10 +14,21 @@ class UsersBook < Neo
 		clause
 	end
 
+	def self.rating_clause
+		" OPTIONAL MATCH (user)-[:RatingAction]->(rating_node:RatingNode)-[:Rate]->(book) "
+	end
+
+	def self.timing_node_clause
+		"OPTIONAL MATCH (user)-[:TimingAction]->(timing_node:TimingNode)-[:Timer]->(book) "
+	end
+
+	def self.endorse_clause
+		"OPTIONAL MATCH (user)-[:EndorseAction]->(endorse)-[:Endorsed]->(book) "
+	end
+
 	def self.get_book_details
-		@neo = Neography::Rest.new
-		clause = "MATCH (b:Book), (u:User) WHERE ID(b)="+@book_id.to_s+" AND ID(u)="+@user_id.to_s+" WITH u, b OPTIONAL MATCH (u)-[:RatingAction]->(rn:RatingNode)-[:Rate]->(b) OPTIONAL MATCH (u)-[:TimingAction]->(tm:TimingNode)-[:Timer]->(b) OPTIONAL MATCH (u)-[:Labelled]->(l1:Label) OPTIONAL MATCH (u)-[:Labelled]->(l2:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(b) OPTIONAL MATCH (u)-[:MarkAsReadAction]->(m)-[:MarkAsRead]->(b) OPTIONAL MATCH (u)-[:EndorseAction]->(e)-[:Endorsed]->(b) OPTIONAL MATCH (u)-[:Follow]->(friend:User)-[:MarkAsReadAction]->(m_friend)-[:MarkAsRead]->(b) OPTIONAL MATCH (b)-[bt:Belongs_to]->(g:Genre) RETURN " + return_book_data + ", rn.rating as user_rating, tm.time_index as user_time_index, COLLECT(DISTINCT l1.name) as labels, COLLECT(DISTINCT l2.name) as selected_labels, m.timestamp as status, ID(e) as endorse_status, COLLECT(ID(friend)) as friends_id, COLLECT(friend.thumb) as friends_thumb, COUNT(friend) as friends_count, COLLECT(g.name) as genres, COLLECT(bt.weight) as genres_weight"
-		clause
+		match_clause + UsersBook.rating_clause + UsersBook.timing_node_clause + User.label_clause + 
+		Bookmark.match_clause + "OPTIONAL MATCH (user)-[:MarkAsReadAction]->(mark_as_read)-[:MarkAsRead]->(b) " + UsersBook.endorse_clause + "OPTIONAL MATCH (user)-[:Follow]->(friend:User)-[:MarkAsReadAction]->(m_friend)-[:MarkAsRead]->(book) " + Book.genre_clause + "RETURN " + Book.get_basic_info + ", rating_node.rating as user_rating, timing_node.time_index as user_time_index, COLLECT(DISTINCT user_label.name) as labels, COLLECT(DISTINCT label.name) as selected_labels, mark_as_read.timestamp as status, ID(endorse) as endorse_status, COLLECT(ID(friend)) as friends_id, COLLECT(friend.thumb) as friends_thumb, COUNT(friend) as friends_count, COLLECT(genre.name) as genres, COLLECT(belongs_to.weight) as genres_weight"
 	end
 
 	def self.rate(rating)
@@ -110,6 +108,23 @@ class UsersBook < Neo
 
 		clause = thumb_request_clause + feednext_clause + bookfeed_clause + existing_ego_clause + ego_clause
 		clause
+	end
+
+	def get_similar_books
+		#Add category 
+		#FIXME get_similar_books
+		"MATCH (b:Book{id:"+@book_id+"})-[h1:Has]->(t:Tag)<-[h2:Has]-(sb:Book), 
+			(u:User{id:"+@user_id+"})
+			WHERE b <> sb AND
+			NOT (u)-[:MarkAsReadAction]->(:MarkAsRead)-[:MarkAsRead]->(sb) AND
+			NOT (u)-[:BookmarkAction]->(:Bookmark)-[:Bookmarked]->(sb)
+			WITH SUM(h1.weight * h2.weight) AS xyDotProduct,
+              SQRT(REDUCE(xDot = 0, a IN COLLECT(h1) | xDot + a.weight^2)) AS xLength,
+              SQRT(REDUCE(yDot = 0, b IN COLLECT(h2) | yDot + b.weight^2)) AS yLength,
+              b, sb
+            RETURN xyDotProduct/(xLength*yLength) as similarity_index
+			LIMIT 5 
+			ORDER BY similarity_index DESC, sb.gr_rating DESC"
 	end
 
 end

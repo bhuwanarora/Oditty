@@ -11,9 +11,8 @@ module Api
 			end
 
 			def genres
-                @neo ||= neo_init
-				filter = params[:q]
-                genres = WebsiteApi.get_root_categories(session[:user_id])
+				user_id = session[:user_id]
+                genres = User::Predict::Category.new(user_id).get_favourites.execute
                 
 				render :json => genres, :status => 200
 			end

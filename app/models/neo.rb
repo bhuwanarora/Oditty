@@ -4,6 +4,14 @@ class Neo
 		@neo = Neography::Rest.new
 	end
 
+	def return_init
+		" RETURN "
+	end
+
+	def skip_count
+		"SKIP " + @skip_count.to_s
+	end
+
 	def self.execute clause
 		@neo ||= self.initialize
 		@neo.execute_query clause

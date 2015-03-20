@@ -1,4 +1,3 @@
-include UsersGraphHelper
 module Api
 	module V0
 		class UserApi

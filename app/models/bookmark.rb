@@ -61,6 +61,10 @@ class Bookmark < Neo
 		self.execute clause
 	end
 
+	def self.match_clause
+		" OPTIONAL MATCH (user)-[:Labelled]->(label:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(book) "
+	end
+
 	def self.add
 		bookmark_clause = _match_user_and_book+" CREATE UNIQUE (u)-[lr:Labelled]->(l:Label{name: \""+@bookmark_key.strip.upcase+"\"}), (l)-[:BookmarkedOn]->(m: BookmarkNode{label:\""+@bookmark_key.strip.upcase+"\", id:"+@id.to_s+", user_id:"+@user_id.to_s+"}), (m)-[:BookmarkAction]->(b) SET m.title = b.title,  m.author = b.author_name, m.name = u.name, m.email=u.email, m.isbn = b.isbn, m.timestamp = "+Time.now.to_i.to_s+", m.thumb = CASE WHEN u.thumb IS NULL THEN '' ELSE u.thumb END WITH u, b, m, l, lr "
 

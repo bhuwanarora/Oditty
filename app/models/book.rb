@@ -12,8 +12,11 @@ class Book < Neo
 	end
 
 	def self.get_basic_info
-		clause = " ID(book) AS book_id, book.isbn AS isbn, book.title AS title, book.author_name AS author_name, book.pages_count AS pages_count, book.published_year AS published_year, book.total_weight as popularity"
-		clause
+		" ID(book) AS book_id, book.isbn AS isbn, book.title AS title, book.author_name AS author_name, book.pages_count AS pages_count, book.published_year AS published_year, book.total_weight as popularity"
+	end
+
+	def self.genre_clause
+		"OPTIONAL MATCH (book)-[belongs_to:Belongs_to]->(genre:Genre) "
 	end
 
 	def self.get_small_reads
@@ -32,6 +35,14 @@ class Book < Neo
 	def self.get_detailed_info
 		clause = " book.title as title, book.author_name as author_name, ID(book) as book_id, book.readers_count as readers_count, book.bookmark_count as bookmark_count, book.comment_count as comment_count, book.published_year as published_year, book.page_count as page_count, book.description as description, book.external_thumb as external_thumb "
 		clause
+	end
+
+	def self.root_category_clause
+		 " MATCH (book)-[from_category:FromCategory]->(category:Category)-[has_root:HasRoot*0..1]->(root_category:Category{is_root:true}) "
+	end
+
+	def self.order_desc
+		" ORDER BY book.total_weight DESC "
 	end
 
 end

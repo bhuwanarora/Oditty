@@ -1,26 +1,34 @@
 class User::Predict::Book < User::Predict
+	Limit = 30
+
+
+	def initialize(user_id, skip_count=0)
+		@user_id = user_id
+		@skip_count = skip_count
+		@user = User.new(user_id)
+	end
 
 	def likely_books_read
-		range = self.get_book_count
-		@skip_count = @skip_count.to_i > @limit ? @skip_count.to_i : Constants::InitialSkipCount  
+		range = @user.get_init_book_count_range.execute[0]["init_book_read_count"]
+		@skip_count = @skip_count.to_i > Limit ? @skip_count.to_i : 0  
 		case range
 		when Constants::ChildBookCountRange
-			data = _handle_few_books_read
+			data = handle_few_books_read
 		when Constants::AdoloscentBookCountRange
-			data = _handle_average_number_books_read
+			data = handle_average_number_books_read
 		when Constants::AboutToBeAdultBookCountRange
-			data = _handle_average_number_books_read
+			data = handle_average_number_books_read
 		when Constants::AdultBookCountRange
-			data = _handle_average_number_books_read
+			data = handle_average_number_books_read
 		when Constants::AboutToDieBookCountRange
-			data = _handle_average_number_books_read
+			data = handle_average_number_books_read
 		end
 		data
 	end
 
-	def _handle_average_number_books_read
+	def handle_average_number_books_read
 	 	need_rating = true
-	 	match_book_genre_clause = " MATCH (book)-[:FromCategory]->(:Category)-[HasRoot*0..1]->(root_category{is_root:true}) WITH book, mark_as_read, root_category, rating_node  ORDER BY book.total_weight DESC SKIP " + @skip_count.to_s + " LIMIT " + Constants::BookCountShownOnSignup.to_s + " RETURN root_category.name as name, ID(root_category) as category_id, root_category.icon as icon, root_category.aws_key as key, "
+	 	match_book_genre_clause = Book.root_category_clause + " WITH book, mark_as_read, root_category, rating_node " + Book.order_desc + skip_count + " LIMIT " + Constants::BookCountShownOnSignup.to_s + return_init + Category::Root.get_basic_info
 	 	clause =  _get_user_clause(need_rating) + match_book_genre_clause + _get_return_book_properties_clause(need_rating) 
 	 	data = @neo.execute_query clause
 	 	has_linked_books = data[0]["root_category"].blank? ? false : true rescue false
@@ -36,7 +44,7 @@ class User::Predict::Book < User::Predict
 	 	data
 	end
 
-	def _handle_few_books_read 
+	def handle_few_books_read 
 		need_rating = true
 		return_clause = " RETURN "
 		clause = _get_user_clause(need_rating) + return_clause +  _get_return_book_properties_clause(need_rating)
