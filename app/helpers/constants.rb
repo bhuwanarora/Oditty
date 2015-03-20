@@ -81,7 +81,7 @@ module Constants
 	BookCountShownOnSignup  	= 30
 	ChildBookCountRange  		= "0-20"
 	AdoloscentBookCountRange 	= "20-50"
-	AboutToBeAdultBookCountRange  = "50-100"
+	AboutToBeAdultBookCountRange= "50-100"
 	AdultBookCountRange  		= "100-250"
 	AboutToDieBookCountRange  	= "250+"
 	InitialSkipCount        	= 0
@@ -89,4 +89,5 @@ module Constants
 	BookLeftAMarkOnYouUpcase 	= "BOOKSLEFTAMARKONYOU"
 	FromFacebookUpcase   		= "FROMFACEBOOK"
 	MarkAsReadUpcase            = "MARKASREAD"
+	PersonalisedRecommendationBookCount = 10
 end
