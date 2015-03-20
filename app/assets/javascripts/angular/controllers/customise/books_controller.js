@@ -6,7 +6,9 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
         var get_popular_books = !$scope._loading && (angular.isUndefined($scope.info.search_book) || $scope.info.search_book.length < 1);
         if(get_popular_books){
             $scope._loading = true;
-            bookService.books_on_signup(skip_count).then(function(data){
+            var params = {"skip_count": skip_count};
+            params = angular.toJson(params);
+            bookService.books_on_signup(params).then(function(data){
                 angular.forEach(data, function(value){
                     var random_int = Math.floor(Math.random()*ColorConstants.value.length);
                     var status = value.status != null;

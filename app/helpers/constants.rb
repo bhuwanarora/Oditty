@@ -1,7 +1,6 @@
 module Constants
 	InfluentialBooks			="influentialbooks"
 	MarkAsReadPoints 			= 5
-	EndorsePoints				= 10
 	# BookmarkPoints 				= 5
 	RatingPoints				= 10
 	BookmarkPoints				= 10
@@ -82,7 +81,7 @@ module Constants
 	BookCountShownOnSignup  	= 30
 	ChildBookCountRange  		= "0-20"
 	AdoloscentBookCountRange 	= "20-50"
-	AboutToBeAdultBookCountRange  = "50-100"
+	AboutToBeAdultBookCountRange= "50-100"
 	AdultBookCountRange  		= "100-250"
 	AboutToDieBookCountRange  	= "250+"
 	InitialSkipCount        	= 0
@@ -90,4 +89,6 @@ module Constants
 	BookLeftAMarkOnYouUpcase 	= "BOOKSLEFTAMARKONYOU"
 	FromFacebookUpcase   		= "FROMFACEBOOK"
 	MarkAsReadUpcase            = "MARKASREAD"
+	PersonalisedBookRecommendationBookCount = 10
+	FollowFavoriteAuthorsCount  = 30 
 end

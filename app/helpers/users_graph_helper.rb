@@ -65,6 +65,8 @@ module UsersGraphHelper
 		clause = create_endorse_node_clause + find_old_feed_clause + create_new_feed_clause + find_old_book_feed_clause + create_new_book_feed_clause + existing_ego_clause + ego_clause + set_clause
 		puts "ENDORSE".green
 		@neo.execute_query(clause)
+
+		# MATCH (u:User), (b:Book) WHERE ID(u)=37835 AND ID(b)=37892  WITH u, b MERGE (u)-[:EndorseAction]->(endorse:EndorseNode{created_at: 1426755195, book_id:ID(b), user_id:ID(u), updated_at:  1426755195})-[endorsed:Endorsed]->(book:Book) WITH u, endorse, b MATCH (u)-[old:FeedNext]->(old_feed)   MERGE (u)-[:FeedNext{user_id:37835}]->(endorse)-[:FeedNext{user_id:37835}]->(old_feed) DELETE old WITH u, endorse, b  MATCH (b)-[old:BookFeed{book_id:37892}]->(old_feed)  MERGE (b)-[:BookFeed{book_id:37892}]->(endorse)-[:BookFeed{book_id:37892}]->(old_feed) DELETE old WITH u, endorse, b OPTIONAL MATCH (u)<-[:Follow]-(f:User) with u,b,f, endorse OPTIONAL MATCH (x1)-[r1:Ego{user_id:ID(f)}]->(u)-[r2:Ego{user_id:ID(f)}]->(x2) FOREACH (s IN CASE WHEN r1 IS NULL THEN [] ELSE [r1] END | FOREACH (t IN CASE WHEN r2 IS NULL THEN [] ELSE [r2] END | CREATE (x1)-[:Ego{user_id:ID(f)}]->(x2) DELETE s, t)) WITH u, b, f,endorse OPTIONAL MATCH (f)-[old:Ego{user_id:ID(f)}]->(old_ego) FOREACH(p IN CASE WHEN old_ego IS NULL THEN [] ELSE [old_ego] END | FOREACH (q IN CASE WHEN f IS NULL THEN [] ELSE [f] END | CREATE (q)-[:Ego{user_id:ID(q)}]->(u)-[:Ego{user_id:ID(q)}]->(p) DELETE old)) WITH DISTINCT u, b, endorse SET b.endorse_count = CASE WHEN b.endorse_count IS NULL THEN 1 ELSE toInt(b.endorse_count) + 1 END, u.total_count = CASE WHEN u.total_count IS NULL THEN 10 ELSE toInt(u.total_count) + 10 END 
 	end
 
 	def self.remove_endorse book_id, user_id
@@ -432,7 +434,7 @@ module UsersGraphHelper
 	end
 
 	def _existing_ego_clause(without_book=false)
-		find_friends = "OPTIONAL MATCH (u)<-[:Follow]-(f:User) "
+		find_friends = "OPTIONAL MATCH (u)<-[:FoFllow]-(f:User) "
 		find_me_in_friends_ego_chain = "OPTIONAL MATCH (x1)-[r1:Ego{user_id:ID(f)}]->(u)-[r2:Ego{user_id:ID(f)}]->(x2) "
 		remove_me_from_friends_ego_chain = "FOREACH (s IN CASE WHEN r1 IS NULL THEN [] ELSE [r1] END | FOREACH (t IN CASE WHEN r2 IS NULL THEN [] ELSE [r2] END | CREATE (x1)-[:Ego{user_id:ID(f)}]->(x2) DELETE s, t)) "
 		if without_book
