@@ -20,6 +20,7 @@ ReadersDoor::Application.routes.draw do
 
       match "get_similar_authors"                    => 'authors_api#get_similar_authors',              :via => [:put, :get, :post]
       match "get_author_details"                     => 'authors_api#get_author_details',               :via => [:put, :get, :post]
+      match "get_active_authors"                     => 'authors_api#get_active_authors',               :via => [:put, :get, :post]    
 
       match "grid"                                   => 'recommendations_api#grid',                     :via => [:put, :get, :post]
       match "recommended_books"                      => 'recommendations_api#books',                    :via => [:put, :get, :post]
@@ -73,9 +74,9 @@ ReadersDoor::Application.routes.draw do
       match 'edit_review'                             => 'users_api#edit_review',                       :via => [:put, :get, :post]
       match 'follow'                                  => 'users_api#follow',                            :via => [:put, :get, :post]
       match "endorse_book"                            => 'users_api#endorse_book',                      :via => [:put, :get, :post]
-      match "tiny_reads"                              => 'users_api#get_tiny_reads',                    :via => [:put, :get, :post]
+      match "tiny_reads"                              => 'users_api#get_small_reads',                    :via => [:put, :get, :post]
       match "books_from_likeable_category"            => 'users_api#get_books_from_likeable_category',  :via => [:put, :get, :post]
-      match "books_from_most_read_author"             => 'users_api#get_books_from_most_read_author',   :via => [:put, :get, :post]
+      match "books_from_most_read_author"             => 'users_api#get_books_from_favourite_author',   :via => [:put, :get, :post]
       match "books_from_most_read_era"                => 'users_api#get_books_from_most_read_era',      :via => [:put, :get, :post]
       match "books_on_your_friends_shelves"           => 'users_api#books_on_your_friends_shelves',     :via => [:put, :get, :post]
       match "get_sorted_genres"                       => 'users_api#get_sorted_genres',                  :via => [:put, :get, :post] 

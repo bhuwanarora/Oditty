@@ -19,20 +19,20 @@ module Api
 				render :json => books, :status => 200
 			end
 
-			def get_books_from_favourite_category
+			def get_books_from_likeable_category
 				user_id = session[:user_id]
 				favourites = true
 				books = PersonalisedBookSuggestionHelper.get_books_from_favourite_category(user_id, favourites)
 				render :json => books, :status => 200
 			end
 
-			def get_books_from_favourite_era
+			def get_books_from_most_read_era
 				user_id = session[:user_id]
 				books = PersonalisedBookSuggestionHelper.get_books_from_most_bookmarked_era(user_id)
 				render :json => books, :status => 200
 			end
 
-			def get_books_on_friends_shelves
+			def books_on_your_friends_shelves
 				user_id = session[:user_id]
 				books = PersonalisedBookSuggestionHelper.get_books_on_friends_shelves(user_id)
 				render :json => books, :status => 200

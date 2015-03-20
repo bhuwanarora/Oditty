@@ -17,22 +17,12 @@ module Api
 				# end
 			end
 
-			def self.get_popular_authors params
+			def self.get_active_authors
 				skip_count = params[:skip_count]
 				unless skip_count
 					skip_count = 0
 				end
-				@neo = Neography::Rest.new
-				clause = "MATCH (author:Author) RETURN author.name as name SKIP "+(10*skip_count.to_i).to_s+" LIMIT 10"
-				puts clause.blue.on_red
-				begin
-					authors =  @neo.execute_query(clause)
-				rescue Exception => e
-					puts e.to_s.red
-					authors = [{:message => "Error in finding authors"}]
-					# books =  @neo.execute_query(clause)["data"]
-				end
-				authors
+				authors =  AuthorsHelper.get_active_authors skip_count
 			end
 
 			def self.push_recommendations

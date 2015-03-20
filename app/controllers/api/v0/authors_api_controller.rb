@@ -26,8 +26,12 @@ module Api
 				render :json => info, :status => status
 			end
 
-			def get_popular_authors
-				authors = AuthorApi.get_popular_authors params
+			def get_active_authors
+				skip_count = params[:skip_count]
+				unless skip_count
+					skip_count = 0
+				end
+				authors =  AuthorsHelper.get_active_authors skip_count
 				render :json => authors, :status => 200
 			end
 
