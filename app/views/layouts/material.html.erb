@@ -137,7 +137,7 @@
                                 <span md-highlight-text="searchText">{{item.display}}</span>
                             </md-autocomplete>
                         </div>
-                        <div layout="row" layout-align="center center" flex="10" flex-sm="20" hide-md hide-lg>
+                        <div layout="row" layout-align="center center" flex="10" flex-sm="20" hide-lg>
                             <md-button ng-show="visible" class="library">
                                 <a href="/infinity">Infinity</a>
                             </md-button>
@@ -160,8 +160,8 @@
                             </a>
                         </div>
                         <div layout="row" layout-align="center center" 
-                                ng-hide="visible" layout-fill layout-padding>
-                            <md-button flex="20" ng-click="show_search_bar()" ng-hide="visible">
+                                ng-hide="visible" layout-fill layout-padding hide-md hide-lg>
+                            <md-button flex="20" ng-click="show_search_bar()" ng-hide="visible" hide-md hide-lg>
                                 <span class="icon-search"></span>
                             </md-button>
                             <md-autocomplete ng-hide="visible"
@@ -170,7 +170,7 @@
                                 md-items="item in querySearch(searchText)"
                                 md-item-text="display"
                                 class="search"
-                                flex="80"
+                                flex="80" hide-md hide-lg
                                 placeholder="Search books, topics and more...">
                                 <span md-highlight-text="searchText">{{item.display}}</span>
                             </md-autocomplete>
