@@ -96,9 +96,9 @@ class User < Neo
 
 	def self.match_category category_id=nil
 		if category_id
-			clause = " MATCH (user)-[likes:Likes]->(category:Category) WHERE ID(category)="+category_id.to_s+" WITH user, category "
+			clause = " MATCH (user)-[likes:Likes]->(category:Category) WHERE ID(category)="+category_id.to_s+" WITH user, likes, category "
 		else
-			clause = " MATCH (user)-[likes:Likes]->(category:Category) WITH user, category "
+			clause = " MATCH (user)-[likes:Likes]->(category:Category) WITH user, likes, category "
 		end
 		clause
 	end
