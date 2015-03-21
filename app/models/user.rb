@@ -18,8 +18,8 @@ class User < Neo
 		" user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id "
 	end
 
-	def get_all_books 
-		match + Bookmark.match + return_init + ::Book.basic_info + ::Book.order_desc
+	def get_all_books skip_count=0, limit_count=Constants::BookCountShownOnSignup 
+		match + Bookmark.match + return_init + ::Book.basic_info + ::Book.order_desc + skip(skip_count) + limit(limit_count)
 	end
 
 	def self.create_label key

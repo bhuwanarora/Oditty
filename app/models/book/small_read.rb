@@ -11,7 +11,7 @@ class Book::SmallRead < Book
 	end
 
 	def self.path
-		clause = " MATCH path = (node)-[:NextSmallRead*" + Limit.to_s + "]-(last_node) WITH path "
+		clause = " MATCH path = (node)-[:NextSmallRead*" + Limit.to_s + "]->(last_node) WITH path "
 	end
 
 	def self.path_nodes
@@ -19,7 +19,7 @@ class Book::SmallRead < Book
 	end
 
 	def self.nth_node length
-		Book::SmallRead.match_best_read + " MATCH (small_read)-[:NextSmallRead*" + length.to_s + "]-(node) WITH node "
+		Book::SmallRead.match_best_read + " MATCH (small_read)-[:NextSmallRead*" + length.to_s + "]->(node) WITH node "
 	end
 
 	def self.path_nodes_after skip
@@ -29,5 +29,4 @@ class Book::SmallRead < Book
 	def self.get_sorted_books skip_count
 		::Book::SmallRead.path_nodes_after(skip_count) + " RETURN " + ::Book.basic_info + ::Book.order_desc + " LIMIT " + Limit.to_s
 	end
-
 end
