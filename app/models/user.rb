@@ -19,7 +19,12 @@ class User < Neo
 	end
 
 	def get_all_books 
-		@user.match + Bookmark.match + return_init + ::Book.basic_info + ::Book.order_desc
+		@user.match + " OPTIONAL MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book:Book)-[:FromCategory]->(:Category)-[:HasRoot*0..1]->(root_category:Category{is_root:true}) WITH user, COUNT(book) AS books_from_category, root_category ORDER BY books_from_category MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book:Book)-[:FromCategory]->(:Category)-[:HasRoot*0..1]->(root_category) " + return_init + ::Book.basic_info + ::Book.order_desc 
+	end
+
+	def get_books_genres skip_count=0, limit_count=0
+
+		@user.match + Bookmark.match + Book.match_root_category + " WITH "
 	end
 
 	def self.from_facebook params

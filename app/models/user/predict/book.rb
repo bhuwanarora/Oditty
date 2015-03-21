@@ -25,8 +25,15 @@ class User::Predict::Book < User::Predict
 		data
 	end
 
-	def handle_average_number_books_read
-	 	
+	def handle_average_number_books_read skip_count
+		data = @user.get_books.execute
+		
+		has_linked_books = data[0]["book_id"].blank? ? false : true rescue false
+		unless has_linked_books
+			clause =  ::Book::SmallRead.get_sorted_books @skip_count
+			data = clause.execute
+		end
+		data 
 	end
 
 	def handle_few_books_read 

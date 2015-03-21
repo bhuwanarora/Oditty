@@ -8,12 +8,12 @@ class Neo
 		" RETURN "
 	end
 
-	def skip_count
-		" SKIP " + @skip_count.to_s
+	def skip_count skip_count
+		" SKIP " + skip_count.to_s
 	end
 
-	def limit count
-		" LIMIT " + count.to_s 
+	def limit_count limit_count
+		" LIMIT " + limit_count.to_s 
 	end
 
 	def self.execute clause
