@@ -13,6 +13,18 @@ module Api
 				render :json => books, :status => 200
 			end
 
+			def handle_influential_books
+				book_id = params[:id]
+				status = params[:status]
+				user_id = session[:user_id]
+				if status
+					Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).add
+				else
+					Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).remove
+				end
+				render :json => "Success", :status => 200
+			end
+
 			def get_books_from_favourite_author
 				user_id = session[:user_id]
 				books = User::Suggest::Book.new(user_id).for_favourite_author(user_id).execute

@@ -78,7 +78,8 @@ ReadersDoor::Application.routes.draw do
       match "books_from_most_read_author"             => 'users_api#get_books_from_most_read_author',   :via => [:put, :get, :post]
       match "books_from_most_read_era"                => 'users_api#get_books_from_most_read_era',      :via => [:put, :get, :post]
       match "books_on_your_friends_shelves"           => 'users_api#books_on_your_friends_shelves',     :via => [:put, :get, :post]
-      match "get_sorted_genres"                       => 'users_api#get_sorted_genres',                  :via => [:put, :get, :post] 
+      match "get_sorted_genres"                       => 'users_api#get_sorted_genres',                 :via => [:put, :get, :post]
+      match "influential_books"                       => 'users_api#handle_influential_books',                 :via => [:put, :get, :post]
 
       match 'user_info'                               => 'users_api#user_info',                         :via => [:put, :get, :post]
       match 'user'                                    => 'users_api#user',                              :via => [:put, :get, :post]

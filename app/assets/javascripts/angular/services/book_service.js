@@ -55,6 +55,10 @@ homeApp.service('bookService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return _deferred_request('/api/v0/book?'+filter);
     }
 
+    this.handle_influential_books = function(id, status){
+        return _deferred_request('/api/v0/influential_books?id='+id+"&status="+status);
+    }
+
     this.get_books_bookmarked = function(skip_count){
         return _deferred_request('/api/v0/books_bookmarked?skip_count='+skip_count+'&id='+_user_id());
     }

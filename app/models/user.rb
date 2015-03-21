@@ -19,7 +19,11 @@ class User < Neo
 	end
 
 	def get_all_books skip_count=0, limit_count=Constants::BookCountShownOnSignup 
-		@user.match + Bookmark.match + return_init + ::Book.basic_info + ::Book.order_desc + skip(skip_count) + limit(limit_count)
+		match + Bookmark.match + return_init + ::Book.basic_info + ::Book.order_desc + skip(skip_count) + limit(limit_count)
+	end
+
+	def self.create_label key
+		" CREATE UNIQUE (user)-[labelled:Labelled]->(label:Label{key: \""+key+"\"}) "
 	end
 
 	def self.from_facebook params
@@ -96,9 +100,9 @@ class User < Neo
 
 	def self.match_category category_id=nil
 		if category_id
-			clause = " MATCH (user)-[likes:Likes]->(category:Category) WHERE ID(category)="+category_id.to_s+" WITH user, likes, category "
+			clause = " MATCH (user)-[likes:Likes]->(category:Category) WHERE ID(category)="+category_id.to_s+" WITH user, category, likes "
 		else
-			clause = " MATCH (user)-[likes:Likes]->(category:Category) WITH user, likes, category "
+			clause = " MATCH (user)-[likes:Likes]->(category:Category) WITH user, category, likes "
 		end
 		clause
 	end
