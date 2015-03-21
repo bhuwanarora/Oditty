@@ -1,6 +1,6 @@
 class Category < Neo
 	
-	def self.get_basic_info
+	def self.basic_info
 		" ID(category) AS category_id, category.icon AS category_icon, category.name AS category_name, category.category_aws_key AS category_aws_key"
 	end
 
