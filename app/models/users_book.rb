@@ -27,7 +27,7 @@ class UsersBook < Neo
 	end
 
 	def self.optional_match_mark_as_read
-		" OPTIONAL MATCH (user)-[mark_as_read:MarkAsReadAction]->(:MarkAsReadNode)--(book:Book) "
+		" OPTIONAL MATCH (user)-[mark_as_read:MarkAsReadAction]->(:MarkAsReadNode)--(book) "
 	end
 
 	def self.friends_book

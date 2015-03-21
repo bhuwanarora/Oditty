@@ -62,7 +62,7 @@ class Bookmark < Neo
 	end
 
 	def self.match
-		" OPTIONAL MATCH (user)-[:Labelled]->(label:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(book) "
+		" OPTIONAL MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book) "
 	end
 
 	def self.add

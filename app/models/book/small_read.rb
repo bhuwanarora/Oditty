@@ -26,4 +26,8 @@ class Book::SmallRead < Book
 		Book::SmallRead.nth_node(skip) + Book::SmallRead.path_nodes
 	end
 
+	def self.get_sorted_books skip_count
+		::Book::SmallRead.path_nodes_after(skip_count) + return_init + ::Book.basic_info + ::Book.order_desc + limit(Limit)
+	end
+
 end

@@ -18,6 +18,10 @@ class User < Neo
 		" user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id "
 	end
 
+	def get_all_books 
+		@user.match + Bookmark.match + return_init + ::Book.basic_info + ::Book.order_desc
+	end
+
 	def self.from_facebook params
 		begin
 			if params[:data].class == Array

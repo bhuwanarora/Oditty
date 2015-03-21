@@ -30,13 +30,11 @@ class User::Predict::Book < User::Predict
 	end
 
 	def handle_few_books_read 
-		#FIXME path nodes are increasing with scroll
-		clause = @user.match + UsersBook.optional_match_mark_as_read + UsersBook.optional_match_rating + return_init +  ::Book.basic_info + ::Book.rating + ::Book.mark_as_read
-		data = clause.execute
+		data = @user.get_all_books.execute
 
 		has_linked_books = data[0]["book_id"].blank? ? false : true rescue false
 		unless has_linked_books
-			clause =  ::Book::SmallRead.path_nodes_after(@skip_count) + return_init + ::Book.basic_info + ::Book.order_desc + limit(Limit)
+			clause =  ::Book::SmallRead.get_sorted_books @skip_count
 			data = clause.execute
 		end
 		data
