@@ -5,17 +5,25 @@ class Book::SmallRead < Book
 		@best_small_read ||= Constants::BestSmallRead
 	end
 
-	def self.best_match_clause
+	def self.match_best_read
 		@best_small_read ||= Constants::BestSmallRead
 		" MATCH (small_read:Book) WHERE ID(small_read) = " + @best_small_read.to_s+"  WITH small_read "
 	end
 
-	def self.path start_id, length
-		length = Limit if length == 0
-		clause = " MATCH path = (small_read:Book)-[:NextSmallRead*" + length.to_s + "]-(last_node) WHERE ID(small_read) = " + start_id.to_s + "  WITH path "
+	def self.path
+		clause = " MATCH path = (node)-[:NextSmallRead*" + Limit.to_s + "]-(last_node) WITH path "
 	end
 
-	def self.path_nodes start_id, length
-		self.path(start_id, length) + ", EXTRACT(n in nodes(path)|n) AS books UNWIND books AS book"
+	def self.path_nodes
+		self.path + ", EXTRACT(n in nodes(path)|n) AS books UNWIND books AS book "
 	end
+
+	def self.nth_node length
+		Book::SmallRead.match_best_read + " MATCH (small_read)-[:NextSmallRead*" + length.to_s + "]-(node) WITH node "
+	end
+
+	def self.path_nodes_after skip
+		Book::SmallRead.nth_node(skip) + Book::SmallRead.path_nodes
+	end
+
 end
