@@ -9,11 +9,11 @@ class Neo
 	end
 
 	def skip skip_count
-		" SKIP " + skip_count.to_s
+		" SKIP " + skip_count.to_s + " "
 	end
 
 	def limit limit_count
-		" LIMIT " + limit_count.to_s 
+		" LIMIT " + limit_count.to_s + " "
 	end
 
 	def self.execute clause
