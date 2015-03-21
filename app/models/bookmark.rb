@@ -61,7 +61,7 @@ class Bookmark < Neo
 		self.execute clause
 	end
 
-	def self.match_clause
+	def self.match
 		" OPTIONAL MATCH (user)-[:Labelled]->(label:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(book) "
 	end
 

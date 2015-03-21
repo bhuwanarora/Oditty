@@ -7,71 +7,15 @@ class User < Neo
 	end
 
 	def get_detailed_info
-		match + User.optional_category_clause + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + return_init + " COLLECT(DISTINCT(category.name)), COLLECT(DISTINCT(ID(category))), COLLECT(DISTINCT(category.icon)), COLLECT(DISTINCT(book.isbn)), COLLECT(DISTINCT(ID(book))), COLLECT(DISTINCT(book.title)), COLLECT(DISTINCT(book.author_name))"
+		match + User.optional_match_category + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + return_init + " COLLECT(DISTINCT(category.name)), COLLECT(DISTINCT(ID(category))), COLLECT(DISTINCT(category.icon)), COLLECT(DISTINCT(book.isbn)), COLLECT(DISTINCT(ID(book))), COLLECT(DISTINCT(book.title)), COLLECT(DISTINCT(book.author_name))"
+	end
+
+	def get_basic_info
+		match + return_init + User.basic_info
 	end
 
 	def self.basic_info
-		" ID(user) AS id, user.first_name AS first_name, user.last_name AS last_name "
-	end
-
-	def self.get_by_email email
-		" MATCH (user:User) WHERE user.email= \"" + email + "\" " + return_init + User.basic_info
-	end
-
-	def self.set_email email
-		" SET user.email = \""+email+"\" "
-	end
-
-	def self.set_thumb thumb
-		" SET user.thumb = \""+thumb+"\" "
-	end
-
-	def self.set_name name
-		" SET user.name = \""+name+"\", user.indexed_user_name=\""+name.downcase.gsub(" ","")+"\", user.search_index=\""+name.downcase.gsub(" ","")+"\""
-	end
-
-	def self.set_first_name first_name
-		" SET user.first_name=\""+first_name+"\""
-	end
-
-	def self.set_last_name last_name
-		" SET user.last_name=\""+last_name+"\""
-	end
-
-	def self.set_location latitude, longitude
-		" SET user.latitude="+latitude.to_s+", user.longitude="+longitude.to_s
-	end
-
-	def self.set_init_book_read_count init_book_read_count
-		" SET user.init_book_read_count=\""+init_book_read_count+"\"" if init_book_read_count
-	end
-
-	def self.set_gender gender
-		" SET user.gender=\""+gender+"\" "
-	end
-
-	def self.set_date_of_birth selected_year, selected_month, selected_day
-		" SET user.selectedYear="+selectedYear.to_s+", user.selectedMonth=\""+selectedMonth.to_s+"\", user.selectedDay="+selectedDay.to_s+" "
-	end
-
-	def self.set_profile type
-		" SET user.profile=\""+profile+"\" "
-	end
-
-	def self.set_profile_picture profile_picture
-		" SET user.profile_picture="+profile_picture+" "
-	end
-
-	def self.set_about about
-		" SET user.about=\""+about+"\" "
-	end
-
-	def self.set_category category_id
-		self.category_clause(category_id) + " SET likes.weight = likes.weight + " + Constants::CategoryLikeWeight.to_s
-	end
-
-	def self.remove_category category_id
-		self.category_clause(category_id) + " SET likes.weight = likes.weight - " + Constants::CategoryLikeWeight.to_s
+		" user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id "
 	end
 
 	def self.from_facebook params
@@ -137,7 +81,7 @@ class User < Neo
 		" MATCH (user:User) WHERE ID(user) = " + @id.to_s + " WITH user "
 	end
 
-	def self.match_root_category category_id
+	def self.match_root_category category_id=nil
 		if category_id
 			clause = " MATCH (user)-[likes:Likes]->(root_category:Category{is_root:true}) WHERE ID(category)="+category_id.to_s
 		else
@@ -146,7 +90,7 @@ class User < Neo
 		clause
 	end
 
-	def self.match_category category_id
+	def self.match_category category_id=nil
 		if category_id
 			clause = " MATCH (user)-[likes:Likes]->(category:Category) WHERE ID(category)="+category_id.to_s+" WITH user, category "
 		else
@@ -155,11 +99,15 @@ class User < Neo
 		clause
 	end
 
-	def self.optional_match_category category_id
-		" OPTIONAL" + User.category_clause category_id
+	def self.optional_match_category category_id=nil
+		" OPTIONAL" + User.category_clause(category_id)
+	end
+
+	def self.init_book_read_count
+		" user.init_book_read_count as init_book_read_count "
 	end
 
 	def get_init_book_count_range
-		match + " RETURN user.init_book_read_count as init_book_read_count"
+		match + return_init + self.init_book_read_count
 	end
 end

@@ -8,4 +8,8 @@ class Category < Neo
 		" ORDER BY likes.weight DESC"
 	end
 
+	def self.likes_weight
+		", likes.weight AS likes_weight "
+	end
+
 end

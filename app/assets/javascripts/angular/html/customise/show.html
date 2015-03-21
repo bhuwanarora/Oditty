@@ -40,6 +40,7 @@
 	<div class="footer md-whiteframe-z1">
 	    <section layout="row">
 	        <md-button ng-click="previous()" class="footer_button"
+	        		aria-label=""
 	                ng-disabled="data.selectedIndex == 0"
 	                flex="50" layout="row" layout-align="start">
 	            <div><span class="icon-angle-left"></span></div>&nbsp;&nbsp;
@@ -51,6 +52,7 @@
 	            </div>
 	        </md-button>
 	        <md-button ng-click="next()" class="footer_button"
+	        			aria-label=""
 	                    flex="50" layout="row" layout-align="end">
 	            <div ng-switch on="data.selectedIndex">
 	                <div ng-switch-when="0">Subjects that interest you</div>

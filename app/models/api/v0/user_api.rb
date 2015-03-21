@@ -3,24 +3,17 @@ module Api
 		class UserApi
 
 			def self.get_details(user_id, session)
+				info = {}
 				if user_id.present?
-					@neo = Neography::Rest.new
-					clause = "MATCH (u:User) WHERE ID(u)=" + user_id.to_s + " RETURN" + self._user_return_clause
-					begin
-						info = @neo.execute_query(clause)[0]
-						session[:last_book] = info["last_book"]
-					rescue Exception => e
-						info = {}
-					end
-				else
-					info = {}
+					info = User.new(user_id).get_basic_info.execute[0]
+					session[:last_book] = info["last_book"]
 				end
 				info
 			end
 
 			def self.recover_password email
 				@neo = Neography::Rest.new
-				clause = "MATCH (user:User{email:\""+email+"\"}) RETURN" + self._user_return_clause
+				clause = "MATCH (user:User{email:\""+email+"\"}) RETURN " + User.basic_info
 				user_id = @neo.execute_query clause
 				user_exists = user_id.present?
 				if user_exists
@@ -111,23 +104,23 @@ module Api
 							clause = User.set_email params[:email]
 						end
 					end
-					clause = User.set_thumb params[:data][:url] 							if params[:data] && params[:data][:url]
-					clause = User.set_name params[:name] 									if params[:name]
-					clause = User.set_first_name params[:first_name]		 				if params[:first_name]
-					clause = User.set_last_name params[:last_name] 							if params[:last_name]
-					clause = User.set_location(params[:latitude], params[:longitude])  		if params[:latitude]
-					clause = User.set_init_book_read_count params[:init_book_read_count] 	if params[:init_book_read_count]
-					clause = User.set_gender params[:gender]								if params[:gender]
-					clause = User.set_date_of_birth(params[:selectedYear], params[:selectedMonth], params[:selectedDay]) if params[:selectedDay]
-					clause = User.set_profile params[:profile] 								if params[:profile]
-					clause = User.set_profile_picture params[:profile_picture] 				if params[:profile_picture]
-					clause = User.set_about params[:about] 									if params[:about]
+					clause = User::Info.set_thumb params[:data][:url] 								if params[:data] && params[:data][:url]
+					clause = User::Info.set_name params[:name] 										if params[:name]
+					clause = User::Info.set_first_name params[:first_name]		 					if params[:first_name]
+					clause = User::Info.set_last_name params[:last_name] 							if params[:last_name]
+					clause = User::Info.set_location(params[:latitude], params[:longitude])  		if params[:latitude]
+					clause = User::Info.set_init_book_read_count params[:init_book_read_count] 		if params[:init_book_read_count]
+					clause = User::Info.set_gender params[:gender]									if params[:gender]
+					clause = User::Info.set_date_of_birth(params[:selectedYear], params[:selectedMonth], params[:selectedDay]) if params[:selectedDay]
+					clause = User::Info.set_profile params[:profile] 								if params[:profile]
+					clause = User::Info.set_profile_picture params[:profile_picture] 				if params[:profile_picture]
+					clause = User::Info.set_about params[:about] 									if params[:about]
 
-					clause = User.set_category params[:genre]					 			if params[:genre] && params[:status]
-					clause = User.remove_category params[:genre]						 	if params[:genre] && !params[:status]
+					clause = User::Info.add_category params[:category_id]					 				if params[:category_id] && params[:status]
+					clause = User::Info.remove_category params[:category_id]						 		if params[:category_id] && !params[:status]
 
 					if clause
-						clause = User.new(user_id).match_clause + clause
+						clause = User.new(user_id).match + clause
 						clause.execute
 					else
 						duplicate_email
@@ -245,15 +238,7 @@ module Api
 			end
 
 			def self.get_info_card_data
-				reading_count_list = [
-					{"name"=> "0-20"},
-					{"name"=> "20-50"},
-					{"name"=> "50-100"},
-					{"name"=> "100-250"},
-					{"name"=> "250+"}
-				]
-
-				info = {"reading_count_list" => reading_count_list}
+				info = {"reading_count_list" => BookRange.get_values}
 			end
 
 			def self.handle_google_user params
@@ -387,10 +372,6 @@ module Api
 				new_object_string
 			end
 
-			def self._user_return_clause
-				clause = " u.init_book_read_count AS init_book_read_count, u.selectedYear AS selectedYear, u.selectedMonth AS selectedMonth, u.selectedDay AS selectedDay, u.first_name AS first_name, u.last_name AS last_name, u.about AS about, ID(u) AS id"
-				clause
-			end
 		end
 	end
 end
