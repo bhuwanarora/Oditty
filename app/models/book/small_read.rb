@@ -27,7 +27,7 @@ class Book::SmallRead < Book
 	end
 
 	def self.get_sorted_books skip_count
-		::Book::SmallRead.path_nodes_after(skip_count) + return_init + ::Book.basic_info + ::Book.order_desc + limit(Limit)
+		::Book::SmallRead.path_nodes_after(skip_count) + " RETURN " + ::Book.basic_info + ::Book.order_desc + " LIMIT " + Limit.to_s
 	end
 
 end

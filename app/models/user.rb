@@ -19,7 +19,7 @@ class User < Neo
 	end
 
 	def get_all_books 
-		@user.match + Bookmark.match + return_init + ::Book.basic_info + ::Book.order_desc
+		match + Bookmark.match + return_init + ::Book.basic_info + ::Book.order_desc
 	end
 
 	def self.from_facebook params
