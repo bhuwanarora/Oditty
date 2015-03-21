@@ -53,10 +53,10 @@ class User::Info < User
 	end
 
 	def self.add_category category_id
-		User.match_category category_id + " SET likes.weight = CASE WHEN likes.weight IS NULL THEN " + Constants::CategoryLikeWeight.to_s + " ELSE toInt(likes.weight) + "+Constants::CategoryLikeWeight.to_s+" END "
+		(User.match_category category_id) + " SET likes.weight = CASE WHEN likes.weight IS NULL THEN " + Constants::CategoryLikeWeight.to_s + " ELSE toInt(likes.weight) + "+Constants::CategoryLikeWeight.to_s+" END "
 	end
 
 	def self.remove_category category_id
-		User.match_category category_id + " SET likes.weight = CASE WHEN likes.weight IS NULL THEN 0 ELSE toInt(likes.weight) - "+Constants::CategoryLikeWeight.to_s+" END "
+		(User.match_category category_id) + " SET likes.weight = CASE WHEN likes.weight IS NULL THEN 0 ELSE toInt(likes.weight) - "+Constants::CategoryLikeWeight.to_s+" END "
 	end
 end
