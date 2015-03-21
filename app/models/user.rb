@@ -6,6 +6,14 @@ class User < Neo
 		# @skip_count = skip_count
 	end
 
+	def set_bookmark_count
+		" user.bookmark_count = CASE WHEN user.bookmark_count IS NULL THEN 1 ELSE toInt(user.bookmark_count) + 1 END "
+	end
+
+	def set_total_count_on_bookmark
+		" user.total_count = CASE WHEN user.total_count IS NULL THEN "+Constants::BookmarkPoints.to_s+" ELSE toInt(user.total_count) + "+Constants::BookmarkPoints.to_s+" END"
+	end
+
 	def get_detailed_info
 		match + User.optional_match_category + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + return_init + " COLLECT(DISTINCT(category.name)), COLLECT(DISTINCT(ID(category))), COLLECT(DISTINCT(category.icon)), COLLECT(DISTINCT(book.isbn)), COLLECT(DISTINCT(ID(book))), COLLECT(DISTINCT(book.title)), COLLECT(DISTINCT(book.author_name))"
 	end

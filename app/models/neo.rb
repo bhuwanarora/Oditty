@@ -86,32 +86,6 @@ class Neo
 		clause
 	end
 
-	def _delete_feed_clause(user_id, other_label=nil)
-		if other_label
-			get_feed_relations_for_m = "MATCH (s)-[f1:FeedNext{user_id:"+user_id.to_s+"}]->("+other_label+")-[f2:FeedNext{user_id:"+user_id.to_s+"}]->(e) "
-		else
-			get_feed_relations_for_m = "MATCH (s)-[f1:FeedNext{user_id:"+user_id.to_s+"}]->(m)-[f2:FeedNext{user_id:"+user_id.to_s+"}]->(e) "
-		end
-		create_new_relations_in_place = "CREATE (s)-[:FeedNext{user_id:"+user_id.to_s+"}]->(e) "
-		delete_old_relations = "DELETE f1, f2 "
-		with_clause = "WITH u, b, m "
-		clause = get_feed_relations_for_m + create_new_relations_in_place + delete_old_relations + with_clause
-		clause
-	end
-
-	def _delete_book_clause(user_id, other_label=nil)
-		if other_label
-			get_bookfeed_relations_for_m = "MATCH (s)-[b1:BookFeed{user_id:"+user_id.to_s+"}]->("+other_label+")-[b2:BookFeed{user_id:"+user_id.to_s+"}]->(e) "
-		else
-			get_bookfeed_relations_for_m = "MATCH (s)-[b1:BookFeed{user_id:"+user_id.to_s+"}]->(m)-[b2:BookFeed{user_id:"+user_id.to_s+"}]->(e) "
-		end
-		create_new_relations_in_place = "CREATE (s)-[:BookFeed{user_id:"+user_id.to_s+"}]->(e) "
-		delete_old_relations = "DELETE b1, b2 "
-		with_clause = "WITH u, b, m"
-		clause = get_bookfeed_relations_for_m + create_new_relations_in_place + delete_old_relations + with_clause
-		clause
-	end
-
 	def _removing_rating
 		get_rating_relationship = "OPTIONAL MATCH (u)-[r1:RatingAction]->(rn:RatingNode)-[r2:Rate]->(b) "
 		delete_rating_relationship = "FOREACH (p IN CASE WHEN r1 IS NULL THEN [] ELSE [u] END | FOREACH (q IN CASE WHEN r2 IS NULL THEN [] ELSE [b] END | SET q.rating_count = CASE WHEN q.rating_count IS NULL THEN 0 ELSE toInt(q.rating_count) - 1 END,  p.total_count = CASE WHEN p.total_count IS NULL THEN 0 ELSE toInt(p.total_count) - "+Constants::RatingPoints.to_s+" END, p.rating_count = CASE WHEN p.rating_count IS NULL THEN 0 ELSE toInt(p.rating_count) - 1 END DELETE r1, r2))  "

@@ -7,6 +7,10 @@ class Book < Neo
 		" MATCH (book:Book)-[:BookFeed*0..]->(news_feed) WHERE ID(book) = " + @id.to_s + " RETURN labels(news_feed), news_feed "
 	end
 
+	def set_bookmark_count
+		" SET book.bookmark_count = CASE WHEN book.bookmark_count IS NULL THEN 1 ELSE toInt(book.bookmark_count) + 1 END "
+	end
+
 	def match
 		" MATCH (book:Book) WHERE ID(book)=" + @id.to_s + " WITH book "
 	end

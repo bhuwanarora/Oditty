@@ -27,4 +27,20 @@ class UsersUser < Neo
 		clause
 	end
 
+	def self.match
+		" OPTIONAL MATCH (user)<-[:Follow]-(friend:User) "
+	end
+
+	def self.remove_user_from_friends_ego_chain
+		" OPTIONAL MATCH (x1)-[r1:Ego{user_id:ID(friend)}]->(user)-[r2:Ego{user_id:ID(friend)}]->(x2) FOREACH (s IN CASE WHEN r1 IS NULL THEN [] ELSE [r1] END | FOREACH (t IN CASE WHEN r2 IS NULL THEN [] ELSE [r2] END | CREATE (x1)-[:Ego{user_id:ID(friend)}]->(x2) DELETE s, t)) WITH user, friend "
+	end
+
+	def self.friend_ego_chain
+		"OPTIONAL MATCH (friend)-[old:Ego{user_id:ID(friend)}]->(old_ego) "
+	end
+
+	def self.add_user_to_friends_ego_chain
+		UsersUser.friend_ego_chain + " FOREACH(p IN CASE WHEN old_ego IS NULL THEN [] ELSE [old_ego] END | FOREACH (q IN CASE WHEN friend IS NULL THEN [] ELSE [f] END | CREATE (q)-[:Ego{user_id:ID(q)}]->(user)-[:Ego{user_id:ID(q)}]->(p) DELETE old)) WITH DISTINCT user "
+	end
+
 end
