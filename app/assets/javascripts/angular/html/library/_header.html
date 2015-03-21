@@ -1,15 +1,15 @@
 <div ng-controller="filtersController">
     <md-subheader class="md-primary filters_header" layout-fill>
         <section layout="row" show-sm hide layout-align="space-between center" layout-fill>
-            <md-button ng-click="show_left_nav($event)" class="reset_button">
+            <md-button ng-click="show_left_nav($event)" class="clear_button">
                 Sort by
             </md-button>
             <div layout="row" layout-align="end center" layout-wrap>
-                <md-button class="md-raised reset_button" ng-click="show_bottom_filters($event)">
+                <md-button class="md-raised clear_button" ng-click="show_bottom_filters($event)">
                     Add Filters
                 </md-button>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <md-button class="reset_button" ng-click="show_right_nav($event)">
+                <md-button class="clear_button" ng-click="show_right_nav($event)">
                     <div layout="column">
                         <div>A</div>
                         <div>Z</div>
@@ -54,7 +54,7 @@
         position: relative;
     }
 
-    .reset_button{
+    .clear_button{
         z-index: 1;
         height: 38px;
         border-radius: 0px !important;
