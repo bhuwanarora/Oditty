@@ -52,6 +52,7 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
                 else{
                     book.status = false;
                 }
+                bookService.handle_influential_books(book.id, book.status);
             }
         });
         $mdToast.show({

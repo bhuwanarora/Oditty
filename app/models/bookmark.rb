@@ -1,83 +1,83 @@
 class Bookmark < Neo
-	Read 									= "Read"
-	IntendingToRead 						= "IntendingToRead"
-	DidntFeelLikeReadingItAfterAPoint 		= "DidntFeelLikeReadingItAfterAPoint"
-	PretendIHaveRead 						= "PretendIHaveRead"
-	SavingForWhenIHaveMoreTime 				= "SavingForWhenIHaveMoreTime"
-	WillNeverRead 							= "WillNeverRead"
-	PurelyForShow 							= "PurelyForShow"
-	ReadButCantRememberASingleThingAboutIt 	= "ReadButCantRememberASingleThingAboutIt"
-	WishIHadntRead 							= "WishIHadntRead"
-	CurrentlyReading 						= "CurrentlyReading"
-	HaveLeftAMarkOnMe 						= "HaveLeftAMarkOnMe"
-	NotWorthReading 						= "NotWorthReading"
-	FromFacebook 							= "FromFacebook"
-	PlanToBuy 								= "PlanToBuy"
-	IOwnthis 								= "IOwnthis"
-	Visited 								= "Visited"
+	# Read 									= "Read"
+	# IntendingToRead 						= "IntendingToRead"
+	# DidntFeelLikeReadingItAfterAPoint 		= "DidntFeelLikeReadingItAfterAPoint"
+	# PretendIHaveRead 						= "PretendIHaveRead"
+	# SavingForWhenIHaveMoreTime 				= "SavingForWhenIHaveMoreTime"
+	# WillNeverRead 							= "WillNeverRead"
+	# PurelyForShow 							= "PurelyForShow"
+	# ReadButCantRememberASingleThingAboutIt 	= "ReadButCantRememberASingleThingAboutIt"
+	# WishIHadntRead 							= "WishIHadntRead"
+	# CurrentlyReading 						= "CurrentlyReading"
+	# HaveLeftAMarkOnMe 						= "HaveLeftAMarkOnMe"
+	# NotWorthReading 						= "NotWorthReading"
+	# FromFacebook 							= "FromFacebook"
+	# PlanToBuy 								= "PlanToBuy"
+	# IOwnthis 								= "IOwnthis"
+	# Visited 								= "Visited"
 
-	def initialize(user_id, id, bookmark_key, add=true, type)
+	def initialize(user_id, id, book_id)
 		@user_id = user_id
-		@id = id
-		@bookmark_key = bookmark_key
-
-		@neo = Neography::Rest.new
-		case bookmark_key
-		when Read
-			clause = self.read
-		when IntendingToRead
-			clause = self.intending_to_read
-		when DidntFeelLikeReadingItAfterAPoint
-			clause = self.didnt_feel_like_reading_it_after_a_point
-		when PretendIHaveRead
-			clause = self.pretend_i_have_read
-		when SavingForWhenIHaveMoreTime
-			clause = self.saving_for_when_i_have_more_time
-		when WillNeverRead
-			clause = self.will_never_read
-		when PurelyForShow
-			clause = self.purely_for_show
-		when ReadButCantRememberASingleThingAboutIt
-			clause = self.read_but_cant_remember_a_single_thing_about_it
-		when WishIHadntRead
-			clause = self.wish_i_hadnt_read
-		when CurrentlyReading
-			clause = self.currently_reading
-		when HaveLeftAMarkOnMe
-			clause = self.have_left_a_mark_on_me
-		when NotWorthReading
-			clause = self.not_worth_reading
-		when FromFacebook
-			clause = self.from_facebook
-		when PlanToBuy
-			clause = self.plan_to_buy
-		when IOwnthis
-			clause = self.i_own_this
-		when Visited
-			clause = self.visited
-		end
-
-		clause = (add ? self.bookmark_book : self.remove_bookmark) + clause
-		self.execute clause
+		@book_id = book_id
 	end
 
 	def self.match
 		" OPTIONAL MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book) "
 	end
 
+	def self.create_label_bookmark_node
+		" (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node: BookmarkNode{label:\""+@bookmark_key+"\", id:"+@id.to_s+", user_id:"+@user_id.to_s+"}) " 
+	end
+
+	def self.create_bookmark_node_book
+		" (bookmark_node)-[bookmark_action:BookmarkAction]->(book) "
+	end
+
+	def self.set_title
+		" SET bookmark_node.title = book.title "
+	end
+
+	def self.set_author_name
+		" SET bookmark_node.author = book.author_name "
+	end
+
+	def self.set_name
+		" SET bookmark_node.name = user.name "
+	end
+
+	def self.set_email
+		" SET bookmark_node.email=user.email "
+	end
+
+	def self.set_isbn
+		" SET bookmark_node.isbn = book.isbn "
+	end
+
+	def self.set_created_at
+		" SET bookmark_node.created_at = " + Time.now.to_i.to_s + " "
+	end
+
+	def self.set_updated_at
+		" SET bookmark_node.updated_at = " + Time.now.to_i.to_s + " "
+	end
+
+	def self.set_thumb
+		" SET bookmark_node.thumb = CASE WHEN user.thumb IS NULL THEN '' ELSE user.thumb END "
+	end
+
 	def self.add
-		bookmark_clause = _match_user_and_book+" CREATE UNIQUE (u)-[lr:Labelled]->(l:Label{name: \""+@bookmark_key.strip.upcase+"\"}), (l)-[:BookmarkedOn]->(m: BookmarkNode{label:\""+@bookmark_key.strip.upcase+"\", id:"+@id.to_s+", user_id:"+@user_id.to_s+"}), (m)-[:BookmarkAction]->(b) SET m.title = b.title,  m.author = b.author_name, m.name = u.name, m.email=u.email, m.isbn = b.isbn, m.timestamp = "+Time.now.to_i.to_s+", m.thumb = CASE WHEN u.thumb IS NULL THEN '' ELSE u.thumb END WITH u, b, m, l, lr "
+		bookmark_clause = UsersBook.new(@user_id, @book_id).match + User.create_label(@bookmark_key) + Bookmark.create_label_bookmark_node + Bookmark.create_bookmark_node_book + Bookmark.set_title + Bookmark.set_author_name + Bookmark.set_name + Bookmark.set_email + Bookmark.set_isbn + Bookmark.set_timestamp + Bookmark.set_created_at + Bookmark.set_updated_at + " WITH user, book, bookmark_node, label, labelled "
 
-		feednext_clause = _feednext_clause(@user_id)+", l, lr "
+		feednext_clause = Feed::User.new(@user_id).create("bookmark") + ", label, labelled "
 
-		bookfeed_next_clause = _bookfeed_clause+", l, lr "
+		bookfeed_next_clause = _bookfeed_clause+", label, labelled "
 
-		existing_ego_clause = _existing_ego_clause+", l, lr "
+		existing_ego_clause = _existing_ego_clause+", label, labelled "
 
-		ego_clause = _ego_clause + ", l, lr "
+		ego_clause = _ego_clause + ", label, labelled "
 
 
-		set_clause = "SET b.bookmark_count = CASE WHEN b.bookmark_count IS NULL THEN 1 ELSE toInt(b.bookmark_count) + 1 END, u.bookmark_count = CASE WHEN u.bookmark_count IS NULL THEN 1 ELSE toInt(u.bookmark_count) + 1 END, l.bookmark_count = CASE WHEN l.bookmark_count IS NULL THEN 1 ELSE toInt(l.bookmark_count) + 1 END, lr.bookmark_count = CASE WHEN lr.bookmark_count IS NULL THEN 1 ELSE toInt(lr.bookmark_count) + 1 END, u.total_count = CASE WHEN u.total_count IS NULL THEN "+Constants::BookmarkPoints.to_s+" ELSE toInt(u.total_count) + "+Constants::BookmarkPoints.to_s+" END"
+		set_clause = "SET book.bookmark_count = CASE WHEN book.bookmark_count IS NULL THEN 1 ELSE toInt(book.bookmark_count) + 1 END, user.bookmark_count = CASE WHEN user.bookmark_count IS NULL THEN 1 ELSE toInt(user.bookmark_count) + 1 END, label.bookmark_count = CASE WHEN label.bookmark_count IS NULL THEN 1 ELSE toInt(label.bookmark_count) + 1 END, labelled.bookmark_count = CASE WHEN labelled.bookmark_count IS NULL THEN 1 ELSE toInt(labelled.bookmark_count) + 1 END, user.total_count = CASE WHEN user.total_count IS NULL THEN "+Constants::BookmarkPoints.to_s+" ELSE toInt(user.total_count) + "+Constants::BookmarkPoints.to_s+" END"
 
 		clause = bookmark_clause + feednext_clause + bookfeed_next_clause + existing_ego_clause + ego_clause + set_clause
 		puts "BOOK BOOKMARKED".green
@@ -204,18 +204,6 @@ class Bookmark < Neo
 
 	def _match_user_and_book
 		"MATCH (user:User), (book:Book) WHERE ID(user) = " + @user_id.to_s + " AND ID(book) = " + @id.to_s + " "
-	end
-
-	def _feednext_clause(without_book=false)
-		find_old_feed = "MATCH (user)-[old:FeedNext]->(old_feed) "
-		create_new_feed = "CREATE UNIQUE (user)-[:FeedNext{user_id:"+user_id.to_s+"}]->(bookmark)-[:FeedNext{user_id:"+user_id.to_s+"}]->(old_feed) "
-		if without_book
-			delete_old_feed = "DELETE old WITH user, bookmark "
-		else
-			delete_old_feed = "DELETE old WITH user, book, bookmark "
-		end
-		clause = find_old_feed + create_new_feed + delete_old_feed
-		clause
 	end
 
 	def _bookfeed_clause

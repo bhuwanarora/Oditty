@@ -22,6 +22,10 @@ class User < Neo
 		match + Bookmark.match + return_init + ::Book.basic_info + ::Book.order_desc
 	end
 
+	def self.create_label key
+		" CREATE UNIQUE (user)-[labelled:Labelled]->(label:Label{key: \""+key+"\"}) "
+	end
+
 	def self.from_facebook params
 		begin
 			if params[:data].class == Array

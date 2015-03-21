@@ -61,14 +61,6 @@ class Neo
 		clause
 	end
 
-	def _bookfeed_clause user_id
-		find_old_book_feed = "MATCH (b)-[old:BookFeed]->(old_feed) "
-		create_new_book_feed = "CREATE UNIQUE (b)-[:BookFeed{user_id:"+user_id.to_s+"}]->(m)-[:BookFeed{user_id:"+user_id.to_s+"}]->(old_feed) "
-		delete_old_book_feed = "DELETE old WITH u, b, m "
-		clause = find_old_book_feed + create_new_book_feed + delete_old_book_feed
-		clause
-	end
-
 	def _existing_ego_clause(without_book=false)
 		find_friends = "OPTIONAL MATCH (u)<-[:FoFllow]-(f:User) "
 		find_me_in_friends_ego_chain = "OPTIONAL MATCH (x1)-[r1:Ego{user_id:ID(f)}]->(u)-[r2:Ego{user_id:ID(f)}]->(x2) "
