@@ -8,11 +8,11 @@ class Neo
 		" RETURN "
 	end
 
-	def skip_count skip_count
+	def skip skip_count
 		" SKIP " + skip_count.to_s
 	end
 
-	def limit_count limit_count
+	def limit limit_count
 		" LIMIT " + limit_count.to_s 
 	end
 
