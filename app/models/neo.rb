@@ -12,7 +12,7 @@ class Neo
 		" SKIP " + skip_count.to_s + " "
 	end
 
-	def return(*params)
+	def return_group(*params)
 		" RETURN " + params.join(", ")
 	end
 

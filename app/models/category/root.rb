@@ -1,9 +1,10 @@
 class Category::Root < Category
+
 	def self.basic_info
-		" ID(root_category) AS root_category_id, root_category.icon AS root_category_icon, root_category.name AS root_category_name, root_category.aws_key AS root_category_aws_key"
+		Category.basic_info "root_category"
 	end
 
-	def self.order_desc
-		" ORDER BY TOINT(likes.weight) DESC "
+	def self.get_books skip, length
+		Category.get_books "root_category", skip, length
 	end
 end

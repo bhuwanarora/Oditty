@@ -27,33 +27,33 @@ module Api
 
 			def get_books_from_favourite_author
 				user_id = session[:user_id]
-				books = User::Suggest::Book.new(user_id).for_favourite_author(user_id).execute
+				books = User::Suggest::Book.new(user_id).for_favourite_author.execute
 				render :json => books, :status => 200
 			end
 
 			def get_books_from_favourite_category
 				user_id = session[:user_id]
 				favourites = true
-				books = User::Suggest::Book.new(user_id).for_favourite_category(user_id, favourites).execute
+				books = User::Suggest::Book.new(user_id).for_favourite_category(favourites).execute
 				render :json => books, :status => 200
 			end
 
 			def get_books_from_favourite_era
 				user_id = session[:user_id]
-				books = User::Suggest::Book.new(user_id).for_most_bookmarked_era(user_id).execute
+				books = User::Suggest::Book.new(user_id).for_most_bookmarked_era.execute
 				render :json => books, :status => 200
 			end
 
 			def get_books_on_friends_shelves
 				user_id = session[:user_id]
-				books = User::Suggest::Book.new(user_id).on_friends_shelves(user_id).execute
+				books = User::Suggest::Book.new(user_id).on_friends_shelves.execute
 				render :json => books, :status => 200
 			end
 
 			def get_books_from_unexplored_subjects
 				user_id = session[:user_id]
 				favourites = false
-				books = User::Suggest::Book.new(user_id).for_favourite_category(user_id, favourites).execute
+				books = User::Suggest::Book.new(user_id).for_favourite_category(favourites).execute
 				render :json => books, :status => 200
 			end
 
