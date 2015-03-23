@@ -5,9 +5,8 @@
             <span>{{second_option.name}}</span>
         </h3>
     </div>
-    <div layout="row" layout-sm="column">
+    <div layout="row">
         <div flex="20" layout="column" 
-             flex-sm="100"
              class="column_height">
             <div layout-padding>Select</div>
             <md-button ng-repeat="option in share_options.ReadingStage" 
@@ -19,7 +18,6 @@
             </md-button>
         </div>
         <div flex="20" layout="column" 
-             flex-sm="100"
              ng-if="nested_options" class="column_height">
              <md-progress-circular class="md-accent md-hue-1" 
                     md-mode="indeterminate" 
@@ -34,23 +32,24 @@
                 {{option.name}}
             </md-button>
         </div>
-       <div flex="60" layout="column" 
-            flex-sm="100"
+        <div flex="60" layout="column"
             class="column_height">
             <md-content ng-if="level2_nested_options" class="white">
                 <md-progress-circular class="md-accent md-hue-1" 
                     md-mode="indeterminate" 
-                    ng-if="loading">
+                    ng-if="loading2">
                 </md-progress-circular>
-                <md-button ng-repeat="option in level2_nested_options"
-                        layout-padding
-                        ng-hide="loading"
-                        ng-click="post_status(option, $event)" 
-                        ng-class="{'active_option1': option == second_option}"
-                        class="md-button-clear">
-                    <span class="icon {{option.icon}}"></span>
-                    <span>{{option.name}}</span>
-                </md-button>
+                <div layout="column" layout-align="start start">
+                    <md-button ng-repeat="option in level2_nested_options"
+                            layout-padding
+                            ng-hide="loading2"
+                            ng-click="post_status(option, $event)" 
+                            ng-class="{'active_option1': option == second_option}"
+                            class="md-button-clear">
+                        <span class="icon {{option.icon}}"></span>
+                        <span>{{option.name}}</span>
+                    </md-button>
+                </div>
             </md-content>
             <md-content ng-if="add_books" layout="column" layout-padding class="white">
                 <md-input-container>

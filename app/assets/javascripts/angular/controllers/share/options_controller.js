@@ -9,8 +9,7 @@ homeApp.controller('optionsController', ["$scope", "$rootScope", "$timeout", 'Sh
         delete $scope.second_option;
         delete $scope.level2_nested_options;
         $scope.add_books = false;
-        
-        $scope.nested_options = [];
+    
         $scope.loading = true;
         angular.forEach(ShareOptions.ReadingStage, function(value){
             if(angular.equals(value, option)){
@@ -28,15 +27,17 @@ homeApp.controller('optionsController', ["$scope", "$rootScope", "$timeout", 'Sh
 
     $scope.show_level2_options = function(option, event){
         $scope.second_option = option;
-        $scope.loading = true;
+        $scope.loading2 = true;
         if(angular.isDefined($scope.second_option.search_book)){
-            $scope.add_books = true;
+                $scope.add_books = true;
             delete $scope.level2_nested_options;
         }
         else{
-            $scope.add_books = false;
-            $scope.loading = false;
-            $scope.level2_nested_options = $scope.second_option.value;
+            var timeout_event = $timeout(function(){
+                $scope.add_books = false;
+                $scope.loading2 = false;
+                $scope.level2_nested_options = $scope.second_option.value;
+            }, 1000);
         }
         event.stopPropagation();
     }
