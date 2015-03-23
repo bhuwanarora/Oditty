@@ -1,22 +1,20 @@
 <md-content>
     <div ng-include src="'/assets/angular/html/author/_header.html'"></div>
     <section layout="row" layout-wrap>
-        <div flex="25" hide-sm flex-md="10"></div>
-        <div flex="50" flex-sm="100" flex-md="80" layout="column"
+        <div flex="25" flex-md="20" hide-sm></div>
+        <div flex="50" flex-sm="100" flex-md="60" layout="column"
              ng-include src="'/assets/angular/html/author/_sub_header.html'">
         </div>
-        <div flex="25" hide-sm 
-             flex-md="10"></div>
+        <div flex="25" flex-md="20" hide-sm></div>
     </section>
     
     <section layout="row" layout-wrap>
-        <div flex="25" hide-sm flex-md="10" 
+        <div layout="column" flex="25" flex-md="20" hide-sm layout-align="start start"
              ng-include src="'/assets/angular/html/author/_left_panel.html'"></div>
-        <div flex="50" flex-sm="100" flex-md="80" layout="column"
+        <div flex="50" flex-sm="100" flex-md="60" layout="column" layout-align="start center"
              ng-include src="'/assets/angular/html/author/show.html'">
         </div>
         <div ng-include src="'/assets/angular/html/author/_right_panel.html'" 
-             flex="25" hide-sm 
-             flex-md="10"></div>
+             flex="25" flex-md="20" hide-sm></div>
     </section>
 </md-content>
