@@ -1,0 +1,5 @@
+class Feed < Neo
+
+	
+
+end

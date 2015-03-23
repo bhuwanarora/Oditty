@@ -7,6 +7,56 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def get_small_reads
+				user_id = session[:user_id]
+				books = Book.get_small_reads
+				render :json => books, :status => 200
+			end
+
+			def handle_influential_books
+				book_id = params[:id]
+				status = params[:status]
+				user_id = session[:user_id]
+				if status
+					Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).add
+				else
+					Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).remove
+				end
+				render :json => "Success", :status => 200
+			end
+
+			def get_books_from_favourite_author
+				user_id = session[:user_id]
+				books = User::Suggest::Book.new(user_id).for_favourite_author(user_id).execute
+				render :json => books, :status => 200
+			end
+
+			def get_books_from_favourite_category
+				user_id = session[:user_id]
+				favourites = true
+				books = User::Suggest::Book.new(user_id).for_favourite_category(user_id, favourites).execute
+				render :json => books, :status => 200
+			end
+
+			def get_books_from_favourite_era
+				user_id = session[:user_id]
+				books = User::Suggest::Book.new(user_id).for_most_bookmarked_era(user_id).execute
+				render :json => books, :status => 200
+			end
+
+			def get_books_on_friends_shelves
+				user_id = session[:user_id]
+				books = User::Suggest::Book.new(user_id).on_friends_shelves(user_id).execute
+				render :json => books, :status => 200
+			end
+
+			def get_books_from_unexplored_subjects
+				user_id = session[:user_id]
+				favourites = false
+				books = User::Suggest::Book.new(user_id).for_favourite_category(user_id, favourites).execute
+				render :json => books, :status => 200
+			end
+
 			def get_user_details
 				if params[:id]
 					info = UserApi.get_details(params[:id], session)
@@ -259,12 +309,28 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def endorse_book
+				user_id = session[:user_id]
+				book_id = params[:id]
+				status = params[:status]
+				if status == "true"
+					UsersGraphHelper.endorse_book(book_id, user_id)
+				else
+					UsersGraphHelper.remove_endorse(book_id, user_id)
+				end
+				render :json => {:message => "Success"}, :status => 200
+			end
+
 			def get_followed_by
 				info = UserApi.get_followed_by session[:user_id]
 				render :json => info, :status => 200
 			end
 
-			
+			def get_sorted_genres
+				user_id = session[:user_id]
+				genres = CategoriesHelper.get_sorted_genres user_id
+				render :json => genres, :status => 200
+			end
 		end
 	end
 end

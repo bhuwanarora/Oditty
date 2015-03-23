@@ -1,47 +1,34 @@
-include UsersGraphHelper
 module Api
 	module V0
 		class UserApi
 
 			def self.get_details(user_id, session)
+				info = {}
 				if user_id.present?
-					@neo = Neography::Rest.new
-					clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" RETURN u"
-					puts clause.blue.on_red
-					begin
-						info = @neo.execute_query(clause)["data"][0][0]["data"]
-						session[:last_book] = info["last_book"]
-					rescue Exception => e
-						info = {}
-					end
-				else
-					info = {}
+					info = User.new(user_id).get_basic_info.execute[0]
+					session[:last_book] = info["last_book"]
 				end
 				info
 			end
 
 			def self.recover_password email
 				@neo = Neography::Rest.new
-				clause = "MATCH (user:User{email:\""+email+"\"}) RETURN user, ID(user) as id"
-				puts clause.blue.on_red
+				clause = "MATCH (user:User{email:\""+email+"\"}) RETURN " + User.basic_info
 				user_id = @neo.execute_query clause
-				user_exists = user_id["data"].present?
+				user_exists = user_id.present?
 				if user_exists
 					verification_token = SecureRandom.hex
 					link = Rails.application.config.home+'recover_password?p='+verification_token.to_s+"&e="+email
 					invitation = {:email => email, :template => Constants::EmailTemplate::PasswordReset, :link => link}
 					SubscriptionMailer.recover_password(invitation).deliver
 					clause =  "MATCH (user:User{email:\""+email+"\"}) SET user.password_token = \""+verification_token+"\""
-					puts clause.blue.on_red
 					@neo.execute_query clause
 				end
 				user_exists
 			end
 
 			def self.get_profile_info id
-				@neo = Neography::Rest.new
-				clause = "MATCH (u:User) WHERE ID(u)="+id.to_s+" OPTIONAL MATCH (u)-[:Likes]->(c) WITH u, c OPTIONAL MATCH (u)-[:Labelled]->(l:Label{indexed_label_name:\""+Constants::InfluentialBooks+"\"})-[:BookmarkedOn]->(z:BookmarkNode)-[:BookmarkAction]->(b:Book) WHERE z.user_id = "+id.to_s+" RETURN COLLECT(DISTINCT(c.name)), COLLECT(DISTINCT(ID(c))), COLLECT(DISTINCT(c.icon)), COLLECT(DISTINCT(b.isbn)), COLLECT(DISTINCT(ID(b))), COLLECT(DISTINCT(b.title)), COLLECT(DISTINCT(b.author_name))"
-				puts clause.blue.on_red
+				User.new(id).get_detailed_info.execute
 				info = @neo.execute_query(clause)["data"][0]
 			end
 
@@ -106,38 +93,35 @@ module Api
 
 			def self.save_info(user_id, params)
 				if user_id.present?
-					@neo = Neography::Rest.new
 					if params[:email]
-						user_clause = "MATCH (u:User) WHERE u.email=\""+params[:email]+"\" RETURN ID(u)"
-						id = @neo.execute_query(user_clause)["data"]
+						user_clause = User.get_by_email params[:email]
+						user_clause.execute["id"]
 						if id.present?
 							if user_id != id
 								duplicate_email = true
 							end
 						else
-							clause = " SET u.email = \""+params[:email]+"\""
+							clause = User.set_email params[:email]
 						end
 					end
-					clause = " SET u.thumb = \""+params[:data][:url]+"\"" if params[:data] && params[:data][:url]
-					clause = " SET u.name = \""+params[:name]+"\", u.indexed_user_name=\""+params[:name].downcase.gsub(" ","")+"\", u.search_index=\""+params[:name].downcase.gsub(" ","")+"\"" 	if params[:name]
-					clause = " SET u.first_name=\""+params[:first_name]+"\"" if params[:first_name]
-					clause = " SET u.last_name=\""+params[:last_name]+"\"" if params[:last_name]
-					clause = " SET u.latitude="+params[:latitude].to_s+", u.longitude="+params[:longitude].to_s if params[:latitude]
-					clause = " SET u.init_book_read_count=\""+params[:init_book_read_count]+"\"" if params[:init_book_read_count]
-					clause = " SET u.gender=\""+params[:gender]+"\"" if params[:gender]
-					clause = " SET u.selectedYear="+params[:selectedYear].to_s+", u.selectedMonth=\""+params[:selectedMonth].to_s+"\", u.selectedDay="+params[:selectedDay].to_s if params[:selectedDay]
-					clause = " SET u.profile=\""+params[:profile]+"\"" if params[:profile]
-					clause = " SET u.profile_picture="+params[:profile_picture] if params[:profile_picture]
-					clause = " SET u.ask_info = "+params[:ask_info].to_s if params[:ask_info] == false
-					clause = " SET u.thumb_blob=\""+params[:blob]+"\"" if params[:blob]
-					clause = " SET u.about=\""+params[:about]+"\"" if params[:about]
+					clause = User::Info.set_thumb params[:data][:url] 								if params[:data] && params[:data][:url]
+					clause = User::Info.set_name params[:name] 										if params[:name]
+					clause = User::Info.set_first_name params[:first_name]		 					if params[:first_name]
+					clause = User::Info.set_last_name params[:last_name] 							if params[:last_name]
+					clause = User::Info.set_location(params[:latitude], params[:longitude])  		if params[:latitude]
+					clause = User::Info.set_init_book_read_count params[:init_book_read_count] 		if params[:init_book_read_count]
+					clause = User::Info.set_gender params[:gender]									if params[:gender]
+					clause = User::Info.set_date_of_birth(params[:selectedYear], params[:selectedMonth], params[:selectedDay]) if params[:selectedDay]
+					clause = User::Info.set_profile params[:profile] 								if params[:profile]
+					clause = User::Info.set_profile_picture params[:profile_picture] 				if params[:profile_picture]
+					clause = User::Info.set_about params[:about] 									if params[:about]
 
-					clause = " WITH u MATCH (g:Category) WHERE ID(g)="+params[:genre].to_s+" CREATE UNIQUE (u)-[:Likes]->(g)" if params[:genre] && params[:status]
-					clause = " WITH u MATCH (u)-[r:Likes]->(g:Category) WHERE ID(g)="+params[:genre].to_s+" DELETE r" if params[:genre] && !params[:status]
+					clause = User::Info.add_category params[:category_id]					 				if params[:category_id] && params[:status]
+					clause = User::Info.remove_category params[:category_id]						 		if params[:category_id] && !params[:status]
+
 					if clause
-						clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+clause
-						puts clause.blue.on_red
-						@neo.execute_query clause
+						clause = User.new(user_id).match + clause
+						clause.execute
 					else
 						duplicate_email
 					end
@@ -152,7 +136,6 @@ module Api
 				if params[:email]
 					puts "email exists".green
 					clause = "MATCH (user:User{email:\""+params[:email]+"\"}) RETURN ID(user)"
-					puts clause.blue.on_red
 					user_id = @neo.execute_query clause
 					user_exists = user_id["data"].present?
 					if user_exists
@@ -163,7 +146,6 @@ module Api
 				else
 					puts "email does not exits".green
 					clause = "MATCH (user:User{fb_id:"+params[:id]+"}) RETURN ID(user)"
-					puts clause.blue.on_red
 					user_id = @neo.execute_query clause
 					user_exists = user_id["data"].present?
 					if user_exists
@@ -172,7 +154,6 @@ module Api
 						clause = self._create_user_without_email params
 					end
 				end
-				puts clause.blue.on_red
 				user_id = @neo.execute_query(clause)["data"][0][0]
 				puts "fb execute_query done...".green
 				puts "FB LOGIN USER_ID #{user_id.to_s.red}"
@@ -188,7 +169,6 @@ module Api
 				email = params[:email]
 				@neo = Neography::Rest.new
 				clause = "MATCH (user:User{email:\""+email+"\"}) RETURN user, ID(user) as id"
-				puts clause.blue.on_red
 				user = @neo.execute_query(clause)["data"]
 				if signin
 					puts "signin".red
@@ -228,7 +208,6 @@ module Api
 							message = Constants::AnotherActivationRequest
 						end
 					else
-						#FIXME: create new user in the graph
 						UsersGraphHelper.create_user(email, params[:password], verification_token)
 						SubscriptionMailer.verify_email(invitation).deliver
 						message = Constants::ActivateAccount
@@ -246,7 +225,6 @@ module Api
 					limit_clause = " LIMIT "+count.to_s
 					skip_clause = " SKIP "+skip.to_s
 					clause = "MATCH (u:User)-[:Follow]->(friend:User) WHERE ID(u)="+user_id.to_s+" OPTIONAL MATCH (friend)-[:Likes]->(category:Category) RETURN ID(friend), friend.name, friend.thumb, friend.init_book_read_count, friend.total_count, friend.book_read_count, friend.bookmark_count, COLLECT(category.icon)"+skip_clause+limit_clause
-					puts clause.blue.on_red
 					friends = @neo.execute_query(clause)["data"]
 				end
 				friends
@@ -255,21 +233,12 @@ module Api
 			def self.get_followed_by user_id
 				@neo = Neography::Rest.new
 				clause = "MATCH (u:User)<-[:Follow]-(friend:User) WHERE ID(u)="+user_id.to_s+" RETURN ID(friend), friend.name, friend.thumb"
-				puts clause.blue.on_red
 				friends = @neo.execute_query(clause)["data"]
 				friends
 			end
 
 			def self.get_info_card_data
-				reading_count_list = [
-					{"name"=> "0-20"},
-					{"name"=> "20-50"},
-					{"name"=> "50-100"},
-					{"name"=> "100-250"},
-					{"name"=> "250+"}
-				]
-
-				info = {"reading_count_list" => reading_count_list}
+				info = {"reading_count_list" => BookRange.get_values}
 			end
 
 			def self.handle_google_user params
@@ -402,6 +371,7 @@ module Api
 				new_object_string = " CREATE UNIQUE ("+new_label.to_s+")-[:HasProperty]->(:"+object_key.to_s.singularize.camelcase+"{"+new_object_string+"})"
 				new_object_string
 			end
+
 		end
 	end
 end

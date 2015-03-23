@@ -1,9 +1,15 @@
-class Category < ActiveRecord::Base
-	has_ancestry
-	uniquify :uuid, :salt, :length => 12, :chars => 0..9
-	attr_accessible :name
-
-	def name=(value)
-		write_attribute(:name, value.upcase)
+class Category < Neo
+	
+	def self.basic_info
+		" ID(category) AS category_id, category.icon AS category_icon, category.name AS category_name, category.category_aws_key AS category_aws_key"
 	end
+
+	def self.order_desc
+		" ORDER BY likes.weight DESC"
+	end
+
+	def self.likes_weight
+		", likes.weight AS likes_weight "
+	end
+
 end

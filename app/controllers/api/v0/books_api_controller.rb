@@ -14,6 +14,13 @@ module Api
 				render :json => info, :status => status
 			end
 
+			def books_on_signup
+				user_id = session[:user_id]
+				skip_count = JSON.parse(params["q"])["skip_count"]
+				books = User::Predict::Book.new(user_id, skip_count).likely_books_read
+				render :json => books, :status => 200
+			end
+
 			def get_popular_books
 				# params = JSON.parse(params["q"])
 				books = BookApi.get_popular_books(params, session[:user_id])
@@ -67,6 +74,12 @@ module Api
 			def get_feed
 				feed = BookApi.get_feed params[:id]
 				render :json => feed, :status => 200
+			end
+
+			def get_root_categories
+				book_id = params[:book_id]
+				data = CategoriesHelper.get_categories book_id
+				render :json => data, :status => 200
 			end
 
 		end

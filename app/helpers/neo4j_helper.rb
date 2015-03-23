@@ -812,7 +812,45 @@ module Neo4jHelper
 	def self.add_labels_to_existing_user
 		@neo ||= self.init
 		clause = "MATCH (user:User), (label:Label{basic:true}) CREATE UNIQUE (user)-[:BookmarkAction{user_id:ID(user)}]->(label)"
+		@neo.execute_query clause
 	end
+
+	def self.add_new_labels
+		@neo ||= self.init
+		# book = 0
+		# articles = 1
+		# listopia = 2
+		# community = 3
+		delete_labels = "MATCH (u:User), (l:Label), (u)-[r1:BookmarkAction]->(l) DELETE r1, l"
+		@neo.execute_query delete_labels
+
+		labels = [{:name => "Read", :key => "Read", :type => [0, 1, 2], :public => true},
+				  {:name => "Intending to read", :key => "IntendingToRead", :type => [0, 1, 2], :public => true},
+				  {:name => "Didn't feel like reading it after a point", :key => "DidntFeelLikeReadingItAfterAPoint", :type => [0, 1, 2], :public => true},
+				  {:name => "Pretend I have read", :key => "PretendIHaveRead", :type => [0, 1, 2], :public => true},
+				  {:name => "Saving for when I have more time", :key => "SavingForWhenIHaveMoreTime", :type => [0, 1, 2], :public => true},
+				  {:name => "Will never read", :key => "WillNeverRead", :type => [0, 1, 2], :public => true},
+				  {:name => "Purely for show", :key => "PurelyForShow", :type => [0, 1, 2], :public => true},
+				  {:name => "Read but can't remember a single thing about it", :key => "ReadButCantRememberASingleThingAboutIt", :type => [0, 1, 2], :public => true},
+				  {:name => "Wish I hadn't read", :key => "WishIHadntRead", :type => [0, 1, 2], :public => true},
+				  {:name => "Currently reading", :key => "CurrentlyReading", :type => [0, 1, 2], :public => true},
+				  {:name => "Have left a mark on me", :key => "HaveLeftAMarkOnMe", :type => [0, 1, 2], :public => true},
+				  {:name => "Not worth reading", :key => "NotWorthReading", :type => [0, 1, 2], :public => true},
+				  {:name => "From facebook", :key => "FromFacebook", :type => [0], :public => false},
+				  {:name => "Plan to buy", :key => "PlanToBuy", :type => [0], :public => true},
+				  {:name => "I own this", :key => "IOwnthis", :type => [0], :public => true},
+				  {:name => "Visited", :key => "Visited", :type => [0, 1, 2], :public => false}]
+		for label in labels
+			clause = " CREATE (label: Label{basic:true, name:\""+label[:name]+"\", key:\""+label[:key]+"\", public:"+label[:public].to_s+"}) "
+			clause = clause + " SET label:BookLabel " 		if label.include? 0
+			clause = clause + " SET label:ArticleLabel " 	if label.include? 1
+			clause = clause + " SET label:ListLabel " 		if label.include? 2
+			@neo.execute_query clause
+		end
+
+		self.add_labels_to_existing_user
+	end
+
 
 	def self.remove_colon_from_indexed_fields
 		@neo ||= self.init
@@ -885,22 +923,22 @@ module Neo4jHelper
 
 	def self.sorted_readtime_books
 		@neo ||= self.init
-		clause = "MATCH ()-[r:NextTinyRead]->() DELETE r"
+		clause = "MATCH ()-[r:NextLongRead]->() DELETE r"
 		puts "deleting...".green
 		@neo.execute_query clause
 
-		clause = "MATCH (book:Book) WHERE toInt(book.page_count) <> 0 AND toInt(book.page_count) <= 50 WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight ORDER BY total_weight DESC, rating_weight DESC WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:NextTinyRead]->(p2))))"
-		puts "adding tiny reads in form of sorted linked lists...".green
-		@neo.execute_query clause
+		# clause = "MATCH (book:Book) WHERE toInt(book.page_count) <> 0 AND toInt(book.page_count) <= 50 WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight ORDER BY total_weight DESC, rating_weight DESC WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:NextTinyRead]->(p2))))"
+		# puts "adding tiny reads in form of sorted linked lists...".green
+		# @neo.execute_query clause
 
-		clause = "MATCH (book:Book) WHERE book.page_count <> 0 AND toInt(book.page_count) > 50 AND toInt(book.page_count) < 100 WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight ORDER BY total_weight DESC, rating_weight DESC WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:NextSmallRead]->(p2))))"
-		puts "adding Small reads in form of sorted linked lists...".green
-		@neo.execute_query clause
+		# clause = "MATCH (book:Book) WHERE book.page_count <> 0 AND toInt(book.page_count) > 50 AND toInt(book.page_count) < 100 WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight ORDER BY total_weight DESC, rating_weight DESC WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:NextSmallRead]->(p2))))"
+		# puts "adding Small reads in form of sorted linked lists...".green
+		# @neo.execute_query clause
 
 		
-		clause = "MATCH (book:Book) WHERE book.page_count <> 0 AND toInt(book.page_count) > 100 AND toInt(book.page_count) < 250 WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight ORDER BY total_weight DESC, rating_weight DESC WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:NextNormalRead]->(p2))))"
-		puts "adding normal reads in form of sorted linked lists...".green
-		@neo.execute_query clause
+		# clause = "MATCH (book:Book) WHERE book.page_count <> 0 AND toInt(book.page_count) > 100 AND toInt(book.page_count) < 250 WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight ORDER BY total_weight DESC, rating_weight DESC WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:NextNormalRead]->(p2))))"
+		# puts "adding normal reads in form of sorted linked lists...".green
+		# @neo.execute_query clause
 
 		clause = "MATCH (book:Book) WHERE book.page_count <> 0 AND toInt(book.page_count) > 250 WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight ORDER BY total_weight DESC, rating_weight DESC WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:NextLongRead]->(p2))))"
 		puts "adding long reads in form of sorted linked lists...".green
@@ -920,16 +958,16 @@ module Neo4jHelper
 	def self.get_best_reads_for_time
 		@neo ||= self.init
 		clause = "MATCH (book)-[r:NextTinyRead]->(:Book) WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight ORDER BY total_weight DESC RETURN ID(book) LIMIT 1"
-		puts @neo.execute_query(clause)["data"][0][0].to_s.green
+		puts @neo.execute_query(clause).to_s.green
 
 		clause = "MATCH (book)-[r:NextSmallRead]->(:Book) WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight ORDER BY total_weight DESC RETURN ID(book) LIMIT 1"
-		puts @neo.execute_query(clause)["data"][0][0].to_s.green
+		puts @neo.execute_query(clause).to_s.green
 
 		clause = "MATCH (book)-[r:NextNormalRead]->(:Book) WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight ORDER BY total_weight DESC RETURN ID(book) LIMIT 1"
-		puts @neo.execute_query(clause)["data"][0][0].to_s.green
+		puts @neo.execute_query(clause).to_s.green
 
 		clause = "MATCH (book)-[r:NextLongRead]->(:Book) WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight ORDER BY total_weight DESC RETURN ID(book) LIMIT 1"
-		puts @neo.execute_query(clause)["data"][0][0].to_s.green
+		puts @neo.execute_query(clause).to_s.green
 	end
 
 	def self.remove_tiny_reads_with_zero_count
@@ -1096,19 +1134,37 @@ module Neo4jHelper
 
 	def self.set_genre_linked_list
 		neo = self.init
-		starting_node = Constants::Id.to_s
-		is_done = false
-		node_id = starting_node
-		while !is_sorted_list_created
-			match_clause = "MATCH popularity_list = (book:Book)-[:Next_book*0.." + Constants::QueryStep.to_s + "]->(next_book) WHERE ID = " + node_id.to_s 
-			unwind_book_collection_clause = " WITH EXTRACT(n in nodes(popularity_list)|n) AS books UNWIND books as book "
-			match_book_to_root_clause = "OPTIONAL MATCH (book)-[:FromCategory]->(category)-[:HasRoot*0..1]->(root_category:Category{is_root:true}) "
-			get_last_linked_node_clause = "WITH book, root_category, root_category.uuid AS uuid OPTIONAL MATCH (root_category)-[genre_popularity_list:NextInCategory*]->(popular_book:Book) WHERE NOT(popular_book-[:NextInGenre{from_category:uuid}]-()) "
-			conditionally_make_relation_clause = "FOREACH(to_be_ignored IN CASE WHEN genre_popularity_list IS NULL THEN [1] ELSE [] END | MERGE (root_category)-[new_popular:NextInGenre]-(book) ON CREATE SET new_popular.from_category = root_category.uuid) FOREACH(to_be_ignored IN CASE WHEN genre_popularity_list IS NOT NULL THEN [1] ELSE [] END | MERGE (popular_book)-[next_popular:NextInGenre]-(book) ON CREATE SET next_popular.from_category = root_category.uuid) RETURN ID(book) as book_id"
+		label = " Category{is_root:true}"
+		property = " NextInCategory "
+		is_sorted = false
+		most_popular_book_id = Constants::BestBook.to_i
+		starting_book_id = Constants::BestBook.to_i
+		self.set_circular_linked_list label, property
+		while !is_sorted
+			match_clause = "OPTIONAL MATCH popularity_list = (book:Book)-[:Next_book*" + Constants::QueryStepDuringSorting.to_s + "]->(next_book) WHERE ID(book) = " + starting_book_id.to_s 
+			unwind_book_collection_clause = " WITH next_book AS least_popular_book_in_path, popularity_list ,EXTRACT(n IN nodes(popularity_list)|n) AS books UNWIND books as book  WITH least_popular_book_in_path, popularity_list, book WITH book, least_popular_book_in_path  "
+			match_book_to_root_clause = " OPTIONAL MATCH (book)-[:FromCategory]->(category:Category)-[:HasRoot*0..1]->(root_category:Category{is_root:true}) "
+			get_last_linked_node_clause = "  WITH book, root_category, root_category.uuid AS uuid , least_popular_book_in_path OPTIONAL MATCH (root_category)<-[old:NextInCategory]-(last_node)   "
+			conditionally_make_relation_clause = " FOREACH (ignore IN CASE WHEN last_node IS  NOT NULL AND old IS NOT null  THEN [old] ELSE [] END | MERGE (last_node)-[:NextInCategory{from_category:uuid}]->(book)-[:NextInCategory{from_category:uuid}]->(root_category)  DELETE old ) RETURN ID(book) AS most_popular_book_id, ID(least_popular_book_in_path) AS least_popular_book_id  ORDER BY book.total_weight LIMIT 1"
 			clause = match_clause + unwind_book_collection_clause + match_book_to_root_clause + get_last_linked_node_clause + conditionally_make_relation_clause 
+			data = neo.execute_query clause
+			most_popular_book_id = data[0]["most_popular_book_id"].to_i
+			starting_book_id = data[0]["least_popular_book_id"].to_i
+			if most_popular_book_id  == Constants::BestBook then is_sorted = true end	
+		end
+	end
+
+
+
+	def self.set_circular_linked_list label, property
+		neo = self.init
+		get_ids_clause = " MATCH (node:" + label.to_s + ") RETURN DISTINCT ID(node) AS id "
+		ids = neo.execute_query get_ids_clause
+		ids.each do |id|
+			match_clause = " MATCH (node:" + label.to_s + ") WHERE ID(node) = " + id["id"].to_s + "  WITH node "
+			set_linked_list = " MERGE (node)-[: " + property + "]->(node)"
+			clause = match_clause + set_linked_list
 			neo.execute_query clause
-			books_id = neo.execute_query["book_id"].flatten 
-			if book_id.include? starting_node then is_sorted_list_created = true end	
 		end
 	end
 end

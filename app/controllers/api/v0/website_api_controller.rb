@@ -11,9 +11,8 @@ module Api
 			end
 
 			def genres
-                @neo ||= neo_init
-				filter = params[:q]
-                genres = WebsiteApi.get_root_categories(session[:user_id])
+				user_id = session[:user_id]
+                genres = User::Predict::Category.new(user_id).get_favourites.execute
                 
 				render :json => genres, :status => 200
 			end
@@ -34,7 +33,7 @@ module Api
 					@neo = Neography::Rest.new
 					clause = "MATCH (b:Book) WHERE b.url=~'.*"+params[:id].to_s+".*' RETURN ID(b), b.title, b.author_name, b.isbn"
 					puts clause.blue.on_red
-					info = @neo.execute_query(clause)["data"]
+					info = @neo.execute_query(clause)
 					render :json => info, :status => 200
 				rescue Exception => e
 					render :json => {:message => e.to_s}, :status => 500
@@ -54,7 +53,7 @@ module Api
 				skip_count = params[:skip].present? ? params[:skip].to_i+1 : 0
     			clause = "MATCH (t:Trending)-[:RelatedBooks]->(b:Book) WHERE t.status = 1 RETURN t.name, ID(t), t.content, t.url, t.title, t.thumb, t.thumbnail_url, t.publisher_thumb, t.searched_words, t.timestamp, COLLECT (b.isbn) ORDER BY t.timestamp DESC SKIP "+skip_count.to_s+" LIMIT 8"
     			puts clause.blue.on_red
-    			trends = neo.execute_query(clause)["data"]
+    			trends = neo.execute_query(clause)
 				render :json => trends, :status => 200
 			end
 
@@ -75,17 +74,15 @@ module Api
 
             def times
                 time_groups = WebsiteApi.get_time_groups
-                results = {:times => time_groups.reverse!}
-                render :json => results, :status => 200
+                render :json => time_groups.reverse!, :status => 200
             end
 
             def read_times
                 @neo ||= neo_init
-                clause = "MATCH (r:ReadTime) RETURN r"
+                clause = "MATCH (r:ReadTime) RETURN r.name as name, r.page_count_range as page_count_range, ID(r) as id"
                 puts clause.blue.on_red
-                read_times = @neo.execute_query(clause)["data"]
-                results = {:read_times => read_times}
-                render :json => results, :status => 200
+                read_times = @neo.execute_query(clause)
+                render :json => read_times, :status => 200
             end
 
 			def notifications

@@ -14,7 +14,9 @@ ReadersDoor::Application.routes.draw do
       match "moments"                                => 'books_api#moments',                            :via => [:put, :get, :post]
       match "affiliate_links"                        => 'books_api#affiliate_links',                    :via => [:put, :get, :post]
       match "popular_books"                          => 'books_api#get_popular_books',                  :via => [:put, :get, :post]
+      match "books_on_signup"                        => 'books_api#books_on_signup',                    :via => [:put, :get, :post]
       match "add_thumbnail"                          => 'books_api#add_thumbnail',                      :via => [:put, :get, :post]
+      match "get_root_categories"                    => 'books_api#get_root_categories',                 :via => [:put, :get, :post]                                              
 
       match "get_similar_authors"                    => 'authors_api#get_similar_authors',              :via => [:put, :get, :post]
       match "get_author_details"                     => 'authors_api#get_author_details',               :via => [:put, :get, :post]
@@ -70,7 +72,15 @@ ReadersDoor::Application.routes.draw do
       match 'post_review'                             => 'users_api#post_review',                       :via => [:put, :get, :post]
       match 'edit_review'                             => 'users_api#edit_review',                       :via => [:put, :get, :post]
       match 'follow'                                  => 'users_api#follow',                            :via => [:put, :get, :post]
-      
+      match "endorse_book"                            => 'users_api#endorse_book',                      :via => [:put, :get, :post]
+      match "tiny_reads"                              => 'users_api#get_tiny_reads',                    :via => [:put, :get, :post]
+      match "books_from_likeable_category"            => 'users_api#get_books_from_likeable_category',  :via => [:put, :get, :post]
+      match "books_from_most_read_author"             => 'users_api#get_books_from_most_read_author',   :via => [:put, :get, :post]
+      match "books_from_most_read_era"                => 'users_api#get_books_from_most_read_era',      :via => [:put, :get, :post]
+      match "books_on_your_friends_shelves"           => 'users_api#books_on_your_friends_shelves',     :via => [:put, :get, :post]
+      match "get_sorted_genres"                       => 'users_api#get_sorted_genres',                 :via => [:put, :get, :post]
+      match "influential_books"                       => 'users_api#handle_influential_books',                 :via => [:put, :get, :post]
+
       match 'user_info'                               => 'users_api#user_info',                         :via => [:put, :get, :post]
       match 'user'                                    => 'users_api#user',                              :via => [:put, :get, :post]
       match 'friends'                                 => 'users_api#get_most_connected_friends',        :via => [:put, :get, :post]
@@ -81,10 +91,14 @@ ReadersDoor::Application.routes.draw do
       match 'books_bookmarked'                        => 'users_api#books_bookmarked',                  :via => [:put, :get, :post]
       match 'fb'                                      => 'users_api#fb',                                :via => [:put, :get, :post]
       match 'google'                                  => 'users_api#google',                            :via => [:put, :get, :post]
+      match 'small_reads'                             => 'users_api#get_small_reads',                   :via => [:put, :get, :post]
+      match 'books_from_favourite_author'             => 'users_api#get_books_from_favourite_author',   :via => [:put, :get, :post]
+      match 'books_from_favourite_category'           => 'users_api#get_books_from_favourite_category', :via => [:put, :get, :post]
+      match 'books_from_favourite_era'                => 'users_api#get_books_from_favourite_era',      :via => [:put, :get, :post]
+      match 'books_on_friends_shelves'                => 'users_api#get_books_on_friends_shelves',      :via => [:put, :get, :post]
+      match 'books_from_unexplored_subjects'          => 'users_api#get_books_from_unexplored_subjects',:via => [:put, :get, :post]
 
       match 'author_details'                          => 'authors_api#details',                         :via => [:put, :get, :post]
-
-
       match 'feed'                                    => 'feeds_api#get_feed',                           :via => [:put, :get, :post]
     end
   end

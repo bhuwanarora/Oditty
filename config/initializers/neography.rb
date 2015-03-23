@@ -18,13 +18,18 @@ Neography.configure do |config|
 end
 
 module Neography
-    class Rest
+    class Rest 
         module Cypher
+            alias_method :old_execute_query, :execute_query            
             def execute_query(query, parameters = {}, cypher_options = nil)
-
-                neo_response = super
-                neo_response["data"].length do |record|
-                    response = Hash[neo_response["columns"].zip(record)]
+                response = []
+                puts query.blue.on_red
+                neo_response = old_execute_query(query, parameters, cypher_options)
+                if Rails.env.development?
+                  # puts neo_response.to_s.green.on_red
+                end
+                neo_response["data"].each do |record|
+                    response << Hash[neo_response["columns"].zip(record)]
                 end
                 response
             end

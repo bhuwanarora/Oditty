@@ -1,24 +1,7 @@
 homeApp.controller('listBottomSheetController', ['$scope', '$mdBottomSheet', '$mdToast', function($scope, $mdBottomSheet, $mdToast){
-    $scope.items = [
-        { name: 'Plan to Read', icon: 'share' },
-        { name: 'Plan to Buy', icon: 'upload' },
-        { name: 'Plan to re-read', icon: 'copy' }
-    ];
-
-    $scope.personal_shelves = [
-        { name: 'Travellers Suggestions', icon: 'print'}
-    ];
-
     $scope.listItemClick = function($index) {
         var clickedItem = $scope.items[$index];
         $mdBottomSheet.hide(clickedItem);
-    };
-
-    $scope.toast_position = {
-        bottom: false,
-        top: true,
-        left: false,
-        right: true
     };
 
     $scope.getToastPosition = function() {
@@ -45,4 +28,26 @@ homeApp.controller('listBottomSheetController', ['$scope', '$mdBottomSheet', '$m
             position: $scope.getToastPosition()
         });    
     }
+
+    var _init = function(){
+        
+        $scope.shelves = [
+            { name: 'Plan to Read', icon: 'share' },
+            { name: 'Plan to Buy', icon: 'upload' },
+            { name: 'Plan to re-read', icon: 'copy' }
+        ];
+
+        $scope.personal_shelves = [
+            { name: 'Travellers Suggestions', icon: 'print'}
+        ];
+
+        $scope.toast_position = {
+            bottom: false,
+            top: true,
+            left: false,
+            right: true
+        };
+    }
+
+    _init();
 }]);

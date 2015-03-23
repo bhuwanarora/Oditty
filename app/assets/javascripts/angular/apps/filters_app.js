@@ -24,6 +24,29 @@ angular.module('filtersApp', [])
       return input;
     }
   })
+  .filter('category_group', function(){
+    return function(books, category){
+        output = []
+        var _category_has_book = function(book){
+            var has_book = false;
+            if(book.categories.length > 0){
+                angular.forEach(book.categories, function(base_category){
+                    if(base_category.name == category.name){
+                        has_book = true;
+                    }
+                });
+            }
+            return has_book;
+        }
+
+        angular.forEach(books, function(book){
+            if(_category_has_book(book)){
+                this.push(book);
+            }
+        }, output);
+        return output;
+    }
+  })
   .filter('trending_name', function(){
     return function(input){
       if(angular.isDefined(input)){

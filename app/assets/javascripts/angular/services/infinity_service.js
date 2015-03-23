@@ -49,4 +49,28 @@ homeApp.service('infinityService', ["$http", "$q", "$rootScope", "WebsiteUIConst
         return _deferred_request('/api/v0/recommendations?count=10&id='+$rootScope.user.id+'&q='+filters);
     }
 
+    this.get_small_reads = function(){
+        return _deferred_request('/api/v0/small_reads');
+    }
+
+    this.get_books_from_favourite_author = function(){
+        return _deferred_request('/api/v0/books_from_favourite_author');
+    }
+
+    this.get_books_from_favourite_category = function(){
+        return _deferred_request('/api/v0/books_from_favourite_category');
+    }
+
+    this.get_books_from_favourite_era = function(){
+        return _deferred_request('/api/v0/books_from_favourite_era');
+    }
+
+    this.get_books_on_friends_shelves = function(){
+        return _deferred_request('/api/v0/books_on_friends_shelves');
+    }
+
+    this.get_books_from_unexplored_subjects = function(){
+        return _deferred_request('/api/v0/books_from_unexplored_subjects');
+    }
+
 }]);

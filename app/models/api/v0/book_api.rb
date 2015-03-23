@@ -24,7 +24,6 @@ module Api
 			def self.get_book(id)
 				@neo = Neography::Rest.new
 				clause = "MATCH (book:Book) WHERE ID(book)="+id.to_s+" RETURN book"
-				puts clause.blue.on_red
 				book = @neo.execute_query(clause)["data"]
 				book
 			end
@@ -115,14 +114,29 @@ module Api
 				params = JSON.parse params["q"]
 				if params.nil? || params["skip_count"].nil?
 					skip_count = 0
+					clause = "MATCH (book:Book) WHERE ID(book)="+Constants::BestBook.to_s
 				else
 					skip_count = params["skip_count"]
+					clause = "MATCH (b:Book) WHERE ID(b)="+Constants::BestBook.to_s+" MATCH p=(b)-[:Next_book*" + (skip_count.to_i).to_s + ".." + (19+skip_count.to_i).to_s + "]->(b_next) WITH last(nodes(p)) AS book"
 				end
+				mark_as_read_clause = " OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" WITH user, book, m"
+				rating_clause = " OPTIONAL MATCH (user)-[:RatingAction]->(z:RatingNode{book_id:ID(book), user_id:"+user_id.to_s+"})-[:Rate]->(book) WITH user, book, m, z"
+				root_category_clause = " OPTIONAL MATCH (book)-[]->(category:Category{is_root: true})"
+				return_clause = " RETURN book.isbn AS isbn, ID(book) AS id, book.title AS title, book.author_name AS author_name, ID(m) AS status, z.rating AS user_rating, book.published_year AS published_year, book.page_count AS page_count, COLLECT(category.id) AS categories_id, COLLECT(category.name) AS categories_name "
+				clause = clause + mark_as_read_clause + rating_clause + root_category_clause + return_clause
 				@neo = Neography::Rest.new
-				clause = "MATCH (b:Book) WHERE ID(b)="+Constants::BestBook.to_s+" MATCH p=(b)-[:Next_book*.."+(20+skip_count.to_i).to_s+"]->(b_next) WITH last(nodes(p)) as book OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" WITH user, book, m OPTIONAL MATCH (user)-[:RatingAction]->(z:RatingNode{book_id:ID(book), user_id:"+user_id.to_s+"})-[:Rate]->(book) RETURN book.isbn as isbn, ID(book), book.title, book.author_name, ID(m), z.rating, book.published_year, book.page_count SKIP "+skip_count.to_s
-				puts clause.blue.on_red
 				begin
-					books =  @neo.execute_query(clause)["data"]
+					books =  @neo.execute_query(clause)
+					categories = []
+					for book in books
+						book["categories_name"].each_with_index do |category_name, index|
+							category = {"name" => category_name, "id" => book["categories_id"][index]}
+							categories.push category
+						end
+						book["categories"] = categories
+						book.except!("categories_id")
+						book.except!("categories_name")
+					end
 				rescue Exception => e
 					puts e.to_s.red
 					books = [{:message => "Error in finding books"}]
@@ -151,13 +165,9 @@ module Api
 			def self.get_book_details(id, user_id=nil)
 				book = BooksGraphHelper.get_details(id, user_id)
 				if user_id
-					user_rating = book[1]
-					user_time_index = book[2]
-					labels = book[3]
-					selected_labels = book[4]
 					structured_labels = []
-					for label in labels
-						if selected_labels.include? label
+					for label in book["labels"]
+						if book["selected_labels"].include? label
 							json = {"name" => label, "checked" => true}
 						else
 							json = {"name" => label, "checked" => false}
@@ -165,36 +175,14 @@ module Api
 						structured_labels.push json
 					end
 
-					mark_as_read = book[5]
-					if mark_as_read.nil?
-						mark_as_read = false
-					else
-						mark_as_read = true
-					end
-					book_data = book[0]["data"]
-
 					friends_who_have_read = []
-					if book[6].present?
-						book[6].each do |id, index|
-							friends_who_have_read.push({:id => id, :thumb => book[7][index]})
+					if book["friends_id"].present?
+						book["friends_id"].each do |id, index|
+							friends_who_have_read.push({:id => id, :thumb => book["friends_thumb"][index]})
 						end
 					end
 
-					friends_who_have_read_count = book[8]
-					genres = book[9]
-					genre_weights = book[10]
 				end
-				info = {
-							:title => book_data["title"],
-							:author_name => book_data["author_name"],
-							:readers_count => book_data["readers_count"],
-							:bookmark_count => book_data["bookmark_count"],
-							:comment_count => book_data["comment_count"],
-							:published_year => book_data["published_year"],
-							:page_count => book_data["page_count"],
-							:summary => book_data["description"],
-							:external_thumb => book_data["external_thumb"],
-						}
 				# isbn = book["isbn"].split(",")[0]
 				# image_url = "http://covers.openlibrary.org/b/isbn/"+isbn+"-S.jpg";
 				# image_service_url = "http://54.187.28.104/api/v0/colors?image_url=#{image_url}"
@@ -202,24 +190,12 @@ module Api
 				# color = JSON.parse(color)["data"]
 
 				if user_id
-					info.merge!(:user_rating => user_rating, 
-								:status => mark_as_read,
-								:labels => structured_labels,
-								:users => friends_who_have_read,
-								:users_count => friends_who_have_read_count,
-								:genres => genres,
-								:genre_weights => genre_weights,
-							    :time_index => user_time_index)
+					book.merge!(:friends => friends_who_have_read)
 				end
-				# info.merge!(color)
-				# unless book_data["linked"].present?
-				# 	Resque.enqueue(SummaryWorker, book["isbn"], id, book["title"])
-				# end
-				info
+				book
 			end
 
 			def self.recommendations(last_book, filters={}, session)
-				#FIXME only output isbns
 				user_id = session[:user_id]
 				if filters["reset"]
 					# $redis.set 'book_ids', ""
@@ -435,7 +411,7 @@ module Api
 					end
 				end
 
-				return_clause = "RETURN book.isbn as isbn, ID(book), book.external_thumb"
+				return_clause = "RETURN book.isbn as isbn, ID(book) as id, book.external_thumb as external_thumb"
 				
 				# distinct_clause = "ALL (id in "+book_ids.to_s+" WHERE toInt(id) <> ID(book)) "
 
@@ -481,6 +457,7 @@ module Api
 					elsif read_time == Constants::LongRead
 						next_Where_clause = " toInt(book.page_count) > 250 "
 					end
+					
 					if where_clause.present?
 						where_clause = where_clause + " AND"+next_Where_clause
 					else

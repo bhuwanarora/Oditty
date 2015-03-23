@@ -1,5 +1,5 @@
 module Constants
-	InfluentialBooks			="influentialbooks"
+	CategoryLikeWeight					= 10
 	MarkAsReadPoints 			= 5
 	# BookmarkPoints 				= 5
 	RatingPoints				= 10
@@ -79,11 +79,14 @@ module Constants
 
 	UniqueNewsCount  			= 50
 	BookCountShownOnSignup  	= 30
-	FewBooksReadCountRange  	= ["0-20"]
-	AverageBooksReadCountRange 	= ["20-50", "50-100", "100-250"]
+	ChildBookCountRange  		= "0-20"
+	AdoloscentBookCountRange 	= "20-50"
+	AboutToBeAdultBookCountRange= "50-100"
+	AdultBookCountRange  		= "100-250"
+	AboutToDieBookCountRange  	= "250+"
 	InitialSkipCount        	= 0
 	RelevantSocialTagValue      = 1
-	BookLeftAMarkOnYouUpcase 	= "BOOKSLEFTAMARKONYOU"
-	FromFacebookUpcase   		= "FROMFACEBOOK"
-	MarkAsReadUpcase            = "MARKASREAD"
+	RecommendationBookCount 	= 10
+	FollowFavoriteAuthorsCount  = 30 
+	QueryStepDuringSorting      = 1000
 end
