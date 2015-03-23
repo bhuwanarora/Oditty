@@ -23,6 +23,10 @@ body{
     font-family: Helvetica, Arial, 'lucida grande',tahoma,verdana,arial,sans-serif;
 }*/
 
+body{
+    /*font-family: 'Din';*/
+}
+
 :not(.scrollbar)::-webkit-scrollbar { 
     display: none; 
 }
@@ -299,7 +303,7 @@ input:focus{
 }
 
 .light_grey{
-    background-color: #DDDDDD !important;
+    background-color: #f5f5f5 !important;
 }
 
 .light_grey_color{
@@ -839,5 +843,5 @@ md-input-container .md-input{
 }
 
 md-backdrop{
-    background-color: transparent !important;
+    /*background-color: transparent !important;*/
 }

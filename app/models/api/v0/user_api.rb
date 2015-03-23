@@ -3,6 +3,23 @@ module Api
 	module V0
 		class UserApi
 
+			def self.get_details(user_id, session)
+				if user_id.present?
+					@neo = Neography::Rest.new
+					clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" RETURN u"
+					puts clause.blue.on_red
+					begin
+						info = @neo.execute_query(clause)["data"][0][0]["data"]
+						session[:last_book] = info["last_book"]
+					rescue Exception => e
+						info = {}
+					end
+				else
+					info = {}
+				end
+				info
+			end
+
 			def self.recover_password email
 				@neo = Neography::Rest.new
 				clause = "MATCH (user:User{email:\""+email+"\"}) RETURN user, ID(user) as id"
@@ -103,6 +120,8 @@ module Api
 					end
 					clause = " SET u.thumb = \""+params[:data][:url]+"\"" if params[:data] && params[:data][:url]
 					clause = " SET u.name = \""+params[:name]+"\", u.indexed_user_name=\""+params[:name].downcase.gsub(" ","")+"\", u.search_index=\""+params[:name].downcase.gsub(" ","")+"\"" 	if params[:name]
+					clause = " SET u.first_name=\""+params[:first_name]+"\"" if params[:first_name]
+					clause = " SET u.last_name=\""+params[:last_name]+"\"" if params[:last_name]
 					clause = " SET u.latitude="+params[:latitude].to_s+", u.longitude="+params[:longitude].to_s if params[:latitude]
 					clause = " SET u.init_book_read_count=\""+params[:init_book_read_count]+"\"" if params[:init_book_read_count]
 					clause = " SET u.gender=\""+params[:gender]+"\"" if params[:gender]
@@ -111,6 +130,8 @@ module Api
 					clause = " SET u.profile_picture="+params[:profile_picture] if params[:profile_picture]
 					clause = " SET u.ask_info = "+params[:ask_info].to_s if params[:ask_info] == false
 					clause = " SET u.thumb_blob=\""+params[:blob]+"\"" if params[:blob]
+					clause = " SET u.about=\""+params[:about]+"\"" if params[:about]
+
 					clause = " WITH u MATCH (g:Category) WHERE ID(g)="+params[:genre].to_s+" CREATE UNIQUE (u)-[:Likes]->(g)" if params[:genre] && params[:status]
 					clause = " WITH u MATCH (u)-[r:Likes]->(g:Category) WHERE ID(g)="+params[:genre].to_s+" DELETE r" if params[:genre] && !params[:status]
 					if clause
@@ -121,23 +142,6 @@ module Api
 						duplicate_email
 					end
 				end
-			end
-
-			def self.get_details(user_id, session)
-				if user_id.present?
-					@neo = Neography::Rest.new
-					clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" RETURN u"
-					puts clause.blue.on_red
-					begin
-						info = @neo.execute_query(clause)["data"][0][0]["data"]
-						session[:last_book] = info["last_book"]
-					rescue Exception => e
-						info = {}
-					end
-				else
-					info = {}
-				end
-				info
 			end
 
 			def self.handle_facebook_user(params, session)

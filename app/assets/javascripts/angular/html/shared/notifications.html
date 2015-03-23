@@ -1,47 +1,50 @@
-<md-content class="md-whiteframe-z2 notifications light_grey" layout="column" layout-align="center start">
-	<div layout="row" layout-align="center center">
-		<div class="padding">notifications...</div>
+<md-content class="md-whiteframe-z1 notifications light_grey" 
+		ng-click="stop_propagation($event)"
+		msd-wheel="stop_propagation($event)"
+		layout="column" layout-align="center start">
+	<div layout="row" layout-align="center center" layout-padding>
+		<div layout-padding flex="100">ReadersDoor Notifications...</div>
 	</div>
-	<md-card>
-		<md-card-content layout="row" layout-wrap>
-			<div flex="20" layout-align="center center" layout="row">
-	                <img class="circular"
+	<md-list layout-padding>
+		<md-item layout-margin>
+			<md-item-content class="white">
+				<div class="md-tile-left" layout-align="center center" layout="row">
+					<img class="circular"
 	                     src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
-	        </div>
-	        <div flex="80" layout-align="center center" layout="row">
-	        	<div class="side_padding">Suraj Singh is now following you.</div>
-	        </div>
-		</md-card-content>
-	</md-card>
-	<md-card>
-		<md-card-content layout="row" layout-wrap>
-			<div flex="20" layout-align="center center" layout="row">
-	                <img class="circular"
+				</div>
+				<div class="md-tile-content">
+					<div class="side_padding">Suraj Singh is now following you.</div>
+				</div>
+			</md-item-content>
+		</md-item>
+		<md-item layout-margin>
+			<md-item-content class="white">
+				<div class="md-tile-left" layout-align="center center" layout="row">
+					<img class="circular"
 	                     src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
-	        </div>
-	        <div flex="80" layout-align="center center" layout="row">
-	        	<div class="side_padding">Suraj Singh is now following you.</div>
-	        </div>
-		</md-card-content>
-	</md-card>
-	<md-card>
-		<md-card-content layout="row" layout-wrap>
-			<div flex="20" layout-align="center center" layout="row">
-	                <img class="circular"
+				</div>
+				<div class="md-tile-content">
+					<div class="side_padding">Suraj Singh is now following you.</div>
+				</div>
+			</md-item-content>
+		</md-item>
+		<md-item layout-margin>
+			<md-item-content class="white">
+				<div class="md-tile-left" layout-align="center center" layout="row">
+					 <img class="circular"
 	                     src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
-	        </div>
-	        <div flex="80" layout-align="center center" layout="row">
-	        	<div class="side_padding">Suraj Singh is now following you.</div>
-	        </div>
-		</md-card-content>
-	</md-card>
-	<md-button>
-		Show all notifications
-	</md-button>
+				</div>
+				<div class="md-tile-content">
+					<div class="side_padding">Suraj Singh is now following you.</div>
+				</div>
+			</md-item-content>
+		</md-item>
+		<md-item layout-margin>
+			<md-item-content layout-align="center center" layout-padding layout-fill>
+				<md-button>
+					Show all notifications
+				</md-button>
+			</md-item-content>
+		</md-item>
+	</md-list>
 </md-content>
-
-<style>
-	md-card{
-		margin-top: 5px !important;
-	}
-</style>

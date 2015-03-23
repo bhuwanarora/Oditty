@@ -26,12 +26,13 @@ module Api
 				neo_init
 				q = q.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("]", "").gsub("\\", "") rescue ""
 				if q.present?
-					clause = "START genre=node:node_auto_index('indexed_star_genre_name:"+q+"*') RETURN genre.name, ID(genre) ORDER BY genre.books_count DESC LIMIT "+limit.to_s
+					clause = "START category=node:node_auto_index('indexed_category_name:" + q + "*') RETURN category.name as name, ID(category) as id ORDER BY category.books_count DESC LIMIT " + limit.to_s
 				else
-					clause = "MATCH(genre:Genre) WHERE genre.root_genre=true RETURN genre.name, ID(genre), genre.icon ORDER BY genre.books_count DESC"
+					clause = "MATCH (category:Category{is_root:true}) RETURN category.name as name, ID(category) as id, category.icon as icon ORDER BY category.books_count DESC"
 				end
+				
 				puts clause.blue.on_red
-				results = @neo.execute_query(clause)["data"]
+				results = @neo.execute_query clause
 				results
 			end
 

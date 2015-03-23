@@ -16,3 +16,18 @@ Neography.configure do |config|
   # config.http_send_timeout    = 1200
   # config.http_receive_timeout = 1200
 end
+
+module Neography
+    class Rest
+        module Cypher
+            def execute_query(query, parameters = {}, cypher_options = nil)
+
+                neo_response = super
+                neo_response["data"].length do |record|
+                    response = Hash[neo_response["columns"].zip(record)]
+                end
+                response
+            end
+        end
+    end
+end

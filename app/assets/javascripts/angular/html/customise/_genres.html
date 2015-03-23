@@ -1,21 +1,37 @@
-<h3>Select Genres</h3>
-<md-content class="card_content white" ng-controller="genresController">
-	<section layout="row" layout-wrap>
-		<div layout="column" class="padding" ng-repeat="genre in info.genres  | orderBy:genre.name" flex="20">
-			<div class="cover_gradient" layout="column" layout-align="center center" ng-if="genre.status">
-				<div layout="row" layout-align="center center">
-					<div><span class="icon-checkmark"></span></div>
+<div layout="row" layout-align="center center">
+    <h3>Subjects that interest you</h3>
+</div>
+<md-content ng-controller="genresController" class="white" style="padding-bottom: 40px;">
+	<section layout="row">
+		<div flex="15" flex-md="10" hide-sm >
+			
+		</div>
+		<div flex="70"
+			 flex-md="80"
+			 flex-sm="100"
+			  layout="row" layout-wrap layout-align="center">
+			<div layout="column" class="padding"
+				 style="width: 170px;" 
+				 ng-repeat="genre in info.genres  | orderBy:genre.name">
+				<div class="cover_gradient" layout="column" layout-align="center center" ng-if="genre.status">
+					<div layout="row" layout-align="center center" class="white circular_icon">
+						<div><span class="icon-checkmark"></span></div>
+					</div>
 				</div>
-			</div>
-			<md-button class="info_button animate-fast" ng-click="select_genre(genre)">
-			</md-button>
-			<img src="https://assets-0.housingcdn.com/website/login/login_image@2x-2ed7b17ab0cb2b35dceef58e89c900d5.jpg" class="cover">
-			<br/>
-			<div layout="row" layout-align="center center"><div>{{genre.name}}</div></div>
+				<md-button class="info_button animate-fast" ng-click="select_genre(genre)">
+				</md-button>
+				<img ng-src="{{genre.url}}" class="cover">
+				<br/>
+				<div layout="row" layout-align="center center"><div>{{genre.name}}</div></div>
+		</div>
 				<!-- <toggle data="genre" on-select="save_genre(genre)" on-deselect="remove_genre(genre)"></toggle> -->
+		</div>
+		<div flex="15" flex-md="10" hide-sm >
+			
 		</div>
 	</section>
 </md-content>
+
 <style>
 	.cover,
 	.cover_gradient{
@@ -28,7 +44,6 @@
 		position: absolute;
 		z-index: 1;
 		background-color: rgba(0, 0, 0, 0.5);
-		color: white;
 	}
 
 	.info_button{
@@ -44,15 +59,19 @@
 	.info_button:hover{
 		border-radius: 50%;
 	}
-
-	/*.cover:hover{
-		zoom: 115%;
-		width: 130px;
-		height: 130px;
-	}
-*/
+	
 	.info_button:active{
 		border-radius: 50%;
+	}
+
+	.circular_icon .icon-checkmark{
+		font-size: 2em;
+	}
+
+	.circular_icon{
+		border-radius: 50%;
+		width: 60px;
+		height: 60px;
 	}
 
 	

@@ -12,10 +12,27 @@
 
         <link rel="stylesheet" href="assets/min/landing_page_site.min.css" />
         <link rel="stylesheet" href="assets/website/home.css" />
-        
+
+
+
         <script src="assets/min/angular/website.min.js"></script>
         <% if Rails.env.development? %>
+            <script src="assets/angular/services/third_party/d3_service.js"></script>
+            <% if @community %>
+                <script src="http://phuonghuynh.github.io/js/bower_components/jquery/dist/jquery.min.js"></script>
+                <script src="assets/angular/vendors/d3.min.js"></script>
+                <script src="http://phuonghuynh.github.io/js/bower_components/d3-transform/src/d3-transform.js"></script>
+                <script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/extarray.js"></script>
+                <script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/misc.js"></script>
+                <script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/micro-observer.js"></script>
+                <script src="http://phuonghuynh.github.io/js/bower_components/microplugin/src/microplugin.js"></script>
+                <script src="assets/angular/vendors/bubble_chart/bubble-chart.js"></script>
+                <script src="assets/angular/vendors/bubble_chart/central-click.js"></script>
+                <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/plugins/lines/lines.js"></script>
+            <% end %>
+            
             <script src="assets/angular/vendors/angular_sticky.js"></script>
+            
             <script src="assets/angular/apps/filters_app.js"></script>
             <script src="assets/angular/apps/home_app.js"></script>
             <script src="assets/angular/apps/app_constants.js"></script>
@@ -29,7 +46,17 @@
             <script src="assets/angular/controllers/home/right_controller.js"></script>
             <script src="assets/angular/controllers/home/list_bottom_sheet_controller.js"></script>
             <script src="assets/angular/controllers/home/share_controller.js"></script>
+            <script src="assets/angular/controllers/share/share_controller.js"></script>
+            <script src="assets/angular/controllers/share/options_controller.js"></script>
+            <script src="assets/angular/controllers/toast_controller.js"></script>
             <script src="assets/angular/directives/site_directives.js"></script>
+
+            <script src="assets/angular/services/feed_service.js"></script>
+
+            <% if @community %>
+                <script src="assets/angular/controllers/community_controller.js"></script>
+                <script src="assets/angular/directives/d3_directives.js"></script>
+            <% end %>
 
             <% if @customise %>
                 <script src="assets/angular/controllers/customise/customise_controller.js"></script>
@@ -39,21 +66,44 @@
                 <script src="assets/angular/controllers/customise/authors_controller.js"></script>
             <% end %>
 
-            <% if @library %>
+            <% if @book %>
+                <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
+            <% end %>
+
+            <% if @infinity %>
                 <script src="assets/angular/controllers/library/library_controller.js"></script>
                 <script src="assets/angular/controllers/library/filters_controller.js"></script>
+                <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
+                
                 <script src="assets/angular/services/time_group_service.js"></script>
                 <script src="assets/angular/services/reading_time_service.js"></script>
+                <script src="assets/angular/services/infinity_service.js"></script>
             <% end %>
+
+            <% if @room %>
+                <script src="assets/angular/controllers/room/room_controller.js"></script>
+            <% end %>
+
+
+            <script src="assets/angular/vendors/angular_dragdrop.min.js"></script>
+            <script src="assets/angular/vendors/angular-drop.min.js.map"></script>
         <% else %>
             <script src="assets/min/angular/home.min.js"></script> 
         <% end %>
     </head>
 
-    <body ng-controller="homeController" ng-keydown="scroll_on_keypress($event)" ng-click="close_popups()" msd-wheel="close_popups()">
+    <body ng-controller="homeController" 
+        ng-keydown="scroll_on_keypress($event)" 
+        ng-click="close_popups()" 
+        ng-keypress="play_type_key($event)"
+        msd-wheel="close_popups()">
+        <audio id="audiotag1" src="assets/typewriter2.m4a" preload="auto"></audio>
+        <audio id="audiotag2" src="assets/typewriter2.m4a" preload="auto"></audio>
+        <audio id="audiotag3" src="assets/typewriter3.m4a" preload="auto"></audio>
+
         <div layout="column" layout-fill>
             <!-- <div ng-include src="'/assets/angular/html/shared/header.html'"></div> -->
-            <md-toolbar md-scroll-shrink class="md-whiteframe-z1 header">
+            <md-toolbar md-scroll-shrink class="header <% if !@infinity %>'no_shadow'<% end %>">
                 <section layout="row" layout-wrap>
                     <div flex="25" flex-md="15" layout="row" layout-align="start center">
                         <md-button class="burger padding" ng-click="toggleLeft($event)">
@@ -66,64 +116,69 @@
                             </a>
                         </div>
                     </div>
-                    <div flex="50" flex-md="70" layout="row" layout-align="end center" layout-align-sm="start center">
-                        <div show-sm hide>
-                            <span class="icon-search"></span>
-                        </div>
-                        <div hide-sm class="search_icon">
-                            <span class="icon-search"></span>
-                        </div>
-                        <md-autocomplete
-                            md-selected-item="selectedItem1"
-                            md-search-text="searchText"
-                            md-items="item in querySearch(searchText)"
-                            md-item-text="display"
-                            class="search"
-                            hide-sm
-                            flex="85"
-                            placeholder="Search books, topics and more...">
-                            <span md-highlight-text="searchText">{{item.display}}</span>
-                        </md-autocomplete>
-                        <md-button class="library">
-                            <a href="/library">Library</a>
-                        </md-button>
-                    </div>
-                    <div flex layout="row" layout-align="space-between center">
-                        <a href="/profile">
-                            <md-button class="profile_link">
-                                <img src="http://www.chicagonow.com/avatar/blog-108-128.png" class="circular">
+                    <% unless @customise %>
+                        <div flex="50" flex-md="70" layout="row" layout-align="end center" layout-align-sm="start center">
+                            <div show-sm hide>
+                                <span class="icon-search"></span>
+                            </div>
+                            <div hide-sm class="search_icon">
+                                <span class="icon-search"></span>
+                            </div>
+                            <md-autocomplete
+                                md-selected-item="selectedItem1"
+                                md-search-text="searchText"
+                                md-items="item in querySearch(searchText)"
+                                md-item-text="display"
+                                class="search"
+                                hide-sm
+                                flex="85"
+                                placeholder="Search books, topics and more...">
+                                <span md-highlight-text="searchText">{{item.display}}</span>
+                            </md-autocomplete>
+                            <md-button class="library">
+                                <a href="/infinity">Infinity</a>
                             </md-button>
-                        </a>
-                        <div layout="row">
-                            <md-button class="small-padding" ng-click="toggle_notifications($event)">
-                                <span class="icon-bell"></span>
-                            </md-button>
+                        </div>
+                        <div flex layout="row" layout-align="end center">
                             <a href="/room"><md-button class="small-padding">
                                 <span class="icon-checkbox-unchecked"></span>
                             </md-button></a>
-                            <md-button class="small-padding">
-                                <span class="icon-angle-down"></span>
+                            <md-button class="small-padding" ng-click="toggle_notifications($event)">
+                                <span class="icon-bell"></span>
                             </md-button>
+                            <a href="/profile">
+                                <md-button class="profile_link">
+                                    <img src="http://www.chicagonow.com/avatar/blog-108-128.png" class="circular">
+                                </md-button>
+                            </a>
                         </div>
-                    </div>
+                    <% end %>
                 </section>
             </md-toolbar>
 
             <%= yield %>
-            <md-button class="md-fab md-fab-bottom-right" aria-label="Eat cake" ng-click="showAdvanced()">
-                <span class="icon-pen"></span>
-            </md-button>
+            <% unless @customise %>
+                <md-button class="md-fab md-fab-bottom-right animate-fast fixed_share"
+                            aria-label="Eat cake"
+                            ng-class="{'md-fab-custom-right': info.show_share}"
+                            ng-click="show_share_page($event)"
+                            ng-style="type_icon_pressed"
+                            style="background-image: url('assets/type.png')">
+                </md-button>
+            <% end %>
+            
             <md-progress-linear class="md-primary loader" 
                     ng-show="info.loading"
                     md-mode="indeterminate">
             </md-progress-linear>
 
-            <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" ng-if="info.cirular_loading">
+            <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" 
+                    ng-if="info.cirular_loading">
             </md-progress-circular>
 
             <div ng-include src="'/assets/angular/html/shared/left_panel.html'" class="left_panel_container"></div>
             <div ng-include src="'/assets/angular/html/shared/notifications.html'" ng-if="show_notifications"></div>
-            <div ng-include src="'/assets/angular/html/share/show.html'"></div>
+            <div ng-include src="'/assets/angular/html/share/show.html'" ></div>
             <!-- <div ng-include src="'/assets/angular/html/home/show.html'"></div> -->
         </div>
         <script>

@@ -12,9 +12,9 @@ class ApplicationController < ActionController::Base
   end
 
   def check_permission
-    # unless ($redis.get 'book_ids').present?
-    #   $redis.set 'book_ids', ""
-    # end
+    unless ($redis.get 'book_ids').present?
+      $redis.set 'book_ids', ""
+    end
     session[:user_id] = 0
     session["init"] = true
     if session[:user_id] == Constants::Admin

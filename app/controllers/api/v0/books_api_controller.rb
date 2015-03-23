@@ -15,6 +15,7 @@ module Api
 			end
 
 			def get_popular_books
+				# params = JSON.parse(params["q"])
 				books = BookApi.get_popular_books(params, session[:user_id])
 				render :json => books, :status => 200
 			end
@@ -28,6 +29,13 @@ module Api
 				id = params[:id]
 				user_id = session[:user_id]
 				info = BookApi.get_book_details(id, user_id)
+				render :json => info, :status => 200
+			end
+
+			def get_basic_book_details
+				id = params[:id]
+				user_id = session[:user_id]
+				info = BookApi.get_basic_book_details(id, user_id)
 				render :json => info, :status => 200
 			end
 

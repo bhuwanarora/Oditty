@@ -1,56 +1,39 @@
-<div msd-wheel="bind_mousewheel_scroll($event)" layout="row" layout-fill>
-    <div flex>
-        <header class="main-header animate-fast" ng-if="show_content">
-            <md-button class="padding" hide show-sm>
-                <a><span class="icon-menu2"></span></a>
-            </md-button>
-            <a class="title-btn" ng-click="scroll_page(0)">
-                <img src="assets/rd_logo.png">
-            </a>
-            <div class="h-btn-right">
-                <!-- <md-button md-no-ink class="md-warn">Sign in</md-button> -->
-                <md-button ng-click="show_signin_options($event)" class="md-raised md-primary md-hue-2">
-                    Sign In
-                </md-button>
-                <!-- <md-button class="md-raised md-warn md-hue-2"  / -->
-                           <!-- ng-click="scroll_page(6)">Sign Up</md-button> -->
-            </div>
-        </header>
-
-        <md-whiteframe class="md-whiteframe-z1 tab-main animate-fast" 
-                        hide-sm
-                       layout layout-align="center" ng-if="show_content">
-            <md-tabs class="md-accent" md-selected="data.selectedIndex" hide-sm>
-                <md-tab ng-click="scroll_page(1)" ng-class="{'active': current_page_id == 1}">
-                    <a>{{data[1]}}</a>
-                </md-tab>
-                <md-tab ng-click="scroll_page(2)" ng-class="{'active': current_page_id == 2}">
-                    <a>{{data[2]}}</a>
-                </md-tab>
-                <md-tab ng-click="scroll_page(3)" ng-class="{'active': current_page_id == 3}">
-                     <a>{{data[3]}}</a>
-                </md-tab>
-                <md-tab ng-click="scroll_page(4)" ng-class="{'active': current_page_id == 4}">
-                    <a>{{data[4]}}</a>
-                </md-tab>
-                <md-tab ng-click="scroll_page(5)" ng-class="{'active': current_page_id == 5}">
-                    <a>{{data[5]}}</a>
-                </md-tab>
-                <md-tab ng-click="scroll_page(6)" ng-class="{'active': current_page_id == 6}">
-                    <a>{{data[6]}}</a>
-                </md-tab>
-            </md-tabs>
-        </md-whiteframe>
-        <div ng-view ng-fadein class="view-cont"></div>
-
-        <md-button class="md-fab btn-arrow" 
-                   aria-label="Comment" 
-                   ng-show="show_content"
-                   ng-click="scroll_next_state()"
-                   ng-style="down_button_style">
-            <!-- <md-icon icon="assets/arrow-down.png" style="width: 24px; height: 24px;"></md-icon> -->
-            <img src="assets/arrow-down.png" class="arrow-icon" />
+<div msd-wheel="bind_mousewheel_scroll($event)" layout="column">
+    <header layout="row" layout-align="start center" class="main-header animate-fast" 
+            ng-if="show_content" layout-padding>
+        <md-button aria-label="Left Sidenav" flex-sm="15" ng-click="left_tab_list($event)" class="padding" hide show-sm>
+            <a><span class="icon-menu2"></span></a>
         </md-button>
-    </div>
+        <div flex-sm="60" flex-md="80" flex-gt-md="90">
+            <a class="title-btn" ng-click="scroll_page(0)">
+            <img src="assets/rd_logo.png">
+            </a>
+        </div>
+        <div class="h-btn-right" flex-sm="25" flex-md="20" flex-gt-md="10">
+            <md-button ng-click="show_signin_options($event)" class="md-raised md-primary md-hue-2">
+                Sign In
+            </md-button>
+        </div>
+    </header>
+    <md-whiteframe class="md-whiteframe-z1 tab-main animate-fast" 
+        hide-sm layout="row" ng-if="show_content">
+        <md-tabs class="md-accent" md-selected="data.selectedIndex" hide-sm>
+            <md-tab ng-click="scroll_page($index)"
+                    ng-class="{'active': current_page_id == $index}"
+                    ng-repeat="i in [0, 1, 2, 3, 4, 5,6] track by $index">
+                    <a>{{data[$index]}}</a>
+            </md-tab>
+        </md-tabs>
+    </md-whiteframe>
+    <div ng-view ng-fadein class="view-cont"></div>
+
+    <md-button class="md-fab btn-arrow" 
+               aria-label="Comment" 
+               ng-show="show_content"
+               ng-click="scroll_next_state()"
+               ng-style="down_button_style">
+        <img src="assets/arrow-down.png" class="arrow-icon" />
+    </md-button>
 </div>
 <div ng-include src="'/assets/angular/html/landing_page/_sign_in.html'"></div>
+<div ng-include src="'/assets/angular/html/landing_page/left_tablist.html'"></div>

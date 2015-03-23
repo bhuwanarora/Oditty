@@ -65,8 +65,8 @@ class WebsiteController < ApplicationController
 		render :layout => "material"
 	end
 
-	def library
-		@library = true
+	def infinity
+		@infinity = true
 		render :layout => "material"
 	end
 
@@ -76,10 +76,12 @@ class WebsiteController < ApplicationController
 	end
 
 	def room
+		@room = true
 		render :layout => "material"
 	end
 
 	def book
+		@book = true
 		render :layout => "material"
 	end
 
@@ -97,6 +99,15 @@ class WebsiteController < ApplicationController
 
 	def customise
 		@customise = true
+		render :layout => "material"
+	end
+
+	def author
+		render :layout => "material"
+	end
+
+	def community
+		@community = true
 		render :layout => "material"
 	end
 

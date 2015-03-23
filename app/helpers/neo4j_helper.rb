@@ -991,7 +991,7 @@ module Neo4jHelper
 
 	def self.set_star_genres
 		@neo ||= self.init
-		clause="MATCH (genre:Genre)<-[r:Belongs_to]-(b:Book) WHERE r.weight IS NOT NULL AND genre.books_count > 1000 WITH DISTINCT(genre) as genre SET genre :StarGenre, genre.indexed_star_genre_name = genre.indexed_genre_name"
+		clause = "MATCH (genre:Genre)<-[r:Belongs_to]-(b:Book) WHERE toINT(genre.gr_book_count) > 1000 WITH DISTINCT(genre) as genre SET genre :StarGenre, genre.indexed_star_genre_name = genre.indexed_genre_name"
 		puts clause.blue.on_red
 		@neo.execute_query clause
 	end
@@ -999,13 +999,13 @@ module Neo4jHelper
 	def self.set_active_books
 		@neo ||= self.init
 		skip = 10000
-		start_id = 384293 #MIN ID
-		end_id = 2655796 #MAX ID
+		start_id = 384294 #MIN ID
+		end_id = 2545302 #MAX ID
 		# limit = 100
 		while start_id <= end_id
 			puts "set_active_books..."+start_id.to_s.green
 			limit = start_id + skip
-			clause = 'MATCH (book:Book) WHERE ID(book) >= '+start_id.to_s+' AND ID(book) < '+limit.to_s+'  AND book.description <> "" AND book.description IS NOT NULL SET book :ActiveBook RETURN COUNT(book)'
+			clause = 'MATCH (book:Book) WHERE ID(book) >= '+start_id.to_s+' AND ID(book) < '+limit.to_s+' AND book.description <> "" AND book.description IS NOT NULL SET book :ActiveBook RETURN COUNT(book)'
 			puts @neo.execute_query(clause)["data"][0]
 			start_id = start_id + skip
 		end	
@@ -1029,8 +1029,8 @@ module Neo4jHelper
 	def self.remove_less
 		@neo ||= self.init
 		skip = 10000
-		start_id = 384293 #MIN ID
-		end_id = 2655796 #MAX ID
+		start_id = 384293 #MIN ID384296
+		end_id = 2655796 #MAX ID2545256
 		# limit = 100
 		while start_id <= end_id
 			puts "set_total_weight..."+start_id.to_s.green
@@ -1094,4 +1094,21 @@ module Neo4jHelper
 		end
 	end
 
+	def self.set_genre_linked_list
+		neo = self.init
+		starting_node = Constants::Id.to_s
+		is_done = false
+		node_id = starting_node
+		while !is_sorted_list_created
+			match_clause = "MATCH popularity_list = (book:Book)-[:Next_book*0.." + Constants::QueryStep.to_s + "]->(next_book) WHERE ID = " + node_id.to_s 
+			unwind_book_collection_clause = " WITH EXTRACT(n in nodes(popularity_list)|n) AS books UNWIND books as book "
+			match_book_to_root_clause = "OPTIONAL MATCH (book)-[:FromCategory]->(category)-[:HasRoot*0..1]->(root_category:Category{is_root:true}) "
+			get_last_linked_node_clause = "WITH book, root_category, root_category.uuid AS uuid OPTIONAL MATCH (root_category)-[genre_popularity_list:NextInCategory*]->(popular_book:Book) WHERE NOT(popular_book-[:NextInGenre{from_category:uuid}]-()) "
+			conditionally_make_relation_clause = "FOREACH(to_be_ignored IN CASE WHEN genre_popularity_list IS NULL THEN [1] ELSE [] END | MERGE (root_category)-[new_popular:NextInGenre]-(book) ON CREATE SET new_popular.from_category = root_category.uuid) FOREACH(to_be_ignored IN CASE WHEN genre_popularity_list IS NOT NULL THEN [1] ELSE [] END | MERGE (popular_book)-[next_popular:NextInGenre]-(book) ON CREATE SET next_popular.from_category = root_category.uuid) RETURN ID(book) as book_id"
+			clause = match_clause + unwind_book_collection_clause + match_book_to_root_clause + get_last_linked_node_clause + conditionally_make_relation_clause 
+			neo.execute_query clause
+			books_id = neo.execute_query["book_id"].flatten 
+			if book_id.include? starting_node then is_sorted_list_created = true end	
+		end
+	end
 end

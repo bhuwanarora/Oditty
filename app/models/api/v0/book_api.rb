@@ -112,12 +112,14 @@ module Api
 			end
 
 			def self.get_popular_books(params, user_id)
-				skip_count = params[:skip_count]
-				unless skip_count
+				params = JSON.parse params["q"]
+				if params.nil? || params["skip_count"].nil?
 					skip_count = 0
+				else
+					skip_count = params["skip_count"]
 				end
 				@neo = Neography::Rest.new
-				clause = "MATCH (b:Book) WHERE ID(b)="+Constants::BestBook.to_s+" MATCH p=(b)-[:Next_book*.."+(20+skip_count.to_i).to_s+"]->(b_next) WITH last(nodes(p)) as book OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" WITH user, book, m OPTIONAL MATCH (user)-[:RatingAction]->(z:RatingNode{book_id:ID(book), user_id:"+user_id.to_s+"})-[:Rate]->(book) RETURN book.isbn as isbn, ID(book), book.title, book.author_name, ID(m), z.rating SKIP "+(skip_count.to_i).to_s
+				clause = "MATCH (b:Book) WHERE ID(b)="+Constants::BestBook.to_s+" MATCH p=(b)-[:Next_book*.."+(20+skip_count.to_i).to_s+"]->(b_next) WITH last(nodes(p)) as book OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" WITH user, book, m OPTIONAL MATCH (user)-[:RatingAction]->(z:RatingNode{book_id:ID(book), user_id:"+user_id.to_s+"})-[:Rate]->(book) RETURN book.isbn as isbn, ID(book), book.title, book.author_name, ID(m), z.rating, book.published_year, book.page_count SKIP "+skip_count.to_s
 				puts clause.blue.on_red
 				begin
 					books =  @neo.execute_query(clause)["data"]
@@ -141,6 +143,11 @@ module Api
 				# results
 				books
 			end
+
+			def self.get_basic_book_details(id, user_id)
+				book = BooksGraphHelper.get_basic_details(id, user_id)
+			end
+
 			def self.get_book_details(id, user_id=nil)
 				book = BooksGraphHelper.get_details(id, user_id)
 				if user_id
@@ -164,7 +171,7 @@ module Api
 					else
 						mark_as_read = true
 					end
-					book = book[0]["data"]
+					book_data = book[0]["data"]
 
 					friends_who_have_read = []
 					if book[6].present?
@@ -174,30 +181,40 @@ module Api
 					end
 
 					friends_who_have_read_count = book[8]
-					
+					genres = book[9]
+					genre_weights = book[10]
 				end
 				info = {
-							:title => book["title"],
-							:author_name => book["author_name"],
-							:readers_count => book["readers_count"],
-							:bookmark_count => book["bookmark_count"],
-							:comment_count => book["comment_count"],
-							:published_year => book["published_year"],
-							:page_count => book["page_count"],
-							:summary => book["description"],
-							:external_thumb => book["external_thumb"]
+							:title => book_data["title"],
+							:author_name => book_data["author_name"],
+							:readers_count => book_data["readers_count"],
+							:bookmark_count => book_data["bookmark_count"],
+							:comment_count => book_data["comment_count"],
+							:published_year => book_data["published_year"],
+							:page_count => book_data["page_count"],
+							:summary => book_data["description"],
+							:external_thumb => book_data["external_thumb"],
 						}
+				# isbn = book["isbn"].split(",")[0]
+				# image_url = "http://covers.openlibrary.org/b/isbn/"+isbn+"-S.jpg";
+				# image_service_url = "http://54.187.28.104/api/v0/colors?image_url=#{image_url}"
+				# color = Net::HTTP.get(URI.parse(image_service_url))
+				# color = JSON.parse(color)["data"]
+
 				if user_id
 					info.merge!(:user_rating => user_rating, 
 								:status => mark_as_read,
 								:labels => structured_labels,
 								:users => friends_who_have_read,
 								:users_count => friends_who_have_read_count,
+								:genres => genres,
+								:genre_weights => genre_weights,
 							    :time_index => user_time_index)
 				end
-				unless book["linked"].present?
-					Resque.enqueue(SummaryWorker, book["isbn"], id, book["title"])
-				end
+				# info.merge!(color)
+				# unless book_data["linked"].present?
+				# 	Resque.enqueue(SummaryWorker, book["isbn"], id, book["title"])
+				# end
 				info
 			end
 
@@ -453,7 +470,6 @@ module Api
 						where_clause = where_clause + next_Where_clause
 					end
 				end
-
 
 				if !only_read_time && filters["other_filters"][Constants::Time].present?
 					if read_time == Constants::TinyRead

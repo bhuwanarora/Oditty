@@ -1,109 +1,55 @@
-<div class="animate-fast" ng-if="show_content" style="padding-top: 121px;">
-		<div id="Search"></div>
-		<div layout="row" layout-margin layout-align="center center" class="header-image orange-background">
-			<div flex>
-				<h2 class="header-title enlarge-width">
-					<span>Discover yourself</span> 
-					<span>through books, friends </span>
-					<span>and the world.<span>
-				</h2>
+<div class="animate-fast top_pad" ng-if="show_content">
+	<div id="Search"></div>
+	<div layout="column" layout-fill>
+		<div layout="row" class="top_view blue_background">
+			<div flex="5"></div>
+			<div flex-gt-md="50" flex-md="50" flex-sm="90" layout="row" layout-align="center center">
+				<h3 class="title clear_margin" layout-align="start center" layout-padding layout-wrap>
+					<div>Discover yourself</div>
+					<div>through books,</div>
+					<div>friends & the world</div>
+				</h3>
 			</div>
-			<div flex>
-				<img src="assets/Discover.png" class="img-discover">
-			</div>
-		</div>
-	<!-- </div> -->
-
-<!-- <div class="discover-area" style="padding-top: 130px;"> -->
-<!-- <div class= "orange-background">
-	<div layout="row" class="inbox-area animate-fast" ng-if="show_content">	
-		<div id="Search"></div>
-		<div flex>
-			<div layout="row" layout-margin layout-align="center center">
-				<div flex class="inbox-cont">
-					<h2>
-						<span>Discover yourself</span> 
-						<span>through books, friends </span>
-						<span>and the world.<span>
-					<h2>
-				</div>
-				<div flex>
-					<img src="assets/Discover.png" class="inbox-img">
-				</div>
-			</div>
-		</div>
-		<!-- <div class="header-image bundles-header">
-			<h2 class="inbox-cont animate-fast" ng-if="!hide_text">
-				<span>Discover yourself</span> 
-				<span>through books, friends </span>
-				<span>and the world.<span>
-			</h2>
-			<div flex>
-				<img src="assets/discover.png" class="inbox-img">
-			</div>
-		</div> -->
-	<!-- </div>  -->
-	<div style="height: 600px;background: #ececec;">
-		<div class="aside-bg">
-			<div class="nav-container">
-				<ul>
-					<!-- <li class="icon promos" ng-class="{'site_color': nested_page_id == 1}">
-						<span class='icon-'></span>
-						<span>Search</span>
-					</li> -->
-					<li class="icon purchases" ng-class="{'site_color': nested_page_id == 2}">
-						<span class='icon-'></span>
-						<span>Filters</span>
-					</li>
-					<li class="icon travel" ng-class="{'site_color': nested_page_id == 3}">
-						<span class='icon-'></span>
-						<span>Suggestions</span>
-					</li>
-				</ul>
+			<div flex="5"></div>
+			<div layout="row" layout-align="center end" flex="40" hide-sm>
+				<img src="assets/Discover.png" class="img_resize"/>
 			</div>
 		</div>
 
-		<div class="right-container">
-			<div class="h-center-container" ng-if="current_page_id == 2">
-				<!-- <div ng-if="nested_page_id == 1" class="animate-fast content-box">
-					<div class="feature-description">
-						Search for books, authors and communities.
-					</div>
-					<md-whiteframe class="md-whiteframe-z1 w-box" 
-									layout="row" 
-									layout-align="left left">
-		    			<timer interval="1000" 
-		    				   autostart="false"
-		    				   stop="!timer_active"/> -->
-		    			<!-- <p ng-bind="search_animated"></p> -->
-		  			<!-- </md-whiteframe>
-				</div> -->
-
-
-				<div ng-if="nested_page_id == 2" class="animate-fast content-box">
-		  			<div class="feature-description">
-						Filters - your personal librarian.
-					</div>
-		  			<md-whiteframe class="w-box" 
-		  							layout="row" 
-		  							layout-align="left left">
-		  							<img src="assets/filters.png" class="image-resize">
-		  			</md-whiteframe>
+		<div layout="row" layout-align="start start" class="foot_view">
+			<div layout="column" class="left_container" flex="25" flex-sm="15" layout-fill>
+				<div layout="row" layout-align="start start" class="list" ng-class="{'site_color': nested_page_id == 2}">
+					<span flex="20" flex-sm="100" flex-md="10" class='icon-' show-sm hide-lg></span>
+					<span flex="80" flex-md="90" hide-sm>Filters</span>
 				</div>
-
-
-				<div ng-if="nested_page_id == 3" class="animate-fast content-box">
-		  			<div class="feature-description">
-						Enhance your reading journey through personalised suggestions.
-					</div>
-		  			<md-whiteframe class="w-box gray_background" 
-		  							layout="row" 
-		  							layout-align="left left">
-		    			<img src= "assets/suggestions.png" class="img-resize"/>
-		  			</md-whiteframe>
+				<div layout="row" layout-align="start start" class="list" ng-class="{'site_color': nested_page_id == 3}">
+					<span flex="20" flex-sm="100" flex-md="10" class='icon-' show-sm hide-lg></span>
+					<span flex="80" flex-md="90" hide-sm>Suggestions</span>
 				</div>
-				
+			</div>
+			<div ng-if="current_page_id == 2" flex="75" flex-sm="85" layout="column" 					
+				 	layout-fill>
+				<div ng-if="nested_page_id == 2" class="animate-fast" layout="column" 
+					layout-fill layout-padding>
+					<div class="description" layout-wrap layout-fill layout-padding>
+						Infinity - Your personal infinite source of knowledge
+					</div>
+					<md-divider layout-fill></md-divider>
+  					<div class="w_box" layout-padding>
+						<img src="assets/infinity.png" class="img_fullsize"/>
+					</div>
+				</div>
+				<div ng-if="nested_page_id == 3" class="animate-fast" layout="column" 
+					layout-fill layout-padding>
+					<div class="description" layout-wrap layout-fill layout-padding>
+						Enhance your reading journey through personalised suggestions
+					</div>
+					<md-divider layout-fill></md-divider>
+	   				<div layout-padding>
+						<img src= "assets/suggestions.png" class="img_fullsize"/>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
+</div>	

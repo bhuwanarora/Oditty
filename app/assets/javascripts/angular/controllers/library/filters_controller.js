@@ -1,4 +1,4 @@
-homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'genreService', 'authorService', 'WebsiteUIConstants', 'SearchUIConstants', 'timeGroupService', 'readingTimeService', function($scope, $rootScope, $timeout, genreService, authorService, WebsiteUIConstants, SearchUIConstants, timeGroupService, readingTimeService){
+homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'genreService', 'authorService', 'WebsiteUIConstants', 'SearchUIConstants', 'timeGroupService', 'readingTimeService', 'infinityService', function($scope, $rootScope, $timeout, genreService, authorService, WebsiteUIConstants, SearchUIConstants, timeGroupService, readingTimeService, infinityService){
 
     $scope._get_genres = function(){
     	if(angular.isUndefined($scope.info.genres) || $scope.info.genres.length == 0){
@@ -25,12 +25,53 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
                 this.push(json);
             },  $scope.info.authors);
         });
-    }       
+    }
+
+    $scope.reset_filter = function(){
+        delete $scope.selected_genre;
+        delete $scope.selected_author;
+        delete $scope.selected_year;
+        delete $scope.selected_duration;
+    }
+
+    _set_books = function(){
+        $scope.info.books = [];
+        infinityService.get_books().then(function(data){
+            angular.forEach(data.recommendations.books, function(value){
+                var json = {
+                    "isbn": value[0],
+                    "id": value[1]
+                }
+                this.push(json);
+            }, $scope.info.books);
+        });
+    }
+
+    $scope.select_genre = function(genre){
+        $rootScope.filters.other_filters[SearchUIConstants.Genre] = genre.id;
+        _set_books();
+    }
+
+    $scope.select_author = function(author){
+        $rootScope.filters.other_filters[SearchUIConstants.AuthorSearch] = author.id;
+        _set_books();
+    }
+
+    $scope.select_reading_time = function(read_time){
+        $rootScope.filters.other_filters[SearchUIConstants.Time] = read_time.id;
+        _set_books();
+    }
+
+    $scope.select_publishing_year = function(time_group){
+        $rootScope.filters.other_filters[SearchUIConstants.Year] = time_group.id;
+        _set_books();
+    }
 
     $scope.search_genres = function(input){
-        debugger
         var params = "q="+input+"&count="+10;
+        $scope.info.loading = true;
         genreService.search_genres(params).then(function(data){
+            $scope.info.loading = false;
             if(data.length > 0){
                 $scope.info.genres = [];
                 angular.forEach(data, function(value){
@@ -46,9 +87,10 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
     }
 
     $scope.search_authors = function(input){
-        debugger
         var params = "q="+input+"&count="+10;
+        $scope.info.loading = true;
         authorService.search_authors("q="+input).then(function(data){
+            $scope.info.loading = false;
             if(data.length > 0){
                 $scope.info.authors = [];
                 angular.forEach(data, function(value){
@@ -88,25 +130,8 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
                 var json = {"icon2": "icon-clock", "type": SearchUIConstants.Time, "custom_option": true};
                 json = angular.extend(json, {"name": name, "tag": tag});
                 this.push(json);
-            }, $scope.info.read_times);            
+            }, $scope.info.read_times);
         });
-    }
-
-    $scope.select_read_times = function(){
-        $scope.info.cirular_loading = true;
-    }
-
-    $scope.select_genres = function(event){
-        debugger
-        $scope.info.cirular_loading = true;
-    }
-
-    $scope.select_authors = function(){
-        $scope.info.cirular_loading = true;
-    }
-
-    $scope.select_time_groups = function(){
-        $scope.info.cirular_loading = true;
     }
 
     $scope._detect_key = function(event){
@@ -126,6 +151,10 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         $scope._get_authors();
         $scope._get_time_groups();
         $scope._get_reading_times();
+        if(angular.isUndefined($rootScope.filters)){
+            $rootScope.filters = {"filter_type": SearchUIConstants.BookSearch};
+        }
+        $rootScope.filters.other_filters = {};
     }
 
     _init();

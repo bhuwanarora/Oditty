@@ -1,7 +1,7 @@
 module Constants
 	InfluentialBooks			="influentialbooks"
 	MarkAsReadPoints 			= 5
-	BookmarkPoints 				= 5
+	# BookmarkPoints 				= 5
 	RatingPoints				= 10
 	BookmarkPoints				= 10
 	ReadTimePoints				= 10
@@ -76,4 +76,14 @@ module Constants
 		EmailVerification		= "email_verification"
 		RecommendBooks			= "RecommendBooks"
 	end
+
+	UniqueNewsCount  			= 50
+	BookCountShownOnSignup  	= 30
+	FewBooksReadCountRange  	= ["0-20"]
+	AverageBooksReadCountRange 	= ["20-50", "50-100", "100-250"]
+	InitialSkipCount        	= 0
+	RelevantSocialTagValue      = 1
+	BookLeftAMarkOnYouUpcase 	= "BOOKSLEFTAMARKONYOU"
+	FromFacebookUpcase   		= "FROMFACEBOOK"
+	MarkAsReadUpcase            = "MARKASREAD"
 end

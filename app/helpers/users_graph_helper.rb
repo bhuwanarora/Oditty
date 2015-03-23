@@ -205,10 +205,11 @@ module UsersGraphHelper
 		create_feednext_relation = "(user)-[fn:FeedNext{user_id:ID(user)}]->(user), "
 		create_ego_relation = "(user)-[:Ego{user_id:ID(user)}]->(user) WITH user "
 		get_labels = "MATCH(bm:Label{primary_label:true}) "
-		add_labels = "CREATE (user)-[:Labelled{user_id:ID(user)}]->(bm) WITH DISTINCT(user) as user "
-		get_all_users = "MATCH (all_user:User) WHERE all_user <> user "
-		make_friends = "CREATE (user)-[:Follow]->(all_user), (user)<-[:Follow]-(all_user)"
-		clause = create_new_user + create_feednext_relation + create_ego_relation + get_labels + add_labels + get_all_users + make_friends
+		add_labels = "CREATE (user)-[:Labelled{user_id:ID(user)}]->(bm) "
+		add_categories_to_user = "WITH user MERGE (user)-[rel:Likes]-(root_category:Category{is_root:true}) ON CREATE SET rel.weight = 0 "
+		# get_all_users = "MATCH (all_user:User) WHERE all_user <> user "
+		# make_friends = "CREATE (user)-[:Follow]->(all_user), (user)<-[:Follow]-(all_user)"
+		clause = create_new_user + create_feednext_relation + create_ego_relation + get_labels + add_labels + add_categories_to_user
 		puts clause.blue.on_red
 		@neo.execute_query(clause)
 	end

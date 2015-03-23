@@ -22,7 +22,7 @@ ReadersDoor::Application.routes.draw do
 
   resources :users
 
-  resources :authors
+  # resources :authors
 
   resources :edges
 
@@ -73,14 +73,16 @@ ReadersDoor::Application.routes.draw do
   # root :to => "website#coming_soon"
   get 'dev'                       => "recommendations#index",    :as => "dev"
   get 'home'                      => "website#home",             :as => "home"
-  get 'library'                   => "website#library",          :as => "library"
+  get 'infinity'                   => "website#infinity",          :as => "infinity"
   get 'search'                    => "website#search",           :as => "search"
   get 'profile'                    => "website#profile",           :as => "profile"
   get 'room'                      => "website#room",             :as => "room"
   get 'book'                      => "website#book",             :as => "dev_book"
   get 'network'                   => "website#network",             :as => "network"
   get 'journey'                   => "website#journey",             :as => "journey"
-  get 'customise'                   => "website#customise",             :as => "customise"
+  get 'customise'                 => "website#customise",             :as => "customise"
+  get 'author'                    => "website#author",             :as => "author"
+  get 'community'                 => "website#community",         :as => "community"
 
   get 'tree'                      => "categories#show_tree",    :as => "show_tree"
   get 'search_tag'                => "tags#search_tag",         :as => "search_tag"
