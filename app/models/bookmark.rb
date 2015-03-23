@@ -67,7 +67,7 @@ class Bookmark < Neo
 	end
 
 	def self.set_thumb
-		" SET bookmark_node.thumb = CASE WHEN user.thumb IS NULL THEN '' ELSE user.thumb END "
+		" SET bookmark_node.thumb = COALESCE(user.thumb,"") "
 	end
 
 	def self.label_and_labelled
