@@ -18,6 +18,10 @@ class User < Neo
 		match + User.optional_match_category + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + return_init + " COLLECT(DISTINCT(category.name)), COLLECT(DISTINCT(ID(category))), COLLECT(DISTINCT(category.icon)), COLLECT(DISTINCT(book.isbn)), COLLECT(DISTINCT(ID(book))), COLLECT(DISTINCT(book.title)), COLLECT(DISTINCT(book.author_name))"
 	end
 
+	def self.books_not_bookmarked
+		" WHERE NOT (user)-[:Labelled]->(:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(book) WITH book "
+	end
+
 	def get_basic_info
 		match + return_init + User.basic_info
 	end

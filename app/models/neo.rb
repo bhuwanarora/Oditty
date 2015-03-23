@@ -12,6 +12,10 @@ class Neo
 		" SKIP " + skip_count.to_s + " "
 	end
 
+	def return(*params)
+		" RETURN " + params.join(", ")
+	end
+
 	def limit limit_count
 		" LIMIT " + limit_count.to_s + " "
 	end
