@@ -15,7 +15,7 @@
 		<div layout="column" class="input_cont">
 			<md-input-container layout-margin style="font-family: 'Inconsolata', 'Courier New', serif;">
 				<!-- <label>Share your reading journey...</label> -->
-		        <textarea set-focus="info.show_share" ng-model="info.status"></textarea>
+		        <textarea name="text_area" id="text_area" set-focus="info.show_share" placeholder="Share your reading journey..." ng-model="info.status"></textarea>
 		    </md-input-container>
 	    
 			<div class="select_mood custom_button" 
@@ -83,24 +83,15 @@
 		height: 55px !important;
 	}
 
-	textarea::-webkit-input-placeholder {
-	   font-weight: bold !important;
-	   margin-top: -10px !important;
+	md-input-container .md-placeholder{
+		color: black !important;
+		font-weight: 450;
+		font-family: Roboto !important;
+		font-size: 45px;
+		left: 8% !important;
+		top: -24px !important;
 	}
+	
 
-	textarea:-moz-placeholder { /* Firefox 18- */
-	   font-weight: bold !important;
-	   margin-top: -10px !important;
-	}
-
-	textarea::-moz-placeholder {  /* Firefox 19+ */
-	   font-weight: bold !important;
-	   margin-top: -10px !important;
-	}
-
-	textarea:-ms-input-placeholder {  
-	   font-weight: bold !important;
-	   margin-top: -10px !important;
-	}
 
 </style>
