@@ -6,12 +6,13 @@ class User < Neo
 		# @skip_count = skip_count
 	end
 
-	def set_bookmark_count
-		" user.bookmark_count = CASE WHEN user.bookmark_count IS NULL THEN 1 ELSE toInt(user.bookmark_count) + 1 END "
+	def set_bookmark_count operation
+		" user.bookmark_count = COALESCE(user.bookmark_count,0) " + operation + " 1 "
 	end
 
-	def set_total_count_on_bookmark
-		" user.total_count = CASE WHEN user.total_count IS NULL THEN "+Constants::BookmarkPoints.to_s+" ELSE toInt(user.total_count) + "+Constants::BookmarkPoints.to_s+" END"
+	def set_total_count_on_bookmark operation
+		" user.total_count = COALESCE(user.total_count,0) " 
+		+ operation.to_s + " "+Constants::BookmarkPoints.to_s+" "
 	end
 
 	def get_detailed_info

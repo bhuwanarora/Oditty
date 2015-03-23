@@ -23,7 +23,7 @@ class Bookmark < Neo
 	end
 
 	def self.match label="user"
-		" OPTIONAL MATCH (" + label + ")-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book) "
+		" OPTIONAL MATCH (" + label + ")-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book),(bookmark_node)-[bookmark_node_relation]-() "
 	end
 
 	def match
@@ -74,35 +74,43 @@ class Bookmark < Neo
 		", label, labelled "
 	end
 
+	def self.set_timestamp
+		" SET bookmark_node.timestamp = " + Time.now.to_i.to_s + " "
+	end
+
 	def self.create
 		UsersBook.new(@user_id, @book_id).match + User.create_label(@key) + Bookmark.create_label_bookmark_node + Bookmark.create_bookmark_node_book + Bookmark.set_title + Bookmark.set_author_name + Bookmark.set_name + Bookmark.set_email + Bookmark.set_isbn + Bookmark.set_timestamp + Bookmark.set_created_at + Bookmark.set_updated_at + " WITH user, book, bookmark_node"
 	end
 
 	def self.add
-		set_clause = Book.set_bookmark_count + User.set_bookmark_count + Label.set_bookmark_count + UsersLabel.set_bookmark_count + User.set_total_count_on_bookmark
-		Bookmark.create + User::Feed.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled + Book::Feed.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled + set_clause
+		operation = "+"
+		set_clause = Book.set_bookmark_count(operation) + User.set_bookmark_count(operation) + Label.set_bookmark_count(operation) + UsersLabel.set_bookmark_count(operation) + User.set_total_count_on_bookmark(operation)
+
+		clause = Bookmark.create + User::Feed.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled + Book::Feed.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled + set_clause
 		puts "BOOK BOOKMARKED".green
+		clause
 	end
 
 	def self.delete_bookmark_relations
-		" MATCH (user)-[labelled:Labelled]->(label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book) DELETE bookmarked_on, bookmark_action WITH user, book, labelled, label, bookmark_node "
+		"  DELETE bookmarked_on, bookmark_action WITH user, book, labelled, label, bookmark_node "
+	end
+
+	def self.delete_bookmark
+		" MATCH ()-[relation]-(bookmark_node) DELETE relation, bookmark_node "
 	end
 
 	def self.remove
-		Bookmark.new(@user_id, @book_id, @key)
-		bookmark.delete_bookmark_relations
+		operation = "-"
+		set_clause = Book.set_bookmark_count(operation) + User.set_bookmark_count(operation) + Label.set_bookmark_count(operation) + UsersLabel.set_bookmark_count(operation) + User.set_total_count_on_bookmark(operation)
 		
 		feednext_clause = User::Feed.new(@user_id).delete_feed("bookmark_node") + ", labelled, label "
 
 		bookfeed_next_clause = Book::Feed.new(@user_id).delete_feed("bookmark_node") + ", labelled, label "
 
-		delete_node = "DELETE bookmark_node WITH user, book, label, labelled "
-
-		set_clause = "SET b.bookmark_count = CASE WHEN b.bookmark_count IS NULL THEN 0 ELSE toInt(b.bookmark_count) - 1 END, u.bookmark_count = CASE WHEN u.bookmark_count IS NULL THEN 0 ELSE toInt(u.bookmark_count) - 1 END, l.bookmark_count = CASE WHEN l.bookmark_count IS NULL THEN 0 ELSE toInt(l.bookmark_count) - 1 END, lr.bookmark_count = CASE WHEN lr.bookmark_count IS NULL THEN 0 ELSE toInt(lr.bookmark_count) - 1 END, u.total_count = CASE WHEN u.total_count IS NULL THEN 0 ELSE toInt(u.total_count) - "+Constants::BookmarkPoints.to_s+" END"
-
-		clause = remove_bookmark_node_clause + feednext_clause + bookfeed_next_clause + delete_node + set_clause
+		clause = Bookmark.new(@user_id, @book_id, @key).match + Bookmark.match + Bookmark.delete_bookmark_relations + set_clause + feednext_clause + bookfeed_next_clause + Bookmark.delete_bookmark
 
 		puts "REMOVE BOOKMARKED".green
+		clause
 	end
 
 	def self.have_left_a_mark_on_me

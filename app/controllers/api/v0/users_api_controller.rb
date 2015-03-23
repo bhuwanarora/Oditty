@@ -53,7 +53,13 @@ module Api
 			def get_books_from_unexplored_subjects
 				user_id = session[:user_id]
 				favourites = false
-				books = User::Suggest::Book.new(user_id).for_favourite_category(user_id, favourites).execute
+				books = []
+				books_processed_count = 0
+				while books.length < 10
+					debugger
+					books << User::Suggest::Book.new(user_id).for_favourite_category(user_id, books_processed_count, favourites).execute
+					books_processed_count += Constants::RecommendationBookCount*10
+				end
 				render :json => books, :status => 200
 			end
 

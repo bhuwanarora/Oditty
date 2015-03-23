@@ -32,7 +32,6 @@ class User::Predict::Book < User::Predict
 
 		clause = match_clause + return_clause
 		data = clause.execute 	
-	 	debugger
 
 	 	has_linked_books = data[0]["book_id"].blank? ? false : true rescue false
 		unless has_linked_books

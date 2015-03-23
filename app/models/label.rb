@@ -7,7 +7,7 @@ class Label < Neo
 		" user_label.name, ID(user_label) "
 	end
 
-	def set_bookmark_count
-		" label.bookmark_count = CASE WHEN label.bookmark_count IS NULL THEN 1 ELSE toInt(label.bookmark_count) + 1 END "
+	def set_bookmark_count operation
+		" label.bookmark_count = COALESCE(label.bookmark_count,0) " + operation.to_s + " 1 "
 	end
 end
