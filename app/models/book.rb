@@ -36,7 +36,7 @@ class Book < Neo
 	end
 
 	def self.get_small_reads
-		Book::SmallRead.path_nodes + return_init + Book.get_basic_info
+		Book::SmallRead.path_nodes + Neo.new.return_group(Book.basic_info)
 	end
 
 	def get_categories

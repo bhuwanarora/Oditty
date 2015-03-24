@@ -1,4 +1,4 @@
-class Book::Feed < Neo
+class Book::Feed < Book
 	def initialize user_id
 		@user_id = user_id
 	end

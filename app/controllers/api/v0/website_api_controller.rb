@@ -1,6 +1,8 @@
 module Api
 	module V0
 		class WebsiteApiController < ApplicationController
+			require_dependency 'user/predict/category'
+
 			def s3
 				begin
 					info = S3WebsiteHelper.s3_access_token

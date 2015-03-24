@@ -1,7 +1,8 @@
 module Api
 	module V0
 		class UsersApiController < ApplicationController
-			
+			require_dependency 'user/suggest/book'
+
 			def get_info_card_data
 				info = UserApi.get_info_card_data
 				render :json => info, :status => 200
@@ -34,7 +35,7 @@ module Api
 			def get_books_from_favourite_category
 				user_id = session[:user_id]
 				favourites = true
-				books = User::Suggest::Book.new(user_id).for_favourite_category(favourites).execute
+				books = User::Suggest::Book.new(user_id).for_favourite_category(favourites)
 				render :json => books, :status => 200
 			end
 
@@ -53,7 +54,7 @@ module Api
 			def get_books_from_unexplored_subjects
 				user_id = session[:user_id]
 				favourites = false
-				books = User::Suggest::Book.new(user_id).for_favourite_category(favourites).execute
+				books = User::Suggest::Book.new(user_id).for_favourite_category(favourites)
 				render :json => books, :status => 200
 			end
 
