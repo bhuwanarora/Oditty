@@ -9,6 +9,7 @@ homeApp.controller('optionsController', ["$scope", "$rootScope", "$timeout", 'Sh
         delete $scope.second_option;
         delete $scope.level2_nested_options;
         $scope.add_books = false;
+        $scope.data.selectedIndex = Math.min($scope.data.selectedIndex + 1, 2) ;
 
         $scope.loading = true;
         angular.forEach(ShareOptions.ReadingStage, function(value){
@@ -27,6 +28,7 @@ homeApp.controller('optionsController', ["$scope", "$rootScope", "$timeout", 'Sh
 
     $scope.show_level2_options = function(option, event){
         $scope.second_option = option;
+        $scope.data.selectedIndex = Math.min($scope.data.selectedIndex + 1, 2) ;
         $scope.loading2 = true;
         if(angular.isDefined($scope.second_option.search_book)){
                 $scope.add_books = true;
@@ -45,6 +47,14 @@ homeApp.controller('optionsController', ["$scope", "$rootScope", "$timeout", 'Sh
     $scope.post_status = function(option, event){
 
     }
+
+    $scope.data = {
+        selectedIndex : 0     
+    };
+
+    $scope.previous = function() {
+        $scope.data.selectedIndex = Math.max($scope.data.selectedIndex - 1, 0);
+    };
 
     _init();
 }]);
