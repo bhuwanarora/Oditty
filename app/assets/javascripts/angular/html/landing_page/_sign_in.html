@@ -1,9 +1,9 @@
-<md-content ng-controller="signInController">
+<div ng-controller="signInController"> 
     <md-sidenav class="md-sidenav-right md-whiteframe-z2 sigin_dialog" md-component-id="right">
         <div flex class="padding" layout="column">
             <md-button layout="row" class="md-button-clear google">
                 <div flex="10"><span class="icon-googleplus"></span></div>
-                <div flex="90" class="google-right">LOGIN WITH GOOGLE</div>
+                <div id="signInButton" flex="90" class="google-right" ng-click = "renderSignInButton()">LOGIN WITH GOOGLE</div>
             </md-button>
             <md-button layout="row" class="md-button-clear fb">
                 <div flex="10"><span class="icon-facebook"></span></div>
@@ -13,17 +13,18 @@
             <div>Or Login with email</div>
             <md-input-container>
                 <label>Email</label>
-                <input>
+                <input ng-model="user.email" type="email" spellcheck="false"
+                   ng-keydown="submit($event)">
             </md-input-container>
             <md-input-container>
                 <label>Password</label>
-                <input>
+                <input ng-model="user.password" type="password" spellcheck="false" ng-keydown="submit($event)">
             </md-input-container>
-            <md-button class="login md-button-clear">LOGIN</md-button>
-            <a href="">Forgot Password?</a>
+            <md-button class="login md-button-clear" ng-click="authenticate();">LOGIN</md-button>
+            <a href="" ng-click = "recover_password()">Forgot Password?</a>
         </div>
     </md-sidenav>
-</md-content>
+</div> 
 
 <style>
     .sign_in_backdrop{

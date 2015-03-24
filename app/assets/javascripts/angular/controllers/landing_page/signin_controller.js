@@ -1,4 +1,48 @@
-app.controller('signInController', ["$scope", "$rootScope", "websiteService", "Facebook", "stropheService", "$timeout", "$cookieStore", "LoginConstants", "WebsiteUIConstants", "$location", "$routeParams", "sharedService", function($scope, $rootScope, websiteService, Facebook, stropheService, $timeout, $cookieStore, LoginConstants, WebsiteUIConstants, $location, $routeParams, sharedService){
+app.controller('signInController', ["$scope", "$rootScope", "websiteService", "Facebook", "$timeout", "$cookieStore", "LoginConstants", "WebsiteUIConstants", "$location", "$routeParams", "sharedService", function($scope, $rootScope, websiteService, Facebook, stropheService, $timeout, $cookieStore, LoginConstants, WebsiteUIConstants, $location, $routeParams, sharedService){
+    // Here we do the authentication processing and error handling.
+    // Note that authResult is a JSON object.
+    $scope.processAuth = function(authResult) {
+        // Do a check if authentication has been successful.
+        if(authResult['access_token']) {
+            // Successful sign in.
+            $scope.signedIn = true;
+            console.log("signedIn");
+        } else if(authResult['error'] == "immediate_failed") {
+            // Error while signing in.
+            gapi.auth.authorize({
+                client_id: '917672049716-pl6i0qbuen1so84tg2b5vijg7qfjhash.apps.googleusercontent.com',
+                scope: 'https://www.googleapis.com/auth/plus.login email',
+                immediate: true
+            }, function (authRes) {
+                if (authRes['status']['signed_in']) {
+                    console.log("signedIn",authResult['error']);
+                }
+            });
+            console.log(" not signedIn",authResult['error']);
+            $scope.signedIn = false;
+ 
+            // Report error.
+        }
+    };
+ 
+    // // When callback is received, we need to process authentication.
+    $scope.signInCallback = function(authResult) {
+        $scope.$apply(function() {
+            $scope.processAuth(authResult);
+        });
+    };
+
+    $scope.renderSignInButton = function() {
+        gapi.signin.render('signInButton',
+            {
+                'callback': $scope.signInCallback, // Function handling the callback.
+                'clientid': '917672049716-pl6i0qbuen1so84tg2b5vijg7qfjhash.apps.googleusercontent.com', 
+                'scope': 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email',
+                'cookiepolicy': 'single_host_origin'
+            }
+        );
+    }
+
     $scope.submit = function(event){
         var enter_pressed = event.keyCode == WebsiteUIConstants.Enter;
         if(enter_pressed){
@@ -254,6 +298,7 @@ app.controller('signInController', ["$scope", "$rootScope", "websiteService", "F
             }
             timer = timer + 1500;
         });
+        $scope.renderSignInButton();
     }
 
 
