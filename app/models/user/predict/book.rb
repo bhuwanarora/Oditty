@@ -25,9 +25,11 @@ class User::Predict::Book < User::Predict
 		data
 	end
 
-	def handle_average_number_books_read skip_count=0, limit_count = Constants::BookCountShownOnSignup
+	def handle_average_number_books_read user_id, skip_count=0, limit_count = Constants::BookCountShownOnSignup
 	 	
-	 	 match_clause = " MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book)-[:FromCategory]->(:Category)-[HasRoot*0..1]->(root_category{is_root:true}),(user)-[:RatingAction]-(rating_node:`RatingNode`)-[:Rate]-(book) WHERE ID(user) = "  + @user_id.to_s + " WITH book, root_category  AS category, rating_node "
+		Users.match(@user_id) + User.match_root_category + User.match_bookmark +  
+
+	 	 match_clause = " MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book:Book)-[:FromCategory]->(:Category)-[HasRoot*0..1]->(root_category{is_root:true}),(user)-[:RatingAction]-(rating_node:`RatingNode`)-[:Rate]-(book:Book) WHERE ID(user) = "  + @user_id.to_s + " WITH book, root_category  AS category, rating_node "
 	 	return_clause = return_init + ::Category.basic_info + " ,rating_node.rating AS user_rating, "+ ::Book.basic_info + ::Book.order_desc + skip(skip_count) + limit(limit_count) 
 
 		clause = match_clause + return_clause

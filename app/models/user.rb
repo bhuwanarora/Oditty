@@ -90,9 +90,30 @@ class User < Neo
 		match + return_init + Book.get_basic_info + ", COLLECT(label.name) as labels SKIP "+skip_count.to_s+" LIMIT 10"
 	end
 
-	def match_bookmark
+	def select_public is_book=false
+		medium = is_book ? "book" : "article"
+		and_clause = " AND bookmark_node.public = true WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, " + medium + ", COUNT(label) AS label_count "
+	end
+
+	def select_visited is_book=false
+		medium = is_book ? "book" : "article"
+		and_clause = " AND bookmark_node.name = 'Visited' WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, " + medium + ", COUNT(label) AS label_count "
+	end
+
+	def select_public_bookshelves 
+		is_book = true
+		match_bookmark + select_public(is_book)
+	end
+
+	def select_visted_books
+		is_book = true
+		match_bookmark + select_visited(is_book)
+	end
+
+	def match_bookmark 
 		" MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book:Book) WHERE bookmark_node.user_id = " + @id.to_s + " "
 	end
+
 
 	def approve_thumb_request(status, id)
 		"MATCH (u:User)-[r1:DataEdit]->(t:ThumbRequest)-[r2:DataEditRequest]->(b:Book) WHERE ID(t)="+id.to_s+" SET t.status = "+status.to_s+", b.external_thumb = CASE WHEN "+status.to_s+" = 1 THEN t.url ELSE null END"
@@ -130,5 +151,33 @@ class User < Neo
 
 	def get_init_book_count_range
 		match + return_init + User.init_book_read_count
+	end
+
+	def select_distinct_properties
+		 " DISTINCT label.name AS shelf,  bookmark_node.timestamp AS time, "
+	end
+
+	def get_books_from_public_shelves 
+		match + select_visted_books + return_init + select_distinct_properties + Book.basic_info  + order_init + " label_count, time DESC "  
+	end
+
+	def get_news_from_public_shelves
+		match + Article::News.new(@id).match_news_bookmark + select_public + return_init + select_distinct_properties  + Article::News.basic_info + order_init + " label_count, time DESC "  
+	end
+
+	def get_blogs_from_public_shelves 
+		match +	Article::Blog.new(@id).match_blog_bookmark + select_public + return_init + select_distinct_properties  + Article::Blog.basic_info + order_init + " label_count, time DESC "  
+	end
+
+	def get_visited_books 
+		match + select_visted_books + return_init + select_distinct_properties + Book.basic_info  + order_init + " label_count, time DESC " 
+	end
+
+	def get_visited_blogs
+		match +	Article::Blog.new(@id).match_blog_bookmark + select_visited + return_init + select_distinct_properties  + Article::Blog.basic_info + order_init + " label_count, time DESC "  
+	end
+
+	def get_visited_news
+		match +	Article::Blog.new(@id).match_blog_bookmark + select_visited + return_init + select_distinct_properties  + Article::Blog.basic_info + order_init + " label_count, time DESC "  
 	end
 end

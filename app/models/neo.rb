@@ -4,6 +4,10 @@ class Neo
 		@neo = Neography::Rest.new
 	end
 
+	def order_init
+		" ORDER BY "
+	end
+
 	def return_init
 		" RETURN "
 	end
