@@ -1,23 +1,27 @@
-<md-bottom-sheet class="md-list md-has-header" ng-controller="listBottomSheetController" ng-click="stop_propagation($event)">
-    <section layout-padding>Add to</section>
-    <md-list>
-        <md-item ng-repeat="item in items" ng-click="show_custom_toast()">
-            <md-checkbox ng-model="data.cb1" aria-label="{{ item.name }}" class="md-warn">
-                {{ item.name }}
-            </md-checkbox>
-        </md-item>
-    </md-list>
-    <md-divider></md-divider>
-    <section layout-padding>Shelves</section>
-    <md-list>
-        <md-item ng-repeat="item in personal_shelves" ng-click="show_custom_toast()">
-            <md-checkbox ng-model="data.cb1" aria-label="{{ item.name }}" class="md-warn">
-                {{ item.name }}
-            </md-checkbox>
-        </md-item>
-    </md-list>
-    <md-divider></md-divider>
-    <section layout="row" layout-padding>
+<md-bottom-sheet class="md-list md-has-header share_bottom" ng-controller="listBottomSheetController" 
+    ng-click="stop_propagation($event)">
+    <section class="padding header" layout-fill>Add to</section>
+    <section layout="column" class="book_list" layout-fill>
+        <md-list>
+            <md-item ng-repeat="item in items" ng-click="show_custom_toast()">
+                <md-checkbox ng-model="data.cb1" aria-label="{{ item.name }}" class="md-warn">
+                    {{ item.name }}
+                </md-checkbox>
+            </md-item>
+        </md-list>
+        <md-divider></md-divider>
+        <section layout-padding>Shelves</section>
+        <md-list>
+            <md-item ng-repeat="item in personal_shelves" ng-click="show_custom_toast()">
+                <md-checkbox ng-model="data.cb1" aria-label="{{ item.name }}" class="md-warn">
+                    {{ item.name }}
+                </md-checkbox>
+            </md-item>
+        </md-list>
+        <md-divider></md-divider>
+    </section>
+    
+    <section class="footer" layout="row" layout-padding>
         <md-input-container class="add_new">
             <label>Create New...</label>
             <input/>
@@ -29,7 +33,19 @@
 </md-bottom-sheet>
 
 <style>
-    .add_new{
-        padding-bottom: 0px;
+    .share_bottom{
+        height: 50%;
+        position: absolute;
+    }
+    .header{
+        position: absolute;
+        top: 5px;
+    }
+    .book_list{
+        margin-top:40px;
+    }
+    .footer{
+        position: absolute;
+        bottom: 5px;
     }
 </style>
