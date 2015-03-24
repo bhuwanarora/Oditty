@@ -32,7 +32,7 @@ class User < Neo
 	end
 
 	def get_all_books skip_count=0, limit_count=Constants::BookCountShownOnSignup 
-		match + Bookmark.match + return_init + ::Book.basic_info + ::Book.order_desc + skip(skip_count) + limit(limit_count)
+		match + Bookmark.match("book", "Book") + return_init + ::Book.basic_info + ::Book.order_desc + skip(skip_count) + limit(limit_count)
 	end
 
 	def self.create_label key

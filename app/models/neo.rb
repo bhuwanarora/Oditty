@@ -117,6 +117,4 @@ class Neo
 		clause = get_timing_relationship + delete_timing_relationship + with_clause
 		clause
 	end
-
-
 end
