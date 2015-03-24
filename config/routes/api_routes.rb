@@ -101,12 +101,10 @@ ReadersDoor::Application.routes.draw do
       match 'author_details'                          => 'authors_api#details',                         :via => [:put, :get, :post]
       match 'feed'                                    => 'feeds_api#get_feed',                          :via => [:put, :get, :post]
 
-      match 'public_bookshelves'                      => 'room_api#get_books',                          :via => [:put, :get, :post]    
-      match 'public_newsshelves'                      => 'room_api#get_news',                           :via => [:put, :get, :post]    
-      match 'public_blogshelves'                      => 'room_api#get_blogs',                          :via => [:put, :get, :post]    
+      match 'bookshelves'                             => 'room_api#get_books',                          :via => [:put, :get, :post]    
+      match 'articleshelves'                          => 'room_api#get_articles',                       :via => [:put, :get, :post]    
       match 'visited_books'                           => 'room_api#get_visited_books',                  :via => [:put, :get, :post]    
-      match 'visited_news'                            => 'room_api#get_visited_news',                   :via => [:put, :get, :post]    
-      match 'visited_blogs'                           => 'room_api#get_visited_blogs',                  :via => [:put, :get, :post]    
+      match 'visited_articles'                        => 'room_api#get_visited_articles',               :via => [:put, :get, :post]    
 
     end
   end

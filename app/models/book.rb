@@ -39,6 +39,10 @@ class Book < Neo
 		Book::SmallRead.path_nodes + Neo.new.return_group(Book.basic_info)
 	end
 
+	def self.match_path relation, limit
+		"MATCH path = (book)-[:" + relation.to_s + "*" + limit.to_s + "]-(last_in_path)"
+	end
+
 	def get_categories
 		match_clause = " MATCH (book) WHERE ID(book) = " + @id.to_s + " MATCH (book)-[:FromCategory]->(:Category)-[:HasRoot*0..1]->(root_category{is_root:true}) RETURN "
 		limit_clause = " LIMIT 5"

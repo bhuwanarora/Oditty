@@ -1,3 +1,5 @@
+require_dependency 'bookmark/object/article'
+require_dependency 'bookmark/object/book'
 class User < Neo
 
 	def initialize user_id, skip_count=0
@@ -17,10 +19,6 @@ class User < Neo
 
 	def get_detailed_info
 		match + User.optional_match_category + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + return_init + " COLLECT(DISTINCT(category.name)), COLLECT(DISTINCT(ID(category))), COLLECT(DISTINCT(category.icon)), COLLECT(DISTINCT(book.isbn)), COLLECT(DISTINCT(ID(book))), COLLECT(DISTINCT(book.title)), COLLECT(DISTINCT(book.author_name))"
-	end
-
-	def self.books_not_bookmarked
-		" WHERE NOT (user)-[:Labelled]->(:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(book) WITH book "
 	end
 
 	def get_basic_info
@@ -110,11 +108,6 @@ class User < Neo
 		match_bookmark + select_visited(is_book)
 	end
 
-	def match_bookmark 
-		" MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book:Book) WHERE bookmark_node.user_id = " + @id.to_s + " "
-	end
-
-
 	def approve_thumb_request(status, id)
 		"MATCH (u:User)-[r1:DataEdit]->(t:ThumbRequest)-[r2:DataEditRequest]->(b:Book) WHERE ID(t)="+id.to_s+" SET t.status = "+status.to_s+", b.external_thumb = CASE WHEN "+status.to_s+" = 1 THEN t.url ELSE null END"
 	end
@@ -187,27 +180,35 @@ class User < Neo
 		 " DISTINCT label.name AS shelf,  bookmark_node.timestamp AS time, "
 	end
 
-	def get_books_from_public_shelves 
-		match + select_visted_books + return_init + select_distinct_properties + Book.basic_info  + order_init + " label_count, time DESC "  
+	def get_books_from_public_shelves
+		threads = [] 
+		labels = Hash.new 
+		books = (match + Bookmark::Object::Book.get_public).execute
+		books.each do |book|
+			threads << Thread.new(book){|book| book["dominant_color"] = ImageServiceHelper.get_dominant_color(book["isbn"])}
+		end
+		threads.each{|thread| thread.join}
+		books.each.with_object({}){|book,labels| if (labels[book["shelf"]].length <=4 or labels[book["shelf"]].nil?) then (labels[book["shelf"]] ||= [] ) << book end }
+		labels
 	end
 
-	def get_news_from_public_shelves
-		match + Article::News.new(@id).match_news_bookmark + select_public + return_init + select_distinct_properties  + Article::News.basic_info + order_init + " label_count, time DESC "  
-	end
-
-	def get_blogs_from_public_shelves 
-		match +	Article::Blog.new(@id).match_blog_bookmark + select_public + return_init + select_distinct_properties  + Article::Blog.basic_info + order_init + " label_count, time DESC "  
+	def get_articles_from_public_shelves
+		match + Bookmark::Object::Article.get_public 
 	end
 
 	def get_visited_books 
-		match + select_visted_books + return_init + select_distinct_properties + Book.basic_info  + order_init + " label_count, time DESC " 
+		threads = []
+		labels = Hash.new 
+		books = (match + Bookmark::Object::Book.get_visited).execute 
+		books.each do |book|
+			threads << Thread.new(book){|book| book["dominant_color"] = ImageServiceHelper.get_dominant_color(book["isbn"])}
+		end
+		threads.each{|thread| thread.join}
+		books.each.with_object({}) {|book,labels| if (labels[book["shelf"]].length <=4 or labels[book["shelf"]].nil?) then (labels[book["shelf"]] ||= [] ) << book end }
+		labels
 	end
 
-	def get_visited_blogs
-		match +	Article::Blog.new(@id).match_blog_bookmark + select_visited + return_init + select_distinct_properties  + Article::Blog.basic_info + order_init + " label_count, time DESC "  
-	end
-
-	def get_visited_news
-		match +	Article::Blog.new(@id).match_blog_bookmark + select_visited + return_init + select_distinct_properties  + Article::Blog.basic_info + order_init + " label_count, time DESC "  
+	def get_visited_articles
+		match + Bookmark::Object::Article.get_visited 
 	end
 end

@@ -5,7 +5,9 @@ class UsersBook < Neo
 		@user_id = user_id
 	end
 
-	def match
+
+
+	def match 
 		" MATCH (book:Book), (user:User) WHERE ID(book)="+@book_id.to_s+" AND ID(user)="+@user_id.to_s+" WITH user, book "
 	end
 
@@ -27,7 +29,7 @@ class UsersBook < Neo
 	end
 
 	def self.optional_match_mark_as_read
-		" OPTIONAL MATCH (user)-[mark_as_read:MarkAsReadAction]->(:MarkAsReadNode)--(book) "
+		" OPTIONAL MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book) "
 	end
 
 	def self.friends_book
