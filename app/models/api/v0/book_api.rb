@@ -1,8 +1,8 @@
-include BooksGraphHelper
 include NotificationHelper
 module Api
 	module V0
 		class BookApi
+			require_dependency 'user/suggest/book'
 
 			def self.create_thumb_request(params, user_id)
 				BooksGraphHelper.create_thumb_request(params, user_id)
@@ -112,50 +112,8 @@ module Api
 
 			def self.get_popular_books(params, user_id)
 				params = JSON.parse params["q"]
-				if params.nil? || params["skip_count"].nil?
-					skip_count = 0
-					clause = "MATCH (book:Book) WHERE ID(book)="+Constants::BestBook.to_s
-				else
-					skip_count = params["skip_count"]
-					clause = "MATCH (b:Book) WHERE ID(b)="+Constants::BestBook.to_s+" MATCH p=(b)-[:Next_book*" + (skip_count.to_i).to_s + ".." + (19+skip_count.to_i).to_s + "]->(b_next) WITH last(nodes(p)) AS book"
-				end
-				mark_as_read_clause = " OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" WITH user, book, m"
-				rating_clause = " OPTIONAL MATCH (user)-[:RatingAction]->(z:RatingNode{book_id:ID(book), user_id:"+user_id.to_s+"})-[:Rate]->(book) WITH user, book, m, z"
-				root_category_clause = " OPTIONAL MATCH (book)-[]->(category:Category{is_root: true})"
-				return_clause = " RETURN book.isbn AS isbn, ID(book) AS id, book.title AS title, book.author_name AS author_name, ID(m) AS status, z.rating AS user_rating, book.published_year AS published_year, book.page_count AS page_count, COLLECT(category.id) AS categories_id, COLLECT(category.name) AS categories_name "
-				clause = clause + mark_as_read_clause + rating_clause + root_category_clause + return_clause
-				@neo = Neography::Rest.new
-				begin
-					books =  @neo.execute_query(clause)
-					categories = []
-					for book in books
-						book["categories_name"].each_with_index do |category_name, index|
-							category = {"name" => category_name, "id" => book["categories_id"][index]}
-							categories.push category
-						end
-						book["categories"] = categories
-						book.except!("categories_id")
-						book.except!("categories_name")
-					end
-				rescue Exception => e
-					puts e.to_s.red
-					books = [{:message => "Error in finding books"}]
-					# books =  @neo.execute_query(clause)["data"]
-				end
-				# results = []
-				# for book in books
-				# 	book = book[0]["data"]
-				# 	isbn = book["isbn"].split(",")[0] rescue nil
-				# 	thumb = "http://covers.openlibrary.org/b/isbn/"+isbn+"-S.jpg" rescue ""
-				# 	book = {
-				# 		:title => book["title"],
-				# 		:author_name => book["author_name"],
-				# 		:thumb => thumb
-				# 	}
-				# 	results.push book
-				# end
-				# results
-				books
+				skip_count = (params.nil? || params["skip_count"].nil?) ? 0 : params[:skip_count]
+				User::Suggest::Book.get_popular_books skip_count
 			end
 
 			def self.get_basic_book_details(id, user_id)

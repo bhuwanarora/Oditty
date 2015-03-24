@@ -12,7 +12,7 @@ class Category < Neo
 		", likes.weight AS likes_weight "
 	end
 
-	def self.get_books label, skip, length
+	def self.get_books label="category", skip, length
 		" MATCH (" + label + ")-[next_in_category:NextInCategory*" + skip.to_s + "]->(book:Book) WITH book, "+label+" MATCH path = (book)-[next_in_category:NextInCategory*" + length.to_s + "]->(category_book:Book) WHERE ALL(relation IN relationships(path) WHERE relation.uuid = "+label+".uuid) WITH "+label+", EXTRACT(n in nodes(path)|n) AS books UNWIND books AS book WITH book, "+label+" AS "+label
 	end
 
