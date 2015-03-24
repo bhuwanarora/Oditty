@@ -9,7 +9,7 @@ homeApp.controller('optionsController', ["$scope", "$rootScope", "$timeout", 'Sh
         delete $scope.second_option;
         delete $scope.level2_nested_options;
         $scope.add_books = false;
-    
+
         $scope.loading = true;
         angular.forEach(ShareOptions.ReadingStage, function(value){
             if(angular.equals(value, option)){
