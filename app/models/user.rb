@@ -141,6 +141,36 @@ class User < Neo
 		clause
 	end
 
+	def self.match_likeable_category(label="category", category_id=nil)
+		if category_id
+			clause = " MATCH (user)-[likes:Likes]->("+label+":Category) WHERE ID("+label+")="+category_id.to_s+" AND likes.weight > 0 WITH user, "+label+", likes "
+		else
+			clause = " MATCH (user)-[likes:Likes]->("+label+":Category) WHERE likes.weight > 0 WITH user, "+label+", likes "
+		end
+		clause
+	end
+
+	def self.match_likeable_root_category category_id=nil
+		clause = " MATCH (user)-[likes:Likes]->(root_category:Category) WHERE "
+		if category_id
+			clause = clause + "ID(root_category)="+category_id.to_s+" AND "
+		end
+		clause = clause + "likes.weight > 0 AND root_category.is_root = true WITH user, root_category, likes "
+		clause
+	end
+
+
+
+	def self.match_custom_likeable_root_category max=true, category_id=nil
+		custom = max ? " MAX " : " MIN "
+		clause = " MATCH (user)-[likes:Likes]->(root_category:Category) WHERE "
+		if category_id
+			clause = clause + " ID(root_category)="+category_id.to_s+" AND "
+		end
+		clause = clause + "likes.weight > 0 AND root_category.is_root = true WITH root_category, user, " + custom + "(likes.weight) AS custom_like_weight MATCH (user)-[likes]->(root_category)-[:NextInCategory]->(book) WHERE likes.weight = custom_like_weight WITH user, root_category, likes "
+		clause
+	end
+
 	def self.optional_match_category category_id=nil
 		" OPTIONAL" + User.category_clause(category_id)
 	end

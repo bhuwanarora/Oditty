@@ -16,12 +16,20 @@ class Neo
 		" SKIP " + skip_count.to_s + " "
 	end
 
-	def return(*params)
+	def return_group(*params)
 		" RETURN " + params.join(", ")
+	end
+
+	def match_group(*params)
+		" MATCH " + params.join(", ")
 	end
 
 	def limit limit_count
 		" LIMIT " + limit_count.to_s + " "
+	end
+
+	def with_group(*params)
+		" WITH " + params.join(", ")
 	end
 
 	def self.execute clause

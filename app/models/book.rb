@@ -35,8 +35,8 @@ class Book < Neo
 		" OPTIONAL " + self.match_genre
 	end
 
-	def self.get_small_reads length=0
-		Book::SmallRead.path_nodes(length)+ return_init + Book.get_basic_info
+	def self.get_small_reads
+		Book::SmallRead.path_nodes + Neo.new.return_group(Book.basic_info)
 	end
 
 	def get_categories
