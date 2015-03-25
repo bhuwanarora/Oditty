@@ -7,8 +7,8 @@ class Book < Neo
 		" MATCH (book:Book)-[:BookFeed*0..]->(news_feed) WHERE ID(book) = " + @id.to_s + " RETURN labels(news_feed), news_feed "
 	end
 
-	def set_bookmark_count
-		" SET book.bookmark_count = CASE WHEN book.bookmark_count IS NULL THEN 1 ELSE toInt(book.bookmark_count) + 1 END "
+	def set_bookmark_count operation
+		" SET book.bookmark_count = COALESCE(book.bookmark_count,0) " + operation.to_s + " 1 "
 	end
 
 	def match
@@ -37,6 +37,10 @@ class Book < Neo
 
 	def self.get_small_reads
 		Book::SmallRead.path_nodes + Neo.new.return_group(Book.basic_info)
+	end
+
+	def self.match_path relation, limit
+		"MATCH path = (book)-[:" + relation.to_s + "*" + limit.to_s + "]-(last_in_path)"
 	end
 
 	def get_categories

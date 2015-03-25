@@ -112,8 +112,9 @@ module Api
 			def self.get_popular_books(params, user_id)
 				params = JSON.parse params["q"]
 				skip_count = (params.nil? || params["skip_count"].nil?) ? 0 : params[:skip_count]
-				User::Suggest::Book.get_popular_books skip_count
+				User::Suggest::Book.get_popular_books skip_count, user_id
 			end
+
 
 			def self.get_basic_book_details(id, user_id)
 				book = BooksGraphHelper.get_basic_details(id, user_id)
@@ -438,7 +439,6 @@ module Api
 				clause = clause + limit_clause 							if limit_clause.present?
 				clause
 			end
-
 		end
 	end
 end

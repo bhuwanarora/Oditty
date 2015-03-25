@@ -4,6 +4,10 @@ class Neo
 		@neo = Neography::Rest.new
 	end
 
+	def order_init
+		" ORDER BY "
+	end
+
 	def return_init
 		" RETURN "
 	end
@@ -113,6 +117,4 @@ class Neo
 		clause = get_timing_relationship + delete_timing_relationship + with_clause
 		clause
 	end
-
-
 end

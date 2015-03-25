@@ -1,6 +1,7 @@
 module Api
 	module V0
 		class BooksApiController < ApplicationController
+			require_dependency 'user/suggest/book'
 			def get_similar_books
 				user_uuid = params[:id]
 				book_uuid = params[:book_id]

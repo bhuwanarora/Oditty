@@ -79,7 +79,7 @@ ReadersDoor::Application.routes.draw do
       match "books_from_most_read_era"                => 'users_api#get_books_from_most_read_era',      :via => [:put, :get, :post]
       match "books_on_your_friends_shelves"           => 'users_api#books_on_your_friends_shelves',     :via => [:put, :get, :post]
       match "get_sorted_genres"                       => 'users_api#get_sorted_genres',                 :via => [:put, :get, :post]
-      match "influential_books"                       => 'users_api#handle_influential_books',                 :via => [:put, :get, :post]
+      match "influential_books"                       => 'users_api#handle_influential_books',          :via => [:put, :get, :post]
 
       match 'user_info'                               => 'users_api#user_info',                         :via => [:put, :get, :post]
       match 'user'                                    => 'users_api#user',                              :via => [:put, :get, :post]
@@ -99,7 +99,13 @@ ReadersDoor::Application.routes.draw do
       match 'books_from_unexplored_subjects'          => 'users_api#get_books_from_unexplored_subjects',:via => [:put, :get, :post]
 
       match 'author_details'                          => 'authors_api#details',                         :via => [:put, :get, :post]
-      match 'feed'                                    => 'feeds_api#get_feed',                           :via => [:put, :get, :post]
+      match 'feed'                                    => 'feeds_api#get_feed',                          :via => [:put, :get, :post]
+
+      match 'bookshelves'                             => 'room_api#get_books',                          :via => [:put, :get, :post]    
+      match 'articleshelves'                          => 'room_api#get_articles',                       :via => [:put, :get, :post]    
+      match 'visited_books'                           => 'room_api#get_visited_books',                  :via => [:put, :get, :post]    
+      match 'visited_articles'                        => 'room_api#get_visited_articles',               :via => [:put, :get, :post]    
+
     end
   end
 end

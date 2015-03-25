@@ -1,0 +1,2 @@
+class Listopia < Neo
+end

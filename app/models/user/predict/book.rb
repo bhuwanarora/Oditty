@@ -27,7 +27,6 @@ class User::Predict::Book < User::Predict
 
 	def handle_average_number_books_read skip_count=0, limit_count = Constants::BookCountShownOnSignup
 		data = @user.get_all_books.execute
-
 	 	has_linked_books = data[0]["book_id"].blank? ? false : true rescue false
 		unless has_linked_books
 			clause = @user.match + User.match_likeable_root_category + ::Category::Root.get_books_for_user(skip_count, limit_count) + Neo.new.return_group(Book.basic_info)

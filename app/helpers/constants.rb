@@ -89,4 +89,7 @@ module Constants
 	RecommendationBookCount 	= 10
 	FollowFavoriteAuthorsCount  = 30 
 	QueryStepDuringSorting      = 1000
+	ArticlesShownInRoomCount    = 10
+	BooksShownInRoomCount       = 10
+
 end
