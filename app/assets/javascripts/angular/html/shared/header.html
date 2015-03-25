@@ -1,36 +1,50 @@
-<md-toolbar md-scroll-shrink class="header">
-	<div layout="row">
-		<md-button class="burger" ng-click="toggleLeft()">
-      	<a><span class="icon-menu2"></span></a>
-		</md-button>
-		<div layout="row" layout-align-lg="center center">
-          <a class="logo">
-          	<img src="assets/rd_icon.png"/>
-          	<span>ReadersDoor</span>
-          </a>
-		</div>
-		<div class="search_container" layout="row">
-      	<md-input-container class="md-default-theme">
-    			<label for="input_010">Search for topics, books and more...</label>
-    			<input ng-model="user.firstName" 
-    				   class="ng-pristine ng-valid md-input ng-touched search" 
-    				   tabindex="0" 
-    				   aria-invalid="false">
-  			<!-- <div class="md-placeholder">Search</div> -->
-  		</md-input-container>
-  		<md-button class="library">
-  			Infinity
-  		</md-button>
-		</div>
-		<div>
-			<span class="icon-bell"></span>
-		</div>
-		<div>
-			<span class="icon-checkbox-unchecked"></span>
-		</div>
-		<div>
-			<span class="icon-angle-down"></span>
-		</div>
-	</div>
-	
-</md-toolbar>
+<section layout="row" layout-wrap>
+    <div flex="25" flex-md="15" layout="row" layout-align="start center">
+        <md-button class="burger padding" ng-click="toggleLeft($event)">
+            <a><span class="icon-menu2"></span></a>
+        </md-button>
+        <div layout-align-lg="center center">
+            <a class="logo" href="/home">
+                <img src="assets/rd_icon.png"/>
+                <span hide-sm hide-md>ReadersDoor</span>
+            </a>
+        </div>
+    </div>
+    <% unless @customise %>
+        <div flex="50" flex-md="70" layout="row" layout-align="end center" layout-align-sm="start center">
+            <div show-sm hide>
+                <span class="icon-search"></span>
+            </div>
+            <div hide-sm class="search_icon">
+                <span class="icon-search"></span>
+            </div>
+            <md-autocomplete
+                md-selected-item="selectedItem1"
+                md-search-text="searchText"
+                md-items="item in querySearch(searchText)"
+                md-item-text="display"
+                class="search"
+                hide-sm
+                flex="85"
+                placeholder="Search books, topics and more...">
+                <span md-highlight-text="searchText">{{item.display}}</span>
+            </md-autocomplete>
+            <md-button class="library">
+                <a href="/infinity">Infinity</a>
+            </md-button>
+        </div>
+        <div flex layout="row" layout-align="end center">
+            <a href="/room"><md-button class="small-padding">
+                <span class="icon-checkbox-unchecked"></span>
+            </md-button></a>
+            <md-button class="small-padding" ng-click="toggle_notifications($event)">
+                <span class="icon-bell"></span>
+            </md-button>
+            <a href="/profile">
+                <md-button class="profile_link">
+                    <img src="http://www.chicagonow.com/avatar/blog-108-128.png" class="circular">
+                </md-button>
+            </a>
+        </div>
+    <% end %>
+</section>

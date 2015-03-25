@@ -1,5 +1,5 @@
 module Constants
-	CategoryLikeWeight					= 10
+	CategoryLikeWeight			= 10
 	MarkAsReadPoints 			= 5
 	# BookmarkPoints 				= 5
 	RatingPoints				= 10

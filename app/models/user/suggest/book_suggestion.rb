@@ -38,7 +38,7 @@ class User::Suggest::BookSuggestion < User::Suggest
 
 	def self.get_popular_books skip_count, user_id
 		categories = []
-		clause = ::Book.new(Constants::BestBook).match + ::Book.match_path("NextInCategory",skip_count) + " WITH last(nodes(path)) AS book "
+		clause = ::Book.new(Constants::BestBook).match + ::Book.match_path("NextInCategory", skip_count) + " WITH last(nodes(path)) AS book "
 		mark_as_read_clause = UsersBook.optional_match_mark_as_read + "WHERE ID(user) = " + user_id.to_s + UsersBook.optional_match_rating +  " WITH user, book, bookmark_node, rating_node "  
 		root_category_clause = Book.match_root_category + " WITH user, book, bookmark_node, rating_node, root_category "
 		return_clause = Neo.new.return_init + ::Book.detailed_info + " , " + " ID(bookmark_node) AS status, rating_node.rating AS user_rating, ID(root_category) AS category_id, root_category.name AS category_name "
