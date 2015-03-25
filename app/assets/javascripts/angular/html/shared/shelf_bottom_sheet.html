@@ -1,32 +1,31 @@
 <md-bottom-sheet class="share_bottom" ng-controller="listBottomSheetController" 
     ng-click="stop_propagation($event)">
-    <div layout="column" layout-fill>
-    <md-content layout="column" class="book_list">
+    <div layout="column" flex layout-fill>
+    <md-content class="book_list">
         <section>
-        <md-subheader class="padding">Add to</md-subheader>
-        <md-list layout="column" layout-fill>
-            <md-item ng-repeat="item in items" ng-click="show_custom_toast()">
-                <md-checkbox ng-model="data.cb1" aria-label="{{ item.name }}" class="md-warn">
-                    {{ item.name }}
-                </md-checkbox>
-            </md-item>
-        </md-list>
+            <md-subheader>Add to</md-subheader>
+            <md-list layout="column" layout-fill>
+                <md-item ng-repeat="item in items" ng-click="show_custom_toast()">
+                    <md-checkbox ng-model="data.cb1" aria-label="{{ item.name }}" class="md-warn">
+                        {{ item.name }}
+                    </md-checkbox>
+                </md-item>
+            </md-list>
         </section>
-        <md-divider></md-divider>
         <section>
-        <md-subheader class="padding">Shelves</md-subheader>
-        <md-list layout="column" layout-fill>
-            <md-item ng-repeat="item in personal_shelves" ng-click="show_custom_toast()">
-                <md-checkbox ng-model="data.cb1" aria-label="{{ item.name }}" class="md-warn">
-                    {{ item.name }}
-                </md-checkbox>
-            </md-item>
-        </md-list>
+            <md-subheader>Shelves</md-subheader>
+            <md-list layout="column" layout-fill>
+                <md-item ng-repeat="item in personal_shelves" ng-click="show_custom_toast()">
+                    <md-checkbox ng-model="data.cb1" aria-label="{{ item.name }}" class="md-warn">
+                        {{ item.name }}
+                    </md-checkbox>
+                </md-item>
+            </md-list>
         </section>
     </md-content>
     <md-divider></md-divider>
-    <div layout="row" layout-padding>
-        <md-input-container class="add_new">
+    <div layout="row" class="footer" layout-padding>
+        <md-input-container>
             <label>Create New...</label>
             <input/>
         </md-input-container>
@@ -38,21 +37,30 @@
 </md-bottom-sheet>
 
 <style>
+    md-content.md-default-theme {
+        background-color: white;
+    }
+
     .share_bottom{
-        height: 50%;
+        height: 45% !important;
         position: absolute;
     }
-    .header{
-        position: absolute;
-        top: 5px;
-    }
+
     .book_list{
-        top: 0px;
-        height:300px !important;
-        border: 2px solid black;
+        position: absolute;
+        top: 5px !important;
+        height:70% !important;
+        width: 100% !important;
     }
+
     .footer{
         position: absolute;
-        bottom: 5px;
+        z-index: 3;
+        bottom: 5px !important;
+        width: 100% !important;
+    }
+
+    .md-subheader:not(.md-sticky-no-effect)[sticky-state=active] {
+        margin-top: 0px !important;
     }
 </style>
