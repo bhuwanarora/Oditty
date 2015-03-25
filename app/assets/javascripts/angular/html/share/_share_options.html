@@ -40,12 +40,12 @@
             <md-content ng-if="level2_nested_options" class="white">
                 <md-progress-circular class="md-accent md-hue-1" 
                     md-mode="indeterminate" 
-                    ng-if="loading2">
+                    ng-if="level2_loading">
                 </md-progress-circular>
                 <div layout="column" layout-align="start start">
                     <md-button ng-repeat="option in level2_nested_options"
                             layout-padding
-                            ng-hide="loading2"
+                            ng-hide="level2_loading"
                             ng-click="post_status(option, $event)" 
                             ng-class="{'active_option1': option == second_option}"
                             class="md-button-clear">
@@ -135,12 +135,12 @@
                     <md-content ng-if="level2_nested_options" class="white">
                         <md-progress-circular class="md-accent md-hue-1" 
                             md-mode="indeterminate" 
-                            ng-if="loading2">
+                            ng-if="level2_loading">
                         </md-progress-circular>
                         <div layout="column" layout-align="start start" layout-fill>
                             <md-button ng-repeat="option in level2_nested_options"
                                     layout-padding
-                                    ng-hide="loading2"
+                                    ng-hide="level2_loading"
                                     ng-click="post_status(option, $event)" 
                                     ng-class="{'active_option1': option == second_option}"
                                     class="md-button-clear">
