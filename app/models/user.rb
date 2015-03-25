@@ -1,3 +1,5 @@
+require_dependency 'bookmark/object/article'
+require_dependency 'bookmark/object/book'
 class User < Neo
 
 	def initialize user_id, skip_count=0
@@ -6,20 +8,17 @@ class User < Neo
 		# @skip_count = skip_count
 	end
 
-	def set_bookmark_count
-		" user.bookmark_count = CASE WHEN user.bookmark_count IS NULL THEN 1 ELSE toInt(user.bookmark_count) + 1 END "
+	def set_bookmark_count operation
+		" user.bookmark_count = COALESCE(user.bookmark_count,0) " + operation + " 1 "
 	end
 
-	def set_total_count_on_bookmark
-		" user.total_count = CASE WHEN user.total_count IS NULL THEN "+Constants::BookmarkPoints.to_s+" ELSE toInt(user.total_count) + "+Constants::BookmarkPoints.to_s+" END"
+	def set_total_count_on_bookmark operation
+		" user.total_count = COALESCE(user.total_count,0) " 
+		+ operation.to_s + " "+Constants::BookmarkPoints.to_s+" "
 	end
 
 	def get_detailed_info
 		match + User.match_likeable_root_category + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + return_group(User.basic_info, "COLLECT(DISTINCT(root_category.name)) AS categories_name", "COLLECT(DISTINCT(ID(root_category))) AS categories_id", "COLLECT(root_category.aws_key) AS categories_aws_key", "COLLECT(DISTINCT(book.isbn)) AS books_isbn", "COLLECT(DISTINCT(ID(book))) AS books_id", "COLLECT(DISTINCT(book.title)) AS books_title", "COLLECT(DISTINCT(book.author_name)) AS books_author_name")
-	end
-
-	def self.books_not_bookmarked
-		" WHERE NOT (user)-[:Labelled]->(:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(book) WITH book "
 	end
 
 	def get_basic_info
@@ -31,7 +30,7 @@ class User < Neo
 	end
 
 	def get_all_books skip_count=0, limit_count=Constants::BookCountShownOnSignup 
-		match + Bookmark.match + return_init + ::Book.basic_info + ::Book.order_desc + skip(skip_count) + limit(limit_count)
+		match + Bookmark::Object::Book.match_path + return_init + ::Book.basic_info + ::Book.order_desc + skip(skip_count) + limit(limit_count)
 	end
 
 	def self.create_label key
@@ -157,5 +156,21 @@ class User < Neo
 
 	def get_init_book_count_range
 		match + return_init + User.init_book_read_count
+	end
+
+	def get_books_from_public_shelves
+		books = (match + Bookmark::Object::Book.get_public)
+	end
+
+	def get_articles_from_public_shelves
+		match + Bookmark::Object::Article.get_public 
+	end
+
+	def get_visited_books 
+		books = (match + Bookmark::Object::Book.get_visited) 
+	end
+
+	def get_visited_articles
+		match + Bookmark::Object::Article.get_visited 
 	end
 end

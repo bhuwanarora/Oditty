@@ -370,7 +370,6 @@ module Api
 				new_object_string = " CREATE UNIQUE ("+new_label.to_s+")-[:HasProperty]->(:"+object_key.to_s.singularize.camelcase+"{"+new_object_string+"})"
 				new_object_string
 			end
-
 		end
 	end
 end

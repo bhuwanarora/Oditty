@@ -5,7 +5,9 @@ class UsersBook < Neo
 		@user_id = user_id
 	end
 
-	def match
+
+
+	def match 
 		" MATCH (book:Book), (user:User) WHERE ID(book)="+@book_id.to_s+" AND ID(user)="+@user_id.to_s+" WITH user, book "
 	end
 
@@ -27,7 +29,7 @@ class UsersBook < Neo
 	end
 
 	def self.optional_match_mark_as_read
-		" OPTIONAL MATCH (user)-[mark_as_read:MarkAsReadAction]->(:MarkAsReadNode)--(book) "
+		" OPTIONAL MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book) "
 	end
 
 	def self.friends_book
@@ -36,7 +38,7 @@ class UsersBook < Neo
 
 	def self.get_book_details
 		match + UsersBook.rating_clause + UsersBook.optional_match_timing_node + User.label_clause + 
-		Bookmark.match + UsersBook.optional_match_mark_as_read + UsersBook.optional_match_endorse + UsersBook.friends_book + Book.genre_clause + return_init + Book.get_basic_info + ", rating_node.rating as user_rating, timing_node.time_index as user_time_index, COLLECT(DISTINCT user_label.name) as labels, COLLECT(DISTINCT label.name) as selected_labels, mark_as_read.timestamp as status, ID(endorse) as endorse_status, COLLECT(ID(friend)) as friends_id, COLLECT(friend.thumb) as friends_thumb, COUNT(friend) as friends_count, COLLECT(genre.name) as genres, COLLECT(belongs_to.weight) as genres_weight"
+		Bookmark::Object::Book.match_path + UsersBook.optional_match_mark_as_read + UsersBook.optional_match_endorse + UsersBook.friends_book + Book.genre_clause + return_init + Book.get_basic_info + ", rating_node.rating as user_rating, timing_node.time_index as user_time_index, COLLECT(DISTINCT user_label.name) as labels, COLLECT(DISTINCT label.name) as selected_labels, mark_as_read.timestamp as status, ID(endorse) as endorse_status, COLLECT(ID(friend)) as friends_id, COLLECT(friend.thumb) as friends_thumb, COUNT(friend) as friends_count, COLLECT(genre.name) as genres, COLLECT(belongs_to.weight) as genres_weight"
 	end
 
 	def self.rate(rating)
