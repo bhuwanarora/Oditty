@@ -29,7 +29,6 @@ module Api
 
 			def self.get_profile_info id
 				User.new(id).get_detailed_info.execute
-				info = @neo.execute_query(clause)["data"][0]
 			end
 
 			def self.add_books_from_fb(params, user_id)

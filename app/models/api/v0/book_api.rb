@@ -1,4 +1,3 @@
-include NotificationHelper
 module Api
 	module V0
 		class BookApi

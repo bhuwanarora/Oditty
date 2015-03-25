@@ -52,7 +52,12 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
     }
 
     this.get_detailed_info = function(id){
-        return _deferred_request('/api/v0/user_profile_info?id='+id);
+        if(angular.isDefined(id)){
+            return _deferred_request('/api/v0/user_profile_info?id='+id);
+        }
+        else{
+            return _deferred_request('/api/v0/user_profile_info');
+        }
     }
 
     this.logout = function(){

@@ -39,14 +39,17 @@
             <script src="assets/angular/services/genre_service.js"></script>
             <script src="assets/angular/services/book_service.js"></script>
             <script src="assets/angular/services/author_service.js"></script>
+            <script src="assets/angular/services/shelf_service.js"></script>
 
             <script src="assets/angular/controllers/home/home_controller.js"></script>
             <script src="assets/angular/controllers/home/left_controller.js"></script>
             <script src="assets/angular/controllers/home/right_controller.js"></script>
-            <script src="assets/angular/controllers/home/list_bottom_sheet_controller.js"></script>
+            <script src="assets/angular/controllers/home/shelf_controller.js"></script>
             <script src="assets/angular/controllers/home/share_controller.js"></script>
             <script src="assets/angular/controllers/share/share_controller.js"></script>
             <script src="assets/angular/controllers/share/options_controller.js"></script>
+            <script src="assets/angular/controllers/profile_controller.js"></script>
+
             <script src="assets/angular/controllers/toast_controller.js"></script>
             <script src="assets/angular/directives/site_directives.js"></script>
 
@@ -80,6 +83,7 @@
             <% end %>
 
             <% if @room %>
+                <script src="assets/angular/services/room_service.js"></script>
                 <script src="assets/angular/controllers/room/room_controller.js"></script>
             <% end %>
 

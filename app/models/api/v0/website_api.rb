@@ -10,7 +10,7 @@ module Api
 			def self.get_labels user_id
 				labels = []
 				if user_id.present?
-					labels = UsersGraphHelper.get_bookmark_labels user_id
+					labels = User.new(user_id).get_public_labels.execute
 				end
 				labels
 			end

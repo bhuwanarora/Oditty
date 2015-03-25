@@ -6,8 +6,9 @@ class Bookmark::Type::HaveLeftAMarkOnMe < Bookmark::Type
 		@book_id = book_id
 	end
 
-	def self.match
-		" OPTIONAL MATCH (user)-[:Labelled]->(label:Label{indexed_label_name:\""+@key+"\"})-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book:Book) WHERE bookmark_node.user_id = " + id.to_s + " "
+	def self.match user_id
+		@key ||= "HaveLeftAMarkOnMe"
+		" OPTIONAL MATCH (user)-[:Labelled]->(label:Label{indexed_label_name:\""+@key+"\"})-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book:Book) WHERE bookmark_node.user_id = " + user_id.to_s + " "
 	end
 
 	def add
