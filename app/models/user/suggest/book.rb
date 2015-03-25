@@ -38,7 +38,6 @@ class User::Suggest::Book < User::Suggest
 
 	def self.get_popular_books skip_count, user_id
 		categories = []
-		debugger
 		clause = ::Book.new(Constants::BestBook).match + ::Book.match_path("NextInCategory",skip_count) + " WITH last(nodes(path)) AS book "
 		mark_as_read_clause = UsersBook.optional_match_mark_as_read + "WHERE ID(user) = " + user_id.to_s + UsersBook.optional_match_rating +  " WITH user, book, bookmark_node, rating_node "  
 		root_category_clause = Book.match_root_category + " WITH user, book, bookmark_node, rating_node, root_category "

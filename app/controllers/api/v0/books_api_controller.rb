@@ -23,10 +23,8 @@ module Api
 			end
 
 			def get_popular_books
-				skip_count = params["skip_count"] || 0
-				user_id = session[:user_id]
-				books = User::Suggest::Book.get_popular_books(skip_count, user_id)
-				render :json => books, :status => 200
+				# params = JSON.parse(params["q"])
+				books = BookApi.get_popular_books(params, session[:user_id])
 			end
 
 			def tooltip
