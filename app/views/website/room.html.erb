@@ -1,5 +1,5 @@
 <md-content ng-controller="roomController">
-	<div ng-include src="'/assets/angular/html/room/_header.html'" ng-hide="constant.show_book"></div>
+	<!-- <div ng-include src="'/assets/angular/html/room/_header.html'" ng-hide="constant.show_book"></div> -->
 	<section layout="row" layout-wrap>
 		<md-content flex="25" hide-sm flex-md="10" >
 		    <div ng-include src="'/assets/angular/html/room/_left_panel.html'"></div>
@@ -13,11 +13,11 @@
 		    <div ng-include src="'/assets/angular/html/room/_right_panel.html'" ></div>
 		</md-content>
 	</section>
-	<div layout="row" class="book_stack droppable" droppable>
-		<img class="recent_visited_book movable" draggable src="http://d.gr-assets.com/books/1356057697l/7898414.jpg">
-		<img class="recent_visited_book movable" draggable src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRn1d0ugUWvQMawcAqRDuOHtHnrskdfBnNyUcdc6paubNw2f74d">
-		<img class="recent_visited_book movable" draggable src="http://ecx.images-amazon.com/images/I/61SO%2BuOZt6L._SL1047_.jpg">
-		<img class="recent_visited_book movable" draggable src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0JiW794WCEy1JcKBmC_Gifc9b0-GZbZVniCNGF090GXyij4_-">
+	<div layout="row" class="book_stack">
+		<img class="recent_visited_book" src="http://d.gr-assets.com/books/1356057697l/7898414.jpg">
+		<img class="recent_visited_book" src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRn1d0ugUWvQMawcAqRDuOHtHnrskdfBnNyUcdc6paubNw2f74d">
+		<img class="recent_visited_book" src="http://ecx.images-amazon.com/images/I/61SO%2BuOZt6L._SL1047_.jpg">
+		<img class="recent_visited_book" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0JiW794WCEy1JcKBmC_Gifc9b0-GZbZVniCNGF090GXyij4_-">
 	</div>
 </md-content>
 

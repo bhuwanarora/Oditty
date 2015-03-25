@@ -20,7 +20,7 @@
                     <md-button class="nav_links">
                         <div layout="column" layout-align="end end">
                             <div><b>BOOKS</b></div>
-                            <h2 class="green_color">28</h2>
+                            <h2 class="green_color">{{user.bookmark_count || 0}}</h2>
                         </div>
                     </md-button>
                 </a>
@@ -28,7 +28,7 @@
                      <md-button class="nav_links">
                         <div layout="column" layout-align="end end">
                             <div><b>FOLLOWERS</b></div>
-                            <h2 class="green_color">12</h2>
+                            <h2 class="green_color">{{user.follower_count || 0}}</h2>
                         </div>
                     </md-button>
                 </a>
@@ -37,7 +37,7 @@
                     <md-button class="nav_links">
                         <div layout="column" layout-align="end end">
                             <div><b>FOLLOWING</b></div>
-                            <h2 class="green_color">12</h2>
+                            <h2 class="green_color">{{user.following_count || 0}}</h2>
                         </div>
                     </md-button>
                 </a>

@@ -1,4 +1,4 @@
-homeApp.controller('listBottomSheetController', ['$scope', '$mdBottomSheet', '$mdToast', function($scope, $mdBottomSheet, $mdToast){
+homeApp.controller('shelfController', ['$scope', '$mdBottomSheet', '$mdToast', function($scope, $mdBottomSheet, $mdToast){
     $scope.listItemClick = function($index) {
         var clickedItem = $scope.items[$index];
         $mdBottomSheet.hide(clickedItem);
@@ -20,27 +20,13 @@ homeApp.controller('listBottomSheetController', ['$scope', '$mdBottomSheet', '$m
         });
     };
 
-    $scope.add_new_shelf = function(){
-        $mdToast.show({
-            controller: 'toastController',
-            templateUrl: 'assets/angular/html/shared/toast/new_shelf.html',
-            hideDelay: 6000,
-            position: $scope.getToastPosition()
-        });    
+    $scope.add_new_label = function(){
+        // if $rootScope.labels include $scope.new_label then push a toast that a label already exists.
+        // else call the below service to add the new label.
+        shelfService.add_new_label($scope.new_label);
     }
 
     var _init = function(){
-        
-        $scope.shelves = [
-            { name: 'Plan to Read', icon: 'share' },
-            { name: 'Plan to Buy', icon: 'upload' },
-            { name: 'Plan to re-read', icon: 'copy' }
-        ];
-
-        $scope.personal_shelves = [
-            { name: 'Travellers Suggestions', icon: 'print'}
-        ];
-
         $scope.toast_position = {
             bottom: false,
             top: true,

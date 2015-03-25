@@ -69,7 +69,8 @@ module Api
 
 
 			def user_profile_info
-				info = UserApi.get_profile_info(params[:id])
+				user_id = session[:user_id]
+				info = UserApi.get_profile_info(user_id)
 				render :json => info, :status => 200
 			end
 

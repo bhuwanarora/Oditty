@@ -18,7 +18,7 @@ class User < Neo
 	end
 
 	def get_detailed_info
-		match + User.optional_match_category + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + return_init + " COLLECT(DISTINCT(category.name)), COLLECT(DISTINCT(ID(category))), COLLECT(DISTINCT(category.icon)), COLLECT(DISTINCT(book.isbn)), COLLECT(DISTINCT(ID(book))), COLLECT(DISTINCT(book.title)), COLLECT(DISTINCT(book.author_name))"
+		match + User.match_likeable_root_category + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + return_group(User.basic_info, "COLLECT(DISTINCT(root_category.name)) AS categories_name", "COLLECT(DISTINCT(ID(root_category))) AS categories_id", "COLLECT(root_category.aws_key) AS categories_aws_key", "COLLECT(DISTINCT(book.isbn)) AS books_isbn", "COLLECT(DISTINCT(ID(book))) AS books_id", "COLLECT(DISTINCT(book.title)) AS books_title", "COLLECT(DISTINCT(book.author_name)) AS books_author_name")
 	end
 
 	def get_basic_info
@@ -80,12 +80,16 @@ class User < Neo
 		clause
 	end
 
-	def get_bookmark_labels
-		match + User.label_clause + return_init + Label.get_basic_info
-	end
-
 	def get_books_bookmarked(skip_count=0)
 		match + return_init + Book.get_basic_info + ", COLLECT(label.name) as labels SKIP "+skip_count.to_s+" LIMIT 10"
+	end
+
+	def get_public_labels
+		match + UsersLabel.match + return_group(Label.basic_info)
+	end
+
+	def match_bookmark
+		" MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book:Book) WHERE bookmark_node.user_id = " + @id.to_s + " "
 	end
 
 	def approve_thumb_request(status, id)
@@ -132,8 +136,6 @@ class User < Neo
 		clause
 	end
 
-
-
 	def self.match_custom_likeable_root_category max=true, category_id=nil
 		custom = max ? " MAX " : " MIN "
 		clause = " MATCH (user)-[likes:Likes]->(root_category:Category) WHERE "
@@ -145,7 +147,7 @@ class User < Neo
 	end
 
 	def self.optional_match_category category_id=nil
-		" OPTIONAL" + User.category_clause(category_id)
+		" OPTIONAL" + User.match_category(category_id)
 	end
 
 	def self.init_book_read_count
