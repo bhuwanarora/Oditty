@@ -1,27 +1,31 @@
-<md-bottom-sheet class="md-list md-has-header share_bottom" ng-controller="listBottomSheetController" 
+<md-bottom-sheet class="share_bottom" ng-controller="listBottomSheetController" 
     ng-click="stop_propagation($event)">
-    <section class="padding header" layout-fill>Add to</section>
-    <section layout="column" class="book_list" layout-fill>
-        <md-list>
+    <div layout="column" layout-fill>
+    <md-content layout="column" class="book_list">
+        <section>
+        <md-subheader class="padding">Add to</md-subheader>
+        <md-list layout="column" layout-fill>
             <md-item ng-repeat="item in items" ng-click="show_custom_toast()">
                 <md-checkbox ng-model="data.cb1" aria-label="{{ item.name }}" class="md-warn">
                     {{ item.name }}
                 </md-checkbox>
             </md-item>
         </md-list>
+        </section>
         <md-divider></md-divider>
-        <section layout-padding>Shelves</section>
-        <md-list>
+        <section>
+        <md-subheader class="padding">Shelves</md-subheader>
+        <md-list layout="column" layout-fill>
             <md-item ng-repeat="item in personal_shelves" ng-click="show_custom_toast()">
                 <md-checkbox ng-model="data.cb1" aria-label="{{ item.name }}" class="md-warn">
                     {{ item.name }}
                 </md-checkbox>
             </md-item>
         </md-list>
-        <md-divider></md-divider>
-    </section>
-    
-    <section class="footer" layout="row" layout-padding>
+        </section>
+    </md-content>
+    <md-divider></md-divider>
+    <div layout="row" layout-padding>
         <md-input-container class="add_new">
             <label>Create New...</label>
             <input/>
@@ -29,7 +33,8 @@
         <md-button ng-click="add_new_shelf()">
             <span class="icon-plus"></span>
         </md-button>
-    </section>
+    </div>
+    </div>
 </md-bottom-sheet>
 
 <style>
@@ -42,7 +47,9 @@
         top: 5px;
     }
     .book_list{
-        margin-top:40px;
+        top: 0px;
+        height:300px !important;
+        border: 2px solid black;
     }
     .footer{
         position: absolute;
