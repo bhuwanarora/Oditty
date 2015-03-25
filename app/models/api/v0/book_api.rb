@@ -1,7 +1,6 @@
 module Api
 	module V0
 		class BookApi
-			require_dependency 'user/suggest/book'
 
 			def self.create_thumb_request(params, user_id)
 				BooksGraphHelper.create_thumb_request(params, user_id)
@@ -112,7 +111,7 @@ module Api
 			def self.get_popular_books(params, user_id)
 				params = JSON.parse params["q"]
 				skip_count = (params.nil? || params["skip_count"].nil?) ? 0 : params[:skip_count]
-				User::Suggest::Book.get_popular_books skip_count, user_id
+				User::Suggest::BookSuggestion.get_popular_books skip_count, user_id
 			end
 
 

@@ -1,7 +1,7 @@
 module Api
 	module V0
 		class BooksApiController < ApplicationController
-			require_dependency 'user/suggest/book'
+			
 			def get_similar_books
 				user_uuid = params[:id]
 				book_uuid = params[:book_id]
@@ -18,7 +18,7 @@ module Api
 			def books_on_signup
 				user_id = session[:user_id]
 				skip_count = JSON.parse(params["q"])["skip_count"]
-				books = User::Predict::Book.new(user_id, skip_count).likely_books_read
+				books = User::Predict::BookSuggestion.new(user_id, skip_count).likely_books_read
 				render :json => books, :status => 200
 			end
 

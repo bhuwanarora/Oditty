@@ -1,7 +1,7 @@
 module Api
 	module V0
 		class WebsiteApiController < ApplicationController
-			require_dependency 'user/predict/category'
+			# require_dependency 'user/predict/category'
 
 			def s3
 				begin
@@ -20,7 +20,7 @@ module Api
 
 			def genres
 				user_id = session[:user_id]
-                genres = User::Predict::Category.new(user_id).get_favourites.execute
+                genres = User::Predict::CategoryPrediction.new(user_id).get_favourites.execute
                 
 				render :json => genres, :status => 200
 			end

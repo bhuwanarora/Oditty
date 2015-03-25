@@ -1,4 +1,4 @@
-class User::Predict::Book < User::Predict
+class User::Predict::BookPrediction < User::Predict
 	Limit = 30
 
 

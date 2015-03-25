@@ -1,7 +1,7 @@
-
-class User::Suggest::Book < User::Suggest
+class User::Suggest::BookSuggestion < User::Suggest
 	def initialize user_id
 		@user_id = user_id
+		@user = User.new(@user_id)
 	end
 
 	def for_favourite_author
@@ -13,7 +13,7 @@ class User::Suggest::Book < User::Suggest
 	end
 
 	def for_most_bookmarked_era
-		Era.new(@user_id).most_popular + Bookmark::Object::Book.match_not + ", era " + ::Book.order_desc + limit(Constants::RecommendationBookCount) + return_group(::Book.basic_info, Era.basic_info)
+		Era.new(@user_id).most_popular + Bookmark::Node::BookLabel.match_not + ", era " + ::Book.order_desc + limit(Constants::RecommendationBookCount) + return_group(::Book.basic_info, Era.basic_info)
 	end
 
 	def on_friends_shelves

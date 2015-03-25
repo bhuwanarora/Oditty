@@ -1,4 +1,4 @@
-class Bookmark::Object::Article < Bookmark::Object
+class Bookmark::Node::ArticleLabel < Bookmark::Node
 
 	def match 
 		" MATCH (article) WHERE article:News  OR article:Blog WITH user, article"  

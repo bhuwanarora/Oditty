@@ -1,5 +1,3 @@
-require_dependency 'bookmark/object/article'
-require_dependency 'bookmark/object/book'
 class User < Neo
 
 	def initialize user_id, skip_count=0
@@ -28,7 +26,7 @@ class User < Neo
 	end
 
 	def get_all_books skip_count=0, limit_count=Constants::BookCountShownOnSignup 
-		match + Bookmark::Object::Book.match_path + return_init + ::Book.basic_info + ::Book.order_desc + skip(skip_count) + limit(limit_count)
+		match + Bookmark::Object::Node::BookLabel.match_path + return_init + ::Book.basic_info + ::Book.order_desc + skip(skip_count) + limit(limit_count)
 	end
 
 	def self.create_label key
@@ -157,18 +155,18 @@ class User < Neo
 	end
 
 	def get_books_from_public_shelves
-		books = (match + Bookmark::Object::Book.get_public)
+		books = (match + Bookmark::Object::Node::BookLabel.get_public)
 	end
 
 	def get_articles_from_public_shelves
-		match + Bookmark::Object::Article.get_public 
+		match + Bookmark::Object::Node::Article.get_public 
 	end
 
 	def get_visited_books 
-		books = (match + Bookmark::Object::Book.get_visited) 
+		books = (match + Bookmark::Object::Node::BookLabel.get_visited) 
 	end
 
 	def get_visited_articles
-		match + Bookmark::Object::Article.get_visited 
+		match + Bookmark::Object::Node::Article.get_visited 
 	end
 end

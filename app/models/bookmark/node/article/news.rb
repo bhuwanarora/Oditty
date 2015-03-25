@@ -1,4 +1,4 @@
-class Bookmark::Object::Article::News < Bookmark::Object::Article
+class Bookmark::Node::Article::NewsLabel < Bookmark::Node::Article
 	Article = "News"
 	def get_public 
 		super(Article)

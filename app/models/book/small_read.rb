@@ -23,10 +23,10 @@ class Book::SmallRead < Book
 	end
 
 	def self.path_nodes_after skip
-		self.nth_node(skip) + self.path_nodes
+		self.nth_node(skip) + self.path_nodes(Limit)
 	end
 
 	def self.get_sorted_books skip_count, limit=Limit
-		self.path_nodes_after(skip_count) + return_init + ::Book.basic_info + ::Book.order_desc + limit(Limit)
+		self.path_nodes_after(skip_count) + Neo.new.return_init + ::Book.basic_info + ::Book.order_desc + Neo.new.limit(Limit)
 	end
 end

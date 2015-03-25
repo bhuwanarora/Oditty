@@ -1,7 +1,7 @@
 module Api
 	module V0
 		class UsersApiController < ApplicationController
-			require_dependency 'user/suggest/book'
+			# require_dependency 'user/suggest/book'w
 
 			def get_info_card_data
 				info = UserApi.get_info_card_data
@@ -28,33 +28,33 @@ module Api
 
 			def get_books_from_favourite_author
 				user_id = session[:user_id]
-				books = User::Suggest::Book.new(user_id).for_favourite_author.execute
+				books = User::Suggest::BookSuggestion.new(user_id).for_favourite_author.execute
 				render :json => books, :status => 200
 			end
 
 			def get_books_from_favourite_category
 				user_id = session[:user_id]
 				favourites = true
-				books = User::Suggest::Book.new(user_id).for_favourite_category(favourites)
+				books = User::Suggest::BookSuggestion.new(user_id).for_favourite_category(favourites)
 				render :json => books, :status => 200
 			end
 
 			def get_books_from_favourite_era
 				user_id = session[:user_id]
-				books = User::Suggest::Book.new(user_id).for_most_bookmarked_era.execute
+				books = User::Suggest::BookSuggestion.new(user_id).for_most_bookmarked_era.execute
 				render :json => books, :status => 200
 			end
 
 			def get_books_on_friends_shelves
 				user_id = session[:user_id]
-				books = User::Suggest::Book.new(user_id).on_friends_shelves.execute
+				books = User::Suggest::BookSuggestion.new(user_id).on_friends_shelves.execute
 				render :json => books, :status => 200
 			end
 
 			def get_books_from_unexplored_subjects
 				user_id = session[:user_id]
 				favourites = false
-				books = User::Suggest::Book.new(user_id).for_favourite_category(favourites)
+				books = User::Suggest::BookSuggestion.new(user_id).for_favourite_category(favourites)
 				render :json => books, :status => 200
 			end
 

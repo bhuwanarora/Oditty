@@ -1,4 +1,4 @@
-class User::Predict::Category < User::Predict
+class User::Predict::CategoryPrediction < User::Predict
 
 	def initialize user_id
 		@user_id = user_id

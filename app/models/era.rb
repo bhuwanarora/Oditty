@@ -5,7 +5,7 @@ class Era < Neo
 	end
 
 	def most_popular
-		@user.match + Bookmark::Object::Book.match_path + ", (book)-[published_in:Published_in]-(year:Year)-[from_era:FromEra]->(era:Era) WITH user, era, COUNT(book) AS book_count, book ORDER BY book_count DESC LIMIT 1 "
+		@user.match + Bookmark::Node::BookLabel.match_path + ", (book)-[published_in:Published_in]-(year:Year)-[from_era:FromEra]->(era:Era) WITH user, era, COUNT(book) AS book_count, book ORDER BY book_count DESC LIMIT 1 "
 	end
 
 	def self.basic_info
