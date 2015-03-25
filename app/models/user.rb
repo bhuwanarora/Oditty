@@ -88,16 +88,6 @@ class User < Neo
 		match + return_init + Book.get_basic_info + ", COLLECT(label.name) as labels SKIP "+skip_count.to_s+" LIMIT 10"
 	end
 
-	def select_public is_book=false
-		medium = is_book ? "book" : "article"
-		and_clause = " AND bookmark_node.public = true WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, " + medium + ", COUNT(label) AS label_count "
-	end
-
-	def select_visited is_book=false
-		medium = is_book ? "book" : "article"
-		and_clause = " AND bookmark_node.name = 'Visited' WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, " + medium + ", COUNT(label) AS label_count "
-	end
-
 	def approve_thumb_request(status, id)
 		"MATCH (u:User)-[r1:DataEdit]->(t:ThumbRequest)-[r2:DataEditRequest]->(b:Book) WHERE ID(t)="+id.to_s+" SET t.status = "+status.to_s+", b.external_thumb = CASE WHEN "+status.to_s+" = 1 THEN t.url ELSE null END"
 	end
