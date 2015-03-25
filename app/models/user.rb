@@ -166,10 +166,6 @@ class User < Neo
 		match + return_init + User.init_book_read_count
 	end
 
-	def select_distinct_properties
-		 " DISTINCT label.name AS shelf,  bookmark_node.timestamp AS time, "
-	end
-
 	def get_books_from_public_shelves
 		books = (match + Bookmark::Object::Book.get_public).execute
 	end
