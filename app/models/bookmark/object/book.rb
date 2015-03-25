@@ -24,4 +24,8 @@ class Bookmark::Object::Book < Bookmark::Object
 	def self.match_not
 		super("book")		
 	end
+
+	def self.match
+		super("book")
+	end
 end
