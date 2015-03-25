@@ -22,12 +22,12 @@ class Bookmark < Neo
 		@key = key
 	end
 
-	def self.match_not media_node_variable
-		" WHERE NOT (user)-[:Labelled]->(:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(" + media_node_variable + ") "
+	def self.match_not media.downcase
+		" WHERE NOT (user)-[:Labelled]->(:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(" + media.downcase + ") "
 	end
 
-	def self.match_path bookmarked_node_variable, bookmarked_node_label, label="user"
-		" OPTIONAL MATCH (" + label + ")-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(" + bookmarked_node_variable.to_s + ":"  + bookmarked_node_label.to_s + ") "
+	def self.match_path media, label="user"
+		" OPTIONAL MATCH (" + label + ")-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(" + media.downcase + ":"  + media.camelcase + ") "
 	end
 
 	def match
@@ -111,7 +111,7 @@ class Bookmark < Neo
 
 		bookfeed_next_clause = Book::Feed.new(@user_id).delete_feed("bookmark_node") + ", labelled, label "
 
-		clause = Bookmark.new(@user_id, @book_id, @key).match + Bookmark.match_path("book", "Book") + Bookmark.delete_bookmark_relations + set_clause + feednext_clause + bookfeed_next_clause + Bookmark.delete_bookmark
+		clause = Bookmark.new(@user_id, @book_id, @key).match + Bookmark::Object::Book.match_path + Bookmark.delete_bookmark_relations + set_clause + feednext_clause + bookfeed_next_clause + Bookmark.delete_bookmark
 
 		puts "REMOVE BOOKMARKED".green
 		clause

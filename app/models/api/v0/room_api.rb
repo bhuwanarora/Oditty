@@ -2,12 +2,12 @@ module Api
 	module V0
 		class RoomApi 
 			def self.get_books_from_public_shelves user_id
-				books = ::User.new(user_id).get_books_from_public_shelves
+				books = ::User.new(user_id).get_books_from_public_shelves.execute
 				self.get_dominant_color books
 			end
 
 			def self.get_visited_books user_id 
-				books = ::User.new(user_id).get_visited_books
+				books = ::User.new(user_id).get_visited_books.execute
 				self.get_dominant_color books
 			end
 

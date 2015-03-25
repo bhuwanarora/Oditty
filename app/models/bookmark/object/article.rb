@@ -1,16 +1,4 @@
 class Bookmark::Object::Article < Bookmark::Object
-	# def get_public article=nil
-	# 	where_clause = " WHERE bookmark_node.public = true WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action," + article.to_s + ", COUNT(label) AS label_count "
-	# 	select_distinct_properties_clause = " DISTINCT label.name AS shelf,  bookmark_node.timestamp AS time, "
-
-	# 	Bookmark.match_path + where_clause + return_init + select_distinct_properties + self.basic_info  + order_init + " label_count, time DESC "  
-	# end
-
-	# def get_visited article=nil
-	# 	where_clause = " WHERE bookmark_node.name = 'Visited' WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action," + article.to_s + ", COUNT(label) AS label_count "
-	# 	select_distinct_properties_clause = " DISTINCT label.name AS shelf,  bookmark_node.timestamp AS time, "
-	# 	Bookmark.match_path + where_clause + return_init + select_distinct_properties + self.basic_info  + order_init + " label_count, time DESC "  
-	# end
 
 	def match 
 		" MATCH (article) WHERE article:News  OR article:Blog WITH user, article"  

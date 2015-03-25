@@ -159,7 +159,7 @@ class User < Neo
 	end
 
 	def get_books_from_public_shelves
-		books = (match + Bookmark::Object::Book.get_public).execute
+		books = (match + Bookmark::Object::Book.get_public)
 	end
 
 	def get_articles_from_public_shelves
@@ -167,7 +167,7 @@ class User < Neo
 	end
 
 	def get_visited_books 
-		books = (match + Bookmark::Object::Book.get_visited).execute 
+		books = (match + Bookmark::Object::Book.get_visited) 
 	end
 
 	def get_visited_articles
