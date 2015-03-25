@@ -11,6 +11,10 @@ module Api
 				info
 			end
 
+			def self.get_small_reads
+				Book::SmallRead.get_sorted_books(0, 10).execute
+			end
+
 			def self.recover_password email
 				@neo = Neography::Rest.new
 				clause = "MATCH (user:User{email:\""+email+"\"}) RETURN " + User.basic_info
@@ -35,7 +39,7 @@ module Api
 				puts "#{params[:type].to_s.green}"
 				if params[:data].present?
 					for book in params[:data]
-						title = book[:name].gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "").downcase rescue ""
+						title = book[:name].search_ready
 						if title
 							id = SearchApi.search(title, 1, 'BOOK')
 							puts id.to_s.green

@@ -19,14 +19,14 @@ class Book::SmallRead < Book
 	end
 
 	def self.nth_node length
-		Book::SmallRead.match_best_read + " MATCH (small_read)-[:NextSmallRead*" + length.to_s + "]->(node) WITH node "
+		self.match_best_read + " MATCH (small_read)-[:NextSmallRead*" + length.to_s + "]->(node) WITH node "
 	end
 
 	def self.path_nodes_after skip
-		Book::SmallRead.nth_node(skip) + Book::SmallRead.path_nodes
+		self.nth_node(skip) + self.path_nodes
 	end
 
-	def self.get_sorted_books skip_count
-		::Book::SmallRead.path_nodes_after(skip_count) + " RETURN " + ::Book.basic_info + ::Book.order_desc + " LIMIT " + Limit.to_s
+	def self.get_sorted_books skip_count, limit=Limit
+		self.path_nodes_after(skip_count) + " RETURN " + ::Book.basic_info + ::Book.order_desc + " LIMIT " + limit.to_s
 	end
 end

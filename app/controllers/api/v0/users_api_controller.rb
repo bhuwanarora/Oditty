@@ -10,7 +10,7 @@ module Api
 
 			def get_small_reads
 				user_id = session[:user_id]
-				books = Book.get_small_reads
+				books = UserApi.get_small_reads
 				render :json => books, :status => 200
 			end
 

@@ -1,9 +1,7 @@
 class User < Neo
 
 	def initialize user_id, skip_count=0
-		# @limit = Constants::BookCountShownOnSignup
 		@id = user_id
-		# @skip_count = skip_count
 	end
 
 	def set_bookmark_count
