@@ -22,11 +22,6 @@ class Bookmark < Neo
 		@key = key
 	end
 
-	def select_public is_book=false
-		medium = is_book ? "book" : "article"
-		and_clause = " AND bookmark_node.public = true WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, " + medium + ", COUNT(label) AS label_count "
-	end
-
 	def self.match_not media_node_variable
 		" WHERE NOT (user)-[:Labelled]->(:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(" + media_node_variable + ") "
 	end
