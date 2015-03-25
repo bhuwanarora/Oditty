@@ -3,7 +3,7 @@ module Api
 		class RoomApiController < ApplicationController
 			def get_books
 				user_id = session[:user_id]
-				info = User.new(user_id).get_books_from_public_shelves
+				info = Api::V0::RoomApi.get_books_from_public_shelves(user_id)
 				render :json => info, :status => 200
 			end
 
@@ -15,7 +15,7 @@ module Api
 
 			def get_visited_books
 				user_id = session[:user_id]
-				info = User.new(user_id).get_visited_books
+				info = Api::V0::RoomApi.get_visited_books(user_id)
 				render :json => info, :status => 200
 			end
 

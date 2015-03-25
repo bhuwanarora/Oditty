@@ -432,7 +432,6 @@ module Api
 				clause = clause + limit_clause 							if limit_clause.present?
 				clause
 			end
-
 		end
 	end
 end

@@ -1,10 +1,10 @@
 class Article < Bookmark
-	def initialize id
-		@user_id = id
+	def initialize user_id
+		@user_id = user_id
 	end
 
-	def match_article_bookmark article, user_id
-		" MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(article:" + article.to_s + ") WHERE bookmark_node.user_id = " + user_id.to_s + " "
+	def match_bookmark article
+		" MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(article:" + article.to_s + ") WHERE bookmark_node.user_id = " + @user_id.to_s + " "
 	end
 
 	def get_feed article
@@ -21,15 +21,6 @@ class Article < Bookmark
 
 	def self.basic_info
 		" ID(article) AS article_id, article.title AS title, article.published_year AS published_year "
-	end
-
-	def self.mark_as_read
-	end
-
-	def self.rating
-	end
-
-	def self.detailed_info
 	end
 
 	def self.order_desc

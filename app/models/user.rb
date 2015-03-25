@@ -181,15 +181,7 @@ class User < Neo
 	end
 
 	def get_books_from_public_shelves
-		threads = [] 
-		labels = Hash.new 
 		books = (match + Bookmark::Object::Book.get_public).execute
-		books.each do |book|
-			threads << Thread.new(book){|book| book["dominant_color"] = ImageServiceHelper.get_dominant_color(book["isbn"])}
-		end
-		threads.each{|thread| thread.join}
-		books.each.with_object({}){|book,labels| if (labels[book["shelf"]].length <=4 or labels[book["shelf"]].nil?) then (labels[book["shelf"]] ||= [] ) << book end }
-		labels
 	end
 
 	def get_articles_from_public_shelves
@@ -197,15 +189,7 @@ class User < Neo
 	end
 
 	def get_visited_books 
-		threads = []
-		labels = Hash.new 
 		books = (match + Bookmark::Object::Book.get_visited).execute 
-		books.each do |book|
-			threads << Thread.new(book){|book| book["dominant_color"] = ImageServiceHelper.get_dominant_color(book["isbn"])}
-		end
-		threads.each{|thread| thread.join}
-		books.each.with_object({}) {|book,labels| if (labels[book["shelf"]].length <=4 or labels[book["shelf"]].nil?) then (labels[book["shelf"]] ||= [] ) << book end }
-		labels
 	end
 
 	def get_visited_articles
