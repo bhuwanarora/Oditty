@@ -37,6 +37,14 @@ class Neo
 		@neo.execute_query clause
 	end
 
+	def self.extract node_variable, path_name = "path"
+		" EXTRACT (node IN nodes(" + path_name + ")|node) AS " + node_variable + " "
+	end
+
+	def self.unwind collection
+		" UNWIND " + collection + " AS " + collection.singularize + " "
+	end
+
 	def _match_user(user_id)
 		"MATCH (u:User) WHERE ID(u)="+user_id.to_s+" "
 	end
@@ -117,4 +125,6 @@ class Neo
 		clause = get_timing_relationship + delete_timing_relationship + with_clause
 		clause
 	end
+
+
 end
