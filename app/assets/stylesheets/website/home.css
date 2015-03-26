@@ -26,7 +26,6 @@ a:active{
 	background-color: #FFFFFF !important;
 	color: rgba(145, 140, 140, 1) !important;
 	z-index: 3;
-	position: absolute;
 	box-shadow: none;
 	min-height: 48px !important;
 }
