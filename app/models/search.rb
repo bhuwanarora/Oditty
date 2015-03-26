@@ -20,9 +20,9 @@ class Search < Neo
 		"START user=node:node_auto_index('indexed_user_name:" + @params + connector + "') " + return_group(" user.first_name AS first_name, user.last_name AS last_name, ID(user) AS id ") + limit(@count)
 	end
 
-	def genre_by_name clause
+	def genre_by_name
 		if @params.present?
-			clause = "START category=node:node_auto_index('indexed_category_name:" + @params + "*') "
+			clause = "START category=node:node_auto_index('indexed_category_name:" + @params + "*') " + return_group(" category.name AS name, ID(category) AS id ") + limit(@count)
 		else
 			clause = Category::Root.get_all
 		end
