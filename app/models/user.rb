@@ -133,12 +133,12 @@ class User < Neo
 	end
 
 	def self.match_custom_likeable_root_category max=true, category_id=nil
-		custom = max ? " MAX " : " MIN "
+		custom = max ? " DESC " : ""
 		clause = " MATCH (user)-[likes:Likes]->(root_category:Category) WHERE "
 		if category_id
 			clause = clause + " ID(root_category)="+category_id.to_s+" AND "
 		end
-		clause = clause + "likes.weight > 0 AND root_category.is_root = true WITH root_category, user, " + custom + "(likes.weight) AS custom_like_weight MATCH (user)-[likes]->(root_category)-[:NextInCategory]->(book) WHERE likes.weight = custom_like_weight WITH user, root_category, likes "
+		clause = clause + "likes.weight > 0 AND root_category.is_root = true WITH root_category, user, likes " + Neo.new.order_init + " likes.weight " + custom + Neo.new.limit(1)
 		clause
 	end
 
