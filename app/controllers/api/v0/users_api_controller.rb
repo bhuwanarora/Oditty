@@ -32,10 +32,10 @@ module Api
 				render :json => books, :status => 200
 			end
 
-			def get_books_from_favourite_category
+			def get_books_from_likeable_category
 				user_id = session[:user_id]
 				favourites = true
-				books = User::Suggest::BookSuggestion.new(user_id).for_favourite_category(favourites)
+				books = Api::V0::UserApi.get_likeable_category(user_id, favourites)
 				render :json => books, :status => 200
 			end
 
@@ -54,7 +54,7 @@ module Api
 			def get_books_from_unexplored_subjects
 				user_id = session[:user_id]
 				favourites = false
-				books = User::Suggest::BookSuggestion.new(user_id).for_favourite_category(favourites)
+				books = Api::V0::UserApi.get_books_from_unexplored_subjects(user_id, favourites)
 				render :json => books, :status => 200
 			end
 

@@ -15,6 +15,21 @@ module Api
 				Book::SmallRead.get_sorted_books(0, 10).execute
 			end
 
+			def self.get_likeable_category user_id, favourites
+				data = []
+				books_processed_count = 0
+
+				while data.length < 10
+					data.push User::Suggest::BookSuggestion.new(user_id).for_likeable_category(favourites, books_processed_count).execute
+					books_processed_count = books_processed_count + Constants::RecommendationBookCount*10
+				end
+				data
+			end
+
+			def self.get_books_from_unexplored_subjects user_id, favourites
+				User::Suggest::BookSuggestion.new(user_id).for_likeable_category(favourites).execute
+			end
+
 			def self.recover_password email
 				@neo = Neography::Rest.new
 				clause = "MATCH (user:User{email:\""+email+"\"}) RETURN " + User.basic_info

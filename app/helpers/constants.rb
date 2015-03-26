@@ -91,5 +91,5 @@ module Constants
 	QueryStepDuringSorting      = 1000
 	ArticlesShownInRoomCount    = 10
 	BooksShownInRoomCount       = 10
-
+	PopularBooksShownCount      = 30 
 end
