@@ -4,6 +4,10 @@ class Neo
 		@neo = Neography::Rest.new
 	end
 
+	def order_init
+		" ORDER BY "
+	end
+
 	def return_init
 		" RETURN "
 	end
@@ -12,17 +16,33 @@ class Neo
 		" SKIP " + skip_count.to_s + " "
 	end
 
-	def return(*params)
+	def return_group(*params)
 		" RETURN " + params.join(", ")
+	end
+
+	def match_group(*params)
+		" MATCH " + params.join(", ")
 	end
 
 	def limit limit_count
 		" LIMIT " + limit_count.to_s + " "
 	end
 
+	def with_group(*params)
+		" WITH " + params.join(", ")
+	end
+
 	def self.execute clause
 		@neo ||= self.initialize
 		@neo.execute_query clause
+	end
+
+	def self.extract node_variable, path_name = "path"
+		" EXTRACT (node IN nodes(" + path_name + ")|node) AS " + node_variable + " "
+	end
+
+	def self.unwind collection
+		" UNWIND " + collection + " AS " + collection.singularize + " "
 	end
 
 	def _match_user(user_id)

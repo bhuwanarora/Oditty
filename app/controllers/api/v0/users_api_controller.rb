@@ -1,7 +1,8 @@
 module Api
 	module V0
 		class UsersApiController < ApplicationController
-			
+			# require_dependency 'user/suggest/book'w
+
 			def get_info_card_data
 				info = UserApi.get_info_card_data
 				render :json => info, :status => 200
@@ -9,7 +10,7 @@ module Api
 
 			def get_small_reads
 				user_id = session[:user_id]
-				books = Book.get_small_reads
+				books = UserApi.get_small_reads
 				render :json => books, :status => 200
 			end
 
@@ -27,33 +28,33 @@ module Api
 
 			def get_books_from_favourite_author
 				user_id = session[:user_id]
-				books = User::Suggest::Book.new(user_id).for_favourite_author(user_id).execute
+				books = User::Suggest::BookSuggestion.new(user_id).for_favourite_author.execute
 				render :json => books, :status => 200
 			end
 
-			def get_books_from_favourite_category
+			def get_books_from_likeable_category
 				user_id = session[:user_id]
 				favourites = true
-				books = User::Suggest::Book.new(user_id).for_favourite_category(user_id, favourites).execute
+				books = Api::V0::UserApi.get_likeable_category(user_id, favourites)
 				render :json => books, :status => 200
 			end
 
 			def get_books_from_favourite_era
 				user_id = session[:user_id]
-				books = User::Suggest::Book.new(user_id).for_most_bookmarked_era(user_id).execute
+				books = User::Suggest::BookSuggestion.new(user_id).for_most_bookmarked_era.execute
 				render :json => books, :status => 200
 			end
 
 			def get_books_on_friends_shelves
 				user_id = session[:user_id]
-				books = User::Suggest::Book.new(user_id).on_friends_shelves(user_id).execute
+				books = User::Suggest::BookSuggestion.new(user_id).on_friends_shelves.execute
 				render :json => books, :status => 200
 			end
 
 			def get_books_from_unexplored_subjects
 				user_id = session[:user_id]
 				favourites = false
-				books = User::Suggest::Book.new(user_id).for_favourite_category(user_id, favourites).execute
+				books = Api::V0::UserApi.get_books_from_unexplored_subjects(user_id, favourites)
 				render :json => books, :status => 200
 			end
 
@@ -68,7 +69,8 @@ module Api
 
 
 			def user_profile_info
-				info = UserApi.get_profile_info(params[:id])
+				user_id = session[:user_id]
+				info = UserApi.get_profile_info(user_id)
 				render :json => info, :status => 200
 			end
 

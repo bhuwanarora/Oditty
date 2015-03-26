@@ -11,6 +11,25 @@ module Api
 				info
 			end
 
+			def self.get_small_reads
+				Book::SmallRead.get_sorted_books(0, 10).execute
+			end
+
+			def self.get_likeable_category user_id, favourites
+				data = []
+				books_processed_count = 0
+
+				while data.length < 10
+					data.push User::Suggest::BookSuggestion.new(user_id).for_likeable_category(favourites, books_processed_count).execute
+					books_processed_count = books_processed_count + Constants::RecommendationBookCount*10
+				end
+				data
+			end
+
+			def self.get_books_from_unexplored_subjects user_id, favourites
+				User::Suggest::BookSuggestion.new(user_id).for_likeable_category(favourites).execute
+			end
+
 			def self.recover_password email
 				@neo = Neography::Rest.new
 				clause = "MATCH (user:User{email:\""+email+"\"}) RETURN " + User.basic_info
@@ -29,14 +48,13 @@ module Api
 
 			def self.get_profile_info id
 				User.new(id).get_detailed_info.execute
-				info = @neo.execute_query(clause)["data"][0]
 			end
 
 			def self.add_books_from_fb(params, user_id)
 				puts "#{params[:type].to_s.green}"
 				if params[:data].present?
 					for book in params[:data]
-						title = book[:name].gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "").downcase rescue ""
+						title = book[:name].search_ready
 						if title
 							id = SearchApi.search(title, 1, 'BOOK')
 							puts id.to_s.green
@@ -371,7 +389,6 @@ module Api
 				new_object_string = " CREATE UNIQUE ("+new_label.to_s+")-[:HasProperty]->(:"+object_key.to_s.singularize.camelcase+"{"+new_object_string+"})"
 				new_object_string
 			end
-
 		end
 	end
 end

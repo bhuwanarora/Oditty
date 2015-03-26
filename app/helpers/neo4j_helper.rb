@@ -1154,8 +1154,6 @@ module Neo4jHelper
 		end
 	end
 
-
-
 	def self.set_circular_linked_list label, property
 		neo = self.init
 		get_ids_clause = " MATCH (node:" + label.to_s + ") RETURN DISTINCT ID(node) AS id "

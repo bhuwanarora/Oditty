@@ -1,35 +1,35 @@
-<md-bottom-sheet class="md-list md-has-header" ng-controller="listBottomSheetController" ng-click="stop_propagation($event)">
-    <section layout-padding>Add to</section>
-    <md-list>
-        <md-item ng-repeat="shelf in shelves" ng-click="show_custom_toast()">
-            <md-checkbox ng-model="data.cb1" aria-label="{{ shelf.name }}" class="md-warn">
-                {{ shelf.name }}
-            </md-checkbox>
-        </md-item>
-    </md-list>
-    <md-divider></md-divider>
-    <section layout-padding>Shelves</section>
-    <md-list>
-        <md-item ng-repeat="shelf in personal_shelves" ng-click="show_custom_toast()">
-            <md-checkbox ng-model="data.cb1" aria-label="{{ shelf.name }}" class="md-warn">
-                {{ shelf.name }}
-            </md-checkbox>
-        </md-item>
-    </md-list>
-    <md-divider></md-divider>
-    <section layout="row" layout-padding>
-        <md-input-container class="add_new">
-            <label>Create New...</label>
-            <input/>
-        </md-input-container>
-        <md-button ng-click="add_new_shelf()">
-            <span class="icon-plus"></span>
-        </md-button>
-    </section>
+<md-bottom-sheet class="md-list md-has-header" 
+    ng-controller="shelfController" 
+    layout-padding
+    ng-click="stop_propagation($event)">
+    <md-content class="bottom_shelf white">
+        <section layout-padding>Add to</section>
+        <md-list>
+            <md-item ng-repeat="label in labels" ng-click="show_custom_toast()" ng-if="label.public_status">
+                <md-checkbox ng-model="data.cb1" aria-label="{{label.label_id}}" class="md-warn">
+                    {{label.label_name}}
+                </md-checkbox>
+            </md-item>
+        </md-list>
+        <md-divider></md-divider>
+        <section layout="row" layout-padding>
+            <md-input-container class="add_new">
+                <label>Create New...</label>
+                <input ng-model="new_label"/>
+            </md-input-container>
+            <md-button ng-click="add_new_label()">
+                <span class="icon-plus"></span>
+            </md-button>
+        </section>
+    </md-content>
 </md-bottom-sheet>
 
 <style>
     .add_new{
         padding-bottom: 0px;
+    }
+
+    .bottom_shelf{
+        max-height: 80vh;
     }
 </style>

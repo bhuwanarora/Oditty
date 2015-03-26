@@ -1,5 +1,5 @@
 module Constants
-	CategoryLikeWeight					= 10
+	CategoryLikeWeight			= 10
 	MarkAsReadPoints 			= 5
 	# BookmarkPoints 				= 5
 	RatingPoints				= 10
@@ -89,4 +89,7 @@ module Constants
 	RecommendationBookCount 	= 10
 	FollowFavoriteAuthorsCount  = 30 
 	QueryStepDuringSorting      = 1000
+	ArticlesShownInRoomCount    = 10
+	BooksShownInRoomCount       = 10
+	PopularBooksShownCount      = 30 
 end

@@ -1,25 +1,20 @@
 class User < Neo
 
 	def initialize user_id, skip_count=0
-		# @limit = Constants::BookCountShownOnSignup
 		@id = user_id
-		# @skip_count = skip_count
 	end
 
-	def set_bookmark_count
-		" user.bookmark_count = CASE WHEN user.bookmark_count IS NULL THEN 1 ELSE toInt(user.bookmark_count) + 1 END "
+	def set_bookmark_count operation
+		" user.bookmark_count = COALESCE(user.bookmark_count,0) " + operation + " 1 "
 	end
 
-	def set_total_count_on_bookmark
-		" user.total_count = CASE WHEN user.total_count IS NULL THEN "+Constants::BookmarkPoints.to_s+" ELSE toInt(user.total_count) + "+Constants::BookmarkPoints.to_s+" END"
+	def set_total_count_on_bookmark operation
+		" user.total_count = COALESCE(user.total_count,0) " 
+		+ operation.to_s + " "+Constants::BookmarkPoints.to_s+" "
 	end
 
 	def get_detailed_info
-		match + User.optional_match_category + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + return_init + " COLLECT(DISTINCT(category.name)), COLLECT(DISTINCT(ID(category))), COLLECT(DISTINCT(category.icon)), COLLECT(DISTINCT(book.isbn)), COLLECT(DISTINCT(ID(book))), COLLECT(DISTINCT(book.title)), COLLECT(DISTINCT(book.author_name))"
-	end
-
-	def self.books_not_bookmarked
-		" WHERE NOT (user)-[:Labelled]->(:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(book) WITH book "
+		match + User.match_likeable_root_category + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + return_group(User.basic_info, "COLLECT(DISTINCT(root_category.name)) AS categories_name", "COLLECT(DISTINCT(ID(root_category))) AS categories_id", "COLLECT(root_category.aws_key) AS categories_aws_key", "COLLECT(DISTINCT(book.isbn)) AS books_isbn", "COLLECT(DISTINCT(ID(book))) AS books_id", "COLLECT(DISTINCT(book.title)) AS books_title", "COLLECT(DISTINCT(book.author_name)) AS books_author_name")
 	end
 
 	def get_basic_info
@@ -31,7 +26,7 @@ class User < Neo
 	end
 
 	def get_all_books skip_count=0, limit_count=Constants::BookCountShownOnSignup 
-		match + Bookmark.match + return_init + ::Book.basic_info + ::Book.order_desc + skip(skip_count) + limit(limit_count)
+		match + Bookmark::Object::Node::BookLabel.match_path + return_init + ::Book.basic_info + ::Book.order_desc + skip(skip_count) + limit(limit_count)
 	end
 
 	def self.create_label key
@@ -81,12 +76,12 @@ class User < Neo
 		clause
 	end
 
-	def get_bookmark_labels
-		match + User.label_clause + return_init + Label.get_basic_info
-	end
-
 	def get_books_bookmarked(skip_count=0)
 		match + return_init + Book.get_basic_info + ", COLLECT(label.name) as labels SKIP "+skip_count.to_s+" LIMIT 10"
+	end
+
+	def get_public_labels
+		match + UsersLabel.match + return_group(Label.basic_info)
 	end
 
 	def match_bookmark
@@ -119,8 +114,36 @@ class User < Neo
 		clause
 	end
 
+	def self.match_likeable_category(label="category", category_id=nil)
+		if category_id
+			clause = " MATCH (user)-[likes:Likes]->("+label+":Category) WHERE ID("+label+")="+category_id.to_s+" AND likes.weight > 0 WITH user, "+label+", likes "
+		else
+			clause = " MATCH (user)-[likes:Likes]->("+label+":Category) WHERE likes.weight > 0 WITH user, "+label+", likes "
+		end
+		clause
+	end
+
+	def self.match_likeable_root_category category_id=nil
+		clause = " MATCH (user)-[likes:Likes]->(root_category:Category) WHERE "
+		if category_id
+			clause = clause + "ID(root_category)="+category_id.to_s+" AND "
+		end
+		clause = clause + "likes.weight > 0 AND root_category.is_root = true WITH user, root_category, likes "
+		clause
+	end
+
+	def self.match_custom_likeable_root_category max=true, category_id=nil
+		custom = max ? " DESC " : ""
+		clause = " MATCH (user)-[likes:Likes]->(root_category:Category) WHERE "
+		if category_id
+			clause = clause + " ID(root_category)="+category_id.to_s+" AND "
+		end
+		clause = clause + "likes.weight > 0 AND root_category.is_root = true WITH root_category, user, likes " + Neo.new.order_init + " likes.weight " + custom + Neo.new.limit(1)
+		clause
+	end
+
 	def self.optional_match_category category_id=nil
-		" OPTIONAL" + User.category_clause(category_id)
+		" OPTIONAL" + User.match_category(category_id)
 	end
 
 	def self.init_book_read_count
@@ -129,5 +152,21 @@ class User < Neo
 
 	def get_init_book_count_range
 		match + return_init + User.init_book_read_count
+	end
+
+	def get_books_from_public_shelves
+		books = (match + Bookmark::Object::Node::BookLabel.get_public)
+	end
+
+	def get_articles_from_public_shelves
+		match + Bookmark::Object::Node::Article.get_public 
+	end
+
+	def get_visited_books 
+		books = (match + Bookmark::Object::Node::BookLabel.get_visited) 
+	end
+
+	def get_visited_articles
+		match + Bookmark::Object::Node::Article.get_visited 
 	end
 end
