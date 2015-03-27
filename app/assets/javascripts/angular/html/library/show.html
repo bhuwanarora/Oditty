@@ -1,10 +1,11 @@
 <md-divider></md-divider>
-<md-whiteframe layout-fill ng-hide="constant.show_book" layout-align="start" 
-	layout-padding layout="row">
-    <md-switch ng-model="active_tab.infinity" aria-label="Personal Suggestions">
-		<h4 ng-if="!active_tab.infinity">Personalised Suggestions for You</h4>
-    	<h4 ng-if="active_tab.infinity">Infinity</h4>
-    </md-switch>
-</md-whiteframe>
-<div ng-include src="'/assets/angular/html/library/_books.html'" ng-if="active_tab.infinity"></div>
-<div ng-include src="'/assets/angular/html/library/_personalised_books.html'" ng-if="!active_tab.infinity"></div>
+	<md-whiteframe layout-fill ng-hide="constant.show_book" layout="row" layout-padding layou-fill>
+	    <md-switch ng-model="active_tab.infinity" aria-label="Personal Suggestions">
+			<h4 ng-if="!active_tab.infinity">Personalised Suggestions for You</h4>
+	    	<h4 ng-if="active_tab.infinity">Infinity</h4>
+	    </md-switch>
+	</md-whiteframe>
+	<div ng-include src="'/assets/angular/html/library/_books.html'" ng-if="active_tab.infinity"></div>
+	<div ng-include src="'/assets/angular/html/library/_personalised_books.html'" 
+	ng-if="!active_tab.infinity">
+</div>

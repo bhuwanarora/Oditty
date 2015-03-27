@@ -25,9 +25,9 @@ a:active{
 	/*background-color: #5f698c !important;*/
 	background-color: #FFFFFF !important;
 	color: rgba(145, 140, 140, 1) !important;
-	z-index: 3;
 	box-shadow: none;
 	min-height: 48px !important;
+	position: relative;
 }
 
 md-card{
@@ -299,3 +299,6 @@ md-toolbar{
 .droppable:hover{
 	/*background-color: #D3D3D3;*/
 }
+
+
+

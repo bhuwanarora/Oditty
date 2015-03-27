@@ -243,5 +243,24 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
     }
 
 
+    $scope.show_right_nav = function(event){
+        $mdSidenav('alphabets_sidenav').toggle();
+        event.stopPropagation();
+    }    
+
+    $scope.show_left_nav = function(event){
+        $mdSidenav('sort_by_sidenav').toggle();
+        event.stopPropagation();
+    }    
+
+    $scope.show_bottom_filters = function(event){
+        $mdBottomSheet.show({
+            templateUrl: '/assets/angular/html/library/bottom_sheet_filters.html',
+            targetEvent: event
+        })
+
+    };
+
+
     _init();
 }]);
