@@ -20,6 +20,10 @@ class Neo
 		" RETURN " + params.join(", ")
 	end
 
+	def create_group(*params)
+		" CREATE UNIQUE " + params.join(", ")
+	end
+
 	def match_group(*params)
 		" MATCH " + params.join(", ")
 	end
@@ -125,6 +129,4 @@ class Neo
 		clause = get_timing_relationship + delete_timing_relationship + with_clause
 		clause
 	end
-
-
 end

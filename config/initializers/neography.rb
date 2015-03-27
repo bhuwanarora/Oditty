@@ -23,7 +23,7 @@ module Neography
             alias_method :old_execute_query, :execute_query            
             def execute_query(query, parameters = {}, cypher_options = nil)
                 response = []
-                puts query.blue.on_red
+                puts query.white.on_black
                 neo_response = old_execute_query(query, parameters, cypher_options)
                 neo_response["data"].each do |record|
                     response << Hash[neo_response["columns"].zip(record)]

@@ -93,4 +93,10 @@ module Constants
 	BooksShownInRoomCount       = 10
 	PopularBooksShownCount      = 30
 	FeedFetchCount				= 4 
+	PlanningToReadStatusCode	= 0
+	CurrentlyReadingStatusCode  = 1
+	ReadStatusCode 				= 2
+	PlanningToBuyStatusCode     = 0
+	PlanningToLendStatusCode	= 1
+	PlanningToBorrowStatusCode  = 2
 end
