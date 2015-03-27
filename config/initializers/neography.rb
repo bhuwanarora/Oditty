@@ -23,11 +23,8 @@ module Neography
             alias_method :old_execute_query, :execute_query            
             def execute_query(query, parameters = {}, cypher_options = nil)
                 response = []
-                puts query.white.on_black
+                puts query.blue.on_red
                 neo_response = old_execute_query(query, parameters, cypher_options)
-                if Rails.env.development?
-                  # puts neo_response.to_s.green.on_red
-                end
                 neo_response["data"].each do |record|
                     response << Hash[neo_response["columns"].zip(record)]
                 end

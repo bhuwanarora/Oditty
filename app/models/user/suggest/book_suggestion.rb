@@ -18,10 +18,18 @@ class User::Suggest::BookSuggestion < User::Suggest
 	end
 
 	def for_likeable_category(favourites = true, books_processed_count=0)
+<<<<<<< HEAD
 		@user.match + User.match_custom_likeable_root_category(favourites) + ::Category::Root.get_books(books_processed_count, Constants::RecommendationBookCount*10) + @user.match + ", book, root_category " + Bookmark.match_not("book") + self.return_group(::Book.basic_info, Category::Root.basic_info)
 	end
 
 	def self.get_popular_books skip_count, user_id
 		::Book.new(Constants::BestBook).match + " AS best_book MATCH (best_book)-[:Next_book*" + skip_count.to_s + "]->(book) WITH book " + ::Book.match_path("Next_book",Constants::PopularBooksShownCount) + " WITH " +  self.extract("books") + self.unwind("books") + self.return_init + ::Book.detailed_info 
+=======
+		@user.match + User.match_custom_likeable_root_category(favourites) + ::Category::Root.get_books(books_processed_count, Constants::RecommendationBookCount*10) + @user.match + ", book, root_category " + Bookmark.match_not("book") + Neo.new.return_group(::Book.basic_info, Category::Root.basic_info)
+	end
+
+	def self.get_popular_books skip_count, user_id
+		::Book.new(Constants::BestBook).match + " AS best_book MATCH (best_book)-[:Next_book*" + skip_count.to_s + "]->(book) WITH book " + ::Book.match_path("Next_book",Constants::PopularBooksShownCount) + " WITH " +  Neo.extract("books") + Neo.unwind("books") + Neo.new.return_init + ::Book.detailed_info 
+>>>>>>> 0f54429e8ce6afd7f256508102aa56b3bcc9fa11
 	end
 end
