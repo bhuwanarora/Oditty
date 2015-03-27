@@ -1,6 +1,8 @@
 module Api
 	module V0
 		class WebsiteApiController < ApplicationController
+			# require_dependency 'user/predict/category'
+
 			def s3
 				begin
 					info = S3WebsiteHelper.s3_access_token
@@ -10,10 +12,15 @@ module Api
 				end
 			end
 
+			def add_label
+				user_id = session[:user_id]
+				UsersLabel.create(user_id, params[:label]).execute
+				render :json => "Success", :status => 200
+			end
+
 			def genres
-                @neo ||= neo_init
-				filter = params[:q]
-                genres = WebsiteApi.get_root_categories(session[:user_id])
+				user_id = session[:user_id]
+                genres = User::Predict::CategoryPrediction.new(user_id).get_favourites.execute
                 
 				render :json => genres, :status => 200
 			end

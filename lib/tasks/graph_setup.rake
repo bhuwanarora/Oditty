@@ -6,6 +6,12 @@ namespace :graph do
   #   Neo4jHelper.delete_labels
   # end
 
+  desc "add_new_labels"
+  task :add_new_labels => :environment do
+    include Neo4jHelper
+    Neo4jHelper.add_new_labels
+  end
+
   desc "set_author_rating"
   task :set_author_rating => :environment do
     include Neo4jHelper

@@ -1,0 +1,2 @@
+class Hashtag < Neo
+end

@@ -1,106 +1,65 @@
-class Book < ActiveRecord::Base
-	# include Tire::Model::Search
- #   	include Tire::Model::Callbacks 
- #   	after_touch() { tire.update_index }
-
- #   	settings analysis: {
- #      tokenizer:{
- #        ngram_tokenizer_search:{
- #          type: "edgeNgram",
- #          min_gram: 3,
- #          max_gram: 7,
- #          token_chars: ["letter","digit"]  
- #        },
- #        ngram_tokenizer:{
- #          type: "nGram",
- #          min_gram: 1,
- #          max_gram: 7,
- #          token_chars: ["letter","digit"]  
- #        }
- #      },  
- #      analyzer: {
- #        word_analyzer_search: {
- #          type: 'custom',
- #          tokenizer: "ngram_tokenizer_search",
- #          filter: ["lowercase"]
- #        },
- #        word_analyzer: {
- #          type: 'custom',
- #          tokenizer: "ngram_tokenizer",
- #          filter: ["lowercase"]
- #        }
- #      } 
- #    } 
-
- #    mapping do
- #      indexes :url, 						:null_value => "",			:store => :yes #TODO NEEDS TO BE OPTIMIZED TO STORE = NO
- #      indexes :notes,						:null_value => "",			:store => :yes #TODO NEEDS TO BE OPTIMIZED TO STORE = NO
- #      indexes :title, 						:type   => 'completion', 	:payloads => true
- #    end
-
-	
-	uniquify :uuid, :salt, :length => 12, :chars => 0..9
-
-	attr_accessible :title, :language_id, :pages, :book_series_id, :excerpts, :link,
-					:weight, :subtitle, :table_of_contents, :contributions, :edition_name, :book_type, :notes, :title_prefix, 
-					:physical_format, :physical_dimensions, :description, :url, :work_titles, :flag
-	has_and_belongs_to_many :authors
-	has_and_belongs_to_many :tags
-	has_and_belongs_to_many :genres
-	has_and_belongs_to_many :categories
-	has_and_belongs_to_many :subject_places, :class_name => "::Book::SubjectPlace"
-	has_and_belongs_to_many :subject_peoples, :class_name => "::Book::SubjectPeople"
-	has_and_belongs_to_many :subject_times,  :class_name => "::Book::SubjectTime" 
-	belongs_to :book_series
-	belongs_to :language
-	has_one :identifier, :class_name => "::Book::Identifier"
-	has_one :publishing_details, :class_name => "::Book::PublishingDetails"
-	has_many :covers, :class_name => "::Book::Cover"
-
-	def to_indexed_json
-	   to_json :except => [],
-	           :methods => [:title, :notes, :url]
+class Book < Neo
+	def initialize id
+		@id = id
 	end
 
-	def self.search(params)
-		response = nil
-	  	tire.search(load: true) do
-	    	response = query {string params}
-	  	end
-	  	response.results
+	def get_feed
+		" MATCH (book:Book)-[:BookFeed*0..]->(news_feed) WHERE ID(book) = " + @id.to_s + " RETURN labels(news_feed), news_feed "
 	end
 
-	def self.is_valid? isbn_number
-	  (isbn_number.length == 10) && (isbn_number.split('').inject([10,0]){|a, c| i,s = a; [s+i*c.to_i,i-1]}.first%11==0)
+	def set_bookmark_count operation
+		" SET book.bookmark_count = COALESCE(book.bookmark_count,0) " + operation.to_s + " 1 "
 	end
 
-	def sorted_tags
-		self.tags.order(:name)
+	def match
+		" MATCH (book:Book) WHERE ID(book)=" + @id.to_s + " WITH book "
 	end
 
-	def self.book_exists? isbn_10
-		isbn_list = Book::Identifier.pluck(:isbn_10).flatten.grep /#{isbn_10}/
-		!isbn_list.empty?
+	def self.basic_info
+		" ID(book) AS book_id, book.isbn AS isbn, book.title AS title, book.author_name AS author_name, book.pages_count AS pages_count, book.published_year AS published_year, TOINT(book.total_weight) as popularity"
 	end
 
-	def self.get_book_id_by_isbn isbn_10
-		book_id = Book::Identifier.select("book_id").where("book_identifiers.isbn_10 LIKE ?", "%#{isbn_10}%").to_json
-		book_id = (JSON.parse book_id).map{|s| s["book_id"]}.compact
-		book_id[0]
+	def self.mark_as_read
+		", ID(mark_as_read) AS status"
 	end
 
-	def sorted_tags
-       	self.tags.order(:name)
-    end
+	def self.rating
+		", rating_node.rating AS user_rating"
+	end
 
-    def formatted_name
-        self.title.gsub(" ", "_")+"_(novel)"
-   	end
+	def self.match_genre
+		" MATCH (book)-[belongs_to:Belongs_to]->(genre:Genre) "
+	end
 
-	# def self.search q
-	# 	@client ||= self.initialize_client
-	# 	@results = @client.search(q)
-	# 	@results
-	# end
+	def self.optional_match_genre
+		" OPTIONAL " + self.match_genre
+	end
+
+	def self.get_small_reads
+		Book::SmallRead.path_nodes + Neo.new.return_group(Book.basic_info)
+	end
+
+	def self.match_path relation, limit
+		"MATCH path = (book)-[:" + relation.to_s + "*" + limit.to_s + "]-(last_in_path)"
+	end
+
+	def get_categories
+		match_clause = " MATCH (book) WHERE ID(book) = " + @id.to_s + " MATCH (book)-[:FromCategory]->(:Category)-[:HasRoot*0..1]->(root_category{is_root:true}) RETURN "
+		limit_clause = " LIMIT 5"
+		clause = match_clause + Category.return_clause  + limit_clause
+		clause
+	end
+
+	def self.detailed_info
+		" book.title as title, book.author_name as author_name, ID(book) as book_id, book.readers_count as readers_count, book.bookmark_count as bookmark_count, book.comment_count as comment_count, book.published_year as published_year, book.page_count as page_count, book.description as description, book.external_thumb as external_thumb "
+	end
+
+	def self.match_root_category
+		 " MATCH (book)-[from_category:FromCategory]->(category:Category)-[has_root:HasRoot*0..1]->(root_category:Category{is_root:true}) "
+	end
+
+	def self.order_desc
+		" ORDER BY book.total_weight DESC "
+	end
 
 end

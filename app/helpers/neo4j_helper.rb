@@ -812,7 +812,45 @@ module Neo4jHelper
 	def self.add_labels_to_existing_user
 		@neo ||= self.init
 		clause = "MATCH (user:User), (label:Label{basic:true}) CREATE UNIQUE (user)-[:BookmarkAction{user_id:ID(user)}]->(label)"
+		@neo.execute_query clause
 	end
+
+	def self.add_new_labels
+		@neo ||= self.init
+		# book = 0
+		# articles = 1
+		# listopia = 2
+		# community = 3
+		delete_labels = "MATCH (u:User), (l:Label), (u)-[r1:BookmarkAction]->(l) DELETE r1, l"
+		@neo.execute_query delete_labels
+
+		labels = [{:name => "Read", :key => "Read", :type => [0, 1, 2], :public => true},
+				  {:name => "Intending to read", :key => "IntendingToRead", :type => [0, 1, 2], :public => true},
+				  {:name => "Didn't feel like reading it after a point", :key => "DidntFeelLikeReadingItAfterAPoint", :type => [0, 1, 2], :public => true},
+				  {:name => "Pretend I have read", :key => "PretendIHaveRead", :type => [0, 1, 2], :public => true},
+				  {:name => "Saving for when I have more time", :key => "SavingForWhenIHaveMoreTime", :type => [0, 1, 2], :public => true},
+				  {:name => "Will never read", :key => "WillNeverRead", :type => [0, 1, 2], :public => true},
+				  {:name => "Purely for show", :key => "PurelyForShow", :type => [0, 1, 2], :public => true},
+				  {:name => "Read but can't remember a single thing about it", :key => "ReadButCantRememberASingleThingAboutIt", :type => [0, 1, 2], :public => true},
+				  {:name => "Wish I hadn't read", :key => "WishIHadntRead", :type => [0, 1, 2], :public => true},
+				  {:name => "Currently reading", :key => "CurrentlyReading", :type => [0, 1, 2], :public => true},
+				  {:name => "Have left a mark on me", :key => "HaveLeftAMarkOnMe", :type => [0, 1, 2], :public => true},
+				  {:name => "Not worth reading", :key => "NotWorthReading", :type => [0, 1, 2], :public => true},
+				  {:name => "From facebook", :key => "FromFacebook", :type => [0], :public => false},
+				  {:name => "Plan to buy", :key => "PlanToBuy", :type => [0], :public => true},
+				  {:name => "I own this", :key => "IOwnthis", :type => [0], :public => true},
+				  {:name => "Visited", :key => "Visited", :type => [0, 1, 2], :public => false}]
+		for label in labels
+			clause = " CREATE (label: Label{basic:true, name:\""+label[:name]+"\", key:\""+label[:key]+"\", public:"+label[:public].to_s+"}) "
+			clause = clause + " SET label:BookLabel " 		if label.include? 0
+			clause = clause + " SET label:ArticleLabel " 	if label.include? 1
+			clause = clause + " SET label:ListLabel " 		if label.include? 2
+			@neo.execute_query clause
+		end
+
+		self.add_labels_to_existing_user
+	end
+
 
 	def self.remove_colon_from_indexed_fields
 		@neo ||= self.init
@@ -1096,18 +1134,24 @@ module Neo4jHelper
 
 	def self.set_genre_linked_list
 		neo = self.init
-		is_sorted_list_created = false
-		node_id = Constants::BestBook.to_s
-		while !is_sorted_list_created
-			match_clause = "MATCH popularity_list = (book:Book)-[:Next_book*0.." + Constants::QueryStep.to_s + "]->(next_book) WHERE ID(book) = " + node_id.to_s 
-			unwind_book_collection_clause = " WITH EXTRACT(n in nodes(popularity_list)|n) AS books UNWIND books as book "
-			match_book_to_root_clause = "OPTIONAL MATCH (book)-[:FromCategory]->(category:Category)-[:HasRoot*0..1]->(root_category:Category{is_root:true}) "
-			get_last_linked_node_clause = "WITH book, root_category, root_category.uuid AS uuid OPTIONAL MATCH (root_category)-[next_in_category:NextInCategory*]->(popular_book:Book) WHERE NOT(popular_book-[:NextInCategory{from_category:uuid}]-()) "
-			conditionally_make_relation_clause = "FOREACH(to_be_ignored IN CASE WHEN next_in_category IS NULL THEN [1] ELSE [] END | MERGE (root_category)-[new_popular:NextInCategory]-(book) ON CREATE SET new_popular.from_category = root_category.uuid) FOREACH(to_be_ignored IN CASE WHEN next_in_category IS NOT NULL THEN [1] ELSE [] END | MERGE (popular_book)-[next_popular:NextInCategory]-(book) ON CREATE SET next_popular.from_category = root_category.uuid) RETURN ID(book) as book_id"
+		is_sorted = false
+		most_popular_book_id = Constants::BestBook.to_i
+		starting_book_id = Constants::BestBook.to_i
+		clause = "MATCH (c:Category{is_root: true}) WITH c CREATE UNIQUE (c)-[:NextInCategory]->(c)"
+		clause.execute
+
+		while !is_sorted
+			match_clause = "OPTIONAL MATCH popularity_list = (book:Book)-[:Next_book*" + Constants::QueryStepDuringSorting.to_s + "]->(next_book) WHERE ID(book) = " + starting_book_id.to_s 
+			unwind_book_collection_clause = " WITH next_book AS least_popular_book_in_path, EXTRACT(n IN nodes(popularity_list)|n) AS books UNWIND books as book "
+			match_book_to_root_clause = " OPTIONAL MATCH (book)-[:FromCategory]->(category:Category)-[:HasRoot*0..1]->(root_category:Category{is_root:true}) "
+			get_last_linked_node_clause = "  WITH book, root_category, root_category.uuid AS uuid , least_popular_book_in_path OPTIONAL MATCH (root_category)<-[old:NextInCategory]-(last_node) "
+			conditionally_make_relation_clause = " FOREACH (ignore IN CASE WHEN last_node IS  NOT NULL AND old IS NOT null  THEN [old] ELSE [] END | MERGE (last_node)-[:NextInCategory{from_category:uuid}]->(book)-[:NextInCategory{from_category:uuid}]->(root_category)  DELETE old ) RETURN ID(book) AS most_popular_book_id, ID(least_popular_book_in_path) AS least_popular_book_id  ORDER BY book.total_weight LIMIT 1"
 			clause = match_clause + unwind_book_collection_clause + match_book_to_root_clause + get_last_linked_node_clause + conditionally_make_relation_clause 
-			neo.execute_query clause
-			books_id = neo.execute_query["book_id"].flatten 
-			if book_id.include? starting_node then is_sorted_list_created = true end	
+			data = neo.execute_query clause
+			most_popular_book_id = data[0]["most_popular_book_id"].to_i
+			starting_book_id = data[0]["least_popular_book_id"].to_i
+			if most_popular_book_id  == Constants::BestBook then is_sorted = true end	
 		end
 	end
+
 end

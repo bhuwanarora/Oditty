@@ -1,0 +1,2 @@
+class ReadingJourney < Neo
+end

@@ -2,7 +2,26 @@
 	<b class="small-padding">Tehzeeb's Reading Journey</b>
 	<md-divider></md-divider>
 	<div>
-		<md-card>
+		<md-card ng-repeat="reading_journey in reading_journeys">
+			<section layout="column" layout-fill>
+				<img ng-src="{{reading_journey.image}}" class="full_width">
+				<a ng-href="/journey/{{reading_jounrey.id}}" layout="column">
+					<md-button class="clear full_width">
+						<div class="small-padding">
+							<b>{{reading_journey.title}}</b>
+							<div>by {{reading_journey.author_name}}</div>
+							RATING
+						</div>
+						<md-divider></md-divider>
+						<div class="small-padding">
+							<B>STARTED ON</B>
+							<div>{{reading_journey.started_on}}</div>
+						</div>
+					</md-button>
+				</a>
+			</section>
+		</md-card>
+		<!-- <md-card>
 			<section layout="column" layout-fill>
 				<img src="https://s-media-cache-ak0.pinimg.com/236x/8f/af/5e/8faf5e39ee67c2c8e6c073a3f0af6ddf.jpg" class="full_width">
 				<a href="/journey" layout="column">
@@ -51,6 +70,6 @@
 					</md-button>
 				</a>
 			</section>
-		</md-card>
+		</md-card> -->
 	</div>
 </section>

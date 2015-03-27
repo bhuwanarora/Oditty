@@ -30,7 +30,7 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
     $scope.show_shelf_bottom_sheet = function(event){
         $mdBottomSheet.show({
             templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
-            controller: 'listBottomSheetController',
+            controller: 'shelfController',
             targetEvent: event
         });
         event.stopPropagation();
@@ -52,6 +52,7 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
                 else{
                     book.status = false;
                 }
+                bookService.handle_influential_books(book.id, book.status);
             }
         });
         $mdToast.show({

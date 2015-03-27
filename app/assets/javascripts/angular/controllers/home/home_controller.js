@@ -1,4 +1,4 @@
-homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSidenav", "$log", '$q', '$mdBottomSheet', '$mdDialog', 'scroller', '$document', 'feedService', '$mdToast', function($scope, $rootScope, $timeout, $mdSidenav, $log, $q, $mdBottomSheet, $mdDialog, scroller, $document, feedService, $mdToast){
+homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSidenav", "$log", '$q', '$mdBottomSheet', '$mdDialog', 'scroller', '$document', 'feedService', '$mdToast', 'shelfService', function($scope, $rootScope, $timeout, $mdSidenav, $log, $q, $mdBottomSheet, $mdDialog, scroller, $document, feedService, $mdToast, shelfService){
 
     $scope.play_type_key = function(event){
         if($scope.info.show_share){
@@ -48,7 +48,7 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
 
     $scope.close_popups = function(){
         $scope.show_notifications = false;
-        $mdSidenav('left').close();
+        // $mdSidenav('left').close();
         // debugger
 
         // $mdBottomSheet.hide({"test": "test"});
@@ -64,62 +64,10 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
       event.stopPropagation();
 	};
 
-  
-  // list of `state` value/display objects
-  $scope.states       = loadAll();
-  $scope.selectedItem = null;
-  $scope.searchText   = null;
-  $scope.querySearch  = querySearch;
-    // ******************************
-    // Internal methods
-    // ******************************
-    /**
-    * Search for states... use $timeout to simulate
-        * remote dataservice call.
-    */
-    function querySearch (query) {
-        var deferred = $q.defer();
-        $timeout(function () {
-            var results = query ? $scope.states.filter( createFilterFor(query) ) : [ ];
-            deferred.resolve(results);
-        }, Math.random() * 1000, false);
-        return deferred.promise;
-    }
-
-    /**
-        * Build `states` list of key/value pairs
-    */
-
-    function loadAll() {
-        var allStates = 'Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware,\
-              Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana,\
-              Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana,\
-              Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina,\
-              North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina,\
-              South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia,\
-              Wisconsin, Wyoming';
-        return allStates.split(/, +/g).map( function (state) {
-            return {
-                value: state.toLowerCase(),
-                display: state
-            };
-        });
-    }
-
-    /**
-        * Create filter function for a query string
-    */
-    function createFilterFor(query) {
-        var lowercaseQuery = angular.lowercase(query);
-        return function filterFn(state) {
-            return (state.value.indexOf(lowercaseQuery) === 0);
-        };
-    }
-
     $scope.show_shelf_bottom_sheet = function(event){
         $mdBottomSheet.show({
             templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
-            controller: 'listBottomSheetController',
+            controller: 'shelfController',
             targetEvent: event
         });
     };
@@ -127,7 +75,7 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
     $scope.show_share_bottom_sheet = function(event){
         $mdBottomSheet.show({
             templateUrl: 'assets/angular/html/shared/social_bottom_sheet.html',
-            controller: 'listBottomSheetController',
+            controller: 'shelfController',
             targetEvent: event
         });
     }; 
@@ -158,12 +106,10 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
         $scope.info.show_share = false;
         $scope.data = {"selectedIndex" : 0};
         $rootScope.user = {};
-        // feedService.get_feed(0).then(function(data){
-        //     // debugger
-        // });
-
-        
+        shelfService.get_all_shelves().then(function(data){
+            $rootScope.labels = data;
+        });
     };
 
-    $scope._init();
+    _init();
 }]);

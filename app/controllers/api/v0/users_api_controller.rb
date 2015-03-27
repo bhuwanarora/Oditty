@@ -1,7 +1,8 @@
 module Api
 	module V0
 		class UsersApiController < ApplicationController
-			
+			# require_dependency 'user/suggest/book'w
+
 			def get_info_card_data
 				info = UserApi.get_info_card_data
 				render :json => info, :status => 200
@@ -9,39 +10,51 @@ module Api
 
 			def get_small_reads
 				user_id = session[:user_id]
-				books = PersonalisedBookSuggestionHelper.get_small_reads
+				books = UserApi.get_small_reads
 				render :json => books, :status => 200
+			end
+
+			def handle_influential_books
+				book_id = params[:id]
+				status = params[:status]
+				user_id = session[:user_id]
+				if status
+					Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).add
+				else
+					Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).remove
+				end
+				render :json => "Success", :status => 200
 			end
 
 			def get_books_from_favourite_author
 				user_id = session[:user_id]
-				books = PersonalisedBookSuggestionHelper.get_books_from_favourite_author(user_id)
+				books = User::Suggest::BookSuggestion.new(user_id).for_favourite_author.execute
 				render :json => books, :status => 200
 			end
 
-			def get_books_from_favourite_category
+			def get_books_from_likeable_category
 				user_id = session[:user_id]
 				favourites = true
-				books = PersonalisedBookSuggestionHelper.get_books_from_favourite_category(user_id, favourites)
+				books = Api::V0::UserApi.get_likeable_category(user_id, favourites)
 				render :json => books, :status => 200
 			end
 
-			def get_books_from_favourite_era
+			def get_books_from_most_read_era
 				user_id = session[:user_id]
-				books = PersonalisedBookSuggestionHelper.get_books_from_most_bookmarked_era(user_id)
+				books = User::Suggest::BookSuggestion.new(user_id).for_most_bookmarked_era.execute
 				render :json => books, :status => 200
 			end
 
-			def get_books_on_friends_shelves
+			def books_on_your_friends_shelves
 				user_id = session[:user_id]
-				books = PersonalisedBookSuggestionHelper.get_books_on_friends_shelves(user_id)
+				books = User::Suggest::BookSuggestion.new(user_id).on_friends_shelves.execute
 				render :json => books, :status => 200
 			end
 
 			def get_books_from_unexplored_subjects
 				user_id = session[:user_id]
 				favourites = false
-				books = PersonalisedBookSuggestionHelper.get_books_from_favourite_category(user_id, favourites)
+				books = Api::V0::UserApi.get_books_from_unexplored_subjects(user_id, favourites)
 				render :json => books, :status => 200
 			end
 
@@ -56,7 +69,8 @@ module Api
 
 
 			def user_profile_info
-				info = UserApi.get_profile_info(params[:id])
+				user_id = session[:user_id]
+				info = UserApi.get_profile_info(user_id)
 				render :json => info, :status => 200
 			end
 
@@ -312,6 +326,12 @@ module Api
 			def get_followed_by
 				info = UserApi.get_followed_by session[:user_id]
 				render :json => info, :status => 200
+			end
+
+			def get_sorted_genres
+				user_id = session[:user_id]
+				genres = CategoriesHelper.get_sorted_genres user_id
+				render :json => genres, :status => 200
 			end
 		end
 	end

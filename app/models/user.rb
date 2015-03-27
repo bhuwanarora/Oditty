@@ -1,81 +1,172 @@
-class User < ActiveRecord::Base
-	require 'uniquify'
-	uniquify :uuid, :salt, :length => 12, :chars => 0..9
-	
-	attr_accessible :human_profile_id, :email, :is_subscribed
-	belongs_to :human_profile
-	has_and_belongs_to_many :books
-	devise :omniauthable, :omniauth_providers => [:google_oauth2, :facebook]
-	has_one :facebook_user_authentication
-	has_one :google_user_authentication
+class User < Neo
 
-	def self.find_for_google_oauth2(access_token, existing_user, signed_in_resource=nil)
-		neo = Neography::Rest.new
-	    data = access_token.info
-		clause = "MATCH (user:User{email: \""+data["email"]+"\"}) RETURN user"
-		graph_data = neo.execute_query(clause)["data"]
-		debugger
-	    if graph_data["email"].present?
-	    	debugger
-	    	#FIXME create user node in the graph for google auth
-		    # user = User.find_or_create_by(:email => data["email"], :is_subscribed => true)
-	    	# google_user_authentication = GoogleUserAuthentication.find_or_create_by(:user_id => user.id)
-	    	# google_user_authentication.first_name = data.first_name
-	    	# google_user_authentication.last_name = data.last_name
-	    	# google_user_authentication.image_url = data.image
-	    	# google_user_authentication.link = data.urls["Google"]
-	    	# google_user_authentication.oauth_token = data.to_s
-	    	# google_user_authentication.save
-	    else
-	    end
-	    send_subscription_mail(google_user_authentication.first_name, user.email) unless existing_user
-	    user
+	def initialize user_id, skip_count=0
+		@id = user_id
 	end
 
-	def self.find_for_facebook_oauth(auth, existing_user, signed_in_resource=nil)
-	    data = auth.extra.raw_info
-	    if data["email"].present?
-	    	#FIXME create user node in the graph for Facebook auth
-	      	user = User.find_or_create_by(:email => data["email"], :is_subscribed => true)
-	      	facebook_user_authentication = FacebookUserAuthentication.find_or_create_by(:user_id => user.id)
-		    facebook_user_authentication.uid = auth.uid
-		    facebook_user_authentication.access_token = auth.credentials.token
-		    facebook_user_authentication.first_name = auth.info.first_name
-		    facebook_user_authentication.last_name = auth.info.last_name
-		    facebook_user_authentication.image_url = auth.info.image
-		    facebook_user_authentication.location_name = auth.info.location
-		    facebook_user_authentication.link = auth.info.urls.Facebook
-		    facebook_user_authentication.gender = auth.extra.raw_info.gender
-		    facebook_user_authentication.oauth_token = auth.to_s
-		    facebook_user_authentication.save
-	    end
-	    # send_subscription_mail(facebook_user_authentication.first_name, user.email) unless existing_user
-	    user
+	def set_bookmark_count operation
+		" user.bookmark_count = COALESCE(user.bookmark_count,0) " + operation + " 1 "
 	end
 
-	def self.invite(name, email)
-		invitation = {:name => name, :email => email, :template => 'Coming Soon'}
-		SubscriptionMailer.invite(invitation).deliver
+	def set_total_count_on_bookmark operation
+		" user.total_count = COALESCE(user.total_count,0) " 
+		+ operation.to_s + " "+Constants::BookmarkPoints.to_s+" "
 	end
 
-	private
-	def self.send_subscription_mail(name, email)
-		invitation = {:name => name, :email => email, :template => 'Subscription'}
-		SubscriptionMailer.invite(invitation).deliver
+	def get_detailed_info
+		match + User.match_likeable_root_category + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + return_group(User.basic_info, "COLLECT(DISTINCT(root_category.name)) AS categories_name", "COLLECT(DISTINCT(ID(root_category))) AS categories_id", "COLLECT(root_category.aws_key) AS categories_aws_key", "COLLECT(DISTINCT(book.isbn)) AS books_isbn", "COLLECT(DISTINCT(ID(book))) AS books_id", "COLLECT(DISTINCT(book.title)) AS books_title", "COLLECT(DISTINCT(book.author_name)) AS books_author_name")
 	end
 
-	def self.send_invitation_mail(name, email)
-		invitation = {:name => name, :email => email, :template => 'Coming Soon'}
-		SubscriptionMailer.invite(invitation).deliver
+	def get_basic_info
+		match + return_init + User.basic_info
 	end
 
-	def post_on_facebook_wall
-	    # url = URI.parse("https://graph.facebook.com/"+facebook_user_authentication.uid+"/og.follows?access_token="+
-	    # 	facebook_user_authentication.access_token+"&method=POST&profile="+facebook_user_authentication.link)
-	    # debugger
-	    # url ="https://graph.facebook.com/"+facebook_user_authentication.uid+"/objects/website?access_token="+
-	    # facebook_user_authentication.access_token+"&method=POST&"+
-	    # "object=%7B%22app_id%22%3A161119590634528%2C%22type%22%3A%22%5C%22website%5C%22%22%2C%22url%22%3A%22%5C%22http%3A%5C%2F%5C%2Fsamples.ogp.me%5C%2F256986074381212%5C%22%22%2C%22title%22%3A%22%5C%22Sample+Website%5C%22%22%2C%22image%22%3A%22%5C%22https%3A%5C%2F%5C%2Fs-static.ak.fbcdn.net%5C%2Fimages%5C%2Fdevsite%5C%2Fattachment_blank.png%5C%22%22%2C%22description%22%3A%22%5C%22%5C%22%22%7D"
-	    # response = Net::HTTP.post_form(url, {})
+	def self.basic_info
+		" user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id "
+	end
+
+	def get_all_books skip_count=0, limit_count=Constants::BookCountShownOnSignup 
+		match + Bookmark::Object::Node::BookLabel.match_path + return_init + ::Book.basic_info + ::Book.order_desc + skip(skip_count) + limit(limit_count)
+	end
+
+	def self.create_label key
+		" CREATE UNIQUE (user)-[labelled:Labelled]->(label:Label{key: \""+key+"\"}) "
+	end
+
+	def self.from_facebook params
+		begin
+			if params[:data].class == Array
+				params[:data].each do |book_data|
+					book = book_data["data"]["book"]
+					indexed_title = book["title"].gsub(" ", "").downcase
+					url_splitter = book["url"].split("/")
+					url_id = url_splitter[url_splitter.length - 1]
+					progress = book_data["data"]["progress"]
+					activity_id = book_data["data"]["id"]
+
+					clause = "MATCH (b:Book) WHERE book.url =~ '.*"+url_id+"' RETURN ID(b)"
+					puts clause.blue.on_red
+				end
+			end
+		rescue Exception => e
+			puts e.to_s.red
+		end
+	end
+
+	def self.match_label
+		" OPTIONAL MATCH (user)-[:Labelled]->(user_label:Label) "
+	end
+
+	def self.create(email, password=nil, verification_token=nil)
+		create_new_user = "CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, last_book: "+Constants::BestBook.to_s+", amateur: true, ask_info: true}), "
+		create_feednext_relation = "(user)-[fn:FeedNext{user_id:ID(user)}]->(user), "
+		create_ego_relation = "(user)-[:Ego{user_id:ID(user)}]->(user) WITH user "
+		get_labels = "MATCH(bm:Label{primary_label:true}) "
+		add_labels = "CREATE (user)-[:Labelled{user_id:ID(user)}]->(bm) "
+		add_categories_to_user = "WITH user MERGE (user)-[rel:Likes]-(root_category:Category{is_root:true}) ON CREATE SET rel.weight = 0 "
+		# get_all_users = "MATCH (all_user:User) WHERE all_user <> user "
+		# make_friends = "CREATE (user)-[:Follow]->(all_user), (user)<-[:Follow]-(all_user)"
+		clause = create_new_user + create_feednext_relation + create_ego_relation + get_labels + add_labels + add_categories_to_user
+		clause
+	end
+
+	def get_notifications
+		return_clause = "RETURN n, ID(n)"
+		clause = match + "MATCH (u)-[r]->(n:Notification) " + return_clause
+		clause
+	end
+
+	def get_books_bookmarked(skip_count=0)
+		match + return_init + Book.get_basic_info + ", COLLECT(label.name) as labels SKIP "+skip_count.to_s+" LIMIT 10"
+	end
+
+	def get_public_labels
+		match + UsersLabel.match + return_group(Label.basic_info)
+	end
+
+	def match_bookmark
+		" MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book:Book) WHERE bookmark_node.user_id = " + @id.to_s + " "
+	end
+
+	def approve_thumb_request(status, id)
+		"MATCH (u:User)-[r1:DataEdit]->(t:ThumbRequest)-[r2:DataEditRequest]->(b:Book) WHERE ID(t)="+id.to_s+" SET t.status = "+status.to_s+", b.external_thumb = CASE WHEN "+status.to_s+" = 1 THEN t.url ELSE null END"
+	end
+
+	def match
+		" MATCH (user:User) WHERE ID(user) = " + @id.to_s + " WITH user "
+	end
+
+	def self.match_root_category category_id=nil
+		if category_id
+			clause = " MATCH (user)-[likes:Likes]->(root_category:Category{is_root:true}) WHERE ID(category)="+category_id.to_s
+		else
+			clause = " MATCH (user)-[likes:Likes]->(root_category:Category{is_root:true}) "
+		end
+		clause
+	end
+
+	def self.match_category category_id=nil
+		if category_id
+			clause = " MATCH (user)-[likes:Likes]->(category:Category) WHERE ID(category)="+category_id.to_s+" WITH user, category, likes "
+		else
+			clause = " MATCH (user)-[likes:Likes]->(category:Category) WITH user, category, likes "
+		end
+		clause
+	end
+
+	def self.match_likeable_category(label="category", category_id=nil)
+		if category_id
+			clause = " MATCH (user)-[likes:Likes]->("+label+":Category) WHERE ID("+label+")="+category_id.to_s+" AND likes.weight > 0 WITH user, "+label+", likes "
+		else
+			clause = " MATCH (user)-[likes:Likes]->("+label+":Category) WHERE likes.weight > 0 WITH user, "+label+", likes "
+		end
+		clause
+	end
+
+	def self.match_likeable_root_category category_id=nil
+		clause = " MATCH (user)-[likes:Likes]->(root_category:Category) WHERE "
+		if category_id
+			clause = clause + "ID(root_category)="+category_id.to_s+" AND "
+		end
+		clause = clause + "likes.weight > 0 AND root_category.is_root = true WITH user, root_category, likes "
+		clause
+	end
+
+	def self.match_custom_likeable_root_category max=true, category_id=nil
+		custom = max ? " DESC " : ""
+		clause = " MATCH (user)-[likes:Likes]->(root_category:Category) WHERE "
+		if category_id
+			clause = clause + " ID(root_category)="+category_id.to_s+" AND "
+		end
+		clause = clause + "likes.weight > 0 AND root_category.is_root = true WITH root_category, user, likes " + Neo.new.order_init + " likes.weight " + custom + Neo.new.limit(1)
+		clause
+	end
+
+	def self.optional_match_category category_id=nil
+		" OPTIONAL" + User.match_category(category_id)
+	end
+
+	def self.init_book_read_count
+		" user.init_book_read_count as init_book_read_count "
+	end
+
+	def get_init_book_count_range
+		match + return_init + User.init_book_read_count
+	end
+
+	def get_books_from_public_shelves
+		books = (match + Bookmark::Object::Node::BookLabel.get_public)
+	end
+
+	def get_articles_from_public_shelves
+		match + Bookmark::Object::Node::Article.get_public 
+	end
+
+	def get_visited_books 
+		books = (match + Bookmark::Object::Node::BookLabel.get_visited) 
+	end
+
+	def get_visited_articles
+		match + Bookmark::Object::Node::Article.get_visited 
 	end
 end
