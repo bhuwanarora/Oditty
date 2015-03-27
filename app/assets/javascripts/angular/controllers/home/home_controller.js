@@ -100,7 +100,7 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
         }
     };
 
-    $scope._init = function(){
+    var _init = function(){
         $scope.visible_search_bar = true;
         $scope.info = {};
         $scope.info.show_share = false;
