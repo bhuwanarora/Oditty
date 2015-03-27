@@ -105,6 +105,7 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
         $scope.info = {};
         $scope.info.show_share = false;
         $scope.data = {"selectedIndex" : 0};
+
         $rootScope.user = {};
         shelfService.get_all_shelves().then(function(data){
             $rootScope.labels = data;

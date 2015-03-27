@@ -59,6 +59,7 @@ md-content{
 }
 
 .burger{
+	height: 54px;
 	background-color: #ececec;
 	color: rgba(145, 140, 140, 1) !important;
 }
