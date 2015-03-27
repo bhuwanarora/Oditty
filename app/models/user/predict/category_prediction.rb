@@ -6,7 +6,7 @@ class User::Predict::CategoryPrediction < User::Predict
 	end
 
 	def get_favourites
-		@user.match + User.match_root_category + return_init + ::Category::Root.basic_info + ::Category.likes_weight + ::Category.order_desc
+		@user.match + User.match_root_category + User::Predict::CategoryPrediction.return_init + ::Category::Root.basic_info + ::Category.likes_weight + ::Category.order_desc
 	end
 	
 end

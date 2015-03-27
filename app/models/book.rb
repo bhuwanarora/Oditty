@@ -36,7 +36,7 @@ class Book < Neo
 	end
 
 	def self.get_small_reads
-		Book::SmallRead.path_nodes + Neo.new.return_group(Book.basic_info)
+		Book::SmallRead.path_nodes + self.return_group(Book.basic_info)
 	end
 
 	def self.match_path relation, limit

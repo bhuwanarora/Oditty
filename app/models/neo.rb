@@ -4,31 +4,31 @@ class Neo
 		@neo = Neography::Rest.new
 	end
 
-	def order_init 
+	def self.order_init 
 		" ORDER BY "
 	end
 
-	def return_init
+	def self.return_init
 		" RETURN "
 	end
 
-	def skip skip_count
+	def self.skip skip_count
 		" SKIP " + skip_count.to_s + " "
 	end
 
-	def return_group(*params)
+	def self.return_group(*params)
 		" RETURN " + params.join(", ")
 	end
 
-	def match_group(*params)
+	def self.match_group(*params)
 		" MATCH " + params.join(", ")
 	end
 
-	def limit limit_count
+	def self.limit limit_count
 		" LIMIT " + limit_count.to_s + " "
 	end
 
-	def with_group(*params)
+	def self.with_group(*params)
 		" WITH " + params.join(", ") + " "
 	end
 

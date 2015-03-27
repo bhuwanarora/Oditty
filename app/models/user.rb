@@ -18,7 +18,7 @@ class User < Neo
 	end
 
 	def get_basic_info
-		match + return_init + User.basic_info
+		match + User.return_init + User.basic_info
 	end
 
 	def self.basic_info
@@ -26,7 +26,7 @@ class User < Neo
 	end
 
 	def get_all_books skip_count=0, limit_count=Constants::BookCountShownOnSignup 
-		match + Bookmark::Object::Node::BookLabel.match_path + return_init + ::Book.basic_info + ::Book.order_desc + skip(skip_count) + limit(limit_count)
+		match + Bookmark::Node::BookLabel.match_path + User.return_init + ::Book.basic_info + ::Book.order_desc + User.skip(skip_count) + User.limit(limit_count)
 	end
 
 	def self.create_label key
@@ -77,11 +77,11 @@ class User < Neo
 	end
 
 	def get_books_bookmarked(skip_count=0)
-		match + return_init + Book.get_basic_info + ", COLLECT(label.name) as labels SKIP "+skip_count.to_s+" LIMIT 10"
+		match + User.return_init + Book.get_basic_info + ", COLLECT(label.name) as labels SKIP "+skip_count.to_s+" LIMIT 10"
 	end
 
 	def get_public_labels
-		match + UsersLabel.match + return_group(Label.basic_info)
+		match + UsersLabel.match + User.return_group(Label.basic_info)
 	end
 
 	def match_bookmark
@@ -138,7 +138,7 @@ class User < Neo
 		if category_id
 			clause = clause + " ID(root_category)="+category_id.to_s+" AND "
 		end
-		clause = clause + "likes.weight > 0 AND root_category.is_root = true WITH root_category, user, likes " + Neo.new.order_init + " likes.weight " + custom + Neo.new.limit(1)
+		clause = clause + "likes.weight > 0 AND root_category.is_root = true WITH root_category, user, likes " + self.order_init + " likes.weight " + custom + self.limit(1)
 		clause
 	end
 
@@ -151,7 +151,7 @@ class User < Neo
 	end
 
 	def get_init_book_count_range
-		match + return_init + User.init_book_read_count
+		match + User.return_init + User.init_book_read_count
 	end
 
 	def get_books_from_public_shelves
@@ -163,7 +163,7 @@ class User < Neo
 	end
 
 	def get_visited_books 
-		books = (match + Bookmark::Object::Node::BookLabel.get_visited) 
+		match + Bookmark::Object::Node::BookLabel.get_visited
 	end
 
 	def get_visited_articles
