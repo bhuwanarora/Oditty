@@ -107,10 +107,10 @@
             <md-toolbar md-scroll-shrink class="header <% if !@infinity %>'no_shadow'<% end %>">
                 <section layout="row" layout-wrap>
                     <div flex="20" flex-sm="35" layout="row" layout-align="start center">
-                        <md-button ng-show="visible" class="burger padding" ng-click="toggleLeft($event)">
+                        <md-button ng-show="visible_search_bar" class="burger padding" ng-click="toggleLeft($event)">
                             <a><span class="icon-menu2"></span></a>
                         </md-button>
-                        <div ng-show="visible" layout-align-lg="center center">
+                        <div ng-show="visible_search_bar" layout-align-lg="center center">
                             <a class="logo" href="/home">
                                 <img src="assets/rd_icon.png"/>
                                 <span hide-sm hide-md>ReadersDoor</span>
@@ -118,8 +118,8 @@
                         </div>
                     </div>
                     <% unless @customise %>
-                        <div flex="50" flex-sm="10" layout="row" layout-align="end center" layout-align-sm="start center">
-                            <md-button ng-click="show_search_bar()" ng-show="visible" show-sm hide>
+                        <div flex="50" flex-md="45" flex-sm="10" layout="row" layout-align="end center" layout-align-sm="start center">
+                            <md-button ng-click="show_search_bar()" ng-show="visible_search_bar" show-sm hide>
                                 <span class="icon-search"></span>
                             </md-button>
                             <div hide-sm class="search_icon">
@@ -137,22 +137,22 @@
                                 <span md-highlight-text="searchText">{{item.display}}</span>
                             </md-autocomplete>
                         </div>
-                        <div layout="row" layout-align="center center" flex="10" flex-sm="20">
-                            <md-button ng-show="visible" class="library">
+                        <div layout="row" layout-align="center center" flex="10" flex-md="15" flex-sm="20">
+                            <md-button ng-show="visible_search_bar" class="library">
                                 <a href="/infinity">Infinity</a>
                             </md-button>
                         </div>
                         <div flex="20" flex-sm="35" layout="row" layout-align="end center">
-                            <a href="/room" ng-show="visible">
+                            <a href="/room" ng-show="visible_search_bar">
                                 <md-button class="small-padding">
                                     <span class="icon-checkbox-unchecked"></span>
                                 </md-button>
                             </a>
-                            <md-button ng-show="visible" class="small-padding" 
+                            <md-button ng-show="visible_search_bar" class="small-padding" 
                                 ng-click="toggle_notifications($event)">
                                 <span class="icon-bell"></span>
                             </md-button>
-                            <a href="/profile" ng-show="visible">
+                            <a href="/profile" ng-show="visible_search_bar">
                                 <md-button class="profile_link">
                                     <img src="http://www.chicagonow.com/avatar/blog-108-128.png" 
                                         class="circular">
@@ -160,11 +160,11 @@
                             </a>
                         </div>
                         <div layout="row" layout-align="center center" 
-                                ng-hide="visible" layout-fill layout-padding hide-md hide-lg>
-                            <md-button flex="20" ng-click="show_search_bar()" ng-hide="visible" hide-md hide-lg>
+                                ng-hide="visible_search_bar" layout-fill layout-padding hide-md hide-lg>
+                            <md-button flex="20" ng-click="show_search_bar()" hide-md hide-lg>
                                 <span class="icon-search"></span>
                             </md-button>
-                            <md-autocomplete ng-hide="visible"
+                            <md-autocomplete
                                 md-selected-item="selectedItem1"
                                 md-search-text="searchText"
                                 md-items="item in querySearch(searchText)"

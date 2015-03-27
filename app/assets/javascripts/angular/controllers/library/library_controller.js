@@ -185,7 +185,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", '$m
 
     $scope.show_bottom_filters = function(event){
         $mdBottomSheet.show({
-            templateUrl: '/assets/angular/html/library/bottomsheet_filters.html',
+            templateUrl: '/assets/angular/html/library/bottom_sheet_filters.html',
             targetEvent: event
         })
 

@@ -132,9 +132,8 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
         });
     }; 
 
-    $scope.visible = true;
     $scope.show_search_bar = function() {
-        $scope.visible = !$scope.visible;
+        $scope.visible_search_bar = !$scope.visible_search_bar;
     
     };
 
@@ -154,6 +153,7 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
     };
 
     $scope._init = function(){
+        $scope.visible_search_bar = true;
         $scope.info = {};
         $scope.info.show_share = false;
         $scope.data = {"selectedIndex" : 0};
