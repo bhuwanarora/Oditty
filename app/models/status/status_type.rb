@@ -1,0 +1,2 @@
+class StatusType < Status
+end
