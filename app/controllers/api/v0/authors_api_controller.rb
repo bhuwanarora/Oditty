@@ -26,7 +26,7 @@ module Api
 				render :json => info, :status => status
 			end
 
-			def get_active_authors
+			def get_popular_authors
 				skip_count = params[:skip_count]
 				unless skip_count
 					skip_count = 0

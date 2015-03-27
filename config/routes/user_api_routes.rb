@@ -29,10 +29,6 @@ ReadersDoor::Application.routes.draw do
       match 'follow'                                  => 'users_api#follow',                            :via => [:put, :get, :post]
       match "endorse_book"                            => 'users_api#endorse_book',                      :via => [:put, :get, :post]
       match "tiny_reads"                              => 'users_api#get_tiny_reads',                    :via => [:put, :get, :post]
-      match "books_from_likeable_category"            => 'users_api#get_books_from_likeable_category',  :via => [:put, :get, :post]
-      match "books_from_most_read_author"             => 'users_api#get_books_from_most_read_author',   :via => [:put, :get, :post]
-      match "books_from_most_read_era"                => 'users_api#get_books_from_most_read_era',      :via => [:put, :get, :post]
-      match "books_on_your_friends_shelves"           => 'users_api#books_on_your_friends_shelves',     :via => [:put, :get, :post]
       match "get_sorted_genres"                       => 'users_api#get_sorted_genres',                 :via => [:put, :get, :post]
       match "influential_books"                       => 'users_api#handle_influential_books',          :via => [:put, :get, :post]
 
