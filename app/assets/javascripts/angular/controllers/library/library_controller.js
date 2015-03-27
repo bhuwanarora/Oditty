@@ -1,4 +1,4 @@
-homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'WebsiteUIConstants', 'SearchUIConstants', 'bookService', '$routeParams', '$location', 'ColorConstants', '$mdToast', 'infinityService', function($scope, $rootScope, $timeout, WebsiteUIConstants, SearchUIConstants, bookService, $routeParams, $location, ColorConstants, $mdToast, infinityService){
+homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'WebsiteUIConstants', 'SearchUIConstants', 'bookService', '$routeParams', '$location', 'ColorConstants', '$mdToast', 'infinityService', '$mdBottomSheet', '$mdSidenav', function($scope, $rootScope, $timeout, WebsiteUIConstants, SearchUIConstants, bookService, $routeParams, $location, ColorConstants, $mdToast, infinityService, $mdBottomSheet, $mdSidenav){
 
     $scope.get_popular_books = function(){
         if(!$scope.info.loading && !$scope.constant.show_book && !
@@ -225,6 +225,25 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         $scope.active_tab = {};
         $scope.info.categories = [];
     }
+
+
+    $scope.show_right_nav = function(event){
+        $mdSidenav('alphabets_sidenav').toggle();
+        event.stopPropagation();
+    }    
+
+    $scope.show_left_nav = function(event){
+        $mdSidenav('sort_by_sidenav').toggle();
+        event.stopPropagation();
+    }    
+
+    $scope.show_bottom_filters = function(event){
+        $mdBottomSheet.show({
+            templateUrl: '/assets/angular/html/library/bottom_sheet_filters.html',
+            targetEvent: event
+        })
+
+    };
 
 
     _init();

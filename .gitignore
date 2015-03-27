@@ -54,6 +54,7 @@ neo4j/plugins/*
 neo4j/system/*
 neo4j/*.txt
 node_modules/*
+dump.rbd
 app/assets/javascripts/angular/widgets/gzip/**
 app/build/**
 .elasticbeanstalk/

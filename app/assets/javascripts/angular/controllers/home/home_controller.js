@@ -78,6 +78,11 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
             controller: 'shelfController',
             targetEvent: event
         });
+    }; 
+
+    $scope.show_search_bar = function() {
+        $scope.visible_search_bar = !$scope.visible_search_bar;
+    
     };
 
     $scope.show_share_page = function(event) {
@@ -96,9 +101,11 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
     };
 
     var _init = function(){
+        $scope.visible_search_bar = true;
         $scope.info = {};
         $scope.info.show_share = false;
         $scope.data = {"selectedIndex" : 0};
+
         $rootScope.user = {};
         shelfService.get_all_shelves().then(function(data){
             $rootScope.labels = data;

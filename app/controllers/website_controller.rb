@@ -103,6 +103,7 @@ class WebsiteController < ApplicationController
 	end
 
 	def author
+		@author = true
 		render :layout => "material"
 	end
 

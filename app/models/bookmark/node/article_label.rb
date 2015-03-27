@@ -7,7 +7,7 @@ class Bookmark::Node::ArticleLabel < Bookmark::Node
 	def self.get_public
 		where_clause = " WHERE bookmark_node.public = true WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, article, COUNT(label) AS label_count "
 
-		self.new.match + self.new.match_path + where_clause + Neo.new.return_init + self.new.rating_info + self.basic_info  + Neo.new.order_init + " label_count, time DESC " + Neo.new.limit(Constants::ArticlesShownInRoomCount)  
+		self.new.match + self.new.match_path + where_clause + self.return_init + self.new.rating_info + self.basic_info  + self.order_init + " label_count, time DESC " + self.limit(Constants::ArticlesShownInRoomCount)  
 	end
 
 	def rating_info
@@ -16,7 +16,7 @@ class Bookmark::Node::ArticleLabel < Bookmark::Node
 
 	def self.get_visited
 		where_clause = " WHERE bookmark_node.name = 'Visited' WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, article, COUNT(label) AS label_count "
-		self.new.match + self.new.match_path + where_clause + Neo.new.return_init + self.new.rating_info + self.basic_info  + Neo.new.order_init + " label_count, time DESC " + Neo.new.limit(Constants::ArticlesShownInRoomCount)
+		self.new.match + self.new.match_path + where_clause + self.return_init + self.new.rating_info + self.basic_info  + self.order_init + " label_count, time DESC " + self.limit(Constants::ArticlesShownInRoomCount)
 	end
 
 	def match_path 

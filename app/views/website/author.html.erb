@@ -1,20 +1,110 @@
-<md-content>
-    <div ng-include src="'/assets/angular/html/author/_header.html'"></div>
-    <section layout="row" layout-wrap>
-        <div flex="25" flex-md="20" hide-sm></div>
-        <div flex="50" flex-sm="100" flex-md="60" layout="column"
-             ng-include src="'/assets/angular/html/author/_sub_header.html'">
+<md-content ng-controller="authorController" layout="row" layout-wrap>
+    <div class="book_cover" layout-align="center center" layout="column">
+        <div class="author_name">
+            <h1 layout="column" layout-align="center center">
+                <div>Dan</div>
+                <div>Brown</div>
+            </h1>
+            <div>(1958-Present)</div>
         </div>
-        <div flex="25" flex-md="20" hide-sm></div>
-    </section>
-    
-    <section layout="row" layout-wrap>
-        <div layout="column" flex="25" flex-md="20" hide-sm layout-align="start start"
-             ng-include src="'/assets/angular/html/author/_left_panel.html'"></div>
-        <div flex="50" flex-sm="100" flex-md="60" layout="column" layout-align="start center"
-             ng-include src="'/assets/angular/html/author/show.html'">
+        <img src="http://www.templarinfernobookreview.com/inferno_book_cover-480.jpg">
+    </div>
+    <div class="md-primary clear author_header" layout-align="center center" layout="row">
+        <md-tabs layout-align="center center" layout="row">
+            <md-tab layout-padding>About Author</md-tab>
+            <md-tab layout-padding>Timeline</md-tab>
+            <md-tab layout-padding>News</md-tab>
+            <md-tab layout-padding>Discussion</md-tab>
+        </md-tabs>
+    </div>
+    <div layout-padding layout="row" class="book_description">
+        <div flex="25"></div>
+        <div flex="50" layout="row" layout-align="center center">
+            <img src="http://www.templarinfernobookreview.com/inferno_book_cover-480.jpg" flex="25" layout-padding class="author_thumb">
+            <div layout="column" flex="75" layout-padding>
+                <h2>Inferno</h2>
+                <div>
+                    Inferno is a 2013 mystery thriller novel by American author Dan Brown and the fourth book in his Robert Langdon series, following Angels & Demons, The Da Vinci Code and The Lost Symbol. The book was released on May 14, 2013 by Doubleday
+                </div>
+            </div>
         </div>
-        <div ng-include src="'/assets/angular/html/author/_right_panel.html'" 
-             flex="25" flex-md="20" hide-sm></div>
-    </section>
+        <div flex="25"></div>
+    </div>
+    <div layout-padding layout="row" class="book_description">
+        <div flex="25"></div>
+        <div flex="50" layout="column" layout-align="center center">
+            <h2>Who is Dan Brown?</h2>
+            <div>Daniel "Dan" Brown (born June 22, 1964) is an American author of thriller fiction who is best known for the 2003 bestselling novel The Da Vinci Code. Brown's novels are treasure hunts set in a 24-hour period,[1] and feature the recurring themes of cryptography, keys, symbols, codes, and conspiracy theories. His books have been translated into 52 languages, and as of 2012, sold over 200 million copies. Two of them, The Da Vinci Code and Angels & Demons, have been adapted into films.</div>
+        </div>
+        <div flex="25"></div>
+    </div>
+    <div class="book_cover" layout-align="center center" layout="column">
+        <img src="http://www.sarahwray.com/TheLostSybolDanBrown.jpeg">
+    </div>
+    <div layout-padding layout="row" class="book_description">
+        <div flex="25"></div>
+        <div flex="50" layout="row" layout-align="center center">
+            <img src="http://www.sarahwray.com/TheLostSybolDanBrown.jpeg" flex="25" layout-padding class="author_thumb">
+            <div layout="column" flex="75" layout-padding>
+                <h2>The Lost Symbol</h2>
+                <div>
+                    Inferno is a 2013 mystery thriller novel by American author Dan Brown and the fourth book in his Robert Langdon series, following Angels & Demons, The Da Vinci Code and The Lost Symbol. The book was released on May 14, 2013 by Doubleday
+                </div>
+            </div>
+        </div>
+        <div flex="25"></div>
+    </div>
 </md-content>
+<style>
+    .book_cover img{
+        width: 100vw;
+        position: absolute;
+        top: 0px;
+        margin-top: -25%;
+        -webkit-filter: sepia(0.6) blur(5px);
+        -moz-filter: sepia(0.6) blur(5px);
+        -o-filter: sepia(0.6) blur(5px);
+        -ms-filter: sepia(0.6) blur(5px);
+        filter: sepia(0.6) blur(5px);
+    }
+
+    .book_cover{
+        position: relative;
+        z-index: 0;
+        height: 350px;
+        width: 100vw;
+        overflow: hidden;
+    }
+
+    .author_name{
+        z-index: 1;
+        color: white;
+        text-align: center;
+    }
+
+    .author_name h1{
+        font-size: 2.5em;
+        text-transform: uppercase;
+    }
+
+    .author_thumb{
+        width: 100%;
+        height: 150%;
+    }
+
+    .book_description{
+        height: 40vh;
+        min-height: 300px; 
+        background-color: white;
+        z-index: 1;
+        position: relative;
+    }
+
+    .author_header{
+        z-index: 3;
+        width: 100vw;
+        background-color: white;
+        bottom: 0px;
+    }
+
+</style>

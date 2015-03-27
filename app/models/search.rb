@@ -1,7 +1,7 @@
 class Search < Neo
 	def initialize params, count=10, fuzzy=nil
 		@params = params
-		@count = count == 0 ? 10 : count
+		@count = ((count == 0) || count.nil?) ? 10 : count
 		@fuzzy = fuzzy
 	end
 
@@ -24,7 +24,7 @@ class Search < Neo
 		if @params.present?
 			clause = "START category=node:node_auto_index('indexed_category_name:" + @params + "*') " + return_group(" category.name AS name, ID(category) AS id ") + limit(@count)
 		else
-			clause = Category::Root.get_all
+			clause = " MATCH (root_category:Category{is_root:true}) RETURN ID(root_category) AS id, root_category.name AS name "
 		end
 		clause	
 	end

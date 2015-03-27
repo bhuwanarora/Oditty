@@ -8,7 +8,7 @@
               href="assets/favicon.png">
         <script>document.write('<base href="' + document.location + '" />');</script>
 
-        <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,100italic,400italic|Roboto+Condensed&amp;lang=en' rel='stylesheet' type='text/css'>
+        <!-- <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,100italic,400italic|Roboto+Condensed&amp;lang=en' rel='stylesheet' type='text/css'> -->
 
         <link rel="stylesheet" href="assets/min/landing_page_site.min.css" />
         <link rel="stylesheet" href="assets/website/home.css" />
@@ -29,7 +29,7 @@
                 <script src="assets/angular/vendors/bubble_chart/central-click.js"></script>
                 <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/plugins/lines/lines.js"></script>
             <% end %>
-            
+            <script src="assets/angular/vendors/angular-parallax.min.js"></script>
             <script src="assets/angular/vendors/angular_sticky.js"></script>
             
             <script src="assets/angular/apps/filters_app.js"></script>
@@ -42,6 +42,7 @@
             <script src="assets/angular/services/shelf_service.js"></script>
 
             <script src="assets/angular/controllers/home/home_controller.js"></script>
+            
             <script src="assets/angular/controllers/home/left_controller.js"></script>
             <script src="assets/angular/controllers/home/right_controller.js"></script>
             <script src="assets/angular/controllers/home/shelf_controller.js"></script>
@@ -87,6 +88,10 @@
                 <script src="assets/angular/controllers/room/room_controller.js"></script>
             <% end %>
 
+            <% if @author %>
+                <!-- // <script src="http://phuonghuynh.github.io/js/bower_components/jquery/dist/jquery.min.js"></script> -->
+                <script src="assets/angular/controllers/author_controller.js"></script>
+            <% end %>
 
             <script src="assets/angular/vendors/angular_dragdrop.min.js"></script>
             <script src="assets/angular/vendors/angular-drop.min.js.map"></script>
@@ -108,11 +113,11 @@
             <!-- <div ng-include src="'/assets/angular/html/shared/header.html'"></div> -->
             <md-toolbar md-scroll-shrink class="header <% if !@infinity %>'no_shadow'<% end %>">
                 <section layout="row" layout-wrap>
-                    <div flex="25" flex-md="15" layout="row" layout-align="start center">
-                        <md-button class="burger padding" ng-click="toggleLeft($event)">
+                    <div flex="20" flex-sm="35" layout="row" layout-align="start center">
+                        <md-button ng-show="visible_search_bar" class="burger padding" ng-click="toggleLeft($event)">
                             <a><span class="icon-menu2"></span></a>
                         </md-button>
-                        <div layout-align-lg="center center">
+                        <div ng-show="visible_search_bar" layout-align-lg="center center">
                             <a class="logo" href="/home">
                                 <img src="assets/rd_icon.png"/>
                                 <span hide-sm hide-md>ReadersDoor</span>
@@ -120,10 +125,10 @@
                         </div>
                     </div>
                     <% unless @customise %>
-                        <div flex="50" flex-md="70" layout="row" layout-align="end center" layout-align-sm="start center">
-                            <div show-sm hide>
+                        <div flex="50" flex-md="45" flex-sm="10" layout="row" layout-align="end center" layout-align-sm="start center">
+                            <md-button ng-click="show_search_bar()" ng-show="visible_search_bar" show-sm hide>
                                 <span class="icon-search"></span>
-                            </div>
+                            </md-button>
                             <div hide-sm class="search_icon">
                                 <span class="icon-search"></span>
                             </div>
@@ -138,22 +143,44 @@
                                 placeholder="Search books, topics and more...">
                                 <span md-highlight-text="searchText">{{item.display}}</span>
                             </md-autocomplete>
-                            <md-button class="library">
+                        </div>
+                        <div layout="row" layout-align="center center" flex="10" flex-md="15" flex-sm="20">
+                            <md-button ng-show="visible_search_bar" class="library">
                                 <a href="/infinity">Infinity</a>
                             </md-button>
                         </div>
-                        <div flex layout="row" layout-align="end center">
-                            <a href="/room"><md-button class="small-padding">
-                                <span class="icon-checkbox-unchecked"></span>
-                            </md-button></a>
-                            <md-button class="small-padding" ng-click="toggle_notifications($event)">
-                                <span class="icon-bell"></span>
-                            </md-button>
-                            <a href="/profile">
-                                <md-button class="profile_link">
-                                    <img src="http://www.chicagonow.com/avatar/blog-108-128.png" class="circular">
+                        <div flex="20" flex-sm="35" layout="row" layout-align="end center">
+                            <a href="/room" ng-show="visible_search_bar">
+                                <md-button class="small-padding">
+                                    <span class="icon-checkbox-unchecked"></span>
                                 </md-button>
                             </a>
+                            <md-button ng-show="visible_search_bar" class="small-padding" 
+                                ng-click="toggle_notifications($event)">
+                                <span class="icon-bell"></span>
+                            </md-button>
+                            <a href="/profile" ng-show="visible_search_bar">
+                                <md-button class="profile_link">
+                                    <img src="http://www.chicagonow.com/avatar/blog-108-128.png" 
+                                        class="circular">
+                                </md-button>
+                            </a>
+                        </div>
+                        <div layout="row" layout-align="center center" 
+                                ng-hide="visible_search_bar" layout-fill layout-padding hide-md hide-lg>
+                            <md-button flex="20" ng-click="show_search_bar()" hide-md hide-lg>
+                                <span class="icon-search"></span>
+                            </md-button>
+                            <md-autocomplete
+                                md-selected-item="selectedItem1"
+                                md-search-text="searchText"
+                                md-items="item in querySearch(searchText)"
+                                md-item-text="display"
+                                class="search"
+                                flex="80" hide-md hide-lg
+                                placeholder="Search books, topics and more...">
+                                <span md-highlight-text="searchText">{{item.display}}</span>
+                            </md-autocomplete>
                         </div>
                     <% end %>
                 </section>
