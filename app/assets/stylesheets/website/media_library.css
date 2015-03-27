@@ -8,6 +8,14 @@
         margin-top: -25px;
         margin-left: 40px;
     }
+    
+    md-input-container .md-placeholder{
+		font-weight: 450;
+		font-family: Roboto !important;
+		font-size: 43px;
+		left: 8% !important;
+		top: -24px !important;
+	}
 }
 
 @media (min-width:600px)and (max-width:1000px){
