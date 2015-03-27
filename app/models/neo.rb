@@ -4,7 +4,7 @@ class Neo
 		@neo = Neography::Rest.new
 	end
 
-	def order_init
+	def order_init 
 		" ORDER BY "
 	end
 
@@ -29,7 +29,7 @@ class Neo
 	end
 
 	def with_group(*params)
-		" WITH " + params.join(", ")
+		" WITH " + params.join(", ") + " "
 	end
 
 	def self.execute clause

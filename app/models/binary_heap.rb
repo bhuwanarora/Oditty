@@ -6,26 +6,22 @@ class BinaryHeap
 	end
 
 	def insert info
-		@node.get_root + @node.get_leaf + @node.link_leaf + @node.set_position
+		@node.get_root + @node.get_leaf + @node.link_leaf + @node.get_insertion_path + @node.interchange
 	end
 
 	def self.update id
-		@node.get_root +  @node.get_node(id) + " ,root_node, latest_feed " + @node.set_position 
+		@node.get_root +  @node.get_node + " ,root_node, latest_feed " + @node.get_insertion_path + @node.interchange 
 	end
 
 	def get_top_nodes skip_count
-
+		@node.get_root +  Node.get_feed(skip_count) 
 	end
 
 	def self.sort
 
 	end
 
-	def self.
-		
-	end
-
 	def self.delete
-
+		@node.get_node + @node.replace_node + @node.get_deletion_path + @node.interchange
 	end
 end
