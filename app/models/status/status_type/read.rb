@@ -1,5 +1,11 @@
 class Status::StatusType::Read < Status::StatusType
-	def self.create book_id, user_id
-		super("Read", book_id, user_id)
+	def initialize book_id, user_id
+		@book_id = book_id
+		@user_id = user_id
+		@status = "Read"
+	end
+
+	def create 
+		Status::StatusType.new(@book_id, @user_id, @status).create
 	end
 end

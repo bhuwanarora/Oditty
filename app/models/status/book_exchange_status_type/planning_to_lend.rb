@@ -2,9 +2,10 @@ class Status::BookExchangeStatusType::PlanningToLend < Status::BookExchangeStatu
 	def initialize book_id, user_id
 		@book_id = book_id
 		@user_id = user_id
+		@exchange_status = "PlanningToLend"
 	end
 
 	def create
-		super("PlanningToLend", @book_id, @user_id)
+		Status::BookExchangeStatusType.new(@book_id, @user_id, @exchange_status).create
 	end
 end

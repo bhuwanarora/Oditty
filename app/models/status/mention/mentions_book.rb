@@ -1,9 +1,11 @@
 class Status::Mention::MentionsBook < Status::Mention
-	def initialize mentioned_book_id
-		@mentioned_book = Book.new(mentioned_book_id)
+	def initialize book_id, user_id
+		@book = Book.new(book_id)
+		@user_id = user_id
+		@node_variable = "book"
 	end
 
-	def create user_id
-		@mentioned_book.match("mentioned_book") + super(user_id, "mentioned_book")
+	def create 
+		@book.match(@node_variable) + Status::Mention.new(@user_id).create(@node_variable)
 	end
 end
