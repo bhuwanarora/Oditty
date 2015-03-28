@@ -1,6 +1,7 @@
 class Author < Neo
 
-	def self.initialize name
+	def initialize author_id=nil
+		@id = author_id
 	end
 
 	def self.get_books
@@ -14,6 +15,10 @@ class Author < Neo
 
 	def match_active
 		" MATCH (author:Author :ActiveAuthor) WITH author "
+	end
+
+	def match node_variable="author"
+		" MATCH (" + node_variable + ":Author) WHERE ID(" + node_variable + ") = " + @id.to_s + " WITH " + node_variable + " "
 	end
 
 	def order_desc
