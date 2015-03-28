@@ -153,20 +153,5 @@ class User < Neo
 	def get_init_book_count_range
 		match + User.return_init + User.init_book_read_count
 	end
-
-	def get_books_from_public_shelves
-		books = (match + Bookmark::Object::Node::BookLabel.get_public)
-	end
-
-	def get_articles_from_public_shelves
-		match + Bookmark::Object::Node::Article.get_public 
-	end
-
-	def get_visited_books 
-		match + Bookmark::Object::Node::BookLabel.get_visited
-	end
-
-	def get_visited_articles
-		match + Bookmark::Object::Node::Article.get_visited 
-	end
+	
 end

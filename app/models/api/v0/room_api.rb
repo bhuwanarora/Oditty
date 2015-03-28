@@ -2,16 +2,24 @@ module Api
 	module V0
 		class RoomApi 
 			def self.get_books_from_public_shelves user_id
-				books = ::User.new(user_id).get_books_from_public_shelves.execute
-				self.get_dominant_color books
+				books = User::Room.new(user_id).get_books_from_public_shelves.execute
+				self.set_dominant_color books
 			end
 
 			def self.get_visited_books user_id 
-				books = ::User.new(user_id).get_visited_books.execute
-				self.get_dominant_color books
+				books = User::Room.new(user_id).get_visited_books.execute
+				self.set_dominant_color books
 			end
 
-			def self.get_dominant_color
+			def self.get_articles_from_public_shelves
+				books = User::Room.new(user_id).get_books_from_public_shelves.execute
+			end
+
+			def self.get_visited_articles
+				articles = User::Room.new(user_id).get_visited_articles.execute
+			end
+
+			def self.set_dominant_color
 				threads = [] 
 				books.each do |book|
 					threads << Thread.new(book){|book| book["dominant_color"] = Book::Photo.get_dominant_color(book["isbn"])}
@@ -22,4 +30,4 @@ module Api
 			end
 		end
 	end
-end 
+end
