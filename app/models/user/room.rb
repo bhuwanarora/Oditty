@@ -9,7 +9,7 @@ class User::Room < User
 	end
 
 	def get_articles_from_public_shelves
-		@user.match + Bookmark::Node::Article.get_public 
+		@user.match + Bookmark::Node::ArticleLabel.get_public 
 	end
 
 	def get_visited_books 
@@ -17,7 +17,7 @@ class User::Room < User
 	end
 
 	def get_visited_articles
-		@user.match + Bookmark::Node::Article.get_visited 
+		@user.match + Bookmark::Node::ArticleLabel.get_visited 
 	end
 
 end

@@ -19,7 +19,7 @@ module Api
 				articles = User::Room.new(user_id).get_visited_articles.execute
 			end
 
-			def self.set_dominant_color
+			def self.set_dominant_color books
 				threads = [] 
 				books.each do |book|
 					threads << Thread.new(book){|book| book["dominant_color"] = Book::Photo.get_dominant_color(book["isbn"])}
