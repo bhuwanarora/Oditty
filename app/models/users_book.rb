@@ -1,17 +1,12 @@
 class UsersBook < Neo
 
-	def self.initialize(book_id, user_id)
+	def initialize(book_id, user_id)
 		@book_id = book_id
 		@user_id = user_id
 	end
 
 	def match 
 		" MATCH (book:Book), (user:User) WHERE ID(book)="+@book_id.to_s+" AND ID(user)="+@user_id.to_s+" WITH user, book "
-	end
-
-	def get_basic_details
-		clause = " MATCH (b:Book), (u:User) WHERE ID(b)="+@book_id.to_s+" AND ID(u)="+@user_id.to_s+" WITH u, b OPTIONAL MATCH (b)-[bt:Belongs_to]->(g:Genre) RETURN b as book, rn.rating as rating, tm.time_index as time_index, COLLECT(DISTINCT l1.name) as labels, COLLECT(DISTINCT l2.name) as selected_labels, m.timestamp as mark_as_read, COLLECT(ID(friend)) as friend_ids, COLLECT(friend.thumb) as friend_thumb, COUNT(friend) as friends_count, COLLECT(g.name) as genres, COLLECT(bt.weight) as weights "
-		clause
 	end
 
 	def self.optional_match_rating
@@ -26,7 +21,7 @@ class UsersBook < Neo
 		" OPTIONAL MATCH (user)-[:EndorseAction]->(endorse)-[:Endorsed]->(book) "
 	end
 
-	def self.optional_match_mark_as_read
+	def self.optional_match_bookmark
 		" OPTIONAL MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book) "
 	end
 
@@ -34,12 +29,13 @@ class UsersBook < Neo
 		" OPTIONAL MATCH (user)-[:Follow]->(friend:User)-[:MarkAsReadAction]->(m_friend)-[:MarkAsRead]->(book) "
 	end
 
-	def self.get_book_details
-		match + UsersBook.rating_clause + UsersBook.optional_match_timing_node + User.label_clause + 
-		Bookmark::Object::Node::BookLabel.match_path + UsersBook.optional_match_mark_as_read + UsersBook.optional_match_endorse + UsersBook.friends_book + Book.genre_clause + return_init + Book.get_basic_info + ", rating_node.rating as user_rating, timing_node.time_index as user_time_index, COLLECT(DISTINCT user_label.name) as labels, COLLECT(DISTINCT label.name) as selected_labels, mark_as_read.timestamp as status, ID(endorse) as endorse_status, COLLECT(ID(friend)) as friends_id, COLLECT(friend.thumb) as friends_thumb, COUNT(friend) as friends_count, COLLECT(genre.name) as genres, COLLECT(belongs_to.weight) as genres_weight"
+	def get_basic_details
+		match + UsersBook.optional_match_rating + UsersBook.optional_match_timing_node + User.match_label + 
+		Bookmark::Node::BookLabel.match_path  + UsersBook.optional_match_endorse + UsersBook.friends_book + Book.optional_match_genre + UsersBook.return_init + Book.basic_info + ", rating_node.rating as user_rating, timing_node.time_index as user_time_index, COLLECT(DISTINCT user_label.name) as labels, COLLECT(DISTINCT label.name) as selected_labels, ID(endorse) as endorse_status, COLLECT(ID(friend)) as friends_id, COLLECT(friend.thumb) as friends_thumb, COUNT(friend) as friends_count, COLLECT(genre.name) as genres, COLLECT(belongs_to.weight) as genres_weight"
 	end
 
 	def self.rate(rating)
+		#TODO: (SATISH) rate refractoring
 		rating_clause = _match_user_and_book(@user_id, @book_id)+" CREATE UNIQUE (u)-[:RatingAction]->(m:RatingNode{book_id:"+book_id.to_s+", title:b.title, author:b.author_name, user_id:"+@user_id.to_s+"})-[:Rate]->(b) SET m.rating="+rating.to_s+", m.timestamp="+Time.now.to_i.to_s+", m.name=u.name, m.email=u.email, m.isbn=b.isbn, m.thumb = CASE WHEN u.thumb IS NULL THEN '' ELSE u.thumb END WITH u, b, m "
 
 		set_clause = "SET b.rating_count = CASE WHEN b.rating_count IS NULL THEN 1 ELSE toInt(b.rating_count) + 1 END, u.rating_count = CASE WHEN u.rating_count IS NULL THEN 1 ELSE toInt(u.rating_count) + 1 END, u.total_count = CASE WHEN u.total_count IS NULL THEN "+Constants::RatingPoints.to_s+" ELSE toInt(u.total_count) + "+Constants::RatingPoints.to_s+" END"
@@ -69,6 +65,7 @@ class UsersBook < Neo
 	end
 	
 	def self.comment(tweet)
+		#TODO: (SATISH) comment refractoring
 		if @book_id
 			tweet_clause = _match_user_and_book(@user_id, @book_id)+" CREATE UNIQUE (u)-[:Commented]->(m:Tweet{tweet:\""+tweet[:message]+"\", timestamp:"+Time.now.to_i.to_s+", book_id: "+@book_id.to_s+", title: b.title, author_name: b.author_name, user_id: "+@user_id.to_s+", label1:\""+tweet[:label1]+"\", label2:\""+tweet[:label2]+"\", icon:\""+tweet[:icon]+"\"})-[:CommentedOn]->(b) SET m.isbn=b.isbn, m.name=u.name, m.email=u.email, m.thumb = CASE WHEN u.thumb IS NULL THEN '' ELSE u.thumb END WITH u, b, m "
 			with_clause = ", b "
@@ -131,6 +128,49 @@ class UsersBook < Neo
             RETURN xyDotProduct/(xLength*yLength) as similarity_index
 			LIMIT 5 
 			ORDER BY similarity_index DESC, sb.gr_rating DESC"
+	end
+
+	def self.endorse_book book_id, user_id
+		#TODO: (SATISH)  endorse book refractoring
+		@neo ||= self.neo_init
+		create_endorse_node_clause = _match_user_and_book(user_id, book_id) + " WITH u, b MERGE (u)-[:EndorseAction]->(endorse:EndorseNode{created_at: " + Time.now.to_i.to_s + ", book_id:ID(b), user_id:ID(u), updated_at:  " + Time.now.to_i.to_s + "})-[endorsed:Endorsed]->(b) WITH u, endorse, b"
+		find_old_feed_clause = " MATCH (u)-[old:FeedNext]->(old_feed)  "
+		create_new_feed_clause = " MERGE (u)-[:FeedNext{user_id:" + user_id.to_s + "}]->(endorse)-[:FeedNext{user_id:" + user_id.to_s + "}]->(old_feed) DELETE old WITH u, endorse, b "
+		find_old_book_feed_clause = " MATCH (b)-[old:BookFeed{book_id:" + book_id.to_s + "}]->(old_feed) "
+		create_new_book_feed_clause = " MERGE (b)-[:BookFeed{book_id:" + book_id.to_s + "}]->(endorse)-[:BookFeed{book_id:" + book_id.to_s + "}]->(old_feed) DELETE old WITH u, endorse, b "
+		set_clause = "SET b.endorse_count = CASE WHEN b.endorse_count IS NULL THEN 1 ELSE toInt(b.endorse_count) + 1 END, u.total_count = CASE WHEN u.total_count IS NULL THEN "+Constants::EndorsePoints.to_s+" ELSE toInt(u.total_count) + "+Constants::EndorsePoints.to_s+" END"
+		existing_ego_clause = _existing_ego_clause
+
+		ego_clause = _ego_clause 
+
+		clause = create_endorse_node_clause + find_old_feed_clause + create_new_feed_clause + find_old_book_feed_clause + create_new_book_feed_clause + existing_ego_clause + ego_clause + set_clause
+		puts "ENDORSE".green
+		@neo.execute_query(clause)
+
+	end
+
+	def self.remove_endorse book_id, user_id
+		#TODO: (SATISH) remove endorse refractoring
+		@neo ||= self.neo_init
+		# delete mark as read relation
+		remove_endorse_clause = _match_user_and_book(user_id, book_id)+" WITH u, b MATCH (u)-[r1:EndorseAction]->(m:EndorseNode)-[r2:Endorsed]->(b) DELETE r1, r2 WITH u, b, m "
+
+		#delete feed relation
+		feednext_clause = _delete_feed_clause(user_id)
+
+		#delete book feed relation
+		bookfeed_clause = _delete_book_clause(user_id)
+
+		delete_node = " DELETE m WITH u, b "
+
+		#update book and user properties
+		book_readers_count = "SET b.endorse_count = CASE WHEN b.endorse_count IS NULL THEN 0 ELSE toInt(b.endorse_count) - 1 END, "
+		user_total_count = "u.total_count = CASE WHEN u.total_count IS NULL THEN 0 ELSE toInt(u.total_count) - "+Constants::EndorsePoints.to_s+" END"
+
+		clause = remove_endorse_clause + feednext_clause + bookfeed_clause + delete_node + book_readers_count + user_total_count
+		
+		puts "REMOVE ENDORSE".green
+		@neo.execute_query(clause)
 	end
 
 end

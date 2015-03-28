@@ -119,26 +119,26 @@ module Api
 			end
 
 			def self.get_book_details(id, user_id=nil)
-				book = Book.new(id).complete_info(user_id).execute
+				book = UsersBook.new(id, user_id).get_basic_details.execute[0]
 				if user_id
 					structured_labels = []
-					# if book["labels"]
-					# 	for label in book["labels"]
-					# 		if book["selected_labels"].include? label
-					# 			json = {"name" => label, "checked" => true}
-					# 		else
-					# 			json = {"name" => label, "checked" => false}
-					# 		end
-					# 		structured_labels.push json
-					# 	end
-					# end
+					if book["labels"]
+						for label in book["labels"]
+							if book["selected_labels"].include? label
+								json = {"name" => label, "checked" => true}
+							else
+								json = {"name" => label, "checked" => false}
+							end
+							structured_labels.push json
+						end
+					end
 
 					friends_who_have_read = []
-					# if book["friends_id"].present?
-					# 	book["friends_id"].each do |id, index|
-					# 		friends_who_have_read.push({:id => id, :thumb => book["friends_thumb"][index]})
-					# 	end
-					# end
+					if book["friends_id"].present?
+						book["friends_id"].each do |id, index|
+							friends_who_have_read.push({:id => id, :thumb => book["friends_thumb"][index]})
+						end
+					end
 
 				end
 				# isbn = book["isbn"].split(",")[0]
@@ -148,7 +148,7 @@ module Api
 				# color = JSON.parse(color)["data"]
 
 				if user_id
-					# book.merge!(:friends => friends_who_have_read)
+					book.merge!(:friends => friends_who_have_read)
 				end
 				book
 			end
