@@ -28,8 +28,9 @@ module Api
 				feelings.each{|feeling| feelings_clauses +=  " WITH status " + Neo.create_group(Status::Feeling.create(user_id, feeling))}
 				hash_tags.each{|hash_tag| hashtagged_clauses += " WITH status " + Neo.create_group(Hashtag.create(user_id, hash_tag))}
 				
-				mentioned_users_ids.each{|mentioned_user_id| mentioned_users_clauses += Status::Mention::MentionsUser.create(user_id, mentioned_user_id)}
-				mentioned_authors_ids.each{|mentioned_author_id| mentioned_authors_clauses += Status::Mention::MentionsAuthor.create(user_id, mentioned_author_id)}
+				mentioned_users_ids.each{|mentioned_user_id| mentioned_users_clauses += Status::Mention::MentionsUser.new(mentioned_user_id).create(user_id)}
+				mentioned_authors_ids.each{|mentioned_author_id| mentioned_authors_clauses += Status::Mention::MentionsAuthor.new(mentioned_author_id).create(user_id)}
+
 				(User.new(user_id).match + Neo.create_group(Status.new(user_id, book_id).create(content)) + set_reading_status + " WITH status " + mentioned_users_clauses + mentioned_authors_clauses  + hashtagged_clauses + feelings_clauses + " WITH status " + set_book_exchange_status).execute  
 			end
 		end

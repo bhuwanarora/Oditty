@@ -4,7 +4,7 @@ class Status < Neo
 		@book_id = book_id
 	end
 
-	def match
+	def self.match
 		" MATCH (user)-[:Posted]->(status_node:StatusNode)-[:PostedContent]->(status:Status) "
 	end
 

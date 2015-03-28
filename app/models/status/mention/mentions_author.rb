@@ -1,5 +1,9 @@
 class Status::Mention::MentionsAuthor < Status::Mention
-	def self.create user_id, mentioned_author_id
-		super
+	def initialize mentioned_author_id
+		@mentioned_author = User.new(mentioned_author_id)
+	end
+
+	def create user_id
+		@mentioned_author.match("mentioned_author") + super(user_id, "mentioned_author")
 	end
 end

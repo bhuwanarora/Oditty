@@ -92,8 +92,8 @@ class User < Neo
 		"MATCH (u:User)-[r1:DataEdit]->(t:ThumbRequest)-[r2:DataEditRequest]->(b:Book) WHERE ID(t)="+id.to_s+" SET t.status = "+status.to_s+", b.external_thumb = CASE WHEN "+status.to_s+" = 1 THEN t.url ELSE null END"
 	end
 
-	def match
-		" MATCH (user:User) WHERE ID(user) = " + @id.to_s + " WITH user "
+	def match node_variable = "user"
+		" MATCH (" + node_variable + ":User) WHERE ID(" + node_variable + ") = " + @id.to_s + " WITH " + node_variable + " "
 	end
 
 	def self.match_root_category category_id=nil
