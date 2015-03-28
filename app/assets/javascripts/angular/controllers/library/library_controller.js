@@ -162,10 +162,10 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
 
     $scope.show_book = function(event, index){
         $scope.grid_style = {"height": "35px", "overflow-y": "hidden", "padding-bottom": "0px"};
-        var insertIndex = (Math.floor(index/5) + 1)*5
+        // var insertIndex = (Math.floor(index/5) + 1)*5
 
-        $scope.tempBooks = $scope.info.books;
-        $scope.info.books = $scope.info.books.slice(0, insertIndex);
+        // $scope.tempBooks = $scope.info.books;
+        // $scope.info.books = $scope.info.books.slice(0, insertIndex);
         $scope.constant = {"show_book": true};
         $rootScope.active_book = $scope.info.books[index];
         event.stopPropagation();
@@ -244,7 +244,6 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         })
 
     };
-
 
     _init();
 }]);

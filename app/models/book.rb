@@ -51,7 +51,7 @@ class Book < Neo
 	end
 
 	def self.detailed_info
-		" book.title as title, book.author_name as author_name, ID(book) as book_id, book.readers_count as readers_count, book.bookmark_count as bookmark_count, book.comment_count as comment_count, book.published_year as published_year, book.page_count as page_count, book.description as description, book.external_thumb as external_thumb "
+		self.basic_info + ", book.readers_count as readers_count, book.bookmark_count as bookmark_count, book.comment_count as comment_count, book.description as description, book.external_thumb as external_thumb "
 	end
 
 	def self.match_root_category
