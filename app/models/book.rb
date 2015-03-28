@@ -62,4 +62,12 @@ class Book < Neo
 		" ORDER BY book.total_weight DESC "
 	end
 
+	def complete_info user_id
+		# if user_id
+		# 	clause = UsersBook.new(@id, user_id) + " OPTIONAL MATCH (u)-[:RatingAction]->(rn:RatingNode)-[:Rate]->(b) OPTIONAL MATCH (u)-[:TimingAction]->(tm:TimingNode)-[:Timer]->(b) OPTIONAL MATCH (u)-[:Labelled]->(l1:Label) OPTIONAL MATCH (u)-[:Labelled]->(l2:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(b) OPTIONAL MATCH (u)-[:MarkAsReadAction]->(m)-[:MarkAsRead]->(b) OPTIONAL MATCH (u)-[:EndorseAction]->(e)-[:Endorsed]->(b) OPTIONAL MATCH (u)-[:Follow]->(friend:User)-[:MarkAsReadAction]->(m_friend)-[:MarkAsRead]->(b) OPTIONAL MATCH (b)-[bt:Belongs_to]->(g:Genre) RETURN " + return_book_data + ", rn.rating as user_rating, tm.time_index as user_time_index, COLLECT(DISTINCT l1.name) as labels, COLLECT(DISTINCT l2.name) as selected_labels, m.timestamp as status, ID(e) as endorse_status, COLLECT(ID(friend)) as friends_id, COLLECT(friend.thumb) as friends_thumb, COUNT(friend) as friends_count, COLLECT(g.name) as genres, COLLECT(bt.weight) as genres_weight"
+		# else
+		# end
+		match + Book.return_init + Book.detailed_info
+	end
+
 end
