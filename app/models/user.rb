@@ -153,5 +153,4 @@ class User < Neo
 	def get_init_book_count_range
 		match + User.return_init + User.init_book_read_count
 	end
-
 end

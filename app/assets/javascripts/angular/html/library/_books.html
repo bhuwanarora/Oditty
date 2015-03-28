@@ -20,7 +20,7 @@
     </md-progress-linear>
     
     <div  ng-style="grid_style" class="white" 
-            ng-if="!info.author_filter && !info.sort_by_alphabet && !info.published_era_filter && !info.reading_time_filter && !info.subject_filter">
+            ng-if="!info.author_filter && !info.sort_by_alphabet && !info.published_era_filter && !info.reading_time_filter && !info.subject_filter" layout-fill>
             <div ng-init="grid_books = info.books" ng-include src="'/assets/angular/html/library/shared/_default_grid.html'"></div>
     </div>
 

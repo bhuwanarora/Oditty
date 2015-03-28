@@ -139,8 +139,8 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         console.debug("initialised filters controller");
         // $scope._get_genres();
         // $scope._get_authors();
-        // $scope._get_time_groups();
-        // $scope._get_reading_times();
+        $scope._get_time_groups();
+        $scope._get_reading_times();
         if(angular.isUndefined($rootScope.filters)){
             $rootScope.filters = {"filter_type": SearchUIConstants.BookSearch};
         }
