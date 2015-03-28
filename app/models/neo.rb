@@ -21,7 +21,7 @@ class Neo
 	end
 
 	def self.create_group(*params)
-		" CREATE UNIQUE " + params.join(", ")
+		" MERGE " + params.join(", ")
 	end
 
 	def self.match_group(*params)
