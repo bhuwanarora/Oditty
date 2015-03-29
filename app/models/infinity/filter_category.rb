@@ -1,9 +1,10 @@
 class Infinity::FilterCategory < Infinity
 	def initialize id
 		@category = Category.new(id)
+		@id = id
 	end
 
 	def match
-		@category.match +  Author.match_path("author", "book", true) 
+		Category.match_path + " WHERE ID(category) = " + @id.to_s 
 	end
 end

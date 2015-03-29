@@ -1,9 +1,9 @@
 class Infinity::FilterAuthor < Infinity
 	def initialize id
 		@author = Author.new(id)
+		@id = id
 	end
 
 	def match
-		@author.match + " WITH author, book" +  Author.match_path("author", "book", true) 
+		Author.match_path("author", "book", true) + " WHERE ID(author) = " + @id.to_s + " " 
 	end
-end
