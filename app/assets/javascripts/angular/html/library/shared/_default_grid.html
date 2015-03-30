@@ -4,7 +4,7 @@
     md-cols-gt-md="5"
     md-row-height="1:1.3"
     md-gutter="1px" >
-    <md-grid-tile ng-repeat="book in grid_books"
+    <md-grid-tile ng-repeat="book in grid_books track by $index"
         md-rowspan="{{book.rowspan}}"
         md-colspan="{{book.colspan}}"
         layout-align="start start"
@@ -23,3 +23,37 @@
         </div>
     </md-grid-tile>
 </md-grid-list>
+
+<style>
+    .grid{
+        position: absolute;
+    }
+
+    .book_grid_link{
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        left: 0px;
+        padding: 0px;
+        border-radius: 0px !important;
+    }
+
+    .book_grid_link img{
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+    }
+
+     .book_backup_cover{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        color: white;
+        white-space: normal;
+    }
+</style>
