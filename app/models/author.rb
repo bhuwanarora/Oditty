@@ -36,7 +36,7 @@ class Author < Neo
 
 	def self.get_books book="book", label_defined=false
 		unless label_defined
-			where_clause = " WHERE " + name + " :Author"
+			where_clause = " WHERE author :Author"
 		else
 			where_clause =  "" 
 		end

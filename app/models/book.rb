@@ -23,10 +23,6 @@ class Book < Neo
 		", ID(mark_as_read) AS status"
 	end
 
-	def self.rating
-		", rating_node.rating AS user_rating"
-	end
-
 	def self.match_genre
 		" MATCH (book)-[belongs_to:Belongs_to]->(genre:Genre) "
 	end
