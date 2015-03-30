@@ -98,4 +98,5 @@ module Constants
 	SmallReadValue	 			= 1
 	NormalReadValue	 			= 2
 	LongReadValue	 			= 3
+	BookShownInInfinty          = 10
 end

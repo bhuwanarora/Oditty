@@ -1,10 +1,11 @@
 class Infinity < Neo
 
-	def initialize category_id=nil, author_id=nil, reading_time=nil, era_id=nil
+	def initialize category_id, author_id, reading_time, era_id, skip_count
 		@category_id = category_id
 		@author_id = author_id
 		@reading_time = reading_time
 		@era_id = era_id
+		@skip_count = skip_count
 	end
 
 	def get_books
@@ -49,6 +50,6 @@ class Infinity < Neo
 			trailing_era_with_clause = ", era "
 		end	
 
-		clause + trailing_author_clause + (with_clause += trailing_author_with_clause) + trailing_category_clause + (with_clause += trailing_category_with_clause)  + trailing_era_clause + (with_clause += trailing_era_with_clause) + Neo.return_group(Book.basic_info, Author.basic_info, Era.basic_info)  
+		clause + trailing_author_clause + (with_clause += trailing_author_with_clause) + trailing_category_clause + (with_clause += trailing_category_with_clause)  + trailing_era_clause + (with_clause += trailing_era_with_clause) + Neo.return_group(Book.basic_info, Author.basic_info, Era.basic_info) + Book.order_desc + Neo.skip(@skip_count) + Neo.limit(Constants::BookShownInInfinty)
 	end
 end

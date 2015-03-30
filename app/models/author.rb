@@ -1,6 +1,6 @@
 class Author < Neo
 
-	def initialize id=nil
+	def initialize id
 		@id = id
 	end
 
