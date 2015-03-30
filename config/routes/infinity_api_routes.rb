@@ -4,7 +4,7 @@ ReadersDoor::Application.routes.draw do
   #############################################
   namespace :api do
     namespace :v0 do
-      match "get_books"                              => 'infinity_api#get_books',                       :via => [:put, :get, :post]
+      match "get_filtered_books"                              => 'infinity_api#get_books',                       :via => [:put, :get, :post]
     end
   end
 end

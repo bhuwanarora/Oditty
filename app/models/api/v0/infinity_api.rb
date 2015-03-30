@@ -8,7 +8,7 @@ module Api
 				@era_id = era_id 
 			end
 			def get_books
-				info = Infinity.new(category, author_id, time_id, era_id).get_books.execute
+				info = Infinity.new(@category, @author_id, @time_id, @era_id).get_books.execute
 			end
 		end
 	end

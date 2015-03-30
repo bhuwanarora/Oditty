@@ -17,6 +17,6 @@ class Era < Neo
 	end
 
 	def self.match_path
-		" MATCH ()-[]-()-"
+		" MATCH (era:`Era`)<-[:FromEra]-(:Year)<-[:Published_in]-(book) "
 	end
 end

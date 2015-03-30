@@ -93,4 +93,9 @@ module Constants
 	BooksShownInRoomCount       = 10
 	PopularBooksShownCount      = 30
 	FeedFetchCount				= 4 
+
+	TinyReadValue	 			= 0
+	SmallReadValue	 			= 1
+	NormalReadValue	 			= 2
+	LongReadValue	 			= 3
 end

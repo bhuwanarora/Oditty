@@ -39,6 +39,6 @@ class Author < Neo
 		else
 			author_node = name.downcase + ":" + name.camelcase
 		end
-		" OPTIONAL MATCH (" + author_node + ")" + "-[:Wrote]->(" + book + ")"
+		" MATCH (" + author_node + ")" + "-[:Wrote]->(" + book + ") "
 	end
 end
