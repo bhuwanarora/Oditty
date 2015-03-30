@@ -11,6 +11,14 @@ module Api
 				info
 			end
 
+			def self.endorse_book book_id, user_id
+				UsersBook::Endorse.new(book_id, user_id).add
+			end
+
+			def self.remove_endorse book_id, user_id
+				UsersBook::Endorse.new(book_id, user_id).remove
+			end
+
 			def self.rate_book book_id, user_id, rating
 				UsersBook::Rate.new(book_id, user_id).add(rating)
 			end

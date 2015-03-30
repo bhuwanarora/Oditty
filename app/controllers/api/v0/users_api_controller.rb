@@ -316,9 +316,9 @@ module Api
 				book_id = params[:id]
 				status =  params[:status]
 				if status 
-					Api::V0::UsersBookApi.endorse_book(book_id, user_id).execute
+					Api::V0::UserApi.endorse_book(book_id, user_id).execute
 				else
-					Api::V0::UsersBookApi.remove_endorse(book_id, user_id).execute
+					Api::V0::UserApi.remove_endorse(book_id, user_id).execute
 				end
 				render :json => {:message => "Success"}, :status => 200
 			end
