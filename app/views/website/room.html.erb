@@ -14,10 +14,7 @@
 		</md-content>
 	</section>
 	<div layout="row" class="book_stack">
-		<img class="recent_visited_book" src="http://d.gr-assets.com/books/1356057697l/7898414.jpg">
-		<img class="recent_visited_book" src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRn1d0ugUWvQMawcAqRDuOHtHnrskdfBnNyUcdc6paubNw2f74d">
-		<img class="recent_visited_book" src="http://ecx.images-amazon.com/images/I/61SO%2BuOZt6L._SL1047_.jpg">
-		<img class="recent_visited_book" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0JiW794WCEy1JcKBmC_Gifc9b0-GZbZVniCNGF090GXyij4_-">
+		<img class="recent_visited_book" ng-src="{{book.url}}" ng-repeat="book in visited_books">
 	</div>
 </md-content>
 

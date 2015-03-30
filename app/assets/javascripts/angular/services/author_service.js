@@ -51,4 +51,8 @@ homeApp.service('authorService', ["$http", "$q", "$rootScope", "WebsiteUIConstan
         return _deferred_request('/api/v0/popular_authors?skip_count='+skip_count);   
     }
 
+    this.get_details = function(params){
+        return _deferred_request('/api/v0/author?'+params);
+    }
+
 }]);

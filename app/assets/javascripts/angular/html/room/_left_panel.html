@@ -1,71 +1,15 @@
 <section>
-	<div class="side_padding">
-		<div class="padding">PLAN TO READ</div><br/>
-		<a href="/book"><md-button class="clear spine_button"><div class="spine" style="background-color: purple;">
-			The Blue Line
-		</div></md-button></a>
-		<a href="/book"><md-button class="clear spine_button"><div class="spine" style="background-color: green;">
-			Athletico
-		</div></md-button></a>
-		<a href="/book"><md-button class="clear spine_button"><div class="spine" style="background-color: red;">
-			Superman - Red Son
-		</div></md-button></a>
-		<a href="/book"><md-button class="clear spine_button"><div class="spine" style="background-color: pink;">
-			Roman Hotness
-		</div></md-button></a>
+	<div ng-repeat="shelf in book_shelves" class="side_padding">
+		<div layout-padding>{{shelf.name}}</div><br/>
+		<a ng-href="/book?q={{book.id}}" ng-repeat="book in shelf.books">
+			<md-button class="clear spine_button">
+				<div class="spine" ng-style="background-color: {{book.spine_color}}">
+					{{shelf.title}}
+				</div>
+			</md-button>
+		</a>
+		<md-divider></md-divider>
 	</div>
-	<md-divider></md-divider>
-	<div class="side_padding">
-		<div class="padding">PLAN TO BUY</div><br/>
-		<a href="/book"><md-button class="clear spine_button"><div class="spine" style="background-color: blue;">
-			The Blue Line
-		</div></md-button></a>
-		<a href="/book"><md-button class="clear spine_button"><div class="spine" style="background-color: yellow;">
-			Athletico
-		</div></md-button></a>
-		<a href="/book"><md-button class="clear spine_button"><div class="spine" style="background-color: green;">
-			Superman - Red Son
-		</div></md-button></a>
-		<a href="/book"><md-button class="clear spine_button"><div class="spine" style="background-color: brown;">
-			Clear Burn
-		</div></md-button></a>
-		<a href="/book"><md-button class="clear spine_button"><div class="spine" style="background-color: orange;">
-			Steve Jobs
-		</div></md-button></a>
-	</div>
-	<md-divider></md-divider>
-	<div class="side_padding">
-		<div class="padding">PLAN TO RE-READ</div><br/>
-		<a href="/book"><md-button class="clear spine_button"><div class="spine" style="background-color: purple;">
-			The Blue Line
-		</div></md-button></a>
-		<a href="/book"><md-button class="clear spine_button"><div class="spine" style="background-color: green;">
-			Athletico
-		</div></md-button></a>
-		<a href="/book"><md-button class="clear spine_button"><div class="spine" style="background-color: red;">
-			Superman - Red Son
-		</div></md-button></a>
-		<a href="/book"><md-button class="clear spine_button"><div class="spine" style="background-color: pink;">
-			Roman Hotness
-		</div></md-button></a>
-	</div>
-	<md-divider></md-divider>
-	<div class="side_padding">
-		<div class="padding">TRAVEL</div><br/>
-		<a href="/book"><md-button class="clear spine_button"><div class="spine" style="background-color: purple;">
-			The Blue Line
-		</div></md-button></a>
-		<a href="/book"><md-button class="clear spine_button"><div class="spine" style="background-color: green;">
-			Athletico
-		</div></md-button></a>
-		<a href="/book"><md-button class="clear spine_button"><div class="spine" style="background-color: red;">
-			Superman - Red Son
-		</div></md-button></a>
-		<a href="/book"><md-button class="clear spine_button"><div class="spine" style="background-color: pink;">
-			Roman Hotness
-		</div></md-button></a>
-	</div>
-	<md-divider></md-divider>
 </section>
 
 <style>

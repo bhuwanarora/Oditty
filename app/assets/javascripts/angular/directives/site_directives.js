@@ -17,6 +17,23 @@ homeApp.directive('setFocus', ["$timeout", "$parse", "$rootScope", function($tim
   };
 }]);
 
+homeApp.directive('rdSticky', ["$timeout", "$parse", "$rootScope", "$document", function($timeout, $parse, $rootScope, $document){
+  return {
+    link: function(scope, element, attrs) {
+        debugger
+        var elem = element[0];
+        var position = elem.scrollTop;
+        $document.bind('scroll', function(){
+            console.log(" new scrollTop ", elem.offsetTop);
+            // if(elem.scrollTop <= position){
+            //     scope.$apply(attrs.checkScrollUp);
+            // }
+            // position = elem.scrollTop;
+        });
+    }
+  };
+}]);
+
 homeApp.directive('compile', ["$compile", function($compile){
 	return ['scope', 'element', 'attrs', function(scope, element, attrs){
 				var ensureCompileRunsOnce = scope.$watch(function(scope){
