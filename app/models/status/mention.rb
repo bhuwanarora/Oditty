@@ -4,6 +4,6 @@ class Status::Mention < Status
 		@user_id = user_id
 	end
 	def create node_variable
-		" MERGE (status)-[:Mentions{user_id: " + @user_id.to_s + "}]->(" + node_variable + ") WITH status " 
+		" MERGE (status)-[mentions:Mentions{user_id: " + @user_id.to_s + "}]->(" + node_variable + ") WITH status " 
 	end
 end

@@ -20,7 +20,7 @@ class Neo
 		" RETURN " + params.join(", ")
 	end
 
-	def self.create_group(*params)
+	def self.merge_group(*params)
 		" MERGE " + params.join(", ") + " "
 	end
 

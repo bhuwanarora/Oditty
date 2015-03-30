@@ -6,6 +6,6 @@ class Status::Mention::MentionsAuthor < Status::Mention
 	end
 
 	def create 
-		@author.match(@node_variable) + Status::Mention.new(@user_id).create( @node_variable)
+		@author.match(@node_variable) + ", status " + Status::Mention.new(@user_id).create(@node_variable)
 	end
 end

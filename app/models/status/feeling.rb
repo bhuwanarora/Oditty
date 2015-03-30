@@ -4,6 +4,6 @@ class Status::Feeling < Status
 		@feeling = feeling
 	end
 	def create 
-		" (status)-[:Feeling{ user_id: " + @user_id.to_s + "}]->(feeling:Feel{name:\"" + @feeling + "\"}) "
+		" MERGE (status)-[feels:Felt{ user_id: " + @user_id.to_s + "}]->(emotion:Emotion{name:\"" + @feeling + "\"}) "
 	end
 end

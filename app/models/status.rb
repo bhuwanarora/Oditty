@@ -1,23 +1,23 @@
 class Status < Neo
-	def initialize(user_id, content, book_id=nil, reading_status_value=nil, mentioned_users_ids=nil, mentioned_authors_ids=nil, hash_tags=nil, feelings=nil, book_exchange_status=nil)
+	def initialize(user_id, status_info)
 		@user_id = user_id
 		@user = User.new(user_id)
-		@book_id = book_id				
-		@reading_status_value = reading_status_value
-		@mentioned_users_ids = mentioned_users_ids
-		@mentioned_authors_ids = mentioned_authors_ids
-		@hash_tags = hash_tags
-		@content = content
-		@feelings = feelings
-		@book_exchange_status = book_exchange_status
+		@book_id = 3 # status_info[:book_id]				
+		@reading_status_value =  status_info[:reading_status_value]
+		@mentioned_users_ids =   status_info[:mentioned_users_ids]
+		@mentioned_authors_ids =   status_info[:mentioned_authors_ids]
+		@hash_tags =   status_info[:hash_tags]
+		@content =  status_info[:content]
+		@feelings =   status_info[:feelings]
+		@book_exchange_status =  status_info[:book_exchange_status]
 	end
 
 	def self.match
 		" MATCH (user)-[:Posted]->(status_node:StatusNode)-[:PostedContent]->(status:Status) "
 	end
 
-	def create
-			@user.match + Neo.create_group(create_path) + " WITH status " + _get_reading_status_clause + " WITH status " + _get_mentioned_users_clauses + _get_mentioned_authors_clauses  + _get_hashtagged_clauses + _get_feelings_clauses + " WITH status " + _get_book_exchange_status_clause  + Neo.return_init + " status "
+	def create 
+			@user.match + Neo.merge_group(create_path) + " WITH status " + _get_reading_status_clause + " WITH status " + _get_mentioned_users_clauses + _get_mentioned_authors_clauses  + _get_hashtagged_clauses + _get_feelings_clauses + " WITH status " + _get_book_exchange_status_clause  + Neo.return_init + " status "
 	end
 
 	def create_path 
@@ -68,7 +68,7 @@ class Status < Neo
 	def _get_feelings_clauses 
 		feelings_clauses = ""
 		unless @feelings.nil?
-			@feelings.each{|feeling| feelings_clauses +=  " WITH status " + Neo.create_group(Status::Feeling.new(feeling, @user_id).create)}
+			@feelings.each{|feeling| feelings_clauses +=  " WITH status " + Status::Feeling.new(feeling, @user_id).create}
 			feelings_clauses
 		end
 		feelings_clauses
@@ -93,7 +93,7 @@ class Status < Neo
 	def _get_hashtagged_clauses 
 		hashtagged_clauses = ""
 		unless @hash_tags.nil?
-			@hash_tags.each{|hash_tag| hashtagged_clauses += " WITH status " + Neo.create_group(Hashtag.new(hash_tag, @user_id).create)}
+			@hash_tags.each{|hash_tag| hashtagged_clauses += " WITH status " + Hashtag.new(hash_tag, @user_id).create}
 		end
 		hashtagged_clauses
 	end

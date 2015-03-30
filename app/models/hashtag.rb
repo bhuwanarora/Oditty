@@ -5,6 +5,6 @@ class Hashtag < Neo
 	end
 
 	def create
-		" (status)-[:HashTagged{user_id:" + @user_id.to_s + "}]->(hash_tag:HashTag{hash_tag:\"" + @hash_tag + "\"}) "
+		" MERGE (status)-[tagged:HashTagged{user_id:" + @user_id.to_s + "}]->(hash_tag:HashTag{hash_tag:\"" + @hash_tag + "\"}) "
 	end
 end

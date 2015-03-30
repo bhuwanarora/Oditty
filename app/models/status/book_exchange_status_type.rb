@@ -5,6 +5,6 @@ class Status::BookExchangeStatusType < Status
 		@user_id = user_id
 	end
 	def create 
-		" MATCH (book) WHERE ID(book) = " + @book_id.to_s + " MERGE (status)-[:" + @relation + "{user_id:" + @user_id.to_s + "}]->(book)"
+		Book.new(@book_id).match + " MERGE (status)-[mentions_book:" + @relation + "{user_id:" + @user_id.to_s + "}]->(book) "
 	end
 end

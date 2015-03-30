@@ -1,10 +1,11 @@
 class Author < Neo
 
-	def initialize author_id=nil
+	def initialize author_id
 		@id = author_id
 	end
 
 	def self.get_books
+		" MATCH (author)-[:Wrote]-(book:Book) WHERE ID(author) = " + @id.to_s + " "
 	end
 
 	def self.remove
