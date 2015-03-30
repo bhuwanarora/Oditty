@@ -6,7 +6,7 @@ class UsersBook::Rate < UsersBook
 
 	def add rating
 		operation = "+"
-		match + create + set_rating(rating) + set_name + set_email + set_isbn + set_thumb + " WITH user, book, rating_node " + Book.set_rating_count(operation) + User.set_rating_count(operation) + User.set_total_count(operation) + User::Feed.new(@user_id).create("rating_node") + Book::Feed.new(@book_id).create("rating_node") 
+		match + create + UsersBook::Rate.set_rating(rating) + UsersBook::Rate.set_name + UsersBook::Rate.set_email + UsersBook::Rate.set_isbn + UsersBook::Rate.set_thumb + " WITH user, book, rating_node " + Book.set_rating_count(operation) + User.set_rating_count(operation) + User.set_total_count(Constants::RatingPoints, operation) + " WITH user, book, rating_node " + User::Feed.new(@user_id).create("rating_node") + Book::Feed.new(@book_id).create("rating_node") + UsersBook.return_init + " rating_node.rating " 
 		
 	end
 
@@ -56,7 +56,7 @@ class UsersBook::Rate < UsersBook
 	end
 
 	def self.set_thumb
-		" SET rating_node.thumb = COALESCE(user.thumb,"") "
+		" SET rating_node.thumb = COALESCE(user.thumb,'') "
 	end
 
 	def self.set_timestamp

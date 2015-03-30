@@ -45,7 +45,7 @@ class Neo
 		" UNWIND " + collection + " AS " + collection.singularize + " "
 	end
 
-	def self.delete_nodes node_variable
+	def self.delete node_variable
 		" MATCH (" + node_variable + ")-[relation]-() DELETE relation, " + node_variable + " "
 	end
 

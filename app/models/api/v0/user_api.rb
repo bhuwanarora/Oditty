@@ -11,6 +11,10 @@ module Api
 				info
 			end
 
+			def self.rate_book book_id, user_id, rating
+				UsersBook::Rate.new(book_id, user_id).add(rating)
+			end
+
 			def self.get_small_reads
 				Book::SmallRead.get_sorted_books(0, 10).execute
 			end

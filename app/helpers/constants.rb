@@ -93,4 +93,6 @@ module Constants
 	BooksShownInRoomCount       = 10
 	PopularBooksShownCount      = 30
 	FeedFetchCount				= 4 
+	EndorsePoints 				= 10
+	RatingPoints				= 10
 end
