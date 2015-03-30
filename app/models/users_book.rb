@@ -36,9 +36,10 @@ class UsersBook < Neo
 
 	def rate(rating)
 		#TODO: (SATISH) rate refractoring
-		rating_clause = match + " MERGE (user)-[rating_action:RatingAction]->(rating_node:RatingNode{book_id:" + @book_id.to_s + ", title:book.title, author:book.author_name, user_id:" + @user_id.to_s + "})-[rate:Rate]->(book) SET bookmark_node.rating="+rating.to_s+", bookmark_node.timestamp="+Time.now.to_i.to_s+", bookmark_node.name=u.name, bookmark_node.email=u.email, bookmark_node.isbn=book.isbn, bookmark_node.thumb = COALESCE(user.thumb,"") WITH user, book, bookmark "
+		operation = "+"
+		rating_clause = match + Rating.new(@book_id, @user_id).create + Bookmark.set_rating(rating) + Bookmark.set_name + Bookmark.set_email + Bookmark.set_isbn + Bookmark.set_thumb + " WITH user, book, bookmark "
 
-		set_clause = "SET b.rating_count = CASE WHEN b.rating_count IS NULL THEN 1 ELSE toInt(b.rating_count) + 1 END, u.rating_count = CASE WHEN u.rating_count IS NULL THEN 1 ELSE toInt(u.rating_count) + 1 END, u.total_count = CASE WHEN u.total_count IS NULL THEN "+Constants::RatingPoints.to_s+" ELSE toInt(u.total_count) + "+Constants::RatingPoints.to_s+" END"
+		set_clause = Book.set_bookmark_count(operation) + User.set_bookmark_count(operation) + User.set_total_count_on_bookmark(operation)
 
 		clause = rating_clause + _delete_existing_feednext_clause(@user_id) + _feednext_clause(@user_id) + _bookfeed_clause(@user_id) + _existing_ego_clause + _ego_clause + set_clause
 		puts "RATE".green
