@@ -19,7 +19,7 @@ class Infinity < Neo
 			trailing_author_clause = ""
 			trailing_author_with_clause = ""
 		else
-			trailing_author_clause = Author.match_path("author", "book", false)
+			trailing_author_clause = Author.get_books("book", false)
 			trailing_author_with_clause = ", author "
 		end	
 

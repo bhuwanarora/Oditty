@@ -31,4 +31,8 @@ class Category < Neo
 		" MATCH (category:Category)-[:FromCategory]-(book)"
 	end
 
+	def get_books
+		" MATCH (category:Category)-[:FromCategory]-(book) WHERE ID(category) = " + @id.to_s + " "
+	end
+
 end

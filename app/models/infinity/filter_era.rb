@@ -1,6 +1,7 @@
 class Infinity::FilterEra < Infinity
 	def initialize id
 		@id = id
+		@era = Era.new(id)
 	end
 
 	def match(book_label_defined)
@@ -9,6 +10,6 @@ class Infinity::FilterEra < Infinity
 		else
 			define_book_label_clause = " AND book :Book "
 		end
-		Era.match_path + " WHERE ID(era) = " + @id.to_s + define_book_label_clause + " "
+		@era.get_books + define_book_label_clause + " "
 	end
 end

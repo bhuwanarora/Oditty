@@ -10,6 +10,6 @@ class Infinity::FilterAuthor < Infinity
 		else
 			define_book_label_clause = " AND book :Book "
 		end
-		Author.match_path("author", "book", author_label_defined=false) + " WHERE ID(author) = " + @id.to_s + define_book_label_clause + " " 
+		@author.get_books + define_book_label_clause + " " 
 	end
 end

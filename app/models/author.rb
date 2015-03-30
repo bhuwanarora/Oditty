@@ -4,7 +4,8 @@ class Author < Neo
 		@id = id
 	end
 
-	def self.get_books
+	def get_books
+		" MATCH (author:Author)-[:Wrote]->(book) WHERE ID(author) = " + @id.to_s
 	end
 
 	def self.match
@@ -33,12 +34,12 @@ class Author < Neo
 		skip(skip_count) +  limit(Constants::FollowFavoriteAuthorsCount) + return_init + Author.basic_info
 	end
 
-	def self.match_path name, book, label_defined=false
-		if label_defined
-			author_node =  name 
+	def self.get_books book="book", label_defined=false
+		unless label_defined
+			where_clause = " WHERE " + name + " :Author"
 		else
-			author_node = name.downcase + ":" + name.camelcase
+			where_clause =  "" 
 		end
-		" MATCH (" + author_node + ")" + "-[:Wrote]->(" + book + ") "
+		" MATCH (" + name + ")" + "-[:Wrote]->(" + book + ") " + where_clause
 	end
 end

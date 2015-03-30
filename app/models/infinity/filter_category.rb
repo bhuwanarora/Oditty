@@ -10,6 +10,6 @@ class Infinity::FilterCategory < Infinity
 		else
 			define_book_label_clause = " AND book :Book "
 		end
-		Category.match_path + " WHERE ID(category) = " + @id.to_s + define_book_label_clause + " "
+		@category.get_books + define_book_label_clause + " "
 	end
 end
