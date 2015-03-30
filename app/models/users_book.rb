@@ -34,9 +34,9 @@ class UsersBook < Neo
 		Bookmark::Node::BookLabel.match_path  + UsersBook.optional_match_endorse + UsersBook.friends_book + Book.optional_match_genre + UsersBook.return_init + Book.basic_info + ", rating_node.rating as user_rating, timing_node.time_index as user_time_index, COLLECT(DISTINCT user_label.name) as labels, COLLECT(DISTINCT label.name) as selected_labels, ID(endorse) as endorse_status, COLLECT(ID(friend)) as friends_id, COLLECT(friend.thumb) as friends_thumb, COUNT(friend) as friends_count, COLLECT(genre.name) as genres, COLLECT(belongs_to.weight) as genres_weight"
 	end
 
-	def self.rate(rating)
+	def rate(rating)
 		#TODO: (SATISH) rate refractoring
-		rating_clause = _match_user_and_book(@user_id, @book_id)+" CREATE UNIQUE (u)-[:RatingAction]->(m:RatingNode{book_id:"+book_id.to_s+", title:b.title, author:b.author_name, user_id:"+@user_id.to_s+"})-[:Rate]->(b) SET m.rating="+rating.to_s+", m.timestamp="+Time.now.to_i.to_s+", m.name=u.name, m.email=u.email, m.isbn=b.isbn, m.thumb = CASE WHEN u.thumb IS NULL THEN '' ELSE u.thumb END WITH u, b, m "
+		rating_clause = match + " MERGE (user)-[rating_action:RatingAction]->(rating_node:RatingNode{book_id:" + @book_id.to_s + ", title:book.title, author:book.author_name, user_id:" + @user_id.to_s + "})-[rate:Rate]->(book) SET bookmark_node.rating="+rating.to_s+", bookmark_node.timestamp="+Time.now.to_i.to_s+", bookmark_node.name=u.name, bookmark_node.email=u.email, bookmark_node.isbn=book.isbn, bookmark_node.thumb = COALESCE(user.thumb,"") WITH user, book, bookmark "
 
 		set_clause = "SET b.rating_count = CASE WHEN b.rating_count IS NULL THEN 1 ELSE toInt(b.rating_count) + 1 END, u.rating_count = CASE WHEN u.rating_count IS NULL THEN 1 ELSE toInt(u.rating_count) + 1 END, u.total_count = CASE WHEN u.total_count IS NULL THEN "+Constants::RatingPoints.to_s+" ELSE toInt(u.total_count) + "+Constants::RatingPoints.to_s+" END"
 
