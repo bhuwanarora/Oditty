@@ -47,10 +47,6 @@ class Bookmark < Neo
 		" (bookmark_node)-[bookmark_action:BookmarkAction]->(book) "
 	end
 
-	def self.set_rating rating
-		"SET bookmark_node.rating=" + rating.to_s + " "
-	end
-
 	def self.set_title
 		" SET bookmark_node.title = book.title "
 	end

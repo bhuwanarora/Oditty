@@ -45,6 +45,10 @@ class Neo
 		" UNWIND " + collection + " AS " + collection.singularize + " "
 	end
 
+	def self.delete_nodes node_variable
+		" MATCH (" + node_variable + ")-[relation]-() DELETE relation, " + node_variable + " "
+	end
+
 	def _match_user(user_id)
 		"MATCH (u:User) WHERE ID(u)="+user_id.to_s+" "
 	end

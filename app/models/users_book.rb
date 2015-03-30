@@ -34,22 +34,6 @@ class UsersBook < Neo
 		Bookmark::Node::BookLabel.match_path  + UsersBook.optional_match_endorse + UsersBook.friends_book + Book.optional_match_genre + UsersBook.return_init + Book.basic_info + ", rating_node.rating as user_rating, timing_node.time_index as user_time_index, COLLECT(DISTINCT user_label.name) as labels, COLLECT(DISTINCT label.name) as selected_labels, ID(endorse) as endorse_status, COLLECT(ID(friend)) as friends_id, COLLECT(friend.thumb) as friends_thumb, COUNT(friend) as friends_count, COLLECT(genre.name) as genres, COLLECT(belongs_to.weight) as genres_weight"
 	end
 
-	def rate(rating)
-		#TODO: (SATISH) rate refractoring
-		operation = "+"
-		puts "RATE".green
-		#update mark as read cache for the book
-		#update popularity index for the book
-		#update popularity index for the author
-
-		#update mark as read cache for the user
-		#update bookworm index for the user
-
-		#update news feed for the book
-		#update news feed for the user
-		match + Rating.new(@book_id, @user_id).create + Rating.set_rating(rating) + Rating.set_name + Rating.set_email + Rating.set_isbn + Rating.set_thumb + " WITH user, book, bookmark " + Book.set_bookmark_count(operation) + User.set_total_count(operation) + User::Feed.new(@user_id).create("rating_node") + Book::Feed.new(@book_id).create("rating_node") 
-	end
-
 	def self.record_time(time)
 		rating_clause = _match_user_and_book(@user_id, @book_id)+" CREATE UNIQUE (u)-[:TimingAction]->(m:TimingNode{book_id:"+@book_id.to_s+", title:b.title, author:b.author_name, user_id:"+@user_id.to_s+"})-[:Timer]->(b) SET m.timestamp="+Time.now.to_i.to_s+", m.time_index="+time.to_s+", m.name=u.name, m.email=u.email, m.isbn=b.isbn, m.thumb = CASE WHEN u.thumb IS NULL THEN '' ELSE u.thumb END  WITH u, b, m "
 

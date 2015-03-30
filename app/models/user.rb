@@ -4,8 +4,12 @@ class User < Neo
 		@id = user_id
 	end
 
-	def set_bookmark_count operation
+	def self.set_bookmark_count operation
 		" user.bookmark_count = COALESCE(user.bookmark_count,0) " + operation + " 1 "
+	end
+
+	def self.set_rating_count operation
+		" user.rating_count = COALESCE(user.rating_count,0) " + operation + " 1 "
 	end
 
 	def self.set_total_count value, operation
