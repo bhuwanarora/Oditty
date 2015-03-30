@@ -64,33 +64,6 @@ class UsersBook < Neo
 		puts "TIMER".green
 		clause
 	end
-	
-	def self.comment(tweet)
-		#TODO: (SATISH) comment refractoring
-		if @book_id
-			tweet_clause = _match_user_and_book(@user_id, @book_id)+" CREATE UNIQUE (u)-[:Commented]->(m:Tweet{tweet:\""+tweet[:message]+"\", timestamp:"+Time.now.to_i.to_s+", book_id: "+@book_id.to_s+", title: b.title, author_name: b.author_name, user_id: "+@user_id.to_s+", label1:\""+tweet[:label1]+"\", label2:\""+tweet[:label2]+"\", icon:\""+tweet[:icon]+"\"})-[:CommentedOn]->(b) SET m.isbn=b.isbn, m.name=u.name, m.email=u.email, m.thumb = CASE WHEN u.thumb IS NULL THEN '' ELSE u.thumb END WITH u, b, m "
-			with_clause = ", b "
-			bookfeed_clause = _bookfeed_clause(@user_id)
-			set_clause = ", b.comment_count = CASE WHEN b.comment_count IS NULL THEN 1 ELSE toInt(b.comment_count) + 1 END"
-		else
-			tweet_clause = _match_user(@user_id)+" CREATE UNIQUE (u)-[:Commented]->(m:Tweet{tweet:\""+tweet[:message]+"\", timestamp:"+Time.now.to_i.to_s+", user_id: "+@user_id.to_s+", label1:\""+tweet[:label1]+"\", label2:\""+tweet[:label2]+"\", icon:\""+tweet[:icon]+"\"}) SET m.name=u.name, m.email=u.email, m.thumb = CASE WHEN u.thumb IS NULL THEN '' ELSE u.thumb END WITH u, m "
-			with_clause = " "
-			bookfeed_clause = " "
-			set_clause = " "
-		end
-
-		
-		feednext_clause = _feednext_clause(@user_id, true)+with_clause
-		
-		existing_ego_clause = _existing_ego_clause(true)+with_clause
-
-		ego_clause = _ego_clause(true)+with_clause
-
-		set_clause = "SET u.comment_count = CASE WHEN u.comment_count IS NULL THEN 1 ELSE toInt(u.comment_count) + 1 END" + set_clause
-		
-		clause = tweet_clause + feednext_clause + bookfeed_clause + existing_ego_clause + ego_clause + set_clause
-		clause
-	end
 
 	def self.recommend(friend_id)
 		total_count = "SET u.total_count = CASE WHEN u.total_count IS NULL THEN 1 ELSE u.total_count + "+Constants::RecommendationPoints.to_s+" END "
@@ -131,14 +104,14 @@ class UsersBook < Neo
 			ORDER BY similarity_index DESC, sb.gr_rating DESC"
 	end
 
-	def self.endorse_book book_id, user_id
+	def 
+		
+	end
+
+	def endorse_book 
 		#TODO: (SATISH)  endorse book refractoring
-		@neo ||= self.neo_init
-		create_endorse_node_clause = _match_user_and_book(user_id, book_id) + " WITH u, b MERGE (u)-[:EndorseAction]->(endorse:EndorseNode{created_at: " + Time.now.to_i.to_s + ", book_id:ID(b), user_id:ID(u), updated_at:  " + Time.now.to_i.to_s + "})-[endorsed:Endorsed]->(b) WITH u, endorse, b"
-		find_old_feed_clause = " MATCH (u)-[old:FeedNext]->(old_feed)  "
-		create_new_feed_clause = " MERGE (u)-[:FeedNext{user_id:" + user_id.to_s + "}]->(endorse)-[:FeedNext{user_id:" + user_id.to_s + "}]->(old_feed) DELETE old WITH u, endorse, b "
-		find_old_book_feed_clause = " MATCH (b)-[old:BookFeed{book_id:" + book_id.to_s + "}]->(old_feed) "
-		create_new_book_feed_clause = " MERGE (b)-[:BookFeed{book_id:" + book_id.to_s + "}]->(endorse)-[:BookFeed{book_id:" + book_id.to_s + "}]->(old_feed) DELETE old WITH u, endorse, b "
+		create_endorse_node_clause = match + " WITH user, book  " + Endorse.new(@book_id, @user_id).create " WITH user, endorse, book" + User::Feed.new(@user_id).create("endorse") + Book::Feed.new(@book_id).create("endorse") + 
+
 		set_clause = "SET b.endorse_count = CASE WHEN b.endorse_count IS NULL THEN 1 ELSE toInt(b.endorse_count) + 1 END, u.total_count = CASE WHEN u.total_count IS NULL THEN "+Constants::EndorsePoints.to_s+" ELSE toInt(u.total_count) + "+Constants::EndorsePoints.to_s+" END"
 		existing_ego_clause = _existing_ego_clause
 
