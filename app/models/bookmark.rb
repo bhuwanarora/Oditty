@@ -97,7 +97,7 @@ class Bookmark < Neo
 
 	def self.add
 		operation = "+"
-		set_clause = Book.set_bookmark_count(operation) + User.set_bookmark_count(operation) + Label.set_bookmark_count(operation) + UsersLabel.set_bookmark_count(operation) + User.set_total_count_on_bookmark(operation)
+		set_clause = Book.set_bookmark_count(operation) + User.set_bookmark_count(operation) + Label.set_bookmark_count(operation) + UsersLabel.set_bookmark_count(operation) + User.set_total_count(Constants::BookmarkPoints, operation)
 
 		clause = Bookmark.create + User::Feed.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled + Book::Feed.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled + set_clause
 		puts "BOOK BOOKMARKED".green
@@ -114,7 +114,7 @@ class Bookmark < Neo
 
 	def self.remove
 		operation = "-"
-		set_clause = Book.set_bookmark_count(operation) + User.set_bookmark_count(operation) + Label.set_bookmark_count(operation) + UsersLabel.set_bookmark_count(operation) + User.set_total_count_on_bookmark(operation)
+		set_clause = Book.set_bookmark_count(operation) + User.set_bookmark_count(operation) + Label.set_bookmark_count(operation) + UsersLabel.set_bookmark_count(operation) + User.set_total_count(Constants::BookmarkPoints, operation)
 		
 		feednext_clause = User::Feed.new(@user_id).delete_feed("bookmark_node") + ", labelled, label "
 

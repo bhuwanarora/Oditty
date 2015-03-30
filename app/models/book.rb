@@ -19,10 +19,6 @@ class Book < Neo
 		" ID(book) AS book_id, book.isbn AS isbn, book.title AS title, book.author_name AS author_name, book.pages_count AS pages_count, book.published_year AS published_year, TOINT(book.total_weight) as popularity"
 	end
 
-	def self.rating
-		", rating_node.rating AS user_rating"
-	end
-
 	def self.match_genre
 		" MATCH (book)-[belongs_to:Belongs_to]->(genre:Genre) "
 	end
@@ -66,4 +62,7 @@ class Book < Neo
 		match + Book.return_init + Book.detailed_info
 	end
 
+	def self.set_endorse_count operation
+		" SET book.endorse_count = COALESCE(book.endorse_count,0) " + operation + " 1 " 
+	end
 end

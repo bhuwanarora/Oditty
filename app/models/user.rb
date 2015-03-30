@@ -8,9 +8,9 @@ class User < Neo
 		" user.bookmark_count = COALESCE(user.bookmark_count,0) " + operation + " 1 "
 	end
 
-	def set_total_count_on_bookmark operation
+	def self.set_total_count value, operation
 		" user.total_count = COALESCE(user.total_count,0) " 
-		+ operation.to_s + " "+Constants::BookmarkPoints.to_s+" "
+		+ operation.to_s + " "+value.to_s+" "
 	end
 
 	def get_detailed_info

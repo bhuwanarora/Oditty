@@ -37,13 +37,7 @@ class UsersBook < Neo
 	def rate(rating)
 		#TODO: (SATISH) rate refractoring
 		operation = "+"
-		rating_clause = match + Rating.new(@book_id, @user_id).create + Bookmark.set_rating(rating) + Bookmark.set_name + Bookmark.set_email + Bookmark.set_isbn + Bookmark.set_thumb + " WITH user, book, bookmark "
-
-		set_clause = Book.set_bookmark_count(operation) + User.set_bookmark_count(operation) + User.set_total_count_on_bookmark(operation)
-
-		clause = rating_clause + _delete_existing_feednext_clause(@user_id) + _feednext_clause(@user_id) + _bookfeed_clause(@user_id) + _existing_ego_clause + _ego_clause + set_clause
 		puts "RATE".green
-		clause
 		#update mark as read cache for the book
 		#update popularity index for the book
 		#update popularity index for the author
@@ -53,6 +47,7 @@ class UsersBook < Neo
 
 		#update news feed for the book
 		#update news feed for the user
+		match + Rating.new(@book_id, @user_id).create + Rating.set_rating(rating) + Rating.set_name + Rating.set_email + Rating.set_isbn + Rating.set_thumb + " WITH user, book, bookmark " + Book.set_bookmark_count(operation) + User.set_total_count(operation) + User::Feed.new(@user_id).create("rating_node") + Book::Feed.new(@book_id).create("rating_node") 
 	end
 
 	def self.record_time(time)
@@ -103,48 +98,4 @@ class UsersBook < Neo
 			LIMIT 5 
 			ORDER BY similarity_index DESC, sb.gr_rating DESC"
 	end
-
-	def 
-		
-	end
-
-	def endorse_book 
-		#TODO: (SATISH)  endorse book refractoring
-		create_endorse_node_clause = match + " WITH user, book  " + Endorse.new(@book_id, @user_id).create " WITH user, endorse, book" + User::Feed.new(@user_id).create("endorse") + Book::Feed.new(@book_id).create("endorse") + 
-
-		set_clause = "SET b.endorse_count = CASE WHEN b.endorse_count IS NULL THEN 1 ELSE toInt(b.endorse_count) + 1 END, u.total_count = CASE WHEN u.total_count IS NULL THEN "+Constants::EndorsePoints.to_s+" ELSE toInt(u.total_count) + "+Constants::EndorsePoints.to_s+" END"
-		existing_ego_clause = _existing_ego_clause
-
-		ego_clause = _ego_clause 
-
-		clause = create_endorse_node_clause + find_old_feed_clause + create_new_feed_clause + find_old_book_feed_clause + create_new_book_feed_clause + existing_ego_clause + ego_clause + set_clause
-		puts "ENDORSE".green
-		@neo.execute_query(clause)
-
-	end
-
-	def self.remove_endorse book_id, user_id
-		#TODO: (SATISH) remove endorse refractoring
-		@neo ||= self.neo_init
-		# delete mark as read relation
-		remove_endorse_clause = _match_user_and_book(user_id, book_id)+" WITH u, b MATCH (u)-[r1:EndorseAction]->(m:EndorseNode)-[r2:Endorsed]->(b) DELETE r1, r2 WITH u, b, m "
-
-		#delete feed relation
-		feednext_clause = _delete_feed_clause(user_id)
-
-		#delete book feed relation
-		bookfeed_clause = _delete_book_clause(user_id)
-
-		delete_node = " DELETE m WITH u, b "
-
-		#update book and user properties
-		book_readers_count = "SET b.endorse_count = CASE WHEN b.endorse_count IS NULL THEN 0 ELSE toInt(b.endorse_count) - 1 END, "
-		user_total_count = "u.total_count = CASE WHEN u.total_count IS NULL THEN 0 ELSE toInt(u.total_count) - "+Constants::EndorsePoints.to_s+" END"
-
-		clause = remove_endorse_clause + feednext_clause + bookfeed_clause + delete_node + book_readers_count + user_total_count
-		
-		puts "REMOVE ENDORSE".green
-		@neo.execute_query(clause)
-	end
-
 end
