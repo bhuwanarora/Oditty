@@ -78,6 +78,7 @@ ReadersDoor::Application.routes.draw do
   get 'profile'                    => "website#profile",           :as => "profile"
   get 'room'                      => "website#room",             :as => "room"
   get 'book'                      => "website#book",             :as => "dev_book"
+  # get ':book/:id'                      => "website#book",             :as => "specific_book"
   get 'network'                   => "website#network",             :as => "network"
   get 'journey'                   => "website#journey",             :as => "journey"
   get 'customise'                 => "website#customise",             :as => "customise"

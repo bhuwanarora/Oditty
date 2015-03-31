@@ -12,6 +12,29 @@ module Api
 				end
 			end
 
+			def news_info
+				#TODO: (SATISH)
+				# id = params[:id]
+				# Article::News.new(id)
+				# {
+					# 	"most_important_tag": {
+					# 		"name", "importance", "view_count", "news_count", "id",
+					# 		"books"-->"basic_info", "users"-->"basic_info"
+					# 	},
+					# 	"other_tags": [
+					# 		{
+					# 			"name", "importance", "view_count", "news_count", "id"
+					# 		}
+					# 	],
+					#  	"more_news": [
+					#  		{
+					#  			"id", "most_important_tag", "timestamp"
+					#  		}
+						#SIX NEWS: Three news prior to this, three after 
+					#  	]
+				# }
+			end
+
 			def add_label
 				user_id = session[:user_id]
 				UsersLabel.create(user_id, params[:label]).execute

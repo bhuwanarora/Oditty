@@ -4,17 +4,20 @@ class User < Neo
 		@id = user_id
 	end
 
-	def set_bookmark_count operation
-		" user.bookmark_count = COALESCE(user.bookmark_count,0) " + operation + " 1 "
+	def self.set_bookmark_count operation
+		" SET user.bookmark_count = COALESCE(user.bookmark_count,0) " + operation + " 1 "
 	end
 
-	def set_total_count_on_bookmark operation
-		" user.total_count = COALESCE(user.total_count,0) " 
-		+ operation.to_s + " "+Constants::BookmarkPoints.to_s+" "
+	def self.set_rating_count operation
+		" SET user.rating_count = COALESCE(user.rating_count,0) " + operation + " 1 "
+	end
+
+	def self.set_total_count value, operation
+		" SET user.total_count = COALESCE(user.total_count,0) " + operation.to_s + " " + value.to_s + " "
 	end
 
 	def get_detailed_info
-		match + User.match_likeable_root_category + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + return_group(User.basic_info, "COLLECT(DISTINCT(root_category.name)) AS categories_name", "COLLECT(DISTINCT(ID(root_category))) AS categories_id", "COLLECT(root_category.aws_key) AS categories_aws_key", "COLLECT(DISTINCT(book.isbn)) AS books_isbn", "COLLECT(DISTINCT(ID(book))) AS books_id", "COLLECT(DISTINCT(book.title)) AS books_title", "COLLECT(DISTINCT(book.author_name)) AS books_author_name")
+		match + User.match_likeable_root_category + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + User.return_group(User.basic_info, "COLLECT(DISTINCT(root_category.name)) AS categories_name", "COLLECT(DISTINCT(ID(root_category))) AS categories_id", "COLLECT(root_category.aws_key) AS categories_aws_key", "COLLECT(DISTINCT(book.isbn)) AS books_isbn", "COLLECT(DISTINCT(ID(book))) AS books_id", "COLLECT(DISTINCT(book.title)) AS books_title", "COLLECT(DISTINCT(book.author_name)) AS books_author_name")
 	end
 
 	def get_basic_info

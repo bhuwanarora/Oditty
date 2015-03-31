@@ -36,6 +36,5 @@ class Infinity < Neo
 
 		clause = clause + with_clause
 		
-
 	end
 end

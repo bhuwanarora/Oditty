@@ -4,8 +4,12 @@ class Author < Neo
 		@id = author_id
 	end
 
-	def get_books
-		" MATCH (author)-[:Wrote]-(book:Book) WHERE ID(author) = " + @id.to_s + " "
+	def match node_variable="author"
+		" MATCH ("+node_variable+": Author) WHERE ID("+node_variable+")="+@id.to_s+" WITH "+node_variable+" "
+	end
+
+	def books
+		" MATCH (author)-[:Wrote]->(book:Book) WITH book, author "
 	end
 
 	def self.remove
@@ -27,7 +31,7 @@ class Author < Neo
 	end
 
 	def self.basic_info
-		" author.name AS name, author.id AS id "
+		" author.name AS name, author.id AS id, author.wiki_url AS wiki_url, author.overview as overview "
 	end
 
 	def self.get_favourites skip_count=0
@@ -42,4 +46,9 @@ class Author < Neo
 		end
 		" OPTIONAL MATCH (" + author_node + ")" + "-[:Wrote]->(" + book + ")"
 	end
+
+	def get_details
+		match + books + Author.return_group(Author.basic_info, Book.detailed_info) + Author.limit(10)
+	end
+
 end

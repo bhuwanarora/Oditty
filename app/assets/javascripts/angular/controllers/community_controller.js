@@ -11,13 +11,6 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", function($sco
     _init = function(){
         $scope.show_details = false;
 
-        $scope.d3Data = [
-            {name: "Greg", score: 98},
-            {name: "Ari", score: 96},
-            {name: 'Q', score: 75},
-            {name: "Loser", score: 48}
-        ];
-
         $scope.electionData = [
             {text: "MODI", count: "236"},
             {text: "KEJRIWAL", count: "382"},

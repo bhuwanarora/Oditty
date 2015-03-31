@@ -119,16 +119,18 @@ module Api
 			end
 
 			def self.get_book_details(id, user_id=nil)
-				book = BooksGraphHelper.get_details(id, user_id)
+				book = UsersBook.new(id, user_id).get_basic_details.execute[0]
 				if user_id
 					structured_labels = []
-					for label in book["labels"]
-						if book["selected_labels"].include? label
-							json = {"name" => label, "checked" => true}
-						else
-							json = {"name" => label, "checked" => false}
+					if book["labels"]
+						for label in book["labels"]
+							if book["selected_labels"].include? label
+								json = {"name" => label, "checked" => true}
+							else
+								json = {"name" => label, "checked" => false}
+							end
+							structured_labels.push json
 						end
-						structured_labels.push json
 					end
 
 					friends_who_have_read = []

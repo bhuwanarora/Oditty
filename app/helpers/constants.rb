@@ -7,7 +7,8 @@ module Constants
 	ReadTimePoints				= 10
 	ThumbSuggest				= 10
 	RecommendationPoints		= 10
-
+	QueryStepDuringLinking		= 1000
+	
 	if Rails.env.development?
 		Admin						= 0
 		BestTinyRead				= 395910 #"thelosthero"
@@ -99,4 +100,6 @@ module Constants
 	PlanningToBuyStatusCode     = 0
 	PlanningToLendStatusCode	= 1
 	PlanningToBorrowStatusCode  = 2
+	EndorsePoints 				= 10
+	
 end
