@@ -7,7 +7,7 @@ class Book < Neo
 		" MATCH (book:Book)-[:BookFeed*0..]->(news_feed) WHERE ID(book) = " + @id.to_s + " RETURN labels(news_feed), news_feed "
 	end
 
-	def set_bookmark_count operation
+	def self.set_bookmark_count operation
 		" SET book.bookmark_count = COALESCE(book.bookmark_count,0) " + operation.to_s + " 1 "
 	end
 
@@ -17,10 +17,6 @@ class Book < Neo
 
 	def self.basic_info
 		" ID(book) AS book_id, book.isbn AS isbn, book.title AS title, book.author_name AS author_name, book.pages_count AS pages_count, book.published_year AS published_year, TOINT(book.total_weight) as popularity"
-	end
-
-	def self.rating
-		", rating_node.rating AS user_rating"
 	end
 
 	def self.match_genre
@@ -66,4 +62,11 @@ class Book < Neo
 		match + Book.return_init + Book.detailed_info
 	end
 
+	def self.set_endorse_count operation
+		" SET book.endorse_count = COALESCE(book.endorse_count,0) " + operation + " 1 " 
+	end
+
+	def self.set_rating_count operation
+		" SET book.rating_count = COALESCE(book.rating_count,0) " + operation + " 1 "
+	end
 end

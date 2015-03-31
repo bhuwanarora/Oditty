@@ -165,7 +165,7 @@ module Api
 				user_id = session[:user_id]
 				book_id = params[:id]
 				rating = params[:data]
-				UsersGraphHelper.rate_book(user_id, book_id, rating)
+				Api::V0::UserApi.rate_book(book_id, user_id, rating).execute
 				render :json => {:message => "Success"}, :status => 200
 			end
 
@@ -314,11 +314,11 @@ module Api
 			def endorse_book
 				user_id = session[:user_id]
 				book_id = params[:id]
-				status = params[:status]
-				if status == "true"
-					UsersGraphHelper.endorse_book(book_id, user_id)
+				status =  params[:status]
+				if status 
+					Api::V0::UserApi.endorse_book(book_id, user_id).execute
 				else
-					UsersGraphHelper.remove_endorse(book_id, user_id)
+					Api::V0::UserApi.remove_endorse(book_id, user_id).execute
 				end
 				render :json => {:message => "Success"}, :status => 200
 			end

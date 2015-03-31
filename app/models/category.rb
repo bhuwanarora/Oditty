@@ -19,5 +19,4 @@ class Category < Neo
 	def self.get_books_for_user label="category", skip, length
 		" MATCH (" + label + ")-[next_in_category:NextInCategory*" + skip.to_s + "]->(book:Book) WITH book, "+label+", user MATCH path = (book)-[next_in_category:NextInCategory*" + length.to_s + "]->(category_book:Book) WHERE ALL(relation IN relationships(path) WHERE relation.uuid = "+label+".uuid) WITH "+label+", user, EXTRACT(n in nodes(path)|n) AS books UNWIND books AS book "
 	end
-
 end
