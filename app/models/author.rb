@@ -44,7 +44,7 @@ class Author < Neo
 	end
 
 	def get_details
-		match + books + Author.return_group(Author.basic_info, Book.basic_info)
+		match + books + Author.return_group(Author.basic_info, Book.detailed_info) + Author.limit(10)
 	end
 
 end
