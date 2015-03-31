@@ -1,7 +1,7 @@
-class Infinity::FilterEra < Infinity
+class Infinity::FilterCategory < Infinity
 	def initialize id
+		@category = Category.new(id)
 		@id = id
-		@era = Era.new(id)
 	end
 
 	def match(book_label_defined)
@@ -10,6 +10,6 @@ class Infinity::FilterEra < Infinity
 		else
 			define_book_label_clause = " AND book :Book "
 		end
-		@era.books + define_book_label_clause + " "
+		@category.books + define_book_label_clause + " "
 	end
 end

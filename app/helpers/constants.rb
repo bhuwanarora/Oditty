@@ -101,5 +101,9 @@ module Constants
 	PlanningToLendStatusCode	= 1
 	PlanningToBorrowStatusCode  = 2
 	EndorsePoints 				= 10
-	
+	TinyReadValue	 			= 0
+	SmallReadValue	 			= 1
+	NormalReadValue	 			= 2
+	LongReadValue	 			= 3
+	BookShownInInfinty          = 10
 end

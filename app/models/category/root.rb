@@ -4,15 +4,15 @@ class Category::Root < Category
 		super("root_category")
 	end
 
-	def self.get_books skip, length
+	def self.books skip, length
 		super("root_category", skip, length)
 	end
 
-	def self.get_books_for_user skip, length
+	def self.books_for_user skip, length
 		super("root_category", skip, length)
 	end
 
 	def self.get_all
-		" MATCH (root_category:Category{is_root:true}) " + self.basic_info
+		" MATCH (root_category:Category{is_root:true}) " + Category::Root.return_group(self.basic_info)
 	end
 end

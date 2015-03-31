@@ -38,13 +38,13 @@ class Author < Neo
 		skip(skip_count) +  limit(Constants::FollowFavoriteAuthorsCount) + return_init + Author.basic_info
 	end
 
-	def self.match_path name, book, label_defined=false
-		if label_defined
-			author_node =  name 
+	def self.books book="book", label_defined=false
+		unless label_defined
+			where_clause = " WHERE author :Author"
 		else
-			author_node = name.downcase + ":" + name.camelcase
+			where_clause =  "" 
 		end
-		" OPTIONAL MATCH (" + author_node + ")" + "-[:Wrote]->(" + book + ")"
+		" MATCH (" + name + ")" + "-[:Wrote]->(" + book + ") " + where_clause
 	end
 
 	def get_details
