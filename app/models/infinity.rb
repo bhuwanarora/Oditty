@@ -1,11 +1,11 @@
 class Infinity < Neo
 
-	def initialize category_id, author_id, reading_time, era_id, skip_count
-		@category_id = category_id
-		@author_id = author_id
-		@reading_time = reading_time
-		@era_id = era_id
-		@skip_count = skip_count
+	def initialize filters
+		@category_id = filters["category_id"]
+		@author_id = filters["author_id"]
+		@reading_time = filters["reading_time"]
+		@era_id = filters["era_id"]
+		@skip_count = filters["skip_count"]
 	end
 
 	def get_books
