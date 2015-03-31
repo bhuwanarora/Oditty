@@ -8,7 +8,7 @@ class Status::StatusType < Status
 		Status::Mention::Book.new(@book_id, @user_id).create + " SET status  :" + reading_status + " "   
 	end
 
-	def handle reading_status_value 
+	def create_for reading_status_value 
 		clause = ""
 		unless reading_status_value.nil?
 			case reading_status_value

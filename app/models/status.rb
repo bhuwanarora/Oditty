@@ -17,7 +17,7 @@ class Status < Neo
 	end
 
 	def create 
-			@user.match + Status.merge_group(create_path) + " WITH status " + Status::StatusType.new(@book_id, @user_id).handle(@reading_status_value)  + " WITH status " + Status::Mention::MentionsUser.create_group(@mentioned_users_ids, @user_id) + Status::Mention::MentionsAuthor.create_group(@mentioned_authors_ids, @user_id)  + Hashtag.create_group(@hash_tags, @user_id) + Status::Feeling.create_group(@feelings, @user_id) + " WITH status " + Status::BookExchangeStatusType.new(@book_id, @user_id).handle(@book_exchange_status) + Status.return_init + Status.basic_info 
+			@user.match + Status.merge_group(create_path) + " WITH status " + Status::StatusType.new(@book_id, @user_id).create_for(@reading_status_value)  + " WITH status " + Status::Mention::MentionsUser.create_group(@mentioned_users_ids, @user_id) + Status::Mention::MentionsAuthor.create_group(@mentioned_authors_ids, @user_id)  + Hashtag.create_group(@hash_tags, @user_id) + Status::Feeling.create_group(@feelings, @user_id) + " WITH status " + Status::BookExchangeStatusType.new(@book_id, @user_id).create_for(@book_exchange_status) + Status.return_init + Status.basic_info 
 	end
 
 	def create_path 
