@@ -4,7 +4,7 @@ class Author < Neo
 		@id = author_id
 	end
 
-	def self.get_books
+	def get_books
 		" MATCH (author)-[:Wrote]-(book:Book) WHERE ID(author) = " + @id.to_s + " "
 	end
 

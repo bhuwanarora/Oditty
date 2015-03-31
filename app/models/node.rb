@@ -65,7 +65,7 @@ class Node
 			descend_level_count += 1
 		end			
 		" MATCH (latest_feed)-[:RightChild|LeftChild*" + start_level.to_s + "{user_id:" + @user_id.to_s + "}]-(feed)-[:RightChild|LeftChild*1.." + descend_level_count.to_s + "{user_id:" + @user_id.to_s + "}]-(older_feed)
-		" + Neo.return_init + " older_feed " + Neo.skip(skip_count - 2**start_level) + Neo.limit(Constants::FeedFetchCount)	+ Neo.order_init + " older_feed.priority "
+		" + Node.return_init + " older_feed " + Node.skip(skip_count - 2**start_level) + Node.limit(Constants::FeedFetchCount)	+ Node.order_init + " older_feed.priority "
 	end
 
 	def replace_node

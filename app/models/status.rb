@@ -17,7 +17,7 @@ class Status < Neo
 	end
 
 	def create 
-			@user.match + Neo.merge_group(create_path) + " WITH status " + _get_reading_status_clause + " WITH status " + _get_mentioned_users_clauses + _get_mentioned_authors_clauses  + _get_hashtagged_clauses + _get_feelings_clauses + " WITH status " + _get_book_exchange_status_clause  + Neo.return_init + " status "
+			@user.match + Status.merge_group(create_path) + " WITH status " + _get_reading_status_clause + " WITH status " + _get_mentioned_users_clauses + _get_mentioned_authors_clauses  + _get_hashtagged_clauses + _get_feelings_clauses + " WITH status " + _get_book_exchange_status_clause  + Status.return_init + Status.basic_info 
 	end
 
 	def create_path 
@@ -32,69 +32,74 @@ class Status < Neo
 		" SET " + node_variable + ".book_id = " + @book_id.to_s
 	end
 
+	def self.basic_info
+		" status.user_id AS updated_by, status.content AS status  "
+	end
+
+	private
 
 	def _get_book_exchange_status_clause 
 		unless @book_exchange_status.nil?
 			
 			case @book_exchange_status
 			when Constants::PlanningToBuyStatusCode
-				set_book_exchange_status = Status::BookExchangeStatusType::PlanningToBuy.new(@book_id, @user_id).create
+				clause = Status::BookExchangeStatusType::PlanningToBuy.new(@book_id, @user_id).create
 			when Constants::PlanningToLendStatusCode
-				set_book_exchange_status = Status::BookExchangeStatusType::PlanningToLend.new(@book_id, @user_id).create
+				clause = Status::BookExchangeStatusType::PlanningToLend.new(@book_id, @user_id).create
 			when Constants::PlanningToBorrowStatusCode
-				set_book_exchange_status = Status::BookExchangeStatusType::PlanningToBorrow.new(@book_id, @user_id).create
+				clause = Status::BookExchangeStatusType::PlanningToBorrow.new(@book_id, @user_id).create
 			end
 		else
-			set_book_exchange_status = ""
+			clause = ""
 		end
-		set_book_exchange_status
+		clause
 	end
 
 	def _get_reading_status_clause
-		set_reading_status = ""
+		clause = ""
 		unless @reading_status_value.nil?
 			case @reading_status_value
 			when Constants::PlanningToReadStatusCode
-				set_reading_status = Status::StatusType::PlanningToRead.new(@book_id, @user_id).create
+				clause = Status::StatusType::PlanningToRead.new(@book_id, @user_id).create
 			when Constants::CurrentlyReadingStatusCode
-				set_reading_status = Status::StatusType::CurrentlyReading.new(@book_id, @user_id).create
+				clause = Status::StatusType::CurrentlyReading.new(@book_id, @user_id).create
 			when Constants::ReadStatusCode
-				set_reading_status = Status::StatusType::Read.new(@book_id, @user_id).create
+				clause = Status::StatusType::Read.new(@book_id, @user_id).create
 			end
 		end 
-		set_reading_status
+		clause
 	end
 
 	def _get_feelings_clauses 
-		feelings_clauses = ""
+		clause = ""
 		unless @feelings.nil?
-			@feelings.each{|feeling| feelings_clauses +=  " WITH status " + Status::Feeling.new(feeling, @user_id).create}
-			feelings_clauses
+			@feelings.each{|feeling| clause +=  " WITH status " + Status::Feeling.new(feeling, @user_id).create}
+			clause
 		end
-		feelings_clauses
+		clause
 	end
 
 	def _get_mentioned_users_clauses
-		mentioned_users_clauses = ""
+		clause = ""
 		unless @mentioned_users_ids.nil?
-			@mentioned_users_ids.each{|mentioned_user_id| mentioned_users_clauses += Status::Mention::MentionsUser.new(mentioned_user_id, @user_id).create}
+			@mentioned_users_ids.each{|mentioned_user_id| clause += Status::Mention::MentionsUser.new(mentioned_user_id, @user_id).create}
 		end
-		mentioned_users_clauses
+		clause
 	end
 
 	def _get_mentioned_authors_clauses 
-		mentioned_authors_clauses = ""
+		clause = ""
 		unless @mentioned_authors_ids.nil?
-			@mentioned_authors_ids.each{|mentioned_author_id| mentioned_authors_clauses += Status::Mention::MentionsAuthor.new(mentioned_author_id, @user_id).create}
+			@mentioned_authors_ids.each{|mentioned_author_id| clause += Status::Mention::MentionsAuthor.new(mentioned_author_id, @user_id).create}
 		end
-		mentioned_authors_clauses
+		clause
 	end
 
 	def _get_hashtagged_clauses 
-		hashtagged_clauses = ""
+		clause = ""
 		unless @hash_tags.nil?
-			@hash_tags.each{|hash_tag| hashtagged_clauses += " WITH status " + Hashtag.new(hash_tag, @user_id).create}
+			@hash_tags.each{|hash_tag| clause += " WITH status " + Hashtag.new(hash_tag, @user_id).create}
 		end
-		hashtagged_clauses
+		clause
 	end
 end
