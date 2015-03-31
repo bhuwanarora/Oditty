@@ -4,13 +4,16 @@ class User < Neo
 		@id = user_id
 	end
 
-	def set_bookmark_count operation
-		" user.bookmark_count = COALESCE(user.bookmark_count,0) " + operation + " 1 "
+	def self.set_bookmark_count operation
+		" SET user.bookmark_count = COALESCE(user.bookmark_count,0) " + operation + " 1 "
 	end
 
-	def set_total_count_on_bookmark operation
-		" user.total_count = COALESCE(user.total_count,0) " 
-		+ operation.to_s + " "+Constants::BookmarkPoints.to_s+" "
+	def self.set_rating_count operation
+		" SET user.rating_count = COALESCE(user.rating_count,0) " + operation + " 1 "
+	end
+
+	def self.set_total_count value, operation
+		" SET user.total_count = COALESCE(user.total_count,0) " + operation.to_s + " " + value.to_s + " "
 	end
 
 	def get_detailed_info
