@@ -20,7 +20,6 @@ homeApp.directive('setFocus', ["$timeout", "$parse", "$rootScope", function($tim
 homeApp.directive('rdSticky', ["$timeout", "$parse", "$rootScope", "$document", function($timeout, $parse, $rootScope, $document){
   return {
     link: function(scope, element, attrs) {
-        debugger
         var elem = element[0];
         var position = elem.scrollTop;
         $document.bind('scroll', function(){

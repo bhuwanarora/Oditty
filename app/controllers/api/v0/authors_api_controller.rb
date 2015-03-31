@@ -40,7 +40,6 @@ module Api
 				render :json => info, :status => 200
 			end
 
-
 		end
 	end
 end

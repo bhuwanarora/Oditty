@@ -2,6 +2,8 @@ module Api
 	module V0
 		class AuthorApi
 			def self.get_author_details_for_book book_id
+				#TODO: SATISH
+				
 				@neo = Neography::Rest.new
 				clause = "MATCH (book:Book)<-[:Wrote]-(author:Author) WHERE ID(book)="+book_id.to_s+" WITH book, author MATCH (author)-[:Wrote]->(b:Book) RETURN author.about, author.image_url, author.signature_pic, ID(author), COLLECT(ID(b)), COLLECT(b.isbn)"
 				puts clause.blue.on_red
