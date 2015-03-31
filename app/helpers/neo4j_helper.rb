@@ -1136,7 +1136,7 @@ module Neo4jHelper
 		most_popular_book_id = Constants::BestBook.to_i
 		starting_book_id = Constants::BestBook.to_i
 		maximum_popular_book_occurence_count = 0
-		clause = "MATCH (c:Category{is_root: true}) WITH c CREATE UNIQUE (c)-[:NextInCategory{from_category:ID(c)}]->(c)"
+		clause = "MATCH (category:Category{is_root: true}) WITH category MERGE (category)-[:NextInCategory{from_category:category.uuid}]->(category)"
 		clause.execute
 		while maximum_popular_book_occurence_count < 2
 			match_clause = " MATCH popularity_list = (book:Book)-[:Next_book*" + Constants::QueryStepDuringLinking.to_s + "]->(next_book) WHERE ID(book) = " + starting_book_id.to_s 
