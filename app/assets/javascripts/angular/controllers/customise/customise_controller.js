@@ -71,10 +71,8 @@ homeApp.controller('customiseController', ["$scope", "$rootScope", "$timeout", '
             }
             else{
                 if($scope.data.selectedIndex == 0){
-                    debugger
                 }
                 else if($scope.data.selectedIndex == 1){
-                    debugger
                     _check_selected_genres_count();
                 }
                 else if($scope.data.selectedIndex == 2){
