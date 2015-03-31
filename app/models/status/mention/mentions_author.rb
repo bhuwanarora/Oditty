@@ -9,7 +9,7 @@ class Status::Mention::MentionsAuthor < Status::Mention
 		@author.match(@node_variable) + ", status " + Status::Mention.new(@user_id).create(@node_variable)
 	end
 
-	def self.handle authors , user_id
+	def self.create_group authors , user_id
 		clause = ""
 		unless authors.nil?
 			authors.each{|author| clause += Status::Mention::MentionsAuthor.new(author, user_id).create}

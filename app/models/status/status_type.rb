@@ -2,13 +2,10 @@ class Status::StatusType < Status
 	def initialize book_id, user_id
 		@user_id = user_id
 		@book_id = book_id
-		@user = User.new(user_id)
-		@book = Book.new(book_id)
-		@node_variable = "book"
 	end
 
 	def create reading_status
-		@book.match + " , status" + Status::Mention.new(@user_id).create(@node_variable) + " SET status  :" + reading_status + " "   
+		Status::Mention::Book.new(@book_id, @user_id).create + " SET status  :" + reading_status + " "   
 	end
 
 	def handle reading_status_value 
