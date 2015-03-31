@@ -26,7 +26,9 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
     var _init = function(){
         // $scope.$location = $location;
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
-        var id = regex.exec($location.absUrl())[2];
+        if(regex.exec($location.absUrl()) != null){
+            var id = regex.exec($location.absUrl())[2];
+        }
         if(angular.isDefined(id)){
             var book_id = id;   
         }

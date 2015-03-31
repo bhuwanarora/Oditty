@@ -37,7 +37,7 @@ class User::Info < User
 	end
 
 	def self.set_date_of_birth selected_year, selected_month, selected_day
-		" SET user.selectedYear="+selectedYear.to_s+", user.selectedMonth=\""+selectedMonth.to_s+"\", user.selectedDay="+selectedDay.to_s+" "
+		" SET user.selectedYear="+selected_year.to_s+", user.selectedMonth=\""+selected_month.to_s+"\", user.selectedDay="+selected_day.to_s+" "
 	end
 
 	def self.set_profile type
