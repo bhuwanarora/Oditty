@@ -8,6 +8,18 @@ class User < Neo
 		" SET user.bookmark_count = COALESCE(user.bookmark_count,0) " + operation + " 1 "
 	end
 
+	def optional_match_books_bookmarked
+		" OPTIONAL MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book:Book) WITH user, label, bookmarked_on, bookmark_node, bookmark_action, book "
+	end
+
+	def authors_of_books_bookmarked
+		optional_match_books_bookmarked + Author.match_books + ", user "
+	end
+
+	def favourite_author
+		optional_match_books_bookmarked + Author.match_books + ", user, COUNT(book) as books_count " 
+	end
+
 	def self.set_rating_count operation
 		" SET user.rating_count = COALESCE(user.rating_count,0) " + operation + " 1 "
 	end

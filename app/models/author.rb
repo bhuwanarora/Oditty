@@ -8,8 +8,12 @@ class Author < Neo
 		" MATCH ("+node_variable+": Author) WHERE ID("+node_variable+")="+@id.to_s+" WITH "+node_variable+" "
 	end
 
-	def books
+	def match_books
 		" MATCH (author)-[:Wrote]->(book:Book) WITH book, author "
+	end
+
+	def self.match_books
+		" MATCH (author:Author)-[:Wrote]->(book:Book) WITH book, author "
 	end
 
 	def self.remove

@@ -1,20 +1,4 @@
 class Bookmark < Neo
-	# Read 										= "Read"
-	# IntendingToRead 							= "IntendingToRead"
-	# DidntFeelLikeReadingItAfterAPoint 		= "DidntFeelLikeReadingItAfterAPoint"
-	# PretendIHaveRead 							= "PretendIHaveRead"
-	# SavingForWhenIHaveMoreTime 				= "SavingForWhenIHaveMoreTime"
-	# WillNeverRead 							= "WillNeverRead"
-	# PurelyForShow 							= "PurelyForShow"
-	# ReadButCantRememberASingleThingAboutIt 	= "ReadButCantRememberASingleThingAboutIt"
-	# WishIHadntRead 							= "WishIHadntRead"
-	# CurrentlyReading 							= "CurrentlyReading"
-	# HaveLeftAMarkOnMe 						= "HaveLeftAMarkOnMe"
-	# NotWorthReading 							= "NotWorthReading"
-	# FromFacebook 								= "FromFacebook"
-	# PlanToBuy 								= "PlanToBuy"
-	# IOwnthis 									= "IOwnthis"
-	# Visited 									= "Visited"
 
 	def initialize(user_id, id, book_id, key)
 		@user_id = user_id
@@ -129,16 +113,6 @@ class Bookmark < Neo
 		clause = match_user_to_books_clause + match_user_to_category_clause + set_likeability_index_clause							
 		
 		set_favourite_clause = ", likes_category.favourite = true"
-		# case @key
-		# when Constants::BookLeftAMarkOnYouUpcase 
-		# 	clause = update_root_category_likes_clause + set_favourite_clause
-		# when Constants::FromFacebookUpcase 
-		# 	clause = update_root_category_likes_clause
-		# when Constants::MarkAsReadUpcase 
-		# 	clause = update_root_category_likes_clause
-		# else
-		# 	clause = ""
-		# end
 		clause	
 	end
 
