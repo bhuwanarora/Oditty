@@ -22,6 +22,6 @@ class User::Suggest::BookSuggestion < User::Suggest
 	end
 
 	def self.get_popular_books skip_count, user_id
-		::Book.new(Constants::BestBook).match + " AS best_book MATCH (best_book)-[:Next_book*" + skip_count.to_s + "]->(book) WITH book " + ::Book.match_path("Next_book",Constants::PopularBooksShownCount) + " WITH " +  self.extract("books") + self.unwind("books") + self.return_init + ::Book.detailed_info 
+		::Book.new(Constants::BestBook).match + " AS best_book MATCH (best_book)-[:Next_book*" + skip_count.to_s + "]->(book) WITH book " + ::Book.match_path("Next_book",Constants::PopularBooksShownCount) + " WITH " +  self.extract("books") + self.unwind("books") + UsersBook.optional_match_mark_as_read + "WHERE ID(user) = " + user_id.to_s + UsersBook.optional_match_rating + " WITH user, book, bookmark_node, rating_node " + Book.match_root_category + self.return_group(Book.detailed_info, Bookmark.basic_info, Rating.basic_info,  Category.basic_info("root_category"))
 	end
 end

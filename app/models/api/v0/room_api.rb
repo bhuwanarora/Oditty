@@ -11,15 +11,15 @@ module Api
 				self.set_dominant_color books
 			end
 
-			def self.get_articles_from_public_shelves
+			def self.get_articles_from_public_shelves user_id
 				books = User::Room.new(user_id).get_books_from_public_shelves.execute
 			end
 
-			def self.get_visited_articles
+			def self.get_visited_articles user_id
 				articles = User::Room.new(user_id).get_visited_articles.execute
 			end
 
-			def self.set_dominant_color
+			def self.set_dominant_color books
 				threads = [] 
 				books.each do |book|
 					threads << Thread.new(book){|book| book["dominant_color"] = Book::Photo.get_dominant_color(book["isbn"])}

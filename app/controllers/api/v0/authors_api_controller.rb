@@ -14,10 +14,10 @@ module Api
 				render :json => info, :status => status
 			end
 
-			def get_author_details
+			def get_details
 				author_id = params[:id]
 				if author_id
-					info = Api::V0::AuthorApi.get_author_details author_id
+					info = Api::V0::AuthorApi.get_details author_id
 					status = 200
 				else
 					info = {:message => "Invalid Request"}

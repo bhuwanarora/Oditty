@@ -11,8 +11,8 @@ class Book < Neo
 		" SET book.bookmark_count = COALESCE(book.bookmark_count,0) " + operation.to_s + " 1 "
 	end
 
-	def match
-		" MATCH (book:Book) WHERE ID(book)=" + @id.to_s + " WITH book "
+	def match node_variable="book"
+		" MATCH ("+ node_variable + ":Book) WHERE ID("+ node_variable + ")=" + @id.to_s + " WITH "+ node_variable + " "
 	end
 
 	def self.basic_info

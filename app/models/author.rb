@@ -22,6 +22,10 @@ class Author < Neo
 		" MATCH (author:Author :ActiveAuthor) WITH author "
 	end
 
+	def match node_variable="author"
+		" MATCH (" + node_variable + ":Author) WHERE ID(" + node_variable + ") = " + @id.to_s + " WITH " + node_variable + " "
+	end
+
 	def order_desc
 		" ORDER BY author.priority DESC "
 	end
@@ -44,7 +48,7 @@ class Author < Neo
 	end
 
 	def get_details
-		match + books + Author.return_group(Author.basic_info, Book.basic_info)
+		match + books + Author.return_group(Author.basic_info, Book.detailed_info) + Author.limit(10)
 	end
 
 end

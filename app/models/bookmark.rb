@@ -142,4 +142,7 @@ class Bookmark < Neo
 		clause	
 	end
 
+	def self.basic_info
+		" ID(bookmark_node) AS status , bookmark_node.name AS bookmarked_by, bookmark.timestamp AS bookmarked_on "
+	end
 end

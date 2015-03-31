@@ -16,8 +16,13 @@ module Api
 				# end
 			end
 
-			def self.get_author_details author_id
-				info = Author.new(author_id).get_details.execute
+			def self.get_details author_id
+				data = Author.new(author_id).get_details.execute
+				books = data
+				name = data[0]["author_name"] rescue ""
+				overview = data[0]["overview"] rescue ""
+				wiki_url = data[0]["wiki_url"] rescue ""
+				info = {:books => books, :name => name, :id => author_id, :overview => overview, :wiki_url => wiki_url}
 				info
 			end
 

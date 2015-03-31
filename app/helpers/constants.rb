@@ -89,11 +89,17 @@ module Constants
 	RelevantSocialTagValue      = 1
 	RecommendationBookCount 	= 10
 	FollowFavoriteAuthorsCount  = 30 
-	QueryStepDuringSorting      = 1000
+	QueryStepDuringLinking      = 1000
 	ArticlesShownInRoomCount    = 10
 	BooksShownInRoomCount       = 10
 	PopularBooksShownCount      = 30
 	FeedFetchCount				= 4 
+	PlanningToReadStatusCode	= 0
+	CurrentlyReadingStatusCode  = 1
+	ReadStatusCode 				= 2
+	PlanningToBuyStatusCode     = 0
+	PlanningToLendStatusCode	= 1
+	PlanningToBorrowStatusCode  = 2
 	EndorsePoints 				= 10
-	RatingPoints				= 10
+	
 end
