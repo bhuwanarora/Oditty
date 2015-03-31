@@ -7,7 +7,7 @@ class Status::BookExchangeStatusType < Status
 		Book.new(@book_id).match + " MERGE (status)-[mentions_book:" + relation + "{user_id:" + @user_id.to_s + "}]->(book) "
 	end
 
-	def get_book_exchange_status_clause book_exchange_status
+	def handle book_exchange_status
 		unless book_exchange_status.nil?
 			case book_exchange_status
 			when Constants::PlanningToBuyStatusCode

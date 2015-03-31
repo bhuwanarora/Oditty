@@ -6,4 +6,12 @@ class Status::Feeling < Status
 	def create 
 		" MERGE (status)-[feels:Felt{ user_id: " + @user_id.to_s + "}]->(emotion:Emotion{name:\"" + @feeling + "\"}) "
 	end
+
+	def self.handle feelings, user_id
+		clause = ""
+		unless feelings.nil?
+			feelings.each{|feeling| clause +=  " WITH status " + Status::Feeling.new(feeling, user_id).create}
+		end
+		clause
+	end
 end
