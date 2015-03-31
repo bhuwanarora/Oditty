@@ -23,6 +23,10 @@ class Bookmark < Neo
 		" MATCH (user:User), (book:Book), (label:Label) WHERE ID(user)=" + @user_id.to_s + " AND ID(book)=" + @book_id.to_s + " AND label.key = \""+@key+"\" WITH user, book, label "
 	end
 
+	def self.match
+	 	" OPTIONAL MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book) "
+	end
+
 	def self.create_label_bookmark_node
 		" (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node: BookmarkNode{label:\""+@key+"\", book_id:"+@book_id.to_s+", user_id:"+@user_id.to_s+"}) " 
 	end
@@ -117,6 +121,6 @@ class Bookmark < Neo
 	end
 
 	def self.basic_info
-		" ID(bookmark_node) AS status , bookmark_node.name AS bookmarked_by, bookmark.timestamp AS bookmarked_on "
+		" ID(bookmark_node) AS status , bookmark_node.name AS bookmarked_by, bookmark_node.timestamp AS time "
 	end
 end

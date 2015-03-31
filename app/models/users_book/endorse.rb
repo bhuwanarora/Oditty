@@ -9,8 +9,12 @@ class UsersBook::Endorse < UsersBook
 		" MERGE (user)-[endorse_action:EndorseAction]->(endorse:EndorseNode{created_at: " + Time.now.to_i.to_s + ", book_id:" + @book_id.to_s + ", user_id:" + @user_id.to_s + ", updated_at:  " + Time.now.to_i.to_s + "})-[endorsed:Endorsed]->(book) "
 	end
 
-	def match
+	def self.match
 		" MATCH (user)-[endorse_action:EndorseAction]->(endorse:EndorseNode)-[endorsed:Endorsed]->(book) "
+	end
+
+	def self.optional_match
+		" OPTIONAL " + self.match
 	end
 
 	def add 

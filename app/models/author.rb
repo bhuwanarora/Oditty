@@ -4,8 +4,8 @@ class Author < Neo
 		@id = author_id
 	end
 
-	def match node_variable="author"
-		" MATCH ("+node_variable+": Author) WHERE ID("+node_variable+")="+@id.to_s+" WITH "+node_variable+" "
+	def match
+		" MATCH (author: Author) WHERE ID(author)="+@id.to_s+" WITH author "
 	end
 
 	def match_books
@@ -26,10 +26,6 @@ class Author < Neo
 		" MATCH (author:Author :ActiveAuthor) WITH author "
 	end
 
-	def match node_variable="author"
-		" MATCH (" + node_variable + ":Author) WHERE ID(" + node_variable + ") = " + @id.to_s + " WITH " + node_variable + " "
-	end
-
 	def order_desc
 		" ORDER BY author.priority DESC "
 	end
@@ -42,17 +38,8 @@ class Author < Neo
 		skip(skip_count) +  limit(Constants::FollowFavoriteAuthorsCount) + return_init + Author.basic_info
 	end
 
-	def self.books book="book", label_defined=false
-		unless label_defined
-			where_clause = " WHERE author :Author"
-		else
-			where_clause =  "" 
-		end
-		" MATCH (" + name + ")" + "-[:Wrote]->(" + book + ") " + where_clause
-	end
-
 	def get_details
-		match + books + Author.return_group(Author.basic_info, Book.detailed_info) + Author.limit(10)
+		match + match_books + Author.return_group(Author.basic_info, Book.detailed_info) + Author.limit(10)
 	end
 
 end

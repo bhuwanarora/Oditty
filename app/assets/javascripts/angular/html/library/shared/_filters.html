@@ -34,7 +34,7 @@
         md-selected-item="selected_year"
         md-search-text="search_tag.time_group"
         md-items="item in info.time_groups | filter:search_tag.time_group"
-        md-selected-item-change="select_time_group(selected_year)"
+        md-selected-item-change="select_publishing_year(selected_year)"
         md-item-text="item.name"
         placeholder="Publishing Era">
         <span md-highlight-text="search_tag.time_group">{{item.name}}</span>
@@ -48,7 +48,7 @@
         md-selected-item="selected_duration"
         md-search-text="search_tag.read_time"
         md-items="item in info.read_times | filter:search_tag.read_time"
-        md-selected-item-change="select_read_time(selected_duration)"
+        md-selected-item-change="select_reading_time(selected_duration)"
         md-item-text="item.name"
         placeholder="Reading Time">
         <span md-highlight-text="search_tag.read_time">{{item.name}}</span>

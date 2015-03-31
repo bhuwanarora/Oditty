@@ -10,6 +10,6 @@ class Infinity::FilterAuthor < Infinity
 		else
 			define_book_label_clause = " AND book :Book "
 		end
-		@author.books + define_book_label_clause + " " 
+		@author.match_books + define_book_label_clause + " " 
 	end
 end

@@ -4,7 +4,11 @@ class Category::Root < Category
 		super("root_category")
 	end
 
-	def self.books skip, length
+	def self.match_books
+		super("root_category")
+	end
+
+	def self.match_books_in_list skip, length
 		super("root_category", skip, length)
 	end
 

@@ -32,34 +32,54 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
 
     _set_books = function(){
         $scope.info.books = [];
-        infinityService.get_books().then(function(data){
-            angular.forEach(data.recommendations.books, function(value){
-                var json = {
-                    "isbn": value[0],
-                    "id": value[1]
-                }
-                this.push(json);
-            }, $scope.info.books);
-        });
+        $scope.active_tab.infinity = true;
+        if(Object.keys($rootScope.filters).length == 0){
+            
+        }
+        else{
+            infinityService.get_books(0).then(function(data){
+                $scope.info.books = data;
+            });
+        }
     }
 
     $scope.select_genre = function(genre){
-        $rootScope.filters.other_filters[SearchUIConstants.Genre] = genre.id;
+        if(angular.isUndefined(genre)){
+            delete $rootScope.filters.category_id;
+        }
+        else{
+            $rootScope.filters["category_id"] = genre.id;
+        }
         _set_books();
     }
 
     $scope.select_author = function(author){
-        $rootScope.filters.other_filters[SearchUIConstants.AuthorSearch] = author.id;
+        if(angular.isUndefined(author)){
+            delete $rootScope.filters.author_id;
+        }
+        else{
+            $rootScope.filters["author_id"] = author.id;
+        }
         _set_books();
     }
 
     $scope.select_reading_time = function(read_time){
-        $rootScope.filters.other_filters[SearchUIConstants.Time] = read_time.id;
+        if(angular.isUndefined(read_time)){
+            delete $rootScope.filters.reading_time_id;
+        }
+        else{
+            $rootScope.filters["reading_time_id"] = read_time.id;
+        }
         _set_books();
     }
 
     $scope.select_publishing_year = function(time_group){
-        $rootScope.filters.other_filters[SearchUIConstants.Year] = time_group.id;
+        if(angular.isUndefined(time_group)){
+            delete $rootScope.filters.era_id;
+        }
+        else{
+            $rootScope.filters["era_id"] = time_group.id;
+        }
         _set_books();
     }
 
@@ -142,9 +162,8 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         $scope._get_time_groups();
         $scope._get_reading_times();
         if(angular.isUndefined($rootScope.filters)){
-            $rootScope.filters = {"filter_type": SearchUIConstants.BookSearch};
+            $rootScope.filters = {};
         }
-        $rootScope.filters.other_filters = {};
     }
 
     _init();

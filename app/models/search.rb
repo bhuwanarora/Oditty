@@ -12,7 +12,7 @@ class Search < Neo
 
 	def author_by_name
 		connector = @fuzzy.present? ? "~0.7" : "*"
-		"START author=node:node_auto_index('indexed_main_author_name:" + @params + connector + "') " + Search.return_group(" author.name AS name", "author.id AS id ") + Search.limit(@count)
+		"START author=node:node_auto_index('indexed_main_author_name:" + @params + connector + "') " + Search.return_group(" author.name AS name", "ID(author) AS id ") + Search.limit(@count)
 	end
 
 	def user_by_name
