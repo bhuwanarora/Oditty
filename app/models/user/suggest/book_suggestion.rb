@@ -5,7 +5,7 @@ class User::Suggest::BookSuggestion < User::Suggest
 	end
 
 	def for_favourite_author
-		@user.match + Bookmark.match_path("read_book",label_defined=true) + User::Suggest::BookSuggestion.with_group("read_book", "user") + Author.get_books("read_book") + User::Suggest::BookSuggestion.with_group(" user "," author "," read_book ") + Author.get_books("book",label_defined=true) + Bookmark.match_not("book") + User::Suggest::BookSuggestion.with_group(" read_book "," user ","author "," book "," COUNT(DISTINCT read_book) AS book_count ") + User::Suggest::BookSuggestion.order_init + " book_count " + User::Suggest::BookSuggestion.limit(1) + User::Suggest::BookSuggestion.return_group(Author.basic_info, ::Book.basic_info) + ::Book.order_desc + User::Suggest::BookSuggestion.limit(Constants::RecommendationBookCount)
+		@user.match + Bookmark.match_path("read_book",label_defined=true) + User::Suggest::BookSuggestion.with_group("read_book", "user") + Author.books("read_book") + User::Suggest::BookSuggestion.with_group(" user "," author "," read_book ") + Author.books("book",label_defined=true) + Bookmark.match_not("book") + User::Suggest::BookSuggestion.with_group(" read_book "," user ","author "," book "," COUNT(DISTINCT read_book) AS book_count ") + User::Suggest::BookSuggestion.order_init + " book_count " + User::Suggest::BookSuggestion.limit(1) + User::Suggest::BookSuggestion.return_group(Author.basic_info, ::Book.basic_info) + ::Book.order_desc + User::Suggest::BookSuggestion.limit(Constants::RecommendationBookCount)
 	end
 
 	def for_most_bookmarked_era
@@ -18,7 +18,7 @@ class User::Suggest::BookSuggestion < User::Suggest
 	end
 
 	def for_likeable_category(favourites = true, books_processed_count=0)
-		@user.match + User.match_custom_likeable_root_category(favourites) + ::Category::Root.get_books(books_processed_count, Constants::RecommendationBookCount*10) + @user.match + ", book, root_category " + Bookmark.match_not("book") + User::Suggest::BookSuggestion.return_group(::Book.basic_info, Category::Root.basic_info)
+		@user.match + User.match_custom_likeable_root_category(favourites) + ::Category::Root.books(books_processed_count, Constants::RecommendationBookCount*10) + @user.match + ", book, root_category " + Bookmark.match_not("book") + User::Suggest::BookSuggestion.return_group(::Book.basic_info, Category::Root.basic_info)
 	end
 
 	def self.get_popular_books skip_count, user_id

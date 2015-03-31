@@ -19,7 +19,7 @@ class Infinity < Neo
 			trailing_author_clause = ""
 			trailing_author_with_clause = ""
 		else
-			trailing_author_clause = Author.get_books("book", false)
+			trailing_author_clause = Author.books("book", false)
 			trailing_author_with_clause = ", author "
 		end	
 
@@ -50,6 +50,6 @@ class Infinity < Neo
 			trailing_era_with_clause = ", era "
 		end	
 
-		clause + trailing_author_clause + (with_clause += trailing_author_with_clause) + trailing_category_clause + (with_clause += trailing_category_with_clause)  + trailing_era_clause + (with_clause += trailing_era_with_clause) + Neo.return_group(Book.basic_info, Author.basic_info, Era.basic_info) + Book.order_desc + Neo.skip(@skip_count) + Neo.limit(Constants::BookShownInInfinty)
+		clause + trailing_author_clause + (with_clause += trailing_author_with_clause) + trailing_category_clause + (with_clause += trailing_category_with_clause)  + trailing_era_clause + (with_clause += trailing_era_with_clause) + Infinity.return_group(Book.basic_info, Author.basic_info, Era.basic_info) + Book.order_desc + Infinity.skip(@skip_count) + Infinity.limit(Constants::BookShownInInfinty)
 	end
 end

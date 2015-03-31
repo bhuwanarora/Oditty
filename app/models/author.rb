@@ -38,7 +38,7 @@ class Author < Neo
 		skip(skip_count) +  limit(Constants::FollowFavoriteAuthorsCount) + return_init + Author.basic_info
 	end
 
-	def self.get_books book="book", label_defined=false
+	def self.books book="book", label_defined=false
 		unless label_defined
 			where_clause = " WHERE author :Author"
 		else

@@ -10,6 +10,6 @@ class Infinity::FilterCategory < Infinity
 		else
 			define_book_label_clause = " AND book :Book "
 		end
-		@category.get_books + define_book_label_clause + " "
+		@category.books + define_book_label_clause + " "
 	end
 end

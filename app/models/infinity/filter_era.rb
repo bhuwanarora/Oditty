@@ -10,6 +10,6 @@ class Infinity::FilterEra < Infinity
 		else
 			define_book_label_clause = " AND book :Book "
 		end
-		@era.get_books + define_book_label_clause + " "
+		@era.books + define_book_label_clause + " "
 	end
 end

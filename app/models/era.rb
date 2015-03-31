@@ -3,7 +3,7 @@ class Era < Neo
 		@id = id
 	end
 
-	def get_books
+	def books
 		" MATCH (book)-[published_in:Published_in]-(year:Year)-[from_era:FromEra]->(era:Era) WHERE ID(era) = " + @id.to_s + " " 
 	end
 
