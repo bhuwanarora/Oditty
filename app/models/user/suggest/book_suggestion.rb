@@ -5,11 +5,11 @@ class User::Suggest::BookSuggestion < User::Suggest
 	end
 
 	def for_favourite_author
-		@user.match + Bookmark.match_path("read_book",label_defined=true) + User::Suggest::BookSuggestion.with_group("read_book", "user") + Author.match_path("author","read_book") + User::Suggest::BookSuggestion.with_group(" user "," author "," read_book ") + Author.match_path("author","book",label_defined=true) + Bookmark.match_not("book") + User::Suggest::BookSuggestion.with_group(" read_book "," user ","author "," book "," COUNT(DISTINCT read_book) AS book_count ") + User::Suggest::BookSuggestion.order_init + " book_count " + User::Suggest::BookSuggestion.limit(1) + User::Suggest::BookSuggestion.return_group(Author.basic_info, ::Book.basic_info) + ::Book.order_desc + User::Suggest::BookSuggestion.limit(Constants::RecommendationBookCount)
+		@user.match + Bookmark.match_path("read_book",label_defined=true) + User::Suggest::BookSuggestion.with_group("read_book", "user") + Author.get_books("read_book") + User::Suggest::BookSuggestion.with_group(" user "," author "," read_book ") + Author.get_books("book",label_defined=true) + Bookmark.match_not("book") + User::Suggest::BookSuggestion.with_group(" read_book "," user ","author "," book "," COUNT(DISTINCT read_book) AS book_count ") + User::Suggest::BookSuggestion.order_init + " book_count " + User::Suggest::BookSuggestion.limit(1) + User::Suggest::BookSuggestion.return_group(Author.basic_info, ::Book.basic_info) + ::Book.order_desc + User::Suggest::BookSuggestion.limit(Constants::RecommendationBookCount)
 	end
 
 	def for_most_bookmarked_era
-		Era.new(@user_id).most_popular + Bookmark::Node::BookLabel.match_not + User::Suggest::BookSuggestion.return_group(::Book.basic_info, Era.basic_info) + ::Book.order_desc + User::Suggest::BookSuggestion.limit(Constants::RecommendationBookCount)
+		Era.most_popular(@user_id) + Bookmark::Node::BookLabel.match_not + User::Suggest::BookSuggestion.return_group(::Book.basic_info, Era.basic_info) + ::Book.order_desc + User::Suggest::BookSuggestion.limit(Constants::RecommendationBookCount)
 	end
 
 	def on_friends_shelves
