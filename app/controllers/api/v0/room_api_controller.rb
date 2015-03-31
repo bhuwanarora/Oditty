@@ -9,7 +9,7 @@ module Api
 
 			def get_articles
 				user_id = session[:user_id]
-				info = User::Room.new(user_id).get_articles_from_public_shelves
+				info = Api::V0::RoomApi.get_articles_from_public_shelves(user_id)
 				render :json => info, :status => 200
 			end
 
@@ -21,7 +21,7 @@ module Api
 
 			def get_visited_articles
 				user_id = session[:user_id]
-				info = User::Room.new(user_id).get_visited_articles
+				info = Api::V0::RoomApi.get_visited_articles(user_id)
 				render :json => info, :status => 200
 			end
 		end

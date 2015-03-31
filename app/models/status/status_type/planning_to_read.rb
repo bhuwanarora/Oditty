@@ -6,6 +6,6 @@ class Status::StatusType::PlanningToRead < Status::StatusType
 	end
 
 	def create 
-		Status::StatusType.new(@book_id, @user_id, @status).create
+		Status::StatusType.new(@book_id, @user_id).create(@status)
 	end
 end

@@ -2,7 +2,7 @@ class Status < Neo
 	def initialize(user_id, status_info)
 		@user_id = user_id
 		@user = User.new(user_id)
-		@book_id = 3 # status_info[:book_id]				
+		@book_id = status_info[:book_id]				
 		@reading_status_value =  status_info[:reading_status_value]
 		@mentioned_users_ids =   status_info[:mentioned_users_ids]
 		@mentioned_authors_ids =   status_info[:mentioned_authors_ids]
@@ -21,11 +21,11 @@ class Status < Neo
 	end
 
 	def create_path 
-		create_clause = " (user)-[posted:Posted{user_id:" + @user_id.to_s + "}]->(status_node:StatusNode{user_id:" + @user_id.to_s + ",created_at:" + Time.now.to_i.to_s + ",updated_at:" + Time.now.to_i.to_s + "})-[posted_content:PostedContent{user_id:" + @user_id.to_s + "}]->(status:Status{user_id:" + @user_id.to_s + ",created_at:" + Time.now.to_i.to_s + ",updated_at:" + Time.now.to_i.to_s + ",content:\"" + @content.to_s + "\"}) "
+		clause = " (user)-[posted:Posted{user_id:" + @user_id.to_s + "}]->(status_node:StatusNode{user_id:" + @user_id.to_s + ",created_at:" + Time.now.to_i.to_s + ",updated_at:" + Time.now.to_i.to_s + "})-[posted_content:PostedContent{user_id:" + @user_id.to_s + "}]->(status:Status{user_id:" + @user_id.to_s + ",created_at:" + Time.now.to_i.to_s + ",updated_at:" + Time.now.to_i.to_s + ",content:\"" + @content.to_s + "\"}) "
 		unless @book_id.nil?
-			create_clause += set_book_id("status_node") + set_book_id("status")
+			clause += set_book_id("status_node") + set_book_id("status")
 		end
-		create_clause 
+		clause 
 	end
 
 	def set_book_id node_variable
@@ -39,35 +39,11 @@ class Status < Neo
 	private
 
 	def _get_book_exchange_status_clause 
-		unless @book_exchange_status.nil?
-			
-			case @book_exchange_status
-			when Constants::PlanningToBuyStatusCode
-				clause = Status::BookExchangeStatusType::PlanningToBuy.new(@book_id, @user_id).create
-			when Constants::PlanningToLendStatusCode
-				clause = Status::BookExchangeStatusType::PlanningToLend.new(@book_id, @user_id).create
-			when Constants::PlanningToBorrowStatusCode
-				clause = Status::BookExchangeStatusType::PlanningToBorrow.new(@book_id, @user_id).create
-			end
-		else
-			clause = ""
-		end
-		clause
+		Status::BookExchangeStatusType.new(@book_id, @user_id).get_book_exchange_status_clause @book_exchange_status
 	end
 
 	def _get_reading_status_clause
-		clause = ""
-		unless @reading_status_value.nil?
-			case @reading_status_value
-			when Constants::PlanningToReadStatusCode
-				clause = Status::StatusType::PlanningToRead.new(@book_id, @user_id).create
-			when Constants::CurrentlyReadingStatusCode
-				clause = Status::StatusType::CurrentlyReading.new(@book_id, @user_id).create
-			when Constants::ReadStatusCode
-				clause = Status::StatusType::Read.new(@book_id, @user_id).create
-			end
-		end 
-		clause
+		Status::StatusType.new(@user_id, @book_id).get_reading_status_clause @reading_status_value 
 	end
 
 	def _get_feelings_clauses 

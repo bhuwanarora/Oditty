@@ -6,6 +6,6 @@ class Status::BookExchangeStatusType::PlanningToBuy < Status::BookExchangeStatus
 	end
 
 	def create
-		Status::BookExchangeStatusType.new(@book_id, @user_id, @exchange_status).create
+		Status::BookExchangeStatusType.new(@book_id, @user_id).create(@exchange_status)
 	end
 end
