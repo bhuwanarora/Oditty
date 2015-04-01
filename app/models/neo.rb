@@ -41,8 +41,8 @@ class Neo
 		@neo.execute_query clause
 	end
 
-	def self.extract node_variable, path_name = "path"
-		" EXTRACT (node IN nodes(" + path_name + ")|node) AS " + node_variable + " "
+	def self.extract_unwind node_variable, path_name = "path"
+		", EXTRACT (node IN nodes(" + path_name + ")|node) AS nodes UNWIND nodes AS " + node_variable + "  WITH " + node_variable + " "
 	end
 
 	def self.unwind collection

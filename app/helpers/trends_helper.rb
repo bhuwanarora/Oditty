@@ -10,11 +10,11 @@ module TrendsHelper
 				tags = []
 				 
 				
-				merge_clause = "MERGE (fresh_news:News{url:" + news_link.to_s + "}) WITH fresh_news MERGE (region:Region{name: " + news_source["region"].to_s + "})-[stale_relation:HasNews]->(stale_news)"
+				merge_clause = "MERGE (fresh_news:News{url:" + news_link.to_s + "}) WITH fresh_news MERGE (region:Region{name: " + news_source["region"].to_s + "})-[stale_relation:RegionalNews{region:ID(region)}]->(stale_news)"
 				with_clause = " WITH fresh_news, region, stale_relation, stale_news"
-				optional_match_clause = " OPTIONAL MATCH (fresh_news)<-[relation:HasNews*1.." + Constants::UniqueNewsCount.to_s + "]-(region:Region)"
+				optional_match_clause = " OPTIONAL MATCH (fresh_news)<-[relation:RegionalNews*" + Constants::UniqueNewsCount.to_s + "{region:ID(region)}]-(region:Region)"
 
-				create_conditional = " FOREACH(ignoreMe IN CASE WHEN relation IS NULL THEN [1] ELSE [] END | MERGE (region)-[:HasNews]->(fresh_news)-[:HasNews]->(stale_news) DELETE stale_relation) RETURN ID(fresh_news) as news_id"
+				create_conditional = " FOREACH(ignoreMe IN CASE WHEN relation IS NULL THEN [1] ELSE [] END | MERGE (region)-[:RegionalNews{region:ID(region)}]->(fresh_news)-[:RegionalNews{region:ID(region)}]->(stale_news) DELETE stale_relation) RETURN ID(fresh_news) as news_id"
 				clause = merge_clause + with_clause + optional_match_clause + create_conditional
 				news_id = @neo.execute_query clause["news_id"][0]
 				tags_topics = self.get_tags news_link
@@ -34,7 +34,7 @@ module TrendsHelper
 	end
 
 	def self.is_news_fresh news_id
-		clause = " MATCH (region:Region)-[relation:HasNews]->(news) WHERE ID(news) = " + news_id.to_s + " RETURN ID(relation) as relation_id"
+		clause = " MATCH (region:Region)-[relation:RegionalNews{region:ID(region)}]->(news) WHERE ID(news) = " + news_id.to_s + " RETURN ID(relation) as relation_id"
 		data = (self.execute_query clause)["relation_id"][0]
 		if data.blank?
 			is_news_fresh = false
@@ -50,7 +50,7 @@ module TrendsHelper
 	end
 
 	def self.map_region_to_news region, news_id
-		merge_clause = " MERGE (region:Region{name:" + region.to_s + "})-[:HasNews]->(news:News) WHERE ID(news) = " + news_id.to_s
+		merge_clause = " MERGE (region:Region{name:" + region.to_s + "})-[:RegionalNews{region:ID(region)}]->(news:News) WHERE ID(news) = " + news_id.to_s
 		self.execute_query merge_clause
 	end
 

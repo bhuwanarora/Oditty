@@ -28,7 +28,7 @@ ReadersDoor::Application.configure do
   # number of complex assets.
   config.assets.debug = true
   config.home = "http://127.0.0.1:3000/"
-  config.nlp_service = "http://52.11.31.102"
+  config.nlp_service = "http://54.68.106.206/api/v0/parser?q="
   config.google_news_sources = "https://support.google.com/news/answer/40237?hl=en"
   config.image_service = ""
 end

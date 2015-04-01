@@ -9,8 +9,9 @@ module Constants
 	RecommendationPoints		= 10
 	QueryStepDuringLinking		= 1000
 	CommunityBooksCount 		= 10
-	CommunityUsersCount
-
+	CommunityUsersCount         = 10
+	NewsShownInCommunityCount   = 7
+	CommunitiesShown            = 7 
 	if Rails.env.development?
 		Admin						= 0
 		BestTinyRead				= 395910 #"thelosthero"

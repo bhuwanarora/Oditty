@@ -7,4 +7,12 @@ class String
     def search_ready
     	self.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "").gsub("@", "") rescue ""
     end
+
+	def is_json?
+	    begin
+	      	!!JSON.parse(self)
+	    rescue
+	      	false
+    	end
+  	end
 end
