@@ -27,8 +27,22 @@ class Article::News < Article
 		# " ORDER BY news.total_weight DESC "
 	end
 
-	def get_tags
+	def match_communities
 		
+	end
+
+	def match_most_important_community
+	end
+
+	def optional_match_news_in_chronological_order
+	end
+
+
+	def self.detailed_info
+	end
+
+	def get_tags
+		# connect with NLP Service
 	end
 
 end
