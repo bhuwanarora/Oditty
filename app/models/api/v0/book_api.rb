@@ -109,7 +109,10 @@ module Api
 			end
 
 			def self.get_popular_books(params, user_id)
-				skip_count = (params.nil? || params["skip_count"].nil?) ? 0 : params[:skip_count]
+				if params["q"].present?
+					params = JSON.parse params["q"]
+				end
+				skip_count = (params.nil? || params["skip_count"].nil?) ? 0 : params["skip_count"]
 				info = (User::Suggest::BookSuggestion.get_popular_books skip_count, user_id).execute
 				info
 			end
