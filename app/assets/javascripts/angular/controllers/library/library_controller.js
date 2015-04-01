@@ -2,7 +2,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
 
     $scope.get_popular_books = function(){
         if(!$scope.info.loading && !$scope.constant.show_book && !
-            $scope.info.author_filter && !$scope.info.sort_by_alphabet &&
+            $scope.info.author_filter && !$scope.info.group_by_alphabet &&
             !$scope.info.reading_time_filter && !$scope.info.published_era_filter &&
             !$scope.info.custom_loading && !$scope.info.subject_filter){
             $scope.info.loading = true;
@@ -17,41 +17,49 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         });
     }
 
-    $scope.sort_by_author = function(){
-        $scope.info.author_filter = true;
-        $scope.info.sort_by_alphabet = false;
+    $scope.ungroup = function(){
+        $scope.info.author_filter = false;
+        $scope.info.group_by_alphabet = false;
         $scope.info.reading_time_filter = false;
         $scope.info.published_era_filter = false;
         $scope.info.subject_filter = false;
     }
 
-    $scope.sort_by_alphabet = function(){
+    $scope.group_by_author = function(){
+        $scope.info.author_filter = true;
+        $scope.info.group_by_alphabet = false;
+        $scope.info.reading_time_filter = false;
+        $scope.info.published_era_filter = false;
+        $scope.info.subject_filter = false;
+    }
+
+    $scope.group_by_alphabet = function(){
         $scope.info.author_filter = false;
-        $scope.info.sort_by_alphabet = true;
+        $scope.info.group_by_alphabet = true;
         $scope.info.reading_time_filter = false;
         $scope.info.published_era_filter = false;   
         $scope.info.subject_filter = false;
     }
 
-    $scope.sort_by_reading_time = function(){
+    $scope.group_by_reading_time = function(){
         $scope.info.author_filter = false;
-        $scope.info.sort_by_alphabet = false;
+        $scope.info.group_by_alphabet = false;
         $scope.info.reading_time_filter = true;
         $scope.info.published_era_filter = false;   
         $scope.info.subject_filter = false;
     }
 
-    $scope.sort_by_published_era = function(){
+    $scope.group_by_published_era = function(){
         $scope.info.author_filter = false;
-        $scope.info.sort_by_alphabet = false;
+        $scope.info.group_by_alphabet = false;
         $scope.info.reading_time_filter = false;
         $scope.info.published_era_filter = true;   
         $scope.info.subject_filter = false;   
     }
 
-    $scope.sort_by_subject = function(){
+    $scope.group_by_subject = function(){
         $scope.info.author_filter = false;
-        $scope.info.sort_by_alphabet = false;
+        $scope.info.group_by_alphabet = false;
         $scope.info.reading_time_filter = false;
         $scope.info.published_era_filter = false;
         $scope.info.subject_filter = true;
@@ -101,8 +109,61 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         }
 
         bookService.get_popular_books(params).then(function(data){
+            var _get_reading_time = function(book){
+                if(book.pages_count < 50){
+                    var reading_time = "For a flight journey";
+                }
+                else if(book.pages_count < 100){
+                    var reading_time = "For a weekend getaway";
+                }
+                else if(book.pages_count <= 250){
+                    var reading_time = "For a week holiday";
+                }
+                else if(book.pages_count > 250){
+                    var reading_time = "For a month vacation";
+                }
+                else{
+                    var reading_time = "Dont Know";
+                }
+                return reading_time;
+            }
+
+            var _get_published_era = function(book){
+                if(book.published_year > 2000){
+                    var published_era = "Contemporary";
+                }
+                else if(book.published_year >= 1939 && book.published_year < 2000){
+                    var published_era = "Post Modern Literature";
+                }
+                else if(book.published_year >= 1900 && book.published_year < 1939){
+                    var published_era = "Modernism";
+                }
+                else if(book.published_year >= 1837 && book.published_year < 1901){
+                    var published_era = "Victorian Literature";
+                }
+                else if(book.published_year >= 1900 && book.published_year < 1939){
+                    var published_era = "Romanticism";
+                }
+                else if(book.published_year >= 1798 && book.published_year < 1837){
+                    var published_era = "Neo Classical Period";
+                }
+                else if(book.published_year >= 1900 && book.published_year < 1939){
+                    var published_era = "English Renaissance";
+                }
+                else if(book.published_year >= 1660 && book.published_year < 1798){
+                    var published_era = "Middle English Literature";
+                }
+                else if(book.published_year >= 1900 && book.published_year < 1939){
+                    var published_era = "Old English Literature";
+                }
+                else{
+                    var published_era = "Don't Know";
+                }
+                return published_era;
+            }
+
             angular.forEach(data, function(book){
-                angular.forEach(book.categories, function(category){
+                angular.forEach(book.root_category, function(category){
                     if($scope.info.categories.length == 0){
                         $scope.info.categories.push(category);
                     }
@@ -116,25 +177,8 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
                 });
                 var random_int = Math.floor(Math.random()*ColorConstants.value.length);
                 var status = book.status != null;
-                if(book.page_count < 50){
-                    var reading_time = "For a flight journey";
-                }
-                else if(book.page_count < 100){
-                    var reading_time = "For a weekend getaway";
-                }
-                else if(book.page_count <= 250){
-                    var reading_time = "For a week holiday";
-                }
-                else{
-                    var reading_time = "For a month vacation";
-                }
-
-                if(book.published_year > 2000){
-                    var published_era = "Contemporary";
-                }
-                else{
-                    var published_era = "Remaining";
-                }
+                var reading_time = _get_reading_time(book);
+                var published_era = _get_published_era(book);
 
                 var json = {
                         "published_era": published_era,
@@ -164,7 +208,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         $scope.grid_style = {"height": "35px", "overflow-y": "hidden", "padding-bottom": "0px"};
         // var insertIndex = (Math.floor(index/5) + 1)*5
 
-        // $scope.tempBooks = $scope.info.books;
+        $scope.tempBooks = $scope.info.books;
         // $scope.info.books = $scope.info.books.slice(0, insertIndex);
         $scope.constant = {"show_book": true};
         $rootScope.active_book = $scope.info.books[index];

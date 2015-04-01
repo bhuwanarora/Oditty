@@ -1,11 +1,10 @@
-
 <div flex="20" flex-sm="100" class="relative" layout-fill>
     <md-autocomplete 
-        md-selected-item="selected_genre"
+        md-selected-item="info.selected_genre"
         md-search-text="search_tag.genre"
         md-items="item in info.genres | filter:search_tag.genre"
         md-search-text-change="search_genres(search_tag.genre)"
-        md-selected-item-change="select_genre(selected_genre)"
+        md-selected-item-change="select_genre(info.selected_genre)"
         md-item-text="item.name"
         placeholder="Subject">
         <span md-highlight-text="search_tag.genre">{{item.name}}</span>
@@ -16,11 +15,11 @@
 </div>
 <div flex="20" flex-sm="100" class="relative" layout-fill>
     <md-autocomplete 
-        md-selected-item="selected_author"
+        md-selected-item="info.selected_author"
         md-search-text="search_tag.author"
         md-items="item in info.authors | filter:search_tag.author"
         md-search-text-change="search_authors(search_tag.author)"
-        md-selected-item-change="select_author(selected_author)"
+        md-selected-item-change="select_author(info.selected_author)"
         md-item-text="item.name"
         placeholder="Author">
         <span md-highlight-text="search_tag.author">{{item.name}}</span>
@@ -31,10 +30,10 @@
 </div>
 <div flex="20" flex-sm="100" class="relative" layout-fill>
     <md-autocomplete 
-        md-selected-item="selected_year"
+        md-selected-item="info.selected_year"
         md-search-text="search_tag.time_group"
         md-items="item in info.time_groups | filter:search_tag.time_group"
-        md-selected-item-change="select_publishing_year(selected_year)"
+        md-selected-item-change="select_publishing_year(info.selected_year)"
         md-item-text="item.name"
         placeholder="Publishing Era">
         <span md-highlight-text="search_tag.time_group">{{item.name}}</span>
@@ -45,10 +44,10 @@
 </div>
 <div flex="20" flex-sm="100" class="relative" layout-fill>
     <md-autocomplete
-        md-selected-item="selected_duration"
+        md-selected-item="info.selected_duration"
         md-search-text="search_tag.read_time"
         md-items="item in info.read_times | filter:search_tag.read_time"
-        md-selected-item-change="select_reading_time(selected_duration)"
+        md-selected-item-change="select_reading_time(info.selected_duration)"
         md-item-text="item.name"
         placeholder="Reading Time">
         <span md-highlight-text="search_tag.read_time">{{item.name}}</span>
