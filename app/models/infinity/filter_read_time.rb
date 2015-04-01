@@ -19,6 +19,6 @@ class Infinity::FilterReadTime < Infinity
 		else
 			define_book_label_clause = " WHERE book :Book "
 		end
-		" MATCH (book)-[:" + @read_type + "]->()" + define_book_label_clause + " "
+		
 	end
 end

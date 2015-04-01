@@ -19,6 +19,10 @@ class UsersBook::Rate < UsersBook
 		" MERGE (user)-[rating_action:RatingAction]->(rating_node:RatingNode{book_id:" + @book_id.to_s + ", title:book.title, author:book.author_name, user_id:" + @user_id.to_s + "})-[rate:Rate]->(book) "	
 	end
 
+	def self.optional_match
+		" OPTIONAL MATCH (user)-[rating_action:RatingAction]->(rating_node:RatingNode)-[rate:Rate]->(book) "
+	end
+
 	def self.set_rating rating
 		"SET rating_node.rating=" + rating.to_s + " "
 	end

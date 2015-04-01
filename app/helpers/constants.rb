@@ -52,15 +52,20 @@ module Constants
 	NormalReadRelation 			= "NextNormalRead"
 	LongReadRelation 			= "NextLongRead"
 
-	OldEnglishLiterature		= "oldenglish"
-	MiddleEnglishLiterature		= "middleenglish"
-	EnglishRenaissance 			= "englishrenaissance"
-	NeoClassicalPeriod 			= "neoclassical"
-	Romanticism 				= "romantic"
-	VictorianLiterature 		= "victorian"
-	Modernism 					= "modern"
-	PostModernLiterature 		= "postmodern"
-	Contemporary				= "contemporary"
+	TinyReadNode	 			= 772853
+	SmallReadNode	 			= 772853
+	NormalReadNode	 			= 772855
+	LongReadNode	 			= 772856
+
+	OldEnglishLiterature		= 422360
+	MiddleEnglishLiterature		= 422363
+	EnglishRenaissance 			= 422367
+	NeoClassicalPeriod 			= 422368
+	Romanticism 				= 422371
+	VictorianLiterature 		= 422372
+	Modernism 					= 422373
+	PostModernLiterature 		= 422374
+	Contemporary				= 422375
 
 	SessionNotSet				= "Session not set properly error..."
 
