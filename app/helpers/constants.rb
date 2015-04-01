@@ -8,7 +8,9 @@ module Constants
 	ThumbSuggest				= 10
 	RecommendationPoints		= 10
 	QueryStepDuringLinking		= 1000
-	
+	CommunityBooksCount 		= 10
+	CommunityUsersCount
+
 	if Rails.env.development?
 		Admin						= 0
 		BestTinyRead				= 395910 #"thelosthero"

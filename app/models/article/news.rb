@@ -44,5 +44,4 @@ class Article::News < Article
 	def get_tags
 		# connect with NLP Service
 	end
-
 end
