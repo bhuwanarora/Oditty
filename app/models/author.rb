@@ -48,7 +48,7 @@ class Author < Neo
 		else
 			where_clause =  "" 
 		end
-		" MATCH (" + name + ")" + "-[:Wrote]->(" + book + ") " + where_clause
+		" MATCH (author)" + "-[:Wrote]->(" + book + ") " + where_clause
 	end
 
 	def get_details
