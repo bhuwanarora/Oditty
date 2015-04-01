@@ -30,14 +30,15 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         delete $scope.selected_duration;
     }
 
-    _set_books = function(){
-        $scope.info.books = [];
+    var _set_books = function(){
+        // $scope.info.books = [];
         $scope.active_tab.infinity = true;
         if(Object.keys($rootScope.filters).length == 0){
             
         }
         else{
             infinityService.get_books(0).then(function(data){
+                delete $scope.info.books;
                 $scope.info.books = data;
             });
         }
@@ -154,11 +155,9 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         return {"backspace_or_delete": backspace_or_delete, "keyUp": keyUp, "keyDown": keyDown, "keyLeft": keyLeft, "keyRight": keyRight, "keyEnter": enter};
     }
 
-    _init = function(){
+    var _init = function(){
         $scope.search_tag = {};
         console.debug("initialised filters controller");
-        // $scope._get_genres();
-        // $scope._get_authors();
         $scope._get_time_groups();
         $scope._get_reading_times();
         if(angular.isUndefined($rootScope.filters)){
