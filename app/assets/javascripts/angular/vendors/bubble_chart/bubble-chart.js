@@ -132,15 +132,21 @@
         .data(self.circlePositions)
         .enter().append("g")
         .attr("class", function (d) {return ["node", options.data.classed(d.item)].join(" ");});
-
       var fnColor = d3.scale.category20();
-      node.append("circle")
-        .attr({r: function (d) {return d.r;}, cx: function (d) {return d.cx;}, cy: function (d) {return d.cy;}})
-        .style("fill", function (d) {
-          return options.data.color !== undefined ? options.data.color(d.item) : fnColor(d.item.text);
-        })
-        .attr("opacity", "0.8");
+      var clipPath = node.append("clipPath")
+        .attr("id", function (d) {return options.data.classed(d.item);});
+      clipPath.append("circle")
+        .attr({r: function (d) {return d.r;}, cx: function (d) {return d.cx;}, cy: function (d) {return d.cy;}});
+        // .style("fill", function (d) {
+        //   return options.data.color !== undefined ? options.data.color(d.item) : fnColor(d.item.text);
+        // })
+        // .attr("opacity", "0.8");
+      node.append("image")
+        .attr("clip-path", function(d){return "url(#" + options.data.classed(d.item) +")"})
+        .attr("x", function (d) {return d.cx-d.r;}).attr("y", function (d) {return d.cy-d.r;})
+        .attr("height", function (d) {return 2*d.r;}).attr("width", function (d) {return 2*d.r;}).attr("xlink:href", "http://www.chicagonow.com/avatar/blog-108-128.png");
       node.sort(function (a, b) {return options.data.eval(b.item) - options.data.eval(a.item);});
+
 
       self.transition = {};
       self.event = $.microObserver.get($.misc.uuid());
@@ -174,6 +180,12 @@
       self.transition.centralNode.attr('transform', toCentralPoint)
         .select("circle")
         .attr('r', function (d) {return self.options.innerRadius;});
+      self.transition.centralNode.attr('transform', toCentralPoint)
+        .select("image")
+        .attr('x', function (d) {return d.cx-self.options.innerRadius;})
+        .attr('y', function (d) {return d.cy-self.options.innerRadius;})
+        .attr('height', function (d) {return 2*self.options.innerRadius;})
+        .attr('width', function (d) {return 2*self.options.innerRadius;});
     },
 
     moveToReflection: function (node, swapped) {
@@ -191,6 +203,15 @@
         .attr('transform', swapped ? "" : toReflectionPoint)
         .select("circle")
         .attr('r', function (d) {return d.r;});
+      node.transition()
+        .duration(self.options.transitDuration)
+        .delay(function (d, i) {return i * 10;})
+        .attr('transform', swapped ? "" : toReflectionPoint)
+        .select("image")
+        .attr('height', function (d) {return 2*d.r;})
+        .attr('width', function (d) {return 2*d.r;})
+        .attr('x', function (d) {return d.cx-d.r;})
+        .attr('y', function (d) {return d.cy-d.r;});
     },
 
     reset: function (node) {
