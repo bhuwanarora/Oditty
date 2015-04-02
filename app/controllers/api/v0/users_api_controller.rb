@@ -200,19 +200,15 @@ module Api
 			end
 
 			def follow
-				follow_action = params[:q]
-				friend_id = params[:id]
-				if session[:user_id]
-					user_id = session[:user_id]
-					if follow_action
-						UsersGraphHelper.follow_user(user_id, friend_id)
-					else
-						UsersGraphHelper.unfollow_user(user_id, friend_id)
-					end
-					render :json => {:message => "Success"}, :status => 200
+				follow_action = params[:q] 
+				friend_id = params[:id] 
+				user_id = session[:user_id]
+				if follow_action
+					Api::V0::UserApi.follow_user(user_id, friend_id).execute
 				else
-					render :json => {:message => Constants::SessionNotSet}, :status => 500
+					Api::V0::UserApi.unfollow_user(user_id, friend_id).execute
 				end
+				render :json => {:message => "Success"}, :status => 200
 			end
 
 			def comment

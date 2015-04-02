@@ -11,6 +11,15 @@ module Api
 				info
 			end
 
+			def self.follow_user user_id, friend_id
+				UsersUser.new(user_id, friend_id).follow
+			end
+
+			def self.unfollow_user user_id, friend_id
+				UsersUser.new(user_id, friend_id).unfollow
+			end
+
+
 			def self.endorse_book book_id, user_id
 				UsersBook::Endorse.new(book_id, user_id).add
 			end
