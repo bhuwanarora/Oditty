@@ -4,28 +4,23 @@ class Bookmark::Node::BookLabel < Bookmark::Node
 		"MATCH (user:User), (book:Book) WHERE ID(user) = " + @user_id.to_s + " AND ID(book) = " + @id.to_s + " "
 	end
 
-	def self.get_public
-		where_clause = " WHERE bookmark_node.public = true WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, book, COUNT(label) AS label_count "
-		select_distinct_properties_clause = " DISTINCT label.name AS shelf,  bookmark_node.timestamp AS time, "
-
-		Bookmark::Node::BookLabel.match_path + where_clause + self.return_init + select_distinct_properties_clause + Book.basic_info  + ", label_count " + self.order_init + " label_count, time DESC "  + self.limit(Constants::BooksShownInRoomCount) 
+	def self.get_public user_id
+		Bookmark::Type::Public.new(user_id).match + Bookmark::Node::BookLabel.return_group("DISTINCT label.name AS shelf", "bookmark_node.timestamp AS time", Book.basic_info, "label_count") + Bookmark::Node::BookLabel.order_init + " label_count, time DESC "  + Bookmark::Node::BookLabel.limit(Constants::BooksShownInRoomCount) 
 	end
 
-	def self.get_visited
-		where_clause = " WHERE bookmark_node.name = 'Visited' WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, book, COUNT(label) AS label_count "
-		select_distinct_properties_clause = " DISTINCT label.name AS shelf,  bookmark_node.timestamp AS time, "
-		Bookmark::Node::BookLabel.match_path + where_clause + self.return_init + select_distinct_properties_clause + Book.basic_info  + ", label_count "  + self.order_init + " label_count, time DESC "  + self.limit(Constants::BooksShownInRoomCount) 
+	def self.get_visited user_id
+		Bookmark::Type::Visited.new(user_id).match + Bookmark::Node::BookLabel.return_group(" DISTINCT label.name AS shelf ", "bookmark_node.timestamp AS time", Book.basic_info, " label_count ")  + Bookmark::Node::BookLabel.order_init + " label_count, time DESC "  + Bookmark::Node::BookLabel.limit(Constants::BooksShownInRoomCount) 
 	end
 
 	def self.match_path
-		super("book")		
+		super
 	end
 
 	def self.match_not
-		super("book")		
+		super
 	end
 
 	def self.match
-		super("book")
+		super
 	end
 end
