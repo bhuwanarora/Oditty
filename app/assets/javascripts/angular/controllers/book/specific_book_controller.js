@@ -7,7 +7,7 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
         else{
             $scope.book.endorse_status = true;
         }
-        bookService.endorse_book($rootScope.active_book.id, $scope.book.endorse_status);
+        bookService.endorse_book($rootScope.active_book.book_id, $scope.book.endorse_status);
         $mdToast.show({
             controller: 'toastController',
             templateUrl: 'assets/angular/html/shared/toast/endorse_action.html',
@@ -15,7 +15,6 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
             position: $scope.getToastPosition()
         });
     }
-
 
     $scope.getToastPosition = function() {
         return Object.keys($scope.toast_position)

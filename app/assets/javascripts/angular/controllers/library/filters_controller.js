@@ -1,4 +1,4 @@
-homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'genreService', 'authorService', 'WebsiteUIConstants', 'SearchUIConstants', 'timeGroupService', 'readingTimeService', 'infinityService', function($scope, $rootScope, $timeout, genreService, authorService, WebsiteUIConstants, SearchUIConstants, timeGroupService, readingTimeService, infinityService){
+homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'genreService', 'authorService', 'WebsiteUIConstants', 'SearchUIConstants', 'timeGroupService', 'readingTimeService', 'infinityService', 'ColorConstants', function($scope, $rootScope, $timeout, genreService, authorService, WebsiteUIConstants, SearchUIConstants, timeGroupService, readingTimeService, infinityService, ColorConstants){
 
     $scope._get_genres = function(){
     	if(angular.isUndefined($scope.info.genres) || $scope.info.genres.length == 0){
@@ -24,21 +24,33 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
     }
 
     $scope.reset_filter = function(){
-        delete $scope.selected_genre;
-        delete $scope.selected_author;
-        delete $scope.selected_year;
-        delete $scope.selected_duration;
+        delete $scope.info.selected_genre;
+        delete $scope.info.selected_author;
+        delete $scope.info.selected_year;
+        delete $scope.info.selected_duration;
+        delete $scope.search_tag.genre;
+        delete $scope.search_tag.time_group;
+        delete $scope.search_tag.author;
+        delete $scope.search_tag.read_time;
+        $rootScope.filters = {};
+        _set_books();
     }
 
-    _set_books = function(){
-        $scope.info.books = [];
+    var _set_books = function(){
+        // $scope.info.books = [];
         $scope.active_tab.infinity = true;
         if(Object.keys($rootScope.filters).length == 0){
-            
+            $scope.info.books = [];
+            $scope.get_popular_books();
         }
         else{
             infinityService.get_books(0).then(function(data){
-                $scope.info.books = data;
+                $scope.info.books = [];
+                angular.forEach(data, function(value){
+                    var random_int = Math.floor(Math.random()*ColorConstants.value.length);
+                    var json = angular.extend(value, {"color": ColorConstants.value[random_int]});
+                    this.push(json);
+                }, $scope.info.books);
             });
         }
     }
@@ -154,11 +166,13 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         return {"backspace_or_delete": backspace_or_delete, "keyUp": keyUp, "keyDown": keyDown, "keyLeft": keyLeft, "keyRight": keyRight, "keyEnter": enter};
     }
 
-    _init = function(){
+    var _init = function(){
         $scope.search_tag = {};
+        $scope.info.genres = [];
+        $scope.info.authors = [];
+        $scope.info.time_groups = [];
+        $scope.info.read_times = [];
         console.debug("initialised filters controller");
-        // $scope._get_genres();
-        // $scope._get_authors();
         $scope._get_time_groups();
         $scope._get_reading_times();
         if(angular.isUndefined($rootScope.filters)){

@@ -14,6 +14,10 @@ class Category < Neo
 		" ID("+node_variable+") AS "+node_variable+"_id, "+node_variable+".icon AS "+node_variable+"_icon, "+node_variable+".name AS "+node_variable+"_name, "+node_variable+".aws_key AS "+node_variable+"_aws_key, "+node_variable+".uuid AS "+node_variable+"_uuid"
 	end
 
+	def self.grouped_basic_info node_variable="category"
+		" {id: ID("+node_variable+"), icon: "+node_variable+".icon, name: "+node_variable+".name, aws_key: "+node_variable+".aws_key, uuid: "+node_variable+".uuid} "
+	end
+
 	def self.order_desc
 		" ORDER BY likes.weight DESC"
 	end

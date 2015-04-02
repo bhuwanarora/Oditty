@@ -31,10 +31,10 @@ module Api
 				data = []
 				books_processed_count = 0
 
-				while data.length < 10
-					data.push User::Suggest::BookSuggestion.new(user_id).for_likeable_category(favourites, books_processed_count).execute
-					books_processed_count = books_processed_count + Constants::RecommendationBookCount*10
-				end
+				# while data.length < 10
+					# data.push User::Suggest::BookSuggestion.new(user_id).for_likeable_category(favourites, books_processed_count).execute
+					# books_processed_count = books_processed_count + Constants::RecommendationBookCount*10
+				# end
 				data
 			end
 

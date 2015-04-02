@@ -51,7 +51,7 @@ class Book < Neo
 	end
 
 	def self.match_root_category
-		 " MATCH (book)-[from_category:FromCategory]->(category:Category)-[has_root:HasRoot*0..1]->(root_category:Category{is_root:true}) "
+		 " MATCH (book)-[from_category:FromCategory]->(category:Category)-[has_root:HasRoot*0..1]->(root_category:Category{is_root:true}) WITH DISTINCT(book) as book, COLLECT(DISTINCT("+Category::Root.grouped_basic_info+")) as root_category "
 	end
 
 	def self.optional_match_root_category
