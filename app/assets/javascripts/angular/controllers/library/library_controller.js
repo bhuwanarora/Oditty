@@ -165,11 +165,13 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
             angular.forEach(data, function(book){
                 angular.forEach(book.root_category, function(category){
                     if($scope.info.categories.length == 0){
-                        $scope.info.categories.push(category);
+                        if((category.name != null)){
+                            $scope.info.categories.push(category);
+                        }
                     }
                     else{
                         angular.forEach($scope.info.categories, function(base_category){
-                            if(!angular.equals(category, base_category) && _is_absent(category)){
+                            if(!angular.equals(category, base_category) && _is_absent(category) && (category.name != null)){
                                 this.push(category);
                             }
                         }, $scope.info.categories);
