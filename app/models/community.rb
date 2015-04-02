@@ -13,15 +13,15 @@ class Community < Neo
 	end
 
 	def match_books 
-		" MATCH (community)-[:RelatedBooks]->(book:Book) WITH community, book ORDER BY book.total_weight DESC LIMIT " + Constants::CommunityBooksCount.to_s + " WITH community, book "
+		" MATCH (community)-[:RelatedBooks]->(book:Book) WITH community, book "
 	end
 
 	def get_books
-		match + match_books + Neo.return_init + Book.basic_info
+		match + match_books + Book.order_desc + Community.limit(Constants::CommunityBooksCount.to_s) + Neo.return_init + Book.basic_info
 	end
 
 	def match_users
-		" MATCH (community)<-[of_community:OfCommunity]-(follow_node:FollowNode)<-[follows:Follows]-(user:User) WITH community, follow_node, user ORDER BY follow_node.comment_count DESC LIMIT " + Constants::CommunityUsersCount.to_s + " WITH community, user "
+		" MATCH (community)<-[of_community:OfCommunity]-(follow_node:FollowNode)<-[follows:Follows]-(user:User) WITH community, follow_node, user "
 	end
 
 	def self.set_name
@@ -37,7 +37,7 @@ class Community < Neo
 	end
 
 	def get_users
-		match + match_users + Community.return_init + User.basic_info
+		match + match_users + Community.limit(Constants::CommunityUsersCount) + Community.return_init + User.basic_info
 	end
 
 
