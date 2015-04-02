@@ -147,7 +147,7 @@ class News < Neo
 		response = Net::HTTP.get(uri)
 	end
 
-	def self.map_books_to_news clause, tag
+	def self.map_books_to_tags clause, tag
 		count = 0
 		Google::Search::Book.new(:query => tag).each do |book|
 			count += 1
