@@ -14,7 +14,7 @@ module Api
 			end
 
 			def self.get_articles_from_public_shelves user_id
-				books = User::Room.new(user_id).get_books_from_public_shelves.execute
+				books = User::Room.new(user_id).get_articles_from_public_shelves.execute
 			end
 
 			def self.get_visited_articles user_id
