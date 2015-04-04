@@ -4,6 +4,7 @@ class Bookmark::Type::HaveLeftAMarkOnMe < Bookmark::Type
 		@name = "Have left a mark on me"
 		@user_id = user_id
 		@book_id = book_id
+		@bookmark = Bookmark.new(@user_id, @book_id, @key)
 	end
 
 	def self.match user_id
@@ -12,10 +13,10 @@ class Bookmark::Type::HaveLeftAMarkOnMe < Bookmark::Type
 	end
 
 	def add
-
+		@bookmark.add
 	end
 
 	def remove
-		
+		@bookmark.remove
 	end
 end

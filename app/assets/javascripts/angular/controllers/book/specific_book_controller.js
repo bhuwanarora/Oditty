@@ -48,6 +48,9 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
             $scope.book = angular.extend($scope.book, json);
             $rootScope.active_book = $scope.book;
         });
+
+        bookService.update_visited($rootScope.active_book.book_id);
+
         $scope.toast_position = {
             bottom: false,
             top: true,

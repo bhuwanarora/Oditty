@@ -40,9 +40,11 @@ class User::Predict::BookPrediction < User::Predict
 
 		has_linked_books = data[0]["book_id"].blank? ? false : true rescue false
 		unless has_linked_books
-			clause =  ::Book::SmallRead.get_sorted_books @skip_count
-			data = clause.execute
+			data = []
 		end
+		clause =  Book::SmallRead.get_sorted_books @skip_count
+		data |= clause.execute
+		# end
 		data
 	end
 end

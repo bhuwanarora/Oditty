@@ -1,10 +1,11 @@
 homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'WebsiteUIConstants', 'SearchUIConstants', 'bookService', '$routeParams', '$location', 'ColorConstants', '$mdToast', 'infinityService', '$mdBottomSheet', '$mdSidenav', function($scope, $rootScope, $timeout, WebsiteUIConstants, SearchUIConstants, bookService, $routeParams, $location, ColorConstants, $mdToast, infinityService, $mdBottomSheet, $mdSidenav){
 
     $scope.get_popular_books = function(){
-        if(!$scope.info.loading && !$scope.constant.show_book && !
+        var ready_to_load = !$scope.info.loading && !$scope.constant.show_book && !
             $scope.info.author_filter && !$scope.info.group_by_alphabet &&
             !$scope.info.reading_time_filter && !$scope.info.published_era_filter &&
-            !$scope.info.custom_loading && !$scope.info.subject_filter){
+            !$scope.info.custom_loading && !$scope.info.subject_filter && $scope.active_tab.infinity;
+        if(ready_to_load){
             $scope.info.loading = true;
             $scope._get_popular_books();
         }
@@ -202,16 +203,11 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         if($scope.constant.show_book){
             $scope.grid_style = {"height": "initial", "padding-bottom": "100px"};
             $scope.constant = {"show_book": false};
-            $scope.info.books = $scope.tempBooks;
         }
     }
 
     $scope.show_book = function(event, index){
         $scope.grid_style = {"height": "35px", "overflow-y": "hidden", "padding-bottom": "0px"};
-        // var insertIndex = (Math.floor(index/5) + 1)*5
-
-        $scope.tempBooks = $scope.info.books;
-        // $scope.info.books = $scope.info.books.slice(0, insertIndex);
         $scope.constant = {"show_book": true};
         $rootScope.active_book = $scope.info.books[index];
         event.stopPropagation();
@@ -296,7 +292,6 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
             templateUrl: '/assets/angular/html/library/bottom_sheet_filters.html',
             targetEvent: event
         })
-
     };
 
     _init();

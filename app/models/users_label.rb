@@ -6,16 +6,20 @@ class UsersLabel < Neo
 		@label = Label.new(label_id)
 	end
 
-	def self.set_bookmark_count
-		" labelled.bookmark_count = CASE WHEN labelled.bookmark_count IS NULL THEN 1 ELSE toInt(labelled.bookmark_count) + 1 END "
+	def self.set_bookmark_count operation
+		if operation == "+"
+			" SET labelled.bookmark_count = TOINT(COALESCE(labelled.bookmark_count, 0)) + 1 "
+		else
+			" SET labelled.bookmark_count = TOINT(COALESCE(labelled.bookmark_count, 1)) - 1 "
+		end
 	end
 
 	def self.match
-		" MATCH (user)-[bookmark_action:BookmarkAction]->(label:Label) WITH user, label "
+		" MATCH (user)-[labelled:Labelled]->(label:Label) WITH user, label, labelled "
 	end
 
 	def create(user_id, label)
-		User.new(user_id).match + " CREATE (label:Label{name:\""+label+"\", public: true}), (user)-[:BookmarkAction]->(label)"
+		User.new(user_id).match + " CREATE (label:Label{name:\""+label+"\", public: true}), (user)-[:Labelled]->(label) "
 	end
 
 end

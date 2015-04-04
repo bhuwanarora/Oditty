@@ -1,4 +1,5 @@
 class Infinity < Neo
+	Limit = 30
 
 	def initialize filters
 		filters = JSON.parse(filters)
@@ -18,10 +19,10 @@ class Infinity < Neo
 		only_category = !@reading_time_id && !@author_id && !@era_id && @category_id.present?
 		if only_read_time
 			puts "only_read_time".green
-			clause = ReadTime.new(@reading_time_id).match_books_after(@skip_count, 10)
+			clause = ReadTime.new(@reading_time_id).match_books_after(@skip_count, Limit)
 		elsif only_category
 			puts "only_category".green
-			clause = Category.new(@category_id).match_books_after(@skip_count, 10)
+			clause = Category.new(@category_id).match_books_after(@skip_count, Limit)
 		else
 			if @era_id.present?
 				puts "era_id".green
@@ -58,7 +59,7 @@ class Infinity < Neo
 		end
 		return_clause = Infinity.return_group(Book.basic_info)
 
-		clause + return_clause + Infinity.limit(10)
+		clause + return_clause + Infinity.limit(Limit)
 		#MATCH WHERE WITH RETURN ORDER SKIP LIMIT
 		# order_clause = init_order_clause + base_order_clause 	if init_order_clause.present?
 		# clause = init_match_clause				

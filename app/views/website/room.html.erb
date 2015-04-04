@@ -14,7 +14,10 @@
 		</md-content>
 	</section>
 	<div layout="row" class="book_stack">
-		<img class="recent_visited_book" ng-src="{{book.url}}" ng-repeat="book in visited_books">
+		<a ng-repeat="book in visited_books | limitTo: 3" ng-if="book.title" ng-href="/book?q={{book.book_id}}" target="_blank">
+			<div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
+			<!-- <img class="recent_visited_book" ng-src="{{book | choose_medium_thumb}}"> -->
+		</a>
 	</div>
 </md-content>
 
@@ -40,9 +43,9 @@
 		z-index: 1;
 	}
 
-	.book_stack img{
+	/*.book_stack img{
 		width: 100px;
 		height: 150px;
 		margin-right: 10px;
-	}
+	}*/
 </style>

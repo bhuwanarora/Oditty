@@ -18,10 +18,10 @@ module Api
 				book_id = params[:id]
 				status = params[:status]
 				user_id = session[:user_id]
-				if status
-					Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).add
+				if status == "true"
+					Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).add.execute
 				else
-					Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).remove
+					Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).remove.execute
 				end
 				render :json => "Success", :status => 200
 			end
