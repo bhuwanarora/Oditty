@@ -224,7 +224,7 @@ module.exports = function(grunt) {
             'app/assets/javascripts/min/angular/services/landing_page/website_service.js',
             'app/assets/javascripts/min/angular/services/landing_page/shared_service.js',
             'app/assets/javascripts/min/angular/services/landing_page/recommendation_service.js',
-            'app/assets/javascripts/min/angular/controllers/landing_page_controller.js',
+            'app/assets/javascripts/min/angular/controllers/landing_page_controller.js',  
             'app/assets/javascripts/min/angular/controllers/landing_page/signin_controller.js'
             ],
 
