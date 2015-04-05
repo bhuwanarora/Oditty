@@ -7,7 +7,8 @@ app.controller('signInController', ["$scope", "$rootScope", "websiteService", "F
             // Successful sign in.
             $scope.signedIn = true;
             console.log("signedIn");
-        } else if(authResult['error'] == "immediate_failed") {
+        } 
+        else if(authResult['error'] == "immediate_failed") {
             // Error while signing in.
             gapi.auth.authorize({
                 client_id: '917672049716-pl6i0qbuen1so84tg2b5vijg7qfjhash.apps.googleusercontent.com',
@@ -159,7 +160,7 @@ app.controller('signInController', ["$scope", "$rootScope", "websiteService", "F
 
 
         $scope.$on('Facebook:statusChange', function(ev, data){
-            console.log('Status: ', data);
+            console.log('facebookStatus: ', data);
             if(data.status == LoginConstants.FacebookLoginStatusCheck) {
                 $scope.$apply(function() {
                 });
@@ -264,7 +265,7 @@ app.controller('signInController', ["$scope", "$rootScope", "websiteService", "F
     }
 
     _init = function(){
-        $cookieStore.remove('tab');
+        // $cookieStore.remove('tab');
         $scope._is_logged_in();
         _bind_auth_listeners();
         $rootScope.user = {'books': {'bookmarked':[], 'read': []},
