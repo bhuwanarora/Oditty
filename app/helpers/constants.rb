@@ -56,7 +56,7 @@ module Constants
 	LongReadRelation 			= "NextLongRead"
 
 	TinyReadNode	 			= 772853
-	SmallReadNode	 			= 772853
+	SmallReadNode	 			= 772854
 	NormalReadNode	 			= 772855
 	LongReadNode	 			= 772856
 

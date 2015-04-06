@@ -11,6 +11,15 @@ module Api
 				info
 			end
 
+			def self.follow_user user_id, friend_id
+				UsersUser.new(user_id, friend_id).follow
+			end
+
+			def self.unfollow_user user_id, friend_id
+				UsersUser.new(user_id, friend_id).unfollow
+			end
+
+
 			def self.endorse_book book_id, user_id
 				UsersBook::Endorse.new(book_id, user_id).add
 			end
@@ -31,10 +40,10 @@ module Api
 				data = []
 				books_processed_count = 0
 
-				while data.length < 10
-					data.push User::Suggest::BookSuggestion.new(user_id).for_likeable_category(favourites, books_processed_count).execute
-					books_processed_count = books_processed_count + Constants::RecommendationBookCount*10
-				end
+				# while data.length < 10
+					# data.push User::Suggest::BookSuggestion.new(user_id).for_likeable_category(favourites, books_processed_count).execute
+					# books_processed_count = books_processed_count + Constants::RecommendationBookCount*10
+				# end
 				data
 			end
 

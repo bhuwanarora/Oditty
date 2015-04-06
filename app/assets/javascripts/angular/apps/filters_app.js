@@ -29,8 +29,8 @@ angular.module('filtersApp', [])
         output = []
         var _category_has_book = function(book){
             var has_book = false;
-            if(book.categories.length > 0){
-                angular.forEach(book.categories, function(base_category){
+            if(book.root_category.length > 0){
+                angular.forEach(book.root_category, function(base_category){
                     if(base_category.name == category.name){
                         has_book = true;
                     }
@@ -102,7 +102,7 @@ angular.module('filtersApp', [])
     }
   })
   .filter('choose_medium_thumb', function() {
-    return function(input) {
+    return function(input){
       var output = "";
       if(angular.isDefined(input) && input){
         var external_thumb = angular.isDefined(input.external_thumb) && input.external_thumb != null;

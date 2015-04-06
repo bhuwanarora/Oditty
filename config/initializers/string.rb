@@ -15,4 +15,18 @@ class String
 	      	false
     	end
   	end
+
+    def print
+    	self.gsub("CREATE", "\n CREATE")
+    		.gsub("MERGE", "\n MERGE")
+    		.gsub("WITH", "\n WITH")
+    		.gsub("WHERE", "\n WHERE")
+    		.gsub("FOREACH", "\n FOREACH")
+    		.gsub("DELETE", "\n DELETE")
+    		.gsub("OPTIONAL", "\n OPTIONAL")
+            .gsub("RETURN", "\n RETURN")
+            .gsub("ORDER", "\n ORDER")
+            .gsub("LIMIT", "\n LIMIT")
+            .gsub("SET", "\n SET")
+    end
 end

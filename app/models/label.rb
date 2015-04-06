@@ -7,7 +7,11 @@ class Label < Neo
 		" user_label.name AS user_label_name, ID(user_label) AS user_label_id "
 	end
 
-	def set_bookmark_count operation
-		" label.bookmark_count = COALESCE(label.bookmark_count,0) " + operation.to_s + " 1 "
+	def self.set_bookmark_count operation
+		if operation == "+"
+			" SET label.bookmark_count = TOINT(COALESCE(label.bookmark_count, 0)) + 1 "
+		else
+			" SET label.bookmark_count = TOINT(COALESCE(label.bookmark_count, 1)) - 1 "
+		end
 	end
 end

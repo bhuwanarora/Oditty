@@ -5,7 +5,11 @@ class User < Neo
 	end
 
 	def self.set_bookmark_count operation
-		" SET user.bookmark_count = COALESCE(user.bookmark_count,0) " + operation + " 1 "
+		if operation == "+"
+			" SET user.bookmark_count = TOINT(COALESCE(user.bookmark_count, 0)) + 1 "
+		else
+			" SET user.bookmark_count = TOINT(COALESCE(user.bookmark_count, 1)) - 1 "
+		end
 	end
 
 	def optional_match_books_bookmarked
@@ -21,11 +25,19 @@ class User < Neo
 	end
 
 	def self.set_rating_count operation
-		" SET user.rating_count = COALESCE(user.rating_count,0) " + operation + " 1 "
+		if operation == "+"
+			" SET user.rating_count = TOINT(COALESCE(user.rating_count, 0)) + 1 "
+		else
+			" SET user.rating_count = TOINT(COALESCE(user.rating_count, 1)) - 1 "
+		end
 	end
 
 	def self.set_total_count value, operation
-		" SET user.total_count = COALESCE(user.total_count,0) " + operation.to_s + " " + value.to_s + " "
+		if operation == "+"
+			" SET user.total_count = TOINT(COALESCE(user.total_count, 0)) + " + value.to_s + " "
+		else
+			" SET user.total_count = TOINT(COALESCE(user.total_count, " + value.to_s + ")) - " + value.to_s + " "
+		end
 	end
 
 	def get_detailed_info
@@ -41,7 +53,7 @@ class User < Neo
 	end
 
 	def get_all_books skip_count=0, limit_count=Constants::BookCountShownOnSignup 
-		match + Bookmark::Node::BookLabel.match_path + User.return_init + ::Book.basic_info + ::Book.order_desc + User.skip(skip_count) + User.limit(limit_count)
+		match + Bookmark::Node::BookLabel.match_path + User.return_group(Book.basic_info, " label.key as shelf ") + Book.order_desc + User.skip(skip_count) + User.limit(limit_count)
 	end
 
 	def self.create_label key
@@ -76,7 +88,7 @@ class User < Neo
 		create_new_user = "CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, last_book: "+Constants::BestBook.to_s+", amateur: true, ask_info: true}), "
 		create_feednext_relation = "(user)-[fn:FeedNext{user_id:ID(user)}]->(user), "
 		create_ego_relation = "(user)-[:Ego{user_id:ID(user)}]->(user) WITH user "
-		get_labels = "MATCH(bm:Label{primary_label:true}) "
+		get_labels = "MATCH(bm:Label{basic:true}) "
 		add_labels = "CREATE (user)-[:Labelled{user_id:ID(user)}]->(bm) "
 		add_categories_to_user = "WITH user MERGE (root_category:Category{is_root:true}) MERGE (user)-[rel:Likes]-(root_category) ON CREATE SET rel.weight = 0 "
 		# get_all_users = "MATCH (all_user:User) WHERE all_user <> user "
@@ -92,7 +104,7 @@ class User < Neo
 	end
 
 	def get_books_bookmarked(skip_count=0)
-		match + User.return_init + Book.get_basic_info + ", COLLECT(label.name) as labels SKIP "+skip_count.to_s+" LIMIT 10"
+		match + optional_match_books_bookmarked + User.return_group(Book.basic_info, " COLLECT(label.name) as labels ") + User.skip(skip_count) + User.limit(10)
 	end
 
 	def get_public_labels

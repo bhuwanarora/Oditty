@@ -19,4 +19,8 @@ class Category::Root < Category
 	def self.get_all
 		" MATCH (root_category:Category{is_root:true}) " + Category::Root.return_group(self.basic_info)
 	end
+
+	def self.grouped_basic_info
+		super("root_category")
+	end
 end

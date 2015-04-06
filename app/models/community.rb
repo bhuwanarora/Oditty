@@ -37,7 +37,11 @@ class Community < Neo
 	end
 
 	def get_users
+<<<<<<< HEAD
 		match + match_users + Community.limit(Constants::CommunityUsersCount) + Community.return_init + User.basic_info
+=======
+		match + match_users + Community.return_init + User.basic_info
+>>>>>>> cbaf7816a2515418149c1f35469da00f14e06fa5
 	end
 
 
@@ -48,7 +52,11 @@ class Community < Neo
 
 
 	def get_communities_chronologically
+<<<<<<< HEAD
 		match + Community.get_news + News.match_chronological_news + News.match_community + Community.return_init + Community.basic_info 
+=======
+		match + Community.get_news + New.match_chronological_news + News.match_community + Community.return_init + Community.basic_info 
+>>>>>>> cbaf7816a2515418149c1f35469da00f14e06fa5
 	end
 
 

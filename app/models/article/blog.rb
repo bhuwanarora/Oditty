@@ -12,7 +12,11 @@ class Article::Blog < Article
 	end
 
 	def self.set_bookmark_count operation
-		" SET blog.bookmark_count = COALESCE(blog.bookmark_count,0) " + operation + " 1 "
+		if operation == "+"
+			" SET blog.bookmark_count = TOINT(COALESCE(blog.bookmark_count, 0)) + 1 "
+		else
+			" SET blog.bookmark_count = TOINT(COALESCE(blog.bookmark_count, 1)) - 1 "
+		end
 	end
 
 	def match 

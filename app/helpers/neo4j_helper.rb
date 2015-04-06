@@ -811,7 +811,7 @@ module Neo4jHelper
 
 	def self.add_labels_to_existing_user
 		@neo ||= self.init
-		clause = "MATCH (user:User), (label:Label{basic:true}) CREATE UNIQUE (user)-[:BookmarkAction{user_id:ID(user)}]->(label)"
+		clause = "MATCH (user:User), (label:Label{basic:true}) CREATE UNIQUE (user)-[:Labelled{user_id:ID(user)}]->(label)"
 		@neo.execute_query clause
 	end
 
@@ -821,7 +821,7 @@ module Neo4jHelper
 		# articles = 1
 		# listopia = 2
 		# community = 3
-		delete_labels = "MATCH (u:User), (l:Label), (u)-[r1:BookmarkAction]->(l) DELETE r1, l"
+		delete_labels = "MATCH (u:User), (l:Label), (u)-[r1:Labelled]->(l) DELETE r1, l"
 		@neo.execute_query delete_labels
 
 		labels = [{:name => "Read", :key => "Read", :type => [0, 1, 2], :public => true},

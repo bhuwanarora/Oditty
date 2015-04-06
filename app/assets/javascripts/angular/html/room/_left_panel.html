@@ -1,12 +1,15 @@
 <section>
 	<div ng-repeat="shelf in book_shelves" class="side_padding">
-		<div layout-padding>{{shelf.name}}</div><br/>
+		<div layout-padding>{{shelf.shelf}}</div><br/>
 		<a ng-href="/book?q={{book.id}}" ng-repeat="book in shelf.books">
-			<md-button class="clear spine_button">
-				<div class="spine" ng-style="background-color: {{book.spine_color}}">
-					{{shelf.title}}
+			<md-button class="clear spine_button" ng-if="book.title">
+				<div class="spine" ng-style="{background:'{{book.color}}'}">
+					{{book.title}}
 				</div>
 			</md-button>
+			<!-- <a href="/infinity" class="spine_button"> -->
+				<!-- Explore and add books to shelves -->
+			<!-- </a> -->
 		</a>
 		<md-divider></md-divider>
 	</div>

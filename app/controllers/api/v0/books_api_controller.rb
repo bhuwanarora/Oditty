@@ -22,6 +22,13 @@ module Api
 				render :json => books, :status => 200
 			end
 
+			def update_visited
+				book_id = params[:id]
+				user_id = session[:user_id]
+				Bookmark::Type::Visited.new(user_id, book_id).add.execute
+				render :json => "Success", :status => 200
+			end
+
 			def get_popular_books
 				# params = JSON.parse(params["q"])
 				books = BookApi.get_popular_books(params, session[:user_id])

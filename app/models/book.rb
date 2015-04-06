@@ -12,7 +12,11 @@ class Book < Neo
 	end
 
 	def self.set_bookmark_count operation
-		" SET book.bookmark_count = COALESCE(book.bookmark_count,0) " + operation.to_s + " 1 "
+		if operation == "+"
+			" SET book.bookmark_count = TOINT(COALESCE(book.bookmark_count, 0)) + 1 "
+		else
+			" SET book.bookmark_count = TOINT(COALESCE(book.bookmark_count, 1)) - 1 "
+		end
 	end
 
 	def match node_variable="book"
@@ -21,6 +25,10 @@ class Book < Neo
 
 	def self.basic_info
 		" ID(book) AS book_id, book.isbn AS isbn, book.title AS title, book.author_name AS author_name, book.pages_count AS pages_count, book.published_year AS published_year, TOINT(book.total_weight) as popularity"
+	end
+
+	def self.grouped_basic_info
+		" {id: ID(book), isbn: book.isbn, title: book.title, author_name: book.author_name, pages_count: book.pages_count, published_year: book.published_year, popularity: TOINT(book.total_weight)} "
 	end
 
 	def self.match_genre
@@ -51,7 +59,7 @@ class Book < Neo
 	end
 
 	def self.match_root_category
-		 " MATCH (book)-[from_category:FromCategory]->(category:Category)-[has_root:HasRoot*0..1]->(root_category:Category{is_root:true}) "
+		 " MATCH (book)-[from_category:FromCategory]->(category:Category)-[has_root:HasRoot*0..1]->(root_category:Category{is_root:true}) WITH DISTINCT(book) as book, COLLECT(DISTINCT("+Category::Root.grouped_basic_info+")) as root_category "
 	end
 
 	def self.optional_match_root_category
@@ -67,10 +75,18 @@ class Book < Neo
 	end
 
 	def self.set_endorse_count operation
-		" SET book.endorse_count = COALESCE(book.endorse_count,0) " + operation + " 1 " 
+		if operation == "+"
+			" SET book.endorse_count = COALESCE(book.endorse_count, 0)) + 1 " 
+		else
+			" SET book.endorse_count = COALESCE(book.endorse_count, 1)) - 1 " 
+		end
 	end
 
 	def self.set_rating_count operation
-		" SET book.rating_count = COALESCE(book.rating_count,0) " + operation + " 1 "
+		if operation == "+"
+			" SET book.rating_count = COALESCE(book.rating_count, 0)) + 1 "
+		else
+			" SET book.rating_count = COALESCE(book.rating_count, 1)) - 1 "
+		end
 	end
 end
