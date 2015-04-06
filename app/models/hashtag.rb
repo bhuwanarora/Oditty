@@ -5,7 +5,7 @@ class Hashtag < Neo
 	end
 
 	def create
-		" MERGE (status)-[tagged:HashTagged{user_id:" + @user_id.to_s + "}]->(hash_tag:HashTag{hash_tag:\"" + @hash_tag + "\"}) "
+		" MERGE (hash_tag:HashTag{hash_tag:\"" + @hash_tag + "\"}) MERGE (status)-[tagged:HashTagged{user_id:" + @user_id.to_s + "}]->(hash_tag) "
 	end
 
 	def self.create_group hash_tags, user_id  

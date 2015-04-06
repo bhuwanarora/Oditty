@@ -35,8 +35,8 @@ class News < Neo
 		tags
 	end
 
-	def self.merge_news news_link
-		" MERGE (fresh_news:Trending{url:\"" + news_link.to_s + "\"}) ON CREATE SET fresh_news.created_at = " + Time.now.to_i.to_s + " WITH fresh_news "
+	def self.merge news_link
+		" MERGE (news:Trending{url:\"" + news_link.to_s + "\"}) ON CREATE SET news.created_at = " + Time.now.to_i.to_s + " WITH news "
 	end
 
 	def self.merge_region news_source
@@ -44,19 +44,19 @@ class News < Neo
 	end
 
 	def self.optional_match_regional_news
-		"OPTIONAL MATCH (region)-[stale_relation:RegionalNews{region:ID(region)}]->(stale_news) WITH region, stale_relation, stale_news "
+		"OPTIONAL MATCH (region)-[old:RegionalNews{region:ID(region)}]->(old_news) WITH region, old, old_news "
 	end
 
 	def self.optional_match_fresh_news
-		" OPTIONAL MATCH (fresh_news)-[relation:RegionalNews{region:ID(region)}]-()"
+		" OPTIONAL MATCH (news)-[relation:RegionalNews{region:ID(region)}]-()"
 	end
 
 	def self.create_news_link
-		" FOREACH(ignoreMe IN CASE WHEN relation IS NULL AND stale_relation IS NOT NULL THEN [1] ELSE [] END | MERGE (region)-[:RegionalNews{region:ID(region)}]->(fresh_news)-[:RegionalNews{region:ID(region)}]->(stale_news) DELETE stale_relation) FOREACH(ignoreMe IN CASE WHEN relation IS NULL AND stale_relation IS  NULL THEN [1] ELSE [] END | MERGE (region)-[:RegionalNews{region:ID(region)}]->(fresh_news))  "
+		" FOREACH(ignoreMe IN CASE WHEN relation IS NULL AND old IS NOT NULL THEN [1] ELSE [] END | MERGE (region)-[:RegionalNews{region:ID(region)}]->(news)-[:RegionalNews{region:ID(region)}]->(old_news) DELETE old) FOREACH(ignoreMe IN CASE WHEN relation IS NULL AND old IS  NULL THEN [1] ELSE [] END | MERGE (region)-[:RegionalNews{region:ID(region)}]->(news))  "
 	end
 
 	def self.create_news_community_topics news_link, news_source
-		clause  = self.merge_news(news_link) + self.merge_region(news_source) + ", fresh_news " + self.optional_match_regional_news +  ", fresh_news " + self.optional_match_fresh_news + self.create_news_link + News.return_init + " ID(fresh_news) as news_id "
+		clause  = self.merge_news(news_link) + self.merge_region(news_source) + ", news " + self.optional_match_regional_news +  ", news " + self.optional_match_fresh_news + self.create_news_link + News.return_init + " ID(news) as news_id "
 		news_id = (clause.execute)[0]["news_id"]
 
 		response = self.fetch_tags news_link
@@ -65,16 +65,15 @@ class News < Neo
 			response = JSON.parse(response)
 			puts response
 			tags = self.handle_tags response
-			if self.is_news_fresh(news_id) && !tags.blank?
+			if self.news_present(news_id) && !tags.blank?
 				self.map_topics(news_id, response["topics"]) 				
 				self.map_tags(news_id, tags)
 				self.map_tags_to_books(tags, news_link, news_source["region"])
 			end
 		end
-
 	end 
 
-	def self.create_fresh_news
+	def self.create_news
 		news_sources ||= self.fetch_news_sources
 		puts news_sources
 		for news_source in news_sources
@@ -83,32 +82,32 @@ class News < Neo
 			puts news_links
 			for news_link in news_links
 				puts news_link
-				self.create news_link, news_source
+				self.create_news_community_topics news_link, news_source
 			end
 		end
 	end
 
-	def self.is_news_fresh news_id
+	def self.news_present news_id
 		clause = " MATCH (region:Region)-[relation:RegionalNews{region:ID(region)}]->(news) WHERE ID(news) = " + news_id.to_s + " RETURN ID(relation) as relation_id "
 		data = (clause.execute)[0]
 		if data.blank?
-			is_news_fresh = false
+			news_present = false
 		else
-			is_news_fresh = true
+			news_present = true
 		end
-		is_news_fresh
+		news_present
 	end
 
 	def self.map_topics news_id, topics
 		topics.each do |topic|
-			clause = News.new(news_id).match + " MERGE (topic:Topic{name:\"" + topic["value"].to_s + "\"})<-[:HasTopic]-(news) "
+			clause = News.new(news_id).match + " MERGE (topic:Topic{name:\"" + topic["value"].to_s + "\"})  MERGE (topic)<-[:HasTopic]-(news) "
 			clause.execute
 		end
 	end
 
 	def self.map_tags news_id, tags
 		for tag in tags
-			clause = News.new(news_id).match + " MERGE (news)-[:HasTags]->(tag:Community{name:\" " + tag.to_s + "\"}) "
+			clause = News.new(news_id).match + " MERGE (tag:Community{name:\" " + tag.to_s + "\"}) MERGE (news)-[:HasTags]->(tag) "
 			clause.execute
 		end
 	end
