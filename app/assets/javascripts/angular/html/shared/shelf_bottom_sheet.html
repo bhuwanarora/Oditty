@@ -4,7 +4,9 @@
     <div layout="column" flex layout-fill>
         <md-content class="book_list">
             <section>
-                <md-subheader>Add to</md-subheader>
+                <md-subheader>
+                    <div layout-padding>Add to</div>
+                </md-subheader>
                 <md-list layout="column" layout-fill>
                     <md-item ng-repeat="label in labels" ng-click="show_custom_toast()" ng-if="label.public_status">
                         <md-checkbox ng-model="data.cb1" aria-label="{{label.label_id}}" class="md-warn">
@@ -16,7 +18,7 @@
         </md-content>
         <md-divider></md-divider>
         <section layout="row" class="footer" layout-padding>
-            <md-input-container class="add_new">
+            <md-input-container class="clear">
                 <label>Create New...</label>
                 <input ng-model="new_label"/>
             </md-input-container>
@@ -47,6 +49,7 @@
         position: fixed;
         bottom: 5px !important;
         width: 100vw !important;
+        background-color: white;
     }
 
     .md-subheader:not(.md-sticky-no-effect)[sticky-state=active] {

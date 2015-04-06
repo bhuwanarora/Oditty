@@ -299,6 +299,12 @@ module Api
 				genres = CategoriesHelper.get_sorted_genres user_id
 				render :json => genres, :status => 200
 			end
+
+			def get_influential_books
+				user_id = session[:user_id]
+				influential_books = UserApi.get_influential_books(user_id).execute
+				render :json => influential_books, :status => 200
+			end
 		end
 	end
 end

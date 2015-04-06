@@ -21,9 +21,8 @@
 		<b class="small-padding">Books he finds influential</b>
 		<md-divider></md-divider>
 		<div layout-padding layout-wrap layout="row">
-			<div ng-repeat="book in user.influential_books" layout="column" layout-wrap>
-				<div ng-include src="'/assets/angular/html/shared/partials/book.html'"></div>
-			</div>
+			<div ng-init="books = user.influential_books" 
+				 ng-include src="'/assets/angular/html/shared/partials/spine.html'"></div>
 		</div>
 	</section>
 </section>

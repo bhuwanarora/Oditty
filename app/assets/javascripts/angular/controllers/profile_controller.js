@@ -9,8 +9,17 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 				var json = {"root_category_id": value, "root_category_name": data.categories_name[index], "url": url, "status": true};
 				this.push(json);
 			}, categories);
+
+			var books = [];
+			angular.forEach(data.books_id, function(value, index){
+				var random_int = Math.floor(Math.random()*ColorConstants.value.length);
+				var json = {"color": ColorConstants.value[random_int], "book_id": value, "title": data.books_title[index], "author_name": data.books_author_name[index], "isbn": data.books_isbn[index]};
+				this.push(json);
+			}, books)
+
 			$rootScope.user = angular.extend($rootScope.user, data);
 			$rootScope.user = angular.extend($rootScope.user, {"favourite_categories": categories});
+			$rootScope.user = angular.extend($rootScope.user, {"influential_books": books});
 		});
 
 		userService.get_feed().then(function(data){
@@ -21,6 +30,7 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 				this.push(value);
 			}, $rootScope.user.feed);
 		});
+
 	}
 
 	_init();

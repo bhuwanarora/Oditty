@@ -119,6 +119,10 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         }
     }
 
+    this.get_influential_books = function(){
+        return _deferred_request('/api/v0/get_influential_books');
+    }
+
     this.get_latest_notification = function(){
         return _deferred_request('/api/v0/latest_notification');
     }

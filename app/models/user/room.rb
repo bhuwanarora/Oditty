@@ -10,7 +10,7 @@ class User::Room < User
 	end
 
 	def get_articles_from_public_shelves
-		@user.match + Bookmark::Node::ArticleLabel.get_public(@user_id)
+		@user.match + Bookmark::Node::ArticleLabel.get_public
 	end
 
 	def get_visited_books 

@@ -19,6 +19,9 @@ module Api
 				UsersUser.new(user_id, friend_id).unfollow
 			end
 
+			def self.get_influential_books user_id
+				Bookmark::Type::HaveLeftAMarkOnMe.get_all user_id
+			end
 
 			def self.endorse_book book_id, user_id
 				UsersBook::Endorse.new(book_id, user_id).add
