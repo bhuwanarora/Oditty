@@ -80,7 +80,7 @@ class Bookmark < Neo
 	end
 
 	def create
-		UsersBook.new(@book_id, @user_id).match + User.create_label(@key) + create_label_bookmark_node + Bookmark.create_bookmark_node_book + Bookmark.set_title + Bookmark.set_author_name + Bookmark.set_name + Bookmark.set_email + Bookmark.set_isbn + Bookmark.set_timestamp + Bookmark.set_created_at + Bookmark.set_updated_at + " WITH user, book, bookmark_node, label, labelled "
+		UsersBook.new(@book_id, @user_id).match + User.create_label(@key) + create_label_bookmark_node + Bookmark.create_bookmark_node_book + Bookmark.set_title + Bookmark.set_author_name + Bookmark.set_name + Bookmark.set_email + Bookmark.set_isbn + Bookmark.set_created_at + Bookmark.set_updated_at + " WITH user, book, bookmark_node, label, labelled "
 	end
 
 	def add
@@ -104,7 +104,7 @@ class Bookmark < Neo
 		operation = "-"
 		set_clause = Book.set_bookmark_count(operation) + User.set_bookmark_count(operation) + Label.set_bookmark_count(operation) + UsersLabel.set_bookmark_count(operation) + User.set_total_count(Constants::BookmarkPoints, operation) + Bookmark.with_group("user", "book", "bookmark_node", "labelled", "label")
 		
-		feednext_clause = User::Feed.new(@user_id).delete_feed("bookmark_node") + ", labelled, label "
+		feednext_clause = User::Feed.new(@user_id).delete_feed("bookmark_node") + ", book, labelled, label "
 
 		bookfeed_next_clause = Book::Feed.new(@user_id).delete_feed("bookmark_node") + ", labelled, label "
 

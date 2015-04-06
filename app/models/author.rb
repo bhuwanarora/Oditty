@@ -38,6 +38,15 @@ class Author < Neo
 		skip(skip_count) +  limit(Constants::FollowFavoriteAuthorsCount) + return_init + Author.basic_info
 	end
 
+	def self.books book="book", label_defined=false
+		unless label_defined
+			where_clause = " WHERE author :Author"
+		else
+			where_clause =  "" 
+		end
+		" MATCH (author)" + "-[:Wrote]->(" + book + ") " + where_clause
+	end
+
 	def get_details
 		match + match_books + Author.return_group(Author.basic_info, Book.detailed_info) + Author.limit(10)
 	end

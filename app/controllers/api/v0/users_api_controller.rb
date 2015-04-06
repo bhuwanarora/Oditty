@@ -19,11 +19,11 @@ module Api
 				status = params[:status]
 				user_id = session[:user_id]
 				if status == "true"
-					Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).add.execute
+					info = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).add.print
 				else
-					Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).remove.execute
+					info = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).remove.print
 				end
-				render :json => "Success", :status => 200
+				render :json => info, :status => 200
 			end
 
 			def get_books_from_favourite_author
@@ -169,50 +169,16 @@ module Api
 				render :json => {:message => "Success"}, :status => 200
 			end
 
-			def bookmark
-				type = params[:type]
-				bookmark_action = params[:data]
-				user_id = session[:user_id]
-				book_id = params[:id]
-				name = params[:name]
-				if type == "BOOK"
-					if bookmark_action
-						UsersGraphHelper.bookmark_book(user_id, book_id, name)
-					else
-						UsersGraphHelper.remove_bookmark(user_id, book_id, name)
-					end
-				elsif type == "AUTHOR"
-				elsif type == "READER"
-				end
-				render :json => {:message => "Success"}, :status => 200
-			end
-
-			def mark_as_read
-				mark_as_read_action = params[:data]
-				user_id = session[:user_id]
-				book_id = params[:book_id]
-				if mark_as_read_action
-					UsersGraphHelper.mark_as_read(user_id, book_id)
-				else
-					UsersGraphHelper.mark_as_unread(user_id, book_id)
-				end
-				render :json => {:message => "Success"}, :status => 200
-			end
-
 			def follow
-				follow_action = params[:q]
-				friend_id = params[:id]
-				if session[:user_id]
-					user_id = session[:user_id]
-					if follow_action
-						UsersGraphHelper.follow_user(user_id, friend_id)
-					else
-						UsersGraphHelper.unfollow_user(user_id, friend_id)
-					end
-					render :json => {:message => "Success"}, :status => 200
+				follow_action = params[:q] 
+				friend_id = params[:id] 
+				user_id = session[:user_id]
+				if follow_action
+					Api::V0::UserApi.follow_user(user_id, friend_id).execute
 				else
-					render :json => {:message => Constants::SessionNotSet}, :status => 500
+					Api::V0::UserApi.unfollow_user(user_id, friend_id).execute
 				end
+				render :json => {:message => "Success"}, :status => 200
 			end
 
 			def comment

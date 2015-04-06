@@ -24,12 +24,12 @@ class User::Feed < User
 		get_feed_relations_for_m = " MATCH (s)-[f1:FeedNext{user_id:"+@user_id.to_s+"}]->("+object+")-[f2:FeedNext{user_id:"+@user_id.to_s+"}]->(e) "
 		create_new_relations_in_place = "CREATE (s)-[:FeedNext{user_id:"+@user_id.to_s+"}]->(e) "
 		delete_old_relations = "DELETE f1, f2 "
-		with_clause = "WITH user, book, "+object
+		with_clause = "WITH user, "+object
 		clause = get_feed_relations_for_m + create_new_relations_in_place + delete_old_relations + with_clause
 		clause
 	end
 
 	def create object
-		" MATCH (user)-[old:FeedNext]->(old_feed) CREATE UNIQUE (user)-[:FeedNext{user_id:"+@user_id.to_s+"}]->(" + object + ")-[:FeedNext{user_id:"+@user_id.to_s+"}]->(old_feed) DELETE old WITH user, "+object
+		" MATCH (user)-[old:FeedNext{user_id:"+@user_id.to_s+"}]->(old_feed) CREATE UNIQUE (user)-[:FeedNext{user_id:"+@user_id.to_s+"}]->(" + object + ")-[:FeedNext{user_id:"+@user_id.to_s+"}]->(old_feed) DELETE old WITH user, "+object+" "
 	end
 end
