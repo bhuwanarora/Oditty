@@ -16,9 +16,9 @@ module Api
 			end
 
 			def self.get_news_feed(user_id, skip_count)
-				news_feed = UsersGraphHelper.get_news_feed(user_id, skip_count)
+				news_feed = User::Feed.new(user_id).get_news_feed(skip_count)
 				begin
-					notifications = NotificationHelper.structure_feed news_feed
+					notifications = Notification.structure_feed news_feed
 				rescue Exception => e
 					notifications = []
 				end
@@ -26,12 +26,8 @@ module Api
 			end
 
 			def self.get_personal_feed(user_id, skip_count)
-				news_feed = UsersGraphHelper.get_personal_feed(user_id, skip_count)
-				begin
-					notifications = NotificationHelper.structure_feed news_feed
-				rescue Exception => e
-					notifications = []
-				end
+				news_feed = User::Feed.new(user_id).get_personal_feed(skip_count).execute
+				notifications = Notification.new(news_feed).structure_feed
 				notifications
 			end
 

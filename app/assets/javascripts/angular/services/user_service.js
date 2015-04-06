@@ -126,4 +126,8 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
     this.get_info_data = function(){
         return _deferred_request('/api/v0/info_data');
     }
+
+    this.get_feed = function(){
+        return _deferred_request('/api/v0/notifications')
+    }
 }]);
