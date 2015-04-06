@@ -1,20 +1,16 @@
 class Bookmark::Node::ArticleLabel < Bookmark::Node
 
-	def self.match 
-		" MATCH (article) WHERE article:News  OR article:Blog WITH user, article"  
-	end
-
 	def self.get_public
-		where_clause = " WHERE bookmark_node.public = true WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, article, COUNT(label) AS label_count "
-		Bookmark::Node::ArticleLabel.match + Bookmark::Node::ArticleLabel.match_path + where_clause + ArticleLabel.return_group(Label.basic_info, Bookmark.basic_info, Bookmark::Node::ArticleLabel.basic_info )  + ", label_count " + ArticleLabel.order_init + " label_count, time DESC " + ArticleLabel.limit(Constants::ArticlesShownInRoomCount)  
+		where_clause = " WHERE bookmark_node.public = true AND ( article:News  OR article:Blog) WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, article, COUNT(label) AS label_count "
+		Bookmark::Node::ArticleLabel.optional_match_user + where_clause + ArticleLabel.return_group(Label.basic_info, Bookmark.basic_info, Bookmark::Node::ArticleLabel.basic_info )  + ", label_count " + ArticleLabel.order_init + " label_count, time DESC " + ArticleLabel.limit(Constants::ArticlesShownInRoomCount)  
 	end
 
 	def self.get_visited
-		where_clause = " WHERE bookmark_node.name = 'Visited' WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, article, COUNT(label) AS label_count "
-		Bookmark::Node::ArticleLabel.match + Bookmark::Node::ArticleLabel.match_path + where_clause + ArticleLabel.return_group(Label.basic_info, Bookmark.basic_info, Bookmark::Node::ArticleLabel.basic_info )  + ", label_count " + ArticleLabel.order_init + " label_count, time DESC " + ArticleLabel.limit(Constants::ArticlesShownInRoomCount)
+		where_clause = " WHERE bookmark_node.name = 'Visited' AND ( article:News  OR article:Blog) WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, article, COUNT(label) AS label_count "
+		Bookmark::Node::ArticleLabel.optional_match_user + where_clause + ArticleLabel.return_group(Label.basic_info, Bookmark.basic_info, Bookmark::Node::ArticleLabel.basic_info )  + ", label_count " + ArticleLabel.order_init + " label_count, time DESC " + ArticleLabel.limit(Constants::ArticlesShownInRoomCount)
 	end
 
-	def self.match_path 
+	def self.optional_match_user 
 		" OPTIONAL MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(article) "
 	end
 
