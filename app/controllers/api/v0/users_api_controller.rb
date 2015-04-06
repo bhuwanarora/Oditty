@@ -19,11 +19,11 @@ module Api
 				status = params[:status]
 				user_id = session[:user_id]
 				if status == "true"
-					Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).add.execute
+					info = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).add.print
 				else
-					Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).remove.execute
+					info = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).remove.print
 				end
-				render :json => "Success", :status => 200
+				render :json => info, :status => 200
 			end
 
 			def get_books_from_favourite_author
@@ -166,36 +166,6 @@ module Api
 				book_id = params[:id]
 				rating = params[:data]
 				Api::V0::UserApi.rate_book(book_id, user_id, rating).execute
-				render :json => {:message => "Success"}, :status => 200
-			end
-
-			def bookmark
-				type = params[:type]
-				bookmark_action = params[:data]
-				user_id = session[:user_id]
-				book_id = params[:id]
-				name = params[:name]
-				if type == "BOOK"
-					if bookmark_action
-						UsersGraphHelper.bookmark_book(user_id, book_id, name)
-					else
-						UsersGraphHelper.remove_bookmark(user_id, book_id, name)
-					end
-				elsif type == "AUTHOR"
-				elsif type == "READER"
-				end
-				render :json => {:message => "Success"}, :status => 200
-			end
-
-			def mark_as_read
-				mark_as_read_action = params[:data]
-				user_id = session[:user_id]
-				book_id = params[:book_id]
-				if mark_as_read_action
-					UsersGraphHelper.mark_as_read(user_id, book_id)
-				else
-					UsersGraphHelper.mark_as_unread(user_id, book_id)
-				end
 				render :json => {:message => "Success"}, :status => 200
 			end
 
