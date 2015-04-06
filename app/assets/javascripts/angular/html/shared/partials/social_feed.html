@@ -1,0 +1,63 @@
+<md-card class="social">
+    <md-card-content>
+        <section layout="row" layout-align="start">
+            <div layout="row">
+                <img ng-src="{{user.profile_thumb}}" class="profile_thumb circular">
+                <div layout="column" layout-align="start start">
+                    <h2>{{feed.first_name}}</h2>
+                    <div>Shared on {{feed.created_at}}</div>
+                </div>
+            </div>
+        </section>
+        <div class="side_padding">
+            
+        </div>
+        <div class="social_content" layout="row">
+            <div class="padding" flex="30">
+                <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'" ng-init="book = feed.book"></div>
+            </div>
+            <div flex="70">
+                <h3>{{feed.book.title}}</h3>
+                <div>By {{feed.book.author_name}}</div>
+                <p>
+                    {{feed.book.description}}
+                </p>
+            </div>
+        </div>
+    </md-card-content>
+    <md-card-content class="footer">
+        <section layout="row" layout-sm="column" layout-align="space-between">
+            <div layout="row" layout-align="start center">
+                <md-button  class="md-button-clear" ng-click="show_shelf_bottom_sheet()">Bookmark</md-button>&nbsp;
+                <div><span class="icon-bookmark3"></span></div>&nbsp;
+                <div>{{feed.bookmark_count || 0}}</div>&nbsp;&nbsp;
+                <div><span class="icon-bubbles2"></span></div>&nbsp;
+                <div>{{feed.comment_count || 0}}</div>&nbsp;
+            </div>
+            <div layout="row" layout-align="end center">
+                <md-button  class="md-button-clear" ng-click="show_share_bottom_sheet()">Share</md-button>&nbsp;
+                <div><span class="icon-share"></span></div>&nbsp;
+                <div>{{feed.share_count || 0}}</div>
+            </div>
+        </section>
+    </md-card-content>
+</md-card>
+<style>
+    .profile_thumb{
+        width: 70px;
+        height: 70px;
+        padding: 10px;
+    }
+
+    .social_content{
+        order: 1;
+    }
+
+    .social h2{
+        margin: 16px 0px 0px 0px !important;
+    }
+
+    .social .book_thumb{
+        width: 100%;
+    }
+</style>

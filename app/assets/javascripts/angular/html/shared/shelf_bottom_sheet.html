@@ -1,18 +1,21 @@
-<md-bottom-sheet class="md-list md-has-header" 
-    ng-controller="shelfController" 
-    layout-padding
+<md-bottom-sheet class="share_bottom_list" 
+    ng-controller="shelfController" layout-padding
     ng-click="stop_propagation($event)">
-    <md-content class="bottom_shelf white">
-        <section layout-padding>Add to</section>
-        <md-list>
-            <md-item ng-repeat="label in labels" ng-click="show_custom_toast()" ng-if="label.public_status">
-                <md-checkbox ng-model="data.cb1" aria-label="{{label.label_id}}" class="md-warn">
-                    {{label.label_name}}
-                </md-checkbox>
-            </md-item>
-        </md-list>
+    <div layout="column" flex layout-fill>
+        <md-content class="book_list">
+            <section>
+                <md-subheader>Add to</md-subheader>
+                <md-list layout="column" layout-fill>
+                    <md-item ng-repeat="label in labels" ng-click="show_custom_toast()" ng-if="label.public_status">
+                        <md-checkbox ng-model="data.cb1" aria-label="{{label.label_id}}" class="md-warn">
+                            {{label.label_name}}
+                        </md-checkbox>
+                    </md-item>
+                </md-list>
+            </section>
+        </md-content>
         <md-divider></md-divider>
-        <section layout="row" layout-padding>
+        <section layout="row" class="footer" layout-padding>
             <md-input-container class="add_new">
                 <label>Create New...</label>
                 <input ng-model="new_label"/>
@@ -21,15 +24,32 @@
                 <span class="icon-plus"></span>
             </md-button>
         </section>
-    </md-content>
+    </div>
 </md-bottom-sheet>
 
 <style>
-    .add_new{
-        padding-bottom: 0px;
+    md-content.md-default-theme {
+        background-color: white;
     }
 
-    .bottom_shelf{
-        max-height: 80vh;
+    .share_bottom_list{
+        height: 60vh !important;
+    }
+
+    .book_list{
+        position: absolute;
+        top: 5px !important;
+        height:75vh !important;
+        width: 100vw !important;
+    }
+
+    .footer{
+        position: fixed;
+        bottom: 5px !important;
+        width: 100vw !important;
+    }
+
+    .md-subheader:not(.md-sticky-no-effect)[sticky-state=active] {
+        margin-top: 0px !important;
     }
 </style>

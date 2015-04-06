@@ -87,7 +87,7 @@ class Bookmark < Neo
 		operation = "+"
 		set_clause = Book.set_bookmark_count(operation) + User.set_bookmark_count(operation) + Label.set_bookmark_count(operation) + UsersLabel.set_bookmark_count(operation) + User.set_total_count(Constants::BookmarkPoints, operation)
 
-		clause = create + User::Feed.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled + Book::Feed.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled + set_clause
+		clause = create + User::Feed.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled + ", book " + Book::Feed.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled + set_clause
 		puts "BOOK BOOKMARKED".green
 		clause
 	end

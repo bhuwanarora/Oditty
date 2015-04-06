@@ -1,1 +1,8 @@
-<div ng-include src="'/assets/angular/html/home/show.html'"></div>
+<md-list>
+	<div ng-repeat="feed in user.feed">
+	    <div ng-if="feed.label != 'BookmarkNode'" ng-include src="'/assets/angular/html/home/_blog.html'"></div>
+	    <div ng-if="feed.label != 'BookmarkNode'" ng-include src="'/assets/angular/html/home/_community.html'"></div>
+	    <div ng-if="feed.label == 'BookmarkNode'" ng-include src="'/assets/angular/html/shared/partials/social_feed.html'"></div>
+	    <div ng-if="feed.label != 'BookmarkNode'" ng-include src="'/assets/angular/html/home/_listopia.html'"></div>
+	</div>
+</md-list>
