@@ -1,6 +1,6 @@
-homeApp.controller('authorController', ["$scope", "$location", 'authorService', '$mdDialog', 'scroller', 'ColorConstants', function($scope, $location, authorService, $mdDialog, scroller, ColorConstants){
+homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'authorService', '$mdDialog', 'scroller', 'ColorConstants', function($scope, $location, $mdSidenav, authorService, $mdDialog, scroller, ColorConstants){
 
-	$scope.show_buy_dialog = function(event){
+    $scope.show_buy_dialog = function(event){
         $mdDialog.show({
             templateUrl: 'assets/angular/html/author/buy.html',
             targetEvent: event,
@@ -20,8 +20,13 @@ homeApp.controller('authorController', ["$scope", "$location", 'authorService', 
 
     }
 
-  	_init = function(){
-  		var regex = /[?&]([^=#]+)=([^&#]*)/g;
+    $scope.show_authors_nav = function(event){
+        $mdSidenav('authors_detail_sidenav').toggle();
+        event.stopPropagation();
+    }
+
+    _init = function(){
+        var regex = /[?&]([^=#]+)=([^&#]*)/g;
         var id = regex.exec($location.absUrl())[2];
         authorService.get_details(id).then(function(data){
             $scope.author = data;
@@ -32,8 +37,8 @@ homeApp.controller('authorController', ["$scope", "$location", 'authorService', 
             });
             $scope.custom_color = {'background-color': $scope.author.books[0].color};
         });
-  	}
+    }
 
-  	_init();
+    _init();
 
 }]);
