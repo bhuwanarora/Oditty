@@ -47,7 +47,7 @@ class News < Neo
 		"OPTIONAL MATCH (region)-[old:RegionalNews{region:ID(region)}]->(old_news) WITH region, old, old_news "
 	end
 
-	def self.optional_match_fresh_news
+	def self.optional_match_news
 		" OPTIONAL MATCH (news)-[relation:RegionalNews{region:ID(region)}]-()"
 	end
 
@@ -56,7 +56,7 @@ class News < Neo
 	end
 
 	def self.create_news_community_topics news_link, news_source
-		clause  = self.merge_news(news_link) + self.merge_region(news_source) + ", news " + self.optional_match_regional_news +  ", news " + self.optional_match_fresh_news + self.create_news_link + News.return_init + " ID(news) as news_id "
+		clause  = self.merge(news_link) + self.merge_region(news_source) + ", news " + self.optional_match_regional_news +  ", news " + self.optional_match_news + self.create_news_link + News.return_init + " ID(news) as news_id "
 		news_id = (clause.execute)[0]["news_id"]
 
 		response = self.fetch_tags news_link
@@ -107,7 +107,7 @@ class News < Neo
 
 	def self.map_tags news_id, tags
 		for tag in tags
-			clause = News.new(news_id).match + " MERGE (community:Community{name:\" " + tag.to_s + "\"}) MERGE (news)-[:HasCommunity]->(community) "
+			clause = News.new(news_id).match + " MERGE (community:Community{name:\" " + tag.to_s + "\"}) MERGE (news)-[:HasCommunity]->(community) " + Community.set_importance
 			clause.execute
 		end
 	end
@@ -115,7 +115,7 @@ class News < Neo
 	def self.map_tags_to_books tags, news_link, region
 	    for tag in tags
         	clause = " MERGE (community:Community{name: \"" + tag + "\"}) ON CREATE SET community.status = 1, community.timestamp=" + Time.now.to_i.to_s + ", community.url = \"" + news_link.to_s + "\", community.location = \"" + region.to_s + "\" WITH community "
-			self.map_books_to_news(clause, tag)
+			self.map_books_to_tags(clause, tag)
 	    end
 	end
 
@@ -141,7 +141,8 @@ class News < Neo
 	end
 
 	def self.fetch_tags news_link
-		query = Rails.application.config.nlp_service + news_link 
+		query = Rails.application.config.nlp_service + "api/v0/parser?q=" + news_link 
+		puts query
 		uri = URI(query)
 		response = Net::HTTP.get(uri)
 	end
@@ -150,11 +151,11 @@ class News < Neo
 		count = 0
 		Google::Search::Book.new(:query => tag).each do |book|
 			count += 1
-			if count == 50
+			if count == 10
 				break
 			end
 			indexed_title = book.title.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\"", "")
-			map_clause = " START book=node:node_auto_index('indexed_title:\""+indexed_title+"\"') MERGE (community)-[:RelatedBooks]->(book)  MERGE (community)-[:RelatedBooks]->(book) "
+			map_clause = " START book=node_auto_index('indexed_title:\""+indexed_title+"\"') MERGE (community)-[:RelatedBooks]->(book) "
 			puts (clause + map_clause).blue.on_red
     		(clause + map_clause).execute
 		end
