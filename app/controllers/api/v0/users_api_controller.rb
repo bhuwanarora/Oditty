@@ -1,7 +1,6 @@
 module Api
 	module V0
 		class UsersApiController < ApplicationController
-			# require_dependency 'user/suggest/book'w
 
 			def get_info_card_data
 				info = UserApi.get_info_card_data
@@ -12,6 +11,22 @@ module Api
 				user_id = session[:user_id]
 				books = UserApi.get_small_reads
 				render :json => books, :status => 200
+			end
+
+			def bookmark
+				params = params["q"]
+				params = JSON.parse params
+				id = params["id"]
+				type = params["type"]
+				shelf = params["shelf"]
+				status = params["status"]
+				user_id = session[:user_id]
+				if status == "true"
+					UserApi.add_bookmark(user_id, id, type, shelf)
+				else
+					UserApi.remove_bookmark(user_id, id, type, shelf)
+				end
+				render :json => {:message => "Success"}, :status => 200
 			end
 
 			def handle_influential_books

@@ -8,8 +8,8 @@
                     <div layout-padding>Add to</div>
                 </md-subheader>
                 <md-list layout="column" layout-fill>
-                    <md-item ng-repeat="label in labels" ng-click="show_custom_toast()" ng-if="label.public_status">
-                        <md-checkbox ng-model="data.cb1" aria-label="{{label.label_id}}" class="md-warn">
+                    <md-item ng-repeat="label in labels" ng-if="label.public_status">
+                        <md-checkbox ng-model="data.cb1" aria-label="{{label.label_id}}" class="md-warn" ng-click="toggle_bookmark(label, data.cb1)" >
                             {{label.label_name}}
                         </md-checkbox>
                     </md-item>

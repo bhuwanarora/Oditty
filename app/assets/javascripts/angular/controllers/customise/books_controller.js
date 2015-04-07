@@ -27,14 +27,14 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
         }
     }
 
-    $scope.show_shelf_bottom_sheet = function(event){
-        $mdBottomSheet.show({
-            templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
-            controller: 'shelfController',
-            targetEvent: event
-        });
-        event.stopPropagation();
-    };
+    // $scope.show_shelf_bottom_sheet = function(event){
+    //     $mdBottomSheet.show({
+    //         templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
+    //         controller: 'shelfController',
+    //         targetEvent: event
+    //     });
+    //     event.stopPropagation();
+    // };
 
     $scope.mark_as_read = function(book, event){
         if(angular.isDefined(book.id)){
