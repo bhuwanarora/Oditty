@@ -275,7 +275,7 @@ module Api
 
 			private
 			def self._get_trends trend_id
-				clause = "MATCH (t:Trending)-[:RelatedBooks]->(b:Book) WHERE ID(t)="+trend_id.to_s+" RETURN b.isbn, ID(b), b.external_thumb LIMIt 15"
+				clause = "MATCH (t:News)-[:RelatedBooks]->(b:Book) WHERE ID(t)="+trend_id.to_s+" RETURN b.isbn, ID(b), b.external_thumb LIMIt 15"
 				clause
 			end
 

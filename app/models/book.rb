@@ -28,7 +28,7 @@ class Book < Neo
 	end
 
 	def self.grouped_basic_info
-		" {id: ID(book), isbn: book.isbn, title: book.title, author_name: book.author_name, pages_count: book.pages_count, published_year: book.published_year, popularity: TOINT(book.total_weight)} "
+		" id: ID(book), isbn: book.isbn, title: book.title, author_name: book.author_name, pages_count: book.pages_count, published_year: book.published_year, popularity: TOINT(book.total_weight) "
 	end
 
 	def self.match_genre

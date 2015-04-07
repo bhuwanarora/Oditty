@@ -12,15 +12,19 @@ class Community < Neo
 		" community.view_count AS view_count, community.name AS name "
 	end
 
-	def match_books 
+	def self.grouped_basic_info
+		"  view_count:community.view_count ,  name:community.name  "
+	end
+
+	def self.match_books 
 		" MATCH (community)-[:RelatedBooks]->(book:Book) WITH community, book "
 	end
 
 	def get_books
-		match + match_books + Book.order_desc + Community.limit(Constants::CommunityBooksCount.to_s) + Neo.return_init + Book.basic_info
+		match + Community.match_books + Book.order_desc + Community.limit(Constants::CommunityBooksCount.to_s) + Neo.return_init + Book.basic_info
 	end
 
-	def match_users
+	def self.match_users
 		" MATCH (community)<-[of_community:OfCommunity]-(follow_node:FollowNode)<-[follows:Follows]-(user:User) WITH community, follow_node, user "
 	end
 
@@ -37,30 +41,25 @@ class Community < Neo
 	end
 
 	def get_users
-<<<<<<< HEAD
-		match + match_users + Community.limit(Constants::CommunityUsersCount) + Community.return_init + User.basic_info
-=======
-		match + match_users + Community.return_init + User.basic_info
->>>>>>> cbaf7816a2515418149c1f35469da00f14e06fa5
+		match + Community.match_users + Community.limit(Constants::CommunityUsersCount) + Community.return_init + User.basic_info
 	end
 
 
 	def self.get_news
-		" MATCH (community)<-[:Hastopic]-(news:News) WITH community, news "
+		" MATCH (community)<-[:HasCommunity]-(news:News) WITH community, news "
 	end
 
-
-
-	def get_communities_chronologically
-<<<<<<< HEAD
-		match + Community.get_news + News.match_chronological_news + News.match_community + Community.return_init + Community.basic_info 
-=======
-		match + Community.get_news + New.match_chronological_news + News.match_community + Community.return_init + Community.basic_info 
->>>>>>> cbaf7816a2515418149c1f35469da00f14e06fa5
-	end
 
 
 	def self.set_follow_count
 		" SET community.follow_count = COALESCE(community.follow_count,0) + 1 "
+	end
+
+	def self.order_desc
+		" ORDER BY community.importance DESC "
+	end
+
+	def self.match_grouped_books
+		Community.match_books + Book.collect_map({"books_info" => Book.grouped_basic_info }) 
 	end
 end

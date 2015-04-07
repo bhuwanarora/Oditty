@@ -15,6 +15,14 @@ module Api
 				labels
 			end
 
+			def self.get_communities_info id
+				Article::News.new(id).most_important_tag_info + Article::News.new(id).other_tags_info
+			end
+
+			def self.get_chronological_news_info id
+				Article::News.new(id).get_chronological_news_info
+			end
+
 			def self.get_news_feed(user_id, skip_count)
 				news_feed = UsersGraphHelper.get_news_feed(user_id, skip_count)
 				begin
@@ -44,12 +52,6 @@ module Api
                 time_groups = @neo.execute_query("MATCH (t:Era) RETURN t.name as name, t.range as range, ID(t) as id")
                 time_groups
 			end
-
-			private
-			def self.neo_init
-				@neo = Neography::Rest.new
-			end
-			
 		end
 	end
 end

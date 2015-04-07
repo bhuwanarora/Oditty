@@ -20,11 +20,11 @@ class News < Neo
 	end
 
 	def self.match_community
-		" MATCH (news:News)-[:HasTopic]->(community:Community) WITH news, community "
+		" MATCH (news:News)-[:HasCommunity]->(community:Community) WITH news, community "
 	end
 
 	def match_community
-		" MATCH (news)-[:HasTopic]->(community:Community) WITH news, community "
+		" MATCH (news)-[:HasCommunity]->(community:Community) WITH news, community "
 	end
 
 	def self.handle_tags response
@@ -36,7 +36,7 @@ class News < Neo
 	end
 
 	def self.merge news_link
-		" MERGE (news:Trending{url:\"" + news_link.to_s + "\"}) ON CREATE SET news.created_at = " + Time.now.to_i.to_s + " WITH news "
+		" MERGE (news:News{url:\"" + news_link.to_s + "\"}) ON CREATE SET news.created_at = " + Time.now.to_i.to_s + " WITH news "
 	end
 
 	def self.merge_region news_source
@@ -107,7 +107,7 @@ class News < Neo
 
 	def self.map_tags news_id, tags
 		for tag in tags
-			clause = News.new(news_id).match + " MERGE (tag:Community{name:\" " + tag.to_s + "\"}) MERGE (news)-[:HasTags]->(tag) "
+			clause = News.new(news_id).match + " MERGE (community:Community{name:\" " + tag.to_s + "\"}) MERGE (news)-[:HasCommunity]->(community) "
 			clause.execute
 		end
 	end
@@ -150,7 +150,7 @@ class News < Neo
 		count = 0
 		Google::Search::Book.new(:query => tag).each do |book|
 			count += 1
-			if count = 50
+			if count == 50
 				break
 			end
 			indexed_title = book.title.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\"", "")
