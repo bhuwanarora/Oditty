@@ -13,10 +13,10 @@
             
         </div>
         <div class="social_content" layout="row" ng-if="feed.book.title">
-            <div class="padding" flex="30">
+            <div class="padding" flex="40">
                 <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'" ng-init="book = feed.book"></div>
             </div>
-            <div flex="70">
+            <div flex="60">
                 <h3>{{feed.book.title}}</h3>
                 <div>By {{feed.book.author_name}}</div>
                 <p>
