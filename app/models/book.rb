@@ -84,17 +84,17 @@ class Book < Neo
 
 	def self.set_endorse_count operation
 		if operation == "+"
-			" SET book.endorse_count = COALESCE(book.endorse_count, 0)) + 1 " 
+			" SET book.endorse_count = TOINT(COALESCE(book.endorse_count, 0)) + 1 " 
 		else
-			" SET book.endorse_count = COALESCE(book.endorse_count, 1)) - 1 " 
+			" SET book.endorse_count = TOINT(COALESCE(book.endorse_count, 1)) - 1 " 
 		end
 	end
 
 	def self.set_rating_count operation
 		if operation == "+"
-			" SET book.rating_count = COALESCE(book.rating_count, 0)) + 1 "
+			" SET book.rating_count = TOINT(COALESCE(book.rating_count, 0)) + 1 "
 		else
-			" SET book.rating_count = COALESCE(book.rating_count, 1)) - 1 "
+			" SET book.rating_count = TOINT(COALESCE(book.rating_count, 1)) - 1 "
 		end
 	end
 end

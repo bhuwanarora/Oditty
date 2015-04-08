@@ -297,11 +297,11 @@ module Api
 				book_id = params[:id]
 				status =  params[:status]
 				if status 
-					Api::V0::UserApi.endorse_book(book_id, user_id).execute
+					info = Api::V0::UserApi.endorse_book(book_id, user_id).execute
 				else
-					Api::V0::UserApi.remove_endorse(book_id, user_id).execute
+					info = Api::V0::UserApi.remove_endorse(book_id, user_id).execute
 				end
-				render :json => {:message => "Success"}, :status => 200
+				render :json => info, :status => 200
 			end
 
 			def get_followed_by

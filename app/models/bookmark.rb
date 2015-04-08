@@ -79,8 +79,9 @@ class Bookmark < Neo
 		" SET bookmark_node.timestamp = " + Time.now.to_i.to_s + " "
 	end
 
-	def self.set_key
-		" SET bookmark_node.key = "+ @key + " "
+	def self.set_key key=nil
+		key ||= @key
+		" SET bookmark_node.key = \""+ key + "\" "
 	end
 
 	def create
@@ -89,9 +90,17 @@ class Bookmark < Neo
 
 	def add
 		operation = "+"
-		set_clause = Book.set_bookmark_count(operation) + User.set_bookmark_count(operation) + Label.set_bookmark_count(operation) + UsersLabel.set_bookmark_count(operation) + User.set_total_count(Constants::BookmarkPoints, operation)
+		if @key == "Visited"
+			end_clause = Bookmark.return_group(Bookmark.basic_info)
+			feednext_clause = ""
+			bookfeed_next_clause = ""
+		else
+			end_clause = Book.set_bookmark_count(operation) + User.set_bookmark_count(operation) + Label.set_bookmark_count(operation) + UsersLabel.set_bookmark_count(operation) + User.set_total_count(Constants::BookmarkPoints, operation)
+			feednext_clause = User::Feed.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled + ", book "
+			bookfeed_next_clause = Book::Feed.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled
+		end
 
-		clause = create + User::Feed.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled + ", book " + Book::Feed.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled + set_clause
+		clause = create + feednext_clause + bookfeed_next_clause  + end_clause
 		puts "BOOK BOOKMARKED".green
 		clause
 	end

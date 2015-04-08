@@ -38,6 +38,9 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 				case "StatusNode":
 					message = value.node.content;
 					break;
+				case "EndorseNode":
+					message = "Endorsed this book.";
+					break;
 			}
 			return message;
 		}

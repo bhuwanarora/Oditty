@@ -1,4 +1,4 @@
-homeApp.controller('shelfController', ['$scope', '$mdBottomSheet', '$mdToast', 'shelfService', function($scope, $mdBottomSheet, $mdToast, shelfService){
+homeApp.controller('shelfController', ['$scope', '$mdBottomSheet', '$mdToast', 'shelfService', 'book_id', function($scope, $mdBottomSheet, $mdToast, shelfService, book_id){
     $scope.listItemClick = function($index) {
         var clickedItem = $scope.items[$index];
         $mdBottomSheet.hide(clickedItem);
@@ -44,6 +44,7 @@ homeApp.controller('shelfController', ['$scope', '$mdBottomSheet', '$mdToast', '
             left: false,
             right: true
         };
+        debugger
     }
 
     _init();

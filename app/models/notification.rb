@@ -42,61 +42,58 @@ class Notification < Neo
 			elsif type == "StatusNode"
 				notification = _share_notification feed
 				notifications.push(notification.merge!("label" => type))
+			elsif type == "EndorseNode"
+				notification = _endorse_notification feed
+				notifications.push(notification.merge!("label" => type))
 			end
 		end
+
 		notifications
+	end
+
+	def _endorse_notification data
+		name = _get_name data
+		structure_notification(data)
 	end
 
 	def _share_notification data
 		name = _get_name data
 		message = "<span> "+data["content"].to_s+" </span>"
-		notification(message, data)
+		structure_notification(data)
 	end
 
 	def _recommend_notification data
 		name = _get_name data
-		# message = "<span> recommended </span><span class='site_color'>"+data["title"]+"</span><span> to "+data["friend_name"]+".</span>"
-		message = ""
-		notification(message, data)
+		structure_notification(data)
 	end
 
 	def _thumb_request_notification data
 		name = _get_name data
-		# message = "<span> suggested thumbnail for </span><span class='site_color'>"+data["title"]+".</span>"
-		message = ""
-		notification(message, data)
+		structure_notification(data)
 	end
 
 	def _bookmark_notification data
 		name = _get_name data
-		# message = "<span> saved </span><span class='site_color'>"+data["title"]+"</span><span>&nbsp;to </span><span>"+data["label"].downcase.camelcase+".</span>"
-		message = ""
-		notification(message, data)
+		structure_notification(data)
 	end
 
 	def _rating_notification data
 		name = _get_name data
-		# message = "<span> gave "+data["rating"].to_s+"/10 stars to </span><span class='site_color'>"+data["title"]+".</span>"
-		message = ""
-		notification(message, data)
+		structure_notification(data)
 	end
 
 	def _timing_node_notification data
 		name = _get_name data
 		book_length_string = _get_time_index data["time_index"]
-		# message = "<span> described reading length of <span class='site_color'>"+data["title"]+"</span>&nbsp; as a '"+book_length_string+"'. </span>"
-		message = ""
-		notification(message, data)
+		structure_notification(data)
 	end
 
 	def _mark_as_read_notification data
 		name = _get_name data
-		# message = "<span> added </span><span class='site_color'>"+data["title"]+"</span><span> to &nbsp;</span><span class='icon-books'></span><span>&nbsp;Books Read.</span>"
-		message = ""
-		notification(message, data)
+		structure_notification(data)
 	end
 
-	def notification(message, data, tag=nil)
+	def structure_notification(data, tag=nil)
 		name = _get_name data
 		thumb = "assets/profile_pic.jpeg"
 		notification_json = {
