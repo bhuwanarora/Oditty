@@ -4,8 +4,20 @@ class User < Neo
 		@id = user_id
 	end
 
-	def get_influential_books
-		
+	def self.match_group ids
+		clause = ""
+		unless ids.nil?
+			for id in ids do 
+				if clause.present?
+					clause = clause + " OR "
+				else
+					clause = " WHERE "
+				end
+				clause = clause + " ID(user) = " + id.to_s
+			end
+		end
+		clause = " MATCH (user:User) " + clause
+		clause
 	end
 
 	def self.set_bookmark_count operation

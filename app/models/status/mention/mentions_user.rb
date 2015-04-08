@@ -6,14 +6,14 @@ class Status::Mention::MentionsUser < Status::Mention
 	end
 
 	def create 
-		@mentioned_user.match(@node_variable) + ", status " + Status::Mention.new(@user_id).create(@node_variable)
+		@mentioned_user.match("user") + ", status " + Status::Mention.new(@user_id).create("user")
 	end
 
-	def self.create_group mentioned_users_ids, user_id
-		clause = ""
-		unless mentioned_users_ids.nil?
-			mentioned_users_ids.each{|mentioned_user_id| clause += Status::Mention::MentionsUser.new(mentioned_user_id, user_id).create}
-		end
-		clause
+	def self.create_group mentioned_users_id, user_id
+		User.match_group(mentioned_users_id) + Status::Mention::MentionsUser.create_for_user(user_id)
+	end
+
+	def self.create_for_user user_id
+		" CREATE UNIQUE (status)-[mentions:Mentions{user_id: "+user_id.to_s+"}]->(user) WITH user, status "
 	end
 end

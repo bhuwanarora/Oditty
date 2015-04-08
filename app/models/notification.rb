@@ -39,9 +39,18 @@ class Notification < Neo
 			elsif type == "RecommendNode"
 				notification = _recommend_notification feed
 				notifications.push(notification.merge!("label" => type))
+			elsif type == "StatusNode"
+				notification = _share_notification feed
+				notifications.push(notification.merge!("label" => type))
 			end
 		end
 		notifications.reverse!
+	end
+
+	def _share_notification data
+		name = _get_name data
+		message = "<span> "+data["content"].to_s+" </span>"
+		notification(message, data)
 	end
 
 	def _recommend_notification data

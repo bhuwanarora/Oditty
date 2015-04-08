@@ -4,7 +4,7 @@
             <div layout="row">
                 <img ng-src="{{user.profile_thumb}}" class="profile_thumb circular">
                 <div layout="column" layout-align="start start">
-                    <h2>{{feed.first_name}}</h2>
+                    <h2>{{user.first_name}}</h2>
                     <div>Shared on {{feed.created_at}}</div>
                 </div>
             </div>
@@ -12,7 +12,7 @@
         <div class="side_padding">
             
         </div>
-        <div class="social_content" layout="row">
+        <div class="social_content" layout="row" ng-if="feed.book.title">
             <div class="padding" flex="30">
                 <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'" ng-init="book = feed.book"></div>
             </div>

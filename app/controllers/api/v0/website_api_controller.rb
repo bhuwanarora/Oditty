@@ -112,7 +112,11 @@ module Api
 
 			def notifications
 				news_feed = []
-				user_id = session[:user_id]
+				if params[:id].present?
+					user_id = params[:id]
+				else
+					user_id = session[:user_id]
+				end
 				info = WebsiteApi.get_personal_feed(user_id, params[:skip_count].to_i)
 				# if ((params[:debug] == "false") || !params[:debug])
 				# elsif params[:debug].present? && params[:debug] == "true"

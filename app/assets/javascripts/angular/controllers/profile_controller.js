@@ -1,6 +1,5 @@
-homeApp.controller('profileController', ["$scope", "userService", '$rootScope', "WebsiteUIConstants", 'ColorConstants', function($scope, userService, $rootScope, WebsiteUIConstants, ColorConstants){
-	var _init = function(){
-
+homeApp.controller('profileController', ["$scope", "userService", '$rootScope', "WebsiteUIConstants", 'ColorConstants', '$location', function($scope, userService, $rootScope, WebsiteUIConstants, ColorConstants, $location){
+	var _get_detailed_info = function(){
 		userService.get_detailed_info().then(function(data){
 			data = data[0];
 			var categories = [];
@@ -21,7 +20,9 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 			$rootScope.user = angular.extend($rootScope.user, {"favourite_categories": categories});
 			$rootScope.user = angular.extend($rootScope.user, {"influential_books": books});
 		});
+	}
 
+	var _get_feed = function(){
 		userService.get_feed().then(function(data){
 			$rootScope.user.feed = [];
 			angular.forEach(data, function(value){
@@ -30,7 +31,19 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 				this.push(value);
 			}, $rootScope.user.feed);
 		});
-
+	}
+	
+	var _init = function(){
+		var regex = /[?&]([^=#]+)=([^&#]*)/g;
+		var url_parser = regex.exec($location.absUrl());
+		if(angular.isDefined(url_parser) && url_parser != null){
+        	var id = url_parser[2];
+		}
+		else{
+			var id = $rootScope.user.id; 
+		}
+        _get_detailed_info(id);
+        _get_feed(id);
 	}
 
 	_init();

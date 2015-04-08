@@ -4,7 +4,7 @@ class Status::BookExchangeStatusType < Status
 		@user_id = user_id
 	end
 	def create relation
-		Book.new(@book_id).match + " MERGE (status)-[mentions_book:" + relation + "{user_id:" + @user_id.to_s + "}]->(book) "
+		Book.new(@book_id).match + ", status CREATE UNIQUE (status)-[mentions_book:" + relation + "{user_id:" + @user_id.to_s + "}]->(book) WITH book, status "
 	end
 
 	def create_for book_exchange_status
