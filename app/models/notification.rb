@@ -100,19 +100,21 @@ class Notification < Neo
 		name = _get_name data
 		thumb = "assets/profile_pic.jpeg"
 		notification_json = {
-			:thumb => data["thumb"],
-			:message => message,
-			:timestamp => data["timestamp"],
-			:book => {
-				:id => data["book_id"]
-			},
+			:created_at => data["created_at"],
 			:user => {
 				:id => data["user_id"],
 				:name => data["name"]
+			},
+			:node => {
+				:key => data["key"],
+				:content => data["content"]
 			}
 		}
 		if tag.present?
 			notification_json.merge!("tag" => tag)
+		end
+		if data["book_id"].present?
+			notification_json.merge!(:book => {:id => data["book_id"]})
 		end
 		notification_json
 	end

@@ -79,8 +79,12 @@ class Bookmark < Neo
 		" SET bookmark_node.timestamp = " + Time.now.to_i.to_s + " "
 	end
 
+	def self.set_key
+		" SET bookmark_node.key = "+ @key + " "
+	end
+
 	def create
-		UsersBook.new(@book_id, @user_id).match + User.create_label(@key) + create_label_bookmark_node + Bookmark.create_bookmark_node_book + Bookmark.set_created_at + Bookmark.set_updated_at + " WITH user, book, bookmark_node, label, labelled "
+		UsersBook.new(@book_id, @user_id).match + User.create_label(@key) + create_label_bookmark_node + Bookmark.create_bookmark_node_book + Bookmark.set_created_at + Bookmark.set_updated_at + Bookmark.set_key(@key) + " WITH user, book, bookmark_node, label, labelled "
 	end
 
 	def add

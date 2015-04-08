@@ -1,10 +1,9 @@
 <md-list>
 	<div ng-repeat="feed in user.feed">
-	    <div ng-if="feed.label == 'BlogkNode'" ng-include src="'/assets/angular/html/home/_blog.html'"></div>
-	    <div ng-if="feed.label == 'CommunityNode'" ng-include src="'/assets/angular/html/home/_community.html'"></div>
-	    <div ng-if="(feed.label == 'BookmarkNode') || (feed.label == 'StatusNode')" 
-	    	 ng-include src="'/assets/angular/html/shared/partials/social_feed.html'"></div>
-	    <div ng-if="feed.label == 'ListopiaNode'" ng-include src="'/assets/angular/html/home/_listopia.html'"></div>
+	    <!-- <div ng-if="feed.label == 'BlogNode'" ng-include src="'/assets/angular/html/home/_blog.html'"></div>
+	    <div ng-if="feed.label == 'CommunityNode'" ng-include src="'/assets/angular/html/home/_community.html'"></div> -->
+	    <div ng-include src="'/assets/angular/html/shared/partials/social_feed.html'"></div>
+	    <!-- <div ng-if="feed.label == 'ListopiaNode'" ng-include src="'/assets/angular/html/home/_listopia.html'"></div> -->
 	</div>
 </md-list>
 

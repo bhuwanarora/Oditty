@@ -23,16 +23,80 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 	}
 
 	var _get_feed = function(){
+		var _get_message = function(value){
+			var message = ""
+			switch(value.label){
+				case "BookmarkNode":
+					message = "Added to "+value.node.key;
+					break;
+				case "Listopia":
+					break;
+				case "CommunityNode":
+					break;
+				case "BlogNode":
+					break;
+				case "StatusNode":
+					message = value.node.content;
+					break;
+			}
+			return message;
+		}
+
+		var _group_feed = function(){
+			var grouped_feed = [];
+			var _book_exists = function(grouped_feed, book_id){
+				var book_exists = false;
+				var feed_index = 0;
+				if(grouped_feed.length > 0){
+					angular.forEach(grouped_feed, function(value, index){
+						if(angular.isDefined(value.book)){
+							if(value.book.id == book_id){
+								book_exists = true;
+								feed_index = index
+							}
+						}
+					});
+				}
+				return {"status": book_exists, "index": feed_index};
+			}
+
+			angular.forEach($rootScope.user.feed, function(value){
+				var book = _book_exists(grouped_feed, value.book.id);
+				if(book.status){
+					delete value.book;
+					grouped_feed[book.index].data.push(value)
+				}
+				else{
+					if(angular.isDefined(value.book)){
+						book = {"book": value.book};
+						delete value.book;
+						value = angular.extend(book, {"data": [value]});
+					}
+					this.push(value);
+				}
+			}, grouped_feed);
+			$rootScope.user.feed = grouped_feed;
+		}
+
 		userService.get_feed().then(function(data){
 			$rootScope.user.feed = [];
 			angular.forEach(data, function(value){
 				var random_int = Math.floor(Math.random() * ColorConstants.value.length);
 				value.book = angular.extend(value.book, {"color": ColorConstants.value[random_int]});
-				bookService.get_basic_book_details(value.book.id).then(function(data){
-					value.book = angular.extend(value.book, data);
-				});
 				this.push(value);
 			}, $rootScope.user.feed);
+			_group_feed();
+			angular.forEach($rootScope.user.feed, function(value){
+				if(angular.isDefined(value.book)){
+					bookService.get_basic_book_details(value.book.id).then(function(data){
+						value.book = angular.extend(value.book, data);
+						angular.forEach(value.data, function(feed_data){
+							var message = _get_message(feed_data);
+							feed_data = angular.extend(feed_data, {"message": message});
+						})
+					});
+				}
+			});
 		});
 	}
 	
@@ -45,6 +109,7 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 		else{
 			var id = $rootScope.user.id;
 		}
+
         _get_detailed_info(id);
         _get_feed(id);
 	}

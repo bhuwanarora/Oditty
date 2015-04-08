@@ -43,9 +43,9 @@ homeApp.service('bookService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return deferred.promise;
     }
 
-    // this.get_basic_book_details = function(id){
-    //     return _deferred_request('/api/v0/basic_book?id='+id);
-    // }
+    this.get_basic_book_details = function(id){
+        return _deferred_request('/api/v0/basic_book?id='+id);
+    }
 
     this.handle_facebook_books = function(params){
         return _deferred_post_request('/api/v0/fb_books', params);

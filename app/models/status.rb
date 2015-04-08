@@ -27,18 +27,13 @@ class Status < Neo
 	def create_unique 
 		clause = " CREATE UNIQUE (user)-[posted:Posted{user_id:" + @user_id.to_s + "}]->" + create_status_node + "-[posted_content:PostedContent{user_id:" + @user_id.to_s + "}]->" + create_status + " SET status.updated_at = " + Time.now.to_i.to_s + " "
 		unless @book_id.nil?
-			clause += set_book_id("status_node") + set_book_id("status")
+			clause = clause + set_book_id("status_node") + set_book_id("status")
 		end
-		clause 
+		clause + Status.set_updated_at
 	end
 
 	def create_status_node
-		if @book_id.present?
-			clause = Status.set_book_id
-		else
-			clause = ""
-		end
-		" (status_node:StatusNode{user_id:" + @user_id.to_s + ", created_at:" + Time.now.to_i.to_s + ", content:\"" + @content.to_s + "\"}) " + Status.set_updated_at + clause
+		" (status_node:StatusNode{user_id:" + @user_id.to_s + ", created_at:" + Time.now.to_i.to_s + ", content:\"" + @content.to_s + "\"}) "
 	end
 
 	def self.set_created_at
