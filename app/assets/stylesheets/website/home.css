@@ -1,5 +1,11 @@
+body,
 md-content.md-default-theme{
-	background-color: #ececec;
+	background-color: #E5E5E5;
+}
+
+md-toolbar{
+	box-shadow: none;
+	/*border-bottom: 1px solid #ececec;*/
 }
 
 a:hover,
@@ -16,11 +22,25 @@ a:active{
 }
 
 .header{
-	background-color: #5f698c !important;
-	color: white !important;
-	min-height: 50px !important;
+	/*background-color: #5f698c !important;*/
+	background-color: #FFFFFF !important;
+	color: rgba(145, 140, 140, 1) !important;
+	box-shadow: none;
+	min-height: 48px !important;
+	position: relative;
 }
 
+md-card{
+	box-shadow: none !important;
+}
+
+.no_shadow{
+	box-shadow: none !important;
+}
+
+.header .md-button{
+	color: rgba(145, 140, 140, 1) !important;
+}
 
 .carddemoBasicUsage md-card {
 	min-height: 150px; 
@@ -33,15 +53,15 @@ md-card{
 
 md-content{
 	height: 100vh !important;
+	padding-bottom: 10px;
 	/*margin-top: 0px !important;*/
 	/*margin-bottom: 100px !important;*/
 }
 
 .burger{
-	background-color: #242736;
-	/*padding-top: 15px;*/
-	/*padding-bottom: 15px;*/
-	color: white;
+	height: 54px;
+	background-color: #ececec;
+	color: rgba(145, 140, 140, 1) !important;
 }
 
 md-tabs a{
@@ -55,9 +75,11 @@ md-tabs a{
 
 .logo img{
 	position: absolute;
-    z-index: 99999999;
-    left: 45px;
-    top: 0px;
+	z-index: 99999999;
+	left: 45px;
+	top: 0px;
+	width: 54px;
+	height: 64px;
 }
 
 .search{
@@ -65,6 +87,9 @@ md-tabs a{
 	width: 50vw;
 	height: 35px;
 	padding-left: 37px;
+	border: none;
+	border-bottom: 1px solid #E4DDDD !important;
+	box-shadow: none;
 }
 
 .search input{
@@ -89,10 +114,10 @@ md-tabs a{
 .library{
 	text-transform: inherit;
 	color: inherit;
-	font-size: inherit;
-	font-weight: inherit;
+	font-size: 14px;
+	font-weight: bold;
 	padding: 0px;
-	height: 50px;
+	height: 35px !important;
 }
 
 .library a{
@@ -116,6 +141,7 @@ md-tabs a{
 
 md-card>img{
  	order: 1;
+ 	max-height: 50vh;
 }
 
 .card .footer{
@@ -164,9 +190,10 @@ md-toolbar{
 .notifications{
 	position: fixed;
 	right: 0px;
-	top: 50px;
+	top: 55px;
 	max-height: 300px;
 	width: 300px;
+	z-index: 2;
 }
 
 .circular{
@@ -180,7 +207,7 @@ md-toolbar{
 }
 
 .left_panel{
-	z-index: 1;
+	z-index: 2;
 	min-width: 250px;
 	width: 250px;
 }
@@ -195,8 +222,84 @@ md-toolbar{
 	left: 0px;
 	right: 0px;
 	height: 10px;
+	z-index: 2;
 }
 
 .left_panel_container md-backdrop{
 	z-index: 0;
 }
+
+.md-fab-custom-right{
+	top: 70% !important;
+	right: 10% !important;
+}
+
+.fixed_share{
+	margin-right: 0px;
+	border-radius: 0px !important;
+	box-shadow: none !important;
+	width: 71px !important;
+	height: 70px !important;
+	background-color: transparent !important;
+}
+
+.fixed_share.ng-enter,
+.fixed_share.ng-leave.ng-leave-active{
+	margin-right: 50%;
+}
+
+.fixed_share.ng-leave,
+.fixed_share.ng-enter-active{
+	margin-right: 0%;
+}
+
+.share.ng-enter,
+.share.ng-leave.ng-leave-active{
+	opacity: 0;
+}
+
+.share.ng-leave,
+.share.ng-enter-active{
+	opacity: 1;
+}
+
+
+.rate{
+	height: 25px;
+	text-align: center;
+	top: 20px;
+	right: 0px;
+	color: white;
+	width: 240px;
+}
+
+.rate_radio{
+	font-size: 0.9em;
+	letter-spacing: -3px;
+}
+
+.rate_radio:active{
+	color: white !important;
+}
+
+.rate_radio_buttons{
+	padding: 3px 15px 2px 0px;
+	width: 275px;
+	text-align: left;
+}
+
+.movable:hover{
+	cursor: pointer;
+	border: 5px solid white;
+}
+
+.movable:active{
+	cursor: move;
+}
+
+.droppable:hover{
+	/*background-color: #D3D3D3;*/
+}
+
+
+

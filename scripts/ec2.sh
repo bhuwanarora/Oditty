@@ -102,7 +102,6 @@ sudo -u postgres psql -c "GRANT ALL ON postgis.spatial_ref_sys TO PUBLIC"
 sudo -u postgres psql -c "ALTER USER bhuwan WITH SUPERUSER;"
 rake db:create
 # psql -d readers_door_development -f /usr/share/postgresql/9.3/contrib/postgis-2.1/postgis.sql
-# 
 
 rake db:migrate
 
@@ -181,6 +180,10 @@ apt-get install redis-server
 # 	secret_access_key: 'CoKHcRq3z5vIqyCz4ltShhljXg66KXoVHL6hwAFA', 
 # 	region: 'us-west-2',
 # 	:s3_endpoint => 's3-ap-southeast-1.amazonaws.com')
+
+#Check the cron tasks
+crontab -l
+
 
 sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update

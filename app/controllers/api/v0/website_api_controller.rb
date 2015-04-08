@@ -1,6 +1,8 @@
 module Api
 	module V0
 		class WebsiteApiController < ApplicationController
+			# require_dependency 'user/predict/category'
+
 			def s3
 				begin
 					info = S3WebsiteHelper.s3_access_token
@@ -10,17 +12,43 @@ module Api
 				end
 			end
 
+			def news_info
+				#TODO: (SATISH)
+				# id = params[:id]
+				# Article::News.new(id)
+				# {
+					# 	"most_important_tag": {
+					# 		"name", "importance", "view_count", "news_count", "id",
+					# 		"books"-->"basic_info", "users"-->"basic_info"
+					# 	},
+					# 	"other_tags": [
+					# 		{
+					# 			"name", "importance", "view_count", "news_count", "id"
+					# 		}
+					# 	],
+					#  	"more_news": [
+					#  		{
+					#  			"id", "most_important_tag", "timestamp"
+					#  		}
+						#SIX NEWS: Three news prior to this, three after 
+					#  	]
+				# }
+			end
+
+			def add_label
+				user_id = session[:user_id]
+				UsersLabel.create(user_id, params[:label]).execute
+				render :json => "Success", :status => 200
+			end
+
 			def genres
-                @neo ||= neo_init
-				filter = params[:q]
-                genres = WebsiteApi.get_root_categories(session[:user_id])
+				user_id = session[:user_id]
+                genres = User::Predict::CategoryPrediction.new(user_id).get_favourites.execute
                 
 				render :json => genres, :status => 200
 			end
 
 			def test
-				puts "TEST ".green
-				puts params[:website_api].to_s.red
 				render :json => {:message => "Success"}, :status => 200
 			end
 
@@ -33,8 +61,7 @@ module Api
 				begin
 					@neo = Neography::Rest.new
 					clause = "MATCH (b:Book) WHERE b.url=~'.*"+params[:id].to_s+".*' RETURN ID(b), b.title, b.author_name, b.isbn"
-					puts clause.blue.on_red
-					info = @neo.execute_query(clause)["data"]
+					info = @neo.execute_query(clause)
 					render :json => info, :status => 200
 				rescue Exception => e
 					render :json => {:message => e.to_s}, :status => 500
@@ -44,7 +71,6 @@ module Api
 			def book_lists
 				@neo = Neography::Rest.new
 				clause = "MATCH (bg:BookGrid)-[:RelatedBooks]->(b:Book) WHERE bg.status=1 RETURN ID(bg), bg.name, COUNT(b), COLLECT(b.isbn)"
-				puts clause.blue.on_red
 				info = @neo.execute_query(clause)["data"]
 				render :json => info, :status => 200
 			end
@@ -53,8 +79,7 @@ module Api
 				neo = Neography::Rest.new
 				skip_count = params[:skip].present? ? params[:skip].to_i+1 : 0
     			clause = "MATCH (t:Trending)-[:RelatedBooks]->(b:Book) WHERE t.status = 1 RETURN t.name, ID(t), t.content, t.url, t.title, t.thumb, t.thumbnail_url, t.publisher_thumb, t.searched_words, t.timestamp, COLLECT (b.isbn) ORDER BY t.timestamp DESC SKIP "+skip_count.to_s+" LIMIT 8"
-    			puts clause.blue.on_red
-    			trends = neo.execute_query(clause)["data"]
+    			trends = neo.execute_query(clause)
 				render :json => trends, :status => 200
 			end
 
@@ -75,65 +100,31 @@ module Api
 
             def times
                 time_groups = WebsiteApi.get_time_groups
-                results = {:times => time_groups.reverse!}
-                render :json => results, :status => 200
+                render :json => time_groups.reverse!, :status => 200
             end
 
             def read_times
                 @neo ||= neo_init
-                clause = "MATCH (r:ReadTime) RETURN r"
-                puts clause.blue.on_red
-                read_times = @neo.execute_query(clause)["data"]
-                results = {:read_times => read_times}
-                render :json => results, :status => 200
+                clause = "MATCH (r:ReadTime) RETURN r.name as name, r.page_count_range as page_count_range, ID(r) as id"
+                read_times = @neo.execute_query(clause)
+                render :json => read_times, :status => 200
             end
-
-			def get_user_details
-				if params[:id]
-					info = UserApi.get_details(params[:id], session)
-				else
-					info = UserApi.get_details(session[:user_id], session)
-				end
-				render :json => info, :status => 200
-			end
-
-			def authenticate
-				authentication_info = UserApi.authenticate(session, params)
-				if authentication_info[:authenticate]
-					render :json => authentication_info, :status => 200
-				else
-					render :json => authentication_info, :status => 403
-				end
-			end
-
-			def update_profile
-				profile_status = params[:user['profile_status']]
-				profile_status = profile_status + 1;
-				render :json => {:message => "success", :profile_status => profile_status, :user_id => 1}, :status => 200
-			end
-
-			def image
-				# image_url = SearchPage.all(:order => "RANDOM()").first.background_image_url
-				neo = Neography::Rest.new
-				r = Random.new
-				random = r.rand(1...8)
-				clause = "MATCH (c:CoverPhoto) WHERE c.status = true RETURN ID(c) SKIP "+random.to_s+" LIMIT 1"
-				puts clause.blue.on_red
-				id = neo.execute_query(clause)["data"]
-				puts id.to_s.green
-				render :json => id, :status => 200
-			end
 
 			def notifications
 				news_feed = []
-				if params[:id] && ((params[:debug] == "false") || !params[:debug])
-					news_feed = WebsiteApi.get_personal_feed(params[:id], params[:skip_count].to_i+1)
-				elsif params[:debug].present? && params[:debug] == "true"
-					news_feed = WebsiteApi.get_news_feed(params[:id], params[:skip_count].to_i+1)
+				if params[:id].present?
+					user_id = params[:id]
 				else
-					news_feed = WebsiteApi.get_news_feed(session[:user_id], params[:skip_count].to_i+1)
+					user_id = session[:user_id]
 				end
-				render :json => {:notifications => news_feed}, :status => 200
+				info = WebsiteApi.get_personal_feed(user_id, params[:skip_count].to_i)
+				# if ((params[:debug] == "false") || !params[:debug])
+				# elsif params[:debug].present? && params[:debug] == "true"
+				# 	news_feed = WebsiteApi.get_news_feed(params[:id], params[:skip_count].to_i+1)
+				# else
+				# 	news_feed = WebsiteApi.get_news_feed(session[:user_id], params[:skip_count].to_i+1)
+				# end
+				render :json => info, :status => 200
 			end
 
 			def latest_notification
@@ -144,11 +135,6 @@ module Api
 			def save_feedback
 				WebsiteApi.save_feedback(params[:feedback], session[:user_id])
 				render :json => {:message => "Success"}, :status => 200
-			end
-
-			def user_profile_info
-				info = UserApi.get_profile_info(params[:id])
-				render :json => info, :status => 200
 			end
 
             private

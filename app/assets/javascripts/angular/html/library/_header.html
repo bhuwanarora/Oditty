@@ -1,93 +1,43 @@
 <div ng-controller="filtersController">
     <md-subheader class="md-primary filters_header">
-        <section layout="row" show-sm hide layout-align="space-between center" layout-wrap>
-            <md-button>Sort by</md-button>
+        <section layout="row" show-sm hide layout-align="space-between center" layout-fill>
+            <md-button ng-click="show_left_nav($event)" class="clear_button">
+                Sort by
+            </md-button>
             <div layout="row" layout-align="end center" layout-wrap>
-                <md-button class="md-raised">
+                <md-button class="md-raised clear_button" ng-click="show_bottom_filters($event)">
                     Add Filters
                 </md-button>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <div layout="column">
-                    <div>A</div>
-                    <div>Z</div>
-                </div>
+                <md-button class="clear_button" ng-click="show_right_nav($event)">
+                    <div layout="column">
+                        <div>A</div>
+                        <div>Z</div>
+                    </div>
+                </md-button>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
         </section>
-        <section layout="row" hide-sm layout-align="center center" layout-wrap >
-            <div flex="10" hide-sm flex-md="10"></div>
-            <div flex="80" flex-md="80" layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-                <div flex="20" flex-sm="100" class="relative">
-                    <md-autocomplete 
-                        md-selected-item="selected_genre"
-                        md-items="item in info.genres"
-                        md-search-text="search_tag.genre"
-                        md-search-text-change="search_genres(search_tag.genre)"
-                        md-item-text="item.name"
-                        placeholder="Genre">
-                        <span md-highlight-text="search_tag.genre">{{item.name}}</span>
-                    </md-autocomplete>
-                    <div class="icon_angle">
-                        <span class="icon-angle-down"></span>
-                    </div>
-                </div>
-                <div flex="20" flex-sm="100" class="relative">
-                    <md-autocomplete md-selected-item="selected_author"
-                        md-search-text="search_author"
-                        md-items="item in info.authors"
-                        md-search-text="search_tag.author"
-                        md-search-text-change="search_authors($event)"
-                        md-selected-item-change="select_authors($event)"
-                        md-item-text="item.name"
-                        placeholder="Author">
-                        <span md-highlight-text="search_author">{{item.name}}</span>
-                    </md-autocomplete>
-                    <div class="icon_angle">
-                        <span class="icon-angle-down"></span>
-                    </div>
-                </div>
-                <div flex="20" flex-sm="100" class="relative">
-                    <md-autocomplete md-selected-item="selected_year"
-                        md-search-text="search_year"
-                        md-items="item in info.time_groups"
-                        md-search-text="search_tag.time_group"
-                        md-selected-item-change="select_time_groups($event)"
-                        md-item-text="item.name"
-                        placeholder="Year">
-                        <span md-highlight-text="search_year">{{item.name}}</span>
-                    </md-autocomplete>
-                    <div class="icon_angle">
-                        <span class="icon-angle-down"></span>
-                    </div>
-                </div>
-                <div flex="20" flex-sm="100" class="relative">
-                    <md-autocomplete
-                        md-selected-item="selected_duration"
-                        md-search-text="search_tag.read_time"
-                        md-items="item in info.read_times"
-                        md-selected-item-change="select_read_times($event)"
-                        md-item-text="item.name"
-                        placeholder="Duration">
-                        <span md-highlight-text="search_read_time">{{item.name}}</span>
-                    </md-autocomplete>
-                    <div class="icon_angle">
-                        <span class="icon-angle-down"></span>
-                    </div>
-                </div>
-                <md-button class="md-raised" flex="10" flex-sm="100">
-                    Reset
-                </md-button>
-            </div>
-            <div flex="10" hide-sm flex-md="10"></div>
+        <section layout="row" hide-sm layout-align="center center" layout-wrap>
+            <div flex="10" flex-md="5"></div>
+            <div layout="row" layout-align="center center" ng-include src="'/assets/angular/html/library/shared/_filters.html'" flex="80" flex-md="90"></div>  
+            <div flex="10" flex-md="5"></div>
         </section>
-    </md-subheader>    
+    </md-subheader>
 </div>
 
+<md-sidenav class="md-sidenav-left md-whiteframe-z2 left_nav" md-component-id="sort_by_sidenav">
+    <div flex="100" ng-include src="'/assets/angular/html/library/shared/_left_panel.html'" layout-fill></div>
+</md-sidenav>
+<md-sidenav class="md-sidenav-right md-whiteframe-z2 right_nav" md-component-id="alphabets_sidenav">
+    <div flex="100" ng-include src="'/assets/angular/html/library/shared/_right_panel.html'" layout-fill></div>
+</md-sidenav>
+
 <style>
-    md-autocomplete ul{
+/*    md-autocomplete ul{
         z-index: 1;
     }
-
+*/
     md-autocomplete ul li{
         line-height: 16px;
         padding: 10px 15px;
@@ -103,4 +53,27 @@
     .relative{
         position: relative;
     }
+
+    .clear_button{
+        z-index: 1;
+        height: 38px;
+        border-radius: 0px !important;
+        color: #8B8B8B !important;
+    }
+    
+    .left_nav{
+        min-width: 250px;
+        width: 250px;
+        margin-top: -10px !important;
+        position: fixed !important;
+    }
+
+    .right_nav{
+        min-width: 50px;
+        width: 50px;
+        margin-top: -10px !important;
+        position: fixed !important;
+        margin-right: 50px;
+    }
+
 </style>

@@ -1,5 +1,3 @@
-include UsersGraphHelper
-include NotificationHelper
 module Api
 	module V0
 		class WebsiteApi
@@ -12,15 +10,15 @@ module Api
 			def self.get_labels user_id
 				labels = []
 				if user_id.present?
-					labels = UsersGraphHelper.get_bookmark_labels user_id
+					labels = User.new(user_id).get_public_labels.execute
 				end
 				labels
 			end
 
 			def self.get_news_feed(user_id, skip_count)
-				news_feed = UsersGraphHelper.get_news_feed(user_id, skip_count)
+				news_feed = User::Feed.new(user_id).get_news_feed(skip_count)
 				begin
-					notifications = NotificationHelper.structure_feed news_feed["data"]
+					notifications = Notification.structure_feed news_feed
 				rescue Exception => e
 					notifications = []
 				end
@@ -28,12 +26,8 @@ module Api
 			end
 
 			def self.get_personal_feed(user_id, skip_count)
-				news_feed = UsersGraphHelper.get_personal_feed(user_id, skip_count)
-				begin
-					notifications = NotificationHelper.structure_feed news_feed["data"]
-				rescue Exception => e
-					notifications = []
-				end
+				news_feed = User::Feed.new(user_id).get_personal_feed(skip_count).execute
+				notifications = Notification.new(news_feed).structure_feed
 				notifications
 			end
 
@@ -43,23 +37,14 @@ module Api
 
 			def self.get_time_groups
 				neo_init
-                time_groups = @neo.execute_query("MATCH (t:Era) RETURN t")["data"]
+                time_groups = @neo.execute_query("MATCH (t:Era) RETURN t.name as name, t.range as range, ID(t) as id")
                 time_groups
-			end
-
-		def self.get_root_categories user_id=nil
-				neo_init
-				clause = "MATCH (category:Category) WHERE category.is_root = true WITH category OPTIONAL MATCH (category)<-[r:Likes]-(u:User) WHERE ID(u)="+user_id.to_s+" RETURN category.name, ID(category), category.icon, ID(r) LIMIT 28"
-				puts clause.blue.on_red
-				info = @neo.execute_query(clause)["data"]
-				info
 			end
 
 			private
 			def self.neo_init
 				@neo = Neography::Rest.new
 			end
-
 			
 		end
 	end

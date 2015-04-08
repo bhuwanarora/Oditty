@@ -1,13 +1,14 @@
 module Constants
-	InfluentialBooks			="influentialbooks"
+	CategoryLikeWeight			= 10
 	MarkAsReadPoints 			= 5
-	BookmarkPoints 				= 5
+	# BookmarkPoints 				= 5
 	RatingPoints				= 10
 	BookmarkPoints				= 10
 	ReadTimePoints				= 10
 	ThumbSuggest				= 10
 	RecommendationPoints		= 10
-
+	QueryStepDuringLinking		= 1000
+	
 	if Rails.env.development?
 		Admin						= 0
 		BestTinyRead				= 395910 #"thelosthero"
@@ -51,15 +52,20 @@ module Constants
 	NormalReadRelation 			= "NextNormalRead"
 	LongReadRelation 			= "NextLongRead"
 
-	OldEnglishLiterature		= "oldenglish"
-	MiddleEnglishLiterature		= "middleenglish"
-	EnglishRenaissance 			= "englishrenaissance"
-	NeoClassicalPeriod 			= "neoclassical"
-	Romanticism 				= "romantic"
-	VictorianLiterature 		= "victorian"
-	Modernism 					= "modern"
-	PostModernLiterature 		= "postmodern"
-	Contemporary				= "contemporary"
+	TinyReadNode	 			= 772853
+	SmallReadNode	 			= 772854
+	NormalReadNode	 			= 772855
+	LongReadNode	 			= 772856
+
+	OldEnglishLiterature		= 422360
+	MiddleEnglishLiterature		= 422363
+	EnglishRenaissance 			= 422367
+	NeoClassicalPeriod 			= 422368
+	Romanticism 				= 422371
+	VictorianLiterature 		= 422372
+	Modernism 					= 422373
+	PostModernLiterature 		= 422374
+	Contemporary				= 422375
 
 	SessionNotSet				= "Session not set properly error..."
 
@@ -76,4 +82,33 @@ module Constants
 		EmailVerification		= "email_verification"
 		RecommendBooks			= "RecommendBooks"
 	end
+
+	UniqueNewsCount  			= 50
+	BookCountShownOnSignup  	= 30
+	ChildBookCountRange  		= "0-20"
+	AdoloscentBookCountRange 	= "20-50"
+	AboutToBeAdultBookCountRange= "50-100"
+	AdultBookCountRange  		= "100-250"
+	AboutToDieBookCountRange  	= "250+"
+	InitialSkipCount        	= 0
+	RelevantSocialTagValue      = 1
+	RecommendationBookCount 	= 10
+	FollowFavoriteAuthorsCount  = 30 
+	QueryStepDuringLinking      = 1000
+	ArticlesShownInRoomCount    = 10
+	BooksShownInRoomCount       = 10
+	PopularBooksShownCount      = 30
+	FeedFetchCount				= 4 
+	PlanningToReadStatusCode	= 0
+	CurrentlyReadingStatusCode  = 1
+	ReadStatusCode 				= 2
+	PlanningToBuyStatusCode     = 0
+	PlanningToLendStatusCode	= 1
+	PlanningToBorrowStatusCode  = 2
+	EndorsePoints 				= 10
+	TinyReadValue	 			= 0
+	SmallReadValue	 			= 1
+	NormalReadValue	 			= 2
+	LongReadValue	 			= 3
+	BookShownInInfinty          = 10
 end

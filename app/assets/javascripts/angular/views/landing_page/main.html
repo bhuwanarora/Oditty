@@ -1,15 +1,15 @@
-<div layout="row" class="inbox-area" ng-class="{'md-whiteframe-z1': show_content}" style="background: #f5f5f5; margin-top: -135px;" id="Intro">
-	<div flex>
-		<div layout="row" layout-margin layout-align="center center">
-			<div flex style="padding-top: 140px;">
-				<video class="logo-video show" preload="metadata" autoplay style="display: block; margin: 0 auto; width:67vw;" poster="/images/white_background.png">
-					<source src="assets/o2.mp4" type="video/mp4">
-				</video>
-				<!-- <img src="assets/o4.gif"> -->
-	   		 </div>
-		</div>
-	</div>		
-</div>
+<div layout="column" class="inbox-area main_view" 
+	 ng-class="{'md-whiteframe-z1': show_content}" style="background: #f5f5f5; margin-top: -135px;" id="Intro">
+	<div layout="column" layout-margin layout-align="center center" layout-fill class="md-whiteframe-z1">
+		<div flex="30"></div>
+		<div flex="50">
+			<video class="video_size" preload="metadata" autoplay style="display: block; margin: 0 auto; width:67vw;" poster="/images/white_background.png">
+				<source src="assets/o2.mp4" type="video/mp4">
+			</video>
+			<!-- <img src="assets/o4.gif"> -->
+   		 </div>
+	</div>
+</div>		
 <div ng-include="'assets/angular/views/landing_page/intro.html'" id="ReadersDoor" style="position:initial;"></div>
 <div ng-include="'assets/angular/views/landing_page/discover.html'" id="Discover"></div>
 <div ng-include="'assets/angular/views/landing_page/connect.html'" id="Connect"></div>

@@ -1,6 +1,7 @@
 module Api
 	module V0
 		class SearchApiController < ApplicationController
+
 			def search
 				query_params = params[:q].strip
 				count = params[:count].to_i
@@ -10,17 +11,22 @@ module Api
 			end
 
 			def search_books
-				results = SearchApi.search_books(params[:q].to_s.strip, params[:skip], session[:user_id])
+				results = SearchApi.search(params[:q].to_s.strip, params[:count], "BOOK")
 				render :json => {:results => results}, :status => 200
 			end
 
 			def search_authors
-				results = SearchApi.search_authors(params[:q].to_s.strip, session[:user_id], params[:genre_id])
+				results = SearchApi.search(params[:q].to_s.strip, params[:count], "AUTHOR")
 				render :json => results, :status => 200
 			end
 
 			def search_genres
-				results = SearchApi.search_genres(params[:q].to_s.strip, params[:count])
+				results = SearchApi.search(params[:q].to_s.strip, params[:count], "GENRE")
+				render :json => results, :status => 200
+			end
+
+			def search_users
+				results = SearchApi.search(params[:q].to_s.strip, params[:count], "READER")
 				render :json => results, :status => 200
 			end
 

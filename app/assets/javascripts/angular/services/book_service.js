@@ -43,12 +43,20 @@ homeApp.service('bookService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return deferred.promise;
     }
 
+    this.get_basic_book_details = function(id){
+        return _deferred_request('/api/v0/basic_book?id='+id);
+    }
+
     this.handle_facebook_books = function(params){
         return _deferred_post_request('/api/v0/fb_books', params);
     }
 
     this.get_book_details = function(filter){
         return _deferred_request('/api/v0/book?'+filter);
+    }
+
+    this.handle_influential_books = function(id, status){
+        return _deferred_request('/api/v0/influential_books?id='+id+"&status="+status);
     }
 
     this.get_books_bookmarked = function(skip_count){
@@ -63,8 +71,20 @@ homeApp.service('bookService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return _deferred_request('/api/v0/search_books?q='+data+"&skip="+skip_count);
     }
 
-    this.get_popular_books = function(skip_count){
-        return _deferred_request('/api/v0/popular_books?skip_count='+skip_count);   
+    this.get_popular_books = function(params){
+        return _deferred_request('/api/v0/popular_books?q='+params);
+    }
+
+    this.books_on_signup = function(params){
+        return _deferred_request('/api/v0/books_on_signup?q='+params);
+    }
+
+    this.endorse_book = function(id, status){
+        return _deferred_request('/api/v0/endorse_book?id='+id+'&status='+status);
+    }
+
+    this.update_visited = function(id){
+        return _deferred_request('/api/v0/update_visited?id='+id);
     }
 
 }]);

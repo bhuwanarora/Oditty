@@ -1,28 +1,39 @@
-<section class="padding">
+<section class="padding margin_top" hide-md>
 	<section layout="column" layout-wrap class="padding">
-		<b class="small-padding">About Tehzeeb</b>
+		<b class="small-padding">About him</b>
 		<md-divider></md-divider>
-		<div class="small-padding">
-			I am a very voracious reader, and I am here for more books.
+		<div layout-padding>
+			{{user.about}}
 		</div>
 	</section>
 
 	<section layout="column" layout-wrap class="padding">
-		<b class="small-padding">Genre Tehzeeb Likes</b>
+		<b class="small-padding">His favourite subjects</b>
 		<md-divider></md-divider>
-		<div class="small-padding">
-			Thriller, Suspense, Drama, Comedy, Self-Help
+		<div layout-padding layout-wrap layout="row">
+			<div ng-repeat="genre in user.favourite_categories" layout="padding" class="genre">
+				<div ng-include src="'/assets/angular/html/shared/partials/genre.html'"></div>
+			</div>
 		</div>
 	</section>
 
 	<section layout="column" layout-wrap class="padding">
-		<b class="small-padding">Books that've made a mark</b>
+		<b class="small-padding">Books he finds influential</b>
 		<md-divider></md-divider>
-		<div class="small-padding">
-			<div><b>To Kill a Mockingbird</b>, by Harper Lee</div>
-			<div><b>Fountain Head</b>, by Ayn Rand</div>
-			<div><b>The Alchemist</b>, by Robin Cook</div>
-			<div><b>Shantaram</b>, by Gregory D.Roberts</div>
+		<div layout-padding layout-wrap layout="row">
+			<div ng-init="books = user.influential_books" 
+				 ng-include src="'/assets/angular/html/shared/partials/spine.html'"></div>
 		</div>
 	</section>
 </section>
+
+<style>
+	.genre{
+		width: 100px;
+		height: 100px;
+	}
+
+	.margin_top{
+		margin-top: 20px;
+	}
+</style>

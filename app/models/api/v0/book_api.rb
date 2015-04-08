@@ -1,5 +1,3 @@
-include BooksGraphHelper
-include NotificationHelper
 module Api
 	module V0
 		class BookApi
@@ -24,7 +22,6 @@ module Api
 			def self.get_book(id)
 				@neo = Neography::Rest.new
 				clause = "MATCH (book:Book) WHERE ID(book)="+id.to_s+" RETURN book"
-				puts clause.blue.on_red
 				book = @neo.execute_query(clause)["data"]
 				book
 			end
@@ -112,97 +109,55 @@ module Api
 			end
 
 			def self.get_popular_books(params, user_id)
-				skip_count = params[:skip_count]
-				unless skip_count
-					skip_count = 0
+				if params["q"].present?
+					params = JSON.parse params["q"]
 				end
-				@neo = Neography::Rest.new
-				clause = "MATCH (b:Book) WHERE ID(b)="+Constants::BestBook.to_s+" MATCH p=(b)-[:Next_book*.."+(20+skip_count.to_i).to_s+"]->(b_next) WITH last(nodes(p)) as book OPTIONAL MATCH (book)<-[:MarkAsRead]-(:MarkAsReadNode)<-[m:MarkAsReadAction]-(user:User) WHERE ID(user)="+user_id.to_s+" WITH user, book, m OPTIONAL MATCH (user)-[:RatingAction]->(z:RatingNode{book_id:ID(book), user_id:"+user_id.to_s+"})-[:Rate]->(book) RETURN book.isbn as isbn, ID(book), book.title, book.author_name, ID(m), z.rating SKIP "+(skip_count.to_i).to_s
-				puts clause.blue.on_red
-				begin
-					books =  @neo.execute_query(clause)["data"]
-				rescue Exception => e
-					puts e.to_s.red
-					books = [{:message => "Error in finding books"}]
-					# books =  @neo.execute_query(clause)["data"]
-				end
-				# results = []
-				# for book in books
-				# 	book = book[0]["data"]
-				# 	isbn = book["isbn"].split(",")[0] rescue nil
-				# 	thumb = "http://covers.openlibrary.org/b/isbn/"+isbn+"-S.jpg" rescue ""
-				# 	book = {
-				# 		:title => book["title"],
-				# 		:author_name => book["author_name"],
-				# 		:thumb => thumb
-				# 	}
-				# 	results.push book
-				# end
-				# results
-				books
-			end
-			def self.get_book_details(id, user_id=nil)
-				book = BooksGraphHelper.get_details(id, user_id)
-				if user_id
-					user_rating = book[1]
-					user_time_index = book[2]
-					labels = book[3]
-					selected_labels = book[4]
-					structured_labels = []
-					for label in labels
-						if selected_labels.include? label
-							json = {"name" => label, "checked" => true}
-						else
-							json = {"name" => label, "checked" => false}
-						end
-						structured_labels.push json
-					end
-
-					mark_as_read = book[5]
-					if mark_as_read.nil?
-						mark_as_read = false
-					else
-						mark_as_read = true
-					end
-					book = book[0]["data"]
-
-					friends_who_have_read = []
-					if book[6].present?
-						book[6].each do |id, index|
-							friends_who_have_read.push({:id => id, :thumb => book[7][index]})
-						end
-					end
-
-					friends_who_have_read_count = book[8]
-					
-				end
-				info = {
-							:title => book["title"],
-							:author_name => book["author_name"],
-							:readers_count => book["readers_count"],
-							:bookmark_count => book["bookmark_count"],
-							:comment_count => book["comment_count"],
-							:published_year => book["published_year"],
-							:page_count => book["page_count"],
-							:summary => book["description"],
-							:external_thumb => book["external_thumb"]
-						}
-				if user_id
-					info.merge!(:user_rating => user_rating, 
-								:status => mark_as_read,
-								:labels => structured_labels,
-								:users => friends_who_have_read,
-								:users_count => friends_who_have_read_count,
-							    :time_index => user_time_index)
-				end
-				unless book["linked"].present?
-					Resque.enqueue(SummaryWorker, book["isbn"], id, book["title"])
-				end
+				skip_count = (params.nil? || params["skip_count"].nil?) ? 0 : params["skip_count"]
+				info = (User::Suggest::BookSuggestion.get_popular_books skip_count, user_id).execute
 				info
 			end
 
+
+			def self.get_basic_book_details(id, user_id)
+				book = BooksGraphHelper.get_basic_details(id, user_id)
+			end
+
+			def self.get_book_details(id, user_id=nil)
+				book = UsersBook.new(id, user_id).get_basic_details.execute[0]
+				if user_id
+					structured_labels = []
+					if book["labels"]
+						for label in book["labels"]
+							if book["selected_labels"].include? label
+								json = {"name" => label, "checked" => true}
+							else
+								json = {"name" => label, "checked" => false}
+							end
+							structured_labels.push json
+						end
+					end
+
+					friends_who_have_read = []
+					if book["friends_id"].present?
+						book["friends_id"].each do |id, index|
+							friends_who_have_read.push({:id => id, :thumb => book["friends_thumb"][index]})
+						end
+					end
+
+				end
+				# isbn = book["isbn"].split(",")[0]
+				# image_url = "http://covers.openlibrary.org/b/isbn/"+isbn+"-S.jpg";
+				# image_service_url = "http://54.187.28.104/api/v0/colors?image_url=#{image_url}"
+				# color = Net::HTTP.get(URI.parse(image_service_url))
+				# color = JSON.parse(color)["data"]
+
+				if user_id
+					book.merge!(:friends => friends_who_have_read)
+				end
+				book
+			end
+
 			def self.recommendations(last_book, filters={}, session)
-				#FIXME only output isbns
 				user_id = session[:user_id]
 				if filters["reset"]
 					# $redis.set 'book_ids', ""
@@ -418,7 +373,7 @@ module Api
 					end
 				end
 
-				return_clause = "RETURN book.isbn as isbn, ID(book), book.external_thumb"
+				return_clause = "RETURN book.isbn as isbn, ID(book) as id, book.external_thumb as external_thumb"
 				
 				# distinct_clause = "ALL (id in "+book_ids.to_s+" WHERE toInt(id) <> ID(book)) "
 
@@ -454,7 +409,6 @@ module Api
 					end
 				end
 
-
 				if !only_read_time && filters["other_filters"][Constants::Time].present?
 					if read_time == Constants::TinyRead
 						next_Where_clause = " toInt(book.page_count) <= 50 "
@@ -465,6 +419,7 @@ module Api
 					elsif read_time == Constants::LongRead
 						next_Where_clause = " toInt(book.page_count) > 250 "
 					end
+					
 					if where_clause.present?
 						where_clause = where_clause + " AND"+next_Where_clause
 					else
@@ -488,7 +443,6 @@ module Api
 				clause = clause + limit_clause 							if limit_clause.present?
 				clause
 			end
-
 		end
 	end
 end

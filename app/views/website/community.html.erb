@@ -1,0 +1,15 @@
+<div layout="column" ng-controller="communityController" >
+    <section layout="row">
+        <div ng-include src="'/assets/angular/html/community/show.html'" 
+             layout="row" layout-align="center"
+             flex></div>
+        <div flex="65" ng-if="show_details" class="animate-fast">
+            
+        </div>
+    </section>
+    <section layout="row" layout-align="center" layout-padding
+        ng-include src="'/assets/angular/html/community/_footer.html'" >
+    </section>
+</div>
+<!-- <d3-circles></d3-circles> -->
+<!-- <d3-bars data="d3Data"></d3-bars> -->

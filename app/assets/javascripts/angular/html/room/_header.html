@@ -1,0 +1,47 @@
+<md-subheader class="room_header clear">
+   <div flex  layout="row" layout-align="space-between">
+        <div flex layout-align="start center" layout="row" layout-padding>
+            <span class="icon-remove"></span>
+        </div>
+       <div flex layout-align="end center" layout="row" layout-padding>
+            <md-switch ng-model="data.cb1" aria-label="Switch 1">
+                {{ data.cb1 }}
+            </md-switch>
+       </div>
+   </div>
+</md-subheader>
+
+<style>
+    md-autocomplete ul{
+        z-index: 1;
+    }
+
+    md-autocomplete ul li{
+        line-height: 16px;
+        padding: 10px 15px;
+        height: inherit;
+    }
+
+    .icon_angle{
+        position: absolute;
+        right: 15px;
+        top: 15px;
+    }
+
+    .relative{
+        position: relative;
+    }
+
+    .reset_button{
+        z-index: 1;
+        height: 38px;
+        border-radius: 0px !important;
+        color: #8B8B8B !important;
+    }
+
+    .room_header{
+        /*margin: 0px;*/
+        background-color: #f5f5f5 !important;
+    }
+
+</style>

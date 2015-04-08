@@ -1,0 +1,22 @@
+<md-toast ng-controller="toastController" layout="row" class="md-whiteframe-z2 white custom_toast">
+    <div flex="20" class="site" layout="row" layout-align="center center" layout-fill>
+        <div class="icon-bell"></div>
+    </div>
+    <div flex="80" layout="row" class="content" layout-padding layout-align="space-between center">
+        <div>Genre selected</div>
+        <md-button ng-click="closeToast()">
+            Undo
+        </md-button>
+    </div>
+</md-toast>
+
+<style>
+    .custom_toast{
+        padding: 0px;
+    }
+
+    .custom_toast .content,
+    .custom_toast .md-button{
+        color: black !important;
+    }
+</style>

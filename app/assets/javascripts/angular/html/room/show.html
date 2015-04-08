@@ -1,5 +1,9 @@
 <md-card layout="column" layout-align="start center">
-	<h2>“Mad, bad, and dangerous to know.”</h2>
+	<!-- <md-input-container flex>
+        <label>Share</label>
+        <input ng-model="user.last_name" 
+               focus-out="set_last_name()" value="Mad, bad, and dangerous to know."/>
+    </md-input-container> -->
 	<md-card-content>
 		<md-content class="white">
 			<md-grid-list
@@ -10,67 +14,15 @@
 	            md-gutter="15px" 
 	            md-gutter-gt-sm="15px" >
 	            <md-grid-tile
+	            	draggable
+	            	draggable-keep-size="true"
+	            	class="movable"
 	                md-rowspan="2"
 	                md-colspan="1"
 	                layout-align="start start"
 	                layout="row"
-	                style='background-image: url("https://snowsfissuresandfractures.files.wordpress.com/2014/10/18g5ew2q1bdeujpg.jpg")'>
-	            </md-grid-tile>
-	             <md-grid-tile
-	                md-rowspan="2"
-	                md-colspan="1"
-	                layout-align="start start"
-	                layout="row"
-	                style='background-image: url("https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR01B6JsTIFYU5hmUPzmDMypMocMRBAGeGMFwJzV3HwT_rCuL9J")'>
-	            </md-grid-tile>
-	             <md-grid-tile
-	                md-rowspan="2"
-	                md-colspan="1"
-	                layout-align="start start"
-	                layout="row"
-	                style='background-image: url("https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQdeq76vPS7icAP39PqVKsvEGHw8u4vw9--ccHdtcXwXJLIqHM-")'>
-	            </md-grid-tile>
-	             <md-grid-tile
-	                md-rowspan="2"
-	                md-colspan="1"
-	                layout-align="start start"
-	                layout="row"
-	                style='background-image: url("https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRlabc77jkClSFTjVWfjqu_Y1AZWdkDZ80IyiQz1-3qMRYKADw2")'>
-	            </md-grid-tile>
-	             <md-grid-tile
-	                md-rowspan="2"
-	                md-colspan="1"
-	                layout-align="start start"
-	                layout="row"
-	                style='background-image: url("https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQAAPLrNjqj_LHHf6Ap-RP-dUWtV1FnEsW4W3Y31V_ShIInYsi1")'>
-	            </md-grid-tile>
-	             <md-grid-tile
-	                md-rowspan="2"
-	                md-colspan="1"
-	                layout-align="start start"
-	                layout="row"
-	                style='background-image: url("http://i.space.com/images/i/000/005/972/i02/sun-photo-solar-filament-101118-02.jpg?1294094311")'>
-	            </md-grid-tile>
-	             <md-grid-tile
-	                md-rowspan="2"
-	                md-colspan="1"
-	                layout-align="start start"
-	                layout="row"
-	                style='background-image: url("http://static.ibnlive.in.com/ibnlive/pix/sitepix/04_2014/swedish-cosmetics-company-plans-to-brighten-moon_200414052342.jpg")'>
-	            </md-grid-tile>
-	             <md-grid-tile
-	                md-rowspan="2"
-	                md-colspan="1"
-	                layout-align="start start"
-	                layout="row"
-	                style='background-image: url("http://vignette4.wikia.nocookie.net/pixar/images/a/ae/Alien.jpg/revision/latest?cb=20110220175306")'>
-	            </md-grid-tile>
-	             <md-grid-tile
-	                md-rowspan="2"
-	                md-colspan="1"
-	                layout-align="start start"
-	                layout="row"
-	                style='background-image: url("http://vignette4.wikia.nocookie.net/pixar/images/a/ae/Alien.jpg/revision/latest?cb=20110220175306")'>
+	                ng-repeat="article in visited_articles"
+	                ng-style='background-image: url("{{article.url}}")'>
 	            </md-grid-tile>
 	        </md-grid-list>
 		</md-content>

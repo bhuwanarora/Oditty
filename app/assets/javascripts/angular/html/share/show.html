@@ -1,12 +1,87 @@
-<div class="share" ng-if="show_share">
-	
+<div ng-controller="shareController" class="share animate-fast" layout="row" 
+	 ng-if="info.show_share"
+	 layout-align="start start" layout-padding>
+	<div flex="10">
+		<div ng-click="back($event)" layout="row" layout-align="center center" class="custom_button">
+			<h1 layout-padding>
+				<span class="icon-angle-left"></span>
+			</h1>
+		</div>
+	</div>
+	<div flex="80" layout="row">
+		<img class="circular user_image" src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
+		<!-- <div > -->
+		<!-- </div> -->
+		<div layout="column" class="input_container">
+			<md-input-container layout-margin style="font-family: 'Inconsolata', 'Courier New', serif;">
+				<!-- <label>Share your reading journey...</label> -->
+		        <textarea name="text_area" id="text_area" set-focus="info.show_share" placeholder="Share your reading journey..." ng-model="info.status"></textarea>
+		    </md-input-container>
+	    
+			<div class="select_mood custom_button" 
+					ng-click="show_share_options($event)">
+				<span class='icon-happy'></span>
+			</div>
+		</div>
+	</div>
+    <div flex="10">
+    </div>
 </div>
+
 <style>
+	.input_container{
+		top:67vh !important;
+		position: fixed;
+		width: 75% !important;
+	}
+
+	.user_image{
+		position: fixed;
+		top: 70vh;
+		width: 72px;
+		height: 72px;
+		z-index: 1;
+		/*margin-right: -20px;*/
+	}
+
 	.share{
 		position: fixed;
 		left: 0px;
 		right: 0px;
 		top: 0px;
 		bottom: 0px;
+		background-color: white;
+		z-index: 3;
 	}
+
+	.share md-input-container{
+		font-size: 40px;
+	}
+
+	.select_mood{
+		font-size: 29px;
+		color: rgba(197, 197, 197, 1);
+		width: 70px;
+		height: 70px;
+		padding: 0px;
+		margin-top: -25px;
+		margin-left: 80px;
+		z-index: 2;
+		position: relative;
+	}
+
+	.custom_button:hover{
+		cursor: pointer;
+		font-weight: bold;
+		color: black;
+	}
+
+	textarea{
+		font-family: 'Inconsolata', 'Courier New', serif;
+		line-height: 45px !important;
+		height: 55px !important;
+		padding-left: 75px !important;
+	}
+
+
 </style>

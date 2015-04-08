@@ -1,20 +1,18 @@
-homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'bookService', function($scope, $rootScope, $timeout, bookService){
+homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'bookService', 'ColorConstants', '$mdToast', function($scope, $rootScope, $timeout, bookService, ColorConstants, $mdToast){
 
-    $scope.get_popular_books = function(){
+    $scope.books_on_signup = function(){
         $scope.info.loading = true;
         var skip_count = $scope.popular_books.length;
         var get_popular_books = !$scope._loading && (angular.isUndefined($scope.info.search_book) || $scope.info.search_book.length < 1);
         if(get_popular_books){
             $scope._loading = true;
-            bookService.get_popular_books(skip_count).then(function(data){
+            var params = {"skip_count": skip_count};
+            params = angular.toJson(params);
+            bookService.books_on_signup(params).then(function(data){
                 angular.forEach(data, function(value){
-                    var status = value[4] != null;
-                    var json = {"isbn": value[0], 
-                            "id": value[1], 
-                            "title": value[2], 
-                            "author_name": value[3], 
-                            "user_rating": value[5],
-                            "status": status};
+                    var random_int = Math.floor(Math.random()*ColorConstants.value.length);
+                    var status = value.shelf == "HaveLeftAMarkOnMe";
+                    var json = angular.extend(value, {"status": status, "color": ColorConstants.value[random_int]});
                     this.push(json);
                 },  $scope.popular_books);
                 $scope._loading = false;
@@ -23,20 +21,20 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
         }
         else{
             if(angular.isUndefined($scope.all_results_found) || !$scope.all_results_found){
-                $scope._fetch_book_results();
+                // $scope._fetch_book_results();
             }
             $scope.info.loading = false;
         }
     }
 
-    $scope.show_shelf_bottom_sheet = function(event){
-        $mdBottomSheet.show({
-            templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
-            controller: 'listBottomSheetController',
-            targetEvent: event
-        });
-        event.stopPropagation();
-    };
+    // $scope.show_shelf_bottom_sheet = function(event){
+    //     $mdBottomSheet.show({
+    //         templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
+    //         controller: 'shelfController',
+    //         targetEvent: event
+    //     });
+    //     event.stopPropagation();
+    // };
 
     $scope.mark_as_read = function(book, event){
         if(angular.isDefined(book.id)){
@@ -54,10 +52,29 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
                 else{
                     book.status = false;
                 }
+                bookService.handle_influential_books(book.book_id, book.status);
             }
         });
-        // $scope.info.genres[index].status = true;
+        $mdToast.show({
+            controller: 'toastController',
+            templateUrl: 'assets/angular/html/shared/toast/select_book.html',
+            hideDelay: 6000,
+            position: $scope.getToastPosition()
+        });
     }
+
+    $scope.toast_position = {
+        bottom: false,
+        top: true,
+        left: false,
+        right: true
+    };
+
+    $scope.getToastPosition = function() {
+        return Object.keys($scope.toast_position)
+          .filter(function(pos) { return $scope.toast_position[pos]; })
+          .join(' ');
+    };
 
     $scope._fetch_book_results = function(reset_required){
         var skip_count = $scope.popular_books.length;
@@ -156,7 +173,7 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
                 if(backspace){
                     if(type == "BOOK"){
                         $scope.popular_books = [];
-                        $scope.get_popular_books();
+                        $scope.books_on_signup();
                     }
                     else{
                         $scope.popular_authors = [];
@@ -175,14 +192,14 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
     $scope.edit_books_read = function(){
         $scope.goto_info_card();
         $rootScope.user.profile_status = 2;
-        $scope.get_popular_books();
+        $scope.books_on_signup();
     }
 
     _init = function(){
         if(angular.isUndefined($scope.popular_books)){
             $scope.popular_books = [];
         }
-        $scope.get_popular_books();
+        $scope.books_on_signup();
     }
 
     _init();

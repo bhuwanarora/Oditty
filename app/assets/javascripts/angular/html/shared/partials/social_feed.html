@@ -1,0 +1,49 @@
+<md-card class="social">
+    <md-card-content>
+        <section layout="row" layout-align="start">
+            <div layout="row">
+                <img ng-src="{{user.profile_thumb}}" class="profile_thumb circular">
+                <div layout="column" layout-align="start start">
+                    <h2>{{user.first_name}}</h2>
+                    <div>Shared on {{feed.created_at}}</div>
+                </div>
+            </div>
+        </section>
+        <div class="side_padding">
+            
+        </div>
+        <div class="social_content" layout="row" ng-if="feed.book.title">
+            <div class="padding" flex="40">
+                <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'" ng-init="book = feed.book"></div>
+            </div>
+            <div flex="60">
+                <h3>{{feed.book.title}}</h3>
+                <div>By {{feed.book.author_name}}</div>
+                <p>
+                    {{feed.book.description}}
+                </p>
+            </div>
+        </div>
+    </md-card-content>
+    <md-card-content class="footer" ng-include src="'/assets/angular/html/shared/partials/card_footer.html'">
+    </md-card-content>
+</md-card>
+<style>
+    .profile_thumb{
+        width: 70px;
+        height: 70px;
+        padding: 10px;
+    }
+
+    .social_content{
+        order: 1;
+    }
+
+    .social h2{
+        margin: 16px 0px 0px 0px !important;
+    }
+
+    .social .book_thumb{
+        width: 100%;
+    }
+</style>

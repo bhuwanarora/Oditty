@@ -1,40 +1,61 @@
-class Author < ActiveRecord::Base
-	require 'uniquify'
-	uniquify :uuid, :salt, :length => 12, :chars => 0..9
+class Author < Neo
 
-	attr_accessible :human_profile_id, :olid, :flag, :shelfari_url, :legal_name, :birthplace, :birthdate, 
-					:nationality, :gender, :official_website, :date_of_death, :burial_location, :overview,
-					:wiki_url, :comments
-
-	belongs_to :human_profile
-	has_and_belongs_to_many :books
-	has_and_belongs_to_many :prizes
-	has_and_belongs_to_many :shelfari_books
-
-	def self.create_authors openlibrary_authors
-		@authors = []
-		openlibrary_authors.each do |author|
-			@human_profile = HumanProfile.find_by(:name => author["name"])
-			unless @human_profile.present?
-				@human_profile = HumanProfile.create(:name => author["name"], :openlibrary_url => author["url"])
-				create_author_for_human_profile
-			else
-				create_author_for_human_profile
-			end
-		end
-		@authors
+	def initialize author_id
+		@id = author_id
 	end
 
-	private
-		def self.create_author_for_human_profile
-			@author = Author.where(:human_profile_id => @human_profile.id).first
-			unless @author.present?
-				@author = Author.new(:human_profile_id => @human_profile.id)
-				if @author.save
-					@authors |= [@author]
+	def match
+		" MATCH (author: Author) WHERE ID(author)="+@id.to_s+" WITH author "
+	end
+
+	def self.match_group ids
+		clause = ""
+		unless ids.nil?
+			for id in ids do 
+				if clause.present?
+					clause = clause + " OR "
+				else
+					clause = " WHERE "
 				end
-			else
-				@authors |= [@author]
+				clause = clause + " ID(author) = " + id.to_s
 			end
 		end
+		clause = " MATCH (author:Author) " + clause
+		clause
+	end
+
+	def match_books
+		" MATCH (author)-[:Wrote]->(book:Book) WITH book, author "
+	end
+
+	def self.match_books
+		" MATCH (author:Author)-[:Wrote]->(book:Book) WITH book, author "
+	end
+
+	def self.remove
+	end
+
+	def self.is_duplicate
+	end
+
+	def match_active
+		" MATCH (author:Author :ActiveAuthor) WITH author "
+	end
+
+	def order_desc
+		" ORDER BY author.priority DESC "
+	end
+
+	def self.basic_info
+		" author.name AS name, author.id AS id, author.wiki_url AS wiki_url, author.overview as overview "
+	end
+
+	def self.get_favourites skip_count=0
+		skip(skip_count) +  limit(Constants::FollowFavoriteAuthorsCount) + return_init + Author.basic_info
+	end
+
+	def get_details
+		match + match_books + Author.return_group(Author.basic_info, Book.detailed_info) + Author.limit(10)
+	end
+
 end

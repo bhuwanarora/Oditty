@@ -1,15 +1,12 @@
-homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'genreService', 'authorService', 'WebsiteUIConstants', 'SearchUIConstants', 'timeGroupService', 'readingTimeService', function($scope, $rootScope, $timeout, genreService, authorService, WebsiteUIConstants, SearchUIConstants, timeGroupService, readingTimeService){
+homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'genreService', 'authorService', 'WebsiteUIConstants', 'SearchUIConstants', 'timeGroupService', 'readingTimeService', 'infinityService', 'ColorConstants', function($scope, $rootScope, $timeout, genreService, authorService, WebsiteUIConstants, SearchUIConstants, timeGroupService, readingTimeService, infinityService, ColorConstants){
 
     $scope._get_genres = function(){
     	if(angular.isUndefined($scope.info.genres) || $scope.info.genres.length == 0){
 			$scope.info.genres = [];
 	    	genreService.get_genres().then(function(data){
 	    		angular.forEach(data, function(value){
-	    			var status = value[3] != null;
-	    			var json = {"name": value[0], 
-	    						"id": value[1], 
-	    						"icon": value[2], 
-	    						"status": status};
+	    			var status = value.status != null;
+	    			var json = angular.extend(value, {"status": status});
 	    			this.push(json);
 	    		}, $scope.info.genres);
 	    	});
@@ -21,21 +18,93 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         var skip_count = 0;
         authorService.get_popular_authors(skip_count).then(function(data){
             angular.forEach(data, function(value){
-                var json = {"name": value[0]};
-                this.push(json);
+                this.push(value);
             },  $scope.info.authors);
         });
-    }       
+    }
+
+    $scope.reset_filter = function(){
+        delete $scope.info.selected_genre;
+        delete $scope.info.selected_author;
+        delete $scope.info.selected_year;
+        delete $scope.info.selected_duration;
+        delete $scope.search_tag.genre;
+        delete $scope.search_tag.time_group;
+        delete $scope.search_tag.author;
+        delete $scope.search_tag.read_time;
+        $rootScope.filters = {};
+        _set_books();
+    }
+
+    var _set_books = function(){
+        // $scope.info.books = [];
+        $scope.active_tab.infinity = true;
+        if(Object.keys($rootScope.filters).length == 0){
+            $scope.info.books = [];
+            $scope.get_popular_books();
+        }
+        else{
+            infinityService.get_books(0).then(function(data){
+                $scope.info.books = [];
+                angular.forEach(data, function(value){
+                    var random_int = Math.floor(Math.random()*ColorConstants.value.length);
+                    var json = angular.extend(value, {"color": ColorConstants.value[random_int]});
+                    this.push(json);
+                }, $scope.info.books);
+            });
+        }
+    }
+
+    $scope.select_genre = function(genre){
+        if(angular.isUndefined(genre)){
+            delete $rootScope.filters.category_id;
+        }
+        else{
+            $rootScope.filters["category_id"] = genre.id;
+        }
+        _set_books();
+    }
+
+    $scope.select_author = function(author){
+        if(angular.isUndefined(author)){
+            delete $rootScope.filters.author_id;
+        }
+        else{
+            $rootScope.filters["author_id"] = author.id;
+        }
+        _set_books();
+    }
+
+    $scope.select_reading_time = function(read_time){
+        if(angular.isUndefined(read_time)){
+            delete $rootScope.filters.reading_time_id;
+        }
+        else{
+            $rootScope.filters["reading_time_id"] = read_time.id;
+        }
+        _set_books();
+    }
+
+    $scope.select_publishing_year = function(time_group){
+        if(angular.isUndefined(time_group)){
+            delete $rootScope.filters.era_id;
+        }
+        else{
+            $rootScope.filters["era_id"] = time_group.id;
+        }
+        _set_books();
+    }
 
     $scope.search_genres = function(input){
-        debugger
         var params = "q="+input+"&count="+10;
+        $scope.info.loading = true;
         genreService.search_genres(params).then(function(data){
+            $scope.info.loading = false;
             if(data.length > 0){
                 $scope.info.genres = [];
                 angular.forEach(data, function(value){
                     var json = {"type": SearchUIConstants.Genre, "custom_option": true, "icon2": "icon-tag"};
-                    json = angular.extend(json, {"name": value[0], "id": value[1]});
+                    json = angular.extend(json, value);
                     this.push(json);
                 }, $scope.info.genres);
             }
@@ -46,14 +115,15 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
     }
 
     $scope.search_authors = function(input){
-        debugger
         var params = "q="+input+"&count="+10;
+        $scope.info.loading = true;
         authorService.search_authors("q="+input).then(function(data){
+            $scope.info.loading = false;
             if(data.length > 0){
                 $scope.info.authors = [];
                 angular.forEach(data, function(value){
                     var json = {"icon2": "icon-pen", "type": SearchUIConstants.AuthorSearch, "custom_option": true};
-                    json = angular.extend(json, {"name": value[0], "id": value[1]});
+                    json = angular.extend(json, value);
                     this.push(json);
                 }, $scope.info.authors);
             }
@@ -65,13 +135,10 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
 
     $scope._get_time_groups = function(){
         timeGroupService.get_time_groups().then(function(data){
-            data = data["times"]
             $scope.info.time_groups = [];
             angular.forEach(data, function(value){
-                var time_data = value[0]["data"];
-                var name = time_data["name"];
                 var json = {"icon2": "icon-calendar", "type": SearchUIConstants.Year, "custom_option": true};
-                json = angular.extend(json, {"name": name, "label": time_data["range"]});
+                json = angular.extend(json, value);
                 this.push(json);
             }, $scope.info.time_groups);
         });
@@ -81,32 +148,12 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         readingTimeService.get_read_times().then(function(data){
             $scope.info.read_times = [];
 
-            angular.forEach(data["read_times"], function(value){
-                var time_data = value[0]["data"];
-                var name = time_data["name"];
-                var tag = time_data["type"];
+            angular.forEach(data, function(value){
                 var json = {"icon2": "icon-clock", "type": SearchUIConstants.Time, "custom_option": true};
-                json = angular.extend(json, {"name": name, "tag": tag});
+                json = angular.extend(json, value);
                 this.push(json);
-            }, $scope.info.read_times);            
+            }, $scope.info.read_times);
         });
-    }
-
-    $scope.select_read_times = function(){
-        $scope.info.cirular_loading = true;
-    }
-
-    $scope.select_genres = function(event){
-        debugger
-        $scope.info.cirular_loading = true;
-    }
-
-    $scope.select_authors = function(){
-        $scope.info.cirular_loading = true;
-    }
-
-    $scope.select_time_groups = function(){
-        $scope.info.cirular_loading = true;
     }
 
     $scope._detect_key = function(event){
@@ -119,13 +166,18 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         return {"backspace_or_delete": backspace_or_delete, "keyUp": keyUp, "keyDown": keyDown, "keyLeft": keyLeft, "keyRight": keyRight, "keyEnter": enter};
     }
 
-    _init = function(){
+    var _init = function(){
         $scope.search_tag = {};
+        $scope.info.genres = [];
+        $scope.info.authors = [];
+        $scope.info.time_groups = [];
+        $scope.info.read_times = [];
         console.debug("initialised filters controller");
-        $scope._get_genres();
-        $scope._get_authors();
         $scope._get_time_groups();
         $scope._get_reading_times();
+        if(angular.isUndefined($rootScope.filters)){
+            $rootScope.filters = {};
+        }
     }
 
     _init();

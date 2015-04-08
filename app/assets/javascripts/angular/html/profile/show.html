@@ -1,1 +1,21 @@
-<div ng-include src="'/assets/angular/html/home/show.html'"></div>
+<md-list>
+	<div ng-repeat="feed in user.feed">
+	    <div ng-if="feed.label == 'BlogkNode'" ng-include src="'/assets/angular/html/home/_blog.html'"></div>
+	    <div ng-if="feed.label == 'CommunityNode'" ng-include src="'/assets/angular/html/home/_community.html'"></div>
+	    <div ng-if="(feed.label == 'BookmarkNode') || (feed.label == 'StatusNode')" 
+	    	 ng-include src="'/assets/angular/html/shared/partials/social_feed.html'"></div>
+	    <div ng-if="feed.label == 'ListopiaNode'" ng-include src="'/assets/angular/html/home/_listopia.html'"></div>
+	</div>
+</md-list>
+
+<style>
+	.info_button{
+		width: 50px !important;
+		height: 50px !important;
+	}
+
+	.genre_cover, .genre_cover_gradient{
+		width: 50px !important;
+		height: 50px !important;
+	}
+</style>

@@ -1,9 +1,26 @@
 namespace :graph do
 
-  desc "remove rubbish labels"
-  task :delete_labels => :environment do
+  # desc "remove rubbish labels"
+  # task :delete_labels => :environment do
+  #   include Neo4jHelper
+  #   Neo4jHelper.delete_labels
+  # end
+
+  desc "set_genre_linked_list"
+  task :set_genre_linked_list => :environment do
     include Neo4jHelper
-    Neo4jHelper.delete_labels
+    Neo4jHelper.set_genre_linked_list
+  end
+
+  task :add_labels_to_existing_user => :environment do
+    include Neo4jHelper
+    Neo4jHelper.add_labels_to_existing_user
+  end
+
+  desc "add_new_labels"
+  task :add_new_labels => :environment do
+    include Neo4jHelper
+    Neo4jHelper.add_new_labels
   end
 
   desc "set_author_rating"

@@ -52,7 +52,12 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
     }
 
     this.get_detailed_info = function(id){
-        return _deferred_request('/api/v0/user_profile_info?id='+id);
+        if(angular.isDefined(id)){
+            return _deferred_request('/api/v0/user_profile_info?id='+id);
+        }
+        else{
+            return _deferred_request('/api/v0/user_profile_info');
+        }
     }
 
     this.logout = function(){
@@ -114,11 +119,24 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         }
     }
 
+    this.get_influential_books = function(){
+        return _deferred_request('/api/v0/get_influential_books');
+    }
+
     this.get_latest_notification = function(){
         return _deferred_request('/api/v0/latest_notification');
     }
 
     this.get_info_data = function(){
         return _deferred_request('/api/v0/info_data');
+    }
+
+    this.get_feed = function(id){
+        if(angular.isDefined(id)){
+            return _deferred_request('/api/v0/notifications?id='+id);
+        }
+        else{
+            return _deferred_request('/api/v0/notifications');
+        } 
     }
 }]);

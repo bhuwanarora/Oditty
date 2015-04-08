@@ -1,21 +1,58 @@
-<md-bottom-sheet class="md-list md-has-header" ng-controller="listBottomSheetController" ng-click="stop_propagation($event)">
-    <md-subheader>Add to</md-subheader>
-    <md-list>
-        <md-item ng-repeat="item in items">
-            <md-checkbox ng-model="data.cb1" aria-label="{{ item.name }}" class="md-warn">
-                {{ item.name }}
-            </md-checkbox>
-        </md-item>
-    </md-list>
-    <md-divider></md-divider>
-    <md-subheader>Shelves</md-subheader>
-    <md-list>
-        <md-item ng-repeat="item in personal_shelves">
-            <md-checkbox ng-model="data.cb1" aria-label="{{ item.name }}" class="md-warn">
-                {{ item.name }}
-            </md-checkbox>
-        </md-item>
-    </md-list>
-    <md-divider></md-divider>
-    <md-subheader>Create New</md-subheader>
+<md-bottom-sheet class="share_bottom_list" 
+    ng-controller="shelfController" layout-padding
+    ng-click="stop_propagation($event)">
+    <div layout="column" flex layout-fill>
+        <md-content class="book_list">
+            <section>
+                <md-subheader>
+                    <div layout-padding>Add to</div>
+                </md-subheader>
+                <md-list layout="column" layout-fill>
+                    <md-item ng-repeat="label in labels" ng-if="label.public_status">
+                        <md-checkbox ng-model="data.cb1" aria-label="{{label.label_id}}" class="md-warn" ng-click="toggle_bookmark(label, data.cb1)" >
+                            {{label.label_name}}
+                        </md-checkbox>
+                    </md-item>
+                </md-list>
+            </section>
+        </md-content>
+        <md-divider></md-divider>
+        <section layout="row" class="footer" layout-padding>
+            <md-input-container class="clear">
+                <label>Create New...</label>
+                <input ng-model="new_label"/>
+            </md-input-container>
+            <md-button ng-click="add_new_label()">
+                <span class="icon-plus"></span>
+            </md-button>
+        </section>
+    </div>
 </md-bottom-sheet>
+
+<style>
+    md-content.md-default-theme {
+        background-color: white;
+    }
+
+    .share_bottom_list{
+        height: 60vh !important;
+    }
+
+    .book_list{
+        position: absolute;
+        top: 5px !important;
+        height:75vh !important;
+        width: 100vw !important;
+    }
+
+    .footer{
+        position: fixed;
+        bottom: 5px !important;
+        width: 100vw !important;
+        background-color: white;
+    }
+
+    .md-subheader:not(.md-sticky-no-effect)[sticky-state=active] {
+        margin-top: 0px !important;
+    }
+</style>

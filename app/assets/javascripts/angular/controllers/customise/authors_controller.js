@@ -21,5 +21,11 @@ homeApp.controller('authorsController', ["$scope", "$rootScope", "$timeout", 'us
         }
     }
 
+   
+
+    var _init = function(){
+        
+    }
+
     _init();
 }]);

@@ -1,25 +1,32 @@
-<div class="animate-fast" ng-if="show_content" style="padding-top: 121px;">
+<div class="animate-fast top_pad" ng-if="show_content">
 	<div id="ExploreInner"></div>
-	<div layout="row" layout-margin layout-align="center center" class="header-image blue-background">
-		<div flex>
-			<h2 class="header-title">
-				<span>Delve inside the </span> 
-				<span>richness of literature.</span>
-			</h2>
-		</div>
-		<div flex>
-			<img src="assets/Explore.png" class="img-wrapped"/>
-		</div>
-	</div>
-	<div style="height: 600px;" class="discover-area">
-		<div>
-			<div class="feature-description">
-				An experience that let you see a book from multiple perspectives by connecting knowledge around in different forms.
+	<div layout="column" layout-fill>
+		<div layout="row" layout-align="center center" class="top_view green_background" layout-fill>			
+			<div flex="5"></div>
+			<div flex-gt-md="50" flex-md="50" flex-sm="90">
+				<h3 class="title" layout-padding layout-wrap>
+					<div>Delve inside the</div>
+					<div>richness of</div>
+					<div>literature</div>
+				</h3>
 			</div>
-			<div class="h-center-container" ng-if="current_page_id == 4">
-				<md-whiteframe class="w-box" layout="row" layout-align="left left">
-	    			<img src="assets/book_page.png" class="animate-fast img-resize"/>
-	  			</md-whiteframe>
+			<div flex="5"></div>
+			<div flex="40" layout="row" layout-align="center center" hide-sm>
+				<img src="assets/Explore.png" class="img_short"/>
+			</div>
+		</div>
+
+		<div layout="row" flex="100" layout-align="center start" class="foot_view" layout-fill>
+			<div layout="column" layout-align="start center" layout-fill layout-padding>
+				<div class="description" layout-padding>
+					An experience that let you see a book from multiple perspectives by connecting	knowledge around in different forms.
+				</div>
+				<md-divider layout-fill></md-divider>
+				<div ng-if="current_page_id == 4" class="w_box">
+					<md-whiteframe layout-padding>
+					   	<img src="assets/book_page.png" class="animate-fast img_fullsize"/>
+					</md-whiteframe>
+				</div>
 			</div>
 		</div>
 	</div>
