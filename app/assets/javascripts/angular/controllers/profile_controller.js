@@ -1,4 +1,4 @@
-homeApp.controller('profileController', ["$scope", "userService", '$rootScope', "WebsiteUIConstants", 'ColorConstants', '$location', function($scope, userService, $rootScope, WebsiteUIConstants, ColorConstants, $location){
+homeApp.controller('profileController', ["$scope", "userService", '$rootScope', "WebsiteUIConstants", 'ColorConstants', '$location', 'bookService', function($scope, userService, $rootScope, WebsiteUIConstants, ColorConstants, $location, bookService){
 	var _get_detailed_info = function(){
 		userService.get_detailed_info().then(function(data){
 			data = data[0];
@@ -26,8 +26,11 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 		userService.get_feed().then(function(data){
 			$rootScope.user.feed = [];
 			angular.forEach(data, function(value){
-				var random_int = Math.floor(Math.random()*ColorConstants.value.length);
+				var random_int = Math.floor(Math.random() * ColorConstants.value.length);
 				value.book = angular.extend(value.book, {"color": ColorConstants.value[random_int]});
+				bookService.get_basic_book_details(value.book.id).then(function(data){
+					value.book = angular.extend(value.book, data);
+				});
 				this.push(value);
 			}, $rootScope.user.feed);
 		});
@@ -40,7 +43,7 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
         	var id = url_parser[2];
 		}
 		else{
-			var id = $rootScope.user.id; 
+			var id = $rootScope.user.id;
 		}
         _get_detailed_info(id);
         _get_feed(id);

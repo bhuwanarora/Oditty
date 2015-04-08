@@ -55,38 +55,44 @@ class Notification < Neo
 
 	def _recommend_notification data
 		name = _get_name data
-		message = "<span> recommended </span><span class='site_color'>"+data["title"]+"</span><span> to "+data["friend_name"]+".</span>"
+		# message = "<span> recommended </span><span class='site_color'>"+data["title"]+"</span><span> to "+data["friend_name"]+".</span>"
+		message = ""
 		notification(message, data)
 	end
 
 	def _thumb_request_notification data
 		name = _get_name data
-		message = "<span> suggested thumbnail for </span><span class='site_color'>"+data["title"]+".</span>"
+		# message = "<span> suggested thumbnail for </span><span class='site_color'>"+data["title"]+".</span>"
+		message = ""
 		notification(message, data)
 	end
 
 	def _bookmark_notification data
 		name = _get_name data
-		message = "<span> saved </span><span class='site_color'>"+data["title"]+"</span><span>&nbsp;to </span><span>"+data["label"].downcase.camelcase+".</span>"
+		# message = "<span> saved </span><span class='site_color'>"+data["title"]+"</span><span>&nbsp;to </span><span>"+data["label"].downcase.camelcase+".</span>"
+		message = ""
 		notification(message, data)
 	end
 
 	def _rating_notification data
 		name = _get_name data
-		message = "<span> gave "+data["rating"].to_s+"/10 stars to </span><span class='site_color'>"+data["title"]+".</span>"
+		# message = "<span> gave "+data["rating"].to_s+"/10 stars to </span><span class='site_color'>"+data["title"]+".</span>"
+		message = ""
 		notification(message, data)
 	end
 
 	def _timing_node_notification data
 		name = _get_name data
 		book_length_string = _get_time_index data["time_index"]
-		message = "<span> described reading length of <span class='site_color'>"+data["title"]+"</span>&nbsp; as a '"+book_length_string+"'. </span>"
+		# message = "<span> described reading length of <span class='site_color'>"+data["title"]+"</span>&nbsp; as a '"+book_length_string+"'. </span>"
+		message = ""
 		notification(message, data)
 	end
 
 	def _mark_as_read_notification data
 		name = _get_name data
-		message = "<span> added </span><span class='site_color'>"+data["title"]+"</span><span> to &nbsp;</span><span class='icon-books'></span><span>&nbsp;Books Read.</span>"
+		# message = "<span> added </span><span class='site_color'>"+data["title"]+"</span><span> to &nbsp;</span><span class='icon-books'></span><span>&nbsp;Books Read.</span>"
+		message = ""
 		notification(message, data)
 	end
 
@@ -98,10 +104,7 @@ class Notification < Neo
 			:message => message,
 			:timestamp => data["timestamp"],
 			:book => {
-				:id => data["book_id"],
-				:title => data["title"],
-				:author_name => data["author_name"],
-				:isbn => data["isbn"]
+				:id => data["book_id"]
 			},
 			:user => {
 				:id => data["user_id"],

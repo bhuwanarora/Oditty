@@ -118,9 +118,9 @@ module Api
 			end
 
 
-			def self.get_basic_book_details(id, user_id)
-				book = BooksGraphHelper.get_basic_details(id, user_id)
-			end
+			# def self.get_basic_book_details(id, user_id)
+			# 	book = BooksGraphHelper.get_basic_details(id, user_id)
+			# end
 
 			def self.get_book_details(id, user_id=nil)
 				book = UsersBook.new(id, user_id).get_basic_details.execute[0]

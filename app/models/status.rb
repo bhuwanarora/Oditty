@@ -34,11 +34,23 @@ class Status < Neo
 
 	def create_status_node
 		if @book_id.present?
-			book_data = ", title: book.title, isbn: book.isbn "
+			clause = Status.set_book_id
 		else
-			book_data = ""
+			clause = ""
 		end
-		" (status_node:StatusNode{user_id:" + @user_id.to_s + ", created_at:" + Time.now.to_i.to_s + ", updated_at:" + Time.now.to_i.to_s + ", content:\"" + @content.to_s + "\""+book_data+"}) "
+		" (status_node:StatusNode{user_id:" + @user_id.to_s + ", created_at:" + Time.now.to_i.to_s + ", content:\"" + @content.to_s + "\"}) " + Status.set_updated_at + clause
+	end
+
+	def self.set_created_at
+		" SET status_node.created_at = "+ Time.now.to_i.to_s + " "
+	end
+
+	def self.set_updated_at
+		" SET status_node.updated_at = "+ Time.now.to_i.to_s + " "
+	end
+
+	def self.set_book_id
+		" SET status_node.book_id = " + @book_id.to_s + " "
 	end
 
 	def create_status
