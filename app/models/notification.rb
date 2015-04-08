@@ -44,7 +44,7 @@ class Notification < Neo
 				notifications.push(notification.merge!("label" => type))
 			end
 		end
-		notifications.reverse!
+		notifications
 	end
 
 	def _share_notification data
