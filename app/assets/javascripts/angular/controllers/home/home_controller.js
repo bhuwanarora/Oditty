@@ -85,21 +85,6 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
     
     };
 
-    $scope.show_share_page = function(event) {
-        if(!$scope.info.show_share){
-            $scope.info.show_share = true;
-        }
-        else{
-            if($scope.info.status.length > 1){
-                $scope.info.status = "";
-                $scope.type_icon_pressed = {"margin-right": "60vw"};
-                $timeout(function(){
-                    $scope.type_icon_pressed = {"margin-right": "0px"};
-                }, 100);
-            }
-        }
-    };
-
     var _init = function(){
         $scope.visible_search_bar = true;
         $scope.info = {};

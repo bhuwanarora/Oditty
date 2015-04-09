@@ -32,7 +32,7 @@ class Bookmark < Neo
 	end
 
 	def create_label_bookmark_node
-		" CREATE (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node: BookmarkNode{label:\""+@key+"\", book_id:"+@book_id.to_s+", user_id:"+@user_id.to_s+"}) " 
+		" CREATE UNIQUE (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node: BookmarkNode{label:\""+@key+"\", book_id:"+@book_id.to_s+", user_id:"+@user_id.to_s+", created_at:"+Time.now.to_i.to_s+"}) " 
 	end
 
 	def self.create_bookmark_node_book
@@ -85,7 +85,7 @@ class Bookmark < Neo
 	end
 
 	def create
-		UsersBook.new(@book_id, @user_id).match + User.create_label(@key) + create_label_bookmark_node + Bookmark.create_bookmark_node_book + Bookmark.set_created_at + Bookmark.set_updated_at + Bookmark.set_key(@key) + " WITH user, book, bookmark_node, label, labelled "
+		UsersBook.new(@book_id, @user_id).match + User.create_label(@key) + create_label_bookmark_node + Bookmark.create_bookmark_node_book + Bookmark.set_updated_at + Bookmark.set_key(@key) + " WITH user, book, bookmark_node, label, labelled "
 	end
 
 	def add
@@ -119,7 +119,7 @@ class Bookmark < Neo
 		
 		feednext_clause = User::Feed.new(@user_id).delete_feed("bookmark_node") + ", book, labelled, label "
 
-		bookfeed_next_clause = Book::Feed.new(@user_id).delete_feed("bookmark_node") + ", labelled, label "
+		bookfeed_next_clause = Book::Feed.delete_feed("bookmark_node", @user_id) + ", labelled, label "
 
 		clause = match + Bookmark::Node::BookLabel.match_path + Bookmark.delete_bookmark_relations + set_clause + feednext_clause + bookfeed_next_clause + Bookmark.delete_bookmark
 

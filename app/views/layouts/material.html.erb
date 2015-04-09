@@ -71,12 +71,14 @@
 
             <% if @book %>
                 <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
+                <script src="assets/angular/controllers/book/timeline_controller.js"></script>
             <% end %>
 
             <% if @infinity %>
                 <script src="assets/angular/controllers/library/library_controller.js"></script>
                 <script src="assets/angular/controllers/library/filters_controller.js"></script>
                 <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
+                <script src="assets/angular/controllers/book/timeline_controller.js"></script>
                 
                 <script src="assets/angular/services/time_group_service.js"></script>
                 <script src="assets/angular/services/reading_time_service.js"></script>
@@ -188,13 +190,15 @@
 
             <%= yield %>
             <% unless @customise %>
-                <md-button class="md-fab md-fab-bottom-right animate-fast fixed_share"
-                            aria-label="Eat cake"
-                            ng-class="{'md-fab-custom-right': info.show_share}"
-                            ng-click="show_share_page($event)"
-                            ng-style="type_icon_pressed"
-                            style="background-image: url('assets/type.png')">
-                </md-button>
+                <div ng-controller="shareController">
+                    <md-button class="md-fab md-fab-bottom-right animate-fast fixed_share"
+                                aria-label="Eat cake"
+                                ng-class="{'md-fab-custom-right': info.show_share}"
+                                ng-click="show_share_page($event)"
+                                ng-style="type_icon_pressed"
+                                style="background-image: url('assets/type.png')">
+                    </md-button>
+                </div>
             <% end %>
             
             <md-progress-linear class="md-primary loader" 

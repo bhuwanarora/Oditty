@@ -36,7 +36,7 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 				case "BlogNode":
 					break;
 				case "StatusNode":
-					message = value.node.content;
+					message = value.node.wrapper_content;
 					break;
 				case "EndorseNode":
 					message = "Endorsed this book.";
@@ -64,17 +64,22 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 			}
 
 			angular.forEach($rootScope.user.feed, function(value){
-				var book = _book_exists(grouped_feed, value.book.id);
-				if(book.status){
-					delete value.book;
-					grouped_feed[book.index].data.push(value)
+				if(angular.isDefined(value.book)){
+					var book = _book_exists(grouped_feed, value.book.id);
+					if(book.status){
+						delete value.book;
+						grouped_feed[book.index].data.push(value)
+					}
+					else{
+						if(angular.isDefined(value.book)){
+							book = {"book": value.book};
+							delete value.book;
+							value = angular.extend(book, {"data": [value]});
+						}
+						this.push(value);
+					}
 				}
 				else{
-					if(angular.isDefined(value.book)){
-						book = {"book": value.book};
-						delete value.book;
-						value = angular.extend(book, {"data": [value]});
-					}
 					this.push(value);
 				}
 			}, grouped_feed);
@@ -85,7 +90,9 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 			$rootScope.user.feed = [];
 			angular.forEach(data, function(value){
 				var random_int = Math.floor(Math.random() * ColorConstants.value.length);
-				value.book = angular.extend(value.book, {"color": ColorConstants.value[random_int]});
+				if(angular.isDefined(value.book)){
+					value.book = angular.extend(value.book, {"color": ColorConstants.value[random_int]});
+				}
 				this.push(value);
 			}, $rootScope.user.feed);
 			_group_feed();
@@ -98,6 +105,11 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 							feed_data = angular.extend(feed_data, {"message": message});
 						})
 					});
+				}
+				else{
+					var message = _get_message(value);
+					var feed_data = angular.extend(value, {"message": message});
+					value.data = [feed_data];
 				}
 			});
 		});

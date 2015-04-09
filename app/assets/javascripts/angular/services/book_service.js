@@ -87,4 +87,8 @@ homeApp.service('bookService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return _deferred_request('/api/v0/update_visited?id='+id);
     }
 
+    this.get_feed = function(id, skip_count){
+        return _deferred_request('/api/v0/book_feed?id='+id+"&skip_count="+skip_count);
+    }
+
 }]);

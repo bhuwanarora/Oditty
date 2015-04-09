@@ -1,5 +1,5 @@
 <md-card class="social">
-    <md-card-content>
+    <md-card-content class="footer">
         <section layout="column" layout-align="start">
             <div layout="row">
                 <img ng-src="{{user.profile_thumb}}" class="profile_thumb circular">
@@ -8,12 +8,12 @@
                 </div>
             </div>
             <div ng-repeat="data in feed.data" layout-padding>
-                <div>{{data.message}}</div>
+                <div ng-bind-html="data.message" class="status_message"></div>
                 <div class="less_important">{{data.created_at | timestamp | date:'h:mm a, dd MMM'}}</div>
             </div>
         </section>
     </md-card-content>
-    <md-card-content class="book_container" ng-if="feed.book.title">
+    <md-card-content class="less_important_container" ng-if="feed.book.title">
         <div class="social_content" layout="row" layout-padding>
             <div flex="25">
                 <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'" ng-init="book = feed.book"></div>
@@ -54,17 +54,13 @@
         font-family: sans-serif;
     }
 
-    .less_important{
-        color: #999999;
-        font-size: 0.8em;
-    }
-
     .book_description{
         margin-top: 10px;
         font-size: 0.9em;
     }
-
-    .book_container{
-        background-color: whitesmoke;
+    
+    .status_message a{
+        font-weight: bold;
+        text-decoration: underline;
     }
 </style>

@@ -104,7 +104,8 @@ class Notification < Neo
 			},
 			:node => {
 				:key => data["key"],
-				:content => data["content"]
+				:content => data["content"],
+				:wrapper_content => data["wrapper_content"]
 			}
 		}
 		if tag.present?

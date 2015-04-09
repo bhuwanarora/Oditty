@@ -318,6 +318,10 @@ input:focus{
     color: #424242 !important;
 }
 
+.grey{
+    background-color: #E5E5E5 !important;
+}
+
 .dark_green_color{
     color: #3cb878 !important;
 }
@@ -844,4 +848,13 @@ md-input-container .md-input{
 
 md-backdrop{
     /*background-color: transparent !important;*/
+}
+
+.less_important{
+    color: #999999;
+    font-size: 0.8em;
+}
+
+.less_important_container{
+    background-color: whitesmoke;
 }

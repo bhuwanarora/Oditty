@@ -235,6 +235,7 @@ module.exports = function(grunt) {
             'app/assets/javascripts/min/angular/vendors/angular_messages.min.js',
             'app/assets/javascripts/min/angular/vendors/angular_animate136.min.js',
             'app/assets/javascripts/min/angular/landing_page_vendors.js',
+            'app/assets/javascripts/min/angular/vendors/angular-sanitize.min.js',
             'app/assets/javascripts/min/lib/angular_scroll.min.js',
             'app/assets/javascripts/min/angular/vendors/angular_filters.min.js'
           ]

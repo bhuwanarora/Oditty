@@ -45,7 +45,7 @@ homeApp.service('statusService', ["$http", "$q", "$rootScope", "WebsiteUIConstan
 
     this.post_status = function(params){
         var params = angular.toJson(params);
-        return _deferred_request('/api/v0/create_status?q='+params);
+        return _deferred_post_request('/api/v0/create_status', params);
     }
 
 }]);

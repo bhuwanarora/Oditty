@@ -14,8 +14,8 @@ module Api
 			end
 
 			def self.get_feed book_id
-				feeds = BooksGraphHelper.get_feed book_id
-				notifications = NotificationHelper.structure_feed feeds
+				feeds = Book::Feed.new(book_id).get_feed.execute
+				notifications = Notification.new(feeds).structure_feed
 				notifications
 			end
 
