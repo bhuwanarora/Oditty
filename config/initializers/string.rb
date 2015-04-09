@@ -29,5 +29,6 @@ class String
             .gsub("LIMIT", "\n LIMIT")
             .gsub("SET", "\n SET")
             .gsub("MATCH", "\n MATCH")
+            .gsub("START", "\n START")
     end
 end
