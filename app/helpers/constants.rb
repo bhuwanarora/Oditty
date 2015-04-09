@@ -7,7 +7,6 @@ module Constants
 	ReadTimePoints				= 10
 	ThumbSuggest				= 10
 	RecommendationPoints		= 10
-	QueryStepDuringLinking		= 1000
 	
 	if Rails.env.development?
 		Admin						= 0
