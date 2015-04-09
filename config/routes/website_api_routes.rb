@@ -17,6 +17,8 @@ ReadersDoor::Application.routes.draw do
       match "trends"                                 => 'website_api#trends',                           :via => [:put, :get, :post]
       match "save_feedback"                          => 'website_api#save_feedback',                    :via => [:put, :get, :post]
       match 'fb_books'                               => 'website_api#fb_books',                         :via => [:put, :get, :post]
+      match "news_info"                              => 'website_api#news_info',                        :via => [:put, :get, :post]
+      match 'chronological_news'                     => 'website_api#chronological_news',           :via => [:put, :get, :post]
     end
   end
 end

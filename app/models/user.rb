@@ -68,6 +68,10 @@ class User < Neo
 		" user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id "
 	end
 
+	def self.grouped_basic_info
+		"  init_book_read_count:user.init_book_read_count ,  selectedYear:user.selectedYear ,  selectedMonth:user.selectedMonth ,  selectedDay:user.selectedDay ,  first_name:user.first_name ,  last_name:user.last_name ,  about:user.about ,  id:ID(user) "
+	end
+
 	def get_all_books skip_count=0, limit_count=Constants::BookCountShownOnSignup 
 		match + Bookmark::Node::BookLabel.match_path + User.return_group(Book.basic_info, " label.key as shelf ") + Book.order_desc + User.skip(skip_count) + User.limit(limit_count)
 	end
@@ -106,7 +110,7 @@ class User < Neo
 		create_ego_relation = "(user)-[:Ego{user_id:ID(user)}]->(user) WITH user "
 		get_labels = "MATCH(bm:Label{basic:true}) "
 		add_labels = "CREATE (user)-[:Labelled{user_id:ID(user)}]->(bm) "
-		add_categories_to_user = "WITH user MERGE (user)-[rel:Likes]-(root_category:Category{is_root:true}) ON CREATE SET rel.weight = 0 "
+		add_categories_to_user = "WITH user MERGE (root_category:Category{is_root:true}) MERGE (user)-[rel:Likes]-(root_category) ON CREATE SET rel.weight = 0 "
 		# get_all_users = "MATCH (all_user:User) WHERE all_user <> user "
 		# make_friends = "CREATE (user)-[:Follow]->(all_user), (user)<-[:Follow]-(all_user)"
 		clause = create_new_user + create_feednext_relation + create_ego_relation + get_labels + add_labels + add_categories_to_user

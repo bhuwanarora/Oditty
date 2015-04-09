@@ -255,7 +255,7 @@ class BooksController < ApplicationController
     if params[:trending_id]
       book_ids = params[:book_ids].gsub("[", "").gsub("]", "").split(",") rescue ""
       id_string = ""
-      clause = "MATCH (t:Trending)-[r:RelatedBooks]->(:Book) WHERE ID(t)="+params[:trending_id]+" DELETE r"
+      clause = "MATCH (t:News)-[r:RelatedBooks]->(:Book) WHERE ID(t)="+params[:trending_id]+" DELETE r"
       neo.execute_query clause
       if book_ids.present?
         for book_id in book_ids
@@ -269,22 +269,22 @@ class BooksController < ApplicationController
         end
         id_string = id_string + ")"
         if params[:status]
-          clause = "MATCH (b:Book), (t:Trending) WHERE ID(t)="+params[:trending_id]+id_string+" SET t.status = 1 CREATE UNIQUE (t)-[:RelatedBooks]->(b)"
+          clause = "MATCH (b:Book), (t:News) WHERE ID(t)="+params[:trending_id]+id_string+" SET t.status = 1 CREATE UNIQUE (t)-[:RelatedBooks]->(b)"
         else
-          clause = "MATCH (b:Book), (t:Trending) WHERE ID(t)="+params[:trending_id]+id_string+" SET t.status = 0 CREATE UNIQUE (t)-[:RelatedBooks]->(b)"
+          clause = "MATCH (b:Book), (t:News) WHERE ID(t)="+params[:trending_id]+id_string+" SET t.status = 0 CREATE UNIQUE (t)-[:RelatedBooks]->(b)"
         end
       else
         if params[:status]
-          clause = "MATCH (t:Trending) WHERE ID(t)="+params[:trending_id]+id_string+" SET t.status = 1"
+          clause = "MATCH (t:News) WHERE ID(t)="+params[:trending_id]+id_string+" SET t.status = 1"
         else
-          clause = "MATCH (t:Trending) WHERE ID(t)="+params[:trending_id]+id_string+" SET t.status = 0"
+          clause = "MATCH (t:News) WHERE ID(t)="+params[:trending_id]+id_string+" SET t.status = 0"
         end
       end
       puts clause.blue.on_red
       neo.execute_query clause
     end
 
-    clause = "MATCH (t:Trending) OPTIONAL MATCH (t)-[:RelatedBooks]->(b:Book) RETURN t.name, t.timestamp, ID(t), COLLECT(b.title), t.status, COLLECT(ID(b)), t.title, t.content, t.searched_words, t.url, t.thumbnail_url, t.redirect_url, t.publisher, t.thumb ORDER BY toInt(t.timestamp) DESC LIMIT 50 "
+    clause = "MATCH (t:News) OPTIONAL MATCH (t)-[:RelatedBooks]->(b:Book) RETURN t.name, t.timestamp, ID(t), COLLECT(b.title), t.status, COLLECT(ID(b)), t.title, t.content, t.searched_words, t.url, t.thumbnail_url, t.redirect_url, t.publisher, t.thumb ORDER BY toInt(t.timestamp) DESC LIMIT 50 "
     puts clause.blue.on_red
     @trends = neo.execute_query(clause)["data"]
 
@@ -293,7 +293,7 @@ class BooksController < ApplicationController
   def remove_trend
     begin
       @neo = Neography::Rest.new
-      clause = "MATCH (t:Trending), (t)-[r]-() WHERE ID(t)="+params[:id].to_s+" DELETE t, r"
+      clause = "MATCH (t:News), (t)-[r]-() WHERE ID(t)="+params[:id].to_s+" DELETE t, r"
       @neo.execute_query clause
       render :json => {:message => "Success"}, :status => 200
     rescue Exception => e

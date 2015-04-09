@@ -13,26 +13,15 @@ module Api
 			end
 
 			def news_info
-				#TODO: (SATISH)
-				# id = params[:id]
-				# Article::News.new(id)
-				# {
-					# 	"most_important_tag": {
-					# 		"name", "importance", "view_count", "news_count", "id",
-					# 		"books"-->"basic_info", "users"-->"basic_info"
-					# 	},
-					# 	"other_tags": [
-					# 		{
-					# 			"name", "importance", "view_count", "news_count", "id"
-					# 		}
-					# 	],
-					#  	"more_news": [
-					#  		{
-					#  			"id", "most_important_tag", "timestamp"
-					#  		}
-						#SIX NEWS: Three news prior to this, three after 
-					#  	]
-				# }
+				id = params[:id]
+				(Api::V0::WebsiteApi.get_communities_info id).execute
+				render :json => " Success", :status => 200
+			end
+
+			def chronological_news
+				id = params[:id]
+				(Api::V0::WebsiteApi.get_chronological_news_info id).execute
+				render :json => " Success", :status => 200
 			end
 
 			def add_label
