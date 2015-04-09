@@ -1,18 +1,21 @@
 class Hashtag < Neo
-	def initialize hash_tag, user_id
+	def initialize hashtag, user_id
 		@user_id = user_id
-		@hash_tag = hash_tag
+		@hashtag = hashtag
 	end
 
 	def create
-		" MERGE (hash_tag:HashTag{hash_tag:\"" + @hash_tag + "\"}) MERGE (status)-[tagged:HashTagged{user_id:" + @user_id.to_s + "}]->(hash_tag) "
+		" MERGE(hashtag:Hashtag{hashtag:\"" + @hashtag.to_s + "\" }) CREATE UNIQUE (status)-[tagged:Hashtagged{user_id:" + @user_id.to_s + "}]->(hashtag) WITH status "
 	end
 
-	def self.create_group hash_tags, user_id  
+	def self.create_group(hashtags, user_id)
 		clause = ""
-		unless hash_tags.nil?
-			hash_tags.each{|hash_tag| clause += " WITH status " + Hashtag.new(hash_tag, user_id).create}
+		unless hashtags.nil?
+			for hashtag in hashtags do 
+				clause = clause + Hashtag.new(hashtag, user_id).create
+			end
 		end
 		clause
 	end
+
 end

@@ -6,6 +6,6 @@ class Status::BookExchangeStatusType::PlanningToLend < Status::BookExchangeStatu
 	end
 
 	def create
-		Status::BookExchangeStatusType.new(@book_id, @user_id).create(@exchange_status)
+		super(@exchange_status)
 	end
 end

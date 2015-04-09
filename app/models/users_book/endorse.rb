@@ -6,7 +6,7 @@ class UsersBook::Endorse < UsersBook
 	end
 
 	def create
-		" MERGE (user)-[endorse_action:EndorseAction]->(endorse:EndorseNode{created_at: " + Time.now.to_i.to_s + ", book_id:" + @book_id.to_s + ", user_id:" + @user_id.to_s + ", updated_at:  " + Time.now.to_i.to_s + "})-[endorsed:Endorsed]->(book) "
+		" MERGE (user)-[endorse_action:EndorseAction]->(endorse:EndorseNode{created_at: " + Time.now.to_i.to_s + ", book_id:" + @book_id.to_s + ", user_id:" + @user_id.to_s + "})-[endorsed:Endorsed]->(book) SET endorse.updated_at = " + Time.now.to_i.to_s
 	end
 
 	def self.match
@@ -19,8 +19,7 @@ class UsersBook::Endorse < UsersBook
 
 	def add 
 		operation = "+"
-		puts "ENDORSE".green
- 		UsersBook.new(@book_id, @user_id).match + " WITH user, book  " + create + " WITH user, endorse, book" + User::Feed.new(@user_id).create("endorse")  + Book::Feed.new(@book_id).create("endorse") + Book.set_endorse_count(operation) + User.set_total_count(Constants::EndorsePoints, operation)
+ 		UsersBook.new(@book_id, @user_id).match + create + " WITH user, endorse, book" + User::Feed.new(@user_id).create("endorse") + ", book "+ Book::Feed.new(@book_id).create("endorse") + Book.set_endorse_count(operation) + User.set_total_count(Constants::EndorsePoints, operation)
 	end
 
 	def remove

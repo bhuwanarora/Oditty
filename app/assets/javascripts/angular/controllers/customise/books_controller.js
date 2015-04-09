@@ -31,7 +31,8 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
         $mdBottomSheet.show({
             templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
             controller: 'shelfController',
-            targetEvent: event
+            targetEvent: event,
+            locals: {book_id: $rootScope.active_book.id}
         });
         event.stopPropagation();
     };

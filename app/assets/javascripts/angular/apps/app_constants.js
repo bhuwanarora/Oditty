@@ -185,6 +185,10 @@ var constants = {
 			"KeyRight": 39,
 			"Delete": 46,
 			"Escape": 27,
+			"LeftShift": 16,
+			"RightShift": 51,
+			"LeftCommand": 91,
+			"RightCommand": 93,
 			"StatusPosted": "Shared",
 			"CoverPhotoCDN": "http://rd-images.readersdoor.netdna-cdn.com/cp/",
 			"GenreAWS": "https://s3-ap-southeast-1.amazonaws.com/rd-genres/"

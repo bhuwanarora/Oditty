@@ -28,5 +28,6 @@ class String
             .gsub("ORDER", "\n ORDER")
             .gsub("LIMIT", "\n LIMIT")
             .gsub("SET", "\n SET")
+            .gsub("MATCH", "\n MATCH")
     end
 end

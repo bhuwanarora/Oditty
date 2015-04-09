@@ -5,7 +5,7 @@ class Status::StatusType < Status
 	end
 
 	def create reading_status
-		Status::Mention::Book.new(@book_id, @user_id).create + " SET status  :" + reading_status + " "   
+		Status::Mention::MentionsBook.new(@book_id, @user_id).create + " SET status  :" + reading_status + " "   
 	end
 
 	def create_for reading_status_value 

@@ -31,6 +31,7 @@ ReadersDoor::Application.routes.draw do
       match "tiny_reads"                              => 'users_api#get_tiny_reads',                    :via => [:put, :get, :post]
       match "get_sorted_genres"                       => 'users_api#get_sorted_genres',                 :via => [:put, :get, :post]
       match "influential_books"                       => 'users_api#handle_influential_books',          :via => [:put, :get, :post]
+      match "get_influential_books"                   => 'users_api#get_influential_books',             :via => [:put, :get, :post]
 
       match 'user_info'                               => 'users_api#user_info',                         :via => [:put, :get, :post]
       match 'user'                                    => 'users_api#user',                              :via => [:put, :get, :post]

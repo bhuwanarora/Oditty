@@ -8,6 +8,22 @@ class Author < Neo
 		" MATCH (author: Author) WHERE ID(author)="+@id.to_s+" WITH author "
 	end
 
+	def self.match_group ids
+		clause = ""
+		unless ids.nil?
+			for id in ids do 
+				if clause.present?
+					clause = clause + " OR "
+				else
+					clause = " WHERE "
+				end
+				clause = clause + " ID(author) = " + id.to_s
+			end
+		end
+		clause = " MATCH (author:Author) " + clause
+		clause
+	end
+
 	def match_books
 		" MATCH (author)-[:Wrote]->(book:Book) WITH book, author "
 	end

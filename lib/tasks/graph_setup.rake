@@ -8,8 +8,8 @@ namespace :graph do
 
   desc "set_genre_linked_list"
   task :set_genre_linked_list => :environment do
-    include Neo4jHelper
-    Neo4jHelper.set_genre_linked_list
+    include GraphHelper
+    GraphHelper.set_genre_linked_list
   end
 
   task :add_labels_to_existing_user => :environment do

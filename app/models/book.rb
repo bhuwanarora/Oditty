@@ -11,6 +11,10 @@ class Book < Neo
 		" MATCH (book:Book)-[:BookFeed*0..]->(news_feed) WHERE ID(book) = " + @id.to_s + " RETURN labels(news_feed), news_feed "
 	end
 
+	def match_author
+		" MATCH (author:Author)-[:Wrote]->(book) WITH author, book "
+	end
+
 	def self.set_bookmark_count operation
 		if operation == "+"
 			" SET book.bookmark_count = TOINT(COALESCE(book.bookmark_count, 0)) + 1 "
@@ -25,6 +29,10 @@ class Book < Neo
 
 	def self.basic_info
 		" ID(book) AS book_id, book.isbn AS isbn, book.title AS title, book.author_name AS author_name, book.pages_count AS pages_count, book.published_year AS published_year, TOINT(book.total_weight) as popularity"
+	end
+
+	def get_display_info
+		match + match_author + Book.return_group(Book.basic_info, " book.description AS description", "ID(author) AS author_id")
 	end
 
 	def self.grouped_basic_info
@@ -76,17 +84,17 @@ class Book < Neo
 
 	def self.set_endorse_count operation
 		if operation == "+"
-			" SET book.endorse_count = COALESCE(book.endorse_count, 0)) + 1 " 
+			" SET book.endorse_count = TOINT(COALESCE(book.endorse_count, 0)) + 1 " 
 		else
-			" SET book.endorse_count = COALESCE(book.endorse_count, 1)) - 1 " 
+			" SET book.endorse_count = TOINT(COALESCE(book.endorse_count, 1)) - 1 " 
 		end
 	end
 
 	def self.set_rating_count operation
 		if operation == "+"
-			" SET book.rating_count = COALESCE(book.rating_count, 0)) + 1 "
+			" SET book.rating_count = TOINT(COALESCE(book.rating_count, 0)) + 1 "
 		else
-			" SET book.rating_count = COALESCE(book.rating_count, 1)) - 1 "
+			" SET book.rating_count = TOINT(COALESCE(book.rating_count, 1)) - 1 "
 		end
 	end
 end

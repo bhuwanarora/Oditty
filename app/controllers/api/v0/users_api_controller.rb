@@ -1,7 +1,6 @@
 module Api
 	module V0
 		class UsersApiController < ApplicationController
-			# require_dependency 'user/suggest/book'w
 
 			def get_info_card_data
 				info = UserApi.get_info_card_data
@@ -14,14 +13,30 @@ module Api
 				render :json => books, :status => 200
 			end
 
+			def bookmark
+				params = params["q"]
+				params = JSON.parse params
+				id = params["id"]
+				type = params["type"]
+				shelf = params["shelf"]
+				status = params["status"]
+				user_id = session[:user_id]
+				if status == "true"
+					UserApi.add_bookmark(user_id, id, type, shelf)
+				else
+					UserApi.remove_bookmark(user_id, id, type, shelf)
+				end
+				render :json => {:message => "Success"}, :status => 200
+			end
+
 			def handle_influential_books
 				book_id = params[:id]
 				status = params[:status]
 				user_id = session[:user_id]
 				if status == "true"
-					info = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).add.print
+					info = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).add.execute
 				else
-					info = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).remove.print
+					info = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).remove.execute
 				end
 				render :json => info, :status => 200
 			end
@@ -282,11 +297,11 @@ module Api
 				book_id = params[:id]
 				status =  params[:status]
 				if status 
-					Api::V0::UserApi.endorse_book(book_id, user_id).execute
+					info = Api::V0::UserApi.endorse_book(book_id, user_id).execute
 				else
-					Api::V0::UserApi.remove_endorse(book_id, user_id).execute
+					info = Api::V0::UserApi.remove_endorse(book_id, user_id).execute
 				end
-				render :json => {:message => "Success"}, :status => 200
+				render :json => info, :status => 200
 			end
 
 			def get_followed_by
@@ -298,6 +313,12 @@ module Api
 				user_id = session[:user_id]
 				genres = CategoriesHelper.get_sorted_genres user_id
 				render :json => genres, :status => 200
+			end
+
+			def get_influential_books
+				user_id = session[:user_id]
+				influential_books = UserApi.get_influential_books(user_id).execute
+				render :json => influential_books, :status => 200
 			end
 		end
 	end

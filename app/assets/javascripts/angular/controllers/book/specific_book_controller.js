@@ -25,8 +25,9 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
     var _init = function(){
         // $scope.$location = $location;
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
-        if(regex.exec($location.absUrl()) != null){
-            var id = regex.exec($location.absUrl())[2];
+        var url_parsed = regex.exec($location.absUrl());
+        if(url_parsed != null){
+            var id = url_parsed[2];
         }
         if(angular.isDefined(id)){
             var book_id = id;   
@@ -49,7 +50,7 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
             $rootScope.active_book = $scope.book;
         });
 
-        bookService.update_visited($rootScope.active_book.book_id);
+        bookService.update_visited(book_id);
 
         $scope.toast_position = {
             bottom: false,
@@ -57,6 +58,8 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
             left: false,
             right: true
         };
+
+        $scope.constant = {"show_book": true};
 
     }
 

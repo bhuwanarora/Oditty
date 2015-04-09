@@ -8,4 +8,12 @@ class Bookmark::Type < Bookmark
 	def match
 		Bookmark::Type.api_not_implemented(self)
 	end
+
+	def add
+		@bookmark.add
+	end
+
+	def remove
+		@bookmark.remove
+	end
 end

@@ -3,9 +3,8 @@ module Api
 		class StatusApiController < ApplicationController
 			def create
 				user_id = session[:user_id] 
-				status_info = JSON.parse params[:status_info] 
-				Api::V0::StatusApi.create(user_id, status_info).execute
-				render :json => "success", :status => 200
+				info = Api::V0::StatusApi.create(user_id, params).execute
+				render :json => info, :status => 200
 			end
 		end
 	end

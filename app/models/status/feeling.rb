@@ -1,17 +1,21 @@
 class Status::Feeling < Status
-	def initialize feeling, user_id
+	def initialize emotion, user_id
 		@user_id = user_id
-		@feeling = feeling
+		@emotion = emotion
 	end
+	
 	def create 
-		" MERGE (status)-[feels:Felt{ user_id: " + @user_id.to_s + "}]->(emotion:Emotion{name:\"" + @feeling + "\"}) "
+		" MERGE(emotion:Emotion{name:\"" + @emotion.to_s + "\" }) CREATE UNIQUE (status)-[feeling:Feeling{ user_id: " + @user_id.to_s + "}]->(emotion) WITH status "
 	end
 
-	def self.create_group feelings, user_id
+	def self.create_group(emotions, user_id)
 		clause = ""
-		unless feelings.nil?
-			feelings.each{|feeling| clause +=  " WITH status " + Status::Feeling.new(feeling, user_id).create}
+		unless emotions.nil?
+			for emotion in emotions do 
+				clause = clause + Status::Feeling.new(emotion, user_id).create
+			end
 		end
 		clause
 	end
+
 end

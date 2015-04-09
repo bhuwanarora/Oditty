@@ -1,5 +1,5 @@
-<section class="padding">
-	<section layout="column" layout-wrap class="padding">
+<section class="padding margin_top" hide-md>
+	<!-- <section layout="column" layout-wrap class="padding">
 		<b class="small-padding">About him</b>
 		<md-divider></md-divider>
 		<div layout-padding>
@@ -15,15 +15,14 @@
 				<div ng-include src="'/assets/angular/html/shared/partials/genre.html'"></div>
 			</div>
 		</div>
-	</section>
+	</section> -->
 
 	<section layout="column" layout-wrap class="padding">
 		<b class="small-padding">Books he finds influential</b>
 		<md-divider></md-divider>
 		<div layout-padding layout-wrap layout="row">
-			<div ng-repeat="book in user.influential_books" layout="column" layout-wrap>
-				<div ng-include src="'/assets/angular/html/shared/partials/book.html'"></div>
-			</div>
+			<div ng-init="books = user.influential_books" 
+				 ng-include src="'/assets/angular/html/shared/partials/spine.html'"></div>
 		</div>
 	</section>
 </section>
@@ -32,5 +31,9 @@
 	.genre{
 		width: 100px;
 		height: 100px;
+	}
+
+	.margin_top{
+		margin-top: 20px;
 	}
 </style>

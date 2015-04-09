@@ -24,4 +24,9 @@ homeApp.service('shelfService', ["$http", "$q", "$rootScope", "WebsiteUIConstant
 		return _deferred_request('/api/v0/add_new_label?label='+label);
 	};
 
+    this.bookmark = function(params){
+        params = angular.toJson(params);
+        return _deferred_request('/api/v0/bookmark?q='+params);
+    }
+
 }]);

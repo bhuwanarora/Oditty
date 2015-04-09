@@ -2,18 +2,18 @@ class Status::Mention::MentionsAuthor < Status::Mention
 	def initialize author_id, user_id
 		@author = Author.new(author_id)
 		@user_id = user_id
-		@node_variable = "author"
 	end
 
 	def create 
-		@author.match(@node_variable) + ", status " + Status::Mention.new(@user_id).create(@node_variable)
+		@author.match + ", status " + Status::Mention.new(@user_id).create("author")
 	end
 
-	def self.create_group authors , user_id
-		clause = ""
-		unless authors.nil?
-			authors.each{|author| clause += Status::Mention::MentionsAuthor.new(author, user_id).create}
-		end
+	def self.create_group authors_id , user_id
+		clause = Author.match_group(authors_id) + Status::Mention::MentionsAuthor.create_for_user(user_id)
 		clause
+	end
+
+	def self.create_for_user user_id
+		" CREATE UNIQUE (status)-[mentions:Mentions{user_id: "+user_id.to_s+"}]->(author) WITH author, status "
 	end
 end

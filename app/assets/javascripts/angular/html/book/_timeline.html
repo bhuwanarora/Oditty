@@ -1,0 +1,42 @@
+<div ng-controller="timelineController" class="grey">
+     <md-card ng-repeat="feed in book_feed">
+        <md-card-content class="less_important_container" ng-if="feed.user">
+            <div class="social_content" layout="row" layout-padding>
+                <div flex="25">
+                    <img ng-src="{{user.profile_thumb}}" class="profile_thumb circular">
+                </div>
+                <div flex="75">
+                    <div class="user_title">
+                        <a ng-href="/user?q={{feed.user.id}}">
+                            <span>{{feed.user.first_name}}</span>
+                            <span>&nbsp;</span>
+                            <span>{{feed.user.last_name}}</span>
+                        </a>
+                    </div>
+                    <div class="user_about">
+                        {{feed.user.about | reduced_summary}}
+                    </div>
+                </div>
+            </div>
+        </md-card-content>
+        <md-card-content>
+            <section layout="column" layout-align="start">
+                <div ng-repeat="data in feed.data" layout-padding>
+                    <div ng-bind-html="data.message" class="status_message"></div>
+                    <div class="less_important">{{data.created_at | timestamp | date:'h:mm a, dd MMM'}}</div>
+                </div>
+            </section>
+        </md-card-content>
+     </md-card>
+</div>
+<style>
+    .user_title{
+        font-size: 1.2em;
+        font-family: sans-serif;
+    }
+
+    .user_description{
+        margin-top: 10px;
+        font-size: 0.9em;
+    }
+</style>
