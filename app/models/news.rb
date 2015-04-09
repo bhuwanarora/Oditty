@@ -73,7 +73,7 @@ class News < Neo
 		end
 	end 
 
-	def self.create_news
+	def self.create
 		news_sources ||= self.fetch_news_sources
 		puts news_sources
 		for news_source in news_sources
