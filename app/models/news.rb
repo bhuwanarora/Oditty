@@ -56,18 +56,25 @@ class News < Neo
 	end
 
 	def self.create_news_community_topics news_link, news_source
-		clause  = self.merge(news_link) + self.merge_region(news_source) + ", news " + self.optional_match_regional_news +  ", news " + self.optional_match_news + self.create_news_link + News.return_init + " ID(news) as news_id "
-		news_id = (clause.execute)[0]["news_id"]
 
 		response = self.fetch_tags news_link
-		if response.is_json?
+		puts response
+
+		if response.is_json? 
 			response = JSON.parse(response)
-			puts response
 			communities = self.handle_tags response
-			news_info = {"news_id" => news_id, "news_source" => news_source, "news_link" => news_link}
-			if self.news_present(news_info["news_id"]) && !communities.blank?
-				self.map_topics(news_info["news_id"], response["topics"]) 				
-				self.map_tags_and_books(communities, news_info)
+			puts communities	
+			
+			unless communities.blank?	
+
+				clause  = self.merge(news_link) + self.merge_region(news_source) + ", news " + self.optional_match_regional_news +  ", news " + self.optional_match_news + self.create_news_link + News.return_init + " ID(news) as news_id "
+				news_id = (clause.execute)[0]["news_id"]
+			
+				news_info = {"news_id" => news_id, "news_source" => news_source, "news_link" => news_link}
+				if self.news_present(news_info["news_id"]) && !communities.blank?
+					self.map_topics(news_info["news_id"], response["topics"]) 				
+					self.map_tags_and_books(communities, news_info)
+				end
 			end
 		end
 	end 
@@ -113,7 +120,7 @@ class News < Neo
 
 				books[community].each do |book|
 					indexed_title = book.search_ready
-					clause += " START book=node:node_auto_index('indexed_title:\""+indexed_title+"\"') MERGE (community)-[:RelatedBooks]->(book) WITH community "
+					clause += " MERGE (book:Book{indexed_title:\""+indexed_title+"\"}) MERGE (community)-[:RelatedBooks]->(book) WITH community "
 				end
 
 				clause+= News.return_init + Community.basic_info

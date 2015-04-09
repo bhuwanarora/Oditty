@@ -13,6 +13,11 @@ class Community < Neo
 	end
 
 	def self.grouped_basic_info
+		"  view_count:community.view_count,  name:community.name "
+	end
+
+
+	def self.grouped_basic_info
 		"  view_count:community.view_count ,  name:community.name  "
 	end
 
@@ -26,6 +31,10 @@ class Community < Neo
 
 	def self.match_users
 		" MATCH (community)<-[of_community:OfCommunity]-(follow_node:FollowNode)<-[follows:Follows]-(user:User) WITH community, follow_node, user "
+	end
+
+	def self.optional_match_users
+		" OPTIONAL MATCH (community)<-[of_community:OfCommunity]-(follow_node:FollowNode)<-[follows:Follows]-(user:User) WITH community, follow_node, user "
 	end
 
 	def self.set_name
@@ -79,5 +88,9 @@ class Community < Neo
 			community_books = {}
 		end
 		community_books
+	end
+
+	def self.most_important_category_info 
+		", HEAD(COLLECT({" + Community.grouped_basic_info + "})) AS community_info "
 	end
 end
