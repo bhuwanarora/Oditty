@@ -28,11 +28,11 @@ class News < Neo
 	end
 
 	def self.handle_tags response
-		tags = []
+		communities = []
 		response["social_tags"].each do |social_tag|
-			if social_tag["importance"] == Constants::RelevantSocialTagValue then tags << social_tag["originalValue"] end
+			if social_tag["importance"] == Constants::RelevantSocialTagValue then communities << social_tag["originalValue"] end
 		end
-		tags
+		communities
 	end
 
 	def self.merge news_link
@@ -60,15 +60,14 @@ class News < Neo
 		news_id = (clause.execute)[0]["news_id"]
 
 		response = self.fetch_tags news_link
-
 		if response.is_json?
 			response = JSON.parse(response)
 			puts response
-			tags = self.handle_tags response
-			if self.news_present(news_id) && !tags.blank?
-				self.map_topics(news_id, response["topics"]) 				
-				self.map_tags(news_id, tags)
-				self.map_tags_to_books(tags, news_link, news_source["region"])
+			communities = self.handle_tags response
+			news_info = {"news_id" => news_id, "news_source" => news_source, "news_link" => news_link}
+			if self.news_present(news_info["news_id"]) && !communities.blank?
+				self.map_topics(news_info["news_id"], response["topics"]) 				
+				self.map_tags_and_books(communities, news_info)
 			end
 		end
 	end 
@@ -105,18 +104,26 @@ class News < Neo
 		end
 	end
 
-	def self.map_tags news_id, tags
-		for tag in tags
-			clause = News.new(news_id).match + " MERGE (community:Community{name:\" " + tag.to_s + "\"}) MERGE (news)-[:HasCommunity]->(community) " + Community.set_importance
-			clause.execute
-		end
+	def self.map_tags_and_books communities, news_info
+	    for community in communities
+			books = Community.get_google_books(community)
+			if self.is_insertable(books,community)
+
+	        	clause =  News.new(news_info["news_id"]).match + " MERGE (community:Community{name: \"" + community + "\"}) ON CREATE SET community.status = 1, community.timestamp=" + Time.now.to_i.to_s + ", community.url = \"" + news_info["news_source"]["news_link"].to_s + "\", community.location = \"" + news_info["news_source"]["region"].to_s + "\" " + Community.set_importance + " MERGE (news)-[:HasCommunity]->(community) WITH community "
+
+				books[community].each do |book|
+					indexed_title = book.search_ready
+					clause += " MERGE (book:Book{indexed_title:\""+indexed_title+"\"}) MERGE (community)-[:RelatedBooks]->(book) WITH community "
+				end
+
+				clause+= News.return_init + Community.basic_info
+				clause.execute
+			end
+	    end
 	end
 
-	def self.map_tags_to_books tags, news_link, region
-	    for tag in tags
-        	clause = " MERGE (community:Community{name: \"" + tag + "\"}) ON CREATE SET community.status = 1, community.timestamp=" + Time.now.to_i.to_s + ", community.url = \"" + news_link.to_s + "\", community.location = \"" + region.to_s + "\" WITH community "
-			self.map_books_to_tags(clause, tag)
-	    end
+	def self.is_insertable books, community
+		is_insertable = !books[community].blank? && books[community].length > 5
 	end
 
 	def self.fetch_news news_source
@@ -145,19 +152,5 @@ class News < Neo
 		puts query
 		uri = URI(query)
 		response = Net::HTTP.get(uri)
-	end
-
-	def self.map_books_to_tags clause, tag
-		count = 0
-		Google::Search::Book.new(:query => tag).each do |book|
-			count += 1
-			if count == 10
-				break
-			end
-			indexed_title = book.title.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\"", "")
-			map_clause = " START book=node_auto_index('indexed_title:\""+indexed_title+"\"') MERGE (community)-[:RelatedBooks]->(book) "
-			puts (clause + map_clause).blue.on_red
-    		(clause + map_clause).execute
-		end
 	end
 end

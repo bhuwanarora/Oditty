@@ -62,4 +62,22 @@ class Community < Neo
 	def self.match_grouped_books
 		Community.match_books + Book.collect_map({"books_info" => Book.grouped_basic_info }) 
 	end
+
+	def self.get_google_books community
+		community_books = {community => []}
+		count = 0
+		begin
+			Google::Search::Book.new(:query => community).each do |book|
+				count += 1
+				if count == 10
+					break
+				end
+				community_books[community] << book.title.search_ready
+			end
+		rescue Exception => e
+			puts e.to_s.red
+			community_books = {}
+		end
+		community_books
+	end
 end
