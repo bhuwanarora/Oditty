@@ -171,6 +171,7 @@ module Api
 			# 	@neo = Neography::Rest.new
 				
 <<<<<<< HEAD
+<<<<<<< HEAD
 				results = []
 
 				specific_list = filters["filter_id"].present?
@@ -375,7 +376,6 @@ module Api
 				end
 
 				return_clause = "RETURN book.isbn as isbn, ID(book) as id, book.external_thumb as external_thumb"
-=======
 			# 	results = []
 
 			# 	specific_list = filters["filter_id"].present?
@@ -580,7 +580,10 @@ module Api
 			# 	end
 
 			# 	return_clause = "RETURN book.isbn as isbn, ID(book) as id, book.external_thumb as external_thumb"
+<<<<<<< HEAD
 >>>>>>> fbdad8455836579b2dbc02bbe7e9235337bafbd5
+=======
+>>>>>>> 042c9cf0c5b5d726c967b6a8696f4fe4b368352a
 				
 			# 	# distinct_clause = "ALL (id in "+book_ids.to_s+" WHERE toInt(id) <> ID(book)) "
 
