@@ -170,8 +170,6 @@ module Api
 			# 	# puts book_ids.sort
 			# 	@neo = Neography::Rest.new
 				
-<<<<<<< HEAD
-<<<<<<< HEAD
 				results = []
 
 				specific_list = filters["filter_id"].present?
