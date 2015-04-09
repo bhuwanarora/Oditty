@@ -14,13 +14,13 @@ module Api
 
 			def news_info
 				id = params[:id]
-				info = (Api::V0::WebsiteApi.get_communities_info(id)).execute
+				info = Api::V0::WebsiteApi.get_communities_info(id).execute
 				render :json => info, :status => 200
 			end
 
 			def chronological_news
 				id = params[:id]
-				info = (Api::V0::WebsiteApi.get_chronological_news_info(id)).execute
+				info = Api::V0::WebsiteApi.get_chronological_news_info(id).execute
 				render :json => info, :status => 200
 			end
 
