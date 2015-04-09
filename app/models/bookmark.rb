@@ -32,11 +32,11 @@ class Bookmark < Neo
 	end
 
 	def create_label_bookmark_node
-		" CREATE UNIQUE (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node: BookmarkNode{label:\""+@key+"\", book_id:"+@book_id.to_s+", user_id:"+@user_id.to_s+", created_at:"+Time.now.to_i.to_s+"}) " 
+		" CREATE UNIQUE (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node: BookmarkNode{label:\""+@key+"\", book_id:"+@book_id.to_s+", user_id:"+@user_id.to_s+"}) " 
 	end
 
 	def self.create_bookmark_node_book
-		" CREATE (bookmark_node)-[bookmark_action:BookmarkAction]->(book) "
+		" CREATE UNIQUE (bookmark_node)-[bookmark_action:BookmarkAction]->(book) "
 	end
 
 	def self.set_title
@@ -85,7 +85,7 @@ class Bookmark < Neo
 	end
 
 	def create
-		UsersBook.new(@book_id, @user_id).match + User.create_label(@key) + create_label_bookmark_node + Bookmark.create_bookmark_node_book + Bookmark.set_updated_at + Bookmark.set_key(@key) + " WITH user, book, bookmark_node, label, labelled "
+		UsersBook.new(@book_id, @user_id).match + User.create_label(@key) + create_label_bookmark_node + Bookmark.create_bookmark_node_book + Bookmark.set_updated_at + Bookmark.set_created_at + Bookmark.set_key(@key) + " WITH user, book, bookmark_node, label, labelled "
 	end
 
 	def add
