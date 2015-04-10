@@ -4,7 +4,7 @@ class Article::News < Article
 	end
 
 	def most_important_tag_info
-		most_important_community + Community.match_grouped_books + Community.optional_match_users + ", books_info WITH books_info , community " + User.collect_map({"users_info" => User.grouped_basic_info })  + " WITH users_info, books_info , community " + Community.collect_map({"most_important_tag" => Community.grouped_basic_info + ", books: books_info, users: users_info" })
+		most_important_community + Community.grouped_books_users
 	end
 
 	def self.set_bookmark_count operation
@@ -34,7 +34,7 @@ class Article::News < Article
 	def self.match_communities_with_books
 		" MATCH (news)-[:HasCommunity]->(community:Community)-[:RelatedBooks]->(:Book) WITH news, community "
 	end
-
+		
 	def most_important_community
 		match + Article::News.match_communities_with_books + Community.order_desc + Article::News.limit(1) + " WITH community "
 	end

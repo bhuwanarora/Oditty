@@ -15,12 +15,16 @@ module Api
 				labels
 			end
 
-			def self.get_communities_info id
+			def self.get_important_community_info id
 				Article::News.new(id).most_important_tag_info + Article::News.new(id).other_tags_info
 			end
 
 			def self.get_chronological_news_info id
 				Article::News.new(id).get_chronological_news_info
+			end
+
+			def self.get_community_info id
+				Community.new(id).books_users_info
 			end
 
 			def self.get_news_feed(user_id, skip_count)
