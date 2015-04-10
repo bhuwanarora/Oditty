@@ -4,7 +4,7 @@ class Article::News < Article
 	end
 
 	def most_important_tag_info
-		most_important_community + Community.match_grouped_books + Community.optional_match_users + ", books_info WITH user, books_info , community " + User.collect_map({"users_info" => User.grouped_basic_info })  + " WITH users_info, books_info , community " + Community.collect_map({"most_important_tag" => Community.grouped_basic_info + ", books: books_info, users: users_info" })
+		most_important_community + Community.match_grouped_books + Community.optional_match_users + ", books_info WITH books_info , community " + User.collect_map({"users_info" => User.grouped_basic_info })  + " WITH users_info, books_info , community " + Community.collect_map({"most_important_tag" => Community.grouped_basic_info + ", books: books_info, users: users_info" })
 	end
 
 	def self.set_bookmark_count operation
@@ -16,7 +16,7 @@ class Article::News < Article
 	end
 
 	def other_tags_info
-		match + ", most_important_tag " + Article::News.match_communities + ", most_important_tag " +  Community.order_desc + " WITH most_important_tag " + Community.tail("community")  + " WITH  most_important_tag  " + Community.collect_map("other_tags" => Community.grouped_basic_info) + Article::News.return_group(" most_important_tag ", " other_tags ")     
+		match + ", most_important_tag " + Article::News.optional_match_communities + ", most_important_tag " +  Community.order_desc + " WITH most_important_tag " + Community.tail("community")  + " WITH  most_important_tag  " + Community.collect_map("other_tags" => Community.grouped_basic_info) + Article::News.return_group(" most_important_tag ", " other_tags ")     
 	end
 
 	def match 
@@ -25,6 +25,10 @@ class Article::News < Article
 
 	def self.match_communities
 		" MATCH (news)-[:HasCommunity]->(community:Community) WITH news, community "
+	end
+
+	def self.optional_match_communities
+		" OPTIONAL MATCH (news)-[:HasCommunity]->(community:Community) WITH news, community "
 	end
 
 	def self.match_communities_with_books

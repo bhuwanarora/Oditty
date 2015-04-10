@@ -69,7 +69,7 @@ class Community < Neo
 	end
 
 	def self.match_grouped_books
-		Community.match_books + Book.collect_map({"books_info" => Book.grouped_basic_info }) 
+		Community.match_books + " WITH community " + Book.collect_map({"books_info" => Book.grouped_basic_info }) 
 	end
 
 	def self.get_google_books community

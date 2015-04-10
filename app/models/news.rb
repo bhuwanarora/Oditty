@@ -120,7 +120,7 @@ class News < Neo
 
 				books[community].each do |book|
 					indexed_title = book.search_ready
-					clause += " MERGE (book:Book{indexed_title:\""+indexed_title+"\"}) MERGE (community)-[:RelatedBooks]->(book) WITH community "
+					clause += " START book=node:node_auto_index('indexed_title:\""+indexed_title+"\"') MERGE (community)-[:RelatedBooks]->(book) WITH community "
 				end
 
 				clause+= News.return_init + Community.basic_info
