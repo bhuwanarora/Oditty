@@ -27,14 +27,6 @@ class News < Neo
 		" MATCH (news)-[:HasCommunity]->(community:Community) WITH news, community "
 	end
 
-	def self.handle_tags response
-		communities = []
-		response["social_tags"].each do |social_tag|
-			if social_tag["importance"] == Constants::RelevantSocialTagValue then communities << social_tag["originalValue"] end
-		end
-		communities
-	end
-
 	def self.merge news_link
 		" MERGE (news:News{url:\"" + news_link.to_s + "\"}) ON CREATE SET news.created_at = " + Time.now.to_i.to_s + " WITH news "
 	end
@@ -55,31 +47,12 @@ class News < Neo
 		" FOREACH(ignoreMe IN CASE WHEN relation IS NULL AND old IS NOT NULL THEN [1] ELSE [] END | MERGE (region)-[:RegionalNews{region:ID(region)}]->(news)-[:RegionalNews{region:ID(region)}]->(old_news) DELETE old) FOREACH(ignoreMe IN CASE WHEN relation IS NULL AND old IS  NULL THEN [1] ELSE [] END | MERGE (region)-[:RegionalNews{region:ID(region)}]->(news))  "
 	end
 
-	def self.create_news_community_topics news_link, news_source
+	def self.create news_link, news_source
+		clause  = News.merge(news_link) + News.merge_region(news_source) + ", news " + News.optional_match_regional_news +  ", news " + News.optional_match_news + News.create_news_link + News.return_init + " ID(news) as news_id "
+		(clause.execute)[0]["news_id"]
+	end
 
-		response = self.fetch_tags news_link
-		puts response
-
-		if response.is_json? 
-			response = JSON.parse(response)
-			communities = self.handle_tags response
-			puts communities	
-			
-			unless communities.blank?	
-
-				clause  = self.merge(news_link) + self.merge_region(news_source) + ", news " + self.optional_match_regional_news +  ", news " + self.optional_match_news + self.create_news_link + News.return_init + " ID(news) as news_id "
-				news_id = (clause.execute)[0]["news_id"]
-			
-				news_info = {"news_id" => news_id, "news_source" => news_source, "news_link" => news_link}
-				if self.news_present(news_info["news_id"]) && !communities.blank?
-					self.map_topics(news_info["news_id"], response["topics"]) 				
-					self.map_tags_and_books(communities, news_info)
-				end
-			end
-		end
-	end 
-
-	def self.create
+	def self.handle
 		news_sources ||= self.fetch_news_sources
 		puts news_sources
 		for news_source in news_sources
@@ -88,20 +61,20 @@ class News < Neo
 			puts news_links
 			for news_link in news_links
 				puts news_link
-				self.create_news_community_topics news_link, news_source
+				Community.create news_link, news_source
 			end
 		end
 	end
 
-	def self.news_present news_id
+	def self.news_already_present news_id
 		clause = " MATCH (region:Region)-[relation:RegionalNews{region:ID(region)}]->(news) WHERE ID(news) = " + news_id.to_s + " RETURN ID(relation) as relation_id "
 		data = (clause.execute)[0]
 		if data.blank?
-			news_present = false
+			news_already_present = false
 		else
-			news_present = true
+			news_already_present = true
 		end
-		news_present
+		news_already_present
 	end
 
 	def self.map_topics news_id, topics
@@ -109,28 +82,6 @@ class News < Neo
 			clause = News.new(news_id).match + " MERGE (topic:Topic{name:\"" + topic["value"].to_s + "\"})  MERGE (topic)<-[:HasTopic]-(news) "
 			clause.execute
 		end
-	end
-
-	def self.map_tags_and_books communities, news_info
-	    for community in communities
-			books = Community.get_google_books(community)
-			if self.is_insertable(books,community)
-
-	        	clause =  News.new(news_info["news_id"]).match + " MERGE (community:Community{name: \"" + community + "\"}) ON CREATE SET community.status = 1, community.timestamp=" + Time.now.to_i.to_s + ", community.url = \"" + news_info["news_source"]["news_link"].to_s + "\", community.location = \"" + news_info["news_source"]["region"].to_s + "\" " + Community.set_importance + " MERGE (news)-[:HasCommunity]->(community) WITH community "
-
-				books[community].each do |book|
-					indexed_title = book.search_ready
-					clause += " START book=node:node_auto_index('indexed_title:\""+indexed_title+"\"') MERGE (community)-[:RelatedBooks]->(book) WITH community "
-				end
-
-				clause+= News.return_init + Community.basic_info
-				clause.execute
-			end
-	    end
-	end
-
-	def self.is_insertable books, community
-		is_insertable = !books[community].blank? && books[community].length > 5
 	end
 
 	def self.fetch_news news_source
