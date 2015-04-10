@@ -3,6 +3,25 @@ module Neo4jHelper
 	# require 'neo4j-cypher'
 	# require 'neo4j-cypher/neography'
 
+	def self.get_id_range
+		clause = " MATCH (a:Book) RETURN MAX(ID(a)) AS max , MIN(ID(a)) AS min "
+		clause.execute
+	end
+	def self.set_integer_books_property
+		ids = self.get_id_range
+		min = ids[0]["min"]
+		max = ids[0]["max"]
+		limit = ((max - min)/20).to_i
+		while min <= max 
+			puts limit
+			puts max
+			puts min
+			clause = " MATCH (a:Book) WHERE ID(a) >= " + min.to_s + " AND ID(a) <= " + (min+limit).to_s + "SET a.total_weight = CASE WHEN a.total_weight IS NULL THEN null ELSE TOFLOAT(a.total_weight) END " 
+			clause.execute
+			min += limit
+		end
+	end
+
 	def self.init
 		@neo = Neography::Rest.new
 	end
@@ -1131,5 +1150,5 @@ module Neo4jHelper
 		    end
 		end
 	end
-	
+
 end

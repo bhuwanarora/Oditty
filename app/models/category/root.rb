@@ -1,5 +1,9 @@
 class Category::Root < Category
 
+	def self.match_books_root
+		" MATCH (book)-[:FromCategory]->(category:Category)-[:HasRoot*0..1]->(root_category:Category{is_root:true}) WITH book, root_category "
+	end
+
 	def self.basic_info
 		super("root_category")
 	end

@@ -738,7 +738,7 @@ input:focus{
 }
 
 .bold{
-    font-weight: 700;
+    font-weight: 700 !important;
 }
 
 .small_font{

@@ -3,7 +3,7 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
     return {
         restrict: 'E',
         scope: {
-            electionData: '=',
+            newsTags: '=',
             onCenterClick: '&',
             onClick: '&'
         },
@@ -24,9 +24,9 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
             //intersectInc: use @default
             //circleColor: use @default
             data: {
-                items: scope.electionData,
-                eval: function (item) {return item.count;},
-                classed: function (item) {return item.text.split(" ").join("");}
+                items: scope.newsTags,
+                eval: function (item) {return item.view_count;},
+                classed: function (item) {return item.name.split(" ").join("");}
             },
             plugins: [
                 {
@@ -52,7 +52,7 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
                     options: {
                         format: [
                             {// Line #0
-                                textField: "count",
+                                textField: "view_count",
                                 classed: {count: true},
                                 style: {
                                     "font-size": "28px",
@@ -67,7 +67,7 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
                                 }
                             },
                             {// Line #1
-                                textField: "text",
+                                textField: "name",
                                 classed: {text: true},
                                 style: {
                                     "font-size": "14px",
