@@ -32,6 +32,6 @@ class User::Suggest::BookSuggestion < User::Suggest
 	def self.get_popular_books skip_count, user_id
 		# get nth node from the beginning
 		# get books after nth node
-		Book.new(Constants::BestBook).match + " AS best_book MATCH (best_book)-[:Next_book*" + skip_count.to_s + "]->(book) WITH book " + ::Book.match_path("Next_book",Constants::PopularBooksShownCount) + " WITH " +  self.extract("books") + self.unwind("books") + UsersBook.optional_match_bookmark + "WHERE ID(user) = " + user_id.to_s + UsersBook.optional_match_rating + " WITH user, book, bookmark_node, rating_node " + Book.optional_match_root_category + ", bookmark_node, rating_node, user "+ self.return_group(Book.detailed_info, Bookmark.grouped_basic_info, Rating.grouped_basic_info,  " root_category ")
+		Book.new(Constants::BestBook).match + " AS best_book MATCH (best_book)-[:Next_book*" + skip_count.to_s + "]->(book) WITH book " + ::Book.match_path("Next_book",Constants::PopularBooksShownCount) + " WITH " +  User::Suggest::BookSuggestion.extract("books") + User::Suggest::BookSuggestion.unwind("books") + UsersBook.optional_match_bookmark + "WHERE ID(user) = " + user_id.to_s + UsersBook.optional_match_rating + " WITH user, book, bookmark_node, rating_node " + Book.optional_match_root_category + ", bookmark_node, rating_node, user "+ User::Suggest::BookSuggestion.return_group(Book.detailed_info, Bookmark.grouped_basic_info, Rating.grouped_basic_info,  " root_category ")
 	end
 end
