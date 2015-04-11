@@ -13,26 +13,21 @@ module Api
 			end
 
 			def news_info
-				#TODO: (SATISH)
-				# id = params[:id]
-				# Article::News.new(id)
-				# {
-					# 	"most_important_tag": {
-					# 		"name", "importance", "view_count", "news_count", "id",
-					# 		"books"-->"basic_info", "users"-->"basic_info"
-					# 	},
-					# 	"other_tags": [
-					# 		{
-					# 			"name", "importance", "view_count", "news_count", "id"
-					# 		}
-					# 	],
-					#  	"more_news": [
-					#  		{
-					#  			"id", "most_important_tag", "timestamp"
-					#  		}
-						#SIX NEWS: Three news prior to this, three after 
-					#  	]
-				# }
+				id = params[:id]
+				info = Api::V0::WebsiteApi.get_important_community_info(id).execute
+				render :json => info, :status => 200
+			end
+
+			def community_info
+				id = params[:id]
+				info = Api::V0::WebsiteApi.get_community_info(id).execute
+				render :json => info, :status => 200
+			end
+
+			def chronological_news
+				id = params[:id]
+				info = Api::V0::WebsiteApi.get_chronological_news_info(id).execute
+				render :json => info, :status => 200
 			end
 
 			def add_label
@@ -135,6 +130,12 @@ module Api
 			def save_feedback
 				WebsiteApi.save_feedback(params[:feedback], session[:user_id])
 				render :json => {:message => "Success"}, :status => 200
+			end
+
+
+			def get_metadata
+				info = UrlParser.get_metadata params[:url]
+				render :json => info, :status => 200
 			end
 
             private

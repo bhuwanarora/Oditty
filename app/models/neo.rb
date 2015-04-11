@@ -16,6 +16,18 @@ class Neo
 		" SKIP " + skip_count.to_s + " "
 	end
 
+	def self.collect_map map
+		clause = ""
+		map.each do |key, value|
+			clause += " COLLECT ({" + value + "}) AS " + key + " "
+		end
+		", " + clause   
+	end
+
+	def self.tail node_variable
+		" , COLLECT (" + node_variable + ") AS temp UNWIND(TAIL(temp)) AS " + node_variable + " "
+	end
+
 	def self.return_group(*params)
 		" RETURN " + params.join(", ")
 	end
@@ -41,8 +53,8 @@ class Neo
 		@neo.execute_query clause
 	end
 
-	def self.extract node_variable, path_name = "path"
-		" EXTRACT (node IN nodes(" + path_name + ")|node) AS " + node_variable + " "
+	def self.extract_unwind node_variable, path_name = "path"
+		", EXTRACT (node IN nodes(" + path_name + ")|node) AS nodes UNWIND nodes AS " + node_variable + "  WITH " + node_variable + " "
 	end
 
 	def self.unwind collection

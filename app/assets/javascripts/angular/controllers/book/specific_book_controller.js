@@ -29,11 +29,16 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
         if(url_parsed != null){
             var id = url_parsed[2];
         }
-        if(angular.isDefined(id)){
-            var book_id = id;   
+        if(angular.isDefined($rootScope.active_book)){
+            if(angular.isDefined($rootScope.active_book.id)){
+                var book_id = $rootScope.active_book.id;
+            }
+            else{
+                var book_id = $rootScope.active_book.book_id;
+            }
         }
         else{
-            var book_id = $rootScope.active_book.book_id;
+            var book_id = id;
         }
         var filter = "id="+book_id;
         bookService.get_book_details(filter).then(function(data){

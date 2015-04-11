@@ -119,3 +119,4 @@ gem 'colorize'
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
 gem 'open4'
+gem 'opengraph_parser'

@@ -8,6 +8,14 @@ class String
     	self.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "").gsub("@", "") rescue ""
     end
 
+	def is_json?
+	    begin
+	      	!!JSON.parse(self)
+	    rescue
+	      	false
+    	end
+  	end
+
     def print
     	self.gsub("CREATE", "\n CREATE")
     		.gsub("MERGE", "\n MERGE")
@@ -21,5 +29,6 @@ class String
             .gsub("LIMIT", "\n LIMIT")
             .gsub("SET", "\n SET")
             .gsub("MATCH", "\n MATCH")
+            .gsub("START", "\n START")
     end
 end

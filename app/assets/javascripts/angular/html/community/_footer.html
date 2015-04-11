@@ -1,7 +1,6 @@
-<md-button class="md-button-clear">Space</md-button>
-<md-button class="md-button-clear">Ebola</md-button>
-<md-button class="md-button-clear">ICC</md-button>
-<md-button>Elections</md-button>
-<md-button class="md-button-clear">Federer</md-button>
-<md-button class="md-button-clear">Malaysian Airlines</md-button>
-<md-button class="md-button-clear">Indias Daughter</md-button>
+<a ng-href="/community?q={{tag.news_id}}" ng-repeat="tag in news" >
+	<md-button class="md-button-clear" 
+		ng-class="{'red_color': (tag.community_info.name == active_tag.name)}">
+		{{tag.community_info.name}}
+	</md-button>
+</a>

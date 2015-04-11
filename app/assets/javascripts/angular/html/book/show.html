@@ -1,6 +1,6 @@
 <div class="book animate-fast" ng-style="book_style" flex="100" ng-controller="specificBookController">
-    <div ng-include src="'/assets/angular/html/book/_left_panel.html'" ></div>
-    <div ng-include src="'/assets/angular/html/book/_right_panel.html'" ></div>
+    <div ng-include src="'/assets/angular/html/book/_left_panel.html'" ng-if="!book.show_info_only"></div>
+    <div ng-include src="'/assets/angular/html/book/_right_panel.html'" ng-if="!book.show_info_only"></div>
     <!-- <div>TEST</div> -->
     <md-toolbar class="light_grey">
         <div layout="row">

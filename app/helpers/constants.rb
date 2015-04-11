@@ -7,7 +7,11 @@ module Constants
 	ReadTimePoints				= 10
 	ThumbSuggest				= 10
 	RecommendationPoints		= 10
-	
+	QueryStepDuringLinking		= 1000
+	CommunityBooksCount 		= 10
+	CommunityUsersCount         = 10
+	NewsShownInCommunityCount   = 7
+	CommunitiesShown            = 7 
 	if Rails.env.development?
 		Admin						= 0
 		BestTinyRead				= 395910 #"thelosthero"
@@ -110,4 +114,6 @@ module Constants
 	NormalReadValue	 			= 2
 	LongReadValue	 			= 3
 	BookShownInInfinty          = 10
+	MaximumCommunityBooksCount	= 10
+	MinimumCommunityBooksCount  = 5
 end

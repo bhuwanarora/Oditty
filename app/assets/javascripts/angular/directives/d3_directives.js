@@ -3,7 +3,7 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
     return {
         restrict: 'E',
         scope: {
-            electionData: '=',
+            newsTags: '=',
             onCenterClick: '&',
             onClick: '&'
         },
@@ -16,17 +16,17 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
             innerRadius: 600 / 3.5,
             //outerRadius: => use @default
             radiusMin: 50,
-            clickEvent: function(){
-                scope.onClick();
+            clickEvent: function(item){
+                scope.onClick({"active_item": item});
             },
             //radiusMax: use @default
             //intersectDelta: use @default
             //intersectInc: use @default
             //circleColor: use @default
             data: {
-                items: scope.electionData,
-                eval: function (item) {return item.count;},
-                classed: function (item) {return item.text.split(" ").join("");}
+                items: scope.newsTags,
+                eval: function (item) {return item.view_count;},
+                classed: function (item) {return item.name.split(" ").join("");}
             },
             plugins: [
                 {
@@ -34,15 +34,14 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
                     options: {
                         text: "Explore Topic",
                         style: {
-                            "font-size": "12px",
+                            "font-size": "15px",
                             "font-style": "italic",
                             "font-family": "Source Sans Pro, sans-serif",
-                            //"font-weight": "700",
                             "text-anchor": "middle",
                             "fill": "white"
                         },
                         attr: {dy: "65px"},
-                        centralClick: function() {
+                        centralClick: function(event){
                             scope.onCenterClick();
                         }
                     }
@@ -52,7 +51,7 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
                     options: {
                         format: [
                             {// Line #0
-                                textField: "count",
+                                textField: "view_count",
                                 classed: {count: true},
                                 style: {
                                     "font-size": "28px",
@@ -67,7 +66,7 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
                                 }
                             },
                             {// Line #1
-                                textField: "text",
+                                textField: "name",
                                 classed: {text: true},
                                 style: {
                                     "font-size": "14px",
@@ -137,22 +136,11 @@ homeApp.directive('d3Circles', ['$window', '$timeout', 'd3Service',
                                 .attr("class", "node")
                                 .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
-            filter_node.append("feImage").attr({
-              'xlink:href' : "assets/1113469.jpg",
-              'result' : 'circle2'
-            });
-
-              // filter_node.append("feImage")
-              //     .attr("r", function(d) { return d.r; })
-              //     .attr('xlink:href','assets/1113469.jpg')
-              //     .style("fill", function(d) { return color(d.packageName); });
-
               node.append("title")
                   .text(function(d) { return d.className + ": " + format(d.value); });
 
               node.append("circle")
                   .attr("r", function(d) { return d.r; })
-                  .attr('filter','url(http://economictimes.indiatimes.com/photo/34842952.cms)')
                   .style("fill", function(d) { return color(d.packageName); });
 
               node.append("text")

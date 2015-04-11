@@ -1,164 +1,168 @@
 (function (root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define(['microplugin'], factory);
-  }
-  else if (typeof exports === 'object') {
-    module.exports = factory(require('microplugin'));
-  }
-  else {
-    root.BubbleChart = factory(root.MicroPlugin);
-  }
+    if (typeof define === 'function' && define.amd) {
+        define(['microplugin'], factory);
+    }
+    else if (typeof exports === 'object') {
+        module.exports = factory(require('microplugin'));
+    }
+    else {
+        root.BubbleChart = factory(root.MicroPlugin);
+    }
 }(this, function (MicroPlugin) {
-  var pi2 = Math.PI * 2;
-  /**
-   * Bubble Chart implementation using {@link d3js.org|d3js}
-   *
-   * @class BubbleChart
-   * @example
-   *  - [test-bubble-chart](../test/test-bubble-chart.html)
-   *
-   * @param {settings} settings - Settings of bubble chart
-   */
-  d3.svg.BubbleChart = function (settings) {
-    var self = this;
-    var defaultViewBoxSize = settings.size;
-    var defaultInnerRadius = settings.size / 3;
-    var defaultOuterRadius = settings.size / 2;
-    var defaultRadiusMin = settings.size / 10;
-    self.options = {};
-    $.extend(self.options, {
-      plugins: [],
-      container: ".bubbleChart",
-      viewBoxSize: defaultViewBoxSize,
-      innerRadius: defaultInnerRadius,
-      outerRadius: defaultOuterRadius,
-      radiusMin: defaultRadiusMin,
-      intersectDelta: 0,
-      transitDuration: 1000,
-    }, settings);
+    var pi2 = Math.PI * 2;
+    /**
+    * Bubble Chart implementation using {@link d3js.org|d3js}
+    *
+    * @class BubbleChart
+    * @example
+    *  - [test-bubble-chart](../test/test-bubble-chart.html)
+    *
+    * @param {settings} settings - Settings of bubble chart
+    */
+    d3.svg.BubbleChart = function (settings) {
+        var self = this;
+        var defaultViewBoxSize = settings.size;
+        var defaultInnerRadius = settings.size / 3;
+        var defaultOuterRadius = settings.size / 2;
+        var defaultRadiusMin = settings.size / 10;
+        self.options = {};
+        $.extend(self.options, {
+            plugins: [],
+            container: ".bubbleChart",
+            viewBoxSize: defaultViewBoxSize,
+            innerRadius: defaultInnerRadius,
+            outerRadius: defaultOuterRadius,
+            radiusMin: defaultRadiusMin,
+            intersectDelta: 0,
+            transitDuration: 1000,
+        }, settings);
 
-    $.extend(self.options, {
-      radiusMax: (self.options.outerRadius - self.options.innerRadius) / 2,
-      intersectInc: self.options.intersectDelta
-    }, settings);
+        $.extend(self.options, {
+            radiusMax: (self.options.outerRadius - self.options.innerRadius) / 2,
+            intersectInc: self.options.intersectDelta
+        }, settings);
 
-    self.initializePlugins(self.options.plugins);
+        self.initializePlugins(self.options.plugins);
 
-    self.setup();
-    self.registerClickEvent(self.getNodes());
-    self.moveToCentral(d3.select(".node"));
-  };
+        self.setup();
+        self.registerClickEvent(self.getNodes());
+        self.moveToCentral(d3.select(".node"));
+    };
 
 
-  $.extend(d3.svg.BubbleChart.prototype, {
-    getTransition: function() {
-      return this.transition;
-    },
+    $.extend(d3.svg.BubbleChart.prototype, {
+        getTransition: function() {
+            return this.transition;
+        },
 
-    getClickedNode: function () {
-      return this.clickedNode;
-    },
+        getClickedNode: function () {
+            return this.clickedNode;
+        },
 
-    getCentralNode: function () {
-      return this.centralNode;
-    },
+        getCentralNode: function () {
+            return this.centralNode;
+        },
 
-    getOptions: function () {
-      return this.options;
-    },
+        getOptions: function () {
+            return this.options;
+        },
 
-    randomCirclesPositions: function (delta) {
-      var self = this;
-      var circles = [];
-      var interval = 0;
-      var options = self.options;
-      while (circles.length < self.items.length && ++interval < self.intervalMax) {
-        var val = self.values[circles.length];
-        var rad = Math.max((val * options.radiusMax) / self.valueMax, options.radiusMin);
-        var dist = self.innerRadius + rad + Math.random() * (self.outerRadius - self.innerRadius - rad * 2);
-        var angle = Math.random() * pi2;
-        var cx = self.centralPoint + dist * Math.cos(angle);
-        var cy = self.centralPoint + dist * Math.sin(angle);
+        randomCirclesPositions: function (delta) {
+            var self = this;
+            var circles = [];
+            var interval = 0;
+            var options = self.options;
+            while (circles.length < self.items.length && ++interval < self.intervalMax) {
+                var val = self.values[circles.length];
+                var rad = Math.max((val * options.radiusMax) / self.valueMax, options.radiusMin);
+                var dist = self.innerRadius + rad + Math.random() * (self.outerRadius - self.innerRadius - rad * 2);
+                var angle = Math.random() * pi2;
+                var cx = self.centralPoint + dist * Math.cos(angle);
+                var cy = self.centralPoint + dist * Math.sin(angle);
 
-        var hit = false;
-        $.each(circles, function (i, circle) {
-          var dx = circle.cx - cx;
-          var dy = circle.cy - cy;
-          var r = circle.r + rad;
-          if (dx * dx + dy * dy < Math.pow(r - delta, 2)) {
-            hit = true;
-            return false;
-          }
-        });
-        if (!hit) {
-          circles.push({cx: cx, cy: cy, r: rad, item: self.items[circles.length]});
-        }
-      }
-      if (circles.length < self.items.length) {
-        if (delta === options.radiusMin) {
-          throw {
-            message: "Not enough space for all bubble. Please change the options.",
-            options: options
-          }
-        }
-        return self.randomCirclesPositions(delta + options.intersectInc);
-      }
-      return circles.shuffle();
-    },
+                var hit = false;
+                $.each(circles, function (i, circle) {
+                    var dx = circle.cx - cx;
+                    var dy = circle.cy - cy;
+                    var r = circle.r + rad;
+                    if (dx * dx + dy * dy < Math.pow(r - delta, 2)) {
+                        hit = true;
+                        return false;
+                    }
+                });
+                if (!hit) {
+                    circles.push({cx: cx, cy: cy, r: rad, item: self.items[circles.length]});
+                }
+            }
+            if (circles.length < self.items.length) {
+                if (delta === options.radiusMin) {
+                    throw {
+                        message: "Not enough space for all bubble. Please change the options.",
+                        options: options
+                    }
+                }
+                return self.randomCirclesPositions(delta + options.intersectInc);
+            }
+            return circles.shuffle();
+        },
 
-    getValues: function () {
-      var values = [];
-      var self = this;
-      $.each(self.items, function (i, item) {values.push(self.options.data.eval(item));});
-      return values;
-    },
+        getValues: function () {
+            var values = [];
+            var self = this;
+            $.each(self.items, function (i, item) {values.push(self.options.data.eval(item));});
+            return values;
+        },
 
-    setup: function () {
-      var self = this;
-      var options = self.options;
-      self.innerRadius = options.innerRadius;
-      self.outerRadius = options.outerRadius;
-      self.centralPoint = options.size / 2;
-      self.intervalMax = options.size * options.size;
-      self.items = options.data.items;
-      self.values = self.getValues();
-      self.valueMax = self.values.max();
-      self.svg = d3.select(options.container).append("svg")
-        .attr({preserveAspectRatio: "xMidYMid", width: options.size, height: options.size, class: "bubbleChart"})
-        .attr("viewBox", function (d) {return ["0 0", options.viewBoxSize, options.viewBoxSize].join(" ")});
-      self.circlePositions = self.randomCirclesPositions(options.intersectDelta);
+        setup: function () {
+            var self = this;
+            var options = self.options;
+            self.innerRadius = options.innerRadius;
+            self.outerRadius = options.outerRadius;
+            self.centralPoint = options.size / 2;
+            self.intervalMax = options.size * options.size;
+            self.items = options.data.items;
+            self.values = self.getValues();
+            self.valueMax = self.values.max();
+            self.svg = d3.select(options.container).append("svg")
+                            .attr({preserveAspectRatio: "xMidYMid", width: options.size, height: options.size, class: "bubbleChart"})
+                            .attr("viewBox", function (d) {return ["0 0", options.viewBoxSize, options.viewBoxSize].join(" ")});
+            self.circlePositions = self.randomCirclesPositions(options.intersectDelta);
 
-      var node = self.svg.selectAll(".node")
-        .data(self.circlePositions)
-        .enter().append("g")
-        .attr("class", function (d) {return ["node", options.data.classed(d.item)].join(" ");});
-      var fnColor = d3.scale.category20();
-      var clipPath = node.append("clipPath")
-        .attr("id", function (d) {return options.data.classed(d.item);});
-      clipPath.append("circle")
+            var node = self.svg.selectAll(".node")
+                        .data(self.circlePositions)
+                        .enter().append("g")
+                        .attr("class", function (d) {return ["node", options.data.classed(d.item)].join(" ");});
+            var fnColor = d3.scale.category20();
+            var clipPath = node.append("clipPath")
+                                .attr("id", function (d) {return options.data.classed(d.item);});
+            clipPath.append("circle")
         .attr({r: function (d) {return d.r;}, cx: function (d) {return d.cx;}, cy: function (d) {return d.cy;}});
         // .style("fill", function (d) {
-        //   return options.data.color !== undefined ? options.data.color(d.item) : fnColor(d.item.text);
+        //     return options.data.color !== undefined ? options.data.color(d.item) : fnColor(d.item.text);
         // })
         // .attr("opacity", "0.8");
-      node.append("image")
-        .attr("clip-path", function(d){return "url(#" + options.data.classed(d.item) +")"})
-        .attr("x", function (d) {return d.cx-d.r;}).attr("y", function (d) {return d.cy-d.r;})
-        .attr("height", function (d) {return 2*d.r;}).attr("width", function (d) {return 2*d.r;}).attr("xlink:href", "http://www.chicagonow.com/avatar/blog-108-128.png");
-      node.sort(function (a, b) {return options.data.eval(b.item) - options.data.eval(a.item);});
+
+        node.append("image")
+            .attr("clip-path", function(d){return "url(#" + options.data.classed(d.item) +")"})
+            .attr("x", function (d) {return d.cx-d.r;}).attr("y", function (d) {return d.cy-d.r;})
+            .attr("height", function (d) {return 2*d.r;})
+            .attr("width", function (d) {return 2*d.r;})
+            .attr("xlink:href", "http://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Color_icon_gray_v2.svg/2000px-Color_icon_gray_v2.svg.png");
+
+        node.sort(function (a, b) {return options.data.eval(b.item) - options.data.eval(a.item);});
 
 
-      self.transition = {};
-      self.event = $.microObserver.get($.misc.uuid());
+        self.transition = {};
+        self.event = $.microObserver.get($.misc.uuid());
 
-      if (options.supportResponsive) {
-        $(window).resize(function() {
-          var width = $(options.container).width();
-          self.svg.attr("width", width);
-          self.svg.attr("height", width);
-        });
-        $(window).resize();
-      }
+        if (options.supportResponsive) {
+            $(window).resize(function() {
+                var width = $(options.container).width();
+                self.svg.attr("width", width);
+                self.svg.attr("height", width);
+            });
+            $(window).resize();
+        }
     },
 
     getCirclePositions: function () {
@@ -166,35 +170,36 @@
     },
 
     moveToCentral: function (node) {
-      var self = this;
-      var toCentralPoint = d3.svg.transform()
-        .translate(function (d) {
-          var cx = node.select('circle').attr("cx");
-          var dx = self.centralPoint - d.cx;
-          var dy = self.centralPoint - d.cy;
-          return [dx, dy];
+        var self = this;
+        var toCentralPoint = d3.svg.transform()
+                                .translate(function (d) {
+            var cx = node.select('circle').attr("cx");
+            var dx = self.centralPoint - d.cx;
+            var dy = self.centralPoint - d.cy;
+            return [dx, dy];
         });
-      self.centralNode = node;
-      self.transition.centralNode = node.classed({active: true})
-        .transition().duration(self.options.transitDuration);
-      self.transition.centralNode.attr('transform', toCentralPoint)
-        .select("circle")
-        .attr('r', function (d) {return self.options.innerRadius;});
-      self.transition.centralNode.attr('transform', toCentralPoint)
-        .select("image")
-        .attr('x', function (d) {return d.cx-self.options.innerRadius;})
-        .attr('y', function (d) {return d.cy-self.options.innerRadius;})
-        .attr('height', function (d) {return 2*self.options.innerRadius;})
-        .attr('width', function (d) {return 2*self.options.innerRadius;});
+        self.centralNode = node;
+        self.transition.centralNode = node.classed({active: true})
+                                            .transition().duration(self.options.transitDuration);
+        self.transition.centralNode.attr('transform', toCentralPoint)
+            .select("circle")
+            .attr('r', function (d) {return self.options.innerRadius;});
+
+        self.transition.centralNode.attr('transform', toCentralPoint)
+            .select("image")
+            .attr('x', function (d) {return d.cx-self.options.innerRadius;})
+            .attr('y', function (d) {return d.cy-self.options.innerRadius;})
+            .attr('height', function (d) {return 2*self.options.innerRadius;})
+            .attr('width', function (d) {return 2*self.options.innerRadius;});
     },
 
     moveToReflection: function (node, swapped) {
-      var self = this;
-      var toReflectionPoint = d3.svg.transform()
-        .translate(function (d) {
-          var dx = 2 * (self.centralPoint - d.cx);
-          var dy = 2 * (self.centralPoint - d.cy);
-          return [dx, dy];
+        var self = this;
+        var toReflectionPoint = d3.svg.transform()
+                                .translate(function (d) {
+            var dx = 2 * (self.centralPoint - d.cx);
+            var dy = 2 * (self.centralPoint - d.cy);
+            return [dx, dy];
         });
 
       node.transition()
@@ -219,24 +224,24 @@
       node.classed({active: false});
     },
 
-    registerClickEvent: function (node) {
-      var self = this;
-      var swapped = false;
-      node.style("cursor", "pointer").on("click", function(d){
-        if(d3.select(this)[0][0].innerHTML == self.centralNode[0][0].innerHTML){
-          self.clickedNode = d3.select(this);
-          self.event.send("click", self.clickedNode);
-        }
-        else{
-          self.options.clickEvent();
-          self.clickedNode = d3.select(this);
-          self.event.send("click", self.clickedNode);
-          self.reset(self.centralNode);
-          self.moveToCentral(self.clickedNode);
-          self.moveToReflection(self.svg.selectAll(".node:not(.active)"), swapped);
-          swapped = !swapped;
-        }
-      });
+    registerClickEvent: function(node){
+        var self = this;
+        var swapped = false;
+        node.style("cursor", "pointer").on("click", function(d){
+            if(d3.select(this)[0][0].innerHTML == self.centralNode[0][0].innerHTML){
+                self.clickedNode = d3.select(this);
+                self.event.send("click", self.clickedNode);
+            }
+            else{
+                self.options.clickEvent(d.item);
+                self.clickedNode = d3.select(this);
+                self.event.send("click", self.clickedNode);
+                self.reset(self.centralNode);
+                self.moveToCentral(self.clickedNode);
+                self.moveToReflection(self.svg.selectAll(".node:not(.active)"), swapped);
+                swapped = !swapped;
+            }
+        });
     },
 
     getNodes: function () {

@@ -27,6 +27,12 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
         }
     }
 
+    $scope.rate_book = function(book, event){
+        debugger
+        // var book_id = 
+        bookService.rate_book()
+    }
+
     $scope.show_shelf_bottom_sheet = function(event){
         $mdBottomSheet.show({
             templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
@@ -196,12 +202,11 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
         $scope.books_on_signup();
     }
 
-    _init = function(){
+    var _init = (function(){
         if(angular.isUndefined($scope.popular_books)){
             $scope.popular_books = [];
         }
         $scope.books_on_signup();
-    }
+    }());
 
-    _init();
 }]);

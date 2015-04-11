@@ -1,60 +1,9 @@
 <md-content layout="column" layout-align="center center" layout-padding class="book_scroller">
-        <md-list>
-            <md-item>
-                <md-item-content>
-                    <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT6mQRu_MLgguTBLnZzfviEid5cA1AiiNKboVwrhxgV-v2WrGQOUg" 
-                         layout-margin
-                         class="circular" />
-                </md-item-content>
-            </md-item>
-            <md-item>
-                <md-item-content>
-                    <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT6mQRu_MLgguTBLnZzfviEid5cA1AiiNKboVwrhxgV-v2WrGQOUg" 
-                         layout-margin
-                         class="circular" />
-                </md-item-content>
-            </md-item>
-            <md-item>
-                <md-item-content>
-                    <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT6mQRu_MLgguTBLnZzfviEid5cA1AiiNKboVwrhxgV-v2WrGQOUg" 
-                         layout-margin
-                         class="circular" />
-                </md-item-content>
-            </md-item>
-            <md-item>
-                <md-item-content>
-                    <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT6mQRu_MLgguTBLnZzfviEid5cA1AiiNKboVwrhxgV-v2WrGQOUg" 
-                         layout-margin
-                         class="circular" />
-                </md-item-content>
-            </md-item>
-            <md-item>
-                <md-item-content>
-                    <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT6mQRu_MLgguTBLnZzfviEid5cA1AiiNKboVwrhxgV-v2WrGQOUg" 
-                         layout-margin
-                         class="circular" />
-                </md-item-content>
-            </md-item>
-            <md-item>
-                <md-item-content>
-                    <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT6mQRu_MLgguTBLnZzfviEid5cA1AiiNKboVwrhxgV-v2WrGQOUg" 
-                         layout-margin
-                         class="circular" />
-                </md-item-content>
-            </md-item>
-            <md-item>
-                <md-item-content>
-                    <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT6mQRu_MLgguTBLnZzfviEid5cA1AiiNKboVwrhxgV-v2WrGQOUg" 
-                         layout-margin
-                         class="circular" />
-                </md-item-content>
-            </md-item>
-            <md-item>
-                <md-item-content>
-                    <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT6mQRu_MLgguTBLnZzfviEid5cA1AiiNKboVwrhxgV-v2WrGQOUg" 
-                         layout-margin
-                         class="circular" />
-                </md-item-content>
-            </md-item>
-        </md-list>
-    </md-content>
+    <md-list>
+        <md-item ng-repeat="user in active_tag.user">
+            <md-item-content>
+                <img ng-src="" layout-margin class="circular" />
+            </md-item-content>
+        </md-item>
+    </md-list>
+</md-content>

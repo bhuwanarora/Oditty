@@ -124,7 +124,7 @@ module Api
 
 			def self.get_book_details(id, user_id=nil)
 				book = UsersBook.new(id, user_id).get_basic_details.execute[0]
-				if user_id
+				if user_id && book
 					structured_labels = []
 					if book["labels"]
 						for label in book["labels"]
@@ -144,6 +144,7 @@ module Api
 						end
 					end
 
+					book.merge!(:friends => friends_who_have_read)
 				end
 				# isbn = book["isbn"].split(",")[0]
 				# image_url = "http://covers.openlibrary.org/b/isbn/"+isbn+"-S.jpg";
@@ -151,9 +152,6 @@ module Api
 				# color = Net::HTTP.get(URI.parse(image_service_url))
 				# color = JSON.parse(color)["data"]
 
-				if user_id
-					book.merge!(:friends => friends_who_have_read)
-				end
 				book
 			end
 

@@ -91,4 +91,8 @@ homeApp.service('bookService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return _deferred_request('/api/v0/book_feed?id='+id+"&skip_count="+skip_count);
     }
 
+    this.rate_book = function(id, data){
+        return _deferred_request('/api/v0/rate?id='+id+"&data="+data);
+    }
+
 }]);
