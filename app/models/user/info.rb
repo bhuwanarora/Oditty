@@ -4,6 +4,10 @@ class User::Info < User
 		" MATCH (user:User) WHERE user.email= \"" + email + "\" " + return_init + User.basic_info
 	end
 
+	def self.get_sign_in_credential_by_email email
+		" MATCH (user:User) WHERE user.email= \"" + email + "\" " + return_init + User.basic_info + ", user.password AS password"
+	end	
+
 	def self.set_email email
 		" SET user.email = \""+email+"\" "
 	end
@@ -58,5 +62,9 @@ class User::Info < User
 
 	def self.remove_category category_id
 		(User.match_category category_id) + " SET likes.weight = CASE WHEN likes.weight IS NULL THEN 0 ELSE toInt(likes.weight) - "+Constants::CategoryLikeWeight.to_s+" END "
+	end
+
+	def self.set_verification_token email, verification_token
+		"MATCH (user:User{email:\""+email+"\"}) SET user.verification_token = \""+verification_token+"\""
 	end
 end

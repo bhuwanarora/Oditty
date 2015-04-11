@@ -90,7 +90,7 @@ module Api
 			end
 
 			def authenticate
-				authentication_info = UserApi.authenticate(session, params)
+				authentication_info = Api::V0::UserApi.authenticate(session, params)
 				if authentication_info[:authenticate]
 					render :json => authentication_info, :status => 200
 				else

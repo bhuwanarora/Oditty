@@ -2,6 +2,10 @@ module Api
 	module V0
 		class UserApi
 
+			def self.authenticate session, params
+				authentication_info = User::Authenticate.action(session, params)
+			end
+
 			def self.get_details(user_id, session)
 				info = {}
 				if user_id.present?
