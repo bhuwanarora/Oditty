@@ -74,6 +74,6 @@ class User::Info < User
 	end
 
 	def self.set_verification_token email, verification_token
-		"MATCH (user:User{email:\""+email+"\"}) SET user.verification_token = \""+verification_token+"\""
+		" MATCH (user:User{email:\""+email+"\"}) SET user.verification_token = \""+verification_token+"\" "
 	end
 end

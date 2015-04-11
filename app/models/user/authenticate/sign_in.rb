@@ -16,6 +16,7 @@ class User::Authenticate::SignIn < User::Authenticate
 			if active_user_authenticated
 				authenticate = true
 				@user_id = user["id"]
+				User::Info.set_last_login.execute(@params[:email])
 				info = {:profile_status => 0, :user_id => user["id"]}
 				message = Constants::LoginSuccess
 			elsif user_authenticated
