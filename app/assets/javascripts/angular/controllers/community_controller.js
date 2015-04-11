@@ -21,7 +21,7 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
     $scope.refresh_data = function(active_item){
         $scope.active_tag = active_item;
         communityService.get_community_details($scope.active_tag.id).then(function(data){
-            $scope.active_tag = angular.extend($scope.active_tag, data);
+            $scope.active_tag = data[0].most_important_tag[0];
         });
     }
 

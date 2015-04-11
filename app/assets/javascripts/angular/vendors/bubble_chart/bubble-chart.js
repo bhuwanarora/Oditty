@@ -142,27 +142,27 @@
         // })
         // .attr("opacity", "0.8");
 
-      node.append("image")
+        node.append("image")
             .attr("clip-path", function(d){return "url(#" + options.data.classed(d.item) +")"})
             .attr("x", function (d) {return d.cx-d.r;}).attr("y", function (d) {return d.cy-d.r;})
             .attr("height", function (d) {return 2*d.r;})
             .attr("width", function (d) {return 2*d.r;})
             .attr("xlink:href", "http://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Color_icon_gray_v2.svg/2000px-Color_icon_gray_v2.svg.png");
 
-      node.sort(function (a, b) {return options.data.eval(b.item) - options.data.eval(a.item);});
+        node.sort(function (a, b) {return options.data.eval(b.item) - options.data.eval(a.item);});
 
 
-      self.transition = {};
-      self.event = $.microObserver.get($.misc.uuid());
+        self.transition = {};
+        self.event = $.microObserver.get($.misc.uuid());
 
-      if (options.supportResponsive) {
-        $(window).resize(function() {
-          var width = $(options.container).width();
-          self.svg.attr("width", width);
-          self.svg.attr("height", width);
-        });
-        $(window).resize();
-      }
+        if (options.supportResponsive) {
+            $(window).resize(function() {
+                var width = $(options.container).width();
+                self.svg.attr("width", width);
+                self.svg.attr("height", width);
+            });
+            $(window).resize();
+        }
     },
 
     getCirclePositions: function () {
