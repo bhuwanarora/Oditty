@@ -138,15 +138,17 @@
             clipPath.append("circle")
         .attr({r: function (d) {return d.r;}, cx: function (d) {return d.cx;}, cy: function (d) {return d.cy;}});
         // .style("fill", function (d) {
-        //   return options.data.color !== undefined ? options.data.color(d.item) : fnColor(d.item.text);
+        //     return options.data.color !== undefined ? options.data.color(d.item) : fnColor(d.item.text);
         // })
         // .attr("opacity", "0.8");
+
       node.append("image")
-        .attr("clip-path", function(d){return "url(#" + options.data.classed(d.item) +")"})
-        .attr("x", function (d) {return d.cx-d.r;}).attr("y", function (d) {return d.cy-d.r;})
-        .attr("height", function (d) {return 2*d.r;})
-        .attr("width", function (d) {return 2*d.r;})
-        .attr("xlink:href", "http://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Color_icon_gray_v2.svg/2000px-Color_icon_gray_v2.svg.png");
+            .attr("clip-path", function(d){return "url(#" + options.data.classed(d.item) +")"})
+            .attr("x", function (d) {return d.cx-d.r;}).attr("y", function (d) {return d.cy-d.r;})
+            .attr("height", function (d) {return 2*d.r;})
+            .attr("width", function (d) {return 2*d.r;})
+            .attr("xlink:href", "http://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Color_icon_gray_v2.svg/2000px-Color_icon_gray_v2.svg.png");
+
       node.sort(function (a, b) {return options.data.eval(b.item) - options.data.eval(a.item);});
 
 

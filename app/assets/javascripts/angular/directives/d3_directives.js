@@ -136,22 +136,11 @@ homeApp.directive('d3Circles', ['$window', '$timeout', 'd3Service',
                                 .attr("class", "node")
                                 .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
-            filter_node.append("feImage").attr({
-              'xlink:href' : "assets/1113469.jpg",
-              'result' : 'circle2'
-            });
-
-              // filter_node.append("feImage")
-              //     .attr("r", function(d) { return d.r; })
-              //     .attr('xlink:href','assets/1113469.jpg')
-              //     .style("fill", function(d) { return color(d.packageName); });
-
               node.append("title")
                   .text(function(d) { return d.className + ": " + format(d.value); });
 
               node.append("circle")
                   .attr("r", function(d) { return d.r; })
-                  .attr('filter','url(http://economictimes.indiatimes.com/photo/34842952.cms)')
                   .style("fill", function(d) { return color(d.packageName); });
 
               node.append("text")
