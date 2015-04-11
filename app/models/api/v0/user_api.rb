@@ -245,59 +245,7 @@ module Api
 			end
 
 			def self.authenticate(session, params)
-				authenticate = false
-				info = {}
-				signin = params[:old_user]
-				email = params[:email]
-				@neo = Neography::Rest.new
-				clause = "MATCH (user:User{email:\""+email+"\"}) RETURN user, ID(user) as id"
-				user = @neo.execute_query(clause)["data"]
-				if signin
-					puts "signin".red
-					begin
-						active_user_authenticated = (user[0][0]["data"]["password"] == params[:password]) && user[0][0]["data"]["verified"] && (user[0][0]["data"]["active"] == true)
-						user_authenticated = user[0][0]["data"]["password"] == params[:password] && user[0][0]["data"]["verified"]
-						if active_user_authenticated
-							authenticate = true
-							session[:user_id] = user[0][1]
-							info = {:profile_status => 0, :user_id => user[0][1]}
-							clause = "MATCH (user:User{email:\""+email+"\"}) SET user.last_login = \""+Time.now.strftime("%Y-%m-%d")+"\""
-							@neo.execute_query clause
-							message = Constants::LoginSuccess
-						elsif user_authenticated
-							message = Constants::PendingActivation
-						elsif  user[0][0]["data"]["password"] != params[:password]
-							message = Constants::AuthenticationFailed
-						elsif !user[0][0]["data"]["verified"]
-							message = Constants::VerifyEmail
-						else
-							message = Constants::AuthenticationFailed
-						end
-					rescue => err
-						message = Constants::EmailNotRegistered
-					end
-				else
-					verification_token = SecureRandom.hex
-					link = Rails.application.config.home+'verify?p='+verification_token.to_s+"&e="+email
-					invitation = {:email => email, :template => Constants::EmailTemplate::EmailVerification, :link => link}
-					if user.present?
-						if user[0][0]["data"]["verified"]
-							message = Constants::EmailAlreadyRegistered
-						else
-							clause = "MATCH (user:User{email:\""+email+"\"}) SET user.verification_token = \""+verification_token+"\""
-							@neo.execute_query clause
-							SubscriptionMailer.verify_email(invitation).deliver
-							message = Constants::AnotherActivationRequest
-						end
-					else
-						UsersGraphHelper.create_user(email, params[:password], verification_token)
-						SubscriptionMailer.verify_email(invitation).deliver
-						message = Constants::ActivateAccount
-					end
-				end
-				info = info.merge(:message => message, :authenticate => authenticate)
-				puts "SESSION USER ID "+session[:user_id].to_s.blue.on_red
-				info
+				info = User::Authenticate.new(session, params).action
 			end
 
 			def self.get_most_connected_friends(user_id, count, skip)

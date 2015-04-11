@@ -1,12 +1,21 @@
 class User::Info < User
 	
+	def self.get_by_fb_id id
+		" MATCH (user:User{fb_id:" + id.to_s + "}) " + User::Info.return_init + User.basic_info
+	end
+
 	def self.get_by_email email
-		" MATCH (user:User) WHERE user.email= \"" + email + "\" " + return_init + User.basic_info
+		" MATCH (user:User) WHERE user.email= \"" + email + "\" " + User::Info.return_init + User.basic_info
 	end
 
 	def self.get_sign_in_credential_by_email email
-		" MATCH (user:User) WHERE user.email= \"" + email + "\" " + return_init + User.basic_info + ", user.password AS password"
+		" MATCH (user:User) WHERE user.email= \"" + email + "\" " + User::Info.return_init + User.basic_info + ", user.password AS password , user.verified AS verified, user.active AS active" 
 	end	
+
+	def self.set_last_login email
+		 " SET user.last_login = \"" + Time.now.strftime("%Y-%m-%d") + "\" "
+	end
+
 
 	def self.set_email email
 		" SET user.email = \""+email+"\" "

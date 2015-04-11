@@ -14,4 +14,9 @@ class Label < Neo
 			" SET label.bookmark_count = TOINT(COALESCE(label.bookmark_count, 1)) - 1 "
 		end
 	end
+
+	def self.match_primary
+		" MATCH (label:Label{primary_label:true}) "
+	end
+
 end

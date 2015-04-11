@@ -1,15 +1,16 @@
 class User::Authenticate < User
-	def initialize user_id, params
-		@
+	def initialize(session, params)
+		@session = session
+		@params = params
 	end
 
-	def self.action(session, params)
-		if params[:old_user]
-			info = User::Authenticate::SignIn.action(session, params)
+	def action
+		if @params[:old_user]
+			info = User::Authenticate::SignIn.new(@session, @params).action
 		else
-			info = User::Authenticate::SignUp.action(params)
+			info = User::Authenticate::SignUp.new(@params).action
 		end
-		puts "SESSION USER ID "+session[:user_id].to_s.blue.on_red
+		puts "SESSION USER ID "+@session[:user_id].to_s.blue.on_red
 		info
 	end
 
