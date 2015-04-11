@@ -112,12 +112,12 @@ class User < Neo
 		"CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, last_book: "+Constants::BestBook.to_s+", amateur: true, ask_info: true}) "
 	end
 
-	def self.link_root_category
+	def self.link_root_categories
 		" MATCH (root_category:Category{is_root:true}) CREATE UNIQUE (user)-[rel:Likes]-(root_category) SET rel.weight = 0 WITH user , root_category "
 	end
 
 	def self.handle_new(email, password=nil, verification_token=nil)
-		User.create(email, password, verification_token) + User::Feed.create_first + Label.match_primary + User.link_primary_labels + User.link_root_category + User.return_init + User.basic_info
+		User.create(email, password, verification_token) + User::Feed.create_first + Label.match_primary + User.link_primary_labels + User.link_root_categories + User.return_init + User.basic_info
 	end
 
 	def get_notifications
