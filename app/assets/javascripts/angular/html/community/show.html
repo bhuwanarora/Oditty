@@ -2,8 +2,10 @@
     flex="15" layout-align="center" layout="column"
     ng-hide="show_details"></div>
 <div flex layout-align="center" layout="row">
-    <d3-click-circles news-tags="newsTags" on-center-click="toggle_details()" 
-        on-click="refresh_data()"
+    <d3-click-circles news-tags="newsTags" 
+        on-center-click="toggle_details()" 
+        on-click="refresh_data(active_item)"
+        ng-if="newsTags.length > 0"
         layout-align="center" layout="center">
         <div class="bubbleChart animate-fast"></div>
     </d3-click-circles>

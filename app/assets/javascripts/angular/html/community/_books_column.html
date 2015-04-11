@@ -1,9 +1,14 @@
 <md-content layout="column" layout-align="center center" layout-padding class="book_scroller">
-    <md-list ng-repeat="book in active_tag.books">
-        <md-item>
-            <md-item-content>
-                <a ng-href="/book?q={{book.id}}"><img ng-src="{{book | choose_medium_thumb}}" layout-margin class="book_cover" /></a>
-            </md-item-content>
-        </md-item>
-    </md-list>
+	<md-button ng-click="show_book_dialog(book, $event)" class="clear" ng-repeat="book in active_tag.books">
+	    <img ng-src="{{book | choose_medium_thumb}}" 
+	         layout-margin/>
+	</md-button>
 </md-content>
+
+<style>
+    .book_scroller img{
+        width: 130px;
+        height: 180px;
+    }
+
+</style>

@@ -13,19 +13,15 @@ class Community < Neo
 	end
 
 	def self.basic_info
-		" community.view_count AS view_count, community.name AS name "
+		" community.view_count AS view_count, community.name AS name, ID(community) AS id "
 	end
 
 	def self.grouped_basic_info
-		"  view_count:community.view_count,  name:community.name "
+		"  view_count:community.view_count,  name:community.name, id:ID(community) "
 	end
 
 	def books_users_info
 		match + Community.grouped_books_users + Community.return_init + " most_important_tag "
-	end
-
-	def self.grouped_basic_info
-		"  view_count:community.view_count ,  name:community.name  "
 	end
 
 	def self.match_books 

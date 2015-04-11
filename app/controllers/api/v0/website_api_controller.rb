@@ -132,6 +132,12 @@ module Api
 				render :json => {:message => "Success"}, :status => 200
 			end
 
+
+			def get_metadata
+				info = UrlParser.get_metadata params[:url]
+				render :json => info, :status => 200
+			end
+
             private
             def neo_init
                 @neo = Neography::Rest.new

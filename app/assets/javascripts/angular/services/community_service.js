@@ -24,4 +24,12 @@ homeApp.service('communityService', ["$http", "$q", "$rootScope", "WebsiteUICons
     this.get_chronological_news = function(id){
         return _deferred_request('/api/v0/chronological_news?id='+id);
     }
+
+    this.get_community_details = function(id){
+        return _deferred_request('/api/v0/community?id='+id);
+    }
+
+    this.get_metadata = function(url){
+        return _deferred_request('/api/v0/metadata?url='+url);
+    }
 }]);

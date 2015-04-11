@@ -16,8 +16,8 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
             innerRadius: 600 / 3.5,
             //outerRadius: => use @default
             radiusMin: 50,
-            clickEvent: function(){
-                scope.onClick();
+            clickEvent: function(item){
+                scope.onClick({"active_item": item});
             },
             //radiusMax: use @default
             //intersectDelta: use @default
@@ -34,15 +34,14 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
                     options: {
                         text: "Explore Topic",
                         style: {
-                            "font-size": "12px",
+                            "font-size": "15px",
                             "font-style": "italic",
                             "font-family": "Source Sans Pro, sans-serif",
-                            //"font-weight": "700",
                             "text-anchor": "middle",
                             "fill": "white"
                         },
                         attr: {dy: "65px"},
-                        centralClick: function() {
+                        centralClick: function(event){
                             scope.onCenterClick();
                         }
                     }

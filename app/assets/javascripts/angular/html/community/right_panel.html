@@ -1,11 +1,20 @@
 <md-sidenav class="md-sidenav-right md-whiteframe-z2 details_panel" 
             md-is-open="show_details"
             md-component-id="right" 
-            ng-click="stop_propagation($event);">
+            ng-click="stop_propagation($event);"
+            layout-padding>
+    <img ng-src="{{news_info.images[0]}}" class="news_cover" />
+    <h2>{{news_info.metadata.title[0]._value}}</h2>
+    <div>{{news_info.metadata.site_name[0]._value}}</div>
+    <div>{{news_info.metadata.description[0]._value}}</div>
 </md-sidenav>
 <style>
     .details_panel{
         width: 60vw;
         min-width: 60vw;
+    }
+
+    .news_cover{
+    	width: 100%;
     }
 </style>
