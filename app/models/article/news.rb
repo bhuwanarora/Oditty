@@ -4,7 +4,7 @@ class Article::News < Article
 	end
 
 	def most_important_tag_info
-		most_important_community + Community.grouped_books_users
+		most_important_community + Community.grouped_books_users_news
 	end
 
 	def self.set_bookmark_count operation

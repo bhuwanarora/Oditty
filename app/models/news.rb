@@ -52,6 +52,11 @@ class News < Neo
 		(clause.execute)[0]["news_id"]
 	end
 
+
+	def self.merge_community
+		" MERGE (news)-[:HasCommunity]->(community) WITH news, community "
+	end
+
 	def self.handle
 		news_sources ||= self.fetch_news_sources
 		puts news_sources
@@ -66,8 +71,12 @@ class News < Neo
 		end
 	end
 
+	def match_region
+		" MATCH (region:Region)-[regional_news:RegionalNews{region:ID(region)}]->(news) WHERE ID(news) = " + @id.to_s + " WITH region, news  "
+	end
+
 	def self.news_already_present news_id
-		clause = " MATCH (region:Region)-[relation:RegionalNews{region:ID(region)}]->(news) WHERE ID(news) = " + news_id.to_s + " RETURN ID(relation) as relation_id "
+		clause = News.new(news_id).match_region + " , regional_news " + News.return_init + " ID(regional_news) AS regional_news " 
 		data = (clause.execute)[0]
 		if data.blank?
 			news_already_present = false
@@ -110,5 +119,9 @@ class News < Neo
 		puts query
 		uri = URI(query)
 		response = Net::HTTP.get(uri)
+	end
+
+	def self.grouped_basic_info
+		"  news_id: ID(news), news_url: news.url  "
 	end
 end

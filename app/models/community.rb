@@ -4,8 +4,8 @@ class Community < Neo
 		@id = id
 	end
 
-	def self.grouped_books_users
-		Community.match_grouped_books + Community.optional_match_users + ", books_info WITH books_info , community " + User.collect_map({"users_info" => User.grouped_basic_info })  + " WITH users_info, books_info , community " + Community.collect_map({"most_important_tag" => Community.grouped_basic_info + ", books: books_info, users: users_info" })
+	def self.grouped_books_users_news
+		Community.match_grouped_books + Community.optional_match_users + ", books_info WITH books_info , community " + User.collect_map({"users_info" => User.grouped_basic_info })  + " WITH users_info, books_info , community " + Community.match_news + " , users_info, books_info " + " WITH users_info, books_info , community " + News.collect_map("news_info" => News.grouped_basic_info) + " WITH users_info, books_info , news_info "  + Community.collect_map({"most_important_tag" => Community.grouped_basic_info + ", books: books_info, users: users_info, news: news_info " })
 	end
 
 	def match
@@ -28,6 +28,10 @@ class Community < Neo
 		" MATCH (community)-[:RelatedBooks]->(book:Book) WITH community, book "
 	end
 
+	def self.match_news 
+		" MATCH (community)<-[:HasCommunity]-(news:News) WITH community, news "
+	end
+
 	def get_books
 		match + Community.match_books + Book.order_desc + Community.limit(Constants::CommunityBooksCount.to_s) + Neo.return_init + Book.basic_info
 	end
@@ -46,10 +50,6 @@ class Community < Neo
 
 	def self.set_importance
 		" SET community.importance = COALESCE(community.importance, 0) + 1 "
-	end
-
-	def self.detailed_info
-		
 	end
 
 	def get_users_books
@@ -75,16 +75,20 @@ class Community < Neo
 		Community.match_books + " WITH community " + Book.collect_map({"books_info" => Book.grouped_basic_info }) 
 	end
 
-	def self.get_google_books community
+	def self.fetch_books community
 		community_books = {community => []}
 		count = 0
 		begin
 			Google::Search::Book.new(:query => community).each do |book|
 				count += 1
+				book = book.title.search_ready
+				book_info = (Book.search_by_indexed_title(book).execute)[0] 
+				if book_info.present?  
+					community_books[community] << book
+				end	
 				if count == Constants::MaximumCommunityBooksCount
 					break
 				end
-				community_books[community] << book.title.search_ready
 			end
 		rescue Exception => e
 			puts e.to_s.red
@@ -115,7 +119,7 @@ class Community < Neo
 			puts communities.to_s.yellow
 
 			communities.each do |community|
-				community_books = Community.get_google_books(community)
+				community_books = Community.fetch_books(community)
 				puts community_books.to_s.green
 
 				if Community.has_required_book_count(community_books[community])
@@ -136,19 +140,27 @@ class Community < Neo
 		end
 	end 
 
+	def self.merge community, news_info
+		" MERGE (community:Community{name: \"" + community + "\"}) ON CREATE SET community.status = 1, community.timestamp=" + Time.now.to_i.to_s + ", community.url = \"" + news_info["news_source"]["news_link"].to_s + "\", community.location = \"" + news_info["news_source"]["region"].to_s + "\" " 
+	end
+
+
 	def self.map_books communities_books, news_info
 	    communities_books.each do |community_books|
 	    	community_books.each do |community, books|
-	        	clause =  News.new(news_info["news_id"]).match + " MERGE (community:Community{name: \"" + community + "\"}) ON CREATE SET community.status = 1, community.timestamp=" + Time.now.to_i.to_s + ", community.url = \"" + news_info["news_source"]["news_link"].to_s + "\", community.location = \"" + news_info["news_source"]["region"].to_s + "\" " + Community.set_importance + " MERGE (news)-[:HasCommunity]->(community) WITH community "
+	        	clause =  News.new(news_info["news_id"]).match + Community.merge(community, news_info) + Community.set_importance + News.merge_community
 				books.each do |book|
 					indexed_title = book.search_ready
-					clause += " START book=node:node_auto_index('indexed_title:\""+indexed_title+"\"') MERGE (community)-[:RelatedBooks]->(book) WITH community "
+					clause += Book.search_by_indexed_title + " , community " + Community.merge_book + " WITH community "
 				end
-
 				clause+= News.return_init + Community.basic_info
 				clause.execute
 			end
 		end
+	end
+
+	def self.merge_book
+		" MERGE (community)-[:RelatedBooks]->(book) WITH book ,community "
 	end
 
 	def self.handle_communities response

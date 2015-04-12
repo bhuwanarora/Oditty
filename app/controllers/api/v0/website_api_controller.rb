@@ -18,6 +18,12 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def get_image 
+				community = params[:community]
+				info = Api::V0::CommunityApi.get_image(community)
+				render :json => info[:message], :status => info[:status] 
+			end
+
 			def community_info
 				id = params[:id]
 				info = Api::V0::WebsiteApi.get_community_info(id).execute

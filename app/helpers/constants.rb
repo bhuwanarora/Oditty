@@ -114,6 +114,6 @@ module Constants
 	NormalReadValue	 			= 2
 	LongReadValue	 			= 3
 	BookShownInInfinty          = 10
-	MaximumCommunityBooksCount	= 10
+	MaximumCommunityBooksCount	= 50
 	MinimumCommunityBooksCount  = 5
 end
