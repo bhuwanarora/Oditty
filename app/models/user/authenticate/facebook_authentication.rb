@@ -17,7 +17,7 @@ class User::Authenticate::FacebookAuthentication < User::Authenticate
 			end
 		else
 			puts "email does not exits".green
-			user_id = (User::Info.get_by_fb_id(@params[:id]).execute)["id"]
+			user_id = (User.get_by_fb_id(@params[:id]).execute)["id"]
 			if user_id.present?
 				clause = self._update_user_without_email 
 			else

@@ -3,7 +3,7 @@ module Api
 		class UserApi
 
 			def self.authenticate session, params
-				authentication_info = User::Authenticate.action(session, params)
+				User::Authenticate.action(session, params)
 			end
 
 			def self.get_details(user_id, session)
@@ -95,19 +95,7 @@ module Api
 			end
 
 			def self.recover_password email
-				@neo = Neography::Rest.new
-				clause = "MATCH (user:User{email:\""+email+"\"}) RETURN " + User.basic_info
-				user_id = @neo.execute_query clause
-				user_exists = user_id.present?
-				if user_exists
-					verification_token = SecureRandom.hex
-					link = Rails.application.config.home+'recover_password?p='+verification_token.to_s+"&e="+email
-					invitation = {:email => email, :template => Constants::EmailTemplate::PasswordReset, :link => link}
-					SubscriptionMailer.recover_password(invitation).deliver
-					clause =  "MATCH (user:User{email:\""+email+"\"}) SET user.password_token = \""+verification_token+"\""
-					@neo.execute_query clause
-				end
-				user_exists
+				User::Authenticate::Password.new(email).recover
 			end
 
 			def self.get_profile_info id

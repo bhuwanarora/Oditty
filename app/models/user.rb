@@ -113,11 +113,11 @@ class User < Neo
 	end
 
 	def self.link_root_categories
-		" MATCH (root_category:Category{is_root:true}) CREATE UNIQUE (user)-[rel:Likes]-(root_category) SET rel.weight = 0 WITH user , root_category "
+		"  CREATE UNIQUE (user)-[rel:Likes]-(root_category) SET rel.weight = 0 WITH user , root_category "
 	end
 
 	def self.handle_new(email, password=nil, verification_token=nil)
-		User.create(email, password, verification_token) + User::Feed.create_first + Label.match_primary + User.link_primary_labels + User.link_root_categories + User.return_init + User.basic_info
+		User.create(email, password, verification_token) + User::Feed.create_first + Label.match_primary  + ", user " + User.link_primary_labels + Category::Root.match  + ", user " + User.link_root_categories + User.return_init + User.basic_info
 	end
 
 	def get_notifications
@@ -203,4 +203,16 @@ class User < Neo
 	def get_init_book_count_range
 		match + User.return_init + User.init_book_read_count
 	end
+
+	def self.get_by_fb_id id
+		" MATCH (user:User{fb_id:" + id.to_s + "}) " + User::Info.return_init + User.basic_info
+	end
+
+	def self.get_by_email email
+		" MATCH (user:User) WHERE user.email= \"" + email + "\" " + User::Info.return_init + User.basic_info
+	end
+
+	def self.get_sign_in_credential_by_email email
+		" MATCH (user:User) WHERE user.email= \"" + email + "\" " + User::Info.return_init + User.basic_info + ", user.password AS password , user.verified AS verified, user.active AS active" 
+	end	
 end

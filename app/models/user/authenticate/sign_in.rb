@@ -1,21 +1,21 @@
 class User::Authenticate::SignIn < User::Authenticate
 	
-	def intialize session, params 
-		@user_id = session[:user_id]
-		@params = @params
+	def initialize session, params 
+		@session = session
+		@params = params
 	end
 
 	def action 
 		info = {}
 		authenticate = false
-		user = (User::Info.get_sign_in_credential_by_email(@params[:email]).execute)[0]
+		user = (User.get_sign_in_credential_by_email(@params[:email]).execute)[0]
 		puts "signin".red
 		begin
 			active_user_authenticated = (user["password"] == @params[:password]) && user["verified"] && (user["active"] == true)
 			user_authenticated = user["password"] == @params[:password] && user["verified"]
 			if active_user_authenticated
 				authenticate = true
-				@user_id = user["id"]
+				@session[:user_id] = user["id"]
 				User::Info.set_last_login.execute(@params[:email])
 				info = {:profile_status => 0, :user_id => user["id"]}
 				message = Constants::LoginSuccess

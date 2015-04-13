@@ -16,7 +16,7 @@ class Label < Neo
 	end
 
 	def self.match_primary
-		" MATCH (label:Label{primary_label:true}) "
+		" MATCH (label:Label{primary_label:true}) WITH label "
 	end
 
 end

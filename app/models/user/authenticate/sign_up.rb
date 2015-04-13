@@ -7,7 +7,7 @@ class User::Authenticate::SignUp < User::Authenticate
 
 	def action
 		authenticate = false
-		user = (User::Info.get_sign_in_credential_by_email(@params[:email]).execute)[0]
+		user = (User.get_sign_in_credential_by_email(@params[:email]).execute)[0]
 		link = Rails.application.config.home+'verify?p='+@verification_token.to_s+"&e="+@params[:email]
 		invitation = {:email => @params[:email], :template => Constants::EmailTemplate::EmailVerification, :link => link}
 		if user.present?

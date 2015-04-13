@@ -271,7 +271,7 @@ module Api
 			end
 
 			def recover_password
-				email_sent = UserApi.recover_password(params[:email])
+				email_sent = Api::V0::UserApi.recover_password(params[:email])
 				render :json => {:message => Constants::PasswordRecoveryInitiated}, :status => 200
 			end
 
