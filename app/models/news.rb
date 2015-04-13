@@ -4,7 +4,7 @@ class News < Neo
 	end
 
 	def self.match_chronological_news
-		News.match_path_bidirectionally(Constant::Count::CommunitiesShown) + News.extract_unwind("linked_news") + ", news, ABS(TOINT(linked_news.created_at - news.created_at*1.0)) AS deviation ORDER BY deviation LIMIT " + Constant::Count::NewsShownInCommunity.to_s + " WITH linked_news AS news ORDER BY news.created_at "
+		News.match_path_bidirectionally(Constant::Count::CommunitiesShown) + ", " + News.extract_unwind("linked_news") + ", news, ABS(TOINT(linked_news.created_at - news.created_at*1.0)) AS deviation ORDER BY deviation LIMIT " + Constant::Count::NewsShownInCommunity.to_s + " WITH linked_news AS news ORDER BY news.created_at "
 	end
 
 	def self.match_path skip_count  

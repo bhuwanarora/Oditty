@@ -27,7 +27,7 @@ module Api
 			def detailed_community_info
 				community_id = params[:id]
 				user_id = session[:user_id]
-				info = Api::V0::CommunityApi.get_detailed_info(community_id, user_id).execute
+				info = Api::V0::CommunityApi.get_detailed_info(community_id, user_id).execute[0]
 				render :json => info, :status => 200 
 			end
 

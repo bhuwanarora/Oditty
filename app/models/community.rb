@@ -155,7 +155,7 @@ class Community < Neo
 	        	clause =  News.new(news_info["news_id"]).match + Community.merge(community, news_info) + ", news " + Community.set_importance + " WITH community, news, " + News.merge_community
 				books.each do |book|
 					indexed_title = book.search_ready
-					clause += Book.search_by_indexed_title + " , community " + Community.merge_book + " WITH community "
+					clause += Book.search_by_indexed_title(indexed_title) + " , community " + Community.merge_book + " WITH community "
 				end
 				clause+= News.return_init + Community.basic_info
 				clause.execute
@@ -170,7 +170,7 @@ class Community < Neo
 	def self.handle_communities response
 		communities = []
 		response["social_tags"].each do |social_tag|
-			if social_tag["importance"] == Constant::Count::RelevantSocialTag then communities << social_tag["originalValue"] end
+			if social_tag["importance"] == Constant::Count::RelevantSocialTagValue then communities << social_tag["originalValue"] end
 		end
 		communities
 	end

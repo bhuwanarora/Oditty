@@ -1,6 +1,7 @@
 class Article::NewsArticle < Article
 	def initialize id
 		@id = id
+		@news = News.new(@id)
 	end
 
 	def most_important_tag_info
@@ -44,7 +45,7 @@ class Article::NewsArticle < Article
 	end
 
 	def get_chronological_news_info
-		match + ::News.match_chronological_news + ::News.new(@id).match_community + Community.order_desc + Community.return_init + News.basic_info + Community.most_important_category_info 
+		match + News.match_chronological_news + @news.match_community + Community.order_desc + Community.return_init + News.basic_info + Community.most_important_category_info 
 	end
 
 end
