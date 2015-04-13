@@ -18,8 +18,15 @@ module Api
 			def books_on_signup
 				user_id = session[:user_id]
 				skip_count = JSON.parse(params["q"])["skip_count"]
-				books = User::Predict::BookSuggestion.new(user_id, skip_count).likely_books_read
+				books = User::Predict::BookPrediction.new(user_id, skip_count).likely_books_read
 				render :json => books, :status => 200
+			end
+
+			def update_visited
+				book_id = params[:id]
+				user_id = session[:user_id]
+				Bookmark::Type::Visited.new(user_id, book_id).add.execute
+				render :json => "Success", :status => 200
 			end
 
 			def get_popular_books
@@ -43,7 +50,7 @@ module Api
 			def get_basic_book_details
 				id = params[:id]
 				user_id = session[:user_id]
-				info = BookApi.get_basic_book_details(id, user_id)
+				info = BookApi.get_basic_book_details(id, user_id).execute[0]
 				render :json => info, :status => 200
 			end
 

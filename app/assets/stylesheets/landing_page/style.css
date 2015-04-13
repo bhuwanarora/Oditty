@@ -94,6 +94,25 @@ h1, h2, h3, h4 {
     color: black; 
 }
 
+md-slider.md-default-theme .md-thumb:after{
+    border-color: transparent !important;
+    background-color: transparent !important;
+}
+
+md-slider.md-min .md-thumb:after{
+    background-color: transparent !important;
+}
+
+md-slider .md-thumb{
+    background-image: url('http://icons.iconarchive.com/icons/aha-soft/multimedia/256/favourites-star-SH-icon.png');
+    background-size: cover;
+    background-color: transparent;
+}
+
+md-slider.md-default-theme .md-sign{
+    /*background-color: rgb(245, 126, 50);*/
+}
+
 md-tabs.md-default-theme.md-accent .md-header{
     background: #fff;    
 }
@@ -311,7 +330,8 @@ md-tab.active a{
 }
 
 .hex_background{
-    background:#BD3109;
+    background-color: #BD3109;
+    /*background-color: #427fed;*/
 }
 
 .signup-container {

@@ -3,28 +3,40 @@ class Book < Neo
 		@id = id
 	end
 
+	def self.init_match
+		" MATCH (book:Book) "
+	end
+
 	def get_feed
 		" MATCH (book:Book)-[:BookFeed*0..]->(news_feed) WHERE ID(book) = " + @id.to_s + " RETURN labels(news_feed), news_feed "
 	end
 
-	def set_bookmark_count operation
-		" SET book.bookmark_count = COALESCE(book.bookmark_count,0) " + operation.to_s + " 1 "
+	def match_author
+		" MATCH (author:Author)-[:Wrote]->(book) WITH author, book "
 	end
 
-	def match
-		" MATCH (book:Book) WHERE ID(book)=" + @id.to_s + " WITH book "
+	def self.set_bookmark_count operation
+		if operation == "+"
+			" SET book.bookmark_count = TOINT(COALESCE(book.bookmark_count, 0)) + 1 "
+		else
+			" SET book.bookmark_count = TOINT(COALESCE(book.bookmark_count, 1)) - 1 "
+		end
+	end
+
+	def match node_variable="book"
+		" MATCH ("+ node_variable + ":Book) WHERE ID("+ node_variable + ")=" + @id.to_s + " WITH "+ node_variable + " "
 	end
 
 	def self.basic_info
 		" ID(book) AS book_id, book.isbn AS isbn, book.title AS title, book.author_name AS author_name, book.pages_count AS pages_count, book.published_year AS published_year, TOINT(book.total_weight) as popularity"
 	end
 
-	def self.mark_as_read
-		", ID(mark_as_read) AS status"
+	def get_display_info
+		match + match_author + Book.return_group(Book.basic_info, " book.description AS description", "ID(author) AS author_id")
 	end
 
-	def self.rating
-		", rating_node.rating AS user_rating"
+	def self.grouped_basic_info
+		" id: ID(book), isbn: book.isbn, title: book.title, author_name: book.author_name, pages_count: book.pages_count, published_year: book.published_year, popularity: TOINT(book.total_weight) "
 	end
 
 	def self.match_genre
@@ -36,7 +48,7 @@ class Book < Neo
 	end
 
 	def self.get_small_reads
-		Book::SmallRead.path_nodes + Neo.new.return_group(Book.basic_info)
+		Book::SmallRead.path_nodes + self.return_group(Book.basic_info)
 	end
 
 	def self.match_path relation, limit
@@ -51,15 +63,38 @@ class Book < Neo
 	end
 
 	def self.detailed_info
-		" book.title as title, book.author_name as author_name, ID(book) as book_id, book.readers_count as readers_count, book.bookmark_count as bookmark_count, book.comment_count as comment_count, book.published_year as published_year, book.page_count as page_count, book.description as description, book.external_thumb as external_thumb "
+		self.basic_info + ", book.readers_count as readers_count, book.bookmark_count as bookmark_count, book.comment_count as comment_count, book.description as description, book.external_thumb as external_thumb "
 	end
 
 	def self.match_root_category
-		 " MATCH (book)-[from_category:FromCategory]->(category:Category)-[has_root:HasRoot*0..1]->(root_category:Category{is_root:true}) "
+		 " MATCH (book)-[from_category:FromCategory]->(category:Category)-[has_root:HasRoot*0..1]->(root_category:Category{is_root:true}) WITH DISTINCT(book) as book, COLLECT(DISTINCT("+Category::Root.grouped_basic_info+")) as root_category "
+	end
+
+	def self.optional_match_root_category
+		" OPTIONAL "+self.match_root_category
 	end
 
 	def self.order_desc
 		" ORDER BY book.total_weight DESC "
 	end
 
+	def self.get_complete_info
+		UsersBook::Rate.optional_match + UsersBook::Endorse.optional_match + Book.optional_match_root_category + Book.return_group(Book.detailed_info, "rating_node.rating AS user_rating", " ID(endorse) AS endorse_status", " COLLECT(ID(root_category)) AS root_category_ids ")
+	end
+
+	def self.set_endorse_count operation
+		if operation == "+"
+			" SET book.endorse_count = TOINT(COALESCE(book.endorse_count, 0)) + 1 " 
+		else
+			" SET book.endorse_count = TOINT(COALESCE(book.endorse_count, 1)) - 1 " 
+		end
+	end
+
+	def self.set_rating_count operation
+		if operation == "+"
+			" SET book.rating_count = TOINT(COALESCE(book.rating_count, 0)) + 1 "
+		else
+			" SET book.rating_count = TOINT(COALESCE(book.rating_count, 1)) - 1 "
+		end
+	end
 end

@@ -1,12 +1,12 @@
-<div layout-wrap layout-fill>
-	<div class="cover_gradient" layout="column" layout-align="center center" ng-if="genre.status">
+<div layout-wrap layout-fill id="genres">
+	<div class="genre_cover_gradient" layout="column" layout-align="center center" ng-if="genre.status">
 		<div layout="row" layout-align="center center" class="white circular_icon">
 			<div><span class="icon-checkmark"></span></div>
 		</div>
 	</div>
 	<md-button class="info_button animate-fast" ng-click="select_genre(genre)" aria-label="">
 	</md-button>
-	<img ng-src="{{genre.url}}" class="cover">
+	<img ng-src="{{genre.url}}" class="genre_cover">
 	<br/>
 	<div layout="row" layout-align="center center" flex>
 		<div>{{genre.root_category_name}}</div>
@@ -14,20 +14,20 @@
 </div>
 
 <style>
-	.cover,
-	.cover_gradient{
+	#genres .genre_cover,
+	#genres .genre_cover_gradient{
 		width: 130px;
 		height: 130px;
 		border-radius: 50%;
 	}
 
-	.cover_gradient{
+	#genres .genre_cover_gradient{
 		position: absolute;
 		z-index: 1;
 		background-color: rgba(0, 0, 0, 0.5);
 	}
 
-	.info_button{
+	#genres .info_button{
 		padding: 0px;
 		border-radius: 50% !important;
 		width: 130px;
@@ -37,19 +37,19 @@
 		z-index: 1;
 	}
 
-	.info_button:hover{
+	#genres .info_button:hover{
 		border-radius: 50%;
 	}
 	
-	.info_button:active{
+	#genres .info_button:active{
 		border-radius: 50%;
 	}
 
-	.circular_icon .icon-checkmark{
+	#genres .circular_icon .icon-checkmark{
 		font-size: 2em;
 	}
 
-	.circular_icon{
+	#genres .circular_icon{
 		border-radius: 50%;
 		width: 60px;
 		height: 60px;

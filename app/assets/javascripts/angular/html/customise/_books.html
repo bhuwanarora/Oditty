@@ -1,7 +1,7 @@
 <div layout="row" layout-align="center center">
     <h3>Select books which have left a mark on you</h3>
 </div>
-<md-content ng-controller="booksController" check-scroll-bottom="books_on_signup()" class="white">
+<md-content ng-controller="booksController" check-scroll-bottom="books_on_signup()" class="white" id="books">
 	<section layout="row">
 		<div flex="15" flex-md="10" hide-sm >
 			
@@ -28,20 +28,21 @@
 </md-content>
 
 <style>
-	.bookmark_link{
+
+	#books .bookmark_link{
 		color: white;
 		padding: 0px;
 		z-index: 2;
 	}
 
-	.cover,
-	.cover_gradient{
+	#books .cover,
+	#books .cover_gradient{
 		width: 130px;
 		height: 180px;
 		z-index: 1;
 	}
 
-	.cover_gradient{
+	#books .cover_gradient{
 		position: absolute;
 		z-index: 2;
 		background-color: rgba(0, 0, 0, 0.5);
@@ -49,7 +50,7 @@
   		height: 132px;
 	}
 
-	.info_button{
+	#books .info_button{
 		padding: 0px;
 		width: 130px;
 		height: 180px;
@@ -58,36 +59,22 @@
 		z-index: 2;
 	}
 
-	.info_button:hover{
+	#books .info_button:hover{
 		border: 5px solid #ececec;
 	}
 
-	.book_backup_cover{
-		width: 130px;
-		height: 180px;
-        position: absolute;
-        color: white;
-        white-space: normal;
-	}
 
-	.circular_icon .icon-checkmark{
+	#books .circular_icon .icon-checkmark{
 		font-size: 2em;
 	}
 
-	.circular_icon{
+	#books .circular_icon{
 		width: 60px;
 		border-radius: 50%;
 		height: 60px;
 	}
 
-	.slider_wrapper{
-		width: 130px;
-  		height: 180px;
-  		overflow: hidden;
-  		z-index: 1;
-	}
-
-	.upper_slider_wrapper{
+	#books .upper_slider_wrapper{
 		z-index: 4;
 		background-color: white;
 		 height: 48px;

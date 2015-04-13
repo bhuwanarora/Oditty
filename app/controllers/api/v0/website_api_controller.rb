@@ -12,6 +12,24 @@ module Api
 				end
 			end
 
+			def news_info
+				id = params[:id]
+				info = Api::V0::WebsiteApi.get_important_community_info(id).execute
+				render :json => info, :status => 200
+			end
+
+			def community_info
+				id = params[:id]
+				info = Api::V0::WebsiteApi.get_community_info(id).execute
+				render :json => info, :status => 200
+			end
+
+			def chronological_news
+				id = params[:id]
+				info = Api::V0::WebsiteApi.get_chronological_news_info(id).execute
+				render :json => info, :status => 200
+			end
+
 			def add_label
 				user_id = session[:user_id]
 				UsersLabel.create(user_id, params[:label]).execute
@@ -26,8 +44,6 @@ module Api
 			end
 
 			def test
-				puts "TEST ".green
-				puts params[:website_api].to_s.red
 				render :json => {:message => "Success"}, :status => 200
 			end
 
@@ -40,7 +56,6 @@ module Api
 				begin
 					@neo = Neography::Rest.new
 					clause = "MATCH (b:Book) WHERE b.url=~'.*"+params[:id].to_s+".*' RETURN ID(b), b.title, b.author_name, b.isbn"
-					puts clause.blue.on_red
 					info = @neo.execute_query(clause)
 					render :json => info, :status => 200
 				rescue Exception => e
@@ -51,7 +66,6 @@ module Api
 			def book_lists
 				@neo = Neography::Rest.new
 				clause = "MATCH (bg:BookGrid)-[:RelatedBooks]->(b:Book) WHERE bg.status=1 RETURN ID(bg), bg.name, COUNT(b), COLLECT(b.isbn)"
-				puts clause.blue.on_red
 				info = @neo.execute_query(clause)["data"]
 				render :json => info, :status => 200
 			end
@@ -60,7 +74,6 @@ module Api
 				neo = Neography::Rest.new
 				skip_count = params[:skip].present? ? params[:skip].to_i+1 : 0
     			clause = "MATCH (t:Trending)-[:RelatedBooks]->(b:Book) WHERE t.status = 1 RETURN t.name, ID(t), t.content, t.url, t.title, t.thumb, t.thumbnail_url, t.publisher_thumb, t.searched_words, t.timestamp, COLLECT (b.isbn) ORDER BY t.timestamp DESC SKIP "+skip_count.to_s+" LIMIT 8"
-    			puts clause.blue.on_red
     			trends = neo.execute_query(clause)
 				render :json => trends, :status => 200
 			end
@@ -88,21 +101,25 @@ module Api
             def read_times
                 @neo ||= neo_init
                 clause = "MATCH (r:ReadTime) RETURN r.name as name, r.page_count_range as page_count_range, ID(r) as id"
-                puts clause.blue.on_red
                 read_times = @neo.execute_query(clause)
                 render :json => read_times, :status => 200
             end
 
 			def notifications
 				news_feed = []
-				if params[:id] && ((params[:debug] == "false") || !params[:debug])
-					news_feed = WebsiteApi.get_personal_feed(params[:id], params[:skip_count].to_i+1)
-				elsif params[:debug].present? && params[:debug] == "true"
-					news_feed = WebsiteApi.get_news_feed(params[:id], params[:skip_count].to_i+1)
+				if params[:id].present?
+					user_id = params[:id]
 				else
-					news_feed = WebsiteApi.get_news_feed(session[:user_id], params[:skip_count].to_i+1)
+					user_id = session[:user_id]
 				end
-				render :json => {:notifications => news_feed}, :status => 200
+				info = WebsiteApi.get_personal_feed(user_id, params[:skip_count].to_i)
+				# if ((params[:debug] == "false") || !params[:debug])
+				# elsif params[:debug].present? && params[:debug] == "true"
+				# 	news_feed = WebsiteApi.get_news_feed(params[:id], params[:skip_count].to_i+1)
+				# else
+				# 	news_feed = WebsiteApi.get_news_feed(session[:user_id], params[:skip_count].to_i+1)
+				# end
+				render :json => info, :status => 200
 			end
 
 			def latest_notification
@@ -113,6 +130,12 @@ module Api
 			def save_feedback
 				WebsiteApi.save_feedback(params[:feedback], session[:user_id])
 				render :json => {:message => "Success"}, :status => 200
+			end
+
+
+			def get_metadata
+				info = UrlParser.get_metadata params[:url]
+				render :json => info, :status => 200
 			end
 
             private

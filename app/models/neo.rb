@@ -4,32 +4,48 @@ class Neo
 		@neo = Neography::Rest.new
 	end
 
-	def order_init
+	def self.order_init 
 		" ORDER BY "
 	end
 
-	def return_init
+	def self.return_init
 		" RETURN "
 	end
 
-	def skip skip_count
+	def self.skip skip_count
 		" SKIP " + skip_count.to_s + " "
 	end
 
-	def return_group(*params)
+	def self.collect_map map
+		clause = ""
+		map.each do |key, value|
+			clause += " COLLECT ({" + value + "}) AS " + key + " "
+		end
+		", " + clause   
+	end
+
+	def self.tail node_variable
+		" , COLLECT (" + node_variable + ") AS temp UNWIND(TAIL(temp)) AS " + node_variable + " "
+	end
+
+	def self.return_group(*params)
 		" RETURN " + params.join(", ")
 	end
 
-	def match_group(*params)
+	def self.merge_group(*params)
+		" MERGE " + params.join(", ") + " "
+	end
+
+	def self.match_group(*params)
 		" MATCH " + params.join(", ")
 	end
 
-	def limit limit_count
+	def self.limit limit_count
 		" LIMIT " + limit_count.to_s + " "
 	end
 
-	def with_group(*params)
-		" WITH " + params.join(", ")
+	def self.with_group(*params)
+		" WITH " + params.join(", ") + " "
 	end
 
 	def self.execute clause
@@ -37,12 +53,16 @@ class Neo
 		@neo.execute_query clause
 	end
 
-	def self.extract node_variable, path_name = "path"
-		" EXTRACT (node IN nodes(" + path_name + ")|node) AS " + node_variable + " "
+	def self.extract_unwind node_variable, path_name = "path"
+		" EXTRACT (node IN nodes(" + path_name + ")|node) AS nodes UNWIND nodes AS " + node_variable + "  WITH " + node_variable + " "
 	end
 
 	def self.unwind collection
 		" UNWIND " + collection + " AS " + collection.singularize + " "
+	end
+
+	def self.delete node_variable
+		" MATCH (" + node_variable + ")-[relation]-() DELETE relation, " + node_variable + " "
 	end
 
 	def _match_user(user_id)
@@ -125,6 +145,4 @@ class Neo
 		clause = get_timing_relationship + delete_timing_relationship + with_clause
 		clause
 	end
-
-
 end

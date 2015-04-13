@@ -1,0 +1,25 @@
+<a ng-href="/book?q={{book.id}}" ng-repeat="book in books">
+	<md-button class="clear spine_button" ng-if="book.title">
+		<div class="spine" ng-style="{background:'{{book.color}}'}">
+			{{book.title}}
+		</div>
+	</md-button>
+</a>
+
+<style>
+	.spine{
+		padding: 10px;
+		color: white;
+		background-image: url("assets/spine.png");
+		background-size: 40px 40px;
+		background-repeat: no-repeat;
+		background-position-x: 100%;
+		background-position-y: 5px;
+		height: 50px;
+	}
+
+	.spine_button{
+		width: 100%;
+		height: 50px;
+	}
+</style>

@@ -7,7 +7,11 @@ module Constants
 	ReadTimePoints				= 10
 	ThumbSuggest				= 10
 	RecommendationPoints		= 10
-
+	QueryStepDuringLinking		= 1000
+	CommunityBooksCount 		= 10
+	CommunityUsersCount         = 10
+	NewsShownInCommunityCount   = 7
+	CommunitiesShown            = 7 
 	if Rails.env.development?
 		Admin						= 0
 		BestTinyRead				= 395910 #"thelosthero"
@@ -51,15 +55,20 @@ module Constants
 	NormalReadRelation 			= "NextNormalRead"
 	LongReadRelation 			= "NextLongRead"
 
-	OldEnglishLiterature		= "oldenglish"
-	MiddleEnglishLiterature		= "middleenglish"
-	EnglishRenaissance 			= "englishrenaissance"
-	NeoClassicalPeriod 			= "neoclassical"
-	Romanticism 				= "romantic"
-	VictorianLiterature 		= "victorian"
-	Modernism 					= "modern"
-	PostModernLiterature 		= "postmodern"
-	Contemporary				= "contemporary"
+	TinyReadNode	 			= 772853
+	SmallReadNode	 			= 772854
+	NormalReadNode	 			= 772855
+	LongReadNode	 			= 772856
+
+	OldEnglishLiterature		= 422360
+	MiddleEnglishLiterature		= 422363
+	EnglishRenaissance 			= 422367
+	NeoClassicalPeriod 			= 422368
+	Romanticism 				= 422371
+	VictorianLiterature 		= 422372
+	Modernism 					= 422373
+	PostModernLiterature 		= 422374
+	Contemporary				= 422375
 
 	SessionNotSet				= "Session not set properly error..."
 
@@ -88,8 +97,23 @@ module Constants
 	RelevantSocialTagValue      = 1
 	RecommendationBookCount 	= 10
 	FollowFavoriteAuthorsCount  = 30 
-	QueryStepDuringSorting      = 1000
+	QueryStepDuringLinking      = 1000
 	ArticlesShownInRoomCount    = 10
 	BooksShownInRoomCount       = 10
-	PopularBooksShownCount      = 30 
+	PopularBooksShownCount      = 30
+	FeedFetchCount				= 4 
+	PlanningToReadStatusCode	= 0
+	CurrentlyReadingStatusCode  = 1
+	ReadStatusCode 				= 2
+	PlanningToBuyStatusCode     = 0
+	PlanningToLendStatusCode	= 1
+	PlanningToBorrowStatusCode  = 2
+	EndorsePoints 				= 10
+	TinyReadValue	 			= 0
+	SmallReadValue	 			= 1
+	NormalReadValue	 			= 2
+	LongReadValue	 			= 3
+	BookShownInInfinty          = 10
+	MaximumCommunityBooksCount	= 10
+	MinimumCommunityBooksCount  = 5
 end

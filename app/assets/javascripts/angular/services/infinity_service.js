@@ -43,10 +43,10 @@ homeApp.service('infinityService', ["$http", "$q", "$rootScope", "WebsiteUIConst
         return deferred.promise;
     }
 
-    this.get_books = function(data){
-        var filters = angular.toJson($rootScope.filters);
-        console.debug("get_recommendations", filters);
-        return _deferred_request('/api/v0/recommendations?count=10&id='+$rootScope.user.id+'&q='+filters);
+    this.get_books = function(skip_count){
+        filters = angular.extend($rootScope.filters, {"skip_count": skip_count});
+        var filters = angular.toJson(filters);
+        return _deferred_request('/api/v0/get_filtered_books?q='+filters);
     }
 
     this.get_small_reads = function(){

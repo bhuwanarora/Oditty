@@ -11,7 +11,7 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
             bookService.books_on_signup(params).then(function(data){
                 angular.forEach(data, function(value){
                     var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-                    var status = value.status != null;
+                    var status = value.shelf == "HaveLeftAMarkOnMe";
                     var json = angular.extend(value, {"status": status, "color": ColorConstants.value[random_int]});
                     this.push(json);
                 },  $scope.popular_books);
@@ -27,11 +27,18 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
         }
     }
 
+    $scope.rate_book = function(book, event){
+        debugger
+        // var book_id = 
+        bookService.rate_book()
+    }
+
     $scope.show_shelf_bottom_sheet = function(event){
         $mdBottomSheet.show({
             templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
             controller: 'shelfController',
-            targetEvent: event
+            targetEvent: event,
+            locals: {book_id: $rootScope.active_book.id}
         });
         event.stopPropagation();
     };
@@ -52,7 +59,7 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
                 else{
                     book.status = false;
                 }
-                bookService.handle_influential_books(book.id, book.status);
+                bookService.handle_influential_books(book.book_id, book.status);
             }
         });
         $mdToast.show({
@@ -61,7 +68,6 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
             hideDelay: 6000,
             position: $scope.getToastPosition()
         });
-        // $scope.info.genres[index].status = true;
     }
 
     $scope.toast_position = {
@@ -196,12 +202,11 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
         $scope.books_on_signup();
     }
 
-    _init = function(){
+    var _init = (function(){
         if(angular.isUndefined($scope.popular_books)){
             $scope.popular_books = [];
         }
         $scope.books_on_signup();
-    }
+    }());
 
-    _init();
 }]);

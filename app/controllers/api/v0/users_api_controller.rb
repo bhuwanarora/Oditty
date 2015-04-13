@@ -1,7 +1,6 @@
 module Api
 	module V0
 		class UsersApiController < ApplicationController
-			# require_dependency 'user/suggest/book'w
 
 			def get_info_card_data
 				info = UserApi.get_info_card_data
@@ -14,16 +13,32 @@ module Api
 				render :json => books, :status => 200
 			end
 
+			def bookmark
+				params = params["q"]
+				params = JSON.parse params
+				id = params["id"]
+				type = params["type"]
+				shelf = params["shelf"]
+				status = params["status"]
+				user_id = session[:user_id]
+				if status == "true"
+					UserApi.add_bookmark(user_id, id, type, shelf)
+				else
+					UserApi.remove_bookmark(user_id, id, type, shelf)
+				end
+				render :json => {:message => "Success"}, :status => 200
+			end
+
 			def handle_influential_books
 				book_id = params[:id]
 				status = params[:status]
 				user_id = session[:user_id]
-				if status
-					Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).add
+				if status == "true"
+					info = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).add.execute
 				else
-					Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).remove
+					info = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).remove.execute
 				end
-				render :json => "Success", :status => 200
+				render :json => info, :status => 200
 			end
 
 			def get_books_from_favourite_author
@@ -165,54 +180,20 @@ module Api
 				user_id = session[:user_id]
 				book_id = params[:id]
 				rating = params[:data]
-				UsersGraphHelper.rate_book(user_id, book_id, rating)
-				render :json => {:message => "Success"}, :status => 200
-			end
-
-			def bookmark
-				type = params[:type]
-				bookmark_action = params[:data]
-				user_id = session[:user_id]
-				book_id = params[:id]
-				name = params[:name]
-				if type == "BOOK"
-					if bookmark_action
-						UsersGraphHelper.bookmark_book(user_id, book_id, name)
-					else
-						UsersGraphHelper.remove_bookmark(user_id, book_id, name)
-					end
-				elsif type == "AUTHOR"
-				elsif type == "READER"
-				end
-				render :json => {:message => "Success"}, :status => 200
-			end
-
-			def mark_as_read
-				mark_as_read_action = params[:data]
-				user_id = session[:user_id]
-				book_id = params[:book_id]
-				if mark_as_read_action
-					UsersGraphHelper.mark_as_read(user_id, book_id)
-				else
-					UsersGraphHelper.mark_as_unread(user_id, book_id)
-				end
+				Api::V0::UserApi.rate_book(book_id, user_id, rating).execute
 				render :json => {:message => "Success"}, :status => 200
 			end
 
 			def follow
-				follow_action = params[:q]
-				friend_id = params[:id]
-				if session[:user_id]
-					user_id = session[:user_id]
-					if follow_action
-						UsersGraphHelper.follow_user(user_id, friend_id)
-					else
-						UsersGraphHelper.unfollow_user(user_id, friend_id)
-					end
-					render :json => {:message => "Success"}, :status => 200
+				follow_action = params[:q] 
+				friend_id = params[:id] 
+				user_id = session[:user_id]
+				if follow_action
+					Api::V0::UserApi.follow_user(user_id, friend_id).execute
 				else
-					render :json => {:message => Constants::SessionNotSet}, :status => 500
+					Api::V0::UserApi.unfollow_user(user_id, friend_id).execute
 				end
+				render :json => {:message => "Success"}, :status => 200
 			end
 
 			def comment
@@ -314,13 +295,13 @@ module Api
 			def endorse_book
 				user_id = session[:user_id]
 				book_id = params[:id]
-				status = params[:status]
-				if status == "true"
-					UsersGraphHelper.endorse_book(book_id, user_id)
+				status =  params[:status]
+				if status 
+					info = Api::V0::UserApi.endorse_book(book_id, user_id).execute
 				else
-					UsersGraphHelper.remove_endorse(book_id, user_id)
+					info = Api::V0::UserApi.remove_endorse(book_id, user_id).execute
 				end
-				render :json => {:message => "Success"}, :status => 200
+				render :json => info, :status => 200
 			end
 
 			def get_followed_by
@@ -332,6 +313,12 @@ module Api
 				user_id = session[:user_id]
 				genres = CategoriesHelper.get_sorted_genres user_id
 				render :json => genres, :status => 200
+			end
+
+			def get_influential_books
+				user_id = session[:user_id]
+				influential_books = UserApi.get_influential_books(user_id).execute
+				render :json => influential_books, :status => 200
 			end
 		end
 	end

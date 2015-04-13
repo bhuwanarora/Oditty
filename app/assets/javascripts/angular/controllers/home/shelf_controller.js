@@ -1,4 +1,4 @@
-homeApp.controller('shelfController', ['$scope', '$mdBottomSheet', '$mdToast', function($scope, $mdBottomSheet, $mdToast){
+homeApp.controller('shelfController', ['$scope', '$mdBottomSheet', '$mdToast', 'shelfService', 'book_id', function($scope, $mdBottomSheet, $mdToast, shelfService, book_id){
     $scope.listItemClick = function($index) {
         var clickedItem = $scope.items[$index];
         $mdBottomSheet.hide(clickedItem);
@@ -7,11 +7,22 @@ homeApp.controller('shelfController', ['$scope', '$mdBottomSheet', '$mdToast', f
     $scope.getToastPosition = function() {
         return Object.keys($scope.toast_position)
           .filter(function(pos) { return $scope.toast_position[pos]; })
-          .join(' ');
-          
+          .join(' ');    
     };
 
-    $scope.show_custom_toast = function() {
+    $scope.toggle_bookmark = function(label, data){
+        if(angular.isUndefined(data) || !data){
+            var status = true;
+        }
+        else{
+            var status = false;
+        }
+        var id = "";
+        var type = "BOOK";
+        var shelf = label.label_key;
+        var params = {"id": id, "type": type, "shelf": shelf, "status": status};
+        
+        shelfService.bookmark(params);
         $mdToast.show({
             controller: 'toastController',
             templateUrl: 'assets/angular/html/shared/toast/bookmark_action.html',
@@ -33,6 +44,7 @@ homeApp.controller('shelfController', ['$scope', '$mdBottomSheet', '$mdToast', f
             left: false,
             right: true
         };
+        debugger
     }
 
     _init();

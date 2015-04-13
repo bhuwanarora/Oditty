@@ -1,5 +1,10 @@
-<md-sidenav class="md-sidenav-left md-whiteframe-z2 left_panel" md-component-id="left" ng-click="stop_propagation($event);">
-		<section ng-controller="leftController" class="md-padding" layout="column">
+<md-sidenav class="md-sidenav-left md-whiteframe-z2 left_panel" 
+            md-component-id="left" 
+            ng-click="stop_propagation($event);" 
+            layout-align="space-between"
+            layout="column">
+	<section class="md-padding" layout="column"
+            ng-controller="leftController">
 		<a href="/home">
             <md-button class="md-button-left full_width">
   			   Home
@@ -42,5 +47,8 @@
                 Blog
             </md-button>
         </a>
+    </section>
+    <section layout-padding>
+        <a href="/customise">Customise</a>
     </section>
 </md-sidenav>

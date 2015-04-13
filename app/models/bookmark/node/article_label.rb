@@ -1,25 +1,16 @@
 class Bookmark::Node::ArticleLabel < Bookmark::Node
 
-	def match 
-		" MATCH (article) WHERE article:News  OR article:Blog WITH user, article"  
-	end
-
 	def self.get_public
-		where_clause = " WHERE bookmark_node.public = true WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, article, COUNT(label) AS label_count "
-
-		self.new.match + self.new.match_path + where_clause + Neo.new.return_init + self.new.rating_info + self.basic_info  + Neo.new.order_init + " label_count, time DESC " + Neo.new.limit(Constants::ArticlesShownInRoomCount)  
-	end
-
-	def rating_info
-		select_distinct_properties_clause = " DISTINCT label.name AS shelf,  bookmark_node.timestamp AS time, "
+		where_clause = " WHERE bookmark_node.public = true AND ( article:News  OR article:Blog) WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, article, COUNT(label) AS label_count "
+		Bookmark::Node::ArticleLabel.optional_match_user + where_clause + ArticleLabel.return_group(Label.basic_info, Bookmark.basic_info, Bookmark::Node::ArticleLabel.basic_info )  + ", label_count " + ArticleLabel.order_init + " label_count, time DESC " + ArticleLabel.limit(Constants::ArticlesShownInRoomCount)  
 	end
 
 	def self.get_visited
-		where_clause = " WHERE bookmark_node.name = 'Visited' WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, article, COUNT(label) AS label_count "
-		self.new.match + self.new.match_path + where_clause + Neo.new.return_init + self.new.rating_info + self.basic_info  + Neo.new.order_init + " label_count, time DESC " + Neo.new.limit(Constants::ArticlesShownInRoomCount)
+		where_clause = " WHERE bookmark_node.name = 'Visited' AND ( article:News  OR article:Blog) WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, article, COUNT(label) AS label_count "
+		Bookmark::Node::ArticleLabel.optional_match_user + where_clause + ArticleLabel.return_group(Label.basic_info, Bookmark.basic_info, Bookmark::Node::ArticleLabel.basic_info )  + ", label_count " + ArticleLabel.order_init + " label_count, time DESC " + ArticleLabel.limit(Constants::ArticlesShownInRoomCount)
 	end
 
-	def match_path 
+	def self.optional_match_user 
 		" OPTIONAL MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(article) "
 	end
 

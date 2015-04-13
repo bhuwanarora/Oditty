@@ -8,25 +8,39 @@
 			</h1>
 		</div>
 	</div>
-	<div flex="80" layout="column" layout-align="center">
+	<div flex="80" layout="row">
 		<img class="circular user_image" src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
-		<!-- <div > -->
-		<!-- </div> -->
-		<md-input-container flex layout-margin style="font-family: 'Inconsolata', 'Courier New', serif;">
-			<!-- <label>Share your reading journey...</label> -->
-	        <textarea set-focus="info.show_share" ng-model="info.status"></textarea>
-	    </md-input-container>
-		<div class="select_mood custom_button" 
-				ng-click="show_share_options($event)"><span class='icon-happy'></span></div>
+		<div layout="column" class="input_container">
+			<md-input-container layout-margin style="font-family: 'Inconsolata', 'Courier New', serif;" class="textarea_container">
+				<div ng-model="info.wrapper_status" class="textarea_wrapper" ng-bind-html="info.wrapper_status">
+				</div>
+		        <textarea name="text_area" 
+		        		  set-focus="info.show_share" 
+		        		  ng-keydown="handle_text_input($event)"
+		        		  placeholder="Share your reading journey..." 
+		        		  ng-model="info.status"></textarea>
+		    </md-input-container>
+	    	
+			<div class="select_mood custom_button" 
+					ng-click="show_share_options($event)">
+				<span class='icon-happy'></span>
+			</div>
+		</div>
 	</div>
     <div flex="10">
     </div>
 </div>
 
 <style>
+	.input_container{
+		top: 67vh !important;
+		position: fixed;
+		width: 75% !important;
+	}
+
 	.user_image{
-		position: absolute;
-		margin-top: 36%;
+		position: fixed;
+		top: 70vh;
 		width: 72px;
 		height: 72px;
 		z-index: 1;
@@ -45,7 +59,6 @@
 
 	.share md-input-container{
 		font-size: 40px;
-		margin-top: 44%;
 	}
 
 	.select_mood{
@@ -57,6 +70,7 @@
 		margin-top: -25px;
 		margin-left: 80px;
 		z-index: 2;
+		position: relative;
 	}
 
 	.custom_button:hover{
@@ -66,30 +80,36 @@
 	}
 
 	textarea{
+		color: transparent !important;
+	}
+
+	textarea,
+	.textarea_wrapper{
 		font-family: 'Inconsolata', 'Courier New', serif;
 		line-height: 45px !important;
-		text-align: center;
 		height: 55px !important;
+		padding-left: 75px !important;
+	    /*overflow: hidden;
+	    padding: 0;
+	    outline: none;
+	    resize: none;*/
 	}
 
-	textarea::-webkit-input-placeholder {
-	   font-weight: bold !important;
-	   margin-top: -10px !important;
+	.textarea_wrapper{
+		position: absolute;
+		cursor: url('http://www.i2symbol.com/images/symbols/geometry/white_small_square_u25AB_icon_256x256.png');
 	}
 
-	textarea:-moz-placeholder { /* Firefox 18- */
-	   font-weight: bold !important;
-	   margin-top: -10px !important;
+	.textarea_wrapper a{
+		background-color: #FFFF00;
+		font-weight: 600;
 	}
 
-	textarea::-moz-placeholder {  /* Firefox 19+ */
-	   font-weight: bold !important;
-	   margin-top: -10px !important;
+	.textarea_container{
+	    /*height: 60vh;
+	    vertical-align: bottom;
+	    display: table-cell;*/
 	}
 
-	textarea:-ms-input-placeholder {  
-	   font-weight: bold !important;
-	   margin-top: -10px !important;
-	}
 
 </style>

@@ -1,22 +1,23 @@
-<md-content ng-controller="libraryController" check-scroll-bottom="get_popular_books()">
+<md-content ng-controller="libraryController" check-scroll-bottom="get_popular_books()" ng-model="info">
     <div ng-include src="'/assets/angular/html/library/_header.html'" ng-hide="constant.show_book"></div>
     <section>
-       <!-- <div ng-include src="'/assets/angular/html/library/_description.html'"></div> -->
         <section layout="row" layout-wrap>
-            <div flex="20" hide-sm flex-md="10" 
-                 ng-include src="'/assets/angular/html/library/_left_panel.html'"></div>
-            <div flex="60" flex-sm="100" flex-md="80" layout="column" class="white"
-                 ng-include src="'/assets/angular/html/library/show.html'">
+            <div flex="20" hide-sm layout="row" layout-align="end start" 
+                 ng-include src="'/assets/angular/html/library/shared/_left_panel.html'" layout-fill>
             </div>
-            <div ng-include src="'/assets/angular/html/library/_right_panel.html'" 
-                 flex="20" hide-sm 
-                 flex-md="10"></div>
+            <div flex="60" flex-sm="100"
+                 ng-include src="'/assets/angular/html/library/show.html'"  
+                 layout-align="start start" layout-fill>
+            </div>
+            <div ng-include src="'/assets/angular/html/library/shared/_right_panel.html'" 
+                 flex="20" hide-sm layout="column" layout-align="start start" layout-fill>
+            </div>
         </section>
     </section>
 </md-content>
 
 <style>
-    .subheaderdemoBasicUsage .face {
+    .subheaderdemoBasicUsage .face{
         border-radius: 30px;
         border: 1px solid #ddd;
         width: 48px;
@@ -25,7 +26,7 @@
 
     .filters_header{
         background-color: #ececec !important;
-        z-index: 2;
+        position: relative;
         box-shadow: none;
         padding: 7px;
         border-bottom: 1px solid #DDDDDD;
@@ -50,15 +51,6 @@
         box-shadow: none;
         -webkit-animation: none !important;
         animation: none !important;
-    }
-
-    .book{
-        /*position: fixed;*/
-        /*height: 5000px;*/
-        /*width: 50%;*/
-        /*background-color: white;*/
-        /*z-index: 6;*/
-        /*margin-left: -25%;*/
     }
 
     .book .subheader{
@@ -92,10 +84,6 @@
         font-size: 1.2em;
     }
 
-    .grid{
-        position: absolute;
-    }
-
     .md-subheader:not(.md-sticky-no-effect).md-sticky-clone{
         margin: 0px !important;
     }
@@ -109,6 +97,4 @@
         color: inherit;
 
     }
-
-
 </style>

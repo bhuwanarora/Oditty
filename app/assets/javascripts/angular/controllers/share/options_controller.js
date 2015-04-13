@@ -2,6 +2,9 @@ homeApp.controller('optionsController', ["$scope", "$rootScope", "$timeout", 'Sh
 
     var _init = function(){
         $scope.share_options = ShareOptions;
+        $scope.data = {
+            selectedIndex : 0     
+        };
     }
 
     $scope.show_level1_options = function(option, event){
@@ -9,8 +12,8 @@ homeApp.controller('optionsController', ["$scope", "$rootScope", "$timeout", 'Sh
         delete $scope.second_option;
         delete $scope.level2_nested_options;
         $scope.add_books = false;
-        
-        $scope.nested_options = [];
+        $scope.data.selectedIndex = Math.min($scope.data.selectedIndex + 1, 2) ;
+
         $scope.loading = true;
         angular.forEach(ShareOptions.ReadingStage, function(value){
             if(angular.equals(value, option)){
@@ -28,15 +31,18 @@ homeApp.controller('optionsController', ["$scope", "$rootScope", "$timeout", 'Sh
 
     $scope.show_level2_options = function(option, event){
         $scope.second_option = option;
-        $scope.loading = true;
+        $scope.data.selectedIndex = Math.min($scope.data.selectedIndex + 1, 2) ;
+        $scope.level2_loading = true;
         if(angular.isDefined($scope.second_option.search_book)){
-            $scope.add_books = true;
+                $scope.add_books = true;
             delete $scope.level2_nested_options;
         }
         else{
-            $scope.add_books = false;
-            $scope.loading = false;
-            $scope.level2_nested_options = $scope.second_option.value;
+            var timeout_event = $timeout(function(){
+                $scope.add_books = false;
+                $scope.level2_loading = false;
+                $scope.level2_nested_options = $scope.second_option.value;
+            }, 1000);
         }
         event.stopPropagation();
     }
@@ -44,6 +50,10 @@ homeApp.controller('optionsController', ["$scope", "$rootScope", "$timeout", 'Sh
     $scope.post_status = function(option, event){
 
     }
+
+    $scope.previous = function() {
+        $scope.data.selectedIndex = Math.max($scope.data.selectedIndex - 1, 0);
+    };
 
     _init();
 }]);

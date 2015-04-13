@@ -13,22 +13,11 @@
 
 <md-button class="info_button animate-fast" ng-click="select_book(book)">
 </md-button>
-<div ng-style="{background:'{{book.color}}'}" class="book_backup_cover" 
-        layout="column" layout-padding layout-align="space-between">
-    <h3>{{book.title}}</h3>
-    <h5>{{book.author_name}}</h5>
-</div>
-<div class="slider_wrapper">
-	<div layout="column" layout-align="center" class="relative white"
-		ng-if="book.status">
-      	<md-slider flex md-discrete ng-model="rating1" step="1" min="1" max="10" aria-label="rating">
-      	</md-slider>
-	</div>
-	<img ng-src="{{book | choose_medium_thumb}}" class="cover">
-</div>
-<br/>
+
+<div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
+
 <div layout="column" layout-align="start start" class="small_font" layout-wrap>
-	<b>{{book.title}}(1947)</b>
+	<b>{{book.title}}({{book.published_year}})</b>
 	<div>{{book.author_name}}</div>
 	<div>
 		<span class="icon-star"></span>

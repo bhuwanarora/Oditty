@@ -4,29 +4,76 @@ class User < Neo
 		@id = user_id
 	end
 
-	def set_bookmark_count operation
-		" user.bookmark_count = COALESCE(user.bookmark_count,0) " + operation + " 1 "
+	def self.match_group ids
+		clause = ""
+		unless ids.nil?
+			for id in ids do 
+				if clause.present?
+					clause = clause + " OR "
+				else
+					clause = " WHERE "
+				end
+				clause = clause + " ID(user) = " + id.to_s
+			end
+		end
+		clause = " MATCH (user:User) " + clause
+		clause
 	end
 
-	def set_total_count_on_bookmark operation
-		" user.total_count = COALESCE(user.total_count,0) " 
-		+ operation.to_s + " "+Constants::BookmarkPoints.to_s+" "
+	def self.set_bookmark_count operation
+		if operation == "+"
+			" SET user.bookmark_count = TOINT(COALESCE(user.bookmark_count, 0)) + 1 "
+		else
+			" SET user.bookmark_count = TOINT(COALESCE(user.bookmark_count, 1)) - 1 "
+		end
+	end
+
+	def optional_match_books_bookmarked
+		" OPTIONAL MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book:Book) WITH user, label, bookmarked_on, bookmark_node, bookmark_action, book "
+	end
+
+	def authors_of_books_bookmarked
+		optional_match_books_bookmarked + Author.match_books + ", user "
+	end
+
+	def favourite_author
+		optional_match_books_bookmarked + Author.match_books + ", user, COUNT(book) as books_count " 
+	end
+
+	def self.set_rating_count operation
+		if operation == "+"
+			" SET user.rating_count = TOINT(COALESCE(user.rating_count, 0)) + 1 "
+		else
+			" SET user.rating_count = TOINT(COALESCE(user.rating_count, 1)) - 1 "
+		end
+	end
+
+	def self.set_total_count value, operation
+		if operation == "+"
+			" SET user.total_count = TOINT(COALESCE(user.total_count, 0)) + " + value.to_s + " "
+		else
+			" SET user.total_count = TOINT(COALESCE(user.total_count, " + value.to_s + ")) - " + value.to_s + " "
+		end
 	end
 
 	def get_detailed_info
-		match + User.match_likeable_root_category + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + return_group(User.basic_info, "COLLECT(DISTINCT(root_category.name)) AS categories_name", "COLLECT(DISTINCT(ID(root_category))) AS categories_id", "COLLECT(root_category.aws_key) AS categories_aws_key", "COLLECT(DISTINCT(book.isbn)) AS books_isbn", "COLLECT(DISTINCT(ID(book))) AS books_id", "COLLECT(DISTINCT(book.title)) AS books_title", "COLLECT(DISTINCT(book.author_name)) AS books_author_name")
+		match + User.match_likeable_root_category + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + User.return_group(User.basic_info, "COLLECT(DISTINCT(root_category.name)) AS categories_name", "COLLECT(DISTINCT(ID(root_category))) AS categories_id", "COLLECT(DISTINCT(root_category.aws_key)) AS categories_aws_key", "COLLECT(DISTINCT(book.isbn)) AS books_isbn", "COLLECT(DISTINCT(ID(book))) AS books_id", "COLLECT(DISTINCT(book.title)) AS books_title", "COLLECT(DISTINCT(book.author_name)) AS books_author_name")
 	end
 
 	def get_basic_info
-		match + return_init + User.basic_info
+		match + User.return_init + User.basic_info
 	end
 
 	def self.basic_info
 		" user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id "
 	end
 
+	def self.grouped_basic_info
+		"  init_book_read_count:user.init_book_read_count ,  selectedYear:user.selectedYear ,  selectedMonth:user.selectedMonth ,  selectedDay:user.selectedDay ,  first_name:user.first_name ,  last_name:user.last_name ,  about:user.about ,  id:ID(user) "
+	end
+
 	def get_all_books skip_count=0, limit_count=Constants::BookCountShownOnSignup 
-		match + Bookmark::Object::Node::BookLabel.match_path + return_init + ::Book.basic_info + ::Book.order_desc + skip(skip_count) + limit(limit_count)
+		match + Bookmark::Node::BookLabel.match_path + User.return_group(Book.basic_info, " label.key as shelf ") + Book.order_desc + User.skip(skip_count) + User.limit(limit_count)
 	end
 
 	def self.create_label key
@@ -61,9 +108,9 @@ class User < Neo
 		create_new_user = "CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, last_book: "+Constants::BestBook.to_s+", amateur: true, ask_info: true}), "
 		create_feednext_relation = "(user)-[fn:FeedNext{user_id:ID(user)}]->(user), "
 		create_ego_relation = "(user)-[:Ego{user_id:ID(user)}]->(user) WITH user "
-		get_labels = "MATCH(bm:Label{primary_label:true}) "
+		get_labels = "MATCH(bm:Label{basic:true}) "
 		add_labels = "CREATE (user)-[:Labelled{user_id:ID(user)}]->(bm) "
-		add_categories_to_user = "WITH user MERGE (user)-[rel:Likes]-(root_category:Category{is_root:true}) ON CREATE SET rel.weight = 0 "
+		add_categories_to_user = "WITH user MERGE (root_category:Category{is_root:true}) MERGE (user)-[rel:Likes]-(root_category) ON CREATE SET rel.weight = 0 "
 		# get_all_users = "MATCH (all_user:User) WHERE all_user <> user "
 		# make_friends = "CREATE (user)-[:Follow]->(all_user), (user)<-[:Follow]-(all_user)"
 		clause = create_new_user + create_feednext_relation + create_ego_relation + get_labels + add_labels + add_categories_to_user
@@ -77,11 +124,11 @@ class User < Neo
 	end
 
 	def get_books_bookmarked(skip_count=0)
-		match + return_init + Book.get_basic_info + ", COLLECT(label.name) as labels SKIP "+skip_count.to_s+" LIMIT 10"
+		match + optional_match_books_bookmarked + User.return_group(Book.basic_info, " COLLECT(label.name) as labels ") + User.skip(skip_count) + User.limit(10)
 	end
 
 	def get_public_labels
-		match + UsersLabel.match + return_group(Label.basic_info)
+		match + UsersLabel.match + User.return_group(Label.basic_info)
 	end
 
 	def match_bookmark
@@ -92,8 +139,8 @@ class User < Neo
 		"MATCH (u:User)-[r1:DataEdit]->(t:ThumbRequest)-[r2:DataEditRequest]->(b:Book) WHERE ID(t)="+id.to_s+" SET t.status = "+status.to_s+", b.external_thumb = CASE WHEN "+status.to_s+" = 1 THEN t.url ELSE null END"
 	end
 
-	def match
-		" MATCH (user:User) WHERE ID(user) = " + @id.to_s + " WITH user "
+	def match node_variable = "user"
+		" MATCH (" + node_variable + ":User) WHERE ID(" + node_variable + ") = " + @id.to_s + " WITH " + node_variable + " "
 	end
 
 	def self.match_root_category category_id=nil
@@ -138,7 +185,7 @@ class User < Neo
 		if category_id
 			clause = clause + " ID(root_category)="+category_id.to_s+" AND "
 		end
-		clause = clause + "likes.weight > 0 AND root_category.is_root = true WITH root_category, user, likes " + Neo.new.order_init + " likes.weight " + custom + Neo.new.limit(1)
+		clause = clause + "likes.weight > 0 AND root_category.is_root = true WITH root_category, user, likes " + self.order_init + " likes.weight " + custom + self.limit(1)
 		clause
 	end
 
@@ -151,22 +198,6 @@ class User < Neo
 	end
 
 	def get_init_book_count_range
-		match + return_init + User.init_book_read_count
-	end
-
-	def get_books_from_public_shelves
-		books = (match + Bookmark::Object::Node::BookLabel.get_public)
-	end
-
-	def get_articles_from_public_shelves
-		match + Bookmark::Object::Node::Article.get_public 
-	end
-
-	def get_visited_books 
-		books = (match + Bookmark::Object::Node::BookLabel.get_visited) 
-	end
-
-	def get_visited_articles
-		match + Bookmark::Object::Node::Article.get_visited 
+		match + User.return_init + User.init_book_read_count
 	end
 end

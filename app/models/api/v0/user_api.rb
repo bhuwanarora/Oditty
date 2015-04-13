@@ -11,6 +11,66 @@ module Api
 				info
 			end
 
+			def self.follow_user user_id, friend_id
+				UsersUser.new(user_id, friend_id).follow
+			end
+
+			def self.add_bookmark user_id, id, type, shelf
+				if type == "BOOK"
+					case shelf
+					when "HaveLeftAMarkOnMe"
+						Bookmark::Type::HaveLeftAMarkOnMe.add
+					when "DidntFeelLikeReadingItAfterAPoint"
+						Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.add
+					when "IntendToRead"
+						Bookmark::Type::IntendToRead.add
+					when "PretendIHaveRead"
+						Bookmark::Type::PretendIHaveRead.add
+					end
+				elsif type == "ARTICLE"
+				elsif type == "LISTOPIA"
+				elsif type == ""
+				end
+			end
+
+			def self.remove_bookmark
+				if type == "BOOK"
+					case shelf
+					when "HaveLeftAMarkOnMe"
+						Bookmark::Type::HaveLeftAMarkOnMe.remove
+					when "DidntFeelLikeReadingItAfterAPoint"
+						Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.remove
+					when "IntendToRead"
+						Bookmark::Type::IntendToRead.remove
+					when "PretendIHaveRead"
+						Bookmark::Type::PretendIHaveRead.remove
+					end
+				elsif type == "ARTICLE"
+				elsif type == "LISTOPIA"
+				elsif type == ""
+				end
+			end
+
+			def self.unfollow_user user_id, friend_id
+				UsersUser.new(user_id, friend_id).unfollow
+			end
+
+			def self.get_influential_books user_id
+				Bookmark::Type::HaveLeftAMarkOnMe.get_all user_id
+			end
+
+			def self.endorse_book book_id, user_id
+				UsersBook::Endorse.new(book_id, user_id).add
+			end
+
+			def self.remove_endorse book_id, user_id
+				UsersBook::Endorse.new(book_id, user_id).remove
+			end
+
+			def self.rate_book book_id, user_id, rating
+				UsersBook::Rate.new(book_id, user_id).add(rating)
+			end
+
 			def self.get_small_reads
 				Book::SmallRead.get_sorted_books(0, 10).execute
 			end
@@ -19,10 +79,10 @@ module Api
 				data = []
 				books_processed_count = 0
 
-				while data.length < 10
-					data.push User::Suggest::BookSuggestion.new(user_id).for_likeable_category(favourites, books_processed_count).execute
-					books_processed_count = books_processed_count + Constants::RecommendationBookCount*10
-				end
+				# while data.length < 10
+					# data.push User::Suggest::BookSuggestion.new(user_id).for_likeable_category(favourites, books_processed_count).execute
+					# books_processed_count = books_processed_count + Constants::RecommendationBookCount*10
+				# end
 				data
 			end
 

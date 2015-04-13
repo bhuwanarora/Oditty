@@ -3,6 +3,25 @@ module Neo4jHelper
 	# require 'neo4j-cypher'
 	# require 'neo4j-cypher/neography'
 
+	def self.get_id_range
+		clause = " MATCH (a:Book) RETURN MAX(ID(a)) AS max , MIN(ID(a)) AS min "
+		clause.execute
+	end
+	def self.set_integer_books_property
+		ids = self.get_id_range
+		min = ids[0]["min"]
+		max = ids[0]["max"]
+		limit = ((max - min)/20).to_i
+		while min <= max 
+			puts limit
+			puts max
+			puts min
+			clause = " MATCH (a:Book) WHERE ID(a) >= " + min.to_s + " AND ID(a) <= " + (min+limit).to_s + "SET a.total_weight = CASE WHEN a.total_weight IS NULL THEN null ELSE TOFLOAT(a.total_weight) END " 
+			clause.execute
+			min += limit
+		end
+	end
+
 	def self.init
 		@neo = Neography::Rest.new
 	end
@@ -811,7 +830,7 @@ module Neo4jHelper
 
 	def self.add_labels_to_existing_user
 		@neo ||= self.init
-		clause = "MATCH (user:User), (label:Label{basic:true}) CREATE UNIQUE (user)-[:BookmarkAction{user_id:ID(user)}]->(label)"
+		clause = "MATCH (user:User), (label:Label{basic:true}) CREATE UNIQUE (user)-[:Labelled{user_id:ID(user)}]->(label)"
 		@neo.execute_query clause
 	end
 
@@ -821,7 +840,7 @@ module Neo4jHelper
 		# articles = 1
 		# listopia = 2
 		# community = 3
-		delete_labels = "MATCH (u:User), (l:Label), (u)-[r1:BookmarkAction]->(l) DELETE r1, l"
+		delete_labels = "MATCH (u:User), (l:Label), (u)-[r1:Labelled]->(l) DELETE r1, l"
 		@neo.execute_query delete_labels
 
 		labels = [{:name => "Read", :key => "Read", :type => [0, 1, 2], :public => true},
@@ -1132,37 +1151,4 @@ module Neo4jHelper
 		end
 	end
 
-	def self.set_genre_linked_list
-		neo = self.init
-		label = " Category{is_root:true}"
-		property = " NextInCategory "
-		is_sorted = false
-		most_popular_book_id = Constants::BestBook.to_i
-		starting_book_id = Constants::BestBook.to_i
-		self.set_circular_linked_list label, property
-		while !is_sorted
-			match_clause = "OPTIONAL MATCH popularity_list = (book:Book)-[:Next_book*" + Constants::QueryStepDuringSorting.to_s + "]->(next_book) WHERE ID(book) = " + starting_book_id.to_s 
-			unwind_book_collection_clause = " WITH next_book AS least_popular_book_in_path, popularity_list ,EXTRACT(n IN nodes(popularity_list)|n) AS books UNWIND books as book  WITH least_popular_book_in_path, popularity_list, book WITH book, least_popular_book_in_path  "
-			match_book_to_root_clause = " OPTIONAL MATCH (book)-[:FromCategory]->(category:Category)-[:HasRoot*0..1]->(root_category:Category{is_root:true}) "
-			get_last_linked_node_clause = "  WITH book, root_category, root_category.uuid AS uuid , least_popular_book_in_path OPTIONAL MATCH (root_category)<-[old:NextInCategory]-(last_node)   "
-			conditionally_make_relation_clause = " FOREACH (ignore IN CASE WHEN last_node IS  NOT NULL AND old IS NOT null  THEN [old] ELSE [] END | MERGE (last_node)-[:NextInCategory{from_category:uuid}]->(book)-[:NextInCategory{from_category:uuid}]->(root_category)  DELETE old ) RETURN ID(book) AS most_popular_book_id, ID(least_popular_book_in_path) AS least_popular_book_id  ORDER BY book.total_weight LIMIT 1"
-			clause = match_clause + unwind_book_collection_clause + match_book_to_root_clause + get_last_linked_node_clause + conditionally_make_relation_clause 
-			data = neo.execute_query clause
-			most_popular_book_id = data[0]["most_popular_book_id"].to_i
-			starting_book_id = data[0]["least_popular_book_id"].to_i
-			if most_popular_book_id  == Constants::BestBook then is_sorted = true end	
-		end
-	end
-
-	def self.set_circular_linked_list label, property
-		neo = self.init
-		get_ids_clause = " MATCH (node:" + label.to_s + ") RETURN DISTINCT ID(node) AS id "
-		ids = neo.execute_query get_ids_clause
-		ids.each do |id|
-			match_clause = " MATCH (node:" + label.to_s + ") WHERE ID(node) = " + id["id"].to_s + "  WITH node "
-			set_linked_list = " MERGE (node)-[: " + property + "]->(node)"
-			clause = match_clause + set_linked_list
-			neo.execute_query clause
-		end
-	end
 end

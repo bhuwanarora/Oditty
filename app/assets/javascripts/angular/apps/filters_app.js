@@ -24,13 +24,22 @@ angular.module('filtersApp', [])
       return input;
     }
   })
+    .filter('flipkart_title', function(){
+        return function(input){
+            var output = input.replace(/the/gi, "")
+                              .replace(/with/gi, "")
+                              .toLowerCase();
+            output = output.replace(/ /gi, "-");
+            return output;
+        }
+    })
   .filter('category_group', function(){
     return function(books, category){
         output = []
         var _category_has_book = function(book){
             var has_book = false;
-            if(book.categories.length > 0){
-                angular.forEach(book.categories, function(base_category){
+            if(book.root_category.length > 0){
+                angular.forEach(book.root_category, function(base_category){
                     if(base_category.name == category.name){
                         has_book = true;
                     }
@@ -84,8 +93,8 @@ angular.module('filtersApp', [])
   .filter('reduced_summary', function(){
     return function(input){
       if(angular.isDefined(input)){
-        if(input != null && input.length > 63){
-          input = input.slice(0, 60)+"...";
+        if(input != null && input.length > 303){
+          input = input.slice(0, 300)+"...";
         }
       }
       return input;
@@ -102,7 +111,7 @@ angular.module('filtersApp', [])
     }
   })
   .filter('choose_medium_thumb', function() {
-    return function(input) {
+    return function(input){
       var output = "";
       if(angular.isDefined(input) && input){
         var external_thumb = angular.isDefined(input.external_thumb) && input.external_thumb != null;
