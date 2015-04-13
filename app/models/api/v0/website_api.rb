@@ -2,9 +2,8 @@ module Api
 	module V0
 		class WebsiteApi
 			def self.save_feedback(feedback, user_id)
-				neo_init
 				clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" CREATE (u)-[:GaveFeedback]->(f:Feedback) SET f.feedback_text=\""+feedback+"\", f.timestamp="+Time.now.to_i.to_s
-				@neo.execute_query clause
+				clause.execute
 			end
 
 			def self.get_labels user_id
@@ -48,9 +47,8 @@ module Api
 			end
 
 			def self.get_time_groups
-				neo_init
-                time_groups = @neo.execute_query("MATCH (t:Era) RETURN t.name as name, t.range as range, ID(t) as id")
-                time_groups
+                time_groups = "MATCH (t:Era) RETURN t.name as name, t.range as range, ID(t) as id"
+                time_groups.execute
 			end
 		end
 	end

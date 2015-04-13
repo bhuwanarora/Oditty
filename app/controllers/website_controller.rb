@@ -62,6 +62,7 @@ class WebsiteController < ApplicationController
 
 	### WEBSITE NEW 
 	def home
+		@home = true
 		render :layout => "material"
 	end
 

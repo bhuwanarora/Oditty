@@ -33,6 +33,11 @@ module Api
 				end
 			end
 
+			def self.get_feed user_id
+				info = Article::Blog.get_posts
+				info
+			end
+
 			def self.remove_bookmark
 				if type == "BOOK"
 					case shelf

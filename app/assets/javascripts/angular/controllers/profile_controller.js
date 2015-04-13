@@ -86,7 +86,7 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 			$rootScope.user.feed = grouped_feed;
 		}
 
-		userService.get_feed().then(function(data){
+		userService.get_personal_feed().then(function(data){
 			$rootScope.user.feed = [];
 			angular.forEach(data, function(value){
 				var random_int = Math.floor(Math.random() * ColorConstants.value.length);
@@ -114,20 +114,31 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 			});
 		});
 	}
+
+	$scope.write_reading_journey = function(event){
+		$scope.info.show_share = true;
+		$scope.info.show_book_share = true;
+	}
+
+	$scope.search_book = function(event){
+		
+	}
 	
-	var _init = function(){
+	var _init = (function(){
 		var regex = /[?&]([^=#]+)=([^&#]*)/g;
 		var url_parser = regex.exec($location.absUrl());
 		if(angular.isDefined(url_parser) && url_parser != null){
         	var id = url_parser[2];
+			$scope.info.my_profile = false;
 		}
 		else{
 			var id = $rootScope.user.id;
+        	$scope.info.my_profile = true;
 		}
+
 
         _get_detailed_info(id);
         _get_feed(id);
-	}
+	}());
 
-	_init();
 }]);

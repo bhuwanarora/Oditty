@@ -41,7 +41,7 @@
             <script src="assets/angular/services/author_service.js"></script>
             <script src="assets/angular/services/shelf_service.js"></script>
 
-            <script src="assets/angular/controllers/home/home_controller.js"></script>
+            <script src="assets/angular/controllers/app_controller.js"></script>
             
             <script src="assets/angular/controllers/home/left_controller.js"></script>
             <script src="assets/angular/controllers/home/right_controller.js"></script>
@@ -55,6 +55,10 @@
 
             <script src="assets/angular/services/status_service.js"></script>
             <script src="assets/angular/services/feed_service.js"></script>
+
+            <% if @home %>
+                <script src="assets/angular/controllers/home/home_controller.js"></script>
+            <% end %>
 
             <% if @community %>
                 <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
@@ -104,7 +108,7 @@
         <% end %>
     </head>
 
-    <body ng-controller="homeController" 
+    <body ng-controller="appController" 
         ng-keydown="scroll_on_keypress($event)" 
         ng-click="close_popups()" 
         ng-keypress="play_type_key($event)"
@@ -192,10 +196,10 @@
 
             <%= yield %>
             <% unless @customise %>
-                <div ng-controller="shareController">
+                <div ng-controller="shareController" >
                     <md-button class="md-fab md-fab-bottom-right animate-fast fixed_share"
                                 aria-label="Eat cake"
-                                ng-class="{'md-fab-custom-right': info.show_share}"
+                                ng-class="{'md-fab-custom-right': info.show_share || info.show_book_share}"
                                 ng-click="show_share_page($event)"
                                 ng-style="type_icon_pressed"
                                 style="background-image: url('assets/type.png')">
@@ -214,7 +218,7 @@
 
             <div ng-include src="'/assets/angular/html/shared/left_panel.html'" class="left_panel_container"></div>
             <div ng-include src="'/assets/angular/html/shared/notifications.html'" ng-if="show_notifications"></div>
-            <div ng-include src="'/assets/angular/html/share/show.html'" ></div>
+            <div ng-include src="'/assets/angular/html/share/show.html'"></div>
             <!-- <div ng-include src="'/assets/angular/html/home/show.html'"></div> -->
         </div>
         <script>

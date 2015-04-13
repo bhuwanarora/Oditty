@@ -13,6 +13,12 @@ module Api
 				render :json => books, :status => 200
 			end
 
+			def get_feed
+				user_id = session[:user_id]
+				info = UserApi.get_feed(user_id)
+				render :json => info, :status => 200
+			end
+
 			def bookmark
 				params = params["q"]
 				params = JSON.parse params
