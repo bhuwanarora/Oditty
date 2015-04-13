@@ -262,7 +262,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/landing_page/main.html',
-    "<div layout=\"column\" class=\"inbox-area main_view\" ng-class=\"{'md-whiteframe-z1': show_content}\" style=\"background:#f5f5f5;margin-top:-135px\" id=\"Intro\"><div layout=\"column\" layout-margin layout-align=\"center center\" layout-fill class=\"md-whiteframe-z1\"><div flex=\"30\"></div><div flex=\"50\"><video class=\"video_size\" preload=\"metadata\" autoplay style=\"display:block;margin:0 auto;width:67vw\" poster=\"/images/white_background.png\"><source src=\"assets/o2.mp4\" type=\"video/mp4\"></source></video></div></div></div><div ng-include=\"'assets/angular/views/landing_page/intro.html'\" id=\"ReadersDoor\" style=\"position:initial\"></div><div ng-include=\"'assets/angular/views/landing_page/discover.html'\" id=\"Discover\"></div><div ng-include=\"'assets/angular/views/landing_page/connect.html'\" id=\"Connect\"></div><div ng-include=\"'assets/angular/views/landing_page/explore.html'\" id=\"Explore\"></div><div ng-include=\"'assets/angular/views/landing_page/personalise.html'\" id=\"Personalise\"></div><div ng-include=\"'assets/angular/views/landing_page/request.html'\" id=\"Invite\"></div>"
+    "<div layout=\"column\" class=\"inbox-area main_view\" ng-class=\"{'md-whiteframe-z1': show_content}\" style=\"background:#f5f5f5;margin-top:-135px\" id=\"Intro\"><div layout=\"column\" layout-margin layout-align=\"center center\" layout-fill class=\"md-whiteframe-z1\"><div flex=\"30\"></div><div flex=\"50\"><video class=\"video_size\" preload=\"metadata\" autoplay style=\"display:block;margin:0 auto;width:67vw\" poster=\"/images/white_background.png\"><source src=\"assets/o2.mp4\" type=\"video/mp4\"></source></video></div></div></div><div ng-include=\"'assets/angular/views/landing_page/intro.html'\" id=\"ReadersDoor\" style=\"position:initial\"></div><div ng-include=\"'assets/angular/views/landing_page/discover.html'\" id=\"Discover\"></div><div ng-include=\"'assets/angular/views/landing_page/connect.html'\" id=\"Connect\"></div><div ng-include=\"'assets/angular/views/landing_page/explore.html'\" id=\"Explore\"></div><div ng-include=\"'assets/angular/views/landing_page/personalise.html'\" id=\"Personalise\"></div><div ng-include=\"'assets/angular/views/landing_page/sign_in.html'\" id=\"Invite\"></div>"
   );
 
 
@@ -271,8 +271,8 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
   );
 
 
-  $templateCache.put('/assets/angular/views/landing_page/request.html',
-    "<div layout=\"row\" ng-if=\"show_content\" class=\"main_view top_pad hex_background\" layout-margin layout-align=\"center center\" layout-fill layout-padding><div flex-sm=\"10\" flex=\"5\"></div><div layout=\"column\" layout-align=\"center center\" flex-sm=\"80\" flex=\"90\"><div class=\"invite\" flex=\"30\" layout-wrap>ReadersDoor starts with an invitation</div><br><br><div class=\"invite\" flex=\"20\">Join us</div><br><h3 class=\"desc\" flex=\"40\" layout=\"row\" layout-align=\"center center\" layout-wrap>Send an email to &nbsp <a class=\"invite-link\" data-href-desktop=\"https://mail.google.com/mail/u/0/#inbox?compose=new\" data-track-action=\"readersdoor@gmail.com\" href=\"https://mail.google.com/mail/u/0/#inbox?compose=new\" target=\"_blank\">readersdoor@gmail.com</a> &nbsp to request an invitation.</h3></div><div flex-sm=\"10\" flex-gt-sm=\"5\"></div></div>"
+  $templateCache.put('/assets/angular/views/landing_page/sign_in.html',
+    "<div layout=\"row\" ng-if=\"show_content\" class=\"main_view top_pad hex_background\" layout-margin layout-align=\"center center\" layout-fill layout-padding><div ng-include=\"'assets/angular/html/landing_page/partials/login_options.html'\"></div></div><style>.main_view .login_box{background-color:#fff;width:60vw}</style>"
   );
 
 

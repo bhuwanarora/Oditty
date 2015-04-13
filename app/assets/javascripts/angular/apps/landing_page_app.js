@@ -24,7 +24,7 @@ app.config(
         templateUrl : 'assets/angular/views/landing_page/personalise.html',
     })
     .when('/request', {
-        templateUrl : 'assets/angular/views/landing_page/request.html',
+        templateUrl : 'assets/angular/views/landing_page/sign_in.html',
     })
     .when('/main', {
         templateUrl : 'assets/angular/views/landing_page/main.html',
