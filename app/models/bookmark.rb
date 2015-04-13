@@ -95,7 +95,7 @@ class Bookmark < Neo
 			feednext_clause = ""
 			bookfeed_next_clause = ""
 		else
-			end_clause = Book.set_bookmark_count(operation) + User.set_bookmark_count(operation) + Label.set_bookmark_count(operation) + UsersLabel.set_bookmark_count(operation) + User.set_total_count(Constants::BookmarkPoints, operation)
+			end_clause = Book.set_bookmark_count(operation) + User.set_bookmark_count(operation) + Label.set_bookmark_count(operation) + UsersLabel.set_bookmark_count(operation) + User.set_total_count(Constant::InteractionPoint::Bookmark, operation)
 			feednext_clause = User::Feed.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled + ", book "
 			bookfeed_next_clause = Book::Feed.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled
 		end
@@ -115,7 +115,7 @@ class Bookmark < Neo
 
 	def remove
 		operation = "-"
-		set_clause = Book.set_bookmark_count(operation) + User.set_bookmark_count(operation) + Label.set_bookmark_count(operation) + UsersLabel.set_bookmark_count(operation) + User.set_total_count(Constants::BookmarkPoints, operation) + Bookmark.with_group("user", "book", "bookmark_node", "labelled", "label")
+		set_clause = Book.set_bookmark_count(operation) + User.set_bookmark_count(operation) + Label.set_bookmark_count(operation) + UsersLabel.set_bookmark_count(operation) + User.set_total_count(Constant::InteractionPoint::Bookmark, operation) + Bookmark.with_group("user", "book", "bookmark_node", "labelled", "label")
 		
 		feednext_clause = User::Feed.new(@user_id).delete_feed("bookmark_node") + ", book, labelled, label "
 

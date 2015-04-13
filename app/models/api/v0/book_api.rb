@@ -189,25 +189,25 @@ module Api
 			# 		end
 			# 	elsif trends
 			# 		unless last_book.present?
-			# 			last_book = Constants::BestBook
+			# 			last_book = Constant::Id::BestBook
 			# 		end
 			# 		puts "get_trends".green
 			# 		clause = self._get_trends(filters["trend_id"])
 			# 	elsif bookmark_list
 			# 		unless last_book.present?
-			# 			last_book = Constants::BestBook
+			# 			last_book = Constant::Id::BestBook
 			# 		end
 			# 		puts "get_bookmark_lists".green
 			# 		clause = self._get_bookmark_lists(filters["label_id"], user_id)
 			# 	elsif specific_list
 			# 		unless last_book.present?
-			# 			last_book = Constants::BestBook
+			# 			last_book = Constant::Id::BestBook
 			# 		end
 			# 		puts "get_specific_lists".green
 			# 		clause = self._get_specific_lists(filters["filter_id"], user_id)
 			# 	else
 			# 		unless last_book.present?
-			# 			last_book = Constants::BestBook
+			# 			last_book = Constant::Id::BestBook
 			# 		end
 			# 		puts "get_basic_recommendations".green
 			# 		clause = self._get_basic_recommendations(filters, last_book)
@@ -312,46 +312,46 @@ module Api
 			# 	skip_clause = ""
 			# 	book_ids = ($redis.get 'book_ids').split(",")
 			# 	random = Random.new.rand(1..100)
-			# 	read_time = filters["other_filters"][Constants::Time]
+			# 	read_time = filters["other_filters"][Constant::Label::Time]
 			# 	only_read_time = filters["other_filters"].keys.length == 1 && read_time.present?
 
 			# 	if only_read_time
-			# 		if read_time == Constants::TinyRead
-			# 			last_book = Constants::BestTinyRead unless last_book.present?
-			# 			relation = Constants::TinyReadRelation
-			# 		elsif read_time == Constants::SmallRead
-			# 			last_book = Constants::BestSmallRead unless last_book.present?
-			# 			relation = Constants::SmallReadRelation
-			# 		elsif read_time == Constants::NormalRead
-			# 			last_book = Constants::BestNormalRead unless last_book.present?
-			# 			relation = Constants::NormalReadRelation
-			# 		elsif read_time == Constants::LongRead
-			# 			last_book = Constants::BestLongRead unless last_book.present?
-			# 			relation = Constants::LongReadRelation
+			# 		if read_time == Constant::Label::TinyRead
+			# 			last_book = Constant::Id::BestTinyRead unless last_book.present?
+			# 			relation = Constant::Label::TinyReadRelation
+			# 		elsif read_time == Constant::Label::SmallRead
+			# 			last_book = Constant::Id::BestSmallRead unless last_book.present?
+			# 			relation = Constant::Label::SmallReadRelation
+			# 		elsif read_time == Constant::Label::NormalRead
+			# 			last_book = Constant::Id::BestNormalRead unless last_book.present?
+			# 			relation = Constant::Label::NormalReadRelation
+			# 		elsif read_time == Constant::Label::LongRead
+			# 			last_book = Constant::Id::BestLongRead unless last_book.present?
+			# 			relation = Constant::Label::LongReadRelation
 			# 		end
 			# 		init_match_clause = "MATCH (b:ActiveBook) WHERE ID(b)="+last_book.to_s+" "
 			# 		match_clause = "MATCH p=(b)-[:"+relation+"*..5]->(next_book) WITH last(nodes(p)) as book "
 			# 	else
-			# 		time_group = filters["other_filters"][Constants::Year].split("(")[0].gsub(" " , "").downcase rescue ""
+			# 		time_group = filters["other_filters"][Constant::Label::Year].split("(")[0].gsub(" " , "").downcase rescue ""
 			# 		if time_group.present?
 			# 			case time_group
-			# 			when Constants::OldEnglishLiterature
+			# 			when Constant::Id::OldEnglishLiterature
 			# 				init_match_clause = "MATCH (book:OldEnglishLiterature) "
-			# 			when Constants::MiddleEnglishLiterature
+			# 			when Constant::Id::MiddleEnglishLiterature
 			# 				init_match_clause = "MATCH (book:MiddleEnglishLiterature) "
-			# 			when Constants::EnglishRenaissance
+			# 			when Constant::Id::EnglishRenaissance
 			# 				init_match_clause = "MATCH (book:EnglishRenaissance) "
-			# 			when Constants::NeoClassicalPeriod
+			# 			when Constant::Id::NeoClassicalPeriod
 			# 				init_match_clause = "MATCH (book:NeoClassicalPeriod) "
-			# 			when Constants::Romanticism
+			# 			when Constant::Id::Romanticism
 			# 				init_match_clause = "MATCH (book:Romanticism) "
-			# 			when Constants::VictorianLiterature
+			# 			when Constant::Id::VictorianLiterature
 			# 				init_match_clause = "MATCH (book:VictorianLiterature) "
-			# 			when Constants::Modernism
+			# 			when Constant::Id::Modernism
 			# 				init_match_clause = "MATCH (book:Modernism) "
-			# 			when Constants::PostModernLiterature
+			# 			when Constant::Id::PostModernLiterature
 			# 				init_match_clause = "MATCH (book:PostModernLiterature) "
-			# 			when Constants::Contemporary
+			# 			when Constant::Id::Contemporary
 			# 				init_match_clause = "MATCH (book:Contemporary) "
 			# 			end
 			# 		else
@@ -375,14 +375,14 @@ module Api
 				
 			# 	# distinct_clause = "ALL (id in "+book_ids.to_s+" WHERE toInt(id) <> ID(book)) "
 
-			# 	if filters["other_filters"][Constants::Country].present?
+			# 	if filters["other_filters"][Constant::Label::Country].present?
 			# 		where_clause = where_clause + ""
 			# 		match_clause = match_clause + ""
 			# 	end
 				
 
-			# 	if filters["other_filters"][Constants::Author].present?
-			# 		author_id =  filters["other_filters"][Constants::Author]
+			# 	if filters["other_filters"][Constant::Label::Author].present?
+			# 		author_id =  filters["other_filters"][Constant::Label::Author]
 			# 		match_clause = match_clause + ", (author:Author)-[:Wrote]->(book) "
 			# 		next_Where_clause = " ID(author) = "+author_id.to_s+" "
 			# 		if where_clause.present?
@@ -393,8 +393,8 @@ module Api
 			# 	end
 
 
-			# 	if filters["other_filters"][Constants::Genre].present?
-			# 		genre = filters["other_filters"][Constants::Genre]
+			# 	if filters["other_filters"][Constant::Label::Genre].present?
+			# 		genre = filters["other_filters"][Constant::Label::Genre]
 			# 		match_clause = match_clause + ", (genre:StarGenre)-[r:Belongs_to]->(book) "
 			# 		next_Where_clause = " ID(genre) = "+genre.to_s+" AND r.weight IS NOT NULL "
 					
@@ -407,14 +407,14 @@ module Api
 			# 		end
 			# 	end
 
-			# 	if !only_read_time && filters["other_filters"][Constants::Time].present?
-			# 		if read_time == Constants::TinyRead
+			# 	if !only_read_time && filters["other_filters"][Constant::Label::Time].present?
+			# 		if read_time == Constant::Label::TinyRead
 			# 			next_Where_clause = " toInt(book.page_count) <= 50 "
-			# 		elsif read_time == Constants::SmallRead
+			# 		elsif read_time == Constant::Label::SmallRead
 			# 			next_Where_clause = " toInt(book.page_count) > 50 AND toInt(book.page_count) <= 100 "
-			# 		elsif read_time == Constants::NormalRead
+			# 		elsif read_time == Constant::Label::NormalRead
 			# 			next_Where_clause = " toInt(book.page_count) < 100 AND toInt(book.page_count) <= 250"
-			# 		elsif read_time == Constants::LongRead
+			# 		elsif read_time == Constant::Label::LongRead
 			# 			next_Where_clause = " toInt(book.page_count) > 250 "
 			# 		end
 					

@@ -2,11 +2,11 @@ class Book::SmallRead < Book
 	Limit = 30
 
 	def initialise
-		@best_small_read ||= Constants::BestSmallRead
+		@best_small_read ||= Constant::Id::BestSmallRead
 	end
 
 	def self.match_best_read
-		@best_small_read ||= Constants::BestSmallRead
+		@best_small_read ||= Constant::Id::BestSmallRead
 		" MATCH (small_read:Book) WHERE ID(small_read) = " + @best_small_read.to_s+"  WITH small_read "
 	end
 

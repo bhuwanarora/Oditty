@@ -61,11 +61,11 @@ class Node
 	def self.get_feed skip_count
 		start_level = Math.log(skip_count, 2).to_i
 		descend_level_count = 0
-		while (2**(start_level + descend_level_count) - skip_count) < Constants::FeedFetchCount
+		while (2**(start_level + descend_level_count) - skip_count) < Constant::Count::FeedFetch
 			descend_level_count += 1
 		end			
 		" MATCH (latest_feed)-[:RightChild|LeftChild*" + start_level.to_s + "{user_id:" + @user_id.to_s + "}]-(feed)-[:RightChild|LeftChild*1.." + descend_level_count.to_s + "{user_id:" + @user_id.to_s + "}]-(older_feed)
-		" + Node.return_init + " older_feed " + Node.skip(skip_count - 2**start_level) + Node.limit(Constants::FeedFetchCount)	+ Node.order_init + " older_feed.priority "
+		" + Node.return_init + " older_feed " + Node.skip(skip_count - 2**start_level) + Node.limit(Constant::Count::FeedFetch)	+ Node.order_init + " older_feed.priority "
 	end
 
 	def replace_node

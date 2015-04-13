@@ -86,7 +86,7 @@ module Api
 
 				# while data.length < 10
 					# data.push User::Suggest::BookSuggestion.new(user_id).for_likeable_category(favourites, books_processed_count).execute
-					# books_processed_count = books_processed_count + Constants::RecommendationBookCount*10
+					# books_processed_count = books_processed_count + Constant::Count::BookRecommendation*10
 				# end
 				data
 			end
@@ -103,7 +103,7 @@ module Api
 				if user_exists
 					verification_token = SecureRandom.hex
 					link = Rails.application.config.home+'recover_password?p='+verification_token.to_s+"&e="+email
-					invitation = {:email => email, :template => Constants::EmailTemplate::PasswordReset, :link => link}
+					invitation = {:email => email, :template => Constant::EmailTemplate::PasswordReset, :link => link}
 					SubscriptionMailer.recover_password(invitation).deliver
 					clause =  "MATCH (user:User{email:\""+email+"\"}) SET user.password_token = \""+verification_token+"\""
 					@neo.execute_query clause
@@ -139,7 +139,7 @@ module Api
 					friend = data[2]["data"]
 					isbn = book["isbn"].split(",")[0] rescue ""
 					params = {
-								:template => Constants::EmailTemplate::RecommendBooks, 
+								:template => Constant::EmailTemplate::RecommendBooks, 
 							  	:user => {
 							  		:thumb => user["thumb"], 
 							  		:id => user_id,
@@ -264,36 +264,36 @@ module Api
 							info = {:profile_status => 0, :user_id => user[0][1]}
 							clause = "MATCH (user:User{email:\""+email+"\"}) SET user.last_login = \""+Time.now.strftime("%Y-%m-%d")+"\""
 							@neo.execute_query clause
-							message = Constants::LoginSuccess
+							message = Constant::StatusMessage::LoginSuccess
 						elsif user_authenticated
-							message = Constants::PendingActivation
+							message = Constant::StatusMessage::PendingActivation
 						elsif  user[0][0]["data"]["password"] != params[:password]
-							message = Constants::AuthenticationFailed
+							message = Constant::StatusMessage::AuthenticationFailed
 						elsif !user[0][0]["data"]["verified"]
-							message = Constants::VerifyEmail
+							message = Constant::StatusMessage::VerifyEmail
 						else
-							message = Constants::AuthenticationFailed
+							message = Constant::StatusMessage::AuthenticationFailed
 						end
 					rescue => err
-						message = Constants::EmailNotRegistered
+						message = Constant::StatusMessage::EmailNotRegistered
 					end
 				else
 					verification_token = SecureRandom.hex
 					link = Rails.application.config.home+'verify?p='+verification_token.to_s+"&e="+email
-					invitation = {:email => email, :template => Constants::EmailTemplate::EmailVerification, :link => link}
+					invitation = {:email => email, :template => Constant::EmailTemplate::EmailVerification, :link => link}
 					if user.present?
 						if user[0][0]["data"]["verified"]
-							message = Constants::EmailAlreadyRegistered
+							message = Constant::StatusMessage::EmailAlreadyRegistered
 						else
 							clause = "MATCH (user:User{email:\""+email+"\"}) SET user.verification_token = \""+verification_token+"\""
 							@neo.execute_query clause
 							SubscriptionMailer.verify_email(invitation).deliver
-							message = Constants::AnotherActivationRequest
+							message = Constant::StatusMessage::AnotherActivationRequest
 						end
 					else
 						UsersGraphHelper.create_user(email, params[:password], verification_token)
 						SubscriptionMailer.verify_email(invitation).deliver
-						message = Constants::ActivateAccount
+						message = Constant::StatusMessage::ActivateAccount
 					end
 				end
 				info = info.merge(:message => message, :authenticate => authenticate)
@@ -371,7 +371,7 @@ module Api
 			end
 
 			def self._create_user_with_email params
-				create_clause = "CREATE (user:User{fb_id:"+params[:id]+", email:\""+params[:email]+"\", thumb:\""+params[:thumb].to_s+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, name:\""+params[:name].to_s+"\", last_book: "+Constants::BestBook.to_s+", amateur: true, ask_info: true}), (user)-[:FacebookAuth]->(fu:FacebookUser), (user)-[fn:FeedNext{user_id:ID(user)}]->(user), (user)-[:Ego{user_id:ID(user)}]->(user) WITH user, fu "
+				create_clause = "CREATE (user:User{fb_id:"+params[:id]+", email:\""+params[:email]+"\", thumb:\""+params[:thumb].to_s+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, name:\""+params[:name].to_s+"\", last_book: "+Constant::Id::BestBook.to_s+", amateur: true, ask_info: true}), (user)-[:FacebookAuth]->(fu:FacebookUser), (user)-[fn:FeedNext{user_id:ID(user)}]->(user), (user)-[:Ego{user_id:ID(user)}]->(user) WITH user, fu "
 				label_clause = "MATCH(bm:Label{primary_label:true}) CREATE (user)-[:Labelled{user_id:ID(user)}]->(bm) WITH DISTINCT(user) as user, fu "
 				follow_clause = "MATCH (all_user:User) WHERE all_user <> user CREATE (user)-[:Follow]->(all_user), (user)<-[:Follow]-(all_user) WITH user, fu "
 				set_clause = "SET user.last_login = \""+Time.now.strftime("%Y-%m-%d")+"\" "
@@ -389,7 +389,7 @@ module Api
 			end
 
 			def self._create_user_without_email params
-				create_clause = "CREATE (user:User{fb_id:"+params[:id]+", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, name:\""+params[:name].to_s+"\", last_book:"+Constants::BestBook.to_s+", amateur: true, ask_info: true}), (user)-[:FacebookAuth]->(fu:FacebookUser), (user)-[fn:FeedNext{user_id:ID(user)}]->(user), (user)-[:Ego{user_id:ID(user)}]->(user) WITH user, fu "
+				create_clause = "CREATE (user:User{fb_id:"+params[:id]+", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, name:\""+params[:name].to_s+"\", last_book:"+Constant::Id::BestBook.to_s+", amateur: true, ask_info: true}), (user)-[:FacebookAuth]->(fu:FacebookUser), (user)-[fn:FeedNext{user_id:ID(user)}]->(user), (user)-[:Ego{user_id:ID(user)}]->(user) WITH user, fu "
 				label_clause = "MATCH(bm:Label{primary_label:true}) CREATE (user)-[:Labelled{user_id:ID(user)}]->(bm) SET user.thumb=\""+params[:thumb].to_s+"\" WITH DISTINCT(user) as user, fu "
 				follow_clause = "MATCH (all_user:User) WHERE all_user <> user CREATE (user)-[:Follow]->(all_user), (user)<-[:Follow]-(all_user) WITH user, fu "
 				set_clause = "SET user.last_login = \""+Time.now.strftime("%Y-%m-%d")+"\" "
