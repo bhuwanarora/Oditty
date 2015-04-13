@@ -4,8 +4,12 @@ class Community < Neo
 		@id = id
 	end
 
-	def self.grouped_books_users_news
-		Community.match_grouped_books + Community.optional_match_users + ", books_info WITH books_info , community " + User.collect_map({"users_info" => User.grouped_basic_info })  + " WITH users_info, books_info , community " + Community.match_news + " , users_info, books_info " + " WITH users_info, books_info , community " + News.collect_map("news_info" => News.grouped_basic_info) + " WITH users_info, books_info , news_info "  + Community.collect_map({"most_important_tag" => Community.grouped_basic_info + ", books: books_info, users: users_info, news: news_info " })
+	def get_news
+		match + match_news + Community.return_init + News.basic_info 
+	end
+
+	def self.grouped_books_users
+		Community.match_grouped_books + Community.optional_match_users + ", books_info WITH books_info , community " + User.collect_map({"users_info" => User.grouped_basic_info }) + " WITH users_info, books_info "  + Community.collect_map({"most_important_tag" => Community.grouped_basic_info + ", books: books_info, users: users_info " })
 	end
 
 	def match
@@ -28,7 +32,7 @@ class Community < Neo
 		" MATCH (community)-[:RelatedBooks]->(book:Book) WITH community, book "
 	end
 
-	def self.match_news 
+	def match_news 
 		" MATCH (community)<-[:HasCommunity]-(news:News) WITH community, news "
 	end
 
@@ -141,14 +145,14 @@ class Community < Neo
 	end 
 
 	def self.merge community, news_info
-		" MERGE (community:Community{name: \"" + community + "\"}) ON CREATE SET community.status = 1, community.timestamp=" + Time.now.to_i.to_s + ", community.url = \"" + news_info["news_source"]["news_link"].to_s + "\", community.location = \"" + news_info["news_source"]["region"].to_s + "\" " 
+		" MERGE (community:Community{name: \"" + community + "\"}) ON CREATE SET community.status = 1, community.timestamp=" + Time.now.to_i.to_s + ", community.url = \"" + news_info["news_source"]["news_link"].to_s + "\", community.location = \"" + news_info["news_source"]["region"].to_s + "\", community.image_url = \"" + Community::CommunityImage.new(community).get_image + "\" WITH community "  
 	end
 
 
 	def self.map_books communities_books, news_info
 	    communities_books.each do |community_books|
 	    	community_books.each do |community, books|
-	        	clause =  News.new(news_info["news_id"]).match + Community.merge(community, news_info) + Community.set_importance + News.merge_community
+	        	clause =  News.new(news_info["news_id"]).match + Community.merge(community, news_info) + ", news " + Community.set_importance + " WITH community, news, " + News.merge_community
 				books.each do |book|
 					indexed_title = book.search_ready
 					clause += Book.search_by_indexed_title + " , community " + Community.merge_book + " WITH community "

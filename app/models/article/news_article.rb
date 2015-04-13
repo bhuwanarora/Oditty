@@ -1,10 +1,10 @@
-class Article::News < Article
+class Article::NewsArticle < Article
 	def initialize id
 		@id = id
 	end
 
 	def most_important_tag_info
-		most_important_community + Community.grouped_books_users_news
+		most_important_community + Community.grouped_books_users
 	end
 
 	def self.set_bookmark_count operation
@@ -16,7 +16,7 @@ class Article::News < Article
 	end
 
 	def other_tags_info
-		match + ", most_important_tag " + Article::News.optional_match_communities + ", most_important_tag " +  Community.order_desc + " WITH most_important_tag " + Community.tail("community")  + " WITH  most_important_tag  " + Community.collect_map("other_tags" => Community.grouped_basic_info) + Article::News.return_group(" most_important_tag ", " other_tags ")     
+		match + ", most_important_tag " + Article::NewsArticle.optional_match_communities + ", most_important_tag " +  Community.order_desc + " WITH most_important_tag " + Community.tail("community")  + " WITH  most_important_tag  " + Community.collect_map("other_tags" => Community.grouped_basic_info) + Article::NewsArticle.return_group(" most_important_tag ", " other_tags ")     
 	end
 
 	def match 
@@ -36,7 +36,7 @@ class Article::News < Article
 	end
 		
 	def most_important_community
-		match + Article::News.match_communities_with_books + Community.order_desc + Article::News.limit(1) + " WITH community "
+		match + Article::NewsArticle.match_communities_with_books + Community.order_desc + Article::NewsArticle.limit(1) + " WITH community "
 	end
 
 	def self.basic_info

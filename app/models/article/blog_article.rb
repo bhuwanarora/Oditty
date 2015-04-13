@@ -1,4 +1,4 @@
-class Article::Blog < Article
+class Article::BlogArticle < Article
 	def initialize user_id
 		@user_id = user_id
 	end

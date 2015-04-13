@@ -121,7 +121,7 @@ class News < Neo
 		response = Net::HTTP.get(uri)
 	end
 
-	def self.grouped_basic_info
-		"  news_id: ID(news), news_url: news.url  "
+	def self.basic_info
+		" ID(news) AS  news_id  ,news.url  AS news_url  "
 	end
 end
