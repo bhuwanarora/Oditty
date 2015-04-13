@@ -23,7 +23,7 @@ module Api
 				@neo = Neography::Rest.new
 				last_grid_id = $redis.get 'last_grid'
 				unless last_grid_id
-					last_grid_id = Constants::BestGrid
+					last_grid_id = Constant::Id::BestGrid
 					$redis.set 'last_grid', last_grid_id
 					clause = "MATCH (bg:BookGrid) WHERE ID(bg)="+last_grid_id.to_s+" WITH bg "
 				else
@@ -35,7 +35,7 @@ module Api
 				begin
 					$redis.set 'last_grid', info[0][3]
 				rescue Exception => e
-					$redis.set 'last_grid', Constants::BestGrid
+					$redis.set 'last_grid', Constant::Id::BestGrid
 				end
 				render :json => info, :status => 200
 			end
@@ -77,7 +77,7 @@ module Api
 				# end
 				user_id = session[:user_id].present? ? session[:user_id] : params[:id]
 				if filter_type == "BOOK"
-					reading_time_filter = filters["other_filters"][Constants::Time].present?
+					reading_time_filter = filters["other_filters"][Constant::Label::Time].present?
 					clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" RETURN "
 					if reading_time_filter
 						if filters["reset"]
@@ -113,7 +113,7 @@ module Api
 					end
 					
 					recommendations =  {:books => books}
-				elsif filter_type == Constants::Author
+				elsif filter_type == Constant::Label::Author
 					authors = AuthorApi.recommendations
 					recommendations = {:authors => authors}
 				else
