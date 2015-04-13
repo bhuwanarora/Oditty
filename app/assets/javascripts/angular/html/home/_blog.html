@@ -1,13 +1,12 @@
 <md-card class="blog">
     <md-card-content>
-        <h2>ReadersDoor Blog</h2>
-        <div>Shared on 10Feb</div>
-        <p>
-            The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-            two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-        </p>
+        <h2><a ng-href="{{blog_feed.guid}}" ng-bind-html="blog_feed.title"></a></h2>
+        <div>Shared on {{blog_feed.date}}</div>
+        <p ng-bind-html="blog_feed.excerpt"></p>
     </md-card-content>
-    <img src="https://material.angularjs.org/img/washedout.png" alt="Washed Out">
+    <div class="image_wrapper">
+        <img ng-src="{{blog_feed.image_url}}" alt="Washed Out">
+    </div>
     <md-card-content class="footer" ng-include src="'/assets/angular/html/shared/partials/card_footer.html'">
     </md-card-content>
 </md-card>

@@ -131,7 +131,7 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return _deferred_request('/api/v0/info_data');
     }
 
-    this.get_feed = function(id){
+    this.get_personal_feed = function(id){
         if(angular.isDefined(id)){
             return _deferred_request('/api/v0/notifications?id='+id);
         }
@@ -139,4 +139,10 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
             return _deferred_request('/api/v0/notifications');
         } 
     }
+
+    this.get_feed = function(){
+        return _deferred_request('/api/v0/get_feed');
+    }
+
+
 }]);

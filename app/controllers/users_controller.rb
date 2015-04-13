@@ -190,9 +190,9 @@ class UsersController < ApplicationController
     clause = "MATCH (user:User) WHERE user.email=\""+params[:e]+"\" AND user.verification_token=\""+params[:p]+"\" SET user.verified = true RETURN user"
     user = clause.execute
     if user["data"]
-      @message = Constants::EmailConfirmed
+      @message = Constant::StatusMessage::EmailConfirmed
     else
-      @message = Constants::EmailConfirmationFailed
+      @message = Constant::StatusMessage::EmailConfirmationFailed
     end
     render :layout => "clean"
   end
@@ -206,7 +206,7 @@ class UsersController < ApplicationController
       @user_id = user["data"][0][0]
     else
       @user_exists = false
-      @message = Constants::InvalidLink
+      @message = Constant::StatusMessage::InvalidLink
     end
     render :layout => "clean"
   end
@@ -216,9 +216,9 @@ class UsersController < ApplicationController
       @neo = Neography::Rest.new
       clause = "MATCH (user:User) WHERE ID(user)="+params[:id].to_s+" SET user.password=\""+params[:p]+"\"  RETURN user"
       user = clause.execute
-      render :json => {:message => Constants::PasswordChangedSuccess}, :status => 200
+      render :json => {:message => Constant::StatusMessage::PasswordChangedSuccess}, :status => 200
     rescue Exception => e
-      render :json => {:message => Constants::PasswordChangedFailure}, :status => 500
+      render :json => {:message => Constant::StatusMessage::PasswordChangedFailure}, :status => 500
     end
   end
 

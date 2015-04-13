@@ -31,5 +31,10 @@ class Article::BlogArticle < Article
 		" ORDER BY blog.total_weight DESC "
 	end
 
+	def self.get_posts
+		url = "https://public-api.wordpress.com/rest/v1.1/sites/literaturerun.wordpress.com/posts/?number=10&pretty=1"
+		response = Net::HTTP.get(URI.parse(url))
+		response
+	end
 
 end

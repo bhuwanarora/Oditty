@@ -1,26 +1,5 @@
 <md-sidenav class="md-sidenav-right md-whiteframe-z2 side_panel" md-component-id="right">
-    <div flex class="padding" layout="column">
-        <md-button layout="row" class="md-button-clear google">
-            <div flex="10"><span class="icon-googleplus"></span></div>
-            <div flex="90" class="google-right">LOGIN WITH GOOGLE</div>
-        </md-button>
-        <md-button layout="row" class="md-button-clear fb">
-            <div flex="10"><span class="icon-facebook"></span></div>
-            <div flex="90" class="fb-right">LOGIN WITH FACEBOOK</div>
-        </md-button>
-        <br/>
-        <div>Or Login with email</div>
-        <md-input-container>
-            <label>Email</label>
-            <input>
-        </md-input-container>
-        <md-input-container>
-            <label>Password</label>
-            <input>
-        </md-input-container>
-        <md-button class="login md-button-clear">LOGIN</md-button>
-        <a href="">Forgot Password?</a>
-    </div>
+    <div ng-include="'assets/angular/html/landing_page/partials/login_options.html'"></div>
 </md-sidenav>
 
 <style>

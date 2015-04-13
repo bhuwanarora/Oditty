@@ -33,7 +33,7 @@ class Community < Neo
 	end
 
 	def get_books
-		match + Community.match_books + Book.order_desc + Community.limit(Constants::CommunityBooksCount.to_s) + Neo.return_init + Book.basic_info
+		match + Community.match_books + Book.order_desc + Community.limit(Constant::Count::CommunityBooks.to_s) + Neo.return_init + Book.basic_info
 	end
 
 	def self.match_users
@@ -51,6 +51,15 @@ class Community < Neo
 	def self.set_importance
 		" SET community.importance = COALESCE(community.importance, 0) + 1 "
 	end
+
+	def self.detailed_info
+		
+	end
+
+	def get_users_books
+		match + Community.match_users + Community.limit(Constant::Count::CommunityUsers) + Community.return_init + User.basic_info
+	end
+
 
 	def self.get_news
 		" MATCH (community)<-[:HasCommunity]-(news:News) WITH community, news "
@@ -81,7 +90,7 @@ class Community < Neo
 				if book_info.present?  
 					community_books[community] << book
 				end	
-				if count == Constants::MaximumCommunityBooksCount
+				if count == Constant::Count::MaximumCommunityBooks
 					break
 				end
 			end
@@ -97,7 +106,7 @@ class Community < Neo
 	end
 
 	def self.has_required_book_count books
-		!books.blank? && books.length >= Constants::MinimumCommunityBooksCount
+		!books.blank? && books.length >= Constant::Count::MinimumCommunityBooks
 	end
 
 
@@ -161,7 +170,7 @@ class Community < Neo
 	def self.handle_communities response
 		communities = []
 		response["social_tags"].each do |social_tag|
-			if social_tag["importance"] == Constants::RelevantSocialTagValue then communities << social_tag["originalValue"] end
+			if social_tag["importance"] == Constant::Count::RelevantSocialTag then communities << social_tag["originalValue"] end
 		end
 		communities
 	end

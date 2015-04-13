@@ -330,7 +330,8 @@ md-tab.active a{
 }
 
 .hex_background{
-    background:#BD3109;
+    background-color: #BD3109;
+    /*background-color: #427fed;*/
 }
 
 .signup-container {

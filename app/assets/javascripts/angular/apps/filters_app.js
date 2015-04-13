@@ -24,6 +24,15 @@ angular.module('filtersApp', [])
       return input;
     }
   })
+    .filter('flipkart_title', function(){
+        return function(input){
+            var output = input.replace(/the/gi, "")
+                              .replace(/with/gi, "")
+                              .toLowerCase();
+            output = output.replace(/ /gi, "-");
+            return output;
+        }
+    })
   .filter('category_group', function(){
     return function(books, category){
         output = []

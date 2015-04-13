@@ -51,7 +51,7 @@ class Author < Neo
 	end
 
 	def self.get_favourites skip_count=0
-		skip(skip_count) +  limit(Constants::FollowFavoriteAuthorsCount) + return_init + Author.basic_info
+		skip(skip_count) +  limit(Constant::Count::FollowFavoriteAuthors) + return_init + Author.basic_info
 	end
 
 	def get_details
