@@ -81,7 +81,7 @@ module Api
 
 				# while data.length < 10
 					# data.push User::Suggest::BookSuggestion.new(user_id).for_likeable_category(favourites, books_processed_count).execute
-					# books_processed_count = books_processed_count + Constant::InteractionPoint::RecommendationBookCount*10
+					# books_processed_count = books_processed_count + Constant::Count::BookRecommendation*10
 				# end
 				data
 			end

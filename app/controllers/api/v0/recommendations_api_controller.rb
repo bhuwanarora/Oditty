@@ -23,7 +23,7 @@ module Api
 				@neo = Neography::Rest.new
 				last_grid_id = $redis.get 'last_grid'
 				unless last_grid_id
-					last_grid_id = Constant::Id::BestBook
+					last_grid_id = Constant::Id::BestGrid
 					$redis.set 'last_grid', last_grid_id
 					clause = "MATCH (bg:BookGrid) WHERE ID(bg)="+last_grid_id.to_s+" WITH bg "
 				else
@@ -35,7 +35,7 @@ module Api
 				begin
 					$redis.set 'last_grid', info[0][3]
 				rescue Exception => e
-					$redis.set 'last_grid', Constant::Id::BestBook
+					$redis.set 'last_grid', Constant::Id::BestGrid
 				end
 				render :json => info, :status => 200
 			end
