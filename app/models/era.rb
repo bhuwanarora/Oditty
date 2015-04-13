@@ -5,23 +5,23 @@ class Era < Neo
 
 	def init_match
 		case @id
-		when Constants::OldEnglishLiterature
+		when Constant::Id::OldEnglishLiterature
 			init_match_clause = "MATCH (book:OldEnglishLiterature) "
-		when Constants::MiddleEnglishLiterature
+		when Constant::Id::MiddleEnglishLiterature
 			init_match_clause = "MATCH (book:MiddleEnglishLiterature) "
-		when Constants::EnglishRenaissance
+		when Constant::Id::EnglishRenaissance
 			init_match_clause = "MATCH (book:EnglishRenaissance) "
-		when Constants::NeoClassicalPeriod
+		when Constant::Id::NeoClassicalPeriod
 			init_match_clause = "MATCH (book:NeoClassicalPeriod) "
-		when Constants::Romanticism
+		when Constant::Id::Romanticism
 			init_match_clause = "MATCH (book:Romanticism) "
-		when Constants::VictorianLiterature
+		when Constant::Id::VictorianLiterature
 			init_match_clause = "MATCH (book:VictorianLiterature) "
-		when Constants::Modernism
+		when Constant::Id::Modernism
 			init_match_clause = "MATCH (book:Modernism) "
-		when Constants::PostModernLiterature
+		when Constant::Id::PostModernLiterature
 			init_match_clause = "MATCH (book:PostModernLiterature) "
-		when Constants::Contemporary
+		when Constant::Id::Contemporary
 			init_match_clause = "MATCH (book:Contemporary) "
 		end
 		init_match_clause
@@ -29,23 +29,23 @@ class Era < Neo
 
 	def books
 		case @id
-		when Constants::OldEnglishLiterature
+		when Constant::Id::OldEnglishLiterature
 			label = ":OldEnglishLiterature"
-		when Constants::MiddleEnglishLiterature
+		when Constant::Id::MiddleEnglishLiterature
 			label = ":MiddleEnglishLiterature"
-		when Constants::EnglishRenaissance
+		when Constant::Id::EnglishRenaissance
 			label = ":EnglishRenaissance"
-		when Constants::NeoClassicalPeriod
+		when Constant::Id::NeoClassicalPeriod
 			label = ":NeoClassicalPeriod"
-		when Constants::Romanticism
+		when Constant::Id::Romanticism
 			label = ":Romanticism"
-		when Constants::VictorianLiterature
+		when Constant::Id::VictorianLiterature
 			label = ":VictorianLiterature"
-		when Constants::Modernism
+		when Constant::Id::Modernism
 			label = ":Modernism"
-		when Constants::PostModernLiterature
+		when Constant::Id::PostModernLiterature
 			label = ":PostModernLiterature"
-		when Constants::Contemporary
+		when Constant::Id::Contemporary
 			label = ":Contemporary"
 		end
 		" MATCH (book "+label+") WITH book "

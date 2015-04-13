@@ -1,6 +1,6 @@
 module GraphHelper
 	def self.set_genre_linked_list
-		starting_book_id = Constants::BestBook.to_i
+		starting_book_id = Constant::Id::BestBook.to_i
 		match_clause = " MATCH (book) WHERE ID(book) = " + starting_book_id.to_s + " WITH book MATCH path = (book)-[:Next_book*]->(book) WHERE LENGTH(path) > 2 " 
 		extract_clause = " WITH path, EXTRACT (n IN nodes(path)|n) AS books UNWIND books AS book "
 		collect_categorised = Category::Root.match_books_root + " WITH DISTINCT root_category, COLLECT(book) AS books "

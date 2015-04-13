@@ -127,7 +127,7 @@ module Api
 				if session[:user_id]
 					info = UserApi.get_notifications session[:user_id]
 				else
-					info = {:message => Constants::SessionNotSet}
+					info = {:message => Constant::StatusMessage::SessionNotSet}
 				end
 				render :json => info, :status => 200
 			end
@@ -272,7 +272,7 @@ module Api
 
 			def recover_password
 				email_sent = UserApi.recover_password(params[:email])
-				render :json => {:message => Constants::PasswordRecoveryInitiated}, :status => 200
+				render :json => {:message => Constant::StatusMessage::PasswordRecoveryInitiated}, :status => 200
 			end
 
 			# def get_news_feed
