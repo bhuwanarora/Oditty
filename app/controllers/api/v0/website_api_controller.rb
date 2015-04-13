@@ -18,15 +18,22 @@ module Api
 				render :json => info, :status => 200
 			end
 
-			def get_community_news
-				community_id = params[:community]
-				info = Api::V0::CommunityApi.get_news(community_id).execute
+			def self.create_visited_news 
+				news_id = params[:news_id]
+				user_id = session[:user_id]
+				Api::V0::CommunityApi.create_visited_news(user_id, news_id)
+			end
+
+			def detailed_community_info
+				community_id = params[:id]
+				user_id = session[:user_id]
+				info = Api::V0::CommunityApi.get_detailed_info(community_id, user_id).execute
 				render :json => info, :status => 200 
 			end
 
-			def community_info
+			def basic_community_info
 				id = params[:id]
-				info = Api::V0::WebsiteApi.get_community_info(id).execute
+				info = Api::V0::WebsiteApi.get_basic_community_info(id).execute
 				render :json => info, :status => 200
 			end
 

@@ -28,7 +28,7 @@ class News < Neo
 	end
 
 	def self.merge news_link
-		" MERGE (news:News{url:\"" + news_link.to_s + "\"}) ON CREATE SET news.created_at = " + Time.now.to_i.to_s + " WITH news "
+		" MERGE (news:News{url:\"" + news_link.to_s + "\"}) ON CREATE SET news.created_at = " + Time.now.to_i.to_s + ", news.view_count = 0 WITH news "
 	end
 
 	def self.merge_region news_source
@@ -123,5 +123,9 @@ class News < Neo
 
 	def self.basic_info
 		" ID(news) AS  news_id  ,news.url  AS news_url  "
+	end
+
+	def self.grouped_basic_info
+		" news_id: ID(news) , news_url: news.url, view_count:news.view_count "
 	end
 end

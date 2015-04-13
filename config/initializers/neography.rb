@@ -1,7 +1,7 @@
 Neography.configure do |config|
   config.protocol             = "http://"
   config.server               = "localhost"
-  config.port                 = 7474
+  config.port                 = 8015
   config.directory            = ""  # prefix this path with '/'
   config.cypher_path          = "/cypher"
   config.gremlin_path         = "/ext/GremlinPlugin/graphdb/execute_script"
@@ -28,7 +28,8 @@ module Neography
                 neo_response["data"].each do |record|
                     response << Hash[neo_response["columns"].zip(record)]
                 end
-                response
+                puts response.to_s.white.on_black
+              response
             end
         end
     end

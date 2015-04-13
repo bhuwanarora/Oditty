@@ -1,4 +1,4 @@
-class Bookmark::Node::Article::BlogLabel < Bookmark::::Node::Article
+class Bookmark::Node::ArticleLabel::BlogLabel < Bookmark::::Node::Article
 
 	def self.match 
 		" MATCH (blog) WHERE blog:News WITH user, blog"  

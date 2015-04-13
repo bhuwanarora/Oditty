@@ -23,8 +23,8 @@ module Api
 				Article::NewsArticle.new(id).get_chronological_news_info
 			end
 
-			def self.get_community_info id
-				Community.new(id).books_users_info
+			def self.get_basic_community_info news_id
+				Community.new(news_id).books_users_info
 			end
 
 			def self.get_news_feed(user_id, skip_count)

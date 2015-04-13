@@ -200,4 +200,8 @@ class User < Neo
 	def get_init_book_count_range
 		match + User.return_init + User.init_book_read_count
 	end
+
+	def match_community
+		" MATCH (user)-[follows_user:FollowsCommunity]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(community) "
+	end
 end
