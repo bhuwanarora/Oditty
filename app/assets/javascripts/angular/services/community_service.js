@@ -26,10 +26,14 @@ homeApp.service('communityService', ["$http", "$q", "$rootScope", "WebsiteUICons
     }
 
     this.get_community_details = function(id){
-        return _deferred_request('/api/v0/community?id='+id);
+        return _deferred_request('/api/v0/basic_community_info?id='+id);
     }
 
     this.get_metadata = function(url){
         return _deferred_request('/api/v0/metadata?url='+url);
+    }
+
+    this.get_detailed_community_info = function(id){
+        return _deferred_request('/api/v0/detailed_community_info?id='+id);
     }
 }]);

@@ -3,10 +3,12 @@
             md-component-id="right" 
             ng-click="stop_propagation($event);"
             layout-padding>
-    <img ng-src="{{news_info.images[0]}}" class="news_cover" />
-    <h2>{{news_info.metadata.title[0]._value}}</h2>
-    <div>{{news_info.metadata.site_name[0]._value}}</div>
-    <div>{{news_info.metadata.description[0]._value}}</div>
+    <div ng-repeat="news_info in active_tag.news">
+        <div><img ng-src="{{news_info.images[0]}}" class="news_cover"/></div>
+        <h2>{{news_info.metadata.title[0]._value}}</h2>
+        <div>{{news_info.metadata.site_name[0]._value}}</div>
+        <div>{{news_info.metadata.description[0]._value}}</div>
+    </div>
 </md-sidenav>
 <style>
     .details_panel{
