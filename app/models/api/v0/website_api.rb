@@ -29,7 +29,7 @@ module Api
 			def self.get_news_feed(user_id, skip_count)
 				news_feed = User::Feed.new(user_id).get_news_feed(skip_count)
 				begin
-					notifications = Notification.structure_feed news_feed
+					notifications = FeedStructure.execute(news_feed)
 				rescue Exception => e
 					notifications = []
 				end
@@ -38,7 +38,7 @@ module Api
 
 			def self.get_personal_feed(user_id, skip_count)
 				news_feed = User::Feed.new(user_id).get_personal_feed(skip_count).execute
-				notifications = Notification.new(news_feed).structure_feed
+				notifications = FeedStructure.new(news_feed).execute
 				notifications
 			end
 

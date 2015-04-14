@@ -4,7 +4,7 @@
         <div>Shared on {{blog_feed.date}}</div>
         <p ng-bind-html="blog_feed.excerpt"></p>
     </md-card-content>
-    <div class="image_wrapper">
+    <div class="image_wrapper" ng-if="blog_feed.image_url">
         <img ng-src="{{blog_feed.image_url}}" alt="Washed Out">
     </div>
     <md-card-content class="footer" ng-include src="'/assets/angular/html/shared/partials/card_footer.html'">

@@ -118,9 +118,7 @@ class User < Neo
 	end
 
 	def get_notifications
-		return_clause = "RETURN n, ID(n)"
-		clause = match + "MATCH (u)-[r]->(n:Notification) " + return_clause
-		clause
+		Notification.match_last_visited_notification(@user_id) + Notification.delete_visited_notification + Notification.create_visited_notification + Notification.match_path + Notification.extract_unwind("notification") + User.return_group("labels(notification)", "notification", "notification.created_at") + User.order_init("notification.created_at")
 	end
 
 	def get_books_bookmarked(skip_count=0)
