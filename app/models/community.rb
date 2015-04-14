@@ -174,8 +174,4 @@ class Community < Neo
 		end
 		communities
 	end
-
-	def self.grouped_news
-		" WITH community " + Community.collect_map("news" => News.grouped_basic_info)
-	end
 end
