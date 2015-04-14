@@ -86,7 +86,7 @@ class Community < Neo
 			Google::Search::Book.new(:query => community).each do |book|
 				count += 1
 				book = book.title.search_ready
-				book_info = (Book.search_by_indexed_title(book).execute)[0] 
+				book_info = (Book.get_by_indexed_title(book).execute)[0] 
 				if book_info.present?  
 					community_books[community] << book
 				end	
@@ -145,7 +145,7 @@ class Community < Neo
 	end 
 
 	def self.merge community, news_info
-		" MERGE (community:Community{name: \"" + community + "\"}) ON CREATE SET community.status = 1, community.timestamp=" + Time.now.to_i.to_s + ", community.url = \"" + news_info["news_source"]["news_link"].to_s + "\", community.location = \"" + news_info["news_source"]["region"].to_s + "\", community.image_url = \"" + Community::CommunityImage.new(community).get_image + "\" WITH community "  
+		" MERGE (community:Community{name: \"" + community + "\"}) ON CREATE SET community.status = 1, community.created_at=" + Time.now.to_i.to_s + ", community.updated_at=" + Time.now.to_i.to_s + ", community.location = \"" + news_info["news_source"]["region"].to_s + "\", community.follow_count = 0, community.image_url = \"" + Community::CommunityImage.new(community).get_image + "\" WITH community "  
 	end
 
 
