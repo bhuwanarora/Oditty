@@ -28,7 +28,7 @@ class Community < Neo
 		" MATCH (community)-[:RelatedBooks]->(book:Book) WITH community, book "
 	end
 
-	def match_news 
+	def self.match_news 
 		" MATCH (community)<-[:HasCommunity]-(news:News) WITH community, news "
 	end
 
@@ -173,5 +173,9 @@ class Community < Neo
 			if social_tag["importance"] == Constant::Count::RelevantSocialTagValue then communities << social_tag["originalValue"] end
 		end
 		communities
+	end
+
+	def self.grouped_news
+		" WITH community " + Community.collect_map("news" => News.grouped_basic_info)
 	end
 end

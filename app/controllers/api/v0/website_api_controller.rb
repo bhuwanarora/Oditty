@@ -12,6 +12,12 @@ module Api
 				end
 			end
 
+			def book_news
+				id = params[:id]
+				info = Api::V0::RealVirtualityApi.get_news(id).execute
+				render :json => info, :status => 200
+			end
+
 			def news_info
 				id = params[:id]
 				info = Api::V0::WebsiteApi.get_important_community_info(id).execute
