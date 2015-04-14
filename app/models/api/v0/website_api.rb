@@ -15,7 +15,7 @@ module Api
 			end
 
 			def self.get_important_community_info id
-				Article::News.new(id).most_important_tag_info + Article::News.new(id).other_tags_info
+				Article::News.new(id).most_important_tag_info + Article::NewsArticle.new(id).other_tags_info
 			end
 
 			def self.get_chronological_news_info id

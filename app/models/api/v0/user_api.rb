@@ -34,7 +34,7 @@ module Api
 			end
 
 			def self.get_feed user_id
-				info = Article::Blog.get_posts
+				info = Article::BlogArticle.get_posts
 				info
 			end
 

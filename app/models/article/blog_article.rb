@@ -1,4 +1,4 @@
-class Article::Blog < Article
+class Article::BlogArticle < Article
 	def initialize user_id
 		@user_id = user_id
 	end
@@ -24,17 +24,10 @@ class Article::Blog < Article
 	end
 
 	def self.basic_info
-		" ID(blog) AS blog_id, blog.title AS title, blog.published_year AS published_year "
+		" ID(blog) AS blog_id, blog.title AS title, blog.published_year AS published_year, blog.created_at AS created_at , blog.posted_at AS posted_at "
 	end
 
 	def self.order_desc
 		" ORDER BY blog.total_weight DESC "
 	end
-
-	def self.get_posts
-		url = "https://public-api.wordpress.com/rest/v1.1/sites/literaturerun.wordpress.com/posts/?number=10&pretty=1"
-		response = Net::HTTP.get(URI.parse(url))
-		response
-	end
-
 end
