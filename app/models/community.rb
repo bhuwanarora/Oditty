@@ -152,7 +152,7 @@ class Community < Neo
 	def self.map_books communities_books, news_info
 	    communities_books.each do |community_books|
 	    	community_books.each do |community, books|
-	        	clause =  News.new(news_info["news_id"]).match + Community.merge(community, news_info) + ", news " + Community.set_importance + " WITH community, news, " + News.merge_community
+	        	clause =  News.new(news_info["news_id"]).match + Community.merge(community, news_info) + ", news " + Community.set_importance + " WITH community, news " + News.merge_community
 				books.each do |book|
 					indexed_title = book.search_ready
 					clause += Book.search_by_indexed_title + " , community " + Community.merge_book + " WITH community "
