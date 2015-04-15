@@ -25,7 +25,7 @@ class Neo
 	end
 
 	def self.tail node_variable
-		" , COLLECT (" + node_variable + ") AS temp UNWIND(TAIL(temp)) AS " + node_variable + " "
+		"  COLLECT (" + node_variable + ") AS temp UNWIND(TAIL(temp)) AS " + node_variable + " "
 	end
 
 	def self.return_group(*params)
@@ -56,6 +56,12 @@ class Neo
 	def self.extract_unwind node_variable, path_name = "path"
 		" EXTRACT (node IN nodes(" + path_name + ")|node) AS nodes UNWIND nodes AS " + node_variable + "  WITH " + node_variable + " "
 	end
+
+
+	def self.extract node_variable, path_name = "path"
+		" EXTRACT (node IN nodes(" + path_name + ")|node) AS " + node_variable + " "
+	end
+
 
 	def self.unwind collection
 		" UNWIND " + collection + " AS " + collection.singularize + " "
