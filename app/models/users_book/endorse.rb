@@ -19,11 +19,11 @@ class UsersBook::Endorse < UsersBook
 
 	def add 
 		operation = "+"
- 		UsersBook.new(@book_id, @user_id).match + create + " WITH user, endorse, book" + User::Feed.new(@user_id).create("endorse") + ", book "+ Book::Feed.new(@book_id).create("endorse") + Book.set_endorse_count(operation) + User.set_total_count(Constant::InteractionPoint::Endorse, operation)
+ 		UsersBook.new(@book_id, @user_id).match + create + " WITH user, endorse, book" + User::Feed.new(@user_id).create("endorse") + ", book "+ Book::BookFeed.new(@book_id).create("endorse") + Book.set_endorse_count(operation) + User.set_total_count(Constant::InteractionPoint::Endorse, operation)
 	end
 
 	def remove
 		operation = "-"
- 		UsersBook.new(@book_id, @user_id).match + " WITH user, book  " + match + " WITH user, endorse, book" + User::Feed.new(@user_id).delete_feed("endorse") + ", book" + Book::Feed.new(@book_id).delete_feed("endorse") + Book.set_endorse_count(operation) + User.set_total_count(Constant::InteractionPoint::Endorse, operation) + " WITH endorse " + Neo.delete("endorse") 
+ 		UsersBook.new(@book_id, @user_id).match + " WITH user, book  " + match + " WITH user, endorse, book" + User::Feed.new(@user_id).delete_feed("endorse") + ", book" + Book::BookFeed.new(@book_id).delete_feed("endorse") + Book.set_endorse_count(operation) + User.set_total_count(Constant::InteractionPoint::Endorse, operation) + " WITH endorse " + Neo.delete("endorse") 
 	end
 end

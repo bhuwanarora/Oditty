@@ -1,10 +1,38 @@
 class Bookmark < Neo
 
-	def initialize(user_id, book_id, key)
+	def initialize(user_id, media_id, key)
 		@user_id = user_id
-		@book_id = book_id
+		@media_id = media_id
 		@key = key
 	end
+
+	def news
+		@media_class = News
+		@media_feed_class = News::NewsFeed
+		@user_media_class = User::UserNews
+		@media_label_class = Bookmark::Node::NewsLabel
+		@media_label = "News"
+		self
+	end
+
+	def book
+		@media_class = Book
+		@media_feed_class = Book::BookFeed
+		@user_media_class = User::UserBook
+		@media_label_class = Bookmark::Node::BookLabel
+		@media_label = "Book"
+		self
+	end
+
+	def blog
+		@media_class = Blog
+		@media_feed_class = Blog::Feed
+		@user_media_class = User::Blog
+		@media_label_class = Bookmark::Node::BlogLabel
+		@media_label = "Blog"
+		self
+	end
+
 
 	def self.match_not media
 		" WHERE NOT (user)-[:Labelled]->(:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(" + media.downcase + ") "
@@ -23,20 +51,14 @@ class Bookmark < Neo
 		" OPTIONAL MATCH (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->" + media
 	end
 
-	def match
-		" MATCH (user:User), (book:Book), (label:Label) WHERE ID(user)=" + @user_id.to_s + " AND ID(book)=" + @book_id.to_s + " AND label.key = \""+@key+"\" WITH user, book, label "
-	end
 
 	def self.match
-	 	" OPTIONAL MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book) "
+	 	" OPTIONAL MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(media) "
 	end
 
-	def create_label_bookmark_node
-		" CREATE UNIQUE (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node: BookmarkNode{label:\""+@key+"\", book_id:"+@book_id.to_s+", user_id:"+@user_id.to_s+"}) " 
-	end
 
 	def self.create_bookmark_node_book
-		" CREATE UNIQUE (bookmark_node)-[bookmark_action:BookmarkAction]->(book) "
+		" CREATE UNIQUE (bookmark_node)-[bookmark_action:BookmarkAction]->(media) "
 	end
 
 	def self.set_title
@@ -84,26 +106,6 @@ class Bookmark < Neo
 		" SET bookmark_node.key = \""+ key + "\" "
 	end
 
-	def create
-		UsersBook.new(@book_id, @user_id).match + User.create_label(@key) + create_label_bookmark_node + Bookmark.create_bookmark_node_book + Bookmark.set_updated_at + Bookmark.set_created_at + Bookmark.set_key(@key) + " WITH user, book, bookmark_node, label, labelled "
-	end
-
-	def add
-		operation = "+"
-		if @key == "Visited"
-			end_clause = Bookmark.return_group(Bookmark.basic_info)
-			feednext_clause = ""
-			bookfeed_next_clause = ""
-		else
-			end_clause = Book.set_bookmark_count(operation) + User.set_bookmark_count(operation) + Label.set_bookmark_count(operation) + UsersLabel.set_bookmark_count(operation) + User.set_total_count(Constant::InteractionPoint::Bookmark, operation)
-			feednext_clause = User::Feed.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled + ", book "
-			bookfeed_next_clause = Book::Feed.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled
-		end
-
-		clause = create + feednext_clause + bookfeed_next_clause  + end_clause
-		puts "BOOK BOOKMARKED".green
-		clause
-	end
 
 	def self.delete_bookmark_relations
 		"  DELETE bookmarked_on, bookmark_action WITH user, book, labelled, label, bookmark_node "
@@ -113,22 +115,9 @@ class Bookmark < Neo
 		" MATCH ()-[relation]-(bookmark_node) DELETE relation, bookmark_node "
 	end
 
-	def remove
-		operation = "-"
-		set_clause = Book.set_bookmark_count(operation) + User.set_bookmark_count(operation) + Label.set_bookmark_count(operation) + UsersLabel.set_bookmark_count(operation) + User.set_total_count(Constant::InteractionPoint::Bookmark, operation) + Bookmark.with_group("user", "book", "bookmark_node", "labelled", "label")
-		
-		feednext_clause = User::Feed.new(@user_id).delete_feed("bookmark_node") + ", book, labelled, label "
-
-		bookfeed_next_clause = Book::Feed.delete_feed("bookmark_node", @user_id) + ", labelled, label "
-
-		clause = match + Bookmark::Node::BookLabel.match_path + Bookmark.delete_bookmark_relations + set_clause + feednext_clause + bookfeed_next_clause + Bookmark.delete_bookmark
-
-		puts "REMOVE BOOKMARKED".green
-		clause
-	end
 
 	def self.have_left_a_mark_on_me
-		match_user_to_books_clause = " WITH u, l, m, b OPTIONAL MATCH (u)-->(l)-->(m)-->(b) WITH user, COUNT(DISTINCT book) as total_book_count MATCH (user)-->(label)-->(bookmark)-->(book)-[:FromCategory]->()-[:HasRoot*0..1]->(root_category{is_root:true}) WITH total_book_count, user, root_category "
+		match_user_to_books_clause = " WITH u, l, m, b OPTIONAL MATCH (u)-->(l)-->(m)-->(b) WITH user, COUNT(DISTINCT book) as total_book_count MATCH (user)-->(label)-->(bookmark)-->(media)-[:FromCategory]->()-[:HasRoot*0..1]->(root_category{is_root:true}) WITH total_book_count, user, root_category "
 		match_user_to_category_clause = "OPTIONAL MATCH  (user)-[likes_category:Likes]->(root_category) WITH user, likes_category, root_category, total_book_count MATCH (user)-[likes_category:Likes]->(root_category) "
 		set_likeability_index_clause = "SET likes_category.likeability_index = TOFLOAT(likes_category.weight*1.0/total_book_count)"
 		clause = match_user_to_books_clause + match_user_to_category_clause + set_likeability_index_clause							
@@ -143,5 +132,49 @@ class Bookmark < Neo
 
 	def self.grouped_basic_info
 		" {status: ID(bookmark_node), bookmarked_by: bookmark_node.name, time: bookmark_node.timestamp} AS bookmark_node "
+	end
+
+	def create_label_bookmark_node
+		" CREATE UNIQUE (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node: BookmarkNode{label:\""+@key+"\", book_id:"+@media_id.to_s+", user_id:"+@user_id.to_s+"}) " 
+	end
+
+	def match
+		" MATCH (user:User), (media:" + @media_label + "), (label:Label) WHERE ID(user)=" + @user_id.to_s + " AND ID(media)=" + @media_id.to_s + " AND label.key = \""+@key+"\" WITH user, book, label "
+	end
+	
+	def remove  media_label_class
+		operation = "-"
+		set_clause = @media_class.set_bookmark_count(operation) + User.set_bookmark_count(operation) + Label.set_bookmark_count(operation) + UsersLabel.set_bookmark_count(operation) + User.set_total_count(Constant::InteractionPoint::Bookmark, operation) + Bookmark.with_group("user", "book", "bookmark_node", "labelled", "label")
+		
+		feednext_clause = User::Feed.new(@user_id).delete_feed("bookmark_node") + ", book, labelled, label "
+
+		bookfeed_next_clause = @media_feed_class.delete_feed("bookmark_node", @user_id) + ", labelled, label "
+
+		clause = match + media_label_class.match_path + Bookmark.delete_bookmark_relations + set_clause + feednext_clause + bookfeed_next_clause + Bookmark.delete_bookmark
+
+		puts "REMOVE BOOKMARKED".green
+		clause
+	end
+
+	def create 
+		debugger
+		@user_media_class.new(@media_id, @user_id).match + User.create_label(@key) + create_label_bookmark_node + Bookmark.create_bookmark_node_book + Bookmark.set_updated_at + Bookmark.set_created_at + Bookmark.set_key(@key) + " WITH user, book, bookmark_node, label, labelled "
+	end
+
+	def add  
+		operation = "+"
+		if @key == "Visited"
+			end_clause = Bookmark.return_group(Bookmark.basic_info)
+			feednext_clause = ""
+			bookfeed_next_clause = ""
+		else
+			end_clause = @media_class.set_bookmark_count(operation) + User.set_bookmark_count(operation) + Label.set_bookmark_count(operation) + UsersLabel.set_bookmark_count(operation) + User.set_total_count(Constant::InteractionPoint::Bookmark, operation)
+			feednext_clause = User::Feed.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled + ", book "
+			bookfeed_next_clause = @media_feed_class.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled
+		end
+
+		clause = create + feednext_clause + bookfeed_next_clause  + end_clause
+		puts "BOOK BOOKMARKED".green
+		clause
 	end
 end

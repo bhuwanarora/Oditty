@@ -4,7 +4,7 @@ class Bookmark::Type::Visited < Bookmark::Type
 		@key = "Visited"
 		@user_id = user_id
 		@book_id = book_id
-		@bookmark = Bookmark.new(@user_id, @book_id, @key)
+		@bookmark = Bookmark.new(@user_id, @book_id, @key).book
 	end
 
 	def match
