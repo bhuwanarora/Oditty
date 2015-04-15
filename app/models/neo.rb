@@ -57,6 +57,12 @@ class Neo
 		" EXTRACT (node IN nodes(" + path_name + ")|node) AS nodes UNWIND nodes AS " + node_variable + "  WITH " + node_variable + " "
 	end
 
+
+	def self.extract node_variable, path_name = "path"
+		" EXTRACT (node IN nodes(" + path_name + ")|node) AS " + node_variable + " "
+	end
+
+
 	def self.unwind collection
 		" UNWIND " + collection + " AS " + collection.singularize + " "
 	end

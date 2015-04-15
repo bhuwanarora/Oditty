@@ -14,36 +14,14 @@ class Notification < Neo
 		for feed in @news_feed
 			type = feed["label"]
 			puts type.green
-			if type == "User"
-			elsif type == "MarkAsReadNode"
-				notification = _mark_as_read_notification feed
-				notifications.push(notification.merge!("label" => type))
-			elsif type == "RatingNode"
-				notification = _rating_notification feed
-				notifications.push(notification.merge!("label" => type))
-			elsif type == "TimingNode"
-				notification = _timing_node_notification feed
-				notifications.push(notification.merge!("label" => type))
-			elsif type == "Tweet"
-				notification = _comment_notification feed
-				notifications.push(notification.merge!("label" => type))
-			elsif type == "BookmarkNode"
-				notification = _bookmark_notification feed
-				notifications.push(notification.merge!("label" => type))
-			elsif type == "Visited"
-				notification = _bookmark_notification feed
-				notifications.push(notification.merge!("label" => type))
-			elsif type == "ThumbRequest"
-				notification = _thumb_request_notification feed
-				notifications.push(notification.merge!("label" => type))
-			elsif type == "RecommendNode"
-				notification = _recommend_notification feed
-				notifications.push(notification.merge!("label" => type))
-			elsif type == "StatusNode"
-				notification = _share_notification feed
-				notifications.push(notification.merge!("label" => type))
-			elsif type == "EndorseNode"
+			if type == "EndorseNode"
 				notification = _endorse_notification feed
+				notifications.push(notification.merge!("label" => type))
+			elsif type == "FollowNode"
+				notification = _follow_notification feed
+				notifications.push(notification.merge!("label" => type))
+			elsif type == "MentionNode"
+				notification = _mention_notification feed
 				notifications.push(notification.merge!("label" => type))
 			end
 		end
@@ -52,49 +30,19 @@ class Notification < Neo
 	end
 
 	def _endorse_notification data
-		name = _get_name data
 		structure_notification(data)
 	end
 
-	def _share_notification data
-		name = _get_name data
-		message = "<span> "+data["content"].to_s+" </span>"
+	def _mention_notification data
 		structure_notification(data)
 	end
 
-	def _recommend_notification data
-		name = _get_name data
-		structure_notification(data)
-	end
-
-	def _thumb_request_notification data
-		name = _get_name data
-		structure_notification(data)
-	end
-
-	def _bookmark_notification data
-		name = _get_name data
-		structure_notification(data)
-	end
-
-	def _rating_notification data
-		name = _get_name data
-		structure_notification(data)
-	end
-
-	def _timing_node_notification data
-		name = _get_name data
-		book_length_string = _get_time_index data["time_index"]
-		structure_notification(data)
-	end
-
-	def _mark_as_read_notification data
-		name = _get_name data
+	def _follow_notification data
 		structure_notification(data)
 	end
 
 	def structure_notification(data, tag=nil)
-		name = _get_name data
+		name = data["first_name"] + " " + data["last_name"]
 		thumb = "assets/profile_pic.jpeg"
 		notification_json = {
 			:created_at => data["created_at"],
@@ -149,12 +97,27 @@ class Notification < Neo
 		output
 	end
 
-	def _get_name data
-		if data["name"]
-			name = data["name"]
-		else
-			name = data["email"]
-		end
-		name
+	def self.match_path
+		" MATCH path = (latest_notification)-[:Notification*]->(last_seen_notification) WITH path, last_seen_notification, latest_notification  "
+	end
+
+	def self.reset_last_seen
+		" MERGE (user)-[:SawNotification]-(latest_notification) DELETE saw_notification WITH user, latest_notification "
+	end
+
+	def self.basic_info
+		" LABELS(notification) AS label, notification.created_at AS created_at "
+	end
+
+	def self.optional_match_book_user
+		" OPTIONAL MATCH (user:User)-->(notification) OPTIONAL MATCH (notification)-->(book:Book) WITH user, book, notification "
+	end
+
+	def self.handle_last_seen
+		User.match_latest_notification +  User.match_last_seen_notification  + ", latest_notification " + Notification.reset_last_seen + ", last_seen_notification "
+	end
+
+	def self.handle_unseen
+		Notification.handle_last_seen + Notification.match_path + "," + Notification.extract_unwind("notification") + ", last_seen_notification WHERE notification <> last_seen_notification "
 	end
 end

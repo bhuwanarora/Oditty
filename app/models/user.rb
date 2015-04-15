@@ -118,9 +118,7 @@ class User < Neo
 	end
 
 	def get_notifications
-		return_clause = "RETURN n, ID(n)"
-		clause = match + "MATCH (u)-[r]->(n:Notification) " + return_clause
-		clause
+		match + Notification.handle_unseen + Notification.optional_match_book_user + Notification.return_group(Notification.basic_info, Book.basic_info, User.basic_info)
 	end
 
 	def get_books_bookmarked(skip_count=0)
@@ -199,5 +197,13 @@ class User < Neo
 
 	def get_init_book_count_range
 		match + User.return_init + User.init_book_read_count
+	end
+
+	def self.match_latest_notification
+		" MATCH (user)-[:NextNotification]->(latest_notification:Notification) WITH user, latest_notification "
+	end
+
+	def self.match_last_seen_notification
+		" MATCH (user)-[saw_notification:SawNotification]->(last_seen_notification:Notification) WITH user, saw_notification, last_seen_notification "
 	end
 end
