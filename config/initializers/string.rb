@@ -5,7 +5,7 @@ class String
     end
 
     def search_ready
-    	self.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "").gsub("@", "") rescue ""
+    	self.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "").gsub("@", "").gsub("\"","").gsub(".","") rescue ""
     end
 
 	def is_json?
