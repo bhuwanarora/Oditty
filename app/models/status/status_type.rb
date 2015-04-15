@@ -12,11 +12,11 @@ class Status::StatusType < Status
 		clause = ""
 		unless reading_status_value.nil?
 			case reading_status_value
-			when Constants::PlanningToReadStatusCode
+			when Constant::StatusCode::PlanningToRead
 				clause = Status::StatusType::PlanningToRead.new(@book_id, @user_id).create
-			when Constants::CurrentlyReadingStatusCode
+			when Constant::StatusCode::CurrentlyReading
 				clause = Status::StatusType::CurrentlyReading.new(@book_id, @user_id).create
-			when Constants::ReadStatusCode
+			when Constant::StatusCode::Read
 				clause = Status::StatusType::Read.new(@book_id, @user_id).create
 			end
 		end 

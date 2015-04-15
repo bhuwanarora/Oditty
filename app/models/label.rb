@@ -14,4 +14,9 @@ class Label < Neo
 			" SET label.bookmark_count = TOINT(COALESCE(label.bookmark_count, 1)) - 1 "
 		end
 	end
+
+	def self.create
+		" CREATE UNIQUE (user)-[:Labelled]->(:Label) "
+	end
+
 end

@@ -2,9 +2,13 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
     $scope.toggle_details = function(){
         $mdSidenav('right').toggle();
         $scope.show_details = true;
-        var url = "http://blog.readersdoor.com/2015/03/08/the-art-of-storytelling/";
-        communityService.get_metadata(url).then(function(data){
-            $scope.news_info = data;
+        communityService.get_detailed_community_info($scope.active_tag.id).then(function(data){
+            $scope.active_tag = angular.extend($scope.active_tag, data);
+            angular.forEach(data.news, function(value){
+                communityService.get_metadata(value.news_url).then(function(news_data){
+                    value = angular.extend(value, news_data)
+                });
+            });
         });
     };
 

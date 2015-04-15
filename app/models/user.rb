@@ -72,7 +72,7 @@ class User < Neo
 		"  init_book_read_count:user.init_book_read_count ,  selectedYear:user.selectedYear ,  selectedMonth:user.selectedMonth ,  selectedDay:user.selectedDay ,  first_name:user.first_name ,  last_name:user.last_name ,  about:user.about ,  id:ID(user) "
 	end
 
-	def get_all_books skip_count=0, limit_count=Constants::BookCountShownOnSignup 
+	def get_all_books skip_count=0, limit_count=Constant::Count::BookCountShownOnSignup 
 		match + Bookmark::Node::BookLabel.match_path + User.return_group(Book.basic_info, " label.key as shelf ") + Book.order_desc + User.skip(skip_count) + User.limit(limit_count)
 	end
 
@@ -105,7 +105,7 @@ class User < Neo
 	end
 
 	def self.create(email, password=nil, verification_token=nil)
-		create_new_user = "CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, last_book: "+Constants::BestBook.to_s+", amateur: true, ask_info: true}), "
+		create_new_user = "CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, last_book: "+Constant::Id::BestBook.to_s+", amateur: true, ask_info: true}), "
 		create_feednext_relation = "(user)-[fn:FeedNext{user_id:ID(user)}]->(user), "
 		create_ego_relation = "(user)-[:Ego{user_id:ID(user)}]->(user) WITH user "
 		get_labels = "MATCH(bm:Label{basic:true}) "
@@ -118,9 +118,7 @@ class User < Neo
 	end
 
 	def get_notifications
-		return_clause = "RETURN n, ID(n)"
-		clause = match + "MATCH (u)-[r]->(n:Notification) " + return_clause
-		clause
+		Notification.match_last_visited_notification(@user_id) + Notification.delete_visited_notification + Notification.create_visited_notification + Notification.match_path + Notification.extract_unwind("notification") + User.return_group("labels(notification)", "notification", "notification.created_at") + User.order_init("notification.created_at")
 	end
 
 	def get_books_bookmarked(skip_count=0)
@@ -199,5 +197,9 @@ class User < Neo
 
 	def get_init_book_count_range
 		match + User.return_init + User.init_book_read_count
+	end
+
+	def match_community
+		" MATCH (user)-[follows_user:FollowsCommunity]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(community) "
 	end
 end

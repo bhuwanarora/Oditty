@@ -10,11 +10,11 @@ class Status::BookExchangeStatusType < Status
 	def create_for book_exchange_status
 		unless book_exchange_status.nil?
 			case book_exchange_status
-			when Constants::PlanningToBuyStatusCode
+			when Constant::StatusCode::PlanningToBuy
 				clause = Status::BookExchangeStatusType::PlanningToBuy.new(@book_id, @user_id).create
-			when Constants::PlanningToLendStatusCode
+			when Constant::StatusCode::PlanningToLend
 				clause = Status::BookExchangeStatusType::PlanningToLend.new(@book_id, @user_id).create
-			when Constants::PlanningToBorrowStatusCode
+			when Constant::StatusCode::PlanningToBorrow
 				clause = Status::BookExchangeStatusType::PlanningToBorrow.new(@book_id, @user_id).create
 			end
 		else
