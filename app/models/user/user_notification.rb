@@ -10,7 +10,7 @@ class User::UserNotification < User
 	end
 
 	def self.add node_variable
-		User::UserNotification.match  + ", " + node_variable + " CREATE UNIQUE (user)-[:NextNotification]-("+ node_variable +")-[:NextNotification]->(notification) " + User::UserNotification.delete_next_notification + " WITH user, " + node_variable 
+		User::UserNotification.match  + ", " + node_variable + " CREATE UNIQUE (user)-[:NextNotification{user_id:ID(user)}]-("+ node_variable +")-[:NextNotification{user_id:ID(user)}]->(notification) " + User::UserNotification.delete_next_notification + " WITH user, " + node_variable 
 	end
 
 	def self.match
@@ -26,7 +26,7 @@ class User::UserNotification < User
 	end
 
 	def self.match_path
-		" MATCH path = (user)-[:NextNotification*]->(notification) WITH path "
+		" MATCH path = (user)-[:NextNotification*{user_id:ID(user)}]->(notification) WITH path "
 	end
 
 	def self.match_last_visited_notification(user_id)
@@ -34,7 +34,7 @@ class User::UserNotification < User
 	end
 
 	def self.create_for_new_user
-		" CREATE UNIQUE (user)-[:NextNotification]->(user) CREATE UNIQUE (user)-[:VisitedNotification]->(user) "
+		" CREATE UNIQUE (user)-[:NextNotification{user_id:ID(user)}]->(user) CREATE UNIQUE (user)-[:VisitedNotification]->(user) "
 	end
 
 	def self.create_visited_notification
