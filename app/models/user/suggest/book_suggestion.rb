@@ -22,7 +22,7 @@ class User::Suggest::BookSuggestion < User::Suggest
 
 	def on_friends_shelves
 		return_clause =  " RETURN friend.name AS name, ID(friend) AS id, "
-		clause = @user.match + UsersUser.match + User::Suggest::BookSuggestion.with_group("user","friend") + Bookmark.match_path("book",false,"friend") + Bookmark.match_not("book") + User::Suggest::BookSuggestion.return_group("friend.name AS name", "ID(friend) AS id", ::Book.basic_info) + ::Book.order_desc + User::Suggest::BookSuggestion.limit(Constant::Count::BookRecommendation) 
+		clause = @user.match + UsersUser.match + Bookmark.match_path("book",false,"friend") + Bookmark.match_not("book") + User::Suggest::BookSuggestion.return_group("friend.name AS name", "ID(friend) AS id", ::Book.basic_info) + ::Book.order_desc + User::Suggest::BookSuggestion.limit(Constant::Count::BookRecommendation) 
 	end
 
 	def for_likeable_category(favourites = true, books_processed_count=0)
