@@ -49,6 +49,7 @@
             <script src="assets/angular/controllers/share/share_controller.js"></script>
             <script src="assets/angular/controllers/share/options_controller.js"></script>
             <script src="assets/angular/controllers/profile_controller.js"></script>
+            <script src="assets/angular/controllers/signup_controller.js"></script>
 
             <script src="assets/angular/controllers/toast_controller.js"></script>
             <script src="assets/angular/directives/site_directives.js"></script>
@@ -122,17 +123,18 @@
             <md-toolbar md-scroll-shrink class="header <% if !@infinity %>'no_shadow'<% end %>">
                 <section layout="row" layout-wrap>
                     <div flex="20" flex-sm="35" layout="row" layout-align="start center">
-                        <md-button ng-show="visible_search_bar" class="burger padding" ng-click="toggleLeft($event)">
+                        <md-button ng-show="visible_search_bar" class="burger padding" ng-click="toggleLeft($event)" ng-if="<%= @isgnup %>">
                             <a><span class="icon-menu2"></span></a>
                         </md-button>
-                        <div ng-show="visible_search_bar" layout-align-lg="center center">
+                        <div ng-show="visible_search_bar" 
+                             layout-align-lg="center center">
                             <a class="logo" href="/home">
                                 <img src="assets/rd_icon.png"/>
-                                <span hide-sm hide-md>ReadersDoor</span>
+                                <span hide-sm hide-md ng-hide="<%= @signup %>">ReadersDoor</span>
                             </a>
                         </div>
                     </div>
-                    <% unless @customise %>
+                    <% unless (@customise || @signup)%>
                         <div flex="50" flex-md="45" flex-sm="10" layout="row" layout-align="end center" layout-align-sm="start center">
                             <md-button ng-click="show_search_bar()" ng-show="visible_search_bar" show-sm hide>
                                 <span class="icon-search"></span>
@@ -195,7 +197,7 @@
             </md-toolbar>
 
             <%= yield %>
-            <% unless @customise %>
+            <% unless (@customise || @signup) %>
                 <div ng-controller="shareController" >
                     <md-button class="md-fab md-fab-bottom-right animate-fast fixed_share"
                                 aria-label="Eat cake"

@@ -113,4 +113,9 @@ class WebsiteController < ApplicationController
 		render :layout => "material"
 	end
 
+	def signup
+		@signup = true
+		render :layout => "material"
+	end
+
 end

@@ -310,5 +310,6 @@ md-toolbar{
 	/*background-color: #D3D3D3;*/
 }
 
-
-
+.sticky_logo{
+	left: 0px !important;
+}
