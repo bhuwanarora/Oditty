@@ -39,6 +39,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
     var _set_books = function(){
         // $scope.info.books = [];
         $scope.active_tab.infinity = true;
+        $scope.info.loading = true;
         if(Object.keys($rootScope.filters).length == 0){
             $scope.info.books = [];
             $scope.get_popular_books();
@@ -51,6 +52,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
                     var json = angular.extend(value, {"color": ColorConstants.value[random_int]});
                     this.push(json);
                 }, $scope.info.books);
+                $scope.info.loading = false;
             });
         }
     }

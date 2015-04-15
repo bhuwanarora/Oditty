@@ -14,7 +14,7 @@ module Constants
 	CommunitiesShown            = 7 
 	if Rails.env.development?
 		Admin						= 0
-		BestTinyRead				= 395910 #"thelosthero"
+		BestTinyRead				= 395911 #"thelosthero"
 		BestSmallRead				= 390072 #"thelittleprince"
 		BestNormalRead				= 1171520 #"harrypotterandthephilosophersstone"
 		BestLongRead				= 395153 #"thehungergames"

@@ -21,11 +21,11 @@ class ReadTime
 	end
 
 	def match_nth_book skip
-		" MATCH (book:Book)-[:"+@relation+"*.."+skip.to_s+"]->(nth_book) WHERE ID(book)="+@last_book.to_s+" WITH nth_book as book "
+		" MATCH (book:Book)-[:" + @relation + "*.." + skip.to_s + "]->(nth_book:Book) WHERE ID(book)=" + @last_book.to_s + " WITH nth_book as book "
 	end
 
 	def match_books_after skip, count
-		match_nth_book(skip) + " MATCH path=(book)-[:"+@relation+"*.."+count.to_s+"]->(last_book) WITH EXTRACT (n IN nodes(path)|n) AS books UNWIND books AS book  "
+		match_nth_book(skip) + " MATCH path=(book)-[:" + @relation + "*.." + count.to_s + "]->(last_book:Book) WITH EXTRACT (n IN nodes(path)|n) AS books UNWIND books AS book  "
 	end
 
 	def where
