@@ -105,4 +105,12 @@ class Book < Neo
 			" SET book.rating_count = TOINT(COALESCE(book.rating_count, 1)) - 1 "
 		end
 	end
+
+	def self.match_communities 
+		" MATCH (community:Community)-[:RelatedBooks]->(book) WITH community, book "
+	end
+
+	def get_news
+		match + Book.match_communities + 
+	end
 end
