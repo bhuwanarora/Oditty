@@ -174,4 +174,8 @@ class Community < Neo
 		end
 		communities
 	end
+
+	def self.search_by_name name
+		" MATCH (community:Community{name:\"" + name + "\") WITH community " 
+	end
 end

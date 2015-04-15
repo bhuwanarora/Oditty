@@ -58,4 +58,11 @@ class Author < Neo
 		match + match_books + Author.return_group(Author.basic_info, Book.detailed_info) + Author.limit(10)
 	end
 
+	def self.search_by_indexed_name indexed_name
+		"START author=node:node_auto_index('indexed_main_author_name:\"" + indexed_name + "\"') WITH author " 
+	end
+
+	def self.get_by_indexed_name indexed_name
+		Author.search_by_indexed_name(indexed_name) + Author.return_init + Author.basic_info 
+	end
 end
