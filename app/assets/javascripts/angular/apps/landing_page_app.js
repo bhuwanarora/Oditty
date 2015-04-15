@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ngAnimate', 'ngMaterial', 'duScroll', 'ngRoute', 'monospaced.mousewheel', 'appConstants', 'timer']);
+var app = angular.module('myApp', ['ngAnimate', 'ngMaterial', 'duScroll', 'ngRoute', 'monospaced.mousewheel', 'appConstants', 'timer', 'facebook', 'ngCookies']);
 
 function easeInQuad(t){ 
     return  t<.5 ? 2*t*t : -1+(4-2*t)*t;
@@ -33,3 +33,11 @@ app.config(
          templateUrl : 'assets/angular/views/landing_page/main.html'
     });
 }]);
+
+app.constant('facebookAppId', "382226461962350");
+
+app.config(["FacebookProvider", "facebookAppId", function(FacebookProvider, facebookAppId){
+    var myAppId = facebookAppId;
+    FacebookProvider.init(myAppId);
+  }
+]);

@@ -212,12 +212,16 @@ module.exports = function(grunt) {
             'app/assets/javascripts/min/angular/vendors/angular_mousewheel.min.js',
             'app/assets/javascripts/min/angular/vendors/angular_router.min.js',
             'app/assets/javascripts/min/angular/vendors/angular_0.8.2.min.js',
+            'app/assets/javascripts/min/angular/vendors/angular_cookies.min.js',
+            'app/assets/javascripts/min/angular/vendors/angular_facebook.js',
             'app/assets/javascripts/min/angular/vendors/angular-timer.min.js'],
 
           'app/assets/javascripts/min/angular/landing_page.min.js': [
             'app/assets/javascripts/min/angular/apps/landing_page_app.js',
             'app/assets/javascripts/min/angular/apps/app_constants.js',
-            'app/assets/javascripts/min/angular/controllers/landing_page_controller.js'],
+            'app/assets/javascripts/min/angular/controllers/landing_page_controller.js',  
+            'app/assets/javascripts/min/angular/controllers/landing_page/signin_controller.js'
+            ],
 
           'app/assets/javascripts/min/angular/home.min.js': [
             'app/assets/javascripts/min/angular/vendors/angular_sticky.js',
