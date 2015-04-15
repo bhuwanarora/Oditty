@@ -8,5 +8,5 @@ module Constant::InteractionPoint
 	Recommendation			= 10
 
 	CategoryLike			= 10
-	EndorsePoints 			= 10
+	Endorse		 			= 10
 end

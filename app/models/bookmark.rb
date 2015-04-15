@@ -1,8 +1,8 @@
 class Bookmark < Neo
 
-	def initialize(user_id, book_id, key)
+	def initialize(user_id, media_id, key)
 		@user_id = user_id
-		@book_id = book_id
+		@media_id = media_id
 		@key = key
 	end
 
@@ -24,19 +24,19 @@ class Bookmark < Neo
 	end
 
 	def match
-		" MATCH (user:User), (book:Book), (label:Label) WHERE ID(user)=" + @user_id.to_s + " AND ID(book)=" + @book_id.to_s + " AND label.key = \""+@key+"\" WITH user, book, label "
+		" MATCH (user:User), (book:Book), (label:Label) WHERE ID(user)=" + @user_id.to_s + " AND ID(book)=" + @media_id.to_s + " AND label.key = \""+@key+"\" WITH user, book, label "
 	end
 
 	def self.match
 	 	" OPTIONAL MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book) "
 	end
 
-	def create_label_bookmark_node
-		" CREATE UNIQUE (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node: BookmarkNode{label:\""+@key+"\", book_id:"+@book_id.to_s+", user_id:"+@user_id.to_s+"}) " 
+	def create_label_bookmark_node media = "book"
+		" CREATE UNIQUE (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node: BookmarkNode{label:\""+@key+"\", " + media.gsub(" ","") + "_id:"+@media_id.to_s+", user_id:"+@user_id.to_s+"}) " 
 	end
 
-	def self.create_bookmark_node_book
-		" CREATE UNIQUE (bookmark_node)-[bookmark_action:BookmarkAction]->(book) "
+	def self.create_bookmark_node_book media = "book"
+		" CREATE UNIQUE (bookmark_node)-[bookmark_action:BookmarkAction]->(" + media + ") "
 	end
 
 	def self.set_title
@@ -85,7 +85,7 @@ class Bookmark < Neo
 	end
 
 	def create
-		UsersBook.new(@book_id, @user_id).match + User.create_label(@key) + create_label_bookmark_node + Bookmark.create_bookmark_node_book + Bookmark.set_updated_at + Bookmark.set_created_at + Bookmark.set_key(@key) + " WITH user, book, bookmark_node, label, labelled "
+		UsersBook.new(@media_id, @user_id).match + User.create_label(@key) + create_label_bookmark_node + Bookmark.create_bookmark_node_book + Bookmark.set_updated_at + Bookmark.set_created_at + Bookmark.set_key(@key) + " WITH user, book, bookmark_node, label, labelled "
 	end
 
 	def add

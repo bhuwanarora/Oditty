@@ -15,7 +15,7 @@ module Api
 
 			def self.get_feed book_id
 				feeds = Book::Feed.new(book_id).get_feed.execute
-				notifications = Notification.new(feeds).structure_feed
+				notifications = FeedStructure.new(feeds).execute
 				notifications
 			end
 

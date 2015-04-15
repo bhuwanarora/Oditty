@@ -15,21 +15,21 @@ module Api
 			end
 
 			def self.get_important_community_info id
-				Article::News.new(id).most_important_tag_info + Article::News.new(id).other_tags_info
+				Article::NewsArticle.new(id).most_important_tag_info + Article::NewsArticle.new(id).other_tags_info
 			end
 
 			def self.get_chronological_news_info id
-				Article::News.new(id).get_chronological_news_info
+				Article::NewsArticle.new(id).get_chronological_news_info
 			end
 
-			def self.get_community_info id
-				Community.new(id).books_users_info
+			def self.get_basic_community_info news_id
+				Community.new(news_id).books_users_info
 			end
 
 			def self.get_news_feed(user_id, skip_count)
 				news_feed = User::Feed.new(user_id).get_news_feed(skip_count)
 				begin
-					notifications = Notification.structure_feed news_feed
+					notifications = FeedStructure.execute(news_feed)
 				rescue Exception => e
 					notifications = []
 				end
@@ -38,7 +38,7 @@ module Api
 
 			def self.get_personal_feed(user_id, skip_count)
 				news_feed = User::Feed.new(user_id).get_personal_feed(skip_count).execute
-				notifications = Notification.new(news_feed).structure_feed
+				notifications = FeedStructure.new(news_feed).execute
 				notifications
 			end
 

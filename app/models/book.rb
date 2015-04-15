@@ -7,6 +7,14 @@ class Book < Neo
 		" MATCH (book:Book) "
 	end
 
+	def self.search_by_indexed_title indexed_title
+		" START book=node:node_auto_index('indexed_title:\""+indexed_title+"\"') WITH book " 
+	end
+
+	def self.get_by_indexed_title indexed_title
+		" START book=node:node_auto_index('indexed_title:\""+indexed_title+"\"') " + Book.return_init + Book.basic_info
+	end	
+
 	def get_feed
 		" MATCH (book:Book)-[:BookFeed*0..]->(news_feed) WHERE ID(book) = " + @id.to_s + " RETURN labels(news_feed), news_feed "
 	end

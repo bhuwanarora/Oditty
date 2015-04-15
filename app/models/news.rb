@@ -4,7 +4,7 @@ class News < Neo
 	end
 
 	def self.match_chronological_news
-		News.match_path_bidirectionally(Constant::Count::CommunitiesShown) + News.extract_unwind("linked_news") + ", news, ABS(TOINT(linked_news.created_at - news.created_at*1.0)) AS deviation ORDER BY deviation LIMIT " + Constant::Count::NewsShownInCommunity.to_s + " WITH linked_news AS news ORDER BY news.created_at "
+		News.match_path_bidirectionally(Constant::Count::CommunitiesShown) + ", " + News.extract_unwind("linked_news") + ", news, ABS(TOINT(linked_news.created_at - news.created_at*1.0)) AS deviation ORDER BY deviation LIMIT " + Constant::Count::NewsShownInCommunity.to_s + " WITH linked_news AS news ORDER BY news.created_at "
 	end
 
 	def self.match_path skip_count  
@@ -28,7 +28,7 @@ class News < Neo
 	end
 
 	def self.merge news_link
-		" MERGE (news:News{url:\"" + news_link.to_s + "\"}) ON CREATE SET news.created_at = " + Time.now.to_i.to_s + " WITH news "
+		" MERGE (news:News{url:\"" + news_link.to_s + "\"}) ON CREATE SET news.created_at = " + Time.now.to_i.to_s + ", news.view_count = 0 WITH news "
 	end
 
 	def self.merge_region news_source
@@ -52,6 +52,11 @@ class News < Neo
 		(clause.execute)[0]["news_id"]
 	end
 
+
+	def self.merge_community
+		" MERGE (news)-[:HasCommunity]->(community) WITH news, community "
+	end
+
 	def self.handle
 		news_sources ||= self.fetch_news_sources
 		puts news_sources
@@ -66,8 +71,12 @@ class News < Neo
 		end
 	end
 
+	def match_region
+		" MATCH (region:Region)-[regional_news:RegionalNews{region:ID(region)}]->(news) WHERE ID(news) = " + @id.to_s + " WITH region, news  "
+	end
+
 	def self.news_already_present news_id
-		clause = " MATCH (region:Region)-[relation:RegionalNews{region:ID(region)}]->(news) WHERE ID(news) = " + news_id.to_s + " RETURN ID(relation) as relation_id "
+		clause = News.new(news_id).match_region + " , regional_news " + News.return_init + " ID(regional_news) AS regional_news " 
 		data = (clause.execute)[0]
 		if data.blank?
 			news_already_present = false
@@ -110,5 +119,13 @@ class News < Neo
 		puts query
 		uri = URI(query)
 		response = Net::HTTP.get(uri)
+	end
+
+	def self.basic_info
+		" ID(news) AS  news_id  ,news.url  AS news_url  "
+	end
+
+	def self.grouped_basic_info
+		" news_id: ID(news) , news_url: news.url, view_count:news.view_count "
 	end
 end

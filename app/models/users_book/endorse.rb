@@ -3,6 +3,7 @@ class UsersBook::Endorse < UsersBook
 	def initialize book_id, user_id
 		@book_id = book_id
 		@user_id = user_id
+		@notification_node_variable = "endorse"
 	end
 
 	def create
@@ -19,7 +20,7 @@ class UsersBook::Endorse < UsersBook
 
 	def add 
 		operation = "+"
- 		UsersBook.new(@book_id, @user_id).match + create + " WITH user, endorse, book" + User::Feed.new(@user_id).create("endorse") + ", book "+ Book::Feed.new(@book_id).create("endorse") + Book.set_endorse_count(operation) + User.set_total_count(Constant::InteractionPoint::Endorse, operation)
+ 		UsersBook.new(@book_id, @user_id).match + create + " WITH user, endorse, book" + User::Feed.new(@user_id).create("endorse") + ", book " + Book::Feed.new(@book_id).create("endorse") + Book.set_endorse_count(operation) + User.set_total_count(Constant::InteractionPoint::Endorse, operation) + UsersUser.add_notification(@notification_node_variable) + UsersBook.return_init + User.basic_info
 	end
 
 	def remove

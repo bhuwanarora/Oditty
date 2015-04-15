@@ -118,7 +118,7 @@ class User < Neo
 	end
 
 	def get_notifications
-		match + Notification.handle_unseen + Notification.optional_match_book_user + Notification.return_group(Notification.basic_info, Book.basic_info, User.basic_info)
+		User::UserNotification.match_last_visited_notification(@id) + User::UserNotification.delete_visited_notification  + " WITH user " + User::UserNotification.create_visited_notification + User::UserNotification.match_path  + "," + User::UserNotification.extract_unwind("notification") + " WITH " + User.tail("notification") + User.return_group("labels(notification)", "notification", "notification.created_at") + User.order_init + " notification.created_at DESC " 
 	end
 
 	def get_books_bookmarked(skip_count=0)
@@ -199,11 +199,7 @@ class User < Neo
 		match + User.return_init + User.init_book_read_count
 	end
 
-	def self.match_latest_notification
-		" MATCH (user)-[:NextNotification]->(latest_notification:Notification) WITH user, latest_notification "
-	end
-
-	def self.match_last_seen_notification
-		" MATCH (user)-[saw_notification:SawNotification]->(last_seen_notification:Notification) WITH user, saw_notification, last_seen_notification "
+	def match_community
+		" MATCH (user)-[follows_user:FollowsCommunity]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(community) "
 	end
 end
