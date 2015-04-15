@@ -1,49 +1,25 @@
 <md-content class="md-whiteframe-z1 notifications light_grey" 
+		ng-controller="notificationController"
 		ng-click="stop_propagation($event)"
 		msd-wheel="stop_propagation($event)"
 		layout="column" layout-align="center start">
 	<div layout="row" layout-align="center center" layout-padding>
 		<div layout-padding flex="100">ReadersDoor Notifications...</div>
 	</div>
-	<md-list layout-padding>
-		<md-item layout-margin>
+	<md-list layout-padding ng-if="notifications">
+		<md-item layout-margin ng-repeat="notification in notifications">
 			<md-item-content class="white">
-				<div class="md-tile-left" layout-align="center center" layout="row">
-					<img class="circular"
-	                     src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
-				</div>
-				<div class="md-tile-content">
-					<div class="side_padding">Suraj Singh is now following you.</div>
-				</div>
+				<div class="md-tile-left" layout-align="center center" layout="row"><img class="circular" ng-src="{{notification.image_url}}"/></div>
+				<div class="md-tile-content"><div class="side_padding">{{notification.message}}</div></div>
 			</md-item-content>
 		</md-item>
+	</md-list>
+	<md-list>
 		<md-item layout-margin>
 			<md-item-content class="white">
-				<div class="md-tile-left" layout-align="center center" layout="row">
-					<img class="circular"
-	                     src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
-				</div>
 				<div class="md-tile-content">
-					<div class="side_padding">Suraj Singh is now following you.</div>
+					<div class="side_padding">No new notifications</div>
 				</div>
-			</md-item-content>
-		</md-item>
-		<md-item layout-margin>
-			<md-item-content class="white">
-				<div class="md-tile-left" layout-align="center center" layout="row">
-					 <img class="circular"
-	                     src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
-				</div>
-				<div class="md-tile-content">
-					<div class="side_padding">Suraj Singh is now following you.</div>
-				</div>
-			</md-item-content>
-		</md-item>
-		<md-item layout-margin>
-			<md-item-content layout-align="center center" layout-padding layout-fill>
-				<md-button>
-					Show all notifications
-				</md-button>
 			</md-item-content>
 		</md-item>
 	</md-list>

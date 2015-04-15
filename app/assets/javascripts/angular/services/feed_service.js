@@ -47,4 +47,8 @@ homeApp.service('feedService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return _deferred_request('/api/v0/feed?skip_count='+skip_count);
     }
 
+    this.get_notifications = function(){
+        return _deferred_request('/api/v0/personal_notifications');
+    }
+
 }]);

@@ -148,19 +148,7 @@ websiteApp.service('websiteService', ["$http", "$q", "$rootScope", "WebsiteUICon
         return _deferred_request('/api/v0/personal_notifications');
     }
 
-    this.get_notifications = function(skip_count, user_id, debug_feed){
-        if(angular.isDefined(user_id)){
-            if(angular.isDefined(debug_feed)){
-                return _deferred_request('/api/v0/notifications?skip_count='+skip_count+"&id="+user_id+"&debug="+true);
-            }
-            else{
-                return _deferred_request('/api/v0/notifications?skip_count='+skip_count+"&id="+user_id);
-            }
-        }
-        else{
-            return _deferred_request('/api/v0/notifications?skip_count='+skip_count);
-        }
-    }
+   
 
     this.get_latest_notification = function(){
         return _deferred_request('/api/v0/latest_notification');
