@@ -247,7 +247,7 @@ class User < Neo
 	end
 
 	def get_followers
-		match_followers + User.get_visited_books + User.return_group("user","books")
+		match_followers + User.get_visited_books + User.return_group(User.basic_info,"books")
 	end
 
 	def match_users_followed
@@ -255,6 +255,6 @@ class User < Neo
 	end
 
 	def get_users_followed
-		match_users_followed + User.get_visited_books + User.return_group("user","books") 
+		match_users_followed + User.get_visited_books + User.return_group(User.basic_info,"books") 
 	end
 end
