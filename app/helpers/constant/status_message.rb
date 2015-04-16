@@ -14,4 +14,5 @@ module Constant::StatusMessage
 	PasswordChangedSuccess	 	= "Password saved. Redirecting to home page."
 	PasswordChangedFailure		= "Error while saving the new password. Please try again."
 	SessionNotSet				= "Session not set properly error..."
+	VerificationTokenExpired	= " Verification token expired. Please request it again "
 end

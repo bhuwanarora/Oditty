@@ -14,4 +14,7 @@ class User::Authenticate < User
 		info
 	end
 
+	def verify
+		User.handle_verification(@params[:e], @params[:p])
+	end
 end

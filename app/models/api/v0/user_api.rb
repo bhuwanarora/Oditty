@@ -3,7 +3,7 @@ module Api
 		class UserApi
 
 			def self.authenticate session, params
-				User::Authenticate.action(session, params)
+				User::Authenticate.new(session, params).action
 			end
 
 			def self.get_details(user_id, session)
@@ -100,7 +100,19 @@ module Api
 			end
 
 			def self.recover_password email
-				User::Authenticate::Password.new(email).recover
+				verification_token = SecureRandom.hex
+				user = User::Authenticate::Password.new(email).recover(verification_token).execute[0]
+				user_exists = user.present?
+				if user_exists
+					link = Rails.application.config.home+'recover_password?p='+verification_token.to_s+"&e="+email
+					invitation = {:email => email, :template => Constant::EmailTemplate::PasswordReset, :link => link}
+					SubscriptionMailer.recover_password(invitation).deliver
+					User.handle_new_verification_request(email, verification_token).execute
+					message = Constant::StatusMessage::PasswordRecoveryInitiated
+				else
+					message = Constant::StatusMessage::EmailNotRegistered
+				end
+				{"message" => message , "user_exists" => user_exists, "user_id" => user["id"]}
 			end
 
 			def self.get_profile_info id
@@ -274,6 +286,21 @@ module Api
 			def self.get_notifications user_id
 				info = User.new(user_id).get_notifications
 				info
+			end
+
+			def self.verify(session, params)
+				user = User::Authenticate.new(session, params).verify.execute[0]
+			    if user.present?
+			    	puts user.to_s
+			    	if user["verified"]
+				      	message = Constant::StatusMessage::EmailConfirmed
+				    else 
+				    	message = Constant::StatusMessage::VerificationTokenExpired
+				    end  
+			    else
+				    message = Constant::StatusMessage::EmailConfirmationFailed
+			    end
+		    	message
 			end
 
 			private

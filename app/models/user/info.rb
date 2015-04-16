@@ -4,9 +4,17 @@ class User::Info < User
 		 " SET user.last_login = \"" + Time.now.strftime("%Y-%m-%d") + "\" "
 	end
 
+	def self.set_verification_time time = Time.now.to_i.to_s
+		" SET user.verification_time = " + time + " "
+	end
+
 
 	def self.set_email email
 		" SET user.email = \""+email+"\" "
+	end
+
+	def self.set_verified_true 
+		" FOREACH (ignore IN CASE WHEN user.verification_time < " + (Time.now.to_i - Constant::Count::SecondsInHourCount).to_s + " THEN [1] ELSE [] END | SET user.verified = true " + User::Info.set_verification_token("null") + User::Info.set_verification_time("null") + " )  "
 	end
 
 	def self.set_thumb thumb
@@ -61,7 +69,7 @@ class User::Info < User
 		(User.match_category category_id) + " SET likes.weight = CASE WHEN likes.weight IS NULL THEN 0 ELSE toInt(likes.weight) - "+Constant::InteractionPoint::CategoryLike.to_s+" END "
 	end
 
-	def self.set_verification_token email, verification_token
-		" MATCH (user:User{email:\""+email+"\"}) SET user.verification_token = \""+verification_token+"\" "
+	def self.set_verification_token verification_token
+		" SET user.verification_token = \"" + verification_token.to_s + "\" "
 	end
 end
