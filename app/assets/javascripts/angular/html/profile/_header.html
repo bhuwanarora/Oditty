@@ -1,6 +1,6 @@
 <md-toolbar class="profile_header">
     <section layout="column" layout-wrap>
-        <div layout="row" layout-align="end start" layout-padding >
+        <div layout="row" layout-align="end start" layout-padding class="top_section">
             <md-button class="md-primary md-raised md-button-clear" ng-if="!info.my_profile">Follow Me</md-button>
         </div>
         <div layout="row" layout-wrap class="bottom_header">
@@ -82,5 +82,9 @@
 
     .profile_header .bottom_header{
         height: 60px;
+    }
+
+    .profile_header .top_section{
+        min-height: 50px;
     }
 </style>

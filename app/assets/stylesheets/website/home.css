@@ -22,12 +22,12 @@ a:active{
 }
 
 .header{
-	/*background-color: #5f698c !important;*/
 	background-color: #FFFFFF !important;
 	color: rgba(145, 140, 140, 1) !important;
 	box-shadow: none;
 	min-height: 48px !important;
 	position: relative;
+	z-index: 3;
 }
 
 md-card{
@@ -201,6 +201,7 @@ md-toolbar{
 	right: 0px;
 	top: 55px;
 	max-height: 300px;
+	height: auto !important;
 	width: 300px;
 	z-index: 2;
 }

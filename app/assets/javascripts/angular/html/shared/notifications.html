@@ -3,7 +3,7 @@
 		ng-click="stop_propagation($event)"
 		msd-wheel="stop_propagation($event)"
 		layout="column" layout-align="center start">
-	<div layout="row" layout-align="center center" layout-padding>
+	<div layout="row" layout-align="center center" layout-padding ng-if="notifications">
 		<div layout-padding flex="100">ReadersDoor Notifications...</div>
 	</div>
 	<md-list layout-padding ng-if="notifications">
@@ -14,11 +14,11 @@
 			</md-item-content>
 		</md-item>
 	</md-list>
-	<md-list>
+	<md-list layout-padding ng-if="!notifications">
 		<md-item layout-margin>
-			<md-item-content class="white">
-				<div class="md-tile-content">
-					<div class="side_padding">No new notifications</div>
+			<md-item-content>
+				<div class="md-tile-content side_padding">
+					No new notifications
 				</div>
 			</md-item-content>
 		</md-item>

@@ -56,12 +56,12 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$timeout", "$mdSid
 
 	$scope.toggleLeft = function(event){
 	    $mdSidenav('left').toggle();
-      event.stopPropagation();
+        event.stopPropagation();
 	};
 
 	$scope.toggleRight = function(event){
 	    $mdSidenav('right').toggle();
-      event.stopPropagation();
+        event.stopPropagation();
 	};
 
     $scope.show_shelf_bottom_sheet = function(event){
@@ -80,10 +80,9 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$timeout", "$mdSid
         });
     }; 
 
-    $scope.show_search_bar = function() {
-        $scope.visible_search_bar = !$scope.visible_search_bar;
-    
-    };
+    $scope.stop_propagation = function(event){
+        event.stopPropagation();
+    }
 
     var _init = function(){
         $scope.visible_search_bar = true;

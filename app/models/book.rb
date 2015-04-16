@@ -111,6 +111,6 @@ class Book < Neo
 	end
 
 	def get_news
-		match + Book.match_communities + 
+		# match + Book.match_communities + 
 	end
 end
