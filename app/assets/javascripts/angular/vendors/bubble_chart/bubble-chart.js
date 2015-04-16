@@ -147,8 +147,7 @@
             .attr("x", function (d) {return d.cx-d.r;}).attr("y", function (d) {return d.cy-d.r;})
             .attr("height", function (d) {return 2*d.r;})
             .attr("width", function (d) {return 2*d.r;})
-            .attr("xlink:href", "http://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Color_icon_gray_v2.svg/2000px-Color_icon_gray_v2.svg.png");
-
+            .attr("xlink:href", function(d){return d.item.image_url;})
         node.sort(function (a, b) {return options.data.eval(b.item) - options.data.eval(a.item);});
 
 
