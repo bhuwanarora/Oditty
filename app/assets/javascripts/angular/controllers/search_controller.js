@@ -35,6 +35,24 @@ homeApp.controller('searchController', ["$scope", "searchService", "$location", 
         event.stopPropagation();
     }
 
+    $scope.reload_results = function(type){
+        switch(type){
+            case 'Book':
+                break;
+            case 'Author':
+                break;
+            case 'Community':
+                break;
+            case 'Blog':
+                break;
+            case 'Person':
+                break;
+            case 'News':
+                break;
+        }
+    }
+
+
     var _init = (function(){
         $scope.search_results = [];
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
@@ -42,6 +60,7 @@ homeApp.controller('searchController', ["$scope", "searchService", "$location", 
         if(angular.isDefined(url_parser) && url_parser != null){
             var q = url_parser[2];
             $scope.show_all_results(q);
+            $scope.display_results_for = q;
         }
     }());
 }]);

@@ -1,4 +1,4 @@
-<md-list ng-controller="searchController">
+<md-lis>
     <md-card ng-repeat="result in all_results">
         <div ng-include src="'/assets/angular/html/search/_book.html'" 
                 ng-if="(result | search_item_type) == 'Book'"></div>
