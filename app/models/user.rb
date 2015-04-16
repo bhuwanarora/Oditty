@@ -237,4 +237,24 @@ class User < Neo
 	def self.handle_new_verification_request email, verification_token
 		User.match_by_email(email) + User::Info.set_verification_token(verification_token) + User::Info.set_verification_time + User.return_init + User.basic_info
 	end
+
+	def match_followers
+		match + " WITH user AS friend " + UsersUser.match 
+	end
+
+	def self.get_visited_books
+		Bookmark::Type::Visited.match + Book.order_desc + Book.limit(3)  +" WITH user " + Book.collect_map("books" => Book.grouped_basic_info )
+	end
+
+	def get_followers
+		match_followers + User.get_visited_books + User.return_group("user","books")
+	end
+
+	def match_users_followed
+		match + UsersUser.match + " WITH friend AS user "  
+	end
+
+	def get_users_followed
+		match_users_followed + User.get_visited_books + User.return_group("user","books") 
+	end
 end

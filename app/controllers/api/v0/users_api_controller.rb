@@ -331,6 +331,18 @@ module Api
 				verification_info = Api::V0::UserApi.verify(session, params)
 				render :json => verification_info, :status => 200
 			end
+
+			def get_followers
+				user_id = session[:user_id]
+				info = Api::V0::UserApi.get_followers(user_id).execute
+				render :json => info, :status => 200
+			end
+
+			def get_users_followed
+				user_id = session[:user_id]
+				info = Api::V0::UserApi.get_users_followed(user_id).execute
+				render :json => info, :status => 200
+			end
 		end
 	end
 end
