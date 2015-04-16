@@ -53,33 +53,26 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
     }
 
     $scope.recover_password = function(){
-        delete $rootScope.user.error_message;
         var success_callback = function(data){
             $scope.loading_icon = false;
-            $rootScope.user.error_message = data.message;
+            alert(data.message);
             $rootScope.user.password = null;
         }
 
         var error_callback = function(data){
             $scope.$apply(function(){
                 $scope.loading_icon = false;
-                $rootScope.user.error_message = data.message;
+                alert(data.message);
                 $rootScope.user.password = null;
             });
         }
         if(!$rootScope.user.email){
-            $rootScope.user.error_message = LoginConstants.EmailNotPresent;
+            alert(LoginConstants.EmailNotPresent);
         }
         else{
             $scope.loading_icon = true;
             websiteService.recover_password("email="+$rootScope.user.email).then(success_callback, error_callback);
         }
-    }
-
-    $scope._on_authenticate = function(){
-        // sharedService.set_labels();
-        // sharedService.set_friends();
-        // sharedService.get_news_feed($scope);
     }
 
     $scope.authenticate = function(old_user){
@@ -94,50 +87,39 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
         var min_length_pattern = new RegExp("^.{8,}$");
         var not_repeat_pattern = new RegExp("^(.)\\1{7,16}$");
         var max_length_pattern = new RegExp("^.{100,}$");
-        delete $rootScope.user.error_message;
 
         // var email = "bhuwanarora67@gmail.com";
         // var password = "test";
         var data_json = {"email": email, "password": password, "old_user": old_user};
         
         var success_callback = function(data){
-            $rootScope.user.error_message = data.message;
             $rootScope.user.profile_status = data.profile_status;
             $rootScope.user.logged = true;
             $rootScope.user.id = data.user_id;
-            $scope.loading_icon = false;
-            var message = "INFO- Welcome back ";
-            var timeout_event = notify($rootScope, message, $timeout);
-            $scope.$on('destroy', function(){
-                $timeout.cancel(timeout_event);
-            });
-            $scope._is_logged_in();
-            $scope._redirect();
-            $scope._on_authenticate();
-            // $scope.$emit('getNotifications');
+            window.location.href = "/home";
         }
 
         var error_callback = function(reason){
             console.debug("error_callback", reason);
             $scope.loading_icon = false;
-            $rootScope.user.error_message = reason.data.message;
+            alert(reason.data.message);
             $rootScope.user.password = null;
         }
 
         if(!$rootScope.user.email){
-            $rootScope.user.error_message = LoginConstants.EmailNotPresent;
+            alert(LoginConstants.EmailNotPresent);
         }
         else if(!$rootScope.user.password) {
-            $rootScope.user.error_message = LoginConstants.PasswordNotPresent;
+            alert(LoginConstants.PasswordNotPresent);
         }
         else if(!min_length_pattern.test($rootScope.user.password) && (!old_user)){
-            $rootScope.user.error_message = LoginConstants.PasswordLengthError;
+            alert(LoginConstants.PasswordLengthError);
         }
         else if((not_repeat_pattern.test($rootScope.user.password)) && (!old_user)){
-            $rootScope.user.error_message = LoginConstants.ChooseAMoreSecurePassword;
+            alert(LoginConstants.ChooseAMoreSecurePassword);
         }
         else if((max_length_pattern.test($rootScope.user.password)) && (!old_user)){
-            $rootScope.user.error_message = LoginConstants.MaximumPasswordLengthError;  
+            alert(LoginConstants.MaximumPasswordLengthError);
         }
         else{
             $scope.loading_icon = true;
