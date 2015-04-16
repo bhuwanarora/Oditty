@@ -11,6 +11,11 @@ class Bookmark::Type::Visited < Bookmark::Type
 		Bookmark::Node::BookLabel.match_path + " WHERE label.key = '"+@key+"' WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, book, COUNT(label) AS label_count "
 	end
 
+	def self.match
+		Bookmark::Node::BookLabel.match_path + " WHERE label.key = 'Visited' WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, book  "
+	end
+
+
 	def add
 		@bookmark.add
 	end
