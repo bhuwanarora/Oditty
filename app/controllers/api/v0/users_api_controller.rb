@@ -96,7 +96,7 @@ module Api
 			end
 
 			def authenticate
-				authentication_info = UserApi.authenticate(session, params)
+				authentication_info = Api::V0::UserApi.authenticate(session, params)
 				if authentication_info[:authenticate]
 					render :json => authentication_info, :status => 200
 				else
@@ -277,8 +277,8 @@ module Api
 			end
 
 			def recover_password
-				email_sent = UserApi.recover_password(params[:email])
-				render :json => {:message => Constant::StatusMessage::PasswordRecoveryInitiated}, :status => 200
+				email_sent = Api::V0::UserApi.recover_password(params[:email])
+				render :json => {:message => Constants::PasswordRecoveryInitiated}, :status => 200
 			end
 
 			# def get_news_feed

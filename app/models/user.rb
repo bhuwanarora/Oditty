@@ -4,6 +4,10 @@ class User < Neo
 		@id = user_id
 	end
 
+	def self.link_primary_labels
+		"  CREATE (user)-[:Labelled{user_id:ID(user)}]->(label) WITH user, label "
+	end
+
 	def self.match_group ids
 		clause = ""
 		unless ids.nil?
@@ -105,16 +109,15 @@ class User < Neo
 	end
 
 	def self.create(email, password=nil, verification_token=nil)
-		create_new_user = "CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, last_book: "+Constant::Id::BestBook.to_s+", amateur: true, ask_info: true}), "
-		create_feednext_relation = "(user)-[fn:FeedNext{user_id:ID(user)}]->(user), "
-		create_ego_relation = "(user)-[:Ego{user_id:ID(user)}]->(user) WITH user "
-		get_labels = "MATCH(bm:Label{basic:true}) "
-		add_labels = "CREATE (user)-[:Labelled{user_id:ID(user)}]->(bm) "
-		add_categories_to_user = "WITH user MERGE (root_category:Category{is_root:true}) MERGE (user)-[rel:Likes]-(root_category) ON CREATE SET rel.weight = 0 "
-		# get_all_users = "MATCH (all_user:User) WHERE all_user <> user "
-		# make_friends = "CREATE (user)-[:Follow]->(all_user), (user)<-[:Follow]-(all_user)"
-		clause = create_new_user + create_feednext_relation + create_ego_relation + get_labels + add_labels + add_categories_to_user
-		clause
+		"CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, last_book: "+Constants::BestBook.to_s+", amateur: true, ask_info: true}) "
+	end
+
+	def self.link_root_categories
+		"  CREATE UNIQUE (user)-[rel:Likes]-(root_category) SET rel.weight = 0 WITH user , root_category "
+	end
+
+	def self.handle_new(email, password=nil, verification_token=nil)
+		User.create(email, password, verification_token) + User::Feed.create_first + Label.match_primary  + ", user " + User.link_primary_labels + Category::Root.match  + ", user " + User.link_root_categories + User.return_init + User.basic_info
 	end
 
 	def get_notifications
@@ -202,4 +205,16 @@ class User < Neo
 	def match_community
 		" MATCH (user)-[follows_user:FollowsCommunity]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(community) "
 	end
+
+	def self.get_by_fb_id id
+		" MATCH (user:User{fb_id:" + id.to_s + "}) " + User::Info.return_init + User.basic_info
+	end
+
+	def self.get_by_email email
+		" MATCH (user:User) WHERE user.email= \"" + email + "\" " + User::Info.return_init + User.basic_info
+	end
+
+	def self.get_sign_in_credential_by_email email
+		" MATCH (user:User) WHERE user.email= \"" + email + "\" " + User::Info.return_init + User.basic_info + ", user.password AS password , user.verified AS verified, user.active AS active" 
+	end	
 end

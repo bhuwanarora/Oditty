@@ -4,6 +4,10 @@ class Category::Root < Category
 		" MATCH (book)-[:FromCategory]->(category:Category)-[:HasRoot*0..1]->(root_category:Category{is_root:true}) WITH book, root_category "
 	end
 
+	def self.match
+		" MATCH (root_category:Category{is_root:true}) WITH root_category "
+	end
+
 	def self.basic_info
 		super("root_category")
 	end

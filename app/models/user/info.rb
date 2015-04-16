@@ -1,8 +1,9 @@
 class User::Info < User
 	
-	def self.get_by_email email
-		" MATCH (user:User) WHERE user.email= \"" + email + "\" " + return_init + User.basic_info
+	def self.set_last_login email
+		 " SET user.last_login = \"" + Time.now.strftime("%Y-%m-%d") + "\" "
 	end
+
 
 	def self.set_email email
 		" SET user.email = \""+email+"\" "
@@ -58,5 +59,9 @@ class User::Info < User
 
 	def self.remove_category category_id
 		(User.match_category category_id) + " SET likes.weight = CASE WHEN likes.weight IS NULL THEN 0 ELSE toInt(likes.weight) - "+Constant::InteractionPoint::CategoryLike.to_s+" END "
+	end
+
+	def self.set_verification_token email, verification_token
+		" MATCH (user:User{email:\""+email+"\"}) SET user.verification_token = \""+verification_token+"\" "
 	end
 end

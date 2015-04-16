@@ -18,5 +18,9 @@ class Label < Neo
 	def self.create
 		" CREATE UNIQUE (user)-[:Labelled]->(:Label) "
 	end
+	
+	def self.match_primary
+		" MATCH (label:Label{primary_label:true}) WITH label "
+	end
 
 end
