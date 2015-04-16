@@ -30,9 +30,24 @@ homeApp.controller('searchController', ["$scope", "searchService", "$location", 
         });
     }
 
-    $scope.on_select = function(event){
-        event.preventDefault();
-        event.stopPropagation();
+    $scope.on_select = function(item){
+        if(angular.isDefined(item)){
+            var book_label = item.labels.indexOf("Book") >= 0;
+            var author_label = item.labels.indexOf("Author") >= 0;
+            var output = ""
+            if(book_label){
+                output = "/book?q="+item.id;
+            }
+            else if(author_label){
+                output = "/author?q="+item.id;
+            }
+            else if(item.show_all){
+              output = "/search?q="+item.search_text;
+            }
+            if(output != ""){
+                window.location.href = output;
+            }
+        }
     }
 
     $scope.reload_results = function(type){

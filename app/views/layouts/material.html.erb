@@ -161,20 +161,19 @@
                                             md-search-text="search_text"
                                             md-items="item in search_results"
                                             md-search-text-change="query_search(search_text)"
-                                            md-selected-item-change="on_select($event)"
+                                            md-selected-item-change="on_select(item)"
                                             md-item-text="item.name"
                                             class="search"
                                             hide-sm
                                             flex="85"
                                             ng-click="stop_propagation($event)"
                                             placeholder="Search books, topics and more...">
-                                <a ng-href="{{item | get_url}}" 
-                                    layout="row"
+                                <div layout="row"
                                     layout-align="space-between"
                                     md-highlight-text="item | search_item_type">
                                     <div>{{item.name}}</div>
                                     <b class="less_important">{{item | search_item_type}}</b>
-                                </a>
+                                </div>
 
                                 <!-- <span md-highlight-text="search_text">
                                     {{item}}
