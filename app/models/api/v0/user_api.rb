@@ -100,10 +100,10 @@ module Api
 			end
 
 			def self.recover_password email
-				user = User::Authenticate::Password.new(email).recover.execute[0]
+				verification_token = SecureRandom.hex
+				user = User::Authenticate::Password.new(email).recover(verification_token).execute[0]
 				user_exists = user.present?
 				if user_exists
-					verification_token = SecureRandom.hex
 					link = Rails.application.config.home+'recover_password?p='+verification_token.to_s+"&e="+email
 					invitation = {:email => email, :template => Constant::EmailTemplate::PasswordReset, :link => link}
 					SubscriptionMailer.recover_password(invitation).deliver
@@ -112,7 +112,7 @@ module Api
 				else
 					message = Constant::StatusMessage::EmailNotRegistered
 				end
-				message
+				{"message" => message , "user_exists" => user_exists, "user_id" => user["id"]}
 			end
 
 			def self.get_profile_info id

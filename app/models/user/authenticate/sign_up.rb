@@ -22,8 +22,6 @@ class User::Authenticate::SignUp < User::Authenticate
 			User.handle_new(@params[:email], @params[:password], @verification_token).execute
 			SubscriptionMailer.verify_email(invitation).deliver
 			message = Constant::StatusMessage::ActivateAccount
-
-			
 		end
 		puts message
 		{:authenticate => authenticate, :message => message }

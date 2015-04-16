@@ -4,7 +4,7 @@ class User::Authenticate::Password < User::Authenticate
 		@email = email
 	end
 
-	def recover 
-		User.get_by_email(@email)
+	def recover verification_token 
+		User.handle_new_verification_request(@email, verification_token)
 	end
 end

@@ -186,13 +186,27 @@ class UsersController < ApplicationController
   end
 
   def verify
-        verification_info = Api::V0::UserApi.verify(session, params)
-        render :json => verification_info, :status => 200
+        @message = Api::V0::UserApi.verify(session, params)
+        render :layout => "clean"
   end
 
   def recover_password
-        message = Api::V0::UserApi.recover_password(params[:e])
-        render :json => {:message => message}, :status => 200
+    info = Api::V0::UserApi.recover_password(params[:e])
+    @user_id = info["user_id"]
+    @user_exists = info["user_exists"]
+    @message = info["message"]
+    render :layout => "clean"
+  end
+
+  def save_password
+    begin
+      @neo = Neography::Rest.new
+      clause = "MATCH (user:User) WHERE ID(user)="+params[:id].to_s+" SET user.password=\""+params[:p]+"\"  RETURN user"
+      user = clause.execute
+      render :json => {:message => Constant::StatusMessage::PasswordChangedSuccess}, :status => 200
+    rescue Exception => e
+      render :json => {:message => Constant::StatusMessage::PasswordChangedFailure}, :status => 500
+    end
   end
 
   def save_password

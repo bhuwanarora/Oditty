@@ -235,6 +235,6 @@ class User < Neo
 	end
 
 	def self.handle_new_verification_request email, verification_token
-		User.match_by_email(email) + User::Info.set_verification_token(verification_token) + User::Info.set_verification_time
+		User.match_by_email(email) + User::Info.set_verification_token(verification_token) + User::Info.set_verification_time + User.return_init + User.basic_info
 	end
 end

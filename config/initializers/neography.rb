@@ -28,7 +28,6 @@ module Neography
                 neo_response["data"].each do |record|
                     response << Hash[neo_response["columns"].zip(record)]
                 end
-              puts response.to_s.white.on_black
               response
             end
         end
