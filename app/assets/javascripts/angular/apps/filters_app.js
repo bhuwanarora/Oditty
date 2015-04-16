@@ -28,6 +28,9 @@ angular.module('filtersApp', [])
                 else if(author_label){
                     output = "/author?q="+input.id;
                 }
+                else if(input.show_all){
+                  output = "/search?q="+input.search_text;
+                }
             }
             return output;
         }

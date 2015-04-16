@@ -1,9 +1,16 @@
-<md-list>
-    <div ng-include src="'/assets/angular/html/search/_blog.html'"></div>
-    <div ng-include src="'/assets/angular/html/search/_book.html'"></div>
-    <div ng-include src="'/assets/angular/html/search/_community.html'"></div>
-    <div ng-include src="'/assets/angular/html/search/_listopia.html'"></div>
-    <div ng-include src="'/assets/angular/html/search/_person.html'"></div>
+<md-list ng-controller="searchController">
+    <md-card ng-repeat="result in all_results">
+        <div ng-include src="'/assets/angular/html/search/_book.html'" 
+                ng-if="(result | search_item_type) == 'Book'"></div>
+        <div ng-include src="'/assets/angular/html/search/_person.html'" 
+                ng-if="(result | search_item_type) == 'Author'"></div>
+        <div ng-include src="'/assets/angular/html/search/_blog.html'" 
+            ng-if="(result | search_item_type) == 'Blog'"></div>
+        <div ng-include src="'/assets/angular/html/search/_community.html'" 
+            ng-if="(result | search_item_type) == 'Community'"></div>
+        <div ng-include src="'/assets/angular/html/search/_listopia.html'" 
+            ng-if="(result | search_item_type) == 'Listopia'"></div>
+    </md-card>
 </md-list>
 
 <style>
