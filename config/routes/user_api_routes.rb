@@ -50,6 +50,8 @@ ReadersDoor::Application.routes.draw do
       match 'books_on_friends_shelves'                => 'users_api#get_books_on_friends_shelves',      :via => [:put, :get, :post]
       match 'books_from_unexplored_subjects'          => 'users_api#get_books_from_unexplored_subjects',:via => [:put, :get, :post]
       match 'get_feed'                                => 'users_api#get_feed',                          :via => [:put, :get, :post]
+      match 'verify'                                  => "users_api#verify",                            :via => [:post]   
+
     end
   end
 end

@@ -277,8 +277,8 @@ module Api
 			end
 
 			def recover_password
-				email_sent = Api::V0::UserApi.recover_password(params[:email])
-				render :json => {:message => Constants::PasswordRecoveryInitiated}, :status => 200
+				message = Api::V0::UserApi.recover_password(params[:email])
+				render :json => {:message => message}, :status => 200
 			end
 
 			# def get_news_feed
@@ -325,6 +325,11 @@ module Api
 				user_id = session[:user_id]
 				influential_books = UserApi.get_influential_books(user_id).execute
 				render :json => influential_books, :status => 200
+			end
+
+			def verify
+				verification_info = Api::V0::UserApi.verify(session, params)
+				render :json => verification_info, :status => 200
 			end
 		end
 	end

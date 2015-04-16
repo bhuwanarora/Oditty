@@ -18,19 +18,20 @@ class User::Authenticate::SignIn < User::Authenticate
 				@session[:user_id] = user["id"]
 				User::Info.set_last_login.execute(@params[:email])
 				info = {:profile_status => 0, :user_id => user["id"]}
-				message = Constants::LoginSuccess
+				message = Constant::StatusMessage::LoginSuccess
 			elsif user_authenticated
-				message = Constants::PendingActivation
+				message = Constant::StatusMessage::PendingActivation
 			elsif  user["password"] != @params[:password]
-				message = Constants::AuthenticationFailed
+				message = Constant::StatusMessage::AuthenticationFailed
 			elsif !user["verified"]
-				message = Constants::VerifyEmail
+				message = Constant::StatusMessage::VerifyEmail
 			else
-				message = Constants::AuthenticationFailed
+				message = Constant::StatusMessage::AuthenticationFailed
 			end
 		rescue => err
-			message = Constants::EmailNotRegistered
+			message = Constant::StatusMessage::EmailNotRegistered
 		end
+		puts message.red
 		{:info => info, :authenticate => authenticate, :message => message }
 	end
 end

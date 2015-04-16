@@ -18,5 +18,7 @@ module Constant::Count
 	UniqueNews  				= 50
 	BookCountShownOnSignup  	= 30
 	InitialSkip		        	= 0
-	RelevantSocialTagValue  	= 1
+	RelevantSocialTag		  	= 1
+
+	SecondsInHourCount			= 3600
 end

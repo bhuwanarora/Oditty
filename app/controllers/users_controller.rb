@@ -186,29 +186,13 @@ class UsersController < ApplicationController
   end
 
   def verify
-    @neo = Neography::Rest.new
-    clause = "MATCH (user:User) WHERE user.email=\""+params[:e]+"\" AND user.verification_token=\""+params[:p]+"\" SET user.verified = true RETURN user"
-    user = clause.execute
-    if user["data"]
-      @message = Constant::StatusMessage::EmailConfirmed
-    else
-      @message = Constant::StatusMessage::EmailConfirmationFailed
-    end
-    render :layout => "clean"
+        verification_info = Api::V0::UserApi.verify(session, params)
+        render :json => verification_info, :status => 200
   end
 
   def recover_password
-    @neo = Neography::Rest.new
-    clause = "MATCH (user:User) WHERE user.email=\""+params[:e]+"\" AND user.password_token=\""+params[:p]+"\"  RETURN ID(user)"
-    user = clause.execute
-    if user["data"].present?
-      @user_exists = true 
-      @user_id = user["data"][0][0]
-    else
-      @user_exists = false
-      @message = Constant::StatusMessage::InvalidLink
-    end
-    render :layout => "clean"
+        message = Api::V0::UserApi.recover_password(params[:e])
+        render :json => {:message => message}, :status => 200
   end
 
   def save_password
