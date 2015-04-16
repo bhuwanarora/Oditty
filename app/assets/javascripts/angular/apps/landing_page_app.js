@@ -1,5 +1,4 @@
 var app = angular.module('myApp', ['ngAnimate', 'ngMaterial', 'duScroll', 'ngRoute', 'monospaced.mousewheel', 'appConstants', 'timer', 'facebook', 'ngCookies']);
-
 function easeInQuad(t){ 
     return  t<.5 ? 2*t*t : -1+(4-2*t)*t;
 };

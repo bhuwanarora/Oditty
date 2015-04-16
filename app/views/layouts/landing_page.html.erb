@@ -9,7 +9,6 @@
         <script>document.write('<base href="' + document.location + '" />');</script>
 
         <link href='assets/fonts.css' rel='stylesheet'>
-        <link rel="stylesheet" href="assets/min/landing_page_site.min.css" />
         <script>
             (function() {
                 var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -18,26 +17,42 @@
             })();
         </script>
         <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
-        <script src="assets/min/angular/website.min.js"></script> 
-        <script src="assets/min/angular/landing_page.min.js"></script>
 
-        <link rel="stylesheet" href="assets/landing_page/style.css" />
-        <link rel="stylesheet" href="assets/landing_page/media.css" />
-        <link rel="stylesheet" href="assets/website/website.css" />
-        <link rel="stylesheet" href="assets/landing_page/animate.css" />
+        <% if Rails.env.development? %>
+            <link rel="stylesheet" href="assets/angular_material_082.css" />
+            <link rel="stylesheet" href="assets/landing_page/style.css" />
+            <link rel="stylesheet" href="assets/landing_page/media.css" />
+            <link rel="stylesheet" href="assets/website/website.css" />
+            <link rel="stylesheet" href="assets/landing_page/animate.css" />
+            <link rel="stylesheet" href="assets/website/icomoon.css" />
 
-        <script src="assets/angular/vendors/angular136.min.js"></script>
-        <script src="assets/angular/vendors/angular_messages.min.js"></script>
-        <script src="assets/angular/vendors/angular_animate136.min.js"></script>
-        <script src="assets/angular/vendors/hammer.js"></script>
-        <script src="assets/angular/vendors/angular-aria135.min.js"></script>
-        <script src="assets/angular/vendors/angular_mousewheel.min.js"></script>
-        <script src="assets/angular/vendors/angular_router.min.js"></script>
-        <script src="assets/angular/vendors/angular_material.min.js"></script>
-        <script src="assets/angular/vendors/angular-timer.min.js"></script>
-        
-        <script src="assets/lib/angular_scroll.min.js"></script> 
-        <script src="assets/angular/vendors/angular_filters.min.js"></script> 
+            <script src="assets/angular/vendors/angular136.min.js"></script>
+            <script src="assets/angular/vendors/angular_messages.min.js"></script>
+            <script src="assets/angular/vendors/angular_animate136.min.js"></script>
+
+            <script src="assets/angular/vendors/hammer.js"></script>
+            <script src="assets/angular/vendors/angular-aria135.min.js"></script>
+            <script src="assets/angular/vendors/angular_mousewheel.min.js"></script>
+            <script src="assets/angular/vendors/angular_router.min.js"></script>
+            <script src="assets/angular/vendors/angular_0.8.2.min.js"></script>
+            <script src="assets/angular/vendors/angular_cookies.min.js"></script>
+            <script src="assets/angular/vendors/angular_facebook.js"></script>
+            <script src="assets/angular/vendors/angular-timer.min.js"></script>
+            <script src="assets/angular/vendors/angular-sanitize.min.js"></script>
+
+            <script src="assets/lib/angular_scroll.min.js"></script> 
+            <script src="assets/angular/vendors/angular_filters.min.js"></script> 
+            
+            <script src='assets/angular/apps/landing_page_app.js'></script>
+            <script src='assets/angular/apps/app_constants.js'></script>
+            <script src='assets/angular/services/website_service.js'></script>
+            <script src='assets/angular/controllers/landing_page_controller.js'></script>
+            <script src='assets/angular/controllers/signup_controller.js'></script>
+        <% else %>
+            <link rel="stylesheet" href="assets/min/landing_page_site.min.css" />
+            <script src="assets/min/angular/website.min.js"></script> 
+            <script src="assets/min/angular/landing_page.min.js"></script>
+        <% end %>
     </head>
 
     <body ng-controller="MainCtrl" ng-keydown="scroll_on_keypress($event)">

@@ -43,6 +43,11 @@ class WebsiteController < ApplicationController
 		render :layout => "landing_page"
 	end
 
+	def signup
+		@signup = true
+		render :layout => "landing_page"
+	end
+
 	def jobs
 		render :layout => "clean"
 	end
@@ -113,9 +118,6 @@ class WebsiteController < ApplicationController
 		render :layout => "material"
 	end
 
-	def signup
-		@signup = true
-		render :layout => "material"
-	end
+	
 
 end

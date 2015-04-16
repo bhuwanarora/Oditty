@@ -1,4 +1,4 @@
-websiteApp.service('websiteService', ["$http", "$q", "$rootScope", "WebsiteUIConstants", function ($http, $q, $rootScope, WebsiteUIConstants){
+app.service('websiteService', ["$http", "$q", "$rootScope", "WebsiteUIConstants", function ($http, $q, $rootScope, WebsiteUIConstants){
 	
     var _user_id = function(){
         if(angular.isDefined($rootScope.reader)){
@@ -59,12 +59,9 @@ websiteApp.service('websiteService', ["$http", "$q", "$rootScope", "WebsiteUICon
         return _deferred_request('/api/v0/user');
     }
 
-   
-
     this.logout = function(){
         return _deferred_request('/api/v0/logout');
     }
-
 
     this.save_user_info = function(params){
         return _deferred_post_request('/api/v0/save_info', params);
@@ -76,16 +73,12 @@ websiteApp.service('websiteService', ["$http", "$q", "$rootScope", "WebsiteUICon
 
     this.handle_google_user = function(params){
         return _deferred_post_request('/api/v0/google', params);
-    }
-
-   
+    }   
 
     this.authenticate = function(data){
         return _deferred_post_request('/api/v0/authenticate', data);
     }
 
-   
-    
     this.get_user_details = function(id){
         if(angular.isDefined(id)){
             return _deferred_request('/api/v0/user_details?id='+id);
@@ -95,6 +88,8 @@ websiteApp.service('websiteService', ["$http", "$q", "$rootScope", "WebsiteUICon
         }
     }
 
-   
+    this.get_personal_notifications = function(){
+        return _deferred_request('/api/v0/personal_notifications');
+    }
 
 }]);
