@@ -96,8 +96,9 @@ module Api
 			end
 
 			def authenticate
-				authentication_info = Api::V0::UserApi.authenticate(session, params)
+				authentication_info = Api::V0::UserApi.authenticate(params)
 				if authentication_info[:authenticate]
+					session[:user_id] = info[:user]["user_id"]
 					render :json => authentication_info, :status => 200
 				else
 					render :json => authentication_info, :status => 403
@@ -325,11 +326,6 @@ module Api
 				user_id = session[:user_id]
 				influential_books = UserApi.get_influential_books(user_id).execute
 				render :json => influential_books, :status => 200
-			end
-
-			def verify
-				verification_info = Api::V0::UserApi.verify(session, params)
-				render :json => verification_info, :status => 200
 			end
 
 			def get_followers

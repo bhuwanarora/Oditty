@@ -249,8 +249,8 @@ module Api
 				user_id
 			end
 
-			def self.authenticate(session, params)
-				info = User::Authenticate.new(session, params).action
+			def self.authenticate(params)
+				info = User::Authenticate.new(params).action
 			end
 
 			def self.get_most_connected_friends(user_id, count, skip)
@@ -289,18 +289,14 @@ module Api
 				info
 			end
 
-			def self.verify(session, params)
-				user = User::Authenticate.new(session, params).verify.execute[0]
+			def self.verify(params)
+				user = User::Authenticate.new(params).verify.execute[0]
 			    if user.present?
-			    	puts user.to_s
-			    	if user["verified"]
-				      	message = Constant::StatusMessage::EmailConfirmed
-				    else 
-				    	message = Constant::StatusMessage::VerificationTokenExpired
-				    end  
+			      	message = Constant::StatusMessage::EmailConfirmed
 			    else
-				    message = Constant::StatusMessage::EmailConfirmationFailed
+			    	message = Constant::StatusMessage::VerificationTokenExpired
 			    end
+			    puts message
 		    	message
 			end
 
