@@ -165,7 +165,7 @@ class Bookmark < Neo
 	end
 
 	def match
-		" MATCH (user:User), (" + @media + ":" + @media_label + "), (label:Label) WHERE ID(user)=" + @user_id.to_s + " AND ID(media)=" + @media_id.to_s + " AND label.key = \""+@key+"\" WITH user, " + @media + ", label "
+		" MATCH (user:User), (" + @media + ":" + @media_label + "), (label:Label) WHERE ID(user)=" + @user_id.to_s + " AND ID(" + @media + ")=" + @media_id.to_s + " AND label.key = \""+@key+"\" WITH user, " + @media + ", label "
 	end
 	
 	def remove  
@@ -176,14 +176,14 @@ class Bookmark < Neo
 
 		bookfeed_next_clause = @media_feed_class.delete_feed("bookmark_node", @user_id) + ", labelled, label "
 
-		clause = match + media_label_class.match_path + delete_bookmark_relations + set_clause + feednext_clause + bookfeed_next_clause + Bookmark.delete_bookmark
+		clause = match + @media_label_class.match_path + delete_bookmark_relations + set_clause + feednext_clause + bookfeed_next_clause + Bookmark.delete_bookmark
 
 		puts "REMOVE BOOKMARKED".green
 		clause
 	end
 
 	def create 
-		@user_media_class.new(@media_id, @user_id).match + User.create_label(@key) + create_label_bookmark_node + create_bookmark_node_book + set_updated_at + set_created_at + set_key(@key) + " WITH user, " + @media + ", bookmark_node, label, labelled "
+		@user_media_class.new(@media_id, @user_id).match + User.create_label(@key) + create_label_bookmark_node + create_bookmark_node_book + Bookmark.set_updated_at + Bookmark.set_created_at + set_key(@key) + " WITH user, " + @media + ", bookmark_node, label, labelled "
 	end
 
 	def add  
@@ -194,8 +194,8 @@ class Bookmark < Neo
 			bookfeed_next_clause = ""
 		else
 			end_clause = @media_class.set_bookmark_count(operation) + User.set_bookmark_count(operation) + Label.set_bookmark_count(operation) + UsersLabel.set_bookmark_count(operation) + User.set_total_count(Constant::InteractionPoint::Bookmark, operation)
-			feednext_clause = User::Feed.new(@user_id).create("bookmark_node") + label_and_labelled + ", " + @media
-			bookfeed_next_clause = @media_feed_class.new(@user_id).create("bookmark_node") + 
+			feednext_clause = User::Feed.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled + ", " + @media
+			bookfeed_next_clause = @media_feed_class.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled
 		end
 
 		clause = create + feednext_clause + bookfeed_next_clause  + end_clause
