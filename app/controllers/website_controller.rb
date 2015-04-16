@@ -96,6 +96,7 @@ class WebsiteController < ApplicationController
 	end
 
 	def network
+		@network = true
 		render :layout => "material"
 	end
 

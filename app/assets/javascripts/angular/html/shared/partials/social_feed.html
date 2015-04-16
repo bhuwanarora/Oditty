@@ -14,18 +14,7 @@
         </section>
     </md-card-content>
     <md-card-content class="less_important_container" ng-if="feed.book.title">
-        <div class="social_content" layout="row" layout-padding>
-            <div flex="25">
-                <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'" ng-init="book = feed.book"></div>
-            </div>
-            <div flex="75">
-                <div class="book_title"><a ng-href="/book?q={{feed.book.id}}">{{feed.book.title}}</a></div>
-                <div class="less_important">By <a ng-href="/author?id={{feed.book.author_id}}">{{feed.book.author_name}}</a></div>
-                <div class="book_description">
-                    {{feed.book.description | reduced_summary}}
-                </div>
-            </div>
-        </div>
+        <div class="footer" ng-init="book = feed.book" ng-include src="'/assets/angular/html/shared/partials/book_info.html'"></div>
     </md-card-content>
     <md-card-content class="footer" ng-include src="'/assets/angular/html/shared/partials/card_footer.html'">
     </md-card-content>
@@ -49,16 +38,6 @@
         width: 100%;
     }
 
-    .book_title{
-        font-size: 1.2em;
-        font-family: sans-serif;
-    }
-
-    .book_description{
-        margin-top: 10px;
-        font-size: 0.9em;
-    }
-    
     .status_message a{
         font-weight: bold;
         text-decoration: underline;

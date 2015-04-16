@@ -64,6 +64,10 @@
                 <script src="assets/angular/controllers/home/home_controller.js"></script>
             <% end %>
 
+            <% if @network %>
+                <script src="assets/angular/controllers/network_controller.js"></script>
+            <% end %>
+
             <% if @community %>
                 <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
                 <script src="assets/angular/services/community_service.js"></script>

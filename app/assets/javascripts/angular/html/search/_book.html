@@ -1,18 +1,5 @@
 <md-card>
     <md-card-content>
-        <section layout="row">
-            <div flex="20" flex-md="30" flex-sm="35" layout="row" layout-align="start start">
-                <div ng-init="book = result" ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
-            </div>
-            <div flex="80" flex-md="70" flex-sm="65" layout="column" layout-wrap class="side_padding">
-                <h4>
-                    <a ng-href="/book?q={{result.id}}">
-                        {{result.name}}
-                    </a>
-                </h4>
-                <div class="less_important">By {{result.author_name}}</div><br/>
-                <div>{{results.description}}</div>
-            </div>
-        </section>
+        <div class="footer" ng-init="book = result" ng-include src="'/assets/angular/html/shared/partials/book_info.html'"></div>
     </md-card-content>
 </md-card>
