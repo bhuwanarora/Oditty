@@ -16,7 +16,8 @@ class User::Authenticate::SignIn < User::Authenticate
 			if active_user_authenticated
 				authenticate = true
 				@session[:user_id] = user["id"]
-				User::Info.set_last_login.execute(@params[:email])
+				clause = User.new(user["id"]).match + User::Info.set_last_login(@params[:email])
+				clause.execute
 				info = {:profile_status => 0, :user_id => user["id"]}
 				message = Constant::StatusMessage::LoginSuccess
 			elsif user_authenticated
@@ -29,6 +30,7 @@ class User::Authenticate::SignIn < User::Authenticate
 				message = Constant::StatusMessage::AuthenticationFailed
 			end
 		rescue => err
+			puts err.to_s
 			message = Constant::StatusMessage::EmailNotRegistered
 		end
 		puts message.red

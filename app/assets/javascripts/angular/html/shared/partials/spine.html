@@ -1,4 +1,4 @@
-<a ng-href="/book?q={{book.id}}" ng-repeat="book in books">
+<a ng-href="/book?q={{book.id || book.book_id}}" ng-repeat="book in books">
 	<md-button class="clear spine_button" ng-if="book.title">
 		<div class="spine" ng-style="{background:'{{book.color}}'}">
 			{{book.title}}
