@@ -25,7 +25,7 @@ class Author < Neo
 	end
 
 	def match_books
-		" MATCH (author)-[:Wrote]->(book:Book) WITH book, author "
+		" MATCH (author)-[:Wrote]->(book:Book) WITH COLLECT({"+Book.grouped_basic_info+"}) AS book, author "
 	end
 
 	def self.match_books
@@ -47,7 +47,7 @@ class Author < Neo
 	end
 
 	def self.basic_info
-		" author.name AS name, author.id AS id, author.wiki_url AS wiki_url, author.overview as overview "
+		" author.name AS name, ID(author) AS id, author.wiki_url AS wiki_url, author.overview as overview "
 	end
 
 	def self.get_favourites skip_count=0
@@ -55,7 +55,7 @@ class Author < Neo
 	end
 
 	def get_details
-		match + match_books + Author.return_group(Author.basic_info, Book.detailed_info) + Author.limit(10)
+		match + match_books + Author.return_group(Author.basic_info, "book AS books") + Author.limit(10)
 	end
 
 	def self.search_by_indexed_name indexed_name
