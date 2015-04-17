@@ -123,6 +123,6 @@ class Blog < Neo
 	end
 
 	def self.basic_info
-		" ID(blog) AS blog_id, blog.title AS title, blog.published_year AS published_year, blog.created_at AS created_at , blog.posted_at AS posted_at "
+		" ID(blog) AS blog_id, blog.title AS title, blog.published_year AS published_year, blog.created_at AS created_at , blog.posted_at AS posted_at, blog.image_url AS image_url, blog.blog_url AS blog_url "
 	end
 end

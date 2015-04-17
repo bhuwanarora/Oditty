@@ -31,6 +31,6 @@ class Search < Neo
 
 	def basic
 		connector = @fuzzy.present? ? "~0.7" : "*"
-		Search.match_indexed(Constant::IndexName::Search, @params, connector) + Search.return_group(Book.basic_info,"LABELS(node) AS label", User.basic_info,Category.basic_info,Author.basic_info, Blog.basic_info, News.basic_info).search_compliant + Search.limit(@count)
+		Search.match_indexed(Constant::IndexName::Search, @params, connector) + Search.return_group(Search.basic_search_info) + Search.limit(@count)
 	end
 end
