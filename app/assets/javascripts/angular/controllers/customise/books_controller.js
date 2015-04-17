@@ -33,15 +33,7 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
         bookService.rate_book()
     }
 
-    $scope.show_shelf_bottom_sheet = function(event){
-        $mdBottomSheet.show({
-            templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
-            controller: 'shelfController',
-            targetEvent: event,
-            locals: {book_id: $rootScope.active_book.id}
-        });
-        event.stopPropagation();
-    };
+    
 
     $scope.mark_as_read = function(book, event){
         if(angular.isDefined(book.id)){
