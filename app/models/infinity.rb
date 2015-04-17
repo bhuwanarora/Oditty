@@ -78,4 +78,36 @@ class Infinity < Neo
 		# clause
 	end
 
+	def get_books
+		clause = " "
+		with_clause = " WITH book "
+		book_label_defined = false
+		if @author_id.present?
+			with_clause += ", author "
+			clause += Infinity::FilterAuthor.new(@author_id).match(book_label_defined) + with_clause
+			book_label_defined = true
+			return_clause << Author.basic_info
+		end	
+
+		if @category_id.present?
+			with_clause += ", category "
+			clause += Infinity::FilterCategory.new(@category_id).match(book_label_defined) + with_clause
+			book_label_defined = true
+			return_clause << Category.basic_info
+		end	
+
+		if @reading_time.present?
+			clause += Infinity::FilterReadTime.new(@reading_time).match(book_label_defined) + with_clause
+			book_label_defined = true
+		end	
+
+		if @era_id.present?
+			with_clause += ", era "
+			clause += Infinity::FilterEra.new(@era_id).match(book_label_defined) + with_clause
+			book_label_defined = true
+			return_clause << Era.basic_info
+		end	
+
+		clause + Book.order_desc + Infinity.return_group(return_clause, Book.basic_info) + Infinity.skip(@skip_count) + Infinity.limit(Constants::BookShownInInfinty)
+	end
 end
