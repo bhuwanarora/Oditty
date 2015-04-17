@@ -26,7 +26,8 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
             data: {
                 items: scope.newsTags,
                 eval: function (item) {return item.view_count;},
-                classed: function (item) {return item.name.split(" ").join("");}
+                classed: function (item) {return item.name.split(" ").join("");},
+                image: function(item){return item.image_url;}
             },
             plugins: [
                 {
@@ -74,13 +75,17 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
                                     "text-anchor": "middle",
                                     fill: "white"
                                 },
-                            attr: {
-                                dy: "20px",
-                                x: function (d) {return d.cx;},
-                                y: function (d) {return d.cy;}
+                                attr: {
+                                    dy: "20px",
+                                    x: function (d) {return d.cx;},
+                                    y: function (d) {return d.cy;}
+                                }
+                            },
+                            {
+                                textField: "image_url",
+                                classed: {image: true}
                             }
-                        }
-                    ],
+                        ],
                     centralFormat: [
                         {// Line #0
                             style: {"font-size": "50px"},

@@ -117,7 +117,7 @@ class User < Neo
 	end
 
 	def self.handle_new(email, password=nil, verification_token=nil)
-		User.create(email, password, verification_token) + User::Feed.create_first + Label.match_primary  + ", user " + User.link_primary_labels + User::UserNotification.create_for_new_user + Category::Root.match  + ", user " + User.link_root_categories + User.return_init + User.basic_info
+		User.create(email, password, verification_token) + User::Feed.create_first + Label.match_primary  + ", user " + User.link_primary_labels + User::UserNotification.create_for_new_user + Category::Root.match  + ", user " + User.link_root_categories + Notification.create_for_new_user + User.return_init + User.basic_info
 	end
 
 	def get_notifications
@@ -236,5 +236,25 @@ class User < Neo
 
 	def self.handle_new_verification_request email, verification_token
 		User.match_by_email(email) + User::Info.set_verification_token(verification_token) + User::Info.set_verification_time + User.return_init + User.basic_info
+	end
+
+	def match_followers
+		match + " WITH user AS friend " + UsersUser.match 
+	end
+
+	def self.get_visited_books
+		Bookmark::Type::Visited.match + Book.order_desc + Book.limit(3)  +" WITH user, " + Book.collect_map("books" => Book.grouped_basic_info )
+	end
+
+	def get_followers
+		match_followers + User.get_visited_books + User.return_group(User.basic_info,"books")
+	end
+
+	def match_users_followed
+		match + UsersUser.match + " WITH friend AS user "  
+	end
+
+	def get_users_followed
+		match_users_followed + User.get_visited_books + User.return_group(User.basic_info,"books") 
 	end
 end

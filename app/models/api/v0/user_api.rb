@@ -38,7 +38,7 @@ module Api
 			end
 
 			def self.get_feed user_id
-				info = Blog.get_posts
+				info = Article::BlogArticle.get_posts
 				info
 			end
 
@@ -265,15 +265,16 @@ module Api
 				friends
 			end
 
-			def self.get_followed_by user_id
-				@neo = Neography::Rest.new
-				clause = "MATCH (u:User)<-[:Follow]-(friend:User) WHERE ID(u)="+user_id.to_s+" RETURN ID(friend), friend.name, friend.thumb"
-				friends = @neo.execute_query(clause)["data"]
-				friends
-			end
-
 			def self.get_info_card_data
 				info = {"reading_count_list" => BookRange.get_values}
+			end
+
+			def self.get_followers user_id
+				User.new(user_id).get_followers
+			end
+
+			def self.get_users_followed user_id
+				User.new(user_id).get_users_followed
 			end
 
 			def self.handle_google_user params

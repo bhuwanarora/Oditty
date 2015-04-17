@@ -16,25 +16,6 @@ angular.module('filtersApp', [])
             return output;
         };
     })
-    .filter('get_url', function(){
-        return function(input){
-            var output = "";
-            if(angular.isDefined(input)){
-                var book_label = input.labels.indexOf("Book") >= 0;
-                var author_label = input.labels.indexOf("Author") >= 0;
-                if(book_label){
-                    output = "/book?q="+input.id;
-                }
-                else if(author_label){
-                    output = "/author?q="+input.id;
-                }
-                else if(input.show_all){
-                  output = "/search?q="+input.search_text;
-                }
-            }
-            return output;
-        }
-    })
     .filter('search_item_type', function(){
         return function(input){
             var output = ""

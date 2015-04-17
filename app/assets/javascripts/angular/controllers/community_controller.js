@@ -49,17 +49,9 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
         $scope.info.active_tag = $scope.active_tag;
 
         communityService.get_news_info(news_id).then(function(data){
-            // $scope.newsTags = [
-            //     {name: "MODI", view_count: "236"},
-            //     {name: "KEJRIWAL", view_count: "382"},
-            //     {name: "BEDI", view_count: "170"},
-            //     {name: "CONGRESS", view_count: "123"},
-            //     {name: "ELECTIONS", view_count: "12"},
-            //     {name: "DELHI", view_count: "170"}
-            // ]
             data = data[0]
             $scope.active_tag = data.most_important_tag[0];
-            var most_important_tag = {"name": $scope.active_tag.name, "view_count": $scope.active_tag.view_count, "id": $scope.active_tag.id};
+            var most_important_tag = {"name": $scope.active_tag.name, "view_count": $scope.active_tag.view_count, "id": $scope.active_tag.id, "image_url": $scope.active_tag.image_url};
             $scope.newsTags.push(most_important_tag);
             $scope.newsTags = $scope.newsTags.concat(data.other_tags);
             angular.forEach($scope.newsTags, function(value){

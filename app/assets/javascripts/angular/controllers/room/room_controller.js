@@ -11,7 +11,7 @@ homeApp.controller('roomController', ["$scope", "$rootScope", "$timeout", 'roomS
 			$scope.book_shelves = [];
 			angular.forEach(data, function(book_shelf){
 				var books = [];
-				book_shelf.books = _set_colors(book_shelf.books, books);
+				book_shelf.books = _set_data(book_shelf.books, books);
 				this.push(book_shelf);
 			}, $scope.book_shelves);
 			_group_books_by_shelf();
@@ -29,7 +29,7 @@ homeApp.controller('roomController', ["$scope", "$rootScope", "$timeout", 'roomS
 			if(angular.isUndefined($scope.visited_articles)){
 				$scope.visited_articles = [];
 			}
-			_set_colors(data, $scope.visited_articles);
+			_set_data(data, $scope.visited_articles);
 		});
 	}
 
@@ -38,14 +38,21 @@ homeApp.controller('roomController', ["$scope", "$rootScope", "$timeout", 'roomS
 			if(angular.isUndefined($scope.visited_books)){
 				$scope.visited_books = [];
 			}
-			_set_colors(data, $scope.visited_books);
+			_set_data(data, $scope.visited_books);
 		});
 	}
 
-	var _set_colors = function(data, array){
+	var _get_random_init = function(min, max){
+	    return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
+
+	var _set_data = function(data, array){
 		angular.forEach(data, function(value){
 			var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-			var json = angular.extend(value, {"color": ColorConstants.value[random_int]});
+			var width = _get_random_init(70, 100);
+			var height = _get_random_init(40, 60);
+			var random_style = {"width": width+"%", "height": height+"px", "background-color": ColorConstants.value[random_int]};
+			var json = angular.extend(value, {"random_style": random_style});
 			this.push(json);
 		}, array);
 		return array;
