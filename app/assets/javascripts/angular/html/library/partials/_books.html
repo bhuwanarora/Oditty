@@ -1,0 +1,23 @@
+<div  class="white" layout-fill>
+    <div ng-init="grid = {'books': init_books}" 
+         ng-hide="constant.show_book"
+         ng-include src="'/assets/angular/html/library/shared/_default_grid.html'"></div>
+</div>
+<div class="books_cover animate-very-fast"
+     flex="60"
+     flex-md="80"
+     flex-sm="100"
+     ng-if="constant.show_book"
+     aria-label=""
+     ng-click="show_grid($event)"
+     layout="row"
+     layout-align="start center">
+    <div class="padding" layout="row">
+        <div layout-padding><span class="icon-angle-left"></span></div>
+        <div layout-padding>Back</div>
+    </div>
+</div>
+<section ng-if="constant.show_book">
+    <div ng-include src="'/assets/angular/html/book/show.html'" 
+        class="animate-fast book"></div>
+</section>

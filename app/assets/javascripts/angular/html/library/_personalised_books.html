@@ -1,15 +1,52 @@
 <section layout-fill layout-padding class="white">
-	<h4>Since you like SUBJECT, here are books you need to read</h4>
-	<h4>Discover other books by your most read author, AUTHOR</h4>
-	<h4>Discover popular books from your most read Era, ERA</h4>
-	<h4>Discover other books from India</h4>
-	<h4>Books on your friend's reading shelves</h4>
-	<h4>Build for your reading appetite with popular easy reads</h4>
-	<div  class="white" layout-fill>
-        <div ng-init="grid = {'books': small_reads}" ng-include src="'/assets/angular/html/library/shared/_default_grid.html'"></div>
+    <div>
+        <md-divider></md-divider>
+        <h4>Since you like <b>{{likeable_category}}</b>, here are books you need to read</h4>
+        <div onload="init_books = books_from_favourite_category" 
+         ng-include src="'/assets/angular/html/library/partials/_books.html'"></div>
     </div>
-	<h4>Look up popular books from unexplored subjects</h4>
-	<h4>Read more on COMMUNITY</h4>
+
+    <div>
+        <md-divider></md-divider>
+        <h4>Discover other books by your most read author, <b>{{likeable_author}}</b></h4>
+        <div onload="init_books = books_from_favourite_author" 
+         ng-include src="'/assets/angular/html/library/partials/_books.html'"></div>
+    </div>
+
+    <div>
+        <md-divider></md-divider>
+        <h4>Discover popular books from your most read Era, <b>{{likeable_era}}</b></h4>
+        <div onload="init_books = books_from_favourite_era" 
+         ng-include src="'/assets/angular/html/library/partials/_books.html'"></div>
+    </div>
+
+    <div>
+        <md-divider></md-divider>
+        <h4>Books on your friend's reading shelves</h4>
+        <div onload="init_books = books_on_friends_shelves" 
+         ng-include src="'/assets/angular/html/library/partials/_books.html'"></div>
+    </div>
+
+    <div>
+        <md-divider></md-divider>
+        <h4>Build for your reading appetite with popular easy reads</h4>
+        <div onload="init_books = small_reads"
+         ng-include src="'/assets/angular/html/library/partials/_books.html'"></div>
+    </div>
+
+    <div>
+        <md-divider></md-divider>
+        <h4>Look up popular books from unexplored subjects, {{unexplored_subject}}</h4>
+        <div onload="init_books = books_from_unexplored_subjects"
+             ng-include src="'/assets/angular/html/library/partials/_books.html'"></div>
+    </div>
+
+    <div>
+        <md-divider></md-divider>
+        <h4>Read more on COMMUNITY</h4>
+        <div ng-include src="'/assets/angular/html/library/partials/_books.html'"></div>
+    </div>
+</div>
 </section>
 <style>
     .grid{
