@@ -1,19 +1,19 @@
 class ReadTime
 	def initialize id
 		@id = id
-		if @id == Constant::Id::TinyRead
+		if @id == Constant::Id::TinyReadNode
 			@last_book = Constant::Id::BestTinyRead
 			@relation = Constant::Label::TinyReadRelation
 			@next_where_clause = " toInt(book.page_count) <= 50 "
-		elsif @id == Constant::Id::SmallRead
+		elsif @id == Constant::Id::SmallReadNode
 			@last_book = Constant::Id::BestSmallRead
 			@relation = Constant::Label::SmallReadRelation
 			@next_where_clause = " toInt(book.page_count) > 50 AND toInt(book.page_count) <= 100 "
-		elsif @id == Constant::Id::NormalRead
+		elsif @id == Constant::Id::NormalReadNode
 			@last_book = Constant::Id::BestNormalRead
 			@relation = Constant::Label::NormalReadRelation
 			@next_where_clause = " toInt(book.page_count) < 100 AND toInt(book.page_count) <= 250"
-		elsif @id == Constant::Id::LongRead
+		elsif @id == Constant::Id::LongReadNode
 			@last_book = Constant::Id::BestLongRead
 			@relation = Constant::Label::LongReadRelation
 			@next_where_clause = " toInt(book.page_count) > 250 "
@@ -21,11 +21,14 @@ class ReadTime
 	end
 
 	def match_nth_book skip
-		" MATCH (book:Book)-[:" + @relation + "*.." + skip.to_s + "]->(nth_book:Book) WHERE ID(book)=" + @last_book.to_s + " WITH nth_book as book "
+		debugger
+		" MATCH (book:Book)-[:" + @relation + "*" + skip.to_s + "]->(nth_book:Book) WHERE ID(book)=" + @last_book.to_s + " WITH nth_book as book "
 	end
 
 	def match_books_after skip, count
-		match_nth_book(skip) + " MATCH path=(book)-[:" + @relation + "*.." + count.to_s + "]->(last_book:Book) WITH EXTRACT (n IN nodes(path)|n) AS books UNWIND books AS book  "
+		puts skip
+		puts count
+		match_nth_book(skip) + " MATCH path=(book)-[:" + @relation + "*" + count.to_s + "]->(last_book:Book) WITH EXTRACT (n IN nodes(path)|n) AS books UNWIND books AS book  "
 	end
 
 	def where
