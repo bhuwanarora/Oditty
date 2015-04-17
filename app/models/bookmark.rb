@@ -7,7 +7,6 @@ class Bookmark < Neo
 
 	def news
 		@media_class = News
-		@media_feed_class = News::NewsFeed
 		@user_media_class = UsersNews
 		@media_label_class = Bookmark::Node::NewsLabel
 		@media_label = "News"
@@ -27,7 +26,6 @@ class Bookmark < Neo
 
 	def blog
 		@media_class = Blog
-		@media_feed_class = Blog::Feed
 		@user_media_class = UsersBlog
 		@media_label_class = Bookmark::Node::BlogLabel
 		@media_label = "Blog"
@@ -174,9 +172,9 @@ class Bookmark < Neo
 		
 		feednext_clause = User::Feed.new(@user_id).delete_feed("bookmark_node") + ", " + @media + ", labelled, label "
 
-		bookfeed_next_clause = @media_feed_class.delete_feed("bookmark_node", @user_id) + ", labelled, label "
+		mediafeed_next_clause = @media == "book" ? @media_feed_class.delete_feed("bookmark_node", @user_id) + ", labelled, label " : ""
 
-		clause = match + @media_label_class.match_path + delete_bookmark_relations + set_clause + feednext_clause + bookfeed_next_clause + Bookmark.delete_bookmark
+		clause = match + @media_label_class.match_path + delete_bookmark_relations + set_clause + feednext_clause + mediafeed_next_clause + Bookmark.delete_bookmark
 
 		puts "REMOVE BOOKMARKED".green
 		clause
@@ -191,14 +189,14 @@ class Bookmark < Neo
 		if @key == "Visited"
 			end_clause = Bookmark.return_group(Bookmark.basic_info)
 			feednext_clause = ""
-			bookfeed_next_clause = ""
+			mediafeed_next_clause = ""
 		else
 			end_clause = @media_class.set_bookmark_count(operation) + User.set_bookmark_count(operation) + Label.set_bookmark_count(operation) + UsersLabel.set_bookmark_count(operation) + User.set_total_count(Constant::InteractionPoint::Bookmark, operation)
 			feednext_clause = User::Feed.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled + ", " + @media
-			bookfeed_next_clause = @media_feed_class.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled
+			mediafeed_next_clause = @media == "book" ? @media_feed_class.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled : "" 
 		end
 
-		clause = create + feednext_clause + bookfeed_next_clause  + end_clause
+		clause = create + feednext_clause + mediafeed_next_clause  + end_clause
 		puts "BOOK BOOKMARKED".green
 		clause
 	end

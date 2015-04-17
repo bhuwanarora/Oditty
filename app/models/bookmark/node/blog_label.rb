@@ -1,23 +1,25 @@
 class Bookmark::Node::BlogLabel < Bookmark::::Node
+	Article = "Blog"
 
 	def self.match_clause
 		"MATCH (user:User), (blog:Blog) WHERE ID(user) = " + @user_id.to_s + " AND ID(blog) = " + @id.to_s + " "
 	end
 
-	def self.get_public user_id
-		Bookmark::Type::Public.new(user_id).match + Bookmark::Node::BookLabel.return_group("DISTINCT label.name AS shelf", "bookmark_node.created_at AS time", "books", "books_count") + Bookmark::Node::BookLabel.order_init + " books_count DESC "
+	def get_public 
+		super(Article)
 	end
 
-	def self.get_visited user_id
-		Bookmark::Type::Visited.new(user_id).match + Bookmark::Node::BookLabel.return_group(" DISTINCT label.key AS shelf ", "bookmark_node.created_at AS time", Book.basic_info, " label_count ")  + Bookmark::Node::BookLabel.order_init + " label_count DESC "  + Bookmark::Node::BookLabel.limit(Constant::Count::BooksShownInRoom) 
+	def get_visited 
+		super(Article)
 	end
+
 
 	def self.match_path
-		Bookmark.match_path "book"
+		Bookmark.match_path "blog"
 	end
 
 	def self.match_not
-		Bookmark.match_not "book"
+		Bookmark.match_not "blog"
 	end
 
 	def self.match
