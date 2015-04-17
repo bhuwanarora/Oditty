@@ -4,6 +4,6 @@ class Bookmark::Type::PretendIHaveRead < Bookmark::Type
 		@name = "Pretend I have read"
 		@user_id = user_id
 		@book_id = book_id
-		@bookmark = Bookmark.new(@user_id, @book_id, @key).book
+		@bookmark = Bookmark.new(@user_id, @book_id, @key)
 	end
 end
