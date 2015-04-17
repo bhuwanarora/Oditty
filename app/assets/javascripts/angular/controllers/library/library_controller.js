@@ -264,6 +264,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         // $scope.info.author_filter = true;
         $scope.$routeParams = $routeParams;
         $scope.filters = {"other": {}};
+        $scope.grid = {};
         // var genre = (/genre=(\d+)/.exec($location.absUrl())[1]);
         // var year = (/year=(\d+)/.exec($location.absUrl())[1]);
         // var author = (/author=(\d+)/.exec($location.absUrl())[1]);

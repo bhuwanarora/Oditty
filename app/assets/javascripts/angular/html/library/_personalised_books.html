@@ -1,52 +1,29 @@
-<section layout-fill layout-padding class="white">
-    <div>
-        <md-divider></md-divider>
-        <h4>Since you like <b>{{likeable_category}}</b>, here are books you need to read</h4>
-        <div onload="init_books = books_from_favourite_category" 
-         ng-include src="'/assets/angular/html/library/partials/_books.html'"></div>
-    </div>
-
-    <div>
-        <md-divider></md-divider>
-        <h4>Discover other books by your most read author, <b>{{likeable_author}}</b></h4>
-        <div onload="init_books = books_from_favourite_author" 
-         ng-include src="'/assets/angular/html/library/partials/_books.html'"></div>
-    </div>
-
-    <div>
-        <md-divider></md-divider>
-        <h4>Discover popular books from your most read Era, <b>{{likeable_era}}</b></h4>
-        <div onload="init_books = books_from_favourite_era" 
-         ng-include src="'/assets/angular/html/library/partials/_books.html'"></div>
-    </div>
-
-    <div>
-        <md-divider></md-divider>
-        <h4>Books on your friend's reading shelves</h4>
-        <div onload="init_books = books_on_friends_shelves" 
-         ng-include src="'/assets/angular/html/library/partials/_books.html'"></div>
-    </div>
-
-    <div>
-        <md-divider></md-divider>
-        <h4>Build for your reading appetite with popular easy reads</h4>
-        <div onload="init_books = small_reads"
-         ng-include src="'/assets/angular/html/library/partials/_books.html'"></div>
-    </div>
-
-    <div>
-        <md-divider></md-divider>
-        <h4>Look up popular books from unexplored subjects, {{unexplored_subject}}</h4>
-        <div onload="init_books = books_from_unexplored_subjects"
-             ng-include src="'/assets/angular/html/library/partials/_books.html'"></div>
-    </div>
-
-    <div>
-        <md-divider></md-divider>
-        <h4>Read more on COMMUNITY</h4>
-        <div ng-include src="'/assets/angular/html/library/partials/_books.html'"></div>
-    </div>
+<section layout-fill layout-padding class="white" ng-if="!constant.show_book">
+    <div ng-include src="'/assets/angular/html/library/partials/category_books.html'"></div>
+    <div ng-include src="'/assets/angular/html/library/partials/author_books.html'"></div>
+    <div ng-include src="'/assets/angular/html/library/partials/era_books.html'"></div>
+    <div ng-include src="'/assets/angular/html/library/partials/friends_books.html'"></div>
+    <div ng-include src="'/assets/angular/html/library/partials/unexplored_books.html'"></div>
+    <div ng-include src="'/assets/angular/html/library/partials/easy_books.html'"></div>
 </div>
+</section>
+<section ng-if="constant.show_book">
+    <div class="books_cover animate-very-fast"
+         flex="60"
+         flex-md="80"
+         flex-sm="100"
+         ng-if="constant.show_book"
+         aria-label=""
+         ng-click="show_grid($event)"
+         layout="row"
+         layout-align="start center">
+        <div class="padding" layout="row">
+            <div layout-padding><span class="icon-angle-left"></span></div>
+            <div layout-padding>Back</div>
+        </div>
+    </div>
+    <div ng-include src="'/assets/angular/html/book/show.html'" 
+        class="animate-fast book"></div>
 </section>
 <style>
     .grid{
