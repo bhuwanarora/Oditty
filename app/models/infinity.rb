@@ -14,6 +14,7 @@ class Infinity < Neo
 		where_clause = ""
 		match_clause = ""
 		skip_clause = ""
+		return_clause = []
 
 		only_read_time = !@category_id && !@author_id && !@era_id && @reading_time_id.present?
 		only_category = !@reading_time_id && !@author_id && !@era_id && @category_id.present?
@@ -23,10 +24,12 @@ class Infinity < Neo
 		elsif only_category
 			puts "only_category".green
 			clause = Category.new(@category_id).match_books_after(@skip_count, Limit)
+			return_clause << category.basic_info  
 		else
 			if @era_id.present?
 				puts "era_id".green
 				init_match_clause = Era.new(@era_id).init_match
+				return_clause << Era.basic_info
 			else
 				init_match_clause = Book.init_match
 			end
@@ -34,6 +37,7 @@ class Infinity < Neo
 			if @author_id.present?
 				puts "author_id".green
 				@author = Author.new(@author_id)
+				return_clause << Author.basic_info
 				match_clause = match_clause + @author.match + @author.match_books
 			end
 			
@@ -41,6 +45,7 @@ class Infinity < Neo
 				puts "category_id".green
 				@category = Category.new(@category_id)
 				match_clause = match_clause + @category.match_books
+				return_clause << category.basic_info  
 			end
 
 			# if @genre_id
@@ -57,9 +62,9 @@ class Infinity < Neo
 			end
 			clause = init_match_clause + match_clause
 		end
-		return_clause = Infinity.return_group(Book.basic_info)
+		return_clause << Infinity.return_group(Book.basic_info)
 
-		clause + return_clause + Infinity.limit(Limit)
+		clause + Infinity.return_group(return_clause) + Infinity.limit(Limit)
 		#MATCH WHERE WITH RETURN ORDER SKIP LIMIT
 		# order_clause = init_order_clause + base_order_clause 	if init_order_clause.present?
 		# clause = init_match_clause				
