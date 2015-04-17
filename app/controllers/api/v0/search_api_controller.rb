@@ -30,6 +30,17 @@ module Api
 				render :json => results, :status => 200
 			end
 
+			# def search_news
+			# 	skip_count = params[:skip_count]
+			# 	results = SearchApi.search(params[:q].to_s.strip, params[:count], "BOOK")
+			# 	render :json => results, :status => 200
+			# end
+
+			# def search_blog
+			# 	skip_count = params[:skip_count]
+			# 	results = SearchApi.search(params[:q].to_s.strip, params[:count], "BOOK")
+			# 	render :json => results, :status => 200
+			# end
 		end
 	end
 end

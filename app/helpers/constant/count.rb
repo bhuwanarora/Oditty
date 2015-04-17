@@ -21,4 +21,5 @@ module Constant::Count
 	RelevantSocialTag		  	= 1
 
 	SecondsInHourCount			= 3600
+	ElementsShownInSearch		= 6
 end
