@@ -243,7 +243,7 @@ class User < Neo
 	end
 
 	def self.get_visited_books
-		Bookmark::Type::Visited.match + Book.order_desc + Book.limit(3)  +" WITH user, " + Book.collect_map("books" => Book.grouped_basic_info )
+		Bookmark::Type::Visited.match("book") + Book.order_desc + Book.limit(3)  +" WITH user, " + Book.collect_map("books" => Book.grouped_basic_info )
 	end
 
 	def get_followers
