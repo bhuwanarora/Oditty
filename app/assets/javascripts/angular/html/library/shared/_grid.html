@@ -2,7 +2,7 @@
 <md-grid-list
     md-cols-sm="2"
     md-cols-md="2" 
-    md-cols-gt-md="5"
+    md-cols-gt-md="4"
     md-row-height="1:1.3"
     md-gutter="1px">
         <md-grid-tile ng-repeat="book in value"
@@ -14,7 +14,7 @@
             ng-class="{'book': book.isBook}" >
             <md-button class="book_grid_link"
                     aria-label=""
-                    ng-click="show_book($event, $index)">
+                    ng-click="show_book($event, book)">
                 <img ng-src="{{book | choose_medium_thumb}}" />
             </md-button>
             <div ng-style="{background:'{{book.color}}'}" class="book_backup_cover" 

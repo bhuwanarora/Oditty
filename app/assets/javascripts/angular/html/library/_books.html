@@ -20,7 +20,7 @@
     </md-progress-linear>
     <div  ng-style="grid_style" class="white" 
             ng-if="!info.author_filter && !info.group_by_alphabet && !info.published_era_filter && !info.reading_time_filter && !info.subject_filter" layout-fill layout-padding>
-            <div ng-init="grid = info" ng-include src="'/assets/angular/html/library/shared/_default_grid.html'"></div>
+            <div ng-init="books = info.books" ng-include src="'/assets/angular/html/library/shared/_default_grid.html'"></div>
     </div>
 
     <div ng-if="info.author_filter && !info.group_by_alphabet && !info.published_era_filter && !info.reading_time_filter && !info.subject_filter"
@@ -58,7 +58,7 @@
             <md-grid-list
                 md-cols-sm="2"
                 md-cols-md="2" 
-                md-cols-gt-md="5"
+                md-cols-gt-md="4"
                 md-row-height="1:1.3"
                 md-gutter="1px">
                     <md-grid-tile ng-repeat="book in info.books | category_group: category"
@@ -70,7 +70,7 @@
                         ng-class="{'book': book.isBook}" >
                         <md-button class="book_grid_link"
                                 aria-label=""
-                                ng-click="show_book($event, $index)">
+                                ng-click="show_book($event, book)">
                             <img ng-src="{{book | choose_medium_thumb}}" />
                         </md-button>
                         <div ng-style="{background:'{{book.color}}'}" class="book_backup_cover" 
@@ -83,6 +83,12 @@
         </div>
     </div>
 </md-whiteframe>
+
+<section ng-if="constant.show_book">
+    <div ng-include src="'/assets/angular/html/book/show.html'" 
+        class="animate-fast book"></div>
+</section>
+
 <style>
 
     .books_cover{
