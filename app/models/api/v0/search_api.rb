@@ -3,7 +3,6 @@ module Api
 		class SearchApi
 
 			def self.search(q, count, type)
-				neo_init
 				results = self._get_search_clause(q, count, type, nil).execute
 				
 				if results.present?
@@ -16,9 +15,6 @@ module Api
 			end
 
 			private
-			def self.neo_init
-                @neo = Neography::Rest.new
-            end
 
             def self._get_search_clause(q, count, type, fuzzy=nil)
             	count ||= 0

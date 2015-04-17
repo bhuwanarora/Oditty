@@ -47,7 +47,7 @@ class Author < Neo
 	end
 
 	def self.basic_info
-		" author.name AS name, author.id AS id, author.wiki_url AS wiki_url, author.overview as overview "
+		" author.name AS name, author.wiki_url AS wiki_url, author.overview as overview "
 	end
 
 	def self.get_favourites skip_count=0

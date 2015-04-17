@@ -74,4 +74,8 @@ class Neo
 	def self.create_timestamp time, node_variable
 		" MERGE (day:Day{day:" + time.to_date.day.to_s + "}) MERGE (month:Month{month:" + time.to_date.month.to_s + "}) MERGE (year:Year{year:" + time.to_date.year.to_s + "})  MERGE (" + node_variable + ")-[:TimeStamp]->(day)<-[:Has_day]-(month)<-[:Has_month]-(year) "
 	end
+
+	def self.match_indexed index, params, connector
+		"START node=node:node_auto_index('" + index + ":" + params + connector + "') "
+	end
 end
