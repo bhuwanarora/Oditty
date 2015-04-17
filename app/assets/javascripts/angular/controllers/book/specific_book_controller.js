@@ -32,6 +32,10 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
                     .join(' ');
     };
 
+    $scope.rate_book = function(book){
+        bookService.rate_book(book.book_id, book.user_rating);
+    }
+
     var _init = function(){
         // $scope.$location = $location;
         var regex = /[?&]([^=#]+)=([^&#]*)/g;

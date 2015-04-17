@@ -33,7 +33,6 @@ class Bookmark < Neo
 		self
 	end
 
-
 	def self.match_not media
 		" WHERE NOT (user)-[:Labelled]->(:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(" + media.downcase + ") "
 	end

@@ -27,13 +27,9 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
         }
     }
 
-    $scope.rate_book = function(book, event){
-        debugger
-        // var book_id = 
-        bookService.rate_book()
+    $scope.rate_book = function(book){
+        bookService.rate_book(book.book_id, book.user_rating);
     }
-
-    
 
     $scope.mark_as_read = function(book, event){
         if(angular.isDefined(book.id)){
