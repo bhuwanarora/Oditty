@@ -6,7 +6,7 @@ class Bookmark < Neo
 	end
 
 	def news
-		@media_class = News
+		@media_class = Article::News
 		@user_media_class = UsersNews
 		@media_label_class = Bookmark::Node::NewsLabel
 		@media_label = "News"
@@ -25,7 +25,7 @@ class Bookmark < Neo
 	end
 
 	def blog
-		@media_class = Blog
+		@media_class = Article::Blog
 		@user_media_class = UsersBlog
 		@media_label_class = Bookmark::Node::BlogLabel
 		@media_label = "Blog"
@@ -165,19 +165,17 @@ class Bookmark < Neo
 	def match
 		" MATCH (user:User), (" + @media + ":" + @media_label + "), (label:Label) WHERE ID(user)=" + @user_id.to_s + " AND ID(" + @media + ")=" + @media_id.to_s + " AND label.key = \""+@key+"\" WITH user, " + @media + ", label "
 	end
+
+	def set_properties operation
+		@media_class.set_bookmark_count(operation) + User.set_bookmark_count(operation) + Label.set_bookmark_count(operation) + UsersLabel.set_bookmark_count(operation) + User.set_total_count(Constant::InteractionPoint::Bookmark, operation) + Bookmark.with_group("user", @media , "bookmark_node", "labelled", "label")
+	end
 	
 	def remove  
 		operation = "-"
-		set_clause = @media_class.set_bookmark_count(operation) + User.set_bookmark_count(operation) + Label.set_bookmark_count(operation) + UsersLabel.set_bookmark_count(operation) + User.set_total_count(Constant::InteractionPoint::Bookmark, operation) + Bookmark.with_group("user", @media , "bookmark_node", "labelled", "label")
-		
 		feednext_clause = User::Feed.new(@user_id).delete_feed("bookmark_node") + ", " + @media + ", labelled, label "
-
 		mediafeed_next_clause = @media == "book" ? @media_feed_class.delete_feed("bookmark_node", @user_id) + ", labelled, label " : ""
-
-		clause = match + @media_label_class.match_path + delete_bookmark_relations + set_clause + feednext_clause + mediafeed_next_clause + Bookmark.delete_bookmark
-
 		puts "REMOVE BOOKMARKED".green
-		clause
+		match + @media_label_class.match_path + delete_bookmark_relations + set_properties(operation) + feednext_clause + mediafeed_next_clause + Bookmark.delete_bookmark
 	end
 
 	def create 
@@ -191,13 +189,10 @@ class Bookmark < Neo
 			feednext_clause = ""
 			mediafeed_next_clause = ""
 		else
-			end_clause = @media_class.set_bookmark_count(operation) + User.set_bookmark_count(operation) + Label.set_bookmark_count(operation) + UsersLabel.set_bookmark_count(operation) + User.set_total_count(Constant::InteractionPoint::Bookmark, operation)
 			feednext_clause = User::Feed.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled + ", " + @media
 			mediafeed_next_clause = @media == "book" ? @media_feed_class.new(@user_id).create("bookmark_node") + Bookmark.label_and_labelled : "" 
 		end
-
-		clause = create + feednext_clause + mediafeed_next_clause  + end_clause
 		puts "BOOK BOOKMARKED".green
-		clause
+		create + feednext_clause + mediafeed_next_clause  + set_properties(operation) + Bookmark.return_group(@media_class.basic_info) 
 	end
 end

@@ -1,4 +1,4 @@
-class Bookmark::Node::BlogLabel < Bookmark::::Node
+class Bookmark::Node::BlogLabel < Bookmark::Node
 	Article = "Blog"
 
 	def self.match_clause

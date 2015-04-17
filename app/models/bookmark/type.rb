@@ -25,7 +25,7 @@ class Bookmark::Type < Bookmark
 
 	def news
 		@bookmark = @bookmark.news
-		@bookmark_node_media_label_class = Bookmark::Node::NewsLabel 
+		# @bookmark_node_media_label_class = Bookmark::Node::NewsLabel 
 		self
 	end
 
