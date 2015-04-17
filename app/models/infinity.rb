@@ -5,7 +5,7 @@ class Infinity < Neo
 		filters = JSON.parse(filters)
 		@category_id = filters["category_id"]
 		@author_id = filters["author_id"]
-		@reading_time_id = filters["reading_time_id"]
+		@reading_time_id = 772853 || filters["reading_time_id"] 
 		@era_id = filters["era_id"]
 		@skip_count = filters["skip_count"] || 0
 	end
