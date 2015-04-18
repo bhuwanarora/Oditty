@@ -4,7 +4,12 @@ class Infinity::FilterEra < Infinity
 		@era = Era.new(id)
 	end
 
-	def match
-		@era.books
+	def match book_label_defined
+		if book_label_defined
+			clause = @era.match_books
+		else
+			clause = @era.init_match
+		end
+		clause
 	end
 end

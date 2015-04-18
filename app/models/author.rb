@@ -24,9 +24,13 @@ class Author < Neo
 		clause
 	end
 
-	def match_books
+	def match_grouped_books
 		" MATCH (author)-[:Wrote]->(book:Book) WITH author, COLLECT({"+Book.grouped_basic_info+"}) AS book "
 	end
+
+	def match_books
+		" MATCH (author)-[:Wrote]->(book:Book) WITH book, author "
+	end	
 
 	def self.match_books
 		" MATCH (author:Author)-[:Wrote]->(book:Book) WITH author, book "
@@ -59,7 +63,7 @@ class Author < Neo
 	end
 
 	def get_details
-		match + match_books + Author.return_group(Author.basic_info, "book AS books") + Author.limit(10)
+		match + match_grouped_books + Author.return_group(Author.basic_info, "book AS books") + Author.limit(10)
 	end
 
 	def self.search_by_indexed_name indexed_name
