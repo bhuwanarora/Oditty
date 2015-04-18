@@ -3,6 +3,10 @@ class News < Neo
 		@id = id
 	end
 
+	def self.get_news
+		" MATCH (news)-[:TimeStamp]->(time)-[:FromDay]->(day:Day)<-[:Has_day]-(month:Month)<-[:Has_month]-(year:Year)  "
+	end
+
 	def self.match_chronological_news
 		News.match_path_bidirectionally(Constant::Count::CommunitiesShown) + ", " + News.extract_unwind("linked_news") + ", news, ABS(TOINT(linked_news.created_at - news.created_at*1.0)) AS deviation ORDER BY deviation LIMIT " + Constant::Count::NewsShownInCommunity.to_s + " WITH linked_news AS news ORDER BY news.created_at "
 	end
@@ -49,8 +53,12 @@ class News < Neo
 
 	def self.create news_link, news_source
 		news_metadata = News.get_metadata news_link
-		clause  = News.merge(news_link, news_metadata) + News.merge_region(news_source) + ", news " + News.optional_match_regional_news +  ", news " + News.optional_match_news + News.create_news_link + News.return_init + " ID(news) as news_id "
+		clause  = News.merge(news_link, news_metadata) + News.merge_timestamp + News.merge_region(news_source) + ", news " + News.optional_match_regional_news +  ", news " + News.optional_match_news + News.create_news_link + News.return_init + " ID(news) as news_id "
 		(clause.execute)[0]["news_id"]
+	end
+
+	def self.merge_timestamp
+		" MERGE (time:Time{#{(Time.now.hour % 6) * 6} - #{((Time.now.hour % 6)+1) * 6}})-[:FromDay]->(day:Day{day:#{Time.now.day}})<-[:Has_day]-(month:Month{month: #{Time.now.month}})<-[:Has_month]-(year:Year{year:#{Time.now.year}}) MERGE (news)-[:TimeStamp]->(time) WITH news "
 	end
 
 	def self.set_metadata news_metadata
@@ -68,8 +76,10 @@ class News < Neo
 			news_data = Nokogiri::HTML(open(news_link))
 			if news_data.css("meta[property='og:title']").present?
 				news_metadata["title"] = news_data.css("meta[property='og:title']")
+			end
 			if news_data.css("meta[property='og:image']").present?
 				news_metadata["image_url"] = news_data.css("meta[property='og:image']")
+			end
 			news_metadata["available"] = true
 		rescue
 			news_metadata["available"] = false
