@@ -27,8 +27,8 @@ class News < Neo
 		" MATCH (news)-[:HasCommunity]->(community:Community) WITH news, community "
 	end
 
-	def self.merge news_link
-		" MERGE (news:News{url:\"" + news_link.to_s + "\"}) ON CREATE SET news.created_at = " + Time.now.to_i.to_s + ", news.view_count = 0 WITH news "
+	def self.merge news_link, news_metadata
+		" MERGE (news:News{url:\"" + news_link.to_s + "\"}) ON CREATE SET news.created_at = " + Time.now.to_i.to_s + ", news.view_count = 0 " + (news_metadata["available"] ? News.set_metadata(news_metadata) : "" ) + " WITH news "
 	end
 
 	def self.merge_region news_source
@@ -48,8 +48,33 @@ class News < Neo
 	end
 
 	def self.create news_link, news_source
-		clause  = News.merge(news_link) + News.merge_region(news_source) + ", news " + News.optional_match_regional_news +  ", news " + News.optional_match_news + News.create_news_link + News.return_init + " ID(news) as news_id "
+		news_metadata = News.get_metadata news_link
+		clause  = News.merge(news_link, news_metadata) + News.merge_region(news_source) + ", news " + News.optional_match_regional_news +  ", news " + News.optional_match_news + News.create_news_link + News.return_init + " ID(news) as news_id "
 		(clause.execute)[0]["news_id"]
+	end
+
+	def self.set_metadata news_metadata
+		clause = ""
+		news_metadata.delete("available")
+		news_metadata.each do |key, value|
+			clause += " SET news." + key + " = \"" + value + "\" " 
+		end
+		clause
+	end
+
+	def self.get_metadata news_link
+		news_metadata = {}
+		begin
+			news_data = Nokogiri::HTML(open(news_link))
+			if news_data.css("meta[property='og:title']").present?
+				news_metadata["title"] = news_data.css("meta[property='og:title']")
+			if news_data.css("meta[property='og:image']").present?
+				news_metadata["image_url"] = news_data.css("meta[property='og:image']")
+			news_metadata["available"] = true
+		rescue
+			news_metadata["available"] = false
+		end
+		news_metadata
 	end
 
 
