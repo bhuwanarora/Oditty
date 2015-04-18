@@ -5,6 +5,6 @@ class Infinity::FilterAuthor < Infinity
 	end
 
 	def match
-		@author.match_books  
+		@author.match + @author.match_books  
 	end
 end

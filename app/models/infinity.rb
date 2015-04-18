@@ -5,7 +5,7 @@ class Infinity < Neo
 		filters = JSON.parse(filters)
 		@category_id = filters["category_id"]
 		@author_id = filters["author_id"]
-		@reading_time_id = 772853 || filters["reading_time_id"] 
+		@reading_time_id = filters["reading_time_id"] 
 		@era_id = filters["era_id"]
 		@skip_count = filters["skip_count"] || 0
 	end
@@ -24,21 +24,18 @@ class Infinity < Neo
 			clause = Infinity::FilterCategory.new(@category_id).get_books(@skip_count, Limit)
 		else
 			clause = ""
-			with_clause = " WITH book "
-			grouped_with_clause = ""
+			with_clause = ""
 			book_label_defined = false
 			if @author_id.present?
-				grouped_with_clause += ", author "
-				with_clause += grouped_with_clause
-				clause += Infinity::FilterAuthor.new(@author_id).match(book_label_defined) + with_clause
+				clause += Infinity::FilterAuthor.new(@author_id).match 
+				with_clause += ", author "
 				book_label_defined = true
 				return_group << Author.basic_info  
 			end	
 
 			if @category_id.present?
-				grouped_with_clause += ", category "
-				with_clause += grouped_with_clause
 				clause += Infinity::FilterCategory.new(@category_id).match(book_label_defined) + with_clause
+				with_clause += ", category "
 				book_label_defined = true
 				return_group << Category.basic_info  
 			end	

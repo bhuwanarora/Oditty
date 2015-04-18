@@ -44,7 +44,7 @@ class ReadTime
 	end
 
 	def match_books
-		" MATCH (book) WHERE " + where
+		" MATCH (book)-[]-() WHERE " + where + " WITH book "
 	end
 
 	def match_books_init
