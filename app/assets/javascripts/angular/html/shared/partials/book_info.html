@@ -1,0 +1,23 @@
+<div class="social_content" layout="row" layout-padding>
+    <div flex="25">
+        <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
+    </div>
+    <div flex="75">
+        <div class="book_title"><a ng-href="/book?q={{book.id}}">{{book.title || book.name}}</a></div>
+        <div class="less_important">By <a ng-href="/author?id={{book.author_id}}">{{book.author_name}}</a></div>
+        <div class="book_description">
+            {{book.description | reduced_summary}}
+        </div>
+    </div>
+</div>
+<style>
+    .book_title{
+        font-size: 1.2em;
+        font-family: sans-serif;
+    }
+
+    .book_description{
+        margin-top: 10px;
+        font-size: 0.9em;
+    }
+</style>
