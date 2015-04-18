@@ -16,19 +16,18 @@ homeApp.service('searchService', ["$http", "$q", "$rootScope", "WebsiteUIConstan
         return deferred.promise;
     }
 
-    this.raw = function(q, count){
-    	if(angular.isDefined(count)){
-    		return _deferred_request('/api/v0/search?q='+q+'&count='+count);
+    this.raw = function(q, type){
+    	if(angular.isDefined(type)){
+    		return _deferred_request('/api/v0/search?q='+q+'&type='+type);
     	}
     	else{
     		return _deferred_request('/api/v0/search?q='+q);
     	}
     }
 
-    this.raw_detailed = function(q, count){
-        debugger
-    	if(angular.isDefined(count)){
-    		return _deferred_request('/api/v0/search_detailed?q='+q+'&count='+count);
+    this.raw_detailed = function(q, type){
+    	if(angular.isDefined(type)){
+    		return _deferred_request('/api/v0/search_detailed?q='+q+'&type='+type);
     	}
     	else{
     		return _deferred_request('/api/v0/search_detailed?q='+q);
