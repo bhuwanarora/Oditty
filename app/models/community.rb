@@ -13,11 +13,11 @@ class Community < Neo
 	end
 
 	def self.basic_info
-		" community.view_count AS view_count, community.name AS name, ID(community) AS id "
+		" community.view_count AS view_count, community.name AS name, ID(community) AS id, community.image_url AS image_url "
 	end
 
 	def self.grouped_basic_info
-		"  view_count:community.view_count,  name:community.name, id:ID(community) "
+		"  view_count:community.view_count,  name:community.name, id:ID(community), image_url:community.image_url "
 	end
 
 	def books_users_info 
@@ -170,7 +170,7 @@ class Community < Neo
 	def self.handle_communities response
 		communities = []
 		response["social_tags"].each do |social_tag|
-			if social_tag["importance"] == Constant::Count::RelevantSocialTagValue then communities << social_tag["originalValue"] end
+			if social_tag["importance"] == Constant::Count::RelevantSocialTag then communities << social_tag["originalValue"] end
 		end
 		communities
 	end

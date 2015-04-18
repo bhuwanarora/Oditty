@@ -5,7 +5,7 @@ class String
     end
 
     def search_ready
-    	self.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "").gsub("@", "").gsub("\"","").gsub(".","") rescue ""
+    	self.downcase.gsub(" ", "").gsub(":", "").gsub("'", "").gsub("!", "").gsub("[", "").gsub("[", "").gsub("\\", "").gsub("@", "").gsub("\"","").gsub(".","").gsub("\'","").gsub(",","") rescue ""
     end
 
 	def is_json?
@@ -15,6 +15,10 @@ class String
 	      	false
     	end
   	end
+
+    def search_compliant
+        self.gsub("book.","node.").gsub("user.","node.").gsub("community.","node.").gsub("news.","node.").gsub("blog.","node.").gsub("category.","node.").gsub("author.","node.").gsub("blog.","node.").gsub("news.","node.").gsub("(book)","(node)").gsub("(author)","(node)").gsub("(category)","(node)").gsub("(user)","(node)").gsub("(blog)","(node)").gsub("(news)","(node)")
+    end
 
     def print
     	self.gsub("CREATE", "\n CREATE")
