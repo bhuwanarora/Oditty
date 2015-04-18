@@ -28,7 +28,7 @@ module Api
 				when 'Person'
 					clause = Search.new(q, count, fuzzy).user_by_name
 				when 'Genre'
-					clause = Search.new(q, count, fuzzy).genre_by_name
+					clause = Search.new(q, count, fuzzy).category_by_name
 				when 'Community'
 					clause = Search.new(q, count, fuzzy).community_by_name
 				when 'News'

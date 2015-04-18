@@ -18,13 +18,25 @@ class Search < Neo
 		Search.match_indexed(Constant::IndexName::UserName, @params, @connector) + Search.return_group(User.basic_info).search_compliant + Search.skip(@count) + Search.limit(Constant::Count::ElementsShownInSearch)
 	end
 
-	def genre_by_name
+	def category_by_name
 		if @params.present?
 			clause = Search.match_indexed(Constant::IndexName::CategoryName, @params, @connector) + Search.return_group(Category.basic_info).search_compliant + Search.skip(@count) + Search.limit(Constant::Count::ElementsShownInSearch)
 		else
 			clause = Category::Root.match_root + Search.return_group(Category.basic_info)
 		end
 		clause	
+	end
+
+	def news_by_title
+		Search.match_indexed(Constant::IndexName::NewsTitle, @params, @connector) + Search.return_group(News.basic_info).search_compliant + Search.skip(@count) + Search.limit(Constant::Count::ElementsShownInSearch)
+	end
+
+	def blog_by_title
+		Search.match_indexed(Constant::IndexName::BlogTitle, @params, @connector) + Search.return_group(Blog.basic_info).search_compliant + Search.skip(@count) + Search.limit(Constant::Count::ElementsShownInSearch)
+	end
+
+	def community_by_name
+		Search.match_indexed(Constant::IndexName::CommunityName, @params, @connector) + Search.return_group(Community.basic_info).search_compliant + Search.skip(@count) + Search.limit(Constant::Count::ElementsShownInSearch)
 	end
 
 	def basic
