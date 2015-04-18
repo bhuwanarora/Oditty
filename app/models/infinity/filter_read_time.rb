@@ -2,23 +2,23 @@ class Infinity::FilterReadTime < Infinity
 	def initialize read_type_value
 		@read_type_value = read_type_value
 		case @read_type_value
-		when Constant::Id::TinyReadNode
+		when Constant::Label::TinyReadValue
 			@read_type = Constant::Label::TinyReadRelation
-		when Constant::Id::SmallReadNode
+		when Constant::Label::SmallReadValue
 			@read_type = Constant::Label::SmallReadRelation
-		when Constant::Id::NormalReadNode
+		when Constant::Label::NormalReadValue
 			@read_type = Constant::Label::NormalReadRelation
-		when Constant::Id::LongReadNode
+		when Constant::Label::LongReadValue
 			@read_type = Constant::Label::LongReadRelation
 		end
 	end
 
-	def match(book_label_defined, skip_count)
+	def match(book_label_defined)
 		if book_label_defined
-			clause = ReadTime.new(@read_type_value).where_books
+			define_book_label_clause = ""
 		else
-			clause = ReadTime.new(@read_type_value).match_books_init
+			define_book_label_clause = " WHERE book :Book "
 		end
-		clause
+		
 	end
 end

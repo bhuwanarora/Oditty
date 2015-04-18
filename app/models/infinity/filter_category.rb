@@ -6,14 +6,10 @@ class Infinity::FilterCategory < Infinity
 
 	def match(book_label_defined)
 		if book_label_defined
-			clause = @category.match_books.gsub(":Book","")
+			define_book_label_clause = ""
 		else
-			clause = @category.match_books 
+			define_book_label_clause = " AND book :Book "
 		end
-		clause
-	end
-
-	def get_books skip_count, limit
-		@category.match + Category.match_books_in_list("category", skip_count, limit) + Infinity::FilterCategory.return_group(Category.basic_info, Infinity::FilterCategory.collect_map({"book" => Book.grouped_basic_info}))   
+		@category.books + define_book_label_clause + " "
 	end
 end
