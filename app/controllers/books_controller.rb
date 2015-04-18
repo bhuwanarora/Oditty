@@ -1,8 +1,8 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
-  include TrendsHelper
+#  include TrendsHelper
   include FlickrHelper
-  include S3UploaderHelper
+ # include S3UploaderHelper
 
   # GET /books
   # GET /books.json
@@ -285,9 +285,7 @@ class BooksController < ApplicationController
     end
 
     clause = "MATCH (t:News) OPTIONAL MATCH (t)-[:RelatedBooks]->(b:Book) RETURN t.name, t.timestamp, ID(t), COLLECT(b.title), t.status, COLLECT(ID(b)), t.title, t.content, t.searched_words, t.url, t.thumbnail_url, t.redirect_url, t.publisher, t.thumb ORDER BY toInt(t.timestamp) DESC LIMIT 50 "
-    puts clause.blue.on_red
-    @trends = neo.execute_query(clause)["data"]
-
+    @trends = clause.execute
   end
 
   def remove_trend
