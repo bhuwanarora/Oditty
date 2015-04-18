@@ -26,6 +26,7 @@ homeApp.service('searchService', ["$http", "$q", "$rootScope", "WebsiteUIConstan
     }
 
     this.raw_detailed = function(q, count){
+        debugger
     	if(angular.isDefined(count)){
     		return _deferred_request('/api/v0/search_detailed?q='+q+'&count='+count);
     	}

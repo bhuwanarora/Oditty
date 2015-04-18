@@ -25,7 +25,7 @@ homeApp.controller('searchController', ["$scope", "searchService", "$location", 
     }
 
     $scope.show_all_results = function(search_text){
-        searchService.raw(search_text, 30).then(function(data){
+        searchService.raw_detailed(search_text, 30).then(function(data){
             $scope.all_results = data;
         });
     }
@@ -72,7 +72,7 @@ homeApp.controller('searchController', ["$scope", "searchService", "$location", 
         $scope.search_results = [];
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
         var url_parser = regex.exec($location.absUrl());
-        var is_search = $location.$$url.indexOf("search") >= 0;
+        var is_search = $location.$$absUrl.indexOf("search") >= 0;
         if(angular.isDefined(url_parser) && (url_parser != null) && is_search){
             var q = url_parser[2];
             $scope.show_all_results(q);
