@@ -58,7 +58,7 @@ class News < Neo
 	end
 
 	def self.merge_timestamp
-		" MERGE (time:Time{#{(Time.now.hour % 6) * 6} - #{((Time.now.hour % 6)+1) * 6}})-[:FromDay]->(day:Day{day:#{Time.now.day}})<-[:Has_day]-(month:Month{month: #{Time.now.month}})<-[:Has_month]-(year:Year{year:#{Time.now.year}}) MERGE (news)-[:TimeStamp]->(time) WITH news "
+		" MERGE (time:TimePeriod{quarter:\"#{(Time.now.hour / 6) * 6}-#{((Time.now.hour / 6)+1) * 6}\"})-[:FromDay]->(day:Day{day:#{Time.now.day}})<-[:Has_day]-(month:Month{month: #{Time.now.month}})<-[:Has_month]-(year:Year{year:#{Time.now.year}}) MERGE (news)-[:TimeStamp]->(time) WITH news "
 	end
 
 	def self.set_metadata news_metadata
@@ -75,10 +75,16 @@ class News < Neo
 		begin
 			news_data = Nokogiri::HTML(open(news_link))
 			if news_data.css("meta[property='og:title']").present?
-				news_metadata["title"] = news_data.css("meta[property='og:title']")
+				news_metadata["title"] = news_data.css("meta[property='og:title']").first.attributes["content"]
 			end
 			if news_data.css("meta[property='og:image']").present?
-				news_metadata["image_url"] = news_data.css("meta[property='og:image']")
+				news_metadata["image_url"] = news_data.css("meta[property='og:image']").first.attributes["content"]
+			end
+
+			if news_data.css("meta[property='description']").present?
+				news_metadata["description"] = news_data.css("meta[property='description']").first.attributes["content"]
+			elsif news_data.css("meta[property='og:description']").present?
+				news_metadata["description"] = news_data.css("meta[property='og:description']").first.attributes["content"]
 			end
 			news_metadata["available"] = true
 		rescue
@@ -157,10 +163,30 @@ class News < Neo
 	end
 
 	def self.basic_info
-		" ID(news) AS  news_id  ,news.url  AS news_url  "
+		" ID(news) AS  news_id  ,news.url  AS news_url , news.image_url AS image_url, news.title AS title, news.description AS description "
 	end
 
 	def self.grouped_basic_info
 		" news_id: ID(news) , news_url: news.url, view_count:news.view_count "
+	end
+
+	def self.match_timestamp
+		" MATCH (time_period:TimePeriod{quarter:\"#{((Time.now.hour / 6)-1) * 6}-#{((Time.now.hour / 6)) * 6}\"})-[:FromDay]->(day:Day{day:#{Time.now.day}})<-[:Has_day]-(month:Month{month: #{Time.now.month}})<-[:Has_month]-(year:Year{year:#{Time.now.year}}) WITH day, time_period, month, year "
+	end
+
+	def self.match_day
+		" MATCH (news)-[:TimeStamp]->(time_period)-[:FromDay]->(day) WITH news, time_period, day "
+	end
+
+	def self.define_label
+		" news :News "
+	end
+
+	def self.order_desc
+		" ORDER BY  TOINT(news.created_at) DESC "
+	end
+
+	def self.get_feed skip_count=0
+		News.match_timestamp +  News.match_day + News.where_group(News.define_label) + News.return_init + News.basic_info + News.order_desc + News.skip(skip_count) + News.limit(Constant::Count::NewsShownInFeed)
 	end
 end

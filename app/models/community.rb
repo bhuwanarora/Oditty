@@ -170,7 +170,7 @@ class Community < Neo
 	def self.handle_communities response
 		communities = []
 		response["social_tags"].each do |social_tag|
-			if social_tag["importance"] == Constant::Count::RelevantSocialTagValue then communities << social_tag["originalValue"] end
+			if social_tag["importance"] == Constant::Count::RelevantSocialTag then communities << social_tag["originalValue"] end
 		end
 		communities
 	end

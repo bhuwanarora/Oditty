@@ -22,4 +22,5 @@ module Constant::Count
 
 	SecondsInHourCount			= 3600
 	ElementsShownInSearch		= 6
+	NewsShownInFeed				= 10
 end
