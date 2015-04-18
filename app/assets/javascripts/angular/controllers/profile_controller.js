@@ -12,7 +12,8 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 			var books = [];
 			angular.forEach(data.books_id, function(value, index){
 				var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-				var json = {"color": ColorConstants.value[random_int], "book_id": value, "title": data.books_title[index], "author_name": data.books_author_name[index], "isbn": data.books_isbn[index]};
+				var color = ColorConstants.value[random_int];
+				var json = {"color": color, "book_id": value, "title": data.books_title[index], "author_name": data.books_author_name[index], "isbn": data.books_isbn[index], "random_style": {"background-color": color}};
 				this.push(json);
 			}, books)
 
