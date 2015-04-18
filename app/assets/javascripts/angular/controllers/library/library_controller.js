@@ -223,8 +223,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
     }
 
     $scope._get_personalised_suggestions = function(){
-        infinityService.get_small_reads().then(function(data){
-            $scope.small_reads = [];
+        var _set_data = function(data, array){
             angular.forEach(data, function(value){
                 var random_int = Math.floor(Math.random()*ColorConstants.value.length);
                 var json = {"colspan": 1,
@@ -232,12 +231,19 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
                                 "rowspan": 1};
                 value = angular.extend(value, json);
                 this.push(value);
-            }, $scope.small_reads);
+            }, array);
+        }
+        
+        infinityService.get_small_reads().then(function(data){
+            $scope.small_reads = [];
+            _set_data(data, $scope.small_reads);
         });
 
         infinityService.get_books_from_favourite_author().then(function(data){
-            $scope.books_from_favourite_author = data.books;
-            $scope.likeable_author = data.info;
+            $scope.books_from_favourite_author = [];
+            _set_data(data.books, $scope.books_from_favourite_author);
+            delete data.books;
+            $scope.likeable_author = data;
         });
 
         infinityService.get_books_from_favourite_category().then(function(data){
@@ -260,7 +266,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         });
     }
 
-    var _init = function(){
+    var _init = (function(){
         // $scope.info.author_filter = true;
         $scope.$routeParams = $routeParams;
         $scope.filters = {"other": {}};
@@ -279,7 +285,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         $scope.search_tag = {};
         $scope.active_tab = {};
         $scope.info.categories = [];
-    }
+    }());
 
 
     $scope.show_right_nav = function(event){
@@ -299,5 +305,4 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         })
     };
 
-    _init();
 }]);

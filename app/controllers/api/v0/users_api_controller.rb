@@ -19,6 +19,13 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def news_visited
+				news_id = params[:id]
+				user_id = session[:user_id]
+				UserApi.news_visited(user_id, news_id)
+				render :json => {:message => "Success"}, :status => 200
+			end
+
 			def bookmark
 				params = params["q"]
 				params = JSON.parse params
@@ -49,7 +56,7 @@ module Api
 
 			def get_books_from_favourite_author
 				user_id = session[:user_id]
-				books = User::Suggest::BookSuggestion.new(user_id).for_favourite_author.execute
+				books = User::Suggest::BookSuggestion.new(user_id).for_favourite_author.execute[0]
 				render :json => books, :status => 200
 			end
 
@@ -62,7 +69,7 @@ module Api
 
 			def get_books_from_favourite_era
 				user_id = session[:user_id]
-				books = User::Suggest::BookSuggestion.new(user_id).for_most_bookmarked_era.execute
+				books = User::Suggest::BookSuggestion.new(user_id).for_most_bookmarked_era.print
 				render :json => books, :status => 200
 			end
 
