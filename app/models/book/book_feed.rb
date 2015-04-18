@@ -1,4 +1,4 @@
-class Book::Feed < Book
+class Book::BookFeed < Book
 	Limit = 10
 	def initialize book_id
 		@book_id = book_id
@@ -19,7 +19,7 @@ class Book::Feed < Book
 	end
 
 	def get_feed skip_count=0
-		@book.match + Book::Feed.match(skip_count) + Book::Feed.return_group("labels(feed) AS labels", "feed AS feed")
+		@book.match + Book::BookFeed.match(skip_count) + Book::BookFeed.return_group("labels(feed) AS labels", "feed AS feed")
 	end
 
 	def self.match skip_count

@@ -52,7 +52,7 @@ homeApp.controller('roomController', ["$scope", "$rootScope", "$timeout", 'roomS
 			var width = _get_random_init(70, 100);
 			var height = _get_random_init(40, 60);
 			var random_style = {"width": width+"%", "height": height+"px", "background-color": ColorConstants.value[random_int]};
-			var json = angular.extend(value, {"random_style": random_style});
+			var json = angular.extend(value, {"random_style": random_style, "color": ColorConstants.value[random_int]});
 			this.push(json);
 		}, array);
 		return array;

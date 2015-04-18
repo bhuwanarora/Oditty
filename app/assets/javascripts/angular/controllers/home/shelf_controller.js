@@ -1,4 +1,5 @@
-homeApp.controller('shelfController', ['$scope', '$mdBottomSheet', '$mdToast', 'shelfService', 'book_id', function($scope, $mdBottomSheet, $mdToast, shelfService, book_id){
+homeApp.controller('shelfController', ['$scope', '$mdBottomSheet', '$mdToast', 'shelfService', 'locals', function($scope, $mdBottomSheet, $mdToast, shelfService, locals){
+    
     $scope.listItemClick = function($index) {
         var clickedItem = $scope.items[$index];
         $mdBottomSheet.hide(clickedItem);
@@ -37,15 +38,14 @@ homeApp.controller('shelfController', ['$scope', '$mdBottomSheet', '$mdToast', '
         shelfService.add_new_label($scope.new_label);
     }
 
-    var _init = function(){
+    var _init = (function(){
         $scope.toast_position = {
             bottom: false,
             top: true,
             left: false,
             right: true
         };
-        debugger
-    }
+        $scope.object_id = locals;
+    }());
 
-    _init();
 }]);

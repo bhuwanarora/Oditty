@@ -24,6 +24,8 @@ homeApp.controller('timelineController', ["$scope", "$rootScope", "bookService",
                 case "EndorseNode":
                     message = "Endorsed this book.";
                     break;
+                case "RatingNode":
+                    message = "Gave "+value.node.content + " rating on 10.";
             }
             return message;
         }
