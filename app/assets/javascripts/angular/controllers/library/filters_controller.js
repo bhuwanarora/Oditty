@@ -54,7 +54,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
                 }, $scope.info.books);
                 $scope.info.loading = false;
                 delete data.book;
-                $scope.other_info = data;
+                $scope.info.other_info = data;
             });
         }
     }
