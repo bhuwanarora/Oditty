@@ -43,15 +43,19 @@ class Infinity < Neo
 				return_group << Category.basic_info  
 			end	
 
-			if @reading_time.present?
-				clause += Infinity::FilterReadTime.new(@reading_time).match(book_label_defined) + with_clause
+			if @reading_time_id.present?
+				clause += Infinity::FilterReadTime.new(@reading_time_id).match(book_label_defined, @skip_count) + with_clause
 				book_label_defined = true
 			end	
 
 			if @era_id.present?
-				clause += Infinity::FilterEra.new(@era_id).match(book_label_defined) + with_clause
+				clause += Infinity::FilterEra.new(@era_id).match + with_clause
 			end
-			clause += Infinity.return_group(Infinity.collect_map({"book" => Book.grouped_basic_info},return_group)) + Infinity.skip(@skip_count) + Infinity.limit(Limit)
+			unless return_group.blank?
+				clause += Infinity.return_group(Infinity.collect_map({"book" => Book.grouped_basic_info}),return_group) + Infinity.skip(@skip_count) + Infinity.limit(Limit)
+			else
+				clause += Infinity.return_group(Infinity.collect_map({"book" => Book.grouped_basic_info})) + Infinity.skip(@skip_count) + Infinity.limit(Limit)
+			end
 		end
 		clause
 	end

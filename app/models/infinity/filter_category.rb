@@ -14,6 +14,7 @@ class Infinity::FilterCategory < Infinity
 	end
 
 	def get_books category_id, skip_count, limit
+		debugger
 		ReadTime.new(category_id).match_books_after(skip_count, limit) + Infinity::FilterCategory.return_group(Category.basic_info, Infinity::FilterCategory.collect_map({"book" => Book.grouped_basic_info}))   
 	end
 end

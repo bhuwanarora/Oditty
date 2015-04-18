@@ -5,6 +5,6 @@ class Infinity::FilterEra < Infinity
 	end
 
 	def match
-		@era.books
+		@era.match_books
 	end
 end

@@ -28,7 +28,7 @@ class ReadTime
 	end
 
 	def match_books_after skip, count
-		match_nth_book(skip) + " MATCH path=(book)-[:" + @relation + "*" + count.to_s + "]->(last_book:Book) WITH EXTRACT (n IN nodes(path)|n) AS books UNWIND books AS book  "
+		( match_book  = skip == 0 ? Book.new(@last_book).match : match_nth_book(skip) ) + " MATCH path=(book)-[:" + @relation + "*" + count.to_s + "]->(last_book:Book) WITH EXTRACT (n IN nodes(path)|n) AS books UNWIND books AS book  "
 	end
 
 	def where
