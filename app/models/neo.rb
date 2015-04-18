@@ -80,6 +80,6 @@ class Neo
 	end
 
 	def self.basic_search_info
-		" CASE WHEN node.title IS NULL THEN node.name ELSE node.title END as name, node.author_name as author_name, ID(node) as id, labels(node) as labels, CASE WHEN node.title IS NULL THEN node.name ELSE node.title END, node.first_name AS first_name, node.last_name AS last_name, node.image_url AS image_url, node.url AS url  " 
+		" CASE WHEN node.title IS NULL THEN node.name ELSE node.title END as name, node.author_name as author_name, ID(node) as id, labels(node) as labels, CASE WHEN node.title IS NULL THEN node.name ELSE node.title END, node.first_name AS first_name, node.last_name AS last_name, node.image_url AS image_url, node.url AS url, node.blog_url AS blog_url  " 
 	end
 end
