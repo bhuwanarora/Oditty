@@ -24,7 +24,7 @@ class Era < Neo
 		when Constant::Id::Contemporary
 			init_match_clause = "MATCH (book:Contemporary) "
 		end
-		init_match_clause
+		init_match_clause + " WITH book "
 	end
 
 	def books

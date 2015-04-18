@@ -8,6 +8,8 @@ class Infinity < Neo
 		@reading_time_id = filters["reading_time_id"] 
 		@era_id = filters["era_id"]
 		@skip_count = filters["skip_count"] || 0
+
+		puts filters.to_s
 	end
 
 	def get_books
@@ -46,7 +48,7 @@ class Infinity < Neo
 			end	
 
 			if @era_id.present?
-				clause += Infinity::FilterEra.new(@era_id).match + with_clause
+				clause += Infinity::FilterEra.new(@era_id).match(book_label_defined) + with_clause
 			end
 			unless return_group.blank?
 				clause += Infinity.return_group(Infinity.collect_map({"book" => Book.grouped_basic_info}),return_group) + Infinity.skip(@skip_count) + Infinity.limit(Limit)
