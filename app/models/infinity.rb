@@ -53,9 +53,10 @@ class Infinity < Neo
 			end
 
 			unless return_group.blank?
-				clause += Infinity.limit(Limit) + Infinity.return_group(Infinity.collect_map({"book" => Book.grouped_basic_info}),return_group) + Infinity.skip(@skip_count) 
+				clause += Book.order_desc + Infinity.skip(@skip_count) + Infinity.limit(Limit) + Infinity.return_group(Infinity.collect_map({"books" => Book.grouped_basic_info}),return_group) 
+
 			else
-				clause += Book.order_desc + Infinity.skip(@skip_count) + Infinity.limit(Limit) + Infinity.return_group(Infinity.collect_map({"book" => Book.grouped_basic_info}))  
+				clause += Book.order_desc + Infinity.skip(@skip_count) + Infinity.limit(Limit) + Infinity.return_group(Infinity.collect_map({"books" => Book.grouped_basic_info}))  
 			end
 		end
 		clause
