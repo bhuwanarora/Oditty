@@ -44,7 +44,8 @@ module Api
 			end
 
 			def self.get_feed user_id
-				info = Article::BlogArticle.get_posts
+				# info = Article::BlogArticle.get_posts
+				info = News.get_feed.execute
 				info
 			end
 
