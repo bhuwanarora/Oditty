@@ -2,7 +2,7 @@
     parallax-background parallax-ratio="0.9"
     layout-align="center center"
     layout="column"
-    ng-style="{'background-color': author.books[0].color}">
+    ng-style="author.books[0].custom_style">
     <div>
         <h1>{{author.name}}</h1>
         <div>{{author.year_born}}-{{author.year_died}}</div>
@@ -17,7 +17,7 @@
         <div flex="25" flex-md="15" flex-sm="10"></div>
         <div flex="50" flex-md="70" flex-sm="80" layout="row" layout-sm="column" layout-align="center center">
             <div flex-gt-md="30" flex-md="40" layout="column" layout-padding layout-align="center center">
-                <img ng-src="{{author.books[0].isbn | choose_medium_thumb}}" class="author_thumb">
+            <div ng-init="book = author.books[0]" ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
                 <div flex="5"></div>
                 <md-button class="md-button-clear md-primary md-raised" 
                             ng-click="show_buy_dialog($event)">
@@ -75,8 +75,11 @@
 </div>
 
 <section ng-repeat="book in author.books">
-    <div class="book_cover" layout-align-sm="center center" layout-align-md="center center" layout="column" parallax-background parallax-ratio="0.9"   layout-align-gt-md="center center"
-            ng-style="{'background-color': book.color}">
+    <div class="book_cover" layout-align-sm="center center" 
+        layout-align-md="center center" layout="column" 
+        parallax-background parallax-ratio="0.9"   
+        layout-align-gt-md="center center"
+        ng-style="book.custom_style">
         <div layout="row" layout-md="column" layout-sm="column">
             <div layout-margin layout-sm="column" layout-md="row" layout-align-sm="center center">
                 <h1 flex-md="50" flex-order-sm="2" flex-order-md="2">
@@ -139,7 +142,7 @@
             <div flex="25" flex-md="15" flex-sm="10"></div>
             <div flex="50" flex-md="70" flex-sm="80" layout="row" layout-sm="column" layout-align="center center">
                 <div flex-gt-md="30" flex-md="40" layout="column" layout-padding layout-align="center center">
-                    <img ng-src="{{book.isbn | choose_medium_thumb}}" class="author_thumb">
+                    <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
                     <div flex="5"></div>
                     <md-button class="md-button-clear md-primary md-raised" 
                                 ng-click="show_buy_dialog($event)">

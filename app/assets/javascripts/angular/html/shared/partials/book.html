@@ -1,6 +1,8 @@
 <div layout="column" layout-align="center" class="relative  upper_slider_wrapper"
 		ng-if="book.status">
-  	<md-slider flex md-discrete ng-model="rating1" step="1" min="1" max="10" aria-label="rating">
+  	<md-slider flex md-discrete ng-model="book.user_rating" 
+  			   step="1" min="1" max="10" aria-label="rating"
+  			   ng-change="rate_book(book)">
   	</md-slider>
 </div>
 <div class="cover_gradient" layout="column" layout-align="center" ng-if="book.status">
@@ -19,8 +21,4 @@
 <div layout="column" layout-align="start start" class="small_font" layout-wrap>
 	<b>{{book.title}}({{book.published_year}})</b>
 	<div>{{book.author_name}}</div>
-	<div>
-		<span class="icon-star"></span>
-		<span>{{book.user_rating}}</span>
-	</div>
 </div>

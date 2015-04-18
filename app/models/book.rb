@@ -7,6 +7,14 @@ class Book < Neo
 		" MATCH (book:Book) "
 	end
 
+	def self.search_by_indexed_title indexed_title
+		" START book=node:node_auto_index('indexed_title:\""+indexed_title+"\"') WITH book " 
+	end
+
+	def self.get_by_indexed_title indexed_title
+		" START book=node:node_auto_index('indexed_title:\""+indexed_title+"\"') " + Book.return_init + Book.basic_info
+	end	
+
 	def get_feed
 		" MATCH (book:Book)-[:BookFeed*0..]->(news_feed) WHERE ID(book) = " + @id.to_s + " RETURN labels(news_feed), news_feed "
 	end
@@ -96,5 +104,17 @@ class Book < Neo
 		else
 			" SET book.rating_count = TOINT(COALESCE(book.rating_count, 1)) - 1 "
 		end
+	end
+
+	def self.match_communities 
+		" MATCH (community:Community)-[:RelatedBooks]->(book) WITH community, book "
+	end
+
+	def self.grouped_news_community
+		" WITH community, " + Book		
+	end
+
+	def get_news
+		match + Book.match_communities + Community.order_desc + Book.limit(1) + Community.match_news  + " ,book WITH book, " + Community.collect_map("news" => News.grouped_basic_info) + Book.match_communities + " ,news " + Book.return_init + " news, " + Community.basic_info + Community.order_desc 
 	end
 end

@@ -28,7 +28,7 @@ module Neography
                 neo_response["data"].each do |record|
                     response << Hash[neo_response["columns"].zip(record)]
                 end
-                response
+              response
             end
         end
     end

@@ -4,6 +4,10 @@ class User < Neo
 		@id = user_id
 	end
 
+	def self.link_primary_labels
+		"  CREATE (user)-[:Labelled{user_id:ID(user)}]->(label) WITH user, label "
+	end
+
 	def self.match_group ids
 		clause = ""
 		unless ids.nil?
@@ -72,7 +76,7 @@ class User < Neo
 		"  init_book_read_count:user.init_book_read_count ,  selectedYear:user.selectedYear ,  selectedMonth:user.selectedMonth ,  selectedDay:user.selectedDay ,  first_name:user.first_name ,  last_name:user.last_name ,  about:user.about ,  id:ID(user) "
 	end
 
-	def get_all_books skip_count=0, limit_count=Constants::BookCountShownOnSignup 
+	def get_all_books skip_count=0, limit_count=Constant::Count::BookCountShownOnSignup 
 		match + Bookmark::Node::BookLabel.match_path + User.return_group(Book.basic_info, " label.key as shelf ") + Book.order_desc + User.skip(skip_count) + User.limit(limit_count)
 	end
 
@@ -105,22 +109,19 @@ class User < Neo
 	end
 
 	def self.create(email, password=nil, verification_token=nil)
-		create_new_user = "CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, last_book: "+Constants::BestBook.to_s+", amateur: true, ask_info: true}), "
-		create_feednext_relation = "(user)-[fn:FeedNext{user_id:ID(user)}]->(user), "
-		create_ego_relation = "(user)-[:Ego{user_id:ID(user)}]->(user) WITH user "
-		get_labels = "MATCH(bm:Label{basic:true}) "
-		add_labels = "CREATE (user)-[:Labelled{user_id:ID(user)}]->(bm) "
-		add_categories_to_user = "WITH user MERGE (root_category:Category{is_root:true}) MERGE (user)-[rel:Likes]-(root_category) ON CREATE SET rel.weight = 0 "
-		# get_all_users = "MATCH (all_user:User) WHERE all_user <> user "
-		# make_friends = "CREATE (user)-[:Follow]->(all_user), (user)<-[:Follow]-(all_user)"
-		clause = create_new_user + create_feednext_relation + create_ego_relation + get_labels + add_labels + add_categories_to_user
-		clause
+		"CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, last_book: "+Constant::Id::BestBook.to_s+", amateur: true, ask_info: true, verification_time " + Time.now.to_i.to_s + "}) "
+	end
+
+	def self.link_root_categories
+		"  CREATE UNIQUE (user)-[rel:Likes]-(root_category) SET rel.weight = 0 WITH user , root_category "
+	end
+
+	def self.handle_new(email, password=nil, verification_token=nil)
+		User.create(email, password, verification_token) + User::Feed.create_first + Label.match_primary  + ", user " + User.link_primary_labels + User::UserNotification.create_for_new_user + Category::Root.match  + ", user " + User.link_root_categories + Notification.create_for_new_user + User.return_init + User.basic_info
 	end
 
 	def get_notifications
-		return_clause = "RETURN n, ID(n)"
-		clause = match + "MATCH (u)-[r]->(n:Notification) " + return_clause
-		clause
+		User::UserNotification.match_last_visited_notification(@id) + User::UserNotification.delete_visited_notification  + " WITH user " + User::UserNotification.create_visited_notification + User::UserNotification.match_path  + "," + User::UserNotification.extract_unwind("notification") + " WITH " + User.tail("notification") + User.return_group("labels(notification)", "notification", "notification.created_at") + User.order_init + " notification.created_at DESC " 
 	end
 
 	def get_books_bookmarked(skip_count=0)
@@ -199,5 +200,61 @@ class User < Neo
 
 	def get_init_book_count_range
 		match + User.return_init + User.init_book_read_count
+	end
+
+	def match_community
+		" MATCH (user)-[follows_user:FollowsCommunity]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(community) "
+	end
+
+	def self.get_by_fb_id id
+		" MATCH (user:User{fb_id:" + id.to_s + "}) " + User::Info.return_init + User.basic_info
+	end
+
+	def self.match_by_email email
+		" MATCH (user:User) WHERE user.email= \"" + email + "\" "
+	end
+
+	def self.get_by_email email
+		User.match_by_email(email) + User::Info.return_init + User.basic_info
+	end
+
+	def self.authentication_info
+		" user.password AS password , user.verified AS verified, user.active AS active "
+	end
+
+	def self.get_sign_in_credential_by_email email
+		User.match_by_email(email) + User::Info.return_group(User.basic_info, User.authentication_info)  
+	end
+
+	def self.match_by_email_verification_token email, verification_token
+	    User.match_by_email(email) + " AND user.verification_token=\"" + verification_token + "\""
+	end	
+
+	def self.handle_verification email, verification_token
+		User.match_by_email_verification_token(email, verification_token) + User::Info.set_verified_true + User.return_group(User.basic_info, User.authentication_info) 
+	end
+
+	def self.handle_new_verification_request email, verification_token
+		User.match_by_email(email) + User::Info.set_verification_token(verification_token) + User::Info.set_verification_time + User.return_init + User.basic_info
+	end
+
+	def match_followers
+		match + " WITH user AS friend " + UsersUser.match 
+	end
+
+	def self.get_visited_books
+		Bookmark::Type::Visited.match + Book.order_desc + Book.limit(3)  +" WITH user, " + Book.collect_map("books" => Book.grouped_basic_info )
+	end
+
+	def get_followers
+		match_followers + User.get_visited_books + User.return_group(User.basic_info,"books")
+	end
+
+	def match_users_followed
+		match + UsersUser.match + " WITH friend AS user "  
+	end
+
+	def get_users_followed
+		match_users_followed + User.get_visited_books + User.return_group(User.basic_info,"books") 
 	end
 end

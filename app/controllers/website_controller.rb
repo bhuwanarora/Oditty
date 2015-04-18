@@ -43,6 +43,11 @@ class WebsiteController < ApplicationController
 		render :layout => "landing_page"
 	end
 
+	def signup
+		@signup = true
+		render :layout => "landing_page"
+	end
+
 	def jobs
 		render :layout => "clean"
 	end
@@ -62,6 +67,7 @@ class WebsiteController < ApplicationController
 
 	### WEBSITE NEW 
 	def home
+		@home = true
 		render :layout => "material"
 	end
 
@@ -90,6 +96,7 @@ class WebsiteController < ApplicationController
 	end
 
 	def network
+		@network = true
 		render :layout => "material"
 	end
 
@@ -111,5 +118,7 @@ class WebsiteController < ApplicationController
 		@community = true
 		render :layout => "material"
 	end
+
+	
 
 end

@@ -13,6 +13,12 @@ module Api
 				render :json => books, :status => 200
 			end
 
+			def get_feed
+				user_id = session[:user_id]
+				info = UserApi.get_feed(user_id)
+				render :json => info, :status => 200
+			end
+
 			def bookmark
 				params = params["q"]
 				params = JSON.parse params
@@ -34,9 +40,9 @@ module Api
 				status = params[:status]
 				user_id = session[:user_id]
 				if status == "true"
-					info = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).add.execute
+					info = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).book.add.execute
 				else
-					info = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).remove.execute
+					info = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).book.remove.execute
 				end
 				render :json => info, :status => 200
 			end
@@ -90,7 +96,7 @@ module Api
 			end
 
 			def authenticate
-				authentication_info = UserApi.authenticate(session, params)
+				authentication_info = Api::V0::UserApi.authenticate(session, params)
 				if authentication_info[:authenticate]
 					render :json => authentication_info, :status => 200
 				else
@@ -127,7 +133,7 @@ module Api
 				if session[:user_id]
 					info = UserApi.get_notifications session[:user_id]
 				else
-					info = {:message => Constants::SessionNotSet}
+					info = {:message => Constant::StatusMessage::SessionNotSet}
 				end
 				render :json => info, :status => 200
 			end
@@ -271,8 +277,8 @@ module Api
 			end
 
 			def recover_password
-				email_sent = UserApi.recover_password(params[:email])
-				render :json => {:message => Constants::PasswordRecoveryInitiated}, :status => 200
+				message = Api::V0::UserApi.recover_password(params[:email])
+				render :json => {:message => message}, :status => 200
 			end
 
 			# def get_news_feed
@@ -319,6 +325,23 @@ module Api
 				user_id = session[:user_id]
 				influential_books = UserApi.get_influential_books(user_id).execute
 				render :json => influential_books, :status => 200
+			end
+
+			def verify
+				verification_info = Api::V0::UserApi.verify(session, params)
+				render :json => verification_info, :status => 200
+			end
+
+			def get_followers
+				user_id = session[:user_id]
+				info = Api::V0::UserApi.get_followers(user_id).execute
+				render :json => info, :status => 200
+			end
+
+			def get_users_followed
+				user_id = session[:user_id]
+				info = Api::V0::UserApi.get_users_followed(user_id).execute
+				render :json => info, :status => 200
 			end
 		end
 	end

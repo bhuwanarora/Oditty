@@ -1,29 +1,45 @@
 angular.module('filtersApp', [])
-  .filter('integer', function() {
+        .filter('integer', function() {
     return function(input) {
-    	var output = input;
-      if(angular.isDefined(input) && input != null){
-        if(input >= 1000000){
-        	output = (input/1000000).toFixed(0)+"m";
+    	   var output = input;
+            if(angular.isDefined(input) && input != null){
+                if(input >= 1000000){
+            	   output = (input/1000000).toFixed(0)+"m";
+                }
+                else if(input >= 1000){
+            	   output = (input/1000).toFixed(0)+"k";
+                }
+            }
+            else{
+                output = 0;
+            }
+            return output;
+        };
+    })
+    .filter('search_item_type', function(){
+        return function(input){
+            var output = ""
+            if(angular.isDefined(input)){
+                var book_label = input.labels.indexOf("Book") >= 0;
+                var author_label = input.labels.indexOf("Author") >= 0;
+                if(book_label){
+                    output = "Book";
+                }
+                else if(author_label){
+                    output = "Author"
+                }
+            }
+            return output;
         }
-        else if(input >= 1000){
-        	output = (input/1000).toFixed(0)+"k";
+    })
+    .filter('first_two', function(){
+        return function(input){
+            if(angular.isDefined(input)){
+                input = input.slice(0, 2);
+            }
+            return input;
         }
-      }
-      else{
-        output = 0;
-      }
-      return output;
-    };
-  })
-  .filter('first_two', function(){
-    return function(input){
-      if(angular.isDefined(input)){
-        input = input.slice(0, 2);
-      }
-      return input;
-    }
-  })
+    })
     .filter('flipkart_title', function(){
         return function(input){
             var output = input.replace(/the/gi, "")
@@ -33,73 +49,73 @@ angular.module('filtersApp', [])
             return output;
         }
     })
-  .filter('category_group', function(){
-    return function(books, category){
-        output = []
-        var _category_has_book = function(book){
-            var has_book = false;
-            if(book.root_category.length > 0){
-                angular.forEach(book.root_category, function(base_category){
-                    if(base_category.name == category.name){
-                        has_book = true;
-                    }
-                });
+    .filter('category_group', function(){
+        return function(books, category){
+            output = []
+            var _category_has_book = function(book){
+                var has_book = false;
+                if(book.root_category.length > 0){
+                    angular.forEach(book.root_category, function(base_category){
+                        if(base_category.name == category.name){
+                            has_book = true;
+                        }
+                    });
+                }
+                return has_book;
             }
-            return has_book;
-        }
 
-        angular.forEach(books, function(book){
-            if(_category_has_book(book)){
-                this.push(book);
+            angular.forEach(books, function(book){
+                if(_category_has_book(book)){
+                    this.push(book);
+                }
+            }, output);
+            return output;
+        }
+    })
+    .filter('trending_name', function(){
+        return function(input){
+            if(angular.isDefined(input)){
+                input = "#"+input.replace(" ", "")
             }
-        }, output);
-        return output;
-    }
-  })
-  .filter('trending_name', function(){
-    return function(input){
-      if(angular.isDefined(input)){
-        input = "#"+input.replace(" ", "")
-      }
-      return input;
-    }
-  })
-  .filter('reduced_label', function(){
-    return function(input){
-      if(angular.isDefined(input) && input.length > 20){
-        input = input.slice(0, 20)+"...";
-      }
-      return input;
-    }
-  })
-  .filter('first_name', function(){
-    return function(input){
-      if(angular.isDefined(input)){
-        input = input.split(" ")[0];
-      }
-      return input;
-    }
-  })
-  .filter('reduced_title', function(){
-    return function(input){
-      if(angular.isDefined(input)){
-        if(input != null && input.length > 28){
-          input = input.slice(0, 25)+"...";
+            return input;
         }
-      }
-      return input;
-    }
-  })
-  .filter('reduced_summary', function(){
-    return function(input){
-      if(angular.isDefined(input)){
-        if(input != null && input.length > 303){
-          input = input.slice(0, 300)+"...";
+    })
+    .filter('reduced_label', function(){
+        return function(input){
+            if(angular.isDefined(input) && input.length > 20){
+                input = input.slice(0, 20)+"...";
+            }
+            return input;
         }
-      }
-      return input;
-    }
-  })
+    })
+    .filter('first_name', function(){
+        return function(input){
+            if(angular.isDefined(input)){
+                input = input.split(" ")[0];
+            }
+            return input;
+        }
+    })
+    .filter('reduced_title', function(){
+        return function(input){
+            if(angular.isDefined(input)){
+                if(input != null && input.length > 28){
+                    input = input.slice(0, 25)+"...";
+                }
+            }
+            return input;
+        }
+    })
+    .filter('reduced_summary', function(){
+        return function(input){
+            if(angular.isDefined(input)){
+                if(input != null && input.length > 303){
+                    input = input.slice(0, 300)+"...";
+                }
+            }
+            return input;
+        }
+    })
   .filter('compressed_filter', function(){
     return function(input){
       if(angular.isDefined(input)){
@@ -272,14 +288,23 @@ angular.module('filtersApp', [])
       return input; 
     }
   })
-  .filter('thumb', function(){
-    return function(isbn_string){
-      if(isbn_string){
-        var isbn = isbn_string.split(",");
-        var thumb = "http://covers.openlibrary.org/b/isbn/"+isbn[0]+"-L.jpg";
-        return thumb;
+  .filter('large_thumb', function(){
+    return function(input){
+      var output = "";
+      if(angular.isDefined(input) && input){
+        var external_thumb = angular.isDefined(input.external_thumb) && input.external_thumb != null;
+        if(external_thumb){
+          output = input.external_thumb;
+        }
+        else{
+          if(input.isbn){
+            var isbn = input.isbn.split(",");
+            output = "http://covers.openlibrary.org/b/isbn/"+isbn[0]+"-L.jpg"
+          }
+        }
       }
-    }
+      return output;
+    };
   })
   .filter('medium_thumb', function(){
     return function(isbn_string){
@@ -287,11 +312,7 @@ angular.module('filtersApp', [])
       if(isbn_string){
         var isbn = isbn_string.split(",");
         angular.forEach(isbn, function(value){
-          // var img = new Image();
           output = "http://covers.openlibrary.org/b/isbn/"+value+"-M.jpg";
-          // if(img.height > 20 && output == ""){
-          //   output = img.src;
-          // }
         });
         return output;
       }

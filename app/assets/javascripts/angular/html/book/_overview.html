@@ -2,11 +2,14 @@
     <div flex="45" class="padding overview" 
             layout="column" layout-align="space-between" 
             flex-sm="100">
-        <section>
-            <p><h3>{{book.title}}</h3>
-                <div>{{book.author_name}}</div></p>
-            <div class="summary">{{book.description}}</div>
-        </section>
+        <md-slider flex="20" md-discrete ng-model="user_rating" ng-change="rate_book(book)"
+                    step="1" min="1" max="10" aria-label="rating">
+        </md-slider>
+        <p>
+            <h3>{{book.title}}</h3>
+            <div>{{book.author_name}}</div>
+        </p>
+        <div class="summary">{{book.description}}</div>
     </div>
     <div flex="5" hide-sm>
         <div class="vertical-text spine" 
@@ -15,11 +18,10 @@
             <div>{{book.title}}({{book.published_year}})</div>
             <div>{{book.author_name}}</div>
         </div>
-            
     </div>
     <div flex="50" hide-sm>
         <!-- <div class="cover_gradient"></div> -->
-        <img ng-src="{{book.isbn | thumb}}" class="cover">
+        <img ng-src="{{book | large_thumb}}" class="cover">
     </div>
 </section>
 <style>

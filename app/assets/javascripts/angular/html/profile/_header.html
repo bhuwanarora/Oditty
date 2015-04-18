@@ -1,7 +1,7 @@
 <md-toolbar class="profile_header">
     <section layout="column" layout-wrap>
-        <div layout="row" layout-align="end start" class="small-padding" >
-            <md-button class="md-primary md-raised md-button-clear">Follow Me</md-button>
+        <div layout="row" layout-align="end start" layout-padding class="top_section">
+            <md-button class="md-primary md-raised md-button-clear" ng-if="!info.my_profile">Follow Me</md-button>
         </div>
         <div layout="row" layout-wrap class="bottom_header">
             <div flex="50" hide-sm hide-md layout="row" layout-align="start start">
@@ -53,8 +53,6 @@
         background-color: #f5f5f5 !important;
         box-shadow: none;
         border-bottom: 1px solid #dddddd;
-        /*padding-top: 60px;*/
-        /*padding-bottom: 0px;*/
     }
 
     .profile_header h2{
@@ -84,5 +82,9 @@
 
     .profile_header .bottom_header{
         height: 60px;
+    }
+
+    .profile_header .top_section{
+        min-height: 50px;
     }
 </style>

@@ -1,10 +1,13 @@
-<md-content layout="column" class="md-padding" layout-align="start end" layout-wrap layout-fill>
+<md-content layout="column" class="md-padding" 
+			layout-align="start end" 
+			layout-wrap 
+			layout-fill>
 	<h3 align="right">Search Results</h3>
-    <div><a>Top Results</a></div>
-	<div><a>Books</a></div>
-	<div><a>Communities</a></div>
-	<div><a>Authors</a></div>
-	<div><a>People</a></div>
-	<div><a>News</a></div>
-	<div><a>Blog</a></div>
+    <a ng-href="/search?q={{display_results_for}}">Top Results</a>
+	<a ng-href="/search?q={{display_results_for}}&type=Book">Books</a>
+	<a ng-href="/search?q={{display_results_for}}&type=Community">Communities</a>
+	<a ng-href="/search?q={{display_results_for}}&type=Author">Authors</a>
+	<a ng-href="/search?q={{display_results_for}}&type=Person">People</a>
+	<a ng-href="/search?q={{display_results_for}}&type=News">News</a>
+	<a ng-href="/search?q={{display_results_for}}&type=Blog">Blog</a>
 </md-content>

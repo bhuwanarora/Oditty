@@ -1,17 +1,15 @@
 <md-card>
     <md-card-content>
         <section layout="row" layout-align="space-between center">
-            <div>Robert <b>Terror</b> Singh</div>
-            <md-button>Follow</md-button>
         </section><br/>
         <section layout="row">
             <div flex="20" flex-md="30" flex-sm="35" layout="row" layout-align="start start">
                 <img src="https://material.angularjs.org/img/washedout.png" alt="Washed Out" class="large_circular">
             </div>
             <div flex="80" flex-md="70" flex-sm="65" layout="column" layout-wrap class="side_padding">
-                <div>23 Friends</div><br/>
-                <div>The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-            two most important words in Ernest Greene's musical language...</div>
+                <h5>{{result.name}}</h5>
+                <div class="less_important">23 Friends</div><br/>
+                <div>{{result.description}}</div>
             </div>
         </section>
     </md-card-content>

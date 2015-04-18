@@ -11,21 +11,21 @@ class User::Predict::BookPrediction < User::Predict
 	def likely_books_read
 		range = @user.get_init_book_count_range.execute[0]["init_book_read_count"]
 		case range
-		when Constants::ChildBookCountRange
+		when Constant::Range::ChildBookCount
 			data = handle_few_books_read
-		when Constants::AdoloscentBookCountRange
+		when Constant::Range::AdoloscentBookCount
 			data = handle_average_number_books_read
-		when Constants::AboutToBeAdultBookCountRange
+		when Constant::Range::AboutToBeAdultBookCount
 			data = handle_average_number_books_read
-		when Constants::AdultBookCountRange
+		when Constant::Range::AdultBookCount
 			data = handle_average_number_books_read
-		when Constants::AboutToDieBookCountRange
+		when Constant::Range::AboutToDieBookCount
 			data = handle_average_number_books_read
 		end
 		data
 	end
 
-	def handle_average_number_books_read skip_count=0, limit_count = Constants::BookCountShownOnSignup
+	def handle_average_number_books_read skip_count=0, limit_count = Constant::Count::BookCountShownOnSignup
 		data = @user.get_all_books.execute
 	 	has_linked_books = data[0]["book_id"].blank? ? false : true rescue false
 		unless has_linked_books

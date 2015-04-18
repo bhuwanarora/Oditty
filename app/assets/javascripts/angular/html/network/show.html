@@ -1,124 +1,31 @@
-<md-list class="white">
-    <md-item>
+<md-list class="white" ng-if="users_list">
+    <md-item ng-repeat="user in users_list">
         <md-item-content>
             <section layout="row" flex="100">
                 <div layout="row" layout-align="center center" flex="20" flex-sm="40">
-                    <img src="http://www.chicagonow.com/avatar/blog-108-128.png" class="circular user_photo" flex="60">
+                    <img ng-src="{{user.thumb_url}}" class="circular user_photo" flex="60">
                 </div>
                 <div layout="column" flex="30" flex-sm="60">
                     <div class="padding">
-                        <h2 class="network_name">Sulekha Gupta</h2>
-                        <div>Mumbai</div>
+                        <h2 class="network_name">{{user.name}}</h2>
+                        <div>{{user.location}}</div>
                     </div>
                     <div class="padding">
-                        <md-button class="md-primary">Follow</md-button>
+                        <md-button class="md-primary">
+                            <span ng-if="!user.status">Follow</span>
+                            <span ng-if="user.status">Followed</span>
+                        </md-button>
                     </div>
                 </div>
                 <div layout="row" flex="50" hide-sm>
-                    <img class="favourite_books" src="https://s-media-cache-ak0.pinimg.com/236x/8f/af/5e/8faf5e39ee67c2c8e6c073a3f0af6ddf.jpg">
-                    <img class="favourite_books" src="http://www.newstract.com/wp-content/uploads/2014/04/fountainhead.jpg">
-                    <img class="favourite_books" src="http://www.newstract.com/wp-content/uploads/2014/04/fountainhead.jpg">
+                    <img ng-src="{{book | choose_medium_thumb}}" 
+                         class="favourite_books" 
+                         ng-repeat="book in user.books">
                 </div>
             </section>
         </md-item-content>
+        <md-divider></md-divider>
     </md-item>
-    <md-divider></md-divider>
-    <md-item>
-        <md-item-content>
-            <section layout="row" flex="100">
-                <div layout="row" layout-align="center center" flex="20" flex-sm="40">
-                    <img src="http://www.chicagonow.com/avatar/blog-108-128.png" class="circular user_photo" flex="60">
-                </div>
-                <div layout="column" flex="30" flex-sm="60">
-                    <div class="padding">
-                        <h2 class="network_name">Sulekha Gupta</h2>
-                        <div>Mumbai</div>
-                    </div>
-                    <div class="padding">
-                        <md-button class="md-primary ">Follow</md-button>
-                    </div>
-                </div>
-                <div layout="row" flex="50" hide-sm>
-                    <img class="favourite_books" src="https://s-media-cache-ak0.pinimg.com/236x/8f/af/5e/8faf5e39ee67c2c8e6c073a3f0af6ddf.jpg">
-                    <img class="favourite_books" src="http://www.newstract.com/wp-content/uploads/2014/04/fountainhead.jpg">
-                    <img class="favourite_books" src="http://www.newstract.com/wp-content/uploads/2014/04/fountainhead.jpg">
-                </div>
-            </section>
-        </md-item-content>
-    </md-item>
-    <md-divider></md-divider>
-    <md-item>
-        <md-item-content>
-            <section layout="row" flex="100">
-                <div layout="row" layout-align="center center" flex="20" flex-sm="40">
-                    <img src="http://www.chicagonow.com/avatar/blog-108-128.png" class="circular user_photo" flex="60">
-                </div>
-                <div layout="column" flex="30" flex-sm="60">
-                    <div class="padding">
-                        <h2 class="network_name">Sulekha Gupta</h2>
-                        <div>Mumbai</div>
-                    </div>
-                    <div class="padding">
-                        <md-button class="md-primary">Follow</md-button>
-                    </div>
-                </div>
-                <div layout="row" flex="50" hide-sm>
-                    <img class="favourite_books" src="https://s-media-cache-ak0.pinimg.com/236x/8f/af/5e/8faf5e39ee67c2c8e6c073a3f0af6ddf.jpg">
-                    <img class="favourite_books" src="http://www.newstract.com/wp-content/uploads/2014/04/fountainhead.jpg">
-                    <img class="favourite_books" src="http://www.newstract.com/wp-content/uploads/2014/04/fountainhead.jpg">
-                </div>
-            </section>
-        </md-item-content>
-    </md-item>
-    <md-divider></md-divider>
-    <md-item>
-        <md-item-content>
-            <section layout="row" flex="100">
-                <div layout="row" layout-align="center center" flex="20" flex-sm="40">
-                    <img src="http://www.chicagonow.com/avatar/blog-108-128.png" class="circular user_photo" flex="60">
-                </div>
-                <div layout="column" flex="30" flex-sm="60">
-                    <div class="padding">
-                        <h2 class="network_name">Sulekha Gupta</h2>
-                        <div>Mumbai</div>
-                    </div>
-                    <div class="padding">
-                        <md-button class="md-primary">Follow</md-button>
-                    </div>
-                </div>
-                <div layout="row" flex="50" hide-sm>
-                    <img class="favourite_books" src="https://s-media-cache-ak0.pinimg.com/236x/8f/af/5e/8faf5e39ee67c2c8e6c073a3f0af6ddf.jpg">
-                    <img class="favourite_books" src="http://www.newstract.com/wp-content/uploads/2014/04/fountainhead.jpg">
-                    <img class="favourite_books" src="http://www.newstract.com/wp-content/uploads/2014/04/fountainhead.jpg">
-                </div>
-            </section>
-        </md-item-content>
-    </md-item>
-    <md-divider></md-divider>
-    <md-item>
-        <md-item-content>
-            <section layout="row" flex="100">
-                <div layout="row" layout-align="center center" flex="20" flex-sm="40">
-                    <img src="http://www.chicagonow.com/avatar/blog-108-128.png" class="circular user_photo" flex="60">
-                </div>
-                <div layout="column" flex="30" flex-sm="60">
-                    <div class="padding">
-                        <h2 class="network_name">Sulekha Gupta</h2>
-                        <div>Mumbai</div>
-                    </div>
-                    <div class="padding">
-                        <md-button class="md-primary">Follow</md-button>
-                    </div>
-                </div>
-                <div layout="row" flex="50" hide-sm>
-                    <img class="favourite_books" src="https://s-media-cache-ak0.pinimg.com/236x/8f/af/5e/8faf5e39ee67c2c8e6c073a3f0af6ddf.jpg">
-                    <img class="favourite_books" src="http://www.newstract.com/wp-content/uploads/2014/04/fountainhead.jpg">
-                    <img class="favourite_books" src="http://www.newstract.com/wp-content/uploads/2014/04/fountainhead.jpg">
-                </div>
-            </section>
-        </md-item-content>
-    </md-item>
-    <md-divider></md-divider>
 </md-list>
 
 <style>

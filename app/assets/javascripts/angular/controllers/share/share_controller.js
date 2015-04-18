@@ -12,6 +12,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
 
     $scope.back = function($event){
         $scope.info.show_share = false;
+        $scope.info.show_book_share = false;
         event.stopPropagation();
     }
 

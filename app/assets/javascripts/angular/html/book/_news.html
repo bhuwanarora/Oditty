@@ -1,91 +1,24 @@
-<section layout="row" layout-wrap class="padding">
-     <div flex="10"></div>
-     <div flex="10" class="light_grey small-padding" layout-align="center center" layout="row">
-        2015
-    </div>
-     <div flex="80">
- </section>
- <section layout="row" layout-wrap class="padding">
-     <div flex="10" layout-align="center center" layout="row">
-        <div>29Feb</div>
-    </div>
-     <div flex="10" layout-align="center center" layout="row">
-            <img class="circular"
-                 src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
-    </div>
-     <div flex="80" layout-align="start start" layout="column" class="small-padding">
-        <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell 
+<div ng-controller="realVirtualityController">
+    <section layout="row" layout-wrap class="padding">
+         <div flex="10"></div>
+         <div flex="10" class="light_grey small-padding" layout-align="center center" layout="row">
+            2015
         </div>
-        <div>Terrorism community</div>
-     </div>
- </section>
- <section layout="row" layout-wrap class="padding">
-     <div flex="10" layout-align="center center" layout="row">
-        <div>29Feb</div>
-    </div>
-    <div flex="10" layout-align="center center" layout="row">
-            <img class="circular"
-                 src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
-    </div>
-     <div flex="80" layout-align="start start" layout="column" class="small-padding">
-        <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell 
+         <div flex="80">
+     </section>
+     <section layout="row" layout-wrap class="padding" ng-repeat="real_news in active_community.news">
+         <div flex="10" layout-align="center center" layout="row">
+            <div>29Feb</div>
         </div>
-        <div>Terrorism community</div>
-     </div>
- </section>
- <section layout="row" layout-wrap class="padding">
-     <div flex="10" layout-align="center center" layout="row">
-        <div>29Feb</div>
-    </div>
-    <div flex="10" layout-align="center center" layout="row">
+         <div flex="10" layout-align="center center" layout="row">
             <img class="circular"
-                 src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
-    </div>
-     <div flex="80" layout-align="start start" layout="column" class="small-padding">
-        <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell 
+                     src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
         </div>
-        <div>Terrorism community</div>
-     </div>
- </section>
- <section layout="row" layout-wrap class="padding">
-     <div flex="10" layout-align="center center" layout="row">
-        <div>29Feb</div>
-    </div>
-    <div flex="10" layout-align="center center" layout="row">
-            <img class="circular"
-                 src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
-    </div>
-     <div flex="80" layout-align="start start" layout="column" class="small-padding">
-        <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell 
-        </div>
-        <div>Terrorism community</div>
-     </div>
- </section>
- <section layout="row" layout-wrap class="padding">
-     <div flex="10" layout-align="center center" layout="row">
-        <div>29Feb</div>
-    </div>
-    <div flex="10" layout-align="center center" layout="row">
-            <img class="circular"
-                 src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
-    </div>
-     <div flex="80" layout-align="start start" layout="column" class="small-padding">
-        <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell 
-        </div>
-        <div>Terrorism community</div>
-     </div>
- </section>
- <section layout="row" layout-wrap class="padding">
-     <div flex="10" layout-align="center center" layout="row">
-        <div>29Feb</div>
-    </div>
-    <div flex="10" layout-align="center center" layout="row">
-            <img class="circular"
-                 src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
-    </div>
-     <div flex="80" layout-align="start start" layout="column" class="small-padding">
-        <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell 
-        </div>
-        <div>Terrorism community</div>
-     </div>
- </section>
+         <div flex="80" layout-align="start start" layout="column" class="small-padding">
+            <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell 
+            </div>
+            <div>Terrorism community</div>
+         </div>
+     </section>
+     
+</div>

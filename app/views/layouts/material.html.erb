@@ -41,23 +41,39 @@
             <script src="assets/angular/services/author_service.js"></script>
             <script src="assets/angular/services/shelf_service.js"></script>
 
-            <script src="assets/angular/controllers/home/home_controller.js"></script>
+            <script src="assets/angular/controllers/app_controller.js"></script>
             
+            <script src="assets/angular/controllers/notification_controller.js"></script>
+            <script src="assets/angular/controllers/search_controller.js"></script>
             <script src="assets/angular/controllers/home/left_controller.js"></script>
             <script src="assets/angular/controllers/home/right_controller.js"></script>
             <script src="assets/angular/controllers/home/shelf_controller.js"></script>
             <script src="assets/angular/controllers/share/share_controller.js"></script>
             <script src="assets/angular/controllers/share/options_controller.js"></script>
             <script src="assets/angular/controllers/profile_controller.js"></script>
+            
 
             <script src="assets/angular/controllers/toast_controller.js"></script>
             <script src="assets/angular/directives/site_directives.js"></script>
 
+            <script src="assets/angular/services/search_service.js"></script>
             <script src="assets/angular/services/status_service.js"></script>
             <script src="assets/angular/services/feed_service.js"></script>
 
+            <% if @home %>
+                <script src="assets/angular/controllers/home/home_controller.js"></script>
+            <% end %>
+
+            <% if @network %>
+                <script src="assets/angular/services/network_service.js"></script>
+                <script src="assets/angular/controllers/network_controller.js"></script>
+            <% end %>
+
             <% if @community %>
                 <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
+                <script src="assets/angular/controllers/book/timeline_controller.js"></script>
+                <script src="assets/angular/controllers/book/real_virtuality_controller.js"></script>
+                
                 <script src="assets/angular/services/community_service.js"></script>
                 <script src="assets/angular/controllers/community_controller.js"></script>
                 <script src="assets/angular/directives/d3_directives.js"></script>
@@ -74,6 +90,7 @@
             <% if @book %>
                 <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
                 <script src="assets/angular/controllers/book/timeline_controller.js"></script>
+                <script src="assets/angular/controllers/book/real_virtuality_controller.js"></script>
             <% end %>
 
             <% if @infinity %>
@@ -81,7 +98,8 @@
                 <script src="assets/angular/controllers/library/filters_controller.js"></script>
                 <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
                 <script src="assets/angular/controllers/book/timeline_controller.js"></script>
-                
+                <script src="assets/angular/controllers/book/real_virtuality_controller.js"></script>
+
                 <script src="assets/angular/services/time_group_service.js"></script>
                 <script src="assets/angular/services/reading_time_service.js"></script>
                 <script src="assets/angular/services/infinity_service.js"></script>
@@ -104,7 +122,7 @@
         <% end %>
     </head>
 
-    <body ng-controller="homeController" 
+    <body ng-controller="appController" 
         ng-keydown="scroll_on_keypress($event)" 
         ng-click="close_popups()" 
         ng-keypress="play_type_key($event)"
@@ -121,31 +139,50 @@
                         <md-button ng-show="visible_search_bar" class="burger padding" ng-click="toggleLeft($event)">
                             <a><span class="icon-menu2"></span></a>
                         </md-button>
-                        <div ng-show="visible_search_bar" layout-align-lg="center center">
+                        <div ng-show="visible_search_bar" 
+                             layout-align-lg="center center">
                             <a class="logo" href="/home">
                                 <img src="assets/rd_icon.png"/>
-                                <span hide-sm hide-md>ReadersDoor</span>
+                                <span hide-sm hide-md ng-hide="<%= @signup %>">ReadersDoor</span>
                             </a>
                         </div>
                     </div>
-                    <% unless @customise %>
-                        <div flex="50" flex-md="45" flex-sm="10" layout="row" layout-align="end center" layout-align-sm="start center">
-                            <md-button ng-click="show_search_bar()" ng-show="visible_search_bar" show-sm hide>
+                    <% unless (@customise || @signup)%>
+                        <div flex="50" flex-md="45" 
+                             ng-controller="searchController"
+                             flex-sm="10" 
+                             layout="row" 
+                             layout-align="end center" 
+                             layout-align-sm="start center">
+                            <md-button ng-click="show_search_bar()" 
+                                       ng-show="visible_search_bar" show-sm hide>
                                 <span class="icon-search"></span>
                             </md-button>
                             <div hide-sm class="search_icon">
                                 <span class="icon-search"></span>
                             </div>
-                            <md-autocomplete
-                                md-selected-item="selectedItem1"
-                                md-search-text="searchText"
-                                md-items="item in querySearch(searchText)"
-                                md-item-text="display"
-                                class="search"
-                                hide-sm
-                                flex="85"
-                                placeholder="Search books, topics and more...">
-                                <span md-highlight-text="searchText">{{item.display}}</span>
+                            <!-- md-items="item in info.genres | filter:search_tag.genre" -->
+                            <md-autocomplete md-selected-item="selected_item_search"
+                                            md-search-text="search_text"
+                                            md-items="item in search_results"
+                                            md-search-text-change="query_search(search_text)"
+                                            md-selected-item-change="on_select(item)"
+                                            md-item-text="item.name"
+                                            class="search"
+                                            hide-sm
+                                            flex="85"
+                                            ng-click="stop_propagation($event)"
+                                            placeholder="Search books, topics and more...">
+                                <div layout="row"
+                                    layout-align="space-between"
+                                    md-highlight-text="item | search_item_type">
+                                    <div>{{item.name}}</div>
+                                    <b class="less_important">{{item | search_item_type}}</b>
+                                </div>
+
+                                <!-- <span md-highlight-text="search_text">
+                                    {{item}}
+                                </span> -->
                             </md-autocomplete>
                         </div>
                         <div layout="row" layout-align="center center" flex="10" flex-md="15" flex-sm="20">
@@ -191,11 +228,11 @@
             </md-toolbar>
 
             <%= yield %>
-            <% unless @customise %>
-                <div ng-controller="shareController">
+            <% unless (@customise || @signup) %>
+                <div ng-controller="shareController" >
                     <md-button class="md-fab md-fab-bottom-right animate-fast fixed_share"
                                 aria-label="Eat cake"
-                                ng-class="{'md-fab-custom-right': info.show_share}"
+                                ng-class="{'md-fab-custom-right': info.show_share || info.show_book_share}"
                                 ng-click="show_share_page($event)"
                                 ng-style="type_icon_pressed"
                                 style="background-image: url('assets/type.png')">
@@ -214,7 +251,7 @@
 
             <div ng-include src="'/assets/angular/html/shared/left_panel.html'" class="left_panel_container"></div>
             <div ng-include src="'/assets/angular/html/shared/notifications.html'" ng-if="show_notifications"></div>
-            <div ng-include src="'/assets/angular/html/share/show.html'" ></div>
+            <div ng-include src="'/assets/angular/html/share/show.html'"></div>
             <!-- <div ng-include src="'/assets/angular/html/home/show.html'"></div> -->
         </div>
         <script>

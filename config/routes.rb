@@ -114,6 +114,8 @@ ReadersDoor::Application.routes.draw do
   get "save_password"                   => "users#save_password",               :as => "save_password"
   post "data"                           => "books#data",                        :as => "data"
   get "remove_trend"                    => "books#remove_trend",                :as => "remove_trend"
+
+  get 'signup'                          => "website#signup",                    :as => "signup"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

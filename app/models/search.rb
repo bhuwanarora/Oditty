@@ -1,7 +1,7 @@
 class Search < Neo
-	def initialize params, count=10, fuzzy=nil
+	def initialize params, count=4, fuzzy=nil
 		@params = params
-		@count = ((count == 0) || count.nil?) ? 10 : count
+		@count = ((count == 0) || count.nil?) ? 4 : count
 		@fuzzy = fuzzy
 	end
 

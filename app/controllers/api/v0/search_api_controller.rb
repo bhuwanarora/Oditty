@@ -7,12 +7,12 @@ module Api
 				count = params[:count].to_i
 				type = params[:t]
 				results = SearchApi.search(query_params, count, type)
-				render :json => {:results => results}, :status => 200
+				render :json => results, :status => 200
 			end
 
 			def search_books
 				results = SearchApi.search(params[:q].to_s.strip, params[:count], "BOOK")
-				render :json => {:results => results}, :status => 200
+				render :json => results, :status => 200
 			end
 
 			def search_authors

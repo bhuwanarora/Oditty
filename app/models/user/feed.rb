@@ -5,6 +5,10 @@ class User::Feed < User
 		@user = User.new @user_id
 	end
 
+	def self.create_first
+		" CREATE UNIQUE (user)-[feed_next:FeedNext{user_id:ID(user)}]->(user) WITH user, feed_next "
+	end
+
 	def get_news_feed(skip_count)
 		skip_count = 0 unless skip_count.present?
 		get_all_ego_relations_through_me = " OPTIONAL MATCH p=(u)-[r:Ego*..1]->(friend:User) "

@@ -3,6 +3,10 @@ md-content.md-default-theme{
 	background-color: #E5E5E5;
 }
 
+.md-paginator.md-next, .md-paginator.md-prev{
+	background-color: #f5f5f5;
+}
+
 md-toolbar{
 	box-shadow: none;
 	/*border-bottom: 1px solid #ececec;*/
@@ -22,12 +26,12 @@ a:active{
 }
 
 .header{
-	/*background-color: #5f698c !important;*/
 	background-color: #FFFFFF !important;
 	color: rgba(145, 140, 140, 1) !important;
 	box-shadow: none;
 	min-height: 48px !important;
 	position: relative;
+	z-index: 3;
 }
 
 md-card{
@@ -140,8 +144,17 @@ md-tabs a{
 }
 
 md-card>img{
+	position: absolute;
+	width: 100%;
+	margin-top: -10%;
+}
+
+md-card .image_wrapper{
  	order: 1;
- 	max-height: 50vh;
+ 	height: 50vh;
+ 	overflow: hidden;
+ 	position: relative;
+ 	width: 100%;
 }
 
 .card .footer{
@@ -192,6 +205,7 @@ md-toolbar{
 	right: 0px;
 	top: 55px;
 	max-height: 300px;
+	height: auto !important;
 	width: 300px;
 	z-index: 2;
 }
@@ -301,5 +315,6 @@ md-toolbar{
 	/*background-color: #D3D3D3;*/
 }
 
-
-
+.sticky_logo{
+	left: 0px !important;
+}
