@@ -24,7 +24,7 @@ class Era < Neo
 		when Constant::Id::Contemporary
 			init_match_clause = "MATCH (book:Contemporary) "
 		end
-		init_match_clause
+		init_match_clause + " WITH book "
 	end
 
 	def books
@@ -48,7 +48,31 @@ class Era < Neo
 		when Constant::Id::Contemporary
 			label = ":Contemporary"
 		end
-		" MATCH (book "+label+") WITH book "
+		" MATCH (book"+label+") WITH book "
+	end
+
+	def match_books
+		case @id
+		when Constant::Id::OldEnglishLiterature
+			label = ":OldEnglishLiterature"
+		when Constant::Id::MiddleEnglishLiterature
+			label = ":MiddleEnglishLiterature"
+		when Constant::Id::EnglishRenaissance
+			label = ":EnglishRenaissance"
+		when Constant::Id::NeoClassicalPeriod
+			label = ":NeoClassicalPeriod"
+		when Constant::Id::Romanticism
+			label = ":Romanticism"
+		when Constant::Id::VictorianLiterature
+			label = ":VictorianLiterature"
+		when Constant::Id::Modernism
+			label = ":Modernism"
+		when Constant::Id::PostModernLiterature
+			label = ":PostModernLiterature"
+		when Constant::Id::Contemporary
+			label = ":Contemporary"
+		end
+		" MATCH (book)-[]-() WHERE book"+label+" WITH book "
 	end
 
 	def self.most_popular user_id

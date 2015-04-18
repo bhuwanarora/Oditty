@@ -35,11 +35,11 @@ class Category < Neo
 	end
 
 	def match_nth_book skip
-		" MATCH (book:Book)-[:NextInCategory*.."+skip.to_s+"]->(nth_book) WHERE ID(book)="+@first_book.to_s+" WITH nth_book as book "
+		" MATCH (book:Book)-[:NextInCategory*"+skip.to_s+"]->(nth_book) WHERE ID(book)="+@first_book.to_s+" WITH nth_book as book "
 	end
 
 	def match_books_after skip, count
-		match_nth_book(skip) + " MATCH path=(book)-[:NextInCategory*.."+count.to_s+"]->(last_book) WITH EXTRACT (n IN nodes(path)|n) AS books UNWIND books AS book  "
+		match_nth_book(skip) + " MATCH path=(book)-[:NextInCategory*"+count.to_s+"]->(last_book) WITH EXTRACT (n IN nodes(path)|n) AS books UNWIND books AS book  "
 	end
 
 	def self.match_books category="category"
@@ -47,6 +47,6 @@ class Category < Neo
 	end
 
 	def match_books category="category"
-		" MATCH ("+category+":Category)-[:FromCategory]-(book) WHERE ID("+category+") = " + @id.to_s + " WITH "+category+", book "
+		" MATCH ("+category+":Category)-[:FromCategory]-(book:Book) WHERE ID("+category+") = " + @id.to_s + " WITH "+category+", book "
 	end
 end
