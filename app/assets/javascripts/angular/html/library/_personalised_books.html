@@ -1,15 +1,29 @@
-<section layout-fill layout-padding class="white">
-	<h4>Since you like SUBJECT, here are books you need to read</h4>
-	<h4>Discover other books by your most read author, AUTHOR</h4>
-	<h4>Discover popular books from your most read Era, ERA</h4>
-	<h4>Discover other books from India</h4>
-	<h4>Books on your friend's reading shelves</h4>
-	<h4>Build for your reading appetite with popular easy reads</h4>
-	<div  class="white" layout-fill>
-        <div ng-init="grid = {'books': small_reads}" ng-include src="'/assets/angular/html/library/shared/_default_grid.html'"></div>
+<section layout-fill layout-padding class="white" ng-if="!constant.show_book">
+    <div ng-include src="'/assets/angular/html/library/partials/category_books.html'"></div>
+    <div ng-include src="'/assets/angular/html/library/partials/author_books.html'"></div>
+    <div ng-include src="'/assets/angular/html/library/partials/era_books.html'"></div>
+    <div ng-include src="'/assets/angular/html/library/partials/friends_books.html'"></div>
+    <div ng-include src="'/assets/angular/html/library/partials/unexplored_books.html'"></div>
+    <div ng-include src="'/assets/angular/html/library/partials/easy_books.html'"></div>
+</div>
+</section>
+<section ng-if="constant.show_book">
+    <div class="books_cover animate-very-fast"
+         flex="60"
+         flex-md="80"
+         flex-sm="100"
+         ng-if="constant.show_book"
+         aria-label=""
+         ng-click="show_grid($event)"
+         layout="row"
+         layout-align="start center">
+        <div class="padding" layout="row">
+            <div layout-padding><span class="icon-angle-left"></span></div>
+            <div layout-padding>Back</div>
+        </div>
     </div>
-	<h4>Look up popular books from unexplored subjects</h4>
-	<h4>Read more on COMMUNITY</h4>
+    <div ng-include src="'/assets/angular/html/book/show.html'" 
+        class="animate-fast book"></div>
 </section>
 <style>
     .grid{

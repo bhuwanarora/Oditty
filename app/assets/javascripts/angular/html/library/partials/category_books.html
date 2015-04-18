@@ -1,0 +1,7 @@
+<md-divider></md-divider>
+<h4>Since you like <b>{{likeable_category}}</b>, here are books you need to read</h4>
+<div  class="white" layout-fill>
+    <div ng-init="books = books_from_favourite_category"
+         ng-hide="constant.show_book"
+         ng-include src="'/assets/angular/html/library/shared/_default_grid.html'"></div>
+</div>

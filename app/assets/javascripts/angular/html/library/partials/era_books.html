@@ -1,0 +1,7 @@
+<md-divider></md-divider>
+<h4>Discover popular books from your most read Era, <b>{{likeable_era}}</b></h4>
+<div  class="white" layout-fill>
+    <div ng-init="books = books_from_favourite_era"
+         ng-hide="constant.show_book"
+         ng-include src="'/assets/angular/html/library/shared/_default_grid.html'"></div>
+</div>

@@ -1,4 +1,4 @@
-homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout", "bookService", '$mdToast', '$location', function($scope, $rootScope, $timeout, bookService, $mdToast, $location){
+homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout", "bookService", '$mdToast', '$location', '$mdBottomSheet', function($scope, $rootScope, $timeout, bookService, $mdToast, $location, $mdBottomSheet){
 
     $scope.toggle_endorse = function(){
         if($scope.book.endorse_status){
@@ -16,11 +16,25 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
         });
     }
 
+    $scope.show_shelf_bottom_sheet = function(event){
+        $mdBottomSheet.show({
+            templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
+            controller: 'shelfController',
+            locals: $rootScope.active_book.book_id,
+            targetEvent: event
+        });
+        event.stopPropagation();
+    };
+
     $scope.getToastPosition = function() {
         return Object.keys($scope.toast_position)
                     .filter(function(pos) { return $scope.toast_position[pos]; })
                     .join(' ');
     };
+
+    $scope.rate_book = function(book){
+        bookService.rate_book(book.book_id, book.user_rating);
+    }
 
     var _init = function(){
         // $scope.$location = $location;
