@@ -144,5 +144,8 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return _deferred_request('/api/v0/get_feed');
     }
 
+    this.news_visited = function(id){
+        return _deferred_request('/api/v0/news_visited?id='+id);
+    }
 
 }]);

@@ -32,6 +32,6 @@ class UsersCommunity < Neo
 	end
 
 	def get_info
-		@community.match + @community.match_news  + " WITH community, " +  UsersCommunity.collect_map("news" => News.grouped_basic_info) + @user.match + ", community, news " + UsersCommunity.optional_match  + ", news " + Community.return_group(UsersCommunity.basic_info, "news ") 
+		@community.match + Community.match_news  + " WITH community, " +  UsersCommunity.collect_map("news" => News.grouped_basic_info) + @user.match + ", community, news " + UsersCommunity.optional_match  + ", news " + Community.return_group(UsersCommunity.basic_info, "news ")
 	end
 end
