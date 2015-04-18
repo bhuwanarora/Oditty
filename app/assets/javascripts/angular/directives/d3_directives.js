@@ -80,10 +80,6 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
                                     x: function (d) {return d.cx;},
                                     y: function (d) {return d.cy;}
                                 }
-                            },
-                            {
-                                textField: "image_url",
-                                classed: {image: true}
                             }
                         ],
                     centralFormat: [
@@ -103,166 +99,166 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
 }]);
 
 
-homeApp.directive('d3Circles', ['$window', '$timeout', 'd3Service', 
-  function($window, $timeout, d3Service) {
-    return {
-        restrict: 'E',
-        scope: {
-        },
-        link: function(scope, ele, attrs){
-            var diameter = 960,
-                format = d3.format(",d"),
-                color = d3.scale.category20c();
+// homeApp.directive('d3Circles', ['$window', '$timeout', 'd3Service', 
+//   function($window, $timeout, d3Service) {
+//     return {
+//         restrict: 'E',
+//         scope: {
+//         },
+//         link: function(scope, ele, attrs){
+//             var diameter = 960,
+//                 format = d3.format(",d"),
+//                 color = d3.scale.category20c();
 
-            var bubble = d3.layout.pack()
-                            .sort(null)
-                            .size([diameter, diameter])
-                            .padding(1.5);
+//             var bubble = d3.layout.pack()
+//                             .sort(null)
+//                             .size([diameter, diameter])
+//                             .padding(1.5);
 
-            var svg = d3.select(ele[0]).append("svg")
-                        .attr("width", diameter)
-                        .attr("height", diameter)
-                        .attr("class", "bubble");
+//             var svg = d3.select(ele[0]).append("svg")
+//                         .attr("width", diameter)
+//                         .attr("height", diameter)
+//                         .attr("class", "bubble");
 
-            d3.json("assets/flare.json", function(error, root){
-                var filter_node = svg.selectAll(".filter_node")
-                                .data(bubble.nodes(classes(root))
-                                        .filter(function(d) { 
-                                            return !d.children; }))
-                                .enter().append("filter")
-                                .attr("class", "filter_node")
-                                .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+//             d3.json("assets/flare.json", function(error, root){
+//                 var filter_node = svg.selectAll(".filter_node")
+//                                 .data(bubble.nodes(classes(root))
+//                                         .filter(function(d) { 
+//                                             return !d.children; }))
+//                                 .enter().append("filter")
+//                                 .attr("class", "filter_node")
+//                                 .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
-                var node = svg.selectAll(".node")
-                                .data(bubble.nodes(classes(root))
-                                        .filter(function(d) { 
-                                            return !d.children; }))
-                                .enter().append("g")
-                                .attr("class", "node")
-                                .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+//                 var node = svg.selectAll(".node")
+//                                 .data(bubble.nodes(classes(root))
+//                                         .filter(function(d) { 
+//                                             return !d.children; }))
+//                                 .enter().append("g")
+//                                 .attr("class", "node")
+//                                 .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
-              node.append("title")
-                  .text(function(d) { return d.className + ": " + format(d.value); });
+//               node.append("title")
+//                   .text(function(d) { return d.className + ": " + format(d.value); });
 
-              node.append("circle")
-                  .attr("r", function(d) { return d.r; })
-                  .style("fill", function(d) { return color(d.packageName); });
+//               node.append("circle")
+//                   .attr("r", function(d) { return d.r; })
+//                   .style("fill", function(d) { return color(d.packageName); });
 
-              node.append("text")
-                  .attr("dy", ".3em")
-                  .style("text-anchor", "middle")
-                  .text(function(d) { return d.className.substring(0, d.r / 3); });
+//               node.append("text")
+//                   .attr("dy", ".3em")
+//                   .style("text-anchor", "middle")
+//                   .text(function(d) { return d.className.substring(0, d.r / 3); });
 
-                /* append image to node */
+//                 /* append image to node */
                 
-            });
+//             });
 
-            // Returns a flattened hierarchy containing all leaf nodes under the root.
-            function classes(root) {
-                var classes = [];
+//             // Returns a flattened hierarchy containing all leaf nodes under the root.
+//             function classes(root) {
+//                 var classes = [];
 
-                function recurse(name, node) {
-                    if (node.children) node.children.forEach(function(child) { recurse(node.name, child); });
-                    else classes.push({packageName: name, className: node.name, value: node.size});
-                }
+//                 function recurse(name, node) {
+//                     if (node.children) node.children.forEach(function(child) { recurse(node.name, child); });
+//                     else classes.push({packageName: name, className: node.name, value: node.size});
+//                 }
 
-                recurse(null, root);
-                return {children: classes};
-            }
+//                 recurse(null, root);
+//                 return {children: classes};
+//             }
 
-            d3.select(self.frameElement).style("height", diameter + "px");
-        }
-    }
-}]);
+//             d3.select(self.frameElement).style("height", diameter + "px");
+//         }
+//     }
+// }]);
 
 
-homeApp.directive('d3Bars', ['$window', '$timeout', 'd3Service', 
-  function($window, $timeout, d3Service){
-    return {
-        restrict: 'E',
-        scope: {
-            data: '=',
-            label: '@',
-            onClick: '&'
-        },
-        link: function(scope, ele, attrs) {
-            var renderTimeout;
-            var margin = parseInt(attrs.margin) || 20,
-                barHeight = parseInt(attrs.barHeight) || 20,
-                barPadding = parseInt(attrs.barPadding) || 5;
+// homeApp.directive('d3Bars', ['$window', '$timeout', 'd3Service', 
+//   function($window, $timeout, d3Service){
+//     return {
+//         restrict: 'E',
+//         scope: {
+//             data: '=',
+//             label: '@',
+//             onClick: '&'
+//         },
+//         link: function(scope, ele, attrs) {
+//             var renderTimeout;
+//             var margin = parseInt(attrs.margin) || 20,
+//                 barHeight = parseInt(attrs.barHeight) || 20,
+//                 barPadding = parseInt(attrs.barPadding) || 5;
 
-            var svg = d3.select(ele[0])
-                        .append('svg')
-                        .style('width', '100%');
+//             var svg = d3.select(ele[0])
+//                         .append('svg')
+//                         .style('width', '100%');
 
-            $window.onresize = function(){
-                scope.$apply();
-            };
+//             $window.onresize = function(){
+//                 scope.$apply();
+//             };
 
-            scope.$watch(function(){
-                return angular.element($window)[0].innerWidth;
-            }, function(){
-                scope.render(scope.data);
-            });
+//             scope.$watch(function(){
+//                 return angular.element($window)[0].innerWidth;
+//             }, function(){
+//                 scope.render(scope.data);
+//             });
 
-            scope.$watch('data', function(newData) {
-                scope.render(newData);
-            }, true);
+//             scope.$watch('data', function(newData) {
+//                 scope.render(newData);
+//             }, true);
 
-            scope.render = function(data) {
-                svg.selectAll('*').remove();
+//             scope.render = function(data) {
+//                 svg.selectAll('*').remove();
 
-                if (!data) return;
-                if (renderTimeout) clearTimeout(renderTimeout);
+//                 if (!data) return;
+//                 if (renderTimeout) clearTimeout(renderTimeout);
 
-                renderTimeout = $timeout(function() {
-                    var width = d3.select(ele[0])[0][0].offsetWidth - margin,
-                        height = scope.data.length * (barHeight + barPadding),
-                        color = d3.scale.category20(),
-                        xScale = d3.scale.linear()
-                                    .domain([0, d3.max(data, function(d) {
-                                        return d.score;
-                                    })])
-                                    .range([0, width]);
+//                 renderTimeout = $timeout(function() {
+//                     var width = d3.select(ele[0])[0][0].offsetWidth - margin,
+//                         height = scope.data.length * (barHeight + barPadding),
+//                         color = d3.scale.category20(),
+//                         xScale = d3.scale.linear()
+//                                     .domain([0, d3.max(data, function(d) {
+//                                         return d.score;
+//                                     })])
+//                                     .range([0, width]);
 
-                    svg.attr('height', height);
+//                     svg.attr('height', height);
 
-                    svg.selectAll('rect')
-                        .data(data)
-                        .enter()
-                        .append('rect')
-                        .on('click', function(d,i) {
-                            return scope.onClick({item: d});
-                        })
-                        .attr('height', barHeight)
-                        .attr('width', 140)
-                        .attr('x', Math.round(margin/2))
-                        .attr('y', function(d,i) {
-                            return i * (barHeight + barPadding);
-                        })
-                        .attr('fill', function(d) {
-                            return color(d.score);
-                        })
-                        .transition()
-                        .duration(1000)
-                        .attr('width', function(d) {
-                            return xScale(d.score);
-                        });
+//                     svg.selectAll('rect')
+//                         .data(data)
+//                         .enter()
+//                         .append('rect')
+//                         .on('click', function(d,i) {
+//                             return scope.onClick({item: d});
+//                         })
+//                         .attr('height', barHeight)
+//                         .attr('width', 140)
+//                         .attr('x', Math.round(margin/2))
+//                         .attr('y', function(d,i) {
+//                             return i * (barHeight + barPadding);
+//                         })
+//                         .attr('fill', function(d) {
+//                             return color(d.score);
+//                         })
+//                         .transition()
+//                         .duration(1000)
+//                         .attr('width', function(d) {
+//                             return xScale(d.score);
+//                         });
 
-                    svg.selectAll('text')
-                        .data(data)
-                        .enter()
-                        .append('text')
-                        .attr('fill', '#fff')
-                        .attr('y', function(d,i) {
-                            return i * (barHeight + barPadding) + 15;
-                        })
-                        .attr('x', 15)
-                        .text(function(d) {
-                            return d.name + " (scored: " + d.score + ")";
-                        });
-                }, 200);
-            };
-        }
-    }
-}]);
+//                     svg.selectAll('text')
+//                         .data(data)
+//                         .enter()
+//                         .append('text')
+//                         .attr('fill', '#fff')
+//                         .attr('y', function(d,i) {
+//                             return i * (barHeight + barPadding) + 15;
+//                         })
+//                         .attr('x', 15)
+//                         .text(function(d) {
+//                             return d.name + " (scored: " + d.score + ")";
+//                         });
+//                 }, 200);
+//             };
+//         }
+//     }
+// }]);

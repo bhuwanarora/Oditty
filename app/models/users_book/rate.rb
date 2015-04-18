@@ -6,7 +6,7 @@ class UsersBook::Rate < UsersBook
 
 	def add rating
 		operation = "+"
-		match + create + UsersBook::Rate.set_rating(rating) + UsersBook::Rate.set_name + UsersBook::Rate.set_email + UsersBook::Rate.set_isbn + UsersBook::Rate.set_thumb + " WITH user, book, rating_node " + Book.set_rating_count(operation) + User.set_rating_count(operation) + User.set_total_count(Constant::InteractionPoint::Rating, operation) + " WITH user, book, rating_node " + User::Feed.new(@user_id).create("rating_node") + ", book" + Book::BookFeed.new(@book_id).create("rating_node") + UsersBook.return_init + " rating_node.rating " 
+		match + create + UsersBook::Rate.set_rating(rating) + UsersBook::Rate.set_name + UsersBook::Rate.set_email + UsersBook::Rate.set_isbn + UsersBook::Rate.set_thumb + UsersBook::Rate.created_at + UsersBook::Rate.updated_at +" WITH user, book, rating_node " + Book.set_rating_count(operation) + User.set_rating_count(operation) + User.set_total_count(Constant::InteractionPoint::Rating, operation) + " WITH user, book, rating_node " + User::Feed.new(@user_id).create("rating_node") + ", book" + Book::BookFeed.new(@book_id).create("rating_node") + UsersBook.return_init + " rating_node.rating " 
 		
 	end
 

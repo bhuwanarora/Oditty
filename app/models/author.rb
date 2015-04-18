@@ -25,7 +25,7 @@ class Author < Neo
 	end
 
 	def match_grouped_books
-		" MATCH (author)-[:Wrote]->(book:Book) WITH COLLECT({"+Book.grouped_basic_info+"}) AS book, author "
+		" MATCH (author)-[:Wrote]->(book:Book) WITH author, COLLECT({"+Book.grouped_basic_info+"}) AS book "
 	end
 
 	def match_books
@@ -33,7 +33,11 @@ class Author < Neo
 	end	
 
 	def self.match_books
-		" MATCH (author:Author)-[:Wrote]->(book:Book) WITH book, author "
+		" MATCH (author:Author)-[:Wrote]->(book:Book) WITH author, book "
+	end
+
+	def self.match_author_for_books
+		" MATCH (author:Author)-[:Wrote]->(book) WITH author, book "
 	end
 
 	def self.remove

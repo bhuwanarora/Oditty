@@ -40,8 +40,8 @@ class ReadTime
 		@relation
 	end
 
-	def match_books
-		" MATCH (book)-[]-() WHERE " + where + " WITH book "
+	def where_books
+		" WHERE " + where + " WITH book "
 	end
 
 	def match_books_init

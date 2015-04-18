@@ -15,6 +15,10 @@ module Api
 				info
 			end
 
+			def self.news_visited(user_id, id)
+				Bookmark::Type::Visited.new(user_id, id).news.add.execute
+			end
+
 			def self.follow_user user_id, friend_id
 				UsersUser.new(user_id, friend_id).follow
 			end

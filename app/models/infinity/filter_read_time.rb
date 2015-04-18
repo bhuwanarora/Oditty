@@ -15,7 +15,7 @@ class Infinity::FilterReadTime < Infinity
 
 	def match(book_label_defined, skip_count)
 		if book_label_defined
-			clause = ReadTime.new(@read_type_value).match_books
+			clause = ReadTime.new(@read_type_value).where_books
 		else
 			clause = ReadTime.new(@read_type_value).match_books_init
 		end
