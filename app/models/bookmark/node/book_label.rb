@@ -9,7 +9,7 @@ class Bookmark::Node::BookLabel < Bookmark::Node
 	end
 
 	def self.get_visited user_id
-		Bookmark::Type::Visited.new(user_id).match + Bookmark::Node::BookLabel.return_group(" DISTINCT label.key AS shelf ", "bookmark_node.created_at AS time", Book.basic_info, " label_count ")  + Bookmark::Node::BookLabel.order_init + " label_count DESC "  + Bookmark::Node::BookLabel.limit(Constant::Count::BooksShownInRoom) 
+		Bookmark::Type::Visited.new(user_id).book.match + Bookmark::Node::BookLabel.return_group(" DISTINCT label.key AS shelf ", "bookmark_node.created_at AS time", Book.basic_info, " label_count ")  + Bookmark::Node::BookLabel.order_init + " label_count DESC "  + Bookmark::Node::BookLabel.limit(Constant::Count::BooksShownInRoom) 
 	end
 
 	def self.match_path

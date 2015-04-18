@@ -23,13 +23,15 @@ module Api
 				if type == "BOOK"
 					case shelf
 					when "HaveLeftAMarkOnMe"
-						Bookmark::Type::HaveLeftAMarkOnMe.add
+						Bookmark::Type::HaveLeftAMarkOnMe.book.add
 					when "DidntFeelLikeReadingItAfterAPoint"
-						Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.add
+						Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.book.add
 					when "IntendToRead"
-						Bookmark::Type::IntendToRead.add
+						Bookmark::Type::IntendToRead.book.add
 					when "PretendIHaveRead"
-						Bookmark::Type::PretendIHaveRead.add
+						Bookmark::Type::PretendIHaveRead.book.add
+					when "Visited"
+						Bookmark::Type::Visited.book.add
 					end
 				elsif type == "ARTICLE"
 				elsif type == "LISTOPIA"

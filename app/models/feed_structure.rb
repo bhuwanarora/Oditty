@@ -104,7 +104,7 @@ class FeedStructure < Neo
 			},
 			:node => {
 				:key => data["key"],
-				:content => data["content"],
+				:content => data["content"] || data["rating"],
 				:wrapper_content => data["wrapper_content"]
 			}
 		}
