@@ -650,10 +650,6 @@ module Neo4jHelper
 	 	puts "init_goodreads_books_complete"
 	end
 
-	def self.init
-		@neo = Neography::Rest.new
-	end
-
 	def self.create_read_time_groups
 		@neo ||= self.init
 		node1 = @neo.create_node("name" => "For a flight journey", "page_count_range" => "<50")
@@ -670,24 +666,24 @@ module Neo4jHelper
 		@neo ||= self.init
 
 		clause = "MATCH (book:Book)-[r:WithReadingTime]->(rt:ReadTime) DELETE r"
-		clause.execute
+		@neo.execute_query(clause)
 		puts "delete WithReadingTime relations".red
 
 		clause = "MATCH (book:Book), (rt:ReadTime{page_count_range: '<50'}) WHERE toInt(book.page_count) <= 50 CREATE UNIQUE (book)-[:WithReadingTime]->(rt)"
 		puts clause.green
-		clause.execute
+		@neo.execute_query(clause)
 
 		clause = "MATCH (book:Book), (rt:ReadTime{page_count_range: '50-100'}) WHERE toInt(book.page_count) > 50 AND toInt(book.page_count) <= 100 CREATE UNIQUE (book)-[:WithReadingTime]->(rt)"
 		puts clause.blue
-		clause.execute
+		@neo.execute_query(clause)
 
 		clause = "MATCH (book:Book), (rt:ReadTime{page_count_range: '100-250'}) WHERE toInt(book.page_count) > 100 AND toInt(book.page_count) <= 250 CREATE UNIQUE (book)-[:WithReadingTime]->(rt)"
 		puts clause.yellow
-		clause.execute
+		@neo.execute_query(clause)
 
 		clause = "MATCH (book:Book), (rt:ReadTime{page_count_range: '>250'}) WHERE toInt(book.page_count) > 250 CREATE UNIQUE  (book)-[:WithReadingTime]->(rt)"
 		puts clause.blue
-		clause.execute
+		@neo.execute_query(clause)
 
 		puts "DONE".red
 	end
