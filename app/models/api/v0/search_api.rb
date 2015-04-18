@@ -19,17 +19,22 @@ module Api
             def self._get_search_clause(q, count, type, fuzzy=nil)
             	count ||= 0
 				q = q.search_ready
-
 				connector = fuzzy.present? ? "~0.7" : "*"
 				case type
-				when 'BOOK'
+				when 'Book'
 					clause = Search.new(q, count, fuzzy).book_by_title
-				when 'AUTHOR'
+				when 'Author'
 					clause = Search.new(q, count, fuzzy).author_by_name
-				when 'READER'
+				when 'Person'
 					clause = Search.new(q, count, fuzzy).user_by_name
-				when 'GENRE'
+				when 'Genre'
 					clause = Search.new(q, count, fuzzy).genre_by_name
+				when 'Community'
+					clause = Search.new(q, count, fuzzy).community_by_name
+				when 'News'
+					clause = Search.new(q, count, fuzzy).news_by_title
+				when 'Blog'
+					clause = Search.new(q, count, fuzzy).blog_by_title
 				else
 					clause = Search.new(q, count, fuzzy).basic
 				end
