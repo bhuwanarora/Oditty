@@ -24,7 +24,7 @@ class News < Neo
 	end
 
 	def self.match_community
-		" MATCH (news:News)-[:HasCommunity]->(community:Community) WITH news, community "
+		" MATCH (news)-[:HasCommunity]->(community:Community) WITH news, community "
 	end
 
 	def match_community
@@ -187,6 +187,6 @@ class News < Neo
 	end
 
 	def self.get_feed skip_count=0
-		News.match_timestamp +  News.match_day + News.where_group(News.define_label) + News.return_init + News.basic_info + News.order_desc + News.skip(skip_count) + News.limit(Constant::Count::NewsShownInFeed)
+		News.match_timestamp +  News.match_day + News.where_group(News.define_label) + News.match_community + " WITH news," + News.collect_map({"communities" => Community.grouped_basic_info}) + News.order_desc + News.skip(skip_count) + News.limit(Constant::Count::NewsShownInFeed) + News.return_group(News.basic_info,"communities") 
 	end
 end
