@@ -250,19 +250,17 @@ class BooksController < ApplicationController
   end
   
   
-  def trending_community_books
-    #ashesh  
+  def trending_community_books   
 
   clause = Community::fetch_books params[:q]  
   @books =clause[params[:q]]
   status_r=200
   begin
-    rescue Exception => e
-      print "error has occured \n"
+    rescue Exception => e      
       status_r=500
       @books=e      
     end
-    
+
   render :json => @books, :status => status_r
   end
 
@@ -318,8 +316,19 @@ class BooksController < ApplicationController
   end
 
   def search_book
-    tags = Api::V0::SearchApi.search_books params[:q]
-    render :json => tags, :status => 200
+    tags="";
+    status_r=200;
+
+    begin    
+    maxBookCount=50;
+    tags = Api::V0::SearchApi.search(params[:q],maxBookCount,'BOOK')    
+    
+    rescue Exception => e
+      tags = e.to_s
+      status_r = 500      
+    end
+    print tags.to_s+" " + status_r.to_s+"\n"
+    render :json => tags, :status => status_r
   end
 
   # GET /books/1/edit

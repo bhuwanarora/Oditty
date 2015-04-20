@@ -47,7 +47,7 @@ ReadersDoor::Application.routes.draw do
   post "books/find_by_isbn"      => "books#find_by_isbn",      :as => "find_book_by_isbn"
   post "books/remove_tag"        => "books#remove_tag",        :as => "remove_tag_for_book"
   post "books/add_tag"           => "books#add_tag",           :as => "add_tag_for_book"
-  get "search_books"             => "books#search",            :as => "search_books"
+  get "search_books"             => "books#search_book",       :as => "search_books"
   get "tags_by_chr"              => "tags#get_by_chr",         :as => "tags_by_chr"
   get "logs_by_tag"              => "logs#get_by_tag",         :as => "logs_by_tag"
   get "logs_by_user"             => "logs#get_by_user",        :as => "logs_by_user"
