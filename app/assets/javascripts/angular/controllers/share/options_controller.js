@@ -7,12 +7,15 @@ homeApp.controller('optionsController', ["$scope", "$rootScope", "$timeout", 'Sh
         };
     }
 
-    $scope.show_level1_options = function(option, event){
+    $scope.show_level1_options = function(option, index, event){
         $scope.first_option = option;
         delete $scope.second_option;
         delete $scope.level2_nested_options;
+        delete $scope.info.book_exchange_status;
+        delete $scope.info.feelings;
         $scope.add_books = false;
-        $scope.data.selectedIndex = Math.min($scope.data.selectedIndex + 1, 2) ;
+        $scope.data.selectedIndex = Math.min($scope.data.selectedIndex + 1, 2);
+        $scope.info.reading_status_value = index;
 
         $scope.loading = true;
         angular.forEach(ShareOptions.ReadingStage, function(value){
@@ -29,9 +32,10 @@ homeApp.controller('optionsController', ["$scope", "$rootScope", "$timeout", 'Sh
         event.stopPropagation();
     }
 
-    $scope.show_level2_options = function(option, event){
+    $scope.show_level2_options = function(option, index, event){
         $scope.second_option = option;
         $scope.data.selectedIndex = Math.min($scope.data.selectedIndex + 1, 2) ;
+        $scope.info.book_exchange_status = index;
         $scope.level2_loading = true;
         if(angular.isDefined($scope.second_option.search_book)){
                 $scope.add_books = true;
@@ -48,7 +52,7 @@ homeApp.controller('optionsController', ["$scope", "$rootScope", "$timeout", 'Sh
     }
 
     $scope.post_status = function(option, event){
-
+        $scope.info.feelings = [option.name];
     }
 
     $scope.previous = function() {

@@ -44,7 +44,7 @@ homeApp.service('authorService', ["$http", "$q", "$rootScope", "WebsiteUIConstan
     }
 
     this.search_authors = function(data){
-        return _deferred_request('/api/v0/search_authors?'+data);
+        return _deferred_request('/api/v0/search?q='+data+"&type=Author");
     }
 
     this.get_popular_authors = function(skip_count){
