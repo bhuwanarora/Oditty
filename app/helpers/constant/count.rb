@@ -22,6 +22,5 @@ module Constant::Count
 
 	ElementsShownInSearch		= 6
 	NewsShownInFeed				= 10
-	
 	VerificationExpirySeconds	= 3600
 end
