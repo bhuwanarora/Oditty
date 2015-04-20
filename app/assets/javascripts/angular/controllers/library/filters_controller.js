@@ -1,4 +1,4 @@
-homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'genreService', 'authorService', 'WebsiteUIConstants', 'SearchUIConstants', 'timeGroupService', 'readingTimeService', 'infinityService', 'ColorConstants', function($scope, $rootScope, $timeout, genreService, authorService, WebsiteUIConstants, SearchUIConstants, timeGroupService, readingTimeService, infinityService, ColorConstants){
+homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'genreService', 'authorService', 'WebsiteUIConstants', 'SearchUIConstants', 'timeGroupService', 'readingTimeService', 'infinityService', 'ColorConstants', 'sharedService', function($scope, $rootScope, $timeout, genreService, authorService, WebsiteUIConstants, SearchUIConstants, timeGroupService, readingTimeService, infinityService, ColorConstants, sharedService){
 
     $scope._get_genres = function(){
     	if(angular.isUndefined($scope.info.genres) || $scope.info.genres.length == 0){
@@ -59,44 +59,61 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         }
     }
 
+    var _handle_filter_removal = function(){
+        var skip_count = $rootScope.filters.skip_count;
+        delete $rootScope.filters.skip_count;
+        if(Object.keys($rootScope.filters).length > 0){
+            $rootScope.filters.skip_count = skip_count;
+            _set_books();
+        }
+        else{
+            $rootScope.filters.skip_count = skip_count;
+            sharedService.get_popular_books();
+        }
+    }
+
     $scope.select_genre = function(genre){
         if(angular.isUndefined(genre)){
             delete $rootScope.filters.category_id;
+            _handle_filter_removal();
         }
         else{
             $rootScope.filters["category_id"] = genre.id;
+           _set_books();
         }
-        _set_books();
     }
 
     $scope.select_author = function(author){
         if(angular.isUndefined(author)){
             delete $rootScope.filters.author_id;
+            _handle_filter_removal();
         }
         else{
             $rootScope.filters["author_id"] = author.id;
+            _set_books();
         }
-        _set_books();
     }
 
     $scope.select_reading_time = function(read_time){
         if(angular.isUndefined(read_time)){
             delete $rootScope.filters.reading_time_id;
+            _handle_filter_removal();
         }
         else{
             $rootScope.filters["reading_time_id"] = read_time.id;
+            _set_books();
         }
-        _set_books();
     }
 
     $scope.select_publishing_year = function(time_group){
         if(angular.isUndefined(time_group)){
             delete $rootScope.filters.era_id;
+            _handle_filter_removal();
         }
         else{
             $rootScope.filters["era_id"] = time_group.id;
+            _set_books();
         }
-        _set_books();
     }
 
     $scope.search_genres = function(input){

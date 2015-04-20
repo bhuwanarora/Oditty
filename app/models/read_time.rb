@@ -1,19 +1,19 @@
 class ReadTime
 	def initialize id
 		@id = id
-		if @id == Constant::Id::TinyReadNode
+		if @id == Constant::Id::TinyRead
 			@last_book = Constant::Id::BestTinyRead
 			@relation = Constant::Label::TinyReadRelation
 			@next_where_clause = " toInt(book.page_count) <= 50 "
-		elsif @id == Constant::Id::SmallReadNode
+		elsif @id == Constant::Id::SmallRead
 			@last_book = Constant::Id::BestSmallRead
 			@relation = Constant::Label::SmallReadRelation
 			@next_where_clause = " toInt(book.page_count) > 50 AND toInt(book.page_count) <= 100 "
-		elsif @id == Constant::Id::NormalReadNode
+		elsif @id == Constant::Id::NormalRead
 			@last_book = Constant::Id::BestNormalRead
 			@relation = Constant::Label::NormalReadRelation
 			@next_where_clause = " toInt(book.page_count) < 100 AND toInt(book.page_count) <= 250"
-		elsif @id == Constant::Id::LongReadNode
+		elsif @id == Constant::Id::LongRead
 			@last_book = Constant::Id::BestLongRead
 			@relation = Constant::Label::LongReadRelation
 			@next_where_clause = " toInt(book.page_count) > 250 "
@@ -40,8 +40,8 @@ class ReadTime
 		@relation
 	end
 
-	def where_books
-		" WHERE " + where + " WITH book "
+	def match_books
+		" MATCH (book) WHERE " + where
 	end
 
 	def match_books_init
