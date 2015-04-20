@@ -248,6 +248,23 @@ class BooksController < ApplicationController
       render :json => {:message => e}, :status => 500
     end
   end
+  
+  
+  def trending_community_books
+    #ashesh  
+
+  clause = Community::fetch_books params[:q]  
+  @books =clause[params[:q]]
+  status_r=200
+  begin
+    rescue Exception => e
+      print "error has occured \n"
+      status_r=500
+      @books=e      
+    end
+    
+  render :json => @books, :status => status_r
+  end
 
   def trends
     neo = Neography::Rest.new

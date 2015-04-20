@@ -151,31 +151,69 @@
 		$('.community_present').change(function(event){
 			<!-- fill the entries in books with return data -->			
 			var trid = $(this).closest('tr');			
-			var abc=["abc", "efg"];
+			
 			//trid.content()[1].innerHTML="hello";			
-			var book=trid.find(".books_select")
-			$('.footer_status').html('Updating books of '+ $(this).val());
-
+			var book_col=trid.find(".books_select")
+			//$('.footer_status').html('Updating books of '+ $(this).val());
+/*
+			var books=["books", "efg"];
 			var newSelect=document.createElement('select');
 			newSelect.size=3;
 			newSelect.width=30;
     		var selectHTML="";
-    		for(i=0; i<abc.length; i=i+1){
-        		selectHTML+= "<option value= "+abc[i]+">"+abc[i]+"</option>";
+    		for(i=0; i<books.length; i=i+1){
+        		selectHTML+= "<option value= "+books[i]+">"+books[i]+"</option>";
     		}
 
     		newSelect.innerHTML= selectHTML;
-    		book.replaceWith(newSelect);
-
+    		book_col.replaceWith(newSelect);
+*/
+			var test=$(this).val().toString();
+			$('.footer_status').html("Updating books.."+ test);
+    		var data= "q=" +$(this).val();
     		$.ajax({
-					url: "<%= remove_trend_path %>",
+					url: "<%= trending_community_books_path %>",
 					data: data,
-					success: function(data, textStatus, jqxhr){
-						$('.footer_status').html('Done..');
+					success: function(data, textStatus, jqXHR){
+
+						var books = [];
+						for(var i=0; i < data.length; i++){
+							var book = {"label": data[i][2]+" by "+data[i][3], "value": data[i][1]};
+							books.push(book);
+						}
+						var empty_ret=false;
+
+						if(books.length == 0){
+							books = ["No results found..."];
+							empty_ret=true;
+
+						}
+						
+						var newSelect=document.createElement('select');
+						newSelect.size=3;
+						newSelect.width=30;
+			    		var selectHTML="";
+
+			    		for(i=0; i<books.length; i=i+1){
+			        		selectHTML+= "<option class= \" book_element\" value= "+books[i]+">"+books[i]+"</option>";
+			    		}
+
+			    		newSelect.innerHTML= selectHTML;
+			    		book_col.replaceWith(newSelect);
+
+			    		if(empty_ret==true){
+			    			//$('.footer_status').html('Not found.');
+			    			//newSelect.attr('disabled','disabled');
+			    		}
+
+			    		$('.footer_status').html('');
+					
 					},
 					error: function(jqxhr, textStatus, errorThrown){
-						$('.footer_status').html('Error in removing..');
-					}
+
+						$('.footer_status').html('Error in searching..');
+					},
+					timeout: 10000
 				});
 
     		
