@@ -1,35 +1,63 @@
+<!-- t.name, t.timestamp, ID(t), COLLECT(b.title), t.status, COLLECT(ID(b)), t.title, t.content, t.searched_words, t.url, t.thumbnail_url, t.redirect_url, t.publisher, t.thumb
+	t.communities
+-->
 <table>
 	<tr>
-		<th>#Books</th>
-		<th>Trending</th>
+		<th>Name</th>
+		<!-- <th>Trending</th>-->
 		<th>Title</th>
 		<th>Content</th>
 		<th>Searched Words</th>
 		<th>Publisher</th>
 		<th>Thumb</th>
 		<th>Timestamp</th>
-		<th>Search Books</th>
+		<th>Status</th>
+		<th>Community</th>
 		<th>Books</th>
-		<th>Active</th>
-		<th>Submit</th>
-		<th></th>
+		<th>Search Books</th>			
+		
 	</tr>
 	<% if @trends %>		
 		<% @trends.sort_by!{|s| Time.at(s[1].to_i)}.reverse.each do |trend|%>
-			<tr class="<% if trend["t.content"].present? && trend["t.content"] == 1 %>active<% end %>">
-				<td><%= trend["t.title"] ? trend["t.title"].length : 0 %></td>
-				<td><a href="<%= trend[9] %>" target="_blank"><%= trend[0] %></a></td>
+			<tr class="<% if trend["t.content"].present? && trend["t.content"] == 1 %>active<% end %>" id="id_"+ trend["ID(t)"]>
+				<td><%= trend["t.name"]%></td>
+				<td><%= trend["t.title"]%></td>
+				<td><%= trend["t.content"]%></td>
+				<td><%=trend["t.searched_words"]%></td>
+				<!-- <td><a href="<%= trend[9] %>" target="_blank"><%= trend[0] %></a></td>-->
 				<td><a href="<%= trend[11] %>" target="_blank"><%= trend["t.publisher"] %></a></td>
 				<td><div class="limit_height"><%= trend["t.thumbnail_url"] %></div></td>
+				<!--
 				<td class="keywords">
 					<span><%= trend["t.timestamp"] %></span>
 					<textarea class="hidden_input" ><%= trend["t.timestamp"] %></textarea>
 					<button class="hidden_input add_books">Go</button>
 					<input type="hidden" value="<%= trend[2] %>" class="trending_id"/>
 				</td>
-				<td><%= trend[12] %></td>
-				<td><img src="<%= trend[10] %>"></td>
-				<td><%= Time.at(trend[1].to_i).strftime("%d-%m-%y") %></td>
+				!-->
+				<td><%= Time.at(trend["t.timestamp"].to_i).strftime("%d-%m-%y") %></td>
+				<td><%= trend["t.status"] %></td>
+				
+				<td>
+					<select name="community_present" size=3 MULTIPLE>
+						<OPTION class="community_select"> Sample option1</OPTION>
+						<OPTION class="community_select"> Sample option2</OPTION>
+						<OPTION class="community_select"> Sample option3</OPTION>
+						<OPTION class="community_select"> Sample option4</OPTION>						
+						<% if(trend["t.communities"]) %>
+							<% trend["t.communities"].each do |community| %>
+								<option class="community_select"><%community%> </option>
+							<% end %>
+						<% end %>
+
+					</select>
+				</td>
+
+				<td>
+					<select name="books_in_c" size=3 MULTIPLE>
+						<OPTION> No community is selected</OPTION>
+					</select>
+				</td>
 				<td>
 					<input class="search_box" />
 				</td>
@@ -118,6 +146,16 @@
 				}, 1000);
 				
 			}
+		});
+		
+		$('.community_select').on('click',function(event){
+			<!-- fill the entries in books with return data -->
+			
+			var trid = $(this).closest('tr').attr('id');
+			$('.footer_status').html('Updating books.. '+trid.toString());
+			var abc=["abc", "efg"];
+			$("<OPTION> IT is entering</OPTION>").appendTo('#trid td:nth-child(10)');
+
 		});
 
 		$('.book_name').on('click', function(){
