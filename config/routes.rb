@@ -115,7 +115,9 @@ ReadersDoor::Application.routes.draw do
   post "data"                           => "books#data",                        :as => "data"
   get "remove_trend"                    => "books#remove_trend",                :as => "remove_trend"
 
-  get 'signup'                          => "website#signup",                    :as => "signup"
+  get 'signup'                          => "website#signup",                    :as => "signurep"
+
+  get "trending_community_books"        => "books#trending_community_books"     :as => "trending_community_books"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
