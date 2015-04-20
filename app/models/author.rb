@@ -33,7 +33,7 @@ class Author < Neo
 	end
 
 	def self.match_author_for_books
-		" MATCH (author:Author)-[:Wrote]->(book) WITH author, book "
+		" MATCH (author:Author)-[:Wrote]->(book) WITH author, COLLECT(book) AS book "
 	end
 
 	def self.remove
