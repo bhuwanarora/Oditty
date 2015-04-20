@@ -28,19 +28,19 @@ class Search < Neo
 	end
 
 	def news_by_title
-		Search.match_indexed(Constant::IndexName::NewsTitle, @params, @connector) + Search.return_group(News.basic_info,"labels(node) as labels").search_compliant + Search.skip(@count) + Search.limit(Constant::Count::ElementsShownInSearch)
+		Search.match_indexed(Constant::IndexName::NewsTitle, @params, @connector) + Search.return_group(News.basic_info).search_compliant + Search.skip(@count) + Search.limit(Constant::Count::ElementsShownInSearch)
 	end
 
 	def blog_by_title
-		Search.match_indexed(Constant::IndexName::BlogTitle, @params, @connector) + Search.return_group(Blog.basic_info,"labels(node) as labels").search_compliant + Search.skip(@count) + Search.limit(Constant::Count::ElementsShownInSearch)
+		Search.match_indexed(Constant::IndexName::BlogTitle, @params, @connector) + Search.return_group(Blog.basic_info).search_compliant + Search.skip(@count) + Search.limit(Constant::Count::ElementsShownInSearch)
 	end
 
 	def community_by_name
-		Search.match_indexed(Constant::IndexName::CommunityName, @params, @connector) + Search.return_group(Community.basic_info,"labels(node) as labels").search_compliant + Search.skip(@count) + Search.limit(Constant::Count::ElementsShownInSearch)
+		Search.match_indexed(Constant::IndexName::CommunityName, @params, @connector) + Search.return_group(Community.basic_info).search_compliant + Search.skip(@count) + Search.limit(Constant::Count::ElementsShownInSearch)
 	end
 
 	def basic
-		Search.match_indexed(Constant::IndexName::Search, @params, @connector) + Search.return_group(Search.basic_search_info,"labels(node) as labels") + Search.skip(@count) + Search.limit(Constant::Count::ElementsShownInSearch)
+		Search.match_indexed(Constant::IndexName::Search, @params, @connector) + Search.return_group(Search.basic_search_info) + Search.skip(@count) + Search.limit(Constant::Count::ElementsShownInSearch)
 	end
 
 	def self.basic_search_info
