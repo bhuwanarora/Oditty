@@ -1,15 +1,5 @@
 <div ng-controller="shareController" ng-if="info.show_share || info.show_book_share">
-	<div class="compact_status">
-		Feelings: {{info.feelings}}
-		<span ng-show="info.reading_status_value == 0">Planning to read</span>
-		<span ng-show="info.reading_status_value == 1">Reading</span>
-		<span ng-show="info.reading_status_value == 2">Finished Reading</span>
-		book_id: {{info.book_id}}
-		mentioned_users_ids: {{info.mentioned_users_ids}}
-		mentioned_authors_ids: {{info.mentioned_authors_ids}}
-		hash_tags: {{info.hash_tags}}
-		book_exchange_status: {{info.book_exchange_status}}
-	</div>
+	<div class="compact_status" ng-include src="'/assets/angular/html/share/_status.html'"></div>
 	<div class="share animate-fast" 
 		 layout="row" 
 		 layout-align="start start" layout-padding>
