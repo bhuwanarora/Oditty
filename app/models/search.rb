@@ -42,4 +42,8 @@ class Search < Neo
 	def basic
 		Search.match_indexed(Constant::IndexName::Search, @params, @connector) + Search.return_group(Search.basic_search_info) + Search.skip(@count) + Search.limit(Constant::Count::ElementsShownInSearch)
 	end
+
+	def self.match_indexed index, params, connector
+		"START node=node:node_auto_index('" + index + ":" + params + connector + "') "
+	end
 end

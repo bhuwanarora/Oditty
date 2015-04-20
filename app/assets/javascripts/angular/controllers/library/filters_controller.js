@@ -47,12 +47,14 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         else{
             infinityService.get_books(0).then(function(data){
                 $scope.info.books = [];
-                angular.forEach(data, function(value){
+                angular.forEach(data.book, function(value){
                     var random_int = Math.floor(Math.random()*ColorConstants.value.length);
                     var json = angular.extend(value, {"color": ColorConstants.value[random_int]});
                     this.push(json);
                 }, $scope.info.books);
                 $scope.info.loading = false;
+                delete data.book;
+                $scope.info.other_info = data;
             });
         }
     }
