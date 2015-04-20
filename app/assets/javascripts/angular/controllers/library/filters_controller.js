@@ -138,7 +138,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
     $scope.search_authors = function(input){
         var params = "q="+input+"&count="+10;
         $scope.info.loading = true;
-        authorService.search_authors("q="+input).then(function(data){
+        authorService.search_authors(input).then(function(data){
             $scope.info.loading = false;
             if(data.length > 0){
                 $scope.info.authors = [];

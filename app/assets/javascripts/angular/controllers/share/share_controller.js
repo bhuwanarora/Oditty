@@ -4,6 +4,8 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         $mdBottomSheet.show({
             templateUrl: 'assets/angular/html/share/_share_options.html',
             controller: 'optionsController',
+            scope: $scope,
+            preserveScope: true,
             targetEvent: event
         }).then(function(value){
             debugger
@@ -22,17 +24,36 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         }
         else{
             
-            var status = {
-                // "book_id"                  : 384295,
-                "reading_status_value"     : 2,
-                "mentioned_users_ids"      : [1, 2, 3],
-                "mentioned_authors_ids"    : [2, 3, 4],
-                "hash_tags"                : $scope.info.hash_tags,
-                "content"                  : $scope.info.status,
-                "wrapper_content"          : $scope.info.wrapper_status,
-                // "feelings"                 : ["Happy", "Sad"],
-                "book_exchange_status"     : 1
+            var status = {};
+
+            if(angular.isDefined($scope.info.feelings) && ($scope.info.feelings.length > 0)){
+                status = angular.extend(status, {"feelings": $scope.info.feelings});
             }
+            if(angular.isDefined($scope.info.reading_status_value)){
+                status = angular.extend(status, {"reading_status_value": $scope.info.reading_status_value});
+            }
+            if(angular.isDefined($scope.info.book_id)){
+                status = angular.extend(status, {"book_id": $scope.info.book_id});
+            }
+            if(angular.isDefined($scope.info.mentioned_users_ids) && ($scope.info.mentioned_users_ids.length > 0)){
+                status = angular.extend(status, {"mentioned_users_ids": $scope.info.mentioned_users_ids});
+            }
+            if(angular.isDefined($scope.info.mentioned_authors_ids) && ($scope.info.mentioned_authors_ids.length > 0)){
+                status = angular.extend(status, {"mentioned_authors_ids": $scope.info.mentioned_authors_ids});
+            }
+            if(angular.isDefined($scope.info.hash_tags) && ($scope.info.hash_tags.length > 0)){
+                status = angular.extend(status, {"hash_tags": $scope.info.hash_tags});
+            }
+            if(angular.isDefined($scope.info.status) && ($scope.info.status.length > 0)){
+                status = angular.extend(status, {"content": $scope.info.status});
+            }
+            if(angular.isDefined($scope.info.wrapper_status) && ($scope.info.wrapper_status.length > 0)){
+                status = angular.extend(status, {"wrapper_content": $scope.info.wrapper_status});
+            }
+            if(angular.isDefined($scope.info.book_exchange_status)){
+                status = angular.extend(status, {"book_exchange_status": $scope.info.book_exchange_status})
+            }
+
             statusService.post_status(status);
             $scope.info.status = "";
             $scope.info.wrapper_status = "";

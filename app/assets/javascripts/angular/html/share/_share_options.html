@@ -11,7 +11,7 @@
              class="column_height">
             <div class="padding">Select</div>
             <md-button ng-repeat="option in share_options.ReadingStage" 
-                    ng-click="show_level1_options(option, $event)"
+                    ng-click="show_level1_options(option, $index, $event)"
                     layout-padding 
                     ng-class="{'active_option1': option == first_option}"
                     class="md-button-clear">
@@ -22,13 +22,13 @@
              flex-sm="100"
              ng-if="nested_options" class="column_height">
              <md-progress-circular class="md-accent md-hue-1" 
-                    md-mode="indeterminate" 
+                    md-mode="indeterminate"
                     ng-if="loading">
             </md-progress-circular>
             <md-button ng-repeat="option in nested_options"
                     layout-padding
                     ng-hide="loading"
-                    ng-click="show_level2_options(option, $event)" 
+                    ng-click="show_level2_options(option, $index, $event)" 
                     ng-class="{'active_option2': option == second_option}"
                     class="md-button-clear">
                 {{option.name}}
@@ -66,7 +66,7 @@
         </div>
     </div>
 
-    <div class="selected_option" layout-padding layout-align="start center" layout="row" hide show-sm>
+    <!-- <div class="selected_option" layout-padding layout-align="start center" layout="row" hide show-sm>
         <md-button ng-click="previous()"
                 ng-disabled="data.selectedIndex == 0"
                 flex="100" layout="row" layout-align="start">
@@ -74,7 +74,7 @@
             <div ng-switch on="data.selectedIndex">
                 <div ng-switch-when="0"></div>
                 <div ng-switch-when="1">
-                    <span>{{first_option.name}}</span>
+                    <span>{{first_option.name}}-4</span>
                 </div>
                 <div ng-switch-when="2">
                     <span>{{first_option.name}}</span>
@@ -99,7 +99,7 @@
                             layout-padding 
                             ng-class="{'active_option1': option == first_option}"
                             class="md-button-clear">
-                        {{option.name}}
+                        {{option.name}}-5
                     </md-button>
                 </div>
             </div>
@@ -121,7 +121,7 @@
                             ng-click="show_level2_options(option, $event)" 
                             ng-class="{'active_option2': option == second_option}"
                             class="md-button-clear">
-                        {{option.name}}
+                        {{option.name}}-6
                     </md-button>
                 </div>
             </div>
@@ -145,7 +145,7 @@
                                     ng-class="{'active_option1': option == second_option}"
                                     class="md-button-clear">
                                 <span class="icon {{option.icon}}"></span>
-                                <span>{{option.name}}</span>
+                                <span>{{option.name}}-7</span>
                             </md-button>
                         </div>
                     </md-content>
@@ -154,14 +154,12 @@
                             <label>Search Books</label>
                             <input/>
                         </md-input-container>
-                        <div layout="row" layout-padding>
-
-                        </div>
+                        <div layout="row" layout-padding></div>
                     </md-content>
                 </div>
             </div>
         </ng-switch>
-    </div>
+    </div> -->
 </md-bottom-sheet>
 
 <style>

@@ -75,15 +75,11 @@ class Neo
 		" MERGE (day:Day{day:" + time.to_date.day.to_s + "}) MERGE (month:Month{month:" + time.to_date.month.to_s + "}) MERGE (year:Year{year:" + time.to_date.year.to_s + "})  MERGE (" + node_variable + ")-[:TimeStamp]->(day)<-[:Has_day]-(month)<-[:Has_month]-(year) "
 	end
 
-	def self.match_indexed index, params, connector
-		"START node=node:node_auto_index('" + index + ":" + params + connector + "') "
+	def self.where_group(*params)
+		" WHERE " + params.join(" AND ") + " "
 	end
 
 	def self.order_by property
 		Neo.order_init + property + " "
-	end
-
-	def self.where_group(*params)
-		" WHERE " + params.join(" AND ") + " "
 	end
 end

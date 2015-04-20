@@ -1,46 +1,59 @@
-<div ng-controller="shareController" class="share animate-fast" layout="row" 
-	 ng-if="info.show_share || info.show_book_share"
-	 layout-align="start start" layout-padding>
-	<div flex="10">
-		<div ng-click="back($event)" layout="row" layout-align="center center" class="custom_button">
-			<h1 layout-padding>
-				<span class="icon-angle-left"></span>
-			</h1>
-		</div>
+<div ng-controller="shareController" ng-if="info.show_share || info.show_book_share">
+	<div class="compact_status">
+		Feelings: {{info.feelings}}
+		<span ng-show="info.reading_status_value == 0">Planning to read</span>
+		<span ng-show="info.reading_status_value == 1">Reading</span>
+		<span ng-show="info.reading_status_value == 2">Finished Reading</span>
+		book_id: {{info.book_id}}
+		mentioned_users_ids: {{info.mentioned_users_ids}}
+		mentioned_authors_ids: {{info.mentioned_authors_ids}}
+		hash_tags: {{info.hash_tags}}
+		book_exchange_status: {{info.book_exchange_status}}
 	</div>
-	<div flex="80" layout="column">
-		<div ng-if="info.show_book_share" layout="row" layout-align="end">
-			<md-input-container layout-margin class="share_book">
-				<label>Add a book</label>
-			    <input ng-model="info.status_book" 
-			    	   ng-keydown="search_book($event)"
-			    	   set-focus="info.show_book_share"/>
-			</md-input-container>
+	<div class="share animate-fast" 
+		 layout="row" 
+		 layout-align="start start" layout-padding>
+		<div flex="10">
+			<div ng-click="back($event)" layout="row" layout-align="center center" class="custom_button">
+				<h1 layout-padding>
+					<span class="icon-angle-left"></span>
+				</h1>
+			</div>
 		</div>
-		<div layout="row" flex ng-if="info.show_share">
-			<img class="circular user_image" src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
-			<div layout="column" class="input_container">
-				<md-input-container layout-margin 
-					style="font-family: 'Inconsolata', 'Courier New', serif;" 
-					class="textarea_container">
-					<div ng-model="info.wrapper_status" class="textarea_wrapper" ng-bind-html="info.wrapper_status">
+		<div flex="80" layout="column">
+			<div ng-if="info.show_book_share" layout="row" layout-align="end">
+				<md-input-container layout-margin class="share_book">
+					<label>Add a book</label>
+				    <input ng-model="info.status_book" 
+				    	   ng-keydown="search_book($event)"
+				    	   set-focus="info.show_book_share"/>
+				</md-input-container>
+			</div>
+			<div layout="row" flex ng-if="info.show_share">
+				<img class="circular user_image" src="https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-xaf1/t31.0-8/10694453_716527165083590_5032803263755359335_o.jpg"/>
+				<div layout="column" class="input_container">
+					<md-input-container layout-margin 
+						style="font-family: 'Inconsolata', 'Courier New', serif;" 
+						class="textarea_container">
+						<div ng-model="status.wrapper_status" class="textarea_wrapper" ng-bind-html="status.wrapper_status">
+						</div>
+				        <textarea name="text_area" 
+				        		  set-focus="info.show_share" 
+				        		  ng-keydown="handle_text_input($event)"
+				        		  placeholder="Share your reading journey..." 
+				        		  ng-model="status.status">
+				        </textarea>
+				    </md-input-container>
+			    	
+					<div class="select_mood custom_button" 
+							ng-click="show_share_options($event)">
+						<span class='icon-happy'></span>
 					</div>
-			        <textarea name="text_area" 
-			        		  set-focus="info.show_share" 
-			        		  ng-keydown="handle_text_input($event)"
-			        		  placeholder="Share your reading journey..." 
-			        		  ng-model="info.status">
-			        </textarea>
-			    </md-input-container>
-		    	
-				<div class="select_mood custom_button" 
-						ng-click="show_share_options($event)">
-					<span class='icon-happy'></span>
 				</div>
 			</div>
 		</div>
+	    <div flex="10"></div>
 	</div>
-    <div flex="10"></div>
 </div>
 
 <style>
@@ -124,5 +137,11 @@
 	    display: table-cell;*/
 	}
 
+	.compact_status{
+		position: fixed;
+		top: 10px;
+		margin-left: 100px;
+		z-index: 4;
+	}
 
 </style>
