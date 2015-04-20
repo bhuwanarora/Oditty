@@ -52,7 +52,7 @@ class Infinity < Neo
 				clause += Infinity::FilterEra.new(@era_id).match(book_label_defined) + with_clause
 			end
 
-			unless return_group.blank?
+			if return_group.present?
 				clause += Book.order_desc + Infinity.skip(@skip_count) + Infinity.limit(Limit) + Infinity.return_group(Infinity.collect_map({"books" => Book.grouped_basic_info}),return_group) 
 
 			else
