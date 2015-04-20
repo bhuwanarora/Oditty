@@ -82,21 +82,17 @@ class Community < Neo
 	def self.fetch_books community
 		community_books = {community => []}
 		count = 0
-		begin
-			Google::Search::Book.new(:query => community).each do |book|
-				count += 1
-				book = book.title.search_ready
+		books = Book::GoogleBooks.get community
+
+		puts books.to_s.green
+		if books.present?
+			books.each do |book|
+				book = book.search_ready
 				book_info = (Book.get_by_indexed_title(book).execute)[0] 
 				if book_info.present?  
 					community_books[community] << book
 				end	
-				if count == Constant::Count::MaximumCommunityBooks
-					break
-				end
 			end
-		rescue Exception => e
-			puts e.to_s.red
-			community_books = {}
 		end
 		community_books
 	end
@@ -170,7 +166,7 @@ class Community < Neo
 	def self.handle_communities response
 		communities = []
 		response["social_tags"].each do |social_tag|
-			if social_tag["importance"] == Constant::Count::RelevantSocialTag then communities << social_tag["originalValue"] end
+			if social_tag["importance"] == Constant::Count::RelevantSocialTag && social_tag["originalValue"] != "" then communities << social_tag["originalValue"] end
 		end
 		communities
 	end
