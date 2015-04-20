@@ -19,19 +19,16 @@ class Bookmark::Type < Bookmark
 
 	def book
 		@bookmark = @bookmark.book
-		@bookmark_node_media_label_class = Bookmark::Node::BookLabel 
 		self
 	end
 
 	def news
 		@bookmark = @bookmark.news
-		# @bookmark_node_media_label_class = Bookmark::Node::NewsLabel 
 		self
 	end
 
 	def blog
 		@bookmark = @bookmark.blog
-		@bookmark_node_media_label_class = Bookmark::Node::BlogLabel
 		self
 	end
 end

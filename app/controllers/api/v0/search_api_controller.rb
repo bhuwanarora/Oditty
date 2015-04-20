@@ -6,7 +6,7 @@ module Api
 				query_params = params[:q].strip
 				count = params[:count].to_i
 				type = params[:type]
-				results = query_params.present? ? SearchApi.search(query_params, count, type).execute : []
+				results = SearchApi.search(query_params, count, type)
 				render :json => results, :status => 200
 			end
 		end

@@ -20,7 +20,7 @@ module Constant::Count
 	InitialSkip		        	= 0
 	RelevantSocialTag		  	= 1
 
-	SecondsInHourCount			= 3600
 	ElementsShownInSearch		= 6
 	NewsShownInFeed				= 10
+	VerificationExpirySeconds	= 3600
 end

@@ -21,11 +21,12 @@ class String
     end
 
 	def is_json?
+        is_json = false
 	    begin
-	      	!!JSON.parse(self)
+	      	is_json = !!JSON.parse(self)
 	    rescue
-	      	false
     	end
+        is_json
   	end
 
     def search_compliant

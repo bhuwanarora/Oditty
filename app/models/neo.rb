@@ -79,8 +79,8 @@ class Neo
 		"START node=node:node_auto_index('" + index + ":" + params + connector + "') "
 	end
 
-	def self.basic_search_info
-		" CASE WHEN node.title IS NULL THEN node.name ELSE node.title END as name, node.author_name as author_name, ID(node) as id, labels(node) as labels, CASE WHEN node.title IS NULL THEN node.name ELSE node.title END, node.first_name AS first_name, node.last_name AS last_name, node.image_url AS image_url, node.url AS url, node.blog_url AS blog_url  " 
+	def self.order_by property
+		Neo.order_init + property + " "
 	end
 
 	def self.where_group(*params)
