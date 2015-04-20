@@ -20,5 +20,5 @@ module Constant::Count
 	InitialSkip		        	= 0
 	RelevantSocialTag		  	= 1
 
-	SecondsInHourCount			= 3600
+	VerificationExpirySeconds	= 3600
 end
