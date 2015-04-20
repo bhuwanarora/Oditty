@@ -79,4 +79,7 @@ class Neo
 		"START node=node:node_auto_index('" + index + ":" + params + connector + "') "
 	end
 
+	def self.order_by property
+		Neo.order_init + property + " "
+	end
 end
