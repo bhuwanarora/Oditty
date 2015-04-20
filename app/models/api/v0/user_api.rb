@@ -15,6 +15,10 @@ module Api
 				info
 			end
 
+			def self.news_visited(user_id, id)
+				Bookmark::Type::Visited.new(user_id, id).news.add.execute
+			end
+
 			def self.follow_user user_id, friend_id
 				UsersUser.new(user_id, friend_id).follow
 			end
@@ -23,13 +27,15 @@ module Api
 				if type == "BOOK"
 					case shelf
 					when "HaveLeftAMarkOnMe"
-						Bookmark::Type::HaveLeftAMarkOnMe.add
+						Bookmark::Type::HaveLeftAMarkOnMe.book.add
 					when "DidntFeelLikeReadingItAfterAPoint"
-						Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.add
+						Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.book.add
 					when "IntendToRead"
-						Bookmark::Type::IntendToRead.add
+						Bookmark::Type::IntendToRead.book.add
 					when "PretendIHaveRead"
-						Bookmark::Type::PretendIHaveRead.add
+						Bookmark::Type::PretendIHaveRead.book.add
+					when "Visited"
+						Bookmark::Type::Visited.book.add
 					end
 				elsif type == "ARTICLE"
 				elsif type == "LISTOPIA"

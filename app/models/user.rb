@@ -37,11 +37,11 @@ class User < Neo
 	end
 
 	def authors_of_books_bookmarked
-		optional_match_books_bookmarked + Author.match_books + ", user "
+		optional_match_books_bookmarked + Author.match_author_for_books + ", user "
 	end
 
 	def favourite_author
-		optional_match_books_bookmarked + Author.match_books + ", user, COUNT(book) as books_count " 
+		optional_match_books_bookmarked + Author.match_author_for_books + ", user, COUNT(book) as book_count " 
 	end
 
 	def self.set_rating_count operation

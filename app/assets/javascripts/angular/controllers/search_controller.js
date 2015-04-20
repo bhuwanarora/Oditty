@@ -72,7 +72,8 @@ homeApp.controller('searchController', ["$scope", "searchService", "$location", 
         $scope.search_results = [];
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
         var url_parser = regex.exec($location.absUrl());
-        if(angular.isDefined(url_parser) && url_parser != null){
+        var is_search = $location.$$url.indexOf("search") >= 0;
+        if(angular.isDefined(url_parser) && (url_parser != null) && is_search){
             var q = url_parser[2];
             $scope.show_all_results(q);
             $scope.display_results_for = q;

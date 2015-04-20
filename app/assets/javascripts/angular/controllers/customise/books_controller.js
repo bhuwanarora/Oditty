@@ -27,21 +27,9 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
         }
     }
 
-    $scope.rate_book = function(book, event){
-        debugger
-        // var book_id = 
-        bookService.rate_book()
+    $scope.rate_book = function(book){
+        bookService.rate_book(book.book_id, book.user_rating);
     }
-
-    $scope.show_shelf_bottom_sheet = function(event){
-        $mdBottomSheet.show({
-            templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
-            controller: 'shelfController',
-            targetEvent: event,
-            locals: {book_id: $rootScope.active_book.id}
-        });
-        event.stopPropagation();
-    };
 
     $scope.mark_as_read = function(book, event){
         if(angular.isDefined(book.id)){

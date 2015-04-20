@@ -28,7 +28,7 @@ class Community < Neo
 		" MATCH (community)-[:RelatedBooks]->(book:Book) WITH community, book "
 	end
 
-	def match_news 
+	def self.match_news 
 		" MATCH (community)<-[:HasCommunity]-(news:News) WITH community, news "
 	end
 

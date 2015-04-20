@@ -8,8 +8,7 @@
 		ng-if="book.status">
       	<md-slider flex md-discrete 
       				class="md-warn"
-      				ng-mouseup="rate_book(book, $event)"
-      				ng-click="rate_book(book, $event)"
+      				ng-change="rate_book(book, $event)"
       				ng-model="book.user_rating" step="1" min="1" max="10" 
       				aria-label="user_rating">
       	</md-slider>

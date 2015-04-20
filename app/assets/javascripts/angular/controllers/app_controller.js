@@ -64,13 +64,14 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$timeout", "$mdSid
         event.stopPropagation();
 	};
 
-    $scope.show_shelf_bottom_sheet = function(event){
-        $mdBottomSheet.show({
-            templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
-            controller: 'shelfController',
-            targetEvent: event
-        });
-    };
+    // $scope.show_shelf_bottom_sheet = function(event){
+    //     $mdBottomSheet.show({
+    //         templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
+    //         controller: 'shelfController',
+    //         locals: '1',
+    //         targetEvent: event
+    //     });
+    // };
 
     $scope.show_share_bottom_sheet = function(event){
         $mdBottomSheet.show({

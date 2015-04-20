@@ -6,7 +6,7 @@ class Bookmark < Neo
 	end
 
 	def news
-		@media_class = Article::News
+		@media_class = Article::NewsArticle
 		@user_media_class = UsersNews
 		@media_label_class = Bookmark::Node::NewsLabel
 		@media_label = "News"
@@ -25,14 +25,13 @@ class Bookmark < Neo
 	end
 
 	def blog
-		@media_class = Article::Blog
+		@media_class = Article::BlogArticle
 		@user_media_class = UsersBlog
 		@media_label_class = Bookmark::Node::BlogLabel
 		@media_label = "Blog"
 		@media = "blog"
 		self
 	end
-
 
 	def self.match_not media
 		" WHERE NOT (user)-[:Labelled]->(:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(" + media.downcase + ") "
@@ -96,7 +95,7 @@ class Bookmark < Neo
 	end
 
 	def self.set_timestamp
-		" SET bookmark_node.timestamp = " + Time.now.to_i.to_s + " "
+		" SET bookmark_node.created_at = " + Time.now.to_i.to_s + " "
 	end
 
 	def self.set_key key=nil
@@ -148,11 +147,11 @@ class Bookmark < Neo
 	end
 
 	def self.basic_info
-		" ID(bookmark_node) AS status , bookmark_node.name AS bookmarked_by, bookmark_node.timestamp AS time "
+		" ID(bookmark_node) AS status , bookmark_node.name AS bookmarked_by, bookmark_node.created_at AS created_at "
 	end
 
 	def self.grouped_basic_info
-		" {status: ID(bookmark_node), bookmarked_by: bookmark_node.name, time: bookmark_node.timestamp} AS bookmark_node "
+		" {status: ID(bookmark_node), bookmarked_by: bookmark_node.name, time: bookmark_node.created_at} AS bookmark_node "
 	end
 
 	def create_label_bookmark_node

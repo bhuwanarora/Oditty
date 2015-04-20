@@ -110,7 +110,11 @@ class Book < Neo
 		" MATCH (community:Community)-[:RelatedBooks]->(book) WITH community, book "
 	end
 
+	def self.grouped_news_community
+		" WITH community, " + Book		
+	end
+
 	def get_news
-		# match + Book.match_communities + 
+		match + Book.match_communities + Community.order_desc + Book.limit(1) + Community.match_news  + " ,book WITH book, " + Community.collect_map("news" => News.grouped_basic_info) + Book.match_communities + " ,news " + Book.return_init + " news, " + Community.basic_info + Community.order_desc 
 	end
 end
