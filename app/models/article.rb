@@ -1,2 +1,3 @@
-class Article < Bookmark
+class Article < Neo
 end
+
