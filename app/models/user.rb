@@ -5,7 +5,7 @@ class User < Neo
 	end
 
 	def self.link_primary_labels
-		"  CREATE (user)-[:Labelled{user_id:ID(user)}]->(label) WITH user, label "
+		" CREATE (user)-[:Labelled{user_id:ID(user)}]->(label) WITH user, label "
 	end
 
 	def self.match_group ids

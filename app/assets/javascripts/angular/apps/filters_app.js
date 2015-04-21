@@ -16,6 +16,16 @@ angular.module('filtersApp', [])
             return output;
         };
     })
+    .filter('first_isbn', function(){
+      return function(input){
+        var output = "";
+        if(angular.isDefined(input)){
+          isbn = input.split(",");
+          output = isbn[0];
+        }
+        return output;
+      }
+    })
     .filter('search_item_type', function(){
         return function(input){
             var output = ""
@@ -31,6 +41,15 @@ angular.module('filtersApp', [])
             }
             return output;
         }
+    })
+    .filter('default_profile', function(){
+      return function(input){
+        var output = input;
+        if(angular.isUndefined(input) || (input == "") || (input == null)){
+          output = "http://www.sessionlogs.com/media/icons/defaultIcon.png";
+        }
+        return output;
+      }
     })
     .filter('first_two', function(){
         return function(input){

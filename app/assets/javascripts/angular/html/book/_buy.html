@@ -82,7 +82,8 @@
                         <div>amazon</div>
                         <div layout="row" layout-md="column" layout-sm="column">
                             <div layout-padding>458.00</div>
-                            <md-button class="md-primary md-raised md-button-clear">Buy</md-button>
+                            <md-button class="md-primary md-raised md-button-clear" 
+                                ng-href="http://www.amazon.in/dp/{{book.isbn | first_isbn}}/?tag=reade0c-21" target="_blank ">Buy</md-button>
                         </div>
                     </div>
                 </md-item-content>
@@ -96,7 +97,7 @@
                         <div>flipkart</div>
                         <div layout="row" layout-md="column" layout-sm="column">
                             <div layout-padding>595.00</div>
-                            <a ng-href="http://dl.flipkart.com/dl/{{book.title | flipkart_title}}/p/itme6anwyzmjzzrc?affid=bhuwanrea" target="blank"><md-button class="md-primary md-raised md-button-clear">Buy</md-button></a>
+                            <md-button ng-href="http://dl.flipkart.com/dl/{{book.title | flipkart_title}}/p/itme6anwyzmjzzrc?affid=bhuwanrea" target="blank" class="md-primary md-raised md-button-clear">Buy</md-button>
                         </div>
                     </div>
                 </md-item-content>
