@@ -1,8 +1,5 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
-  include TrendsHelper
-  include FlickrHelper
-  include S3UploaderHelper
 
   # GET /books
   # GET /books.json
