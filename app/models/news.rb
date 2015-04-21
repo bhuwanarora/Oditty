@@ -65,7 +65,7 @@ class News < Neo
 		clause = ""
 		news_metadata.delete("available")
 		news_metadata.each do |key, value|
-			clause += " SET news." + key + " = \"" + value + "\" " 
+			clause += " SET news." + key + " = \"" + value.to_s.gsub("\"","\\\"").gsub("\'","\\\'") + "\" " 
 		end
 		clause
 	end

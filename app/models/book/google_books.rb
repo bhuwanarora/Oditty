@@ -4,7 +4,7 @@ class Book::GoogleBooks < Book
 		begin
 			query = query.gsub(" ","+")
 			url = "https://www.googleapis.com/books/v1/volumes?q=#{query}&maxResults=40&projection=lite&printType=books"
-			books_info = (JSON.parse(Net::HTTP.get(URI.parse(url))))["items"]
+			books_info = (JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url)))))["items"]
 			books_info.each { |book_info| books_title << book_info["volumeInfo"]["title"]}
 		rescue Exception => e
 			puts e.to_s.red
