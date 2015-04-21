@@ -5,7 +5,7 @@
         </div>
         <div layout="row" layout-wrap class="bottom_header">
             <div flex="50" hide-sm hide-md layout="row" layout-align="start start">
-                <img src="https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-xaf1/t31.0-8/10694453_716527165083590_5032803263755359335_o.jpg" class="circular profile_pic">
+                <img ng-src="{{user.image_url | default_profile}}" class="circular profile_pic">
                 <a href="/profile"><div layout="column" layout-wrap layout-align="start start">
                     <h3 style="margin: 0px !important;" layout="row" layout-padding>
                         <div ng-bind="user.first_name"></div>
