@@ -44,7 +44,7 @@ homeApp.service('genreService', ["$http", "$q", "$rootScope", "WebsiteUIConstant
     }
 
     this.search_genres = function(q){
-        return _deferred_request('/api/v0/search?q='+q+"type=Genre");
+        return _deferred_request('/api/v0/search?q='+q+"&type=Genre");
     }
 
     this.get_genres = function(){

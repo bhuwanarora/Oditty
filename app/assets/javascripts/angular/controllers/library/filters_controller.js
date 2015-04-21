@@ -124,8 +124,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
             if(data.length > 0){
                 $scope.info.genres = [];
                 angular.forEach(data, function(value){
-                    var json = {"type": SearchUIConstants.Genre, "custom_option": true, "icon2": "icon-tag"};
-                    json = angular.extend(json, value);
+                    var json = {"type": SearchUIConstants.Genre, "custom_option": true, "icon2": "icon-tag", "name": value.category_name, "id": value.category_id};
                     this.push(json);
                 }, $scope.info.genres);
             }
