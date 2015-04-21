@@ -2,13 +2,13 @@ class Infinity::FilterReadTime < Infinity
 	def initialize read_type_value
 		@read_type_value = read_type_value
 		case @read_type_value
-		when Constant::Label::TinyReadValue
+		when Constant::Id::TinyReadNode
 			@read_type = Constant::Label::TinyReadRelation
-		when Constant::Label::SmallReadValue
+		when Constant::Id::SmallReadNode
 			@read_type = Constant::Label::SmallReadRelation
-		when Constant::Label::NormalReadValue
+		when Constant::Id::NormalReadNode
 			@read_type = Constant::Label::NormalReadRelation
-		when Constant::Label::LongReadValue
+		when Constant::Id::LongReadNode
 			@read_type = Constant::Label::LongReadRelation
 		end
 	end

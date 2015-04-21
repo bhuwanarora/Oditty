@@ -58,7 +58,7 @@ class News < Neo
 	end
 
 	def self.merge_timestamp
-		" MERGE (time:TimePeriod{quarter:\"#{(Time.now.hour / 6) * 6}-#{((Time.now.hour / 6)+1) * 6}\"})-[:FromDay]->(day:Day{day:#{Time.now.day}})<-[:Has_day]-(month:Month{month: #{Time.now.month}})<-[:Has_month]-(year:Year{year:#{Time.now.year}}) MERGE (news)-[:TimeStamp]->(time) WITH news "
+		" MERGE (year:Year{year:#{Time.now.year}}) MERGE (month:Month{month: #{Time.now.month}})<-[:Has_month]-(year) MERGE (day:Day{day:#{Time.now.day}})<-[:Has_day]-(month) MERGE (time:TimePeriod{quarter:\"#{(Time.now.hour / 6) * 6}-#{((Time.now.hour / 6)+1) * 6}\"})-[:FromDay]->(day) MERGE (news)-[:TimeStamp]->(time) WITH news "
 	end
 
 	def self.set_metadata news_metadata

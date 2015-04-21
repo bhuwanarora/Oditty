@@ -23,7 +23,6 @@ class UsersBook::Rate < UsersBook
 				 Book::BookFeed.new(@book_id).create("rating_node") + 
 				 UsersBook.return_init + 
 				 " rating_node.rating " 
-		
 	end
 
 	def create

@@ -7,7 +7,7 @@ class Search < Neo
 	end
 
 	def book_by_title
-		Search.match_indexed(Constant::IndexName::BookTitle, ( @params + @connector)) + Search.return_group(Book.basic_info,"labels(node) as labels").search_compliant + Search.skip(@count) + Search.limit(Constant::Count::ElementsShownInSearch)
+		Search.match_indexed(Constant::IndexName::BookTitle, ( @params + @connector)) + Search.return_group(Book.basic_info,"labels(node) as labels").search_compliant + Search.order_by("popularity") + " DESC " + Search.skip(@count) + Search.limit(Constant::Count::ElementsShownInSearch) 
 	end
 
 	def author_by_name

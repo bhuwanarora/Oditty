@@ -49,7 +49,7 @@ class Infinity < Neo
 			end	
 
 			if @era_id.present?
-				clause += Infinity::FilterEra.new(@era_id).match(book_label_defined) + with_clause
+				clause += Infinity::FilterEra.new(@era_id).match + with_clause
 			end
 
 			if return_group.present?
