@@ -23,4 +23,13 @@ class Label < Neo
 		" MATCH (label:Label{primary_label:true}) WITH label "
 	end
 
+	def self.match_public
+		" MATCH (user)-[labelled:Labelled]->(label:Label) WHERE label.public = true WITH label "
+	end
+
+	def self.optional_match_books
+		" OPTIONAL MATCH (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book:Book)
+		WITH label, COLLECT({"+Book.grouped_basic_info+"}) as book, COUNT(label) AS label_count "
+	end
+
 end
