@@ -118,7 +118,7 @@ class Blog < Neo
 	end
 
 	def self.get_posts clause
-		url = "https://public-api.wordpress.com/rest/v1.1/sites/literaturerun.wordpress.com/posts/?number=10&pretty=1&order=ASC&fields=title,date,short_URL,excerpt,discussion,like_count,featured_image,tags,is_reblogged,attachments" + clause
+		url = Rails.application.config.blog_url + clause
 		JSON.parse(Net::HTTP.get(URI.parse(url)))
 	end
 
