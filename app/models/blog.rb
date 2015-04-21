@@ -38,16 +38,24 @@ class Blog < Neo
 		clause
 	end
 
-	def self.find_nth skip_count = 1
-		" OPTIONAL MATCH (new)-[next_post:NextPost*" + skip_count.to_s + "]->(old) WITH old, new, next_post "
+	def self.match_path skip_count = 0
+		" OPTIONAL MATCH path = (blog)-[next_post:NextPost*" + skip_count.to_s + "]->(next_blog) WITH path "
+	end
+
+	def self.match_nth skip_count = 0
+		" OPTIONAL MATCH (blog)-[next_post:NextPost*" + skip_count.to_s + "]->(old) WITH old, blog, next_post "
 	end
 
 	def self.match_root
 		" MERGE (root_blog:Blog{is_root:true}) WITH root_blog "
 	end
 
+	def self.match_latest_blog
+		Blog.match_root + " WITH root_blog AS blog " + Blog.match_nth(1) + " WITH old AS blog "
+	end
+
 	def self.get_latest_blog
-		Blog.match_root + " WITH root_blog AS new " + Blog.find_nth + " WITH old AS blog " + Blog.return_init + Blog.basic_info  
+		Blog.match_latest_blog + Blog.return_init + Blog.basic_info  
 	end
 
 	def self.create_is_about
@@ -66,16 +74,6 @@ class Blog < Neo
 		Community.search(name) + Blog.create_belongs_to   
 	end
 
-	def self.handle_communities tags
-		tags.each do |key, value|
-			author = Community.get(key).execute[0]
-			if author.present?
-				tags.delete(key)
-			end
-		end
-		tags			
-	end
-
 	def self.handle_authors tags
 		tags.each do |key, value|
 			author = Author.get_by_indexed_name(key.search_ready).execute[0]
@@ -87,22 +85,16 @@ class Blog < Neo
 	end
 
 	def self.create_next_post
-		" OPTIONAL MATCH (root_blog)-[relation:NextPost]->(old:Blog) FOREACH(ignoreMe IN CASE WHEN relation IS NOT NULL THEN [1] ELSE [] END | MERGE (root_blog)-[:NextPost]->(blog)-[:NextPost]->(old) DELETE relation) FOREACH(ignoreMe IN CASE WHEN relation IS NULL THEN [1] ELSE [] END | MERGE (root_blog)-[:NextPost]->(blog)) WITH blog  "
+		" OPTIONAL MATCH (root_blog)-[relation:NextPost]->(old:Blog) FOREACH(ignoreMe IN CASE WHEN relation IS NOT NULL AND old <> blog THEN [1] ELSE [] END | MERGE (root_blog)-[:NextPost]->(blog)-[:NextPost]->(old) DELETE relation) FOREACH(ignoreMe IN CASE WHEN relation IS NULL AND old <> blog THEN [1] ELSE [] END | MERGE (root_blog)-[:NextPost]->(blog)) WITH blog  "
 	end
 
 	def self.handle
 		last_posted_time = Blog.get_latest_blog.execute[0]["posted_at"]
-		puts last_posted_time.to_s
-		if last_posted_time.present?
-			uri_clause = "&after=" + last_posted_time
-		else
-			uri_clause = "&limit=100"
-		end
-		response = (Blog.get_posts uri_clause)
+		response = Blog.get_posts last_posted_time
 
 		for post in response["posts"]
 			clause = ""
-			clause = Blog.create(post) + Blog.match_root + " ,blog " + Blog.create_next_post + Blog.create_timestamp(post["date"],"blog")  
+			clause = Blog.create(post) + Blog.match_root + " ,blog " + Blog.create_next_post + Blog.create_timestamp(post["date"],"blog") + Blog.return_init + Blog.basic_info  
 			
 			author_tags = Blog.handle_authors post["tags"]
 			author_tags.each do |key, value|
@@ -117,12 +109,14 @@ class Blog < Neo
 		end					
 	end
 
-	def self.get_posts clause
-		url = Rails.application.config.blog_url + clause
+	def self.get_posts last_posted_time
+		last_posted_time = Date.iso8601(last_posted_time).strftime
+		url = "https://public-api.wordpress.com/rest/v1.1/sites/literaturerun.wordpress.com/posts/?number=100&pretty=1&order=ASC&fields=title,date,short_URL,excerpt,discussion,like_count,featured_image,tags,is_reblogged,attachments&after=" + last_posted_time
+		puts url
 		JSON.parse(Net::HTTP.get(URI.parse(url)))
 	end
 
 	def self.basic_info
-		" ID(blog) AS blog_id, blog.title AS title, blog.published_year AS published_year, blog.created_at AS created_at , blog.posted_at AS posted_at, blog.image_url AS image_url, blog.blog_url AS blog_url "
+		" ID(blog) AS blog_id, blog.title AS title, blog.image_url AS image_url , blog.posted_at AS posted_at, blog.like_count AS like_count, blog.blog_url AS blog_url, blog.excerpt AS excerpt, blog.reblog_count AS reblog_count  "
 	end
 end
