@@ -2,7 +2,7 @@ module Api
 	module V0
 		class RoomApi 
 			def self.get_books_from_public_shelves user_id
-				books = User::Room.new(user_id).get_books_from_public_shelves.print
+				books = User::Room.new(user_id).get_books_from_public_shelves.execute
 				self._set_dominant_color books
 				books
 			end
