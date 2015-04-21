@@ -85,13 +85,13 @@ module Api
 				if type == "BOOK"
 					case shelf
 					when "HaveLeftAMarkOnMe"
-						clause = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, id).remove
+						clause = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, id).book.remove
 					when "DidntFeelLikeReadingItAfterAPoint"
-						clause = Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.new(user_id, id).remove
+						clause = Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.new(user_id, id).book.remove
 					when "IntendToRead"
-						clause = Bookmark::Type::IntendToRead.new(user_id, id).remove
+						clause = Bookmark::Type::IntendToRead.new(user_id, id).book.remove
 					when "PretendIHaveRead"
-						clause = Bookmark::Type::PretendIHaveRead.new(user_id, id).remove
+						clause = Bookmark::Type::PretendIHaveRead.new(user_id, id).book.remove
 					end
 				elsif type == "NEWS"
 					case shelf

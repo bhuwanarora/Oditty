@@ -54,6 +54,10 @@ class Blog < Neo
 		Blog.match_root + " WITH root_blog AS blog " + Blog.match_nth(1) + " WITH old AS blog "
 	end
 
+	def self.get_blog skip_count=1
+		Blog.match_latest_blog + Blog.match_nth(skip_count) + Blog.return_init + Blog.basic_info
+	end
+
 	def self.get_latest_blog
 		Blog.match_latest_blog + Blog.return_init + Blog.basic_info  
 	end
@@ -119,4 +123,5 @@ class Blog < Neo
 	def self.basic_info
 		" ID(blog) AS blog_id, blog.title AS title, blog.image_url AS image_url , blog.posted_at AS posted_at, blog.like_count AS like_count, blog.blog_url AS blog_url, blog.excerpt AS excerpt, blog.reblog_count AS reblog_count  "
 	end
+
 end
