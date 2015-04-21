@@ -14,21 +14,10 @@
         <link rel="stylesheet" href="assets/website/home.css" />
         <link rel="stylesheet" href="assets/website/media_library.css" />
 
-        <script src="assets/min/angular/website.min.js"></script>
         <% if Rails.env.development? %>
+            <script src="assets/min/angular/vendors.min.js"></script>
+
             <script src="assets/angular/services/third_party/d3_service.js"></script>
-            <% if (@community || @home)%>
-                <script src="http://phuonghuynh.github.io/js/bower_components/jquery/dist/jquery.min.js"></script>
-                <script src="assets/angular/vendors/d3.min.js"></script>
-                <script src="http://phuonghuynh.github.io/js/bower_components/d3-transform/src/d3-transform.js"></script>
-                <script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/extarray.js"></script>
-                <script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/misc.js"></script>
-                <script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/micro-observer.js"></script>
-                <script src="http://phuonghuynh.github.io/js/bower_components/microplugin/src/microplugin.js"></script>
-                <script src="assets/angular/vendors/bubble_chart/bubble-chart.js"></script>
-                <script src="assets/angular/vendors/bubble_chart/central-click.js"></script>
-                <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/plugins/lines/lines.js"></script>
-            <% end %>
             <script src="assets/angular/vendors/angular-parallax.min.js"></script>
             <script src="assets/angular/vendors/angular_sticky.js"></script>
             
@@ -60,6 +49,21 @@
             <script src="assets/angular/services/status_service.js"></script>
             <script src="assets/angular/services/feed_service.js"></script>
 
+            <% if (@community || @home)%>
+                <script src="assets/angular/vendors/jquery.min.js"></script>
+                <script src="assets/angular/vendors/d3.min.js"></script>
+                <script src="assets/angular/vendors/bubble_chart/d3_transform.js"></script>
+                <script src="assets/angular/vendors/bubble_chart/extarray.js"></script>
+                <script src="assets/angular/vendors/bubble_chart/misc.js"></script>
+                <script src="assets/angular/vendors/bubble_chart/micro-observer.js"></script>
+                <script src="assets/angular/vendors/bubble_chart/microplugin.js"></script>
+                <script src="assets/angular/vendors/bubble_chart/bubble-chart.js"></script>
+                <script src="assets/angular/vendors/bubble_chart/central-click.js"></script>
+                <script src="assets/angular/vendors/bubble_chart/lines.js"></script>
+                <script src="assets/angular/directives/d3_directives.js"></script>
+            <% end %>
+
+            
             <% if @home %>
                 <script src="assets/angular/controllers/home/home_controller.js"></script>
             <% end %>
@@ -78,10 +82,6 @@
                 <script src="assets/angular/controllers/community_controller.js"></script>
             <% end %>
 
-            <% if @community || @home %>
-                <script src="assets/angular/directives/d3_directives.js"></script>
-            <% end %>
-
             <% if @customise %>
                 <script src="assets/angular/controllers/customise/customise_controller.js"></script>
                 <script src="assets/angular/controllers/customise/info_controller.js"></script>
@@ -98,6 +98,9 @@
 
             <% if @infinity %>
                 <script src="assets/angular/services/shared_service.js"></script>
+                <script src="assets/angular/services/time_group_service.js"></script>
+                <script src="assets/angular/services/reading_time_service.js"></script>
+                <script src="assets/angular/services/infinity_service.js"></script>
                 
                 <script src="assets/angular/controllers/library/library_controller.js"></script>
                 <script src="assets/angular/controllers/library/filters_controller.js"></script>
@@ -105,9 +108,6 @@
                 <script src="assets/angular/controllers/book/timeline_controller.js"></script>
                 <script src="assets/angular/controllers/book/real_virtuality_controller.js"></script>
 
-                <script src="assets/angular/services/time_group_service.js"></script>
-                <script src="assets/angular/services/reading_time_service.js"></script>
-                <script src="assets/angular/services/infinity_service.js"></script>
             <% end %>
 
             <% if @room %>
@@ -116,14 +116,49 @@
             <% end %>
 
             <% if @author %>
-                <!-- // <script src="http://phuonghuynh.github.io/js/bower_components/jquery/dist/jquery.min.js"></script> -->
                 <script src="assets/angular/controllers/author_controller.js"></script>
             <% end %>
 
-            <script src="assets/angular/vendors/angular_dragdrop.min.js"></script>
-            <script src="assets/angular/vendors/angular-drop.min.js.map"></script>
         <% else %>
-            <script src="assets/min/angular/home.min.js"></script> 
+            <script src="assets/min/angular/site.min.js"></script>
+
+            <% if (@community || @home)%>
+                <script src="assets/min/angular/d3_group.min.js"></script> 
+            <% end %>
+
+
+            <% if @home %>
+                <script src="assets/min/angular/controllers/home_group.min.js"></script>
+            <% end %>
+
+            <% if @network %>
+                <script src="assets/min/angular/controllers/network_group.min.js"></script>
+            <% end %>
+
+            <% if @community %>
+                <script src="assets/min/angular/controllers/community_group.min.js"></script>
+            <% end %>
+
+            <% if @customise %>
+                <script src="assets/min/angular/controllers/customise_group.min.js"></script>
+            <% end %>
+
+            <% if @book %>
+                <script src="assets/min/angular/controllers/book_group.min.js"></script>
+            <% end %>
+
+            <% if @infinity %>
+                <script src="assets/min/angular/controllers/infinity_group.min.js"></script>
+            <% end %>
+
+            <% if @room %>
+                <script src="assets/min/angular/controllers/room_group.min.js"></script>
+            <% end %>
+
+            <% if @author %>
+                <script src="assets/min/angular/controllers/author_group.min.js"></script>
+            <% end %>
+
         <% end %>
     </head>
 

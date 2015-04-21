@@ -117,9 +117,9 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
     }
 
     $scope.search_genres = function(input){
-        var params = "q="+input+"&count="+10;
+        // var params = "q="+input+"&count="+10;
         $scope.info.loading = true;
-        genreService.search_genres(params).then(function(data){
+        genreService.search_genres(input).then(function(data){
             $scope.info.loading = false;
             if(data.length > 0){
                 $scope.info.genres = [];
@@ -136,7 +136,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
     }
 
     $scope.search_authors = function(input){
-        var params = "q="+input+"&count="+10;
+        // var params = "q="+input+"&count="+10;
         $scope.info.loading = true;
         authorService.search_authors(input).then(function(data){
             $scope.info.loading = false;

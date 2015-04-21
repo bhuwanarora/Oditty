@@ -1,0 +1,13 @@
+<span ng-show="info.reading_status_value == 0 && info.book_exchange_status == 0">Looking to buy a book.</span>
+<span ng-show="info.reading_status_value == 0 && info.book_exchange_status == 1">Looking to borrow a book.</span>
+<span ng-show="info.reading_status_value == 0 && info.book_exchange_status == 2">Looking to lend a book.</span>
+<span ng-show="info.reading_status_value == 1">
+	<span ng-show="((info.book_exchange_status != 0) && (info.book_exchange_status != 1)) 
+				&& (!info.feelings || info.feelings.length == 0)">Currently Reading</span>
+	<span ng-show="info.feelings && info.feelings.length > 0">Feeling {{info.feelings[0]}} while reading a book.</span>
+	<span ng-show="info.book_exchange_status == 0">Reading a book on </span>
+</span>
+<span ng-show="info.reading_status_value == 2">
+	<span ng-show="info.feelings && info.feelings.length > 0">Feeling {{info.feelings[0]}} after reading a book.</span>
+	<span ng-show="!info.feelings || info.feelings.length == 0">Finished reading a book.</span>
+</span>

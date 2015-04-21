@@ -29,10 +29,11 @@ homeApp.controller('optionsController', ["$scope", "$rootScope", "$timeout", 'Sh
                 });
             }
         });
-        event.stopPropagation();
     }
 
     $scope.show_level2_options = function(option, index, event){
+        delete $scope.info.feelings;
+
         $scope.second_option = option;
         $scope.data.selectedIndex = Math.min($scope.data.selectedIndex + 1, 2) ;
         $scope.info.book_exchange_status = index;
@@ -48,7 +49,6 @@ homeApp.controller('optionsController', ["$scope", "$rootScope", "$timeout", 'Sh
                 $scope.level2_nested_options = $scope.second_option.value;
             }, 1000);
         }
-        event.stopPropagation();
     }
 
     $scope.post_status = function(option, event){

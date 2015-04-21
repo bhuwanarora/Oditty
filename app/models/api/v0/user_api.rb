@@ -10,7 +10,7 @@ module Api
 				info = {}
 				if user_id.present?
 					info = User.new(user_id).get_basic_info.execute[0]
-					session[:last_book] = info["last_book"]
+					# session[:last_book] = info["last_book"]
 				end
 				info
 			end

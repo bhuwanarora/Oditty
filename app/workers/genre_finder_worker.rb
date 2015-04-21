@@ -5,7 +5,7 @@ module GenreFinderWorker
 		end
 	end
 
-	def self.find_genres_for_book user_id. book_title
+	def self.find_genres_for_book user_id, book_title
 		book_title = book_title.gsub(" ","").downcase
 		
 		start_clause = "START book = node:node_auto_index('indexed_title:(\"" + indexed_titles.to_s + "\")') WITH book"
