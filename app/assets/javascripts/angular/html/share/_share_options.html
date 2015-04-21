@@ -1,9 +1,18 @@
 <md-bottom-sheet class="options" layout="column">
-    <div class="selected_option" layout-padding layout-align="start center" layout="row" hide-sm>
-        <h3>
-            <span>{{first_option.name}}</span>
-            <span>{{second_option.name}}</span>
-        </h3>
+    <div class="selected_option" layout-padding 
+         layout-align="space-between" layout="row" hide-sm>
+        <div ng-include src="'/assets/angular/html/share/_status.html'"></div>
+        <md-autocomplete
+            class="add_book"
+            md-selected-item="info.selected_genre"
+            md-search-text="search_tag.genre"
+            md-items="item in info.genres | filter:search_tag.genre"
+            md-search-text-change="search_genres(search_tag.genre)"
+            md-selected-item-change="select_genre(info.selected_genre)"
+            md-item-text="item.name"
+            placeholder="Add a book...">
+            <span>{{item.name}}</span>
+        </md-autocomplete>
     </div>
     <div layout="row" hide-sm>
         <div flex="20" layout="column" 
@@ -164,11 +173,16 @@
 
 <style>
     .selected_option{
-        height: 8vh;
+        height: 100px;
+        border-bottom: 1px solid #F0F0F0;
     }
 
     .options{
         height: 75vh;
+    }
+
+    .add_book{
+        width: 200px;
     }
 
     .active_option1,
