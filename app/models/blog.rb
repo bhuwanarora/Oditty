@@ -55,7 +55,7 @@ class Blog < Neo
 	end
 
 	def self.get_blog skip_count=1
-		Blog.match_latest_blog + Blog.match_nth(skip_count) + Blog.return_init + Blog.basic_info
+		Blog.match_latest_blog + Blog.match_nth(skip_count) + " WITH old as blog " + Blog.return_init + Blog.basic_info
 	end
 
 	def self.get_latest_blog
