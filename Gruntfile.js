@@ -50,10 +50,12 @@ module.exports = function(grunt) {
                     'app/assets/stylesheets/min/landing_page_site.min.css': [
                         'app/assets/stylesheets/min/angular_material_082.min.css',
                         'app/assets/stylesheets/min/landing_page/style.min.css',
+                        'app/assets/stylesheets/min/landing_page/media.min.css',
                         'app/assets/stylesheets/min/website.min.css',
                         'app/assets/stylesheets/min/landing_page/animate.min.css',
                         'app/assets/stylesheets/min/icomoon.min.css'
                     ]
+
                 }
             }
         },
@@ -235,13 +237,13 @@ module.exports = function(grunt) {
                     
                 // ],
 
-                // 'app/assets/javascripts/min/angular/landing_page.min.js': [
-                //     'app/assets/javascripts/min/angular/apps/landing_page_app.js',
-                //     'app/assets/javascripts/min/angular/apps/app_constants.js',
-                //     'app/assets/javascripts/min/angular/services/website_service.js',
-                //     'app/assets/javascripts/min/angular/controllers/landing_page_controller.js',  
-                //     'app/assets/javascripts/min/angular/controllers/signup_controller.js',
-                // ],
+                'app/assets/javascripts/min/angular/landing_page.min.js': [
+                    'app/assets/javascripts/min/angular/apps/landing_page_app.js',
+                    'app/assets/javascripts/min/angular/apps/app_constants.js',
+                    'app/assets/javascripts/min/angular/services/website_service.js',
+                    'app/assets/javascripts/min/angular/controllers/landing_page_controller.js',  
+                    'app/assets/javascripts/min/angular/controllers/signup_controller.js',
+                ],
 
                 'app/assets/javascripts/min/angular/site.min.js': [
                     'app/assets/javascripts/min/angular/vendors.min.js',
