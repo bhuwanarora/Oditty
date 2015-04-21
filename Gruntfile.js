@@ -145,6 +145,18 @@ module.exports = function(grunt) {
           },
           basic_and_extras: {
             files: {
+                'app/assets/javascripts/min/angular/services.js': [
+                    "app/assets/javascripts/min/angular/services/third_party/d3_service.js",
+                    "app/assets/javascripts/min/angular/services/search_service.js",
+                    "app/assets/javascripts/min/angular/services/status_service.js",
+                    "app/assets/javascripts/min/angular/services/feed_service.js",
+                    "app/assets/javascripts/min/angular/services/user_service.js",
+                    "app/assets/javascripts/min/angular/services/genre_service.js",
+                    "app/assets/javascripts/min/angular/services/book_service.js",
+                    "app/assets/javascripts/min/angular/services/author_service.js",
+                    "app/assets/javascripts/min/angular/services/shelf_service.js"
+                ],
+
                 'app/assets/javascripts/min/angular/controllers.js': [
                     "app/assets/javascripts/min/angular/controllers/app_controller.js",
                     "app/assets/javascripts/min/angular/controllers/notification_controller.js",
@@ -157,18 +169,6 @@ module.exports = function(grunt) {
                     "app/assets/javascripts/min/angular/controllers/profile_controller.js",
                     "app/assets/javascripts/min/angular/controllers/toast_controller.js",
                     'app/assets/javascripts/min/angular/controllers/home/list_bottom_sheet_controller.js'
-                ],
-
-                'app/assets/javascripts/min/angular/services.js': [
-                    "app/assets/javascripts/min/angular/services/third_party/d3_service.js",
-                    "app/assets/javascripts/min/angular/services/search_service.js",
-                    "app/assets/javascripts/min/angular/services/status_service.js",
-                    "app/assets/javascripts/min/angular/services/feed_service.js",
-                    "app/assets/javascripts/min/angular/services/user_service.js",
-                    "app/assets/javascripts/min/angular/services/genre_service.js",
-                    "app/assets/javascripts/min/angular/services/book_service.js",
-                    "app/assets/javascripts/min/angular/services/author_service.js",
-                    "app/assets/javascripts/min/angular/services/shelf_service.js"
                 ],
 
                 'app/assets/javascripts/min/angular/directives.js': [
@@ -244,12 +244,11 @@ module.exports = function(grunt) {
                 // ],
 
                 'app/assets/javascripts/min/angular/site.min.js': [
-                    'app/assets/javascripts/angular/vendors/angular.min.js',
                     'app/assets/javascripts/min/angular/vendors.min.js',
                     'app/assets/javascripts/min/angular/apps.js',
+                    'app/assets/javascripts/min/angular/services.js',
                     'app/assets/javascripts/min/angular/directives.js',
-                    'app/assets/javascripts/min/angular/controllers.js',
-                    'app/assets/javascripts/min/angular/services.js'
+                    'app/assets/javascripts/min/angular/controllers.js'
                 ],
 
                 "app/assets/javascripts/min/angular/d3_group.min.js": [
