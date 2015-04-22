@@ -39,7 +39,7 @@ homeApp.controller('homeController', ["$scope", "$rootScope", "$timeout", "$mdSi
     // 		"id": 2586408,
     // 		"image_url": "http://www.sbs.com.au/news/sites/sbs.com.au.news/files/lake_car_aap_0.jpg"
     // 	};
-    // 	$scope.feed = [json];
+    	// $scope.feed = [json];
     }());
 
 }]);

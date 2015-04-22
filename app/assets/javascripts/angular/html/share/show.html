@@ -25,13 +25,13 @@
 					<md-input-container layout-margin 
 						style="font-family: 'Inconsolata', 'Courier New', serif;" 
 						class="textarea_container">
-						<div ng-model="status.wrapper_status" class="textarea_wrapper" ng-bind-html="status.wrapper_status">
+						<div ng-model="info.wrapper_status" class="textarea_wrapper" ng-bind-html="info.wrapper_status">
 						</div>
 				        <textarea name="text_area" 
 				        		  set-focus="info.show_share" 
 				        		  ng-keydown="handle_text_input($event)"
 				        		  placeholder="Share your reading journey..." 
-				        		  ng-model="status.status">
+				        		  ng-model="info.status">
 				        </textarea>
 				    </md-input-container>
 			    	
