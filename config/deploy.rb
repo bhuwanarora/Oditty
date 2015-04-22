@@ -14,7 +14,6 @@ set :bundle_flags, '--deployment --quiet'
 set :bundle_without, %w{development test}.join(' ')
 set :bundle_binstubs, -> { shared_path.join('bin') }
 set :bundle_roles, :all
-_cset(:whenever_update_flags) { "–update-crontab #{fetch :whenever_identifier} –set #{fetch :whenever_variables} –user ubuntu" }
 set :application, 'rd'
 set :repo_url, 'git@github.com:test-rd/rd.git'
 
@@ -76,7 +75,7 @@ namespace :deploy do
         puts " updating crontab file"
         # execute "cd #{release_path} && #{try_sudo} GEM_HOME=/opt/local/ruby/gems RAILS_ENV=#{} bundle exec whenever --clear-crontab #{application} --user #{ubuntu}"
         # execute "cd #{release_path} && #{try_sudo} GEM_HOME=/opt/local/ruby/gems RAILS_ENV=production bundle exec whenever --update-crontab #{application} --user #{ubuntu}"
-        execute "cd #{release_path} && bundle exec whenever --update-crontab store"
+        execute "cd #{release_path} bundle exec whenever --set 'environment=#{deploy[:environment_variables][:RAILS_ENV]}&env_path=#{ENV['PATH']}' --update-crontab  store "
       end  
     end
   end
