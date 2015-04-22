@@ -1,6 +1,6 @@
 set :output, "log/cron.log"
 
-every 1.day, :at => '1:05 pm' do
+every 1.hour do
   runner "News.handle"
 end
 
