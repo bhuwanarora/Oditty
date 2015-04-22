@@ -74,10 +74,8 @@ module Api
 				clause
 			end
 
-			def self.get_feed user_id
-				# info = Article::BlogArticle.get_posts
-				info = News.get_feed.execute
-				info
+			def self.get_feed user_id, skip_count=0
+				News.get_feed(skip_count)
 			end
 
 			def self.remove_bookmark user_id, id, type, shelf

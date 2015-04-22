@@ -163,19 +163,15 @@ class News < Neo
 	end
 
 	def self.basic_info
-		" ID(news) AS  news_id  ,news.url  AS news_url , news.image_url AS image_url, news.title AS title, news.description AS description "
+		" ID(news) AS  id  ,news.url  AS url , news.image_url AS image_url, news.title AS title, news.description AS description "
 	end
 
 	def self.grouped_basic_info
 		" news_id: ID(news) , news_url: news.url, view_count:news.view_count "
 	end
 
-	def self.match_timestamp
-		" MATCH (time_period:TimePeriod{quarter:\"#{((Time.now.hour / 6)-1) * 6}-#{((Time.now.hour / 6)) * 6}\"})-[:FromDay]->(day:Day{day:#{Time.now.day}})<-[:Has_day]-(month:Month{month: #{Time.now.month}})<-[:Has_month]-(year:Year{year:#{Time.now.year}}) WITH day, time_period, month, year "
-	end
-
 	def self.match_day
-		" MATCH (news)-[:TimeStamp]->(time_period)-[:FromDay]->(day) WITH news, time_period, day "
+		" MATCH (news:News)-[:TimeStamp]->()-[:FromDay]->(day:Day{day:#{Time.now.day}})<-[:Has_day]-(month:Month{month: #{Time.now.month}})<-[:Has_month]-(year:Year{year:#{Time.now.year}}) WITH day, month, year, news "
 	end
 
 	def self.define_label
@@ -187,6 +183,6 @@ class News < Neo
 	end
 
 	def self.get_feed skip_count=0
-		News.match_timestamp +  News.match_day + News.where_group(News.define_label) + News.match_community + " WITH news," + News.collect_map({"communities" => Community.grouped_basic_info}) + News.order_desc + News.skip(skip_count) + News.limit(Constant::Count::NewsShownInFeed) + News.return_group(News.basic_info,"communities") 
+		News.match_day + News.match_community + " WITH news," + News.collect_map({"communities" => Community.grouped_basic_info}) + News.order_desc + News.skip(skip_count) + News.limit(Constant::Count::NewsShownInFeed) + News.return_group(News.basic_info,"communities") 
 	end
 end
