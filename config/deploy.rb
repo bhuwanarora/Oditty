@@ -79,7 +79,9 @@ namespace :deploy do
       end  
     end
   end
-  after "deploy:symlink:linked_dirs", "deploy:bundle_install", "deploy:update_crontab"  
+  after "deploy:symlink:linked_dirs"
+  after "deploy:bundle_install"
+  after "deploy:update_crontab"  
 
 
 
