@@ -96,6 +96,7 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
             $rootScope.user.profile_status = data.profile_status;
             $rootScope.user.logged = true;
             $rootScope.user.id = data.user_id;
+            debugger
             window.location.href = "/home";
         }
 
@@ -224,6 +225,7 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
             });
         }
 
+        debugger
         websiteService.get_user().then(function(data){
             if(data["logged_in"]){
                 $rootScope.user.logged = true;
@@ -232,7 +234,7 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
                     angular.extend($rootScope.user, data);
                 });
                 $cookieStore.put('logged', true);
-                $scope._on_authenticate();
+                // $scope._on_authenticate();
                 _handle_push_notifications();           
                 // stropheService.start_connection();
             }
@@ -249,7 +251,7 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
     var _init = (function(){
         // $cookieStore.remove('tab');
         // $scope.login_active = true;
-        $scope._is_logged_in();
+        // $scope._is_logged_in();
         _bind_auth_listeners();
         $rootScope.user = {'books': {'bookmarked':[], 'read': []},
                 'authors': {'bookmarked': [], 'follow': []},
