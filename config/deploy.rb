@@ -69,7 +69,6 @@ namespace :deploy do
         execute "cd #{release_path} && bundle install "
       end
     end
-  end
 
     desc "Update the crontab file"  
     task :update_crontab do
