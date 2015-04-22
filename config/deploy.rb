@@ -62,7 +62,15 @@ namespace :deploy do
 
   end
   
-  namespace :deploy do  
+  namespace :deploy do
+    desc " Bundle install "
+    task :bundle_install do 
+      on roles :all do
+        execute "cd #{release_path} && bundle install "
+      end
+    end
+  end
+
     desc "Update the crontab file"  
     task :update_crontab do
       on roles :all do
@@ -72,7 +80,7 @@ namespace :deploy do
       end  
     end
   end
-  after "deploy:symlink:linked_dirs", "deploy:update_crontab"  
+  after "deploy:symlink:linked_dirs", "deply:bundle_install", "deploy:update_crontab"  
 
 
 
