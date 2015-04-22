@@ -15,7 +15,8 @@ module Api
 
 			def get_feed
 				user_id = session[:user_id]
-				info = UserApi.get_feed(user_id)
+				skip_count = session[:skip_count] || 0
+				info = UserApi.get_feed(user_id, skip_count).execute
 				render :json => info, :status => 200
 			end
 
