@@ -1,5 +1,5 @@
 set :output, "log/cron.log"
-set env :PATH, ENV['PATH']
+env :PATH, ENV['PATH']
 
 every 1.hour do
   runner "News.handle"
