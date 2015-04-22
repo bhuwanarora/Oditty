@@ -1,4 +1,4 @@
-homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout", "bookService", '$mdToast', '$location', '$mdBottomSheet', function($scope, $rootScope, $timeout, bookService, $mdToast, $location, $mdBottomSheet){
+homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout", "bookService", '$mdToast', '$location', '$mdBottomSheet', 'ColorConstants', function($scope, $rootScope, $timeout, bookService, $mdToast, $location, $mdBottomSheet, ColorConstants){
 
     $scope.toggle_endorse = function(){
         if($scope.book.endorse_status){
@@ -58,15 +58,18 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
         bookService.get_book_details(filter).then(function(data){
             var endorse_status = data.endorse_status != null;
             var status = data.status != null;
-            var json = {"endorse_status" : endorse_status, "status" : status};
+            var random_int = Math.floor(Math.random()*ColorConstants.value.length);
+            var json = {"endorse_status" : endorse_status, "status" : status, "color": ColorConstants.value[random_int]};
             if(angular.isDefined($rootScope.active_book)){
                 $scope.book = angular.extend($rootScope.active_book, data);
             }
             else{
                 $scope.book = data;    
             }
+
             $scope.book = angular.extend($scope.book, json);
             $rootScope.active_book = $scope.book;
+
         });
 
         bookService.update_visited(book_id);
