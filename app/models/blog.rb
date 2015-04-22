@@ -63,19 +63,19 @@ class Blog < Neo
 	end
 
 	def self.create_is_about
-		" MERGE (blog)-[is_about:IsAbout]->(author) " 
+		" MERGE (blog)-[is_about:IsAbout]->(author) WITH blog, author " 
 	end
 
 	def self.create_belongs_to
-		" MERGE (blog)-[belongs_to:BelongsTo]->(community) " 
+		" MERGE (blog)-[belongs_to:BelongsTo]->(community) WITH community, blog " 
 	end
 
 	def self.link_author indexed_name
-		Author.search_by_indexed_name(indexed_name) + Blog.create_is_about   
+		Author.search_by_indexed_name(indexed_name) + " , blog " + Blog.create_is_about   
 	end
 
 	def self.link_community name
-		Community.search(name) + Blog.create_belongs_to   
+		Community.search_by_name(name) + " , blog " + Blog.create_belongs_to   
 	end
 
 	def self.handle_authors tags
@@ -98,17 +98,18 @@ class Blog < Neo
 
 		for post in response["posts"]
 			clause = ""
-			clause = Blog.create(post) + Blog.match_root + " ,blog " + Blog.create_next_post + Blog.create_timestamp(post["date"],"blog") + Blog.return_init + Blog.basic_info  
+			clause = Blog.create(post) + Blog.match_root + " ,blog " + Blog.create_next_post + Blog.create_timestamp(post["date"],"blog")   
 			
 			author_tags = Blog.handle_authors post["tags"]
 			author_tags.each do |key, value|
 				post["tags"].delete(key)
-				clause += Blog.link_author(key) + " WITH blog "
+				clause += Blog.link_author(key.search_ready) + " WITH blog "
 			end
 
 			post["tags"].each do |key, value|
 				clause += Blog.link_community(key) + " WITH blog "
 			end
+			clause += Blog.return_init + Blog.basic_info
 			clause.execute 
 		end					
 	end
