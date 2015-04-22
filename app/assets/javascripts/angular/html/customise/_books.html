@@ -1,16 +1,25 @@
 <div layout="row" layout-align="center center">
     <h3>Select books which have left a mark on you</h3>
 </div>
+<div ng-show="did_you_mean">
+	Did you mean?
+</div>
 <md-content ng-controller="booksController" check-scroll-bottom="books_on_signup()" class="white" id="books">
 	<section layout="row">
 		<div flex="15" flex-md="10" hide-sm >
 			
 		</div>
 		<div flex-sm="100" flex-md="80" flex="70" layout="column">
-			<md-input-container flex layout-padding layout-margin>
-			    <label>Search books...</label>
-			    <input/>
-			</md-input-container>
+			<md-autocomplete
+				class="search_book_autocomplete" 
+				flex layout-padding layout-margin
+		        md-search-text="search_tag.book"
+		        md-items="item in popular_books | filter:search_tag.book"
+		        md-search-text-change="search_books(search_tag.book)"
+		        md-selected-item-change="reset_books()"
+		        placeholder="Search books...">
+		    </md-autocomplete>
+
 			<div layout="row" layout-wrap layout-align="center">
 				<div ng-repeat="book in popular_books"
 					 layout-margin
@@ -77,10 +86,14 @@
 	#books .upper_slider_wrapper{
 		z-index: 3;
 		background-color: white;
-		 height: 48px;
+		height: 48px;
   		position: absolute;
   		left: 0px;
   		width: 130px;
+	}
+
+	#books .search_book_autocomplete{
+		height: 54px;
 	}
 
 </style>

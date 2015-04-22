@@ -12,12 +12,22 @@
 		</div>
 		<div flex="80" layout="column">
 			<div ng-if="info.show_book_share" layout="row" layout-align="end">
-				<md-input-container layout-margin class="share_book">
-					<label>Add a book</label>
-				    <input ng-model="info.status_book" 
-				    	   ng-keydown="search_book($event)"
-				    	   set-focus="info.show_book_share"/>
-				</md-input-container>
+				<md-autocomplete
+					layout-margin 
+		            class="share_book"
+		            md-search-text="search_tag.book"
+		            md-items="item in searched_books | filter:search_tag.book"
+		            md-search-text-change="search_books(search_tag.book)"
+		            placeholder="Add a book...">
+		        </md-autocomplete>
+		        <md-content ng-if="searched_books && searched_books.length > 0" 
+                        layout-wrap layout="row" layout-padding class="white searched_books">
+	                <div layout-padding ng-repeat="book in searched_books" >
+	                    <md-button ng-click="add_book(book)" class="clear book_image_cover">
+	                        <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
+	                    </md-button>
+	                </div>
+	            </md-content>
 			</div>
 			<div layout="row" flex ng-if="info.show_share">
 				<img class="circular user_image" ng-src="{{user.image_url | default_profile}}"/>
@@ -132,6 +142,13 @@
 		top: 10px;
 		margin-left: 100px;
 		z-index: 4;
+	}
+
+	.searched_books{
+		position: fixed;
+		height: 300px !important;
+		left: 50px;
+		top: 100px;
 	}
 
 </style>

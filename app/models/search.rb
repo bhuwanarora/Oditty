@@ -7,20 +7,20 @@ class Search < Neo
 	end
 
 	def book_by_title
-		Search.match_indexed(Constant::IndexName::BookTitle, ( @params + @connector)) + Search.return_group(Book.basic_info,"labels(node) as labels").search_compliant + Search.order_by("popularity") + " DESC " + Search.skip(@count) + Search.limit(Constant::Count::ElementsShownInSearch) 
+		Search.match_indexed(Constant::IndexName::BookTitle, ( @params + @connector)) + Search.return_group(Book.basic_info,"labels(node) as labels").search_compliant + Search.order_by("popularity") + " DESC " + Search.skip(@skip_count) + Search.limit(@count) 
 	end
 
 	def author_by_name
-		Search.match_indexed(Constant::IndexName::MainAuthorName, ( @params + @connector)) + Search.return_group(Author.basic_info,"labels(node) as labels").search_compliant + Search.skip(@count) + Search.limit(Constant::Count::ElementsShownInSearch)
+		Search.match_indexed(Constant::IndexName::MainAuthorName, ( @params + @connector)) + Search.return_group(Author.basic_info,"labels(node) as labels").search_compliant + Search.skip(@skip_count) + Search.limit(@count)
 	end
 
 	def user_by_name
-		Search.match_indexed(Constant::IndexName::UserName, ( @params + @connector)) + Search.return_group(User.basic_info,"labels(node) as labels").search_compliant + Search.skip(@count) + Search.limit(Constant::Count::ElementsShownInSearch)
+		Search.match_indexed(Constant::IndexName::UserName, ( @params + @connector)) + Search.return_group(User.basic_info,"labels(node) as labels").search_compliant + Search.skip(@skip_count) + Search.limit(@count)
 	end
 
 	def category_by_name
 		if @params.present?
-			clause = Search.match_indexed(Constant::IndexName::CategoryName, ( @params + @connector)) + Search.return_group(Category.basic_info,"labels(node) as labels").search_compliant + Search.skip(@count) + Search.limit(Constant::Count::ElementsShownInSearch)
+			clause = Search.match_indexed(Constant::IndexName::CategoryName, ( @params + @connector)) + Search.return_group(Category.basic_info,"labels(node) as labels").search_compliant + Search.skip(@skip_count) + Search.limit(@count)
 		else
 			clause = Category::Root.match_root + Search.return_group(Category.basic_info,"labels(node) as labels")
 		end
@@ -28,19 +28,19 @@ class Search < Neo
 	end
 
 	def news_by_title
-		Search.match_indexed(Constant::IndexName::NewsTitle, ( @params + @connector)) + Search.return_group(News.basic_info).search_compliant + Search.skip(@count) + Search.limit(Constant::Count::ElementsShownInSearch)
+		Search.match_indexed(Constant::IndexName::NewsTitle, ( @params + @connector)) + Search.return_group(News.basic_info).search_compliant + Search.skip(@skip_count) + Search.limit(@count)
 	end
 
 	def blog_by_title
-		Search.match_indexed(Constant::IndexName::BlogTitle, ( @params + @connector)) + Search.return_group(Blog.basic_info).search_compliant + Search.skip(@count) + Search.limit(Constant::Count::ElementsShownInSearch)
+		Search.match_indexed(Constant::IndexName::BlogTitle, ( @params + @connector)) + Search.return_group(Blog.basic_info).search_compliant + Search.skip(@skip_count) + Search.limit(@count)
 	end
 
 	def community_by_name
-		Search.match_indexed(Constant::IndexName::CommunityName, ( @params + @connector)) + Search.return_group(Community.basic_info).search_compliant + Search.skip(@count) + Search.limit(Constant::Count::ElementsShownInSearch)
+		Search.match_indexed(Constant::IndexName::CommunityName, ( @params + @connector)) + Search.return_group(Community.basic_info).search_compliant + Search.skip(@skip_count) + Search.limit(@count)
 	end
 
 	def basic
-		Search.match_indexed(Constant::IndexName::Search, ( @params + @connector)) + Search.return_group(Search.basic_search_info) + Search.skip(@count) + Search.limit(Constant::Count::ElementsShownInSearch)
+		Search.match_indexed(Constant::IndexName::Search, ( @params + @connector)) + Search.return_group(Search.basic_search_info) + Search.skip(@skip_count) + Search.limit(@count)
 	end
 
 	def self.basic_search_info

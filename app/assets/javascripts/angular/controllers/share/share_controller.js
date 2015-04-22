@@ -1,4 +1,4 @@
-homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'ShareOptions', '$routeParams', '$mdBottomSheet', 'statusService', 'WebsiteUIConstants', function($scope, $rootScope, $timeout, ShareOptions, $routeParams, $mdBottomSheet, statusService, WebsiteUIConstants){
+homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'ShareOptions', '$routeParams', '$mdBottomSheet', 'statusService', 'WebsiteUIConstants', 'bookService', 'ColorConstants', function($scope, $rootScope, $timeout, ShareOptions, $routeParams, $mdBottomSheet, statusService, WebsiteUIConstants, bookService, ColorConstants){
 
     $scope.show_share_options = function(event){
         $mdBottomSheet.show({
@@ -18,22 +18,40 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         event.stopPropagation();
     }
 
+    $scope.search_books = function(q){
+        $scope.info.loading = true;
+        $scope.searched_books = [];
+        bookService.search_books(q, 10).then(function(data){
+            $scope.info.loading = false;
+            $scope.did_you_mean = true;
+            angular.forEach(data, function(value){
+                var random_int = Math.floor(Math.random()*ColorConstants.value.length);
+                if(angular.isUndefined(value.fuzzy)){
+                    value = angular.extend(value, {"color": ColorConstants.value[random_int]});
+                    this.push(value);
+                }
+            }, $scope.searched_books);
+        });
+    }
+
+    $scope.add_book = function(book){
+        $scope.info.book = book;
+    }
+
     $scope.show_share_page = function(event) {
         if(!$scope.info.show_share){
             $scope.info.show_share = true;
         }
         else{
-            
             var status = {};
-
             if(angular.isDefined($scope.info.feelings) && ($scope.info.feelings.length > 0)){
                 status = angular.extend(status, {"feelings": $scope.info.feelings});
             }
             if(angular.isDefined($scope.info.reading_status_value)){
                 status = angular.extend(status, {"reading_status_value": $scope.info.reading_status_value});
             }
-            if(angular.isDefined($scope.info.book_id)){
-                status = angular.extend(status, {"book_id": $scope.info.book_id});
+            if(angular.isDefined($scope.info.book)){
+                status = angular.extend(status, {"book_id": $scope.info.book.id});
             }
             if(angular.isDefined($scope.info.mentioned_users_ids) && ($scope.info.mentioned_users_ids.length > 0)){
                 status = angular.extend(status, {"mentioned_users_ids": $scope.info.mentioned_users_ids});

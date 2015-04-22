@@ -3,13 +3,17 @@ module Api
 		class SearchApi
 
 			def self.search(q, count, type)
-				results = self._get_search_clause(q, count, type, nil).execute
-				
-				if results.present?
-					results
+				if(q && q.length >= 3)
+					results = self._get_search_clause(q, count, type, nil).execute
+					
+					if results.present?
+						results
+					else
+						results = self._get_search_clause(q, count, type, true).execute
+						results.push({:fuzzy => true})
+					end
 				else
-					results = self._get_search_clause(q, count, type, true).execute
-					results.push({:fuzzy => true})
+					results = []
 				end
 				results
 			end
