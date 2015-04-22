@@ -126,6 +126,10 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 	$scope.search_book = function(event){
 		
 	}
+
+	$scope.follow_user = function(){
+		
+	}
 	
 	var _init = (function(){
 		var regex = /[?&]([^=#]+)=([^&#]*)/g;

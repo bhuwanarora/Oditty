@@ -103,12 +103,12 @@ homeApp.controller('customiseController', ["$scope", "$rootScope", "$timeout", '
     var search_input_timeout = "";
     
     
-    _init = function(){
+    var _init = (function(){
         $scope.info.loading = false;
         userService.get_user_details().then(function(data){
             $rootScope.user = data;
         });
-    }
+        $scope.info.my_profile = true;
+    }());
 
-    _init();
 }]);
