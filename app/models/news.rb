@@ -53,12 +53,16 @@ class News < Neo
 
 	def self.create news_link, news_source
 		news_metadata = News.get_metadata news_link
-		clause  = News.merge(news_link, news_metadata) + News.merge_timestamp + News.merge_region(news_source) + ", news " + News.optional_match_regional_news +  ", news " + News.optional_match_news + News.create_news_link + News.return_init + " ID(news) as news_id "
+		clause  = News.merge(news_link, news_metadata) + News.merge_timestamp  + News.merge_region(news_source) + ", news " + News.optional_match_regional_news +  ", news " + News.optional_match_news + News.create_news_link + News.return_init + " ID(news) as news_id "
 		(clause.execute)[0]["news_id"]
 	end
 
 	def self.merge_timestamp
 		" MERGE (year:Year{year:#{Time.now.year}}) MERGE (month:Month{month: #{Time.now.month}})<-[:Has_month]-(year) MERGE (day:Day{day:#{Time.now.day}})<-[:Has_day]-(month) MERGE (time:TimePeriod{quarter:\"#{(Time.now.hour / 6) * 6}-#{((Time.now.hour / 6)+1) * 6}\"})-[:FromDay]->(day) MERGE (news)-[:TimeStamp]->(time) WITH news "
+	end
+
+	def self.set_indexed_title title
+		" SET news.indexed_title = \"" + title.to_s.search_ready + "\" "
 	end
 
 	def self.set_metadata news_metadata
@@ -67,7 +71,7 @@ class News < Neo
 		news_metadata.each do |key, value|
 			clause += " SET news." + key + " = \"" + value.to_s.gsub("\"","\\\"").gsub("\'","\\\'") + "\" " 
 		end
-		clause
+		clause + News.set_indexed_title(news_metadata["title"])
 	end
 
 	def self.get_metadata news_link

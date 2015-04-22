@@ -2,7 +2,11 @@ class Blog < Neo
 	
 	def self.create post
 		puts post.to_s.green
-		" MERGE (blog:Blog{blog_url:\"" + post["short_URL"] + "\"}) " + Blog.set_excerpt(post["excerpt"]) + Blog.set_title(post["title"]) + Blog.set_image_url(post["attachments"]) + Blog.set_reblog_count(post["is_reblogged"]) + Blog.set_like_count(post["like_count"]) + Blog.set_created_at(post["date"]) + " WITH blog "
+		" MERGE (blog:Blog{blog_url:\"" + post["short_URL"] + "\"}) " + Blog.set_excerpt(post["excerpt"]) + Blog.set_title(post["title"]) + Blog.set_image_url(post["attachments"]) + Blog.set_reblog_count(post["is_reblogged"]) + Blog.set_indexed_title(post["title"]) + Blog.set_like_count(post["like_count"]) + Blog.set_created_at(post["date"]) + " WITH blog "
+	end
+
+	def self.set_indexed_title title
+		" SET blog.indexed_title = \"" + title.to_s.search_ready + "\" "
 	end
 
 	def self.set_created_at date
@@ -116,7 +120,7 @@ class Blog < Neo
 
 	def self.get_posts last_posted_time
 		last_posted_time = Date.iso8601(last_posted_time).strftime
-		url = "https://public-api.wordpress.com/rest/v1.1/sites/literaturerun.wordpress.com/posts/?number=100&pretty=1&order=ASC&fields=title,date,short_URL,excerpt,discussion,like_count,featured_image,tags,is_reblogged,attachments&after=" + last_posted_time
+		url = Rails.application.config.blog_url + last_posted_time
 		puts url
 		JSON.parse(Net::HTTP.get(URI.parse(url)))
 	end
