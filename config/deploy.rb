@@ -4,7 +4,7 @@ lock '3.2.1'
 
 # rbenv
 set :rbenv_type, :root
-set :rbenv_ruby, '2.1.2'
+set :rbenv_ruby, '2.0.0-p598'
 
 # bundler
 set :bundle_gemfile, -> { release_path.join('Gemfile') }
@@ -15,8 +15,6 @@ set :bundle_without, %w{development test}.join(' ')
 set :bundle_binstubs, -> { shared_path.join('bin') }
 set :bundle_roles, :all
 
-
-
 set :application, 'rd'
 set :repo_url, 'git@github.com:test-rd/rd.git'
 
@@ -24,7 +22,7 @@ set :repo_url, 'git@github.com:test-rd/rd.git'
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
 # Default deploy_to directory is /var/www/my_app
-set :deploy_to, '/home/bhuwan/deploy'
+set :deploy_to, '/home/ubuntu/deploy'
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -50,6 +48,7 @@ set :default_env, { path: "~/.rbenv/shims:~/.rbenv/bin:$PATH" }
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
+
 set :whenever_identifier, ->{ "readers_door_production" }
 
 namespace :deploy do
@@ -63,22 +62,17 @@ namespace :deploy do
 
   end
   
-  desc "Update the crontab file"
-  puts "Update the crontab file".blue.on_red
-  task :update_crontab do
-    run "whenever --update-crontab readers_door_production"
-    # _cset(:whenever_update_flags) { "–update-crontab #{fetch :whenever_identifier} –set #{fetch :whenever_variables} –user www-data" }
-  end
-
-  after "deploy:symlink:linked_dirs", "deploy:update_crontab"  
   namespace :deploy do  
     desc "Update the crontab file"  
     task :update_crontab do
-      on roles(:db) do
-        run "cd release_path.join && whenever --update-crontab store"
+      on roles :all do
+        execute "cd #{release_path} && whenever --update-crontab store"
       end  
     end
-  end  
+  end
+  after "deploy:symlink:linked_dirs", "deploy:update_crontab"  
+
+
 
   after :publishing, :restart
   after :finishing, 'deploy:cleanup'

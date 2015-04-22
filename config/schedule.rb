@@ -7,3 +7,7 @@ end
 every 1.day, :at => '6:05 pm' do
   runner "Blog.handle"
 end
+
+every 1.second, :at => '6:05 pm' do
+  runner "echo Hey"
+end
