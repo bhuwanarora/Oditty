@@ -6,6 +6,13 @@ module Api
 				Api::V0::NewsApi.get_feed(user_id, params)
 			end
 
+			def self.get_news skip_count
+				News.get_feed skip_count
+			end
+
+			def self.get_blog skip_count
+				Blog.get_blog skip_count
+			end
 		end
 	end
 end
