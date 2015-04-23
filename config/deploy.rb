@@ -79,7 +79,7 @@ namespace :deploy do
         puts " updating crontab file"
         # execute "cd #{release_path} && #{try_sudo} GEM_HOME=/opt/local/ruby/gems RAILS_ENV=#{} bundle exec whenever --clear-crontab #{application} --user #{ubuntu}"
         # execute "cd #{release_path} && #{try_sudo} GEM_HOME=/opt/local/ruby/gems RAILS_ENV=production bundle exec whenever --update-crontab #{application} --user #{ubuntu}"
-        execute "cd #{release_path} && bundle exec whenever --update-crontab store"
+        execute "cd #{release_path} && bundle install && bundle exec whenever --update-crontab store"
       end  
     end
   end
