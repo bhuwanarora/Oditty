@@ -63,18 +63,18 @@ namespace :deploy do
   end
   
 
-  # namespace :deploy do
-  #   desc "Update the crontab file"  
-  #   task :update_crontab do
-  #     on roles :all do
-  #       puts " updating crontab file"
-  #       # execute "cd #{release_path} && #{try_sudo} GEM_HOME=/opt/local/ruby/gems RAILS_ENV=#{} bundle exec whenever --clear-crontab #{application} --user #{ubuntu}"
-  #       # execute "cd #{release_path} && #{try_sudo} GEM_HOME=/opt/local/ruby/gems RAILS_ENV=production bundle exec whenever --update-crontab #{application} --user #{ubuntu}"
-  #       execute "cd #{release_path} whenever --update-crontab store"
-  #     end  
-  #   end
-  # end
-  after "deploy:symlink:linked_dirs"  
+  namespace :deploy do
+    desc "Update the crontab file"  
+    task :update_crontab do
+      on roles :all do
+        puts " updating crontab file"
+        # execute "cd #{release_path} && #{try_sudo} GEM_HOME=/opt/local/ruby/gems RAILS_ENV=#{} bundle exec whenever --clear-crontab #{application} --user #{ubuntu}"
+        # execute "cd #{release_path} && #{try_sudo} GEM_HOME=/opt/local/ruby/gems RAILS_ENV=production bundle exec whenever --update-crontab #{application} --user #{ubuntu}"
+        execute "cd #{release_path} && whenever --update-crontab store"
+      end  
+    end
+  end
+  after "deploy:symlink:linked_dirs", "deploy:update_crontab"  
 
 
 
