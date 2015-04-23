@@ -7,4 +7,5 @@ module Constant::IndexName
 	NewsTitle			= "indexed_news_title"
 	BlogTitle			= "indexed_blog_title"
 	CommunityName		= "indexed_community_name"
+	LabelName 			= "indexed_label_name"
 end

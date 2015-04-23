@@ -106,10 +106,9 @@ class Community < Neo
 	end
 
 
-	def self.create news_link, news_source
+	def self.create news_metadata
 		communities_books = []
-
-		response = News.fetch_tags news_link
+		response = News.fetch_tags news_metadata["news_link"]
 		puts response.red
 
 		if response.is_json? 
@@ -128,12 +127,11 @@ class Community < Neo
 			end
 
 			unless communities_books.blank?	
-				news_id = News.create news_link, news_source
-				news_info = {"news_id" => news_id, "news_source" => news_source, "news_link" => news_link}
+				news_metadata["news_id"] = News.create news_metadata
 				
-				if News.news_already_present(news_info["news_id"]) 
-					News.map_topics(news_info["news_id"], response["topics"]) 				
-					Community.map_books(communities_books, news_info)
+				if News.news_already_present(news_metadata["news_id"]) 
+					News.map_topics(news_metadata["news_id"], response["topics"]) 				
+					Community.map_books(communities_books, news_metadata)
 				end
 
 			end
