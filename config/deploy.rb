@@ -14,10 +14,10 @@ set :bundle_flags, '--deployment --quiet'
 set :bundle_without, %w{development test}.join(' ')
 set :bundle_binstubs, -> { shared_path.join('bin') }
 set :bundle_roles, :all
-
 set :application, 'rd'
 set :repo_url, 'git@github.com:test-rd/rd.git'
-
+# set :whenever_environment, defer { stage }
+# set :whenever_command, 'bundle exec whenever'
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
@@ -62,24 +62,28 @@ namespace :deploy do
 
   end
   
-  namespace :deploy do
-    desc " Bundle install "
-    task :bundle_install do 
-      on roles :all do
-        execute "cd #{release_path} && bundle install "
-      end
-    end
 
+  namespace :deploy do
+  # desc " bundle install gems "
+  # task :bundle_install do 
+  # on roles :all do
+  #       puts " bundle install "
+  #       # execute "cd #{release_path} && #{try_sudo} GEM_HOME=/opt/local/ruby/gems RAILS_ENV=#{} bundle exec whenever --clear-crontab #{application} --user #{ubuntu}"
+  #       # execute "cd #{release_path} && #{try_sudo} GEM_HOME=/opt/local/ruby/gems RAILS_ENV=production bundle exec whenever --update-crontab #{application} --user #{ubuntu}"
+  #       execute " cd #{release_path} && bundle install "
+  #     end  
+  #   end
     desc "Update the crontab file"  
     task :update_crontab do
       on roles :all do
+        puts " updating crontab file"
         # execute "cd #{release_path} && #{try_sudo} GEM_HOME=/opt/local/ruby/gems RAILS_ENV=#{} bundle exec whenever --clear-crontab #{application} --user #{ubuntu}"
         # execute "cd #{release_path} && #{try_sudo} GEM_HOME=/opt/local/ruby/gems RAILS_ENV=production bundle exec whenever --update-crontab #{application} --user #{ubuntu}"
-        execute "cd #{release_path} && bundle exec whenever --update-crontab store"
+        execute "cd #{release_path} && rbenv exec bundle exec whenever --update-crontab store --user ubuntu "
       end  
     end
   end
-  after "deploy:symlink:linked_dirs", "deploy:bundle_install", "deploy:update_crontab"  
+  after "deploy:symlink:linked_dirs",  "deploy:update_crontab"  
 
 
 
