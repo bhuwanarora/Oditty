@@ -16,8 +16,8 @@ set :bundle_binstubs, -> { shared_path.join('bin') }
 set :bundle_roles, :all
 set :application, 'rd'
 set :repo_url, 'git@github.com:test-rd/rd.git'
-set :whenever_environment, defer { stage }
-set :whenever_command, 'bundle exec whenever'
+# set :whenever_environment, defer { stage }
+# set :whenever_command, 'bundle exec whenever'
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
