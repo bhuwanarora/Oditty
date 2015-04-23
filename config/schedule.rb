@@ -1,4 +1,3 @@
-job_type :runner, "cd :path && bundle exec rails runner -e :environment ':task' :output"
 job_type :cronner, "cd :path && bundle exec rails runner -e :environment ':task' :output"
 set :output, "log/cron.log"
 env :PATH, ENV['PATH']
@@ -14,4 +13,8 @@ end
 
 every 1.minute  do
   cronner " TesterHelper.outs "
+end
+
+every 1.minute  do
+  runner " TesterHelper.outs "
 end
