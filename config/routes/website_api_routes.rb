@@ -10,7 +10,7 @@ ReadersDoor::Application.routes.draw do
             match "countries"                              => 'website_api#countries',                        :via => [:put, :get, :post]
             match "times"                                  => 'website_api#times',                            :via => [:put, :get, :post]
             match "labels"                                 => 'website_api#labels',                           :via => [:put, :get, :post]
-            match "add_label"                              => 'website_api#add_label',                        :via => [:put, :get, :post]
+            match "add_new_label"                          => 'website_api#add_new_label',                        :via => [:put, :get, :post]
             match "read_times"                             => 'website_api#read_times',                       :via => [:put, :get, :post]
             match "notifications"                          => 'website_api#notifications',                    :via => [:put, :get, :post]
             match "latest_notification"                    => 'website_api#latest_notification',              :via => [:put, :get, :post]
