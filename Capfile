@@ -15,7 +15,6 @@ require 'capistrano/ssh_doctor'
 #
 # require 'capistrano/rvm'
  require 'capistrano/rbenv'
- set :rbenv_custom_path, '/home/ubuntu/.rbenv'
  # require 'capistrano/chruby'
  # require 'capistrano/bundler'
  require 'capistrano/rails/assets'
