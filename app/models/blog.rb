@@ -2,11 +2,15 @@ class Blog < Neo
 	
 	def self.create post
 		puts post.to_s.green
-		" MERGE (blog:Blog{blog_url:\"" + post["short_URL"] + "\"}) " + Blog.set_excerpt(post["excerpt"]) + Blog.set_title(post["title"]) + Blog.set_image_url(post["attachments"]) + Blog.set_reblog_count(post["is_reblogged"]) + Blog.set_indexed_title(post["title"]) + Blog.set_like_count(post["like_count"]) + Blog.set_created_at(post["date"]) + " WITH blog "
+		" MERGE (blog:Blog{blog_url:\"" + post["short_URL"] + "\"}) " + Blog.set_excerpt(post["excerpt"]) + Blog.set_title(post["title"]) + Blog.set_image_url(post["attachments"]) + Blog.set_reblog_count(post["is_reblogged"]) + Blog.set_search_index(post["title"]) + Blog.set_indexed_title(post["title"]) + Blog.set_like_count(post["like_count"]) + Blog.set_created_at(post["date"]) + " WITH blog "
 	end
 
 	def self.set_indexed_title title
 		" SET blog.indexed_title = \"" + title.to_s.search_ready + "\" "
+	end
+
+	def self.set_search_index title
+		" SET blog.search_index = \"" + title.to_s.search_ready + "\" "
 	end
 
 	def self.set_created_at date

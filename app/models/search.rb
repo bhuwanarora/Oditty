@@ -14,6 +14,10 @@ class Search < Neo
 		Search.match_indexed(Constant::IndexName::MainAuthorName, ( @params + @connector)) + Search.return_group(Author.basic_info,"labels(node) as labels").search_compliant + Search.skip(@skip_count) + Search.limit(@count)
 	end
 
+	def label_by_name
+		Search.match_indexed(Constant::IndexName::LabelName, ( @params + @connector)) + Search.return_group(Label.basic_info,"labels(node) as labels").search_compliant + Search.skip(@skip_count) + Search.limit(@count)
+	end
+
 	def user_by_name
 		Search.match_indexed(Constant::IndexName::UserName, ( @params + @connector)) + Search.return_group(User.basic_info,"labels(node) as labels").search_compliant + Search.skip(@skip_count) + Search.limit(@count)
 	end

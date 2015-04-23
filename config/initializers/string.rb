@@ -46,6 +46,8 @@ class String
             .gsub("(user)","(node)")
             .gsub("(blog)","(node)")
             .gsub("(news)","(node)")
+            .gsub("(label)", "(node)")
+            .gsub("label.", "node.")
     end
 
     def print
