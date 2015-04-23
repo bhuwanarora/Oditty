@@ -1,4 +1,8 @@
-homeApp.controller('realVirtualityController', ["$scope", "$rootScope", "$timeout", "bookService", '$mdToast', '$location', '$mdBottomSheet', function($scope, $rootScope, $timeout, bookService, $mdToast, $location, $mdBottomSheet){
+homeApp.controller('realVirtualityController', ["$scope", "$rootScope", "bookService", function($scope, $rootScope, bookService){
+
+	$scope.change_news = function(){
+		
+	}
 
     var _init = (function(){
         var book_id = $rootScope.active_book.book_id;

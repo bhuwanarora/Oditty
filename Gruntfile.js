@@ -280,6 +280,7 @@ module.exports = function(grunt) {
                     "app/assets/javascripts/min/angular/controllers/book/specific_book_controller.js",
                     "app/assets/javascripts/min/angular/controllers/book/timeline_controller.js",
                     "app/assets/javascripts/min/angular/controllers/book/real_virtuality_controller.js",
+                    "app/assets/javascripts/min/angular/controllers/book/buy_controller.js",
                     "app/assets/javascripts/min/angular/services/community_service.js",
                     "app/assets/javascripts/min/angular/controllers/community_controller.js"
                 ],
@@ -295,7 +296,8 @@ module.exports = function(grunt) {
                 "app/assets/javascripts/min/angular/controllers/book_group.min.js":[
                     "app/assets/javascripts/min/angular/controllers/book/specific_book_controller.js",
                     "app/assets/javascripts/min/angular/controllers/book/timeline_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/real_virtuality_controller.js"
+                    "app/assets/javascripts/min/angular/controllers/book/real_virtuality_controller.js",
+                    "app/assets/javascripts/min/angular/controllers/book/buy_controller.js"
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/infinity_group.min.js":[
@@ -307,7 +309,8 @@ module.exports = function(grunt) {
                     "app/assets/javascripts/min/angular/controllers/library/filters_controller.js",
                     "app/assets/javascripts/min/angular/controllers/book/specific_book_controller.js",
                     "app/assets/javascripts/min/angular/controllers/book/timeline_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/real_virtuality_controller.js"
+                    "app/assets/javascripts/min/angular/controllers/book/real_virtuality_controller.js",
+                    "app/assets/javascripts/min/angular/controllers/book/buy_controller.js"
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/room_group.min.js":[

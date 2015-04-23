@@ -1,9 +1,9 @@
-<div layout="row" layout-sm="column">
+<div layout="row" layout-sm="column" ng-controller="buyController">
     <div flex layout="column" layout-padding>
         <h4>Borrow this book from a friend</h4>
-        <md-list layout-padding ng-if="book.borrow_users">
+        <md-list layout-padding ng-if="borrow_users">
             <md-item>
-                <md-item-content layout="row" ng-repeat="user in book.borrow_users">
+                <md-item-content layout="row" ng-repeat="user in borrow_users">
                     <div class="md-tile-left">
                         <img class="circular" ng-src="{{user.image_url | default_profile}}">
                     </div>
@@ -34,34 +34,6 @@
                     </div>
                 </md-item-content>
               </md-item>
-              <!-- <md-item>
-                <md-item-content>
-                    <div class="md-tile-left">
-                        <img class="circular" src="http://www.wpsauce.com/wp-content/uploads/2012/01/flipkartlogo.png">
-                    </div>
-                    <div class="md-tile-content" layout="row" layout-align="space-between center">
-                        <div>flipkart</div>
-                        <div layout="row" layout-md="column" layout-sm="column">
-                            <div layout-padding>595.00</div>
-                            <md-button ng-href="http://dl.flipkart.com/dl/{{book.title | flipkart_title}}/p/itme6anwyzmjzzrc?affid=bhuwanrea" target="blank" class="md-primary md-raised md-button-clear">Buy</md-button>
-                        </div>
-                    </div>
-                </md-item-content>
-              </md-item>
-              <md-item>
-                <md-item-content>
-                    <div class="md-tile-left">
-                        <img class="circular" src="http://cdn.marketplaceimages.windowsphone.com/v8/images/7fdb10c5-ff43-496b-887b-85806f8eeea6?imageType=ws_icon_large">
-                    </div>
-                    <div class="md-tile-content" layout="row" layout-align="space-between center">
-                        <div>snapdeal</div>
-                        <div layout="row" layout-md="column" layout-sm="column">
-                            <div layout-padding>558.00</div>
-                            <md-button class="md-primary md-raised md-button-clear">Buy</md-button>
-                        </div>
-                    </div>
-                </md-item-content>
-            </md-item> -->
         </md-list>
     </div>
 </div>
