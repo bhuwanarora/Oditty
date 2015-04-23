@@ -7,7 +7,7 @@ namespace :get_media do
   end
 
   task :blog => :environment do
-    puts "init"
+    puts "init blog service"
     Blog.handle
   end
   task :test => :environment do
