@@ -16,14 +16,12 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
         });
     }
 
-    $scope.show_shelf_bottom_sheet = function(event){
+    $scope.show_shelf_bottom_sheet = function(bookmark_object_id, bookmark_object_type){
+        $rootScope.bookmark_object = {"type": bookmark_object_type, "id": bookmark_object_id};
         $mdBottomSheet.show({
             templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
-            controller: 'shelfController',
-            locals: $rootScope.active_book.book_id,
-            targetEvent: event
+            controller: 'shelfController'
         });
-        event.stopPropagation();
     };
 
     $scope.getToastPosition = function() {

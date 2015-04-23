@@ -1,9 +1,19 @@
-homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', function($scope, $rootScope, userService){
+homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$mdBottomSheet', 'shelfService', function($scope, $rootScope, userService, $mdBottomSheet, shelfService){
 
 	$scope.goto_community_page = function(id){
 		userService.news_visited(id);
 		window.location.href = "/community?q="+id;
 	}
+
+    $scope.show_shelf_bottom_sheet = function(bookmark_object_id, bookmark_object_type){
+        $rootScope.bookmark_object = {"type": bookmark_object_type, "id": bookmark_object_id};
+        $mdBottomSheet.show({
+            templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
+            controller: 'shelfController',
+            targetEvent: event
+        });
+        event.stopPropagation();
+    };
 
     var _init = (function(){
     	var _create_empty_feed = (function(){
@@ -23,6 +33,6 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', fun
 	            value = angular.extend(value, data[index]);
         	});
         });
-    }());
 
+    }());
 }]);
