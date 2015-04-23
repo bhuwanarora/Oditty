@@ -31,8 +31,8 @@ class News < Neo
 		" MATCH (news)-[:HasCommunity]->(community:Community) WITH news, community "
 	end
 
-	def self.merge news_link, news_metadata
-		" MERGE (news:News{url:\"" + news_link.to_s + "\"}) ON CREATE SET news.created_at = " + Time.now.to_i.to_s + ", news.view_count = 0 " + (news_metadata["available"] ? News.set_metadata(news_metadata) : "" ) + " WITH news "
+	def self.merge news_metadata
+		" MERGE (news:News{url:\"" + news_metadata["news_link"].to_s + "\"}) ON CREATE SET news.created_at = " + Time.now.to_i.to_s + ", news.view_count = 0 " +  News.set_metadata(news_metadata) + " WITH news "
 	end
 
 	def self.merge_region news_source
@@ -51,9 +51,8 @@ class News < Neo
 		" FOREACH(ignoreMe IN CASE WHEN relation IS NULL AND old IS NOT NULL THEN [1] ELSE [] END | MERGE (region)-[:RegionalNews{region:ID(region)}]->(news)-[:RegionalNews{region:ID(region)}]->(old_news) DELETE old) FOREACH(ignoreMe IN CASE WHEN relation IS NULL AND old IS  NULL THEN [1] ELSE [] END | MERGE (region)-[:RegionalNews{region:ID(region)}]->(news))  "
 	end
 
-	def self.create news_link, news_source
-		news_metadata = News.get_metadata news_link
-		clause  = News.merge(news_link, news_metadata) + News.merge_timestamp  + News.merge_region(news_source) + ", news " + News.optional_match_regional_news +  ", news " + News.optional_match_news + News.create_news_link + News.return_init + " ID(news) as news_id "
+	def self.create news_metadata
+		clause  = News.merge(news_metadata) + News.merge_timestamp  + News.merge_region(news_metadata["news_source"]) + ", news " + News.optional_match_regional_news +  ", news " + News.optional_match_news + News.create_news_link + News.return_init + " ID(news) as news_id "
 		(clause.execute)[0]["news_id"]
 	end
 
@@ -71,11 +70,16 @@ class News < Neo
 		news_metadata.each do |key, value|
 			clause += " SET news." + key + " = \"" + value.to_s.gsub("\"","\\\"").gsub("\'","\\\'") + "\" " 
 		end
-		clause + News.set_indexed_title(news_metadata["title"])
+		clause + News.set_indexed_title(news_metadata["title"]) + News.set_search_index(news_metadata["title"])
+	end
+
+	def self.set_search_index title
+		" SET news.search_index = \"" + title.to_s.search_ready + "\" "
 	end
 
 	def self.get_metadata news_link
 		news_metadata = {}
+		news_metadata["available"] = false
 		begin
 			news_data = Nokogiri::HTML(open(news_link))
 			if news_data.css("meta[property='og:title']").present?
@@ -90,10 +94,14 @@ class News < Neo
 			elsif news_data.css("meta[property='og:description']").present?
 				news_metadata["description"] = news_data.css("meta[property='og:description']").first.attributes["content"]
 			end
-			news_metadata["available"] = true
-		rescue
+			if news_metadata["title"].present? and news_metadata["description"].present?   
+				news_metadata["available"] = true
+			end
+		rescue Exception => e
+			puts e.to_s.red
 			news_metadata["available"] = false
 		end
+		puts news_metadata.to_s.green
 		news_metadata
 	end
 
@@ -110,8 +118,12 @@ class News < Neo
 			news_links = self.fetch_news news_source["url"]
 			puts news_links
 			for news_link in news_links
+				news_metadata = {}
 				puts news_link
-				Community.create news_link, news_source
+				news_metadata = News.get_metadata news_link
+				news_metadata["news_link"] = news_link
+				news_metadata["news_source"] = news_source
+				Community.create news_metadata
 			end
 		end
 	end
