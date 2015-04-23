@@ -120,3 +120,4 @@ gem 'colorize'
 # gem 'capistrano', group: :development
 gem 'open4'
 gem 'opengraph_parser'
+gem 'rake', '~>10.4.2'
