@@ -1,4 +1,5 @@
 job_type :runner, "cd :path && bundle exec rails runner -e :environment ':task' :output"
+job_type :cronner, "cd :path && bundle exec rails runner -e :environment ':task' :output"
 set :output, "log/cron.log"
 env :PATH, ENV['PATH']
 env :GEM_PATH, " /home/ubuntu/.rbenv/versions/2.0.0-p598/lib/ruby/gems/2.0.0"
@@ -12,5 +13,5 @@ every 1.day, :at => '6:05 pm' do
 end
 
 every 1.minute  do
-  " bundle exec rails runner -e #{:environment} echo Hey "
+  cronner " TesterHelper.outs "
 end
