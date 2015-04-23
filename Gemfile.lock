@@ -530,6 +530,7 @@ DEPENDENCIES
   rails_12factor
   rails_admin
   rails_admin_nestable
+  rake (~> 10.4.2)
   resque (= 1.23.0)
   rspec
   sass-rails (~> 4.0.0)
