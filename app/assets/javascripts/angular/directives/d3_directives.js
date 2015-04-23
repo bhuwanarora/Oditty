@@ -5,96 +5,110 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
         scope: {
             newsTags: '=',
             onCenterClick: '&',
-            onClick: '&'
+            onClick: '&',
+            newsId: '=',
+            index: '=',
+            communityPage: "="
         },
         link: function(scope, ele, attrs){
+            // console.debug(scope.newsTags);
             var bubbleChart = new d3.svg.BubbleChart({
-            supportResponsive: true,
-            //container: => use @default
-            size: 600,
-            //viewBoxSize: => use @default
-            innerRadius: 600 / 3.5,
-            //outerRadius: => use @default
-            radiusMin: 50,
-            clickEvent: function(item){
-                scope.onClick({"active_item": item});
-            },
-            //radiusMax: use @default
-            //intersectDelta: use @default
-            //intersectInc: use @default
-            //circleColor: use @default
-            data: {
-                items: scope.newsTags,
-                eval: function (item) {return item.view_count;},
-                classed: function (item) {return item.name.split(" ").join("");},
-                image: function(item){return item.image_url;}
-            },
-            plugins: [
-                {
-                    name: "central-click",
-                    options: {
-                        text: "Explore Topic",
-                        style: {
-                            "font-size": "15px",
-                            "font-style": "italic",
-                            "font-family": "Source Sans Pro, sans-serif",
-                            "text-anchor": "middle",
-                            "fill": "white"
-                        },
-                        attr: {dy: "65px"},
-                        centralClick: function(event){
-                            scope.onCenterClick();
-                        }
-                    }
+                supportResponsive: true,
+                //container: => use @default
+                size: 600,
+                //viewBoxSize: => use @default
+                innerRadius: 600 / 3.5,
+                //outerRadius: => use @default
+                radiusMin: 50,
+                clickEvent: function(item){
+                    scope.onClick({"active_item": item});
                 },
-                {
-                    name: "lines",
-                    options: {
-                        format: [
-                            {// Line #0
-                                textField: "view_count",
-                                classed: {count: true},
-                                style: {
-                                    "font-size": "28px",
-                                    "font-family": "Source Sans Pro, sans-serif",
-                                    "text-anchor": "middle",
-                                    fill: "white"
+                getNewsId: function(){
+                    return scope.newsId;
+                },
+                getIndex: function(){
+                    return scope.index;
+                },
+                isCommunityPage: function(){
+                    return scope.communityPage;
+                },
+                //radiusMax: use @default
+                //intersectDelta: use @default
+                //intersectInc: use @default
+                //circleColor: use @default
+                data: {
+                    items: scope.newsTags,
+                    eval: function (item) {return item.view_count;},
+                    classed: function (item) {return item.name.split(" ").join("");},
+                    image: function(item){return item.image_url;}
+                },
+                plugins: [
+                    {
+                        name: "central-click",
+                        options: {
+                            text: "Explore Topic",
+                            style: {
+                                "font-size": "15px",
+                                "font-style": "italic",
+                                "font-family": "Source Sans Pro, sans-serif",
+                                "text-anchor": "middle",
+                                "fill": "white"
+                            },
+                            attr: {dy: "65px"},
+                            centralClick: function(event){
+                                scope.onCenterClick();
+                            }
+                        }
+                    },
+                    {
+                        name: "lines",
+                        options: {
+                            format: [
+                                {// Line #0
+                                    textField: "view_count",
+                                    classed: {count: true},
+                                    style: {
+                                        "font-size": "28px",
+                                        "font-family": "Source Sans Pro, sans-serif",
+                                        "text-anchor": "middle",
+                                        fill: "white"
+                                    },
+                                    attr: {
+                                        dy: "0px",
+                                        x: function (d) {return d.cx;},
+                                        y: function (d) {return d.cy;}
+                                    }
                                 },
-                                attr: {
-                                    dy: "0px",
-                                    x: function (d) {return d.cx;},
-                                    y: function (d) {return d.cy;}
+                                {// Line #1
+                                    textField: "name",
+                                    classed: {text: true},
+                                    style: {
+                                        "font-size": "14px",
+                                        "font-family": "Source Sans Pro, sans-serif",
+                                        "text-anchor": "middle",
+                                        fill: "white"
+                                    },
+                                    attr: {
+                                        dy: "20px",
+                                        x: function (d) {return d.cx;},
+                                        y: function (d) {return d.cy;}
+                                    }
                                 }
+                            ],
+                        centralFormat: [
+                            {// Line #0
+                                style: {"font-size": "50px"},
+                                attr: {}
                             },
                             {// Line #1
-                                textField: "name",
-                                classed: {text: true},
-                                style: {
-                                    "font-size": "14px",
-                                    "font-family": "Source Sans Pro, sans-serif",
-                                    "text-anchor": "middle",
-                                    fill: "white"
-                                },
-                                attr: {
-                                    dy: "20px",
-                                    x: function (d) {return d.cx;},
-                                    y: function (d) {return d.cy;}
-                                }
+                                style: {"font-size": "30px"},
+                                attr: {dy: "40px"}
                             }
-                        ],
-                    centralFormat: [
-                        {// Line #0
-                            style: {"font-size": "50px"},
-                            attr: {}
-                        },
-                        {// Line #1
-                            style: {"font-size": "30px"},
-                            attr: {dy: "40px"}
-                        }
-                    ]
-                }
-            }]
-        });
+                        ]
+                    }
+                }]
+            }
+        );
     }}
 }]);
 

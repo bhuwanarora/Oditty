@@ -8,7 +8,8 @@
     </md-card-content>
     <md-card-content class="circles clear">
         <d3-click-circles news-tags="community_feed.communities" 
-            ng-if="community_feed.communities.length > 0"
+            news-id="community_feed.id"
+            index="$index"
             on-center-click="goto_community_page(community_feed.id)" 
             on-click="goto_community_page(community_feed.id)"
             layout-align="center" 

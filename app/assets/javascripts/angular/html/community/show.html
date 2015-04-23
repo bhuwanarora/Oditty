@@ -5,6 +5,7 @@
     <d3-click-circles news-tags="newsTags" 
         on-center-click="toggle_details()" 
         on-click="refresh_data(active_item)"
+        community-page="true"
         ng-if="newsTags.length > 0">
         <div class="bubbleChart animate-fast"></div>
     </d3-click-circles>
@@ -17,6 +18,7 @@
         min-width: 100px;
         max-width: 700px;
         height: 80vh;
+        overflow: inherit;
     }
 
     .left_shifted{
