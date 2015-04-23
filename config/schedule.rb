@@ -12,5 +12,5 @@ every 1.day, :at => '6:05 pm' do
 end
 
 every 1.minute  do
-  runner "echo Hey"
+  " bundle exec rails runner -e #{:environment} echo Hey "
 end
