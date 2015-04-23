@@ -1,14 +1,18 @@
 class Label < Neo
+	def initialize id
+		@id = id
+	end
+
 	def self.basic_info
 		" label.name AS label_name, ID(label) AS label_id, label.public as public_status, label.key AS label_key "
 	end
 
-	def self.basic_info_user_label
-		" user_label.name AS user_label_name, ID(user_label) AS user_label_id "
+	def match
+		" MATCH (label) WHERE ID(label) = " @id.to_s + "  WITH label "
 	end
 
-	def self.basic_info
-		" label.name AS label_name, ID(label) AS label_id "
+	def self.basic_info_user_label
+		" user_label.name AS user_label_name, ID(user_label) AS user_label_id "
 	end
 
 	def self.set_bookmark_count operation

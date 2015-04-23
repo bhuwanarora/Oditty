@@ -49,6 +49,12 @@ module Api
 				render :json => "Success", :status => 200
 			end
 
+			def add_label
+				user_id = session[:user_id]
+				Api::V0::WebsiteApi.add_label(user_id, params[:label]).execute
+				render :json => "Success", :status => 200
+			end
+
 			def genres
 				user_id = session[:user_id]
                 genres = User::Predict::CategoryPrediction.new(user_id).get_favourites.execute
