@@ -224,7 +224,6 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
             });
         }
 
-        debugger
         websiteService.get_user().then(function(data){
             if(data["logged_in"]){
                 $rootScope.user.logged = true;
