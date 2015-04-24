@@ -1,7 +1,7 @@
 <div ng-controller="filtersController">
     <md-subheader class="md-primary filters_header">
         <section layout="row" show-sm hide layout-align="space-between center" layout-fill>
-            <md-button ng-click="show_left_nav($event)" class="clear_button">
+            <md-button ng-click="show_left_nav($event)" class="clear_button" ng-show="info.infinity">
                 Sort by
             </md-button>
             <div layout="row" layout-align="end center" layout-wrap>
@@ -9,7 +9,7 @@
                     Add Filters
                 </md-button>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <md-button class="clear_button" ng-click="show_right_nav($event)">
+                <md-button class="clear_button" ng-click="show_right_nav($event)" ng-show="info.infinity">
                     <div layout="column">
                         <div>A</div>
                         <div>Z</div>
@@ -24,14 +24,16 @@
             <div flex="10" flex-md="5"></div>
         </section>
     </md-subheader>
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2 left_nav" md-component-id="sort_by_sidenav">
+        <br/>
+        <div flex="100" ng-include src="'/assets/angular/html/library/shared/_left_panel.html'" layout-fill></div>
+    </md-sidenav>
+
+    <md-sidenav class="md-sidenav-right md-whiteframe-z2 right_nav" md-component-id="alphabets_sidenav">
+        <div flex="100" ng-include src="'/assets/angular/html/library/shared/_right_panel.html'" layout-fill></div>
+    </md-sidenav>
 </div>
 
-<md-sidenav class="md-sidenav-left md-whiteframe-z2 left_nav" md-component-id="sort_by_sidenav">
-    <div flex="100" ng-include src="'/assets/angular/html/library/shared/_left_panel.html'" layout-fill></div>
-</md-sidenav>
-<md-sidenav class="md-sidenav-right md-whiteframe-z2 right_nav" md-component-id="alphabets_sidenav">
-    <div flex="100" ng-include src="'/assets/angular/html/library/shared/_right_panel.html'" layout-fill></div>
-</md-sidenav>
 
 <style>
 /*    md-autocomplete ul{

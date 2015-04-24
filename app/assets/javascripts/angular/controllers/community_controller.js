@@ -4,11 +4,6 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
         $scope.show_details = true;
         communityService.get_detailed_community_info($scope.active_tag.id).then(function(data){
             $scope.active_tag = angular.extend($scope.active_tag, data);
-            angular.forEach(data.news, function(value){
-                communityService.get_metadata(value.news_url).then(function(news_data){
-                    value = angular.extend(value, news_data);
-                });
-            });
         });
     };
 
