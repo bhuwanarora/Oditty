@@ -10,6 +10,9 @@
           <md-button ng-class="{'inactive_blue_circle': !book.endorse_status, 'md-raised blue_circle': book.endorse_status}" 
                     ng-click="toggle_endorse()">
                <span class="icon-"></span>
+               <md-tooltip>
+                Endorse
+               </md-tooltip>
           </md-button>
      </div>
      <div layout-margin class="relative_block">
@@ -18,6 +21,9 @@
           </div>
           <md-button class="md-raised blue_circle" ng-click="show_shelf_bottom_sheet(book.id, 'Book')">
                <span class="icon-bookmark3"></span>
+               <md-tooltip md-visible="demo.showTooltip">
+                 Bookmark
+               </md-tooltip>
           </md-button>
      </div>
      <div layout-margin class="relative_block">
@@ -26,6 +32,9 @@
           </div>
           <md-button class="md-raised blue_circle" ng-click="show_share_bottom_sheet()">
                <span class="icon-share"></span>
+               <md-tooltip md-visible="demo.showTooltip">
+                 Share
+               </md-tooltip>
           </md-button>
      </div>
 </md-content>
