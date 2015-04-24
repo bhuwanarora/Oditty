@@ -17,7 +17,7 @@
           <div class="counter" layout="row" layout-align="center center" ng-if="book.bookmark_count">
                <div>{{book.bookmark_count}}</div>
           </div>
-          <md-button class="md-raised blue_circle" ng-click="show_shelf_bottom_sheet(book.id, 'Book')">
+          <md-button class="md-raised blue_circle" ng-click="show_shelf_bottom_sheet(book.id || book.book_id, 'Book')">
                <span class="icon-bookmark3"></span>
           </md-button>
      </div>
