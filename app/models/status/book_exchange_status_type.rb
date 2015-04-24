@@ -7,6 +7,10 @@ class Status::BookExchangeStatusType < Status
 		Book.new(@book_id).match + ", status CREATE UNIQUE (status)-[mentions_book:" + relation + "{user_id:" + @user_id.to_s + "}]->(book) WITH book, status "
 	end
 
+	def match relation
+		" MATCH (status:Status)-[mentions_book:" + relation + "]->(book) WITH book, status "
+	end
+
 	def create_for book_exchange_status
 		unless book_exchange_status.nil?
 			case book_exchange_status
