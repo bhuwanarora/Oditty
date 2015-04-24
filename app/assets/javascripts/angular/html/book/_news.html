@@ -10,18 +10,23 @@
         </md-radio-button>
     </md-radio-group>
    
-     <section layout="row" layout-wrap class="padding" ng-repeat="news in active_community.news">
-         <div flex="10" layout-align="center center" layout="row">
+     <section layout="row" layout-wrap ng-repeat="news in active_community.news" ng-if="active_community.news">
+        <div flex="10" layout-align="center center" layout="row">
             <div>{{news.created_at | timestamp | date:'dd MMM'}}</div>
         </div>
          <div flex="10" layout-align="center center" layout="row">
             <img class="circular"
-                 ng-src="{{user.image_url | default_profile}}"/>
+                 ng-src="{{news.image_url | default_profile}}"/>
         </div>
          <div flex="80" layout-align="start start" layout="column" class="small-padding">
-            <h4 ng-bind-html="news.title"></h4>
-            <div ng-bind-html="news.description"></div>
+            <a ng-href="/community?id={{news.news_id}}">
+                <h4 ng-bind-html="news.title"></h4>
+            </a>
+            <div ng-bind-html="news.description"></div><br/>
+            <a ng-href="{{news.news_url}}" class="less_important" target="_blank">Source</a>
          </div>
      </section>
-     
+     <section ng-if="!active_community.news" layout-padding>
+         <h1>We're searching for news from the real world for this book. Please come back later.</h1>
+     </section>
 </div>

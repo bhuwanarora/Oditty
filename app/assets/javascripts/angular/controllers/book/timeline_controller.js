@@ -1,5 +1,11 @@
 homeApp.controller('timelineController', ["$scope", "$rootScope", "bookService", '$location', 'userService', function($scope, $rootScope, bookService, $location, userService){
 
+    $scope.write_reading_journey_for = function(){
+        $scope.info.book = $rootScope.active_book;
+        $scope.info.show_share = true;
+        $scope.info.show_book_share = true;
+    }
+
     $scope.get_feed = function(){
         if(angular.isUndefined($scope.book_feed)){
             $scope.book_feed = [];
