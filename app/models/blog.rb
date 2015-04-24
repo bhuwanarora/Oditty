@@ -2,7 +2,15 @@ class Blog < Neo
 	
 	def self.create post
 		puts post.to_s.green
-		" MERGE (blog:Blog{blog_url:\"" + post["short_URL"] + "\"}) " + Blog.set_excerpt(post["excerpt"]) + Blog.set_title(post["title"]) + Blog.set_image_url(post["attachments"]) + Blog.set_reblog_count(post["is_reblogged"]) + Blog.set_like_count(post["like_count"]) + Blog.set_created_at(post["date"]) + " WITH blog "
+		" MERGE (blog:Blog{blog_url:\"" + post["short_URL"] + "\"}) " + Blog.set_excerpt(post["excerpt"]) + Blog.set_title(post["title"]) + Blog.set_image_url(post["attachments"]) + Blog.set_reblog_count(post["is_reblogged"]) + Blog.set_search_index(post["title"]) + Blog.set_indexed_title(post["title"]) + Blog.set_like_count(post["like_count"]) + Blog.set_created_at(post["date"]) + " WITH blog "
+	end
+
+	def self.set_indexed_title title
+		" SET blog.indexed_title = \"" + title.to_s.search_ready + "\" "
+	end
+
+	def self.set_search_index title
+		" SET blog.search_index = \"" + title.to_s.search_ready + "\" "
 	end
 
 	def self.set_created_at date
@@ -38,42 +46,44 @@ class Blog < Neo
 		clause
 	end
 
-	def self.find_nth skip_count = 1
-		" OPTIONAL MATCH (new)-[next_post:NextPost*" + skip_count.to_s + "]->(old) WITH old, new, next_post "
+	def self.match_path skip_count = 0
+		" OPTIONAL MATCH path = (blog)-[next_post:NextPost*" + skip_count.to_s + "]->(next_blog) WITH path "
+	end
+
+	def self.match_nth skip_count = 0
+		" OPTIONAL MATCH (blog)-[next_post:NextPost*" + skip_count.to_s + "]->(old) WITH old, blog, next_post "
 	end
 
 	def self.match_root
 		" MERGE (root_blog:Blog{is_root:true}) WITH root_blog "
 	end
 
+	def self.match_latest_blog
+		Blog.match_root + " WITH root_blog AS blog " + Blog.match_nth(1) + " WITH old AS blog "
+	end
+
+	def self.get_blog skip_count=1
+		Blog.match_latest_blog + Blog.match_nth(skip_count) + " WITH old as blog " + Blog.return_init + Blog.basic_info
+	end
+
 	def self.get_latest_blog
-		Blog.match_root + " WITH root_blog AS new " + Blog.find_nth + " WITH old AS blog " + Blog.return_init + Blog.basic_info  
+		Blog.match_latest_blog + Blog.return_init + Blog.basic_info  
 	end
 
 	def self.create_is_about
-		" MERGE (blog)-[is_about:IsAbout]->(author) " 
+		" MERGE (blog)-[is_about:IsAbout]->(author) WITH blog, author " 
 	end
 
 	def self.create_belongs_to
-		" MERGE (blog)-[belongs_to:BelongsTo]->(community) " 
+		" MERGE (blog)-[belongs_to:BelongsTo]->(community) WITH community, blog " 
 	end
 
 	def self.link_author indexed_name
-		Author.search_by_indexed_name(indexed_name) + Blog.create_is_about   
+		Author.search_by_indexed_name(indexed_name) + " , blog " + Blog.create_is_about   
 	end
 
 	def self.link_community name
-		Community.search(name) + Blog.create_belongs_to   
-	end
-
-	def self.handle_communities tags
-		tags.each do |key, value|
-			author = Community.get(key).execute[0]
-			if author.present?
-				tags.delete(key)
-			end
-		end
-		tags			
+		Community.search_by_name(name) + " , blog " + Blog.create_belongs_to   
 	end
 
 	def self.handle_authors tags
@@ -87,42 +97,40 @@ class Blog < Neo
 	end
 
 	def self.create_next_post
-		" OPTIONAL MATCH (root_blog)-[relation:NextPost]->(old:Blog) FOREACH(ignoreMe IN CASE WHEN relation IS NOT NULL THEN [1] ELSE [] END | MERGE (root_blog)-[:NextPost]->(blog)-[:NextPost]->(old) DELETE relation) FOREACH(ignoreMe IN CASE WHEN relation IS NULL THEN [1] ELSE [] END | MERGE (root_blog)-[:NextPost]->(blog)) WITH blog  "
+		" OPTIONAL MATCH (root_blog)-[relation:NextPost]->(old:Blog) FOREACH(ignoreMe IN CASE WHEN relation IS NOT NULL AND old <> blog THEN [1] ELSE [] END | MERGE (root_blog)-[:NextPost]->(blog)-[:NextPost]->(old) DELETE relation) FOREACH(ignoreMe IN CASE WHEN relation IS NULL AND old <> blog THEN [1] ELSE [] END | MERGE (root_blog)-[:NextPost]->(blog)) WITH blog  "
 	end
 
 	def self.handle
 		last_posted_time = Blog.get_latest_blog.execute[0]["posted_at"]
-		puts last_posted_time.to_s
-		if last_posted_time.present?
-			uri_clause = "&after=" + last_posted_time
-		else
-			uri_clause = "&limit=100"
-		end
-		response = (Blog.get_posts uri_clause)
+		response = Blog.get_posts last_posted_time
 
 		for post in response["posts"]
 			clause = ""
-			clause = Blog.create(post) + Blog.match_root + " ,blog " + Blog.create_next_post + Blog.create_timestamp(post["date"],"blog")  
+			clause = Blog.create(post) + Blog.match_root + " ,blog " + Blog.create_next_post + Blog.create_timestamp(post["date"],"blog")   
 			
 			author_tags = Blog.handle_authors post["tags"]
 			author_tags.each do |key, value|
 				post["tags"].delete(key)
-				clause += Blog.link_author(key) + " WITH blog "
+				clause += Blog.link_author(key.search_ready) + " WITH blog "
 			end
 
 			post["tags"].each do |key, value|
 				clause += Blog.link_community(key) + " WITH blog "
 			end
+			clause += Blog.return_init + Blog.basic_info
 			clause.execute 
 		end					
 	end
 
-	def self.get_posts clause
-		url = "https://public-api.wordpress.com/rest/v1.1/sites/literaturerun.wordpress.com/posts/?number=10&pretty=1&order=ASC&fields=title,date,short_URL,excerpt,discussion,like_count,featured_image,tags,is_reblogged,attachments" + clause
+	def self.get_posts last_posted_time
+		last_posted_time = Date.iso8601(last_posted_time).strftime
+		url = Rails.application.config.blog_url + last_posted_time
+		puts url
 		JSON.parse(Net::HTTP.get(URI.parse(url)))
 	end
 
 	def self.basic_info
-		" ID(blog) AS blog_id, blog.title AS title, blog.published_year AS published_year, blog.created_at AS created_at , blog.posted_at AS posted_at "
+		" ID(blog) AS blog_id, blog.title AS title, blog.image_url AS image_url , blog.posted_at AS posted_at, blog.like_count AS like_count, blog.blog_url AS blog_url, blog.excerpt AS excerpt, blog.reblog_count AS reblog_count  "
 	end
+
 end

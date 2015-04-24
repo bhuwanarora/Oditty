@@ -2,7 +2,11 @@
 	<md-select ng-model="selectedYear" placeholder="Year" ng-change="date_check()" layout-padding>
 		<md-option ng-repeat="year in years" ng-value="year">{{year}}</md-option>
     </md-select>
+<<<<<<< HEAD
     <md-select ng-model="selectedMonth" placeholder="Month" ng-change="date_check()" ng-show="selectedYear" layout-padding>
+=======
+    <md-select ng-model="selectedMonth" placeholder="Month" ng-change="date_check();_init ()"  ng-show="selectedYear" layout-padding>
+>>>>>>> ff028ca436a57c086b11f5d9b593342c2cb4aa34
 		<md-option ng-repeat="month in months" ng-value="month">{{month}}</md-option>
     </md-select>
     <md-select ng-model="selectedDay" placeholder="Day" ng-change="date_check(); save_date(selectedYear, selectedMonth, selectedDay);" ng-show="selectedYear && selectedMonth" layout-padding>

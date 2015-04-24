@@ -1,5 +1,5 @@
 class ReupdateBooksWorker
-	include BooksHelper
+	# include BooksHelper
 	@queue = :reupdate_books
 
 	def self.perform isbn_number

@@ -5,8 +5,8 @@
     <d3-click-circles news-tags="newsTags" 
         on-center-click="toggle_details()" 
         on-click="refresh_data(active_item)"
-        ng-if="newsTags.length > 0"
-        layout-align="center" layout="center">
+        community-page="true"
+        ng-if="newsTags.length > 0">
         <div class="bubbleChart animate-fast"></div>
     </d3-click-circles>
     <div ng-include src="'/assets/angular/html/community/right_panel.html'" class="right_panel_container"></div>
@@ -18,6 +18,7 @@
         min-width: 100px;
         max-width: 700px;
         height: 80vh;
+        overflow: inherit;
     }
 
     .left_shifted{

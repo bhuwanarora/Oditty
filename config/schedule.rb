@@ -1,9 +1,10 @@
 set :output, "log/cron.log"
+env :PATH, ENV['PATH']
 
-every 1.day, :at => '1:05 pm' do
-  runner "News.handle"
+every 1.hour do
+  rake " get_media:news "
 end
 
 every 1.day, :at => '6:05 pm' do
-  runner "Blog.handle"
+  rake " get_media:blog "
 end

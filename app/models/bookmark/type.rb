@@ -16,4 +16,19 @@ class Bookmark::Type < Bookmark
 	def remove
 		@bookmark.remove
 	end
+
+	def book
+		@bookmark = @bookmark.book
+		self
+	end
+
+	def news
+		@bookmark = @bookmark.news
+		self
+	end
+
+	def blog
+		@bookmark = @bookmark.blog
+		self
+	end
 end

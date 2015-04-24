@@ -6,6 +6,14 @@ module Api
 				clause.execute
 			end
 
+			def self.add_new_label user_id, label
+				UsersLabel.create_new(user_id, label)
+			end
+
+			def self.add_label user_id, label
+				UsersLabel.create(user_id, label)
+			end
+
 			def self.get_labels user_id
 				labels = []
 				if user_id.present?

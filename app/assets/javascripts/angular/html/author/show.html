@@ -2,9 +2,9 @@
     parallax-background parallax-ratio="0.9"
     layout-align="center center"
     layout="column"
-    ng-style="{'background-color': author.books[0].color}">
+    ng-style="author.books[0].custom_style">
     <div>
-        <h1>{{author.name}}</h1>
+        <h1>{{author.name | uppercase}}</h1>
         <div>{{author.year_born}}-{{author.year_died}}</div>
     </div>
     <div class="nav_icons" layout="row">
@@ -12,23 +12,23 @@
         <md-button ng-click="next_block()"><span class="icon-angle-down"></span></md-button>
     </div>
 </div>
-<div layout-padding class="book_description" parallax-background parallax-ratio="0.7" layout-align="center center" layout="row">
-    <div layout="row" layout-align="center center">
+<div layout-padding class="book_description" 
+     parallax-background parallax-ratio="0.7">
+    <div layout="row" class="full_width">
         <div flex="25" flex-md="15" flex-sm="10"></div>
-        <div flex="50" flex-md="70" flex-sm="80" layout="row" layout-sm="column" layout-align="center center">
-            <div flex-gt-md="30" flex-md="40" layout="column" layout-padding layout-align="center center">
-                <img ng-src="{{author.books[0].isbn | choose_medium_thumb}}" class="author_thumb">
-                <div flex="5"></div>
+        <div flex="50" flex-md="70" flex-sm="80" layout="row" layout-sm="column">
+            <div flex-gt-md="30" flex-md="40" layout="column" layout-padding>
+                <div ng-init="book = author.books[0]" 
+                     ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'">
+                </div>
                 <md-button class="md-button-clear md-primary md-raised" 
                             ng-click="show_buy_dialog($event)">
                     Get this book
                 </md-button>
             </div>
-            <div layout="column" flex-gt-md="70" flex-md="60" layout-padding>
-                <h2>{{author.books[0].title}} </h2>
-                <div>
-                    {{author.books[0].description}}
-                </div>
+            <div flex-gt-md="70" flex-md="60" layout="column" layout-padding>
+                <h2><a ng-href="/book?q={{author.books[0].id}}">{{author.books[0].title}}</a></h2>
+                <div>{{author.books[0].description}}</div>
             </div>
         </div>
         <div flex="25" flex-md="15" flex-sm="10"></div>
@@ -75,8 +75,11 @@
 </div>
 
 <section ng-repeat="book in author.books">
-    <div class="book_cover" layout-align-sm="center center" layout-align-md="center center" layout="column" parallax-background parallax-ratio="0.9"   layout-align-gt-md="center center"
-            ng-style="{'background-color': book.color}">
+    <div class="book_cover" layout-align-sm="center center" 
+        layout-align-md="center center" layout="column" 
+        parallax-background parallax-ratio="0.9"   
+        layout-align-gt-md="center center"
+        ng-style="book.custom_style">
         <div layout="row" layout-md="column" layout-sm="column">
             <div layout-margin layout-sm="column" layout-md="row" layout-align-sm="center center">
                 <h1 flex-md="50" flex-order-sm="2" flex-order-md="2">
@@ -137,9 +140,9 @@
     <div layout-padding class="book_description" parallax-background parallax-ratio="0.7">
         <div layout="row">
             <div flex="25" flex-md="15" flex-sm="10"></div>
-            <div flex="50" flex-md="70" flex-sm="80" layout="row" layout-sm="column" layout-align="center center">
-                <div flex-gt-md="30" flex-md="40" layout="column" layout-padding layout-align="center center">
-                    <img ng-src="{{book.isbn | choose_medium_thumb}}" class="author_thumb">
+            <div flex="50" flex-md="70" flex-sm="80" layout="row" layout-sm="column">
+                <div flex-gt-md="30" flex-md="40" layout="column" layout-padding>
+                    <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
                     <div flex="5"></div>
                     <md-button class="md-button-clear md-primary md-raised" 
                                 ng-click="show_buy_dialog($event)">
@@ -147,10 +150,10 @@
                     </md-button>
                 </div>
                 <div layout="column" flex-gt-md="70" flex-md="60" layout-padding>
-                    <h2>{{book.title}}</h2>
+                    <h2><a ng-href="/book?q={{book.id}}">{{book.title}}</a></h2>
                     <div>{{book.description}}</div>
                     <div>
-                        <a ng-href="{{book.wiki_url}}">more on wiki</a>
+                        <a ng-href="{{book.wiki_url}}" ng-if="book.wiki_url">more on wiki</a>
                     </div>
                 </div>
             </div>

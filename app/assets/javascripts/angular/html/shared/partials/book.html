@@ -1,6 +1,8 @@
 <div layout="column" layout-align="center" class="relative  upper_slider_wrapper"
 		ng-if="book.status">
-  	<md-slider flex md-discrete ng-model="rating1" step="1" min="1" max="10" aria-label="rating">
+  	<md-slider flex md-discrete ng-model="book.user_rating" 
+  			   step="1" min="1" max="10" aria-label="rating"
+  			   ng-change="rate_book(book)">
   	</md-slider>
 </div>
 <div class="cover_gradient" layout="column" layout-align="center" ng-if="book.status">

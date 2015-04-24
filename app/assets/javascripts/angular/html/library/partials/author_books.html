@@ -1,7 +1,12 @@
 <md-divider></md-divider>
-<h4>Discover other books by your most read author, <b>{{likeable_author}}</b></h4>
-<div  class="white" layout-fill>
-    <div ng-init="books = books_from_favourite_author"
-         ng-hide="constant.show_book"
-         ng-include src="'/assets/angular/html/library/shared/_default_grid.html'"></div>
+<div ng-if="books_from_favourite_author">
+	<h4>Discover other books by your most read author, <a ng-href="/author?q={{likeable_author.id}}"><b>{{likeable_author.name}}</b></a></h4>
+	<div  class="white" layout-fill>
+	    <div ng-init="books = books_from_favourite_author"
+	         ng-hide="constant.show_book"
+	         ng-include src="'/assets/angular/html/library/shared/_default_grid.html'"></div>
+	</div>
 </div>
+<a ng-href="/room" ng-if="!books_from_favourite_author" class="less_important" layout-padding>
+	<br/>Couldn't find your Favourite Author. Add more books to your room.<br/><br/>
+</a>

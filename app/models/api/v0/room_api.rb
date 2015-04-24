@@ -18,7 +18,7 @@ module Api
 			end
 
 			def self.get_visited_articles user_id
-				# articles = User::Room.new(user_id).get_visited_articles.execute
+				articles = User::Room.new(user_id).get_visited_articles.execute
 			end
 
 			private

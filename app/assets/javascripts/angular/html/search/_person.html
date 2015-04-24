@@ -7,7 +7,7 @@
                 <img src="https://material.angularjs.org/img/washedout.png" alt="Washed Out" class="large_circular">
             </div>
             <div flex="80" flex-md="70" flex-sm="65" layout="column" layout-wrap class="side_padding">
-                <h5>{{result.name}}</h5>
+                <h5><a ng-href="/author?id={{result.id}}">{{result.name}}</a></h5>
                 <div class="less_important">23 Friends</div><br/>
                 <div>{{result.description}}</div>
             </div>

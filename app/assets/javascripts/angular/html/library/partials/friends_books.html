@@ -1,7 +1,12 @@
 <md-divider></md-divider>
-<h4>Books on your friend's reading shelves</h4>
-<div  class="white" layout-fill>
-    <div ng-init="books = books_on_friends_shelves"
-         ng-hide="constant.show_book"
-         ng-include src="'/assets/angular/html/library/shared/_default_grid.html'"></div>
+<div ng-if="books_from_favourite_era">
+	<h4>Books on your friend's reading shelves</h4>
+	<div  class="white" layout-fill>
+	    <div ng-init="books = books_on_friends_shelves"
+	         ng-hide="constant.show_book"
+	         ng-include src="'/assets/angular/html/library/shared/_default_grid.html'"></div>
+	</div>
 </div>
+<a ng-href="/room" ng-if="!books_from_favourite_era" class="less_important" layout-padding>
+	<br/>You don't have enough friends. Follow more people.<br/><br/>
+</a>
