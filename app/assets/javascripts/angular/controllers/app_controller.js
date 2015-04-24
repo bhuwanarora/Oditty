@@ -1,23 +1,5 @@
 homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdBottomSheet', '$mdDialog', 'shelfService', function($scope, $rootScope, $mdSidenav, $mdBottomSheet, $mdDialog, shelfService){
 
-    $scope.play_type_key = function(event){
-        if($scope.info.show_share){
-            if(angular.isUndefined($scope.current_track) || $scope.current_track == 0){
-                $scope.current_track = 1;
-                document.getElementById('audiotag1').play();
-            }
-            else if($scope.current_track == 1){
-                $scope.current_track = 2;
-                document.getElementById('audiotag2').play();
-            }
-            else{
-                $scope.current_track = 0;
-                document.getElementById('audiotag3').play();
-            }
-            event.stopPropagation();
-        }
-    }
-
     $scope.stop_propagation = function(event){
         event.stopPropagation();
     }

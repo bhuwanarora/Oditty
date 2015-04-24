@@ -37,7 +37,8 @@
 						class="textarea_container">
 						<div ng-model="info.wrapper_status" class="textarea_wrapper" ng-bind-html="info.wrapper_status">
 						</div>
-				        <textarea name="text_area" 
+				        <textarea name="text_area"
+				        		  ng-keypress="play_type_key($event)" 
 				        		  set-focus="info.show_share" 
 				        		  ng-keydown="handle_text_input($event)"
 				        		  placeholder="Share your reading journey..." 
