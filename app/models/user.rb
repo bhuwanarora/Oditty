@@ -84,7 +84,7 @@ class User < Neo
 		"  init_book_read_count:user.init_book_read_count ,  selectedYear:user.selectedYear ,  selectedMonth:user.selectedMonth ,  selectedDay:user.selectedDay ,  first_name:user.first_name ,  last_name:user.last_name ,  about:user.about ,  id:ID(user) "
 	end
 
-	def get_all_books skip_count=0, limit_count=Constant::Count::BookCountShownOnSignup 
+	def get_all_books skip_count, limit_count=Constant::Count::BookCountShownOnSignup 
 		match + Bookmark::Node::BookLabel.match_path + User.return_group(Book.basic_info, " label.key as shelf ") + Book.order_desc + User.skip(skip_count) + User.limit(limit_count)
 	end
 

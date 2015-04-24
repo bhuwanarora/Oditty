@@ -16,7 +16,9 @@ set :bundle_binstubs, -> { shared_path.join('bin') }
 set :bundle_roles, :all
 set :application, 'rd'
 set :repo_url, 'git@github.com:test-rd/rd.git'
-# set :whenever_environment, defer { stage }
+set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
+set :rbenv_map_bins, %w{rake gem bundle ruby rails}
+set :rbenv_roles, :all # default value# set :whenever_environment, defer { stage }
 # set :whenever_command, 'bundle exec whenever'
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
@@ -43,7 +45,7 @@ set :deploy_to, '/home/centos/deploy'
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 # Default value for default_env is {}
-set :default_env, { path: "~/.rbenv/shims:~/.rbenv/bin:$PATH" }
+set :default_env, { path: "~/.rbenv/bin/rbenv:$PATH" }
 #set :default_env, { path: "/opt/ruby/bin:$PATH" }
 # set :whenever_environment, defer { stage }
 # Default value for keep_releases is 5
@@ -79,7 +81,7 @@ namespace :deploy do
         puts " updating crontab file"
         # execute "cd #{release_path} && #{try_sudo} GEM_HOME=/opt/local/ruby/gems RAILS_ENV=#{} bundle exec whenever --clear-crontab #{application} --user #{ubuntu}"
         # execute "cd #{release_path} && #{try_sudo} GEM_HOME=/opt/local/ruby/gems RAILS_ENV=production bundle exec whenever --update-crontab #{application} --user #{ubuntu}"
-        execute "cd #{release_path} && rbenv exec bundle exec whenever --update-crontab store "
+        execute "cd #{release_path} && bundle exec whenever --update-crontab store "
       end  
     end
   end

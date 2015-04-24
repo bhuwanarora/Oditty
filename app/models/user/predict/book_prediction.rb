@@ -26,7 +26,7 @@ class User::Predict::BookPrediction < User::Predict
 	end
 
 	def handle_average_number_books_read  
-		data = @user.get_all_books.execute
+		data = @user.get_all_books(@skip_count).execute
 	 	has_linked_books = data[0]["book_id"].blank? ? false : true rescue false
 		unless has_linked_books
 			clause = @user.match + User.match_likeable_root_category + ::Category::Root.books_for_user(@skip_count, Constant::Count::BookCountShownOnSignup) + User::Predict::BookPrediction.return_group(Book.basic_info)
@@ -36,7 +36,7 @@ class User::Predict::BookPrediction < User::Predict
 	end
 
 	def handle_few_books_read 
-		data = @user.get_all_books.execute
+		data = @user.get_all_books(@skip_count).execute
 
 		has_linked_books = data[0]["book_id"].blank? ? false : true rescue false
 		unless has_linked_books
