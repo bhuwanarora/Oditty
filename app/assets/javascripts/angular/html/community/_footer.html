@@ -1,4 +1,4 @@
-<a ng-href="/community?q={{tag.news_id}}" ng-repeat="tag in news" >
+<a ng-href="/community?q={{tag.id}}" ng-repeat="tag in news" >
 	<md-button class="md-button-clear" 
 		ng-class="{'red_color': (tag.community_info.name == active_tag.name)}">
 		{{tag.community_info.name}}

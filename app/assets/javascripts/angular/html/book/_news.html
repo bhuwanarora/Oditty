@@ -1,23 +1,26 @@
 <div ng-controller="realVirtualityController">
-    <section layout="row" layout-wrap class="padding">
-         <div flex="10"></div>
-         <div flex="10" class="light_grey small-padding" layout-align="center center" layout="row">
-            2015
-        </div>
-         <div flex="80">
-     </section>
-     <section layout="row" layout-wrap class="padding" ng-repeat="real_news in active_community.news">
+    <md-radio-group layout="row" 
+        layout-sm="column" 
+        ng-model="active_community.id"
+        ng-change="change_news()">
+        <md-radio-button ng-repeat="community in communities" 
+                        class="md-warn" 
+                        ng-value="community.id">
+            {{community.name}}
+        </md-radio-button>
+    </md-radio-group>
+   
+     <section layout="row" layout-wrap class="padding" ng-repeat="news in active_community.news">
          <div flex="10" layout-align="center center" layout="row">
-            <div>29Feb</div>
+            <div>{{news.created_at | timestamp | date:'dd MMM'}}</div>
         </div>
          <div flex="10" layout-align="center center" layout="row">
             <img class="circular"
                  ng-src="{{user.image_url | default_profile}}"/>
         </div>
          <div flex="80" layout-align="start start" layout="column" class="small-padding">
-            <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell 
-            </div>
-            <div>Terrorism community</div>
+            <h4 ng-bind-html="news.title"></h4>
+            <div ng-bind-html="news.description"></div>
          </div>
      </section>
      
