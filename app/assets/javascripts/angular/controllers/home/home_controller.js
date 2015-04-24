@@ -1,4 +1,4 @@
-homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$mdBottomSheet', 'shelfService', function($scope, $rootScope, userService, $mdBottomSheet, shelfService){
+homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$mdBottomSheet', 'shelfService', '$timeout', function($scope, $rootScope, userService, $mdBottomSheet, shelfService, $timeout){
 
 	$scope.goto_community_page = function(id){
 		userService.news_visited(id);
@@ -22,6 +22,16 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$m
     			$scope.feed = $scope.feed.concat([{"communities": []}]);
     		}
     	}());
+
+        var timeout_event = $timeout(function(){
+            userService.get_blog_feed().then(function(data){
+                $scope.feed = data.concat($scope.feed);
+            });
+        }, 1000);
+        
+        $scope.$on('destroy', function(){
+            $timeout.cancel(timeout_event);
+        });
 
         userService.get_feed().then(function(data){
         	angular.forEach($scope.feed, function(value, index){
