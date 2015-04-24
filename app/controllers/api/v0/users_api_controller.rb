@@ -359,7 +359,7 @@ module Api
 
 			def get_lenders
 				user_id = session[:user_id]
-				book_id = params[:book_id]
+				book_id = params[:id]
 				info = Api::V0::UserApi.get_lenders(book_id, user_id).execute
 				render :json => info, :status => 200
 			end
