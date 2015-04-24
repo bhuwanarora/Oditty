@@ -341,7 +341,7 @@ angular.module('filtersApp', [])
       if(isbn_string){
         var isbn = isbn_string.split(",");
         angular.forEach(isbn, function(value){
-          output = "http://rd-images.readersdoor.netdna-cdn.com/"+value+"-/.jpg";
+          output = "http://rd-images.readersdoor.netdna-cdn.com/"+value+"/M.jpg";
         });
         return output;
       }
@@ -354,7 +354,7 @@ angular.module('filtersApp', [])
             var isbn = isbn_string.split(",");
             angular.forEach(isbn, function(value){
             var img = new Image();
-            img.src = "http://rd-images.readersdoor.netdna-cdn.com/"+value+"-/.jpg";
+            img.src = "http://rd-images.readersdoor.netdna-cdn.com/"+value+"/S.jpg";
             // debugger
                 output = img.src;
             if(img.height > 20 && output == ""){
