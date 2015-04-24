@@ -8,7 +8,3 @@ end
 every 1.day, :at => '6:05 pm' do
   rake " get_media:blog "
 end
-
-every 1.minute  do
-  rake " get_media:test "
-end

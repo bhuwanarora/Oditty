@@ -14,6 +14,6 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
 	}
 
 	var _init = (function(){
-		$scope.get_followers();
+		
 	}());
 }]);

@@ -52,7 +52,7 @@ class News < Neo
 	end
 
 	def self.create news_metadata
-		clause  = News.merge(news_metadata) + News.merge_timestamp  + News.merge_region(news_metadata["news_source"]) + ", news " + News.optional_match_regional_news +  ", news " + News.optional_match_news + News.create_news_link + News.return_init + " ID(news) as news_id "
+		clause  = News.merge(news_metadata) + News.merge_timestamp  + News.merge_region(news_metadata["region"]) + ", news " + News.optional_match_regional_news +  ", news " + News.optional_match_news + News.create_news_link + News.return_init + " ID(news) as news_id "
 		(clause.execute)[0]["news_id"]
 	end
 
@@ -66,7 +66,7 @@ class News < Neo
 
 	def self.set_metadata news_metadata
 		clause = ""
-		news_metadata.delete("available")
+		news_metadata.delete("available").delete("news_link").delete("region")
 		news_metadata.each do |key, value|
 			clause += " SET news." + key + " = \"" + value.to_s.gsub("\"","\\\"").gsub("\'","\\\'") + "\" " 
 		end
@@ -122,7 +122,7 @@ class News < Neo
 				puts news_link
 				news_metadata = News.get_metadata news_link
 				news_metadata["news_link"] = news_link
-				news_metadata["news_source"] = news_source
+				news_metadata["region"] = news_source["region"]
 				Community.create news_metadata
 			end
 		end
@@ -179,11 +179,11 @@ class News < Neo
 	end
 
 	def self.basic_info
-		" ID(news) AS  id  ,news.url  AS url , news.image_url AS image_url, news.title AS title, news.description AS description "
+		" ID(news) AS  id  ,news.url  AS url , news.image_url AS image_url, news.title AS title, news.description AS description, news.created_at AS created_at "
 	end
 
 	def self.grouped_basic_info
-		" news_id: ID(news) , news_url: news.url, view_count:news.view_count "
+		" news_id: ID(news) , news_url: news.url, view_count:news.view_count, title: news.title , description: news.description  , image_url: news.image_url, created_at:news.created_at "
 	end
 
 	def self.match_day
