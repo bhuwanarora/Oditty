@@ -1,0 +1,18 @@
+# user: images.readersdoor.com
+# group: images.readersdoor.com
+pid: tmp/pids/thin.pid
+timeout: 30
+wait: 30
+address: 127.0.0.1
+port: 3000
+log: log/thin.log
+max_conns: 1024
+require: []
+environment: production
+max_persistent_conns: 512
+servers: 3
+threaded: true
+no-epoll: true
+daemonize: true
+# socket: tmp/sockets/thin.sock
+tag: thin-gem
