@@ -1,5 +1,5 @@
 set :stage, :staging
-server '52.74.158.10',
+server '52.74.166.1',
 user: 'ubuntu',
 roles: %w{app},
 ssh_options: {
