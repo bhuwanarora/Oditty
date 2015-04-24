@@ -6,16 +6,14 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
 			$scope.users_list = data;
 		});
 	}
-
-	$scope.get_users_followed = function(){
+    $scope.get_users_followed = function(){
 		$scope.users_list = [];
 		$scope.selectedIndex=1;
 		networkService.get_users_followed().then(function(data){
 			$scope.users_list = data;
 		});	
 	}
-
-	var _init = (function(){
+    var _init = (function(){
 	    var regex = /[?&]([^=#]+)=([^&#]*)/g;
 		var url_parser = regex.exec($location.absUrl());
 		if(angular.isDefined(url_parser) && url_parser != null){
@@ -25,9 +23,7 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
 			}
 			else if(follow_state == 1){
                $scope.get_users_followed();
-
-		
-			}
+            }
 		}
 	}());
 }]);
