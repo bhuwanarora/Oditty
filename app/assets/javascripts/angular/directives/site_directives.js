@@ -1,3 +1,5 @@
+
+
 homeApp.directive('setFocus', ["$timeout", "$parse", "$rootScope", function($timeout, $parse, $rootScope) {
   return {
     link: function(scope, element, attrs) {
@@ -114,9 +116,11 @@ homeApp.directive('focusOut',function(){
 homeApp.directive('calendar', ["$rootScope", function($rootScope){
 	return{
 		restrict: 'E',
-		scope : {saveDate: '&'},
+    scope : {saveDate: '&'},
 		controller: ["$scope", function($scope){
+      $scope.months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 			$scope.date_check = function(){
+        
 				var month = $scope.months.indexOf($scope.selectedMonth) + 1;
 				var no_days = new Date($scope.selectedYear, month, 0).getDate();
 				$scope.days = new Array(no_days)
@@ -125,14 +129,18 @@ homeApp.directive('calendar', ["$rootScope", function($rootScope){
 							.map(function(item, index){return ++index;});
 			}
 
+       
+
 			$scope.save_date = function(selectedYear, selectedMonth, selectedDay){
+
+        
 				$rootScope.user.selectedDay = selectedDay;
 				$rootScope.user.selectedMonth = selectedMonth;
 				$rootScope.user.selectedYear = selectedYear;
 				$scope.saveDate();
 			}
 
-			_init =function(){
+      _init =function(){			
 				$scope.days = new Array(31)
 							.join()
 							.split(',')
@@ -148,9 +156,9 @@ homeApp.directive('calendar', ["$rootScope", function($rootScope){
 				for(var i=currentYear; i>1904; i--){
 					$scope.years.push(i);
 				}
-			}
+    	}
 
-			_init();
+			_init()
 		}],
 		templateUrl: '/assets/angular/views/getting_started/shared/calendar.html'
 	}
