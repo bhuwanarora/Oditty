@@ -183,7 +183,7 @@ class News < Neo
 	end
 
 	def self.grouped_basic_info
-		" news_id: ID(news) , news_url: news.url, view_count:news.view_count, news.title AS title, description: news.description  , image_url: news.image_url   "
+		" news_id: ID(news) , news_url: news.url, view_count:news.view_count, title: news.title , description: news.description  , image_url: news.image_url   "
 	end
 
 	def self.match_day
