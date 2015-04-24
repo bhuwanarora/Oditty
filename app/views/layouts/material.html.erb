@@ -29,6 +29,7 @@
             <script src="assets/angular/services/book_service.js"></script>
             <script src="assets/angular/services/author_service.js"></script>
             <script src="assets/angular/services/shelf_service.js"></script>
+            <script src="assets/angular/services/shared_service.js"></script>
 
             <script src="assets/angular/controllers/app_controller.js"></script>
             
@@ -99,7 +100,6 @@
             <% end %>
 
             <% if @infinity %>
-                <script src="assets/angular/services/shared_service.js"></script>
                 <script src="assets/angular/services/time_group_service.js"></script>
                 <script src="assets/angular/services/reading_time_service.js"></script>
                 <script src="assets/angular/services/infinity_service.js"></script>
@@ -271,6 +271,7 @@
             <%= yield %>
             <div ng-controller="shareController" >
                 <md-button class="md-fab md-fab-bottom-right animate-fast fixed_share"
+                            ng-hide="active_shelf"
                             aria-label="Eat cake"
                             ng-class="{'md-fab-custom-right': info.show_share || info.show_book_share}"
                             ng-click="show_share_page($event)"
@@ -279,9 +280,9 @@
                 </md-button>
             </div>
             
-            <md-progress-linear class="md-primary loader" 
-                    ng-show="info.loading"
-                    md-mode="indeterminate">
+            <md-progress-linear class="md-primary loader"
+                                ng-show="info.loading"
+                                md-mode="indeterminate">
             </md-progress-linear>
 
             <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" 

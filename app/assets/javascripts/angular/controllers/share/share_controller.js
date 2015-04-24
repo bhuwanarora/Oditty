@@ -1,4 +1,4 @@
-homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'ShareOptions', '$routeParams', '$mdBottomSheet', 'statusService', 'WebsiteUIConstants', 'bookService', 'ColorConstants', function($scope, $rootScope, $timeout, ShareOptions, $routeParams, $mdBottomSheet, statusService, WebsiteUIConstants, bookService, ColorConstants){
+homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'ShareOptions', '$routeParams', '$mdBottomSheet', 'statusService', 'WebsiteUIConstants', 'bookService', 'ColorConstants', 'sharedService', function($scope, $rootScope, $timeout, ShareOptions, $routeParams, $mdBottomSheet, statusService, WebsiteUIConstants, bookService, ColorConstants, sharedService){
 
     $scope.show_share_options = function(event){
         $mdBottomSheet.show({
@@ -35,14 +35,14 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     }
 
     $scope.add_book = function(book){
-        $scope.info.book = book;
+        $rootScope.bookmark_object = {"id": book.id, "type": 'Book'};
+        sharedService.toggle_bookmark($rootScope.active_shelf, true);
+        delete $rootScope.active_shelf;
+        $scope.info.show_share = false;
     }
 
-    $scope.show_share_page = function(event) {
-        if(!$scope.info.show_share){
-            $scope.info.show_share = true;
-        }
-        else{
+    $scope.show_share_page = function(event){
+        var _post_status = function(){
             var status = {};
             if(angular.isDefined($scope.info.feelings) && ($scope.info.feelings.length > 0)){
                 status = angular.extend(status, {"feelings": $scope.info.feelings});
@@ -79,6 +79,13 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
             $timeout(function(){
                 $scope.type_icon_pressed = {"margin-right": "0px"};
             }, 100);
+        }
+
+        if(!$scope.info.show_share){
+            $scope.info.show_share = true;
+        }
+        else{
+            _post_status();
         }
     };
 

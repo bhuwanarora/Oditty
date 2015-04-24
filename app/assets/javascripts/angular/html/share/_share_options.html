@@ -61,8 +61,8 @@
                 <md-divider></md-divider>
             </md-content>
             <md-content ng-if="searched_books && searched_books.length > 0" 
-                        layout-wrap layout="row" layout-padding class="white">
-                <div layout-padding ng-repeat="book in searched_books" >
+                        layout="row" layout-wrap layout-padding class="white">
+                <div layout-padding ng-repeat="book in searched_books">
                     <md-button ng-click="add_book(book)" class="clear book_image_cover">
                         <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
                     </md-button>
