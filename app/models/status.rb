@@ -21,7 +21,7 @@ class Status < Neo
 	end
 
 	def self.match
-		" MATCH (user)-[:Posted]->(status_node:StatusNode)-[:PostedContent]->(status:Status) "
+		" MATCH (user)-[:Posted]->(status_node:StatusNode)-[:PostedContent]->(status:Status) WITH user, status_node, status "
 	end
 
 	def create
