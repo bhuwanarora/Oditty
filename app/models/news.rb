@@ -35,8 +35,8 @@ class News < Neo
 		" MERGE (news:News{url:\"" + news_metadata["news_link"].to_s + "\"}) ON CREATE SET news.created_at = " + Time.now.to_i.to_s + ", news.view_count = 0 " +  News.set_metadata(news_metadata) + " WITH news "
 	end
 
-	def self.merge_region news_source
-		" MERGE (region:Region{name: \"" + news_source["region"].to_s + "\"}) WITH region " 
+	def self.merge_region region
+		" MERGE (region:Region{name: \"" + region.to_s + "\"}) WITH region " 
 	end
 
 	def self.optional_match_regional_news
@@ -66,7 +66,9 @@ class News < Neo
 
 	def self.set_metadata news_metadata
 		clause = ""
-		news_metadata.delete("available").delete("news_link").delete("region")
+		news_metadata.delete("news_link")
+		news_metadata.delete("available")
+		news_metadata.delete("region")
 		news_metadata.each do |key, value|
 			clause += " SET news." + key + " = \"" + value.to_s.gsub("\"","\\\"").gsub("\'","\\\'") + "\" " 
 		end
