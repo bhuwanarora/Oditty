@@ -8,7 +8,7 @@ class Label < Neo
 	end
 
 	def match
-		" MATCH (label) WHERE ID(label) = " @id.to_s + "  WITH label "
+		" MATCH (label) WHERE ID(label) = " + @id.to_s + "  WITH label "
 	end
 
 	def self.basic_info_user_label
