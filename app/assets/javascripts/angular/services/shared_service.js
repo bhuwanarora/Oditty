@@ -4,7 +4,7 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
         var ready_to_load = !$scope.info.loading && !$scope.constant.show_book && !
             $scope.info.author_filter && !$scope.info.group_by_alphabet &&
             !$scope.info.reading_time_filter && !$scope.info.published_era_filter &&
-            !$scope.info.custom_loading && !$scope.info.subject_filter && $scope.active_tab.infinity;
+            !$scope.info.custom_loading && !$scope.info.subject_filter && $scope.info.infinity;
         if(ready_to_load){
             $scope.info.loading = true;
             this.load_popular_books($scope);

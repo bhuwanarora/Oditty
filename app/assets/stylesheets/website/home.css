@@ -68,10 +68,10 @@ md-content{
 	color: rgba(145, 140, 140, 1) !important;
 }
 
-md-tabs a{
+/*md-tabs a{
 	color: white !important;
 }
-
+*/
 .logo{
 	padding-left: 50px;
 	font-size: 1.2em;
@@ -317,4 +317,196 @@ md-toolbar{
 
 .sticky_logo{
 	left: 0px !important;
+}
+
+@media only screen
+and (min-width : 320px)
+and (max-width : 800px){
+	.vertical_padder_active {
+		height: 120px;
+	}
+
+	.share_wrapper{
+		height: 0px;
+		padding: 0px;
+	}
+
+	.shelf_nav_links{
+		height: 30px;
+		top: 63px;
+	}
+
+	.left_panel{
+		top: 0px;
+		width: 51px !important;
+	}
+
+	.left_column_collapsed{
+		width: 50px;
+		text-align: center;
+		color: transparent;
+	}
+
+	.left_column_collapsed:hover{
+		color: transparent;
+	}
+
+	.left_column{
+		left: 0px;
+		right: 60px;
+		width: inherit;
+	}
+
+	.left_column_shifted{
+		right: 15px;
+		width: 40px !important;
+		left: inherit !important;
+	}
+
+	.left_column .collapse_icon{
+		right: 20px;
+		left: initial;
+	}
+
+	.site_logo{
+		display: none;
+	}
+
+	.compressed_site_logo{
+		display: inline-block;
+	}
+
+	.main_header .search_typeahead_group,
+	.main_header .search_input_shifted{
+		left: 50px;
+		width: 70%;
+		border: none;
+	}
+
+	.user_profile,
+	.feed_group{
+		left: 0;
+		margin: 0;
+		right: 0;
+		width: 96%;
+		padding: 2%;
+		background-color: white;
+	}
+
+	.shelf_nav_links{
+		right: 5px;
+	}
+
+	.trending_thumb_color_wrapper,
+	.profile_thumb_color_wrapper,
+	.profile_thumb_wrapper,
+	.thumb_wrapper_shifted,
+	.header_navbar img,
+	.expand_notifications,
+	.share_wrapper .thumb_wrapper, 
+	.share_wrapper .thumb_wrapper img,
+	.scroller,
+	.user_name .name{
+		display: none;
+	}
+
+	.user_name div{
+		float: left;
+		display: inline-block;
+	}
+
+	.user_name{
+		left: 58px;
+		top: 65px;
+	}
+
+	.interaction_group,
+	.feed_header{
+		left: 5px;
+		right: 5px;
+		width: inherit;
+	}
+
+	.interaction_box,
+	.message_box,
+	.tweets .tweet{
+		width: 96%;
+		padding: 2%;
+	}
+
+	.book_thumb_color_wrapper, .book_thumb_wrapper{
+		width: 100px;
+		height: 155px;
+	}
+
+	.feed_header{
+		margin-left: 0px;
+	}
+
+	.large_font{
+		font-size: 14px;
+	}
+
+	.left_panel_expanded,
+	.notifications_popup{
+		left: 0px;
+		right: 0px;
+		width: inherit !important;
+		bottom: 0px;
+		height: inherit;
+		max-height: none;
+	}
+
+	.share_wrapper_shifted{
+		width: 100%;
+		padding: 0px;
+		background-position: 0px 0px;
+	}
+
+	.share{
+		position: fixed;
+		bottom: 10px;
+		background-color: #427fed;
+		color: #fff;
+		width: initial;
+		height: initial;
+		border-radius: 20px;
+		padding: 10px;
+		left: 10px;
+	}
+
+	.share:hover{
+		text-decoration: none;
+		padding: 11px;
+	}
+
+	.share:before{
+		content: "\e620";
+		font-family: icomoon;
+		speak: none;
+		font-style: normal;
+		font-weight: 400;
+		font-variant: normal;
+		text-transform: none;
+		line-height: 1;
+	}
+
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen
+and (min-device-width : 768px){
+	.book_scroller{
+		max-height: 70vh;
+	}
+/* Styles */
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen
+and (min-width : 321px) {
+/* Styles */
+	.book_scroller{
+		max-height: 180px;
+	}
 }

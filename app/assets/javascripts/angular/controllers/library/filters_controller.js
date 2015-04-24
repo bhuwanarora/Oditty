@@ -38,7 +38,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
 
     var _set_books = function(){
         // $scope.info.books = [];
-        $scope.active_tab.infinity = true;
+        $scope.info.infinity = true;
         $scope.info.loading = true;
         if(Object.keys($rootScope.filters).length == 0){
             $scope.info.books = [];
