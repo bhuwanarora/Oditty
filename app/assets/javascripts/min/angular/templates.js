@@ -155,7 +155,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/getting_started/shared/calendar.html',
-    "<div layout=\"row\"><md-select ng-model=\"selectedYear\" placeholder=\"Year\" ng-change=\"date_check()\" layout-padding><md-option ng-repeat=\"year in years\" ng-value=\"year\">{{year}}</md-option></md-select><md-select ng-model=\"selectedMonth\" placeholder=\"Month\" ng-change=\"date_check();_init ()\" ng-show=\"selectedYear\" layout-padding><md-option ng-repeat=\"month in months\" ng-value=\"month\">{{month}}</md-option></md-select><md-select ng-model=\"selectedDay\" placeholder=\"Day\" ng-change=\"date_check(); save_date(selectedYear, selectedMonth, selectedDay)\" ng-show=\"selectedYear && selectedMonth\" layout-padding><md-option ng-repeat=\"day in days\" ng-value=\"day\">{{day}}</md-option></md-select></div>"
+    "<div layout=\"row\"><md-select ng-model=\"selectedYear\" placeholder=\"Year\" ng-change=\"date_check()\" layout-padding><md-option ng-repeat=\"year in years\" ng-value=\"year\">{{year}}</md-option></md-select><md-select ng-model=\"selectedMonth\" placeholder=\"Month\" ng-change=\"date_check()\" ng-show=\"selectedYear\" layout-padding><md-option ng-repeat=\"month in months\" ng-value=\"month\">{{month}}</md-option></md-select><md-select ng-model=\"selectedDay\" placeholder=\"Day\" ng-change=\"date_check(); save_date(selectedYear, selectedMonth, selectedDay);\" ng-show=\"selectedYear && selectedMonth\" layout-padding><md-option ng-repeat=\"day in days\" ng-value=\"day\">{{day}}</md-option></md-select></div>"
   );
 
 
