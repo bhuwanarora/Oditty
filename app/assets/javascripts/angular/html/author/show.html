@@ -72,6 +72,10 @@
         </div>
         <div flex="25"></div>
     </div>
+    <iframe ng-src="{{wiki_url}}" class="wiki" 
+            scrolling="no" seamless="seamless"></iframe>
+    <a ng-click="scroll_wiki()" class="less_important">Continue Reading</a>
+    <div class="less_important">From <a ng-href="{{wiki_url}}">Wikipedia</a>, the free encyclopedia</div>
 </div>
 
 <section ng-repeat="book in author.books">
@@ -89,48 +93,6 @@
                     <div>Published In</div>
                 </h3>
             </div>
-            <div layout="row" layout-sm="column">
-                <div layout-margin layout-sm="row" layout-align-sm="center center">
-                    <h1 flex="50" flex-order-sm="2">
-                        <div>{{book.pages_count || 0}}</div>
-                    </h1>
-                    <h3 flex="50" flex-order-sm="1">
-                        <div>Pages Count</div>
-                    </h3>
-                </div>
-                <div layout-margin layout-sm="row" layout-align-sm="center center">
-                    <h1 flex="50" flex-order-sm="2">
-                        <div>{{book.popularity || 0}}</div>
-                    </h1>
-                    <h3 flex="50" flex-order-sm="1">
-                        <div>Popularity</div>
-                    </h3>
-                </div>
-                <div layout-margin layout-sm="row" layout-align-sm="center center">
-                    <h1 flex="50" flex-order-sm="2">
-                        <div>{{book.readers_count || 0}}</div>
-                    </h1>
-                    <h3 flex="50" flex-order-sm="1">
-                        <div>Readers Count</div>
-                    </h3>
-                </div>
-                <div layout-margin layout-sm="row" layout-align-sm="center center">
-                    <h1 flex="50" flex-order-sm="2">
-                        <div>{{book.bookmark_count || 0}}</div>
-                    </h1>
-                    <h3 flex="50" flex-order-sm="1">
-                        <div>Bookmark Count</div>
-                    </h3>
-                </div>
-                <div layout-margin layout-sm="row" layout-align-sm="center center">
-                    <h1 flex="50" flex-order-sm="2">
-                        <div>{{book.comment_count || 0}}</div>
-                    </h1>
-                    <h3 flex="50" flex-order-sm="1">
-                        <div>Comment Count</div>
-                    </h3>
-                </div>
-             </div>
          </div>
          <div class="nav_icons" layout="row">
             <md-button ng-click="previous_block()"><span class="icon-angle-up"></span></md-button>
