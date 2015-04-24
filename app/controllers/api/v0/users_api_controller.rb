@@ -15,22 +15,30 @@ module Api
 
 			def get_feed
 				user_id = session[:user_id]
-				info = UserApi.get_feed(user_id)
+				skip_count = session[:skip_count] || 0
+				info = UserApi.get_feed(user_id, skip_count).execute
 				render :json => info, :status => 200
 			end
 
+			def news_visited
+				news_id = params[:id]
+				user_id = session[:user_id]
+				UserApi.news_visited(user_id, news_id)
+				render :json => {:message => "Success"}, :status => 200
+			end
+
 			def bookmark
-				params = params["q"]
-				params = JSON.parse params
+				# params = params["q"]
+				# params = JSON.parse params
 				id = params["id"]
 				type = params["type"]
 				shelf = params["shelf"]
 				status = params["status"]
 				user_id = session[:user_id]
 				if status == "true"
-					UserApi.add_bookmark(user_id, id, type, shelf)
+					Api::V0::UserApi.add_bookmark(user_id, id, type, shelf).execute
 				else
-					UserApi.remove_bookmark(user_id, id, type, shelf)
+					Api::V0::UserApi.remove_bookmark(user_id, id, type, shelf).execute
 				end
 				render :json => {:message => "Success"}, :status => 200
 			end
@@ -40,16 +48,16 @@ module Api
 				status = params[:status]
 				user_id = session[:user_id]
 				if status == "true"
-					info = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).add.execute
+					info = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).book.add.execute
 				else
-					info = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).remove.execute
+					info = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, book_id).book.remove.execute
 				end
 				render :json => info, :status => 200
 			end
 
 			def get_books_from_favourite_author
 				user_id = session[:user_id]
-				books = User::Suggest::BookSuggestion.new(user_id).for_favourite_author.execute
+				books = User::Suggest::BookSuggestion.new(user_id).for_favourite_author.execute[0]
 				render :json => books, :status => 200
 			end
 
@@ -62,7 +70,7 @@ module Api
 
 			def get_books_from_favourite_era
 				user_id = session[:user_id]
-				books = User::Suggest::BookSuggestion.new(user_id).for_most_bookmarked_era.execute
+				books = User::Suggest::BookSuggestion.new(user_id).for_most_bookmarked_era.print
 				render :json => books, :status => 200
 			end
 
@@ -337,6 +345,13 @@ module Api
 			def get_users_followed
 				user_id = session[:user_id]
 				info = Api::V0::UserApi.get_users_followed(user_id).execute
+				render :json => info, :status => 200
+			end
+
+			def get_lenders
+				user_id = session[:user_id]
+				book_id = params[:book_id]
+				info = Api::V0::UserApi.get_lenders(book_id, user_id).execute
 				render :json => info, :status => 200
 			end
 		end

@@ -1,5 +1,5 @@
 class Book::SmallRead < Book
-	Limit = 30
+	Limit = 8
 
 	def initialise
 		@best_small_read ||= Constant::Id::BestSmallRead

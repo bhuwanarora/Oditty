@@ -3,7 +3,7 @@
         <md-card-content class="less_important_container" ng-if="feed.user">
             <div class="social_content" layout="row" layout-padding>
                 <div flex="25">
-                    <img ng-src="{{user.profile_thumb}}" class="profile_thumb circular">
+                    <img ng-src="{{user.profile_thumb | default_profile}}" class="profile_thumb circular">
                 </div>
                 <div flex="75">
                     <div class="user_title">

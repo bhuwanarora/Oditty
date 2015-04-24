@@ -1,9 +1,14 @@
 <md-bottom-sheet class="options" layout="column">
-    <div class="selected_option" layout-padding layout-align="start center" layout="row" hide-sm>
-        <h3>
-            <span>{{first_option.name}}</span>
-            <span>{{second_option.name}}</span>
-        </h3>
+    <div class="selected_option" layout-padding 
+         layout-align="space-between" layout="row" hide-sm>
+        <div ng-include src="'/assets/angular/html/share/_status.html'"></div>
+        <md-autocomplete
+            class="add_book"
+            md-search-text="search_tag.book"
+            md-items="item in searched_books | filter:search_tag.book"
+            md-search-text-change="search_books(search_tag.book)"
+            placeholder="Add a book...">
+        </md-autocomplete>
     </div>
     <div layout="row" hide-sm>
         <div flex="20" layout="column" 
@@ -11,7 +16,7 @@
              class="column_height">
             <div class="padding">Select</div>
             <md-button ng-repeat="option in share_options.ReadingStage" 
-                    ng-click="show_level1_options(option, $event)"
+                    ng-click="show_level1_options(option, $index, $event)"
                     layout-padding 
                     ng-class="{'active_option1': option == first_option}"
                     class="md-button-clear">
@@ -22,13 +27,13 @@
              flex-sm="100"
              ng-if="nested_options" class="column_height">
              <md-progress-circular class="md-accent md-hue-1" 
-                    md-mode="indeterminate" 
+                    md-mode="indeterminate"
                     ng-if="loading">
             </md-progress-circular>
             <md-button ng-repeat="option in nested_options"
                     layout-padding
                     ng-hide="loading"
-                    ng-click="show_level2_options(option, $event)" 
+                    ng-click="show_level2_options(option, $index, $event)" 
                     ng-class="{'active_option2': option == second_option}"
                     class="md-button-clear">
                 {{option.name}}
@@ -53,124 +58,32 @@
                         <span>{{option.name}}</span>
                     </md-button>
                 </div>
+                <md-divider></md-divider>
             </md-content>
-            <md-content ng-if="add_books" layout="column" layout-padding class="white">
-                <md-input-container>
-                    <label>Search Books</label>
-                    <input/>
-                </md-input-container>
-                <div layout="row" layout-padding>
-
+            <md-content ng-if="searched_books && searched_books.length > 0" 
+                        layout="row" layout-wrap layout-padding class="white">
+                <div layout-padding ng-repeat="book in searched_books">
+                    <md-button ng-click="add_book(book)" class="clear book_image_cover">
+                        <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
+                    </md-button>
                 </div>
             </md-content>
         </div>
-    </div>
-
-    <div class="selected_option" layout-padding layout-align="start center" layout="row" hide show-sm>
-        <md-button ng-click="previous()"
-                ng-disabled="data.selectedIndex == 0"
-                flex="100" layout="row" layout-align="start">
-            <div><span class="icon-angle-left"></span></div>&nbsp;&nbsp;
-            <div ng-switch on="data.selectedIndex">
-                <div ng-switch-when="0"></div>
-                <div ng-switch-when="1">
-                    <span>{{first_option.name}}</span>
-                </div>
-                <div ng-switch-when="2">
-                    <span>{{first_option.name}}</span>
-                    <span>{{second_option.name}}</span>
-                </div>
-            </div>
-        </md-button>
-    </div>
-    <div layout="row" hide show-sm>
-        <ng-switch on="data.selectedIndex" class="tabpanel-container">
-            <div role="tabpanel"
-                 id="tab1-content"
-                 aria-labelledby="tab1"
-                 ng-switch-when="0"
-                 md-swipe-left="show_level1_options()"
-                 md-swipe-right="previous()">
-                <div layout="column" flex="100"
-                     class="column_height" layout-fill>
-                    <div class="padding">Select</div>
-                    <md-button ng-repeat="option in share_options.ReadingStage" 
-                            ng-click="show_level1_options(option, $event)"
-                            layout-padding 
-                            ng-class="{'active_option1': option == first_option}"
-                            class="md-button-clear">
-                        {{option.name}}
-                    </md-button>
-                </div>
-            </div>
-            <div role="tabpanel"
-                 id="tab2-content"
-                 aria-labelledby="tab2"
-                 ng-switch-when="1"
-                 md-swipe-left="show_level2_options()"
-                 md-swipe-right="previous()" >
-                <div layout="column" flex="100"
-                     ng-if="nested_options" class="column_height" layout-fill>
-                     <md-progress-circular class="md-accent md-hue-1" 
-                            md-mode="indeterminate" 
-                            ng-if="loading">
-                    </md-progress-circular>
-                    <md-button ng-repeat="option in nested_options"
-                            layout-padding
-                            ng-hide="loading"
-                            ng-click="show_level2_options(option, $event)" 
-                            ng-class="{'active_option2': option == second_option}"
-                            class="md-button-clear">
-                        {{option.name}}
-                    </md-button>
-                </div>
-            </div>
-            <div role="tabpanel"
-                 id="tab3-content"
-                 aria-labelledby="tab3"
-                 ng-switch-when="2"
-                 md-swipe-right="previous()" >
-                <div layout="column" flex="100"
-                    class="column_height" layout-fill>
-                    <md-content ng-if="level2_nested_options" class="white">
-                        <md-progress-circular class="md-accent md-hue-1" 
-                            md-mode="indeterminate" 
-                            ng-if="level2_loading">
-                        </md-progress-circular>
-                        <div layout="column" layout-align="start start" layout-fill>
-                            <md-button ng-repeat="option in level2_nested_options"
-                                    layout-padding
-                                    ng-hide="level2_loading"
-                                    ng-click="post_status(option, $event)" 
-                                    ng-class="{'active_option1': option == second_option}"
-                                    class="md-button-clear">
-                                <span class="icon {{option.icon}}"></span>
-                                <span>{{option.name}}</span>
-                            </md-button>
-                        </div>
-                    </md-content>
-                    <md-content ng-if="add_books" layout="column" layout-padding class="white">
-                        <md-input-container>
-                            <label>Search Books</label>
-                            <input/>
-                        </md-input-container>
-                        <div layout="row" layout-padding>
-
-                        </div>
-                    </md-content>
-                </div>
-            </div>
-        </ng-switch>
     </div>
 </md-bottom-sheet>
 
 <style>
     .selected_option{
-        height: 8vh;
+        height: 100px;
+        border-bottom: 1px solid #F0F0F0;
     }
 
     .options{
         height: 75vh;
+    }
+
+    .add_book{
+        width: 200px;
     }
 
     .active_option1,

@@ -16,24 +16,15 @@ angular.module('filtersApp', [])
             return output;
         };
     })
-    .filter('get_url', function(){
-        return function(input){
-            var output = "";
-            if(angular.isDefined(input)){
-                var book_label = input.labels.indexOf("Book") >= 0;
-                var author_label = input.labels.indexOf("Author") >= 0;
-                if(book_label){
-                    output = "/book?q="+input.id;
-                }
-                else if(author_label){
-                    output = "/author?q="+input.id;
-                }
-                else if(input.show_all){
-                  output = "/search?q="+input.search_text;
-                }
-            }
-            return output;
+    .filter('first_isbn', function(){
+      return function(input){
+        var output = "";
+        if(angular.isDefined(input)){
+          isbn = input.split(",");
+          output = isbn[0];
         }
+        return output;
+      }
     })
     .filter('search_item_type', function(){
         return function(input){
@@ -50,6 +41,15 @@ angular.module('filtersApp', [])
             }
             return output;
         }
+    })
+    .filter('default_profile', function(){
+      return function(input){
+        var output = input;
+        if(angular.isUndefined(input) || (input == "") || (input == null)){
+          output = "http://www.sessionlogs.com/media/icons/defaultIcon.png";
+        }
+        return output;
+      }
     })
     .filter('first_two', function(){
         return function(input){
@@ -307,14 +307,23 @@ angular.module('filtersApp', [])
       return input; 
     }
   })
-  .filter('thumb', function(){
-    return function(isbn_string){
-      if(isbn_string){
-        var isbn = isbn_string.split(",");
-        var thumb = "http://covers.openlibrary.org/b/isbn/"+isbn[0]+"-L.jpg";
-        return thumb;
+  .filter('large_thumb', function(){
+    return function(input){
+      var output = "";
+      if(angular.isDefined(input) && input){
+        var external_thumb = angular.isDefined(input.external_thumb) && input.external_thumb != null;
+        if(external_thumb){
+          output = input.external_thumb;
+        }
+        else{
+          if(input.isbn){
+            var isbn = input.isbn.split(",");
+            output = "http://covers.openlibrary.org/b/isbn/"+isbn[0]+"-L.jpg"
+          }
+        }
       }
-    }
+      return output;
+    };
   })
   .filter('medium_thumb', function(){
     return function(isbn_string){
@@ -322,11 +331,7 @@ angular.module('filtersApp', [])
       if(isbn_string){
         var isbn = isbn_string.split(",");
         angular.forEach(isbn, function(value){
-          // var img = new Image();
           output = "http://covers.openlibrary.org/b/isbn/"+value+"-M.jpg";
-          // if(img.height > 20 && output == ""){
-          //   output = img.src;
-          // }
         });
         return output;
       }

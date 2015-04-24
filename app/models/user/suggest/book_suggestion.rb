@@ -13,7 +13,7 @@ class User::Suggest::BookSuggestion < User::Suggest
 		# most bookmarked author
 		# other books from author
 
-		@user.match + @user.authors_of_books_bookmarked + Author.match_books + Bookmark.match_not("book") + User::Suggest::BookSuggestion.with_group(label, " user ","author "," book "," COUNT(DISTINCT "+label+") AS book_count ") + User::Suggest::BookSuggestion.order_init + " book_count " + User::Suggest::BookSuggestion.limit(1) + User::Suggest::BookSuggestion.return_group(Author.basic_info, ::Book.basic_info) + ::Book.order_desc + User::Suggest::BookSuggestion.limit(Constant::Count::BookRecommendation)
+ 		@user.match + @user.favourite_author + User::Suggest::BookSuggestion.order_init + " book_count DESC " + User::Suggest::BookSuggestion.limit(1) +  "WITH author, user " + Author.match_books + ", user " + Bookmark.match_not("book") + User::Suggest::BookSuggestion.with_group("book", "author") + User::Suggest::BookSuggestion.order_init + " toINT(book.total_weight) DESC " + User::Suggest::BookSuggestion.limit(8) + User::Suggest::BookSuggestion.return_group("COLLECT({"+Book.grouped_basic_info+"}) AS books", Author.basic_info)
 	end
 
 	def for_most_bookmarked_era
@@ -32,6 +32,6 @@ class User::Suggest::BookSuggestion < User::Suggest
 	def self.get_popular_books skip_count, user_id
 		# get nth node from the beginning
 		# get books after nth node
-		Book.new(Constants::BestBook).match + " AS best_book MATCH (best_book)-[:Next_book*" + skip_count.to_s + "]->(book) WITH book " + ::Book.match_path("Next_book",Constants::Count::PopularBooksShownCount) + " WITH " +  User::Suggest::BookSuggestion.extract_unwind("book") + UsersBook.optional_match_bookmark + "WHERE ID(user) = " + user_id.to_s + UsersBook.optional_match_rating + " WITH user, book, bookmark_node, rating_node " + Book.optional_match_root_category + ", bookmark_node, rating_node, user "+ User::Suggest::BookSuggestion.return_group(Book.detailed_info, Bookmark.grouped_basic_info, Rating.grouped_basic_info,  " root_category ")
+		Book.new(Constant::Id::BestBook).match + " AS best_book MATCH (best_book)-[:Next_book*" + skip_count.to_s + "]->(book) WITH book " + ::Book.match_path("Next_book",Constant::Count::PopularBooksShown) + " WITH " +  User::Suggest::BookSuggestion.extract_unwind("book") + UsersBook.optional_match_bookmark + "WHERE ID(user) = " + user_id.to_s + UsersBook.optional_match_rating + " WITH user, book, bookmark_node, rating_node " + Book.optional_match_root_category + ", bookmark_node, rating_node, user "+ User::Suggest::BookSuggestion.return_group(Book.detailed_info, Bookmark.grouped_basic_info, Rating.grouped_basic_info,  " root_category ")
 	end
 end

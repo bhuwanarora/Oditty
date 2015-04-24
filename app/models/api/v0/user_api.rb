@@ -10,9 +10,13 @@ module Api
 				info = {}
 				if user_id.present?
 					info = User.new(user_id).get_basic_info.execute[0]
-					session[:last_book] = info["last_book"]
+					# session[:last_book] = info["last_book"]
 				end
 				info
+			end
+
+			def self.news_visited(user_id, id)
+				Bookmark::Type::Visited.new(user_id, id).news.add.execute
 			end
 
 			def self.follow_user user_id, friend_id
@@ -20,44 +24,103 @@ module Api
 			end
 
 			def self.add_bookmark user_id, id, type, shelf
+				puts user_id
+				puts id
+				puts type
+				puts shelf
+				clause =""
 				if type == "BOOK"
 					case shelf
 					when "HaveLeftAMarkOnMe"
-						Bookmark::Type::HaveLeftAMarkOnMe.add
+						clause = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, id).book.add
 					when "DidntFeelLikeReadingItAfterAPoint"
-						Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.add
+						clause = Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.new(user_id, id).book.add
 					when "IntendToRead"
-						Bookmark::Type::IntendToRead.add
+						clause = Bookmark::Type::IntendToRead.new(user_id, id).book.add
 					when "PretendIHaveRead"
-						Bookmark::Type::PretendIHaveRead.add
+						clause = Bookmark::Type::PretendIHaveRead.new(user_id, id).book.add
+					when "Visited"
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					end
-				elsif type == "ARTICLE"
+				elsif type == "NEWS"
+					case shelf
+					when "HaveLeftAMarkOnMe"
+						clause = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, id).news.add
+					when "DidntFeelLikeReadingItAfterAPoint"
+						clause = Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.new(user_id, id).news.add
+					when "IntendToRead"
+						clause = Bookmark::Type::IntendToRead.new(user_id, id).news.add
+					when "PretendIHaveRead"
+						clause = Bookmark::Type::PretendIHaveRead.new(user_id, id).news.add
+					when "Visited"
+						clause = Bookmark::Type::Visited.new(user_id, id).news.add
+					end
+				elsif type == "BLOG"
+					case shelf
+					when "HaveLeftAMarkOnMe"
+						clause = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, id).blog.add
+					when "DidntFeelLikeReadingItAfterAPoint"
+						clause = Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.new(user_id, id).blog.add
+					when "IntendToRead"
+						clause = Bookmark::Type::IntendToRead.new(user_id, id).blog.add
+					when "PretendIHaveRead"
+						clause = Bookmark::Type::PretendIHaveRead.new(user_id, id).blog.add
+					when "Visited"
+						clause = Bookmark::Type::Visited.new(user_id, id).blog.add
+					end
 				elsif type == "LISTOPIA"
 				elsif type == ""
 				end
+				clause
 			end
 
-			def self.get_feed user_id
-				info = Blog.get_posts
-				info
+			def self.get_feed user_id, skip_count=0
+				News.get_feed(skip_count)
 			end
 
-			def self.remove_bookmark
+			def self.remove_bookmark user_id, id, type, shelf
+				clause =""
 				if type == "BOOK"
 					case shelf
 					when "HaveLeftAMarkOnMe"
-						Bookmark::Type::HaveLeftAMarkOnMe.remove
+						clause = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, id).book.remove
 					when "DidntFeelLikeReadingItAfterAPoint"
-						Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.remove
+						clause = Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.new(user_id, id).book.remove
 					when "IntendToRead"
-						Bookmark::Type::IntendToRead.remove
+						clause = Bookmark::Type::IntendToRead.new(user_id, id).book.remove
 					when "PretendIHaveRead"
-						Bookmark::Type::PretendIHaveRead.remove
+						clause = Bookmark::Type::PretendIHaveRead.new(user_id, id).book.remove
 					end
-				elsif type == "ARTICLE"
+				elsif type == "NEWS"
+					case shelf
+					when "HaveLeftAMarkOnMe"
+						clause = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, id).news.remove
+					when "DidntFeelLikeReadingItAfterAPoint"
+						clause = Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.new(user_id, id).news.remove
+					when "IntendToRead"
+						clause = Bookmark::Type::IntendToRead.new(user_id, id).news.remove
+					when "PretendIHaveRead"
+						clause = Bookmark::Type::PretendIHaveRead.new(user_id, id).news.remove
+					when "Visited"
+						clause = Bookmark::Type::Visited.new(user_id, id).news.remove
+					end
+				elsif type == "BLOG"
+					case shelf
+					when "HaveLeftAMarkOnMe"
+						clause = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, id).blog.remove
+					when "DidntFeelLikeReadingItAfterAPoint"
+						clause = Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.new(user_id, id).blog.remove
+					when "IntendToRead"
+						clause = Bookmark::Type::IntendToRead.new(user_id, id).blog.remove
+					when "PretendIHaveRead"
+						clause = Bookmark::Type::PretendIHaveRead.new(user_id, id).blog.remove
+					when "Visited"
+						clause = Bookmark::Type::Visited.new(user_id, id).blog.remove
+					end
 				elsif type == "LISTOPIA"
 				elsif type == ""
 				end
+				clause
 			end
 
 			def self.unfollow_user user_id, friend_id
@@ -298,6 +361,10 @@ module Api
 			    end
 			    puts message
 		    	message
+			end
+
+			def self.get_lenders book_id, user_id
+				Book.new(book_id).get_lenders user_id											
 			end
 
 			private

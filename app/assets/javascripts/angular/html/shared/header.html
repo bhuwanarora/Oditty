@@ -42,7 +42,7 @@
             </md-button>
             <a href="/profile">
                 <md-button class="profile_link">
-                    <img src="http://www.chicagonow.com/avatar/blog-108-128.png" class="circular">
+                    <img ng-src="{{user.image_url | default_profile}}" class="circular">
                 </md-button>
             </a>
         </div>

@@ -1,11 +1,11 @@
-set :stage, :production
-server '178.79.137.190',
-user: 'bhuwan',
+set :stage, :staging
+server '52.74.158.10',
+user: 'ubuntu',
 roles: %w{app},
 ssh_options: {
-	user: 'bhuwan', # overrides user setting above
-	# keys: %w(/home/user_name/.ssh/id_rsa),
+	user: 'ubuntu', # overrides user setting above
+	keys: %w(/home/palashgupta577/Downloads/rd_staging.pem),
 	forward_agent: false,
 	auth_methods: %w(publickey password),
-	password: ''
+	# password: ''
 }

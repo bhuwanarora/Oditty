@@ -1,6 +1,21 @@
-<md-tabs layout="row" layout-wrap>
-	<md-tab class="padding">FOLLOWERS(12)</md-tab>
-	<md-tab class="padding">FOLLOWING(45)</md-tab>
+<md-tabs layout="row" layout-wrap
+		 md-selected="data.selectedIndex">
+	<md-tab class="padding" 
+			aria-controls="tab1-content"
+			id="tab1"
+			label="FOLLOWERS({{user.follower_count || 0}})">
+	        <div layout="column"
+	             ng-include src="'/assets/angular/html/network/show.html'">
+	        </div>
+	</md-tab>
+	<md-tab class="padding" 
+			aria-controls="tab2-content"
+			id="tab2"
+			label="FOLLOWING({{user.following_count || 0}})">
+			<div layout="column"
+	             ng-include src="'/assets/angular/html/network/show.html'">
+	        </div>
+	</md-tab>
 </md-tabs>
 <br/>
 <br/>

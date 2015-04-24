@@ -1,4 +1,4 @@
-homeApp.controller('appController', ["$scope", "$rootScope", "$timeout", "$mdSidenav", "$log", '$q', '$mdBottomSheet', '$mdDialog', 'scroller', '$document', 'feedService', '$mdToast', 'shelfService', function($scope, $rootScope, $timeout, $mdSidenav, $log, $q, $mdBottomSheet, $mdDialog, scroller, $document, feedService, $mdToast, shelfService){
+homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdBottomSheet', '$mdDialog', 'shelfService', function($scope, $rootScope, $mdSidenav, $mdBottomSheet, $mdDialog, shelfService){
 
     $scope.play_type_key = function(event){
         if($scope.info.show_share){
@@ -64,14 +64,6 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$timeout", "$mdSid
         event.stopPropagation();
 	};
 
-    $scope.show_shelf_bottom_sheet = function(event){
-        $mdBottomSheet.show({
-            templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
-            controller: 'shelfController',
-            targetEvent: event
-        });
-    };
-
     $scope.show_share_bottom_sheet = function(event){
         $mdBottomSheet.show({
             templateUrl: 'assets/angular/html/shared/social_bottom_sheet.html',
@@ -84,7 +76,7 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$timeout", "$mdSid
         event.stopPropagation();
     }
 
-    var _init = function(){
+    var _init = (function(){
         $scope.visible_search_bar = true;
         $scope.info = {};
         $scope.info.show_share = false;
@@ -94,7 +86,6 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$timeout", "$mdSid
         shelfService.get_all_shelves().then(function(data){
             $rootScope.labels = data;
         });
-    };
+    }());
 
-    _init();
 }]);

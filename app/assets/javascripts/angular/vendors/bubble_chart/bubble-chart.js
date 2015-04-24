@@ -21,10 +21,18 @@
     */
     d3.svg.BubbleChart = function (settings) {
         var self = this;
-        var defaultViewBoxSize = settings.size;
-        var defaultInnerRadius = settings.size / 3;
-        var defaultOuterRadius = settings.size / 2;
-        var defaultRadiusMin = settings.size / 10;
+        if(settings.isCommunityPage()){
+            var defaultViewBoxSize = settings.size ;
+            var defaultInnerRadius = settings.size/3;
+            var defaultOuterRadius = settings.size/2;
+            var defaultRadiusMin = settings.size / 10;
+        }
+        else{
+            var defaultViewBoxSize = settings.size ;
+            var defaultInnerRadius = settings.size/ 2;
+            var defaultOuterRadius = settings.size/ 1;
+            var defaultRadiusMin = settings.size / 1;   
+        }
         self.options = {};
         $.extend(self.options, {
             plugins: [],
@@ -33,6 +41,8 @@
             innerRadius: defaultInnerRadius,
             outerRadius: defaultOuterRadius,
             radiusMin: defaultRadiusMin,
+            index: settings.getIndex(),
+            isCommunityPage: settings.isCommunityPage(),
             intersectDelta: 0,
             transitDuration: 1000,
         }, settings);
@@ -123,7 +133,13 @@
             self.items = options.data.items;
             self.values = self.getValues();
             self.valueMax = self.values.max();
-            self.svg = d3.select(options.container).append("svg")
+            if(options.isCommunityPage()){
+                var container_element = d3.select(options.container);
+            }
+            else{
+                var container_element = d3.select(d3.selectAll(options.container).filter("div")[0][options.index]);
+            }
+            self.svg = container_element.append("svg")
                             .attr({preserveAspectRatio: "xMidYMid", width: options.size, height: options.size, class: "bubbleChart"})
                             .attr("viewBox", function (d) {return ["0 0", options.viewBoxSize, options.viewBoxSize].join(" ")});
             self.circlePositions = self.randomCirclesPositions(options.intersectDelta);
@@ -136,19 +152,20 @@
             var clipPath = node.append("clipPath")
                                 .attr("id", function (d) {return options.data.classed(d.item);});
             clipPath.append("circle")
-        .attr({r: function (d) {return d.r;}, cx: function (d) {return d.cx;}, cy: function (d) {return d.cy;}});
-        // .style("fill", function (d) {
-        //     return options.data.color !== undefined ? options.data.color(d.item) : fnColor(d.item.text);
-        // })
-        // .attr("opacity", "0.8");
+                .attr({r: function (d) {return d.r;}, cx: function (d) {return d.cx;}, cy: function (d) {return d.cy;}})
+                .style("fill", function (d) {
+                    return "#ffffff";
+                })
+                .attr("opacity", "1");
 
-        node.append("image")
-            .attr("clip-path", function(d){return "url(#" + options.data.classed(d.item) +")"})
-            .attr("x", function (d) {return d.cx-d.r;}).attr("y", function (d) {return d.cy-d.r;})
-            .attr("height", function (d) {return 2*d.r;})
-            .attr("width", function (d) {return 2*d.r;})
-            .attr("xlink:href", "http://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Color_icon_gray_v2.svg/2000px-Color_icon_gray_v2.svg.png");
-
+            node.append("image")
+                .attr("clip-path", function(d){return "url(#" + options.data.classed(d.item) +")"})
+                .attr("x", function (d) {return d.cx-d.r;})
+                .attr("y", function (d) {return d.cy-d.r;})
+                .attr("height", function (d) {return 2*d.r;})
+                .attr("width", function (d) {return 2*d.r;})
+                .attr("xlink:href", function(d){return d.item.image_url;});
+            
         node.sort(function (a, b) {return options.data.eval(b.item) - options.data.eval(a.item);});
 
 
@@ -180,7 +197,7 @@
         });
         self.centralNode = node;
         self.transition.centralNode = node.classed({active: true})
-                                            .transition().duration(self.options.transitDuration);
+                                          .transition().duration(self.options.transitDuration);
         self.transition.centralNode.attr('transform', toCentralPoint)
             .select("circle")
             .attr('r', function (d) {return self.options.innerRadius;});

@@ -3,7 +3,7 @@
         <div flex="10"><span class="icon-googleplus"></span></div>
         <div flex="90" class="google-right">LOGIN WITH GOOGLE</div>
     </md-button>
-    <md-button layout="row" class="md-button-clear fb">
+    <md-button layout="row" class="md-button-clear fb" ng-click="intent_login()">
         <div flex="10"><span class="icon-facebook"></span></div>
         <div flex="90" class="fb-right">LOGIN WITH FACEBOOK</div>
     </md-button>
@@ -22,7 +22,7 @@
                 ng-click="authenticate(true)">Log in</md-button>
     <md-button class="md-button-clear" ng-class="{'login': show_sign_up}" 
                 ng-click="authenticate(false)">Sign up</md-button>
-    <a href="" ng-click="recover_password()" layout-margin>Forgot Password?</a>
+    <a href="" ng-click="recover_password()" class="less_important" layout-margin>Forgot Password?</a>
     <div ng-model="user.error_message" class="md-warn">{{user.error_message}}</div>
 </div>
 

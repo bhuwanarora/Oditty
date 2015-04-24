@@ -1,5 +1,5 @@
 class ShelfariAuthorCrawlerWorker
-	include ShelfariCrawler
+	# include ShelfariCrawler
 	@queue = :author_crawler_queue
 
 	def self.perform(url, page_number)

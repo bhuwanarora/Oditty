@@ -2,7 +2,7 @@
     <md-card-content>
         <section layout="row" layout-align="start">
             <div layout="row">
-                <img src="http://www.chicagonow.com/avatar/blog-108-128.png" class="profile_thumb circular">
+                <img ng-src="{{user.image_url | default_profile}}" class="profile_thumb circular">
                 <div layout="column" layout-align="start start">
                     <h2>Shekhar Sahu</h2>
                     <div>Shared on 10Feb</div>

@@ -1,5 +1,5 @@
 module FileParser
-	include BooksHelper
+	# include BooksHelper
 
 	BookKeys = ["table_of_contents", "series", "lc_classifications", "contributions", "edition_name", "title", "languages", "subjects", "publish_country", "by_statement", "type", "revision", "publishers", "last_modified", "key", "publish_places", "pagination", "dewey_decimal_class", "notes", "number_of_pages", "lccn", "isbn_10", "publish_date", "authors", "oclc_number", "subtitle", "genres", "title_prefix", "physical_format", "weight", "isbn_13", "covers", "latest_revision", "physical_dimensions", "identifiers", "subject_place", "source_records", "created", "works", "other_titles", "description", "url", "work_titles", "ocaid", "oclc_numbers"]
 

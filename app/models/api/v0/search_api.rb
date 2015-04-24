@@ -3,37 +3,43 @@ module Api
 		class SearchApi
 
 			def self.search(q, count, type)
-				neo_init
-				results = self._get_search_clause(q, count, type, nil).execute
-				
-				if results.present?
-					results
+				if(q && q.length >= 3)
+					results = self._get_search_clause(q, count, type, nil).execute
+					
+					if results.present?
+						results
+					else
+						results = self._get_search_clause(q, count, type, true).execute
+						results.push({:fuzzy => true})
+					end
 				else
-					results = self._get_search_clause(q, count, type, true).execute
-					results.push({:fuzzy => true})
+					results = []
 				end
 				results
 			end
 
 			private
-			def self.neo_init
-                @neo = Neography::Rest.new
-            end
 
             def self._get_search_clause(q, count, type, fuzzy=nil)
             	count ||= 0
 				q = q.search_ready
-
-				connector = fuzzy.present? ? "~0.7" : "*"
-				case type
-				when 'BOOK'
+ 				case type
+				when 'Book'
 					clause = Search.new(q, count, fuzzy).book_by_title
-				when 'AUTHOR'
+				when 'Author'
 					clause = Search.new(q, count, fuzzy).author_by_name
-				when 'READER'
+				when 'Person'
 					clause = Search.new(q, count, fuzzy).user_by_name
-				when 'GENRE'
-					clause = Search.new(q, count, fuzzy).genre_by_name
+				when 'Genre'
+					clause = Search.new(q, count, fuzzy).category_by_name
+				when 'Community'
+					clause = Search.new(q, count, fuzzy).community_by_name
+				when 'News'
+					clause = Search.new(q, count, fuzzy).news_by_title
+				when 'Blog'
+					clause = Search.new(q, count, fuzzy).blog_by_title
+				when 'Label'
+					clause = Search.new(q, count, fuzzy).label_by_name
 				else
 					clause = Search.new(q, count, fuzzy).basic
 				end

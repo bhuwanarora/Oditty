@@ -1,24 +1,22 @@
 <md-card class="community">
-    <md-card-content>
-        <section layout="row" layout-align="space-between">
-            <div layout="row">
-                <img src="/assets/community_icon.png" class="community_icon">
-                <div layout="column" layout-align="start start">
-                    <h2>Spacecrafts</h2>
-                    <div>Shared on 10Feb</div>
-                </div>
-            </div>
-            <div layout="row" layout-align="end start">
-                <md-button class="md-primary">Join Community</md-button>
-            </div>
-        </section>
-        <p>
-            The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-            two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-        </p>
+    <md-card-content class="content">
+        <h3><a ng-click="goto_community_page(community_feed.id)">{{community_feed.title}}</a></h3>
+        <div>{{community_feed.description}}</div>
     </md-card-content>
-    <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQox0nlxDovuLYNFipkkbIyE_yuQEVfqjL4qf6y0VtSaA6F2rpH" alt="Washed Out">
-    <md-card-content class="footer" ng-include src="'/assets/angular/html/shared/partials/card_footer.html'">
+    <md-card-content class="circles clear">
+        <d3-click-circles news-tags="community_feed.communities" 
+            news-id="community_feed.id"
+            index="$index"
+            on-center-click="goto_community_page(community_feed.id)" 
+            on-click="goto_community_page(community_feed.id)"
+            layout-align="center" 
+            layout="center">
+            <div class="bubbleChart animate-fast"></div>
+        </d3-click-circles>
+    </md-card-content>
+    <md-card-content class="footer" 
+                     ng-init="bookmark_object_id = community_feed.id, bookmark_object_type = 'Community'"
+                     ng-include src="'/assets/angular/html/shared/partials/card_footer.html'">
     </md-card-content>
 </md-card>
 <style>
@@ -29,5 +27,22 @@
 
     .community h2{
         margin: 16px 0px 0px 0px !important;
+    }
+
+    .community .circles{
+        background-color: #f5f5f5;
+        order: 2;
+    }
+
+    .community .circles svg{
+        max-height: 400px;
+    }
+
+    .community .content{
+        order: 1;
+    }
+
+    .community .footer{
+        order: 3;
     }
 </style>

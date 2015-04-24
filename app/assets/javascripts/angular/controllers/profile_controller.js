@@ -12,7 +12,8 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 			var books = [];
 			angular.forEach(data.books_id, function(value, index){
 				var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-				var json = {"color": ColorConstants.value[random_int], "book_id": value, "title": data.books_title[index], "author_name": data.books_author_name[index], "isbn": data.books_isbn[index]};
+				var color = ColorConstants.value[random_int];
+				var json = {"color": color, "book_id": value, "title": data.books_title[index], "author_name": data.books_author_name[index], "isbn": data.books_isbn[index], "random_style": {"background-color": color}};
 				this.push(json);
 			}, books)
 
@@ -41,6 +42,8 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 				case "EndorseNode":
 					message = "Endorsed this book.";
 					break;
+				case "RatingNode":
+					message = "Gave "+value.node.content + " rating on 10.";
 			}
 			return message;
 		}
@@ -121,6 +124,10 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 	}
 
 	$scope.search_book = function(event){
+		
+	}
+
+	$scope.follow_user = function(){
 		
 	}
 	

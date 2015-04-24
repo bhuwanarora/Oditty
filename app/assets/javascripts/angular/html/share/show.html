@@ -1,46 +1,59 @@
-<div ng-controller="shareController" class="share animate-fast" layout="row" 
-	 ng-if="info.show_share || info.show_book_share"
-	 layout-align="start start" layout-padding>
-	<div flex="10">
-		<div ng-click="back($event)" layout="row" layout-align="center center" class="custom_button">
-			<h1 layout-padding>
-				<span class="icon-angle-left"></span>
-			</h1>
+<div ng-controller="shareController" ng-if="info.show_share || info.show_book_share">
+	<div class="compact_status" ng-include src="'/assets/angular/html/share/_status.html'"></div>
+	<div class="share animate-fast" 
+		 layout="row" 
+		 layout-align="start start" layout-padding>
+		<div flex="10">
+			<div ng-click="back($event)" layout="row" layout-align="center center" class="custom_button">
+				<h1 layout-padding>
+					<span class="icon-angle-left"></span>
+				</h1>
+			</div>
 		</div>
-	</div>
-	<div flex="80" layout="column">
-		<div ng-if="info.show_book_share" layout="row" layout-align="end">
-			<md-input-container layout-margin class="share_book">
-				<label>Add a book</label>
-			    <input ng-model="info.status_book" 
-			    	   ng-keydown="search_book($event)"
-			    	   set-focus="info.show_book_share"/>
-			</md-input-container>
-		</div>
-		<div layout="row" flex ng-if="info.show_share">
-			<img class="circular user_image" src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
-			<div layout="column" class="input_container">
-				<md-input-container layout-margin 
-					style="font-family: 'Inconsolata', 'Courier New', serif;" 
-					class="textarea_container">
-					<div ng-model="info.wrapper_status" class="textarea_wrapper" ng-bind-html="info.wrapper_status">
+		<div flex="80" layout="column">
+			<div ng-if="info.show_book_share" layout="row" layout-align="end">
+				<md-autocomplete
+					layout-margin 
+		            class="share_book"
+		            md-search-text="search_tag.book"
+		            md-items="item in searched_books | filter:search_tag.book"
+		            md-search-text-change="search_books(search_tag.book)"
+		            placeholder="Add a book...">
+		        </md-autocomplete>
+		        <md-content ng-if="searched_books && searched_books.length > 0" 
+                        layout-wrap layout="row" layout-padding class="white searched_books">
+	                <div layout-padding ng-repeat="book in searched_books" >
+	                    <md-button ng-click="add_book(book)" class="clear book_image_cover">
+	                        <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
+	                    </md-button>
+	                </div>
+	            </md-content>
+			</div>
+			<div layout="row" flex ng-if="info.show_share">
+				<img class="circular user_image" ng-src="{{user.image_url | default_profile}}"/>
+				<div layout="column" class="input_container">
+					<md-input-container layout-margin 
+						style="font-family: 'Inconsolata', 'Courier New', serif;" 
+						class="textarea_container">
+						<div ng-model="info.wrapper_status" class="textarea_wrapper" ng-bind-html="info.wrapper_status">
+						</div>
+				        <textarea name="text_area" 
+				        		  set-focus="info.show_share" 
+				        		  ng-keydown="handle_text_input($event)"
+				        		  placeholder="Share your reading journey..." 
+				        		  ng-model="info.status">
+				        </textarea>
+				    </md-input-container>
+			    	
+					<div class="select_mood custom_button" 
+							ng-click="show_share_options($event)">
+						<span class='icon-happy'></span>
 					</div>
-			        <textarea name="text_area" 
-			        		  set-focus="info.show_share" 
-			        		  ng-keydown="handle_text_input($event)"
-			        		  placeholder="Share your reading journey..." 
-			        		  ng-model="info.status">
-			        </textarea>
-			    </md-input-container>
-		    	
-				<div class="select_mood custom_button" 
-						ng-click="show_share_options($event)">
-					<span class='icon-happy'></span>
 				</div>
 			</div>
 		</div>
+	    <div flex="10"></div>
 	</div>
-    <div flex="10"></div>
 </div>
 
 <style>
@@ -124,5 +137,18 @@
 	    display: table-cell;*/
 	}
 
+	.compact_status{
+		position: fixed;
+		top: 10px;
+		margin-left: 100px;
+		z-index: 4;
+	}
+
+	.searched_books{
+		position: fixed;
+		height: 300px !important;
+		left: 50px;
+		top: 100px;
+	}
 
 </style>

@@ -5,7 +5,7 @@ class User < Neo
 	end
 
 	def self.link_primary_labels
-		"  CREATE (user)-[:Labelled{user_id:ID(user)}]->(label) WITH user, label "
+		" CREATE (user)-[:Labelled{user_id:ID(user)}]->(label) WITH user, label "
 	end
 
 	def self.match_group ids
@@ -37,11 +37,11 @@ class User < Neo
 	end
 
 	def authors_of_books_bookmarked
-		optional_match_books_bookmarked + Author.match_books + ", user "
+		optional_match_books_bookmarked + Author.match_author_for_books + ", user "
 	end
 
 	def favourite_author
-		optional_match_books_bookmarked + Author.match_books + ", user, COUNT(book) as books_count " 
+		optional_match_books_bookmarked + Author.match_author_for_books + ", user, COUNT(book) as book_count " 
 	end
 
 	def self.set_rating_count operation
@@ -243,7 +243,7 @@ class User < Neo
 	end
 
 	def self.get_visited_books
-		Bookmark::Type::Visited.match + Book.order_desc + Book.limit(3)  +" WITH user, " + Book.collect_map("books" => Book.grouped_basic_info )
+		Bookmark::Type::Visited.match("book") + Book.order_desc + Book.limit(3)  +" WITH user, " + Book.collect_map("books" => Book.grouped_basic_info )
 	end
 
 	def get_followers

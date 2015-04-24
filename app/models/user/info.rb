@@ -13,8 +13,8 @@ class User::Info < User
 		" SET user.email = \""+email+"\" "
 	end
 
-	def self.set_verified_status 
-		" SET user.verified = true " 
+	def self.set_verified_true 
+		" FOREACH (ignore IN CASE WHEN user.verification_time < " + (Time.now.to_i - Constant::Count::VerificationExpirySeconds).to_s + " THEN [1] ELSE [] END | SET user.verified = true " + User::Info.set_verification_token("null") + User::Info.set_verification_time("null") + " )  "
 	end
 
 	def self.set_thumb thumb
