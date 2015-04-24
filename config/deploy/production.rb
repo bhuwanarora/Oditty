@@ -1,10 +1,10 @@
 set :stage, :staging
-server '52.74.158.10',
-user: 'ubuntu',
+server '52.74.162.19',
+user: 'centos',
 roles: %w{app},
 ssh_options: {
-	user: 'ubuntu', # overrides user setting above
-	keys: %w(/home/palashgupta577/Downloads/rd_staging.pem),
+	user: 'centos', # overrides user setting above
+	keys: %w(/home/palashgupta577/Downloads/rd_production.pem),
 	forward_agent: false,
 	auth_methods: %w(publickey password),
 	# password: ''
