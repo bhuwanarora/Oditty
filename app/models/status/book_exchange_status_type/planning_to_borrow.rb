@@ -8,4 +8,8 @@ class Status::BookExchangeStatusType::PlanningToBorrow < Status::BookExchangeSta
 	def create
 		Status::BookExchangeStatusType.new(@book_id, @user_id).create(@exchange_status)
 	end
+
+	def match
+		super(@exchange_status)
+	end
 end
