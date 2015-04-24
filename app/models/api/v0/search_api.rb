@@ -38,6 +38,8 @@ module Api
 					clause = Search.new(q, count, fuzzy).news_by_title
 				when 'Blog'
 					clause = Search.new(q, count, fuzzy).blog_by_title
+				when 'Label'
+					clause = Search.new(q, count, fuzzy).label_by_name
 				else
 					clause = Search.new(q, count, fuzzy).basic
 				end

@@ -367,6 +367,10 @@ module Api
 		    	message
 			end
 
+			def self.get_lenders book_id, user_id
+				Book.new(book_id).get_lenders user_id											
+			end
+
 			private
 			def self._fb_set_clause params
 				set_clause = ""

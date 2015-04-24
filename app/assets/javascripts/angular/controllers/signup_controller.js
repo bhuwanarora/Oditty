@@ -96,7 +96,6 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
             $rootScope.user.profile_status = data.profile_status;
             $rootScope.user.logged = true;
             $rootScope.user.id = data.user_id;
-            debugger
             window.location.href = "/home";
         }
 

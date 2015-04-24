@@ -1,4 +1,4 @@
-homeApp.controller('shelfController', ['$scope', '$mdBottomSheet', '$mdToast', 'shelfService', 'locals', function($scope, $mdBottomSheet, $mdToast, shelfService, locals){
+homeApp.controller('shelfController', ['$scope', '$mdBottomSheet', '$mdToast', 'shelfService', '$rootScope', function($scope, $mdBottomSheet, $mdToast, shelfService, $rootScope){
     
     $scope.listItemClick = function($index) {
         var clickedItem = $scope.items[$index];
@@ -18,8 +18,8 @@ homeApp.controller('shelfController', ['$scope', '$mdBottomSheet', '$mdToast', '
         else{
             var status = false;
         }
-        var id = "";
-        var type = "BOOK";
+        var id = $rootScope.bookmark_object.id;
+        var type = $rootScope.bookmark_object.type;
         var shelf = label.label_key;
         var params = {"id": id, "type": type, "shelf": shelf, "status": status};
         
@@ -33,9 +33,25 @@ homeApp.controller('shelfController', ['$scope', '$mdBottomSheet', '$mdToast', '
     };
 
     $scope.add_new_label = function(){
-        // if $rootScope.labels include $scope.new_label then push a toast that a label already exists.
-        // else call the below service to add the new label.
-        shelfService.add_new_label($scope.new_label);
+        var label_exists = false;
+        if(angular.isUndefined($scope.new_label) || ($scope.new_label == "")){
+            alert("Enter a valid shelf.");
+        }
+        else{
+            angular.forEach($rootScope.labels, function(value){
+                if(value.label_name.toLowerCase() == $scope.new_label.toLowerCase()){
+                    label_exists = true;
+                }
+            });
+
+            if(!label_exists){
+                shelfService.add_new_label($scope.new_label);
+            }
+            else{
+                alert("Shelf already exists.");
+                $scope.new_label = "";
+            }
+        }
     }
 
     var _init = (function(){
@@ -45,7 +61,6 @@ homeApp.controller('shelfController', ['$scope', '$mdBottomSheet', '$mdToast', '
             left: false,
             right: true
         };
-        $scope.object_id = locals;
     }());
 
 }]);
