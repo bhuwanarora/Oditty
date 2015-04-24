@@ -156,7 +156,8 @@ module.exports = function(grunt) {
                     "app/assets/javascripts/min/angular/services/genre_service.js",
                     "app/assets/javascripts/min/angular/services/book_service.js",
                     "app/assets/javascripts/min/angular/services/author_service.js",
-                    "app/assets/javascripts/min/angular/services/shelf_service.js"
+                    "app/assets/javascripts/min/angular/services/shelf_service.js",
+                    "app/assets/javascripts/min/angular/services/shared_service.js"
                 ],
 
                 'app/assets/javascripts/min/angular/controllers.js': [

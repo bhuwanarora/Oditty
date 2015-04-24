@@ -1,4 +1,4 @@
-homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$location", "bookService", function ($timeout, $rootScope, ColorConstants, $location, bookService){
+homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$location", "bookService", "shelfService", "$mdToast", function ($timeout, $rootScope, ColorConstants, $location, bookService, shelfService, $mdToast){
 
     this.get_popular_books = function($scope){
         var ready_to_load = !$scope.info.loading && !$scope.constant.show_book && !
@@ -9,6 +9,42 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
             $scope.info.loading = true;
             this.load_popular_books($scope);
         }
+    }
+
+    this.toggle_bookmark = function(label, data){
+        var toast_position = {
+            bottom: false,
+            top: true,
+            left: false,
+            right: true
+        };
+
+        var _getToastPosition = function(){
+            return Object.keys(toast_position)
+                          .filter(function(pos) { return toast_position[pos]; })
+                          .join(' ');
+        }
+
+        if(angular.isUndefined(data) || !data){
+            var status = true;
+        }
+        else{
+            var status = false;
+        }
+
+
+        var id = $rootScope.bookmark_object.id;
+        var type = $rootScope.bookmark_object.type;
+        var shelf = label.label_key;
+        var params = {"id": id, "type": type, "shelf": shelf, "status": status};
+        
+        shelfService.bookmark(params);
+        $mdToast.show({
+            controller: 'toastController',
+            templateUrl: 'assets/angular/html/shared/toast/bookmark_action.html',
+            hideDelay: 6000,
+            position: _getToastPosition()
+        });
     }
 
     this.load_popular_books = function($scope){
