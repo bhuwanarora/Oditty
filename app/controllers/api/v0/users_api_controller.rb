@@ -100,10 +100,11 @@ module Api
 			def user_profile_info
 				if params[:id].present?
 					user_id = params[:id]
+					info = UserApi.get_profile_info_of_another(session[:user_id], user_id)
 				else
 					user_id = session[:user_id]
+					info = UserApi.get_profile_info(user_id)
 				end
-				info = UserApi.get_profile_info(user_id)
 				render :json => info, :status => 200
 			end
 
