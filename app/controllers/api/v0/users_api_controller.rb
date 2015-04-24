@@ -28,7 +28,7 @@ module Api
 			end
 
 			def bookmark
-				params = JSON.parse(JSON.parse(params)["q"])
+				params = JSON.stringify(params["q"])
 				id = params["id"]
 				type = params["type"]
 				shelf = params["shelf"]
