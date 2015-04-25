@@ -96,6 +96,7 @@ gem 'angular_rails_csrf'
 gem 'capistrano-ssh-doctor', '~> 1.0'
 gem 'capistrano-npm'
 gem 'capistrano-grunt', github: 'roots/capistrano-grunt'
+# gem 'capistrano-ssh-doctor', '~> 1.0'
 group :development do
 	gem "byebug", "~> 2.5.0"
 	gem 'annotate'

@@ -67,6 +67,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     $scope.show_share_page = function(event){
         var _post_status = function(){
             var status = {};
+
             if(angular.isDefined($scope.info.feelings) && ($scope.info.feelings.length > 0)){
                 status = angular.extend(status, {"feelings": $scope.info.feelings});
             }
@@ -95,13 +96,16 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
                 status = angular.extend(status, {"book_exchange_status": $scope.info.book_exchange_status})
             }
 
-            statusService.post_status(status);
-            $scope.info.status = "";
-            $scope.info.wrapper_status = "";
-            $scope.type_icon_pressed = {"margin-right": "60vw"};
-            $timeout(function(){
-                $scope.type_icon_pressed = {"margin-right": "0px"};
-            }, 100);
+            if(Object.keys(status).length != 0){
+                statusService.post_status(status);
+                $scope.info.status = "";
+                $scope.info.wrapper_status = "";
+                $scope.type_icon_pressed = {"margin-right": "60vw"};
+                $timeout(function(){
+                    $scope.type_icon_pressed = {"margin-right": "0px"};
+                }, 100);
+            }
+
         }
 
         if(!$scope.info.show_share){

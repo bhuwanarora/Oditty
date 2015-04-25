@@ -1,10 +1,10 @@
 set :stage, :staging
-server '52.74.166.1',
+server '52.74.154.196',
 user: 'ubuntu',
 roles: %w{app},
 ssh_options: {
 	user: 'ubuntu', # overrides user setting above
-	keys: %w(/Users/bhuwan/Downloads/rd_staging.pem),
+	keys: %w(/home/akki/Desktop/keys/production_v1.pem),
 	forward_agent: false,
 	auth_methods: %w(publickey password),
 	# password: ''
