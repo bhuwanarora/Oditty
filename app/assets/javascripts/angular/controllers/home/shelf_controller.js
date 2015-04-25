@@ -20,9 +20,10 @@ homeApp.controller('shelfController', ['$scope', '$mdBottomSheet', '$mdToast', '
                     label_exists = true;
                 }
             });
-
             if(!label_exists){
-                shelfService.add_new_label($scope.new_label);
+                shelfService.add_new_label($scope.new_label).then(function(data){
+                    $scope.labels.push(data);
+                });
             }
             else{
                 alert("Shelf already exists.");
