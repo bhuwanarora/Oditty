@@ -187,7 +187,7 @@ class UsersController < ApplicationController
 
   def verify
         @message = Api::V0::UserApi.verify(session, params)
-        render :layout => "clean"
+        render :layout => "backend"
   end
 
   def recover_password
@@ -195,7 +195,7 @@ class UsersController < ApplicationController
     @user_id = info["user_id"]
     @user_exists = info["user_exists"]
     @message = info["message"]
-    render :layout => "clean"
+    render :layout => "backend"
   end
 
   def save_password
