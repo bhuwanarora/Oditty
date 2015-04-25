@@ -3,25 +3,17 @@
             layout="column" 
             flex-sm="100">
         <h3>{{book.title}}</h3>
-<<<<<<< HEAD
-        <md-content class="summary">{{book.description}}</md-content>
-        <div  flex="10"><md-slider flex="20" md-discrete ng-model="book.user_rating" ng-change="rate_book(book)"
-                    step="1" min="1" max="10" aria-label="rating">
-         </md-slider><md-tooltip>
-        Rate your book
-      </md-tooltip>
-        </div>
-         <a ng-href="/author?q={{book.author_id}}">{{book.author_name}}</a>
-        
-=======
         <a ng-href="/author?q={{book.author_id}}">{{book.author_name}}</a>
-        <md-slider flex="20" md-discrete 
+        <div flex="10"><md-slider flex="20" md-discrete 
                     class="rate_slider"
                     ng-model="book.user_rating" ng-change="rate_book(book)"
                     step="1" min="1" max="10" aria-label="rating">
         </md-slider>
+        <md-tooltip>
+           Rate your book
+         </md-tooltip>
+        <div>
         <md-content class="summary">{{book.description}}</md-content>
->>>>>>> ff815c73e5b00cfbdae0cab2065a2c4dbdfa0bc5
     </div>
     <div flex="5" hide-sm>
         <div class="vertical-text spine" 
