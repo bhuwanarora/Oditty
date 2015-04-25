@@ -1,4 +1,4 @@
-homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'genreService', 'authorService', 'WebsiteUIConstants', 'SearchUIConstants', 'timeGroupService', 'readingTimeService', 'infinityService', 'ColorConstants', 'sharedService', function($scope, $rootScope, $timeout, genreService, authorService, WebsiteUIConstants, SearchUIConstants, timeGroupService, readingTimeService, infinityService, ColorConstants, sharedService){
+homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'genreService', 'authorService', 'WebsiteUIConstants', 'SearchUIConstants', 'timeGroupService', 'readingTimeService', 'infinityService', 'ColorConstants', 'sharedService', '$mdBottomSheet', function($scope, $rootScope, $timeout, genreService, authorService, WebsiteUIConstants, SearchUIConstants, timeGroupService, readingTimeService, infinityService, ColorConstants, sharedService, $mdBottomSheet){
 
     $scope._get_genres = function(){
     	if(angular.isUndefined($scope.info.genres) || $scope.info.genres.length == 0){
@@ -11,6 +11,10 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
 	    		}, $scope.info.genres);
 	    	});
 		}
+    }
+
+    $scope.close_filters = function(){
+        $mdBottomSheet.hide();
     }
 
     $scope._get_authors = function(){
@@ -39,10 +43,9 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
     var _set_books = function(){
         // $scope.info.books = [];
         $scope.info.infinity = true;
-        $scope.info.loading = true;
         if(Object.keys($rootScope.filters).length == 0){
             $scope.info.books = [];
-            $scope.get_popular_books();
+            sharedService.get_popular_books($scope);
         }
         else{
             infinityService.get_books(0).then(function(data){
@@ -68,7 +71,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         }
         else{
             $rootScope.filters.skip_count = skip_count;
-            sharedService.get_popular_books();
+            sharedService.get_popular_books($scope);
         }
     }
 
