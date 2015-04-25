@@ -191,14 +191,11 @@ class UsersController < ApplicationController
   end
 
   def recover_password
-    begin
-      info = Api::V0::UserApi.recover_password(params[:e])
-      @user_id = info["user_id"]
-      @user_exists = info["user_exists"]
-      @message = info["message"]
-    rescue
-      layout = " "
-      render :layout => "backend"
+    info = Api::V0::UserApi.recover_password(params[:e])
+    @user_id = info["user_id"]
+    @user_exists = info["user_exists"]
+    @message = info["message"]
+    render :layout => "backend"
   end
 
   def save_password

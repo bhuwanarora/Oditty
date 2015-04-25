@@ -69,4 +69,12 @@ class Author < Neo
 	def self.get_by_indexed_name indexed_name
 		Author.search_by_indexed_name(indexed_name) + Author.return_init + Author.basic_info 
 	end
+
+	def self.match_active
+		" MATCH (author:Author :Active) WITH author "
+	end
+
+	def self.get_active_authors skip_count 
+		Author.match_active + Author.order_by("author.priority DESC ") + Author.skip(skip_count) + Author.limit(Constant::Count::FollowFavoriteAuthors) + Author.return_group(Author.basic_info)
+	end
 end

@@ -1,7 +1,7 @@
-class Bookmark::Type::DidntFeelLikeReadingItAfterAPoint < Bookmark::Type
+class Bookmark::Type::IntendingToRead < Bookmark::Type
 	def initialize(user_id, book_id)
-		@key = "DidntFeelLikeReadingItAfterAPoint"
-		@name = "Didn't feel like reading it after a point"
+		@key = "IntendingToRead"
+		@name = "Intend to read"
 		@user_id = user_id
 		@book_id = book_id
 		@bookmark = Bookmark.new(@user_id, @book_id, @key)
@@ -14,7 +14,7 @@ class Bookmark::Type::DidntFeelLikeReadingItAfterAPoint < Bookmark::Type
 
 	def self.get_all user_id
 		@key ||= "DidntFeelLikeReadingItAfterAPoint"
-		Bookmark::Type::HaveLeftAMarkOnMe.match(user_id) + " RETURN " + Book.basic_info
+		Bookmark::Type::IntendingToRead.match(user_id) + " RETURN " + Book.basic_info
 	end
 
 	def add

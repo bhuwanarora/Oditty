@@ -290,7 +290,7 @@ module Api
 
 			def recover_password
 				message = Api::V0::UserApi.recover_password(params[:email])
-				render :json => {:message => message}, :status => 200
+				render :json => message, :status => 200
 			end
 
 			# def get_news_feed
