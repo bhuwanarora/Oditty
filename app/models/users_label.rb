@@ -19,7 +19,7 @@ class UsersLabel < Neo
 	end
 
 	def self.create_new(user_id, label)
-		User.new(user_id).match + " MERGE (label:Label{name:\""+label+"\", public:true}) ON CREATE SET label.indexed_label_name = \"" + label.search_ready + "\" MERGE (user)-[:Labelled]->(label) "
+		User.new(user_id).match + " MERGE (label:Label{name:\""+label+"\", public:true}) ON CREATE SET label.indexed_label_name = \"" + label.search_ready + "\" MERGE (user)-[:Labelled]->(label) " + User.return_init + Label.basic_info
 	end
 
 	def self.create(user_id, label)

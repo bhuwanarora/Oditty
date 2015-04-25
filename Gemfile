@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.1'
 
-# gem 'pg', '~> 0.17.1'
+gem 'pg', '~> 0.17.1'
 gem 'sass-rails', '~> 4.0.0'
 #for attr accessibel in rails4
 gem 'protected_attributes'

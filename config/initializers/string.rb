@@ -18,7 +18,8 @@ class String
             .gsub(".","")
             .gsub("\'","")
             .gsub(",","")
-            .gsub("\"","\\\"") rescue ""
+            .gsub("\"","\\\"")
+            .gsub("\"",%q(\\\')) rescue ""
     end
 
 	def is_json?
