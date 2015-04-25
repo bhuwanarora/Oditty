@@ -45,7 +45,7 @@ set :deploy_to, '/home/centos/deploy'
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 # Default value for default_env is {}
-set :default_env, { path: "~/.rbenv/bin/rbenv:$PATH" }
+set :default_env, { path: "~/.rbenv/shims:~/.rbenv/bin:$PATH" }
 #set :default_env, { path: "/opt/ruby/bin:$PATH" }
 # set :whenever_environment, defer { stage }
 # Default value for keep_releases is 5
@@ -81,7 +81,7 @@ namespace :deploy do
         puts " updating crontab file"
         # execute "cd #{release_path} && #{try_sudo} GEM_HOME=/opt/local/ruby/gems RAILS_ENV=#{} bundle exec whenever --clear-crontab #{application} --user #{ubuntu}"
         # execute "cd #{release_path} && #{try_sudo} GEM_HOME=/opt/local/ruby/gems RAILS_ENV=production bundle exec whenever --update-crontab #{application} --user #{ubuntu}"
-        execute "cd #{release_path} && bundle exec whenever --update-crontab store "
+        execute "cd #{release_path} && whenever --update-crontab store "
       end  
     end
   end
