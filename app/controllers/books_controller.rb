@@ -303,7 +303,7 @@ class BooksController < ApplicationController
     end
 
     #clause = "MATCH (t:News) OPTIONAL MATCH (t)-[:RelatedBooks]->(b:Book) RETURN t.name, t.timestamp, ID(t), COLLECT(b.title), t.status, COLLECT(ID(b)), t.title, t.content, t.searched_words, t.url, t.thumbnail_url, t.redirect_url, t.publisher, t.thumb ORDER BY toInt(t.timestamp) DESC LIMIT 50 "
-     clause = " MATCH (c:Community)<-[:HasCommunity]-(t:News)  RETURN t.name, COLLECT(c.name) AS communities, t.timestamp, ID(t), t.status, t.title, t.content, t.searched_words, t.url, t.thumbnail_url, t.redirect_url, t.publisher, t.thumb ORDER BY toInt(t.timestamp) DESC LIMIT 50 "
+     clause = " MATCH (c:Community)<-[:HasCommunity]-(t:News)  RETURN t.name, COLLECT(c.name) AS communities, t.timestamp, ID(t) AS id_news, t.status, t.title, t.description,t.image_url, t.thumbnail_url, t.redirect_url, t.publisher, t.thumb ORDER BY toInt(t.timestamp) DESC LIMIT 50 "
     @trends = clause.execute
   end
 
@@ -311,6 +311,7 @@ class BooksController < ApplicationController
     begin
       @neo = Neography::Rest.new
       clause = "MATCH (t:News), (t)-[r]-() WHERE ID(t)="+params[:id].to_s+" DELETE t, r"
+      
       @neo.execute_query clause
       render :json => {:message => "Success"}, :status => 200
     rescue Exception => e

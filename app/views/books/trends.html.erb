@@ -1,4 +1,4 @@
-<!-- t.name, t.timestamp, ID(t), t.status, COLLECT(ID(b)), t.title, t.content, t.searched_words, t.url, t.thumbnail_url, t.redirect_url, t.publisher, t.thumb
+<!-- t.name, t.timestamp, ID(t), t.status, COLLECT(ID(b)), t.title, t.description, t.searched_words, t.url, t.thumbnail_url, t.redirect_url, t.publisher, t.thumb
 	communities
 -->
 <table>
@@ -6,7 +6,7 @@
 		
 		<!-- <th>Trending</th>-->
 		<th>Title</th>
-		<th>Picture</th>
+		<th></th>
 		
 		<th>Community</th>
 		<th>Books</th>
@@ -16,26 +16,16 @@
 	</tr>
 	<% if @trends %>		
 		<% @trends.sort_by!{|s| Time.at(s[1].to_i)}.reverse.each do |trend|%>
-			<tr class="<% if trend["t.content"].present? && trend["t.content"] == 1 %>active<% end %>" id="id_"+ trend["ID(t)"]>				
-				<td><%= trend["t.title"]%> <br> <%= Time.at(trend["t.timestamp"].to_i).strftime("%d-%m-%y") %></td>
-				<td>Picture <td>
-				<!-- <td><a href="<%= trend[9] %>" target="_blank"><%= trend[0] %></a></td>-->
-								
+			<tr class="<% if trend["t.description"].present? && trend["t.description"] == 1 %>active<% end %>" id="id_"+ trend["ID(t)"]>				
 				
-				<td><%= trend["t.status"] %></td>
-				
+				<td title= "<%=trend["t.description"]%>"><%= trend["t.title"]%> <br> <%= Time.at(trend["t.timestamp"].to_i).strftime("%d-%m-%y") %></td>
+				<td><img src="<%=trend["t.image_url"] %>" alt="" border=3 height=50 width=100> </td>
+
 				<td>
 					<select class="community_present" size=3 MULTIPLE>
 						<%trend["communities"].each do |c|%>
 							<OPTION><%=c%></OPTION>
-						<%end%>
-						
-						<% if(trend["communities"]) %>
-							<% trend["communities"].each do |community| %>
-								<option class="community_select"><%community%> </option>
-							<% end %>
-						<% end %>
-
+						<%end%>						
 					</select>
 				</td>
 
@@ -50,17 +40,12 @@
 
 				<form action="<%= trends_path %>">
 
-					<input type="hidden" value="<%= trend[2] %>" name="trending_id"/>
-					<input type="hidden" value="<%= trend["t.searched_words"] %>" name="book_ids" />
-					<% if trend["t.content"].present? && trend["t.content"] == 1 %>
-						<td><input type="checkbox" name="status" checked></td>
-					<% else %>
-						<td><input type="checkbox" name="status"></td>
-					<% end %>
+					<input type="hidden" value="<%= trend["id_news"] %>" name="trending_id"/>
+					<input type="hidden" value="<%= trend["t.searched_words"] %>" name="book_ids" />					
 					<td><input type="submit" value="Submit"></td>
 				</form>
 				<td class="remove_trend">x
-				<input type="hidden" value="<%= trend[2] %>" class="trending_id"/></td>
+				<input type="hidden" value="<%= trend["id_news"] %>" class="trending_id"/></td>
 			</tr>
 		<% end %>
 	<% end %>
