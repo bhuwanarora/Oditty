@@ -49,6 +49,7 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
         $scope.info.active_tag = $scope.active_tag;
 
         communityService.get_news_info(news_id).then(function(data){
+            data = data[0];
             $scope.active_tag = data.most_important_tag[0];
             var most_important_tag = {"name": $scope.active_tag.name, 
                                 "view_count": $scope.active_tag.view_count, 
