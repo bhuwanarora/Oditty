@@ -55,19 +55,19 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
     $scope.recover_password = function(){
         var success_callback = function(data){
             $scope.loading_icon = false;
-            alert(data.message);
+            $scope.user.error_message = data.message;
             $rootScope.user.password = null;
         }
 
         var error_callback = function(data){
             $scope.$apply(function(){
                 $scope.loading_icon = false;
-                alert(data.message);
+                $scope.user.error_message = data.message;
                 $rootScope.user.password = null;
             });
         }
         if(!$rootScope.user.email){
-            alert(LoginConstants.EmailNotPresent);
+            $scope.user.error_message = LoginConstants.EmailNotPresent;
         }
         else{
             $scope.loading_icon = true;
@@ -102,24 +102,24 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
         var error_callback = function(reason){
             console.debug("error_callback", reason);
             $scope.loading_icon = false;
-            alert(reason.data.message);
+            $scope.user.error_message = reason.data.message;
             $rootScope.user.password = null;
         }
 
         if(!$rootScope.user.email){
-            alert(LoginConstants.EmailNotPresent);
+            $scope.user.error_message = LoginConstants.EmailNotPresent;
         }
         else if(!$rootScope.user.password) {
-            alert(LoginConstants.PasswordNotPresent);
+            $scope.user.error_message = LoginConstants.PasswordNotPresent;
         }
         else if(!min_length_pattern.test($rootScope.user.password) && (!old_user)){
-            alert(LoginConstants.PasswordLengthError);
+            $scope.user.error_message = LoginConstants.PasswordLengthError;
         }
         else if((not_repeat_pattern.test($rootScope.user.password)) && (!old_user)){
-            alert(LoginConstants.ChooseAMoreSecurePassword);
+            $scope.user.error_message = LoginConstants.ChooseAMoreSecurePassword;
         }
         else if((max_length_pattern.test($rootScope.user.password)) && (!old_user)){
-            alert(LoginConstants.MaximumPasswordLengthError);
+            $scope.user.error_message = LoginConstants.MaximumPasswordLengthError;
         }
         else{
             $scope.loading_icon = true;
