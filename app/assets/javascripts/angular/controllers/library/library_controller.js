@@ -100,7 +100,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
     }
 
     $scope.toggle_infinity_content = function(){
-        if(angular.isDefined($scope.active_tab.infinity) && $scope.active_tab.infinity){
+        if(angular.isDefined($scope.info.infinity) && $scope.info.infinity){
             $scope._get_personalised_suggestions();
         }
         else{
@@ -171,6 +171,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         $scope.search_tag = {};
         $scope.active_tab = {};
         $scope.info.categories = [];
+        // $scope.info.infinity = true;
     }());
 
 

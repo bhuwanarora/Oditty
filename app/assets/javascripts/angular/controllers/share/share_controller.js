@@ -1,5 +1,22 @@
 homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'ShareOptions', '$routeParams', '$mdBottomSheet', 'statusService', 'WebsiteUIConstants', 'bookService', 'ColorConstants', 'sharedService', function($scope, $rootScope, $timeout, ShareOptions, $routeParams, $mdBottomSheet, statusService, WebsiteUIConstants, bookService, ColorConstants, sharedService){
 
+    $scope.play_type_key = function(event){
+        if($scope.info.show_share){
+            if(angular.isUndefined($scope.current_track) || $scope.current_track == 0){
+                $scope.current_track = 1;
+                document.getElementById('audiotag1').play();
+            }
+            else if($scope.current_track == 1){
+                $scope.current_track = 2;
+                document.getElementById('audiotag2').play();
+            }
+            else{
+                $scope.current_track = 0;
+                document.getElementById('audiotag3').play();
+            }
+            event.stopPropagation();
+        }
+    }
     $scope.show_share_options = function(event){
         $mdBottomSheet.show({
             templateUrl: 'assets/angular/html/share/_share_options.html',
@@ -15,6 +32,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     $scope.back = function($event){
         $scope.info.show_share = false;
         $scope.info.show_book_share = false;
+        delete $rootScope.active_shelf;
         event.stopPropagation();
     }
 
@@ -35,10 +53,15 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     }
 
     $scope.add_book = function(book){
-        $rootScope.bookmark_object = {"id": book.id, "type": 'Book'};
-        sharedService.toggle_bookmark($rootScope.active_shelf, true);
-        delete $rootScope.active_shelf;
-        $scope.info.show_share = false;
+        if($rootScope.active_shelf){
+            $rootScope.bookmark_object = {"id": book.id, "type": 'Book'};
+            sharedService.toggle_bookmark($rootScope.active_shelf, true);
+            delete $rootScope.active_shelf;
+            $scope.info.show_share = false;
+        }
+        else{
+            $scope.info.book = book;
+        }
     }
 
     $scope.show_share_page = function(event){

@@ -208,20 +208,12 @@ var constants = {
 						{	
 							"name": "Looking to borrow",
 							"search_book": true	
-						},
-						{	
-							"name": "Looking to lend",
-							"search_book": true	
 						}
 					]
 				},
 				{
 					"name": "Reading",
 					"nested_options": [
-						{	
-							"name": "Select place",
-							"value": places
-						},
 						{	
 							"name": "Feeling",
 							"value": emotions

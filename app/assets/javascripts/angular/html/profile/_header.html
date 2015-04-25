@@ -1,9 +1,13 @@
 <md-toolbar class="profile_header">
     <section layout="column" layout-wrap>
         <div layout="row" layout-align="end start" layout-padding class="top_section">
-            <md-button class="md-primary md-raised md-button-clear" 
+            <md-button class="md-primary md-button-clear" 
                         ng-click="follow_user()"
-                        ng-if="!info.my_profile">Follow Me</md-button>
+                        ng-class="{'md-raised': !profile_user.status}"
+                        ng-if="!info.my_profile">
+                        <span ng-show="!profile_user.status">Follow Me</span>
+                        <span ng-show="profile_user.status">Following</span>
+            </md-button>
         </div>
         <div layout="row" layout-wrap class="bottom_header">
             <div flex="50" hide-sm hide-md layout="row" layout-align="start start">
@@ -26,7 +30,7 @@
                         </div>
                     </md-button>
                 </a>
-                <a href="/network">
+                <a href="/network?q=0">
                      <md-button class="nav_links">
                         <div layout="column" layout-align="end end">
                             <div><b>FOLLOWERS</b></div>
@@ -35,7 +39,7 @@
                     </md-button>
                 </a>
                 
-                 <a href="/network">
+                 <a href="/network?q=1" >
                     <md-button class="nav_links">
                         <div layout="column" layout-align="end end">
                             <div><b>FOLLOWING</b></div>

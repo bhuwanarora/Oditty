@@ -1,9 +1,11 @@
-<md-content layout="column" layout-align="center center" layout-padding class="book_scroller">
-    <md-list>
-        <md-item ng-repeat="user in active_tag.user">
-            <md-item-content>
-                <img ng-src="" layout-margin class="circular" />
-            </md-item-content>
-        </md-item>
-    </md-list>
+<md-content layout="column" layout-sm="row" layout-align="center center" layout-padding class="book_scroller">
+	<section>
+	    <md-list>
+	        <md-item ng-repeat="user in active_tag.user">
+	            <md-item-content>
+	                <img ng-src="" layout-margin class="circular" />
+	            </md-item-content>
+	        </md-item>
+	    </md-list>
+	</section>
 </md-content>

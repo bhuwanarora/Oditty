@@ -363,8 +363,13 @@ module Api
 		    	message
 			end
 
+
 			def self.get_lenders book_id, user_id
 				Book.new(book_id).get_lenders user_id											
+			end
+
+			def self.get_profile_info_of_another id, user_id
+				User.new(user_id).get_profile_info_and_follow_status(id).execute
 			end
 
 			private

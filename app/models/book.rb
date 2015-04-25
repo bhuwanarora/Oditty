@@ -52,7 +52,7 @@ class Book < Neo
 	end
 
 	def self.optional_match_genre
-		" OPTIONAL " + self.match_genre
+		" OPTIONAL " + Book.match_genre
 	end
 
 	def self.get_small_reads

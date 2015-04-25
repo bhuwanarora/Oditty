@@ -61,7 +61,15 @@ class User < Neo
 	end
 
 	def get_detailed_info
-		match + User.match_likeable_root_category + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + User.return_group(User.basic_info, "COLLECT(DISTINCT(root_category.name)) AS categories_name", "COLLECT(DISTINCT(ID(root_category))) AS categories_id", "COLLECT(DISTINCT(root_category.aws_key)) AS categories_aws_key", "COLLECT(DISTINCT(book.isbn)) AS books_isbn", "COLLECT(DISTINCT(ID(book))) AS books_id", "COLLECT(DISTINCT(book.title)) AS books_title", "COLLECT(DISTINCT(book.author_name)) AS books_author_name")
+		match + User.match_likeable_root_category + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + ", root_category " + User.return_group(User.basic_info, "COLLECT(DISTINCT(root_category.name)) AS categories_name", "COLLECT(DISTINCT(ID(root_category))) AS categories_id", "COLLECT(DISTINCT(root_category.aws_key)) AS categories_aws_key", "COLLECT(DISTINCT(book.isbn)) AS books_isbn", "COLLECT(DISTINCT(ID(book))) AS books_id", "COLLECT(DISTINCT(book.title)) AS books_title", "COLLECT(DISTINCT(book.author_name)) AS books_author_name")
+	end
+
+	def get_profile_info_and_follow_status id
+		match + User.match_likeable_root_category + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + ", root_category " + match_follower(id) + " , root_category, book " + User.return_group(User.basic_info, "COLLECT(DISTINCT(root_category.name)) AS categories_name", "COLLECT(DISTINCT(ID(root_category))) AS categories_id", "COLLECT(DISTINCT(root_category.aws_key)) AS categories_aws_key", "COLLECT(DISTINCT(book.isbn)) AS books_isbn", "COLLECT(DISTINCT(ID(book))) AS books_id", "COLLECT(DISTINCT(book.title)) AS books_title", "COLLECT(DISTINCT(book.author_name)) AS books_author_name", " ID(follows_node) AS status ")
+	end
+
+	def match_follower user_id
+		" OPTIONAL MATCH (friend)-[follows_user:FollowsUser]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(user) WHERE ID(friend) = " + user_id.to_s + " WITH user, friend, follows_node "
 	end
 
 	def get_basic_info
@@ -76,7 +84,7 @@ class User < Neo
 		"  init_book_read_count:user.init_book_read_count ,  selectedYear:user.selectedYear ,  selectedMonth:user.selectedMonth ,  selectedDay:user.selectedDay ,  first_name:user.first_name ,  last_name:user.last_name ,  about:user.about ,  id:ID(user) "
 	end
 
-	def get_all_books skip_count=0, limit_count=Constant::Count::BookCountShownOnSignup 
+	def get_all_books skip_count, limit_count=Constant::Count::BookCountShownOnSignup 
 		match + Bookmark::Node::BookLabel.match_path + User.return_group(Book.basic_info, " label.key as shelf ") + Book.order_desc + User.skip(skip_count) + User.limit(limit_count)
 	end
 

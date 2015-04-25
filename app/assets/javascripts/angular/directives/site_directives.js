@@ -1,3 +1,5 @@
+
+
 homeApp.directive('setFocus', ["$timeout", "$parse", "$rootScope", function($timeout, $parse, $rootScope) {
   return {
     link: function(scope, element, attrs) {
@@ -112,48 +114,48 @@ homeApp.directive('focusOut',function(){
 });
 
 homeApp.directive('calendar', ["$rootScope", function($rootScope){
-	return{
-		restrict: 'E',
-		scope : {saveDate: '&'},
-		controller: ["$scope", function($scope){
-			$scope.date_check = function(){
-				var month = $scope.months.indexOf($scope.selectedMonth) + 1;
-				var no_days = new Date($scope.selectedYear, month, 0).getDate();
-				$scope.days = new Array(no_days)
-							.join()
-							.split(',')
-							.map(function(item, index){return ++index;});
-			}
+  return{
+    restrict: 'E',
+    scope : {saveDate: '&'},
+    controller: ["$scope", function($scope){
+      $scope.date_check = function(){
+        var month = $scope.months.indexOf($scope.selectedMonth) + 1;
+        var no_days = new Date($scope.selectedYear, month, 0).getDate();
+        $scope.days = new Array(no_days)
+              .join()
+              .split(',')
+              .map(function(item, index){return ++index;});
+      }
 
-			$scope.save_date = function(selectedYear, selectedMonth, selectedDay){
-				$rootScope.user.selectedDay = selectedDay;
-				$rootScope.user.selectedMonth = selectedMonth;
-				$rootScope.user.selectedYear = selectedYear;
-				$scope.saveDate();
-			}
+      $scope.save_date = function(selectedYear, selectedMonth, selectedDay){
+        $rootScope.user.selectedDay = selectedDay;
+        $rootScope.user.selectedMonth = selectedMonth;
+        $rootScope.user.selectedYear = selectedYear;
+        $scope.saveDate();
+      }
 
-			_init =function(){
-				$scope.days = new Array(31)
-							.join()
-							.split(',')
-							.map(function(item, index){return ++index;});
-				$scope.months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-				$scope.years = [];
-				
-				$scope.selectedDay = $rootScope.user.selectedDay;
-				$scope.selectedMonth = $rootScope.user.selectedMonth;
-				$scope.selectedYear = $rootScope.user.selectedYear;
+      _init =function(){
+        $scope.days = new Array(31)
+              .join()
+              .split(',')
+              .map(function(item, index){return ++index;});
+        $scope.months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        $scope.years = [];
         
-				var currentYear = new Date().getFullYear();
-				for(var i=currentYear; i>1904; i--){
-					$scope.years.push(i);
-				}
-			}
+        $scope.selectedDay = $rootScope.user.selectedDay;
+        $scope.selectedMonth = $rootScope.user.selectedMonth;
+        $scope.selectedYear = $rootScope.user.selectedYear;
+        
+        var currentYear = new Date().getFullYear();
+        for(var i=currentYear; i>1904; i--){
+          $scope.years.push(i);
+        }
+      }
 
-			_init();
-		}],
-		templateUrl: '/assets/angular/views/getting_started/shared/calendar.html'
-	}
+      _init();
+    }],
+    templateUrl: '/assets/angular/views/getting_started/shared/calendar.html'
+  }
 }]);
 
 homeApp.directive('rate', ["$rootScope", "$timeout", function($rootScope, $timeout){

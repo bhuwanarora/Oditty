@@ -17,7 +17,7 @@ class User::Suggest::BookSuggestion < User::Suggest
 	end
 
 	def for_most_bookmarked_era
-		Era.most_popular(@user_id) + Bookmark::Node::BookLabel.match_not + User::Suggest::BookSuggestion.return_group(::Book.basic_info, Era.basic_info) + ::Book.order_desc + User::Suggest::BookSuggestion.limit(Constant::Count::BookRecommendation)
+		Era.most_popular(@user_id) + " WITH user, era " + Era.match_books + " , user " + Bookmark::Node::BookLabel.match_not + User::Suggest::BookSuggestion.return_group(::Book.basic_info, Era.basic_info) + ::Book.order_desc + User::Suggest::BookSuggestion.limit(Constant::Count::BookRecommendation)
 	end
 
 	def on_friends_shelves

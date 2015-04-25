@@ -1,4 +1,5 @@
 homeApp.controller('infoController', ["$scope", "$rootScope", "$timeout", 'userService', function($scope, $rootScope, $timeout, userService){
+    
     $scope.set_first_name = function(){
         if(angular.isDefined($rootScope.user.first_name) && $rootScope.user.first_name.length > 0){
             var params = {"first_name": $rootScope.user.first_name};
@@ -14,7 +15,7 @@ homeApp.controller('infoController', ["$scope", "$rootScope", "$timeout", 'userS
     }
 
     $scope.set_date_of_birth = function(){
-        var params = {"selectedYear":$rootScope.user.selectedYear, 
+        var params = {"selectedYear": $rootScope.user.selectedYear, 
                       "selectedMonth": $rootScope.user.selectedMonth,
                       "selectedDay": $rootScope.user.selectedDay};
         userService.save_user_info(params);
@@ -25,15 +26,19 @@ homeApp.controller('infoController', ["$scope", "$rootScope", "$timeout", 'userS
             var params = {"email": $rootScope.user.email};
             userService.save_user_info(params);
         }   
-    }
-
+    } 
+          
     $scope.set_gender = function(){
-        if($rootScope.user.gender){
+           
+            
+            if($rootScope.user.gender){
+               
+            
             var params = {"gender": $rootScope.user.gender};
             userService.save_user_info(params);
         }
     }
-
+    
     $scope.set_init_book_read_count = function(){
         if($rootScope.user.init_book_read_count){
             var params = {"init_book_read_count": $rootScope.user.init_book_read_count};

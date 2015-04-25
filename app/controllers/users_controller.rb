@@ -195,7 +195,7 @@ class UsersController < ApplicationController
     @user_id = info["user_id"]
     @user_exists = info["user_exists"]
     @message = info["message"]
-    render :layout => "clean"
+    render :layout => "backend"
   end
 
   def save_password

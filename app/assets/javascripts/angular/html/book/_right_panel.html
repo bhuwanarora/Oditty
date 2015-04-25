@@ -1,27 +1,28 @@
 <md-content layout="column" layout-padding class="fixed_right_panel" 
           layout-align="start start"
+          hide-sm
           ng-if="constant.show_book">
      <div class="padding"></div>
      <div class="padding"></div>
      <div layout-margin class="relative_block">
-          <div class="counter" layout="row" layout-align="center center">
+          <div class="counter" layout="row" layout-align="center center" ng-if="book.endorse_count">
                <div>{{book.endorse_count}}</div>
           </div>
           <md-button ng-class="{'inactive_blue_circle': !book.endorse_status, 'md-raised blue_circle': book.endorse_status}" 
                     ng-click="toggle_endorse()">
-               <span class="icon-"></span>
+               <span class="icon-feed"></span>
           </md-button>
      </div>
      <div layout-margin class="relative_block">
-          <div class="counter" layout="row" layout-align="center center">
+          <div class="counter" layout="row" layout-align="center center" ng-if="book.bookmark_count">
                <div>{{book.bookmark_count}}</div>
           </div>
-          <md-button class="md-raised blue_circle" ng-click="show_shelf_bottom_sheet(book.id, 'Book')">
+          <md-button class="md-raised blue_circle" ng-click="show_shelf_bottom_sheet(book.id || book.book_id, 'Book')">
                <span class="icon-bookmark3"></span>
           </md-button>
      </div>
      <div layout-margin class="relative_block">
-          <div class="counter" layout="row" layout-align="center center">
+          <div class="counter" layout="row" layout-align="center center" ng-if="book.share_count">
                <div>{{book.share_count}}</div>
           </div>
           <md-button class="md-raised blue_circle" ng-click="show_share_bottom_sheet()">
@@ -76,7 +77,5 @@
           width: 45px;
           height: 45px;
      }
-
-     
 
 </style>

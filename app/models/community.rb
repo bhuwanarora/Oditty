@@ -138,15 +138,15 @@ class Community < Neo
 		end
 	end 
 
-	def self.merge community, news_info
-		" MERGE (community:Community{name: \"" + community + "\"}) ON CREATE SET community.status = 1, community.created_at=" + Time.now.to_i.to_s + ", community.updated_at=" + Time.now.to_i.to_s + ", community.location = \"" + news_info["news_source"]["region"].to_s + "\", community.follow_count = 0, community.image_url = \"" + Community::CommunityImage.new(community).get_image + "\" WITH community "  
+	def self.merge community
+		" MERGE (community:Community{name: \"" + community + "\"}) ON CREATE SET community.status = 1, community.created_at=" + Time.now.to_i.to_s + ", community.updated_at=" + Time.now.to_i.to_s + ", community.follow_count = 0, community.image_url = \"" + Community::CommunityImage.new(community).get_image + "\" WITH community "  
 	end
 
 
-	def self.map_books communities_books, news_info
+	def self.map_books communities_books, news_metadata
 	    communities_books.each do |community_books|
 	    	community_books.each do |community, books|
-	        	clause =  News.new(news_info["news_id"]).match + Community.merge(community, news_info) + ", news " + Community.set_importance + " WITH community, news " + News.merge_community
+	        	clause =  News.new(news_metadata["news_id"]).match + Community.merge(community) + ", news " + Community.set_importance + " WITH community, news " + News.merge_community
 				books.each do |book|
 					indexed_title = book.search_ready
 					clause += Book.search_by_indexed_title(indexed_title) + " , community " + Community.merge_book + " WITH community "
