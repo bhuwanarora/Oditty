@@ -51,7 +51,7 @@ set :default_env, { path: "~/.rbenv/shims:~/.rbenv/bin:$PATH" }
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
-set :whenever_identifier, ->{ "readers_door_production" }
+set :whenever_identifier, ->{ "store" }
 
 namespace :deploy do
 
@@ -81,7 +81,7 @@ namespace :deploy do
         puts " updating crontab file"
         # execute "cd #{release_path} && #{try_sudo} GEM_HOME=/opt/local/ruby/gems RAILS_ENV=#{} bundle exec whenever --clear-crontab #{application} --user #{ubuntu}"
         # execute "cd #{release_path} && #{try_sudo} GEM_HOME=/opt/local/ruby/gems RAILS_ENV=production bundle exec whenever --update-crontab #{application} --user #{ubuntu}"
-        execute "cd #{release_path} && whenever --update-crontab store "
+        execute "cd #{release_path} && sudo gem install bundler && bundle install && bundle exec whenever --update-crontab store "
       end  
     end
   end

@@ -14,7 +14,7 @@ require 'capistrano/deploy'
 #   https://github.com/capistrano/rails
 #
 # require 'capistrano/rvm'
- # require 'capistrano/rbenv'
+ require 'capistrano/rbenv'
  set :rbenv_custom_path, '/home/ubuntu/.rbenv'
  # require 'capistrano/chruby'
  # require 'capistrano/bundler'
