@@ -1,0 +1,1 @@
+homeApp.controller("leftController",["$scope","$timeout","$mdSidenav","$log",function(a,b,c){a.close=function(){c("left").close()}}]);
