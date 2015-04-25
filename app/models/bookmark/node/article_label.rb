@@ -1,7 +1,7 @@
 class Bookmark::Node::ArticleLabel < Bookmark::Node
 
 	def self.get_public user_id
-		User.new(user_id).match + Label.match_public + Label.optional_match_articles + Bookmark::Node::ArticleLabel.return_group("DISTINCT label.name AS shelf", "article AS articles", "label_count AS label_count")
+		Label.match_public + Label.optional_match_articles + Bookmark::Node::ArticleLabel.return_group("DISTINCT label.name AS shelf", "article AS articles", "label_count AS label_count")
 	end
 
 	def self.get_visited
