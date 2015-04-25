@@ -1,8 +1,7 @@
 class Bookmark::Node::ArticleLabel < Bookmark::Node
 
 	def self.get_public user_id
-		where_clause = " WHERE bookmark_node.public = true AND ( article:News  OR article:Blog) WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, article, COUNT(label) AS label_count "
-		Bookmark::Node::ArticleLabel.optional_match_user + where_clause + Bookmark::Node::ArticleLabel.return_group(Label.basic_info, Bookmark.basic_info, "COLLECT({"+Bookmark::Node::ArticleLabel.grouped_basic_info+"}) AS articles" )  + ", label_count " + Bookmark::Node::ArticleLabel.order_init + " label_count, created_at DESC " + Bookmark::Node::ArticleLabel.limit(Constant::Count::ArticlesShownInRoom)  
+		User.new(user_id).match + Label.match_public + Label.optional_match_articles + Bookmark::Node::ArticleLabel.return_group("DISTINCT label.name AS shelf", "article AS articles", "label_count AS label_count")
 	end
 
 	def self.get_visited
