@@ -117,7 +117,7 @@ class User < Neo
 	end
 
 	def self.create(email, password=nil, verification_token=nil)
-		"CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, last_book: "+Constant::Id::BestBook.to_s+", amateur: true, ask_info: true, verification_time : " + Time.now.to_i.to_s + "}) "
+		"CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, last_book: "+Constant::Id::BestBook.to_s+", amateur: true, ask_info: true, verification_time :" + Time.now.to_i.to_s + "}) "
 	end
 
 	def self.link_root_categories
@@ -235,11 +235,11 @@ class User < Neo
 	end
 
 	def self.match_by_email_verification_token email, verification_token
-	    User.match_by_email(email) + " AND user.verification_token=\"" + verification_token + "\""
+	    User.match_by_email(email) + " AND user.verification_token=\"" + verification_token + "\" AND TOINT(user.verification_time) > " + (Time.now.to_i - 3600).to_s + " "
 	end	
 
 	def self.handle_verification email, verification_token
-		User.match_by_email_verification_token(email, verification_token) + User::Info.set_verified_true + User.return_group(User.basic_info, User.authentication_info) 
+		User.match_by_email_verification_token(email, verification_token) + User::Info.set_verified_status + User::Info.set_verification_time("null") + User::Info.set_verification_token("null") + User.return_group(User.basic_info, User.authentication_info) 
 	end
 
 	def self.handle_new_verification_request email, verification_token

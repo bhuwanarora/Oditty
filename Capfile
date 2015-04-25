@@ -21,6 +21,7 @@ require 'capistrano/ssh_doctor'
  require 'capistrano/rails/assets'
  require 'capistrano/rails/migrations'
  require "whenever/capistrano"
-
+ require 'capistrano/grunt'
+ require 'capistrano/npm'
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
 Dir.glob('lib/capistrano/tasks/*.cap').each { |r| import r }

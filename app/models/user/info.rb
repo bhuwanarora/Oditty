@@ -70,6 +70,11 @@ class User::Info < User
 	end
 
 	def self.set_verification_token verification_token
-		" SET user.verification_token = \"" + verification_token.to_s + "\" "
+		if verification_token == "null"
+			clause = " SET user.verification_token = " + verification_token.to_s + " "
+		else
+			clause = " SET user.verification_token = \"" + verification_token.to_s + "\" "
+		end
+		clause
 	end
 end
