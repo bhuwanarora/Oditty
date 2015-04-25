@@ -4,7 +4,7 @@ module Constant::StatusMessage
 	AuthenticationFailed		= "Email and password doesn't match."
 	VerifyEmail					= "Please verify your email address."
 	EmailNotRegistered			= "Email not registered."
-	EmailAlreadyRegistered		= "Email already registered. Please check your inbox to reset password if you have forgotten."
+	EmailAlreadyRegistered		= "Email already registered."
 	ActivateAccount				= "We have sent you an email with an activation link. Please activate your account."
 	AnotherActivationRequest	= "Please activate your email account. We are sending you another mail."
 	EmailConfirmed				= "Email Verified. We have recieved your request and will soon be able give access. Please bear with us."

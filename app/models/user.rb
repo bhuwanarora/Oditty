@@ -235,11 +235,11 @@ class User < Neo
 	end
 
 	def self.match_by_email_verification_token email, verification_token
-	    User.match_by_email(email) + " AND user.verification_token=\"" + verification_token + "\" AND TOINT(user.verification_time) > " + (Time.now.to_i - 3600).to_s + " "
+	    User.match_by_email(email) + " AND user.verification_token=\"" + verification_token  + "\" "
 	end	
 
 	def self.handle_verification email, verification_token
-		User.match_by_email_verification_token(email, verification_token) + User::Info.set_verified_status + User::Info.set_verification_time("null") + User::Info.set_verification_token("null") + User.return_group(User.basic_info, User.authentication_info) 
+		User.match_by_email_verification_token(email, verification_token) + User::Info.set_verified_true + User.return_group(User.basic_info, User.authentication_info) 
 	end
 
 	def self.handle_new_verification_request email, verification_token

@@ -42,51 +42,51 @@ module Api
 					when "Visited"
 						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					when "CurrentlyReading"
-						clause = Bookmark::Type::Visited.new(user_id, id).book.
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					when "IOwnThis"
-						clause = Bookmark::Type::Visited.new(user_id, id).book.
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					when "NotWorthReading"
-						clause = Bookmark::Type::Visited.new(user_id, id).book.
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					when "FromFacebook"
-						clause = Bookmark::Type::Visited.new(user_id, id).book.
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					when "ReadButCantRememberASingleThingAboutIt"
-						clause = Bookmark::Type::Visited.new(user_id, id).book.
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					when "WishIHadntRead"
-						clause = Bookmark::Type::Visited.new(user_id, id).book.
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					when "IOwnThis"
-						clause = Bookmark::Type::Visited.new(user_id, id).book.
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					when "PlanToBuy"
-						clause = Bookmark::Type::Visited.new(user_id, id).book.
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					when "NotWorthReading"
-						clause = Bookmark::Type::Visited.new(user_id, id).book.
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					when "CurrentlyReading"
-						clause = Bookmark::Type::Visited.new(user_id, id).book.
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					when "WishIHadntRead"
-						clause = Bookmark::Type::Visited.new(user_id, id).book.
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					when "ReadButCantRememberASingleThingAboutIt"
-						clause = Bookmark::Type::Visited.new(user_id, id).book.
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					when "PurelyForShow"
-						clause = Bookmark::Type::Visited.new(user_id, id).book.
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					when "WillNeverRead"
-						clause = Bookmark::Type::Visited.new(user_id, id).book.
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					when "SavingForWhenIHaveMoreTime"
-						clause = Bookmark::Type::Visited.new(user_id, id).book.
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					when "PretendIHaveRead"
-						clause = Bookmark::Type::Visited.new(user_id, id).book.
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					when "IntendingToRead"
-						clause = Bookmark::Type::Visited.new(user_id, id).book.
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					when "Read"
-						clause = Bookmark::Type::Visited.new(user_id, id).book.
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					when "DidntFeelLikeReadingItAfterAPoint"
-						clause = Bookmark::Type::Visited.new(user_id, id).book.
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					when "SavingForWhenIHaveMoreTime"
-						clause = Bookmark::Type::Visited.new(user_id, id).book.
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					when "WillNeverRead"
-						clause = Bookmark::Type::Visited.new(user_id, id).book.
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					when "PurelyForShow"
-						clause = Bookmark::Type::Visited.new(user_id, id).book.
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					when "PlanToBuy"
-						clause = Bookmark::Type::Visited.new(user_id, id).book.
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
 					end
 				elsif type == "NEWS"
 					case shelf
