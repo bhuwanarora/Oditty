@@ -252,8 +252,11 @@ class BooksController < ApplicationController
   
   def trending_community_books   
 
-  clause = Community::fetch_books params[:q]  
-  @books =clause[params[:q]]
+  clause = (Community::search_by_name params[:q])     
+  clause =clause+(Community::match_books)+ "RETURN DISTINCT book.title LIMIT 10"  
+  @books =clause.execute
+  
+  
   status_r=200
   begin
     rescue Exception => e      
@@ -299,7 +302,8 @@ class BooksController < ApplicationController
       neo.execute_query clause
     end
 
-    clause = "MATCH (t:News) OPTIONAL MATCH (t)-[:RelatedBooks]->(b:Book) RETURN t.name, t.timestamp, ID(t), COLLECT(b.title), t.status, COLLECT(ID(b)), t.title, t.content, t.searched_words, t.url, t.thumbnail_url, t.redirect_url, t.publisher, t.thumb ORDER BY toInt(t.timestamp) DESC LIMIT 50 "
+    #clause = "MATCH (t:News) OPTIONAL MATCH (t)-[:RelatedBooks]->(b:Book) RETURN t.name, t.timestamp, ID(t), COLLECT(b.title), t.status, COLLECT(ID(b)), t.title, t.content, t.searched_words, t.url, t.thumbnail_url, t.redirect_url, t.publisher, t.thumb ORDER BY toInt(t.timestamp) DESC LIMIT 50 "
+     clause = " MATCH (c:Community)<-[:HasCommunity]-(t:News)  RETURN t.name, COLLECT(c.name) AS communities, t.timestamp, ID(t), t.status, t.title, t.content, t.searched_words, t.url, t.thumbnail_url, t.redirect_url, t.publisher, t.thumb ORDER BY toInt(t.timestamp) DESC LIMIT 50 "
     @trends = clause.execute
   end
 

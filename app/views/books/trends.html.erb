@@ -1,17 +1,13 @@
-<!-- t.name, t.timestamp, ID(t), COLLECT(b.title), t.status, COLLECT(ID(b)), t.title, t.content, t.searched_words, t.url, t.thumbnail_url, t.redirect_url, t.publisher, t.thumb
-	t.communities
+<!-- t.name, t.timestamp, ID(t), t.status, COLLECT(ID(b)), t.title, t.content, t.searched_words, t.url, t.thumbnail_url, t.redirect_url, t.publisher, t.thumb
+	communities
 -->
 <table>
 	<tr>
-		<th>Name</th>
+		
 		<!-- <th>Trending</th>-->
 		<th>Title</th>
-		<th>Content</th>
-		<th>Searched Words</th>
-		<th>Publisher</th>
-		<th>Thumb</th>
-		<th>Timestamp</th>
-		<th>Status</th>
+		<th>Picture</th>
+		
 		<th>Community</th>
 		<th>Books</th>
 		<th>Search Books</th>
@@ -20,33 +16,22 @@
 	</tr>
 	<% if @trends %>		
 		<% @trends.sort_by!{|s| Time.at(s[1].to_i)}.reverse.each do |trend|%>
-			<tr class="<% if trend["t.content"].present? && trend["t.content"] == 1 %>active<% end %>" id="id_"+ trend["ID(t)"]>
-				<td><%= trend["t.name"]%></td>
-				<td><%= trend["t.title"]%></td>
-				<td><%= trend["t.content"]%></td>
-				<td><%=trend["t.searched_words"]%></td>
+			<tr class="<% if trend["t.content"].present? && trend["t.content"] == 1 %>active<% end %>" id="id_"+ trend["ID(t)"]>				
+				<td><%= trend["t.title"]%> <br> <%= Time.at(trend["t.timestamp"].to_i).strftime("%d-%m-%y") %></td>
+				<td>Picture <td>
 				<!-- <td><a href="<%= trend[9] %>" target="_blank"><%= trend[0] %></a></td>-->
-				<td><a href="<%= trend[11] %>" target="_blank"><%= trend["t.publisher"] %></a></td>
-				<td><div class="limit_height"><%= trend["t.thumbnail_url"] %></div></td>
-				<!--
-				<td class="keywords">
-					<span><%= trend["t.timestamp"] %></span>
-					<textarea class="hidden_input" ><%= trend["t.timestamp"] %></textarea>
-					<button class="hidden_input add_books">Go</button>
-					<input type="hidden" value="<%= trend[2] %>" class="trending_id"/>
-				</td>
-				!-->
-				<td><%= Time.at(trend["t.timestamp"].to_i).strftime("%d-%m-%y") %></td>
+								
+				
 				<td><%= trend["t.status"] %></td>
 				
 				<td>
 					<select class="community_present" size=3 MULTIPLE>
-						<OPTION> Sample option1</OPTION>
-						<OPTION> Sample option2</OPTION>
-						<OPTION> Sample option3</OPTION>
-						<OPTION> Sample option4</OPTION>						
-						<% if(trend["t.communities"]) %>
-							<% trend["t.communities"].each do |community| %>
+						<%trend["communities"].each do |c|%>
+							<OPTION><%=c%></OPTION>
+						<%end%>
+						
+						<% if(trend["communities"]) %>
+							<% trend["communities"].each do |community| %>
 								<option class="community_select"><%community%> </option>
 							<% end %>
 						<% end %>
@@ -54,8 +39,8 @@
 					</select>
 				</td>
 
-				<td class="books_select">
-					<select name="books_in_c" size=3 MULTIPLE>
+				<td >
+					<select name="books_in_c" class="books_select" size=3 MULTIPLE>
 						<OPTION> No community is selected</OPTION>
 					</select>
 				</td>
@@ -64,15 +49,7 @@
 				</td>
 
 				<form action="<%= trends_path %>">
-					<td class="books" name="books">
-						<div class="limit_height">
-							<% if trend["t.title"] %>
-								<% trend["t.title"].each.with_index do |book, index| %>
-									<div data-id="<%= trend["t.searched_words"][index] %>" class="book_name"><span> · </span><span><%= book %></span></div>
-								<% end %>
-							<% end %>
-						</div>
-					</td>
+
 					<input type="hidden" value="<%= trend[2] %>" name="trending_id"/>
 					<input type="hidden" value="<%= trend["t.searched_words"] %>" name="book_ids" />
 					<% if trend["t.content"].present? && trend["t.content"] == 1 %>
@@ -171,7 +148,7 @@
 */
 			var test=$(this).val().toString();
 			$('.footer_status').html("Updating books.."+ test);
-    		var data= "q=" +$(this).val();
+    		var data= "q=" +$(this).val().toString();
     		$.ajax({
 					url: "<%= trending_community_books_path %>",
 					data: data,
@@ -179,7 +156,7 @@
 
 						var books = [];
 						for(var i=0; i < data.length; i++){
-							var book = {"label": data[i][2]+" by "+data[i][3], "value": data[i][1]};
+							var book = data[i]["book.title"];
 							books.push(book);
 						}
 						var empty_ret=false;
@@ -191,6 +168,7 @@
 						}
 						
 						var newSelect=document.createElement('select');
+						newSelect.className="books_select";
 						newSelect.size=3;
 						newSelect.width=30;
 			    		var selectHTML="";
