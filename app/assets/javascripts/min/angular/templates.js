@@ -272,7 +272,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/landing_page/sign_in.html',
-    "<div layout=\"row\" ng-if=\"show_content\" class=\"main_view top_pad hex_background\"><div ng-include=\"'assets/angular/html/landing_page/partials/login_options.html'\" layout=\"row\" layout-align=\"center center\" flex></div></div>"
+    "<div layout=\"column\" ng-if=\"show_content\" class=\"main_view top_pad hex_background\"><div ng-include=\"'assets/angular/html/landing_page/partials/login_options.html'\" layout=\"row\" layout-align=\"center center\" flex></div><div layout-align=\"center center\" ng-include=\"'assets/angular/html/shared/partials/social_links.html'\"></div></div>"
   );
 
 

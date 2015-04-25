@@ -282,7 +282,7 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
             }
             timer = timer + 1500;
         });
-        $scope.renderSignInButton();
+        // $scope.renderSignInButton();
     }());
 
 }]);

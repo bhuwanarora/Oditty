@@ -141,7 +141,6 @@ homeApp.directive('calendar', ["$rootScope", function($rootScope){
               .map(function(item, index){return ++index;});
         $scope.months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         $scope.years = [];
-        
         $scope.selectedDay = $rootScope.user.selectedDay;
         $scope.selectedMonth = $rootScope.user.selectedMonth;
         $scope.selectedYear = $rootScope.user.selectedYear;
