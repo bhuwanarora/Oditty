@@ -10,6 +10,10 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
         }
     }
 
+    $scope.show_search_bar = function(){
+        $scope.info.mobile_search = !$scope.info.mobile_search;
+    }
+
     $scope.show_rating = function(event){
         $mdDialog.show({
             templateUrl: 'assets/angular/html/shared/share.html',

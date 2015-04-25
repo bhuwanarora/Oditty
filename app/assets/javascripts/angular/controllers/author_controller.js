@@ -1,4 +1,4 @@
-homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'authorService', '$mdDialog', 'scroller', 'ColorConstants', '$filter', function($scope, $location, $mdSidenav, authorService, $mdDialog, scroller, ColorConstants, $filter){
+homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'authorService', '$mdDialog', 'scroller', 'ColorConstants', '$filter', '$sce', function($scope, $location, $mdSidenav, authorService, $mdDialog, scroller, ColorConstants, $filter, $sce){
 
     $scope.show_buy_dialog = function(event){
         $mdDialog.show({
@@ -20,6 +20,10 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
 
     }
 
+    $scope.scroll_wiki = function(){
+
+    }
+
     $scope.show_authors_nav = function(event){
         $mdSidenav('authors_detail_sidenav').toggle();
         event.stopPropagation();
@@ -28,8 +32,13 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
     var _init = (function(){
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
         var id = regex.exec($location.absUrl())[2];
+
         authorService.get_details(id).then(function(data){
             $scope.author = data;
+            if(data.wiki_url != null){
+                $scope.author.wiki_url = data.wiki_url.substring(data.wiki_url.lastIndexOf("?q=")+3,data.wiki_url.lastIndexOf("&sa"));
+                $scope.wiki_url = $sce.trustAsResourceUrl($scope.author.wiki_url)+"?action=render";
+            }
             angular.forEach($scope.author.books, function(value, index){
                 var random_int = Math.floor(Math.random()*ColorConstants.value.length);
                 var url = $filter('large_thumb')(value);

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="homeApp" ng-strict-di>
     <head>
+        <meta name="viewport" content="width=device-width">
         <meta charset="utf-8" />
         <title>ReadersDoor</title>
         <link rel="icon" 
@@ -178,10 +179,10 @@
             <md-toolbar md-scroll-shrink class="header <% if !@infinity %>'no_shadow'<% end %>">
                 <section layout="row" layout-wrap>
                     <div flex="20" flex-sm="35" layout="row" layout-align="start center">
-                        <md-button ng-show="visible_search_bar" class="burger padding" ng-click="toggleLeft($event)">
+                        <md-button ng-show="info.mobile_search" class="burger padding" ng-click="toggleLeft($event)">
                             <a><span class="icon-menu2"></span></a>
                         </md-button>
-                        <div ng-show="visible_search_bar" 
+                        <div ng-show="info.mobile_search" 
                              layout-align-lg="center center">
                             <a class="logo" href="/home">
                                 <img src="assets/rd_icon.png"/>
@@ -198,7 +199,7 @@
                          layout-align="end center" 
                          layout-align-sm="start center">
                         <md-button ng-click="show_search_bar()" 
-                                   ng-show="visible_search_bar" show-sm hide>
+                                   ng-show="info.mobile_search" show-sm hide>
                             <span class="icon-search"></span>
                         </md-button>
                         <div hide-sm class="search_icon">
@@ -219,37 +220,33 @@
                             <div layout="row"
                                 layout-align="space-between"
                                 md-highlight-text="item | search_item_type">
-                                <div>{{item.name}}</div>
-                                <b class="less_important">{{item | search_item_type}}</b>
+                                <div ng-bind-html="item.name"></div>
+                                <b class="less_important" ng-bind-html="item | search_item_type"></b>
                             </div>
-
-                            <!-- <span md-highlight-text="search_text">
-                                {{item}}
-                            </span> -->
                         </md-autocomplete>
                     </div>
                     <div layout="row" layout-align="center center" flex="10" flex-md="15" flex-sm="20">
-                        <md-button ng-show="visible_search_bar" class="library">
+                        <md-button ng-show="info.mobile_search" class="library">
                             <a href="/infinity">Infinity</a>
                         </md-button>
                     </div>
                     <div flex="20" flex-sm="35" layout="row" layout-align="end center">
-                        <a href="/room" ng-show="visible_search_bar">
+                        <a href="/room" ng-show="info.mobile_search">
                             <md-button class="small-padding">
-                                <span class="icon-checkbox-unchecked"></span>
+                                <span class="icon-home2"></span>
                                 <md-tooltip >
                                         Room
                                 </md-tooltip>
                             </md-button>
                         </a>
-                        <md-button ng-show="visible_search_bar" class="small-padding" 
+                        <md-button ng-show="info.mobile_search" class="small-padding" 
                             ng-click="toggle_notifications($event)">
                             <span class="icon-bell"></span>
                             <md-tooltip >
                                         Notification
                             </md-tooltip>
                         </md-button>
-                        <a href="/profile" ng-show="visible_search_bar">
+                        <a href="/profile" ng-show="info.mobile_search">
                             <md-button class="profile_link">
                                 <img ng-src="{{user.image_url | default_profile}}" 
                                     class="circular">
@@ -260,9 +257,9 @@
                         </a>
                     </div>
                     <div layout="row" layout-align="center center" 
-                            ng-hide="visible_search_bar" layout-fill layout-padding hide-md hide-lg>
-                        <md-button flex="20" ng-click="show_search_bar()" hide-md hide-lg>
-                            <span class="icon-search"></span>
+                            ng-hide="info.mobile_search" layout-fill layout-padding hide-md hide-lg>
+                        <md-button flex="10" ng-click="show_search_bar()" hide-md hide-lg class="md-button-clear">
+                            <span class="icon-angle-left"></span>
                         </md-button>
                         <md-autocomplete
                             md-selected-item="selectedItem1"
@@ -270,16 +267,18 @@
                             md-items="item in querySearch(searchText)"
                             md-item-text="display"
                             class="search"
-                            flex="80" hide-md hide-lg
+                            flex="90" hide-md hide-lg
                             placeholder="Search books, topics and more...">
-                            <span md-highlight-text="searchText">{{item.display}}</span>
+                            <span md-highlight-text="searchText" ng-bind-html="item.display"></span>
                         </md-autocomplete>
                     </div>
                 </section>
             </md-toolbar>
 
-            <%= yield %>
-            <div ng-controller="shareController" >
+            <div ng-show="info.mobile_search">
+                <%= yield %>
+            </div>
+            <div ng-controller="shareController" ng-show="info.mobile_search">
                 <md-button class="md-fab md-fab-bottom-right animate-fast fixed_share"
                             ng-hide="active_shelf"
                             aria-label="Eat cake"

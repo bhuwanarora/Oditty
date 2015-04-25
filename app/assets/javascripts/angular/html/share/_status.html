@@ -57,5 +57,5 @@
 			&& (info.reading_status_value != 1) 
 			&& (info.reading_status_value != 2) 
 			&& info.book">
-	{{info.book.title}}
+	<div ng-init="book = info.book" ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
 </span>

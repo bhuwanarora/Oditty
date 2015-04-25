@@ -288,7 +288,6 @@ GEM
       rest-client (~> 1.6)
     orm_adapter (0.5.0)
     os (0.9.6)
-    pg (0.17.1)
     polyglot (0.3.5)
     protected_attributes (1.0.9)
       activemodel (>= 4.0.1, < 5.0)
@@ -517,7 +516,6 @@ DEPENDENCIES
   open4
   opengraph_parser
   openlibrary
-  pg (~> 0.17.1)
   polyglot
   protected_attributes
   pubnub

@@ -272,7 +272,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/landing_page/sign_in.html',
-    "<div layout=\"row\" ng-if=\"show_content\" class=\"main_view top_pad hex_background\" layout-margin layout-align=\"center center\" layout-fill layout-padding><div ng-include=\"'assets/angular/html/landing_page/partials/login_options.html'\"></div></div><style>.main_view .login_box{background-color:#fff;width:60vw}</style>"
+    "<div layout=\"row\" ng-if=\"show_content\" class=\"main_view top_pad hex_background\"><div ng-include=\"'assets/angular/html/landing_page/partials/login_options.html'\" layout=\"row\" layout-align=\"center center\" flex></div></div>"
   );
 
 
