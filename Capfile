@@ -2,7 +2,7 @@
 require 'capistrano/setup'
 # Includes default deployment tasks
 require 'capistrano/deploy'
-require 'capistrano/ssh_doctor'
+# require 'capistrano/ssh_doctor'
 # Includes tasks from other gems included in your Gemfile
 #
 # For documentation on these, see for example:
@@ -14,8 +14,8 @@ require 'capistrano/ssh_doctor'
 #   https://github.com/capistrano/rails
 #
 # require 'capistrano/rvm'
- require 'capistrano/rbenv'
- set :rbenv_custom_path, '/home/centos/.rbenv'
+ # require 'capistrano/rbenv'
+ set :rbenv_custom_path, '/home/ubuntu/.rbenv'
  # require 'capistrano/chruby'
  # require 'capistrano/bundler'
  require 'capistrano/rails/assets'

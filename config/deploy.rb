@@ -24,7 +24,7 @@ set :rbenv_roles, :all # default value# set :whenever_environment, defer { stage
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
 # Default deploy_to directory is /var/www/my_app
-set :deploy_to, '/home/centos/deploy'
+set :deploy_to, '/home/ubuntu/deploy'
 
 # Default value for :scm is :git
 # set :scm, :git

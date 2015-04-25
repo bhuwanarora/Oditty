@@ -27,14 +27,18 @@ class Status < Neo
 	def create
 		if  @book_id.present?
 			match_clause = @users_book.match
-			reading_status_value = @status_type.create_for(@reading_status_value)  + " WITH status "
-			book_exchange_status = @status_book_exchange_type.create_for(@book_exchange_status)
+			reading_status_value = @reading_status_value ? (@status_type.create_for(@reading_status_value)  + " WITH status ") : ""
+			book_exchange_status = @book_exchange_status ? @status_book_exchange_type.create_for(@book_exchange_status) : ""
 		else
 			match_clause = @user.match
 			reading_status_value = ""
 			book_exchange_status = ""
 		end
-		match_clause + create_unique + " WITH status, status_node, user " + @user_feed.create("status_node") + ", status " + book_exchange_status + reading_status_value + Status::Mention::MentionsUser.create_group(@mentioned_users_ids, @user_id) + Status::Mention::MentionsAuthor.create_group(@mentioned_authors_ids, @user_id)  + Hashtag.create_group(@hash_tags, @user_id) + Status::Feeling.create_group(@feelings, @user_id) + Status.return_init + Status.basic_info
+		mentioned_users_ids = @mentioned_users_ids ? Status::Mention::MentionsUser.create_group(@mentioned_users_ids, @user_id) : ""
+		mentioned_authors_ids = @mentioned_authors_ids ? Status::Mention::MentionsAuthor.create_group(@mentioned_authors_ids, @user_id) : ""
+		hash_tags = @hash_tags ? Hashtag.create_group(@hash_tags, @user_id) : ""
+		feelings = @feelings ? Status::Feeling.create_group(@feelings, @user_id) : ""
+		match_clause + create_unique + " WITH status, status_node, user " + @user_feed.create("status_node") + ", status " + book_exchange_status + reading_status_value + mentioned_users_ids + mentioned_authors_ids + hash_tags + feelings + Status.return_init + Status.basic_info
 	end
 
 	def create_unique 
