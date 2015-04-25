@@ -253,7 +253,7 @@ class BooksController < ApplicationController
   def trending_community_books   
 
   clause = (Community::search_by_name params[:q])     
-  clause =clause+(Community::match_books)+ "RETURN DISTINCT book.title LIMIT 10"  
+  clause =clause+(Community::match_books)+ "RETURN DISTINCT book.title, ID(book) AS id_book LIMIT 10"  
   @books =clause.execute
   
   

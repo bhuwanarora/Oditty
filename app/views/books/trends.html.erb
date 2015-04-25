@@ -10,6 +10,7 @@
 		
 		<th>Community</th>
 		<th>Books</th>
+		<th>Remove Books</th>
 		<th>Search Books</th>
 		<th> Search result</th>			
 		
@@ -34,7 +35,13 @@
 						<OPTION> No community is selected</OPTION>
 					</select>
 				</td>
-				<td>
+				<form class ="removeBookForm" action="<%= trends_path %>" >
+					<td >
+
+						<input type="submit" value="Remove Book" class = "remove_button" disabled="disabled">
+					</td>
+				</form>
+					<td>
 					<input class="search_box" />
 				</td>
 
@@ -111,6 +118,18 @@
 			}
 		});
 		
+		$('.removeBookForm').submit( function(){
+			var comName=$(this).closest('tr').find(".community_present").val();
+			var bookName=$(this).closest('tr').find(".books_select").val();
+			if(confirm("Do you want to remove book "+  bookName +" from "+comName)==true){
+					
+					return true;
+			}
+			return false;
+			
+
+		});
+
 		$('.community_present').change(function(event){
 			<!-- fill the entries in books with return data -->			
 			var trid = $(this).closest('tr');			
@@ -118,19 +137,7 @@
 			//trid.content()[1].innerHTML="hello";			
 			var book_col=trid.find(".books_select")
 			//$('.footer_status').html('Updating books of '+ $(this).val());
-/*
-			var books=["books", "efg"];
-			var newSelect=document.createElement('select');
-			newSelect.size=3;
-			newSelect.width=30;
-    		var selectHTML="";
-    		for(i=0; i<books.length; i=i+1){
-        		selectHTML+= "<option value= "+books[i]+">"+books[i]+"</option>";
-    		}
 
-    		newSelect.innerHTML= selectHTML;
-    		book_col.replaceWith(newSelect);
-*/
 			var test=$(this).val().toString();
 			$('.footer_status').html("Updating books.."+ test);
     		var data= "q=" +$(this).val().toString();
@@ -140,8 +147,11 @@
 					success: function(data, textStatus, jqXHR){
 
 						var books = [];
+						var books_id= [];
 						for(var i=0; i < data.length; i++){
 							var book = data[i]["book.title"];
+							var id_b=data[i]["id_book"];
+							books_id.push(id_b);
 							books.push(book);
 						}
 						var empty_ret=false;
@@ -156,10 +166,11 @@
 						newSelect.className="books_select";
 						newSelect.size=3;
 						newSelect.width=30;
+
 			    		var selectHTML="";
 
 			    		for(i=0; i<books.length; i=i+1){
-			        		selectHTML+= "<option class= \" book_element\" value= "+books[i]+">"+books[i]+"</option>";
+			        		selectHTML+= "<option value= "+books[i]+">"+books[i]+"</option>";
 			    		}
 
 			    		newSelect.innerHTML= selectHTML;
@@ -184,6 +195,17 @@
 
 
 		});
+		
+		$(document).on('click','.books_select',function () {
+			
+			var trid = $(this).closest('tr');			
+			var t1=trid.find(".remove_button");
+			t1.removeAttr('disabled');
+			
+		});
+
+
+		
 
 		$('.book_name').on('click', function(){
 			var $this = $(this);
