@@ -71,6 +71,16 @@ class WebsiteController < ApplicationController
 		render :layout => "material"
 	end
 
+	def communities
+		@home = true
+		render :layout => "material"
+	end
+
+	def blogs
+		@home = true
+		render :layout => "material"
+	end
+
 	def infinity
 		@infinity = true
 		render :layout => "material"

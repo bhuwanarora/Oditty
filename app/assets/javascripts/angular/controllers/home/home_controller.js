@@ -1,4 +1,4 @@
-homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$mdBottomSheet', 'shelfService', '$timeout', function($scope, $rootScope, userService, $mdBottomSheet, shelfService, $timeout){
+homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$mdBottomSheet', 'shelfService', '$timeout', '$location', function($scope, $rootScope, userService, $mdBottomSheet, shelfService, $timeout, $location){
 
 	$scope.goto_community_page = function(id){
 		userService.news_visited(id);
@@ -23,26 +23,48 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$m
     		}
     	}());
 
-        var timeout_event = $timeout(function(){
+        var _get_community_feed = function(){
+            userService.get_feed().then(function(data){
+                angular.forEach($scope.feed, function(value, index){
+                    value.communities = value.communities.concat(data[index].communities);
+                    angular.forEach(value.communities, function(community){
+                        community.view_count = 100;
+                    });
+                    delete data[index].communities;
+                    value = angular.extend(value, data[index]);
+                });
+            });
+        }
+
+        var _get_blog_feed = function(){
             userService.get_blog_feed().then(function(data){
                 $scope.feed = data.concat($scope.feed);
             });
-        }, 1000);
+        }
+
+        var url = $location.absUrl();
+
         
         $scope.$on('destroy', function(){
             $timeout.cancel(timeout_event);
         });
 
-        userService.get_feed().then(function(data){
-        	angular.forEach($scope.feed, function(value, index){
-	            value.communities = value.communities.concat(data[index].communities);
-	            angular.forEach(value.communities, function(community){
-	                community.view_count = 100;
-	            });
-	            delete data[index].communities;
-	            value = angular.extend(value, data[index]);
-        	});
-        });
+        var communities = (url.indexOf("communities") > 0);
+        var blogs = (url.indexOf("blogs") > 0);
+        if(communities){
+            _get_community_feed();
+        }
+        else if(blogs){
+            _get_blog_feed();
+        }
+        else{
+            _get_community_feed();
+            var timeout_event = $timeout(function(){
+                _get_blog_feed();
+            }, 1000);
+        }
+
+        
 
     }());
 }]);

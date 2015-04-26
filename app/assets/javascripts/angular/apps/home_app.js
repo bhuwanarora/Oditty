@@ -13,6 +13,6 @@ homeApp.config(["$routeProvider", function($routeProvider){
 homeApp.run(["$rootScope", "$location", "$cookieStore", "$cookies", "$http", function($rootScope, $location, $cookieStore, $cookies, $http){
     var unauthenticated_user = !$cookieStore.get('logged');
 	if(unauthenticated_user){
-		window.location.href = "/signup";
+		// window.location.href = "/signup";
 	}
 }]);
