@@ -1,1 +1,0 @@
-angular.module("d3",[]).service("d3Service",["$http","$q","$rootScope","WebsiteUIConstants",function(){var a;return a}]);

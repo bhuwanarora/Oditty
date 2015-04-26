@@ -1,1 +1,0 @@
-homeApp.controller("networkController",["$scope","$rootScope","networkService",function(a,b,c){a.get_followers=function(){a.users_list=[],c.get_followers().then(function(b){a.users_list=b})},a.get_users_followed=function(){a.users_list=[],c.get_users_followed().then(function(b){a.users_list=b})}}]);

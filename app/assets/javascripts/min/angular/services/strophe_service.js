@@ -1,1 +1,0 @@
-websiteApp.service("stropheService",["$rootScope",function(){}]);

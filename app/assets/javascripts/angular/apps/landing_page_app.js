@@ -33,7 +33,7 @@ app.config(
     });
 }]);
 
-app.constant('facebookAppId', "382226461962350");
+app.constant('facebookAppId', "667868653261167");
 
 app.config(["FacebookProvider", "facebookAppId", function(FacebookProvider, facebookAppId){
     var myAppId = facebookAppId;

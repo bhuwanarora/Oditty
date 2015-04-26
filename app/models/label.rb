@@ -40,4 +40,8 @@ class Label < Neo
 		WITH label, COLLECT({"+Book.grouped_basic_info+"}) as book, COUNT(label) AS label_count "
 	end
 
+	def self.optional_match_articles
+		" OPTIONAL MATCH (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(article) WHERE (article:News OR article:Blog) WITH label, COLLECT({"+Article.grouped_basic_info+"}) as article, COUNT(label) AS label_count "
+	end
+
 end

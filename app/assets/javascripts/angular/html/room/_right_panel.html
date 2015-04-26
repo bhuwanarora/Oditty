@@ -1,6 +1,6 @@
 <section>
-	<div class="side_padding" ng-repeat="shelf in article_shelves">
-		<div class="padding">{{shelf.name}}</div><br/>
+	<div class="side_padding shelf" ng-repeat="shelf in articles_grouped_by_shelves">
+		<div class="padding">{{shelf.shelf}}</div><br/>
 		<md-content class="grid_content">
 			<md-grid-list
 	            md-cols-sm="1" 
@@ -14,8 +14,9 @@
 	                md-colspan="1"
 	                layout-align="start start"
 	                layout="row"
+	                ng-if="article.title != null"
 	                ng-repeat="article in shelf.articles"
-	                ng-style='background-image: url("{{article.url}}")'>
+	                ng-style="background-image: url('{{article.image_url}}')">
 	            </md-grid-tile>
 	        </md-grid-list>
 	    </md-content>

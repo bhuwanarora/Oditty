@@ -1,1 +1,0 @@
-homeApp.controller("rightController",["$scope","$timeout","$mdSidenav","$log",function(a,b,c){a.close=function(){c("right").close()}}]);
