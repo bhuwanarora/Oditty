@@ -1,0 +1,1 @@
+homeApp.controller("buyController",["$scope","$rootScope","bookService",function(a,b,c){!function(){var d=b.active_book.id;c.get_borrow_users(d).then(function(b){a.borrow_users=b})}()}]);
