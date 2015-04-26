@@ -121,9 +121,21 @@
 		$('.removeBookForm').submit( function(){
 			var comName=$(this).closest('tr').find(".community_present").val();
 			var bookName=$(this).closest('tr').find(".books_select").val();
+			//var bookId=0;
 			if(confirm("Do you want to remove book "+  bookName +" from "+comName)==true){
+				
+				$.ajax({
+					url: "<%= deleteBookRelationship_path %>",
+					data: {book_name: bookName.toString(), community_name:comName.toString()},
+					success: function(data, textStatus, jqxhr){
+						$('.footer_status').html('Done..');
+					},
+					error: function(jqxhr, textStatus, errorThrown){
+						$('.footer_status').html('Error in removing book..');
+					}
+				});
 					
-					return true;
+				return true;
 			}
 			return false;
 			
@@ -170,7 +182,8 @@
 			    		var selectHTML="";
 
 			    		for(i=0; i<books.length; i=i+1){
-			        		selectHTML+= "<option value= "+books[i]+">"+books[i]+"</option>";
+			        		selectHTML+= "<option value= "+books[i]+"label= "+books_id[i]+">"+books[i]+"</option>";
+
 			    		}
 
 			    		newSelect.innerHTML= selectHTML;

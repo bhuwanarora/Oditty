@@ -251,20 +251,35 @@ class BooksController < ApplicationController
   
   
   def trending_community_books   
-
-  clause = (Community::search_by_name params[:q])     
-  clause =clause+(Community::match_books)+ "RETURN DISTINCT book.title, ID(book) AS id_book LIMIT 10"  
-  @books =clause.execute
-  
   
   status_r=200
   begin
+    clause = (Community::search_by_name params[:q])     
+    clause =clause+(Community::match_books)+ "RETURN DISTINCT book.title, ID(book) AS id_book LIMIT 10"  
+    @books =clause.execute
+    
     rescue Exception => e      
       status_r=500
       @books=e      
     end
 
   render :json => @books, :status => status_r
+  end
+
+  def deleteBookRelationship
+    status_r=200
+
+    begin
+      book_name=params[:book_name]
+      community_name=params[:community_name]
+      clause = Community::search_by_name community_name
+      clause = clause + "MATCH (community)-[r:RelatedBooks]->(book:Book) WHERE book.title ="+book_name+ " DELETE r"
+      
+      clause.execute 
+    rescue Exception => e
+      status_r=500
+    end      
+   render :json => "", :status => status_r 
   end
 
   def trends
