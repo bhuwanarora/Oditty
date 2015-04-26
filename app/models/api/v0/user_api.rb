@@ -303,7 +303,7 @@ module Api
 						clause = self._create_user_without_email params
 					end
 				end
-				user_id = clause.execute
+				user_id = clause.execute[0]["user_id"]
 				puts "fb execute_query done...".green
 				puts "FB LOGIN USER_ID #{user_id.to_s.red}"
 				session[:user_id] = user_id
