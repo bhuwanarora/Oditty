@@ -524,7 +524,7 @@ module Api
 			end
 
 			def self._fb_return_clause
-				" RETURN DISTINCT(ID(user))"
+				" RETURN DISTINCT(ID(user)) AS user_id"
 			end
 
 			def self._update_user_with_email params
