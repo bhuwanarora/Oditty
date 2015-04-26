@@ -16,7 +16,6 @@ class ApplicationController < ActionController::Base
       $redis.set 'book_ids', ""
     end
     session["init"] = true
-    session[:user_id] = nil
     if session[:user_id] == Constant::Id::Admin
       @is_admin = true
     end
