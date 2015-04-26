@@ -93,10 +93,8 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
         var data_json = {"email": email, "password": password, "old_user": old_user};
         
         var success_callback = function(data){
-            $rootScope.user.profile_status = data.profile_status;
-            $rootScope.user.logged = true;
             $rootScope.user.id = data.user_id;
-            $cookieStore.put('logged', true);
+            $scope._init_user();
             window.location.href = "/home";
         }
 
