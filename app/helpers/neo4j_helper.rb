@@ -840,7 +840,7 @@ module Neo4jHelper
 		# articles = 1
 		# listopia = 2
 		# community = 3
-		delete_labels = "MATCH (u:User), (l:Label), (u)-[r1:Labelled]->(l) DELETE r1, l"
+		delete_labels = "MATCH (u:User), (l:Label), (l)-[r1]-() DELETE r1, l"
 		@neo.execute_query delete_labels
 
 		labels = [{:name => "Read", :key => "Read", :type => [0, 1, 2], :public => true},
@@ -861,9 +861,9 @@ module Neo4jHelper
 				  {:name => "Visited", :key => "Visited", :type => [0, 1, 2], :public => false}]
 		for label in labels
 			clause = " CREATE (label: Label{basic:true, name:\""+label[:name]+"\", key:\""+label[:key]+"\", public:"+label[:public].to_s+"}) "
-			clause = clause + " SET label:BookLabel " 		if label.include? 0
-			clause = clause + " SET label:ArticleLabel " 	if label.include? 1
-			clause = clause + " SET label:ListLabel " 		if label.include? 2
+			# clause = clause + " SET label:BookLabel " 		if label.include? 0
+			# clause = clause + " SET label:ArticleLabel " 	if label.include? 1
+			# clause = clause + " SET label:ListLabel " 		if label.include? 2
 			@neo.execute_query clause
 		end
 

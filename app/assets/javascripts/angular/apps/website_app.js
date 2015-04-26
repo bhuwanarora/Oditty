@@ -4,83 +4,56 @@ var websiteApp = angular.module('websiteApp', ['ngRoute', 'ngAnimate', 'fx.anima
                   'appConstants']);
 
 websiteApp.config(["$routeProvider", "$locationProvider", function ($routeProvider, $locationProvider) {
-  $routeProvider
-  .when('/search', {
-    templateUrl: '/assets/angular/views/search/show.html'
-  })
-  .when('/search/url/:url', {
-    templateUrl: '/assets/angular/views/search/show.html'
-  })
-  .when('/user/:id', {
-    templateUrl: '/assets/angular/views/search/show.html'
-  })
-  .when('/user/:id/recommendations/:type', {
-    templateUrl: '/assets/angular/views/home.html'
-  })
-  .when('/user/:id/recommendations/:type/filter/:filter_id/name/:name', {
-    templateUrl: '/assets/angular/views/home.html'
-  })
-  .when('/user/:id/recommendations/:type/label/:label_id/name/:name', {
-    templateUrl: '/assets/angular/views/home.html'
-  })
-  .when('/user/:id/grid/:type/id/:grid_id/name/:name', {
-    templateUrl: '/assets/angular/views/home.html'
-  })
-  .when('/user/:id/trending/:type/id/:trend_id/name/:name', {
-    templateUrl: '/assets/angular/views/home.html'
-  })
-  .when('/book/:id', {
-    templateUrl: '/assets/angular/views/home.html'
-  })
-  .when('/user/:id/book/:title/author/:author', {
-    templateUrl: '/assets/angular/views/home.html'
-  })
-  .when('/user/:id/book/:title/all/:status', {
-    templateUrl: '/assets/angular/views/home.html'
-  })
-  .when('/user/:id/book/:book_id', {
-    templateUrl: '/assets/angular/views/home.html'
-  })
-  .when('/user/:id/book/:title/author/:author/id/:book_id', {
-    templateUrl: '/assets/angular/views/home.html'
-  })
-  .when('/reader/:id/:type', {
-    templateUrl: '/assets/angular/views/home.html'
-  })
-  // .when('/user/:id/timeline', {
-  //   templateUrl: '/assets/angular/views/home.html'
-  // })
-  // .when('/user/:id/book/:book_id', {
-  //   templateUrl: '/assets/angular/views/unused/book.html'
-  // })
-  // .when('/user/:id/book/:book_id/reviews', {
-  //   templateUrl: '/assets/angular/views/unused/book.html'
-  // })
-  // .when('/user/:id/book/:book_id/discussions', {
-  //   templateUrl: '/assets/angular/views/unused/book.html'
-  // })
-  // .when('/user/:id/book/:book_id/timeline', {
-  //   templateUrl: '/assets/angular/views/unused/book.html'
-  // })
-  // .when('/book/:book_id', {
-  //   templateUrl: '/assets/angular/views/unused/book.html'
-  // })
-  // .when('/book/:book_id/reviews', {
-  //   templateUrl: '/assets/angular/views/unused/book.html'
-  // })
-  // .when('/book/:book_id/discussions', {
-  //   templateUrl: '/assets/angular/views/unused/book.html'
-  // })
-  // .when('/book/:book_id/timeline', {
-  //   templateUrl: '/assets/angular/views/unused/timeline.html'
-  // })
-  .when('/', {
-    templateUrl: '/assets/angular/views/search/show.html'
-  })
-  .otherwise({
-    templateUrl: '/assets/angular/views/search/show.html'
-  });
-  // $locationProvider.html5Mode(true);
+    $routeProvider
+        .when('/search', {
+            templateUrl: '/assets/angular/views/search/show.html'
+        })
+        .when('/search/url/:url', {
+            templateUrl: '/assets/angular/views/search/show.html'
+        })
+        .when('/user/:id', {
+            templateUrl: '/assets/angular/views/search/show.html'
+        })
+        .when('/user/:id/recommendations/:type', {
+            templateUrl: '/assets/angular/views/home.html'
+        })
+        .when('/user/:id/recommendations/:type/filter/:filter_id/name/:name', {
+            templateUrl: '/assets/angular/views/home.html'
+        })
+        .when('/user/:id/recommendations/:type/label/:label_id/name/:name', {
+            templateUrl: '/assets/angular/views/home.html'
+        })
+        .when('/user/:id/grid/:type/id/:grid_id/name/:name', {
+            templateUrl: '/assets/angular/views/home.html'
+        })
+        .when('/user/:id/trending/:type/id/:trend_id/name/:name', {
+            templateUrl: '/assets/angular/views/home.html'
+        })
+        .when('/book/:id', {
+            templateUrl: '/assets/angular/views/home.html'
+        })
+        .when('/user/:id/book/:title/author/:author', {
+            templateUrl: '/assets/angular/views/home.html'
+        })
+        .when('/user/:id/book/:title/all/:status', {
+            templateUrl: '/assets/angular/views/home.html'
+        })
+        .when('/user/:id/book/:book_id', {
+            templateUrl: '/assets/angular/views/home.html'
+        })
+        .when('/user/:id/book/:title/author/:author/id/:book_id', {
+            templateUrl: '/assets/angular/views/home.html'
+        })
+        .when('/reader/:id/:type', {
+            templateUrl: '/assets/angular/views/home.html'
+        })
+        .when('/', {
+            templateUrl: '/assets/angular/views/search/show.html'
+        })
+        .otherwise({
+            templateUrl: '/assets/angular/views/search/show.html'
+        });
+        // $locationProvider.html5Mode(true);
 }]);
 
 websiteApp.constant('facebookAppId', "667868653261167");
@@ -165,19 +138,19 @@ function notify($rootScope, message, $timeout){
 }
 
 function get_size() {
-  if(typeof(window.innerWidth) == 'number'){
-    //Non-IE
-    window_width = window.innerWidth;
-    window_height = window.innerHeight;
-  }else if(document.documentElement && (document.documentElement.clientWidth || document.documentElement.clientHeight)){
-    //IE 6+ in 'standards compliant mode'
-    window_width = document.documentElement.clientWidth;
-    window_height = document.documentElement.clientHeight;
-  }else if(document.body && (document.body.clientWidth || document.body.clientHeight)){
-    //IE 4 compatible
-    window_width = document.body.clientWidth;
-    window_height = document.body.clientHeight;
-  }
+    if(typeof(window.innerWidth) == 'number'){
+        //Non-IE
+        window_width = window.innerWidth;
+        window_height = window.innerHeight;
+    }else if(document.documentElement && (document.documentElement.clientWidth || document.documentElement.clientHeight)){
+        //IE 6+ in 'standards compliant mode'
+        window_width = document.documentElement.clientWidth;
+        window_height = document.documentElement.clientHeight;
+    }else if(document.body && (document.body.clientWidth || document.body.clientHeight)){
+        //IE 4 compatible
+        window_width = document.body.clientWidth;
+        window_height = document.body.clientHeight;
+    }
 }
 
 var window_width = 0, window_height = 0;

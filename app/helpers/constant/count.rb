@@ -9,8 +9,8 @@ module Constant::Count
 	PopularBooksShown			= 30
 	FeedFetch					= 4 
 	BookShownInInfinty          = 10
-	MaximumCommunityBooks		= 10
-	MinimumCommunityBooks  		= 5
+	MaximumCommunityBooks		= 20
+	MinimumCommunityBooks  		= 1
 
 	QueryStepDuringLinking		= 1000
 	CommunitiesShown            = 7 
@@ -20,5 +20,7 @@ module Constant::Count
 	InitialSkip		        	= 0
 	RelevantSocialTag		  	= 1
 
-	SecondsInHourCount			= 3600
+	ElementsShownInSearch		= 6
+	NewsShownInFeed				= 10
+	VerificationExpirySeconds	= 3600
 end

@@ -1,5 +1,5 @@
 class Book::SmallRead < Book
-	Limit = 12
+	Limit = 8
 
 	def initialise
 		@best_small_read ||= Constant::Id::BestSmallRead
@@ -27,6 +27,6 @@ class Book::SmallRead < Book
 	end
 
 	def self.get_sorted_books skip_count, limit=Limit
-		self.path_nodes_after(skip_count) + self.return_init + ::Book.basic_info + ::Book.order_desc + self.limit(Limit)
+		Book::SmallRead.nth_node(skip_count) + Book::SmallRead.path + "," +  Book::SmallRead.extract_unwind("book") + Book::SmallRead.return_init + ::Book.basic_info + ::Book.order_desc + Book::SmallRead.limit(Limit)
 	end
 end

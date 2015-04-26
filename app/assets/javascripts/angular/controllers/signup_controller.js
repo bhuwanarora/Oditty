@@ -55,19 +55,19 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
     $scope.recover_password = function(){
         var success_callback = function(data){
             $scope.loading_icon = false;
-            alert(data.message);
+            $scope.user.error_message = data.message;
             $rootScope.user.password = null;
         }
 
         var error_callback = function(data){
             $scope.$apply(function(){
                 $scope.loading_icon = false;
-                alert(data.message);
+                $scope.user.error_message = data.message;
                 $rootScope.user.password = null;
             });
         }
         if(!$rootScope.user.email){
-            alert(LoginConstants.EmailNotPresent);
+            $scope.user.error_message = LoginConstants.EmailNotPresent;
         }
         else{
             $scope.loading_icon = true;
@@ -93,33 +93,32 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
         var data_json = {"email": email, "password": password, "old_user": old_user};
         
         var success_callback = function(data){
-            $rootScope.user.profile_status = data.profile_status;
-            $rootScope.user.logged = true;
             $rootScope.user.id = data.user_id;
+            $scope._init_user();
             window.location.href = "/home";
         }
 
         var error_callback = function(reason){
             console.debug("error_callback", reason);
             $scope.loading_icon = false;
-            alert(reason.data.message);
+            $scope.user.error_message = reason.data.message;
             $rootScope.user.password = null;
         }
 
         if(!$rootScope.user.email){
-            alert(LoginConstants.EmailNotPresent);
+            $scope.user.error_message = LoginConstants.EmailNotPresent;
         }
         else if(!$rootScope.user.password) {
-            alert(LoginConstants.PasswordNotPresent);
+            $scope.user.error_message = LoginConstants.PasswordNotPresent;
         }
         else if(!min_length_pattern.test($rootScope.user.password) && (!old_user)){
-            alert(LoginConstants.PasswordLengthError);
+            $scope.user.error_message = LoginConstants.PasswordLengthError;
         }
         else if((not_repeat_pattern.test($rootScope.user.password)) && (!old_user)){
-            alert(LoginConstants.ChooseAMoreSecurePassword);
+            $scope.user.error_message = LoginConstants.ChooseAMoreSecurePassword;
         }
         else if((max_length_pattern.test($rootScope.user.password)) && (!old_user)){
-            alert(LoginConstants.MaximumPasswordLengthError);
+            $scope.user.error_message = LoginConstants.MaximumPasswordLengthError;
         }
         else{
             $scope.loading_icon = true;
@@ -189,19 +188,21 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
     $scope.me = function() {
         Facebook.api('/me', function(response){
             websiteService.handle_facebook_user(response).then(function(){
-                $scope._is_logged_in();
+                $scope._init_user();
+                // $scope._is_logged_in();
+                window.location.href = "/home";
             });
             $rootScope.user = response;
-            $scope._init_user();
             Facebook.api('me/picture?redirect=false&type=large', function(response){
                 websiteService.save_user_info(response);
             });
+
         });
     };
 
     $scope._init_user = function(){
-        $rootScope.user.profile_status = 0;
         $rootScope.user.logged = true;
+        $cookieStore.put('logged', true);
     }
       
     // $scope.logout = function() {
@@ -232,8 +233,8 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
                     angular.extend($rootScope.user, data);
                 });
                 $cookieStore.put('logged', true);
-                $scope._on_authenticate();
-                _handle_push_notifications();           
+                // $scope._on_authenticate();
+                _handle_push_notifications();     
                 // stropheService.start_connection();
             }
         });
@@ -249,7 +250,7 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
     var _init = (function(){
         // $cookieStore.remove('tab');
         // $scope.login_active = true;
-        $scope._is_logged_in();
+        // $scope._is_logged_in();
         _bind_auth_listeners();
         $rootScope.user = {'books': {'bookmarked':[], 'read': []},
                 'authors': {'bookmarked': [], 'follow': []},
@@ -282,7 +283,7 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
             }
             timer = timer + 1500;
         });
-        $scope.renderSignInButton();
+        // $scope.renderSignInButton();
     }());
 
 }]);

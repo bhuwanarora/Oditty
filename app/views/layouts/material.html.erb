@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html ng-app="homeApp" ng-strict-di>
     <head>
+        <meta name="viewport" content="width=device-width">
+        <meta property="og:url" content="http://www.readersdoor.com" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="ReadersDoor: Global Community of Book Lovers" />
+        <meta property="og:description" content="We are a global community for bibliophiles, where we intend to enrich and enhance users’ reading experience by focusing on virtualisation and idealisation of their real life interactions and experiences.
+
+At ReadersDoor, we aim to bridge the gap between reality and knowledge deriving from books and literature, which we accomplish through an all-inclusive strategy comprising of recommendations, reading lists, discussion communities, latest news concerning a particular topic or an issue." />
+        <meta property="og:image" content="https://literaturerun.files.wordpress.com/2015/02/rd_logo7.png" />
+        <meta property="fb:app_id" content="667868653261167"/>
+
         <meta charset="utf-8" />
         <title>ReadersDoor</title>
-        <link rel="icon" 
-              type="image/png" 
-              href="assets/favicon.png">
+        <link rel="icon" type="image/png" href="assets/favicon.png">
         <script>document.write('<base href="' + document.location + '" />');</script>
 
         <!-- <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,100italic,400italic|Roboto+Condensed&amp;lang=en' rel='stylesheet' type='text/css'> -->
@@ -14,21 +22,10 @@
         <link rel="stylesheet" href="assets/website/home.css" />
         <link rel="stylesheet" href="assets/website/media_library.css" />
 
-        <script src="assets/min/angular/website.min.js"></script>
         <% if Rails.env.development? %>
+            <script src="assets/min/angular/vendors.min.js"></script>
+
             <script src="assets/angular/services/third_party/d3_service.js"></script>
-            <% if (@community || @home)%>
-                <script src="http://phuonghuynh.github.io/js/bower_components/jquery/dist/jquery.min.js"></script>
-                <script src="assets/angular/vendors/d3.min.js"></script>
-                <script src="http://phuonghuynh.github.io/js/bower_components/d3-transform/src/d3-transform.js"></script>
-                <script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/extarray.js"></script>
-                <script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/misc.js"></script>
-                <script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/micro-observer.js"></script>
-                <script src="http://phuonghuynh.github.io/js/bower_components/microplugin/src/microplugin.js"></script>
-                <script src="assets/angular/vendors/bubble_chart/bubble-chart.js"></script>
-                <script src="assets/angular/vendors/bubble_chart/central-click.js"></script>
-                <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/plugins/lines/lines.js"></script>
-            <% end %>
             <script src="assets/angular/vendors/angular-parallax.min.js"></script>
             <script src="assets/angular/vendors/angular_sticky.js"></script>
             
@@ -40,6 +37,7 @@
             <script src="assets/angular/services/book_service.js"></script>
             <script src="assets/angular/services/author_service.js"></script>
             <script src="assets/angular/services/shelf_service.js"></script>
+            <script src="assets/angular/services/shared_service.js"></script>
 
             <script src="assets/angular/controllers/app_controller.js"></script>
             
@@ -60,6 +58,21 @@
             <script src="assets/angular/services/status_service.js"></script>
             <script src="assets/angular/services/feed_service.js"></script>
 
+            <% if (@community || @home)%>
+                <script src="assets/angular/vendors/jquery.min.js"></script>
+                <script src="assets/angular/vendors/d3.min.js"></script>
+                <script src="assets/angular/vendors/bubble_chart/d3_transform.js"></script>
+                <script src="assets/angular/vendors/bubble_chart/extarray.js"></script>
+                <script src="assets/angular/vendors/bubble_chart/misc.js"></script>
+                <script src="assets/angular/vendors/bubble_chart/micro-observer.js"></script>
+                <script src="assets/angular/vendors/bubble_chart/microplugin.js"></script>
+                <script src="assets/angular/vendors/bubble_chart/bubble-chart.js"></script>
+                <script src="assets/angular/vendors/bubble_chart/central-click.js"></script>
+                <script src="assets/angular/vendors/bubble_chart/lines.js"></script>
+                <script src="assets/angular/directives/d3_directives.js"></script>
+            <% end %>
+
+            
             <% if @home %>
                 <script src="assets/angular/controllers/home/home_controller.js"></script>
             <% end %>
@@ -73,13 +86,10 @@
                 <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
                 <script src="assets/angular/controllers/book/timeline_controller.js"></script>
                 <script src="assets/angular/controllers/book/real_virtuality_controller.js"></script>
+                <script src="assets/angular/controllers/book/buy_controller.js"></script>
                 
                 <script src="assets/angular/services/community_service.js"></script>
                 <script src="assets/angular/controllers/community_controller.js"></script>
-            <% end %>
-
-            <% if @community || @home %>
-                <script src="assets/angular/directives/d3_directives.js"></script>
             <% end %>
 
             <% if @customise %>
@@ -94,18 +104,21 @@
                 <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
                 <script src="assets/angular/controllers/book/timeline_controller.js"></script>
                 <script src="assets/angular/controllers/book/real_virtuality_controller.js"></script>
+                <script src="assets/angular/controllers/book/buy_controller.js"></script>
             <% end %>
 
             <% if @infinity %>
+                <script src="assets/angular/services/time_group_service.js"></script>
+                <script src="assets/angular/services/reading_time_service.js"></script>
+                <script src="assets/angular/services/infinity_service.js"></script>
+                
                 <script src="assets/angular/controllers/library/library_controller.js"></script>
                 <script src="assets/angular/controllers/library/filters_controller.js"></script>
                 <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
                 <script src="assets/angular/controllers/book/timeline_controller.js"></script>
                 <script src="assets/angular/controllers/book/real_virtuality_controller.js"></script>
+                <script src="assets/angular/controllers/book/buy_controller.js"></script>
 
-                <script src="assets/angular/services/time_group_service.js"></script>
-                <script src="assets/angular/services/reading_time_service.js"></script>
-                <script src="assets/angular/services/infinity_service.js"></script>
             <% end %>
 
             <% if @room %>
@@ -114,21 +127,55 @@
             <% end %>
 
             <% if @author %>
-                <!-- // <script src="http://phuonghuynh.github.io/js/bower_components/jquery/dist/jquery.min.js"></script> -->
                 <script src="assets/angular/controllers/author_controller.js"></script>
             <% end %>
 
-            <script src="assets/angular/vendors/angular_dragdrop.min.js"></script>
-            <script src="assets/angular/vendors/angular-drop.min.js.map"></script>
         <% else %>
-            <script src="assets/min/angular/home.min.js"></script> 
+            <script src="assets/min/angular/site.min.js"></script>
+
+            <% if (@community || @home)%>
+                <script src="assets/min/angular/d3_group.min.js"></script> 
+            <% end %>
+
+
+            <% if @home %>
+                <script src="assets/min/angular/controllers/home_group.min.js"></script>
+            <% end %>
+
+            <% if @network %>
+                <script src="assets/min/angular/controllers/network_group.min.js"></script>
+            <% end %>
+
+            <% if @community %>
+                <script src="assets/min/angular/controllers/community_group.min.js"></script>
+            <% end %>
+
+            <% if @customise %>
+                <script src="assets/min/angular/controllers/customise_group.min.js"></script>
+            <% end %>
+
+            <% if @book %>
+                <script src="assets/min/angular/controllers/book_group.min.js"></script>
+            <% end %>
+
+            <% if @infinity %>
+                <script src="assets/min/angular/controllers/infinity_group.min.js"></script>
+            <% end %>
+
+            <% if @room %>
+                <script src="assets/min/angular/controllers/room_group.min.js"></script>
+            <% end %>
+
+            <% if @author %>
+                <script src="assets/min/angular/controllers/author_group.min.js"></script>
+            <% end %>
+
         <% end %>
     </head>
 
     <body ng-controller="appController" 
         ng-keydown="scroll_on_keypress($event)" 
         ng-click="close_popups()" 
-        ng-keypress="play_type_key($event)"
         msd-wheel="close_popups()">
         <audio id="audiotag1" src="assets/typewriter2.m4a" preload="auto"></audio>
         <audio id="audiotag2" src="assets/typewriter2.m4a" preload="auto"></audio>
@@ -139,14 +186,16 @@
             <md-toolbar md-scroll-shrink class="header <% if !@infinity %>'no_shadow'<% end %>">
                 <section layout="row" layout-wrap>
                     <div flex="20" flex-sm="35" layout="row" layout-align="start center">
-                        <md-button ng-show="visible_search_bar" class="burger padding" ng-click="toggleLeft($event)">
+                        <md-button ng-show="info.mobile_search" class="burger padding" ng-click="toggleLeft($event)">
                             <a><span class="icon-menu2"></span></a>
                         </md-button>
-                        <div ng-show="visible_search_bar" 
+                        <div ng-show="info.mobile_search" 
                              layout-align-lg="center center">
                             <a class="logo" href="/home">
                                 <img src="assets/rd_icon.png"/>
+
                                 <span hide-sm hide-md ng-hide="<%= @signup %>">ReadersDoor</span>
+                                
                             </a>
                         </div>
                     </div>
@@ -157,7 +206,7 @@
                          layout-align="end center" 
                          layout-align-sm="start center">
                         <md-button ng-click="show_search_bar()" 
-                                   ng-show="visible_search_bar" show-sm hide>
+                                   ng-show="info.mobile_search" show-sm hide>
                             <span class="icon-search"></span>
                         </md-button>
                         <div hide-sm class="search_icon">
@@ -178,41 +227,46 @@
                             <div layout="row"
                                 layout-align="space-between"
                                 md-highlight-text="item | search_item_type">
-                                <div>{{item.name}}</div>
-                                <b class="less_important">{{item | search_item_type}}</b>
+                                <div ng-bind-html="item.name"></div>
+                                <b class="less_important" ng-bind-html="item | search_item_type"></b>
                             </div>
-
-                            <!-- <span md-highlight-text="search_text">
-                                {{item}}
-                            </span> -->
                         </md-autocomplete>
                     </div>
                     <div layout="row" layout-align="center center" flex="10" flex-md="15" flex-sm="20">
-                        <md-button ng-show="visible_search_bar" class="library">
+                        <md-button ng-show="info.mobile_search" class="library">
                             <a href="/infinity">Infinity</a>
                         </md-button>
                     </div>
                     <div flex="20" flex-sm="35" layout="row" layout-align="end center">
-                        <a href="/room" ng-show="visible_search_bar">
+                        <a href="/room" ng-show="info.mobile_search">
                             <md-button class="small-padding">
-                                <span class="icon-checkbox-unchecked"></span>
+                                <span class="icon-home2"></span>
+                                <md-tooltip >
+                                        Room
+                                </md-tooltip>
                             </md-button>
                         </a>
-                        <md-button ng-show="visible_search_bar" class="small-padding" 
+                        <md-button ng-show="info.mobile_search" class="small-padding" 
                             ng-click="toggle_notifications($event)">
                             <span class="icon-bell"></span>
+                            <md-tooltip >
+                                        Notifications
+                            </md-tooltip>
                         </md-button>
-                        <a href="/profile" ng-show="visible_search_bar">
+                        <a href="/profile" ng-show="info.mobile_search">
                             <md-button class="profile_link">
-                                <img src="http://www.chicagonow.com/avatar/blog-108-128.png" 
+                                <img ng-src="{{user.image_url | default_profile}}" 
                                     class="circular">
+                                    <md-tooltip >
+                                        Profile
+                                    </md-tooltip>
                             </md-button>
                         </a>
                     </div>
                     <div layout="row" layout-align="center center" 
-                            ng-hide="visible_search_bar" layout-fill layout-padding hide-md hide-lg>
-                        <md-button flex="20" ng-click="show_search_bar()" hide-md hide-lg>
-                            <span class="icon-search"></span>
+                            ng-hide="info.mobile_search" layout-fill layout-padding hide-md hide-lg>
+                        <md-button flex="10" ng-click="show_search_bar()" hide-md hide-lg class="md-button-clear">
+                            <span class="icon-angle-left"></span>
                         </md-button>
                         <md-autocomplete
                             md-selected-item="selectedItem1"
@@ -220,28 +274,34 @@
                             md-items="item in querySearch(searchText)"
                             md-item-text="display"
                             class="search"
-                            flex="80" hide-md hide-lg
+                            flex="90" hide-md hide-lg
                             placeholder="Search books, topics and more...">
-                            <span md-highlight-text="searchText">{{item.display}}</span>
+                            <span md-highlight-text="searchText" ng-bind-html="item.display"></span>
                         </md-autocomplete>
                     </div>
                 </section>
             </md-toolbar>
 
-            <%= yield %>
-            <div ng-controller="shareController" >
+            <div ng-show="info.mobile_search">
+                <%= yield %>
+            </div>
+            <div ng-controller="shareController" ng-show="info.mobile_search">
                 <md-button class="md-fab md-fab-bottom-right animate-fast fixed_share"
+                            ng-hide="active_shelf"
                             aria-label="Eat cake"
                             ng-class="{'md-fab-custom-right': info.show_share || info.show_book_share}"
                             ng-click="show_share_page($event)"
                             ng-style="type_icon_pressed"
                             style="background-image: url('assets/type.png')">
+                            <md-tooltip md-direction="left">
+                                  Share your reading journey
+                            </md-tooltip>
                 </md-button>
             </div>
             
-            <md-progress-linear class="md-primary loader" 
-                    ng-show="info.loading"
-                    md-mode="indeterminate">
+            <md-progress-linear class="md-primary loader"
+                                ng-show="info.loading"
+                                md-mode="indeterminate">
             </md-progress-linear>
 
             <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" 

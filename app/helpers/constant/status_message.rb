@@ -4,7 +4,7 @@ module Constant::StatusMessage
 	AuthenticationFailed		= "Email and password doesn't match."
 	VerifyEmail					= "Please verify your email address."
 	EmailNotRegistered			= "Email not registered."
-	EmailAlreadyRegistered		= "Email already registered. Please check your inbox to reset password if you have forgotten."
+	EmailAlreadyRegistered		= "Email already registered."
 	ActivateAccount				= "We have sent you an email with an activation link. Please activate your account."
 	AnotherActivationRequest	= "Please activate your email account. We are sending you another mail."
 	EmailConfirmed				= "Email Verified. We have recieved your request and will soon be able give access. Please bear with us."
@@ -14,5 +14,5 @@ module Constant::StatusMessage
 	PasswordChangedSuccess	 	= "Password saved. Redirecting to home page."
 	PasswordChangedFailure		= "Error while saving the new password. Please try again."
 	SessionNotSet				= "Session not set properly error..."
-	VerificationTokenExpired	= " Verification token expired. Please request it again "
+	VerificationTokenExpired	= " Verification token invalid or expired. Please request it again "
 end

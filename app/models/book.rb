@@ -52,7 +52,7 @@ class Book < Neo
 	end
 
 	def self.optional_match_genre
-		" OPTIONAL " + self.match_genre
+		" OPTIONAL " + Book.match_genre
 	end
 
 	def self.get_small_reads
@@ -116,5 +116,13 @@ class Book < Neo
 
 	def get_news
 		match + Book.match_communities + Community.order_desc + Book.limit(1) + Community.match_news  + " ,book WITH book, " + Community.collect_map("news" => News.grouped_basic_info) + Book.match_communities + " ,news " + Book.return_init + " news, " + Community.basic_info + Community.order_desc 
+	end
+
+	def self.match_lenders 
+		Status::BookExchangeStatusType::PlanningToLend.new(@id).match + ", friend " + Status.match + " , friend " + UsersUser.match_all
+	end
+
+	def get_lenders user_id
+		User.new(user_id).match + " WITH user AS friend " + match + " , friend " + Book.match_lenders + Book.return_init + User.basic_info   
 	end
 end

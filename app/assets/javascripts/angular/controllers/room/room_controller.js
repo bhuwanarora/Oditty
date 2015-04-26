@@ -1,5 +1,6 @@
 homeApp.controller('roomController', ["$scope", "$rootScope", "$timeout", 'roomService', 'ColorConstants', function($scope, $rootScope, $timeout, roomService, ColorConstants){
 	$scope.add_books_to_shelf = function(shelf, event){
+		$rootScope.active_shelf = shelf;
 		$scope.info.show_book_share = true;
 	}
 
@@ -51,7 +52,8 @@ homeApp.controller('roomController', ["$scope", "$rootScope", "$timeout", 'roomS
 			var random_int = Math.floor(Math.random()*ColorConstants.value.length);
 			var width = _get_random_init(70, 100);
 			var height = _get_random_init(40, 60);
-			var random_style = {"width": width+"%", "height": height+"px", "background-color": ColorConstants.value[random_int]};
+			var margin_left = _get_random_init(1, 10);
+			var random_style = {"width": width+"%", "height": height+"px", "background-color": ColorConstants.value[random_int], "margin-left": margin_left+"px"};
 			var json = angular.extend(value, {"random_style": random_style, "color": ColorConstants.value[random_int]});
 			this.push(json);
 		}, array);

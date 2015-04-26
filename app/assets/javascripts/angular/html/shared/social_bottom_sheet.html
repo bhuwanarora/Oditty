@@ -1,16 +1,17 @@
 <md-bottom-sheet class="md-list md-has-header" 
-        ng-controller="shareController" ng-click="stop_propagation($event)">
+        ng-controller="shelfController" ng-click="stop_propagation($event)">
     <md-subheader>Share</md-subheader>
     <md-list>
         <md-item>
-            <md-button aria-label="Facebook" class="md-button-clear">
+            <md-button aria-label="Facebook" class="md-button-clear"
+                class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" 
+                data-layout="link">
                 <md-inline-list-icon icon="icon-facebook"></md-inline-list-icon>
                 <span class="md-inline-list-icon-label">Facebook</span>
             </md-button>
-            <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="link"></div>
         </md-item>
         <md-item>
-            <md-button aria-label="Twitter" class="md-button-clear">
+            <md-button aria-label="Twitter" class="md-button-clear"  href="https://twitter.com/share" class="twitter-share-button" data-text="www.readersdoor.com" data-via="readers_door">
                 <md-inline-list-icon icon="icon-twitter"></md-inline-list-icon>
                 <span class="md-inline-list-icon-label">Twitter</span>
             </md-button>
@@ -31,10 +32,16 @@
 </md-bottom-sheet>
 
 <div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=382226461962350&version=v2.2";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+<script>
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=667868653261167";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+    
+</script>

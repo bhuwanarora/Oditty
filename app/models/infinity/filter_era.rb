@@ -4,7 +4,7 @@ class Infinity::FilterEra < Infinity
 		@era = Era.new(id)
 	end
 
-	def match
+	def match 
 		@era.books
 	end
 end

@@ -68,7 +68,7 @@ homeApp.service('bookService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
     }
 
     this.search_books = function(data, skip_count){
-        return _deferred_request('/api/v0/search_books?q='+data+"&skip="+skip_count);
+        return _deferred_request('/api/v0/search?q='+data+"&skip="+skip_count+"&type=Book");
     }
 
     this.get_popular_books = function(params){
@@ -97,6 +97,10 @@ homeApp.service('bookService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
 
     this.get_real_news = function(id){
         return _deferred_request('/api/v0/book_news?id='+id);
+    }
+
+    this.get_borrow_users = function(id){
+        return _deferred_request('/api/v0/borrow_users?id='+id)
     }
 
 }]);

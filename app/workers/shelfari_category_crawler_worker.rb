@@ -1,5 +1,5 @@
 class ShelfariCategoryCrawlerWorker
-	include ShelfariCrawler
+	# include ShelfariCrawler
 	@queue = :category_crawler
 
 

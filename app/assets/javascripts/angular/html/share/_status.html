@@ -1,0 +1,61 @@
+<span ng-if="active_shelf">
+	<h3>Add books to {{active_shelf.shelf}}</h3>
+</span>
+
+<span ng-show="info.reading_status_value == 0">
+	<span ng-if="!info.book_exchange_status">
+		Planning to read
+		<span ng-if="info.book">{{info.book.title}}</span>
+		<span ng-if="!info.book"> a book</span>.
+	</span>
+
+	<span ng-if="info.book_exchange_status">
+		<span ng-show="info.book_exchange_status == 0">
+			Looking to buy
+			<span ng-if="info.book">{{info.book.title}}</span>
+			<span ng-if="!info.book"> a book</span>.
+		</span>
+
+		<span ng-show="info.book_exchange_status == 1">
+			Looking to borrow
+			<span ng-if="info.book">{{info.book.title}}</span>
+			<span ng-if="!info.book"> a book</span>.
+		</span>
+
+	</span>
+</span>
+
+
+<span ng-show="info.reading_status_value == 1">
+	<span ng-show="((info.book_exchange_status != 0) && (info.book_exchange_status != 1)) 
+				&& (!info.feelings || info.feelings.length == 0)">
+		Currently Reading
+		<span ng-if="info.book">{{info.book.title}}</span>
+		<span ng-if="!info.book"> a book</span>.
+	</span>
+	<span ng-show="info.feelings && info.feelings.length > 0">
+		Feeling {{info.feelings[0]}} while reading
+		<span ng-if="info.book">{{info.book.title}}</span>
+		<span ng-if="!info.book"> a book</span>.
+	</span>
+</span>
+
+<span ng-show="info.reading_status_value == 2">
+	<span ng-show="info.feelings && info.feelings.length > 0">
+		Feeling {{info.feelings[0]}} after reading
+		<span ng-if="info.book">{{info.book.title}}</span>
+		<span ng-if="!info.book"> a book</span>.
+	</span>
+	<span ng-show="!info.feelings || info.feelings.length == 0">
+		Finished reading
+		<span ng-if="info.book">{{info.book.title}}</span>
+		<span ng-if="!info.book"> a book</span>.
+	</span>
+</span>
+
+<span ng-if="(info.reading_status_value != 0) 
+			&& (info.reading_status_value != 1) 
+			&& (info.reading_status_value != 2) 
+			&& info.book">
+	<div ng-init="book = info.book" ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
+</span>

@@ -1,10 +1,10 @@
 <md-content layout="column" layout-align="center center" layout-padding class="book_scroller">
-	<section>
+	<section layout-sm="row">
 		<md-button ng-click="show_book_dialog(book, $event)" 
-				   class="clear" 
+				   class="clear" layout-margin
 				   ng-repeat="book in active_tag.books">
-		    <img ng-src="{{book | choose_medium_thumb}}" 
-		         layout-margin/>
+			<div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'">
+			</div>
 		</md-button>
 	</section>
 </md-content>
@@ -15,5 +15,4 @@
         width: 130px;
         height: 180px;
     }
-
 </style>

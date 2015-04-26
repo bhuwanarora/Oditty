@@ -43,9 +43,15 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def add_new_label
+				user_id = session[:user_id]
+				info = Api::V0::WebsiteApi.add_new_label(user_id, params[:label]).execute[0]
+				render :json => info, :status => 200
+			end
+
 			def add_label
 				user_id = session[:user_id]
-				UsersLabel.create(user_id, params[:label]).execute
+				Api::V0::WebsiteApi.add_label(user_id, params[:label]).execute
 				render :json => "Success", :status => 200
 			end
 
@@ -119,19 +125,12 @@ module Api
             end
 
 			def notifications
-				news_feed = []
 				if params[:id].present?
 					user_id = params[:id]
 				else
 					user_id = session[:user_id]
 				end
 				info = WebsiteApi.get_personal_feed(user_id, params[:skip_count].to_i)
-				# if ((params[:debug] == "false") || !params[:debug])
-				# elsif params[:debug].present? && params[:debug] == "true"
-				# 	news_feed = WebsiteApi.get_news_feed(params[:id], params[:skip_count].to_i+1)
-				# else
-				# 	news_feed = WebsiteApi.get_news_feed(session[:user_id], params[:skip_count].to_i+1)
-				# end
 				render :json => info, :status => 200
 			end
 

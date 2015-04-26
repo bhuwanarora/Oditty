@@ -1,10 +1,5 @@
 homeApp.controller('searchController', ["$scope", "searchService", "$location", function($scope, searchService, $location){
 
-    $scope.show_search_bar = function() {
-        $scope.visible_search_bar = !$scope.visible_search_bar;
-    
-    };
-
     $scope.query_search = function(search_text){
         searchService.raw(search_text).then(function(data){
             $scope.search_results = data;
@@ -24,8 +19,8 @@ homeApp.controller('searchController', ["$scope", "searchService", "$location", 
         });
     }
 
-    $scope.show_all_results = function(search_text){
-        searchService.raw(search_text, 30).then(function(data){
+    $scope.show_all_results = function(search_text, type){
+        searchService.raw(search_text, type).then(function(data){
             $scope.all_results = data;
         });
     }
@@ -67,15 +62,24 @@ homeApp.controller('searchController', ["$scope", "searchService", "$location", 
         }
     }
 
-
     var _init = (function(){
+        var _get_parameter_by_name = function(name){
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        $scope.info.mobile_search = true;
+
         $scope.search_results = [];
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
         var url_parser = regex.exec($location.absUrl());
-        var is_search = $location.$$url.indexOf("search") >= 0;
+        var is_search = $location.$$absUrl.indexOf("search") >= 0;
         if(angular.isDefined(url_parser) && (url_parser != null) && is_search){
-            var q = url_parser[2];
-            $scope.show_all_results(q);
+            var q = _get_parameter_by_name("q");
+            var type = _get_parameter_by_name("type")
+            $scope.show_all_results(q, type);
             $scope.display_results_for = q;
         }
     }());

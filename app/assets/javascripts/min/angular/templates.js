@@ -155,7 +155,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/getting_started/shared/calendar.html',
-    "<div layout=\"row\"><md-select ng-model=\"selectedYear\" placeholder=\"Year\" ng-change=\"date_check()\" layout-padding><md-option ng-repeat=\"year in years\" ng-value=\"year\">{{year}}</md-option></md-select><md-select ng-model=\"selectedMonth\" placeholder=\"Month\" ng-change=\"date_check()\" ng-disabled=\"!selectedYear\" layout-padding><md-option ng-repeat=\"month in months\" ng-value=\"month\">{{month}}</md-option></md-select><md-select ng-model=\"selectedDay\" placeholder=\"Day\" ng-change=\"date_check(); save_date(selectedYear, selectedMonth, selectedDay);\" ng-disabled=\"!selectedYear || !selectedMonth\" layout-padding><md-option ng-repeat=\"day in days\" ng-value=\"day\">{{day}}</md-option></md-select></div>"
+    "<div layout=\"row\"><md-select ng-model=\"selectedYear\" placeholder=\"Year\" ng-change=\"date_check()\" layout-padding><md-option ng-repeat=\"year in years\" ng-value=\"year\">{{year}}</md-option></md-select><md-select ng-model=\"selectedMonth\" placeholder=\"Month\" ng-change=\"date_check()\" ng-show=\"selectedYear\" layout-padding><md-option ng-repeat=\"month in months\" ng-value=\"month\">{{month}}</md-option></md-select><md-select ng-model=\"selectedDay\" placeholder=\"Day\" ng-change=\"date_check(); save_date(selectedYear, selectedMonth, selectedDay);\" ng-show=\"selectedYear && selectedMonth\" layout-padding><md-option ng-repeat=\"day in days\" ng-value=\"day\">{{day}}</md-option></md-select></div>"
   );
 
 
@@ -272,7 +272,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/landing_page/sign_in.html',
-    "<div layout=\"row\" ng-if=\"show_content\" class=\"main_view top_pad hex_background\" layout-margin layout-align=\"center center\" layout-fill layout-padding><div ng-include=\"'assets/angular/html/landing_page/partials/login_options.html'\"></div></div><style>.main_view .login_box{background-color:#fff;width:60vw}</style>"
+    "<div layout=\"column\" ng-if=\"show_content\" class=\"main_view top_pad hex_background\"><div ng-include=\"'assets/angular/html/landing_page/partials/login_options.html'\" layout=\"row\" layout-align=\"center center\" flex></div><div layout-align=\"center center\" ng-include=\"'assets/angular/html/shared/partials/social_links.html'\"></div></div>"
   );
 
 

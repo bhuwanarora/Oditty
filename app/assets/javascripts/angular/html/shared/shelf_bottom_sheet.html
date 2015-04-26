@@ -9,7 +9,8 @@
                 </md-subheader>
                 <md-list layout="column" layout-fill>
                     <md-item ng-repeat="label in labels" ng-if="label.public_status">
-                        <md-checkbox ng-model="data.cb1" aria-label="{{label.label_id}}" class="md-warn" ng-click="toggle_bookmark(label, data.cb1)" >
+                        <md-checkbox ng-model="data.cb1" aria-label="{{label.label_id}}" class="md-warn" 
+                                    ng-click="toggle_bookmark(label, data.cb1)" >
                             {{label.label_name}}
                         </md-checkbox>
                     </md-item>
@@ -22,7 +23,7 @@
                 <label>Create New...</label>
                 <input ng-model="new_label"/>
             </md-input-container>
-            <md-button ng-click="add_new_label()">
+            <md-button ng-click="add_new_label()" class="md-button-clear">
                 <span class="icon-plus"></span>
             </md-button>
         </section>

@@ -13,11 +13,11 @@ class Community < Neo
 	end
 
 	def self.basic_info
-		" community.view_count AS view_count, community.name AS name, ID(community) AS id "
+		" community.view_count AS view_count, community.name AS name, ID(community) AS id, community.image_url AS image_url "
 	end
 
 	def self.grouped_basic_info
-		"  view_count:community.view_count,  name:community.name, id:ID(community) "
+		"  view_count:community.view_count,  name:community.name, id:ID(community), image_url:community.image_url "
 	end
 
 	def books_users_info 
@@ -82,21 +82,17 @@ class Community < Neo
 	def self.fetch_books community
 		community_books = {community => []}
 		count = 0
-		begin
-			Google::Search::Book.new(:query => community).each do |book|
-				count += 1
-				book = book.title.search_ready
+		books = Book::GoogleBooks.get community
+
+		puts books.to_s.green
+		if books.present?
+			books.each do |book|
+				book = book.search_ready
 				book_info = (Book.get_by_indexed_title(book).execute)[0] 
 				if book_info.present?  
 					community_books[community] << book
 				end	
-				if count == Constant::Count::MaximumCommunityBooks
-					break
-				end
 			end
-		rescue Exception => e
-			puts e.to_s.red
-			community_books = {}
 		end
 		community_books
 	end
@@ -110,10 +106,9 @@ class Community < Neo
 	end
 
 
-	def self.create news_link, news_source
+	def self.create news_metadata
 		communities_books = []
-
-		response = News.fetch_tags news_link
+		response = News.fetch_tags news_metadata["news_link"]
 		puts response.red
 
 		if response.is_json? 
@@ -132,27 +127,26 @@ class Community < Neo
 			end
 
 			unless communities_books.blank?	
-				news_id = News.create news_link, news_source
-				news_info = {"news_id" => news_id, "news_source" => news_source, "news_link" => news_link}
+				news_metadata["news_id"] = News.create news_metadata
 				
-				if News.news_already_present(news_info["news_id"]) 
-					News.map_topics(news_info["news_id"], response["topics"]) 				
-					Community.map_books(communities_books, news_info)
+				if News.news_already_present(news_metadata["news_id"]) 
+					News.map_topics(news_metadata["news_id"], response["topics"]) 				
+					Community.map_books(communities_books, news_metadata)
 				end
 
 			end
 		end
 	end 
 
-	def self.merge community, news_info
-		" MERGE (community:Community{name: \"" + community + "\"}) ON CREATE SET community.status = 1, community.created_at=" + Time.now.to_i.to_s + ", community.updated_at=" + Time.now.to_i.to_s + ", community.location = \"" + news_info["news_source"]["region"].to_s + "\", community.follow_count = 0, community.image_url = \"" + Community::CommunityImage.new(community).get_image + "\" WITH community "  
+	def self.merge community
+		" MERGE (community:Community{name: \"" + community + "\"}) ON CREATE SET community.status = 1, community.created_at=" + Time.now.to_i.to_s + ", community.updated_at=" + Time.now.to_i.to_s + ", community.follow_count = 0, community.image_url = \"" + Community::CommunityImage.new(community).get_image + "\" WITH community "  
 	end
 
 
-	def self.map_books communities_books, news_info
+	def self.map_books communities_books, news_metadata
 	    communities_books.each do |community_books|
 	    	community_books.each do |community, books|
-	        	clause =  News.new(news_info["news_id"]).match + Community.merge(community, news_info) + ", news " + Community.set_importance + " WITH community, news " + News.merge_community
+	        	clause =  News.new(news_metadata["news_id"]).match + Community.merge(community) + ", news " + Community.set_importance + " WITH community, news " + News.merge_community
 				books.each do |book|
 					indexed_title = book.search_ready
 					clause += Book.search_by_indexed_title(indexed_title) + " , community " + Community.merge_book + " WITH community "
@@ -170,7 +164,7 @@ class Community < Neo
 	def self.handle_communities response
 		communities = []
 		response["social_tags"].each do |social_tag|
-			if social_tag["importance"] == Constant::Count::RelevantSocialTagValue then communities << social_tag["originalValue"] end
+			if social_tag["importance"] == Constant::Count::RelevantSocialTag && social_tag["originalValue"] != "" then communities << social_tag["originalValue"] end
 		end
 		communities
 	end

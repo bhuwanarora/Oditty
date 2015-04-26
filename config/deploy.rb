@@ -1,10 +1,10 @@
 # config valid only for Capistrano 3.1
 lock '3.2.1'
 
-
+require "capistrano-rbenv"
 # rbenv
 set :rbenv_type, :root
-set :rbenv_ruby, '2.1.2'
+set :rbenv_ruby, '2.0.0-p598'
 
 # bundler
 set :bundle_gemfile, -> { release_path.join('Gemfile') }
@@ -14,17 +14,17 @@ set :bundle_flags, '--deployment --quiet'
 set :bundle_without, %w{development test}.join(' ')
 set :bundle_binstubs, -> { shared_path.join('bin') }
 set :bundle_roles, :all
-
-
-
 set :application, 'rd'
 set :repo_url, 'git@github.com:test-rd/rd.git'
-
+set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
+set :rbenv_map_0bins, %w{rake gem bundle ruby rails}
+set :rbenv_roles, :all # default value# set :whenever_environment, defer { stage }
+# set :whenever_command, 'bundle exec whenever'
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
 # Default deploy_to directory is /var/www/my_app
-set :deploy_to, '/home/bhuwan/deploy'
+set :deploy_to, '/home/ubuntu/deploy'
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -39,7 +39,7 @@ set :deploy_to, '/home/bhuwan/deploy'
 # set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, %w{config/database.yml}
+# set :linked_files, %w{config/database.yml}
 
 # Default value for linked_dirs is []
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
@@ -47,10 +47,11 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public
 # Default value for default_env is {}
 set :default_env, { path: "~/.rbenv/shims:~/.rbenv/bin:$PATH" }
 #set :default_env, { path: "/opt/ruby/bin:$PATH" }
-
+# set :whenever_environment, defer { stage }
 # Default value for keep_releases is 5
 # set :keep_releases, 5
-set :whenever_identifier, ->{ "readers_door_production" }
+
+set :whenever_identifier, ->{ "store" }
 
 namespace :deploy do
 
@@ -63,23 +64,31 @@ namespace :deploy do
 
   end
   
-  desc "Update the crontab file"
-  puts "Update the crontab file".blue.on_red
-  task :update_crontab do
-    run "whenever --update-crontab readers_door_production"
-    # _cset(:whenever_update_flags) { "–update-crontab #{fetch :whenever_identifier} –set #{fetch :whenever_variables} –user www-data" }
-  end
 
-  after "deploy:symlink", "deploy:update_crontab"  
-  
-  namespace :deploy do  
+  namespace :deploy do
+  # desc " bundle install gems "
+  # task :bundle_install do 
+  # on roles :all do
+  #       puts " bundle install "
+  #       # execute "cd #{release_path} && #{try_sudo} GEM_HOME=/opt/local/ruby/gems RAILS_ENV=#{} bundle exec whenever --clear-crontab #{application} --user #{ubuntu}"
+  #       # execute "cd #{release_path} && #{try_sudo} GEM_HOME=/opt/local/ruby/gems RAILS_ENV=production bundle exec whenever --update-crontab #{application} --user #{ubuntu}"
+  #       execute " cd #{release_path} && bundle install "
+  #     end  
+  #   end
     desc "Update the crontab file"  
-    task :update_crontab, :roles => :db do  
-      run "cd #{release_path} && whenever --update-crontab readers_door_production"  
-    end  
-  end  
+    task :update_crontab do
+      on roles :all do
+        puts " updating crontab file"
+        # execute "cd #{release_path} && #{try_sudo} GEM_HOME=/opt/local/ruby/gems RAILS_ENV=#{} bundle exec whenever --clear-crontab #{application} --user #{ubuntu}"
+        # execute "cd #{release_path} && #{try_sudo} GEM_HOME=/opt/local/ruby/gems RAILS_ENV=production bundle exec whenever --update-crontab #{application} --user #{ubuntu}"
+        execute "cd #{release_path} && sudo gem install bundler && bundle install && bundle exec whenever --update-crontab store "
+      end  
+    end
+  end
+  after "deploy:symlink:linked_dirs",  "deploy:update_crontab"  
+
+
 
   after :publishing, :restart
   after :finishing, 'deploy:cleanup'
-
 end

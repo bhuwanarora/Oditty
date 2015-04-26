@@ -24,14 +24,14 @@
 	         md-swipe-right="previous()" >
 	         <div ng-include src="'/assets/angular/html/customise/_books.html'" layout-padding></div>
 	    </div>
-	    <div role="tabpanel"
+	   <!--  <div role="tabpanel"
 	         id="tab4-content"
 	         aria-labelledby="tab4"
 	         ng-switch-when="3"
 	         md-swipe-left="next()"
 	         md-swipe-right="previous()" >
 	        <div ng-include src="'/assets/angular/html/customise/_authors.html'" layout-padding></div>
-	    </div>
+	    </div> -->
 	</ng-switch>
 	<md-progress-linear class="md-warn progress" 
 	            ng-value="data.selectedIndex*25"
@@ -57,8 +57,8 @@
 	            <div ng-switch on="data.selectedIndex">
 	                <div ng-switch-when="0">Subjects that interest you</div>
 	                <div ng-switch-when="1">Select Books</div>
-	                <div ng-switch-when="2">Add favourite Writers and People</div>
-	                <div ng-switch-when="3" class="site_color">Go to Infinity</div>
+	                <!-- <div ng-switch-when="2">Add favourite Writers and People</div> -->
+	                <div ng-switch-when="2" class="site_color">Go to Infinity</div>
 	            </div>&nbsp;&nbsp;
 	            <div><span class="icon-angle-right"></span></div>
 	        </md-button>

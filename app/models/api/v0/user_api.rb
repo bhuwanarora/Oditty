@@ -10,7 +10,7 @@ module Api
 				info = {}
 				if user_id.present?
 					info = User.new(user_id).get_basic_info.execute[0]
-					session[:last_book] = info["last_book"]
+					# session[:last_book] = info["last_book"]
 				end
 				info
 			end
@@ -24,46 +24,233 @@ module Api
 			end
 
 			def self.add_bookmark user_id, id, type, shelf
+				puts user_id
+				puts id
+				puts type
+				puts shelf
+				clause =""
 				if type == "BOOK"
 					case shelf
 					when "HaveLeftAMarkOnMe"
-						Bookmark::Type::HaveLeftAMarkOnMe.book.add
-					when "DidntFeelLikeReadingItAfterAPoint"
-						Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.book.add
-					when "IntendToRead"
-						Bookmark::Type::IntendToRead.book.add
-					when "PretendIHaveRead"
-						Bookmark::Type::PretendIHaveRead.book.add
+						clause = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, id).book.add
 					when "Visited"
-						Bookmark::Type::Visited.book.add
+						clause = Bookmark::Type::Visited.new(user_id, id).book.add
+					when "IOwnThis"
+						clause = Bookmark::Type::IOwnThis.new(user_id, id).book.add
+					when "NotWorthReading"
+						clause = Bookmark::Type::NotWorthReading.new(user_id, id).book.add
+					when "CurrentlyReading"
+						clause = Bookmark::Type::CurrentlyReading.new(user_id, id).book.add
+					when "WishIHadntRead"
+						clause = Bookmark::Type::WishIHadntRead.new(user_id, id).book.add
+					when "ReadButCantRememberASingleThingAboutIt"
+						clause = Bookmark::Type::ReadButCantRememberASingleThingAboutIt.new(user_id, id).book.add
+					when "PretendIHaveRead"
+						clause = Bookmark::Type::PretendIHaveRead.new(user_id, id).book.add
+					when "IntendingToRead"
+						clause = Bookmark::Type::IntendingToRead.new(user_id, id).book.add
+					when "Read"
+						clause = Bookmark::Type::Read.new(user_id, id).book.add
+					when "DidntFeelLikeReadingItAfterAPoint"
+						clause = Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.new(user_id, id).book.add
+					when "SavingForWhenIHaveMoreTime"
+						clause = Bookmark::Type::SavingForWhenIHaveMoreTime.new(user_id, id).book.add
+					when "WillNeverRead"
+						clause = Bookmark::Type::WillNeverRead.new(user_id, id).book.add
+					when "PurelyForShow"
+						clause = Bookmark::Type::PurelyForShow.new(user_id, id).book.add
+					when "PlanToBuy"
+						clause = Bookmark::Type::PlanToBuy.new(user_id, id).book.add
 					end
-				elsif type == "ARTICLE"
+				elsif type == "NEWS"
+					case shelf
+					when "HaveLeftAMarkOnMe"
+						clause = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, id).news.add
+					when "Visited"
+						clause = Bookmark::Type::Visited.new(user_id, id).news.add
+					when "IOwnThis"
+						clause = Bookmark::Type::IOwnThis.new(user_id, id).news.add
+					when "NotWorthReading"
+						clause = Bookmark::Type::NotWorthReading.new(user_id, id).news.add
+					when "CurrentlyReading"
+						clause = Bookmark::Type::CurrentlyReading.new(user_id, id).news.add
+					when "WishIHadntRead"
+						clause = Bookmark::Type::WishIHadntRead.new(user_id, id).news.add
+					when "ReadButCantRememberASingleThingAboutIt"
+						clause = Bookmark::Type::ReadButCantRememberASingleThingAboutIt.new(user_id, id).news.add
+					when "PretendIHaveRead"
+						clause = Bookmark::Type::PretendIHaveRead.new(user_id, id).news.add
+					when "IntendingToRead"
+						clause = Bookmark::Type::IntendingToRead.new(user_id, id).news.add
+					when "Read"
+						clause = Bookmark::Type::Read.new(user_id, id).news.add
+					when "DidntFeelLikeReadingItAfterAPoint"
+						clause = Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.new(user_id, id).news.add
+					when "SavingForWhenIHaveMoreTime"
+						clause = Bookmark::Type::SavingForWhenIHaveMoreTime.new(user_id, id).news.add
+					when "WillNeverRead"
+						clause = Bookmark::Type::WillNeverRead.new(user_id, id).news.add
+					when "PurelyForShow"
+						clause = Bookmark::Type::PurelyForShow.new(user_id, id).news.add
+					when "PlanToBuy"
+						clause = Bookmark::Type::PlanToBuy.new(user_id, id).news.add
+					end
+
+				elsif type == "BLOG"
+					case shelf
+					when "HaveLeftAMarkOnMe"
+						clause = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, id).blog.add
+					when "Visited"
+						clause = Bookmark::Type::Visited.new(user_id, id).blog.add
+					when "IOwnThis"
+						clause = Bookmark::Type::IOwnThis.new(user_id, id).blog.add
+					when "NotWorthReading"
+						clause = Bookmark::Type::NotWorthReading.new(user_id, id).blog.add
+					when "CurrentlyReading"
+						clause = Bookmark::Type::CurrentlyReading.new(user_id, id).blog.add
+					when "WishIHadntRead"
+						clause = Bookmark::Type::WishIHadntRead.new(user_id, id).blog.add
+					when "ReadButCantRememberASingleThingAboutIt"
+						clause = Bookmark::Type::ReadButCantRememberASingleThingAboutIt.new(user_id, id).blog.add
+					when "PretendIHaveRead"
+						clause = Bookmark::Type::PretendIHaveRead.new(user_id, id).blog.add
+					when "IntendingToRead"
+						clause = Bookmark::Type::IntendingToRead.new(user_id, id).blog.add
+					when "Read"
+						clause = Bookmark::Type::Read.new(user_id, id).blog.add
+					when "DidntFeelLikeReadingItAfterAPoint"
+						clause = Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.new(user_id, id).blog.add
+					when "SavingForWhenIHaveMoreTime"
+						clause = Bookmark::Type::SavingForWhenIHaveMoreTime.new(user_id, id).blog.add
+					when "WillNeverRead"
+						clause = Bookmark::Type::WillNeverRead.new(user_id, id).blog.add
+					when "PurelyForShow"
+						clause = Bookmark::Type::PurelyForShow.new(user_id, id).blog.add
+					when "PlanToBuy"
+						clause = Bookmark::Type::PlanToBuy.new(user_id, id).blog.add
+					end
+
 				elsif type == "LISTOPIA"
 				elsif type == ""
 				end
+				clause
 			end
 
-			def self.get_feed user_id
-				info = Article::BlogArticle.get_posts
-				info
+			def self.get_feed user_id, skip_count=0
+				News.get_feed(skip_count)
 			end
 
-			def self.remove_bookmark
+			def self.remove_bookmark user_id, id, type, shelf
+				puts user_id
+				puts id
+				puts type
+				puts shelf
+				clause =""
 				if type == "BOOK"
 					case shelf
 					when "HaveLeftAMarkOnMe"
-						Bookmark::Type::HaveLeftAMarkOnMe.remove
-					when "DidntFeelLikeReadingItAfterAPoint"
-						Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.remove
-					when "IntendToRead"
-						Bookmark::Type::IntendToRead.remove
+						clause = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, id).book.remove
+					when "Visited"
+						clause = Bookmark::Type::Visited.new(user_id, id).book.remove
+					when "IOwnThis"
+						clause = Bookmark::Type::IOwnThis.new(user_id, id).book.remove
+					when "NotWorthReading"
+						clause = Bookmark::Type::NotWorthReading.new(user_id, id).book.remove
+					when "CurrentlyReading"
+						clause = Bookmark::Type::CurrentlyReading.new(user_id, id).book.remove
+					when "WishIHadntRead"
+						clause = Bookmark::Type::WishIHadntRead.new(user_id, id).book.remove
+					when "ReadButCantRememberASingleThingAboutIt"
+						clause = Bookmark::Type::ReadButCantRememberASingleThingAboutIt.new(user_id, id).book.remove
 					when "PretendIHaveRead"
-						Bookmark::Type::PretendIHaveRead.remove
+						clause = Bookmark::Type::PretendIHaveRead.new(user_id, id).book.remove
+					when "IntendingToRead"
+						clause = Bookmark::Type::IntendingToRead.new(user_id, id).book.remove
+					when "Read"
+						clause = Bookmark::Type::Read.new(user_id, id).book.remove
+					when "DidntFeelLikeReadingItAfterAPoint"
+						clause = Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.new(user_id, id).book.remove
+					when "SavingForWhenIHaveMoreTime"
+						clause = Bookmark::Type::SavingForWhenIHaveMoreTime.new(user_id, id).book.remove
+					when "WillNeverRead"
+						clause = Bookmark::Type::WillNeverRead.new(user_id, id).book.remove
+					when "PurelyForShow"
+						clause = Bookmark::Type::PurelyForShow.new(user_id, id).book.remove
+					when "PlanToBuy"
+						clause = Bookmark::Type::PlanToBuy.new(user_id, id).book.remove
 					end
-				elsif type == "ARTICLE"
+				elsif type == "NEWS"
+					case shelf
+					when "HaveLeftAMarkOnMe"
+						clause = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, id).news.remove
+					when "Visited"
+						clause = Bookmark::Type::Visited.new(user_id, id).news.remove
+					when "IOwnThis"
+						clause = Bookmark::Type::IOwnThis.new(user_id, id).news.remove
+					when "NotWorthReading"
+						clause = Bookmark::Type::NotWorthReading.new(user_id, id).news.remove
+					when "CurrentlyReading"
+						clause = Bookmark::Type::CurrentlyReading.new(user_id, id).news.remove
+					when "WishIHadntRead"
+						clause = Bookmark::Type::WishIHadntRead.new(user_id, id).news.remove
+					when "ReadButCantRememberASingleThingAboutIt"
+						clause = Bookmark::Type::ReadButCantRememberASingleThingAboutIt.new(user_id, id).news.remove
+					when "PretendIHaveRead"
+						clause = Bookmark::Type::PretendIHaveRead.new(user_id, id).news.remove
+					when "IntendingToRead"
+						clause = Bookmark::Type::IntendingToRead.new(user_id, id).news.remove
+					when "Read"
+						clause = Bookmark::Type::Read.new(user_id, id).news.remove
+					when "DidntFeelLikeReadingItAfterAPoint"
+						clause = Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.new(user_id, id).news.remove
+					when "SavingForWhenIHaveMoreTime"
+						clause = Bookmark::Type::SavingForWhenIHaveMoreTime.new(user_id, id).news.remove
+					when "WillNeverRead"
+						clause = Bookmark::Type::WillNeverRead.new(user_id, id).news.remove
+					when "PurelyForShow"
+						clause = Bookmark::Type::PurelyForShow.new(user_id, id).news.remove
+					when "PlanToBuy"
+						clause = Bookmark::Type::PlanToBuy.new(user_id, id).news.remove
+					end
+
+				elsif type == "BLOG"
+					case shelf
+					when "HaveLeftAMarkOnMe"
+						clause = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, id).blog.add
+					when "Visited"
+						clause = Bookmark::Type::Visited.new(user_id, id).blog.add
+					when "IOwnThis"
+						clause = Bookmark::Type::IOwnThis.new(user_id, id).blog.add
+					when "NotWorthReading"
+						clause = Bookmark::Type::NotWorthReading.new(user_id, id).blog.add
+					when "CurrentlyReading"
+						clause = Bookmark::Type::CurrentlyReading.new(user_id, id).blog.add
+					when "WishIHadntRead"
+						clause = Bookmark::Type::WishIHadntRead.new(user_id, id).blog.add
+					when "ReadButCantRememberASingleThingAboutIt"
+						clause = Bookmark::Type::ReadButCantRememberASingleThingAboutIt.new(user_id, id).blog.add
+					when "PretendIHaveRead"
+						clause = Bookmark::Type::PretendIHaveRead.new(user_id, id).blog.add
+					when "IntendingToRead"
+						clause = Bookmark::Type::IntendingToRead.new(user_id, id).blog.add
+					when "Read"
+						clause = Bookmark::Type::Read.new(user_id, id).blog.add
+					when "DidntFeelLikeReadingItAfterAPoint"
+						clause = Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.new(user_id, id).blog.add
+					when "SavingForWhenIHaveMoreTime"
+						clause = Bookmark::Type::SavingForWhenIHaveMoreTime.new(user_id, id).blog.add
+					when "WillNeverRead"
+						clause = Bookmark::Type::WillNeverRead.new(user_id, id).blog.add
+					when "PurelyForShow"
+						clause = Bookmark::Type::PurelyForShow.new(user_id, id).blog.add
+					when "PlanToBuy"
+						clause = Bookmark::Type::PlanToBuy.new(user_id, id).blog.add
+					end
+
 				elsif type == "LISTOPIA"
 				elsif type == ""
 				end
+				clause
 			end
 
 			def self.unfollow_user user_id, friend_id
@@ -115,10 +302,12 @@ module Api
 					SubscriptionMailer.recover_password(invitation).deliver
 					User.handle_new_verification_request(email, verification_token).execute
 					message = Constant::StatusMessage::PasswordRecoveryInitiated
+					info = {"message" => message , "user_exists" => user_exists, "user_id" => user["id"]}
 				else
 					message = Constant::StatusMessage::EmailNotRegistered
+					info = {"message" => message , "user_exists" => user_exists}
 				end
-				{"message" => message , "user_exists" => user_exists, "user_id" => user["id"]}
+				info
 			end
 
 			def self.get_profile_info id
@@ -222,15 +411,14 @@ module Api
 			end
 
 			def self.handle_facebook_user(params, session)
-				@neo = Neography::Rest.new	
 				params = params[:users_api]
 				puts params.to_s.red
 				
 				if params[:email]
 					puts "email exists".green
-					clause = "MATCH (user:User{email:\""+params[:email]+"\"}) RETURN ID(user)"
-					user_id = @neo.execute_query clause
-					user_exists = user_id["data"].present?
+					clause = "MATCH (user:User{email:\""+params[:email]+"\"}) RETURN ID(user) AS user_id"
+					user_id = clause.execute[0]
+					user_exists = user_id.present?
 					if user_exists
 						clause = self._update_user_with_email params
 					else
@@ -238,16 +426,16 @@ module Api
 					end
 				else
 					puts "email does not exits".green
-					clause = "MATCH (user:User{fb_id:"+params[:id]+"}) RETURN ID(user)"
-					user_id = @neo.execute_query clause
-					user_exists = user_id["data"].present?
+					clause = "MATCH (user:User{fb_id:"+params[:id]+"}) RETURN ID(user) AS user_id"
+					user_id = clause.execute[0]
+					user_exists = user_id.present?
 					if user_exists
 						clause = self._update_user_without_email params
 					else
 						clause = self._create_user_without_email params
 					end
 				end
-				user_id = @neo.execute_query(clause)["data"][0][0]
+				user_id = clause.execute[0]["user_id"]
 				puts "fb execute_query done...".green
 				puts "FB LOGIN USER_ID #{user_id.to_s.red}"
 				session[:user_id] = user_id
@@ -255,8 +443,8 @@ module Api
 				user_id
 			end
 
-			def self.authenticate(session, params)
-				info = User::Authenticate.new(session, params).action
+			def self.authenticate(params)
+				info = User::Authenticate.new(params).action
 			end
 
 			def self.get_most_connected_friends(user_id, count, skip)
@@ -295,19 +483,24 @@ module Api
 				info
 			end
 
-			def self.verify(session, params)
-				user = User::Authenticate.new(session, params).verify.execute[0]
+			def self.verify(params)
+				user = User::Authenticate.new(params).verify.execute[0]
 			    if user.present?
-			    	puts user.to_s
-			    	if user["verified"]
-				      	message = Constant::StatusMessage::EmailConfirmed
-				    else 
-				    	message = Constant::StatusMessage::VerificationTokenExpired
-				    end  
+			      	message = Constant::StatusMessage::EmailConfirmed
 			    else
-				    message = Constant::StatusMessage::EmailConfirmationFailed
+			    	message = Constant::StatusMessage::VerificationTokenExpired
 			    end
+			    puts message
 		    	message
+			end
+
+
+			def self.get_lenders book_id, user_id
+				Book.new(book_id).get_lenders user_id											
+			end
+
+			def self.get_profile_info_of_another id, user_id
+				User.new(user_id).get_profile_info_and_follow_status(id).execute
 			end
 
 			private
@@ -331,7 +524,7 @@ module Api
 			end
 
 			def self._fb_return_clause
-				" RETURN DISTINCT(ID(user))"
+				" RETURN DISTINCT(ID(user)) AS user_id"
 			end
 
 			def self._update_user_with_email params

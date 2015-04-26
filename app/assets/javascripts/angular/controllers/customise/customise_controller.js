@@ -66,7 +66,7 @@ homeApp.controller('customiseController', ["$scope", "$rootScope", "$timeout", '
         }
 
         if(angular.isDefined($scope.data.selectedIndex)){
-            if($scope.data.selectedIndex == 3){
+            if($scope.data.selectedIndex == 2){
                 window.location.href = "/infinity";
             }
             else{
@@ -89,7 +89,7 @@ homeApp.controller('customiseController', ["$scope", "$rootScope", "$timeout", '
     $scope.previous = function(){
         if(angular.isDefined($scope.data.selectedIndex)){
             if($scope.data.selectedIndex == 0){
-                $scope.data.selectedIndex = 3;
+                $scope.data.selectedIndex = 2;
             }
             else{
                 $scope.data.selectedIndex = $scope.data.selectedIndex - 1;
@@ -103,12 +103,12 @@ homeApp.controller('customiseController', ["$scope", "$rootScope", "$timeout", '
     var search_input_timeout = "";
     
     
-    _init = function(){
+    var _init = (function(){
         $scope.info.loading = false;
         userService.get_user_details().then(function(data){
             $rootScope.user = data;
         });
-    }
+        $scope.info.my_profile = true;
+    }());
 
-    _init();
 }]);

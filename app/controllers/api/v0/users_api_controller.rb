@@ -15,7 +15,8 @@ module Api
 
 			def get_feed
 				user_id = session[:user_id]
-				info = UserApi.get_feed(user_id)
+				skip_count = session[:skip_count] || 0
+				info = UserApi.get_feed(user_id, skip_count).execute
 				render :json => info, :status => 200
 			end
 
@@ -27,17 +28,15 @@ module Api
 			end
 
 			def bookmark
-				params = params["q"]
-				params = JSON.parse params
 				id = params["id"]
 				type = params["type"]
 				shelf = params["shelf"]
 				status = params["status"]
 				user_id = session[:user_id]
-				if status == "true"
-					UserApi.add_bookmark(user_id, id, type, shelf)
+				if status 
+					Api::V0::UserApi.add_bookmark(user_id, id, type.upcase, shelf).execute
 				else
-					UserApi.remove_bookmark(user_id, id, type, shelf)
+					Api::V0::UserApi.remove_bookmark(user_id, id, type.upcase, shelf).execute
 				end
 				render :json => {:message => "Success"}, :status => 200
 			end
@@ -56,7 +55,7 @@ module Api
 
 			def get_books_from_favourite_author
 				user_id = session[:user_id]
-				books = User::Suggest::BookSuggestion.new(user_id).for_favourite_author.execute[0]
+				books = User::Suggest::BookSuggestion.new(user_id).for_favourite_author.execute
 				render :json => books, :status => 200
 			end
 
@@ -69,7 +68,7 @@ module Api
 
 			def get_books_from_favourite_era
 				user_id = session[:user_id]
-				books = User::Suggest::BookSuggestion.new(user_id).for_most_bookmarked_era.print
+				books = User::Suggest::BookSuggestion.new(user_id).for_most_bookmarked_era.execute
 				render :json => books, :status => 200
 			end
 
@@ -97,14 +96,20 @@ module Api
 
 
 			def user_profile_info
-				user_id = session[:user_id]
-				info = UserApi.get_profile_info(user_id)
+				if params[:id].present?
+					user_id = params[:id]
+					info = UserApi.get_profile_info_of_another(session[:user_id], user_id)
+				else
+					user_id = session[:user_id]
+					info = UserApi.get_profile_info(user_id)
+				end
 				render :json => info, :status => 200
 			end
 
 			def authenticate
-				authentication_info = Api::V0::UserApi.authenticate(session, params)
+				authentication_info = Api::V0::UserApi.authenticate(params)
 				if authentication_info[:authenticate]
+					session[:user_id] = authentication_info[:info][:user_id]
 					render :json => authentication_info, :status => 200
 				else
 					render :json => authentication_info, :status => 403
@@ -285,7 +290,7 @@ module Api
 
 			def recover_password
 				message = Api::V0::UserApi.recover_password(params[:email])
-				render :json => {:message => message}, :status => 200
+				render :json => message, :status => 200
 			end
 
 			# def get_news_feed
@@ -334,11 +339,6 @@ module Api
 				render :json => influential_books, :status => 200
 			end
 
-			def verify
-				verification_info = Api::V0::UserApi.verify(session, params)
-				render :json => verification_info, :status => 200
-			end
-
 			def get_followers
 				user_id = session[:user_id]
 				info = Api::V0::UserApi.get_followers(user_id).execute
@@ -348,6 +348,13 @@ module Api
 			def get_users_followed
 				user_id = session[:user_id]
 				info = Api::V0::UserApi.get_users_followed(user_id).execute
+				render :json => info, :status => 200
+			end
+
+			def get_lenders
+				user_id = session[:user_id]
+				book_id = params[:id]
+				info = Api::V0::UserApi.get_lenders(book_id, user_id).execute
 				render :json => info, :status => 200
 			end
 		end

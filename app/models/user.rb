@@ -5,7 +5,7 @@ class User < Neo
 	end
 
 	def self.link_primary_labels
-		"  CREATE (user)-[:Labelled{user_id:ID(user)}]->(label) WITH user, label "
+		" CREATE (user)-[:Labelled{user_id:ID(user)}]->(label) WITH user, label "
 	end
 
 	def self.match_group ids
@@ -61,7 +61,15 @@ class User < Neo
 	end
 
 	def get_detailed_info
-		match + User.match_likeable_root_category + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + User.return_group(User.basic_info, "COLLECT(DISTINCT(root_category.name)) AS categories_name", "COLLECT(DISTINCT(ID(root_category))) AS categories_id", "COLLECT(DISTINCT(root_category.aws_key)) AS categories_aws_key", "COLLECT(DISTINCT(book.isbn)) AS books_isbn", "COLLECT(DISTINCT(ID(book))) AS books_id", "COLLECT(DISTINCT(book.title)) AS books_title", "COLLECT(DISTINCT(book.author_name)) AS books_author_name")
+		match + User.match_likeable_root_category + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + ", root_category " + User.return_group(User.basic_info, "COLLECT(DISTINCT(root_category.name)) AS categories_name", "COLLECT(DISTINCT(ID(root_category))) AS categories_id", "COLLECT(DISTINCT(root_category.aws_key)) AS categories_aws_key", "COLLECT(DISTINCT(book.isbn)) AS books_isbn", "COLLECT(DISTINCT(ID(book))) AS books_id", "COLLECT(DISTINCT(book.title)) AS books_title", "COLLECT(DISTINCT(book.author_name)) AS books_author_name")
+	end
+
+	def get_profile_info_and_follow_status id
+		match + User.match_likeable_root_category + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + ", root_category " + match_follower(id) + " , root_category, book " + User.return_group(User.basic_info, "COLLECT(DISTINCT(root_category.name)) AS categories_name", "COLLECT(DISTINCT(ID(root_category))) AS categories_id", "COLLECT(DISTINCT(root_category.aws_key)) AS categories_aws_key", "COLLECT(DISTINCT(book.isbn)) AS books_isbn", "COLLECT(DISTINCT(ID(book))) AS books_id", "COLLECT(DISTINCT(book.title)) AS books_title", "COLLECT(DISTINCT(book.author_name)) AS books_author_name", " ID(follows_node) AS status ")
+	end
+
+	def match_follower user_id
+		" OPTIONAL MATCH (friend)-[follows_user:FollowsUser]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(user) WHERE ID(friend) = " + user_id.to_s + " WITH user, friend, follows_node "
 	end
 
 	def get_basic_info
@@ -69,14 +77,14 @@ class User < Neo
 	end
 
 	def self.basic_info
-		" user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id "
+		" user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id, user.gender AS gender, user.thumb as image_url "
 	end
 
 	def self.grouped_basic_info
-		"  init_book_read_count:user.init_book_read_count ,  selectedYear:user.selectedYear ,  selectedMonth:user.selectedMonth ,  selectedDay:user.selectedDay ,  first_name:user.first_name ,  last_name:user.last_name ,  about:user.about ,  id:ID(user) "
+		"  init_book_read_count:user.init_book_read_count ,  selectedYear:user.selectedYear ,  selectedMonth:user.selectedMonth ,  selectedDay:user.selectedDay ,  first_name:user.first_name ,  last_name:user.last_name ,  about:user.about ,  id:ID(user), gender:user.gender, image_url: user.thumb "
 	end
 
-	def get_all_books skip_count=0, limit_count=Constant::Count::BookCountShownOnSignup 
+	def get_all_books skip_count, limit_count=Constant::Count::BookCountShownOnSignup 
 		match + Bookmark::Node::BookLabel.match_path + User.return_group(Book.basic_info, " label.key as shelf ") + Book.order_desc + User.skip(skip_count) + User.limit(limit_count)
 	end
 
@@ -109,7 +117,7 @@ class User < Neo
 	end
 
 	def self.create(email, password=nil, verification_token=nil)
-		"CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, last_book: "+Constant::Id::BestBook.to_s+", amateur: true, ask_info: true, verification_time " + Time.now.to_i.to_s + "}) "
+		"CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, last_book: "+Constant::Id::BestBook.to_s+", amateur: true, ask_info: true, verification_time :" + Time.now.to_i.to_s + "}) "
 	end
 
 	def self.link_root_categories
@@ -117,7 +125,7 @@ class User < Neo
 	end
 
 	def self.handle_new(email, password=nil, verification_token=nil)
-		User.create(email, password, verification_token) + User::Feed.create_first + Label.match_primary  + ", user " + User.link_primary_labels + User::UserNotification.create_for_new_user + Category::Root.match  + ", user " + User.link_root_categories + Notification.create_for_new_user + User.return_init + User.basic_info
+		User.create(email, password, verification_token) + User::Feed.create_first + Label.match_primary  + ", user " + User.link_primary_labels + User::UserNotification.create_for_new_user + Category::Root.match  + ", user " + User.link_root_categories + User.return_init + User.basic_info
 	end
 
 	def get_notifications
@@ -227,7 +235,7 @@ class User < Neo
 	end
 
 	def self.match_by_email_verification_token email, verification_token
-	    User.match_by_email(email) + " AND user.verification_token=\"" + verification_token + "\""
+	    User.match_by_email(email) + " AND user.verification_token=\"" + verification_token  + "\" "
 	end	
 
 	def self.handle_verification email, verification_token
@@ -243,7 +251,7 @@ class User < Neo
 	end
 
 	def self.get_visited_books
-		Bookmark::Type::Visited.match + Book.order_desc + Book.limit(3)  +" WITH user, " + Book.collect_map("books" => Book.grouped_basic_info )
+		Bookmark::Type::Visited.match("book") + Book.order_desc + Book.limit(3)  +" WITH user, " + Book.collect_map("books" => Book.grouped_basic_info )
 	end
 
 	def get_followers

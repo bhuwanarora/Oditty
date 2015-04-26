@@ -3,18 +3,20 @@
         <h3><a ng-click="goto_community_page(community_feed.id)">{{community_feed.title}}</a></h3>
         <div>{{community_feed.description}}</div>
     </md-card-content>
-    <md-card-content class="footer" 
-                     ng-include src="'/assets/angular/html/shared/partials/card_footer.html'">
-    </md-card-content>
     <md-card-content class="circles clear">
         <d3-click-circles news-tags="community_feed.communities" 
-            ng-if="community_feed.communities.length > 0"
+            news-id="community_feed.id"
+            index="$index"
             on-center-click="goto_community_page(community_feed.id)" 
             on-click="goto_community_page(community_feed.id)"
             layout-align="center" 
             layout="center">
             <div class="bubbleChart animate-fast"></div>
         </d3-click-circles>
+    </md-card-content>
+    <md-card-content class="footer" 
+                     ng-init="bookmark_object = {'id': community_feed.id, 'type': 'Community'}"
+                     ng-include src="'/assets/angular/html/shared/partials/card_footer.html'">
     </md-card-content>
 </md-card>
 <style>

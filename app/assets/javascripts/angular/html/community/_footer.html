@@ -1,6 +1,8 @@
-<a ng-href="/community?q={{tag.news_id}}" ng-repeat="tag in news" >
-	<md-button class="md-button-clear" 
-		ng-class="{'red_color': (tag.community_info.name == active_tag.name)}">
-		{{tag.community_info.name}}
-	</md-button>
-</a>
+<div flex="60" flex-sm="100">
+	<md-tabs class="white">
+		<md-tab ng-repeat="tag in news"
+			layout-margin>
+			<a ng-href="/community?q={{tag.id}}">{{tag.community_info.name}}</a>
+		</md-tab>
+	</md-tabs>
+</div>

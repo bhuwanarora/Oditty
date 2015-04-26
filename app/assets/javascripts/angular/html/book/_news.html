@@ -1,24 +1,32 @@
 <div ng-controller="realVirtualityController">
-    <section layout="row" layout-wrap class="padding">
-         <div flex="10"></div>
-         <div flex="10" class="light_grey small-padding" layout-align="center center" layout="row">
-            2015
-        </div>
-         <div flex="80">
-     </section>
-     <section layout="row" layout-wrap class="padding" ng-repeat="real_news in active_community.news">
-         <div flex="10" layout-align="center center" layout="row">
-            <div>29Feb</div>
+    <md-radio-group layout="row" 
+        layout-sm="column" 
+        ng-model="active_community.id"
+        ng-change="change_news()">
+        <md-radio-button ng-repeat="community in communities" 
+                        class="md-warn" 
+                        ng-value="community.id">
+            {{community.name}}
+        </md-radio-button>
+    </md-radio-group>
+   
+     <section layout="row" layout-wrap ng-repeat="news in active_community.news" ng-if="active_community.news">
+        <div flex="10" layout-align="center center" layout="row">
+            <div>{{news.created_at | timestamp | date:'dd MMM'}}</div>
         </div>
          <div flex="10" layout-align="center center" layout="row">
             <img class="circular"
-                     src="http://www.chicagonow.com/avatar/blog-108-128.png"/>
+                 ng-src="{{news.image_url | default_profile}}"/>
         </div>
          <div flex="80" layout-align="start start" layout="column" class="small-padding">
-            <div>Eric Arthur Blair (25 June 1903 – 21 January 1950),[1] who used the pen name George Orwell 
-            </div>
-            <div>Terrorism community</div>
+            <a ng-href="/community?id={{news.news_id}}">
+                <h4 ng-bind-html="news.title"></h4>
+            </a>
+            <div ng-bind-html="news.description"></div><br/>
+            <a ng-href="{{news.news_url}}" class="less_important" target="_blank">Source</a>
          </div>
      </section>
-     
+     <section ng-if="!active_community.news" layout-padding>
+         <h1>We're searching for news from the real world for this book. Please come back later.</h1>
+     </section>
 </div>

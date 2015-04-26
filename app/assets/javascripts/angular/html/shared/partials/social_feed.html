@@ -2,7 +2,7 @@
     <md-card-content class="footer">
         <section layout="column" layout-align="start">
             <div layout="row">
-                <img ng-src="{{user.profile_thumb}}" class="profile_thumb circular">
+                <img ng-src="{{user.image_url | default_profile}}" class="profile_thumb circular">
                 <div layout="column" layout-align="start start">
                     <h2>{{user.first_name}}</h2>
                 </div>

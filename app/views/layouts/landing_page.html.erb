@@ -1,7 +1,17 @@
 <!DOCTYPE html>
 <html ng-app="myApp" ng-strict-di>
     <head>
+        <meta name="viewport" content="width=device-width">
         <meta charset="utf-8" />
+        <meta property="og:url" content="http://www.readersdoor.com" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="ReadersDoor: Global Community of Book Lovers" />
+        <meta property="og:description" content="We are a global community for bibliophiles, where we intend to enrich and enhance users’ reading experience by focusing on virtualisation and idealisation of their real life interactions and experiences.
+
+At ReadersDoor, we aim to bridge the gap between reality and knowledge deriving from books and literature, which we accomplish through an all-inclusive strategy comprising of recommendations, reading lists, discussion communities, latest news concerning a particular topic or an issue." />
+        <meta property="og:image" content="https://literaturerun.files.wordpress.com/2015/02/rd_logo7.png" />
+        <meta property="fb:app_id" content="667868653261167"/>
+
         <title>ReadersDoor</title>
         <link rel="icon" 
               type="image/png" 
@@ -50,7 +60,7 @@
             <script src='assets/angular/controllers/signup_controller.js'></script>
         <% else %>
             <link rel="stylesheet" href="assets/min/landing_page_site.min.css" />
-            <script src="assets/min/angular/website.min.js"></script> 
+            <script src="assets/min/angular/vendors.min.js"></script> 
             <script src="assets/min/angular/landing_page.min.js"></script>
         <% end %>
     </head>

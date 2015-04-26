@@ -1,9 +1,28 @@
-homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'ShareOptions', '$routeParams', '$mdBottomSheet', 'statusService', 'WebsiteUIConstants', function($scope, $rootScope, $timeout, ShareOptions, $routeParams, $mdBottomSheet, statusService, WebsiteUIConstants){
+homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'ShareOptions', '$routeParams', '$mdBottomSheet', 'statusService', 'WebsiteUIConstants', 'bookService', 'ColorConstants', 'sharedService', function($scope, $rootScope, $timeout, ShareOptions, $routeParams, $mdBottomSheet, statusService, WebsiteUIConstants, bookService, ColorConstants, sharedService){
 
+    $scope.play_type_key = function(event){
+        if($scope.info.show_share){
+            if(angular.isUndefined($scope.current_track) || $scope.current_track == 0){
+                $scope.current_track = 1;
+                document.getElementById('audiotag1').play();
+            }
+            else if($scope.current_track == 1){
+                $scope.current_track = 2;
+                document.getElementById('audiotag2').play();
+            }
+            else{
+                $scope.current_track = 0;
+                document.getElementById('audiotag3').play();
+            }
+            event.stopPropagation();
+        }
+    }
     $scope.show_share_options = function(event){
         $mdBottomSheet.show({
             templateUrl: 'assets/angular/html/share/_share_options.html',
             controller: 'optionsController',
+            scope: $scope,
+            preserveScope: true,
             targetEvent: event
         }).then(function(value){
             debugger
@@ -13,33 +32,87 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     $scope.back = function($event){
         $scope.info.show_share = false;
         $scope.info.show_book_share = false;
+        delete $rootScope.active_shelf;
         event.stopPropagation();
     }
 
-    $scope.show_share_page = function(event) {
+    $scope.search_books = function(q){
+        $scope.info.loading = true;
+        $scope.searched_books = [];
+        bookService.search_books(q, 10).then(function(data){
+            $scope.info.loading = false;
+            $scope.did_you_mean = true;
+            angular.forEach(data, function(value){
+                var random_int = Math.floor(Math.random()*ColorConstants.value.length);
+                if(angular.isUndefined(value.fuzzy)){
+                    value = angular.extend(value, {"color": ColorConstants.value[random_int]});
+                    this.push(value);
+                }
+            }, $scope.searched_books);
+        });
+    }
+
+    $scope.add_book = function(book){
+        if($rootScope.active_shelf){
+            $rootScope.bookmark_object = {"id": book.id, "type": 'Book'};
+            sharedService.toggle_bookmark($rootScope.active_shelf, true);
+            delete $rootScope.active_shelf;
+            $scope.info.show_share = false;
+        }
+        else{
+            $scope.info.book = book;
+        }
+    }
+
+    $scope.show_share_page = function(event){
+        var _post_status = function(){
+            var status = {};
+
+            if(angular.isDefined($scope.info.feelings) && ($scope.info.feelings.length > 0)){
+                status = angular.extend(status, {"feelings": $scope.info.feelings});
+            }
+            if(angular.isDefined($scope.info.reading_status_value)){
+                status = angular.extend(status, {"reading_status_value": $scope.info.reading_status_value});
+            }
+            if(angular.isDefined($scope.info.book)){
+                status = angular.extend(status, {"book_id": $scope.info.book.id});
+            }
+            if(angular.isDefined($scope.info.mentioned_users_ids) && ($scope.info.mentioned_users_ids.length > 0)){
+                status = angular.extend(status, {"mentioned_users_ids": $scope.info.mentioned_users_ids});
+            }
+            if(angular.isDefined($scope.info.mentioned_authors_ids) && ($scope.info.mentioned_authors_ids.length > 0)){
+                status = angular.extend(status, {"mentioned_authors_ids": $scope.info.mentioned_authors_ids});
+            }
+            if(angular.isDefined($scope.info.hash_tags) && ($scope.info.hash_tags.length > 0)){
+                status = angular.extend(status, {"hash_tags": $scope.info.hash_tags});
+            }
+            if(angular.isDefined($scope.info.status) && ($scope.info.status.length > 0)){
+                status = angular.extend(status, {"content": $scope.info.status});
+            }
+            if(angular.isDefined($scope.info.wrapper_status) && ($scope.info.wrapper_status.length > 0)){
+                status = angular.extend(status, {"wrapper_content": $scope.info.wrapper_status});
+            }
+            if(angular.isDefined($scope.info.book_exchange_status)){
+                status = angular.extend(status, {"book_exchange_status": $scope.info.book_exchange_status})
+            }
+
+            if(Object.keys(status).length != 0){
+                statusService.post_status(status);
+                $scope.info.status = "";
+                $scope.info.wrapper_status = "";
+                $scope.type_icon_pressed = {"margin-right": "60vw"};
+                $timeout(function(){
+                    $scope.type_icon_pressed = {"margin-right": "0px"};
+                }, 100);
+            }
+
+        }
+
         if(!$scope.info.show_share){
             $scope.info.show_share = true;
         }
         else{
-            
-            var status = {
-                // "book_id"                  : 384295,
-                "reading_status_value"     : 2,
-                "mentioned_users_ids"      : [1, 2, 3],
-                "mentioned_authors_ids"    : [2, 3, 4],
-                "hash_tags"                : $scope.info.hash_tags,
-                "content"                  : $scope.info.status,
-                "wrapper_content"          : $scope.info.wrapper_status,
-                // "feelings"                 : ["Happy", "Sad"],
-                "book_exchange_status"     : 1
-            }
-            statusService.post_status(status);
-            $scope.info.status = "";
-            $scope.info.wrapper_status = "";
-            $scope.type_icon_pressed = {"margin-right": "60vw"};
-            $timeout(function(){
-                $scope.type_icon_pressed = {"margin-right": "0px"};
-            }, 100);
+            _post_status();
         }
     };
 

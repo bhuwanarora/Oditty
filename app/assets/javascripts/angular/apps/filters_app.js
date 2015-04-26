@@ -16,6 +16,16 @@ angular.module('filtersApp', [])
             return output;
         };
     })
+    .filter('first_isbn', function(){
+      return function(input){
+        var output = "";
+        if(angular.isDefined(input)){
+          isbn = input.split(",");
+          output = isbn[0];
+        }
+        return output;
+      }
+    })
     .filter('search_item_type', function(){
         return function(input){
             var output = ""
@@ -31,6 +41,15 @@ angular.module('filtersApp', [])
             }
             return output;
         }
+    })
+    .filter('default_profile', function(){
+      return function(input){
+        var output = input;
+        if(angular.isUndefined(input) || (input == "") || (input == null)){
+          output = "http://www.sessionlogs.com/media/icons/defaultIcon.png";
+        }
+        return output;
+      }
     })
     .filter('first_two', function(){
         return function(input){
@@ -126,6 +145,15 @@ angular.module('filtersApp', [])
       return input;
     }
   })
+  .filter('author_thumb', function(){
+    return function(input){
+      var output = "";
+      if(angular.isDefined(input) && input){
+        output = "http://rd-authors.readersdoor.netdna-cdn.com/"+input+"/M.jpg"
+      }
+      return output;
+    };
+  })
   .filter('choose_medium_thumb', function() {
     return function(input){
       var output = "";
@@ -137,8 +165,9 @@ angular.module('filtersApp', [])
         else{
           if(input.isbn){
             var isbn = input.isbn.split(",");
-            output = "http://covers.openlibrary.org/b/isbn/"+isbn[0]+"-M.jpg"
+            output = "http://rd-images.readersdoor.netdna-cdn.com/"+isbn[0]+"/M.jpg";
           }
+
         }
       }
       return output;
@@ -299,7 +328,7 @@ angular.module('filtersApp', [])
         else{
           if(input.isbn){
             var isbn = input.isbn.split(",");
-            output = "http://covers.openlibrary.org/b/isbn/"+isbn[0]+"-L.jpg"
+            output = "http://rd-images.readersdoor.netdna-cdn.com/"+isbn[0]+"/L.jpg"
           }
         }
       }
@@ -312,7 +341,7 @@ angular.module('filtersApp', [])
       if(isbn_string){
         var isbn = isbn_string.split(",");
         angular.forEach(isbn, function(value){
-          output = "http://covers.openlibrary.org/b/isbn/"+value+"-M.jpg";
+          output = "http://rd-images.readersdoor.netdna-cdn.com/"+value+"/M.jpg";
         });
         return output;
       }
@@ -325,7 +354,7 @@ angular.module('filtersApp', [])
             var isbn = isbn_string.split(",");
             angular.forEach(isbn, function(value){
             var img = new Image();
-            img.src = "http://covers.openlibrary.org/b/isbn/"+value+"-S.jpg";
+            img.src = "http://rd-images.readersdoor.netdna-cdn.com/"+value+"/S.jpg";
             // debugger
                 output = img.src;
             if(img.height > 20 && output == ""){
