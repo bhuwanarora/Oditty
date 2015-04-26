@@ -100,6 +100,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
     }
 
     $scope.toggle_infinity_content = function(){
+        $scope.info.loading = true;
         if(angular.isDefined($scope.info.infinity) && $scope.info.infinity){
             $scope._get_personalised_suggestions();
         }
@@ -109,12 +110,13 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
     }
 
     $scope._get_personalised_suggestions = function(){
+
         var _set_data = function(data, array){
             angular.forEach(data, function(value){
                 var random_int = Math.floor(Math.random()*ColorConstants.value.length);
                 var json = {"colspan": 1,
-                                "color": ColorConstants.value[random_int],
-                                "rowspan": 1};
+                            "color": ColorConstants.value[random_int],
+                            "rowspan": 1};
                 value = angular.extend(value, json);
                 this.push(value);
             }, array);
@@ -149,6 +151,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         infinityService.get_books_from_unexplored_subjects().then(function(data){
             $scope.books_from_unexplored_subjects = data.books;
             $scope.unexplored_subject = data.info;
+            $scope.info.loading = false;
         });
     }
 
