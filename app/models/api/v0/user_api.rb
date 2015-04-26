@@ -141,44 +141,112 @@ module Api
 			end
 
 			def self.remove_bookmark user_id, id, type, shelf
+				puts user_id
+				puts id
+				puts type
+				puts shelf
 				clause =""
 				if type == "BOOK"
 					case shelf
 					when "HaveLeftAMarkOnMe"
 						clause = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, id).book.remove
-					when "DidntFeelLikeReadingItAfterAPoint"
-						clause = Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.new(user_id, id).book.remove
-					when "IntendToRead"
-						clause = Bookmark::Type::IntendToRead.new(user_id, id).book.remove
+					when "Visited"
+						clause = Bookmark::Type::Visited.new(user_id, id).book.remove
+					when "IOwnThis"
+						clause = Bookmark::Type::IOwnThis.new(user_id, id).book.remove
+					when "NotWorthReading"
+						clause = Bookmark::Type::NotWorthReading.new(user_id, id).book.remove
+					when "CurrentlyReading"
+						clause = Bookmark::Type::CurrentlyReading.new(user_id, id).book.remove
+					when "WishIHadntRead"
+						clause = Bookmark::Type::WishIHadntRead.new(user_id, id).book.remove
+					when "ReadButCantRememberASingleThingAboutIt"
+						clause = Bookmark::Type::ReadButCantRememberASingleThingAboutIt.new(user_id, id).book.remove
 					when "PretendIHaveRead"
 						clause = Bookmark::Type::PretendIHaveRead.new(user_id, id).book.remove
+					when "IntendingToRead"
+						clause = Bookmark::Type::IntendingToRead.new(user_id, id).book.remove
+					when "Read"
+						clause = Bookmark::Type::Read.new(user_id, id).book.remove
+					when "DidntFeelLikeReadingItAfterAPoint"
+						clause = Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.new(user_id, id).book.remove
+					when "SavingForWhenIHaveMoreTime"
+						clause = Bookmark::Type::SavingForWhenIHaveMoreTime.new(user_id, id).book.remove
+					when "WillNeverRead"
+						clause = Bookmark::Type::WillNeverRead.new(user_id, id).book.remove
+					when "PurelyForShow"
+						clause = Bookmark::Type::PurelyForShow.new(user_id, id).book.remove
+					when "PlanToBuy"
+						clause = Bookmark::Type::PlanToBuy.new(user_id, id).book.remove
 					end
 				elsif type == "NEWS"
 					case shelf
 					when "HaveLeftAMarkOnMe"
 						clause = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, id).news.remove
-					when "DidntFeelLikeReadingItAfterAPoint"
-						clause = Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.new(user_id, id).news.remove
-					when "IntendToRead"
-						clause = Bookmark::Type::IntendToRead.new(user_id, id).news.remove
-					when "PretendIHaveRead"
-						clause = Bookmark::Type::PretendIHaveRead.new(user_id, id).news.remove
 					when "Visited"
 						clause = Bookmark::Type::Visited.new(user_id, id).news.remove
+					when "IOwnThis"
+						clause = Bookmark::Type::IOwnThis.new(user_id, id).news.remove
+					when "NotWorthReading"
+						clause = Bookmark::Type::NotWorthReading.new(user_id, id).news.remove
+					when "CurrentlyReading"
+						clause = Bookmark::Type::CurrentlyReading.new(user_id, id).news.remove
+					when "WishIHadntRead"
+						clause = Bookmark::Type::WishIHadntRead.new(user_id, id).news.remove
+					when "ReadButCantRememberASingleThingAboutIt"
+						clause = Bookmark::Type::ReadButCantRememberASingleThingAboutIt.new(user_id, id).news.remove
+					when "PretendIHaveRead"
+						clause = Bookmark::Type::PretendIHaveRead.new(user_id, id).news.remove
+					when "IntendingToRead"
+						clause = Bookmark::Type::IntendingToRead.new(user_id, id).news.remove
+					when "Read"
+						clause = Bookmark::Type::Read.new(user_id, id).news.remove
+					when "DidntFeelLikeReadingItAfterAPoint"
+						clause = Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.new(user_id, id).news.remove
+					when "SavingForWhenIHaveMoreTime"
+						clause = Bookmark::Type::SavingForWhenIHaveMoreTime.new(user_id, id).news.remove
+					when "WillNeverRead"
+						clause = Bookmark::Type::WillNeverRead.new(user_id, id).news.remove
+					when "PurelyForShow"
+						clause = Bookmark::Type::PurelyForShow.new(user_id, id).news.remove
+					when "PlanToBuy"
+						clause = Bookmark::Type::PlanToBuy.new(user_id, id).news.remove
 					end
+
 				elsif type == "BLOG"
 					case shelf
 					when "HaveLeftAMarkOnMe"
-						clause = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, id).blog.remove
-					when "DidntFeelLikeReadingItAfterAPoint"
-						clause = Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.new(user_id, id).blog.remove
-					when "IntendToRead"
-						clause = Bookmark::Type::IntendToRead.new(user_id, id).blog.remove
-					when "PretendIHaveRead"
-						clause = Bookmark::Type::PretendIHaveRead.new(user_id, id).blog.remove
+						clause = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, id).blog.add
 					when "Visited"
-						clause = Bookmark::Type::Visited.new(user_id, id).blog.remove
+						clause = Bookmark::Type::Visited.new(user_id, id).blog.add
+					when "IOwnThis"
+						clause = Bookmark::Type::IOwnThis.new(user_id, id).blog.add
+					when "NotWorthReading"
+						clause = Bookmark::Type::NotWorthReading.new(user_id, id).blog.add
+					when "CurrentlyReading"
+						clause = Bookmark::Type::CurrentlyReading.new(user_id, id).blog.add
+					when "WishIHadntRead"
+						clause = Bookmark::Type::WishIHadntRead.new(user_id, id).blog.add
+					when "ReadButCantRememberASingleThingAboutIt"
+						clause = Bookmark::Type::ReadButCantRememberASingleThingAboutIt.new(user_id, id).blog.add
+					when "PretendIHaveRead"
+						clause = Bookmark::Type::PretendIHaveRead.new(user_id, id).blog.add
+					when "IntendingToRead"
+						clause = Bookmark::Type::IntendingToRead.new(user_id, id).blog.add
+					when "Read"
+						clause = Bookmark::Type::Read.new(user_id, id).blog.add
+					when "DidntFeelLikeReadingItAfterAPoint"
+						clause = Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.new(user_id, id).blog.add
+					when "SavingForWhenIHaveMoreTime"
+						clause = Bookmark::Type::SavingForWhenIHaveMoreTime.new(user_id, id).blog.add
+					when "WillNeverRead"
+						clause = Bookmark::Type::WillNeverRead.new(user_id, id).blog.add
+					when "PurelyForShow"
+						clause = Bookmark::Type::PurelyForShow.new(user_id, id).blog.add
+					when "PlanToBuy"
+						clause = Bookmark::Type::PlanToBuy.new(user_id, id).blog.add
 					end
+
 				elsif type == "LISTOPIA"
 				elsif type == ""
 				end
