@@ -186,7 +186,7 @@ class UsersController < ApplicationController
   end
 
   def verify
-        @message = Api::V0::UserApi.verify(session, params)
+        @message = Api::V0::UserApi.verify(params)
         render :layout => "backend"
   end
 

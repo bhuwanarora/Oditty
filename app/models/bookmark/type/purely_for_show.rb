@@ -1,19 +1,19 @@
-class Bookmark::Type::Read < Bookmark::Type
+class Bookmark::Type::PurelyForShow < Bookmark::Type
 	def initialize(user_id, book_id)
-		@key = "Read"
+		@key = "PurelyForShow"
 		@user_id = user_id
 		@book_id = book_id
 		@bookmark = Bookmark.new(@user_id, @book_id, @key)
 	end
 
 	def self.match user_id
-		@key ||= "Read"
+		@key ||= "PurelyForShow"
 		" OPTIONAL MATCH (user)-[:Labelled]->(label:Label{key:\""+@key+"\"})-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book:Book) WHERE bookmark_node.user_id = " + user_id.to_s + " WITH user, label, bookmark_node, book "
 	end
 
 	def self.get_all user_id
-		@key ||= "Read"
-		Bookmark::Type::Read.match(user_id) + " RETURN " + Book.basic_info
+		@key ||= "PurelyForShow"
+		Bookmark::Type::PurelyForShow.match(user_id) + " RETURN " + Book.basic_info
 	end
 
 	def add

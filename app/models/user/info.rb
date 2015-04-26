@@ -14,7 +14,7 @@ class User::Info < User
 	end
 
 	def self.set_verified_true 
-		" FOREACH (ignore IN CASE WHEN user.verification_time < " + (Time.now.to_i - Constant::Count::VerificationExpirySeconds).to_s + " THEN [1] ELSE [] END | SET user.verified = true " + User::Info.set_verification_token("null") + User::Info.set_verification_time("null") + " )  "
+		" FOREACH (ignore IN CASE WHEN user.verification_time > " + (Time.now.to_i - Constant::Count::VerificationExpirySeconds).to_s + " THEN [1] ELSE [] END | SET user.verified = true " + User::Info.set_verification_token("null") + User::Info.set_verification_time("null") + " )  "
 	end
 
 	def self.set_thumb thumb
@@ -70,6 +70,11 @@ class User::Info < User
 	end
 
 	def self.set_verification_token verification_token
-		" SET user.verification_token = \"" + verification_token.to_s + "\" "
+		if verification_token == "null"
+			clause = " SET user.verification_token = " + verification_token.to_s + " "
+		else
+			clause = " SET user.verification_token = \"" + verification_token.to_s + "\" "
+		end
+		clause
 	end
 end

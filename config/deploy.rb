@@ -1,7 +1,7 @@
 # config valid only for Capistrano 3.1
 lock '3.2.1'
 
-
+require "capistrano-rbenv"
 # rbenv
 set :rbenv_type, :root
 set :rbenv_ruby, '2.0.0-p598'
@@ -17,7 +17,7 @@ set :bundle_roles, :all
 set :application, 'rd'
 set :repo_url, 'git@github.com:test-rd/rd.git'
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
-set :rbenv_map_bins, %w{rake gem bundle ruby rails}
+set :rbenv_map_0bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all # default value# set :whenever_environment, defer { stage }
 # set :whenever_command, 'bundle exec whenever'
 # Default branch is :master

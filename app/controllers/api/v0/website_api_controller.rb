@@ -45,8 +45,8 @@ module Api
 
 			def add_new_label
 				user_id = session[:user_id]
-				Api::V0::WebsiteApi.add_new_label(user_id, params[:label]).execute
-				render :json => "Success", :status => 200
+				info = Api::V0::WebsiteApi.add_new_label(user_id, params[:label]).execute[0]
+				render :json => info, :status => 200
 			end
 
 			def add_label
