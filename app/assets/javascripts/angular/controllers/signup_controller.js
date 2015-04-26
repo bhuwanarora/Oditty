@@ -189,19 +189,21 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
     $scope.me = function() {
         Facebook.api('/me', function(response){
             websiteService.handle_facebook_user(response).then(function(){
-                $scope._is_logged_in();
+                $scope._init_user();
+                // $scope._is_logged_in();
+                window.location.href = "/home";
             });
             $rootScope.user = response;
-            $scope._init_user();
             Facebook.api('me/picture?redirect=false&type=large', function(response){
                 websiteService.save_user_info(response);
             });
+
         });
     };
 
     $scope._init_user = function(){
-        $rootScope.user.profile_status = 0;
         $rootScope.user.logged = true;
+        $cookieStore.put('logged', true);
     }
       
     // $scope.logout = function() {
@@ -233,7 +235,7 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
                 });
                 $cookieStore.put('logged', true);
                 // $scope._on_authenticate();
-                _handle_push_notifications();           
+                _handle_push_notifications();     
                 // stropheService.start_connection();
             }
         });
