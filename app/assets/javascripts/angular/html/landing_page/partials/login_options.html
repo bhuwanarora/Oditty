@@ -25,6 +25,9 @@
                 ng-click="authenticate(false)">Sign up</md-button>
     <a href="" ng-click="recover_password()" class="less_important" layout-margin>Forgot Password?</a>
     <div ng-model="user.error_message" class="md-warn">{{user.error_message}}</div>
+    <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" 
+            ng-if="loading_icon">
+    </md-progress-circular>
 </div>
 
 <style>

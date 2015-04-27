@@ -31,21 +31,17 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
 
 	$scope.facebook_invite = function(){
 		// _facebook_init();
-		FB.ui({
-			method: 'send',
-			title: 'Hey! Check this awesome book discovery website..',
-			message: 'Spread the love for books',
-			link: 'http://www.readersdoor.com/'
-		}, $scope.say_thanks());
-		// FB.api(
-	 //    	"/me/invitable_friends?fields=name,picture.width(300)s",
-	 //    	function (response) {
-		//       	if (response && !response.error) {
-		//         	/* handle the result */
-		//         	debugger
-		//       	}
-		//     }
-		// );
+		if(navigator.userAgent.indexOf("Mobi") > -1){
+			FB.ui({
+				method: 'send',
+				title: 'Hey! Check this awesome book discovery website..',
+				message: 'Spread the love for books',
+				link: 'http://www.readersdoor.com/'
+			}, $scope.say_thanks());
+		}
+		else{
+			window.location.replace("https://www.facebook.com/dialog/send?app_id=667868653261167&link=http://www.readersdoor.com&redirect_uri=http://readersdoor.com/network?q=0");
+		}
 	}
 
     var _init = (function(){

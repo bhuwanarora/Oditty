@@ -123,7 +123,6 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
         else{
             $scope.loading_icon = true;
             websiteService.authenticate(data_json).then(success_callback, error_callback);
-            // stropheService.start_connection();
         }
     }
 
