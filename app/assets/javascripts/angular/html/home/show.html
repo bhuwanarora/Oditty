@@ -1,6 +1,12 @@
 <md-list>
-    <!-- <div ng-include src="'/assets/angular/html/home/_blog.html'" ng-repeat="blog_feed in feed"></div> -->
-    <div ng-include src="'/assets/angular/html/home/_community.html'"  ng-repeat="community_feed in feed track by $index"></div>
+    <div ng-repeat="news_feed in feed track by $index">
+    	<div ng-init="blog_feed = news_feed" 
+    		ng-include src="'/assets/angular/html/home/_blog.html'" 
+    		ng-if="news_feed.label == 'blog'"></div>
+    	<div ng-init="community_feed = news_feed" 
+    		ng-include src="'/assets/angular/html/home/_community.html'" 
+    		ng-if="news_feed.label == 'news'"></div>
+    </div>
 <!--     <div ng-include src="'/assets/angular/html/home/_social.html'"></div>
     <div ng-include src="'/assets/angular/html/home/_listopia.html'"></div>
     <div ng-include src="'/assets/angular/html/home/_blog.html'"></div>

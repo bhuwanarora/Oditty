@@ -1,8 +1,8 @@
 <md-card class="blog">
     <md-card-content>
-        <h2><a ng-href="{{blog_feed.guid}}" ng-bind-html="blog_feed.title"></a></h2>
-        <div>Shared on {{blog_feed.date}}</div>
-        <p ng-bind-html="blog_feed.excerpt"></p>
+        <h3><a ng-href="{{blog_feed.blog_url}}" target="_blank" ng-bind-html="blog_feed.title"></a></h3>
+        <div class="less_important">Blog</div>
+        <div ng-bind-html="blog_feed.excerpt"></div>
     </md-card-content>
     <div class="image_wrapper" ng-if="blog_feed.image_url">
         <img ng-src="{{blog_feed.image_url}}" alt="Washed Out">
@@ -12,7 +12,8 @@
 </md-card>
 
 <style>
-    .blog h2{
-        margin: 16px 0px 0px 0px !important;
+    .blog p{
+        line-height: 18px;
+        margin: 0px;
     }
 </style>

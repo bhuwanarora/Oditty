@@ -1,18 +1,16 @@
-<md-card class="community">
+<md-card class="community" ng-if="community_feed.title && community_feed.title != '' && community_feed.title != null">
     <md-card-content class="content">
         <h3><a ng-click="goto_community_page(community_feed.id)">{{community_feed.title}}</a></h3>
+        <div class="less_important">News</div>
         <div>{{community_feed.description}}</div>
     </md-card-content>
-    <md-card-content class="circles clear">
-        <d3-click-circles news-tags="community_feed.communities" 
-            news-id="community_feed.id"
-            index="$index"
-            on-center-click="goto_community_page(community_feed.id)" 
-            on-click="goto_community_page(community_feed.id)"
-            layout-align="center" 
-            layout="center">
-            <div class="bubbleChart animate-fast"></div>
-        </d3-click-circles>
+    <md-card-content class="circles clear" layout="row">
+        <img flex class="community_feed_image" ng-repeat="feed in community_feed.communities"
+             ng-src="{{feed.image_url}}"
+             ng-click="goto_community_page(community_feed.id)"  
+             layout-padding
+             ng-show="feed.image_url">
+        </img>
     </md-card-content>
     <md-card-content class="footer" 
                      ng-init="bookmark_object = {'id': community_feed.id, 'type': 'Community'}"
@@ -20,6 +18,10 @@
     </md-card-content>
 </md-card>
 <style>
+    .community_feed_image{
+        height: 50vh;
+    }
+
     .community_icon{
         width: 70px;
         height: 70px;

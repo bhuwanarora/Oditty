@@ -13,6 +13,10 @@ module Api
 			def self.get_blog skip_count
 				Blog.get_blog skip_count
 			end
+
+			def self.last_blog
+				Blog.get_latest_blog
+			end
 		end
 	end
 end

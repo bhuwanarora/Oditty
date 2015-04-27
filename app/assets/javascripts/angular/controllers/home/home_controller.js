@@ -16,28 +16,21 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$m
     };
 
     var _init = (function(){
-    	var _create_empty_feed = (function(){
-    		$scope.feed = [];
-    		for(var i = 0; i < 10; i++){
-    			$scope.feed = $scope.feed.concat([{"communities": []}]);
-    		}
-    	}());
+    	$scope.feed = [];
 
         var _get_community_feed = function(){
             userService.get_feed().then(function(data){
-                angular.forEach($scope.feed, function(value, index){
-                    value.communities = value.communities.concat(data[index].communities);
-                    angular.forEach(value.communities, function(community){
-                        community.view_count = 100;
-                    });
-                    delete data[index].communities;
-                    value = angular.extend(value, data[index]);
-                });
+                angular.forEach(data, function(value){
+                    var json = {'label': 'news'};
+                    value = angular.extend(value, json);
+                    this.push(value);
+                }, $scope.feed);
             });
         }
 
         var _get_blog_feed = function(){
-            userService.get_blog_feed().then(function(data){
+            userService.get_last_blog().then(function(data){
+                data[0].label = 'blog';
                 $scope.feed = data.concat($scope.feed);
             });
         }
