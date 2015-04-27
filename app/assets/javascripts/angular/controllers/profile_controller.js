@@ -133,6 +133,10 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 		$scope.profile_user.status = !$scope.profile_user.status;
 		userService.follow($scope.profile_user.id, $scope.profile_user.status);
 	}
+
+	
+
+
 	
 	var _init = (function(){
 		$scope.profile_user = {};

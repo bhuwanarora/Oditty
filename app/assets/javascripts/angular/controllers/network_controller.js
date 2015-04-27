@@ -13,6 +13,24 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
 			$scope.users_list = data;
 		});	
 	}
+
+	$scope.facebook_invite = function(){
+		// _facebook_init();
+		FB.ui({
+			method: 'apprequests',
+			message: 'Spread the love for books'
+		});
+		// FB.api(
+	 //    	"/me/invitable_friends?fields=name,picture.width(300)s",
+	 //    	function (response) {
+		//       	if (response && !response.error) {
+		//         	/* handle the result */
+		//         	debugger
+		//       	}
+		//     }
+		// );
+	}
+
     var _init = (function(){
 	    var regex = /[?&]([^=#]+)=([^&#]*)/g;
 		var url_parser = regex.exec($location.absUrl());
