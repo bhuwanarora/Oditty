@@ -165,7 +165,7 @@ angular.module('websiteApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/views/getting_started/shared/invite.html',
-    "<script src=\"http://connect.facebook.net/en_US/all.js\"></script><div id=\"fb-root\"></div><div onclick=\"facebook_invite()\" class=\"invite_friends red_button\"><b>Invite Friends</b></div><script type=\"text/javascript\">top.location!=self.location&&(top.location=self.location);</script>"
+    "<script src=\"http://connect.facebook.net/en_US/all.js\"></script><div id=\"fb-root\"></div><md-button ng-click=\"_facebook_invite();\" class=\"invite_friends\"><b>Invite Friends</b></md-button><script type=\"text/javascript\">top.location!=self.location&&(top.location=self.location);</script>"
   );
 
 
