@@ -21,6 +21,7 @@ class ReadTime < Neo
 	end
 
 	def match_nth_book skip_count
+		puts "#{@relation} - #{skip_count} - #{@last_book}"
 		" MATCH (book:Book)-[:" + @relation + "*" + skip_count.to_s + "]->(nth_book:Book) WHERE ID(book)=" + @last_book.to_s + " WITH nth_book as book "
 	end
 

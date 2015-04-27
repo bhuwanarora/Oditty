@@ -1,5 +1,6 @@
 homeApp.controller('profileController', ["$scope", "userService", '$rootScope', "WebsiteUIConstants", 'ColorConstants', '$location', 'bookService', function($scope, userService, $rootScope, WebsiteUIConstants, ColorConstants, $location, bookService){
 	var _get_detailed_info = function(id){
+
 		userService.get_detailed_info(id).then(function(data){
 			if(data.length != 0){
 				data = data[0];
@@ -133,10 +134,6 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 		$scope.profile_user.status = !$scope.profile_user.status;
 		userService.follow($scope.profile_user.id, $scope.profile_user.status);
 	}
-
-	
-
-
 	
 	var _init = (function(){
 		$scope.profile_user = {};
@@ -164,6 +161,7 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 
         _get_detailed_info(id);
         _get_feed(id);
+        $scope.profile_user = $rootScope.user;
 	}());
 
 }]);

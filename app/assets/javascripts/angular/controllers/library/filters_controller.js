@@ -189,7 +189,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         return {"backspace_or_delete": backspace_or_delete, "keyUp": keyUp, "keyDown": keyDown, "keyLeft": keyLeft, "keyRight": keyRight, "keyEnter": enter};
     }
 
-    var _init = function(){
+    var _init = (function(){
         $scope.search_tag = {};
         $scope.info.genres = [];
         $scope.info.authors = [];
@@ -201,7 +201,6 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         if(angular.isUndefined($rootScope.filters)){
             $rootScope.filters = {};
         }
-    }
-
-    _init();
+    }());
+    
 }]);

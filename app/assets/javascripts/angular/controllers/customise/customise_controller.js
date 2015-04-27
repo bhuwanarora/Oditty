@@ -100,8 +100,6 @@ homeApp.controller('customiseController', ["$scope", "$rootScope", "$timeout", '
         }
     }
     
-    var search_input_timeout = "";
-    
     
     var _init = (function(){
         $scope.info.loading = false;
