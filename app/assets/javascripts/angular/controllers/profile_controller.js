@@ -154,14 +154,14 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
         	}
 		}
 		else{
-			var id = $scope.profile_user.id;
         	$scope.info.my_profile = true;
+        	$scope.profile_user = $rootScope.user;
+			var id = $scope.profile_user.id;
 		}
 
 
         _get_detailed_info(id);
         _get_feed(id);
-        $scope.profile_user = $rootScope.user;
 	}());
 
 }]);

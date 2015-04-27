@@ -1,4 +1,4 @@
-homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService', '$location', function($scope, $rootScope, networkService, $location){
+homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService', '$location', '$mdToast', function($scope, $rootScope, networkService, $location, $mdToast){
 	$scope.get_followers = function(){
 		$scope.users_list = [];
 		$scope.selectedIndex=0;
@@ -14,12 +14,29 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
 		});	
 	}
 
+	$scope.say_thanks = function(){
+		$mdToast.show({
+            controller: 'toastController',
+            templateUrl: 'assets/angular/html/shared/toast/invite_success.html',
+            hideDelay: 6000,
+            position: $scope.getToastPosition()
+        });
+	}
+
+	$scope.getToastPosition = function(){
+		return Object.keys($scope.toast_position)
+          .filter(function(pos) { return $scope.toast_position[pos]; })
+          .join(' ');
+	}
+
 	$scope.facebook_invite = function(){
 		// _facebook_init();
 		FB.ui({
-			method: 'apprequests',
-			message: 'Spread the love for books'
-		});
+			method: 'send',
+			title: 'Hey! Check this awesome book discovery website..',
+			message: 'Spread the love for books',
+			link: 'http://www.readersdoor.com/'
+		}, $scope.say_thanks());
 		// FB.api(
 	 //    	"/me/invitable_friends?fields=name,picture.width(300)s",
 	 //    	function (response) {
@@ -43,6 +60,13 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
                $scope.get_users_followed();
             }
 		}
+
+		$scope.toast_position = {
+            bottom: false,
+            top: true,
+            left: false,
+            right: true
+        };
 	}());
 }]);
 
