@@ -32,12 +32,15 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
     var _init = (function(){
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
         var id = regex.exec($location.absUrl())[2];
+        var _get_wiki_without_google_redirect = function(wiki_url){
+            $scope.author.wiki_url = wiki_url.substring(wiki_url.lastIndexOf("?q=")+3, wiki_url.lastIndexOf("&sa"));
+        }
 
         authorService.get_details(id).then(function(data){
             $scope.author = data;
             if(data.wiki_url != null){
-                $scope.author.wiki_url = data.wiki_url.substring(data.wiki_url.lastIndexOf("?q=")+3,data.wiki_url.lastIndexOf("&sa"));
-                $scope.wiki_url = $sce.trustAsResourceUrl($scope.author.wiki_url)+"?action=render";
+                _get_wiki_without_google_redirect(data.wiki_url);
+                $scope.author.wiki_url = $sce.trustAsResourceUrl($scope.author.wiki_url+"?action=render");
             }
             angular.forEach($scope.author.books, function(value, index){
                 var random_int = Math.floor(Math.random()*ColorConstants.value.length);
