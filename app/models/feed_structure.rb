@@ -105,7 +105,7 @@ class FeedStructure < Neo
 			:node => {
 				:key => data["key"],
 				:content => data["content"] || data["rating"],
-				:wrapper_content => data["wrapper_content"]
+				:wrapper_content => data["content"]
 			}
 		}
 		if tag.present?
