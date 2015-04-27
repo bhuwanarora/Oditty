@@ -4,15 +4,16 @@
             flex-sm="100">
         <h3>{{book.title}}</h3>
         <a ng-href="/author?q={{book.author_id}}">{{book.author_name}}</a>
-        <div flex="10"><md-slider flex="20" md-discrete 
+        <div flex="10">
+            <md-slider flex="20" md-discrete 
                     class="rate_slider"
                     ng-model="book.user_rating" ng-change="rate_book(book)"
                     step="1" min="1" max="10" aria-label="rating">
-        </md-slider>
-        <md-tooltip>
-           Rate your book
-         </md-tooltip>
-        <div>
+            </md-slider>
+            <md-tooltip>
+               Rate your book
+             </md-tooltip>
+        </div>
         <md-content class="summary">{{book.description}}</md-content>
     </div>
     <div flex="5" hide-sm>
@@ -24,7 +25,7 @@
         </div>
     </div>
     <div flex="50" hide-sm class="relative">
-        <img ng-src="{{book | large_thumb}}" class="cover">
+        <img ng-src="{{book | large_thumb}}" class="cover"/>
         <div class="absolute" ng-style="{background: '{{book.color}}'}"></div>
     </div>
 </section>

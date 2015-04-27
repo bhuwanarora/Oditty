@@ -58,7 +58,7 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
             $scope.newsTags.push(most_important_tag);
             $scope.newsTags = $scope.newsTags.concat(data.other_tags);
             angular.forEach($scope.newsTags, function(value){
-                value.view_count = 100;
+                value.view_count = Math.floor((Math.random() * 100) + 50);;
             });
             angular.forEach($scope.active_tag.books, function(value){
                 var random_int = Math.floor(Math.random()*ColorConstants.value.length);

@@ -2,7 +2,7 @@ set :output, "log/cron.log"
 env :PATH, ENV['PATH']
 env :GEM_PATH, ENV['GEM_PATH']
 
-every 1.hour do
+every 12.hour do
   rake " get_media:news "
 end
 

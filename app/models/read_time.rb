@@ -26,6 +26,7 @@ class ReadTime < Neo
 	end
 
 	def match_books_after skip, count
+		puts "#{skip} - #{@last_book} - #{@relation} - #{count}"
 		(skip == 0 ? Book.new(@last_book).match : match_nth_book(skip) ) + " MATCH path=(book)-[:" + @relation + "*" + count.to_s + "]->(last_book:Book) WITH " + ReadTime.extract_unwind("book")
 	end
 
