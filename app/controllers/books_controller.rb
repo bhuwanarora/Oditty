@@ -320,64 +320,63 @@ class BooksController < ApplicationController
             # neo.execute_query clause
         end
 
-        clause = News.match_day_for(time) + " WITH news as t MATCH (t)-[:HasCommunity]->(c:Community) RETURN t.name, COLLECT(c.name) AS communities, t.timestamp, ID(t) AS id_news, t.status, t.title, t.description,t.image_url, t.thumbnail_url, t.redirect_url, t.publisher, t.thumb ORDER BY toInt(t.timestamp) DESC "
+        clause = News.match_day_for(time) + " WITH news as t OPTIONAL MATCH (t)-[:HasCommunity]->(c:Community) RETURN t.name, COLLECT(c.name) AS communities, t.timestamp, ID(t) AS id_news, t.status as status, t.title, t.description,t.image_url, t.thumbnail_url, t.redirect_url, t.publisher, t.thumb ORDER BY t.status DESC "
         @trends = clause.execute
     end
 
-  def remove_trend
-    begin
-      @neo = Neography::Rest.new
-      clause = "MATCH (t:News), (t)-[r]-() WHERE ID(t)="+params[:id].to_s+" SET t.status = false "
+    def remove_trend
+        begin
+            @neo = Neography::Rest.new
+            clause = "MATCH (t:News) WHERE ID(t)="+params[:id].to_s+" SET t.status = NOT COALESCE(t.status, false) "
       
-      @neo.execute_query clause
-      render :json => {:message => "Success"}, :status => 200
-    rescue Exception => e
-      render :json => {:message => e.to_s}, :status => 500
+            @neo.execute_query clause
+            render :json => {:message => "Success"}, :status => 200
+        rescue Exception => e
+            render :json => {:message => e.to_s}, :status => 500
+        end
     end
 
-  end
+    def search_book
+        tags="";
+        status_r=200;
 
-  def search_book
-    tags="";
-    status_r=200;
-
-    begin    
-    maxBookCount=50;
-    tags = Api::V0::SearchApi.search(params[:q],maxBookCount,'BOOK')    
+        begin    
+            maxBookCount=50;
+            tags = Api::V0::SearchApi.search(params[:q],maxBookCount,'BOOK')    
     
-    rescue Exception => e
-      tags = e.to_s
-      status_r = 500      
+        rescue Exception => e
+            tags = e.to_s
+            status_r = 500      
+        end
+        print tags.to_s+" " + status_r.to_s+"\n"
+        render :json => tags, :status => status_r
     end
-    print tags.to_s+" " + status_r.to_s+"\n"
-    render :json => tags, :status => status_r
-  end
 
-  # GET /books/1/edit
-  def edit
-  end
-
-  def count
-    neo = Neography::Rest.new
-    tags = params[:q]
-    # count = neo.execute_query("MATCH (b:Book)-[:Belongs_to]->(g:Genre) WHERE g.name=''")
-    render :json => {:count => 1}, :status => 200
-  end
-
-  def thumbs
-    neo = Neography::Rest.new
-    clause = "MATCH (u:User)-[:DataEdit]->(t:ThumbRequest)-[:DataEditRequest]->(b:Book) RETURN ID(u), ID(b), u.name, b.title, b.author_name, t.url, ID(t), t.status"
-    @requests = neo.execute_query(clause)["data"]
-  end
-
-  def update_thumb_status
-    begin
-      BooksGraphHelper.approve_thumb_request(params[:status], params[:id])
-      render :json => {:message => "Success"}, :status => 200
-    rescue Exception => e
-      render :json => {:message => e}, :status => 500
+    # GET /books/1/edit
+    def edit
     end
-  end
+
+    def count
+        neo = Neography::Rest.new
+        tags = params[:q]
+        # count = neo.execute_query("MATCH (b:Book)-[:Belongs_to]->(g:Genre) WHERE g.name=''")
+        render :json => {:count => 1}, :status => 200
+    end
+
+    def thumbs
+        neo = Neography::Rest.new
+        clause = "MATCH (u:User)-[:DataEdit]->(t:ThumbRequest)-[:DataEditRequest]->(b:Book) RETURN ID(u), ID(b), u.name, b.title, b.author_name, t.url, ID(t), t.status"
+        @requests = neo.execute_query(clause)["data"]
+    end
+
+    def update_thumb_status
+        begin
+            BooksGraphHelper.approve_thumb_request(params[:status], params[:id])
+            render :json => {:message => "Success"}, :status => 200
+        rescue Exception => e
+            render :json => {:message => e}, :status => 500
+        end
+    end
 
   # POST /books
   # POST /books.json

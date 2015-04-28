@@ -1,7 +1,6 @@
 <table>
-<input id="datepicker" type="text"	/>
+	<input id="datepicker" type="text"	/>
 	<tr>
-		
 		<!-- <th>Trending</th>-->
 		<th>Title</th>
 		<th></th>
@@ -11,15 +10,14 @@
 		<th>Remove Books</th>
 		<th>Search Books</th>
 		<th> Search result</th>			
-		
 	</tr>
 	<% if @trends %>		
 		<% @trends.sort_by!{|s| Time.at(s[1].to_i)}.reverse.each do |trend|%>
-			<tr class="<% if trend["t.description"].present? && trend["t.description"] == 1 %>active<% end %>" id="id_"+ trend["ID(t)"]>				
-				
+			<tr class="<% if trend['status'] %>active<% end %>" 
+				id="id_<%= trend["id_news"] %>">
 				<td title= "<%=trend["t.description"]%>">
 					<%= trend["t.title"]%> <br> 
-					<%= Time.at(trend["t.timestamp"].to_i).strftime("%d-%m-%y") %>,  <%= trend["id_news"] %>
+					<%= Time.at(trend["t.timestamp"].to_i).strftime("%d/%m/%y") %>,  <%= trend["id_news"] %>
 				</td>
 				<td><img src="<%=trend["t.image_url"] %>" alt="" border=3 height=50 width=100> </td>
 
@@ -31,20 +29,20 @@
 					</select>
 				</td>
 
-				<td >
+				<td>
 					<select name="books_in_c" class="books_select" size=3 MULTIPLE>
 						<OPTION> No community is selected</OPTION>
 					</select>
 				</td>
 				<form class ="removeBookForm" action="<%= trends_path %>" >
-					<td >
+					<td>
 
 						<input type="submit" value="Remove Book" class = "remove_button" disabled="disabled">
 					</td>
 				</form>
 					<td>
-					<input class="search_box" />
-				</td>
+						<input class="search_box" />
+					</td>
 
 				<form action="<%= trends_path %>">
 
@@ -52,8 +50,10 @@
 					<input type="hidden" value="<%= trend["t.searched_words"] %>" name="book_ids" />					
 					<td><input type="submit" value="Submit"></td>
 				</form>
-				<td class="remove_trend">x
-				<input type="hidden" value="<%= trend["id_news"] %>" class="trending_id"/></td>
+				<td class="remove_trend">
+					<button>Toggle</button>
+					<input type="hidden" value="<%= trend["id_news"] %>" class="trending_id"/>
+				</td>
 			</tr>
 		<% end %>
 	<% end %>
@@ -277,9 +277,10 @@
 					data: data,
 					success: function(data, textStatus, jqxhr){
 						$('.footer_status').html('Done..');
+						window.location.reload();
 					},
 					error: function(jqxhr, textStatus, errorThrown){
-						$('.footer_status').html('Error in removing..');
+						$('.footer_status').html('Error in toggling news..');
 					}
 				});
 			});
@@ -288,7 +289,6 @@
 		link_new_books();
 		add_new_books();
 		bind_remove_trend();
-
 
 	});
 </script>

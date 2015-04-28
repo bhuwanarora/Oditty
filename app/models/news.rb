@@ -32,7 +32,7 @@ class News < Neo
 	end
 
 	def self.merge news_metadata
-		" MERGE (news:News{url:\"" + news_metadata["news_link"].to_s + "\"}) ON CREATE SET news.created_at = " + Time.now.to_i.to_s + ", news.view_count = 0 " +  News.set_metadata(news_metadata) + " WITH news "
+		" MERGE (news:News{url:\"" + news_metadata["news_link"].to_s + "\"}) ON CREATE SET news.created_at = " + Time.now.to_i.to_s + ", news.view_count = 0 " +  News.set_metadata(news_metadata) + ", news.status = true WITH news "
 	end
 
 	def self.merge_region region
@@ -205,6 +205,6 @@ class News < Neo
 	end
 
 	def self.get_feed skip_count=0
-		News.match_day + News.match_community + " WITH news," + News.collect_map({"communities" => Community.grouped_basic_info}) + " WHERE NOT news.active = false " + News.order_desc + News.skip(skip_count) + News.limit(Constant::Count::NewsShownInFeed) + News.return_group(News.basic_info,"communities") 
+		News.match_day + News.match_community + " WITH news," + News.collect_map({"communities" => Community.grouped_basic_info}) + " WHERE news.status = true " + News.return_group(News.basic_info,"communities") + News.order_desc + News.skip(skip_count) + News.limit(Constant::Count::NewsShownInFeed)
 	end
 end
