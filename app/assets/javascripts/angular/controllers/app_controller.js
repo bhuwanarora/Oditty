@@ -1,4 +1,4 @@
-homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdBottomSheet', '$mdDialog', 'shelfService', function($scope, $rootScope, $mdSidenav, $mdBottomSheet, $mdDialog, shelfService){
+homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdBottomSheet', '$mdDialog', 'shelfService', 'userService', '$cookieStore', function($scope, $rootScope, $mdSidenav, $mdBottomSheet, $mdDialog, shelfService, userService, $cookieStore){
 
     $scope.stop_propagation = function(event){
         event.stopPropagation();
@@ -67,11 +67,33 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
         $scope.info = {};
         $scope.info.show_share = false;
         $scope.data = {"selectedIndex" : 0};
+        var _handle_labels = function(){
+            if(angular.isUndefined($cookieStore.get('labels'))){
+                shelfService.get_all_shelves().then(function(data){
+                    $rootScope.labels = data;
+                    $cookieStore.put('labels', data);
+                });
+            }
+            else{
+                $rootScope.labels = $cookieStore.get('labels');
+            }
+        }
 
-        $rootScope.user = {};
-        shelfService.get_all_shelves().then(function(data){
-            $rootScope.labels = data;
-        });
+        var _handle_user_details = function(){
+            if(angular.isUndefined($cookieStore.get('user'))){
+                userService.get_user_details().then(function(data){
+                    $rootScope.user = data;
+                    $cookieStore.put('user', data);
+                });
+            }
+            else{
+                $rootScope.user = $cookieStore.get('user');
+            }
+        }
+
+        _handle_labels();
+        _handle_user_details();
+
     }());
 
 }]);

@@ -57,11 +57,6 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$m
             }, 1000);
         }
 
-        if(angular.isUndefined($rootScope.user)){
-            userService.get_user_details().then(function(data){
-                $rootScope.user = data;
-            });
-        }
-        
+
     }());
 }]);
