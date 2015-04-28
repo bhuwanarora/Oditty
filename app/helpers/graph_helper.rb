@@ -24,4 +24,18 @@ module GraphHelper
 		clause = match_clause + extract_clause + collect_categorised + create_links
 		clause.execute
 	end
+
+	def self.set_blogs
+		blogs_set = false
+		set_root = " MERGE (root:Blog{is_root:true}) MERGE (root)-[:NextPost]->(root) SET root.posted_at = \" 2014-04-28T12:06:25+05:30 \" RETURN root "
+		set_root.execute
+		while !blogs_set
+			latest_blog = Blog.get_latest_blog.execute[0]
+			Blog.handle
+			updated_latest_blog = Blog.get_latest_blog.execute[0]
+			if latest_blog["blog_url"] == updated_latest_blog["blog_url"]
+				blogs_set = true
+			end
+		end
+	end
 end
