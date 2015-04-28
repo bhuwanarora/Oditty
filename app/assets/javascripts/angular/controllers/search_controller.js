@@ -4,15 +4,16 @@ homeApp.controller('searchController', ["$scope", "searchService", "$location", 
         if(search_text.length > 2){
             $scope.info.loading = true;
             searchService.raw(search_text).then(function(data){
+                delete $scope.search_results;
                 $scope.info.loading = false;
-                $scope.search_results = data;
                 $scope.did_you_mean = false;
                 angular.forEach(data, function(value){
                     if(value.fuzzy){
                         $scope.did_you_mean = true;
                     }
-                    console.debug(value);
                 });
+                
+                $scope.search_results = data;
                 if($scope.did_you_mean){
                     var json = {"name": "Did you mean", "labels": []};
                     $scope.search_results.splice(0, 0, json);
@@ -23,6 +24,9 @@ homeApp.controller('searchController', ["$scope", "searchService", "$location", 
                 }
             });
         }
+        else{
+            $scope.search_results = [];
+        }
     }
 
     $scope.show_all_results = function(search_text, type){
@@ -32,6 +36,7 @@ homeApp.controller('searchController', ["$scope", "searchService", "$location", 
     }
 
     $scope.on_select = function(item){
+        delete $scope.search_results;
         if(angular.isDefined(item)){
             var book_label = item.labels.indexOf("Book") >= 0;
             var author_label = item.labels.indexOf("Author") >= 0;
