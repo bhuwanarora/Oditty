@@ -12,6 +12,13 @@ namespace :graph do
     GraphHelper.set_genre_linked_list
   end
 
+  desc "set_day_linked_list"
+  task :set_day_linked_list => :environment do
+    include GraphHelper
+    GraphHelper.set_day_linked_list
+  end
+
+
   task :add_labels_to_existing_user => :environment do
     include Neo4jHelper
     Neo4jHelper.add_labels_to_existing_user
