@@ -1,5 +1,5 @@
 <md-card class="community" ng-if="community_feed.title && community_feed.title != '' && community_feed.title != null">
-    <md-card-content layout="row" layout-padding class="communities">
+    <md-card-content layout="row" layout-padding class="communities light_grey">
         <md-list-item class="md-2-line contact-item selected" 
                       ng-repeat="community in community_feed.communities" 
                       layout-align="center center"
@@ -13,7 +13,7 @@
     </md-card-content>
     <md-card-content class="content">
         <h3><a ng-click="goto_community_page(community_feed.id)">{{community_feed.title}}</a></h3>
-        <div class="less_important">News</div>
+        <div class="less_important">News, {{community_feed.created_at | timestamp | date:'dd MMM'}}</div>
         <div>{{community_feed.description}}</div>
     </md-card-content>
     <md-card-content class="circles clear" layout="row">
@@ -43,8 +43,8 @@
         height: 70px;
     }
 
-    .community h2{
-        margin: 16px 0px 0px 0px !important;
+    .community h3{
+        margin: 7px 0px !important;
     }
 
     .community .circles{
