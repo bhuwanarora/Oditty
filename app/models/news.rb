@@ -201,6 +201,6 @@ class News < Neo
 	end
 
 	def self.get_feed skip_count=0
-		News.match_day  + " WITH news WHERE NOT news.status = false "  + News.match_community + " WITH news ," + News.collect_map({"communities" => Community.grouped_basic_info}) + News.order_desc + News.skip(skip_count) + News.limit(Constant::Count::NewsShownInFeed) + News.return_group(News.basic_info,"communities") 
+		News.match_day + News.match_community + " WITH news," + News.collect_map({"communities" => Community.grouped_basic_info}) + " WHERE NOT news.active = false " + News.order_desc + News.skip(skip_count) + News.limit(Constant::Count::NewsShownInFeed) + News.return_group(News.basic_info,"communities") 
 	end
 end
