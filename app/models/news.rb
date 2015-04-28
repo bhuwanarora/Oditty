@@ -197,7 +197,7 @@ class News < Neo
 	end
 
 	def self.order_desc
-		" ORDER BY  TOINT(news.created_at) DESC "
+		" ORDER BY TOINT(news.created_at) DESC "
 	end
 
 	def self.get_feed skip_count=0
