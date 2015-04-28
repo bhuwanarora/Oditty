@@ -6,6 +6,12 @@ namespace :graph do
   #   Neo4jHelper.delete_labels
   # end
 
+  desc " create root blog node and fetch all blogs "
+  task :set_blogs => :environment do
+    include GraphHelper
+    GraphHelper.set_blogs
+  end
+
   desc "set_genre_linked_list"
   task :set_genre_linked_list => :environment do
     include GraphHelper
