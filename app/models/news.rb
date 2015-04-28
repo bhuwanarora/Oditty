@@ -188,10 +188,6 @@ class News < Neo
 		" news_id: ID(news) , news_url: news.url, view_count:news.view_count, title: news.title , description: news.description  , image_url: news.image_url, created_at:news.created_at "
 	end
 
-	def self.match_has_seen
-		" MATCH (user)-[:HasSeen]->(day:Day) WITH user, day "
-	end
-
 	def self.match_day day_skip_count
 		" MATCH (news:News)-[:TimeStamp]->()-[:FromDay]->(next_days:Day)<-[:NextDay*0..#{Constant::Count::NewsFromDays}]-(:Day)-[:NextDay*#{day_skip_count}]->(day:Day{day:#{Time.now.day}})<-[:Has_day]-(month:Month{month:#{Time.now.month}})<-[:Has_month]-(year:Year{year:#{Time.now.year}}) WITH day, month, year, news "
 	end
