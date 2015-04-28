@@ -103,7 +103,7 @@ module.exports = function(grunt) {
             src: 'app/assets/javascripts/angular/html/**/*.html',
             dest: 'app/assets/javascripts/min/angular/templates.js',
             options:{
-              module: 'websiteApp',
+              module: 'homeApp',
               htmlmin:{ 
                 removeComments: true,
                 removeCommentsFromCDATA: true,
@@ -251,7 +251,7 @@ module.exports = function(grunt) {
                     'app/assets/javascripts/min/angular/apps.js',
                     'app/assets/javascripts/min/angular/services.js',
                     'app/assets/javascripts/min/angular/directives.js',
-                    'app/assets/javascripts/min/angular/controllers.js',
+                    'app/assets/javascripts/min/angular/controllers.js'
                 ],
 
                 "app/assets/javascripts/min/angular/d3_group.min.js": [

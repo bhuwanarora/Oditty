@@ -153,7 +153,7 @@ homeApp.directive('calendar', ["$rootScope", function($rootScope){
 
       _init();
     }],
-    templateUrl: '/assets/angular/views/getting_started/shared/calendar.html'
+    templateUrl: '/assets/angular/html/shared/calendar.html'
   }
 }]);
 

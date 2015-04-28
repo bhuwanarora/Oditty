@@ -1,1 +1,0 @@
-websiteApp.factory("appSocket",["socketFactory",function(a){var b=a();return b.forward("error"),b}]);
