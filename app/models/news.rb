@@ -192,6 +192,10 @@ class News < Neo
 		" MATCH (news:News)-[:TimeStamp]->()-[:FromDay]->(day:Day{day:#{Time.now.day}})<-[:Has_day]-(month:Month{month: #{Time.now.month}})<-[:Has_month]-(year:Year{year:#{Time.now.year}}) WITH day, month, year, news "
 	end
 
+	def self.match_day_for time
+		" MATCH (news:News)-[:TimeStamp]->()-[:FromDay]->(day:Day{day:#{time.day}})<-[:Has_day]-(month:Month{month: #{time.month}})<-[:Has_month]-(year:Year{year:#{time.year}}) WITH day, month, year, news "
+	end
+
 	def self.define_label
 		" news :News "
 	end
@@ -201,6 +205,6 @@ class News < Neo
 	end
 
 	def self.get_feed skip_count=0
-		News.match_day + News.match_community + " WITH news," + News.collect_map({"communities" => Community.grouped_basic_info}) + News.order_desc + News.skip(skip_count) + News.limit(Constant::Count::NewsShownInFeed) + News.return_group(News.basic_info,"communities") 
+		News.match_day + News.match_community + " WITH news," + News.collect_map({"communities" => Community.grouped_basic_info}) + " WHERE NOT news.active = false " + News.order_desc + News.skip(skip_count) + News.limit(Constant::Count::NewsShownInFeed) + News.return_group(News.basic_info,"communities") 
 	end
 end

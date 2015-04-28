@@ -136,3 +136,9 @@ a, .site_color{
 .inactive{
 	opacity: 0.4;
 }
+
+#datepicker{
+	margin-top: 100px;
+	width: 200px;
+	font-size: 1.2em;
+}
