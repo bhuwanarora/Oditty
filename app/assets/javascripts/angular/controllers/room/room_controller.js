@@ -41,6 +41,7 @@ homeApp.controller('roomController', ["$scope", "$rootScope", "$timeout", 'roomS
 			}
 			_set_data(data, $scope.visited_books);
 		});
+		$scope.info.loading = false;
 	}
 
 	var _get_random_init = function(min, max){
@@ -87,6 +88,7 @@ homeApp.controller('roomController', ["$scope", "$rootScope", "$timeout", 'roomS
 	}
 
 	var _init = (function(){
+		$scope.info.loading = true;
 		_get_books_grouped_by_shelves();
 		_get_articles_grouped_by_shelves();
 		_get_visited_articles();

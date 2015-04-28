@@ -174,6 +174,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         $scope.search_tag = {};
         $scope.active_tab = {};
         $scope.info.categories = [];
+        $scope.info.loading = true;
         // $scope.info.infinity = true;
     }());
 

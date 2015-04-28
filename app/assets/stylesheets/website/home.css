@@ -236,7 +236,7 @@ md-toolbar{
 	left: 0px;
 	right: 0px;
 	height: 10px;
-	z-index: 2;
+	z-index: 99999;
 }
 
 .left_panel_container md-backdrop{

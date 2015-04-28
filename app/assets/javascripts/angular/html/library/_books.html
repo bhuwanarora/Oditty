@@ -19,7 +19,7 @@
             md-mode="indeterminate">
     </md-progress-linear>
 
-    <div layout-padding class="white" ng-if="info.other_info">
+    <div layout-padding class="white" ng-if="info.other_info && info.other_info.name">
         <a ng-href="/author?q={{info.other_info.id}}"><h3 ng-bind-html="info.other_info.name"></h3></a>
         <div ng-bind-html="info.other_info.overview"></div>
         <a ng-href="{{info.other_info.wiki_url}}" target="_blank">Read more at Wiki</a>
