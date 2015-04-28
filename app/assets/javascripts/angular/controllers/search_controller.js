@@ -1,22 +1,28 @@
 homeApp.controller('searchController', ["$scope", "searchService", "$location", function($scope, searchService, $location){
 
     $scope.query_search = function(search_text){
-        searchService.raw(search_text).then(function(data){
-            $scope.search_results = data;
-            $scope.did_you_mean = false;
-            angular.forEach(data, function(value){
-                if(value.fuzzy){
-                    $scope.did_you_mean = true;
+        if(search_text.length > 2){
+            $scope.info.loading = true;
+            searchService.raw(search_text).then(function(data){
+                $scope.info.loading = false;
+                $scope.search_results = data;
+                $scope.did_you_mean = false;
+                angular.forEach(data, function(value){
+                    if(value.fuzzy){
+                        $scope.did_you_mean = true;
+                    }
+                    console.debug(value);
+                });
+                if($scope.did_you_mean){
+                    var json = {"name": "Did you mean", "labels": []};
+                    $scope.search_results.splice(0, 0, json);
                 }
-                console.debug(value);
+                if(data.length > 0){
+                    var json = {"name": "Show all results", "show_all": true, "labels": [], "search_text": search_text};
+                    $scope.search_results.push(json);
+                }
             });
-            if($scope.did_you_mean){
-                var json = {"name": "Did you mean", "labels": []};
-                $scope.search_results.splice(0, 0, json);
-            }
-            var json = {"name": "Show all results", "show_all": true, "labels": [], "search_text": search_text};
-            $scope.search_results.push(json);
-        });
+        }
     }
 
     $scope.show_all_results = function(search_text, type){
