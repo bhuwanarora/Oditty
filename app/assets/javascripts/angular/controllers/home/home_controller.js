@@ -15,23 +15,23 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$m
         event.stopPropagation();
     };
 
+    $scope.get_community_feed = function(){
+        userService.get_feed().then(function(data){
+            angular.forEach(data, function(value){
+                var json = {'label': 'news'};
+                value = angular.extend(value, json);
+                this.push(value);
+            }, $scope.feed);
+        });
+    }
+
     var _init = (function(){
     	$scope.feed = [];
-
-        var _get_community_feed = function(){
-            userService.get_feed().then(function(data){
-                angular.forEach(data, function(value){
-                    var json = {'label': 'news'};
-                    value = angular.extend(value, json);
-                    this.push(value);
-                }, $scope.feed);
-            });
-        }
 
         var _get_blog_feed = function(){
             userService.get_last_blog().then(function(data){
                 data[0].label = 'blog';
-                $scope.feed = data.concat($scope.feed);
+                $scope.feed = $scope.feed.concat(data);
             });
         }
 
@@ -45,13 +45,13 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$m
         var communities = (url.indexOf("communities") > 0);
         var blogs = (url.indexOf("blogs") > 0);
         if(communities){
-            _get_community_feed();
+            $scope.get_community_feed();
         }
         else if(blogs){
             _get_blog_feed();
         }
         else{
-            _get_community_feed();
+            $scope.get_community_feed();
             var timeout_event = $timeout(function(){
                 _get_blog_feed();
             }, 6000);
@@ -59,7 +59,6 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$m
                 $timeout.cancel(timeout_event);
             });
         }
-
 
     }());
 }]);

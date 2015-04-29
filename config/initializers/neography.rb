@@ -1,7 +1,7 @@
 Neography.configure do |config|
     config.protocol             = "http://"
     config.server               = "localhost"
-    config.port                 = 8015
+    config.port                 = 7474
     config.directory            = ""  # perfix this path with '/'
     config.cypher_path          = "/cypher"
     config.gremlin_path         = "/ext/GremlinPlugin/graphdb/execute_script"

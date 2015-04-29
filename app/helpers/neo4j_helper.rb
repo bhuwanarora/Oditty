@@ -7,6 +7,7 @@ module Neo4jHelper
 		clause = " MATCH (a:Book) RETURN MAX(ID(a)) AS max , MIN(ID(a)) AS min "
 		clause.execute
 	end
+	
 	def self.set_integer_books_property
 		ids = self.get_id_range
 		min = ids[0]["min"]

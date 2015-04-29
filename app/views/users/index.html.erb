@@ -1,37 +1,41 @@
 <div class="header"><b><%= @users.count %> Users</b></div>
+<input id="datepicker" type="text"  />
 <div style="overflow: auto;">
   <% @users.each_with_index do |user, index| %>
     <span>
       <ul class="user_grid">
-          <b class="site_color user">#<%= user[3] %> 
-                                    <%= user[0]["data"]["email"] %> 
-                                    <%= user[0]["data"]["name"] %>
-                                    <%= user[0]["data"]["last_login"] %>
-                                    <img class="thumb" src="<%= user[0]['data']['thumb'] %>"/></b>
+          <b class="site_color user">#<%= user["id"] %> 
+                                    <%= user["email"] %> 
+                                    <%= user["first_name"] %>
+                                    <%= user["last_name"] %>
+                                    <%= user["init_book_read_count"] %>
+                                    <img class="thumb" src="<%= user['image_url'] %>"/></b>
         <table style="display:none;">
-          <% user[0]["data"].keys.each do |key| %>
-            <tr><td><b><%= key %></b></td><td><%= user[0]["data"][key] %></td></tr>
-          <% end %>
-          <tr>
-            <input type="hidden"  value="<%= user[3] %>" name="id" />
-            <td><b>Active</b></td>
-            <td><input type="checkbox" name="active" <% if user[0]["data"]["active"] %>checked<% end %>/></td>
-          </tr>
-          <tr><td><hr/></td></tr>
-          <tr><td><button type="submit">Sumbit</button></td></tr>
-          <% if user[1] %>
-            <tr><td><hr/></td></tr>
-            <tr><td><b>Facebook</b></td></tr>
-            <% user[1]["data"].keys.each do |key| %>
-              <tr><td><b><%= key %></b></td><td><%= user[1]["data"][key] %></td></tr>
-            <% end %>
-          <% end %>
-          <% if user[2] %>
-            <tr><td><hr/></td></tr>
-            <tr><td><b>Likes</b></td></tr>
-            <% user[2].each do |like| %>
-              <tr><td><%= like %></td></tr>
-            <% end %>
+          <% if user["facebook_auth"].present? %>
+              <% user["facebook_auth"]["data"].keys.each do |key| %>
+                <tr><td><b><%= key %></b></td><td><%= user["facebook_auth"]["data"][key] %></td></tr>
+              <% end %>
+              <tr>
+                <input type="hidden"  value="<%= user[3] %>" name="id" />
+                <td><b>Active</b></td>
+                <td><input type="checkbox" name="active" <% if user["facebook_auth"]["data"]["active"] %>checked<% end %>/></td>
+              </tr>
+              <tr><td><hr/></td></tr>
+              <tr><td><button type="submit">Sumbit</button></td></tr>
+              <% if user[1] %>
+                <tr><td><hr/></td></tr>
+                <tr><td><b>Facebook</b></td></tr>
+                <% user[1]["data"].keys.each do |key| %>
+                  <tr><td><b><%= key %></b></td><td><%= user[1]["data"][key] %></td></tr>
+                <% end %>
+              <% end %>
+              <% if user[2] %>
+                <tr><td><hr/></td></tr>
+                <tr><td><b>Likes</b></td></tr>
+                <% user[2].each do |like| %>
+                  <tr><td><%= like %></td></tr>
+                <% end %>
+              <% end %>
           <% end %>
         </table>
       </ul>
@@ -51,6 +55,15 @@
 
 <script>
   $(document).ready(function(){
+    $("#datepicker").datepicker({
+      onSelect: function(dateText, inst){
+          window.location.href = "/users?t="+dateText;
+        }
+    });
+    $("#datepicker").datepicker("option", "dateFormat", "yy-mm-dd");
+    $("#datepicker").datepicker("setDate", "<%= @timestamp %>" );
+
+
     var clear_data = function(){
       $('.footer_status').html("Processing request...");
       $.ajax({
