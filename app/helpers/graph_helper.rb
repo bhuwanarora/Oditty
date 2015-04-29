@@ -75,7 +75,6 @@ module GraphHelper
 	end
 
 	def set_index
-		@neo ||= Neography::Rest.new
 		clause = "MATCH (book: Book) return max(ID(book)) as id"
 		maximum_node_id = 4938046
 		count = 0
@@ -85,7 +84,7 @@ module GraphHelper
 
 		for count in (minimum_node_id...maximum_node_id).step(step_size)
 			clause = "MATCH (book: Book) where ID(book) >= #{count} AND ID(book) < #{count + step_size} WITH book WHERE (book.indexed_title IS NOT NULL OR book.indexed_title <> \"null\") AND (book.indexed_author_name IS NOT NULL OR book.indexed_author_name <> \"null\") SET book.unique_index = LOWER(book.indexed_title + SUBSTRING(book.indexed_author_name, 1)) RETURN book.unique_index"
-			unique_index = (@neo.execute_query clause)["data"]
+			unique_index = clause.execute
 			p unique_index
 		end
 	end
