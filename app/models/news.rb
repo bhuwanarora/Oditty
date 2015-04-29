@@ -156,7 +156,7 @@ class News < Neo
 		" news_id: ID(news) , news_url: news.url, view_count:news.view_count, title: news.title , description: news.description  , image_url: news.image_url, created_at:news.created_at "
 	end
 
-	def self.match_day_path length = Constant::Count::NewsFromDays-1
+	def self.match_day_path length = Constant::Count::SkipDays-1
 		" MATCH path = (today:Day)<-[:NextDay*#{length}]-(last_days:Day) WITH path "
 	end
 

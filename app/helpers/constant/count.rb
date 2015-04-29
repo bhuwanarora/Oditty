@@ -23,6 +23,6 @@ module Constant::Count
 	ElementsShownInSearch		= 6
 	NewsShownInFeed				= 10
 	VerificationExpirySeconds	= 3600
-	NewsSkip					= 10
-	NewsFromDays				= 10
+	SkipNews					= 10
+	SkipDays				= 10
 end

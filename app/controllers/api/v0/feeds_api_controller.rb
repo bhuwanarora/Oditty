@@ -14,12 +14,14 @@ module Api
 				render :json => info, :status => 200
 			end
 
-			def get_news 
-				session[:news_skip_count] ||= 0 
-				session[:news_skip_count] += Constant::Count::NewsSkip
-				session[:news_day_skip_count] ||= 0
+			def get_news  
+				if params["new_landing"] == "true"
+					session[:news_day_skip_count] = 0
+					session[:news_skip_count] = 0
+				end 
+				session[:news_skip_count] += Constant::Count::SkipNews
 				if (info = Api::V0::FeedsApi.get_news(session[:news_skip_count], session[:news_day_skip_count]).execute).blank?
-					session[:news_day_skip_count] += Constant::Count::NewsFromDays
+					session[:news_day_skip_count] += Constant::Count::SkipDays
 					session[:news_skip_count] = 0
 					info = Api::V0::FeedsApi.get_news(session[:news_skip_count], session[:news_day_skip_count]).execute
 				end
