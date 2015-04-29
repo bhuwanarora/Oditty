@@ -1,46 +1,44 @@
 class User::Authenticate::FacebookAuthentication < User::Authenticate
-	def initialize(params, session)
+	def initialize(params)
+		puts params.to_s
 		@params = params[:users_api]
-		@user_id = session[:user_id]
 	end
 
 	def handle
 		puts @params.to_s.red
-		
-		if @params[:email]
+		if @params["email"]
 			puts "email exists".green
-			user_exists = !User.get_by_email[0].execute.blank?
-			if user_exists
-				clause = self._update_user_with_email
-			else
-				clause = self._create_user_with_email
-			end
+			user = User::Info.get_by_email(@params["email"]).execute[0]
+			user_exists = user.present?
+			user_id = user_exists ? user["id"] : User.merge_by_email(@params["email"]).execute[0]["id"] 
 		else
 			puts "email does not exits".green
-			user_id = (User.get_by_fb_id(@params[:id]).execute)["id"]
-			if user_id.present?
-				clause = self._update_user_without_email 
-			else
-				clause = self._create_user_without_email 
-			end
+			user = User::Info.get_by_fb_id(@params["id"]).execute[0]
+			user_exists = user.present?
+			user_id = user_exists ? user["id"] : User.merge_by_fb_id(@params["id"]).execute[0]["id"] 
 		end
-		user_id = (clause.execute)[0]["id"]
-		puts "fb execute_query done...".green
-		puts "FB LOGIN USER_ID #{user_id.to_s.red}"
-		session[:user_id] = user_id
-		puts "session #{session[:user_id]}".red
+		Resque.enqueue(FacebookDataEntryWorker, user_exists, @params)
+		puts user_id.to_s
 		user_id
 	end
 
+	def self.update_user_without_email 
+		User::FacebookUser.new(@params["id"]).merge + User::FacebookUser.set_thumb(@params["thumb"]) + User::FacebookUser.set_name(@params["name"]) + User::FacebookUser.set_last_login + User::Authenticate::FacebookAuthentication._fb_set_clause 
+	end
+
+	def self.create_user_without_email 
+		User::FacebookUser.new(@params).create + User::Feed.create_first + Label.match_primary + User.link_primary_labels + User::FacebookUser.create_facebook_user + User.set_thumb + User::FacebookUser.set_last_login + User::Authenticate::FacebookAuthentication._fb_set_clause 
+	end
+
+	def self.update_user_with_email 
+		User::Authenticate::FacebookAuthentication.update_user_without_email + User::Info.set_email(@params["email"])
+	end
+
+	def self._create_user_with_email
+		User::Authenticate::FacebookAuthentication.create_user_without_email + User::Info.set_email(@params["email"])
+	end
+
 	private
-
-	def self._update_user_without_email 
-		User::FacebookUser.new(@params[:id]).merge + User::FacebookUser.set_thumb(@params[:thumb]) + User::FacebookUser.set_thumb(@params[:name]) + User::FacebookUser.set_last_login + self._fb_set_clause + self._fb_return_clause
-	end
-
-	def self._create_user_without_email 
-		User::FacebookUser.new(@params).create + User::Feed.create_first + Label.match_primary + User.link_primary_labels + User::FacebookUser.create_facebook_user + User.set_thumb + User::FacebookUser.set_last_login + User::Authenticate::Facebook._fb_set_clause + User::Authenticate::Facebook._fb_return_clause
-	end
 
 	def self._fb_set_clause 
 		set_clause = ""
@@ -58,10 +56,6 @@ class User::Authenticate::FacebookAuthentication < User::Authenticate
 		end
 		set_clause = set_clause + property_clause
 		set_clause
-	end
-
-	def self._fb_return_clause
-		" RETURN DISTINCT(ID(user))"
 	end
 
 	def self._get_string_from_array(key, array)
