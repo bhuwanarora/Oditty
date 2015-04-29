@@ -14,7 +14,7 @@ module Api
 				render :json => info, :status => 200
 			end
 
-			def get_news
+			def get_news 
 				session[:news_skip_count] ||= 0 
 				session[:news_skip_count] += Constant::Count::NewsSkip
 				session[:news_day_skip_count] ||= 0
