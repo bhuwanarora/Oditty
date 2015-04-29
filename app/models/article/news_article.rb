@@ -47,5 +47,4 @@ class Article::NewsArticle < Article
 	def get_chronological_news_info
 		match + News.match_chronological_news + @news.match_community + Community.order_desc + Community.return_init + News.basic_info + Community.most_important_category_info 
 	end
-
 end

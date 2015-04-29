@@ -25,6 +25,11 @@ module GraphHelper
 		clause.execute
 	end
 
+	def self.set_day_linked_list
+		clause = " MATCH (year:Year)-->(month:Month)-->(day:Day) WITH day ORDER BY (366*TOINT(year.year)+ 31*TOINT(month.month) + TOINT(day.day)) WITH COLLECT(day) AS days FOREACH(i in RANGE(0, length(days)-2) |  FOREACH(p1 in [days[i]] |  FOREACH(p2 in [days[i+1]] |  MERGE (p1)-[:NextDay]->(p2)))) "
+		clause.execute
+	end
+
 	def self.set_blogs
 		blogs_set = false
 		set_root = " MERGE (root:Blog{is_root:true}) MERGE (root)-[:NextPost]->(root) SET root.posted_at = \" 2014-04-28T12:06:25+05:30 \" RETURN root "
