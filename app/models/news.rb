@@ -8,19 +8,15 @@ class News < Neo
 	end
 
 	def self.match_chronological_news
-		News.match_path_bidirectionally(Constant::Count::CommunitiesShown) + ", " + News.extract_unwind("linked_news") + ", news, ABS(TOINT(linked_news.created_at - news.created_at*1.0)) AS deviation ORDER BY deviation LIMIT " + Constant::Count::NewsShownInCommunity.to_s + " WITH linked_news AS news ORDER BY news.created_at "
+		News.match_day + " WITH news AS current, day AS today " + News.match_chronological_days_path(1) + ", current, " + News.extract_unwind("day") + ", current" + News.match_day + ", current , ABS(TOINT(news.created_at - current.created_at*1.0)) AS deviation ORDER BY deviation LIMIT " + Constant::Count::NewsShownInCommunity.to_s + " WITH news ORDER BY news.created_at "
 	end
 
-	def self.match_path skip_count  
-		" MATCH path = (news)-[:RegionalNews*" + skip_count.to_s + "]->(next_news) WITH news, path "
+	def self.match_chronological_days_path length
+		" MATCH path = (next_days:Day)<-[:NextDay*#{length}]-(today:Day)<-[:NextDay*#{length}]-(last_days:Day) WITH path "
 	end
 
 	def match
 		" MATCH (news:News) WHERE ID(news) = " + @id.to_s + " WITH news "
-	end
-
-	def self.match_path_bidirectionally skip_count
-		" MATCH path = (news)-[:RegionalNews*" + skip_count.to_s + "]-(next_news) WITH news, path "
 	end
 
 	def self.match_community
@@ -35,29 +31,17 @@ class News < Neo
 		" MERGE (news:News{url:\"" + news_metadata["news_link"].to_s + "\"}) ON CREATE SET news.created_at = " + Time.now.to_i.to_s + ", news.view_count = 0 " +  News.set_metadata(news_metadata) + ", news.status = true WITH news "
 	end
 
-	def self.merge_region region
-		" MERGE (region:Region{name: \"" + region.to_s + "\"}) WITH region " 
-	end
-
-	def self.optional_match_regional_news
-		"OPTIONAL MATCH (region)-[old:RegionalNews{region:ID(region)}]->(old_news) WITH region, old, old_news "
-	end
-
-	def self.optional_match_news
-		" OPTIONAL MATCH (news)-[relation:RegionalNews{region:ID(region)}]-()"
-	end
-
-	def self.create_news_link
-		" FOREACH(ignoreMe IN CASE WHEN relation IS NULL AND old IS NOT NULL THEN [1] ELSE [] END | MERGE (region)-[:RegionalNews{region:ID(region)}]->(news)-[:RegionalNews{region:ID(region)}]->(old_news) DELETE old) FOREACH(ignoreMe IN CASE WHEN relation IS NULL AND old IS  NULL THEN [1] ELSE [] END | MERGE (region)-[:RegionalNews{region:ID(region)}]->(news))  "
+	def self.merge_region news_metadata
+		" MERGE (region:Region{name:\"#{news_metadata["region"]}\"}) MERGE (region)<-[:FromRegion{region:ID(region)}]-(news) WITH region, news " 
 	end
 
 	def self.create news_metadata
-		clause  = News.merge(news_metadata) + News.merge_timestamp  + News.merge_region(news_metadata["region"]) + ", news " + News.optional_match_regional_news +  ", news " + News.optional_match_news + News.create_news_link + News.return_init + " ID(news) as news_id "
+		clause  = News.merge(news_metadata) + News.merge_timestamp  + News.merge_region(news_metadata) + News.return_init + " ID(news) as news_id "
 		(clause.execute)[0]["news_id"]
 	end
 
 	def self.merge_timestamp
-		" MERGE (year:Year{year:#{Time.now.year}}) MERGE (month:Month{month: #{Time.now.month}})<-[:Has_month]-(year) MERGE (day:Day{day:#{Time.now.day}})<-[:Has_day]-(month) MERGE (time:TimePeriod{quarter:\"#{(Time.now.hour / 6) * 6}-#{((Time.now.hour / 6)+1) * 6}\"})-[:FromDay]->(day) MERGE (news)-[:TimeStamp]->(time) WITH news "
+		" MATCH (year:Year{year:#{Time.now.year}})-[:Has_month]->(month:Month{month: #{Time.now.month}})-[:Has_day]->(day:Day{day:#{Time.now.day}}) MERGE (time:TimePeriod{quarter:\"#{(Time.now.hour / 6) * 6}-#{((Time.now.hour / 6)+1) * 6}\"})-[:FromDay]->(day) MERGE (news)-[:TimeStamp]->(time) WITH news "
 	end
 
 	def self.set_indexed_title title
@@ -66,11 +50,10 @@ class News < Neo
 
 	def self.set_metadata news_metadata
 		clause = ""
-		news_metadata.delete("news_link")
-		news_metadata.delete("available")
-		news_metadata.delete("region")
 		news_metadata.each do |key, value|
-			clause += " SET news." + key + " = \"" + value.to_s.gsub("\"","\\\"").gsub("\'","\\\'") + "\" " 
+			unless key == "news_link" || key == "available" || key == "region" 
+				clause += " SET news." + key + " = \"" + value.to_s.database_ready + "\" " 
+			end
 		end
 		clause + News.set_indexed_title(news_metadata["title"]) + News.set_search_index(news_metadata["title"])
 	end
@@ -130,21 +113,6 @@ class News < Neo
 		end
 	end
 
-	def match_region
-		" MATCH (region:Region)-[regional_news:RegionalNews{region:ID(region)}]->(news) WHERE ID(news) = " + @id.to_s + " WITH region, news  "
-	end
-
-	def self.news_already_present news_id
-		clause = News.new(news_id).match_region + " , regional_news " + News.return_init + " ID(regional_news) AS regional_news " 
-		data = (clause.execute)[0]
-		if data.blank?
-			news_already_present = false
-		else
-			news_already_present = true
-		end
-		news_already_present
-	end
-
 	def self.map_topics news_id, topics
 		topics.each do |topic|
 			clause = News.new(news_id).match + " MERGE (topic:Topic{name:\"" + topic["value"].to_s + "\"})  MERGE (topic)<-[:HasTopic]-(news) "
@@ -189,7 +157,16 @@ class News < Neo
 	end
 
 	def self.match_day
-		" MATCH (news:News)-[:TimeStamp]->()-[:FromDay]->(day:Day{day:#{Time.now.day}})<-[:Has_day]-(month:Month{month: #{Time.now.month}})<-[:Has_month]-(year:Year{year:#{Time.now.year}}) WITH day, month, year, news "
+		" MATCH (day:Day)<-[:FromDay]-(:TimePeriod)<-[:TimeStamp]-(news:News) WITH day, news"
+	end
+
+	def self.match_time_period day_skip_count
+		if day_skip_count == 0
+			clause = " MATCH (year:Year{year:#{Time.now.year}})-[:Has_month]->(month:Month{month:#{Time.now.month}})-[:Has_day]->(day:Day{day:#{Time.now.day}}) WITH day " + News.match_day
+		else
+			clause = " MATCH (year:Year{year:#{Time.now.year}})-[:Has_month]->(month:Month{month:#{Time.now.month}})-[:Has_day]->(:Day{day:#{Time.now.day}})<-[:NextDay*#{day_skip_count}]-(day:Day) WITH day "  + News.match_day
+		end
+		clause
 	end
 
 	def self.match_day_for time
@@ -204,7 +181,7 @@ class News < Neo
 		" ORDER BY TOINT(news.created_at) DESC "
 	end
 
-	def self.get_feed skip_count=0
-		News.match_day + News.match_community + " WITH news," + News.collect_map({"communities" => Community.grouped_basic_info}) + " WHERE news.status = true " + News.return_group(News.basic_info,"communities") + News.order_desc + News.skip(skip_count) + News.limit(Constant::Count::NewsShownInFeed)
+	def self.get_feed skip_count, day_skip_count
+		News.match_time_period(day_skip_count) + " WHERE news.status = true WITH news " + News.order_desc + News.skip(skip_count) + News.limit(Constant::Count::NewsShownInFeed) + News.match_community + " WITH news," + News.collect_map({"communities" => Community.grouped_basic_info}) + News.return_group(News.basic_info,"communities") 
 	end
 end

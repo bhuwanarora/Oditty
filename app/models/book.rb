@@ -11,8 +11,16 @@ class Book < Neo
 		" START book=node:node_auto_index('indexed_title:\""+indexed_title+"\"') WITH book " 
 	end
 
+	def self.search_by_legacy_indexed_title indexed_title
+		" MATCH (book:Book{indexed_title:\""+indexed_title+"\"}) WITH book " 
+	end
+
 	def self.get_by_indexed_title indexed_title
 		" START book=node:node_auto_index('indexed_title:\""+indexed_title+"\"') " + Book.return_init + Book.basic_info
+	end	
+
+	def self.get_by_legacy_indexed_title indexed_title
+		Book.search_by_legacy_indexed_title(indexed_title) + Book.return_init + Book.basic_info
 	end	
 
 	def get_feed

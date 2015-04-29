@@ -8,7 +8,7 @@
                 </div>
                 <div layout="column" flex="30" flex-sm="60">
                     <div class="padding">
-                        <h3 class="network_name">{{user.first_name}}</h3>
+                        <a ng-href="/profile?p={{user.id}}"><h3 class="network_name">{{user.first_name}}</h3></a>
                     </div>
                     <div class="padding">
                         <md-button class="md-primary">
