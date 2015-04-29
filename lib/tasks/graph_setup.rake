@@ -6,6 +6,12 @@ namespace :graph do
   #   Neo4jHelper.delete_labels
   # end
 
+  desc "reset_news_link"
+  task :reset_news_link => :environment do
+    include GraphHelper
+    GraphHelper.reset_news_link
+  end
+
   desc "set_genre_linked_list"
   task :set_genre_linked_list => :environment do
     include GraphHelper

@@ -128,12 +128,8 @@ class Community < Neo
 
 			unless communities_books.blank?	
 				news_metadata["news_id"] = News.create news_metadata
-				
-				if News.news_already_present(news_metadata["news_id"]) 
-					News.map_topics(news_metadata["news_id"], response["topics"]) 				
-					Community.map_books(communities_books, news_metadata)
-				end
-
+				News.map_topics(news_metadata["news_id"], response["topics"]) 				
+				Community.map_books(communities_books, news_metadata)
 			end
 		end
 	end 
