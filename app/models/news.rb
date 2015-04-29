@@ -28,7 +28,7 @@ class News < Neo
 	end
 
 	def self.merge news_metadata
-		" MERGE (news:News{url:\"" + news_metadata["news_link"].to_s + "\"}) ON CREATE SET news.active = true, news.created_at = " + Time.now.to_i.to_s + ", news.view_count = 0 " +  News.set_metadata(news_metadata) + " WITH news "
+		" MERGE (news:News{url:\"" + news_metadata["news_link"].to_s + "\"}) ON CREATE SET news.created_at = " + Time.now.to_i.to_s + ", news.view_count = 0 " +  News.set_metadata(news_metadata) + ", news.status = true WITH news "
 	end
 
 	def self.merge_region news_metadata
@@ -168,12 +168,16 @@ class News < Neo
 		" MATCH (year:Year{year:#{Time.now.year}})-[:Has_month]->(month:Month{month:#{Time.now.month}})-[:Has_day]->(:Day{day:#{Time.now.day}})<-[:NextDay*#{day_skip_count}]-(day:Day) WITH day AS today " + News.match_day_path + ", " + News.extract_unwind("day") + News.match_day
 	end
 
+	def self.match_day_for time
+		" MATCH (news:News)-[:TimeStamp]->()-[:FromDay]->(day:Day{day:#{time.day}})<-[:Has_day]-(month:Month{month: #{time.month}})<-[:Has_month]-(year:Year{year:#{time.year}}) WITH day, month, year, news "
+	end
+
 	def self.define_label
 		" news :News "
 	end
 
 	def self.order_desc
-		" ORDER BY  TOINT(news.created_at) DESC "
+		" ORDER BY TOINT(news.created_at) DESC "
 	end
 
 	def self.get_feed skip_count, day_skip_count

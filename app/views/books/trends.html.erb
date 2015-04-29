@@ -1,58 +1,61 @@
 <table>
+	<input id="datepicker" type="text"	/>
 	<tr>
-		<th>#Books</th>
-		<th>Trending</th>
+		<!-- <th>Trending</th>-->
 		<th>Title</th>
-		<th>Content</th>
-		<th>Searched Words</th>
-		<th>Publisher</th>
-		<th>Thumb</th>
-		<th>Timestamp</th>
-		<th>Search Books</th>
-		<th>Books</th>
-		<th>Active</th>
-		<th>Submit</th>
 		<th></th>
+		
+		<th>Community</th>
+		<th>Books</th>
+		<th>Remove Books</th>
+		<th>Search Books</th>
+		<th> Search result</th>			
 	</tr>
-	<% @trends.sort_by!{|s| Time.at(s[1].to_i)}.reverse.each do |trend|%>
-		<tr class="<% if trend[4].present? && trend[4] == 1 %>active<% end %>">
-			<td><%= trend[3].length %></td>
-			<td><a href="<%= trend[9] %>" target="_blank"><%= trend[0] %></a></td>
-			<td><a href="<%= trend[11] %>" target="_blank"><%= trend[6] %></a></td>
-			<td><div class="limit_height"><%= trend[7] %></div></td>
-			<td class="keywords">
-				<span><%= trend[8] %></span>
-				<textarea class="hidden_input" ><%= trend[8] %></textarea>
-				<button class="hidden_input add_books">Go</button>
-				<input type="hidden" value="<%= trend[2] %>" class="trending_id"/>
-			</td>
-			<td><%= trend[12] %></td>
-			<td><img src="<%= trend[10] %>"></td>
-			<td><%= Time.at(trend[1].to_i).strftime("%d-%m-%y") %></td>
-			<td>
-				<input class="search_box" />
-			</td>
-
-			<form action="<%= trends_path %>">
-				<td class="books" name="books">
-					<div class="limit_height">
-						<% trend[3].each.with_index do |book, index| %>
-							<div data-id="<%= trend[5][index] %>" class="book_name"><span> · </span><span><%= book %></span></div>
-						<% end %>
-					</div>
+	<% if @trends %>		
+		<% @trends.sort_by!{|s| Time.at(s[1].to_i)}.reverse.each do |trend|%>
+			<tr class="<% if trend['status'] %>active<% end %>" 
+				id="id_<%= trend["id_news"] %>">
+				<td title= "<%=trend["t.description"]%>">
+					<%= trend["t.title"]%> <br> 
+					<%= Time.at(trend["t.timestamp"].to_i).strftime("%d/%m/%y") %>,  <%= trend["id_news"] %>
 				</td>
-				<input type="hidden" value="<%= trend[2] %>" name="trending_id"/>
-				<input type="hidden" value="<%= trend[5] %>" name="book_ids" />
-				<% if trend[4].present? && trend[4] == 1 %>
-					<td><input type="checkbox" name="status" checked></td>
-				<% else %>
-					<td><input type="checkbox" name="status"></td>
-				<% end %>
-				<td><input type="submit" value="Submit"></td>
-			</form>
-			<td class="remove_trend">x
-			<input type="hidden" value="<%= trend[2] %>" class="trending_id"/></td>
-		</tr>
+				<td><img src="<%=trend["t.image_url"] %>" alt="" border=3 height=50 width=100> </td>
+
+				<td>
+					<select class="community_present" size=3 MULTIPLE>
+						<%trend["communities"].each do |c|%>
+							<OPTION><%=c%></OPTION>
+						<%end%>						
+					</select>
+				</td>
+
+				<td>
+					<select name="books_in_c" class="books_select" size=3 MULTIPLE>
+						<OPTION> No community is selected</OPTION>
+					</select>
+				</td>
+				<form class ="removeBookForm" action="<%= trends_path %>" >
+					<td>
+
+						<input type="submit" value="Remove Book" class = "remove_button" disabled="disabled">
+					</td>
+				</form>
+					<td>
+						<input class="search_box" />
+					</td>
+
+				<form action="<%= trends_path %>">
+
+					<input type="hidden" value="<%= trend["id_news"] %>" name="trending_id"/>
+					<input type="hidden" value="<%= trend["t.searched_words"] %>" name="book_ids" />					
+					<td><input type="submit" value="Submit"></td>
+				</form>
+				<td class="remove_trend">
+					<button>Toggle</button>
+					<input type="hidden" value="<%= trend["id_news"] %>" class="trending_id"/>
+				</td>
+			</tr>
+		<% end %>
 	<% end %>
 </table>
 <div class="main_footer">
@@ -61,6 +64,13 @@
 <div class="vertical_padder"></div>
 <script>
 	$(document).ready(function(){
+		$("#datepicker").datepicker({
+			onSelect: function(dateText, inst){
+		        window.location.href = "/panel/trends?t="+dateText;
+		    }
+		});
+		$("#datepicker").datepicker("setDate", "<%= @timestamp %>" );
+
 		var search_on = false;
 		var search = function($this, search_for){
 			$.ajax({
@@ -115,6 +125,108 @@
 				
 			}
 		});
+		
+		$('.removeBookForm').submit( function(){
+			var comName=$(this).closest('tr').find(".community_present").val();
+			var bookName=$(this).closest('tr').find(".books_select").val();
+			//var bookId=0;
+			if(confirm("Do you want to remove book "+  bookName +" from "+comName)==true){
+				
+				$.ajax({
+					url: "<%= delete_book_relationship_path %>",
+					data: {book_name: bookName.toString(), community_name:comName.toString()},
+					success: function(data, textStatus, jqxhr){
+						$('.footer_status').html('Done..');
+					},
+					error: function(jqxhr, textStatus, errorThrown){
+						$('.footer_status').html('Error in removing book..');
+					}
+				});
+					
+				return true;
+			}
+			return false;
+			
+
+		});
+
+		$('.community_present').change(function(event){
+			<!-- fill the entries in books with return data -->			
+			var trid = $(this).closest('tr');			
+			
+			//trid.content()[1].innerHTML="hello";			
+			var book_col=trid.find(".books_select")
+			//$('.footer_status').html('Updating books of '+ $(this).val());
+
+			var test=$(this).val().toString();
+			$('.footer_status').html("Updating books.."+ test);
+    		var data= "q=" +$(this).val().toString();
+    		$.ajax({
+					url: "<%= trending_community_books_path %>",
+					data: data,
+					success: function(data, textStatus, jqXHR){
+
+						var books = [];
+						var books_id= [];
+						for(var i=0; i < data.length; i++){
+							var book = data[i]["book.title"];
+							var id_b=data[i]["id_book"];
+							books_id.push(id_b);
+							books.push(book);
+						}
+						var empty_ret=false;
+
+						if(books.length == 0){
+							books = ["No results found..."];
+							empty_ret=true;
+
+						}
+						
+						var newSelect=document.createElement('select');
+						newSelect.className="books_select";
+						newSelect.size=3;
+						newSelect.width=30;
+
+			    		var selectHTML="";
+
+			    		for(i=0; i<books.length; i=i+1){
+			        		selectHTML+= "<option value= "+books[i]+"label= "+books_id[i]+">"+books[i]+"</option>";
+
+			    		}
+
+			    		newSelect.innerHTML= selectHTML;
+			    		book_col.replaceWith(newSelect);
+
+			    		if(empty_ret==true){
+			    			//$('.footer_status').html('Not found.');
+			    			//newSelect.attr('disabled','disabled');
+			    		}
+
+			    		$('.footer_status').html('');
+					
+					},
+					error: function(jqxhr, textStatus, errorThrown){
+
+						$('.footer_status').html('Error in searching..');
+					},
+					timeout: 10000
+				});
+
+    		
+
+
+		});
+		
+		$(document).on('click','.books_select',function () {
+			
+			var trid = $(this).closest('tr');			
+			var t1=trid.find(".remove_button");
+			t1.removeAttr('disabled');
+			
+		});
+
+
+		
 
 		$('.book_name').on('click', function(){
 			var $this = $(this);
@@ -165,9 +277,10 @@
 					data: data,
 					success: function(data, textStatus, jqxhr){
 						$('.footer_status').html('Done..');
+						window.location.reload();
 					},
 					error: function(jqxhr, textStatus, errorThrown){
-						$('.footer_status').html('Error in removing..');
+						$('.footer_status').html('Error in toggling news..');
 					}
 				});
 			});
@@ -176,7 +289,6 @@
 		link_new_books();
 		add_new_books();
 		bind_remove_trend();
-
 
 	});
 </script>

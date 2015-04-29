@@ -65,4 +65,3 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
         };
 	}());
 }]);
-

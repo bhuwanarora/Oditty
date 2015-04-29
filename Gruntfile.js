@@ -100,10 +100,10 @@ module.exports = function(grunt) {
         // },
         ngtemplates:{
           app:{
-            src: 'app/assets/javascripts/angular/views/**/*.html',
+            src: 'app/assets/javascripts/angular/html/**/*.html',
             dest: 'app/assets/javascripts/min/angular/templates.js',
             options:{
-              module: 'websiteApp',
+              module: 'homeApp',
               htmlmin:{ 
                 removeComments: true,
                 removeCommentsFromCDATA: true,

@@ -236,7 +236,7 @@ md-toolbar{
 	left: 0px;
 	right: 0px;
 	height: 10px;
-	z-index: 2;
+	z-index: 99999;
 }
 
 .left_panel_container md-backdrop{
@@ -505,20 +505,24 @@ and (max-width : 800px){
 
 }
 
-/* iPads (portrait and landscape) ----------- */
-@media only screen
-and (min-device-width : 768px){
-	.book_scroller{
-		max-height: 70vh;
-	}
-/* Styles */
+
+@media only screen and (min-width: 768px) {
+    /* tablets and desktop */
+    .book_scroller{
+    	max-height: 70vh;
+    }
 }
 
-/* Smartphones (landscape) ----------- */
-@media only screen
-and (min-width : 321px) {
-/* Styles */
-	.book_scroller{
-		max-height: 180px;
-	}
+@media only screen and (max-width: 767px) {
+    /* phones */
+    .book_scroller{
+    	max-height: 180px;
+    }
+}
+
+@media only screen and (max-width: 767px) and (orientation: portrait) {
+    /* portrait phones */
+    .book_scroller{
+    	max-height: 180px;
+    }
 }

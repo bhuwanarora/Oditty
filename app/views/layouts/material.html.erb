@@ -222,12 +222,7 @@
                                         flex="85"
                                         ng-click="stop_propagation($event)"
                                         placeholder="Search books, topics and more...">
-                            <div layout="row"
-                                layout-align="space-between"
-                                md-highlight-text="item | search_item_type">
-                                <div ng-bind-html="item.name"></div>
-                                <b class="less_important" ng-bind-html="item | search_item_type"></b>
-                            </div>
+                            <div ng-bind-html="item.name"></div>
                         </md-autocomplete>
                     </div>
                     <div layout="row" layout-align="center center" flex="10" flex-md="15" flex-sm="20">

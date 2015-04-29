@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
     unless ($redis.get 'book_ids').present?
       $redis.set 'book_ids', ""
     end
+    
     session["init"] = true
     if session[:user_id] == Constant::Id::Admin
       @is_admin = true

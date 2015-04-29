@@ -54,14 +54,12 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$m
             _get_community_feed();
             var timeout_event = $timeout(function(){
                 _get_blog_feed();
-            }, 1000);
-        }
-
-        if(angular.isUndefined($rootScope.user)){
-            userService.get_user_details().then(function(data){
-                $rootScope.user = data;
+            }, 6000);
+            $scope.$on('destroy', function(){
+                $timeout.cancel(timeout_event);
             });
         }
-        
+
+
     }());
 }]);

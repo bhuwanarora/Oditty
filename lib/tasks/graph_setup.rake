@@ -10,6 +10,16 @@ namespace :graph do
   task :reset_news_link => :environment do
     include GraphHelper
     GraphHelper.reset_news_link
+
+  desc " create root blog node and fetch all blogs "
+  task :set_blogs => :environment do
+    include GraphHelper
+    GraphHelper.set_blogs
+  end
+
+  task :set_index => :environment do
+    include GraphHelper
+    GraphHelper.set_index
   end
 
   desc "set_genre_linked_list"

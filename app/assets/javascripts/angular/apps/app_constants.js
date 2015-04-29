@@ -174,7 +174,7 @@ var constants = {
 		},
 		"WebsiteUIConstants":{
 			"LeftPanelMinWidth": "16%",
-			"ServerError": "Something went wrong. Please refresh the page and try again.",
+			"ServerError": "Something went wrong. Our developers are working on this error.",
 			"Share": "Share your book reading journey...",
 			"BrowserIncompatible": "Please use latest version of Chrome for now...",
 			"Enter": 13,
