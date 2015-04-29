@@ -3,15 +3,15 @@ class FacebookDataEntryWorker
 	def self.perform(user_exists, params)
 		if params["email"].present?
 			if user_exists
-				clause = Api::V0::UserApi._update_user_with_email params
+				clause = User::Authenticate::FacebookAuthentication.new(params).update_user_with_email 
 			else
-				clause = Api::V0::UserApi._create_user_with_email params
+				clause = User::Authenticate::FacebookAuthentication.new(params).create_user_with_email 
 			end
 		else 
 			if user_exists
-				clause = Api::V0::UserApi._update_user_without_email params
+				clause = User::Authenticate::FacebookAuthentication.new(params).update_user_without_email 
 			else
-				clause = Api::V0::UserApi._create_user_without_email params
+				clause = User::Authenticate::FacebookAuthentication.new(params).create_user_without_email 
 			end
 		end
 		clause.execute
