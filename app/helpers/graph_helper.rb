@@ -77,10 +77,10 @@ module GraphHelper
 	def set_index
 		@neo ||= Neography::Rest.new
 		clause = "MATCH (book: Book) return max(ID(book)) as id"
-		maximum_node_id = clause.execute["id"]
+		maximum_node_id = 4938046
 		count = 0
 		clause = "MATCH (book: Book) return  min(ID(book))"
-		minimum_node_id = clause.execute["id"]
+		minimum_node_id = 384294
 		step_size = 1000
 
 		for count in (minimum_node_id...maximum_node_id).step(step_size)
