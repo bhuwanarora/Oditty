@@ -1,6 +1,6 @@
 module Constant::Id
 	if Rails.env.development?
-		Admin						= 0
+		Admin						= 3952772
 		BestTinyRead				= 395910 #"thelosthero"
 		BestSmallRead				= 390072 #"thelittleprince"
 		BestNormalRead				= 1171520 #"harrypotterandthephilosophersstone"

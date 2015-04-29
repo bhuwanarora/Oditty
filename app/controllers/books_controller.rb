@@ -320,7 +320,7 @@ class BooksController < ApplicationController
             # neo.execute_query clause
         end
 
-        clause = News.match_day_for(time) + " WITH news as t OPTIONAL MATCH (t)-[:HasCommunity]->(c:Community) RETURN t.name, COLLECT(c.name) AS communities, t.timestamp, ID(t) AS id_news, t.status as status, t.title, t.description,t.image_url, t.thumbnail_url, t.redirect_url, t.publisher, t.thumb ORDER BY t.status DESC "
+        clause = News.match_day_for(time) + " WITH news as t OPTIONAL MATCH (t)-[:HasCommunity]->(c:Community) RETURN t.name, COLLECT(c.name) AS communities, t.timestamp, ID(t) AS id_news, t.status as status, t.title, t.description,t.image_url, t.thumbnail_url, t.redirect_url, t.publisher, t.thumb ORDER BY t.status DESC, t.timestamp DESC "
         @trends = clause.execute
     end
 

@@ -80,7 +80,7 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
         }
 
         var _handle_user_details = function(){
-            if(angular.isUndefined($cookieStore.get('user'))){
+            if(angular.isUndefined($cookieStore.get('user')) || $cookieStore.get('user') == null){
                 userService.get_user_details().then(function(data){
                     $rootScope.user = data;
                     $cookieStore.put('user', data);

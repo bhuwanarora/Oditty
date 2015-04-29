@@ -38,4 +38,56 @@ module GraphHelper
 			end
 		end
 	end
+
+	def get_substring(start_string, end_string, clause)
+      	clause[/#{start_string}(.*?)#{end_string}/m, 1]
+	end
+
+
+	def concat_new_index
+
+		clause = "MERGE(b:Book{indexed_title:\"AWrinkleinTime\"}) SET b.name=\"A Wrinkle in Time\" "
+
+		title_start_string = "indexed_title:\\\""
+
+		title_end_string = "SET b.name="
+
+		author_start_string = "Author{name:\\\""
+
+		author_end_string = ", url:"
+
+
+
+		title_string = get_substring(title_start_string, title_end_string, clause)[0..-3]
+
+		author_name = get_substring(author_start_string, author_end_string, clause)
+
+		indexed_author_name = search_ready(author_name)
+
+		indexed_title_string = search_ready(title_string)
+
+		str = title_start_string[0..-3] + "\"" + title_string
+		p str
+		if !indexed_author_name.empty? and !indexed_title_string.empty?
+		      p clause.gsub(str, "unique_index:"+indexed_title_string + indexed_author_name + "\"}")
+		end
+
+	end
+
+	def set_index
+		@neo ||= Neography::Rest.new
+		clause = "MATCH (book: Book) return  max(ID(book))"
+		maximum_node_id = (@neo.execute_query clause)["data"][0][0]
+		count = 0
+		clause = "MATCH (book: Book) return  min(ID(book))"
+		minimum_node_id = (@neo.execute_query clause)["data"][0][0]
+		step_size = 1000
+
+		for count in (minimum_node_id...maximum_node_id).step(step_size)
+			clause = "MATCH (book: Book) where ID(book) >= #{count} AND ID(book) < #{count + step_size} WITH book WHERE (book.indexed_title IS NOT NULL OR book.indexed_title <> \"null\") AND (book.indexed_author_name IS NOT NULL OR book.indexed_author_name <> \"null\") SET book.unique_index = LOWER(book.indexed_title + SUBSTRING(book.indexed_author_name, 1)) RETURN book.unique_index"
+			unique_index = (@neo.execute_query clause)["data"]
+			p unique_index
+		end
+	end
+
 end

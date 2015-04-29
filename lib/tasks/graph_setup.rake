@@ -12,6 +12,11 @@ namespace :graph do
     GraphHelper.set_blogs
   end
 
+  task :set_index => :environment do
+    include GraphHelper
+    GraphHelper.set_index
+  end
+
   desc "set_genre_linked_list"
   task :set_genre_linked_list => :environment do
     include GraphHelper
