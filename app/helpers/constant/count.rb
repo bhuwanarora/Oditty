@@ -24,5 +24,5 @@ module Constant::Count
 	NewsShownInFeed				= 10
 	VerificationExpirySeconds	= 3600
 	SkipNews					= 10
-	SkipDays				= 10
+	SkipDays					= 1
 end

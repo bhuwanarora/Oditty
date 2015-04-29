@@ -156,16 +156,12 @@ class News < Neo
 		" news_id: ID(news) , news_url: news.url, view_count:news.view_count, title: news.title , description: news.description  , image_url: news.image_url, created_at:news.created_at "
 	end
 
-	def self.match_day_path length = Constant::Count::SkipDays-1
-		" MATCH path = (today:Day)<-[:NextDay*#{length}]-(last_days:Day) WITH path "
-	end
-
 	def self.match_day
 		" MATCH (day:Day)<-[:FromDay]-(:TimePeriod)<-[:TimeStamp]-(news:News) WITH day, news"
 	end
 
 	def self.match_time_period day_skip_count
-		" MATCH (year:Year{year:#{Time.now.year}})-[:Has_month]->(month:Month{month:#{Time.now.month}})-[:Has_day]->(:Day{day:#{Time.now.day}})<-[:NextDay*#{day_skip_count}]-(day:Day) WITH day AS today " + News.match_day_path + ", " + News.extract_unwind("day") + News.match_day
+		" MATCH (year:Year{year:#{Time.now.year}})-[:Has_month]->(month:Month{month:#{Time.now.month}})-[:Has_day]->(:Day{day:#{Time.now.day}})<-[:NextDay*#{day_skip_count}]-(day:Day) WITH day "  + News.match_day
 	end
 
 	def self.match_day_for time
@@ -181,6 +177,6 @@ class News < Neo
 	end
 
 	def self.get_feed skip_count, day_skip_count
-		News.match_time_period(day_skip_count) + " WHERE news.active = true WITH news " + News.order_desc + News.skip(skip_count) + News.limit(Constant::Count::NewsShownInFeed) + News.match_community + " WITH news," + News.collect_map({"communities" => Community.grouped_basic_info}) + News.return_group(News.basic_info,"communities") 
+		News.match_time_period(day_skip_count) + " WHERE news.status = true WITH news " + News.order_desc + News.skip(skip_count) + News.limit(Constant::Count::NewsShownInFeed) + News.match_community + " WITH news," + News.collect_map({"communities" => Community.grouped_basic_info}) + News.return_group(News.basic_info,"communities") 
 	end
 end
