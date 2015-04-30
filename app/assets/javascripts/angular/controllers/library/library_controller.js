@@ -131,6 +131,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
 
         var author_event = $timeout(function(){
             infinityService.get_books_from_favourite_author().then(function(data){
+                data = data[0];
                 $scope.books_from_favourite_author = [];
                 _set_data(data.books, $scope.books_from_favourite_author);
                 delete data.books;

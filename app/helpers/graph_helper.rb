@@ -84,7 +84,7 @@ module GraphHelper
 		maximum_node_id = 4938046
 		count = 0
 		clause = "MATCH (book: Book) return  min(ID(book))"
-		minimum_node_id = 2283294 #384294
+		minimum_node_id = 2578686 #2283294 #384294
 		step_size = 1000
 
 		for count in (minimum_node_id...maximum_node_id).step(step_size)
