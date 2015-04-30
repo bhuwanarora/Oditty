@@ -36,11 +36,11 @@ class News < Neo
 	end
 
 	def self.create news_metadata
-		clause  = News.merge(news_metadata) + News.merge_timestamp  + News.merge_region(news_metadata) + News.return_init + " ID(news) as news_id "
+		clause  = News.merge(news_metadata) + News.match_timestamp  + News.merge_region(news_metadata) + News.return_init + " ID(news) as news_id "
 		(clause.execute)[0]["news_id"]
 	end
 
-	def self.merge_timestamp
+	def self.match_timestamp
 		" MATCH (year:Year{year:#{Time.now.year}})-[:Has_month]->(month:Month{month:#{Time.now.month}})-[:Has_day]->(day:Day{day:#{Time.now.day}}) MERGE (time:TimePeriod{quarter:\"#{(Time.now.hour / 6) * 6}-#{((Time.now.hour / 6)+1) * 6}\"})-[:FromDay]->(day) MERGE (news)-[:TimeStamp]->(time) WITH news "
 	end
 
