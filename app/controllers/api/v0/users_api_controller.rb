@@ -29,14 +29,14 @@ module Api
 
 			def bookmark
 				id = params["id"]
-				type = params["type"]
+				type = params["type"].upcase
 				shelf = params["shelf"]
 				status = params["status"]
 				user_id = session[:user_id]
 				if status 
-					Api::V0::UserApi.add_bookmark(user_id, id, type.upcase, shelf).execute
+					Api::V0::UserApi.add_bookmark(user_id, id, type, shelf).execute
 				else
-					Api::V0::UserApi.remove_bookmark(user_id, id, type.upcase, shelf).execute
+					Api::V0::UserApi.remove_bookmark(user_id, id, type, shelf).execute
 				end
 				render :json => {:message => "Success"}, :status => 200
 			end

@@ -342,7 +342,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/room/_left_panel.html',
-    "<section><div ng-repeat=\"shelf in book_shelves\" class=\"side_padding shelf\"><div layout-padding class=\"shelf_name\">{{shelf.shelf}}</div><br><div ng-init=\"books = shelf.books\" ng-include src=\"'/assets/angular/html/shared/partials/spine.html'\"></div><div class=\"side_padding\" ng-if=\"(shelf.books.length == 1) || !books\"><md-button class=\"md-button-clear md-primary md-raised\" ng-click=\"add_books_to_shelf(shelf, $event)\">Add books to this shelf</md-button></div><md-divider></md-divider></div></section><style>.shelf{background-color:#f5f5f5;margin-top:10px;border-bottom:5px solid #DADADA}.shelf_name{font-size:1em;font-family:sans-serif}</style>"
+    "<section><div ng-repeat=\"shelf in book_shelves\" class=\"side_padding shelf\"><div layout-padding class=\"shelf_name\">{{shelf.shelf}}</div><br><div class=\"side_padding\" ng-if=\"(shelf.books.length == 1) || !books\"><md-button class=\"md-button-clear md-primary md-raised\" ng-click=\"add_books_to_shelf(shelf, $event)\">Add books to this shelf</md-button></div><div ng-init=\"books = shelf.books\" ng-include src=\"'/assets/angular/html/shared/partials/spine.html'\"></div><md-divider></md-divider></div></section><style>.shelf{background-color:#f5f5f5;margin-top:10px;border-bottom:5px solid #DADADA}.shelf_name{font-size:1em;font-family:sans-serif}</style>"
   );
 
 
