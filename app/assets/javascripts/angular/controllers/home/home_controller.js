@@ -16,15 +16,17 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$m
     };
 
     $scope.get_community_feed = function(){
-        $scope.info.loading = true;
-        userService.get_feed().then(function(data){
-            $scope.info.loading = false;
-            angular.forEach(data, function(value){
-                var json = {'label': 'news'};
-                value = angular.extend(value, json);
-                this.push(value);
-            }, $scope.feed);
-        });
+        if(!$scope.info.loading){
+            $scope.info.loading = true;
+            userService.get_feed().then(function(data){
+                $scope.info.loading = false;
+                angular.forEach(data, function(value){
+                    var json = {'label': 'news'};
+                    value = angular.extend(value, json);
+                    this.push(value);
+                }, $scope.feed);
+            });
+        }
     }
 
     var _init = (function(){

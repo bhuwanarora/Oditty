@@ -145,7 +145,7 @@ class Community < Neo
 	        	clause =  News.new(news_metadata["news_id"]).match + Community.merge(community) + ", news " + Community.set_importance + " WITH community, news " + News.merge_community
 				books.each do |book|
 					indexed_title = book.search_ready
-					clause += Book.search_by_legacy_indexed_title(indexed_title) + " , community " + Community.merge_book + " WITH community "
+					clause += Book.search_by_indexed_title(indexed_title) + " , community " + Community.merge_book + " WITH community "
 				end
 				clause+= News.return_init + Community.basic_info
 				clause.execute
