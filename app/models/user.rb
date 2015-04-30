@@ -218,8 +218,16 @@ class User < Neo
 		" MATCH (user:User{fb_id:" + id.to_s + "}) " + User::Info.return_init + User.basic_info
 	end
 
+	def self.merge_by_email email
+		" MERGE (user:User{email:\"" + email + "\"}) " + User::Info.return_init + User.basic_info
+	end
+	
+	def self.merge_by_fb_id id
+		" MERGE (user:User{fb_id:" + id.to_s + "}) " + User::Info.return_init + User.basic_info
+	end
+
 	def self.match_by_email email
-		" MATCH (user:User) WHERE user.email= \"" + email + "\" "
+		" MATCH (user:User) WHERE user.email= \"" + email + "\"  WITH user "
 	end
 
 	def self.get_by_email email
