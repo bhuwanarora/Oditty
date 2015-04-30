@@ -72,7 +72,7 @@ class Neo
 	end
 
 	def self.create_timestamp time, node_variable
-		"  MERGE (year:Year{year:#{time.to_date.year}}) MERGE (month:Month{month: #{time.to_date.month}})<-[:Has_month]-(year) MERGE (day:Day{day:#{time.to_date.day}})<-[:Has_day]-(month) MERGE (" + node_variable + ")-[:TimeStamp]->(day) WITH " + node_variable + " "
+		"  MATCH (year:Year{year:#{time.to_date.year}})-[:Has_month]->(month:Month{month:#{time.to_date.month}})-[:Has_day]->(day:Day{day:#{time.to_date.day}}) MERGE (" + node_variable + ")-[:TimeStamp]->(day) WITH " + node_variable + " "
 	end
 
 	def self.where_group(*params)
