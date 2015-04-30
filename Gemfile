@@ -122,3 +122,5 @@ gem 'colorize'
 # gem 'capistrano', group: :development
 gem 'open4'
 gem 'opengraph_parser'
+gem 'redis' # gem 'qless'
+gem 'sidekiq'

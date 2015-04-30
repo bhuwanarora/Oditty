@@ -1,6 +1,7 @@
 class FacebookDataEntryWorker
+	include Sidekiq::Worker
 	@queue = :facebook_data
-	def self.perform(user_exists, params)
+	def perform(user_exists, params)
 		if params["email"].present?
 			if user_exists
 				clause = User::Authenticate::FacebookAuthentication.new(params).update_user_with_email 

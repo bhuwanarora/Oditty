@@ -17,7 +17,7 @@ class User::Authenticate::FacebookAuthentication < User::Authenticate
 			user_exists = user.present?
 			user_id = user_exists ? user["id"] : User.merge_by_fb_id(@params["id"]).execute[0]["id"] 
 		end
-		Resque.enqueue(FacebookDataEntryWorker, user_exists, @params)
+		FacebookDataEntryWorker.perform_async(user_exists, @params)
 		puts user_id.to_s
 		user_id
 	end
