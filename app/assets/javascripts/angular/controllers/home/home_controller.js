@@ -16,7 +16,9 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$m
     };
 
     $scope.get_community_feed = function(){
+        $scope.info.loading = true;
         userService.get_feed().then(function(data){
+            $scope.info.loading = false;
             angular.forEach(data, function(value){
                 var json = {'label': 'news'};
                 value = angular.extend(value, json);
@@ -31,7 +33,7 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$m
         var _get_blog_feed = function(){
             userService.get_last_blog().then(function(data){
                 data[0].label = 'blog';
-                $scope.feed = $scope.feed.concat(data);
+                $scope.feed.push(data[0]);
             });
         }
 

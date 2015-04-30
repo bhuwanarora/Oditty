@@ -7,6 +7,10 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
         });
     };
 
+    $scope.follow_community = function(){
+        communityService.follow($scope.active_tag.id, $scope.active_tag.status);
+    }
+
     $scope.show_book_dialog = function(book, event){
         $rootScope.active_book = book;
         $rootScope.active_book.show_info_only = true;

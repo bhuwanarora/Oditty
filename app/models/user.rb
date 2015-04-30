@@ -218,8 +218,16 @@ class User < Neo
 		" MATCH (user:User{fb_id:" + id.to_s + "}) " + User::Info.return_init + User.basic_info
 	end
 
+	def self.merge_by_email email
+		" MERGE (user:User{email:\"" + email + "\"}) " + User::Info.return_init + User.basic_info
+	end
+	
+	def self.merge_by_fb_id id
+		" MERGE (user:User{fb_id:" + id.to_s + "}) " + User::Info.return_init + User.basic_info
+	end
+
 	def self.match_by_email email
-		" MATCH (user:User) WHERE user.email= \"" + email + "\" "
+		" MATCH (user:User) WHERE user.email= \"" + email + "\"  WITH user "
 	end
 
 	def self.get_by_email email
@@ -246,23 +254,23 @@ class User < Neo
 		User.match_by_email(email) + User::Info.set_verification_token(verification_token) + User::Info.set_verification_time + User.return_init + User.basic_info
 	end
 
-	def match_followers
-		match + " WITH user AS friend " + UsersUser.match 
+	def match_followers skip
+		match + " WITH user AS friend " + UsersUser.match + "WITH user " + User.skip(skip) + User.limit(10)
 	end
 
 	def self.get_visited_books
 		Bookmark::Type::Visited.match("book") + " WITH DISTINCT user, book " + Book.order_desc + " WITH user, " + Book.collect_map("books" => Book.grouped_basic_info ) + " WITH user, books[0..3] AS books "
 	end
 
-	def get_followers
-		match_followers + User.get_visited_books + User.return_group(User.basic_info,"books")
+	def get_followers skip
+		match_followers(skip) + User.get_visited_books + User.return_group(User.basic_info,"books")
 	end
 
-	def match_users_followed
-		match + UsersUser.match + " WITH friend AS user "  
+	def match_users_followed skip
+		match + UsersUser.match + " WITH friend AS user " + User.skip(skip) + User.limit(10)
 	end
 
-	def get_users_followed
-		match_users_followed + User.get_visited_books + User.return_group(User.basic_info,"books") 
+	def get_users_followed skip
+		match_users_followed(skip) + User.get_visited_books + User.return_group(User.basic_info,"books")
 	end
 end

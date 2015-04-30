@@ -156,7 +156,7 @@ module Api
 			end
 
 			def fb
-				user_id = UserApi.handle_facebook_user(params, session)
+				user_id = Api::V0::UserApi.handle_facebook_user(params[:users_api])
 				session[:user_id] = user_id
 				if user_id.present?
 					render :json => {:message => "Success"}, :status => 200
@@ -341,13 +341,15 @@ module Api
 
 			def get_followers
 				user_id = session[:user_id]
-				info = Api::V0::UserApi.get_followers(user_id).execute
+				skip_count = params[:skip] || 0
+				info = Api::V0::UserApi.get_followers(user_id, skip_count).execute
 				render :json => info, :status => 200
 			end
 
 			def get_users_followed
 				user_id = session[:user_id]
-				info = Api::V0::UserApi.get_users_followed(user_id).execute
+				skip_count = params[:skip] || 0
+				info = Api::V0::UserApi.get_users_followed(user_id, skip_count).execute
 				render :json => info, :status => 200
 			end
 

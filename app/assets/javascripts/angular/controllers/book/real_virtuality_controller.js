@@ -6,7 +6,9 @@ homeApp.controller('realVirtualityController', ["$scope", "$rootScope", "bookSer
 
     var _init = (function(){
         var book_id = $rootScope.active_book.book_id;
+        $scope.book_loading = true;
         bookService.get_real_news(book_id).then(function(data){
+            $scope.book_loading = false;
             $scope.communities = data;
             $scope.active_community = data[0];
         });
