@@ -410,37 +410,8 @@ module Api
 				end
 			end
 
-			def self.handle_facebook_user(params, session)
-				params = params[:users_api]
-				puts params.to_s.red
-				
-				if params[:email]
-					puts "email exists".green
-					clause = "MATCH (user:User{email:\""+params[:email]+"\"}) RETURN ID(user) AS user_id"
-					user_id = clause.execute[0]
-					user_exists = user_id.present?
-					if user_exists
-						clause = self._update_user_with_email params
-					else
-						clause = self._create_user_with_email params
-					end
-				else
-					puts "email does not exits".green
-					clause = "MATCH (user:User{fb_id:"+params[:id]+"}) RETURN ID(user) AS user_id"
-					user_id = clause.execute[0]
-					user_exists = user_id.present?
-					if user_exists
-						clause = self._update_user_without_email params
-					else
-						clause = self._create_user_without_email params
-					end
-				end
-				user_id = clause.execute[0]["user_id"]
-				puts "fb execute_query done...".green
-				puts "FB LOGIN USER_ID #{user_id.to_s.red}"
-				session[:user_id] = user_id
-				puts "session #{session[:user_id]}".red
-				user_id
+			def self.handle_facebook_user(params)
+				User::Authenticate::FacebookAuthentication.new(params).handle
 			end
 
 			def self.authenticate(params)
@@ -463,12 +434,12 @@ module Api
 				info = {"reading_count_list" => BookRange.get_values}
 			end
 
-			def self.get_followers user_id
-				User.new(user_id).get_followers
+			def self.get_followers(user_id, skip_count)
+				User.new(user_id).get_followers(skip_count)
 			end
 
-			def self.get_users_followed user_id
-				User.new(user_id).get_users_followed
+			def self.get_users_followed(user_id, skip_count)
+				User.new(user_id).get_users_followed(skip_count)
 			end
 
 			def self.handle_google_user params
