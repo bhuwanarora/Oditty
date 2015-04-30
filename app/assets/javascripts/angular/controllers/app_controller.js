@@ -68,7 +68,7 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
         $scope.info.show_share = false;
         $scope.data = {"selectedIndex" : 0};
         var _handle_labels = function(){
-            if(angular.isUndefined($cookieStore.get('labels'))){
+            if(angular.isUndefined($cookieStore.get('labels')) || $cookieStore.get('labels') == null || $cookieStore.get('labels').length == 0){
                 shelfService.get_all_shelves().then(function(data){
                     $rootScope.labels = data;
                     $cookieStore.put('labels', data);
