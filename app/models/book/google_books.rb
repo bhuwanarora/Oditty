@@ -8,6 +8,7 @@ class Book::GoogleBooks < Book
 			books_info.each { |book_info| books_title << book_info["volumeInfo"]["title"] }
 		rescue Exception => e
 			puts e.to_s.red
+			File.open("log/google_book_api.log", 'a') { |file| file.write("#{e} at #{Time.now} while processing #{query}")}
 		end
 		puts books_title.to_s.green
 		books_title.uniq.compact
