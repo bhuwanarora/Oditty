@@ -88,7 +88,7 @@ class Community < Neo
 		if books.present?
 			books.each do |book|
 				book = book.search_ready
-				book_info = (Book.get_by_legacy_indexed_title(book).execute)[0] 
+				book_info = (Book.get_by_indexed_title(book).execute)[0] 
 				if book_info.present?  
 					community_books[community] << book
 				end	
