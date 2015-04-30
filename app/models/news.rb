@@ -161,7 +161,12 @@ class News < Neo
 	end
 
 	def self.match_time_period day_skip_count
-		" MATCH (year:Year{year:#{Time.now.year}})-[:Has_month]->(month:Month{month:#{Time.now.month}})-[:Has_day]->(:Day{day:#{Time.now.day}})<-[:NextDay*#{day_skip_count}]-(day:Day) WITH day "  + News.match_day
+		if day_skip_count == 0
+			clause = " MATCH (year:Year{year:#{Time.now.year}})-[:Has_month]->(month:Month{month:#{Time.now.month}})-[:Has_day]->(day:Day{day:#{Time.now.day}}) WITH day " + News.match_day
+		else
+			clause = " MATCH (year:Year{year:#{Time.now.year}})-[:Has_month]->(month:Month{month:#{Time.now.month}})-[:Has_day]->(:Day{day:#{Time.now.day}})<-[:NextDay*#{day_skip_count}]-(day:Day) WITH day "  + News.match_day
+		end
+		clause
 	end
 
 	def self.match_day_for time
