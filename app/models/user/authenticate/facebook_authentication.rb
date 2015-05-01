@@ -17,25 +17,25 @@ class User::Authenticate::FacebookAuthentication < User::Authenticate
 			user_exists = user.present?
 			user_id = user_exists ? user["id"] : User.merge_by_fb_id(@params["id"]).execute[0]["id"] 
 		end
-		FacebookDataEntryWorker.perform_async(user_exists, @params)
+		FacebookDataEntryWorker.perform_async(user_exists, @params, user_id)
 		puts user_id.to_s
 		user_id
 	end
 
-	def update_user_without_email
-		User::FacebookUser.new(@params).merge + ( @params["thumb"].present? ? User::Info.set_thumb(@params["thumb"]) : " " ) + User::FacebookUser.set_name(@params["name"]) + User::Info.set_last_login + fb_set_clause 
+	def update_user_without_email user_id
+		User.new(user_id).match + User::FacebookUser.create_facebook_user + ( @params["thumb"].present? ? User::Info.set_thumb(@params["thumb"]) : " " ) + User::FacebookUser.set_name(@params["name"]) + User::Info.set_last_login + fb_set_clause 
 	end
 
-	def create_user_without_email 
-		User::FacebookUser.new(@params).create + User::Feed.create_first + Label.match_primary + ", user " + User.link_primary_labels + User::FacebookUser.create_facebook_user + ( @params["thumb"].present? ? User::Info.set_thumb(@params["thumb"]) : " " ) + User::Info.set_last_login + fb_set_clause 
+	def create_user_without_email user_id 
+		User.new(user_id).match + User::FacebookUser.new(@params).add_info + User::Feed.create_first + Label.match_primary + ", user " + User.link_primary_labels + User::FacebookUser.create_facebook_user + ( @params["thumb"].present? ? User::Info.set_thumb(@params["thumb"]) : " " ) + User::Info.set_last_login + fb_set_clause 
 	end
 
-	def update_user_with_email 
-		update_user_without_email + User::Info.set_email(@params["email"])
+	def update_user_with_email user_id 
+		update_user_without_email(user_id) + User::Info.set_email(@params["email"])
 	end
 
-	def create_user_with_email
-		create_user_without_email + User::Info.set_email(@params["email"])
+	def create_user_with_email user_id
+		create_user_without_email(user_id) + User::Info.set_email(@params["email"])
 	end
 
 	def fb_set_clause 

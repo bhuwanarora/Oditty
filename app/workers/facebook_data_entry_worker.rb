@@ -1,18 +1,22 @@
 class FacebookDataEntryWorker
 	include Sidekiq::Worker
-	@queue = :facebook_data
-	def perform(user_exists, params)
+	def perform(user_exists, params, user_id)
 		if params["email"].present?
+			puts " email : #{params["email"]}"
 			if user_exists
-				clause = User::Authenticate::FacebookAuthentication.new(params).update_user_with_email 
+				puts " user_exists"
+				clause = User::Authenticate::FacebookAuthentication.new(params).update_user_with_email user_id 
 			else
-				clause = User::Authenticate::FacebookAuthentication.new(params).create_user_with_email 
+				puts " user does not exists"
+				clause = User::Authenticate::FacebookAuthentication.new(params).create_user_with_email user_id 
 			end
 		else 
 			if user_exists
-				clause = User::Authenticate::FacebookAuthentication.new(params).update_user_without_email 
+				puts " user_exists"
+				clause = User::Authenticate::FacebookAuthentication.new(params).update_user_without_email user_id
 			else
-				clause = User::Authenticate::FacebookAuthentication.new(params).create_user_without_email 
+				puts " user does not exists"
+				clause = User::Authenticate::FacebookAuthentication.new(params).create_user_without_email user_id
 			end
 		end
 		clause.execute
