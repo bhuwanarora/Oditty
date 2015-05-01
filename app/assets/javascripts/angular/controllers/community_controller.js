@@ -60,6 +60,7 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
                                 "id": $scope.active_tag.id, 
                                 "image_url": $scope.active_tag.image_url};
             $scope.newsTags.push(most_important_tag);
+            data.other_tags.shift();
             $scope.newsTags = $scope.newsTags.concat(data.other_tags);
             angular.forEach($scope.newsTags, function(value){
                 value.view_count = Math.floor((Math.random() * 100) + 50);;

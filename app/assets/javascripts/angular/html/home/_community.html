@@ -14,7 +14,7 @@
     <md-card-content class="content">
         <h3><a ng-click="goto_community_page(community_feed.id)">{{community_feed.title}}</a></h3>
         <div class="less_important">News, {{community_feed.created_at | timestamp | date:'dd MMM'}}</div>
-        <div>{{community_feed.description}}</div>
+        <div ng-bind-html="community_feed.description"></div>
     </md-card-content>
     <md-card-content class="circles clear" layout="row">
         <img flex class="community_feed_image" ng-repeat="feed in community_feed.communities"
