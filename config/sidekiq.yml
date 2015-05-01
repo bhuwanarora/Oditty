@@ -1,4 +1,10 @@
-verbose: false
-pidfile: ./tmp/pids/sidekiq.pid
-logfile: ./log/sidekiq.log
-concurrency:  25
+logfile: log/sidekiq.log
+pidfile: tmp/pids/sidekiq.pid
+concurrency: 25
+staging:
+  :concurrency: 10
+production:
+  :concurrency: 20
+queues:
+  - default
+  - [facebook_user, 2]concurrency:  25

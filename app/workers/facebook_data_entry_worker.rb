@@ -1,5 +1,6 @@
 class FacebookDataEntryWorker
 	include Sidekiq::Worker
+	sidekiq_options :queue => :facebook_user
 	def perform(user_exists, params, user_id)
 		if params["email"].present?
 			puts " email : #{params["email"]}"
