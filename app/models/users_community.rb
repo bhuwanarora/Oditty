@@ -8,19 +8,28 @@ class UsersCommunity < Neo
 	end
 
 	def create
-		" MERGE (user)-[follows:Follows]->(follow_node:FollowNode{created_at:" + Time.now.to_i.to_s + ", updated_at:" + Time.now.to_i.to_s + ", user_id:" + @user_id.to_s + ", community_id: " + @community_id.to_s + "})-[:OfCommunity]->(community) WITH user, follow_node "
+		" MERGE (user)-[follows:Follows]->(follow_node:FollowNode{created_at:" + Time.now.to_i.to_s + ", updated_at:" + Time.now.to_i.to_s + ", user_id:" + @user_id.to_s + ", community_id: " + @community_id.to_s + "})-[:OfCommunity]->(community) WITH user, follow_node, community, follows "
 	end
 
 	def remove
-		" MATCH (user)-[follows:Follows]->(follow_node:FollowNode)-[of_community:OfCommunity]->(community) DELETE follows, of_community OPTIONAL MATCH (n1)-[r1:FeedNext]->(follow_node)-[r2:FeedNext]->(n2) DELETE r1, r2 CREATE UNIQUE (n1)-[:FeedNext]->(n2) WITH follow_node "
+		" MATCH (user)-[follows:Follows]->(follow_node:FollowNode)-[of_community:OfCommunity]->(community) DELETE follows, of_community WITH user, follow_node, community MATCH (n1)-[r1:FeedNext]->(follow_node)-[r2:FeedNext]->(n2) OPTIONAL MATCH (follow_node)-[r]-() DELETE r DELETE r1, r2, r CREATE UNIQUE (n1)-[:FeedNext]->(n2) WITH follow_node  "
 	end
 
 	def follow
-		@user.match + @community.match + ", user " + create + Community.set_follow_count + Community::Feed.create("follow_node") + User::Feed.create("follow_node")
+		match + Community.set_follow_count + create + User::Feed.new(@user_id).create("follow_node") + UsersCommunity.return_group(UsersCommunity.basic_info)
+	end
+
+	def unfollow
+		operation = "-"
+		match + Community.set_follow_count(operation) + " WITH user, community " + remove + " , user" + User::Feed.new(@user_id).delete_feed("follow_node") + " DELETE follow_node "
 	end
 
 	def set_view_count
 		" SET community.view_count = COALESCE(community.view_count,0) + 1 "
+	end
+
+	def self.delete
+		UsersCommunity.optional_match + " OPTIONAL MATCH (follow_node)-[relation]-() DELETE relation "
 	end
 
 	# def comment
@@ -40,14 +49,6 @@ class UsersCommunity < Neo
 	end
 
 	def match
-		" MATCH (user:User), (community:Community) WHERE ID(user)=" + @user_id + " AND ID(community)=" + @community_id + " WITH user, community "
-	end
-
-	def follow
-		match + create + User::Feed.new(@user_id).create("follow_node")
-	end
-
-	def unfollow
-		match + remove + User::Feed.new(@user_id).delete_feed("follow_node") + " DELETE follow_node "
+		" MATCH (user:User), (community:Community) WHERE ID(user)= #{@user_id}  AND ID(community)=#{ @community_id} WITH user, community "
 	end
 end

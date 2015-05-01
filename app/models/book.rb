@@ -91,7 +91,7 @@ class Book < Neo
 	end
 
 	def self.order_desc
-		" ORDER BY book.total_weight DESC "
+		" ORDER BY TOINT(book.total_weight) DESC "
 	end
 
 	def self.get_complete_info

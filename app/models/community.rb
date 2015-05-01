@@ -67,8 +67,8 @@ class Community < Neo
 
 
 
-	def self.set_follow_count
-		" SET community.follow_count = COALESCE(community.follow_count,0) + 1 "
+	def self.set_follow_count operation = "+"
+		" SET community.follow_count = COALESCE(community.follow_count,0) #{operation} 1 "
 	end
 
 	def self.order_desc
