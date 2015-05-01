@@ -117,13 +117,19 @@ class Community < Neo
 			communities = Community.handle_communities response
 			puts communities.to_s.yellow
 
-			communities.each do |community|
-				community_books = Community.fetch_books(community)
-				puts community_books.to_s.green
+			skip = 10000
+			timer = communities.length * skip
+			for i in 0..timer do
+				if (i % skip) == 0
+					community_books = Community.fetch_books(communities[i/skip])
+					puts community_books.to_s.green
 
-				if Community.has_required_book_count(community_books[community])
-					communities_books << community_books
+					if Community.has_required_book_count(community_books[communities[i/skip]])
+						communities_books << community_books
+					end
 				end
+				# communities.each do |community|
+				# end
 			end
 
 			unless communities_books.blank?	
