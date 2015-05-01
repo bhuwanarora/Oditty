@@ -40,8 +40,8 @@ homeApp.controller('roomController', ["$scope", "$rootScope", "$timeout", 'roomS
 				$scope.visited_books = [];
 			}
 			_set_data(data, $scope.visited_books);
+			$scope.info.loading = false;
 		});
-		$scope.info.loading = false;
 	}
 
 	var _get_random_init = function(min, max){

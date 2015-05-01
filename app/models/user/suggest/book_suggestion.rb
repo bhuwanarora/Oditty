@@ -17,7 +17,7 @@ class User::Suggest::BookSuggestion < User::Suggest
 	end
 
 	def for_most_bookmarked_era
-		Era.most_popular(@user_id) + " WITH user, era  RETURN era.basic_info " #+ Era.match_books + " , user " + Bookmark::Node::BookLabel.match_not + " WITH user, book, era " + ::Book.order_desc + " WITH user, era, #{User::Suggest::BookSuggestion.collect_map("books" => Book.grouped_basic_info)} WITH #{User::Suggest::BookSuggestion.collect_map("info" => Era.grouped_basic_info)}, books[0..#{Constant::Count::BookRecommendation}] AS books " + User::Suggest::BookSuggestion.return_group("info", "books")  
+		Era.most_popular(@user_id) + " WITH user, era " + Era.match_books + " , user " + Bookmark::Node::BookLabel.match_not + " WITH user, book, era " + ::Book.order_desc + " WITH user, era, #{User::Suggest::BookSuggestion.collect_map("books" => Book.grouped_basic_info)} WITH #{User::Suggest::BookSuggestion.collect_map("info" => Era.grouped_basic_info)}, books[0..#{Constant::Count::BookRecommendation}] AS books " + User::Suggest::BookSuggestion.return_group("info", "books")  
 
 	end
 

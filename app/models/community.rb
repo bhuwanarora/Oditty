@@ -117,29 +117,31 @@ class Community < Neo
 			communities = Community.handle_communities response
 			puts communities.to_s.yellow
 
-			communities.each do |community|
-				community_books = Community.fetch_books(community)
-				puts community_books.to_s.green
+			skip = 10000
+			timer = communities.length * skip
+			for i in 0..timer do
+				if (i % skip) == 0
+					community_books = Community.fetch_books(communities[i/skip])
+					puts community_books.to_s.green
 
-				if Community.has_required_book_count(community_books[community])
-					communities_books << community_books
+					if Community.has_required_book_count(community_books[communities[i/skip]])
+						communities_books << community_books
+					end
 				end
+				# communities.each do |community|
+				# end
 			end
 
 			unless communities_books.blank?	
 				news_metadata["news_id"] = News.create news_metadata
-				
-				if News.news_already_present(news_metadata["news_id"]) 
-					News.map_topics(news_metadata["news_id"], response["topics"]) 				
-					Community.map_books(communities_books, news_metadata)
-				end
-
+				News.map_topics(news_metadata["news_id"], response["topics"]) 				
+				Community.map_books(communities_books, news_metadata)
 			end
 		end
 	end 
 
 	def self.merge community
-		" MERGE (community:Community{name: \"" + community + "\"}) ON CREATE SET community.status = 1, community.created_at=" + Time.now.to_i.to_s + ", community.updated_at=" + Time.now.to_i.to_s + ", community.follow_count = 0, community.image_url = \"" + Community::CommunityImage.new(community).get_image + "\" WITH community "  
+		" MERGE (community:Community{indexed_community_name: \"" + community.search_ready + "\"}) ON CREATE SET community.name = \"" + community + "\", community.status = 1, community.created_at=" + Time.now.to_i.to_s + ", community.updated_at=" + Time.now.to_i.to_s + ", community.follow_count = 0, community.image_url = \"" + Community::CommunityImage.new(community).get_image + "\" WITH community "  
 	end
 
 
@@ -151,14 +153,14 @@ class Community < Neo
 					indexed_title = book.search_ready
 					clause += Book.search_by_indexed_title(indexed_title) + " , community " + Community.merge_book + " WITH community "
 				end
-				clause+= News.return_init + Community.basic_info
+				clause += News.return_init + Community.basic_info
 				clause.execute
 			end
 		end
 	end
 
 	def self.merge_book
-		" MERGE (community)-[:RelatedBooks]->(book) WITH book ,community "
+		" MERGE (community)-[:RelatedBooks]->(book) WITH book, community "
 	end
 
 	def self.handle_communities response

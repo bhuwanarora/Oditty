@@ -13,7 +13,7 @@ class User::Authenticate::SignIn < User::Authenticate
 			user_authenticated = user["password"] == @params[:password] && user["verified"]
 			if user_authenticated
 				authenticate = true
-				clause = User.new(user["id"]).match + User::Info.set_last_login(@params[:email])
+				clause = User.new(user["id"]).match + User::Info.set_last_login
 				clause.execute
 				info = {:profile_status => 0, :user_id => user["id"]}
 				message = Constant::StatusMessage::LoginSuccess

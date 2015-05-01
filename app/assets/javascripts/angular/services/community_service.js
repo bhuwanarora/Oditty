@@ -36,4 +36,8 @@ homeApp.service('communityService', ["$http", "$q", "$rootScope", "WebsiteUICons
     this.get_detailed_community_info = function(id){
         return _deferred_request('/api/v0/detailed_community_info?id='+id);
     }
+
+    this.follow = function(id, status){
+        return _deferred_request('/api/v0/follow_community?id='+id+"&status="+status);
+    }
 }]);

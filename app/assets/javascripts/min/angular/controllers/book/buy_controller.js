@@ -1,1 +1,1 @@
-homeApp.controller("buyController",["$scope","$rootScope","bookService",function(a,b,c){!function(){var d=b.active_book.id||b.active_book.book_id;c.get_borrow_users(d).then(function(b){a.borrow_users=b})}()}]);
+homeApp.controller("buyController",["$scope","$rootScope","bookService",function(a,b,c){!function(){var d=b.active_book.id||b.active_book.book_id;a.book_loading=!0,c.get_borrow_users(d).then(function(b){a.borrow_users=b,a.book_loading=!1})}()}]);

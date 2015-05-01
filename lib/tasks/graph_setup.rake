@@ -6,6 +6,12 @@ namespace :graph do
   #   Neo4jHelper.delete_labels
   # end
 
+  desc "reset_news_link"
+  task :reset_news_link => :environment do
+    include GraphHelper
+    GraphHelper.reset_news_link
+  end
+
   desc " create root blog node and fetch all blogs "
   task :set_blogs => :environment do
     include GraphHelper
@@ -22,6 +28,13 @@ namespace :graph do
     include GraphHelper
     GraphHelper.set_genre_linked_list
   end
+
+  desc "set_day_linked_list"
+  task :set_day_linked_list => :environment do
+    include GraphHelper
+    GraphHelper.set_day_linked_list
+  end
+
 
   task :add_labels_to_existing_user => :environment do
     include Neo4jHelper

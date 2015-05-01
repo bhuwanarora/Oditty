@@ -1,7 +1,12 @@
-<md-content layout="row" layout-wrap ng-controller="homeController">
+<md-content layout="row" layout-wrap ng-controller="homeController" check-scroll-bottom="get_community_feed()">
     <div flex="20" hide-sm flex-md="10"></div>
     <div flex="60" flex-sm="100" flex-md="80">
         <div ng-include src="'/assets/angular/html/home/show.html'"></div>
     </div>
     <div flex="20" hide-sm flex-md="10"></div>
 </md-content>
+<style>
+	a:hover{
+		text-decoration: underline!important;
+	}
+</style>

@@ -24,7 +24,6 @@ ReadersDoor::Application.routes.draw do
             match 'metadata'                               => 'website_api#get_metadata',                     :via => [:put, :get, :post]
             match 'basic_community_info'                   => 'website_api#basic_community_info',             :via => [:put, :get, :post]      
             match 'visited_news'                           => 'website_api#create_visited_news',              :via => [:post]  
-            match 'book_news'                              => 'website_api#book_news',                        :via => [:put, :get, :post]      
         end
     end
 end

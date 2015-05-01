@@ -4,90 +4,96 @@ class UsersController < ApplicationController
 
   # GET /users
   # GET /users.json
-  def index
-    neo = Neography::Rest.new
-    clause = "MATCH (u:User) OPTIONAL MATCH (u)-[:FacebookAuth]->(f) OPTIONAL MATCH (u)-[:Likes]->(l) RETURN DISTINCT(u), f, COLLECT(l.name), ID(u)"
-    
-    @users = clause.execute
-    @users = []
-    render :index
-  end
-
-  def activate
-    begin
-      neo = Neography::Rest.new
-      if params[:id].present?
-        if params[:active].present?
-          clause = "MATCH (u:User) WHERE ID(u)="+params[:id].to_s+" SET u.active=true "
+    def index
+        neo = Neography::Rest.new
+        if params[:t]
+            time = Time.strptime(params[:t], "%Y-%m-%d")
+            @timestamp = params[:t]
         else
-          clause = "MATCH (u:User) WHERE ID(u)="+params[:id].to_s+" SET u.active=false "
+            time = Time.new
+            @timestamp = "#{time.year}-#{time.month}-#{time.day}"
         end
-
-        clause.execute
-      end
-
-      clause = "MATCH (u:User) RETURN u, ID(u)"
-      @users = clause.execute
-      render :json => {:message => "Success"}, :status => 200
-    rescue Exception => e
-      render :json => {:message => e.to_s}, :status => 500
+        clause = " MATCH (user:User) WHERE user.last_login = \"" + @timestamp + "\" OPTIONAL MATCH (user)-[:FacebookAuth]->(facebook_auth) WITH DISTINCT(user) as user, facebook_auth " + User.return_group(User.basic_info, "user.email as email ", "facebook_auth")
+    
+        @users = clause.execute
+        render :index
     end
-  end
 
-  def clear_data
-    begin
-      neo = Neography::Rest.new
+    def activate
+        begin
+            neo = Neography::Rest.new
+            if params[:id].present?
+                if params[:active].present?
+                    clause = "MATCH (u:User) WHERE ID(u)="+params[:id].to_s+" SET u.active=true "
+                else
+                    clause = "MATCH (u:User) WHERE ID(u)="+params[:id].to_s+" SET u.active=false "
+                end
 
-      clause = "MATCH (a)-[r:FeedNext]->(b) WHERE a <> b DELETE r"
-      puts "Feednext...".green
-      clause.execute
+                clause.execute
+            end
 
-      clause = "MATCH (a)-[r:Ego]->(b) DELETE r"
-      puts "Ego...".green
-      clause.execute
-
-      clause = "MATCH (a)-[r:BookFeed]->(b) WHERE a <> b DELETE r"
-      puts "Bookfeed...".green
-      clause.execute
-
-      clause = "MATCH (:User)-[r1:RatingAction]->(r2:RatingNode)-[r3:Rate]->(:Book) DELETE r1, r2, r3"
-      puts "Rating...".green
-      clause.execute    
-
-      clause = "MATCH (:User)-[r1:TimingAction]->(r2:TimingNode)-[r3:Timer]->(:Book) DELETE r1, r2, r3"
-      puts "Timing...".green
-      clause.execute
-
-      clause = "MATCH (:User)-[r1:Labelled]-(r2:Label)-[r3:BookmarkedOn]->(r4:BookmarkNode)-[r5:BookmarkAction]-(:Book) DELETE r3, r4, r5"
-      puts "Bookmark...".green
-      clause.execute
-
-      clause = "MATCH (:User)-[r1:MarkAsReadAction]->(r2:MarkAsReadNode)-[r3:MarkAsRead]->(:Book) DELETE r1, r2, r3"
-      puts "MarkAsRead...".green
-      clause.execute
-
-      clause = "MATCH (:User)-[r1:Commented]->(r2:Tweet)-[r3:CommentedOn]->(:Book) DELETE r1, r2, r3"
-      puts "Comment...".green
-      clause.execute
-
-      clause = "MATCH (:User)-[r1:RecommendedTo]->()-[r2:RecommendedAction]->(r3:RecommendNode)-[r4:Recommended]->() DELETE r1, r2, r3, r4"
-      puts "Recommended...".green
-      clause.execute
-
-      # clause = " MATCH (:User)-[r1:DataEdit]->(r2:ThumbRequest)-[r3:DataEditRequest]->(:Book) DELETE r1, r2, r3"
-
-      clause = "MATCH  (b:Book) CREATE UNIQUE (b)-[:BookFeed]->(b)"
-      puts "Create bookfeed...".green
-      clause.execute
-
-      clause = "MATCH (u:User) CREATE UNIQUE (u)-[:FeedNext]->(u) CREATE UNIQUE (u)-[:Ego{user_id:ID(u)}]->(u) SET u.total_count = 0, u.bookmark_count = 0, u.book_read_count = 0, u.rating_count = 0"
-      puts "handle user...".green
-      clause.execute
-      render :json => {:message => "Success"}, :status => 200
-    rescue Exception => e
-      render :json => {:message => e.to_s}, :status => 500
+            clause = "MATCH (u:User) RETURN u, ID(u)"
+            @users = clause.execute
+            render :json => {:message => "Success"}, :status => 200
+        rescue Exception => e
+            render :json => {:message => e.to_s}, :status => 500
+        end
     end
-  end
+
+    def clear_data
+        begin
+            neo = Neography::Rest.new
+
+            clause = "MATCH (a)-[r:FeedNext]->(b) WHERE a <> b DELETE r"
+            puts "Feednext...".green
+            clause.execute
+
+            clause = "MATCH (a)-[r:Ego]->(b) DELETE r"
+            puts "Ego...".green
+            clause.execute
+
+            clause = "MATCH (a)-[r:BookFeed]->(b) WHERE a <> b DELETE r"
+            puts "Bookfeed...".green
+            clause.execute
+
+            clause = "MATCH (:User)-[r1:RatingAction]->(r2:RatingNode)-[r3:Rate]->(:Book) DELETE r1, r2, r3"
+            puts "Rating...".green
+            clause.execute    
+
+            clause = "MATCH (:User)-[r1:TimingAction]->(r2:TimingNode)-[r3:Timer]->(:Book) DELETE r1, r2, r3"
+            puts "Timing...".green
+            clause.execute
+
+            clause = "MATCH (:User)-[r1:Labelled]-(r2:Label)-[r3:BookmarkedOn]->(r4:BookmarkNode)-[r5:BookmarkAction]-(:Book) DELETE r3, r4, r5"
+            puts "Bookmark...".green
+            clause.execute
+
+            clause = "MATCH (:User)-[r1:MarkAsReadAction]->(r2:MarkAsReadNode)-[r3:MarkAsRead]->(:Book) DELETE r1, r2, r3"
+            puts "MarkAsRead...".green
+            clause.execute
+
+            clause = "MATCH (:User)-[r1:Commented]->(r2:Tweet)-[r3:CommentedOn]->(:Book) DELETE r1, r2, r3"
+            puts "Comment...".green
+            clause.execute
+
+            clause = "MATCH (:User)-[r1:RecommendedTo]->()-[r2:RecommendedAction]->(r3:RecommendNode)-[r4:Recommended]->() DELETE r1, r2, r3, r4"
+            puts "Recommended...".green
+            clause.execute
+
+            # clause = " MATCH (:User)-[r1:DataEdit]->(r2:ThumbRequest)-[r3:DataEditRequest]->(:Book) DELETE r1, r2, r3"
+
+            clause = "MATCH  (b:Book) CREATE UNIQUE (b)-[:BookFeed]->(b)"
+            puts "Create bookfeed...".green
+            clause.execute
+
+            clause = "MATCH (u:User) CREATE UNIQUE (u)-[:FeedNext]->(u) CREATE UNIQUE (u)-[:Ego{user_id:ID(u)}]->(u) SET u.total_count = 0, u.bookmark_count = 0, u.book_read_count = 0, u.rating_count = 0"
+            puts "handle user...".green
+            clause.execute
+            render :json => {:message => "Success"}, :status => 200
+        rescue Exception => e
+            render :json => {:message => e.to_s}, :status => 500
+        end
+    end
 
   def feedbacks
     neo = Neography::Rest.new

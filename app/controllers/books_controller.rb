@@ -287,39 +287,6 @@ class BooksController < ApplicationController
             time = Time.new
             @timestamp = "#{time.month}/#{time.day}/#{time.year}"
         end
-
-        if params[:trending_id]
-            debugger
-            # book_ids = params[:book_ids].gsub("[", "").gsub("]", "").split(",") rescue ""
-            # id_string = ""
-            # clause = "MATCH (t:News)-[r:RelatedBooks]->(:Book) WHERE ID(t)="+params[:trending_id]+" DELETE r"
-            # neo.execute_query clause
-            # if book_ids.present?
-            #     for book_id in book_ids
-            #         if book_id.present?
-            #             if id_string.present?
-            #                 id_string = id_string + " OR ID(b) = " + book_id
-            #             else
-            #                 id_string = id_string + " AND (ID(b) = " + book_id
-            #             end
-            #         end
-            #     end
-            #     id_string = id_string + ")"
-            #     if params[:status]
-            #         clause = "MATCH (b:Book), (t:News) WHERE ID(t)="+params[:trending_id]+id_string+" SET t.status = 1 CREATE UNIQUE (t)-[:RelatedBooks]->(b)"
-            #     else
-            #         clause = "MATCH (b:Book), (t:News) WHERE ID(t)="+params[:trending_id]+id_string+" SET t.status = 0 CREATE UNIQUE (t)-[:RelatedBooks]->(b)"
-            #     end
-            # end
-            # if params[:status]
-            #     clause = "MATCH (t:News) WHERE ID(t)="+params[:trending_id]+id_string+" SET t.status = 1"
-            # else
-            #     clause = "MATCH (t:News) WHERE ID(t)="+params[:trending_id]+id_string+" SET t.status = 0"
-            # end
-            # puts clause.blue.on_red
-            # neo.execute_query clause
-        end
-
         clause = News.match_day_for(time) + " WITH news as t OPTIONAL MATCH (t)-[:HasCommunity]->(c:Community) RETURN t.name, COLLECT(c.name) AS communities, t.timestamp, ID(t) AS id_news, t.status as status, t.title, t.description,t.image_url, t.thumbnail_url, t.redirect_url, t.publisher, t.thumb ORDER BY t.status DESC, t.timestamp DESC "
         @trends = clause.execute
     end

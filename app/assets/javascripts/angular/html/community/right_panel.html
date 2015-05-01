@@ -3,13 +3,26 @@
             md-component-id="right" 
             ng-click="stop_propagation($event);"
             layout-padding>
-    <div ng-repeat="news_info in active_tag.news">
-        <div><img ng-src="{{news_info.image_url}}" class="news_cover"/></div>
-        <a target="_blank" ng-href="{{news.news_url}}">{{news_info.title}}</a>
-        <div class="less_important">{{news_info.created_at | timestamp | date:'dd MMM'}}</div><br/>
-        <div>{{news_info.description}}</div>
-        <md-divider layout-margin layout-padding></md-divider>
-    </div>
+    <md-content class="white">
+        <md-subheader layout="row" layout-align="space-between">
+            <div layout="row">
+                <img class="circular" ng-src="{{active_tag.image_url}}" layout-padding>
+                <h3>{{active_tag.name | uppercase}}</h3>
+            </div>
+            <md-button class="md-raised" ng-click="follow_community()">Follow</md-button>
+        </md-subheader>
+        <md-card ng-repeat="news_info in active_tag.news">
+            <md-card-content>
+                <h3><a target="_blank" ng-href="{{news.news_url}}">{{news_info.title}}</a></h3>
+                <div class="less_important">{{news_info.created_at | timestamp | date:'dd MMM'}}</div>
+                <div ng-bind-html="news_info.description"></div>
+            </md-card-content>
+
+            <md-card-content>
+                <img ng-src="{{news_info.image_url}}" class="news_cover"/>
+            </md-card-content>
+        </md-card>
+    </md-content>
 </md-sidenav>
 <style>
     .details_panel{
@@ -19,5 +32,10 @@
 
     .news_cover{
     	width: 100%;
+    }
+
+    .details_panel p{
+        margin: 0px;
+        line-height: 1.4em;
     }
 </style>

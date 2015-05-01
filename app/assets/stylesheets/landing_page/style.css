@@ -24,12 +24,12 @@ h1, h2, h3, h4 {
     z-index: 2;
 }
 
-.main-header .title-btn {
-    display: inline-block;
-    position: relative;
-    text-decoration: none;
-    vertical-align: top;
-    line-height: 40px;
+.main_logo{
+    font-size: 1.2em;
+    position: fixed;
+    left: 80px;
+    top: 10px;
+    z-index: 9;
 }
 
 .main-header h1{

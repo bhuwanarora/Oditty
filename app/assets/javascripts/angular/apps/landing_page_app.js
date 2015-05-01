@@ -8,28 +8,28 @@ app.value('duScrollEasing', easeInQuad);
 app.config(
 ["$routeProvider", function($routeProvider) {
     $routeProvider.when('/discover', {
-        templateUrl : 'assets/angular/views/landing_page/discover.html',
+        templateUrl : 'assets/angular/html/landing_page/discover.html',
     })
     .when('/intro', {
-        templateUrl : 'assets/angular/views/landing_page/intro.html',
+        templateUrl : 'assets/angular/html/landing_page/intro.html',
     })
     .when('/connect', {
-        templateUrl : 'assets/angular/views/landing_page/connect.html',
+        templateUrl : 'assets/angular/html/landing_page/connect.html',
     })
     .when('/explore', {
-        templateUrl : 'assets/angular/views/landing_page/explore.html',
+        templateUrl : 'assets/angular/html/landing_page/explore.html',
     })
     .when('/personalise', {
-        templateUrl : 'assets/angular/views/landing_page/personalise.html',
+        templateUrl : 'assets/angular/html/landing_page/personalise.html',
     })
     .when('/request', {
-        templateUrl : 'assets/angular/views/landing_page/sign_in.html',
+        templateUrl : 'assets/angular/html/landing_page/sign_in.html',
     })
     .when('/main', {
-        templateUrl : 'assets/angular/views/landing_page/main.html',
+        templateUrl : 'assets/angular/html/landing_page/main.html',
     })
     .otherwise({
-         templateUrl : 'assets/angular/views/landing_page/main.html'
+         templateUrl : 'assets/angular/html/landing_page/main.html'
     });
 }]);
 
