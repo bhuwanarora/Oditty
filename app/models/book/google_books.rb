@@ -13,7 +13,7 @@ class Book::GoogleBooks < Book
 			puts e.to_s.red
 			File.open("log/google_book_api.log", 'a') { |file| file.write("#{e} at #{Time.now} while processing #{query}")}
 		end
-		File.close
+		# File.close
 		puts books_title.to_s.green
 		books_title.uniq.compact
 	end
