@@ -66,4 +66,10 @@ class String
             .gsub("MATCH", "\n MATCH")
             .gsub("START", "\n START")
     end
+
+    def database_ready
+        self.gsub("\\","\\\\")
+            .gsub("\"","\\\"")
+            .gsub("\"",%q(\\\'))
+    end
 end

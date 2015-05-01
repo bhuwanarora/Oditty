@@ -1,5 +1,5 @@
-app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "WebsiteUIConstants", '$interval', '$mdDialog', '$mdSidenav', function($scope, scroller, $document, $timeout, WebsiteUIConstants, $interval, $mdDialog, $mdSidenav){
-	function _init(){
+app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "WebsiteUIConstants", '$interval', '$mdDialog', '$mdSidenav', '$cookieStore', function($scope, scroller, $document, $timeout, WebsiteUIConstants, $interval, $mdDialog, $mdSidenav, $cookieStore){
+	var _init = function(){
 	    $scope.data = [
 	    	"Intro",
 	    	"ReadersDoor",
@@ -22,6 +22,10 @@ app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "Webs
 		$scope.scroll_active = true;
 		$scope.text_index = 1;
 		$scope.current_text = "";
+
+		if($cookieStore.get('logged')){
+			window.location.href = "/home";
+		}
 	}
 
 	$scope.scroll_page = function(page_id){

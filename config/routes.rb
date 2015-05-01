@@ -1,4 +1,5 @@
 require 'resque/server'
+require 'sidekiq/web'
 ReadersDoor::Application.routes.draw do
   root :to => "website#landing_page"
 
@@ -9,7 +10,7 @@ ReadersDoor::Application.routes.draw do
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
   # devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
-  
+  mount Sidekiq::Web => '/sidekiq'  
   resources :tags
 
   resources :categories

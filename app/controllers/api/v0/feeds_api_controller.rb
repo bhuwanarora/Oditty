@@ -15,8 +15,13 @@ module Api
 			end
 
 			def get_news
-				skip_count = params[:skip_count]
-				info = Api::V0::FeedsApi.get_news(skip_count).execute
+				info = Api::V0::FeedsApi.get_news(session[:news_skip_count], session[:news_day_skip_count]).execute
+				if info.blank?
+					session[:news_day_skip_count] += 1
+					session[:news_skip_count] = 0
+					info = Api::V0::FeedsApi.get_news(session[:news_skip_count], session[:news_day_skip_count]).execute
+				end
+				session[:news_skip_count] += info.length
 				render :json => info, :status => 200
 			end
 

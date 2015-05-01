@@ -141,7 +141,7 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
     }
 
     this.get_feed = function(){
-        return _deferred_request('/api/v0/get_feed');
+        return _deferred_request('/api/v0/feed_news');
     }
 
     this.news_visited = function(id){

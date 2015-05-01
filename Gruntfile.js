@@ -320,6 +320,7 @@ module.exports = function(grunt) {
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/author_group.min.js":[
+                    "app/assets/javascripts/min/angular/controllers/book/buy_controller.js",
                     "app/assets/javascripts/min/angular/controllers/author_controller.js"
                 ]
             },

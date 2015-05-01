@@ -434,12 +434,12 @@ module Api
 				info = {"reading_count_list" => BookRange.get_values}
 			end
 
-			def self.get_followers user_id
-				User.new(user_id).get_followers
+			def self.get_followers(user_id, skip_count)
+				User.new(user_id).get_followers(skip_count)
 			end
 
-			def self.get_users_followed user_id
-				User.new(user_id).get_users_followed
+			def self.get_users_followed(user_id, skip_count)
+				User.new(user_id).get_users_followed(skip_count)
 			end
 
 			def self.handle_google_user params

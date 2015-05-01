@@ -1,10 +1,11 @@
-logfile: log/sidekiq.log
-pidfile: tmp/pids/sidekiq.pid
-concurrency: 25
-staging:
-  :concurrency: 10
-production:
-  :concurrency: 20
-queues:
+# Sample configuration file for Sidekiq.
+# Options here can still be overridden by cmd line args.
+#   sidekiq -C config.yml
+---
+:pidfile: ./tmp/pids/sidekiq.pid
+:concurrency: 25
+# Set timeout to 8 on Heroku, longer if you manage your own systems.
+:timeout: 30
+:queues:
+  - facebook_user
   - default
-  - [facebook_user, 2]concurrency:  25

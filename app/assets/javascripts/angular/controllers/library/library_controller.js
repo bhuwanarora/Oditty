@@ -122,36 +122,58 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
             }, array);
         }
         
-        infinityService.get_small_reads().then(function(data){
-            $scope.small_reads = [];
-            _set_data(data, $scope.small_reads);
-        });
+        var small_reads_event = $timeout(function(){
+            infinityService.get_small_reads().then(function(data){
+                $scope.small_reads = [];
+                _set_data(data, $scope.small_reads);
+            });
+        }, 100);
 
-        infinityService.get_books_from_favourite_author().then(function(data){
-            $scope.books_from_favourite_author = [];
-            _set_data(data.books, $scope.books_from_favourite_author);
-            delete data.books;
-            $scope.likeable_author = data;
-        });
+        var author_event = $timeout(function(){
+            infinityService.get_books_from_favourite_author().then(function(data){
+                data = data[0];
+                $scope.books_from_favourite_author = [];
+                _set_data(data.books, $scope.books_from_favourite_author);
+                delete data.books;
+                $scope.likeable_author = data;
+            });
+        }, 100);
 
-        infinityService.get_books_from_favourite_category().then(function(data){
-            $scope.books_from_favourite_category = data.books;
-            $scope.likeable_category = data.info;
-        });
+        var category_event = $timeout(function(){
+            infinityService.get_books_from_favourite_category().then(function(data){
+                $scope.books_from_favourite_category = data.books;
+                $scope.likeable_category = data.info;
+            });
+        }, 100);
 
-        infinityService.get_books_from_favourite_era().then(function(data){
-            $scope.books_from_favourite_era = data.books;
-            $scope.likeable_era = data.info;
-        });
+        var era_event = $timeout(function(){
+            infinityService.get_books_from_favourite_era().then(function(data){
+                $scope.books_from_favourite_era = data.books;
+                $scope.likeable_era = data.info;
+            });
+        }, 100);
 
-        infinityService.get_books_on_friends_shelves().then(function(data){
-            $scope.books_on_friends_shelves = data;
-        });
+        var friends_shelves_event = $timeout(function(){
+            infinityService.get_books_on_friends_shelves().then(function(data){
+                $scope.books_on_friends_shelves = data;
+            });
+        }, 100);
 
-        infinityService.get_books_from_unexplored_subjects().then(function(data){
-            $scope.books_from_unexplored_subjects = data.books;
-            $scope.unexplored_subject = data.info;
-            $scope.info.loading = false;
+        var unexplored_subject_event = $timeout(function(){
+            infinityService.get_books_from_unexplored_subjects().then(function(data){
+                $scope.books_from_unexplored_subjects = data.books;
+                $scope.unexplored_subject = data.info;
+                $scope.info.loading = false;
+            });
+        }, 100);
+
+        $scope.$on('destroy', function(){
+            $timeout.cancel(small_reads_event);
+            $timeout.cancel(author_event);
+            $timeout.cancel(category_event);
+            $timeout.cancel(era_event);
+            $timeout.cancel(friends_shelves_event);
+            $timeout.cancel(unexplored_subject_event);
         });
     }
 

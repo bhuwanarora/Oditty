@@ -3,7 +3,8 @@
 	<md-tab class="padding" 
 			aria-controls="tab1-content"
 			id="tab1"
-			label="FOLLOWERS({{user.follower_count || 0}})">
+			ng-click="get_followers()"
+			label="{{user.follower_count || 0}} FOLLOWERS">
 	        <div layout="column"
 	             ng-include src="'/assets/angular/html/network/show.html'">
 	        </div>
@@ -12,7 +13,8 @@
 	<md-tab class="padding" 
 			aria-controls="tab2-content"
 			id="tab2"
-			label="FOLLOWING({{user.following_count || 0}})">
+			ng-click="get_users_followed()"
+			label="{{user.following_count || 0}} FOLLOWING">
 			<div layout="column"
 	             ng-include src="'/assets/angular/html/network/show.html'">
 	        </div>

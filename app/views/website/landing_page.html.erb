@@ -1,16 +1,16 @@
 <div msd-wheel="bind_mousewheel_scroll($event)" layout="column">
-    <header layout="row" layout-align="start center" class="main-header animate-fast" 
-            ng-if="show_content" layout-padding>
-        <md-button aria-label="Left Sidenav" flex-sm="15" ng-click="left_tab_list($event)" class="padding" hide show-sm>
+    <div class="main_logo" ng-click="scroll_page(0)" layout="row" layout-align="center center">
+        <img src="assets/rd_icon.png">
+        <span hide-sm>ReadersDoor</span>
+    </div>
+    <header layout="row" class="main-header animate-fast" 
+            ng-if="show_content" layout-padding layout-align="space-between center">
+        <md-button aria-label="Left Sidenav" show-sm ng-click="left_tab_list($event)" class="padding" hide>
             <a><span class="icon-menu2"></span></a>
         </md-button>
-        <div flex-sm="60" flex-md="80" flex-gt-md="90">
-            <a class="title-btn" ng-click="scroll_page(0)">
-            <img src="assets/rd_logo.png">
-            </a>
-        </div>
-        <div class="h-btn-right" flex-sm="25" flex-md="20" flex-gt-md="10">
-            <md-button ng-click="show_signin_options($event)" class="md-raised md-warn md-hue-2 md-button-clear">
+        <div></div>
+        <div class="h-btn-right">
+            <md-button ng-click="show_signin_options($event)" class="md-raised md-button-clear">
                 Sign In
             </md-button>
         </div>

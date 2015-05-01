@@ -67,6 +67,8 @@ class WebsiteController < ApplicationController
 
 	### WEBSITE NEW 
 	def home
+		session[:news_day_skip_count] = 0
+		session[:news_skip_count] = 0
 		@home = true
 		render :layout => "material"
 	end
