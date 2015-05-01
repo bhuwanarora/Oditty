@@ -8,15 +8,24 @@ class UsersCommunity < Neo
 	end
 
 	def create
-		" MERGE (user)-[follows:Follows]->(follow_node:FollowNode{created_at:" + Time.now.to_i.to_s + ", updated_at:" + Time.now.to_i.to_s + ", user_id:" + @user_id.to_s + ", community_id: " + @community_id.to_s + "})-[:OfCommunity]->(community)  "
+		" MERGE (user)-[follows:Follows]->(follow_node:FollowNode{created_at:" + Time.now.to_i.to_s + ", updated_at:" + Time.now.to_i.to_s + ", user_id:" + @user_id.to_s + ", community_id: " + @community_id.to_s + "})-[:OfCommunity]->(community) WITH user, follow_node, community, follows "
 	end
 
 	def follow
-		@user.match + @community.match + ", user " + create + Community.set_follow_count + Community::Feed.create("follow_node") + User::Feed.create("follow_node")
+		@user.match + @community.match + ", user " + Community.set_follow_count + create + User::Feed.new(@user_id).create("follow_node") + UsersCommunity.return_group(UsersCommunity.basic_info)
+	end
+
+	def unfollow
+		operation = "-"
+		@user.match + @community.match + ", user " + UsersCommunity.delete + Community.set_follow_count(operation) + " WITH user, follow_node " + User::Feed.new(@user_id).delete_feed("follow_node") + " DELETE follow_node "
 	end
 
 	def set_view_count
 		" SET community.view_count = COALESCE(community.view_count,0) + 1 "
+	end
+
+	def self.delete
+		UsersCommunity.optional_match + " OPTIONAL MATCH (follow_node)-[relation]-() DELETE relation "
 	end
 
 	# def comment

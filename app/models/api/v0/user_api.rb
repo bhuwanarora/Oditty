@@ -23,6 +23,14 @@ module Api
 				UsersUser.new(user_id, friend_id).follow
 			end
 
+			def self.follow_community user_id, community_id
+				UserCommunity.new(user_id, community_id).follow
+			end
+			
+			def self.unfollow_community user_id, community_id
+				UserCommunity.new(user_id, community_id).unfollow
+			end
+
 			def self.add_bookmark user_id, id, type, shelf
 				puts user_id
 				puts id

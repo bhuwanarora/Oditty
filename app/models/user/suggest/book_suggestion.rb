@@ -17,12 +17,14 @@ class User::Suggest::BookSuggestion < User::Suggest
 	end
 
 	def for_most_bookmarked_era
-		Era.most_popular(@user_id) + " WITH user, era " + Era.match_books + " , user " + Bookmark::Node::BookLabel.match_not + User::Suggest::BookSuggestion.return_group(::Book.basic_info, Era.basic_info) + ::Book.order_desc + User::Suggest::BookSuggestion.limit(Constant::Count::BookRecommendation)
+		Era.most_popular(@user_id) + " WITH user, era  RETURN era.basic_info " #+ Era.match_books + " , user " + Bookmark::Node::BookLabel.match_not + " WITH user, book, era " + ::Book.order_desc + " WITH user, era, #{User::Suggest::BookSuggestion.collect_map("books" => Book.grouped_basic_info)} WITH #{User::Suggest::BookSuggestion.collect_map("info" => Era.grouped_basic_info)}, books[0..#{Constant::Count::BookRecommendation}] AS books " + User::Suggest::BookSuggestion.return_group("info", "books")  
+
 	end
 
+
+
 	def on_friends_shelves
-		return_clause =  " RETURN friend.name AS name, ID(friend) AS id, "
-		clause = @user.match + UsersUser.match + Bookmark.match_path("book",false,"friend") + Bookmark.match_not("book") + User::Suggest::BookSuggestion.return_group("friend.name AS name", "ID(friend) AS id", ::Book.basic_info) + ::Book.order_desc + User::Suggest::BookSuggestion.limit(Constant::Count::BookRecommendation) 
+		@user.match + UsersUser.match + Bookmark.match_path("book","friend") + Bookmark.match_not("book") + " WITH user, friend , book " +  ::Book.order_desc + " WITH friend AS user, #{User::Suggest::BookSuggestion.collect_map("books" => Book.grouped_basic_info)} WITH #{User::Suggest::BookSuggestion.collect_map("info" => User.grouped_basic_info)}, books[0..4] AS books " + User::Suggest::BookSuggestion.return_group("info", "books")  
 	end
 
 	def for_likeable_category(favourites = true, books_processed_count=0)

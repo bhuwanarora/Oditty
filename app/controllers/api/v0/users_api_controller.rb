@@ -202,6 +202,18 @@ module Api
 				render :json => {:message => "Success"}, :status => 200
 			end
 
+			def follow_community
+				user_id = session[:user_id]
+				community = params[:id]
+				status = params[:status].downcase
+				if status == "true"
+					Api::V0::UserApi.follow_community(user_id, id).execute
+				else
+					Api::V0::UserApi.unfollow_community(user_id, id).execute
+				end
+				render :json => {:message => "Success"}, :status => 200
+			end
+
 			def follow
 				follow_action = params[:q] 
 				friend_id = params[:id] 
