@@ -58,6 +58,14 @@ module Api
                 time_groups = "MATCH (t:Era) RETURN t.name as name, t.range as range, ID(t) as id"
                 time_groups.execute
 			end
+
+			def follow_community(user_id, id, status)
+				if status
+					UsersCommunity.new(user_id, status).follow
+				else
+					UsersCommunity.new(user_id, status).unfollow
+				end
+			end
 		end
 	end
 end

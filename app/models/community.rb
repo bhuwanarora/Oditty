@@ -153,14 +153,14 @@ class Community < Neo
 					indexed_title = book.search_ready
 					clause += Book.search_by_indexed_title(indexed_title) + " , community " + Community.merge_book + " WITH community "
 				end
-				clause+= News.return_init + Community.basic_info
+				clause += News.return_init + Community.basic_info
 				clause.execute
 			end
 		end
 	end
 
 	def self.merge_book
-		" MERGE (community)-[:RelatedBooks]->(book) WITH book ,community "
+		" MERGE (community)-[:RelatedBooks]->(book) WITH book, community "
 	end
 
 	def self.handle_communities response

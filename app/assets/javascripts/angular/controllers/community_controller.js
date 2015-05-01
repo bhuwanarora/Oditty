@@ -1,7 +1,6 @@
 homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communityService', '$location', '$rootScope', '$mdDialog', 'ColorConstants', function($scope, $mdSidenav, communityService, $location, $rootScope, $mdDialog, ColorConstants){
     $scope.toggle_details = function(){
         $mdSidenav('right').toggle();
-        $scope.show_details = true;
         communityService.get_detailed_community_info($scope.active_tag.id).then(function(data){
             $scope.active_tag = angular.extend($scope.active_tag, data);
         });
@@ -47,7 +46,6 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
             var news_id = $rootScope.active_community.news_id;
         }
 
-        $scope.show_details = false;
 
         $scope.newsTags = [];
         $scope.info.active_tag = $scope.active_tag;

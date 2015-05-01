@@ -150,6 +150,14 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def follow_community
+				status = params[:status]
+				user_id = session[:user_id]
+				id = params[:id]
+				info = WebsiteApi.follow_community(user_id, id, status)
+				render :json => {:message => "Success"}, :status => 200
+			end
+
             private
             def neo_init
                 @neo = Neography::Rest.new

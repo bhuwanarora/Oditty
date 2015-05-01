@@ -8,7 +8,11 @@ class UsersCommunity < Neo
 	end
 
 	def create
-		" MERGE (user)-[follows:Follows]->(follow_node:FollowNode{created_at:" + Time.now.to_i.to_s + ", updated_at:" + Time.now.to_i.to_s + ", user_id:" + @user_id.to_s + ", community_id: " + @community_id.to_s + "})-[:OfCommunity]->(community)  "
+		" MERGE (user)-[follows:Follows]->(follow_node:FollowNode{created_at:" + Time.now.to_i.to_s + ", updated_at:" + Time.now.to_i.to_s + ", user_id:" + @user_id.to_s + ", community_id: " + @community_id.to_s + "})-[:OfCommunity]->(community) WITH user, follow_node "
+	end
+
+	def remove
+		" MATCH (user)-[follows:Follows]->(follow_node:FollowNode)-[of_community:OfCommunity]->(community) DELETE follows, of_community OPTIONAL MATCH (n1)-[r1:FeedNext]->(follow_node)-[r2:FeedNext]->(n2) DELETE r1, r2 CREATE UNIQUE (n1)-[:FeedNext]->(n2) WITH follow_node "
 	end
 
 	def follow
@@ -33,5 +37,17 @@ class UsersCommunity < Neo
 
 	def get_info
 		@community.match + Community.match_news  + " WITH community, " +  UsersCommunity.collect_map("news" => News.grouped_basic_info) + @user.match + ", community, news " + UsersCommunity.optional_match  + ", news " + Community.return_group(UsersCommunity.basic_info, "news ")
+	end
+
+	def match
+		" MATCH (user:User), (community:Community) WHERE ID(user)=" + @user_id + " AND ID(community)=" + @community_id + " WITH user, community "
+	end
+
+	def follow
+		match + create + User::Feed.new(@user_id).create("follow_node")
+	end
+
+	def unfollow
+		match + remove + User::Feed.new(@user_id).delete_feed("follow_node") + " DELETE follow_node "
 	end
 end

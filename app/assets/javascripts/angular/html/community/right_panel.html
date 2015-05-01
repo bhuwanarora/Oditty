@@ -15,7 +15,7 @@
             <md-card-content>
                 <h3><a target="_blank" ng-href="{{news.news_url}}">{{news_info.title}}</a></h3>
                 <div class="less_important">{{news_info.created_at | timestamp | date:'dd MMM'}}</div>
-                <div>{{news_info.description}}</div>
+                <div ng-bind-html="news_info.description"></div>
             </md-card-content>
 
             <md-card-content>
@@ -32,5 +32,10 @@
 
     .news_cover{
     	width: 100%;
+    }
+
+    .details_panel p{
+        margin: 0px;
+        line-height: 1.4em;
     }
 </style>
