@@ -46,7 +46,7 @@
             <script src="assets/angular/controllers/home/shelf_controller.js"></script>
             <script src="assets/angular/controllers/share/share_controller.js"></script>
             <script src="assets/angular/controllers/share/options_controller.js"></script>
-            <script src="assets/angular/controllers/profile_controller.js"></script>
+            
             
 
             <script src="assets/angular/controllers/toast_controller.js"></script>
@@ -129,6 +129,12 @@
                 <script src="assets/angular/controllers/author_controller.js"></script>
             <% end %>
 
+            <% if @profile %>
+                <script src="assets/angular/services/community_service.js"></script>
+                <script src="assets/angular/controllers/profile_controller.js"></script>
+                <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
+            <% end %>
+
         <% else %>
             <script src="assets/min/angular/site.min.js"></script>
 
@@ -167,6 +173,10 @@
 
             <% if @author %>
                 <script src="assets/min/angular/controllers/author_group.min.js"></script>
+            <% end %>
+
+            <% if @profile %>
+                <script src="assets/min/angular/controllers/profile_group.min.js"></script>
             <% end %>
 
         <% end %>

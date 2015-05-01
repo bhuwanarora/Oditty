@@ -30,7 +30,7 @@ class UsersBook < Neo
 	end
 
 	def get_basic_details
-		match + Book.new(@book_id).match_author +  ", user " + UsersBook.optional_match_rating + UsersBook.optional_match_timing_node + User.match_label + Bookmark::Node::BookLabel.match_path  + UsersBook.optional_match_endorse + UsersBook.friends_book + Book.optional_match_genre + UsersBook.return_init + Book.detailed_info + ", rating_node.rating as user_rating, timing_node.time_index as user_time_index, COLLECT(DISTINCT user_label.name) as labels, COLLECT(DISTINCT label.name) as selected_labels, ID(endorse) as endorse_status, COLLECT(ID(friend)) as friends_id, COLLECT(friend.thumb) as friends_thumb, COUNT(friend) as friends_count, COLLECT(genre.name) as genres, COLLECT(belongs_to.weight) as genres_weight , ID(author) AS author_id "
+		match + Book.new(@book_id).match_author +  ", user " + UsersBook.optional_match_rating + UsersBook.optional_match_timing_node + User.match_label + Bookmark::Node::BookLabel.optional_match_path  + UsersBook.optional_match_endorse + UsersBook.friends_book + Book.optional_match_genre + UsersBook.return_init + Book.detailed_info + ", rating_node.rating as user_rating, timing_node.time_index as user_time_index, COLLECT(DISTINCT user_label.name) as labels, COLLECT(DISTINCT label.name) as selected_labels, ID(endorse) as endorse_status, COLLECT(ID(friend)) as friends_id, COLLECT(friend.thumb) as friends_thumb, COUNT(friend) as friends_count, COLLECT(genre.name) as genres, COLLECT(belongs_to.weight) as genres_weight , ID(author) AS author_id "
 	end
 
 	def self.record_time(time)

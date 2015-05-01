@@ -122,6 +122,9 @@ class FeedStructure < Neo
 		if data["book_id"].present?
 			notification_json.merge!(:book => {:id => data["book_id"], :title => data["title"]})
 		end
+		if data["community_id"].present?
+			notification_json.merge!(:community => {:id => data["community_id"]})
+		end
 		notification_json
 	end
 
