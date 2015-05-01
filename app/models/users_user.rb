@@ -1,3 +1,4 @@
+
 class UsersUser < Neo
 
 	def initialize(user_id, friend_id)
@@ -9,7 +10,7 @@ class UsersUser < Neo
 	end
 
 	def create
-		" MERGE (user)-[follows_user:FollowsUser]->(follows_node:FollowsNode{created_at: " + Time.now.to_i.to_s + ", updated_at: " + Time.now.to_i.to_s + ", friend_id:ID(friend), user_id: ID(user)})-[followed_by:FollowedBy]->(friend)  WITH user, follows_user, friend, follows_node, followed_by "
+		" MERGE (user:User)-[follows_user:FollowsUser]->(follows_node:FollowsNode{created_at: " + Time.now.to_i.to_s + ", updated_at: " + Time.now.to_i.to_s + ", friend_id:ID(friend), user_id: ID(user)})-[followed_by:FollowedBy]->(friend:User)  WITH user, follows_user, friend, follows_node, followed_by "
 	end
 
 	def match 

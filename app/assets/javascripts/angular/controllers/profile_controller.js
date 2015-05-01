@@ -1,4 +1,4 @@
-homeApp.controller('profileController', ["$scope", "userService", '$rootScope', "WebsiteUIConstants", 'ColorConstants', '$location', 'bookService', function($scope, userService, $rootScope, WebsiteUIConstants, ColorConstants, $location, bookService){
+homeApp.controller('profileController', ["$scope", "userService", '$rootScope', "WebsiteUIConstants", 'ColorConstants', '$location', 'bookService', 'communityService', '$mdDialog', function($scope, userService, $rootScope, WebsiteUIConstants, ColorConstants, $location, bookService, communityService, $mdDialog){
 	var _get_detailed_info = function(id){
 
 		userService.get_detailed_info(id).then(function(data){
@@ -47,6 +47,9 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 					break;
 				case "RatingNode":
 					message = "Gave "+value.node.content + " rating on 10.";
+					break;
+				case "FollowNode":
+					message = "Followed " + value.community.name;
 			}
 			return message;
 		}
@@ -109,7 +112,15 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 						angular.forEach(value.data, function(feed_data){
 							var message = _get_message(feed_data);
 							feed_data = angular.extend(feed_data, {"message": message});
-						})
+						});
+					});
+				}
+				else if(angular.isDefined(value.community)){
+					communityService.get_community_details(value.community.id).then(function(data){
+						data = data[0].most_important_tag[0];
+						value.community = angular.extend(value.community, data);
+						var message = _get_message(value);
+						feed_data = angular.extend(value, {"message": message});
 					});
 				}
 				else{
@@ -134,6 +145,16 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 		$scope.profile_user.status = !$scope.profile_user.status;
 		userService.follow($scope.profile_user.id, $scope.profile_user.status);
 	}
+
+	$scope.show_book_dialog = function(book, event){
+        $rootScope.active_book = book;
+        $rootScope.active_book.show_info_only = true;
+        $mdDialog.show({
+            templateUrl: '/assets/angular/html/community/book.html',
+            targetEvent: event,
+        });
+        event.stopPropagation();
+    }
 	
 	var _init = (function(){
 		$scope.profile_user = {};

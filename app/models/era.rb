@@ -63,4 +63,8 @@ class Era < Neo
 		" era.name AS era_name, ID(era) AS era_id "
 	end
 
+	def self.grouped_basic_info
+		"  era_name:era.name , era_id:ID(era)  "
+	end
+
 end

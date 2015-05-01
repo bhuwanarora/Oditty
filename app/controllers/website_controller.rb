@@ -104,6 +104,7 @@ class WebsiteController < ApplicationController
 	end
 
 	def profile
+		@profile = true
 		render :layout => "material"
 	end
 

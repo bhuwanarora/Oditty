@@ -1,0 +1,45 @@
+<md-card class="social">
+    <md-card-content class="footer">
+        <section layout="column" layout-align="start">
+            <div layout="row">
+                <img ng-src="{{user.image_url | default_profile}}" class="profile_thumb circular">
+                <div layout="column" layout-align="start start">
+                    <h2>{{user.first_name}}</h2>
+                </div>
+            </div>
+            <div ng-bind-html="feed.message" class="status_message"></div>
+            <div class="less_important">{{feed.created_at | timestamp | date:'h:mm a, dd MMM'}}</div>
+            <!-- <div ng-repeat="data in feed.data" layout-padding> -->
+            <!-- </div> -->
+        </section>
+    </md-card-content>
+    <md-card-content class="less_important_container" ng-if="feed.community.name">
+        <div class="footer" ng-init="community = feed.community" ng-include src="'/assets/angular/html/shared/partials/community_info.html'"></div>
+    </md-card-content>
+    <md-card-content class="footer" ng-include src="'/assets/angular/html/shared/partials/card_footer.html'">
+    </md-card-content>
+</md-card>
+<style>
+    .profile_thumb{
+        width: 70px;
+        height: 70px;
+        padding: 10px;
+    }
+
+    .social_content{
+        order: 1;
+    }
+
+    .social h2{
+        margin: 16px 0px 0px 0px !important;
+    }
+
+    .social .book_thumb{
+        width: 100%;
+    }
+
+    .status_message a{
+        font-weight: bold;
+        text-decoration: underline;
+    }
+</style>

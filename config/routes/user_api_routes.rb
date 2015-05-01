@@ -54,7 +54,7 @@ ReadersDoor::Application.routes.draw do
       match 'users_followed'                          => 'users_api#get_users_followed',                :via => [:put, :get, :post]
       match 'news_visited'                            => 'users_api#news_visited',                      :via => [:put, :get, :post]
       match 'borrow_users'                            => 'users_api#get_lenders',                       :via => [:put, :get, :post]
-
+      match 'follow_community'                        => 'users_api#follow_community',                  :via => [:put, :get, :post]
     end
   end
 end

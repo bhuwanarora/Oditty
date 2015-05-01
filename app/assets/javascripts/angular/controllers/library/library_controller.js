@@ -141,21 +141,27 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
 
         var category_event = $timeout(function(){
             infinityService.get_books_from_favourite_category().then(function(data){
-                $scope.books_from_favourite_category = data.books;
+                $scope.books_from_favourite_category = [];
+                _set_data(data.books, $scope.books_from_favourite_category);
                 $scope.likeable_category = data.info;
             });
         }, 100);
 
         var era_event = $timeout(function(){
             infinityService.get_books_from_favourite_era().then(function(data){
-                $scope.books_from_favourite_era = data.books;
+                data = data[0];
+                $scope.books_from_favourite_era = [];
+                _set_data(data.books, $scope.books_from_favourite_era);
                 $scope.likeable_era = data.info;
             });
         }, 100);
 
         var friends_shelves_event = $timeout(function(){
             infinityService.get_books_on_friends_shelves().then(function(data){
-                $scope.books_on_friends_shelves = data;
+                $scope.friends = data;
+                angular.forEach($scope.friends, function(friend){
+                    _set_data(friend.books, friend.books);
+                });
             });
         }, 100);
 

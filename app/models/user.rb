@@ -262,6 +262,10 @@ class User < Neo
 		Bookmark::Type::Visited.match("book") + " WITH DISTINCT user, book " + Book.order_desc + " WITH user, " + Book.collect_map("books" => Book.grouped_basic_info ) + " WITH user, books[0..3] AS books "
 	end
 
+	def self.get_bookmarked_books
+		Bookmark.match + Book.order_desc + " WITH user, " + Book.collect_map("books" => Book.grouped_basic_info) +  " WITH user, books[0..4]"
+	end
+
 	def get_followers skip
 		match_followers(skip) + User.get_visited_books + User.return_group(User.basic_info,"books")
 	end

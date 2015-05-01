@@ -23,6 +23,14 @@ module Api
 				UsersUser.new(user_id, friend_id).follow
 			end
 
+			def self.follow_community user_id, community_id, status
+				if status == "true"
+					UsersCommunity.new(user_id, community_id).follow
+				else
+					UsersCommunity.new(user_id, community_id).unfollow
+				end
+			end
+			
 			def self.add_bookmark user_id, id, type, shelf
 				puts user_id
 				puts id
