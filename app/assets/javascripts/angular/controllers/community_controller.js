@@ -7,7 +7,7 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
     };
 
     $scope.follow_community = function(){
-        communityService.follow($scope.active_tag.id, $scope.active_tag.status);
+        communityService.follow($scope.active_tag.id, ($scope.active_tag.status || true));
     }
 
     $scope.show_book_dialog = function(book, event){

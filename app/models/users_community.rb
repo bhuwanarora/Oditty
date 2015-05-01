@@ -1,8 +1,8 @@
 class UsersCommunity < Neo
 
 	def initialize user_id, community_id
-		@user_id = user_id
-		@community_id = community_id
+		@user_id = user_id.to_s
+		@community_id = community_id.to_s
 		@user = User.new(user_id)
 		@community = Community.new(community_id)
 	end

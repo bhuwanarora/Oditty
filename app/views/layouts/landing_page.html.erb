@@ -62,18 +62,7 @@
             <script src="assets/min/angular/vendors.min.js"></script> 
             <script src="assets/min/angular/landing_page.min.js"></script>
         <% end %>
-        <script type="application/ld+json">
-            {
-                "@context": "http://schema.org",
-                "@type": "WebSite",
-                "url": "https://www.readersdoor.com/",
-                "potentialAction": {
-                    "@type": "SearchAction",
-                    "target": "http://readersdoor.com/api/v0/search?q={search_term_string}",
-                    "query-input": "required name=search_term_string"
-                }
-            }
-        </script>
+        
     </head>
 
     <body ng-controller="MainCtrl" ng-keydown="scroll_on_keypress($event)">

@@ -59,11 +59,11 @@ module Api
                 time_groups.execute
 			end
 
-			def follow_community(user_id, id, status)
-				if status
-					UsersCommunity.new(user_id, status).follow
+			def self.follow_community(user_id, id, status)
+				if status.to_s == "true"
+					UsersCommunity.new(user_id, id).follow
 				else
-					UsersCommunity.new(user_id, status).unfollow
+					UsersCommunity.new(user_id, id).unfollow
 				end
 			end
 		end
