@@ -18,6 +18,10 @@ class Bookmark::Node::BlogLabel < Bookmark::Node
 		Bookmark.match_path "blog"
 	end
 
+	def self.optional_match_path
+		Bookmark.optional_match_path "blog"
+	end
+
 	def self.match_not
 		Bookmark.match_not "blog"
 	end

@@ -12,6 +12,10 @@ class Bookmark::Node::NewsLabel < Bookmark::Node
 		"MATCH (user:User), (news:News) WHERE ID(user) = " + @user_id.to_s + " AND ID(news) = " + @id.to_s + " "
 	end
 
+	def self.optional_match_path
+		Bookmark.optional_match_path "news"
+	end
+
 	def self.match_path
 		Bookmark.match_path "news"
 	end
