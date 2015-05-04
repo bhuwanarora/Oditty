@@ -243,7 +243,7 @@ class User < Neo
 	end
 
 	def self.match_by_email_verification_token email, verification_token
-	    User.match_by_email(email) + " AND user.verification_token=\"" + verification_token  + "\" "
+	    User.match_by_email(email) + " WITH user WHERE user.verification_token=\"" + verification_token  + "\" "
 	end	
 
 	def self.handle_verification email, verification_token
