@@ -12,6 +12,17 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
                   inline_css: true
   end
 
+  def webhooks params
+    mandrill_mail template: params[:template],
+                  subject: 'Github Notification',
+                  to: {email: params[:email]},
+                  vars: {
+                    'PARAMS' => params[:params]
+                  },
+                  important: true,
+                  inline_css: true
+  end
+
   def subscribe(invitation)
     mandrill_mail template: invitation[:template],
                   subject: 'Welcome To Reader\'s Door',

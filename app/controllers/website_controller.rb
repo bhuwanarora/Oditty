@@ -10,6 +10,11 @@ class WebsiteController < ApplicationController
 		render :json => {:quotes => @quotes}, :status => 200
 	end
 
+	def webhooks params
+		email_params = {:email => Constant::EmailTemplate::Admin, :template => Constant::EmailTemplate::Webhooks, :params => params}
+		SubscriptionMailer.webhooks(email_params).deliver
+	end
+
 	def email_subscription
 		email = params[:subscription][:email]
 		existing_user = User.where(:email => email).first
