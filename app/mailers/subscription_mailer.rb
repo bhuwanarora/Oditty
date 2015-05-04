@@ -13,11 +13,17 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
   end
 
   def webhooks params
-    mandrill_mail template: params[:template],
-                  subject: 'Github Notification',
+    mandrill_mail template: params[:template] ,
+                  subject: ('Github ' + params[:params][:commits][0][:message] + ' : ' + params[:params][:pusher][:name]),
                   to: {email: params[:email]},
                   vars: {
-                    'PARAMS' => params[:params]
+                    'USERNAME' => params[:params][:pusher][:name],
+                    'EMAIL' => params[:params][:pusher][:email],
+                    'MESSAGE' => params[:params][:commits][0][:message],
+                    'TIMESTAMP' => params[:params][:commits][0][:timestamp],
+                    'REPOSITORY' => params[:params][:repository][:full_name],
+                    'LINK' => params[:params][:commits][0][:url],
+                    'BRANCH' => params[:params][:ref]
                   },
                   important: true,
                   inline_css: true

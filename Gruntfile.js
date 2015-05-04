@@ -157,6 +157,7 @@ module.exports = function(grunt) {
                     "app/assets/javascripts/min/angular/services/book_service.js",
                     "app/assets/javascripts/min/angular/services/author_service.js",
                     "app/assets/javascripts/min/angular/services/shelf_service.js",
+                    "app/assets/javascripts/min/angular/services/infinity_service.js",
                     "app/assets/javascripts/min/angular/services/shared_service.js"
                 ],
 
@@ -302,10 +303,8 @@ module.exports = function(grunt) {
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/infinity_group.min.js":[
-                    "app/assets/javascripts/min/angular/services/shared_service.js",
                     "app/assets/javascripts/min/angular/services/time_group_service.js",
                     "app/assets/javascripts/min/angular/services/reading_time_service.js",
-                    "app/assets/javascripts/min/angular/services/infinity_service.js",
                     "app/assets/javascripts/min/angular/controllers/library/library_controller.js",
                     "app/assets/javascripts/min/angular/controllers/library/filters_controller.js",
                     "app/assets/javascripts/min/angular/controllers/book/specific_book_controller.js",

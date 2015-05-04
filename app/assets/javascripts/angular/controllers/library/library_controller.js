@@ -1,7 +1,12 @@
 homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'WebsiteUIConstants', 'SearchUIConstants', 'bookService', '$routeParams', '$location', 'ColorConstants', '$mdToast', 'infinityService', '$mdBottomSheet', '$mdSidenav', 'sharedService', function($scope, $rootScope, $timeout, WebsiteUIConstants, SearchUIConstants, bookService, $routeParams, $location, ColorConstants, $mdToast, infinityService, $mdBottomSheet, $mdSidenav, sharedService){
 
-    $scope.get_popular_books = function(){ 
-        sharedService.get_popular_books($scope);
+    $scope.get_popular_books = function(){
+        if(Object.keys($rootScope.filters).length > 0){
+            sharedService.filtered_books($scope);
+        }
+        else{
+            sharedService.get_popular_books($scope);
+        }
     }
 
     $scope.init_book = function(index){
