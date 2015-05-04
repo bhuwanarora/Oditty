@@ -242,12 +242,12 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/library/partials/era_books.html',
-    "<md-divider></md-divider><div ng-if=\"books_from_favourite_era\"><h4>Discover popular books from your most read Era, <b>{{likeable_era}}</b></h4><div class=\"white\" layout-fill><div ng-init=\"books = books_from_favourite_era\" ng-hide=\"constant.show_book\" ng-include src=\"'/assets/angular/html/library/shared/_default_grid.html'\"></div></div></div><a ng-href=\"/room\" ng-if=\"!books_from_favourite_era\" class=\"less_important\" layout-padding><br>Couldn't find your Favourite Era. Add more books to your room.<br><br></a>"
+    "<md-divider></md-divider><div ng-if=\"books_from_favourite_era\"><h4>Discover popular books from your most read Era, <b>{{likeable_era.era_name}} Literature</b></h4><div class=\"white\" layout-fill><div ng-init=\"books = books_from_favourite_era\" ng-hide=\"constant.show_book\" ng-include src=\"'/assets/angular/html/library/shared/_default_grid.html'\"></div></div></div><a ng-href=\"/room\" ng-if=\"!books_from_favourite_era\" class=\"less_important\" layout-padding><br>Couldn't find your Favourite Era. Add more books to your room.<br><br></a>"
   );
 
 
   $templateCache.put('/assets/angular/html/library/partials/friends_books.html',
-    "<md-divider></md-divider><div ng-if=\"books_from_favourite_era\"><h4>Books on your friend's reading shelves</h4><div class=\"white\" layout-fill><div ng-init=\"books = books_on_friends_shelves\" ng-hide=\"constant.show_book\" ng-include src=\"'/assets/angular/html/library/shared/_default_grid.html'\"></div></div></div><a ng-href=\"/network?q=1\" ng-if=\"!books_from_favourite_era\" class=\"less_important\" layout-padding><br>You don't have enough friends. Follow more people.<br><br></a>"
+    "<md-divider></md-divider><div ng-if=\"books_from_favourite_era\"><h4>Books on your friend's reading shelves</h4><div class=\"white\" layout-fill><div ng-repeat=\"friend in friends\"><div layout=\"row\"><img class=\"circular\" ng-src=\"{{friend.image_url}}\"><h3>{{friend.first_name || friend.id}} {{friend.last_name}}</h3></div><div ng-init=\"books = friend.books\" ng-hide=\"constant.show_book\" ng-include src=\"'/assets/angular/html/library/shared/_default_grid.html'\"></div></div></div></div><a ng-href=\"/network?q=1\" ng-if=\"!books_from_favourite_era\" class=\"less_important\" layout-padding><br>You don't have enough friends. Follow more people.<br><br></a>"
   );
 
 
@@ -327,7 +327,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/profile/show.html',
-    "<md-list><div ng-repeat=\"feed in personal_feed\"><div ng-include src=\"'/assets/angular/html/shared/partials/social_feed.html'\"></div></div></md-list><style>.info_button{width:50px!important;height:50px!important}.genre_cover,.genre_cover_gradient{width:50px!important;height:50px!important}</style>"
+    "<md-list><div ng-repeat=\"feed in personal_feed\"><div ng-if=\"feed.label != 'FollowNode'\" ng-include src=\"'/assets/angular/html/shared/partials/social_feed.html'\"></div><div ng-if=\"feed.label == 'FollowNode'\" ng-include src=\"'/assets/angular/html/shared/partials/follow_feed.html'\"></div></div></md-list><style>.info_button{width:50px!important;height:50px!important}.genre_cover,.genre_cover_gradient{width:50px!important;height:50px!important}</style>"
   );
 
 
@@ -453,6 +453,16 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('/assets/angular/html/shared/partials/card_footer.html',
     "<section layout=\"row\" layout-sm=\"column\" layout-align=\"space-between\"><div layout=\"row\" layout-align=\"end center\"></div><div layout=\"row\" layout-align=\"start center\"><md-button class=\"md-button-clear\" ng-click=\"show_shelf_bottom_sheet(bookmark_object.id, bookmark_object.type)\">Bookmark</md-button>&nbsp;<div><span class=\"icon-bookmark3\"></span><md-tooltip>Bookmark</md-tooltip></div>&nbsp;<div>{{feed.bookmark_count || 0}}</div>&nbsp;&nbsp;<div><span class=\"icon-bubbles2\"></span><md-tooltip>Comments</md-tooltip></div>&nbsp;<div>{{feed.comment_count || 0}}</div>&nbsp;</div></section>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/shared/partials/community_info.html',
+    "<div class=\"follow_content\" layout=\"row\" layout-padding><div flex=\"25\" layout=\"row\" layout-align=\"center center\"><img ng-src=\"{{community.image_url}}\" class=\"circular\"></div><div flex=\"75\"><div class=\"community_title\">{{community.name}}</div><md-content class=\"books\"><section layout=\"row\"><md-button ng-click=\"show_book_dialog(book, $event)\" class=\"clear book\" layout-margin ng-repeat=\"book in community.books\"><div ng-include src=\"'/assets/angular/html/shared/partials/book_thumb.html'\"></div></md-button></section></md-content></div></div><style>.community_title{font-size:1.2em;font-family:sans-serif}.books{max-height:180px}.books .book{width:130px;height:180px}.follow_content .circular{width:120px;height:120px}</style>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/shared/partials/follow_feed.html',
+    "<md-card class=\"social\"><md-card-content class=\"footer\"><section layout=\"column\" layout-align=\"start\"><div layout=\"row\"><img ng-src=\"{{user.image_url | default_profile}}\" class=\"profile_thumb circular\"><div layout=\"column\" layout-align=\"start start\"><h2>{{user.first_name}}</h2></div></div><div ng-bind-html=\"feed.message\" class=\"status_message\"></div><div class=\"less_important\">{{feed.created_at | timestamp | date:'h:mm a, dd MMM'}}</div></section></md-card-content><md-card-content class=\"less_important_container\" ng-if=\"feed.community.name\"><div class=\"footer\" ng-init=\"community = feed.community\" ng-include src=\"'/assets/angular/html/shared/partials/community_info.html'\"></div></md-card-content><md-card-content class=\"footer\" ng-include src=\"'/assets/angular/html/shared/partials/card_footer.html'\"></md-card-content></md-card><style>.profile_thumb{width:70px;height:70px;padding:10px}.social_content{order:1}.social h2{margin:16px 0 0 0!important}.social .book_thumb{width:100%}.status_message a{font-weight:700;text-decoration:underline}</style>"
   );
 
 
