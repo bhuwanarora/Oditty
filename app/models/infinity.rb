@@ -1,6 +1,5 @@
 class Infinity < Neo
-	Limit = 30
-
+	Limit = Constant::Count::BookShownInInfinty
 	def initialize filters
 		filters = JSON.parse(filters)
 		@category_id = filters["category_id"]
@@ -48,10 +47,10 @@ class Infinity < Neo
 			if @era_id.present?
 				clause += Infinity::FilterEra.new(@era_id).match + with_clause
 			end
-			unless return_group.blank?
-				clause += Infinity.return_group(Infinity.collect_map({"book" => Book.grouped_basic_info}),return_group) + Infinity.skip(@skip_count) + Infinity.limit(Limit)
+			if return_group.present?
+				clause += Book.order_desc + Infinity.skip(@skip_count) + Infinity.limit(Limit) + Infinity.return_group(Infinity.collect_map({"books" => Book.grouped_basic_info}),return_group) 
 			else
-				clause += Infinity.return_group(Infinity.collect_map({"book" => Book.grouped_basic_info})) + Infinity.skip(@skip_count) + Infinity.limit(Limit)
+				clause += Book.order_desc + Infinity.skip(@skip_count) + Infinity.limit(Limit) + Infinity.return_group(Infinity.collect_map({"books" => Book.grouped_basic_info})) 
 			end
 		end
 		clause
