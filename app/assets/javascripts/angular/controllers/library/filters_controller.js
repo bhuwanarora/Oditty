@@ -48,29 +48,21 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
             sharedService.get_popular_books($scope);
         }
         else{
-            infinityService.get_books(0).then(function(data){
-                $scope.info.books = [];
-                angular.forEach(data.book, function(value){
-                    var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-                    var json = angular.extend(value, {"color": ColorConstants.value[random_int]});
-                    this.push(json);
-                }, $scope.info.books);
-                $scope.info.loading = false;
-                delete data.book;
-                $scope.info.other_info = data;
-            });
+            $scope.info.loading = true;
+            $scope.info.books = [];
+            sharedService.filtered_books($scope);
         }
     }
 
     var _handle_filter_removal = function(){
         var skip_count = $rootScope.filters.skip_count;
         delete $rootScope.filters.skip_count;
+        delete $scope.info.other_info;
+        $scope.info.books = [];
         if(Object.keys($rootScope.filters).length > 0){
-            $rootScope.filters.skip_count = skip_count;
             _set_books();
         }
         else{
-            $rootScope.filters.skip_count = skip_count;
             sharedService.get_popular_books($scope);
         }
     }
@@ -121,39 +113,43 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
 
     $scope.search_genres = function(input){
         // var params = "q="+input+"&count="+10;
-        $scope.info.loading = true;
-        genreService.search_genres(input).then(function(data){
-            $scope.info.loading = false;
-            if(data.length > 0){
-                $scope.info.genres = [];
-                angular.forEach(data, function(value){
-                    var json = {"type": SearchUIConstants.Genre, "custom_option": true, "icon2": "icon-tag", "name": value.category_name, "id": value.category_id};
-                    this.push(json);
-                }, $scope.info.genres);
-            }
-            else{
-                // $scope.search_display = SearchUIConstants.NoResultsFound;
-            }
-        });
+        if(!$scope.info.loading){
+            $scope.info.loading = true;
+            genreService.search_genres(input).then(function(data){
+                $scope.info.loading = false;
+                if(data.length > 0){
+                    $scope.info.genres = [];
+                    angular.forEach(data, function(value){
+                        var json = {"type": SearchUIConstants.Genre, "custom_option": true, "icon2": "icon-tag", "name": value.category_name, "id": value.category_id};
+                        this.push(json);
+                    }, $scope.info.genres);
+                }
+                else{
+                    // $scope.search_display = SearchUIConstants.NoResultsFound;
+                }
+            });
+        }
     }
 
     $scope.search_authors = function(input){
         // var params = "q="+input+"&count="+10;
-        $scope.info.loading = true;
-        authorService.search_authors(input).then(function(data){
-            $scope.info.loading = false;
-            if(data.length > 0){
-                $scope.info.authors = [];
-                angular.forEach(data, function(value){
-                    var json = {"icon2": "icon-pen", "type": SearchUIConstants.AuthorSearch, "custom_option": true};
-                    json = angular.extend(json, value);
-                    this.push(json);
-                }, $scope.info.authors);
-            }
-            else{
-                // $scope.search_display = SearchUIConstants.NoResultsFound;
-            }
-        });
+        if(!$scope.info.loading){
+            $scope.info.loading = true;
+            authorService.search_authors(input).then(function(data){
+                $scope.info.loading = false;
+                if(data.length > 0){
+                    $scope.info.authors = [];
+                    angular.forEach(data, function(value){
+                        var json = {"icon2": "icon-pen", "type": SearchUIConstants.AuthorSearch, "custom_option": true};
+                        json = angular.extend(json, value);
+                        this.push(json);
+                    }, $scope.info.authors);
+                }
+                else{
+                    // $scope.search_display = SearchUIConstants.NoResultsFound;
+                }
+            });
+        }
     }
 
     $scope._get_time_groups = function(){
