@@ -1,4 +1,4 @@
-homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$location", "bookService", "shelfService", "$mdToast", function ($timeout, $rootScope, ColorConstants, $location, bookService, shelfService, $mdToast){
+homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$location", "bookService", "shelfService", "$mdToast", "infinityService", function ($timeout, $rootScope, ColorConstants, $location, bookService, shelfService, $mdToast, infinityService){
 
     this.get_popular_books = function($scope){
         var ready_to_load = !$scope.info.loading && !$scope.constant.show_book && !
@@ -9,6 +9,20 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
             $scope.info.loading = true;
             this.load_popular_books($scope);
         }
+    }
+
+    this.filtered_books = function($scope){
+        var skip_count = $scope.info.books.length;
+        infinityService.get_books(skip_count).then(function(data){
+            angular.forEach(data.books, function(value){
+                var random_int = Math.floor(Math.random() * ColorConstants.value.length);
+                var json = angular.extend(value, {"color": ColorConstants.value[random_int]});
+                this.push(json);
+            }, $scope.info.books);
+            $scope.info.loading = false;
+            delete data.books;
+            $scope.info.other_info = data;
+        });
     }
 
     this.toggle_bookmark = function(label, data){
