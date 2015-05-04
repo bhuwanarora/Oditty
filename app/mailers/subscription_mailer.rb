@@ -22,7 +22,8 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
                     'MESSAGE' => params[:params][:commits][0][:message],
                     'TIMESTAMP' => params[:params][:commits][0][:timestamp],
                     'REPOSITORY' => params[:params][:repository][:full_name],
-                    'LINK' => params[:params][:commits][0][:url]
+                    'LINK' => params[:params][:commits][0][:url],
+                    'BRANCH' => params[:params][:ref]
                   },
                   important: true,
                   inline_css: true
