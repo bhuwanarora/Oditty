@@ -49,5 +49,4 @@ class ReadTime < Neo
 	def match_books_init
 		" MATCH (book:Book) WHERE " + where
 	end
-
 end

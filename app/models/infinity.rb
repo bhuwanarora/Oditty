@@ -1,6 +1,5 @@
 class Infinity < Neo
-
-	Limit = Constant::Count::BookShownInInfinty
+	Limit = 30
 
 	def initialize filters
 		filters = JSON.parse(filters)
@@ -9,8 +8,6 @@ class Infinity < Neo
 		@reading_time_id = filters["reading_time_id"] 
 		@era_id = filters["era_id"]
 		@skip_count = filters["skip_count"] || 0
-
-		puts filters.to_s
 	end
 
 	def get_books
@@ -37,26 +34,24 @@ class Infinity < Neo
 			end	
 
 			if @category_id.present?
-				clause += Infinity::FilterCategory.new(@category_id).match(book_label_defined) + with_clause
+				clause += Infinity::FilterCategory.new(@category_id).match + with_clause
 				with_clause += ", category "
 				book_label_defined = true
 				return_group << Category.basic_info  
 			end	
 
 			if @reading_time_id.present?
-				clause += Infinity::FilterReadTime.new(@reading_time_id).match(book_label_defined, @skip_count) + with_clause
+				clause += Infinity::FilterReadTime.new(@reading_time_id).match(@skip_count) + with_clause
 				book_label_defined = true
 			end	
 
 			if @era_id.present?
 				clause += Infinity::FilterEra.new(@era_id).match + with_clause
 			end
-
-			if return_group.present?
-				clause += Book.order_desc + Infinity.skip(@skip_count) + Infinity.limit(Limit) + Infinity.return_group(Infinity.collect_map({"books" => Book.grouped_basic_info}),return_group) 
-
+			unless return_group.blank?
+				clause += Infinity.return_group(Infinity.collect_map({"book" => Book.grouped_basic_info}),return_group) + Infinity.skip(@skip_count) + Infinity.limit(Limit)
 			else
-				clause += Book.order_desc + Infinity.skip(@skip_count) + Infinity.limit(Limit) + Infinity.return_group(Infinity.collect_map({"books" => Book.grouped_basic_info}))  
+				clause += Infinity.return_group(Infinity.collect_map({"book" => Book.grouped_basic_info})) + Infinity.skip(@skip_count) + Infinity.limit(Limit)
 			end
 		end
 		clause

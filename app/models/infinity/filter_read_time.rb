@@ -13,12 +13,7 @@ class Infinity::FilterReadTime < Infinity
 		end
 	end
 
-	def match(book_label_defined)
-		if book_label_defined
-			define_book_label_clause = ""
-		else
-			define_book_label_clause = " WHERE book :Book "
-		end
-		
+	def match(skip_count)
+		ReadTime.new(@read_type_value).match_books_init + " WITH book "
 	end
 end
