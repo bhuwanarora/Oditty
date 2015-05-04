@@ -30,7 +30,7 @@ module Api
 			def bookmark
 				id = params["id"]
 				type = params["type"].upcase
-				shelf = params["shelf"]
+				shelf = params["shelf"].upcase
 				status = params["status"]
 				user_id = session[:user_id]
 				if status 
