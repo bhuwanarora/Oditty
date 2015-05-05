@@ -1,5 +1,10 @@
 <md-card class="community" ng-if="community_feed.title && community_feed.title != '' && community_feed.title != null">
     <md-card-content layout="row" layout-padding class="communities light_grey">
+        <md-list-item layout-align="center center"
+                      layout-padding
+                      layout="row">
+            <div>Books on </div>
+        </md-list-item>
         <md-list-item class="md-2-line contact-item selected" 
                       ng-repeat="community in community_feed.communities" 
                       layout-align="center center"
@@ -7,7 +12,7 @@
                       layout="row">
             <img ng-src="{{community.image_url}}" class="circular" alt="{{community.name}}" />
             <div class="md-list-item-text compact">
-                <div layout-padding>{{community.name}}</div>
+                <a layout-padding ng-click="goto_community_page(community_feed.id)">{{community.name}}</a>
             </div>
         </md-list-item>
     </md-card-content>
