@@ -59,6 +59,10 @@ module Api
                 time_groups.execute
 			end
 
+			def self.get_regions
+				News.get_regions
+			end
+
 		end
 	end
 end

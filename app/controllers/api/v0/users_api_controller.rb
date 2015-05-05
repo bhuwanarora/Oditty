@@ -374,6 +374,13 @@ module Api
 				info = Api::V0::UserApi.get_lenders(book_id, user_id).execute
 				render :json => info, :status => 200
 			end
+
+			def set_region
+				region = params[:id]
+				user_id = session[:user_id]
+				info = Api::V0::UserApi.set_region(user_id, region).execute
+				render :json => info, :status => 200
+			end
 		end
 	end
 end
