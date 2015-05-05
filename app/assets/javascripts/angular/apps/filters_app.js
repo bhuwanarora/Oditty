@@ -149,7 +149,7 @@ angular.module('filtersApp', [])
     return function(input){
       var output = "";
       if(angular.isDefined(input) && input){
-        output = "http://rd-authors.readersdoor.netdna-cdn.com/"+input+"/M.jpg"
+        output = "http://rd-authors.readersdoor.netdna-cdn.com/"+input+"/M.png"
       }
       return output;
     };
