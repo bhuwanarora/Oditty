@@ -7,6 +7,13 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def set_intro_seen_status
+				user_id = session[:user_id]
+				status = params[:q]
+				Api::V0::UserApi.set_intro_seen_status(user_id, status).execute
+				render :json => {:message => "Success"}, :status => 200
+			end
+
 			def get_small_reads
 				user_id = session[:user_id]
 				books = UserApi.get_small_reads
@@ -30,7 +37,7 @@ module Api
 			def bookmark
 				id = params["id"]
 				type = params["type"].upcase
-				shelf = params["shelf"]
+				shelf = params["shelf"].upcase
 				status = params["status"]
 				user_id = session[:user_id]
 				if status 
