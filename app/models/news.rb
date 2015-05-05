@@ -181,7 +181,20 @@ class News < Neo
 		" ORDER BY TOINT(news.created_at) DESC "
 	end
 
-	def self.get_feed skip_count, day_skip_count
-		News.match_time_period(day_skip_count) + " WHERE news.status = true WITH news " + News.order_desc + News.skip(skip_count) + News.limit(Constant::Count::NewsShownInFeed) + News.match_community + " WITH news," + News.collect_map({"communities" => Community.grouped_basic_info}) + News.return_group(News.basic_info,"communities") 
+	def self.match_region region
+		if region
+			clause = " MATCH (news)-[:FromRegion]->(region:Region) WHERE ID(region) = " + region.to_s + " WITH news, region "
+		else
+			clause = ""
+		end
+		clause
+	end
+
+	def self.get_feed skip_count, day_skip_count, region
+		News.match_time_period(day_skip_count) + " WHERE news.status = true WITH news " + News.match_region(region) + News.order_desc + News.skip(skip_count) + News.limit(Constant::Count::NewsShownInFeed) + News.match_community + " WITH news," + News.collect_map({"communities" => Community.grouped_basic_info}) + News.return_group(News.basic_info,"communities") 
+	end
+
+	def self.get_regions
+		" MATCH (region:Region) RETURN COLLECT({id:ID(region)  , name:region.name}) AS regions "
 	end
 end

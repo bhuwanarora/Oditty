@@ -74,7 +74,7 @@ module Api
 					when "PLANTOBUY"
 						clause = Bookmark::Type::PlanToBuy.new(user_id, id).book.add
 					end
-				elsif type == "NEWS"
+				elsif type == "COMMUNITY"
 					case shelf
 					when "HAVELEFTAMARKONME"
 						clause = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, id).news.add
@@ -191,7 +191,7 @@ module Api
 					when "PLANTOBUY"
 						clause = Bookmark::Type::PlanToBuy.new(user_id, id).book.remove
 					end
-				elsif type == "NEWS"
+				elsif type == "COMMUNITY"
 					case shelf
 					when "HAVELEFTAMARKONME"
 						clause = Bookmark::Type::HaveLeftAMarkOnMe.new(user_id, id).news.remove
@@ -603,6 +603,10 @@ module Api
 				end
 				new_object_string = " CREATE UNIQUE ("+new_label.to_s+")-[:HasProperty]->(:"+object_key.to_s.singularize.camelcase+"{"+new_object_string+"})"
 				new_object_string
+			end
+
+			def self.set_region user_id, region
+				User.new(user_id).set_region(region)
 			end
 		end
 	end
