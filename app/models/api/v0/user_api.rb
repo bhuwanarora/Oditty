@@ -6,8 +6,8 @@ module Api
 				User::Authenticate.new(session, params).action
 			end
 
-			def self.set_intro_seen_status user_id
-				User.new(user_id).set_intro_seen_status
+			def self.set_intro_seen_status user_id, status
+				User.new(user_id).set_intro_seen_status(status)
 			end
 
 			def self.get_details(user_id, session)

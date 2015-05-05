@@ -9,7 +9,8 @@ module Api
 
 			def intro
 				user_id = session[:user_id]
-				Api::V0::UserApi.set_intro_seen_status(user_id).execute
+				status = params[:q]
+				Api::V0::UserApi.set_intro_seen_status(user_id, status).execute
 				render :json => {:message => "Success"}, :status => 200
 			end
 

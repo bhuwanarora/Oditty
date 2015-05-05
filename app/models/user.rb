@@ -278,7 +278,7 @@ class User < Neo
 		match_users_followed(skip) + User.get_visited_books + User.return_group(User.basic_info,"books")
 	end
 
-	def set_intro_seen_status
-		match + User::Info.set_intro_seen_status
+	def set_intro_seen_status status
+		match + User::Info.set_intro_seen_status(status)
 	end
 end

@@ -1,7 +1,7 @@
 class User::Info < User
 
-	def self.set_intro_seen_status
-		" SET user.intro_seen = true "
+	def self.set_intro_seen_status status
+		" SET user.intro_seen = " + status + " "
 	end
 	
 	def self.set_last_login 
