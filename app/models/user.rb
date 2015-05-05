@@ -77,7 +77,7 @@ class User < Neo
 	end
 
 	def self.basic_info
-		" user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id, user.gender AS gender, user.thumb as image_url "
+		" user.intro_seen AS intro_seen, user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id, user.gender AS gender, user.thumb as image_url "
 	end
 
 	def self.grouped_basic_info
@@ -276,5 +276,9 @@ class User < Neo
 
 	def get_users_followed skip
 		match_users_followed(skip) + User.get_visited_books + User.return_group(User.basic_info,"books")
+	end
+
+	def set_intro_seen_status status
+		match + User::Info.set_intro_seen_status(status)
 	end
 end
