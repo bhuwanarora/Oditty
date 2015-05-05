@@ -62,7 +62,7 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         $scope.info.loading = true;
         authorService.get_details(id).then(function(data){
             $scope.author = data;
-            if(data.wiki_url != null){
+            if(data.wiki_url != null && data.wiki_url != ""){
                 _get_wiki_without_google_redirect(data.wiki_url);
                 $scope.author.wiki_url = $sce.trustAsResourceUrl($scope.author.wiki_url+"?action=render");
             }

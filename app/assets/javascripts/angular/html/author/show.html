@@ -73,7 +73,7 @@
         </div>
         <div flex="25"></div>
     </div>
-    <md-card class="light_grey">
+    <md-card class="light_grey" ng-if="wiki_url">
         <md-card-content ng-click="toggle_wiki()" layout="row" layout-align="space-between" class="pointer">
             <div>
                 <span ng-show="!show_author_wiki" class="icon-angle-down"></span>
