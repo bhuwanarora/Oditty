@@ -6,6 +6,10 @@ module Api
 				User::Authenticate.new(session, params).action
 			end
 
+			def self.set_intro_seen_status user_id
+				User.new(user_id).set_intro_seen_status
+			end
+
 			def self.get_details(user_id, session)
 				info = {}
 				if user_id.present?

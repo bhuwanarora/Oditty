@@ -1,4 +1,8 @@
 class User::Info < User
+
+	def self.set_intro_seen_status
+		" SET user.intro_seen = true "
+	end
 	
 	def self.set_last_login 
 		 " SET user.last_login = \"" + Time.now.strftime("%Y-%m-%d") + "\" "

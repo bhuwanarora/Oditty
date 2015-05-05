@@ -7,6 +7,12 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def intro
+				user_id = session[:user_id]
+				Api::V0::UserApi.set_intro_seen_status(user_id).execute
+				render :json => {:message => "Success"}, :status => 200
+			end
+
 			def get_small_reads
 				user_id = session[:user_id]
 				books = UserApi.get_small_reads
