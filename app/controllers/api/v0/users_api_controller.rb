@@ -7,7 +7,7 @@ module Api
 				render :json => info, :status => 200
 			end
 
-			def intro
+			def set_intro_seen_status
 				user_id = session[:user_id]
 				status = params[:q]
 				Api::V0::UserApi.set_intro_seen_status(user_id, status).execute
