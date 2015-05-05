@@ -150,6 +150,11 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def get_regions
+				info = Api::V0::WebsiteApi.get_regions.execute	
+				render :json => info, :status => 200
+			end
+
             private
             def neo_init
                 @neo = Neography::Rest.new
