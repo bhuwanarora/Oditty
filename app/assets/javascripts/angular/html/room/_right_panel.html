@@ -2,23 +2,17 @@
 	<div class="side_padding shelf" ng-repeat="shelf in articles_grouped_by_shelves">
 		<div class="padding">{{shelf.shelf}}</div><br/>
 		<md-content class="grid_content">
-			<md-grid-list
-	            md-cols-sm="1" 
-	            md-cols-md="2" 
-	            md-cols-gt-md="2"
-	            md-row-height="3:1"
-	            md-gutter="15px" 
-	            md-gutter-gt-sm="15px" >
-	            <md-grid-tile
-	                md-rowspan="2"
-	                md-colspan="1"
-	                layout-align="start start"
-	                layout="row"
-	                ng-if="article.title != null"
-	                ng-repeat="article in shelf.articles"
-	                ng-style="background-image: url('{{article.image_url}}')">
-	            </md-grid-tile>
-	        </md-grid-list>
+			<div class="article"
+				layout-margin
+				ng-if="article.title"
+	            ng-repeat="article in shelf.articles">
+            	<a ng-href="/community?q={{article.id}}">
+	            	<img ng-src="{{article.image_url}}">
+	            	<md-tooltip md-direction="bottom">
+	                 	{{article.title}}
+	               	</md-tooltip>
+            	</a>
+	        </div>
 	    </md-content>
 	</div>
 </section>
