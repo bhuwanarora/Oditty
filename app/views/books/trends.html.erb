@@ -152,70 +152,53 @@
 		});
 
 		$('.community_present').change(function(event){
-			<!-- fill the entries in books with return data -->			
+			// <!-- fill the entries in books with return data -->			
 			var trid = $(this).closest('tr');			
-			
 			//trid.content()[1].innerHTML="hello";			
 			var book_col=trid.find(".books_select")
 			//$('.footer_status').html('Updating books of '+ $(this).val());
-
 			var test=$(this).val().toString();
 			$('.footer_status').html("Updating books.."+ test);
     		var data= "q=" +$(this).val().toString();
     		$.ajax({
-					url: "<%= trending_community_books_path %>",
-					data: data,
-					success: function(data, textStatus, jqXHR){
+				url: "<%= trending_community_books_path %>",
+				data: data,
+				success: function(data, textStatus, jqXHR){
+					var books = [];
+					var books_id= [];
+					for(var i=0; i < data.length; i++){
+						var book = data[i]["book.title"];
+						var id_b=data[i]["id_book"];
+						books_id.push(id_b);
+						books.push(book);
+					}
+					var empty_ret=false;
+					if(books.length == 0){
+						books = ["No results found..."];
+						empty_ret=true;
 
-						var books = [];
-						var books_id= [];
-						for(var i=0; i < data.length; i++){
-							var book = data[i]["book.title"];
-							var id_b=data[i]["id_book"];
-							books_id.push(id_b);
-							books.push(book);
-						}
-						var empty_ret=false;
-
-						if(books.length == 0){
-							books = ["No results found..."];
-							empty_ret=true;
-
-						}
-						
-						var newSelect=document.createElement('select');
-						newSelect.className="books_select";
-						newSelect.size=3;
-						newSelect.width=30;
-
-			    		var selectHTML="";
-
-			    		for(i=0; i<books.length; i=i+1){
-			        		selectHTML+= "<option value= "+books[i]+"label= "+books_id[i]+">"+books[i]+"</option>";
-
-			    		}
-
-			    		newSelect.innerHTML= selectHTML;
-			    		book_col.replaceWith(newSelect);
-
-			    		if(empty_ret==true){
-			    			//$('.footer_status').html('Not found.');
-			    			//newSelect.attr('disabled','disabled');
-			    		}
-
-			    		$('.footer_status').html('');
-					
-					},
-					error: function(jqxhr, textStatus, errorThrown){
-
-						$('.footer_status').html('Error in searching..');
-					},
-					timeout: 10000
-				});
-
-    		
-
-
+					}
+					var newSelect=document.createElement('select');
+					newSelect.className="books_select";
+					newSelect.size=3;
+					newSelect.width=30;
+		    		var selectHTML="";
+		    		for(i=0; i<books.length; i=i+1){
+		        		selectHTML+= "<option value= "+books[i]+"label= "+books_id[i]+">"+books[i]+"</option>";
+		    		}
+		    		newSelect.innerHTML= selectHTML;
+		    		book_col.replaceWith(newSelect);
+		    		if(empty_ret==true){
+		    			//$('.footer_status').html('Not found.');
+		    			//newSelect.attr('disabled','disabled');
+		    		}
+		    		$('.footer_status').html('');
+				},
+				error: function(jqxhr, textStatus, errorThrown){
+					$('.footer_status').html('Error in searching..');
+				},
+				timeout: 10000
+			});
 		});
 		
 		$(document).on('click','.books_select',function () {
@@ -278,7 +261,7 @@
 					data: data,
 					success: function(data, textStatus, jqxhr){
 						$('.footer_status').html('Done..');
-						window.location.reload();
+						// window.location.reload();
 					},
 					error: function(jqxhr, textStatus, errorThrown){
 						$('.footer_status').html('Error in toggling news..');

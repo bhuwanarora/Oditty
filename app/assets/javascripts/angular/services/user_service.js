@@ -131,12 +131,13 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return _deferred_request('/api/v0/info_data');
     }
 
-    this.get_personal_feed = function(id){
+    this.get_personal_feed = function(id, skip){
+        skip = skip || 0;
         if(angular.isDefined(id)){
-            return _deferred_request('/api/v0/notifications?id='+id);
+            return _deferred_request('/api/v0/notifications?id='+id+'&skip='+skip);
         }
         else{
-            return _deferred_request('/api/v0/notifications');
+            return _deferred_request('/api/v0/notifications?skip='+skip);
         } 
     }
 
@@ -157,8 +158,9 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return _deferred_post_request('/api/v0/follow?id='+id+"&status="+status);
     }
 
-    this.get_blog_feed = function(){
-        return _deferred_request('/api/v0/feed_blog');
+    this.get_blog_feed = function(skip_count){
+        skip_count = skip_count || 0;
+        return _deferred_request('/api/v0/feed_blog?skip_count='+skip_count);
     }
 
     this.get_last_blog = function(){

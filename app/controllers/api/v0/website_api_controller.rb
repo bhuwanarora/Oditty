@@ -130,7 +130,7 @@ module Api
 				else
 					user_id = session[:user_id]
 				end
-				info = WebsiteApi.get_personal_feed(user_id, params[:skip_count].to_i)
+				info = WebsiteApi.get_personal_feed(user_id, params[:skip].to_i)
 				render :json => info, :status => 200
 			end
 

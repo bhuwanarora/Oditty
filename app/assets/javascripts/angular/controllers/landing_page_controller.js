@@ -23,7 +23,7 @@ app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "Webs
 		$scope.text_index = 1;
 		$scope.current_text = "";
 
-		if($cookieStore.get('logged')){
+		if(getCookie("logged") != ""){
 			window.location.href = "/home";
 		}
 	}

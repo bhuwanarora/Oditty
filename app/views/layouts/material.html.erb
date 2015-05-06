@@ -135,6 +135,10 @@
                 <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
             <% end %>
 
+            <% if @search %>
+                <script src="assets/angular/controllers/search_page_controller.js"></script>
+            <% end %>
+
         <% else %>
             <script src="assets/min/angular/site.min.js"></script>
 
@@ -179,6 +183,9 @@
                 <script src="assets/min/angular/controllers/profile_group.min.js"></script>
             <% end %>
 
+            <% if @search %>
+                <script src="assets/min/angular/controllers/search_group.min.js"></script>
+            <% end %>
         <% end %>
     </head>
 
