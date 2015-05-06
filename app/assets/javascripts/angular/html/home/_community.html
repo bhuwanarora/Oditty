@@ -3,7 +3,7 @@
         <md-list-item layout-align="center center"
                       layout-padding
                       layout="row">
-            <div>Books on </div>
+            <div>Communities linked </div>
         </md-list-item>
         <md-list-item class="md-2-line contact-item selected" 
                       ng-repeat="community in community_feed.communities" 
@@ -21,51 +21,17 @@
         <div class="less_important">News, {{community_feed.created_at | timestamp | date:'dd MMM'}}</div>
         <div ng-bind-html="community_feed.description"></div>
     </md-card-content>
-    <md-card-content class="circles clear" layout="row">
-        <img flex class="community_feed_image" ng-repeat="feed in community_feed.communities"
-             ng-src="{{feed.image_url}}"
-             ng-click="goto_community_page(community_feed.id)"  
-             layout-padding
-             ng-show="feed.image_url">
-        </img>
+    <md-card-content class="image_container clear" layout="row">
+        <div flex class="image_wrapper" ng-repeat="feed in community_feed.communities">
+            <img class="community_feed_image"
+                 ng-src="{{feed.image_url}}"
+                 ng-click="goto_community_page(community_feed.id)"  
+                 layout-padding
+                 ng-show="feed.image_url"/>
+        </div>
     </md-card-content>
     <md-card-content class="footer" 
                      ng-init="bookmark_object = {'id': community_feed.id, 'type': 'Community'}"
                      ng-include src="'/assets/angular/html/shared/partials/card_footer.html'">
     </md-card-content>
 </md-card>
-<style>
-    .community_feed_image{
-        height: 50vh;
-    }
-
-    .communities{
-        order: 0;
-    }
-
-    .community_icon{
-        width: 70px;
-        height: 70px;
-    }
-
-    .community h3{
-        margin: 7px 0px !important;
-    }
-
-    .community .circles{
-        background-color: #f5f5f5;
-        order: 2;
-    }
-
-    .community .circles svg{
-        max-height: 400px;
-    }
-
-    .community .content{
-        order: 1;
-    }
-
-    .community .footer{
-        order: 3;
-    }
-</style>

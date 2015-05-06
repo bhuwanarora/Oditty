@@ -140,8 +140,13 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         } 
     }
 
-    this.get_feed = function(){
-        return _deferred_request('/api/v0/feed_news');
+    this.get_feed = function(id){
+        if(angular.isDefined(id)){
+            return _deferred_request('/api/v0/feed_news?id='+id);
+        }
+        else{
+            return _deferred_request('/api/v0/feed_news');
+        }
     }
 
     this.news_visited = function(id){
@@ -158,6 +163,10 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
 
     this.get_last_blog = function(){
         return _deferred_request('/api/v0/last_blog');
+    }
+
+    this.get_regions = function(){
+        return _deferred_request('/api/v0/regions');
     }
 
 }]);
