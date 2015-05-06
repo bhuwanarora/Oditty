@@ -362,6 +362,11 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('/assets/angular/html/search/_author.html',
+    "<md-card><md-card-content><section layout=\"row\" layout-align=\"space-between center\"></section><br><section layout=\"row\"><div flex=\"20\" flex-md=\"30\" flex-sm=\"35\" layout=\"row\" layout-align=\"start start\"><img ng-src=\"{{result.id | author_thumb}}\" class=\"large_circular\"></div><div flex=\"80\" flex-md=\"70\" flex-sm=\"65\" layout=\"column\" layout-wrap class=\"side_padding\"><div class=\"author_title\"><a ng-href=\"/author?id={{result.id}}\">{{result.name}}</a></div><div class=\"author_description\">{{result.description}}</div></div></section></md-card-content></md-card><style>.author_title{font-size:1.2em;font-family:sans-serif}.author_description{margin-top:10px;font-size:.9em}</style>"
+  );
+
+
   $templateCache.put('/assets/angular/html/search/_blog.html',
     "<md-card><md-card-content><div><b>Terror</b> in syria</div><br><section layout=\"row\"><div flex=\"20\" flex-md=\"30\" flex-sm=\"35\" layout=\"row\" layout-align=\"start start\"><img src=\"https://material.angularjs.org/img/washedout.png\" alt=\"Washed Out\" class=\"left_image\"></div><div flex=\"80\" flex-md=\"70\" flex-sm=\"65\" layout=\"column\" layout-wrap class=\"side_padding\"><div>Shared on 10Feb</div><br><div>The titles of Washed Out's breakthrough song and the first single from Paracosm share the two most important words in Ernest Greene's musical language...</div></div></section></md-card-content></md-card>"
   );
@@ -398,7 +403,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/search/show.html',
-    "<md-lis><md-card ng-repeat=\"result in all_results\"><div ng-include src=\"'/assets/angular/html/search/_book.html'\" ng-if=\"(result | search_item_type) == 'Book'\"></div><div ng-include src=\"'/assets/angular/html/search/_person.html'\" ng-if=\"(result | search_item_type) == 'Author'\"></div><div ng-include src=\"'/assets/angular/html/search/_blog.html'\" ng-if=\"(result | search_item_type) == 'Blog'\"></div><div ng-include src=\"'/assets/angular/html/search/_community.html'\" ng-if=\"(result | search_item_type) == 'Community'\"></div><div ng-include src=\"'/assets/angular/html/search/_listopia.html'\" ng-if=\"(result | search_item_type) == 'Listopia'\"></div></md-card><style>.left_image{max-width:100%;max-height:140px}.listopia_thumb{width:70px;height:100px}.large_circular{border-radius:50%;max-width:100%}md-card{margin-top:15px!important}</style></md-lis>"
+    "<md-list><md-card ng-repeat=\"result in all_results\"><div ng-include src=\"'/assets/angular/html/search/_book.html'\" ng-if=\"(result | search_item_type) == 'Book'\"></div><div ng-include src=\"'/assets/angular/html/search/_author.html'\" ng-if=\"(result | search_item_type) == 'Author'\"></div><div ng-include src=\"'/assets/angular/html/search/_blog.html'\" ng-if=\"(result | search_item_type) == 'Blog'\"></div><div ng-include src=\"'/assets/angular/html/search/_community.html'\" ng-if=\"(result | search_item_type) == 'Community'\"></div><div ng-include src=\"'/assets/angular/html/search/_listopia.html'\" ng-if=\"(result | search_item_type) == 'Listopia'\"></div></md-card></md-list><style>.left_image{max-width:100%;max-height:140px}.listopia_thumb{width:70px;height:100px}.large_circular{border-radius:50%;max-width:100%}md-card{margin-top:15px!important}</style>"
   );
 
 

@@ -95,7 +95,7 @@ class WebsiteController < ApplicationController
 	end
 
 	def search
-		@search_for = "Terror"
+		@search = true
 		render :layout => "material"
 	end
 
