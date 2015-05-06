@@ -486,7 +486,8 @@ module Api
 				User.new(user_id).get_profile_info_and_follow_status(id).execute
 			end
 
-			def self.set_region user_id, region
+			def self.set_region user_id, region, ip
+				region = GeoIP.new('GeoIP.dat').country(remote_ip.to_s).country_name  
 				User.new(user_id).set_region(region)
 			end
 		end

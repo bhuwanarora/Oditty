@@ -25,4 +25,5 @@ module Constant::Count
 	VerificationExpirySeconds	= 3600
 	SkipNews					= 10
 	SkipDays					= 1
+	BlogsShown					= 4
 end

@@ -378,7 +378,8 @@ module Api
 			def set_region
 				region = params[:id]
 				user_id = session[:user_id]
-				info = Api::V0::UserApi.set_region(user_id, region).execute
+				remote_ip = request.remote_ip
+				info = Api::V0::UserApi.set_region(user_id, region, remote_ip).execute
 				render :json => info, :status => 200
 			end
 		end

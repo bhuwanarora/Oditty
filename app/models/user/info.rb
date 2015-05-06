@@ -5,7 +5,7 @@ class User::Info < User
 	end
 
 	def self.set_region region
-		" SET user.region = " + region.to_s + " "
+		" MATCH(region:Region{name:\"" + region.strip + "\"}) WITH user, region SET user.region = region.name  "
 	end
 	
 	def self.set_last_login 
