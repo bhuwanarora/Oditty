@@ -36,18 +36,21 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$m
     }
 
     $scope.get_blog_feed = function(){
-        $scope.info.loading = true;
-        if(angular.isUndefined($scope.feed)){
-            $scope.feed = [];
+        if(!$scope.info.loading){
+            $scope.info.loading = true;
+            if(angular.isUndefined($scope.feed)){
+                $scope.feed = [];
+            }
+            var skip = $scope.feed.length;
+            var multiple = true;
+            userService.get_blog_feed(skip, multiple).then(function(data){
+                angular.forEach(data, function(value){
+                    value.label = "blog";
+                    this.push(value);
+                }, $scope.feed);
+                $scope.info.loading = false;
+            });
         }
-        var skip = $scope.feed.length;
-        userService.get_blog_feed(skip).then(function(data){
-            angular.forEach(data, function(value){
-                value.label = "blog";
-                this.push(value);
-            }, $scope.feed);
-            $scope.info.loading = false;
-        });
     }
 
     var _init = (function(){

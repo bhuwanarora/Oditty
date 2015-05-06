@@ -158,9 +158,10 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return _deferred_post_request('/api/v0/follow?id='+id+"&status="+status);
     }
 
-    this.get_blog_feed = function(skip_count){
+    this.get_blog_feed = function(skip_count, multiple){
         skip_count = skip_count || 0;
-        return _deferred_request('/api/v0/feed_blog?skip_count='+skip_count);
+        multiple = multiple || false;
+        return _deferred_request('/api/v0/feed_blog?skip_count='+skip_count+'&multiple='+multiple);
     }
 
     this.get_last_blog = function(){
