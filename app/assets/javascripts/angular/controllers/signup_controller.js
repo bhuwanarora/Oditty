@@ -96,7 +96,7 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
             $rootScope.user = data.user;
             $cookieStore.put('user', data.user);
             $scope._init_user();
-            window.location.href = "/home";
+            _redirect_user();
         }
 
         var error_callback = function(reason){
@@ -189,8 +189,7 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
         Facebook.api('/me', function(response){
             websiteService.handle_facebook_user(response).then(function(){
                 $scope._init_user();
-                // $scope._is_logged_in();
-                window.location.href = "/home";
+                _redirect_user();
             });
             $rootScope.user = response;
             Facebook.api('me/picture?redirect=false&type=large', function(response){
@@ -199,6 +198,15 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
 
         });
     };
+
+    var _redirect_user = function(){
+        if($cookieStore.get('redirect_url') && ($cookieStore.get('redirect_url') != null)){
+            window.location.href = $cookieStore.get('redirect_url');
+        }
+        else{
+            window.location.href = "/home";
+        }
+    }
 
     $scope._init_user = function(){
         $rootScope.user.logged = true;

@@ -12,7 +12,8 @@ homeApp.config(["$routeProvider", function($routeProvider){
 
 homeApp.run(["$rootScope", "$location", "$cookieStore", "$cookies", "$http", function($rootScope, $location, $cookieStore, $cookies, $http){
     var unauthenticated_user = !$cookieStore.get('logged');
-	if(unauthenticated_user){
+    if(unauthenticated_user){
+        $cookieStore.put('redirect_url', $location.$$absUrl);
 		window.location.href = "/signup";
 	}
 }]);
