@@ -448,27 +448,10 @@ module Api
 
 			def self.get_followers(user_id, skip_count)
 				info = User.new(user_id).get_followers(skip_count).execute
-				Api::V0::UserApi.remove_duplicates info
-			end
-
-			def self.remove_duplicates info
-				for head_index in (0..length(info)-1)
-					for compare_index in (head_index+1..length(info))
-						for book_head_index in (0..length(info[head_index]["book"])-1)
-							for book_compare_index in (0..length(info[compare_index]["book"]))
-								if info[head_index]["book"][book_head_index]["book_id"] == info[compare_index]["book"][book_compare_index]["book_id"]
-									info[compare_index]["book"] = info[compare_index]["book"] - [info[compare_index]["book"][book_compare_index]]
-								end 
-							end
-						end
-					end
-				end
-				info
 			end
 
 			def self.get_users_followed(user_id, skip_count)
 				info = User.new(user_id).get_users_followed(skip_count).execute
-				Api::V0::UserApi.remove_duplicates info
 			end
 
 			def self.handle_google_user params
