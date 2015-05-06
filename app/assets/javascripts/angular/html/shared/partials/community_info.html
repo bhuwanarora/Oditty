@@ -8,7 +8,7 @@
             <section layout="row" >
                 <md-button ng-click="show_book_dialog(book, $event)" 
                    class="clear book" layout-margin
-                   ng-repeat="book in community.books">
+                   ng-repeat="book in community.books | limitTo:3">
                     <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'" ></div>
                 </md-button>
             </section>
@@ -23,6 +23,7 @@
 
     .books{
         max-height: 180px;
+        background-color: transparent !important;
     }
 
     .books .book{
