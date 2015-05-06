@@ -357,14 +357,14 @@ module Api
 			def get_followers
 				user_id = session[:user_id]
 				skip_count = params[:skip] || 0
-				info = Api::V0::UserApi.get_followers(user_id, skip_count).execute
+				info = Api::V0::UserApi.get_followers(user_id, skip_count)
 				render :json => info, :status => 200
 			end
 
 			def get_users_followed
 				user_id = session[:user_id]
 				skip_count = params[:skip] || 0
-				info = Api::V0::UserApi.get_users_followed(user_id, skip_count).execute
+				info = Api::V0::UserApi.get_users_followed(user_id, skip_count)
 				render :json => info, :status => 200
 			end
 

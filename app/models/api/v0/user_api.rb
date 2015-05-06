@@ -447,11 +447,28 @@ module Api
 			end
 
 			def self.get_followers(user_id, skip_count)
-				User.new(user_id).get_followers(skip_count)
+				info = User.new(user_id).get_followers(skip_count).execute
+				Api::V0::UserApi.remove_duplicates info
+			end
+
+			def self.remove_duplicates info
+				for head_index in (0..length(info)-1)
+					for compare_index in (head_index+1..length(info))
+						for book_head_index in (0..length(info[head_index]["book"])-1)
+							for book_compare_index in (0..length(info[compare_index]["book"]))
+								if info[head_index]["book"][book_head_index]["book_id"] == info[compare_index]["book"][book_compare_index]["book_id"]
+									info[compare_index]["book"] = info[compare_index]["book"] - [info[compare_index]["book"][book_compare_index]]
+								end 
+							end
+						end
+					end
+				end
+				info
 			end
 
 			def self.get_users_followed(user_id, skip_count)
-				User.new(user_id).get_users_followed(skip_count)
+				info = User.new(user_id).get_users_followed(skip_count).execute
+				Api::V0::UserApi.remove_duplicates info
 			end
 
 			def self.handle_google_user params
@@ -484,125 +501,6 @@ module Api
 
 			def self.get_profile_info_of_another id, user_id
 				User.new(user_id).get_profile_info_and_follow_status(id).execute
-			end
-
-			private
-			def self._fb_set_clause params
-				set_clause = ""
-				property_clause = ""
-				for key in params.keys
-					puts "_fb_set_clause #{params[key].class} #{key}".blue
-					if params[key].class == Array
-						new_string = self._get_string_from_array(key, params[key])
-						property_clause = property_clause + new_string
-					elsif (params[key].class == ActiveSupport::HashWithIndifferentAccess) || (params[key].class == ActionController::Parameters)
-						puts "TO ADD #{params[key].class}".red
-					else
-						set_clause = set_clause + " SET fu."+key.to_s+"=\""+params[key].to_s.gsub("\"","'")+"\""
-					end
-				end
-
-				set_clause = set_clause + property_clause
-				set_clause
-			end
-
-			def self._fb_return_clause
-				" RETURN DISTINCT(ID(user)) AS user_id"
-			end
-
-			def self._update_user_with_email params
-				merge_clause = "MERGE (user:User{fb_id:"+params[:id]+"}) MERGE (user)-[:FacebookAuth]->(fu:FacebookUser) "
-				set_thumb = "SET user.thumb = CASE WHEN user.thumb IS NULL THEN \""+params[:thumb].to_s+"\" ELSE user.thumb END "
-				set_name = "SET user.name = CASE WHEN user.name IS NULL THEN \""+params[:name].to_s+"\" ELSE user.name END "
-				set_last_login = "SET user.last_login = \""+Time.now.strftime("%Y-%m-%d")+"\" "
-				set_email = "SET user.email = \""+params[:email].to_s+"\""
-				clause = merge_clause + set_thumb + set_name + set_last_login + set_email + self._fb_set_clause(params) + self._fb_return_clause
-				clause
-			end
-
-			def self._create_user_with_email params
-				create_clause = "CREATE (user:User{fb_id:"+params[:id]+", email:\""+params[:email]+"\", thumb:\""+params[:thumb].to_s+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, name:\""+params[:name].to_s+"\", last_book: "+Constant::Id::BestBook.to_s+", amateur: true, ask_info: true}), (user)-[:FacebookAuth]->(fu:FacebookUser), (user)-[fn:FeedNext{user_id:ID(user)}]->(user), (user)-[:Ego{user_id:ID(user)}]->(user) WITH user, fu "
-				label_clause = "MATCH(bm:Label{primary_label:true}) CREATE (user)-[:Labelled{user_id:ID(user)}]->(bm) WITH DISTINCT(user) as user, fu "
-				follow_clause = "MATCH (all_user:User) WHERE all_user <> user CREATE (user)-[:Follow]->(all_user), (user)<-[:Follow]-(all_user) WITH user, fu "
-				set_clause = "SET user.last_login = \""+Time.now.strftime("%Y-%m-%d")+"\" "
-				clause = create_clause + label_clause + follow_clause + set_clause + self._fb_set_clause(params)+self._fb_return_clause
-				clause
-			end
-
-			def self._update_user_without_email params
-				merge_clause = "MERGE (user:User{fb_id:"+params[:id]+"}) MERGE (user)-[:FacebookAuth]->(fu:FacebookUser) "
-				set_thumb = "SET user.thumb = CASE WHEN user.thumb IS NULL THEN \""+params[:thumb].to_s+"\" ELSE user.thumb END "
-				set_name = "SET user.name = CASE WHEN user.name IS NULL THEN \""+params[:name].to_s+"\" ELSE user.name END "
-				set_last_login = "SET user.last_login = \""+Time.now.strftime("%Y-%m-%d")+"\" "
-				clause = merge_clause + set_thumb + set_name + set_last_login + self._fb_set_clause(params) + self._fb_return_clause
-				clause
-			end
-
-			def self._create_user_without_email params
-				create_clause = "CREATE (user:User{fb_id:"+params[:id]+", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, name:\""+params[:name].to_s+"\", last_book:"+Constant::Id::BestBook.to_s+", amateur: true, ask_info: true}), (user)-[:FacebookAuth]->(fu:FacebookUser), (user)-[fn:FeedNext{user_id:ID(user)}]->(user), (user)-[:Ego{user_id:ID(user)}]->(user) WITH user, fu "
-				label_clause = "MATCH(bm:Label{primary_label:true}) CREATE (user)-[:Labelled{user_id:ID(user)}]->(bm) SET user.thumb=\""+params[:thumb].to_s+"\" WITH DISTINCT(user) as user, fu "
-				follow_clause = "MATCH (all_user:User) WHERE all_user <> user CREATE (user)-[:Follow]->(all_user), (user)<-[:Follow]-(all_user) WITH user, fu "
-				set_clause = "SET user.last_login = \""+Time.now.strftime("%Y-%m-%d")+"\" "
-				clause = create_clause + label_clause + follow_clause + set_clause + self._fb_set_clause(params)+self._fb_return_clause
-				clause
-			end
-
-			def self._get_string_from_array(key, array)
-				key = key.to_s
-				string = ""
-				label = key.camelcase
-				count = 0
-				for param in array
-					count = count + 1
-					
-					object_string = ""
-					node_string = ""
-					new_label = label.downcase+count.to_s
-					for object_key in param.keys
-						if object_string.present?
-							connector = ","
-						else
-							connector = ""
-						end
-						if param[object_key].class == String
-							new_string = self._handle_string(object_key, param[object_key])
-							object_string = object_string + connector + new_string
-						elsif param[object_key].class == Array
-							for hash_object in param[object_key]
-								node_string = node_string + self._handle_hash(hash_object, object_key, new_label)		
-							end
-						elsif (param[object_key].class == Hash) || (param[object_key].class == ActiveSupport::HashWithIndifferentAccess)
-							node_string = node_string + self._handle_hash(param[object_key], object_key, new_label)
-						end
-
-						puts "#{param[object_key].to_s.green} #{object_key.to_s} #{key} #{param[object_key].class}"
-						puts object_string.to_s.blue
-						puts node_string.to_s.red
-					end
-					if object_string.present?
-						string = string + " CREATE UNIQUE (user)-[:"+label+"]->("+new_label+":"+label.singularize+"{"+object_string+"}) "+node_string
-					end
-				end
-				string
-			end
-
-			def self._handle_string(key, value)
-				key.to_s+": \""+value.to_s.gsub("\"", "'")+"\""
-			end
-
-			def self._handle_hash(param, object_key, new_label)
-				new_object_string = ""
-				for new_object_key in param.keys
-					if new_object_string.present?
-						connector = ","
-					else
-						connector = ""
-					end
-					new_string = self._handle_string(new_object_key, param[new_object_key])
-					new_object_string = new_object_string + connector + new_string
-				end
-				new_object_string = " CREATE UNIQUE ("+new_label.to_s+")-[:HasProperty]->(:"+object_key.to_s.singularize.camelcase+"{"+new_object_string+"})"
-				new_object_string
 			end
 
 			def self.set_region user_id, region
