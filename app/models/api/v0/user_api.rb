@@ -447,11 +447,11 @@ module Api
 			end
 
 			def self.get_followers(user_id, skip_count)
-				info = User.new(user_id).get_followers(skip_count).execute
+				User.new(user_id).get_followers(skip_count)
 			end
 
 			def self.get_users_followed(user_id, skip_count)
-				info = User.new(user_id).get_users_followed(skip_count).execute
+				User.new(user_id).get_users_followed(skip_count)
 			end
 
 			def self.handle_google_user params
