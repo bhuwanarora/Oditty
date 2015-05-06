@@ -9,8 +9,9 @@ module Api
 			end
 
 			def get_blog
-				skip_count = params[:skip_count]
-				info = Api::V0::FeedsApi.get_blog(skip_count).execute
+				skip_count = params[:skip_count] || 1
+				multiple_blog = params[:multiple_blog] || false
+				info = Api::V0::FeedsApi.get_blog(skip_count, multiple_blog).execute
 				render :json => info, :status => 200
 			end
 

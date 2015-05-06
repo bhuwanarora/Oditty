@@ -16,8 +16,9 @@ module Api
 
 			def get_details
 				author_id = params[:id]
+				user_id = session[:user_id]
 				if author_id
-					info = Api::V0::AuthorApi.get_details author_id
+					info = Api::V0::AuthorApi.get_details author_id, user_id
 					status = 200
 				else
 					info = {:message => "Invalid Request"}

@@ -10,8 +10,8 @@ module Api
 				News.get_feed(skip_count, day_skip_count, region)
 			end
 
-			def self.get_blog skip_count
-				Blog.get_blog skip_count
+			def self.get_blog skip_count, multiple_blog
+				Blog.get_blog skip_count, multiple_blog
 			end
 
 			def self.last_blog

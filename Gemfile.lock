@@ -166,6 +166,7 @@ GEM
       railties (>= 3.2, < 5.0)
     freebase-api (0.1.5)
       httparty (~> 0.10)
+    geoip (1.5.0)
     girl_friday (0.11.2)
       connection_pool (~> 1.0)
       rubinius-actor
@@ -516,6 +517,7 @@ DEPENDENCIES
   fb_graph
   flickraw
   freebase-api
+  geoip
   google-search (~> 1.0.3)
   hirb
   hirb-unicode

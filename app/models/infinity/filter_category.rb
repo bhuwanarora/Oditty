@@ -9,6 +9,6 @@ class Infinity::FilterCategory < Infinity
 	end
 
 	def get_books skip_count, limit
-		@category.match + Category.match_books_in_list("category", skip_count, limit) + Infinity::FilterCategory.return_group(Category.basic_info, Infinity::FilterCategory.collect_map({"book" => Book.grouped_basic_info}))   
+		@category.match + Category.match_books_in_list("category", skip_count, limit) + Infinity::FilterCategory.return_group(Category.basic_info, Infinity::FilterCategory.collect_map({"books" => Book.grouped_basic_info}))   
 	end
 end

@@ -17,7 +17,7 @@ class Infinity < Neo
 		if only_read_time
 			puts "only_read_time".green
 			puts @skip_count
-			clause = ReadTime.new(@reading_time_id).match_books_after(@skip_count, Limit) + Infinity.return_init + Book.basic_info
+			clause = ReadTime.new(@reading_time_id).match_books_after(@skip_count, Limit) + Infinity.return_group(Infinity.collect_map({"books" => Book.grouped_basic_info}))
 		elsif only_category
 			puts "only_category".green
 			clause = Infinity::FilterCategory.new(@category_id).get_books(@skip_count, Limit)

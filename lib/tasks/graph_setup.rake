@@ -12,6 +12,18 @@ namespace :graph do
     GraphHelper.reset_news_link
   end
 
+  desc "Category linked list"
+  task :set_category_linked_list => :environment do
+    include GraphHelper
+    GraphHelper.set_category_linked_list
+  end
+
+  desc "Era linked list"
+  task :set_era_linked_list => :environment do
+    include GraphHelper
+    GraphHelper.set_era_linked_list
+  end
+
   desc " create root blog node and fetch all blogs "
   task :set_blogs => :environment do
     include GraphHelper
