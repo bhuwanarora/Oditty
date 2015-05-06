@@ -17,7 +17,7 @@ module Api
 			def get_news
 				region = params[:id]
 				session[:news_skip_count] ||= 0
-				session[:news_day_skip_count ||= 0
+				session[:news_day_skip_count] ||= 0
 				info = Api::V0::FeedsApi.get_news(session[:news_skip_count], session[:news_day_skip_count], region).execute
 				if info.blank?
 					session[:news_day_skip_count] += 1
