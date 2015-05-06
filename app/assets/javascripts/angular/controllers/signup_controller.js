@@ -211,6 +211,7 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
     $scope._init_user = function(){
         $rootScope.user.logged = true;
         $cookieStore.put('logged', true);
+        setCookie("logged", true, 31);
     }
       
     // $scope.logout = function() {
@@ -241,6 +242,7 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
                     angular.extend($rootScope.user, data);
                 });
                 $cookieStore.put('logged', true);
+                setCookie("logged", true, 31);
                 // $scope._on_authenticate();
                 _handle_push_notifications();     
                 // stropheService.start_connection();
