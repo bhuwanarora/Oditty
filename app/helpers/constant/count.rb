@@ -21,9 +21,9 @@ module Constant::Count
 	RelevantSocialTag		  	= 1
 
 	ElementsShownInSearch		= 6
-	NewsShownInFeed				= 10
+	NewsShownInFeed				= 4
 	VerificationExpirySeconds	= 3600
-	SkipNews					= 10
+	SkipNews					= 4
 	SkipDays					= 1
 	BlogsShown					= 4
 end
