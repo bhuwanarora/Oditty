@@ -34,15 +34,15 @@ class Bookmark < Neo
 	end
 
 	def self.match_not media
-		" WHERE NOT (user)-[:Labelled]->(:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(" + media.downcase + ") "
+		" WHERE NOT (user)-[:Labelled]->(:Label)-[:BookmarkedOn]->(:BookmarkNode{user_id:ID(user)})-[:BookmarkAction]->(" + media.downcase + ") "
 	end
 
 	def self.match_path media, label="user"
-		" MATCH ("+ label +":User)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->("+media+")"
+		" MATCH ("+ label +":User)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode{user_id:ID(" + label + ")})-[bookmark_action:BookmarkAction]->("+media+")"
 	end
 
 	def self.optional_match_path  media, label="user"
-		" OPTIONAL MATCH (" + label + ":User)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->("+media+")"
+		" OPTIONAL MATCH (" + label + ":User)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode{user_id:ID(" + label + ")})-[bookmark_action:BookmarkAction]->("+media+")"
 	end
 
 	def self.optional_match_label media = "book"
@@ -50,7 +50,7 @@ class Bookmark < Neo
 	end
 
 	def self.match media = "book"
-	 	" MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(" + media + ") With user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, " + media + " "
+	 	" MATCH (user)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode{user_id:ID(user)})-[bookmark_action:BookmarkAction]->(" + media + ") With user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, " + media + " "
 	end
 
 	def self.create_bookmark_node_book media = "book"

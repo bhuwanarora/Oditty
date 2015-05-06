@@ -25,7 +25,7 @@ class Author < Neo
 	end
 
 	def optional_match_books
-		" OPTIONAL MATCH (author)-[:Wrote]->(book:Book) WITH author, book ORDER BY book.published_year DESC WITH author, COLLECT({"+Book.grouped_basic_info+", description: book.description}) AS book "
+		" OPTIONAL MATCH (author)-[:Wrote]->(book:Book) WITH author, book "
 	end
 
 	def self.match_books
@@ -58,8 +58,8 @@ class Author < Neo
 		skip(skip_count) +  limit(Constant::Count::FollowFavoriteAuthors) + return_init + Author.basic_info
 	end
 
-	def get_details
-		match + optional_match_books + Author.return_group(Author.basic_info, "book AS books") + Author.limit(10)
+	def get_details user_id
+		match + optional_match_books + Author.order_by("book.published_year DESC") + User.new(user_id).match + ", author, book " + Bookmark::Type::IOwnThis.match(user_id) + ", author " + Author.return_group(Author.basic_info, "COLLECT({"+Book.grouped_basic_info+", description: book.description, own_status:ID(bookmark_node)}) AS books") + Author.limit(10)
 	end
 
 	def self.search_by_indexed_name indexed_name

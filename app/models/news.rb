@@ -32,6 +32,9 @@ class News < Neo
 	end
 
 	def self.merge_region news_metadata
+		if news_metadata["region"].strip == "Canada English"
+			news_metadata["region"] = "Canada"
+		end
 		" MERGE (region:Region{name:\"#{news_metadata["region"]}\"}) MERGE (region)<-[:FromRegion{region:ID(region)}]-(news) WITH region, news " 
 	end
 
@@ -195,6 +198,6 @@ class News < Neo
 	end
 
 	def self.get_regions
-		" MATCH (region:Region) RETURN COLLECT({id:ID(region)  , name:region.name}) AS regions "
+		" MATCH (region:Region) WITH region ORDER BY region.name RETURN COLLECT({id:ID(region)  , name:region.name}) AS regions "
 	end
 end

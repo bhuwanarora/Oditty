@@ -16,8 +16,8 @@ module Api
 				# end
 			end
 
-			def self.get_details author_id
-				info = Author.new(author_id).get_details.execute[0]
+			def self.get_details author_id, user_id
+				info = Author.new(author_id).get_details(user_id).execute[0]
 				info
 			end
 
