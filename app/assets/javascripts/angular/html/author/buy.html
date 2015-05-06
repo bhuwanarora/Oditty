@@ -1,17 +1,10 @@
 <md-dialog aria-label="Buy this book" class="buy_dialog">
-    <md-content class="sticky-container">
-        <md-subheader class="md-sticky-no-effect">
-            Buy this book
-        </md-subheader>
-        <div class="dialog-content">
-            <div ng-include src="'/assets/angular/html/book/_buy.html'"></div>
-        </div>
+    <md-subheader>
+        Buy this book
+    </md-subheader>
+    <md-content>
+        <div ng-include src="'/assets/angular/html/book/_buy.html'"></div>
     </md-content>
-    <div class="md-actions" layout="row">
-        <md-button ng-click="close_dialog()" class="md-primary">
-            Close
-        </md-button>
-    </div>
 </md-dialog>
 <style>
     .buy_dialog{

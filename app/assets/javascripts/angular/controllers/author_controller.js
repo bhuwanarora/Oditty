@@ -1,27 +1,49 @@
-homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'authorService', '$mdDialog', 'scroller', 'ColorConstants', '$filter', '$sce', function($scope, $location, $mdSidenav, authorService, $mdDialog, scroller, ColorConstants, $filter, $sce){
+homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'authorService', '$mdDialog', 'scroller', 'ColorConstants', '$filter', '$sce', '$rootScope', "scroller", function($scope, $location, $mdSidenav, authorService, $mdDialog, scroller, ColorConstants, $filter, $sce, $rootScope, scroller){
 
-    $scope.show_buy_dialog = function(event){
+    $scope.show_buy_dialog = function(event, book){
+        $rootScope.active_book = book;
         $mdDialog.show({
             templateUrl: 'assets/angular/html/author/buy.html',
-            targetEvent: event,
+            targetEvent: event
         });
         event.stopPropagation();
     }
 
-    $scope.close_dialog = function(){
-        $mdDialog.hide();
+    $scope.next_block = function(index){
+        var length = $scope.author.books.length;
+        if(index == (length-1)){
+            index = -1;
+        }
+        index = index + 1;
+        $scope.scroll_to_element(index);
     }
 
-    $scope.next_block = function(){
-
+    $scope.scroll_to_element = function(index){
+        var offset = 0;
+        var duration = 2000;
+        var id = $scope.author.books[index].id;
+        var someElement = angular.element(document.getElementById(id));
+        var easeInQuad = function(t){ 
+            return t*t;
+        };
+        scroller.scrollToElement(someElement, offset, duration);
     }
 
-    $scope.previous_block = function(){
-
+    $scope.previous_block = function(index){
+        var length = $scope.author.books.length;
+        if(index == 0){
+            index = length;
+        }
+        index = index - 1;
+        $scope.scroll_to_element(index);
     }
 
     $scope.scroll_wiki = function(){
 
+    }
+
+    $scope.toggle_wiki = function(){
+        $scope.show_author_wiki = !$scope.show_author_wiki;
     }
 
     $scope.show_authors_nav = function(event){
@@ -36,9 +58,11 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
             $scope.author.wiki_url = wiki_url.substring(wiki_url.lastIndexOf("?q=")+3, wiki_url.lastIndexOf("&sa"));
         }
 
+        $scope.active_index = 0;
+        $scope.info.loading = true;
         authorService.get_details(id).then(function(data){
             $scope.author = data;
-            if(data.wiki_url != null){
+            if(data.wiki_url != null && data.wiki_url != ""){
                 _get_wiki_without_google_redirect(data.wiki_url);
                 $scope.author.wiki_url = $sce.trustAsResourceUrl($scope.author.wiki_url+"?action=render");
             }
@@ -55,6 +79,7 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
                 $scope.author.books[index] = angular.extend($scope.author.books[index], json);
             });
             $scope.custom_color = {'background-color': $scope.author.books[0].color};
+            $scope.info.loading = false;
         });
     }());
 

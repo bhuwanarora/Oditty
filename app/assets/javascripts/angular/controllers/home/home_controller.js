@@ -1,4 +1,4 @@
-homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$mdBottomSheet', 'shelfService', '$timeout', '$location', function($scope, $rootScope, userService, $mdBottomSheet, shelfService, $timeout, $location){
+homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$mdBottomSheet', 'shelfService', '$timeout', '$location', 'userService', function($scope, $rootScope, userService, $mdBottomSheet, shelfService, $timeout, $location, userService){
 
 	$scope.goto_community_page = function(id){
 		userService.news_visited(id);
@@ -15,10 +15,16 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$m
         event.stopPropagation();
     };
 
+    $scope.change_feed = function(){
+        $scope.feed = [];
+        $scope.get_community_feed();        
+    }
+
     $scope.get_community_feed = function(){
         if(!$scope.info.loading){
             $scope.info.loading = true;
-            userService.get_feed().then(function(data){
+            var region_id = $scope.active_region;
+            userService.get_feed(region_id).then(function(data){
                 $scope.info.loading = false;
                 angular.forEach(data, function(value){
                     var json = {'label': 'news'};
@@ -44,6 +50,10 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$m
         
         $scope.$on('destroy', function(){
             $timeout.cancel(timeout_event);
+        });
+
+        userService.get_regions().then(function(data){
+            $scope.regions = data[0].regions;
         });
 
         var communities = (url.indexOf("communities") > 0);

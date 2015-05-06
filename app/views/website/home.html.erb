@@ -1,12 +1,57 @@
-<md-content layout="row" layout-wrap ng-controller="homeController" check-scroll-bottom="get_community_feed()">
-    <div flex="20" hide-sm flex-md="10"></div>
-    <div flex="60" flex-sm="100" flex-md="80">
-        <div ng-include src="'/assets/angular/html/home/show.html'"></div>
-    </div>
-    <div flex="20" hide-sm flex-md="10"></div>
+<md-content ng-controller="homeController" check-scroll-bottom="get_community_feed()">
+	<div layout="row" layout-align="space-between" layout-padding>
+		<div></div>
+		<md-select ng-model="active_region" placeholder="Select Region" layout-padding ng-change="change_feed()">
+	      	<md-optgroup label="Regions">
+	        	<md-option ng-value="region.id" ng-repeat="region in regions">{{region.name}}</md-option>
+	      	</md-optgroup>
+	    </md-select>
+	</div>
+	<div layout="row" layout-wrap>
+	    <div flex="20" hide-sm flex-md="10"></div>
+	    <div flex="60" flex-sm="100" flex-md="80">
+	        <div ng-include src="'/assets/angular/html/home/show.html'"></div>
+	    </div>
+	    <div flex="20" hide-sm flex-md="10"></div>
+	</div>
 </md-content>
 <style>
 	a:hover{
 		text-decoration: underline!important;
 	}
+
+    .communities{
+        order: 0;
+    }
+
+    .community_icon{
+        width: 70px;
+        height: 70px;
+    }
+
+    .community h3{
+        margin: 7px 0px !important;
+    }
+
+    .community .image_container{
+        background-color: #f5f5f5;
+        order: 2;
+    }
+
+    .community .image_container img{
+        height: auto;
+        width: 100%;
+    }
+
+    .community .image_wrapper{
+    	overflow: hidden;
+    }
+
+    .community .content{
+        order: 1;
+    }
+
+    .community .footer{
+        order: 3;
+    }
 </style>
