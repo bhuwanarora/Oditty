@@ -48,7 +48,6 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
             sharedService.get_popular_books($scope);
         }
         else{
-            $scope.info.loading = true;
             $scope.info.books = [];
             sharedService.filtered_books($scope);
         }
