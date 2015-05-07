@@ -66,19 +66,27 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
                 _get_wiki_without_google_redirect(data.wiki_url);
                 $scope.author.wiki_url = $sce.trustAsResourceUrl($scope.author.wiki_url+"?action=render");
             }
-            angular.forEach($scope.author.books, function(value, index){
+            if(($scope.author.books.length == 1) && ($scope.author.books[0].title == null)){
+                $scope.author.books = [];
                 var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-                var url = $filter('large_thumb')(value);
                 var color = ColorConstants.value[random_int];
-                if(url != ""){
-                    var json =  {"color": color, "custom_style": {"background-image": "url('"+url+"')"}};
-                }
-                else{
-                    var json =  {"color": color, "custom_style": {"background-color": color}};
-                }
-                $scope.author.books[index] = angular.extend($scope.author.books[index], json);
-            });
-            $scope.custom_color = {'background-color': $scope.author.books[0].color};
+                $scope.custom_style = {'background-color': color};
+                $scope.custom_color = color;
+            }
+            else{
+                angular.forEach($scope.author.books, function(value, index){
+                    var random_int = Math.floor(Math.random()*ColorConstants.value.length);
+                    var url = $filter('large_thumb')(value);
+                    var color = ColorConstants.value[random_int];
+                    if(url != ""){
+                        var json =  {"color": color, "custom_style": {"background-image": "url('"+url+"')"}};
+                    }
+                    else{
+                        var json =  {"color": color, "custom_style": {"background-color": color}};
+                    }
+                    $scope.author.books[index] = angular.extend($scope.author.books[index], json);
+                });
+            }
             $scope.info.loading = false;
         });
     }());

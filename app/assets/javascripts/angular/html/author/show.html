@@ -2,19 +2,14 @@
     parallax-background parallax-ratio="0.9"
     layout-align="center center"
     layout="column"
+    ng-if="author.books.length != 0"
     id="{{author.books[0].id}}"
-    ng-style="author.books[0].custom_style">
-    <div>
-        <h1>{{author.name | uppercase}}</h1>
-        <div>{{author.year_born}}-{{author.year_died}}</div>
-    </div>
-    <div class="nav_icons" layout="row">
-        <md-button ng-click="previous_block(0)"><span class="icon-angle-up"></span></md-button>
-        <md-button ng-click="next_block(0)"><span class="icon-angle-down"></span></md-button>
-    </div>
+    ng-style="author.books[0].custom_style || custom_style">
+    <div ng-include src="'/assets/angular/html/shared/partials/author_name.html'"></div>
 </div>
 <div layout-padding class="book_description" 
-     parallax-background parallax-ratio="0.7">
+     parallax-background parallax-ratio="0.7"
+     ng-if="author.books.length != 0">
     <div layout="row" class="full_width">
         <div flex="25" flex-md="15" flex-sm="10"></div>
         <div flex="50" flex-md="70" flex-sm="80" layout="row" layout-sm="column">
@@ -35,10 +30,12 @@
         <div flex="25" flex-md="15" flex-sm="10"></div>
     </div>
 </div>
- <div class="author_book_cover" layout-align="center center" layout="column" 
-    parallax-background parallax-ratio="0.9"
-    ng-style="{'background-color': author.books[0].color}">
-     <div class="nav_icons" layout="row">
+<div class="author_book_cover" 
+     layout-align="center center" layout="column"
+     parallax-background parallax-ratio="0.9"
+     ng-style="{'background-color': (author.books[0].color ||  custom_color)}">
+     <div ng-include src="'/assets/angular/html/shared/partials/author_name.html'" ng-if="author.books.length == 0"></div>
+     <div class="nav_icons" layout="row" ng-if="author.books.length != 0">
         <md-button ng-click="previous_block(0)"><span class="icon-angle-up"></span></md-button>
         <md-button ng-click="next_block(0)"><span class="icon-angle-down"></span></md-button>
     </div>
@@ -91,7 +88,9 @@
     </md-card>
 </div>
 
-<section ng-repeat="book in author.books track by $index" id="{{book.id}}">
+<section ng-repeat="book in author.books track by $index" 
+         ng-if="author.books.length != 0"
+         id="{{book.id}}">
     <div class="book_cover" layout-align-sm="center center" 
         layout-align-md="center center" layout="column" 
         parallax-background parallax-ratio="0.9"   

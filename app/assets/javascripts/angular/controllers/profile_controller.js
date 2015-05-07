@@ -28,8 +28,10 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 
 	$scope.get_feed = function(){
 		if(!$scope.info.loading){
+			var personal_feed = [];
 			var id = $scope.active_user_id;
 			$scope.info.loading = true;
+
 			var _get_message = function(value){
 				var message = ""
 				switch(value.label){
@@ -75,7 +77,7 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 					return {"status": book_exists, "index": feed_index};
 				}
 
-				angular.forEach($scope.personal_feed, function(value){
+				angular.forEach(personal_feed, function(value){
 					if(angular.isDefined(value.book)){
 						var book = _book_exists(grouped_feed, value.book.id);
 						if(book.status){
@@ -95,12 +97,13 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 						this.push(value);
 					}
 				}, grouped_feed);
-				$scope.personal_feed = grouped_feed;
+				personal_feed = grouped_feed;
 			}
 
 			if(angular.isUndefined($scope.personal_feed)){
 				$scope.personal_feed = [];
 			}
+
 			var skip = $scope.personal_feed.length;
 			userService.get_personal_feed(id, skip).then(function(data){
 				if(data.length > 0){
@@ -110,9 +113,9 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 							value.book = angular.extend(value.book, {"color": ColorConstants.value[random_int]});
 						}
 						this.push(value);
-					}, $scope.personal_feed);
+					}, personal_feed);
 					_group_feed();
-					angular.forEach($scope.personal_feed, function(value){
+					angular.forEach(personal_feed, function(value){
 						if(angular.isDefined(value.book)){
 							bookService.get_basic_book_details(value.book.id).then(function(data){
 								value.book = angular.extend(value.book, data);
@@ -143,6 +146,7 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 					});
 				}
 				$scope.info.loading = false;
+				$scope.personal_feed = $scope.personal_feed.concat(personal_feed);
 			});
 		}
 	}
