@@ -200,7 +200,8 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
     };
 
     var _redirect_user = function(){
-        if($cookieStore.get('redirect_url') && ($cookieStore.get('redirect_url') != null)){
+        var redirect_url = getCookie("redirect_url");
+        if(redirect_url && (redirect_url != null)){
             window.location.href = $cookieStore.get('redirect_url');
         }
         else{

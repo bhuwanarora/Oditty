@@ -46,7 +46,8 @@ app.run(["$rootScope", "$location", "$cookieStore", "$cookies", "$http", functio
     var unauthenticated_user = getCookie("logged") == "";
     if(unauthenticated_user){
         if($location.$$absUrl.indexOf("signup") < 0){
-            $cookieStore.put('redirect_url', $location.$$absUrl);
+            // $cookieStore.put('redirect_url', $location.$$absUrl);
+            setCookie("redirect_url", $location.$$absUrl);
             window.location.href = "/signup";
         }
     }
