@@ -4,22 +4,26 @@ class Search < Neo
 		@client = Elasticsearch::Client.new log: true	
 	end
 
+	def self.extract_info record
+		record["_source"]["label"] = record["_type"].camelcase
+		record["_source"]["id"] = record["_id"].to_i
+		record
+	end
+
 	def book_by_title
 		response = []
-		search_response = @client.search index: 'search', type: 'book', scroll: '5m', body: { query: { match: { title: @search_text}} , sort: {'weight'=> {'order' => 'desc'}}}
+		search_response = @client.search index: 'search_read', type: 'book', scroll: '5m', body:{query: { dis_max: { queries: [{match:{title: @search_text}}, {match:{ author: @search_text}}]}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		search_response["hits"]["hits"].each do |record|
-			record["_source"]["label"] = record["_type"].camelcase
-			response << record["_source"] 
+			response << Search.extract_info(record)["_source"] 
 		end
 		response
 	end
 
 	def author_by_name
 		response = []
-		search_response = @client.search index: 'search', type: 'author', scroll: '5m', body: { query: { match: { title: @search_text}} , sort: {'weight'=> {'order' => 'desc'}}}
+		search_response = @client.search index: 'search', type: 'author', scroll: '5m', body: { query: { match: { title: @search_text}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		search_response["hits"]["hits"].each do |record|
-			record["_source"]["label"] = record["_type"].camelcase
-			response << record["_source"] 
+			response << Search.extract_info(record)["_source"] 
 		end
 		response
 	end
@@ -30,10 +34,9 @@ class Search < Neo
 
 	def user_by_name
 		response = []
-		search_response = @client.search index: 'search', type: 'user', scroll: '5m', body: { query: { match: { title: @search_text}} , sort: {'weight'=> {'order' => 'desc'}}}
+		search_response = @client.search index: 'search', type: 'user', scroll: '5m', body: { query: { match: { title: @search_text}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		search_response["hits"]["hits"].each do |record|
-			record["_source"]["label"] = record["_type"].camelcase
-			response << record["_source"] 
+			response << Search.extract_info(record)["_source"] 
 		end
 		response
 	end
@@ -49,40 +52,36 @@ class Search < Neo
 
 	def news_by_title
 		response = []
-		search_response = @client.search index: 'search', type: 'news', scroll: '5m', body: { query: { match: { title: @search_text}} , sort: {'weight'=> {'order' => 'desc'}}}
+		search_response = @client.search index: 'search', type: 'news', scroll: '5m', body: { query: { match: { title: @search_text}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		search_response["hits"]["hits"].each do |record|
-			record["_source"]["label"] = record["_type"].camelcase
-			response << record["_source"] 
+			response << Search.extract_info(record)["_source"] 
 		end
 		response
 	end
 
 	def blog_by_title
 		response = []
-		search_response = @client.search index: 'blog', type: 'blog', scroll: '5m', body: { query: { match: { title: @search_text}} , sort: {'weight'=> {'order' => 'desc'}}}
+		search_response = @client.search index: 'blog', type: 'blog', scroll: '5m', body: { query: { match: { title: @search_text}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		search_response["hits"]["hits"].each do |record|
-			record["_source"]["label"] = record["_type"].camelcase
-			response << record["_source"] 
+			response << Search.extract_info(record)["_source"] 
 		end
 		response
 	end
 
 	def community_by_name
 		response = []
-		search_response = @client.search index: 'search', type: 'community', scroll: '5m', body: { query: { match: { title: @search_text}} , sort: {'weight'=> {'order' => 'desc'}}}
+		search_response = @client.search index: 'search', type: 'community', scroll: '5m', body: { query: { match: { title: @search_text, }} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		search_response["hits"]["hits"].each do |record|
-			record["_source"]["label"] = record["_type"].camelcase
-			response << record["_source"] 
+			response << Search.extract_info(record)["_source"] 
 		end
 		response
 	end
 
 	def basic
 		response = []
-		search_response = @client.search index: 'search', scroll: '5m', body: { query: { match: { title: @search_text}} , sort: {'weight'=> {'order' => 'desc'}}}
+		search_response = @client.search index: 'search_read', scroll: '5m', body:{query: { dis_max: { queries: [{match:{title: @search_text}}, {match:{ author: @search_text}}, {match:{ name: @search_text}}, { match:{ community_name: @search_text}}]}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		search_response["hits"]["hits"].each do |record|
-			record["_source"]["label"] = record["_type"].camelcase
-			response << record["_source"] 
+			response << Search.extract_info(record)["_source"] 
 		end
 		response
 	end

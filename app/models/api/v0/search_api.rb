@@ -8,13 +8,13 @@ module Api
             	type = params[:type]
 				if(q && q.length >= 3)
 					params.merge!(:fuzzy => nil)
-					results = self._get_search_clause(params).execute
+					results = self._get_search_clause(params)
 					
 					if results.present?
 						results
 					else
 						params[:fuzzy] = true
-						results = self._get_search_clause(params).execute
+						results = self._get_search_clause(params)
 						results.push({:fuzzy => true})
 					end
 				else
@@ -41,7 +41,7 @@ module Api
 				when 'Person'
 					clause = Search.new(params).user_by_name
 				when 'Genre'
-					clause = Search.new(params).category_by_name
+					clause = Search.new(params).category_by_name.execute
 				when 'Community'
 					clause = Search.new(params).community_by_name
 				when 'News'
@@ -49,7 +49,7 @@ module Api
 				when 'Blog'
 					clause = Search.new(params).blog_by_title
 				when 'Label'
-					clause = Search.new(params).label_by_name
+					clause = Search.new(params).label_by_name.execute
 				else
 					clause = Search.new(params).basic
 				end
