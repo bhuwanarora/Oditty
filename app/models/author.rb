@@ -32,6 +32,10 @@ class Author < Neo
 		" MATCH (author:Author)-[:Wrote]->(book:Book) WITH author, book "
 	end
 
+	def get_books skip_count = 0
+		match + match_books + Author.return_init + Book.basic_info + Author.skip(skip_count) + Author.limit(4) 
+	end
+
 	def self.match_author_for_books
 		" MATCH (author:Author)-[:Wrote]->(book) WITH author, COLLECT(book) AS book "
 	end
@@ -59,7 +63,12 @@ class Author < Neo
 	end
 
 	def get_details user_id
-		match + optional_match_books + Author.order_by("book.published_year DESC") + User.new(user_id).match + ", author, book " + Bookmark::Type::IOwnThis.match(user_id) + ", author " + Author.return_group(Author.basic_info, "COLLECT({"+Book.grouped_basic_info+", description: book.description, own_status:ID(bookmark_node)}) AS books") + Author.limit(10)
+		if user_id.present?
+			clause = match + optional_match_books + Author.order_by("book.published_year DESC") + User.new(user_id).match + ", author, book " + Bookmark::Type::IOwnThis.match(user_id) + ", author " + Author.return_group(Author.basic_info, "COLLECT({"+Book.grouped_basic_info+", description: book.description, own_status:ID(bookmark_node)}) AS books")
+		else
+			clause = match + optional_match_books + Author.order_by("book.published_year DESC") + Author.return_group(Author.basic_info, "COLLECT({"+Book.grouped_basic_info+", description: book.description})")
+		end
+		clause
 	end
 
 	def self.search_by_indexed_name indexed_name

@@ -123,7 +123,12 @@ module Api
 			end
 
 			def self.get_book_details(id, user_id=nil)
-				book = UsersBook.new(id, user_id).get_basic_details.execute[0]
+				if user_id.present?
+					book = UsersBook.new(id, user_id).get_basic_details.execute[0]
+				else
+					book = Book.new(id).get_display_info.execute[0]
+				end
+
 				if user_id && book
 					structured_labels = []
 					if book["labels"]

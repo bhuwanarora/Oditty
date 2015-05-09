@@ -21,6 +21,10 @@ module Api
 				info
 			end
 
+			def self.get_author_books author_id, user_id, skip_count
+				
+			end
+
 			def self.get_active_authors
 				skip_count = params[:skip_count]
 				unless skip_count

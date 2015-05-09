@@ -25,7 +25,9 @@ module Api
 			def update_visited
 				book_id = params[:id]
 				user_id = session[:user_id]
-				Bookmark::Type::Visited.new(user_id, book_id).book.add.execute
+				if user_id.present?
+					Bookmark::Type::Visited.new(user_id, book_id).book.add.execute
+				end
 				render :json => "Success", :status => 200
 			end
 
@@ -42,7 +44,7 @@ module Api
 
 			def get_book_details
 				id = params[:id]
-				user_id = session[:user_id]
+				user_id = session[:user_i]
 				info = BookApi.get_book_details(id, user_id)
 				render :json => info, :status => 200
 			end

@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
     end
     
     session["init"] = true
-    session[:user_id] = 0
+    # session[:user_id] = 0
     if session[:user_id] == Constant::Id::Admin
       @is_admin = true
     end
