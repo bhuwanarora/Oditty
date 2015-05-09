@@ -7,6 +7,9 @@ class Search < Neo
 	def self.extract_info record
 		record["_source"]["label"] = record["_type"].camelcase
 		record["_source"]["id"] = record["_id"].to_i
+		if record["_source"]["name"].blank?
+			record["_source"]["name"] = record["_source"]["title"]
+		end
 		record
 	end
 
@@ -79,10 +82,11 @@ class Search < Neo
 
 	def basic
 		response = []
-		search_response = @client.search index: 'search_read', scroll: '5m', body:{query: { dis_max: { queries: [{match:{title: @search_text}}, {match:{ author: @search_text}}, {match:{ name: @search_text}}, { match:{ community_name: @search_text}}]}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		search_response = @client.search index: 'search_read', scroll: '2s', body:{query: { dis_max: { queries: [{match:{title: @search_text}}, {match:{ author: @search_text}}, {match:{ name: @search_text}}, { match:{ community_name: @search_text}}]}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		search_response["hits"]["hits"].each do |record|
 			response << Search.extract_info(record)["_source"] 
 		end
+		puts response.to_s.green
 		response
 	end
 

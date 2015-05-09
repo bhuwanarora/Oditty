@@ -12,7 +12,9 @@ module Api
 					
 					if results.present?
 						results
+						puts "results present"
 					else
+						puts "results absent"
 						params[:fuzzy] = true
 						results = self._get_search_clause(params)
 						results.push({:fuzzy => true})
@@ -35,27 +37,26 @@ module Api
 
  				case type
 				when 'Book'
-					clause = Search.new(params).book_by_title
+					response = Search.new(params).book_by_title
 				when 'Author'
-					clause = Search.new(params).author_by_name
+					response = Search.new(params).author_by_name
 				when 'Person'
-					clause = Search.new(params).user_by_name
+					response = Search.new(params).user_by_name
 				when 'Genre'
-					clause = Search.new(params).category_by_name.execute
+					response = Search.new(params).category_by_name.execute
 				when 'Community'
-					clause = Search.new(params).community_by_name
+					response = Search.new(params).community_by_name
 				when 'News'
-					clause = Search.new(params).news_by_title
+					response = Search.new(params).news_by_title
 				when 'Blog'
-					clause = Search.new(params).blog_by_title
+					response = Search.new(params).blog_by_title
 				when 'Label'
-					clause = Search.new(params).label_by_name.execute
+					response = Search.new(params).label_by_name.execute
 				else
-					clause = Search.new(params).basic
+					response = Search.new(params).basic
 				end
-				clause
+				response
             end
-
 		end
 	end
 end

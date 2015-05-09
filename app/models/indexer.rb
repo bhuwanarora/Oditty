@@ -47,7 +47,7 @@ class Indexer
 		relation_count = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url)))).length
 	end
 	def index_book 
-		@client.index  index: 'search_read', type: 'book', id: @response["book_id"], body: { title: @response["title"], search_index: @response["search_index"], isbn: @response["isbn"], description: @response["description"], author: @response["author_name"] ,weight: get_relationships(@response["book_id"])}
+		@client.index  index: 'search_read', type: 'book', id: @response["book_id"], body: { title: @response["title"], search_index: @response["search_index"], isbn: @response["isbn"], description: @response["description"], author_name: @response["author_name"] ,weight: get_relationships(@response["book_id"])}
 	end	
 
 	def index_blog
