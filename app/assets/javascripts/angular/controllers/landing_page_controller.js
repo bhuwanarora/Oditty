@@ -1,32 +1,6 @@
-app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "WebsiteUIConstants", '$interval', '$mdDialog', '$mdSidenav', '$cookieStore', function($scope, scroller, $document, $timeout, WebsiteUIConstants, $interval, $mdDialog, $mdSidenav, $cookieStore){
-	var _init = function(){
-	    $scope.data = [
-	    	"Intro",
-	    	"ReadersDoor",
-	      	"Discover",
-	      	"Connect",
-	      	"Explore",
-	      	"Personalise",
-			"SignIn"
-		];
+app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "WebsiteUIConstants", '$interval', '$mdDialog', '$mdSidenav', '$cookieStore', '$mdToast', function($scope, scroller, $document, $timeout, WebsiteUIConstants, $interval, $mdDialog, $mdSidenav, $cookieStore, $mdToast){
+	var timeout_redirect_event;
 
-		var video = document.getElementsByTagName('video')[0];
-
-		$scope.current_page_id = 0;
-		$scope.nested_page_id = 0;
-		$timeout(function(){
-			$scope.show_content = true;
-		}, 3000);
-
-		$scope.down_button_style = {"bottom": "110px"};
-		$scope.scroll_active = true;
-		$scope.text_index = 1;
-		$scope.current_text = "";
-
-		if(getCookie("logged") != ""){
-			window.location.href = "/home";
-		}
-	}
 
 	$scope.scroll_page = function(page_id){
 		$scope.nested_page_id = 0;
@@ -213,6 +187,67 @@ app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "Webs
 		event.stopPropagation();
   	}
 
-	_init();
-    
+  	$scope.getToastPosition = function(){
+        return Object.keys($scope.toast_position)
+          .filter(function(pos) { return $scope.toast_position[pos]; })
+          .join(' ');
+    }
+
+    $scope.cancel_redirect = function(){
+    	$mdToast.hide();
+        $timeout.cancel(timeout_redirect_event);
+    }
+
+    var _init = (function(){
+	    $scope.data = [
+	    	"Intro",
+	    	"ReadersDoor",
+	      	"Discover",
+	      	"Connect",
+	      	"Explore",
+	      	"Personalise",
+			"SignIn"
+		];
+
+		var video = document.getElementsByTagName('video')[0];
+
+		$scope.current_page_id = 0;
+		$scope.nested_page_id = 0;
+		$timeout(function(){
+			$scope.show_content = true;
+		}, 3000);
+	
+        $scope.toast_position = {
+            bottom: false,
+            top: true,
+            left: false,
+            right: true
+        };
+		$scope.down_button_style = {"bottom": "110px"};
+		$scope.scroll_active = true;
+		$scope.text_index = 1;
+		$scope.current_text = "";
+
+		if(getCookie("logged") != ""){
+			$scope.hide_signin = true;
+			$timeout(function(){
+	            $mdToast.show({
+	                templateUrl: 'assets/angular/html/shared/toast/cancel_redirect.html',
+	                hideDelay: 6000,
+	                scope: $scope,
+	                preserveScope: true,
+	                position: $scope.getToastPosition()
+	            });
+			}, 2000);
+			$scope.timer = 5;
+			$interval(function(){
+				$scope.timer = $scope.timer - 1;
+			}, 1000, 5);
+			timeout_redirect_event = $timeout(function(){
+				window.location.href = "/home";
+            }, 5000);
+		}
+	}());
+
+
 }]);

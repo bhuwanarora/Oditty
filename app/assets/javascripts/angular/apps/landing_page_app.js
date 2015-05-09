@@ -41,18 +41,6 @@ app.config(["FacebookProvider", "facebookAppId", function(FacebookProvider, face
   }
 ]);
 
-
-app.run(["$rootScope", "$location", "$cookieStore", "$cookies", "$http", function($rootScope, $location, $cookieStore, $cookies, $http){
-    var unauthenticated_user = getCookie("logged") == "";
-    if(unauthenticated_user){
-        if($location.$$absUrl.indexOf("signup") < 0){
-            // $cookieStore.put('redirect_url', $location.$$absUrl);
-            setCookie("redirect_url", $location.$$absUrl);
-            window.location.href = "/signup";
-        }
-    }
-}]);
-
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays*24*60*60*1000));

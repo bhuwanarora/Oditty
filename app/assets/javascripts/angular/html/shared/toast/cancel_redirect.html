@@ -1,0 +1,23 @@
+<md-toast layout="row" class="md-whiteframe-z2 white custom_toast" layout-padding>
+    <div flex layout="row" layout-align="start center" class="content">
+        <div>
+            Redirecting to home page in {{timer}} secs..
+        </div>
+    </div>
+    <md-button  layout="row" class="content" 
+        ng-click="cancel_redirect()"
+        layout-padding layout-align="space-between center">
+        Cancel
+    </md-button>
+</md-toast>
+
+<style>
+    .custom_toast{
+        padding: 0px;
+    }
+
+    .custom_toast .content,
+    .custom_toast .md-button{
+        color: black !important;
+    }
+</style>

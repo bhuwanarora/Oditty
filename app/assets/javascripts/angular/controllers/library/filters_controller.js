@@ -115,7 +115,6 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
     }
 
     $scope.search_genres = function(input){
-        debugger
         // var params = "q="+input+"&count="+10;
         if(input){
             if(!$scope.info.loading){
