@@ -1,3 +1,9 @@
+<md-button class="follow_author md-button-clear" 
+           ng-class="{'md-raised': !author.status}" 
+           ng-click="toggle_follow()">
+    <span ng-if="!author.status">Follow</span>
+    <span ng-if="author.status">Following</span>
+</md-button>
 <div class="author_book_cover"
     parallax-background parallax-ratio="0.9"
     layout-align="center center"
@@ -136,9 +142,16 @@
         </div>
     </div>
 </section>
+
 <style>
     .book_width{
         width: 130px;
     }
 
+    .follow_author{
+        position: fixed;
+        z-index: 2;
+        right: 10px;
+        top: 67px;
+    }
 </style>

@@ -3,11 +3,16 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
         $mdSidenav('right').toggle();
         communityService.get_detailed_community_info($scope.active_tag.id).then(function(data){
             $scope.active_tag = angular.extend($scope.active_tag, data);
+            var follow_node = $scope.active_tag.follow_node;
+            if(angular.isDefined(follow_node) && (follow_node != null)){
+                $scope.active_tag.status = true;
+            }
         });
     };
 
-    $scope.follow_community = function(){
-        communityService.follow($scope.active_tag.id, ($scope.active_tag.status || true));
+    $scope.toggle_follow = function(){
+        $scope.active_tag.status = !$scope.active_tag.status;
+        communityService.follow($scope.active_tag.id, $scope.active_tag.status);
     }
 
     $scope.show_book_dialog = function(book, event){

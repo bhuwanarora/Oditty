@@ -55,4 +55,8 @@ homeApp.service('authorService', ["$http", "$q", "$rootScope", "WebsiteUIConstan
         return _deferred_request('/api/v0/author_details?id='+id);
     }
 
+    this.follow = function(id, status){
+        return _deferred_request('/api/v0/follow_author?id='+id+'&status='+status);
+    }
+
 }]);

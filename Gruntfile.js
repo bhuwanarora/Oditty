@@ -23,7 +23,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: 'app/assets/stylesheets/',
-                        src: ['angular_material_082.css'],
+                        src: ['angular_material.css'],
                         dest: 'app/assets/stylesheets/min/',
                         ext: '.min.css'
                     }
@@ -48,7 +48,7 @@ module.exports = function(grunt) {
                     ],
 
                     'app/assets/stylesheets/min/landing_page_site.min.css': [
-                        'app/assets/stylesheets/min/angular_material_082.min.css',
+                        'app/assets/stylesheets/min/angular_material.min.css',
                         'app/assets/stylesheets/min/landing_page/style.min.css',
                         'app/assets/stylesheets/min/landing_page/media.min.css',
                         'app/assets/stylesheets/min/website.min.css',

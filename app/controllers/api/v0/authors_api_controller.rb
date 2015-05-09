@@ -38,6 +38,10 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def follow
+				
+			end
+
 		end
 	end
 end

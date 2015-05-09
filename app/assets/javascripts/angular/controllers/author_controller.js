@@ -9,6 +9,11 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         event.stopPropagation();
     }
 
+    $scope.toggle_follow = function(){
+        $scope.author.status = !$scope.author.status;
+        authorService.follow($scope.author.id, $scope.author.status);
+    }
+
     $scope.next_block = function(index){
         var length = $scope.author.books.length;
         if(index == (length-1)){
