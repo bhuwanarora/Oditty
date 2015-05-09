@@ -1,17 +1,27 @@
 class Search < Neo
 	def initialize params
 		@search_text = params[:q]
-		@count = params[:count] || 4
-		@connector = params[:fuzzy].present? ? "~0.7" : "*"
-		@skip_count = params[:skip] || 0
+		@client = Elasticsearch::Client.new log: true	
 	end
 
 	def book_by_title
-		Search.match_indexed(Constant::IndexName::BookTitle, ( @search_text + @connector)) + Search.return_group(Book.detailed_info,"labels(node) as labels").search_compliant + Search.order_by("popularity") + " DESC " + Search.skip(@skip_count) + Search.limit(@count) 
+		response = []
+		search_response = @client.search index: 'search', type: 'book', scroll: '5m', body: { query: { match: { title: @search_text}} , sort: {'weight'=> {'order' => 'desc'}}}
+		search_response["hits"]["hits"].each do |record|
+			record["_source"]["label"] = record["_type"].camelcase
+			response << record["_source"] 
+		end
+		response
 	end
 
 	def author_by_name
-		Search.match_indexed(Constant::IndexName::MainAuthorName, ( @search_text + @connector)) + Search.return_group(Author.basic_info,"labels(node) as labels").search_compliant + Search.skip(@skip_count) + Search.limit(@count)
+		response = []
+		search_response = @client.search index: 'search', type: 'author', scroll: '5m', body: { query: { match: { title: @search_text}} , sort: {'weight'=> {'order' => 'desc'}}}
+		search_response["hits"]["hits"].each do |record|
+			record["_source"]["label"] = record["_type"].camelcase
+			response << record["_source"] 
+		end
+		response
 	end
 
 	def label_by_name
@@ -19,7 +29,13 @@ class Search < Neo
 	end
 
 	def user_by_name
-		Search.match_indexed(Constant::IndexName::UserName, ( @search_text + @connector)) + Search.return_group(User.basic_info,"labels(node) as labels").search_compliant + Search.skip(@skip_count) + Search.limit(@count)
+		response = []
+		search_response = @client.search index: 'search', type: 'user', scroll: '5m', body: { query: { match: { title: @search_text}} , sort: {'weight'=> {'order' => 'desc'}}}
+		search_response["hits"]["hits"].each do |record|
+			record["_source"]["label"] = record["_type"].camelcase
+			response << record["_source"] 
+		end
+		response
 	end
 
 	def category_by_name
@@ -32,19 +48,43 @@ class Search < Neo
 	end
 
 	def news_by_title
-		Search.match_indexed(Constant::IndexName::NewsTitle, ( @search_text + @connector)) + Search.return_group(News.basic_info).search_compliant + Search.skip(@skip_count) + Search.limit(@count)
+		response = []
+		search_response = @client.search index: 'search', type: 'news', scroll: '5m', body: { query: { match: { title: @search_text}} , sort: {'weight'=> {'order' => 'desc'}}}
+		search_response["hits"]["hits"].each do |record|
+			record["_source"]["label"] = record["_type"].camelcase
+			response << record["_source"] 
+		end
+		response
 	end
 
 	def blog_by_title
-		Search.match_indexed(Constant::IndexName::BlogTitle, ( @search_text + @connector)) + Search.return_group(Blog.basic_info).search_compliant + Search.skip(@skip_count) + Search.limit(@count)
+		response = []
+		search_response = @client.search index: 'blog', type: 'blog', scroll: '5m', body: { query: { match: { title: @search_text}} , sort: {'weight'=> {'order' => 'desc'}}}
+		search_response["hits"]["hits"].each do |record|
+			record["_source"]["label"] = record["_type"].camelcase
+			response << record["_source"] 
+		end
+		response
 	end
 
 	def community_by_name
-		Search.match_indexed(Constant::IndexName::CommunityName, ( @search_text + @connector)) + Search.return_group(Community.basic_info).search_compliant + Search.skip(@skip_count) + Search.limit(@count)
+		response = []
+		search_response = @client.search index: 'search', type: 'community', scroll: '5m', body: { query: { match: { title: @search_text}} , sort: {'weight'=> {'order' => 'desc'}}}
+		search_response["hits"]["hits"].each do |record|
+			record["_source"]["label"] = record["_type"].camelcase
+			response << record["_source"] 
+		end
+		response
 	end
 
 	def basic
-		Search.match_indexed(Constant::IndexName::Search, ( @search_text + @connector)) + Search.return_group(Search.basic_search_info) + Search.skip(@skip_count) + Search.limit(@count)
+		response = []
+		search_response = @client.search index: 'search', scroll: '5m', body: { query: { match: { title: @search_text}} , sort: {'weight'=> {'order' => 'desc'}}}
+		search_response["hits"]["hits"].each do |record|
+			record["_source"]["label"] = record["_type"].camelcase
+			response << record["_source"] 
+		end
+		response
 	end
 
 	def self.basic_search_info
