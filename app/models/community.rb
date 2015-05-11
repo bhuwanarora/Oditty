@@ -13,7 +13,7 @@ class Community < Neo
 	end
 
 	def self.basic_info
-		" community.view_count AS view_count, community.name AS name, ID(community) AS id, community.image_url AS image_url, labels(community) AS label, community.search_index AS search_index "
+		" community.view_count AS view_count, community.name AS name, ID(community) AS id, community.image_url AS image_url "
 	end
 
 	def self.grouped_basic_info
