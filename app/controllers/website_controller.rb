@@ -78,7 +78,7 @@ class WebsiteController < ApplicationController
 
 		unless session[:user_id]
 			cookies[:logged] = nil
-			cookies[:redirected_to] = request.url
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
 			redirect_to :controller => 'website', :action => 'signup' 			
 		else
 			@home = true
@@ -89,7 +89,7 @@ class WebsiteController < ApplicationController
 	def communities
 		unless session[:user_id]
 			cookies[:logged] = nil
-			cookies[:redirected_to] = request.url
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
 			redirect_to :controller => 'website', :action => 'signup'			
 		else
 			@home = true
@@ -100,7 +100,7 @@ class WebsiteController < ApplicationController
 	def blogs
 		unless session[:user_id]
 			cookies[:logged] = nil
-			cookies[:redirected_to] = request.url
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
 			redirect_to :controller => 'website', :action => 'signup'			
 		else
 			@home = true
@@ -111,7 +111,7 @@ class WebsiteController < ApplicationController
 	def infinity
 		unless session[:user_id]
 			cookies[:logged] = nil
-			cookies[:redirected_to] = request.url
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
 			redirect_to :controller => 'website', :action => 'signup'			
 		else
 			@infinity = true
@@ -122,7 +122,7 @@ class WebsiteController < ApplicationController
 	def search
 		unless session[:user_id]
 			cookies[:logged] = nil
-			cookies[:redirected_to] = request.url
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
 			redirect_to :controller => 'website', :action => 'signup'			
 		else
 			@search = true
@@ -133,7 +133,7 @@ class WebsiteController < ApplicationController
 	def room
 		unless session[:user_id]
 			cookies[:logged] = nil
-			cookies[:redirected_to] = request.url
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
 			redirect_to :controller => 'website', :action => 'signup'			
 		else
 			@room = true
@@ -149,7 +149,7 @@ class WebsiteController < ApplicationController
 	def profile
 		unless session[:user_id]
 			cookies[:logged] = nil
-			cookies[:redirected_to] = request.url
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
 			redirect_to :controller => 'website', :action => 'signup'			
 		else
 			@profile = true
@@ -160,7 +160,7 @@ class WebsiteController < ApplicationController
 	def network
 		unless session[:user_id]
 			cookies[:logged] = nil
-			cookies[:redirected_to] = request.url
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
 			redirect_to :controller => 'website', :action => 'signup'			
 		else
 			@network = true
@@ -171,7 +171,7 @@ class WebsiteController < ApplicationController
 	def journey
 		unless session[:user_id]
 			cookies[:logged] = nil
-			cookies[:redirected_to] = request.url
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
 			redirect_to :controller => 'website', :action => 'signup'			
 		else
 			render :layout => "material"
@@ -181,7 +181,7 @@ class WebsiteController < ApplicationController
 	def customise
 		unless session[:user_id]
 			cookies[:logged] = nil
-			cookies[:redirected_to] = request.url
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
 			redirect_to :controller => 'website', :action => 'signup'			
 		else
 			@customise = true
