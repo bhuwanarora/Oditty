@@ -2,7 +2,7 @@ namespace :index do
 
 	desc "index books"
 	task :book => :environment do
-	    Indexer.create_index("Book", Book)
+	    Indexer.create_index_books
 	end
 
 	desc "index blog"

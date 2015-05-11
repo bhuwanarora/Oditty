@@ -10,7 +10,7 @@ class Search < Neo
 	def self.extract_info search_response
 		response = []
 		search_response["hits"]["hits"].each do |record|
-			record["_source"]["label"] = record["_type"].camelcase
+			record["_source"]["labels"] = record["_type"].camelcase
 			record["_source"]["id"] = record["_id"].to_i
 			if record["_source"]["name"].blank?
 				record["_source"]["name"] = record["_source"]["title"]
@@ -27,13 +27,13 @@ class Search < Neo
 	end
 
 	def book_by_title
-		search_response = @client.search index: 'search_read', type: 'book', scroll: '1m', body:{query: {dis_max: { queries: [{match:{title:  {query: @search_text, fuzziness: 2}}}, {match:{ author: {query: @search_text, fuzziness: 2}}}]}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		search_response = @client.search index: 'search_read', type: 'book', scroll: '1m', body:{query: {dis_max: { queries: [{match:{title:  {query: @search_text, fuzziness: 2}}}, {match:{ author: {query: @search_text, fuzziness: 2}}}]}} , size: 5, sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		scroll_id = search_response["_scroll_id"]
 		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
 
 	def author_by_name
-		search_response = @client.search index: 'search_read', type: 'author', scroll: '1m', body: { query: {match: { title: {query: @search_text, fuzziness: 2}}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		search_response = @client.search index: 'search_read', type: 'author', scroll: '1m', body: { query: {match: { title: {query: @search_text, fuzziness: 2}}} , size: 5, sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		scroll_id = search_response["_scroll_id"]
 		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
@@ -43,7 +43,7 @@ class Search < Neo
 	end
 
 	def user_by_name
-		search_response = @client.search index: 'search_read', type: 'user', scroll: '1m', body: { query: {match: { title: {query: @search_text, fuzziness: 2}}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		search_response = @client.search index: 'search_read', type: 'user', scroll: '1m', body: { query: {match: { title: {query: @search_text, fuzziness: 2}}} , size: 5, sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		scroll_id = search_response["_scroll_id"]
 		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
@@ -58,25 +58,25 @@ class Search < Neo
 	end
 
 	def news_by_title
-		search_response = @client.search index: 'search_read', type: 'news', scroll: '1m', body: { query: {match: { title: {query: @search_text, fuzziness: 2}}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		search_response = @client.search index: 'search_read', type: 'news', scroll: '1m', body: { query: {match: { title: {query: @search_text, fuzziness: 2}}} , size: 5, sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		scroll_id = search_response["_scroll_id"]
 		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
 
 	def blog_by_title
-		search_response = @client.search index: 'blog', type: 'blog', scroll: '1m', body: { query: {match: { title: {query: @search_text, fuzziness: 2}}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		search_response = @client.search index: 'blog', type: 'blog', scroll: '1m', body: { query: {match: { title: {query: @search_text, fuzziness: 2}}} , size: 5, sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		scroll_id = search_response["_scroll_id"]
 		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
 
 	def community_by_name
-		search_response = @client.search index: 'search_read', type: 'community', scroll: '1m', body: { query: {match: { title: {query: @search_text, fuzziness: 2}}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		search_response = @client.search index: 'search_read', type: 'community', scroll: '1m', body: { query: {match: { title: {query: @search_text, fuzziness: 2}}} , size: 5, sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		scroll_id = search_response["_scroll_id"]
 		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
 
 	def basic
-		search_response = @client.search index: 'search_read', scroll: '1m', body:{query: { dis_max: { queries: [{match:{title: {query: @search_text, fuzziness: 2}}}, {match:{ author: {query: @search_text, fuzziness: 2}}}, {match:{ name: {query: @search_text, fuzziness: 2}}}, { match:{ community_name: {query: @search_text, fuzziness: 2}}}]}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		search_response = @client.search index: 'search_read', scroll: '1m', body:{query: { dis_max: { queries: [{match:{title: {query: @search_text, fuzziness: 2}}}, {match:{ author: {query: @search_text, fuzziness: 2}}}, {match:{ name: {query: @search_text, fuzziness: 2}}}, { match:{ community_name: {query: @search_text, fuzziness: 2}}}]}} , size: 5, sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		scroll_id = search_response["_scroll_id"]
 		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end

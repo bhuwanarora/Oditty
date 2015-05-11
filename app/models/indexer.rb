@@ -17,8 +17,13 @@ class Indexer
 				}
 			end
 		end
+		
+		if client.indices.exists index: Time.now.strftime("%D").gsub("/","-")
+			client.indices.delete index: Time.now.strftime("%D").gsub("/","-")
+		end
 
 		client.indices.create index: Time.now.strftime("%D").gsub("/","-"),
+		
 		body: {
         	settings: {
     			index: {
@@ -90,11 +95,32 @@ class Indexer
 		minimum = range["minimum"]
 		puts maximum
 		puts minimum
-		range = (maximum - minimum) / 1000
+		range = (maximum - minimum) / 10000
 		while minimum < maximum
 			get_nodes = " MATCH (node:#{label})  WHERE ID(node) <= #{minimum + range} AND ID(node) >= #{minimum} " + Neo.return_init + node_class.basic_info.search_compliant 
 			minimum += range
 			nodes = get_nodes.execute
+			for node in nodes
+				Indexer.new([node]).handle
+			end
+		end
+	end
+
+	def self.create_index_books 
+		label = "Book"
+		node_class = Book
+		get_ids_range_clause = " MATCH (node:#{label}) RETURN MAX(ID(node)) AS maximum , MIN(ID(node)) AS minimum "
+		range = get_ids_range_clause.execute[0]
+		maximum = range["maximum"]
+		minimum = range["minimum"]
+		puts maximum
+		puts minimum
+		range = (maximum - minimum) / 10000
+		while minimum < maximum
+			get_nodes = " MATCH (node:#{label})  WHERE ID(node) <= #{minimum + range} AND ID(node) >= #{minimum} " + Neo.return_init + node_class.basic_info.search_compliant + ", node.description AS description "
+			minimum += range
+			nodes = get_nodes.execute
+			debugger
 			for node in nodes
 				Indexer.new([node]).handle
 			end
@@ -125,7 +151,7 @@ class Indexer
 		relation_count = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url)))).length
 	end
 	def index_book 
-		@client.index  index: 'search', type: 'books', id: @response["book_id"], body: { title: @response["title"], search_index: @response["search_index"], isbn: @response["isbn"], description: @response["description"], author_name: @response["author_name"] ,weight: get_relationships(@response["book_id"])}
+		@client.index  index: 'search_read', type: 'books', id: @response["book_id"], body: { title: @response["title"], search_index: @response["search_index"], isbn: @response["isbn"], description: @response["description"], author_name: @response["author_name"] ,weight: get_relationships(@response["book_id"])}
 	end	
 
 	def index_blog

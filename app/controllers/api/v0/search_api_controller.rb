@@ -6,14 +6,17 @@ module Api
 				query_params = params[:q].strip
 				count = params[:count].to_i
 				type = params[:type]
+				puts query_params.to_s.white
+				puts session[:query].to_s.white
 				unless session[:query] == query_params
-					resposne = SearchApi.search(params)
-					session[:query] = @search_text
-					results = resposne["results"]
-					session[:scroll_id] = resposne["scroll_id"] if scroll_id.present?
+					results = SearchApi.search(params)
+					session[:query] = query_params
+					session[:scroll_id] = results["scroll_id"] if results["scroll_id"].present?
+					results = results["results"]
 				else
-					results = SearchApi.search_by_scroll_id["results"]
+					results = SearchApi.search_by_scroll_id(session[:scroll_id])["results"]
 				end
+				puts results.to_s.green
 				render :json => results, :status => 200
 			end
 		end

@@ -16,7 +16,6 @@ module Api
 			private
 
             def self._get_search_clause(params)
-            	params[:q] = params[:q].search_ready
             	q = params[:q]
             	count = params[:count] || 4
             	type = params[:type]
@@ -31,6 +30,7 @@ module Api
 				when 'Person'
 					response = Search.new(params).user_by_name
 				when 'Genre'
+	            	params[:q] = params[:q].search_ready
 					response = {"results" => Search.new(params).category_by_name.execute}
 				when 'Community'
 					response = Search.new(params).community_by_name
@@ -39,6 +39,7 @@ module Api
 				when 'Blog'
 					response = Search.new(params).blog_by_title
 				when 'Label'
+	            	params[:q] = params[:q].search_ready
 					response = {"results" => Search.new(params).label_by_name.execute}
 				else
 					response = Search.new(params).basic
