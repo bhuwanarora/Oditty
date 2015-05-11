@@ -195,13 +195,7 @@ class WebsiteController < ApplicationController
 	end
 
 	def community
-		unless session[:user_id]
-			cookies[:logged] = nil
-			cookies[:redirected_to] = request.url
-			redirect_to :controller => 'website', :action => 'signup' 			
-		else
-			@community = true
-			render :layout => "material"
-		end
+		@community = true
+		render :layout => "material"
 	end
 end
