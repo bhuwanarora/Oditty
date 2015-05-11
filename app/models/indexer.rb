@@ -151,15 +151,15 @@ class Indexer
 		relation_count = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url)))).length
 	end
 	def index_book 
-		@client.index  index: 'search_read', type: 'books', id: @response["book_id"], body: { title: @response["title"], search_index: @response["search_index"], isbn: @response["isbn"], description: @response["description"], author_name: @response["author_name"] ,weight: get_relationships(@response["book_id"])}
+		@client.index  index: 'search_read', type: 'books', id: @response["book_id"], body: { title: @response["title"], isbn: @response["isbn"], description: @response["description"], author_name: @response["author_name"] ,weight: get_relationships(@response["book_id"])}
 	end	
 
 	def index_blog
-		@client.index  index: 'search', type: 'blogs', id: @response["blog_id"], body: { title: @response["title"], search_index: @response["indexed_blog_title"],  title: @response["title"], image_url: @response["image_url"], weight: get_relationships(@response["blog_id"])}
+		@client.index  index: 'search', type: 'blogs', id: @response["blog_id"], body: { title: @response["title"],  title: @response["title"], image_url: @response["image_url"], weight: get_relationships(@response["blog_id"])}
 	end
 
 	def index_news
-		@client.index  index: 'search', type: 'news', id: @response["news_id"], body: { title: @response["title"], search_index: @response["indexed_news_title"], image_url: @response["image_url"], title: @response["title"], created_at: @response["created_at"], weight: get_relationships(@response["news_id"])}
+		@client.index  index: 'search', type: 'news', id: @response["news_id"], body: { title: @response["title"], image_url: @response["image_url"], title: @response["title"], created_at: @response["created_at"], weight: get_relationships(@response["news_id"])}
 	end	
 
 	def index_user
@@ -171,6 +171,6 @@ class Indexer
 	end	
 
 	def index_community
-		@client.index  index: 'search', type: 'communities', id: @response["community_id"], body: { name: @response["name"], search_index: @response["indexed_community_name"], image_url: @response["image_url"], weight: get_relationships(@response["community_id"])}
+		@client.index  index: 'search', type: 'communities', id: @response["community_id"], body: { name: @response["name"], image_url: @response["image_url"], weight: get_relationships(@response["community_id"])}
 	end	
 end

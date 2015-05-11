@@ -44,7 +44,7 @@ module Api
 
 			def get_book_details
 				id = params[:id]
-				user_id = session[:user_id]
+				user_id = session[:user_i]
 				info = BookApi.get_book_details(id, user_id)
 				render :json => info, :status => 200
 			end
