@@ -73,35 +73,82 @@ class WebsiteController < ApplicationController
 
 	### WEBSITE NEW 
 	def home
+		unless session[:user_id]
+			status = 403
+			cookie_reset = true
+		else
+			status = 200
+			cookie_reset = false
+		end
 		session[:news_day_skip_count] = 0
 		session[:news_skip_count] = 0
 		@home = true
-		render :layout => "material"
+		render :layout => "material", :status => status, :cookie_reset => cookie_reset, :redirect => request.url 
 	end
 
 	def communities
+		unless session[:user_id]
+			status = 403
+			cookie_reset = true
+		else
+			status = 200
+			cookie_reset = false
+		end
+
 		@home = true
-		render :layout => "material"
+		render :layout => "material", :status => status, :cookie_reset => cookie_reset, :redirect => request.url
 	end
 
 	def blogs
+		unless session[:user_id]
+			status = 403
+			cookie_reset = true
+		else
+			status = 200
+			cookie_reset = false
+		end
+
 		@home = true
-		render :layout => "material"
+		render :layout => "material", :status => status, :cookie_reset => cookie_reset, :redirect => request.url
 	end
 
 	def infinity
+		unless session[:user_id]
+			status = 403
+			cookie_reset = true
+		else
+			status = 200
+			cookie_reset = false
+		end
+
 		@infinity = true
-		render :layout => "material"
+		render :layout => "material", :status => status, :cookie_reset => cookie_reset, :redirect => request.url
 	end
 
 	def search
+		unless session[:user_id]
+			status = 403
+			cookie_reset = true
+		else
+			status = 200
+			cookie_reset = false
+		end
+
 		@search = true
-		render :layout => "material"
+		render :layout => "material", :status => status, :cookie_reset => cookie_reset, :redirect => request.url
 	end
 
 	def room
+		unless session[:user_id]
+			status = 403
+			cookie_reset = true
+		else
+			status = 200
+			cookie_reset = false
+		end
+
 		@room = true
-		render :layout => "material"
+		render :layout => "material", :status => status, :cookie_reset => cookie_reset, :redirect => request.url
 	end
 
 	def book
@@ -110,22 +157,54 @@ class WebsiteController < ApplicationController
 	end
 
 	def profile
+		unless session[:user_id]
+			status = 403
+			cookie_reset = true
+		else
+			status = 200
+			cookie_reset = false
+		end
+
 		@profile = true
-		render :layout => "material"
+		render :layout => "material", :status => status, :cookie_reset => cookie_reset, :redirect => request.url
 	end
 
 	def network
+		unless session[:user_id]
+			status = 403
+			cookie_reset = true
+		else
+			status = 200
+			cookie_reset = false
+		end
+
 		@network = true
-		render :layout => "material"
+		render :layout => "material", :status => status, :cookie_reset => cookie_reset, :redirect => request.url
 	end
 
 	def journey
-		render :layout => "material"
+		unless session[:user_id]
+			status = 403
+			cookie_reset = true
+		else
+			status = 200
+			cookie_reset = false
+		end
+
+		render :layout => "material", :status => status, :cookie_reset => cookie_reset, :redirect => request.url
 	end
 
 	def customise
+		unless session[:user_id]
+			status = 403
+			cookie_reset = true
+		else
+			status = 200
+			cookie_reset = false
+		end
+
 		@customise = true
-		render :layout => "material"
+		render :layout => "material", :status => status, :cookie_reset => cookie_reset, :redirect => request.url
 	end
 
 	def author
@@ -134,8 +213,15 @@ class WebsiteController < ApplicationController
 	end
 
 	def community
-		@community = true
-		render :layout => "material"
-	end
+		unless session[:user_id]
+			status = 403
+			cookie_reset = true
+		else
+			status = 200
+			cookie_reset = false
+		end
 
+		@community = true
+		render :layout => "material", :status => status, :cookie_reset => cookie_reset, :redirect => request.url
+	end
 end

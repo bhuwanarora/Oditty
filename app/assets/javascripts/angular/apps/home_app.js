@@ -50,7 +50,7 @@ var _deferred_request = function(url, $q, $http){
     }
     var error_callback = function(reason){
         if(reason.status == 500){
-            alert(WebsiteUIConstants.ServerError);
+            alert("Something went wrong. Our developers are working on this error.");
         }
     }
     $http.get(url).then(success_callback, error_callback);
@@ -65,7 +65,7 @@ var _deferred_post_request = function(url, params, $q, $http){
     var error_callback = function(reason){
         console.debug("error_callback service", reason);
         if(reason.status == 500){
-            alert(WebsiteUIConstants.ServerError);
+            alert("Something went wrong. Our developers are working on this error.");
         }
         else if(reason.status == 403){
             // window.location.href = "/signup";
