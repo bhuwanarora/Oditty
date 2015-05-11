@@ -147,7 +147,7 @@ class Indexer
 	def get_relationships id
 		id = id.to_s.strip
 		url = "http://localhost:7474/db/data/node/#{id}/relationships/all/"
-		puts url		
+		puts url 		
 		relation_count = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url)))).length
 	end
 	def index_book 
@@ -159,7 +159,7 @@ class Indexer
 	end
 
 	def index_news
-		@client.index  index: 'search', type: 'news', id: @response["news_id"], body: { title: @response["title"], image_url: @response["image_url"], title: @response["title"], created_at: @response["created_at"], weight: get_relationships(@response["news_id"])}
+		@client.index  index: 'search', type: 'news', id: @response["id"], body: { title: @response["title"], image_url: @response["image_url"], title: @response["title"], created_at: @response["created_at"], weight: get_relationships(@response["id"])}
 	end	
 
 	def index_user
@@ -167,10 +167,10 @@ class Indexer
 	end	
 
 	def index_author
-		@client.index  index: 'search', type: 'authors', id: @response["author_id"], body: { name: @response["name"], weight: get_relationships(@response["author_id"])}
+		@client.index  index: 'search', type: 'authors', id: @response["id"], body: { name: @response["name"], weight: get_relationships(@response["id"])}
 	end	
 
 	def index_community
-		@client.index  index: 'search', type: 'communities', id: @response["community_id"], body: { name: @response["name"], image_url: @response["image_url"], weight: get_relationships(@response["community_id"])}
+		@client.index  index: 'search', type: 'communities', id: @response["id"], body: { name: @response["name"], image_url: @response["image_url"], weight: get_relationships(@response["id"])}
 	end	
 end
