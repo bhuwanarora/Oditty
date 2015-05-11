@@ -40,6 +40,10 @@ class UsersCommunity < Neo
 		" OPTIONAL MATCH (user)-[follows:Follows]->(follow_node:FollowNode)-[of_community:OfCommunity]->(community) WITH user, follows, follow_node, of_community, community  "
 	end
 
+	def self.match
+		" MATCH (user)-[follows:Follows]->(follow_node:FollowNode)-[of_community:OfCommunity]->(community) WITH user, follows, follow_node, of_community, community  "
+	end
+
 	def self.basic_info
 		" ID(follow_node) AS follow_node "
 	end
