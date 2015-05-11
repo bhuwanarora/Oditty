@@ -138,6 +138,4 @@ class WebsiteController < ApplicationController
 		render :layout => "material"
 	end
 
-	
-
 end

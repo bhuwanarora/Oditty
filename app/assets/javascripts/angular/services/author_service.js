@@ -10,53 +10,20 @@ homeApp.service('authorService', ["$http", "$q", "$rootScope", "WebsiteUIConstan
         return user_id;
     }
 
-    var _deferred_request = function(url){
-        var deferred = $q.defer();
-        var success_callback = function(result){
-            return deferred.resolve(result.data); 
-        }
-        var error_callback = function(reason){
-            if(reason.status == 500){
-                alert(WebsiteUIConstants.ServerError);
-            }
-        }
-        $http.get(url).then(success_callback, error_callback);
-        return deferred.promise;   
-    }
-
-    var _deferred_post_request = function(url, params){
-        var deferred = $q.defer();
-        var success_callback = function(result){
-            return deferred.resolve(result.data); 
-        }
-        var error_callback = function(reason){
-            console.debug("error_callback service", reason);
-            if(reason.status == 500){
-                alert(WebsiteUIConstants.ServerError);
-            }
-            else if(reason.status == 403){
-                console.debug("403 authenticate");
-                return deferred.reject(reason);
-            }
-        }
-        $http.post(url, params).then(success_callback, error_callback);
-        return deferred.promise;
-    }
-
     this.search_authors = function(data){
-        return _deferred_request('/api/v0/search?q='+data+"&type=Author");
+        return _deferred_request('/api/v0/search?q='+data+"&type=Author", $q, $http);
     }
 
     this.get_popular_authors = function(skip_count){
-        return _deferred_request('/api/v0/popular_authors?skip_count='+skip_count);   
+        return _deferred_request('/api/v0/popular_authors?skip_count='+skip_count, $q, $http);
     }
 
     this.get_details = function(id){
-        return _deferred_request('/api/v0/author_details?id='+id);
+        return _deferred_request('/api/v0/author_details?id='+id, $q, $http);
     }
 
     this.follow = function(id, status){
-        return _deferred_request('/api/v0/follow_author?id='+id+'&status='+status);
+        return _deferred_request('/api/v0/follow_author?id='+id+'&status='+status, $q, $http);
     }
 
 }]);

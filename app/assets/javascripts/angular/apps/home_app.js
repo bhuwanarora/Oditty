@@ -38,3 +38,41 @@ function getCookie(cname) {
     }
     return "";
 }
+
+function deleteCookie(name){
+  document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
+
+var _deferred_request = function(url, $q, $http){
+    var deferred = $q.defer();
+    var success_callback = function(result){
+        return deferred.resolve(result.data); 
+    }
+    var error_callback = function(reason){
+        if(reason.status == 500){
+            alert(WebsiteUIConstants.ServerError);
+        }
+    }
+    $http.get(url).then(success_callback, error_callback);
+    return deferred.promise;   
+}
+
+var _deferred_post_request = function(url, params, $q, $http){
+    var deferred = $q.defer();
+    var success_callback = function(result){
+        return deferred.resolve(result.data); 
+    }
+    var error_callback = function(reason){
+        console.debug("error_callback service", reason);
+        if(reason.status == 500){
+            alert(WebsiteUIConstants.ServerError);
+        }
+        else if(reason.status == 403){
+            // window.location.href = "/signup";
+            console.debug("403 authenticate");
+            return deferred.reject(reason);
+        }
+    }
+    $http.post(url, params).then(success_callback, error_callback);
+    return deferred.promise;
+}
