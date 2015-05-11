@@ -122,7 +122,7 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
     }
 
     this.follow = function(id, status){
-        return _deferred_post_request('/api/v0/follow?id='+id+"&status="+status, $q, $http);
+        return _deferred_request('/api/v0/follow?id='+id+"&status="+status, $q, $http);
     }
 
     this.get_blog_feed = function(skip_count, multiple){
