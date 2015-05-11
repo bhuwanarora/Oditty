@@ -32,8 +32,13 @@ class Author < Neo
 		" MATCH (author:Author)-[:Wrote]->(book:Book) WITH author, book "
 	end
 
-	def get_books skip_count = 0
-		match + match_books + Author.return_init + Book.basic_info + Author.skip(skip_count) + Author.limit(4) 
+	def get_books user_id, skip_count = 0
+		if user_id
+			clause = match + optional_match_books + Author.order_by("book.published_year DESC") + User.new(user_id).match + ", author, book " + Bookmark::Type::IOwnThis.match(user_id) + ", author " + Author.return_group("COLLECT({"+Book.grouped_basic_info+", description: book.description, own_status:ID(bookmark_node)}) AS books")
+		else
+			clause = match + optional_match_books + Author.order_by("book.published_year DESC") + Author.skip(skip_count) + Author.limit(4) + Author.return_group("COLLECT({"+Book.grouped_basic_info+", description: book.description}) AS books ")
+		end
+		clause
 	end
 
 	def self.match_author_for_books
@@ -66,7 +71,7 @@ class Author < Neo
 		if user_id.present?
 			clause = match + optional_match_books + Author.order_by("book.published_year DESC") + User.new(user_id).match + ", author, book " + Bookmark::Type::IOwnThis.match(user_id) + ", author " + Author.return_group(Author.basic_info, "COLLECT({"+Book.grouped_basic_info+", description: book.description, own_status:ID(bookmark_node)}) AS books")
 		else
-			clause = match + optional_match_books + Author.order_by("book.published_year DESC") + Author.return_group(Author.basic_info, "COLLECT({"+Book.grouped_basic_info+", description: book.description})")
+			clause = match + optional_match_books + Author.order_by("book.published_year DESC") + Author.return_group(Author.basic_info, "COLLECT({"+Book.grouped_basic_info+", description: book.description}) AS books ")
 		end
 		clause
 	end

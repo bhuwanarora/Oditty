@@ -17,8 +17,8 @@ module Api
 			def get_details
 				author_id = params[:id]
 				user_id = session[:user_id]
-				skip_count = session[:skip]
-				if skip_count.present?
+				skip_count = params[:skip]
+				unless skip_count.present?
 					info = Api::V0::AuthorApi.get_details author_id, user_id
 				else
 					info = Api::V0::AuthorApi.get_author_books author_id, user_id, skip_count

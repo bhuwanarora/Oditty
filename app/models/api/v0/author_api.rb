@@ -17,12 +17,11 @@ module Api
 			end
 
 			def self.get_details author_id, user_id
-				info = Author.new(author_id).get_details(user_id).execute[0]
-				info
+				Author.new(author_id).get_details(user_id).execute[0]
 			end
 
 			def self.get_author_books author_id, user_id, skip_count
-				
+				Author.new(author_id).get_books(user_id, skip_count).execute[0]				
 			end
 
 			def self.get_active_authors
