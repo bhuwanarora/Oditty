@@ -73,35 +73,71 @@ class WebsiteController < ApplicationController
 
 	### WEBSITE NEW 
 	def home
+		unless session[:user_id]
+			status = 403
+		else
+			status = 200
+		end
+
 		session[:news_day_skip_count] = 0
 		session[:news_skip_count] = 0
 		@home = true
-		render :layout => "material"
+		render :layout => "material", :status => status
 	end
 
 	def communities
+		unless session[:user_id]
+			status = 403
+		else
+			status = 200
+		end
+
 		@home = true
-		render :layout => "material"
+		render :layout => "material", :status => status
 	end
 
 	def blogs
+		unless session[:user_id]
+			status = 403
+		else
+			status = 200
+		end
+
 		@home = true
-		render :layout => "material"
+		render :layout => "material", :status => status
 	end
 
 	def infinity
+		unless session[:user_id]
+			status = 403
+		else
+			status = 200
+		end
+
 		@infinity = true
-		render :layout => "material"
+		render :layout => "material", :status => status
 	end
 
 	def search
+		unless session[:user_id]
+			status = 403
+		else
+			status = 200
+		end
+
 		@search = true
-		render :layout => "material"
+		render :layout => "material", :status => status
 	end
 
 	def room
+		unless session[:user_id]
+			status = 403
+		else
+			status = 200
+		end
+
 		@room = true
-		render :layout => "material"
+		render :layout => "material", :status => status
 	end
 
 	def book
@@ -110,22 +146,46 @@ class WebsiteController < ApplicationController
 	end
 
 	def profile
+		unless session[:user_id]
+			status = 403
+		else
+			status = 200
+		end
+
 		@profile = true
-		render :layout => "material"
+		render :layout => "material", :status => status
 	end
 
 	def network
+		unless session[:user_id]
+			status = 403
+		else
+			status = 200
+		end
+
 		@network = true
-		render :layout => "material"
+		render :layout => "material", :status => status
 	end
 
 	def journey
-		render :layout => "material"
+		unless session[:user_id]
+			status = 403
+		else
+			status = 200
+		end
+
+		render :layout => "material", :status => status
 	end
 
 	def customise
+		unless session[:user_id]
+			status = 403
+		else
+			status = 200
+		end
+
 		@customise = true
-		render :layout => "material"
+		render :layout => "material", :status => status
 	end
 
 	def author
@@ -134,10 +194,13 @@ class WebsiteController < ApplicationController
 	end
 
 	def community
+		unless session[:user_id]
+			status = 403
+		else
+			status = 200
+		end
+
 		@community = true
-		render :layout => "material"
+		render :layout => "material", :status => status
 	end
-
-	
-
 end
