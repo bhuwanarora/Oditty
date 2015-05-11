@@ -75,13 +75,13 @@ class WebsiteController < ApplicationController
 	def home
 		session[:news_day_skip_count] = 0
 		session[:news_skip_count] = 0
-		@home = true
 
 		unless session[:user_id]
 			cookies[:logged] = nil
 			cookies[:redirected_to] = request.url
 			redirect_to :controller => 'website', :action => 'signup' 			
 		else
+			@home = true
 			render :layout => "material" 
 		end
 	end
@@ -92,6 +92,7 @@ class WebsiteController < ApplicationController
 			cookies[:redirected_to] = request.url
 			redirect_to :controller => 'website', :action => 'signup'			
 		else
+			@home = true
 			render :layout => "material"
 		end
 	end
@@ -102,39 +103,40 @@ class WebsiteController < ApplicationController
 			cookies[:redirected_to] = request.url
 			redirect_to :controller => 'website', :action => 'signup'			
 		else
+			@home = true
 			render :layout => "material"
 		end
 	end
 
 	def infinity
-		@infinity = true
 		unless session[:user_id]
 			cookies[:logged] = nil
 			cookies[:redirected_to] = request.url
 			redirect_to :controller => 'website', :action => 'signup'			
 		else
+			@infinity = true
 			render :layout => "material"
 		end
 	end
 
 	def search
-		@search = true
 		unless session[:user_id]
 			cookies[:logged] = nil
 			cookies[:redirected_to] = request.url
 			redirect_to :controller => 'website', :action => 'signup'			
 		else
+			@search = true
 			render :layout => "material"
 		end
 	end
 
 	def room
-		@room = true
 		unless session[:user_id]
 			cookies[:logged] = nil
 			cookies[:redirected_to] = request.url
 			redirect_to :controller => 'website', :action => 'signup'			
 		else
+			@room = true
 			render :layout => "material"
 		end
 	end
@@ -145,23 +147,23 @@ class WebsiteController < ApplicationController
 	end
 
 	def profile
-		@profile = true
 		unless session[:user_id]
 			cookies[:logged] = nil
 			cookies[:redirected_to] = request.url
 			redirect_to :controller => 'website', :action => 'signup'			
 		else
+			@profile = true
 			render :layout => "material"
 		end
 	end
 
 	def network
-		@network = true
 		unless session[:user_id]
 			cookies[:logged] = nil
 			cookies[:redirected_to] = request.url
 			redirect_to :controller => 'website', :action => 'signup'			
 		else
+			@network = true
 			render :layout => "material"
 		end
 	end
@@ -177,12 +179,12 @@ class WebsiteController < ApplicationController
 	end
 
 	def customise
-		@customise = true
 		unless session[:user_id]
 			cookies[:logged] = nil
 			cookies[:redirected_to] = request.url
 			redirect_to :controller => 'website', :action => 'signup'			
 		else
+			@customise = true
 			render :layout => "material"
 		end
 	end
@@ -193,12 +195,12 @@ class WebsiteController < ApplicationController
 	end
 
 	def community
-		@community = true
 		unless session[:user_id]
 			cookies[:logged] = nil
 			cookies[:redirected_to] = request.url
 			redirect_to :controller => 'website', :action => 'signup' 			
 		else
+			@community = true
 			render :layout => "material"
 		end
 	end
