@@ -1,4 +1,4 @@
-homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'authorService', '$mdDialog', 'scroller', 'ColorConstants', '$filter', '$sce', '$rootScope', "scroller", function($scope, $location, $mdSidenav, authorService, $mdDialog, scroller, ColorConstants, $filter, $sce, $rootScope, scroller){
+homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'authorService', '$mdDialog', 'scroller', 'ColorConstants', '$filter', '$sce', '$rootScope', "scroller", "WebsiteUIConstants", function($scope, $location, $mdSidenav, authorService, $mdDialog, scroller, ColorConstants, $filter, $sce, $rootScope, scroller, WebsiteUIConstants){
 
     $scope.show_buy_dialog = function(event, book){
         $rootScope.active_book = book;
@@ -9,6 +9,21 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         event.stopPropagation();
     }
 
+    $scope.toggle_follow = function(){
+        $scope.author.status = !$scope.author.status;
+        authorService.follow($scope.author.id, $scope.author.status);
+    }
+
+    $scope.keypress_scroll = function(event){
+        debugger
+        if(event.keyCode == WebsiteUIConstants.KeyDown){
+            $scope.active_index = $scope.next_block($scope.active_index);
+        }
+        else if(event.keyCode == WebsiteUIConstants.KeyUp){
+            $scope.active_index = $scope.previous_block($scope.active_index);
+        }
+    }
+
     $scope.next_block = function(index){
         var length = $scope.author.books.length;
         if(index == (length-1)){
@@ -16,6 +31,7 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         }
         index = index + 1;
         $scope.scroll_to_element(index);
+        return index;
     }
 
     $scope.scroll_to_element = function(index){
@@ -36,6 +52,7 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         }
         index = index - 1;
         $scope.scroll_to_element(index);
+        return index;
     }
 
     $scope.scroll_wiki = function(){
@@ -66,19 +83,27 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
                 _get_wiki_without_google_redirect(data.wiki_url);
                 $scope.author.wiki_url = $sce.trustAsResourceUrl($scope.author.wiki_url+"?action=render");
             }
-            angular.forEach($scope.author.books, function(value, index){
+            if(($scope.author.books.length == 1) && ($scope.author.books[0].title == null)){
+                $scope.author.books = [];
                 var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-                var url = $filter('large_thumb')(value);
                 var color = ColorConstants.value[random_int];
-                if(url != ""){
-                    var json =  {"color": color, "custom_style": {"background-image": "url('"+url+"')"}};
-                }
-                else{
-                    var json =  {"color": color, "custom_style": {"background-color": color}};
-                }
-                $scope.author.books[index] = angular.extend($scope.author.books[index], json);
-            });
-            $scope.custom_color = {'background-color': $scope.author.books[0].color};
+                $scope.custom_style = {'background-color': color};
+                $scope.custom_color = color;
+            }
+            else{
+                angular.forEach($scope.author.books, function(value, index){
+                    var random_int = Math.floor(Math.random()*ColorConstants.value.length);
+                    var url = $filter('large_thumb')(value);
+                    var color = ColorConstants.value[random_int];
+                    if(url != ""){
+                        var json =  {"color": color, "custom_style": {"background-image": "url('"+url+"')"}};
+                    }
+                    else{
+                        var json =  {"color": color, "custom_style": {"background-color": color}};
+                    }
+                    $scope.author.books[index] = angular.extend($scope.author.books[index], json);
+                });
+            }
             $scope.info.loading = false;
         });
     }());

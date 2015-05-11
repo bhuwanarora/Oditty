@@ -12,17 +12,22 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
     }
 
     this.filtered_books = function($scope){
-        var skip_count = $scope.info.books.length;
-        infinityService.get_books(skip_count).then(function(data){
-            angular.forEach(data.books, function(value){
-                var random_int = Math.floor(Math.random() * ColorConstants.value.length);
-                var json = angular.extend(value, {"color": ColorConstants.value[random_int]});
-                this.push(json);
-            }, $scope.info.books);
-            $scope.info.loading = false;
-            delete data.books;
-            $scope.info.other_info = data;
-        });
+        if(!$scope.info.fetching_books){
+            var skip_count = $scope.info.books.length;
+            $scope.info.loading = true;
+            $scope.info.fetching_books = true;
+            infinityService.get_books(skip_count).then(function(data){
+                angular.forEach(data.books, function(value){
+                    var random_int = Math.floor(Math.random() * ColorConstants.value.length);
+                    var json = angular.extend(value, {"color": ColorConstants.value[random_int]});
+                    this.push(json);
+                }, $scope.info.books);
+                $scope.info.loading = false;
+                $scope.info.fetching_books = false;
+                delete data.books;
+                $scope.info.other_info = data;
+            });
+        }
     }
 
     this.toggle_bookmark = function(label, data){

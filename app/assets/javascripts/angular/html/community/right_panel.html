@@ -9,7 +9,10 @@
                 <img class="circular" ng-src="{{active_tag.image_url}}" layout-padding>
                 <h3>{{active_tag.name | uppercase}}</h3>
             </div>
-            <md-button class="md-raised" ng-click="follow_community()">Follow</md-button>
+            <md-button ng-class="{'md-raised': !active_tag.status}" class="md-button-clear" ng-click="toggle_follow()">
+                <span ng-if="!active_tag.status">Follow</span>
+                <span ng-if="active_tag.status">Following</span>
+            </md-button>
         </md-subheader>
         <md-card ng-repeat="news_info in active_tag.news">
             <md-card-content>
