@@ -120,7 +120,6 @@ class Indexer
 			get_nodes = " MATCH (node:#{label})  WHERE ID(node) <= #{minimum + range} AND ID(node) >= #{minimum} " + Neo.return_init + node_class.basic_info.search_compliant + ", node.description AS description "
 			minimum += range
 			nodes = get_nodes.execute
-			debugger
 			for node in nodes
 				Indexer.new([node]).handle
 			end
@@ -144,34 +143,34 @@ class Indexer
 		end
 	end
 
-	def get_relationships id
+	def get_relationship_count id
 		id = id.to_s.strip
-		url = "http://localhost:7474/db/data/node/#{id}/relationships/all/"
+		url = Rails.application.config.neo4j_relation_url
 		puts url 		
 		relation_count = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url)))).length
 	end
 	
 	def index_book 
-		@client.index  index: 'search_read', type: 'books', id: @response["book_id"], body: { title: @response["title"], isbn: @response["isbn"], description: @response["description"], author_name: @response["author_name"] ,weight: get_relationships(@response["book_id"])}
+		@client.index  index: 'search_read', type: 'books', id: @response["book_id"], body: { title: @response["title"], isbn: @response["isbn"], description: @response["description"], author_name: @response["author_name"] ,weight: get_relationship_count(@response["book_id"])}
 	end	
 
 	def index_blog
-		@client.index  index: 'search', type: 'blogs', id: @response["blog_id"], body: { title: @response["title"],  title: @response["title"], image_url: @response["image_url"], weight: get_relationships(@response["blog_id"])}
+		@client.index  index: 'search', type: 'blogs', id: @response["blog_id"], body: { title: @response["title"],  title: @response["title"], image_url: @response["image_url"], weight: get_relationship_count(@response["blog_id"])}
 	end
 
 	def index_news
-		@client.index  index: 'search', type: 'news', id: @response["id"], body: { title: @response["title"], image_url: @response["image_url"], title: @response["title"], created_at: @response["created_at"], weight: get_relationships(@response["id"])}
+		@client.index  index: 'search', type: 'news', id: @response["id"], body: { title: @response["title"], image_url: @response["image_url"], title: @response["title"], created_at: @response["created_at"], weight: get_relationship_count(@response["id"])}
 	end	
 
 	def index_user
-		@client.index  index: 'search', type: 'users', id: @response["id"], body: { search_index: @response["indexed_user_name"], first_name: @response["first_name"] , last_name: @response["last_name"], region: @response["region"] ,weight: get_relationships(@response["id"])}
+		@client.index  index: 'search', type: 'users', id: @response["id"], body: { search_index: @response["indexed_user_name"], first_name: @response["first_name"] , last_name: @response["last_name"], region: @response["region"] ,weight: get_relationship_count(@response["id"])}
 	end	
 
 	def index_author
-		@client.index  index: 'search', type: 'authors', id: @response["id"], body: { name: @response["name"], weight: get_relationships(@response["id"])}
+		@client.index  index: 'search', type: 'authors', id: @response["id"], body: { name: @response["name"], weight: get_relationship_count(@response["id"])}
 	end	
 
 	def index_community
-		@client.index  index: 'search', type: 'communities', id: @response["id"], body: { name: @response["name"], image_url: @response["image_url"], weight: get_relationships(@response["id"])}
+		@client.index  index: 'search', type: 'communities', id: @response["id"], body: { name: @response["name"], image_url: @response["image_url"], weight: get_relationship_count(@response["id"])}
 	end	
 end
