@@ -5,6 +5,84 @@ class Indexer
 
 	end
 
+	def self.set_index
+		client = Elasticsearch::Client.new log: true	
+		if (client.indices.exists_alias name: 'search')
+			indices = client.indices.get_alias name: 'search'
+			indices.each do |key, value|
+				client.indices.update_aliases body: {
+				  actions: [
+				    { remove: { index: key, alias: 'search' } },
+				  ]
+				}
+			end
+		end
+
+		client.indices.create index: Time.now.strftime("%D").gsub("/","-"),
+		body: {
+        	settings: {
+    			index: {
+                    number_of_shards: 1,
+                    number_of_replicas: 0,
+                  		},
+				analysis: {
+					filter: { 
+						nGram_filter:{ 
+							max_gram: "20", min_gram: "2", type: "nGram", token_chars: ["letter","digit","punctuation","symbol"]
+									}
+							},
+				analyzer:{
+					nGram_analyzer: {
+						type: "custom",filter: ["lowercase","asciifolding","nGram_filter"],tokenizer: "whitespace"
+									},
+					whitespace_analyzer: {
+						type: "custom",filter: ["lowercase","asciifolding"],tokenizer: "whitespace"}
+						}
+					},
+				mappings: {
+					books: {
+						_all: {
+			            index_analyzer: "nGram_analyzer",
+			            search_analyzer: "whitespace_analyzer"
+							  },
+			        properties: {
+			            description: {
+			               type: "string",
+			               index: "no"
+			            			}
+			            		}
+			            },
+					news: {
+						_all: {
+			            index_analyzer: "nGram_analyzer",
+			            search_analyzer: "whitespace_analyzer"
+							  },
+			        properties: {
+			            description: {
+			               type: "string",
+			               index: "no"
+			            			}
+			            		}
+			            },
+					blogs: {
+						_all: {
+			            index_analyzer: "nGram_analyzer",
+			            search_analyzer: "whitespace_analyzer"
+							  },
+			        properties: {
+			            excerpt: {
+			               type: "string",
+			               index: "no"
+			            		}
+			            	}
+			            }
+					}
+				}
+			}
+
+		client.indices.put_alias index: Time.now.strftime("%D").gsub("/","-"), name: 'search'			
+	end
+
 	def self.create_index label, node_class
 		get_ids_range_clause = " MATCH (node:#{label}) RETURN MAX(ID(node)) AS maximum , MIN(ID(node)) AS minimum "
 		range = get_ids_range_clause.execute[0]
@@ -47,11 +125,11 @@ class Indexer
 		relation_count = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url)))).length
 	end
 	def index_book 
-		@client.index  index: 'search', type: 'book', id: @response["book_id"], body: { title: @response["title"], search_index: @response["search_index"], isbn: @response["isbn"], description: @response["description"], author_name: @response["author_name"] ,weight: get_relationships(@response["book_id"])}
+		@client.index  index: 'search', type: 'books', id: @response["book_id"], body: { title: @response["title"], search_index: @response["search_index"], isbn: @response["isbn"], description: @response["description"], author_name: @response["author_name"] ,weight: get_relationships(@response["book_id"])}
 	end	
 
 	def index_blog
-		@client.index  index: 'search', type: 'blog', id: @response["blog_id"], body: { title: @response["title"], search_index: @response["indexed_blog_title"],  title: @response["title"], image_url: @response["image_url"], weight: get_relationships(@response["blog_id"])}
+		@client.index  index: 'search', type: 'blogs', id: @response["blog_id"], body: { title: @response["title"], search_index: @response["indexed_blog_title"],  title: @response["title"], image_url: @response["image_url"], weight: get_relationships(@response["blog_id"])}
 	end
 
 	def index_news
@@ -59,14 +137,14 @@ class Indexer
 	end	
 
 	def index_user
-		@client.index  index: 'search', type: 'user', id: @response["id"], body: { search_index: @response["indexed_user_name"], first_name: @response["first_name"] , last_name: @response["last_name"], region: @response["region"] ,weight: get_relationships(@response["id"])}
+		@client.index  index: 'search', type: 'users', id: @response["id"], body: { search_index: @response["indexed_user_name"], first_name: @response["first_name"] , last_name: @response["last_name"], region: @response["region"] ,weight: get_relationships(@response["id"])}
 	end	
 
 	def index_author
-		@client.index  index: 'search', type: 'author', id: @response["author_id"], body: { name: @response["name"], weight: get_relationships(@response["author_id"])}
+		@client.index  index: 'search', type: 'authors', id: @response["author_id"], body: { name: @response["name"], weight: get_relationships(@response["author_id"])}
 	end	
 
 	def index_community
-		@client.index  index: 'search', type: 'community', id: @response["community_id"], body: { name: @response["name"], search_index: @response["indexed_community_name"], image_url: @response["image_url"], weight: get_relationships(@response["community_id"])}
+		@client.index  index: 'search', type: 'communities', id: @response["community_id"], body: { name: @response["name"], search_index: @response["indexed_community_name"], image_url: @response["image_url"], weight: get_relationships(@response["community_id"])}
 	end	
 end
