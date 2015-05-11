@@ -2,33 +2,40 @@ class Search < Neo
 	def initialize params
 		@search_text = params[:q]
 		@client = Elasticsearch::Client.new log: true	
+		@count = params[:count] || 4
+		@connector = params[:fuzzy].present? ? "~0.7" : "*"
+		@skip_count = params[:skip] || 0
 	end
 
-	def self.extract_info record
-		record["_source"]["label"] = record["_type"].camelcase
-		record["_source"]["id"] = record["_id"].to_i
-		if record["_source"]["name"].blank?
-			record["_source"]["name"] = record["_source"]["title"]
+	def self.extract_info search_response
+		response = []
+		search_response["hits"]["hits"].each do |record|
+			record["_source"]["label"] = record["_type"].camelcase
+			record["_source"]["id"] = record["_id"].to_i
+			if record["_source"]["name"].blank?
+				record["_source"]["name"] = record["_source"]["title"]
+			end
+			response << record["_source"] 
 		end
-		record
+		response
+	end
+
+	def self.by_scroll_id scroll_id
+		client = Elasticsearch::Client.new log: true	
+		search_response = client.scroll index: 'search_read', scroll: '1m', scroll_id: scroll_id.to_s
+		{"results" => Search.extract_info(search_response)}
 	end
 
 	def book_by_title
-		response = []
-		search_response = @client.search index: 'search_read', type: 'book', scroll: '1m', body:{query: { dis_max: { queries: [{match:{title: @search_text}}, {match:{ author: @search_text}}]}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
-		search_response["hits"]["hits"].each do |record|
-			response << Search.extract_info(record)["_source"] 
-		end
-		response
+		search_response = @client.search index: 'search_read', type: 'book', scroll: '1m', body:{query: {dis_max: { queries: [{match:{title:  {query: @search_text, fuzziness: 2}}}, {match:{ author: {query: @search_text, fuzziness: 2}}}]}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		scroll_id = search_response["_scroll_id"]
+		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
 
 	def author_by_name
-		response = []
-		search_response = @client.search index: 'search', type: 'author', scroll: '1m', body: { query: { match: { title: @search_text}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
-		search_response["hits"]["hits"].each do |record|
-			response << Search.extract_info(record)["_source"] 
-		end
-		response
+		search_response = @client.search index: 'search_read', type: 'author', scroll: '1m', body: { query: {match: { title: {query: @search_text, fuzziness: 2}}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		scroll_id = search_response["_scroll_id"]
+		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
 
 	def label_by_name
@@ -36,12 +43,9 @@ class Search < Neo
 	end
 
 	def user_by_name
-		response = []
-		search_response = @client.search index: 'search', type: 'user', scroll: '1m', body: { query: { match: { title: @search_text}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
-		search_response["hits"]["hits"].each do |record|
-			response << Search.extract_info(record)["_source"] 
-		end
-		response
+		search_response = @client.search index: 'search_read', type: 'user', scroll: '1m', body: { query: {match: { title: {query: @search_text, fuzziness: 2}}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		scroll_id = search_response["_scroll_id"]
+		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
 
 	def category_by_name
@@ -54,40 +58,27 @@ class Search < Neo
 	end
 
 	def news_by_title
-		response = []
-		search_response = @client.search index: 'search', type: 'news', scroll: '1m', body: { query: { match: { title: @search_text}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
-		search_response["hits"]["hits"].each do |record|
-			response << Search.extract_info(record)["_source"] 
-		end
-		response
+		search_response = @client.search index: 'search_read', type: 'news', scroll: '1m', body: { query: {match: { title: {query: @search_text, fuzziness: 2}}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		scroll_id = search_response["_scroll_id"]
+		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
 
 	def blog_by_title
-		response = []
-		search_response = @client.search index: 'blog', type: 'blog', scroll: '1m', body: { query: { match: { title: @search_text}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
-		search_response["hits"]["hits"].each do |record|
-			response << Search.extract_info(record)["_source"] 
-		end
-		response
+		search_response = @client.search index: 'blog', type: 'blog', scroll: '1m', body: { query: {match: { title: {query: @search_text, fuzziness: 2}}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		scroll_id = search_response["_scroll_id"]
+		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
 
 	def community_by_name
-		response = []
-		search_response = @client.search index: 'search', type: 'community', scroll: '1m', body: { query: { match: { title: @search_text, }} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
-		search_response["hits"]["hits"].each do |record|
-			response << Search.extract_info(record)["_source"] 
-		end
-		response
+		search_response = @client.search index: 'search_read', type: 'community', scroll: '1m', body: { query: {match: { title: {query: @search_text, fuzziness: 2}}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		scroll_id = search_response["_scroll_id"]
+		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
 
 	def basic
-		response = []
-		search_response = @client.search index: 'search_read', scroll: '1m', body:{query: { dis_max: { queries: [{match:{title: @search_text}}, {match:{ author: @search_text}}, {match:{ name: @search_text}}, { match:{ community_name: @search_text}}]}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
-		search_response["hits"]["hits"].each do |record|
-			response << Search.extract_info(record)["_source"] 
-		end
-		puts response.to_s.green
-		response
+		search_response = @client.search index: 'search_read', scroll: '1m', body:{query: { dis_max: { queries: [{match:{title: {query: @search_text, fuzziness: 2}}}, {match:{ author: {query: @search_text, fuzziness: 2}}}, {match:{ name: {query: @search_text, fuzziness: 2}}}, { match:{ community_name: {query: @search_text, fuzziness: 2}}}]}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		scroll_id = search_response["_scroll_id"]
+		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
 
 	def self.basic_search_info

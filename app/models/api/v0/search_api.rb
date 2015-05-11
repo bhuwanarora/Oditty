@@ -6,23 +6,11 @@ module Api
 				q = params[:q]
             	count = params[:count]
             	type = params[:type]
-				if(q && q.length >= 3)
-					params.merge!(:fuzzy => nil)
-					results = self._get_search_clause(params)
-					
-					if results.present?
-						results
-						puts "results present"
-					else
-						puts "results absent"
-						params[:fuzzy] = true
-						results = self._get_search_clause(params)
-						results.push({:fuzzy => true})
-					end
-				else
-					results = []
-				end
-				results
+				self._get_search_clause(params)
+			end
+
+			def self.search_by_scroll_id scroll_id
+				results = Search.by_scroll_id scroll_id
 			end
 
 			private
@@ -43,7 +31,7 @@ module Api
 				when 'Person'
 					response = Search.new(params).user_by_name
 				when 'Genre'
-					response = Search.new(params).category_by_name.execute
+					response = {"results" => Search.new(params).category_by_name.execute}
 				when 'Community'
 					response = Search.new(params).community_by_name
 				when 'News'
@@ -51,7 +39,7 @@ module Api
 				when 'Blog'
 					response = Search.new(params).blog_by_title
 				when 'Label'
-					response = Search.new(params).label_by_name.execute
+					response = {"results" => Search.new(params).label_by_name.execute}
 				else
 					response = Search.new(params).basic
 				end
