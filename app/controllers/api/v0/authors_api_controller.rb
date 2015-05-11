@@ -17,14 +17,13 @@ module Api
 			def get_details
 				author_id = params[:id]
 				user_id = session[:user_id]
-				if author_id
+				skip_count = params[:skip]
+				unless skip_count.present?
 					info = Api::V0::AuthorApi.get_details author_id, user_id
-					status = 200
 				else
-					info = {:message => "Invalid Request"}
-					status = 400
+					info = Api::V0::AuthorApi.get_author_books author_id, user_id, skip_count
 				end
-				render :json => info, :status => status
+				render :json => info, :status => 200
 			end
 
 			def get_popular_authors

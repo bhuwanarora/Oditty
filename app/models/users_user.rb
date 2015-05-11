@@ -10,7 +10,7 @@ class UsersUser < Neo
 	end
 
 	def create
-		" MERGE (user:User)-[follows_user:FollowsUser]->(follows_node:FollowsNode{created_at: " + Time.now.to_i.to_s + ", updated_at: " + Time.now.to_i.to_s + ", friend_id:ID(friend), user_id: ID(user)})-[followed_by:FollowedBy]->(friend:User)  WITH user, follows_user, friend, follows_node, followed_by "
+		" MERGE (user)-[follows_user:FollowsUser]->(follows_node:FollowsNode{friend_id:ID(friend), user_id: ID(user)}) MERGE (follows_node)-[followed_by:FollowedBy]->(friend) SET follows_node.created_at = " + Time.now.to_i.to_s + ", follows_node.updated_at = " + Time.now.to_i.to_s + ", WITH user, follows_user, friend, follows_node, followed_by "
 	end
 
 	def match 
