@@ -145,7 +145,7 @@ class Indexer
 
 	def get_relationship_count id
 		id = id.to_s.strip
-		url = Rails.application.config.neo4j_relation_url
+		url = "#{Rails.application.config.neo4j_url}/db/data/node/#{id}/relationships/all/"
 		puts url 		
 		relation_count = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url)))).length
 	end
