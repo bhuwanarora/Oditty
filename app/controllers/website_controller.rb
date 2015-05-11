@@ -78,11 +78,10 @@ class WebsiteController < ApplicationController
 		else
 			status = 200
 		end
-
 		session[:news_day_skip_count] = 0
 		session[:news_skip_count] = 0
 		@home = true
-		render :layout => "material", :status => status
+		render :layout => "material", :status => status, :cookie_reset => true, :url => request.url 
 	end
 
 	def communities
@@ -93,7 +92,7 @@ class WebsiteController < ApplicationController
 		end
 
 		@home = true
-		render :layout => "material", :status => status
+		render :layout => "material", :status => status, :cookie_reset => true, :url => request.url
 	end
 
 	def blogs
@@ -104,7 +103,7 @@ class WebsiteController < ApplicationController
 		end
 
 		@home = true
-		render :layout => "material", :status => status
+		render :layout => "material", :status => status, :cookie_reset => true, :url => request.url
 	end
 
 	def infinity
@@ -115,7 +114,7 @@ class WebsiteController < ApplicationController
 		end
 
 		@infinity = true
-		render :layout => "material", :status => status
+		render :layout => "material", :status => status, :cookie_reset => true, :url => request.url
 	end
 
 	def search
@@ -126,7 +125,7 @@ class WebsiteController < ApplicationController
 		end
 
 		@search = true
-		render :layout => "material", :status => status
+		render :layout => "material", :status => status, :cookie_reset => true, :url => request.url
 	end
 
 	def room
@@ -137,7 +136,7 @@ class WebsiteController < ApplicationController
 		end
 
 		@room = true
-		render :layout => "material", :status => status
+		render :layout => "material", :status => status, :cookie_reset => true, :url => request.url
 	end
 
 	def book
@@ -153,7 +152,7 @@ class WebsiteController < ApplicationController
 		end
 
 		@profile = true
-		render :layout => "material", :status => status
+		render :layout => "material", :status => status, :cookie_reset => true, :url => request.url
 	end
 
 	def network
@@ -164,7 +163,7 @@ class WebsiteController < ApplicationController
 		end
 
 		@network = true
-		render :layout => "material", :status => status
+		render :layout => "material", :status => status, :cookie_reset => true, :url => request.url
 	end
 
 	def journey
@@ -174,7 +173,7 @@ class WebsiteController < ApplicationController
 			status = 200
 		end
 
-		render :layout => "material", :status => status
+		render :layout => "material", :status => status, :cookie_reset => true, :url => request.url
 	end
 
 	def customise
@@ -185,7 +184,7 @@ class WebsiteController < ApplicationController
 		end
 
 		@customise = true
-		render :layout => "material", :status => status
+		render :layout => "material", :status => status, :cookie_reset => true, :url => request.url
 	end
 
 	def author
@@ -201,6 +200,6 @@ class WebsiteController < ApplicationController
 		end
 
 		@community = true
-		render :layout => "material", :status => status
+		render :layout => "material", :status => status, :cookie_reset => true, :url => request.url
 	end
 end
