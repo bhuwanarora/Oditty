@@ -75,80 +75,81 @@ class WebsiteController < ApplicationController
 	def home
 		unless session[:user_id]
 			status = 403
-			cookie_reset = true
-		else
-			status = 200
-			cookie_reset = false
+			cookies[:logged] = nil
+			session[:redirected_to] = request.url
+			redirect_to :controller => 'website', :action => 'signup' and return			
 		end
+
+		if session[:redirected_to]
+			redirection_url = session[:redirected_to]
+			session[:redirected_to] = nil
+			redirect_to redirection_url and return
+		end
+
 		session[:news_day_skip_count] = 0
 		session[:news_skip_count] = 0
 		@home = true
-		render :layout => "material", :status => status, :cookie_reset => cookie_reset, :redirect => request.url 
+		render :layout => "material" 
 	end
 
 	def communities
 		unless session[:user_id]
 			status = 403
-			cookie_reset = true
-		else
-			status = 200
-			cookie_reset = false
+			cookies[:logged] = nil
+			session[:redirected_to] = request.url
+			redirect_to :controller => 'website', :action => 'signup' and return			
 		end
 
 		@home = true
-		render :layout => "material", :status => status, :cookie_reset => cookie_reset, :redirect => request.url
+		render :layout => "material"
 	end
 
 	def blogs
 		unless session[:user_id]
 			status = 403
-			cookie_reset = true
-		else
-			status = 200
-			cookie_reset = false
+			cookies[:logged] = nil
+			session[:redirected_to] = request.url
+			redirect_to :controller => 'website', :action => 'signup' and return			
 		end
 
 		@home = true
-		render :layout => "material", :status => status, :cookie_reset => cookie_reset, :redirect => request.url
+		render :layout => "material"
 	end
 
 	def infinity
 		unless session[:user_id]
 			status = 403
-			cookie_reset = true
-		else
-			status = 200
-			cookie_reset = false
+			cookies[:logged] = nil
+			session[:redirected_to] = request.url
+			redirect_to :controller => 'website', :action => 'signup' and return			
 		end
 
 		@infinity = true
-		render :layout => "material", :status => status, :cookie_reset => cookie_reset, :redirect => request.url
+		render :layout => "material"
 	end
 
 	def search
 		unless session[:user_id]
 			status = 403
-			cookie_reset = true
-		else
-			status = 200
-			cookie_reset = false
+			cookies[:logged] = nil
+			session[:redirected_to] = request.url
+			redirect_to :controller => 'website', :action => 'signup' and return			
 		end
 
 		@search = true
-		render :layout => "material", :status => status, :cookie_reset => cookie_reset, :redirect => request.url
+		render :layout => "material"
 	end
 
 	def room
 		unless session[:user_id]
 			status = 403
-			cookie_reset = true
-		else
-			status = 200
-			cookie_reset = false
+			cookies[:logged] = nil
+			session[:redirected_to] = request.url
+			redirect_to :controller => 'website', :action => 'signup' and return			
 		end
 
 		@room = true
-		render :layout => "material", :status => status, :cookie_reset => cookie_reset, :redirect => request.url
+		render :layout => "material"
 	end
 
 	def book
@@ -159,52 +160,48 @@ class WebsiteController < ApplicationController
 	def profile
 		unless session[:user_id]
 			status = 403
-			cookie_reset = true
-		else
-			status = 200
-			cookie_reset = false
+			cookies[:logged] = nil
+			session[:redirected_to] = request.url
+			redirect_to :controller => 'website', :action => 'signup' and return			
 		end
 
 		@profile = true
-		render :layout => "material", :status => status, :cookie_reset => cookie_reset, :redirect => request.url
+		render :layout => "material"
 	end
 
 	def network
 		unless session[:user_id]
 			status = 403
-			cookie_reset = true
-		else
-			status = 200
-			cookie_reset = false
+			cookies[:logged] = nil
+			session[:redirected_to] = request.url
+			redirect_to :controller => 'website', :action => 'signup' and return			
 		end
 
 		@network = true
-		render :layout => "material", :status => status, :cookie_reset => cookie_reset, :redirect => request.url
+		render :layout => "material"
 	end
 
 	def journey
 		unless session[:user_id]
 			status = 403
-			cookie_reset = true
-		else
-			status = 200
-			cookie_reset = false
+			cookies[:logged] = nil
+			session[:redirected_to] = request.url
+			redirect_to :controller => 'website', :action => 'signup' and return			
 		end
 
-		render :layout => "material", :status => status, :cookie_reset => cookie_reset, :redirect => request.url
+		render :layout => "material"
 	end
 
 	def customise
 		unless session[:user_id]
 			status = 403
-			cookie_reset = true
-		else
-			status = 200
-			cookie_reset = false
+			cookies[:logged] = nil
+			session[:redirected_to] = request.url
+			redirect_to :controller => 'website', :action => 'signup' and return			
 		end
 
 		@customise = true
-		render :layout => "material", :status => status, :cookie_reset => cookie_reset, :redirect => request.url
+		render :layout => "material"
 	end
 
 	def author
@@ -215,13 +212,12 @@ class WebsiteController < ApplicationController
 	def community
 		unless session[:user_id]
 			status = 403
-			cookie_reset = true
-		else
-			status = 200
-			cookie_reset = false
+			cookies[:logged] = nil
+			session[:redirected_to] = request.url
+			redirect_to :controller => 'website', :action => 'signup' and return 			
 		end
 
 		@community = true
-		render :layout => "material", :status => status, :cookie_reset => cookie_reset, :redirect => request.url
+		render :layout => "material"
 	end
 end
