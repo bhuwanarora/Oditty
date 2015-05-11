@@ -15,7 +15,7 @@ class Search < Neo
 
 	def book_by_title
 		response = []
-		search_response = @client.search index: 'search_read', type: 'book', scroll: '5m', body:{query: { dis_max: { queries: [{match:{title: @search_text}}, {match:{ author: @search_text}}]}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		search_response = @client.search index: 'search_read', type: 'book', scroll: '1m', body:{query: { dis_max: { queries: [{match:{title: @search_text}}, {match:{ author: @search_text}}]}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		search_response["hits"]["hits"].each do |record|
 			response << Search.extract_info(record)["_source"] 
 		end
@@ -24,7 +24,7 @@ class Search < Neo
 
 	def author_by_name
 		response = []
-		search_response = @client.search index: 'search', type: 'author', scroll: '5m', body: { query: { match: { title: @search_text}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		search_response = @client.search index: 'search', type: 'author', scroll: '1m', body: { query: { match: { title: @search_text}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		search_response["hits"]["hits"].each do |record|
 			response << Search.extract_info(record)["_source"] 
 		end
@@ -37,7 +37,7 @@ class Search < Neo
 
 	def user_by_name
 		response = []
-		search_response = @client.search index: 'search', type: 'user', scroll: '5m', body: { query: { match: { title: @search_text}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		search_response = @client.search index: 'search', type: 'user', scroll: '1m', body: { query: { match: { title: @search_text}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		search_response["hits"]["hits"].each do |record|
 			response << Search.extract_info(record)["_source"] 
 		end
@@ -55,7 +55,7 @@ class Search < Neo
 
 	def news_by_title
 		response = []
-		search_response = @client.search index: 'search', type: 'news', scroll: '5m', body: { query: { match: { title: @search_text}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		search_response = @client.search index: 'search', type: 'news', scroll: '1m', body: { query: { match: { title: @search_text}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		search_response["hits"]["hits"].each do |record|
 			response << Search.extract_info(record)["_source"] 
 		end
@@ -64,7 +64,7 @@ class Search < Neo
 
 	def blog_by_title
 		response = []
-		search_response = @client.search index: 'blog', type: 'blog', scroll: '5m', body: { query: { match: { title: @search_text}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		search_response = @client.search index: 'blog', type: 'blog', scroll: '1m', body: { query: { match: { title: @search_text}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		search_response["hits"]["hits"].each do |record|
 			response << Search.extract_info(record)["_source"] 
 		end
@@ -73,7 +73,7 @@ class Search < Neo
 
 	def community_by_name
 		response = []
-		search_response = @client.search index: 'search', type: 'community', scroll: '5m', body: { query: { match: { title: @search_text, }} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		search_response = @client.search index: 'search', type: 'community', scroll: '1m', body: { query: { match: { title: @search_text, }} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		search_response["hits"]["hits"].each do |record|
 			response << Search.extract_info(record)["_source"] 
 		end
@@ -82,7 +82,7 @@ class Search < Neo
 
 	def basic
 		response = []
-		search_response = @client.search index: 'search_read', scroll: '2s', body:{query: { dis_max: { queries: [{match:{title: @search_text}}, {match:{ author: @search_text}}, {match:{ name: @search_text}}, { match:{ community_name: @search_text}}]}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		search_response = @client.search index: 'search_read', scroll: '1m', body:{query: { dis_max: { queries: [{match:{title: @search_text}}, {match:{ author: @search_text}}, {match:{ name: @search_text}}, { match:{ community_name: @search_text}}]}} , sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		search_response["hits"]["hits"].each do |record|
 			response << Search.extract_info(record)["_source"] 
 		end

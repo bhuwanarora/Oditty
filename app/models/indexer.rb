@@ -14,9 +14,9 @@ class Indexer
 		puts minimum
 		range = (maximum - minimum) / 1000
 		while minimum < maximum
-			get_nodes_clause = " MATCH (node:#{label})  WHERE ID(node) <= #{minimum + range} AND ID(node) >= #{minimum} " + Neo.return_init + node_class.basic_info.search_compliant 
+			get_nodes = " MATCH (node:#{label})  WHERE ID(node) <= #{minimum + range} AND ID(node) >= #{minimum} " + Neo.return_init + node_class.basic_info.search_compliant 
 			minimum += range
-			nodes = get_nodes_clause.execute
+			nodes = get_nodes.execute
 			for node in nodes
 				Indexer.new([node]).handle
 			end
@@ -51,11 +51,11 @@ class Indexer
 	end	
 
 	def index_blog
-		@client.index  index: 'search_read', type: 'blog', id: @response["blog_id"], body: { title: @response["title"], search_index: @response["indexed_blog_title"],  title: @response["title"], image_url: @response["image_url"], posted_at: @response["posted_at"],  like_count: @response["like_count"], blog_url: @response["blog_url"], excerpt: @response["excerpt"], reblog_count: @response["reblog_count"], weight: get_relationships(@response["blog_id"])}
+		@client.index  index: 'search_read', type: 'blog', id: @response["blog_id"], body: { title: @response["title"], search_index: @response["indexed_blog_title"],  title: @response["title"], image_url: @response["image_url"], weight: get_relationships(@response["blog_id"])}
 	end
 
 	def index_news
-		@client.index  index: 'search_read', type: 'news', id: @response["news_id"], body: { title: @response["title"], search_index: @response["indexed_news_title"], url: @response["url"], image_url: @response["image_url"], title: @response["title"], description: @response["description"], created_at: @response["created_at"], weight: get_relationships(@response["news_id"])}
+		@client.index  index: 'search_read', type: 'news', id: @response["news_id"], body: { title: @response["title"], search_index: @response["indexed_news_title"], image_url: @response["image_url"], title: @response["title"], created_at: @response["created_at"], weight: get_relationships(@response["news_id"])}
 	end	
 
 	def index_user
