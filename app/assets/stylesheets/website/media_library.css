@@ -79,7 +79,7 @@
         height: 350px;
         width: 100vw;
         overflow: hidden;
-        background-size: cover;
+        background-size: contain;
         color: white;
         text-align: center;
     }
@@ -167,7 +167,7 @@
         height: 450px;
         width: 100vw;
         overflow: hidden;
-        background-size: cover;
+        background-size: contain;
         color: white;
         text-align: center;
     } 
@@ -224,7 +224,7 @@
         height: auto;
         width: 100vw;
         overflow: hidden;
-        background-size: cover;
+        background-size: contain;
         color: white;
         text-align: center;
     }

@@ -5,7 +5,7 @@
     <span ng-if="author.status">Following</span>
 </md-button>
 <div class="author_book_cover"
-    parallax-background parallax-ratio="0.9"
+    parallax-background parallax-ratio="-0.7"
     layout-align="center center"
     layout="column"
     ng-if="author.books.length != 0"
@@ -14,7 +14,7 @@
     <div ng-include src="'/assets/angular/html/shared/partials/author_name.html'"></div>
 </div>
 <div layout-padding class="book_container" 
-     parallax-background parallax-ratio="0.7"
+     parallax-background parallax-ratio="1"
      ng-if="author.books.length != 0">
     <div layout="row" class="full_width">
         <div flex="25" flex-md="15" flex-sm="10"></div>
@@ -38,7 +38,7 @@
 </div>
 <div class="author_book_cover" 
      layout-align="center center" layout="column"
-     parallax-background parallax-ratio="0.9"
+     parallax-background parallax-ratio="-0.7"
      ng-style="{'background-color': (author.books[0].color ||  custom_color)}">
      <div ng-include src="'/assets/angular/html/shared/partials/author_name.html'" ng-if="author.books.length == 0"></div>
      <div class="nav_icons" layout="row" ng-if="author.books.length != 0">
@@ -61,7 +61,7 @@
         </md-tabs>
     </div> -->
 </div>
-<div layout-padding class="book_container" parallax-background parallax-ratio="0.7">
+<div layout-padding class="book_container" parallax-background parallax-ratio="1">
     <md-button class="burger_button" ng-click="show_authors_nav($event)" hide show-sm show-md>
         <span class="icon-menu2"></span>
     </md-button>
@@ -101,7 +101,7 @@
     <md-divider ng-if="!book.description || !book.isbn"></md-divider>
     <div class="book_cover" layout-align-sm="center center" 
         layout-align-md="center center" layout="column" 
-        parallax-background parallax-ratio="0.9"   
+        parallax-background parallax-ratio="-0.7"   
         layout-align-gt-md="center center"
         ng-if="book.description && book.isbn"
         ng-style="book.custom_style">
@@ -121,7 +121,7 @@
             <md-button ng-click="next_block($index)"><span class="icon-angle-down"></span></md-button>
          </div>
     </div>
-    <div layout-padding class="book_container" parallax-background parallax-ratio="0.7">
+    <div layout-padding class="book_container" parallax-background parallax-ratio="1">
         <div layout="row">
             <div flex="25" flex-md="15" flex-sm="10"></div>
             <div flex="50" flex-md="70" flex-sm="80" layout="row" layout-sm="column"  layout-align="center center">
