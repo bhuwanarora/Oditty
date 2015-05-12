@@ -152,7 +152,7 @@ md-card>img{
 md-card .image_wrapper{
  	order: 1;
  	height: auto;
- 	max-height: 50vh;
+ 	/*max-height: 50vh;*/
  	overflow: hidden;
  	position: relative;
  	width: 100%;
