@@ -212,7 +212,7 @@ module Api
 			def follow_community
 				user_id = session[:user_id]
 				community_id = params[:id]
-				status = params[:status].downcase
+				status = params[:status].downcase if params[:status]
 				Api::V0::UserApi.follow_community(user_id, community_id, status).execute
 				render :json => {:message => "Success"}, :status => 200
 			end

@@ -136,6 +136,7 @@ class Community < Neo
 				news_metadata["news_id"] = News.create news_metadata
 				News.map_topics(news_metadata["news_id"], response["topics"]) 				
 				Community.map_books(communities_books, news_metadata)
+				News.new(news_metadata["news_id"]).add_notification.execute
 			end
 		end
 	end 
