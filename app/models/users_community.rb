@@ -8,7 +8,7 @@ class UsersCommunity < Neo
 	end
 
 	def create
-		" MERGE (user)-[follows:Follows]->(follow_node:FollowNode{created_at:" + Time.now.to_i.to_s + ", updated_at:" + Time.now.to_i.to_s + ", user_id:" + @user_id.to_s + ", community_id: " + @community_id.to_s + "})-[:OfCommunity]->(community) WITH user, follow_node, community, follows "
+		" MERGE (user)-[follows:Follows]->(follow_node:FollowNode{user_id:" + @user_id.to_s + ", community_id: " + @community_id.to_s + "}) MERGE (follow_node)-[:OfCommunity]->(community) ON CREATE SET follow_node.created_at = " + Time.now.to_i.to_s + ", follow_node.updated_at = " + Time.now.to_i.to_s + " WITH user, follow_node, community, follows "
 	end
 
 	def remove
@@ -16,7 +16,7 @@ class UsersCommunity < Neo
 	end
 
 	def follow
-		match + Community.set_follow_count + create + User::Feed.new(@user_id).create("follow_node") + UsersCommunity.return_group(Community.basic_info)
+		match + Community.set_follow_count + create + User::Feed.new(@user_id).create("follow_node") + ", community " + UsersCommunity.return_group(Community.basic_info)
 	end
 
 	def unfollow
