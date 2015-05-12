@@ -54,7 +54,7 @@ class Bookmark < Neo
 	end
 
 	def self.create_bookmark_node_book media = "book"
-		" CREATE UNIQUE (bookmark_node)-[bookmark_action:BookmarkAction]->(" + media + ") "
+		" MERGE (bookmark_node)-[bookmark_action:BookmarkAction]->(" + media + ") "
 	end
 
 	def self.set_title media = "book"
@@ -110,7 +110,7 @@ class Bookmark < Neo
 	end
 
 	def create_bookmark_node_book
-		" CREATE UNIQUE (bookmark_node)-[bookmark_action:BookmarkAction]->(" + @media + ") "
+		" MERGE (bookmark_node)-[bookmark_action:BookmarkAction]->(" + @media + ") "
 	end
 
 	def set_title
@@ -154,7 +154,7 @@ class Bookmark < Neo
 	end
 
 	def create_label_bookmark_node
-		" CREATE UNIQUE (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node: BookmarkNode{label:\""+@key+"\", book_id:"+ @media_id.to_s + ", user_id:" + @user_id.to_s + "}) " 
+		" MERGE (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node: BookmarkNode{label:\""+@key+"\", book_id:"+ @media_id.to_s + ", user_id:" + @user_id.to_s + "}) " 
 	end
 
 	def match
@@ -174,7 +174,7 @@ class Bookmark < Neo
 	end
 
 	def create 
-		@user_media_class.new(@media_id, @user_id).match + User.create_label(@key) + create_label_bookmark_node + create_bookmark_node_book + Bookmark.set_updated_at + Bookmark.set_created_at + set_key(@key) + " WITH user, " + @media + ", bookmark_node, label, labelled "
+		@user_media_class.new(@media_id, @user_id).match + User.create_label(@key) + create_label_bookmark_node + create_bookmark_node_book + " ON MATCH " + Bookmark.set_updated_at + " ON CREATE " +  Bookmark.set_created_at  + " ON CREATE " + Bookmark.set_updated_at + set_key(@key) + " WITH user, " + @media + ", bookmark_node, label, labelled "
 	end
 
 	def add  
