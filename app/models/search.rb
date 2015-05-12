@@ -33,7 +33,7 @@ class Search < Neo
 	end
 
 	def author_by_name
-		search_response = @client.search index: 'search', type: 'authors', scroll: '10m', body: { query: {match: { title: {query: @search_text, fuzziness: 1}}} , size: 5, sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		search_response = @client.search index: 'search', type: 'authors', scroll: '10m', body: { query: {match: { name: {query: @search_text, fuzziness: 1}}} , size: 5, sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		scroll_id = search_response["_scroll_id"]
 		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
@@ -43,7 +43,7 @@ class Search < Neo
 	end
 
 	def user_by_name
-		search_response = @client.search index: 'search', type: 'users', scroll: '10m', body: { query: {match: { title: {query: @search_text, fuzziness: 1}}} , size: 5, sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		search_response = @client.search index: 'search', type: 'users', scroll: '10m', body:{query: {dis_max: { queries: [{match:{first_name:  {query: @search_text, fuzziness: 1}}}, {match:{ last_name: {query: @search_text, fuzziness: 1}}}]}} , size: 5, sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		scroll_id = search_response["_scroll_id"]
 		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
@@ -70,7 +70,7 @@ class Search < Neo
 	end
 
 	def community_by_name
-		search_response = @client.search index: 'search', type: 'communities', scroll: '10m', body: { query: {match: { title: {query: @search_text, fuzziness: 1}}} , size: 5, sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		search_response = @client.search index: 'search', type: 'communities', scroll: '10m', body: { query: {match: { name: {query: @search_text, fuzziness: 1}}} , size: 5, sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
 		scroll_id = search_response["_scroll_id"]
 		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
