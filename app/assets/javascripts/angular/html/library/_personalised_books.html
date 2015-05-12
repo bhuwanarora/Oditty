@@ -1,10 +1,10 @@
 <section layout-fill layout-padding class="white" ng-if="!constant.show_book">
-    <div ng-include src="'/assets/angular/html/library/partials/category_books.html'"></div>
-    <div ng-include src="'/assets/angular/html/library/partials/author_books.html'"></div>
-    <div ng-include src="'/assets/angular/html/library/partials/era_books.html'"></div>
-    <div ng-include src="'/assets/angular/html/library/partials/friends_books.html'"></div>
-    <div ng-include src="'/assets/angular/html/library/partials/unexplored_books.html'"></div>
-    <div ng-include src="'/assets/angular/html/library/partials/easy_books.html'"></div>
+    <div ng-include src="'/assets/angular/html/library/partials/category_books.html'" ng-if="info.active_tab == 'favourite_category'"></div>
+    <div ng-include src="'/assets/angular/html/library/partials/author_books.html'" ng-if="info.active_tab == 'favourite_author'"></div>
+    <div ng-include src="'/assets/angular/html/library/partials/era_books.html'" ng-if="info.active_tab == 'favourite_era'"></div>
+    <div ng-include src="'/assets/angular/html/library/partials/friends_books.html'" ng-if="info.active_tab == 'friend_shelves'"></div>
+    <div ng-include src="'/assets/angular/html/library/partials/unexplored_books.html'" ng-if="info.active_tab == 'unexplored_subject'"></div>
+    <div ng-include src="'/assets/angular/html/library/partials/easy_books.html'" ng-if="info.active_tab == 'small_read'"></div>
 </div>
 </section>
 <section ng-if="constant.show_book">

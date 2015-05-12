@@ -1,6 +1,5 @@
-<md-divider></md-divider>
-<div ng-if="books_from_favourite_era">
-	<h4>Books on your friend's reading shelves</h4>
+<div ng-if="friends">
+	<div class="custom_title">Books on your friend's reading shelves</div>
 	<div  class="white" layout-fill>
 		<div ng-repeat="friend in friends">
 			<div layout="row">
@@ -13,6 +12,6 @@
 		</div>
 	</div>
 </div>
-<a ng-href="/network?q=1" ng-if="!books_from_favourite_era" class="less_important" layout-padding>
+<a ng-href="/network?q=1" ng-if="!friends" class="less_important" layout-padding>
 	<br/>You don't have enough friends. Follow more people.<br/><br/>
 </a>
