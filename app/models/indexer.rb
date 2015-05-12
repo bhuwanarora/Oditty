@@ -24,63 +24,86 @@ class Indexer
 
 		client.indices.create index: Time.now.strftime("%D").gsub("/","-"),
 		
-		body: {
-        	settings: {
-    			index: {
-                    number_of_shards: 1,
+		body: 
+			{settings:
+				{index:
+					{number_of_shards: 1,
                     number_of_replicas: 0,
-                  		},
-				analysis: {
-					filter: { 
-						nGram_filter:{ 
-							max_gram: "20", min_gram: "2", type: "nGram", token_chars: ["letter","digit","punctuation","symbol"]
-									}
-							},
-				analyzer:{
-					nGram_analyzer: {
-						type: "custom",filter: ["lowercase","asciifolding","nGram_filter"],tokenizer: "whitespace"
-									},
-					whitespace_analyzer: {
-						type: "custom",filter: ["lowercase","asciifolding"],tokenizer: "whitespace"}
-						}
-					},
-				mappings: {
-					books: {
-						_all: {
-			            index_analyzer: "nGram_analyzer",
-			            search_analyzer: "whitespace_analyzer"
-							  },
-			        properties: {
-			            description: {
-			               type: "string",
-			               index: "no"
-			            			}
-			            		}
-			            },
-					news: {
-						_all: {
-			            index_analyzer: "nGram_analyzer",
-			            search_analyzer: "whitespace_analyzer"
-							  },
-			        properties: {
-			            description: {
-			               type: "string",
-			               index: "no"
-			            			}
-			            		}
-			            },
-					blogs: {
-						_all: {
-			            index_analyzer: "nGram_analyzer",
-			            search_analyzer: "whitespace_analyzer"
-							  },
-			        properties: {
-			            excerpt: {
-			               type: "string",
-			               index: "no"
+                  	},
+				analysis: 
+					{filter:
+						{autocomplete_filter:
+                			{type:"edge_ngram",
+		                    min_gram: "1",
+		                    max_gram: "20",
+		                    side: "front",
+		                    token_chars: [ "letter", "digit", "punctuation", "symbol"]
+	                		}
+	         			},
+            	
+	            	analyzer:
+	            		{autocomplete:
+	            			{type: "custom",
+	                    	tokenizer: "edge_ngram_tokenizer",
+	                    	filter: ["lowercase", "standard"]
+	                		},
+						whitespace: 
+							{type: "custom",
+		               		tokenizer: "whitespace",
+		               		filter: ["lowercase","asciifolding"]
+		            		}
+		            	},
+		            tokenizer: 
+		            	{edge_ngram_tokenizer: 
+		            		{type: "edgeNGram",
+			                min_gram: "1",
+			                max_gram: "5",
+			                token_chars: [ "letter", "digit" ]
+              				}
+          				}
+	                },
+
+				mappings: 
+					{books:
+						{_all:
+							{index_analyzer: "autocomplete",
+				            search_analyzer: "whitespace"
+							 },
+				        properties:
+				         	{description:
+				         		{type: "string",
+				               	index: "no"
+				            	},
+				            title:
+				            	{type: "string",
+								analyzer: "autocomplete"
+				               	}
+				            }
+			        	},
+					news:
+						{_all:
+							{index_analyzer: "autocomplete",
+			            	search_analyzer: "whitespace"
+							 },
+			        	properties: 
+			        		{description:
+			        			{type: "string",
+			               		index: "no"
 			            		}
 			            	}
-			            }
+			            },
+					blogs: 
+						{_all:
+							{index_analyzer: "autocomplete",
+				            search_analyzer: "whitespace"
+							},
+				        properties:
+				        	{excerpt:
+				        		{type: "string",
+				               	index: "no"
+				            	}
+				            }
+				        }
 					}
 				}
 			}
@@ -151,7 +174,7 @@ class Indexer
 	end
 	
 	def index_book 
-		@client.index  index: 'search_read', type: 'books', id: @response["book_id"], body: { title: @response["title"], isbn: @response["isbn"], description: @response["description"], author_name: @response["author_name"] ,weight: get_relationship_count(@response["book_id"])}
+		@client.index  index: 'search', type: 'books', id: @response["book_id"], body: { title: @response["title"], isbn: @response["isbn"], description: @response["description"], author_name: @response["author_name"] ,weight: get_relationship_count(@response["book_id"])}
 	end	
 
 	def index_blog
