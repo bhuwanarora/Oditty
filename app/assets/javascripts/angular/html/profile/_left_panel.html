@@ -26,6 +26,38 @@
 		</div>
 	</section>
 </section>
+<section layout="column" layout-wrap class="padding" hide-md>
+	<div ng-if="reading_journeys">
+		<b class="small-padding">{{user.first_name}}'s Reading Journey</b>
+		<md-divider></md-divider>
+		<md-card ng-repeat="reading_journey in reading_journeys">
+			<section layout="column" layout-fill>
+				<img ng-src="{{reading_journey.image}}" class="full_width">
+				<a ng-href="/journey/{{reading_jounrey.id}}" layout="column">
+					<md-button class="clear full_width">
+						<div class="small-padding">
+							<b>{{reading_journey.title}}</b>
+							<div>by {{reading_journey.author_name}}</div>
+							RATING
+						</div>
+						<md-divider></md-divider>
+						<div class="small-padding">
+							<B>STARTED ON</B>
+							<div>{{reading_journey.started_on}}</div>
+						</div>
+					</md-button>
+				</a>
+			</section>
+		</md-card>
+	</div>
+	<div ng-if="!reading_journeys && info.my_profile">
+		<md-button class="md-button-clear md-primary md-raised" ng-click="write_reading_journey($event)">
+			<div><span>Share moments from </span></div>
+			<div><span>Reading Journey.</span>
+			<span class="icon-pencil"></span></div>
+		</md-button>
+	</div>
+</section>
 
 <style>
 	.genre{
