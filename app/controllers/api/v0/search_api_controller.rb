@@ -8,9 +8,12 @@ module Api
 				type = params[:type]
 				puts query_params.to_s.white
 				puts session[:query].to_s.white
-				unless session[:query] == query_params 
+				puts session[:query_type].to_s.white
+				puts type.to_s.white
+				unless session[:query] == query_params and session[:query_type] == type
 					results = SearchApi.search(params)
 					session[:query] = query_params
+					session[:query_type] = type
 					session[:scroll_id] = results["scroll_id"] if results["scroll_id"].present?
 					results = results["results"]
 				else
