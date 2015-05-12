@@ -16,7 +16,6 @@ class ApplicationController < ActionController::Base
       $redis.set 'book_ids', ""
     end
     session["init"] = true
-    # session[:user_id] = 0
     if session[:user_id] == Constant::Id::Admin
       @is_admin = true
     end
@@ -29,4 +28,4 @@ class ApplicationController < ActionController::Base
     super || (form_authenticity_token == request.headers['X-XSRF-TOKEN'])
   end
 
-end
+end 
