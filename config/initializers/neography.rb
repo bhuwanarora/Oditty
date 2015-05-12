@@ -29,7 +29,7 @@ module Neography
                     response << Hash[neo_response["columns"].zip(record)]
                 end
                 begin
-                    if response[0]["label"].present? && response.length == 1
+                    if response.present? && response[0]["label"].present? && response.length == 1
                         IndexerWorker.perform_async(response) 
                     end 
                 rescue Exception => e
