@@ -1,17 +1,41 @@
 class Search < Neo
 	def initialize params
 		@search_text = params[:q]
+		@client = Elasticsearch::Client.new log: true	
 		@count = params[:count] || 4
 		@connector = params[:fuzzy].present? ? "~0.7" : "*"
 		@skip_count = params[:skip] || 0
 	end
 
+	def self.extract_info search_response
+		response = []
+		search_response["hits"]["hits"].each do |record|
+			record["_source"]["labels"] = record["_type"].camelcase
+			record["_source"]["id"] = record["_id"].to_i
+			if record["_source"]["name"].blank?
+				record["_source"]["name"] = record["_source"]["title"]
+			end
+			response << record["_source"] 
+		end
+		response
+	end
+
+	def self.by_scroll_id scroll_id
+		client = Elasticsearch::Client.new log: true	
+		search_response = client.scroll index: 'search', scroll: '10m', scroll_id: scroll_id.to_s
+		{"results" => Search.extract_info(search_response)}
+	end
+
 	def book_by_title
-		Search.match_indexed(Constant::IndexName::BookTitle, ( @search_text + @connector)) + Search.return_group(Book.detailed_info,"labels(node) as labels").search_compliant + Search.order_by("popularity") + " DESC " + Search.skip(@skip_count) + Search.limit(@count) 
+		search_response = @client.search index: 'search', type: 'books', scroll: '10m', body:{query: {dis_max: { queries: [{match:{title:  {query: @search_text, fuzziness: 1}}}, {match:{ author_name: {query: @search_text, fuzziness: 1}}}]}} , size: 5, sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		scroll_id = search_response["_scroll_id"]
+		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
 
 	def author_by_name
-		Search.match_indexed(Constant::IndexName::MainAuthorName, ( @search_text + @connector)) + Search.return_group(Author.basic_info,"labels(node) as labels").search_compliant + Search.skip(@skip_count) + Search.limit(@count)
+		search_response = @client.search index: 'search', type: 'authors', scroll: '10m', body: { query: {match: { name: {query: @search_text, fuzziness: 1}}} , size: 5, sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		scroll_id = search_response["_scroll_id"]
+		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
 
 	def label_by_name
@@ -19,7 +43,9 @@ class Search < Neo
 	end
 
 	def user_by_name
-		Search.match_indexed(Constant::IndexName::UserName, ( @search_text + @connector)) + Search.return_group(User.basic_info,"labels(node) as labels").search_compliant + Search.skip(@skip_count) + Search.limit(@count)
+		search_response = @client.search index: 'search', type: 'users', scroll: '10m', body:{query: {dis_max: { queries: [{match:{first_name:  {query: @search_text, fuzziness: 1}}}, {match:{ last_name: {query: @search_text, fuzziness: 1}}}]}} , size: 5, sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		scroll_id = search_response["_scroll_id"]
+		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
 
 	def category_by_name
@@ -32,19 +58,27 @@ class Search < Neo
 	end
 
 	def news_by_title
-		Search.match_indexed(Constant::IndexName::NewsTitle, ( @search_text + @connector)) + Search.return_group(News.basic_info).search_compliant + Search.skip(@skip_count) + Search.limit(@count)
+		search_response = @client.search index: 'search', type: 'news', scroll: '10m', body: { query: {match: { title: {query: @search_text, fuzziness: 1}}} , size: 5, sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		scroll_id = search_response["_scroll_id"]
+		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
 
 	def blog_by_title
-		Search.match_indexed(Constant::IndexName::BlogTitle, ( @search_text + @connector)) + Search.return_group(Blog.basic_info).search_compliant + Search.skip(@skip_count) + Search.limit(@count)
+		search_response = @client.search index: 'search', type: 'blogs', scroll: '10m', body: { query: {match: { title: {query: @search_text, fuzziness: 1}}} , size: 5, sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		scroll_id = search_response["_scroll_id"]
+		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
 
 	def community_by_name
-		Search.match_indexed(Constant::IndexName::CommunityName, ( @search_text + @connector)) + Search.return_group(Community.basic_info).search_compliant + Search.skip(@skip_count) + Search.limit(@count)
+		search_response = @client.search index: 'search', type: 'communities', scroll: '10m', body: { query: {match: { name: {query: @search_text, fuzziness: 1}}} , size: 5, sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		scroll_id = search_response["_scroll_id"]
+		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
 
 	def basic
-		Search.match_indexed(Constant::IndexName::Search, ( @search_text + @connector)) + Search.return_group(Search.basic_search_info) + Search.skip(@skip_count) + Search.limit(@count)
+		search_response = @client.search index: 'search', scroll: '10m', body:{query: { dis_max: { queries: [{match:{title: {query: @search_text, fuzziness: 2}}}, {match:{ author_name: {query: @search_text, fuzziness: 2}}}, {match:{ name: {query: @search_text, fuzziness: 2}}}, { match:{ community_name: {query: @search_text, fuzziness: 2}}}]}} , size: 5, sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		scroll_id = search_response["_scroll_id"]
+		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
 
 	def self.basic_search_info

@@ -2,8 +2,6 @@
     <div flex="45" class="padding overview" 
             layout="column" 
             flex-sm="100">
-        <h3>{{book.title}}</h3>
-        <a ng-href="/author?q={{book.author_id}}">{{book.author_name}}</a>
         <div flex="10">
             <md-slider flex="20" md-discrete 
                     class="rate_slider"
@@ -14,6 +12,8 @@
                Rate your book
              </md-tooltip>
         </div>
+        <h3>{{book.title}}</h3>
+        <a ng-href="/author?q={{book.author_id}}">{{book.author_name}}</a>
         <md-content class="summary">{{book.description}}</md-content>
     </div>
     <div flex="5" hide-sm>

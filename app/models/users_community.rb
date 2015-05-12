@@ -16,7 +16,7 @@ class UsersCommunity < Neo
 	end
 
 	def follow
-		match + Community.set_follow_count + create + User::Feed.new(@user_id).create("follow_node") + UsersCommunity.return_group(UsersCommunity.basic_info)
+		match + Community.set_follow_count + create + User::Feed.new(@user_id).create("follow_node") + UsersCommunity.return_group(Community.basic_info)
 	end
 
 	def unfollow

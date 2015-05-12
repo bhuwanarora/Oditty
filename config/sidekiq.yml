@@ -10,3 +10,4 @@
 :queues:
   - facebook_user
   - default
+  - indexer

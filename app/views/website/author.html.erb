@@ -1,4 +1,4 @@
-<div ng-controller="authorController" layout="row" layout-wrap>
+<div ng-controller="authorController" layout="row" layout-wrap class="white" ng-keydown="keypress_scroll($event)">
     <div ng-include src="'/assets/angular/html/author/show.html'"></div>
 </div>
 <style>
@@ -6,7 +6,7 @@
         width: 100%;
         height: 150%;
     }
-    .book_description{
+    .book_container{
         min-height: 350px; 
         background-color: white;
         z-index: 1;
@@ -65,5 +65,26 @@
         left: 0;
         top: -65px;
         position: absolute; 
+    }
+
+    .book_width{
+        width: 130px;
+    }
+
+    .follow_author{
+        position: fixed;
+        z-index: 2;
+        right: 10px;
+        top: 67px;
+    }
+
+    .book_title{
+        font-size: 1.2em;
+        font-family: sans-serif;
+    }
+
+    .book_description{
+        margin-top: 10px;
+        font-size: 0.9em;
     }
 </style>

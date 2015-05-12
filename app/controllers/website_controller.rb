@@ -75,33 +75,70 @@ class WebsiteController < ApplicationController
 	def home
 		session[:news_day_skip_count] = 0
 		session[:news_skip_count] = 0
-		@home = true
-		render :layout => "material"
+
+		unless session[:user_id]
+			cookies[:logged] = nil
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
+			redirect_to :controller => 'website', :action => 'signup' 			
+		else
+			@home = true
+			render :layout => "material" 
+		end
 	end
 
 	def communities
-		@home = true
-		render :layout => "material"
+		unless session[:user_id]
+			cookies[:logged] = nil
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
+			redirect_to :controller => 'website', :action => 'signup'			
+		else
+			@home = true
+			render :layout => "material"
+		end
 	end
 
 	def blogs
-		@home = true
-		render :layout => "material"
+		unless session[:user_id]
+			cookies[:logged] = nil
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
+			redirect_to :controller => 'website', :action => 'signup'			
+		else
+			@home = true
+			render :layout => "material"
+		end
 	end
 
 	def infinity
-		@infinity = true
-		render :layout => "material"
+		unless session[:user_id]
+			cookies[:logged] = nil
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
+			redirect_to :controller => 'website', :action => 'signup'			
+		else
+			@infinity = true
+			render :layout => "material"
+		end
 	end
 
 	def search
-		@search = true
-		render :layout => "material"
+		unless session[:user_id]
+			cookies[:logged] = nil
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
+			redirect_to :controller => 'website', :action => 'signup'			
+		else
+			@search = true
+			render :layout => "material"
+		end
 	end
 
 	def room
-		@room = true
-		render :layout => "material"
+		unless session[:user_id]
+			cookies[:logged] = nil
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
+			redirect_to :controller => 'website', :action => 'signup'			
+		else
+			@room = true
+			render :layout => "material"
+		end
 	end
 
 	def book
@@ -110,22 +147,46 @@ class WebsiteController < ApplicationController
 	end
 
 	def profile
-		@profile = true
-		render :layout => "material"
+		unless session[:user_id]
+			cookies[:logged] = nil
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
+			redirect_to :controller => 'website', :action => 'signup'			
+		else
+			@profile = true
+			render :layout => "material"
+		end
 	end
 
 	def network
-		@network = true
-		render :layout => "material"
+		unless session[:user_id]
+			cookies[:logged] = nil
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
+			redirect_to :controller => 'website', :action => 'signup'			
+		else
+			@network = true
+			render :layout => "material"
+		end
 	end
 
 	def journey
-		render :layout => "material"
+		unless session[:user_id]
+			cookies[:logged] = nil
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
+			redirect_to :controller => 'website', :action => 'signup'			
+		else
+			render :layout => "material"
+		end
 	end
 
 	def customise
-		@customise = true
-		render :layout => "material"
+		unless session[:user_id]
+			cookies[:logged] = nil
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
+			redirect_to :controller => 'website', :action => 'signup'			
+		else
+			@customise = true
+			render :layout => "material"
+		end
 	end
 
 	def author
@@ -137,7 +198,4 @@ class WebsiteController < ApplicationController
 		@community = true
 		render :layout => "material"
 	end
-
-	
-
 end

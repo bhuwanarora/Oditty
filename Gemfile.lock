@@ -510,6 +510,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   colorize
   devise
+  elasticsearch
   elasticsearch-model
   elasticsearch-rails
   eventmachine

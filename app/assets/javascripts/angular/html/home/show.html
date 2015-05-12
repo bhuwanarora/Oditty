@@ -1,16 +1,34 @@
-<md-list>
-    <div ng-repeat="news_feed in feed track by $index">
-    	<div ng-init="blog_feed = news_feed" 
-    		ng-include src="'/assets/angular/html/home/_blog.html'" 
-    		ng-if="news_feed.label == 'blog'"></div>
-    	<div ng-init="community_feed = news_feed" 
-    		ng-include src="'/assets/angular/html/home/_community.html'" 
-    		ng-if="news_feed.label == 'news'"></div>
+<md-list layout-wrap layout="row" hide-sm>
+    <div layout="column" flex>
+        <div ng-repeat="news_feed in feed track by $index" class="feed" ng-if="$even">
+            <div ng-init="blog_feed = news_feed" 
+                ng-include src="'/assets/angular/html/home/_blog.html'" 
+                ng-if="news_feed.label == 'blog'"></div>
+            <div ng-init="community_feed = news_feed" 
+                ng-include src="'/assets/angular/html/home/_community.html'" 
+                ng-if="news_feed.label == 'news'"></div>
+        </div>
     </div>
-<!--     <div ng-include src="'/assets/angular/html/home/_social.html'"></div>
-    <div ng-include src="'/assets/angular/html/home/_listopia.html'"></div>
-    <div ng-include src="'/assets/angular/html/home/_blog.html'"></div>
-    <div ng-include src="'/assets/angular/html/home/_blog.html'"></div>
-    <div ng-include src="'/assets/angular/html/home/_blog.html'"></div>
- -->
+    <div layout="column" flex>
+        <div ng-repeat="news_feed in feed track by $index" class="feed" ng-if="$odd">
+            <div ng-init="blog_feed = news_feed" 
+                ng-include src="'/assets/angular/html/home/_blog.html'" 
+                ng-if="news_feed.label == 'blog'"></div>
+            <div ng-init="community_feed = news_feed" 
+                ng-include src="'/assets/angular/html/home/_community.html'" 
+                ng-if="news_feed.label == 'news'"></div>
+        </div>
+    </div>
+</md-list>
+<md-list layout-wrap layout="row" show-sm hide>
+    <div layout="column" flex>
+        <div ng-repeat="news_feed in feed track by $index" class="feed">
+            <div ng-init="blog_feed = news_feed" 
+                ng-include src="'/assets/angular/html/home/_blog.html'" 
+                ng-if="news_feed.label == 'blog'"></div>
+            <div ng-init="community_feed = news_feed" 
+                ng-include src="'/assets/angular/html/home/_community.html'" 
+                ng-if="news_feed.label == 'news'"></div>
+        </div>
+    </div>
 </md-list>

@@ -1,7 +1,7 @@
 module Constant::Count
 	CommunityBooks 				= 10
 	CommunityUsers         		= 10
-	NewsShownInCommunity   		= 7
+	NewsShownInCommunity   		= 15
 	BookRecommendation	 		= 10
 	FollowFavoriteAuthors		= 30 
 	ArticlesShownInRoom	    	= 10

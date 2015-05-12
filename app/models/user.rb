@@ -61,11 +61,11 @@ class User < Neo
 	end
 
 	def get_detailed_info
-		match + User.match_likeable_root_category + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + ", root_category " + User.return_group(User.basic_info, "COLLECT(DISTINCT(root_category.name)) AS categories_name", "COLLECT(DISTINCT(ID(root_category))) AS categories_id", "COLLECT(DISTINCT(root_category.aws_key)) AS categories_aws_key", "COLLECT(DISTINCT(book.isbn)) AS books_isbn", "COLLECT(DISTINCT(ID(book))) AS books_id", "COLLECT(DISTINCT(book.title)) AS books_title", "COLLECT(DISTINCT(book.author_name)) AS books_author_name")
+		match + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + User.return_group(User.basic_info, "COLLECT(DISTINCT(book.isbn)) AS books_isbn", "COLLECT(DISTINCT(ID(book))) AS books_id", "COLLECT(DISTINCT(book.title)) AS books_title", "COLLECT(DISTINCT(book.author_name)) AS books_author_name")
 	end
 
 	def get_profile_info_and_follow_status id
-		match + User.match_likeable_root_category + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + ", root_category " + match_follower(id) + " , root_category, book " + User.return_group(User.basic_info, "COLLECT(DISTINCT(root_category.name)) AS categories_name", "COLLECT(DISTINCT(ID(root_category))) AS categories_id", "COLLECT(DISTINCT(root_category.aws_key)) AS categories_aws_key", "COLLECT(DISTINCT(book.isbn)) AS books_isbn", "COLLECT(DISTINCT(ID(book))) AS books_id", "COLLECT(DISTINCT(book.title)) AS books_title", "COLLECT(DISTINCT(book.author_name)) AS books_author_name", " ID(follows_node) AS status ")
+		match + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + match_follower(id) + ", book " + User.return_group(User.basic_info, "COLLECT(DISTINCT(book.isbn)) AS books_isbn", "COLLECT(DISTINCT(ID(book))) AS books_id", "COLLECT(DISTINCT(book.title)) AS books_title", "COLLECT(DISTINCT(book.author_name)) AS books_author_name", " ID(follows_node) AS status ")
 	end
 
 	def match_follower user_id
@@ -77,7 +77,7 @@ class User < Neo
 	end
 
 	def self.basic_info
-		" user.intro_seen AS intro_seen, user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id, user.gender AS gender, user.thumb as image_url, user.region AS region "
+		" user.intro_seen AS intro_seen, user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id, user.gender AS gender, user.thumb as image_url, user.region AS region, labels(user) AS label, user.latest_feed_id AS latest_feed_id "
 	end
 
 	def self.grouped_basic_info

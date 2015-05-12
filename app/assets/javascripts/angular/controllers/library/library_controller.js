@@ -1,4 +1,4 @@
-homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'WebsiteUIConstants', 'SearchUIConstants', 'bookService', '$routeParams', '$location', 'ColorConstants', '$mdToast', 'infinityService', '$mdBottomSheet', '$mdSidenav', 'sharedService', function($scope, $rootScope, $timeout, WebsiteUIConstants, SearchUIConstants, bookService, $routeParams, $location, ColorConstants, $mdToast, infinityService, $mdBottomSheet, $mdSidenav, sharedService){
+homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'WebsiteUIConstants', 'SearchUIConstants', 'bookService', '$routeParams', '$location', 'ColorConstants', '$mdToast', 'infinityService', '$mdBottomSheet', '$mdSidenav', 'sharedService', '$cookieStore', function($scope, $rootScope, $timeout, WebsiteUIConstants, SearchUIConstants, bookService, $routeParams, $location, ColorConstants, $mdToast, infinityService, $mdBottomSheet, $mdSidenav, sharedService, $cookieStore){
 
     $scope.get_popular_books = function(){
         if(Object.keys($rootScope.filters).length > 0){
@@ -105,7 +105,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
     }
 
     $scope.toggle_infinity_content = function(){
-        $scope.info.loading = true;
+        $cookieStore.put('infinity', $scope.info.infinity);
         if(angular.isDefined($scope.info.infinity) && $scope.info.infinity){
             $scope._get_personalised_suggestions();
         }
@@ -115,7 +115,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
     }
 
     $scope._get_personalised_suggestions = function(){
-
+        $scope.info.loading = true;
         var _set_data = function(data, array){
             angular.forEach(data, function(value){
                 var random_int = Math.floor(Math.random()*ColorConstants.value.length);
@@ -193,21 +193,30 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         $scope.$routeParams = $routeParams;
         $scope.filters = {"other": {}};
         $scope.grid = {};
+
         // var genre = (/genre=(\d+)/.exec($location.absUrl())[1]);
         // var year = (/year=(\d+)/.exec($location.absUrl())[1]);
         // var author = (/author=(\d+)/.exec($location.absUrl())[1]);
         // var duration = (/duration=(\d+)/.exec($location.absUrl())[1]);
+
         $scope.active_endorse = false;
         $scope.active_bookmark = true;
         $scope.active_share = true;
-        $scope._get_personalised_suggestions();
+        if($cookieStore.get('infinity')){
+            $scope.info.infinity = false;
+            $scope._get_personalised_suggestions();
+        }
+        else{
+            $scope.info.infinity = true;
+            $scope._get_popular_books();
+        }
 
         $scope.constant = {"show_book": false};
         $scope.info.books = [];
         $scope.search_tag = {};
         $scope.active_tab = {};
         $scope.info.categories = [];
-        $scope.info.loading = true;
+        
         // $scope.info.infinity = true;
     }());
 
@@ -229,8 +238,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
             scope : $scope ,
             preserveScope: true,
             controller: "filtersController" 
-
-        })
+        });
     };
 
 }]);

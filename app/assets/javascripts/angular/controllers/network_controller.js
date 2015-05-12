@@ -57,6 +57,8 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
             }
 		}
 
+		$scope.hide_follow = true;
+
 		$scope.toast_position = {
             bottom: false,
             top: true,

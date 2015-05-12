@@ -135,6 +135,6 @@ class Blog < Neo
 	end
 
 	def self.basic_info
-		" ID(blog) AS blog_id, blog.title AS title, blog.image_url AS image_url , blog.posted_at AS posted_at, blog.like_count AS like_count, blog.blog_url AS blog_url, blog.excerpt AS excerpt, blog.reblog_count AS reblog_count  "
+		" ID(blog) AS blog_id, blog.title AS title, blog.image_url AS image_url , blog.posted_at AS posted_at, blog.like_count AS like_count, blog.blog_url AS blog_url, blog.excerpt AS excerpt, blog.reblog_count AS reblog_count, labels(blog) AS label  "
 	end
 end
