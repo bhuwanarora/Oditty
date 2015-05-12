@@ -19,7 +19,7 @@
         <a ng-class="{'inactive_link': !info.reading_time_filter && !info.author_filter && !info.published_era_filter && !info.subject_filter}" class="right_anchored">Ungroup</a>
     </div>
 </md-content>
-<md-radio-group ng-if="!info.infinity" layout-margin class="books_tab"
+<md-radio-group ng-if="!info.infinity && !constant.show_book" layout-margin class="books_tab"
     layout="column" ng-model="info.active_tab">
     <md-radio-button value="small_read"
         class="custom_tab md-button" ng-click="show_small_reads()">

@@ -130,20 +130,7 @@ class FeedStructure < Neo
 
 	def _comment_notification data
 		name = _get_name data
-		message = "<span>"+data["tweet"]+".</span>";
-
-		tag = "<div class='"+data["icon"]+" inline_block'></div>" rescue ""
-		clause = "<div class='inline_block'> is "+data["label1"] rescue "<div class='inline_block'> "
-		tag = tag + clause
-
-		clause = " "+data["label2"]+" " rescue " "
-		tag = tag + clause
-
-		clause = "<span class='site_color'>"+data["title"]+"</span>.</div>" rescue "</div>"
-		tag = tag + clause
-
-
-		notification(message, data, tag)
+		structure_notification(data)
 	end
 
 	def _get_time_index time_index
