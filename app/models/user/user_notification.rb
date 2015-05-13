@@ -10,7 +10,11 @@ class User::UserNotification < User
 	end
 
 	def self.add node_variable
-		User::UserNotification.match  + ", " + node_variable + " CREATE UNIQUE (user)-[:NextNotification{user_id:ID(user)}]-("+ node_variable +")-[:NextNotification{user_id:ID(user)}]->(notification) " + User::UserNotification.delete_next_notification + " WITH user, " + node_variable
+		User::UserNotification.match  + ", " + node_variable + " OPTIONAL MATCH (" + node_variable + ")-[existing_relation:NextNotification{user_id:ID(user)}]->() FOREACH(IgnoreMe IN CASE WHEN existing_relation IS NULL THEN [1] ELSE [] END | CREATE UNIQUE (user)-[:NextNotification{user_id:ID(user)}]->("+ node_variable +")-[:NextNotification{user_id:ID(user)}]->(notification) " + User::UserNotification.delete_next_notification + " ) WITH user, " + node_variable
+	end
+
+	def self.remove node_variable
+		" MATCH (s)-[f1:NextNotification]->("+node_variable+")-[f2:NextNotification]->(e) CREATE (s)-[:NextNotification]->(e) DELETE f1, f2  WITH "+node_variable
 	end
 
 	def self.match
