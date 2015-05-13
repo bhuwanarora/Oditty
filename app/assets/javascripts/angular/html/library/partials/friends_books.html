@@ -1,16 +1,10 @@
 <div ng-if="friends">
-	<div class="custom_title">Books on your friend's reading shelves</div>
-	<div  class="white" layout-fill>
-		<div ng-repeat="friend in friends">
-			<div layout="row">
-				<img class="circular" ng-src="{{friend.image_url}}">
-				<h3>{{friend.first_name || friend.id}} {{friend.last_name}}</h3>
-			</div>
-		    <div ng-init="books = friend.books"
-		         ng-hide="constant.show_book"
-		         ng-include src="'/assets/angular/html/library/shared/_default_grid.html'"></div>
-		</div>
-	</div>
+	<d3-click-circles news-tags="friends" 
+        on-click="refresh_data(active_item)"
+        community-page="true"
+        ng-if="friends.length > 0">
+        <div class="bubbleChart animate-fast"></div>
+    </d3-click-circles>
 </div>
 <a ng-href="/network?q=1" ng-if="!friends" class="less_important" layout-padding>
 	<br/>You don't have enough friends. Follow more people.<br/><br/>

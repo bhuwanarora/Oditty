@@ -1,4 +1,4 @@
-homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'WebsiteUIConstants', 'SearchUIConstants', 'bookService', '$routeParams', '$location', 'ColorConstants', '$mdToast', 'infinityService', '$mdBottomSheet', '$mdSidenav', 'sharedService', '$cookieStore', function($scope, $rootScope, $timeout, WebsiteUIConstants, SearchUIConstants, bookService, $routeParams, $location, ColorConstants, $mdToast, infinityService, $mdBottomSheet, $mdSidenav, sharedService, $cookieStore){
+homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'WebsiteUIConstants', 'SearchUIConstants', 'bookService', '$routeParams', '$location', 'ColorConstants', '$mdToast', 'infinityService', '$mdBottomSheet', '$mdSidenav', 'sharedService', '$cookieStore', '$mdDialog', function($scope, $rootScope, $timeout, WebsiteUIConstants, SearchUIConstants, bookService, $routeParams, $location, ColorConstants, $mdToast, infinityService, $mdBottomSheet, $mdSidenav, sharedService, $cookieStore, $mdDialog){
 
     $scope.get_popular_books = function(){
         if(Object.keys($rootScope.filters).length > 0){
@@ -107,7 +107,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
     $scope.toggle_infinity_content = function(){
         $cookieStore.put('infinity', $scope.info.infinity);
         if(angular.isDefined($scope.info.infinity) && $scope.info.infinity){
-            $scope.show_small_reads();
+            $scope.show_books_for_author();
         }
         else{
             $scope._get_popular_books();
@@ -123,6 +123,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
             value = angular.extend(value, json);
             this.push(value);
         }, array);
+        return array;
     }
 
     $scope.show_unexplored_subject_books = function(){
@@ -137,16 +138,50 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
     }
 
     $scope.show_books_on_friend_shelves = function(){
-        if(angular.isUndefined($scope.friends)){
+        if(angular.isUndefined($scope.friends) || $scope.friends.length == 0){
+            $scope.info.active_tab = "friend_shelves";
             $scope.info.loading = true;
             infinityService.get_books_on_friends_shelves().then(function(data){
-                $scope.friends = data;
-                angular.forEach($scope.friends, function(friend){
-                    _set_data(friend.books, friend.books);
-                });
+                angular.forEach(data, function(value){
+                    if((value.info[0].image_url == null) || (value.info[0].image_url == "")){
+                        var image_url = "http://www.sessionlogs.com/media/icons/defaultIcon.png";
+                    }
+                    else{
+                        var image_url = value.info[0].image_url;
+                    }
+                    var json = {"image_url": image_url, "view_count": 100, "name": value.info[0].first_name, "id": value.info[0].id};
+                    value = angular.extend(value, json);
+                    value.books = _set_data(value.books, []);
+                    if(value.name != null){
+                        this.push(value);
+                    }
+                }, $scope.friends);
                 $scope.info.loading = false;
             });
         }
+        else{
+            var temp = $scope.friends;
+            $scope.friends = [];
+            $scope.info.loading = true;
+            var timeout_event = $timeout(function(){
+                $scope.info.loading = false;
+                $scope.friends = temp;
+                $scope.info.active_tag = $scope.friends[0];
+            }, 1000);
+            $scope.$on('destroy', function(){
+                $timeout.cancel(timeout_event);
+            });
+        }
+    }
+
+     $scope.show_book_dialog = function(book, event){
+        $rootScope.active_book = book;
+        $rootScope.active_book.show_info_only = true;
+        $mdDialog.show({
+            templateUrl: '/assets/angular/html/community/book.html',
+            targetEvent: event,
+        });
+        event.stopPropagation();
     }
 
     $scope.show_books_for_era = function(){
@@ -176,16 +211,24 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
 
     $scope.show_books_for_author = function(){
         if(angular.isUndefined($scope.books_from_favourite_author)){
+            $scope.books_from_favourite_author = [];
+            $scope.info.active_tab = "favourite_author";
             $scope.info.loading = true;
             infinityService.get_books_from_favourite_author().then(function(data){
-                data = data[0];
-                $scope.books_from_favourite_author = [];
-                _set_data(data.books, $scope.books_from_favourite_author);
-                delete data.books;
-                $scope.likeable_author = data;
+                angular.forEach(data, function(value){
+                    var json = {"image_url": "http://rd-authors.readersdoor.netdna-cdn.com/"+value.id+"/M.png", "view_count": 100};
+                    value = angular.extend(value, json);
+                    value.books = _set_data(value.books, []);
+                    this.push(value);
+                }, $scope.books_from_favourite_author);
                 $scope.info.loading = false;
             });
         }
+        $scope.info.active_tag = $scope.books_from_favourite_author[0];
+    }
+
+    $scope.refresh_data = function(active_item){
+        $scope.info.active_tag = active_item;
     }
 
     $scope.show_small_reads = function(){
@@ -200,6 +243,25 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         }
     }
 
+    $scope.show_right_nav = function(event){
+        $mdSidenav('alphabets_sidenav').toggle();
+        event.stopPropagation();
+    }    
+
+    $scope.show_left_nav = function(event){
+        $mdSidenav('sort_by_sidenav').toggle();
+        event.stopPropagation();
+    }
+
+    $scope.show_bottom_filters = function(event){
+        $mdBottomSheet.show({
+            templateUrl: '/assets/angular/html/library/bottom_sheet_filters.html',
+            targetEvent: event ,
+            scope : $scope ,
+            preserveScope: true,
+            controller: "filtersController" 
+        });
+    };
 
     var _init = (function(){
         // $scope.info.author_filter = true;
@@ -217,7 +279,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         $scope.active_share = true;
         if($cookieStore.get('infinity')){
             $scope.info.infinity = false;
-            $scope.show_small_reads();
+            $scope.show_books_for_author();
             // $scope._get_personalised_suggestions();
         }
         else{
@@ -230,28 +292,9 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         $scope.search_tag = {};
         $scope.active_tab = {};
         $scope.info.categories = [];
+        $scope.friends = [];
         
         // $scope.info.infinity = true;
     }());
-
-    $scope.show_right_nav = function(event){
-        $mdSidenav('alphabets_sidenav').toggle();
-        event.stopPropagation();
-    }    
-
-    $scope.show_left_nav = function(event){
-        $mdSidenav('sort_by_sidenav').toggle();
-        event.stopPropagation();
-    }    
-
-    $scope.show_bottom_filters = function(event){
-        $mdBottomSheet.show({
-            templateUrl: '/assets/angular/html/library/bottom_sheet_filters.html',
-            targetEvent: event ,
-            scope : $scope ,
-            preserveScope: true,
-            controller: "filtersController" 
-        });
-    };
 
 }]);

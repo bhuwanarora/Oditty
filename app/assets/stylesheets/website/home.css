@@ -518,6 +518,7 @@ and (max-width : 800px){
     /* phones */
     .book_scroller{
     	max-height: 180px;
+    	max-width: 100vw;
     }
 }
 
@@ -525,5 +526,6 @@ and (max-width : 800px){
     /* portrait phones */
     .book_scroller{
     	max-height: 180px;
+    	max-width: 100vw;
     }
 }

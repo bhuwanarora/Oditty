@@ -63,6 +63,10 @@ class Author < Neo
 		" author.name AS name, ID(author) AS id, author.wiki_url AS wiki_url, author.overview as overview, labels(author) AS label, author.location AS location  "
 	end
 
+	def self.grouped_basic_info
+		" name: author.name, id: ID(author), wiki_url: author.wiki_url, overview: author.overview, label: labels(author), location: author.location "
+	end
+
 	def self.get_favourites skip_count=0
 		skip(skip_count) +  limit(Constant::Count::FollowFavoriteAuthors) + return_init + Author.basic_info
 	end
