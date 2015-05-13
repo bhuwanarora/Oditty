@@ -8,11 +8,11 @@ class UsersCommunity < Neo
 	end
 
 	def create
-		" MERGE (user)-[follows:Follows]->(follow_node:FollowNode{user_id:" + @user_id.to_s + ", community_id: " + @community_id.to_s + "}) MERGE (follow_node)-[:OfCommunity]->(community) ON CREATE SET follow_node.created_at = " + Time.now.to_i.to_s + ", follow_node.updated_at = " + Time.now.to_i.to_s + " WITH user, follow_node, community, follows "
+		" MERGE (user)-[follows:Follows]->(follow_node:FollowsNode{user_id:" + @user_id.to_s + ", community_id: " + @community_id.to_s + "}) MERGE (follow_node)-[:OfCommunity]->(community) ON CREATE SET follow_node.created_at = " + Time.now.to_i.to_s + ", follow_node.updated_at = " + Time.now.to_i.to_s + " ON MATCH SET follow_node.updated_at = " + Time.now.to_i.to_s + " WITH user, follow_node, community, follows "
 	end
 
 	def remove
-		" MATCH (user)-[follows:Follows]->(follow_node:FollowNode)-[of_community:OfCommunity]->(community) DELETE follows, of_community WITH user, follow_node, community MATCH (n1)-[r1:FeedNext]->(follow_node)-[r2:FeedNext]->(n2) OPTIONAL MATCH (follow_node)-[r]-() DELETE r DELETE r1, r2, r CREATE UNIQUE (n1)-[:FeedNext]->(n2) WITH follow_node  "
+		" MATCH (user)-[follows:Follows]->(follow_node:FollowsNode)-[of_community:OfCommunity]->(community) DELETE follows, of_community WITH user, follow_node, community MATCH (n1)-[r1:FeedNext]->(follow_node)-[r2:FeedNext]->(n2) OPTIONAL MATCH (follow_node)-[r]-() DELETE r CREATE UNIQUE (n1)-[:FeedNext]->(n2) WITH follow_node  "
 	end
 
 	def follow
@@ -21,7 +21,7 @@ class UsersCommunity < Neo
 
 	def unfollow
 		operation = "-"
-		match + Community.set_follow_count(operation) + " WITH user, community " + remove + " , user" + User::Feed.new(@user_id).delete_feed("follow_node") + " DELETE follow_node "
+		match + Community.set_follow_count(operation) + " WITH user, community " + remove + " , user, community DELETE follow_node WITH DISTINCT community " + UsersCommunity.return_group(Community.basic_info)
 	end
 
 	def set_view_count
@@ -37,11 +37,11 @@ class UsersCommunity < Neo
 	# end
 
 	def self.optional_match
-		" OPTIONAL MATCH (user)-[follows:Follows]->(follow_node:FollowNode)-[of_community:OfCommunity]->(community) WITH user, follows, follow_node, of_community, community  "
+		" OPTIONAL MATCH (user)-[follows:Follows]->(follow_node:FollowsNode)-[of_community:OfCommunity]->(community) WITH user, follows, follow_node, of_community, community  "
 	end
 
 	def self.match
-		" MATCH (user)-[follows:Follows]->(follow_node:FollowNode)-[of_community:OfCommunity]->(community) WITH user, follows, follow_node, of_community, community  "
+		" MATCH (user)-[follows:Follows]->(follow_node:FollowsNode)-[of_community:OfCommunity]->(community) WITH user, follows, follow_node, of_community, community  "
 	end
 
 	def self.basic_info

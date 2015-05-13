@@ -45,7 +45,7 @@ class FeedStructure < Neo
 			elsif type == "EndorseNode"
 				notification = _endorse_notification(feed)
 				notifications.push(notification.merge!("label" => type))
-			elsif type == "FollowNode"
+			elsif type == "FollowsNode"
 				notification = _follow_notification(feed)
 				notifications.push(notification.merge!("label" => type))
 			end

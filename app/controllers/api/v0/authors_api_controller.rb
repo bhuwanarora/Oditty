@@ -28,7 +28,7 @@ module Api
 
 			def get_popular_authors
 				skip_count = params[:skip_count] || 0
-				authors =  Api::V0::Author.get_active_authors(skip_count).execute
+				authors =  Api::V0::AuthorApi.get_active_authors(skip_count).execute
 				render :json => authors, :status => 200
 			end
 
@@ -38,9 +38,15 @@ module Api
 			end
 
 			def follow
-				
+				user_id = session[:user_id]
+				id = params[:id]
+				if params[:status].present? && params[:status]== "true"
+					Api::V0::AuthorApi.follow(id, user_id).execute
+				else
+					Api::V0::AuthorApi.unfollow(id, user_id).execute
+				end
+				render :json => {:message => "Success"}, :status => 200
 			end
-
 		end
 	end
 end
