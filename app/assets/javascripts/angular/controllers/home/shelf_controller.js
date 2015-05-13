@@ -32,6 +32,10 @@ homeApp.controller('shelfController', ['$scope', '$mdBottomSheet', '$mdToast', '
         }
     }
 
+    $scope.toggle_shelves = function(){
+        $scope.show_all = !$scope.show_all;
+    }
+
     var _init = (function(){
         $scope.toast_position = {
             bottom: false,

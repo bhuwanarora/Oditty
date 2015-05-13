@@ -1,10 +1,10 @@
 homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$location", "bookService", "shelfService", "$mdToast", "infinityService", function ($timeout, $rootScope, ColorConstants, $location, bookService, shelfService, $mdToast, infinityService){
 
     this.get_popular_books = function($scope){
-        var ready_to_load = !$scope.info.loading && !$scope.constant.show_book && !
+        var ready_to_load = !$scope.info.loading && (angular.isUndefined($scope.constant) || !$scope.constant.show_book) && !
             $scope.info.author_filter && !$scope.info.group_by_alphabet &&
             !$scope.info.reading_time_filter && !$scope.info.published_era_filter &&
-            !$scope.info.custom_loading && !$scope.info.subject_filter && $scope.info.infinity;
+            !$scope.info.custom_loading && !$scope.info.subject_filter && ($scope.info.infinity || angular.isUndefined($scope.info.infinity));
         if(ready_to_load){
             $scope.info.loading = true;
             this.load_popular_books($scope);
@@ -74,6 +74,9 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
             $scope.info.books = [];
             var skip_count = 0;
         }
+        if(angular.isUndefined($scope.filters)){
+            $scope.filters = {};
+        }
         var params = angular.extend($scope.filters, {"skip_count": skip_count});
         params = angular.toJson(params);
 
@@ -142,20 +145,22 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
             }
 
             angular.forEach(data, function(book){
-                angular.forEach(book.root_category, function(category){
-                    if($scope.info.categories.length == 0){
-                        if((category.name != null)){
-                            $scope.info.categories.push(category);
-                        }
-                    }
-                    else{
-                        angular.forEach($scope.info.categories, function(base_category){
-                            if(!angular.equals(category, base_category) && _is_absent(category) && (category.name != null)){
-                                this.push(category);
+                if(angular.isDefined($scope.info.categories)){
+                    angular.forEach(book.root_category, function(category){
+                        if($scope.info.categories.length == 0){
+                            if((category.name != null)){
+                                $scope.info.categories.push(category);
                             }
-                        }, $scope.info.categories);
-                    }
-                });
+                        }
+                        else{
+                            angular.forEach($scope.info.categories, function(base_category){
+                                if(!angular.equals(category, base_category) && _is_absent(category) && (category.name != null)){
+                                    this.push(category);
+                                }
+                            }, $scope.info.categories);
+                        }
+                    });
+                }
                 var random_int = Math.floor(Math.random()*ColorConstants.value.length);
                 var status = book.status != null;
                 var reading_time = _get_reading_time(book);

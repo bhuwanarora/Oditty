@@ -1,9 +1,66 @@
-homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$mdBottomSheet', 'shelfService', '$timeout', '$location', 'userService', function($scope, $rootScope, userService, $mdBottomSheet, shelfService, $timeout, $location, userService){
+homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$mdBottomSheet', 'shelfService', '$timeout', '$location', 'userService', 'sharedService', 'bookService', function($scope, $rootScope, userService, $mdBottomSheet, shelfService, $timeout, $location, userService, sharedService, bookService){
 
 	$scope.goto_community_page = function(id){
 		userService.news_visited(id);
 		window.location.href = "/community?q="+id;
 	}
+
+    $scope.toggle_left_menu = function(){
+        $scope.show_menu = !$scope.show_menu;
+        // $scope.active_menu = false;
+        // $scope.info.hide_feed = false;
+        $scope.info.hide_feed = !$scope.info.hide_feed;
+        if(($scope.info.hide_feed) && (angular.isUndefined($scope.info.books) || ($scope.info.books.length == 0))){
+            sharedService.get_popular_books($scope);
+        }
+    }
+
+    $scope.show_interesting_details = function(book){
+        $scope.info.books = [book];
+        $scope.info.loading = true;
+        bookService.get_interesting_info(book.book_id).then(function(data){
+            $scope.related_info = [];
+            angular.forEach(data[0].info, function(value){
+                var label = value.labels[0];
+                var info = value.info.data;
+                var id = value.id;
+
+                if(label == "Author"){
+                    delete info.indexed_main_author_name;
+                    delete info.gr_url;
+                    delete info.search_index;
+                    var json = {"id": id, "label": "Author"};
+                    info = angular.extend(info, json);
+                }
+                else{
+                    debugger
+                }
+                this.push(info);
+                $scope.info.loading = false;
+            }, $scope.related_info);
+        });
+    }
+
+    // $scope.toggle_menu_state = function(){
+        // $scope.active_menu = !$scope.active_menu;
+    // }
+
+    $scope.on_select = function(){
+
+    }
+
+    $scope.search_books = function(q){
+        $scope.info.loading = true;
+        bookService.search_books(q, 10).then(function(data){
+            $scope.info.loading = false;
+            $scope.did_you_mean = true;
+            angular.forEach(data, function(value){
+                if(angular.isUndefined(value.fuzzy)){
+                    this.push(value);
+                }
+            }, $scope.search_results)
+        });
+    }
 
     $scope.show_shelf_bottom_sheet = function(bookmark_object_id, bookmark_object_type){
         $rootScope.bookmark_object = {"type": bookmark_object_type, "id": bookmark_object_id};
@@ -53,8 +110,10 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$m
         }
     }
 
+
     var _init = (function(){
     	$scope.feed = [];
+        // $scope.info.hide_feed = true;
 
         var _get_blog_feed = function(){
             userService.get_last_blog().then(function(data){

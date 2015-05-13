@@ -92,6 +92,11 @@ module Api
 				render :json => data, :status => 200
 			end
 
+			def get_interesting_info
+				book_id = params[:id]
+				data = BookApi.get_interesting_info book_id
+				render :json => data, :status => 200
+			end
 		end
 	end
 end

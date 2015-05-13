@@ -251,5 +251,11 @@ namespace :graph do
      include Neo4jHelper
      Neo4jHelper.init_shelfari_books
   end
+
+  desc "remove_wrongly_matched_books"
+  task :remove_wrongly_matched_books => :environment do
+    include GraphHelper
+    GraphHelper.remove_wrongly_matched_books
+  end
   
 end

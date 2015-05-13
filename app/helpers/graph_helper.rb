@@ -88,4 +88,18 @@ module GraphHelper
 		end
 	end
 
+	def remove_wrongly_matched_books
+		skip = 1000
+		start_id = 384293 #MIN ID384296
+		end_id = 2655796 #MAX ID2545256
+		# limit = 100
+		while start_id <= end_id
+			puts "Start ID..."+start_id.to_s.green
+			limit = start_id + skip
+			clause = " MATCH (b:Book)<-[:Wrote]-(a:Author) WHERE b.author_name <> a.name AND ID(b) < "+limit.to_s+" AND ID(b) >= "+start_id.to_s+" RETURN COUNT(b) AS count"
+			puts clause.execute[0]["count"]
+			start_id = start_id + skip
+		end	
+	end
+
 end

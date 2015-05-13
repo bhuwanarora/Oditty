@@ -133,4 +133,8 @@ class Book < Neo
 	def get_lenders user_id
 		User.new(user_id).match + " WITH user AS friend " + match + " , friend " + Book.match_lenders + Book.return_init + User.basic_info   
 	end
+
+	def get_interesting_info
+		match + " MATCH (book)-[relation]-(info) WHERE type(relation) <> 'Belongs_to' AND type(relation) <> 'Next_book' AND type(relation) <> 'BookFeed' AND type(relation) <> 'NextLongRead' AND type(relation) <> 'NextNormalRead' AND type(relation) <> 'NextTinyRead' AND type(relation) <> 'NextSmallRead' " + Book.return_group(Book.basic_info, "COLLECT({info : info, labels: labels(info), id: ID(info)}) AS info")
+	end
 end

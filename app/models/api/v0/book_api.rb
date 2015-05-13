@@ -30,6 +30,10 @@ module Api
 				self.recommendations
 			end
 
+			def self.get_interesting_info book_id
+				Book.new(book_id).get_interesting_info.execute
+			end
+
 			# def self.get_timeline id
 			# 	test_moments = [
 			# 		{

@@ -196,6 +196,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
     $scope.show_books_for_era = function(){
         if(angular.isUndefined($scope.books_from_favourite_era)){
             $scope.info.loading = true;
+            delete $scope.info.active_tag;
             infinityService.get_books_from_favourite_era().then(function(data){
                 data = data[0];
                 $scope.books_from_favourite_era = [];
@@ -209,6 +210,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
     $scope.show_books_for_category = function(){
         if(angular.isUndefined($scope.books_from_favourite_category)){
             $scope.info.loading = true;
+            delete $scope.info.active_tag;
             infinityService.get_books_from_favourite_category().then(function(data){
                 $scope.books_from_favourite_category = [];
                 _set_data(data.books, $scope.books_from_favourite_category);
@@ -247,6 +249,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         if(angular.isUndefined($scope.small_reads)){
             $scope.info.loading = true;
             $scope.info.active_tab = "small_read";
+            delete $scope.info.active_tag;
             infinityService.get_small_reads().then(function(data){
                 $scope.small_reads = [];
                 _set_data(data, $scope.small_reads);

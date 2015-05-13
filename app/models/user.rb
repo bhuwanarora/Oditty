@@ -137,7 +137,7 @@ class User < Neo
 	end
 
 	def get_public_labels
-		match + UsersLabel.match + User.return_group(Label.basic_info)
+		match + UsersLabel.match_public + User.return_group(Label.basic_info)
 	end
 
 	def match_bookmark

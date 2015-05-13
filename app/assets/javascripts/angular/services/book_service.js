@@ -67,7 +67,11 @@ homeApp.service('bookService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
     }
 
     this.get_borrow_users = function(id){
-        return _deferred_request('/api/v0/borrow_users?id='+i, $q, $httpd)
+        return _deferred_request('/api/v0/borrow_users?id='+i, $q, $http)
+    }
+
+    this.get_interesting_info = function(id){
+        return _deferred_request('/api/v0/get_interesting_info?id='+id, $q, $http);
     }
 
 }]);
