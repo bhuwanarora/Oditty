@@ -137,6 +137,14 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         }
     }
 
+    $scope.goto_user_profile = function(){
+        window.location.href = "/profile?id="+$scope.info.active_tag.id;
+    }
+
+    $scope.goto_author_profile = function(){
+        window.location.href = "/author?id="+$scope.info.active_tag.id;   
+    }
+
     $scope.show_books_on_friend_shelves = function(){
         if(angular.isUndefined($scope.friends) || $scope.friends.length == 0){
             $scope.info.active_tab = "friend_shelves";
@@ -156,6 +164,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
                         this.push(value);
                     }
                 }, $scope.friends);
+                $scope.info.active_tag = $scope.friends[0];
                 $scope.info.loading = false;
             });
         }
@@ -221,10 +230,13 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
                     value.books = _set_data(value.books, []);
                     this.push(value);
                 }, $scope.books_from_favourite_author);
+                $scope.info.active_tag = $scope.books_from_favourite_author[0];
                 $scope.info.loading = false;
             });
         }
-        $scope.info.active_tag = $scope.books_from_favourite_author[0];
+        else{
+            $scope.info.active_tag = $scope.books_from_favourite_author[0];
+        }
     }
 
     $scope.refresh_data = function(active_item){

@@ -1,6 +1,7 @@
 <div ng-if="books_from_favourite_author">
 	<d3-click-circles news-tags="books_from_favourite_author" 
         on-click="refresh_data(active_item)"
+        on-center-click="goto_author_profile()"
         community-page="true"
         ng-if="books_from_favourite_author.length > 0">
         <div class="bubbleChart animate-fast"></div>

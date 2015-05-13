@@ -233,7 +233,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/library/partials/author_books.html',
-    "<div ng-if=\"books_from_favourite_author\"><d3-click-circles news-tags=\"books_from_favourite_author\" on-click=\"refresh_data(active_item)\" community-page=\"true\" ng-if=\"books_from_favourite_author.length > 0\"><div class=\"bubbleChart animate-fast\"></div></d3-click-circles></div><a ng-href=\"/room\" ng-if=\"!books_from_favourite_author\" class=\"less_important\" layout-padding><br>Couldn't find your Favourite Author. Add more books to your room.<br><br></a>"
+    "<div ng-if=\"books_from_favourite_author\"><d3-click-circles news-tags=\"books_from_favourite_author\" on-click=\"refresh_data(active_item)\" on-center-click=\"goto_author_profile()\" community-page=\"true\" ng-if=\"books_from_favourite_author.length > 0\"><div class=\"bubbleChart animate-fast\"></div></d3-click-circles></div><a ng-href=\"/room\" ng-if=\"!books_from_favourite_author\" class=\"less_important\" layout-padding><br>Couldn't find your Favourite Author. Add more books to your room.<br><br></a>"
   );
 
 
@@ -253,7 +253,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/library/partials/friends_books.html',
-    "<div ng-if=\"friends\"><d3-click-circles news-tags=\"friends\" on-click=\"refresh_data(active_item)\" community-page=\"true\" ng-if=\"friends.length > 0\"><div class=\"bubbleChart animate-fast\"></div></d3-click-circles></div><a ng-href=\"/network?q=1\" ng-if=\"!friends\" class=\"less_important\" layout-padding><br>You don't have enough friends. Follow more people.<br><br></a>"
+    "<div ng-if=\"friends\"><d3-click-circles news-tags=\"friends\" on-click=\"refresh_data(active_item)\" on-center-click=\"goto_user_profile()\" community-page=\"true\" ng-if=\"friends.length > 0\"><div class=\"bubbleChart animate-fast\"></div></d3-click-circles></div><a ng-href=\"/network?q=1\" ng-if=\"!friends\" class=\"less_important\" layout-padding><br>You don't have enough friends. Follow more people.<br><br></a>"
   );
 
 

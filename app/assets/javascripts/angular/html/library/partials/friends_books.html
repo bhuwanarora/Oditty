@@ -1,6 +1,7 @@
 <div ng-if="friends">
 	<d3-click-circles news-tags="friends" 
         on-click="refresh_data(active_item)"
+        on-center-click="goto_user_profile()" 
         community-page="true"
         ng-if="friends.length > 0">
         <div class="bubbleChart animate-fast"></div>
