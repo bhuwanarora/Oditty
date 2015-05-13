@@ -37,11 +37,11 @@ class Community < Neo
 	end
 
 	def self.match_users
-		" MATCH (community)<-[of_community:OfCommunity]-(follow_node:FollowNode)<-[follows:Follows]-(user:User) WITH community, follow_node, user "
+		" MATCH (community)<-[of_community:OfCommunity]-(follow_node:FollowsNode)<-[follows:Follows]-(user:User) WITH community, follow_node, user "
 	end
 
 	def self.optional_match_users
-		" OPTIONAL MATCH (community)<-[of_community:OfCommunity]-(follow_node:FollowNode)<-[follows:Follows]-(user:User) WITH community, follow_node, user "
+		" OPTIONAL MATCH (community)<-[of_community:OfCommunity]-(follow_node:FollowsNode)<-[follows:Follows]-(user:User) WITH community, follow_node, user "
 	end
 
 	def self.set_name

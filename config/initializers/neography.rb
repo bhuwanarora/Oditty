@@ -1,7 +1,7 @@
 Neography.configure do |config|
     config.protocol             = "http://"
     config.server               = "localhost"
-    config.port                 = 7474
+    config.port                 = 8000
     config.directory            = ""  # perfix this path with '/'
     config.cypher_path          = "/cypher"
     config.gremlin_path         = "/ext/GremlinPlugin/graphdb/execute_script"
@@ -35,6 +35,7 @@ module Neography
                 rescue Exception => e
                     puts "Error #{e.to_s}".red                    
                 end
+                puts response.to_s.green
                 response
             end
         end
