@@ -21,7 +21,7 @@ class UsersCommunity < Neo
 
 	def unfollow
 		operation = "-"
-		match + Community.set_follow_count(operation) + " WITH user, community " + remove + " , user, community DELETE follow_node " + UsersCommunity.return_group(Community.basic_info)
+		match + Community.set_follow_count(operation) + " WITH user, community " + remove + " , user, community DELETE follow_node WITH DISTINCT community " + UsersCommunity.return_group(Community.basic_info)
 	end
 
 	def set_view_count
