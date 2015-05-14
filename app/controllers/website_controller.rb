@@ -147,7 +147,7 @@ class WebsiteController < ApplicationController
 		puts "in book".green
 		if BotDetector.detect request.env['HTTP_USER_AGENT']
 			id = params[:q]
-			user_id = session[:user_id]
+			user_id = nil
 			puts "bot_incoming".red
 			@info = Api::V0::BookApi.get_book_details(id, user_id)
 			@info["original_url"] = request.original_url
@@ -204,13 +204,13 @@ class WebsiteController < ApplicationController
 
 	def author
 		@author = true
-		if BotDetector.detect request.env['HTTP_USER_AGENT']
-			id = params[:q]
-			user_id = session[:user_id]
+		if BotDetector.detect(request.env['HTTP_USER_AGENT'])
+			author_id = params[:q]
+			user_id = nil
 			puts "bot_incoming".red
-			@info = Api::V0::BookApi.get_book_details(id, user_id)
+			@info = Api::V0::AuthorApi.get_details author_id, user_id
 			@info["original_url"] = request.original_url
-			@info["image_url"] = @info["id"].to_s + "/M.png"
+			@info["image_url"] = "http://rd-images.s3.amazonaws.com/" + @info["id"].to_s + "/M.png"
 			render :layout => "social"
 		else
 			user_id = session[:user_id]
