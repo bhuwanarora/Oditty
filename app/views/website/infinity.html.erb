@@ -1,4 +1,4 @@
-<md-content ng-controller="libraryController" check-scroll-bottom="get_popular_books()" ng-model="info">
+<md-content ng-controller="libraryController" check-scroll-bottom="get_popular_books()" ng-model="info" id="infinity_page">
     <div ng-include src="'/assets/angular/html/library/_header.html'" ng-hide="constant.show_book"></div>
     <section>
         <section layout="row" layout-wrap>
@@ -97,7 +97,7 @@
         color: inherit;
     }
 
-    .custom_title{
+    .infinity_page .custom_title{
         font-size: 1.2em;
         font-family: sans-serif;
     }

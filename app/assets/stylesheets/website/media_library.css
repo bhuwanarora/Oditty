@@ -64,13 +64,13 @@
         margin-left: 40px;
     }
     
-    md-input-container .md-placeholder{
+   /* md-input-container .md-placeholder{
         font-weight: 450;
         font-family: Roboto !important;
         font-size: 43px;
         left: 8% !important;
         top: -24px !important;
-    }
+    }*/
 
     .book_cover{
         background-color: #427fed;
@@ -148,13 +148,13 @@
         margin-left: 10px;
     }
     
-    md-input-container .md-placeholder{
+   /* md-input-container .md-placeholder{
         font-weight: 450;
         font-family: Roboto !important;
         font-size: 30px;
         left: 14% !important;
         top: -16px !important;
-    }
+    }*/
     .column_height{
         height: 50vh;
         border: 1px solid #EAEAEA;
@@ -204,13 +204,13 @@
         margin-top: 2px;
     }
 
-    md-input-container .md-placeholder{
+    /*md-input-container .md-placeholder{
         font-weight: 450;
         font-family: Roboto !important;
         font-size: 16px;
         left: 23% !important;
         top: -4px !important;
-    }
+    }*/
     .column_height{
         height: 50vh;
         width: 90vw;

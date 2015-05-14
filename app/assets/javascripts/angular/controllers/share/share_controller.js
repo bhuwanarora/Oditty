@@ -1,4 +1,4 @@
-homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'ShareOptions', '$routeParams', '$mdBottomSheet', 'statusService', 'WebsiteUIConstants', 'bookService', 'ColorConstants', 'sharedService', function($scope, $rootScope, $timeout, ShareOptions, $routeParams, $mdBottomSheet, statusService, WebsiteUIConstants, bookService, ColorConstants, sharedService){
+homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'ShareOptions', '$routeParams', '$mdBottomSheet', 'statusService', 'WebsiteUIConstants', 'bookService', 'ColorConstants', 'sharedService', 'Emotions', function($scope, $rootScope, $timeout, ShareOptions, $routeParams, $mdBottomSheet, statusService, WebsiteUIConstants, bookService, ColorConstants, sharedService, Emotions){
 
     $scope.play_type_key = function(event){
         if($scope.info.show_share){
@@ -17,6 +17,47 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
             event.stopPropagation();
         }
     }
+
+    $scope.deselect_book = function(){
+        delete $scope.active_book;
+        $scope.deselect_emotion();
+        delete $scope.related_info;
+        delete $scope.info.status_books;
+        $scope.show_relevant_books();
+    }
+
+    $scope.show_interesting_details = function(book){
+        $scope.active_book = book;
+        $scope.info.status_books = [book];
+        $scope.info.loading = true;
+        
+        bookService.get_interesting_info(book.book_id).then(function(data){
+            $scope.related_info = [];
+            angular.forEach(data[0].info, function(value){
+                var label = value.labels[0];
+                var info = value.info.data;
+                var id = value.id;
+
+                if(label == "Author"){
+                    delete info.indexed_main_author_name;
+                    delete info.gr_url;
+                    delete info.search_index;
+                    var json = {"id": id, "label": "Author"};
+                    info = angular.extend(info, json);
+                }
+                else if(label == "Year"){
+                    var json = {"label": "Year"};
+                    info = angular.extend(info, json);
+                }
+                else{
+                    debugger
+                }
+                this.push(info);
+                $scope.info.loading = false;
+            }, $scope.related_info);
+        });
+    }
+
     $scope.show_share_options = function(event){
         $mdBottomSheet.show({
             templateUrl: 'assets/angular/html/share/_share_options.html',
@@ -385,9 +426,50 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         }
     }
 
+    $scope.make_active = function(id){
+        $scope.active_id = id;
+        $scope.show_relevant_books();
+    }
+
+    $scope.init_reading_options = function(){
+        $scope.reading_options = [
+            {"name": "What are you currently reading?", "id": 0, "status": "Currently Reading", "emotion_status": "white reading"}, 
+            {"name": "Which book do you plan to read?", "id": 1, "status": "Planning to Read", "emotion_status": "while planning to read"}, 
+            {"name": "Which book did you recently read?", "id": 2, "status": "Recently Read", "emotion_status": "after reading"}
+        ];
+        $scope.reading_status_selected = false;
+        $scope.active_id = 0;
+        $scope.info.status_books = [];
+        $scope.related_info = [];
+        delete $scope.active_book;
+        $scope.deselect_emotion();
+    }
+
+    $scope.show_relevant_books = function(){
+        $scope.reading_status_selected = true;
+        if(angular.isUndefined($scope.active_book)){
+            $scope.info.status_books = [];
+            sharedService.get_popular_books($scope, $scope.info.status_books);
+        }
+    }
+
+    $scope.toggle_options = function(){
+        $scope.show_options = !$scope.show_options;
+    }
+
+    $scope.set_emotion = function(emotion){
+        $scope.active_emotion = emotion;
+    }
+
+    $scope.deselect_emotion = function(){
+        delete $scope.active_emotion;
+    }
+
     var _init = (function(){
         $scope.info.status = "";
         $scope.info.hash_tags = [];
         $scope.info.wrapper_status = "";
+        $scope.init_reading_options();
+        $scope.emotions = Emotions;
     }());
 }]);

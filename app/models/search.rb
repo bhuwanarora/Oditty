@@ -2,7 +2,7 @@ class Search < Neo
 	def initialize params
 		@search_text = params[:q]
 		@client = Elasticsearch::Client.new log: true	
-		@count = params[:count] || 4
+		@count = params[:count] || 8
 		@connector = params[:fuzzy].present? ? "~0.7" : "*"
 		@skip_count = params[:skip] || 0
 	end

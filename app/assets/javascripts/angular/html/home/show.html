@@ -1,62 +1,6 @@
 <md-list layout-wrap layout="row" hide-sm>
     <div layout="column" flex>
-        <div class="currently_reading" 
-             layout="column">
-             <div layout="row" class="md-whiteframe-z1 white">
-                <div>
-                    <!-- <md-button class="md-button-clear" ng-show="!active_menu && show_menu" 
-                                ng-click="toggle_menu_state()">What are you currently reading?</md-button> -->
-                    <md-autocomplete
-                        ng-show="show_menu"
-                        md-selected-item="selectedItem1"
-                        md-search-text="searchText"
-                        md-items="item in search_books(searchText)"
-                        md-selected-item-change="on_select(item)"
-                        md-item-text="display"
-                        class="menu_search"
-                        placeholder="What are you currently reading?">
-                        <span md-highlight-text="searchText" ng-bind-html="item.display"></span>
-                    </md-autocomplete>
-                </div>
-                <md-button class="md-button-clear" ng-click="toggle_left_menu()" >
-                    <span class="icon-close" ng-show="show_menu"></span>
-                    <span class="icon-book-alt2" ng-show="!show_menu"></span>
-                </md-button>
-            </div>
-            <md-list ng-if="show_menu" layout="column">
-                <md-list-item ng-repeat="book in info.books | limitTo: 4" 
-                            layout="row" layout-align="space-between"
-                            class="menu_details white md-whiteframe-z1 margin_top">
-                    <div layout="row" flex="90">
-                        <div flex="15">
-                            <img ng-src="{{book.isbn | small_thumb}}" class="menu_thumb">
-                        </div>
-                        <div layout-wrap layout-padding flex="85">
-                            <div class="big_title">{{book.title}}</div>
-                            <div class="less_important">{{book.author_name}}</div>
-                        </div>
-                    </div>
-                    <md-button class="md-button-clear light_grey grey_color" flex="10" ng-click="show_interesting_details(book)">
-                        <span class="icon-plus"></span>
-                    </md-button>
-                </md-list-item>
-                <md-list-item ng-repeat="info in related_info" class="menu_details white md-whiteframe-z1 margin_top">
-                    <div ng-if="info.label == 'Author'" layout="column">
-                        <div class="big_title" layout-padding>{{info.name}}</div>
-                        <div layout="row">
-                            <img ng-src="{{info.id | author_thumb}}">
-                            <div class="custom_title" layout-padding>
-                                {{info.overview}}
-                            </div>
-                        </div>
-                    </div>
-                </md-list-item>
-                <md-progress-linear ng-show="info.loading"
-                                md-mode="indeterminate">
-            </md-progress-linear>
-            </md-list>
-        </div>
-        <div ng-repeat="news_feed in feed track by $index" class="feed" ng-if="$even" ng-show="!info.hide_feed">
+        <div ng-repeat="news_feed in feed track by $index" class="feed" ng-if="$even">
             <div ng-init="blog_feed = news_feed" 
                 ng-include src="'/assets/angular/html/home/_blog.html'" 
                 ng-if="news_feed.label == 'blog'"></div>
@@ -66,7 +10,7 @@
         </div>
     </div>
     <div layout="column" flex>
-        <div ng-repeat="news_feed in feed track by $index" class="feed" ng-if="$odd" ng-show="!info.hide_feed">
+        <div ng-repeat="news_feed in feed track by $index" class="feed" ng-if="$odd">
             <div ng-init="blog_feed = news_feed" 
                 ng-include src="'/assets/angular/html/home/_blog.html'" 
                 ng-if="news_feed.label == 'blog'"></div>

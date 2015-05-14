@@ -1,0 +1,184 @@
+<div class="currently_reading roboto" 
+ 	layout="column">
+    <div layout="row" class="md-whiteframe-z1 white">
+        <md-autocomplete
+            md-selected-item="selectedItem1"
+            md-search-text="searchText"
+            md-items="item in search_books(searchText)"
+            md-selected-item-change="on_select(item)"
+            md-item-text="display"
+            class="menu_search"
+            ng-click="show_relevant_books()"
+            placeholder="{{reading_options[active_id].name}}">
+            <span md-highlight-text="searchText" ng-bind-html="item.display"></span>
+        </md-autocomplete>
+        <md-button class="md-button-clear">
+            <span class="icon-search"></span>
+        </md-button>
+    </div>
+    <md-list layout="column" ng-if="!reading_status_selected">
+    	<md-button class="md-button-clear menu_details white md-whiteframe-z1" 
+    				ng-repeat="option in reading_options"
+    				ng-hide="option.id == active_id"
+    			   layout-padding ng-click="make_active(option.id)">
+    		<i>{{option.name}}</i>
+        </md-button>
+    </md-list>
+    <md-list layout="column" ng-if="info.status_books && (info.status_books.length > 0)">
+        <md-list-item ng-repeat="book in info.status_books | limitTo: 4" 
+                    layout="row" layout-align="space-between"
+                    class="menu_details white md-whiteframe-z1">
+            <div layout="row" flex="90">
+            	<div flex="15">
+            		<img ng-src="{{book.isbn | small_thumb}}">
+            	</div>
+                <div layout-wrap layout-padding flex="85">
+                    <div layout="row" ng-if="reading_status_selected && active_book"
+				 		 layout-align="space-between">
+				 		<div class="custom_title light_title" ng-if="!active_emotion">
+				 			<span>{{reading_options[active_id].status}} </span>
+				 		</div>
+				 		<div class="custom_title light_title" ng-if="active_emotion">
+				 			<span>Feeling {{active_emotion.name}} </span>
+				 			<span>{{reading_options[active_id].emotion_status}} </span>
+				 		</div>
+				 		<md-button class="clear" ng-click="deselect_book()">
+				 			<span class="icon-close"></span>
+				 		</md-button>
+				 	</div>
+                    <div class="big_title" ng-class="{'bold_light_title': active_book}">{{book.title}}</div>
+                    <div class="less_important">{{book.author_name}}</div>
+                    <div layout="row" ng-if="reading_status_selected && active_book"
+				 		 layout-align="space-between">
+				 		<div class="custom_title light_title">
+				 			<span ng-show="info.current_page"> on page <b>{{info.current_page}}</b></span>
+				 			<span ng-show="info.page_count"><b>/{{info.page_count}}</b>.</span>
+				 		</div>
+				 	</div>
+                </div>
+            </div>
+            <md-button class="md-button-clear light_grey grey_color custom_title" flex="10" 
+            		  ng-click="show_interesting_details(book)"
+            		  ng-if="!active_book">
+                <span class="icon-plus"></span>
+            </md-button>
+            <md-button class="md-button-clear light_grey grey_color" flex="10" 
+            		  ng-click="init_reading_options()"
+            		  ng-if="active_book">
+            	<span class="icon-angle-left"></span>
+            </md-button>
+        </md-list-item>
+    </md-list>
+    <md-list layout="column" ng-if="related_info.length > 0 && active_id == 0">
+    	<md-list-item class="menu_details white md-whiteframe-z1"
+    		layout="row" layout-align="space-between">
+    		<div class="light_grey_color custom_title roboto" layout-padding>
+	    		<i>Currently on page</i>
+	    	</div>
+    		<div layout="row">
+	    		<md-input-container class="page_count_input">
+	                <input ng-model="info.current_page" 
+	                       focus-out="set_current_page()"/>
+	            </md-input-container>
+	            <div class="big_title" layout-padding>/</div>
+	            <md-input-container class="page_count_input">
+	                    <input ng-model="info.page_count" 
+	                           focus-out="set_total_page()"/>
+	            </md-input-container>
+    		</div>
+    	</md-list-item>
+    	<md-list-item class="menu_details white md-whiteframe-z1"
+    		layout="column">
+    		<div class="big_title light_title" layout-padding>Track reading time</div>
+    		<div layout="row" layout-align="space-between center" layout-padding>
+    			<div layout="row" layout-align="start end">
+	    			<b class="less_important" layout-padding>Started reading on</b>
+	    			<md-input-container class="page_count_input">
+		               	<input/>
+		            </md-input-container>
+    			</div>
+    			<div layout="row" layout-align="start end">
+	    			<b class="less_important" layout-padding>Finised on</b>
+		            <md-input-container class="page_count_input">
+		                <input/>
+		            </md-input-container>
+    			</div>
+    		</div>
+    		<div class="light_grey_color custom_title" layout-padding>
+    			Keep a record of your reading journeys
+    		</div>
+    	</md-list-item>
+    </md-list>
+    <md-list ng-if="active_emotion">
+    	<div class="menu_details white md-whiteframe-z1" layout="row" layout-align="space-between">
+    		<div layout-padding>Feeling {{active_emotion.name}}</div>
+    		<md-button ng-click="deselect_emotion()" class="md-button-clear"><span class="icon-angle-left"></span></md-button>
+    	</div>
+    </md-list>
+    <md-list layout="column" ng-if="related_info.length > 0 && active_id == 0 && !active_emotion">
+    	<div layout="column" class="menu_details white md-whiteframe-z1">
+	    	<div layout-padding class="light_grey_color custom_title roboto">
+	    		<i>What are you feeling?</i>
+	    	</div>
+	    	<div layout="row">
+		        <md-autocomplete md-search-text="info.search_emotion"
+		            md-items="item in emotions"
+		            class="menu_search"
+		            placeholder="Search emotions...">
+		        </md-autocomplete>
+		        <md-button class="md-button-clear">
+		            <span class="icon-search"></span>
+		        </md-button>
+	    	</div>
+	    </div>
+	    <div class="emotions">
+	    	<md-button ng-repeat="emotion in emotions | filter: {name: info.search_emotion} | limitTo: 4" 
+	    				layout-padding ng-if="info.search_emotion"
+	    				ng-click="set_emotion(emotion)"
+	    				class="menu_details capitalize white md-whiteframe-z1 md-button-clear custom_title overlap">
+	    		{{emotion.name}}
+	    	</md-button>
+	    	<md-button ng-repeat="emotion in emotions | limitTo: 4" layout-padding 
+	    				ng-if="!info.search_emotion || (info.search_emotion == '')"
+	    				ng-click="set_emotion(emotion)"
+	    				class="menu_details capitalize white md-whiteframe-z1 md-button-clear custom_title overlap">
+	    		{{emotion.name}}
+	    	</md-button>
+	    </div>
+    </md-list>
+    <md-list layout="column" ng-if="related_info && related_info.length > 0" class="roboto">
+    	<md-button ng-hide="show_options" class="menu_details white md-whiteframe-z1 clear" ng-click="toggle_options()" 
+    				layout="row" layout-align="space-between">
+    		<div class="light_grey_color custom_title roboto" layout-padding>
+	    		<i>More details</i>
+	    	</div>
+    	</md-button>
+    	<div ng-hide="!show_options" class="menu_details white md-whiteframe-z1" layout="column">
+			<md-button ng-hide="!show_options" class= "clear" ng-click="toggle_options()"
+				layout="row" layout-align="space-between">
+				<div class="light_grey_color custom_title roboto" layout-padding>
+		    		<i>Less details</i>
+		    	</div>
+			</md-button>
+			<md-list-item ng-repeat="info in related_info" layout="column">
+		        <div ng-if="info.label == 'Year'" layout="column" class="bold_light_title custom_title" layout-padding>
+	        		A {{info.year}} novel.
+	        	</div>
+	        </md-list-item>
+	        <md-list-item ng-repeat="info in related_info" layout="column">
+	            <div ng-if="info.label == 'Author'" layout="column">
+	                <div class="big_title" layout-padding>{{info.name}}</div>
+	                <div layout="row">
+	                    <img ng-src="{{info.id | author_thumb}}">
+	                    <div class="custom_title" layout-padding>
+	                        {{info.overview}}
+	                    </div>
+	                </div>
+	            </div>
+	        </md-list-item>
+    	</div>
+    </md-list>
+    <md-progress-linear ng-show="info.loading"
+        md-mode="indeterminate">
+	</md-progress-linear>
+</div>

@@ -1,0 +1,16 @@
+<div layout="row" flex ng-if="info.show_share">
+	<!-- <img class="circular user_image" ng-src="{{user.image_url | default_profile}}"/> -->
+	<div layout="column" class="input_container">
+		<md-input-container layout-margin 
+			style="font-family: 'Inconsolata', 'Courier New', serif;" 
+			class="textarea_container">
+	        <textarea name="text_area"
+	        		  ng-keypress="play_type_key($event)" 
+	        		  set-focus="info.show_share" 
+	        		  ng-keydown="handle_text_input($event)"
+	        		  placeholder="Share your reading journey..." 
+	        		  ng-model="info.status">
+	        </textarea>
+	    </md-input-container>
+	</div>
+</div>

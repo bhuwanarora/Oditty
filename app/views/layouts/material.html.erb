@@ -265,7 +265,7 @@
                             <md-button class="small-padding">
                                 <span class="icon-home2"></span>
                                 <md-tooltip >
-                                        Room
+                                    Room
                                 </md-tooltip>
                             </md-button>
                         </a>
@@ -273,7 +273,7 @@
                             ng-click="toggle_notifications($event)">
                             <span class="icon-bell"></span>
                             <md-tooltip >
-                                        Notifications
+                                Notifications
                             </md-tooltip>
                         </md-button>
                         <a href="/profile" ng-show="info.mobile_search">
@@ -313,7 +313,6 @@
                 <md-button class="md-fab md-fab-bottom-right animate-fast fixed_share"
                             ng-hide="active_shelf"
                             aria-label="Eat cake"
-                            ng-class="{'md-fab-custom-right': info.show_share || info.show_book_share}"
                             ng-click="show_share_page($event)"
                             ng-style="type_icon_pressed"
                             style="background-image: url('assets/type.png')">
@@ -324,7 +323,7 @@
             </div>
             
             <md-progress-linear class="md-primary loader"
-                                ng-show="info.loading"
+                                ng-show="info.loading && !info.show_share"
                                 md-mode="indeterminate">
             </md-progress-linear>
 
