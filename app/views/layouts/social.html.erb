@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+    <head>
+        <meta name="description" content="<%= @info["description"] %>" /> 
+
+        <!-- Open Graph data -->
+        <meta charset="utf-8" />
+        <meta property="og:url" content= "<%= @info["original_url"] %>" />
+        <meta property="og:title" content= "<%= @info["title"] || @info["name"] %>" />
+        <meta property="og:type" content= "website" />
+        <meta property="og:description" content= "<%= @info["description"] %>" />
+        <meta property="fb:app_id" content= "667868653261167" />        
+        <meta property="og:image" content= "<%= @info["image_url"] %>" />
+
+         <!-- Twitter Card data -->
+        <meta name="twitter:card" content="website"/>
+        <meta name="twitter:site" content="<%= @info["original_url"] %>"/>
+        <meta name="twitter:title" content="<%= @info["title"] || @info["name"] %>"/>
+        <meta name="twitter:description" content="<%= @info["description"] %>" />
+        <meta name="twitter:image" content="<%= @info["image_url"] %>"/>
+    </head>
+    <body></body>
+</html>
