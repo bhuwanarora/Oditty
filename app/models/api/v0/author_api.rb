@@ -9,6 +9,14 @@ module Api
 				info
 			end
 
+			def self.follow author_id, user_id
+				UsersAuthor.new(author_id, user_id).follow				
+			end
+
+			def self.unfollow author_id, user_id
+				UsersAuthor.new(author_id, user_id).unfollow				
+			end
+
 			def self.bookmarked_authors
 				# self.recommendations.map do |s|
 				# 	s['authormark_status'] = 1

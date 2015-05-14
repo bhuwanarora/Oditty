@@ -61,11 +61,11 @@ class User < Neo
 	end
 
 	def get_detailed_info
-		match + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + User.return_group(User.basic_info, "COLLECT(DISTINCT(book.isbn)) AS books_isbn", "COLLECT(DISTINCT(ID(book))) AS books_id", "COLLECT(DISTINCT(book.title)) AS books_title", "COLLECT(DISTINCT(book.author_name)) AS books_author_name")
+		match + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + User.return_group(User.basic_info, "COLLECT(DISTINCT(book.isbn)) AS books_isbn", "COLLECT(DISTINCT(ID(book))) AS books_id", "COLLECT(DISTINCT(book.title)) AS books_title", "COLLECT(DISTINCT(book.author_name)) AS books_author_name","User.bookmark_count AS bookmark_count"," User.follows_count AS follows_count", "User.followed_by_count As followed_by_count")
 	end
 
 	def get_profile_info_and_follow_status id
-		match + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + match_follower(id) + ", book " + User.return_group(User.basic_info, "COLLECT(DISTINCT(book.isbn)) AS books_isbn", "COLLECT(DISTINCT(ID(book))) AS books_id", "COLLECT(DISTINCT(book.title)) AS books_title", "COLLECT(DISTINCT(book.author_name)) AS books_author_name", " ID(follows_node) AS status ")
+		match + Bookmark::Type::HaveLeftAMarkOnMe.match(@id) + match_follower(id) + ", book " + User.return_group(User.basic_info, "COLLECT(DISTINCT(book.isbn)) AS books_isbn", "COLLECT(DISTINCT(ID(book))) AS books_id", "COLLECT(DISTINCT(book.title)) AS books_title", "COLLECT(DISTINCT(book.author_name)) AS books_author_name", " ID(follows_node) AS status ","User.bookmark_count AS bookmark_count"," User.follows_count AS follows_count", "User.followed_by_count As followed_by_count")
 	end
 
 	def match_follower user_id
