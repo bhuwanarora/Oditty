@@ -223,34 +223,46 @@ class Indexer
 		end
 	end
 
-	def get_relationship_count id
+	def get_relationships id
 		id = id.to_s.strip
 		url = "#{Rails.application.config.neo4j_url}/db/data/node/#{id}/relationships/all/"
 		puts url 		
-		relation_count = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url)))).length
+		relations = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
 	end
 	
-	def index_book 
-		@client.index  index: 'search', type: 'books', id: @response["book_id"], body: { title: @response["title"], isbn: @response["isbn"], description: @response["description"], author_name: @response["author_name"] ,weight: get_relationship_count(@response["book_id"])}
+	def index_book
+		authors = [] 
+		relationships = get_relationships(@response["book_id"])
+		relationships.each do |relationship|
+			if relationship["type"] == "Wrote" 
+				author_id = relationship["start"].split("/").last
+				author_node_url = "#{Rails.application.config.neo4j_url}/db/data/node/#{author_id}/properties"
+				author_name = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(author_node_url))))["name"]
+				authors << {"id" => author_id, "name" => author_name }
+			end 
+		end
+		author_name = authors.present? ? authors.first["name"] : "null" 
+		author_id =  authors.present? ? authors.first["id"] : "null"
+		@client.index  index: 'search', type: 'books', id: @response["book_id"], body: { title: @response["title"], isbn: @response["isbn"], description: @response["description"], author_name: author_name, author_id: author_id, weight: get_relationships(@response["book_id"]).length}
 	end	
 
 	def index_blog
-		@client.index  index: 'search', type: 'blogs', id: @response["blog_id"], body: { title: @response["title"], excerpt: @response["excerpt"],  title: @response["title"], image_url: @response["image_url"], weight: get_relationship_count(@response["blog_id"])}
+		@client.index  index: 'search', type: 'blogs', id: @response["blog_id"], body: { title: @response["title"], excerpt: @response["excerpt"],  title: @response["title"], image_url: @response["image_url"], weight: get_relationships(@response["blog_id"]).length}
 	end
 
 	def index_news
-		@client.index  index: 'search', type: 'news', id: @response["id"], body: { title: @response["title"], description: @response["description"], image_url: @response["image_url"], title: @response["title"], created_at: @response["created_at"], weight: get_relationship_count(@response["id"])}
+		@client.index  index: 'search', type: 'news', id: @response["id"], body: { title: @response["title"], description: @response["description"], image_url: @response["image_url"], title: @response["title"], created_at: @response["created_at"], weight: get_relationships(@response["id"]).length}
 	end	
 
 	def index_user
-		@client.index  index: 'search', type: 'users', id: @response["id"], body: { search_index: @response["indexed_user_name"], first_name: @response["first_name"] , last_name: @response["last_name"], region: @response["region"] ,weight: get_relationship_count(@response["id"])}
+		@client.index  index: 'search', type: 'users', id: @response["id"], body: { search_index: @response["indexed_user_name"], first_name: @response["first_name"] , last_name: @response["last_name"], region: @response["region"] ,weight: get_relationships(@response["id"]).length}
 	end	
 
 	def index_author
-		@client.index  index: 'search', type: 'authors', id: @response["id"], body: { name: @response["name"], weight: get_relationship_count(@response["id"])}
+		@client.index  index: 'search', type: 'authors', id: @response["id"], body: { name: @response["name"], weight: get_relationships(@response["id"]).length}
 	end	
 
 	def index_community
-		@client.index  index: 'search', type: 'communities', id: @response["id"], body: { name: @response["name"], image_url: @response["image_url"], weight: get_relationship_count(@response["id"])}
+		@client.index  index: 'search', type: 'communities', id: @response["id"], body: { name: @response["name"], image_url: @response["image_url"], weight: get_relationships(@response["id"]).length}
 	end	
 end
