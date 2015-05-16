@@ -79,18 +79,35 @@ class Community < Neo
 		Community.match_books + " WITH community, " + Book.collect_map({"books_info" => Book.grouped_basic_info }) 
 	end
 
+	# This funnction first checks the database for books, if no books are present,
+	# it calls google api to fetch books	
+	def self.fetch_books_database_Net community
+		clause = Community.search_by_name(community) + Community.match_books + "RETURN book.title"		
+		books_list = clause.execute
+		if(books_list.empty?)
+			books = Community.fetch_books community
+		else
+			books = {community => []}
+			books_list.each do |book|
+				books[community] << book["book.title"]
+			end
+			books[community] = books[community].uniq
+		end
+		books 
+	end
+
 	def self.fetch_books community
 		community_books = {community => []}
 		count = 0
 		books = Book::GoogleBooks.get community
 
-		puts books.to_s.green
+		#puts books.to_s.green
 		if books.present?
 			books.each do |book|
 				book = book.search_ready
 				book_info = (Book.get_by_indexed_title(book).execute)[0] 
 				if book_info.present?  
-					community_books[community] << book
+					community_books[community] << book					
 				end	
 			end
 		end
@@ -106,36 +123,31 @@ class Community < Neo
 	end
 
 
-	def self.create news_metadata
-		communities_books = []
+	def self.create news_metadata		
+		communities_books = []		
+		relevance = []	 # This is the relevance which we will use
 		response = News.fetch_tags news_metadata["news_link"]
-		puts response.red
-
 		if response.is_json? 
-			response = JSON.parse(response)
-			
-			communities = Community.handle_communities response
-			puts communities.to_s.yellow
-
+			response = JSON.parse(response)			
+			communities = Community.handle_communities response			
 			skip = 10000
-			timer = communities.length * skip
+			timer = communities.length * skip -1
 			for i in 0..timer do
 				if (i % skip) == 0
-					community_books = Community.fetch_books(communities[i/skip])
-					puts community_books.to_s.green
-
-					if Community.has_required_book_count(community_books[communities[i/skip]])
+					puts communities[i/skip]['value']
+					community_books = Community.fetch_books_database_Net(communities[i/skip]['value'])
+					if Community.has_required_book_count(community_books[communities[i/skip]['value']])
+						relevance << {'relevance' => communities[i/skip]['relevance'],
+									'relevanceOriginal' => communities[i/skip]['relevanceOriginal']}
 						communities_books << community_books
 					end
 				end
-				# communities.each do |community|
-				# end
 			end
-
+			
 			unless communities_books.blank?	
 				news_metadata["news_id"] = News.create news_metadata
-				News.map_topics(news_metadata["news_id"], response["topics"]) 				
-				Community.map_books(communities_books, news_metadata)
+				News.map_topics(news_metadata["news_id"], response["Hierarchy"]) 				
+				Community.map_books(communities_books.zip(relevance), news_metadata)
 				News.new(news_metadata["news_id"]).add_notification.execute
 			end
 		end
@@ -147,15 +159,16 @@ class Community < Neo
 
 
 	def self.map_books communities_books, news_metadata
-	    communities_books.each do |community_books|
+	    communities_books.each do |community_books,relevance|
 	    	community_books.each do |community, books|
-	        	clause =  News.new(news_metadata["news_id"]).match + Community.merge(community) + ", news " + Community.set_importance + " WITH community, news " + News.merge_community
+	    		
+	        	clause =  News.new(news_metadata["news_id"]).match + Community.merge(community) + ", news " + Community.set_importance + " WITH community, news " + News.merge_community(relevance)				
 				books.each do |book|
 					indexed_title = book.search_ready
 					clause += Book.search_by_indexed_title(indexed_title) + " , community " + Community.merge_book + " WITH community "
 				end
 				clause += News.return_init + Community.basic_info
-				clause.execute
+				clause.execute				
 			end
 		end
 	end
@@ -165,14 +178,17 @@ class Community < Neo
 	end
 
 	def self.handle_communities response
-		communities = []
-		response["social_tags"].each do |social_tag|
-			if social_tag["importance"] == Constant::Count::RelevantSocialTag && social_tag["originalValue"] != "" then communities << social_tag["originalValue"] end
+		communities = []		
+		response["Tags"].each do |social_tag|
+			if social_tag['value'] != ""
+				communities << social_tag
+				
+			end
 		end
 		communities
 	end
 
 	def self.search_by_name name
-		" MATCH (community:Community{name:\"" + name + "\"}) WITH community " 
+		" MATCH (community:Community{name:'" + name + "'}) WITH community " 
 	end
 end

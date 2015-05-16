@@ -97,9 +97,13 @@ class News < Neo
 		news_metadata
 	end
 
-
-	def self.merge_community
-		" MERGE (news)-[:HasCommunity]->(community) WITH news, community "
+#{relevance: "+ relevance['relevance'].to_s+",relevanceOriginal:"+relevance['relevanceOriginal'].to_s+"}
+	def self.merge_community relevance
+		clause = " MERGE (news)-[h:HasCommunity]->(community)"\
+		" ON CREATE SET h +={relevance: "+ relevance['relevance'].to_s+",relevanceOriginal:"+relevance['relevanceOriginal'].to_s+"}"\
+		" ON MATCH  SET h +={relevance: "+ relevance['relevance'].to_s+",relevanceOriginal:"+relevance['relevanceOriginal'].to_s+"}"\
+		" WITH news,community"
+		clause
 	end
 
 	def self.handle
@@ -121,8 +125,8 @@ class News < Neo
 	end
 
 	def self.map_topics news_id, topics
-		topics.each do |topic|
-			clause = News.new(news_id).match + " MERGE (topic:Topic{name:\"" + topic["value"].to_s + "\"})  MERGE (topic)<-[:HasTopic]-(news) "
+		topics.each do |topic|			
+			clause = News.new(news_id).match + " MERGE (topic:Topic{name:'" + topic["value"].to_s + "'}) <-[:HasTopic {relevance :"+ topic["relevance"].to_s+" }]-(news) "
 			clause.execute
 		end
 	end
