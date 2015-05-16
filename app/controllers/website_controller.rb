@@ -151,7 +151,7 @@ class WebsiteController < ApplicationController
 			puts "bot_incoming".red
 			@info = Api::V0::BookApi.get_book_details(id, user_id)
 			@info["original_url"] = request.original_url
-			@info["image_url"] = "http://rd-images.s3.amazonaws.com/" + @info["isbn"].split(",").first + "/M.jpg"
+			@info["image_url"] = "http://rd-images.readersdoor.netdna-cdn.com/" + @info["isbn"].split(",").first + "/M.jpg"
 			render :layout => "social"
 		else
 			user_id = session[:user_id]
@@ -210,7 +210,7 @@ class WebsiteController < ApplicationController
 			puts "bot_incoming".red
 			@info = Api::V0::AuthorApi.get_details author_id, user_id
 			@info["original_url"] = request.original_url
-			@info["image_url"] = "http://rd-images.s3.amazonaws.com/" + @info["id"].to_s + "/M.png"
+			@info["image_url"] = "http://rd-authors.readersdoor.netdna-cdn.com/" + @info["id"].to_s + "/M.png"
 			render :layout => "social"
 		else
 			user_id = session[:user_id]

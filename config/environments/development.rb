@@ -32,5 +32,5 @@ ReadersDoor::Application.configure do
   config.google_news_sources = "https://support.google.com/news/answer/40237?hl=en"
   config.blog_url = " https://public-api.wordpress.com/rest/v1.1/sites/literaturerun.wordpress.com/posts/?number=10&pretty=1&order=ASC&fields=title,date,short_URL,excerpt,discussion,like_count,featured_image,tags,is_reblogged,attachments&after="
   config.image_service = ""
-  config.neo4j_url = "http://localhost:8000"
+  config.neo4j_url = "http://localhost:7474"
 end
