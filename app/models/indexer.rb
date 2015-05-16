@@ -33,8 +33,8 @@ class Indexer
 					{filter:
 						{autocomplete_filter:
                 			{type:"edge_ngram",
-		                    min_gram: "1",
-		                    max_gram: "20",
+		                    min_gram: "3",
+		                    max_gram: "12",
 		                    side: "front",
 		                    token_chars: [ "letter", "digit", "punctuation", "symbol"]
 	                		}
@@ -42,8 +42,8 @@ class Indexer
 	            	analyzer:
 	            		{autocomplete:
 	            			{type: "custom",
-	                    	tokenizer: "standard",
-	                    	filter: ["lowercase", "standard", "autocomplete_filter"]
+	                    	tokenizer: "edge_ngram_tokenizer",
+	                    	filter: ["lowercase", "standard"]
 	                		},
 						whitespace: 
 							{type: "custom",
@@ -54,8 +54,8 @@ class Indexer
 		            tokenizer: 
 		            	{edge_ngram_tokenizer: 
 		            		{type: "edgeNGram",
-			                min_gram: "1",
-			                max_gram: "5",
+			                min_gram: "2",
+			                max_gram: "12",
 			                token_chars: [ "letter", "digit" ]
               				}
           				}

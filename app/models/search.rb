@@ -10,7 +10,7 @@ class Search < Neo
 	def self.extract_info search_response
 		response = []
 		search_response["hits"]["hits"].each do |record|
-			record["_source"]["labels"] = record["_type"].camelcase
+			record["_source"]["labels"] = record["_type"].camelcase.singularize
 			record["_source"]["id"] = record["_id"].to_i
 			if record["_source"]["name"].blank?
 				record["_source"]["name"] = record["_source"]["title"]
