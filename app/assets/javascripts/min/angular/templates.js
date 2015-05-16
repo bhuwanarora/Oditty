@@ -72,7 +72,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/community/_footer.html',
-    "<div flex=\"100\" flex-sm=\"100\"><md-tabs class=\"white\"><md-tab ng-repeat=\"tag in news\" layout-margin><a ng-href=\"/community?q={{tag.id}}\">{{tag.community_info.name}}</a></md-tab></md-tabs></div>"
+    "<div flex=\"100\" flex-sm=\"100\"><md-tabs class=\"white\" md-selected=\"selectedIndex\"><a ng-href=\"/community?q={{tag.id}}\" ng-repeat=\"tag in news\"><md-tab layout-margin>{{tag.community_info.name}}</md-tab></a></md-tabs></div>"
   );
 
 
