@@ -1,7 +1,7 @@
 <md-content ng-controller="homeController" check-scroll-bottom="get_community_feed()">
-	<div layout="row" layout-align="space-between" layout-padding>
+	<div layout="row" layout-align="space-between center" class="light_grey">
 		<div></div>
-		<md-select ng-model="active_region" placeholder="Select Region" layout-padding ng-change="change_feed()">
+		<md-select ng-model="active_region" placeholder="Select Region" ng-change="change_feed()">
 	      	<md-optgroup label="Regions">
 	        	<md-option ng-value="region.id" ng-repeat="region in regions">{{region.name}}</md-option>
 	      	</md-optgroup>

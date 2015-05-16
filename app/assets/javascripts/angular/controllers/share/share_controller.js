@@ -141,6 +141,27 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         $scope.info.loading = true;
         var status = {};
 
+        if($scope.reading_status_selected && $scope.active_book){
+            if(!$scope.active_emotion){
+                $scope.info.status = $scope.reading_options[$scope.active_id].status;
+                $scope.info.wrapper_status = "<span><span class='custom_title light_title'><span>"+$scope.reading_options[$scope.active_id].status+"</span></span>"
+            }
+            else{
+                $scope.info.status = "Feeling "+ $scope.active_emotion.name + $scope.reading_options[$scope.active_id].emotion_status;
+                $scope.info.wrapper_status = "<span class='custom_title light_title'><span>Feeling "+$scope.active_emotion.name+"  </span><span>"+$scope.reading_options[$scope.active_id].emotion_status+"</span></span>";
+            }
+            $scope.info.status = $scope.info.status + " " + $scope.active_book.title + " by " + $scope.active_book.author_name;
+            $scope.info.wrapper_status = $scope.info.wrapper_status + "<span class='big_title bold_light_title'>"+$scope.active_book.title+" </span><span class='less_important'>by "+$scope.active_book.author_name+"</span>";
+            if($scope.info.current_page){
+                $scope.info.status = $scope.info.status + " on page " + $scope.info.current_page;
+                $scope.info.wrapper_status = $scope.info.wrapper_status + "<span> on page <b>"+$scope.info.current_page+"</b></span>";
+            }
+            if($scope.info.page_count){
+                $scope.info.status = $scope.info.status + "/"+ $scope.info.page_count;
+                $scope.info.wrapper_status = $scope.info.wrapper_status + "<span><b>/{{info.page_count}}</b>.</span>";
+            }
+        }
+
         if(angular.isDefined($scope.info.feelings) && ($scope.info.feelings.length > 0)){
             status = angular.extend(status, {"feelings": $scope.info.feelings});
         }
@@ -470,8 +491,8 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     $scope.init_reading_options = function(){
         if(angular.isUndefined($scope.reading_options) || ($scope.reading_options.length != 3)){
             $scope.reading_options = [
-                {"name": "What are you currently reading?", "id": 0, "status": "Currently Reading", "emotion_status": "white reading"}, 
-                {"name": "Which book do you plan to read?", "id": 1, "status": "Planning to Read", "emotion_status": "while planning to read"}, 
+                {"name": "Which book do you plan to read?", "id": 0, "status": "Planning to Read", "emotion_status": "while planning to read"}, 
+                {"name": "What are you currently reading?", "id": 1, "status": "Currently Reading", "emotion_status": "while reading"}, 
                 {"name": "Which book did you recently read?", "id": 2, "status": "Recently Read", "emotion_status": "after reading"}
             ];
         }
@@ -501,7 +522,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         if(angular.isUndefined($scope.info.feelings)){
             $scope.info.feelings = [];
         }
-        $scope.info.feelings.push(emotion);
+        $scope.info.feelings.push(emotion.name);
     }
 
     $scope.deselect_emotion = function(){
