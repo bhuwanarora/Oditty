@@ -76,10 +76,93 @@ class Indexer
 			            	{type: "string",
 							index: "analyzed",
 	                        analyzer: "autocomplete"
+			               	},
+			            author_name:
+			            	{type: "string",
+							index: "analyzed",
+	                        analyzer: "autocomplete"
 			               	}
 			            }
-                	}
-				}
+                	},
+				blogs:
+					{_all:
+						{index_analyzer: "autocomplete",
+			            search_analyzer: "autocomplete"
+						 },
+			        properties:
+			         	{excerpt:
+			         		{type: "string",
+			               	index: "no"
+			            	},
+			        	title:
+			            	{type: "string",
+							index: "analyzed",
+	                        analyzer: "autocomplete"
+			               	}
+		            	}
+                	},
+				news:
+					{_all:
+						{index_analyzer: "autocomplete",
+			            search_analyzer: "autocomplete"
+						 },
+			        properties:
+			         	{description:
+			         		{type: "string",
+			               	index: "no"
+			            	},
+			        	title:
+			            	{type: "string",
+							index: "analyzed",
+	                        analyzer: "autocomplete"
+			               	}
+			            }
+                	},				
+				authors:
+					{_all:
+						{index_analyzer: "autocomplete",
+			            search_analyzer: "autocomplete"
+						},
+			        properties:
+			         	{name:
+			         		{type: "string",
+							index: "analyzed",
+	                        analyzer: "autocomplete"
+			            	}
+			            }
+                	},				
+				communities:
+					{_all:
+						{index_analyzer: "autocomplete",
+			            search_analyzer: "autocomplete"
+						},
+			        properties:
+			         	{name:
+			         		{type: "string",
+							index: "analyzed",
+	                        analyzer: "autocomplete"
+			            	}
+			            }
+                	},				
+				users:
+					{_all:
+						{index_analyzer: "autocomplete",
+			            search_analyzer: "autocomplete"
+						},
+			        properties:
+			         	{first_name:
+			         		{type: "string",
+							index: "analyzed",
+	                        analyzer: "autocomplete"
+			            	},
+			            last_name:
+			         		{type: "string",
+							index: "analyzed",
+	                        analyzer: "autocomplete"
+			            	}
+			            }
+                	}				
+                }
 			}
 
 		client.indices.put_alias index: Time.now.strftime("%D").gsub("/","-"), name: 'search'			
@@ -152,11 +235,11 @@ class Indexer
 	end	
 
 	def index_blog
-		@client.index  index: 'search', type: 'blogs', id: @response["blog_id"], body: { title: @response["title"],  title: @response["title"], image_url: @response["image_url"], weight: get_relationship_count(@response["blog_id"])}
+		@client.index  index: 'search', type: 'blogs', id: @response["blog_id"], body: { title: @response["title"], excerpt: @response["excerpt"],  title: @response["title"], image_url: @response["image_url"], weight: get_relationship_count(@response["blog_id"])}
 	end
 
 	def index_news
-		@client.index  index: 'search', type: 'news', id: @response["id"], body: { title: @response["title"], image_url: @response["image_url"], title: @response["title"], created_at: @response["created_at"], weight: get_relationship_count(@response["id"])}
+		@client.index  index: 'search', type: 'news', id: @response["id"], body: { title: @response["title"], description: @response["description"], image_url: @response["image_url"], title: @response["title"], created_at: @response["created_at"], weight: get_relationship_count(@response["id"])}
 	end	
 
 	def index_user
