@@ -1,0 +1,29 @@
+<div layout="column" class="menu_details margin_top white md-whiteframe-z1">
+	<div layout-padding class="light_grey_color custom_title roboto">
+		<i>What are you feeling?</i>
+	</div>
+	<div layout="row">
+        <md-autocomplete md-search-text="info.search_emotion"
+            md-items="item in emotions"
+            class="menu_search"
+            placeholder="Search emotions...">
+        </md-autocomplete>
+        <md-button class="md-button-clear">
+            <span class="icon-search"></span>
+        </md-button>
+	</div>
+</div>
+<div class="emotions">
+	<md-button ng-repeat="emotion in emotions | filter: {name: info.search_emotion} | limitTo: 4" 
+				layout-padding ng-if="info.search_emotion"
+				ng-click="set_emotion(emotion)"
+				class="menu_details margin_top capitalize white md-whiteframe-z1 md-button-clear custom_title overlap">
+		{{emotion.name}}
+	</md-button>
+	<md-button ng-repeat="emotion in emotions | limitTo: 4" layout-padding 
+				ng-if="!info.search_emotion || (info.search_emotion == '')"
+				ng-click="set_emotion(emotion)"
+				class="menu_details margin_top capitalize white md-whiteframe-z1 md-button-clear custom_title overlap">
+		{{emotion.name}}
+	</md-button>
+</div>

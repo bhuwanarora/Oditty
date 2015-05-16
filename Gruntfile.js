@@ -32,19 +32,11 @@ module.exports = function(grunt) {
             combine: {
                 files: {
                     'app/assets/stylesheets/min/site.min.css': [
-                        'app/assets/stylesheets/min/website.min.css',
-                        'app/assets/stylesheets/min/cropme.min.css',
-                        'app/assets/stylesheets/min/animate.min.css',
-                        'app/assets/stylesheets/min/icomoon.min.css',
-                        'app/assets/stylesheets/min/search_page.min.css',
-                        'app/assets/stylesheets/min/recommendation.min.css',
-                        'app/assets/stylesheets/min/focused_tooltip.min.css',
-                        'app/assets/stylesheets/min/info_card.min.css',
-                        'app/assets/stylesheets/min/card.min.css',
-                        'app/assets/stylesheets/min/grid.min.css',
-                        'app/assets/stylesheets/min/introjs-rtl.min.css',
-                        'app/assets/stylesheets/min/introjs.min.css',
-                        'app/assets/stylesheets/min/icons.min.css'
+                        'app/assets/stylesheets/angular_material.min.css',
+                        'app/assets/stylesheets/website/website.min.css',
+                        'app/assets/stylesheets/website/icomoon.min.css',
+                        'app/assets/stylesheets/website/home.min.css',
+                        'app/assets/stylesheets/website/media_library.min.css'
                     ],
 
                     'app/assets/stylesheets/min/landing_page_site.min.css': [
@@ -158,6 +150,7 @@ module.exports = function(grunt) {
                     "app/assets/javascripts/min/angular/services/author_service.js",
                     "app/assets/javascripts/min/angular/services/shelf_service.js",
                     "app/assets/javascripts/min/angular/services/infinity_service.js",
+                    "app/assets/javascripts/min/angular/services/network_service.js",
                     "app/assets/javascripts/min/angular/services/shared_service.js"
                 ],
 
@@ -168,6 +161,8 @@ module.exports = function(grunt) {
                     "app/assets/javascripts/min/angular/controllers/home/left_controller.js",
                     "app/assets/javascripts/min/angular/controllers/home/right_controller.js",
                     "app/assets/javascripts/min/angular/controllers/home/shelf_controller.js",
+                    "app/assets/javascripts/min/angular/controllers/book/buy_controller.js",
+                    "app/assets/javascripts/min/angular/controllers/recommend_controller.js",
                     "app/assets/javascripts/min/angular/controllers/share/share_controller.js",
                     "app/assets/javascripts/min/angular/controllers/share/options_controller.js",
                     "app/assets/javascripts/min/angular/controllers/profile_controller.js",
@@ -274,7 +269,6 @@ module.exports = function(grunt) {
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/network_group.min.js":[
-                    "app/assets/javascripts/min/angular/services/network_service.js",
                     "app/assets/javascripts/min/angular/controllers/network_controller.js"
                 ],
 
@@ -282,7 +276,6 @@ module.exports = function(grunt) {
                     "app/assets/javascripts/min/angular/controllers/book/specific_book_controller.js",
                     "app/assets/javascripts/min/angular/controllers/book/timeline_controller.js",
                     "app/assets/javascripts/min/angular/controllers/book/real_virtuality_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/buy_controller.js",
                     "app/assets/javascripts/min/angular/services/community_service.js",
                     "app/assets/javascripts/min/angular/controllers/community_controller.js"
                 ],
@@ -298,8 +291,7 @@ module.exports = function(grunt) {
                 "app/assets/javascripts/min/angular/controllers/book_group.min.js":[
                     "app/assets/javascripts/min/angular/controllers/book/specific_book_controller.js",
                     "app/assets/javascripts/min/angular/controllers/book/timeline_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/real_virtuality_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/buy_controller.js"
+                    "app/assets/javascripts/min/angular/controllers/book/real_virtuality_controller.js"
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/infinity_group.min.js":[
@@ -309,8 +301,7 @@ module.exports = function(grunt) {
                     "app/assets/javascripts/min/angular/controllers/library/filters_controller.js",
                     "app/assets/javascripts/min/angular/controllers/book/specific_book_controller.js",
                     "app/assets/javascripts/min/angular/controllers/book/timeline_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/real_virtuality_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/buy_controller.js"
+                    "app/assets/javascripts/min/angular/controllers/book/real_virtuality_controller.js"
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/room_group.min.js":[
@@ -319,7 +310,6 @@ module.exports = function(grunt) {
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/author_group.min.js":[
-                    "app/assets/javascripts/min/angular/controllers/book/buy_controller.js",
                     "app/assets/javascripts/min/angular/controllers/author_controller.js"
                 ],
 

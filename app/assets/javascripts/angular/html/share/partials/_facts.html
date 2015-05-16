@@ -1,0 +1,30 @@
+<md-button ng-hide="show_options" class="menu_details margin_top white md-whiteframe-z1 clear" ng-click="toggle_options()" 
+			layout="row" layout-align="space-between">
+	<div class="light_grey_color custom_title roboto" layout-padding>
+		<i>More details</i>
+	</div>
+</md-button>
+<div ng-hide="!show_options" class="menu_details margin_top white md-whiteframe-z1" layout="column">
+	<md-button ng-hide="!show_options" class= "clear" ng-click="toggle_options()"
+		layout="row" layout-align="space-between">
+		<div class="light_grey_color custom_title roboto" layout-padding>
+    		<i>Less details</i>
+    	</div>
+	</md-button>
+	<md-list-item ng-repeat="info in related_info" layout="column">
+        <div ng-if="info.label == 'Year'" layout="column" class="bold_light_title custom_title" layout-padding>
+    		A {{info.year}} novel.
+    	</div>
+    </md-list-item>
+    <md-list-item ng-repeat="info in related_info" layout="column">
+        <div ng-if="info.label == 'Author'" layout="column">
+            <div class="big_title" layout-padding>{{info.name}}</div>
+            <div layout="row">
+                <img ng-src="{{info.id | author_thumb}}">
+                <div class="custom_title" layout-padding>
+                    {{info.overview}}
+                </div>
+            </div>
+        </div>
+    </md-list-item>
+</div>

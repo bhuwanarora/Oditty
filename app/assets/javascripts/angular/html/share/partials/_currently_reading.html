@@ -1,0 +1,38 @@
+<md-list-item class="menu_details margin_top white md-whiteframe-z1"
+	layout="row" layout-align="space-between">
+	<div class="light_grey_color custom_title roboto" layout-padding>
+		<i>Currently on page</i>
+	</div>
+	<div layout="row">
+		<md-input-container class="page_count_input">
+            <input ng-model="info.current_page" 
+                   focus-out="set_current_page()"/>
+        </md-input-container>
+        <div class="big_title" layout-padding>/</div>
+        <md-input-container class="page_count_input">
+                <input ng-model="info.page_count" 
+                       focus-out="set_total_page()"/>
+        </md-input-container>
+	</div>
+</md-list-item>
+<md-list-item class="menu_details margin_top white md-whiteframe-z1"
+	layout="column">
+	<div class="big_title light_title" layout-padding>Track reading time</div>
+	<div layout="row" layout-align="space-between center" layout-padding>
+		<div layout="row" layout-align="start end">
+			<b class="less_important" layout-padding>Started reading on</b>
+			<md-input-container class="page_count_input">
+               	<input/>
+            </md-input-container>
+		</div>
+		<div layout="row" layout-align="start end">
+			<b class="less_important" layout-padding>Finised on</b>
+            <md-input-container class="page_count_input">
+                <input/>
+            </md-input-container>
+		</div>
+	</div>
+	<div class="light_grey_color custom_title" layout-padding>
+		Keep a record of your reading journeys
+	</div>
+</md-list-item>

@@ -6,7 +6,8 @@
 		 layout-sm="column"
 		 layout-align="start start" layout-padding>
 		<div flex="10">
-			<div ng-click="back($event)" layout="row" layout-align="center center" class="custom_button">
+			<div ng-click="back($event)" layout="row" 
+				layout-align="center center" class="custom_button">
 				<h1 layout-padding>
 					<span class="icon-angle-left"></span>
 				</h1>
@@ -63,11 +64,15 @@
 		position: relative;
 	}*/
 
-	/*.custom_button:hover{
-		cursor: pointer;
+	.custom_button:hover{
 		font-weight: bold;
 		color: black;
-	}*/
+	}
+
+	.custom_button{
+		cursor: pointer;
+		color: #757575;
+	}
 
 	textarea{
 		/*color: transparent !important;*/
@@ -134,7 +139,6 @@
 	.menu_details,
 	.menu_search{
 		width: 400px;
-		margin-top: 6px;
 		max-height: 200px;
 		overflow: hidden;
 	}

@@ -54,13 +54,6 @@ h1, h2, h3, h4 {
     font-weight: bold;
 }
 
-.md-button-clear{
-      text-transform: none!important;
-      font-weight: inherit!important;
-      text-align: inherit!important;
-      border-radius: 0!important;
-}
-
 .tab-main{
     position: fixed;
     width: 100%;

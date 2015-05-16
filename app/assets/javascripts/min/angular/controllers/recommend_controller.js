@@ -1,0 +1,1 @@
+homeApp.controller("recommendController",["$scope","userService","$rootScope","WebsiteUIConstants","ColorConstants","networkService",function(a,b,c,d,e,f){a.toggle_recommend=function(){a.show_recommend=!a.show_recommend,angular.isUndefined(a.users_list)&&f.get_followers().then(function(b){a.users_list=b})}}]);
