@@ -1,4 +1,4 @@
-<md-list ng-if="personal_feed &&  personal_feed.length > 0" layout="row" hide-sm>
+<md-list layout="row" hide-sm>
 	<div flex>
 		<div layout="column" ng-if="user.influential_books" layout-padding layout-wrap>
 			<!-- <b class="small-padding">Books he finds influential</b> -->
@@ -49,7 +49,7 @@
 		</div>
 	</div>
 </md-list>
-<md-list ng-if="personal_feed &&  personal_feed.length > 0" layout="column" show-sm hide>
+<md-list layout="column" show-sm hide>
 	<div ng-if="info.my_profile" ng-include 
 			 src="'/assets/angular/html/profile/_share_journey.html'"></div>
 	<div ng-repeat="feed in personal_feed">
