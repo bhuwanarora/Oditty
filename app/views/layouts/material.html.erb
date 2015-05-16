@@ -17,12 +17,12 @@
         <!-- <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,100italic,400italic|Roboto+Condensed&amp;lang=en' rel='stylesheet' type='text/css'> -->
 
 
+        <link rel="stylesheet" href="assets/angular_material.css" />
+        <link rel="stylesheet" href="assets/website/website.css" />
+        <link rel="stylesheet" href="assets/website/icomoon.css" />
+        <link rel="stylesheet" href="assets/website/home.css" />
+        <link rel="stylesheet" href="assets/website/media_library.css" />
         <% if Rails.env.development? %>
-            <link rel="stylesheet" href="assets/angular_material.css" />
-            <link rel="stylesheet" href="assets/website/website.css" />
-            <link rel="stylesheet" href="assets/website/icomoon.css" />
-            <link rel="stylesheet" href="assets/website/home.css" />
-            <link rel="stylesheet" href="assets/website/media_library.css" />
 
             <script src="assets/min/angular/vendors.min.js"></script>
 
@@ -139,7 +139,7 @@
             <% end %>
 
         <% else %>
-            <link rel="stylesheet" href="assets/min/site.min.css" />
+            <!-- <link rel="stylesheet" href="assets/min/site.min.css" /> -->
             <script src="assets/min/angular/site.min.js"></script>
 
             <% if (@community || @home || @infinity)%>
