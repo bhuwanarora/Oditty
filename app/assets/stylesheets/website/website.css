@@ -73,7 +73,7 @@ input:focus{
     width: 100%;
     overflow-y: auto;
 }
-/*
+
 .scrollbar{
     overflow-x: hidden;
     overflow-y: auto;
@@ -118,7 +118,7 @@ input:focus{
     -webkit-border-radius: 9px;
     border-radius: 10px;
 }
-*/
+
 
 .yellow_color{
     color: #E2B503 !important;

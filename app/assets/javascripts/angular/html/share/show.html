@@ -1,5 +1,4 @@
 <div ng-controller="shareController" ng-if="info.show_share || info.show_book_share">
-	<!-- <div class="compact_status" ng-include src="'/assets/angular/html/share/_status.html'"></div> -->
 
 	<div class="share animate-fast" 
 		 layout="row" 
@@ -15,7 +14,6 @@
 		</div>
 		<div flex="80" layout="column">
 			<div ng-include src="'/assets/angular/html/share/searched_books.html'" ng-if="info.show_book_share"></div>
-			<!-- <div ng-include src="'/assets/angular/html/share/textbox.html'"></div> -->
 			<div ng-include src="'/assets/angular/html/share/status_options.html'" ng-if="info.show_share"></div>
 		</div>
 	    <div flex="10"></div>

@@ -54,8 +54,9 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
 
         $scope.newsTags = [];
         $scope.info.active_tag = $scope.active_tag;
-
+        $scope.info.loading = true;
         communityService.get_news_info(news_id).then(function(data){
+            $scope.info.loading = false;
             data = data[0];
             $scope.active_tag = data.most_important_tag[0];
             var most_important_tag = {"name": $scope.active_tag.name, 
@@ -77,6 +78,11 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
 
         communityService.get_chronological_news(news_id).then(function(data){
             $scope.news = data;
+            angular.forEach($scope.news, function(value, index){
+                if(value.community_info.name == $scope.active_tag.name){
+                    $scope.selectedIndex = index;
+                }
+            });
         });
     }());
 
