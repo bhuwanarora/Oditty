@@ -27,7 +27,7 @@ class Search < Neo
 	end
 
 	def book_by_title
-		search_response = @client.search index: 'search', type: 'books', scroll: '10m', body:{query: {dis_max: { queries: [{match:{title:  {query: @search_text, fuzziness: 1}}}, {match:{ author_name: {query: @search_text, fuzziness: 1}}}]}} , size: 5, sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		search_response = @client.search index: 'search', type: 'books', scroll: '10m', body:{query:{function_score: {boost_mode: "replace", query:{multi_match:{query:@search_text,fields:["title^2","author_name"]}}}}, sort:{ _script: {params:{factor: 0.4}, type: "number", script: "weight", order: "desc"}}}, analyzer: "autocomplete"
 		scroll_id = search_response["_scroll_id"]
 		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
@@ -76,7 +76,8 @@ class Search < Neo
 	end
 
 	def basic
-		search_response = @client.search index: 'search', scroll: '10m', body:{query: { dis_max: { queries: [{match:{title: {query: @search_text, fuzziness: 2}}}, {match:{ author_name: {query: @search_text, fuzziness: 2}}}, {match:{ name: {query: @search_text, fuzziness: 2}}}, { match:{ community_name: {query: @search_text, fuzziness: 2}}}]}} , size: 5, sort: [{ _score: { order: "desc" }}, { weight: {order: 'desc'}}]}
+		search_response = @client.search index: 'search', scroll: '10m', body:{query: { dis_max: { queries: [{match:{title: {query: @search_text, fuzziness: 2}}}, {match:{ author_name: {query: @search_text, fuzziness: 2}}}, {match:{ name: {query: @search_text, fuzziness: 2}}}, { match:{ community_name: {query: @search_text, fuzziness: 2}}}]}} , size: 5, sort: {_script:{script: "doc['weight'].value * factor + doc['_score'].value * (1-factor) ", type: "number", params:{factor: 0.4
+            }, order: "desc"}}}
 		scroll_id = search_response["_scroll_id"]
 		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end

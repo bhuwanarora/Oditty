@@ -23,7 +23,6 @@ class Indexer
 		end
 
 		client.indices.create index: Time.now.strftime("%D").gsub("/","-"),
-		
 		body: 
 			{settings:
 				{index:
@@ -40,12 +39,11 @@ class Indexer
 		                    token_chars: [ "letter", "digit", "punctuation", "symbol"]
 	                		}
 	         			},
-            	
 	            	analyzer:
 	            		{autocomplete:
 	            			{type: "custom",
-	                    	tokenizer: "edge_ngram_tokenizer",
-	                    	filter: ["lowercase", "standard"]
+	                    	tokenizer: "standard",
+	                    	filter: ["lowercase", "standard", "autocomplete_filter"]
 	                		},
 						whitespace: 
 							{type: "custom",
@@ -61,50 +59,26 @@ class Indexer
 			                token_chars: [ "letter", "digit" ]
               				}
           				}
-	                },
-
-				mappings: 
-					{books:
-						{_all:
-							{index_analyzer: "autocomplete",
-				            search_analyzer: "whitespace"
-							 },
-				        properties:
-				         	{description:
-				         		{type: "string",
-				               	index: "no"
-				            	},
-				            title:
-				            	{type: "string",
-								analyzer: "autocomplete"
-				               	}
-				            }
-			        	},
-					news:
-						{_all:
-							{index_analyzer: "autocomplete",
-			            	search_analyzer: "whitespace"
-							 },
-			        	properties: 
-			        		{description:
-			        			{type: "string",
-			               		index: "no"
-			            		}
-			            	}
-			            },
-					blogs: 
-						{_all:
-							{index_analyzer: "autocomplete",
-				            search_analyzer: "whitespace"
-							},
-				        properties:
-				        	{excerpt:
-				        		{type: "string",
-				               	index: "no"
-				            	}
-				            }
-				        }
-					}
+	                }
+	            },
+			mappings: 
+				{books:
+					{_all:
+						{index_analyzer: "autocomplete",
+			            search_analyzer: "autocomplete"
+						 },
+			        properties:
+			         	{description:
+			         		{type: "string",
+			               	index: "no"
+			            	},
+			            title:
+			            	{type: "string",
+							index: "analyzed",
+	                        analyzer: "autocomplete"
+			               	}
+			            }
+                	}
 				}
 			}
 
