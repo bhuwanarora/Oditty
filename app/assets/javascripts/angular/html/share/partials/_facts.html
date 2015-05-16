@@ -20,8 +20,8 @@
         <div ng-if="info.label == 'Author'" layout="column">
             <div class="big_title" layout-padding>{{info.name}}</div>
             <div layout="row">
-                <img ng-src="{{info.id | author_thumb}}">
-                <div class="custom_title" layout-padding>
+                <img ng-src="{{info.id | author_thumb}}" flex="30">
+                <div class="custom_title" layout-padding flex="70">
                     {{info.overview}}
                 </div>
             </div>
