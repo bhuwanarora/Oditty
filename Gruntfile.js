@@ -32,11 +32,11 @@ module.exports = function(grunt) {
             combine: {
                 files: {
                     'app/assets/stylesheets/min/site.min.css': [
-                        'app/assets/stylesheets/angular_material.min.css',
-                        'app/assets/stylesheets/website/website.min.css',
-                        'app/assets/stylesheets/website/icomoon.min.css',
-                        'app/assets/stylesheets/website/home.min.css',
-                        'app/assets/stylesheets/website/media_library.min.css'
+                        'app/assets/stylesheets/min/angular_material.min.css',
+                        'app/assets/stylesheets/min/website/min/website.min.css',
+                        'app/assets/stylesheets/min/website/icomoon.min.css',
+                        'app/assets/stylesheets/min/website/home.min.css',
+                        'app/assets/stylesheets/min/website/media_library.min.css'
                     ],
 
                     'app/assets/stylesheets/min/landing_page_site.min.css': [
