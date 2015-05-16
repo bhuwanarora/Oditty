@@ -42,8 +42,8 @@ class Indexer
 	            	analyzer:
 	            		{autocomplete:
 	            			{type: "custom",
-	                    	tokenizer: "edge_ngram_tokenizer",
-	                    	filter: ["lowercase", "standard"]
+	                    	tokenizer: "standard",
+	                    	filter: ["lowercase", "standard", "autocomplete_filter"]
 	                		},
 						whitespace: 
 							{type: "custom",
