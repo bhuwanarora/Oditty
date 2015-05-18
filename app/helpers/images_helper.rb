@@ -56,6 +56,7 @@ module ImagesHelper
 			users = clause.execute
 			users.each do |user|
 				url = "#{Rails.application.config.image_service}/api/v0/user_versions?id=#{user["id"]}&&bucket=rd-images&&url=#{user["image_url"]}"
+				response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
 			end
 			minimum += range
 		end
@@ -74,6 +75,7 @@ module ImagesHelper
 			communitites = clause.execute
 			communitites.each do |community|
 				url = "#{Rails.application.config.image_service}/api/v0/community_versions?id=#{community["id"]}&&bucket=rd-images&&url=#{community["image_url"]}"
+				response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
 			end
 			minimum += range
 		end
@@ -92,6 +94,7 @@ module ImagesHelper
 			newss = clause.execute
 			newss.each do |news|
 				url = "#{Rails.application.config.image_service}/api/v0/news_versions?id=#{news["id"]}&&bucket=rd-images&&url=#{news["image_url"]}"
+				response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
 			end
 			minimum += range
 		end
