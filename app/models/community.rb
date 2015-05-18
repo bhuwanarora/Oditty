@@ -17,7 +17,7 @@ class Community < Neo
 	end
 
 	def self.grouped_basic_info
-		"  view_count:community.view_count,  name:community.name, id:ID(community), image_url:community.image_url "
+		"  view_count:community.view_count,  name:community.name, id:ID(community), image_url:community.image_url  "
 	end
 
 	def books_users_info 
