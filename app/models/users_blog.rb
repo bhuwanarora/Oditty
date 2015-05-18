@@ -5,6 +5,6 @@ class UsersBlog < Neo
 	end
 
 	def match 
-		" MATCH (blog:Blog), (user:User) WHERE ID(blog)="+@blog.to_s+" AND ID(user)="+@user_id.to_s+" WITH user, blog "
+		" MATCH (blog:Blog), (user:User) WHERE ID(blog)="+@blog.to_s+" AND ID(user)="+@user_id.to_s+ User::Info.set_last_active_session + " WITH user, blog "
 	end
 end

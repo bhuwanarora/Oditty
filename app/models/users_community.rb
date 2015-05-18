@@ -53,6 +53,6 @@ class UsersCommunity < Neo
 	end
 
 	def match
-		" MATCH (user:User), (community:Community) WHERE ID(user)= #{@user_id}  AND ID(community)=#{ @community_id} WITH user, community "
+		" MATCH (user:User), (community:Community) WHERE ID(user)= #{@user_id}  AND ID(community)=#{ @community_id} " + User::Info.set_last_active_session + " WITH user, community "
 	end
 end
