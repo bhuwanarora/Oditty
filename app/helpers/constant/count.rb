@@ -27,5 +27,5 @@ module Constant::Count
 	SkipDays					= 1
 	BlogsShown					= 4
 	CommunitiesOfNewsShown		= 4
-	CommunitiesShownInCommunityPage = 8
+	CommunitiesInNewsPage 		= 10
 end

@@ -1,6 +1,10 @@
 homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communityService', '$location', '$rootScope', '$mdDialog', 'ColorConstants', function($scope, $mdSidenav, communityService, $location, $rootScope, $mdDialog, ColorConstants){
     $scope.toggle_details = function(){
         $mdSidenav('right').toggle();
+        // $scope.get_detailed_community_info();
+    };
+
+    $scope.get_detailed_community_info = function(){
         communityService.get_detailed_community_info($scope.active_tag.id).then(function(data){
             $scope.active_tag = angular.extend($scope.active_tag, data);
             var follow_node = $scope.active_tag.follow_node;
@@ -8,7 +12,7 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
                 $scope.active_tag.status = true;
             }
         });
-    };
+    }
 
     $scope.toggle_follow = function(){
         $scope.active_tag.status = !$scope.active_tag.status;
@@ -35,6 +39,8 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
                 value.color = color;
             });
         });
+
+        $scope.get_detailed_community_info();
     }
 
     var _init = (function(){
@@ -74,6 +80,7 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
                 var color = ColorConstants.value[random_int];
                 value.color = color;
             });
+            $scope.get_detailed_community_info();
         });
 
         communityService.get_chronological_news(news_id).then(function(data){
@@ -84,6 +91,8 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
                 }
             });
         });
+
+
     }());
 
 }]);

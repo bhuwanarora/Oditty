@@ -125,6 +125,16 @@ angular.module('filtersApp', [])
             return input;
         }
     })
+    .filter('reduced_news_title', function(){
+        return function(input){
+            if(angular.isDefined(input)){
+                if(input != null && input.length > 53){
+                    input = input.slice(0, 50)+"...";
+                }
+            }
+            return input;
+        }
+    })
     .filter('reduced_summary', function(){
         return function(input){
             if(angular.isDefined(input)){

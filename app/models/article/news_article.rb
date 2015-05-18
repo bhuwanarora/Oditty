@@ -17,7 +17,7 @@ class Article::NewsArticle < Article
 	end
 
 	def other_tags_info
-		match + ", most_important_tag " + Article::NewsArticle.optional_match_communities + ", most_important_tag ORDER BY has_community.relevance WITH  most_important_tag, " + Community.collect_map("other_tags" => Community.grouped_basic_info) + Article::NewsArticle.return_group(" most_important_tag ", " other_tags[1.." + (Constant::Count::CommunitiesShownInCommunityPage+1).to_s + "] AS other_tags ")
+		match + ", most_important_tag " + Article::NewsArticle.optional_match_communities + ", most_important_tag ORDER BY has_community.relevance WITH  most_important_tag, " + Community.collect_map("other_tags" => Community.grouped_basic_info) + Article::NewsArticle.return_group(" most_important_tag ", " other_tags[1.." + (Constant::Count::CommunitiesInNewsPage + 1).to_s + "] AS other_tags ")
 	end
 
 	def match 
