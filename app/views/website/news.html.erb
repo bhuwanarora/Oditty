@@ -1,0 +1,40 @@
+<div layout="column" ng-controller="communityController" >
+    <section layout="row">
+        <div ng-include src="'/assets/angular/html/community/show.html'" 
+             layout="row" layout-align="center"
+             layout-sm="column"
+             flex></div>
+        <div flex="65" ng-if="show_details" class="animate-fast">
+        </div>
+    </section>
+    <section layout="row" 
+        layout-align="center" 
+        layout-padding
+        class="news_footer"
+        ng-include src="'/assets/angular/html/community/_footer.html'" >
+    </section>
+</div>
+<!-- <d3-circles></d3-circles> -->
+<!-- <d3-bars data="d3Data"></d3-bars> -->
+<style>
+     .news_footer{
+        position: fixed;
+        left: 100px;
+        right: 100px;
+        bottom: 0px;
+    }
+
+    .news_footer .md-header-items,
+    .news_footer, .news_footer .md-header-items-container{
+        background-color: #D2D2D2;
+    }
+
+    md-tabs.md-default-theme md-tab{
+        background: white;
+    }
+
+    .news_footer md-tabs.md-default-theme md-tabs-ink-bar{
+        color: transparent !important;
+        background: transparent !important;
+    }
+</style>

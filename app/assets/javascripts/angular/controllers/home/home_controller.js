@@ -2,7 +2,7 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$m
 
 	$scope.goto_community_page = function(id){
 		userService.news_visited(id);
-		window.location.href = "/community?q="+id;
+		window.location.href = "/news?q="+id;
 	}
 
     $scope.search_books = function(q){
