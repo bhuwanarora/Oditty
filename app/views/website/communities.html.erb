@@ -1,7 +1,88 @@
-<md-content layout="row" layout-wrap ng-controller="homeController">
-    <div flex="20" hide-sm flex-md="10"></div>
+<md-content ng-controller="homeController" check-scroll-bottom="get_community_feed()">
+	<div layout="row" layout-wrap>
+	    <div flex="10" hide-sm flex-md="10"></div>
+	    <div flex="80" flex-sm="100" flex-md="80">
+	        <div ng-include src="'/assets/angular/html/home/show.html'"></div>
+	    </div>
+	    <div flex="10" hide-sm flex-md="10"></div>
+	</div>
+    <!-- <div flex="20" hide-sm flex-md="10"></div>
     <div flex="60" flex-sm="100" flex-md="80">
         <div ng-include src="'/assets/angular/html/home/show.html'"></div>
     </div>
-    <div flex="20" hide-sm flex-md="10"></div>
+    <div flex="20" hide-sm flex-md="10"></div> -->
 </md-content>
+<style>
+	a:hover{
+		text-decoration: underline!important;
+	}
+
+    .communities{
+        order: 2;
+        margin-top: -70px;
+        z-index: 1;
+        background-color: transparent;
+    }
+
+    .feed{
+        /*width: 45%;*/
+        /*min-width: 280px;*/
+    }
+
+    .community_icon{
+        width: 70px;
+        height: 70px;
+    }
+
+    .community h3{
+        margin: 7px 0px !important;
+    }
+
+    .community .image_container{
+        background-color: white;
+        order: 1;
+        min-height: 120px;
+    }
+
+    .community .image_container img{
+        height: auto;
+        width: 100%;
+        border: 1px solid #f5f5f5;
+    }
+
+    .community_description{
+        font-size: 0.9em;
+    }
+
+    .community .image_wrapper{
+    	overflow: hidden;
+    }
+
+    .community .content{
+        order: 0;
+    }
+
+    .community .footer{
+        order: 3;
+    }
+
+    .community_circular{
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+    }
+
+    .custom_title{
+        font-family: sans-serif;
+        font-size: 0.9em;
+    }
+
+    .communities md-list-item{
+        height: auto;
+        width: 100px;
+        border-bottom: 1px solid #f5f5f5;
+        text-align: center;
+    }
+
+   
+</style>

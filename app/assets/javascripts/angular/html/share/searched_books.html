@@ -1,0 +1,18 @@
+<div ng-if="info.show_book_share" layout="row" layout-align="end">
+	<md-autocomplete
+		layout-margin 
+        class="share_book"
+        md-search-text="search_tag.book"
+        md-items="item in searched_books | filter:search_tag.book"
+        md-search-text-change="search_books(search_tag.book)"
+        placeholder="Add a book...">
+    </md-autocomplete>
+    <md-content ng-if="searched_books && searched_books.length > 0" 
+            layout-wrap layout="row" layout-padding class="white searched_books">
+        <div layout-padding ng-repeat="book in searched_books" >
+            <md-button ng-click="add_book(book)" class="clear book_image_cover">
+                <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
+            </md-button>
+        </div>
+    </md-content>
+</div>

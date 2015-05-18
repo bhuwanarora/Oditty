@@ -9,6 +9,14 @@ module Api
 				info
 			end
 
+			def self.follow author_id, user_id
+				UsersAuthor.new(author_id, user_id).follow				
+			end
+
+			def self.unfollow author_id, user_id
+				UsersAuthor.new(author_id, user_id).unfollow				
+			end
+
 			def self.bookmarked_authors
 				# self.recommendations.map do |s|
 				# 	s['authormark_status'] = 1
@@ -17,8 +25,11 @@ module Api
 			end
 
 			def self.get_details author_id, user_id
-				info = Author.new(author_id).get_details(user_id).execute[0]
-				info
+				Author.new(author_id).get_details(user_id).execute[0]
+			end
+
+			def self.get_author_books author_id, user_id, skip_count
+				Author.new(author_id).get_books(user_id, skip_count).execute[0]				
 			end
 
 			def self.get_active_authors

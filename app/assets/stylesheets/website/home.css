@@ -77,6 +77,11 @@ md-content{
 	font-size: 1.2em;
 }
 
+.logo:hover{
+	text-decoration: none !important;
+	color: #333;
+}
+
 .logo img{
 	position: absolute;
 	z-index: 99999999;
@@ -152,7 +157,7 @@ md-card>img{
 md-card .image_wrapper{
  	order: 1;
  	height: auto;
- 	max-height: 50vh;
+ 	/*max-height: 50vh;*/
  	overflow: hidden;
  	position: relative;
  	width: 100%;
@@ -194,7 +199,7 @@ md-backdrop.md-opaque.md-default-theme{
 	position: absolute;
 	z-index: 1;
 	top: 18px;
-	margin-left: 10px;
+	margin-left: 2px;
 }
 
 md-toolbar{
@@ -330,6 +335,11 @@ md-toolbar{
 .wiki body{
 	height: 80vh;
 	overflow: hidden;
+}
+
+.big_title{
+	font-size: 1.2em;
+	font-family: sans-serif;
 }
 
 @media only screen
@@ -518,6 +528,7 @@ and (max-width : 800px){
     /* phones */
     .book_scroller{
     	max-height: 180px;
+    	max-width: 100vw;
     }
 }
 
@@ -525,5 +536,10 @@ and (max-width : 800px){
     /* portrait phones */
     .book_scroller{
     	max-height: 180px;
+    	max-width: 100vw;
     }
+}
+
+.margin_top{
+	margin-top: 6px;
 }

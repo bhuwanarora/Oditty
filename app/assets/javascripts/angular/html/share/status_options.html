@@ -1,0 +1,25 @@
+<div class="currently_reading roboto" 
+ 	layout="column">
+    <div layout="row" class="md-whiteframe-z1 white"
+        ng-include src="'/assets/angular/html/share/partials/_search.html'"></div>
+    <md-list layout="column" ng-if="!reading_status_selected"
+    	ng-include src="'/assets/angular/html/share/partials/_reading_option.html'">
+    </md-list>
+    <md-list layout="column" ng-if="info.status_books && (info.status_books.length > 0)"
+         ng-include src="'/assets/angular/html/share/partials/_active_status.html'"></md-list>
+    <md-list layout="column" ng-include src="'/assets/angular/html/share/partials/_currently_reading.html'"
+            ng-if="active_book && active_id == 0"></md-list>
+    <md-list layout="column" ng-include src="'/assets/angular/html/share/partials/_planning_to_read.html'"
+            ng-if="active_book && active_id == 1"></md-list>
+    <md-list layout="column" ng-include src="'/assets/angular/html/share/partials/_recently_read.html'"
+            ng-if="active_book && active_id == 2" ng-controller="recommendController"></md-list>
+    <md-list ng-if="active_emotion"  
+        ng-include src="'/assets/angular/html/share/partials/_active_feeling.html'"></md-list>
+    <md-list layout="column" ng-include src="'/assets/angular/html/share/partials/_feeling.html'"
+            ng-if="related_info.length > 0 && active_id == 0 && !active_emotion"></md-list>
+    <md-list layout="column" ng-if="related_info && related_info.length > 0" class="roboto"
+        ng-include src="'/assets/angular/html/share/partials/_facts.html'"></md-list>
+    <md-progress-linear ng-show="info.loading"
+        md-mode="indeterminate">
+	</md-progress-linear>
+</div>

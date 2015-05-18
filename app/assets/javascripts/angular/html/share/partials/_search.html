@@ -1,0 +1,20 @@
+<md-button class="md-button-clear light_grey grey_color"
+          ng-click="init_reading_options()"
+          ng-if="(active_id == 0 && info.status_books.length != 0) || (active_id != 0)">
+    <span class="icon-angle-left"></span>
+</md-button>
+<md-autocomplete
+    md-selected-item="selectedItem1"
+    md-search-text="searchText"
+    md-items="item in search_status_books(searchText)"
+    md-selected-item-change="on_select(item)"
+    md-item-text="display"
+    ng-keydown="handle_backspace($event)"
+    class="menu_search"
+    ng-click="show_relevant_books()"
+    placeholder="{{reading_options[active_id].name}}">
+    <span md-highlight-text="searchText" ng-bind-html="item.display"></span>
+</md-autocomplete>
+<md-button class="md-button-clear">
+    <span class="icon-search"></span>
+</md-button>

@@ -50,6 +50,7 @@ class WebsiteController < ApplicationController
 	end
 
 	def signup
+		cookies[:logged] = nil
 		@signup = true
 		render :layout => "landing_page"
 	end
@@ -75,69 +76,160 @@ class WebsiteController < ApplicationController
 	def home
 		session[:news_day_skip_count] = 0
 		session[:news_skip_count] = 0
-		@home = true
-		render :layout => "material"
+
+		unless session[:user_id]
+			cookies[:logged] = nil
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
+			redirect_to :controller => 'website', :action => 'signup' 			
+		else
+			@home = true
+			render :layout => "material" 
+		end
 	end
 
 	def communities
-		@home = true
-		render :layout => "material"
+		unless session[:user_id]
+			cookies[:logged] = nil
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
+			redirect_to :controller => 'website', :action => 'signup'			
+		else
+			@home = true
+			render :layout => "material"
+		end
 	end
 
 	def blogs
-		@home = true
-		render :layout => "material"
+		unless session[:user_id]
+			cookies[:logged] = nil
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
+			redirect_to :controller => 'website', :action => 'signup'			
+		else
+			@home = true
+			render :layout => "material"
+		end
 	end
 
 	def infinity
-		@infinity = true
-		render :layout => "material"
+		unless session[:user_id]
+			cookies[:logged] = nil
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
+			redirect_to :controller => 'website', :action => 'signup'			
+		else
+			@infinity = true
+			render :layout => "material"
+		end
 	end
 
 	def search
-		@search = true
-		render :layout => "material"
+		unless session[:user_id]
+			cookies[:logged] = nil
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
+			redirect_to :controller => 'website', :action => 'signup'			
+		else
+			@search = true
+			render :layout => "material"
+		end
 	end
 
 	def room
-		@room = true
-		render :layout => "material"
+		unless session[:user_id]
+			cookies[:logged] = nil
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
+			redirect_to :controller => 'website', :action => 'signup'			
+		else
+			@room = true
+			render :layout => "material"
+		end
 	end
 
 	def book
 		@book = true
-		render :layout => "material"
+		puts "in book".green
+		if BotDetector.detect request.env['HTTP_USER_AGENT']
+			id = params[:q]
+			user_id = nil
+			puts "bot_incoming".red
+			@info = Api::V0::BookApi.get_book_details(id, user_id)
+			@info["original_url"] = request.original_url
+			@info["image_url"] = "http://rd-images.readersdoor.netdna-cdn.com/" + @info["isbn"].split(",").first + "/M.jpg"
+			render :layout => "social"
+		else
+			user_id = session[:user_id]
+			render :layout => "material"
+		end
 	end
 
 	def profile
-		@profile = true
-		render :layout => "material"
+		unless session[:user_id]
+			cookies[:logged] = nil
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
+			redirect_to :controller => 'website', :action => 'signup'			
+		else
+			@profile = true
+			render :layout => "material"
+		end
 	end
 
 	def network
-		@network = true
-		render :layout => "material"
+		unless session[:user_id]
+			cookies[:logged] = nil
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
+			redirect_to :controller => 'website', :action => 'signup'			
+		else
+			@network = true
+			render :layout => "material"
+		end
 	end
 
 	def journey
-		render :layout => "material"
+		unless session[:user_id]
+			cookies[:logged] = nil
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
+			redirect_to :controller => 'website', :action => 'signup'			
+		else
+			render :layout => "material"
+		end
 	end
 
 	def customise
-		@customise = true
-		render :layout => "material"
+		unless session[:user_id]
+			cookies[:logged] = nil
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
+			redirect_to :controller => 'website', :action => 'signup'			
+		else
+			@customise = true
+			render :layout => "material"
+		end
 	end
 
 	def author
 		@author = true
-		render :layout => "material"
+		if BotDetector.detect(request.env['HTTP_USER_AGENT'])
+			author_id = params[:q]
+			user_id = nil
+			puts "bot_incoming".red
+			@info = Api::V0::AuthorApi.get_details author_id, user_id
+			@info["original_url"] = request.original_url
+			@info["image_url"] = "http://rd-authors.readersdoor.netdna-cdn.com/" + @info["id"].to_s + "/M.png"
+			render :layout => "social"
+		else
+			user_id = session[:user_id]
+			render :layout => "material"
+		end
 	end
 
 	def community
 		@community = true
-		render :layout => "material"
+		if BotDetector.detect request.env['HTTP_USER_AGENT']
+			id = params[:q]
+			user_id = session[:user_id]
+			puts "bot_incoming".red
+			@info = Api::V0::BookApi.get_book_details(id, user_id)
+			@info["original_url"] = request.original_url
+			render :layout => "social"
+		else
+			user_id = session[:user_id]
+			render :layout => "material"
+		end
 	end
-
-	
-
 end

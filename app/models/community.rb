@@ -5,7 +5,7 @@ class Community < Neo
 	end
 
 	def self.grouped_books_users
-		Community.match_grouped_books + Community.optional_match_users + ", books_info WITH books_info , community, " + User.collect_map({"users_info" => User.grouped_basic_info }) + " WITH users_info, books_info , community, "  + Community.collect_map({"most_important_tag" => Community.grouped_basic_info + ", books: books_info, users: users_info " })
+		Community.match_grouped_books + Community.optional_match_users + ", books_info WITH DISTINCT user, books_info, community WITH books_info , community, " + User.collect_map({"users_info" => User.grouped_basic_info }) + " WITH users_info, books_info , community, "  + Community.collect_map({"most_important_tag" => Community.grouped_basic_info + ", books: books_info, users: users_info " })
 	end
 
 	def match
@@ -13,7 +13,7 @@ class Community < Neo
 	end
 
 	def self.basic_info
-		" community.view_count AS view_count, community.name AS name, ID(community) AS id, community.image_url AS image_url "
+		" community.view_count AS view_count, community.name AS name, ID(community) AS id, community.image_url AS image_url, labels(community) AS label "
 	end
 
 	def self.grouped_basic_info
@@ -37,11 +37,11 @@ class Community < Neo
 	end
 
 	def self.match_users
-		" MATCH (community)<-[of_community:OfCommunity]-(follow_node:FollowNode)<-[follows:Follows]-(user:User) WITH community, follow_node, user "
+		" MATCH (community)<-[of_community:OfCommunity]-(follow_node:FollowsNode)<-[follows:Follows]-(user:User) WITH community, follow_node, user "
 	end
 
 	def self.optional_match_users
-		" OPTIONAL MATCH (community)<-[of_community:OfCommunity]-(follow_node:FollowNode)<-[follows:Follows]-(user:User) WITH community, follow_node, user "
+		" OPTIONAL MATCH (community)<-[of_community:OfCommunity]-(follow_node:FollowsNode)<-[follows:Follows]-(user:User) WITH community, follow_node, user "
 	end
 
 	def self.set_name
@@ -86,7 +86,7 @@ class Community < Neo
 		booksList = clause.execute				
 		if(booksList.empty?)
 			books = Community.fetch_books community
-		else			
+		else
 			books = {community => []}
 			booksList.each do |book|
 				if(book.has_key?("book.author_name"))

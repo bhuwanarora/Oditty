@@ -17,19 +17,18 @@ module Api
 			def get_details
 				author_id = params[:id]
 				user_id = session[:user_id]
-				if author_id
+				skip_count = params[:skip]
+				unless skip_count.present?
 					info = Api::V0::AuthorApi.get_details author_id, user_id
-					status = 200
 				else
-					info = {:message => "Invalid Request"}
-					status = 400
+					info = Api::V0::AuthorApi.get_author_books author_id, user_id, skip_count
 				end
-				render :json => info, :status => status
+				render :json => info, :status => 200
 			end
 
 			def get_popular_authors
 				skip_count = params[:skip_count] || 0
-				authors =  Api::V0::Author.get_active_authors(skip_count).execute
+				authors =  Api::V0::AuthorApi.get_active_authors(skip_count).execute
 				render :json => authors, :status => 200
 			end
 
@@ -38,6 +37,16 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def follow
+				user_id = session[:user_id]
+				id = params[:id]
+				if params[:status].present? && params[:status]== "true"
+					Api::V0::AuthorApi.follow(id, user_id).execute
+				else
+					Api::V0::AuthorApi.unfollow(id, user_id).execute
+				end
+				render :json => {:message => "Success"}, :status => 200
+			end
 		end
 	end
 end

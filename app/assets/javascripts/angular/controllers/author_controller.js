@@ -1,4 +1,4 @@
-homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'authorService', '$mdDialog', 'scroller', 'ColorConstants', '$filter', '$sce', '$rootScope', "scroller", function($scope, $location, $mdSidenav, authorService, $mdDialog, scroller, ColorConstants, $filter, $sce, $rootScope, scroller){
+homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'authorService', '$mdDialog', 'scroller', 'ColorConstants', '$filter', '$sce', '$rootScope', "scroller", "WebsiteUIConstants", function($scope, $location, $mdSidenav, authorService, $mdDialog, scroller, ColorConstants, $filter, $sce, $rootScope, scroller, WebsiteUIConstants){
 
     $scope.show_buy_dialog = function(event, book){
         $rootScope.active_book = book;
@@ -9,6 +9,21 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         event.stopPropagation();
     }
 
+    $scope.toggle_follow = function(){
+        $scope.author.status = !$scope.author.status;
+        authorService.follow($scope.author.id, $scope.author.status);
+    }
+
+    $scope.keypress_scroll = function(event){
+        debugger
+        if(event.keyCode == WebsiteUIConstants.KeyDown){
+            $scope.active_index = $scope.next_block($scope.active_index);
+        }
+        else if(event.keyCode == WebsiteUIConstants.KeyUp){
+            $scope.active_index = $scope.previous_block($scope.active_index);
+        }
+    }
+
     $scope.next_block = function(index){
         var length = $scope.author.books.length;
         if(index == (length-1)){
@@ -16,6 +31,7 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         }
         index = index + 1;
         $scope.scroll_to_element(index);
+        return index;
     }
 
     $scope.scroll_to_element = function(index){
@@ -36,6 +52,7 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         }
         index = index - 1;
         $scope.scroll_to_element(index);
+        return index;
     }
 
     $scope.scroll_wiki = function(){

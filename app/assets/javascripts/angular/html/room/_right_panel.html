@@ -6,12 +6,7 @@
 				layout-margin
 				ng-if="article.title"
 	            ng-repeat="article in shelf.articles">
-            	<a ng-href="/community?q={{article.id}}">
-	            	<img ng-src="{{article.image_url}}">
-	            	<md-tooltip md-direction="bottom">
-	                 	{{article.title}}
-	               	</md-tooltip>
-            	</a>
+            	<div ng-include src="'/assets/angular/html/room/article.html'"></div>
 	        </div>
 	    </md-content>
 	</div>

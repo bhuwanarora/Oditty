@@ -39,7 +39,9 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
                 data: {
                     items: scope.newsTags,
                     eval: function (item) {return item.view_count;},
-                    classed: function (item) {return item.name.split(" ").join("");},
+                    classed: function (item) {
+                        return item.name.split(" ").join("");
+                    },
                     image: function(item){return item.image_url;}
                 },
                 plugins: [

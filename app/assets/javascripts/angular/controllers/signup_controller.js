@@ -21,8 +21,6 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
             });
             console.log(" not signedIn",authResult['error']);
             $scope.signedIn = false;
- 
-            // Report error.
         }
     };
 
@@ -199,6 +197,8 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
         });
     };
 
+    
+
     var _redirect_user = function(){
         var redirect_url = getCookie("redirect_url");
         if(redirect_url && (redirect_url != null)){
@@ -209,10 +209,12 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
         }
     }
 
+    
+
     $scope._init_user = function(){
         $rootScope.user.logged = true;
-        // $cookieStore.put('logged', true);
         setCookie("logged", true, 31);
+        setCookie("logged", $rootScope.user.id, 31);
     }
       
     // $scope.logout = function() {
@@ -243,19 +245,12 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
                     angular.extend($rootScope.user, data);
                 });
                 // $cookieStore.put('logged', true);
-                setCookie("logged", true, 31);
+                $scope._init_user();
                 // $scope._on_authenticate();
                 _handle_push_notifications();     
                 // stropheService.start_connection();
             }
         });
-    }
-
-    $scope._redirect = function(){
-        var routeParams = $routeParams;
-        if(angular.isDefined($routeParams.url)){
-            $location.path("/user/"+$rootScope.user.id+$routeParams.url);
-        }
     }
 
     var _init = (function(){
@@ -273,6 +268,7 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
                $rootScope.user.fb_connect = true;
             }
         });
+
 
         var index = 0;
         var timer = 500;

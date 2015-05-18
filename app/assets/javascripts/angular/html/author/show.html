@@ -1,5 +1,11 @@
+<md-button class="follow_author md-button-clear" 
+           ng-class="{'md-raised': !author.status}" 
+           ng-click="toggle_follow()">
+    <span ng-if="!author.status">Follow</span>
+    <span ng-if="author.status">Following</span>
+</md-button>
 <div class="author_book_cover"
-    parallax-background parallax-ratio="0.9"
+    parallax-background parallax-ratio="-0.7"
     layout-align="center center"
     layout="column"
     ng-if="author.books.length != 0"
@@ -7,8 +13,8 @@
     ng-style="author.books[0].custom_style || custom_style">
     <div ng-include src="'/assets/angular/html/shared/partials/author_name.html'"></div>
 </div>
-<div layout-padding class="book_description" 
-     parallax-background parallax-ratio="0.7"
+<div layout-padding class="book_container" 
+     parallax-background parallax-ratio="1"
      ng-if="author.books.length != 0">
     <div layout="row" class="full_width">
         <div flex="25" flex-md="15" flex-sm="10"></div>
@@ -23,8 +29,8 @@
                 </md-button>
             </div>
             <div flex-gt-md="70" flex-md="60" layout="column" layout-padding>
-                <h2><a ng-href="/book?q={{author.books[0].id}}">{{author.books[0].title}}</a></h2>
-                <div>{{author.books[0].description}}</div>
+                <div class="book_title"><a ng-href="/book?q={{author.books[0].id}}">{{author.books[0].title}}</a></div>
+                <div class="book_description">{{author.books[0].description}}</div>
             </div>
         </div>
         <div flex="25" flex-md="15" flex-sm="10"></div>
@@ -32,7 +38,7 @@
 </div>
 <div class="author_book_cover" 
      layout-align="center center" layout="column"
-     parallax-background parallax-ratio="0.9"
+     parallax-background parallax-ratio="-0.7"
      ng-style="{'background-color': (author.books[0].color ||  custom_color)}">
      <div ng-include src="'/assets/angular/html/shared/partials/author_name.html'" ng-if="author.books.length == 0"></div>
      <div class="nav_icons" layout="row" ng-if="author.books.length != 0">
@@ -55,7 +61,7 @@
         </md-tabs>
     </div> -->
 </div>
-<div layout-padding class="book_description" parallax-background parallax-ratio="0.7">
+<div layout-padding class="book_container" parallax-background parallax-ratio="1">
     <md-button class="burger_button" ng-click="show_authors_nav($event)" hide show-sm show-md>
         <span class="icon-menu2"></span>
     </md-button>
@@ -65,8 +71,8 @@
     <div layout="row" layout-sm="column">
         <div flex="25"></div>
         <div flex="50" flex-sm="100" layout="column" layout-align="center center">
-            <h2>WHO IS {{author.name | uppercase}}</h2>
-            <div>{{author.overview}}</div>
+            <div class="book_title">WHO IS {{author.name | uppercase}}</div>
+            <div class="book_description">{{author.overview}}</div>
         </div>
         <div flex="25"></div>
     </div>
@@ -90,11 +96,14 @@
 
 <section ng-repeat="book in author.books track by $index" 
          ng-if="author.books.length != 0"
+         ng-hide="$first"
          id="{{book.id}}">
+    <md-divider ng-if="!book.description || !book.isbn"></md-divider>
     <div class="book_cover" layout-align-sm="center center" 
         layout-align-md="center center" layout="column" 
-        parallax-background parallax-ratio="0.9"   
+        parallax-background parallax-ratio="-0.7"   
         layout-align-gt-md="center center"
+        ng-if="book.description && book.isbn"
         ng-style="book.custom_style">
         <div layout="row" layout-md="column" layout-sm="column">
             <div layout-margin layout-sm="column" layout-md="row" layout-align-sm="center center"
@@ -112,10 +121,10 @@
             <md-button ng-click="next_block($index)"><span class="icon-angle-down"></span></md-button>
          </div>
     </div>
-    <div layout-padding class="book_description" parallax-background parallax-ratio="0.7">
+    <div layout-padding class="book_container" parallax-background parallax-ratio="1">
         <div layout="row">
             <div flex="25" flex-md="15" flex-sm="10"></div>
-            <div flex="50" flex-md="70" flex-sm="80" layout="row" layout-sm="column">
+            <div flex="50" flex-md="70" flex-sm="80" layout="row" layout-sm="column"  layout-align="center center">
                 <div flex-gt-md="30" flex-md="40" layout="column" layout-padding>
                     <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
                     <div flex="5"></div>
@@ -125,8 +134,13 @@
                     </md-button>
                 </div>
                 <div layout="column" flex-gt-md="70" flex-md="60" layout-padding>
-                    <h2><a ng-href="/book?q={{book.id}}">{{book.title}}</a></h2>
-                    <div>{{book.description}}</div>
+                    <div class="book_title"><a ng-href="/book?q={{book.id}}">{{book.title}}</a></div>
+                    <div class="less_important">
+                        <span>{{book.author_name}}</span>
+                        <span ng-if="book.pages_count">, {{book.pages_count}} Pages</span>
+                        <span ng-if="book.published_year">, Published in {{book.published_year}}</span>
+                    </div>
+                    <div class="book_description">{{book.description}}</div>
                     <div>
                         <a ng-href="{{book.wiki_url}}" ng-if="book.wiki_url">more on wiki</a>
                     </div>
@@ -136,9 +150,3 @@
         </div>
     </div>
 </section>
-<style>
-    .book_width{
-        width: 130px;
-    }
-
-</style>

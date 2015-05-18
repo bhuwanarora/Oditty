@@ -18,6 +18,10 @@ class UsersLabel < Neo
 		" MATCH (user)-[labelled:Labelled]->(label:Label) WITH user, label, labelled "
 	end
 
+	def self.match_public
+		" MATCH (user)-[labelled:Labelled]->(label:Label) WHERE label.public = true WITH user, label, labelled "
+	end
+
 	def self.create_new(user_id, label)
 		User.new(user_id).match + " MERGE (label:Label{name:\""+label+"\", public:true}) ON CREATE SET label.indexed_label_name = \"" + label.search_ready + "\" MERGE (user)-[:Labelled]->(label) " + User.return_init + Label.basic_info
 	end

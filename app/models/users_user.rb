@@ -10,7 +10,7 @@ class UsersUser < Neo
 	end
 
 	def create
-		" MERGE (user:User)-[follows_user:FollowsUser]->(follows_node:FollowsNode{created_at: " + Time.now.to_i.to_s + ", updated_at: " + Time.now.to_i.to_s + ", friend_id:ID(friend), user_id: ID(user)})-[followed_by:FollowedBy]->(friend:User)  WITH user, follows_user, friend, follows_node, followed_by "
+		" MERGE (user)-[follows_user:FollowsUser]->(follows_node:FollowsNode{friend_id:ID(friend), user_id: ID(user)}) MERGE (follows_node)-[followed_by:FollowedBy]->(friend) SET follows_node.created_at = " + Time.now.to_i.to_s + ", follows_node.updated_at = " + Time.now.to_i.to_s + " WITH user, follows_user, friend, follows_node, followed_by "
 	end
 
 	def match 
@@ -26,11 +26,17 @@ class UsersUser < Neo
 	end
 
 	def follow
-		@user.match + @friend.match("friend") + ", user " + create +  User::Feed.new(@user_id).create("follows_node")  + ", friend WITH follows_node, friend AS user " + User::Feed.new(@friend_id).create("follows_node") + User::UserNotification.add(@notification_node_variable) + UsersUser.return_init + User.basic_info
+		operation = "+"
+		@user.match + User::Info.set_follows_count(operation) + " WITH user " + @friend.match("friend") + ", user " + create +  User::Feed.new(@user_id).create("follows_node")  + ", friend WITH follows_node, friend AS user " + User::Feed.new(@friend_id).create("follows_node") + User::UserNotification.add(@notification_node_variable) + User::Info.set_followed_by_count(operation) + UsersUser.return_init + User.basic_info
+	end
+
+	def remove
+		User::Feed.new(@user_id).delete_feed("follows_node") + ", friend" + User::Feed.new(@friend_id).delete_feed("follows_node") + ", friend "  + User::UserNotification.remove("follows_node") + ", friend AS user " + UsersUser.delete("follows_node") + " WITH DISTINCT user " 
 	end
 
 	def unfollow
-		match + User::Feed.new(@user_id).delete_feed("follows_node") + ", friend" + User::Feed.new(@friend_id).delete_feed("follows_node") + ", friend" + UsersUser.delete("follows_node") 
+		operation = "-"
+		match + User::Info.set_follows_count(operation) + " WITH user, follows_node, friend " + remove  + User::Info.set_followed_by_count(operation) + UsersUser.return_group(User.basic_info) 
 	end
 
 	def self.add_notification node_variable

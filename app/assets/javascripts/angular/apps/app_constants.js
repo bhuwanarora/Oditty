@@ -45,6 +45,7 @@ var places = [
 
 
 var constants = {
+		"Emotions": emotions,
 		"IntroConstants":{
 			"NewsFeed": "<div class='tooltip_header'><div class='larger_font inline_block icon-newspaper site_color'></div><div class='inline_block header_text'>Keep track of what your friends are doing on Reader's Door.</div></div>",
 

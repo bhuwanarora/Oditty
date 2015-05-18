@@ -1,5 +1,6 @@
 homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sharedService", function($scope, $rootScope, bookService, sharedService){
 	var _init = (function(){
+		$scope.info.loading = true;
 		var id = ($rootScope.active_book.id) || ($rootScope.active_book.book_id);
 		if(angular.isUndefined($scope.book)){
 			$scope.book = $rootScope.active_book;
@@ -8,6 +9,7 @@ homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sha
 		bookService.get_borrow_users(id).then(function(data){
 			$scope.borrow_users = data;
 			$scope.book_loading = false;
+			$scope.info.loading = false;
 		});
 	}());
 

@@ -1,13 +1,13 @@
 homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$location", "bookService", "shelfService", "$mdToast", "infinityService", function ($timeout, $rootScope, ColorConstants, $location, bookService, shelfService, $mdToast, infinityService){
 
-    this.get_popular_books = function($scope){
-        var ready_to_load = !$scope.info.loading && !$scope.constant.show_book && !
-            $scope.info.author_filter && !$scope.info.group_by_alphabet &&
+    this.get_popular_books = function($scope, books){
+        var ready_to_load = !$scope.info.loading && (angular.isUndefined($scope.constant) || !$scope.constant.show_book) && 
+            (angular.isUndefined($scope.info.author_filter) || !$scope.info.author_filter) && (angular.isUndefined($scope.info.group_by_alphabet) || !$scope.info.group_by_alphabet) &&
             !$scope.info.reading_time_filter && !$scope.info.published_era_filter &&
-            !$scope.info.custom_loading && !$scope.info.subject_filter && $scope.info.infinity;
+            !$scope.info.custom_loading && !$scope.info.subject_filter && ($scope.info.infinity || angular.isUndefined($scope.info.infinity) || angular.isDefined(books));
         if(ready_to_load){
             $scope.info.loading = true;
-            this.load_popular_books($scope);
+            this.load_popular_books($scope, books);
         }
     }
 
@@ -66,13 +66,20 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
         });
     }
 
-    this.load_popular_books = function($scope){
-        if(angular.isDefined($scope.info.books)){
-            var skip_count = $scope.info.books.length;
+    this.load_popular_books = function($scope, books){
+        if(angular.isUndefined(books)){
+            books = $scope.info.books;
+        }
+
+        if(angular.isDefined(books)){
+            var skip_count = books.length;
         }
         else{
-            $scope.info.books = [];
+            books = [];
             var skip_count = 0;
+        }
+        if(angular.isUndefined($scope.filters)){
+            $scope.filters = {};
         }
         var params = angular.extend($scope.filters, {"skip_count": skip_count});
         params = angular.toJson(params);
@@ -142,20 +149,22 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
             }
 
             angular.forEach(data, function(book){
-                angular.forEach(book.root_category, function(category){
-                    if($scope.info.categories.length == 0){
-                        if((category.name != null)){
-                            $scope.info.categories.push(category);
-                        }
-                    }
-                    else{
-                        angular.forEach($scope.info.categories, function(base_category){
-                            if(!angular.equals(category, base_category) && _is_absent(category) && (category.name != null)){
-                                this.push(category);
+                if(angular.isDefined($scope.info.categories)){
+                    angular.forEach(book.root_category, function(category){
+                        if($scope.info.categories.length == 0){
+                            if((category.name != null)){
+                                $scope.info.categories.push(category);
                             }
-                        }, $scope.info.categories);
-                    }
-                });
+                        }
+                        else{
+                            angular.forEach($scope.info.categories, function(base_category){
+                                if(!angular.equals(category, base_category) && _is_absent(category) && (category.name != null)){
+                                    this.push(category);
+                                }
+                            }, $scope.info.categories);
+                        }
+                    });
+                }
                 var random_int = Math.floor(Math.random()*ColorConstants.value.length);
                 var status = book.status != null;
                 var reading_time = _get_reading_time(book);
@@ -172,7 +181,7 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
                         "alphabet": book.title[0]};
                 json = angular.extend(book, json)
                 this.push(json);
-            },  $scope.info.books);
+            },  books);
             $scope.info.loading = false;
         });
     }

@@ -16,11 +16,14 @@
 
         <!-- <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,100italic,400italic|Roboto+Condensed&amp;lang=en' rel='stylesheet' type='text/css'> -->
 
-        <link rel="stylesheet" href="assets/min/landing_page_site.min.css" />
+
+        <link rel="stylesheet" href="assets/angular_material.css" />
+        <link rel="stylesheet" href="assets/website/website.css" />
+        <link rel="stylesheet" href="assets/website/icomoon.css" />
         <link rel="stylesheet" href="assets/website/home.css" />
         <link rel="stylesheet" href="assets/website/media_library.css" />
-
         <% if Rails.env.development? %>
+
             <script src="assets/min/angular/vendors.min.js"></script>
 
             <script src="assets/angular/services/third_party/d3_service.js"></script>
@@ -37,6 +40,7 @@
             <script src="assets/angular/services/shelf_service.js"></script>
             <script src="assets/angular/services/infinity_service.js"></script>
             <script src="assets/angular/services/shared_service.js"></script>
+            <script src="assets/angular/services/network_service.js"></script>
 
             <script src="assets/angular/controllers/app_controller.js"></script>
             
@@ -44,11 +48,11 @@
             <script src="assets/angular/controllers/search_controller.js"></script>
             <script src="assets/angular/controllers/home/left_controller.js"></script>
             <script src="assets/angular/controllers/home/right_controller.js"></script>
+            <script src="assets/angular/controllers/book/buy_controller.js"></script>
+            <script src="assets/angular/controllers/recommend_controller.js"></script>
             <script src="assets/angular/controllers/home/shelf_controller.js"></script>
             <script src="assets/angular/controllers/share/share_controller.js"></script>
-            <script src="assets/angular/controllers/share/options_controller.js"></script>
-            
-            
+            <script src="assets/angular/controllers/share/options_controller.js"></script>            
 
             <script src="assets/angular/controllers/toast_controller.js"></script>
             <script src="assets/angular/directives/site_directives.js"></script>
@@ -57,7 +61,7 @@
             <script src="assets/angular/services/status_service.js"></script>
             <script src="assets/angular/services/feed_service.js"></script>
 
-            <% if (@community || @home)%>
+            <% if (@community || @home || @infinity)%>
                 <script src="assets/angular/vendors/jquery.min.js"></script>
                 <script src="assets/angular/vendors/d3.min.js"></script>
                 <script src="assets/angular/vendors/bubble_chart/d3_transform.js"></script>
@@ -77,7 +81,6 @@
             <% end %>
 
             <% if @network %>
-                <script src="assets/angular/services/network_service.js"></script>
                 <script src="assets/angular/controllers/network_controller.js"></script>
             <% end %>
 
@@ -85,7 +88,6 @@
                 <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
                 <script src="assets/angular/controllers/book/timeline_controller.js"></script>
                 <script src="assets/angular/controllers/book/real_virtuality_controller.js"></script>
-                <script src="assets/angular/controllers/book/buy_controller.js"></script>
                 
                 <script src="assets/angular/services/community_service.js"></script>
                 <script src="assets/angular/controllers/community_controller.js"></script>
@@ -103,7 +105,6 @@
                 <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
                 <script src="assets/angular/controllers/book/timeline_controller.js"></script>
                 <script src="assets/angular/controllers/book/real_virtuality_controller.js"></script>
-                <script src="assets/angular/controllers/book/buy_controller.js"></script>
             <% end %>
 
             <% if @infinity %>
@@ -115,7 +116,6 @@
                 <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
                 <script src="assets/angular/controllers/book/timeline_controller.js"></script>
                 <script src="assets/angular/controllers/book/real_virtuality_controller.js"></script>
-                <script src="assets/angular/controllers/book/buy_controller.js"></script>
 
             <% end %>
 
@@ -125,7 +125,6 @@
             <% end %>
 
             <% if @author %>
-                <script src="assets/angular/controllers/book/buy_controller.js"></script>
                 <script src="assets/angular/controllers/author_controller.js"></script>
             <% end %>
 
@@ -140,12 +139,12 @@
             <% end %>
 
         <% else %>
+            <!-- <link rel="stylesheet" href="assets/min/site.min.css" /> -->
             <script src="assets/min/angular/site.min.js"></script>
 
-            <% if (@community || @home)%>
+            <% if (@community || @home || @infinity)%>
                 <script src="assets/min/angular/d3_group.min.js"></script> 
             <% end %>
-
 
             <% if @home %>
                 <script src="assets/min/angular/controllers/home_group.min.js"></script>
@@ -247,6 +246,7 @@
                                         md-search-text-change="query_search(search_text)"
                                         md-selected-item-change="on_select(item)"
                                         md-item-text="item.name"
+                                        md-min-length="2"
                                         class="search"
                                         hide-sm
                                         flex="85"
@@ -265,7 +265,7 @@
                             <md-button class="small-padding">
                                 <span class="icon-home2"></span>
                                 <md-tooltip >
-                                        Room
+                                    Room
                                 </md-tooltip>
                             </md-button>
                         </a>
@@ -273,7 +273,7 @@
                             ng-click="toggle_notifications($event)">
                             <span class="icon-bell"></span>
                             <md-tooltip >
-                                        Notifications
+                                Notifications
                             </md-tooltip>
                         </md-button>
                         <a href="/profile" ng-show="info.mobile_search">
@@ -308,11 +308,11 @@
             <div ng-show="info.mobile_search">
                 <%= yield %>
             </div>
+            
             <div ng-controller="shareController" ng-show="info.mobile_search">
                 <md-button class="md-fab md-fab-bottom-right animate-fast fixed_share"
-                            ng-hide="active_shelf"
-                            aria-label="Eat cake"
-                            ng-class="{'md-fab-custom-right': info.show_share || info.show_book_share}"
+                            ng-hide="active_shelf || info.show_share"
+                            aria-label="Share reading journey"
                             ng-click="show_share_page($event)"
                             ng-style="type_icon_pressed"
                             style="background-image: url('assets/type.png')">
@@ -323,7 +323,7 @@
             </div>
             
             <md-progress-linear class="md-primary loader"
-                                ng-show="info.loading"
+                                ng-show="info.loading && !info.show_share"
                                 md-mode="indeterminate">
             </md-progress-linear>
 

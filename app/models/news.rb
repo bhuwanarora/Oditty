@@ -3,6 +3,10 @@ class News < Neo
 		@id = id
 	end
 
+	def add_notification
+		match + Community.match_news + UsersCommunity.match + ", news WITH DISTINCT user, news " + User::UserNotification.add("news") + News.return_init + News.basic_info
+	end
+
 	def self.get_news
 		" MATCH (news)-[:TimeStamp]->(time)-[:FromDay]->(day:Day)<-[:Has_day]-(month:Month)<-[:Has_month]-(year:Year)  "
 	end
@@ -156,7 +160,7 @@ class News < Neo
 	end
 
 	def self.basic_info
-		" ID(news) AS  id  ,news.url  AS url , news.image_url AS image_url, news.title AS title, news.description AS description, news.created_at AS created_at "
+		" ID(news) AS  id  ,news.url  AS url , news.image_url AS image_url, news.title AS title, news.description AS description, news.created_at AS created_at, labels(news) AS label "
 	end
 
 	def self.grouped_basic_info

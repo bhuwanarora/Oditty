@@ -13,15 +13,12 @@ class User::Suggest::BookSuggestion < User::Suggest
 		# most bookmarked author
 		# other books from author
 
- 		@user.match + @user.favourite_author + User::Suggest::BookSuggestion.order_init + " book_count DESC " + User::Suggest::BookSuggestion.limit(1) +  "WITH author, user " + Author.match_books + ", user " + Bookmark.match_not("book") + User::Suggest::BookSuggestion.with_group("book", "author") + User::Suggest::BookSuggestion.order_init + " toINT(book.total_weight) DESC " + User::Suggest::BookSuggestion.limit(8) + User::Suggest::BookSuggestion.return_group("COLLECT({"+Book.grouped_basic_info+"}) AS books", Author.basic_info)
+ 		@user.match + @user.favourite_author + User::Suggest::BookSuggestion.order_init + " book_count DESC " + User::Suggest::BookSuggestion.limit(8) +  "WITH author, user " + Author.match_books + ", user " + Bookmark.match_not("book") + User::Suggest::BookSuggestion.with_group("book", "author") + User::Suggest::BookSuggestion.order_init + " toINT(book.total_weight) DESC " + User::Suggest::BookSuggestion.return_group(Author.basic_info, "COLLECT({"+Book.grouped_basic_info+"})[0..8] AS books")
 	end
 
 	def for_most_bookmarked_era
-		Era.most_popular(@user_id) + " WITH user, era " + Era.match_books + " , user " + Bookmark::Node::BookLabel.match_not + " WITH user, book, era " + ::Book.order_desc + " WITH user, era, #{User::Suggest::BookSuggestion.collect_map("books" => Book.grouped_basic_info)} WITH #{User::Suggest::BookSuggestion.collect_map("info" => Era.grouped_basic_info)}, books[0..#{Constant::Count::BookRecommendation}] AS books " + User::Suggest::BookSuggestion.return_group("info", "books")  
-
+		Era.most_popular(@user_id) + " WITH user, era " + Era.match_books + " , user " + Bookmark::Node::BookLabel.match_not + " WITH user, book, era " + ::Book.order_desc + " WITH user, era, #{User::Suggest::BookSuggestion.collect_map("books" => Book.grouped_basic_info)} WITH #{User::Suggest::BookSuggestion.collect_map("info" => Era.grouped_basic_info)}, books[0..#{Constant::Count::BookRecommendation}] AS books " + User::Suggest::BookSuggestion.return_group("info", "books")
 	end
-
-
 
 	def on_friends_shelves
 		@user.match + UsersUser.match + Bookmark.match_path("book","friend") + Bookmark.match_not("book") + " WITH user, friend , book " +  ::Book.order_desc + " WITH friend AS user, #{User::Suggest::BookSuggestion.collect_map("books" => Book.grouped_basic_info)} WITH #{User::Suggest::BookSuggestion.collect_map("info" => User.grouped_basic_info)}, books[0..4] AS books " + User::Suggest::BookSuggestion.return_group("info", "books")  

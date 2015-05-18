@@ -3,47 +3,51 @@
         <div layout="row" layout-align="end start" layout-padding class="top_section">
             <md-button class="md-primary md-button-clear" 
                         ng-click="follow_user()"
+                        ng-hide="hide_follow"
                         ng-class="{'md-raised': !profile_user.status}"
                         ng-if="!info.my_profile">
-                        <span ng-show="!profile_user.status">Follow Me</span>
+                        <span ng-show="!profile_user.status">
+                            <span class="icon-user-add"></span>
+                            <span> Follow</span>
+                        </span>
                         <span ng-show="profile_user.status">Following</span>
             </md-button>
         </div>
         <div layout="row" layout-wrap class="bottom_header">
             <div flex="50" hide-sm hide-md layout="row" layout-align="start start">
-                <img ng-src="{{user.image_url | default_profile}}" class="circular profile_pic">
+                <img ng-src="{{profile_user.image_url | default_profile}}" class="circular profile_pic">
                 <a href="/profile"><div layout="column" layout-wrap layout-align="start start">
                     <h3 style="margin: 0px !important;" layout="row" layout-padding>
-                        <div ng-bind="user.first_name"></div>
+                        <div ng-bind="profile_user.first_name"></div>
                         <div>&nbsp;</div>
-                        <div ng-bind="user.last_name"></div>
+                        <div ng-bind="profile_user.last_name"></div>
                     </h3>
                     <!-- <h5>Mumbai</h5> -->
                 </div></a>
             </div>
             <div flex="50" flex-md="100" flex-sm="100" layout="row" layout-column layout-align="end end">
-                <a href="/room">
+                <a href="/room" ng-hide="hide_follow_links">
                     <md-button class="nav_links">
                         <div layout="column" layout-align="end end">
                             <div><b>BOOKS</b></div>
-                            <h2 class="green_color">{{user.bookmark_count || 0}}</h2>
+                            <h2 class="green_color">{{profile_user.bookmark_count || 0}}</h2>
                         </div>
                     </md-button>
                 </a>
-                <a href="/network?q=0">
+                <a href="/network?q=0" ng-hide="hide_follow_links">
                      <md-button class="nav_links">
                         <div layout="column" layout-align="end end">
                             <div><b>FOLLOWERS</b></div>
-                            <h2 class="green_color">{{user.follower_count || 0}}</h2>
+                            <h2 class="green_color">{{profile_user.follower_count || 0}}</h2>
                         </div>
                     </md-button>
                 </a>
                 
-                 <a href="/network?q=1" >
+                 <a href="/network?q=1" ng-hide="hide_follow_links">
                     <md-button class="nav_links">
                         <div layout="column" layout-align="end end">
                             <div><b>FOLLOWING</b></div>
-                            <h2 class="green_color">{{user.following_count || 0}}</h2>
+                            <h2 class="green_color">{{profile_user.following_count || 0}}</h2>
                         </div>
                     </md-button>
                 </a>

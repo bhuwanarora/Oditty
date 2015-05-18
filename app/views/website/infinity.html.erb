@@ -1,4 +1,4 @@
-<md-content ng-controller="libraryController" check-scroll-bottom="get_popular_books()" ng-model="info">
+<md-content ng-controller="libraryController" check-scroll-bottom="get_popular_books()" ng-model="info" id="infinity_page">
     <div ng-include src="'/assets/angular/html/library/_header.html'" ng-hide="constant.show_book"></div>
     <section>
         <section layout="row" layout-wrap>
@@ -10,7 +10,7 @@
                  layout-align="start start" layout-fill>
             </div>
             <div ng-include src="'/assets/angular/html/library/shared/_right_panel.html'" 
-                 flex="20" hide-sm layout="column" layout-align="start start" layout-fill>
+                 flex="20" layout="column" layout-align="start start" layout-fill>
             </div>
         </section>
     </section>
@@ -95,6 +95,10 @@
     .md-button{
         text-transform: none !important;
         color: inherit;
+    }
 
+    .infinity_page .custom_title{
+        font-size: 1.2em;
+        font-family: sans-serif;
     }
 </style>

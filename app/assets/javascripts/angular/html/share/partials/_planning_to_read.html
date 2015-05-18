@@ -1,0 +1,22 @@
+<md-button ng-click="toggle_buy()" flex 
+	class="menu_details margin_top white md-whiteframe-z1 clear">
+	<div class="light_grey_color custom_title roboto" layout-padding>
+		<i ng-if="!hide_buy">Looking to buy</i>
+		<i ng-if="hide_buy">Hide buy options</i>
+	</div>
+</md-button>
+<div flex layout="column" layout-padding ng-show="hide_buy" class="white menu_details"
+		ng-controller="buyController"
+        ng-include src="'/assets/angular/html/book/partials/_buy_options.html'"></div>
+
+<md-button ng-click="toggle_borrow()" flex 
+	class="menu_details margin_top white md-whiteframe-z1 clear">
+	<div class="light_grey_color custom_title roboto" layout-padding>
+		<i ng-if="!hide_borrow">Looking to borrow</i>
+		<i ng-if="hide_borrow">Hide borrow options</i>
+	</div>
+</md-button>
+<div flex layout="column" layout-padding ng-show="hide_borrow" class="white menu_details"
+		ng-controller="buyController"
+        ng-include src="'/assets/angular/html/book/partials/_borrow_options.html'">
+</div>

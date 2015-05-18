@@ -1,11 +1,11 @@
-<md-divider></md-divider>
 <div ng-if="books_from_favourite_author">
-	<h4>Discover other books by your most read author, <a ng-href="/author?q={{likeable_author.id}}"><b>{{likeable_author.name}}</b></a></h4>
-	<div  class="white" layout-fill>
-	    <div ng-init="books = books_from_favourite_author"
-	         ng-hide="constant.show_book"
-	         ng-include src="'/assets/angular/html/library/shared/_default_grid.html'"></div>
-	</div>
+	<d3-click-circles news-tags="books_from_favourite_author" 
+        on-click="refresh_data(active_item)"
+        on-center-click="goto_author_profile()"
+        community-page="true"
+        ng-if="books_from_favourite_author.length > 0">
+        <div class="bubbleChart animate-fast"></div>
+    </d3-click-circles>
 </div>
 <a ng-href="/room" ng-if="!books_from_favourite_author" class="less_important" layout-padding>
 	<br/>Couldn't find your Favourite Author. Add more books to your room.<br/><br/>

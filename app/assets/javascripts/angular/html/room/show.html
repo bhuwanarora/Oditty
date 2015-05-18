@@ -1,21 +1,11 @@
 <md-card layout="column" layout-align="start center">
-	<!-- <md-input-container flex>
-        <label>Share</label>
-        <input ng-model="user.last_name" 
-               focus-out="set_last_name()" value="Mad, bad, and dangerous to know."/>
-    </md-input-container> -->
 	<md-card-content>
 		<md-content class="white">
 			<section layout="row" layout-wrap >
 				<div class="article"
-					layout-margin
+					layout-margin layout="column"
 		            ng-repeat="article in visited_articles">
-	            	<a ng-href="/community?q={{article.article_id}}">
-		            	<img ng-src="{{article.image_url}}">
-		            	<md-tooltip md-direction="bottom">
-		                 	{{article.title}}
-		               	</md-tooltip>
-	            	</a>
+		            <div ng-include src="'/assets/angular/html/room/article.html'"></div>
 		        </div>
 			</section>
 		</md-content>

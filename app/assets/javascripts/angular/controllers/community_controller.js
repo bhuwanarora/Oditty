@@ -3,11 +3,16 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
         $mdSidenav('right').toggle();
         communityService.get_detailed_community_info($scope.active_tag.id).then(function(data){
             $scope.active_tag = angular.extend($scope.active_tag, data);
+            var follow_node = $scope.active_tag.follow_node;
+            if(angular.isDefined(follow_node) && (follow_node != null)){
+                $scope.active_tag.status = true;
+            }
         });
     };
 
-    $scope.follow_community = function(){
-        communityService.follow($scope.active_tag.id, ($scope.active_tag.status || true));
+    $scope.toggle_follow = function(){
+        $scope.active_tag.status = !$scope.active_tag.status;
+        communityService.follow($scope.active_tag.id, $scope.active_tag.status);
     }
 
     $scope.show_book_dialog = function(book, event){
@@ -49,8 +54,9 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
 
         $scope.newsTags = [];
         $scope.info.active_tag = $scope.active_tag;
-
+        $scope.info.loading = true;
         communityService.get_news_info(news_id).then(function(data){
+            $scope.info.loading = false;
             data = data[0];
             $scope.active_tag = data.most_important_tag[0];
             var most_important_tag = {"name": $scope.active_tag.name, 
@@ -72,6 +78,11 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
 
         communityService.get_chronological_news(news_id).then(function(data){
             $scope.news = data;
+            angular.forEach($scope.news, function(value, index){
+                if(value.community_info.name == $scope.active_tag.name){
+                    $scope.selectedIndex = index;
+                }
+            });
         });
     }());
 

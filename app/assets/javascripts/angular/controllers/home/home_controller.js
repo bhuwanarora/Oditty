@@ -1,9 +1,22 @@
-homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$mdBottomSheet', 'shelfService', '$timeout', '$location', 'userService', function($scope, $rootScope, userService, $mdBottomSheet, shelfService, $timeout, $location, userService){
+homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$mdBottomSheet', 'shelfService', '$timeout', '$location', 'userService', 'bookService', function($scope, $rootScope, userService, $mdBottomSheet, shelfService, $timeout, $location, userService, bookService){
 
 	$scope.goto_community_page = function(id){
 		userService.news_visited(id);
 		window.location.href = "/community?q="+id;
 	}
+
+    $scope.search_books = function(q){
+        $scope.info.loading = true;
+        bookService.search_books(q, 10).then(function(data){
+            $scope.info.loading = false;
+            $scope.did_you_mean = true;
+            angular.forEach(data, function(value){
+                if(angular.isUndefined(value.fuzzy)){
+                    this.push(value);
+                }
+            }, $scope.search_results)
+        });
+    }
 
     $scope.show_shelf_bottom_sheet = function(bookmark_object_id, bookmark_object_type){
         $rootScope.bookmark_object = {"type": bookmark_object_type, "id": bookmark_object_id};
@@ -53,8 +66,10 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$m
         }
     }
 
+
     var _init = (function(){
     	$scope.feed = [];
+        // $scope.info.hide_feed = true;
 
         var _get_blog_feed = function(){
             userService.get_last_blog().then(function(data){
@@ -84,12 +99,12 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$m
         }
         else{
             $scope.get_community_feed();
-            var timeout_event = $timeout(function(){
-                _get_blog_feed();
-            }, 6000);
-            $scope.$on('destroy', function(){
-                $timeout.cancel(timeout_event);
-            });
+            // var timeout_event = $timeout(function(){
+            //     _get_blog_feed();
+            // }, 6000);
+            // $scope.$on('destroy', function(){
+            //     $timeout.cancel(timeout_event);
+            // });
         }
 
     }());

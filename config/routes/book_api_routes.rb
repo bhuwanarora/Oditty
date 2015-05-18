@@ -17,6 +17,7 @@ ReadersDoor::Application.routes.draw do
       match "add_thumbnail"                          => 'books_api#add_thumbnail',                      :via => [:put, :get, :post]
       match "get_root_categories"                    => 'books_api#get_root_categories',                :via => [:put, :get, :post]
       match "update_visited"                         => 'books_api#update_visited',                     :via => [:put, :get, :post]
+      match "get_interesting_info"                   => 'books_api#get_interesting_info',               :via => [:put, :get, :post]
     end
   end
 end

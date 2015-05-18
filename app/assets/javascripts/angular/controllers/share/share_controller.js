@@ -1,4 +1,4 @@
-homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'ShareOptions', '$routeParams', '$mdBottomSheet', 'statusService', 'WebsiteUIConstants', 'bookService', 'ColorConstants', 'sharedService', function($scope, $rootScope, $timeout, ShareOptions, $routeParams, $mdBottomSheet, statusService, WebsiteUIConstants, bookService, ColorConstants, sharedService){
+homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'ShareOptions', '$routeParams', '$mdBottomSheet', 'statusService', 'WebsiteUIConstants', 'bookService', 'ColorConstants', 'sharedService', 'Emotions', function($scope, $rootScope, $timeout, ShareOptions, $routeParams, $mdBottomSheet, statusService, WebsiteUIConstants, bookService, ColorConstants, sharedService, Emotions){
 
     $scope.play_type_key = function(event){
         if($scope.info.show_share){
@@ -17,6 +17,63 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
             event.stopPropagation();
         }
     }
+
+    $scope.toggle_buy = function(){
+        $scope.hide_buy = !$scope.hide_buy;
+    }
+
+    $scope.toggle_borrow = function(){
+        $scope.hide_borrow = !$scope.hide_borrow;
+    }
+
+    $scope.deselect_book = function(){
+        delete $scope.active_book;
+        delete $rootScope.active_book
+        $scope.deselect_emotion();
+        delete $scope.related_info;
+        delete $scope.info.status_books;
+        $scope.show_relevant_books();
+    }
+
+    $scope.show_interesting_details = function(book){
+        $scope.active_book = book;
+        $scope.info.book = book;
+        $rootScope.active_book = book;
+        $scope.info.status_books = [book];
+        $scope.info.loading = true;
+
+
+        var _get_interesting_details = function(){
+            bookService.get_interesting_info(book.book_id).then(function(data){
+                $scope.related_info = [];
+                angular.forEach(data[0].info, function(value){
+                    var label = value.labels[0];
+                    var info = value.info.data;
+                    var id = value.id;
+
+                    if(label == "Author"){
+                        delete info.indexed_main_author_name;
+                        delete info.gr_url;
+                        delete info.search_index;
+                        var json = {"id": id, "label": "Author"};
+                        info = angular.extend(info, json);
+                    }
+                    else if(label == "Year"){
+                        var json = {"label": "Year"};
+                        info = angular.extend(info, json);
+                    }
+                    else{
+                        debugger
+                    }
+                    this.push(info);
+                    $scope.info.loading = false;
+                }, $scope.related_info);
+            });
+        }
+
+        _get_interesting_details();
+    }
+
     $scope.show_share_options = function(event){
         $mdBottomSheet.show({
             templateUrl: 'assets/angular/html/share/_share_options.html',
@@ -25,7 +82,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
             preserveScope: true,
             targetEvent: event
         }).then(function(value){
-            debugger
+            // debugger
         });
     };
 
@@ -36,9 +93,24 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         event.stopPropagation();
     }
 
-    $scope.search_books = function(q){
+    $scope.handle_backspace = function(event){
+        var key = $scope._detect_key(event)
+        if(key.backspace_or_delete){
+            $scope.init_reading_options();
+        }
+    }
+
+    $scope.search_status_books = function(q){
+        $scope.info.status_books = [];
+        $scope.search_books(q, $scope.info.status_books);
+    }
+
+    $scope.search_books = function(q, books){
+        if(angular.isUndefined(books)){
+            $scope.searched_books = [];
+            books = $scope.searched_books;
+        }
         $scope.info.loading = true;
-        $scope.searched_books = [];
         bookService.search_books(q, 10).then(function(data){
             $scope.info.loading = false;
             $scope.did_you_mean = true;
@@ -48,7 +120,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
                     value = angular.extend(value, {"color": ColorConstants.value[random_int]});
                     this.push(value);
                 }
-            }, $scope.searched_books);
+            }, books);
         });
     }
 
@@ -64,55 +136,59 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         }
     }
 
-    $scope.show_share_page = function(event){
-        var _post_status = function(){
-            var status = {};
+    $scope.post_status = function(){
+        $scope.posting = true;
+        $scope.info.loading = true;
+        var status = {};
 
-            if(angular.isDefined($scope.info.feelings) && ($scope.info.feelings.length > 0)){
-                status = angular.extend(status, {"feelings": $scope.info.feelings});
-            }
-            if(angular.isDefined($scope.info.reading_status_value)){
-                status = angular.extend(status, {"reading_status_value": $scope.info.reading_status_value});
-            }
-            if(angular.isDefined($scope.info.book)){
-                status = angular.extend(status, {"book_id": $scope.info.book.id});
-            }
-            if(angular.isDefined($scope.info.mentioned_users_ids) && ($scope.info.mentioned_users_ids.length > 0)){
-                status = angular.extend(status, {"mentioned_users_ids": $scope.info.mentioned_users_ids});
-            }
-            if(angular.isDefined($scope.info.mentioned_authors_ids) && ($scope.info.mentioned_authors_ids.length > 0)){
-                status = angular.extend(status, {"mentioned_authors_ids": $scope.info.mentioned_authors_ids});
-            }
-            if(angular.isDefined($scope.info.hash_tags) && ($scope.info.hash_tags.length > 0)){
-                status = angular.extend(status, {"hash_tags": $scope.info.hash_tags});
-            }
-            if(angular.isDefined($scope.info.status) && ($scope.info.status.length > 0)){
-                status = angular.extend(status, {"content": $scope.info.status});
-            }
-            if(angular.isDefined($scope.info.wrapper_status) && ($scope.info.wrapper_status.length > 0)){
-                status = angular.extend(status, {"wrapper_content": $scope.info.wrapper_status});
-            }
-            if(angular.isDefined($scope.info.book_exchange_status)){
-                status = angular.extend(status, {"book_exchange_status": $scope.info.book_exchange_status})
-            }
-
-            if(Object.keys(status).length != 0){
-                statusService.post_status(status);
-                $scope.info.status = "";
-                $scope.info.wrapper_status = "";
-                $scope.type_icon_pressed = {"margin-right": "60vw"};
-                $timeout(function(){
-                    $scope.type_icon_pressed = {"margin-right": "0px"};
-                }, 100);
-            }
-
+        if(angular.isDefined($scope.info.feelings) && ($scope.info.feelings.length > 0)){
+            status = angular.extend(status, {"feelings": $scope.info.feelings});
+        }
+        if(angular.isDefined($scope.info.reading_status_value)){
+            status = angular.extend(status, {"reading_status_value": $scope.info.reading_status_value});
+        }
+        if(angular.isDefined($scope.info.book)){
+            status = angular.extend(status, {"book_id": $scope.info.book.id});
+        }
+        if(angular.isDefined($scope.info.mentioned_users_ids) && ($scope.info.mentioned_users_ids.length > 0)){
+            status = angular.extend(status, {"mentioned_users_ids": $scope.info.mentioned_users_ids});
+        }
+        if(angular.isDefined($scope.info.mentioned_authors_ids) && ($scope.info.mentioned_authors_ids.length > 0)){
+            status = angular.extend(status, {"mentioned_authors_ids": $scope.info.mentioned_authors_ids});
+        }
+        if(angular.isDefined($scope.info.hash_tags) && ($scope.info.hash_tags.length > 0)){
+            status = angular.extend(status, {"hash_tags": $scope.info.hash_tags});
+        }
+        if(angular.isDefined($scope.info.status) && ($scope.info.status.length > 0)){
+            status = angular.extend(status, {"content": $scope.info.status});
+        }
+        if(angular.isDefined($scope.info.wrapper_status) && ($scope.info.wrapper_status.length > 0)){
+            status = angular.extend(status, {"wrapper_content": $scope.info.wrapper_status});
+        }
+        if(angular.isDefined($scope.info.book_exchange_status)){
+            status = angular.extend(status, {"book_exchange_status": $scope.info.book_exchange_status})
         }
 
+        if(Object.keys(status).length != 0){
+            statusService.post_status(status).then(function(){
+                $scope.posting = false;
+                $scope.info.loading = false;
+            });
+            $scope.info.status = "";
+            $scope.info.wrapper_status = "";
+            $scope.type_icon_pressed = {"margin-right": "60vw"};
+            $timeout(function(){
+                $scope.type_icon_pressed = {"margin-right": "0px"};
+            }, 100);
+        }
+    }
+
+    $scope.show_share_page = function(event){
         if(!$scope.info.show_share){
             $scope.info.show_share = true;
         }
         else{
-            _post_status();
+            $scope.post_status();
         }
     };
 
@@ -385,9 +461,58 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         }
     }
 
+    $scope.make_active = function(id){
+        $scope.active_id = id;
+        $scope.info.reading_status_value = id;
+        $scope.show_relevant_books();
+    }
+
+    $scope.init_reading_options = function(){
+        if(angular.isUndefined($scope.reading_options) || ($scope.reading_options.length != 3)){
+            $scope.reading_options = [
+                {"name": "What are you currently reading?", "id": 0, "status": "Currently Reading", "emotion_status": "white reading"}, 
+                {"name": "Which book do you plan to read?", "id": 1, "status": "Planning to Read", "emotion_status": "while planning to read"}, 
+                {"name": "Which book did you recently read?", "id": 2, "status": "Recently Read", "emotion_status": "after reading"}
+            ];
+        }
+        $scope.reading_status_selected = false;
+        $scope.active_id = 0;
+        $scope.info.status_books = [];
+        $scope.related_info = [];
+        delete $scope.active_book;
+        delete $rootScope.active_book
+        $scope.deselect_emotion();
+    }
+
+    $scope.show_relevant_books = function(){
+        $scope.reading_status_selected = true;
+        if(angular.isUndefined($scope.active_book)){
+            $scope.info.status_books = [];
+            sharedService.get_popular_books($scope, $scope.info.status_books);
+        }
+    }
+
+    $scope.toggle_options = function(){
+        $scope.show_options = !$scope.show_options;
+    }
+
+    $scope.set_emotion = function(emotion){
+        $scope.active_emotion = emotion;
+        if(angular.isUndefined($scope.info.feelings)){
+            $scope.info.feelings = [];
+        }
+        $scope.info.feelings.push(emotion);
+    }
+
+    $scope.deselect_emotion = function(){
+        delete $scope.active_emotion;
+    }
+
     var _init = (function(){
         $scope.info.status = "";
         $scope.info.hash_tags = [];
         $scope.info.wrapper_status = "";
+        $scope.init_reading_options();
+        $scope.emotions = Emotions;
     }());
 }]);

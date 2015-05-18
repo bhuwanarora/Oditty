@@ -56,6 +56,4 @@ homeApp.controller('optionsController', ["$scope", "$rootScope", "$timeout", 'Sh
         $scope.data.selectedIndex = Math.max($scope.data.selectedIndex - 1, 0);
     };
 
-    
-
 }]);

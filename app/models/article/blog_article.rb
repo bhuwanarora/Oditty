@@ -24,7 +24,7 @@ class Article::BlogArticle < Article
 	end
 
 	def self.basic_info
-		" ID(blog) AS blog_id, blog.title AS title, blog.published_year AS published_year, blog.created_at AS created_at , blog.posted_at AS posted_at "
+		" ID(blog) AS blog_id, blog.title AS title, blog.published_year AS published_year, blog.created_at AS created_at , blog.posted_at AS posted_at, labels(blog) AS label "
 	end
 
 	def self.order_desc

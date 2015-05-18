@@ -187,10 +187,12 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
         		}
         		else{
 					$scope.info.my_profile = false;
+					$scope.hide_follow_links = true;
         		}
         	}
         	else{
         		$scope.info.my_profile = false;
+        		$scope.hide_follow_links = true;
         	}
 		}
 		else{
@@ -198,7 +200,6 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
         	$scope.profile_user = $rootScope.user;
 			$scope.active_user_id = $scope.profile_user.id;
 		}
-
 
         _get_detailed_info();
         $scope.get_feed();

@@ -28,6 +28,13 @@ module Neography
                 neo_response["data"].each do |record|
                     response << Hash[neo_response["columns"].zip(record)]
                 end
+                begin
+                    if response.present? && response[0]["label"].present? && response.length == 1
+                        IndexerWorker.perform_async(response) 
+                    end 
+                rescue Exception => e
+                    puts "Error #{e.to_s}".red                    
+                end
                 puts response.to_s.green
                 response
             end
