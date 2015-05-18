@@ -17,6 +17,9 @@
                         </div>
                     </div>
                 </md-tab>
+               <!--  <md-tab ng-click="load_sample_read()">
+                    Sample Read
+                </md-tab> -->
                 <md-tab id="tab2" aria-controls="tab2-content" class="padding">
                     Real Virtuality
                 </md-tab>
@@ -42,8 +45,17 @@
              class="white">
             <div ng-include src="'/assets/angular/html/book/_overview.html'"></div>
         </div>
-        <div role="tabpanel"
+        <!-- <div role="tabpanel"
              id="tab2-content"
+             aria-labelledby="tab2"
+             ng-switch-when="1"
+             md-swipe-left="next()"
+             md-swipe-right="previous()" 
+             class="white">
+            <div ng-include src="'/assets/angular/html/book/_sample.html'"></div>
+        </div> -->
+        <div role="tabpanel"
+             id="tab3-content"
              aria-labelledby="tab2"
              ng-switch-when="1"
              md-swipe-left="next()"
@@ -52,7 +64,7 @@
             <div ng-include src="'/assets/angular/html/book/_news.html'"></div>
         </div>
         <div role="tabpanel"
-             id="tab3-content"
+             id="tab4-content"
              aria-labelledby="tab3"
              ng-switch-when="2"
              md-swipe-left="next()"
@@ -60,7 +72,7 @@
              <div ng-include src="'/assets/angular/html/book/_timeline.html'"></div>
         </div>
         <div role="tabpanel"
-             id="tab4-content"
+             id="tab5-content"
              aria-labelledby="tab4"
              ng-switch-when="3"
              md-swipe-left="next()"

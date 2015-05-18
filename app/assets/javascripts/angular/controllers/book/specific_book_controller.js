@@ -34,6 +34,17 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
         bookService.rate_book(book.book_id, book.user_rating);
     }
 
+    $scope.load_sample_read = function(){
+        // google.load("books", "0");
+
+        // function initialize() {
+        //     var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+        //     viewer.load('ISBN:0738531367');
+        // }
+
+        // google.setOnLoadCallback(initialize);
+    }
+
     var _init = function(){
         // $scope.$location = $location;
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
@@ -81,7 +92,7 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
         };
 
         $scope.constant = {"show_book": true};
-
+        
     }
 
     _init();
