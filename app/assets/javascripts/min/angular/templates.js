@@ -72,7 +72,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/community/_footer.html',
-    "<div flex=\"100\" flex-sm=\"100\"><md-tabs class=\"white\" md-selected=\"selectedIndex\"><a ng-href=\"/community?q={{tag.id}}\" ng-repeat=\"tag in news\"><md-tab layout-margin>{{tag.community_info.name}}</md-tab></a></md-tabs></div>"
+    "<div flex=\"100\" flex-sm=\"100\"><md-tabs class=\"white\" md-selected=\"selectedIndex\"><a ng-href=\"/news?q={{tag.id}}\" ng-repeat=\"tag in news\"><md-tab layout-margin>{{tag.community_info.name}}</md-tab></a></md-tabs></div>"
   );
 
 
@@ -378,7 +378,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/room/show.html',
-    "<md-card layout=\"column\" layout-align=\"start center\"><md-card-content><md-content class=\"white\"><section layout=\"row\" layout-wrap><div class=\"article\" layout-margin layout=\"column\" ng-repeat=\"article in visited_articles\"><div ng-include src=\"'/assets/angular/html/room/article.html'\"></div></div></section></md-content></md-card-content></md-card><style>md-card-content{width:100%}md-grid-tile{background-size:cover;background-repeat:no-repeat;border:5px solid #f5f5f5}</style>"
+    "<md-card layout=\"column\" layout-align=\"start center\"><md-card-content><md-content class=\"white\"><section layout=\"row\" layout-wrap><div class=\"article\" layout-margin layout=\"column\" ng-repeat=\"article in visited_articles\"><div ng-include src=\"'/assets/angular/html/room/article.html'\"></div></div></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section></md-content></md-card-content></md-card><style>md-card-content{width:100%}md-grid-tile{background-size:cover;background-repeat:no-repeat;border:5px solid #f5f5f5}</style>"
   );
 
 

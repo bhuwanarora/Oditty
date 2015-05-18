@@ -13,10 +13,7 @@
         <title>ReadersDoor</title>
         <link rel="icon" type="image/png" href="assets/favicon.png">
         <script>document.write('<base href="' + document.location + '" />');</script>
-
         <!-- <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,100italic,400italic|Roboto+Condensed&amp;lang=en' rel='stylesheet' type='text/css'> -->
-
-
         <link rel="stylesheet" href="assets/angular_material.css" />
         <link rel="stylesheet" href="assets/website/website.css" />
         <link rel="stylesheet" href="assets/website/icomoon.css" />
@@ -252,7 +249,20 @@
                                         flex="85"
                                         ng-click="stop_propagation($event)"
                                         placeholder="Search books, topics and more...">
-                            <div ng-bind-html="item.name"></div>
+                            <div layout="row" layout-align="space-between">
+                                <div layout="row" flex="90">
+                                    <img ng-src="{{item.isbn | small_thumb}}" ng-show="item.isbn" class="search_thumb" />
+                                    <div>&nbsp;</div>
+                                    <div ng-bind-html="item.name || item.title" md-highlight-text="search_text"></div>
+                                    <div class="less_important" md-highlight-text="search_text" ng-show="item.author_name">
+                                        &nbsp;by {{item.author_name}}
+                                    </div>
+                                </div>
+                                <div flex="10" layout="row" layout-align="space-between">
+                                    <div></div>
+                                    <div>{{item | search_item_type}}</div>
+                                </div>
+                            </div>
                         </md-autocomplete>
                     </div>
                     <div layout="row" layout-align="center center" flex="10" flex-md="15" flex-sm="20">

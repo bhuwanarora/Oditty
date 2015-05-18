@@ -543,3 +543,8 @@ and (max-width : 800px){
 .margin_top{
 	margin-top: 6px;
 }
+
+.search_thumb{
+	height: 40px;
+	width: 30px;
+}
