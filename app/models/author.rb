@@ -83,11 +83,15 @@ class Author < Neo
 		skip(skip_count) +  limit(Constant::Count::FollowFavoriteAuthors) + return_init + Author.basic_info
 	end
 
+	def self.set_visted_count
+		" SET author.set_visted_count = COALESCE(author.visited_count,0) + 1 "
+	end
+
 	def get_details user_id
 		if user_id.present?
-			clause = match + optional_match_books + Book.optional_match_published_year + ", author " + Author.order_by("year.year DESC") + Author.limit(Constant::Count::InitialBooksShownInAuthorPage) + User.new(user_id).match + ", author, book " + Bookmark::Type::IOwnThis.match(user_id) + ", author  WITH COLLECT({"+Book.grouped_basic_info+", description: book.description, own_status:ID(bookmark_node)}) AS books, author " + Author.match_user + ", books "  + Author.match_followers + ", books, ID(follows_node) AS status  WITH followers AS user, books, status, author LIMIT 10 " + Author.return_group(Author.basic_info,"books", "COLLECT({"+User.grouped_basic_info+"}) AS users", "status")
+			clause = match + Author.set_visted_count + " WITH author " + optional_match_books + Book.optional_match_published_year + ", author " + Author.order_by("year.year DESC") + Author.limit(Constant::Count::InitialBooksShownInAuthorPage) + User.new(user_id).match + ", author, book " + Bookmark::Type::IOwnThis.match(user_id) + ", author  WITH COLLECT({"+Book.grouped_basic_info+", description: book.description, own_status:ID(bookmark_node)}) AS books, author " + Author.match_user + ", books "  + Author.match_followers + ", books, ID(follows_node) AS status  WITH followers AS user, books, status, author LIMIT 10 " + Author.return_group(Author.basic_info,"books", "COLLECT({"+User.grouped_basic_info+"}) AS users", "status")
 		else
-			clause = match + Book.optional_match_published_year + ", author " + Author.order_by("year.year DESC") + Author.limit(Constant::Count::InitialBooksShownInAuthorPage) + " WITH COLLECT({"+Book.grouped_basic_info+", description: book.description}) AS books, author " + Author.match_followers + ", books WITH author, books, followers AS user LIMIT 10 " + Author.return_group(Author.basic_info, "books", "COLLECT({"+User.grouped_basic_info+"}) AS users")
+			clause = match + Author.set_visted_count + " WITH author " + Book.optional_match_published_year + ", author " + Author.order_by("year.year DESC") + Author.limit(Constant::Count::InitialBooksShownInAuthorPage) + " WITH COLLECT({"+Book.grouped_basic_info+", description: book.description}) AS books, author " + Author.match_followers + ", books WITH author, books, followers AS user LIMIT 10 " + Author.return_group(Author.basic_info, "books", "COLLECT({"+User.grouped_basic_info+"}) AS users")
 		end
 		clause
 	end
