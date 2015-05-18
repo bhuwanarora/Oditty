@@ -42,4 +42,58 @@ module ImagesHelper
 			@neo.execute_query clause
 		end
 	end
+
+	def self.set_user_image_version
+		get_ids_range_clause = " MATCH (node:User) RETURN MAX(ID(node)) AS maximum , MIN(ID(node)) AS minimum "
+		range = get_ids_range_clause.execute[0]
+		maximum = range["maximum"]
+		minimum = range["minimum"]
+		puts maximum
+		puts minimum
+		range = (maximum - minimum) / 500
+		while minimum < maximum
+			clause = "MATCH (user:User) WHERE ID(user) <= #{minimum + range} AND ID(user) >= #{minimum} " + User.return_init + User.basic_info	
+			users = clause.execute
+			users.each do |user|
+				url = "#{Rails.application.config.image_service}/api/v0/user_versions?id=#{user["id"]}&&bucket=rd-images&&url=#{user["image_url"]}"
+			end
+			minimum += range
+		end
+	end
+
+	def self.set_community_image_version
+		get_ids_range_clause = " MATCH (node:Community) RETURN MAX(ID(node)) AS maximum , MIN(ID(node)) AS minimum "
+		range = get_ids_range_clause.execute[0]
+		maximum = range["maximum"]
+		minimum = range["minimum"]
+		puts maximum
+		puts minimum
+		range = (maximum - minimum) / 500
+		while minimum < maximum
+			clause = "MATCH (community:Community) WHERE ID(community) <= #{minimum + range} AND ID(community) >= #{minimum} " + Community.return_init + Community.basic_info	
+			communitites = clause.execute
+			communitites.each do |community|
+				url = "#{Rails.application.config.image_service}/api/v0/community_versions?id=#{community["id"]}&&bucket=rd-images&&url=#{community["image_url"]}"
+			end
+			minimum += range
+		end
+	end
+
+	def self.set_news_image_version
+		get_ids_range_clause = " MATCH (node:News) RETURN MAX(ID(node)) AS maximum , MIN(ID(node)) AS minimum "
+		range = get_ids_range_clause.execute[0]
+		maximum = range["maximum"]
+		minimum = range["minimum"]
+		puts maximum
+		puts minimum
+		range = (maximum - minimum) / 500
+		while minimum < maximum
+			clause = "MATCH (news:News) WHERE ID(news) <= #{minimum + range} AND ID(news) >= #{minimum} " + News.return_init + News.basic_info	
+			newss = clause.execute
+			newss.each do |news|
+				url = "#{Rails.application.config.image_service}/api/v0/news_versions?id=#{news["id"]}&&bucket=rd-images&&url=#{news["image_url"]}"
+			end
+			minimum += range
+		end
+	end
 end
