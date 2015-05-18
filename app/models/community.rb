@@ -107,8 +107,6 @@ class Community < Neo
 		books_info = Book::GoogleBooks.get community
 		if books_info.present?
 			books,author_list = books_info.transpose			
-			puts (books.length).to_s
-			puts (author_list.length).to_s			
 			books.each_with_index do |book,index|				
 				if(author_list[index].nil?)					
 					next
@@ -165,8 +163,7 @@ class Community < Neo
 					Community.map_books(communities_books.zip(relevance), news_metadata)
 				end
 			end
-		rescue Exception => e
-			debugger
+		rescue Exception => e			
 			puts e.to_s.red
 		end
 	end 
