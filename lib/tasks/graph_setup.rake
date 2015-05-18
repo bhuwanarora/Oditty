@@ -251,5 +251,16 @@ namespace :graph do
      include Neo4jHelper
      Neo4jHelper.init_shelfari_books
   end
+
+  desc "Remove un-authored books"
+  task :remove_unauthored_books => :environment do
+    Book.remove_unauthored_books
+  end
+
+  desc "set_book_unique_index"
+  task :set_book_unique_index => :environment do
+    include Neo4jHelper
+    Neo4jHelper.set_book_unique_index
+  end
   
 end

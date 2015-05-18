@@ -11,6 +11,10 @@ class Book < Neo
 		" START book=node:node_auto_index('indexed_title:\""+indexed_title+"\"') WITH book " 
 	end
 
+	def self.search_by_unique_index unique_index
+		" MATCH(book:Book{unique_index:\""+unique_index+"\"}) WITH book " 
+	end
+
 	def self.search_by_legacy_indexed_title indexed_title
 		" MATCH (book:Book{indexed_title:\""+indexed_title+"\"}) WITH book " 
 	end
@@ -18,6 +22,10 @@ class Book < Neo
 	def self.get_by_indexed_title indexed_title
 		" START book=node:node_auto_index('indexed_title:\""+indexed_title+"\"') " + Book.return_init + Book.basic_info
 	end	
+
+	def self.get_by_unique_index unique_index
+		" MATCH(book:Book{unique_index:\""+unique_index+"\"}) " + Book.return_init + Book.basic_info
+	end
 
 	def self.get_by_legacy_indexed_title indexed_title
 		Book.search_by_legacy_indexed_title(indexed_title) + Book.return_init + Book.basic_info
@@ -133,4 +141,10 @@ class Book < Neo
 	def get_lenders user_id
 		User.new(user_id).match + " WITH user AS friend " + match + " , friend " + Book.match_lenders + Book.return_init + User.basic_info   
 	end
+
+	def self.remove_unauthored_books
+		clause = "MATCH (b: Book) WHERE NOT(HAS(b.author_name)) WITH b"\
+		"MATCH (b)-[r]-() REMOVE b,r"
+	end
+	
 end

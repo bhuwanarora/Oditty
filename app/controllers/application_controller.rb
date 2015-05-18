@@ -17,9 +17,9 @@ class ApplicationController < ActionController::Base
     end
     
     session["init"] = true
-    if session[:user_id] == Constant::Id::Admin
+#    if session[:user_id] == Constant::Id::Admin
       @is_admin = true
-    end
+#    end
     puts "check_permission is_admin #{@is_admin} user_id #{session[:user_id]}".green
   end
 
