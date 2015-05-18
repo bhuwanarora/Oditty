@@ -258,4 +258,16 @@ namespace :graph do
     GraphHelper.remove_wrongly_matched_books
   end
   
+  desc "curate book author name "
+  task :curate_books_author_name => :environment do
+    include GraphHelper
+    GraphHelper.curate_books_author_name
+  end
+
+  desc "curate author names "
+  task :curate_author_names => :environment do
+    include GraphHelper
+    GraphHelper.curate_author_names
+  end
+
 end

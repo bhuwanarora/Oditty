@@ -1,4 +1,34 @@
 module GraphHelper
+	def self.curate_author_names
+		get_ids_range_clause = " MATCH (node:Author) RETURN MAX(ID(node)) AS maximum , MIN(ID(node)) AS minimum "
+		range = get_ids_range_clause.execute[0]
+		maximum = range["maximum"]
+		minimum = range["minimum"]
+		puts maximum
+		puts minimum
+		range = (maximum - minimum) / 500
+		while minimum < maximum
+			clause = "MATCH (author:Author) WHERE ID(author) <= #{minimum + range} AND ID(author) >= #{minimum} AND author.name=~'@.*' SET author.name = SUBSTRING(author.name, 1) "	
+			clause.execute
+			minimum += range
+		end
+	end
+
+	def self.curate_books_author_name
+		get_ids_range_clause = " MATCH (node:Book) RETURN MAX(ID(node)) AS maximum , MIN(ID(node)) AS minimum "
+		range = get_ids_range_clause.execute[0]
+		maximum = range["maximum"]
+		minimum = range["minimum"]
+		puts maximum
+		puts minimum
+		range = (maximum - minimum) / 500
+		while minimum < maximum
+			clause = "MATCH (book:Book) WHERE book.author_name=~'@.*' AND ID(book) <= #{minimum + range} AND ID(book) >= #{minimum} SET book.author_name = SUBSTRING(book.author_name, 1) "	
+			clause.execute
+			minimum += range
+		end
+	end
+
 	def self.set_category_linked_list
 		starting_book_id = Constant::Id::BestBook.to_i
 		match_clause = " MATCH (book) WHERE ID(book) = " + starting_book_id.to_s + " WITH book MATCH path = (book)-[:Next_book*]->(book) WHERE length(path) > 2 " 
@@ -101,5 +131,6 @@ module GraphHelper
 			start_id = start_id + skip
 		end	
 	end
+
 
 end
