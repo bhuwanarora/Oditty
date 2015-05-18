@@ -202,7 +202,7 @@ class News < Neo
 	end
 
 	def self.get_feed skip_count, day_skip_count, region
-		News.match_time_period(day_skip_count) + " WHERE news.status = true WITH news " + News.match_region(region) + News.order_desc + News.skip(skip_count) + News.limit(Constant::Count::NewsShownInFeed) + News.match_community + " WITH news, community ORDER BY has_community.relevance  WITH news,  " + News.collect_map({"communities" => Community.grouped_basic_info}) + News.return_group(News.basic_info,"communities[0.." +  Constant::Count::CommunitiesOfNewsShown.to_s + "] AS communities ") 
+		News.match_time_period(day_skip_count) + " WHERE news.status = true WITH news " + News.match_region(region) + News.order_desc + News.skip(skip_count) + News.limit(Constant::Count::NewsShownInFeed) + News.match_community + " WITH news, community ORDER BY has_community.relevance  DESC WITH news,  " + News.collect_map({"communities" => Community.grouped_basic_info}) + News.return_group(News.basic_info,"communities[0.." +  Constant::Count::CommunitiesOfNewsShown.to_s + "] AS communities ") 
 	end
 
 	def self.get_regions
