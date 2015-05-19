@@ -43,7 +43,7 @@ class Status < Neo
 	end
 
 	def create_unique 
-		clause = " CREATE UNIQUE (user)-[posted:Posted{user_id:" + @user_id.to_s + "}]->" + create_status_node + "-[posted_content:PostedContent{user_id:" + @user_id.to_s + "}]->" + create_status + " SET status.updated_at = " + Time.now.to_i.to_s + " "
+		clause = create_status_node + create_status 
 		unless @book_id.nil?
 			clause = clause + set_book_id("status_node") + set_book_id("status")
 		end
@@ -51,7 +51,7 @@ class Status < Neo
 	end
 
 	def create_status_node
-		" (status_node:StatusNode{user_id:" + @user_id.to_s + ", created_at:" + Time.now.to_i.to_s + ", content:\"" + @content.to_s + "\", wrapper_content:\"" + @wrapper_content.to_s + "\"}) "
+		" MERGE (user)-[posted:Posted{user_id:" + @user_id.to_s + "}]->(status_node:StatusNode{user_id:" + @user_id.to_s + ", content:\"" + @content.to_s + "\", wrapper_content:\"" + @wrapper_content.to_s + "\"}) ON CREATE SET status_node.created_at = " + Time.now.to_i.to_s + ", status_node.updated_at = " + Time.now.to_i.to_s + " ON MATCH SET status_node.updated_at = " + Time.now.to_i.to_s
 	end
 
 	def self.set_created_at
@@ -67,7 +67,7 @@ class Status < Neo
 	end
 
 	def create_status
-		" (status:Status{user_id:" + @user_id.to_s + ", created_at:" + Time.now.to_i.to_s + ", content:\"" + @content.to_s + "\"}) "
+		" MERGE (status_node)-[posted_content:PostedContent{user_id:" + @user_id.to_s + "}]->(status:Status{user_id:" + @user_id.to_s + ", content:\"" + @content.to_s + "\"}) ON CREATE SET status.created_at = " + Time.now.to_i.to_s + ", status.updated_at = " + Time.now.to_i.to_s + " ON MATCH SET status.updated_at = " + Time.now.to_i.to_s
 	end
 
 	def set_book_id node_variable="status"
@@ -75,6 +75,6 @@ class Status < Neo
 	end
 
 	def self.basic_info
-		" status.user_id AS updated_by, status.content AS status  "
+		" status.user_id AS updated_by, status.content AS status, ID(status) AS id "
 	end
 end
