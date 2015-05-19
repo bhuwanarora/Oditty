@@ -6,7 +6,7 @@ class Book::BookFeed < Book
 	end
 
 	def create object
-		" MATCH (book)-[old:BookFeed]->(old_feed) CREATE UNIQUE (book)-[:BookFeed]->(" + object + ")-[:BookFeed]->(old_feed) DELETE old WITH user, book, "+object
+		@book.match + "," + object + " MATCH (book)-[old:BookFeed]->(old_feed) CREATE UNIQUE (book)-[:BookFeed]->(" + object + ")-[:BookFeed]->(old_feed) DELETE old WITH book, "+object
 	end
 
 	def self.delete_feed(object, user_id) 

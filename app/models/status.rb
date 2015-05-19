@@ -8,6 +8,7 @@ class Status < Neo
 			@users_book 								= UsersBook.new(@book_id, user_id)
 			@status_type								= Status::StatusType.new(@book_id, @user_id)
 			@status_book_exchange_type					= Status::BookExchangeStatusType.new(@book_id, @user_id)
+			
 		end
 		@user_feed									= User::Feed.new(user_id)
 		@reading_status_value 						= status_info["reading_status_value"]
