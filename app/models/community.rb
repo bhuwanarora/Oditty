@@ -191,4 +191,8 @@ class Community < Neo
 	def self.search_by_name name
 		" MATCH (community:Community{name:'" + name + "'}) WITH community " 
 	end
+
+	def self.suggest_communities user_id, skip_count = 0
+		User.new(user_id).match + Bookmark::Node::NewsLabel.optional_match_path + " WHERE news: News WITH news, user " + News.match_community + " WITH DISTINCT community, SUM(COALESCE(has_community.relevance,0)) AS relevance ORDER BY relevance DESC SKIP " + skip_count.to_s + Community.limit(Constant::Count::CommunitiesSuggested) + Community.return_group(Community.basic_info, "relevance")
+	end
 end
