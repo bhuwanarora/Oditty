@@ -9,6 +9,10 @@ module Api
 			def self.create_visited_news user_id, news_id
 				News.new(news_id).create_visited(user_id)
 			end
+
+			def self.suggest_communities user_id, skip_count
+				info = Community.suggest_communities(user_id, skip_count)
+			end
 		end
 	end
 end
