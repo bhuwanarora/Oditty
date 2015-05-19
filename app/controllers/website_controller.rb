@@ -147,11 +147,16 @@ class WebsiteController < ApplicationController
 		puts "in book".green
 		if BotDetector.detect request.env['HTTP_USER_AGENT']
 			id = params[:q]
-			user_id = nil
 			puts "bot_incoming".red
-			@info = Api::V0::BookApi.get_book_details(id, user_id)
+			@info = Book.new(id).get_basic_info.execute[0]
 			@info["original_url"] = request.original_url
-			@info["image_url"] = "http://rd-images.readersdoor.netdna-cdn.com/" + @info["isbn"].split(",").first + "/M.jpg"
+			@info["title"] = @info['title'] + " by " + @info['author_name'] + ", ReadersDoor"
+			@info["meta_type"] = "book"
+			if @info["isbn"]
+				@info["image_url"] = "http://rd-images.readersdoor.netdna-cdn.com/" + @info["isbn"].split(",").first + "/M.jpg";
+			else
+				@info["image_url"] = "https://scontent-cdg.xx.fbcdn.net/hphotos-xpf1/t31.0-8/10958828_401228046714738_8995198285620261747_o.jpg";
+			end
 			render :layout => "social"
 		else
 			user_id = session[:user_id]
@@ -208,7 +213,9 @@ class WebsiteController < ApplicationController
 			author_id = params[:q]
 			user_id = nil
 			puts "bot_incoming".red
-			@info = Api::V0::AuthorApi.get_details author_id, user_id
+			@info = Author.new(author_id).get_basic_info.execute[0]
+			@info["meta_type"] = "readersdoor:author"
+			@info["title"] = @info["name"] + ", ReadersDoor"
 			@info["original_url"] = request.original_url
 			@info["image_url"] = "http://rd-authors.readersdoor.netdna-cdn.com/" + @info["id"].to_s + "/M.png"
 			render :layout => "social"
@@ -226,9 +233,10 @@ class WebsiteController < ApplicationController
 		@news = true
 		if BotDetector.detect request.env['HTTP_USER_AGENT']
 			id = params[:q]
-			user_id = session[:user_id]
 			puts "bot_incoming".red
-			@info = Api::V0::BookApi.get_book_details(id, user_id)
+			@info = News.new(id).get_basic_info.execute[0]
+			@info["meta_type"] = "readersdoor:news"
+			@info["title"] = @info["title"] + ", ReadersDoor"
 			@info["original_url"] = request.original_url
 			render :layout => "social"
 		else

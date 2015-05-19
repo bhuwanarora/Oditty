@@ -81,6 +81,7 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$m
 
         var communities = (url.indexOf("communities") > 0);
         var blogs = (url.indexOf("blogs") > 0);
+        $scope.info.loading = false;
         if(communities){
             $scope.get_community_feed();
         }

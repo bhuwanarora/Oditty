@@ -71,6 +71,10 @@ class Author < Neo
 		" ORDER BY author.priority DESC "
 	end
 
+	def get_basic_info
+		match + Author.return_group(Author.basic_info)
+	end
+
 	def self.basic_info
 		" author.name AS name, ID(author) AS id, author.wiki_url AS wiki_url, author.overview as overview, labels(author) AS label, author.location AS location  "
 	end
