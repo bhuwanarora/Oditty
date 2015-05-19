@@ -1,1 +1,1 @@
-homeApp.controller("notificationController",["$scope","feedService",function(a,b){!function(){b.get_notifications().then(function(b){a.notifications=b})}();a.stop_propagation=function(a){a.stopPropagation()}}]);
+homeApp.controller("notificationController",["$scope","feedService",function(a,b){(function(){b.get_notifications().then(function(b){a.notifications=b})})();a.stop_propagation=function(a){a.stopPropagation()}}]);
