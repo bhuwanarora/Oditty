@@ -373,12 +373,12 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/room/_left_panel.html',
-    "<section><div ng-repeat=\"shelf in book_shelves\" class=\"side_padding shelf\"><div layout-padding class=\"shelf_name\">{{shelf.shelf}}</div><br><div class=\"side_padding\" ng-if=\"(shelf.books.length == 1) || !books\"><md-button class=\"md-button-clear md-raised\" ng-click=\"add_books_to_shelf(shelf, $event)\">Add books to this shelf</md-button></div><div ng-init=\"books = shelf.books\" ng-include src=\"'/assets/angular/html/shared/partials/spine.html'\"></div><md-divider></md-divider></div></section><style>.shelf{background-color:#f5f5f5;margin-top:10px;border-bottom:5px solid #DADADA}.shelf_name{font-size:1em;font-family:sans-serif}</style>"
+    "<md-progress-linear class=\"md-primary\" ng-show=\"shelf_loading\" md-mode=\"indeterminate\"></md-progress-linear><section><div ng-repeat=\"shelf in book_shelves\" class=\"side_padding shelf\"><div layout-padding class=\"shelf_name\">{{shelf.shelf}}</div><br><div class=\"side_padding\" ng-if=\"(shelf.books.length == 1) || !books\"><md-button class=\"md-button-clear md-raised\" ng-click=\"add_books_to_shelf(shelf, $event)\">Add books to this shelf</md-button></div><div ng-init=\"books = shelf.books\" ng-include src=\"'/assets/angular/html/shared/partials/spine.html'\"></div><md-divider></md-divider></div></section><style>.shelf{background-color:#f5f5f5;margin-top:10px;border-bottom:5px solid #DADADA}.shelf_name{font-size:1em;font-family:sans-serif}</style>"
   );
 
 
   $templateCache.put('/assets/angular/html/room/_right_panel.html',
-    "<section><div class=\"side_padding shelf\" ng-repeat=\"shelf in articles_grouped_by_shelves\"><div class=\"padding\">{{shelf.shelf}}</div><br><md-content class=\"grid_content\"><div class=\"article\" layout-margin ng-if=\"article.title\" ng-repeat=\"article in shelf.articles\"><div ng-include src=\"'/assets/angular/html/room/article.html'\"></div></div></md-content></div></section><style>.grid_content{height:200px!important}</style>"
+    "<md-progress-linear class=\"md-primary\" ng-show=\"shelf_loading\" md-mode=\"indeterminate\"></md-progress-linear><section><div class=\"side_padding shelf\" ng-repeat=\"shelf in articles_grouped_by_shelves\"><div class=\"padding\">{{shelf.shelf}}</div><br><md-content class=\"grid_content\"><div class=\"article\" layout-margin ng-if=\"article.title\" ng-repeat=\"article in shelf.articles\"><div ng-include src=\"'/assets/angular/html/room/article.html'\"></div></div></md-content></div></section><style>.grid_content{height:200px!important}</style>"
   );
 
 
@@ -387,8 +387,13 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('/assets/angular/html/room/book_stack.html',
+    "<md-progress-linear class=\"md-primary\" ng-show=\"shelf_loading\" md-mode=\"indeterminate\"></md-progress-linear><div layout=\"row\" class=\"book_stack\" hide-sm><a ng-repeat=\"book in visited_books | limitTo: 3\" ng-if=\"book.title\" ng-href=\"/book?q={{book.book_id}}\" target=\"_blank\"><div ng-include src=\"'/assets/angular/html/shared/partials/book_thumb.html'\"></div></a></div>"
+  );
+
+
   $templateCache.put('/assets/angular/html/room/show.html',
-    "<md-card layout=\"column\" layout-align=\"start center\"><md-card-content><md-content class=\"white\"><section layout=\"row\" layout-wrap><div class=\"article\" layout-margin layout=\"column\" ng-repeat=\"article in visited_articles\"><div ng-include src=\"'/assets/angular/html/room/article.html'\"></div></div></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section></md-content></md-card-content></md-card><style>md-card-content{width:100%}md-grid-tile{background-size:cover;background-repeat:no-repeat;border:5px solid #f5f5f5}</style>"
+    "<md-progress-linear class=\"md-primary\" ng-show=\"shelf_loading\" md-mode=\"indeterminate\"></md-progress-linear><md-card layout=\"column\" layout-align=\"start center\"><md-card-content><md-content class=\"white\"><section layout=\"row\" layout-wrap><div class=\"article\" layout-margin layout=\"column\" ng-repeat=\"article in visited_articles\"><div ng-include src=\"'/assets/angular/html/room/article.html'\"></div></div></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section><section layout-padding></section></md-content></md-card-content></md-card><style>md-card-content{width:100%}md-grid-tile{background-size:cover;background-repeat:no-repeat;border:5px solid #f5f5f5}</style>"
   );
 
 
