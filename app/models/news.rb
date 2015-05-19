@@ -206,6 +206,6 @@ class News < Neo
 	end
 
 	def self.get_regions
-		" MATCH (region:Region) WITH region ORDER BY region.name RETURN COLLECT({id:ID(region)  , name:region.name}) AS regions "
+		" MATCH (region:Region) WITH region ORDER BY region.name RETURN COLLECT({id:ID(region)  , name:region.name, news_count:region.news_count }) AS regions "
 	end
 end

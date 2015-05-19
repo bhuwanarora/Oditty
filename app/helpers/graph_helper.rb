@@ -30,7 +30,7 @@ module GraphHelper
 	end
 
 	def self.set_region_news_count
-		clause = " MATCH (region:Region) WITH region MATCH (region)<-[:FromRegion]-(news:News) WITH DISTINCT region, COUNT(news) AS news_count SET region.news_count = news_count "
+		clause = " MATCH (region:Region) WITH region OPTIONAL MATCH (region)<-[:FromRegion]-(news:News) WITH DISTINCT region, COUNT(news) AS news_count SET region.news_count = COALESCE(news_count,0) "
 		clause.execute
 	end
 
