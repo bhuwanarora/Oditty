@@ -151,13 +151,13 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
   );
 
 
-  $templateCache.put('/assets/angular/html/home/partials/feed_type.html',
-    "<div ng-init=\"blog_feed = news_feed\" ng-include src=\"'/assets/angular/html/home/_blog.html'\" ng-if=\"news_feed.label == 'blog'\"></div><div ng-init=\"community_feed = news_feed\" ng-include src=\"'/assets/angular/html/home/_community.html'\" ng-if=\"news_feed.label == 'news'\"></div>"
+  $templateCache.put('/assets/angular/html/home/main.html',
+    "<md-list layout-wrap layout=\"row\" hide-sm><div layout=\"column\" flex><div ng-repeat=\"news_feed in feed track by $index\" class=\"feed\" ng-if=\"$even\"><div ng-include src=\"'/assets/angular/html/home/partials/feed_type.html'\"></div></div></div><div layout=\"column\" flex><div ng-repeat=\"news_feed in feed track by $index\" class=\"feed\" ng-if=\"$odd\"><div ng-include src=\"'/assets/angular/html/home/partials/feed_type.html'\"></div></div></div></md-list><md-list layout-wrap layout=\"row\" show-sm hide><div layout=\"column\" flex><div ng-repeat=\"news_feed in feed track by $index\" class=\"feed\"><div ng-include src=\"'/assets/angular/html/home/partials/feed_type.html'\"></div></div></div></md-list>"
   );
 
 
-  $templateCache.put('/assets/angular/html/home/show.html',
-    "<md-list layout-wrap layout=\"row\" hide-sm><div layout=\"column\" flex><div ng-repeat=\"news_feed in feed track by $index\" class=\"feed\" ng-if=\"$even\"><div ng-include src=\"'/assets/angular/html/home/partials/feed_type.html'\"></div></div></div><div layout=\"column\" flex><div ng-repeat=\"news_feed in feed track by $index\" class=\"feed\" ng-if=\"$odd\"><div ng-include src=\"'/assets/angular/html/home/partials/feed_type.html'\"></div></div></div></md-list><md-list layout-wrap layout=\"row\" show-sm hide><div layout=\"column\" flex><div ng-repeat=\"news_feed in feed track by $index\" class=\"feed\"><div ng-include src=\"'/assets/angular/html/home/partials/feed_type.html'\"></div></div></div></md-list>"
+  $templateCache.put('/assets/angular/html/home/partials/feed_type.html',
+    "<div ng-init=\"blog_feed = news_feed\" ng-include src=\"'/assets/angular/html/home/_blog.html'\" ng-if=\"news_feed.label == 'blog'\"></div><div ng-init=\"community_feed = news_feed\" ng-include src=\"'/assets/angular/html/home/_community.html'\" ng-if=\"news_feed.label == 'news'\"></div>"
   );
 
 
