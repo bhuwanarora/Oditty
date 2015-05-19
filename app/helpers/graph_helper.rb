@@ -29,6 +29,11 @@ module GraphHelper
 		end
 	end
 
+	def self.set_region_news_count
+		clause = " MATCH (region:Region) WITH region MATCH (region)<-[:FromRegion]-(news:News) WITH DISTINCT region, COUNT(news) AS news_count SET region.news_count = news_count "
+		clause.execute
+	end
+
 	def self.set_category_linked_list
 		starting_book_id = Constant::Id::BestBook.to_i
 		match_clause = " MATCH (book) WHERE ID(book) = " + starting_book_id.to_s + " WITH book MATCH path = (book)-[:Next_book*]->(book) WHERE length(path) > 2 " 
