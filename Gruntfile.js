@@ -247,7 +247,8 @@ module.exports = function(grunt) {
                     'app/assets/javascripts/min/angular/apps.js',
                     'app/assets/javascripts/min/angular/services.js',
                     'app/assets/javascripts/min/angular/directives.js',
-                    'app/assets/javascripts/min/angular/controllers.js'
+                    'app/assets/javascripts/min/angular/controllers.js',
+                    'app/assets/javascripts/min/angular/templates.min.js'
                 ],
 
                 "app/assets/javascripts/min/angular/d3_group.min.js": [
