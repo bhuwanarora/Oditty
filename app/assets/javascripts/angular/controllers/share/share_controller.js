@@ -169,7 +169,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
             status = angular.extend(status, {"reading_status_value": $scope.info.reading_status_value});
         }
         if(angular.isDefined($scope.info.book)){
-            status = angular.extend(status, {"book_id": $scope.info.book.id});
+            status = angular.extend(status, {"book_id": ($scope.info.book.id || $scope.info.book.book_id)});
         }
         if(angular.isDefined($scope.info.mentioned_users_ids) && ($scope.info.mentioned_users_ids.length > 0)){
             status = angular.extend(status, {"mentioned_users_ids": $scope.info.mentioned_users_ids});

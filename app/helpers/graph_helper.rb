@@ -1,4 +1,53 @@
 module GraphHelper
+	def self.curate_author_names
+		get_ids_range_clause = " MATCH (node:Author) RETURN MAX(ID(node)) AS maximum , MIN(ID(node)) AS minimum "
+		range = get_ids_range_clause.execute[0]
+		maximum = range["maximum"]
+		minimum = range["minimum"]
+		puts maximum
+		puts minimum
+		range = (maximum - minimum) / 500
+		while minimum < maximum
+			clause = "MATCH (author:Author) WHERE ID(author) <= #{minimum + range} AND ID(author) >= #{minimum} AND author.name=~'@.*' SET author.name = SUBSTRING(author.name, 1) "	
+			clause.execute
+			minimum += range
+		end
+	end
+
+	def self.fix_feed user_id
+		clause = " MATCH (feed:Feed{user_id:" + user_id.to_s + "}), user WHERE ID(user) = " + user_id.to_s + " OPTIONAL MATCH (feed)-[r:FeedNext]-() DELETE r WITH feed, user ORDER BY feed.updated_at DESC WITH user, COLLECT(feed) AS feeds  FOREACH(i in RANGE(0, length(feeds)-2) |  FOREACH(p1 in [feeds[i]] |  FOREACH(p2 in [feeds[i+1]] |  MERGE (p1)-[:FeedNext{user_id:" + user_id.to_s + " }]->(p2)))) WITH user, LAST(feeds) AS last, HEAD(feeds) AS head  MERGE (last)-[:FeedNext{user_id:" + user_id.to_s + " }]->(user)-[:FeedNext{user_id:" + user_id.to_s + " }]->(head) " + User.return_group(User.basic_info)
+		clause.execute
+	end
+
+
+	def self.detect_broken_feed user_id
+		clause = "MATCH (user) WHERE ID(user) = " + user_id.to_s + " WITH user MATCH (user)-[r:FeedNext*1..]->(user) RETURN LENGTH(r) AS length, ID(user) AS id "
+		response = clause.execute
+		unless response.present? && response[0]["length"].present?
+			GraphHelper.fix_feed user_id
+		end
+	end
+
+	def self.curate_books_author_name
+		get_ids_range_clause = " MATCH (node:Book) RETURN MAX(ID(node)) AS maximum , MIN(ID(node)) AS minimum "
+		range = get_ids_range_clause.execute[0]
+		maximum = range["maximum"]
+		minimum = range["minimum"]
+		puts maximum
+		puts minimum
+		range = (maximum - minimum) / 500
+		while minimum < maximum
+			clause = "MATCH (book:Book) WHERE book.author_name=~'@.*' AND ID(book) <= #{minimum + range} AND ID(book) >= #{minimum} SET book.author_name = SUBSTRING(book.author_name, 1) "	
+			clause.execute
+			minimum += range
+		end
+	end
+
+	def self.set_region_news_count
+		clause = " MATCH (region:Region) WITH region OPTIONAL MATCH (region)<-[:FromRegion]-(news:News) WITH DISTINCT region, COUNT(news) AS news_count SET region.news_count = COALESCE(news_count,0) "
+		clause.execute
+	end
+
 	def self.set_category_linked_list
 		starting_book_id = Constant::Id::BestBook.to_i
 		match_clause = " MATCH (book) WHERE ID(book) = " + starting_book_id.to_s + " WITH book MATCH path = (book)-[:Next_book*]->(book) WHERE length(path) > 2 " 
@@ -101,5 +150,6 @@ module GraphHelper
 			start_id = start_id + skip
 		end	
 	end
+
 
 end

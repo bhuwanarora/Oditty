@@ -53,7 +53,7 @@ homeApp.controller('searchPageController', ["$scope", "searchService", "$locatio
         var is_search = $location.$$absUrl.indexOf("search") >= 0;
         if(angular.isDefined(url_parser) && (url_parser != null) && is_search){
             var q = _get_parameter_by_name("q");
-            var type = _get_parameter_by_name("type")
+            var type = _get_parameter_by_name("type");
             $scope.active_q = q;
             $scope.active_type = type;
             $scope.show_all_results();

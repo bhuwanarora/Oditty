@@ -10,8 +10,9 @@
                 <h3>{{active_tag.name | uppercase}}</h3>
             </div>
             <md-button ng-class="{'md-raised': !active_tag.status}" class="md-button-clear" ng-click="toggle_follow()">
-                <span ng-if="!active_tag.status">Join</span>
+                <span ng-if="!active_tag.status">Join Community&nbsp;</span>
                 <span ng-if="active_tag.status">Joined</span>
+                <span ng-if="!active_tag.status" class="icon-user-add"></span>
             </md-button>
         </md-subheader>
         <md-card ng-repeat="news_info in active_tag.news">

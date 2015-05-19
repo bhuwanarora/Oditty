@@ -3,7 +3,7 @@ homeApp.controller('searchController', ["$scope", "searchService", "$location", 
     $scope.query_search = function(search_text){
         if(search_text.length > 2){
             $scope.info.loading = true;
-            params = {"q": search_text};
+            params = {"q": search_text, "count": 4};
             searchService.raw(params).then(function(data){
                 delete $scope.search_results;
                 $scope.info.loading = false;
