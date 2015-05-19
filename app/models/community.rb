@@ -184,7 +184,7 @@ class Community < Neo
 					authorlist_string = authors[i].sort.join('').search_ready						
 					unique_index = book.search_ready + authorlist_string
 					clause_temp += Book.search_by_unique_index(unique_index) + " , community " + Community.merge_book + " WITH community "
-					if((i+1)%batch_size_cypher ==0)						
+					if((i+1)%batch_size_cypher == 0)
 						clause_temp += News.return_init + Community.basic_info
 						clause_temp.execute
 						clause_temp = clause
