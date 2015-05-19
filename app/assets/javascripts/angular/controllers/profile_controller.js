@@ -117,26 +117,14 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 					_group_feed();
 					angular.forEach(personal_feed, function(value){
 						if(angular.isDefined(value.book)){
-							bookService.get_basic_book_details(value.book.id).then(function(data){
-								value.book = angular.extend(value.book, data);
-								angular.forEach(value.data, function(feed_data){
-									var message = _get_message(feed_data);
-									feed_data = angular.extend(feed_data, {"message": message});
-								});
+							angular.forEach(value.data, function(feed_data){
+								var message = _get_message(feed_data);
+								feed_data = angular.extend(feed_data, {"message": message});
 							});
 						}
 						else if(angular.isDefined(value.community)){
-							communityService.get_community_details(value.community.id).then(function(data){
-								data = data[0].most_important_tag[0];
-								value.community = angular.extend(value.community, data);
-								angular.forEach(value.community.books, function(book){
-									var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-									var color = ColorConstants.value[random_int];
-									book.color = color;
-								});
-								var message = _get_message(value);
-								feed_data = angular.extend(value, {"message": message});
-							});
+							var message = _get_message(value);
+							feed_data = angular.extend(value, {"message": message});
 						}
 						else{
 							var message = _get_message(value);
@@ -198,6 +186,7 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 		else{
         	$scope.info.my_profile = true;
         	$scope.profile_user = $rootScope.user;
+        	console.debug($rootScope.user);
 			$scope.active_user_id = $scope.profile_user.id;
 		}
 

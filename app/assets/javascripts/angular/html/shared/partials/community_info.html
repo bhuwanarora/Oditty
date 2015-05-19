@@ -1,4 +1,4 @@
-<div class="follow_content" layout="row" layout-padding>
+<div class="follow_content" layout="row" layout-padding ng-show="!community_loading" ng-if="feed.community.name">
     <div flex="25" layout="row" layout-align="center center">
         <img ng-src="{{community.image_url}}" class="circular">
     </div>
@@ -15,6 +15,10 @@
         </md-content>
     </div>
 </div>
+<md-progress-linear class="md-primary"
+                    ng-show="community_loading"
+                    md-mode="indeterminate">
+</md-progress-linear>
 <style>
     .community_title{
         font-size: 1.2em;
