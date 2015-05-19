@@ -12,6 +12,12 @@ namespace :graph do
     GraphHelper.reset_news_link
   end
 
+  desc "set region news count"
+  task :set_region_news_count => :environment do
+    include GraphHelper
+    GraphHelper.set_region_news_count
+  end
+
   desc "Category linked list"
   task :set_category_linked_list => :environment do
     include GraphHelper
