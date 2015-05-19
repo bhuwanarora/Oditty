@@ -567,3 +567,12 @@ and (max-width : 800px){
 .shelf_tooltip{
 	pointer-events: initial;
 }
+
+/*.material_cover{
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	height: 400px;
+	background-color: #427fed;
+}*/

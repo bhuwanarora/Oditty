@@ -208,6 +208,7 @@
         <!-- <gcse:search></gcse:search> -->
         <div layout="column" layout-fill>
             <!-- <div ng-include src="'/assets/angular/html/shared/header.html'"></div> -->
+
             <md-toolbar md-scroll-shrink class="md-whiteframe-z1 header <% if !@infinity %>'no_shadow'<% end %>">
                 <section layout="row" layout-wrap>
                     <div flex="20" flex-sm="35" layout="row" layout-align="start center">
@@ -320,6 +321,7 @@
             <div ng-show="info.mobile_search">
                 <%= yield %>
             </div>
+            
             
             <div ng-controller="shareController" ng-show="info.mobile_search">
                 <md-button class="md-fab md-fab-bottom-right animate-fast fixed_share"
