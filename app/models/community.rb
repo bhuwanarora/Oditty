@@ -83,12 +83,12 @@ class Community < Neo
 	# it calls google api to fetch books	
 	def self.fetch_books_database_Net community
 		clause = Community.search_by_name(community) + Community.match_books + "RETURN book.title,book.author_name"		
-		booksList = clause.execute				
-		if(booksList.empty?)
+		books_list = clause.execute				
+		if(books_list.empty?)
 			books = Community.fetch_books community
 		else
 			books = {community => []}
-			booksList.each do |book|
+			books_list.each do |book|
 				if(book.has_key?("book.author_name"))
 					author = book["book.author_name"] # it will be array, now it is not
 					if(author.nil?)
