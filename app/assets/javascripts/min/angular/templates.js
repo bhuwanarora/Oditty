@@ -137,7 +137,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/home/_community.html',
-    "<md-card class=\"community\" ng-if=\"community_feed.title && community_feed.title != '' && community_feed.title != null\"><md-card-content class=\"content\"><h3><a ng-click=\"goto_community_page(community_feed.id)\">{{community_feed.title}}</a></h3><div class=\"less_important\">News, {{community_feed.created_at | timestamp | date:'dd MMM'}}</div><div ng-bind-html=\"community_feed.description\" class=\"community_description\"></div></md-card-content><md-card-content class=\"image_container clear\" layout=\"row\"><div flex class=\"image_wrapper\"><img class=\"community_feed_image\" ng-src=\"{{community_feed.image_url}}\" ng-click=\"goto_community_page(community_feed.id)\" layout-padding ng-show=\"community_feed.image_url\"></div></md-card-content><md-card-content layout=\"row\" layout-padding class=\"communities\"><md-list-item ng-repeat=\"community in community_feed.communities | limitTo: 4\" layout-align=\"start start\" layout-padding layout-wrap layout=\"row\"><div layout=\"column\" layout-align=\"center start\"><img ng-src=\"{{community.image_url}}\" class=\"community_circular\" alt=\"{{community.name}}\"> <a ng-bind-html=\"community.name\" layout-wrap class=\"custom_title\" layout-padding ng-click=\"goto_community_page(community_feed.id)\"></a></div></md-list-item></md-card-content></md-card>"
+    ""
   );
 
 
