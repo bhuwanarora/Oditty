@@ -33,4 +33,5 @@ ReadersDoor::Application.configure do
   config.blog_url = " https://public-api.wordpress.com/rest/v1.1/sites/literaturerun.wordpress.com/posts/?number=10&pretty=1&order=ASC&fields=title,date,short_URL,excerpt,discussion,like_count,featured_image,tags,is_reblogged,attachments&after="
   config.image_service = ""
   config.neo4j_url = "http://localhost:7474"
+  config.image_service = "http://52.10.230.9"
 end
