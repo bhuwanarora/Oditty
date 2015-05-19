@@ -285,4 +285,8 @@ class User < Neo
 	def set_region region
 		match + User::Info.set_region(region)
 	end
+
+	def self.merge_searched
+		" MERGE (user)-[:SearchedFor]->(search_node:SearchNode{created_at: " + Time.now.to_i.to_s + "})-[:SearchMedia]->(bookmark_node) "
+	end
 end

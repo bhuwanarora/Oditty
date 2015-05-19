@@ -45,6 +45,10 @@ module Api
 				else
 					Api::V0::UserApi.remove_bookmark(user_id, id, type, shelf).execute
 				end
+				
+				if params[:parent]
+					Api::V0::UserApi.add_book_searched(user_id, id).execute
+				end
 				render :json => {:message => "Success"}, :status => 200
 			end
 

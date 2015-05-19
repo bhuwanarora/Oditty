@@ -5,6 +5,10 @@ class UsersBook < Neo
 		@user_id = user_id
 	end
 
+	def handle_searched
+		match + Bookmark::Type::Visited.match + User.merge_searched + UsersBook.return_group(User.basic_info) 
+	end
+
 	def match 
 		" MATCH (book:Book), (user:User) WHERE ID(book)="+@book_id.to_s+" AND ID(user)="+@user_id.to_s+ User::Info.set_last_active_session+" WITH user, book "
 	end

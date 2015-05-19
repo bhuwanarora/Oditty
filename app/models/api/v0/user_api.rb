@@ -34,6 +34,10 @@ module Api
 					UsersCommunity.new(user_id, community_id).unfollow
 				end
 			end
+
+			def self.add_book_searched user_id, id
+				UsersBook.new(id, user_id).handle_searched
+			end
 			
 			def self.add_bookmark user_id, id, type, shelf
 				puts user_id
