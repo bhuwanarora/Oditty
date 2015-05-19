@@ -7,6 +7,10 @@ class Book < Neo
 		" MATCH (book:Book) "
 	end
 
+	def self.optional_match_published_year
+		" OPTIONAL MATCH (book:Book)-[:Published_in]->(year:Year) WITH book, year "
+	end
+
 	def self.search_by_indexed_title indexed_title
 		" START book=node:node_auto_index('indexed_title:\""+indexed_title+"\"') WITH book " 
 	end
