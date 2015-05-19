@@ -16,13 +16,13 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
         });
     }
 
-    $scope.show_shelf_bottom_sheet = function(bookmark_object_id, bookmark_object_type){
-        $rootScope.bookmark_object = {"type": bookmark_object_type, "id": bookmark_object_id};
-        $mdBottomSheet.show({
-            templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
-            controller: 'shelfController'
-        });
-    };
+    // $scope.show_shelf_bottom_sheet = function(bookmark_object_id, bookmark_object_type){
+    //     $rootScope.bookmark_object = {"type": bookmark_object_type, "id": bookmark_object_id};
+    //     // $mdBottomSheet.show({
+    //     //     templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
+    //     //     controller: 'shelfController'
+    //     // });
+    // };
 
     $scope.getToastPosition = function() {
         return Object.keys($scope.toast_position)

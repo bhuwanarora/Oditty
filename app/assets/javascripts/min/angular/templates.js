@@ -517,6 +517,11 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('/assets/angular/html/shared/bookmark.html',
+    "<div><md-tooltip md-direction=\"top\" class=\"shelf_tooltip\" md-visible=\"show_shelf\"><div ng-include src=\"'/assets/angular/html/shared/shelves.html'\" class=\"shelves\"></div></md-tooltip></div><md-button class=\"md-button-clear\" ng-click=\"show_shelves()\">Bookmark</md-button>"
+  );
+
+
   $templateCache.put('/assets/angular/html/shared/calendar.html',
     "<div layout=\"row\"><md-select ng-model=\"selectedYear\" placeholder=\"Year\" ng-change=\"date_check()\" layout-padding><md-option ng-repeat=\"year in years\" ng-value=\"year\">{{year}}</md-option></md-select><md-select ng-model=\"selectedMonth\" placeholder=\"Month\" ng-change=\"date_check()\" ng-show=\"selectedYear\" layout-padding><md-option ng-repeat=\"month in months\" ng-value=\"month\">{{month}}</md-option></md-select><md-select ng-model=\"selectedDay\" placeholder=\"Day\" ng-change=\"date_check(); save_date(selectedYear, selectedMonth, selectedDay);\" ng-show=\"selectedYear && selectedMonth\" layout-padding><md-option ng-repeat=\"day in days\" ng-value=\"day\">{{day}}</md-option></md-select></div>"
   );
@@ -558,7 +563,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/partials/card_footer.html',
-    "<section layout=\"row\" layout-sm=\"column\" layout-align=\"space-between\"><div layout=\"row\" layout-align=\"end center\"></div><div layout=\"row\" layout-align=\"start center\"><md-button class=\"md-button-clear\" ng-click=\"show_shelf_bottom_sheet(bookmark_object.id, bookmark_object.type)\">Bookmark</md-button>&nbsp;<div><span class=\"icon-bookmark3\"></span><md-tooltip>Bookmark</md-tooltip></div>&nbsp;<div>{{feed.bookmark_count || 0}}</div>&nbsp;&nbsp;<div><span class=\"icon-bubbles2\"></span><md-tooltip>Comments</md-tooltip></div>&nbsp;<div>{{feed.comment_count || 0}}</div>&nbsp;</div></section>"
+    "<section layout=\"row\" layout-sm=\"column\" layout-align=\"space-between\"><div layout=\"row\" layout-align=\"end center\"></div><div layout=\"row\" layout-align=\"start center\"><bookmark data=\"bookmark_object\"></bookmark>&nbsp;<div><span class=\"icon-bookmark3\"></span><md-tooltip>Bookmark</md-tooltip></div>&nbsp;<div>{{feed.bookmark_count || 0}}</div>&nbsp;&nbsp;<div><span class=\"icon-bubbles2\"></span><md-tooltip>Comments</md-tooltip></div>&nbsp;<div>{{feed.comment_count || 0}}</div>&nbsp;</div></section>"
   );
 
 
@@ -603,7 +608,12 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/shelf_bottom_sheet.html',
-    "<md-bottom-sheet class=\"share_bottom_list\" ng-controller=\"shelfController\" layout-padding ng-click=\"stop_propagation($event)\"><div layout=\"column\" flex layout-fill><md-content class=\"book_list\"><section><md-subheader><div layout-padding>Add to</div></md-subheader><md-list layout=\"row\" layout-fill layout-wrap><md-item ng-repeat=\"label in labels | limitTo: 4\" ng-hide=\"show_all\"><md-checkbox ng-model=\"data.cb1\" aria-label=\"{{label.label_id}}\" class=\"md-warn\" ng-click=\"toggle_bookmark(label, data.cb1)\">{{label.label_name}}</md-checkbox></md-item><md-item ng-repeat=\"label in labels\" ng-show=\"show_all\"><md-checkbox ng-model=\"data.cb1\" aria-label=\"{{label.label_id}}\" class=\"md-warn\" ng-click=\"toggle_bookmark(label, data.cb1)\">{{label.label_name}}</md-checkbox></md-item></md-list><md-button class=\"md-button-clear show_more\" flex ng-click=\"toggle_shelves()\"><span ng-if=\"!show_all\">More Shelves</span> <span ng-if=\"show_all\">Less Shelves</span> <span ng-if=\"!show_all\" class=\"icon-angle-down\"></span> <span ng-if=\"show_all\" class=\"icon-angle-up\"></span></md-button></section></md-content><md-divider></md-divider><section layout=\"column\" class=\"footer\" layout-padding layout-align=\"end end\"><div layout=\"row\"><md-input-container class=\"clear\"><label>Create New...</label><input ng-model=\"new_label\"></md-input-container><md-button ng-click=\"add_new_label()\" class=\"md-button-clear md-raised md-primary\"><span class=\"icon-plus\"></span></md-button><div layout-padding></div><div layout-padding></div></div><div layout-padding></div><div layout-padding></div><div layout-padding></div></section></div></md-bottom-sheet><style>md-content.md-default-theme{background-color:#fff}.share_bottom_list{height:60vh!important}.book_list{position:absolute;top:5px!important;height:75vh!important;width:100vw!important}.footer{position:fixed;bottom:5px!important;width:100vw!important;background-color:#fff}.md-subheader:not(.md-sticky-no-effect)[sticky-state=active]{margin-top:0!important}.show_more{border:1px solid #CACACA}</style>"
+    "<md-bottom-sheet class=\"share_bottom_list\" ng-controller=\"shelfController\" layout-padding ng-click=\"stop_propagation($event)\"></md-bottom-sheet><style>md-content.md-default-theme{background-color:#fff}.share_bottom_list{height:60vh!important}.book_list{position:absolute;top:5px!important;height:75vh!important;width:100vw!important}.footer{position:fixed;bottom:5px!important;width:100vw!important;background-color:#fff}.md-subheader:not(.md-sticky-no-effect)[sticky-state=active]{margin-top:0!important}.show_more{border:1px solid #CACACA}</style>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/shared/shelves.html',
+    "<div layout=\"column\" flex layout-fill ng-controller=\"shelfController\"><md-content class=\"book_list\"><section><md-list layout=\"row\" layout-fill layout-wrap><md-item ng-repeat=\"label in labels | limitTo: 4\" ng-hide=\"show_all\"><md-checkbox ng-model=\"label.status\" aria-label=\"{{label.label_id}}\" class=\"md-warn\" ng-click=\"toggle_bookmark(label, label.status)\">{{label.label_name}}</md-checkbox></md-item><md-item ng-repeat=\"label in labels\" ng-show=\"show_all\"><md-checkbox ng-model=\"label.status\" aria-label=\"{{label.label_id}}\" class=\"md-warn\" ng-click=\"toggle_bookmark(label, label.status)\">{{label.label_name}}</md-checkbox></md-item><md-item layout-padding><a class=\"show_more\" flex ng-click=\"toggle_shelves()\"><span ng-if=\"!show_all\">More Shelves</span> <span ng-if=\"show_all\">Less Shelves</span> <span ng-if=\"!show_all\" class=\"icon-angle-down\"></span> <span ng-if=\"show_all\" class=\"icon-angle-up\"></span></a></md-item></md-list></section></md-content><md-divider></md-divider><section layout=\"column\" class=\"footer\" layout-padding layout-align=\"end end\"><div layout=\"row\"><md-input-container class=\"clear\"><label>Create New...</label><input ng-model=\"new_label\"></md-input-container><md-button ng-click=\"add_new_label()\" class=\"md-button-clear md-raised md-primary\"><span class=\"icon-plus\"></span></md-button></div></section></div>"
   );
 
 

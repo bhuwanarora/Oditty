@@ -548,3 +548,22 @@ and (max-width : 800px){
 	height: 40px;
 	width: 30px;
 }
+
+.shelves{
+	background-color: white !important;
+	color: black;
+}
+
+.shelves md-checkbox{
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.shelves md-content{
+	background-color: white;
+	max-height: 200px;
+}
+
+.shelf_tooltip{
+	pointer-events: initial;
+}
