@@ -18,6 +18,7 @@ module Api
 					results = results["results"]
 				else
 					results = SearchApi.search_by_scroll_id(session[:scroll_id])["results"]
+					session[:scroll_id] = results["scroll_id"] if results["scroll_id"].present?
 				end
 				puts results.to_s.green
 				render :json => results, :status => 200
