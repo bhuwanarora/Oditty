@@ -159,6 +159,10 @@ class News < Neo
 		response = Net::HTTP.get(uri)
 	end
 
+	def get_basic_info
+		match + News.return_group(News.basic_info)
+	end
+
 	def self.basic_info
 		" ID(news) AS  id  ,news.url  AS url , news.image_url AS image_url, news.title AS title, news.description AS description, news.created_at AS created_at, labels(news) AS label "
 	end
