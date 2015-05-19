@@ -27,13 +27,13 @@ class Search < Neo
 	end
 
 	def book_by_title
-		search_response = @client.search index: 'search', type: 'books', scroll: '10m', body:{query:{function_score: {boost_mode: "replace", query:{multi_match:{query:@search_text,fields:["title^2","author_name"]}}}}, size: 5, sort:{ _script: {params:{factor: 0.4}, type: "number", script: "weight", order: "desc"}}}
+		search_response = @client.search index: 'search', type: 'books', scroll: '10m', body:{query:{function_score: {boost_mode: "replace", query:{multi_match:{query:@search_text,fields:["title^2","author_name"]}}}}, size: @count, sort:{ _script: {params:{factor: 0.4}, type: "number", script: "weight", order: "desc"}}}
 		scroll_id = search_response["_scroll_id"]
 		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
 
 	def author_by_name
-		search_response = @client.search index: 'search', type: 'authors', scroll: '10m', body: { query: {match: { name: {query: @search_text, fuzziness: 1}}} , size: 5, sort:{ _script: {params:{factor: 0.4}, type: "number", script: "weight", order: "desc"}}}
+		search_response = @client.search index: 'search', type: 'authors', scroll: '10m', body: { query: {match: { name: {query: @search_text, fuzziness: 1}}} , size: @count, sort:{ _script: {params:{factor: 0.4}, type: "number", script: "weight", order: "desc"}}}
 		scroll_id = search_response["_scroll_id"]
 		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
@@ -43,7 +43,7 @@ class Search < Neo
 	end
 
 	def user_by_name
-		search_response = @client.search index: 'search', type: 'users', scroll: '10m', body:{query:{function_score: {boost_mode: "replace", query:{multi_match:{query:@search_text,fields:["first_name^2","last_name"]}}}}, size: 5, sort:{ _script: {params:{factor: 0.4}, type: "number", script: "weight", order: "desc"}}}
+		search_response = @client.search index: 'search', type: 'users', scroll: '10m', body:{query:{function_score: {boost_mode: "replace", query:{multi_match:{query:@search_text,fields:["first_name^2","last_name"]}}}}, size: @count, sort:{ _script: {params:{factor: 0.4}, type: "number", script: "weight", order: "desc"}}}
 		scroll_id = search_response["_scroll_id"]
 		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
@@ -58,25 +58,25 @@ class Search < Neo
 	end
 
 	def news_by_title
-		search_response = @client.search index: 'search', type: 'news', scroll: '10m', body: { query: {match: { title: {query: @search_text, fuzziness: 1}}} , size: 5, sort: { _script: {params:{factor: 0.4}, type: "number", script: "weight", order: "desc"}}}
+		search_response = @client.search index: 'search', type: 'news', scroll: '10m', body: { query: {match: { title: {query: @search_text, fuzziness: 1}}} , size: @count, sort: { _script: {params:{factor: 0.4}, type: "number", script: "weight", order: "desc"}}}
 		scroll_id = search_response["_scroll_id"]
 		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
 
 	def blog_by_title
-		search_response = @client.search index: 'search', type: 'blogs', scroll: '10m', body: { query: {match: { title: {query: @search_text, fuzziness: 1}}} , size: 5, sort: { _script: {params:{factor: 0.4}, type: "number", script: "weight", order: "desc"}}}
+		search_response = @client.search index: 'search', type: 'blogs', scroll: '10m', body: { query: {match: { title: {query: @search_text, fuzziness: 1}}} , size: @count, sort: { _script: {params:{factor: 0.4}, type: "number", script: "weight", order: "desc"}}}
 		scroll_id = search_response["_scroll_id"]
 		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
 
 	def community_by_name
-		search_response = @client.search index: 'search', type: 'communities', scroll: '10m', body: { query: {match: { name: {query: @search_text, fuzziness: 1}}} , size: 5, sort: { _script: {params:{factor: 0.4}, type: "number", script: "weight", order: "desc"}}}
+		search_response = @client.search index: 'search', type: 'communities', scroll: '10m', body: { query: {match: { name: {query: @search_text, fuzziness: 1}}} , size: @count, sort: { _script: {params:{factor: 0.4}, type: "number", script: "weight", order: "desc"}}}
 		scroll_id = search_response["_scroll_id"]
 		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end
 
 	def basic
-		search_response = @client.search index: 'search', scroll: '10m', body:{query:{function_score: {boost_mode: "replace", query:{multi_match:{query:@search_text,fields:["title^30","author_name^3", "first_name^2", "name", "last_name^2"]}}}}, size: 5, sort:{ _script: {params:{factor: 0.4}, type: "number", script: "weight", order: "desc"}}}
+		search_response = @client.search index: 'search', scroll: '10m', body:{query:{function_score: {boost_mode: "replace", query:{multi_match:{query:@search_text,fields:["title^30","author_name^3", "first_name^2", "name", "last_name^2"]}}}}, size: @count, sort:{ _script: {params:{factor: 0.4}, type: "number", script: "weight", order: "desc"}}}
 		scroll_id = search_response["_scroll_id"]
 		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
 	end

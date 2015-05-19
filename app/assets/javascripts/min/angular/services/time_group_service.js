@@ -1,1 +1,1 @@
-homeApp.service("timeGroupService",["$http","$q","$rootScope","WebsiteUIConstants",function(a,b,c){this.get_time_groups=function(){return _deferred_request("/api/v0/times",b,a)}}]);
+homeApp.service("timeGroupService",["$http","$q","$rootScope","WebsiteUIConstants",function(a,b,c,d){this.get_time_groups=function(){return _deferred_request("/api/v0/times",b,a)}}]);

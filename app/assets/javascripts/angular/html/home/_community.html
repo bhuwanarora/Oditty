@@ -14,7 +14,7 @@
         </div>
     </md-card-content>
     <md-card-content layout="row" layout-padding class="communities">
-        <md-list-item ng-repeat="community in community_feed.communities" 
+        <md-list-item ng-repeat="community in community_feed.communities | limitTo: 4" 
             layout-align="start start"
             layout-padding
             layout-wrap

@@ -33,7 +33,7 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 			$scope.info.loading = true;
 
 			var _get_message = function(value){
-				var message = ""
+				var message = "";
 				switch(value.label){
 					case "BookmarkNode":
 						message = "Added to "+value.node.key;
@@ -53,7 +53,7 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 					case "RatingNode":
 						message = "Gave "+value.node.content + " rating on 10.";
 						break;
-					case "FollowNode":
+					case "FollowsNode":
 						message = "Followed " + value.community.name;
 				}
 				return message;
@@ -153,7 +153,7 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 
 	$scope.write_reading_journey = function(event){
 		$scope.info.show_share = true;
-		$scope.info.show_book_share = true;
+		// $scope.info.show_book_share = true;
 	}
 
 	$scope.search_book = function(event){

@@ -149,7 +149,7 @@ class User < Neo
 	end
 
 	def match node_variable = "user"
-		" MATCH (" + node_variable + ":User) WHERE ID(" + node_variable + ") = " + @id.to_s + " WITH " + node_variable + " "
+		" MATCH (" + node_variable + ":User) WHERE ID(" + node_variable + ") = " + @id.to_s + User::Info.set_last_active_session + " WITH " + node_variable + " "
 	end
 
 	def self.match_root_category category_id=nil
