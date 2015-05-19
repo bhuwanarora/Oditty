@@ -20,38 +20,38 @@ homeApp.directive('bookmark', ["$rootScope", function($rootScope){
 
 
 homeApp.directive('setFocus', ["$timeout", "$parse", "$rootScope", function($timeout, $parse, $rootScope){
-  return {
-    link: function(scope, element, attrs) {
-      var model = $parse(attrs.setFocus);
-      scope.$watch(model, function(value) {
-        if(value == true) { 
-          $timeout(function() {
-          	if($rootScope.keyCode){
-            	element[0].value = String.fromCharCode($rootScope.keyCode);
-          	}
-            element[0].focus();
-            // $speechSynthetis.speak("You are at Reader's Door. How can I help you?", 'en-UK');
-          });
+    return {
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.setFocus);
+            scope.$watch(model, function(value) {
+                if(value == true) { 
+                    $timeout(function() {
+              	         if($rootScope.keyCode){
+                	       element[0].value = String.fromCharCode($rootScope.keyCode);
+              	         }
+                        element[0].focus();
+                        // $speechSynthetis.speak("You are at Reader's Door. How can I help you?", 'en-UK');
+                    });
+                }
+            });
         }
-      });
-    }
-  };
+    };
 }]);
 
 homeApp.directive('rdSticky', ["$timeout", "$parse", "$rootScope", "$document", function($timeout, $parse, $rootScope, $document){
-  return {
-    link: function(scope, element, attrs) {
-        var elem = element[0];
-        var position = elem.scrollTop;
-        $document.bind('scroll', function(){
-            console.log(" new scrollTop ", elem.offsetTop);
-            // if(elem.scrollTop <= position){
-            //     scope.$apply(attrs.checkScrollUp);
-            // }
-            // position = elem.scrollTop;
-        });
-    }
-  };
+    return {
+        link: function(scope, element, attrs) {
+            var elem = element[0];
+            var position = elem.scrollTop;
+            $document.bind('scroll', function(){
+                console.log(" new scrollTop ", elem.offsetTop);
+                // if(elem.scrollTop <= position){
+                //     scope.$apply(attrs.checkScrollUp);
+                // }
+                // position = elem.scrollTop;
+            });
+        }
+    };
 }]);
 
 homeApp.directive('compile', ["$compile", function($compile){
@@ -176,86 +176,86 @@ homeApp.directive('calendar', ["$rootScope", function($rootScope){
   }
 }]);
 
-homeApp.directive('rate', ["$rootScope", "$timeout", function($rootScope, $timeout){
-  	return{
-    	restrict: 'E',
-    	scope: {'rate_object': '=data'},
-    	controller: ["$scope", function($scope){
-      		$scope.show_if_rated = function(index){
-        		$scope.temp_rating = $scope.rate_object.user_rating;
-        		$scope.rate_object.user_rating = parseInt(index) + 1;
-        		$scope.ready_to_rate = true;
-      		}
+//   homeApp.directive('rate', ["$rootScope", "$timeout", function($rootScope, $timeout){
+//   	return{
+//     	restrict: 'E',
+//     	scope: {'rate_object': '=data'},
+//     	controller: ["$scope", function($scope){
+//       		$scope.show_if_rated = function(index){
+//         		$scope.temp_rating = $scope.rate_object.user_rating;
+//         		$scope.rate_object.user_rating = parseInt(index) + 1;
+//         		$scope.ready_to_rate = true;
+//       		}
 
-      		$scope.reset_rating = function(){
-        		$scope.ready_to_rate = false;
-        		$scope.rate_object.user_rating = $scope.temp_rating;
-      		}
+//       		$scope.reset_rating = function(){
+//         		$scope.ready_to_rate = false;
+//         		$scope.rate_object.user_rating = $scope.temp_rating;
+//       		}
 
-      		_add_notification = function(){
-        		var name = $rootScope.user.email;
-        		if(angular.isDefined($rootScope.user.name)){
-          			name = $rootScope.user.name;
-        		}
+//       		_add_notification = function(){
+//         		var name = $rootScope.user.email;
+//         		if(angular.isDefined($rootScope.user.name)){
+//           			name = $rootScope.user.name;
+//         		}
 
-        		var message = "<span>gave "+$scope.rate_object.user_rating+"/10 stars to&nbsp;</span><span class='site_color'>"+$scope.rate_object.title+"</span>";
-        		var notification = {
-          			"thumb":$rootScope.user.thumb,
-          			"message":message,
-          			"timestamp":new Date().getTime(),
-          			"book":{
-            			"id":$scope.rate_object.id,
-            			"title":$scope.rate_object.title,
-            			"author_name":$scope.rate_object.author_name,
-            			"isbn":$scope.rate_object.isbn
-          			},
-          			"user":{
-            		"id":$rootScope.user.id,
-            		"name":name
-          		}
-        	}
-        	$scope.$emit('addToNotifications', notification);
-      	}
+//         		var message = "<span>gave "+$scope.rate_object.user_rating+"/10 stars to&nbsp;</span><span class='site_color'>"+$scope.rate_object.title+"</span>";
+//         		var notification = {
+//           			"thumb":$rootScope.user.thumb,
+//           			"message":message,
+//           			"timestamp":new Date().getTime(),
+//           			"book":{
+//             			"id":$scope.rate_object.id,
+//             			"title":$scope.rate_object.title,
+//             			"author_name":$scope.rate_object.author_name,
+//             			"isbn":$scope.rate_object.isbn
+//           			},
+//           			"user":{
+//             		"id":$rootScope.user.id,
+//             		"name":name
+//           		}
+//         	}
+//         	$scope.$emit('addToNotifications', notification);
+//       	}
 
-      	_gamify = function(){
-        	if(!$scope.rate_object.rated){
-          		$scope.$emit('gamifyCount', 10, true);
-        	}
-      	}
+//       	_gamify = function(){
+//         	if(!$scope.rate_object.rated){
+//           		$scope.$emit('gamifyCount', 10, true);
+//         	}
+//       	}
 
-      	$scope.mark_as_rated = function(index, event){
-        	_gamify();
-        	$scope.rate_object.rated = true;
-        	$scope.rate_object.user_rating = parseInt(index) + 1;
-        	$scope.temp_rating = parseInt(index) + 1;
-        	var timeout_event = notify($rootScope, "SUCCESS-Thanks, This will help us to recommend you better books.", $timeout);
+//       	$scope.mark_as_rated = function(index, event){
+//         	_gamify();
+//         	$scope.rate_object.rated = true;
+//         	$scope.rate_object.user_rating = parseInt(index) + 1;
+//         	$scope.temp_rating = parseInt(index) + 1;
+//         	var timeout_event = notify($rootScope, "SUCCESS-Thanks, This will help us to recommend you better books.", $timeout);
 
-        	$scope.$on('destroy', function(){
-          		$timeout.cancel(timeout_event);
-        	});
-        	var params = {"id":$scope.rate_object.id, "data":$scope.rate_object.user_rating};
+//         	$scope.$on('destroy', function(){
+//           		$timeout.cancel(timeout_event);
+//         	});
+//         	var params = {"id":$scope.rate_object.id, "data":$scope.rate_object.user_rating};
 
-        	//ONLY FOR BOOKS
-        	if(angular.isUndefined($scope.rate_object.status) || !$scope.rate_object.status){
-          		sharedService.mark_as_read($scope, $scope.rate_object, event);
-        	}
-        	widgetService.rate_this_book(params);
-        	_add_notification();
-        	event.stopPropagation();
-      	}
+//         	//ONLY FOR BOOKS
+//         	if(angular.isUndefined($scope.rate_object.status) || !$scope.rate_object.status){
+//           		sharedService.mark_as_read($scope, $scope.rate_object, event);
+//         	}
+//         	widgetService.rate_this_book(params);
+//         	_add_notification();
+//         	event.stopPropagation();
+//       	}
 
-      	$scope.is_active = function(index){
-        	var is_active = false;
-        	if($scope.rate_object){
-          	var rating = parseInt(index) + 1;
-          	if(rating <= $scope.rate_object.user_rating){
-            	is_active = true;
-          	}
-        }
-        return is_active;
-     }
+//       	$scope.is_active = function(index){
+//         	var is_active = false;
+//         	if($scope.rate_object){
+//           	var rating = parseInt(index) + 1;
+//           	if(rating <= $scope.rate_object.user_rating){
+//             	is_active = true;
+//           	}
+//         }
+//         return is_active;
+//      }
 
-    }],
-    templateUrl: '/assets/angular/views/shared/rate.html'
-  	}
-}]);
+//     }],
+//     templateUrl: '/assets/angular/views/shared/rate.html'
+//   	}
+// }]);

@@ -563,7 +563,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/partials/card_footer.html',
-    "<section layout=\"row\" layout-sm=\"column\" layout-align=\"space-between\"><div layout=\"row\" layout-align=\"end center\"></div><div layout=\"row\" layout-align=\"start center\"><bookmark data=\"bookmark_object\"></bookmark>&nbsp;<div><span class=\"icon-bookmark3\"></span><md-tooltip>Bookmark</md-tooltip></div>&nbsp;<div>{{feed.bookmark_count || 0}}</div>&nbsp;&nbsp;<div><span class=\"icon-bubbles2\"></span><md-tooltip>Comments</md-tooltip></div>&nbsp;<div>{{feed.comment_count || 0}}</div>&nbsp;</div></section>"
+    ""
   );
 
 
