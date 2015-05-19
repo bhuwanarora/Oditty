@@ -213,8 +213,8 @@ class WebsiteController < ApplicationController
 			author_id = params[:q]
 			user_id = nil
 			puts "bot_incoming".red
-			@info["meta_type"] = "readersdoor:author"
 			@info = Api::V0::AuthorApi.get_details(author_id, user_id)
+			@info["meta_type"] = "readersdoor:author"
 			@info["original_url"] = request.original_url
 			@info["image_url"] = "http://rd-authors.readersdoor.netdna-cdn.com/" + @info["id"].to_s + "/M.png"
 			render :layout => "social"
@@ -231,10 +231,10 @@ class WebsiteController < ApplicationController
 	def news
 		@news = true
 		if BotDetector.detect request.env['HTTP_USER_AGENT']
-			@info["meta_type"] = "readersdoor:news"
 			id = params[:q]
 			puts "bot_incoming".red
 			@info = News.new(id).get_basic_info.execute[0]
+			@info["meta_type"] = "readersdoor:news"
 			@info["original_url"] = request.original_url
 			render :layout => "social"
 		else
