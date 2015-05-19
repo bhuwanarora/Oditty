@@ -1,1 +1,1 @@
-homeApp.service("feedService",["$http","$q","$rootScope","WebsiteUIConstants",function(a,b,c){this.get_feed=function(c){return _deferred_request("/api/v0/feed?skip_count="+c,b,a)},this.get_notifications=function(){return _deferred_request("/api/v0/personal_notifications",b,a)}}]);
+homeApp.service("feedService",["$http","$q","$rootScope","WebsiteUIConstants",function(a,b,c,d){this.get_feed=function(c){return _deferred_request("/api/v0/feed?skip_count="+c,b,a)},this.get_notifications=function(){return _deferred_request("/api/v0/personal_notifications",b,a)}}]);

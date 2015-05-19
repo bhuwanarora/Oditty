@@ -6,7 +6,7 @@ class UsersBook < Neo
 	end
 
 	def match 
-		" MATCH (book:Book), (user:User) WHERE ID(book)="+@book_id.to_s+" AND ID(user)="+@user_id.to_s+" WITH user, book "
+		" MATCH (book:Book), (user:User) WHERE ID(book)="+@book_id.to_s+" AND ID(user)="+@user_id.to_s+ User::Info.set_last_active_session+" WITH user, book "
 	end
 
 	def self.optional_match_rating

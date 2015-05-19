@@ -7,8 +7,16 @@ class Book < Neo
 		" MATCH (book:Book) "
 	end
 
+	def self.optional_match_published_year
+		" OPTIONAL MATCH (book:Book)-[:Published_in]->(year:Year) WITH book, year "
+	end
+
 	def self.search_by_indexed_title indexed_title
 		" START book=node:node_auto_index('indexed_title:\""+indexed_title+"\"') WITH book " 
+	end
+
+	def self.search_by_unique_index unique_index
+		" MATCH(book:Book{unique_index:\""+unique_index+"\"}) WITH book " 
 	end
 
 	def self.search_by_legacy_indexed_title indexed_title
@@ -18,6 +26,10 @@ class Book < Neo
 	def self.get_by_indexed_title indexed_title
 		" START book=node:node_auto_index('indexed_title:\""+indexed_title+"\"') " + Book.return_init + Book.basic_info
 	end	
+
+	def self.get_by_unique_index unique_index
+		" MATCH(book:Book{unique_index:\""+unique_index+"\"}) " + Book.return_init + Book.basic_info
+	end
 
 	def self.get_by_legacy_indexed_title indexed_title
 		Book.search_by_legacy_indexed_title(indexed_title) + Book.return_init + Book.basic_info
@@ -134,6 +146,11 @@ class Book < Neo
 		User.new(user_id).match + " WITH user AS friend " + match + " , friend " + Book.match_lenders + Book.return_init + User.basic_info   
 	end
 
+	def self.remove_unauthored_books
+		clause = "MATCH (b: Book) WHERE NOT(HAS(b.author_name)) WITH b"\
+		"MATCH (b)-[r]-() REMOVE b,r"
+	end
+	
 	def get_interesting_info
 		match + " MATCH (book)-[relation]-(info) WHERE type(relation) <> 'Belongs_to' AND type(relation) <> 'Next_book' AND type(relation) <> 'BookFeed' AND type(relation) <> 'NextLongRead' AND type(relation) <> 'NextNormalRead' AND type(relation) <> 'NextTinyRead' AND type(relation) <> 'NextSmallRead' AND type(relation) <> 'BookmarkNode'" + Book.return_group(Book.basic_info, "COLLECT({info : info, labels: labels(info), id: ID(info)}) AS info")
 	end

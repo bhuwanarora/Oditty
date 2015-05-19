@@ -92,7 +92,6 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
             });
         });
 
-
     }());
 
 }]);
