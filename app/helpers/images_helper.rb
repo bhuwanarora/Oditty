@@ -55,7 +55,7 @@ module ImagesHelper
 			clause = "MATCH (user:User) WHERE ID(user) <= #{minimum + range} AND ID(user) >= #{minimum} " + User.return_init + User.basic_info	
 			users = clause.execute
 			users.each do |user|
-				url = "#{Rails.application.config.image_service}/api/v0/user_versions?id=#{user["id"]}&&bucket=rd-images&&url=#{user["image_url"]}"
+				url = "#{Rails.application.config.image_service}/api/v0/user_versions?id=#{user["id"]}&&bucket=rd-images&&url=#{user["image_url"]}									"
 				response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
 			end
 			minimum += range
