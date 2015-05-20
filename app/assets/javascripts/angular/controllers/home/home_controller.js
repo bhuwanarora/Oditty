@@ -68,6 +68,9 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$m
         var active_region = getCookie("active_region");
         if(angular.isDefined(active_region) && active_region != "" && active_region != null){
             $scope.info.active_region = active_region;
+            var timeout_set_region = $timeout(function(){
+                $scope.info.active_region = active_region;
+            }, 2000);
         }
 
         var _get_blog_feed = function(){
