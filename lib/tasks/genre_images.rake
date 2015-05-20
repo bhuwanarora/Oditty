@@ -25,4 +25,3 @@ namespace :images do
   end  
 
 end
-
