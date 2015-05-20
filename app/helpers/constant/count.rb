@@ -30,4 +30,5 @@ module Constant::Count
 	CommunitiesOfNewsShown		= 4
 	CommunitiesInNewsPage 		= 10
 	CommunitiesSuggested		= 5
+	UsersShownInFeed			= 4
 end
