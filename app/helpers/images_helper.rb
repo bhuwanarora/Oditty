@@ -50,7 +50,7 @@ module ImagesHelper
 		minimum = range["minimum"]
 		puts maximum
 		puts minimum
-		range = (maximum - minimum) / 500
+		range = (maximum - minimum) / 5000
 		while minimum < maximum
 			clause = "MATCH (user:User) WHERE ID(user) <= #{minimum + range} AND ID(user) >= #{minimum} " + User.return_init + User.basic_info	
 			users = clause.execute
@@ -69,7 +69,7 @@ module ImagesHelper
 		minimum = range["minimum"]
 		puts maximum
 		puts minimum
-		range = (maximum - minimum) / 500
+		range = (maximum - minimum) / 5000
 		while minimum < maximum
 			clause = "MATCH (community:Community) WHERE ID(community) <= #{minimum + range} AND ID(community) >= #{minimum} " + Community.return_init + Community.basic_info	
 			communitites = clause.execute
@@ -88,7 +88,7 @@ module ImagesHelper
 		minimum = range["minimum"]
 		puts maximum
 		puts minimum
-		range = (maximum - minimum) / 500
+		range = (maximum - minimum) / 5000
 		while minimum < maximum
 			clause = "MATCH (news:News) WHERE ID(news) <= #{minimum + range} AND ID(news) >= #{minimum} " + News.return_init + News.basic_info	
 			newss = clause.execute
