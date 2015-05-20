@@ -55,8 +55,14 @@ module ImagesHelper
 			clause = "MATCH (user:User) WHERE ID(user) <= #{minimum + range} AND ID(user) >= #{minimum} " + User.return_init + User.basic_info	
 			users = clause.execute
 			users.each do |user|
-				url = "#{Rails.application.config.image_service}/api/v0/user_versions?id=#{user["id"]}&&bucket=rd-images&&url=#{user["image_url"]}									"
-				response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
+				begin 
+					url = "#{Rails.application.config.image_service}/api/v0/user_versions?id=#{user["id"]}&&bucket=rd-images&&url=#{user["image_url"]}"
+					response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
+				rescue Exception => e
+					puts e.to_s.red
+					message = "#{e} for id #{user["id"]} at #{ Time.now.strftime("%D")}"
+					File.open("log/uploader.log", 'a') { |file| file.puts(message) }
+				end
 			end
 			minimum += range
 		end
@@ -74,8 +80,14 @@ module ImagesHelper
 			clause = "MATCH (community:Community) WHERE ID(community) <= #{minimum + range} AND ID(community) >= #{minimum} " + Community.return_init + Community.basic_info	
 			communitites = clause.execute
 			communitites.each do |community|
-				url = "#{Rails.application.config.image_service}/api/v0/community_versions?id=#{community["id"]}&&bucket=rd-images&&url=#{community["image_url"]}"
-				response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
+				begin
+					url = "#{Rails.application.config.image_service}/api/v0/community_versions?id=#{community["id"]}&&bucket=rd-images&&url=#{community["image_url"]}"
+					response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
+				rescue Exception => e
+					puts e.to_s.red
+					message = "#{e} for id #{community["id"]} at #{ Time.now.strftime("%D")}"
+					File.open("log/uploader.log", 'a') { |file| file.puts(message) }
+				end
 			end
 			minimum += range
 		end
@@ -93,8 +105,13 @@ module ImagesHelper
 			clause = "MATCH (news:News) WHERE ID(news) <= #{minimum + range} AND ID(news) >= #{minimum} " + News.return_init + News.basic_info	
 			newss = clause.execute
 			newss.each do |news|
-				url = "#{Rails.application.config.image_service}/api/v0/news_versions?id=#{news["id"]}&&bucket=rd-images&&url=#{news["image_url"]}"
-				response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
+				begin
+					url = "#{Rails.application.config.image_service}/api/v0/news_versions?id=#{news["id"]}&&bucket=rd-images&&url=#{news["image_url"]}"
+					response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
+				rescue Exception => e
+					message = "#{e} for id #{news["id"]} at #{ Time.now.strftime("%D")}"
+					File.open("log/uploader.log", 'a') { |file| file.puts(message) }
+				end
 			end
 			minimum += range
 		end
