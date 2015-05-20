@@ -85,22 +85,11 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
             data.other_tags.shift();
             $scope.newsTags = $scope.newsTags.concat(data.other_tags);
             angular.forEach($scope.newsTags, function(value){
-                if(angular.isDefined(active_community) && (active_community != "")){
-                    if(parseInt(active_community) == value.id){
-                        $scope.active_tag = value;
-                        value.view_count = Math.floor((Math.random() * 1000) + 500);
-                    }
-                    else{
-                        value.view_count = Math.floor((Math.random() * 100) + 50);
-                    }
+                if($scope.active_tag.id == value.id){
+                    value.view_count = Math.floor((Math.random() * 1000) + 500);
                 }
                 else{
-                    if($scope.active_tag.id == value.id){
-                        value.view_count = Math.floor((Math.random() * 1000) + 500);
-                    }
-                    else{
-                        value.view_count = Math.floor((Math.random() * 100) + 50);
-                    }
+                    value.view_count = Math.floor((Math.random() * 100) + 50);
                 }
                 deleteCookie("active_community");
             });

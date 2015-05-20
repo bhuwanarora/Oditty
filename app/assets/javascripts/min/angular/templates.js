@@ -92,7 +92,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/community/right_panel.html',
-    "<md-sidenav class=\"md-sidenav-right md-whiteframe-z2 details_panel\" md-is-open=\"show_details\" md-component-id=\"right\" ng-click=\"stop_propagation($event);\" layout-padding><md-content class=\"white\"><md-subheader layout=\"row\" layout-align=\"space-between\"><div layout=\"row\"><img class=\"circular\" ng-src=\"{{active_tag.image_url}}\" layout-padding><h3>{{active_tag.name | uppercase}}</h3></div><md-button ng-class=\"{'md-raised': !active_tag.status}\" class=\"md-button-clear\" ng-click=\"toggle_follow()\"><span ng-if=\"!active_tag.status\">Join Community&nbsp;</span> <span ng-if=\"active_tag.status\">Joined</span> <span ng-if=\"!active_tag.status\" class=\"icon-user-add\"></span></md-button></md-subheader><md-card ng-repeat=\"news_info in active_tag.news\"><md-card-content><h3><a target=\"_blank\" ng-href=\"{{news.news_url}}\">{{news_info.title}}</a></h3><div class=\"less_important\">{{news_info.created_at | timestamp | date:'dd MMM'}}</div><div ng-bind-html=\"news_info.description\"></div></md-card-content><md-card-content><img ng-src=\"{{news_info.image_url}}\" class=\"news_cover\"></md-card-content></md-card></md-content></md-sidenav><style>.details_panel{width:60vw;min-width:60vw}.news_cover{width:100%}.details_panel p{margin:0;line-height:1.4em}</style>"
+    "<md-sidenav class=\"md-sidenav-right md-whiteframe-z2 details_panel\" md-is-open=\"show_details\" md-component-id=\"right\" ng-click=\"stop_propagation($event);\" layout-padding><md-content class=\"white\"><md-subheader layout=\"row\" layout-align=\"space-between\"><div layout=\"row\"><img class=\"circular\" ng-src=\"{{active_tag.image_url}}\" layout-padding><h3>{{active_tag.name | uppercase}}</h3></div><md-button ng-class=\"{'md-raised': !active_tag.status}\" class=\"md-button-clear\" ng-click=\"toggle_follow()\"><span ng-if=\"!active_tag.status\">Join Community&nbsp;</span> <span ng-if=\"active_tag.status\">Joined</span> <span ng-if=\"!active_tag.status\" class=\"icon-user-add\"></span></md-button></md-subheader><md-card ng-repeat=\"news_info in active_tag.news\"><md-card-content><h3><a target=\"_blank\" ng-href=\"{{news.news_url}}\">{{news_info.title}}</a></h3><div class=\"less_important\">{{news_info.created_at | timestamp | date:'dd MMM'}}</div><div ng-bind-html=\"news_info.description\"></div></md-card-content><md-card-content><img ng-src=\"{{news_info.image_url}}\" class=\"news_cover\"></md-card-content></md-card></md-content></md-sidenav><style>.details_panel{width:60vw;min-width:60vw;position:fixed}.news_cover{width:100%}.details_panel p{margin:0;line-height:1.4em}</style>"
   );
 
 
@@ -528,7 +528,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/bookmark.html',
-    "<div><md-tooltip md-direction=\"top\" class=\"shelf_tooltip\" md-visible=\"show_shelf\"><div ng-include src=\"'/assets/angular/html/shared/shelves.html'\" class=\"shelves\"></div></md-tooltip></div><md-button class=\"md-button-clear\" ng-click=\"show_shelves()\">Bookmark</md-button>"
+    "<div><md-tooltip md-direction=\"top\" class=\"shelf_tooltip && !hide_shelves\" md-visible=\"show_shelf\"><div ng-include src=\"'/assets/angular/html/shared/shelves.html'\" class=\"shelves\"></div></md-tooltip></div><md-button class=\"md-button-clear\" ng-click=\"show_shelves()\"><span>Bookmark</span> <span class=\"icon-bookmark3\"></span> <span>{{feed.bookmark_count || 0}}</span></md-button>"
   );
 
 
@@ -578,7 +578,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/partials/feed_footer.html',
-    "<section layout=\"row\" layout-sm=\"column\" layout-align=\"space-between\"><div layout=\"row\" layout-align=\"end center\"></div><div layout=\"row\" layout-align=\"start center\"><bookmark data=\"bookmark_object\"></bookmark>&nbsp;<div><span class=\"icon-bookmark3\"></span><md-tooltip>Bookmark</md-tooltip></div>&nbsp;<div>{{feed.bookmark_count || 0}}</div>&nbsp;&nbsp;<div><span class=\"icon-bubbles2\"></span><md-tooltip>Comments</md-tooltip></div>&nbsp;<div>{{feed.comment_count || 0}}</div>&nbsp;</div></section>"
+    "<section layout=\"row\" layout-sm=\"column\" layout-align=\"space-between\"><div layout=\"row\" layout-align=\"end center\"></div><div layout=\"row\" layout-align=\"start center\"><bookmark data=\"bookmark_object\"></bookmark></div></section>"
   );
 
 
