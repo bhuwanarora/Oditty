@@ -8,6 +8,10 @@ class User < Neo
 		" CREATE (user)-[:Labelled{user_id:ID(user)}]->(label) WITH user, label "
 	end
 
+	def self.grouped_primary_display_info
+		" first_name:user.first_name ,  last_name:user.last_name ,  id:ID(user), image_url: user.thumb "
+	end
+
 	def self.match_group ids
 		clause = ""
 		unless ids.nil?
