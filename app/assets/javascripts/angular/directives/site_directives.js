@@ -1,4 +1,4 @@
-homeApp.directive('bookmark', ["$rootScope", function($rootScope){
+homeApp.directive('bookmark', ["$rootScope", 'feedService', function($rootScope, feedService){
     return {
         restrict: 'E',
         scope : {data: '='},

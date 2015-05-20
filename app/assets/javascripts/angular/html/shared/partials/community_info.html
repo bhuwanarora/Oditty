@@ -1,9 +1,9 @@
-<div class="follow_content" layout="row" layout-padding ng-show="!community_loading" ng-if="feed.community.name">
+<div class="follow_content" layout="row" layout-padding ng-show="!community_loading" ng-if="community">
     <div flex="25" layout="row" layout-align="center center">
         <img ng-src="{{community.image_url}}" class="circular">
     </div>
     <div flex="75">
-        <div class="community_title">{{community.name}}</div>
+        <div class="big_title">{{community.name}}</div>
         <md-content class="books">
             <section layout="row" >
                 <md-button ng-click="show_book_dialog(book, $event)" 
@@ -20,11 +20,6 @@
                     md-mode="indeterminate">
 </md-progress-linear>
 <style>
-    .community_title{
-        font-size: 1.2em;
-        font-family: sans-serif;
-    }
-
     .books{
         max-height: 110px;
         background-color: transparent !important;

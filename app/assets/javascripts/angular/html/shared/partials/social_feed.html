@@ -4,7 +4,7 @@
             <div layout="row">
                 <img ng-src="{{profile_user.image_url | default_profile}}" class="profile_thumb circular">
                 <div layout="column" layout-align="start start">
-                    <h2>{{profile_user.first_name}}</h2>
+                    <div class="big_title">{{profile_user.first_name}}</div>
                 </div>
             </div>
             <div ng-repeat="data in feed.data" layout-padding>
@@ -28,10 +28,6 @@
 
     .social_content{
         order: 1;
-    }
-
-    .social h2{
-        margin: 16px 0px 0px 0px !important;
     }
 
     .social .book_thumb{

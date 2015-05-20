@@ -509,7 +509,11 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         $scope.reading_status_selected = true;
         if(angular.isUndefined($scope.active_book)){
             $scope.info.status_books = [];
-            sharedService.get_popular_books($scope, $scope.info.status_books);
+            $scope.info.loading = true;
+            bookService.get_top_searches().then(function(data){
+                $scope.info.loading = false;
+                $scope.info.status_books = data;
+            });
         }
     }
 

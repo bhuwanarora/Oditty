@@ -18,20 +18,19 @@ homeApp.directive('bookInfo', ["$rootScope", "bookService", function($rootScope,
     };
 }]);
 
-homeApp.directive('communityInfo', ["$rootScope", "bookService", function($rootScope, bookService){
+homeApp.directive('communityInfo', ["$rootScope", "communityService", 'ColorConstants', function($rootScope, communityService, ColorConstants){
     return {
         restrict: 'E',
         scope : {community: '='},
         controller: ["$scope", function($scope){
-
             var _init = function(){
                 $scope.community_loading = true;
                 communityService.get_community_details($scope.community.id).then(function(data){
                     data = data[0].most_important_tag[0];
                     $scope.community = angular.extend($scope.community, data);
                     angular.forEach($scope.community.books, function(book){
-                        var random_int = Math.floor(Math.random()*ColorConstants.$scope.length);
-                        var color = ColorConstants.$scope[random_int];
+                        var random_int = Math.floor(Math.random()*ColorConstants.value.length);
+                        var color = ColorConstants.value[random_int];
                         book.color = color;
                     });
                     $scope.community_loading = false;

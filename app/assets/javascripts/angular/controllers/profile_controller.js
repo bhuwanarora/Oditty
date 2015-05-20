@@ -20,8 +20,8 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 				}, books)
 
 				$scope.profile_user = angular.extend($scope.profile_user, data);
-				$scope.profile_user = angular.extend($scope.profile_user, {"favourite_categories": categories});
-				$scope.profile_user = angular.extend($scope.profile_user, {"influential_books": books});
+				// $scope.profile_user = angular.extend($scope.profile_user, {"favourite_categories": categories});
+				// $scope.profile_user = angular.extend($scope.profile_user, {"influential_books": books});
 			}
 		});
 	}
@@ -54,7 +54,7 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 						message = "Gave "+value.node.content + " rating on 10.";
 						break;
 					case "FollowsNode":
-						message = "Followed " + value.community.name;
+						message = "Joined community.";
 				}
 				return message;
 			}
@@ -190,7 +190,7 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 			$scope.active_user_id = $scope.profile_user.id;
 		}
 
-        _get_detailed_info();
+        // _get_detailed_info();
         $scope.get_feed();
 	}());
 
