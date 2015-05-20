@@ -21,7 +21,7 @@ class Community < Neo
 	end
 
 	def books_users_info 
-		match + Community.grouped_books_users + Community.return_init + " most_important_tag "
+		match + Community.grouped_books_users + " WITH users_info, books_info , community WITH users_info, books_info , community, "  + Community.collect_map({"most_important_tag" => Community.grouped_basic_info + ", books: books_info[0..3], users: users_info " }) + Community.return_group("most_important_tag")
 	end
 
 	def self.match_books 
