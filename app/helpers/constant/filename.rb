@@ -1,3 +1,3 @@
 module Constant::Filename
-	IndexerLogs = " IndexerLog" + Time.now.strftime("%D") + ".log"
+	IndexerLogs = "log/indexer.log"
 end

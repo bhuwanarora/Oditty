@@ -2,7 +2,7 @@ class Indexer
 	def initialize response
 		@response = response
 		@client = Elasticsearch::Client.new log: true	
-		@filename = Constant::IndexerLogs
+		@filename = Constant::Filename::IndexerLogs
 	end
 
 	def self.set_index
@@ -247,7 +247,7 @@ class Indexer
 			@client.index  index: 'search', type: 'books', id: @response["book_id"], body: { title: @response["title"], isbn: @response["isbn"], description: @response["description"], author_name: author_name, author_id: author_id, weight: get_relationships(@response["book_id"]).length}
 		rescue Exception => e
 			puts e.to_s.red
-			message = "#{e} for id #{@response["book_id"]}"
+			message = "#{e} for id #{@response["book_id"]} at #{ Time.now.strftime("%D")}"
 			File.open(@filename, 'a') { |file| file.puts(message) }
 		end
 	end	
