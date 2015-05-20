@@ -578,7 +578,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/partials/feed_footer.html',
-    "<section layout=\"row\" layout-sm=\"column\" layout-align=\"space-between\"><div layout=\"row\" layout-align=\"end center\"></div><div layout=\"row\" layout-align=\"start center\"><bookmark data=\"bookmark_object\"></bookmark></div></section>"
+    "<section layout=\"row\" layout-sm=\"column\" layout-align=\"space-between\"><div layout=\"row\" layout-align=\"end center\"><div ng-repeat=\"user in feed.users\" ng-if=\"user.first_name\"><a ng-href=\"/profile?id={{user.id}}\"><img ng-src=\"{{user.image_url}}\" class=\"circular\"></a><md-tooltip md-direction=\"top\">{{user.first_name}}</md-tooltip></div></div><div layout=\"row\" layout-align=\"start center\"><bookmark data=\"bookmark_object\"></bookmark></div></section>"
   );
 
 
