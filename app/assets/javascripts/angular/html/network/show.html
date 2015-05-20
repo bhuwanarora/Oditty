@@ -1,9 +1,11 @@
 <div ng-include src="'/assets/angular/html/profile/invite.html'"></div>
-<md-list class="white user_card" ng-if="users_list" layout="row" layout-wrap>
-    <md-item ng-repeat="user in users_list" flex>
+<md-content ng-if="users_list" layout="row" layout-wrap check-scroll-bottom="load_users()">
+    <md-item ng-repeat="user in users_list" class="white user_card" layout-margin>
         <md-item-content layout="row" flex>
-            <div ng-repeat="book in user.books">
+            <div ng-repeat="book in user.books" class="network_book">
+                <a ng-href="/book?q={{book.id}}">
                 <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
+                </a>
             </div>
         </md-item-content>
         <md-item-content layout="row" layout-align="center center" flex class="user_cover_image">
@@ -21,8 +23,7 @@
             </md-button>
         </md-item-content>
     </md-item>
-</md-list>
-
+</md-content>
 
 <style>
     .favourite_books{
@@ -59,5 +60,9 @@
 
     .user_card a:hover{
         text-decoration: underline;
+    }
+
+    .network_book h5{
+        display: none;
     }
 </style>

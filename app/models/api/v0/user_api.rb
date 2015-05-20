@@ -2,19 +2,22 @@ module Api
 	module V0
 		class UserApi
 
-			def self.authenticate session, params
-				User::Authenticate.new(session, params).action
-			end
-
 			def self.set_intro_seen_status user_id, status
 				User.new(user_id).set_intro_seen_status(status)
 			end
 
-			def self.get_details(user_id, session)
+			def self.get_details(user_id)
 				info = {}
 				if user_id.present?
 					info = User.new(user_id).get_basic_info.execute[0]
-					# session[:last_book] = info["last_book"]
+				end
+				info
+			end
+
+			def self.get_relative_details(friend_id, user_id)
+				info = {}
+				if friend_id.present?
+					info = UsersUser.new(friend_id, user_id).get_basic_info.execute[0]
 				end
 				info
 			end

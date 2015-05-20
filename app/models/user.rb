@@ -153,7 +153,11 @@ class User < Neo
 	end
 
 	def match node_variable = "user"
-		" MATCH (" + node_variable + ":User) WHERE ID(" + node_variable + ") = " + @id.to_s + User::Info.set_last_active_session + " WITH " + node_variable + " "
+		" MATCH (" + node_variable + ":User) WHERE ID(" + node_variable + ") = " + @id.to_s + " WITH " + node_variable + " "
+	end
+
+	def set_last_active_session
+		match + User::Info.set_last_active_session + " WITH user "
 	end
 
 	def self.match_root_category category_id=nil
@@ -266,6 +270,18 @@ class User < Neo
 		Bookmark::Type::Visited.match("book") + " WHERE book :Book WITH DISTINCT user, book " + Book.order_desc + " WITH user, " + Book.collect_map("books" => Book.grouped_basic_info ) + " WITH user, books[0..3] AS books "
 	end
 
+	def self.optional_get_visited_books
+		" OPTIONAL " + User.get_visited_books
+	end
+
+	def self.get_visited_books_label
+		Bookmark::Type::Visited.match_label("book", "Book") + " WITH DISTINCT user, book " + Book.order_desc + " WITH user, " + Book.collect_map("books" => Book.grouped_basic_info ) + " WITH user, books[0..3] AS books "
+	end
+
+	def self.optional_get_visited_books_label
+		" OPTIONAL " + User.get_visited_books_label
+	end
+
 	def self.get_bookmarked_books
 		Bookmark.match + Book.order_desc + " WITH user, " + Book.collect_map("books" => Book.grouped_basic_info) +  " WITH user, books[0..4]"
 	end
@@ -279,7 +295,7 @@ class User < Neo
 	end
 
 	def get_users_followed skip
-		match_users_followed(skip) + User.get_visited_books + User.return_group(User.basic_info,"books")
+		match_users_followed(skip) + User.optional_get_visited_books_label + User.return_group(User.basic_info, "books")
 	end
 
 	def set_intro_seen_status status

@@ -103,7 +103,7 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
 
             $timeout(function(){
                 $scope.get_detailed_community_info();
-            }, 4000);
+            }, 100);
         });
 
     }());

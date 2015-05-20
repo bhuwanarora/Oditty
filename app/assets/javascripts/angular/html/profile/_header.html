@@ -16,14 +16,15 @@
         <div layout="row" layout-wrap class="bottom_header">
             <div flex="50" hide-sm hide-md layout="row" layout-align="start start">
                 <img ng-src="{{profile_user.image_url | default_profile}}" class="circular profile_pic">
-                <a href="/profile"><div layout="column" layout-wrap layout-align="start start">
-                    <h3 style="margin: 0px !important;" layout="row" layout-padding>
-                        <div ng-bind="profile_user.first_name"></div>
-                        <div>&nbsp;</div>
-                        <div ng-bind="profile_user.last_name"></div>
-                    </h3>
-                    <!-- <h5>Mumbai</h5> -->
-                </div></a>
+                <div>
+                    <a href="/profile"><div layout="column" layout-wrap layout-align="start start">
+                        <div class="big_title" layout="row" layout-padding>
+                            <div ng-bind="profile_user.first_name"></div>
+                            <div>&nbsp;</div>
+                            <div ng-bind="profile_user.last_name"></div>
+                        </div>
+                    </div></a>
+                </div>
             </div>
             <div flex="50" flex-md="100" flex-sm="100" layout="row" layout-column layout-align="end end">
                 <a href="/room" ng-hide="hide_follow_links">

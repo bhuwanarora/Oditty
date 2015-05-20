@@ -17,6 +17,10 @@ class UsersUser < Neo
 		" MATCH (user)-[follows_user:FollowsUser]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(friend) WHERE ID(user) = " + @user_id.to_s + " AND ID(friend) = " + @friend_id.to_s + User::Info.set_last_active_session + " WITH user, follows_user, friend, follows_node, followed_by "
 	end
 
+	def optional_match
+		" OPTIONAL " + match
+	end
+
 	def self.match_all
 		" MATCH (user)-[follows_user:FollowsUser]-(follows_node:FollowsNode)-[followed_by:FollowedBy]-(friend) WITH user, friend "
 	end
@@ -41,5 +45,13 @@ class UsersUser < Neo
 
 	def self.add_notification node_variable
 		" WITH user AS friend " + " , " + node_variable + UsersUser.match  + " , " + node_variable + User::UserNotification.add(node_variable)
+	end
+
+	def get_basic_info
+		@user.match + optional_match + UsersUser.return_group(User.basic_info, "ID(follows_node) as status")
+	end
+
+	def self.optional_match_invert
+		" OPTIONAL MATCH (friend)-[follows_user:FollowsUser]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(user) WITH user, friend, follows_node "
 	end
 end

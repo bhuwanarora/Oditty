@@ -16,6 +16,13 @@ angular.module('filtersApp', [])
             return output;
         };
     })
+    .filter('random_color', ['ColorConstants', function(ColorConstants){
+      return function(){
+          var random_int = Math.floor(Math.random()*ColorConstants.value.length);
+          var color = ColorConstants.value[random_int];
+          return color;
+      }
+    }])
     .filter('first_isbn', function(){
       return function(input){
         var output = "";

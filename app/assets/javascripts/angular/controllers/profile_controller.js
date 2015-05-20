@@ -1,28 +1,34 @@
 homeApp.controller('profileController', ["$scope", "userService", '$rootScope', "WebsiteUIConstants", 'ColorConstants', '$location', 'bookService', 'communityService', '$mdDialog', function($scope, userService, $rootScope, WebsiteUIConstants, ColorConstants, $location, bookService, communityService, $mdDialog){
-	var _get_detailed_info = function(){
-		var id = $scope.active_user_id;
-		userService.get_detailed_info(id).then(function(data){
-			if(data.length != 0){
-				data = data[0];
-				var categories = [];
-				angular.forEach(data.categories_id, function(value, index){
-					var url = WebsiteUIConstants.GenreAWS + data.categories_aws_key[index];
-					var json = {"root_category_id": value, "root_category_name": data.categories_name[index], "url": url, "status": true};
-					this.push(json);
-				}, categories);
+	// var _get_detailed_info = function(){
+	// 	var id = $scope.active_user_id;
+	// 	userService.get_detailed_info(id).then(function(data){
+	// 		if(data.length != 0){
+	// 			data = data[0];
+	// 			var categories = [];
+	// 			angular.forEach(data.categories_id, function(value, index){
+	// 				var url = WebsiteUIConstants.GenreAWS + data.categories_aws_key[index];
+	// 				var json = {"root_category_id": value, "root_category_name": data.categories_name[index], "url": url, "status": true};
+	// 				this.push(json);
+	// 			}, categories);
 
-				var books = [];
-				angular.forEach(data.books_id, function(value, index){
-					var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-					var color = ColorConstants.value[random_int];
-					var json = {"color": color, "book_id": value, "title": data.books_title[index], "author_name": data.books_author_name[index], "isbn": data.books_isbn[index], "random_style": {"background-color": color}};
-					this.push(json);
-				}, books)
+	// 			var books = [];
+	// 			angular.forEach(data.books_id, function(value, index){
+	// 				var random_int = Math.floor(Math.random()*ColorConstants.value.length);
+	// 				var color = ColorConstants.value[random_int];
+	// 				var json = {"color": color, "book_id": value, "title": data.books_title[index], "author_name": data.books_author_name[index], "isbn": data.books_isbn[index], "random_style": {"background-color": color}};
+	// 				this.push(json);
+	// 			}, books)
 
-				$scope.profile_user = angular.extend($scope.profile_user, data);
-				// $scope.profile_user = angular.extend($scope.profile_user, {"favourite_categories": categories});
-				// $scope.profile_user = angular.extend($scope.profile_user, {"influential_books": books});
-			}
+	// 			$scope.profile_user = angular.extend($scope.profile_user, data);
+	// 			// $scope.profile_user = angular.extend($scope.profile_user, {"favourite_categories": categories});
+	// 			// $scope.profile_user = angular.extend($scope.profile_user, {"influential_books": books});
+	// 		}
+	// 	});
+	// }
+
+	var _get_user_details = function(){
+		userService.get_user_details($scope.active_user_id).then(function(data){
+			$scope.profile_user = data;
 		});
 	}
 
@@ -170,6 +176,7 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 		if(angular.isDefined(url_parser) && url_parser != null){
         	$scope.active_user_id = url_parser[2];
         	if(angular.isDefined($rootScope.user)){
+        		$scope.profile_user = {"id": $scope.active_user_id};
         		if($rootScope.user.id == $scope.active_user_id){
         			$scope.info.my_profile = true;
         		}
@@ -182,12 +189,18 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
         		$scope.info.my_profile = false;
         		$scope.hide_follow_links = true;
         	}
+        	_get_user_details();
 		}
 		else{
         	$scope.info.my_profile = true;
         	$scope.profile_user = $rootScope.user;
         	console.debug($rootScope.user);
-			$scope.active_user_id = $scope.profile_user.id;
+        	if(angular.isUndefined($scope.profile_user.id)){
+        		window.location.reload;
+        	}
+        	else{
+				$scope.active_user_id = $scope.profile_user.id;
+        	}
 		}
 
         // _get_detailed_info();
