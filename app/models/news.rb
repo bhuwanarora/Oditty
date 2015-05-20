@@ -169,11 +169,11 @@ class News < Neo
 	end
 
 	def self.basic_info
-		" ID(news) AS  id  ,news.url  AS url , news.image_url AS image_url, news.title AS title, news.description AS description, news.created_at AS created_at, labels(news) AS label, news.bookmark_count AS bookmark_count "
+		" ID(news) AS  id  ,news.url  AS url , news.image_url AS image_url, news.title AS title, news.description AS description, news.created_at AS created_at, labels(news) AS label, COALESCE(news.bookmark_count,0) AS bookmark_count "
 	end
 
 	def self.grouped_basic_info
-		" news_id: ID(news) , news_url: news.url, view_count:news.view_count, title: news.title , description: news.description  , image_url: news.image_url, created_at:news.created_at, bookmark_count: news.bookmark_count "
+		" news_id: ID(news) , news_url: news.url, view_count:news.view_count, title: news.title , description: news.description  , image_url: news.image_url, created_at:news.created_at, bookmark_count: COALESCE(news.bookmark_count,0) "
 	end
 
 	def self.match_day
