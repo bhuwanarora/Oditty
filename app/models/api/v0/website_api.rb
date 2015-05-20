@@ -22,8 +22,13 @@ module Api
 				labels
 			end
 
-			def self.get_important_community_info id
-				Article::NewsArticle.new(id).most_important_tag_info + Article::NewsArticle.new(id).other_tags_info
+			def self.get_important_community_info id, community_id = nil
+				if community_id
+					clause = Community.new(community_id).get_books_users + " WITH most_important_tag " + Community.new(community_id).match_news_related_communities(id)
+				else
+					clause = Article::NewsArticle.new(id).most_important_tag_info + Article::NewsArticle.new(id).other_tags_info
+				end
+				clause
 			end
 
 			def self.get_chronological_news_info id
