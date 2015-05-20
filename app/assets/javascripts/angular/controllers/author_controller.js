@@ -89,6 +89,9 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
                     $scope.author = data;
                 }
                 else{
+                    if(data.books.length == 1 && (data.books[0].title == null)){
+                        data.books = [];
+                    }
                     $scope.author.books = $scope.author.books.concat(data.books);
                 }
 
