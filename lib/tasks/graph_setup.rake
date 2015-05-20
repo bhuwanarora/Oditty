@@ -12,6 +12,12 @@ namespace :graph do
     GraphHelper.reset_news_link
   end
 
+  desc "set book article shelf"
+  task :make_book_and_article_shelves => :environment do
+    include GraphHelper
+    GraphHelper.make_book_and_article_shelves
+  end
+
   desc "set region news count"
   task :set_region_news_count => :environment do
     include GraphHelper

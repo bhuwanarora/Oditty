@@ -11,6 +11,7 @@ class Bookmark < Neo
 		@media_label_class = Bookmark::Node::NewsLabel
 		@media_label = "News"
 		@media = "news"
+		@shelf = ":ArticleShelf"
 		self
 	end
 
@@ -20,6 +21,7 @@ class Bookmark < Neo
 		@user_media_class = UsersBook
 		@media_label_class = Bookmark::Node::BookLabel
 		@media_label = "Book"
+		@shelf = ":BookShelf"
 		@media = "book"
 		self
 	end
@@ -29,6 +31,7 @@ class Bookmark < Neo
 		@user_media_class = UsersBlog
 		@media_label_class = Bookmark::Node::BlogLabel
 		@media_label = "Blog"
+		@shelf = ":ArticleShelf"
 		@media = "blog"
 		self
 	end

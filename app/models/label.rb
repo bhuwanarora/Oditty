@@ -3,6 +3,19 @@ class Label < Neo
 		@id = id
 	end
 
+	def self.get_shelves id
+		label = Label.get_labels(id).execute[0]["label"][0]
+		case label
+		when "Book"
+			shelf = ":BookShelf"
+		when "News"
+			shelf = ":ArticleShelf"
+		when "Blog"
+			shelf = ":ArticleShelf"
+		end
+		clause = " MATCH (label:Label) WHERE label " + shelf + Label.return_init + Label.basic_info
+	end
+
 	def self.basic_info
 		" label.name AS label_name, ID(label) AS label_id, label.public as public_status, label.key AS label_key "
 	end

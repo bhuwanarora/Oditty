@@ -28,6 +28,11 @@ module GraphHelper
 		end
 	end
 
+	def self.make_book_and_article_shelves
+		clause = " MATCH (label: Label) SET label: BookShelf WITH label WHERE NOT (label.key = \"PlanToBuy\" OR label.key = \"IOwnThis\" OR label.key = \"IOwnthis\") WITH label SET label: ArticleShelf "
+		clause.execute
+	end
+
 	def self.curate_books_author_name
 		get_ids_range_clause = " MATCH (node:Book) RETURN MAX(ID(node)) AS maximum , MIN(ID(node)) AS minimum "
 		range = get_ids_range_clause.execute[0]
