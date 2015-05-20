@@ -82,7 +82,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/community/_users_column.html',
-    "<md-content layout=\"column\" layout-sm=\"row\" layout-align=\"center center\" layout-padding class=\"book_scroller\"><section><md-list ng-if=\"active_tag.users\"><md-item ng-repeat=\"user in active_tag.users\"><md-item-content><a ng-href=\"/profile?id={{user.id}}\" ng-if=\"user.first_name\"><img ng-src=\"{{user.image_url | default_profile}}\" layout-margin class=\"user_circular circular\"><md-tooltip md-direction=\"bottom\">{{user.first_name}} {{user.last_name}}</md-tooltip></a></md-item-content></md-item></md-list><md-list ng-if=\"!active_tag.users || (active_tag.users.length == 0)\">Join and stay updated with the communities.</md-list></section></md-content>"
+    "<md-content layout=\"column\" layout-sm=\"row\" layout-align=\"center center\" layout-padding class=\"book_scroller\"><section><md-list ng-if=\"active_tag.users\"><md-item ng-repeat=\"user in active_tag.users\"><md-item-content><a ng-href=\"/profile?id={{user.id}}\" ng-if=\"user.first_name\"><img ng-src=\"{{user.image_url | default_profile}}\" layout-margin class=\"user_circular circular\"><md-tooltip md-direction=\"bottom\">{{user.first_name}} {{user.last_name}}</md-tooltip></a></md-item-content></md-item></md-list></section></md-content>"
   );
 
 
