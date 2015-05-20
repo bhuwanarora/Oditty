@@ -85,7 +85,7 @@ homeApp.directive('checkScrollBottom', function(){
         link: function (scope, element, attrs){
             var elem = element[0];
             element.bind('scroll', function(){
-            	var buffer = 150;
+            	var buffer = 700;
                 if((elem.scrollTop + elem.offsetHeight + buffer) > elem.scrollHeight){
                     scope.$apply(attrs.checkScrollBottom);
                 }
