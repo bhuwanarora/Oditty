@@ -50,7 +50,8 @@ class WebsiteController < ApplicationController
 	end
 
 	def signup
-		cookies[:logged] = nil
+		cookies.clear
+		session.clear
 		@signup = true
 		render :layout => "landing_page"
 	end
