@@ -11,6 +11,7 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
             if(angular.isDefined(follow_node) && (follow_node != null)){
                 $scope.active_tag.status = true;
             }
+            $scope._check_users();
         });
     }
 
@@ -43,6 +44,15 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
         $scope.get_detailed_community_info();
     }
 
+    $scope._check_users = function(){
+        if($scope.active_tag.users.length == 1){
+            var first_name = $scope.active_tag.users[0].first_name;
+            if(angular.isUndefined(first_name) || first_name == null){
+                $scope.active_tag.users = [];
+            }
+        }
+    }
+
     var _init = (function(){
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
         var url_parsed = regex.exec($location.absUrl());
@@ -62,7 +72,8 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
         $scope.newsTags = [];
         $scope.info.active_tag = $scope.active_tag;
         $scope.info.loading = true;
-        communityService.get_news_info(news_id).then(function(data){
+        var active_community = getCookie("active_community");
+        communityService.get_news_info(news_id, active_community).then(function(data){
             $scope.info.loading = false;
             data = data[0];
             $scope.active_tag = data.most_important_tag[0];
@@ -73,23 +84,33 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
             $scope.newsTags.push(most_important_tag);
             data.other_tags.shift();
             $scope.newsTags = $scope.newsTags.concat(data.other_tags);
-            var active_community = getCookie("active_community");
             angular.forEach($scope.newsTags, function(value){
-                if(angular.isDefined(active_community)){
-                    console.debug("active_community", value.name);
+                if(angular.isDefined(active_community) && (active_community != "")){
                     if(parseInt(active_community) == value.id){
-                        $timeout(function(){
-                            $scope.refresh_data(value);
-                        }, 2000);
+                        $scope.active_tag = value;
+                        value.view_count = Math.floor((Math.random() * 1000) + 500);
+                    }
+                    else{
+                        value.view_count = Math.floor((Math.random() * 100) + 50);
                     }
                 }
-                value.view_count = Math.floor((Math.random() * 100) + 50);;
+                else{
+                    if($scope.active_tag.id == value.id){
+                        value.view_count = Math.floor((Math.random() * 1000) + 500);
+                    }
+                    else{
+                        value.view_count = Math.floor((Math.random() * 100) + 50);
+                    }
+                }
+                deleteCookie("active_community");
             });
             angular.forEach($scope.active_tag.books, function(value){
                 var random_int = Math.floor(Math.random()*ColorConstants.value.length);
                 var color = ColorConstants.value[random_int];
                 value.color = color;
             });
+
+            $scope._check_users();
 
             $timeout(function(){
                 $scope.get_detailed_community_info();

@@ -216,7 +216,7 @@
             <md-toolbar md-scroll-shrink class="md-whiteframe-z1 header <% if !@infinity %>'no_shadow'<% end %>">
                 <section layout="row" layout-wrap>
                     <div flex="20" flex-sm="35" layout="row" layout-align="start center">
-                        <md-button ng-show="info.mobile_search" class="burger padding" ng-click="toggleLeft($event)">
+                        <md-button ng-show="info.mobile_search" class="burger padding <% if @news %>white<% end %>" ng-click="toggleLeft($event)">
                             <a><span class="icon-menu2"></span></a>
                         </md-button>
                         <div ng-show="info.mobile_search" 
