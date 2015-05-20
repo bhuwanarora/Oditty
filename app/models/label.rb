@@ -36,12 +36,12 @@ class Label < Neo
 	end
 
 	def self.optional_match_books
-		" OPTIONAL MATCH (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(book:Book)
+		" OPTIONAL MATCH (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode{user_id: ID(user)})-[bookmark_action:BookmarkAction]->(book:Book)
 		WITH label, COLLECT({"+Book.grouped_basic_info+"}) as book, COUNT(label) AS label_count "
 	end
 
 	def self.optional_match_articles
-		" OPTIONAL MATCH (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(article) WHERE (article:News OR article:Blog) WITH label, COLLECT({"+Article.grouped_basic_info+"}) as article, COUNT(label) AS label_count "
+		" OPTIONAL MATCH (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode{user_id: ID(user)})-[bookmark_action:BookmarkAction]->(article) WHERE (article:News OR article:Blog) WITH label, COLLECT({"+Article.grouped_basic_info+"}) as article, COUNT(label) AS label_count "
 	end
 
 end
