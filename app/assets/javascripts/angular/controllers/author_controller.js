@@ -15,7 +15,6 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
     }
 
     $scope.keypress_scroll = function(event){
-        debugger
         if(event.keyCode == WebsiteUIConstants.KeyDown){
             $scope.active_index = $scope.next_block($scope.active_index);
         }
@@ -68,44 +67,68 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         event.stopPropagation();
     }
 
+    $scope.get_books = function(id){
+        if(angular.isUndefined($scope.info.loading) || !$scope.info.loading){
+            var _get_wiki_without_google_redirect = function(wiki_url){
+                $scope.author.wiki_url = wiki_url.substring(wiki_url.lastIndexOf("?q=")+3, wiki_url.lastIndexOf("&sa"));
+            }
+
+            if(angular.isUndefined(id)){
+                id = $scope.author.id;
+            }
+            $scope.info.loading = true;
+            if(angular.isDefined($scope.author) && angular.isDefined($scope.author.books)){
+                var skip = $scope.author.books.length;
+            }
+            else{
+                var skip = 0;
+            }
+
+            authorService.get_details(id, skip).then(function(data){
+                if(skip == 0){
+                    $scope.author = data;
+                }
+                else{
+                    $scope.author.books = $scope.author.books.concat(data.books);
+                }
+
+                if(data.wiki_url != null && data.wiki_url != ""){
+                    _get_wiki_without_google_redirect(data.wiki_url);
+                    $scope.author.wiki_url = $sce.trustAsResourceUrl($scope.author.wiki_url+"?action=render");
+                }
+                if(($scope.author.books.length == 1) && ($scope.author.books[0].title == null)){
+                    $scope.author.books = [];
+                    var random_int = Math.floor(Math.random()*ColorConstants.value.length);
+                    var color = ColorConstants.value[random_int];
+                    $scope.custom_style = {'background-color': color};
+                    $scope.custom_color = color;
+                }
+                else{
+                    angular.forEach($scope.author.books, function(value, index){
+                        var random_int = Math.floor(Math.random()*ColorConstants.value.length);
+                        var url = $filter('large_thumb')(value);
+                        var color = ColorConstants.value[random_int];
+                        if(url != ""){
+                            var json =  {"color": color, "custom_style": {"background-image": "url('"+url+"')"}};
+                        }
+                        else{
+                            var json =  {"color": color, "custom_style": {"background-color": color}};
+                        }
+                        $scope.author.books[index] = angular.extend($scope.author.books[index], json);
+                    });
+                }
+                $scope.info.loading = false;
+            });
+        }
+    }
+
     var _init = (function(){
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
         var id = regex.exec($location.absUrl())[2];
-        var _get_wiki_without_google_redirect = function(wiki_url){
-            $scope.author.wiki_url = wiki_url.substring(wiki_url.lastIndexOf("?q=")+3, wiki_url.lastIndexOf("&sa"));
-        }
+        
 
         $scope.active_index = 0;
-        $scope.info.loading = true;
-        authorService.get_details(id).then(function(data){
-            $scope.author = data;
-            if(data.wiki_url != null && data.wiki_url != ""){
-                _get_wiki_without_google_redirect(data.wiki_url);
-                $scope.author.wiki_url = $sce.trustAsResourceUrl($scope.author.wiki_url+"?action=render");
-            }
-            if(($scope.author.books.length == 1) && ($scope.author.books[0].title == null)){
-                $scope.author.books = [];
-                var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-                var color = ColorConstants.value[random_int];
-                $scope.custom_style = {'background-color': color};
-                $scope.custom_color = color;
-            }
-            else{
-                angular.forEach($scope.author.books, function(value, index){
-                    var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-                    var url = $filter('large_thumb')(value);
-                    var color = ColorConstants.value[random_int];
-                    if(url != ""){
-                        var json =  {"color": color, "custom_style": {"background-image": "url('"+url+"')"}};
-                    }
-                    else{
-                        var json =  {"color": color, "custom_style": {"background-color": color}};
-                    }
-                    $scope.author.books[index] = angular.extend($scope.author.books[index], json);
-                });
-            }
-            $scope.info.loading = false;
-        });
+        $scope.get_books(id);
     }());
 
 }]);
