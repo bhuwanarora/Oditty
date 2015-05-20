@@ -44,6 +44,10 @@ class Article::NewsArticle < Article
 		" ID(news) AS news_id, news.title AS title, news.published_year AS published_year "
 	end
 
+	def self.get_bookmark
+		
+	end
+
 	def get_chronological_news_info
 		match + News.match_chronological_news + @news.match_community + Community.order_desc + Community.return_init + News.basic_info + Community.most_important_category_info 
 	end

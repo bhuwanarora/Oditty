@@ -57,4 +57,11 @@ class Label < Neo
 		" OPTIONAL MATCH (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode{user_id: ID(user)})-[bookmark_action:BookmarkAction]->(article) WHERE (article:News OR article:Blog) WITH label, COLLECT({"+Article.grouped_basic_info+"}) as article, COUNT(label) AS label_count "
 	end
 
+	def self.optional_match_public_labels
+		" OPTIONAL MATCH (label:Label{public: true}) WITH label "
+	end
+
+	def self.grouped_basic_info
+		" label: ID(label), key: label.key, name: label.name "
+	end
 end

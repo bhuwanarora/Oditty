@@ -6,8 +6,8 @@ module Api
 				Api::V0::NewsApi.get_feed(user_id, params)
 			end
 
-			def self.get_news skip_count, day_skip_count, region
-				News.get_feed(skip_count, day_skip_count, region)
+			def self.get_news skip_count, day_skip_count, region, user_id
+				News.get_feed(skip_count, day_skip_count, region, user_id)
 			end
 
 			def self.get_blog skip_count, multiple_blog
