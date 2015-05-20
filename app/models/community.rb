@@ -172,7 +172,11 @@ class Community < Neo
 					clause += Book.search_by_indexed_title(indexed_title) + " , community " + Community.merge_book + " WITH community "
 				end
 				clause += News.return_init + Community.basic_info
-				clause.execute				
+				community_info = clause.execute[0]				
+				if community_info["image_url"].present && community_info["id"].present?
+					type = "community"
+					VersionerWorker.perform_async(community_info["id"], community_info["image_url"], type)
+				end
 			end
 		end
 	end
