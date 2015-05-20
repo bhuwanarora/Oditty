@@ -274,6 +274,7 @@ module.exports = function(grunt) {
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/community_group.min.js":[
+                    "app/assets/javascripts/min/angular/directives/news_directives.js",
                     "app/assets/javascripts/min/angular/controllers/book/specific_book_controller.js",
                     "app/assets/javascripts/min/angular/controllers/book/timeline_controller.js",
                     "app/assets/javascripts/min/angular/controllers/book/real_virtuality_controller.js",

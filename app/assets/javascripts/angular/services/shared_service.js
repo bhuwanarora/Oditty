@@ -68,16 +68,15 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
 
     this.load_popular_books = function($scope, books){
         if(angular.isUndefined(books)){
-            books = $scope.info.books;
+            if(angular.isUndefined($scope.info.books)){
+                books = [];
+            }
+            else{
+                books = $scope.info.books;
+            }
         }
+        var skip_count = books.length;
 
-        if(angular.isDefined(books)){
-            var skip_count = books.length;
-        }
-        else{
-            books = [];
-            var skip_count = 0;
-        }
         if(angular.isUndefined($scope.filters)){
             $scope.filters = {};
         }

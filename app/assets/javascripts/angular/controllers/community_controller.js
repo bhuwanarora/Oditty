@@ -1,4 +1,4 @@
-homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communityService', '$location', '$rootScope', '$mdDialog', 'ColorConstants', function($scope, $mdSidenav, communityService, $location, $rootScope, $mdDialog, ColorConstants){
+homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communityService', '$location', '$rootScope', '$mdDialog', 'ColorConstants', '$timeout', function($scope, $mdSidenav, communityService, $location, $rootScope, $mdDialog, ColorConstants, $timeout){
     $scope.toggle_details = function(){
         $mdSidenav('right').toggle();
         // $scope.get_detailed_community_info();
@@ -57,6 +57,7 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
             var news_id = $rootScope.active_community.news_id;
         }
 
+        $scope.info.active_news_id = news_id;
 
         $scope.newsTags = [];
         $scope.info.active_tag = $scope.active_tag;
@@ -72,7 +73,11 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
             $scope.newsTags.push(most_important_tag);
             data.other_tags.shift();
             $scope.newsTags = $scope.newsTags.concat(data.other_tags);
+            var active_community = getCookie("active_community");
             angular.forEach($scope.newsTags, function(value){
+                if(angular.isDefined(active_community) == value.id){
+                    $scope.refresh_data(value);
+                }
                 value.view_count = Math.floor((Math.random() * 100) + 50);;
             });
             angular.forEach($scope.active_tag.books, function(value){
@@ -80,16 +85,11 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
                 var color = ColorConstants.value[random_int];
                 value.color = color;
             });
-            $scope.get_detailed_community_info();
-        });
 
-        communityService.get_chronological_news(news_id).then(function(data){
-            $scope.news = data;
-            angular.forEach($scope.news, function(value, index){
-                if(value.community_info.name == $scope.active_tag.name){
-                    $scope.selectedIndex = index;
-                }
-            });
+            console.debug($scope.newsTags);
+            $timeout(function(){
+                $scope.get_detailed_community_info();
+            }, 4000);
         });
 
     }());
