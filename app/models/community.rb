@@ -149,6 +149,10 @@ class Community < Neo
 				News.map_topics(news_metadata["news_id"], response["Hierarchy"]) 				
 				Community.map_books(communities_books.zip(relevance), news_metadata)
 				News.new(news_metadata["news_id"]).add_notification.execute
+				if news_metadata["image_url"].present && news_metadata["news_id"].present?
+					type = "news"
+					VersionerWorker.perform_async(news_metadata["news_id"], news_metadata["image_url"], type)
+				end
 			end
 		end
 	end 
