@@ -9,6 +9,7 @@ homeApp.directive('newsScroller', ["$rootScope", "communityService", function($r
                     angular.forEach($scope.news, function(value, index){
                         if(value.community_info.name == $scope.active_tag.name){
                             $scope.selectedIndex = index;
+                            $rootScope.active_news = value;
                         }
                     });
                 });

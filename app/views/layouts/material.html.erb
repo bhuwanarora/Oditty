@@ -191,6 +191,7 @@
 
     <body ng-controller="appController" 
         ng-keydown="scroll_on_keypress($event)" 
+        class="<% if @news %>white<% end %>" 
         ng-click="close_popups()" 
         msd-wheel="close_popups()">
         <!-- <audio id="audiotag1" src="assets/typewriter2.m4a" preload="auto"></audio>

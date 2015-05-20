@@ -75,8 +75,13 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
             $scope.newsTags = $scope.newsTags.concat(data.other_tags);
             var active_community = getCookie("active_community");
             angular.forEach($scope.newsTags, function(value){
-                if(angular.isDefined(active_community) == value.id){
-                    $scope.refresh_data(value);
+                if(angular.isDefined(active_community)){
+                    console.debug("active_community", value.name);
+                    if(parseInt(active_community) == value.id){
+                        $timeout(function(){
+                            $scope.refresh_data(value);
+                        }, 2000);
+                    }
                 }
                 value.view_count = Math.floor((Math.random() * 100) + 50);;
             });
@@ -86,7 +91,6 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
                 value.color = color;
             });
 
-            console.debug($scope.newsTags);
             $timeout(function(){
                 $scope.get_detailed_community_info();
             }, 4000);
