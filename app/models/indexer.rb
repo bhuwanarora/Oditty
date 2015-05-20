@@ -2,7 +2,7 @@ class Indexer
 	def initialize response
 		@response = response
 		@client = Elasticsearch::Client.new log: true	
-
+		@filename = Constant::IndexerLogs
 	end
 
 	def self.set_index
@@ -231,19 +231,25 @@ class Indexer
 	end
 	
 	def index_book
-		authors = [] 
-		relationships = get_relationships(@response["book_id"])
-		relationships.each do |relationship|
-			if relationship["type"] == "Wrote" 
-				author_id = relationship["start"].split("/").last
-				author_node_url = "#{Rails.application.config.neo4j_url}/db/data/node/#{author_id}/properties"
-				author_name = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(author_node_url))))["name"]
-				authors << {"id" => author_id, "name" => author_name }
-			end 
+		begin
+			authors = [] 
+			relationships = get_relationships(@response["book_id"])
+			relationships.each do |relationship|
+				if relationship["type"] == "Wrote" 
+					author_id = relationship["start"].split("/").last
+					author_node_url = "#{Rails.application.config.neo4j_url}/db/data/node/#{author_id}/properties"
+					author_name = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(author_node_url))))["name"]
+					authors << {"id" => author_id, "name" => author_name }
+				end 
+			end
+			author_name = authors.present? ? authors.first["name"] : "null" 
+			author_id =  authors.present? ? authors.first["id"] : "null"
+			@client.index  index: 'search', type: 'books', id: @response["book_id"], body: { title: @response["title"], isbn: @response["isbn"], description: @response["description"], author_name: author_name, author_id: author_id, weight: get_relationships(@response["book_id"]).length}
+		rescue Exception => e
+			puts e.to_s.red
+			message = "#{e} for id #{@response["book_id"]}"
+			File.open(@filename, 'a') { |file| file.puts(message) }
 		end
-		author_name = authors.present? ? authors.first["name"] : "null" 
-		author_id =  authors.present? ? authors.first["id"] : "null"
-		@client.index  index: 'search', type: 'books', id: @response["book_id"], body: { title: @response["title"], isbn: @response["isbn"], description: @response["description"], author_name: author_name, author_id: author_id, weight: get_relationships(@response["book_id"]).length}
 	end	
 
 	def index_blog
