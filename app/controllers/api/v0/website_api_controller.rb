@@ -45,6 +45,12 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def feed_community_info
+				id = params[:id]
+				info = Api::V0::WebsiteApi.get_feed_community_info(id).execute[0]
+				render :json => info, :status => 200
+			end
+
 			def chronological_news
 				id = params[:id]
 				info = Api::V0::WebsiteApi.get_chronological_news_info(id).execute

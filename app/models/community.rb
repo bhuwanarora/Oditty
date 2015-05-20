@@ -17,18 +17,22 @@ class Community < Neo
 	end
 
 	def self.grouped_basic_info
-		"  view_count:community.view_count,  name:community.name, id:ID(community), image_url:community.image_url  "
+		" view_count:community.view_count,  name:community.name, id:ID(community), image_url:community.image_url "
 	end
 
 	def books_users_info 
-		match + Community.grouped_books_users + " WITH users_info, books_info , community WITH users_info, books_info , community, "  + Community.collect_map({"most_important_tag" => Community.grouped_basic_info + ", books: books_info[0..3], users: users_info " }) + Community.return_group("most_important_tag")
+		match + Community.grouped_books_users + Community.return_init + " most_important_tag "
+	end
+
+	def feed_info
+		match + Community.match_grouped_books + Community.return_group(Community.basic_info, "books_info[0..3] AS books")
 	end
 
 	def self.match_books 
 		" MATCH (community)-[:RelatedBooks]->(book:Book) WITH community, book "
 	end
 
-	def self.match_news 
+	def self.match_news
 		" MATCH (community)<-[:HasCommunity]-(news:News) WITH community, news "
 	end
 
@@ -65,8 +69,6 @@ class Community < Neo
 		" MATCH (community)<-[:HasCommunity]-(news:News) WITH community, news "
 	end
 
-
-
 	def self.set_follow_count operation = "+"
 		" SET community.follow_count = COALESCE(community.follow_count,0) #{operation} 1 "
 	end
@@ -76,7 +78,7 @@ class Community < Neo
 	end
 
 	def self.match_grouped_books
-		Community.match_books + " WITH community, " + Book.collect_map({"books_info" => Book.grouped_basic_info }) 
+		Community.match_books + " WITH community, " + Book.collect_map({"books_info" => Book.grouped_basic_info})
 	end
 
 	# This funnction first checks the database for books, if no books are present,

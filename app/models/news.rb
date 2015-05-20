@@ -220,11 +220,11 @@ class News < Neo
 
 	def self.get_bookmarks user_id
 		media = "news"
-		User.new(user_id).match + " , news, follow_count, communities, users " + Label.optional_match_public_labels + " , news, follow_count, communities, users " +  Bookmark.optional_match_path(media) + " WHERE label: ArticleShelf " + " WITH DISTINCT news, follow_count, communities, users , " + News.collect_map({"shelves" => (Label.grouped_basic_info + ", status: ID(bookmark_node)")}) 
+		User.new(user_id).match + " , news, follow_count, communities, users " + Label.optional_match_public_labels + " , news, follow_count, communities, users " +  Bookmark.optional_match_path(media) + News.with_group("news", "follow_count", "communities", "users", "label", "bookmark_node") + " WHERE label: ArticleShelf " + " WITH DISTINCT news, follow_count, communities, users , " + News.collect_map({"shelves" => (Label.grouped_basic_info + ", status: ID(bookmark_node)")}) 
 	end
 
 	def self.get_feed skip_count, day_skip_count, region, user_id
-		 News.match_regional_temporal_news(skip_count,day_skip_count,region) + News.match_community_users + News.get_bookmarks(user_id) + News.return_group(News.basic_info," follow_count, communities[0.." + Constant::Count::CommunitiesOfNewsShown.to_s + "] AS communities ", "users[0..4] AS users", "shelves")
+		 News.match_regional_temporal_news(skip_count, day_skip_count, region) + News.match_community_users + News.get_bookmarks(user_id) + News.return_group(News.basic_info," follow_count, communities[0.." + Constant::Count::CommunitiesOfNewsShown.to_s + "] AS communities ", "users[0..4] AS users", "shelves")
 	end
 
 	def self.get_regions

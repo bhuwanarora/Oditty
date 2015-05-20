@@ -1,17 +1,13 @@
 homeApp.directive('bookmark', ["$rootScope", 'feedService', function($rootScope, feedService){
     return {
         restrict: 'E',
-        scope : {data: '='},
+        scope : {data: '=', shelves: '='},
         controller: ["$scope", function($scope){
             $scope.show_shelves = function(){
                 $scope.show_shelf = !$scope.show_shelf;
-                feedService.get_bookmarks($scope.data.id).then(function(data){
-                    $scope.labels = data;
-                });
             }
 
             var _init = function(){
-                $scope.labels = $rootScope.labels;
                 $rootScope.bookmark_object = $scope.data;
             }
 

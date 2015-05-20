@@ -25,8 +25,7 @@ homeApp.directive('communityInfo', ["$rootScope", "communityService", 'ColorCons
         controller: ["$scope", function($scope){
             var _init = function(){
                 $scope.community_loading = true;
-                communityService.get_community_details($scope.community.id).then(function(data){
-                    data = data[0].most_important_tag[0];
+                communityService.get_feed_info($scope.community.id).then(function(data){
                     $scope.community = angular.extend($scope.community, data);
                     angular.forEach($scope.community.books, function(book){
                         var random_int = Math.floor(Math.random()*ColorConstants.value.length);

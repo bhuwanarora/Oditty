@@ -54,7 +54,7 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
 
         var id = $rootScope.bookmark_object.id;
         var type = $rootScope.bookmark_object.type;
-        var shelf = label.label_key;
+        var shelf = (label.label_key || label.key);
         var params = {"id": id, "type": type, "shelf": shelf, "status": status};
         
         shelfService.bookmark(params);
