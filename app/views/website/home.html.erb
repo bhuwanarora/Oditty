@@ -2,7 +2,8 @@
     <!-- <div class="material_cover md-whiteframe-z1"></div> -->
 	<div layout="row" layout-align="space-between center" class="light_grey">
 		<div></div>
-		<md-select ng-model="active_region" placeholder="Select Region" ng-change="change_feed()">
+		<md-select ng-model="info.active_region" placeholder="Select Region" 
+            ng-change="change_feed()">
 	      	<md-optgroup label="Regions">
 	        	<md-option ng-value="region.id" ng-repeat="region in regions">{{region.name}}</md-option>
 	      	</md-optgroup>

@@ -375,6 +375,15 @@ angular.module('filtersApp', [])
 
     }
   })
+    .filter('cdn_image', function(){
+        return function(id, type){
+            var output = "";
+            if(id){
+                output = "http://rd-images.readersdoor.netdna-cdn.com/"+id+"/"+type+".png";
+            }
+            return output;
+        }
+    })
   .filter('thumb_backup', function(){
     return function(input){
         var output = input;

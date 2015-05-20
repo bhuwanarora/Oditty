@@ -83,6 +83,7 @@
             <% end %>
 
             <% if @news %>
+                <script src="assets/angular/directives/news_directives.js"></script>
                 <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
                 <script src="assets/angular/controllers/book/timeline_controller.js"></script>
                 <script src="assets/angular/controllers/book/real_virtuality_controller.js"></script>
@@ -190,6 +191,7 @@
 
     <body ng-controller="appController" 
         ng-keydown="scroll_on_keypress($event)" 
+        class="<% if (@news || @infinity || @book) %>white<% end %>" 
         ng-click="close_popups()" 
         msd-wheel="close_popups()">
         <!-- <audio id="audiotag1" src="assets/typewriter2.m4a" preload="auto"></audio>
@@ -214,7 +216,7 @@
             <md-toolbar md-scroll-shrink class="md-whiteframe-z1 header <% if !@infinity %>'no_shadow'<% end %>">
                 <section layout="row" layout-wrap>
                     <div flex="20" flex-sm="35" layout="row" layout-align="start center">
-                        <md-button ng-show="info.mobile_search" class="burger padding" ng-click="toggleLeft($event)">
+                        <md-button ng-show="info.mobile_search" class="burger padding <% if (@book || @news || @infinity) %>white<% end %>" ng-click="toggleLeft($event)">
                             <a><span class="icon-menu2"></span></a>
                         </md-button>
                         <div ng-show="info.mobile_search" 
@@ -280,7 +282,7 @@
                     <div flex="20" flex-sm="35" layout="row" layout-align="end center">
                         <a href="/room" ng-show="info.mobile_search">
                             <md-button class="small-padding">
-                                <span class="icon-home2"></span>
+                                <span class="icon-books"></span>
                                 <md-tooltip >
                                     Room
                                 </md-tooltip>

@@ -1,7 +1,12 @@
 homeApp.service('communityService', ["$http", "$q", "$rootScope", "WebsiteUIConstants", function($http, $q, $rootScope, WebsiteUIConstants){
 
-	this.get_news_info = function(id){
-		return _deferred_request('/api/v0/news_info?id='+id, $q, $http);
+	this.get_news_info = function(id, tag_id){
+        if(angular.isDefined(tag_id) && (tag_id != "")){
+            return _deferred_request('/api/v0/news_info?id='+id+'&tag_id='+tag_id, $q, $http);
+        }
+        else{
+		    return _deferred_request('/api/v0/news_info?id='+id, $q, $http);
+        }
 	}
 
     this.get_chronological_news = function(id){

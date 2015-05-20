@@ -1,10 +1,13 @@
-homeApp.directive('bookmark', ["$rootScope", function($rootScope){
+homeApp.directive('bookmark', ["$rootScope", 'feedService', function($rootScope, feedService){
     return {
         restrict: 'E',
         scope : {data: '='},
         controller: ["$scope", function($scope){
             $scope.show_shelves = function(){
                 $scope.show_shelf = !$scope.show_shelf;
+                feedService.get_bookmarks($scope.data.id).then(function(data){
+                    $scope.labels = data;
+                });
             }
 
             var _init = function(){
@@ -82,8 +85,8 @@ homeApp.directive('checkScrollBottom', function(){
         link: function (scope, element, attrs){
             var elem = element[0];
             element.bind('scroll', function(){
-            	var buffer = 150;
-                if(elem.scrollTop + elem.offsetHeight + buffer > elem.scrollHeight) {
+            	var buffer = 1400;
+                if((elem.scrollTop + elem.offsetHeight + buffer) > elem.scrollHeight){
                     scope.$apply(attrs.checkScrollBottom);
                 }
             });

@@ -8,7 +8,6 @@
         <div flex class="image_wrapper">
             <img class="community_feed_image"
                  ng-src="{{community_feed.image_url}}"
-                 ng-click="goto_community_page(community_feed.id)"  
                  layout-padding
                  ng-show="community_feed.image_url"/>
         </div>
@@ -22,12 +21,12 @@
             <div layout="column" layout-align="center start">
                 <img ng-src="{{community.image_url}}" class="community_circular" alt="{{community.name}}" />
                 <a ng-bind-html="community.name" layout-wrap class="custom_title" layout-padding 
-                    ng-click="goto_community_page(community_feed.id)"></a>
+                    ng-click="goto_community_page(community_feed.id, community.id)"></a>
             </div>
         </md-list-item>
     </md-card-content>
     <md-card-content class="footer" 
-        ng-init="bookmark_object = {'id': community_feed.id, 'type': 'Community'}"
+        ng-init="bookmark_object = {'id': community_feed.id, 'type': 'Community'}; feed = community_feed"
         ng-include src="'/assets/angular/html/shared/partials/feed_footer.html'">
     </md-card-content>
 </md-card>

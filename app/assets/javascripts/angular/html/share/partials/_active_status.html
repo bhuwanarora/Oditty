@@ -1,6 +1,6 @@
 <md-list-item ng-repeat="book in info.status_books | limitTo: 4" 
             layout="row" layout-align="space-between"
-            class="menu_details margin_top white md-whiteframe-z1">
+            class="menu_details margin_top white">
     <div layout="row" flex="90">
     	<div flex="15">
     		<img ng-src="{{book.isbn | small_thumb}}">
@@ -38,7 +38,7 @@
         <span class="icon-plus"></span>
     </md-button>
 </md-list-item>
-<div class="menu_details white md-whiteframe-z1" layout="row" 
+<div class="menu_details white" layout="row" 
     layout-padding
     layout-align="space-between" ng-if="active_book">
     <div layout-padding>

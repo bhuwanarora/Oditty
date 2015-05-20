@@ -1,11 +1,11 @@
 <md-content	ng-if="constant.show_book" layout="column" 
 		hide-sm
 		layout-align="start end" layout-padding  
-		class="fixed_left_panel">
+		class="fixed_left_panel white">
 	<div layout="row" layout-align="center center" layout-margin 
 		 class="genre" 
 		 ng-repeat="genre in active_book.genres | limitTo:5">
-		<div>{{genre}}&nbsp;&nbsp;</div>
+		<div hide-sm hide-md>{{genre}}&nbsp;&nbsp;</div>
 		<div class="grey_circle" layout-align="center center" layout="center">
 			<div>{{genre | first_two | uppercase}}</div>
 		</div>

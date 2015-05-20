@@ -93,7 +93,7 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
 
         $scope.search_results = [];
 
-        _handle_labels();
+        // _handle_labels();
         _handle_user_details();
 
     }());

@@ -7,12 +7,11 @@
         <div flex="65" ng-if="show_details" class="animate-fast">
         </div>
     </section>
-    <section layout="row" 
+     <news-scroller layout="row" 
         layout-align="center" 
         layout-padding
-        class="news_footer"
-        ng-include src="'/assets/angular/html/community/_footer.html'" >
-    </section>
+        class="news_footer">
+    </news-scroller>
 </div>
 <!-- <d3-circles></d3-circles> -->
 <!-- <d3-bars data="d3Data"></d3-bars> -->
@@ -30,7 +29,7 @@
     #news .news_footer .md-header-items,
     #news .news_footer, 
     #news .news_footer .md-header-items-container{
-        background-color: #D2D2D2;
+        background-color: #e5e5e5;
     }
 
     #news md-tabs.md-default-theme md-tab{

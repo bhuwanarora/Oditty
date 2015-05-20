@@ -1,3 +1,7 @@
+.md-button.md-fab.md-fab-bottom-right{
+	position: fixed !important;
+}
+
 body,
 md-content.md-default-theme{
 	background-color: #ececec;
@@ -521,6 +525,7 @@ and (max-width : 800px){
     /* tablets and desktop */
     .book_scroller{
     	max-height: 70vh;
+    	margin-left: 20px;
     }
 }
 
@@ -570,4 +575,9 @@ and (max-width : 800px){
 
 .less_important_container{
 	background-color: #f5f5f5;
+}
+
+.user_circular{
+	width: 80px;
+	height: 80px;
 }

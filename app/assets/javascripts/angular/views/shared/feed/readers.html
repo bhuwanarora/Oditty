@@ -1,9 +1,0 @@
-<div class="notifications animate-fast scrollbar" 
-	 check-scroll-bottom="get_notifications(reader.id)">
-	<div class="full_height">
-		<notification data="notification" ng-repeat="notification in readers_notifications | reverse"></notification>
-		<div class="notification_stable">
-			No new notifications from {{reader.name | first_name}}.
-		</div>
-	</div>
-</div>

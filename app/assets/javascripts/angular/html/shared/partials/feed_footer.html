@@ -1,21 +1,26 @@
 <section layout="row" layout-sm="column" layout-align="space-between">
     <div layout="row" layout-align="end center">
+        <div ng-repeat="user in feed.users" ng-if="user.first_name">
+            <a ng-href="/profile?id={{user.id}}"><img ng-src="{{user.image_url | default_profile}}" class="circular"></a>
+            &nbsp;
+            <md-tooltip md-direction="top">
+                {{user.first_name}} {{user.last_name}}
+            </md-tooltip>
+        </div>
+        <div ng-show="feed.follow_count > 4">
+            {{feed.follow_count - 4}} other users
+        </div>
     </div>
     <div layout="row" layout-align="start center">
         <bookmark data="bookmark_object"></bookmark>
-    &nbsp;
-    <div>
-        <span class="icon-bookmark3"></span>
-            <md-tooltip>
-                Bookmark
-            </md-tooltip>
-        </div>&nbsp;
-        <div>{{feed.bookmark_count || 0}}</div>&nbsp;&nbsp;
-        <div><span class="icon-bubbles2"></span>
-            <md-tooltip>
-                Comments
-            </md-tooltip>
-        </div>&nbsp;
-        <div>{{feed.comment_count || 0}}</div>&nbsp;
+        <!-- <div layout="row">
+            <div>{{feed.bookmark_count || 0}}</div>&nbsp;&nbsp;
+            <div><span class="icon-bubbles2"></span>
+                <md-tooltip>
+                    Comments
+                </md-tooltip>
+            </div>&nbsp;
+            <div>{{feed.comment_count || 0}}</div>&nbsp;
+        </div> -->
     </div>
 </section>
