@@ -27,6 +27,11 @@ class News < Neo
 		" MATCH (news)-[has_community:HasCommunity]->(community:Community) WITH news, community, has_community "
 	end
 
+	def self.optional_match_community
+		" MATCH (news)-[has_community:HasCommunity]->(community:Community) WITH news, community, has_community "
+	end
+
+
 	def match_community
 		" MATCH (news)-[:HasCommunity]->(community:Community) WITH news, community "
 	end

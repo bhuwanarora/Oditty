@@ -14,7 +14,8 @@ module Api
 
 			def news_info
 				id = params[:id]
-				info = Api::V0::WebsiteApi.get_important_community_info(id).execute
+				community_id = params[:tag_id]
+				info = Api::V0::WebsiteApi.get_important_community_info(id, community_id).execute
 				render :json => info, :status => 200
 			end
 
