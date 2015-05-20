@@ -49,6 +49,9 @@ module GraphHelper
 	end
 
 	def self.set_category_linked_list
+		delete_clause = "MATCH (a)-[r:NextInCategory]->(b) DELETE r"
+		delete_clause.execute
+
 		starting_book_id = Constant::Id::BestBook.to_i
 		match_clause = " MATCH (book) WHERE ID(book) = " + starting_book_id.to_s + " WITH book MATCH  (last:Book)-[:Next_book]->(book) WITH book, last MATCH path = (book)-[:Next_book*]->(last) " 
 		extract_clause = " WITH path, EXTRACT (n IN nodes(path)|n) AS books UNWIND books AS book WITH book WHERE NOT (book)-[:NextInCategory]-() "
@@ -59,6 +62,9 @@ module GraphHelper
 	end
 
 	def self.set_era_linked_list
+		delete_clause = "MATCH (a)-[r:NextInEra]->(b) DELETE r"
+		delete_clause.execute
+
 		starting_book_id = Constant::Id::BestBook.to_i
 		match_clause = " MATCH (book) WHERE ID(book) = " + starting_book_id.to_s + " WITH book MATCH  (last:Book)-[:Next_book]->(book) WITH book, last MATCH path = (book)-[:Next_book*]->(last) " 
 		extract_clause = " WITH path, EXTRACT (n IN nodes(path)|n) AS books UNWIND books AS book WITH book WHERE NOT (book)-[:NextInEra]-() "
