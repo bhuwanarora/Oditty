@@ -6,8 +6,8 @@ module Api
 				clause.execute
 			end
 
-			def self.add_new_label user_id, label
-				UsersLabel.create_new(user_id, label)
+			def self.add_new_label user_id, label, type
+				UsersLabel.create_new(user_id, label, type)
 			end
 
 			def self.add_label user_id, label
