@@ -318,7 +318,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/network/_sub_header.html',
-    "<md-tabs layout=\"row\" layout-wrap md-selected=\"selectedIndex\"><md-tab class=\"padding\" aria-controls=\"tab1-content\" id=\"tab1\" ng-click=\"get_followers()\" label=\"{{user.follower_count || 0}} FOLLOWERS\"><div layout=\"column\" ng-include src=\"'/assets/angular/html/network/show.html'\"></div></md-tab><md-tab class=\"padding\" aria-controls=\"tab2-content\" id=\"tab2\" ng-click=\"get_users_followed()\" label=\"{{user.following_count || 0}} FOLLOWING\"><div layout=\"column\" ng-include src=\"'/assets/angular/html/network/show.html'\"></div></md-tab></md-tabs><br><br>"
+    "<md-tabs layout=\"row\" layout-wrap md-selected=\"selectedIndex\"><md-tab class=\"padding\" aria-controls=\"tab1-content\" id=\"tab1\" ng-click=\"get_followers()\" label=\"{{profile_user.follows_count || 0}} FOLLOWERS\"><div layout=\"column\" ng-include src=\"'/assets/angular/html/network/show.html'\"></div></md-tab><md-tab class=\"padding\" aria-controls=\"tab2-content\" id=\"tab2\" ng-click=\"get_users_followed()\" label=\"{{profile_user.followed_by_count || 0}} FOLLOWING\"><div layout=\"column\" ng-include src=\"'/assets/angular/html/network/show.html'\"></div></md-tab></md-tabs><br><br>"
   );
 
 
