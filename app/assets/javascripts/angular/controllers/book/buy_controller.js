@@ -16,8 +16,8 @@ homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sha
 	$scope.toggle_bookmark = function(status){
 		var id = ($rootScope.active_book.id) || ($rootScope.active_book.book_id);
 		var label = {"label_key": "IOwnThis"};
-		$rootScope.bookmark_object = {"type": "Book", "id": id};
-		sharedService.toggle_bookmark(label, status);
+		var bookmark_object = {"type": "Book", "id": id};
+		sharedService.toggle_bookmark(label, status, bookmark_object);
 	}
 
 }]);

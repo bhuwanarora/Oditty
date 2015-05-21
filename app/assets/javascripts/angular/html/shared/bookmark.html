@@ -1,11 +1,12 @@
 <div>
-	<md-tooltip md-direction="top" class="shelf_tooltip && !hide_shelves" md-visible="show_shelf">
-		<div ng-include src="'/assets/angular/html/shared/shelves.html'" class="shelves"></div>
+	<md-tooltip md-direction="top" class="shelf_tooltip" md-visible="show_shelf || custom">
+		<div ng-include src="'/assets/angular/html/shared/shelves.html'" ng-init="bookmark_object = data" class="shelves"></div>
 	</md-tooltip>
 </div>
 <md-button class="md-button-clear" 
+	ng-if="!custom"
     ng-click="show_shelves()">
     <span>Bookmark </span>
     <span class="icon-bookmark3"></span>
-    <span>{{feed.bookmark_count || 0}}</span>
+    <span>{{count || 0}}</span>
 </md-button>

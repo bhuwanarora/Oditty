@@ -6,7 +6,7 @@ homeApp.controller('shelfController', ['$scope', '$mdBottomSheet', '$mdToast', '
     };
 
     $scope.toggle_bookmark = function(label, data){
-        sharedService.toggle_bookmark(label, data);
+        sharedService.toggle_bookmark(label, data, $scope.bookmark_object);
     };
 
     $scope.add_new_label = function(){
@@ -43,6 +43,7 @@ homeApp.controller('shelfController', ['$scope', '$mdBottomSheet', '$mdToast', '
             left: false,
             right: true
         };
+
     }());
 
 }]);

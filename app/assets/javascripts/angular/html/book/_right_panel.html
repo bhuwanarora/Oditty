@@ -17,17 +17,6 @@
           </md-button>
      </div>
      <div layout-margin class="relative_block">
-          <div class="counter" layout="row" layout-align="center center" ng-if="book.bookmark_count">
-               <div>{{book.bookmark_count}}</div>
-          </div>
-          <md-button class="md-raised blue_circle" ng-click="show_shelf_bottom_sheet(book.id || book.book_id, 'Book')">
-               <span class="icon-bookmark3"></span>
-               <md-tooltip md-direction="right" md-visible="demo.showTooltip">
-                 Bookmark
-               </md-tooltip>
-          </md-button>
-     </div>
-     <div layout-margin class="relative_block">
           <div class="counter" layout="row" layout-align="center center" ng-if="book.share_count">
                <div>{{book.share_count}}</div>
           </div>
@@ -37,6 +26,12 @@
                  Share
                </md-tooltip>
           </md-button>
+     </div>
+     <div layout-margin class="relative_block">
+          <div class="counter" layout="row" layout-align="center center" ng-if="book.bookmark_count">
+               <div>{{book.bookmark_count}}</div>
+          </div>
+          <bookmark data="{'id': (book.id || book.book_id), 'type': 'Book'}" custom="true"></bookmark>
      </div>
 </md-content>
 <style> 

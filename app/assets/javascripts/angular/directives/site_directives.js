@@ -1,17 +1,18 @@
-homeApp.directive('bookmark', ["$rootScope", 'feedService', function($rootScope, feedService){
+homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', function($rootScope, feedService, $timeout){
     return {
         restrict: 'E',
-        scope : {data: '=', shelves: '='},
+        scope : {data: '=', shelves: '=', custom: '=', count: '='},
         controller: ["$scope", function($scope){
             $scope.show_shelves = function(){
                 $scope.show_shelf = !$scope.show_shelf;
             }
 
             var _init = function(){
-                $rootScope.bookmark_object = $scope.data;
+                if(angular.isUndefined($scope.shelves)){
+                    $scope.shelves = $rootScope.labels;
+                }
             }
 
-            _init();
         }],
         templateUrl: '/assets/angular/html/shared/bookmark.html'
     };

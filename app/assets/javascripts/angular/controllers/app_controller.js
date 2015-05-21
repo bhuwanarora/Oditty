@@ -34,6 +34,7 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
 
     $scope.close_popups = function(){
         $scope.show_notifications = false;
+        $rootScope.shelves_visible = false;
         // $mdSidenav('left').close();
         // debugger
 

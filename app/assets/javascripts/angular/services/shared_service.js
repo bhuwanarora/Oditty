@@ -30,7 +30,7 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
         }
     }
 
-    this.toggle_bookmark = function(label, data){
+    this.toggle_bookmark = function(label, data, bookmark_object){
         var toast_position = {
             bottom: false,
             top: true,
@@ -52,8 +52,8 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
         }
 
 
-        var id = $rootScope.bookmark_object.id;
-        var type = $rootScope.bookmark_object.type;
+        var id = bookmark_object.id;
+        var type = bookmark_object.type;
         var shelf = (label.label_key || label.key);
         var params = {"id": id, "type": type, "shelf": shelf, "status": status};
         
