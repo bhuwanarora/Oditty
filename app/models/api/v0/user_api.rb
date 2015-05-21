@@ -398,7 +398,7 @@ module Api
 								duplicate_email = true
 							end
 						else
-							clause = User.set_email params[:email]
+							clause = User::Info.set_email params[:email]
 						end
 					end
 					clause = User::Info.set_thumb params[:data][:url] 								if params[:data] && params[:data][:url]
@@ -413,8 +413,8 @@ module Api
 					clause = User::Info.set_profile_picture params[:profile_picture] 				if params[:profile_picture]
 					clause = User::Info.set_about params[:about] 									if params[:about]
 
-					clause = User::Info.add_category params[:category_id]					 				if params[:category_id] && params[:status]
-					clause = User::Info.remove_category params[:category_id]						 		if params[:category_id] && !params[:status]
+					clause = User::Info.add_category params[:category_id]					 		if params[:category_id] && params[:status]
+					clause = User::Info.remove_category params[:category_id]						if params[:category_id] && !params[:status]
 
 					if clause
 						clause = User.new(user_id).match + clause

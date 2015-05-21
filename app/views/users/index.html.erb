@@ -1,63 +1,63 @@
 <div class="header"><b><%= @users.count %> Users</b></div>
 <input id="datepicker" type="text"  />
 <div style="overflow: auto;">
-  <% @users.each_with_index do |user, index| %>
-    <span>
-      <ul class="user_grid">
-          <b class="site_color user">#<%= user["id"] %> 
-                                    <%= user["email"] %> 
-                                    <%= user["first_name"] %>
-                                    <%= user["last_name"] %>
-                                    <%= user["init_book_read_count"] %>
-                                    <img class="thumb" src="<%= user['image_url'] %>"/></b>
-        <table style="display:none;">
-          <% if user["facebook_auth"].present? %>
-              <% user["facebook_auth"]["data"].keys.each do |key| %>
-                <tr><td><b><%= key %></b></td><td><%= user["facebook_auth"]["data"][key] %></td></tr>
-              <% end %>
-              <tr>
-                <input type="hidden"  value="<%= user[3] %>" name="id" />
-                <td><b>Active</b></td>
-                <td><input type="checkbox" name="active" <% if user["facebook_auth"]["data"]["active"] %>checked<% end %>/></td>
-              </tr>
-              <tr><td><hr/></td></tr>
-              <tr><td><button type="submit">Sumbit</button></td></tr>
-              <% if user[1] %>
-                <tr><td><hr/></td></tr>
-                <tr><td><b>Facebook</b></td></tr>
-                <% user[1]["data"].keys.each do |key| %>
-                  <tr><td><b><%= key %></b></td><td><%= user[1]["data"][key] %></td></tr>
-                <% end %>
-              <% end %>
-              <% if user[2] %>
-                <tr><td><hr/></td></tr>
-                <tr><td><b>Likes</b></td></tr>
-                <% user[2].each do |like| %>
-                  <tr><td><%= like %></td></tr>
-                <% end %>
-              <% end %>
-          <% end %>
-        </table>
-      </ul>
-    </span>
-  <% end %>
+    <% @users.each_with_index do |user, index| %>
+        <span>
+            <ul class="user_grid">
+                <b class="site_color user">#<%= user["id"] %> 
+                                        <%= user["email"] %> 
+                                        <%= user["first_name"] %>
+                                        <%= user["last_name"] %>
+                                        <%= user["init_book_read_count"] %>
+                                        <img class="thumb" src="<%= user['image_url'] %>"/></b>
+                <table style="display:none;">
+                    <% if user["facebook_auth"].present? %>
+                        <% user["facebook_auth"]["data"].keys.each do |key| %>
+                            <tr><td><b><%= key %></b></td><td><%= user["facebook_auth"]["data"][key] %></td></tr>
+                        <% end %>
+                        <tr>
+                        <input type="hidden"  value="<%= user[3] %>" name="id" />
+                        <td><b>Active</b></td>
+                        <td><input type="checkbox" name="active" <% if user["facebook_auth"]["data"]["active"] %>checked<% end %>/></td>
+                        </tr>
+                        <tr><td><hr/></td></tr>
+                        <tr><td><button type="submit">Sumbit</button></td></tr>
+                        <% if user[1] %>
+                            <tr><td><hr/></td></tr>
+                            <tr><td><b>Facebook</b></td></tr>
+                            <% user[1]["data"].keys.each do |key| %>
+                                <tr><td><b><%= key %></b></td><td><%= user[1]["data"][key] %></td></tr>
+                            <% end %>
+                        <% end %>
+                        <% if user[2] %>
+                            <tr><td><hr/></td></tr>
+                            <tr><td><b>Likes</b></td></tr>
+                            <% user[2].each do |like| %>
+                                <tr><td><%= like %></td></tr>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                </table>
+            </ul>
+        </span>
+    <% end %>
   
 </div>
 
 <div class="vertical_padder"></div>
-
+<!-- 
 <div class="main_footer">
-  <a class="clear_data">Clear Dummy User Data</a>
-  <button class="add_user">Add test user</button>
-  <div class="footer_status"></div>
-</div>
+    <a class="clear_data">Clear Dummy User Data</a>
+    <button class="add_user">Add test user</button>
+    <div class="footer_status"></div>
+</div> -->
 
 
 <script>
   $(document).ready(function(){
     $("#datepicker").datepicker({
-      onSelect: function(dateText, inst){
-          window.location.href = "/users?t="+dateText;
+        onSelect: function(dateText, inst){
+            window.location.href = "/users?t="+dateText;
         }
     });
     $("#datepicker").datepicker("option", "dateFormat", "yy-mm-dd");
@@ -65,37 +65,36 @@
 
 
     var clear_data = function(){
-      $('.footer_status').html("Processing request...");
-      $.ajax({
-        url: "<%= clear_data_path %>",
-        success: function(){
-          $('.footer_status').html('Data cleaned..');
-        },
-        error: function(){
-          $('.footer_status').html('Error in cleaning data');
-        }
-      })
+        $('.footer_status').html("Processing request...");
+        $.ajax({
+            url: "<%= clear_data_path %>",
+            success: function(){
+                $('.footer_status').html('Data cleaned..');
+            },
+            error: function(){
+                $('.footer_status').html('Error in cleaning data');
+            }
+        })
     }
 
     $('.user').on('click', function(){
-      $(this).siblings('table').toggle();
+        $(this).siblings('table').toggle();
     });
 
     $('.clear_data').on('click', function(){
-      clear_data();
+        clear_data();
     });
 
     function add_user(){
-      $('.add_user').on('click', function(){
-        $('.modal').removeClass('hidden_input');
-      });
+        $('.add_user').on('click', function(){
+            $('.modal').removeClass('hidden_input');
+        });
     }
 
     function submit_user(){
-      $('.submit').on('click', function(){
-        var data = $('#newUser').serialise();
-         
-      });
+        $('.submit').on('click', function(){
+            var data = $('#newUser').serialise();
+        });
     }
   });
 </script>
