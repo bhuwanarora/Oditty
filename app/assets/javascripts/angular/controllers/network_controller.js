@@ -1,4 +1,4 @@
-homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService', '$location', '$mdToast', function($scope, $rootScope, networkService, $location, $mdToast){
+homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService', '$location', '$mdToast', 'userService', function($scope, $rootScope, networkService, $location, $mdToast, userService){
 	$scope.get_followers = function(){
 		$scope.selectedIndex = 0;
 		$scope.load_followers();
@@ -81,6 +81,19 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
 			$scope.follow_state = follow_state;
 			$scope.load_users();
 		}
+
+		$scope.info.my_profile = true;
+    	if(angular.isUndefined($rootScope.user)){
+    		userService.get_user_details().then(function(data){
+                $rootScope.user = data;
+                $scope.profile_user = $rootScope.user;
+				$scope.active_user_id = $scope.profile_user.id;
+            });
+    	}
+    	else{
+        	$scope.profile_user = $rootScope.user;
+			$scope.active_user_id = $scope.profile_user.id;
+    	}
 
 		$scope.hide_follow = true;
 

@@ -162,5 +162,10 @@ module GraphHelper
 		end	
 	end
 
+	def update_follow_counts_for_user
+		clause = User.match + UsersUser.match + " WITH user, COUNT(DISTINCT(friend)) as follows_count RETURN ID(user), follows_count "
+		clause.execute
+	end
+
 
 end

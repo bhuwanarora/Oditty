@@ -193,12 +193,15 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 		}
 		else{
         	$scope.info.my_profile = true;
-        	$scope.profile_user = $rootScope.user;
-        	console.debug($rootScope.user);
-        	if(angular.isUndefined($scope.profile_user.id)){
-        		window.location.reload;
+        	if(angular.isUndefined($rootScope.user)){
+        		userService.get_user_details().then(function(data){
+                    $rootScope.user = data;
+                    $scope.profile_user = $rootScope.user;
+					$scope.active_user_id = $scope.profile_user.id;
+                });
         	}
         	else{
+	        	$scope.profile_user = $rootScope.user;
 				$scope.active_user_id = $scope.profile_user.id;
         	}
 		}

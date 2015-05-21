@@ -50,7 +50,8 @@ class WebsiteController < ApplicationController
 	end
 
 	def signup
-		cookies.clear
+		cookies.delete :user
+		cookies.delete :logged
 		session.clear
 		@signup = true
 		render :layout => "landing_page"

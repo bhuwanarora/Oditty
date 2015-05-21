@@ -287,4 +287,10 @@ namespace :graph do
     GraphHelper.curate_author_names
   end
 
+  desc "update_follow_counts_for_user"
+  task :update_follow_counts_for_user => :environment do
+    include GraphHelper
+    GraphHelper.update_follow_counts_for_user
+  end
+
 end

@@ -30,7 +30,7 @@
                 <a href="/room" ng-hide="hide_follow_links">
                     <md-button class="nav_links">
                         <div layout="column" layout-align="end end">
-                            <div><b>BOOKS</b></div>
+                            <div><b>BOOKMARKS</b></div>
                             <h2 class="green_color">{{profile_user.bookmark_count || 0}}</h2>
                         </div>
                     </md-button>
@@ -39,7 +39,7 @@
                      <md-button class="nav_links">
                         <div layout="column" layout-align="end end">
                             <div><b>FOLLOWERS</b></div>
-                            <h2 class="green_color">{{profile_user.follower_count || 0}}</h2>
+                            <h2 class="green_color">{{profile_user.followed_by_count || 0}}</h2>
                         </div>
                     </md-button>
                 </a>
@@ -48,7 +48,7 @@
                     <md-button class="nav_links">
                         <div layout="column" layout-align="end end">
                             <div><b>FOLLOWING</b></div>
-                            <h2 class="green_color">{{profile_user.following_count || 0}}</h2>
+                            <h2 class="green_color">{{profile_user.follows_count || 0}}</h2>
                         </div>
                     </md-button>
                 </a>
