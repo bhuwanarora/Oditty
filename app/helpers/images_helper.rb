@@ -44,9 +44,10 @@ module ImagesHelper
 	end
 
 	def self.set_user_image_version
+		redis = Redis.new
 		get_ids_range_clause = " MATCH (node:User) RETURN MAX(ID(node)) AS maximum , MIN(ID(node)) AS minimum "
 		ids_range = get_ids_range_clause.execute[0]
-		minimum = File.exist?("user_ids.json") ? JSON.parse(File.read("user_ids.json"))["minimum"] : ids_range["minimum"]
+		minimum = redis.get("user_id_image_processed").present? ? redis.get("user_id_image_processed").to_i : ids_range["minimum"]
 		maximum = ids_range["maximum"]
 		range = (maximum - minimum) / 500
 		while minimum < maximum
@@ -54,13 +55,10 @@ module ImagesHelper
 			users = clause.execute
 			users.each do |user|
 				begin
-					ids_range = {}
-					ids_range[:minimum] = user["id"]
-					ids_range[:maximum] = maximum
 					url = "#{Rails.application.config.image_service}/api/v0/user_versions?id=#{user["id"]}&&bucket=#{Rails.application.config.user_bucket}&&url=#{user["image_url"]}"
 					puts url.to_s.red
 					response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
-					File.open("user_ids.json", 'w') {|file| file.write(ids_range.to_json)}
+					redis.set("user_id_image_processed", user["id"])
 				rescue Exception => e
 					puts e.to_s.red
 					message = "#{e} for id #{user["id"]} at #{ Time.now.strftime("%D")}"
@@ -72,9 +70,10 @@ module ImagesHelper
 	end
 
 	def self.set_community_image_version
+		redis = Redis.new
 		get_ids_range_clause = " MATCH (node:Community) RETURN MAX(ID(node)) AS maximum , MIN(ID(node)) AS minimum "
 		ids_range = get_ids_range_clause.execute[0]
-		minimum = File.exist?("community_ids.json") ? JSON.parse(File.read("community_ids.json"))["minimum"] : ids_range["minimum"]
+		minimum = redis.get("community_id_image_processed").present? ? redis.get("community_id_image_processed").to_i : ids_range["minimum"]
 		maximum = ids_range["maximum"]
 		range = (maximum - minimum) / 500
 		while minimum < maximum
@@ -82,13 +81,10 @@ module ImagesHelper
 			communitites = clause.execute
 			communitites.each do |community|
 				begin
-					ids_range = {}
-					ids_range[:minimum] = community["id"]
-					ids_range[:maximum] = maximum
 					url = "#{Rails.application.config.image_service}/api/v0/community_versions?id=#{community["id"]}&&bucket=#{Rails.application.config.community_bucket}&&url=#{community["image_url"]}"
 					puts url.to_s.red
 					response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
-					File.open("community_ids.json", 'w') {|file| file.write(ids_range.to_json)}
+					redis.set("community_id_image_processed", community["id"])
 				rescue Exception => e
 					puts e.to_s.red
 					message = "#{e} for id #{community["id"]} at #{ Time.now.strftime("%D")}"
@@ -100,9 +96,10 @@ module ImagesHelper
 	end
 
 	def self.set_news_image_version
+		redis = Redis.new
 		get_ids_range_clause = " MATCH (node:News) RETURN MAX(ID(node)) AS maximum , MIN(ID(node)) AS minimum "
 		ids_range = get_ids_range_clause.execute[0]
-		minimum = File.exist?("news_ids.json") ? JSON.parse(File.read("news_ids.json"))["minimum"] : ids_range["minimum"]
+		minimum = redis.get("news_id_image_processed").present? ? redis.get("news_id_image_processed").to_i : ids_range["minimum"]
 		maximum = ids_range["maximum"]
 		range = (maximum - minimum) / 500
 		while minimum < maximum
@@ -111,13 +108,10 @@ module ImagesHelper
 			newss.each do |news|
 				puts news["id"].to_s.green
 				begin
-					ids_range = {}
-					ids_range[:minimum] = news["id"]
-					ids_range[:maximum] = maximum
-					File.open("news_ids.json", 'w') {|file| file.write(ids_range.to_json)}
 					url = "#{Rails.application.config.image_service}/api/v0/news_versions?id=#{news["id"]}&&bucket=#{Rails.application.config.news_bucket}&&url=#{news["image_url"]}"
 					puts url.to_s.red
 					response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
+					redis.set("news_id_image_processed", news["id"])
 				rescue Exception => e
 					puts e.to_s.red
 					message = "#{e} for id #{news["id"]} at #{ Time.now.strftime("%D")}"
