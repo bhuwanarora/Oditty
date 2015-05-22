@@ -1,9 +1,9 @@
 <md-button flex layout="column"
-	class="clear light_grey_color custom_title roboto menu_details margin_top white md-whiteframe-z1"
+	class="clear light_grey_color custom_title roboto menu_details margin_top white"
 	ng-click="toggle_recommend()">
 	<i layout-padding>Recommend book to friends</i>
 </md-button>
-<div class="menu_details white md-whiteframe-z1">
+<div class="menu_details white">
 	<div layout="row" ng-if="show_recommend">
 	    <md-autocomplete md-search-text="search_friend"
 	        md-items="item in users_list"

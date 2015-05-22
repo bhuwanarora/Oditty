@@ -8,6 +8,10 @@ class Neo
 		" ORDER BY "
 	end
 
+	def self.get_labels id
+		" MATCH (node) WHERE ID(node) = " + id.to_s + " RETURN labels(node) AS label "
+	end
+
 	def self.return_init
 		" RETURN "
 	end

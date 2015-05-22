@@ -25,7 +25,7 @@ ReadersDoor::Application.routes.draw do
 
   resources :books
 
-  resources :users
+  # resources :users
 
   # resources :authors
 
@@ -118,6 +118,9 @@ ReadersDoor::Application.routes.draw do
   
   get "recover_password"                => "users#recover_password",            :as => "recover_password"
   get "save_password"                   => "users#save_password",               :as => "save_password"
+  get "all_users"                       => "users#all",                         :as => "all_users"
+  get "update_user"                     => "users#update",                         :as => "update_user"
+  get 'users'                           => "users#index",                       :as => "users"
   post "data"                           => "books#data",                        :as => "data"
   get "remove_trend"                    => "books#remove_trend",                :as => "remove_trend"
 

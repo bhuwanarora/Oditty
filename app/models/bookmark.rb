@@ -11,6 +11,7 @@ class Bookmark < Neo
 		@media_label_class = Bookmark::Node::NewsLabel
 		@media_label = "News"
 		@media = "news"
+		@shelf = ":ArticleShelf"
 		self
 	end
 
@@ -20,6 +21,7 @@ class Bookmark < Neo
 		@user_media_class = UsersBook
 		@media_label_class = Bookmark::Node::BookLabel
 		@media_label = "Book"
+		@shelf = ":BookShelf"
 		@media = "book"
 		self
 	end
@@ -29,6 +31,7 @@ class Bookmark < Neo
 		@user_media_class = UsersBlog
 		@media_label_class = Bookmark::Node::BlogLabel
 		@media_label = "Blog"
+		@shelf = ":ArticleShelf"
 		@media = "blog"
 		self
 	end
@@ -39,6 +42,14 @@ class Bookmark < Neo
 
 	def self.match_path media, label="user"
 		" MATCH ("+ label +":User)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode{user_id:ID(" + label + ")})-[bookmark_action:BookmarkAction]->("+media+")"
+	end
+
+	def self.optional_match_path_public media, label="user"
+		" OPTIONAL MATCH (label:Label{public:true}) OPTIONAL MATCH ("+ label +":User)-[labelled:Labelled]->(label:Label{})-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode{user_id:ID(" + label + ")})-[bookmark_action:BookmarkAction]->("+media+")"
+	end
+
+	def self.match_path_label media, label="User", media_label
+		" MATCH ("+ label +":User)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode{user_id:ID(" + label + ")})-[bookmark_action:BookmarkAction]->("+media+":"+media_label+")"
 	end
 
 	def self.optional_match_path  media, label="user"

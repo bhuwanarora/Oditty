@@ -1,0 +1,48 @@
+<div class="header"><b><%= @users.count %> Users</b></div>
+<div class="inline_block">
+    <% @users.each_with_index do |user, index| %>
+        <div>
+            <img src="<%= user['image_url'] %>" class="thumb">
+            <a href="/profile?id=<%= user['id'] %>" target="blank">
+                <%= user['first_name'] %> <%= user['last_name'] %>
+            </a>
+            <a href="/all_users?id=<%= user['id'] %>" value="<%= user['id'] %>" class="right">Edit&nbsp;</a>
+            <a href="https://www.facebook.com/<%= user['fb_id'] %>" target="blank" class="right">Facebook&nbsp;</a>
+            <hr>
+        </div>
+    <% end %>
+</div>
+
+<% if @active_user %>
+    <form class="inline_block" action="<%= update_user_path %>">
+        <div>
+            First Name
+            <input value="<%= @active_user['first_name'] %>" name="first_name">
+        </div>
+
+        <div>
+            Last Name
+            <input value="<%= @active_user['last_name'] %>" name="last_name">
+        </div>
+
+        <div>
+            Email
+            <input value="<%= @active_user['email'] %>" type="email" name="email">
+        </div>
+
+        <div>
+            Image Url
+            <input value="<%= @active_user['image_url'] %>" name="image_url">
+        </div>
+
+        <input name="id" type="hidden" value="<%= @active_user['id'] %>">
+        <input type="submit">
+    </form>
+<% end %>
+
+<div class="vertical_padder"></div>
+<script>
+    $(document).ready(function(){
+        
+    });
+</script>

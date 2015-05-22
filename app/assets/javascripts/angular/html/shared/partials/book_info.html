@@ -1,4 +1,4 @@
-<div class="social_content" layout="row" layout-padding>
+<div class="social_content" layout="row" layout-padding ng-show="!book_loading" ng-if="book.title || book.name">
     <div flex="25">
         <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
     </div>
@@ -10,6 +10,10 @@
         </div>
     </div>
 </div>
+<md-progress-linear class="md-primary"
+                    ng-show="book_loading"
+                    md-mode="indeterminate">
+</md-progress-linear>
 <style>
     .book_title{
         font-size: 1.2em;

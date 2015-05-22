@@ -17,7 +17,7 @@ class Article::NewsArticle < Article
 	end
 
 	def other_tags_info
-		match + ", most_important_tag " + Article::NewsArticle.optional_match_communities + ", most_important_tag ORDER BY has_community.relevance DESC WITH  most_important_tag, " + Community.collect_map("other_tags" => Community.grouped_basic_info) + Article::NewsArticle.return_group(" most_important_tag ", " other_tags[1.." + (Constant::Count::CommunitiesInNewsPage + 1).to_s + "] AS other_tags ")
+		match + ", most_important_tag " + Article::NewsArticle.optional_match_communities + ", most_important_tag ORDER BY has_community.relevance DESC WITH  most_important_tag, " + Community.collect_map("other_tags" => Community.grouped_basic_info) + Article::NewsArticle.return_group(" most_important_tag ", " other_tags[1.." + (Constant::Count::CommunitiesShown+1).to_s + "] AS other_tags ")
 	end
 
 	def match 
@@ -25,7 +25,7 @@ class Article::NewsArticle < Article
 	end
 
 	def self.match_communities
-		" MATCH (news)-[:HasCommunity]->(community:Community) WITH news, community "
+		" MATCH (news)-[has_community:HasCommunity]->(community:Community) WITH news, community "
 	end
 
 	def self.optional_match_communities
@@ -33,15 +33,19 @@ class Article::NewsArticle < Article
 	end
 
 	def self.match_communities_with_books
-		" MATCH (news)-[:HasCommunity]->(community:Community)-[:RelatedBooks]->(:Book) WITH news, community "
+		" MATCH (news)-[has_community:HasCommunity]->(community:Community)-[:RelatedBooks]->(:Book) WITH news, community "
 	end
 		
 	def most_important_community
-		match + Article::NewsArticle.match_communities_with_books + Community.order_desc + Article::NewsArticle.limit(1) + " WITH community "
+		match + Article::NewsArticle.match_communities_with_books + " ORDER BY has_community.relevance DESC " + Article::NewsArticle.limit(1) + " WITH community "
 	end
 
 	def self.basic_info
 		" ID(news) AS news_id, news.title AS title, news.published_year AS published_year "
+	end
+
+	def self.get_bookmark
+		
 	end
 
 	def get_chronological_news_info

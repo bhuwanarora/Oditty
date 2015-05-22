@@ -42,4 +42,83 @@ module ImagesHelper
 			@neo.execute_query clause
 		end
 	end
+
+	def self.set_user_image_version
+		redis = Redis.new
+		get_ids_range_clause = " MATCH (node:User) RETURN MAX(ID(node)) AS maximum , MIN(ID(node)) AS minimum "
+		ids_range = get_ids_range_clause.execute[0]
+		minimum = redis.get("user_id_image_processed").present? ? redis.get("user_id_image_processed").to_i : ids_range["minimum"]
+		maximum = ids_range["maximum"]
+		range = (maximum - minimum) / 500
+		while minimum < maximum
+			clause = "MATCH (user:User) WHERE ID(user) <= #{minimum + range} AND ID(user) >= #{minimum} RETURN user.thumb AS image_url, ID(user) AS id " 	
+			users = clause.execute
+			users.each do |user|
+				begin
+					url = "#{Rails.application.config.image_service}/api/v0/user_versions?id=#{user["id"]}&&bucket=#{Rails.application.config.user_bucket}&&url=#{user["image_url"]}"
+					puts url.to_s.red
+					response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
+					redis.set("user_id_image_processed", user["id"])
+				rescue Exception => e
+					puts e.to_s.red
+					message = "#{e} for id #{user["id"]} at #{ Time.now.strftime("%D")}"
+					File.open("log/uploader.log", 'a') { |file| file.puts(message) }
+				end
+			end
+			minimum += range
+		end
+	end
+
+	def self.set_community_image_version
+		redis = Redis.new
+		get_ids_range_clause = " MATCH (node:Community) RETURN MAX(ID(node)) AS maximum , MIN(ID(node)) AS minimum "
+		ids_range = get_ids_range_clause.execute[0]
+		minimum = redis.get("community_id_image_processed").present? ? redis.get("community_id_image_processed").to_i : ids_range["minimum"]
+		maximum = ids_range["maximum"]
+		range = (maximum - minimum) / 500
+		while minimum < maximum
+			clause = "MATCH (community:Community) WHERE ID(community) <= #{minimum + range} AND ID(community) >= #{minimum} " + Community.return_init + Community.basic_info	
+			communitites = clause.execute
+			communitites.each do |community|
+				begin
+					url = "#{Rails.application.config.image_service}/api/v0/community_versions?id=#{community["id"]}&&bucket=#{Rails.application.config.community_bucket}&&url=#{community["image_url"]}"
+					puts url.to_s.red
+					response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
+					redis.set("community_id_image_processed", community["id"])
+				rescue Exception => e
+					puts e.to_s.red
+					message = "#{e} for id #{community["id"]} at #{ Time.now.strftime("%D")}"
+					File.open("log/uploader.log", 'a') { |file| file.puts(message) }
+				end
+			end
+			minimum += range
+		end
+	end
+
+	def self.set_news_image_version
+		redis = Redis.new
+		get_ids_range_clause = " MATCH (node:News) RETURN MAX(ID(node)) AS maximum , MIN(ID(node)) AS minimum "
+		ids_range = get_ids_range_clause.execute[0]
+		minimum = redis.get("news_id_image_processed").present? ? redis.get("news_id_image_processed").to_i : ids_range["minimum"]
+		maximum = ids_range["maximum"]
+		range = (maximum - minimum) / 500
+		while minimum < maximum
+			clause = "MATCH (news:News) WHERE ID(news) <= #{minimum + range} AND ID(news) >= #{minimum} " + News.return_init + News.basic_info	
+			newss = clause.execute
+			newss.each do |news|
+				puts news["id"].to_s.green
+				begin
+					url = "#{Rails.application.config.image_service}/api/v0/news_versions?id=#{news["id"]}&&bucket=#{Rails.application.config.news_bucket}&&url=#{news["image_url"]}"
+					puts url.to_s.red
+					response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
+					redis.set("news_id_image_processed", news["id"])
+				rescue Exception => e
+					puts e.to_s.red
+					message = "#{e} for id #{news["id"]} at #{ Time.now.strftime("%D")}"
+					File.open("log/uploader.log", 'a') { |file| file.puts(message) }
+				end
+			end
+			minimum += range
+		end
+	end
 end

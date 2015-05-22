@@ -247,7 +247,8 @@ module.exports = function(grunt) {
                     'app/assets/javascripts/min/angular/apps.js',
                     'app/assets/javascripts/min/angular/services.js',
                     'app/assets/javascripts/min/angular/directives.js',
-                    'app/assets/javascripts/min/angular/controllers.js'
+                    'app/assets/javascripts/min/angular/controllers.js',
+                    'app/assets/javascripts/min/angular/templates.min.js'
                 ],
 
                 "app/assets/javascripts/min/angular/d3_group.min.js": [
@@ -273,6 +274,7 @@ module.exports = function(grunt) {
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/community_group.min.js":[
+                    "app/assets/javascripts/min/angular/directives/news_directives.js",
                     "app/assets/javascripts/min/angular/controllers/book/specific_book_controller.js",
                     "app/assets/javascripts/min/angular/controllers/book/timeline_controller.js",
                     "app/assets/javascripts/min/angular/controllers/book/real_virtuality_controller.js",
@@ -305,6 +307,7 @@ module.exports = function(grunt) {
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/room_group.min.js":[
+                    "app/assets/javascripts/min/angular/directives/room_directives.js",
                     "app/assets/javascripts/min/angular/services/room_service.js",
                     "app/assets/javascripts/min/angular/controllers/room/room_controller.js"
                 ],
@@ -314,6 +317,7 @@ module.exports = function(grunt) {
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/profile_group.min.js":[
+                    "app/assets/javascripts/min/angular/directives/profile_directives.js",
                     "app/assets/javascripts/min/angular/services/community_service.js",
                     "app/assets/javascripts/min/angular/controllers/profile_controller.js",
                     "app/assets/javascripts/min/angular/controllers/book/specific_book_controller.js"

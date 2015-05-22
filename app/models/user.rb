@@ -4,8 +4,16 @@ class User < Neo
 		@id = user_id
 	end
 
+	def self.match
+		"MATCH (user:User) WITH user "
+	end
+
 	def self.link_primary_labels
 		" CREATE (user)-[:Labelled{user_id:ID(user)}]->(label) WITH user, label "
+	end
+
+	def self.grouped_primary_display_info
+		" first_name:user.first_name ,  last_name:user.last_name ,  id:ID(user), image_url: user.thumb "
 	end
 
 	def self.match_group ids
@@ -77,7 +85,7 @@ class User < Neo
 	end
 
 	def self.basic_info
-		" user.intro_seen AS intro_seen, user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id, user.gender AS gender, user.thumb as image_url, user.region AS region, labels(user) AS label, user.latest_feed_id AS latest_feed_id "
+		" user.intro_seen AS intro_seen, user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id, user.gender AS gender, user.thumb as image_url, user.region AS region, labels(user) AS label, user.latest_feed_id AS latest_feed_id, user.follows_count AS follows_count, user.followed_by_count AS followed_by_count, user.bookmark_count AS bookmark_count "
 	end
 
 	def self.grouped_basic_info
@@ -149,7 +157,11 @@ class User < Neo
 	end
 
 	def match node_variable = "user"
-		" MATCH (" + node_variable + ":User) WHERE ID(" + node_variable + ") = " + @id.to_s + User::Info.set_last_active_session + " WITH " + node_variable + " "
+		" MATCH (" + node_variable + ":User) WHERE ID(" + node_variable + ") = " + @id.to_s + " WITH " + node_variable + " "
+	end
+
+	def set_last_active_session
+		match + User::Info.set_last_active_session + " WITH user "
 	end
 
 	def self.match_root_category category_id=nil
@@ -255,11 +267,23 @@ class User < Neo
 	end
 
 	def match_followers skip
-		match + " WITH user AS friend " + UsersUser.match + "WITH user " + User.skip(skip) + User.limit(10)
+		match + " WITH user AS friend " + UsersUser.match_followers + "WITH user, friend " + UsersUser.optional_reverse_match + ", ID(follows_node) AS status " + User.skip(skip) + User.limit(10)
 	end
 
 	def self.get_visited_books
-		Bookmark::Type::Visited.match("book") + " WHERE book :Book WITH DISTINCT user, book " + Book.order_desc + " WITH user, " + Book.collect_map("books" => Book.grouped_basic_info ) + " WITH user, books[0..3] AS books "
+		Bookmark::Type::Visited.match("book") + " , status WHERE book :Book WITH DISTINCT status, user, book " + Book.order_desc + " WITH DISTINCT user, status, " + Book.collect_map("books" => Book.grouped_basic_info ) + " WITH DISTINCT user, books[0..3] AS books, status "
+	end
+
+	def self.optional_get_visited_books
+		" OPTIONAL " + User.get_visited_books
+	end
+
+	def self.get_visited_books_label
+		Bookmark::Type::Visited.match_label("book", "Book") + " WITH DISTINCT user, book " + Book.order_desc + " WITH user, " + Book.collect_map("books" => Book.grouped_basic_info ) + " WITH user, books[0..3] AS books "
+	end
+
+	def self.optional_get_visited_books_label
+		" OPTIONAL " + User.get_visited_books_label
 	end
 
 	def self.get_bookmarked_books
@@ -267,15 +291,15 @@ class User < Neo
 	end
 
 	def get_followers skip
-		match_followers(skip) + User.get_visited_books + User.return_group(User.basic_info,"books")
+		match_followers(skip) + User.optional_get_visited_books + User.return_group(User.basic_info,"books", "status")
 	end
 
 	def match_users_followed skip
-		match + UsersUser.match + " WITH friend AS user " + User.skip(skip) + User.limit(10)
+		match + UsersUser.match + " WITH user, friend " +  UsersUser.optional_reverse_match + " , ID(follows_node) AS status " + User.skip(skip) + User.limit(10) + " WITH friend AS user , status "
 	end
 
 	def get_users_followed skip
-		match_users_followed(skip) + User.get_visited_books + User.return_group(User.basic_info,"books")
+		match_users_followed(skip) + User.optional_get_visited_books + User.return_group(User.basic_info, "books", "status")
 	end
 
 	def set_intro_seen_status status
@@ -288,5 +312,16 @@ class User < Neo
 
 	def self.merge_searched
 		" MERGE (user)-[:SearchedFor]->(search_node:SearchNode{created_at: " + Time.now.to_i.to_s + "})-[:SearchMedia]->(bookmark_node) "
+	end 
+	
+	def get_bookmarks(id, type)
+		type.upcase!
+		case type
+		when "BOOK"
+			shelf = ":BookShelf" 
+		else
+			shelf = ":ArticleShelf" 
+		end
+		match + Label.match_shelves(shelf) + " MATCH (media) WHERE ID(media) = " + id.to_s + " WITH label, media " + Bookmark.optional_match_path("media") + User.return_group(User.collect_map({"shelf" => "name: label.name, status: ID(bookmark_node)"}))
 	end
 end

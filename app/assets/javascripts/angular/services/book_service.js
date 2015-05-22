@@ -74,4 +74,8 @@ homeApp.service('bookService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return _deferred_request('/api/v0/get_interesting_info?id='+id, $q, $http);
     }
 
+    this.get_top_searches = function(){
+        return _deferred_request('/api/v0/top_searches', $q, $http);
+    }
+
 }]);

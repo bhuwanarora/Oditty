@@ -6,10 +6,22 @@ namespace :graph do
   #   Neo4jHelper.delete_labels
   # end
 
+  desc "set author circular linked list"
+  task :set_author_feed => :environment do
+    include GraphHelper
+    GraphHelper.set_author_feed
+  end
+
   desc "reset_news_link"
   task :reset_news_link => :environment do
     include GraphHelper
     GraphHelper.reset_news_link
+  end
+
+  desc "set book article shelf"
+  task :make_book_and_article_shelves => :environment do
+    include GraphHelper
+    GraphHelper.make_book_and_article_shelves
   end
 
   desc "set region news count"
@@ -279,6 +291,12 @@ namespace :graph do
   task :curate_author_names => :environment do
     include GraphHelper
     GraphHelper.curate_author_names
+  end
+
+  desc "update_follow_counts_for_user"
+  task :update_follow_counts_for_user => :environment do
+    include GraphHelper
+    GraphHelper.update_follow_counts_for_user
   end
 
 end

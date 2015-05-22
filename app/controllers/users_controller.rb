@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  # before_action :set_user, only: [:show, :edit, :update, :destroy]
   
 
   # GET /users
@@ -17,6 +17,17 @@ class UsersController < ApplicationController
     
         @users = clause.execute
         render :index
+    end
+
+    def all
+        id = params[:id]
+        if id
+            clause = User.new(id).get_basic_info 
+            @active_user = clause.execute[0]
+        end
+
+        clause = User.match + User.return_group(User.basic_info + ", user.fb_id as fb_id")
+        @users = clause.execute
     end
 
     def activate
@@ -95,145 +106,137 @@ class UsersController < ApplicationController
         end
     end
 
-  def feedbacks
-    neo = Neography::Rest.new
-    clause = "MATCH (u:User)-[:GaveFeedback]->(f:Feedback) RETURN ID(u), ID(f), u.name, f.feedback_text, f.timestamp, f.status"
-    @feedbacks = neo.execute_query(clause)["data"]
-  end
-
-  def change_feedback_status
-    begin
-      neo = Neography::Rest.new
-      clause = "MATCH (f:Feedback) WHERE ID(f)="+params[:id].to_s+" SET f.status="+params[:status].to_s
-      clause.execute
-      render :json => {:message => "Success"}, :status => 200
-    rescue Exception => e
-      render :json => {:message => e.to_s}, :status => 500
+    def feedbacks
+        neo = Neography::Rest.new
+        clause = "MATCH (u:User)-[:GaveFeedback]->(f:Feedback) RETURN ID(u), ID(f), u.name, f.feedback_text, f.timestamp, f.status"
+        @feedbacks = neo.execute_query(clause)["data"]
     end
-  end
 
-  # GET /users/1
-  # GET /users/1.json
-  def show
-  end
-
-  # GET /users/new
-  def new
-    @user = User.new
-  end
-
-  # GET /users/1/edit
-  def edit
-  end
-
-  def test
-    render 'test_layout'
-  end
-
-  
-
-  # POST /users
-  # POST /users.json
-  def create
-    @user = User.new(user_params)
-
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @user }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    def change_feedback_status
+        begin
+            neo = Neography::Rest.new
+            clause = "MATCH (f:Feedback) WHERE ID(f)="+params[:id].to_s+" SET f.status="+params[:status].to_s
+            clause.execute
+            render :json => {:message => "Success"}, :status => 200
+        rescue Exception => e
+            render :json => {:message => e.to_s}, :status => 500
+        end
     end
-  end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
-  def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    def show
     end
-  end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
-  def destroy
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url }
-      format.json { head :no_content }
+    # GET /users/new
+    def new
+        @user = User.new
     end
-  end
 
-  def logout
-    session[:email] = nil
-    @user = nil
-    render 'login'
-  end
+    # GET /users/1/edit
+    def edit
+        id = params[:id]
+        clause = User.new(id).get_basic_info
+        @active_user = clause.execute[0]
+        render :json => {}
+    end
 
-  def login
-    render 'login'
-  end
+    def test
+        render 'test_layout'
+    end
 
-  def invalid_user
-    @message = "Invalid Reader's Door User Account."
-    render 'invalid'
-  end
+    def create
+        @user = User.new(user_params)
 
-  def test_layout
+        respond_to do |format|
+            if @user.save
+                format.html { redirect_to @user, notice: 'User was successfully created.' }
+                format.json { render action: 'show', status: :created, location: @user }
+            else
+                format.html { render action: 'new' }
+                format.json { render json: @user.errors, status: :unprocessable_entity }
+            end
+        end
+    end
 
-  end
+    def update
+        first_name = params[:first_name]
+        last_name = params[:last_name]
+        email = params[:email]
+        image_url = params[:image_url]
+        clause = User.new(params[:id]).match + User::Info.set_first_name(first_name) + User::Info.set_last_name(last_name) + User::Info.set_email(email) + User::Info.set_thumb(image_url)
+        clause.execute
+        redirect_to :all_users
+    end
 
-  def verify
+    def destroy
+        @user.destroy
+        respond_to do |format|
+            format.html { redirect_to users_url }
+            format.json { head :no_content }
+        end
+    end
+
+    def logout
+        session[:email] = nil
+        @user = nil
+        render 'login'
+    end
+
+    def login
+        render 'login'
+    end
+
+    def invalid_user
+        @message = "Invalid Reader's Door User Account."
+        render 'invalid'
+    end
+
+    def test_layout
+
+    end
+
+    def verify
         @message = Api::V0::UserApi.verify(params)
         render :layout => "backend"
-  end
-
-  def recover_password
-    info = Api::V0::UserApi.recover_password(params[:e])
-    @user_id = info["user_id"]
-    @user_exists = info["user_exists"]
-    @message = info["message"]
-    render :layout => "backend"
-  end
-
-  def save_password
-    begin
-      @neo = Neography::Rest.new
-      clause = "MATCH (user:User) WHERE ID(user)="+params[:id].to_s+" SET user.password=\""+params[:p]+"\"  RETURN user"
-      user = clause.execute
-      render :json => {:message => Constant::StatusMessage::PasswordChangedSuccess}, :status => 200
-    rescue Exception => e
-      render :json => {:message => Constant::StatusMessage::PasswordChangedFailure}, :status => 500
     end
-  end
 
-  def save_password
-    begin
-      @neo = Neography::Rest.new
-      clause = "MATCH (user:User) WHERE ID(user)="+params[:id].to_s+" SET user.password=\""+params[:p]+"\"  RETURN user"
-      user = clause.execute
-      render :json => {:message => Constant::StatusMessage::PasswordChangedSuccess}, :status => 200
-    rescue Exception => e
-      render :json => {:message => Constant::StatusMessage::PasswordChangedFailure}, :status => 500
+    def recover_password
+        info = Api::V0::UserApi.recover_password(params[:e])
+        @user_id = info["user_id"]
+        @user_exists = info["user_exists"]
+        @message = info["message"]
+        render :layout => "backend"
     end
-  end
 
-  private
+    def save_password
+        begin
+            @neo = Neography::Rest.new
+            clause = "MATCH (user:User) WHERE ID(user)="+params[:id].to_s+" SET user.password=\""+params[:p]+"\"  RETURN user"
+            user = clause.execute
+            render :json => {:message => Constant::StatusMessage::PasswordChangedSuccess}, :status => 200
+        rescue Exception => e
+            render :json => {:message => Constant::StatusMessage::PasswordChangedFailure}, :status => 500
+        end
+    end
+
+    def save_password
+        begin
+            @neo = Neography::Rest.new
+            clause = "MATCH (user:User) WHERE ID(user)="+params[:id].to_s+" SET user.password=\""+params[:p]+"\"  RETURN user"
+            user = clause.execute
+            render :json => {:message => Constant::StatusMessage::PasswordChangedSuccess}, :status => 200
+        rescue Exception => e
+            render :json => {:message => Constant::StatusMessage::PasswordChangedFailure}, :status => 500
+        end
+    end
+
+    private
     # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
+    # def set_user
+        # @user = User.find(params[:id])
+    # end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params[:user]
+        params[:user]
     end
 end

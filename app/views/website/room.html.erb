@@ -2,27 +2,21 @@
 	<!-- <div ng-include src="'/assets/angular/html/room/_header.html'" ng-hide="constant.show_book"></div> -->
 	<section layout="row" layout-wrap>
 		<md-content flex="25" flex-sm="100" flex-md="10" >
-		    <div ng-include src="'/assets/angular/html/room/_left_panel.html'"></div>
+			<book-shelves></book-shelves>
 		</md-content>
 		<md-content flex="50" hide-sm flex-md="80" >
-		    <div layout="column" ng-include src="'/assets/angular/html/room/show.html'">
-	    	</div>
+		    <articles layout="column" ></articles>
 		</md-content>
 	    <md-content flex="25" hide-sm 
 		         flex-md="10">
-		    <div ng-include src="'/assets/angular/html/room/_right_panel.html'" ></div>
+		    <article-shelves></article-shelves>
 		</md-content>
 	</section>
-	<div layout="row" class="book_stack" hide-sm>
-		<a ng-repeat="book in visited_books | limitTo: 3" ng-if="book.title" ng-href="/book?q={{book.book_id}}" target="_blank">
-			<div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
-			<!-- <img class="recent_visited_book" ng-src="{{book | choose_medium_thumb}}"> -->
-		</a>
-	</div>
+	<!-- <book-stach></book-stach> -->
 </md-content>
 
 
-<img src="assets/table.png" class="table" hide-sm>
+<!-- <img src="assets/table.png" class="table" hide-sm> -->
 
 <style>	
 	.table{
@@ -49,8 +43,7 @@
 	}
 
 	.article img{
-		height: 50px;
-		width: 50px;
+		width: 100%;
 	}
 
 	.article{

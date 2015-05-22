@@ -3,6 +3,10 @@ module Api
 		class CommunityApi
 
 			def self.get_detailed_info(id, user_id)
+				if user_id
+					# Community.new(id).get_info
+				else
+				end
 				UsersCommunity.new(user_id, id).get_info
 			end
 

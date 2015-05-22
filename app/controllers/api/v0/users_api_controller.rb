@@ -14,6 +14,18 @@ module Api
 				render :json => {:message => "Success"}, :status => 200
 			end
 
+			def get_bookmarks
+				user_id = session[:user_id]
+				if user_id.present?
+					type = params[:type] || "News"
+					id = params[:id]
+					info = Api::V0::UserApi.get_bookmarks(id, user_id, type).execute
+					render :json => info, :status => 200
+				else
+					redirect_to :controller => 'website', :action => 'signup'			
+				end
+			end
+
 			def get_small_reads
 				user_id = session[:user_id]
 				books = UserApi.get_small_reads
@@ -98,9 +110,9 @@ module Api
 
 			def get_user_details
 				if params[:id]
-					info = UserApi.get_details(params[:id], session)
+					info = UserApi.get_relative_details(params[:id], session[:user_id])
 				else
-					info = UserApi.get_details(session[:user_id], session)
+					info = UserApi.get_details(session[:user_id])
 				end
 				render :json => info, :status => 200
 			end

@@ -1,23 +1,22 @@
-homeApp.directive('bookmark', ["$rootScope", function($rootScope){
+homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', function($rootScope, feedService, $timeout){
     return {
         restrict: 'E',
-        scope : {data: '='},
+        scope : {data: '=', shelves: '=', custom: '=', count: '='},
         controller: ["$scope", function($scope){
             $scope.show_shelves = function(){
                 $scope.show_shelf = !$scope.show_shelf;
             }
 
             var _init = function(){
-                $scope.labels = $rootScope.labels;
-                $rootScope.bookmark_object = $scope.data;
+                if(angular.isUndefined($scope.shelves)){
+                    $scope.shelves = $rootScope.labels;
+                }
             }
 
-            _init();
         }],
         templateUrl: '/assets/angular/html/shared/bookmark.html'
     };
 }]);
-
 
 homeApp.directive('setFocus', ["$timeout", "$parse", "$rootScope", function($timeout, $parse, $rootScope){
     return {
@@ -83,8 +82,8 @@ homeApp.directive('checkScrollBottom', function(){
         link: function (scope, element, attrs){
             var elem = element[0];
             element.bind('scroll', function(){
-            	var buffer = 150;
-                if(elem.scrollTop + elem.offsetHeight + buffer > elem.scrollHeight) {
+            	var buffer = 1400;
+                if((elem.scrollTop + elem.offsetHeight + buffer) > elem.scrollHeight){
                     scope.$apply(attrs.checkScrollBottom);
                 }
             });
@@ -176,7 +175,7 @@ homeApp.directive('calendar', ["$rootScope", function($rootScope){
   }
 }]);
 
-//   homeApp.directive('rate', ["$rootScope", "$timeout", function($rootScope, $timeout){
+ //   homeApp.directive('rate', ["$rootScope", "$timeout", function($rootScope, $timeout){
 //   	return{
 //     	restrict: 'E',
 //     	scope: {'rate_object': '=data'},
