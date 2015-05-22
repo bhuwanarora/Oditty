@@ -53,13 +53,19 @@ module ImagesHelper
 			clause = "MATCH (user:User) WHERE ID(user) <= #{minimum + range} AND ID(user) >= #{minimum} RETURN user.thumb AS image_url, ID(user) AS id " 	
 			users = clause.execute
 			users.each do |user|
-				ids_range = {}
-				ids_range[:minimum] = user["id"]
-				ids_range[:maximum] = maximum
-				url = "#{Rails.application.config.image_service}/api/v0/user_versions?id=#{user["id"]}&&bucket=#{Rails.application.config.user_bucket}&&url=#{user["image_url"]}"
-				puts url.to_s.red
-				response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
-				File.open("user_ids.json", 'w') {|file| file.write(ids_range.to_json)}
+				begin
+					ids_range = {}
+					ids_range[:minimum] = user["id"]
+					ids_range[:maximum] = maximum
+					url = "#{Rails.application.config.image_service}/api/v0/user_versions?id=#{user["id"]}&&bucket=#{Rails.application.config.user_bucket}&&url=#{user["image_url"]}"
+					puts url.to_s.red
+					response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
+					File.open("user_ids.json", 'w') {|file| file.write(ids_range.to_json)}
+				rescue Exception => e
+					puts e.to_s.red
+					message = "#{e} for id #{user["id"]} at #{ Time.now.strftime("%D")}"
+					File.open("log/uploader.log", 'a') { |file| file.puts(message) }
+				end
 			end
 			minimum += range
 		end
@@ -75,13 +81,19 @@ module ImagesHelper
 			clause = "MATCH (community:Community) WHERE ID(community) <= #{minimum + range} AND ID(community) >= #{minimum} " + Community.return_init + Community.basic_info	
 			communitites = clause.execute
 			communitites.each do |community|
-				ids_range = {}
-				ids_range[:minimum] = community["id"]
-				ids_range[:maximum] = maximum
-				url = "#{Rails.application.config.image_service}/api/v0/community_versions?id=#{community["id"]}&&bucket=#{Rails.application.config.community_bucket}&&url=#{community["image_url"]}"
-				puts url.to_s.red
-				response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
-				File.open("community_ids.json", 'w') {|file| file.write(ids_range.to_json)}
+				begin
+					ids_range = {}
+					ids_range[:minimum] = community["id"]
+					ids_range[:maximum] = maximum
+					url = "#{Rails.application.config.image_service}/api/v0/community_versions?id=#{community["id"]}&&bucket=#{Rails.application.config.community_bucket}&&url=#{community["image_url"]}"
+					puts url.to_s.red
+					response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
+					File.open("community_ids.json", 'w') {|file| file.write(ids_range.to_json)}
+				rescue Exception => e
+					puts e.to_s.red
+					message = "#{e} for id #{community["id"]} at #{ Time.now.strftime("%D")}"
+					File.open("log/uploader.log", 'a') { |file| file.puts(message) }
+				end
 			end
 			minimum += range
 		end
@@ -98,13 +110,19 @@ module ImagesHelper
 			newss = clause.execute
 			newss.each do |news|
 				puts news["id"].to_s.green
-				ids_range = {}
-				ids_range[:minimum] = news["id"]
-				ids_range[:maximum] = maximum
-				File.open("news_ids.json", 'w') {|file| file.write(ids_range.to_json)}
-				url = "#{Rails.application.config.image_service}/api/v0/news_versions?id=#{news["id"]}&&bucket=#{Rails.application.config.news_bucket}&&url=#{news["image_url"]}"
-				puts url.to_s.red
-				response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
+				begin
+					ids_range = {}
+					ids_range[:minimum] = news["id"]
+					ids_range[:maximum] = maximum
+					File.open("news_ids.json", 'w') {|file| file.write(ids_range.to_json)}
+					url = "#{Rails.application.config.image_service}/api/v0/news_versions?id=#{news["id"]}&&bucket=#{Rails.application.config.news_bucket}&&url=#{news["image_url"]}"
+					puts url.to_s.red
+					response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
+				rescue Exception => e
+					puts e.to_s.red
+					message = "#{e} for id #{news["id"]} at #{ Time.now.strftime("%D")}"
+					File.open("log/uploader.log", 'a') { |file| file.puts(message) }
+				end
 			end
 			minimum += range
 		end
