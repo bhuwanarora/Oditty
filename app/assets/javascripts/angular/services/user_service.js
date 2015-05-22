@@ -139,4 +139,9 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return _deferred_request('/api/v0/regions', $q, $http);
     }
 
+    
+    this.suggest_communities = function(){
+        return _deferred_request('/api/v0/suggest_communities', $q, $http);
+    }
+
 }]);

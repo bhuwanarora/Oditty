@@ -24,6 +24,12 @@ module Api
 				info = Api::V0::RoomApi.get_visited_articles(user_id)
 				render :json => info, :status => 200
 			end
+
+			def get_labels
+				id = params[:id]
+				info = Api::V0::RoomApi.get_labels(id).execute
+				render :json => info, :status => 200
+			end
 		end
 	end
 end

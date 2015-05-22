@@ -1,4 +1,4 @@
-<md-content layout="column" class="fixed_right_panel" ng-if="!constant.show_book && info.infinity" layout-padding>
+<md-content layout="column" class="white fixed_right_panel" ng-if="!constant.show_book && info.infinity" layout-padding>
      <div class="thin_margin" ng-click="group_by_alphabet(A)"><a class="left_anchored">A-Z</a>
      <md-tooltip>
         Group by alphabet
@@ -7,7 +7,7 @@
 </md-content>
 
 <md-content ng-if="!constant.show_book && !info.infinity"
-		 layout="column" layout-align="center center" layout-padding class="book_scroller">
+		 layout="column" layout-align="center center" layout-padding class="book_scroller white">
 	<section layout-sm="row">
 		<md-button ng-click="show_book_dialog(book, $event)" 
 				   class="clear" layout-margin
@@ -23,5 +23,6 @@
     .book_scroller .md-button{
         width: 130px;
         height: 180px;
+        margin-top: 10px;
     }
 </style>

@@ -55,6 +55,10 @@ class Book < Neo
 		" MATCH ("+ node_variable + ":Book) WHERE ID("+ node_variable + ")=" + @id.to_s + " WITH "+ node_variable + " "
 	end
 
+	def get_basic_info
+		match + Book.return_group(Book.basic_info)
+	end
+
 	def self.basic_info
 		" ID(book) AS book_id, book.isbn AS isbn, book.title AS title, book.author_name AS author_name, book.pages_count AS pages_count, book.published_year AS published_year, TOINT(book.total_weight) as popularity, labels(book) AS label "
 	end

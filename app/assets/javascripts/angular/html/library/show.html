@@ -4,7 +4,7 @@
     		   ng-click="toggle_infinity_content()"
     		   aria-label="Personal Suggestions">
 		<h4 ng-if="!info.infinity">Personalised Suggestions for You</h4>
-    	<h4 ng-if="info.infinity">Infinity</h4>
+    	<h4 ng-if="info.infinity">Popular Books</h4>
     </md-switch>
 </md-whiteframe>
 <div ng-include src="'/assets/angular/html/library/_books.html'" ng-if="info.infinity"></div>

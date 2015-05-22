@@ -1,16 +1,11 @@
-<md-content ng-controller="homeController" check-scroll-bottom="get_community_feed()">
+<md-content ng-controller="homeController" check-scroll-bottom="get_community_feed()" id="home">
 	<div layout="row" layout-wrap>
 	    <div flex="10" hide-sm flex-md="10"></div>
 	    <div flex="80" flex-sm="100" flex-md="80">
-	        <div ng-include src="'/assets/angular/html/home/show.html'"></div>
+	        <div ng-include src="'/assets/angular/html/home/main.html'"></div>
 	    </div>
 	    <div flex="10" hide-sm flex-md="10"></div>
 	</div>
-    <!-- <div flex="20" hide-sm flex-md="10"></div>
-    <div flex="60" flex-sm="100" flex-md="80">
-        <div ng-include src="'/assets/angular/html/home/show.html'"></div>
-    </div>
-    <div flex="20" hide-sm flex-md="10"></div> -->
 </md-content>
 <style>
 	a:hover{

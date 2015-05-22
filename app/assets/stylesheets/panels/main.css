@@ -142,3 +142,13 @@ a, .site_color{
 	width: 200px;
 	font-size: 1.2em;
 }
+
+.inline_block{
+	float: left;
+	display: inline-block;
+	padding: 20px;
+}
+
+.right{
+	float: right;
+}

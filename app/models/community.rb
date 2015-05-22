@@ -17,18 +17,22 @@ class Community < Neo
 	end
 
 	def self.grouped_basic_info
-		"  view_count:community.view_count,  name:community.name, id:ID(community), image_url:community.image_url  "
+		" view_count:community.view_count,  name:community.name, id:ID(community), image_url:community.image_url "
 	end
 
 	def books_users_info 
 		match + Community.grouped_books_users + Community.return_init + " most_important_tag "
 	end
 
+	def feed_info
+		match + Community.match_grouped_books + Community.return_group(Community.basic_info, "books_info[0..3] AS books")
+	end
+
 	def self.match_books 
 		" MATCH (community)-[:RelatedBooks]->(book:Book) WITH community, book "
 	end
 
-	def self.match_news 
+	def self.match_news
 		" MATCH (community)<-[:HasCommunity]-(news:News) WITH community, news "
 	end
 
@@ -65,8 +69,6 @@ class Community < Neo
 		" MATCH (community)<-[:HasCommunity]-(news:News) WITH community, news "
 	end
 
-
-
 	def self.set_follow_count operation = "+"
 		" SET community.follow_count = COALESCE(community.follow_count,0) #{operation} 1 "
 	end
@@ -76,7 +78,7 @@ class Community < Neo
 	end
 
 	def self.match_grouped_books
-		Community.match_books + " WITH community, " + Book.collect_map({"books_info" => Book.grouped_basic_info }) 
+		Community.match_books + " WITH community, " + Book.collect_map({"books_info" => Book.grouped_basic_info})
 	end
 
 	# This funnction first checks the database for books, if no books are present,
@@ -161,6 +163,11 @@ class Community < Neo
 					news_metadata["news_id"] = News.create news_metadata
 					News.map_topics(news_metadata["news_id"], response["Hierarchy"]) 				
 					Community.map_books(communities_books.zip(relevance), news_metadata)
+					News.new(news_metadata["news_id"]).add_notification.execute
+					if news_metadata.present? && news_metadata["image_url"].present? && news_metadata["news_id"].present?
+						type = "news"
+						VersionerWorker.perform_async(news_metadata["news_id"], news_metadata["image_url"], type)
+					end
 				end
 			end
 		rescue Exception => e			
@@ -184,7 +191,7 @@ class Community < Neo
 					authorlist_string = authors[i].sort.join('').search_ready						
 					unique_index = book.search_ready + authorlist_string
 					clause_temp += Book.search_by_unique_index(unique_index) + " , community " + Community.merge_book + " WITH community "
-					if((i+1)%batch_size_cypher ==0)						
+					if((i+1)%batch_size_cypher == 0)
 						clause_temp += News.return_init + Community.basic_info
 						clause_temp.execute
 						clause_temp = clause
@@ -192,7 +199,11 @@ class Community < Neo
 				end
 				if(clause_temp.length > clause.length)
 					clause_temp += News.return_init + Community.basic_info
-					clause_temp.execute				
+					community_info = clause_temp.execute[0]				
+					if community_info.present? && community_info["image_url"].present? && community_info["id"].present?
+						type = "community"
+						VersionerWorker.perform_async(community_info["id"], community_info["image_url"], type)
+					end
 				end
 			end
 		end
@@ -219,5 +230,13 @@ class Community < Neo
 
 	def self.suggest_communities user_id, skip_count = 0
 		User.new(user_id).match + Bookmark::Node::NewsLabel.optional_match_path + " WHERE news: News WITH news, user " + News.match_community + " WITH DISTINCT community, SUM(COALESCE(has_community.relevance,0)) AS relevance ORDER BY relevance DESC SKIP " + skip_count.to_s + Community.limit(Constant::Count::CommunitiesSuggested) + Community.return_group(Community.basic_info, "relevance")
+	end
+
+	def get_books_users
+		match + Community.grouped_books_users 
+	end
+
+	def match_news_related_communities news_id
+		News.new(news_id).match + ", most_important_tag " + News.optional_match_community + " , most_important_tag  WHERE NOT ID(community) = " + @id.to_s + " WITH most_important_tag, community, has_community ORDER BY has_community.relevance DESC WITH  most_important_tag, " + Community.collect_map("other_tags" => Community.grouped_basic_info) + Article::NewsArticle.return_group(" most_important_tag ", " other_tags[0.." + (Constant::Count::CommunitiesShown+1).to_s + "] AS other_tags ")
 	end
 end

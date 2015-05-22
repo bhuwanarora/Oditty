@@ -5,16 +5,22 @@
             layout="column">
 	<section class="md-padding" layout="column"
             ng-controller="leftController">
-		<a href="/home">
+		<a href="/infinity">
             <md-button class="md-button-left full_width">
   			   Home
 		  </md-button>
         </a>
-        <a href="/infinity">
+        <!-- <a href="/commun">
             <md-button class="md-button-left full_width">
                 Infinity
             </md-button>
+        </a> -->
+        <a href="/communities">
+            <md-button class="md-button-left full_width">
+                Communities
+            </md-button>
         </a>
+        
         <a href="/profile">
             <md-button class="md-button-left full_width">
                 Profile
@@ -27,21 +33,7 @@
         </a>
         <md-divider></md-divider>
         
-        <a href="/communities">
-            <md-button class="md-button-left full_width">
-                Communities
-            </md-button>
-        </a>
-       <!--  <a href="">
-            <md-button class="md-button-left full_width">
-                Social Feed
-            </md-button>
-        </a> -->
-       <!--  <a href="">
-            <md-button class="md-button-left full_width">
-                Listopia
-            </md-button>
-        </a> -->
+     
         <a href="/blogs">
             <md-button class="md-button-left full_width">
                 Blog
@@ -49,6 +41,7 @@
         </a>
     </section>
     <section layout-padding>
-        <a href="/customise">Customise</a>
+        <a href="/customise" class="less_important">Customise</a>
+        <a href="/signup" class="less_important">Logout</a>
     </section>
 </md-sidenav>

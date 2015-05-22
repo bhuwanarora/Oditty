@@ -76,9 +76,35 @@ class Search < Neo
 	end
 
 	def basic
-		search_response = @client.search index: 'search', scroll: '10m', body:{query:{function_score: {boost_mode: "replace", query:{multi_match:{query:@search_text,fields:["title^30","author_name^3", "first_name^2", "name", "last_name^2"]}}}}, size: @count, sort:{ _script: {params:{factor: 0.4}, type: "number", script: "weight", order: "desc"}}}
+		# AUTHOR > BOOK > COMMUNITY > USER > BLOG > NEWS
+		search_response = @client.search index: 'search', scroll: '10m', body:{
+				query:{
+					function_score: {
+						boost_mode: "replace", 
+						query:{
+							multi_match:{
+								query: @search_text,
+								fields: ["name^3", "title^2", "first_name", "last_name"]
+							}
+						}
+					}
+				}, 
+				size: @count, 
+				sort: { 
+					_script: {
+						params: {
+							factor: 0.4
+						}, 
+						type: "number", 
+						script: "weight", 
+						order: "desc"
+					}
+				}
+			}
 		scroll_id = search_response["_scroll_id"]
-		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
+		search_response = Search.extract_info(search_response)
+		response = {"scroll_id" => scroll_id, "results" => search_response}
+		response
 	end
 
 	def self.basic_search_info

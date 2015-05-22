@@ -2,19 +2,22 @@ module Api
 	module V0
 		class UserApi
 
-			def self.authenticate session, params
-				User::Authenticate.new(session, params).action
-			end
-
 			def self.set_intro_seen_status user_id, status
 				User.new(user_id).set_intro_seen_status(status)
 			end
 
-			def self.get_details(user_id, session)
+			def self.get_details(user_id)
 				info = {}
 				if user_id.present?
 					info = User.new(user_id).get_basic_info.execute[0]
-					# session[:last_book] = info["last_book"]
+				end
+				info
+			end
+
+			def self.get_relative_details(friend_id, user_id)
+				info = {}
+				if friend_id.present?
+					info = UsersUser.new(friend_id, user_id).get_basic_info.execute[0]
 				end
 				info
 			end
@@ -395,7 +398,7 @@ module Api
 								duplicate_email = true
 							end
 						else
-							clause = User.set_email params[:email]
+							clause = User::Info.set_email params[:email]
 						end
 					end
 					clause = User::Info.set_thumb params[:data][:url] 								if params[:data] && params[:data][:url]
@@ -410,8 +413,8 @@ module Api
 					clause = User::Info.set_profile_picture params[:profile_picture] 				if params[:profile_picture]
 					clause = User::Info.set_about params[:about] 									if params[:about]
 
-					clause = User::Info.add_category params[:category_id]					 				if params[:category_id] && params[:status]
-					clause = User::Info.remove_category params[:category_id]						 		if params[:category_id] && !params[:status]
+					clause = User::Info.add_category params[:category_id]					 		if params[:category_id] && params[:status]
+					clause = User::Info.remove_category params[:category_id]						if params[:category_id] && !params[:status]
 
 					if clause
 						clause = User.new(user_id).match + clause

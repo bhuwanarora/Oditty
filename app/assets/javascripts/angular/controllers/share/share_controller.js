@@ -1,21 +1,21 @@
 homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'ShareOptions', '$routeParams', '$mdBottomSheet', 'statusService', 'WebsiteUIConstants', 'bookService', 'ColorConstants', 'sharedService', 'Emotions', function($scope, $rootScope, $timeout, ShareOptions, $routeParams, $mdBottomSheet, statusService, WebsiteUIConstants, bookService, ColorConstants, sharedService, Emotions){
 
     $scope.play_type_key = function(event){
-        if($scope.info.show_share){
-            if(angular.isUndefined($scope.current_track) || $scope.current_track == 0){
-                $scope.current_track = 1;
-                document.getElementById('audiotag1').play();
-            }
-            else if($scope.current_track == 1){
-                $scope.current_track = 2;
-                document.getElementById('audiotag2').play();
-            }
-            else{
-                $scope.current_track = 0;
-                document.getElementById('audiotag3').play();
-            }
-            event.stopPropagation();
-        }
+        // if($scope.info.show_share){
+        //     if(angular.isUndefined($scope.current_track) || $scope.current_track == 0){
+        //         $scope.current_track = 1;
+        //         document.getElementById('audiotag1').play();
+        //     }
+        //     else if($scope.current_track == 1){
+        //         $scope.current_track = 2;
+        //         document.getElementById('audiotag2').play();
+        //     }
+        //     else{
+        //         $scope.current_track = 0;
+        //         document.getElementById('audiotag3').play();
+        //     }
+        //     event.stopPropagation();
+        // }
     }
 
     $scope.toggle_buy = function(){
@@ -125,9 +125,10 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     }
 
     $scope.add_book = function(book){
+        debugger
         if($rootScope.active_shelf){
-            $rootScope.bookmark_object = {"id": (book.id || book.book_id), "type": 'Book'};
-            sharedService.toggle_bookmark($rootScope.active_shelf, false);
+            var bookmark_object = {"id": (book.id || book.book_id), "type": 'Book'};
+            sharedService.toggle_bookmark($rootScope.active_shelf, false, bookmark_object);
             delete $rootScope.active_shelf;
             $scope.info.show_share = false;
         }
@@ -509,7 +510,11 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         $scope.reading_status_selected = true;
         if(angular.isUndefined($scope.active_book)){
             $scope.info.status_books = [];
-            sharedService.get_popular_books($scope, $scope.info.status_books);
+            $scope.info.loading = true;
+            bookService.get_top_searches().then(function(data){
+                $scope.info.loading = false;
+                $scope.info.status_books = data;
+            });
         }
     }
 

@@ -47,10 +47,14 @@
             <script src="assets/angular/controllers/home/left_controller.js"></script>
             <script src="assets/angular/controllers/home/right_controller.js"></script>
             <script src="assets/angular/controllers/book/buy_controller.js"></script>
+
             <script src="assets/angular/controllers/recommend_controller.js"></script>
             <script src="assets/angular/controllers/home/shelf_controller.js"></script>
             <script src="assets/angular/controllers/share/share_controller.js"></script>
             <script src="assets/angular/controllers/share/options_controller.js"></script>            
+            <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
+            <script src="assets/angular/controllers/book/timeline_controller.js"></script>
+            <script src="assets/angular/controllers/book/real_virtuality_controller.js"></script>
 
             <script src="assets/angular/controllers/toast_controller.js"></script>
             <script src="assets/angular/directives/site_directives.js"></script>
@@ -75,6 +79,8 @@
 
             
             <% if @home %>
+                <script src="assets/angular/services/community_service.js"></script>
+                <script src="assets/angular/directives/home_directives.js"></script>
                 <script src="assets/angular/controllers/home/home_controller.js"></script>
             <% end %>
 
@@ -83,10 +89,7 @@
             <% end %>
 
             <% if @news %>
-                <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
-                <script src="assets/angular/controllers/book/timeline_controller.js"></script>
-                <script src="assets/angular/controllers/book/real_virtuality_controller.js"></script>
-                
+                <script src="assets/angular/directives/news_directives.js"></script>
                 <script src="assets/angular/services/community_service.js"></script>
                 <script src="assets/angular/controllers/community_controller.js"></script>
             <% end %>
@@ -100,9 +103,7 @@
             <% end %>
 
             <% if @book %>
-                <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
-                <script src="assets/angular/controllers/book/timeline_controller.js"></script>
-                <script src="assets/angular/controllers/book/real_virtuality_controller.js"></script>
+                
             <% end %>
 
             <% if @infinity %>
@@ -111,13 +112,10 @@
                 
                 <script src="assets/angular/controllers/library/library_controller.js"></script>
                 <script src="assets/angular/controllers/library/filters_controller.js"></script>
-                <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
-                <script src="assets/angular/controllers/book/timeline_controller.js"></script>
-                <script src="assets/angular/controllers/book/real_virtuality_controller.js"></script>
-
             <% end %>
 
             <% if @room %>
+                <script src="assets/angular/directives/room_directives.js"></script>
                 <script src="assets/angular/services/room_service.js"></script>
                 <script src="assets/angular/controllers/room/room_controller.js"></script>
             <% end %>
@@ -127,9 +125,11 @@
             <% end %>
 
             <% if @profile %>
+                <script src="assets/angular/directives/profile_directives.js"></script>
                 <script src="assets/angular/services/community_service.js"></script>
+                
                 <script src="assets/angular/controllers/profile_controller.js"></script>
-                <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
+                
             <% end %>
 
             <% if @search %>
@@ -188,11 +188,12 @@
 
     <body ng-controller="appController" 
         ng-keydown="scroll_on_keypress($event)" 
+        class="<% if (@news || @infinity || @book) %>white<% end %>" 
         ng-click="close_popups()" 
         msd-wheel="close_popups()">
-        <audio id="audiotag1" src="assets/typewriter2.m4a" preload="auto"></audio>
+        <!-- <audio id="audiotag1" src="assets/typewriter2.m4a" preload="auto"></audio>
         <audio id="audiotag2" src="assets/typewriter2.m4a" preload="auto"></audio>
-        <audio id="audiotag3" src="assets/typewriter3.m4a" preload="auto"></audio>
+        <audio id="audiotag3" src="assets/typewriter3.m4a" preload="auto"></audio> -->
         <script>
           // (function() {
           //   var cx = '010250045073231072543:z7pnnxbf5s8';
@@ -208,15 +209,16 @@
         <!-- <gcse:search></gcse:search> -->
         <div layout="column" layout-fill>
             <!-- <div ng-include src="'/assets/angular/html/shared/header.html'"></div> -->
+
             <md-toolbar md-scroll-shrink class="md-whiteframe-z1 header <% if !@infinity %>'no_shadow'<% end %>">
                 <section layout="row" layout-wrap>
                     <div flex="20" flex-sm="35" layout="row" layout-align="start center">
-                        <md-button ng-show="info.mobile_search" class="burger padding" ng-click="toggleLeft($event)">
+                        <md-button ng-show="info.mobile_search" class="burger padding <% if (@book || @news || @infinity) %>white<% end %>" ng-click="toggleLeft($event)">
                             <a><span class="icon-menu2"></span></a>
                         </md-button>
                         <div ng-show="info.mobile_search" 
                              layout-align-lg="center center">
-                            <a class="logo" href="/home">
+                            <a class="logo" href="/infinity">
                                 <img src="assets/rd_icon.png"/>
 
                                 <span hide-sm hide-md ng-hide="<%= @signup %>">ReadersDoor</span>
@@ -254,8 +256,8 @@
                                 <div layout="row" flex="90">
                                     <img ng-src="{{item.isbn | small_thumb}}" ng-show="item.isbn" class="search_thumb" />
                                     <div>&nbsp;</div>
-                                    <div ng-bind-html="item.name || item.title" md-highlight-text="search_text"></div>
-                                    <div class="less_important" md-highlight-text="search_text" ng-show="item.author_name">
+                                    <div ng-bind-html="item.name || item.title" ></div>
+                                    <div class="less_important" ng-show="item.author_name">
                                         <span>&nbsp;by </span>
                                         <span ng-bind-html="item.author_name"></span>
                                     </div>
@@ -268,14 +270,16 @@
                         </md-autocomplete>
                     </div>
                     <div layout="row" layout-align="center center" flex="10" flex-md="15" flex-sm="20">
-                        <md-button ng-show="info.mobile_search" class="library">
-                            <a href="/infinity">Infinity</a>
-                        </md-button>
+                        <a href="/communities" ng-show="info.mobile_search" class="library">
+                            <md-button>
+                                Communities
+                            </md-button>
+                        </a>
                     </div>
                     <div flex="20" flex-sm="35" layout="row" layout-align="end center">
                         <a href="/room" ng-show="info.mobile_search">
                             <md-button class="small-padding">
-                                <span class="icon-home2"></span>
+                                <span class="icon-books"></span>
                                 <md-tooltip >
                                     Room
                                 </md-tooltip>
@@ -321,6 +325,7 @@
                 <%= yield %>
             </div>
             
+            
             <div ng-controller="shareController" ng-show="info.mobile_search">
                 <md-button class="md-fab md-fab-bottom-right animate-fast fixed_share"
                             ng-hide="active_shelf || info.show_share"
@@ -346,7 +351,6 @@
             <div ng-include src="'/assets/angular/html/shared/left_panel.html'" class="left_panel_container"></div>
             <div ng-include src="'/assets/angular/html/shared/notifications.html'" ng-if="show_notifications"></div>
             <div ng-include src="'/assets/angular/html/share/show.html'"></div>
-            <!-- <div ng-include src="'/assets/angular/html/home/show.html'"></div> -->
         </div>
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

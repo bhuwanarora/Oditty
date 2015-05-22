@@ -48,10 +48,9 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
                     {
                         name: "central-click",
                         options: {
-                            text: "Explore Topic",
+                            text: "Click To Explore.",
                             style: {
-                                "font-size": "15px",
-                                "font-style": "italic",
+                                "font-size": "24px",
                                 "font-family": "Source Sans Pro, sans-serif",
                                 "text-anchor": "middle",
                                 "fill": "white"
@@ -66,21 +65,6 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
                         name: "lines",
                         options: {
                             format: [
-                                {// Line #0
-                                    textField: "view_count",
-                                    classed: {count: true},
-                                    style: {
-                                        "font-size": "28px",
-                                        "font-family": "Source Sans Pro, sans-serif",
-                                        "text-anchor": "middle",
-                                        fill: "white"
-                                    },
-                                    attr: {
-                                        dy: "0px",
-                                        x: function (d) {return d.cx;},
-                                        y: function (d) {return d.cy;}
-                                    }
-                                },
                                 {// Line #1
                                     textField: "name",
                                     classed: {text: true},
@@ -88,10 +72,27 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
                                         "font-size": "14px",
                                         "font-family": "Source Sans Pro, sans-serif",
                                         "text-anchor": "middle",
-                                        fill: "white"
+                                        "text-transform": "uppercase",
+                                        "width": "100px",
+                                        fill: "none"
                                     },
                                     attr: {
                                         dy: "20px",
+                                        x: function (d) {return d.cx;},
+                                        y: function (d) {return d.cy;}
+                                    }
+                                },
+                                {// Line #0
+                                    textField: "view_count",
+                                    classed: {count: true},
+                                    style: {
+                                        "font-size": "28px",
+                                        "font-family": "Source Sans Pro, sans-serif",
+                                        "text-anchor": "middle",
+                                        fill: "none"
+                                    },
+                                    attr: {
+                                        dy: "0px",
                                         x: function (d) {return d.cx;},
                                         y: function (d) {return d.cy;}
                                     }

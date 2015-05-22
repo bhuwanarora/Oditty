@@ -197,15 +197,13 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
         });
     };
 
-    
-
     var _redirect_user = function(){
         var redirect_url = getCookie("redirect_url");
         if(redirect_url && (redirect_url != null)){
             window.location.href = redirect_url;
         }
         else{
-            window.location.href = "/home";
+            window.location.href = "/infinity";
         }
     }
 

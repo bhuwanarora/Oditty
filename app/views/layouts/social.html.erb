@@ -1,22 +1,29 @@
-<!DOCTYPE html>
-    <head>
+<html>
+    <head prefix="readersdoor: http://readersdoor.com/ns#">
         <meta name="description" content="<%= @info["description"] %>" /> 
 
         <!-- Open Graph data -->
         <meta charset="utf-8" />
-        <meta property="og:url" content= "<%= @info["original_url"] %>" />
-        <meta property="og:title" content= "<%= @info["title"] || @info["name"] %>" />
-        <meta property="og:type" content= "website" />
-        <meta property="og:description" content= "<%= @info["description"] %>" />
+        <meta property="og:site_name" content= "ReadersDoor" />
+        <meta property="og:url" content= "<%= @info['original_url'] %>" />
+        <meta property="og:title" content= "<%= @info['title'] || @info['name'] %>" />
+        <meta property="og:type" content= "<%= @info['meta_type'] %>" />
+
+        <meta property="og:book:author" content= "<%= @info['author_name'] %>" ng-if="<% @info['meta_type'] == 'book'%>"/>
+        <meta property="og:book:isbn" content= "<%= @info['isbn'] %>" ng-if="<% @info['meta_type'] == 'book'%>"/>
+        <meta property="og:book:release_date" content= "<%= @info['published_year'] %>" ng-if="<% @info['meta_type'] == 'book'%>"/>
+        
+
+        <meta property="og:description" content= "<%= @info['description'] || @info['overview']%>" />
         <meta property="fb:app_id" content= "667868653261167" />        
-        <meta property="og:image" content= "<%= @info["image_url"] %>" />
+        <meta property="og:image" content= "<%= @info['image_url'] %>" />
 
          <!-- Twitter Card data -->
-        <meta name="twitter:card" content="website"/>
-        <meta name="twitter:site" content="<%= @info["original_url"] %>"/>
-        <meta name="twitter:title" content="<%= @info["title"] || @info["name"] %>"/>
-        <meta name="twitter:description" content="<%= @info["description"] %>" />
-        <meta name="twitter:image" content="<%= @info["image_url"] %>"/>
+        <meta name="twitter:card" content="<%= @info['meta_type'] %>"/>
+        <meta name="twitter:site" content="<%= @info['original_url'] %>"/>
+        <meta name="twitter:title" content="<%= @info['title'] || @info['name'] %>"/>
+        <meta name="twitter:description" content="<%= @info['description'] %>" />
+        <meta name="twitter:image" content="<%= @info['image_url'] %>"/>
     </head>
     <body></body>
 </html>
