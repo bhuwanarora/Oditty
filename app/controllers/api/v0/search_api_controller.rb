@@ -12,7 +12,7 @@ module Api
 					results = SearchApi.search(params)
 					session[:query] = query_params
 					session[:query_type] = type
-					session[:scroll_id] = results["scroll_id"] if results["scroll_id"].present?
+					session[:scroll_id] = results["scroll_id"] 
 					results = results["results"]
 				elsif session[:scroll_id].present?
 					puts " search with scroll id "
