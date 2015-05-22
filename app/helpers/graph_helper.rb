@@ -102,4 +102,98 @@ module GraphHelper
 		end	
 	end
 
+	def self.repliacate_links_optimized(clause_init, link_types,source,destination)
+		output = 1
+		left_to_execute =true
+		limit_query_length = 100
+		orig_id = 0
+		dup_id = 0
+		begin
+			clause =clause_init
+			arrows=[{:left => "",:right => ">"},{:left => "<",:right => ""}]			
+			arrows.each do |arrow|
+				clause =clause_init+"MATCH ("+source+")"+arrow[:left]+"-[rel]-"+arrow[:right]+"(node) "\
+					"RETURN ID(rel) AS id_rel, ID(node) AS id_node, ID("+source+") AS id_source, ID("+destination+") AS id_dest, type(rel) as type_r "
+				output_temp = clause.execute
+				if(output_temp.length == 0)
+					output = 0
+					break
+				end				
+				clause = " MATCH ("+source+":Book), ("+destination+":Book) WHERE ID("+source+") ="+output_temp[0]["id_source"].to_s+" AND ID("+destination+") ="+output_temp[0]["id_dest"].to_s+" "			
+				output_temp.each do |output|
+					dup_id = output["id_source"]
+					orig_id = output["id_dest"]
+					left_to_execute = true
+					clause += "WITH "+source+", "+destination+" "
+					clause += "MATCH ("+source+")"+arrow[:left]+"-[rel]-"+arrow[:right]+"(node) "\
+						"WHERE ID(rel) ="+output["id_rel"].to_s+" AND ID(node) = "+output["id_node"].to_s+" "\
+						"WITH rel,node, "+source+", "+destination+" "
+					clause += "MERGE ("+destination+")"+arrow[:left]+"-[new_relation:"+output["type_r"]+"]-"+arrow[:right]+"(node) "				
+					if !link_types[output["type_r"]].nil?
+						if(link_types[output["type_r"]].length >0)
+							clause += "WITH rel,node, "+source+", "+destination+", new_relation "	
+							link_types[output["type_r"]].each do |property|
+								clause +="SET new_relation."+property +" = rel."+property+" "
+							end					
+						end
+					else
+						puts ("New LinkType Found: "+output["type_r"]).red 						
+					end
+					if (clause.length >limit_query_length)						
+						clause.execute
+						left_to_execute =false
+						clause = "MATCH ("+source+":Book), ("+destination+":Book) WHERE ID("+source+") ="+output["id_source"].to_s+" AND ID("+destination+") ="+output["id_dest"].to_s+" "					
+					end
+				end				
+				if left_to_execute == true					
+					clause.execute	
+					left_to_execute =false		
+				end			
+			end
+			
+		rescue Exception => e
+			output = -1
+			puts e.message.red
+		end
+		[output,orig_id,dup_id]
+	end
+
+
+		# This function deletes the duplicate books. Duplicacy is on the basis of unique-index
+	def self.delete_duplicate_books_unique_index
+		end_id_author, start_id_author = Author.get_max_min_id
+		book_links_property= Book.get_book_links		
+		step_size = 500
+		cur_id = start_id_author
+		while cur_id <=end_id_author
+			upper_limit = cur_id+step_size			
+			clause_init = "MATCH (n: Author)-[:Wrote]->(book: Book), (n)-[:Wrote]->(dup_book: Book)"\
+				"WHERE ID(n)>= "+cur_id.to_s+" AND ID(n) <= "+upper_limit.to_s+" AND NOT(HAS(book.to_be_deleted)) AND "\
+				"dup_book.unique_index = book.unique_index AND ID(dup_book) <> ID(book) "\
+				"AND dup_book.indexed_author_name = book.indexed_author_name "\
+				"WITH dup_book,book LIMIT 1 "
+			output,orig_id,dup_id = repliacate_links_optimized(clause_init,book_links_property,"dup_book","book")			
+			if (output == 1)				
+				dup = ("MATCH (dup:Book) WHERE  ID(dup) = "+dup_id.to_s+" RETURN dup").execute[0]["dup"]["data"]
+				clause = "MATCH (orig:Book),(dup:Book) WHERE ID(orig) = "+orig_id.to_s+"  AND ID(dup) = "+dup_id.to_s+" WITH orig, dup "
+				dup.keys.each do |prop|
+					if (dup[prop].is_a? String)
+						clause += ", (CASE WHEN (not(has(orig."+prop+")) OR length(orig."+prop+") <length(dup."+prop+")) THEN dup."+prop+" ELSE orig."+prop+" END) AS "+prop+" "
+					else
+						clause += ", (CASE WHEN (not(has(orig."+prop+"))) THEN dup."+prop+" ELSE orig."+prop+" END) AS "+prop+" "
+					end					
+				end
+				dup.keys.each do |prop|
+					clause += "SET orig."+prop+" = "+prop+" "					
+				end 
+				clause += "WITH dup MATCH (dup)-[r]-() DELETE dup,r"				
+				clause.execute				
+			elsif(output == 0)					
+				File.open('duplicate_removal_log.txt', 'a') { |f| f.puts('duplicate book removal upto author id'+cur_id.to_s) }
+				cur_id +=step_size
+			end		
+		end
+	end
+
+
 end
