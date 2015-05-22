@@ -203,7 +203,7 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
             window.location.href = redirect_url;
         }
         else{
-            window.location.href = "/home";
+            window.location.href = "/infinity";
         }
     }
 
