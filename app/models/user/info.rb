@@ -1,5 +1,9 @@
 class User::Info < User
 
+	def self.set_last_active_session node_variable = "user"
+		" SET " + node_variable + ".last_active_session = \"" + Time.now.strftime("%Y-%m-%d") + "\" "
+	end
+
 	def self.set_intro_seen_status status
 		" SET user.intro_seen = " + status + " "
 	end

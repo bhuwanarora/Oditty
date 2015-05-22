@@ -219,7 +219,11 @@ class WebsiteController < ApplicationController
 	end
 
 	def community
-		@community = true
+		
+	end
+
+	def news
+		@news = true
 		if BotDetector.detect request.env['HTTP_USER_AGENT']
 			id = params[:q]
 			user_id = session[:user_id]
@@ -230,6 +234,7 @@ class WebsiteController < ApplicationController
 		else
 			user_id = session[:user_id]
 			render :layout => "material"
-		end
+		end	
 	end
+
 end

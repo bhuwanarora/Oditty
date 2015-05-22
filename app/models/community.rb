@@ -17,7 +17,7 @@ class Community < Neo
 	end
 
 	def self.grouped_basic_info
-		"  view_count:community.view_count,  name:community.name, id:ID(community), image_url:community.image_url "
+		"  view_count:community.view_count,  name:community.name, id:ID(community), image_url:community.image_url  "
 	end
 
 	def books_users_info 
@@ -83,12 +83,12 @@ class Community < Neo
 	# it calls google api to fetch books	
 	def self.fetch_books_database_Net community
 		clause = Community.search_by_name(community) + Community.match_books + "RETURN book.title,book.author_name"		
-		booksList = clause.execute				
-		if(booksList.empty?)
+		books_list = clause.execute				
+		if(books_list.empty?)
 			books = Community.fetch_books community
 		else
 			books = {community => []}
-			booksList.each do |book|
+			books_list.each do |book|
 				if(book.has_key?("book.author_name"))
 					author = book["book.author_name"] # it will be array, now it is not
 					if(author.nil?)
@@ -215,5 +215,9 @@ class Community < Neo
 
 	def self.search_by_name name
 		" MATCH (community:Community{name:'" + name + "'}) WITH community " 
+	end
+
+	def self.suggest_communities user_id, skip_count = 0
+		User.new(user_id).match + Bookmark::Node::NewsLabel.optional_match_path + " WHERE news: News WITH news, user " + News.match_community + " WITH DISTINCT community, SUM(COALESCE(has_community.relevance,0)) AS relevance ORDER BY relevance DESC SKIP " + skip_count.to_s + Community.limit(Constant::Count::CommunitiesSuggested) + Community.return_group(Community.basic_info, "relevance")
 	end
 end

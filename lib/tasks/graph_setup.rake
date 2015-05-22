@@ -12,6 +12,12 @@ namespace :graph do
     GraphHelper.reset_news_link
   end
 
+  desc "set region news count"
+  task :set_region_news_count => :environment do
+    include GraphHelper
+    GraphHelper.set_region_news_count
+  end
+
   desc "Category linked list"
   task :set_category_linked_list => :environment do
     include GraphHelper
@@ -263,9 +269,23 @@ namespace :graph do
     Neo4jHelper.set_book_unique_index
   end
 
+
   desc "Deletes duplicate books and appropriately setup links."
   task :remove_duplicate_books => :environment do
     include GraphHelper
     GraphHelper.delete_duplicate_books_unique_index
   end  
+  
+  desc "curate book author name "
+  task :curate_books_author_name => :environment do
+    include GraphHelper
+    GraphHelper.curate_books_author_name
+  end
+
+  desc "curate author names "
+  task :curate_author_names => :environment do
+    include GraphHelper
+    GraphHelper.curate_author_names
+  end
+
 end

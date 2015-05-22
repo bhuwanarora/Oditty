@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="homeApp" ng-strict-di>
     <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
         <meta name="viewport" content="width=device-width">
         <meta property="og:url" content="http://www.readersdoor.com" />
         <meta property="og:type" content="website" />
@@ -8,22 +9,19 @@
         <meta property="og:image" content="https://fbcdn-sphotos-f-a.akamaihd.net/hphotos-ak-xfp1/t31.0-8/s2048x2048/10928967_401263720044504_3799751116430229659_o.jpg" />
         <meta property="og:description" content="ReadersDoor is a global community for book readers, where we intend to enrich and enhance users’ reading experience by focusing on virtualisation and idealisation of their real life interactions and experiences." />
         <meta property="fb:app_id" content="667868653261167"/>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
         <meta charset="utf-8" />
         <title>ReadersDoor</title>
         <link rel="icon" type="image/png" href="assets/favicon.png">
         <script>document.write('<base href="' + document.location + '" />');</script>
-
         <!-- <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,100italic,400italic|Roboto+Condensed&amp;lang=en' rel='stylesheet' type='text/css'> -->
-
-
         <link rel="stylesheet" href="assets/angular_material.css" />
         <link rel="stylesheet" href="assets/website/website.css" />
         <link rel="stylesheet" href="assets/website/icomoon.css" />
         <link rel="stylesheet" href="assets/website/home.css" />
         <link rel="stylesheet" href="assets/website/media_library.css" />
         <% if Rails.env.development? %>
-
             <script src="assets/min/angular/vendors.min.js"></script>
 
             <script src="assets/angular/services/third_party/d3_service.js"></script>
@@ -61,7 +59,7 @@
             <script src="assets/angular/services/status_service.js"></script>
             <script src="assets/angular/services/feed_service.js"></script>
 
-            <% if (@community || @home || @infinity)%>
+            <% if (@news || @home || @infinity)%>
                 <script src="assets/angular/vendors/jquery.min.js"></script>
                 <script src="assets/angular/vendors/d3.min.js"></script>
                 <script src="assets/angular/vendors/bubble_chart/d3_transform.js"></script>
@@ -84,7 +82,7 @@
                 <script src="assets/angular/controllers/network_controller.js"></script>
             <% end %>
 
-            <% if @community %>
+            <% if @news %>
                 <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
                 <script src="assets/angular/controllers/book/timeline_controller.js"></script>
                 <script src="assets/angular/controllers/book/real_virtuality_controller.js"></script>
@@ -142,7 +140,7 @@
             <!-- <link rel="stylesheet" href="assets/min/site.min.css" /> -->
             <script src="assets/min/angular/site.min.js"></script>
 
-            <% if (@community || @home || @infinity)%>
+            <% if (@news || @home || @infinity)%>
                 <script src="assets/min/angular/d3_group.min.js"></script> 
             <% end %>
 
@@ -154,7 +152,7 @@
                 <script src="assets/min/angular/controllers/network_group.min.js"></script>
             <% end %>
 
-            <% if @community %>
+            <% if @news %>
                 <script src="assets/min/angular/controllers/community_group.min.js"></script>
             <% end %>
 
@@ -210,7 +208,7 @@
         <!-- <gcse:search></gcse:search> -->
         <div layout="column" layout-fill>
             <!-- <div ng-include src="'/assets/angular/html/shared/header.html'"></div> -->
-            <md-toolbar md-scroll-shrink class="header <% if !@infinity %>'no_shadow'<% end %>">
+            <md-toolbar md-scroll-shrink class="md-whiteframe-z1 header <% if !@infinity %>'no_shadow'<% end %>">
                 <section layout="row" layout-wrap>
                     <div flex="20" flex-sm="35" layout="row" layout-align="start center">
                         <md-button ng-show="info.mobile_search" class="burger padding" ng-click="toggleLeft($event)">
@@ -252,7 +250,21 @@
                                         flex="85"
                                         ng-click="stop_propagation($event)"
                                         placeholder="Search books, topics and more...">
-                            <div ng-bind-html="item.name"></div>
+                            <div layout="row" layout-align="space-between">
+                                <div layout="row" flex="90">
+                                    <img ng-src="{{item.isbn | small_thumb}}" ng-show="item.isbn" class="search_thumb" />
+                                    <div>&nbsp;</div>
+                                    <div ng-bind-html="item.name || item.title" md-highlight-text="search_text"></div>
+                                    <div class="less_important" md-highlight-text="search_text" ng-show="item.author_name">
+                                        <span>&nbsp;by </span>
+                                        <span ng-bind-html="item.author_name"></span>
+                                    </div>
+                                </div>
+                                <div flex="10" layout="row" layout-align="space-between">
+                                    <div></div>
+                                    <div ng-bind-html="item | search_item_type"></div>
+                                </div>
+                            </div>
                         </md-autocomplete>
                     </div>
                     <div layout="row" layout-align="center center" flex="10" flex-md="15" flex-sm="20">

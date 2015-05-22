@@ -1,6 +1,25 @@
+homeApp.directive('bookmark', ["$rootScope", function($rootScope){
+    return {
+        restrict: 'E',
+        scope : {data: '='},
+        controller: ["$scope", function($scope){
+            $scope.show_shelves = function(){
+                $scope.show_shelf = !$scope.show_shelf;
+            }
+
+            var _init = function(){
+                $scope.labels = $rootScope.labels;
+                $rootScope.bookmark_object = $scope.data;
+            }
+
+            _init();
+        }],
+        templateUrl: '/assets/angular/html/shared/bookmark.html'
+    };
+}]);
 
 
-homeApp.directive('setFocus', ["$timeout", "$parse", "$rootScope", function($timeout, $parse, $rootScope) {
+homeApp.directive('setFocus', ["$timeout", "$parse", "$rootScope", function($timeout, $parse, $rootScope){
   return {
     link: function(scope, element, attrs) {
       var model = $parse(attrs.setFocus);

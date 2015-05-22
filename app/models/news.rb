@@ -24,7 +24,7 @@ class News < Neo
 	end
 
 	def self.match_community
-		" MATCH (news)-[:HasCommunity]->(community:Community) WITH news, community "
+		" MATCH (news)-[has_community:HasCommunity]->(community:Community) WITH news, community, has_community "
 	end
 
 	def match_community
@@ -39,7 +39,7 @@ class News < Neo
 		if news_metadata["region"].strip == "Canada English"
 			news_metadata["region"] = "Canada"
 		end
-		" MERGE (region:Region{name:\"#{news_metadata["region"]}\"}) MERGE (region)<-[:FromRegion{region:ID(region)}]-(news) WITH region, news " 
+		" MERGE (region:Region{name:\"#{news_metadata["region"]}\"}) MERGE (region)<-[:FromRegion{region:ID(region)}]-(news) SET region.news_count = COALESCE(region.news_count) + 1 WITH region, news " 
 	end
 
 	def self.create news_metadata
@@ -202,10 +202,10 @@ class News < Neo
 	end
 
 	def self.get_feed skip_count, day_skip_count, region
-		News.match_time_period(day_skip_count) + " WHERE news.status = true WITH news " + News.match_region(region) + News.order_desc + News.skip(skip_count) + News.limit(Constant::Count::NewsShownInFeed) + News.match_community + " WITH news," + News.collect_map({"communities" => Community.grouped_basic_info}) + News.return_group(News.basic_info,"communities") 
+		News.match_time_period(day_skip_count) + " WHERE news.status = true WITH news " + News.match_region(region) + News.order_desc + News.skip(skip_count) + News.limit(Constant::Count::NewsShownInFeed) + News.match_community + " WITH news, community ORDER BY has_community.relevance  DESC WITH news,  " + News.collect_map({"communities" => Community.grouped_basic_info}) + News.return_group(News.basic_info,"communities[0.." +  Constant::Count::CommunitiesOfNewsShown.to_s + "] AS communities ") 
 	end
 
 	def self.get_regions
-		" MATCH (region:Region) WITH region ORDER BY region.name RETURN COLLECT({id:ID(region)  , name:region.name}) AS regions "
+		" MATCH (region:Region) WITH region ORDER BY region.name RETURN COLLECT({id:ID(region)  , name:region.name, news_count:region.news_count }) AS regions "
 	end
 end

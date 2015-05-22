@@ -66,7 +66,6 @@ class FeedStructure < Neo
 
 	def _share_notification data
 		name = _get_name data
-		message = "<span> "+data["content"].to_s+" </span>"
 		structure_notification(data)
 	end
 

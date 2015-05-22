@@ -16,13 +16,13 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
         });
     }
 
-    $scope.show_shelf_bottom_sheet = function(bookmark_object_id, bookmark_object_type){
-        $rootScope.bookmark_object = {"type": bookmark_object_type, "id": bookmark_object_id};
-        $mdBottomSheet.show({
-            templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
-            controller: 'shelfController'
-        });
-    };
+    // $scope.show_shelf_bottom_sheet = function(bookmark_object_id, bookmark_object_type){
+    //     $rootScope.bookmark_object = {"type": bookmark_object_type, "id": bookmark_object_id};
+    //     // $mdBottomSheet.show({
+    //     //     templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
+    //     //     controller: 'shelfController'
+    //     // });
+    // };
 
     $scope.getToastPosition = function() {
         return Object.keys($scope.toast_position)
@@ -32,6 +32,17 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
 
     $scope.rate_book = function(book){
         bookService.rate_book(book.book_id, book.user_rating);
+    }
+
+    $scope.load_sample_read = function(){
+        // google.load("books", "0");
+
+        // function initialize() {
+        //     var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+        //     viewer.load('ISBN:0738531367');
+        // }
+
+        // google.setOnLoadCallback(initialize);
     }
 
     var _init = function(){
@@ -81,7 +92,7 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
         };
 
         $scope.constant = {"show_book": true};
-
+        
     }
 
     _init();
