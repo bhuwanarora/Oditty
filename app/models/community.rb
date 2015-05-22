@@ -163,7 +163,6 @@ class Community < Neo
 					news_metadata["news_id"] = News.create news_metadata
 					News.map_topics(news_metadata["news_id"], response["Hierarchy"]) 				
 					Community.map_books(communities_books.zip(relevance), news_metadata)
-					Community.map_books(communities_books.zip(relevance), news_metadata)
 					News.new(news_metadata["news_id"]).add_notification.execute
 					if news_metadata.present? && news_metadata["image_url"].present? && news_metadata["news_id"].present?
 						type = "news"
