@@ -79,6 +79,8 @@
 
             
             <% if @home %>
+                <script src="assets/angular/services/community_service.js"></script>
+                <script src="assets/angular/directives/home_directives.js"></script>
                 <script src="assets/angular/controllers/home/home_controller.js"></script>
             <% end %>
 
@@ -88,8 +90,6 @@
 
             <% if @news %>
                 <script src="assets/angular/directives/news_directives.js"></script>
-                
-                
                 <script src="assets/angular/services/community_service.js"></script>
                 <script src="assets/angular/controllers/community_controller.js"></script>
             <% end %>

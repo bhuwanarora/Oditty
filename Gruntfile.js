@@ -269,6 +269,8 @@ module.exports = function(grunt) {
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/home_group.min.js":[
+                    "app/assets/javascripts/min/angular/services/community_service.js",
+                    "app/assets/javascripts/min/angular/directives/home_directives.js",
                     "app/assets/javascripts/min/angular/controllers/home/home_controller.js"
                 ],
 

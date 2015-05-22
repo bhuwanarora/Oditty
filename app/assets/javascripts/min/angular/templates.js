@@ -152,7 +152,17 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/home/main.html',
-    "<md-list layout-wrap layout=\"row\" hide-sm><div layout=\"column\" flex><div ng-repeat=\"news_feed in feed track by $index\" class=\"feed\" ng-if=\"$even\"><div ng-include src=\"'/assets/angular/html/home/partials/feed_type.html'\"></div></div></div><div layout=\"column\" flex><div ng-repeat=\"news_feed in feed track by $index\" class=\"feed\" ng-if=\"$odd\"><div ng-include src=\"'/assets/angular/html/home/partials/feed_type.html'\"></div></div></div></md-list><md-list layout-wrap layout=\"row\" show-sm hide><div layout=\"column\" flex><div ng-repeat=\"news_feed in feed track by $index\" class=\"feed\"><div ng-include src=\"'/assets/angular/html/home/partials/feed_type.html'\"></div></div></div></md-list>"
+    "<md-list layout-wrap layout=\"row\" hide-sm><div layout=\"column\" flex><div ng-repeat=\"news_feed in feed track by $index\" class=\"feed\" ng-if=\"$even\"><div ng-include src=\"'/assets/angular/html/home/partials/feed_type.html'\"></div></div></div><div layout=\"column\" flex><suggest-communities></suggest-communities><div ng-repeat=\"news_feed in feed track by $index\" class=\"feed\" ng-if=\"$odd\"><div ng-include src=\"'/assets/angular/html/home/partials/feed_type.html'\"></div></div></div></md-list><md-list layout-wrap layout=\"row\" show-sm hide><div layout=\"column\" flex><suggest-communities></suggest-communities><div ng-repeat=\"news_feed in feed track by $index\" class=\"feed\"><div ng-include src=\"'/assets/angular/html/home/partials/feed_type.html'\"></div></div></div></md-list>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/home/partials/community.html',
+    "<div layout=\"row\" layout-align=\"center center\"><img ng-src=\"{{community.image_url}}\" class=\"circular\"> <a layout-padding ng-href=\"/news?q={{community.id}}\">{{community.name}}</a></div><md-button class=\"md-button-clear md-warn\" ng-class=\"{'md-raised': community.status}\"><span ng-show=\"community.status\">Join</span> <span ng-show=\"!community.status\">Joined</span> <span class=\"icon-user-add\"></span></md-button>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/home/partials/community_suggestions.html',
+    "<md-card><md-card-content><div ng-repeat=\"community in suggest_communities\" layout=\"row\" layout-align=\"space-between\" layout-padding><community community=\"community\"></community></div></md-card-content></md-card>"
   );
 
 
@@ -253,7 +263,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/library/partials/author_books.html',
-    "<div ng-if=\"books_from_favourite_author\"><d3-click-circles news-tags=\"books_from_favourite_author\" on-click=\"refresh_data(active_item)\" on-center-click=\"goto_author_profile()\" community-page=\"true\" ng-if=\"books_from_favourite_author.length > 0\"><div class=\"bubbleChart animate-fast\"></div></d3-click-circles></div><a ng-href=\"/room\" ng-if=\"!books_from_favourite_author\" class=\"less_important\" layout-padding><br>Couldn't find your Favourite Author. Add more books to your room.<br><br></a>"
+    "<div ng-if=\"books_from_favourite_author\"><d3-click-circles news-tags=\"books_from_favourite_author\" on-click=\"refresh_data(active_item)\" on-center-click=\"goto_author_profile()\" community-page=\"true\" ng-if=\"books_from_favourite_author.length > 0\"><div class=\"bubbleChart animate-fast\"></div></d3-click-circles></div><div class=\"big_title bold\">{{info.active_tag.name}}</div><a ng-href=\"/room\" ng-if=\"!books_from_favourite_author\" class=\"less_important\" layout-padding><br>Couldn't find your Favourite Author. Add more books to your room.<br><br></a>"
   );
 
 
