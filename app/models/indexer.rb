@@ -237,9 +237,10 @@ class Indexer
 			relationships.each do |relationship|
 				if relationship["type"] == "Wrote" 
 					author_id = relationship["start"].split("/").last
-					author_node_url = "#{Rails.application.config.neo4j_url}/db/data/node/#{author_id}/properties"
-					author_name = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(author_node_url))))["name"]
+					clause = Author.new(author_id).match + Author.return_init + " author.name AS name "
+					author_name = clause.execute[0]["name"]
 					authors << {"id" => author_id, "name" => author_name }
+					puts authors.to_s.green
 				end 
 			end
 			author_name = authors.present? ? authors.first["name"] : "null" 
