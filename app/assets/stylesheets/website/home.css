@@ -99,8 +99,8 @@ md-content{
 	height: 35px;
 	padding: 0px !important;
 	border: none;
-	border-bottom: 1px solid #C0C0C0 !important;
 	box-shadow: none;
+	font-size: 18px;
 }
 
 .search input{
@@ -258,11 +258,10 @@ md-toolbar{
 
 .fixed_share{
 	margin-right: 0px;
-	border-radius: 0px !important;
-	box-shadow: none !important;
-	width: 71px !important;
+	/*color: rgb(178, 113, 5) !important;*/
+  	font-size: 27px;
+	width: 70px !important;
 	height: 70px !important;
-	background-color: transparent !important;
 }
 
 .fixed_share.ng-enter,
@@ -570,6 +569,10 @@ and (max-width : 800px){
 .shelf_tooltip{
 	margin-top: 55px;
 	pointer-events: initial;
+}
+
+md-tooltip .md-content{
+	height: auto !important;
 }
 
 .less_important_container{
