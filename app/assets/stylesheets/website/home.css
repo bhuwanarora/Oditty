@@ -97,7 +97,7 @@ md-content{
 	background-color: transparent !important;
 	width: 50vw;
 	height: 35px;
-	padding-left: 37px;
+	padding: 0px !important;
 	border: none;
 	border-bottom: 1px solid #C0C0C0 !important;
 	box-shadow: none;
@@ -200,8 +200,8 @@ md-backdrop.md-opaque.md-default-theme{
 	color: grey;
 	position: absolute;
 	z-index: 1;
-	top: 18px;
-	margin-left: 2px;
+	top: 32px;
+  	margin-left: -25px;
 }
 
 md-toolbar{
