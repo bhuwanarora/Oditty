@@ -267,11 +267,11 @@ class User < Neo
 	end
 
 	def match_followers skip
-		match + " WITH user AS friend " + UsersUser.match + "WITH user " + User.skip(skip) + User.limit(10)
+		match + " WITH user AS friend " + UsersUser.match_followers + "WITH user, friend " + UsersUser.optional_reverse_match + ", ID(follows_node) AS status " + User.skip(skip) + User.limit(10)
 	end
 
 	def self.get_visited_books
-		Bookmark::Type::Visited.match("book") + " WHERE book :Book WITH DISTINCT user, book " + Book.order_desc + " WITH user, " + Book.collect_map("books" => Book.grouped_basic_info ) + " WITH user, books[0..3] AS books "
+		Bookmark::Type::Visited.match("book") + " , status WHERE book :Book WITH DISTINCT status, user, book " + Book.order_desc + " WITH DISTINCT user, status, " + Book.collect_map("books" => Book.grouped_basic_info ) + " WITH DISTINCT user, books[0..3] AS books, status "
 	end
 
 	def self.optional_get_visited_books
@@ -291,15 +291,15 @@ class User < Neo
 	end
 
 	def get_followers skip
-		match_followers(skip) + User.get_visited_books + User.return_group(User.basic_info,"books")
+		match_followers(skip) + User.optional_get_visited_books + User.return_group(User.basic_info,"books", "status")
 	end
 
 	def match_users_followed skip
-		match + UsersUser.match + " WITH friend AS user " + User.skip(skip) + User.limit(10)
+		match + UsersUser.match + " WITH user, friend " +  UsersUser.optional_reverse_match + " , ID(follows_node) AS status " + User.skip(skip) + User.limit(10) + " WITH friend AS user , status "
 	end
 
 	def get_users_followed skip
-		match_users_followed(skip) + User.optional_get_visited_books_label + User.return_group(User.basic_info, "books")
+		match_users_followed(skip) + User.optional_get_visited_books + User.return_group(User.basic_info, "books", "status")
 	end
 
 	def set_intro_seen_status status
