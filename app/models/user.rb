@@ -309,4 +309,5 @@ class User < Neo
 	def set_region region
 		match + User::Info.set_region(region)
 	end
+
 end

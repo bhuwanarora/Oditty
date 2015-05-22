@@ -1,3 +1,6 @@
+
+
+
 module Constant::StatusCode
 	PlanningToRead		= 0
 	CurrentlyReading  	= 1

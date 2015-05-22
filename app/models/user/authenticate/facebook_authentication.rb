@@ -18,6 +18,10 @@ class User::Authenticate::FacebookAuthentication < User::Authenticate
 			user_id = user_exists ? user["id"] : User.merge_by_fb_id(@params["id"]).execute[0]["id"] 
 		end
 		FacebookDataEntryWorker.perform_async(user_exists, @params, user_id)
+		if @params["thumb"].present && user_id.present?
+			type = "user"
+			VersionerWorker.perform_async(user_id, @params["thumb"], type)
+		end
 		puts user_id.to_s
 		user_id
 	end

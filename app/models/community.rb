@@ -163,6 +163,11 @@ class Community < Neo
 					news_metadata["news_id"] = News.create news_metadata
 					News.map_topics(news_metadata["news_id"], response["Hierarchy"]) 				
 					Community.map_books(communities_books.zip(relevance), news_metadata)
+					News.new(news_metadata["news_id"]).add_notification.execute
+					if news_metadata.present? && news_metadata["image_url"].present? && news_metadata["news_id"].present?
+						type = "news"
+						VersionerWorker.perform_async(news_metadata["news_id"], news_metadata["image_url"], type)
+					end
 				end
 			end
 		rescue Exception => e			
@@ -194,7 +199,11 @@ class Community < Neo
 				end
 				if(clause_temp.length > clause.length)
 					clause_temp += News.return_init + Community.basic_info
-					clause_temp.execute				
+					community_info = clause_temp.execute[0]				
+					if community_info.present? && community_info["image_url"].present? && community_info["id"].present?
+						type = "community"
+						VersionerWorker.perform_async(community_info["id"], community_info["image_url"], type)
+					end
 				end
 			end
 		end
