@@ -162,7 +162,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/home/partials/community_suggestions.html',
-    "<md-card><md-card-content><div class=\"big_title\">Community Suggestions</div></md-card-content><md-card-content><join-community community=\"community\" layout-padding layout=\"row\" layout-align=\"space-between\" ng-repeat=\"community in suggest_communities\"></join-community></md-card-content></md-card>"
+    "<md-card><md-card-content><div class=\"less_important\">Community Suggestions</div></md-card-content><md-card-content><join-community community=\"community\" layout-padding layout=\"row\" layout-align=\"space-between\" ng-repeat=\"community in suggest_communities\"></join-community></md-card-content></md-card>"
   );
 
 
