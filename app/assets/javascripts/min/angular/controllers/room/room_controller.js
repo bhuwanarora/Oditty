@@ -1,1 +1,1 @@
-homeApp.controller("roomController",["$scope","$rootScope","$timeout","roomService","ColorConstants",function(a,b,c,d,e){a.add_books_to_shelf=function(c,d){b.active_shelf=c,a.info.show_book_share=!0}}]);
+homeApp.controller("roomController",["$scope","$rootScope","$timeout","roomService","ColorConstants",function(a,b,c,d,e){}]);

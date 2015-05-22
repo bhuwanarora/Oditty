@@ -167,5 +167,9 @@ module GraphHelper
 		clause.execute
 	end
 
+	def relink_books_and_communities
+		# Before 20 May
+
+	end
 
 end

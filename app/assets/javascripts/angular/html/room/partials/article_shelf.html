@@ -1,0 +1,13 @@
+<div class="side_padding shelf" >
+	<md-button layout-padding class="md-button-clear" ng-click="toggle()">
+		{{shelf.shelf}}
+	</md-button>
+	<md-content class="grid_content" ng-show="show_shelf">
+		<div class="article"
+			layout-margin
+			ng-if="article.title"
+	        ng-repeat="article in shelf.articles">
+	    	<div ng-include src="'/assets/angular/html/room/article.html'"></div>
+	    </div>
+	</md-content>
+</div>

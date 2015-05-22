@@ -28,6 +28,7 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
             scope: $scope,
             preserveScope: true,
             targetEvent: event,
+            clickOutsideToClose: true
         });
         event.stopPropagation();
     }

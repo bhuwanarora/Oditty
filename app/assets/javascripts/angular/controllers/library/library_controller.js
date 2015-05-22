@@ -190,7 +190,8 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
             templateUrl: '/assets/angular/html/community/book.html',
             scope: $scope,
             preserveScope: true,
-            targetEvent: event,
+            clickOutsideToClose: true,
+            targetEvent: event
         });
         event.stopPropagation();
     }

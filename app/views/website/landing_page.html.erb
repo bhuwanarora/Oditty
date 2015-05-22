@@ -17,11 +17,11 @@
     </header>
     <md-whiteframe class="md-whiteframe-z1 tab-main animate-fast" 
         hide-sm layout="row" ng-if="show_content">
-        <md-tabs class="md-accent" md-selected="data.selectedIndex" hide-sm>
-            <md-tab ng-click="scroll_page($index)"
+        <md-tabs md-selected="data.selectedIndex" hide-sm flex class="white">
+            <md-tab md-on-select="scroll_page($index)"
                     ng-class="{'active': current_page_id == $index}"
                     ng-repeat="i in [0, 1, 2, 3, 4, 5,6] track by $index">
-                    <a>{{data[$index]}}</a>
+                    {{data[$index]}}
             </md-tab>
         </md-tabs>
     </md-whiteframe>

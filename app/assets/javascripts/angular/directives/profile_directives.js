@@ -11,6 +11,7 @@ homeApp.directive('bookInfo', ["$rootScope", "bookService", '$mdDialog', functio
                     scope: $scope,
                     preserveScope: true,
                     targetEvent: event,
+                    clickOutsideToClose: true
                 });
                 event.stopPropagation();
             }
@@ -41,7 +42,8 @@ homeApp.directive('communityInfo', ["$rootScope", "communityService", 'ColorCons
                     templateUrl: '/assets/angular/html/community/book.html',
                     scope: $scope,
                     preserveScope: true,
-                    targetEvent: event,
+                    clickOutsideToClose: true,
+                    targetEvent: event
                 });
                 event.stopPropagation();
             }

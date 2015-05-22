@@ -167,7 +167,10 @@ module.exports = function(grunt) {
                     "app/assets/javascripts/min/angular/controllers/share/options_controller.js",
                     "app/assets/javascripts/min/angular/controllers/profile_controller.js",
                     "app/assets/javascripts/min/angular/controllers/toast_controller.js",
-                    'app/assets/javascripts/min/angular/controllers/home/list_bottom_sheet_controller.js'
+                    'app/assets/javascripts/min/angular/controllers/home/list_bottom_sheet_controller.js',
+                    "app/assets/javascripts/min/angular/controllers/book/specific_book_controller.js",
+                    "app/assets/javascripts/min/angular/controllers/book/timeline_controller.js",
+                    "app/assets/javascripts/min/angular/controllers/book/real_virtuality_controller.js"
                 ],
 
                 'app/assets/javascripts/min/angular/directives.js': [
@@ -275,9 +278,6 @@ module.exports = function(grunt) {
 
                 "app/assets/javascripts/min/angular/controllers/community_group.min.js":[
                     "app/assets/javascripts/min/angular/directives/news_directives.js",
-                    "app/assets/javascripts/min/angular/controllers/book/specific_book_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/timeline_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/real_virtuality_controller.js",
                     "app/assets/javascripts/min/angular/services/community_service.js",
                     "app/assets/javascripts/min/angular/controllers/community_controller.js"
                 ],
@@ -291,19 +291,15 @@ module.exports = function(grunt) {
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/book_group.min.js":[
-                    "app/assets/javascripts/min/angular/controllers/book/specific_book_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/timeline_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/real_virtuality_controller.js"
+                    
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/infinity_group.min.js":[
                     "app/assets/javascripts/min/angular/services/time_group_service.js",
                     "app/assets/javascripts/min/angular/services/reading_time_service.js",
                     "app/assets/javascripts/min/angular/controllers/library/library_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/library/filters_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/specific_book_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/timeline_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/real_virtuality_controller.js"
+                    "app/assets/javascripts/min/angular/controllers/library/filters_controller.js"
+                    
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/room_group.min.js":[
@@ -319,10 +315,7 @@ module.exports = function(grunt) {
                 "app/assets/javascripts/min/angular/controllers/profile_group.min.js":[
                     "app/assets/javascripts/min/angular/directives/profile_directives.js",
                     "app/assets/javascripts/min/angular/services/community_service.js",
-                    "app/assets/javascripts/min/angular/controllers/profile_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/specific_book_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/timeline_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/real_virtuality_controller.js"
+                    "app/assets/javascripts/min/angular/controllers/profile_controller.js"
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/search_group.min.js":[
