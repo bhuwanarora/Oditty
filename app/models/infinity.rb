@@ -47,8 +47,12 @@ class Infinity < Neo
 			if @era_id.present?
 				clause += Infinity::FilterEra.new(@era_id).match + with_clause
 			end
+
+			clause += Category::Root.optional_match_books_root +  with_clause + " WITH COLLECT (DISTINCT " + Category.grouped_basic_info("root_category") + ") AS categories, book " + with_clause 
+			with_clause += ", categories "
+
 			if return_group.present?
-				clause += Book.order_desc + Infinity.skip(@skip_count) + Infinity.limit(Limit) + Infinity.return_group(Infinity.collect_map({"books" => Book.grouped_basic_info}),return_group) 
+				clause += Book.order_desc + Infinity.skip(@skip_count) + Infinity.limit(Limit) + Infinity.return_group(Infinity.collect_map({"books" => "#{Book.grouped_basic_info}, categories: categories"}),return_group) 
 			else
 				clause += Book.order_desc + Infinity.skip(@skip_count) + Infinity.limit(Limit) + Infinity.return_group(Infinity.collect_map({"books" => Book.grouped_basic_info})) 
 			end
