@@ -12,6 +12,7 @@ module Api
 				end
 			end
 
+
 			def news_info
 				id = params[:id]
 				community_id = params[:tag_id]

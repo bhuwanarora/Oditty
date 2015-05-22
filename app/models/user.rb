@@ -310,4 +310,14 @@ class User < Neo
 		match + User::Info.set_region(region)
 	end
 
+	def get_bookmarks(id, type)
+		type.upcase!
+		case type
+		when "BOOK"
+			shelf = ":BookShelf" 
+		else
+			shelf = ":ArticleShelf" 
+		end
+		match + Label.match_shelves(shelf) + " MATCH (media) WHERE ID(media) = " + id.to_s + " WITH label, media " + Bookmark.optional_match_path("media") + User.return_group(User.collect_map({"shelf" => "name: label.name, status: ID(bookmark_node)"}))
+	end
 end

@@ -14,6 +14,18 @@ module Api
 				render :json => {:message => "Success"}, :status => 200
 			end
 
+			def get_bookmarks
+				user_id = session[:user_id]
+				if user_id.present?
+					type = params[:type] || "News"
+					id = params[:id]
+					info = Api::V0::UserApi.get_bookmarks(id, user_id, type).execute
+					render :json => info, :status => 200
+				else
+					redirect_to :controller => 'website', :action => 'signup'			
+				end
+			end
+
 			def get_small_reads
 				user_id = session[:user_id]
 				books = UserApi.get_small_reads

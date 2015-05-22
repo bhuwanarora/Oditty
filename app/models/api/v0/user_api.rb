@@ -6,6 +6,10 @@ module Api
 				User.new(user_id).set_intro_seen_status(status)
 			end
 
+			def self.get_bookmarks(id, user_id, type)
+				User.new(user_id).get_bookmarks(id, type)
+			end
+
 			def self.get_details(user_id)
 				info = {}
 				if user_id.present?
