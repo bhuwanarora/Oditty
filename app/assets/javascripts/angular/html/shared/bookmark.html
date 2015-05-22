@@ -1,5 +1,6 @@
 <div>
-	<md-tooltip md-direction="top" class="shelf_tooltip" md-visible="show_shelf || custom">
+	<md-tooltip md-direction="top" class="shelf_tooltip" md-visible="show_shelf || custom" 
+				ng-class="{'margin_top white': custom}">
 		<div ng-include src="'/assets/angular/html/shared/shelves.html'" ng-init="bookmark_object = data" class="shelves"></div>
 	</md-tooltip>
 </div>
