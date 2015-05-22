@@ -213,7 +213,15 @@ module GraphHelper
 		end_id_author, start_id_author = Author.get_max_min_id
 		book_links_property= Book.get_book_links		
 		step_size = 500
-		cur_id = start_id_author
+		logfile = 'duplicate_removal_log.txt'
+		if(File.exist?(logfile))
+			lines = IO.readlines(logfile)		
+			cur_id = lines.last.to_i
+		else
+			File.open(logfile, 'a') { |f| f.puts("Duplicate removal log file: Below are the author ids till which duplicacy is removed.") }
+			File.open(logfile, 'a') { |f| f.puts((start_id_author-1).to_s) }
+			cur_id = start_id_author
+		end		
 		while cur_id <=end_id_author
 			upper_limit = cur_id+step_size			
 			clause_init = "MATCH (n: Author)-[:Wrote]->(book: Book), (n)-[:Wrote]->(dup_book: Book)"\
@@ -238,7 +246,7 @@ module GraphHelper
 				clause += "WITH dup MATCH (dup)-[r]-() DELETE dup,r"				
 				clause.execute				
 			elsif(output == 0)					
-				File.open('duplicate_removal_log.txt', 'a') { |f| f.puts('duplicate book removal upto author id'+cur_id.to_s) }
+				File.open(logfile, 'a') { |f| f.puts(cur_id.to_s) }
 				cur_id +=step_size
 			end		
 		end
