@@ -1,7 +1,7 @@
 
 
 
-d0module Constant::StatusCode
+d03module Constant::StatusCode
 	PlanningToRead		= 0
 	CurrentlyReading  	= 1
 	Read 				= 2

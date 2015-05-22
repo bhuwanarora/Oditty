@@ -62,22 +62,13 @@ class Blog < Neo
 		Blog.match_root + " WITH root_blog AS blog " + Blog.match_nth(1) + " WITH old AS blog "
 	end
 
-	def self.get_blog skip_count=1, multiple_blog = false, user_id = nil
+	def self.get_blog skip_count=1, multiple_blog = false
 		if multiple_blog
 			multiple_blog_clause = Blog.match_nth(Constant::Count::BlogsShown) + " WITH " + Blog.extract_unwind("blog") + " WITH " + Blog.tail("blog")
 		else
 			multiple_blog_clause = ""
 		end
-		Blog.match_latest_blog + Blog.match_nth(skip_count) + " WITH old as blog " + multiple_blog_clause + Blog.match_shelves(user_id) + Blog.return_init + Blog.basic_info + (user_id.present? ? ", shelf" : " ")
-	end
-
-	def self.match_shelves user_id
-		if user_id
-			clause = User.new(user_id).match + ", blog " + Label.optional_match_public_article_labels + Bookmark.optional_match_path("blog") + " WITH blog, " + Blog.collect_map({"shelf" => "name : label.name ,status: ID(bookmark_node) "})
-		else
-			clause = ""
-		end
-		clause
+		Blog.match_latest_blog + Blog.match_nth(skip_count) + " WITH old as blog " + multiple_blog_clause  + Blog.return_init + Blog.basic_info 
 	end
 
 	def self.get_latest_blog

@@ -11,8 +11,7 @@ module Api
 			def get_blog
 				skip_count = params[:skip_count] || 1
 				multiple = params[:multiple] || false
-				user_id = session[:user_id]
-				info = Api::V0::FeedsApi.get_blog(skip_count, multiple, user_id).execute
+				info = Api::V0::FeedsApi.get_blog(skip_count, multiple).execute
 				render :json => info, :status => 200
 			end
 
@@ -28,12 +27,12 @@ module Api
 					session[:region] = region
 				end
 				
-				info = Api::V0::FeedsApi.get_news(session[:news_skip_count], session[:news_day_skip_count], region, user_id).execute
+				info = Api::V0::FeedsApi.get_news(session[:news_skip_count], session[:news_day_skip_count], region).execute
 				
 				if info.blank?
 					session[:news_day_skip_count] += 1
 					session[:news_skip_count] = 0
-					info = Api::V0::FeedsApi.get_news(session[:news_skip_count], session[:news_day_skip_count], region, user_id).execute
+					info = Api::V0::FeedsApi.get_news(session[:news_skip_count], session[:news_day_skip_count], region).execute
 				end
 
 				session[:news_skip_count] += info.length
