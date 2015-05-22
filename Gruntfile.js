@@ -179,19 +179,19 @@ module.exports = function(grunt) {
 
                 'app/assets/javascripts/min/angular/landing_page_vendors.js': [
                     'app/assets/javascripts/min/angular/vendors/hammer.js',
-                    'app/assets/javascripts/min/angular/vendors/angular-aria135.min.js',
+                    'app/assets/javascripts/min/angular/vendors/angular-aria.min.js',
                     'app/assets/javascripts/min/angular/vendors/angular_mousewheel.min.js',
                     'app/assets/javascripts/min/angular/vendors/angular_router.min.js',
-                    'app/assets/javascripts/min/angular/vendors/angular_0.8.2.min.js',
+                    'app/assets/javascripts/min/angular/vendors/angular_material.min.js',
                     'app/assets/javascripts/min/angular/vendors/angular_cookies.min.js',
                     'app/assets/javascripts/min/angular/vendors/angular_facebook.js',
                     'app/assets/javascripts/min/angular/vendors/angular-timer.min.js'
                 ],
 
                 'app/assets/javascripts/min/angular/vendors.min.js': [
-                    'app/assets/javascripts/min/angular/vendors/angular136.min.js',
+                    'app/assets/javascripts/min/angular/vendors/angular.min.js',
                     'app/assets/javascripts/min/angular/vendors/angular_messages.min.js',
-                    'app/assets/javascripts/min/angular/vendors/angular_animate136.min.js',
+                    'app/assets/javascripts/min/angular/vendors/angular_animate.min.js',
                     'app/assets/javascripts/min/angular/landing_page_vendors.js',
                     'app/assets/javascripts/min/angular/vendors/angular-sanitize.min.js',
                     'app/assets/javascripts/min/lib/angular_scroll.min.js',
@@ -204,38 +204,6 @@ module.exports = function(grunt) {
                     "app/assets/javascripts/min/angular/apps/filters_app.js",
                     "app/assets/javascripts/min/angular/apps/app_constants.js",
                 ],
-
-                // 'app/assets/javascripts/min/angular/vendors.js': [
-                //     'app/assets/javascripts/min/angular/vendors/angular_animate.min.js',
-                //     'app/assets/javascripts/min/angular/vendors/ngFx.js',
-                //     'app/assets/javascripts/min/angular/vendors/angular_cookies.min.js',
-                //     'app/assets/javascripts/min/angular/vendors/angular_google_map.js',
-                //     'app/assets/javascripts/min/angular/vendors/angular_intro.js',
-                //     'app/assets/javascripts/min/angular/vendors/angular_facebook.js',
-                //     'app/assets/javascripts/min/angular/vendors/google_map.js',
-                //     'app/assets/javascripts/min/angular/vendors/angular_mousewheel.min.js',
-                //     'app/assets/javascripts/min/angular/vendors/angular_router.min.js',
-                //     'app/assets/javascripts/min/angular/vendors/cropme.js',
-                //     'app/assets/javascripts/min/angular/vendors/hamster.min.js',
-                //     'app/assets/javascripts/min/angular/vendors/intro.js',
-                //     'app/assets/javascripts/min/angular/vendors/angular_filters.min.js',
-                //     'app/assets/javascripts/min/angular/vendors/angular_touch.min.js'
-                // ],
-
-                // 'app/assets/javascripts/min/angular/main.js': [
-                //     'app/assets/javascripts/angular/vendors/angular.min.js',
-                //     'app/assets/javascripts/min/angular/vendors.js',
-                //     'app/assets/javascripts/min/angular/libs.js',
-                //     'app/assets/javascripts/min/angular/apps.js',
-                //     'app/assets/javascripts/min/angular/directives.js',
-                //     'app/assets/javascripts/min/angular/controllers.js',
-                //     'app/assets/javascripts/min/angular/services.js',
-                //     'app/assets/javascripts/min/angular/templates.min.js',
-
-                //     "app/assets/javascripts/min/angular/vendors/angular-parallax.min.js",
-                //     "app/assets/javascripts/min/angular/vendors/angular_sticky.js",
-                    
-                // ],
 
                 'app/assets/javascripts/min/angular/landing_page.min.js': [
                     'app/assets/javascripts/min/angular/apps/landing_page_app.js',
