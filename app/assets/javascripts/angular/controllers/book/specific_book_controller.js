@@ -49,6 +49,11 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
         // $scope.$location = $location;
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
         var url_parsed = regex.exec($location.absUrl());
+        if(angular.isUndefined){
+            $scope.data = {};    
+        }
+        $scope.data.selectedIndex = 0;
+        
         if(url_parsed != null){
             var id = url_parsed[2];
         }

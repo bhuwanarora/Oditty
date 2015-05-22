@@ -320,7 +320,9 @@ module.exports = function(grunt) {
                     "app/assets/javascripts/min/angular/directives/profile_directives.js",
                     "app/assets/javascripts/min/angular/services/community_service.js",
                     "app/assets/javascripts/min/angular/controllers/profile_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/specific_book_controller.js"
+                    "app/assets/javascripts/min/angular/controllers/book/specific_book_controller.js",
+                    "app/assets/javascripts/min/angular/controllers/book/timeline_controller.js",
+                    "app/assets/javascripts/min/angular/controllers/book/real_virtuality_controller.js"
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/search_group.min.js":[
