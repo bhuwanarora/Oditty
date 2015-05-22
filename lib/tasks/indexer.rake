@@ -46,4 +46,3 @@ namespace :index do
 		Indexer.create_index("Community", Community)
  	end
 end
-

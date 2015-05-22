@@ -4,11 +4,13 @@
             <div layout="row">
                 <img ng-src="{{profile_user.image_url | default_profile}}" class="profile_thumb circular">
                 <div layout="column" layout-align="start start">
-                    <div class="big_title">{{profile_user.first_name}}</div>
+                    <div layout-padding class="big_title">{{profile_user.first_name}}</div>
+                    <div layout-padding>
+                        <div ng-bind-html="feed.message" class="status_message"></div>
+                        <div class="less_important">{{feed.created_at | timestamp | date:'h:mm a, dd MMM'}}</div>
+                    </div>
                 </div>
             </div>
-            <div ng-bind-html="feed.message" class="status_message"></div>
-            <div class="less_important">{{feed.created_at | timestamp | date:'h:mm a, dd MMM'}}</div>
             <!-- <div ng-repeat="data in feed.data" layout-padding> -->
             <!-- </div> -->
         </section>
