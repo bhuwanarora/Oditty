@@ -10,7 +10,7 @@ module.exports = function(grunt) {
                         expand: true,
                         cwd: 'app/assets/stylesheets/website/',
                         src: ['*.css', '!*.min.css', '*.css.scss'],
-                        dest: 'app/assets/stylesheets/min/',
+                        dest: 'app/assets/stylesheets/min/website/',
                         ext: '.min.css'
                     },
                     {
@@ -33,7 +33,7 @@ module.exports = function(grunt) {
                 files: {
                     'app/assets/stylesheets/min/site.min.css': [
                         'app/assets/stylesheets/min/angular_material.min.css',
-                        'app/assets/stylesheets/min/website/min/website.min.css',
+                        'app/assets/stylesheets/min/website/website.min.css',
                         'app/assets/stylesheets/min/website/icomoon.min.css',
                         'app/assets/stylesheets/min/website/home.min.css',
                         'app/assets/stylesheets/min/website/media_library.min.css'
