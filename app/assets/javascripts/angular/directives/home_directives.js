@@ -19,7 +19,7 @@ homeApp.directive('suggestCommunities', ["$rootScope", "userService", function($
     };
 }]);
 
-homeApp.directive('community', ["$rootScope", "communityService", function($rootScope, communityService){
+homeApp.directive('joinCommunity', ["$rootScope", "communityService", function($rootScope, communityService){
     return {
         restrict: 'E',
         scope: {community: '='},
@@ -31,6 +31,6 @@ homeApp.directive('community', ["$rootScope", "communityService", function($root
             }
 
         }],
-        templateUrl: '/assets/angular/html/home/partials/community_suggestions.html'
+        templateUrl: '/assets/angular/html/home/partials/community.html'
     };
 }]);

@@ -157,12 +157,12 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/home/partials/community.html',
-    "<div layout=\"row\" layout-align=\"center center\"><img ng-src=\"{{community.image_url}}\" class=\"circular\"> <a layout-padding ng-href=\"/news?q={{community.id}}\">{{community.name}}</a></div><md-button class=\"md-button-clear md-warn\" ng-class=\"{'md-raised': community.status}\"><span ng-show=\"community.status\">Join</span> <span ng-show=\"!community.status\">Joined</span> <span class=\"icon-user-add\"></span></md-button>"
+    "<div layout=\"row\" layout-align=\"center center\"><img ng-src=\"{{community.image_url}}\" class=\"circular\"> <a layout-padding ng-href=\"/news?q={{community.id}}\">{{community.name}}</a></div><md-button class=\"md-button-clear md-warn\" ng-class=\"{'md-raised': !community.status}\" ng-click=\"toggle()\"><span ng-show=\"!community.status\">Join</span> <span ng-show=\"community.status\">Joined</span> <span ng-show=\"!community.status\" class=\"icon-user-add\"></span></md-button>"
   );
 
 
   $templateCache.put('/assets/angular/html/home/partials/community_suggestions.html',
-    "<md-card><md-card-content><div ng-repeat=\"community in suggest_communities\" layout=\"row\" layout-align=\"space-between\" layout-padding><community community=\"community\"></community></div></md-card-content></md-card>"
+    "<md-card><md-card-content><div class=\"big_title\">Community Suggestions</div></md-card-content><md-card-content><join-community community=\"community\" layout-padding layout=\"row\" layout-align=\"space-between\" ng-repeat=\"community in suggest_communities\"></join-community></md-card-content></md-card>"
   );
 
 
