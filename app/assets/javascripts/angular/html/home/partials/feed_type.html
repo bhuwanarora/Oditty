@@ -1,0 +1,6 @@
+<div ng-init="blog_feed = news_feed" 
+    ng-include src="'/assets/angular/html/home/_blog_feed.html'" 
+    ng-if="news_feed.label == 'blog'"></div>
+<div ng-init="community_feed = news_feed" 
+    ng-include src="'/assets/angular/html/home/_community_feed.html'" 
+    ng-if="news_feed.label == 'news'"></div>

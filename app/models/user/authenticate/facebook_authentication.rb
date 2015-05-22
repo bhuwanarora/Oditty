@@ -27,11 +27,11 @@ class User::Authenticate::FacebookAuthentication < User::Authenticate
 	end
 
 	def update_user_without_email user_id
-		User.new(user_id).match + User::FacebookUser.create_facebook_user + ( @params["thumb"].present? ? User::Info.set_thumb(@params["thumb"]) : " " ) + User::FacebookUser.set_name(@params["name"]) + User::Info.set_last_login + fb_set_clause 
+		User.new(user_id).match + User::Info.set_last_login + " WITH user " + User::FacebookUser.create_facebook_user + ( @params["thumb"].present? ? User::Info.set_thumb(@params["thumb"]) : " " ) + User::FacebookUser.set_name(@params["name"]) + fb_set_clause 
 	end
 
 	def create_user_without_email user_id 
-		User.new(user_id).match + User::FacebookUser.new(@params).add_info + User::Feed.create_first + Label.match_primary + ", user " + User.link_primary_labels + User::FacebookUser.create_facebook_user + ( @params["thumb"].present? ? User::Info.set_thumb(@params["thumb"]) : " " ) + User::Info.set_last_login + fb_set_clause 
+		User.new(user_id).match + User::Info.set_last_login + " WITH user " + User::FacebookUser.new(@params).add_info + User::Feed.create_first + Label.match_primary + ", user " + User.link_primary_labels + User::FacebookUser.create_facebook_user + ( @params["thumb"].present? ? User::Info.set_thumb(@params["thumb"]) : " " ) + fb_set_clause 
 	end
 
 	def update_user_with_email user_id 

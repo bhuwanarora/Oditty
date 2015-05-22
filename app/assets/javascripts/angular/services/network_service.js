@@ -10,12 +10,22 @@ homeApp.service('networkService', ["$http", "$q", "$rootScope", "WebsiteUIConsta
         return user_id;
     }
 
-    this.get_followers = function(){
-        return _deferred_request('/api/v0/followers', $q, $http);
+    this.get_followers = function(skip){
+        if(angular.isDefined(skip)){
+            return _deferred_request('/api/v0/followers?skip='+skip, $q, $http);
+        }
+        else{
+            return _deferred_request('/api/v0/followers', $q, $http);
+        }
     }
 
-    this.get_users_followed = function(){
-        return _deferred_request('/api/v0/users_followed', $q, $http);
+    this.get_users_followed = function(skip){
+        if(angular.isDefined(skip)){
+            return _deferred_request('/api/v0/users_followed?skip='+skip, $q, $http);    
+        }
+        else{
+            return _deferred_request('/api/v0/users_followed', $q, $http);
+        }
     }
 
 }]);

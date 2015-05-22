@@ -1,5 +1,9 @@
 class User::Info < User
 
+	def self.set_last_active_session node_variable = "user"
+		" SET " + node_variable + ".last_active_session = \"" + Time.now.strftime("%Y-%m-%d") + "\" "
+	end
+
 	def self.set_intro_seen_status status
 		" SET user.intro_seen = " + status + " "
 	end
@@ -15,7 +19,6 @@ class User::Info < User
 	def self.set_verification_time time = Time.now.to_i.to_s
 		" SET user.verification_time = " + time + " "
 	end
-
 
 	def self.set_email email
 		" SET user.email = \""+email+"\" "

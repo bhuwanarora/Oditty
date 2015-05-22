@@ -15,6 +15,11 @@ class Bookmark::Type::Visited < Bookmark::Type
 		Bookmark.match_path(media) + " WHERE label.key = 'Visited' WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, " + media +  ", COUNT(label) AS label_count "
 	end
 
+	def self.match_label media="book", media_label
+		Bookmark.match_path_label(media, media_label) + " WHERE label.key = 'Visited' WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, " + media +  ", COUNT(label) AS label_count "
+		# Bookmark.match_path(media, media_label) + " WHERE label.key = '"+@key+"' WITH user, labelled, label, bookmarked_on, bookmark_node, bookmark_action, " + media +  ", COUNT(label) AS label_count "
+	end
+
 	def add
 		@bookmark.add
 	end

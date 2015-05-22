@@ -1,6 +1,8 @@
-<div ng-controller="authorController" layout="row" layout-wrap class="white" ng-keydown="keypress_scroll($event)">
+<md-content ng-controller="authorController" layout="row" layout-wrap class="white" 
+     check-scroll-bottom="get_books()"
+     ng-keydown="keypress_scroll($event)">
     <div ng-include src="'/assets/angular/html/author/show.html'"></div>
-</div>
+</md-content>
 <style>
     .author_thumb{
         width: 100%;

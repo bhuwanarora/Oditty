@@ -6,7 +6,7 @@ class UsersNews < Neo
 	end
 
 	def match 
-		" MATCH (news:News), (user:User) WHERE ID(news)="+@news.to_s+" AND ID(user)="+@user_id.to_s+" WITH user, news "
+		" MATCH (news:News), (user:User) WHERE ID(news)="+@news.to_s+" AND ID(user)="+@user_id.to_s+ User::Info.set_last_active_session + " WITH user, news "
 	end
 
 	# def self.optional_match_rating

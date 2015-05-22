@@ -1,15 +1,15 @@
-<div layout="row">
-	<img ng-src="{{article.image_url}}" flex="20">
-	<div md-direction="bottom" layout-align="center center" 
+<div layout="column">
+	<img ng-src="{{article.image_url}}">
+	<div class="less_important" layout-align="end end" layout="row" layout-padding>
+		<div>
+			Last seen {{article.created_at | timestamp | date:'h:mm a, dd MMM'}}
+		</div>
+	</div>
+	<div layout-align="center center" 
 		 layout-padding flex="80" layout-wrap
 		 layout="row" class="custom_title">
-		<a ng-href="/community?q={{article.article_id}}">
+		<a ng-href="/news?q={{article.article_id || article.id}}">
          	{{article.title}}
 		</a>
    	</div>
-</div>
-<div class="less_important" layout-align="end end" layout="row" layout-padding>
-	<div>
-		Last seen {{article.created_at | timestamp | date:'h:mm a, dd MMM'}}
-	</div>
 </div>

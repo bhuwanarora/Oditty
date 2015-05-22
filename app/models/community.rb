@@ -17,18 +17,22 @@ class Community < Neo
 	end
 
 	def self.grouped_basic_info
-		"  view_count:community.view_count,  name:community.name, id:ID(community), image_url:community.image_url  "
+		" view_count:community.view_count,  name:community.name, id:ID(community), image_url:community.image_url "
 	end
 
 	def books_users_info 
 		match + Community.grouped_books_users + Community.return_init + " most_important_tag "
 	end
 
+	def feed_info
+		match + Community.match_grouped_books + Community.return_group(Community.basic_info, "books_info[0..3] AS books")
+	end
+
 	def self.match_books 
 		" MATCH (community)-[:RelatedBooks]->(book:Book) WITH community, book "
 	end
 
-	def self.match_news 
+	def self.match_news
 		" MATCH (community)<-[:HasCommunity]-(news:News) WITH community, news "
 	end
 
@@ -65,8 +69,6 @@ class Community < Neo
 		" MATCH (community)<-[:HasCommunity]-(news:News) WITH community, news "
 	end
 
-
-
 	def self.set_follow_count operation = "+"
 		" SET community.follow_count = COALESCE(community.follow_count,0) #{operation} 1 "
 	end
@@ -76,22 +78,27 @@ class Community < Neo
 	end
 
 	def self.match_grouped_books
-		Community.match_books + " WITH community, " + Book.collect_map({"books_info" => Book.grouped_basic_info }) 
+		Community.match_books + " WITH community, " + Book.collect_map({"books_info" => Book.grouped_basic_info})
 	end
 
 	# This funnction first checks the database for books, if no books are present,
 	# it calls google api to fetch books	
 	def self.fetch_books_database_Net community
-		clause = Community.search_by_name(community) + Community.match_books + "RETURN book.title"		
-		books_list = clause.execute
+		clause = Community.search_by_name(community) + Community.match_books + "RETURN book.title,book.author_name"		
+		books_list = clause.execute				
 		if(books_list.empty?)
 			books = Community.fetch_books community
 		else
 			books = {community => []}
 			books_list.each do |book|
-				books[community] << book["book.title"]
-			end
-			books[community] = books[community].uniq
+				if(book.has_key?("book.author_name"))
+					author = book["book.author_name"] # it will be array, now it is not
+					if(author.nil?)
+						next
+					end
+					books[community] << [book["book.title"],[author[1..author.length]]]
+				end
+			end			
 		end
 		books 
 	end
@@ -99,18 +106,23 @@ class Community < Neo
 	def self.fetch_books community
 		community_books = {community => []}
 		count = 0
-		books = Book::GoogleBooks.get community
-
-		#puts books.to_s.green
-		if books.present?
-			books.each do |book|
-				book = book.search_ready
-				book_info = (Book.get_by_indexed_title(book).execute)[0] 
-				if book_info.present?  
-					community_books[community] << book					
+		books_info = Book::GoogleBooks.get community
+		if books_info.present?
+			books,author_list = books_info.transpose			
+			books.each_with_index do |book,index|				
+				if(author_list[index].nil?)					
+					next
+				end
+				authors = author_list[index]			
+				authors = authors.sort				
+				author_string = authors.join('').search_ready
+				unique_index = book.search_ready + author_string
+				book_info = (Book.get_by_unique_index(unique_index).execute)[0] 
+				if book_info.present?					 
+					community_books[community] << [book,authors]
 				end	
 			end
-		end
+		end		
 		community_books
 	end
 
@@ -124,36 +136,43 @@ class Community < Neo
 
 
 	def self.create news_metadata		
-		communities_books = []		
-		relevance = []	 # This is the relevance which we will use
-		response = News.fetch_tags news_metadata["news_link"]
-		if response.is_json? 
-			response = JSON.parse(response)			
-			communities = Community.handle_communities response			
-			skip = 10000
-			timer = communities.length * skip -1
-			for i in 0..timer do
-				if (i % skip) == 0
-					puts communities[i/skip]['value']
-					community_books = Community.fetch_books_database_Net(communities[i/skip]['value'])
-					if Community.has_required_book_count(community_books[communities[i/skip]['value']])
-						relevance << {'relevance' => communities[i/skip]['relevance'],
-									'relevanceOriginal' => communities[i/skip]['relevanceOriginal']}
-						communities_books << community_books
+		begin
+			communities_books = []		
+			relevance = []	 # This is the relevance which we will use
+			response = News.fetch_tags news_metadata["news_link"]
+			puts response.red
+
+			if response.is_json? 
+				response = JSON.parse(response)			
+				communities = Community.handle_communities response						
+				skip = 10000
+				timer = communities.length * skip -1
+				for i in 0..timer do
+					if (i % skip) == 0					
+						community_books = Community.fetch_books_database_Net(communities[i/skip]['value'])
+						temp = community_books[communities[i/skip]['value']]					
+						book_name,authors = temp.transpose
+						if Community.has_required_book_count(book_name)						
+							relevance << {'relevance' => communities[i/skip]['relevance'],
+										'relevanceOriginal' => communities[i/skip]['relevanceOriginal']}
+							communities_books << community_books
+						end
+					end
+				end			
+				unless communities_books.blank?	
+					news_metadata["news_id"] = News.create news_metadata
+					News.map_topics(news_metadata["news_id"], response["Hierarchy"]) 				
+					Community.map_books(communities_books.zip(relevance), news_metadata)
+					Community.map_books(communities_books.zip(relevance), news_metadata)
+					News.new(news_metadata["news_id"]).add_notification.execute
+					if news_metadata.present? && news_metadata["image_url"].present? && news_metadata["news_id"].present?
+						type = "news"
+						VersionerWorker.perform_async(news_metadata["news_id"], news_metadata["image_url"], type)
 					end
 				end
 			end
-			
-			unless communities_books.blank?	
-				news_metadata["news_id"] = News.create news_metadata
-				News.map_topics(news_metadata["news_id"], response["Hierarchy"]) 				
-				Community.map_books(communities_books.zip(relevance), news_metadata)
-				News.new(news_metadata["news_id"]).add_notification.execute
-				if news_metadata["image_url"].present && news_metadata["news_id"].present?
-					type = "news"
-					VersionerWorker.perform_async(news_metadata["news_id"], news_metadata["image_url"], type)
-				end
-			end
+		rescue Exception => e			
+			puts e.to_s.red
 		end
 	end 
 
@@ -163,19 +182,29 @@ class Community < Neo
 
 
 	def self.map_books communities_books, news_metadata
-	    communities_books.each do |community_books,relevance|
-	    	community_books.each do |community, books|
-	    		
-	        	clause =  News.new(news_metadata["news_id"]).match + Community.merge(community) + ", news " + Community.set_importance + " WITH community, news " + News.merge_community(relevance)				
-				books.each do |book|
-					indexed_title = book.search_ready
-					clause += Book.search_by_indexed_title(indexed_title) + " , community " + Community.merge_book + " WITH community "
+		batch_size_cypher = 4 
+	    communities_books.each do |community_books,relevance|	    	
+	    	community_books.each do |community, books_authors|
+	    		books,authors = books_authors.transpose
+	        	clause =  News.new(news_metadata["news_id"]).match + Community.merge(community) + ", news " + Community.set_importance + " WITH community, news " + News.merge_community(relevance)					        	
+	        	clause_temp = clause
+				books.each_with_index do |book,i|
+					authorlist_string = authors[i].sort.join('').search_ready						
+					unique_index = book.search_ready + authorlist_string
+					clause_temp += Book.search_by_unique_index(unique_index) + " , community " + Community.merge_book + " WITH community "
+					if((i+1)%batch_size_cypher == 0)
+						clause_temp += News.return_init + Community.basic_info
+						clause_temp.execute
+						clause_temp = clause
+					end
 				end
-				clause += News.return_init + Community.basic_info
-				community_info = clause.execute[0]				
-				if community_info["image_url"].present && community_info["id"].present?
-					type = "community"
-					VersionerWorker.perform_async(community_info["id"], community_info["image_url"], type)
+				if(clause_temp.length > clause.length)
+					clause_temp += News.return_init + Community.basic_info
+					community_info = clause_temp.execute[0]				
+					if community_info.present? && community_info["image_url"].present? && community_info["id"].present?
+						type = "community"
+						VersionerWorker.perform_async(community_info["id"], community_info["image_url"], type)
+					end
 				end
 			end
 		end
@@ -198,5 +227,17 @@ class Community < Neo
 
 	def self.search_by_name name
 		" MATCH (community:Community{name:'" + name + "'}) WITH community " 
+	end
+
+	def self.suggest_communities user_id, skip_count = 0
+		User.new(user_id).match + Bookmark::Node::NewsLabel.optional_match_path + " WHERE news: News WITH news, user " + News.match_community + " WITH DISTINCT community, SUM(COALESCE(has_community.relevance,0)) AS relevance ORDER BY relevance DESC SKIP " + skip_count.to_s + Community.limit(Constant::Count::CommunitiesSuggested) + Community.return_group(Community.basic_info, "relevance")
+	end
+
+	def get_books_users
+		match + Community.grouped_books_users 
+	end
+
+	def match_news_related_communities news_id
+		News.new(news_id).match + ", most_important_tag " + News.optional_match_community + " , most_important_tag  WHERE NOT ID(community) = " + @id.to_s + " WITH most_important_tag, community, has_community ORDER BY has_community.relevance DESC WITH  most_important_tag, " + Community.collect_map("other_tags" => Community.grouped_basic_info) + Article::NewsArticle.return_group(" most_important_tag ", " other_tags[0.." + (Constant::Count::CommunitiesShown+1).to_s + "] AS other_tags ")
 	end
 end

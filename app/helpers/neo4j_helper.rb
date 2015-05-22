@@ -705,6 +705,7 @@ module Neo4jHelper
 		@neo ||= self.init
 		puts "indexing initiated...".green
 		@neo.execute_query "CREATE INDEX ON :Book(indexed_title)"
+		@neo.execute_query "CREATE INDEX ON :Book(unique_index)"
 		@neo.execute_query "CREATE INDEX ON :Book(indexed_author_name)"
 		@neo.execute_query "CREATE INDEX ON :Author(indexed_name)"
 		@neo.execute_query "CREATE INDEX ON :Label(indexed_name)"
@@ -785,7 +786,7 @@ module Neo4jHelper
 		# @neo.delete_schema_index("Era", "name")
 		# @neo.delete_schema_index("Genre", "name")
 		
-		clause = "MATCH (book:Book) WITH book, toFloat(book.gr_rating)*toFloat(book.gr_ratings_count)*toFloat(book.gr_reviews_count) as weight ORDER BY weight DESC, toFloat(book.gr_rating) WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:Next_book]->(p2))))"
+		clause = "MATCH (book:Book) WITH book, toFloat(book.gr_rating)*toFloat(book.gr_ratings_count)*toFloat(book.gr_reviews_count) as weight ORDER BY weight DESC, toFloat(book.gr_rating) WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:Next_book]->(p2)))) WITH LAST(p) AS last, HEAD(p) AS head MERGE (last)-[:Next_book]->(head)"
 		puts "adding books in form of sorted linked lists...".green
 		@neo.execute_query clause
 
@@ -1111,6 +1112,30 @@ module Neo4jHelper
 			@neo.execute_query clause
 			start_id = start_id + skip
 		end
+	end
+
+	def self.set_book_unique_index
+		s_id = "MATCH (b:Book) RETURN min(ID(b)) AS min_id".execute
+		e_id = "MATCH (b:Book) RETURN max(ID(b)) AS max_id".execute
+		skip = 10000
+		start_id = s_id[0]["min_id"]
+		end_id = e_id[0]["max_id"]		
+		while start_id <= end_id
+			puts "Setting unique_index.."+start_id.to_s.green
+			limit = start_id + skip
+			clause = "MATCH (b:Book) WHERE ID(b) >= "+ start_id.to_s+ " AND ID(b) < "+limit.to_s+" " \
+			'WITH b '\
+			'set b.temp =b.title + b.author_name '\
+			'set b.temp2 = LOWER(b.temp) '\
+			'set b.temp  = REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(b.temp2," ",""),"-",""),":" ,""),"\'",""),"!","") '\
+			'set b.temp2 = REPLACE(REPLACE(REPLACE(b.temp,"[",""),"]",""),"@","") '\
+			'set b.temp  = REPLACE(REPLACE(REPLACE(b.temp2,".",""),",",""),"/","") '\
+			'set b.unique_index = b.temp '\
+			'remove b.temp remove b.temp2 '
+			clause.execute
+			start_id += skip
+		end
+
 	end
 
 	def self.set_author_rating

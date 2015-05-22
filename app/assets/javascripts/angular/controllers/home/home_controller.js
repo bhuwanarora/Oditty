@@ -1,7 +1,11 @@
 homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$mdBottomSheet', 'shelfService', '$timeout', '$location', 'userService', 'bookService', function($scope, $rootScope, userService, $mdBottomSheet, shelfService, $timeout, $location, userService, bookService){
 
-	$scope.goto_community_page = function(id){
+	$scope.goto_community_page = function(id, community_id){
 		userService.news_visited(id);
+        deleteCookie("active_community");
+        if(angular.isDefined(community_id)){
+            setCookie("active_community", community_id, 1)
+        }
 		window.location.href = "/news?q="+id;
 	}
 
@@ -18,25 +22,16 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$m
         });
     }
 
-    $scope.show_shelf_bottom_sheet = function(bookmark_object_id, bookmark_object_type){
-        $rootScope.bookmark_object = {"type": bookmark_object_type, "id": bookmark_object_id};
-        $mdBottomSheet.show({
-            templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
-            controller: 'shelfController',
-            targetEvent: event
-        });
-        event.stopPropagation();
-    };
-
     $scope.change_feed = function(){
         $scope.feed = [];
+        setCookie("active_region", $scope.info.active_region, 31);
         $scope.get_community_feed();        
     }
 
     $scope.get_community_feed = function(){
         if(!$scope.info.loading){
             $scope.info.loading = true;
-            var region_id = $scope.active_region;
+            var region_id = $scope.info.active_region;
             userService.get_feed(region_id).then(function(data){
                 $scope.info.loading = false;
                 angular.forEach(data, function(value){
@@ -70,6 +65,13 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$m
     var _init = (function(){
     	$scope.feed = [];
         // $scope.info.hide_feed = true;
+        var active_region = getCookie("active_region");
+        if(angular.isDefined(active_region) && active_region != "" && active_region != null){
+            $scope.info.active_region = active_region;
+            var timeout_set_region = $timeout(function(){
+                $scope.info.active_region = active_region;
+            }, 2000);
+        }
 
         var _get_blog_feed = function(){
             userService.get_last_blog().then(function(data){
@@ -91,6 +93,7 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$m
 
         var communities = (url.indexOf("communities") > 0);
         var blogs = (url.indexOf("blogs") > 0);
+        $scope.info.loading = false;
         if(communities){
             $scope.get_community_feed();
         }

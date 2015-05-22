@@ -1,4 +1,11 @@
+<md-progress-linear class="md-primary"
+                    ng-show="shelf_loading"
+                    md-mode="indeterminate">
+</md-progress-linear>
 <section>
+	<div class="less_important" layout-padding>
+		Book Shelves
+	</div>
 	<div ng-repeat="shelf in book_shelves" class="side_padding shelf">
 		<div layout-padding class="shelf_name">{{shelf.shelf}}</div><br/>
 		<div class="side_padding" ng-if="(shelf.books.length == 1) || !books">
