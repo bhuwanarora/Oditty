@@ -1,8 +1,5 @@
 homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sharedService", function($scope, $rootScope, bookService, sharedService){
 	var _init = (function(){
-		if(angular.isUndefined($scope.info)){
-			$scope.info = {};
-		}
 		$scope.info.loading = true;
 		var id = ($rootScope.active_book.id) || ($rootScope.active_book.book_id);
 		if(angular.isUndefined($scope.book)){

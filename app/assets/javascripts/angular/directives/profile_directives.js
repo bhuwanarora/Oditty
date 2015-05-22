@@ -1,13 +1,15 @@
 homeApp.directive('bookInfo', ["$rootScope", "bookService", '$mdDialog', function($rootScope, bookService, $mdDialog){
     return {
         restrict: 'E',
-        scope : {book: '='},
+        scope : {book: '=', info: '='},
         controller: ["$scope", function($scope){
             $scope.show_book_dialog = function(book, event){
                 $rootScope.active_book = book;
                 $rootScope.active_book.show_info_only = true;
                 $mdDialog.show({
                     templateUrl: '/assets/angular/html/community/book.html',
+                    scope: $scope,
+                    preserveScope: true,
                     targetEvent: event,
                 });
                 event.stopPropagation();
@@ -30,13 +32,15 @@ homeApp.directive('bookInfo', ["$rootScope", "bookService", '$mdDialog', functio
 homeApp.directive('communityInfo', ["$rootScope", "communityService", 'ColorConstants', '$mdDialog', function($rootScope, communityService, ColorConstants, $mdDialog){
     return {
         restrict: 'E',
-        scope : {community: '='},
+        scope : {community: '=', info: '='},
         controller: ["$scope", function($scope){
             $scope.show_book_dialog = function(book, event){
                 $rootScope.active_book = book;
                 $rootScope.active_book.show_info_only = true;
                 $mdDialog.show({
                     templateUrl: '/assets/angular/html/community/book.html',
+                    scope: $scope,
+                    preserveScope: true,
                     targetEvent: event,
                 });
                 event.stopPropagation();
