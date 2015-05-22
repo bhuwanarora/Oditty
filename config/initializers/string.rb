@@ -11,7 +11,7 @@ class String
             .gsub("'", "")
             .gsub("!", "")
             .gsub("[", "")
-            .gsub("[", "")
+            .gsub("]", "")
             .gsub("\\", "")
             .gsub("@", "")
             .gsub("\"","")

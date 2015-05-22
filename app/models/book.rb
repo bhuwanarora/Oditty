@@ -158,4 +158,57 @@ class Book < Neo
 	def get_interesting_info
 		match + " MATCH (book)-[relation]-(info) WHERE type(relation) <> 'Belongs_to' AND type(relation) <> 'Next_book' AND type(relation) <> 'BookFeed' AND type(relation) <> 'NextLongRead' AND type(relation) <> 'NextNormalRead' AND type(relation) <> 'NextTinyRead' AND type(relation) <> 'NextSmallRead' AND type(relation) <> 'BookmarkNode'" + Book.return_group(Book.basic_info, "COLLECT({info : info, labels: labels(info), id: ID(info)}) AS info")
 	end
+
+	def self.get_out_relationship relationship_type,book
+		"MATCH ("+book+":Book)-[relation:"+relationship_type+"]->(node) WITH "+book+",relation,node "
+	end
+
+	def self.get_in_relationship relationship_type,book
+		"MATCH ("+book+":Book)<-[relation:"+relationship_type+"]-(node) WITH "+book+",relation,node "
+	end
+
+	def self.get_max_min_id
+		output = "MATCH (a:Book) RETURN max(ID(a)) as max_id,min(ID(a)) as min_id".execute[0]
+		[output["max_id"],output["min_id"]]
+	end
+	
+	def self.add_in_relation node1,node2,relationship_type,properties
+		clause = "CREATE("+node1+")<-[r:"+relationship_type+"]-("+node2+") "
+		properties.each do |key,value|
+			clause += "SET r."+key+" = "+value+" "
+		end
+		clause
+	end
+
+	def self.add_out_relation node1,node2,relationship_type,properties
+		clause = "CREATE("+node1+")-[r:"+relationship_type+"]->("+node2+") "
+		properties.each do |key,value|
+			clause += "SET r."+key+" = "+value+" "
+		end
+		clause
+	end
+
+	def self.get_book_links
+		book_links_property={"Wrote"=> [], # These are the inlinks.	
+				"Published_in"	 => [],
+				"MovieBased"     => [],
+				"FromCategory"   => [],
+				"ReadingLevel"   => [],
+				"Eversion"       => [],
+				"BookFeed"		 => [],				
+				"NextNormalRead" => [],
+				"BookmarkAction" => [],
+				"NextLongRead"   => [],
+				"NextSmallRead"  => [],
+				"Rate"           => [],
+				"NextTinyRead"   => [],				
+				"RelatedBooks"   => [],
+				"Belongs_to"     => ["weight"],				
+				"Mentions"       => [],
+				"Endorsed"		 => [],
+				"FeedNext"       => [],
+				"Next_book"      => []
+				}
+		book_links_property
+	end
 end

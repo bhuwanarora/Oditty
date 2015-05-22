@@ -115,4 +115,9 @@ class Author < Neo
 	def self.get_active_authors skip_count 
 		Author.match_active + Author.order_by("author.priority DESC ") + Author.skip(skip_count) + Author.limit(Constant::Count::FollowFavoriteAuthors) + Author.return_group(Author.basic_info)
 	end
+
+	def self.get_max_min_id
+		output = "MATCH (a:Author) RETURN max(ID(a)) as max_id,min(ID(a)) as min_id".execute[0]
+		[output["max_id"],output["min_id"]]
+	end
 end
