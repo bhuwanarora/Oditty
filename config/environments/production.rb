@@ -7,7 +7,10 @@ ReadersDoor::Application.configure do
   config.google_news_sources = "https://support.google.com/news/answer/40237?hl=en"
   config.blog_url = " https://public-api.wordpress.com/rest/v1.1/sites/literaturerun.wordpress.com/posts/?number=10&pretty=1&order=ASC&fields=title,date,short_URL,excerpt,discussion,like_count,featured_image,tags,is_reblogged,attachments&after="
   config.neo4j_url = "http://localhost:7474"
-
+  config.community_bucket = "rd-images"
+  config.user_bucket = "rd-images"
+  config.news_bucket = "rd-images"
+  config.image_service = "http://52.10.230.9"
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both thread web servers
   # and those relying on copy on write to perform better.
