@@ -48,8 +48,8 @@ module Api
 
 			def bookmark
 				id = params["id"]
-				type = params["type"].upcase
-				shelf = params["shelf"].upcase
+				type = params["type"].to_s.upcase
+				shelf = params["shelf"].to_s.upcase
 				status = params["status"]
 				user_id = session[:user_id]
 				if status 

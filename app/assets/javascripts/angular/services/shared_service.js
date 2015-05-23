@@ -156,6 +156,7 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
                             }
                         }
                         else{
+                            debugger
                             angular.forEach($scope.info.categories, function(base_category){
                                 if(!angular.equals(category, base_category) && _is_absent(category) && (category.name != null)){
                                     this.push(category);

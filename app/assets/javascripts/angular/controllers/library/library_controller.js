@@ -61,6 +61,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         $scope.info.group_by_alphabet = false;
         $scope.info.reading_time_filter = false;
         $scope.info.published_era_filter = false;
+        debugger
         $scope.info.subject_filter = true;
     }
 

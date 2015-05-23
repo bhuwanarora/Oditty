@@ -258,10 +258,8 @@ md-toolbar{
 
 .fixed_share{
 	margin-right: 0px;
-	/*color: rgb(178, 113, 5) !important;*/
-  	font-size: 27px;
-	width: 70px !important;
-	height: 70px !important;
+  	font-size: 18px;
+  	box-shadow: 0 3px 5px -1px rgba(0,0,0,.2),0 6px 10px 0 rgba(0,0,0,.14),0 1px 18px 0 rgba(0,0,0,.12) !important;
 }
 
 .fixed_share.ng-enter,
@@ -543,7 +541,7 @@ and (max-width : 800px){
 }
 
 .margin_top{
-	margin-top: 6px;
+	margin-top: 6px !important;
 }
 
 .search_thumb{

@@ -322,6 +322,6 @@ class User < Neo
 		else
 			shelf = ":ArticleShelf" 
 		end
-		match + Label.match_shelves(shelf) + " MATCH (media) WHERE ID(media) = " + id.to_s + " WITH label, media " + Bookmark.optional_match_path("media") + User.return_group(User.collect_map({"shelf" => "name: label.name, status: ID(bookmark_node)"}))
+		match + Label.match_shelves(shelf) + " MATCH (media) WHERE ID(media) = " + id.to_s + " WITH label, media " + Bookmark.optional_match_path("media") + User.return_group(Label.basic_info, "ID(bookmark_node) AS status")
 	end
 end

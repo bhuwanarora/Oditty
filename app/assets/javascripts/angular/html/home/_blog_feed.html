@@ -8,7 +8,7 @@
         <img ng-src="{{blog_feed.image_url}}" alt="Washed Out">
     </div>
     <md-card-content class="footer" 
-        ng-init="bookmark_object = {'type': 'Blog', 'id': blog_feed.id}" 
+        ng-init="bookmark_object = {'type': 'Blog', 'id': blog_feed.blog_id}" 
         ng-include src="'/assets/angular/html/shared/partials/feed_footer.html'">
     </md-card-content>
 </md-card>

@@ -1,29 +1,27 @@
-<div ng-include src="'/assets/angular/html/profile/invite.html'"></div>
-<md-content ng-if="users_list" layout="row" layout-wrap check-scroll-bottom="load_users()">
-    <md-item ng-repeat="user in users_list" class="white user_card" layout-margin>
-        <md-item-content layout="row" flex class="clear">
-            <div ng-repeat="book in user.books" class="network_book">
-                <a ng-href="/book?q={{book.id}}">
-                <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
-                </a>
-            </div>
-        </md-item-content>
-        <md-item-content layout="row" layout-align="center center" flex class="user_cover_image clear">
-            <img ng-src="{{user.image_url | default_profile}}" class="circular user_photo" flex="60">
-        </md-item-content>
-        <md-item-content layout="row" layout-align="center center" class="clear">
-            <a ng-href="/profile?p={{user.id}}">
-                <div class="network_name">{{user.first_name}}</div>
+<!-- <div ng-include src="'/assets/angular/html/profile/invite.html'"></div> -->
+<md-item ng-repeat="user in users_list" class="white user_card" layout-margin>
+    <md-item-content layout="row" flex class="clear">
+        <div ng-repeat="book in user.books" class="network_book">
+            <a ng-href="/book?q={{book.id}}">
+            <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
             </a>
-        </md-item-content>
-        <md-item-content layout="row" layout-align="center center" class="clear">
-            <md-button class="md-primary md-button-clear">
-                <span ng-if="!user.status" >Follow</span>
-                <span ng-if="user.status">Following</span>
-            </md-button>
-        </md-item-content>
-    </md-item>
-</md-content>
+        </div>
+    </md-item-content>
+    <md-item-content layout="row" layout-align="center center" flex class="user_cover_image clear">
+        <img ng-src="{{user.image_url | default_profile}}" class="circular user_photo" flex="60">
+    </md-item-content>
+    <md-item-content layout="row" layout-align="center center" class="clear">
+        <a ng-href="/profile?p={{user.id}}">
+            <div class="network_name">{{user.first_name}}</div>
+        </a>
+    </md-item-content>
+    <md-item-content layout="row" layout-align="center center" class="clear">
+        <md-button class="md-primary md-button-clear">
+            <span ng-if="!user.status" >Follow</span>
+            <span ng-if="user.status">Following</span>
+        </md-button>
+    </md-item-content>
+</md-item>
 
 <style>
     .favourite_books{
@@ -52,6 +50,7 @@
     .user_card{
         width: 240px;
         padding: 0px;
+        height: 310px;
     }
 
     .user_cover_image{
@@ -64,5 +63,13 @@
 
     .network_book h5{
         display: none;
+    }
+
+    #network md-tabs.md-default-theme md-tabs-wrapper{
+        width: 100%;
+    }
+
+    #network md-tab-content{
+        bottom: initial;
     }
 </style>

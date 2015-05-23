@@ -130,7 +130,7 @@ class News < Neo
 	end
 
 	def self.map_topics news_id, topics
-		topics.each do |topic|			
+		topics.each do |topic|
 			clause = News.new(news_id).match + " MERGE (topic:Topic{name:'" + topic["value"].to_s + "'}) <-[:HasTopic {relevance :"+ topic["relevance"].to_s+" }]-(news) "
 			clause.execute
 		end

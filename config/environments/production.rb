@@ -10,6 +10,7 @@ ReadersDoor::Application.configure do
   config.community_bucket = "rd-images"
   config.user_bucket = "rd-images"
   config.news_bucket = "rd-images"
+  config.google_public_key = 'AIzaSyAV495wghmWMcTENY9CsrUpvVPzJpNOaxo'
   config.image_service = "http://52.10.230.9"
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both thread web servers
