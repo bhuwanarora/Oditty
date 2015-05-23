@@ -271,7 +271,7 @@ class User < Neo
 	end
 
 	def self.get_visited_books
-		Bookmark::Type::Visited.match("book") + " , status WHERE book :Book WITH DISTINCT status, user, book " + Book.order_desc + " WITH DISTINCT user, status, " + Book.collect_map("books" => Book.grouped_basic_info ) + " WITH DISTINCT user, books[0..3] AS books, status "
+		Bookmark::Type::Visited.match_path("book") + " WHERE label.key = \"Visited\" AND book :Book WITH DISTINCT status, user, book " + Book.order_desc + " WITH DISTINCT user, status, " + Book.collect_map("books" => Book.grouped_basic_info ) + " WITH DISTINCT user, books[0..3] AS books, status "
 	end
 
 	def self.optional_get_visited_books
