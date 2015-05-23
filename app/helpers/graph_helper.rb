@@ -211,16 +211,14 @@ module GraphHelper
 		# This function deletes the duplicate books. Duplicacy is on the basis of unique-index
 	def self.delete_duplicate_books_unique_index
 		end_id_author, start_id_author = Author.get_max_min_id
-		book_links_property= Book.get_book_links		
+		book_links_property = Book.get_book_links		
 		step_size = 500
-		logfile = 'duplicate_removal_log.txt'
-		if(File.exist?(logfile))
-			lines = IO.readlines(logfile)		
-			cur_id = lines.last.to_i
-		else
-			File.open(logfile, 'a') { |f| f.puts("Duplicate removal log file: Below are the author ids till which duplicacy is removed.") }
-			File.open(logfile, 'a') { |f| f.puts((start_id_author-1).to_s) }
+		author_id_key = 'author_id'
+		if(!$redis[author_id_key].nil?)			
+			cur_id = $redis[author_id_key].to_i
+		else			
 			cur_id = start_id_author
+			$redis[author_id_key] = cur_id -1
 		end		
 		while cur_id <=end_id_author
 			upper_limit = cur_id+step_size			
@@ -228,8 +226,8 @@ module GraphHelper
 				"WHERE ID(n)>= "+cur_id.to_s+" AND ID(n) <= "+upper_limit.to_s+" AND NOT(HAS(book.to_be_deleted)) AND "\
 				"dup_book.unique_index = book.unique_index AND ID(dup_book) <> ID(book) "\
 				"AND dup_book.indexed_author_name = book.indexed_author_name "\
-				"WITH dup_book,book LIMIT 1 "
-			output,orig_id,dup_id = repliacate_links_optimized(clause_init,book_links_property,"dup_book","book")			
+				"WITH dup_book, book LIMIT 1 "
+			output, orig_id, dup_id = repliacate_links_optimized(clause_init, book_links_property, "dup_book", "book")			
 			if (output == 1)				
 				dup = ("MATCH (dup:Book) WHERE  ID(dup) = "+dup_id.to_s+" RETURN dup").execute[0]["dup"]["data"]
 				clause = "MATCH (orig:Book),(dup:Book) WHERE ID(orig) = "+orig_id.to_s+"  AND ID(dup) = "+dup_id.to_s+" WITH orig, dup "
@@ -245,9 +243,9 @@ module GraphHelper
 				end 
 				clause += "WITH dup MATCH (dup)-[r]-() DELETE dup,r"				
 				clause.execute				
-			elsif(output == 0)					
-				File.open(logfile, 'a') { |f| f.puts(cur_id.to_s) }
-				cur_id +=step_size
+			elsif(output == 0)				
+				cur_id += step_size				
+				$redis[author_id_key] = cur_id
 			end		
 		end
 	end

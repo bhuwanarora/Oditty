@@ -168,7 +168,7 @@ class Book < Neo
 		[output["max_id"],output["min_id"]]
 	end
 	
-	def self.add_in_relation node1,node2,relationship_type,properties
+	def self.create_in_relation node1,node2,relationship_type,properties
 		clause = "CREATE("+node1+")<-[r:"+relationship_type+"]-("+node2+") "
 		properties.each do |key,value|
 			clause += "SET r."+key+" = "+value+" "
@@ -176,7 +176,7 @@ class Book < Neo
 		clause
 	end
 
-	def self.add_out_relation node1,node2,relationship_type,properties
+	def self.create_out_relation node1,node2,relationship_type,properties
 		clause = "CREATE("+node1+")-[r:"+relationship_type+"]->("+node2+") "
 		properties.each do |key,value|
 			clause += "SET r."+key+" = "+value+" "
