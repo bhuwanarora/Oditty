@@ -3,10 +3,6 @@ module Api
 		class CommunityApi
 
 			def self.get_detailed_info(id, user_id)
-				if user_id
-					# Community.new(id).get_info
-				else
-				end
 				UsersCommunity.new(user_id, id).get_info
 			end
 
@@ -16,6 +12,15 @@ module Api
 
 			def self.suggest_communities user_id, skip_count
 				info = Community.suggest_communities(user_id, skip_count)
+			end
+
+			def self.top_communities user_id, skip_count
+				if user_id
+					clause  = UsersCommunity.top_communities  user_id, skip_count
+				else
+					clause = Community.top_communities skip_count
+				end
+				clause
 			end
 		end
 	end

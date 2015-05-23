@@ -27,6 +27,13 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def top_communities
+				user_id = session[:user_id]
+				skip_count = params[:skip] || 0
+				info = Api::V0::CommunityApi.top_communities(user_id, skip_count).execute
+				render :json => info, :status => 200
+			end
+
 			def self.create_visited_news 
 				news_id = params[:news_id]
 				user_id = session[:user_id]
