@@ -10,10 +10,73 @@ homeApp.config(["$routeProvider", function($routeProvider){
 }]);
 
 homeApp.config(["$mdThemingProvider", function($mdThemingProvider){
-     $mdThemingProvider.theme('default')
-                       .primaryPalette('blue')
-                       .accentPalette('light-green')
-                       .warnPalette('amber');
+    $mdThemingProvider.definePalette('googleBlue', {
+        '50': '4487FF',
+        '100': '4485FA',
+        '200': '4182F5',
+        '300': '427fed',
+        '400': '3D7BEA',
+        '500': '3066C7',
+        '600': '3066C7',
+        '700': '3066C7',
+        '800': '3066C7',
+        '900': '3066C7',
+        'A100': '3066C7',
+        'A200': '3066C7',
+        'A400': '3066C7',
+        'A700': '3066C7',
+        'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
+                                            // on this palette should be dark or light
+        'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
+         '200', '300', '400', 'A100'],
+        'contrastLightColors': undefined    // could also specify this if default was 'dark'
+    });
+    $mdThemingProvider.definePalette('googleRed', {
+        '50': 'F4473B',
+        '100': 'EF4539',
+        '200': 'ED4539',
+        '300': 'E84236',
+        '400': 'DF4034',
+        '500': 'D03C31',
+        '600': 'C73A30',
+        '700': 'C73A30',
+        '800': 'C73A30',
+        '900': 'C73A30',
+        'A100': 'C73A30',
+        'A200': 'C73A30',
+        'A400': 'C73A30',
+        'A700': 'C73A30',
+        'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
+                                            // on this palette should be dark or light
+        'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
+         '200', '300', '400', 'A100'],
+        'contrastLightColors': undefined    // could also specify this if default was 'dark'
+    });
+    $mdThemingProvider.definePalette('googleGreen', {
+        '50': '03A35D',
+        '100': '029655',
+        '200': '039052',
+        '300': '02884D',
+        '400': '03844C',
+        '500': '009C58',
+        '600': '027C47',
+        '700': '027C47',
+        '800': '027C47',
+        '900': '027C47',
+        'A100': '027C47',
+        'A200': '027C47',
+        'A400': '027C47',
+        'A700': '027C47',
+        'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
+                                            // on this palette should be dark or light
+        'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
+         '200', '300', '400', 'A100'],
+        'contrastLightColors': undefined    // could also specify this if default was 'dark'
+    });
+    $mdThemingProvider.theme('default')
+                      .primaryPalette('googleBlue')
+                      .accentPalette('googleGreen')
+                      .warnPalette('googleRed')
 }]);
 
 homeApp.run(["$rootScope", "$location", "$cookieStore", "$cookies", "$http", function($rootScope, $location, $cookieStore, $cookies, $http){

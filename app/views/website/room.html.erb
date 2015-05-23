@@ -1,17 +1,29 @@
 <md-content ng-controller="roomController">
 	<!-- <div ng-include src="'/assets/angular/html/room/_header.html'" ng-hide="constant.show_book"></div> -->
-	<section layout="row" layout-wrap>
-		<md-content flex="25" flex-sm="100" flex-md="10" >
+	<section layout="row" hide-sm hide-md>
+		<md-content flex="25" flex-sm="100" hide-md >
 			<book-shelves></book-shelves>
 		</md-content>
-		<md-content flex="50" hide-sm flex-md="80" >
+		<md-content flex="50">
 		    <articles layout="column" ></articles>
 		</md-content>
-	    <md-content flex="25" hide-sm 
-		         flex-md="10">
+	    <md-content flex="25">
 		    <article-shelves></article-shelves>
 		</md-content>
 	</section>
+	<div show-sm show-md hide layout="row" layout-align="center">
+		<md-tabs md-dynamic-height class="full_width">
+			<md-tab label="Book Shelves" aria-controls="tab1-content">
+				<book-shelves layout="column" layout-align="center"></book-shelves>
+			</md-tab>
+			<md-tab label="Articles Visited" aria-controls="tab2-content">
+				<articles layout="column" ></articles>
+			</md-tab>
+			<md-tab label="Article Shelves" aria-controls="tab3-content">
+				<article-shelves layout="column" layout-align="center"></article-shelves>
+			</md-tab>
+		</md-tabs>
+	</div>
 	<!-- <book-stach></book-stach> -->
 </md-content>
 
@@ -38,7 +50,7 @@
 	}
 
 	.article{
-		width: 250px;
+		width: 130px;
 		background-color: white;
 	}
 
@@ -46,13 +58,4 @@
 		width: 100%;
 	}
 
-	.article{
-		border: 1px solid #f5f5f5;
-	}
-
-	/*.book_stack img{
-		width: 100px;
-		height: 150px;
-		margin-right: 10px;
-	}*/
 </style>

@@ -3,20 +3,8 @@
                     md-mode="indeterminate">
 </md-progress-linear>
 <section>
-	<div class="less_important" layout-padding>
+		<div class="less_important" layout-padding hide-sm hide-md>
 		Book Shelves
 	</div>
 	<book-shelf ng-repeat="shelf in book_shelves" shelf="shelf" info="info"></book-shelf>
 </section>
-<style>
-	.shelf{
-		background-color: #f5f5f5;
-		margin-top: 10px;
-		border-bottom: 5px solid #DADADA;
-	}
-
-	.shelf_name{
-		font-size: 1em;
-		font-family: sans-serif;
-	}
-</style>
