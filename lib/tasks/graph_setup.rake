@@ -6,6 +6,12 @@ namespace :graph do
   #   Neo4jHelper.delete_labels
   # end
 
+  desc "set author circular linked list"
+  task :set_author_feed => :environment do
+    include GraphHelper
+    GraphHelper.set_author_feed
+  end
+
   desc "reset_news_link"
   task :reset_news_link => :environment do
     include GraphHelper

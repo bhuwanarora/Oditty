@@ -13,7 +13,7 @@ class Community < Neo
 	end
 
 	def self.basic_info
-		" community.view_count AS view_count, community.name AS name, ID(community) AS id, community.image_url AS image_url, labels(community) AS label "
+		" community.view_count AS view_count, community.name AS name, ID(community) AS id, community.image_url AS image_url, labels(community) AS label, community.follow_count AS follow_count "
 	end
 
 	def self.grouped_basic_info
@@ -228,8 +228,12 @@ class Community < Neo
 		" MATCH (community:Community{name:'" + name + "'}) WITH community " 
 	end
 
+	def self.top_communities user_id, skip_count=0
+		" MATCH (community:Community) WITH community " + Community.return_init + Community.basic_info + Community.order_by("community.follow_count, community.view_count DESC ") + Community.skip(skip_count) + Community.limit(Constant::Count::CommunitiesSuggested) 
+	end
+
 	def self.suggest_communities user_id, skip_count = 0
-		User.new(user_id).match + Bookmark::Node::NewsLabel.optional_match_path + " WHERE news: News WITH news, user " + News.match_community + " WITH DISTINCT community, SUM(COALESCE(has_community.relevance,0)) AS relevance ORDER BY relevance DESC SKIP " + skip_count.to_s + Community.limit(Constant::Count::CommunitiesSuggested) + Community.return_group(Community.basic_info, "relevance")
+		User.new(user_id).match + Bookmark::Node::NewsLabel.optional_match_path + " WHERE news: News WITH news, user, bookmark_node " + News.match_community + ", user, bookmark_node " + UsersCommunity.where_not + " WITH DISTINCT community, SUM(COALESCE(has_community.relevance,0)) AS relevance_sum , SUM(COALESCE(has_community.relevance,0)*COALESCE(bookmark_node.count,0)) AS total_relevance ORDER BY total_relevance, relevance_sum  DESC SKIP " + skip_count.to_s + Community.limit(Constant::Count::CommunitiesSuggested) + Community.return_group(Community.basic_info, "total_relevance", "relevance_sum")
 	end
 
 	def get_books_users

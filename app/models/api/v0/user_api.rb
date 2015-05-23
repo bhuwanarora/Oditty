@@ -6,6 +6,10 @@ module Api
 				User.new(user_id).set_intro_seen_status(status)
 			end
 
+			def self.get_bookmarks(id, user_id, type)
+				User.new(user_id).get_bookmarks(id, type)
+			end
+
 			def self.get_details(user_id)
 				info = {}
 				if user_id.present?
@@ -36,6 +40,10 @@ module Api
 				else
 					UsersCommunity.new(user_id, community_id).unfollow
 				end
+			end
+
+			def self.add_book_searched user_id, id
+				UsersBook.new(id, user_id).handle_searched
 			end
 			
 			def self.add_bookmark user_id, id, type, shelf

@@ -20,6 +20,12 @@ class Search < Neo
 		response
 	end
 
+	def self.get_top_searches
+		client = Elasticsearch::Client.new log: true	
+		search_response = client.search index: 'search', type: 'books', body:{query: {match_all: {}}, size: 4, sort:{ weight: {order: "desc"}}}
+		Search.extract_info(search_response)
+	end
+
 	def self.by_scroll_id scroll_id
 		client = Elasticsearch::Client.new log: true	
 		search_response = client.scroll index: 'search', scroll: '10m', scroll_id: scroll_id.to_s

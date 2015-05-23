@@ -6,6 +6,12 @@ namespace :images do
     ImagesHelper.set_genre_images
   end
 
+  desc "set redis values"
+  task :reset_redis_values => :environment do
+    include ImagesHelper
+    ImagesHelper.reset_redis_values
+  end
+
   desc "set community images"
   task :set_community_image_version => :environment do
     include ImagesHelper

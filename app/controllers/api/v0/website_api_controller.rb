@@ -12,6 +12,7 @@ module Api
 				end
 			end
 
+
 			def news_info
 				id = params[:id]
 				community_id = params[:tag_id]
@@ -23,6 +24,13 @@ module Api
 				user_id = session[:user_id]
 				skip_count = params[:skip] || 0
 				info = Api::V0::CommunityApi.suggest_communities(user_id, skip_count).execute
+				render :json => info, :status => 200
+			end
+
+			def top_communities
+				user_id = session[:user_id]
+				skip_count = params[:skip] || 0
+				info = Api::V0::CommunityApi.top_communities(user_id, skip_count).execute
 				render :json => info, :status => 200
 			end
 

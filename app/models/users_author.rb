@@ -5,7 +5,7 @@ class UsersAuthor < Neo
 	end
 
 	def match
-		" MATCH (user:User), (author:Author) WHERE ID(user) = " + @user_id.to_s + " AND ID(author) = " + @author_id.to_s + User::Info.set_last_active_session + " WITH author, user "
+		" MATCH (user:User), (author:Author) WHERE ID(user) = " + @user_id.to_s + " AND ID(author) = " + @author_id.to_s + " WITH author, user "
 	end
 
 	def create
