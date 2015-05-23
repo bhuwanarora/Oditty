@@ -137,11 +137,13 @@ class Community < Neo
 
 	def self.create news_metadata		
 		begin
+			if(news_metadata["available"]==false)
+				return
+			end
 			communities_books = []		
 			relevance = []	 # This is the relevance which we will use
 			response = News.fetch_tags news_metadata["news_link"]
 			puts response.red
-
 			if response.is_json? 
 				response = JSON.parse(response)			
 				communities = Community.handle_communities response						
