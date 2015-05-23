@@ -72,3 +72,4 @@ neo4j/conf/neo4j.properties
 # Ignore application configuration
 /config/application.yml
  config/deploy/*
+ duplicate_removal_log.txt

@@ -1,5 +1,5 @@
 <div flex="100" flex-sm="100">
-	<md-tabs md-selected="selectedIndex">
+	<md-tabs md-selected="selectedIndex" ng-if="news">
 		<md-tab ng-repeat="tag in news" md-selected="selectedIndex">
 			<a ng-href="/news?q={{tag.id}}" >
 				<div layout="row" class="news_item">
