@@ -188,7 +188,10 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         $rootScope.active_book.show_info_only = true;
         $mdDialog.show({
             templateUrl: '/assets/angular/html/community/book.html',
-            targetEvent: event,
+            scope: $scope,
+            preserveScope: true,
+            clickOutsideToClose: true,
+            targetEvent: event
         });
         event.stopPropagation();
     }
@@ -283,15 +286,16 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         $scope.$routeParams = $routeParams;
         $scope.filters = {"other": {}};
         $scope.grid = {};
-
-        // var genre = (/genre=(\d+)/.exec($location.absUrl())[1]);
-        // var year = (/year=(\d+)/.exec($location.absUrl())[1]);
-        // var author = (/author=(\d+)/.exec($location.absUrl())[1]);
-        // var duration = (/duration=(\d+)/.exec($location.absUrl())[1]);
+        $scope.info.books = [];
+        $scope.search_tag = {};
+        $scope.active_tab = {};
+        $scope.info.categories = [];
+        $scope.friends = [];
 
         $scope.active_endorse = false;
         $scope.active_bookmark = true;
         $scope.active_share = true;
+        
         if($cookieStore.get('infinity')){
             $scope.info.infinity = false;
             $scope.show_books_for_author();
@@ -303,11 +307,6 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         }
 
         $scope.constant = {"show_book": false};
-        $scope.info.books = [];
-        $scope.search_tag = {};
-        $scope.active_tab = {};
-        $scope.info.categories = [];
-        $scope.friends = [];
         
         // $scope.info.infinity = true;
     }());

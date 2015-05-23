@@ -4,19 +4,21 @@
             <div layout="row">
                 <img ng-src="{{profile_user.image_url | default_profile}}" class="profile_thumb circular">
                 <div layout="column" layout-align="start start">
-                    <h2>{{profile_user.first_name}}</h2>
+                    <div layout-padding class="big_title">{{profile_user.first_name}}</div>
+                    <div layout-padding>
+                        <div ng-bind-html="feed.message" class="status_message"></div>
+                        <div class="less_important">{{feed.created_at | timestamp | date:'h:mm a, dd MMM'}}</div>
+                    </div>
                 </div>
             </div>
-            <div ng-bind-html="feed.message" class="status_message"></div>
-            <div class="less_important">{{feed.created_at | timestamp | date:'h:mm a, dd MMM'}}</div>
             <!-- <div ng-repeat="data in feed.data" layout-padding> -->
             <!-- </div> -->
         </section>
     </md-card-content>
-    <md-card-content class="less_important_container" ng-if="feed.community.name">
-        <div class="footer" ng-init="community = feed.community" ng-include src="'/assets/angular/html/shared/partials/community_info.html'"></div>
+    <md-card-content class="less_important_container clear">
+        <community-info class="footer" info="info" community="feed.community"></community-info>
     </md-card-content>
-    <!-- <md-card-content class="footer" ng-include src="'/assets/angular/html/shared/partials/card_footer.html'">
+    <!-- <md-card-content class="footer" ng-include src="'/assets/angular/html/shared/partials/feed_footer.html'">
     </md-card-content> -->
 </md-card>
 <style>

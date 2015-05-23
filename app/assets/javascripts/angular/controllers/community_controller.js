@@ -1,4 +1,4 @@
-homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communityService', '$location', '$rootScope', '$mdDialog', 'ColorConstants', function($scope, $mdSidenav, communityService, $location, $rootScope, $mdDialog, ColorConstants){
+homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communityService', '$location', '$rootScope', '$mdDialog', 'ColorConstants', '$timeout', function($scope, $mdSidenav, communityService, $location, $rootScope, $mdDialog, ColorConstants, $timeout){
     $scope.toggle_details = function(){
         $mdSidenav('right').toggle();
         // $scope.get_detailed_community_info();
@@ -11,6 +11,7 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
             if(angular.isDefined(follow_node) && (follow_node != null)){
                 $scope.active_tag.status = true;
             }
+            $scope._check_users();
         });
     }
 
@@ -24,7 +25,10 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
         $rootScope.active_book.show_info_only = true;
         $mdDialog.show({
             templateUrl: '/assets/angular/html/community/book.html',
+            scope: $scope,
+            preserveScope: true,
             targetEvent: event,
+            clickOutsideToClose: true
         });
         event.stopPropagation();
     }
@@ -43,6 +47,15 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
         $scope.get_detailed_community_info();
     }
 
+    $scope._check_users = function(){
+        if($scope.active_tag.users.length == 1){
+            var first_name = $scope.active_tag.users[0].first_name;
+            if(angular.isUndefined(first_name) || first_name == null){
+                $scope.active_tag.users = [];
+            }
+        }
+    }
+
     var _init = (function(){
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
         var url_parsed = regex.exec($location.absUrl());
@@ -57,11 +70,13 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
             var news_id = $rootScope.active_community.news_id;
         }
 
+        $scope.info.active_news_id = news_id;
 
         $scope.newsTags = [];
         $scope.info.active_tag = $scope.active_tag;
         $scope.info.loading = true;
-        communityService.get_news_info(news_id).then(function(data){
+        var active_community = getCookie("active_community");
+        communityService.get_news_info(news_id, active_community).then(function(data){
             $scope.info.loading = false;
             data = data[0];
             $scope.active_tag = data.most_important_tag[0];
@@ -73,23 +88,25 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
             data.other_tags.shift();
             $scope.newsTags = $scope.newsTags.concat(data.other_tags);
             angular.forEach($scope.newsTags, function(value){
-                value.view_count = Math.floor((Math.random() * 100) + 50);;
+                if($scope.active_tag.id == value.id){
+                    value.view_count = Math.floor((Math.random() * 1000) + 500);
+                }
+                else{
+                    value.view_count = Math.floor((Math.random() * 100) + 50);
+                }
+                deleteCookie("active_community");
             });
             angular.forEach($scope.active_tag.books, function(value){
                 var random_int = Math.floor(Math.random()*ColorConstants.value.length);
                 var color = ColorConstants.value[random_int];
                 value.color = color;
             });
-            $scope.get_detailed_community_info();
-        });
 
-        communityService.get_chronological_news(news_id).then(function(data){
-            $scope.news = data;
-            angular.forEach($scope.news, function(value, index){
-                if(value.community_info.name == $scope.active_tag.name){
-                    $scope.selectedIndex = index;
-                }
-            });
+            $scope._check_users();
+
+            $timeout(function(){
+                $scope.get_detailed_community_info();
+            }, 100);
         });
 
     }());

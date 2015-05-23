@@ -347,6 +347,7 @@ input:focus{
     text-align: inherit !important;
     padding: 0px !important;
     border-radius: 0px !important;
+    margin: 0px !important;
 }
 
 md-input-container .md-input{
@@ -360,4 +361,49 @@ md-input-container .md-input{
 
 .absolute{
     position: absolute;
+}
+
+.z-index-1{
+    z-index: 1;
+}
+
+.md-button{
+    line-height: 18px !important;
+    margin: 0px !important;
+    min-width: inherit !important;
+}
+
+md-list-item{
+    flex: initial !important;
+    padding: 0px !important;
+}
+
+.md-button.md-fab.md-fab-bottom-right{
+    position: fixed !important;
+}
+
+.md-subheader .md-subheader-inner{
+    padding: 0px !important;
+}
+
+md-autocomplete input:not(.md-input){
+    /*padding: 0px;*/
+}
+
+
+
+/*md-tabs.md-default-theme .md-tab{
+   
+}*/
+
+md-checkbox{
+    line-height: 14px;
+}
+
+md-backdrop{
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    top: 0px;
+    position: fixed;
 }

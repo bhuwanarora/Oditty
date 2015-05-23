@@ -20,7 +20,6 @@ class User::Info < User
 		" SET user.verification_time = " + time + " "
 	end
 
-
 	def self.set_email email
 		" SET user.email = \""+email+"\" "
 	end

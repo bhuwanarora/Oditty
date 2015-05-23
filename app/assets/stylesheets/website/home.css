@@ -1,9 +1,11 @@
+
 body,
 md-content.md-default-theme{
 	background-color: #ececec;
 }
 
-.md-paginator.md-next, .md-paginator.md-prev{
+.md-paginator.md-next, 
+.md-paginator.md-prev{
 	background-color: #f5f5f5;
 }
 
@@ -217,7 +219,7 @@ md-toolbar{
 }
 
 .circular{
-    border-radius: 50%;
+    border-radius: 50% !important;
     width: 40px;
     height: 40px;
 }
@@ -521,6 +523,7 @@ and (max-width : 800px){
     /* tablets and desktop */
     .book_scroller{
     	max-height: 70vh;
+    	margin-left: 20px;
     }
 }
 
@@ -565,5 +568,23 @@ and (max-width : 800px){
 }
 
 .shelf_tooltip{
+	margin-top: 55px;
 	pointer-events: initial;
+}
+
+.less_important_container{
+	background-color: #f5f5f5;
+}
+
+.user_circular{
+	width: 80px !important;
+	height: 80px !important;
+}
+
+#home{
+    position: inherit !important;
+}
+
+.footer{
+	order: 5;
 }

@@ -1,7 +1,7 @@
 <div flex="100" flex-sm="100">
 	<md-tabs md-selected="selectedIndex">
-		<a ng-href="/news?q={{tag.id}}" ng-repeat="tag in news">
-			<md-tab layout-margin>
+		<md-tab ng-repeat="tag in news" md-selected="selectedIndex">
+			<a ng-href="/news?q={{tag.id}}" >
 				<div layout="row" class="news_item">
 					<img ng-src="{{tag.image_url}}" class="news_thumb" flex="20"/>
 					<div layout="column" flex="80" layout-align="start start" layout-padding layout-wrap>
@@ -12,7 +12,7 @@
 						{{tag.description}}
 					</md-tooltip>
 				</div>
-			</md-tab>
-		</a>
+			</a>
+		</md-tab>
 	</md-tabs>
 </div>

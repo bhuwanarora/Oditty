@@ -12,6 +12,6 @@ class User::FacebookUser < User
 	end
 
 	def self.set_name name
-		" SET user.thumb = COALESCE(user.name, \"" + name + "\" ) "
+		" SET user.name = COALESCE(user.name, \"" + name + "\" ) "
 	end
 end 

@@ -786,7 +786,7 @@ module Neo4jHelper
 		# @neo.delete_schema_index("Era", "name")
 		# @neo.delete_schema_index("Genre", "name")
 		
-		clause = "MATCH (book:Book) WITH book, toFloat(book.gr_rating)*toFloat(book.gr_ratings_count)*toFloat(book.gr_reviews_count) as weight ORDER BY weight DESC, toFloat(book.gr_rating) WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:Next_book]->(p2))))"
+		clause = "MATCH (book:Book) WITH book, toFloat(book.gr_rating)*toFloat(book.gr_ratings_count)*toFloat(book.gr_reviews_count) as weight ORDER BY weight DESC, toFloat(book.gr_rating) WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:Next_book]->(p2)))) WITH LAST(p) AS last, HEAD(p) AS head MERGE (last)-[:Next_book]->(head)"
 		puts "adding books in form of sorted linked lists...".green
 		@neo.execute_query clause
 

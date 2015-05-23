@@ -16,6 +16,13 @@ angular.module('filtersApp', [])
             return output;
         };
     })
+    .filter('random_color', ['ColorConstants', function(ColorConstants){
+      return function(){
+          var random_int = Math.floor(Math.random()*ColorConstants.value.length);
+          var color = ColorConstants.value[random_int];
+          return color;
+      }
+    }])
     .filter('first_isbn', function(){
       return function(input){
         var output = "";
@@ -375,6 +382,15 @@ angular.module('filtersApp', [])
 
     }
   })
+    .filter('cdn_image', function(){
+        return function(id, type){
+            var output = "";
+            if(id){
+                output = "http://rd-images.readersdoor.netdna-cdn.com/"+id+"/"+type+".png";
+            }
+            return output;
+        }
+    })
   .filter('thumb_backup', function(){
     return function(input){
         var output = input;

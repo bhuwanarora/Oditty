@@ -27,6 +27,11 @@ class News < Neo
 		" MATCH (news)-[has_community:HasCommunity]->(community:Community) WITH news, community, has_community "
 	end
 
+	def self.optional_match_community
+		" MATCH (news)-[has_community:HasCommunity]->(community:Community) WITH news, community, has_community "
+	end
+
+
 	def match_community
 		" MATCH (news)-[:HasCommunity]->(community:Community) WITH news, community "
 	end
@@ -159,12 +164,16 @@ class News < Neo
 		response = Net::HTTP.get(uri)
 	end
 
+	def get_basic_info
+		match + News.return_group(News.basic_info)
+	end
+
 	def self.basic_info
-		" ID(news) AS  id  ,news.url  AS url , news.image_url AS image_url, news.title AS title, news.description AS description, news.created_at AS created_at, labels(news) AS label "
+		" ID(news) AS  id  ,news.url  AS url , news.image_url AS image_url, news.title AS title, news.description AS description, news.created_at AS created_at, labels(news) AS label, COALESCE(news.bookmark_count,0) AS bookmark_count "
 	end
 
 	def self.grouped_basic_info
-		" news_id: ID(news) , news_url: news.url, view_count:news.view_count, title: news.title , description: news.description  , image_url: news.image_url, created_at:news.created_at "
+		" news_id: ID(news) , news_url: news.url, view_count:news.view_count, title: news.title , description: news.description  , image_url: news.image_url, created_at:news.created_at, bookmark_count: COALESCE(news.bookmark_count,0) "
 	end
 
 	def self.match_day
@@ -201,8 +210,21 @@ class News < Neo
 		clause
 	end
 
-	def self.get_feed skip_count, day_skip_count, region
-		News.match_time_period(day_skip_count) + " WHERE news.status = true WITH news " + News.match_region(region) + News.order_desc + News.skip(skip_count) + News.limit(Constant::Count::NewsShownInFeed) + News.match_community + " WITH news, community ORDER BY has_community.relevance  DESC WITH news,  " + News.collect_map({"communities" => Community.grouped_basic_info}) + News.return_group(News.basic_info,"communities[0.." +  Constant::Count::CommunitiesOfNewsShown.to_s + "] AS communities ") 
+	def self.match_regional_temporal_news skip_count, day_skip_count, region
+		News.match_time_period(day_skip_count) + " WHERE news.status = true WITH news " + News.match_region(region) + News.order_desc + News.skip(skip_count) + News.limit(Constant::Count::NewsShownInFeed)
+	end
+
+	def self.match_community_users
+		News.match_community + UsersCommunity.optional_match + ", news " + " WITH DISTINCT news, user WITH news , " + News.collect_map({"users" => User.grouped_primary_display_info}) + " WITH DISTINCT news, users  " + News.match_community + ", users ORDER BY has_community.relevance DESC WITH users, news,  " + News.collect_map({"communities" => Community.grouped_basic_info}) + ", SUM(community.follow_count) AS follow_count WITH news, users, communities, follow_count " 
+	end
+
+	def self.get_bookmarks user_id
+		media = "news"
+		User.new(user_id).match + " , news, follow_count, communities, users " + Label.optional_match_public_labels + " , news, follow_count, communities, users " +  Bookmark.optional_match_path(media) + News.with_group("news", "follow_count", "communities", "users", "label", "bookmark_node") + " WHERE label: ArticleShelf " + " WITH DISTINCT news, follow_count, communities, users , " + News.collect_map({"shelves" => (Label.grouped_basic_info + ", status: ID(bookmark_node)")}) 
+	end
+
+	def self.get_feed skip_count, day_skip_count, region, user_id
+		 News.match_regional_temporal_news(skip_count, day_skip_count, region) + News.match_community_users + News.get_bookmarks(user_id) + News.return_group(News.basic_info," follow_count, communities[0.." + Constant::Count::CommunitiesOfNewsShown.to_s + "] AS communities ", "users[0..4] AS users", "shelves")
 	end
 
 	def self.get_regions

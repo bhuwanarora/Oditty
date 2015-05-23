@@ -30,7 +30,7 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
         }
     }
 
-    this.toggle_bookmark = function(label, data){
+    this.toggle_bookmark = function(label, data, bookmark_object){
         var toast_position = {
             bottom: false,
             top: true,
@@ -52,9 +52,9 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
         }
 
 
-        var id = $rootScope.bookmark_object.id;
-        var type = $rootScope.bookmark_object.type;
-        var shelf = label.label_key;
+        var id = bookmark_object.id;
+        var type = bookmark_object.type;
+        var shelf = (label.label_key || label.key);
         var params = {"id": id, "type": type, "shelf": shelf, "status": status};
         
         shelfService.bookmark(params);
@@ -68,16 +68,15 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
 
     this.load_popular_books = function($scope, books){
         if(angular.isUndefined(books)){
-            books = $scope.info.books;
+            if(angular.isUndefined($scope.info.books)){
+                books = [];
+            }
+            else{
+                books = $scope.info.books;
+            }
         }
+        var skip_count = books.length;
 
-        if(angular.isDefined(books)){
-            var skip_count = books.length;
-        }
-        else{
-            books = [];
-            var skip_count = 0;
-        }
         if(angular.isUndefined($scope.filters)){
             $scope.filters = {};
         }

@@ -1,7 +1,14 @@
+<md-progress-linear class="md-primary"
+                    ng-show="shelf_loading"
+                    md-mode="indeterminate">
+</md-progress-linear>
 <md-card layout="column" layout-align="start center">
 	<md-card-content>
+		<div class="less_important" layout-padding>
+			Recently Visited Articles
+		</div>
 		<md-content class="white">
-			<section layout="row" layout-wrap >
+			<section layout="row" layout-wrap layout-align="center center">
 				<div class="article"
 					layout-margin layout="column"
 		            ng-repeat="article in visited_articles">

@@ -21,6 +21,10 @@ module Api
 				articles = User::Room.new(user_id).get_visited_articles.execute
 			end
 
+			def self.get_labels id
+				Label.get_shelves(id)
+			end
+
 			private
 			def self._set_dominant_color books
 				labels = []

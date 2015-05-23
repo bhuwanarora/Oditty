@@ -1,7 +1,8 @@
 <section layout="row" layout-wrap>
     <div flex="45" class="padding overview" 
             layout="column" 
-            flex-sm="100">
+            flex-sm="100"
+            flex-md="100">
         <h3>{{book.title}}</h3>
         <a ng-href="/author?q={{book.author_id}}">{{book.author_name}}</a>
         <md-content class="summary">{{book.description}}</md-content>
@@ -16,7 +17,7 @@
              </md-tooltip>
         </div>
     </div>
-    <div flex="5" hide-sm>
+    <div flex="5" hide-sm hide-md>
         <div class="vertical-text spine" 
              layout="row"
              layout-align="space-between">
@@ -24,7 +25,7 @@
             <div>{{book.author_name}}</div>
         </div>
     </div>
-    <div flex="50" hide-sm class="relative">
+    <div flex="50" hide-sm class="relative" hide-md>
         <img ng-src="{{book | large_thumb}}" class="cover"/>
         <div class="absolute" ng-style="{background: '{{book.color}}'}"></div>
     </div>

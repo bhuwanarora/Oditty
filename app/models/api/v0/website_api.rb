@@ -6,8 +6,8 @@ module Api
 				clause.execute
 			end
 
-			def self.add_new_label user_id, label
-				UsersLabel.create_new(user_id, label)
+			def self.add_new_label user_id, label, type
+				UsersLabel.create_new(user_id, label, type)
 			end
 
 			def self.add_label user_id, label
@@ -22,16 +22,25 @@ module Api
 				labels
 			end
 
-			def self.get_important_community_info id
-				Article::NewsArticle.new(id).most_important_tag_info + Article::NewsArticle.new(id).other_tags_info
+			def self.get_important_community_info id, community_id = nil
+				if community_id
+					clause = Community.new(community_id).get_books_users + " WITH most_important_tag " + Community.new(community_id).match_news_related_communities(id)
+				else
+					clause = Article::NewsArticle.new(id).most_important_tag_info + Article::NewsArticle.new(id).other_tags_info
+				end
+				clause
 			end
 
 			def self.get_chronological_news_info id
 				Article::NewsArticle.new(id).get_chronological_news_info
 			end
 
-			def self.get_basic_community_info news_id
-				Community.new(news_id).books_users_info
+			def self.get_basic_community_info community_id
+				Community.new(community_id).books_users_info
+			end
+
+			def self.get_feed_community_info community_id
+				Community.new(community_id).feed_info
 			end
 
 			def self.get_news_feed(user_id, skip_count)

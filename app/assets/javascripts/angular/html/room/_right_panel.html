@@ -1,15 +1,14 @@
+<md-progress-linear class="md-primary"
+                    ng-show="shelf_loading"
+                    md-mode="indeterminate">
+</md-progress-linear>
 <section>
-	<div class="side_padding shelf" ng-repeat="shelf in articles_grouped_by_shelves">
-		<div class="padding">{{shelf.shelf}}</div><br/>
-		<md-content class="grid_content">
-			<div class="article"
-				layout-margin
-				ng-if="article.title"
-	            ng-repeat="article in shelf.articles">
-            	<div ng-include src="'/assets/angular/html/room/article.html'"></div>
-	        </div>
-	    </md-content>
+	<div class="less_important" layout-padding>
+		Article Shelves
 	</div>
+	<article-shelf shelf="shelf" 
+		ng-repeat="shelf in articles_grouped_by_shelves">
+	</article-shelf>
 </section>
 <style>
 	.grid_content{

@@ -1,0 +1,21 @@
+<md-card class="blog">
+    <md-card-content>
+        <h3><a ng-href="{{blog_feed.blog_url}}" target="_blank" ng-bind-html="blog_feed.title"></a></h3>
+        <div class="less_important">Blog</div>
+        <div ng-bind-html="blog_feed.excerpt"></div>
+    </md-card-content>
+    <div class="image_wrapper" ng-if="blog_feed.image_url">
+        <img ng-src="{{blog_feed.image_url}}" alt="Washed Out">
+    </div>
+    <md-card-content class="footer" 
+        ng-init="bookmark_object = {'type': 'Blog', 'id': blog_feed.id}" 
+        ng-include src="'/assets/angular/html/shared/partials/feed_footer.html'">
+    </md-card-content>
+</md-card>
+
+<style>
+    .blog p{
+        line-height: 18px;
+        margin: 0px;
+    }
+</style>
