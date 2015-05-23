@@ -1127,10 +1127,11 @@ module Neo4jHelper
 			'WITH b '\
 			'set b.temp =b.title + b.author_name '\
 			'set b.temp2 = LOWER(b.temp) '\
-			'set b.temp  = REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(b.temp2," ",""),"-",""),":" ,""),"\'",""),"!","") '\
+			'set b.temp  = REPLACE(REPLACE(REPLACE(REPLACE(b.temp2," ",""),":" ,""),"\'",""),"!","") '\
 			'set b.temp2 = REPLACE(REPLACE(REPLACE(b.temp,"[",""),"]",""),"@","") '\
-			'set b.temp  = REPLACE(REPLACE(REPLACE(b.temp2,".",""),",",""),"/","") '\
-			'set b.unique_index = b.temp '\
+			'set b.temp  = REPLACE(REPLACE(b.temp2,".",""),",","") '\
+			"set b.temp2 = REPLACE(b.temp,'\"','')"\
+			'set b.unique_index = b.temp2 '\
 			'remove b.temp remove b.temp2 '
 			clause.execute
 			start_id += skip

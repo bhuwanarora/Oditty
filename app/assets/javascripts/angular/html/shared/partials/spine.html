@@ -1,11 +1,10 @@
-<a ng-href="/book?q={{book.id || book.book_id}}" ng-repeat="book in books">
-	<md-button class="clear spine_button" ng-style="{{book.random_style}}" ng-if="book.title">
-		<div class="spine">
-			{{book.title}}
-		</div>
-	</md-button>
-</a>
-
+<md-button class="clear spine_button" ng-style="{{book.random_style}}" 
+	ng-click="show_book_dialog(book, $event)"
+	ng-if="book.title" ng-repeat="book in books">
+	<div class="spine">
+		{{book.title}}
+	</div>
+</md-button>
 
 <style>
 	.spine{

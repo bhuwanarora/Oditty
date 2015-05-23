@@ -1,6 +1,8 @@
 <div class="social_content" layout="row" layout-padding ng-show="!book_loading" ng-if="book.title || book.name">
     <div flex="25">
-        <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
+        <md-button ng-click="show_book_dialog(book, $event)" class="clear book" layout-margin>
+            <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
+        </md-button>
     </div>
     <div flex="75">
         <div class="book_title"><a ng-href="/book?q={{book.id}}">{{book.title || book.name}}</a></div>

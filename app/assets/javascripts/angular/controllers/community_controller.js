@@ -25,7 +25,10 @@ homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communitySer
         $rootScope.active_book.show_info_only = true;
         $mdDialog.show({
             templateUrl: '/assets/angular/html/community/book.html',
+            scope: $scope,
+            preserveScope: true,
             targetEvent: event,
+            clickOutsideToClose: true
         });
         event.stopPropagation();
     }

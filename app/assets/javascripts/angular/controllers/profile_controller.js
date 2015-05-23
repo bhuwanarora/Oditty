@@ -159,16 +159,6 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 		userService.follow($scope.profile_user.id, $scope.profile_user.status);
 	}
 
-	$scope.show_book_dialog = function(book, event){
-        $rootScope.active_book = book;
-        $rootScope.active_book.show_info_only = true;
-        $mdDialog.show({
-            templateUrl: '/assets/angular/html/community/book.html',
-            targetEvent: event,
-        });
-        event.stopPropagation();
-    }
-	
 	var _init = (function(){
 		$scope.profile_user = {};
 		var regex = /[?&]([^=#]+)=([^&#]*)/g;

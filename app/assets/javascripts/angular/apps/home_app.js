@@ -9,6 +9,12 @@ homeApp.config(["$routeProvider", function($routeProvider){
     });
 }]);
 
+homeApp.config(["$mdThemingProvider", function($mdThemingProvider){
+     $mdThemingProvider.theme('default')
+                       .primaryPalette('blue')
+                       .accentPalette('light-green')
+                       .warnPalette('amber');
+}]);
 
 homeApp.run(["$rootScope", "$location", "$cookieStore", "$cookies", "$http", function($rootScope, $location, $cookieStore, $cookies, $http){
     var unauthenticated_user = getCookie("logged") == "";

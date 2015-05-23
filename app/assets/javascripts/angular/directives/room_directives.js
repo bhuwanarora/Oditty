@@ -1,44 +1,76 @@
-// homeApp.directive('bookStach', ["$rootScope", "roomService", "ColorConstants", function($rootScope, roomService, ColorConstants){
-//     return {
-//         restrict: 'E',
-//         controller: ["$scope", function($scope){
+homeApp.directive('bookShelf', ["$rootScope", "roomService", "ColorConstants", '$mdDialog', function($rootScope, roomService, ColorConstants, $mdDialog){
+    return {
+        restrict: 'E',
+        scope: {shelf: '=', info: '='},
+        controller: ["$scope", function($scope){
 
-//             var _get_visited_books = function(){
-//                 roomService.get_visited_books().then(function(data){
-//                     if(angular.isUndefined($scope.visited_books)){
-//                         $scope.visited_books = [];
-//                     }
-//                     _set_data(data, $scope.visited_books);
-//                 });
-//             }
+            $scope.toggle = function(){
+                $scope.show_shelf = !$scope.show_shelf;
+            }
 
-//             var _set_data = function(data, array){
-//                 angular.forEach(data, function(value){
-//                     var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-//                     var width = _get_random_init(70, 100);
-//                     var height = _get_random_init(40, 60);
-//                     var margin_left = _get_random_init(1, 10);
-//                     var random_style = {"width": width+"%", "height": height+"px", "background-color": ColorConstants.value[random_int], "margin-left": margin_left+"px"};
-//                     var json = angular.extend(value, {"random_style": random_style, "color": ColorConstants.value[random_int]});
-//                     this.push(json);
-//                 }, array);
-//                 return array;
-//             }
+            $scope.show_book_dialog = function(book, event){
+                $rootScope.active_book = book;
+                $rootScope.active_book.show_info_only = true;
+                $mdDialog.show({
+                    templateUrl: '/assets/angular/html/community/book.html',
+                    scope: $scope,
+                    preserveScope: true,
+                    clickOutsideToClose: true
+                });
+            }
 
-//             var _get_random_init = function(min, max){
-//                 return Math.floor(Math.random() * (max - min + 1)) + min;
-//             }
+            $scope.add_books_to_shelf = function(shelf, event){
+                $rootScope.active_shelf = shelf;
+                $scope.info.show_book_share = true;
+            }
+            
+            var _init = function(){
+               if($scope.shelf.books.length == 1 && ($scope.shelf.books[0].title == null)){
+                    $scope.show_shelf = false;
+                }
+                else if($scope.shelf.books.length > 0){ 
+                    $scope.show_shelf = true;
+                }
+                else{
+                    $scope.show_shelf = false;
+                }
+            }
 
-//             var _init = function(){
-//                 $scope.shelf_loading = true;
-//                 _get_visited_books();
-//             }
+            _init();
 
-//             _init();
-//         }],
-//         templateUrl: '/assets/angular/html/room/book_stack.html'
-//     };
-// }]);
+        }],
+        templateUrl: '/assets/angular/html/room/partials/book_shelf.html'
+    };
+}]);
+
+homeApp.directive('articleShelf', ["$rootScope", "roomService", "ColorConstants", function($rootScope, roomService, ColorConstants){
+    return {
+        restrict: 'E',
+        scope: {shelf: '='},
+        controller: ["$scope", function($scope){
+
+            $scope.toggle = function(){
+                $scope.show_shelf = !$scope.show_shelf;
+            }
+
+            var _init = function(){
+                if($scope.shelf.articles.length == 1 && ($scope.shelf.articles[0].title == null)){
+                    $scope.show_shelf = false;
+                }
+                else if($scope.shelf.articles.length > 0){ 
+                    $scope.show_shelf = true;
+                }
+                else{
+                    $scope.show_shelf = false;
+                }
+            }
+
+            _init();
+
+        }],
+        templateUrl: '/assets/angular/html/room/partials/article_shelf.html'
+    };
+}]);
 
 homeApp.directive('articles', ["$rootScope", "roomService", "ColorConstants", function($rootScope, roomService, ColorConstants){
     return {

@@ -1,8 +1,20 @@
-homeApp.directive('bookInfo', ["$rootScope", "bookService", function($rootScope, bookService){
+homeApp.directive('bookInfo', ["$rootScope", "bookService", '$mdDialog', function($rootScope, bookService, $mdDialog){
     return {
         restrict: 'E',
-        scope : {book: '='},
+        scope : {book: '=', info: '='},
         controller: ["$scope", function($scope){
+            $scope.show_book_dialog = function(book, event){
+                $rootScope.active_book = book;
+                $rootScope.active_book.show_info_only = true;
+                $mdDialog.show({
+                    templateUrl: '/assets/angular/html/community/book.html',
+                    scope: $scope,
+                    preserveScope: true,
+                    targetEvent: event,
+                    clickOutsideToClose: true
+                });
+                event.stopPropagation();
+            }
 
             var _init = function(){
                 $scope.book_loading = true;
@@ -18,11 +30,24 @@ homeApp.directive('bookInfo', ["$rootScope", "bookService", function($rootScope,
     };
 }]);
 
-homeApp.directive('communityInfo', ["$rootScope", "communityService", 'ColorConstants', function($rootScope, communityService, ColorConstants){
+homeApp.directive('communityInfo', ["$rootScope", "communityService", 'ColorConstants', '$mdDialog', function($rootScope, communityService, ColorConstants, $mdDialog){
     return {
         restrict: 'E',
-        scope : {community: '='},
+        scope : {community: '=', info: '='},
         controller: ["$scope", function($scope){
+            $scope.show_book_dialog = function(book, event){
+                $rootScope.active_book = book;
+                $rootScope.active_book.show_info_only = true;
+                $mdDialog.show({
+                    templateUrl: '/assets/angular/html/community/book.html',
+                    scope: $scope,
+                    preserveScope: true,
+                    clickOutsideToClose: true,
+                    targetEvent: event
+                });
+                event.stopPropagation();
+            }
+
             var _init = function(){
                 $scope.community_loading = true;
                 communityService.get_feed_info($scope.community.id).then(function(data){

@@ -1,0 +1,11 @@
+<div class="side_padding shelf">
+	<md-button layout-padding class="shelf_name md-button-clear" ng-click="toggle()">{{shelf.shelf}}</md-button>
+	<div ng-show="show_shelf">
+		<div class="side_padding">
+			<md-button class="md-button-clear md-raised" 
+				ng-click="add_books_to_shelf(shelf, $event)">Add books to this shelf</md-button>
+		</div>
+		<div ng-init="books = shelf.books" ng-include src="'/assets/angular/html/shared/partials/spine.html'"></div>
+	</div>
+	<md-divider></md-divider>
+</div>

@@ -32,4 +32,5 @@ homeApp.service('communityService', ["$http", "$q", "$rootScope", "WebsiteUICons
     this.get_feed_info = function(id){
         return _deferred_request('/api/v0/feed_community_info?id='+id, $q, $http);
     }
+
 }]);

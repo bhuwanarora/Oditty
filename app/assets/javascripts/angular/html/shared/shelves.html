@@ -1,19 +1,19 @@
 <div layout="column" flex layout-fill ng-controller="shelfController">
     <md-content class="book_list">
         <section>
-            <md-list layout="row" layout-fill layout-wrap>
+            <md-list layout="column" layout-fill layout-wrap layout-align="start">
                 <md-item ng-repeat="label in shelves | limitTo: 4" ng-hide="show_all">
                     <md-checkbox ng-model="label.status" aria-label="{{label.label}}" class="md-warn" 
                                 ng-click="toggle_bookmark(label, label.status)" 
                                 ng-class="{'md-checked': label.status}">
-                        {{label.name}}
+                        <div layout-padding>{{label.name}}</div>
                     </md-checkbox>
                 </md-item>
                 <md-item ng-repeat="label in shelves" ng-show="show_all">
                     <md-checkbox ng-model="label.status" aria-label="{{label.label}}" class="md-warn" 
                                 ng-click="toggle_bookmark(label, label.status)" 
                                 ng-class="{'md-checked': label.status}">
-                        {{label.name}}
+                        <div layout-padding>{{label.name}}</div>
                     </md-checkbox>
                 </md-item>
                 <md-item layout-padding>

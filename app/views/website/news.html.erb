@@ -1,11 +1,12 @@
 <div layout="column" ng-controller="communityController" id="news">
     <section layout="row">
         <div ng-include src="'/assets/angular/html/community/show.html'" 
-             layout="row" layout-align="center"
+             layout="row" layout-align="center center"
              layout-sm="column"
-             flex></div>
-        <div flex="65" ng-if="show_details" class="animate-fast">
+             flex>
         </div>
+        <!-- <div flex="65" ng-if="show_details" class="animate-fast">
+        </div> -->
     </section>
      <news-scroller layout="row" 
         layout-align="center" 
@@ -26,20 +27,30 @@
         left: 0px;
     }
 
+    #news .news_footer .md-paginator.md-next, 
+    #news .news_footer .md-paginator.md-prev{
+        background-color: transparent !important;
+    }
+
     #news .news_footer .md-header-items,
     #news .news_footer, 
     #news .news_footer .md-header-items-container{
         background-color: #e5e5e5;
     }
 
-    #news md-tabs.md-default-theme md-tab{
-        background: white;
+    #news .news_footer md-tabs-canvas{
+        height: 60px;
+    }
+    
+
+    #news .news_footer md-tabs.md-default-theme .md-tab{
+        background-color: white;
         padding: 0px;
-        text-transform: inherit !important;
-        /*max-width: 300px;*/
+        line-height: 14px;
+        margin-right: 5px;
     }
 
-    #news .news_footer md-tabs.md-default-theme md-tabs-ink-bar{
+    #news .news_footer md-tabs.md-default-theme md-ink-bar{
         color: transparent !important;
         background: transparent !important;
     }

@@ -48,10 +48,9 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
                     {
                         name: "central-click",
                         options: {
-                            text: "Explore Topic",
+                            text: "Click To Explore.",
                             style: {
-                                "font-size": "15px",
-                                "font-style": "italic",
+                                "font-size": "24px",
                                 "font-family": "Source Sans Pro, sans-serif",
                                 "text-anchor": "middle",
                                 "fill": "white"
@@ -75,7 +74,7 @@ homeApp.directive('d3ClickCircles', ['$window', '$timeout', 'd3Service',
                                         "text-anchor": "middle",
                                         "text-transform": "uppercase",
                                         "width": "100px",
-                                        fill: "white"
+                                        fill: "none"
                                     },
                                     attr: {
                                         dy: "20px",

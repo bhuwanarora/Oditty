@@ -4,6 +4,7 @@ homeApp.directive('newsScroller', ["$rootScope", "communityService", function($r
         controller: ["$scope", function($scope){
             var _init = function(){
                 var news_id = $scope.info.active_news_id;
+                // $scope.news = [];
                 communityService.get_chronological_news(news_id).then(function(data){
                     $scope.news = data;
                     angular.forEach($scope.news, function(value, index){

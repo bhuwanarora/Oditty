@@ -10,7 +10,7 @@ module.exports = function(grunt) {
                         expand: true,
                         cwd: 'app/assets/stylesheets/website/',
                         src: ['*.css', '!*.min.css', '*.css.scss'],
-                        dest: 'app/assets/stylesheets/min/',
+                        dest: 'app/assets/stylesheets/min/website/',
                         ext: '.min.css'
                     },
                     {
@@ -33,7 +33,7 @@ module.exports = function(grunt) {
                 files: {
                     'app/assets/stylesheets/min/site.min.css': [
                         'app/assets/stylesheets/min/angular_material.min.css',
-                        'app/assets/stylesheets/min/website/min/website.min.css',
+                        'app/assets/stylesheets/min/website/website.min.css',
                         'app/assets/stylesheets/min/website/icomoon.min.css',
                         'app/assets/stylesheets/min/website/home.min.css',
                         'app/assets/stylesheets/min/website/media_library.min.css'
@@ -167,7 +167,10 @@ module.exports = function(grunt) {
                     "app/assets/javascripts/min/angular/controllers/share/options_controller.js",
                     "app/assets/javascripts/min/angular/controllers/profile_controller.js",
                     "app/assets/javascripts/min/angular/controllers/toast_controller.js",
-                    'app/assets/javascripts/min/angular/controllers/home/list_bottom_sheet_controller.js'
+                    'app/assets/javascripts/min/angular/controllers/home/list_bottom_sheet_controller.js',
+                    "app/assets/javascripts/min/angular/controllers/book/specific_book_controller.js",
+                    "app/assets/javascripts/min/angular/controllers/book/timeline_controller.js",
+                    "app/assets/javascripts/min/angular/controllers/book/real_virtuality_controller.js"
                 ],
 
                 'app/assets/javascripts/min/angular/directives.js': [
@@ -176,19 +179,19 @@ module.exports = function(grunt) {
 
                 'app/assets/javascripts/min/angular/landing_page_vendors.js': [
                     'app/assets/javascripts/min/angular/vendors/hammer.js',
-                    'app/assets/javascripts/min/angular/vendors/angular-aria135.min.js',
+                    'app/assets/javascripts/min/angular/vendors/angular-aria.min.js',
                     'app/assets/javascripts/min/angular/vendors/angular_mousewheel.min.js',
                     'app/assets/javascripts/min/angular/vendors/angular_router.min.js',
-                    'app/assets/javascripts/min/angular/vendors/angular_0.8.2.min.js',
+                    'app/assets/javascripts/min/angular/vendors/angular_material.min.js',
                     'app/assets/javascripts/min/angular/vendors/angular_cookies.min.js',
                     'app/assets/javascripts/min/angular/vendors/angular_facebook.js',
                     'app/assets/javascripts/min/angular/vendors/angular-timer.min.js'
                 ],
 
                 'app/assets/javascripts/min/angular/vendors.min.js': [
-                    'app/assets/javascripts/min/angular/vendors/angular136.min.js',
+                    'app/assets/javascripts/min/angular/vendors/angular.min.js',
                     'app/assets/javascripts/min/angular/vendors/angular_messages.min.js',
-                    'app/assets/javascripts/min/angular/vendors/angular_animate136.min.js',
+                    'app/assets/javascripts/min/angular/vendors/angular_animate.min.js',
                     'app/assets/javascripts/min/angular/landing_page_vendors.js',
                     'app/assets/javascripts/min/angular/vendors/angular-sanitize.min.js',
                     'app/assets/javascripts/min/lib/angular_scroll.min.js',
@@ -201,38 +204,6 @@ module.exports = function(grunt) {
                     "app/assets/javascripts/min/angular/apps/filters_app.js",
                     "app/assets/javascripts/min/angular/apps/app_constants.js",
                 ],
-
-                // 'app/assets/javascripts/min/angular/vendors.js': [
-                //     'app/assets/javascripts/min/angular/vendors/angular_animate.min.js',
-                //     'app/assets/javascripts/min/angular/vendors/ngFx.js',
-                //     'app/assets/javascripts/min/angular/vendors/angular_cookies.min.js',
-                //     'app/assets/javascripts/min/angular/vendors/angular_google_map.js',
-                //     'app/assets/javascripts/min/angular/vendors/angular_intro.js',
-                //     'app/assets/javascripts/min/angular/vendors/angular_facebook.js',
-                //     'app/assets/javascripts/min/angular/vendors/google_map.js',
-                //     'app/assets/javascripts/min/angular/vendors/angular_mousewheel.min.js',
-                //     'app/assets/javascripts/min/angular/vendors/angular_router.min.js',
-                //     'app/assets/javascripts/min/angular/vendors/cropme.js',
-                //     'app/assets/javascripts/min/angular/vendors/hamster.min.js',
-                //     'app/assets/javascripts/min/angular/vendors/intro.js',
-                //     'app/assets/javascripts/min/angular/vendors/angular_filters.min.js',
-                //     'app/assets/javascripts/min/angular/vendors/angular_touch.min.js'
-                // ],
-
-                // 'app/assets/javascripts/min/angular/main.js': [
-                //     'app/assets/javascripts/angular/vendors/angular.min.js',
-                //     'app/assets/javascripts/min/angular/vendors.js',
-                //     'app/assets/javascripts/min/angular/libs.js',
-                //     'app/assets/javascripts/min/angular/apps.js',
-                //     'app/assets/javascripts/min/angular/directives.js',
-                //     'app/assets/javascripts/min/angular/controllers.js',
-                //     'app/assets/javascripts/min/angular/services.js',
-                //     'app/assets/javascripts/min/angular/templates.min.js',
-
-                //     "app/assets/javascripts/min/angular/vendors/angular-parallax.min.js",
-                //     "app/assets/javascripts/min/angular/vendors/angular_sticky.js",
-                    
-                // ],
 
                 'app/assets/javascripts/min/angular/landing_page.min.js': [
                     'app/assets/javascripts/min/angular/apps/landing_page_app.js',
@@ -266,6 +237,8 @@ module.exports = function(grunt) {
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/home_group.min.js":[
+                    "app/assets/javascripts/min/angular/services/community_service.js",
+                    "app/assets/javascripts/min/angular/directives/home_directives.js",
                     "app/assets/javascripts/min/angular/controllers/home/home_controller.js"
                 ],
 
@@ -275,9 +248,6 @@ module.exports = function(grunt) {
 
                 "app/assets/javascripts/min/angular/controllers/community_group.min.js":[
                     "app/assets/javascripts/min/angular/directives/news_directives.js",
-                    "app/assets/javascripts/min/angular/controllers/book/specific_book_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/timeline_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/real_virtuality_controller.js",
                     "app/assets/javascripts/min/angular/services/community_service.js",
                     "app/assets/javascripts/min/angular/controllers/community_controller.js"
                 ],
@@ -291,19 +261,15 @@ module.exports = function(grunt) {
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/book_group.min.js":[
-                    "app/assets/javascripts/min/angular/controllers/book/specific_book_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/timeline_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/real_virtuality_controller.js"
+                    
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/infinity_group.min.js":[
                     "app/assets/javascripts/min/angular/services/time_group_service.js",
                     "app/assets/javascripts/min/angular/services/reading_time_service.js",
                     "app/assets/javascripts/min/angular/controllers/library/library_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/library/filters_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/specific_book_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/timeline_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/real_virtuality_controller.js"
+                    "app/assets/javascripts/min/angular/controllers/library/filters_controller.js"
+                    
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/room_group.min.js":[
@@ -319,8 +285,7 @@ module.exports = function(grunt) {
                 "app/assets/javascripts/min/angular/controllers/profile_group.min.js":[
                     "app/assets/javascripts/min/angular/directives/profile_directives.js",
                     "app/assets/javascripts/min/angular/services/community_service.js",
-                    "app/assets/javascripts/min/angular/controllers/profile_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/specific_book_controller.js"
+                    "app/assets/javascripts/min/angular/controllers/profile_controller.js"
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/search_group.min.js":[
