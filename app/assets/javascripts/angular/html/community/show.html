@@ -1,57 +1,58 @@
-<md-content >
-    <div layout="row" layout-align="space-between" layout-padding>
-        <div layout="column" class="relative" flex>
-            <div class="absolute full_width" layout-padding layout="row" layout-align="space-between">
-                <div class="big_title white_color">{{active_tag.name | uppercase}}</div>
-                <md-button ng-class="{'md-raised': !active_tag.status}" 
-                    class="md-primary md-button-clear" ng-click="toggle_follow()">
-                    <span ng-if="!active_tag.status">Join Community&nbsp;</span>
-                    <span ng-if="active_tag.status">Joined</span>
-                    <span ng-if="!active_tag.status" class="icon-user-add"></span>
-                </md-button>
-            </div>
-            <img ng-src="{{active_tag.image_url}}" class="full_width">
-            <div layout="row" layout-wrap class="users" layout-padding>
-                <a ng-repeat="user in active_tag.users" ng-href="/user?q={{user.id}}" layout-margin>
-                    <img class="circular" layout-margin ng-src="{{user.image_url}}">
-                    <md-tooltip md-direction="top">
-                        {{user.first_name}}
-                    </md-tooltip>
-                </a>
-            </div>
+<div layout="row" layout-align="space-between" layout-padding>
+    <div layout="column" class="relative" flex>
+        <div layout-padding class="big_title">{{active_tag.name | uppercase}}</div>
+        <div class="absolute full_width" layout-padding layout="row" layout-align="space-between">
+            <div></div>
+            <md-button ng-class="{'md-raised': !active_tag.status}" 
+                class="md-primary md-button-clear" ng-click="toggle_follow()">
+                <span ng-if="!active_tag.status">Join Community&nbsp;</span>
+                <span ng-if="active_tag.status">Joined</span>
+                <span ng-if="!active_tag.status" class="icon-user-add"></span>
+            </md-button>
+        </div>
+        <img ng-src="{{active_tag.image_url}}" class="full_width">
+        <div layout="row" layout-wrap class="users" layout-padding>
+            <a ng-repeat="user in active_tag.users" ng-href="/user?q={{user.id}}" layout-margin>
+                <img class="circular" layout-margin ng-src="{{user.image_url}}">
+                <md-tooltip md-direction="top">
+                    {{user.first_name}}
+                </md-tooltip>
+            </a>
         </div>
     </div>
-    
-    <div class="less_important" ng-if="active_tag.books" layout-padding>
-        Related Books
-    </div>
-    <div layout="row" layout-wrap>
-        <div ng-repeat="book in active_tag.books" class="book_thumb" layout-margin
+</div>
+
+<div class="less_important" ng-if="active_tag.books" layout-padding>
+    Related Books
+</div>
+<div layout="row" layout-wrap>
+    <md-button ng-click="show_book_dialog(book, $event)" ng-repeat="book in active_tag.books" class="clear">
+        <div class="book_thumb" layout-margin
             ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'">
         </div>
-    </div>
-    <div class="less_important" ng-if="active_tag.news" layout-padding>
-        Real Virtuality
-    </div>
-    <div hide-sm layout="row">
-        <div ng-repeat="community_feed in active_tag.news" ng-if="$odd" flex="50"
-            ng-include src="'/assets/angular/html/home/_community_feed.html'"></div>
-        <div ng-repeat="community_feed in active_tag.news" ng-if="$even" flex="50"
-            ng-include src="'/assets/angular/html/home/_community_feed.html'"></div>
-    </div>
-    <div show-sm hide>
-        <div ng-repeat="community_feed in active_tag.news" 
-            ng-include src="'/assets/angular/html/home/_community_feed.html'"></div>
-    </div>
-    <!-- <md-card ng-repeat="news_info in active_tag.news">
-        <md-card-content>
-            <h3><a target="_blank" ng-href="{{news.news_url}}">{{news_info.title}}</a></h3>
-            <div class="less_important">{{news_info.created_at | timestamp | date:'dd MMM'}}</div>
-            <div ng-bind-html="news_info.description"></div>
-        </md-card-content>
+    </md-button>
+</div>
+<div class="less_important" ng-if="active_tag.news" layout-padding>
+    Real Virtuality
+</div>
+<div hide-sm layout="row">
+    <div ng-repeat="community_feed in active_tag.news" ng-if="$odd" flex="50"
+        ng-include src="'/assets/angular/html/home/_community_feed.html'"></div>
+    <div ng-repeat="community_feed in active_tag.news" ng-if="$even" flex="50"
+        ng-include src="'/assets/angular/html/home/_community_feed.html'"></div>
+</div>
+<div show-sm hide>
+    <div ng-repeat="community_feed in active_tag.news" 
+        ng-include src="'/assets/angular/html/home/_community_feed.html'"></div>
+</div>
+<!-- <md-card ng-repeat="news_info in active_tag.news">
+    <md-card-content>
+        <h3><a target="_blank" ng-href="{{news.news_url}}">{{news_info.title}}</a></h3>
+        <div class="less_important">{{news_info.created_at | timestamp | date:'dd MMM'}}</div>
+        <div ng-bind-html="news_info.description"></div>
+    </md-card-content>
 
-        <md-card-content>
-            <img ng-src="{{news_info.image_url}}" class="news_cover"/>
-        </md-card-content>
-    </md-card> -->
-</md-content>
+    <md-card-content>
+        <img ng-src="{{news_info.image_url}}" class="news_cover"/>
+    </md-card-content>
+</md-card> -->
