@@ -57,7 +57,7 @@ class UsersCommunity < Neo
 	end
 
 	def get_info
-		@community.match + Community.match_news  + " WITH community, " +  UsersCommunity.collect_map("news" => News.grouped_basic_info) + @user.match + ", community, news " + UsersCommunity.optional_match  + ", news "  + UsersCommunity.set_view_count + Community.return_group(UsersCommunity.basic_info, "news ")
+		@community.match + Community.match_news  + " WITH community, " +  UsersCommunity.collect_map("news" => News.grouped_basic_info) + @user.match + ", community, news " + UsersCommunity.optional_match  + ", news "  + UsersCommunity.set_view_count + Community.return_group(UsersCommunity.basic_info, "news", Community.basic_info)
 	end
 
 	def match

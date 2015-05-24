@@ -228,7 +228,13 @@ class WebsiteController < ApplicationController
 	end
 
 	def community
-		
+		@community = true
+		if BotDetector.detect(request.env['HTTP_USER_AGENT'])
+			render :layout => "social"
+		else
+			user_id = session[:user_id]
+			render :layout => "material"
+		end
 	end
 
 	def news

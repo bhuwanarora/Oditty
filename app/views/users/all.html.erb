@@ -2,6 +2,7 @@
 <div class="inline_block">
     <% @users.each_with_index do |user, index| %>
         <div>
+            <img src="https://s3-ap-southeast-1.amazonaws.com/rd-images/<%= user['id'] %>/S.png" class="thumb">
             <img src="<%= user['image_url'] %>" class="thumb">
             <a href="/profile?id=<%= user['id'] %>" target="blank">
                 <%= user['first_name'] %> <%= user['last_name'] %>

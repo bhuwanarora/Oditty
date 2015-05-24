@@ -1,6 +1,6 @@
 homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$mdBottomSheet', 'shelfService', '$timeout', '$location', 'userService', 'bookService', function($scope, $rootScope, userService, $mdBottomSheet, shelfService, $timeout, $location, userService, bookService){
 
-	$scope.goto_community_page = function(id, community_id){
+	$scope.goto_news_page = function(id, community_id){
 		userService.news_visited(id);
         deleteCookie("active_community");
         if(angular.isDefined(community_id)){

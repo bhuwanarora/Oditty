@@ -94,7 +94,7 @@
 
             
             <% if @home %>
-                <script src="assets/angular/services/community_service.js"></script>
+                <script src="assets/angular/services/news_service.js"></script>
                 <script src="assets/angular/directives/home_directives.js"></script>
                 <script src="assets/angular/controllers/home/home_controller.js"></script>
             <% end %>
@@ -105,7 +105,12 @@
 
             <% if @news %>
                 <script src="assets/angular/directives/news_directives.js"></script>
-                <script src="assets/angular/services/community_service.js"></script>
+                <script src="assets/angular/services/news_service.js"></script>
+                <script src="assets/angular/controllers/news_controller.js"></script>
+            <% end %>
+
+            <% if @community %>
+                <script src="assets/angular/services/news_service.js"></script>
                 <script src="assets/angular/controllers/community_controller.js"></script>
             <% end %>
 
@@ -141,7 +146,7 @@
 
             <% if @profile %>
                 <script src="assets/angular/directives/profile_directives.js"></script>
-                <script src="assets/angular/services/community_service.js"></script>
+                <script src="assets/angular/services/news_service.js"></script>
                 
                 <script src="assets/angular/controllers/profile_controller.js"></script>
                 
@@ -168,6 +173,10 @@
             <% end %>
 
             <% if @news %>
+                <script src="assets/min/angular/controllers/news_group.min.js"></script>
+            <% end %>
+
+            <% if @community %>
                 <script src="assets/min/angular/controllers/community_group.min.js"></script>
             <% end %>
 

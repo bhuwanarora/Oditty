@@ -7,7 +7,7 @@ homeApp.directive('bookInfo', ["$rootScope", "bookService", '$mdDialog', functio
                 $rootScope.active_book = book;
                 $rootScope.active_book.show_info_only = true;
                 $mdDialog.show({
-                    templateUrl: '/assets/angular/html/community/book.html',
+                    templateUrl: '/assets/angular/html/news/book.html',
                     scope: $scope,
                     preserveScope: true,
                     targetEvent: event,
@@ -30,7 +30,7 @@ homeApp.directive('bookInfo', ["$rootScope", "bookService", '$mdDialog', functio
     };
 }]);
 
-homeApp.directive('communityInfo', ["$rootScope", "communityService", 'ColorConstants', '$mdDialog', function($rootScope, communityService, ColorConstants, $mdDialog){
+homeApp.directive('communityInfo', ["$rootScope", "newsService", 'ColorConstants', '$mdDialog', function($rootScope, newsService, ColorConstants, $mdDialog){
     return {
         restrict: 'E',
         scope : {community: '=', info: '='},
@@ -39,7 +39,7 @@ homeApp.directive('communityInfo', ["$rootScope", "communityService", 'ColorCons
                 $rootScope.active_book = book;
                 $rootScope.active_book.show_info_only = true;
                 $mdDialog.show({
-                    templateUrl: '/assets/angular/html/community/book.html',
+                    templateUrl: '/assets/angular/html/news/book.html',
                     scope: $scope,
                     preserveScope: true,
                     clickOutsideToClose: true,
@@ -50,7 +50,7 @@ homeApp.directive('communityInfo', ["$rootScope", "communityService", 'ColorCons
 
             var _init = function(){
                 $scope.community_loading = true;
-                communityService.get_feed_info($scope.community.id).then(function(data){
+                newsService.get_feed_info($scope.community.id).then(function(data){
                     $scope.community = angular.extend($scope.community, data);
                     angular.forEach($scope.community.books, function(book){
                         var random_int = Math.floor(Math.random()*ColorConstants.value.length);

@@ -1,4 +1,4 @@
-homeApp.controller('profileController', ["$scope", "userService", '$rootScope', "WebsiteUIConstants", 'ColorConstants', '$location', 'bookService', 'communityService', '$mdDialog', function($scope, userService, $rootScope, WebsiteUIConstants, ColorConstants, $location, bookService, communityService, $mdDialog){
+homeApp.controller('profileController', ["$scope", "userService", '$rootScope', "WebsiteUIConstants", 'ColorConstants', '$location', 'bookService', 'newsService', '$mdDialog', function($scope, userService, $rootScope, WebsiteUIConstants, ColorConstants, $location, bookService, newsService, $mdDialog){
 	// var _get_detailed_info = function(){
 	// 	var id = $scope.active_user_id;
 	// 	userService.get_detailed_info(id).then(function(data){

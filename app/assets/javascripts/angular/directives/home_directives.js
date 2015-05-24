@@ -8,18 +8,13 @@ homeApp.directive('suggestCommunities', ["$rootScope", "userService", function($
                 });
             }
 
-            // $scope.toggle_follow = function(){
-            //     $scope.active_tag.status = !$scope.active_tag.status;
-            //     communityService.follow($scope.active_tag.id, $scope.active_tag.status);
-            // }
-
             _init();
         }],
         templateUrl: '/assets/angular/html/home/partials/community_suggestions.html'
     };
 }]);
 
-homeApp.directive('joinCommunity', ["$rootScope", "communityService", function($rootScope, communityService){
+homeApp.directive('joinCommunity', ["$rootScope", "newsService", function($rootScope, newsService){
     return {
         restrict: 'E',
         scope: {community: '='},
@@ -27,7 +22,7 @@ homeApp.directive('joinCommunity', ["$rootScope", "communityService", function($
             $scope.toggle = function(){
                 var id = $scope.community.id;
                 $scope.community.status = !$scope.community.status;
-                communityService.follow(id, $scope.community.status);
+                newsService.follow(id, $scope.community.status);
             }
 
         }],

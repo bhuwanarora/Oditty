@@ -1,50 +1,14 @@
-<div layout="column" ng-controller="communityController" >
-    <section layout="row">
-        <div ng-include src="'/assets/angular/html/community/show.html'" 
-             layout="row" layout-align="center"
-             layout-sm="column"
-             flex></div>
-        <div flex="65" ng-if="show_details" class="animate-fast">
-        </div>
-    </section>
-    <news-scroller layout="row" 
-        layout-align="center" 
-        layout-padding
-        class="news_footer">
-    </news-scroller>
+<div layout="row" ng-controller="communityController" id="community">
+    <div flex="10" flex-md="5" hide-sm></div>
+    <div ng-include src="'/assets/angular/html/community/show.html'" 
+             class="right_panel_container"
+             flex="80" flex-md="90" flex-sm="100"></div>
+    <div flex="10" flex-md="5" hide-sm></div>
 </div>
-<!-- <d3-circles></d3-circles> -->
-<!-- <d3-bars data="d3Data"></d3-bars> -->
 <style>
-     .news_footer{
-        position: fixed;
-        left: 100px;
-        right: 100px;
-        bottom: 0px;
-    }
-
-    .news_footer .md-header-items,
-    .news_footer, .news_footer .md-header-items-container{
-        background-color: #D2D2D2;
-    }
-
-    .news_footer .md-paginator.md-next, 
-    .news_footer .md-paginator.md-prev{
-        background-color: transparent !important;
-    }
-
-    .news_footer md-tabs.md-default-theme md-tab{
-        background: white;
-        padding: 0px;
-    }
-
-    .news_footer md-tabs.md-default-theme md-tabs-ink-bar{
-        color: transparent !important;
-        background: transparent !important;
-    }
-
-    .news_footer .news_thumb{
-        width: 100px;
-        height: 50px;
-    }
+	.users{
+		bottom: 0px;
+		left: 0px;
+		position: absolute;
+	}
 </style>
