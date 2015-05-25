@@ -1,4 +1,4 @@
-homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope', 'ColorConstants', '$timeout', '$location', '$mdDialog', function($scope, newsService, $rootScope, ColorConstants, $timeout, $location, $mdDialog){
+homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope', 'ColorConstants', '$timeout', '$location', '$mdDialog', 'userService', function($scope, newsService, $rootScope, ColorConstants, $timeout, $location, $mdDialog, userService){
     $scope.get_detailed_community_info = function(){
         newsService.get_detailed_community_info($scope.active_tag.id).then(function(data){
             $scope.active_tag = angular.extend($scope.active_tag, data);
@@ -7,6 +7,15 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
                 $scope.active_tag.status = true;
             }
         });
+    }
+
+    $scope.goto_news_page = function(id, community_id){
+        userService.news_visited(id);
+        deleteCookie("active_community");
+        if(angular.isDefined(community_id)){
+            setCookie("active_community", community_id, 1)
+        }
+        window.location.href = "/news?q="+id;
     }
 
     $scope.show_book_dialog = function(book, event){
