@@ -35,7 +35,7 @@
 <div class="less_important" ng-if="active_tag.news" layout-padding>
     Real Virtuality
 </div>
-<div hide-sm layout="row">
+<div hide-sm layout="column">
     <div ng-repeat="community_feed in active_tag.news" ng-if="$odd" flex="50"
         ng-include src="'/assets/angular/html/home/_community_feed.html'"></div>
     <div ng-repeat="community_feed in active_tag.news" ng-if="$even" flex="50"
