@@ -1,113 +1,59 @@
-homeApp.controller('communityController', ["$scope", "$mdSidenav", 'communityService', '$location', '$rootScope', '$mdDialog', 'ColorConstants', '$timeout', function($scope, $mdSidenav, communityService, $location, $rootScope, $mdDialog, ColorConstants, $timeout){
-    $scope.toggle_details = function(){
-        $mdSidenav('right').toggle();
-        // $scope.get_detailed_community_info();
-    };
-
+homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope', 'ColorConstants', '$timeout', '$location', '$mdDialog', function($scope, newsService, $rootScope, ColorConstants, $timeout, $location, $mdDialog){
     $scope.get_detailed_community_info = function(){
-        communityService.get_detailed_community_info($scope.active_tag.id).then(function(data){
+        newsService.get_detailed_community_info($scope.active_tag.id).then(function(data){
             $scope.active_tag = angular.extend($scope.active_tag, data);
             var follow_node = $scope.active_tag.follow_node;
             if(angular.isDefined(follow_node) && (follow_node != null)){
                 $scope.active_tag.status = true;
             }
-            $scope._check_users();
         });
-    }
-
-    $scope.toggle_follow = function(){
-        $scope.active_tag.status = !$scope.active_tag.status;
-        communityService.follow($scope.active_tag.id, $scope.active_tag.status);
     }
 
     $scope.show_book_dialog = function(book, event){
         $rootScope.active_book = book;
         $rootScope.active_book.show_info_only = true;
         $mdDialog.show({
-            templateUrl: '/assets/angular/html/community/book.html',
+            templateUrl: '/assets/angular/html/news/book.html',
             scope: $scope,
             preserveScope: true,
-            targetEvent: event,
-            clickOutsideToClose: true
+            clickOutsideToClose: true,
+            targetEvent: event
         });
         event.stopPropagation();
     }
 
-    $scope.refresh_data = function(active_item){
-        $scope.active_tag = active_item;
-        communityService.get_community_details($scope.active_tag.id).then(function(data){
-            $scope.active_tag = data[0].most_important_tag[0];
+    $scope.toggle_follow = function(){
+        $scope.active_tag.status = !$scope.active_tag.status;
+        newsService.follow($scope.active_tag.id, $scope.active_tag.status);
+    }
+
+    $scope.refresh_data = function(){
+        newsService.get_community_details($scope.active_tag.id).then(function(data){
+            $scope.active_tag = angular.extend($scope.active_tag, data[0].most_important_tag[0]);
             angular.forEach($scope.active_tag.books, function(value){
                 var random_int = Math.floor(Math.random()*ColorConstants.value.length);
                 var color = ColorConstants.value[random_int];
                 value.color = color;
+                $scope.info.loading = false;
             });
         });
-
-        $scope.get_detailed_community_info();
-    }
-
-    $scope._check_users = function(){
-        if($scope.active_tag.users.length == 1){
-            var first_name = $scope.active_tag.users[0].first_name;
-            if(angular.isUndefined(first_name) || first_name == null){
-                $scope.active_tag.users = [];
-            }
-        }
     }
 
     var _init = (function(){
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
         var url_parsed = regex.exec($location.absUrl());
         if(url_parsed != null){
+            $scope.info.loading = true;
             var id = url_parsed[2];
-        }
-
-        if(angular.isDefined(id)){
-            var news_id = id;
+            $scope.active_tag = {"id": id};
+            $scope.get_detailed_community_info();
+            $timeout(function(){
+                $scope.refresh_data();
+            }, 2000);
         }
         else{
-            var news_id = $rootScope.active_community.news_id;
+            alert("Bad url");
         }
-
-        $scope.info.active_news_id = news_id;
-
-        $scope.newsTags = [];
-        $scope.info.active_tag = $scope.active_tag;
-        $scope.info.loading = true;
-        var active_community = getCookie("active_community");
-        communityService.get_news_info(news_id, active_community).then(function(data){
-            $scope.info.loading = false;
-            data = data[0];
-            $scope.active_tag = data.most_important_tag[0];
-            var most_important_tag = {"name": $scope.active_tag.name, 
-                                "view_count": $scope.active_tag.view_count, 
-                                "id": $scope.active_tag.id, 
-                                "image_url": $scope.active_tag.image_url};
-            $scope.newsTags.push(most_important_tag);
-            data.other_tags.shift();
-            $scope.newsTags = $scope.newsTags.concat(data.other_tags);
-            angular.forEach($scope.newsTags, function(value){
-                if($scope.active_tag.id == value.id){
-                    value.view_count = Math.floor((Math.random() * 1000) + 500);
-                }
-                else{
-                    value.view_count = Math.floor((Math.random() * 100) + 50);
-                }
-                deleteCookie("active_community");
-            });
-            angular.forEach($scope.active_tag.books, function(value){
-                var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-                var color = ColorConstants.value[random_int];
-                value.color = color;
-            });
-
-            $scope._check_users();
-
-            $timeout(function(){
-                $scope.get_detailed_community_info();
-            }, 100);
-        });
 
     }());
 

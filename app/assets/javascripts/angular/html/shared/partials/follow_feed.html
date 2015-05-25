@@ -2,7 +2,7 @@
     <md-card-content class="footer">
         <section layout="column" layout-align="start">
             <div layout="row">
-                <img ng-src="{{profile_user.image_url | default_profile}}" class="profile_thumb circular">
+                <img ng-src="{{profile_user.image_url | default_profile}}" class="circular">
                 <div layout="column" layout-align="start start">
                     <div layout-padding class="big_title">{{profile_user.first_name}}</div>
                     <div layout-padding>
@@ -11,15 +11,11 @@
                     </div>
                 </div>
             </div>
-            <!-- <div ng-repeat="data in feed.data" layout-padding> -->
-            <!-- </div> -->
         </section>
     </md-card-content>
     <md-card-content class="less_important_container clear">
         <community-info class="footer" info="info" community="feed.community"></community-info>
     </md-card-content>
-    <!-- <md-card-content class="footer" ng-include src="'/assets/angular/html/shared/partials/feed_footer.html'">
-    </md-card-content> -->
 </md-card>
 <style>
     .profile_thumb{

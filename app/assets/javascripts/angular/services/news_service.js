@@ -1,4 +1,4 @@
-homeApp.service('communityService', ["$http", "$q", "$rootScope", "WebsiteUIConstants", function($http, $q, $rootScope, WebsiteUIConstants){
+homeApp.service('newsService', ["$http", "$q", "$rootScope", "WebsiteUIConstants", function($http, $q, $rootScope, WebsiteUIConstants){
 
 	this.get_news_info = function(id, tag_id){
         if(angular.isDefined(tag_id) && (tag_id != "")){
