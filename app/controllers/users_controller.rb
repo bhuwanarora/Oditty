@@ -22,11 +22,11 @@ class UsersController < ApplicationController
     def all
         id = params[:id]
         if id
-            clause = User.new(id).get_basic_info 
+            clause = User.new(id).get_basic_info + ", user.email AS email, user.password AS password "
             @active_user = clause.execute[0]
         end
 
-        clause = User.match + User.return_group(User.basic_info + ", user.fb_id as fb_id")
+        clause = User.match + User.return_group(User.basic_info + ", user.email AS email, user.fb_id AS fb_id")
         @users = clause.execute
     end
 

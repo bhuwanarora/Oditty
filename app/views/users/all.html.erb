@@ -5,7 +5,7 @@
             <img src="https://s3-ap-southeast-1.amazonaws.com/rd-images/<%= user['id'] %>/S.png" class="thumb">
             <img src="<%= user['image_url'] %>" class="thumb">
             <a href="/profile?id=<%= user['id'] %>" target="blank">
-                <%= user['first_name'] %> <%= user['last_name'] %>
+                <%= user['first_name'] %> <%= user['last_name'] %> <%= user['email'] %>
             </a>
             <a href="/all_users?id=<%= user['id'] %>" value="<%= user['id'] %>" class="right">Edit&nbsp;</a>
             <a href="https://www.facebook.com/<%= user['fb_id'] %>" target="blank" class="right">Facebook&nbsp;</a>
@@ -16,6 +16,7 @@
 
 <% if @active_user %>
     <form class="inline_block" action="<%= update_user_path %>">
+        <%= @active_user['id'] %>
         <div>
             First Name
             <input value="<%= @active_user['first_name'] %>" name="first_name">
@@ -34,6 +35,9 @@
         <div>
             Image Url
             <input value="<%= @active_user['image_url'] %>" name="image_url">
+        </div>
+        <div>
+            <%= @active_user['password'] %>
         </div>
 
         <input name="id" type="hidden" value="<%= @active_user['id'] %>">

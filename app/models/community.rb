@@ -236,6 +236,10 @@ class Community < Neo
 		User.new(user_id).match + Bookmark::Node::NewsLabel.optional_match_path + " WHERE news: News WITH news, user, bookmark_node " + News.match_community + ", user, bookmark_node " + UsersCommunity.where_not + " WITH DISTINCT community, SUM(COALESCE(has_community.relevance,0)) AS relevance_sum , SUM(COALESCE(has_community.relevance,0)*COALESCE(bookmark_node.count,0)) AS total_relevance ORDER BY total_relevance, relevance_sum  DESC SKIP " + skip_count.to_s + Community.limit(Constant::Count::CommunitiesSuggested) + Community.return_group(Community.basic_info, "total_relevance", "relevance_sum")
 	end
 
+	def self.get_popular skip_count = 0
+		"MATCH (c:Community)<-[r:HasCommunity]-(m:News)-[]-(:BookmarkNode)-[]-(k) RETURN c.name, COUNT(m) as news_count, COUNT(k) as bookmark_count ORDER BY bookmark_count DESC, news_count DESC LIMIT 10 SKIP " + skip_count.to_s
+	end
+
 	def get_books_users
 		match + Community.grouped_books_users 
 	end
