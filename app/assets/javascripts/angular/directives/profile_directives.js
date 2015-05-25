@@ -49,16 +49,18 @@ homeApp.directive('communityInfo', ["$rootScope", "newsService", 'ColorConstants
             }
 
             var _init = function(){
-                $scope.community_loading = true;
-                newsService.get_feed_info($scope.community.id).then(function(data){
-                    $scope.community = angular.extend($scope.community, data);
-                    angular.forEach($scope.community.books, function(book){
-                        var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-                        var color = ColorConstants.value[random_int];
-                        book.color = color;
+                if(angular.isDefined($scope.community)){
+                    $scope.community_loading = true;
+                    newsService.get_feed_info($scope.community.id).then(function(data){
+                        $scope.community = angular.extend($scope.community, data);
+                        angular.forEach($scope.community.books, function(book){
+                            var random_int = Math.floor(Math.random()*ColorConstants.value.length);
+                            var color = ColorConstants.value[random_int];
+                            book.color = color;
+                        });
+                        $scope.community_loading = false;
                     });
-                    $scope.community_loading = false;
-                });
+                }
             }
 
             _init();

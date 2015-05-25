@@ -2,7 +2,7 @@
     <md-card-content class="footer">
         <section layout="column" layout-align="start">
             <div layout="row">
-                <img ng-src="{{profile_user.image_url | default_profile}}" class="profile_thumb circular">
+                <img ng-src="{{profile_user.image_url | default_profile}}" class="circular" >
                 <div layout="column" layout-align="start start">
                     <div class="big_title" layout-padding>{{profile_user.first_name}}</div>
                     <div ng-repeat="data in feed.data" layout-padding>
@@ -16,8 +16,6 @@
     <md-card-content class="less_important_container" ng-if="feed.book">
         <book-info book="feed.book" info="info" class="footer"></book-info>
     </md-card-content>
-    <!-- <md-card-content class="footer" ng-include src="'/assets/angular/html/shared/partials/feed_footer.html'">
-    </md-card-content> -->
 </md-card>
 <style>
     .profile_thumb{
