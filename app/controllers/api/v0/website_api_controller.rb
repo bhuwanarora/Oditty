@@ -12,6 +12,10 @@ module Api
 				end
 			end
 
+			def popular_communities
+				info = Api::V0::CommunityApi.get_popular_communities.execute
+				render :json => info, :status => 200				
+			end
 
 			def news_info
 				id = params[:id]
