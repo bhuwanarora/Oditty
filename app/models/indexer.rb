@@ -103,7 +103,7 @@ class Indexer
 			            posted_at:{
 			            	type: "integer",
 			            	index: "no"
-			            }
+			            },
 			        	title:{
 			        		type: "string",
 							index: "analyzed",
