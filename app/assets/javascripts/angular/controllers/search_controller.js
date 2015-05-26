@@ -12,6 +12,9 @@ homeApp.controller('searchController', ["$scope", "searchService", "$location", 
                     if(value.fuzzy){
                         $scope.did_you_mean = true;
                     }
+                    if(value.first_name){
+                        value.name = value.first_name + " " + value.last_name;
+                    }
                 });
                 
                 $scope.search_results = data;
@@ -35,12 +38,16 @@ homeApp.controller('searchController', ["$scope", "searchService", "$location", 
         if(angular.isDefined(item)){
             var book_label = item.labels.indexOf("Book") >= 0;
             var author_label = item.labels.indexOf("Author") >= 0;
+            var user_label = item.labels == "User"
             var output = ""
             if(book_label){
                 output = "/book?q="+item.id;
             }
             else if(author_label){
                 output = "/author?q="+item.id;
+            }
+            else if(user_label){
+                output = "/profile?q="+item.id;
             }
             else if(item.show_all){
               output = "/search?q="+item.search_text;
