@@ -408,6 +408,7 @@ md-backdrop{
     position: fixed;
 }
 
-md-tooltip{
+md-toast.md-default-theme{
     font-size: 14px !important;
+    color: #333 !important;
 }
