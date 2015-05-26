@@ -278,7 +278,7 @@ class Indexer
 		begin
 			authors = [] 
 			# relationships = get_relationships(@response["book_id"])
-			clause = Book.match_author + Book.return_group(Author.primary_info)
+			clause = Book.new(@response["book_id"]).match_author + Book.return_group(Author.primary_info)
 			authors = clause.execute
 
 			author_name = authors.present? ? authors.first["name"] : "null" 
