@@ -35,7 +35,6 @@ module Neography
                 rescue Exception => e
                     puts "Error #{e.to_s}".red                    
                 end
-                puts response.to_s.green
                 response
             end
         end
