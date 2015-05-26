@@ -1,10 +1,12 @@
 <md-content ng-controller="profileController" check-scroll-bottom="get_feed()">
     <div ng-include src="'/assets/angular/html/profile/_header.html'"></div>
     <section layout="row" layout-wrap>
-        <div flex="10" hide-sm flex-md="10"></div>
-        <div flex="80" flex-sm="100" flex-md="80" layout="column"
+        <div flex="20" hide-sm flex-md="15"
+        	ng-include src="'/assets/angular/html/profile/left_panel.html'"></div>
+        <div flex="60" flex-sm="100" flex-md="70" layout="column"
              ng-include src="'/assets/angular/html/profile/show.html'">
         </div>
-        <div flex="10" hide-sm flex-md="10"></div>
+        <div flex="20" hide-sm flex-md="15"
+        	ng-include src="'/assets/angular/html/profile/right_panel.html'"></div>
     </section>
 </md-content>

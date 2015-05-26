@@ -271,4 +271,8 @@ module GraphHelper
 
 	end
 
+	def self.set_author_feed
+		clause = "MATCH (author:Author) MERGE (author)-[r4:AuthorFeedNext]->(author) "
+		clause.execute
+	end
 end

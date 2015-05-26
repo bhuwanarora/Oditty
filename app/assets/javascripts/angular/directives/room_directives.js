@@ -12,7 +12,7 @@ homeApp.directive('bookShelf', ["$rootScope", "roomService", "ColorConstants", '
                 $rootScope.active_book = book;
                 $rootScope.active_book.show_info_only = true;
                 $mdDialog.show({
-                    templateUrl: '/assets/angular/html/community/book.html',
+                    templateUrl: '/assets/angular/html/news/book.html',
                     scope: $scope,
                     preserveScope: true,
                     clickOutsideToClose: true

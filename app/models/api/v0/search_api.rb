@@ -13,6 +13,10 @@ module Api
 				results = Search.by_scroll_id scroll_id
 			end
 
+			def self.get_top_searches
+				Search.get_top_searches
+			end
+
 			private
 
             def self._get_search_clause(params)

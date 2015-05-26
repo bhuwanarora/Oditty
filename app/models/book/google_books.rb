@@ -4,7 +4,7 @@ class Book::GoogleBooks < Book
 		books_author = []
 		begin
 			query = query.gsub(" ","+")
-			url = "https://www.googleapis.com/books/v1/volumes?q=#{query}&maxResults=40&projection=lite&printType=books&key=AIzaSyDPDaicSFnNjbYqviSzne1hDsKkPXc3mK0"
+			url = "https://www.googleapis.com/books/v1/volumes?q=#{query}&maxResults=40&projection=lite&printType=books&key="+Rails.application.config.google_public_key
 			url_encoded = URI.parse(URI.encode(url))
 			response = Net::HTTP.get(url_encoded)
 			puts response.to_s.yellow			

@@ -135,16 +135,16 @@ module Api
 
 				if user_id && book
 					structured_labels = []
-					if book["labels"]
-						for label in book["labels"]
-							if book["selected_labels"].include? label
-								json = {"name" => label, "checked" => true}
-							else
-								json = {"name" => label, "checked" => false}
-							end
-							structured_labels.push json
-						end
-					end
+					# if book["labels"]
+					# 	for label in book["labels"]
+					# 		if book["selected_labels"].include? label
+					# 			json = {"name" => label, "checked" => true}
+					# 		else
+					# 			json = {"name" => label, "checked" => false}
+					# 		end
+					# 		structured_labels.push json
+					# 	end
+					# end
 
 					friends_who_have_read = []
 					if book["friends_id"].present?

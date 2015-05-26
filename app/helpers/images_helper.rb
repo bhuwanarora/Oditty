@@ -121,4 +121,11 @@ module ImagesHelper
 			minimum += range
 		end
 	end
+
+	def self.reset_redis_values
+		redis = Redis.new
+		redis.set("news_id_image_processed", 0)
+		redis.set("user_id_image_processed", 0)
+		redis.set("community_id_image_processed", 0)
+	end
 end

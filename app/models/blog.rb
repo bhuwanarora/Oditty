@@ -55,7 +55,7 @@ class Blog < Neo
 	end
 
 	def self.match_root
-		" MERGE (root_blog:Blog{is_root:true}) WITH root_blog "
+		" MATCH (root_blog:Blog{is_root:true}) WITH root_blog "
 	end
 
 	def self.match_latest_blog
@@ -68,7 +68,7 @@ class Blog < Neo
 		else
 			multiple_blog_clause = ""
 		end
-		Blog.match_latest_blog + Blog.match_nth(skip_count) + " WITH old as blog " + multiple_blog_clause + Blog.return_init + Blog.basic_info
+		Blog.match_latest_blog + Blog.match_nth(skip_count) + " WITH old as blog " + multiple_blog_clause  + Blog.return_init + Blog.basic_info 
 	end
 
 	def self.get_latest_blog

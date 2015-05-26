@@ -16,6 +16,10 @@ class Label < Neo
 		clause = " MATCH (label:Label) WHERE label " + shelf + Label.return_init + Label.basic_info
 	end
 
+	def self.match_shelves shelf
+		"MATCH (label:Label" + shelf + "{public:true}) WITH label "
+	end
+
 	def self.basic_info
 		" label.name AS label_name, ID(label) AS label_id, label.public as public_status, label.key AS label_key "
 	end
@@ -40,6 +44,10 @@ class Label < Neo
 		" CREATE UNIQUE (user)-[:Labelled]->(:Label) "
 	end
 	
+	def self.optional_match_public_article_labels
+		" OPTIONAL MATCH (label:Label:ArticleShelf{public:true}) "
+	end
+
 	def self.match_primary
 		" MATCH (label:Label{primary_label:true}) WITH label "
 	end

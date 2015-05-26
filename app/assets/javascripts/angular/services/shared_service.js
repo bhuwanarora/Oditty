@@ -6,7 +6,6 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
             !$scope.info.reading_time_filter && !$scope.info.published_era_filter &&
             !$scope.info.custom_loading && !$scope.info.subject_filter && ($scope.info.infinity || angular.isUndefined($scope.info.infinity) || angular.isDefined(books));
         if(ready_to_load){
-            $scope.info.loading = true;
             this.load_popular_books($scope, books);
         }
     }
@@ -67,6 +66,7 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
     }
 
     this.load_popular_books = function($scope, books){
+        $scope.info.loading = true;
         if(angular.isUndefined(books)){
             if(angular.isUndefined($scope.info.books)){
                 books = [];
@@ -156,6 +156,7 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
                             }
                         }
                         else{
+                            debugger
                             angular.forEach($scope.info.categories, function(base_category){
                                 if(!angular.equals(category, base_category) && _is_absent(category) && (category.name != null)){
                                     this.push(category);

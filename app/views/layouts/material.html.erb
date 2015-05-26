@@ -78,7 +78,7 @@
             <script src="assets/angular/services/status_service.js"></script>
             <script src="assets/angular/services/feed_service.js"></script>
 
-            <% if (@news || @home || @infinity)%>
+            <% if (@news || @home || @profile)%>
                 <script src="assets/angular/vendors/jquery.min.js"></script>
                 <script src="assets/angular/vendors/d3.min.js"></script>
                 <script src="assets/angular/vendors/bubble_chart/d3_transform.js"></script>
@@ -94,7 +94,7 @@
 
             
             <% if @home %>
-                <script src="assets/angular/services/community_service.js"></script>
+                <script src="assets/angular/services/news_service.js"></script>
                 <script src="assets/angular/directives/home_directives.js"></script>
                 <script src="assets/angular/controllers/home/home_controller.js"></script>
             <% end %>
@@ -105,7 +105,12 @@
 
             <% if @news %>
                 <script src="assets/angular/directives/news_directives.js"></script>
-                <script src="assets/angular/services/community_service.js"></script>
+                <script src="assets/angular/services/news_service.js"></script>
+                <script src="assets/angular/controllers/news_controller.js"></script>
+            <% end %>
+
+            <% if @community %>
+                <script src="assets/angular/services/news_service.js"></script>
                 <script src="assets/angular/controllers/community_controller.js"></script>
             <% end %>
 
@@ -141,7 +146,7 @@
 
             <% if @profile %>
                 <script src="assets/angular/directives/profile_directives.js"></script>
-                <script src="assets/angular/services/community_service.js"></script>
+                <script src="assets/angular/services/news_service.js"></script>
                 
                 <script src="assets/angular/controllers/profile_controller.js"></script>
                 
@@ -155,7 +160,7 @@
             <link rel="stylesheet" href="assets/min/site.min.css" />
             <script src="assets/min/angular/site.min.js"></script>
 
-            <% if (@news || @home || @infinity)%>
+            <% if (@news || @home || @profile)%>
                 <script src="assets/min/angular/d3_group.min.js"></script> 
             <% end %>
 
@@ -168,6 +173,10 @@
             <% end %>
 
             <% if @news %>
+                <script src="assets/min/angular/controllers/news_group.min.js"></script>
+            <% end %>
+
+            <% if @community %>
                 <script src="assets/min/angular/controllers/community_group.min.js"></script>
             <% end %>
 
@@ -201,14 +210,9 @@
         <% end %>
     </head>
 
-    <body ng-controller="appController" 
-        ng-keydown="scroll_on_keypress($event)" 
-        class="<% if (@news || @infinity || @book) %>white<% end %>" 
-        ng-click="close_popups()" 
+    <body ng-controller="appController" ng-keydown="scroll_on_keypress($event)" 
+        class="<% if (@news || @infinity || @book) %>white<% end %>" ng-click="close_popups()" 
         msd-wheel="close_popups()">
-        <!-- <audio id="audiotag1" src="assets/typewriter2.m4a" preload="auto"></audio>
-        <audio id="audiotag2" src="assets/typewriter2.m4a" preload="auto"></audio>
-        <audio id="audiotag3" src="assets/typewriter3.m4a" preload="auto"></audio> -->
         <script>
           // (function() {
           //   var cx = '010250045073231072543:z7pnnxbf5s8';
@@ -347,12 +351,12 @@
             
             
             <div ng-controller="shareController" ng-show="info.mobile_search">
-                <md-button class="md-primary md-fab md-whiteframe-z1 md-fab-bottom-right animate-fast fixed_share "
+                <md-button class="md-warn md-fab md-whiteframe-z3 md-fab-bottom-right animate-fast fixed_share "
                             ng-hide="active_shelf || info.show_share"
                             aria-label="Share reading journey"
                             ng-click="show_share_page($event)"
                             ng-style="type_icon_pressed">
-                    <span class="icon-book"></span>
+                    <span class="icon-book-alt2"></span>
                     <md-tooltip md-direction="left">
                           Share your reading journey
                     </md-tooltip>

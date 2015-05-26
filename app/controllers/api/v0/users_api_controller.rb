@@ -14,6 +14,18 @@ module Api
 				render :json => {:message => "Success"}, :status => 200
 			end
 
+			def get_bookmarks
+				user_id = session[:user_id]
+				if user_id.present?
+					type = params[:type] || "News"
+					id = params[:id]
+					info = Api::V0::UserApi.get_bookmarks(id, user_id, type).execute
+					render :json => info, :status => 200
+				else
+					redirect_to :controller => 'website', :action => 'signup'			
+				end
+			end
+
 			def get_small_reads
 				user_id = session[:user_id]
 				books = UserApi.get_small_reads
@@ -36,14 +48,18 @@ module Api
 
 			def bookmark
 				id = params["id"]
-				type = params["type"].upcase
-				shelf = params["shelf"].upcase
+				type = params["type"].to_s.upcase
+				shelf = params["shelf"].to_s.upcase
 				status = params["status"]
 				user_id = session[:user_id]
 				if status 
 					Api::V0::UserApi.add_bookmark(user_id, id, type, shelf).execute
 				else
 					Api::V0::UserApi.remove_bookmark(user_id, id, type, shelf).execute
+				end
+				
+				if params[:parent]
+					Api::V0::UserApi.add_book_searched(user_id, id).execute
 				end
 				render :json => {:message => "Success"}, :status => 200
 			end

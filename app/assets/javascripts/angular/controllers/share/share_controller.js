@@ -44,7 +44,8 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
 
 
         var _get_interesting_details = function(){
-            bookService.get_interesting_info(book.book_id).then(function(data){
+            var id = book.book_id || book.id;
+            bookService.get_interesting_info(id).then(function(data){
                 $scope.related_info = [];
                 angular.forEach(data[0].info, function(value){
                     var label = value.labels[0];

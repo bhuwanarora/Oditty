@@ -407,3 +407,8 @@ md-backdrop{
     top: 0px;
     position: fixed;
 }
+
+md-toast.md-default-theme{
+    font-size: 14px !important;
+    color: #333 !important;
+}

@@ -57,6 +57,7 @@ ReadersDoor::Application.routes.draw do
       match 'follow_community'                        => 'users_api#follow_community',                  :via => [:put, :get, :post]
       match 'intro'                                   => 'users_api#set_intro_seen_status',             :via => [:put, :get, :post]
       match 'set_region'                              => 'users_api#set_region',                        :via => [:put, :get, :post]
+      match "get_bookmarks"                           => 'users_api#get_bookmarks',                     :via => [:put, :get, :post]
     end
   end
 end

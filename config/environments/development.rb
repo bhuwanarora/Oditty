@@ -36,4 +36,5 @@ ReadersDoor::Application.configure do
   config.community_bucket = "rd-arjun"
   config.user_bucket = "rd-arjun"
   config.news_bucket = "rd-arjun"
+  config.google_public_key = 'AIzaSyDPDaicSFnNjbYqviSzne1hDsKkPXc3mK0'
 end

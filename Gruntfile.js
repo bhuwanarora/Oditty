@@ -237,7 +237,7 @@ module.exports = function(grunt) {
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/home_group.min.js":[
-                    "app/assets/javascripts/min/angular/services/community_service.js",
+                    "app/assets/javascripts/min/angular/services/news_service.js",
                     "app/assets/javascripts/min/angular/directives/home_directives.js",
                     "app/assets/javascripts/min/angular/controllers/home/home_controller.js"
                 ],
@@ -246,11 +246,16 @@ module.exports = function(grunt) {
                     "app/assets/javascripts/min/angular/controllers/network_controller.js"
                 ],
 
-                "app/assets/javascripts/min/angular/controllers/community_group.min.js":[
+                "app/assets/javascripts/min/angular/controllers/news_group.min.js":[
                     "app/assets/javascripts/min/angular/directives/news_directives.js",
-                    "app/assets/javascripts/min/angular/services/community_service.js",
-                    "app/assets/javascripts/min/angular/controllers/community_controller.js"
+                    "app/assets/javascripts/min/angular/services/news_service.js",
+                    "app/assets/javascripts/min/angular/controllers/news_controller.js"
                 ],
+
+                "app/assets/javascripts/min/angular/controllers/community_group.min.js":[
+                    "app/assets/javascripts/min/angular/services/news_service.js",
+                    "app/assets/javascripts/min/angular/controllers/community_controller.js"
+                ],                
 
                 "app/assets/javascripts/min/angular/controllers/customise_group.min.js":[
                     "app/assets/javascripts/min/angular/controllers/customise/customise_controller.js",
@@ -284,7 +289,7 @@ module.exports = function(grunt) {
 
                 "app/assets/javascripts/min/angular/controllers/profile_group.min.js":[
                     "app/assets/javascripts/min/angular/directives/profile_directives.js",
-                    "app/assets/javascripts/min/angular/services/community_service.js",
+                    "app/assets/javascripts/min/angular/services/news_service.js",
                     "app/assets/javascripts/min/angular/controllers/profile_controller.js"
                 ],
 

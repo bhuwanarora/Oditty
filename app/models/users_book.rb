@@ -5,8 +5,12 @@ class UsersBook < Neo
 		@user_id = user_id
 	end
 
+	def handle_searched
+		match + Bookmark::Type::Visited.match + User.merge_searched + UsersBook.return_group(User.basic_info) 
+	end
+
 	def match 
-		" MATCH (book:Book), (user:User) WHERE ID(book)="+@book_id.to_s+" AND ID(user)="+@user_id.to_s+ User::Info.set_last_active_session+" WITH user, book "
+		" MATCH (book:Book), (user:User) WHERE ID(book)="+@book_id.to_s+" AND ID(user)="+@user_id.to_s+" WITH user, book "
 	end
 
 	def self.optional_match_rating
@@ -30,7 +34,7 @@ class UsersBook < Neo
 	end
 
 	def get_basic_details
-		match + Book.new(@book_id).match_author +  ", user " + UsersBook.optional_match_rating + UsersBook.optional_match_timing_node + User.match_label + Bookmark::Node::BookLabel.optional_match_path  + UsersBook.optional_match_endorse + UsersBook.friends_book + Book.optional_match_genre  + " WITH DISTINCT genre, user, book, belongs_to,  rating_node, timing_node, user_label, label, endorse, friend, author ORDER BY genre.gr_book_count DESC " + UsersBook.return_init + Book.detailed_info + ", rating_node.rating as user_rating, timing_node.time_index as user_time_index, COLLECT(DISTINCT user_label.name) as labels, COLLECT(DISTINCT label.name) as selected_labels, ID(endorse) as endorse_status, COLLECT(ID(friend)) as friends_id, COLLECT(friend.thumb) as friends_thumb, COUNT(friend) as friends_count, COLLECT(DISTINCT genre.name)[0..5] as genres, COLLECT(belongs_to.weight)[0..5] as genres_weight , ID(author) AS author_id "
+		match + Book.new(@book_id).match_author +  ", user " + UsersBook.optional_match_rating + UsersBook.optional_match_timing_node + User.match_label + Bookmark::Node::BookLabel.optional_match_path_public + UsersBook.optional_match_endorse + UsersBook.friends_book + Book.optional_match_genre  +  " WITH DISTINCT genre, user, book, belongs_to,  rating_node, timing_node, user_label, label, bookmark_node, endorse, friend, author ORDER BY genre.gr_book_count DESC " + UsersBook.return_group(Book.detailed_info, "rating_node.rating as user_rating", "timing_node.time_index as user_time_index", "COLLECT(DISTINCT {" +Label.grouped_basic_info + ", status: ID(bookmark_node)}) as shelves", "ID(endorse) as endorse_status", "COLLECT(ID(friend)) as friends_id", "COLLECT(friend.thumb) as friends_thumb", "COUNT(friend) as friends_count", "COLLECT(DISTINCT genre.name)[0..5] as genres", "COLLECT(belongs_to.weight)[0..5] as genres_weight", "ID(author) AS author_id ")
 	end
 
 	def self.record_time(time)

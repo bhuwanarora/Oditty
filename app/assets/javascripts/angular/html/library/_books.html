@@ -30,24 +30,22 @@
     <div ng-style="grid_style" class="white" 
             ng-if="!info.author_filter && !info.group_by_alphabet && !info.published_era_filter 
                 && !info.reading_time_filter && !info.subject_filter" layout-fill layout-padding>
-        <div>
-            <div layout="row" layout-wrap layout-align="start">
-                <div ng-repeat="book in info.books track by $index"
-                    layout-margin
-                    layout-align="start start"
-                    layout="row"
-                    class="md-button grid"
-                    ng-class="{'book': book.isBook}" >
-                    <md-button class="book_grid_link"
-                            aria-label=""
-                            ng-click="show_book($event, book)">
-                        <img ng-src="{{book | choose_medium_thumb}}"/>
-                    </md-button>
-                    <div ng-style="{background:'{{book.color}}'}" class="book_backup_cover" 
-                            layout="column" layout-padding layout-align="space-between">
-                        <h3>{{book.title}}</h3>
-                        <h5>{{book.author_name}}</h5>
-                    </div>
+        <div layout="row" layout-wrap layout-align="start">
+            <div ng-repeat="book in info.books track by $index"
+                layout-margin
+                layout-align="start start"
+                layout="row"
+                class="md-button grid"
+                ng-class="{'book': book.isBook}" >
+                <md-button class="book_grid_link"
+                        aria-label=""
+                        ng-click="show_book($event, book)">
+                    <img ng-src="{{book | choose_medium_thumb}}"/>
+                </md-button>
+                <div ng-style="{background:'{{book.color}}'}" class="book_backup_cover" 
+                        layout="column" layout-padding layout-align="space-between">
+                    <h3>{{book.title}}</h3>
+                    <h5>{{book.author_name}}</h5>
                 </div>
             </div>
         </div>
@@ -137,6 +135,7 @@
     .grid{
         width: 170px;
         height: 240px;
+        margin: 10px !important;
     }
 
     .book_grid_link{
