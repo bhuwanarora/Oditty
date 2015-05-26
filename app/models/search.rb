@@ -22,26 +22,85 @@ class Search < Neo
 
 	def self.get_top_searches
 		client = Elasticsearch::Client.new log: true	
-		search_response = client.search index: 'search', type: 'books', body:{query: {match_all: {}}, size: 4, sort:{ weight: {order: "desc"}}}
+		body = 	{
+					query:{
+						match_all: {}
+					}, 
+					size: 4, 
+					sort:{ 
+						weight: {
+							order: "desc"
+						}
+					}
+				}
+		search_response = client.search index: 'search', type: 'books', body: body
 		Search.extract_info(search_response)
 	end
 
 	def self.by_scroll_id scroll_id
-		client = Elasticsearch::Client.new log: true	
+		client = Elasticsearch::Client.new log: true
 		search_response = client.scroll index: 'search', scroll: '10m', scroll_id: scroll_id.to_s
-		{"results" => Search.extract_info(search_response)}
+		results = {"results" => Search.extract_info(search_response)}
+		results
 	end
 
 	def book_by_title
-		search_response = @client.search index: 'search', type: 'books', scroll: '10m', body:{query:{function_score: {boost_mode: "replace", query:{multi_match:{query:@search_text,fields:["title^2","author_name"]}}}}, size: @count, sort:{ _script: {params:{factor: 0.4}, type: "number", script: "weight", order: "desc"}}}
+		body = {
+			query:{
+				function_score: {
+					boost_mode: "replace", 
+					query:{
+						multi_match:{
+							query: @search_text,
+							fields:["title^2", "author_name"]
+						}
+					}
+				}
+			}, 
+			size: @count, 
+			sort:{ 
+				_script: {
+					params:{
+						factor: 0.4
+					}, 
+					type: "number", 
+					script: "weight", 
+					order: "desc"
+				}
+			}
+		}
+		search_response = @client.search index: 'search', type: 'books', scroll: '10m', body: body
 		scroll_id = search_response["_scroll_id"]
-		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
+		results = {"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
+		results
 	end
 
 	def author_by_name
-		search_response = @client.search index: 'search', type: 'authors', scroll: '10m', body: { query: {match: { name: {query: @search_text, fuzziness: 1}}} , size: @count, sort:{ _script: {params:{factor: 0.4}, type: "number", script: "weight", order: "desc"}}}
+		body = {
+			query:{
+				match:{
+					name:{
+						query: @search_text, 
+						fuzziness: 1
+					}
+				}
+			}, 
+			size: @count, 
+			sort:{
+				_script:{
+					params:{
+						factor: 0.4
+					}, 
+					type: "number", 
+					script: "weight", 
+					order: "desc"
+				}
+			}
+		}
+		search_response = @client.search index: 'search', type: 'authors', scroll: '10m', body: body
 		scroll_id = search_response["_scroll_id"]
-		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
+		results = {"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
+		results
 	end
 
 	def label_by_name
@@ -49,9 +108,34 @@ class Search < Neo
 	end
 
 	def user_by_name
-		search_response = @client.search index: 'search', type: 'users', scroll: '10m', body:{query:{function_score: {boost_mode: "replace", query:{multi_match:{query:@search_text,fields:["first_name^2","last_name"]}}}}, size: @count, sort:{ _script: {params:{factor: 0.4}, type: "number", script: "weight", order: "desc"}}}
+		body = {
+			query:{
+				function_score:{
+					boost_mode: "replace", 
+					query:{
+						multi_match:{
+							query:@search_text,
+							fields:["first_name^2","last_name"]
+						}
+					}
+				}
+			}, 
+			size: @count, 
+			sort:{ 
+				_script:{
+					params:{
+						factor: 0.4
+					}, 
+					type: "number", 
+					script: "weight", 
+					order: "desc"
+				}
+			}
+		}
+		search_response = @client.search index: 'search', type: 'users', scroll: '10m', body: body
 		scroll_id = search_response["_scroll_id"]
-		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
+		results = {"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
+		results
 	end
 
 	def category_by_name
@@ -60,53 +144,120 @@ class Search < Neo
 		else
 			clause = Category::Root.match_root + Search.return_group(Category.basic_info,"labels(node) as labels")
 		end
-		clause	
+		clause
 	end
 
 	def news_by_title
-		search_response = @client.search index: 'search', type: 'news', scroll: '10m', body: { query: {match: { title: {query: @search_text, fuzziness: 1}}} , size: @count, sort: { _script: {params:{factor: 0.4}, type: "number", script: "weight", order: "desc"}}}
+		body = {
+			query:{
+				match:{
+					title:{
+						query: @search_text, 
+						fuzziness: 1
+					}
+				}
+			} , 
+			size: @count, 
+			sort:{
+				_script:{
+					params:{
+						factor: 0.4
+					}, 
+					type: "number", 
+					script: "weight", 
+					order: "desc"
+				}
+			}
+		}
+		search_response = @client.search index: 'search', type: 'news', scroll: '10m', body: 
 		scroll_id = search_response["_scroll_id"]
-		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
+		results = {"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
+		results
 	end
 
 	def blog_by_title
-		search_response = @client.search index: 'search', type: 'blogs', scroll: '10m', body: { query: {match: { title: {query: @search_text, fuzziness: 1}}} , size: @count, sort: { _script: {params:{factor: 0.4}, type: "number", script: "weight", order: "desc"}}}
+		body = {
+			query:{
+				match:{
+					title:{
+						query: @search_text, 
+						fuzziness: 1
+					}
+				}
+			}, 
+			size: @count, 
+			sort:{
+				_script:{
+					params:{
+						factor: 0.4
+					}, 
+					type: "number", 
+					script: "weight", 
+					order: "desc"
+				}
+			}
+		}
+		search_response = @client.search index: 'search', type: 'blogs', scroll: '10m', body: body
 		scroll_id = search_response["_scroll_id"]
-		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
+		results = {"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
+		results
 	end
 
 	def community_by_name
-		search_response = @client.search index: 'search', type: 'communities', scroll: '10m', body: { query: {match: { name: {query: @search_text, fuzziness: 1}}} , size: @count, sort: { _script: {params:{factor: 0.4}, type: "number", script: "weight", order: "desc"}}}
+		body = {
+			query:{
+				match:{
+					name:{
+						query: @search_text, 
+						fuzziness: 1
+					}
+				}
+			}, 
+			size: @count, 
+			sort:{
+				_script:{
+					params:{
+						factor: 0.4
+					},
+					type: "number", 
+					script: "weight", 
+					order: "desc"
+				}
+			}
+		}
+		search_response = @client.search index: 'search', type: 'communities', scroll: '10m', body: body
 		scroll_id = search_response["_scroll_id"]
-		{"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
+		results = {"scroll_id" => scroll_id, "results" => Search.extract_info(search_response)}
+		results
 	end
 
 	def basic
 		# AUTHOR > BOOK > COMMUNITY > USER > BLOG > NEWS
-		search_response = @client.search index: 'search', scroll: '10m', body:{
-				query:{
-					function_score: {
-						boost_mode: "replace", 
-						query:{
-							multi_match:{
-								query: @search_text,
-								fields: ["name^3", "title^2", "first_name", "last_name"]
-							}
+		body = {
+			query:{
+				function_score: {
+					boost_mode: "replace", 
+					query:{
+						multi_match:{
+							query: @search_text,
+							fields: ["name", "title", "first_name", "last_name"]
 						}
 					}
-				}, 
-				size: @count, 
-				sort: { 
-					_script: {
-						params: {
-							factor: 0.4
-						}, 
-						type: "number", 
-						script: "weight", 
-						order: "desc"
-					}
+				}
+			}, 
+			size: @count, 
+			sort: { 
+				_script: {
+					params: {
+						factor: 0.4
+					},
+					type: "number", 
+					script: "weight", 
+					order: "desc"
 				}
 			}
+		}
+		search_response = @client.search index: 'search', scroll: '10m', body: body
 		scroll_id = search_response["_scroll_id"]
 		search_response = Search.extract_info(search_response)
 		response = {"scroll_id" => scroll_id, "results" => search_response}
