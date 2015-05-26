@@ -76,7 +76,11 @@ class Author < Neo
 	end
 
 	def self.basic_info
-		" author.name AS name, ID(author) AS id, author.wiki_url AS wiki_url, author.overview as overview, labels(author) AS label, author.location AS location  "
+		Author.primary_info + ", author.wiki_url AS wiki_url, author.overview as overview, labels(author) AS label, author.location AS location "
+	end
+
+	def self.primary_info
+		" author.name AS name, ID(author) AS id "
 	end
 
 	def self.grouped_basic_info

@@ -49,14 +49,3 @@
     <div ng-repeat="community_feed in active_tag.news" 
         ng-include src="'/assets/angular/html/home/_community_feed.html'"></div>
 </div>
-<!-- <md-card ng-repeat="news_info in active_tag.news">
-    <md-card-content>
-        <h3><a target="_blank" ng-href="{{news.news_url}}">{{news_info.title}}</a></h3>
-        <div class="less_important">{{news_info.created_at | timestamp | date:'dd MMM'}}</div>
-        <div ng-bind-html="news_info.description"></div>
-    </md-card-content>
-
-    <md-card-content>
-        <img ng-src="{{news_info.image_url}}" class="news_cover"/>
-    </md-card-content>
-</md-card> -->
