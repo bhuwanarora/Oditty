@@ -1,0 +1,11 @@
+<div ng-if="books_from_favourite_era">
+	<div class="custom_title" layout-padding>Discover popular books from your most read Era, <b>{{likeable_era.era_name}} Literature</b></div>
+	<div  class="white" layout-fill>
+	    <div ng-init="books = books_from_favourite_era"
+	         ng-hide="constant.show_book"
+	         ng-include src="'/assets/angular/html/library/shared/_default_grid.html'"></div>
+	</div>
+</div>
+<a ng-href="/room" ng-if="!books_from_favourite_era" class="less_important" layout-padding>
+	<br/>Couldn't find your Favourite Era. Add more books to your room.<br/><br/>
+</a>

@@ -5,6 +5,10 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 		});
 	}
 
+    $scope.toggle_circles = function(){
+        $scope.info.circles = !$scope.info.circles;
+    }
+
 	$scope.get_feed = function(){
         $scope.info.selectedIndex = 1;
 		if(!$scope.info.loading){

@@ -1,15 +1,19 @@
-<md-tabs class="white" md-selected="info.selectedIndex" md-dynamic-height md-border-bottom>
+<md-tabs class="white" md-selected="info.selectedIndex" md-dynamic-height md-border-bottom
+	md-center-tabs>
 	<md-tab aria-controls="tab1-content"
 			id="tab1"
 			ng-disabled="!info.my_profile"
 			md-on-select="show_books_for_author()"
 			label="Personalised Suggestions">
-		<div ng-include src="'/assets/angular/html/personalised_suggestions/show.html'"></div>
 	</md-tab>
 	<md-tab aria-controls="tab2-content"
 			id="tab2"
 			md-on-select="get_feed()"
 			label="Feed">
-	    <div ng-include src="'/assets/angular/html/profile/feed.html'" class="grey"></div>
 	</md-tab>
 </md-tabs>	
+<div ng-if="info.selectedIndex == 0" 
+	ng-include src="'/assets/angular/html/personalised_suggestions/grid.html'" 
+	class="white"></div>
+<div ng-include src="'/assets/angular/html/profile/feed.html'" 
+	class="grey" ng-if="info.selectedIndex == 1"></div>

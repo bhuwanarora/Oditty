@@ -78,7 +78,7 @@
             <script src="assets/angular/services/status_service.js"></script>
             <script src="assets/angular/services/feed_service.js"></script>
 
-            <% if (@news || @home || @profile)%>
+            <% if (@news || @home)%>
                 <script src="assets/angular/vendors/jquery.min.js"></script>
                 <script src="assets/angular/vendors/d3.min.js"></script>
                 <script src="assets/angular/vendors/bubble_chart/d3_transform.js"></script>
@@ -160,7 +160,7 @@
             <link rel="stylesheet" href="assets/min/site.min.css" />
             <script src="assets/min/angular/site.min.js"></script>
 
-            <% if (@news || @home || @profile)%>
+            <% if (@news || @home)%>
                 <script src="assets/min/angular/d3_group.min.js"></script> 
             <% end %>
 
@@ -310,9 +310,10 @@
                                 </md-tooltip>
                             </md-button>
                         </a>
-                        <md-button ng-show="info.mobile_search" class="small-padding" 
+                        <md-button ng-show="info.mobile_search" 
+                            class="small-padding" 
                             ng-click="toggle_notifications($event)">
-                            <span class="icon-bell"></span>
+                            <span class="icon-hearts"></span>
                             <md-tooltip >
                                 Notifications
                             </md-tooltip>

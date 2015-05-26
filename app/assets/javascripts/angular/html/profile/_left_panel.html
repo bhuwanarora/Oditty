@@ -1,22 +1,4 @@
 <section class="padding margin_top" hide-md>
-	<!-- <section layout="column" layout-wrap class="padding">
-		<b class="small-padding">About him</b>
-		<md-divider></md-divider>
-		<div layout-padding>
-			{{user.about}}
-		</div>
-	</section>
-
-	<section layout="column" layout-wrap class="padding">
-		<b class="small-padding">His favourite subjects</b>
-		<md-divider></md-divider>
-		<div layout-padding layout-wrap layout="row">
-			<div ng-repeat="genre in user.favourite_categories" layout="padding" class="genre">
-				<div ng-include src="'/assets/angular/html/shared/partials/genre.html'"></div>
-			</div>
-		</div>
-	</section> -->
-
 	<section layout="column" layout-wrap class="padding" ng-if="user.influential_books">
 		<b class="small-padding">Books he finds influential</b>
 		<md-divider></md-divider>

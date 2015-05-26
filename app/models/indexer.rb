@@ -246,8 +246,10 @@ class Indexer
 			get_nodes = " MATCH (node:#{label})  WHERE ID(node) <= #{minimum + range} AND ID(node) >= #{minimum} " + Neo.return_init + node_class.basic_info.search_compliant + ", node.description AS description "
 			minimum += range
 			nodes = get_nodes.execute
-			for node in nodes
-				Indexer.new([node]).handle
+			if nodes.present?
+				for node in nodes
+					Indexer.new([node]).handle
+				end
 			end
 		end
 	end
@@ -285,7 +287,7 @@ class Indexer
 			author_name = authors.present? ? authors.first["name"] : "null" 
 			author_id =  authors.present? ? authors.first["id"] : "null"
 			body = {
-					title: @response["title"], 
+					title: @response["title"],
 					description: @response["description"],
 					isbn: @response["isbn"], 
 					author_name: author_name, 

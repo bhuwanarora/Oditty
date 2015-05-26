@@ -232,36 +232,6 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
   );
 
 
-  $templateCache.put('/assets/angular/html/library/partials/author_books.html',
-    "<div ng-if=\"books_from_favourite_author\"><d3-click-circles news-tags=\"books_from_favourite_author\" on-click=\"refresh_data(active_item)\" on-center-click=\"goto_author_profile()\" community-page=\"true\" ng-if=\"books_from_favourite_author.length > 0\"><div class=\"bubbleChart animate-fast\"></div></d3-click-circles></div><div class=\"big_title bold\">{{info.active_tag.name}}</div><a ng-href=\"/room\" ng-if=\"!books_from_favourite_author\" class=\"less_important\" layout-padding><br>Couldn't find your Favourite Author. Add more books to your room.<br><br></a>"
-  );
-
-
-  $templateCache.put('/assets/angular/html/library/partials/category_books.html',
-    "<div ng-if=\"books_from_favourite_category\"><div class=\"custom_title\" layout-padding>Since you like <b>{{likeable_category}}</b>, here are books you need to read</div><div class=\"white\" layout-fill><div ng-init=\"books = books_from_favourite_category\" ng-hide=\"constant.show_book\" ng-include src=\"'/assets/angular/html/library/shared/_default_grid.html'\"></div></div></div><a ng-href=\"/room\" ng-if=\"!books_from_favourite_category\" class=\"less_important\" layout-padding><br>Couldn't find your Favourite Subjects. Add more books to your room.<br><br></a>"
-  );
-
-
-  $templateCache.put('/assets/angular/html/library/partials/easy_books.html',
-    "<div class=\"custom_title\" layout-padding>Build for your reading appetite with popular easy reads</div><div class=\"white\" layout-fill><div ng-init=\"books = small_reads\" ng-hide=\"constant.show_book\" ng-include src=\"'/assets/angular/html/library/shared/_default_grid.html'\"></div></div>"
-  );
-
-
-  $templateCache.put('/assets/angular/html/library/partials/era_books.html',
-    "<div ng-if=\"books_from_favourite_era\"><div class=\"custom_title\" layout-padding>Discover popular books from your most read Era, <b>{{likeable_era.era_name}} Literature</b></div><div class=\"white\" layout-fill><div ng-init=\"books = books_from_favourite_era\" ng-hide=\"constant.show_book\" ng-include src=\"'/assets/angular/html/library/shared/_default_grid.html'\"></div></div></div><a ng-href=\"/room\" ng-if=\"!books_from_favourite_era\" class=\"less_important\" layout-padding><br>Couldn't find your Favourite Era. Add more books to your room.<br><br></a>"
-  );
-
-
-  $templateCache.put('/assets/angular/html/library/partials/friends_books.html',
-    "<div ng-if=\"friends\"><d3-click-circles news-tags=\"friends\" on-click=\"refresh_data(active_item)\" on-center-click=\"goto_user_profile()\" community-page=\"true\" ng-if=\"friends.length > 0\"><div class=\"bubbleChart animate-fast\"></div></d3-click-circles></div><a ng-href=\"/network?q=1\" ng-if=\"!friends\" class=\"less_important\" layout-padding><br>You don't have enough friends. Follow more people.<br><br></a>"
-  );
-
-
-  $templateCache.put('/assets/angular/html/library/partials/unexplored_books.html',
-    "<div ng-if=\"books_from_unexplored_subjects\"><div class=\"custom_title\" layout-padding>Look up popular books from unexplored subjects, {{unexplored_subject}}</div><div class=\"white\" layout-fill><div ng-init=\"books = books_from_unexplored_subjects\" ng-hide=\"constant.show_book\" ng-include src=\"'/assets/angular/html/library/shared/_default_grid.html'\"></div></div></div><a ng-href=\"/room\" ng-if=\"!books_from_unexplored_subjects\" class=\"less_important\" layout-padding><br>Couldn't find your not so Favourite Subjects. Add more books to your room.<br><br></a>"
-  );
-
-
   $templateCache.put('/assets/angular/html/library/shared/_default_grid.html',
     "<md-grid-list md-cols-sm=\"2\" md-cols-md=\"2\" md-cols-gt-md=\"4\" md-row-height=\"1:1.3\" md-gutter=\"1px\"><md-grid-tile ng-repeat=\"book in books track by $index\" md-rowspan=\"{{book.rowspan}}\" md-colspan=\"{{book.colspan}}\" layout-align=\"start start\" layout=\"row\" class=\"md-button grid\" ng-class=\"{'book': book.isBook}\"><md-button class=\"book_grid_link\" aria-label=\"\" ng-click=\"show_book($event, book)\"><img ng-src=\"{{book | choose_medium_thumb}}\"></md-button><div ng-style=\"{background:'{{book.color}}'}\" class=\"book_backup_cover\" layout=\"column\" layout-padding layout-align=\"space-between\"><h3>{{book.title}}</h3><h5>{{book.author_name}}</h5></div></md-grid-tile></md-grid-list>"
   );
@@ -342,18 +312,88 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('/assets/angular/html/personalised_suggestions/circles.html',
+    "<section layout-fill layout-padding ng-if=\"!constant.show_book\"><div ng-include src=\"'/assets/angular/html/personalised_suggestions/partials/circles/category_books.html'\" ng-if=\"info.active_tab == 'favourite_category'\"></div><div ng-include src=\"'/assets/angular/html/personalised_suggestions/partials/circles/author_books.html'\" ng-if=\"info.active_tab == 'favourite_author'\"></div><div ng-include src=\"'/assets/angular/html/personalised_suggestions/partials/circles/era_books.html'\" ng-if=\"info.active_tab == 'favourite_era'\"></div><div ng-include src=\"'/assets/angular/html/personalised_suggestions/partials/circles/friends_books.html'\" ng-if=\"info.active_tab == 'friend_shelves'\"></div><div ng-include src=\"'/assets/angular/html/personalised_suggestions/partials/circles/unexplored_books.html'\" ng-if=\"info.active_tab == 'unexplored_subject'\"></div><div ng-include src=\"'/assets/angular/html/personalised_suggestions/partials/circles/easy_books.html'\" ng-if=\"info.active_tab == 'small_read'\"></div></section><section ng-if=\"constant.show_book\"><div class=\"books_cover animate-very-fast\" flex=\"60\" flex-md=\"80\" flex-sm=\"100\" ng-if=\"constant.show_book\" aria-label=\"\" ng-click=\"show_grid($event)\" layout=\"row\" layout-align=\"start center\"><div class=\"padding\" layout=\"row\"><div layout-padding><span class=\"icon-angle-left\"></span></div><div layout-padding>Back</div></div></div><div ng-include src=\"'/assets/angular/html/book/show.html'\" class=\"animate-fast book\"></div></section><style>.grid{position:absolute}.book_grid_link{position:absolute;height:100%;width:100%;left:0;padding:0;border-radius:0!important}.book_grid_link img{width:100%;height:100%;z-index:1;position:absolute;left:0;top:0}.book_backup_cover{width:100%!important;height:100%!important;position:absolute;left:0;top:0;color:#fff;white-space:normal}.bubbleChart{min-width:100px;max-width:700px;height:65vh;overflow:inherit}.left_shifted{margin:0}.book_thumb{width:40px;height:70px}.book_scroller{background-color:transparent!important;border-top:1px solid #f5f5f5;border-bottom:1px solid #f5f5f5}</style>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/personalised_suggestions/grid.html',
+    "<div ng-include src=\"'/assets/angular/html/personalised_suggestions/left_panel.html'\"></div><div ng-include src=\"'/assets/angular/html/personalised_suggestions/partials/grid/category_books.html'\" ng-if=\"info.active_tab == 'favourite_category'\"></div><div ng-include src=\"'/assets/angular/html/personalised_suggestions/partials/grid/author_books.html'\" ng-if=\"info.active_tab == 'favourite_author'\"></div><div ng-include src=\"'/assets/angular/html/personalised_suggestions/partials/grid/era_books.html'\" ng-if=\"info.active_tab == 'favourite_era'\"></div><div ng-include src=\"'/assets/angular/html/personalised_suggestions/partials/grid/friends_books.html'\" ng-if=\"info.active_tab == 'friend_shelves'\"></div><div ng-include src=\"'/assets/angular/html/personalised_suggestions/partials/grid/unexplored_books.html'\" ng-if=\"info.active_tab == 'unexplored_subject'\"></div><div ng-include src=\"'/assets/angular/html/personalised_suggestions/partials/grid/easy_books.html'\" ng-if=\"info.active_tab == 'small_read'\"></div><style>.grid{position:absolute}.md-switch-thumb .md-container,md-radio-button .md-container{display:none}.book_grid_link{position:absolute;height:100%;width:100%;left:0;padding:0;border-radius:0!important}.book_grid_link img{width:100%;height:100%;z-index:1;position:absolute;left:0;top:0}.book_backup_cover{width:100%!important;height:100%!important;position:absolute;left:0;top:0;color:#fff;white-space:normal}.bubbleChart{min-width:100px;max-width:700px;height:65vh;overflow:inherit}.left_shifted{margin:0}.book_thumb{width:40px;height:70px}.book_scroller{background-color:transparent!important;border-top:1px solid #f5f5f5;border-bottom:1px solid #f5f5f5}</style>"
+  );
+
+
   $templateCache.put('/assets/angular/html/personalised_suggestions/left_panel.html',
-    "<md-radio-group ng-if=\"!info.infinity && !constant.show_book\" layout-margin class=\"books_tab\" layout=\"column\" ng-model=\"info.active_tab\"><md-radio-button value=\"small_read\" class=\"custom_tab md-button\" ng-click=\"show_small_reads()\">Small Reads</md-radio-button><md-radio-button value=\"favourite_author\" class=\"custom_tab md-button\" ng-click=\"show_books_for_author()\">From Favourite Author</md-radio-button><md-radio-button value=\"favourite_category\" class=\"custom_tab md-button\" ng-click=\"show_books_for_category()\">From Favourite Category</md-radio-button><md-radio-button value=\"favourite_era\" class=\"custom_tab md-button\" ng-click=\"show_books_for_era()\">From Favourite Era</md-radio-button><md-radio-button value=\"unexplored_subject\" class=\"custom_tab md-button\" ng-click=\"show_unexplored_subject_books()\">From Unexplored Subject</md-radio-button><md-radio-button value=\"friend_shelves\" class=\"custom_tab md-button\" ng-click=\"show_books_on_friend_shelves()\">On Friends Shelves</md-radio-button></md-radio-group><style>.custom_tab{font-family:sans-serif;font-size:.9em;border-bottom:1px solid #F5F5F5;text-align:left;font-weight:400}.books_tab{background-color:#fff;margin-top:120px}</style>"
+    "<md-radio-group ng-if=\"!info.infinity && !constant.show_book\" layout-margin class=\"books_tab\" layout-wrap layout=\"row\" ng-model=\"info.active_tab\"><md-radio-button value=\"favourite_author\" class=\"custom_tab md-button md-button-clear\" ng-click=\"show_books_for_author()\">Author Suggestions</md-radio-button><md-radio-button value=\"friend_shelves\" class=\"custom_tab md-button md-button-clear\" ng-click=\"show_books_on_friend_shelves()\">Friends Suggestions</md-radio-button></md-radio-group><style>.custom_tab{font-family:sans-serif;font-size:.9em;border-bottom:1px solid #F5F5F5;text-align:left;font-weight:400}.books_tab{background-color:#fff}.md-checked{font-weight:700!important}</style>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/personalised_suggestions/partials/circles/author_books.html',
+    "<div ng-if=\"books_from_favourite_author\"><d3-click-circles news-tags=\"books_from_favourite_author\" on-click=\"refresh_data(active_item)\" on-center-click=\"goto_author_profile()\" community-page=\"true\" ng-if=\"books_from_favourite_author.length > 0\"><div class=\"bubbleChart animate-fast\"></div></d3-click-circles></div><div class=\"big_title bold\">{{info.active_tag.name}}</div><a ng-href=\"/room\" ng-if=\"!books_from_favourite_author\" class=\"less_important\" layout-padding><br>Couldn't find your Favourite Author. Add more books to your room.<br><br></a>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/personalised_suggestions/partials/circles/category_books.html',
+    "<div ng-if=\"books_from_favourite_category\"><div class=\"custom_title\" layout-padding>Since you like <b>{{likeable_category}}</b>, here are books you need to read</div><div class=\"white\" layout-fill><div ng-init=\"books = books_from_favourite_category\" ng-hide=\"constant.show_book\" ng-include src=\"'/assets/angular/html/library/shared/_default_grid.html'\"></div></div></div><a ng-href=\"/room\" ng-if=\"!books_from_favourite_category\" class=\"less_important\" layout-padding><br>Couldn't find your Favourite Subjects. Add more books to your room.<br><br></a>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/personalised_suggestions/partials/circles/easy_books.html',
+    "<div class=\"custom_title\" layout-padding>Build for your reading appetite with popular easy reads</div><div class=\"white\" layout-fill><div ng-init=\"books = small_reads\" ng-hide=\"constant.show_book\" ng-include src=\"'/assets/angular/html/library/shared/_default_grid.html'\"></div></div>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/personalised_suggestions/partials/circles/era_books.html',
+    "<div ng-if=\"books_from_favourite_era\"><div class=\"custom_title\" layout-padding>Discover popular books from your most read Era, <b>{{likeable_era.era_name}} Literature</b></div><div class=\"white\" layout-fill><div ng-init=\"books = books_from_favourite_era\" ng-hide=\"constant.show_book\" ng-include src=\"'/assets/angular/html/library/shared/_default_grid.html'\"></div></div></div><a ng-href=\"/room\" ng-if=\"!books_from_favourite_era\" class=\"less_important\" layout-padding><br>Couldn't find your Favourite Era. Add more books to your room.<br><br></a>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/personalised_suggestions/partials/circles/friends_books.html',
+    "<div ng-if=\"friends\"><d3-click-circles news-tags=\"friends\" on-click=\"refresh_data(active_item)\" on-center-click=\"goto_user_profile()\" community-page=\"true\" ng-if=\"friends.length > 0\"><div class=\"bubbleChart animate-fast\"></div></d3-click-circles></div><a ng-href=\"/network?q=1\" ng-if=\"!friends\" class=\"less_important\" layout-padding><br>You don't have enough friends. Follow more people.<br><br></a>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/personalised_suggestions/partials/circles/unexplored_books.html',
+    "<div ng-if=\"books_from_unexplored_subjects\"><div class=\"custom_title\" layout-padding>Look up popular books from unexplored subjects, {{unexplored_subject}}</div><div class=\"white\" layout-fill><div ng-init=\"books = books_from_unexplored_subjects\" ng-hide=\"constant.show_book\" ng-include src=\"'/assets/angular/html/library/shared/_default_grid.html'\"></div></div></div><a ng-href=\"/room\" ng-if=\"!books_from_unexplored_subjects\" class=\"less_important\" layout-padding><br>Couldn't find your not so Favourite Subjects. Add more books to your room.<br><br></a>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/personalised_suggestions/partials/grid/author_books.html',
+    "<div class=\"less_important bold\" layout=\"row\" layout-padding layout-align=\"center\"><div>Author Suggestions on the basis of your Reading Journey</div></div><div ng-if=\"books_from_favourite_author\" layout=\"row\" layout-padding><div flex=\"30\" layout=\"column\"><md-button class=\"md-button-clear\" ng-repeat=\"author in books_from_favourite_author\" ng-click=\"refresh_data(author)\"><div layout=\"row\"><img ng-src=\"{{author.image_url}}\" layout=\"row\" class=\"circular\"><div layout-padding ng-bind-html=\"author.name\" ng-class=\"{'bold': info.active_tag.name == author.name}\"></div></div></md-button></div><div flex=\"70\" layout-padding><div layout-padding><a class=\"big_title\" ng-href=\"/author?q={{info.active_tag.id}}\" ng-bind-html=\"info.active_tag.name\"></a></div><div layout=\"row\" layout-wrap><md-button ng-repeat=\"book in info.active_tag.books\" layout-margin ng-click=\"show_book_dialog(book, $event)\"><div ng-include src=\"'/assets/angular/html/shared/partials/book_thumb.html'\"></div></md-button></div></div></div><a ng-href=\"/room\" ng-if=\"!books_from_favourite_author\" class=\"less_important\" layout-padding><br>Couldn't find your Favourite Author. Add more books to your room.<br><br></a>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/personalised_suggestions/partials/grid/category_books.html',
+    "<div ng-if=\"books_from_favourite_category\"><div class=\"custom_title\" layout-padding>Since you like <b>{{likeable_category}}</b>, here are books you need to read</div><div class=\"white\" layout-fill><div ng-init=\"books = books_from_favourite_category\" ng-hide=\"constant.show_book\" ng-include src=\"'/assets/angular/html/library/shared/_default_grid.html'\"></div></div></div><a ng-href=\"/room\" ng-if=\"!books_from_favourite_category\" class=\"less_important\" layout-padding><br>Couldn't find your Favourite Subjects. Add more books to your room.<br><br></a>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/personalised_suggestions/partials/grid/easy_books.html',
+    "<div class=\"custom_title\" layout-padding>Build for your reading appetite with popular easy reads</div><div class=\"white\" layout-fill><div ng-init=\"books = small_reads\" ng-hide=\"constant.show_book\" ng-include src=\"'/assets/angular/html/library/shared/_default_grid.html'\"></div></div>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/personalised_suggestions/partials/grid/era_books.html',
+    "<div ng-if=\"books_from_favourite_era\"><div class=\"custom_title\" layout-padding>Discover popular books from your most read Era, <b>{{likeable_era.era_name}} Literature</b></div><div class=\"white\" layout-fill><div ng-init=\"books = books_from_favourite_era\" ng-hide=\"constant.show_book\" ng-include src=\"'/assets/angular/html/library/shared/_default_grid.html'\"></div></div></div><a ng-href=\"/room\" ng-if=\"!books_from_favourite_era\" class=\"less_important\" layout-padding><br>Couldn't find your Favourite Era. Add more books to your room.<br><br></a>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/personalised_suggestions/partials/grid/friends_books.html',
+    "<div class=\"less_important bold\" layout=\"row\" layout-padding layout-align=\"center\"><div>Books From your friends Reading Journey</div></div><div ng-if=\"friends\" layout=\"row\" layout-padding><div flex=\"30\" layout=\"column\"><md-button class=\"md-button-clear\" ng-repeat=\"profile in friends\" ng-click=\"refresh_data(profile)\"><div layout=\"row\"><img ng-src=\"{{profile.image_url}}\" layout=\"row\" class=\"circular\"><div layout-padding ng-bind-html=\"profile.name\" ng-class=\"{'bold': info.active_tag.name == profile.name}\"></div></div></md-button></div><div flex=\"70\" layout-padding><div layout-padding><a class=\"big_title\" ng-href=\"/profile?q={{info.active_tag.id}}\" ng-bind-html=\"info.active_tag.name\"></a></div><div layout=\"row\" layout-wrap><md-button ng-repeat=\"book in info.active_tag.books\" layout-margin ng-click=\"show_book_dialog(book, $event)\"><div ng-include src=\"'/assets/angular/html/shared/partials/book_thumb.html'\"></div></md-button></div></div></div><a ng-href=\"/room\" ng-if=\"!friends\" class=\"less_important\" layout-padding><br>You don't have enough friends. Follow more people.<br><br></a>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/personalised_suggestions/partials/grid/unexplored_books.html',
+    "<div ng-if=\"books_from_unexplored_subjects\"><div class=\"custom_title\" layout-padding>Look up popular books from unexplored subjects, {{unexplored_subject}}</div><div class=\"white\" layout-fill><div ng-init=\"books = books_from_unexplored_subjects\" ng-hide=\"constant.show_book\" ng-include src=\"'/assets/angular/html/library/shared/_default_grid.html'\"></div></div></div><a ng-href=\"/room\" ng-if=\"!books_from_unexplored_subjects\" class=\"less_important\" layout-padding><br>Couldn't find your not so Favourite Subjects. Add more books to your room.<br><br></a>"
   );
 
 
   $templateCache.put('/assets/angular/html/personalised_suggestions/right_panel.html',
-    "<md-content ng-if=\"!constant.show_book && !info.infinity\" layout=\"column\" layout-align=\"center center\" layout-padding class=\"book_scroller white\"><section layout-sm=\"row\"><md-button ng-click=\"show_book_dialog(book, $event)\" class=\"clear\" layout-margin ng-repeat=\"book in info.active_tag.books\"><div ng-include src=\"'/assets/angular/html/shared/partials/book_thumb.html'\"></div></md-button></section></md-content><style>.book_scroller .md-button{width:130px;height:180px;margin-top:10px}</style>"
+    ""
   );
 
 
   $templateCache.put('/assets/angular/html/personalised_suggestions/show.html',
-    "<section layout-fill layout-padding ng-if=\"!constant.show_book\"><div ng-include src=\"'/assets/angular/html/library/partials/category_books.html'\" ng-if=\"info.active_tab == 'favourite_category'\"></div><div ng-include src=\"'/assets/angular/html/library/partials/author_books.html'\" ng-if=\"info.active_tab == 'favourite_author'\"></div><div ng-include src=\"'/assets/angular/html/library/partials/era_books.html'\" ng-if=\"info.active_tab == 'favourite_era'\"></div><div ng-include src=\"'/assets/angular/html/library/partials/friends_books.html'\" ng-if=\"info.active_tab == 'friend_shelves'\"></div><div ng-include src=\"'/assets/angular/html/library/partials/unexplored_books.html'\" ng-if=\"info.active_tab == 'unexplored_subject'\"></div><div ng-include src=\"'/assets/angular/html/library/partials/easy_books.html'\" ng-if=\"info.active_tab == 'small_read'\"></div></section><section ng-if=\"constant.show_book\"><div class=\"books_cover animate-very-fast\" flex=\"60\" flex-md=\"80\" flex-sm=\"100\" ng-if=\"constant.show_book\" aria-label=\"\" ng-click=\"show_grid($event)\" layout=\"row\" layout-align=\"start center\"><div class=\"padding\" layout=\"row\"><div layout-padding><span class=\"icon-angle-left\"></span></div><div layout-padding>Back</div></div></div><div ng-include src=\"'/assets/angular/html/book/show.html'\" class=\"animate-fast book\"></div></section><style>.grid{position:absolute}.book_grid_link{position:absolute;height:100%;width:100%;left:0;padding:0;border-radius:0!important}.book_grid_link img{width:100%;height:100%;z-index:1;position:absolute;left:0;top:0}.book_backup_cover{width:100%!important;height:100%!important;position:absolute;left:0;top:0;color:#fff;white-space:normal}.bubbleChart{min-width:100px;max-width:700px;height:65vh;overflow:inherit}.left_shifted{margin:0}.book_thumb{width:40px;height:70px}.book_scroller{background-color:transparent!important;border-top:1px solid #f5f5f5;border-bottom:1px solid #f5f5f5}</style>"
+    ""
   );
 
 
@@ -393,7 +433,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/profile/left_panel.html',
-    "<div ng-if=\"info.selectedIndex == 0\" ng-include src=\"'/assets/angular/html/personalised_suggestions/left_panel.html'\"></div>"
+    ""
   );
 
 
@@ -408,7 +448,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/profile/show.html',
-    "<md-tabs class=\"white\" md-selected=\"info.selectedIndex\" md-dynamic-height md-border-bottom><md-tab aria-controls=\"tab1-content\" id=\"tab1\" ng-disabled=\"!info.my_profile\" md-on-select=\"show_books_for_author()\" label=\"Personalised Suggestions\"><div ng-include src=\"'/assets/angular/html/personalised_suggestions/show.html'\"></div></md-tab><md-tab aria-controls=\"tab2-content\" id=\"tab2\" md-on-select=\"get_feed()\" label=\"Feed\"><div ng-include src=\"'/assets/angular/html/profile/feed.html'\" class=\"grey\"></div></md-tab></md-tabs>"
+    "<md-tabs class=\"white\" md-selected=\"info.selectedIndex\" md-dynamic-height md-border-bottom md-center-tabs><md-tab aria-controls=\"tab1-content\" id=\"tab1\" ng-disabled=\"!info.my_profile\" md-on-select=\"show_books_for_author()\" label=\"Personalised Suggestions\"></md-tab><md-tab aria-controls=\"tab2-content\" id=\"tab2\" md-on-select=\"get_feed()\" label=\"Feed\"></md-tab></md-tabs><div ng-if=\"info.selectedIndex == 0\" ng-include src=\"'/assets/angular/html/personalised_suggestions/grid.html'\" class=\"white\"></div><div ng-include src=\"'/assets/angular/html/profile/feed.html'\" class=\"grey\" ng-if=\"info.selectedIndex == 1\"></div>"
   );
 
 
@@ -453,7 +493,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/room/show.html',
-    "<md-progress-linear class=\"md-primary\" ng-show=\"shelf_loading\" md-mode=\"indeterminate\"></md-progress-linear><md-card layout=\"column\" layout-align=\"start center\"><md-card-content><div class=\"less_important\" layout-padding hide-sm hide-md>Recently Visited Articles</div><md-content class=\"white\"><section layout=\"row\" layout-wrap layout-align=\"center\"><div class=\"article\" layout-margin layout=\"column\" ng-repeat=\"article in visited_articles\"><div ng-include src=\"'/assets/angular/html/room/article.html'\"></div></div></section></md-content></md-card-content></md-card><style>md-card-content{width:100%}md-grid-tile{background-size:cover;background-repeat:no-repeat;border:5px solid #f5f5f5}</style>"
+    "<md-progress-linear class=\"md-primary\" ng-show=\"shelf_loading\" md-mode=\"indeterminate\"></md-progress-linear><md-card layout=\"column\" layout-align=\"start center\"><md-card-content><div class=\"less_important\" layout-padding hide-sm hide-md>Recently Visited Articles</div><md-content class=\"white\"><section layout=\"column\" layout-align=\"start\"><div layout-margin ng-repeat=\"article in visited_articles\" layout=\"row\"><div layout-padding><img ng-src=\"{{article.image_url}}\" class=\"circular\"></div><div layout-padding><a ng-href=\"/news?q={{article.article_id || article.id}}\" ng-bind-html=\"article.title\"></a><div ng-bind-html=\"article.created_at | timestamp | date:'h:mm a, dd MMM'\" class=\"less_important\"></div></div><md-divider></md-divider></div></section></md-content></md-card-content></md-card><style>md-card-content{width:100%}md-grid-tile{background-size:cover;background-repeat:no-repeat;border:5px solid #f5f5f5}</style>"
   );
 
 
@@ -628,7 +668,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/partials/book_thumb.html',
-    "<div ng-style=\"{background:'{{book.color | random_color}}'}\" class=\"book_backup_cover\" layout=\"column\" layout-padding layout-align=\"space-between\"><h3>{{book.title}}</h3><h5>{{book.author_name}}</h5></div><div class=\"slider_wrapper\"><div layout=\"column\" layout-align=\"center\" class=\"relative white\" ng-if=\"book.status\"><md-slider flex md-discrete class=\"md-warn\" ng-change=\"rate_book(book, $event)\" ng-model=\"book.user_rating\" step=\"1\" min=\"1\" max=\"10\" aria-label=\"user_rating\"></md-slider></div><img ng-src=\"{{book | choose_medium_thumb}}\" class=\"book_image_cover\"></div><br><style>.book_backup_cover{width:130px;height:180px;position:absolute;color:#fff;white-space:normal}.book_backup_cover h3{font-weight:400;overflow:hidden;margin:0}.book_image_cover{width:130px;height:180px;position:relative}.slider_wrapper{width:130px;height:180px;overflow:hidden;z-index:1}</style>"
+    "<div ng-style=\"{background:'{{book.color | random_color}}'}\" class=\"rd_book_backup_cover\" layout=\"column\" layout-padding layout-align=\"space-between\"><h3>{{book.title}}</h3><h5>{{book.author_name}}</h5></div><div class=\"rd_slider_wrapper\"><div layout=\"column\" layout-align=\"center\" class=\"relative white\" ng-if=\"book.status\"><md-slider flex md-discrete class=\"md-warn\" ng-change=\"rate_book(book, $event)\" ng-model=\"book.user_rating\" step=\"1\" min=\"1\" max=\"10\" aria-label=\"user_rating\"></md-slider></div><img ng-src=\"{{book | choose_medium_thumb}}\" class=\"rd_book_image_cover\"></div><br><style>.rd_book_backup_cover{width:130px;height:180px;position:absolute;color:#fff;white-space:normal}.rd_book_backup_cover h3{font-weight:400;overflow:hidden;margin:0}.rd_book_image_cover{width:130px;height:180px;position:relative}.rd_slider_wrapper{width:130px;height:180px;overflow:hidden;z-index:1}</style>"
   );
 
 

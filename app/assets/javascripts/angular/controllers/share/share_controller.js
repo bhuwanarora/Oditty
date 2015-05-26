@@ -64,7 +64,6 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
                         info = angular.extend(info, json);
                     }
                     else{
-                        debugger
                     }
                     this.push(info);
                     $scope.info.loading = false;
