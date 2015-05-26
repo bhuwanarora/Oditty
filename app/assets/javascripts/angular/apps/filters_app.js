@@ -66,13 +66,13 @@ angular.module('filtersApp', [])
         }
     })
     .filter('default_profile', function(){
-      return function(input){
-        var output = input;
-        if(angular.isUndefined(input) || (input == "") || (input == null)){
-            output = "http://www.sessionlogs.com/media/icons/defaultIcon.png";
+        return function(input){
+            var output = input;
+            if(angular.isUndefined(input) || (input == "") || (input == null)){
+                output = "http://www.sessionlogs.com/media/icons/defaultIcon.png";
+            }
+            return output;
         }
-        return output;
-      }
     })
     .filter('first_two', function(){
         return function(input){
