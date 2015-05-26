@@ -277,7 +277,7 @@ class Indexer
 	def index_book
 		begin
 			authors = [] 
-			relationships = get_relationships(@response["book_id"])
+			# relationships = get_relationships(@response["book_id"])
 			clause = Book.match_author + Book.return_group(Author.primary_info)
 			authors = clause.execute
 
