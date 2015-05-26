@@ -242,6 +242,11 @@ module.exports = function(grunt) {
                     "app/assets/javascripts/min/angular/controllers/home/home_controller.js"
                 ],
 
+                "app/assets/javascripts/min/angular/controllers/personalised_group.min.js":[
+                    "app/assets/javascripts/min/angular/services/news_service.js",
+                    "app/assets/javascripts/min/angular/controllers/personalised_controller.js"
+                ],
+
                 "app/assets/javascripts/min/angular/controllers/network_group.min.js":[
                     "app/assets/javascripts/min/angular/controllers/network_controller.js"
                 ],

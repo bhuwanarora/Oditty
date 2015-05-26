@@ -75,7 +75,7 @@ class WebsiteController < ApplicationController
 
 
 	### WEBSITE NEW 
-	def home
+	def news_group
 		session[:news_day_skip_count] = 0
 		session[:news_skip_count] = 0
 
@@ -84,7 +84,7 @@ class WebsiteController < ApplicationController
 			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
 			redirect_to :controller => 'website', :action => 'signup' 			
 		else
-			@home = true
+			@news_group = true
 			render :layout => "material" 
 		end
 	end
@@ -95,7 +95,7 @@ class WebsiteController < ApplicationController
 			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
 			redirect_to :controller => 'website', :action => 'signup'			
 		else
-			@home = true
+			@news_group = true
 			render :layout => "material"
 		end
 	end
@@ -106,7 +106,7 @@ class WebsiteController < ApplicationController
 			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
 			redirect_to :controller => 'website', :action => 'signup'			
 		else
-			@home = true
+			@news_group = true
 			render :layout => "material"
 		end
 	end
@@ -251,6 +251,15 @@ class WebsiteController < ApplicationController
 			user_id = session[:user_id]
 			render :layout => "material"
 		end	
+	end
+
+	def personalised_suggestions
+		@personalised_suggestions = true
+		render :layout => "material"
+	end
+
+	def home
+		render :layout => "material"
 	end
 
 end

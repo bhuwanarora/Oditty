@@ -78,7 +78,7 @@
             <script src="assets/angular/services/status_service.js"></script>
             <script src="assets/angular/services/feed_service.js"></script>
 
-            <% if (@news || @home)%>
+            <% if (@news || @news_group)%>
                 <script src="assets/angular/vendors/jquery.min.js"></script>
                 <script src="assets/angular/vendors/d3.min.js"></script>
                 <script src="assets/angular/vendors/bubble_chart/d3_transform.js"></script>
@@ -93,10 +93,15 @@
             <% end %>
 
             
-            <% if @home %>
+            <% if @news_group %>
                 <script src="assets/angular/services/news_service.js"></script>
                 <script src="assets/angular/directives/home_directives.js"></script>
                 <script src="assets/angular/controllers/home/home_controller.js"></script>
+            <% end %>
+
+            <% if @personalised_suggestions %>
+                <script src="assets/angular/services/news_service.js"></script>
+                <script src="assets/angular/controllers/personalised_controller.js"></script>
             <% end %>
 
             <% if @network %>
@@ -160,12 +165,16 @@
             <link rel="stylesheet" href="assets/min/site.min.css" />
             <script src="assets/min/angular/site.min.js"></script>
 
-            <% if (@news || @home)%>
+            <% if (@news || @news_group)%>
                 <script src="assets/min/angular/d3_group.min.js"></script> 
             <% end %>
 
-            <% if @home %>
+            <% if @news_group %>
                 <script src="assets/min/angular/controllers/home_group.min.js"></script>
+            <% end %>
+
+            <% if @personalised_suggestions %>
+                <script src="assets/min/angular/controllers/personalised_group.min.js"></script>
             <% end %>
 
             <% if @network %>
@@ -237,7 +246,7 @@
                         </md-button>
                         <div ng-show="info.mobile_search" 
                              layout-align-lg="center center">
-                            <a class="logo" href="/infinity">
+                            <a class="logo" href="/home">
                                 <img src="assets/rd_icon.png"/>
 
                                 <span hide-sm hide-md ng-hide="<%= @signup %>">ReadersDoor</span>
@@ -295,11 +304,20 @@
                         </md-autocomplete>
                     </div>
                     <div layout="row" layout-align="center center" flex="10" flex-md="15" flex-sm="20">
-                        <a href="/communities" ng-show="info.mobile_search" class="library">
-                            <md-button>
-                                Communities
-                            </md-button>
-                        </a>
+                        <md-select ng-model="active_page" class="active_page_menu">
+                            <a href="/home">
+                                <md-option ng-value="-1">Home</md-option>
+                            </a>
+                            <a href="/personalised_suggestions">
+                                <md-option ng-value="0">Personalised</md-option>
+                            </a>
+                            <a href="/communities">
+                                <md-option ng-value="1">Communities</md-option>
+                            </a>
+                            <a href="/infinity">
+                                <md-option ng-value="2">Infinity</md-option>
+                            </a>
+                        </md-select>
                     </div>
                     <div flex="20" flex-sm="35" layout="row" layout-align="end center">
                         <a href="/room" ng-show="info.mobile_search">

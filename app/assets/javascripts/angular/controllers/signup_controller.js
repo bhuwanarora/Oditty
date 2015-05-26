@@ -203,7 +203,7 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
             window.location.href = redirect_url;
         }
         else{
-            window.location.href = "/infinity";
+            window.location.href = "/home";
         }
     }
 
@@ -215,7 +215,7 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
         setCookie("logged", $rootScope.user.id, 31);
     }
       
-    // $scope.logout = function() {
+    // $scope.logout = function(){
    //   Facebook.logout(function() {
    //           $scope.$apply(function() {
    //           $rootScope.user   = {};

@@ -589,3 +589,18 @@ md-tooltip .md-content{
 .footer{
 	order: 5;
 }
+
+.active_page_menu{
+	padding: 0px;
+	margin: 0px;
+	margin-top: 10px;
+}
+
+.active_page_menu, 
+.active_page_menu .md-select-label{
+	font-size: 15px;	
+}
+
+.md-select-menu-container .md-default-theme{
+	background-color: white !important;
+}

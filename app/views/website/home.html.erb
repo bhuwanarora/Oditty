@@ -1,96 +1,108 @@
-<md-content ng-controller="homeController" check-scroll-bottom="get_community_feed()" id="home">
-    <!-- <div class="material_cover md-whiteframe-z1"></div> -->
-	<div layout="row" layout-align="space-between center" class="light_grey">
-		<div></div>
-		<md-select ng-model="info.active_region" placeholder="Select Region" 
-            ng-change="change_feed()">
-	      	<md-optgroup label="Regions">
-	        	<md-option ng-value="region.id" ng-repeat="region in regions">{{region.name}}</md-option>
-	      	</md-optgroup>
-	    </md-select>
+<md-content class="white" flex>
+	<div class="relative">
+		<div class="tagline ">
+			CONNECTING KNOWLEDGE
+		</div>
+		<div class="home_wrapper"></div>
+		<img src="https://s3-ap-southeast-1.amazonaws.com/rd-genres/home3.jpg" class="full_width">
+		<div class="big_title instruct_tagline" layout="row" layout-align="center center" layout-padding>
+			<div>
+				<div>Planning to read a book?</div>
+				<div>Choose a Book Discovery option.</div>
+			</div>
+		</div>
 	</div>
-	<div layout="row" layout-wrap>
-	    <div flex="10" hide-sm flex-md="10"></div>
-	    <div flex="80" flex-sm="100" flex-md="80">
-	        <div ng-include src="'/assets/angular/html/home/main.html'"></div>
-	    </div>
-	    <div flex="10" hide-sm flex-md="10"></div>
+	<div layout="row" layout-sm="column" layout-wrap layout-align="center center">
+		<a href="/personalised_suggestions" 
+		   flex="30" layout-padding layout="row" class="nav_options" layout-margin
+			layout-align="center center">
+			<div layout-padding>Personalised Suggestions</div>
+		</a>
+		<a href="/news_group" 
+			flex="30" layout-padding layout="row" class="nav_options" layout-margin
+			layout-align="center center">
+			<div layout-padding>Discover books through News</div>
+		</a>
+		<a href="/infinity" 
+			flex="30" layout-padding layout="row" class="nav_options" layout-margin
+			layout-align="center center">
+			<div layout-padding>Have some idea of what I want to read</div>
+		</a>
+	</div>
+	<div class="light_grey">
+		<div layout-align="center center" ng-include="'assets/angular/html/shared/partials/social_links.html'"></div>
 	</div>
 </md-content>
 <style>
-	a:hover{
-		text-decoration: underline!important;
+	.header{
+		background-color: transparent !important;
+  		position: absolute;
 	}
 
-    .communities{
-        order: 2;
-        margin-top: -70px;
-        z-index: 1;
-        background-color: rgba(182, 182, 182, 0.39);
-    }
+	.burger{
+		background-color: transparent !important;
+	}
 
-    .feed{
-        /*width: 45%;*/
-        /*min-width: 280px;*/
-    }
+	.header .md-button, 
+	.logo,
+	.search label,
+	.search input,
+	.active_page_menu{
+		color: white !important;
+	}
 
-    .community_icon{
-        width: 70px;
-        height: 70px;
-    }
+	.search{
+		border-bottom: 1px solid white;
+  		color: white;
+	}
 
-    .community h3{
-        margin: 7px 0px !important;
-    }
+	.nav_options{
+		height: 300px;
+		font-family: AvenirNextLTW01-Regular,Helvetica,Arial,sans-serif;
+		font-weight: 400;
+		font-size: 16px;
+		color: #000;
+		letter-spacing: 3px;
+		line-height: 19px;
+		text-transform: uppercase;
+		text-align: center;
+	}
 
-    .community .image_container{
-        background-color: white;
-        order: 1;
-        min-height: 120px;
-    }
+	.nav_options a:hover{
+		text-decoration: underline !important;
+	}
 
-    .community .image_container img{
-        height: auto;
-        width: 100%;
-        border: 1px solid #f5f5f5;
-    }
+	.tagline{
+		font-weight: 800;
+		color: white;
+		font-size: 60px;
+		line-height: 60px;
+		text-shadow: 1px 1px 6px rgba(0,0,0,0.2);
+		margin-top: 100px;
+		position: absolute;
+		z-index: 1;
+		text-align: center;
+		width: 100%;
+	}
 
-    .community_description{
-        font-size: 0.9em;
-    }
+	.instruct_tagline{
+		font-family: AvenirNextLTW01-Regular,Helvetica,Arial,sans-serif;
+		text-align: center;
+		position: absolute;
+		bottom: 20px;
+		color: white;
+		width: 100%;
+		font-size: 30px;
+		text-transform: uppercase;
+		font-weight: 700;
+		text-shadow: 1px 1px 6px rgba(0,0,0,0.2);
+	}
 
-    .community .image_wrapper{
-    	overflow: hidden;
-    }
+	.home_wrapper{
+		position: absolute;
+		background-color: rgba(0,0,0,.4);
+		width: 100%;
+		height: 100%;
+	}
 
-    .community .content{
-        order: 0;
-    }
-
-    .community .footer{
-        order: 3;
-    }
-
-    .community_circular{
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-    }
-
-    .custom_title{
-        font-family: sans-serif;
-        font-size: 0.9em;
-    }
-
-    .communities md-list-item{
-        height: auto;
-        width: 100px;
-        border-bottom: 1px solid #f5f5f5;
-        text-align: center;
-    }
-
-    .menu_thumb{
-        width: 54px;
-        height: 72px;
-    }
 </style>

@@ -128,13 +128,16 @@ ReadersDoor::Application.routes.draw do
 
   get 'blogs'                           => "website#blogs",                     :as => "blogs"
   get 'communities'                     => "website#communities",               :as => "communities"
+  get 'personalised_suggestions'        => "website#personalised_suggestions",  :as => "personalised_suggestions"
 
   get 'signup'                          => "website#signup",                    :as => "signurep"
+  get 'news_group'                      => "website#news_group",                :as => "news_group"
 
   get "trending_community_books"        => "books#trending_community_books",     :as => "trending_community_books"
   get "delete_book_relationship"        => "books#delete_book_relationship",       :as => "delete_book_relationship"
 
   post 'webhooks'                        => "website#webhooks",                  :as => "webhooks"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes"
 
