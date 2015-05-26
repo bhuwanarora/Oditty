@@ -269,7 +269,7 @@ class Indexer
 		end
 	end
 
-	def get_relationship_count
+	def get_relationship_count id
 		clause = "MATCH (node)-[r]-() WHERE ID(node)="+id+" RETURN COUNT(node) AS count"
 		clause.execute[0]
 	end
