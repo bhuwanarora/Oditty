@@ -38,7 +38,10 @@ homeApp.controller('searchController', ["$scope", "searchService", "$location", 
         if(angular.isDefined(item)){
             var book_label = item.labels.indexOf("Book") >= 0;
             var author_label = item.labels.indexOf("Author") >= 0;
-            var user_label = item.labels == "User"
+            var user_label = item.labels == "User";
+            var blog_label = item.labels == "Blog";
+            var news_label = item.labels == "News";
+            var community_label = item.labels == "Community";
             var output = ""
             if(book_label){
                 output = "/book?q="+item.id;
@@ -49,9 +52,19 @@ homeApp.controller('searchController', ["$scope", "searchService", "$location", 
             else if(user_label){
                 output = "/profile?q="+item.id;
             }
+            else if(blog_label){
+                output = item.blog_url;
+            }
+            else if(news_label){
+                output = "/news?q="+item.id;
+            }
+            else if(community_label){
+                output = "/community?q="+item.id;
+            }
             else if(item.show_all){
               output = "/search?q="+item.search_text;
             }
+
             if(output != ""){
                 window.location.href = output;
             }

@@ -408,7 +408,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/profile/show.html',
-    "<md-tabs class=\"white\" md-selected=\"info.selectedIndex\" md-dynamic-height md-border-bottom><md-tab aria-controls=\"tab1-content\" id=\"tab1\" ng-disabled=\"!info.my_profile\" md-on-select=\"show_books_for_author()\" label=\"Personalised Suggestions\"><div ng-include src=\"'/assets/angular/html/personalised_suggestions/show.html'\"></div></md-tab><md-tab aria-controls=\"tab2-content\" id=\"tab2\" md-on-select=\"get_feed()\" label=\"Feed\"><div ng-include src=\"'/assets/angular/html/profile/feed.html'\" class=\"light_grey\"></div></md-tab></md-tabs>"
+    "<md-tabs class=\"white\" md-selected=\"info.selectedIndex\" md-dynamic-height md-border-bottom><md-tab aria-controls=\"tab1-content\" id=\"tab1\" ng-disabled=\"!info.my_profile\" md-on-select=\"show_books_for_author()\" label=\"Personalised Suggestions\"><div ng-include src=\"'/assets/angular/html/personalised_suggestions/show.html'\"></div></md-tab><md-tab aria-controls=\"tab2-content\" id=\"tab2\" md-on-select=\"get_feed()\" label=\"Feed\"><div ng-include src=\"'/assets/angular/html/profile/feed.html'\" class=\"grey\"></div></md-tab></md-tabs>"
   );
 
 

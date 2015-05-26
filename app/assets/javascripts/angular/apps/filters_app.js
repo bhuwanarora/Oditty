@@ -39,11 +39,27 @@ angular.module('filtersApp', [])
             if(angular.isDefined(input)){
                 var book_label = input.labels.indexOf("Book") >= 0;
                 var author_label = input.labels.indexOf("Author") >= 0;
+                var user_label = item.labels == "User";
+                var blog_label = item.labels == "Blog";
+                var news_label = item.labels == "News";
+                var community_label = item.labels == "Community";
                 if(book_label){
                     output = "Book";
                 }
                 else if(author_label){
-                    output = "Author"
+                    output = "Author";
+                }
+                else if(blog_label){
+                  output = "Blog";
+                }
+                else if(user_label){
+                  output = "User";
+                }
+                else if(news_label){
+                  output = "News";
+                }
+                else if(community_label){
+                  output = "Community";
                 }
             }
             return output;

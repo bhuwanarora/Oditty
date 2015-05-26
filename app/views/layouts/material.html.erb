@@ -275,7 +275,7 @@
                                 <div layout="row" layout-align="space-between">
                                     <div layout="row" flex="90">
                                         <img ng-src="{{item.isbn | small_thumb}}" ng-show="item.isbn" class="search_thumb" />
-                                        
+                                        <img ng-src="{{item.image_url}}" ng-show="item.image_url" class="search_thumb" />
                                         <div>&nbsp;</div>
                                         <div ng-bind-html="item.name || item.title" ></div>
                                         <div class="less_important" ng-show="item.author_name">
