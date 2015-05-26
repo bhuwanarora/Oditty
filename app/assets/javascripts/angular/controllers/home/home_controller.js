@@ -102,12 +102,6 @@ homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$m
         }
         else{
             $scope.get_community_feed();
-            // var timeout_event = $timeout(function(){
-            //     _get_blog_feed();
-            // }, 6000);
-            // $scope.$on('destroy', function(){
-            //     $timeout.cancel(timeout_event);
-            // });
         }
 
     }());

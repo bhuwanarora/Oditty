@@ -15,7 +15,7 @@ module Api
 			end
 
 			def self.suggest_communities user_id, skip_count
-				info = Community.suggest_communities(user_id, skip_count)
+				info = Community.get_popular(skip_count)
 			end
 
 			def self.top_communities user_id, skip_count
