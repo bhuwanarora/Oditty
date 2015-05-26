@@ -39,10 +39,10 @@ angular.module('filtersApp', [])
             if(angular.isDefined(input)){
                 var book_label = input.labels.indexOf("Book") >= 0;
                 var author_label = input.labels.indexOf("Author") >= 0;
-                var user_label = item.labels == "User";
-                var blog_label = item.labels == "Blog";
-                var news_label = item.labels == "News";
-                var community_label = item.labels == "Community";
+                var user_label = input.labels == "User";
+                var blog_label = input.labels == "Blog";
+                var news_label = input.labels == "News";
+                var community_label = input.labels == "Community";
                 if(book_label){
                     output = "Book";
                 }
@@ -50,16 +50,16 @@ angular.module('filtersApp', [])
                     output = "Author";
                 }
                 else if(blog_label){
-                  output = "Blog";
+                    output = "Blog";
                 }
                 else if(user_label){
-                  output = "User";
+                    output = "User";
                 }
                 else if(news_label){
-                  output = "News";
+                    output = "News";
                 }
                 else if(community_label){
-                  output = "Community";
+                    output = "Community";
                 }
             }
             return output;
@@ -69,7 +69,7 @@ angular.module('filtersApp', [])
       return function(input){
         var output = input;
         if(angular.isUndefined(input) || (input == "") || (input == null)){
-          output = "http://www.sessionlogs.com/media/icons/defaultIcon.png";
+            output = "http://www.sessionlogs.com/media/icons/defaultIcon.png";
         }
         return output;
       }
