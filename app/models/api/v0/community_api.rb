@@ -2,6 +2,10 @@ module Api
 	module V0
 		class CommunityApi
 
+			def self.get_popular_communities
+				Community.get_popular
+			end
+
 			def self.get_detailed_info(id, user_id)
 				UsersCommunity.new(user_id, id).get_info
 			end

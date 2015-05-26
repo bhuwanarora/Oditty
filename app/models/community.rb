@@ -237,7 +237,7 @@ class Community < Neo
 	end
 
 	def self.get_popular skip_count = 0
-		"MATCH (c:Community)<-[r:HasCommunity]-(m:News)-[]-(:BookmarkNode)-[]-(k) RETURN c.name, COUNT(m) as news_count, COUNT(k) as bookmark_count ORDER BY bookmark_count DESC, news_count DESC LIMIT 10 SKIP " + skip_count.to_s
+		Community.match_news + Bookmark::Node::NewsLabel.optional_match_path + Community.return_group("community.name AS name", "COUNT(news) as news_count", "COUNT(bookmark_node) as bookmark_count") + Community.order_by("bookmark_count DESC , news_count DESC") + Community.skip(skip_count) + Community.limit(10)
 	end
 
 	def get_books_users

@@ -28,6 +28,7 @@ ReadersDoor::Application.routes.draw do
             match "regions"                                => 'website_api#get_regions',                      :via => [:put, :get, :post]              
             match "suggest_communities"                    => 'website_api#suggest_communities',              :via => [:put, :get, :post]
             match "top_communities"                        => 'website_api#top_communities',                  :via => [:put, :get, :post]
+            match "popular_communities"                    => 'website_api#popular_communities',              :via => [:put, :get, :post]
 
         end
     end
