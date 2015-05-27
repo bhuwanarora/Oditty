@@ -82,7 +82,7 @@ homeApp.config(["$mdThemingProvider", function($mdThemingProvider){
 homeApp.run(["$rootScope", "$location", "$cookieStore", "$cookies", "$http", function($rootScope, $location, $cookieStore, $cookies, $http){
     var unauthenticated_user = getCookie("logged") == "";
     if(unauthenticated_user){
-        var closed_urls = ($location.$$absUrl.indexOf("signup") < 0) && ($location.$$absUrl.indexOf("book") < 0) && ($location.$$absUrl.indexOf("author") < 0) && ($location.$$absUrl.indexOf("community") < 0);
+        var closed_urls = ($location.$$absUrl.indexOf("signup") < 0) && ($location.$$absUrl.indexOf("book") < 0) && ($location.$$absUrl.indexOf("author") < 0) && ($location.$$absUrl.indexOf("community") < 0) && ($location.$$absUrl.indexOf("home") < 0);
         if(closed_urls){
             // $cookieStore.put('redirect_url', $location.$$absUrl);
             setCookie("redirect_url", $location.$$absUrl);
