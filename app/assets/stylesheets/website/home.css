@@ -604,3 +604,27 @@ md-tooltip .md-content{
 .md-select-menu-container .md-default-theme{
 	background-color: white !important;
 }
+
+.navigator{
+  	border-radius: 0px;
+  	width: 200px;
+  	height: 300px;
+  	margin-left: -100px;
+  	color: #333 !important;
+  	font-size: 15px;
+  	font-family: sans-serif;
+  	text-transform: uppercase;
+  	pointer-events: initial;
+}
+
+.navigator, 
+.navigator .md-background,
+.navigator .md-content,
+.navigator .navigation_block{
+	background-color: white !important;
+	padding: 0px !important;
+}
+
+.navigator .navigation_block{
+
+}

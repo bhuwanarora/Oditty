@@ -300,7 +300,7 @@ class Indexer
 			message = "#{e} for id #{@response["book_id"]} at #{ Time.now.strftime("%D")}"
 			File.open(@filename, 'a') { |file| file.puts(message) }
 		end
-	end	
+	end
 
 	def index_blog
 		body = { 
