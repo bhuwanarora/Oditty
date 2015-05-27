@@ -94,8 +94,9 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
             $rootScope.user = data.user;
             $cookieStore.put('user', data.user);
             $scope._init_user();
+            // window.location.gr
             $scope.info.hide_signin = true;
-            // _redirect_user();
+            _redirect_user();
         }
 
         var error_callback = function(reason){
@@ -200,12 +201,12 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
 
     var _redirect_user = function(){
         var redirect_url = getCookie("redirect_url");
-        if(redirect_url && (redirect_url != null)){
-            window.location.href = redirect_url;
-        }
-        else{
-            window.location.href = "/home";
-        }
+        window.location.href = "/home";
+        // if(redirect_url && (redirect_url != null)){
+        //     window.location.href = redirect_url;
+        // }
+        // else{
+        // }
     }
 
     
