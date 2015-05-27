@@ -294,7 +294,7 @@
                          layout-align="end center" 
                          layout-align-sm="start center">
                         <md-button ng-click="show_search_bar()" 
-                                   ng-show="info.mobile_search" show-sm hide>
+                                   ng-show="info.mobile_search" show-sm hide ng-if="hide_signin">
                             <span class="icon-search"></span>
                         </md-button>
                         <!-- <div hide-sm class="search_icon">
@@ -413,7 +413,7 @@
                         </div>
                     </div>
                     <div layout="row" layout-align="center center" 
-                            ng-hide="info.mobile_search" layout-fill layout-padding hide-md hide-lg>
+                            ng-hide="info.mobile_search" layout-fill layout-padding hide-md hide-lg ng-if="hide_signin">
                         <md-button flex="10" ng-click="show_search_bar()" hide-md hide-lg class="md-button-clear">
                             <span class="icon-angle-left"></span>
                         </md-button>
