@@ -205,8 +205,8 @@ app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "Webs
 	      	"Discover",
 	      	"Connect",
 	      	"Explore",
-	      	"Personalise",
-			"SignIn"
+	      	"Personalise"
+			// "SignIn"
 		];
 
 		var video = document.getElementsByTagName('video')[0];

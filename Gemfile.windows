@@ -95,6 +95,10 @@ gem 'capistrano-rails'
 gem 'capistrano-rbenv'
 gem 'google-search', '~> 1.0.3'
 gem 'angular_rails_csrf'
+gem 'capistrano-ssh-doctor', '~> 1.0'
+gem 'capistrano-npm'
+gem 'capistrano-grunt', github: 'roots/capistrano-grunt'
+# gem 'capistrano-ssh-doctor', '~> 1.0'
 
 group :development do
 	# comment it
@@ -103,7 +107,8 @@ group :development do
 	gem 'hirb'
 	gem 'hirb-unicode'
 	gem 'railroady'
-	gem 'better_errors'
+	#comment it
+	#gem 'better_errors'
 	gem 'binding_of_caller'
 	gem 'meta_request'
 	# gem 'did_you_mean'
@@ -121,3 +126,9 @@ gem 'colorize'
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
 gem 'open4'
+gem 'opengraph_parser'
+gem 'redis' # gem 'qless'
+# gem 'redis-namespace'
+gem 'sidekiq'
+gem 'geoip'
+gem 'elasticsearch'

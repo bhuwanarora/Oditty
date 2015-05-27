@@ -9,13 +9,16 @@
         <meta property="og:image" content="https://fbcdn-sphotos-f-a.akamaihd.net/hphotos-ak-xfp1/t31.0-8/s2048x2048/10928967_401263720044504_3799751116430229659_o.jpg" />
         <meta property="og:description" content="ReadersDoor is a global community for book readers, where we intend to enrich and enhance users’ reading experience by focusing on virtualisation and idealisation of their real life interactions and experiences." />
         <meta property="fb:app_id" content="667868653261167"/>
+
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
         <meta charset="utf-8" />
+
         <title>ReadersDoor</title>
         <link rel="icon" type="image/png" href="assets/favicon.png">
         <script>document.write('<base href="' + document.location + '" />');</script>
         <!-- <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,100italic,400italic|Roboto+Condensed&amp;lang=en' rel='stylesheet' type='text/css'> -->
+
         <% if Rails.env.development? %>
             <link rel="stylesheet" href="assets/angular_material.css" />
             <link rel="stylesheet" href="assets/website/website.css" />
@@ -97,6 +100,36 @@
                 <script src="assets/angular/services/news_service.js"></script>
                 <script src="assets/angular/directives/home_directives.js"></script>
                 <script src="assets/angular/controllers/home/home_controller.js"></script>
+            <% end %>
+
+            <% if @home %>
+                <script>
+                    (function() {
+                      var _fbq = window._fbq || (window._fbq = []);
+                      if (!_fbq.loaded) {
+                        var fbds = document.createElement('script');
+                        fbds.async = true;
+                        fbds.src = '//connect.facebook.net/en_US/fbds.js';
+                        var s = document.getElementsByTagName('script')[0];
+                        s.parentNode.insertBefore(fbds, s);
+                        _fbq.loaded = true;
+                      }
+                    })();
+                    window._fbq = window._fbq || [];
+                    window._fbq.push(['track', '6022104506938', {'value':'0.00','currency':'INR'}]);
+                </script>
+                <noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=6022104506938&amp;cd[value]=0.00&amp;cd[currency]=INR&amp;noscript=1" /></noscript>
+
+                <script>
+                    (function() {
+                        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                        po.src = 'https://apis.google.com/js/client:plusone.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                    })();
+                </script>
+                <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+                <script src="assets/angular/controllers/signup_controller.js"></script>
+                <script src='assets/angular/services/website_service.js'></script>
             <% end %>
 
             <% if @personalised_suggestions %>
@@ -241,15 +274,15 @@
             <md-toolbar md-scroll-shrink class="md-whiteframe-z1 header <% if !@infinity %>'no_shadow'<% end %>">
                 <section layout="row" layout-wrap>
                     <div flex="20" flex-sm="25" layout="row" layout-align="start center">
-                        <md-button ng-show="info.mobile_search" class="burger padding <% if (@book || @news || @infinity) %>white<% end %>" ng-click="toggleLeft($event)">
+                        <md-button ng-if="info.hide_signin" ng-show="info.mobile_search" class="burger padding <% if (@book || @news || @infinity) %>white<% end %>" ng-click="toggleLeft($event)">
                             <a><span class="icon-menu2"></span></a>
                         </md-button>
                         <div ng-show="info.mobile_search" 
                              layout-align-lg="center center">
                             <a class="logo" href="/home">
-                                <img src="assets/rd_icon.png"/>
+                                <img src="assets/rd_icon.png" />
 
-                                <span hide-sm hide-md ng-hide="<%= @signup %>">ReadersDoor</span>
+                                <span hide-sm hide-md ng-hide="<%= @signup %>" ng-class="{'signup_title': !info.hide_signin}">ReadersDoor</span>
                                 
                             </a>
                         </div>
@@ -261,7 +294,7 @@
                          layout-align="end center" 
                          layout-align-sm="start center">
                         <md-button ng-click="show_search_bar()" 
-                                   ng-show="info.mobile_search" show-sm hide>
+                                   ng-show="info.mobile_search" show-sm hide ng-if="info.hide_signin">
                             <span class="icon-search"></span>
                         </md-button>
                         <!-- <div hide-sm class="search_icon">
@@ -270,7 +303,7 @@
                         <!-- md-items="item in info.genres | filter:search_tag.genre" -->
                         <md-autocomplete md-selected-item="selected_item_search"
                                         md-search-text="search_text"
-                                        md-items="item in search_results"
+                                        md-items="item xxin search_results"
                                         md-search-text-change="query_search(search_text)"
                                         md-selected-item-change="on_select(item)"
                                         md-item-text="item.name"
@@ -279,7 +312,7 @@
                                         hide-sm
                                         flex="85"
                                         ng-click="stop_propagation($event)"
-                                        md-floating-label="Search books, topics and more...">
+                                        md-floating-label="Search books, topics and more..." ng-if="info.hide_signin">
                             <md-item-template>
                                 <div layout="row" layout-align="space-between">
                                     <div layout="row" flex="90">
@@ -303,8 +336,7 @@
                             </md-not-found>
                         </md-autocomplete>
                     </div>
-                    <div layout="row" layout-align="center center" flex="10" flex-md="15" flex-sm="30"
-                        ng-show="info.mobile_search">
+                    <div layout="row" layout-align="center center" flex="10" flex-md="15" flex-sm="20" ng-if="info.hide_signin" ng-show="info.mobile_search">
                         <md-select ng-model="active_page" class="active_page_menu">
                             <md-option ng-value="-1" ng-disabled="true">Discover</md-option>
                             <a href="/personalised_suggestions">
@@ -318,7 +350,7 @@
                             </a>
                         </md-select>
                     </div>
-                    <div flex="20" flex-sm="35" layout="row" layout-align="end center">
+                    <div flex="20" flex-sm="35" layout="row" layout-align="end center" ng-if="info.hide_signin">
                         <a href="/shelves" ng-show="info.mobile_search">
                             <md-button class="small-padding">
                                 <span class="icon-books"></span>
@@ -381,7 +413,7 @@
                         </div>
                     </div>
                     <div layout="row" layout-align="center center" 
-                            ng-hide="info.mobile_search" layout-fill layout-padding hide-md hide-lg>
+                            ng-hide="info.mobile_search" layout-fill layout-padding hide-md hide-lg ng-if="info.hide_signin">
                         <md-button flex="10" ng-click="show_search_bar()" hide-md hide-lg class="md-button-clear">
                             <span class="icon-angle-left"></span>
                         </md-button>
@@ -395,6 +427,11 @@
                             placeholder="Search books, topics and more...">
                             <span md-highlight-text="searchText" ng-bind-html="item.display"></span>
                         </md-autocomplete>
+                    </div>
+                    <div flex="30" layout="row" layout-padding layout-align="end center" class="h-btn-right" ng-hide="info.hide_signin">
+                        <md-button ng-click="show_signin_options($event)" class="sign-up-button md-raised md-button-clear" style="color: rgba(0,0,0,0.87) !important;">
+                            Sign In
+                        </md-button>
                     </div>
                 </section>
             </md-toolbar>
@@ -429,6 +466,7 @@
             <div ng-include src="'/assets/angular/html/shared/left_panel.html'" class="left_panel_container"></div>
             <div ng-include src="'/assets/angular/html/shared/notifications.html'" ng-if="show_notifications"></div>
             <div ng-include src="'/assets/angular/html/share/show.html'"></div>
+            <div ng-include src="'/assets/angular/html/home/_sign_in.html'"></div>
         </div>
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

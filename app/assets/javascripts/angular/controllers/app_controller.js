@@ -61,6 +61,11 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
 
     $scope.stop_propagation = function(event){
         event.stopPropagation();
+    };
+
+    $scope.show_signin_options = function(event){
+        $mdSidenav('signup').toggle();
+        event.stopPropagation();
     }
 
     $scope.toggle_navigation_options = function(event){
@@ -106,6 +111,10 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
         }
 
         $scope.search_results = [];
+
+        if(getCookie("logged") != ""){
+            $scope.info.hide_signin = true;
+        }
 
     }());
 
