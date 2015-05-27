@@ -24,7 +24,7 @@ a:active{
   	width: 48px;
   	margin: 16px;
   	border-radius: 48px;
-  	border: 1px solid #ddd; 
+  	border: 1px solid #ddd;
 }
 
 .header{
@@ -77,6 +77,10 @@ md-content{
 .logo{
 	padding-left: 50px;
 	font-size: 1.2em;
+}
+
+.signup_title{
+	padding-left: 50px !important;
 }
 
 .logo:hover{
@@ -603,4 +607,10 @@ md-tooltip .md-content{
 
 .md-select-menu-container .md-default-theme{
 	background-color: white !important;
+}
+
+.h-btn-right{
+    float: right !important;
+    font-size: .8em;
+    padding-top: 5px;
 }

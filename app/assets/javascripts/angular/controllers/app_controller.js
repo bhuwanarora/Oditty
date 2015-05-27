@@ -61,6 +61,11 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
 
     $scope.stop_propagation = function(event){
         event.stopPropagation();
+    };
+
+    $scope.show_signin_options = function(event){
+        $mdSidenav('signup').toggle();
+        event.stopPropagation();
     }
 
     var _init = (function(){
@@ -98,6 +103,26 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
         }
 
         $scope.search_results = [];
+
+        if(getCookie("logged") != ""){
+            $scope.hide_signin = true;
+            $timeout(function(){
+                $mdToast.show({
+                    templateUrl: 'assets/angular/html/shared/toast/cancel_redirect.html',
+                    hideDelay: 6000,
+                    scope: $scope,
+                    preserveScope: true,
+                    position: $scope.getToastPosition()
+                });
+            }, 2000);
+            $scope.timer = 5;
+            $interval(function(){
+                $scope.timer = $scope.timer - 1;
+            }, 1000, 5);
+            timeout_redirect_event = $timeout(function(){
+                window.location.href = "/home";
+            }, 5000);
+        }
 
     }());
 

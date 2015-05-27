@@ -1,4 +1,4 @@
-var homeApp = angular.module('homeApp', ['ngAnimate', 'ngMaterial', 'ngMessages', 'duScroll', 'ngRoute', 'monospaced.mousewheel', 'appConstants', 'timer', 'duScroll', 'filtersApp', 'angular.filter', 'd3', 'angular-parallax', 'ngSanitize', 'ngCookies']);
+var homeApp = angular.module('homeApp', ['ngAnimate', 'ngMaterial', 'ngMessages', 'duScroll', 'ngRoute', 'monospaced.mousewheel', 'appConstants', 'timer', 'duScroll', 'filtersApp', 'angular.filter', 'd3', 'angular-parallax', 'ngSanitize', 'ngCookies', 'facebook']);
 
 homeApp.config(["$routeProvider", function($routeProvider){
     $routeProvider.when('/discover', {
@@ -78,6 +78,14 @@ homeApp.config(["$mdThemingProvider", function($mdThemingProvider){
                       .accentPalette('googleGreen')
                       .warnPalette('googleRed')
 }]);
+
+homeApp.constant('facebookAppId', "667868653261167");
+
+homeApp.config(["FacebookProvider", "facebookAppId", function(FacebookProvider, facebookAppId){
+    var myAppId = facebookAppId;
+    FacebookProvider.init(myAppId);
+  }
+]);
 
 homeApp.run(["$rootScope", "$location", "$cookieStore", "$cookies", "$http", function($rootScope, $location, $cookieStore, $cookies, $http){
     var unauthenticated_user = getCookie("logged") == "";

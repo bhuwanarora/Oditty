@@ -1,1 +1,1 @@
-homeApp.service("statusService",["$http","$q","$rootScope","WebsiteUIConstants",function(a,b,c,d){this.post_status=function(c){var c=angular.toJson(c);return _deferred_post_request("/api/v0/create_status",c,b,a)}}]);
+homeApp.service("statusService",["$http","$q","$rootScope","WebsiteUIConstants",function(a,b,c){this.post_status=function(c){var c=angular.toJson(c);return _deferred_post_request("/api/v0/create_status",c,b,a)}}]);
