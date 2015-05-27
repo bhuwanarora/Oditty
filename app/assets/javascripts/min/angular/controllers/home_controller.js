@@ -1,0 +1,1 @@
+homeApp.controller("homeController",["$scope","$mdSidenav",function(a,b){a.show_signin_options=function(a){b("signup").toggle(),a.stopPropagation()}}]);

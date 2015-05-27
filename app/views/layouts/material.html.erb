@@ -99,7 +99,7 @@
             <% if @news_group %>
                 <script src="assets/angular/services/news_service.js"></script>
                 <script src="assets/angular/directives/home_directives.js"></script>
-                <script src="assets/angular/controllers/home/home_controller.js"></script>
+                <script src="assets/angular/controllers/home/feed_controller.js"></script>
             <% end %>
 
             <% if @home || @signup %>
@@ -128,8 +128,10 @@
                     })();
                 </script>
                 <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
-                <script src="assets/angular/controllers/signup_controller.js"></script>
                 <script src='assets/angular/services/website_service.js'></script>
+                <script src="assets/angular/controllers/signup_controller.js"></script>
+                <script src="assets/angular/controllers/home_controller.js"></script>
+
             <% end %>
 
             <% if @personalised_suggestions %>
@@ -457,10 +459,14 @@
                             <span md-highlight-text="searchText" ng-bind-html="item.display"></span>
                         </md-autocomplete>
                     </div>
-                    <div flex="30" layout="row" layout-padding layout-align="end center" class="h-btn-right" ng-hide="info.hide_signin">
-                        <md-button ng-click="show_signin_options($event)" class="sign-up-button md-raised md-button-clear" style="color: rgba(0,0,0,0.87) !important;">
-                            Sign In
-                        </md-button>
+                    <div flex="30" layout="row" layout-padding layout-align="end center" class="h-btn-right" 
+                        ng-if="!info.hide_signin">
+                        <div ng-controller="homeController">
+                            <div ng-include src="'/assets/angular/html/home/_sign_in.html'"></div>
+                            <md-button ng-click="show_signin_options($event)" class="sign-up-button md-raised md-button-clear" style="color: rgba(0,0,0,0.87) !important;">
+                                Sign In
+                            </md-button>
+                        </div>
                     </div>
                 </section>
             </md-toolbar>
@@ -495,7 +501,7 @@
             <div ng-include src="'/assets/angular/html/shared/left_panel.html'" class="left_panel_container"></div>
             <div ng-include src="'/assets/angular/html/shared/notifications.html'" ng-if="show_notifications"></div>
             <div ng-include src="'/assets/angular/html/share/show.html'"></div>
-            <div ng-include src="'/assets/angular/html/home/_sign_in.html'"></div>
+            
         </div>
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

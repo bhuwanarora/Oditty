@@ -63,11 +63,6 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
         event.stopPropagation();
     };
 
-    $scope.show_signin_options = function(event){
-        $mdSidenav('signup').toggle();
-        event.stopPropagation();
-    }
-
     $scope.toggle_navigation_options = function(event){
         $scope.navigation_options = !$scope.navigation_options;
     }

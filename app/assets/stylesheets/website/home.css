@@ -645,3 +645,9 @@ md-tooltip .md-content{
   	line-height: 14px;
   	font-family: AvenirNextLTW01-Regular,Helvetica,Arial,sans-serif; 
 }
+
+.side_panel{
+    margin-top: 0px !important;
+    max-width: 100px !important;
+    position: fixed;
+}

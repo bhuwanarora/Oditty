@@ -1,6 +1,5 @@
-homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$mdBottomSheet', 'shelfService', '$timeout', '$location', 'userService', 'bookService', function($scope, $rootScope, userService, $mdBottomSheet, shelfService, $timeout, $location, userService, bookService){
+homeApp.controller('feedController', ["$scope", "$rootScope", 'userService', '$mdBottomSheet', 'shelfService', '$timeout', '$location', 'userService', 'bookService', function($scope, $rootScope, userService, $mdBottomSheet, shelfService, $timeout, $location, userService, bookService){
 
-	
     $scope.search_books = function(q){
         $scope.info.loading = true;
         bookService.search_books(q, 10).then(function(data){

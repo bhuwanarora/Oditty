@@ -96,7 +96,7 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
             $scope._init_user();
             // window.location.gr
             $scope.info.hide_signin = true;
-            _redirect_user();
+            // _redirect_user();
         }
 
         var error_callback = function(reason){

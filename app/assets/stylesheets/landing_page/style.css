@@ -382,10 +382,3 @@ md-tab.active a{
     height: 95%;
     width: 75%; 
 }
-
-
-.side_panel{
-    margin-top: 0px !important;
-    max-width: 100px !important;
-    position: fixed;
-}
