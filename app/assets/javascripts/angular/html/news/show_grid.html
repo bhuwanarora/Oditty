@@ -37,9 +37,11 @@
 	        </md-button>
 		</div>
 		<div layout="row" layout-padding layout-wrap>
-			<div ng-repeat="book in active_tag.books" ng-click="show_book_dialog(book, $event)" 
-				ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'" 
-				layout-margin>
+			<div layout-margin ng-repeat="book in active_tag.books">
+				<md-button class="clear" ng-click="show_book_dialog(book, $event)" >
+					<div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'" >
+					</div>
+				</md-button>
 			</div>
 		</div>
 	</div>

@@ -15,6 +15,7 @@ homeApp.controller('newsController', ["$scope", "$mdSidenav", 'newsService', '$l
         });
     }
 
+
     $scope.toggle_follow = function(){
         $scope.active_tag.status = !$scope.active_tag.status;
         newsService.follow($scope.active_tag.id, $scope.active_tag.status);

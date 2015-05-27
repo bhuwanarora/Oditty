@@ -1,14 +1,6 @@
 homeApp.controller('homeController', ["$scope", "$rootScope", 'userService', '$mdBottomSheet', 'shelfService', '$timeout', '$location', 'userService', 'bookService', function($scope, $rootScope, userService, $mdBottomSheet, shelfService, $timeout, $location, userService, bookService){
 
-	$scope.goto_news_page = function(id, community_id){
-		userService.news_visited(id);
-        deleteCookie("active_community");
-        if(angular.isDefined(community_id)){
-            setCookie("active_community", community_id, 1)
-        }
-		window.location.href = "/news?q="+id;
-	}
-
+	
     $scope.search_books = function(q){
         $scope.info.loading = true;
         bookService.search_books(q, 10).then(function(data){
