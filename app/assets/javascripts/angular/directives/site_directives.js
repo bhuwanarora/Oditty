@@ -18,6 +18,36 @@ homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', function
     };
 }]);
 
+
+homeApp.directive('communityFeed', ["$rootScope", 'userService', '$timeout', function($rootScope, userService, $timeout){
+    return {
+        restrict: 'E',
+        scope : {communityFeed: '='},
+        controller: ["$scope", function($scope){
+            $scope.toggle_expand = function(){
+                $scope.expand = !$scope.expand;
+            }
+
+            var _init = function(){
+                $scope.expand = false;
+            }
+
+            $scope.goto_news_page = function(id, community_id){
+                userService.news_visited(id);
+                deleteCookie("active_community");
+                if(angular.isDefined(community_id)){
+                    setCookie("active_community", community_id, 1)
+                }
+                window.location.href = "/news?q="+id;
+            }
+
+            _init();
+        }],
+        templateUrl: '/assets/angular/html/home/_community_feed.html'
+    };
+}]);
+
+
 homeApp.directive('setFocus', ["$timeout", "$parse", "$rootScope", function($timeout, $parse, $rootScope){
     return {
         link: function(scope, element, attrs) {

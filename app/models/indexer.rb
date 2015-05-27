@@ -101,7 +101,7 @@ class Indexer
 			            	index: "no"
 			            },
 			            posted_at:{
-			            	type: "integer",
+			            	type: "string",
 			            	index: "no"
 			            },
 			        	title:{
@@ -272,7 +272,7 @@ class Indexer
 	end
 
 	def get_relationship_count id
-		clause = "MATCH (node)-[r]-() WHERE ID(node)="+id.to_s.strip+" RETURN COUNT(node) AS count"
+		clause = "MATCH (node)-[r]-() WHERE ID(node)="+id.to_s.strip+" RETURN COUNT(r) AS count"
 		clause.execute[0]
 	end
 
@@ -300,7 +300,7 @@ class Indexer
 			message = "#{e} for id #{@response["book_id"]} at #{ Time.now.strftime("%D")}"
 			File.open(@filename, 'a') { |file| file.puts(message) }
 		end
-	end	
+	end
 
 	def index_blog
 		body = { 

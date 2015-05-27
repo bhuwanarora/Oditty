@@ -68,6 +68,10 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
         event.stopPropagation();
     }
 
+    $scope.toggle_navigation_options = function(event){
+        $scope.navigation_options = !$scope.navigation_options;
+    }
+
     var _init = (function(){
         $scope.visible_search_bar = true;
         $scope.info = {};
@@ -76,6 +80,7 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
         var communities = (url.indexOf("communities") > 0);
         var personalised_suggestions = (url.indexOf("personalised_suggestions") > 0);
         var infinity = (url.indexOf("infinity") > 0);
+
         if(communities){
             $scope.active_page = 1;
         }
@@ -88,6 +93,9 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
         else{
             $scope.active_page = -1;
         }
+
+        $scope.random_set = -1;
+
         $scope.data = {"selectedIndex" : 0};
 
         var _handle_labels = function(){

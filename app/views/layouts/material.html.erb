@@ -273,7 +273,7 @@
 
             <md-toolbar md-scroll-shrink class="md-whiteframe-z1 header <% if !@infinity %>'no_shadow'<% end %>">
                 <section layout="row" layout-wrap>
-                    <div flex="20" flex-sm="35" layout="row" layout-align="start center">
+                    <div flex="20" flex-sm="25" layout="row" layout-align="start center">
                         <md-button ng-if="hide_signin" ng-show="info.mobile_search" class="burger padding <% if (@book || @news || @infinity) %>white<% end %>" ng-click="toggleLeft($event)">
                             <a><span class="icon-menu2"></span></a>
                         </md-button>
@@ -336,11 +336,9 @@
                             </md-not-found>
                         </md-autocomplete>
                     </div>
-                    <div layout="row" layout-align="center center" flex="10" flex-md="15" flex-sm="20" ng-if="hide_signin">
+                    <div layout="row" layout-align="center center" flex="10" flex-md="15" flex-sm="20" ng-if="hide_signin" ng-show="info.mobile_search">
                         <md-select ng-model="active_page" class="active_page_menu">
-                            <a href="/home">
-                                <md-option ng-value="-1">Home</md-option>
-                            </a>
+                            <md-option ng-value="-1">Discover</md-option>
                             <a href="/personalised_suggestions">
                                 <md-option ng-value="0">Personalised</md-option>
                             </a>
@@ -378,6 +376,41 @@
                                     </md-tooltip>
                             </md-button>
                         </a>
+                        <div ng-show="info.mobile_search" >
+                            <md-button ng-click="toggle_navigation_options()">
+                                <span class="icon-plus"></span>
+                            </md-button>
+                            <div>
+                                <md-tooltip md-visible="navigation_options" class="navigator md-whiteframe-z1">
+                                    <div layout="column" layout-wrap>
+                                        <div class="navigation_block full_width">
+                                            <a target="_blank" 
+                                                href="http://magazine.readersdoor.com" class="full_width">
+                                                <md-button class="md-button-clear full_width">
+                                                    Magazine
+                                                </md-button>
+                                            </a>
+                                        </div>
+                                        <div class="navigation_block full_width">
+                                            <a target="_blank" 
+                                                href="http://blog.readersdoor.com" class="full_width">
+                                                <md-button class="md-button-clear full_width">
+                                                    Blog
+                                                </md-button>
+                                            </a>
+                                        </div>
+                                        <div class="navigation_block full_width">
+                                            <a target="_blank" 
+                                                href="http://fragments.readersdoor.com" class="full_width">
+                                                <md-button class="md-button-clear full_width">
+                                                    Fragments
+                                                </md-button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </md-tooltip>
+                            </div>
+                        </div>
                     </div>
                     <div layout="row" layout-align="center center" 
                             ng-hide="info.mobile_search" layout-fill layout-padding hide-md hide-lg>

@@ -412,3 +412,8 @@ md-toast.md-default-theme{
     font-size: 14px !important;
     color: #333 !important;
 }
+
+.wrap{
+    white-space: initial !important;
+    word-wrap: break-word;
+}

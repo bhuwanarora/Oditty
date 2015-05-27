@@ -1,4 +1,3 @@
-
 body,
 md-content.md-default-theme{
 	background-color: #ececec;
@@ -613,4 +612,36 @@ md-tooltip .md-content{
     float: right !important;
     font-size: .8em;
     padding-top: 5px;
+}
+
+.navigator{
+  	border-radius: 0px;
+  	width: 200px;
+  	height: 300px;
+  	margin-left: -100px;
+  	color: #333 !important;
+  	font-size: 15px;
+  	font-family: sans-serif;
+  	text-transform: uppercase;
+  	pointer-events: initial;
+}
+
+.navigator, 
+.navigator .md-background,
+.navigator .md-content,
+.navigator .navigation_block{
+	background-color: white !important;
+	padding: 0px !important;
+}
+
+.navigator .navigation_block{
+
+}
+
+.category_title{
+	color: #000;
+  	font-size: 11px;
+  	letter-spacing: 2px;
+  	line-height: 14px;
+  	font-family: AvenirNextLTW01-Regular,Helvetica,Arial,sans-serif; 
 }

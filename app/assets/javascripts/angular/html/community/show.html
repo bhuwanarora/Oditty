@@ -37,15 +37,15 @@
 </div>
 <div hide-sm layout="row" flex>
     <div layout="column"  flex="50">
-        <div ng-repeat="community_feed in active_tag.news" ng-if="$even"
-            ng-include src="'/assets/angular/html/home/_community_feed.html'"></div>
+        <community-feed community-feed="community_feed" 
+            ng-repeat="community_feed in active_tag.news" ng-if="$even"></community-feed>
     </div>
     <div layout="column" flex="50">
-        <div ng-repeat="community_feed in active_tag.news" ng-if="$odd"
-            ng-include src="'/assets/angular/html/home/_community_feed.html'"></div>
+        <community-feed community-feed="community_feed" 
+            ng-repeat="community_feed in active_tag.news" ng-if="$odd"></community-feed>
     </div>
 </div>
 <div show-sm hide>
-    <div ng-repeat="community_feed in active_tag.news" 
-        ng-include src="'/assets/angular/html/home/_community_feed.html'"></div>
+    <community-feed community-feed="community_feed" 
+            ng-repeat="community_feed in active_tag.news"></community-feed>
 </div>
