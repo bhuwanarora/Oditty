@@ -47,27 +47,29 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
             var id = book.book_id || book.id;
             bookService.get_interesting_info(id).then(function(data){
                 $scope.related_info = [];
-                angular.forEach(data[0].info, function(value){
-                    var label = value.labels[0];
-                    var info = value.info.data;
-                    var id = value.id;
+                if(angular.isDefined(data[0])){
+                    angular.forEach(data[0].info, function(value){
+                        var label = value.labels[0];
+                        var info = value.info.data;
+                        var id = value.id;
 
-                    if(label == "Author"){
-                        delete info.indexed_main_author_name;
-                        delete info.gr_url;
-                        delete info.search_index;
-                        var json = {"id": id, "label": "Author"};
-                        info = angular.extend(info, json);
-                    }
-                    else if(label == "Year"){
-                        var json = {"label": "Year"};
-                        info = angular.extend(info, json);
-                    }
-                    else{
-                    }
-                    this.push(info);
-                    $scope.info.loading = false;
-                }, $scope.related_info);
+                        if(label == "Author"){
+                            delete info.indexed_main_author_name;
+                            delete info.gr_url;
+                            delete info.search_index;
+                            var json = {"id": id, "label": "Author"};
+                            info = angular.extend(info, json);
+                        }
+                        else if(label == "Year"){
+                            var json = {"label": "Year"};
+                            info = angular.extend(info, json);
+                        }
+                        else{
+                        }
+                        this.push(info);
+                        $scope.info.loading = false;
+                    }, $scope.related_info);
+                }
             });
         }
 

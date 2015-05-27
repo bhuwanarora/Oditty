@@ -59,7 +59,7 @@ homeApp.controller('searchController', ["$scope", "searchService", "$location", 
                 output = "/news?q="+item.id;
             }
             else if(community_label){
-                output = "/community?q="+item.id;
+                output = "/room?q="+item.id;
             }
             else if(item.show_all){
               output = "/search?q="+item.search_text;

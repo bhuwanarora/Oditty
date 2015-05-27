@@ -19,7 +19,7 @@
         <md-list-item ng-repeat="community in communityFeed.communities | limitTo: 4" 
             layout-align="start start"
             layout-padding layout-wrap layout="row">
-            <a layout="column" layout-align="center center" ng-href="/community?id={{community.id}}">
+            <a layout="column" layout-align="center center" ng-href="/room?id={{community.id}}">
                 <img ng-src="{{community.image_url}}" class="community_circular" alt="{{community.name}}" />
                 <div ng-bind-html="community.name | uppercase" layout-wrap class="category_title" layout-padding></div>
             </a>

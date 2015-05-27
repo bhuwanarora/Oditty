@@ -133,13 +133,13 @@ class WebsiteController < ApplicationController
 		end
 	end
 
-	def room
+	def shelves
 		unless session[:user_id]
 			cookies[:logged] = nil
 			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
 			redirect_to :controller => 'website', :action => 'signup'			
 		else
-			@room = true
+			@shelves = true
 			render :layout => "material"
 		end
 	end
@@ -227,8 +227,8 @@ class WebsiteController < ApplicationController
 		end
 	end
 
-	def community
-		@community = true
+	def room
+		@room = true
 		if BotDetector.detect(request.env['HTTP_USER_AGENT'])
 			render :layout => "social"
 		else

@@ -4,7 +4,7 @@
             class="white fixed_left_panel">
     <h3>Group by</h3>
     <div class="thin_margin" ng-click="group_by_subject()" ng-disabled="info.subject_filter">
-        <a ng-class="{'inactive_link': info.subject_filter}" class="right_anchored">Subject</a>
+        <a ng-class="{'inactive_link': info.subject_filter}" class="right_anchored">Genre</a>
     </div>
     <div class="thin_margin" ng-click="group_by_published_era()" ng-disabled="info.published_era_filter">
         <a ng-class="{'inactive_link': info.published_era_filter}" class="right_anchored">Publishing Era</a>
@@ -13,7 +13,7 @@
         <a ng-class="{'inactive_link': info.author_filter}" class="right_anchored">Author</a>
     </div>
     <div class="thin_margin" ng-click="group_by_reading_time()" ng-disabled="info.reading_time_filter">
-        <a ng-class="{'inactive_link': info.reading_time_filter}" class="right_anchored">Reading Time</a>
+        <a ng-class="{'inactive_link': info.reading_time_filter}" class="right_anchored">Duration</a>
     </div>
     <div class="thin_margin" ng-click="ungroup()">
         <a ng-class="{'inactive_link': !info.reading_time_filter && !info.author_filter && !info.published_era_filter && !info.subject_filter}" class="right_anchored">Ungroup</a>

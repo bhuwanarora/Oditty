@@ -114,7 +114,7 @@
                 <script src="assets/angular/controllers/news_controller.js"></script>
             <% end %>
 
-            <% if @community %>
+            <% if @room %>
                 <script src="assets/angular/services/news_service.js"></script>
                 <script src="assets/angular/controllers/community_controller.js"></script>
             <% end %>
@@ -139,7 +139,7 @@
                 <script src="assets/angular/controllers/library/filters_controller.js"></script>
             <% end %>
 
-            <% if @room %>
+            <% if @shelves %>
                 <script src="assets/angular/directives/room_directives.js"></script>
                 <script src="assets/angular/services/room_service.js"></script>
                 <script src="assets/angular/controllers/room/room_controller.js"></script>
@@ -185,7 +185,7 @@
                 <script src="assets/min/angular/controllers/news_group.min.js"></script>
             <% end %>
 
-            <% if @community %>
+            <% if @room %>
                 <script src="assets/min/angular/controllers/community_group.min.js"></script>
             <% end %>
 
@@ -201,7 +201,7 @@
                 <script src="assets/min/angular/controllers/infinity_group.min.js"></script>
             <% end %>
 
-            <% if @room %>
+            <% if @shelves %>
                 <script src="assets/min/angular/controllers/room_group.min.js"></script>
             <% end %>
 
@@ -306,24 +306,24 @@
                     <div layout="row" layout-align="center center" flex="10" flex-md="15" flex-sm="30"
                         ng-show="info.mobile_search">
                         <md-select ng-model="active_page" class="active_page_menu">
-                            <md-option ng-value="-1">Discover</md-option>
+                            <md-option ng-value="-1" ng-disabled="true">Discover</md-option>
                             <a href="/personalised_suggestions">
-                                <md-option ng-value="0">Personalised</md-option>
+                                <md-option ng-value="0">Exclusive</md-option>
                             </a>
                             <a href="/communities">
-                                <md-option ng-value="1">Communities</md-option>
+                                <md-option ng-value="1">Insight</md-option>
                             </a>
                             <a href="/infinity">
-                                <md-option ng-value="2">Infinity</md-option>
+                                <md-option ng-value="2">Beyond</md-option>
                             </a>
                         </md-select>
                     </div>
                     <div flex="20" flex-sm="35" layout="row" layout-align="end center">
-                        <a href="/room" ng-show="info.mobile_search">
+                        <a href="/shelves" ng-show="info.mobile_search">
                             <md-button class="small-padding">
                                 <span class="icon-books"></span>
                                 <md-tooltip >
-                                    Room
+                                    Shelves
                                 </md-tooltip>
                             </md-button>
                         </a>
