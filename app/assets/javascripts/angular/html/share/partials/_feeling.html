@@ -1,4 +1,4 @@
-<div layout="column" class="menu_details margin_top white">
+<div layout="column" class="menu_details margin_top white md-whiteframe-z1">
 	<div layout-padding class="light_grey_color custom_title roboto">
 		<i>What are you feeling?</i>
 	</div>
@@ -17,13 +17,13 @@
 	<md-button ng-repeat="emotion in emotions | filter: {name: info.search_emotion} | limitTo: 4" 
 				layout-padding ng-if="info.search_emotion"
 				ng-click="set_emotion(emotion)"
-				class="menu_details margin_top capitalize white md-button-clear custom_title overlap">
+				class="menu_details margin_top capitalize white md-button-clear custom_title overlap md-whiteframe-z1">
 		{{emotion.name}}
 	</md-button>
 	<md-button ng-repeat="emotion in emotions | limitTo: 4" layout-padding 
 				ng-if="!info.search_emotion || (info.search_emotion == '')"
 				ng-click="set_emotion(emotion)"
-				class="menu_details margin_top capitalize white md-button-clear custom_title overlap">
+				class="menu_details margin_top capitalize white md-button-clear custom_title overlap md-whiteframe-z1">
 		{{emotion.name}}
 	</md-button>
 </div>

@@ -1,22 +1,17 @@
-<md-content ng-controller="libraryController" check-scroll-bottom="get_popular_books()" ng-model="info" 
-        class="white"
-        id="infinity_page">
-    <div ng-include src="'/assets/angular/html/library/_header.html'" ng-hide="constant.show_book"></div>
-    <section>
-        <section layout="row" layout-wrap>
-            <div flex="20" hide-sm layout="row" layout-align="end start" 
-                 ng-include src="'/assets/angular/html/library/shared/_left_panel.html'" layout-fill>
-            </div>
-            <div flex="60" flex-sm="100"
-                 ng-include src="'/assets/angular/html/library/show.html'"  
-                 layout-align="start start" layout-fill>
-            </div>
-            <div ng-include src="'/assets/angular/html/library/shared/_right_panel.html'" 
-                 flex="20" layout="column" layout-align="start start" layout-fill>
-            </div>
-        </section>
-    </section>
-</md-content>
+<div ng-include src="'/assets/angular/html/library/_header.html'" ng-hide="constant.show_book" class="primary"></div>
+<div ng-include src="'/assets/angular/html/shared/share.html'" class="primary"></div>
+<section layout="row" layout-wrap class="feed_margin">
+    <div flex="20" hide-sm layout="row" layout-align="end start"  class="background" 
+         ng-include src="'/assets/angular/html/library/shared/_left_panel.html'" layout-fill>
+    </div>
+    <div flex="60" flex-sm="100"
+         ng-include src="'/assets/angular/html/library/show.html'" class="background md-whiteframe-z1" 
+         layout-align="center center" layout-fill>
+    </div>
+    <div ng-include src="'/assets/angular/html/library/shared/_right_panel.html'" class="background" 
+         flex="20" layout="column" layout-align="start start" layout-fill>
+    </div>
+</section>
 
 <style>
     .subheaderdemoBasicUsage .face{
@@ -27,11 +22,10 @@
     }
 
     .filters_header{
-        background-color: white !important;
+        /*background-color: white !important;*/
         position: relative;
         box-shadow: none;
         padding: 7px;
-        border-bottom: 1px solid #DDDDDD;
     }
 
     .md-sticky-clone{

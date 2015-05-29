@@ -1,4 +1,4 @@
-<md-card class="community" ng-if="communityFeed.title && communityFeed.title != '' && communityFeed.title != null">
+<md-card class="md-whiteframe-z1 community" ng-if="communityFeed.title && communityFeed.title != '' && communityFeed.title != null">
     <md-card-content class="content">
         <div class="big_title"><a ng-click="goto_news_page(communityFeed.id || communityFeed.news_id)">{{communityFeed.title}}</a></div>
         <div class="less_important">News, {{communityFeed.created_at | timestamp | date:'dd MMM'}}</div><br/>

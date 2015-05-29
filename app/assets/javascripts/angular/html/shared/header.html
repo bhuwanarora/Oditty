@@ -1,50 +1,24 @@
 <section layout="row" layout-wrap>
-    <div flex="25" flex-md="15" layout="row" layout-align="start center">
-        <md-button class="burger padding" ng-click="toggleLeft($event)">
-            <a><span class="icon-menu2"></span></a>
-        </md-button>
-        <div layout-align-lg="center center">
-            <a class="logo" href="/home">
-                <img src="assets/rd_icon.png"/>
-                <span hide-sm hide-md>ReadersDoor</span>
-            </a>
-        </div>
+    <div ng-include src="'/assets/angular/html/shared/logo.html'"
+        flex="20" flex-sm="25" layout="row" layout-align="start center"></div>
+    <div flex="50" flex-md="45" 
+         ng-controller="searchController"
+         flex-sm="10" 
+         layout="row" 
+         layout-align="end center" 
+         layout-align-sm="start center"
+         ng-include src="'/assets/angular/html/shared/search.html'">
     </div>
-    <% unless @customise %>
-        <div flex="50" flex-md="70" layout="row" layout-align="end center" layout-align-sm="start center">
-            <div show-sm hide>
-                <span class="icon-search"></span>
-            </div>
-            <div hide-sm class="search_icon">
-                <span class="icon-search"></span>
-            </div>
-            <md-autocomplete
-                md-selected-item="selectedItem1"
-                md-search-text="searchText"
-                md-items="item in querySearch(searchText)"
-                md-item-text="display"
-                class="search"
-                hide-sm
-                flex="85"
-                placeholder="Search books, topics and more...">
-                <span md-highlight-text="searchText" >{{item.display}}</span>
-            </md-autocomplete>
-            <md-button class="library">
-                <a href="/infinity">Infinity</a>
-            </md-button>
-        </div>
-        <div flex layout="row" layout-align="end center">
-            <a href="/room"><md-button class="small-padding">
-                <span class="icon-checkbox-unchecked"></span>
-            </md-button></a>
-            <md-button class="small-padding" ng-click="toggle_notifications($event)">
-                <span class="icon-bell"></span>
-            </md-button>
-            <a href="/profile">
-                <md-button class="profile_link">
-                    <img ng-src="{{user.image_url | default_profile}}" class="circular">
-                </md-button>
-            </a>
-        </div>
-    <% end %>
+    <div layout="row" layout-align="center center" flex="10" flex-md="15" flex-sm="20" 
+         ng-if="info.hide_signin" ng-show="info.mobile_search"
+         ng-include src="'/assets/angular/html/shared/discovery_options.html'"></div>
+    <div flex="20" flex-sm="35" layout="row" layout-align="end center" ng-if="info.hide_signin"
+         ng-include src="'/assets/angular/html/shared/right_nav_options.html'"></div>
+    <div layout="row" layout-align="center center" 
+         ng-hide="info.mobile_search" layout-fill layout-padding 
+         hide-md hide-lg ng-if="info.hide_signin"
+         ng-include src="'/assets/angular/html/shared/mobile_search.html'"></div>
+    <div flex="30" flex-sm="65" layout="row" layout-padding layout-align="end center" 
+        ng-if="!info.hide_signin" ng-include src="'/assets/angular/html/shared/sign_in.html'">
+    </div>
 </section>

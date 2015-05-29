@@ -1,5 +1,6 @@
 body,
-md-content.md-default-theme{
+md-content.md-default-theme,
+.background{
 	background-color: #ececec;
 }
 
@@ -27,16 +28,16 @@ a:active{
 }
 
 .header{
-	background-color: white !important;
-	color: rgba(145, 140, 140, 1) !important;
 	box-shadow: none;
 	min-height: 48px !important;
-	position: relative;
 	z-index: 3;
+	background-color: #00BCD4;
+	color: white;
+	width: 100%;
 }
 
 md-card{
-	box-shadow: none !important;
+	/*box-shadow: none !important;*/
 }
 
 .no_shadow{
@@ -44,7 +45,7 @@ md-card{
 }
 
 .header .md-button{
-	color: rgba(145, 140, 140, 1) !important;
+	/*color: rgba(145, 140, 140, 1) !important;*/
 }
 
 .carddemoBasicUsage md-card {
@@ -52,12 +53,12 @@ md-card{
 }
 
 md-card{
-	margin-top: 25px !important;
+	/*margin-top: 25px !important;*/
 	background-color: white;
 }
 
 md-content{
-	height: 100vh !important;
+	max-height: 100vh !important;
 	padding-bottom: 10px;
 	/*margin-top: 0px !important;*/
 	/*margin-bottom: 100px !important;*/
@@ -65,8 +66,8 @@ md-content{
 
 .burger{
 	height: 54px;
-	background-color: #ececec;
-	color: rgba(145, 140, 140, 1) !important;
+	/*background-color: #ececec;*/
+	/*color: rgba(145, 140, 140, 1) !important;*/
 }
 
 /*md-tabs a{
@@ -78,10 +79,6 @@ md-content{
 	font-size: 1.2em;
 }
 
-.signup_title{
-	padding-left: 50px !important;
-}
-
 .logo:hover{
 	text-decoration: none !important;
 	color: #333;
@@ -89,11 +86,11 @@ md-content{
 
 .logo img{
 	position: absolute;
-	z-index: 99999999;
-	left: 45px;
-	top: 0px;
-	width: 54px;
-	height: 64px;
+  	z-index: 99999999;
+  	left: 1px;
+  	top: -17px;
+  	width: 54px;
+  	height: 64px;
 }
 
 .search{
@@ -259,10 +256,20 @@ md-toolbar{
 	right: 10% !important;
 }
 
+.primary{
+	background-color: #00BCD4;
+}
+
+.share_container{
+	position: relative;
+  	width: 100%;
+  	height: 56px;
+}
+
 .fixed_share{
-	margin-right: 0px;
-  	font-size: 18px;
-  	box-shadow: 0 3px 5px -1px rgba(0,0,0,.2),0 6px 10px 0 rgba(0,0,0,.14),0 1px 18px 0 rgba(0,0,0,.12) !important;
+  position: absolute;
+  right: 35px;
+  top: 25px;
 }
 
 .fixed_share.ng-enter,
@@ -489,15 +496,10 @@ and (max-width : 800px){
 	}
 
 	.share{
-		position: fixed;
-		bottom: 10px;
-		background-color: #427fed;
-		color: #fff;
 		width: initial;
 		height: initial;
 		border-radius: 20px;
 		padding: 10px;
-		left: 10px;
 	}
 
 	.share:hover{

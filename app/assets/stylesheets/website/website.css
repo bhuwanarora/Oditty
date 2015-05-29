@@ -125,7 +125,7 @@ input:focus{
 }
 
 .yellow{
-    background-color: #E2B503 !important;   
+    background-color: #FFC107 !important;   
 }
 
 .white_color{
@@ -161,7 +161,7 @@ input:focus{
 }
 
 .red{
-    background-color: #DD4B39 !important;
+    background-color: #F44336 !important;
 }
 
 .light_grey{
@@ -234,7 +234,7 @@ input:focus{
 }
 
 .orange{
-    background-color: #d73d32 !important;
+    background-color: #FF9800 !important;
 }
 
 .purple{
@@ -416,4 +416,17 @@ md-toast.md-default-theme{
 .wrap{
     white-space: initial !important;
     word-wrap: break-word;
+}
+
+.square{
+    width: 60px;
+    height: 60px;
+}
+
+.feed_margin{
+    margin-top: 90px;
+}
+
+.z_index_1{
+    z-index: 1;
 }

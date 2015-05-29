@@ -1,22 +1,22 @@
-<md-content ng-controller="feedController" check-scroll-bottom="get_community_feed()" id="home">
-    <!-- <div class="material_cover md-whiteframe-z1"></div> -->
-	<div layout="row" layout-align="space-between center" class="light_grey">
-		<div></div>
-		<md-select ng-model="info.active_region" placeholder="Select Region" 
-            ng-change="change_feed()">
-	      	<md-optgroup label="Regions">
-	        	<md-option ng-value="region.id" ng-repeat="region in regions">{{region.name}}</md-option>
-	      	</md-optgroup>
-	    </md-select>
-	</div>
-	<div layout="row" layout-wrap>
-	    <div flex="10" hide-sm flex-md="10"></div>
-	    <div flex="80" flex-sm="100" flex-md="80">
-	        <div ng-include src="'/assets/angular/html/home/main.html'"></div>
-	    </div>
-	    <div flex="10" hide-sm flex-md="10"></div>
-	</div>
-</md-content>
+
+<!-- <div class="material_cover md-whiteframe-z1"></div> -->
+<div layout="row" layout-align="space-between center" class="light_grey">
+	<div></div>
+	<!-- <md-select ng-model="info.active_region" placeholder="Select Region" 
+        ng-change="change_feed()">
+      	<md-optgroup label="Regions">
+        	<md-option ng-value="region.id" ng-repeat="region in regions">{{region.name}}</md-option>
+      	</md-optgroup>
+    </md-select> -->
+    
+</div>
+<div layout="row" layout-wrap>
+    <div flex="10" hide-sm flex-md="10"></div>
+    <div flex="80" flex-sm="100" flex-md="80">
+        <div ng-include src="'/assets/angular/html/home/main.html'"></div>
+    </div>
+    <div flex="10" hide-sm flex-md="10"></div>
+</div>
 <style>
 	a:hover{
 		text-decoration: underline!important;

@@ -1,4 +1,4 @@
-<md-content layout="column" layout-padding class="fixed_right_panel white" 
+<div layout="column" layout-padding class="fixed_right_panel" 
           layout-align="start start"
           hide-sm
           ng-if="constant.show_book">
@@ -31,9 +31,10 @@
           <div class="counter" layout="row" layout-align="center center" ng-if="book.bookmark_count">
                <div>{{book.bookmark_count}}</div>
           </div>
-          <bookmark data="{'id': (book.id || book.book_id), 'type': 'Book'}" shelves="book.shelves" custom="true"></bookmark>
+          <bookmark data="{'id': (book.id || book.book_id), 'type': 'Book'}" 
+               shelves="book.shelves" custom="true"></bookmark>
      </div>
-</md-content>
+</div>
 <style> 
 /*     .fixed_right_panel{
           position: fixed;

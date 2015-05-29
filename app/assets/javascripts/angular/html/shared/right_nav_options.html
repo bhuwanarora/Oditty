@@ -1,0 +1,26 @@
+<a href="/shelves" ng-show="info.mobile_search">
+    <md-button class="small-padding">
+        <span class="icon-books"></span>
+        <md-tooltip >
+            Shelves
+        </md-tooltip>
+    </md-button>
+</a>
+<md-button ng-show="info.mobile_search" 
+    class="small-padding" 
+    ng-click="toggle_notifications($event)">
+    <span class="icon-hearts"></span>
+    <md-tooltip >
+        Notifications
+    </md-tooltip>
+</md-button>
+<a href="/profile" ng-show="info.mobile_search">
+    <md-button class="profile_link">
+        <img ng-src="{{user.image_url | default_profile}}" 
+            class="circular">
+            <md-tooltip >
+                Profile
+            </md-tooltip>
+    </md-button>
+</a>
+<div ng-show="info.mobile_search" ng-include src="'/assets/angular/html/shared/site_options.html'"></div>

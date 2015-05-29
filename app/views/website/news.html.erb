@@ -1,36 +1,38 @@
-<div layout="column" ng-controller="newsController" id="news">
-    <div flex layout="row" layout-align="space-between">
-        <div></div>
-        <md-switch ng-model="info.circles" 
-                   ng-click="toggle_circles()"
-                   aria-label="Community Circles">
-        </md-switch>
-    </div>
-    <div ng-if="info.circles">
-        <section layout="row">
-            <div ng-include src="'/assets/angular/html/news/show.html'" 
-                 layout="row" layout-align="center center"
-                 layout-sm="column"
-                 flex>
-            </div>
-            <!-- <div flex="65" ng-if="show_details" class="animate-fast">
-            </div> -->
-        </section>
-    </div>
-    <div ng-if="!info.circles" layout="row">
-        
-        <div flex="15" flex-md="10" hide-sm></div>
-        <div ng-include src="'/assets/angular/html/news/show_grid.html'" 
-             flex="70" flex-md="80" flex="100" layout="column"></div>
-        <div flex="15" flex-md="10" hide-sm></div>
-    </div>
-     <news-scroller layout="row" 
-        layout-align="center" 
-        layout-padding
-        ng-hide="!info.circles"
-        class="news_footer">
-     </news-scroller>
+<div flex layout="row" layout-align="space-between" class="primary">
+    <md-switch ng-model="info.circles" 
+               ng-click="toggle_circles()"
+               aria-label="Community Circles">
+    </md-switch>
+    <div></div>
 </div>
+<div class="primary" layout="row">
+    <div flex="15" flex-md="10" hide-sm></div>
+    <div flex="70" flex-md="80" flex="100" class="big_title">{{info.active_news.title | uppercase}}</div>
+    <div flex="15" flex-md="10" hide-sm></div>
+</div>
+<div ng-include src="'/assets/angular/html/shared/share.html'" class="primary"></div>
+<div ng-if="info.circles" class="feed_margin">
+    <section layout="row">
+        <div ng-include src="'/assets/angular/html/news/show.html'" 
+             layout="row" layout-align="center center"
+             layout-sm="column"
+             flex>
+        </div>
+    </section>
+</div>
+<div ng-if="!info.circles" layout="row" class="feed_margin">
+    <div flex="15" flex-md="10" hide-sm></div>
+    <div ng-include src="'/assets/angular/html/news/show_grid.html'" 
+         flex="70" flex-md="80" flex="100" layout="column" class="white md-whiteframe-z1"></div>
+    <div flex="15" flex-md="10" hide-sm></div>
+</div>
+
+<news-scroller layout="row" 
+    layout-align="center" 
+    layout-padding
+    ng-hide="!info.circles"
+    class="news_footer">
+</news-scroller>
 <!-- <d3-circles></d3-circles> -->
 <!-- <d3-bars data="d3Data"></d3-bars> -->
 <style>

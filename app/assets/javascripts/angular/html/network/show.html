@@ -1,14 +1,14 @@
 <!-- <div ng-include src="'/assets/angular/html/profile/invite.html'"></div> -->
-<md-item ng-repeat="user in users_list" class="white user_card" layout-margin>
+<md-item ng-repeat="user in users_list" class="white user_card md-whiteframe-z1" layout-margin>
     <md-item-content layout="row" flex class="clear">
-        <div ng-repeat="book in user.books" class="network_book">
+        <div ng-repeat="book in user.books" class="network_book" ng-if="book.id">
             <a ng-href="/book?q={{book.id}}">
             <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
             </a>
         </div>
     </md-item-content>
     <md-item-content layout="row" layout-align="center center" flex class="user_cover_image clear">
-        <img ng-src="{{user.image_url | default_profile}}" class="circular user_photo" flex="60">
+        <img ng-src="{{user.image_url | default_profile}}" class="square user_photo" flex="60">
     </md-item-content>
     <md-item-content layout="row" layout-align="center center" class="clear">
         <a ng-href="/profile?p={{user.id}}">
@@ -50,7 +50,7 @@
     .user_card{
         width: 240px;
         padding: 0px;
-        height: 310px;
+        max-height: 310px;
     }
 
     .user_cover_image{

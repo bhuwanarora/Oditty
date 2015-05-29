@@ -1,0 +1,14 @@
+<md-button ng-disabled="!info.hide_signin" 
+	ng-show="info.mobile_search" class="burger padding <% if (@book || @news || @infinity) %>white<% end %>" 
+	ng-click="toggleLeft($event)">
+    <a><span class="icon-menu2"></span></a>
+</md-button>
+<div ng-show="info.mobile_search" 
+     layout-align-lg="center center">
+    <a class="logo relative" href="/home">
+        <img src="assets/rd_icon.png" />
+
+        <span hide-sm hide-md >ReadersDoor</span>
+        
+    </a>
+</div>

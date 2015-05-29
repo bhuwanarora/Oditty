@@ -1,8 +1,4 @@
-<md-content ng-controller="authorController" layout="row" layout-wrap class="white" 
-     check-scroll-bottom="get_books()"
-     ng-keydown="keypress_scroll($event)">
-    <div ng-include src="'/assets/angular/html/author/show.html'"></div>
-</md-content>
+<div ng-include src="'/assets/angular/html/author/show.html'"></div>
 <style>
     .author_thumb{
         width: 100%;
@@ -10,9 +6,9 @@
     }
     .book_container{
         min-height: 350px; 
-        background-color: white;
         z-index: 1;
         position: relative;
+        margin-top: -100px;
     }
     .author_header{
         z-index: 3;
@@ -74,7 +70,7 @@
     }
 
     .follow_author{
-        position: fixed;
+        position: absolute;
         z-index: 2;
         right: 10px;
         top: 67px;
@@ -89,4 +85,5 @@
         margin-top: 10px;
         font-size: 0.9em;
     }
+
 </style>
