@@ -1,52 +1,64 @@
 <div>
-	<div class="cover_wrapper">
-		<div class="tagline ">
-			<div class="small_title">
-				Door to Real Book Lovers	
+	<div class="cover_wrapper" layout="column" layout-align="space-between" 
+		ng-class="{'cover_reduced_wrapper': info.hide_signin}">
+		<div></div>
+
+		<div class="tagline" layout="row" layout-align="center center">
+			<!-- <img src="assets/rd_icon.png" /> -->
+			<div layout-padding>
+	        	<div ng-hide="info.hide_signin">
+	        		Planning to read a book?
+	        	</div>
+				<div class="small_title" layout="row" layout-align="center">
+					<div>
+						Choose the Book Discovery option below
+					</div>
+				</div>
 			</div>
 		</div>
-		<div class="home_wrapper">
-		</div>
-		<img src="https://s3-ap-southeast-1.amazonaws.com/rd-genres/home3.jpg" class="cover_image">
+		<div></div>
+		<!-- <div class="home_wrapper"> -->
+		<!-- </div> -->
+		<!-- <img src="https://s3-ap-southeast-1.amazonaws.com/rd-genres/home3.jpg" class="cover_image"> -->
 	</div>
 </div>
-<div layout="column" layout-align="center center" class="background reverse_margin">
-	<div class="big_title instruct_tagline" layout="row" layout-align="center center" layout-padding>
+<div layout="column" layout-align="center center" class="">
+	<!-- <div class="big_title instruct_tagline" layout="row" layout-align="center center" layout-padding>
 		<div>
 			<div class="small_title">Planning to read a book?</div>
 			<div>Choose the Book Discovery option</div>
 		</div>
-	</div>
+	</div> -->
+
 	<div layout="row" layout-sm="column" layout-md="column" layout-align="center center" 
-		class="full_width z_index_1">
-		<md-button ng-click="handle_personalised_redirect($event)" id="suggestions"
-		   flex="30" flex-md="100" class="nav_options white md-whiteframe-z1" layout-margin flex-sm="100">
-			<section layout-padding layout="column" layout-align="center" class="wrap">
-				<div layout-padding>Personalised Suggestions</div>
-				<i class="description">
-					Suggestions based on your Taste.
-				</i>
-			</section>
-		</md-button>&nbsp;<br/>
+		class="full_width z_index_1" layout-padding>
 		<md-button ng-click="handle_news_redirect($event)" id="news"
-			flex="30" flex-md="100" class="nav_options white md-whiteframe-z1" layout-margin
-			 flex-sm="100">
-			<section layout-padding layout="column" layout-align="center" class="wrap">
-				<div layout-padding>Books Via News</div>
-				<i class="description">Imbibe knowledge through News.
-				</i>
-			</section>
-		</md-button>&nbsp;<br/>
-		<md-button ng-click="handle_infinity_redirect($event)" id="filters"
-			flex="30" flex-md="100" class="nav_options white md-whiteframe-z1" layout-margin
-			flex-sm="100">
-			<section layout-padding layout="column" layout-align="center" class="wrap">
-				<div layout-padding>Filters</div>
-				<i class="description">
-					Genre, Author, Era, Duration. Choose.
-				</i>
-			</section>
+			 flex="30" flex-md="100" flex-sm="100"
+			 class="pointer nav_options md-whiteframe-z1" >
+			<div layout-padding>Books Via News</div>
+			<div class="description">Imbibe knowledge through News.
+			</div>
+			
 		</md-button>
+		<md-button ng-click="handle_personalised_redirect($event)" id="suggestions"
+		     flex="30" flex-md="100" flex-sm="100"
+		     class="pointer nav_options md-whiteframe-z1" >
+			<div layout-padding>Personalised Suggestions</div>
+			<div class="description">
+				Suggestions based on your Taste.
+			</div>
+			
+		</md-button>
+		<md-button ng-click="handle_infinity_redirect($event)" id="filters"
+			  flex="30" flex-md="100" flex-sm="100"
+			 class="pointer nav_options md-whiteframe-z1">
+			<div layout-padding>Filters</div>
+			<div class="description">
+				Genre, Author, Era, Duration. Choose.
+			</div>
+			
+		</md-button>
+		
 	</div>
 	<div layout-padding></div>
 	<div layout-padding></div>
@@ -54,31 +66,91 @@
 	<div layout-padding></div>
 	<div layout-padding></div>
 </div>
+<div class="big_title hello_world" layout-padding
+	layout="column" layout-align="space-between">
+	<div>
+		Hello World
+	</div>
+	<div  layout="row" layout-align="space-between">
+		<div>
+		</div>
+		<div class="white md-whiteframe-z1 about_card" layout-padding layout="row">
+			<div flex="10"></div>
+			<div flex="80">
+				<div layout-padding></div>
+				<div layout-padding></div>
+				<div layout="column" layout-align="space-between">
+					<div>
+						Built on everything we learnt from the journeys of several book lovers, ReadersDoor is a fresh start to help spread the love of books.
+					</div>
+					<div layout="row" layout-align="space-between">
+						<div></div>
+						<div>
+							<a href="/landing_page">How it works</a>
+						</div>
+					</div>
+				</div>
+				<div layout-padding></div>
+				<div layout-padding></div>
+			</div>
+			<div flex="10"></div>
+		</div>
+		
+	</div>
+</div>
+<div layout-padding></div>
+<div layout-padding></div>
+<div layout-padding></div>
+<div layout-padding></div>
+<md-tabs md-dynamic-height md-center-tabs>
+	<md-tab aria-controls="tab1-content"
+			id="tab1"
+			label="Publishers">
+		<div layout="row" layout-align="center center" 
+			layout-padding
+			class="publishers" layout-sm="column">
+			<img src="/assets/hachette.jpg" layout-padding>
+			<img src="/assets/authorsink.jpeg" layout-padding>
+		</div>
+	</md-tab>
+	<md-tab aria-controls="tab2-content"
+			id="tab2"
+			label="Authors">
+
+	</md-tab>
+</md-tabs>
 <div class="light_grey">
-	
 	<div layout-align="center center" ng-include="'assets/angular/html/shared/partials/social_links.html'"></div>
 </div>
+<div class="small_title" layout="row" layout-align="center center">
+	<div class="less_important" layout-padding>Books are dangerous for the mind. Handle with care.</div>
+</div>
 <style>
-	.header{
-		background-color: transparent !important;
-  		position: absolute;
+	.header, .social_links{
+		background-color: #F7F7F7 !important;
+  		/*position: absolute;*/
 	}
 
 	.burger{
 		background-color: transparent !important;
 	}
 
-	.header .md-button, 
 	.logo,
 	.search label,
 	.search input,
-	.active_page_menu{
+	.active_page_menu,
+	.pointer,
+	.hello_world .about_card{
+		color: #444444 !important;
+	}
+
+	.header .white_color{
 		color: white !important;
 	}
 
 	.search{
 		border-bottom: 1px solid white;
-  		color: white;
+  		color: #444444;
 	}
 
 	.nav_options{
@@ -86,7 +158,7 @@
 		font-family: AvenirNextLTW01-Regular,Helvetica,Arial,sans-serif;
 		font-weight: 400;
 		font-size: 16px;
-		color: #000;
+		color: white !important;
 		letter-spacing: 3px;
 		line-height: 19px;
 		text-transform: uppercase;
@@ -106,29 +178,56 @@
 	}
 
 	#suggestions{
-		background: url("/assets/options.jpg") 0 0;
+		background-image: url('http://g-design.storage.googleapis.com/production/v2/assets/palette-perfect-209ab219.svg');
 	}
 
 	#news{
-		background: url("/assets/options.jpg") 50% 0;
+		background-image: url("/assets/news.svg");
 	}
 
 	#filters{
-		background: url("/assets/options.jpg") 100% 0;
+		background-color: #FBBC05 !important;
+		/*background: url("/assets/filters.gif");*/
 	}
 
+	#suggestions:hover, 
+	#news:hover, 
+	#filters:hover{
+		box-shadow: 0 5px 5px -3px rgba(0,0,0,.2),0 8px 10px 1px rgba(0,0,0,.14),0 3px 14px 2px rgba(0,0,0,.12);
+	}
+
+	#suggestions, 
+	#news, 
+	#filters{
+		background-size: cover;
+	  	color: white;
+	  	background-position: 100%;
+	}
+
+
 	.tagline{
-		font-weight: 800;
-		color: white;
+		/*font-family: "Open Sans" "san-selif";*/
+		font-weight: 400;
+  		line-height: 1.4em;
 		font-size: 60px;
-		line-height: 60px;
-		text-shadow: 1px 1px 6px rgba(0,0,0,0.2);
-		z-index: 1;
-		text-align: center;
 		width: 100%;
 		z-index: 2;
-		position: absolute;
+		/*position: absolute;*/
 		top: 40%;
+	}
+
+	.tagline img{
+		width: 110px;
+	}
+
+	.tagline .small_title{
+		font-weight: 300;
+		margin: 0;
+		padding: 0;
+		font-size: 1.4em;
+		color: #999;
+		line-height: 1.4em;
+		font-size: 22px;
 	}
 
 	.instruct_tagline{
@@ -139,7 +238,7 @@
 		font-size: 30px;
 		text-transform: uppercase;
 		font-weight: 700;
-		color: white;
+		/*color: white;*/
 		/*text-shadow: 1px 1px 6px rgba(0,0,0,0.2);*/
 		z-index: 1;
 	}
@@ -166,8 +265,32 @@
 		overflow: hidden;
 	}
 
+	.cover_reduced_wrapper{
+		height: 30vh;
+	}
+
 	.reverse_margin{
 		margin-top: -150px;
+	}
+
+	.publishers img{
+		height: 100px;
+	}
+
+	.hello_world{
+		background-color: #8BC34A;
+  		height: 400px;
+  		color: white;
+	}
+
+	.hello_world .about_card a{
+		color: #8BC34A;
+	}
+
+	.hello_world .about_card{
+		height: 300px;
+		margin-top: 100px;
+		width: 400px;
 	}
 
 
@@ -176,7 +299,7 @@
 	and (max-width : 800px){
 
 		.nav_options{
-			height: inherit !important;
+			width: 100%;
 			font-weight: 400;
 			font-size: 16px;
 			letter-spacing: 3px;
@@ -185,9 +308,13 @@
 
 		.tagline{
 			font-weight: 400;
-  			font-size: 40px;
+  			font-size: 30px;
   			line-height: 40px;
   			top: 30%;
+		}
+
+		.tagline .small_title{
+			font-size: 18px;
 		}
 
 		.cover_image{
@@ -220,5 +347,6 @@
 	    
 
 	}
+
 
 </style>

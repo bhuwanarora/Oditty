@@ -339,7 +339,11 @@
             <% end %>
                     <div ng-show="info.mobile_search" flex>
                         <div class="header <% if @profile || @shelves || @network %>yellow<% end %>">
-                            <div ng-include src="'/assets/angular/html/shared/header.html'"></div>
+                            <% if @home || @signup %>
+                                <div ng-include src="'/assets/angular/html/shared/home_header.html'"></div>
+                            <% else %>
+                                <div ng-include src="'/assets/angular/html/shared/header.html'"></div>
+                            <% end %>
                             <% unless @home || @profile || @news || @network || @room || @infinity || @signup%>
                                 <div ng-include src="'/assets/angular/html/shared/share.html'"></div>
                             <% end %>
