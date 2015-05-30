@@ -7,7 +7,7 @@
 </div>
 <div class="primary" layout="row">
     <div flex="15" flex-md="10" hide-sm></div>
-    <div flex="70" flex-md="80" flex="100" class="big_title">{{info.active_news.title | uppercase}}</div>
+    <div flex="70" flex-md="80" flex="100" class="rd_title" layout-padding>{{info.active_news.title | uppercase}}</div>
     <div flex="15" flex-md="10" hide-sm></div>
 </div>
 <div ng-include src="'/assets/angular/html/shared/share.html'" class="primary"></div>
@@ -21,10 +21,10 @@
     </section>
 </div>
 <div ng-if="!info.circles" layout="row" class="feed_margin">
-    <div flex="15" flex-md="10" hide-sm></div>
+    <div flex="15" hide-md hide-sm></div>
     <div ng-include src="'/assets/angular/html/news/show_grid.html'" 
-         flex="70" flex-md="80" flex="100" layout="column" class="white md-whiteframe-z1"></div>
-    <div flex="15" flex-md="10" hide-sm></div>
+         flex="70" flex-md="100" flex-sm="100" layout="column" class="white md-whiteframe-z1"></div>
+    <div flex="15" hide-md hide-sm></div>
 </div>
 
 <news-scroller layout="row" 

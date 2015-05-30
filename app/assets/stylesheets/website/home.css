@@ -245,10 +245,6 @@ md-toolbar{
 	z-index: 99999;
 }
 
-.left_panel_container md-backdrop{
-	z-index: 0;
-}
-
 .md-fab-custom-right{
 	top: 70% !important;
 	right: 10% !important;
@@ -616,9 +612,9 @@ md-tooltip .md-content{
 
 .navigator{
   	border-radius: 0px;
-  	width: 200px;
-  	height: 300px;
-  	margin-left: -100px;
+  	width: 400px;
+  	/*height: 300px;*/
+  	margin-left: -185px;
   	color: #333 !important;
   	font-size: 15px;
   	font-family: sans-serif;
@@ -635,7 +631,10 @@ md-tooltip .md-content{
 }
 
 .navigator .navigation_block{
-
+	width: 100px;
+}
+.navigator .navigation_block i{
+	font-size: 48px;
 }
 
 .category_title{
@@ -650,4 +649,47 @@ md-tooltip .md-content{
     margin-top: 0px !important;
     max-width: 100px !important;
     position: fixed;
+}
+
+
+.rd_book_backup_cover,
+.rd_book_image_cover,
+.rd_slider_wrapper,
+.rd_book_shadow{
+	width: 130px;
+	height: 180px;
+}
+
+.rd_book_backup_cover{
+    position: absolute;
+    color: white;
+    white-space: normal;
+}
+
+.rd_book_backup_cover h3{
+	font-weight: 400;
+	overflow: hidden;
+	margin: 0px;
+}
+
+.rd_book_image_cover{
+	position: relative;
+}
+
+.rd_slider_wrapper{
+		overflow: hidden;
+		z-index: 1;
+}
+
+.rd_book_shadow{
+	position: absolute;
+	z-index: 1;
+}
+
+.rd_title{
+	color: white;
+  	font-weight: 600;
+  	font-size: 40px;
+  	text-shadow: 1px 1px 6px rgba(0,0,0,0.2);
+  	font-family: sans-serif;
 }

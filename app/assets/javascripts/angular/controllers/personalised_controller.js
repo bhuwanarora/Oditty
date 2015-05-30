@@ -35,6 +35,7 @@ homeApp.controller('personalisedController', ["$scope", "userService", '$rootSco
         if(angular.isUndefined($scope.friends) || $scope.friends.length == 0){
             $scope.info.active_tab = "friend_shelves";
             $scope.info.loading = true;
+            delete $scope.info.active_tag;
             infinityService.get_books_on_friends_shelves().then(function(data){
                 angular.forEach(data, function(value){
                     if((value.info[0].image_url == null) || (value.info[0].image_url == "")){
@@ -115,6 +116,7 @@ homeApp.controller('personalisedController', ["$scope", "userService", '$rootSco
             $scope.books_from_favourite_author = [];
             $scope.info.active_tab = "favourite_author";
             $scope.info.loading = true;
+            delete $scope.info.active_tag;
             infinityService.get_books_from_favourite_author().then(function(data){
                 angular.forEach(data, function(value){
                     var json = {"image_url": "http://rd-authors.readersdoor.netdna-cdn.com/"+value.id+"/M.png", 

@@ -1,3 +1,37 @@
+homeApp.directive('bookInfo', ["$rootScope", "bookService", '$mdDialog', function($rootScope, bookService, $mdDialog){
+    return {
+        restrict: 'E',
+        scope : {book: '=', info: '='},
+        controller: ["$scope", function($scope){
+            $scope.show_book_dialog = function(book, event){
+                $rootScope.active_book = book;
+                $rootScope.active_book.show_info_only = true;
+                $mdDialog.show({
+                    templateUrl: '/assets/angular/html/news/book.html',
+                    scope: $scope,
+                    preserveScope: true,
+                    targetEvent: event,
+                    clickOutsideToClose: true
+                });
+                event.stopPropagation();
+            }
+
+            var _init = function(){
+                if(angular.isUndefined($scope.book.title)){
+                    $scope.book_loading = true;
+                    bookService.get_basic_book_details($scope.book.id).then(function(data){
+                        $scope.book = angular.extend($scope.book, data);
+                        $scope.book_loading = false;
+                    });
+                }
+            }
+
+            _init();
+        }],
+        templateUrl: '/assets/angular/html/shared/partials/book_info.html'
+    };
+}]);
+
 homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', function($rootScope, feedService, $timeout){
     return {
         restrict: 'E',
