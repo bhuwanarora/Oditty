@@ -17,8 +17,9 @@
 			<div>Choose the Book Discovery option</div>
 		</div>
 	</div>
-	<div layout="row" layout-sm="column" layout-md="column" layout-align="center center" class="full_width z_index_1">
-		<md-button ng-click="handle_personalised_redirect($event)" 
+	<div layout="row" layout-sm="column" layout-md="column" layout-align="center center" 
+		class="full_width z_index_1">
+		<md-button ng-click="handle_personalised_redirect($event)" id="suggestions"
 		   flex="30" flex-md="100" class="nav_options white md-whiteframe-z1" layout-margin flex-sm="100">
 			<section layout-padding layout="column" layout-align="center" class="wrap">
 				<div layout-padding>Personalised Suggestions</div>
@@ -27,7 +28,7 @@
 				</i>
 			</section>
 		</md-button>&nbsp;<br/>
-		<md-button ng-click="handle_news_redirect($event)"
+		<md-button ng-click="handle_news_redirect($event)" id="news"
 			flex="30" flex-md="100" class="nav_options white md-whiteframe-z1" layout-margin
 			 flex-sm="100">
 			<section layout-padding layout="column" layout-align="center" class="wrap">
@@ -36,7 +37,7 @@
 				</i>
 			</section>
 		</md-button>&nbsp;<br/>
-		<md-button ng-click="handle_infinity_redirect($event)"
+		<md-button ng-click="handle_infinity_redirect($event)" id="filters"
 			flex="30" flex-md="100" class="nav_options white md-whiteframe-z1" layout-margin
 			flex-sm="100">
 			<section layout-padding layout="column" layout-align="center" class="wrap">
@@ -102,6 +103,18 @@
 		font-family: sans-serif;
 		text-transform: none;
 		letter-spacing: initial;
+	}
+
+	#suggestions{
+		background: url("/assets/options.jpg") 0 0;
+	}
+
+	#news{
+		background: url("/assets/options.jpg") 50% 0;
+	}
+
+	#filters{
+		background: url("/assets/options.jpg") 100% 0;
 	}
 
 	.tagline{
