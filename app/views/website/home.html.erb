@@ -6,14 +6,7 @@
 		<div class="tagline" layout="row" layout-align="center center">
 			<!-- <img src="assets/rd_icon.png" /> -->
 			<div layout-padding>
-	        	<div ng-hide="info.hide_signin">
-	        		Planning to read a book?
-	        	</div>
-				<div class="small_title" layout="row" layout-align="center">
-					<div>
-						Choose the Book Discovery option below
-					</div>
-				</div>
+	        	<div ng-include src="'assets/angular/html/shared/home/tagline.html'"></div>
 			</div>
 		</div>
 		<div></div>
@@ -22,81 +15,12 @@
 		<!-- <img src="https://s3-ap-southeast-1.amazonaws.com/rd-genres/home3.jpg" class="cover_image"> -->
 	</div>
 </div>
-<div layout="column" layout-align="center center" class="">
-	<!-- <div class="big_title instruct_tagline" layout="row" layout-align="center center" layout-padding>
-		<div>
-			<div class="small_title">Planning to read a book?</div>
-			<div>Choose the Book Discovery option</div>
-		</div>
-	</div> -->
-
-	<div layout="row" layout-sm="column" layout-md="column" layout-align="center center" 
-		class="full_width z_index_1" layout-padding>
-		<md-button ng-click="handle_news_redirect($event)" id="news"
-			 flex="30" flex-md="100" flex-sm="100"
-			 class="pointer nav_options md-whiteframe-z1" >
-			<div layout-padding>Books Via News</div>
-			<div class="description">Imbibe knowledge through News.
-			</div>
-			
-		</md-button>
-		<md-button ng-click="handle_personalised_redirect($event)" id="suggestions"
-		     flex="30" flex-md="100" flex-sm="100"
-		     class="pointer nav_options md-whiteframe-z1" >
-			<div layout-padding>Personalised Suggestions</div>
-			<div class="description">
-				Suggestions based on your Taste.
-			</div>
-			
-		</md-button>
-		<md-button ng-click="handle_infinity_redirect($event)" id="filters"
-			  flex="30" flex-md="100" flex-sm="100"
-			 class="pointer nav_options md-whiteframe-z1">
-			<div layout-padding>Filters</div>
-			<div class="description">
-				Genre, Author, Era, Duration. Choose.
-			</div>
-			
-		</md-button>
-		
-	</div>
-	<div layout-padding></div>
-	<div layout-padding></div>
-	<div layout-padding></div>
-	<div layout-padding></div>
-	<div layout-padding></div>
+<div layout="column" layout-align="center center" 
+	ng-include src="'assets/angular/html/shared/home/options.html'">
 </div>
 <div class="big_title hello_world" layout-padding
-	layout="column" layout-align="space-between">
-	<div>
-		Hello World
-	</div>
-	<div  layout="row" layout-align="space-between">
-		<div>
-		</div>
-		<div class="white md-whiteframe-z1 about_card" layout-padding layout="row">
-			<div flex="10"></div>
-			<div flex="80">
-				<div layout-padding></div>
-				<div layout-padding></div>
-				<div layout="column" layout-align="space-between">
-					<div>
-						Built on everything we learnt from the journeys of several book lovers, ReadersDoor is a fresh start to help spread the love of books.
-					</div>
-					<div layout="row" layout-align="space-between">
-						<div></div>
-						<div>
-							<a href="/landing_page">How it works</a>
-						</div>
-					</div>
-				</div>
-				<div layout-padding></div>
-				<div layout-padding></div>
-			</div>
-			<div flex="10"></div>
-		</div>
-		
-	</div>
+	layout="column" layout-align="space-between"
+	ng-include src="'assets/angular/html/shared/home/story.html'">
 </div>
 <div layout-padding></div>
 <div layout-padding></div>

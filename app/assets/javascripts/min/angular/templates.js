@@ -668,6 +668,21 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('/assets/angular/html/shared/home/options.html',
+    "<div layout=\"row\" layout-sm=\"column\" layout-md=\"column\" layout-align=\"center center\" class=\"full_width z_index_1\" layout-padding><md-button ng-click=\"handle_news_redirect($event)\" id=\"news\" flex=\"30\" flex-md=\"100\" flex-sm=\"100\" class=\"pointer nav_options md-whiteframe-z1\"><div layout-padding>Books Via News</div><div class=\"description\">Imbibe knowledge through News.</div></md-button><md-button ng-click=\"handle_personalised_redirect($event)\" id=\"suggestions\" flex=\"30\" flex-md=\"100\" flex-sm=\"100\" class=\"pointer nav_options md-whiteframe-z1\"><div layout-padding>Personalised Suggestions</div><div class=\"description\">Suggestions based on your Taste.</div></md-button><md-button ng-click=\"handle_infinity_redirect($event)\" id=\"filters\" flex=\"30\" flex-md=\"100\" flex-sm=\"100\" class=\"pointer nav_options md-whiteframe-z1\"><div layout-padding>Filters</div><div class=\"description\">Genre, Author, Era, Duration. Choose.</div></md-button></div><div layout-padding></div><div layout-padding></div><div layout-padding></div><div layout-padding></div><div layout-padding></div>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/shared/home/story.html',
+    "<div>Hello World</div><div layout=\"row\" layout-align=\"space-between\"><div></div><div class=\"white md-whiteframe-z1 about_card\" layout-padding layout=\"row\"><div flex=\"10\"></div><div flex=\"80\"><div layout-padding></div><div layout-padding></div><div layout=\"column\" layout-align=\"space-between\"><div>Built on everything we learnt from the journeys of several book lovers, ReadersDoor is a fresh start to help spread the love of books.</div><div layout=\"row\" layout-align=\"space-between\"><div></div><div><a href=\"/landing_page\">How it works</a></div></div></div><div layout-padding></div><div layout-padding></div></div><div flex=\"10\"></div></div></div>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/shared/home/tagline.html',
+    "<div ng-hide=\"info.hide_signin\">Planning to read a book?</div><div class=\"small_title\" layout=\"row\" layout-align=\"center\"><div>Choose the Book Discovery option below</div></div>"
+  );
+
+
   $templateCache.put('/assets/angular/html/shared/home_header.html',
     "<section layout=\"row\" layout-wrap><div ng-include src=\"'/assets/angular/html/shared/logo.html'\" flex=\"20\" flex-sm=\"25\" layout=\"row\" layout-align=\"start center\"></div><div flex=\"50\" flex-md=\"45\" ng-controller=\"searchController\" flex-sm=\"10\" layout=\"row\" layout-align=\"end center\" layout-align-sm=\"start center\"></div><div layout=\"row\" layout-align=\"center center\" flex=\"10\" flex-md=\"15\" flex-sm=\"30\" ng-if=\"info.hide_signin\" ng-show=\"info.mobile_search\"></div><div flex=\"20\" flex-sm=\"35\" layout=\"row\" layout-align=\"end center\" ng-if=\"info.hide_signin\" ng-include src=\"'/assets/angular/html/shared/right_nav_options.html'\"></div><div layout=\"row\" layout-align=\"center center\" ng-hide=\"info.mobile_search\" layout-fill layout-padding hide-md hide-lg ng-if=\"info.hide_signin\" ng-include src=\"'/assets/angular/html/shared/mobile_search.html'\"></div><div flex=\"30\" flex-sm=\"65\" layout=\"row\" layout-padding layout-align=\"end center\" ng-if=\"!info.hide_signin\" ng-include src=\"'/assets/angular/html/shared/sign_in.html'\"></div></section>"
   );

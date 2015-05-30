@@ -32,4 +32,7 @@ homeApp.controller('homeController', ["$scope", "$mdSidenav", function($scope, $
     	}
     }
 
+    var _init = (function(){
+    }());
+
 }]);
