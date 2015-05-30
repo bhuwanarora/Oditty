@@ -481,7 +481,7 @@
                             ng-hide="active_shelf || info.show_share"
                             aria-label="Share reading journey"
                             ng-click="show_share_page($event)"
-                            ng-style="type_icon_pressed">
+                            ng-style="type_icon_pressed" ng-if="info.hide_signin">
                     <span class="icon-book-alt2"></span>
                     <md-tooltip md-direction="left">
                           Share your reading journey

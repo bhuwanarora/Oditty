@@ -19,7 +19,7 @@
 		</div>
 		<div layout="row" layout-sm="column" layout-wrap layout-align="center center" class="full_width">
 			<a href="/personalised_suggestions" 
-			   flex="30" layout-padding layout="column" class="nav_options" layout-margin
+			   flex="30" layout-padding layout="column" class="nav_options" layout-margin id="suggestions"
 				layout-align="center" flex-sm="100">
 				<div layout-padding>Personalised Suggestions</div>
 				<i class="description">
@@ -27,14 +27,14 @@
 				</i>
 			</a>
 			<a href="/news_group" 
-				flex="30" layout-padding layout="column" class="nav_options" layout-margin
+				flex="30" layout-padding layout="column" class="nav_options" layout-margin id="news"
 				layout-align="center center" flex-sm="100">
 				<div layout-padding>Books Via News</div>
 				<i class="description">Imbibe knowledge through News.
 				</i>
 			</a>
 			<a href="/infinity" 
-				flex="30" layout-padding layout="column" class="nav_options" layout-margin
+				flex="30" layout-padding layout="column" class="nav_options" layout-margin id="filters"
 				layout-align="center center" flex-sm="100">
 				<div layout-padding>Filters</div>
 				<i class="description">
@@ -92,6 +92,18 @@
 		font-family: sans-serif;
 		text-transform: none;
 		letter-spacing: initial;
+	}
+
+	#suggestions{
+		background: url("/assets/options.jpg") 0 0;
+	}
+
+	#news{
+		background: url("/assets/options.jpg") 50% 0;
+	}
+
+	#filters{
+		background: url("/assets/options.jpg") 100% 0;
 	}
 
 	.tagline{
