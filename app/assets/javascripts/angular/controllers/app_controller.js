@@ -28,18 +28,15 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
     }
 
     $scope.toggle_notifications = function(event){
-        if($scope.show_notifications){
-            $scope.show_notifications = false;
-        }
-        else{
-            $scope.show_notifications = true;
-        }
+        $scope.show_notifications = !$scope.show_notifications;
+        $scope.navigation_options = false;
         event.stopPropagation();
     }
 
     $scope.close_popups = function(){
         $scope.show_notifications = false;
         $rootScope.shelves_visible = false;
+        $scope.navigation_options = false;
         // $mdSidenav('left').close();
         // debugger
 
@@ -75,6 +72,8 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
 
     $scope.toggle_navigation_options = function(event){
         $scope.navigation_options = !$scope.navigation_options;
+        $scope.show_notifications = false;
+        event.stopPropagation();
     }
 
     var _init = (function(){
