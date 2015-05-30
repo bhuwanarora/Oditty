@@ -1,4 +1,4 @@
-<md-list layout="row" hide-sm>
+<md-list layout="row" hide-sm hide-md>
 	<div flex>
 		<div ng-repeat="feed in personal_feed" ng-if="$even">
 		    <div ng-include src="'/assets/angular/html/profile/partials/feed_type.html'"></div>
@@ -33,7 +33,7 @@
 		</div>
 	</div>
 </md-list>
-<md-list layout="column" show-sm hide>
+<md-list layout="column" show-sm show-md hide>
 	<div ng-repeat="feed in personal_feed">
 	    <div ng-include src="'/assets/angular/html/profile/partials/feed_type.html'"></div>
 	</div>

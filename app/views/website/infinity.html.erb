@@ -1,15 +1,15 @@
 <div ng-include src="'/assets/angular/html/library/_header.html'" ng-hide="constant.show_book" class="primary"></div>
 <div ng-include src="'/assets/angular/html/shared/share.html'" class="primary"></div>
 <section layout="row" layout-wrap class="feed_margin">
-    <div flex="20" hide-sm layout="row" layout-align="end start"  class="background" 
+    <div flex="20" hide-sm hide-md layout="row" layout-align="end start"  class="background" 
          ng-include src="'/assets/angular/html/library/shared/_left_panel.html'" layout-fill>
     </div>
-    <div flex="60" flex-sm="100"
+    <div flex="60" flex-sm="100" flex-md="100"
          ng-include src="'/assets/angular/html/library/show.html'" class="background md-whiteframe-z1" 
          layout-align="center center" layout-fill>
     </div>
     <div ng-include src="'/assets/angular/html/library/shared/_right_panel.html'" class="background" 
-         flex="20" layout="column" layout-align="start start" layout-fill>
+         flex="20" hide-md hide-sm layout="column" layout-align="start start" layout-fill>
     </div>
 </section>
 

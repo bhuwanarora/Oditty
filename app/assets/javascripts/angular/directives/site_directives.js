@@ -17,7 +17,7 @@ homeApp.directive('bookInfo', ["$rootScope", "bookService", '$mdDialog', functio
             }
 
             var _init = function(){
-                if(angular.isUndefined($scope.book.title)){
+                if(angular.isUndefined($scope.book.description)){
                     $scope.book_loading = true;
                     bookService.get_basic_book_details($scope.book.id).then(function(data){
                         $scope.book = angular.extend($scope.book, data);

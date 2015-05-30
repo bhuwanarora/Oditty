@@ -3,8 +3,8 @@
 		Books From your friends Reading Journey
 	</div>
 </div>
-<div ng-if="friends" layout="row" layout-padding>
-	<div flex="30" layout="column">
+<div ng-if="friends" layout="row" layout-padding layout-sm="column">
+	<div flex="30" layout="column" flex-sm="100">
 		<md-button class="margin_top clear md-whiteframe-z1"
 			 ng-repeat="profile in friends" 
 			 ng-click="refresh_data(profile)">
@@ -15,7 +15,7 @@
 			 </div>
 		</md-button>
 	</div>
-	<div flex="70" layout-padding>
+	<div flex="70" layout-padding flex-sm="100">
 		<div layout-padding>
 			<a class="big_title" ng-href="/profile?q={{info.active_tag.id}}" 
 				ng-bind-html="info.active_tag.name"></a>

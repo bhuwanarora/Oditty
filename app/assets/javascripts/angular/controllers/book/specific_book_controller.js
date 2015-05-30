@@ -71,19 +71,21 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
         var filter = "id="+book_id;
         $scope.book_loading = true;
         bookService.get_book_details(filter).then(function(data){
-            var endorse_status = data.endorse_status != null;
-            var status = data.status != null;
-            var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-            var json = {"endorse_status" : endorse_status, "status" : status, "color": ColorConstants.value[random_int]};
-            if(angular.isDefined($rootScope.active_book)){
-                $scope.book = angular.extend($rootScope.active_book, data);
-            }
-            else{
-                $scope.book = data;    
-            }
+            if(angular.isDefined(data) && data != null){
+                var endorse_status = data.endorse_status != null;
+                var status = data.status != null;
+                var random_int = Math.floor(Math.random()*ColorConstants.value.length);
+                var json = {"endorse_status" : endorse_status, "status" : status, "color": ColorConstants.value[random_int]};
+                if(angular.isDefined($rootScope.active_book)){
+                    $scope.book = angular.extend($rootScope.active_book, data);
+                }
+                else{
+                    $scope.book = data;    
+                }
 
-            $scope.book = angular.extend($scope.book, json);
-            $rootScope.active_book = $scope.book;
+                $scope.book = angular.extend($scope.book, json);
+                $rootScope.active_book = $scope.book;
+            }
             $scope.book_loading = false;
         });
 

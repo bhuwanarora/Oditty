@@ -446,3 +446,14 @@ md-toast.md-default-theme{
 .center_text{
     text-align: center;
 }
+
+.md-autocomplete-suggestions{
+    max-width: 400px !important;
+}
+
+.md-autocomplete-suggestions li{
+    white-space: normal !important;
+    height: inherit !important;
+    line-height: inherit !important;
+    padding: 10px;
+}
