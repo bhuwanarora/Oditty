@@ -106,6 +106,7 @@ class WebsiteController < ApplicationController
 			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
 			redirect_to :controller => 'website', :action => 'signup'			
 		else
+			@blogs = true
 			@news_group = true
 			render :layout => "material"
 		end

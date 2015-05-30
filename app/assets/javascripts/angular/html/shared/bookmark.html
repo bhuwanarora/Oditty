@@ -4,10 +4,12 @@
 		<div ng-include src="'/assets/angular/html/shared/shelves.html'" ng-init="bookmark_object = data" class="shelves"></div>
 	</md-tooltip>
 </div>
-<md-button class="md-button-clear" 
+<div class="pointer"
+	layout-padding
 	ng-if="!custom"
     ng-click="show_shelves()">
     <span>Add to Shelf </span>
-    <span class="icon-books"></span>
+    <i class="material-icons">library_books</i>
+    <!-- <span class="icon-books"></span> -->
     <span>{{count || 0}}</span>
-</md-button>
+</div>

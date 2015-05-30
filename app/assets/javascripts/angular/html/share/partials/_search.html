@@ -1,8 +1,9 @@
-<md-button class="md-button-clear primary"
+<div class="pointer primary" layout-padding
           ng-click="init_reading_options()"
           ng-if="(active_id == 0 && info.status_books.length != 0) || (active_id != 0)">
-    <span class="icon-angle-left"></span>
-</md-button>
+    <!-- <span class="icon-angle-left"></span> -->
+    <i class="material-icons">chevron_left</i>
+</div>
 <md-autocomplete
     md-selected-item="selectedItem1"
     md-search-text="searchText"
@@ -15,6 +16,7 @@
     placeholder="{{reading_options[active_id].name}}">
     <span md-highlight-text="searchText" ng-bind-html="item.display"></span>
 </md-autocomplete>
-<md-button class="md-button-clear">
-    <span class="icon-search"></span>
-</md-button>
+<div class="pointer" layout-padding>
+    <i class="material-icons">search</i>
+    <!-- <span class="icon-search"></span> -->
+</div>

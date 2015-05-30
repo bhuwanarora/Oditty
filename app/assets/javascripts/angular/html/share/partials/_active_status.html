@@ -27,16 +27,17 @@
             </div>
         </div>
     </div>
-    <md-button class="md-button-clear light_grey grey_color" flex="10" 
-              ng-click="deselect_book()"
-              ng-if="active_book">
-        <span class="icon-close"></span>
-    </md-button>
-    <md-button class="md-button-clear light_grey grey_color custom_title" flex="10" 
-    		  ng-click="show_interesting_details(book)"
-    		  ng-if="!active_book">
-        <span class="icon-plus"></span>
-    </md-button>
+    <div class=" light_grey grey_color" flex="10" 
+        ng-click="deselect_book()" layout-padding
+        ng-if="active_book">
+        <i class="material-icons">close</i>
+    </div>
+    <div class="pointer light_grey grey_color custom_title" flex="10" 
+        layout-padding
+    	ng-click="show_interesting_details(book)"
+    	ng-if="!active_book">
+        <i class="material-icons">add</i>
+    </div>
 </md-list-item>
 <div class="menu_details white md-whiteframe-z1" layout="row" 
     layout-padding

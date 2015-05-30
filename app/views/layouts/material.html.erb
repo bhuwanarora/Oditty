@@ -15,6 +15,7 @@
         <meta charset="utf-8" />
 
         <title>ReadersDoor</title>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="icon" type="image/png" href="assets/favicon.png">
         <script>document.write('<base href="' + document.location + '" />');</script>
         <!-- <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,100italic,400italic|Roboto+Condensed&amp;lang=en' rel='stylesheet' type='text/css'> -->
@@ -311,8 +312,11 @@
                 <md-content ng-controller="networkController" id="network">
             <% elsif @news %>
                 <md-content layout="column" ng-controller="newsController" id="news">
-            <% elsif @news_group %>
+            <% elsif @news_group && !@blogs %>
                 <md-content ng-controller="feedController" check-scroll-bottom="get_community_feed()" id="home">
+            <% elsif @blogs && @news_group %>
+                <md-content layout="row" layout-wrap ng-controller="feedController" 
+                    check-scroll-bottom="get_blog_feed()" id="home">
             <% elsif @signup %>
                 <md-content class="white" flex ng-controller="homeController">
             <% elsif @room %>

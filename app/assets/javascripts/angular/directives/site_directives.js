@@ -25,11 +25,11 @@ homeApp.directive('communityFeed', ["$rootScope", 'userService', '$timeout', fun
         scope : {communityFeed: '='},
         controller: ["$scope", function($scope){
             $scope.toggle_expand = function(){
-                $scope.expand = !$scope.expand;
+                $scope.communityFeed.expand = !$scope.communityFeed.expand;
             }
 
             var _init = function(){
-                $scope.expand = false;
+                $scope.communityFeed.expand = false;
             }
 
             $scope.goto_news_page = function(id, community_id){

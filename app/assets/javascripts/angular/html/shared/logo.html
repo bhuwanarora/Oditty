@@ -1,8 +1,8 @@
-<md-button ng-disabled="!info.hide_signin" 
-	ng-show="info.mobile_search" class="burger padding <% if (@book || @news || @infinity) %>white<% end %>" 
+<div ng-disabled="!info.hide_signin" 
+	ng-show="info.mobile_search" class="burger pointer  <% if (@book || @news || @infinity) %>white<% end %>" 
 	ng-click="toggleLeft($event)">
-    <a><span class="icon-menu2"></span></a>
-</md-button>
+    <a><i class="material-icons">menu</i></a>
+</div>
 <div ng-show="info.mobile_search" 
      layout-align-lg="center center">
     <a class="logo relative" href="/home">

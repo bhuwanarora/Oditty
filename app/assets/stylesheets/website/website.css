@@ -430,3 +430,11 @@ md-toast.md-default-theme{
 .z_index_1{
     z-index: 1;
 }
+
+.pointer{
+    cursor: pointer;
+}
+
+.pointer:hover{
+    background-color: rgba(0, 0, 0, 0.1);
+}

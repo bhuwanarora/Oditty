@@ -3,44 +3,62 @@
             ng-click="stop_propagation($event);" 
             layout-align="space-between"
             layout="column">
-	<section class="md-padding" layout="column"
+	<section layout="column"
             ng-controller="leftController">
 		<a href="/infinity">
-            <md-button class="md-button-left full_width">
-  			   Home
-		  </md-button>
+            <div class="pointer full_width side_padding" layout-padding layout="row" layout-align="start center">
+                <i class="material-icons">home</i>
+                <div layout-padding>
+  			       Home
+                </div>
+		    </div>
         </a>
         <!-- <a href="/commun">
-            <md-button class="md-button-left full_width">
-                Infinity
-            </md-button>
+            <div class="pointer full_width side_padding" layout-padding layout="row" layout-align="start center">
+                <i class="material-icons"></i>
+                <div layout-padding>
+                    Infinity
+                </div>
+            </div>
         </a> -->
-        <a href="/communities">
-            <md-button class="md-button-left full_width">
-                Communities
-            </md-button>
+        <a href="/news_group">
+            <div class="pointer full_width side_padding" layout-padding layout="row" layout-align="start center">
+                <i class="material-icons">people</i>
+                <div layout-padding>
+                    News
+                </div>
+            </div>
         </a>
         
         <a href="/profile">
-            <md-button class="md-button-left full_width">
-                Profile
-            </md-button>
+            <div class="pointer full_width side_padding" layout-padding layout="row" layout-align="start center">
+                <i class="material-icons">account_circle</i>
+                <div layout-padding>
+                    Profile
+                </div>
+            </div>
         </a>
-        <a href="/room">
-            <md-button class="md-button-left full_width">
-                Room
-            </md-button>
+        <a href="/shelves">
+            <div class="pointer full_width side_padding" layout-padding layout="row" layout-align="start center">
+                <i class="material-icons">library_books</i>
+                <div layout-padding>
+                    Shelves
+                </div>
+            </div>
         </a>
         <md-divider></md-divider>
         
      
         <a href="/blogs">
-            <md-button class="md-button-left full_width">
-                Blog
-            </md-button>
+            <div class="pointer full_width side_padding" layout-padding layout="row" layout-align="start center">
+                <i class="material-icons">toys</i>
+                <div layout-padding>
+                    Blog
+                </div>
+            </div>
         </a>
     </section>
-    <section layout-padding>
+    <section layout-padding layout="row" layout-align="space-between">
         <a href="/customise" class="less_important">Customise</a>
         <a href="/signup" class="less_important">Logout</a>
     </section>
