@@ -195,7 +195,7 @@ var constants = {
 			"GenreAWS": "https://s3-ap-southeast-1.amazonaws.com/rd-genres/"
 		},
 		"ColorConstants":{
-			"value": ["#695447", "#d1d2de", "#c4c2b5", "#675850", "#83817f", "#b3b2b1", "#839baa", "#4867a4", "#423b34", "#e4bc7e", "#987c4e", "#8c7971", "#ad9894", "#565240", "#5d2726"]
+			"value": ["#26c6da", "#00acc1", "#0097a7", "#00838f", "#006064"]
 		},
 		"ShareOptions":{
 			"ReadingStage":[

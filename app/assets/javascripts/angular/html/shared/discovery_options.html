@@ -1,0 +1,15 @@
+<md-select ng-model="active_page" class="active_page_menu">
+    <md-option ng-value="-1" ng-disabled>Select Discovery Option</md-option>
+    <a href="/personalised_suggestions" layout="row" layout-align="start center" layout-padding class="pointer">
+        <i class="material-icons">accessibility</i>
+        <md-option ng-value="0">Personalised Suggestions</md-option>
+    </a>
+    <a href="/communities" layout="row" layout-align="start center" layout-padding class="pointer">
+        <i class="material-icons">whatshot</i>
+        <md-option ng-value="1">Books Via News</md-option>
+    </a>
+    <a href="/infinity" layout="row" layout-align="start center" layout-padding class="pointer">
+        <i class="material-icons">filter_list</i>
+        <md-option ng-value="2">Filter Books</md-option>
+    </a>
+</md-select>

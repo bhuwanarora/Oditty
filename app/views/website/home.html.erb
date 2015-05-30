@@ -1,52 +1,62 @@
-<md-content class="white" flex ng-controller="homeController">
+<div>
 	<div class="cover_wrapper">
 		<div class="tagline ">
-			BOOKS . NEWS . PEOPLE
 			<div class="small_title">
-				<!-- CONNECTING KNOWLEDGE -->
-				
+				Door to Real Book Lovers	
 			</div>
 		</div>
-		<div class="home_wrapper"></div>
+		<div class="home_wrapper">
+		</div>
 		<img src="https://s3-ap-southeast-1.amazonaws.com/rd-genres/home3.jpg" class="cover_image">
 	</div>
-	<div layout="column" layout-align="center center" >
-		<div class="big_title instruct_tagline" layout="row" layout-align="center center" layout-padding>
-			<div>
-				<div class="small_title">Planning to read a book?</div>
-				<div>Choose the Book Discovery option</div>
-			</div>
+</div>
+<div layout="column" layout-align="center center" class="background reverse_margin">
+	<div class="big_title instruct_tagline" layout="row" layout-align="center center" layout-padding>
+		<div>
+			<div class="small_title">Planning to read a book?</div>
+			<div>Choose the Book Discovery option</div>
 		</div>
-		<div layout="row" layout-sm="column" layout-wrap layout-align="center center" class="full_width">
-			<a href="/personalised_suggestions" 
-			   flex="30" layout-padding layout="column" class="nav_options" layout-margin id="suggestions"
-				layout-align="center" flex-sm="100">
+	</div>
+	<div layout="row" layout-sm="column" layout-md="column" layout-align="center center" class="full_width z_index_1">
+		<md-button ng-click="handle_personalised_redirect($event)" 
+		   flex="30" flex-md="100" class="nav_options white md-whiteframe-z1" layout-margin flex-sm="100">
+			<section layout-padding layout="column" layout-align="center" class="wrap">
 				<div layout-padding>Personalised Suggestions</div>
 				<i class="description">
 					Suggestions based on your Taste.
 				</i>
-			</a>
-			<a href="/news_group" 
-				flex="30" layout-padding layout="column" class="nav_options" layout-margin id="news"
-				layout-align="center center" flex-sm="100">
+			</section>
+		</md-button>&nbsp;<br/>
+		<md-button ng-click="handle_news_redirect($event)"
+			flex="30" flex-md="100" class="nav_options white md-whiteframe-z1" layout-margin
+			 flex-sm="100">
+			<section layout-padding layout="column" layout-align="center" class="wrap">
 				<div layout-padding>Books Via News</div>
 				<i class="description">Imbibe knowledge through News.
 				</i>
-			</a>
-			<a href="/infinity" 
-				flex="30" layout-padding layout="column" class="nav_options" layout-margin id="filters"
-				layout-align="center center" flex-sm="100">
+			</section>
+		</md-button>&nbsp;<br/>
+		<md-button ng-click="handle_infinity_redirect($event)"
+			flex="30" flex-md="100" class="nav_options white md-whiteframe-z1" layout-margin
+			flex-sm="100">
+			<section layout-padding layout="column" layout-align="center" class="wrap">
 				<div layout-padding>Filters</div>
 				<i class="description">
 					Genre, Author, Era, Duration. Choose.
 				</i>
-			</a>
-		</div>
+			</section>
+		</md-button>
 	</div>
-	<div class="light_grey">
-		<div layout-align="center center" ng-include="'assets/angular/html/shared/partials/social_links.html'"></div>
-	</div>
-</md-content>
+	<div layout-padding></div>
+	<div layout-padding></div>
+	<div layout-padding></div>
+	<div layout-padding></div>
+	<div layout-padding></div>
+</div>
+<div class="light_grey">
+	
+	<div layout-align="center center" ng-include="'assets/angular/html/shared/partials/social_links.html'"></div>
+</div>
 <style>
 	.header{
 		background-color: transparent !important;
@@ -80,7 +90,7 @@
 		line-height: 19px;
 		text-transform: uppercase;
 		text-align: center;
-		border: 1px solid #C8C8C8;
+		/*border: 1px solid #C8C8C8;*/
 		margin-bottom: 20px;
 	}
 
@@ -112,12 +122,12 @@
 		font-size: 60px;
 		line-height: 60px;
 		text-shadow: 1px 1px 6px rgba(0,0,0,0.2);
-		margin-top: 100px;
-		position: absolute;
 		z-index: 1;
 		text-align: center;
 		width: 100%;
 		z-index: 2;
+		position: absolute;
+		top: 40%;
 	}
 
 	.instruct_tagline{
@@ -128,7 +138,7 @@
 		font-size: 30px;
 		text-transform: uppercase;
 		font-weight: 700;
-		color: #868686;
+		color: white;
 		/*text-shadow: 1px 1px 6px rgba(0,0,0,0.2);*/
 		z-index: 1;
 	}
@@ -139,7 +149,7 @@
 
 	.home_wrapper{
 		position: absolute;
-		background-color: rgba(0,0,0,.4);
+		background-color: rgba(0,0,0,.7);
 		width: 100%;
 		height: 100%;
 		z-index: 1;
@@ -152,6 +162,11 @@
 	.cover_wrapper{
 		height: 75vh;
 		position: relative;
+		overflow: hidden;
+	}
+
+	.reverse_margin{
+		margin-top: -150px;
 	}
 
 
@@ -171,7 +186,7 @@
 			font-weight: 400;
   			font-size: 40px;
   			line-height: 40px;
-  			margin-top: 145px;
+  			top: 30%;
 		}
 
 		.cover_image{

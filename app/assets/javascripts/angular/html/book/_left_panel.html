@@ -1,7 +1,7 @@
-<md-content	ng-if="constant.show_book" layout="column" 
+<div ng-if="constant.show_book" layout="column" 
 		hide-sm
 		layout-align="start end" layout-padding  
-		class="fixed_left_panel white">
+		class="fixed_left_panel">
 	<div layout="row" layout-align="center center" layout-margin 
 		 class="genre" 
 		 ng-repeat="genre in active_book.genres | limitTo:5">
@@ -10,13 +10,9 @@
 			<div>{{genre | first_two | uppercase}}</div>
 		</div>
 	</div>
-</md-content>
+</div>
 
 <style>
-    .fixed_left_panel{
-        position: fixed;
-		top: 100px;
-    }
 
 	.grey_circle{
 		background-color: rgba(197, 197, 197, 0.46);

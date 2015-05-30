@@ -1,14 +1,5 @@
 homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'authorService', '$mdDialog', 'scroller', 'ColorConstants', '$filter', '$sce', '$rootScope', "scroller", "WebsiteUIConstants", function($scope, $location, $mdSidenav, authorService, $mdDialog, scroller, ColorConstants, $filter, $sce, $rootScope, scroller, WebsiteUIConstants){
 
-    $scope.show_buy_dialog = function(event, book){
-        $rootScope.active_book = book;
-        $mdDialog.show({
-            templateUrl: 'assets/angular/html/author/buy.html',
-            targetEvent: event
-        });
-        event.stopPropagation();
-    }
-
     $scope.toggle_follow = function(){
         $scope.author.status = !$scope.author.status;
         authorService.follow($scope.author.id, $scope.author.status);
@@ -128,7 +119,9 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
     var _init = (function(){
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
         var id = regex.exec($location.absUrl())[2];
-        
+        if(angular.isUndefined($scope.info)){
+            $scope.info = {};
+        }
 
         $scope.active_index = 0;
         $scope.get_books(id);

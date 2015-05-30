@@ -2,11 +2,11 @@
 	<md-button ng-repeat="user in users_list"
 				ng-click="recommend_friend(user)"
 				layout-padding
-				class="menu_details capitalize white md-whiteframe-z1 md-button-clear custom_title overlap">
+				class="margin_top menu_details capitalize white md-button-clear custom_title overlap">
 		<div layout="row">
-			<img ng-src="{{user.thumb | default_profile}}" class="circular">
-			<div layout="row" layout-align="center center">
-				{{user.name}}
+			<img ng-src="{{user.image_url | default_profile}}" class="square">
+			<div layout="row" layout-align="center center" layout-padding>
+				{{user.first_name}}
 			</div>
 		</div>
 	</md-button>

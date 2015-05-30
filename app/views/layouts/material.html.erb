@@ -15,6 +15,7 @@
         <meta charset="utf-8" />
 
         <title>ReadersDoor</title>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="icon" type="image/png" href="assets/favicon.png">
         <script>document.write('<base href="' + document.location + '" />');</script>
         <!-- <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,100italic,400italic|Roboto+Condensed&amp;lang=en' rel='stylesheet' type='text/css'> -->
@@ -284,7 +285,7 @@
     </head>
 
     <body ng-controller="appController" ng-keydown="scroll_on_keypress($event)" 
-        class="<% if (@news || @infinity || @book) %>white<% end %>" ng-click="close_popups()" 
+         ng-click="close_popups()" 
         msd-wheel="close_popups()">
         <script>
           // (function() {
@@ -302,192 +303,52 @@
         <div layout="column" layout-fill>
             <!-- <div ng-include src="'/assets/angular/html/shared/header.html'"></div> -->
 
-            <md-toolbar md-scroll-shrink class="md-whiteframe-z1 header <% if !@infinity %>'no_shadow'<% end %>">
-                <section layout="row" layout-wrap>
-                    <div flex="20" flex-sm="25" layout="row" layout-align="start center">
-                        <md-button ng-if="info.hide_signin" ng-show="info.mobile_search" class="burger padding <% if (@book || @news || @infinity) %>white<% end %>" ng-click="toggleLeft($event)">
-                            <a><span class="icon-menu2"></span></a>
-                        </md-button>
-                        <div ng-show="info.mobile_search" 
-                             layout-align-lg="center center">
-                            <a class="logo" href="/home">
-                                <img src="assets/rd_icon.png" />
 
-                                <span hide-sm hide-md ng-class="{'signup_title': !info.hide_signin}">ReadersDoor</span>
-                                
-                            </a>
+            <% if @home %>
+                <md-content class="white" flex ng-controller="homeController">
+            <% elsif @personalised_suggestions %>
+                <md-content ng-controller="personalisedController">
+            <% elsif @network %>
+                <md-content ng-controller="networkController" id="network">
+            <% elsif @news %>
+                <md-content layout="column" ng-controller="newsController" id="news">
+            <% elsif @news_group && !@blogs %>
+                <md-content ng-controller="feedController" check-scroll-bottom="get_community_feed()" id="home">
+            <% elsif @blogs && @news_group %>
+                <md-content layout="row" layout-wrap ng-controller="feedController" 
+                    check-scroll-bottom="get_blog_feed()" id="home">
+            <% elsif @signup %>
+                <md-content class="white" flex ng-controller="homeController">
+            <% elsif @room %>
+                <md-content ng-controller="communityController" id="community">
+            <% elsif @infinity %>
+                <md-content ng-controller="libraryController" 
+                    check-scroll-bottom="get_popular_books()" ng-model="info" id="infinity_page">
+            <% elsif @shelves %>
+                <md-content ng-controller="roomController">
+            <% elsif @author %>
+                <md-content ng-controller="authorController" layout="row" layout-wrap check-scroll-bottom="get_books()" ng-keydown="keypress_scroll($event)">
+            <% elsif @profile %>
+                <md-content ng-controller="profileController" check-scroll-bottom="get_feed()">
+            <% elsif @search %>
+                <md-content layout="row" layout-wrap ng-controller="searchPageController" check-scroll-bottom="show_all_results()">
+            <% elsif @book %>
+                <md-content class="white">
+            <% elsif @customise %>
+                <md-content ng-controller="customiseController" class="white" flex="100">
+            <% end %>
+                    <div ng-show="info.mobile_search" flex>
+                        <div class="header <% if @profile || @shelves || @network %>yellow<% end %>">
+                            <div ng-include src="'/assets/angular/html/shared/header.html'"></div>
+                            <% unless @home || @profile || @news || @network || @room || @infinity || @signup%>
+                                <div ng-include src="'/assets/angular/html/shared/share.html'"></div>
+                            <% end %>
+                        </div>
+                        <div ng-hide="info.show_share || info.show_book_share">
+                            <%= yield %>
                         </div>
                     </div>
-                    <div flex="50" flex-md="45" 
-                         ng-controller="searchController"
-                         flex-sm="10" 
-                         layout="row" 
-                         layout-align="end center" 
-                         layout-align-sm="start center">
-                        <md-button ng-click="show_search_bar()" 
-                                   ng-show="info.mobile_search" show-sm hide ng-if="info.hide_signin">
-                            <span class="icon-search"></span>
-                        </md-button>
-                        <!-- <div hide-sm class="search_icon">
-                            <span class="icon-search"></span>
-                        </div> -->
-                        <!-- md-items="item in info.genres | filter:search_tag.genre" -->
-                        <md-autocomplete md-selected-item="selected_item_search"
-                                        md-search-text="search_text"
-                                        md-items="item in search_results"
-                                        md-search-text-change="query_search(search_text)"
-                                        md-selected-item-change="on_select(item)"
-                                        md-item-text="item.name"
-                                        md-min-length="2"
-                                        class="search"
-                                        hide-sm
-                                        flex="85"
-                                        ng-click="stop_propagation($event)"
-                                        md-floating-label="Search books, topics and more..." ng-if="info.hide_signin">
-                            <md-item-template>
-                                <div layout="row" layout-align="space-between">
-                                    <div layout="row" flex="90">
-                                        <img ng-src="{{item.isbn | small_thumb}}" ng-show="item.isbn" class="search_thumb" />
-                                        <img ng-src="{{item.image_url}}" ng-show="item.image_url" class="search_thumb" />
-                                        <div>&nbsp;</div>
-                                        <div ng-bind-html="item.name || item.title" ></div>
-                                        <div class="less_important" ng-show="item.author_name">
-                                            <span>&nbsp;by </span>
-                                            <span ng-bind-html="item.author_name"></span>
-                                        </div>
-                                    </div>
-                                    <div flex="10" layout="row" layout-align="space-between">
-                                        <div></div>
-                                        <div ng-bind-html="item | search_item_type"></div>
-                                    </div>
-                                </div>
-                            </md-item-template>
-                            <md-not-found>
-                                No matches found.
-                            </md-not-found>
-                        </md-autocomplete>
-                    </div>
-                    <div layout="row" layout-align="center center" flex="10" flex-md="15" flex-sm="20" ng-if="info.hide_signin" ng-show="info.mobile_search">
-                        <md-select ng-model="active_page" class="active_page_menu">
-                            <md-option ng-value="-1" ng-disabled="true">Discover</md-option>
-                            <a href="/personalised_suggestions">
-                                <md-option ng-value="0">Personalised Suggestions</md-option>
-                            </a>
-                            <a href="/communities">
-                                <md-option ng-value="1">News</md-option>
-                            </a>
-                            <a href="/infinity">
-                                <md-option ng-value="2">Filters</md-option>
-                            </a>
-                        </md-select>
-                    </div>
-                    <div flex="20" flex-sm="35" layout="row" layout-align="end center" ng-if="info.hide_signin">
-                        <a href="/shelves" ng-show="info.mobile_search">
-                            <md-button class="small-padding">
-                                <span class="icon-books"></span>
-                                <md-tooltip >
-                                    Shelves
-                                </md-tooltip>
-                            </md-button>
-                        </a>
-                        <md-button ng-show="info.mobile_search" 
-                            class="small-padding" 
-                            ng-click="toggle_notifications($event)">
-                            <span class="icon-hearts"></span>
-                            <md-tooltip >
-                                Notifications
-                            </md-tooltip>
-                        </md-button>
-                        <a href="/profile" ng-show="info.mobile_search">
-                            <md-button class="profile_link">
-                                <img ng-src="{{user.image_url | default_profile}}" 
-                                    class="circular">
-                                    <md-tooltip >
-                                        Profile
-                                    </md-tooltip>
-                            </md-button>
-                        </a>
-                        <div ng-show="info.mobile_search" >
-                            <md-button ng-click="toggle_navigation_options()">
-                                <span class="icon-plus"></span>
-                            </md-button>
-                            <div>
-                                <md-tooltip md-visible="navigation_options" class="navigator md-whiteframe-z1">
-                                    <div layout="column" layout-wrap>
-                                        <div class="navigation_block full_width">
-                                            <a target="_blank" 
-                                                href="http://magazine.readersdoor.com" class="full_width">
-                                                <md-button class="md-button-clear full_width">
-                                                    Magazine
-                                                </md-button>
-                                            </a>
-                                        </div>
-                                        <div class="navigation_block full_width">
-                                            <a target="_blank" 
-                                                href="http://blog.readersdoor.com" class="full_width">
-                                                <md-button class="md-button-clear full_width">
-                                                    Blog
-                                                </md-button>
-                                            </a>
-                                        </div>
-                                        <div class="navigation_block full_width">
-                                            <a target="_blank" 
-                                                href="http://fragments.readersdoor.com" class="full_width">
-                                                <md-button class="md-button-clear full_width">
-                                                    Fragments
-                                                </md-button>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </md-tooltip>
-                            </div>
-                        </div>
-                    </div>
-                    <div layout="row" layout-align="center center" 
-                            ng-hide="info.mobile_search" layout-fill layout-padding hide-md hide-lg ng-if="info.hide_signin">
-                        <md-button flex="10" ng-click="show_search_bar()" hide-md hide-lg class="md-button-clear">
-                            <span class="icon-angle-left"></span>
-                        </md-button>
-                        <md-autocomplete
-                            md-selected-item="selectedItem1"
-                            md-search-text="searchText"
-                            md-items="item in querySearch(searchText)"
-                            md-item-text="display"
-                            class="search"
-                            flex="90" hide-md hide-lg
-                            placeholder="Search books, topics and more...">
-                            <span md-highlight-text="searchText" ng-bind-html="item.display"></span>
-                        </md-autocomplete>
-                    </div>
-                    <div flex="30" layout="row" layout-padding layout-align="end center" class="h-btn-right" 
-                        ng-if="!info.hide_signin">
-                        <div ng-controller="homeController">
-                            <div ng-include src="'/assets/angular/html/home/_sign_in.html'"></div>
-                            <md-button ng-click="show_signin_options($event)" class="sign-up-button md-raised md-button-clear" style="color: rgba(0,0,0,0.87) !important;">
-                                Sign In
-                            </md-button>
-                        </div>
-                    </div>
-                </section>
-            </md-toolbar>
-
-            <div ng-show="info.mobile_search">
-                <%= yield %>
-            </div>
-            
-            
-            <div ng-controller="shareController" ng-show="info.mobile_search">
-                <md-button class="md-warn md-fab md-whiteframe-z3 md-fab-bottom-right animate-fast fixed_share "
-                            ng-hide="active_shelf || info.show_share"
-                            aria-label="Share reading journey"
-                            ng-click="show_share_page($event)"
-                            ng-style="type_icon_pressed" ng-if="info.hide_signin">
-                    <span class="icon-book-alt2"></span>
-                    <md-tooltip md-direction="left">
-                          Share your reading journey
-                    </md-tooltip>
-                </md-button>
-            </div>
+                </md-content>
             
             <md-progress-linear class="md-primary loader"
                                 ng-show="info.loading && !info.show_share"

@@ -1,8 +1,10 @@
-<md-content ng-controller="authorController" layout="row" layout-wrap class="white" 
-     check-scroll-bottom="get_books()"
-     ng-keydown="keypress_scroll($event)">
-    <div ng-include src="'/assets/angular/html/author/show.html'"></div>
-</md-content>
+<div layout="row" class="feed_margin">
+    <div flex="10" hide-sm flex-md="10"></div>
+    <div flex="80" flex-sm="100" flex-md="80">
+        <div ng-include src="'/assets/angular/html/author/profile.html'"></div>
+    </div>
+    <div flex="10" hide-sm flex-md="10"></div>
+</div>
 <style>
     .author_thumb{
         width: 100%;
@@ -10,9 +12,9 @@
     }
     .book_container{
         min-height: 350px; 
-        background-color: white;
         z-index: 1;
         position: relative;
+        margin-top: -100px;
     }
     .author_header{
         z-index: 3;
@@ -64,9 +66,9 @@
         left: -10px !important;
     }
     .md-sidenav-left, md-sidenav {
-        left: 0;
-        top: -65px;
-        position: absolute; 
+        /*left: 0;*/
+        /*top: -65px;*/
+        /*position: absolute; */
     }
 
     .book_width{
@@ -74,7 +76,7 @@
     }
 
     .follow_author{
-        position: fixed;
+        position: absolute;
         z-index: 2;
         right: 10px;
         top: 67px;
@@ -89,4 +91,5 @@
         margin-top: 10px;
         font-size: 0.9em;
     }
+
 </style>

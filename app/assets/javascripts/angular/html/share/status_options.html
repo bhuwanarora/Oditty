@@ -1,6 +1,6 @@
 <div class="currently_reading roboto" 
  	layout="column">
-    <div layout="row" class="white"
+    <div layout="row" class="white md-whiteframe-z1"
         ng-include src="'/assets/angular/html/share/partials/_search.html'"></div>
     <md-list layout="column" ng-if="!reading_status_selected"
     	ng-include src="'/assets/angular/html/share/partials/_reading_option.html'">
@@ -19,7 +19,7 @@
             ng-if="related_info.length > 0 && active_id == 1 && !active_emotion"></md-list>
     <md-list layout="column" ng-if="related_info && related_info.length > 0" class="roboto"
         ng-include src="'/assets/angular/html/share/partials/_facts.html'"></md-list>
-    <md-progress-linear ng-show="info.loading"
+    <md-progress-linear ng-show="info.loading" class="menu_search"
         md-mode="indeterminate">
 	</md-progress-linear>
 </div>

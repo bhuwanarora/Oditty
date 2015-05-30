@@ -4,10 +4,15 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
         event.stopPropagation();
     }
 
-    $scope.stopPropagation = function(){
-        if($scope.constant.show_book){
-            // $scope.constant = {"show_book": true};
-        }
+    // $scope.stopPropagation = function(){
+    //     if($scope.constant.show_book){
+    //         // $scope.constant = {"show_book": true};
+    //     }
+    // }
+
+    $scope.show_signin_options = function(event){
+        $mdSidenav('signup').toggle();
+        event.stopPropagation();
     }
 
     $scope.show_search_bar = function(){
@@ -42,8 +47,13 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
     }
 
 	$scope.toggleLeft = function(event){
-	    $mdSidenav('left').toggle();
-        event.stopPropagation();
+        if($scope.info.hide_signin){
+    	    $mdSidenav('left').toggle();
+            event.stopPropagation();
+        }
+        else{
+            $scope.show_signin_options();
+        }
 	};
 
 	$scope.toggleRight = function(event){

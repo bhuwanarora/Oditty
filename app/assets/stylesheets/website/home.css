@@ -1,5 +1,6 @@
 body,
-md-content.md-default-theme{
+md-content.md-default-theme,
+.background{
 	background-color: #ececec;
 }
 
@@ -27,16 +28,16 @@ a:active{
 }
 
 .header{
-	background-color: white !important;
-	color: rgba(145, 140, 140, 1) !important;
 	box-shadow: none;
 	min-height: 48px !important;
-	position: relative;
 	z-index: 3;
+	background-color: #00BCD4;
+	color: white;
+	width: 100%;
 }
 
 md-card{
-	box-shadow: none !important;
+	/*box-shadow: none !important;*/
 }
 
 .no_shadow{
@@ -44,7 +45,7 @@ md-card{
 }
 
 .header .md-button{
-	color: rgba(145, 140, 140, 1) !important;
+	/*color: rgba(145, 140, 140, 1) !important;*/
 }
 
 .carddemoBasicUsage md-card {
@@ -52,21 +53,19 @@ md-card{
 }
 
 md-card{
-	margin-top: 25px !important;
+	/*margin-top: 25px !important;*/
 	background-color: white;
 }
 
 md-content{
-	height: 100vh !important;
+	max-height: 100vh !important;
 	padding-bottom: 10px;
 	/*margin-top: 0px !important;*/
 	/*margin-bottom: 100px !important;*/
 }
 
 .burger{
-	height: 54px;
-	background-color: #ececec;
-	color: rgba(145, 140, 140, 1) !important;
+	padding: 10px;
 }
 
 /*md-tabs a{
@@ -78,10 +77,6 @@ md-content{
 	font-size: 1.2em;
 }
 
-.signup_title{
-	padding-left: 50px !important;
-}
-
 .logo:hover{
 	text-decoration: none !important;
 	color: #333;
@@ -89,11 +84,11 @@ md-content{
 
 .logo img{
 	position: absolute;
-	z-index: 99999999;
-	left: 45px;
-	top: 0px;
-	width: 54px;
-	height: 64px;
+  	z-index: 99999999;
+  	left: 1px;
+  	top: -17px;
+  	width: 54px;
+  	height: 64px;
 }
 
 .search{
@@ -218,7 +213,7 @@ md-toolbar{
 	max-height: 300px;
 	height: auto !important;
 	width: 300px;
-	z-index: 2;
+	z-index: 20;
 }
 
 .circular{
@@ -232,7 +227,7 @@ md-toolbar{
 }
 
 .left_panel{
-	z-index: 2;
+	z-index: 99999999;
 	min-width: 250px;
 	width: 250px;
 }
@@ -250,19 +245,25 @@ md-toolbar{
 	z-index: 99999;
 }
 
-.left_panel_container md-backdrop{
-	z-index: 0;
-}
-
 .md-fab-custom-right{
 	top: 70% !important;
 	right: 10% !important;
 }
 
+.primary{
+	background-color: #00BCD4;
+}
+
+.share_container{
+	position: relative;
+  	width: 100%;
+  	height: 56px;
+}
+
 .fixed_share{
-	margin-right: 0px;
-  	font-size: 18px;
-  	box-shadow: 0 3px 5px -1px rgba(0,0,0,.2),0 6px 10px 0 rgba(0,0,0,.14),0 1px 18px 0 rgba(0,0,0,.12) !important;
+  position: absolute;
+  right: 35px;
+  top: 25px;
 }
 
 .fixed_share.ng-enter,
@@ -489,15 +490,10 @@ and (max-width : 800px){
 	}
 
 	.share{
-		position: fixed;
-		bottom: 10px;
-		background-color: #427fed;
-		color: #fff;
 		width: initial;
 		height: initial;
 		border-radius: 20px;
 		padding: 10px;
-		left: 10px;
 	}
 
 	.share:hover{
@@ -616,9 +612,9 @@ md-tooltip .md-content{
 
 .navigator{
   	border-radius: 0px;
-  	width: 200px;
-  	height: 300px;
-  	margin-left: -100px;
+  	width: 400px;
+  	/*height: 300px;*/
+  	margin-left: -185px;
   	color: #333 !important;
   	font-size: 15px;
   	font-family: sans-serif;
@@ -635,7 +631,10 @@ md-tooltip .md-content{
 }
 
 .navigator .navigation_block{
-
+	width: 100px;
+}
+.navigator .navigation_block i{
+	font-size: 48px;
 }
 
 .category_title{
@@ -650,4 +649,47 @@ md-tooltip .md-content{
     margin-top: 0px !important;
     max-width: 100px !important;
     position: fixed;
+}
+
+
+.rd_book_backup_cover,
+.rd_book_image_cover,
+.rd_slider_wrapper,
+.rd_book_shadow{
+	width: 130px;
+	height: 180px;
+}
+
+.rd_book_backup_cover{
+    position: absolute;
+    color: white;
+    white-space: normal;
+}
+
+.rd_book_backup_cover h3{
+	font-weight: 400;
+	overflow: hidden;
+	margin: 0px;
+}
+
+.rd_book_image_cover{
+	position: relative;
+}
+
+.rd_slider_wrapper{
+		overflow: hidden;
+		z-index: 1;
+}
+
+.rd_book_shadow{
+	position: absolute;
+	z-index: 1;
+}
+
+.rd_title{
+	color: white;
+  	font-weight: 600;
+  	font-size: 40px;
+  	text-shadow: 1px 1px 6px rgba(0,0,0,0.2);
+  	font-family: sans-serif;
 }

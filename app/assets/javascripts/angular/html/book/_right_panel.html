@@ -1,4 +1,4 @@
-<md-content layout="column" layout-padding class="fixed_right_panel white" 
+<div layout="column" layout-padding class="fixed_right_panel" 
           layout-align="start start"
           hide-sm
           ng-if="constant.show_book">
@@ -8,32 +8,37 @@
           <div class="counter" layout="row" layout-align="center center" ng-if="book.endorse_count">
                <div>{{book.endorse_count}}</div>
           </div>
-          <md-button ng-class="{'inactive_blue_circle': !book.endorse_status, 'md-raised blue_circle': book.endorse_status}" 
-                    ng-click="toggle_endorse()">
-               <span class="icon-feed"></span>
+          <div ng-class="{'inactive_blue_circle': !book.endorse_status, 
+               'md-raised blue_circle': book.endorse_status}"   layout="row" layout-align="center center"
+               class="pointer" layout-padding ng-click="toggle_endorse()">
+               <!-- <span class="icon-feed"></span> -->
+               <i class="material-icons">plus_one</i>
                <md-tooltip md-direction="right">
                 Like
                </md-tooltip>
-          </md-button>
+          </div>
      </div>
      <div layout-margin class="relative_block">
           <div class="counter" layout="row" layout-align="center center" ng-if="book.share_count">
                <div>{{book.share_count}}</div>
           </div>
-          <md-button class="md-raised blue_circle" ng-click="show_share_bottom_sheet()">
-               <span class="icon-share"></span>
+          <div class="md-raised blue_circle pointer"  layout="row" layout-align="center center"
+               layout-padding ng-click="show_share_bottom_sheet()">
+               <!-- <span class="icon-share"></span> -->
+               <i class="material-icons">share</i>
                <md-tooltip md-direction="right" md-visible="demo.showTooltip">
                  Share
                </md-tooltip>
-          </md-button>
+          </div>
      </div>
      <div layout-margin class="relative_block">
           <div class="counter" layout="row" layout-align="center center" ng-if="book.bookmark_count">
                <div>{{book.bookmark_count}}</div>
           </div>
-          <bookmark data="{'id': (book.id || book.book_id), 'type': 'Book'}" shelves="book.shelves" custom="true"></bookmark>
+          <bookmark data="{'id': (book.id || book.book_id), 'type': 'Book'}" 
+               shelves="book.shelves" custom="true"></bookmark>
      </div>
-</md-content>
+</div>
 <style> 
 /*     .fixed_right_panel{
           position: fixed;

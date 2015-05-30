@@ -74,7 +74,7 @@ homeApp.config(["$mdThemingProvider", function($mdThemingProvider){
         'contrastLightColors': undefined    // could also specify this if default was 'dark'
     });
     $mdThemingProvider.theme('default')
-                      .primaryPalette('googleBlue')
+                      .primaryPalette('blue')
                       .accentPalette('googleGreen')
                       .warnPalette('googleRed')
 }]);

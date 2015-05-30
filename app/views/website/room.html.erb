@@ -1,10 +1,20 @@
-<md-content layout="row" ng-controller="communityController" id="community">
-    <div flex="10" flex-md="5" hide-sm></div>
-    <div ng-include src="'/assets/angular/html/community/show.html'" 
-             class="right_panel_container"
-             flex="80" flex-md="90" flex-sm="100"></div>
-    <div flex="10" flex-md="5" hide-sm></div>
-</md-content>
+<section layout="row" layout-padding class="primary">
+	<div flex="10" flex-md="5" hide-sm></div>
+	<div layout-padding flex="80" flex-md="90" flex-sm="100" layout="row" flex layout-align="space-between">
+		<div class="big_title">
+			{{active_tag.name | uppercase}}
+		</div>
+	</div>
+	<div flex="10" flex-md="5" hide-sm></div>
+</section>
+<div ng-include src="'/assets/angular/html/shared/share.html'" class="primary"></div>
+<section layout="row">
+	<div flex="10" flex-md="5" hide-sm></div>
+	<div ng-include src="'/assets/angular/html/community/show.html'" 
+	         class="right_panel_container feed_margin"
+	         flex="80" flex-md="90" flex-sm="100"></div>
+	<div flex="10" flex-md="5" hide-sm></div>
+</section>
 <style>
 	.users{
 		bottom: 0px;

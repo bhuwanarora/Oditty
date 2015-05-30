@@ -1,4 +1,4 @@
-class Indexer
+class Indexer 
 	def initialize response
 		@response = response
 		@client = Elasticsearch::Client.new log: true	
