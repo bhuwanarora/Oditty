@@ -213,7 +213,7 @@ md-toolbar{
 	max-height: 300px;
 	height: auto !important;
 	width: 300px;
-	z-index: 2;
+	z-index: 20;
 }
 
 .circular{
@@ -227,7 +227,7 @@ md-toolbar{
 }
 
 .left_panel{
-	z-index: 2;
+	z-index: 99999999;
 	min-width: 250px;
 	width: 250px;
 }

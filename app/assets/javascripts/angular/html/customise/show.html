@@ -1,5 +1,4 @@
-
-<ng-switch on="data.selectedIndex" class="tabpanel-container">
+<ng-switch on="data.selectedIndex" class="customise_continaer feed_margin">
     <div role="tabpanel"
          id="tab1-content"
          aria-labelledby="tab1"
@@ -44,29 +43,37 @@
 		            md-mode="buffer">
 		</md-progress-linear>
 	    <section layout="row">
-	        <md-button ng-click="previous()" class="footer_button"
+	        <div ng-click="previous()" class="footer_button pointer"
 	        		aria-label=""
 	                ng-disabled="data.selectedIndex == 0"
-	                flex="50" layout="row" layout-align="start">
-	            <div><span class="icon-angle-left"></span></div>&nbsp;&nbsp;
-	            <div ng-switch on="data.selectedIndex">
-	                <div ng-switch-when="0"></div>
-	                <div ng-switch-when="1">Personal Info</div>
-	                <div ng-switch-when="2">Subjects that interest you</div>
-	                <div ng-switch-when="3">Select Books</div>
-	            </div>
-	        </md-button>
-	        <md-button ng-click="next()" class="footer_button"
+	                flex="50">
+	            <section layout="row" layout-align="start center">
+		            <div layout-padding>
+		            	<i class="material-icons">navigate_before</i>
+		            </div>
+		            <div ng-switch on="data.selectedIndex">
+		                <div ng-switch-when="0"></div>
+		                <div ng-switch-when="1">Personal Info</div>
+		                <div ng-switch-when="2">Subjects that interest you</div>
+		                <div ng-switch-when="3">Select Books</div>
+		            </div>
+	            </section>
+	        </div>
+	        <div ng-click="next()" class="footer_button pointer"
 	        			aria-label=""
-	                    flex="50" layout="row" layout-align="end">
-	            <div ng-switch on="data.selectedIndex">
-	                <div ng-switch-when="0">Subjects that interest you</div>
-	                <div ng-switch-when="1">Select Books</div>
-	                <!-- <div ng-switch-when="2">Add favourite Writers and People</div> -->
-	                <div ng-switch-when="2" class="site_color">Go to Infinity</div>
-	            </div>&nbsp;&nbsp;
-	            <div><span class="icon-angle-right"></span></div>
-	        </md-button>
+	                    flex="50" >
+	           	<section layout="row" layout-align="end center">
+		            <div ng-switch on="data.selectedIndex">
+		                <div ng-switch-when="0">Subjects that interest you</div>
+		                <div ng-switch-when="1">Select Books</div>
+		                <!-- <div ng-switch-when="2">Add favourite Writers and People</div> -->
+		                <div ng-switch-when="2" class="site_color">Go to Infinity</div>
+		            </div>
+		            <div layout-padding>
+		            	<i class="material-icons">navigate_next</i>
+		            </div>
+	           	</section>
+	        </div>
 	    </section>
 	</div>
 	<div flex="15" flex-md="10" hide-sm></div>
@@ -114,4 +121,5 @@
 		color: white !important;
 		background-color: rgba(0, 0, 0, 0.39);
 	}
+
 </style>

@@ -1,10 +1,10 @@
-<div layout="row" layout-align="center center">
-    <h3>Select books which have left a mark on you</h3>
+<div layout="row" layout-align="center center" layout-padding>
+    <div class="big_title uppercase">Select books which have left a mark on you</div>
 </div>
 <div ng-show="did_you_mean">
 	Did you mean?
 </div>
-<md-content ng-controller="booksController" check-scroll-bottom="books_on_signup()" class="white" id="books">
+<div ng-controller="booksController" check-scroll-bottom="books_on_signup()" class="white" id="books">
 	<section layout="row">
 		<div flex="15" flex-md="10" hide-sm >
 			
@@ -34,7 +34,7 @@
 			
 		</div>
 	</section>
-</md-content>
+</div>
 
 <style>
 

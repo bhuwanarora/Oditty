@@ -438,3 +438,11 @@ md-toast.md-default-theme{
 .pointer:hover{
     background-color: rgba(0, 0, 0, 0.1);
 }
+
+.uppercase{
+    text-transform: uppercase;
+}
+
+.center_text{
+    text-align: center;
+}

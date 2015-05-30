@@ -11,7 +11,7 @@
         </div>
         <img ng-src="{{active_tag.image_url}}">
         <div layout="row" layout-wrap class="users" layout-padding>
-            <a ng-repeat="user in active_tag.users" ng-href="/user?q={{user.id}}" layout-margin>
+            <a ng-repeat="user in active_tag.users" ng-href="/user?q={{user.id}}" layout-margin ng-if="user.id">
                 <img class="circular" layout-margin ng-src="{{user.image_url}}">
                 <md-tooltip md-direction="top">
                     {{user.first_name}}

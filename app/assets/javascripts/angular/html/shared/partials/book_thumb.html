@@ -1,4 +1,4 @@
-<div ng-style="{background:'{{book.color | random_color}}'}" class="rd_book_backup_cover md-whiteframe-z1" 
+<div ng-style="{background:'{{book.color | random_color}}'}" class="rd_book_backup_cover md-whiteframe-z3" 
         layout="column" layout-padding layout-align="space-between">
     <h3>{{book.title}}</h3>
     <h5>{{book.author_name}}</h5>
@@ -13,15 +13,22 @@
       				aria-label="user_rating">
       	</md-slider>
 	</div>
+	<img src="/assets/book_shadow.png" class="rd_book_shadow">
 	<img ng-src="{{book | choose_medium_thumb}}" class="rd_book_image_cover">
 </div>
 <br/>
 
 <style>
 
-	.rd_book_backup_cover{
+	.rd_book_backup_cover,
+	.rd_book_image_cover,
+	.rd_slider_wrapper,
+	.rd_book_shadow{
 		width: 130px;
 		height: 180px;
+	}
+
+	.rd_book_backup_cover{
         position: absolute;
         color: white;
         white-space: normal;
@@ -34,16 +41,17 @@
 	}
 
 	.rd_book_image_cover{
-		width: 130px;
-		height: 180px;
 		position: relative;
 	}
 
 	.rd_slider_wrapper{
-		width: 130px;
-  		height: 180px;
   		overflow: hidden;
   		z-index: 1;
+	}
+
+	.rd_book_shadow{
+		position: absolute;
+		z-index: 1;
 	}
 
 </style>
