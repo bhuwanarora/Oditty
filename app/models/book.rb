@@ -84,7 +84,7 @@ class Book < Neo
 	end
 
 	def self.match_path relation, limit
-		"MATCH path = (book)-[:" + relation.to_s + "*" + limit.to_s + "]-(last_in_path)"
+		"MATCH path = (book)-[:" + relation.to_s + "*" + limit.to_s + "]->(last_in_path)"
 	end
 
 	def get_categories
@@ -156,7 +156,7 @@ class Book < Neo
 	end
 	
 	def get_interesting_info
-		match + " MATCH (book)-[relation]-(info) WHERE type(relation) <> 'Belongs_to' AND type(relation) <> 'Next_book' AND type(relation) <> 'BookFeed' AND type(relation) <> 'NextLongRead' AND type(relation) <> 'NextNormalRead' AND type(relation) <> 'NextTinyRead' AND type(relation) <> 'NextSmallRead' AND type(relation) <> 'BookmarkNode'" + Book.return_group(Book.basic_info, "COLLECT({info : info, labels: labels(info), id: ID(info)}) AS info")
+		match + " MATCH (book)-[relation]-(info) WHERE type(relation) <> 'Belongs_to' AND type(relation) <> 'NextBook' AND type(relation) <> 'BookFeed' AND type(relation) <> 'NextLongRead' AND type(relation) <> 'NextNormalRead' AND type(relation) <> 'NextTinyRead' AND type(relation) <> 'NextSmallRead' AND type(relation) <> 'BookmarkNode'" + Book.return_group(Book.basic_info, "COLLECT({info : info, labels: labels(info), id: ID(info)}) AS info")
 	end
 
 	def self.get_out_relationship relationship_type,book
@@ -207,7 +207,7 @@ class Book < Neo
 				"Mentions"       => [],
 				"Endorsed"		 => [],
 				"FeedNext"       => [],
-				"Next_book"      => []
+				"NextBook"      => []
 				}
 		book_links_property
 	end

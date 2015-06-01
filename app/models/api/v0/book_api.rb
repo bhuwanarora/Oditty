@@ -297,7 +297,7 @@ module Api
 			# end
 
 			# def self._get_basic_recommendations(filters, last_book)
-			# 	clause = "MATCH (book:Book) WHERE ID(book)="+last_book.to_s+" MATCH p=(book)-[:Next_book*..10]->(b) WITH last(nodes(p)) as b RETURN b.isbn, ID(b), b.external_thumb"
+			# 	clause = "MATCH (book:Book) WHERE ID(book)="+last_book.to_s+" MATCH p=(book)-[:NextBook*..10]->(b) WITH last(nodes(p)) as b RETURN b.isbn, ID(b), b.external_thumb"
 			# 	clause
 			# end
 
@@ -339,7 +339,7 @@ module Api
 			# 			relation = Constant::Label::LongReadRelation
 			# 		end
 			# 		init_match_clause = "MATCH (b:ActiveBook) WHERE ID(b)="+last_book.to_s+" "
-			# 		match_clause = "MATCH p=(b)-[:"+relation+"*..5]->(next_book) WITH last(nodes(p)) as book "
+			# 		match_clause = "MATCH p=(b)-[:"+relation+"*..5]->(NextBook) WITH last(nodes(p)) as book "
 			# 	else
 			# 		time_group = filters["other_filters"][Constant::Label::Year].split("(")[0].gsub(" " , "").downcase rescue ""
 			# 		if time_group.present?

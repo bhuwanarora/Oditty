@@ -9,7 +9,7 @@
                 <span ng-if="!active_tag.status" class="icon-user-add"></span>
             </md-button>
         </div>
-        <img ng-src="{{active_tag.image_url}}"/>
+        <img ng-src="{{active_tag.image_url}}" class="max_full_width" />
         <div layout="row" layout-wrap class="users" layout-padding>
             <a ng-repeat="user in active_tag.users" ng-href="/user?q={{user.id}}" layout-margin ng-if="user.id">
                 <img class="circular" layout-margin ng-src="{{user.image_url}}"/>

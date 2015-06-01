@@ -4,7 +4,7 @@
          flex-md="80"
          flex-sm="100"
          ng-if="constant.show_book"
-         aria-label=""
+         aria-label="book"
          ng-click="show_grid($event)"
          layout="row"
          layout-align="start center">
@@ -18,6 +18,11 @@
             ng-show="info.custom_loading"
             md-mode="indeterminate">
     </md-progress-linear>
+
+    <div class="less_important white" layout="row" layout-padding
+        layout-align="end center" ng-if="!constant.show_book">
+        <div>{{info.books.length}} results</div>
+    </div>
 
     <div layout-padding class="white" ng-if="info.other_info && info.other_info.name">
         <a ng-href="/author?q={{info.other_info.id}}"><h3 ng-bind-html="info.other_info.name"></h3></a>
@@ -35,18 +40,19 @@
                 layout-margin
                 layout-align="start start"
                 layout="row"
-                class="md-button grid md-whiteframe-z1"
+                class="rd_book_image_cover md-whiteframe-z3"
                 ng-class="{'book': book.isBook}" >
-                <md-button class="book_grid_link"
-                        aria-label=""
+                <md-button class="book_grid_link" aria-label="book"
                         ng-click="show_book($event, book)">
-                    <img ng-src="{{book | choose_medium_thumb}}"/>
+                    <!-- <img ng-src="{{book | choose_medium_thumb}}"/> -->
+                    <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'">
+                    </div>
                 </md-button>
-                <div ng-style="{background:'{{book.color}}'}" class="book_backup_cover" 
+                <!-- <div ng-style="{background:'{{book.color}}'}" class="book_backup_cover" 
                         layout="column" layout-padding layout-align="space-between">
                     <h3>{{book.title}}</h3>
                     <h5>{{book.author_name}}</h5>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -93,18 +99,18 @@
                     layout-align="start start"
                     layout="row"
                     layout-margin
-                    class="md-button grid md-whiteframe-z1"
+                    class="rd_book_image_cover md-whiteframe-z3"
                     ng-class="{'book': book.isBook}" >
                     <md-button class="book_grid_link"
-                            aria-label=""
+                            aria-label="book"
                             ng-click="show_book($event, book)">
-                        <img ng-src="{{book | choose_medium_thumb}}" />
+                        <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
                     </md-button>
-                    <div ng-style="{background:'{{book.color}}'}" class="book_backup_cover" 
+                    <!-- <div ng-style="{background:'{{book.color}}'}" class="book_backup_cover" 
                             layout="column" layout-padding layout-align="space-between">
                         <h3>{{book.title}}</h3>
                         <h5>{{book.author_name}}</h5>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -132,11 +138,11 @@
         font-weight: bold;
     }
 
-    .grid{
+    /*.grid{
         width: 170px;
         height: 240px;
         margin: 10px !important;
-    }
+    }*/
 
     .book_grid_link{
         position: absolute;
