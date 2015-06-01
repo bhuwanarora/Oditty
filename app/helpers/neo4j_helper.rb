@@ -775,6 +775,13 @@ module Neo4jHelper
 
 	end
 
+	def create_linked_list
+		@neo ||= self.init
+		clause = "MATCH (book:Book) WITH book, toFloat(book.gr_rating)*toFloat(book.gr_ratings_count)*toFloat(book.gr_reviews_count) as weight ORDER BY weight DESC, toFloat(book.gr_rating) WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:NextBook]->(p2)))) WITH LAST(p) AS last, HEAD(p) AS head MERGE (last)-[:NextBook]->(head)"
+		puts "adding books in form of sorted linked lists...".green
+		@neo.execute_query clause
+	end
+
 	def self.restructure_database
 		# puts "Droping existing indexes...".green
 		@neo ||= self.init

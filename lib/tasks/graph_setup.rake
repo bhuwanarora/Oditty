@@ -12,6 +12,12 @@ namespace :graph do
     GraphHelper.set_author_feed
   end
 
+  desc "create_linked_list"
+  task :create_linked_list => :environment do
+    include Neo4jHelper
+    Neo4jHelper.create_linked_list
+  end
+
   desc "reset_news_link"
   task :reset_news_link => :environment do
     include GraphHelper
