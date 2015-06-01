@@ -52,7 +52,7 @@ class Era < Neo
 	end
 
 	def self.most_popular user_id
-		User.new(user_id).match + Bookmark::Node::BookLabel.match_path + ", (book)-[published_in:Published_in]-(year:Year)-[from_era:FromEra]->(era:Era) WITH user, era, COUNT(book) AS book_count, book ORDER BY book_count DESC LIMIT 1 "
+		User.new(user_id).match + Bookmark::Node::BookLabel.match_path + ", (book)-[published_in:Published_in]-(year:Year)-[from_era:FromEra]->(era:Era) WITH user, era, COUNT(book) AS book_count, ORDER BY book_count DESC LIMIT 1 "
 	end
 
 	def self.match_books
