@@ -287,7 +287,6 @@ namespace :graph do
     Neo4jHelper.set_book_unique_index
   end
 
-
   desc "Deletes duplicate books and appropriately setup links."
   task :remove_duplicate_books => :environment do
     include GraphHelper

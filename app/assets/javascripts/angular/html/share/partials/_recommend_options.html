@@ -1,13 +1,3 @@
 <div class="emotions">
-	<md-button ng-repeat="user in users_list"
-				ng-click="recommend_friend(user)"
-				layout-padding
-				class="margin_top menu_details capitalize white md-button-clear custom_title overlap">
-		<div layout="row">
-			<img ng-src="{{user.image_url | default_profile}}" class="square">
-			<div layout="row" layout-align="center center" layout-padding>
-				{{user.first_name}}
-			</div>
-		</div>
-	</md-button>
+	<recommend ng-repeat="user in users_list" user="user" book="active_book"></recommend>
 </div>

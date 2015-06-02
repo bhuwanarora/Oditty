@@ -350,34 +350,31 @@ module Api
 				end
 			end
 
-			def self.recommend_book(user_id, friend_ids, book_id)
+			def self.recommend_book(user_id, friends_id, book_id)
 				@neo = Neography::Rest.new
-				for friend_id in friend_ids
-					UsersGraphHelper.recommend_book(user_id, friend_id, book_id)
-					clause = "MATCH (b:Book), (u:User), (f:User) WHERE ID(b)="+book_id.to_s+" AND ID(u)="+user_id.to_s+" AND ID(f)="+friend_id.to_s+" RETURN b, u, f"
-					data = @neo.execute_query(clause)["data"][0]
-					book = data[0]["data"]
-					user = data[1]["data"]
-					friend = data[2]["data"]
-					isbn = book["isbn"].split(",")[0] rescue ""
-					params = {
-								:template => Constant::EmailTemplate::RecommendBooks, 
-							  	:user => {
-							  		:thumb => user["thumb"], 
-							  		:id => user_id,
-							  		:name => user["name"]
-							  	},
-							  	:friend =>{
-							  		:name => friend["name"],
-							  		:email => friend["email"]
-							  	},
-							  	:book => {
-							  		:id => book_id,
-							  		:title => book["title"],
-							  		:author_name => book["author_name"],
-							  		:isbn => isbn
-							  	}
-							}
+				# UsersGraphHelper.recommend_book(user_id, friends_id, book_id)
+				clause = "MATCH (book:Book), (user:User), (friend:User) WHERE ID(user)=" + user_id.to_s + " AND ID(book)=" + book_id.to_s + " AND ID(friend)=" + friends_id.to_s + User.return_group("book.title AS title, ID(book) as book_id, book.author_name AS author_name, book.isbn AS isbn", "user.image_url AS image_url, ID(user) as id, user.first_name AS first_name, user.last_name AS last_name", "friend.first_name as friends_first_name, friend.last_name AS friends_last_name, ID(friend) AS friends_id, friend.email AS friends_email")
+				info = clause.execute[0]
+				isbn = info["isbn"].split(",")[0] rescue ""
+				params = {
+					:template => Constant::EmailTemplate::RecommendBooks, 
+				  	:user => {
+				  		:thumb => info["image_url"], 
+				  		:id => info["id"],
+				  		:name => info["first_name"] + " " + info["last_name"]
+				  	},
+				  	:friend =>{
+				  		:name => info["friends_first_name"] + " " + info["friends_last_name"],
+				  		:email => info["email"]
+				  	},
+				  	:book => {
+				  		:id => info["book_id"],
+				  		:title => info["title"],
+				  		:author_name => info["author_name"],
+				  		:isbn => isbn
+				  	}
+				}
+				if params[:friend][:email]
 					SubscriptionMailer.recommend_book(params).deliver
 				end
 			end

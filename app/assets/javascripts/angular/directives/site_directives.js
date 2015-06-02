@@ -1,3 +1,21 @@
+homeApp.directive('recommend', ["$rootScope", "userService", function($rootScope, userService){
+    return{
+        restrict: 'E',
+        scope: {user: '=', book: '='},
+        controller: ['$scope', function($scope){
+            $scope.recommend_friend = function(){
+                var friends_id = $scope.user.id;
+                var book_id = $scope.book.id;
+                $scope.recommending = true;
+                userService.recommend(friends_id, book_id).then(function(){
+                    $scope.recommending = false;
+                });
+            }
+        }],
+        templateUrl: '/assets/angular/html/shared/recommend.html'
+    }
+}]);
+
 homeApp.directive('bookInfo', ["$rootScope", "bookService", '$mdDialog', function($rootScope, bookService, $mdDialog){
     return {
         restrict: 'E',
