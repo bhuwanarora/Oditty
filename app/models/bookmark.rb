@@ -161,11 +161,8 @@ class Bookmark < Neo
 	end
 
 	def self.grouped_basic_info
-		" {status: ID(bookmark_node), bookmarked_by: bookmark_node.name, time: bookmark_node.created_at} AS bookmark_node "
-	end
-	def self.grouped_basic_info_noAS
-		" {status: ID(bookmark_node), bookmarked_by: bookmark_node.name, time: bookmark_node.created_at} "
-	end
+		" status: ID(bookmark_node), bookmarked_by: bookmark_node.name, time: bookmark_node.created_at "
+	end	
 
 	def create_label_bookmark_node
 		" MERGE (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node: BookmarkNode{label:\""+@key+"\", book_id:"+ @media_id.to_s + ", user_id:" + @user_id.to_s + "}) ON CREATE SET bookmark_node.count = 0 ON MATCH SET bookmark_node.count = bookmark_node.count + 1 " 
