@@ -1,7 +1,3 @@
-:not(.scrollbar)::-webkit-scrollbar { 
-    /*display: none; */
-}
-
 hr{
     opacity: 0.2;
 }
