@@ -1,5 +1,5 @@
 :not(.scrollbar)::-webkit-scrollbar { 
-    display: none; 
+    /*display: none; */
 }
 
 hr{
