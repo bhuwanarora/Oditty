@@ -1,4 +1,4 @@
-homeApp.controller('publishersController', ["$scope", '$rootScope', "publishersService", function($scope, $rootScope, publishersService){
+homeApp.controller('publishersController', ["$scope", '$rootScope', "publishersService", "$location", function($scope, $rootScope, publishersService, $location){
 	
 	var _init = (function(){
 		var regex = /[?&]([^=#]+)=([^&#]*)/g;

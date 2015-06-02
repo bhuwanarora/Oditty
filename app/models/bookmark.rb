@@ -163,6 +163,7 @@ class Bookmark < Neo
 	def self.grouped_basic_info
 		" {status: ID(bookmark_node), bookmarked_by: bookmark_node.name, time: bookmark_node.created_at} AS bookmark_node "
 	end
+	
 	def self.grouped_basic_info_noAS
 		" {status: ID(bookmark_node), bookmarked_by: bookmark_node.name, time: bookmark_node.created_at} "
 	end

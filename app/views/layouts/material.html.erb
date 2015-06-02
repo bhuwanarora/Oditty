@@ -137,7 +137,7 @@
             <% end %>
 
             <% if @publishers %>
-                <script src='assets/angular/services/website_service.js'></script>
+                <script src='assets/angular/services/publishers_service.js'></script>
                 <script src='assets/angular/controllers/publishers_controller.js'></script>
             <% end %>
 
@@ -248,6 +248,10 @@
                 <script src="assets/min/angular/controllers/personalised_group.min.js"></script>
             <% end %>
 
+            <% if @publishers %>
+                <script src="assets/min/angular/controllers/publishers_group.min.js"></script>
+            <% end %>
+
             <% if @network %>
                 <script src="assets/min/angular/controllers/network_group.min.js"></script>
             <% end %>
@@ -342,6 +346,8 @@
                 <md-content class="white">
             <% elsif @customise %>
                 <md-content ng-controller="customiseController" class="white" flex="100">
+            <% elsif @publishers %>
+                <md-content ng-controller="publishersController">
             <% end %>
                     <div ng-show="info.mobile_search" flex>
                         <div class="header <% if @profile || @shelves || @network %>yellow<% end %>">
@@ -350,7 +356,7 @@
                             <% else %>
                                 <div ng-include src="'/assets/angular/html/shared/header.html'"></div>
                             <% end %>
-                            <% unless @home || @profile || @news || @network || @room || @infinity || @signup%>
+                            <% unless @home || @profile || @news || @network || @room || @infinity || @signup || @publishers %>
                                 <div ng-include src="'/assets/angular/html/shared/share.html'"></div>
                             <% end %>
                         </div>
