@@ -3,20 +3,18 @@
     <div layout="row" class="white md-whiteframe-z1"
         ng-include src="'/assets/angular/html/share/partials/_search.html'"></div>
     <md-list layout="column" ng-if="!reading_status_selected"
-    	ng-include src="'/assets/angular/html/share/partials/_reading_option.html'">
-    </md-list>
+    	ng-include src="'/assets/angular/html/share/partials/_reading_option.html'"></md-list>
     <md-list layout="column" ng-if="info.status_books && (info.status_books.length > 0)"
          ng-include src="'/assets/angular/html/share/partials/_active_status.html'"></md-list>
     <md-list layout="column" ng-include src="'/assets/angular/html/share/partials/_planning_to_read.html'"
-            ng-if="active_book && active_id == 0"></md-list>
+        ng-if="active_book && active_id == 0"></md-list>
     <md-list layout="column" ng-include src="'/assets/angular/html/share/partials/_currently_reading.html'"
-            ng-if="active_book && active_id == 1"></md-list>
+            ng-if="active_book && active_id == 1"
+            ng-hide="info.page_count && info.current_page && hide_page_count"></md-list>
     <md-list layout="column" ng-include src="'/assets/angular/html/share/partials/_recently_read.html'"
             ng-if="active_book && active_id == 2" ng-controller="recommendController"></md-list>
-    <md-list ng-if="active_emotion"  
-        ng-include src="'/assets/angular/html/share/partials/_active_feeling.html'"></md-list>
     <md-list layout="column" ng-include src="'/assets/angular/html/share/partials/_feeling.html'"
-            ng-if="related_info.length > 0 && active_id == 1 && !active_emotion"></md-list>
+            ng-if="related_info.length > 0 && active_id == 1 && !active_emotion && (info.page_count && info.current_page)"></md-list>
     <md-list layout="column" ng-if="related_info && related_info.length > 0" class="roboto"
         ng-include src="'/assets/angular/html/share/partials/_facts.html'"></md-list>
     <md-progress-linear ng-show="info.loading" class="menu_search"

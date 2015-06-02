@@ -18,6 +18,16 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         // }
     }
 
+    $scope.set_pages = function(current_page, page_count){
+        $scope.info.page_count = page_count;
+        $scope.info.current_page = current_page;
+        $scope.hide_page_count = true;
+    }
+
+    $scope.show_page_count = function(){
+        $scope.hide_page_count = false;      
+    }
+
     $scope.toggle_buy = function(){
         $scope.hide_buy = !$scope.hide_buy;
     }
@@ -27,6 +37,8 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     }
 
     $scope.deselect_book = function(){
+        delete $scope.info.page_count;
+        delete $scope.info.current_page;
         delete $scope.active_book;
         delete $rootScope.active_book
         $scope.deselect_emotion();
@@ -127,7 +139,6 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     }
 
     $scope.add_book = function(book){
-        debugger
         if($rootScope.active_shelf){
             var bookmark_object = {"id": (book.id || book.book_id), "type": 'Book'};
             sharedService.toggle_bookmark($rootScope.active_shelf, false, bookmark_object);
@@ -190,13 +201,20 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
             status = angular.extend(status, {"wrapper_content": $scope.info.wrapper_status});
         }
         if(angular.isDefined($scope.info.book_exchange_status)){
-            status = angular.extend(status, {"book_exchange_status": $scope.info.book_exchange_status})
+            status = angular.extend(status, {"book_exchange_status": $scope.info.book_exchange_status});
+        }
+        if(angular.isDefined($scope.info.page_count)){
+            status = angular.extend(status, {"total_page_count": $scope.info.page_count});
+        }
+        if(angular.isDefined($scope.info.current_page)){
+            status = angular.extend(status, {"current_page": $scope.info.current_page});
         }
 
         if(Object.keys(status).length != 0){
             statusService.post_status(status).then(function(){
                 $scope.posting = false;
                 $scope.info.loading = false;
+                // $scope.post_again = true;
             });
             $scope.info.status = "";
             $scope.info.wrapper_status = "";

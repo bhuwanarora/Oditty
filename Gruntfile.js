@@ -36,7 +36,8 @@ module.exports = function(grunt) {
                         'app/assets/stylesheets/min/website/website.min.css',
                         'app/assets/stylesheets/min/website/icomoon.min.css',
                         'app/assets/stylesheets/min/website/home.min.css',
-                        'app/assets/stylesheets/min/website/media_library.min.css'
+                        'app/assets/stylesheets/min/website/media_library.min.css',
+                        'app/assets/stylesheets/min/website/animation.min.css',
                     ],
 
                     'app/assets/stylesheets/min/landing_page_site.min.css': [
