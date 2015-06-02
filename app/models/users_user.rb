@@ -29,6 +29,9 @@ class UsersUser < Neo
 		" OPTIONAL " + reverse_match
 	end
 
+	def self.recommend
+	end
+
 	def self.match_all
 		" MATCH (user)-[follows_user:FollowsUser]-(follows_node:FollowsNode)-[followed_by:FollowedBy]-(friend) WITH user, friend "
 	end

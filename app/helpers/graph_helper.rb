@@ -275,4 +275,10 @@ module GraphHelper
 		clause = "MATCH (author:Author) MERGE (author)-[r4:AuthorFeedNext]->(author) "
 		clause.execute
 	end
+
+
+	def wrong_author_links
+		clause = "MATCH (book:Book)<-[:Wrote]-(author:Author) WHERE book.author_name <> author.name RETURN COUNT(b)"
+
+	end
 end

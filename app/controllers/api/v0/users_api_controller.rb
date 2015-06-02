@@ -205,7 +205,7 @@ module Api
 			end
 
 			def recommend
-				UserApi.recommend_book(session[:user_id], params[:friend_ids], params[:book_id])
+				UserApi.recommend_book(session[:user_id], params[:friends_id], params[:book_id])
 				render :json => {:message => "Success"}, :status => 200
 			end
 

@@ -1,0 +1,15 @@
+<div ng-click="recommend_friend()"
+	layout-padding layout="row" layout-align="space-between"
+	class="margin_top capitalize white custom_title overlap pointer">
+	<img ng-src="{{user.image_url | default_profile}}" class="square">
+	<div layout="row" layout-align="space-between center" layout-padding>
+		<div>{{user.first_name}}</div>
+		<div layout-padding ng-hide="recommending">
+        	<i class="material-icons md-dark">check</i>
+        </div>
+        <div layout-padding ng-show="recommending">
+        	<md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate">
+        	</md-progress-circular>
+        </div>
+	</div>
+</div>
