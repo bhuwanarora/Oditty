@@ -133,6 +133,7 @@ ReadersDoor::Application.routes.draw do
 
   get 'signup'                          => "website#signup",                    :as => "signurep"
   get 'news_group'                      => "website#news_group",                :as => "news_group"
+  get 'publishers'                      => "website#publishers",                :as => "publishers"
 
   get "trending_community_books"        => "books#trending_community_books",     :as => "trending_community_books"
   get "delete_book_relationship"        => "books#delete_book_relationship",       :as => "delete_book_relationship"
