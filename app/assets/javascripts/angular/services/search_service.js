@@ -15,15 +15,15 @@ homeApp.service('searchService', ["$http", "$q", "$rootScope", "WebsiteUIConstan
         if(count){
             params_string = params_string + "&count=" + count;
         }
-    	return _deferred_request("/api/v0/search?" + params_string, $q, $http);
+    	return _deferred_request("http://readersdoor.com/api/v0/search?" + params_string, $q, $http);
     }
 
     this.raw_detailed = function(q, type){
     	if(angular.isDefined(type)){
-    		return _deferred_request('/api/v0/search_detailed?q='+q+'&type='+type, $q, $http);
+    		return _deferred_request('http://readersdoor.com/api/v0/search_detailed?q='+q+'&type='+type, $q, $http);
     	}
     	else{
-    		return _deferred_request('/api/v0/search_detailed?q='+q, $q, $http);
+    		return _deferred_request('http://readersdoor.com/api/v0/search_detailed?q='+q, $q, $http);
     	}	
     }
 
