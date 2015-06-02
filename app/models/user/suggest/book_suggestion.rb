@@ -13,7 +13,7 @@ class User::Suggest::BookSuggestion < User::Suggest
 		# most bookmarked author
 		# other books from author
 
- 		@user.match + @user.favourite_author + User::Suggest::BookSuggestion.order_init + " book_count DESC " + User::Suggest::BookSuggestion.limit(8) +  "WITH author, user " + Author.match_books + ", user " + Bookmark.match_not("book") + User::Suggest::BookSuggestion.with_group("book", "author") + User::Suggest::BookSuggestion.order_init + " toINT(book.total_weight) DESC " + User::Suggest::BookSuggestion.return_group(Author.basic_info, "COLLECT({"+Book.grouped_basic_info+"})[0..8] AS books")
+ 		@user.match + @user.favourite_author_new + User::Suggest::BookSuggestion.order_init + " book_count DESC " + User::Suggest::BookSuggestion.limit(8) +  "WITH author, user " + Author.match_books + ", user " + Bookmark.match_not("book") + User::Suggest::BookSuggestion.with_group("book", "author") + User::Suggest::BookSuggestion.order_init + " toINT(book.total_weight) DESC " + User::Suggest::BookSuggestion.return_group(Author.basic_info, "COLLECT({"+Book.grouped_basic_info+"})[0..8] AS books")
 	end
 
 	def for_most_bookmarked_era

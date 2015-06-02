@@ -52,6 +52,10 @@ class User < Neo
 		optional_match_books_bookmarked + Author.match_author_for_books + ", user, COUNT(book) as book_count " 
 	end
 
+	def favourite_author_new
+		optional_match_books_bookmarked +  "MATCH (author:Author)-[:Wrote]->(book) WITH author, user, COUNT(book) as book_count "
+	end
+
 	def self.set_rating_count operation
 		if operation == "+"
 			" SET user.rating_count = TOINT(COALESCE(user.rating_count, 0)) + 1 "
