@@ -136,6 +136,11 @@
 
             <% end %>
 
+            <% if @publishers %>
+                <script src='assets/angular/services/website_service.js'></script>
+                <script src='assets/angular/controllers/publishers_controller.js'></script>
+            <% end %>
+
             <% if @personalised_suggestions %>
                 <script src="assets/angular/services/news_service.js"></script>
                 <script src="assets/angular/controllers/personalised_controller.js"></script>

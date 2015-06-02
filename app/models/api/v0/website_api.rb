@@ -1,6 +1,12 @@
 module Api
 	module V0
 		class WebsiteApi
+
+			def self.publishers_info id
+				info = Publisher.new(id).get_info.execute
+				info
+			end
+
 			def self.save_feedback(feedback, user_id)
 				clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" CREATE (u)-[:GaveFeedback]->(f:Feedback) SET f.feedback_text=\""+feedback+"\", f.timestamp="+Time.now.to_i.to_s
 				clause.execute

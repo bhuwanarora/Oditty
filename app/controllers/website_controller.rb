@@ -264,4 +264,9 @@ class WebsiteController < ApplicationController
 		render :layout => "material"
 	end
 
+	def publishers
+		@publishers = true
+		render :layout => "material"
+	end
+
 end

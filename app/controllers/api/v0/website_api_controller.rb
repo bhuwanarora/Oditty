@@ -181,6 +181,12 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def publishers_info
+				id = params[:id]
+				info = Api::V0::WebsiteApi.publishers_info
+				render :json => info, :status => 200
+			end
+
             private
             def neo_init
                 @neo = Neography::Rest.new
