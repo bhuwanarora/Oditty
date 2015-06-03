@@ -9,8 +9,10 @@
         </section>
     </div>
     <div class="md-list-item-text">
-        <div class="book_title" layout-padding ><a ng-href="/book?q={{book.id}}">{{book.title || book.name}}</a></div>
-        <div class="less_important" layout-padding >By <a ng-href="/author?id={{book.author_id}}">{{book.author_name}}</a></div>
+        <div layout-padding>
+            <div class="book_title" ><a ng-href="/book?q={{book.id}}">{{book.title || book.name}}</a></div>
+            <div class="less_important">By <a ng-href="/author?id={{book.author_id}}">{{book.author_name}}</a></div>
+        </div>
         <div class="book_description" layout-padding >
             {{book.description | reduced_summary}}
         </div>

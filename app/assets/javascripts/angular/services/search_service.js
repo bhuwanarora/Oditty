@@ -27,5 +27,4 @@ homeApp.service('searchService', ["$http", "$q", "$rootScope", "WebsiteUIConstan
     	}	
     }
 
-	
 }]);

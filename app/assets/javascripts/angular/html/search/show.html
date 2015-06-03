@@ -1,5 +1,5 @@
 <md-list>
-    <md-card ng-repeat="result in all_results">
+    <div ng-repeat="result in all_results">
         <div ng-include src="'/assets/angular/html/search/_book.html'" 
                 ng-if="(result | search_item_type) == 'Book'"></div>
         <div ng-include src="'/assets/angular/html/search/_author.html'" 
@@ -10,7 +10,7 @@
             ng-if="(result | search_item_type) == 'Community'"></div>
         <div ng-include src="'/assets/angular/html/search/_listopia.html'" 
             ng-if="(result | search_item_type) == 'Listopia'"></div>
-    </md-card>
+    </div>
 </md-list>
 
 <style>
