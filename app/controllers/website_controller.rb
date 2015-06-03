@@ -149,7 +149,7 @@ class WebsiteController < ApplicationController
 		@book = true
 		puts "in book".green
 		if BotDetector.detect request.env['HTTP_USER_AGENT']
-			id = params[:q]
+			id = params[:q] || params[:id]
 			puts "bot_incoming".red
 			@info = Book.new(id).get_basic_info.execute[0]
 			@info["original_url"] = request.original_url
@@ -213,7 +213,7 @@ class WebsiteController < ApplicationController
 	def author
 		@author = true
 		if BotDetector.detect(request.env['HTTP_USER_AGENT'])
-			author_id = params[:q]
+			author_id = params[:q] || params[:id]
 			user_id = nil
 			puts "bot_incoming".red
 			@info = Author.new(author_id).get_basic_info.execute[0]
@@ -231,6 +231,8 @@ class WebsiteController < ApplicationController
 	def room
 		@room = true
 		if BotDetector.detect(request.env['HTTP_USER_AGENT'])
+			id = params[:id] || params[:q]
+			@info = Community.new(id).get_basic_info.execute
 			render :layout => "social"
 		else
 			user_id = session[:user_id]
@@ -241,7 +243,7 @@ class WebsiteController < ApplicationController
 	def news
 		@news = true
 		if BotDetector.detect request.env['HTTP_USER_AGENT']
-			id = params[:q]
+			id = params[:q] || params[:id]
 			puts "bot_incoming".red
 			@info = News.new(id).get_basic_info.execute[0]
 			@info["meta_type"] = "readersdoor:news"

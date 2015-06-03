@@ -16,6 +16,10 @@ class Community < Neo
 		" community.view_count AS view_count, community.name AS name, ID(community) AS id, community.image_url AS image_url, labels(community) AS label, community.follow_count AS follow_count "
 	end
 
+	def get_basic_info
+		match + Community.return_group(Community.basic_info)
+	end
+
 	def self.grouped_basic_info
 		" view_count:community.view_count,  name:community.name, id:ID(community), image_url:community.image_url "
 	end
