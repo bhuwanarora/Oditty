@@ -7,7 +7,7 @@
 </div>
 <div class="primary" layout="row">
     <div flex="15" flex-md="10" hide-sm></div>
-    <div flex="70" flex-md="80" flex="100" class="rd_title" layout-padding>{{info.active_news.title | uppercase}}</div>
+    <div flex="70" flex-md="80" flex="100" class="rd_title" layout-padding ng-bind-html="info.active_news.title | uppercase"></div>
     <div flex="15" flex-md="10" hide-sm></div>
 </div>
 <div ng-include src="'/assets/angular/html/shared/share.html'" class="primary"></div>

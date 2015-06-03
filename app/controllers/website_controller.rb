@@ -232,7 +232,7 @@ class WebsiteController < ApplicationController
 		@room = true
 		if BotDetector.detect(request.env['HTTP_USER_AGENT'])
 			id = params[:id] || params[:q]
-			@info = Community.new(id).get_basic_info.execute
+			@info = Community.new(id).get_basic_info.execute[0]
 			render :layout => "social"
 		else
 			user_id = session[:user_id]
