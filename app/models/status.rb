@@ -5,9 +5,9 @@ class Status < Neo
 		@user 										= User.new(user_id)
 
 		if @book_id
-			@users_book 								= UsersBook.new(@book_id, user_id)
-			@status_type								= Status::StatusType.new(@book_id, @user_id)
-			@status_book_exchange_type					= Status::BookExchangeStatusType.new(@book_id, @user_id)
+			@users_book 							= UsersBook.new(@book_id, user_id)
+			@status_type							= Status::StatusType.new(@book_id, @user_id)
+			@status_book_exchange_type				= Status::BookExchangeStatusType.new(@book_id, @user_id)
 		end
 		@user_feed									= User::Feed.new(user_id)
 		@reading_status_value 						= status_info["reading_status_value"]
@@ -18,6 +18,8 @@ class Status < Neo
 		@wrapper_content 							= status_info["wrapper_content"]
 		@feelings 									= status_info["feelings"]
 		@book_exchange_status 						= status_info["book_exchange_status"]
+		@total_page_count							= status_info["total_page_count"]
+		@current_page								= status_info["current_page"]
 	end
 
 	def self.match

@@ -203,7 +203,8 @@ module.exports = function(grunt) {
                 'app/assets/javascripts/min/angular/apps.js': [
                     "app/assets/javascripts/min/angular/apps/home_app.js",
                     "app/assets/javascripts/min/angular/apps/filters_app.js",
-                    "app/assets/javascripts/min/angular/apps/app_constants.js",
+                    "app/assets/javascripts/min/angular/constants/production.js",
+                    "app/assets/javascripts/min/angular/apps/app_constants.js"
                 ],
 
                 'app/assets/javascripts/min/angular/landing_page.min.js': [

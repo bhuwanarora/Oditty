@@ -4,7 +4,7 @@
 	<div layout-padding>Recommend book to friends</div>
 </md-button>
 <md-content class="menu_details white md-whiteframe-z1 animate-fast vertical_animate">
-	<div layout="row" ng-if="show_recommend">
+	<!-- <div layout="row" ng-if="show_recommend">
 	    <md-autocomplete md-search-text="search_friend"
 	        md-items="item in users_list"
 	        class="menu_search"
@@ -13,7 +13,7 @@
 	    <md-button class="md-button-clear">
 	        <span class="icon-search"></span>
 	    </md-button>
-	</div>
+	</div> -->
 	<div flex layout="column" layout-padding 
 		ng-if="show_recommend && users_list"
 	    ng-include src="'/assets/angular/html/share/partials/_recommend_options.html'">

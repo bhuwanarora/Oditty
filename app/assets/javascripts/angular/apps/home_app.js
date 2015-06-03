@@ -121,7 +121,7 @@ function deleteCookie(name){
     setCookie(name, "", -1);
 }
 
-var _deferred_request = function(url, $q, $http){
+var _deferred_request = function(url, $q, $http, search_service_url){
     var deferred = $q.defer();
     var success_callback = function(result){
         return deferred.resolve(result.data); 
@@ -131,7 +131,12 @@ var _deferred_request = function(url, $q, $http){
             alert("Something went wrong. Our developers are working on this error.");
         }
     }
-    $http.get(url).then(success_callback, error_callback);
+    if(angular.isDefined(search_service_url)){
+        $http.get(search_service_url + url).then(success_callback, error_callback);
+    }
+    else{
+        $http.get(url).then(success_callback, error_callback);
+    }
     return deferred.promise;   
 }
 

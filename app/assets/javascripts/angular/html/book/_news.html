@@ -1,12 +1,13 @@
 <div ng-controller="realVirtualityController">
     <md-radio-group layout="row" 
-        layout-sm="column" 
+        layout-sm="column" layout-wrap
         ng-model="active_community.id"
         ng-change="change_news()">
         <md-radio-button ng-repeat="community in communities" 
-                        class="md-warn" 
+                        class="md-warn" layout="row" layout-margin
                         ng-value="community.id">
-            {{community.name}}
+            <img ng-src="{{community.image_url}}" class="circular">
+            <div ng-bind-html="community.name | uppercase" layout-padding class="less_important"></div>
         </md-radio-button>
     </md-radio-group>
    
@@ -20,17 +21,36 @@
         </div>
          <div flex="80" layout-align="start start" layout="column" class="small-padding">
             <a ng-href="/community?id={{news.news_id}}">
-                <h4 ng-bind-html="news.title"></h4>
+                <div ng-bind-html="news.title" class="big_title"></div>
             </a>
-            <div ng-bind-html="news.description"></div><br/>
+            <div ng-bind-html="news.description"></div>
             <a ng-href="{{news.news_url}}" class="less_important" target="_blank">Source</a>
          </div>
      </section>
-     <section ng-if="!active_community.news" layout-padding>
+     <section ng-if="!active_community.news && !info.loading" layout-padding>
          <div class="big_title">We're searching for news from the real world for this book. Please come back later.</div>
+     </section>
+     <section ng-if="!active_community.news && info.loading">
+         Searching...
      </section>
       <md-progress-linear class="md-primary loader"
                         ng-show="book_loading"
                         md-mode="indeterminate">
     </md-progress-linear>
 </div>
+<style>
+    .md-switch-thumb .md-container, 
+    md-radio-button .md-container{
+        display: none;
+    }
+
+    .md-checked{
+        font-weight: bold;
+    }
+
+    .md-switch-thumb .md-label, 
+    md-radio-button .md-label{
+        flex-direction: row;
+        display: flex;
+    }
+</style>

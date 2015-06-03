@@ -1,4 +1,4 @@
-homeApp.service('authorService', ["$http", "$q", "$rootScope", "WebsiteUIConstants", function ($http, $q, $rootScope, WebsiteUIConstants){
+homeApp.service('authorService', ["$http", "$q", "$rootScope", "WebsiteUIConstants", "base_url", "search_service_url", function ($http, $q, $rootScope, WebsiteUIConstants, base_url, search_service_url){
 	
     var _user_id = function(){
         if(angular.isDefined($rootScope.reader)){
@@ -11,7 +11,7 @@ homeApp.service('authorService', ["$http", "$q", "$rootScope", "WebsiteUIConstan
     }
 
     this.search_authors = function(data){
-        return _deferred_request('/api/v0/search?q='+data+"&type=Author", $q, $http);
+        return _deferred_request('/api/v0/search?q='+data+"&type=Author", $q, $http, search_service_url);
     }
 
     this.get_popular_authors = function(skip_count){
