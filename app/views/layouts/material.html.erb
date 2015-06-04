@@ -105,7 +105,7 @@
                 <script src="assets/angular/controllers/home/feed_controller.js"></script>
             <% end %>
 
-            <% if @home || @signup %>
+            <div ng-if="info.hide_signin">
                 <script>
                     (function() {
                       var _fbq = window._fbq || (window._fbq = []);
@@ -133,6 +133,10 @@
                 <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
                 <script src='assets/angular/services/website_service.js'></script>
                 <script src="assets/angular/controllers/signup_controller.js"></script>
+            </div>
+
+            <% if @home || @signup %>
+                
                 <script src="assets/angular/controllers/home_controller.js"></script>
 
             <% end %>
@@ -212,7 +216,7 @@
                 <script src="assets/min/angular/d3_group.min.js"></script> 
             <% end %>
 
-            <% if @home || @signup %>
+            <div ng-if="info.hide_signin">
                 <script>
                     (function() {
                       var _fbq = window._fbq || (window._fbq = []);
@@ -238,6 +242,10 @@
                     })();
                 </script>
                 <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+                <script src="assets/min/angular/controllers/signin_group.min.js"></script>
+            </div>
+            
+            <% if @home || @signup %>
                 <script src="assets/min/angular/controllers/home_group.min.js"></script>
             <% end %>
 

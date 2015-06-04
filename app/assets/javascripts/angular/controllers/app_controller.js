@@ -49,7 +49,7 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
             event.stopPropagation();
         }
         else{
-            $scope.show_signin_options();
+            $scope.show_signin_options(event);
         }
 	};
 
