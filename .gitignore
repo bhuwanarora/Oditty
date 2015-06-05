@@ -70,6 +70,7 @@ neo4j/conf/neo4j.properties
 *.png
 *.graphml
 # Ignore application configuration
+config/environments/development.rb
 /config/application.yml
  config/deploy/*
  duplicate_removal_log.txt
