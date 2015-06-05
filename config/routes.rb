@@ -42,7 +42,7 @@ ReadersDoor::Application.routes.draw do
   get 'privacy'                     => 'website#privacy',       :as => "privacy"
   get 'terms'                       => 'website#terms',         :as => "terms"
   get 'advertising'                 => 'website#advertising',   :as => "advertising"
-  get 'landing_page'                => 'website#landing_page',  :as => 'landing_page'
+  get 'how_it_works'                => 'website#how_it_works',  :as => 'how_it_works'
 
   get 'recommended_books'     => "recommendations#books",    :as => "recommended_books"
   get 'recommendations'          => "recommendations#index",    :as => "recommendations"

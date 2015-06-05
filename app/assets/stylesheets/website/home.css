@@ -222,6 +222,12 @@ md-toolbar{
     height: 40px;
 }
 
+.big_circle{
+	border-radius: 50% !important;
+    width: 100px;
+    height: 100px;	
+}
+
 .profile_link{
 	padding: 4px 8px;
 }

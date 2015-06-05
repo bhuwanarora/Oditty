@@ -45,7 +45,7 @@ class WebsiteController < ApplicationController
 		render :layout => "clean"
 	end
 
-	def landing_page
+	def how_it_works
 		render :layout => "landing_page"
 	end
 
