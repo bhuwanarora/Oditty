@@ -271,4 +271,8 @@ class WebsiteController < ApplicationController
 		render :layout => "material"
 	end
 
+	def help
+		render :layout => "material_clean"
+	end
+
 end
