@@ -5,7 +5,7 @@ homeApp.controller('searchController', ["$scope", "searchService", "$location", 
             $scope.info.loading = true;
             params = {"q": search_text, "count": 4};
             searchService.raw(params).then(function(data){
-                delete $scope.search_results;
+                delete $scope.info.search_results;
                 $scope.info.loading = false;
                 $scope.did_you_mean = false;
                 angular.forEach(data, function(value){
@@ -17,24 +17,24 @@ homeApp.controller('searchController', ["$scope", "searchService", "$location", 
                     }
                 });
                 
-                $scope.search_results = data;
+                $scope.info.search_results = data;
                 if($scope.did_you_mean){
                     var json = {"name": "Did you mean", "labels": []};
-                    $scope.search_results.splice(0, 0, json);
+                    $scope.info.search_results.splice(0, 0, json);
                 }
                 if(data.length > 0){
                     var json = {"name": "Show all results", "show_all": true, "labels": [], "search_text": search_text};
-                    $scope.search_results.push(json);
+                    $scope.info.search_results.push(json);
                 }
             });
         }
         else{
-            $scope.search_results = [];
+            $scope.info.search_results = [];
         }
     }
 
     $scope.on_select = function(item){
-        delete $scope.search_results;
+        delete $scope.info.search_results;
         if(angular.isDefined(item)){
             var book_label = item.labels.indexOf("Book") >= 0;
             var author_label = item.labels.indexOf("Author") >= 0;
@@ -73,6 +73,6 @@ homeApp.controller('searchController', ["$scope", "searchService", "$location", 
 
     var _init = (function(){
         $scope.info.mobile_search = true;
-        $scope.search_results = [];
+        $scope.info.search_results = [];
     }());
 }]);

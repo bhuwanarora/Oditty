@@ -4,7 +4,7 @@
 </md-button>
 <md-autocomplete md-selected-item="selected_item_search"
                 md-search-text="search_text"
-                md-items="item in search_results"
+                md-items="item in info.search_results"
                 md-search-text-change="query_search(search_text)"
                 md-selected-item-change="on_select(item)"
                 md-item-text="item.name"
@@ -19,8 +19,10 @@
             <div layout="row" flex="90">
                 <img ng-src="{{item.isbn | small_thumb}}" ng-show="item.isbn" class="search_thumb" />
                 <img ng-src="{{item.image_url}}" ng-show="item.image_url" class="search_thumb" />
+                <img ng-src="{{item.id | author_small_thumb}}" ng-show="item.labels == 'Author'" 
+                    class=" circular" />
                 <div>&nbsp;</div>
-                <div>
+                <div layout-padding>
                     <div ng-bind-html="item.name || item.title" ></div>
                     <div class="less_important" ng-show="item.author_name">
                         <span>&nbsp;by </span>
