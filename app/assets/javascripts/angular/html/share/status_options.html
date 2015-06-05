@@ -17,7 +17,7 @@
             ng-if="related_info.length > 0 && active_id == 1 && !active_emotion && (info.page_count && info.current_page)"></md-list>
     <md-list layout="column" ng-if="related_info && related_info.length > 0" class="roboto"
         ng-include src="'/assets/angular/html/share/partials/_facts.html'"></md-list>
-    <md-progress-linear ng-show="info.loading" class="menu_search"
+    <md-progress-linear ng-show="info.share_loading" class="menu_search"
         md-mode="indeterminate">
 	</md-progress-linear>
 </div>

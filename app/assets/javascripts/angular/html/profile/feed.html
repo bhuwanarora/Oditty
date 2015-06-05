@@ -3,8 +3,6 @@
 		<div ng-repeat="feed in personal_feed" ng-if="$even">
 		    <div ng-include src="'/assets/angular/html/profile/partials/feed_type.html'"></div>
 		</div>
-	</div>
-	<div flex>
 		<div ng-if="reading_journeys" class="white">
 			<b class="small-padding">{{user.first_name}}'s Reading Journey</b>
 			<md-divider></md-divider>
@@ -28,12 +26,22 @@
 				</section>
 			</md-card>
 		</div>
+	</div>
+	<div flex>
+		<div ng-include src="'/assets/angular/html/share/status_options.html'" 
+	 	  	ng-controller="shareController" 
+	 	  	class="" layout-margin layout-padding>
+	 	 </div>
 		<div ng-repeat="feed in personal_feed" ng-if="$odd">
 		    <div ng-include src="'/assets/angular/html/profile/partials/feed_type.html'"></div>
 		</div>
 	</div>
 </md-list>
 <md-list layout="column" show-sm show-md hide>
+	<div ng-include src="'/assets/angular/html/share/status_options.html'" 
+ 	  	ng-controller="shareController" 
+ 	  	class="" layout-margin layout-padding>
+ 	 </div>
 	<div ng-repeat="feed in personal_feed">
 	    <div ng-include src="'/assets/angular/html/profile/partials/feed_type.html'"></div>
 	</div>
