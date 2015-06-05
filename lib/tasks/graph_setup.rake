@@ -292,6 +292,12 @@ namespace :graph do
     include GraphHelper
     GraphHelper.delete_duplicate_books_unique_index
   end  
+
+  desc "Deletes duplicate authors and appropriately setup links."
+  task :remove_duplicate_authors => :environment do
+    include GraphHelper
+    GraphHelper.merge_duplicate_authors
+  end  
   
   desc "curate book author name "
   task :curate_books_author_name => :environment do

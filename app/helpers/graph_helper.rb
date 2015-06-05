@@ -261,6 +261,135 @@ module GraphHelper
 		end
 	end
 
+	def self.same_property(node1,node2,prop)
+		"(" + node1 + "." + prop +" = " + node2 + "." + prop +")"
+	end
+	def self.not_has(node, property)
+		"(NOT(has(" +node + "." + property + ")))"		
+	end
+
+	def self.match_duplicate_authors_conditions (original, duplicate)
+		"(" +GraphHelper.same_property(original,duplicate,"gr_url") + " OR "\
+		"((" + GraphHelper.not_has(original,"gr_url") + " OR " + GraphHelper.not_has(duplicate,"gr_url") + ") AND " + GraphHelper.same_property(original,duplicate,"url") + ")  OR "\
+		"((" + GraphHelper.not_has(original,"gr_url") + " OR " + GraphHelper.not_has( duplicate,"gr_url") + ") AND (" + GraphHelper.not_has(original,"url") + " OR " + GraphHelper.not_has( duplicate,"url") + ") AND (" +GraphHelper.same_property(original,duplicate,"wiki_url") + "))) "
+	end
+	
+	def self.set_original_author_properties (original, duplicate)
+		clause = ""\
+		" OPTIONAL MATCH(" + duplicate + ")-[wrote:Wrote]->(books:Book) "\
+		" FOREACH (book in ( CASE WHEN books IS NULL THEN [] ELSE [books] END)| "\
+		" MERGE(" + original + ")-[:Wrote]->(book)" \
+		" ) "\
+		" DELETE wrote "\
+		" WITH " + original + "," + duplicate + " "\
+		" "\
+		" OPTIONAL MATCH(" + duplicate + ")<-[is_about:IsAbout]-(blogs:Blog) "\
+		" FOREACH (blog in ( CASE WHEN blogs IS NULL THEN [] ELSE [blogs] END)| "\
+		" MERGE(" + original + ")<-[:IsAbout]-(blog)" \
+		" ) "\
+		" DELETE is_about "\
+		" WITH " + original + "," + duplicate + " "\
+		" "\
+		" OPTIONAL MATCH(" + duplicate + ")-[answered:Answered]->(questions:Question) "\
+		" FOREACH (question in ( CASE WHEN questions IS NULL THEN [] ELSE [questions] END)| "\
+		" MERGE(" + original + ")-[:Answered]->(question)" \
+		" ) "\
+		" DELETE answered "\
+		" WITH " + original + "," + duplicate + " "\
+		" "\
+		" OPTIONAL MATCH(" + duplicate + ")<-[follows:OfAuthor]-(followsnodes:FollowsNode) "\
+		" FOREACH (followsnode in ( CASE WHEN followsnodes IS NULL THEN [] ELSE [followsnodes] END)| "\
+		" MERGE(" + original + ")<-[:OfAuthor]-(followsnode) " \
+		" ON CREATE SET " + original + ".follow_count = CASE WHEN " + GraphHelper.not_has("original","follow_count") + "THEN 1 ELSE " + original + ".follow_count + 1 END, "\
+		" followsnode.author_id = ID(" + original + ") "\
+		" ) "\
+		" DELETE follows "\
+		" WITH " + original + "," + duplicate + " "\
+		" OPTIONAL MATCH (" + duplicate + ")-[r]-() "\
+		" DELETE "+ duplicate + ",r "\
+		" RETURN ID(original) AS id"
+		clause
+		
+	end
+	def self.copy_properties_author(original_id,duplicate_id)
+		dup = ("MATCH (duplicate:Author) WHERE ID(duplicate) = " + duplicate_id.to_s + " RETURN duplicate").execute[0]["duplicate"]["data"]
+		clause = "MATCH (orig:Author),(dup:Author) WHERE ID(orig) = " + original_id.to_s + "  AND ID(dup) = "+duplicate_id.to_s+" WITH orig, dup "
+		dup.keys.each do |prop|
+			if (dup[prop].is_a? String)
+				clause += ", (CASE WHEN (not(has(orig."+prop+")) OR length(orig."+prop+") <length(dup."+prop+")) THEN dup."+prop+" ELSE orig."+prop+" END) AS "+prop+" "
+			else
+				clause += ", (CASE WHEN (not(has(orig."+prop+"))) THEN dup."+prop+" ELSE orig."+prop+" END) AS "+prop+" "
+			end					
+		end
+		dup.keys.each do |prop|
+			clause += "SET orig."+prop+" = "+prop+" "					
+		end 		
+		clause.execute
+	end
+	def self.merge_duplicate_authors_in_range(starting_regex)
+		puts "Removing duplicate authors with search_index starting with: " + starting_regex
+		clause = "MATCH (original:Author),(duplicate:Author) WHERE ("\
+				"(original.search_index =~" + "\'" + starting_regex + ".*\'" + ") AND (duplicate.search_index =~ " + "\'" + starting_regex + ".*\'" + ")  AND (ID(original) <> ID(duplicate)) "\
+				"AND " + GraphHelper.match_duplicate_authors_conditions("original","duplicate") + " ) "\
+				" RETURN ID(original),ID(duplicate) LIMIT 1"
+		output = clause.execute		
+		if (output.length >0)
+			id_orig = output[0]["ID(original)"]
+			id_dup = output[0]["ID(duplicate)"]
+			GraphHelper.copy_properties_author(id_orig,id_dup)
+			clause = "MATCH (original:Author),(duplicate:Author) WHERE "\
+				"ID(original) = " + id_orig.to_s + " AND ID(duplicate) = " + id_dup.to_s + " "\
+				"WITH original,duplicate  "\
+				"" + GraphHelper.set_original_author_properties("original","duplicate")		
+			output = clause.execute
+		end
+		if(output.nil? || output.length == 0 || !(output[0].keys.include? "id"))
+			matched = 0
+		else
+			debugger
+			matched = 1
+		end
+		matched
+	end
+	
+	def self.next_regex(first_letter, second_letter, third_letter)
+		if (third_letter == 'z')
+			third_letter = 'a'
+			if(second_letter == 'z')
+				first_letter = first_letter.ord.next.chr
+				second_letter = 'a'
+			else
+				second_letter = second_letter.ord.next.chr
+			end
+		else
+			third_letter = third_letter.ord.next.chr
+		end
+		[first_letter,second_letter, third_letter]
+	end
+
+	def self.merge_duplicate_authors		
+		author_id_key = 'dup_author_regex'		
+		if(!$redis[author_id_key].nil?)			
+			cur_state = $redis[author_id_key]
+			fl = cur_state[0]
+			sl = cur_state[1]
+			tl = cur_state[2]
+		else
+			$redis[author_id_key] = "aaa"
+			fl = "a"
+			sl = "a"
+			tl = "a"
+		end
+		debugger		
+		while (!(fl == 'z' && sl == 'z' && tl == 'z'))
+			matched = GraphHelper.merge_duplicate_authors_in_range("" + fl + sl + tl)
+			if(matched == 0 )				
+				(fl,sl,tl) = GraphHelper.next_regex(fl,sl,tl)
+				$redis[author_id_key] = "" + fl + sl + tl
+			end
+		end
+	end
+
 	def update_follow_counts_for_user
 		clause = User.match + UsersUser.match + " WITH user, COUNT(DISTINCT(friend)) as follows_count RETURN ID(user), follows_count "
 		clause.execute
