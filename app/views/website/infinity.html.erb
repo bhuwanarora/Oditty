@@ -12,6 +12,16 @@
          flex="20" hide-md hide-sm layout="column" layout-align="start start" layout-fill>
     </div>
 </section>
+<section layout="row" layout-wrap ng-if="constant.show_book" 
+    ng-controller="specificBookController">
+    <div flex="20" hide-sm flex-md="10" ng-include src="'/assets/angular/html/book/_left_panel.html'" 
+        ng-if="!book.show_info_only"></div>
+    <div flex="60" flex-sm="100" flex-md="80" layout="column"
+         ng-include src="'/assets/angular/html/book/show.html'">
+    </div>
+    <div flex="20" hide-sm flex-md="10" ng-include src="'/assets/angular/html/book/_right_panel.html'" 
+        ng-if="!book.show_info_only"></div>
+</section>
 
 <style>
     .subheaderdemoBasicUsage .face{

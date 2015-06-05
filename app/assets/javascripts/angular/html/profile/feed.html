@@ -25,6 +25,13 @@
 					</a>
 				</section>
 			</md-card>
+			<md-list ng-if="!personal_feed || (personal_feed == 0)">
+				<md-card>
+					<md-card-content>
+						No recent activity.
+					</md-card-content>
+				</md-card>
+			</md-list>
 		</div>
 	</div>
 	<div flex>
@@ -45,13 +52,13 @@
 	<div ng-repeat="feed in personal_feed">
 	    <div ng-include src="'/assets/angular/html/profile/partials/feed_type.html'"></div>
 	</div>
-</md-list>
-<md-list ng-if="!personal_feed || (personal_feed == 0)">
-	<md-card>
-		<md-card-content>
-			No recent activity.
-		</md-card-content>
-	</md-card>
+	<md-list ng-if="!personal_feed || (personal_feed == 0)">
+		<md-card>
+			<md-card-content>
+				No recent activity.
+			</md-card-content>
+		</md-card>
+	</md-list>
 </md-list>
 
 

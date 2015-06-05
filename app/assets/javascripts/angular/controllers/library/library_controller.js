@@ -151,12 +151,14 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         $scope.active_endorse = false;
         $scope.active_bookmark = true;
         $scope.active_share = true;
-        
+        var popular_books_timeout = $timeout(function(){
+            $scope._get_popular_books();
+        }, 100);
 
-        $scope._get_popular_books();
+        $scope.$on('destroy', function(){
+            $timeout.cancel(popular_books_timeout);
+        });
         $scope.constant = {"show_book": false};
-        
-        // $scope.info.infinity = true;
     }());
 
 }]);

@@ -1,8 +1,9 @@
 <section layout="row" layout-wrap class="feed_margin">
-    <div flex="20" hide-sm flex-md="10"></div>
+	<div flex="20" hide-sm flex-md="10" ng-include src="'/assets/angular/html/book/_left_panel.html'" 
+		ng-if="!book.show_info_only"></div>
     <div flex="60" flex-sm="100" flex-md="80" layout="column"
          ng-include src="'/assets/angular/html/book/show.html'">
     </div>
-    <div flex="20" hide-sm 
-         flex-md="10"></div>
+    <div flex="20" hide-sm flex-md="10" ng-include src="'/assets/angular/html/book/_right_panel.html'" 
+    	ng-if="!book.show_info_only"></div>
 </section>

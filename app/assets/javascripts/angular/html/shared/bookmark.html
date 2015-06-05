@@ -1,9 +1,24 @@
-<div>
+<!-- <div>
 	<md-tooltip md-direction="top" class="shelf_tooltip" md-visible="show_shelf || custom" 
 				ng-class="{'margin_top white': custom}">
 		<div ng-include src="'/assets/angular/html/shared/shelves.html'" ng-init="bookmark_object = data" class="shelves"></div>
 	</md-tooltip>
+</div> -->
+<div class="md-raised blue_circle pointer"  layout="row" layout-align="center center"
+   layout-padding ng-click="show_shelves()">
+   <!-- <span class="icon-share"></span> -->
+   <i class="material-icons">bookmark</i>
+   <md-tooltip md-direction="right" md-visible="demo.showTooltip">
+     Bookmark
+   </md-tooltip>
 </div>
+<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right_bookmark">
+	 <md-toolbar class="md-primary">
+        <h1 class="md-toolbar-tools">Your Personal Shelves</h1>
+     </md-toolbar>
+  	<div ng-include src="'/assets/angular/html/shared/shelves.html'" 
+  		ng-init="bookmark_object = data" class="shelves"></div>
+</md-sidenav>
 <div class="pointer"
 	layout-padding
 	ng-if="!custom"
