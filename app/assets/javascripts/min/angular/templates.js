@@ -654,7 +654,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/bookmark.html',
-    "<div class=\"md-raised blue_circle pointer\" layout=\"row\" layout-align=\"center center\" layout-padding ng-click=\"show_shelves()\"><i class=\"material-icons\">bookmark</i><md-tooltip md-direction=\"right\" md-visible=\"demo.showTooltip\">Bookmark</md-tooltip></div><md-sidenav class=\"md-sidenav-right md-whiteframe-z2\" md-component-id=\"right_bookmark\"><md-toolbar class=\"md-primary\"><h1 class=\"md-toolbar-tools\">Your Personal Shelves</h1></md-toolbar><div ng-include src=\"'/assets/angular/html/shared/shelves.html'\" ng-init=\"bookmark_object = data\" class=\"shelves\"></div></md-sidenav><div class=\"pointer\" layout-padding ng-if=\"!custom\" ng-click=\"show_shelves()\"><span>Add to Shelf</span> <i class=\"material-icons\">library_books</i> <span>{{count || 0}}</span></div>"
+    "<div class=\"md-raised blue_circle pointer\" layout=\"row\" layout-align=\"center center\" layout-padding ng-click=\"show_shelves()\" ng-if=\"custom\"><i class=\"material-icons\">bookmark</i><md-tooltip md-direction=\"right\" md-visible=\"demo.showTooltip\">Bookmark</md-tooltip></div><md-sidenav class=\"md-sidenav-right md-whiteframe-z2\" md-component-id=\"right_bookmark\"><md-toolbar class=\"md-primary\"><h1 class=\"md-toolbar-tools\">Your Personal Shelves</h1></md-toolbar><div ng-include src=\"'/assets/angular/html/shared/shelves.html'\" ng-init=\"bookmark_object = data\" class=\"shelves\"></div></md-sidenav><div class=\"pointer\" layout-padding ng-if=\"!custom\" ng-click=\"show_shelves()\"><span>Add to Shelf</span> <i class=\"material-icons\">library_books</i> <span>{{count || 0}}</span></div>"
   );
 
 
