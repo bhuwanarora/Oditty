@@ -74,8 +74,7 @@ class WebsiteController < ApplicationController
 	end
 
 
-	### WEBSITE NEW 
-	def news_group
+	def newsfeed_news_communities
 		session[:news_day_skip_count] = 0
 		session[:news_skip_count] = 0
 
@@ -89,15 +88,13 @@ class WebsiteController < ApplicationController
 		end
 	end
 
+	### WEBSITE NEW 
+	def news_group
+		newsfeed_news_communities
+	end
+
 	def communities
-		unless session[:user_id]
-			cookies[:logged] = nil
-			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
-			redirect_to :controller => 'website', :action => 'signup'			
-		else
-			@news_group = true
-			render :layout => "material"
-		end
+		newsfeed_news_communities
 	end
 
 	def blogs
