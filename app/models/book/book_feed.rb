@@ -26,4 +26,10 @@ class Book::BookFeed < Book
 		" MATCH (book)-[:BookFeed*" + skip_count.to_s + ".." + Limit.to_s + "]->(feed) "
 	end
 
+	def self.insert_feed(book, user_id, feed)
+		"MATCH (" + book + ")-[old:BookFeed]->(old_feed) "\
+		"CREATE UNIQUE (" + book + ")-[:BookFeed{user_id:" + user_id.to_s + "}]->(" + feed + ")-[:BookFeed{user_id:" + user_id.to_s + "}]->(old_feed) "\
+		"DELETE old "\
+	end
+
 end
