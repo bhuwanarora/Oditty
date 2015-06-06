@@ -80,8 +80,8 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
         }
         var filter = "id="+book_id;
         $scope.book_loading = true;
-
         var book_data_timeout = $timeout(function(){
+            $scope.info.loading = true;
             bookService.get_book_details(filter).then(function(data){
                 if(angular.isDefined(data) && data != null){
                     var endorse_status = data.endorse_status != null;
@@ -98,6 +98,7 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
                     $rootScope.active_book = $scope.book;
                 }
                 $scope.book_loading = false;
+                $scope.info.loading = false;
             });
             bookService.update_visited(book_id);
         }, 1000);
