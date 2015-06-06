@@ -1,4 +1,4 @@
-homeApp.directive('recommend', ["$rootScope", "userService", function($rootScope, userService){
+homeApp.directive('recommend', ["$rootScope", "userService", "sharedService", function($rootScope, userService, sharedService){
     return{
         restrict: 'E',
         scope: {user: '=', book: '='},
@@ -22,16 +22,17 @@ homeApp.directive('bookInfo', ["$rootScope", "bookService", '$mdDialog', functio
         scope : {book: '=', info: '='},
         controller: ["$scope", function($scope){
             $scope.show_book_dialog = function(book, event){
-                $rootScope.active_book = book;
-                $rootScope.active_book.show_info_only = true;
-                $mdDialog.show({
-                    templateUrl: '/assets/angular/html/news/book.html',
-                    scope: $scope,
-                    preserveScope: true,
-                    targetEvent: event,
-                    clickOutsideToClose: true
-                });
-                event.stopPropagation();
+                // $rootScope.active_book = book;
+                // $rootScope.active_book.show_info_only = true;
+                // $mdDialog.show({
+                //     templateUrl: '/assets/angular/html/news/book.html',
+                //     scope: $scope,
+                //     preserveScope: true,
+                //     targetEvent: event,
+                //     clickOutsideToClose: true
+                // });
+                // event.stopPropagation();
+                sharedService.show_book_dialog($rootScope, $scope, book, event);
             }
 
             var _init = function(){

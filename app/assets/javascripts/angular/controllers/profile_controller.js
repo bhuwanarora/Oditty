@@ -1,4 +1,4 @@
-homeApp.controller('profileController', ["$scope", "userService", '$rootScope', "WebsiteUIConstants", 'ColorConstants', '$location', 'bookService', 'newsService', '$mdDialog', 'infinityService', function($scope, userService, $rootScope, WebsiteUIConstants, ColorConstants, $location, bookService, newsService, $mdDialog, infinityService){
+homeApp.controller('profileController', ["$scope", "userService", '$rootScope', "WebsiteUIConstants", 'ColorConstants', '$location', 'bookService', 'newsService', '$mdDialog', 'infinityService', 'sharedService', function($scope, userService, $rootScope, WebsiteUIConstants, ColorConstants, $location, bookService, newsService, $mdDialog, infinityService, sharedService){
 	var _get_user_details = function(){
 		userService.get_user_details($scope.active_user_id).then(function(data){
 			$scope.profile_user = data;
@@ -137,16 +137,17 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
     }
 
     $scope.show_book_dialog = function(book, event){
-        $rootScope.active_book = book;
-        $rootScope.active_book.show_info_only = true;
-        $mdDialog.show({
-            templateUrl: '/assets/angular/html/news/book.html',
-            scope: $scope,
-            preserveScope: true,
-            clickOutsideToClose: true,
-            targetEvent: event
-        });
-        event.stopPropagation();
+    //     $rootScope.active_book = book;
+    //     $rootScope.active_book.show_info_only = true;
+    //     $mdDialog.show({
+    //         templateUrl: '/assets/angular/html/news/book.html',
+    //         scope: $scope,
+    //         preserveScope: true,
+    //         clickOutsideToClose: true,
+    //         targetEvent: event
+    //     });
+    //     event.stopPropagation();
+        sharedService.show_book_dialog($rootScope, $scope, book, event);    	
     }
 
 	var _init = (function(){

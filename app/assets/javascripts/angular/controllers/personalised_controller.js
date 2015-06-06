@@ -1,4 +1,4 @@
-homeApp.controller('personalisedController', ["$scope", "userService", '$rootScope', "WebsiteUIConstants", 'ColorConstants', '$location', 'bookService', 'newsService', '$mdDialog', 'infinityService', function($scope, userService, $rootScope, WebsiteUIConstants, ColorConstants, $location, bookService, newsService, $mdDialog, infinityService){
+homeApp.controller('personalisedController', ["$scope", "userService", '$rootScope', "WebsiteUIConstants", 'ColorConstants', '$location', 'bookService', 'newsService', '$mdDialog', 'infinityService', 'sharedService', function($scope, userService, $rootScope, WebsiteUIConstants, ColorConstants, $location, bookService, newsService, $mdDialog, infinityService, sharedService){
 	
 	var _set_data = function(data, array){
         angular.forEach(data, function(value){
@@ -71,16 +71,17 @@ homeApp.controller('personalisedController', ["$scope", "userService", '$rootSco
     }
 
      $scope.show_book_dialog = function(book, event){
-        $rootScope.active_book = book;
-        $rootScope.active_book.show_info_only = true;
-        $mdDialog.show({
-            templateUrl: '/assets/angular/html/news/book.html',
-            scope: $scope,
-            preserveScope: true,
-            clickOutsideToClose: true,
-            targetEvent: event
-        });
-        event.stopPropagation();
+    //     $rootScope.active_book = book;
+    //     $rootScope.active_book.show_info_only = true;
+    //     $mdDialog.show({
+    //         templateUrl: '/assets/angular/html/news/book.html',
+    //         scope: $scope,
+    //         preserveScope: true,
+    //         clickOutsideToClose: true,
+    //         targetEvent: event
+    //     });
+    //     event.stopPropagation();
+        sharedService.show_book_dialog($rootScope, $scope, book, event);
     }
 
     $scope.show_books_for_era = function(){

@@ -1,4 +1,4 @@
-homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$location", "bookService", "shelfService", "$mdToast", "infinityService", function ($timeout, $rootScope, ColorConstants, $location, bookService, shelfService, $mdToast, infinityService){
+homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$location", "bookService", "shelfService", "$mdToast", "infinityService", "$mdDialog", function ($timeout, $rootScope, ColorConstants, $location, bookService, shelfService, $mdToast, infinityService, $mdDialog){
 
     this.get_popular_books = function($scope, books){
         var ready_to_load = !$scope.info.loading && (angular.isUndefined($scope.constant) || !$scope.constant.show_book) && 
@@ -8,6 +8,19 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
         if(ready_to_load){
             this.load_popular_books($scope, books);
         }
+    }
+
+    this.show_book_dialog = function($rootScope, $scope, book, event){
+        $rootScope.active_book = book;
+        $rootScope.active_book.show_info_only = true;
+        $mdDialog.show({
+            templateUrl: '/assets/angular/html/news/book.html',
+            scope: $scope,
+            preserveScope: true,
+            clickOutsideToClose: true,
+            targetEvent: event
+        });
+        event.stopPropagation();
     }
 
     this.filtered_books = function($scope){

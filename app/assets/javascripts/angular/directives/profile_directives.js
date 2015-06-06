@@ -1,21 +1,22 @@
 
 
-homeApp.directive('communityInfo', ["$rootScope", "newsService", 'ColorConstants', '$mdDialog', function($rootScope, newsService, ColorConstants, $mdDialog){
+homeApp.directive('communityInfo', ["$rootScope", "newsService", 'ColorConstants', '$mdDialog', 'sharedService', function($rootScope, newsService, ColorConstants, $mdDialog, sharedService){
     return {
         restrict: 'E',
         scope : {community: '=', info: '='},
         controller: ["$scope", function($scope){
             $scope.show_book_dialog = function(book, event){
-                $rootScope.active_book = book;
-                $rootScope.active_book.show_info_only = true;
-                $mdDialog.show({
-                    templateUrl: '/assets/angular/html/news/book.html',
-                    scope: $scope,
-                    preserveScope: true,
-                    clickOutsideToClose: true,
-                    targetEvent: event
-                });
-                event.stopPropagation();
+                // $rootScope.active_book = book;
+                // $rootScope.active_book.show_info_only = true;
+                // $mdDialog.show({
+                //     templateUrl: '/assets/angular/html/news/book.html',
+                //     scope: $scope,
+                //     preserveScope: true,
+                //     clickOutsideToClose: true,
+                //     targetEvent: event
+                // });
+                // event.stopPropagation();
+                sharedService.show_book_dialog($rootScope, $scope, book, event);
             }
 
             var _init = function(){

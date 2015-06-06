@@ -1,4 +1,4 @@
-homeApp.controller('newsController', ["$scope", "$mdSidenav", 'newsService', '$location', '$rootScope', '$mdDialog', 'ColorConstants', '$timeout', function($scope, $mdSidenav, newsService, $location, $rootScope, $mdDialog, ColorConstants, $timeout){
+homeApp.controller('newsController', ["$scope", "$mdSidenav", 'newsService', '$location', '$rootScope', '$mdDialog', 'ColorConstants', '$timeout', 'sharedService', function($scope, $mdSidenav, newsService, $location, $rootScope, $mdDialog, ColorConstants, $timeout, sharedService){
     $scope.toggle_details = function(){
         $mdSidenav('right').toggle();
         // $scope.get_detailed_community_info();
@@ -22,16 +22,17 @@ homeApp.controller('newsController', ["$scope", "$mdSidenav", 'newsService', '$l
     }
 
     $scope.show_book_dialog = function(book, event){
-        $rootScope.active_book = book;
-        $rootScope.active_book.show_info_only = true;
-        $mdDialog.show({
-            templateUrl: '/assets/angular/html/news/book.html',
-            scope: $scope,
-            preserveScope: true,
-            targetEvent: event,
-            clickOutsideToClose: true
-        });
-        event.stopPropagation();
+    //     $rootScope.active_book = book;
+    //     $rootScope.active_book.show_info_only = true;
+    //     $mdDialog.show({
+    //         templateUrl: '/assets/angular/html/news/book.html',
+    //         scope: $scope,
+    //         preserveScope: true,
+    //         targetEvent: event,
+    //         clickOutsideToClose: true
+    //     });
+    //     event.stopPropagation();
+        sharedService.show_book_dialog($rootScope, $scope, book, event);
     }
 
     $scope.refresh_data = function(active_item){
