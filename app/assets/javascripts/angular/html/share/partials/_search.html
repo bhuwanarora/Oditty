@@ -13,7 +13,7 @@
     md-item-text="display"
     ng-keydown="handle_backspace($event)"
     class="menu_search no_shadow"
-    ng-click="get_default_results()"
+    ng-click="show_relevant_books()"
     placeholder="{{reading_options[active_id].name}}">
     <span md-highlight-text="searchText" ng-bind-html="item.display"></span>
 </md-autocomplete>
