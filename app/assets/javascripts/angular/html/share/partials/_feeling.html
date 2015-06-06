@@ -1,11 +1,11 @@
-<div layout="column" class="menu_details margin_top white animate-fast vertical_animate">
+<div layout="column" class="menu_details margin_top white animate-fast vertical_animate md-whiteframe-z1">
 	<div layout-padding class="light_grey_color custom_title roboto">
 		<i>What are you feeling?</i>
 	</div>
 	<div layout="row">
         <md-autocomplete md-search-text="info.search_emotion"
-            md-items="item in emotions"
-            class="menu_search"
+            md-items="item in []" flex
+            class="menu_search no_shadow"
             placeholder="Search emotions...">
         </md-autocomplete>
         <div class="pointer" layout-padding>
@@ -13,7 +13,7 @@
         </div>
 	</div>
 </div>
-<div class="emotions animate-fast vertical_animate">
+<div class="emotions animate-fast vertical_animate" layout="column">
 	<md-button ng-repeat="emotion in emotions | filter: {name: info.search_emotion} | limitTo: 4" 
 				layout-padding ng-if="info.search_emotion"
 				ng-click="set_emotion(emotion)"

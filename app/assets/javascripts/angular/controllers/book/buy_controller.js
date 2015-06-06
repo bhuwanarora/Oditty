@@ -13,6 +13,10 @@ homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sha
 		});
 	}());
 
+	$scope.notify_friends = function(){
+		
+	}
+
 	$scope.toggle_bookmark = function(status){
 		var id = ($rootScope.active_book.id) || ($rootScope.active_book.book_id);
 		var label = {"label_key": "IOwnThis"};

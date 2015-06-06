@@ -2,9 +2,14 @@
 	class="clear light_grey_color custom_title roboto menu_details 
 		margin_top white animate-fast vertical_animate md-whiteframe-z1"
 	ng-click="toggle_recommend()">
-	<div layout-padding>Recommend book to friends</div>
+	<div layout-padding ng-if="!show_recommend">Select Friends to Recommend</div>
+	<div layout-padding ng-if="show_recommend && !users_list && info.share_loading">
+		You don't have enough Friends at ReadersDoor. Tell them and spread the love for books.
+	</div>
+	<div layout-padding ng-if="show_recommend && users_list">Recommend book to Friends</div>
 </md-button>
-<md-content class="menu_details white animate-fast vertical_animate md-whiteframe-z1">
+<md-content class="menu_details" 
+	ng-if="show_recommend && users_list">
 	<!-- <div layout="row" ng-if="show_recommend">
 	    <md-autocomplete md-search-text="search_friend"
 	        md-items="item in users_list"
@@ -15,8 +20,7 @@
 	        <span class="icon-search"></span>
 	    </md-button>
 	</div> -->
-	<div flex layout="column" layout-padding 
-		ng-if="show_recommend && users_list"
+	<div flex layout="column"
 	    ng-include src="'/assets/angular/html/share/partials/_recommend_options.html'">
 	</div>
 </md-content>

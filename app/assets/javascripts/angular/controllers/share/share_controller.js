@@ -84,8 +84,10 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
                 }
             });
         }
-
-        _get_interesting_details();
+        var interesting_details_timeout = $timeout(_get_interesting_details(), 100);
+        $scope.$on('destroy', function(){
+            $timeout.cancel(interesting_details_timeout);
+        });
     }
 
     $scope.show_share_options = function(event){
