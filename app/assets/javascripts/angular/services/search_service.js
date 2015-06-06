@@ -27,4 +27,8 @@ homeApp.service('searchService', ["$http", "$q", "$rootScope", "WebsiteUIConstan
     	}	
     }
 
+    this.get_top_searches = function(){
+        return _deferred_request('/api/v0/top_searches', $q, $http, search_service_url);
+    }
+
 }]);

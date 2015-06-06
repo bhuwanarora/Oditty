@@ -18,6 +18,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         // }
     }
 
+    
     $scope.set_pages = function(current_page, page_count){
         $scope.info.page_count = page_count;
         $scope.info.current_page = current_page;
