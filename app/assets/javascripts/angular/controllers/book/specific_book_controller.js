@@ -80,7 +80,6 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
         }
         var filter = "id="+book_id;
         $scope.book_loading = true;
-
         var book_data_timeout = $timeout(function(){
             $scope.info.loading = true;
             bookService.get_book_details(filter).then(function(data){
