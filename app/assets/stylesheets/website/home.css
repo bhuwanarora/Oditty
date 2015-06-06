@@ -653,8 +653,14 @@ md-tooltip .md-content{
 
 .side_panel{
     margin-top: 0px !important;
-    max-width: 100px !important;
+    width: 800px !important;
+  	max-width: 100vw !important;
     position: fixed;
+    color: rgba(0,0,0,.87) !important;
+}
+
+.side_panel .login_panel{
+	width: 320px !important;
 }
 
 

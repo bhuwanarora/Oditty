@@ -30,7 +30,7 @@
      <section ng-if="!active_community.news && !info.loading" layout-padding>
          <div class="big_title">We're searching for news from the real world for this book. Please come back later.</div>
      </section>
-     <section ng-if="!active_community.news && info.loading">
+     <section ng-if="!active_community.news && info.loading" layout-padding class="less_important">
          Searching...
      </section>
       <md-progress-linear class="md-primary loader"
