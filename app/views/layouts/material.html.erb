@@ -44,7 +44,7 @@
             <script src='assets/min/angular/vendors/angular_filters.min.js'></script>
             <script src="assets/min/angular/vendors/angular-parallax.min.js"></script>
 
-            <script src="assets/angular/services/third_party/d3_service.js"></script>
+            <!-- // <script src="assets/angular/services/third_party/d3_service.js"></script> -->
             <script src="assets/angular/vendors/angular-parallax.min.js"></script>
             <script src="assets/angular/vendors/angular_sticky.js"></script>
             
@@ -85,17 +85,17 @@
             <script src="assets/angular/services/feed_service.js"></script>
 
             <% if (@news || @news_group)%>
-                <script src="assets/angular/vendors/jquery.min.js"></script>
-                <script src="assets/angular/vendors/d3.min.js"></script>
-                <script src="assets/angular/vendors/bubble_chart/d3_transform.js"></script>
-                <script src="assets/angular/vendors/bubble_chart/extarray.js"></script>
-                <script src="assets/angular/vendors/bubble_chart/misc.js"></script>
-                <script src="assets/angular/vendors/bubble_chart/micro-observer.js"></script>
-                <script src="assets/angular/vendors/bubble_chart/microplugin.js"></script>
-                <script src="assets/angular/vendors/bubble_chart/bubble-chart.js"></script>
-                <script src="assets/angular/vendors/bubble_chart/central-click.js"></script>
-                <script src="assets/angular/vendors/bubble_chart/lines.js"></script>
-                <script src="assets/angular/directives/d3_directives.js"></script>
+                // <!-- <script src="assets/angular/vendors/jquery.min.js"></script>
+                // <script src="assets/angular/vendors/d3.min.js"></script>
+                // <script src="assets/angular/vendors/bubble_chart/d3_transform.js"></script>
+                // <script src="assets/angular/vendors/bubble_chart/extarray.js"></script>
+                // <script src="assets/angular/vendors/bubble_chart/misc.js"></script>
+                // <script src="assets/angular/vendors/bubble_chart/micro-observer.js"></script>
+                // <script src="assets/angular/vendors/bubble_chart/microplugin.js"></script>
+                // <script src="assets/angular/vendors/bubble_chart/bubble-chart.js"></script>
+                // <script src="assets/angular/vendors/bubble_chart/central-click.js"></script>
+                // <script src="assets/angular/vendors/bubble_chart/lines.js"></script>
+                // <script src="assets/angular/directives/d3_directives.js"></script> -->
             <% end %>
 
             
@@ -188,7 +188,7 @@
             <script src="assets/min/angular/site.min.js"></script>
 
             <% if (@news || @news_group)%>
-                <script src="assets/min/angular/d3_group.min.js"></script> 
+                <!-- // <script src="assets/min/angular/d3_group.min.js"></script>  -->
             <% end %>
 
             <div ng-if="info.hide_signin">
@@ -290,7 +290,7 @@
             <% elsif @signup %>
                 <md-content class="white" flex ng-controller="homeController">
             <% elsif @room %>
-                <md-content ng-controller="communityController" id="community">
+                <md-content ng-controller="communityController" id="community" class="white">
             <% elsif @infinity %>
                 <md-content ng-controller="libraryController" 
                     check-scroll-bottom="get_popular_books()" ng-model="info" id="infinity_page">
@@ -316,7 +316,7 @@
                             <% else %>
                                 <div ng-include src="'/assets/angular/html/shared/header.html'"></div>
                             <% end %>
-                            <% unless @home || @profile || @news || @network || @room || @infinity || @signup || @publishers %>
+                            <% unless @home || @profile || @network || @infinity || @signup || @publishers %>
                                 <div ng-include src="'/assets/angular/html/shared/share.html'"></div>
                             <% end %>
                         </div>

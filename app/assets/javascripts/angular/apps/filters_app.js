@@ -37,8 +37,8 @@ angular.module('filtersApp', [])
         return function(input){
             var output = ""
             if(angular.isDefined(input)){
-                var book_label = input.labels.indexOf("Book") >= 0;
-                var author_label = input.labels.indexOf("Author") >= 0;
+                var book_label = (input.labels == 'Book') || (input.labels.indexOf("Book") >= 0);
+                var author_label = (input.labels == 'Author') || (input.labels.indexOf("Author") >= 0);
                 var user_label = input.labels == "User";
                 var blog_label = input.labels == "Blog";
                 var news_label = input.labels == "News";

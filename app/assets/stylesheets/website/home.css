@@ -99,10 +99,18 @@ md-content{
 	border: none;
 	box-shadow: none;
 	font-size: 18px;
+	color: white !important;
+}
+
+.search md-input-container label,
+.search .md-input{
+	color: white !important;
+	border-color: white !important;
 }
 
 .search input{
 	padding-left: 0px;
+	color: white !important;
 }
 
 .search input:focus{
@@ -117,6 +125,7 @@ md-content{
 
 .search_container label{
 	font-size: 15px;
+	color: white !important;
   	padding-left: 40px;
 }
 
@@ -601,6 +610,10 @@ md-tooltip .md-content{
 	margin-top: 10px;
 }
 
+.active_page_menu .md-select-label{
+	border-color: white !important;
+}
+
 .active_page_menu, 
 .active_page_menu .md-select-label{
 	font-size: 15px;	
@@ -704,4 +717,8 @@ md-tooltip .md-content{
   	font-size: 40px;
   	text-shadow: 1px 1px 6px rgba(0,0,0,0.2);
   	font-family: sans-serif;
+}
+
+.md-list-item-text{
+	padding: 0px !important;
 }

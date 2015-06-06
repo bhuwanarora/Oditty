@@ -1,16 +1,10 @@
-<div flex layout="row" layout-align="space-between" class="primary">
+<!-- <div flex layout="row" layout-align="space-between" class="primary">
     <md-switch ng-model="info.circles" 
                ng-click="toggle_circles()"
                aria-label="Community Circles">
     </md-switch>
     <div></div>
-</div>
-<div class="primary" layout="row">
-    <div flex="15" flex-md="10" hide-sm></div>
-    <div flex="70" flex-md="80" flex="100" class="rd_title" layout-padding ng-bind-html="info.active_news.title | uppercase"></div>
-    <div flex="15" flex-md="10" hide-sm></div>
-</div>
-<div ng-include src="'/assets/angular/html/shared/share.html'" class="primary"></div>
+</div> -->
 <div ng-if="info.circles" class="feed_margin">
     <section layout="row">
         <div ng-include src="'/assets/angular/html/news/show.html'" 

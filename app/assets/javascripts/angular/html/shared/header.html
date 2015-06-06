@@ -1,14 +1,14 @@
 <section layout="row" layout-wrap>
     <div ng-include src="'/assets/angular/html/shared/logo.html'"
         flex="20" flex-sm="25" layout="row" layout-align="start center"></div>
-    <div layout="row" layout-align="center center" flex="10" flex-md="15" flex-sm="30" 
+    <div layout="row" layout-align="center center" flex="20" flex-md="15" flex-sm="30" 
          ng-if="info.hide_signin" ng-show="info.mobile_search"
          ng-include src="'/assets/angular/html/shared/discovery_options.html'"></div>
     <div layout="row" layout-align="center center" 
          ng-hide="info.mobile_search" layout-fill layout-padding 
          hide-md hide-lg ng-if="info.hide_signin"
          ng-include src="'/assets/angular/html/shared/mobile_search.html'"></div>
-    <div flex="50" flex-md="45" 
+    <div flex="40" flex-md="45" 
          ng-controller="searchController"
          flex-sm="10" 
          layout="row" 

@@ -13,7 +13,7 @@ homeApp.controller('searchPageController', ["$scope", "searchService", "$locatio
                 angular.forEach(data, function(value){
                     if(value.labels.indexOf("Book") >= 0){
                         var random_int = Math.floor(Math.random() * ColorConstants.value.length);
-                        value = angular.extend(value, {"color": ColorConstants.value[random_int], "title": value.name});
+                        value = angular.extend(value, {"color": ColorConstants.value[random_int]});
                     }
                     this.push(value);
                 }, $scope.all_results)

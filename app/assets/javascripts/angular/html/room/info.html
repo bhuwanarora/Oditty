@@ -1,0 +1,33 @@
+<div layout="column" layout-padding>
+    <img ng-src="{{active_tag.image_url}}" class="max_full_width" />
+    <div layout-padding></div>
+    <div layout="row" layout-align="space-between">
+        <div class="big_title bold capitalize" ng-bind-html="active_tag.name"></div>
+        <div>
+            <md-button ng-class="{'md-raised': !active_tag.status}" 
+                class="md-warn md-button-clear" ng-click="toggle_follow()">
+                <span ng-if="!active_tag.status">Join Room&nbsp;</span>
+                <span ng-if="active_tag.status">Joined</span>
+                <span ng-if="!active_tag.status" class="icon-user-add"></span>
+            </md-button>
+        </div>
+    </div>
+    <div layout-padding></div>
+    <div class="less_important">Related Books</div>
+    <div layout="row" layout-wrap class="users" layout-padding>
+        <a ng-repeat="user in active_tag.users" ng-href="/user?q={{user.id}}" layout-margin ng-if="user.id">
+            <img class="circular" layout-margin ng-src="{{user.image_url}}"/>
+            <md-tooltip md-direction="top">
+                {{user.first_name}}
+            </md-tooltip>
+        </a>
+    </div>
+</div>
+<div layout="row" layout-wrap>
+    <section ng-repeat="book in active_tag.books" layout-margin>
+        <md-button ng-click="show_book_dialog(book, $event)" class="clear rd_book_image_cover md-whiteframe-z3">
+            <div class="book_thumb" ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'">
+            </div>
+        </md-button>
+    </section>    
+</div>

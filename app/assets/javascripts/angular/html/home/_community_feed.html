@@ -1,6 +1,23 @@
-<md-card class="md-whiteframe-z1 community" 
+<md-card class="community" 
     ng-class="{'md-whiteframe-z5': communityFeed.expand}"
     ng-if="communityFeed.title && communityFeed.title != '' && communityFeed.title != null">
+    <md-card-content layout="row" layout-padding class="communities" ng-if="communityFeed.communities">
+        <div ng-repeat="community in communityFeed.communities | limitTo: 4" 
+            layout-align="start start" layout-padding layout-wrap layout="row" class="community_circle">
+            <a layout="column" layout-align="center center" ng-href="/room?id={{community.id}}" 
+                class="animate-fast vertical_expansion" 
+                ng-if="!communityFeed.expand">
+                <img ng-src="{{community.image_url}}" class="community_circular" alt="{{community.name}}" />
+                <div ng-bind-html="community.name | uppercase" layout-wrap class="category_title" layout-padding></div>
+            </a>
+            <a layout="row" layout-align="start" ng-href="/room?id={{community.id}}" 
+                class="animate-fast vertical_expansion"
+                ng-if="communityFeed.expand">
+                <img ng-src="{{community.image_url}}" class="circular" alt="{{community.name}}" />
+                <md-tooltip>{{community.name}}</md-tooltip>
+            </a>
+        </div>
+    </md-card-content>
     <md-card-content class="content">
         <div class="big_title">
             <a ng-click="goto_news_page(communityFeed.id || communityFeed.news_id)">
@@ -20,23 +37,7 @@
                  ng-show="communityFeed.image_url"/>
         </div>
     </md-card-content>
-    <md-card-content layout="row" layout-padding class="communities" ng-if="communityFeed.communities">
-        <div ng-repeat="community in communityFeed.communities | limitTo: 4" 
-            layout-align="start start" layout-padding layout-wrap layout="row" class="community_circle">
-            <a layout="column" layout-align="center center" ng-href="/room?id={{community.id}}" 
-                class="animate-fast vertical_expansion" 
-                ng-if="!communityFeed.expand">
-                <img ng-src="{{community.image_url}}" class="community_circular" alt="{{community.name}}" />
-                <div ng-bind-html="community.name | uppercase" layout-wrap class="category_title" layout-padding></div>
-            </a>
-            <a layout="row" layout-align="start" ng-href="/room?id={{community.id}}" 
-                class="animate-fast vertical_expansion"
-                ng-if="communityFeed.expand">
-                <img ng-src="{{community.image_url}}" class="circular" alt="{{community.name}}" />
-                <md-tooltip>{{community.name}}</md-tooltip>
-            </a>
-        </div>
-    </md-card-content>
+    
     <md-card-content class="footer" 
         ng-if="communityFeed.id && communityFeed.expand"
         ng-init="bookmark_object = {'id': communityFeed.id, 'type': 'Community'}; feed = communityFeed"

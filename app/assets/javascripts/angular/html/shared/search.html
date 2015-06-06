@@ -22,7 +22,7 @@
                 <img ng-src="{{item.id | author_small_thumb}}" ng-show="item.labels == 'Author'" 
                     class=" circular" />
                 <div>&nbsp;</div>
-                <div layout-padding>
+                <div layout-align="center start" layout="column">
                     <div ng-bind-html="item.name || item.title" ></div>
                     <div class="less_important" ng-show="item.author_name">
                         <span>&nbsp;by </span>
@@ -30,7 +30,7 @@
                     </div>
                 </div>
             </div>
-            <div flex="10" layout="row" layout-align="space-between">
+            <div flex="10" layout="row" layout-align="space-between center">
                 <div></div>
                 <div ng-bind-html="item | search_item_type"></div>
             </div>
