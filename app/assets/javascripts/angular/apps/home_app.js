@@ -132,7 +132,7 @@ var _deferred_request = function(url, $q, $http, search_service_url){
         }
     }
     if(angular.isDefined(search_service_url)){
-        $http.get(search_service_url + url + "&withCredentials="+true).then(success_callback, error_callback);
+        $http.get(search_service_url + url, {headers: {'withCredentials': true}}).then(success_callback, error_callback);
     }
     else{
         $http.get(url).then(success_callback, error_callback);
