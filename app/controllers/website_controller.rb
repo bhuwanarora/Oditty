@@ -45,7 +45,7 @@ class WebsiteController < ApplicationController
 		render :layout => "clean"
 	end
 
-	def landing_page
+	def how_it_works
 		render :layout => "landing_page"
 	end
 
@@ -269,6 +269,10 @@ class WebsiteController < ApplicationController
 	def publishers
 		@publishers = true
 		render :layout => "material"
+	end
+
+	def help
+		render :layout => "material_clean"
 	end
 
 end

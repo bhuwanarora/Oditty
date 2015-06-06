@@ -1,4 +1,4 @@
-<div layout="column" layout-padding class="fixed_right_panel" 
+<div layout="column" layout-padding  
           layout-align="start start"
           hide-sm
           ng-if="constant.show_book">
@@ -30,6 +30,7 @@
                  Share
                </md-tooltip>
           </div>
+          <div ng-include src="'/assets/angular/html/shared/social_bottom_sheet.html'"></div> 
      </div>
      <div layout-margin class="relative_block">
           <div class="counter" layout="row" layout-align="center center" ng-if="book.bookmark_count">

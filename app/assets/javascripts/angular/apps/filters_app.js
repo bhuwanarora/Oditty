@@ -187,6 +187,15 @@ angular.module('filtersApp', [])
       return output;
     };
   })
+  .filter('author_small_thumb', function(){
+    return function(input){
+      var output = "";
+      if(angular.isDefined(input) && input){
+        output = "http://rd-authors.readersdoor.netdna-cdn.com/"+input+"/T.png"
+      }
+      return output;
+    }
+  })
   .filter('choose_medium_thumb', function() {
     return function(input){
       var output = "";

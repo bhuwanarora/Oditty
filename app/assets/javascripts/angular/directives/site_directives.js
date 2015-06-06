@@ -50,18 +50,19 @@ homeApp.directive('bookInfo', ["$rootScope", "bookService", '$mdDialog', functio
     };
 }]);
 
-homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', function($rootScope, feedService, $timeout){
+homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', '$mdSidenav', function($rootScope, feedService, $timeout, $mdSidenav){
     return {
         restrict: 'E',
         scope : {data: '=', shelves: '=', custom: '=', count: '='},
         controller: ["$scope", function($scope){
             $scope.show_shelves = function(){
+                $mdSidenav('right_bookmark').toggle();
                 if(angular.isUndefined($scope.shelves)){
                     feedService.get_bookmarks($scope.data.id).then(function(data){
                         $scope.shelves = data;
                     });
                 }
-                $scope.show_shelf = !$scope.show_shelf;
+                // $scope.show_shelf = !$scope.show_shelf;
             }
 
 

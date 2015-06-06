@@ -453,3 +453,7 @@ md-toast.md-default-theme{
     line-height: inherit !important;
     padding: 10px;
 }
+
+md-sidenav{
+    position: fixed;
+}

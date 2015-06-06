@@ -11,7 +11,7 @@
     md-selected-item-change="on_select(item)"
     md-item-text="display"
     ng-keydown="handle_backspace($event)"
-    class="menu_search"
+    class="menu_search no_shadow"
     ng-click="show_relevant_books()"
     placeholder="{{reading_options[active_id].name}}">
     <span md-highlight-text="searchText" ng-bind-html="item.display"></span>

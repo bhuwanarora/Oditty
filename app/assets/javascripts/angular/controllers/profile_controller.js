@@ -152,6 +152,7 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 	var _init = (function(){
         $scope.info.books = [];
 		$scope.profile_user = {};
+		$scope.info.embed_share = true;
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
         var url_parser = regex.exec($location.absUrl());
         if(angular.isDefined(url_parser) && url_parser != null){

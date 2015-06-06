@@ -58,14 +58,6 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
         event.stopPropagation();
 	};
 
-    $scope.show_share_bottom_sheet = function(event){
-        $mdBottomSheet.show({
-            templateUrl: 'assets/angular/html/shared/social_bottom_sheet.html',
-            controller: 'shelfController',
-            targetEvent: event
-        });
-    }; 
-
     $scope.stop_propagation = function(event){
         event.stopPropagation();
     };

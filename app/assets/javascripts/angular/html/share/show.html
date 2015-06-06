@@ -1,11 +1,10 @@
 <div ng-controller="shareController" ng-if="info.show_share || info.show_book_share">
-
 	<div class="share animate-fast" 
 		 layout="row" 
 		 layout-sm="column"
 		 layout-align="start start" layout-padding>
 		<div flex="10">
-			<div ng-click="back($event)" layout="row" 
+			<div ng-click="back($event)" layout="row" ng-hide="info.embed_share"
 				layout-align="center center" class="pointer">
 				<h1 layout-padding>
 					<i class="material-icons">arrow_back</i>
@@ -152,7 +151,7 @@
 	}
 
 	.currently_reading md-list{
-		padding: 0px;
+		padding: 0px !important;
 	}
 
 	.light_title{

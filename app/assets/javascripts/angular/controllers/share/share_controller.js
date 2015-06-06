@@ -52,7 +52,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         $scope.info.book = book;
         $rootScope.active_book = book;
         $scope.info.status_books = [book];
-        $scope.info.loading = true;
+        $scope.info.share_loading = true;
 
 
         var _get_interesting_details = function(){
@@ -79,7 +79,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
                         else{
                         }
                         this.push(info);
-                        $scope.info.loading = false;
+                        $scope.info.share_loading = false;
                     }, $scope.related_info);
                 }
             });
@@ -124,9 +124,9 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
             $scope.searched_books = [];
             books = $scope.searched_books;
         }
-        $scope.info.loading = true;
+        $scope.info.share_loading = true;
         bookService.search_books(q, 10).then(function(data){
-            $scope.info.loading = false;
+            $scope.info.share_loading = false;
             $scope.did_you_mean = true;
             angular.forEach(data, function(value){
                 var random_int = Math.floor(Math.random()*ColorConstants.value.length);
@@ -152,7 +152,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
 
     $scope.post_status = function(){
         $scope.posting = true;
-        $scope.info.loading = true;
+        $scope.info.share_loading = true;
         var status = {};
 
         if($scope.reading_status_selected && $scope.active_book){
@@ -213,7 +213,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         if(Object.keys(status).length != 0){
             statusService.post_status(status).then(function(){
                 $scope.posting = false;
-                $scope.info.loading = false;
+                $scope.info.share_loading = false;
                 // $scope.post_again = true;
             });
             $scope.info.status = "";
@@ -504,6 +504,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     }
 
     $scope.make_active = function(id){
+        delete $rootScope.active_book;
         $scope.active_id = id;
         $scope.info.reading_status_value = id;
         $scope.show_relevant_books();
@@ -530,9 +531,9 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         $scope.reading_status_selected = true;
         if(angular.isUndefined($scope.active_book)){
             $scope.info.status_books = [];
-            $scope.info.loading = true;
+            $scope.info.share_loading = true;
             bookService.get_top_searches().then(function(data){
-                $scope.info.loading = false;
+                $scope.info.share_loading = false;
                 $scope.info.status_books = data;
             });
         }

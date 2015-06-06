@@ -1,4 +1,4 @@
-homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout", "bookService", '$mdToast', '$location', '$mdBottomSheet', 'ColorConstants', function($scope, $rootScope, $timeout, bookService, $mdToast, $location, $mdBottomSheet, ColorConstants){
+homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout", "bookService", '$mdToast', '$location', '$mdSidenav', 'ColorConstants', function($scope, $rootScope, $timeout, bookService, $mdToast, $location, $mdSidenav, ColorConstants){
 
     $scope.toggle_endorse = function(){
         if($scope.book.endorse_status){
@@ -18,11 +18,21 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
 
     // $scope.show_shelf_bottom_sheet = function(bookmark_object_id, bookmark_object_type){
     //     $rootScope.bookmark_object = {"type": bookmark_object_type, "id": bookmark_object_id};
-    //     // $mdBottomSheet.show({
+    //     // $mdSidenav.show({
     //     //     templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
     //     //     controller: 'shelfController'
     //     // });
     // };
+
+    $scope.show_share_bottom_sheet = function(event){
+        $mdSidenav('right_share').toggle();
+        // $mdSide.show({
+        //     templateUrl: 'assets/angular/html/shared/social_bottom_sheet.html',
+        //     controller: 'shelfController',
+        //     targetEvent: event
+        // });
+    }; 
+
 
     $scope.getToastPosition = function() {
         return Object.keys($scope.toast_position)
@@ -71,27 +81,32 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
         var filter = "id="+book_id;
         $scope.book_loading = true;
         $scope.info.loading = true;
-        bookService.get_book_details(filter).then(function(data){
-            if(angular.isDefined(data) && data != null){
-                var endorse_status = data.endorse_status != null;
-                var status = data.status != null;
-                var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-                var json = {"endorse_status" : endorse_status, "status" : status, "color": ColorConstants.value[random_int]};
-                if(angular.isDefined($rootScope.active_book)){
-                    $scope.book = angular.extend($rootScope.active_book, data);
-                }
-                else{
-                    $scope.book = data;    
-                }
 
-                $scope.book = angular.extend($scope.book, json);
-                $rootScope.active_book = $scope.book;
-            }
-            $scope.book_loading = false;
-            $scope.info.loading = false;
+        var book_data_timeout = $timeout(function(){
+            bookService.get_book_details(filter).then(function(data){
+                if(angular.isDefined(data) && data != null){
+                    var endorse_status = data.endorse_status != null;
+                    var status = data.status != null;
+                    var random_int = Math.floor(Math.random()*ColorConstants.value.length);
+                    var json = {"endorse_status" : endorse_status, "status" : status, "color": ColorConstants.value[random_int]};
+                    if(angular.isDefined($rootScope.active_book)){
+                        $scope.book = angular.extend($rootScope.active_book, data);
+                    }
+                    else{
+                        $scope.book = data;
+                    }
+                    $scope.book = angular.extend($scope.book, json);
+                    $rootScope.active_book = $scope.book;
+                }
+                $scope.book_loading = false;
+                $scope.info.loading = false;
+            });
+            bookService.update_visited(book_id);
+        }, 1000);
+        
+        $scope.$on('destroy', function(){
+            $timeout.cancel(book_data_timeout);
         });
-
-        bookService.update_visited(book_id);
 
         $scope.toast_position = {
             bottom: false,
