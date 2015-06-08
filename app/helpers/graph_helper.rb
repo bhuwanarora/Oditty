@@ -90,7 +90,7 @@ module GraphHelper
 		set_root.execute
 		while !blogs_set
 			latest_blog = Blog.get_latest_blog.execute[0]
-			Blog.handle
+			BlogsHelper.handle
 			updated_latest_blog = Blog.get_latest_blog.execute[0]
 			if latest_blog["blog_url"] == updated_latest_blog["blog_url"]
 				blogs_set = true

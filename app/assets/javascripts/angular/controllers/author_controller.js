@@ -1,8 +1,13 @@
 homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'authorService', '$mdDialog', 'scroller', 'ColorConstants', '$filter', '$sce', '$rootScope', "scroller", "WebsiteUIConstants", function($scope, $location, $mdSidenav, authorService, $mdDialog, scroller, ColorConstants, $filter, $sce, $rootScope, scroller, WebsiteUIConstants){
 
     $scope.toggle_follow = function(){
-        $scope.author.status = !$scope.author.status;
-        authorService.follow($scope.author.id, $scope.author.status);
+        if(angular.isDefined($scope.author.status)){
+            $scope.author.status = !$scope.author.status;
+            authorService.follow($scope.author.id, $scope.author.status);
+        }
+        else{
+            $mdSidenav('signup').toggle();
+        }
     }
 
     $scope.keypress_scroll = function(event){

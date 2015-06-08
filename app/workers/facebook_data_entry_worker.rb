@@ -21,5 +21,6 @@ class FacebookDataEntryWorker
 			end
 		end
 		clause.execute
+		IndexerWorker.perform_async(user_id, "User")
 	end
 end

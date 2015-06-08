@@ -220,8 +220,11 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         $scope.info.time_groups = [];
         $scope.info.read_times = [];
         console.debug("initialised filters controller");
-        $scope._get_time_groups();
-        $scope._get_reading_times();
+        var fetch_data = $timeout(function(){
+            $scope._get_time_groups();
+            $scope._get_reading_times();
+        }, 100);
+        $timeout.cancel(fetch_data);
         if(angular.isUndefined($rootScope.filters)){
             $rootScope.filters = {};
         }

@@ -11,7 +11,9 @@ class WebsiteController < ApplicationController
 	end
 
 	def webhooks
-		email_params = {:email => Constant::EmailTemplate::Admin, :template => Constant::EmailTemplate::Webhooks, :params => params}
+		email_params = {:email => Constant::EmailTemplate::Admin, 
+				:template => Constant::EmailTemplate::Webhooks, 
+				:params => params}
 		SubscriptionMailer.webhooks(email_params).deliver
 		render :json => {:message => "Success"}, :status => 200
 	end

@@ -14,16 +14,18 @@ class User::Authenticate::SignUp < User::Authenticate
 			if user["verified"]
 				message = Constant::StatusMessage::EmailAlreadyRegistered
 			else
-				User.handle_new_verification_request(@params[:email], @verification_token).execute
+				info = User.handle_new_verification_request(@params[:email], @verification_token).execute[0]["id"]
+				IndexerWorker.perform_async(info, "User")
 				SubscriptionMailer.verify_email(invitation).deliver
 				message = Constant::StatusMessage::AnotherActivationRequest
 			end
 		else
-			User.handle_new(@params[:email], @params[:password], @verification_token).execute
+			info = User.handle_new(@params[:email], @params[:password], @verification_token).execute[0]["id"]
+			IndexerWorker.perform_async(info, "User")
 			SubscriptionMailer.verify_email(invitation).deliver
 			message = Constant::StatusMessage::ActivateAccount
 		end
 		puts message
-		{:authenticate => authenticate, :message => message }
+		{:authenticate => authenticate, :message => message}
 	end
 end

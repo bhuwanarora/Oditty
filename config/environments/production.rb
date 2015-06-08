@@ -93,4 +93,6 @@ ReadersDoor::Application.configure do
     'basic_less.css',
     'full_control.css'
   ]
+
+  config.search_service_url = "http://109.237.26.43"
 end

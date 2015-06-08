@@ -603,7 +603,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/share/partials/_reading_option.html',
-    "<md-button class=\"md-button-clear menu_details margin_top white animate-fast vertical_animate md-whiteframe-z1\" ng-repeat=\"option in reading_options\" ng-hide=\"option.id == active_id\" layout-padding ng-click=\"make_active(option.id)\"><i>{{option.name}}</i></md-button>"
+    "<md-button class=\"md-button-clear menu_details margin_top white md-whiteframe-z1\" ng-repeat=\"option in reading_options\" ng-hide=\"option.id == active_id\" layout-padding ng-click=\"make_active(option.id)\">{{option.name}}</md-button>"
   );
 
 

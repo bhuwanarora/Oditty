@@ -18,9 +18,9 @@ Neography.configure do |config|
 end
 
 module Neography
-    class Rest 
+    class Rest
         module Cypher
-            alias_method :old_execute_query, :execute_query            
+            alias_method :old_execute_query, :execute_query
             def execute_query(query, parameters = {}, cypher_options = nil)
                 response = []
                 puts query.print.blue.on_red
@@ -28,13 +28,14 @@ module Neography
                 neo_response["data"].each do |record|
                     response << Hash[neo_response["columns"].zip(record)]
                 end
-                begin
-                    if response.present? && response[0]["label"].present? && response.length == 1
-                        IndexerWorker.perform_async(response) 
-                    end 
-                rescue Exception => e
-                    puts "Error #{e.to_s}".red                    
-                end
+
+                # begin
+                #     if response.present? && response[0]["label"].present? && response.length == 1
+                #         IndexerWorker.perform_async(response) 
+                #     end
+                # rescue Exception => e
+                #     puts "Error #{e.to_s}".red
+                # end
                 response
             end
         end
