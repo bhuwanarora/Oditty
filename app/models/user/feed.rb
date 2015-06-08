@@ -29,6 +29,6 @@ class User::Feed < User
 	end
 
 	def create object
-		" MATCH (user)-[old:FeedNext]->(old_feed) OPTIONAL MATCH (" + object + ")-[existing_relation:FeedNext{user_id:" + @user_id.to_s + "}]->() FOREACH(ignore IN CASE WHEN existing_relation IS NULL THEN [1] ELSE [] END | CREATE UNIQUE (user)-[:FeedNext{user_id:" + @user_id.to_s + "}]->(" + object + ")-[:FeedNext{user_id:" + @user_id.to_s + "}]->(old_feed) DELETE old SET user.latest_feed_id = ID(" + object + ")) WITH user, " + object + " "
+		" MATCH (user)-[old:FeedNext]->(old_feed) OPTIONAL MATCH (" + object + ")-[existing_relation:FeedNext{user_id:" + @user_id.to_s + "}]->() FOREACH(ignore IN CASE WHEN existing_relation IS NULL THEN [1] ELSE [] END | CREATE UNIQUE (user)-[:FeedNext{user_id:" + @user_id.to_s + "}]->(" + object + ")-[:FeedNext{user_id:" + @user_id.to_s + "}]->(old_feed) DELETE old SET user.latest_feed_id = ID(" + object + ")) WITH user, " + object + ", friend, book "
 	end
 end

@@ -36,9 +36,9 @@ class UsersUser < Neo
 	end
 
 	def create_recommendation book_id
-		clause += " CREATE UNIQUE (user)-[:RecommendedTo]->(friend)-[:RecommendedAction]->( "\
-			"recommend_node:RecommendNode{book_id:" + book_id.to_s + ",user_id:" + @user_id.to_s + ", "\
-			"friend_id:"+@friend_id.to_s+", timestamp:\'"+Time.now.getutc.to_s+"\'})-[:Recommended]->(book) "
+		" CREATE UNIQUE (user)-[:RecommendedTo]->(friend)-[:RecommendedAction]->( "\
+		"recommend_node:RecommendNode{book_id:"+book_id.to_s + ",user_id:" + @user_id.to_s + ", "\
+		"friend_id:" + @friend_id.to_s + ", timestamp:\'" + Time.now.getutc.to_s + "\'})-[:Recommended]->(book) "
 	end
 	
 	def recommend_book(book_id)		
@@ -46,14 +46,14 @@ class UsersUser < Neo
 		clause += create_recommendation book_id
 		clause += "WITH user, friend, book, recommend_node "		
 		clause += User::Feed.new(@user_id).create("recommend_node")
-		clause += "WITH user, friend, bokk, recommend_node "
+		clause += "WITH user, friend, book, recommend_node "
 		clause += Book::BookFeed.insert_feed(@user_id,"recommend_node")
 		clause += "WITH user, friend, book, recommend_node "
 		clause += User.set_total_count(10,"+")
 		clause += Book.set_recommended_count(1, "+")
-		clause += "WITH friend as user, rn "
-		clause += User::UserNotification.add("rn")
-		clause += " RETURN id(rn)"
+		clause += "WITH friend as user, recommend_node "
+		clause += User::UserNotification.add("recommend_node")
+		clause += " RETURN id(recommend_node)"
 	end
 
 	def self.match_all
