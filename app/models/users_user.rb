@@ -41,7 +41,7 @@ class UsersUser < Neo
 		"friend_id:" + @friend_id.to_s + ", timestamp:\'" + Time.now.getutc.to_i.to_s + "\'})-[:Recommended]->(book) "
 	end
 	
-	def recommend_book(book_id)		
+	def recommend_book book_id
 		clause = match_book book_id
 		clause += create_recommendation book_id
 		clause += "WITH user, friend, book, recommend_node "		

@@ -94,7 +94,7 @@ homeApp.run(["$rootScope", "$location", "$cookieStore", "$cookies", "$http", fun
         if(closed_urls){
             // $cookieStore.put('redirect_url', $location.$$absUrl);
             setCookie("redirect_url", $location.$$absUrl);
-    		window.location.href = "/signup";
+    		//window.location.href = "/signup";
         }
 	}
 }]);
