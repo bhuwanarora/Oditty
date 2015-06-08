@@ -16,7 +16,7 @@ homeApp.directive('recommend', ["$rootScope", "userService", "sharedService", fu
     }
 }]);
 
-homeApp.directive('bookInfo', ["$rootScope", "bookService", '$mdDialog', function($rootScope, bookService, $mdDialog){
+homeApp.directive('bookInfo', ["$rootScope", "bookService", '$mdDialog', 'sharedService', function($rootScope, bookService, $mdDialog, sharedService){
     return {
         restrict: 'E',
         scope : {book: '=', info: '='},
