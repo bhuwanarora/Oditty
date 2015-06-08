@@ -37,7 +37,7 @@ class UsersUser < Neo
 
 	def create_recommendation book_id
 		" CREATE UNIQUE (user)-[:RecommendedTo]->(friend)-[:RecommendedAction]->( "\
-		"recommend_node:RecommendNode{book_id:"+book_id.to_s + ",user_id:" + @user_id.to_s + ", "\
+		"recommend_node:RecommendNode{book_id:" + book_id.to_s + ", user_id:" + @user_id.to_s + ", "\
 		"friend_id:" + @friend_id.to_s + ", timestamp:\'" + Time.now.getutc.to_i.to_s + "\'})-[:Recommended]->(book) "
 	end
 	
