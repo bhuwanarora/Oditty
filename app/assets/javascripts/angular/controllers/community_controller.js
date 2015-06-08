@@ -1,4 +1,4 @@
-homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope', 'ColorConstants', '$timeout', '$location', '$mdDialog', 'userService', 'sharedService', function($scope, newsService, $rootScope, ColorConstants, $timeout, $location, $mdDialog, userService, sharedService){
+homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope', 'ColorConstants', '$timeout', '$location', '$mdDialog', 'userService', '$mdSidenav', 'sharedService', function($scope, newsService, $rootScope, ColorConstants, $timeout, $location, $mdDialog, userService, $mdSidenav, sharedService){
     $scope.get_detailed_community_info = function(){
         newsService.get_detailed_community_info($scope.active_tag.id).then(function(data){
             $scope.active_tag = angular.extend($scope.active_tag, data);
@@ -33,8 +33,13 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
     }
 
     $scope.toggle_follow = function(){
-        $scope.active_tag.status = !$scope.active_tag.status;
-        newsService.follow($scope.active_tag.id, $scope.active_tag.status);
+        if(angular.isDefined($scope.active_tag)){
+            $scope.active_tag.status = !$scope.active_tag.status;
+            newsService.follow($scope.active_tag.id, $scope.active_tag.status);
+        }
+        else{
+            $mdSidenav('signup').toggle();
+        }
     }
 
     $scope.refresh_data = function(){

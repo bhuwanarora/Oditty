@@ -1,4 +1,4 @@
-homeApp.controller('profileController', ["$scope", "userService", '$rootScope', "WebsiteUIConstants", 'ColorConstants', '$location', 'bookService', 'newsService', '$mdDialog', 'infinityService', 'sharedService', function($scope, userService, $rootScope, WebsiteUIConstants, ColorConstants, $location, bookService, newsService, $mdDialog, infinityService, sharedService){
+homeApp.controller('profileController', ["$scope", "userService", '$rootScope', "WebsiteUIConstants", 'ColorConstants', '$location', 'bookService', 'newsService', '$mdDialog', 'infinityService', '$timeout', 'sharedService', function($scope, userService, $rootScope, WebsiteUIConstants, ColorConstants, $location, bookService, newsService, $mdDialog, infinityService, $timeout, sharedService){
 	var _get_user_details = function(){
 		userService.get_user_details($scope.active_user_id).then(function(data){
 			$scope.profile_user = data;
@@ -172,16 +172,26 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
                 $scope.info.my_profile = false;
                 $scope.hide_follow_links = true;
             }
-            _get_user_details();
+            var details_timeout = $timeout(function(){
+            	_get_user_details();
+            }, 100);
+            $scope.$on('destroy', function(){
+            	$timeout.cancel(details_timeout);	
+            });
         }
         else{
             $scope.info.my_profile = true;
             if(angular.isUndefined($rootScope.user)){
-                userService.get_user_details().then(function(data){
-                    $rootScope.user = data;
-                    $scope.profile_user = $rootScope.user;
-                    $scope.active_user_id = $scope.profile_user.id;
-                });
+            	var details_timeout = $timeout(function(){
+	                userService.get_user_details().then(function(data){
+	                    $rootScope.user = data;
+	                    $scope.profile_user = $rootScope.user;
+	                    $scope.active_user_id = $scope.profile_user.id;
+	                });
+            	}, 100);
+            	$scope.$on('destroy', function(){
+	            	$timeout.cancel(details_timeout);	
+	            });
             }
             else{
                 $scope.profile_user = $rootScope.user;
@@ -189,8 +199,12 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
             }
         }
        
-        $scope.get_feed();   
+       	var feed_timeout = $timeout(function(){
+        	$scope.get_feed();
+       	}, 100);
+       	$scope.$on('destroy', function(){
+       		$timeout.cancel(feed_timeout);
+       	});
 
     }());
-
 }]);

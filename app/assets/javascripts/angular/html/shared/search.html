@@ -8,11 +8,11 @@
                 md-search-text-change="query_search(search_text)"
                 md-selected-item-change="on_select(item)"
                 md-item-text="item.name"
-                md-min-length="2"
+                md-min-length="0"
                 class="search"
                 hide-sm
                 flex="85"
-                ng-click="stop_propagation($event)"
+                ng-click="get_default_results($event)"
                 md-floating-label="Search books, topics and more..." ng-if="info.hide_signin">
     <md-item-template>
         <div layout="row" layout-align="space-between">

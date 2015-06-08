@@ -1,16 +1,17 @@
 namespace :get_media do
 
-  desc "Get News"
-  task :news => :environment do
-    puts "init"
-    News.handle
-  end
+    desc "Get News"
+    task :news => :environment do
+        puts "init"
+        include NewsHelper
+        NewsHelper.handle
+    end
 
-  task :blog => :environment do
-    puts "init blog service"
-    Blog.handle
-  end
-  task :test => :environment do
-    puts "Started"
-  end
+    desc "Get Blog"
+    task :blog => :environment do
+        puts "init blog service"
+        include BlogsHelper
+        BlogsHelper.handle
+    end
+
 end

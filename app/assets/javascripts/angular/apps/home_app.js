@@ -90,7 +90,7 @@ homeApp.config(["FacebookProvider", "facebookAppId", function(FacebookProvider, 
 homeApp.run(["$rootScope", "$location", "$cookieStore", "$cookies", "$http", function($rootScope, $location, $cookieStore, $cookies, $http){
     var unauthenticated_user = getCookie("logged") == "";
     if(unauthenticated_user){
-        var closed_urls = ($location.$$absUrl.indexOf("signup") < 0) && ($location.$$absUrl.indexOf("book") < 0) && ($location.$$absUrl.indexOf("author") < 0) && ($location.$$absUrl.indexOf("community") < 0) && ($location.$$absUrl.indexOf("home") < 0);
+        var closed_urls = ($location.$$absUrl.indexOf("signup") < 0) && ($location.$$absUrl.indexOf("book") < 0) && ($location.$$absUrl.indexOf("author") < 0) && ($location.$$absUrl.indexOf("communities") < 0) && ($location.$$absUrl.indexOf("home") < 0) && ($location.$$absUrl.indexOf("room") < 0) && ($location.$$absUrl.indexOf("news") < 0) && ($location.$$absUrl.indexOf("news_group") < 0) && ($location.$$absUrl.indexOf("infinity") < 0);
         if(closed_urls){
             // $cookieStore.put('redirect_url', $location.$$absUrl);
             setCookie("redirect_url", $location.$$absUrl);
@@ -132,7 +132,8 @@ var _deferred_request = function(url, $q, $http, search_service_url){
         }
     }
     if(angular.isDefined(search_service_url)){
-        $http.get(search_service_url + url).then(success_callback, error_callback);
+        // $http.defaults.headers.config.withCredentials = true;
+        $http.get(search_service_url + url, {"withCredentials": true}).then(success_callback, error_callback);
     }
     else{
         $http.get(url).then(success_callback, error_callback);

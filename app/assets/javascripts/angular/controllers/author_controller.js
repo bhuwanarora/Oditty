@@ -1,8 +1,13 @@
-homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'authorService', '$mdDialog', 'scroller', 'ColorConstants', '$filter', '$sce', '$rootScope', "scroller", "WebsiteUIConstants", function($scope, $location, $mdSidenav, authorService, $mdDialog, scroller, ColorConstants, $filter, $sce, $rootScope, scroller, WebsiteUIConstants){
+homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'authorService', '$mdDialog', 'scroller', 'ColorConstants', '$filter', '$sce', '$rootScope', "scroller", "WebsiteUIConstants", '$timeout', function($scope, $location, $mdSidenav, authorService, $mdDialog, scroller, ColorConstants, $filter, $sce, $rootScope, scroller, WebsiteUIConstants, $timeout){
 
     $scope.toggle_follow = function(){
-        $scope.author.status = !$scope.author.status;
-        authorService.follow($scope.author.id, $scope.author.status);
+        if(angular.isDefined($scope.author.status)){
+            $scope.author.status = !$scope.author.status;
+            authorService.follow($scope.author.id, $scope.author.status);
+        }
+        else{
+            $mdSidenav('signup').toggle();
+        }
     }
 
     $scope.keypress_scroll = function(event){
@@ -124,7 +129,12 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         }
 
         $scope.active_index = 0;
-        $scope.get_books(id);
+        var books_timeout = $timeout(function(){
+            $scope.get_books(id);
+        }, 100);
+        $scope.$on('destroy', function(){
+            $timeout.cancel(books_timeout);
+        });
     }());
 
 }]);

@@ -105,28 +105,6 @@ class Blog < Neo
 		" OPTIONAL MATCH (root_blog)-[relation:NextPost]->(old:Blog) FOREACH(ignoreMe IN CASE WHEN relation IS NOT NULL AND old <> blog THEN [1] ELSE [] END | MERGE (root_blog)-[:NextPost]->(blog)-[:NextPost]->(old) DELETE relation) FOREACH(ignoreMe IN CASE WHEN relation IS NULL AND old <> blog THEN [1] ELSE [] END | MERGE (root_blog)-[:NextPost]->(blog)) WITH blog  "
 	end
 
-	def self.handle
-		last_posted_time = Blog.get_latest_blog.execute[0]["posted_at"]
-		response = Blog.get_posts last_posted_time
-
-		for post in response["posts"]
-			clause = ""
-			clause = Blog.create(post) + Blog.match_root + " ,blog " + Blog.create_next_post + Blog.create_timestamp(post["date"],"blog")   
-			
-			author_tags = Blog.handle_authors post["tags"]
-			author_tags.each do |key, value|
-				post["tags"].delete(key)
-				clause += Blog.link_author(key.search_ready) + " WITH blog "
-			end
-
-			post["tags"].each do |key, value|
-				clause += Blog.link_community(key) + " WITH blog "
-			end
-			clause += Blog.return_init + Blog.basic_info
-			clause.execute 
-		end					
-	end
-
 	def self.get_posts last_posted_time
 		last_posted_time = Date.iso8601(last_posted_time).strftime
 		url = Rails.application.config.blog_url + last_posted_time
@@ -135,6 +113,6 @@ class Blog < Neo
 	end
 
 	def self.basic_info
-		" ID(blog) AS blog_id, blog.title AS title, blog.image_url AS image_url , blog.posted_at AS posted_at, blog.like_count AS like_count, blog.blog_url AS blog_url, blog.excerpt AS excerpt, blog.reblog_count AS reblog_count, labels(blog) AS label  "
+		" ID(blog) AS blog_id, blog.title AS title, blog.image_url AS image_url , blog.posted_at AS posted_at, blog.like_count AS like_count, blog.blog_url AS blog_url, blog.excerpt AS excerpt, blog.reblog_count AS reblog_count, labels(blog) AS label "
 	end
 end

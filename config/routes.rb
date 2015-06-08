@@ -38,7 +38,7 @@ ReadersDoor::Application.routes.draw do
   resources :website
 
   get 'how_it_works'                => 'website#how_it_works',  :as => 'how_it_works'
-
+  get 'publishers'                  => 'website#publishers',    :as => 'publishers'
   get 'recommended_books'     => "recommendations#books",    :as => "recommended_books"
   get 'recommendations'          => "recommendations#index",    :as => "recommendations"
 
@@ -84,7 +84,7 @@ ReadersDoor::Application.routes.draw do
   get 'journey'                   => "website#journey",               :as => "journey"
   get 'customise'                 => "website#customise",             :as => "customise"
   get 'author'                    => "website#author",                :as => "author"
-  get 'room'                 => "website#room",             :as => "room"
+  get 'room'                      => "website#room",                  :as => "room"
   get 'news'                      => "website#news",                  :as => "news"
 
   get 'tree'                      => "categories#show_tree",    :as => "show_tree"

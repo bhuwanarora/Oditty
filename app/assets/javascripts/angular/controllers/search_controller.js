@@ -33,6 +33,15 @@ homeApp.controller('searchController', ["$scope", "searchService", "$location", 
         }
     }
 
+    $scope.get_default_results = function(event){
+        if(angular.isUndefined($scope.search_text) || ($scope.search_text == "")){
+            searchService.get_top_searches().then(function(data){
+                $scope.info.search_results = data;
+            });
+        }
+        event.stopPropagation();
+    }
+
     $scope.on_select = function(item){
         delete $scope.info.search_results;
         if(angular.isDefined(item)){

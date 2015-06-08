@@ -18,6 +18,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         // }
     }
 
+    
     $scope.set_pages = function(current_page, page_count){
         $scope.info.page_count = page_count;
         $scope.info.current_page = current_page;
@@ -515,9 +516,9 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     $scope.init_reading_options = function(){
         if(angular.isUndefined($scope.reading_options) || ($scope.reading_options.length != 3)){
             $scope.reading_options = [
-                {"name": "Which book do you plan to read?", "id": 0, "status": "Planning to Read", "emotion_status": "while planning to read"}, 
-                {"name": "What are you currently reading?", "id": 1, "status": "Currently Reading", "emotion_status": "while reading"}, 
-                {"name": "Which book did you recently read?", "id": 2, "status": "Recently Read", "emotion_status": "after reading"}
+                {"name": "Which Book do you plan to Read?", "id": 0, "status": "Planning to Read", "emotion_status": "while planning to read"}, 
+                {"name": "What are you Currently Reading?", "id": 1, "status": "Currently Reading", "emotion_status": "while reading"}, 
+                {"name": "Which Book did you Recently Read?", "id": 2, "status": "Recently Read", "emotion_status": "after reading"}
             ];
         }
         $scope.reading_status_selected = false;
