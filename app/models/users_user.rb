@@ -28,9 +28,32 @@ class UsersUser < Neo
 	def self.optional_reverse_match
 		" OPTIONAL " + reverse_match
 	end
+	
+	def match_book book_id
+		clause = " MATCH (user:User), (book:Book), (friend:User) "
+		clause += "WHERE ID(user)="+@user_id.to_s+" AND ID(book)="+book_id.to_s+" AND ID(friend)="+@friend_id.to_s+" "
+		clause
+	end
 
-	def recommend(book_id)
-		
+	def create_recommendation book_id
+		" CREATE UNIQUE (user)-[:RecommendedTo]->(friend)-[:RecommendedAction]->( "\
+		"recommend_node:RecommendNode{book_id:" + book_id.to_s + ", user_id:" + @user_id.to_s + ", "\
+		"friend_id:" + @friend_id.to_s + ", timestamp:\'" + Time.now.getutc.to_i.to_s + "\'})-[:Recommended]->(book) "
+	end
+	
+	def recommend_book(book_id)		
+		clause = match_book book_id
+		clause += create_recommendation book_id
+		clause += "WITH user, friend, book, recommend_node "		
+		clause += User::Feed.new(@user_id).create("recommend_node") + ", friend, book "
+		clause += "WITH user, friend, book, recommend_node "
+		clause += Book::BookFeed.new(book_id).create("recommend_node")
+		clause += "WITH user, friend, book, recommend_node "
+		clause += User.set_total_count(Constant::Count::TotalCountIncrementRecommendation,"+")
+		clause += Book.set_recommended_count(1, "+")
+		clause += "WITH friend as user, recommend_node "
+		clause += User::UserNotification.add("recommend_node")
+		clause += " RETURN ID(recommend_node)"
 	end
 
 	def self.match_all

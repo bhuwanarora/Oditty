@@ -21,7 +21,7 @@ module Api
 				session[:news_skip_count] ||= 0
 				session[:news_day_skip_count] ||= 0
 
-				unless session[:region] == region
+				if(!(region.nil? || session[:region] == region))
 					session[:news_skip_count] = 0
 					session[:news_day_skip_count] = 0
 					session[:region] = region
