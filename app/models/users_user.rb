@@ -53,7 +53,7 @@ class UsersUser < Neo
 		clause += Book.set_recommended_count(1, "+")
 		clause += "WITH friend as user, recommend_node "
 		clause += User::UserNotification.add("recommend_node")
-		clause += " RETURN id(recommend_node)"
+		clause += " RETURN ID(recommend_node)"
 	end
 
 	def self.match_all

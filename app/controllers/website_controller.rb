@@ -77,15 +77,8 @@ class WebsiteController < ApplicationController
 	def newsfeed_news_communities
 		session[:news_day_skip_count] = 0
 		session[:news_skip_count] = 0
-
-		unless session[:user_id]
-			cookies[:logged] = nil
-			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
-			redirect_to :controller => 'website', :action => 'signup' 			
-		else
-			@news_group = true
-			render :layout => "material" 
-		end
+		@news_group = true
+		render :layout => "material"	
 	end
 
 	### WEBSITE NEW 
@@ -110,14 +103,8 @@ class WebsiteController < ApplicationController
 	end
 
 	def infinity
-		unless session[:user_id]
-			cookies[:logged] = nil
-			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
-			redirect_to :controller => 'website', :action => 'signup'			
-		else
-			@infinity = true
-			render :layout => "material"
-		end
+		@infinity = true
+		render :layout => "material"
 	end
 
 	def search
@@ -254,8 +241,14 @@ class WebsiteController < ApplicationController
 	end
 
 	def personalised_suggestions
-		@personalised_suggestions = true
-		render :layout => "material"
+		unless session[:user_id]
+			cookies[:logged] = nil
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
+			redirect_to :controller => 'website', :action => 'signup'			
+		else
+			@personalised_suggestions = true
+			render :layout => "material"
+		end
 	end
 
 	def home
