@@ -45,7 +45,7 @@ class UsersUser < Neo
 		clause = match_book book_id
 		clause += create_recommendation book_id
 		clause += "WITH user, friend, book, recommend_node "		
-		clause += User::Feed.new(@user_id).create("recommend_node")
+		clause += User::Feed.new(@user_id).create("recommend_node") + ", friend, book "
 		clause += "WITH user, friend, book, recommend_node "
 		clause += Book::BookFeed.insert_feed(@user_id,"recommend_node")
 		clause += "WITH user, friend, book, recommend_node "

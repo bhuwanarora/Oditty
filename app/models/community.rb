@@ -144,7 +144,7 @@ class Community < Neo
 			if(news_metadata["available"]==false)
 				return
 			end
-			communities_books = []		
+			communities_books = []					
 			relevance = []	 # This is the relevance which we will use			
 			response = News.fetch_tags news_metadata["news_link"]
 			puts response.red
