@@ -17,8 +17,14 @@ homeApp.controller('newsController', ["$scope", "$mdSidenav", 'newsService', '$l
 
 
     $scope.toggle_follow = function(){
-        $scope.active_tag.status = !$scope.active_tag.status;
-        newsService.follow($scope.active_tag.id, $scope.active_tag.status);
+        var unauthenticated_user = (getCookie("logged") == "") || (getCookie("logged") == null);
+        if(unauthenticated_user){
+            $mdSidenav('signup').toggle();
+        }
+        else{
+            $scope.active_tag.status = !$scope.active_tag.status;
+            newsService.follow($scope.active_tag.id, $scope.active_tag.status);
+        }
     }
 
     $scope.show_book_dialog = function(book, event){

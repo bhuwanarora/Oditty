@@ -33,12 +33,13 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
     }
 
     $scope.toggle_follow = function(){
-        if(angular.isDefined($scope.active_tag)){
-            $scope.active_tag.status = !$scope.active_tag.status;
-            newsService.follow($scope.active_tag.id, $scope.active_tag.status);
+        var unauthenticated_user = (getCookie("logged") == "") || (getCookie("logged") == null);
+        if(unauthenticated_user){
+            $mdSidenav('signup').toggle();
         }
         else{
-            $mdSidenav('signup').toggle();
+            $scope.active_tag.status = !$scope.active_tag.status;
+            newsService.follow($scope.active_tag.id, $scope.active_tag.status);
         }
     }
 

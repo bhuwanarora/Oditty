@@ -224,7 +224,9 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
             $scope._get_time_groups();
             $scope._get_reading_times();
         }, 100);
-        $timeout.cancel(fetch_data);
+        $scope.$on('destroy', function(){
+            $timeout.cancel(fetch_data);
+        });
         if(angular.isUndefined($rootScope.filters)){
             $rootScope.filters = {};
         }

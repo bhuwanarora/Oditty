@@ -1,4 +1,8 @@
-homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sharedService", function($scope, $rootScope, bookService, sharedService){
+homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sharedService", "$mdSidenav", function($scope, $rootScope, bookService, sharedService, $mdSidenav){
+	var _unauthenticated_user = function(){
+		return ((getCookie("logged") == "") || (getCookie("logged") == null));
+	}
+
 	var _init = (function(){
 		$scope.info.loading = true;
 		var id = ($rootScope.active_book.id) || ($rootScope.active_book.book_id);
@@ -6,22 +10,40 @@ homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sha
 			$scope.book = $rootScope.active_book;
 		}
 		$scope.book_loading = true;
-		bookService.get_borrow_users(id).then(function(data){
-			$scope.borrow_users = data;
+		
+		if(!_unauthenticated_user()){
+			bookService.get_borrow_users(id).then(function(data){
+				$scope.borrow_users = data;
+				$scope.book_loading = false;
+				$scope.info.loading = false;
+			});
+		}
+		else{
 			$scope.book_loading = false;
 			$scope.info.loading = false;
-		});
+		}
 	}());
 
 	$scope.notify_friends = function(){
-		
+		var unauthenticated_user = (getCookie("logged") == "") || (getCookie("logged") == null);
+		if(unauthenticated_user){
+			$mdSidenav('signup').toggle();
+		}
+		else{
+
+		}
 	}
 
 	$scope.toggle_bookmark = function(status){
-		var id = ($rootScope.active_book.id) || ($rootScope.active_book.book_id);
-		var label = {"label_key": "IOwnThis"};
-		var bookmark_object = {"type": "Book", "id": id};
-		sharedService.toggle_bookmark(label, status, bookmark_object);
+		if(_unauthenticated_user()){
+			$mdSidenav('signup').toggle();
+		}
+		else{
+			var id = ($rootScope.active_book.id) || ($rootScope.active_book.book_id);
+			var label = {"label_key": "IOwnThis"};
+			var bookmark_object = {"type": "Book", "id": id};
+			sharedService.toggle_bookmark(label, status, bookmark_object);
+		}
 	}
 
 }]);

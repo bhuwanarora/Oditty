@@ -1,19 +1,28 @@
 homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout", "bookService", '$mdToast', '$location', '$mdSidenav', 'ColorConstants', function($scope, $rootScope, $timeout, bookService, $mdToast, $location, $mdSidenav, ColorConstants){
 
     $scope.toggle_endorse = function(){
-        if($scope.book.endorse_status){
-            $scope.book.endorse_status = false;
+        if(_unauthenticated_user()){
+            $mdSidenav('signup').toggle();
         }
         else{
-            $scope.book.endorse_status = true;
+            if($scope.book.endorse_status){
+                $scope.book.endorse_status = false;
+            }
+            else{
+                $scope.book.endorse_status = true;
+            }
+            bookService.endorse_book($rootScope.active_book.book_id, $scope.book.endorse_status);
+            $mdToast.show({
+                controller: 'toastController',
+                templateUrl: 'assets/angular/html/shared/toast/endorse_action.html',
+                hideDelay: 6000,
+                position: $scope.getToastPosition()
+            });
         }
-        bookService.endorse_book($rootScope.active_book.book_id, $scope.book.endorse_status);
-        $mdToast.show({
-            controller: 'toastController',
-            templateUrl: 'assets/angular/html/shared/toast/endorse_action.html',
-            hideDelay: 6000,
-            position: $scope.getToastPosition()
-        });
+    }
+
+    var _unauthenticated_user = function(){
+        return ((getCookie("logged") == "") || (getCookie("logged") == null));
     }
 
     // $scope.show_shelf_bottom_sheet = function(bookmark_object_id, bookmark_object_type){
@@ -41,7 +50,12 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
     };
 
     $scope.rate_book = function(book){
-        bookService.rate_book(book.book_id, book.user_rating);
+        if(_unauthenticated_user()){
+            $mdSidenav('signup').toggle();
+        }
+        else{
+            bookService.rate_book(book.book_id, book.user_rating);
+        }
     }
 
     $scope.load_sample_read = function(){

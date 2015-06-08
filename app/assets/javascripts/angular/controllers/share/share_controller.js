@@ -1,4 +1,4 @@
-homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'ShareOptions', '$routeParams', '$mdBottomSheet', 'statusService', 'WebsiteUIConstants', 'bookService', 'ColorConstants', 'sharedService', 'Emotions', function($scope, $rootScope, $timeout, ShareOptions, $routeParams, $mdBottomSheet, statusService, WebsiteUIConstants, bookService, ColorConstants, sharedService, Emotions){
+homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'ShareOptions', '$routeParams', '$mdBottomSheet', 'statusService', 'WebsiteUIConstants', 'bookService', 'ColorConstants', 'sharedService', 'Emotions', '$mdSidenav', function($scope, $rootScope, $timeout, ShareOptions, $routeParams, $mdBottomSheet, statusService, WebsiteUIConstants, bookService, ColorConstants, sharedService, Emotions, $mdSidenav){
 
     $scope.play_type_key = function(event){
         if($scope.info.show_share){
@@ -229,11 +229,17 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     }
 
     $scope.show_share_page = function(event){
-        if(!$scope.info.show_share){
-            $scope.info.show_share = true;
+        var unauthenticated_user = (getCookie("logged") == "") || (getCookie("logged") == null);
+        if(unauthenticated_user){
+            $mdSidenav('signup').toggle();
         }
         else{
-            $scope.post_status();
+            if(!$scope.info.show_share){
+                $scope.info.show_share = true;
+            }
+            else{
+                $scope.post_status();
+            }
         }
     };
 

@@ -56,14 +56,21 @@ homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', '$mdSide
         restrict: 'E',
         scope : {data: '=', shelves: '=', custom: '=', count: '='},
         controller: ["$scope", function($scope){
+             var _unauthenticated_user = function(){
+                return ((getCookie("logged") == "") || (getCookie("logged") == null));
+            }
             $scope.show_shelves = function(){
-                $mdSidenav('right_bookmark').toggle();
-                if(angular.isUndefined($scope.shelves)){
-                    feedService.get_bookmarks($scope.data.id).then(function(data){
-                        $scope.shelves = data;
-                    });
+                if(_unauthenticated_user()){
+                    $mdSidenav('signup').toggle();
                 }
-                // $scope.show_shelf = !$scope.show_shelf;
+                else{
+                    $mdSidenav('right_bookmark').toggle();
+                    if(angular.isUndefined($scope.shelves)){
+                        feedService.get_bookmarks($scope.data.id).then(function(data){
+                            $scope.shelves = data;
+                        });
+                    }
+                }
             }
 
 
