@@ -68,7 +68,6 @@ class Community < Neo
 		match + Community.match_users + Community.limit(Constant::Count::CommunityUsers) + Community.return_init + User.basic_info
 	end
 
-
 	def self.get_news
 		" MATCH (community)<-[:HasCommunity]-(news:News) WITH community, news "
 	end
@@ -85,34 +84,9 @@ class Community < Neo
 		Community.match_books + " WITH community, " + Book.collect_map({"books_info" => Book.grouped_basic_info})
 	end
 
-	def self.fetch_books community
-		community_books = {community => []}
-		count = 0
-		books_info = Book::GoogleBooks.get community
-		if books_info.present?
-			books,author_list = books_info.transpose			
-			books.each_with_index do |book,index|				
-				if(author_list[index].nil?)					
-					next
-				end
-				authors = author_list[index]			
-				authors = authors.sort				
-				author_string = authors.join('').search_ready
-				unique_index = book.search_ready + author_string
-				book_info = (Book.get_by_unique_index(unique_index).execute)[0] 
-				if book_info.present?					 
-					community_books[community] << [book,authors]
-				end	
-			end
-		end		
-		community_books
-	end
-
 	def self.most_important_category_info 
 		", HEAD(COLLECT({" + Community.grouped_basic_info + "})) AS community_info "
 	end
-
-	
 
 	def self.merge community
 		" MERGE (community:Community{indexed_community_name: \"" + community.search_ready + "\"}) ON CREATE SET community.name = \"" + community + "\", community.status = 1, community.created_at=" + Time.now.to_i.to_s + ", community.updated_at=" + Time.now.to_i.to_s + ", community.follow_count = 0, community.image_url = \"" + Community::CommunityImage.new(community).get_image + "\" WITH community "  

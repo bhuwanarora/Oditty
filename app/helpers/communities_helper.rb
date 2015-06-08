@@ -61,7 +61,7 @@ module CommunitiesHelper
 		clause = Community.search_by_name(community) + Community.match_books + "RETURN book.title,book.author_name"		
 		books_list = clause.execute				
 		if(books_list.empty?)
-			books = Community.fetch_books community
+			books = CommunitiesHelper.fetch_books community
 		else
 			books = {community => []}
 			books_list.each do |book|
@@ -110,6 +110,29 @@ module CommunitiesHelper
 				end
 			end
 		end
+	end
+
+	def self.fetch_books community
+		community_books = {community => []}
+		count = 0
+		books_info = Book::GoogleBooks.get community
+		if books_info.present?
+			books,author_list = books_info.transpose			
+			books.each_with_index do |book,index|				
+				if(author_list[index].nil?)					
+					next
+				end
+				authors = author_list[index]			
+				authors = authors.sort				
+				author_string = authors.join('').search_ready
+				unique_index = book.search_ready + author_string
+				book_info = (Book.get_by_unique_index(unique_index).execute)[0] 
+				if book_info.present?					 
+					community_books[community] << [book,authors]
+				end	
+			end
+		end		
+		community_books
 	end
 
 end
