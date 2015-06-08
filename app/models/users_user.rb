@@ -29,19 +29,31 @@ class UsersUser < Neo
 		" OPTIONAL " + reverse_match
 	end
 	
+	def match_book book_id
+		clause = " MATCH (user:User), (book:Book), (friend:User) "
+		clause += "WHERE ID(user)="+@user_id.to_s+" AND ID(book)="+book_id.to_s+" AND ID(friend)="+@friend_id.to_s+" "
+		clause
+	end
+
+	def create_recommendation book_id
+		clause += " CREATE UNIQUE (user)-[:RecommendedTo]->(friend)-[:RecommendedAction]->( "\
+			"recommend_node:RecommendNode{book_id:" + book_id.to_s + ",user_id:" + @user_id.to_s + ", "\
+			"friend_id:"+@friend_id.to_s+", timestamp:\'"+Time.now.getutc.to_s+"\'})-[:Recommended]->(book) "
+	end
+	
 	def recommend_book(book_id)		
-		clause = "MATCH (u:User), (b:Book), (friend:User) "
-		clause += "WHERE ID(u)="+@user_id.to_s+" AND ID(b)="+book_id.to_s+" AND ID(friend)="+@friend_id.to_s+" "
-		clause += "CREATE UNIQUE (u)-[:RecommendedTo]->(friend)-[:RecommendedAction]->( "\
-			"rn:RecommendNode{book_id:" + book_id.to_s + ",user_id:" + @user_id.to_s + ", "\
-			"friend_id:"+@friend_id.to_s+", timestamp:\'"+Time.now.getutc.to_s+"\'})-[:Recommended]->(b) "
-		clause += "WITH u, friend, b, rn "		
-		clause += User::Feed.new(@user_id).insert_feed("u","rn")
-		clause += "WITH u, friend, b, rn "
-		clause += Book::BookFeed.insert_feed("b",@user_id,"rn")
-		clause += "WITH u, friend, b, rn "
-		clause += "SET u.total_count = CASE WHEN u.total_count IS NULL THEN 1 ELSE u.total_count + 10 END, "
-		clause += "b.recommended_count = CASE WHEN b.recommended_count IS NULL THEN 1 ELSE b.recommended_count + 1 END "
+		clause = match_book book_id
+		clause += create_recommendation book_id
+		clause += "WITH user, friend, book, recommend_node "		
+		clause += User::Feed.new(@user_id).create("recommend_node")
+		clause += "WITH user, friend, bokk, recommend_node "
+		clause += Book::BookFeed.insert_feed(@user_id,"recommend_node")
+		clause += "WITH user, friend, book, recommend_node "
+		clause += User.set_total_count(10,"+")
+		clause += Book.set_recommended_count(1, "+")
+		clause += "WITH friend as user, rn "
+		clause += User::UserNotification.add("rn")
+		clause += " RETURN id(rn)"
 	end
 
 	def self.match_all

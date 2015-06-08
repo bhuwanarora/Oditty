@@ -351,12 +351,8 @@ module Api
 			end
 
 			def self.recommend_book(user_id, friends_id, book_id)
-				@neo = Neography::Rest.new
-				# UsersGraphHelper.recommend_book(user_id, friends_id, book_id)
-				clause = UsersUser.new(user_id,friends_id).recommend_book(book_id)
-				clause += "WITH friend as user, rn "
-				clause += User::UserNotification.add("rn")
-				clause += " RETURN id(rn)"
+				@neo = Neography::Rest.new				
+				clause = UsersUser.new(user_id,friends_id).recommend_book(book_id)				
 				clause.execute
 
 				clause = "MATCH (book:Book), (user:User), (friend:User) WHERE ID(user)=" + user_id.to_s + " AND ID(book)=" + book_id.to_s + " AND ID(friend)=" + friends_id.to_s + User.return_group("book.title AS title, ID(book) as book_id, book.author_name AS author_name, book.isbn AS isbn", "user.image_url AS image_url, ID(user) as id, user.first_name AS first_name, user.last_name AS last_name", "friend.first_name as friends_first_name, friend.last_name AS friends_last_name, ID(friend) AS friends_id, friend.email AS friends_email")

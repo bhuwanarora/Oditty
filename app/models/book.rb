@@ -211,4 +211,12 @@ class Book < Neo
 				}
 		book_links_property
 	end
+	
+	def self.set_recommended_count value, operation
+		if operation == "+"
+			" SET book.recommended_count = TOINT(COALESCE(book.recommended_count, 0)) + " + value.to_s + " "
+		else
+			" SET book.recommended_count = TOINT(COALESCE(book.recommended_count, " + value.to_s + ")) - " + value.to_s + " "
+		end
+	end
 end
