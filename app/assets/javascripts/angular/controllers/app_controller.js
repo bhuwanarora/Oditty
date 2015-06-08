@@ -38,8 +38,6 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
         $rootScope.shelves_visible = false;
         $scope.navigation_options = false;
         // $mdSidenav('left').close();
-        // debugger
-
         // $mdBottomSheet.hide({"test": "test"});
     }
 
