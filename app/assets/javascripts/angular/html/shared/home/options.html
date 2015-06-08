@@ -7,10 +7,8 @@
 
 <div layout="row" layout-sm="column" layout-md="column" layout-align="center center" 
 	class="full_width z_index_1" layout-padding>
-	<a href="/news_group">
-		<md-button ng-click="handle_news_redirect($event)" id="news"
-			 flex="30" flex-md="100" flex-sm="100"
-			 class="pointer nav_options md-whiteframe-z1" >
+	<a href="/news_group" class="clear md-whiteframe-z1" flex="30" flex-md="100" flex-sm="100" id="news">
+		<md-button class="nav_options full_width" flex>
 			<div layout-padding class="bold">Rooms of Knowledge</div>
 			<div class="description">Connecting Books with the real world through News.
 			</div>
@@ -19,16 +17,14 @@
 	</a>
 	<md-button ng-click="handle_personalised_redirect($event)" id="suggestions"
 	     flex="30" flex-md="100" flex-sm="100"
-	     class="pointer nav_options md-whiteframe-z1" >
+	     class="nav_options md-whiteframe-z1" >
 		<div layout-padding class="bold">Personalised Suggestions</div>
 		<div class="description">
 			Suggestions based on your Taste.
 		</div>
 	</md-button>
-	<a href="/infinity">
-		<md-button id="filters"
-			  flex="30" flex-md="100" flex-sm="100"
-			 class="pointer nav_options md-whiteframe-z1">
+	<a href="/infinity" flex="30" flex-md="100" flex-sm="100" class="clear md-whiteframe-z1" id="filters">
+		<md-button class="nav_options full_width">
 			<div layout-padding class="bold">Filters</div>
 			<div class="description">
 				Genre, Author, Era, Duration. Choose.
