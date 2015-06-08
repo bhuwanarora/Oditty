@@ -1,11 +1,10 @@
 <div ng-controller="realVirtualityController">
     <md-radio-group layout="row" 
         layout-sm="column" layout-wrap
-        ng-model="active_community.id"
-        ng-change="change_news()">
+        ng-model="active_community">
         <md-radio-button ng-repeat="community in communities" 
                         class="md-warn" layout="row" layout-margin
-                        ng-value="community.id">
+                        ng-value="community">
             <img ng-src="{{community.image_url}}" class="circular">
             <div ng-bind-html="community.name | uppercase" layout-padding class="less_important"></div>
         </md-radio-button>
