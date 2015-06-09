@@ -44,14 +44,12 @@ class UsersUser < Neo
 	def recommend_book book_id
 		clause = match_book book_id
 		clause += create_recommendation book_id
-		clause += "WITH user, friend, book, recommend_node "		
+		clause += " WITH user, friend, book, recommend_node "
 		clause += User::Feed.new(@user_id).create("recommend_node") + ", friend, book "
-		clause += "WITH user, friend, book, recommend_node "
-		clause += Book::BookFeed.new(book_id).create("recommend_node")
-		clause += "WITH user, friend, book, recommend_node "
+		clause += Book::BookFeed.new(book_id).create("recommend_node") + ", friend "
 		clause += User.set_total_count(Constant::Count::TotalCountIncrementRecommendation,"+")
 		clause += Book.set_recommended_count(1, "+")
-		clause += "WITH friend as user, recommend_node "
+		clause += " WITH friend as user, recommend_node "
 		clause += User::UserNotification.add("recommend_node")
 		clause += " RETURN ID(recommend_node)"
 	end
