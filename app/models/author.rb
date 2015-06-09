@@ -76,7 +76,7 @@ class Author < Neo
 	end
 
 	def self.basic_info
-		Author.primary_info + ", author.wiki_url AS wiki_url, author.overview as overview, labels(author) AS label, author.location AS location "
+		Author.primary_info + ", author.wiki_url AS wiki_url, author.overview as overview, labels(author) AS label, author.location AS location, author.books_count as books_count "
 	end
 
 	def self.primary_info
