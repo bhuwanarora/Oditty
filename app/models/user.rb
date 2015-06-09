@@ -1,5 +1,10 @@
 class User < Neo
 
+	def search_friends q
+		q.downcase!
+		match + UsersUser.follow_match + " WHERE LOWER(friend.first_name) =~ '"+q+".*' WITH friend AS user " + User.return_group(User.basic_info)
+	end
+
 	def initialize user_id, skip_count=0
 		@id = user_id
 	end
@@ -13,7 +18,7 @@ class User < Neo
 	end
 
 	def self.grouped_primary_display_info
-		" first_name:user.first_name ,  last_name:user.last_name ,  id:ID(user), image_url: user.thumb "
+		" first_name:user.first_name,  last_name:user.last_name, id:ID(user), image_url: user.thumb "
 	end
 
 	def self.match_group ids

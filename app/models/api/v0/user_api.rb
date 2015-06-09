@@ -499,6 +499,11 @@ module Api
 				region = GeoIP.new('GeoIP.dat').country(remote_ip.to_s).country_name  
 				User.new(user_id).set_region(region)
 			end
+
+			def self.search_friends(user_id, search_text)
+				info = User.new(user_id).search_friends(search_text).execute
+				info
+			end
 		end
 	end
 end

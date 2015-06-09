@@ -13,8 +13,12 @@ class UsersUser < Neo
 		" MERGE (user)-[follows_user:FollowsUser]->(follows_node:FollowsNode{friend_id:ID(friend), user_id: ID(user)}) MERGE (follows_node)-[followed_by:FollowedBy]->(friend) SET follows_node.created_at = " + Time.now.to_i.to_s + ", follows_node.updated_at = " + Time.now.to_i.to_s + " WITH user, follows_user, friend, follows_node, followed_by "
 	end
 
+	def self.follow_match
+		" MATCH (user)-[follows_user:FollowsUser]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(friend) "
+	end
+
 	def match 
-		" MATCH (user)-[follows_user:FollowsUser]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(friend) WHERE ID(user) = " + @user_id.to_s + " AND ID(friend) = " + @friend_id.to_s + " WITH user, follows_user, friend, follows_node, followed_by "
+		UsersUser.follow_match + " WHERE ID(user) = " + @user_id.to_s + " AND ID(friend) = " + @friend_id.to_s + " WITH user, follows_user, friend, follows_node, followed_by "
 	end
 
 	def self.reverse_match 

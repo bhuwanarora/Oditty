@@ -608,7 +608,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/share/partials/_recently_read.html',
-    "<md-button flex layout=\"column\" class=\"clear light_grey_color custom_title roboto menu_details margin_top white animate-fast vertical_animate md-whiteframe-z1\" ng-click=\"toggle_recommend()\"><div layout-padding ng-if=\"!show_recommend\">Select Friends to Recommend</div><div layout-padding ng-if=\"show_recommend && !users_list && info.share_loading\">You don't have enough Friends at ReadersDoor. Tell them and spread the love for books.</div><div layout-padding ng-if=\"show_recommend && users_list\">Recommend book to Friends</div></md-button><md-content class=\"menu_details\" ng-if=\"show_recommend && users_list\"><div flex layout=\"column\" ng-include src=\"'/assets/angular/html/share/partials/_recommend_options.html'\"></div></md-content>"
+    "<md-button flex layout=\"column\" class=\"clear light_grey_color custom_title roboto menu_details margin_top white animate-fast vertical_animate md-whiteframe-z1\" ng-click=\"toggle_recommend()\"><div layout-padding ng-if=\"!show_recommend\">Select Friends to Recommend</div><div layout-padding ng-if=\"show_recommend && !users_list && info.share_loading\">You don't have enough Friends at ReadersDoor. Tell them and spread the love for books.</div><div layout-padding ng-if=\"show_recommend && users_list\"><div>Recommend book to Friends</div></div></md-button><md-content class=\"menu_details\" ng-if=\"show_recommend && users_list\"><div layout=\"row\" ng-if=\"show_recommend && users_list\" class=\"md-whiteframe-z1 white\"><md-autocomplete flex md-search-text-change=\"search_friends(searchFriend)\" md-items=\"item in []\" md-search-text=\"searchFriend\" class=\"menu_search no_shadow\" placeholder=\"Search Friends...\"></md-autocomplete><div class=\"pointer\" layout-padding><i class=\"material-icons\">search</i></div></div><div flex layout=\"column\" ng-include src=\"'/assets/angular/html/share/partials/_recommend_options.html'\"></div></md-content>"
   );
 
 
@@ -774,7 +774,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/recommend.html',
-    "<div ng-click=\"recommend_friend()\" layout-padding layout=\"row\" layout-align=\"space-between\" class=\"capitalize white custom_title overlap pointer margin_top md-whiteframe-z1\"><img ng-src=\"{{user.image_url | default_profile}}\" class=\"square\"><div layout=\"row\" layout-align=\"space-between center\" layout-padding><div>{{user.first_name}}</div><div layout-padding ng-hide=\"recommending\"><i class=\"material-icons md-dark\">check</i></div><div layout-padding ng-show=\"recommending\"><md-progress-circular class=\"md-accent md-hue-1\" md-mode=\"indeterminate\"></md-progress-circular></div></div></div>"
+    "<div ng-click=\"recommend_friend()\" layout-padding layout=\"row\" layout-align=\"space-between\" class=\"capitalize white custom_title pointer margin_top md-whiteframe-z1\"><img ng-src=\"{{user.image_url | default_profile}}\" class=\"square\"><div layout=\"row\" layout-align=\"space-between center\" layout-padding><div>{{user.first_name}}</div><div layout-padding ng-hide=\"recommending\"><i class=\"material-icons md-dark\">check</i></div><div layout-padding ng-show=\"recommending\"><md-progress-circular class=\"md-accent md-hue-1\" md-mode=\"indeterminate\"></md-progress-circular></div></div></div>"
   );
 
 

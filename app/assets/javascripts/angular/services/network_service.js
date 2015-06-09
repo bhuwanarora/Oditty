@@ -28,4 +28,8 @@ homeApp.service('networkService', ["$http", "$q", "$rootScope", "WebsiteUIConsta
         }
     }
 
+    this.search_friends = function(q){
+        return _deferred_request('/api/v0/search_friends?q='+q, $q, $http);
+    }
+
 }]);

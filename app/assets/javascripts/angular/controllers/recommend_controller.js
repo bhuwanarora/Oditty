@@ -9,4 +9,10 @@ homeApp.controller('recommendController', ["$scope", "userService", '$rootScope'
             });
         }
     }
+
+    $scope.search_friends = function(q){
+        networkService.search_friends(q).then(function(data){
+            $scope.users_list = data;
+        });
+    }
 }]);
