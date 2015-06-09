@@ -1,15 +1,18 @@
 <div ng-controller="realVirtualityController">
-    <md-radio-group layout="row" 
+    <md-radio-group layout="row" layout-align="center center" layout-padding
         layout-sm="column" layout-wrap
         ng-model="active_community">
         <md-radio-button ng-repeat="community in communities" 
                         class="md-warn" layout="row" layout-margin
                         ng-value="community">
             <img ng-src="{{community.image_url}}" class="circular">
-            <div ng-bind-html="community.name | uppercase" layout-padding class="less_important"></div>
+            <md-tooltip>
+                <div ng-bind-html="community.name"></div>
+            </md-tooltip>
+            <!-- <div ng-bind-html="community.name | uppercase" layout-padding class="less_important"></div> -->    
         </md-radio-button>
     </md-radio-group>
-   
+    <md-divider></md-divider>
      <section layout="row" layout-wrap ng-repeat="news in active_community.news" ng-if="active_community.news">
         <div flex="10" layout-align="center center" layout="row">
             <div>{{news.created_at | timestamp | date:'dd MMM'}}</div>

@@ -1,11 +1,15 @@
-homeApp.directive('suggestCommunities', ["$rootScope", "userService", function($rootScope, userService){
+homeApp.directive('suggestCommunities', ["$rootScope", "userService", "$timeout", function($rootScope, userService, $timeout){
     return {
         restrict: 'E',
         controller: ["$scope", function($scope){
             var _init = function(){
-                userService.suggest_communities().then(function(data){
-                    $scope.suggest_communities = data;
-                });
+                $scope.info.loading = true;
+                var room_timeout = $timeout(function(){
+                    userService.suggest_communities().then(function(data){
+                        $scope.info.loading = false;
+                        $scope.suggest_communities = data;
+                    });
+                }, 100);
             }
 
             _init();

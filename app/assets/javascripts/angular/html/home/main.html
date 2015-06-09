@@ -1,3 +1,4 @@
+<suggest-communities></suggest-communities>
 <md-list layout-wrap layout="row" hide-sm hide-md class="feed_margin">
     <div layout="column" flex>
         <div ng-repeat="news_feed in feed track by $index" class="feed" ng-if="$even">
@@ -5,7 +6,6 @@
         </div>
     </div>
     <div layout="column" flex>
-        <!-- <suggest-communities></suggest-communities> -->
         <div ng-repeat="news_feed in feed track by $index" class="feed" ng-if="$odd">
            <div ng-include src="'/assets/angular/html/home/partials/feed_type.html'" ></div>
         </div>
@@ -13,7 +13,6 @@
 </md-list>
 <md-list layout-wrap layout="row" show-sm show-md hide class="feed_margin">
     <div layout="column" flex>
-        <!-- <suggest-communities></suggest-communities> -->
         <div ng-repeat="news_feed in feed track by $index" class="feed">
             <div ng-include src="'/assets/angular/html/home/partials/feed_type.html'" ></div>
         </div>

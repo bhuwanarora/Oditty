@@ -30,7 +30,10 @@
 	</div>
 	<div flex="70" layout="column" flex-sm="100">
 		<div layout="row" layout-align="space-between" layout-padding>
-			<a ng-href="/room?id={{active_tag.id}}"><div class="big_title bold capitalise">{{active_tag.name}}</div></a>
+			<a ng-href="/room?id={{active_tag.id}}">
+				<div class="big_title bold capitalize">{{active_tag.name}}</div>
+				<div class="less_important">Go to room</div>
+			</a>
 			<md-button class="md-button-clear md-warn" ng-class="{'md-raised': !active_tag.status}" 
 				layout-margin
 	            ng-click="toggle_follow()">
