@@ -12,7 +12,8 @@
         </div>
     </div>
     <div layout="row" layout-align="start center">
-        <bookmark data="bookmark_object" shelves="feed.shelves" count="feed.bookmark_count"></bookmark>
+        <bookmark bookmark-id="bookmark_object.id" bookmark-type="bookmark_object.type" ng-if="bookmark_object"
+            shelves="feed.shelves" count="feed.bookmark_count"></bookmark>
         <!-- <div layout="row">
             <div>{{feed.bookmark_count || 0}}</div>&nbsp;&nbsp;
             <div><span class="icon-bubbles2"></span>

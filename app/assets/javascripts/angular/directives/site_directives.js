@@ -54,25 +54,27 @@ homeApp.directive('bookInfo', ["$rootScope", "bookService", '$mdDialog', 'shared
 homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', '$mdSidenav', function($rootScope, feedService, $timeout, $mdSidenav){
     return {
         restrict: 'E',
-        scope : {data: '=', shelves: '=', custom: '=', count: '='},
+        scope : {bookmarkId: '=', bookmarkType: '=', shelves: '=', custom: '=', count: '='},
         controller: ["$scope", function($scope){
-             var _unauthenticated_user = function(){
+
+            var _unauthenticated_user = function(){
                 return ((getCookie("logged") == "") || (getCookie("logged") == null));
             }
+
             $scope.show_shelves = function(){
                 if(_unauthenticated_user()){
                     $mdSidenav('signup').toggle();
                 }
                 else{
+                    $rootScope.bookmark_object = {"id": $scope.bookmarkId, "type": $scope.bookmarkType};
                     $mdSidenav('right_bookmark').toggle();
                     if(angular.isUndefined($scope.shelves)){
-                        feedService.get_bookmarks($scope.data.id).then(function(data){
+                        feedService.get_bookmarks($scope.bookmarkId).then(function(data){
                             $scope.shelves = data;
                         });
                     }
                 }
             }
-
 
         }],
         templateUrl: '/assets/angular/html/shared/bookmark.html'

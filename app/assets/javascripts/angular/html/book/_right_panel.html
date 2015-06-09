@@ -36,7 +36,7 @@
           <div class="counter" layout="row" layout-align="center center" ng-if="book.bookmark_count">
                <div>{{book.bookmark_count}}</div>
           </div>
-          <bookmark data="{'id': (book.id || book.book_id), 'type': 'Book'}" 
+          <bookmark bookmark-id="book.book_id || book.id" bookmark-type="'Book'" ng-if="book"
                shelves="book.shelves" custom="true"></bookmark>
      </div>
 </div>
