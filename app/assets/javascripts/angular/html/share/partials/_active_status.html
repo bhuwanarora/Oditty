@@ -4,11 +4,11 @@
                 ng-class="{'md-whiteframe-z1': !active_book}"
                 ng-click="show_interesting_details(book)"
                 class="menu_details margin_top white animate-fast vertical_animate pointer">
-        <div layout="row" flex="90">
-        	<div flex="15">
+        <div layout="row" >
+        	<div>
         		<img ng-src="{{book.isbn | small_thumb}}">
         	</div>
-            <div layout-wrap layout-padding flex="85">
+            <div layout-wrap layout-padding>
                 <div layout="row" ng-if="reading_status_selected && active_book"
     		 		 layout-align="space-between">
     		 		<div class="custom_title light_title" ng-if="!active_emotion">
@@ -30,19 +30,19 @@
                 </div>
             </div>
         </div>
-        <div class="pointer" flex="10" 
+        <div class="pointer"
             ng-click="deselect_book()" layout-padding
             ng-if="active_book">
             <i class="material-icons">close</i>
         </div>
-        <div class="custom_title" flex="10" 
+        <div class="custom_title"
             layout-padding
         	ng-if="!active_book">
             <i class="material-icons">add</i>
         </div>
     </div>
 </div>
-<div class="menu_details white" ng-if="active_book">
+<div class="menu_details white md-whiteframe-z1" ng-if="active_book">
     <div layout-padding layout="row" layout-align="space-between center">
         <div></div>
         <div ng-click="mute_volume()" class="pointer" layout-padding>

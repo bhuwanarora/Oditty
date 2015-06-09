@@ -64,7 +64,13 @@ homeApp.controller('genresController', ["$scope", "$rootScope", "$timeout", 'use
             left: false,
             right: true
         };
-        $scope._get_genres();
+        var genre_timeout = $timeout(function(){
+            $scope._get_genres();
+        }, 100);
+
+        $scope.$on('destroy', function(){
+            $timeout.cancel(genre_timeout);
+        });
     }
 
     _init();

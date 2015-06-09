@@ -1,3 +1,7 @@
+<div ng-include src="'/assets/angular/html/share/status_options.html'" 
+  	ng-controller="shareController" 
+  	class="" layout-margin layout-padding>
+ </div>
 <md-list layout="row" hide-sm hide-md>
 	<div flex>
 		<div ng-repeat="feed in personal_feed" ng-if="$even">
@@ -35,20 +39,13 @@
 		</div>
 	</div>
 	<div flex>
-		<div ng-include src="'/assets/angular/html/share/status_options.html'" 
-	 	  	ng-controller="shareController" 
-	 	  	class="" layout-margin layout-padding>
-	 	 </div>
+		
 		<div ng-repeat="feed in personal_feed" ng-if="$odd">
 		    <div ng-include src="'/assets/angular/html/profile/partials/feed_type.html'"></div>
 		</div>
 	</div>
 </md-list>
 <md-list layout="column" show-sm show-md hide>
-	<div ng-include src="'/assets/angular/html/share/status_options.html'" 
- 	  	ng-controller="shareController" 
- 	  	class="" layout-margin layout-padding>
- 	 </div>
 	<div ng-repeat="feed in personal_feed">
 	    <div ng-include src="'/assets/angular/html/profile/partials/feed_type.html'"></div>
 	</div>

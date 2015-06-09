@@ -17,7 +17,7 @@
         <md-list layout="column" ng-include src="'/assets/angular/html/share/partials/_recently_read.html'"
                 ng-if="active_book && active_id == 2" ng-controller="recommendController"></md-list>
         <md-list layout="column" ng-include src="'/assets/angular/html/share/partials/_feeling.html'"
-                ng-if="related_info.length > 0 && active_id == 1 && !active_emotion && (info.page_count && info.current_page)"></md-list>
+                ng-if="active_id == 1 && !active_emotion && (info.page_count && info.current_page)"></md-list>
         <md-list layout="column" ng-if="related_info && related_info.length > 0" class="roboto"
             ng-include src="'/assets/angular/html/share/partials/_facts.html'"></md-list>
     </div>

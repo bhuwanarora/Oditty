@@ -471,7 +471,7 @@ module Api
 			end
 
 			def self.get_notifications user_id
-				info = User.new(user_id).get_notifications
+				info = User.new(user_id).get_notifications.execute
 				info
 			end
 

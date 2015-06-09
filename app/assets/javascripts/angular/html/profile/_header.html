@@ -18,13 +18,15 @@
             <div flex="50" hide-sm hide-md layout="row" layout-align="start start">
                 <img ng-src="{{profile_user.image_url | default_profile}}" class="circular profile_pic">
                 <div class="title_margin">
-                    <a href="/profile"><div layout="column" layout-wrap layout-align="start start">
-                        <div class="big_title" layout="row" layout-padding>
-                            <div ng-bind="profile_user.first_name"></div>
-                            <div>&nbsp;</div>
-                            <div ng-bind="profile_user.last_name"></div>
+                    <a href="/profile">
+                        <div layout="column" layout-wrap layout-align="start start">
+                            <div class="big_title" layout="row" layout-padding>
+                                <div ng-bind="profile_user.first_name"></div>
+                                <div>&nbsp;</div>
+                                <div ng-bind="profile_user.last_name"></div>
+                            </div>
                         </div>
-                    </div></a>
+                    </a>
                 </div>
             </div>
             <div flex="50" flex-md="100" flex-sm="100" layout="row" layout-column layout-align="end end">
