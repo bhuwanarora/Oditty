@@ -111,11 +111,7 @@ module Api
 			end
 
 			def get_user_details
-				if params[:id]
-					info = UserApi.get_relative_details(params[:id], session[:user_id])
-				else
-					info = UserApi.get_details(session[:user_id])
-				end
+				info = UserApi.get_details(params[:id])
 				render :json => info, :status => 200
 			end
 
