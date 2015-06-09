@@ -36,7 +36,7 @@
     <div ng-style="grid_style" class="white" 
             ng-if="!info.author_filter && !info.group_by_alphabet && !info.published_era_filter 
                 && !info.reading_time_filter && !info.subject_filter" layout-fill layout-padding>
-        <div layout="row" layout-wrap layout-align="start">
+        <div layout="row" layout-wrap layout-align="center">
             <div ng-repeat="book in info.books track by $index"
                 layout-margin
                 layout-align="start start"
@@ -95,7 +95,7 @@
         ng-style="grid_style" class="white" >
         <div ng-repeat="category in info.categories" layout-padding>
             <h3>{{category.name}}</h3>
-            <div layout="row" layout-wrap layout-align="start">
+            <div layout="row" layout-wrap layout-align="center">
                 <div ng-repeat="book in info.books | category_group: category"
                     layout-align="start start"
                     layout="row"

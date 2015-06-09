@@ -1,7 +1,6 @@
 <div ng-controller="realVirtualityController">
     <md-radio-group layout="row" layout-align="center center" layout-padding
-        layout-sm="column" layout-wrap
-        ng-model="active_community">
+        layout-wrap ng-model="active_community">
         <md-radio-button ng-repeat="community in communities" 
                         class="md-warn" layout="row" layout-margin
                         ng-value="community">
@@ -13,21 +12,23 @@
         </md-radio-button>
     </md-radio-group>
     <md-divider></md-divider>
-     <section layout="row" layout-wrap ng-repeat="news in active_community.news" ng-if="active_community.news">
-        <div flex="10" layout-align="center center" layout="row">
-            <div>{{news.created_at | timestamp | date:'dd MMM'}}</div>
+     <section layout="row" layout-sm="column" layout-wrap ng-repeat="news in active_community.news" ng-if="active_community.news">
+        <div flex="20" flex-sm="100" layout="row" layout-align="center center">
+            <div flex="50" layout-align="center center" layout="row">
+                <div>{{news.created_at | timestamp | date:'dd MMM'}}</div>
+            </div>
+             <div flex="50" layout-align="center center" layout="row">
+                <img class="circular"
+                     ng-src="{{news.image_url | default_profile}}"/>
+            </div>
         </div>
-         <div flex="10" layout-align="center center" layout="row">
-            <img class="circular"
-                 ng-src="{{news.image_url | default_profile}}"/>
-        </div>
-         <div flex="80" layout-align="start start" layout="column" class="small-padding">
+        <div flex="80" layout-align="start start" layout="column" class="small-padding" flex-sm="100">
             <a ng-href="/community?id={{news.news_id}}">
                 <div ng-bind-html="news.title" class="big_title"></div>
             </a>
             <div ng-bind-html="news.description"></div>
             <a ng-href="{{news.news_url}}" class="less_important" target="_blank">Source</a>
-         </div>
+        </div>
      </section>
      <section ng-if="!active_community.news && !info.loading" layout-padding>
          <div class="big_title">We're searching for news from the real world for this book. Please come back later.</div>
