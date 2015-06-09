@@ -11,6 +11,10 @@ class Book < Neo
 		" OPTIONAL MATCH (book:Book)-[:Published_in]->(year:Year) WITH book, year "
 	end
 
+	def self.match_in_range min_id,max_id
+		" MATCH (book:Book) WHERE ID(book) >=" + min_id.to_s + " AND ID(book) <=" + max_id.to_s + " "
+	end
+
 	def self.search_by_indexed_title indexed_title
 		" START book=node:node_auto_index('indexed_title:\""+indexed_title+"\"') WITH book " 
 	end

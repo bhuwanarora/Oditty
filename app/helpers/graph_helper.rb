@@ -19,6 +19,28 @@ module GraphHelper
 		clause.execute
 	end
 
+	def self.set_book_feed
+		(end_id,start_id) = Book.get_max_min_id
+		step_count = 10000
+		book_feed_key = "book_feed_key"
+		if(!$redis[book_feed_key].nil?)
+			cur_id = $redis[book_feed_key].to_i
+		else
+			cur_id = start_id
+			$redis[book_feed_key] = cur_id -1
+		end
+		clause = " OPTIONAL MATCH (book:Book)-[f:BookFeed]->() "\
+			"FOREACH (book IN (CASE WHEN f IS NULL THEN [book] ELSE [] END )| "\
+				"CREATE UNIQUE (book)-[:BookFeed]->(book) "\
+				" ) "
+		while cur_id <= end_id
+			temp_clause = Book.match_in_range cur_id,(cur_id + step_count)
+			temp_clause += clause
+			temp_clause.execute
+			$redis[book_feed_key] = cur_id
+			cur_id += step_count
+		end
+	end
 
 	def self.detect_broken_feed user_id
 		clause = "MATCH (user) WHERE ID(user) = " + user_id.to_s + " WITH user MATCH (user)-[r:FeedNext*1..]->(user) RETURN LENGTH(r) AS length, ID(user) AS id "
@@ -346,7 +368,6 @@ module GraphHelper
 		if(output.nil? || output.length == 0 || !(output[0].keys.include? "id"))
 			matched = 0
 		else
-			debugger
 			matched = 1
 		end
 		matched
@@ -380,7 +401,6 @@ module GraphHelper
 			sl = "a"
 			tl = "a"
 		end
-		debugger		
 		while (!(fl == 'z' && sl == 'z' && tl == 'z'))
 			matched = GraphHelper.merge_duplicate_authors_in_range("" + fl + sl + tl)
 			if(matched == 0 )				
