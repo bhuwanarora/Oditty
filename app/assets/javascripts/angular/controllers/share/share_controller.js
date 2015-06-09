@@ -59,7 +59,6 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
             $scope.info.book = book;
             $rootScope.active_book = book;
             $scope.info.status_books = [book];
-            
         }
     }
 
@@ -579,6 +578,9 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         $scope.info.status = "";
         $scope.info.hash_tags = [];
         $scope.info.wrapper_status = "";
+        if(angular.isDefined($rootScope.active_book)){
+            $scope.show_interesting_details($rootScope.active_book);
+        }
         $scope.init_reading_options();
         $scope.emotions = Emotions;
     }());

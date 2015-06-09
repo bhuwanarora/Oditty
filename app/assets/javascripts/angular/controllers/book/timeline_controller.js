@@ -1,10 +1,19 @@
-homeApp.controller('timelineController', ["$scope", "$rootScope", "bookService", '$location', 'userService', '$mdDialog', function($scope, $rootScope, bookService, $location, userService, $mdDialog){
+homeApp.controller('timelineController', ["$scope", "$rootScope", "bookService", '$location', 'userService', '$mdDialog', '$mdSidenav', function($scope, $rootScope, bookService, $location, userService, $mdDialog, $mdSidenav){
+
+    var _unauthenticated_user = function(){
+        return ((getCookie("logged") == "") || (getCookie("logged") == null));
+    }
 
     $scope.write_reading_journey_for = function(){
-        $scope.info.book = $rootScope.active_book;
-        $scope.info.show_share = true;
-        $scope.info.show_book_share = true;
-        $mdDialog.hide();
+        if(_unauthenticated_user()){
+            $mdSidenav('signup').toggle();
+        }
+        else{
+            // $scope.info.book = $rootScope.active_book;
+            $scope.info.show_share = true;
+            // $scope.info.show_book_share = true;
+            $mdDialog.hide();
+        }
     }
 
     $scope.get_feed = function(){
