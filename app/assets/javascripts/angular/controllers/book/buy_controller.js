@@ -1,4 +1,4 @@
-homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sharedService", "$mdSidenav", function($scope, $rootScope, bookService, sharedService, $mdSidenav){
+homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sharedService", "$mdSidenav", "$timeout", function($scope, $rootScope, bookService, sharedService, $mdSidenav, $timeout){
 	var _unauthenticated_user = function(){
 		return ((getCookie("logged") == "") || (getCookie("logged") == null));
 	}
@@ -12,10 +12,15 @@ homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sha
 		$scope.book_loading = true;
 		
 		if(!_unauthenticated_user()){
-			bookService.get_borrow_users(id).then(function(data){
-				$scope.borrow_users = data;
-				$scope.book_loading = false;
-				$scope.info.loading = false;
+			var borrow_users_timeout = $timeout(function(){
+				bookService.get_borrow_users(id).then(function(data){
+					$scope.borrow_users = data;
+					$scope.book_loading = false;
+					$scope.info.loading = false;
+				});
+			}, 100);
+			$scope.$on('destroy', function(){
+				$timeout.cancel(borrow_users_timeout);
 			});
 		}
 		else{

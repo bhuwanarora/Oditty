@@ -1,23 +1,28 @@
 homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'ShareOptions', '$routeParams', '$mdBottomSheet', 'statusService', 'WebsiteUIConstants', 'bookService', 'ColorConstants', 'sharedService', 'Emotions', '$mdSidenav', function($scope, $rootScope, $timeout, ShareOptions, $routeParams, $mdBottomSheet, statusService, WebsiteUIConstants, bookService, ColorConstants, sharedService, Emotions, $mdSidenav){
 
     $scope.play_type_key = function(event){
-        if($scope.info.show_share){
-            document.getElementById('audiotag1').play();
-            // if(angular.isUndefined($scope.current_track) || $scope.current_track == 0){
-            //     $scope.current_track = 1;
-            // }
-            // else if($scope.current_track == 1){
-            //     $scope.current_track = 2;
-            //     document.getElementById('audiotag2').play();
-            // }
-            // else{
-            //     $scope.current_track = 0;
-            //     document.getElementById('audiotag3').play();
-            // }
-            event.stopPropagation();
+        if(!$scope.mute){
+            if($scope.info.show_share){
+                if(angular.isUndefined($scope.current_track) || $scope.current_track == 0){
+                    $scope.current_track = 1;
+                    document.getElementById('audiotag1').play();
+                }
+                else if($scope.current_track == 1){
+                    $scope.current_track = 2;
+                    document.getElementById('audiotag2').play();
+                }
+                else{
+                    $scope.current_track = 0;
+                    document.getElementById('audiotag3').play();
+                }
+                event.stopPropagation();
+            }
         }
     }
 
+    $scope.mute_volume = function(){
+        $scope.mute = !$scope.mute;
+    }
     
     $scope.set_pages = function(current_page, page_count){
         $scope.info.page_count = page_count;
@@ -49,46 +54,13 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     }
 
     $scope.show_interesting_details = function(book){
-        $scope.active_book = book;
-        $scope.info.book = book;
-        $rootScope.active_book = book;
-        $scope.info.status_books = [book];
-        $scope.info.share_loading = true;
-
-
-        var _get_interesting_details = function(){
-            var id = book.book_id || book.id;
-            bookService.get_interesting_info(id).then(function(data){
-                $scope.related_info = [];
-                if(angular.isDefined(data[0])){
-                    angular.forEach(data[0].info, function(value){
-                        var label = value.labels[0];
-                        var info = value.info.data;
-                        var id = value.id;
-
-                        if(label == "Author"){
-                            delete info.indexed_main_author_name;
-                            delete info.gr_url;
-                            delete info.search_index;
-                            var json = {"id": id, "label": "Author"};
-                            info = angular.extend(info, json);
-                        }
-                        else if(label == "Year"){
-                            var json = {"label": "Year"};
-                            info = angular.extend(info, json);
-                        }
-                        else{
-                        }
-                        this.push(info);
-                        $scope.info.share_loading = false;
-                    }, $scope.related_info);
-                }
-            });
+        if(angular.isUndefined($scope.active_book)){
+            $scope.active_book = book;
+            $scope.info.book = book;
+            $rootScope.active_book = book;
+            $scope.info.status_books = [book];
+            
         }
-        var interesting_details_timeout = $timeout(_get_interesting_details(), 100);
-        $scope.$on('destroy', function(){
-            $timeout.cancel(interesting_details_timeout);
-        });
     }
 
     $scope.show_share_options = function(event){
@@ -553,6 +525,42 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
 
     $scope.toggle_options = function(){
         $scope.show_options = !$scope.show_options;
+        var _get_interesting_details = function(){
+            var id = book.book_id || book.id;
+            bookService.get_interesting_info(id).then(function(data){
+                $scope.related_info = [];
+                if(angular.isDefined(data[0])){
+                    angular.forEach(data[0].info, function(value){
+                        var label = value.labels[0];
+                        var info = value.info.data;
+                        var id = value.id;
+
+                        if(label == "Author"){
+                            delete info.indexed_main_author_name;
+                            delete info.gr_url;
+                            delete info.search_index;
+                            var json = {"id": id, "label": "Author"};
+                            info = angular.extend(info, json);
+                        }
+                        else if(label == "Year"){
+                            var json = {"label": "Year"};
+                            info = angular.extend(info, json);
+                        }
+                        else{
+                        }
+                        this.push(info);
+                        $scope.info.share_loading = false;
+                    }, $scope.related_info);
+                }
+            });
+        }
+        if(angular.isUndefined($scope.related_info)){
+            $scope.info.share_loading = true;
+            var interesting_details_timeout = $timeout(_get_interesting_details(), 100);
+            $scope.$on('destroy', function(){
+                $timeout.cancel(interesting_details_timeout);
+            });
+        }
     }
 
     $scope.set_emotion = function(emotion){
