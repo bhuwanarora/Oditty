@@ -40,7 +40,6 @@ homeApp.controller('shelfController', ['$scope', '$mdBottomSheet', '$mdToast', '
     }
 
     var _init = (function(){
-        debugger
         $scope.toast_position = {
             bottom: false,
             top: true,
