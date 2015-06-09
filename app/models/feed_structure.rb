@@ -13,43 +13,41 @@ class FeedStructure < Neo
 		notifications = []
 		for feed in @news_feed
 			type = feed["label"]
-			if(!type.nil?)
-				puts type.green
-				if type == "User"
-				elsif type == "MarkAsReadNode"
-					notification = _mark_as_read_notification(feed)
-					notifications.push(notification.merge!("label" => type))
-				elsif type == "RatingNode"
-					notification = _rating_notification(feed)
-					notifications.push(notification.merge!("label" => type))
-				elsif type == "TimingNode"
-					notification = _timing_node_notification(feed)
-					notifications.push(notification.merge!("label" => type))
-				elsif type == "Tweet"
-					notification = _comment_notification(feed)
-					notifications.push(notification.merge!("label" => type))
-				elsif type == "BookmarkNode"
-					notification = _bookmark_notification(feed)
-					notifications.push(notification.merge!("label" => type))
-				elsif type == "Visited"
-					notification = _bookmark_notification(feed)
-					notifications.push(notification.merge!("label" => type))
-				elsif type == "ThumbRequest"
-					notification = _thumb_request_notification(feed)
-					notifications.push(notification.merge!("label" => type))
-				elsif type == "RecommendNode"
-					notification = _recommend_notification(feed)
-					notifications.push(notification.merge!("label" => type))
-				elsif type == "StatusNode"
-					notification = _share_notification(feed)
-					notifications.push(notification.merge!("label" => type))
-				elsif type == "EndorseNode"
-					notification = _endorse_notification(feed)
-					notifications.push(notification.merge!("label" => type))
-				elsif type == "FollowsNode"
-					notification = _follow_notification(feed)
-					notifications.push(notification.merge!("label" => type))
-				end
+			puts type.green
+			if type == "User"
+			elsif type == "MarkAsReadNode"
+				notification = _mark_as_read_notification(feed)
+				notifications.push(notification.merge!("label" => type))
+			elsif type == "RatingNode"
+				notification = _rating_notification(feed)
+				notifications.push(notification.merge!("label" => type))
+			elsif type == "TimingNode"
+				notification = _timing_node_notification(feed)
+				notifications.push(notification.merge!("label" => type))
+			elsif type == "Tweet"
+				notification = _comment_notification(feed)
+				notifications.push(notification.merge!("label" => type))
+			elsif type == "BookmarkNode"
+				notification = _bookmark_notification(feed)
+				notifications.push(notification.merge!("label" => type))
+			elsif type == "Visited"
+				notification = _bookmark_notification(feed)
+				notifications.push(notification.merge!("label" => type))
+			elsif type == "ThumbRequest"
+				notification = _thumb_request_notification(feed)
+				notifications.push(notification.merge!("label" => type))
+			elsif type == "RecommendNode"
+				notification = _recommend_notification(feed)
+				notifications.push(notification.merge!("label" => type))
+			elsif type == "StatusNode"
+				notification = _share_notification(feed)
+				notifications.push(notification.merge!("label" => type))
+			elsif type == "EndorseNode"
+				notification = _endorse_notification(feed)
+				notifications.push(notification.merge!("label" => type))
+			elsif type == "FollowsNode"
+				notification = _follow_notification(feed)
+				notifications.push(notification.merge!("label" => type))
 			end
 		end
 
