@@ -34,7 +34,7 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 						message = "Gave "+value.node.content + " rating on 10.";
 						break;
 					case "FollowsNode":
-						message = "Joined community.";
+						message = "Joined room.";
 				}
 				return message;
 			}

@@ -8,7 +8,7 @@
                 class="animate-fast vertical_expansion" 
                 ng-if="!communityFeed.expand">
                 <img ng-src="{{community.image_url}}" class="community_circular" alt="{{community.name}}" />
-                <div ng-bind-html="community.name | uppercase" layout-wrap class="category_title" layout-padding></div>
+                <div ng-bind-html="community.name" layout-wrap class="bold capitalize" layout-padding></div>
             </a>
             <a layout="row" layout-align="start" ng-href="/room?id={{community.id}}" 
                 class="animate-fast vertical_expansion"
@@ -30,12 +30,15 @@
             <div ng-show="!communityFeed.description">Expand</div>
         </md-button>
     </md-card-content>
-    <md-card-content class="image_container clear" layout="row" ng-if="communityFeed.expand">
+    <md-card-content class="image_container clear" layout="column" ng-if="communityFeed.expand">
         <div flex class="image_wrapper">
             <img class="full_width"
                  ng-src="{{communityFeed.image_url}}"
                  ng-show="communityFeed.image_url"/>
         </div>
+        <a class="less_important" ng-href="{{communityFeed.url}}" layout-padding>
+            {{communityFeed.url}}
+        </a>
     </md-card-content>
     
     <md-card-content class="footer" 

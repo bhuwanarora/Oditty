@@ -1,17 +1,17 @@
-<!-- <news-scroller layout="row" 
-	layout-align="center" 
-	layout-padding
-	class="news_footer">
-</news-scroller>
- -->
 <div layout-padding layout="column">
-	<div class="big_title bold" layout-padding ng-bind-html="info.active_news.title | uppercase"></div>
+	<div layout-padding>
+		<div class="big_title bold" ng-bind-html="info.active_news.title"></div>
+		<div class="less_important">
+			<a ng-href="{{info.active_news.url}}" target="_blank">
+				{{info.active_news.url}}
+			</a>
+		</div>
+	</div>
 	<div layout-padding>{{info.active_news.description}}</div>
 </div>
 <div>
 	<img ng-src="{{info.active_news.image_url}}" class="max_full_width" />
 </div>
-<md-divider></md-divider>
 <div layout="row" layout-sm="column">
 	<div flex="30" layout="column" flex-sm="100" layout-sm="column" layout-padding>
 		<div class="less_important" layout-padding>
@@ -51,6 +51,13 @@
 			</div>
 		</div>
 	</div>
+</div>
+<div>
+	<news-scroller layout="row" 
+	    layout-align="center" 
+	    layout-padding
+	    class="news_footer">
+	</news-scroller>
 </div>
 
 <style>
