@@ -298,7 +298,8 @@
             <% elsif @shelves %>
                 <md-content ng-controller="roomController">
             <% elsif @author %>
-                <md-content ng-controller="authorController" layout="row" layout-wrap check-scroll-bottom="get_books()" ng-keydown="keypress_scroll($event)">
+                <md-content ng-controller="authorController" layout="row" layout-wrap class="white"
+                    check-scroll-bottom="get_books()" ng-keydown="keypress_scroll($event)">
             <% elsif @profile %>
                 <md-content ng-controller="profileController" check-scroll-bottom="get_feed()" class="white">
             <% elsif @search %>

@@ -433,6 +433,7 @@ md-toast.md-default-theme{
 
 .pointer:hover{
     background-color: rgba(0, 0, 0, 0.1);
+    text-decoration: none !important;
 }
 
 .uppercase{

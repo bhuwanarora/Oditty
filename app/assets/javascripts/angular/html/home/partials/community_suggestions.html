@@ -1,15 +1,22 @@
-<md-card class="md-whiteframe-z4">
+<md-card ng-class="{'md-whiteframe-z4': show_suggestions, 'md-whiteframe-z1': !show_suggestions}">
 	<md-card-content>
-		<div class="less_important" layout="row">
+		<div layout="row" layout-align="space-between">
+			<div class="less_important" layout="row">
+				<div>
+					<i class="material-icons">whatshot</i>
+				</div>
+				<div layout-padding>
+					Room Suggestions
+				</div>
+			</div>
 			<div>
-				<i class="material-icons">whatshot</i>
+				<i class="material-icons pointer" ng-show="show_suggestions" ng-click="toggle_suggestions()">close</i>
+				<i class="material-icons pointer" ng-show="!show_suggestions" ng-click="toggle_suggestions()">add</i>
 			</div>
-			<div layout-padding>
-				Room Suggestions
-			</div>
+			
 		</div>
 	</md-card-content>
-	<md-card-content>
+	<md-card-content ng-show="show_suggestions">
 		<join-community community="community" layout-padding layout="row" layout-align="space-between"
 			ng-repeat="community in suggest_communities" >
 		</join-community>

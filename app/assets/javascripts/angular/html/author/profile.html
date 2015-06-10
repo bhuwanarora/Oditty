@@ -1,5 +1,5 @@
-<md-list>
-    <section class="white md-whiteframe-z1" layout-padding>
+<md-list class="white md-whiteframe-z4">
+    <section layout-padding>
         <md-list-item layout-padding class="md-3-line" layout-sm="column">
             <img ng-src="{{author.id | author_thumb}}" 
                  class="circular author_image"/>
@@ -17,7 +17,7 @@
             </div>
         </md-list-item>
     </section>
-    <div ng-click="toggle_wiki()" ng-if="author.wiki_url" class="white md-whiteframe-z1">
+    <div ng-click="toggle_wiki()" ng-if="author.wiki_url" class="">
         <section layout="row" layout-align="space-between" flex>
             <div></div>
             <div layout="row" class="pointer" layout-padding>
@@ -27,13 +27,13 @@
             </div>
         </section>
     </div>
-    <md-list-item ng-show="show_author_wiki" class="white md-whiteframe-z1">
+    <md-list-item ng-show="show_author_wiki">
         <iframe ng-src="{{author.wiki_url}}" class="wiki" 
                 seamless="seamless"></iframe>
     </md-list-item>
 
 </md-list>
-<md-list layout-wrap layout="row" hide-sm>
+<!-- <md-list layout-wrap layout="row" hide-sm>
     <div layout="column" flex>
         <md-card ng-repeat="book in author.books" class="white md-whiteframe-z1"  ng-if="$even">
             <div layout-padding>
@@ -56,17 +56,18 @@
             <book-info layout-padding book="book" info="info"></book-info>
         </md-card>
     </div>
-</md-list>
-<md-list layout-wrap layout="row" show-sm hide>
-    <div layout="column" flex>
-        <md-card ng-repeat="book in author.books" class="white md-whiteframe-z1"  ng-if="$even">
+</md-list> -->
+<md-list layout-wrap layout="column">
+    <div flex ng-repeat="book in author.books">
+        <md-card  class="no_shadow">
             <div layout-padding>
-                <div class="big_title">Published {{book.title}}</div>
                 <div class="less_important">
                     {{book.published_year}}
                 </div>
+                <div class="bold">Published {{book.title}}</div>
             </div>
             <book-info layout-padding book="book" info="info"></book-info>
         </md-card>
+        <md-divider></md-divider>
     </div>
 </md-list>

@@ -247,8 +247,12 @@ md-toolbar{
 	width: 250px;
 }
 
+.left_panel a:hover{
+	text-decoration: none !important;
+}
+
 .left_panel section{
-	margin-top: 60px;
+	margin-top: 10px;
 }
 
 .loader{

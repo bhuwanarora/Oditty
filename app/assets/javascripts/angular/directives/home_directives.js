@@ -8,8 +8,13 @@ homeApp.directive('suggestCommunities', ["$rootScope", "userService", "$timeout"
                     userService.suggest_communities().then(function(data){
                         $scope.info.loading = false;
                         $scope.suggest_communities = data;
+                        $scope.show_suggestions = true;
                     });
                 }, 100);
+            }
+
+            $scope.toggle_suggestions = function(){
+                $scope.show_suggestions = !$scope.show_suggestions;
             }
 
             _init();
