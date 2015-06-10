@@ -348,6 +348,33 @@ module GraphHelper
 		end 		
 		clause.execute
 	end
+
+	def self.merge_duplicate_authors_in_range_auto_index(starting_regex)
+		puts "Removing duplicate authors with search_index starting with: " + starting_regex
+		clause = "START original=node:node_auto_index('indexed_main_author_name:" + starting_regex +"*" + "')  WITH original "\
+			"START duplicate = node:node_auto_index('indexed_main_author_name:" + starting_regex +"*" + "') "\
+			"WHERE ( (ID(original) <> ID(duplicate)) "\
+			"AND " + GraphHelper.match_duplicate_authors_conditions("original","duplicate") + " ) "\
+				" RETURN ID(original),ID(duplicate) LIMIT 1"
+		output = clause.execute
+		if (output.length >0)
+			id_orig = output[0]["ID(original)"]
+			id_dup = output[0]["ID(duplicate)"]
+			GraphHelper.copy_properties_author(id_orig,id_dup)
+			clause = "MATCH (original:Author),(duplicate:Author) WHERE "\
+				"ID(original) = " + id_orig.to_s + " AND ID(duplicate) = " + id_dup.to_s + " "\
+				"WITH original,duplicate  "\
+				"" + GraphHelper.set_original_author_properties("original","duplicate")
+			output = clause.execute
+		end
+		if(output.nil? || output.length == 0 || !(output[0].keys.include? "id"))
+			matched = 0
+		else
+			matched = 1
+		end
+		matched
+	end
+
 	def self.merge_duplicate_authors_in_range(starting_regex)
 		puts "Removing duplicate authors with search_index starting with: " + starting_regex
 		clause = "MATCH (original:Author),(duplicate:Author) WHERE ("\
@@ -402,7 +429,7 @@ module GraphHelper
 			tl = "a"
 		end
 		while (!(fl == 'z' && sl == 'z' && tl == 'z'))
-			matched = GraphHelper.merge_duplicate_authors_in_range("" + fl + sl + tl)
+			matched = GraphHelper.merge_duplicate_authors_in_range_auto_index("" + fl + sl + tl)
 			if(matched == 0 )				
 				(fl,sl,tl) = GraphHelper.next_regex(fl,sl,tl)
 				$redis[author_id_key] = "" + fl + sl + tl
