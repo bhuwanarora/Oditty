@@ -46,7 +46,6 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         delete $scope.info.page_count;
         delete $scope.info.current_page;
         delete $scope.active_book;
-        delete $rootScope.active_book
         $scope.deselect_emotion();
         delete $scope.related_info;
         delete $scope.info.status_books;
@@ -484,7 +483,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     }
 
     $scope.make_active = function(id){
-        delete $rootScope.active_book;
+        delete $scope.active_book;
         $scope.active_id = id;
         $scope.info.reading_status_value = id;
         $scope.show_relevant_books();
@@ -503,7 +502,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         $scope.info.status_books = [];
         $scope.related_info = [];
         delete $scope.active_book;
-        delete $rootScope.active_book
+        // delete $rootScope.active_book;
         $scope.deselect_emotion();
     }
 
