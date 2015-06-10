@@ -9,7 +9,7 @@ class User::Predict::CategoryPrediction < User::Predict
 		if @user_id
 			@user.match + User.match_root_category + User::Predict::CategoryPrediction.return_init + ::Category::Root.basic_info + ::Category.likes_weight + ::Category.order_desc
 		else
-			Category::Root.match + Category::Root.basic_info
+			Category::Root.match + Category::Root.return_group(Category::Root.basic_info)
 		end
 	end
 
