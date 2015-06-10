@@ -26,3 +26,11 @@
         </div>
     </div>
 </div>
+<div layout="row" layout-sm="column" layout-align="space-between">
+    <md-button ng-show="!book.i_own_this" class="md-raised md-button-clear" ng-click="toggle_bookmark(false)">
+        Add to "I own this"
+    </md-button>
+    <md-button ng-show="book.i_own_this" class="md-primary md-button-clear" ng-click="toggle_bookmark(true)">
+        I own this
+    </md-button>
+</div>
