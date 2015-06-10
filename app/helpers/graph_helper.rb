@@ -425,6 +425,30 @@ module GraphHelper
 		clause.execute
 	end
 
+	def self.set_author_books_count
+		end_id_author, start_id_author = Author.get_max_min_id
+		author_id_key = 'set_author_books_count'
+		if(!$redis[author_id_key].nil?)
+			cur_state = $redis[author_id_key]
+			fl = cur_state[0]
+			sl = cur_state[1]
+		else
+			$redis[author_id_key] = "aa"
+			fl = "a"
+			sl = "a"
+		end
+
+		while fl != "z" && sl != "z"
+			clause = "START author=node:node_auto_index('indexed_main_author_name:" + fl + sl +"*" + "')  WITH author "\
+				"MATCH (book:Book)<-[:Wrote]-(author:Author) "\
+				"WITH COLLECT(DISTINCT(book)) AS books,author "\
+				"SET author.books_count = CASE WHEN books IS NULL THEN 0 ELSE LENGTH(books) END "
+			clause.execute
+			(tl,fl,sl) = GraphHelper.next_regex("z",fl,sl)
+			$redis[author_id_key] = "" + fl + sl
+		end
+	end
+
 
 	def wrong_author_links
 		clause = "MATCH (book:Book)<-[:Wrote]-(author:Author) WHERE book.author_name <> author.name RETURN COUNT(b)"

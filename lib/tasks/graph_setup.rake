@@ -317,6 +317,12 @@ namespace :graph do
     GraphHelper.curate_author_names
   end
 
+  desc "set books_count for authors "
+  task :set_author_books_count => :environment do
+    include GraphHelper
+    GraphHelper.set_author_books_count
+  end
+
   desc "update_follow_counts_for_user"
   task :update_follow_counts_for_user => :environment do
     include GraphHelper

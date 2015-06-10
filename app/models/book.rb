@@ -79,6 +79,11 @@ class Book < Neo
 		" MATCH (book)-[belongs_to:Belongs_to]->(genre:Genre) "
 	end
 
+	def set_total_page_count
+		match + " FOREACH (ignore IN (CASE WHEN HAS(book.total_page_count) THEN [] ELSE [1] END) | SET book.total_page_count = " + total_page_count.to_s + " "\
+			")"
+	end
+
 	def self.optional_match_genre
 		" OPTIONAL " + Book.match_genre
 	end
