@@ -9,10 +9,10 @@
         md-items="item in info.genres"
         md-search-text-change="search_genres(search_tag.genre)"
         md-selected-item-change="select_genre(info.selected_genre)"
-        md-item-text="item.name"
+        md-item-text="item.name || item.root_category_name"
         md-min-length="0"
         placeholder="Genre">
-        <span md-highlight-text="search_tag.genre">{{item.name}}</span>
+        <span md-highlight-text="search_tag.genre">{{item.name || item.root_category_name}}</span>
     </md-autocomplete>
     <!-- <div class="icon_angle">
         <span class="icon-angle-down"></span>

@@ -72,7 +72,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
             _handle_filter_removal();
         }
         else{
-            $rootScope.filters["category_id"] = genre.id;
+            $rootScope.filters["category_id"] = (genre.id || genre.root_category_id);
            _set_books();
         }
     }
@@ -137,16 +137,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         }
         else{
             $scope.info.loading = true;
-            if(angular.isUndefined($scope.info.genres) || ($scope.info.genres.length == 0)){
-                genreService.get_genres().then(function(data){
-                    $scope.info.genres = [];
-                    angular.forEach(data, function(value){
-                        var json = {"name": value.root_category_name, "id": value.root_category_id};
-                        this.push(json);
-                    }, $scope.info.genres);
-                    $scope.info.loading = false;
-                });
-            }
+            $scope._get_genres();
         }
     }
 
@@ -223,6 +214,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         var fetch_data = $timeout(function(){
             $scope._get_time_groups();
             $scope._get_reading_times();
+            $scope._get_genres();
         }, 100);
         $scope.$on('destroy', function(){
             $timeout.cancel(fetch_data);

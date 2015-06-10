@@ -1,10 +1,10 @@
-<md-card class="social">
+<md-card class="social no_shadow">
     <md-card-content class="footer">
         <section layout="column" layout-align="start">
             <div layout="row">
                 <img ng-src="{{profile_user.image_url | default_profile}}" class="circular" >
                 <div layout="column" layout-align="start start">
-                    <div class="big_title" layout-padding>{{profile_user.first_name}}</div>
+                    <div class="bold" layout-padding>{{profile_user.first_name}}</div>
                     <div ng-repeat="data in feed.data" layout-padding>
                         <div ng-bind-html="data.message" class="status_message"></div>
                         <div class="less_important">{{data.created_at | timestamp | date:'h:mm a, dd MMM'}}</div>

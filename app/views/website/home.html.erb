@@ -18,12 +18,12 @@
 <div layout="column" layout-align="center center" 
 	ng-include src="'assets/angular/html/shared/home/options.html'">
 </div>
-<div class="big_title hello_world" layout-padding
+<!-- <div class="big_title hello_world" layout-padding
 	layout="column" layout-align="space-between"
 	ng-include src="'assets/angular/html/shared/home/story.html'">
-</div>
+</div> -->
 
-<div ng-include src="'assets/angular/html/shared/home/rooms_linked.html'"></div>
+<div ng-include src="'assets/angular/html/shared/home/rooms_linked.html'" class="hello_world"></div>
 <div ng-include src="'assets/angular/html/shared/home/people_linked.html'"></div>
 
 <div class="light_grey">
@@ -186,8 +186,8 @@
 	}
 
 	.hello_world{
-		background-color: #8BC34A;
-  		height: 400px;
+		background-color: #263238;
+  		/*height: 400px;*/
   		color: white;
 	}
 
@@ -200,6 +200,71 @@
 		margin-top: 100px;
 		width: 400px;
 	}
+
+
+	/*.floating{
+	    float: left;
+	    -webkit-animation-name: Floatingx;
+	    -webkit-animation-duration: 3s;
+	    -webkit-animation-iteration-count: infinite;
+	    -webkit-animation-timing-function: ease-in-out;
+	    -moz-animation-name: Floating;
+	    -moz-animation-duration: 3s;
+	    -moz-animation-iteration-count: infinite;
+	    -moz-animation-timing-function: ease-in-out;
+	    margin-left: 30px;
+	    margin-top: 5px;
+
+	}
+
+	@-webkit-keyframes Floatingx{
+	    from {-webkit-transform:translate(0, 0px);}
+	    65% {-webkit-transform:translate(0, 15px);}
+	    to {-webkit-transform: translate(0, -0px);    }    
+	}
+	    
+	@-moz-keyframes Floating{
+	    from {-moz-transform:translate(0, 0px);}
+	    65% {-moz-transform:translate(0, 15px);}
+	    to {-moz-transform: translate(0, -0px);}    
+	}
+
+*/
+	.scaling{
+	    float: left;
+	    -webkit-animation-name: scalex;
+	    -webkit-animation-duration:3s;
+	    -webkit-animation-iteration-count:infinite;
+	    -webkit-animation-timing-function:ease-in-out;
+	    -moz-animation-name: scale;
+	    -moz-animation-duration:3s;
+	    -moz-animation-iteration-count:infinite;
+	    -moz-animation-timing-function:ease-in-out;
+	}
+
+	.scaling:hover{
+		-webkit-animation-name: scalex;
+	    -webkit-animation-duration: 0s;
+	    -webkit-animation-iteration-count:infinite;
+	    -webkit-animation-timing-function:ease-in-out;
+	    -moz-animation-name: scale;
+	    -moz-animation-duration: 0s;
+	    -moz-animation-iteration-count:infinite;
+	    -moz-animation-timing-function:ease-in-out;	
+	}
+	    
+    @-webkit-keyframes scalex{
+        from {-webkit-transform: scale(0.9);}
+        65% {-webkit-transform: scale(1.0);}
+        to {-webkit-transform: scale(0.9);}    
+    }
+        
+    @-moz-keyframes scale{
+        from {-moz-transform: scale(0.9);}
+        65% {-moz-transform: scale(1.0);}
+        to {-moz-transform: scale(0.9);}    
+    }
+
 
 
 	@media only screen

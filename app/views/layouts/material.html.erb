@@ -300,7 +300,7 @@
             <% elsif @author %>
                 <md-content ng-controller="authorController" layout="row" layout-wrap check-scroll-bottom="get_books()" ng-keydown="keypress_scroll($event)">
             <% elsif @profile %>
-                <md-content ng-controller="profileController" check-scroll-bottom="get_feed()">
+                <md-content ng-controller="profileController" check-scroll-bottom="get_feed()" class="white">
             <% elsif @search %>
                 <md-content layout="row" layout-wrap ng-controller="searchPageController" check-scroll-bottom="show_all_results()">
             <% elsif @book %>
