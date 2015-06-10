@@ -726,3 +726,7 @@ md-tooltip .md-content{
 .md-list-item-text{
 	padding: 0px !important;
 }
+
+.extensive_padding{
+	padding: 30px;
+}

@@ -166,7 +166,7 @@ class News < Neo
 	end
 
 	def self.get_feed skip_count, day_skip_count, region
-		 News.match_regional_temporal_news(skip_count, day_skip_count, region) + News.match_community_users + News.return_group(News.basic_info," follow_count, communities[0.." + Constant::Count::CommunitiesOfNewsShown.to_s + "] AS communities ", "users[0..4] AS users")
+		 News.match_regional_temporal_news(skip_count, day_skip_count, region) + News.match_community_users + News.return_group(News.basic_info," follow_count, news.view_count AS view_count, communities[0.." + Constant::Count::CommunitiesOfNewsShown.to_s + "] AS communities ", "users[0..4] AS users")
 	end
 
 	def self.get_regions

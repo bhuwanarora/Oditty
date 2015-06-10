@@ -18,7 +18,9 @@
 		</div>
 		<div flex="80" layout="column" flex-sm="100" class="full_width">
 			<div ng-include src="'/assets/angular/html/share/searched_books.html'" ng-if="info.show_book_share"></div>
-			<div ng-include src="'/assets/angular/html/share/status_options.html'" ng-if="info.show_share"></div>
+			<div ng-include src="'/assets/angular/html/share/status_options.html'" class="extensive_padding"
+				ng-class="{'dark_grey': reading_status_selected}"
+				ng-if="info.show_share"></div>
 		</div>
 	    <div flex="10" hide-sm></div>
 	</div>
@@ -133,5 +135,12 @@
 	.roboto{
 		font-family: 'roboto';
 	}
+
+	.active_extended{
+		width: 103%;
+  		margin-left: -10px;
+	}
+
+	
 
 </style>

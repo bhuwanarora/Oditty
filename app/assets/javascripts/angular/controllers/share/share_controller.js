@@ -45,7 +45,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     $scope.deselect_book = function(){
         delete $scope.info.page_count;
         delete $scope.info.current_page;
-        delete $scope.active_book;
+        delete $scope.selected_book;
         $scope.deselect_emotion();
         delete $scope.related_info;
         delete $scope.info.status_books;
@@ -53,8 +53,8 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     }
 
     $scope.show_interesting_details = function(book){
-        if(angular.isUndefined($scope.active_book)){
-            $scope.active_book = book;
+        if(angular.isUndefined($scope.selected_book)){
+            $scope.selected_book = book;
             $scope.info.book = book;
             $rootScope.active_book = book;
             $scope.info.status_books = [book];
@@ -128,7 +128,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         $scope.info.share_loading = true;
         var status = {};
 
-        if($scope.reading_status_selected && $scope.active_book){
+        if($scope.reading_status_selected && $scope.selected_book){
             if(!$scope.active_emotion){
                 $scope.info.status = $scope.reading_options[$scope.active_id].status;
                 $scope.info.wrapper_status = "<span><span class='custom_title light_title'><span>"+$scope.reading_options[$scope.active_id].status+"</span></span>"
@@ -137,8 +137,8 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
                 $scope.info.status = "Feeling "+ $scope.active_emotion.name + $scope.reading_options[$scope.active_id].emotion_status;
                 $scope.info.wrapper_status = "<span class='custom_title light_title'><span>Feeling "+$scope.active_emotion.name+"  </span><span>"+$scope.reading_options[$scope.active_id].emotion_status+"</span></span>";
             }
-            $scope.info.status = $scope.info.status + " " + $scope.active_book.title + " by " + $scope.active_book.author_name;
-            $scope.info.wrapper_status = $scope.info.wrapper_status + "<span class='big_title bold_light_title'>"+$scope.active_book.title+" </span><span class='less_important'>by "+$scope.active_book.author_name+"</span>";
+            $scope.info.status = $scope.info.status + " " + $scope.selected_book.title + " by " + $scope.selected_book.author_name;
+            $scope.info.wrapper_status = $scope.info.wrapper_status + "<span class='big_title bold_light_title'>"+$scope.selected_book.title+" </span><span class='less_important'>by "+$scope.selected_book.author_name+"</span>";
             if($scope.info.current_page){
                 $scope.info.status = $scope.info.status + " on page " + $scope.info.current_page;
                 $scope.info.wrapper_status = $scope.info.wrapper_status + "<span> on page <b>"+$scope.info.current_page+"</b></span>";
@@ -483,7 +483,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     }
 
     $scope.make_active = function(id){
-        delete $scope.active_book;
+        delete $scope.selected_book;
         $scope.active_id = id;
         $scope.info.reading_status_value = id;
         $scope.show_relevant_books();
@@ -501,23 +501,23 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         $scope.active_id = 0;
         $scope.info.status_books = [];
         $scope.related_info = [];
-        delete $scope.active_book;
+        delete $scope.selected_book;
         // delete $rootScope.active_book;
         $scope.deselect_emotion();
     }
 
     $scope.show_relevant_books = function(){
         $scope.reading_status_selected = true;
-        if(angular.isUndefined($scope.active_book) && $scope.info.status_books.length == 0){
+        if(angular.isUndefined($scope.selected_book) && $scope.info.status_books.length == 0){
             $scope.info.status_books = [];
             $scope.info.share_loading = true;
-            // var top_searches = [{"title":"The Giver","description":"Jonas' world is perfect. Everything is under control. There is no war or fear or pain. There are no choices. Every person is assigned a role in the Community. When Jonas turns twelve, he is singled out to receive special training from The Giver. The Giver alone holds the memories of the true pain and pleasure of life. Now, it is time for Jonas to receive the truth. There is no turning back.","isbn":"0385732554,9780385732550","author_name":"Lois Lowry","author_id":390175,"degree":369,"base_rating":4.11,"base_ratings_count":746618,"base_reviews_count":30671,"labels":"Book","id":2364530},{"title":"The Awakening","description":"This story of a woman's struggle with oppressive social structures received much public contempt at its first release; put aside because of initial controversy, the novel gained popularity in the 1960s, some six decades after its first publication, and has since remained a favorite of many readers. Chopin's depiction of a married woman, bound to her family and with no way to assert a fulfilling life of her own, has become a foundation for feminism and a classic account of gender crises in the late Victorian era.","isbn":"0543898083,9780543898081","author_name":"Kate Chopin","author_id":389970,"degree":363,"base_rating":3.6,"base_ratings_count":2368,"base_reviews_count":108,"labels":"Book","id":389969},{"title":"Harry Potter and the Half-Blood Prince","description":"The war against Voldemort is not going well; even the Muggle governments are noticing. Ron scans the obituary pages of the Daily Prophet, looking for familiar names. Dumbledore is absent from Hogwarts for long stretches of time, and the Order of the Phoenix has already suffered losses. And yet, as with all wars, life goes on. Sixth-year students learn to Apparateâand lose a few eyebrows in the process. Teenagers flirt and fight and fall in love. Classes are never straightforward, though Harry receives some extraordinary help from the mysterious Half-Blood Prince.So it's the home front that takes center stage in the multilayered sixth installment of the story of Harry Potter. Here at Hogwarts, Harry will search for the full and complex story of the boy who became Lord Voldemortâand thereby find what may be his only vulnerability.","isbn":"0439785960,9780439785969","author_name":"J. K. Rowling","author_id":390054,"degree":359,"base_rating":4.47,"base_ratings_count":1088335,"base_reviews_count":15638,"labels":"Book","id":395599},{"title":"Eclipse","description":"In the dead silence, all the details suddenly fell into place for me with a burst of intuition.Something Edward didn't want me to know. Something Jacob wouldn't have kept from me...It was never going to end, was it?As Seattle is ravaged by a string of mysterious killings and a malicious vampire continues her quest for revenge, Bella once again finds herself surrounded by danger. In the midst of it all, she is forced to choose between her love for Edward and her friendship with Jacob - knowing that her decision has the potential to ignite the ageless struggle between vampire and werewolf. With her graduation quickly approaching, Bella has one more decision to make: life or death. But which is which?","isbn":"0316160202,9780316160209","author_name":"Stephenie Meyer","author_id":395656,"degree":358,"base_rating":3.73,"base_ratings_count":1054,"base_reviews_count":161,"labels":"Book","id":395892}];
-            bookService.get_top_searches().then(function(data){
-                $scope.info.share_loading = false;
-                $scope.info.status_books = data;
-            });
-            // $scope.info.share_loading = false;
-            // $scope.info.status_books = top_searches;
+            var top_searches = [{"title":"The Giver","description":"Jonas' world is perfect. Everything is under control. There is no war or fear or pain. There are no choices. Every person is assigned a role in the Community. When Jonas turns twelve, he is singled out to receive special training from The Giver. The Giver alone holds the memories of the true pain and pleasure of life. Now, it is time for Jonas to receive the truth. There is no turning back.","isbn":"0385732554,9780385732550","author_name":"Lois Lowry","author_id":390175,"degree":369,"base_rating":4.11,"base_ratings_count":746618,"base_reviews_count":30671,"labels":"Book","id":2364530},{"title":"The Awakening","description":"This story of a woman's struggle with oppressive social structures received much public contempt at its first release; put aside because of initial controversy, the novel gained popularity in the 1960s, some six decades after its first publication, and has since remained a favorite of many readers. Chopin's depiction of a married woman, bound to her family and with no way to assert a fulfilling life of her own, has become a foundation for feminism and a classic account of gender crises in the late Victorian era.","isbn":"0543898083,9780543898081","author_name":"Kate Chopin","author_id":389970,"degree":363,"base_rating":3.6,"base_ratings_count":2368,"base_reviews_count":108,"labels":"Book","id":389969},{"title":"Harry Potter and the Half-Blood Prince","description":"The war against Voldemort is not going well; even the Muggle governments are noticing. Ron scans the obituary pages of the Daily Prophet, looking for familiar names. Dumbledore is absent from Hogwarts for long stretches of time, and the Order of the Phoenix has already suffered losses. And yet, as with all wars, life goes on. Sixth-year students learn to Apparateâand lose a few eyebrows in the process. Teenagers flirt and fight and fall in love. Classes are never straightforward, though Harry receives some extraordinary help from the mysterious Half-Blood Prince.So it's the home front that takes center stage in the multilayered sixth installment of the story of Harry Potter. Here at Hogwarts, Harry will search for the full and complex story of the boy who became Lord Voldemortâand thereby find what may be his only vulnerability.","isbn":"0439785960,9780439785969","author_name":"J. K. Rowling","author_id":390054,"degree":359,"base_rating":4.47,"base_ratings_count":1088335,"base_reviews_count":15638,"labels":"Book","id":395599},{"title":"Eclipse","description":"In the dead silence, all the details suddenly fell into place for me with a burst of intuition.Something Edward didn't want me to know. Something Jacob wouldn't have kept from me...It was never going to end, was it?As Seattle is ravaged by a string of mysterious killings and a malicious vampire continues her quest for revenge, Bella once again finds herself surrounded by danger. In the midst of it all, she is forced to choose between her love for Edward and her friendship with Jacob - knowing that her decision has the potential to ignite the ageless struggle between vampire and werewolf. With her graduation quickly approaching, Bella has one more decision to make: life or death. But which is which?","isbn":"0316160202,9780316160209","author_name":"Stephenie Meyer","author_id":395656,"degree":358,"base_rating":3.73,"base_ratings_count":1054,"base_reviews_count":161,"labels":"Book","id":395892}];
+            // bookService.get_top_searches().then(function(data){
+            //     $scope.info.share_loading = false;
+            //     $scope.info.status_books = data;
+            // });
+            $scope.info.share_loading = false;
+            $scope.info.status_books = top_searches;
         }
     }
 
@@ -581,6 +581,9 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
             $scope.show_interesting_details($rootScope.active_book);
         }
         $scope.init_reading_options();
+        if(angular.isDefined($rootScope.active_book)){
+            $scope.selected_book = $rootScope.active_book;
+        }
         $scope.emotions = Emotions;
     }());
 }]);

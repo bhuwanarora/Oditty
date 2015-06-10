@@ -3,9 +3,13 @@
             layout="column" 
             flex-sm="100"
             flex-md="100">
-        <h3>{{book.title}}</h3>
-        <a ng-href="/author?q={{book.author_id}}">{{book.author_name}}</a>
-        <md-content class="summary">{{book.description}}</md-content>
+        <md-content class="overview_container">
+            <h3>{{book.title}}</h3>
+            <a ng-href="/author?q={{book.author_id}}">{{book.author_name}}</a>
+            <div class="summary">
+                {{book.description}}
+            </div>
+        </md-content>
     </div>
     <div flex="5" hide-sm hide-md>
         <div class="vertical-text spine" 
@@ -46,15 +50,17 @@
         font-family: 'Din';
         font-size: 18px;
         line-height: 24px;
-        height: 80% !important;
+    }
+
+    .overview_container{
         background-color: white !important;
     }
 
     .absolute{
-        position: absolute;
         z-index: 1;
         width: 100%;
         height: 88vh;
+        position: absolute;
         color: white;
         text-align: center;
     }

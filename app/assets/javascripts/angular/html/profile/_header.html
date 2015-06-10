@@ -1,17 +1,18 @@
 <div class="profile_header yellow">
     <section layout="column" layout-wrap>
         <div layout="row" layout-align="end start" layout-padding class="top_section">
-            <md-button class="md-primary md-button-clear" 
+            <md-button class="md-warn md-button-clear" 
                         ng-click="follow_user()"
                         ng-hide="hide_follow"
                         ng-class="{'md-raised': !profile_user.status}"
                         ng-if="!info.my_profile">
-                        <span ng-show="!profile_user.status">
-                            <!-- <span class="icon-user-add"></span> -->
-                            <i class="material-icons">person_add</i>
-                            <span> Follow</span>
-                        </span>
-                        <span ng-show="profile_user.status">Following</span>
+                <section layout="row" layout-align="start center">
+                    <div ng-show="!profile_user.status">
+                        <div> Follow</div>
+                        <i class="material-icons">person_add</i>
+                    </div>
+                    <div ng-show="profile_user.status">Following</div>
+                </section>
             </md-button>
         </div>
         <div layout="row" layout-wrap class="bottom_header">

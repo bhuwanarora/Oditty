@@ -1,5 +1,11 @@
 <section layout="row" layout-sm="column" layout-align="space-between">
     <div layout="row" layout-align="end center">
+        <div layout="row" ng-show="feed.view_count && feed.view_count != 0">
+            <div ng-bind-html="feed.view_count"></div>
+            <div>
+                <i class="material-icons">visibility</i>
+            </div>
+        </div>
         <div ng-repeat="user in feed.users" ng-if="user.first_name">
             <a ng-href="/profile?id={{user.id}}"><img ng-src="{{user.image_url | default_profile}}" class="circular"></a>
             &nbsp;

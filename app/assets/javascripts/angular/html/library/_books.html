@@ -10,7 +10,7 @@
          layout-align="start center">
         <div class="padding" layout="row">
             <div layout-padding><span class="icon-angle-left"></span></div>
-            <div layout-padding>Back to Beyond</div>
+            <div layout-padding>Back</div>
         </div>
     </div>
 
@@ -19,13 +19,13 @@
             md-mode="indeterminate">
     </md-progress-linear>
 
-    <div class="less_important white" layout="row" layout-padding
+    <div class="less_important dark_grey" layout="row" layout-padding
         layout-align="space-between center" ng-if="!constant.show_book">
         <div>Popular Books</div>
         <div>{{info.books.length}} results</div>
     </div>
 
-    <div layout-padding class="white" ng-if="info.other_info && info.other_info.name">
+    <div layout-padding class="dark_grey" ng-if="info.other_info && info.other_info.name">
         <a ng-href="/author?q={{info.other_info.id}}"><h3 ng-bind-html="info.other_info.name"></h3></a>
         <div ng-bind-html="info.other_info.overview"></div>
         <a ng-href="{{info.other_info.wiki_url}}" target="_blank">Read more at Wiki</a>
@@ -33,7 +33,7 @@
     <md-divider ng-if="info.other_info"></md-divider>
 
     <!-- {{info.books}} -->
-    <div ng-style="grid_style" class="white" 
+    <div ng-style="grid_style" class="dark_grey" 
             ng-if="!info.author_filter && !info.group_by_alphabet && !info.published_era_filter 
                 && !info.reading_time_filter && !info.subject_filter" layout-fill layout-padding>
         <div layout="row" layout-wrap layout-align="center">
@@ -60,7 +60,7 @@
 
     <div ng-if="info.author_filter && !info.group_by_alphabet && !info.published_era_filter 
                 && !info.reading_time_filter && !info.subject_filter"
-        ng-style="grid_style" class="white" >
+        ng-style="grid_style" class="dark_grey" >
         <div ng-repeat="(key, value) in info.books | groupBy: 'author_name'" layout-padding>
             <div ng-include src="'/assets/angular/html/library/shared/_grid.html'"></div>
         </div>
@@ -68,7 +68,7 @@
    
     <div ng-if="info.group_by_alphabet && !info.author_filter && !info.published_era_filter 
             && !info.reading_time_filter && !info.subject_filter"
-        ng-style="grid_style" class="white" >
+        ng-style="grid_style" class="dark_grey" >
         <div ng-repeat="(key, value) in info.books | groupBy: 'alphabet'" layout-padding>
             <div ng-include src="'/assets/angular/html/library/shared/_grid.html'"></div>
         </div>
@@ -76,7 +76,7 @@
 
     <div ng-if="!info.group_by_alphabet && !info.author_filter && !info.published_era_filter 
                 && info.reading_time_filter && !info.subject_filter"
-        ng-style="grid_style" class="white" >
+        ng-style="grid_style" class="dark_grey" >
         <div ng-repeat="(key, value) in info.books | groupBy: 'reading_time'" layout-padding>
             <div ng-include src="'/assets/angular/html/library/shared/_grid.html'"></div>
         </div>
@@ -84,7 +84,7 @@
 
     <div ng-if="!info.group_by_alphabet && !info.author_filter && info.published_era_filter 
                 && !info.reading_time_filter && !info.subject_filter"
-        ng-style="grid_style" class="white" >
+        ng-style="grid_style" class="dark_grey" >
         <div ng-repeat="(key, value) in info.books | groupBy: 'published_era'" layout-padding>
             <div ng-include src="'/assets/angular/html/library/shared/_grid.html'"></div>
         </div>
@@ -92,7 +92,7 @@
 
     <div ng-if="!info.group_by_alphabet && !info.author_filter && !info.published_era_filter 
             && !info.reading_time_filter && info.subject_filter"
-        ng-style="grid_style" class="white" >
+        ng-style="grid_style" class="dark_grey" >
         <div ng-repeat="category in info.categories" layout-padding>
             <h3>{{category.name}}</h3>
             <div layout="row" layout-wrap layout-align="center">
