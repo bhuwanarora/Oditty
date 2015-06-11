@@ -17,7 +17,7 @@ md-toolbar{
 a:hover,
 a:visited,
 a:active{
-	text-decoration: none !important;
+	/*text-decoration: none !important;*/
 }
 
 .toolbardemoScrollShrink .face {
