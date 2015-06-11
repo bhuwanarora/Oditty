@@ -1,14 +1,14 @@
 homeApp.controller('infoController', ["$scope", "$rootScope", "$timeout", 'userService', function($scope, $rootScope, $timeout, userService){
     
     $scope.set_first_name = function(){
-        if(angular.isDefined($rootScope.user.first_name) && $rootScope.user.first_name.length > 0){
+        if(angular.isDefined($rootScope.user.first_name) &&  $rootScope.user.first_name != null && $rootScope.user.first_name.length > 0){
             var params = {"first_name": $rootScope.user.first_name};
             userService.save_user_info(params);
         }
     }
 
     $scope.set_last_name = function(){
-        if(angular.isDefined($rootScope.user.last_name) && $rootScope.user.last_name.length > 0){
+        if(angular.isDefined($rootScope.user.last_name) && $rootScope.user.last_name != null && $rootScope.user.last_name.length > 0){
             var params = {"last_name": $rootScope.user.last_name};
             userService.save_user_info(params);
         }

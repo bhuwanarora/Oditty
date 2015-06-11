@@ -252,10 +252,15 @@ homeApp.directive('calendar', ["$rootScope", function($rootScope){
               .map(function(item, index){return ++index;});
         $scope.months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         $scope.years = [];
-        $scope.selectedDay = $rootScope.user.selectedDay;
-        $scope.selectedMonth = $rootScope.user.selectedMonth;
-        $scope.selectedYear = $rootScope.user.selectedYear;
-        
+        if(angular.isDefined($rootScope.user)){
+            $scope.selectedDay = $rootScope.user.selectedDay;
+        }
+        if(angular.isDefined($rootScope.user)){
+            $scope.selectedMonth = $rootScope.user.selectedMonth;
+        }
+        if(angular.isDefined($rootScope.user)){
+            $scope.selectedYear = $rootScope.user.selectedYear;
+        }
         var currentYear = new Date().getFullYear();
         for(var i=currentYear; i>1904; i--){
           $scope.years.push(i);
