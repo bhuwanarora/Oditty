@@ -644,7 +644,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/bookmark.html',
-    "<div class=\"md-raised blue_circle pointer\" layout=\"row\" layout-align=\"center center\" layout-padding ng-click=\"show_shelves()\" ng-if=\"custom\"><i class=\"material-icons\">bookmark</i><md-tooltip md-direction=\"right\" md-visible=\"demo.showTooltip\">Bookmark</md-tooltip></div><md-sidenav class=\"md-sidenav-right md-whiteframe-z2\" md-component-id=\"right_bookmark\"><md-toolbar class=\"md-primary\"><h1 class=\"md-toolbar-tools\">Your Personal Shelves</h1></md-toolbar><div ng-include src=\"'/assets/angular/html/shared/shelves.html'\" ng-init=\"bookmark_object = data\" class=\"shelves\"></div></md-sidenav><div class=\"pointer\" layout-padding ng-if=\"!custom\" ng-click=\"show_shelves()\"><span>Add to Shelf</span> <i class=\"material-icons\">library_books</i> <span>{{count || 0}}</span></div>"
+    "<div class=\"md-raised blue_circle pointer\" layout=\"row\" layout-align=\"center center\" layout-padding ng-click=\"show_shelves()\" ng-if=\"custom\"><i class=\"material-icons\" ng-hide=\"shelves_loading\">bookmark</i><md-tooltip md-direction=\"right\" md-visible=\"demo.showTooltip\">Bookmark</md-tooltip></div><div class=\"pointer\" layout-padding ng-if=\"!custom\" ng-click=\"show_shelves()\"><span>Add to Shelf</span> <i class=\"material-icons\" ng-hide=\"shelves_loading\">bookmark</i><md-progress-circular class=\"md-accent md-hue-1\" md-mode=\"indeterminate\" ng-show=\"shelves_loading\"></md-progress-circular><span ng-hide=\"shelves_loading\">{{count || 0}}</span></div>"
   );
 
 
@@ -779,7 +779,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/right_nav_options.html',
-    "<a href=\"/shelves\" ng-show=\"info.mobile_search\" hide-sm><div class=\"pointer\" layout-padding><i class=\"material-icons\">library_books</i><md-tooltip>Shelves</md-tooltip></div></a><div ng-show=\"info.mobile_search\" class=\"pointer\" layout-padding ng-click=\"toggle_notifications($event)\"><i class=\"material-icons\">notifications_none</i><md-tooltip>Notifications</md-tooltip></div><a href=\"/profile\" ng-show=\"info.mobile_search\" hide-sm><div class=\"profile_link pointer\"><img ng-src=\"{{user.image_url}}\" ng-if=\"user.image_url\" class=\"circular\"> <i class=\"material-icons md-48\" ng-if=\"!user.image_url\">account_circle</i><md-tooltip>Profile</md-tooltip></div></a><div ng-show=\"info.mobile_search\" ng-include src=\"'/assets/angular/html/shared/site_options.html'\"></div>"
+    "<a href=\"/shelves\" ng-show=\"info.mobile_search\" hide-sm><div class=\"pointer\" layout-padding><i class=\"material-icons\">turned_in_not</i><md-tooltip>Shelves</md-tooltip></div></a><div ng-show=\"info.mobile_search\" class=\"pointer\" layout-padding ng-click=\"toggle_notifications($event)\"><i class=\"material-icons\">notifications_none</i><md-tooltip>Notifications</md-tooltip></div><a href=\"/profile\" ng-show=\"info.mobile_search\" hide-sm><div class=\"profile_link pointer\"><img ng-src=\"{{user.image_url}}\" ng-if=\"user.image_url\" class=\"circular\"> <i class=\"material-icons md-48\" ng-if=\"!user.image_url\">account_circle</i><md-tooltip>Profile</md-tooltip></div></a><div ng-show=\"info.mobile_search\" ng-include src=\"'/assets/angular/html/shared/site_options.html'\"></div>"
   );
 
 
@@ -800,6 +800,11 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('/assets/angular/html/shared/shelves.html',
     "<div layout=\"column\" flex layout-fill ng-controller=\"shelfController\"><md-content class=\"book_list\"><section><md-list layout=\"column\" layout-fill layout-wrap layout-align=\"start\"><md-item ng-repeat=\"label in shelves | limitTo: 4\" ng-hide=\"show_all\"><md-checkbox ng-model=\"label.status\" aria-label=\"{{label.label}}\" class=\"md-warn\" ng-click=\"toggle_bookmark(label, label.status)\" ng-class=\"{'md-checked': label.status}\"><div layout-padding>{{label.name || label.label_name}}</div></md-checkbox></md-item><md-item ng-repeat=\"label in shelves\" ng-show=\"show_all\"><md-checkbox ng-model=\"label.status\" aria-label=\"{{label.label}}\" class=\"md-warn\" ng-click=\"toggle_bookmark(label, label.status)\" ng-class=\"{'md-checked': label.status}\"><div layout-padding>{{label.name || label.label_name}}</div></md-checkbox></md-item><md-item layout-padding><a class=\"show_more\" flex ng-click=\"toggle_shelves()\"><span ng-if=\"!show_all\">More Shelves</span> <span ng-if=\"show_all\">Less Shelves</span> <span ng-if=\"!show_all\" class=\"icon-angle-down\"></span> <span ng-if=\"show_all\" class=\"icon-angle-up\"></span></a></md-item></md-list></section></md-content><md-divider></md-divider><section layout=\"column\" class=\"footer\" layout-padding layout-align=\"end end\"><div layout=\"row\"><md-input-container class=\"clear\"><label>Create New...</label><input ng-model=\"new_label\"></md-input-container><md-button ng-click=\"add_new_label(bookmark_object.type)\" class=\"md-button-clear md-raised md-primary\"><span class=\"icon-plus\"></span></md-button></div></section></div>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/shared/shelves_sidenav.html',
+    "<md-sidenav class=\"md-sidenav-right md-whiteframe-z2\" md-component-id=\"right_bookmark\"><md-toolbar class=\"md-primary\"><h1 class=\"md-toolbar-tools\">Your Personal Shelves</h1></md-toolbar><div ng-include src=\"'/assets/angular/html/shared/shelves.html'\" ng-init=\"bookmark_object = data\" class=\"shelves\"></div></md-sidenav>"
   );
 
 

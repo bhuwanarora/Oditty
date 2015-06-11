@@ -54,7 +54,7 @@ homeApp.directive('bookInfo', ["$rootScope", "bookService", '$mdDialog', 'shared
 homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', '$mdSidenav', function($rootScope, feedService, $timeout, $mdSidenav){
     return {
         restrict: 'E',
-        scope : {bookmarkId: '=', bookmarkType: '=', shelves: '=', custom: '=', count: '='},
+        scope : {bookmarkId: '=', bookmarkType: '=', shelves: '=', custom: '=', count: '=', info: '='},
         controller: ["$scope", function($scope){
 
             var _unauthenticated_user = function(){
@@ -66,13 +66,13 @@ homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', '$mdSide
                     $mdSidenav('signup').toggle();
                 }
                 else{
+                    $scope.shelves_loading = true;
+                    feedService.get_bookmarks($scope.bookmarkId).then(function(data){
+                        $rootScope.shelves = data;
+                        $scope.shelves_loading = false;
+                        $mdSidenav('right_bookmark').toggle();
+                    });
                     $rootScope.bookmark_object = {"id": $scope.bookmarkId, "type": $scope.bookmarkType};
-                    $mdSidenav('right_bookmark').toggle();
-                    if(angular.isUndefined($scope.shelves)){
-                        feedService.get_bookmarks($scope.bookmarkId).then(function(data){
-                            $scope.shelves = data;
-                        });
-                    }
                 }
             }
 
