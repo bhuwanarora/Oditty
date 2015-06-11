@@ -26,8 +26,8 @@
             <a ng-href="/news?id={{news.news_id}}">
                 <div ng-bind-html="news.title" class="big_title"></div>
             </a>
+            <a ng-href="{{news.news_url}}" class="less_important" target="_blank">{{news.news_url}}</a>
             <div ng-bind-html="news.description"></div>
-            <a ng-href="{{news.news_url}}" class="less_important" target="_blank">Source</a>
         </div>
      </section>
      <section ng-if="!active_community.news && !info.loading" layout-padding>

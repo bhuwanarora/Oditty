@@ -154,14 +154,8 @@ class WebsiteController < ApplicationController
 	end
 
 	def profile
-		unless session[:user_id]
-			cookies[:logged] = nil
-			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
-			redirect_to :controller => 'website', :action => 'signup'			
-		else
-			@profile = true
-			render :layout => "material"
-		end
+		@profile = true
+		render :layout => "material"
 	end
 
 	def network

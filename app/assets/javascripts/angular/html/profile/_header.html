@@ -6,20 +6,18 @@
                         ng-hide="hide_follow"
                         ng-class="{'md-raised': !profile_user.status}"
                         ng-if="!info.my_profile">
-                <section layout="row" layout-align="start center">
-                    <div ng-show="!profile_user.status">
-                        <div> Follow</div>
-                        <i class="material-icons">person_add</i>
-                    </div>
-                    <div ng-show="profile_user.status">Following</div>
-                </section>
+                <div ng-show="!profile_user.status" layout="row" layout-align="start center">
+                    <div> Follow</div>
+                    <i class="material-icons">person_add</i>
+                </div>
+                <div ng-show="profile_user.status">Following</div>
             </md-button>
         </div>
         <div layout="row" layout-wrap class="bottom_header">
             <div flex="50" hide-sm hide-md layout="row" layout-align="start start">
                 <img ng-src="{{profile_user.image_url | default_profile}}" class="circular profile_pic">
                 <div class="title_margin">
-                    <a href="/profile">
+                    <a ng-href="/profile?id={{profile_user.id}}">
                         <div layout="column" layout-wrap layout-align="start start">
                             <div class="big_title" layout="row" layout-padding>
                                 <div ng-bind="profile_user.first_name"></div>

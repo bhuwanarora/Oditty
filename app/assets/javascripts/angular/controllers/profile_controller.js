@@ -1,4 +1,4 @@
-homeApp.controller('profileController', ["$scope", "userService", '$rootScope', "WebsiteUIConstants", 'ColorConstants', '$location', 'bookService', 'newsService', '$mdDialog', 'infinityService', '$timeout', 'sharedService', function($scope, userService, $rootScope, WebsiteUIConstants, ColorConstants, $location, bookService, newsService, $mdDialog, infinityService, $timeout, sharedService){
+homeApp.controller('profileController', ["$scope", "userService", '$rootScope', "WebsiteUIConstants", 'ColorConstants', '$location', 'bookService', 'newsService', '$mdDialog', 'infinityService', '$timeout', 'sharedService', '$mdSidenav', function($scope, userService, $rootScope, WebsiteUIConstants, ColorConstants, $location, bookService, newsService, $mdDialog, infinityService, $timeout, sharedService, $mdSidenav){
 	var _get_user_details = function(){
 		userService.get_user_details($scope.active_user_id).then(function(data){
 			$scope.profile_user = data;
@@ -119,9 +119,18 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 		}
 	}
 
+	var _unauthenticated_user = function(){
+        return ((getCookie("logged") == "") || (getCookie("logged") == null));
+    }
+
 	$scope.follow_user = function(){
-		$scope.profile_user.status = !$scope.profile_user.status;
-		userService.follow($scope.profile_user.id, $scope.profile_user.status);
+		if(_unauthenticated_user()){
+			$mdSidenav('signup').toggle();
+		}
+		else{
+			$scope.profile_user.status = !$scope.profile_user.status;
+			userService.follow($scope.profile_user.id, $scope.profile_user.status);
+		}
 	}
 
 	var _set_data = function(data, array){
