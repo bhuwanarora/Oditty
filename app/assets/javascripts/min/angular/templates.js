@@ -613,7 +613,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/share/partials/_recommend_options.html',
-    "<div class=\"emotions\"><recommend ng-repeat=\"user in users_list\" user=\"user\" book=\"active_book\"></recommend></div>"
+    "<div class=\"emotions\"><recommend ng-repeat=\"user in users_list\" user=\"user\" users-list=\"users_list\" book=\"active_book\"></recommend></div>"
   );
 
 
@@ -774,7 +774,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/recommend.html',
-    "<div ng-click=\"recommend_friend()\" layout-padding layout=\"row\" layout-align=\"space-between\" class=\"capitalize white custom_title pointer margin_top md-whiteframe-z1\"><img ng-src=\"{{user.image_url | default_profile}}\" class=\"square\"><div layout=\"row\" layout-align=\"space-between center\" layout-padding><div>{{user.first_name}}</div><div layout-padding ng-hide=\"recommending\"><i class=\"material-icons md-dark\">check</i></div><div layout-padding ng-show=\"recommending\"><md-progress-circular class=\"md-accent md-hue-1\" md-mode=\"indeterminate\"></md-progress-circular></div></div></div>"
+    "<div ng-click=\"recommend_friend()\" layout-padding layout=\"row\" layout-align=\"space-between\" class=\"capitalize white custom_title pointer margin_top md-whiteframe-z1\"><div layout=\"row\" layout-align=\"start center\"><img ng-src=\"{{user.image_url | default_profile}}\" class=\"square\"> <a layout-padding ng-href=\"/profile?q={{user.id}}\">{{user.first_name}}</a></div><div layout=\"row\" layout-align=\"space-between center\" layout-padding><div layout-padding ng-hide=\"recommending\"><i class=\"material-icons md-dark\">check</i></div><div layout-padding ng-show=\"recommending\"><md-progress-circular class=\"md-accent md-hue-1\" md-mode=\"indeterminate\"></md-progress-circular></div></div></div>"
   );
 
 

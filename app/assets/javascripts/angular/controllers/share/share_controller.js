@@ -49,6 +49,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         $scope.deselect_emotion();
         delete $scope.related_info;
         delete $scope.info.status_books;
+        $scope.info.status_books = [];
         $scope.show_relevant_books();
     }
 
@@ -129,20 +130,26 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         var status = {};
 
         if($scope.reading_status_selected && $scope.selected_book){
+            $scope.info.wrapper_status = "";
+            $scope.info.status = $scope.info.status || "";
             if(!$scope.active_emotion){
-                $scope.info.status = $scope.reading_options[$scope.active_id].status;
-                $scope.info.wrapper_status = "<span><span class='custom_title light_title'><span>"+$scope.reading_options[$scope.active_id].status+"</span></span>"
+                $scope.info.status = $scope.info.status + " "+ $scope.reading_options[$scope.active_id].status;
+                $scope.info.wrapper_status = $scope.info.wrapper_status + "<span><span class='custom_title light_title'><span>"+$scope.reading_options[$scope.active_id].status+"</span></span>"
             }
             else{
-                $scope.info.status = "Feeling "+ $scope.active_emotion.name + $scope.reading_options[$scope.active_id].emotion_status;
-                $scope.info.wrapper_status = "<span class='custom_title light_title'><span>Feeling "+$scope.active_emotion.name+"  </span><span>"+$scope.reading_options[$scope.active_id].emotion_status+"</span></span>";
+                $scope.info.status = $scope.info.status + " Feeling "+ $scope.active_emotion.name + " " + $scope.reading_options[$scope.active_id].emotion_status;
+                $scope.info.wrapper_status = $scope.info.wrapper_status + "<span class='custom_title light_title'><span>Feeling "+$scope.active_emotion.name+"  </span><span>"+$scope.reading_options[$scope.active_id].emotion_status+"</span></span>";
             }
+
             $scope.info.status = $scope.info.status + " " + $scope.selected_book.title + " by " + $scope.selected_book.author_name;
+
             $scope.info.wrapper_status = $scope.info.wrapper_status + "<span class='big_title bold_light_title'>"+$scope.selected_book.title+" </span><span class='less_important'>by "+$scope.selected_book.author_name+"</span>";
+
             if($scope.info.current_page){
                 $scope.info.status = $scope.info.status + " on page " + $scope.info.current_page;
                 $scope.info.wrapper_status = $scope.info.wrapper_status + "<span> on page <b>"+$scope.info.current_page+"</b></span>";
             }
+
             if($scope.info.page_count){
                 $scope.info.status = $scope.info.status + "/"+ $scope.info.page_count;
                 $scope.info.wrapper_status = $scope.info.wrapper_status + "<span><b>/{{info.page_count}}</b>.</span>";
@@ -365,7 +372,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
                             }
                         }
                         else{
-                            console.debug($scope.info.wrapper_status, text_state.current_character);
+                            // console.debug($scope.info.wrapper_status, text_state.current_character);
                             $scope.info.wrapper_status = $scope.info.wrapper_status+text_state.current_character;
                         }
                     }

@@ -35,6 +35,9 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 						break;
 					case "FollowsNode":
 						message = "Joined room.";
+						break;
+					case "RecommendNode":
+						message = "Recommended this book.";
 				}
 				return message;
 			}

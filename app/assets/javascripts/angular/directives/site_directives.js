@@ -1,7 +1,7 @@
 homeApp.directive('recommend', ["$rootScope", "userService", "sharedService", function($rootScope, userService, sharedService){
     return{
         restrict: 'E',
-        scope: {user: '=', book: '='},
+        scope: {user: '=', book: '=', usersList: '='},
         controller: ['$scope', function($scope){
             $scope.recommend_friend = function(){
                 var friends_id = $scope.user.id;

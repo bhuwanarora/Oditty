@@ -49,6 +49,9 @@ homeApp.controller('timelineController', ["$scope", "$rootScope", "bookService",
                     break;
                 case "RatingNode":
                     message = "Gave "+value.node.content + " rating on 10.";
+                    break;
+                case "RecommendNode":
+                    message = "Recommended this book to a friend."
             }
             return message;
         }
