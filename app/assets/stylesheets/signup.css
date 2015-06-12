@@ -311,10 +311,11 @@ and (max-width : 800px){
 .profile__group .avatar-container .avatar,
 .profile__group .avatar-container .avatar--large{
     position: absolute;
-    width: 8.125rem;
-    height: 8.125rem;
+    width: 7rem;
+    height: 7rem;
     margin-left: -4.0625rem;
     margin-top: -4.0625rem;
-    border-radius: 4.0625rem;
+    border-radius: 3.5rem;
+    letter-spacing: 3.5px;
     background-size: cover;
 }
