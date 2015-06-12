@@ -297,7 +297,19 @@ and (max-width : 800px){
 .profile__group .avatar-container.visible{
     visibility: visible;
 }
-.profile__group .avatar-container .avatar,.profile__group .avatar-container .avatar--large{
+
+.profile__group .avatar-container .room_title{
+    background-color: white;
+    font-size: 15px;
+    padding: 4px;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+
+.profile__group .avatar-container .avatar,
+.profile__group .avatar-container .avatar--large{
     position: absolute;
     width: 8.125rem;
     height: 8.125rem;
