@@ -58,7 +58,8 @@ class Label < Neo
 
 	def self.optional_match_books
 		" OPTIONAL MATCH (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode{user_id: ID(user)})-[bookmark_action:BookmarkAction]->(book:Book)
-		WITH label, COLLECT({"+Book.grouped_basic_info+"}) as book, COUNT(label) AS label_count "
+		WITH label, COLLECT({"+Book.grouped_basic_info+"}) AS book, COUNT(label) AS label_count "\
+		"WITH label, filter(b in book WHERE b.id IS NOT NULL) AS book,label_count "
 	end
 
 	def self.optional_match_articles
