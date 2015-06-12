@@ -1,4 +1,4 @@
-homeApp.controller('recommendController', ["$scope", 'networkService', '$timeout', function($scope, networkService, $timeout){
+homeApp.controller('recommendController', ["$scope", 'networkService', '$timeout', '$mdSidenav', function($scope, networkService, $timeout, $mdSidenav){
 	$scope.toggle_recommend = function(){
 		$scope.show_recommend = !$scope.show_recommend;
         if(angular.isUndefined($scope.users_list)){
@@ -16,12 +16,25 @@ homeApp.controller('recommendController', ["$scope", 'networkService', '$timeout
         });
     }
 
+    var _unauthenticated_user = function(){
+        return ((getCookie("logged") == "") || (getCookie("logged") == null));
+    }
+
+    $scope.show_signin = function(){
+        $mdSidenav('signup').toggle();
+    }
+
     var _init = (function(){
-        var friends_timeout = $timeout(function(){
-            $scope.toggle_recommend();
-        }, 100);
-        $scope.$on('destroy', function(){
-            $timeout.cancel(friends_timeout);
-        });
+        if(_unauthenticated_user()){
+            $scope.sign_in = true;
+        }
+        else{
+            var friends_timeout = $timeout(function(){
+                $scope.toggle_recommend();
+            }, 100);
+            $scope.$on('destroy', function(){
+                $timeout.cancel(friends_timeout);
+            });
+        }
     }());
 }]);

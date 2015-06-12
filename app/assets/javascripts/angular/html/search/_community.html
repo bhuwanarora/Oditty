@@ -3,10 +3,8 @@
         <section layout="row" layout-align="space-between center">
         </section><br/>
         <section layout="row">
-            <div flex="20" flex-md="30" flex-sm="35" layout="row" layout-align="start start">
-                <img ng-src="{{result.image_url}}" class="large_circular">
-            </div>
-            <div flex="80" flex-md="70" flex-sm="65" layout="column" layout-wrap class="side_padding">
+            <img ng-src="{{result.image_url}}" class="big_circle">
+            <div layout-wrap class="side_padding">
                 <div class="big_title"><a ng-href="/room?id={{result.id}}">{{result.name}}</a></div>
             </div>
         </section>

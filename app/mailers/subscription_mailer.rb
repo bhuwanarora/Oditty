@@ -53,7 +53,7 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
 
   def recommend_book params
     mandrill_mail template: params[:template],
-                  subject: params[:user][:name]+" recommend you to read " + params[:book][:title],
+                  subject: params[:user][:name]+" recommends you to read " + params[:book][:title],
                   to: { email: params[:friend][:email]},
                   vars: {
                     'ISBN' => params[:book][:isbn],

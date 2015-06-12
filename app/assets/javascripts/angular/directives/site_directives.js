@@ -5,7 +5,7 @@ homeApp.directive('recommend', ["$rootScope", "userService", "sharedService", fu
         controller: ['$scope', function($scope){
             $scope.recommend_friend = function(){
                 var friends_id = $scope.user.id;
-                var book_id = $scope.book.id;
+                var book_id = $scope.book.id || $rootScope.active_book.id || $rootScope.active_book.book_id;
                 $scope.recommending = true;
                 userService.recommend(friends_id, book_id).then(function(){
                     $scope.recommending = false;
