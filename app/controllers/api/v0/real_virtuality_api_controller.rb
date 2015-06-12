@@ -7,6 +7,13 @@ module Api
 				info = Api::V0::RealVirtualityApi.get_news(id).execute
 				render :json => info, :status => 200
 			end
+
+			def community_news
+				skip_count = params[:skip] || 0
+				community_id = params[:id]
+				info = Api::V0::RealVirtualityApi.get_news_community(community_id,skip_count).execute
+				render :json => info, :status => 200
+			end
 		end
 	end
 end

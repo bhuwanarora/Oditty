@@ -147,8 +147,8 @@ class Book < Neo
 		" WITH community, " + Book		
 	end
 
-	def get_news
-		match + Book.match_communities + Community.order_desc + Book.limit(1) + Community.match_news  + " ,book WITH book, " + Community.collect_map("news" => News.grouped_basic_info) + Book.match_communities + " ,news " + Book.return_init + " news, " + Community.basic_info + Community.order_desc 
+	def get_news skip_count = 0
+		match + Book.match_communities + Community.order_desc + Book.limit(1) + Community.match_news  + " ,book " + Book.skip(skip_count) + Book.limit(10) +  " WITH book, " + Community.collect_map("news" => News.grouped_basic_info) + Book.match_communities + " ,news " + Community.order_desc + Book.return_init + " news, " + Community.collect_map("community" => Community.grouped_basic_info)
 	end
 
 	def self.match_lenders 

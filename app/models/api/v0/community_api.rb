@@ -14,8 +14,8 @@ module Api
 				News.new(news_id).create_visited(user_id)
 			end
 
-			def self.suggest_communities user_id, skip_count
-				info = Community.get_popular(skip_count)
+			def self.suggest_communities user_id
+				clause = User::Suggest::CommunitySuggestion.new(user_id).get_communities
 			end
 
 			def self.top_communities user_id, skip_count

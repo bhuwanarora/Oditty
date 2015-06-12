@@ -4,6 +4,10 @@ module Api
 			def self.get_news id
 				Book.new(id).get_news
 			end
+
+			def self.get_news_community community_id,skip_count
+				Community.new(community_id).get_news skip_count
+			end
 		end
 	end
 end 

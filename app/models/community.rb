@@ -124,4 +124,8 @@ class Community < Neo
 	def match_news_related_communities news_id
 		News.new(news_id).match + ", most_important_tag " + News.optional_match_community + " , most_important_tag  WHERE NOT ID(community) = " + @id.to_s + " WITH most_important_tag, community, has_community ORDER BY has_community.relevance DESC WITH  most_important_tag, " + Community.collect_map("other_tags" => Community.grouped_basic_info) + Article::NewsArticle.return_group(" most_important_tag ", " other_tags[0.." + (Constant::Count::CommunitiesShown+1).to_s + "] AS other_tags ")
 	end
+
+	def get_news skip_count = 0
+		clause = match + Community.match_news +  Community.skip(skip_count) + Community.limit(10) + " WITH community, " + Community.collect_map("news" => News.grouped_basic_info) + " RETURN news, " + Community.collect_map("community" => Community.grouped_basic_info)
+	end
 end
