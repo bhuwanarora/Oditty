@@ -5,10 +5,6 @@ class User::Suggest::CommunitySuggestion < User::Suggest
 		@user = User.new(@user_id)
 	end
 
-	def self.get_news community_id, skip_count
-		clause = Community.new(community_id).match  + Community.match_news  + CommunitySuggestion.skip(skip_count) + CommunitySuggestion.limit(10) + " WITH community, " + Community.collect_map("news" => News.grouped_basic_info) + " RETURN news, " + Community.collect_map("community" => Community.grouped_basic_info)
-	end
-
 	def get_communities
 		clause = ""
 		if(@user_id.present?)

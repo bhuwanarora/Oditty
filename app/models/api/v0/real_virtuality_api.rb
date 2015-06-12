@@ -6,7 +6,7 @@ module Api
 			end
 
 			def self.get_news_community community_id,skip_count
-				User::Suggest::CommunitySuggestion.get_news community_id, skip_count
+				Community.new(community_id).get_news skip_count
 			end
 		end
 	end
