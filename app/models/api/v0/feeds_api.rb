@@ -17,10 +17,6 @@ module Api
 			def self.last_blog
 				Blog.get_latest_blog
 			end
-
-			def self.notify_borrow user_id, book_id
-				UsersUser.notify_borrow user_id, user_id
-			end
 		end
 	end
 end

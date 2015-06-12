@@ -317,4 +317,10 @@ namespace :graph do
     GraphHelper.update_follow_counts_for_user
   end
 
+  desc "set user notification circular linked list"
+  task :set_user_notification => :environment do
+    include GraphHelper
+    GraphHelper.set_user_notification
+  end
+
 end

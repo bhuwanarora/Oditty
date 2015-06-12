@@ -405,9 +405,14 @@ module GraphHelper
 		clause.execute
 	end
 
-
 	def wrong_author_links
 		clause = "MATCH (book:Book)<-[:Wrote]-(author:Author) WHERE book.author_name <> author.name RETURN COUNT(b)"
+	end
 
+	def set_user_notification
+		clause = "MATCH (user:User) WITH user "\
+			"WHERE NOT ((user)-[:NextNotification]->())"\
+			"CREATE UNIQUE (user)-[:NextNotification]->(user)"
+		clause.execute
 	end
 end

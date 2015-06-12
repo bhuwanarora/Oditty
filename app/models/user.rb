@@ -129,7 +129,7 @@ class User < Neo
 	end
 
 	def self.create(email, password=nil, verification_token=nil)
-		"CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, last_book: "+Constant::Id::BestBook.to_s+", amateur: true, ask_info: true, verification_time :" + Time.now.to_i.to_s + "}) "
+		"CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, last_book: "+Constant::Id::BestBook.to_s+", amateur: true, ask_info: true, verification_time :" + Time.now.to_i.to_s + "}) WITH user "
 	end
 
 	def self.link_root_categories
@@ -137,7 +137,7 @@ class User < Neo
 	end
 
 	def self.handle_new(email, password=nil, verification_token=nil)
-		User.create(email, password, verification_token) + User::Feed.create_first + Label.match_primary  + ", user " + User.link_primary_labels + User::UserNotification.create_for_new_user + Category::Root.match  + ", user " + User.link_root_categories + User.return_init + User.basic_info
+		User.create(email, password, verification_token) + UserNotification.create_for_new_user +  User::Feed.create_first + Label.match_primary  + ", user " + User.link_primary_labels + User::UserNotification.create_for_new_user + Category::Root.match  + ", user " + User.link_root_categories + User.return_init + User.basic_info
 	end
 
 	def get_notifications
@@ -327,5 +327,10 @@ class User < Neo
 			shelf = ":ArticleShelf" 
 		end
 		match + Label.match_shelves(shelf) + " MATCH (media) WHERE ID(media) = " + id.to_s + " WITH label, media " + Bookmark.optional_match_path("media") + User.return_group(Label.basic_info, "ID(bookmark_node) AS status")
+	end
+
+	def self.get_max_min_id
+		output = "MATCH (a:User) RETURN max(ID(a)) as max_id,min(ID(a)) as min_id".execute[0]
+		[output["max_id"],output["min_id"]]
 	end
 end

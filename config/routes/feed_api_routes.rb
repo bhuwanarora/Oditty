@@ -8,7 +8,6 @@ ReadersDoor::Application.routes.draw do
             match 'feed_news'                               => 'feeds_api#get_news',                          :via => [:put, :get, :post]
             match 'feed_blog'                               => 'feeds_api#get_blog',                          :via => [:put, :get, :post]
             match 'last_blog'                               => 'feeds_api#last_blog',                         :via => [:put, :get, :post]
-            match 'notify_borrow'                           => 'feeds_api#notify_borrow',                          :via => [:put, :get, :post]
         end
     end
 end
