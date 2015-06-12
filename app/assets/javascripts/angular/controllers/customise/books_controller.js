@@ -103,8 +103,13 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
             left: false,
             right: true
         };
+        var books_timeout = $timeout(function(){
+            $scope.books_on_signup();
+        }, 100);
 
-        $scope.books_on_signup();
+        $scope.$on('destroy', function(){
+            $timeout.cancel(books_timeout);
+        });
     }());
 
 }]);

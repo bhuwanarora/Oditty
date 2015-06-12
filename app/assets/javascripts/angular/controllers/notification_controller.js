@@ -1,7 +1,15 @@
-homeApp.controller('notificationController', ["$scope", 'feedService', function($scope, feedService){
+homeApp.controller('notificationController', ["$scope", 'feedService', '$timeout', function($scope, feedService, $timeout){
 	var _init = (function(){
-		feedService.get_notifications().then(function(data){
-			$scope.notifications = data;
+		$scope.info.loading = true;
+
+		var notifications_timeout = $timeout(function(){
+			feedService.get_notifications().then(function(data){
+				$scope.info.loading = false;
+				$scope.notifications = data;
+			});
+		}, 100);
+		$scope.$on('destroy', function(){
+			$timeout.cancel(notifications_timeout);
 		});
 	}());
 

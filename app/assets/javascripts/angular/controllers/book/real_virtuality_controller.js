@@ -10,5 +10,7 @@ homeApp.controller('realVirtualityController', ["$scope", "$rootScope", "bookSer
             $scope.communities = data;
             $scope.active_community = data[0];
         });
+
+        // bookService.
     }());
 }]);

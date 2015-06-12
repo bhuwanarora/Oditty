@@ -1,1 +1,1 @@
-homeApp.controller("notificationController",["$scope","feedService",function(a,b){(function(){b.get_notifications().then(function(b){a.notifications=b})})();a.stop_propagation=function(a){a.stopPropagation()}}]);
+homeApp.controller("notificationController",["$scope","feedService","$timeout",function(a,b,c){(function(){a.info.loading=!0;var d=c(function(){b.get_notifications().then(function(b){a.info.loading=!1,a.notifications=b})},100);a.$on("destroy",function(){c.cancel(d)})})();a.stop_propagation=function(a){a.stopPropagation()}}]);

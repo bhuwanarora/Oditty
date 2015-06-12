@@ -1,46 +1,51 @@
-<md-card class="community" 
-    ng-class="{'md-whiteframe-z5': communityFeed.expand}"
-    ng-if="communityFeed.title && communityFeed.title != '' && communityFeed.title != null">
-    <md-card-content layout="row" layout-padding class="communities" ng-if="communityFeed.communities">
-        <div ng-repeat="community in communityFeed.communities | limitTo: 4" 
-            layout-align="start start" layout-padding layout-wrap layout="row" class="community_circle">
-            <a layout="column" layout-align="center center" ng-href="/room?id={{community.id}}" 
-                class="animate-fast vertical_expansion" 
-                ng-if="!communityFeed.expand">
-                <img ng-src="{{community.image_url}}" class="community_circular" alt="{{community.name}}" />
-                <div ng-bind-html="community.name | uppercase" layout-wrap class="category_title" layout-padding></div>
+<div layout-padding ng-class="{'dark_grey': communityFeed.expand}">
+    <md-card class="community" 
+        ng-if="communityFeed.title && communityFeed.title != '' && communityFeed.title != null">
+        <md-card-content layout="row" layout-padding class="communities" ng-if="communityFeed.communities">
+            <div ng-repeat="community in communityFeed.communities | limitTo: 4" 
+                layout-align="start start" layout-padding layout-wrap layout="row" class="community_circle">
+                <a layout="column" layout-align="center center" ng-href="/room?id={{community.id}}" 
+                    class="animate-fast vertical_expansion" 
+                    ng-if="!communityFeed.expand">
+                    <img ng-src="{{community.image_url}}" class="community_circular" alt="{{community.name}}" />
+                    <div ng-bind-html="community.name" layout-wrap class="bold capitalize" layout-padding></div>
+                </a>
+                <a layout="row" layout-align="start" ng-href="/room?id={{community.id}}" 
+                    class="animate-fast vertical_expansion"
+                    ng-if="communityFeed.expand">
+                    <img ng-src="{{community.image_url}}" class="circular" alt="{{community.name}}" />
+                    <md-tooltip>{{community.name}}</md-tooltip>
+                </a>
+            </div>
+        </md-card-content>
+        <md-card-content class="content">
+            <div class="big_title">
+                <a ng-click="goto_news_page(communityFeed.id || communityFeed.news_id)">
+                {{communityFeed.title}}</a>
+            </div>
+            <div class="less_important">News, {{communityFeed.created_at | timestamp | date:'dd MMM'}}</div><br/>
+            <md-button ng-click="toggle_expand()"
+                class="clear community_description">
+                <div ng-bind-html="communityFeed.description" class="wrap" ng-show="communityFeed.description"></div>
+                <div ng-show="!communityFeed.description">Expand</div>
+            </md-button>
+        </md-card-content>
+        <md-card-content class="image_container clear" layout="column" ng-if="communityFeed.expand">
+            <div flex class="image_wrapper">
+                <img class="full_width"
+                     ng-src="{{communityFeed.image_url}}"
+                     ng-show="communityFeed.image_url"/>
+            </div>
+            <a class="less_important" ng-href="{{communityFeed.url}}" layout-padding target="_blank">
+                {{communityFeed.url}}
             </a>
-            <a layout="row" layout-align="start" ng-href="/room?id={{community.id}}" 
-                class="animate-fast vertical_expansion"
-                ng-if="communityFeed.expand">
-                <img ng-src="{{community.image_url}}" class="circular" alt="{{community.name}}" />
-                <md-tooltip>{{community.name}}</md-tooltip>
-            </a>
-        </div>
-    </md-card-content>
-    <md-card-content class="content">
-        <div class="big_title">
-            <a ng-click="goto_news_page(communityFeed.id || communityFeed.news_id)">
-            {{communityFeed.title}}</a>
-        </div>
-        <div class="less_important">News, {{communityFeed.created_at | timestamp | date:'dd MMM'}}</div><br/>
-        <md-button ng-click="toggle_expand()"
-            class="clear community_description">
-            <div ng-bind-html="communityFeed.description" class="wrap" ng-show="communityFeed.description"></div>
-            <div ng-show="!communityFeed.description">Expand</div>
-        </md-button>
-    </md-card-content>
-    <md-card-content class="image_container clear" layout="row" ng-if="communityFeed.expand">
-        <div flex class="image_wrapper">
-            <img class="full_width"
-                 ng-src="{{communityFeed.image_url}}"
-                 ng-show="communityFeed.image_url"/>
-        </div>
-    </md-card-content>
+        </md-card-content>
+        
+        <md-card-content class="footer" 
+            ng-if="communityFeed.id && communityFeed.expand"
+            ng-init="bookmark_object = {'id': communityFeed.id, 'type': 'Community'}; feed = communityFeed"
+            ng-include src="'/assets/angular/html/shared/partials/feed_footer.html'">
+        </md-card-content>
+    </md-card>
     
-    <md-card-content class="footer" 
-        ng-if="communityFeed.id && communityFeed.expand"
-        ng-init="bookmark_object = {'id': communityFeed.id, 'type': 'Community'}; feed = communityFeed"
-        ng-include src="'/assets/angular/html/shared/partials/feed_footer.html'">
-    </md-card-content>
-</md-card>
+</div>

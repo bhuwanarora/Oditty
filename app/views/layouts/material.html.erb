@@ -175,7 +175,7 @@
             <% if @profile %>
                 <script src="assets/angular/directives/profile_directives.js"></script>
                 <script src="assets/angular/services/news_service.js"></script>
-                
+                <script src="assets/angular/controllers/customise/genres_controller.js"></script>
                 <script src="assets/angular/controllers/profile_controller.js"></script>
                 
             <% end %>
@@ -298,9 +298,10 @@
             <% elsif @shelves %>
                 <md-content ng-controller="roomController">
             <% elsif @author %>
-                <md-content ng-controller="authorController" layout="row" layout-wrap check-scroll-bottom="get_books()" ng-keydown="keypress_scroll($event)">
+                <md-content ng-controller="authorController" layout="row" layout-wrap class="white"
+                    check-scroll-bottom="get_books()" ng-keydown="keypress_scroll($event)">
             <% elsif @profile %>
-                <md-content ng-controller="profileController" check-scroll-bottom="get_feed()">
+                <md-content ng-controller="profileController" check-scroll-bottom="get_feed()" class="white">
             <% elsif @search %>
                 <md-content layout="row" layout-wrap ng-controller="searchPageController" check-scroll-bottom="show_all_results()">
             <% elsif @book %>
@@ -341,7 +342,7 @@
             <% unless @profile %>
                 <div ng-include src="'/assets/angular/html/share/show.html'"></div>
             <% end %>
-            
+            <div ng-include src="'/assets/angular/html/shared/shelves_sidenav.html'" ></div>
         </div>
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

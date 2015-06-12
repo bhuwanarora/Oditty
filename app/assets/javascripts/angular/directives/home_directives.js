@@ -1,11 +1,20 @@
-homeApp.directive('suggestCommunities', ["$rootScope", "userService", function($rootScope, userService){
+homeApp.directive('suggestCommunities', ["$rootScope", "userService", "$timeout", function($rootScope, userService, $timeout){
     return {
         restrict: 'E',
         controller: ["$scope", function($scope){
             var _init = function(){
-                userService.suggest_communities().then(function(data){
-                    $scope.suggest_communities = data;
-                });
+                $scope.info.loading = true;
+                var room_timeout = $timeout(function(){
+                    userService.suggest_communities().then(function(data){
+                        $scope.info.loading = false;
+                        $scope.suggest_communities = data;
+                        $scope.show_suggestions = true;
+                    });
+                }, 100);
+            }
+
+            $scope.toggle_suggestions = function(){
+                $scope.show_suggestions = !$scope.show_suggestions;
             }
 
             _init();
@@ -14,15 +23,24 @@ homeApp.directive('suggestCommunities', ["$rootScope", "userService", function($
     };
 }]);
 
-homeApp.directive('joinCommunity', ["$rootScope", "newsService", function($rootScope, newsService){
+homeApp.directive('joinCommunity', ["$rootScope", "newsService", "$mdSidenav", function($rootScope, newsService, $mdSidenav){
     return {
         restrict: 'E',
         scope: {community: '='},
         controller: ["$scope", function($scope){
+            var _unauthenticated_user = function(){
+                return ((getCookie("logged") == "") || (getCookie("logged") == null));
+            }
+
             $scope.toggle = function(){
-                var id = $scope.community.id;
-                $scope.community.status = !$scope.community.status;
-                newsService.follow(id, $scope.community.status);
+                if(_unauthenticated_user()){
+                    $mdSidenav('signup').toggle();
+                }
+                else{
+                    var id = $scope.community.id;
+                    $scope.community.status = !$scope.community.status;
+                    newsService.follow(id, $scope.community.status);
+                }
             }
 
         }],

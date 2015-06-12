@@ -1,6 +1,8 @@
 <div class="follow_content" layout="row" ng-show="!community_loading" ng-if="community">
     <div class="image_wrapper">
-        <div class="big_title absolute white_color" layout-padding>{{community.name | uppercase}}</div>
+        <a ng-href="/room?id={{community.id}}">
+            <div class="big_title absolute white_color" layout-padding>{{community.name | uppercase}}</div>
+        </a>
         <img ng-src="{{community.image_url}}" class="full_width">
        <!--  <section layout="row" class="absolute">
             <md-button ng-click="show_book_dialog(book, $event)" 
@@ -11,10 +13,10 @@
         </section> -->
     </div>
 </div>
-<md-progress-linear class="md-primary"
+<!-- <md-progress-linear class="md-primary"
                     ng-show="community_loading"
                     md-mode="indeterminate">
-</md-progress-linear>
+</md-progress-linear> -->
 <style>
     .books{
         max-height: 110px;

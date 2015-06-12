@@ -1,19 +1,19 @@
-<md-card class="social">
+<md-card class="social no_shadow">
     <md-card-content class="footer">
         <section layout="column" layout-align="start">
             <div layout="row">
                 <img ng-src="{{profile_user.image_url | default_profile}}" class="circular">
                 <div layout="column" layout-align="start start">
-                    <div layout-padding class="big_title">{{profile_user.first_name}}</div>
+                    <div layout-padding class="bold">{{profile_user.first_name}}</div>
                     <div layout-padding>
-                        <div ng-bind-html="feed.message" class="status_message"></div>
                         <div class="less_important">{{feed.created_at | timestamp | date:'h:mm a, dd MMM'}}</div>
+                        <div ng-bind-html="feed.message" class="status_message"></div>
                     </div>
                 </div>
             </div>
         </section>
     </md-card-content>
-    <md-card-content class="less_important_container clear">
+    <md-card-content class="clear grey" ng-if="feed.community">
         <community-info class="footer" info="info" community="feed.community"></community-info>
     </md-card-content>
 </md-card>

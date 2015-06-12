@@ -360,13 +360,14 @@ module Api
 				params = {
 					:template => Constant::EmailTemplate::RecommendBooks, 
 				  	:user => {
-				  		:thumb => info["image_url"], 
+				  		:image_url => info["image_url"], 
 				  		:id => info["id"],
-				  		:name => info["first_name"] + " " + info["last_name"]
+				  		:name => info["first_name"] + " " + info["last_name"],
 				  	},
 				  	:friend =>{
-				  		:name => info["friends_first_name"] + " " + info["friends_last_name"],
-				  		:email => info["email"]
+				  		:name => info["friends_first_name"],
+				  		:email => info["friends_email"],
+				  		:id => info["friends_id"]
 				  	},
 				  	:book => {
 				  		:id => info["book_id"],
@@ -471,7 +472,7 @@ module Api
 			end
 
 			def self.get_notifications user_id
-				info = User.new(user_id).get_notifications
+				info = User.new(user_id).get_notifications.execute
 				info
 			end
 
@@ -498,6 +499,11 @@ module Api
 			def self.set_region user_id, region, ip
 				region = GeoIP.new('GeoIP.dat').country(remote_ip.to_s).country_name  
 				User.new(user_id).set_region(region)
+			end
+
+			def self.search_friends(user_id, search_text)
+				info = User.new(user_id).search_friends(search_text).execute
+				info
 			end
 		end
 	end

@@ -1,7 +1,7 @@
 homeApp.directive('recommend', ["$rootScope", "userService", "sharedService", function($rootScope, userService, sharedService){
     return{
         restrict: 'E',
-        scope: {user: '=', book: '='},
+        scope: {user: '=', book: '=', usersList: '='},
         controller: ['$scope', function($scope){
             $scope.recommend_friend = function(){
                 var friends_id = $scope.user.id;
@@ -54,7 +54,7 @@ homeApp.directive('bookInfo', ["$rootScope", "bookService", '$mdDialog', 'shared
 homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', '$mdSidenav', function($rootScope, feedService, $timeout, $mdSidenav){
     return {
         restrict: 'E',
-        scope : {bookmarkId: '=', bookmarkType: '=', shelves: '=', custom: '=', count: '='},
+        scope : {bookmarkId: '=', bookmarkType: '=', shelves: '=', custom: '=', count: '=', info: '='},
         controller: ["$scope", function($scope){
 
             var _unauthenticated_user = function(){
@@ -66,13 +66,13 @@ homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', '$mdSide
                     $mdSidenav('signup').toggle();
                 }
                 else{
+                    $scope.shelves_loading = true;
+                    feedService.get_bookmarks($scope.bookmarkId).then(function(data){
+                        $rootScope.shelves = data;
+                        $scope.shelves_loading = false;
+                        $mdSidenav('right_bookmark').toggle();
+                    });
                     $rootScope.bookmark_object = {"id": $scope.bookmarkId, "type": $scope.bookmarkType};
-                    $mdSidenav('right_bookmark').toggle();
-                    if(angular.isUndefined($scope.shelves)){
-                        feedService.get_bookmarks($scope.bookmarkId).then(function(data){
-                            $scope.shelves = data;
-                        });
-                    }
                 }
             }
 
@@ -252,10 +252,15 @@ homeApp.directive('calendar', ["$rootScope", function($rootScope){
               .map(function(item, index){return ++index;});
         $scope.months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         $scope.years = [];
-        $scope.selectedDay = $rootScope.user.selectedDay;
-        $scope.selectedMonth = $rootScope.user.selectedMonth;
-        $scope.selectedYear = $rootScope.user.selectedYear;
-        
+        if(angular.isDefined($rootScope.user)){
+            $scope.selectedDay = $rootScope.user.selectedDay;
+        }
+        if(angular.isDefined($rootScope.user)){
+            $scope.selectedMonth = $rootScope.user.selectedMonth;
+        }
+        if(angular.isDefined($rootScope.user)){
+            $scope.selectedYear = $rootScope.user.selectedYear;
+        }
         var currentYear = new Date().getFullYear();
         for(var i=currentYear; i>1904; i--){
           $scope.years.push(i);

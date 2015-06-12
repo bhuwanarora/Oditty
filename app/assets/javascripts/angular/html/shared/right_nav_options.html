@@ -1,6 +1,6 @@
-<a href="/shelves" ng-show="info.mobile_search">
+<a href="/shelves" ng-show="info.mobile_search" hide-sm>
     <div class="pointer" layout-padding>
-        <i class="material-icons">library_books</i>
+        <i class="material-icons">turned_in_not</i>
         <md-tooltip >
             Shelves
         </md-tooltip>
@@ -14,7 +14,7 @@
         Notifications
     </md-tooltip>
 </div>
-<a href="/profile" ng-show="info.mobile_search">
+<a href="/profile" ng-show="info.mobile_search" hide-sm>
     <div class="profile_link pointer">
         <img ng-src="{{user.image_url}}" ng-if="user.image_url" class="circular">
         <i class="material-icons md-48" ng-if="!user.image_url">account_circle</i>

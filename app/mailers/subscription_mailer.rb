@@ -53,7 +53,7 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
 
   def recommend_book params
     mandrill_mail template: params[:template],
-                  subject: params[:user][:name]+" recommended you a book at ReadersDoor",
+                  subject: params[:user][:name]+" recommend you to read " + params[:book][:title],
                   to: { email: params[:friend][:email]},
                   vars: {
                     'ISBN' => params[:book][:isbn],
@@ -62,9 +62,10 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
                     'BOOK_ID' => params[:book][:id],
                     'FRIEND_NAME' => params[:friend][:name],
                     'USERNAME' => params[:user][:name],
-                    'THUMB' => params[:user][:thumb],
+                    'THUMB' => params[:user][:image_url],
                     'USER_ID' => params[:user][:id]
                   },
+                  # from: "recommendbooks@readersdoor.com",
                   important: true,
                   inline_css: true
   end

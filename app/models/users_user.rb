@@ -13,8 +13,12 @@ class UsersUser < Neo
 		" MERGE (user)-[follows_user:FollowsUser]->(follows_node:FollowsNode{friend_id:ID(friend), user_id: ID(user)}) MERGE (follows_node)-[followed_by:FollowedBy]->(friend) SET follows_node.created_at = " + Time.now.to_i.to_s + ", follows_node.updated_at = " + Time.now.to_i.to_s + " WITH user, follows_user, friend, follows_node, followed_by "
 	end
 
+	def self.follow_match
+		" MATCH (user)-[follows_user:FollowsUser]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(friend) "
+	end
+
 	def match 
-		" MATCH (user)-[follows_user:FollowsUser]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(friend) WHERE ID(user) = " + @user_id.to_s + " AND ID(friend) = " + @friend_id.to_s + " WITH user, follows_user, friend, follows_node, followed_by "
+		UsersUser.follow_match + " WHERE ID(user) = " + @user_id.to_s + " AND ID(friend) = " + @friend_id.to_s + " WITH user, follows_user, friend, follows_node, followed_by "
 	end
 
 	def self.reverse_match 
@@ -47,17 +51,15 @@ class UsersUser < Neo
 		" WITH user, borrow_node "
 	end
 	
-	def recommend_book(book_id)		
+	def recommend_book book_id
 		clause = match_book book_id
 		clause += create_recommendation book_id
-		clause += "WITH user, friend, book, recommend_node "		
+		clause += " WITH user, friend, book, recommend_node "
 		clause += User::Feed.new(@user_id).create("recommend_node") + ", friend, book "
-		clause += "WITH user, friend, book, recommend_node "
-		clause += Book::BookFeed.new(book_id).create("recommend_node")
-		clause += "WITH user, friend, book, recommend_node "
+		clause += Book::BookFeed.new(book_id).create("recommend_node") + ", friend "
 		clause += User.set_total_count(Constant::Count::TotalCountIncrementRecommendation,"+")
 		clause += Book.set_recommended_count(1, "+")
-		clause += "WITH friend as user, recommend_node "
+		clause += " WITH friend as user, recommend_node "
 		clause += User::UserNotification.add("recommend_node")
 		clause += " RETURN ID(recommend_node)"
 	end

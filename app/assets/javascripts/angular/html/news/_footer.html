@@ -8,9 +8,6 @@
 						<div ng-bind-html="tag.title | reduced_news_title" layout-wrap></div>
 						<div ng-bind-html="tag.community_info.name" class="less_important"></div>
 					</div>
-					<md-tooltip md-direction="top" ng-show="tag.description">
-						{{tag.description}}
-					</md-tooltip>
 				</div>
 				<!-- <div layout="column" class="news_item" ng-if="!info.active_circles">
 					<img ng-src="{{tag.image_url}}" class="full_width" />

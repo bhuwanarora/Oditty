@@ -27,10 +27,23 @@
                     Get this book
                 </md-tab>
             </md-tabs>
-          <!--  <md-button class="rating md-primary" ng-click="show_rating($event)" flex="10">
-                {{book.rating}}
-            </md-button> -->
         </div>
+    </div>
+    <div layout-padding class="yellow">
+        <div layout="row" layout-align="space-between">
+            <div class="bold less_important white_color pointer" ng-click="hide_rating = !hide_rating;">
+                Rate this book {{book.user_rating}}/10
+            </div>
+            <div>
+                <i class="material-icons pointer white_color" ng-show="!hide_rating" ng-click="hide_rating = true;">add</i>
+                <i class="material-icons pointer white_color" ng-show="hide_rating" ng-click="hide_rating = false;">close</i>
+            </div>
+        </div>
+         <md-slider flex="20" md-discrete 
+                class="rate_slider" ng-show="hide_rating"
+                ng-model="book.user_rating" ng-change="rate_book(book)"
+                step="1" min="1" max="10" aria-label="rating">
+        </md-slider>
     </div>
     <ng-switch on="data.selectedIndex" class="tabpanel-container">
         <div role="tabpanel"

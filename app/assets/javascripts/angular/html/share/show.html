@@ -7,7 +7,7 @@
 		 layout="row" 
 		 layout-sm="column"
 		 layout-align="start start" layout-padding>
-		<div flex="10">
+		<div flex="10" flex-sm="100">
 			<div ng-click="back($event)" layout="row" ng-hide="info.embed_share"
 				layout-align="center center" class="pointer">
 				<h1 layout-padding>
@@ -16,11 +16,13 @@
 				</h1>
 			</div>
 		</div>
-		<div flex="80" layout="column">
+		<div flex="80" layout="column" flex-sm="100" class="full_width">
 			<div ng-include src="'/assets/angular/html/share/searched_books.html'" ng-if="info.show_book_share"></div>
-			<div ng-include src="'/assets/angular/html/share/status_options.html'" ng-if="info.show_share"></div>
+			<div ng-include src="'/assets/angular/html/share/status_options.html'" class="extensive_padding"
+				ng-class="{'dark_grey': reading_status_selected}"
+				ng-if="info.show_share"></div>
 		</div>
-	    <div flex="10"></div>
+	    <div flex="10" hide-sm></div>
 	</div>
 </div>
 
@@ -85,7 +87,7 @@
 		font-size: 0.9em;
 		font-family: sans-serif;
 		min-height: 60px;
-		width: 450px;
+		/*width: 450px;*/
 	}
 
 	.menu_search{
@@ -97,8 +99,8 @@
 
 	.menu_details,
 	.menu_search{
-		width: 400px;
-		max-height: 200px !important;
+		/*width: 400px;*/
+		max-height: 300px !important;
 	}
 
 	.overlap{
@@ -133,5 +135,12 @@
 	.roboto{
 		font-family: 'roboto';
 	}
+
+	.active_extended{
+		width: 103%;
+  		margin-left: -10px;
+	}
+
+	
 
 </style>

@@ -1,12 +1,19 @@
-<div layout="row">
-	<md-button layout-padding flex class="md-button-clear" ng-click="toggle()">
+<div layout="row" ng-class="{'white md-whiteframe-z1': !show_shelf, 'dark_grey': show_shelf}" 
+	 ng-click="toggle()"
+	layout-align="space-between">
+	<div layout-padding flex
+		ng-class="{'bold': show_shelf}">
 		{{shelf.shelf}}
-	</md-button>
+	</div>
+	<div layout-padding>
+		<i class="material-icons less_important" ng-show="!show_shelf">add</i>
+		<i class="material-icons less_important" ng-show="show_shelf">close</i>
+	</div>
 </div>
-<md-content class="grid_content" ng-show="show_shelf" layout="row" layout-wrap>
+<div class="dark_grey" ng-show="show_shelf" layout="row" layout-wrap layout-margin>
 	<div class="article"
 		layout-margin ng-if="article.title"
         ng-repeat="article in shelf.articles">
-    	<div ng-include src="'/assets/angular/html/room/article.html'"></div>
+    	<div ng-include src="'/assets/angular/html/room/article.html'" class="white"></div>
     </div>
-</md-content>
+</div>

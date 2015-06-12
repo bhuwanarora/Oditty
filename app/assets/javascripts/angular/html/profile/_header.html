@@ -1,30 +1,31 @@
 <div class="profile_header yellow">
     <section layout="column" layout-wrap>
         <div layout="row" layout-align="end start" layout-padding class="top_section">
-            <md-button class="md-primary md-button-clear" 
+            <md-button class="md-warn md-button-clear" 
                         ng-click="follow_user()"
                         ng-hide="hide_follow"
                         ng-class="{'md-raised': !profile_user.status}"
                         ng-if="!info.my_profile">
-                        <span ng-show="!profile_user.status">
-                            <!-- <span class="icon-user-add"></span> -->
-                            <i class="material-icons">person_add</i>
-                            <span> Follow</span>
-                        </span>
-                        <span ng-show="profile_user.status">Following</span>
+                <div ng-show="!profile_user.status" layout="row" layout-align="start center">
+                    <div> Follow</div>
+                    <i class="material-icons">person_add</i>
+                </div>
+                <div ng-show="profile_user.status">Following</div>
             </md-button>
         </div>
         <div layout="row" layout-wrap class="bottom_header">
             <div flex="50" hide-sm hide-md layout="row" layout-align="start start">
                 <img ng-src="{{profile_user.image_url | default_profile}}" class="circular profile_pic">
                 <div class="title_margin">
-                    <a href="/profile"><div layout="column" layout-wrap layout-align="start start">
-                        <div class="big_title" layout="row" layout-padding>
-                            <div ng-bind="profile_user.first_name"></div>
-                            <div>&nbsp;</div>
-                            <div ng-bind="profile_user.last_name"></div>
+                    <a ng-href="/profile?id={{profile_user.id}}">
+                        <div layout="column" layout-wrap layout-align="start start">
+                            <div class="big_title" layout="row" layout-padding>
+                                <div ng-bind="profile_user.first_name"></div>
+                                <div>&nbsp;</div>
+                                <div ng-bind="profile_user.last_name"></div>
+                            </div>
                         </div>
-                    </div></a>
+                    </a>
                 </div>
             </div>
             <div flex="50" flex-md="100" flex-sm="100" layout="row" layout-column layout-align="end end">

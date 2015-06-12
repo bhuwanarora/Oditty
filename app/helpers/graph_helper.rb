@@ -19,6 +19,28 @@ module GraphHelper
 		clause.execute
 	end
 
+	def self.set_book_feed
+		(end_id,start_id) = Book.get_max_min_id
+		step_count = 10000
+		book_feed_key = "book_feed_key"
+		if(!$redis[book_feed_key].nil?)
+			cur_id = $redis[book_feed_key].to_i
+		else
+			cur_id = start_id
+			$redis[book_feed_key] = cur_id -1
+		end
+		clause = " OPTIONAL MATCH (book:Book)-[f:BookFeed]->() "\
+			"FOREACH (book IN (CASE WHEN f IS NULL THEN [book] ELSE [] END )| "\
+				"CREATE UNIQUE (book)-[:BookFeed]->(book) "\
+				" ) "
+		while cur_id <= end_id
+			temp_clause = Book.match_in_range cur_id,(cur_id + step_count)
+			temp_clause += clause
+			temp_clause.execute
+			$redis[book_feed_key] = cur_id
+			cur_id += step_count
+		end
+	end
 
 	def self.detect_broken_feed user_id
 		clause = "MATCH (user) WHERE ID(user) = " + user_id.to_s + " WITH user MATCH (user)-[r:FeedNext*1..]->(user) RETURN LENGTH(r) AS length, ID(user) AS id "
@@ -326,6 +348,33 @@ module GraphHelper
 		end 		
 		clause.execute
 	end
+
+	def self.merge_duplicate_authors_in_range_auto_index(starting_regex)
+		puts "Removing duplicate authors with search_index starting with: " + starting_regex
+		clause = "START original=node:node_auto_index('indexed_main_author_name:" + starting_regex +"*" + "')  WITH original "\
+			"START duplicate = node:node_auto_index('indexed_main_author_name:" + starting_regex +"*" + "') "\
+			"WHERE ( (ID(original) <> ID(duplicate)) "\
+			"AND " + GraphHelper.match_duplicate_authors_conditions("original","duplicate") + " ) "\
+				" RETURN ID(original),ID(duplicate) LIMIT 1"
+		output = clause.execute
+		if (output.length >0)
+			id_orig = output[0]["ID(original)"]
+			id_dup = output[0]["ID(duplicate)"]
+			GraphHelper.copy_properties_author(id_orig,id_dup)
+			clause = "MATCH (original:Author),(duplicate:Author) WHERE "\
+				"ID(original) = " + id_orig.to_s + " AND ID(duplicate) = " + id_dup.to_s + " "\
+				"WITH original,duplicate  "\
+				"" + GraphHelper.set_original_author_properties("original","duplicate")
+			output = clause.execute
+		end
+		if(output.nil? || output.length == 0 || !(output[0].keys.include? "id"))
+			matched = 0
+		else
+			matched = 1
+		end
+		matched
+	end
+
 	def self.merge_duplicate_authors_in_range(starting_regex)
 		puts "Removing duplicate authors with search_index starting with: " + starting_regex
 		clause = "MATCH (original:Author),(duplicate:Author) WHERE ("\
@@ -346,7 +395,6 @@ module GraphHelper
 		if(output.nil? || output.length == 0 || !(output[0].keys.include? "id"))
 			matched = 0
 		else
-			debugger
 			matched = 1
 		end
 		matched
@@ -380,9 +428,8 @@ module GraphHelper
 			sl = "a"
 			tl = "a"
 		end
-		debugger		
 		while (!(fl == 'z' && sl == 'z' && tl == 'z'))
-			matched = GraphHelper.merge_duplicate_authors_in_range("" + fl + sl + tl)
+			matched = GraphHelper.merge_duplicate_authors_in_range_auto_index("" + fl + sl + tl)
 			if(matched == 0 )				
 				(fl,sl,tl) = GraphHelper.next_regex(fl,sl,tl)
 				$redis[author_id_key] = "" + fl + sl + tl
@@ -403,6 +450,30 @@ module GraphHelper
 	def self.set_author_feed
 		clause = "MATCH (author:Author) MERGE (author)-[r4:AuthorFeedNext]->(author) "
 		clause.execute
+	end
+
+	def self.set_author_books_count
+		end_id_author, start_id_author = Author.get_max_min_id
+		author_id_key = 'set_author_books_count'
+		if(!$redis[author_id_key].nil?)
+			cur_state = $redis[author_id_key]
+			fl = cur_state[0]
+			sl = cur_state[1]
+		else
+			$redis[author_id_key] = "aa"
+			fl = "a"
+			sl = "a"
+		end
+
+		while fl != "z" && sl != "z"
+			clause = "START author=node:node_auto_index('indexed_main_author_name:" + fl + sl +"*" + "')  WITH author "\
+				"MATCH (book:Book)<-[:Wrote]-(author:Author) "\
+				"WITH COLLECT(DISTINCT(book)) AS books,author "\
+				"SET author.books_count = CASE WHEN books IS NULL THEN 0 ELSE LENGTH(books) END "
+			clause.execute
+			(tl,fl,sl) = GraphHelper.next_regex("z",fl,sl)
+			$redis[author_id_key] = "" + fl + sl
+		end
 	end
 
 	def wrong_author_links

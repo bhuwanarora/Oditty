@@ -9,16 +9,20 @@
         <md-list layout="column" ng-if="info.status_books && (info.status_books.length > 0)"
              ng-include src="'/assets/angular/html/share/partials/_active_status.html'"></md-list>
 
-        <md-list layout="column" ng-include src="'/assets/angular/html/share/partials/_planning_to_read.html'"
-            ng-if="active_book && active_id == 0"></md-list>
+        <md-list layout="column" ng-include src="'/assets/angular/html/share/partials/_planning_to_read.html'" 
+            class="active_extended"
+            ng-if="selected_book && active_id == 0"></md-list>
         <md-list layout="column" ng-include src="'/assets/angular/html/share/partials/_currently_reading.html'"
-                ng-if="active_book && active_id == 1"
+                ng-if="selected_book && active_id == 1"
+                class="active_extended"
                 ng-hide="info.page_count && info.current_page && hide_page_count"></md-list>
         <md-list layout="column" ng-include src="'/assets/angular/html/share/partials/_recently_read.html'"
-                ng-if="active_book && active_id == 2" ng-controller="recommendController"></md-list>
+                class="active_extended"
+                ng-if="selected_book && active_id == 2" ng-controller="recommendController"></md-list>
         <md-list layout="column" ng-include src="'/assets/angular/html/share/partials/_feeling.html'"
-                ng-if="related_info.length > 0 && active_id == 1 && !active_emotion && (info.page_count && info.current_page)"></md-list>
-        <md-list layout="column" ng-if="related_info && related_info.length > 0" class="roboto"
+                class="active_extended"
+                ng-if="active_id == 1 && !active_emotion && (info.page_count && info.current_page)"></md-list>
+        <md-list layout="column" ng-if="related_info && related_info.length > 0" class="active_extended roboto"
             ng-include src="'/assets/angular/html/share/partials/_facts.html'"></md-list>
     </div>
     <md-progress-linear ng-show="info.share_loading" class="menu_search"

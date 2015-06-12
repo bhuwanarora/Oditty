@@ -1,15 +1,15 @@
-<div ng-class="{'md-whiteframe-z4': active_book}" class="menu_details">
+<div ng-class="{'md-whiteframe-z4 active_extended': selected_book}" class="menu_details">
     <div ng-repeat="book in info.status_books | limitTo: 4" 
                 layout="row" layout-align="space-between"
-                ng-class="{'md-whiteframe-z1': !active_book}"
+                ng-class="{'md-whiteframe-z1': !selected_book}"
                 ng-click="show_interesting_details(book)"
                 class="menu_details margin_top white animate-fast vertical_animate pointer">
-        <div layout="row" flex="90">
-        	<div flex="15">
+        <div layout="row" >
+        	<div>
         		<img ng-src="{{book.isbn | small_thumb}}">
         	</div>
-            <div layout-wrap layout-padding flex="85">
-                <div layout="row" ng-if="reading_status_selected && active_book"
+            <div layout-wrap layout-padding>
+                <div layout="row" ng-if="reading_status_selected && selected_book"
     		 		 layout-align="space-between">
     		 		<div class="custom_title light_title" ng-if="!active_emotion">
     		 			<span>{{reading_options[active_id].status}} </span>
@@ -19,9 +19,9 @@
     		 			<span>{{reading_options[active_id].emotion_status}} </span>
     		 		</div>
                 </div>
-                <div class="big_title" ng-class="{'bold_light_title': active_book}">{{book.title}}</div>
+                <div class="big_title" ng-class="{'bold_light_title': selected_book}">{{book.title}}</div>
                 <div class="less_important">{{book.author_name}}</div>
-                <div layout="row" ng-if="reading_status_selected && active_book"
+                <div layout="row" ng-if="reading_status_selected && selected_book"
                      layout-align="space-between">
                     <div class="custom_title light_title pointer" ng-click="show_page_count()">
                         <span ng-show="info.current_page"> on page <b>{{info.current_page}}</b></span>
@@ -30,19 +30,19 @@
                 </div>
             </div>
         </div>
-        <div class="pointer" flex="10" 
+        <div class="pointer"
             ng-click="deselect_book()" layout-padding
-            ng-if="active_book">
+            ng-if="selected_book">
             <i class="material-icons">close</i>
         </div>
-        <div class="custom_title" flex="10" 
+        <div class="custom_title"
             layout-padding
-        	ng-if="!active_book">
+        	ng-if="!selected_book">
             <i class="material-icons">add</i>
         </div>
     </div>
 </div>
-<div class="menu_details white" ng-if="active_book">
+<div class="menu_details white md-whiteframe-z4 active_extended" ng-if="selected_book">
     <div layout-padding layout="row" layout-align="space-between center">
         <div></div>
         <div ng-click="mute_volume()" class="pointer" layout-padding>
@@ -50,7 +50,7 @@
             <i class="material-icons" ng-show="mute">volume_off</i>
         </div>
     </div>
-    <div class="white md-whiteframe-z1 margin_top" ng-if="active_book"
+    <div class="white md-whiteframe-z1 margin_top" ng-if="selected_book"
         ng-include src="'/assets/angular/html/share/textbox.html'"></div>
     <div class="menu_details white" layout="row" 
         layout-padding

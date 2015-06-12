@@ -1,6 +1,4 @@
 <div layout="column" layout-padding>
-    <img ng-src="{{active_tag.image_url}}" class="max_full_width" />
-    <div layout-padding></div>
     <div layout="row" layout-align="space-between">
         <div class="big_title bold capitalize" ng-bind-html="active_tag.name"></div>
         <div>
@@ -13,15 +11,22 @@
         </div>
     </div>
     <div layout-padding></div>
-    <div class="less_important">Related Books</div>
-    <div layout="row" layout-wrap class="users" layout-padding>
-        <a ng-repeat="user in active_tag.users" ng-href="/user?q={{user.id}}" layout-margin ng-if="user.id">
-            <img class="circular" layout-margin ng-src="{{user.image_url}}"/>
-            <md-tooltip md-direction="top">
-                {{user.first_name}}
-            </md-tooltip>
-        </a>
+    <img ng-src="{{active_tag.image_url}}" class="full_width" />
+    <div layout-padding></div>
+    <div class="less_important" ng-if="active_tag.users && active_tag.users.length > 0">
+        Readers in this room
     </div>
+    <md-list layout="row" layout-wrap>
+        <a ng-repeat="user in active_tag.users" ng-href="/profile?q={{user.id}}" ng-if="user.id" layout-margin
+            layout="row" layout-align="center center">
+            <img class="circular" ng-src="{{user.image_url}}"  alt="{{user.first_name}} {{user.last_name}}"/>
+            <div layout-padding>
+                <div>{{user.first_name}} {{user.last_name}}</div>
+            </div>
+        </a>
+    </md-list>
+    <div layout-padding></div>
+    <div class="less_important">Books related to {{active_tag.name}}</div>
 </div>
 <div layout="row" layout-wrap>
     <section ng-repeat="book in active_tag.books" layout-margin>

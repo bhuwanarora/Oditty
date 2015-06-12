@@ -12,6 +12,12 @@ namespace :graph do
     GraphHelper.set_author_feed
   end
 
+  desc "set self link of type bookFeed on those books for which no feed exist "
+  task :set_book_feed => :environment do
+    include GraphHelper
+    GraphHelper.set_book_feed
+  end
+
   desc "create_linked_list"
   task :create_linked_list => :environment do
     include Neo4jHelper
@@ -309,6 +315,12 @@ namespace :graph do
   task :curate_author_names => :environment do
     include GraphHelper
     GraphHelper.curate_author_names
+  end
+
+  desc "set books_count for authors "
+  task :set_author_books_count => :environment do
+    include GraphHelper
+    GraphHelper.set_author_books_count
   end
 
   desc "update_follow_counts_for_user"

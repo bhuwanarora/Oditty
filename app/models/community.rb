@@ -12,6 +12,10 @@ class Community < Neo
 		" MATCH (community:Community) WHERE ID(community) = " + @id.to_s + " WITH community "
 	end
 
+	def self.match
+		" MATCH (community:Community) WITH community "
+	end
+
 	def self.basic_info
 		" community.view_count AS view_count, community.name AS name, ID(community) AS id, community.image_url AS image_url, labels(community) AS label, community.follow_count AS follow_count "
 	end
@@ -109,7 +113,8 @@ class Community < Neo
 	end
 
 	def self.get_popular skip_count = 0
-		Community.match_news + Bookmark::Node::NewsLabel.optional_match_path + Community.return_group(Community.basic_info, "COUNT(news) as news_count", "COUNT(bookmark_node) as bookmark_count") + Community.order_by("bookmark_count DESC , news_count DESC") + Community.skip(skip_count) + Community.limit(10)
+		Community.match + Community.return_group(Community.basic_info) + Community.order_by("follow_count DESC") + Community.limit(10)
+		# Community.match_news + Bookmark::Node::NewsLabel.optional_match_path + Community.return_group(Community.basic_info, "COUNT(news) as news_count", "COUNT(bookmark_node) as bookmark_count") + Community.order_by("bookmark_count DESC , news_count DESC") + Community.skip(skip_count) + Community.limit(10)
 	end
 
 	def get_books_users

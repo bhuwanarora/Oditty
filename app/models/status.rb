@@ -72,7 +72,14 @@ class Status < Neo
 	end
 
 	def set_book_id node_variable="status"
-		" SET " + node_variable + ".book_id = " + @book_id.to_s
+		clause = " SET " + node_variable + ".book_id = " + @book_id.to_s
+		if(@total_page_count.present?)
+			clause += " SET " + node_variable + ".total_page_count = " + @total_page_count.to_s
+		end
+		if(@current_page.present?)
+			clause += " SET " + node_variable + ".current_page = " + @current_page.to_s
+		end
+		clause
 	end
 
 	def self.basic_info
