@@ -53,5 +53,61 @@ module NewsHelper
 		end
 	end
 
+	def self.send_newsletter
+		info = News.get_popular_news_from_last_week.execute
+		params = {
+					:news1 => {:community1 => {}, :community2 => {}}, 
+				  	:news2 => {:community1 => {}, :community2 => {}}, 
+				  	:news3 => {:community1 => {}, :community2 => {}}, 
+				  	:news4 => {:community1 => {}, :community2 => {}}
+				}
+		params[:news1][:title] = info[0]["title"] rescue ""
+		params[:news2][:title] = info[1]["title"] rescue ""
+		params[:news3][:title] = info[2]["title"] rescue ""
+		params[:news4][:title] = info[3]["title"] rescue ""
+		params[:news1][:description] = info[0]["description"] rescue ""
+		params[:news2][:description] = info[1]["description"] rescue ""
+		params[:news3][:description] = info[2]["description"] rescue ""
+		params[:news4][:description] = info[3]["description"] rescue ""
+		params[:news1][:url] = info[0]["url"] rescue ""
+		params[:news2][:url] = info[1]["url"] rescue ""
+		params[:news3][:url] = info[2]["url"] rescue ""
+		params[:news4][:url] = info[3]["url"] rescue ""
+		params[:news1][:image_url] = info[0]["image_url"] rescue ""
+		params[:news2][:image_url] = info[1]["image_url"] rescue ""
+		params[:news3][:image_url] = info[2]["image_url"] rescue ""
+		params[:news4][:image_url] = info[3]["image_url"] rescue ""
+		params[:news1][:id] = info[0]["id"] rescue ""
+		params[:news2][:id] = info[1]["id"] rescue ""
+		params[:news3][:id] = info[2]["id"] rescue ""
+		params[:news4][:id] = info[3]["id"] rescue ""
+		params[:news1][:community1][:id] = info[0]["communities"][0]["id"] rescue ""
+		params[:news1][:community2][:id] = info[0]["communities"][1]["id"] rescue ""
+		params[:news2][:community1][:id] = info[1]["communities"][0]["id"] rescue ""
+		params[:news2][:community2][:id] = info[1]["communities"][1]["id"] rescue ""
+		params[:news3][:community1][:id] = info[2]["communities"][0]["id"] rescue ""
+		params[:news3][:community2][:id] = info[2]["communities"][1]["id"] rescue ""
+		params[:news4][:community1][:id] = info[3]["communities"][0]["id"] rescue ""
+		params[:news4][:community2][:id] = info[3]["communities"][1]["id"] rescue ""
+		params[:news1][:community1][:name] = info[0]["communities"][0]["name"] rescue ""
+		params[:news1][:community2][:name] = info[0]["communities"][1]["name"] rescue ""
+		params[:news2][:community1][:name] = info[1]["communities"][0]["name"] rescue ""
+		params[:news2][:community2][:name] = info[1]["communities"][1]["name"] rescue ""
+		params[:news3][:community1][:name] = info[2]["communities"][0]["name"] rescue ""
+		params[:news3][:community2][:name] = info[2]["communities"][1]["name"] rescue ""
+		params[:news4][:community1][:name] = info[3]["communities"][0]["name"] rescue ""
+		params[:news4][:community2][:name] = info[3]["communities"][1]["name"] rescue ""
+		params[:news1][:community1][:image_url] = info[0]["communities"][0]["image_url"] rescue ""
+		params[:news1][:community2][:image_url] = info[0]["communities"][1]["image_url"]  rescue ""
+		params[:news2][:community1][:image_url] = info[1]["communities"][0]["image_url"] rescue ""
+		params[:news2][:community2][:image_url] = info[1]["communities"][1]["image_url"]  rescue ""
+		params[:news3][:community1][:image_url] = info[2]["communities"][0]["image_url"]  rescue ""
+		params[:news3][:community2][:image_url] = info[2]["communities"][1]["image_url"]  rescue ""
+		params[:news4][:community1][:image_url] = info[3]["communities"][0]["image_url"]  rescue ""
+		params[:news4][:community2][:image_url] = info[3]["communities"][1]["image_url"]  rescue ""
+		params[:template] = Constant::EmailTemplate::Newsletter
+		SubscriptionMailer.news_subscription(params).deliver
+	end
+
 
 end
