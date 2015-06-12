@@ -165,7 +165,10 @@ class Bookmark < Neo
 	end	
 
 	def create_label_bookmark_node
-		" MERGE (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node: BookmarkNode{label:\""+@key+"\", book_id:"+ @media_id.to_s + ", user_id:" + @user_id.to_s + "}) ON CREATE SET bookmark_node.count = 0 ON MATCH SET bookmark_node.count = bookmark_node.count + 1 " 
+		clause = " MERGE (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node: BookmarkNode{label:\""+@key+"\", book_id:"+ @media_id.to_s + ", user_id:" + @user_id.to_s + "}) ON CREATE SET bookmark_node.count = 0 "
+		unless (@key == Bookmark::Type::Visited.get_key || Bookmark::Type::FromFacebook.get_key )
+			clause += "ON MATCH SET bookmark_node.count = bookmark_node.count + 1 "
+		end
 	end
 
 	def match

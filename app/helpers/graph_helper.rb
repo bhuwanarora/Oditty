@@ -52,7 +52,8 @@ module GraphHelper
 
 	def self.user_set_bookmark_count
 		clause = "MATCH (user:User) WITH user "\
-			"OPTIONAL " + Bookmark.match_path("book") + " WITH user, COUNT(DISTINCT(bookmark_node)) as bookmark_node_count "\
+			"OPTIONAL " + Bookmark.match_path("book") + "WHERE label.key <> \'" + Bookmark::Type::FromFacebook.get_key + "\' AND label.key <> \'" + Bookmark::Type::Visited.get_key + "\' "\
+			" WITH user, COUNT(DISTINCT(bookmark_node)) as bookmark_node_count "\
 				"SET user.bookmark_count = bookmark_node_count"
 		clause.execute
 	end
