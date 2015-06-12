@@ -151,15 +151,6 @@ class Book < Neo
 		match + Book.match_communities + Community.order_desc + Book.limit(1) + Community.match_news  + " ,book " + Book.skip(skip_count) + Book.limit(10) +  " WITH book, " + Community.collect_map("news" => News.grouped_basic_info) + Book.match_communities + " ,news " + Community.order_desc + Book.return_init + " news, " + Community.collect_map("community" => Community.grouped_basic_info)
 	end
 
-	def get_news_community community_id,skip_count = 0
-		if(community_id.nil?)
-			clause = get_news skip_count
-		else
-			clause = match + Community.new(community_id).match + ", book " + Community.order_desc + Community.match_news  + " ,book " +  Book.skip(skip_count) + Book.limit(10) + " WITH book, community, " + Community.collect_map("news" => News.grouped_basic_info) + Book.return_init + " news, " + Community.collect_map("community" => Community.grouped_basic_info)
-		end
-	end
-
-
 	def self.match_lenders 
 		Status::BookExchangeStatusType::PlanningToLend.new(@id).match + ", friend " + Status.match + " , friend " + UsersUser.match_all
 	end

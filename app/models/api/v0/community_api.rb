@@ -15,7 +15,7 @@ module Api
 			end
 
 			def self.suggest_communities user_id
-				clause = Community.get_popular_seen(user_id)
+				clause = User::Suggest::CommunitySuggestion.new(user_id).get_communities
 			end
 
 			def self.top_communities user_id, skip_count

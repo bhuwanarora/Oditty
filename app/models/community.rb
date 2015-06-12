@@ -117,21 +117,15 @@ class Community < Neo
 		# Community.match_news + Bookmark::Node::NewsLabel.optional_match_path + Community.return_group(Community.basic_info, "COUNT(news) as news_count", "COUNT(bookmark_node) as bookmark_count") + Community.order_by("bookmark_count DESC , news_count DESC") + Community.skip(skip_count) + Community.limit(10)
 	end
 
-	def self.get_popular_seen user_id
-		clause = ""
-		if(user_id.present?)
-			clause = Community.match + "WITH community " + Community.order_by("community.follow_count DESC") + Community.limit(10) + User.new(user_id).match + ", community " + " OPTIONAL " + UsersCommunity.match + " WITH community, user, (CASE WHEN follow_node IS NULL THEN 0 ELSE 1 END) AS follow_status " + Community.return_group(Community.basic_info) + ", follow_status " + Community.order_by("follow_count DESC")
-		else
-			clause = Community.match + "WITH community " + Community.order_by("community.follow_count DESC") + Community.limit(10) +  Community.return_group(Community.basic_info) + ", 0 AS follow_status " + Community.order_by("follow_count DESC")
-		end
-		clause
-	end
-
 	def get_books_users
 		match + Community.grouped_books_users 
 	end
 
 	def match_news_related_communities news_id
 		News.new(news_id).match + ", most_important_tag " + News.optional_match_community + " , most_important_tag  WHERE NOT ID(community) = " + @id.to_s + " WITH most_important_tag, community, has_community ORDER BY has_community.relevance DESC WITH  most_important_tag, " + Community.collect_map("other_tags" => Community.grouped_basic_info) + Article::NewsArticle.return_group(" most_important_tag ", " other_tags[0.." + (Constant::Count::CommunitiesShown+1).to_s + "] AS other_tags ")
+	end
+
+	def get_news community_id,skip_count = 0
+		clause = match + Community.order_desc + Community.match_news +  Community.skip(skip_count) + Community.limit(10) + " WITH book, community, " + Community.collect_map("news" => News.grouped_basic_info) + Book.return_init + " news, " + Community.collect_map("community" => Community.grouped_basic_info)
 	end
 end
