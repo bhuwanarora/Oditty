@@ -50,6 +50,13 @@ module GraphHelper
 		end
 	end
 
+	def self.user_set_bookmark_count
+		clause = "MATCH (user:User) WITH user "\
+			"OPTIONAL " + Bookmark.match_path("book") + " WITH user, COUNT(DISTINCT(bookmark_node)) as bookmark_node_count "\
+				"SET user.bookmark_count = bookmark_node_count"
+		clause.execute
+	end
+
 	def self.make_book_and_article_shelves
 		clause = " MATCH (label: Label) SET label: BookShelf WITH label WHERE NOT (label.key = \"PlanToBuy\" OR label.key = \"IOwnThis\" OR label.key = \"IOwnthis\") WITH label SET label: ArticleShelf "
 		clause.execute

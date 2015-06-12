@@ -264,6 +264,18 @@ namespace :graph do
     Neo4jHelper.create_labels
   end
 
+  desc " Add label_bookshelf"
+  task :add_label_bookshelf => :environment do
+    include Neo4jHelper
+    Neo4jHelper.set_bookshelf_label
+  end
+
+  desc " set_bookshelf_label"
+  task :set_bookshelf_label => :environment do
+    include Neo4jHelper
+    Neo4jHelper.set_bookshelf_label
+  end
+
   desc "Add Graph Indexes"
   task :create_indexes => :environment do
     include Neo4jHelper
@@ -327,6 +339,12 @@ namespace :graph do
   task :update_follow_counts_for_user => :environment do
     include GraphHelper
     GraphHelper.update_follow_counts_for_user
+  end
+
+  desc "bookmark_count for user"
+  task :set_user_bookmark_count => :environment do
+    include GraphHelper
+    GraphHelper.user_set_bookmark_count
   end
 
   desc "set user notification circular linked list"
