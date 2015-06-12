@@ -4,7 +4,7 @@ module Api
 
 			def book_news
 				id = params[:id]
-				info = Api::V0::RealVirtualityApi.get_news(id).execute
+				info = Api::V0::RealVirtualityApi.get_news(id).execute[0]
 				render :json => info, :status => 200
 			end
 
