@@ -26,8 +26,7 @@ module Api
 
 			def suggest_communities
 				user_id = session[:user_id]
-				skip_count = params[:skip] || 0
-				info = Api::V0::CommunityApi.suggest_communities(user_id, skip_count).execute
+				info = Api::V0::CommunityApi.suggest_communities(user_id).execute
 				render :json => info, :status => 200
 			end
 
