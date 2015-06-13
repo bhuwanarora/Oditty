@@ -57,17 +57,23 @@
         </md-card>
     </div>
 </md-list> -->
-<md-list layout-wrap layout="column">
-    <div flex ng-repeat="book in author.books">
-        <md-card  class="no_shadow">
-            <div layout-padding>
-                <div class="less_important">
-                    {{book.published_year}}
-                </div>
-                <div class="bold">Published {{book.title}}</div>
+<div layout="row">
+    <div flex="15" flex-md="5" hide-sm></div>
+    <div flex="70" flex-md="80" flex-sm="100" layout="column">
+        <md-list layout-wrap layout="column">
+            <div flex ng-repeat="book in author.books">
+                <md-card  class="no_shadow">
+                    <div layout-padding>
+                        <div class="less_important">
+                            {{book.published_year}}
+                        </div>
+                        <div class="bold">Published {{book.title}}</div>
+                    </div>
+                    <book-info layout-padding book="book" info="info"></book-info>
+                </md-card>
+                <md-divider></md-divider>
             </div>
-            <book-info layout-padding book="book" info="info"></book-info>
-        </md-card>
-        <md-divider></md-divider>
+        </md-list>
     </div>
-</md-list>
+    <div flex="15" flex-md="5" hide-sm></div>
+</div>
