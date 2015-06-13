@@ -177,7 +177,7 @@ module CommunitiesHelper
 		books = CommunitiesHelper.fetch_book_ids community_name
 		books = books[community_name]
 		clause = Community.new(community_id).match
-		clause += "WHERE community.name = " + "\'" + community_name + "\'  WITH community "
+		clause += "WHERE community.name = " + "\'" + community_name.gsub("'","\\\\'") + "\'  WITH community "
 		or_clause = ""
 		books.each_with_index do |book_id,index|
 			if index == 0
