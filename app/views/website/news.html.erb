@@ -5,21 +5,17 @@
     </md-switch>
     <div></div>
 </div> -->
-<div ng-if="info.circles" class="feed_margin">
-    <section layout="row">
-        <div ng-include src="'/assets/angular/html/news/show.html'" 
-             layout="row" layout-align="center center"
-             layout-sm="column"
-             flex>
-        </div>
-    </section>
-</div>
-<div ng-if="!info.circles" layout="row" class="feed_margin">
+<div layout="row" class="feed_margin">
     <div flex="15" hide-md hide-sm></div>
     <div ng-include src="'/assets/angular/html/news/show_grid.html'" 
-         flex="70" flex-md="100" flex-sm="100" layout="column" class="white md-whiteframe-z1"></div>
+         flex="70" flex-md="100" flex-sm="100" layout="column"></div>
     <div flex="15" hide-md hide-sm></div>
 </div>
+<news-scroller layout="row" 
+    layout-align="center" 
+    layout-padding
+    class="news_footer">
+</news-scroller>
 
 
 <!-- <d3-circles></d3-circles> -->
@@ -27,6 +23,7 @@
 <style>
     #news .news_footer{
         width: 100%;
+        margin-top: 30px;
     }
 
     #news .news_footer .md-paginator.md-next, 
@@ -37,7 +34,7 @@
     #news .news_footer .md-header-items,
     #news .news_footer, 
     #news .news_footer .md-header-items-container{
-        background-color: #e5e5e5;
+        background-color: #212121;
     }
 
     #news .news_footer md-tabs-canvas{

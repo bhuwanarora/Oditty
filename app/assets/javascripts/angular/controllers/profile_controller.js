@@ -1,8 +1,8 @@
 homeApp.controller('profileController', ["$scope", "userService", '$rootScope', "WebsiteUIConstants", 'ColorConstants', '$location', 'bookService', 'newsService', '$mdDialog', 'infinityService', '$timeout', 'sharedService', '$mdSidenav', function($scope, userService, $rootScope, WebsiteUIConstants, ColorConstants, $location, bookService, newsService, $mdDialog, infinityService, $timeout, sharedService, $mdSidenav){
-	var _get_user_details = function(){
-		userService.get_user_details($scope.active_user_id).then(function(data){
-			$scope.profile_user = data;
-		});
+	var _get_user_details = function(user, user_id){
+		userService.get_user_details(user_id).then(function(data){
+			user = data;
+        });
 	}
 
 	$scope.get_feed = function(){
@@ -91,33 +91,22 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 			userService.get_personal_feed(id, skip).then(function(data){
 				if(data.length > 0){
 					angular.forEach(data, function(value){
-						var random_int = Math.floor(Math.random() * ColorConstants.value.length);
 						if(angular.isDefined(value.book)){
-							value.book = angular.extend(value.book, {"color": ColorConstants.value[random_int]});
-						}
-						this.push(value);
-					}, personal_feed);
-					_group_feed();
-					angular.forEach(personal_feed, function(value){
-						if(angular.isDefined(value.book)){
-							angular.forEach(value.data, function(feed_data){
-								var message = _get_message(feed_data);
-								feed_data = angular.extend(feed_data, {"message": message});
-							});
+							var message = _get_message(value);
+							value = angular.extend(value, {"message": message});
 						}
 						else if(angular.isDefined(value.community)){
 							var message = _get_message(value);
-							feed_data = angular.extend(value, {"message": message});
+							value = angular.extend(value, {"message": message});
 						}
 						else{
 							var message = _get_message(value);
-							var feed_data = angular.extend(value, {"message": message});
-							value.data = [feed_data];
+							value = angular.extend(value, {"message": message});
 						}
 					});
 				}
 				$scope.info.loading = false;
-				$scope.personal_feed = $scope.personal_feed.concat(personal_feed);
+				$scope.personal_feed = $scope.personal_feed.concat(data);
 			});
 		}
 	}
@@ -149,74 +138,94 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
     }
 
     $scope.show_book_dialog = function(book, event){
-    //     $rootScope.active_book = book;
-    //     $rootScope.active_book.show_info_only = true;
-    //     $mdDialog.show({
-    //         templateUrl: '/assets/angular/html/news/book.html',
-    //         scope: $scope,
-    //         preserveScope: true,
-    //         clickOutsideToClose: true,
-    //         targetEvent: event
-    //     });
-    //     event.stopPropagation();
-        sharedService.show_book_dialog($rootScope, $scope, book, event);    	
+        sharedService.show_book_dialog($rootScope, $scope, book, event);
     }
 
-	var _init = (function(){
-        $scope.info.books = [];
-		$scope.profile_user = {};
-		$scope.info.embed_share = true;
-        var regex = /[?&]([^=#]+)=([^&#]*)/g;
-        var url_parser = regex.exec($location.absUrl());
-        if(angular.isDefined(url_parser) && url_parser != null){
-            $scope.active_user_id = url_parser[2];
-            if(angular.isDefined($rootScope.user)){
-                $scope.profile_user = {"id": $scope.active_user_id};
-                if($rootScope.user.id == $scope.active_user_id){
-                    $scope.info.my_profile = true;
-                }
-                else{
-                    $scope.info.my_profile = false;
-                    $scope.hide_follow_links = true;
-                }
-            }
-            else{
-                $scope.info.my_profile = false;
-                $scope.hide_follow_links = true;
-            }
-            var details_timeout = $timeout(function(){
-            	_get_user_details();
-            }, 100);
-            $scope.$on('destroy', function(){
+    var _user_is_me = function(){
+    	var user_is_me = false;
+    	if($scope.active_user_id == $rootScope.user.id){
+    		user_is_me = true;
+    		$scope.info.my_profile = true;
+        	$scope.hide_follow_links = false;
+    	}
+    	else{
+    		$scope.info.my_profile = false;
+        	$scope.hide_follow_links = true;	
+    	}
+    	return user_is_me;
+    }
+
+    var _handle_profile_data = function(){
+        var user_is_me = _user_is_me();
+    	if(user_is_me){
+        	_set_my_profile();
+        }
+        else{
+        	userService.get_user_details($scope.active_user_id).then(function(data){
+    			$scope.profile_user = data;
+    		});
+        }
+    }
+
+    var _handle_id_from_url = function(url_parser){
+    	var user_is_me = false;
+        $scope.active_user_id = url_parser[2];
+        if(angular.isDefined($rootScope.user)){
+        	_handle_profile_data();
+        }
+        else{
+        	userService.get_user_details().then(function(data){
+				$rootScope.user = data;
+		        _handle_profile_data();
+	        });
+        }
+    }
+
+    var _set_my_profile = function(){
+    	$scope.profile_user = $rootScope.user;
+        $scope.active_user_id = $scope.profile_user.id;
+    }
+
+    var _handle_me = function(){
+        $scope.info.my_profile = true;
+        $scope.hide_follow_links = false;
+        if(angular.isUndefined($rootScope.user)){
+        	var details_timeout = $timeout(function(){
+        		userService.get_user_details().then(function(data){
+					$rootScope.user = data;
+			        _set_my_profile();
+		        });
+        	}, 100);
+        	$scope.$on('destroy', function(){
             	$timeout.cancel(details_timeout);	
             });
         }
         else{
-            $scope.info.my_profile = true;
-            if(angular.isUndefined($rootScope.user)){
-            	var details_timeout = $timeout(function(){
-	                userService.get_user_details().then(function(data){
-	                    $rootScope.user = data;
-	                    $scope.profile_user = $rootScope.user;
-	                    $scope.active_user_id = $scope.profile_user.id;
-	                });
-            	}, 100);
-            	$scope.$on('destroy', function(){
-	            	$timeout.cancel(details_timeout);	
-	            });
-            }
-            else{
-                $scope.profile_user = $rootScope.user;
-                $scope.active_user_id = $scope.profile_user.id;
-            }
+            _set_my_profile();
         }
-       
+    }
+
+    var _get_feed = function(){
        	var feed_timeout = $timeout(function(){
         	$scope.get_feed();
        	}, 100);
        	$scope.$on('destroy', function(){
        		$timeout.cancel(feed_timeout);
        	});
+    }
 
+	var _init = (function(){
+		$scope.profile_user = {};
+		$scope.info.embed_share = true;
+
+        var regex = /[?&]([^=#]+)=([^&#]*)/g;
+        var url_parser = regex.exec($location.absUrl());
+        if(angular.isDefined(url_parser) && url_parser != null){
+        	_handle_id_from_url(url_parser);
+        }
+        else{
+        	_handle_me();
+        }
+       _get_feed();
     }());
 }]);

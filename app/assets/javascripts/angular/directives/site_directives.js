@@ -16,22 +16,30 @@ homeApp.directive('recommend', ["$rootScope", "userService", "sharedService", fu
     }
 }]);
 
-homeApp.directive('bookInfo', ["$rootScope", "bookService", '$mdDialog', 'sharedService', function($rootScope, bookService, $mdDialog, sharedService){
+homeApp.directive('basicBook', ["$rootScope", "bookService", function($rootScope, bookService){
+    return {
+        restrict: 'E',
+        scope : {book: '='},
+        controller: ["$scope", function($scope){
+
+            var _init = function(){
+                bookService.get_primary_info($scope.book.id).then(function(data){
+                    $scope.book = angular.extend($scope.book, data);
+                });
+            }
+
+            _init();
+        }],
+        templateUrl: '/assets/angular/html/shared/partials/basic_book.html'
+    };
+}]);
+
+homeApp.directive('bookInfo', ["$rootScope", "bookService", 'sharedService', function($rootScope, bookService, sharedService){
     return {
         restrict: 'E',
         scope : {book: '=', info: '='},
         controller: ["$scope", function($scope){
             $scope.show_book_dialog = function(book, event){
-                // $rootScope.active_book = book;
-                // $rootScope.active_book.show_info_only = true;
-                // $mdDialog.show({
-                //     templateUrl: '/assets/angular/html/news/book.html',
-                //     scope: $scope,
-                //     preserveScope: true,
-                //     targetEvent: event,
-                //     clickOutsideToClose: true
-                // });
-                // event.stopPropagation();
                 sharedService.show_book_dialog($rootScope, $scope, book, event);
             }
 
@@ -93,15 +101,6 @@ homeApp.directive('communityFeed', ["$rootScope", 'userService', '$timeout', fun
 
             var _init = function(){
                 $scope.communityFeed.expand = false;
-            }
-
-            $scope.goto_news_page = function(id, community_id){
-                userService.news_visited(id);
-                deleteCookie("active_community");
-                if(angular.isDefined(community_id)){
-                    setCookie("active_community", community_id, 1)
-                }
-                window.location.href = "/news?q="+id;
             }
 
             _init();
