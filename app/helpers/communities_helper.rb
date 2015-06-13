@@ -186,7 +186,11 @@ module CommunitiesHelper
 				or_clause += " OR ID(book) =" + book_id.to_s + " "
 			end
 		end
-		clause += "MATCH (book:Book) WHERE " + or_clause + Community.merge_book + " RETURN ID(community) "
+		if(books.length > 0)
+			clause += " MATCH (book:Book) WHERE " + or_clause + Community.merge_book + " RETURN ID(community) "
+		else
+			clause += " RETURN ID(community)"
+		end
 		clause
 	end
 
