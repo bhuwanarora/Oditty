@@ -231,10 +231,6 @@ class User < Neo
 		match + User.return_init + User.init_book_read_count
 	end
 
-	def match_community
-		" MATCH (user)-[follows_user:FollowsCommunity]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(community) "
-	end
-
 	def self.get_by_fb_id id
 		" MATCH (user:User{fb_id:" + id.to_s + "}) " + User::Info.return_init + User.basic_info
 	end

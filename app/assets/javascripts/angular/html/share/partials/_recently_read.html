@@ -12,21 +12,5 @@
 		</div>
 	</div>
 </md-button>
-<md-content class="menu_details" 
+<div flex layout="column" ng-include src="'/assets/angular/html/shared/recommend_to_friends.html'" 
 	ng-if="show_recommend && users_list">
-	<div layout="row" ng-if="show_recommend && users_list" class="md-whiteframe-z1 white">
-	    <md-autocomplete flex
-	    	md-search-text-change="search_friends(searchFriend)"
-	        md-items="item in []"
-	        md-search-text="searchFriend"
-	        class="menu_search no_shadow"
-	        placeholder="Search Friends...">
-	    </md-autocomplete>
-	    <div class="pointer" layout-padding>
-	    	<i class="material-icons">search</i>
-	    </div>
-	</div>
-	<div flex layout="column"
-	    ng-include src="'/assets/angular/html/share/partials/_recommend_options.html'">
-	</div>
-</md-content>

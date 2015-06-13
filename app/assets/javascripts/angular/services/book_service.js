@@ -78,4 +78,12 @@ homeApp.service('bookService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return _deferred_request('/api/v0/top_searches', $q, $http, search_service_url);
     }
 
+    this.get_community_news = function(id, skip){
+        return _deferred_request('/api/v0/community_news?id='+id+'&skip='+skip, $q, $http);
+    }
+
+    this.get_primary_info = function(id){
+        return _deferred_request('/api/v0/book_primary_info?id='+id, $q, $http);
+    }
+
 }]);
