@@ -1,0 +1,9 @@
+<md-card>
+    <md-card-content>
+        <div layout-padding>
+            <div class="big_title"><a ng-href="/news?id={{result.id}}">{{result.title}}</a></div>
+            <div class="less_important">News, {{result.created_at | timestamp | date:'dd MMM'}}</div>
+            <div ng-bind-html="result.description"></div>
+        </div>
+    </md-card-content>
+</md-card>
