@@ -90,34 +90,34 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 			var skip = $scope.personal_feed.length;
 			userService.get_personal_feed(id, skip).then(function(data){
 				if(data.length > 0){
+					// angular.forEach(data, function(value){
+					// 	var random_int = Math.floor(Math.random() * ColorConstants.value.length);
+					// 	if(angular.isDefined(value.book)){
+					// 		value.book = angular.extend(value.book, {"color": ColorConstants.value[random_int]});
+					// 	}
+					// 	this.push(value);
+					// }, personal_feed);
+					// _group_feed();
 					angular.forEach(data, function(value){
-						var random_int = Math.floor(Math.random() * ColorConstants.value.length);
 						if(angular.isDefined(value.book)){
-							value.book = angular.extend(value.book, {"color": ColorConstants.value[random_int]});
-						}
-						this.push(value);
-					}, personal_feed);
-					_group_feed();
-					angular.forEach(personal_feed, function(value){
-						if(angular.isDefined(value.book)){
-							angular.forEach(value.data, function(feed_data){
-								var message = _get_message(feed_data);
-								feed_data = angular.extend(feed_data, {"message": message});
-							});
+							var message = _get_message(value);
+							value = angular.extend(value, {"message": message});
+							// angular.forEach(value.data, function(value){
+							// });
 						}
 						else if(angular.isDefined(value.community)){
 							var message = _get_message(value);
-							feed_data = angular.extend(value, {"message": message});
+							value = angular.extend(value, {"message": message});
 						}
 						else{
 							var message = _get_message(value);
-							var feed_data = angular.extend(value, {"message": message});
-							value.data = [feed_data];
+							value = angular.extend(value, {"message": message});
+							// value.data = [feed_data];
 						}
 					});
 				}
 				$scope.info.loading = false;
-				$scope.personal_feed = $scope.personal_feed.concat(personal_feed);
+				$scope.personal_feed = $scope.personal_feed.concat(data);
 			});
 		}
 	}
