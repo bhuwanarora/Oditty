@@ -1,7 +1,14 @@
 <div layout="column" layout-padding class="md-whiteframe-z1">
     <div layout-padding></div>
     <div layout="row" layout-align="space-between">
-        <div class="big_title bold capitalize" ng-bind-html="active_tag.name"></div>
+        <div layout="column">
+            <div class="big_title bold capitalize" ng-bind-html="active_tag.name"></div>
+            <div class="less_important" ng-show="active_tag.view_count && active_tag.view_count != 0">
+                <span>{{active_tag.view_count}} </span>
+                <span ng-show="active_tag.view_count == 1">View</span>
+                <span ng-show="active_tag.view_count != 1">Views</span>
+            </div>
+        </div>
         <div>
             <md-button ng-class="{'md-raised': !active_tag.status}" 
                 class="md-warn md-button-clear" ng-click="toggle_follow()">
