@@ -38,7 +38,7 @@ class Book < Neo
 	def set_author_list author_name_list
 		set_clause = "SET book.author_name_list = ["
 		author_name_list.each do |author_name|
-			set_clause += " \'" + author_name + "\',"
+			set_clause += " \'" + author_name.gsub("\'","\\\\'") + "\',"
 		end
 		set_clause[set_clause.length - 1 ] =']'
 		match + set_clause
