@@ -21,7 +21,7 @@ class User::Feed < User
 
 	def get_personal_feed(skip_count)
 		skip_count = 0 unless skip_count.present?
-		@user.match + " MATCH (user)-[:FeedNext*" + skip_count.to_s + "..10]->(feed) RETURN labels(feed) AS labels, feed AS feed"
+		@user.match + " MATCH (user)-[:FeedNext*" + skip_count.to_s + "..4]->(feed) RETURN labels(feed) AS labels, feed AS feed"
 	end
 
 	def delete_feed(object)

@@ -1,5 +1,5 @@
 <md-card class="social no_shadow">
-    <md-card-content class="footer">
+    <md-card-content>
         <section layout="column" layout-align="start">
             <div layout="row">
                 <img ng-src="{{profile_user.image_url | default_profile}}" class="circular" >
@@ -9,12 +9,10 @@
                         <div class="less_important">{{data.created_at | timestamp | date:'h:mm a, dd MMM'}}</div>
                         <div ng-bind-html="data.message" class="status_message"></div>
                     </div>
+                    <basic-book ng-if="feed.book" book="feed.book"></basic-book>
                 </div>
             </div>
         </section>
-    </md-card-content>
-    <md-card-content ng-if="feed.book">
-        <book-info book="feed.book" info="info" class="footer"></book-info>
     </md-card-content>
 </md-card>
 <style>

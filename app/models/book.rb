@@ -221,6 +221,14 @@ class Book < Neo
 		clause
 	end
 
+	def self.primary_info
+		" book.title AS title, book.author_name AS author_name, ID(book) AS id "
+	end
+
+	def get_primary_info
+		match + match_author + Book.return_group(Book.primary_info, "ID(author) as author_id")
+	end
+
 	def self.get_book_links
 		book_links_property={"Wrote"=> [], # These are the inlinks.	
 				"Published_in"	 => [],

@@ -1,4 +1,4 @@
-homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'authorService', '$mdDialog', 'scroller', 'ColorConstants', '$filter', '$sce', '$rootScope', "scroller", "WebsiteUIConstants", '$timeout', function($scope, $location, $mdSidenav, authorService, $mdDialog, scroller, ColorConstants, $filter, $sce, $rootScope, scroller, WebsiteUIConstants, $timeout){
+homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'authorService', '$mdDialog', 'scroller', 'ColorConstants', '$filter', '$sce', '$rootScope', "scroller", "WebsiteUIConstants", '$timeout', 'sharedService', function($scope, $location, $mdSidenav, authorService, $mdDialog, scroller, ColorConstants, $filter, $sce, $rootScope, scroller, WebsiteUIConstants, $timeout, sharedService){
 
     $scope.toggle_follow = function(){
         if(angular.isDefined($scope.author.status)){
@@ -17,6 +17,10 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         else if(event.keyCode == WebsiteUIConstants.KeyUp){
             $scope.active_index = $scope.previous_block($scope.active_index);
         }
+    }
+
+    $scope.show_book_dialog = function(book, event){
+        sharedService.show_book_dialog($rootScope, $scope, book, event);
     }
 
     $scope.next_block = function(index){

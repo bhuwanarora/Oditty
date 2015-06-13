@@ -33,7 +33,7 @@ class Community < Neo
 	end
 
 	def feed_info
-		match + Community.match_grouped_books + Community.return_group(Community.basic_info, "books_info[0..3] AS books")
+		match + Community.return_group(Community.basic_info)
 	end
 
 	def self.match_books 

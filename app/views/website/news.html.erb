@@ -17,7 +17,7 @@
 <div ng-if="!info.circles" layout="row" class="feed_margin">
     <div flex="15" hide-md hide-sm></div>
     <div ng-include src="'/assets/angular/html/news/show_grid.html'" 
-         flex="70" flex-md="100" flex-sm="100" layout="column" class="white md-whiteframe-z1"></div>
+         flex="70" flex-md="100" flex-sm="100" layout="column"></div>
     <div flex="15" hide-md hide-sm></div>
 </div>
 
@@ -27,6 +27,7 @@
 <style>
     #news .news_footer{
         width: 100%;
+        margin-top: 10px;
     }
 
     #news .news_footer .md-paginator.md-next, 
@@ -37,7 +38,7 @@
     #news .news_footer .md-header-items,
     #news .news_footer, 
     #news .news_footer .md-header-items-container{
-        background-color: #e5e5e5;
+        background-color: white;
     }
 
     #news .news_footer md-tabs-canvas{
