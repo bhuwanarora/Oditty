@@ -27,7 +27,11 @@ module Api
 			end
 
 			def self.news_visited(user_id, id)
-				Bookmark::Type::Visited.new(user_id, id).news.add.execute
+				visited = Bookmark::Type::Visited.new(user_id, id)
+				if user_id.present?
+					visited.news.add.execute
+				end
+				visited.change_news_view_count("+").execute
 			end
 
 			def self.follow_user user_id, friend_id
