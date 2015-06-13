@@ -1,5 +1,6 @@
 <div layout-padding layout="column" class="white md-whiteframe-z1">
 	<div layout-padding>
+		<div class="less_important" ng-show="info.active_news">News, {{info.active_news.created_at | timestamp | date:'dd MMM'}}</div>
 		<div class="big_title bold" ng-bind-html="info.active_news.title"></div>
 		<div class="less_important">
 			<a ng-href="{{info.active_news.url}}" target="_blank">
@@ -64,8 +65,3 @@
 		</div>
 	</div>
 </div>
-<news-scroller layout="row" 
-    layout-align="center" 
-    layout-padding
-    class="news_footer md-whiteframe-z1">
-</news-scroller>
