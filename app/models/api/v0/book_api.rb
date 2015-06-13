@@ -31,7 +31,16 @@ module Api
 			end
 
 			def self.get_interesting_info book_id
-				Book.new(book_id).get_interesting_info.execute
+				output = Book.new(book_id).get_interesting_info.execute[0]
+				info_list = output["info"]
+				filtered_info = []
+				info_list.each do |info|
+					temp_info = {"id" =>info["id"], "labels" => info["labels"], "data"=>info["info"]["data"]}
+					filtered_info << temp_info
+				end
+				filtered_output = output
+				filtered_output["info"] = filtered_info
+				filtered_output
 			end
 
 			# def self.get_timeline id

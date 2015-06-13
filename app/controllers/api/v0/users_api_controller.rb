@@ -394,6 +394,7 @@ module Api
 				user_id = session[:user_id]
 				book_id = params[:id]
 				info = Api::V0::UserApi.get_lenders(book_id, user_id).execute
+				UsersUser.notify_borrow(user_id, book_id).execute
 				render :json => info, :status => 200
 			end
 
