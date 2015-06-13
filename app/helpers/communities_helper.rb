@@ -123,16 +123,80 @@ module CommunitiesHelper
 					next
 				end
 				authors = author_list[index]			
-				authors = authors.sort				
-				author_string = authors.join('').search_ready
-				unique_index = book.search_ready + author_string
-				book_info = (Book.get_by_unique_index(unique_index).execute)[0] 
-				if book_info.present?					 
+				authors = authors.sort
+				#author_string = authors.join('').search_ready
+				#unique_index = book.search_ready + author_string
+				books_id = (Book.get_by_one_author(book, authors) + Book.unwind("books") + " RETURN ID(book) AS id").execute
+				#book_info = (Book.get_by_unique_index(unique_index).execute)[0]
+				if books_id.present? && books_id[0].present? && books_id[0]["id"].present?
 					community_books[community] << [book,authors]
-				end	
+					books_id.each do |book_id|
+						Book.new(book_id["id"]).set_author_list(authors).execute
+					end
+				end
 			end
 		end		
 		community_books
 	end
+
+	def self.fetch_book_ids community
+		community_books = {community => []}
+		count = 0
+		books_info = Book::GoogleBooks.get community
+		if books_info.present?
+			books,author_list = books_info.transpose
+			books.each_with_index do |book,index|
+				if(author_list[index].nil?)
+					next
+				end
+				authors = author_list[index]
+				authors = authors.sort
+				books_id = (Book.get_by_one_author(book, authors) + Book.unwind("books") + " RETURN ID(book) AS id").execute
+				if books_id.present? && books_id[0].present? && books_id[0]["id"].present?
+					books_id.each do |book_id|
+						community_books[community] << book_id["id"]
+						Book.new(book_id["id"]).set_author_list(authors).execute
+					end
+				end
+			end
+		end
+		community_books
+	end
+
+	#deletes links to books for all communities before a time_stamp
+	def self.get_communities_created_before created_before
+		Community.match_by_creation_time(created_before) + " WITH community "\
+		"" + Community.return_group("ID(community) as id", "community.name as name ")
+	end
+
+	def self.delete_community_to_book_links id
+		Community.new(id).match + Community.delete_community_to_book_links
+	end
+
+	def self.create_book_links community_id, community_name
+		books = CommunitiesHelper.fetch_book_ids community_name
+		books = books[community_name]
+		clause = Community.new(community_id).match
+		clause += "WHERE community.name = " + "\'" + community_name + "\'  WITH community "
+		or_clause = ""
+		books.each_with_index do |book_id,index|
+			if index == 0
+				or_clause += " ID(book) =" + book_id.to_s + " "
+			else
+				or_clause += " OR ID(book) =" + book_id.to_s + " "
+			end
+		end
+		clause += "MATCH (book:Book) WHERE " + or_clause + Community.merge_book + " RETURN ID(community) "
+		clause
+	end
+
+	def self.reset_book_links created_before
+		communities = CommunitiesHelper.get_communities_created_before(created_before).execute
+		communities.each do |community|
+			CommunitiesHelper.delete_community_to_book_links(community["id"]).execute
+			CommunitiesHelper.create_book_links(community["id"], community["name"]).execute
+		end
+	end
+
 
 end

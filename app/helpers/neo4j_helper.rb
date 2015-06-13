@@ -1195,4 +1195,12 @@ module Neo4jHelper
 		end
 	end
 
+	def self.cypher_replace orig_string, replace_dictionary
+		query = orig_string
+		replace_dictionary.each do |key,replacement|
+			query = "REPLACE(" + query + ", \'" + key + "\', \'" + replacement + "\') "
+		end
+		query
+	end
+
 end
