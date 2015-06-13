@@ -88,6 +88,10 @@ class Community < Neo
 		Community.match_books + " WITH community, " + Book.collect_map({"books_info" => Book.grouped_basic_info})
 	end
 
+	def self.match_by_creation_time created_before
+		"MATCH (community:Community) WHERE community.created_at <= " + created_before.to_s + " "
+	end
+
 	def self.most_important_category_info 
 		", HEAD(COLLECT({" + Community.grouped_basic_info + "})) AS community_info "
 	end
@@ -127,5 +131,10 @@ class Community < Neo
 
 	def get_news skip_count = 0
 		match + Community.match_news +  Community.order_init + " news.created_at DESC " + Community.skip(skip_count) + Community.limit(10) + " WITH community, " + Community.collect_map("news" => News.grouped_basic_info) + Community.return_group(" news", Community.collect_map("community" => Community.grouped_basic_info))
+	end
+
+	def self.delete_community_to_book_links
+		"MATCH (community)-[r:RelatedBooks]->(:Book) "\
+		"DELETE r "
 	end
 end

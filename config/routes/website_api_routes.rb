@@ -20,15 +20,11 @@ ReadersDoor::Application.routes.draw do
             match 'fb_books'                               => 'website_api#fb_books',                         :via => [:put, :get, :post]
             match "news_info"                              => 'website_api#news_info',                        :via => [:put, :get, :post]
             match 'chronological_news'                     => 'website_api#chronological_news',               :via => [:put, :get, :post]
-            match 'detailed_community_info'                => 'website_api#detailed_community_info',          :via => [:put, :get, :post]
             match 'feed_community_info'                    => 'website_api#feed_community_info',          :via => [:put, :get, :post]
             match 'metadata'                               => 'website_api#get_metadata',                     :via => [:put, :get, :post]
             match 'basic_community_info'                   => 'website_api#basic_community_info',             :via => [:put, :get, :post]      
             match 'visited_news'                           => 'website_api#create_visited_news',              :via => [:post]  
             match "regions"                                => 'website_api#get_regions',                      :via => [:put, :get, :post]              
-            match "suggest_communities"                    => 'website_api#suggest_communities',              :via => [:put, :get, :post]
-            match "top_communities"                        => 'website_api#top_communities',                  :via => [:put, :get, :post]
-            match "popular_communities"                    => 'website_api#popular_communities',              :via => [:put, :get, :post]
         end
     end
 end

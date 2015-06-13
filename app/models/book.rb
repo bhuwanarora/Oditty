@@ -35,6 +35,30 @@ class Book < Neo
 		" MATCH(book:Book{unique_index:\""+unique_index+"\"}) " + Book.return_init + Book.basic_info
 	end
 
+	def set_author_list author_name_list
+		set_clause = "SET book.author_name_list = ["
+		author_name_list.each do |author_name|
+			set_clause += " \'" + author_name.gsub("\'","\\\\'") + "\',"
+		end
+		set_clause[set_clause.length - 1 ] =']'
+		match + set_clause
+	end
+
+	def self.get_by_one_author book_name, author_name_list
+		replace_dictionary = {"@" => "", "."  => ""}
+		clause = " MATCH (books:Book) WHERE books.indexed_title = \'" + book_name.search_ready + "\' "
+		or_clause = " "
+		author_name_list.each_with_index do |author_name,index|
+			if index == 0
+				or_clause += Neo4jHelper.cypher_replace("books.indexed_author_name", replace_dictionary)+ " = \'" + author_name.search_ready + "\'"
+			else
+				or_clause += " OR " + Neo4jHelper.cypher_replace("books.indexed_author_name", replace_dictionary)+ " = \'" + author_name.search_ready + "\'"
+			end
+		end
+		clause += "WITH (CASE WHEN " + or_clause + " THEN [books] ELSE [] END ) AS books "
+		clause
+	end
+
 	def self.get_by_legacy_indexed_title indexed_title
 		Book.search_by_legacy_indexed_title(indexed_title) + Book.return_init + Book.basic_info
 	end	

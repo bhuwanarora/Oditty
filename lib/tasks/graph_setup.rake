@@ -329,4 +329,11 @@ namespace :graph do
     GraphHelper.update_follow_counts_for_user
   end
 
+  desc "reset links to books for communities before a timestamp"
+  task :reset_community_to_book_links => :environment do
+    include CommunitiesHelper
+    created_before = Time.local(2015, 5, 20).to_i
+    CommunitiesHelper.reset_book_links created_before
+  end
+
 end
