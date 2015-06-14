@@ -26,6 +26,9 @@
                 <md-tab id="tab4" aria-controls="tab4-content" class="padding" ng-disabled="info.loading">
                     Get this book
                 </md-tab>
+                <md-tab id="tab5" aria-controls="tab5-content" class="padding" ng-disabled="info.loading">
+                    Preview
+                </md-tab>
             </md-tabs>
         </div>
     </div>
@@ -89,6 +92,15 @@
              md-swipe-right="previous()" 
              class="white">
             <div ng-include src="'/assets/angular/html/book/_buy.html'"></div>
+        </div>
+        <div role="tabpanel"
+             id="tab6-content"
+             aria-labelledby="tab5"
+             ng-switch-when="4"
+             md-swipe-left="next()"
+             md-swipe-right="previous()" 
+             class="white">
+            <div ng-include src="'/assets/angular/html/book/_book_embed.html'"></div>
         </div>
     </ng-switch>
 </div>
