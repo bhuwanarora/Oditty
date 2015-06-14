@@ -26,6 +26,10 @@ module Api
 				end
 				clause
 			end
+
+			def self.get_books id
+				Community.new(id).get_books
+			end
 		end
 	end
 end
