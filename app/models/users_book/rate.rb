@@ -8,9 +8,7 @@ class UsersBook::Rate < UsersBook
 		operation = "+"
 		match + create + UsersBook::Rate.set_rating(rating) +
 				 UsersBook::Rate.set_name + 
-				 UsersBook::Rate.set_email + 
 				 UsersBook::Rate.set_isbn + 
-				 UsersBook::Rate.set_thumb + 
 				 UsersBook::Rate.set_created_at + 
 				 UsersBook::Rate.set_updated_at +
 				 " WITH user, book, rating_node " + 

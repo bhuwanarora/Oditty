@@ -4,4 +4,5 @@ module Constant::EmailTemplate
 	RecommendBooks			= "RecommendBooks"
 	Webhooks				= "Webhooks"
 	Admin					= "bhuwan@readersdoor.com"
+	Newsletter 				= "Newsletter"
 end

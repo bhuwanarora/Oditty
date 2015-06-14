@@ -115,7 +115,6 @@
             </div>
 
             <% if @home || @signup %>
-                
                 <script src="assets/angular/controllers/home_controller.js"></script>
 
             <% end %>
@@ -287,7 +286,7 @@
             <% elsif @news %>
                 <md-content layout="column" ng-controller="newsController" id="news">
             <% elsif @news_group && !@blogs %>
-                <md-content ng-controller="feedController" check-scroll-bottom="get_community_feed()" id="home">
+                <md-content ng-controller="feedController" check-scroll-bottom="get_community_feed()" id="home" class="white">
             <% elsif @blogs && @news_group %>
                 <md-content layout="row" layout-wrap ng-controller="feedController" 
                     check-scroll-bottom="get_blog_feed()" id="home">

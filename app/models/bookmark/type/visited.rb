@@ -24,6 +24,10 @@ class Bookmark::Type::Visited < Bookmark::Type
 		@bookmark.add
 	end
 
+	def change_news_view_count operator
+		News.new(@media_id).change_view_count "+"
+	end
+
 	def remove
 		@bookmark.remove
 	end

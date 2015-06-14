@@ -1,41 +1,13 @@
 <div class="follow_content" layout="row" ng-show="!community_loading" ng-if="community">
-    <div class="image_wrapper">
+    <img ng-src="{{community.image_url}}" class="square">
+    <div layout-padding>
         <a ng-href="/room?id={{community.id}}">
-            <div class="big_title absolute white_color" layout-padding>{{community.name | uppercase}}</div>
+            <div class="big_title bold capitalize">{{community.name}}</div>
         </a>
-        <img ng-src="{{community.image_url}}" class="full_width">
-       <!--  <section layout="row" class="absolute">
-            <md-button ng-click="show_book_dialog(book, $event)" 
-               class="clear book" layout-margin
-               ng-repeat="book in community.books | limitTo:3">
-                <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'" ></div>
-            </md-button>
-        </section> -->
+        <div class="less_important" ng-show="community.view_count && community.view_count != 0">
+            <span>{{community.view_count}} </span>
+            <span ng-show="community.view_count == 1">View</span>
+            <span ng-show="community.view_count != 1">Views</span>
+        </div>
     </div>
 </div>
-<!-- <md-progress-linear class="md-primary"
-                    ng-show="community_loading"
-                    md-mode="indeterminate">
-</md-progress-linear> -->
-<style>
-    .books{
-        max-height: 110px;
-        background-color: transparent !important;
-    }
-
-    .books .book{
-        width: 85px;
-        height: 110px;
-    }
-
-    .follow_content .circular{
-        width: 80px;
-        height: 80px;
-    }
-
-    .image_wrapper{
-        height: 200px !important;
-        overflow: hidden;
-    }
-
-</style>

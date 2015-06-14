@@ -56,7 +56,7 @@ class WebsiteController < ApplicationController
 		cookies.delete :logged
 		session.clear
 		@signup = true
-		render :home, :layout => "material"
+		render :home, :layout => "material_home"
 	end
 
 	def jobs
@@ -249,7 +249,7 @@ class WebsiteController < ApplicationController
 
 	def home
 		@home = true
-		render :layout => "material"
+		render :layout => "material_home"
 	end
 
 	def publishers

@@ -1,5 +1,5 @@
 <div layout-padding ng-class="{'dark_grey': communityFeed.expand}">
-    <md-card class="community" 
+    <md-card class="community no_shadow" 
         ng-if="communityFeed.title && communityFeed.title != '' && communityFeed.title != null">
         <md-card-content layout="row" layout-padding class="communities" ng-if="communityFeed.communities">
             <div ng-repeat="community in communityFeed.communities | limitTo: 4" 
@@ -20,7 +20,7 @@
         </md-card-content>
         <md-card-content class="content">
             <div class="big_title">
-                <a ng-click="goto_news_page(communityFeed.id || communityFeed.news_id)">
+                <a ng-href="/news?id={{communityFeed.id || communityFeed.news_id}}">
                 {{communityFeed.title}}</a>
             </div>
             <div class="less_important">News, {{communityFeed.created_at | timestamp | date:'dd MMM'}}</div><br/>
@@ -47,5 +47,5 @@
             ng-include src="'/assets/angular/html/shared/partials/feed_footer.html'">
         </md-card-content>
     </md-card>
-    
 </div>
+<md-divider></md-divider>

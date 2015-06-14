@@ -42,7 +42,7 @@ angular.module('filtersApp', [])
                 var user_label = input.labels == "User";
                 var blog_label = input.labels == "Blog";
                 var news_label = input.labels == "News";
-                var community_label = input.labels == "Room";
+                var community_label = input.labels == "Community";
                 if(book_label){
                     output = "Book";
                 }

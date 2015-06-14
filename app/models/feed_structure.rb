@@ -104,7 +104,7 @@ class FeedStructure < Neo
 		name = _get_name data
 		thumb = "assets/profile_pic.jpeg"
 		notification_json = {
-			:created_at => data["created_at"],
+			:created_at => data["created_at"] || data["timestamp"],
 			:user => {
 				:id => data["user_id"],
 				:name => data["name"]

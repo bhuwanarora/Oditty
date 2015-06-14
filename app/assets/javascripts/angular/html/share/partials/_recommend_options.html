@@ -1,4 +1,12 @@
-<div class="emotions">
-	<recommend ng-repeat="user in users_list" user="user"
+<div class="emotions" ng-if="!sign_in">
+	<recommend ng-repeat="user in users_list" user="user" users-list="users_list"
 		book="active_book"></recommend>
+</div>
+<div ng-if="sign_in" layout-padding layout-align="center center" layout="column">
+	<div class="less_important" layout-padding>
+		Sign in to recommend books to your friends.
+	</div>
+	<md-button ng-click="show_signin()" class="md-raised md-warn md-button-clear">
+		Sign In
+	</md-button>
 </div>

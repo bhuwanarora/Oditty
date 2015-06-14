@@ -122,8 +122,14 @@ module Api
 			end
 
 
-			def self.get_basic_book_details(id, user_id)
-				book = Book.new(id).get_display_info
+			def self.get_basic_feed_info(id)
+				book = Book.new(id).get_display_info.execute[0]
+				book
+			end
+
+			def self.get_primary_info id
+				book = Book.new(id).get_primary_info.execute[0]
+				book
 			end
 
 			def self.get_book_details(id, user_id=nil)
