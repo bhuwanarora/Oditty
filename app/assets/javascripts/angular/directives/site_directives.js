@@ -1,3 +1,45 @@
+homeApp.directive('bookEmbed', ["$rootScope", function($rootScope){
+    return{
+        restrict: 'A',
+        scope: {user: '=', book: '=', info: '='},
+        link: function($scope, $element){
+            var _unauthenticated_user = function(){
+                return ((getCookie("logged") == "") || (getCookie("logged") == null));
+            }
+
+            var _init = (function () {
+                debugger
+                $scope.info.loading = true;
+                var id = ($rootScope.active_book.id) || ($rootScope.active_book.book_id);
+
+                var initialize = function(){
+                    debugger
+                    var isbn = [];
+                    isbn = $scope.book.isbn.split(',');
+                    var isbn_string = "ISBN:"
+                    var viewer = new google.books.DefaultViewer($element.find('div')[0]);
+                    viewer.load(isbn_string.concat(isbn[1]));              
+                }
+
+                if(angular.isUndefined($scope.book)){
+                    $scope.book = $rootScope.active_book;
+                }
+                $scope.book_loading = true;
+                
+                if(!_unauthenticated_user()){
+                    google.setOnLoadCallback(initialize);
+                    $scope.info.loading = false;
+                }
+                else{
+                    $scope.book_loading = false;
+                    $scope.info.loading = false;
+                }
+            }());
+        }
+    }
+}]);
+
+
 homeApp.directive('recommend', ["$rootScope", "userService", "sharedService", function($rootScope, userService, sharedService){
     return{
         restrict: 'E',
@@ -356,3 +398,4 @@ homeApp.directive('calendar', ["$rootScope", function($rootScope){
 //     templateUrl: '/assets/angular/views/shared/rate.html'
 //   	}
 // }]);
+
