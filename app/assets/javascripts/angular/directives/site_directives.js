@@ -401,4 +401,3 @@ homeApp.directive('calendar', ["$rootScope", function($rootScope){
 //     templateUrl: '/assets/angular/views/shared/rate.html'
 //   	}
 // }]);
-
