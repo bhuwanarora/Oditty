@@ -6,7 +6,7 @@
 <div ng-if="friends" layout="row" layout-padding layout-sm="column">
 	<div flex="30" layout="column" flex-sm="100">
 		<md-button class="margin_top clear md-whiteframe-z1"
-			 ng-repeat="profile in ::friends" 
+			 ng-repeat="profile in friends" 
 			 ng-click="refresh_data(profile)">
 			 <div layout="row">
 				<img ng-src="{{::profile.image_url}}" layout="row" class="square">

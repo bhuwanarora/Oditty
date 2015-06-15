@@ -6,7 +6,7 @@
 <div ng-if="books_from_favourite_author" layout="row" layout-padding layout-sm="column">
 	<div flex="30" layout="column" flex-sm="100">
 		<md-button class="margin_top clear md-whiteframe-z1"
-			 ng-repeat="author in ::books_from_favourite_author" 
+			 ng-repeat="author in books_from_favourite_author" 
 			 ng-click="refresh_data(author)">
 			 <div layout="row">
 				<img ng-src="{{::author.image_url}}" layout="row" class="square">
