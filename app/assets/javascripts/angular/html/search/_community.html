@@ -1,9 +1,9 @@
 <md-card>
     <md-card-content>
         <section layout="row">
-            <img ng-src="{{result.image_url}}" class="square">
+            <img ng-src="{{::result.image_url}}" class="square">
             <div layout-wrap class="side_padding">
-                <div class="big_title"><a ng-href="/room?id={{result.id}}">{{result.name}}</a></div>
+                <div class="big_title"><a ng-href="/room?id={{::result.id}}">{{::result.name}}</a></div>
                 <div class="less_important">Room</div>
             </div>
         </section>

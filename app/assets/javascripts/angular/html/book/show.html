@@ -10,7 +10,7 @@
                     <div layout="row">
                         <img ng-src="{{book.isbn | small_thumb}}" width="40px" height="50px" layout-padding/>
                         <div>
-                            {{book.title}}
+                            {{::book.title}}
                         </div>
                     </div>
                 </md-tab>
@@ -38,7 +38,7 @@
     <div layout-padding class="yellow">
         <div layout="row" layout-align="space-between">
             <div class="bold less_important white_color pointer" ng-click="hide_rating = !hide_rating;">
-                Rate this book {{book.user_rating}}/10
+                Rate this book {{::book.user_rating}}/10
             </div>
             <div>
                 <i class="material-icons pointer white_color" ng-show="!hide_rating" ng-click="hide_rating = true;">add</i>
@@ -47,7 +47,7 @@
         </div>
          <md-slider flex="20" md-discrete 
                 class="rate_slider" ng-show="hide_rating"
-                ng-model="book.user_rating" ng-change="rate_book(book)"
+                ng-model="::book.user_rating" ng-change="rate_book(book)"
                 step="1" min="1" max="10" aria-label="rating">
         </md-slider>
     </div>

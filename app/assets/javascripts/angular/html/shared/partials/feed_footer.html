@@ -10,11 +10,11 @@
             <a ng-href="/profile?id={{user.id}}"><img ng-src="{{user.image_url | default_profile}}" class="circular"></a>
             &nbsp;
             <md-tooltip md-direction="top">
-                {{user.first_name}} {{user.last_name}}
+                {{::user.first_name}} {{::user.last_name}}
             </md-tooltip>
         </div>
         <div ng-show="feed.follow_count > 4">
-            {{feed.follow_count - 4}} other users
+            {{::feed.follow_count - 4}} other users
         </div>
     </div>
     <div layout="row" layout-align="start center">

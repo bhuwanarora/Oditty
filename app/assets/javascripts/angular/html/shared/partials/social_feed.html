@@ -4,12 +4,12 @@
             <div layout="row">
                 <img ng-src="{{profile_user.image_url | default_profile}}" class="circular" >
                 <div layout="column" layout-align="start start">
-                    <div class="bold" layout-padding>{{profile_user.first_name}}</div>
+                    <div class="bold" layout-padding>{{::profile_user.first_name}}</div>
                     <div class="less_important">{{feed.created_at | timestamp | date:'h:mm a, dd MMM'}}</div>
                     <div ng-bind-html="feed.message" class="status_message"></div>
                     <!-- <div ng-repeat="data in feed.data" layout-padding> -->
                     <!-- </div> -->
-                    <basic-book ng-if="feed.book" book="feed.book"></basic-book>
+                    <basic-book ng-if="feed.book" book="::feed.book"></basic-book>
                 </div>
             </div>
         </section>

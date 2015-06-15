@@ -1,14 +1,14 @@
 <div layout-padding layout="column" class="white md-whiteframe-z1">
 	<div layout-padding>
 		<div class="less_important" ng-show="info.active_news">News, {{info.active_news.created_at | timestamp | date:'dd MMM'}}</div>
-		<div class="big_title bold" ng-bind-html="info.active_news.title"></div>
+		<div class="big_title bold" ng-bind-html="::info.active_news.title"></div>
 		<div class="less_important">
 			<a ng-href="{{info.active_news.url}}" target="_blank">
-				{{info.active_news.url}}
+				{{::info.active_news.url}}
 			</a>
 		</div>
 	</div>
-	<div layout-padding>{{info.active_news.description}}</div>
+	<div layout-padding>{{::info.active_news.description}}</div>
 	<div>
 		<img ng-src="{{info.active_news.image_url}}" class="max_full_width" />
 	</div>
@@ -22,13 +22,13 @@
 			ng-click="refresh_data(community)" 
 			ng-disabled="info.loading" layout="column" flex-sm="100">
 			<div layout="row">
-				<img ng-src="{{community.image_url}}" class="circular">
+				<img ng-src="{{::community.image_url}}" class="circular">
 				<div layout="column" layout-padding>
 					<div ng-class="{'bold': active_tag.name == community.name}" class="wrap capitalize">
-						{{community.name}}
+						{{::community.name}}
 					</div>
 					<div class="less_important" ng-show="community.view_count && community.view_count != 0">
-						<span>{{community.view_count}} </span>
+						<span>{{::community.view_count}} </span>
 						<span ng-show="community.view_count == 1">View</span>
 						<span ng-show="community.view_count != 1">Views</span>
 					</div>
