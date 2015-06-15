@@ -50,6 +50,14 @@ module GraphHelper
 		end
 	end
 
+	def self.user_set_bookmark_count
+		clause = "MATCH (user:User) WITH user "\
+			"OPTIONAL " + Bookmark.match_path("book") + "WHERE label.key <> \'" + Bookmark::Type::FromFacebook.get_key + "\' AND label.key <> \'" + Bookmark::Type::Visited.get_key + "\' "\
+			" WITH user, COUNT(DISTINCT(bookmark_node)) as bookmark_node_count "\
+				"SET user.bookmark_count = bookmark_node_count"
+		clause.execute
+	end
+
 	def self.make_book_and_article_shelves
 		clause = " MATCH (label: Label) SET label: BookShelf WITH label WHERE NOT (label.key = \"PlanToBuy\" OR label.key = \"IOwnThis\" OR label.key = \"IOwnthis\") WITH label SET label: ArticleShelf "
 		clause.execute
@@ -476,9 +484,14 @@ module GraphHelper
 		end
 	end
 
-
 	def wrong_author_links
 		clause = "MATCH (book:Book)<-[:Wrote]-(author:Author) WHERE book.author_name <> author.name RETURN COUNT(b)"
+	end
 
+	def set_user_notification
+		clause = "MATCH (user:User) WITH user "\
+			"WHERE NOT ((user)-[:NextNotification]->())"\
+			"CREATE UNIQUE (user)-[:NextNotification]->(user)"
+		clause.execute
 	end
 end
