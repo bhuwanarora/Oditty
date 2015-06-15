@@ -1,3 +1,49 @@
+homeApp.directive('bookEmbed', ["$rootScope", function($rootScope){
+    return{
+        restrict: 'A',
+        scope: {user: '=', book: '=', info: '=', book_not_found: '='},
+        link: function($scope, $element){
+
+            var _unauthenticated_user = function(){
+                return ((getCookie("logged") == "") || (getCookie("logged") == null));
+            }
+
+            var alertNotFound = function() {
+                $scope.book_not_found = true;
+            }
+
+            var load_book = function(){
+                var isbn = [0738531367];
+                // var ibn = [];
+                // isbn = $scope.book.isbn.split(',');
+                var isbn_string = "ISBN:"
+                var viewer = new google.books.DefaultViewer($element.find('div')[0]);
+                viewer.load(isbn_string.concat(isbn[0]), alertNotFound);
+                $scope.info.loading = false;
+            }
+
+
+            var _init = (function () {
+                $scope.info.loading = true;
+                var id = ($rootScope.active_book.id) || ($rootScope.active_book.book_id);
+
+                if(angular.isUndefined($scope.book)){
+                    $scope.book = $rootScope.active_book;
+                }
+                $scope.book_loading = true;
+                
+                if(!_unauthenticated_user()){
+                    google.load("books", "0", {callback: load_book});
+                }
+                else{
+                    $scope.book_loading = false;
+                    $scope.info.loading = false;
+                }
+            }());
+        }
+    }
+}]);
+
 homeApp.directive('recommend', ["$rootScope", "userService", "sharedService", function($rootScope, userService, sharedService){
     return{
         restrict: 'E',
