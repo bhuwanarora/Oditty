@@ -1,11 +1,11 @@
-homeApp.directive('bookEmbed', ["$rootScope", function($rootScope){
+homeApp.directive('bookEmbed', ["$rootScope", "google_public_key", function($rootScope, google_public_key){
     return{
         restrict: 'A',
         scope: {book: '=', info: '='},
-        link: function($scope, $element){
+        link: function($scope, $element, google_public_key){
 
             var alert_not_found = function(){
-                $scope.book_not_found = true;
+                $element.prepend("<div>Preview not found</div>");
             }
 
             var load_book = function(){
@@ -29,7 +29,7 @@ homeApp.directive('bookEmbed', ["$rootScope", function($rootScope){
                 google.load("books", "0", {callback: load_book});
             }());
         }
-    }
+    };
 }]);
 
 homeApp.directive('recommend', ["$rootScope", "userService", "sharedService", function($rootScope, userService, sharedService){
