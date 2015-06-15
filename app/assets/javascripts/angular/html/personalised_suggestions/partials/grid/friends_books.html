@@ -5,7 +5,7 @@
 </div>
 <div ng-if="friends" layout="row" layout-padding layout-sm="column">
 	<div flex="30" layout="column" flex-sm="100">
-		<md-button class="margin_top clear md-whiteframe-z1"
+		<md-button aria-label="refresh_data" class="margin_top clear md-whiteframe-z1"
 			 ng-repeat="profile in friends" 
 			 ng-click="refresh_data(profile)">
 			 <div layout="row">
@@ -22,7 +22,7 @@
 		</div>
 		<div layout="row" layout-wrap>
 			<section layout-margin ng-repeat="book in info.active_tag.books" >
-				<md-button class="rd_book_image_cover md-whiteframe-z3 clear"
+				<md-button aria-label="show_book_dialog" class="rd_book_image_cover md-whiteframe-z3 clear"
 					ng-click="show_book_dialog(book, $event)">
 					<div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></md-button>
 				</md-button>

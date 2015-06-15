@@ -6,7 +6,7 @@
             <div layout="column" class="md-list-item-text" >
                 <div layout="row" layout-align="space-between">
                     <div class="big_title" ng-bind-html="author.name" layout-padding></div>
-                    <md-button class=" md-button-clear md-warn" 
+                    <md-button aria-label="toggle_follow" class=" md-button-clear md-warn" 
                                ng-class="{'md-raised': !author.status}" 
                                ng-click="toggle_follow()">
                         <span ng-if="!author.status">Follow</span>
@@ -39,7 +39,7 @@
 </div>
 <div layout="row" layout-wrap>
     <section ng-repeat="book in author.books" layout-margin>
-        <md-button ng-click="show_book_dialog(book, $event)" class="clear rd_book_image_cover" >
+        <md-button aria-label="show_book_dialog" ng-click="show_book_dialog(book, $event)" class="clear rd_book_image_cover" >
             <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
         </md-button>
     </section>

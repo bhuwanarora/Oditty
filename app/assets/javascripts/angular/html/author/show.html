@@ -5,7 +5,7 @@
     ng-if="author.books.length != 0"
     id="{{author.books[0].id}}"
     ng-style="author.books[0].custom_style || custom_style">
-    <md-button class="follow_author md-button-clear md-warn" 
+    <md-button aria-label="toggle_follow" class="follow_author md-button-clear md-warn" 
                ng-class="{'md-raised': !author.status}" 
                ng-click="toggle_follow()">
         <span ng-if="!author.status">Follow</span>
@@ -43,8 +43,8 @@
      ng-style="{'background-color': (author.books[0].color ||  custom_color)}">
      <div ng-include src="'/assets/angular/html/shared/partials/author_name.html'" ng-if="author.books.length == 0"></div>
      <div class="nav_icons" layout="row" ng-if="author.books.length != 0">
-        <md-button ng-click="previous_block(0)"><span class="icon-angle-up"></span></md-button>
-        <md-button ng-click="next_block(0)"><span class="icon-angle-down"></span></md-button>
+        <md-button aria-label="previous_block" ng-click="previous_block(0)"><span class="icon-angle-up"></span></md-button>
+        <md-button aria-label="next_block" ng-click="next_block(0)"><span class="icon-angle-down"></span></md-button>
     </div>
 </div>
 <div class="relative" flex="100">
@@ -63,7 +63,7 @@
     </div> -->
 </div>
 <div layout-padding class="book_container" parallax-background parallax-ratio="1">
-    <md-button class="burger_button" ng-click="show_authors_nav($event)" hide show-sm show-md>
+    <md-button aria-label="burger_button" class="burger_button" ng-click="show_authors_nav($event)" hide show-sm show-md>
         <span class="icon-menu2"></span>
     </md-button>
     <md-sidenav class="md-sidenav-left" md-component-id="authors_detail_sidenav">
@@ -117,8 +117,8 @@
             </div>
          </div>
          <div class="nav_icons" layout="row">
-            <md-button ng-click="previous_block($index)"><span class="icon-angle-up"></span></md-button>
-            <md-button ng-click="next_block($index)"><span class="icon-angle-down"></span></md-button>
+            <md-button aria-label="previous_block" ng-click="previous_block($index)"><span class="icon-angle-up"></span></md-button>
+            <md-button aria-label="next_block" ng-click="next_block($index)"><span class="icon-angle-down"></span></md-button>
          </div>
     </div>
     <div layout-padding class="book_container" parallax-background parallax-ratio="1">

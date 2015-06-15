@@ -3,7 +3,7 @@
     ng-if="book.title || book.name">
     <div>
         <section class="md-whiteframe-z3 rd_book_image_cover">
-            <md-button ng-click="show_book_dialog(book, $event)" class="clear rd_book_image_cover" layout-margin>
+            <md-button aria-label="show_book_dialog" ng-click="show_book_dialog(book, $event)" class="clear rd_book_image_cover" layout-margin>
                 <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
             </md-button>
         </section>
