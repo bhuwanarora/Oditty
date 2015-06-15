@@ -29,6 +29,9 @@
                 <md-tab id="tab5" aria-controls="tab5-content" class="padding" ng-disabled="info.loading">
                     Recommend
                 </md-tab>
+                <md-tab id="tab6" aria-controls="tab6-content" class="padding" ng-disabled="info.loading">
+                    Preview
+                </md-tab>
             </md-tabs>
         </div>
     </div>
@@ -102,6 +105,15 @@
              class="white">
             <div layout="column"  ng-include src="'/assets/angular/html/shared/recommend_to_friends.html'"
                 ng-controller="recommendController"></div>
+        </div>
+        <div role="tabpanel"
+             id="tab6-content"
+             aria-labelledby="tab6"
+             ng-switch-when="5"
+             md-swipe-left="next()"
+             md-swipe-right="previous()" 
+             class="white">
+            <div ng-include src="'/assets/angular/html/book/_book_embed.html'"></div>
         </div>
     </ng-switch>
 </div>

@@ -1,3 +1,37 @@
+homeApp.directive('bookEmbed', ["$rootScope", "google_public_key", function($rootScope, google_public_key){
+    return{
+        restrict: 'A',
+        scope: {book: '=', info: '='},
+        link: function($scope, $element, google_public_key){
+
+            var alert_not_found = function(){
+                $element.prepend("<div>Preview not found</div>");
+            }
+
+            var load_book = function(){
+                var isbn = $scope.book.isbn.split(',');
+                var isbn_string = "ISBN:"
+                var viewer = new google.books.DefaultViewer($element.find('div')[0]);
+                viewer.load(isbn_string.concat(isbn[1]), alert_not_found);
+                $scope.info.loading = false;
+            }
+
+
+            var _init = (function () {
+                $scope.info.loading = true;
+                var id = ($rootScope.active_book.id) || ($rootScope.active_book.book_id);
+
+                if(angular.isUndefined($scope.book)){
+                    $scope.book = $rootScope.active_book;
+                }
+                $scope.book_loading = true;
+                
+                google.load("books", "0", {callback: load_book});
+            }());
+        }
+    };
+}]);
+
 homeApp.directive('recommend', ["$rootScope", "userService", "sharedService", function($rootScope, userService, sharedService){
     return{
         restrict: 'E',
