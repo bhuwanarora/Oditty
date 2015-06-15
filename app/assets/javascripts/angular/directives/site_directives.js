@@ -1,24 +1,18 @@
 homeApp.directive('bookEmbed', ["$rootScope", function($rootScope){
     return{
         restrict: 'A',
-        scope: {user: '=', book: '=', info: '=', book_not_found: '='},
+        scope: {book: '=', info: '='},
         link: function($scope, $element){
 
-            var _unauthenticated_user = function(){
-                return ((getCookie("logged") == "") || (getCookie("logged") == null));
-            }
-
-            var alertNotFound = function() {
+            var alert_not_found = function(){
                 $scope.book_not_found = true;
             }
 
             var load_book = function(){
-                var isbn = [0738531367];
-                // var ibn = [];
-                // isbn = $scope.book.isbn.split(',');
+                var isbn = $scope.book.isbn.split(',');
                 var isbn_string = "ISBN:"
                 var viewer = new google.books.DefaultViewer($element.find('div')[0]);
-                viewer.load(isbn_string.concat(isbn[0]), alertNotFound);
+                viewer.load(isbn_string.concat(isbn[1]), alert_not_found);
                 $scope.info.loading = false;
             }
 
@@ -32,13 +26,7 @@ homeApp.directive('bookEmbed', ["$rootScope", function($rootScope){
                 }
                 $scope.book_loading = true;
                 
-                if(!_unauthenticated_user()){
-                    google.load("books", "0", {callback: load_book});
-                }
-                else{
-                    $scope.book_loading = false;
-                    $scope.info.loading = false;
-                }
+                google.load("books", "0", {callback: load_book});
             }());
         }
     }
