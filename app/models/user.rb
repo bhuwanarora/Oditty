@@ -106,7 +106,11 @@ class User < Neo
 	end
 
 	def self.create_label key
-		" CREATE UNIQUE (user)-[labelled:Labelled]->(label:Label{key: \""+key+"\"}) "
+		clause = " CREATE UNIQUE (user)-[labelled:Labelled]->(label:Label{key: \""+key+"\"}) "
+		if (key != Bookmark::Type::FromFacebook.get_key && key != Bookmark::Type::Visited.get_key)
+			clause += Bookmark.increment_media_bookmark_count "user"
+		end
+		clause
 	end
 
 	def self.from_facebook params
@@ -331,7 +335,6 @@ class User < Neo
 	end
 
 	def self.get_max_min_id
-		output = "MATCH (a:User) RETURN max(ID(a)) as max_id,min(ID(a)) as min_id".execute[0]
-		[output["max_id"],output["min_id"]]
+		output = "MATCH (a:User) RETURN max(ID(a)) as max_id,min(ID(a)) as min_id"
 	end
 end

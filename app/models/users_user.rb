@@ -45,12 +45,6 @@ class UsersUser < Neo
 		"friend_id:" + @friend_id.to_s + ", timestamp:\'" + Time.now.getutc.to_i.to_s + "\'})-[:Recommended]->(book) "
 	end
 
-	def self.create_borrow_node user_id, book_id
-		" MERGE (user) -[:BorrowItem]->(borrow_node:BorrowNode{book_id:" + book_id.to_s + ", user_id:" + user_id.to_s +  "})"\
-		"SET borrow_node.timestamp =\'" + Time.now.getutc.to_i.to_s + "\' "\
-		" WITH user, borrow_node "
-	end
-	
 	def recommend_book book_id
 		clause = match_book book_id
 		clause += create_recommendation book_id
@@ -102,7 +96,4 @@ class UsersUser < Neo
 		" OPTIONAL MATCH (friend)-[follows_user:FollowsUser]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(user) WITH user, friend, follows_node "
 	end
 
-	def self.notify_borrow user_id, book_id
-		User.new(user_id).match + UsersUser.match_followers + UsersUser.create_borrow_node(user_id, book_id) + ", friend " + "WITH friend as user, borrow_node " + 	User::UserNotification.add("borrow_node") + " RETURN ID(user) "
-	end
 end
