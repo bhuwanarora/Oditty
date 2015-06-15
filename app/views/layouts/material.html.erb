@@ -304,7 +304,7 @@
             <% elsif @search %>
                 <md-content layout="row" layout-wrap ng-controller="searchPageController" check-scroll-bottom="show_all_results()">
             <% elsif @book %>
-                <md-content class="white" ng-controller="specificBookController">
+                <md-content class="white" ng-controller="specificBookController" class="white">
             <% elsif @customise %>
                 <md-content ng-controller="customiseController" class="white" flex="100">
             <% elsif @publishers %>
@@ -337,7 +337,7 @@
             </md-progress-circular>
 
             <div ng-include src="'/assets/angular/html/shared/left_panel.html'" class="left_panel_container"></div>
-            <div ng-include src="'/assets/angular/html/shared/notifications.html'" ng-if="show_notifications"></div>
+            <div ng-include src="'/assets/angular/html/shared/notifications.html'" class="right_panel_container"></div>
             <% unless @profile %>
                 <div ng-include src="'/assets/angular/html/share/show.html'"></div>
             <% end %>

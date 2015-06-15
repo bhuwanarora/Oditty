@@ -9,7 +9,9 @@
 <div ng-show="info.mobile_search" 
     class="pointer"  layout-padding
     ng-click="toggle_notifications($event)">
-    <i class="material-icons">notifications_none</i>
+    <i class="material-icons" ng-show="notifications.length == 0">notifications_none</i>
+    <i class="material-icons red_color" ng-show="notifications.length != 0 && !info.notifications_seen">notifications_active</i>
+    <i class="material-icons" ng-show="notifications.length != 0 && info.notifications_seen">notifications</i>
     <md-tooltip >
         Notifications
     </md-tooltip>

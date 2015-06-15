@@ -5,6 +5,7 @@ homeApp.directive('bookEmbed', ["$rootScope", "google_public_key", function($roo
         link: function($scope, $element, google_public_key){
 
             var alert_not_found = function(){
+                $scope.info.loading = false;
                 $element.prepend("<div>Preview not found</div>");
             }
 

@@ -477,7 +477,21 @@ module Api
 
 			def self.get_notifications user_id
 				info = User.new(user_id).get_notifications.execute
-				info
+				notifications = []
+				for data_info in info
+					if data_info["label"][0] == "User"
+					elsif data_info["label"][0] == "RecommendNode"
+						notification = {
+							:friend_id => data_info["notification"]["data"]["friend_id"],
+							:book_id => data_info["notification"]["data"]["book_id"],
+							:user_id => data_info["notification"]["data"]["user_id"],
+							:timestamp => data_info["notification"]["data"]["timestamp"]
+						}
+						data_info["notification"] = notification
+						notifications.push data_info
+					end
+				end
+				notifications
 			end
 
 			def self.verify(params)

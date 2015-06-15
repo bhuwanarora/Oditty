@@ -46,6 +46,6 @@ class User::UserNotification < User
 	end
 
 	def self.basic_info
-		" LABELS(notification) AS label, notification, notification.created_at AS created_at "
+		" DISTINCT(notification) AS notification, LABELS(notification) AS label, notification.created_at AS created_at "
 	end
 end
