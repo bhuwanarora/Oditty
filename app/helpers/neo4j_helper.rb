@@ -879,8 +879,10 @@ module Neo4jHelper
 	end
 
 	def self.set_bookshelf_label
-		clause = " MATCH (label:Label) WHERE label.key <> 'IOwnthis' AND label.key <> 'PlanToBuy' "\
-			" SET label: BookShelf "
+		clause = " MATCH (label:Label) WHERE label.key <> '" + Label.get_iownthis_key + "' AND label.key <> '" + Label.get_plantobuy_key + "' "\
+			" SET label" + Bookmark.get_articleshelf_string + " "\
+			" MATCH (label:Label) "\
+			" SET label" + Bookmark.get_bookshelf_string + " "
 		clause.execute
 	end
 

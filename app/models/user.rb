@@ -106,7 +106,11 @@ class User < Neo
 	end
 
 	def self.create_label key
-		" CREATE UNIQUE (user)-[labelled:Labelled]->(label:Label{key: \""+key+"\"}) "
+		clause = " CREATE UNIQUE (user)-[labelled:Labelled]->(label:Label{key: \""+key+"\"}) "
+		if (key != Bookmark::Type::FromFacebook.get_key && key != Bookmark::Type::Visited.get_key)
+			clause += Bookmark.increment_media_bookmark_count "user"
+		end
+		clause
 	end
 
 	def self.from_facebook params

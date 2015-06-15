@@ -49,7 +49,7 @@ module Api
 				book_id = params[:id]
 				clause = Api::V0::FeedsApi.notify_borrow user_id,book_id
 				clause.execute
-				render :json => "", :status => 200
+				render :json => "success", :status => 200
 			end
 		end
 	end
