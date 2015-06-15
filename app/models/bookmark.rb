@@ -169,6 +169,7 @@ class Bookmark < Neo
 		unless (@key == Bookmark::Type::Visited.get_key || Bookmark::Type::FromFacebook.get_key )
 			clause += "ON MATCH SET bookmark_node.count = bookmark_node.count + 1 "
 		end
+		clause
 	end
 
 	def match

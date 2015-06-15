@@ -279,7 +279,7 @@
             <% elsif @personalised_suggestions %>
                 <md-content ng-controller="personalisedController">
             <% elsif @network %>
-                <md-content ng-controller="networkController" id="network">
+                <md-content ng-controller="networkController" id="network" check-scroll-bottom="load_users()">
             <% elsif @news %>
                 <md-content layout="column" ng-controller="newsController" id="news">
             <% elsif @news_group && !@blogs %>

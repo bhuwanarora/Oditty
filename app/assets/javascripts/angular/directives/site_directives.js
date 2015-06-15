@@ -10,11 +10,16 @@ homeApp.directive('bookEmbed', ["$rootScope", "google_public_key", function($roo
             }
 
             var load_book = function(){
-                var isbn = $scope.book.isbn.split(',');
-                var isbn_string = "ISBN:"
-                var viewer = new google.books.DefaultViewer($element.find('div')[0]);
-                viewer.load(isbn_string.concat(isbn[1]), alert_not_found);
-                $scope.info.loading = false;
+                if($scope.book.isbn == null){
+                    $scope.alert_not_found();
+                }
+                else{
+                    var isbn = $scope.book.isbn.split(',');
+                    var isbn_string = "ISBN:"
+                    var viewer = new google.books.DefaultViewer($element.find('div')[0]);
+                    viewer.load(isbn_string.concat(isbn[1]), alert_not_found);
+                    $scope.info.loading = false;
+                }
             }
 
 

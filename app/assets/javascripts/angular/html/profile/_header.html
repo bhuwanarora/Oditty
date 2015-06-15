@@ -36,7 +36,7 @@
                     </md-button>
                 </a>
                 <a href="/network?q=0" ng-hide="hide_follow_links">
-                     <md-button class="nav_links">
+                     <md-button class="nav_links" ng-class="{'red_color': follow_state == 0}">
                         <div layout="column" layout-align="center center">
                             <div><b>FOLLOWERS</b></div>
                             <h2>{{profile_user.followed_by_count || 0}}</h2>
@@ -45,7 +45,7 @@
                 </a>
                 
                  <a href="/network?q=1" ng-hide="hide_follow_links">
-                    <md-button class="nav_links">
+                    <md-button class="nav_links" ng-class="{'red_color': follow_state == 1}">
                         <div layout="column" layout-align="center center">
                             <div><b>FOLLOWING</b></div>
                             <h2>{{profile_user.follows_count || 0}}</h2>
@@ -106,7 +106,6 @@
 
     .profile_header .nav_links{
         padding: 4px 8px !important;
-        color: inherit !important;
         font-size: 0.8em;
     }
 
