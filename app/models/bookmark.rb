@@ -68,6 +68,10 @@ class Bookmark < Neo
 		" MERGE (bookmark_node)-[bookmark_action:BookmarkAction]->(" + media + ") "
 	end
 
+	def self.increment_media_bookmark_count media = "book"
+		"SET " + media + ".bookmark_count = COALESCE(" + media + ".bookmark_count, " + "0) + 1 "
+	end
+
 	def self.set_title media = "book"
 		" SET bookmark_node.title = " + media + ".title "
 	end
@@ -165,7 +169,7 @@ class Bookmark < Neo
 	end	
 
 	def create_label_bookmark_node
-		" MERGE (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node: BookmarkNode{label:\""+@key+"\", book_id:"+ @media_id.to_s + ", user_id:" + @user_id.to_s + "}) ON CREATE SET bookmark_node.count = 0 ON MATCH SET bookmark_node.count = bookmark_node.count + 1 " 
+		clause = " MERGE (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node: BookmarkNode{label:\""+@key+"\", book_id:"+ @media_id.to_s + ", user_id:" + @user_id.to_s + "}) "
 	end
 
 	def match
@@ -185,7 +189,7 @@ class Bookmark < Neo
 	end
 
 	def create 
-		@user_media_class.new(@media_id, @user_id).match + User.create_label(@key) + create_label_bookmark_node + create_bookmark_node_book + " ON MATCH " + Bookmark.set_updated_at + " ON CREATE " +  Bookmark.set_created_at  + " ON CREATE " + Bookmark.set_updated_at + set_key(@key) + " WITH user, " + @media + ", bookmark_node, label, labelled "
+		@user_media_class.new(@media_id, @user_id).match + User.create_label(@key) + create_label_bookmark_node + create_bookmark_node_book + " ON MATCH " + Bookmark.set_updated_at + " ON CREATE " +  Bookmark.set_created_at  + " ON CREATE " + Bookmark.set_updated_at + set_key(@key) + Bookmark.increment_media_bookmark_count(@media) + " WITH user, " + @media + ", bookmark_node, label, labelled "
 	end
 
 	def add  
@@ -200,5 +204,13 @@ class Bookmark < Neo
 		end
 		puts "BOOK BOOKMARKED".green
 		create + feednext_clause + mediafeed_next_clause  + set_properties(operation) + Bookmark.return_group(@media_class.basic_info) 
+	end
+
+	def self.get_bookshelf_string
+		":BookShelf"
+	end
+
+	def self.get_articleshelf_string
+		":ArticleShelf"
 	end
 end
