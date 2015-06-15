@@ -335,7 +335,6 @@ class User < Neo
 	end
 
 	def self.get_max_min_id
-		output = "MATCH (a:User) RETURN max(ID(a)) as max_id,min(ID(a)) as min_id".execute[0]
-		[output["max_id"],output["min_id"]]
+		output = "MATCH (a:User) RETURN max(ID(a)) as max_id,min(ID(a)) as min_id"
 	end
 end
