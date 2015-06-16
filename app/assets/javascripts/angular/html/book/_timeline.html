@@ -5,12 +5,12 @@
             <div layout="column" layout-padding>
                 <div class="big_title">
                     <a ng-href="/profile?q={{feed.user.id}}">
-                        <span>{{feed.user.first_name}}</span>
-                        <span>{{feed.user.last_name}}</span>
+                        <span>{{::feed.user.first_name}}</span>
+                        <span>{{::feed.user.last_name}}</span>
                     </a>
                 </div>
                 <div class="less_important">
-                    {{feed.user.init_book_read_count}}
+                    {{::feed.user.init_book_read_count}}
                 </div>
             </div>
         </md-card-content>

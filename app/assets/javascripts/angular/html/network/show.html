@@ -2,7 +2,7 @@
 <md-item ng-repeat="user in users_list" class="white user_card md-whiteframe-z1" layout-margin>
     <md-item-content layout="row" flex class="clear">
         <div ng-repeat="book in user.books" class="network_book" ng-if="book.id">
-            <a ng-href="/book?q={{book.id}}">
+            <a ng-href="/book?q={{::book.id}}">
             <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
             </a>
         </div>
@@ -11,8 +11,8 @@
         <img ng-src="{{user.image_url | default_profile}}" class="square user_photo" flex="60">
     </md-item-content>
     <md-item-content layout="row" layout-align="center center" class="clear">
-        <a ng-href="/profile?p={{user.id}}">
-            <div class="network_name">{{user.first_name}}</div>
+        <a ng-href="/profile?p={{::user.id}}">
+            <div class="network_name">{{::user.first_name}}</div>
         </a>
     </md-item-content>
     <md-item-content layout="row" layout-align="center center" class="clear">
@@ -42,7 +42,7 @@
         max-width: 100px !important;
     }
 
-    .rd_book_image_cover, .rd_book_backup_cover, .rd_slider_wrapper{
+    .rd_book_image_cover, .rd_book_backup_cover, .rd_slider_wrapper, .rd_book_shadow{
         width: 80px;
         height: 110px;
     }

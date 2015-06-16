@@ -7,10 +7,10 @@
                 <div>&nbsp;&nbsp;</div>
                 <div layout="column" layout-padding class="md-list-item-text side_padding">
                     <div class="less_important">
-                        {{book.published_year}}
+                        {{::book.published_year}}
                     </div>
                     <div>Published <a ng-href="/book?id={{book.id || book.book_id}}" class="big_title bold">
-                        {{book.title}}
+                        {{::book.title}}
                     </a></div>
                 </div>
             </md-list-item>

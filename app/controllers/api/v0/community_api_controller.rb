@@ -37,7 +37,6 @@ module Api
 				user_id = session[:user_id]
 				Api::V0::CommunityApi.create_visited_news(user_id, news_id)
 			end
-
 		end
 	end
 end

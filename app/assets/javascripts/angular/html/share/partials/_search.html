@@ -1,6 +1,6 @@
 <div class="pointer primary" layout-padding
           ng-click="init_reading_options()"
-          ng-if="(active_id == 0 && info.status_books.length != 0) || (active_id != 0)">
+          ng-if="(active_id == 0 && info.status_books.length != 0 && !info.share_loading) || (active_id != 0)">
     <i class="material-icons">chevron_left</i>
 </div>
 <md-autocomplete flex

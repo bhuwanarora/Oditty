@@ -42,9 +42,7 @@ module Api
 			def news_visited
 				news_id = params[:id]
 				user_id = session[:user_id]
-				if(!user_id.nil?)
-					UserApi.news_visited(user_id, news_id)
-				end
+				UserApi.news_visited(user_id, news_id)
 				render :json => {:message => "Success"}, :status => 200
 			end
 

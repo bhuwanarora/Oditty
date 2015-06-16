@@ -7,9 +7,9 @@
                 <img ng-src="{{result.id | author_thumb}}" class="large_circular">
             </div>
             <div flex="80" flex-md="70" flex-sm="65" layout="column" layout-wrap class="side_padding">
-                <div class="author_title"><a ng-href="/author?id={{result.id}}">{{result.name}}</a></div>
+                <div class="author_title"><a ng-href="/author?id={{::result.id}}">{{::result.name}}</a></div>
                 <div class="less_important">Author</div>
-                <div class="author_description">{{result.description}}</div>
+                <div class="author_description">{{::result.description}}</div>
             </div>
         </section>
     </md-card-content>

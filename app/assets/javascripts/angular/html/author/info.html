@@ -1,11 +1,11 @@
-<md-list>
+<md-list class="yellow">
     <section layout-padding>
         <md-list-item layout-padding class="md-3-line" layout="column">
             <img ng-src="{{author.id | author_thumb}}" 
                  class="circular author_image"/>
             <div layout="column" class="md-list-item-text" >
                 <div layout="row" layout-align="space-between">
-                    <div class="big_title" ng-bind-html="author.name" layout-padding></div>
+                    <div class="big_title" ng-bind-html="::author.name" layout-padding></div>
                     <md-button class=" md-button-clear md-warn" 
                                ng-class="{'md-raised': !author.status}" 
                                ng-click="toggle_follow()">
@@ -14,7 +14,7 @@
                     </md-button>
                 </div>
                 <div class="less_important" layout-padding>Author</div>
-                <div ng-bind-html="author.overview" layout-padding></div>
+                <div ng-bind-html="::author.overview" layout-padding></div>
             </div>
         </md-list-item>
     </section>
@@ -29,7 +29,7 @@
         </section>
     </div>
     <md-list-item ng-show="show_author_wiki">
-        <iframe ng-src="{{author.wiki_url}}" class="wiki" 
+        <iframe ng-src="{{::author.wiki_url}}" class="wiki" 
                 seamless="seamless"></iframe>
     </md-list-item>
 

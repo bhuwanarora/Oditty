@@ -878,6 +878,13 @@ module Neo4jHelper
 		self.add_labels_to_existing_user
 	end
 
+	def self.set_bookshelf_label
+		clause = " MATCH (label:Label) WHERE label.key <> '" + Label.get_iownthis_key + "' AND label.key <> '" + Label.get_plantobuy_key + "' "\
+			" SET label" + Bookmark.get_articleshelf_string + " "\
+			" MATCH (label:Label) "\
+			" SET label" + Bookmark.get_bookshelf_string + " "
+		clause.execute
+	end
 
 	def self.remove_colon_from_indexed_fields
 		@neo ||= self.init

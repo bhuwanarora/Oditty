@@ -2,7 +2,7 @@
 	ng-click="show_book_dialog(book, $event)"
 	ng-if="book.title" ng-repeat="book in books">
 	<div class="spine">
-		{{book.title}}
+		{{::book.title}}
 	</div>
 </md-button>
 

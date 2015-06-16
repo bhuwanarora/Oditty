@@ -4,10 +4,10 @@
             flex-sm="100"
             flex-md="100">
         <md-content class="overview_container">
-            <h3>{{book.title}}</h3>
-            <a ng-href="/author?q={{book.author_id}}">{{book.author_name}}</a>
+            <h3>{{::book.title}}</h3>
+            <a ng-href="/author?q={{::book.author_id}}">{{::book.author_name}}</a>
             <div class="summary">
-                {{book.description}}
+                {{::book.description}}
             </div>
         </md-content>
     </div>
@@ -15,13 +15,13 @@
         <div class="vertical-text spine" 
              layout="row"
              layout-align="space-between">
-            <div>{{book.title}}</div>
-            <div>{{book.author_name}}</div>
+            <div>{{::book.title}}</div>
+            <div>{{::book.author_name}}</div>
         </div>
     </div>
     <div flex="50" hide-sm class="relative" hide-md>
         <img ng-src="{{book | large_thumb}}" class="cover"/>
-        <div class="absolute" ng-style="{background: '{{book.color}}'}"></div>
+        <div class="absolute" ng-style="{background: '{{::book.color}}'}"></div>
     </div>
 </section>
 <style>

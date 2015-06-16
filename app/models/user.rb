@@ -106,7 +106,11 @@ class User < Neo
 	end
 
 	def self.create_label key
-		" CREATE UNIQUE (user)-[labelled:Labelled]->(label:Label{key: \""+key+"\"}) "
+		clause = " CREATE UNIQUE (user)-[labelled:Labelled]->(label:Label{key: \""+key+"\"}) "
+		if (key != Bookmark::Type::FromFacebook.get_key && key != Bookmark::Type::Visited.get_key)
+			clause += Bookmark.increment_media_bookmark_count "user"
+		end
+		clause
 	end
 
 	def self.from_facebook params
@@ -142,11 +146,11 @@ class User < Neo
 	end
 
 	def self.handle_new(email, password=nil, verification_token=nil)
-		User.create(email, password, verification_token) + User::Feed.create_first + Label.match_primary  + ", user " + User.link_primary_labels + User::UserNotification.create_for_new_user + Category::Root.match  + ", user " + User.link_root_categories + User.return_init + User.basic_info
+		User.create(email, password, verification_token) + UserNotification.create_for_new_user +  User::Feed.create_first + Label.match_primary  + ", user " + User.link_primary_labels + User::UserNotification.create_for_new_user + Category::Root.match  + ", user " + User.link_root_categories + User.return_init + User.basic_info
 	end
 
 	def get_notifications
-		User::UserNotification.match_last_visited_notification(@id) + User::UserNotification.delete_visited_notification  + " WITH user " + User::UserNotification.create_visited_notification + User::UserNotification.match_path  + "," + User::UserNotification.extract_unwind("notification") + " WITH " + User.tail("notification") + User.return_group("labels(notification)", "notification", "notification.created_at") + User.order_init + " notification.created_at DESC " 
+		User::UserNotification.match_last_visited_notification(@id) + User::UserNotification.delete_visited_notification  + " WITH user " + User::UserNotification.create_visited_notification + User::UserNotification.match_path  + "," + User::UserNotification.extract_unwind("notification") + " WITH " + User.tail("notification") + User.return_group(User::UserNotification.basic_info) + User.order_init + " notification.created_at DESC "
 	end
 
 	def get_books_bookmarked(skip_count=0)
@@ -328,5 +332,9 @@ class User < Neo
 			shelf = ":ArticleShelf" 
 		end
 		match + Label.match_shelves(shelf) + " MATCH (media) WHERE ID(media) = " + id.to_s + " WITH label, media " + Bookmark.optional_match_path("media") + User.return_group(Label.basic_info, "ID(bookmark_node) AS status")
+	end
+
+	def self.get_max_min_id
+		output = "MATCH (a:User) RETURN max(ID(a)) as max_id,min(ID(a)) as min_id"
 	end
 end

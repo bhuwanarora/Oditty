@@ -6,12 +6,12 @@
 	<md-card-content>
 		<md-content class="white">
 			<section layout="column" layout-align="start">
-				<div layout-margin ng-repeat="article in visited_articles" layout="row">
+				<div layout-margin ng-repeat="article in ::visited_articles" layout="row">
 					<div layout-padding>
-						<img ng-src="{{article.image_url}}" class="circular">
+						<img ng-src="{{::article.image_url}}" class="circular">
 					</div>
 					<div layout-padding>
-			            <a ng-href="/news?q={{article.article_id || article.id}}" ng-bind-html="article.title"></a>
+			            <a ng-href="/news?q={{article.article_id || article.id}}" ng-bind-html="::article.title"></a>
 			            <div ng-bind-html="article.created_at | timestamp | date:'h:mm a, dd MMM'" class="less_important"></div>
 					</div>
 			        <md-divider></md-divider>

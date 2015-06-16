@@ -1,7 +1,7 @@
 <div ng-style="{background:'{{book.color | random_color}}'}" class="rd_book_backup_cover md-whiteframe-z3" 
         layout="column" layout-padding layout-align="space-between">
-    <h3>{{book.title}}</h3>
-    <h5>{{book.author_name}}</h5>
+    <h3>{{::book.title}}</h3>
+    <h5>{{::book.author_name}}</h5>
 </div>
 <div class="rd_slider_wrapper">
 	<div layout="column" layout-align="center" class="relative white"
