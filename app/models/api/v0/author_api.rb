@@ -17,6 +17,10 @@ module Api
 				UsersAuthor.new(author_id, user_id).unfollow				
 			end
 
+			def self.get_interview_details author_id
+				Author.new(author_id).get_interview_details.execute
+			end
+
 			def self.bookmarked_authors
 				# self.recommendations.map do |s|
 				# 	s['authormark_status'] = 1

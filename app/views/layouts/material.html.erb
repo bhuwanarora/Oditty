@@ -168,6 +168,7 @@
             <% end %>
 
             <% if @author %>
+                <script src="assets/angular/directives/author_directives.js"></script>
                 <script src="assets/angular/controllers/author_controller.js"></script>
             <% end %>
 
@@ -192,7 +193,6 @@
             <% end %>
 
             <div ng-if="info.hide_signin">
-                
                 <script src="assets/min/angular/controllers/signin_group.min.js"></script>
             </div>
             
@@ -298,7 +298,7 @@
                 <md-content ng-controller="roomController">
             <% elsif @author %>
                 <md-content ng-controller="authorController" layout="row" layout-wrap class="white"
-                    check-scroll-bottom="get_books()" ng-keydown="keypress_scroll($event)">
+                    check-scroll-bottom="load_books()" ng-keydown="keypress_scroll($event)">
             <% elsif @profile %>
                 <md-content ng-controller="profileController" check-scroll-bottom="get_feed()" class="white">
             <% elsif @search %>

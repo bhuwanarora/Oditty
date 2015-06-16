@@ -47,6 +47,12 @@ module Api
 				end
 				render :json => {:message => "Success"}, :status => 200
 			end
+
+			def get_interview_details
+				author_id = params[:id]
+				info = Api::V0::AuthorApi.get_interview_details(author_id)
+				render :json => info, :status => 200
+			end
 		end
 	end
 end

@@ -67,15 +67,27 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         event.stopPropagation();
     }
 
+    $scope.load_books = function(){
+        if($scope.data.selectedIndex == 0){
+            $scope.get_books();
+        }
+    }
+
     $scope.get_books = function(id){
         if(angular.isUndefined($scope.info.loading) || !$scope.info.loading){
             var _get_wiki_without_google_redirect = function(wiki_url){
-                $scope.author.wiki_url = wiki_url.substring(wiki_url.lastIndexOf("?q=")+3, wiki_url.lastIndexOf("&sa"));
+                if(wiki_url.indexOf("google") < 0){
+                    $scope.author.wiki_url = wiki_url;
+                }
+                else{
+                    $scope.author.wiki_url = wiki_url.substring(wiki_url.lastIndexOf("?q=")+3, wiki_url.lastIndexOf("&sa"));
+                }
             }
 
             if(angular.isUndefined(id)){
                 id = $scope.author.id;
             }
+
             $scope.info.loading = true;
             if(angular.isDefined($scope.author) && angular.isDefined($scope.author.books)){
                 var skip = $scope.author.books.length;
@@ -139,6 +151,7 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         $scope.$on('destroy', function(){
             $timeout.cancel(books_timeout);
         });
+
     }());
 
 }]);
