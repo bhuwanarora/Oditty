@@ -9,6 +9,9 @@
                         <div class="less_important">{{feed.created_at | timestamp | date:'h:mm a, dd MMM'}}</div>
                         <div class="status_message">{{::feed.message}}</div>
                     </div>
+                    <author-info info="info" ng-if="feed.author" 
+                        flex="50" author="::feed.author">
+                    </author-info>
                     <community-info info="info" ng-if="feed.community" 
                         flex="50" community="::feed.community"></community-info>
                 </div>

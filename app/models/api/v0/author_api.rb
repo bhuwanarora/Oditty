@@ -21,6 +21,10 @@ module Api
 				Author.new(author_id).get_interview_details.execute
 			end
 
+			def self.get_basic_info id
+				Author.new(id).get_basic_info.execute[0]
+			end
+
 			def self.bookmarked_authors
 				# self.recommendations.map do |s|
 				# 	s['authormark_status'] = 1

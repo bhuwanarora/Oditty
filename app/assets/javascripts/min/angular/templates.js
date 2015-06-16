@@ -713,6 +713,11 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('/assets/angular/html/shared/partials/author_info.html',
+    "<div class=\"follow_content\" layout=\"row\" ng-show=\"!author_loading\" ng-if=\"author\"><img ng-src=\"{{author.id | author_thumb}}\" class=\"circular\"><div layout-padding><a ng-href=\"/author?id={{::author.id}}\"><div class=\"big_title bold capitalize\">{{::author.name}}</div></a><div class=\"less_important\" ng-show=\"author.location\"><span>{{::author.location}}</span></div></div></div>"
+  );
+
+
   $templateCache.put('/assets/angular/html/shared/partials/author_name.html',
     "<div><h1>{{author.name | uppercase}}</h1><div>{{::author.location}}</div><div ng-if=\"author.year_born\">{{::author.year_born}}-{{::author.year_died}}</div></div><div class=\"nav_icons\" layout=\"row\"><md-button ng-click=\"previous_block(0)\"><span class=\"icon-angle-up\"></span></md-button><md-button ng-click=\"next_block(0)\"><span class=\"icon-angle-down\"></span></md-button></div>"
   );
@@ -749,7 +754,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/partials/follow_feed.html',
-    "<md-card class=\"social no_shadow\"><md-card-content layout=\"column\"><section layout=\"column\" layout-align=\"start\" flex=\"50\"><div layout=\"row\"><img ng-src=\"{{profile_user.image_url | default_profile}}\" class=\"circular\"><div layout=\"column\" layout-align=\"start start\"><div layout-padding class=\"bold\">{{::profile_user.first_name}}</div><div layout-padding><div class=\"less_important\">{{feed.created_at | timestamp | date:'h:mm a, dd MMM'}}</div><div class=\"status_message\">{{::feed.message}}</div></div><community-info info=\"info\" ng-if=\"feed.community\" flex=\"50\" community=\"::feed.community\"></community-info></div></div></section></md-card-content></md-card><style>.profile_thumb{width:70px;height:70px;padding:10px}.social_content{order:1}.social h2{margin:16px 0 0 0!important}.social .book_thumb{width:100%}.status_message a{font-weight:700;text-decoration:underline}</style>"
+    "<md-card class=\"social no_shadow\"><md-card-content layout=\"column\"><section layout=\"column\" layout-align=\"start\" flex=\"50\"><div layout=\"row\"><img ng-src=\"{{profile_user.image_url | default_profile}}\" class=\"circular\"><div layout=\"column\" layout-align=\"start start\"><div layout-padding class=\"bold\">{{::profile_user.first_name}}</div><div layout-padding><div class=\"less_important\">{{feed.created_at | timestamp | date:'h:mm a, dd MMM'}}</div><div class=\"status_message\">{{::feed.message}}</div></div><author-info info=\"info\" ng-if=\"feed.author\" flex=\"50\" author=\"::feed.author\"></author-info><community-info info=\"info\" ng-if=\"feed.community\" flex=\"50\" community=\"::feed.community\"></community-info></div></div></section></md-card-content></md-card><style>.profile_thumb{width:70px;height:70px;padding:10px}.social_content{order:1}.social h2{margin:16px 0 0 0!important}.social .book_thumb{width:100%}.status_message a{font-weight:700;text-decoration:underline}</style>"
   );
 
 

@@ -30,4 +30,8 @@ homeApp.service('authorService', ["$http", "$q", "$rootScope", "WebsiteUIConstan
         return _deferred_request('/api/v0/author_interview?id='+id, $q, $http);
     }
 
+    this.get_basic_info = function(id){
+        return _deferred_request('/api/v0/author_basic_info?id='+id, $q, $http);
+    }
+
 }]);
