@@ -23,7 +23,8 @@ class Book::BookFeed < Book
 	end
 
 	def self.match skip_count
-		" MATCH (book)-[:BookFeed*" + skip_count.to_s + ".." + Limit.to_s + "]->(feed) "
+		skip_count = skip_count + 1
+		" MATCH (book)-[:BookFeed*" + skip_count.to_s + ".." + (skip_count + Limit - 1).to_s + "]->(feed) "
 	end
 
 end

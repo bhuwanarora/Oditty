@@ -20,6 +20,15 @@ a:active{
 	/*text-decoration: none !important;*/
 }
 
+a{
+    color: #006064;
+}
+
+.header a{
+	color: white;
+}
+
+
 .toolbardemoScrollShrink .face {
   	width: 48px;
   	margin: 16px;
@@ -67,6 +76,7 @@ md-content{
 .burger{
 	padding: 10px;
 }
+
 
 /*md-tabs a{
 	color: white !important;
