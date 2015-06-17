@@ -88,10 +88,10 @@ module GraphHelper
 		delete_clause.execute
 
 		starting_book_id = Constant::Id::BestBook.to_i
-		match_clause = " MATCH (book) WHERE ID(book) = " + starting_book_id.to_s + " WITH book MATCH  (last:Book)-[:NextBook]->(book) WITH book, last MATCH path = (book)-[:NextBook*]->(last) " 
+		match_clause = " MATCH (book) WHERE ID(book) = " + starting_book_id.to_s + " WITH book MATCH  (last:Book)-[:NextBook]->(book) WITH book, last MATCH path = (book)-[:NextBook*]->(last) "
 		extract_clause = " WITH path, EXTRACT (n IN nodes(path)|n) AS books UNWIND books AS book WITH book WHERE NOT (book)-[:NextInCategory]-() "
 		collect_categorised = Category::Root.match_books_root + " WITH DISTINCT root_category ,COLLECT(book) AS books "
-		create_links = " FOREACH(i in RANGE(0, length(books)-2) |  FOREACH(p1 in [books[i]] |  FOREACH(p2 in [books[i+1]] |  MERGE (p1)-[:NextInCategory{from_category:root_category.uuid}]->(p2)))) WITH root_category, HEAD(books) as most_popular, LAST(books) as least_popular MERGE (least_popular)-[:NextInCategory{from_category:root_category.uuid}]->(root_category) MERGE (root_category)-[:NextInCategory{from_category:root_category.uuid}]->(most_popular)  "		
+		create_links = " FOREACH(i in RANGE(0, length(books)-2) |  FOREACH(p1 in [books[i]] |  FOREACH(p2 in [books[i+1]] |  MERGE (p1)-[:NextInCategory{from_category:root_category.uuid}]->(p2)))) WITH root_category, HEAD(books) as most_popular, LAST(books) as least_popular MERGE (least_popular)-[:NextInCategory{from_category:root_category.uuid}]->(root_category) MERGE (root_category)-[:NextInCategory{from_category:root_category.uuid}]->(most_popular) "
 		clause = match_clause + extract_clause + collect_categorised + create_links
 		info = clause.execute[0]
 	end
