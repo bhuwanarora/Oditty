@@ -1,6 +1,7 @@
 <md-select ng-model="active_page" class="active_page_menu" hide-sm>
     <md-option ng-value="-1" ng-disabled>Select Discovery Option</md-option>
-    <a href="/personalised_suggestions" layout="row" layout-align="start center"  class="pointer">
+    <a href="/personalised_suggestions" layout="row" layout-align="start center"
+        class="pointer" ng-hide="!info.hide_signin">
         <span>&nbsp;&nbsp;</span>
         <i class="material-icons light_grey_color">accessibility</i>
         <md-option ng-value="0">Suggestions</md-option>

@@ -58,13 +58,8 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
     }
 
 	$scope.toggleLeft = function(event){
-        if($scope.info.hide_signin){
-    	    $mdSidenav('left').toggle();
-            event.stopPropagation();
-        }
-        else{
-            $scope.show_signin_options(event);
-        }
+	    $mdSidenav('left').toggle();
+        event.stopPropagation();
 	};
 
 	$scope.toggleRight = function(event){
