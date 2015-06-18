@@ -33,7 +33,6 @@ homeApp.controller('personalisedController', ["$scope", "$timeout", '$rootScope'
 
     $scope.show_books_on_friend_shelves = function(){
         if(angular.isUndefined($scope.friends) || $scope.friends.length == 0){
-            $scope.info.active_tab = "friend_shelves";
             $scope.info.loading = true;
             delete $scope.info.active_tag;
             infinityService.get_books_on_friends_shelves().then(function(data){
@@ -115,7 +114,6 @@ homeApp.controller('personalisedController', ["$scope", "$timeout", '$rootScope'
         $scope.info.selectedIndex = 0;
         if(angular.isUndefined($scope.books_from_favourite_author)){
             $scope.books_from_favourite_author = [];
-            $scope.info.active_tab = "favourite_author";
             $scope.info.loading = true;
             delete $scope.info.active_tag;
             infinityService.get_books_from_favourite_author().then(function(data){
@@ -142,7 +140,6 @@ homeApp.controller('personalisedController', ["$scope", "$timeout", '$rootScope'
     $scope.show_small_reads = function(){
         if(angular.isUndefined($scope.small_reads)){
             $scope.info.loading = true;
-            $scope.info.active_tab = "small_read";
             delete $scope.info.active_tag;
             infinityService.get_small_reads().then(function(data){
                 $scope.small_reads = [];
@@ -154,7 +151,6 @@ homeApp.controller('personalisedController', ["$scope", "$timeout", '$rootScope'
 
 	var _init = (function(){
         $scope.info.books = [];
-        $scope.active_tab = {};
         $scope.friends = [];
         var authors_timeout = $timeout(function(){
     	   $scope.show_books_for_author();

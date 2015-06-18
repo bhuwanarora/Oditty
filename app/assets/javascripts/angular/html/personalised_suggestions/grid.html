@@ -1,17 +1,23 @@
-<div ng-include src="'/assets/angular/html/personalised_suggestions/header.html'"></div>
-<div ng-include src="'/assets/angular/html/personalised_suggestions/left_panel.html'"></div>
-<div ng-include src="'/assets/angular/html/personalised_suggestions/partials/grid/category_books.html'" 
-     ng-if="info.active_tab == 'favourite_category'"></div>
-<div ng-include src="'/assets/angular/html/personalised_suggestions/partials/grid/author_books.html'" 
-     ng-if="info.active_tab == 'favourite_author'"></div>
-<div ng-include src="'/assets/angular/html/personalised_suggestions/partials/grid/era_books.html'" 
-     ng-if="info.active_tab == 'favourite_era'"></div>
-<div ng-include src="'/assets/angular/html/personalised_suggestions/partials/grid/friends_books.html'" 
-     ng-if="info.active_tab == 'friend_shelves'"></div>
-<div ng-include src="'/assets/angular/html/personalised_suggestions/partials/grid/unexplored_books.html'" 
+ <md-tabs flex md-dynamic-height>
+    <md-tab aria-controls="tab1-content" ng-disabled="info.loading" label="Author Suggestions"
+        md-on-select="show_books_for_author()">
+        <div ng-include src="'/assets/angular/html/personalised_suggestions/partials/grid/author_books.html'" ></div>
+    </md-tab>
+    <md-tab aria-controls="tab2-content" ng-disabled="info.loading" label="Friends Shelves"
+        md-on-select="show_books_on_friend_shelves()">
+        <div ng-include src="'/assets/angular/html/personalised_suggestions/partials/grid/friends_books.html'" ></div>
+    </md-tab>
+</md-tabs>
+<!-- <div ng-include src="'/assets/angular/html/personalised_suggestions/header.html'"></div> -->
+<!-- <div ng-include src="'/assets/angular/html/personalised_suggestions/left_panel.html'"></div> -->
+<!-- <div ng-include src="'/assets/angular/html/personalised_suggestions/partials/grid/category_books.html'" 
+     ng-if="info.active_tab == 'favourite_category'"></div> -->
+<!-- <div ng-include src="'/assets/angular/html/personalised_suggestions/partials/grid/era_books.html'" 
+     ng-if="info.active_tab == 'favourite_era'"></div> -->
+<!-- <div ng-include src="'/assets/angular/html/personalised_suggestions/partials/grid/unexplored_books.html'" 
      ng-if="info.active_tab == 'unexplored_subject'"></div>
 <div ng-include src="'/assets/angular/html/personalised_suggestions/partials/grid/easy_books.html'" 
-     ng-if="info.active_tab == 'small_read'"></div>
+     ng-if="info.active_tab == 'small_read'"></div> -->
 <style>
     .grid{
         position: absolute;
