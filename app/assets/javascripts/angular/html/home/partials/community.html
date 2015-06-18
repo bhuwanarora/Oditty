@@ -1,16 +1,18 @@
-<div layout="row" layout-align="center center">
-	<img ng-src="{{community.image_url}}" class="circular">
-	<a ng-href="/room?q={{community.id}}" layout-padding layout="column">
-		<div ng-bind-html="community.name" class="capitalize"></div>
-		<div class="less_important" layout="row">
-			<div ng-show="community.news_count">{{community.news_count}} News</div>
-			<div ng-show="community.news_count && community.view_count">, </div>
-			<div ng-show="community.view_count">{{community.view_count}} Views</div>
-		</div>
-	</a>
+<div layout="row" layout-align="space-between center" class="md-whiteframe-z1 white" layout-padding>
+	<div layout="row" layout-align="center center">
+		<img ng-src="{{community.image_url}}" class="circular">
+		<a ng-href="/room?q={{community.id}}" layout-padding layout="column">
+			<div ng-bind-html="community.name" class="capitalize"></div>
+			<div class="less_important" layout="row">
+				<div ng-show="community.news_count">{{community.news_count}} News</div>
+				<div ng-show="community.news_count && community.view_count">, </div>
+				<div ng-show="community.view_count">{{community.view_count}} Views</div>
+			</div>
+		</a>
+	</div>
+	<md-button class="md-button-clear md-warn" ng-class="{'md-raised': !community.status}" ng-click="toggle()">
+		<span ng-show="!community.status">Join </span>
+		<span ng-show="community.status"> Joined</span>
+		<span ng-show="!community.status" class="icon-user-add"></span>
+	</md-button>	
 </div>
-<md-button class="md-button-clear md-warn" ng-class="{'md-raised': !community.status}" ng-click="toggle()">
-	<span ng-show="!community.status">Join </span>
-	<span ng-show="community.status"> Joined</span>
-	<span ng-show="!community.status" class="icon-user-add"></span>
-</md-button>
