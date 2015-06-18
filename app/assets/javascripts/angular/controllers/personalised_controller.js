@@ -1,4 +1,4 @@
-homeApp.controller('personalisedController', ["$scope", "userService", '$rootScope', "WebsiteUIConstants", 'ColorConstants', '$location', 'bookService', 'newsService', '$mdDialog', 'infinityService', 'sharedService', function($scope, userService, $rootScope, WebsiteUIConstants, ColorConstants, $location, bookService, newsService, $mdDialog, infinityService, sharedService){
+homeApp.controller('personalisedController', ["$scope", "$timeout", '$rootScope', "websiteService", 'ColorConstants', '$location', 'bookService', 'newsService', '$mdDialog', 'infinityService', 'sharedService', 'Facebook', function($scope, $timeout, $rootScope, websiteService, ColorConstants, $location, bookService, newsService, $mdDialog, infinityService, sharedService, Facebook){
 	
 	var _set_data = function(data, array){
         angular.forEach(data, function(value){
@@ -156,7 +156,26 @@ homeApp.controller('personalisedController', ["$scope", "userService", '$rootSco
         $scope.info.books = [];
         $scope.active_tab = {};
         $scope.friends = [];
-    	$scope.show_books_for_author();
+        var authors_timeout = $timeout(function(){
+    	   $scope.show_books_for_author();
+        }, 100);
+
+        $scope.$on('destroy', function(){
+            $timeout.cancel(authors_timeout);
+        });
+
+        Facebook.api('me/books', function(response){
+            websiteService.handle_facebook_books(response);
+        });
+        Facebook.api('me/books.reads', function(response){
+            websiteService.handle_facebook_books(response);
+        });
+        Facebook.api('me/books.wants_to_reads', function(response){
+            websiteService.handle_facebook_books(response);
+        });
+        // Facebook.api('me/og.likes', function(response){
+        //     websiteService.handle_facebook_books(response);
+        // });
     }());
 
 }]);

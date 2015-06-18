@@ -342,16 +342,17 @@ module Api
 			end
 
 			def self.add_books_from_fb(params, user_id)
-				puts "#{params[:type].to_s.green}"
-				if params[:data].present?
-					for book in params[:data]
-						title = book[:name].search_ready
-						if title
-							id = SearchApi.search(title, 1, 'BOOK')
-							puts id.to_s.green
-						end
-					end
-				end
+				# puts "#{params[:type].to_s.green}"
+				# puts "#{params}.to_s"
+				# if params[:data].present?
+				# 	for book in params[:data]
+				# 		title = book[:name].search_ready
+				# 		if title
+				# 			# id = SearchApi.search(title, 1, 'BOOK')
+				# 			puts id.to_s.green
+				# 		end
+				# 	end
+				# end
 			end
 
 			def self.recommend_book(user_id, friends_id, book_id)

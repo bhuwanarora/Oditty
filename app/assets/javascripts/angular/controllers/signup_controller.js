@@ -195,7 +195,6 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
             Facebook.api('me/picture?redirect=false&type=large', function(response){
                 websiteService.save_user_info(response);
             });
-
         });
     };
 
