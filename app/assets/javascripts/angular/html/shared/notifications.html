@@ -1,26 +1,34 @@
-<md-content class="md-whiteframe-z1 notifications light_grey" 
-		ng-controller="notificationController"
+<md-sidenav class="md-sidenav-right notifications light_grey" 
+		md-component-id="notifications" 
 		ng-click="stop_propagation($event)"
 		msd-wheel="stop_propagation($event)"
-		layout="column" layout-align="center start">
-	<div layout="row" layout-align="center center" layout-padding ng-if="notifications">
-		<div layout-padding flex="100">ReadersDoor Notifications...</div>
+		layout="column" layout-align="start start">
+	<div ng-if="info.loading" class="less_important" layout-padding>
+		Loading Notifications...
 	</div>
-	<md-list layout-padding ng-if="notifications">
-		<md-item layout-margin ng-repeat="notification in notifications">
-			<md-item-content class="white">
-				<div class="md-tile-left" layout-align="center center" layout="row"><img class="circular" ng-src="{{notification.image_url}}"/></div>
-				<div class="md-tile-content"><div class="side_padding">{{notification.message}}</div></div>
-			</md-item-content>
-		</md-item>
-	</md-list>
-	<md-list layout-padding ng-if="!notifications">
-		<md-item layout-margin>
-			<md-item-content>
-				<div class="md-tile-content side_padding">
-					No new notifications
-				</div>
-			</md-item-content>
-		</md-item>
-	</md-list>
-</md-content>
+	<div ng-if="!info.loading">
+		<md-list layout-padding ng-if="notifications && notifications.length > 0">
+			<div layout="row" layout-align="center center" layout-padding ng-if="notifications">
+				<div layout-padding flex="100">Notifications</div>
+			</div>
+			<md-item layout-margin ng-repeat="notification in notifications">
+				<md-list-item  class="md-3-line">
+	                <img ng-src="{{notification.image_url}}" class="circular" ng-show="notification.image_url"/>
+	                <div ng-show="notification.image_url">&nbsp;&nbsp;</div>
+	                <div layout="column" layout-padding class="md-list-item-text side_padding"
+	                	ng-bind-html="notification.message">
+	                </div>
+	            </md-list-item>
+			</md-item>
+		</md-list>
+		<md-list layout-padding ng-if="!notifications || notifications.length == 0">
+			<md-item layout-margin>
+				<md-item-content>
+					<div class="md-tile-content side_padding">
+						No new notifications
+					</div>
+				</md-item-content>
+			</md-item>
+		</md-list>
+	</div>
+</md-sidenav>

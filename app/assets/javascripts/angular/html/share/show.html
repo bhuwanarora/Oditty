@@ -1,34 +1,34 @@
-<div ng-controller="shareController" ng-if="info.show_share || info.show_book_share">
+<audio id="audiotag1" src="assets/typewriter2.m4a" preload="auto"></audio>
+<audio id="audiotag2" src="assets/typewriter2.m4a" preload="auto"></audio>
+<audio id="audiotag3" src="assets/typewriter3.m4a" preload="auto"></audio>
 
+<div ng-controller="shareController" ng-if="info.show_share || info.show_book_share">
 	<div class="share animate-fast" 
 		 layout="row" 
 		 layout-sm="column"
 		 layout-align="start start" layout-padding>
-		<div flex="10">
-			<div ng-click="back($event)" layout="row" 
-				layout-align="center center" class="custom_button">
+		<div flex="10" flex-sm="100">
+			<div ng-click="back($event)" layout="row" ng-hide="info.embed_share"
+				layout-align="center center" class="pointer">
 				<h1 layout-padding>
-					<span class="icon-angle-left"></span>
+					<i class="material-icons">arrow_back</i>
+					<!-- <span class="icon-angle-left"></span> -->
 				</h1>
 			</div>
 		</div>
-		<div flex="80" layout="column">
+		<div flex="80" layout="column" flex-sm="100" class="full_width">
 			<div ng-include src="'/assets/angular/html/share/searched_books.html'" ng-if="info.show_book_share"></div>
-			<div ng-include src="'/assets/angular/html/share/status_options.html'" ng-if="info.show_share"></div>
+			<div ng-include src="'/assets/angular/html/share/status_options.html'" class="extensive_padding"
+				ng-class="{'dark_grey': reading_status_selected}"
+				ng-if="info.show_share"></div>
 		</div>
-	    <div flex="10"></div>
+	    <div flex="10" hide-sm></div>
 	</div>
 </div>
 
 <style>
 	.share_book{
 		width: 300px;
-	}
-
-	.input_container{
-		/*top: 5px !important;*/
-  		/*position: fixed;*/
-  		/*width: 50% !important;*/
 	}
 
 	.user_image{
@@ -41,12 +41,6 @@
 	}
 
 	.share{
-		position: fixed;
-		left: 0px;
-		right: 0px;
-		top: 0px;
-		bottom: 0px;
-		background-color: rgba(0, 0, 0, 0.85);
 		z-index: 3;
 	}
 
@@ -73,38 +67,7 @@
 		/*color: white;*/
 	}
 
-	textarea{
-		/*color: transparent !important;*/
-	}
-
-	textarea,
-	.textarea_wrapper{
-		font-size: 0.9em;
-		font-family: 'Inconsolata', 'Courier New', serif;
-		line-height: 45px !important;
-		height: 55px !important;
-		padding-left: 75px !important;
-	    /*overflow: hidden;
-	    padding: 0;
-	    outline: none;
-	    resize: none;*/
-	}
-
-	.textarea_wrapper{
-		position: absolute;
-		cursor: url('http://www.i2symbol.com/images/symbols/geometry/white_small_square_u25AB_icon_256x256.png');
-	}
-
-	.textarea_wrapper a{
-		background-color: #FFFF00;
-		font-weight: 600;
-	}
-
-	.textarea_container{
-	    /*height: 60vh;
-	    vertical-align: bottom;
-	    display: table-cell;*/
-	}
+	
 
 	.compact_status{
 		position: fixed;
@@ -124,7 +87,7 @@
 		font-size: 0.9em;
 		font-family: sans-serif;
 		min-height: 60px;
-		width: 450px;
+		/*width: 450px;*/
 	}
 
 	.menu_search{
@@ -136,9 +99,8 @@
 
 	.menu_details,
 	.menu_search{
-		width: 400px;
-		max-height: 200px;
-		overflow: hidden;
+		/*width: 400px;*/
+		max-height: 300px !important;
 	}
 
 	.overlap{
@@ -158,7 +120,7 @@
 	}
 
 	.currently_reading md-list{
-		padding: 0px;
+		padding: 0px !important;
 	}
 
 	.light_title{
@@ -173,5 +135,12 @@
 	.roboto{
 		font-family: 'roboto';
 	}
+
+	.active_extended{
+		width: 103%;
+  		margin-left: -10px;
+	}
+
+	
 
 </style>

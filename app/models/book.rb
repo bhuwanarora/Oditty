@@ -11,6 +11,10 @@ class Book < Neo
 		" OPTIONAL MATCH (book:Book)-[:Published_in]->(year:Year) WITH book, year "
 	end
 
+	def self.match_in_range min_id,max_id
+		" MATCH (book:Book) WHERE ID(book) >=" + min_id.to_s + " AND ID(book) <=" + max_id.to_s + " "
+	end
+
 	def self.search_by_indexed_title indexed_title
 		" START book=node:node_auto_index('indexed_title:\""+indexed_title+"\"') WITH book " 
 	end
@@ -75,6 +79,11 @@ class Book < Neo
 		" MATCH (book)-[belongs_to:Belongs_to]->(genre:Genre) "
 	end
 
+	def set_total_page_count
+		match + " FOREACH (ignore IN (CASE WHEN HAS(book.total_page_count) THEN [] ELSE [1] END) | SET book.total_page_count = " + total_page_count.to_s + " "\
+			")"
+	end
+
 	def self.optional_match_genre
 		" OPTIONAL " + Book.match_genre
 	end
@@ -84,7 +93,7 @@ class Book < Neo
 	end
 
 	def self.match_path relation, limit
-		"MATCH path = (book)-[:" + relation.to_s + "*" + limit.to_s + "]-(last_in_path)"
+		"MATCH path = (book)-[:" + relation.to_s + "*" + limit.to_s + "]->(last_in_path)"
 	end
 
 	def get_categories
@@ -138,8 +147,8 @@ class Book < Neo
 		" WITH community, " + Book		
 	end
 
-	def get_news
-		match + Book.match_communities + Community.order_desc + Book.limit(1) + Community.match_news  + " ,book WITH book, " + Community.collect_map("news" => News.grouped_basic_info) + Book.match_communities + " ,news " + Book.return_init + " news, " + Community.basic_info + Community.order_desc 
+	def get_news skip_count = 0
+		match + Book.match_communities + Community.order_desc + Book.limit(1) + Community.match_news  + " ,book " + News.order_desc  + Book.skip(skip_count) + Book.limit(10) +  " WITH book, " + Community.collect_map("news" => News.grouped_basic_info) + Book.match_communities + " ,news " + Community.order_desc + Book.return_init + " news, " + Community.collect_map("communities" => Community.grouped_basic_info)
 	end
 
 	def self.match_lenders 
@@ -156,7 +165,7 @@ class Book < Neo
 	end
 	
 	def get_interesting_info
-		match + " MATCH (book)-[relation]-(info) WHERE type(relation) <> 'Belongs_to' AND type(relation) <> 'Next_book' AND type(relation) <> 'BookFeed' AND type(relation) <> 'NextLongRead' AND type(relation) <> 'NextNormalRead' AND type(relation) <> 'NextTinyRead' AND type(relation) <> 'NextSmallRead' AND type(relation) <> 'BookmarkNode'" + Book.return_group(Book.basic_info, "COLLECT({info : info, labels: labels(info), id: ID(info)}) AS info")
+		match + " MATCH (book)-[relation]-(info) WHERE type(relation) <> 'Belongs_to' AND type(relation) <> 'NextBook' AND type(relation) <> 'BookFeed' AND type(relation) <> 'NextLongRead' AND type(relation) <> 'NextNormalRead' AND type(relation) <> 'NextTinyRead' AND type(relation) <> 'NextSmallRead' AND type(relation) <> 'BookmarkNode'" + Book.return_group(Book.basic_info, "COLLECT({info : info, labels: labels(info), id: ID(info)}) AS info")
 	end
 
 	def self.get_out_relationship relationship_type,book
@@ -188,6 +197,14 @@ class Book < Neo
 		clause
 	end
 
+	def self.primary_info
+		" book.title AS title, book.author_name AS author_name, ID(book) AS id "
+	end
+
+	def get_primary_info
+		match + match_author + Book.return_group(Book.primary_info, "ID(author) as author_id")
+	end
+
 	def self.get_book_links
 		book_links_property={"Wrote"=> [], # These are the inlinks.	
 				"Published_in"	 => [],
@@ -207,8 +224,16 @@ class Book < Neo
 				"Mentions"       => [],
 				"Endorsed"		 => [],
 				"FeedNext"       => [],
-				"Next_book"      => []
+				"NextBook"      => []
 				}
 		book_links_property
+	end
+	
+	def self.set_recommended_count value, operation
+		if operation == "+"
+			" SET book.recommended_count = TOINT(COALESCE(book.recommended_count, 0)) + " + value.to_s + " "
+		else
+			" SET book.recommended_count = TOINT(COALESCE(book.recommended_count, " + value.to_s + ")) - " + value.to_s + " "
+		end
 	end
 end

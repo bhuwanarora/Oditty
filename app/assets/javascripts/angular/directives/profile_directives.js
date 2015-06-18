@@ -1,51 +1,32 @@
-homeApp.directive('bookInfo', ["$rootScope", "bookService", '$mdDialog', function($rootScope, bookService, $mdDialog){
+homeApp.directive('authorInfo', ["$rootScope", "authorService", 'ColorConstants', '$mdDialog', function($rootScope, authorService, ColorConstants, $mdDialog){
     return {
         restrict: 'E',
-        scope : {book: '=', info: '='},
+        scope : {author: '=', info: '='},
         controller: ["$scope", function($scope){
-            $scope.show_book_dialog = function(book, event){
-                $rootScope.active_book = book;
-                $rootScope.active_book.show_info_only = true;
-                $mdDialog.show({
-                    templateUrl: '/assets/angular/html/news/book.html',
-                    scope: $scope,
-                    preserveScope: true,
-                    targetEvent: event,
-                    clickOutsideToClose: true
-                });
-                event.stopPropagation();
-            }
-
+           
             var _init = function(){
-                $scope.book_loading = true;
-                bookService.get_basic_book_details($scope.book.id).then(function(data){
-                    $scope.book = angular.extend($scope.book, data);
-                    $scope.book_loading = false;
-                });
+                if(angular.isDefined($scope.author)){
+                    $scope.author_loading = true;
+                    authorService.get_basic_info($scope.author.id).then(function(data){
+                        $scope.author = angular.extend($scope.author, data);
+                        $scope.author_loading = false;
+                    });
+                }
             }
 
             _init();
         }],
-        templateUrl: '/assets/angular/html/shared/partials/book_info.html'
+        templateUrl: '/assets/angular/html/shared/partials/author_info.html'
     };
 }]);
 
-homeApp.directive('communityInfo', ["$rootScope", "newsService", 'ColorConstants', '$mdDialog', function($rootScope, newsService, ColorConstants, $mdDialog){
+homeApp.directive('communityInfo', ["$rootScope", "newsService", 'ColorConstants', '$mdDialog', 'sharedService', function($rootScope, newsService, ColorConstants, $mdDialog, sharedService){
     return {
         restrict: 'E',
         scope : {community: '=', info: '='},
         controller: ["$scope", function($scope){
             $scope.show_book_dialog = function(book, event){
-                $rootScope.active_book = book;
-                $rootScope.active_book.show_info_only = true;
-                $mdDialog.show({
-                    templateUrl: '/assets/angular/html/news/book.html',
-                    scope: $scope,
-                    preserveScope: true,
-                    clickOutsideToClose: true,
-                    targetEvent: event
-                });
-                event.stopPropagation();
+                sharedService.show_book_dialog($rootScope, $scope, book, event);
             }
 
             var _init = function(){
@@ -53,11 +34,6 @@ homeApp.directive('communityInfo', ["$rootScope", "newsService", 'ColorConstants
                     $scope.community_loading = true;
                     newsService.get_feed_info($scope.community.id).then(function(data){
                         $scope.community = angular.extend($scope.community, data);
-                        angular.forEach($scope.community.books, function(book){
-                            var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-                            var color = ColorConstants.value[random_int];
-                            book.color = color;
-                        });
                         $scope.community_loading = false;
                     });
                 }

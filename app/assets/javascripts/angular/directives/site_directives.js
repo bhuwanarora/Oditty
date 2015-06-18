@@ -1,22 +1,154 @@
-homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', function($rootScope, feedService, $timeout){
-    return {
-        restrict: 'E',
-        scope : {data: '=', shelves: '=', custom: '=', count: '='},
-        controller: ["$scope", function($scope){
-            $scope.show_shelves = function(){
-                if(angular.isUndefined($scope.shelves)){
-                    feedService.get_bookmarks($scope.data.id).then(function(data){
-                        $scope.shelves = data;
-                    });
-                }
-                $scope.show_shelf = !$scope.show_shelf;
+homeApp.directive('bookEmbed', ["$rootScope", "google_public_key", function($rootScope, google_public_key){
+    return{
+        restrict: 'A',
+        scope: {book: '=', info: '='},
+        link: function($scope, $element, google_public_key){
+
+            var alert_not_found = function(){
+                $scope.info.loading = false;
+                $element.prepend("<div>Preview not found</div>");
             }
 
+            var load_book = function(){
+                if($scope.book.isbn == null){
+                    $scope.alert_not_found();
+                }
+                else{
+                    var isbn = $scope.book.isbn.split(',');
+                    var isbn_string = "ISBN:"
+                    var viewer = new google.books.DefaultViewer($element.find('div')[0]);
+                    viewer.load(isbn_string.concat(isbn[1]), alert_not_found);
+                    $scope.info.loading = false;
+                }
+            }
+
+
+            var _init = (function () {
+                $scope.info.loading = true;
+                var id = ($rootScope.active_book.id) || ($rootScope.active_book.book_id);
+
+                if(angular.isUndefined($scope.book)){
+                    $scope.book = $rootScope.active_book;
+                }
+                $scope.book_loading = true;
+                
+                google.load("books", "0", {callback: load_book});
+            }());
+        }
+    };
+}]);
+
+homeApp.directive('recommend', ["$rootScope", "userService", "sharedService", function($rootScope, userService, sharedService){
+    return{
+        restrict: 'E',
+        scope: {user: '=', book: '=', usersList: '='},
+        controller: ['$scope', function($scope){
+            $scope.recommend_friend = function(){
+                var friends_id = $scope.user.id;
+                var book_id = $scope.book.id || $rootScope.active_book.id || $rootScope.active_book.book_id;
+                $scope.recommending = true;
+                userService.recommend(friends_id, book_id).then(function(){
+                    $scope.recommending = false;
+                });
+            }
+        }],
+        templateUrl: '/assets/angular/html/shared/recommend.html'
+    }
+}]);
+
+homeApp.directive('basicBook', ["$rootScope", "bookService", function($rootScope, bookService){
+    return {
+        restrict: 'E',
+        scope : {book: '='},
+        controller: ["$scope", function($scope){
+
+            var _init = function(){
+                bookService.get_primary_info($scope.book.id).then(function(data){
+                    $scope.book = angular.extend($scope.book, data);
+                });
+            }
+
+            _init();
+        }],
+        templateUrl: '/assets/angular/html/shared/partials/basic_book.html'
+    };
+}]);
+
+homeApp.directive('bookInfo', ["$rootScope", "bookService", 'sharedService', function($rootScope, bookService, sharedService){
+    return {
+        restrict: 'E',
+        scope : {book: '=', info: '='},
+        controller: ["$scope", function($scope){
+            $scope.show_book_dialog = function(book, event){
+                sharedService.show_book_dialog($rootScope, $scope, book, event);
+            }
+
+            var _init = function(){
+                if(angular.isUndefined($scope.book.description)){
+                    $scope.book_loading = true;
+                    bookService.get_basic_book_details($scope.book.id).then(function(data){
+                        $scope.book = angular.extend($scope.book, data);
+                        $scope.book_loading = false;
+                    });
+                }
+            }
+
+            _init();
+        }],
+        templateUrl: '/assets/angular/html/shared/partials/book_info.html'
+    };
+}]);
+
+homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', '$mdSidenav', function($rootScope, feedService, $timeout, $mdSidenav){
+    return {
+        restrict: 'E',
+        scope : {bookmarkId: '=', bookmarkType: '=', shelves: '=', custom: '=', count: '=', info: '='},
+        controller: ["$scope", function($scope){
+
+            var _unauthenticated_user = function(){
+                return ((getCookie("logged") == "") || (getCookie("logged") == null));
+            }
+
+            $scope.show_shelves = function(){
+                if(_unauthenticated_user()){
+                    $mdSidenav('signup').toggle();
+                }
+                else{
+                    $scope.shelves_loading = true;
+                    feedService.get_bookmarks($scope.bookmarkId).then(function(data){
+                        $rootScope.shelves = data;
+                        $scope.shelves_loading = false;
+                        $mdSidenav('right_bookmark').toggle();
+                    });
+                    $rootScope.bookmark_object = {"id": $scope.bookmarkId, "type": $scope.bookmarkType};
+                }
+            }
 
         }],
         templateUrl: '/assets/angular/html/shared/bookmark.html'
     };
 }]);
+
+
+homeApp.directive('communityFeed', ["$rootScope", 'userService', '$timeout', function($rootScope, userService, $timeout){
+    return {
+        restrict: 'E',
+        scope : {communityFeed: '='},
+        controller: ["$scope", function($scope){
+            $scope.toggle_expand = function(){
+                $scope.communityFeed.expand = !$scope.communityFeed.expand;
+            }
+
+            var _init = function(){
+                $scope.communityFeed.expand = false;
+            }
+
+            _init();
+        }],
+        templateUrl: '/assets/angular/html/home/_community_feed.html'
+    };
+}]);
+
 
 homeApp.directive('setFocus', ["$timeout", "$parse", "$rootScope", function($timeout, $parse, $rootScope){
     return {
@@ -159,10 +291,15 @@ homeApp.directive('calendar', ["$rootScope", function($rootScope){
               .map(function(item, index){return ++index;});
         $scope.months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         $scope.years = [];
-        $scope.selectedDay = $rootScope.user.selectedDay;
-        $scope.selectedMonth = $rootScope.user.selectedMonth;
-        $scope.selectedYear = $rootScope.user.selectedYear;
-        
+        if(angular.isDefined($rootScope.user)){
+            $scope.selectedDay = $rootScope.user.selectedDay;
+        }
+        if(angular.isDefined($rootScope.user)){
+            $scope.selectedMonth = $rootScope.user.selectedMonth;
+        }
+        if(angular.isDefined($rootScope.user)){
+            $scope.selectedYear = $rootScope.user.selectedYear;
+        }
         var currentYear = new Date().getFullYear();
         for(var i=currentYear; i>1904; i--){
           $scope.years.push(i);

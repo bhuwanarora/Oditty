@@ -1,0 +1,21 @@
+.vertical_animate.ng-enter,
+.vertical_animate.ng-leave.ng-leave-active{
+	margin-top: -10px;
+	height: 0px;
+}
+
+.vertical_animate.ng-leave,
+.vertical_animate.ng-enter.ng-enter-active{
+	margin-top: 0px;
+	height: inherit;
+}
+
+.vertical_expansion.ng-enter,
+.vertical_expansion.ng-leave.ng-leave-active{
+	min-height: 0px;
+}
+
+.vertical_expansion.ng-leave,
+.vertical_expansion.ng-enter.ng-enter-active{
+	min-height: 200px;
+}

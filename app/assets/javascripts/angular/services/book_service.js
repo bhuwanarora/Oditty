@@ -1,4 +1,4 @@
-homeApp.service('bookService', ["$http", "$q", "$rootScope", "WebsiteUIConstants", function ($http, $q, $rootScope, WebsiteUIConstants){
+homeApp.service('bookService', ["$http", "$q", "$rootScope", "WebsiteUIConstants", "search_service_url", function ($http, $q, $rootScope, WebsiteUIConstants, search_service_url){
 	
     var _user_id = function(){
         if(angular.isDefined($rootScope.reader)){
@@ -35,7 +35,7 @@ homeApp.service('bookService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
     }
 
     this.search_books = function(data, skip_count){
-        return _deferred_request('/api/v0/search?q='+data+"&skip="+skip_count+"&type=Book", $q, $http);
+        return _deferred_request('/api/v0/search?q='+data+"&skip="+skip_count+"&type=Book", $q, $http, search_service_url);
     }
 
     this.get_popular_books = function(params){
@@ -75,7 +75,15 @@ homeApp.service('bookService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
     }
 
     this.get_top_searches = function(){
-        return _deferred_request('/api/v0/top_searches', $q, $http);
+        return _deferred_request('/api/v0/top_searches', $q, $http, search_service_url);
+    }
+
+    this.get_community_news = function(id, skip){
+        return _deferred_request('/api/v0/community_news?id='+id+'&skip='+skip, $q, $http);
+    }
+
+    this.get_primary_info = function(id){
+        return _deferred_request('/api/v0/book_primary_info?id='+id, $q, $http);
     }
 
 }]);

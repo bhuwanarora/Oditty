@@ -34,7 +34,7 @@ module PersonalisedBookSuggestionHelper
 			pick_category_clause = " WITH user, likes_category, root_category, mean_likeability_index, book, TOFLOAT(likes_category.likeability_index*1.0 - mean_likeability_index) AS mean_deviation ORDER BY mean_deviation " + likes_category_sorting + " LIMIT 1"
 
 
-			match_category_to_books_clause  = " MATCH path = (book)-[:NextInCategory*" + (Constant::Count::BookRecommendation*10).to_s + "]-(next_book) WHERE ALL(relation IN relationships(path) WHERE relation.uuid = root_category.uuid) WITH mean_deviation, user, root_category, FILTER(node IN nodes(path) WHERE NOT (user)-[:Labelled]->(:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(node)) AS books UNWIND books AS book WITH book, mean_deviation, root_category ORDER BY book.total_weight LIMIT " + Constant::Count::BookRecommendation.to_s 
+			match_category_to_books_clause  = " MATCH path = (book)-[:NextInCategory*" + (Constant::Count::BookRecommendation*10).to_s + "]-(NextBook) WHERE ALL(relation IN relationships(path) WHERE relation.uuid = root_category.uuid) WITH mean_deviation, user, root_category, FILTER(node IN nodes(path) WHERE NOT (user)-[:Labelled]->(:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(node)) AS books UNWIND books AS book WITH book, mean_deviation, root_category ORDER BY book.total_weight LIMIT " + Constant::Count::BookRecommendation.to_s 
 			return_clause = " RETURN mean_deviation, root_category.name AS name, ID(root_category) AS id, "
 			
 

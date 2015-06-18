@@ -1,13 +1,12 @@
-<div class="emotions">
-	<md-button ng-repeat="user in users_list"
-				ng-click="recommend_friend(user)"
-				layout-padding
-				class="menu_details capitalize white md-whiteframe-z1 md-button-clear custom_title overlap">
-		<div layout="row">
-			<img ng-src="{{user.thumb | default_profile}}" class="circular">
-			<div layout="row" layout-align="center center">
-				{{user.name}}
-			</div>
-		</div>
+<div class="emotions" ng-if="!sign_in">
+	<recommend ng-repeat="user in users_list" user="user" users-list="users_list"
+		book="active_book"></recommend>
+</div>
+<div ng-if="sign_in" layout-padding layout-align="center center" layout="column">
+	<div class="less_important" layout-padding>
+		Sign in to recommend books to your friends.
+	</div>
+	<md-button ng-click="show_signin()" class="md-raised md-warn md-button-clear">
+		Sign In
 	</md-button>
 </div>

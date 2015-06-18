@@ -12,6 +12,18 @@ namespace :graph do
     GraphHelper.set_author_feed
   end
 
+  desc "set self link of type bookFeed on those books for which no feed exist "
+  task :set_book_feed => :environment do
+    include GraphHelper
+    GraphHelper.set_book_feed
+  end
+
+  desc "create_linked_list"
+  task :create_linked_list => :environment do
+    include Neo4jHelper
+    Neo4jHelper.create_linked_list
+  end
+
   desc "reset_news_link"
   task :reset_news_link => :environment do
     include GraphHelper
@@ -252,6 +264,18 @@ namespace :graph do
     Neo4jHelper.create_labels
   end
 
+  desc " Add label_bookshelf"
+  task :add_label_bookshelf => :environment do
+    include Neo4jHelper
+    Neo4jHelper.set_bookshelf_label
+  end
+
+  desc " set_bookshelf_label"
+  task :set_bookshelf_label => :environment do
+    include Neo4jHelper
+    Neo4jHelper.set_bookshelf_label
+  end
+
   desc "Add Graph Indexes"
   task :create_indexes => :environment do
     include Neo4jHelper
@@ -281,11 +305,16 @@ namespace :graph do
     Neo4jHelper.set_book_unique_index
   end
 
-
   desc "Deletes duplicate books and appropriately setup links."
   task :remove_duplicate_books => :environment do
     include GraphHelper
     GraphHelper.delete_duplicate_books_unique_index
+  end  
+
+  desc "Deletes duplicate authors and appropriately setup links."
+  task :remove_duplicate_authors => :environment do
+    include GraphHelper
+    GraphHelper.merge_duplicate_authors
   end  
   
   desc "curate book author name "
@@ -300,10 +329,28 @@ namespace :graph do
     GraphHelper.curate_author_names
   end
 
+  desc "set books_count for authors "
+  task :set_author_books_count => :environment do
+    include GraphHelper
+    GraphHelper.set_author_books_count
+  end
+
   desc "update_follow_counts_for_user"
   task :update_follow_counts_for_user => :environment do
     include GraphHelper
     GraphHelper.update_follow_counts_for_user
+  end
+
+  desc "bookmark_count for user"
+  task :set_user_bookmark_count => :environment do
+    include GraphHelper
+    GraphHelper.user_set_bookmark_count
+  end
+
+  desc "set user notification circular linked list"
+  task :set_user_notification => :environment do
+    include GraphHelper
+    GraphHelper.set_user_notification
   end
 
 end

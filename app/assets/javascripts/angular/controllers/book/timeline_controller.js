@@ -1,14 +1,24 @@
-homeApp.controller('timelineController', ["$scope", "$rootScope", "bookService", '$location', 'userService', '$mdDialog', function($scope, $rootScope, bookService, $location, userService, $mdDialog){
+homeApp.controller('timelineController', ["$scope", "$rootScope", "bookService", '$location', 'userService', '$mdDialog', '$mdSidenav', '$timeout', function($scope, $rootScope, bookService, $location, userService, $mdDialog, $mdSidenav, $timeout){
+
+    var _unauthenticated_user = function(){
+        return ((getCookie("logged") == "") || (getCookie("logged") == null));
+    }
 
     $scope.write_reading_journey_for = function(){
-        $scope.info.book = $rootScope.active_book;
-        $scope.info.show_share = true;
-        $scope.info.show_book_share = true;
-        $mdDialog.hide();
+        if(_unauthenticated_user()){
+            $mdSidenav('signup').toggle();
+        }
+        else{
+            // $scope.info.book = $rootScope.active_book;
+            $scope.info.show_share = true;
+            // $scope.info.show_book_share = true;
+            $mdDialog.hide();
+        }
     }
 
     $scope.get_feed = function(){
         $scope.book_loading = true;
+        $scope.info.loading = true;
         if(angular.isUndefined($scope.book_feed)){
             $scope.book_feed = [];
         }
@@ -18,7 +28,12 @@ homeApp.controller('timelineController', ["$scope", "$rootScope", "bookService",
             var message = ""
             switch(value.label){
                 case "BookmarkNode":
-                    message = "Added to "+value.node.key;
+                    if(value.node.key){
+                        message = "Added to "+value.node.key;
+                    }
+                    else{
+                        message = "Added "+$rootScope.active_book.title+" to a Shelf."
+                    }
                     break;
                 case "Listopia":
                     break;
@@ -34,72 +49,30 @@ homeApp.controller('timelineController', ["$scope", "$rootScope", "bookService",
                     break;
                 case "RatingNode":
                     message = "Gave "+value.node.content + " rating on 10.";
+                    break;
+                case "RecommendNode":
+                    message = "Recommended this book to a friend."
             }
             return message;
         }
 
-        var _group_feed = function(){
-            var grouped_feed = [];
-            var _user_exists = function(grouped_feed, user_id){
-                var book_exists = false;
-                var feed_index = 0;
-                if(grouped_feed.length > 0){
-                    angular.forEach(grouped_feed, function(value, index){
-                        if(angular.isDefined(value.user)){
-                            if(value.user.id == user_id){
-                                book_exists = true;
-                                feed_index = index
-                            }
-                        }
-                    });
-                }
-                return {"status": book_exists, "index": feed_index};
-            }
-
-            angular.forEach($scope.book_feed, function(value){
-                if(angular.isDefined(value.user)){
-                    var user = _user_exists(grouped_feed, value.user.id);
-                    if(user.status){
-                        delete value.user;
-                        grouped_feed[user.index].data.push(value)
-                    }
-                    else{
-                        if(angular.isDefined(value.user)){
-                            user = {"user": value.user};
-                            delete value.user;
-                            value = angular.extend(user, {"data": [value]});
-                        }
-                        this.push(value);
-                    }
-                }
-                else{
-                    this.push(value);
-                }
-            }, grouped_feed);
-            $scope.book_feed = grouped_feed;
-        }
-
         bookService.get_feed($scope.book_id, skip_count).then(function(data){
             $scope.book_feed = data;
-            _group_feed();
             angular.forEach($scope.book_feed, function(value){
+                var message = _get_message(value);
+                value = angular.extend(value, {"message": message});
                 if(angular.isDefined(value.user)){
                     userService.get_user_details(value.user.id).then(function(data){
                         value.user = angular.extend(value.user, data);
-                        angular.forEach(value.data, function(feed_data){
-                            var message = _get_message(feed_data);
-                            feed_data = angular.extend(feed_data, {"message": message});
-                        })
                     });
                 }
                 else{
                     var message = _get_message(value);
-                    var feed_data = angular.extend(value, {"message": message});
-                    value.data = [feed_data];
+                    value = angular.extend(value, {"message": message});
                 }
             });
             $scope.book_loading = false;
-            // $scope.book_feed = data;
+            $scope.info.loading = false;
         });
     }
     
@@ -109,13 +82,20 @@ homeApp.controller('timelineController', ["$scope", "$rootScope", "bookService",
         if(url_parsed != null){
             var id = url_parsed[2];
         }
-        if(angular.isDefined(id)){
-            var book_id = id;   
+
+        if(angular.isDefined($rootScope.active_book)){
+            var book_id = $rootScope.active_book.book_id || $rootScope.active_book.id;
         }
         else{
-            var book_id = $rootScope.active_book.book_id;
+            var book_id = id;
         }
         $scope.book_id = book_id;
-        $scope.get_feed();
+        var feed_timeout = $timeout(function(){
+            $scope.get_feed();
+        }, 100);
+
+        $scope.$on('destroy', function(){
+            $timeout.cancel(feed_timeout);
+        });
     }());
 }]);

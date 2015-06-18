@@ -5,9 +5,9 @@ class Status < Neo
 		@user 										= User.new(user_id)
 
 		if @book_id
-			@users_book 								= UsersBook.new(@book_id, user_id)
-			@status_type								= Status::StatusType.new(@book_id, @user_id)
-			@status_book_exchange_type					= Status::BookExchangeStatusType.new(@book_id, @user_id)
+			@users_book 							= UsersBook.new(@book_id, user_id)
+			@status_type							= Status::StatusType.new(@book_id, @user_id)
+			@status_book_exchange_type				= Status::BookExchangeStatusType.new(@book_id, @user_id)
 		end
 		@user_feed									= User::Feed.new(user_id)
 		@reading_status_value 						= status_info["reading_status_value"]
@@ -18,6 +18,8 @@ class Status < Neo
 		@wrapper_content 							= status_info["wrapper_content"]
 		@feelings 									= status_info["feelings"]
 		@book_exchange_status 						= status_info["book_exchange_status"]
+		@total_page_count							= status_info["total_page_count"]
+		@current_page								= status_info["current_page"]
 	end
 
 	def self.match
@@ -70,7 +72,14 @@ class Status < Neo
 	end
 
 	def set_book_id node_variable="status"
-		" SET " + node_variable + ".book_id = " + @book_id.to_s
+		clause = " SET " + node_variable + ".book_id = " + @book_id.to_s
+		if(@total_page_count.present?)
+			clause += " SET " + node_variable + ".total_page_count = " + @total_page_count.to_s
+		end
+		if(@current_page.present?)
+			clause += " SET " + node_variable + ".current_page = " + @current_page.to_s
+		end
+		clause
 	end
 
 	def self.basic_info

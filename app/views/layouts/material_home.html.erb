@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html ng-app="homeApp" ng-strict-di>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <meta name="viewport" content="width=device-width">
+        <meta property="og:url" content="http://www.readersdoor.com" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="ReadersDoor: Global Community of Book Lovers" />
+        <meta property="og:image" content="https://fbcdn-sphotos-f-a.akamaihd.net/hphotos-ak-xfp1/t31.0-8/s2048x2048/10928967_401263720044504_3799751116430229659_o.jpg" />
+        <meta property="og:description" content="ReadersDoor is a global community for book readers, where we intend to enrich and enhance users’ reading experience by focusing on virtualisation and idealisation of their real life interactions and experiences." />
+        <meta property="fb:app_id" content="667868653261167"/>
+
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+        <meta charset="utf-8" />
+
+        <title>ReadersDoor</title>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="icon" type="image/png" href="assets/favicon.png">
+        <script>document.write('<base href="' + document.location + '" />');</script>
+        <!-- <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,100italic,400italic|Roboto+Condensed&amp;lang=en' rel='stylesheet' type='text/css'> -->
+
+        <% if Rails.env.development? %>
+            <!-- <link rel="stylesheet" href="assets/material_icons.css" /> -->
+            <link rel="stylesheet" href="assets/signup.css" />
+            <link rel="stylesheet" href="assets/angular_material.css" />
+            <link rel="stylesheet" href="assets/website/website.css" />
+            <link rel="stylesheet" href="assets/website/icomoon.css" />
+            <link rel="stylesheet" href="assets/website/home.css" />
+            <link rel="stylesheet" href="assets/website/media_library.css" />
+            <link rel="stylesheet" type="text/css" href="assets/website/animation.css" >
+            <script src='assets/min/angular/vendors/angular.min.js'></script>
+            <script src='assets/min/angular/vendors/angular_messages.min.js'></script>
+            <script src="assets/angular/vendors/hammer.js"></script>
+            <script src="assets/angular/vendors/angular-aria.min.js"></script>
+            <script src="assets/angular/vendors/angular_mousewheel.min.js"></script>
+            <script src="assets/angular/vendors/angular_router.min.js"></script>
+            <script src="assets/angular/vendors/angular_material.min.js"></script>
+            <script src="assets/angular/vendors/angular_cookies.min.js"></script>
+            <script src="assets/angular/vendors/angular_facebook.js"></script>
+            <script src="assets/angular/vendors/angular-timer.min.js"></script>
+
+            <script src='assets/min/angular/vendors/angular_animate.min.js'></script>
+            <script src='assets/min/angular/vendors/angular-sanitize.min.js'></script>
+            <script src='assets/min/lib/angular_scroll.min.js'></script>
+            <script src='assets/min/angular/vendors/angular_filters.min.js'></script>
+            <script src="assets/min/angular/vendors/angular-parallax.min.js"></script>
+
+            <!-- // <script src="assets/angular/services/third_party/d3_service.js"></script> -->
+            <script src="assets/angular/vendors/angular-parallax.min.js"></script>
+            <script src="assets/angular/vendors/angular_sticky.js"></script>
+            
+            <script src="assets/angular/apps/filters_app.js"></script>
+            <script src="assets/angular/apps/home_app.js"></script>
+            <script src="assets/angular/apps/app_constants.js"></script>
+            <script src="assets/angular/constants/development.js"></script>
+            <script src="assets/angular/services/user_service.js"></script>
+            <script src="assets/angular/services/genre_service.js"></script>
+            <script src="assets/angular/services/book_service.js"></script>
+            <script src="assets/angular/services/author_service.js"></script>
+            <script src="assets/angular/services/shelf_service.js"></script>
+            <script src="assets/angular/services/infinity_service.js"></script>
+            <script src="assets/angular/services/shared_service.js"></script>
+            <script src="assets/angular/services/network_service.js"></script>
+
+            <script src="assets/angular/controllers/app_controller.js"></script>
+            
+            <script src="assets/angular/controllers/notification_controller.js"></script>
+            <script src="assets/angular/controllers/search_controller.js"></script>
+            <script src="assets/angular/controllers/home/left_controller.js"></script>
+            <script src="assets/angular/controllers/home/right_controller.js"></script>
+            <script src="assets/angular/controllers/book/buy_controller.js"></script>
+
+            <script src="assets/angular/controllers/recommend_controller.js"></script>
+            <script src="assets/angular/controllers/home/shelf_controller.js"></script>
+            <script src="assets/angular/controllers/share/share_controller.js"></script>
+            <script src="assets/angular/controllers/share/options_controller.js"></script>            
+            <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
+            <script src="assets/angular/controllers/book/timeline_controller.js"></script>
+            <script src="assets/angular/controllers/book/real_virtuality_controller.js"></script>
+
+            <script src="assets/angular/controllers/toast_controller.js"></script>
+            <script src="assets/angular/directives/site_directives.js"></script>
+
+            <script src="assets/angular/services/search_service.js"></script>
+            <script src="assets/angular/services/status_service.js"></script>
+            <script src="assets/angular/services/feed_service.js"></script>
+
+            <div ng-if="info.hide_signin">
+                <script src='assets/angular/services/website_service.js'></script>
+                <script src="assets/angular/controllers/signup_controller.js"></script>
+            </div>
+
+            <script src="assets/angular/controllers/home_controller.js"></script>
+        <% else %>
+            <link rel="stylesheet" href="assets/min/site.min.css" />
+            <link rel="stylesheet" href="assets/signup.css" />
+            <script src="assets/min/angular/site.min.js"></script>
+            <div ng-if="info.hide_signin">
+                <script src="assets/min/angular/controllers/signin_group.min.js"></script>
+            </div>
+            
+            <script src="assets/min/angular/controllers/home_group.min.js"></script>
+
+        <% end %>
+    </head>
+
+    <body ng-controller="appController" ng-keydown="scroll_on_keypress($event)" 
+         ng-click="close_popups()" 
+        msd-wheel="close_popups()">
+        <script>
+          // (function() {
+          //   var cx = '010250045073231072543:z7pnnxbf5s8';
+          //   var gcse = document.createElement('script');
+          //   gcse.type = 'text/javascript';
+          //   gcse.async = true;
+          //   gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+          //       '//cse.google.com/cse.js?cx=' + cx;
+          //   var s = document.getElementsByTagName('script')[0];
+          //   s.parentNode.insertBefore(gcse, s);
+          // })();
+        </script>
+        <!-- <gcse:search></gcse:search> -->
+        <div layout="column" layout-fill>
+            <!-- <div ng-include src="'/assets/angular/html/shared/header.html'"></div> -->
+            <div class="white" flex>
+       
+                <div ng-show="info.mobile_search" flex>
+                    <div class="header <% if @profile || @shelves || @network %>yellow<% end %>">
+                        <div ng-include src="'/assets/angular/html/shared/home_header.html'"></div>
+                    </div>
+                    <div ng-hide="info.show_share || info.show_book_share">
+                         <div class="hello_world">
+                            <form accept-charset='UTF-8' class='form' id='form' role='form'></form>
+                            <div class='main' role='main'>
+                               <section class='section js-section' id='beta-public-profiles'>
+                                  <article class='article'>
+                                       <div class='profile__group'>
+                                            <div class='profile-avatars'>
+                                                <template id='avatars-lazyload'>
+
+                                                     <span class="avatar-container" 
+                                                        draggable="true">
+                                                        <a alt="Music" class="avatar--large stranger" 
+                                                            draggable="false" 
+                                                            data-username="room?id=4974430"
+                                                            href="/room?id=4974430"
+                                                            style="background-image:url(&#39;https://markgilroymusic.files.wordpress.com/2014/06/music-music-33355145-3888-2592.jpg&#39;);" 
+                                                            title="Music">
+                                                        <div class="room_title_wrapper">
+                                                            <div class="room_title">Music</div>
+                                                        </div>
+                                                    </a></span>
+                                                    <span>&nbsp;&nbsp;&nbsp;</span>
+
+                                                    <span class="avatar-container" 
+                                                    draggable="true">
+                                                        <a alt="Brain" class="avatar--large stranger" 
+                                                        draggable="false" 
+                                                        data-username="room?id=4988942"
+                                                        href="/room?id=4988942"
+                                                        style="background-image:url(&#39;http://www.wired.com/wp-content/uploads/2014/07/brain1.jpg&#39;);" 
+                                                        title="Brain">
+                                                        <div class="room_title_wrapper">
+                                                            <div class="room_title">Brain</div>
+                                                        </div>
+                                                    </a></span>
+                                                    <span>&nbsp;&nbsp;&nbsp;</span>
+
+                                                    <span class="avatar-container" 
+                                                    draggable="true">
+                                                        <a alt="Narendra Modi" class="avatar--large  stranger" 
+                                                        draggable="false" 
+                                                        data-username="room?q=4976671" 
+                                                        href="/room?q=4976671" 
+                                                        style="background-image:url(&#39;https://pbs.twimg.com/profile_images/454954067488288768/fU6NY-EI_400x400.jpeg&#39;);" 
+                                                        title="Narendra Modi">
+                                                        <div class="room_title_wrapper">
+                                                            <div class="room_title">Narendra Modi</div>
+                                                        </div>
+                                                    </a></span>
+                                                    <span>&nbsp;&nbsp;&nbsp;</span>
+
+                                                    <span class="avatar-container" 
+                                                    draggable="true">
+                                                        <a alt="Mars Exploration" class="avatar--large stranger" 
+                                                        draggable="false" 
+                                                        data-username="room?id=4976760"
+                                                        href="/room?id=4976760"
+                                                         style="background-image:url(&#39;http://upload.wikimedia.org/wikipedia/commons/d/d8/NASA_Mars_Rover.jpg&#39;);" 
+                                                        title="Mars Exploration">
+                                                        <div class="room_title_wrapper">
+                                                            <div class="room_title">Mars Exploration</div>
+                                                        </div>
+                                                    </a></span>
+                                                    <span>&nbsp;&nbsp;&nbsp;</span>
+
+                                                    <span class="avatar-container" 
+                                                    draggable="true">
+                                                        <a alt="Bollywood" class="avatar--large stranger" 
+                                                            draggable="false" 
+                                                            data-username="room?id=4981449"
+                                                            href="/room?id=4981449"
+                                                             style="background-image:url(&#39;http://chandrakantha.com/articles/indian_music/nritya/nritya_media/bollywood_dance2.jpg&#39;);" 
+                                                            title="Bollywood">
+                                                        <div class="room_title_wrapper">
+                                                            <div class="room_title">Bollywood</div>
+                                                        </div>
+                                                    </a></span>
+                                                    <span>&nbsp;&nbsp;&nbsp;</span>
+
+                                                    <span class="avatar-container" 
+                                                    draggable="true">
+                                                        <a alt="Depression" class="avatar--large stranger" 
+                                                            draggable="false" 
+                                                            data-username="room?id=4979966"
+                                                            href="/room?id=4979966"
+                                                             style="background-image:url(&#39;http://miamioh.edu/student-life/_files/images/student-counseling/content/depressed400.jpg&#39;);" 
+                                                            title="Depression">
+                                                            <div class="room_title_wrapper">
+                                                                <div class="room_title">Depression</div>
+                                                            </div>
+                                                        </a></span>
+                                                        <span>&nbsp;&nbsp;&nbsp;</span>
+
+                                                    <span class="avatar-container" 
+                                                    draggable="true">
+                                                        <a alt="Science" class="avatar--large stranger" 
+                                                            draggable="false" 
+                                                            data-username="room?q=4975695" 
+                                                            href="/room?q=4975695" 
+                                                            style="background-image:url(&#39;http://www.morecambehigh.com/LIVE/wp-content/uploads/2014/12/Science-2.png&#39;);" 
+                                                            title="Science">
+                                                            <div class="room_title_wrapper">
+                                                                <div class="room_title">Science</div>
+                                                            </div>
+                                                        </a></span>
+                                                        <span>&nbsp;&nbsp;&nbsp;</span>
+
+                                                    <span class="avatar-container" 
+                                                    draggable="true">
+                                                        <a alt="Natural Disaster" class="avatar--large stranger" 
+                                                            draggable="false" 
+                                                            data-username="room?q=4988761" 
+                                                            href="/room?q=4988761" 
+                                                            style="background-image:url(&#39;http://strangesounds.org/wp-content/uploads/2015/04/natural-disaster-video.jpg&#39;);" 
+                                                            title="Natural Disaster">
+                                                            <div class="room_title_wrapper">
+                                                                <div class="room_title">Natural Disaster</div>
+                                                            </div>
+                                                        </a></span>
+                                                        <span>&nbsp;&nbsp;&nbsp;</span>
+
+                                                    <span class="avatar-container" 
+                                                    draggable="true">
+                                                        <a alt="Global Warming" class="avatar--large stranger" 
+                                                            draggable="false" 
+                                                            data-username="room?q=4977148" 
+                                                            href="/room?q=4977148" 
+                                                            style="background-image:url(&#39;http://www.iop.org/news/13/jul/img_full_60515.jpg&#39;);" 
+                                                            title="Global Warming">
+                                                            <div class="room_title_wrapper">
+                                                                <div class="room_title">Global Warming</div>
+                                                            </div>
+                                                        </a></span>
+                                                        <span>&nbsp;&nbsp;&nbsp;</span>
+
+                                                    <span class="avatar-container" 
+                                                    draggable="true">
+                                                        <a alt="SpaceX" class="avatar--large stranger" 
+                                                            draggable="false" 
+                                                            data-username="room?q=4976296" 
+                                                            href="/room?q=4976296" 
+                                                            style="background-image:url(&#39;http://blogs-images.forbes.com/alexknapp/files/2014/07/dragon-grappled-e1405722424530.jpg&#39;);" 
+                                                            title="SpaceX">
+                                                            <div class="room_title_wrapper">
+                                                                <div class="room_title">SpaceX</div>
+                                                            </div>
+                                                        </a></span>
+                                                        <span>&nbsp;&nbsp;&nbsp;</span>
+
+                                                    <span class="avatar-container" 
+                                                    draggable="true">
+                                                        <a alt="Art History" class="avatar--large stranger" 
+                                                            draggable="false" 
+                                                            data-username="room?q=4977592" 
+                                                            href="/room?q=4977592" 
+                                                            style="background-image:url(&#39;http://www.ithaca.edu/depts/i/Vincent_van_Gogh,_The_Starry_Night,_1889_Museum_of_Modern_Art,_New_York/21908_photo.jpg&#39;);" 
+                                                            title="Art History">
+                                                            <div class="room_title_wrapper">
+                                                                <div class="room_title">Art History</div>
+                                                            </div>
+                                                        </a></span>
+                                                        <span>&nbsp;&nbsp;&nbsp;</span>
+
+                                                    <span class="avatar-container" 
+                                                    draggable="true">
+                                                        <a alt="Lifestyle" class="avatar--large stranger" 
+                                                            draggable="false" 
+                                                            data-username="room?q=4980153" 
+                                                            href="/room?q=4980153" 
+                                                            style="background-image:url(&#39;http://www.europeansunlight.eu/images/stories/blog/lifestyle.jpg&#39;);" 
+                                                            title="Lifestyle">
+                                                            <div class="room_title_wrapper">
+                                                                <div class="room_title">Lifestyle</div>
+                                                            </div>
+                                                        </a></span>
+                                                        <span>&nbsp;&nbsp;&nbsp;</span>
+
+                                                    <span class="avatar-container" 
+                                                    draggable="true">
+                                                        <a alt="Religion" class="avatar--large stranger" 
+                                                            draggable="false" 
+                                                            data-username="room?q=4978366" 
+                                                            href="/room?q=4978366" 
+                                                            style="background-image:url(&#39;http://www.oxfordmok.org/wp-content/uploads/2014/06/religionpost.jpg&#39;);" 
+                                                            title="Religion">
+                                                            <div class="room_title_wrapper">
+                                                                <div class="room_title">Religion</div>
+                                                            </div>
+                                                        </a></span>
+                                                        <span>&nbsp;&nbsp;&nbsp;</span>
+
+                                                   <span class="avatar-container" 
+                                                   draggable="true">
+                                                    <a alt="Death" class="avatar--large stranger" 
+                                                        draggable="false" 
+                                                        data-username="room?q=4975736" 
+                                                        href="/room?q=4975736" 
+                                                        style="background-image:url(&#39;http://static.giantbomb.com/uploads/original/15/155745/2263909-death_skull_bones_image_31001.jpg&#39;);" 
+                                                        title="Death">
+                                                        <div class="room_title_wrapper">
+                                                            <div class="room_title">Death</div>
+                                                        </div>
+                                                       </a></span>
+                                                       <span>&nbsp;&nbsp;&nbsp;</span>
+
+                                                     <span class="avatar-container" 
+                                                    draggable="true">
+                                                        <a alt="Cricket" class="avatar--large stranger" 
+                                                            draggable="false" 
+                                                            data-username="room?q=4974792" 
+                                                            href="/room?q=4974792" 
+                                                            style="background-image:url(&#39;http://upload.wikimedia.org/wikipedia/commons/7/7a/Pollock_to_Hussey.jpg&#39;);" 
+                                                            title="Cricket">
+                                                            <div class="room_title_wrapper">
+                                                                <div class="room_title">Cricket</div>
+                                                            </div>
+                                                        </a></span>
+                                                        <span>&nbsp;&nbsp;&nbsp;</span>
+                                                     
+                                                     <span class="avatar-container" 
+                                                    draggable="true">
+                                                        <a alt="Earth" class="avatar--large stranger" 
+                                                            draggable="false" 
+                                                            data-username="room?q=4975227" 
+                                                            href="/room?q=4975227" 
+                                                            style="background-image:url(&#39;http://solarviews.com/raw/earth/bluemarblewest.jpg&#39;);" 
+                                                            title="Earth">
+                                                            <div class="room_title_wrapper">
+                                                                <div class="room_title">Earth</div>
+                                                            </div>
+                                                        </a></span>
+                                                        <span>&nbsp;&nbsp;&nbsp;</span>
+
+
+                                                     <span class="avatar-container" 
+                                                    draggable="true">
+                                                        <a alt="Road Trip" class="avatar--large stranger" 
+                                                            draggable="false" 
+                                                            data-username="room?id=5008148" 
+                                                            href="/room?q=5008148" 
+                                                            style="background-image:url(&#39;http://apassportaffair.com/wp-content/uploads/2014/08/o-ROAD-TRIP-facebook.jpg&#39;);" 
+                                                            title="Road Trip">
+                                                            <div class="room_title_wrapper">
+                                                                <div class="room_title">Road Trip</div>
+                                                            </div>
+                                                        </a></span>
+                                                        <span>&nbsp;&nbsp;&nbsp;</span>
+
+                                                    <span class="avatar-container" 
+                                                    draggable="true">
+                                                        <a alt="NASA" class="avatar--large stranger" 
+                                                            draggable="false" 
+                                                            data-username="room?id=4978193"
+                                                            href="/room?q=4978193" 
+                                                            style="background-image:url(&#39;http://static.ddmcdn.com/gif/nasa-logo-670x440.jpg&#39;);" 
+                                                            title="NASA">
+                                                            <div class="room_title_wrapper">
+                                                                <div class="room_title">NASA</div>
+                                                            </div>
+                                                        </a></span>
+                                                        <span>&nbsp;&nbsp;&nbsp;</span>
+
+                                                     <span class="avatar-container" 
+                                                    draggable="true">
+                                                        <a alt="World Economy" class="avatar--large stranger" 
+                                                            draggable="false" 
+                                                            data-username="room?id=5006092"
+                                                            href="/room?q=5006092" 
+                                                            style="background-image:url(&#39;http://cdn5.freedomoutpost.com/wp-content/uploads/2013/10/business-news_05_temp-1334821725-4f8fc35d-620x348.jpg&#39;);" 
+                                                            title="World Economy">
+                                                            <div class="room_title_wrapper">
+                                                                <div class="room_title">World Economy</div>
+                                                            </div>
+                                                        </a></span>
+                                                        <span>&nbsp;&nbsp;&nbsp;</span>
+
+                                                    <span class="avatar-container" 
+                                                    draggable="true">
+                                                        <a alt="Sports" class="avatar--large stranger" 
+                                                            draggable="false" 
+                                                            data-username="room?id=4974719"
+                                                            href="/room?q=4974719" 
+                                                            style="background-image:url(&#39;http://www.lf.k12.de.us/wp-content/uploads/2015/03/Sports.png&#39;);" 
+                                                            title="Sports">
+                                                            <div class="room_title_wrapper">
+                                                                <div class="room_title">Sports</div>
+                                                            </div>
+                                                        </a></span>
+                                                        <span>&nbsp;&nbsp;&nbsp;</span>
+
+                                                     <span class="avatar-container" 
+                                                    draggable="true">
+                                                        <a alt="Yoga" class="avatar--large stranger" 
+                                                            draggable="false" 
+                                                            data-username="room?id=5003454"
+                                                            href="/room?q=5003454" 
+                                                            style="background-image:url(&#39;http://upperlimits.com/west-county/wp-content/uploads/2014/05/yoga.jpg&#39;);" 
+                                                            title="Yoga">
+                                                            <div class="room_title_wrapper">
+                                                                <div class="room_title">Yoga</div>
+                                                            </div>
+                                                        </a></span>
+                                                        <span>&nbsp;&nbsp;&nbsp;</span>
+
+                                                    <span class="avatar-container" 
+                                                    draggable="true">
+                                                        <a alt="Virtual World" class="avatar--large stranger" 
+                                                            draggable="false" 
+                                                            data-username="room?id=5004986"
+                                                            href="/room?q=5004986" 
+                                                            style="background-image:url(&#39;http://retailtopnews.com/wp-content/uploads/2015/03/Virtual-World.jpg&#39;);" 
+                                                            title="Virtual World">
+                                                            <div class="room_title_wrapper">
+                                                                <div class="room_title">Virtual World</div>
+                                                            </div>
+                                                        </a></span>
+                                                        <span>&nbsp;&nbsp;&nbsp;</span>
+
+                                                    <span class="avatar-container" 
+                                                    draggable="true">
+                                                        <a alt="Travel" class="avatar--large stranger" 
+                                                            draggable="false" 
+                                                            data-username="room?id=4980414"
+                                                            href="/room?q=4980414" 
+                                                            style="background-image:url(&#39;http://healthfitnessrevolution.com/wp-content/uploads/2014/01/travel-health.jpg&#39;);" 
+                                                            title="Travel">
+                                                            <div class="room_title_wrapper">
+                                                                <div class="room_title">Travel</div>
+                                                            </div>
+                                                        </a></span>
+                                                        <span>&nbsp;&nbsp;&nbsp;</span>
+                                               </template>
+                                            </div>
+                                        </div>
+                                    </article>  
+                                </section>
+                            </div>
+
+                        </div>
+                        <div>
+                            <div class="cover_wrapper" layout="column" layout-align="space-between" >
+                                <div></div>
+
+                                <div class="tagline" layout="row" layout-align="center center">
+                                    <!-- <img src="assets/rd_icon.png" /> -->
+                                    <div layout-padding>
+                                        <div ng-include src="'assets/angular/html/shared/home/tagline.html'"></div>
+                                    </div>
+                                </div>
+                                <div></div>
+                            </div>
+                        </div>
+                        <div layout="column" layout-align="center center" 
+                            ng-include src="'assets/angular/html/shared/home/options.html'">
+                        </div>
+
+
+                        <div layout-align="center center" ng-include="'assets/angular/html/shared/partials/social_links.html'"></div>
+                        <div class="small_title" layout="column" layout-align="center center">
+                            <div class="less_important" layout-padding>Books are dangerous for the mind. Handle with care.</div>
+                            <div class="less_important" layout-padding>© Singularity Technologies Pvt. Ltd.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <md-progress-linear class="md-primary loader"
+                                ng-show="info.loading && !info.show_share"
+                                md-mode="indeterminate">
+            </md-progress-linear>
+
+            <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" 
+                    ng-if="info.cirular_loading">
+            </md-progress-circular>
+
+            <div ng-include src="'/assets/angular/html/shared/left_panel.html'" class="left_panel_container"></div>
+            <div ng-include src="'/assets/angular/html/shared/notifications.html'" class="right_panel_container" ></div>
+            <div ng-include src="'/assets/angular/html/share/show.html'"></div>
+            <div ng-include src="'/assets/angular/html/shared/shelves_sidenav.html'" ></div>
+        </div>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-35051501-1', 'readersdoor.com');
+            ga('send', 'pageview');
+        </script>
+        <script>
+            var tts=tts||{};tts.CSSHelper=function(){var t=tts.CSSHelper.getVendorPrefix("Transform"),e=null!=t,i=t+"Transform";tts.CSSHelper.transformString=t+"Transform";var s=t+"Transition",r=navigator.userAgent.toLowerCase().match(/android 2/i)||navigator.userAgent.toLowerCase().match(/android 3/i)?!0:!1,n=function(){return t},o=function(){return e},u=function(t){t.style[s]=""},c=function(e,i){i=i||"hidden",e.style.backfaceVisibility="hidden",e.style[t+"BackfaceVisibility"]="hidden"},d=function(t,s,n,o,c,d){t&&(1!=d&&(d=!1),o=o||1,c=c||0,0==d&&u(t),e&&1!=r?1==r?(a(t),t.getAttribute("data-pos")||t.setAttribute("data-pos",t.offsetLeft+","+t.offsetTop),pos=t.getAttribute("data-pos").split(","),s+=parseInt(pos[0]),n+=parseInt(pos[1]),t.style.left=tts.CSSHelper.roundForCSS(s)+"px",t.style.top=tts.CSSHelper.roundForCSS(n)+"px",1!=o&&t.children&&t.children[0]&&t.children[0].style&&(t.children[0].style[i]=f(o))):t.style[i]=h(s,n)+f(o)+g(c):(t.style.left=tts.CSSHelper.roundForCSS(s)+"px",t.style.top=tts.CSSHelper.roundForCSS(n)+"px",t.style.zoom=o))},l=function(t,e){t.style[i]=g(e)},h=function(t,e){return" translate3d( "+tts.CSSHelper.roundForCSS(t)+"px, "+tts.CSSHelper.roundForCSS(e)+"px, 0px )"},f=function(t){return" scale( "+tts.CSSHelper.roundForCSS(t)+" )"},g=function(t){return" rotate( "+tts.CSSHelper.roundForCSS(t)+"deg )"};return{update2DPosition:d,update2DRotation:l,getVendor:n,getCssTransformsEnabled:o,setBackfaceVisbility:c}},tts.CSSHelper.getVendorPrefix=function(t){var e=function(){if(!navigator.userAgent.toLowerCase().match(/msie 9/i)){var e=["Moz","Webkit","ms"],s=i();for(var r in e)if(void 0!==s.style[e[r]+t])return e[r];return null}},i=function(){var t=document.body.childNodes;for(var e in t)if("undefined"!=typeof t[e].style)return t[e]};return e()},tts.CSSHelper.roundForCSS=function(t){var e=Math.pow(10,2);return Math.round(t*e)/e};var ElasticPoint=function(t,e,i,s,r){var n=s,o=r,a=t,u=e,c=i,d=t,l=e,h=i,f=0,g=0,p=0,m=!1,t=function(){return a},e=function(){return u},i=function(){return c},v=function(){return m},S=function(){return f+g+p},y=function(){return f},w=function(){return g},C=function(){return p},U=function(t,e,i){a=t,u=e,c=i},L=function(t,e,i){d=t,l=e,h=i},E=function(t){d=t},x=function(t){l=t},T=function(t){h=t},H=function(t){n=t},M=function(t){o=t},A=function(){f=((d-a)*o+f)*n,g=((l-u)*o+g)*n,p=((h-c)*o+p)*n,a+=f,u+=g,c+=p,m=f>.001||g>.001||p>.001};return{x:t,y:e,z:i,isDirty:v,speed:S,speedX:y,speedY:w,speedZ:C,setTarget:L,setTargetX:E,setTargetY:x,setTargetZ:T,setCurrent:U,setFriction:H,setAccel:M,update:A}},MathUtil=MathUtil||{};MathUtil.getPercentWithinRange=function(t,e,i){return e+=-t,i+=-t,t+=-t,i/(e-t)},MathUtil.getDistance=function(t,e,i,s){return a=t-i,b=e-s,Math.abs(Math.sqrt(a*a+b*b))},MathUtil.clamp=function(t,e,i){return Math.max(e,Math.min(i,t))},function(){var t=function(t,e){return function(){return t.apply(e,arguments)}};this.FeaturedUser=function(){function t(t,e,i,s){this.grid=t,this.el=e,this.imageEl=i,this.index=s,this.name=this.imageEl.getAttribute("data-username"),this.gridLoc={x:0,y:0},this.isOffScreen=!1,this.selected=!1,this.isAccel=!1,this.offset=new ElasticPoint(1,1,1,.15,.05),this.scale=new ElasticPoint(0,0,.001,.65,.21),this.calcGridPosition(),this.addClickHandlers()}return t.prototype.calcGridPosition=function(){var t,e,i,s;return i=this.grid.gridCols*UserGrid.userSpacing,e=this.grid.gridRows*UserGrid.userSpacing,t=this.index%this.grid.gridCols,s=Math.floor(this.index/this.grid.gridCols),this.gridLoc.x=-i/2+t*UserGrid.userSpacing+UserGrid.userSpacing/2,this.gridLoc.y=this.grid.stageH/2-e/2+s*UserGrid.userSpacing+1.5*UserGrid.userSpacing,this.curX=this.gridLoc.x,this.curY=this.gridLoc.y},t.prototype.scaleUp=function(){return this.el.classList.add("visible"),this.scale.setTargetZ(1)},t.prototype.scaleDown=function(){return this.scale.setTargetZ(0)},t.prototype.forceShow=function(){return this.calcGridPosition(),this.scale.setTargetZ(1),this.el.classList.add("visible")},t.prototype.setActive=function(t){var e,i;return t?(this.selected=!0,this.scale.setTargetZ(1.4),e=document.createElement("div"),e.classList.add("outro__cover"),document.body.appendChild(e),i=document.querySelector(".link__logo"),null!=i&&i.classList.add("loading"),setTimeout(function(){return function(){return e.classList.add("outro--active")}}(this),650),setTimeout(function(t){return function(){return document.location="/"+t.name}}(this),800),setTimeout(function(){return function(){return document.location.reload()}}(this),5e3)):this.scale.setTargetZ(0)},t.prototype.addClickHandlers=function(){return this.el.addEventListener("mouseout",function(t){return function(){return t.grid.exiting!==!0?t.scale.setTargetZ(1):void 0}}(this)),this.el.addEventListener("mouseover",function(t){return function(){return t.scale.setTargetZ(1.1)}}(this)),this.el.addEventListener("click",function(t){return function(e){return e.preventDefault(),t.grid.activateUser(t)}}(this))},t.prototype.update=function(){var t,e,i;return e=MathUtil.getDistance(this.grid.mouseOffsetX*this.grid.stageW,this.grid.mouseOffsetY*this.grid.stageH+this.grid.stageH/2,this.curX,this.curY),i=e/this.grid.stageW,this.isAccel?(.2>i&&(i=.2),i>.35&&(i=.35)):(.25>i&&(i=.25),i>.6&&(i=.6)),t=1-i,this.offset.setAccel(t),this.offset.setTargetX(this.grid.mouseOffsetX*this.grid.gridOverhangX),this.offset.setTargetY(this.grid.mouseOffsetY*this.grid.gridOverhangY),this.offset.update(),this.scale.update(),this.curX=this.gridLoc.x-this.offset.x(),this.curY=this.gridLoc.y-this.offset.y(),this.curX>-this.grid.stageW/2-UserGrid.userRadius&&this.curX<this.grid.stageW/2+UserGrid.userRadius&&this.curY>-this.grid.stageH/2-UserGrid.userRadius&&this.curY<this.grid.stageH+UserGrid.userRadius?(this.grid.cssHelper.update2DPosition(this.el,this.curX,this.curY,this.scale.z(),0,!1),this.isOffScreen=!1):this.isOffScreen===!1?(this.curX=-UserGrid.userSize,this.curY=-UserGrid.userSize,this.grid.cssHelper.update2DPosition(this.el,this.curX,this.curY,this.scale.z(),0,!1),this.isOffScreen=!0):void 0},t}(),this.UserGrid=function(){function e(){this.animate=t(this.animate,this),this.updateOrientation=t(this.updateOrientation,this),this.cssHelper=new tts.CSSHelper,this.scaleUpIndex=0,this.scaleUpLastTime=0,this.scaleDownIndex=0,this.scaleDownLastTime=0,this.lazyLoadAvatars(),this.getElements(),this.avatarsArr.length>0&&setTimeout(function(t){return function(){return t.active=!0,t.timeout=0,t.paused=!1,t.createMaxNodes(),t.gridConfig(),t.getUserData(),t.watchMouse(),t.watchAccelerometer(),setTimeout(function(){return requestAnimationFrame(t.animate)},350)}}(this),0)}return e.userSize=130,e.userRadius=e.userSize/2,e.userPadding=40,e.userSpacing=e.userSize+e.userPadding,e.mobileBreak=720,e.prototype.supportsTemplate=function(){return"content"in document.createElement("template")},e.prototype.lazyLoadAvatars=function(){var t,e;return e=document.querySelector("#avatars-lazyload"),this.supportsTemplate()?(e=document.querySelector("#avatars-lazyload"),t=document.importNode(e.content,!0),e.parentElement.appendChild(t),e.parentElement.removeChild(e)):e.parentElement.innerHTML=e.innerHTML},e.prototype.getElements=function(){return this.gridEl=document.querySelector(".profile__group"),this.avatarsEl=this.gridEl.querySelector(".profile-avatars"),this.avatarsArr=document.querySelectorAll(".avatar-container")},e.prototype.getUserData=function(){var t,e,i,s,r,n,o;for(this.users=[],this.numUsersLoaded=0,o=this.avatarsArr,i=r=0,n=o.length;n>r;i=++r)t=o[i],e=t.querySelector(".avatar--large"),s=new FeaturedUser(this,t,e,this.numUsersLoaded),this.users.push(s),this.numUsersLoaded++;return!0},e.prototype.createMaxNodes=function(){var t,i,s,r,n,o,a,u;for(this.screenW=window.screen.width,this.screenH=window.screen.height,r=Math.ceil(this.screenW/e.userSize),this.gridCols%2===0&&(r+=3),n=Math.ceil(this.screenH/e.userSize),n+=n%2===0?3:2,this.stageW<e.mobileBreak&&(n+=2),o=n*r,a=Math.ceil(o/this.avatarsArr.length),i=this.avatarsEl.innerHTML,t="",s=u=0;a>u;s=u+=1)t+=i;return this.avatarsEl.innerHTML=t,this.avatarsArr=document.querySelectorAll(".avatar-container")},e.prototype.getGridSpacing=function(){return this.stageW<e.mobileBreak?(this.gridEl.classList.add("small--avatars"),e.userSize=90,e.userPadding=20):(this.gridEl.classList.remove("small--avatars"),e.userSize=130,e.userPadding=40),e.userSpacing=e.userSize+e.userPadding,e.userRadius=e.userSize/2},e.prototype.gridConfig=function(){return this.gridEl?(this.stageW=this.gridEl.offsetWidth,this.stageH=this.gridEl.offsetHeight,this.stageAspectRatio=this.stageW/this.stageH,this.getGridSpacing(),this.gridCols=Math.ceil(this.stageW/e.userSize),this.gridCols%2===0&&(this.gridCols+=3),this.gridRows=Math.ceil(this.stageH/e.userSize),this.gridRows+=this.gridRows%2===0?3:2,this.stageW<e.mobileBreak&&(this.gridRows+=2),this.numUsersDisplayed=this.gridRows*this.gridCols,this.gridOverhangX=this.gridCols*e.userSpacing-this.stageW,this.gridOverhangY=(this.gridRows-2)*e.userSpacing-this.stageH):void 0},e.prototype.watchMouse=function(){return this.mouseOffset=new ElasticPoint(0,0,0,.25,.05),this.mouseX=0,this.mouseY=0,this.mouseOffsetX=0,this.mouseOffsetY=0,window.addEventListener("mousemove",function(t){return function(e){var i,s,r;return t.exiting!==!0?(s=e.clientX-t.mouseX,r=e.clientY-t.mouseY,i=t.gridEl.getBoundingClientRect(),t.mouseX=e.clientX,t.mouseY=e.clientY,t.mouseX>i.left&&t.mouseX<i.left+i.width&&t.mouseY>i.top&&t.mouseY<i.top+i.height&&(t.mouseY-=i.top,t.mouseOffsetX=MathUtil.clamp(MathUtil.getPercentWithinRange(0,t.stageW,t.mouseX)-.5,-.5,.5),t.mouseOffsetY=MathUtil.clamp(MathUtil.getPercentWithinRange(0,t.stageH,t.mouseY)-.5,-.5,.5),t.mouseOffset.setTarget(t.mouseOffsetX,t.mouseOffsetY,0)),t.active===!1&&requestAnimationFrame(t.animate),t.active=!0,t.timeout=0):void 0}}(this),!1)},e.prototype.watchAccelerometer=function(){return this.tiltZAxis=0,this.tiltXAxis=0,this.compass=0,this.accelerometerSet=!1,window.addEventListener("deviceorientation",this.updateOrientation)},e.prototype.nextScaleUp=function(){var t,e,i,s,r,n,o;for(this.scaleUpLastTime=Date.now(),r=this.scaleUpIndex,i=r,s=r+r,t=n=r;s>=n;t=n+=1)e=t,t!==r&&(e=i),e<this.numUsersDisplayed&&null!=(o=this.users[e])&&o.scaleUp(),i+=this.gridCols-1;return this.scaleUpIndex++,this.scaleUpIndex>=this.gridRows+this.gridCols?this.nextScaleUp=null:void 0},e.prototype.nextScaleDown=function(){var t,e,i,s,r,n,o,a;for(this.scaleDownLastTime=Date.now(),r=this.scaleDownIndex,i=r,s=r+r,t=n=r;s>=n;t=n+=1)e=t,t!==r&&(e=i),e<this.numUsersDisplayed&&!(null!=(o=this.users[e])?o.selected:void 0)&&null!=(a=this.users[e])&&a.scaleDown(),i+=this.gridCols-1;return this.scaleDownIndex++,this.scaleDownIndex>=this.gridRows+this.gridCols?this.nextScaleDown=null:void 0},e.prototype.animate=function(){var t,e,i,s;if(this.active===!0&&this.paused===!1){for(requestAnimationFrame(this.animate),Date.now()>this.scaleUpLastTime+100&&"function"==typeof this.nextScaleUp&&this.nextScaleUp(),this.exiting&&Date.now()>this.scaleDownLastTime+20&&"function"==typeof this.nextScaleDown&&this.nextScaleDown(),this.mouseOffset.update(),s=this.users,e=0,i=s.length;i>e;e++)t=s[e],t.update();this.timeout>150&&(this.active=!1)}return!0},e.prototype.activateUser=function(t){return this.exiting=!0,t.setActive(!0)},e.prototype.setPaused=function(t){return this.paused=t,this.paused?void 0:this.animate()},e.prototype.resized=function(){var t,e,i,s,r,n;if(this.gridConfig(),(null!=(s=this.users)?s.length:void 0)>0){for(r=this.users,n=[],e=0,i=r.length;i>e;e++)t=r[e],n.push(t.forceShow());return n}},e}()}.call(this),function(){var t,e,i,s,r;r=Date.now||function(){return(new Date).getTime()},s=function(t,e,i){var s,n,o,a,u,c;return u=void 0,s=void 0,n=void 0,c=void 0,a=void 0,o=function(){var d;d=r()-c,e>d?u=setTimeout(o,e-d):(u=null,i||(a=t.apply(n,s),n=s=null))},function(){var d;return n=this,s=arguments,c=r(),d=i&&!u,u||(u=setTimeout(o,e)),d&&(a=t.apply(n,s),n=s=null),a}},i=function(t,e,i){var s,r,n;return n=new XMLHttpRequest,s=document.querySelector('meta[name="csrf-token"]'),r=s?s.getAttribute("content"):void 0,n.onload=function(){return function(){return 4===n.readyState&&200===n.status?"function"==typeof e?e(n):void 0:"function"==typeof i?i(n):void 0}}(this),n.open(t.method,t.url,!0),r&&n.setRequestHeader("X-CSRF-Token",r),n.send(t.data||null)},t=function(){var t;return t=document.createElement("div"),t.matches||t.webkitMatchesSelector||t.mozMatchesSelector||t.msMatchesSelector}(),e=function(e,i){if(t.bind(e)(i))return e;for(e=e.parentNode;e&&e!==document;){if(t.bind(e)(i))return e;e=e.parentNode}return!1},function(){var t,e,i,r,n,o,a,u,c,d,l,h,f,g,p,m,v,S,y,w,C,U,L,E,x,T,H,M,A,D,b;for(b=null,M=null,C=[],y=document.querySelectorAll(".js-section"),w=document.querySelectorAll(".js-section-link"),i=-1,U=y.length,t=document.getElementById("agree_button"),E=document.getElementById("sharing_button"),o=document.getElementById("form"),p=o.querySelector("input.btn"),l=document.querySelector(".main"),h=document.querySelector(".navigation"),setTimeout(function(){return function(){var t;return t=new window.UserGrid}}(this),200),n=function(){return null!=M?M:M=document.getElementById("form_email")},r=s(m,300),window.addEventListener("resize",r),window.addEventListener("scroll",S),"no-touch"===document.documentElement.className&&document.addEventListener("keydown",d),window.addEventListener("popstate",g),o.addEventListener("submit",a),t.addEventListener("click",f),E.addEventListener("click",e),A=0,D=w.length;D>A;A++)H=w[A],H.addEventListener("click",x);return(c=function(){var t;return T(),t=window.location.pathname.replace(/\//gi,""),t.length?setTimeout(function(){return function(){var e;return e=u(t),L(e),v(e.id)}}(this),500):m()})()}()}.call(this);
+        </script>
+    </body>
+</html>

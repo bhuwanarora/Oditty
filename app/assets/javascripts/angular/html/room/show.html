@@ -2,17 +2,19 @@
                     ng-show="shelf_loading"
                     md-mode="indeterminate">
 </md-progress-linear>
-<md-card layout="column" layout-align="start center">
+<md-card layout="column" layout-align="start center" class="no_shadow">
 	<md-card-content>
-		<div class="less_important" layout-padding hide-sm hide-md>
-			Recently Visited Articles
-		</div>
 		<md-content class="white">
-			<section layout="row" layout-wrap layout-align="center">
-				<div class="article"
-					layout-margin layout="column"
-		            ng-repeat="article in visited_articles">
-		            <div ng-include src="'/assets/angular/html/room/article.html'"></div>
+			<section layout="column" layout-align="start">
+				<div layout-margin ng-repeat="article in ::visited_articles" layout="row">
+					<div layout-padding>
+						<img ng-src="{{::article.image_url}}" class="circular">
+					</div>
+					<div layout-padding>
+			            <a ng-href="/news?q={{article.article_id || article.id}}" ng-bind-html="::article.title"></a>
+			            <div ng-bind-html="article.created_at | timestamp | date:'h:mm a, dd MMM'" class="less_important"></div>
+					</div>
+			        <md-divider></md-divider>
 		        </div>
 			</section>
 		</md-content>

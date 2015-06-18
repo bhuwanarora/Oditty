@@ -32,14 +32,17 @@ module.exports = function(grunt) {
             combine: {
                 files: {
                     'app/assets/stylesheets/min/site.min.css': [
+                        // 'app/assets/stylesheets/min/material_icons.min.css',
                         'app/assets/stylesheets/min/angular_material.min.css',
                         'app/assets/stylesheets/min/website/website.min.css',
                         'app/assets/stylesheets/min/website/icomoon.min.css',
                         'app/assets/stylesheets/min/website/home.min.css',
-                        'app/assets/stylesheets/min/website/media_library.min.css'
+                        'app/assets/stylesheets/min/website/media_library.min.css',
+                        'app/assets/stylesheets/min/website/animation.min.css',
                     ],
 
                     'app/assets/stylesheets/min/landing_page_site.min.css': [
+                        'app/assets/stylesheets/min/material_icons.min.css',
                         'app/assets/stylesheets/min/angular_material.min.css',
                         'app/assets/stylesheets/min/landing_page/style.min.css',
                         'app/assets/stylesheets/min/landing_page/media.min.css',
@@ -202,7 +205,8 @@ module.exports = function(grunt) {
                 'app/assets/javascripts/min/angular/apps.js': [
                     "app/assets/javascripts/min/angular/apps/home_app.js",
                     "app/assets/javascripts/min/angular/apps/filters_app.js",
-                    "app/assets/javascripts/min/angular/apps/app_constants.js",
+                    "app/assets/javascripts/min/angular/constants/production.js",
+                    "app/assets/javascripts/min/angular/apps/app_constants.js"
                 ],
 
                 'app/assets/javascripts/min/angular/landing_page.min.js': [
@@ -236,10 +240,24 @@ module.exports = function(grunt) {
                     "app/assets/javascripts/min/angular/directives/d3_directives.js"
                 ],
 
-                "app/assets/javascripts/min/angular/controllers/home_group.min.js":[
+                "app/assets/javascripts/min/angular/controllers/news_group_group.min.js":[
                     "app/assets/javascripts/min/angular/services/news_service.js",
                     "app/assets/javascripts/min/angular/directives/home_directives.js",
-                    "app/assets/javascripts/min/angular/controllers/home/home_controller.js"
+                    "app/assets/javascripts/min/angular/controllers/home/feed_controller.js"
+                ],
+
+                "app/assets/javascripts/min/angular/controllers/signin_group.min.js":[
+                    'app/assets/javascripts/min/angular/services/website_service.js',
+                    "app/assets/javascripts/min/angular/controllers/signup_controller.js"
+                ],                
+
+                "app/assets/javascripts/min/angular/controllers/home_group.min.js":[
+                    "app/assets/javascripts/min/angular/controllers/home_controller.js"
+                ],
+
+                "app/assets/javascripts/min/angular/controllers/personalised_group.min.js":[
+                    "app/assets/javascripts/min/angular/services/news_service.js",
+                    "app/assets/javascripts/min/angular/controllers/personalised_controller.js"
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/network_group.min.js":[
@@ -255,7 +273,12 @@ module.exports = function(grunt) {
                 "app/assets/javascripts/min/angular/controllers/community_group.min.js":[
                     "app/assets/javascripts/min/angular/services/news_service.js",
                     "app/assets/javascripts/min/angular/controllers/community_controller.js"
-                ],                
+                ],
+
+                "app/assets/javascripts/min/angular/controllers/publishers_group.min.js":[
+                    "app/assets/javascripts/min/angular/services/publishers_service.js",
+                    "app/assets/javascripts/min/angular/controllers/publishers_controller.js"
+                ],
 
                 "app/assets/javascripts/min/angular/controllers/customise_group.min.js":[
                     "app/assets/javascripts/min/angular/controllers/customise/customise_controller.js",
@@ -284,6 +307,7 @@ module.exports = function(grunt) {
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/author_group.min.js":[
+                    "app/assets/javascripts/min/angular/directives/author_directives.js",
                     "app/assets/javascripts/min/angular/controllers/author_controller.js"
                 ],
 

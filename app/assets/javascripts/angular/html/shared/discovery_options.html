@@ -1,0 +1,19 @@
+<md-select ng-model="active_page" class="active_page_menu" hide-sm>
+    <md-option ng-value="-1" ng-disabled>Select Discovery Option</md-option>
+    <a href="/personalised_suggestions" layout="row" layout-align="start center"
+        class="pointer" ng-hide="!info.hide_signin">
+        <span>&nbsp;&nbsp;</span>
+        <i class="material-icons light_grey_color">accessibility</i>
+        <md-option ng-value="0">Suggestions</md-option>
+    </a>
+    <a href="/news_group" layout="row" layout-align="start center"  class="pointer">
+        <span>&nbsp;&nbsp;</span>
+        <i class="material-icons light_grey_color">whatshot</i>
+        <md-option ng-value="1">Rooms</md-option>
+    </a>
+    <a href="/infinity" layout="row" layout-align="start center"  class="pointer">
+        <span>&nbsp;&nbsp;</span>
+        <i class="material-icons light_grey_color">filter_list</i>
+        <md-option ng-value="2">Filters</md-option>
+    </a>
+</md-select>

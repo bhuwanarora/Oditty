@@ -1,7 +1,7 @@
 homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'bookService', 'ColorConstants', '$mdToast', function($scope, $rootScope, $timeout, bookService, ColorConstants, $mdToast){
 
     $scope.books_on_signup = function(){
-        var search_active = angular.isDefined($scope.search_tag) && angular.isDefined($scope.search_tag.book) && ($scope.search_tag.book != "");
+        var search_active = angular.isDefined($scope.search_tag) && angular.isDefined($scope.search_tag.book) && ($scope.search_tag.book != "") && ($scope.search_tag.book != null);
         if(!search_active){
             $scope.info.loading = true;
             var skip_count = $scope.popular_books.length;
@@ -103,8 +103,13 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
             left: false,
             right: true
         };
+        var books_timeout = $timeout(function(){
+            $scope.books_on_signup();
+        }, 100);
 
-        $scope.books_on_signup();
+        $scope.$on('destroy', function(){
+            $timeout.cancel(books_timeout);
+        });
     }());
 
 }]);

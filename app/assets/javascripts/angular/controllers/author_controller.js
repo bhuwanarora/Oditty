@@ -1,17 +1,13 @@
-homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'authorService', '$mdDialog', 'scroller', 'ColorConstants', '$filter', '$sce', '$rootScope', "scroller", "WebsiteUIConstants", function($scope, $location, $mdSidenav, authorService, $mdDialog, scroller, ColorConstants, $filter, $sce, $rootScope, scroller, WebsiteUIConstants){
-
-    $scope.show_buy_dialog = function(event, book){
-        $rootScope.active_book = book;
-        $mdDialog.show({
-            templateUrl: 'assets/angular/html/author/buy.html',
-            targetEvent: event
-        });
-        event.stopPropagation();
-    }
+homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'authorService', '$mdDialog', 'scroller', 'ColorConstants', '$filter', '$sce', '$rootScope', "scroller", "WebsiteUIConstants", '$timeout', 'sharedService', function($scope, $location, $mdSidenav, authorService, $mdDialog, scroller, ColorConstants, $filter, $sce, $rootScope, scroller, WebsiteUIConstants, $timeout, sharedService){
 
     $scope.toggle_follow = function(){
-        $scope.author.status = !$scope.author.status;
-        authorService.follow($scope.author.id, $scope.author.status);
+        if(angular.isDefined($scope.author.status)){
+            $scope.author.status = !$scope.author.status;
+            authorService.follow($scope.author.id, $scope.author.status);
+        }
+        else{
+            $mdSidenav('signup').toggle();
+        }
     }
 
     $scope.keypress_scroll = function(event){
@@ -21,6 +17,10 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         else if(event.keyCode == WebsiteUIConstants.KeyUp){
             $scope.active_index = $scope.previous_block($scope.active_index);
         }
+    }
+
+    $scope.show_book_dialog = function(book, event){
+        sharedService.show_book_dialog($rootScope, $scope, book, event);
     }
 
     $scope.next_block = function(index){
@@ -67,15 +67,27 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         event.stopPropagation();
     }
 
+    $scope.load_books = function(){
+        if($scope.data.selectedIndex == 0){
+            $scope.get_books();
+        }
+    }
+
     $scope.get_books = function(id){
         if(angular.isUndefined($scope.info.loading) || !$scope.info.loading){
             var _get_wiki_without_google_redirect = function(wiki_url){
-                $scope.author.wiki_url = wiki_url.substring(wiki_url.lastIndexOf("?q=")+3, wiki_url.lastIndexOf("&sa"));
+                if(wiki_url.indexOf("google") < 0){
+                    $scope.author.wiki_url = wiki_url;
+                }
+                else{
+                    $scope.author.wiki_url = wiki_url.substring(wiki_url.lastIndexOf("?q=")+3, wiki_url.lastIndexOf("&sa"));
+                }
             }
 
             if(angular.isUndefined(id)){
                 id = $scope.author.id;
             }
+
             $scope.info.loading = true;
             if(angular.isDefined($scope.author) && angular.isDefined($scope.author.books)){
                 var skip = $scope.author.books.length;
@@ -128,10 +140,18 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
     var _init = (function(){
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
         var id = regex.exec($location.absUrl())[2];
-        
+        if(angular.isUndefined($scope.info)){
+            $scope.info = {};
+        }
 
         $scope.active_index = 0;
-        $scope.get_books(id);
+        var books_timeout = $timeout(function(){
+            $scope.get_books(id);
+        }, 100);
+        $scope.$on('destroy', function(){
+            $timeout.cancel(books_timeout);
+        });
+
     }());
 
 }]);

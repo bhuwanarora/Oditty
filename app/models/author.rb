@@ -76,7 +76,11 @@ class Author < Neo
 	end
 
 	def self.basic_info
-		" author.name AS name, ID(author) AS id, author.wiki_url AS wiki_url, author.overview as overview, labels(author) AS label, author.location AS location  "
+		Author.primary_info + ", author.wiki_url AS wiki_url, author.overview as overview, labels(author) AS label, author.location AS location, author.books_count as books_count, author.is_interviewed AS is_interviewed "
+	end
+
+	def self.primary_info
+		" author.name AS name, ID(author) AS id "
 	end
 
 	def self.grouped_basic_info
@@ -91,11 +95,15 @@ class Author < Neo
 		" SET author.set_visted_count = COALESCE(author.visited_count,0) + 1 "
 	end
 
+	def self.social_info
+		" author.website_url AS website_url, author.facebook_url AS facebook_url, author.twitter_handle AS twitter_handle "
+	end
+
 	def get_details user_id
 		if user_id.present?
-			clause = match + Author.set_visted_count + " WITH author " + optional_match_books + Book.optional_match_published_year + ", author " + Author.order_by("year.year DESC") + Author.limit(Constant::Count::InitialBooksShownInAuthorPage) + User.new(user_id).match + ", author, book " + UsersAuthor.merged_viewed + ", book " + Bookmark::Type::IOwnThis.match(user_id) + ", author  WITH COLLECT({"+Book.grouped_basic_info+", description: book.description, own_status:ID(bookmark_node)}) AS books, author " + Author.match_user + ", books "  + Author.match_followers + ", books, ID(follows_node) AS status  WITH followers AS user, books, status, author LIMIT 10 " + Author.return_group(Author.basic_info,"books", "COLLECT({"+User.grouped_basic_info+"}) AS users", "status")
+			clause = match + Author.set_visted_count + " WITH author " + optional_match_books + Book.optional_match_published_year + ", author " + Author.order_by("year.year DESC") + Author.limit(Constant::Count::InitialBooksShownInAuthorPage) + User.new(user_id).match + ", author, book " + Bookmark::Type::IOwnThis.match(user_id) + ", author  WITH COLLECT({"+Book.grouped_basic_info+", description: book.description, own_status:ID(bookmark_node)}) AS books, author " + Author.match_user + ", books "  + Author.match_followers + ", books, ID(follows_node) AS status  WITH followers AS user, books, status, author LIMIT 10 " + Author.return_group(Author.basic_info, "books", "COLLECT({"+User.grouped_basic_info+"}) AS users", "status", Author.social_info)
 		else
-			clause = match + Author.set_visted_count + " WITH author " + Book.optional_match_published_year + ", author " + Author.order_by("year.year DESC") + Author.limit(Constant::Count::InitialBooksShownInAuthorPage) + " WITH COLLECT({"+Book.grouped_basic_info+", description: book.description}) AS books, author " + Author.match_followers + ", books WITH author, books, followers AS user LIMIT 10 " + Author.return_group(Author.basic_info, "books", "COLLECT({"+User.grouped_basic_info+"}) AS users")
+			clause = match + Author.set_visted_count + " WITH author " + optional_match_books +  Book.optional_match_published_year + ", author " + Author.order_by("year.year DESC") + Author.limit(Constant::Count::InitialBooksShownInAuthorPage) + " WITH COLLECT({"+Book.grouped_basic_info+", description: book.description}) AS books, author " + Author.match_followers + ", books WITH author, books, followers AS user LIMIT 10 " + Author.return_group(Author.basic_info, "books", "COLLECT({"+User.grouped_basic_info+"}) AS users", Author.social_info)
 		end
 		clause
 	end
@@ -117,7 +125,12 @@ class Author < Neo
 	end
 
 	def self.get_max_min_id
-		output = "MATCH (a:Author) RETURN max(ID(a)) as max_id,min(ID(a)) as min_id".execute[0]
-		[output["max_id"],output["min_id"]]
+		output = "MATCH (a:Author) RETURN max(ID(a)) as max_id, min(ID(a)) as min_id".execute[0]
+		[output["max_id"], output["min_id"]]
+	end
+
+
+	def get_interview_details
+		match + Author::Interview.optional_match_question + Author::Interview.new(@id).match_answer + Author.return_group(Author::Interview.basic_info)
 	end
 end

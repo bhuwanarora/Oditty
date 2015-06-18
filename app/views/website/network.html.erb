@@ -1,14 +1,13 @@
-<md-content ng-controller="networkController" id="network">
-    <div ng-include src="'/assets/angular/html/profile/_header.html'"></div>
-    <section layout="row" layout-wrap>
-        <div flex="15" hide-sm flex-md="10"></div>
-        <div flex="70" flex-sm="100" flex-md="80" layout="column"
-             ng-include src="'/assets/angular/html/network/_sub_header.html'">
-        </div>
-        <div flex="15" hide-sm 
-             flex-md="10"></div>
-    </section>
-</md-content>
+<div ng-include src="'/assets/angular/html/profile/_header.html'" class="md-whiteframe-z1"></div>
+<section layout="row" layout-wrap>
+    <div flex="15" hide-sm flex-md="10"></div>
+    <div flex="70" flex-sm="100" flex-md="80" layout="column"
+    	 class="feed_margin" 
+         ng-include src="'/assets/angular/html/network/_sub_header.html'">
+    </div>
+    <div flex="15" hide-sm 
+         flex-md="10"></div>
+</section>
 
 <script>
 //     (function(d, s, id){

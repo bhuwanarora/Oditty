@@ -31,7 +31,13 @@ module Api
 			end
 
 			def self.get_interesting_info book_id
-				Book.new(book_id).get_interesting_info.execute
+				output = Book.new(book_id).get_interesting_info.execute[0]
+				info_list = output["info"]
+				filtered_info = []
+				filtered_info = info_list.map{|element| {"id" => element["id"], "labels" => element["labels"], "data" => element["info"]["data"]}}
+				filtered_output = output
+				filtered_output["info"] = filtered_info
+				filtered_output
 			end
 
 			# def self.get_timeline id
@@ -122,8 +128,14 @@ module Api
 			end
 
 
-			def self.get_basic_book_details(id, user_id)
-				book = Book.new(id).get_display_info
+			def self.get_basic_feed_info(id)
+				book = Book.new(id).get_display_info.execute[0]
+				book
+			end
+
+			def self.get_primary_info id
+				book = Book.new(id).get_primary_info.execute[0]
+				book
 			end
 
 			def self.get_book_details(id, user_id=nil)
@@ -297,7 +309,7 @@ module Api
 			# end
 
 			# def self._get_basic_recommendations(filters, last_book)
-			# 	clause = "MATCH (book:Book) WHERE ID(book)="+last_book.to_s+" MATCH p=(book)-[:Next_book*..10]->(b) WITH last(nodes(p)) as b RETURN b.isbn, ID(b), b.external_thumb"
+			# 	clause = "MATCH (book:Book) WHERE ID(book)="+last_book.to_s+" MATCH p=(book)-[:NextBook*..10]->(b) WITH last(nodes(p)) as b RETURN b.isbn, ID(b), b.external_thumb"
 			# 	clause
 			# end
 
@@ -339,7 +351,7 @@ module Api
 			# 			relation = Constant::Label::LongReadRelation
 			# 		end
 			# 		init_match_clause = "MATCH (b:ActiveBook) WHERE ID(b)="+last_book.to_s+" "
-			# 		match_clause = "MATCH p=(b)-[:"+relation+"*..5]->(next_book) WITH last(nodes(p)) as book "
+			# 		match_clause = "MATCH p=(b)-[:"+relation+"*..5]->(NextBook) WITH last(nodes(p)) as book "
 			# 	else
 			# 		time_group = filters["other_filters"][Constant::Label::Year].split("(")[0].gsub(" " , "").downcase rescue ""
 			# 		if time_group.present?

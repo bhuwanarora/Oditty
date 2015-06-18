@@ -3,31 +3,25 @@
             layout="column" 
             flex-sm="100"
             flex-md="100">
-        <h3>{{book.title}}</h3>
-        <a ng-href="/author?q={{book.author_id}}">{{book.author_name}}</a>
-        <md-content class="summary">{{book.description}}</md-content>
-        <div flex="10">
-            <md-slider flex="20" md-discrete 
-                    class="rate_slider"
-                    ng-model="book.user_rating" ng-change="rate_book(book)"
-                    step="1" min="1" max="10" aria-label="rating">
-            </md-slider>
-            <md-tooltip>
-               Rate your book
-             </md-tooltip>
-        </div>
+        <md-content class="overview_container">
+            <h3>{{::book.title}}</h3>
+            <a ng-href="/author?q={{::book.author_id}}">{{::book.author_name}}</a>
+            <div class="summary">
+                {{::book.description}}
+            </div>
+        </md-content>
     </div>
     <div flex="5" hide-sm hide-md>
         <div class="vertical-text spine" 
              layout="row"
              layout-align="space-between">
-            <div>{{book.title}}({{book.published_year}})</div>
-            <div>{{book.author_name}}</div>
+            <div>{{::book.title}}</div>
+            <div>{{::book.author_name}}</div>
         </div>
     </div>
     <div flex="50" hide-sm class="relative" hide-md>
         <img ng-src="{{book | large_thumb}}" class="cover"/>
-        <div class="absolute" ng-style="{background: '{{book.color}}'}"></div>
+        <div class="absolute" ng-style="{background: '{{::book.color}}'}"></div>
     </div>
 </section>
 <style>
@@ -56,15 +50,17 @@
         font-family: 'Din';
         font-size: 18px;
         line-height: 24px;
-        height: 80% !important;
+    }
+
+    .overview_container{
         background-color: white !important;
     }
 
     .absolute{
-        position: absolute;
         z-index: 1;
         width: 100%;
         height: 88vh;
+        position: absolute;
         color: white;
         text-align: center;
     }

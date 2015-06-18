@@ -12,6 +12,7 @@ ReadersDoor::Application.configure do
   config.news_bucket = "rd-images"
   config.google_public_key = 'AIzaSyAV495wghmWMcTENY9CsrUpvVPzJpNOaxo'
   config.image_service = "http://52.10.230.9"
+  config.neo4j_server_port = 7474
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both thread web servers
   # and those relying on copy on write to perform better.
@@ -92,4 +93,6 @@ ReadersDoor::Application.configure do
     'basic_less.css',
     'full_control.css'
   ]
+
+  config.search_service_url = "http://109.237.26.43"
 end

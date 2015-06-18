@@ -37,26 +37,42 @@ angular.module('filtersApp', [])
         return function(input){
             var output = ""
             if(angular.isDefined(input)){
-                var book_label = input.labels.indexOf("Book") >= 0;
-                var author_label = input.labels.indexOf("Author") >= 0;
+                var book_label = (input.labels == 'Book') || (input.labels.indexOf("Book") >= 0);
+                var author_label = (input.labels == 'Author') || (input.labels.indexOf("Author") >= 0);
+                var user_label = input.labels == "User";
+                var blog_label = input.labels == "Blog";
+                var news_label = input.labels == "News";
+                var community_label = input.labels == "Community";
                 if(book_label){
                     output = "Book";
                 }
                 else if(author_label){
-                    output = "Author"
+                    output = "Author";
+                }
+                else if(blog_label){
+                    output = "Blog";
+                }
+                else if(user_label){
+                    output = "User";
+                }
+                else if(news_label){
+                    output = "News";
+                }
+                else if(community_label){
+                    output = "Community";
                 }
             }
             return output;
         }
     })
     .filter('default_profile', function(){
-      return function(input){
-        var output = input;
-        if(angular.isUndefined(input) || (input == "") || (input == null)){
-          output = "http://www.sessionlogs.com/media/icons/defaultIcon.png";
+        return function(input){
+            var output = input;
+            if(angular.isUndefined(input) || (input == "") || (input == null)){
+                output = "http://www.sessionlogs.com/media/icons/defaultIcon.png";
+            }
+            return output;
         }
-        return output;
-      }
     })
     .filter('first_two', function(){
         return function(input){
@@ -170,6 +186,15 @@ angular.module('filtersApp', [])
       }
       return output;
     };
+  })
+  .filter('author_small_thumb', function(){
+    return function(input){
+      var output = "";
+      if(angular.isDefined(input) && input){
+        output = "http://rd-authors.readersdoor.netdna-cdn.com/"+input+"/T.png"
+      }
+      return output;
+    }
   })
   .filter('choose_medium_thumb', function() {
     return function(input){

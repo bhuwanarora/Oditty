@@ -1,4 +1,4 @@
-homeApp.controller('searchPageController', ["$scope", "searchService", "$location", "ColorConstants", function($scope, searchService, $location, ColorConstants){
+homeApp.controller('searchPageController', ["$scope", "searchService", "$location", "ColorConstants", "sharedService", "$rootScope", function($scope, searchService, $location, ColorConstants, sharedService, $rootScope){
 
     $scope.show_all_results = function(search_text, type){
         if(angular.isUndefined($scope.info.loading) || !$scope.info.loading){
@@ -13,13 +13,17 @@ homeApp.controller('searchPageController', ["$scope", "searchService", "$locatio
                 angular.forEach(data, function(value){
                     if(value.labels.indexOf("Book") >= 0){
                         var random_int = Math.floor(Math.random() * ColorConstants.value.length);
-                        value = angular.extend(value, {"color": ColorConstants.value[random_int], "title": value.name});
+                        value = angular.extend(value, {"color": ColorConstants.value[random_int]});
                     }
                     this.push(value);
                 }, $scope.all_results)
                 $scope.info.loading = false;
             });
         }
+    }
+
+    $scope.show_book_dialog = function(book, event){
+        sharedService.show_book_dialog($rootScope, $scope, book, event);
     }
 
     $scope.reload_results = function(type){

@@ -1,79 +1,83 @@
-<md-content ng-controller="customiseController" class="white" flex="100">
-	<ng-switch on="data.selectedIndex" class="tabpanel-container">
-	    <div role="tabpanel"
-	         id="tab1-content"
-	         aria-labelledby="tab1"
-	         ng-switch-when="0"
-	         md-swipe-left="next()"
-	         md-swipe-right="previous()" >
-			<div ng-include src="'/assets/angular/html/customise/_info.html'" layout-padding></div>
-	    </div>
-	    <div role="tabpanel"
-	         id="tab2-content"
-	         aria-labelledby="tab2"
-	         ng-switch-when="1"
-	         md-swipe-left="next()"
-	         md-swipe-right="previous()">
-	        <div ng-include src="'/assets/angular/html/customise/_genres.html'" layout-padding></div>
-	    </div>
-	    <div role="tabpanel"
-	         id="tab3-content"
-	         aria-labelledby="tab3"
-	         ng-switch-when="2"
-	         md-swipe-left="next()"
-	         md-swipe-right="previous()" >
-	         <div ng-include src="'/assets/angular/html/customise/_books.html'" layout-padding></div>
-	    </div>
-	   <!--  <div role="tabpanel"
-	         id="tab4-content"
-	         aria-labelledby="tab4"
-	         ng-switch-when="3"
-	         md-swipe-left="next()"
-	         md-swipe-right="previous()" >
-	        <div ng-include src="'/assets/angular/html/customise/_authors.html'" layout-padding></div>
-	    </div> -->
-	</ng-switch>
-	<section layout="row" class="footer">
-		<div flex="15" flex-md="10" hide-sm></div>
-		<div class="md-whiteframe-z1" 
-				 flex="70"
-				 flex-md="80"
-				 flex-sm="100">
-			<md-progress-linear class="md-warn progress" 
-			            ng-value="data.selectedIndex*25"
-			            md-mode="buffer">
-			</md-progress-linear>
-		    <section layout="row">
-		        <md-button ng-click="previous()" class="footer_button"
-		        		aria-label=""
-		                ng-disabled="data.selectedIndex == 0"
-		                flex="50" layout="row" layout-align="start">
-		            <div><span class="icon-angle-left"></span></div>&nbsp;&nbsp;
+<ng-switch on="data.selectedIndex" class="customise_continaer feed_margin">
+    <div role="tabpanel"
+         id="tab1-content"
+         aria-labelledby="tab1"
+         ng-switch-when="0"
+         md-swipe-left="next()"
+         md-swipe-right="previous()" >
+		<div ng-include src="'/assets/angular/html/customise/_info.html'" layout-padding></div>
+    </div>
+    <div role="tabpanel"
+         id="tab2-content"
+         aria-labelledby="tab2"
+         ng-switch-when="1"
+         md-swipe-left="next()"
+         md-swipe-right="previous()">
+        <div ng-include src="'/assets/angular/html/customise/_genres.html'" layout-padding></div>
+    </div>
+    <div role="tabpanel"
+         id="tab3-content"
+         aria-labelledby="tab3"
+         ng-switch-when="2"
+         md-swipe-left="next()"
+         md-swipe-right="previous()" >
+         <div ng-include src="'/assets/angular/html/customise/_books.html'" layout-padding></div>
+    </div>
+   <!--  <div role="tabpanel"
+         id="tab4-content"
+         aria-labelledby="tab4"
+         ng-switch-when="3"
+         md-swipe-left="next()"
+         md-swipe-right="previous()" >
+        <div ng-include src="'/assets/angular/html/customise/_authors.html'" layout-padding></div>
+    </div> -->
+</ng-switch>
+<section layout="row" class="footer">
+	<div flex="15" flex-md="10" hide-sm></div>
+	<div class="md-whiteframe-z1" 
+			 flex="70"
+			 flex-md="80"
+			 flex-sm="100">
+		<md-progress-linear class="md-warn progress" 
+		            ng-value="data.selectedIndex*25"
+		            md-mode="buffer">
+		</md-progress-linear>
+	    <section layout="row">
+	        <div ng-click="previous()" class="footer_button pointer"
+	        		aria-label=""
+	                ng-disabled="data.selectedIndex == 0"
+	                flex="50">
+	            <section layout="row" layout-align="start center">
+		            <div layout-padding>
+		            	<i class="material-icons">navigate_before</i>
+		            </div>
 		            <div ng-switch on="data.selectedIndex">
 		                <div ng-switch-when="0"></div>
 		                <div ng-switch-when="1">Personal Info</div>
 		                <div ng-switch-when="2">Subjects that interest you</div>
 		                <div ng-switch-when="3">Select Books</div>
 		            </div>
-		        </md-button>
-		        <md-button ng-click="next()" class="footer_button"
-		        			aria-label=""
-		                    flex="50" layout="row" layout-align="end">
+	            </section>
+	        </div>
+	        <div ng-click="next()" class="footer_button pointer"
+	        			aria-label=""
+	                    flex="50" >
+	           	<section layout="row" layout-align="end center">
 		            <div ng-switch on="data.selectedIndex">
 		                <div ng-switch-when="0">Subjects that interest you</div>
 		                <div ng-switch-when="1">Select Books</div>
 		                <!-- <div ng-switch-when="2">Add favourite Writers and People</div> -->
 		                <div ng-switch-when="2" class="site_color">Go to Infinity</div>
-		            </div>&nbsp;&nbsp;
-		            <div><span class="icon-angle-right"></span></div>
-		        </md-button>
-		    </section>
-		</div>
-		<div flex="15" flex-md="10" hide-sm></div>
-	</section>
-	
-</md-content>
-
+		            </div>
+		            <div layout-padding>
+		            	<i class="material-icons">navigate_next</i>
+		            </div>
+	           	</section>
+	        </div>
+	    </section>
+	</div>
+	<div flex="15" flex-md="10" hide-sm></div>
+</section>
 <style>
 	.book_cover{
 		width: 130px;
@@ -117,4 +121,5 @@
 		color: white !important;
 		background-color: rgba(0, 0, 0, 0.39);
 	}
+
 </style>

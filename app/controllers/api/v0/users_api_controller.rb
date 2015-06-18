@@ -109,10 +109,14 @@ module Api
 			end
 
 			def get_user_details
-				if params[:id]
-					info = UserApi.get_relative_details(params[:id], session[:user_id])
+				if session[:user_id]
+					if params[:id]
+						info = UserApi.get_relative_details(params[:id], session[:user_id])
+					else
+						info = UserApi.get_details(session[:user_id])
+					end
 				else
-					info = UserApi.get_details(session[:user_id])
+					info = UserApi.get_details(params[:id])
 				end
 				render :json => info, :status => 200
 			end
@@ -205,7 +209,7 @@ module Api
 			end
 
 			def recommend
-				UserApi.recommend_book(session[:user_id], params[:friend_ids], params[:book_id])
+				UserApi.recommend_book(session[:user_id], params[:friends_id], params[:book_id])
 				render :json => {:message => "Success"}, :status => 200
 			end
 
@@ -396,6 +400,13 @@ module Api
 				user_id = session[:user_id]
 				remote_ip = request.remote_ip
 				info = Api::V0::UserApi.set_region(user_id, region, remote_ip).execute
+				render :json => info, :status => 200
+			end
+
+			def search_friends
+				user_id = session[:user_id]
+				search_text = params[:q]
+				info = Api::V0::UserApi.search_friends(user_id, search_text)
 				render :json => info, :status => 200
 			end
 		end

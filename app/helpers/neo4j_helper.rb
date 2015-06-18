@@ -47,7 +47,6 @@ module Neo4jHelper
 			t2 = Time.now
 			puts "#{year} #{t2-t1}"
 		end
-
 	end
 
 	def create_internal_nodes_for_an_year(node, year)
@@ -775,6 +774,13 @@ module Neo4jHelper
 
 	end
 
+	def create_linked_list
+		@neo ||= self.init
+		clause = "MATCH (book:Book) WITH book, toFloat(book.gr_rating)*toFloat(book.gr_ratings_count)*toFloat(book.gr_reviews_count) as weight ORDER BY weight DESC, toFloat(book.gr_rating) WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:NextBook]->(p2)))) WITH LAST(p) AS last, HEAD(p) AS head MERGE (last)-[:NextBook]->(head)"
+		puts "adding books in form of sorted linked lists...".green
+		@neo.execute_query clause
+	end
+
 	def self.restructure_database
 		# puts "Droping existing indexes...".green
 		@neo ||= self.init
@@ -786,7 +792,7 @@ module Neo4jHelper
 		# @neo.delete_schema_index("Era", "name")
 		# @neo.delete_schema_index("Genre", "name")
 		
-		clause = "MATCH (book:Book) WITH book, toFloat(book.gr_rating)*toFloat(book.gr_ratings_count)*toFloat(book.gr_reviews_count) as weight ORDER BY weight DESC, toFloat(book.gr_rating) WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:Next_book]->(p2)))) WITH LAST(p) AS last, HEAD(p) AS head MERGE (last)-[:Next_book]->(head)"
+		clause = "MATCH (book:Book) WITH book, toFloat(book.gr_rating)*toFloat(book.gr_ratings_count)*toFloat(book.gr_reviews_count) as weight ORDER BY weight DESC, toFloat(book.gr_rating) WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:NextBook]->(p2)))) WITH LAST(p) AS last, HEAD(p) AS head MERGE (last)-[:NextBook]->(head)"
 		puts "adding books in form of sorted linked lists...".green
 		@neo.execute_query clause
 
@@ -872,6 +878,13 @@ module Neo4jHelper
 		self.add_labels_to_existing_user
 	end
 
+	def self.set_bookshelf_label
+		clause = " MATCH (label:Label) WHERE label.key <> '" + Label.get_iownthis_key + "' AND label.key <> '" + Label.get_plantobuy_key + "' "\
+			" SET label" + Bookmark.get_articleshelf_string + " "\
+			" MATCH (label:Label) "\
+			" SET label" + Bookmark.get_bookshelf_string + " "
+		clause.execute
+	end
 
 	def self.remove_colon_from_indexed_fields
 		@neo ||= self.init
@@ -948,6 +961,18 @@ module Neo4jHelper
 		puts "deleting...".green
 		@neo.execute_query clause
 
+		# clause = "MATCH ()-[r:NextTinyRead]->() DELETE r"
+		# puts "deleting...".green
+		# @neo.execute_query clause
+
+		# clause = "MATCH ()-[r:NextSmallRead]->() DELETE r"
+		# puts "deleting...".green
+		# @neo.execute_query clause
+
+		# clause = "MATCH ()-[r:NextNormalRead]->() DELETE r"
+		# puts "deleting...".green
+		# @neo.execute_query clause
+
 		# clause = "MATCH (book:Book) WHERE toInt(book.page_count) <> 0 AND toInt(book.page_count) <= 50 WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight ORDER BY total_weight DESC, rating_weight DESC WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:NextTinyRead]->(p2))))"
 		# puts "adding tiny reads in form of sorted linked lists...".green
 		# @neo.execute_query clause
@@ -955,7 +980,6 @@ module Neo4jHelper
 		# clause = "MATCH (book:Book) WHERE book.page_count <> 0 AND toInt(book.page_count) > 50 AND toInt(book.page_count) < 100 WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight ORDER BY total_weight DESC, rating_weight DESC WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:NextSmallRead]->(p2))))"
 		# puts "adding Small reads in form of sorted linked lists...".green
 		# @neo.execute_query clause
-
 		
 		# clause = "MATCH (book:Book) WHERE book.page_count <> 0 AND toInt(book.page_count) > 100 AND toInt(book.page_count) < 250 WITH book, toFloat(book.gr_ratings_count) * toFloat(book.gr_reviews_count) * toFloat(book.gr_rating) AS total_weight, toFloat(book.gr_ratings_count) * toFloat(book.gr_rating) AS rating_weight ORDER BY total_weight DESC, rating_weight DESC WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:NextNormalRead]->(p2))))"
 		# puts "adding normal reads in form of sorted linked lists...".green
@@ -967,7 +991,7 @@ module Neo4jHelper
 
 		clause = "MATCH ()-[r1:WithReadingTime]->(:ReadTime) DELETE r1"
 		puts "Delete WithReadingTime relations...".green
-		@neo.execute_query clause	
+		@neo.execute_query clause
 	end
 
 	def self.delete_belongs_to_relationship_on_categories

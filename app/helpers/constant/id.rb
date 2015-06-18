@@ -1,17 +1,17 @@
 module Constant::Id
 	if Rails.env.development?
 		Admin						= [3952772, 4084079]
-		BestTinyRead				= 395910 #"thelosthero"
-		BestSmallRead				= 390072 #"thelittleprince"
-		BestNormalRead				= 1171520 #"harrypotterandthephilosophersstone"
-		BestLongRead				= 395153 #"thehungergames"
-		BestBook					= 395153 #"thehungergames"
+		BestTinyRead				= 1250445 #"thelosthero"
+		BestSmallRead				= 390687 #"thelittleprince"
+		BestNormalRead				= 1171519 #"harrypotterandthephilosophersstone"
+		BestLongRead				= 395152 #"thehungergames"
+		BestBook					= 395152 #"thehungergames"
 		BestGrid					= 2594148
 	else
 		Admin						= [4084079, 4105710]
-		BestTinyRead				= 395910 #"thelosthero"
-		BestSmallRead				= 390071 #"thelittleprince"
-		BestNormalRead				= 1171522 #"harrypotterandthephilosophersstone"
+		BestTinyRead				= 1250445 #"thelosthero"
+		BestSmallRead				= 390687 #"thelittleprince"
+		BestNormalRead				= 1171519 #"harrypotterandthephilosophersstone"
 		BestLongRead				= 395152 #"thehungergames"
 		BestBook					= 395152 #"thehungergames"
 		BestGrid					= 2594148

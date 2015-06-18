@@ -1,4 +1,4 @@
-homeApp.service('authorService', ["$http", "$q", "$rootScope", "WebsiteUIConstants", function ($http, $q, $rootScope, WebsiteUIConstants){
+homeApp.service('authorService', ["$http", "$q", "$rootScope", "WebsiteUIConstants", "base_url", "search_service_url", function ($http, $q, $rootScope, WebsiteUIConstants, base_url, search_service_url){
 	
     var _user_id = function(){
         if(angular.isDefined($rootScope.reader)){
@@ -11,7 +11,7 @@ homeApp.service('authorService', ["$http", "$q", "$rootScope", "WebsiteUIConstan
     }
 
     this.search_authors = function(data){
-        return _deferred_request('/api/v0/search?q='+data+"&type=Author", $q, $http);
+        return _deferred_request('/api/v0/search?q='+data+"&type=Author", $q, $http, search_service_url);
     }
 
     this.get_popular_authors = function(skip_count){
@@ -24,6 +24,14 @@ homeApp.service('authorService', ["$http", "$q", "$rootScope", "WebsiteUIConstan
 
     this.follow = function(id, status){
         return _deferred_request('/api/v0/follow_author?id='+id+'&status='+status, $q, $http);
+    }
+
+    this.get_interview_details = function(id){
+        return _deferred_request('/api/v0/author_interview?id='+id, $q, $http);
+    }
+
+    this.get_basic_info = function(id){
+        return _deferred_request('/api/v0/author_basic_info?id='+id, $q, $http);
     }
 
 }]);

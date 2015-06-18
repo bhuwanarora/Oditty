@@ -1,12 +1,11 @@
-<div layout="row" flex ng-if="info.show_share">
-	<!-- <img class="circular user_image" ng-src="{{user.image_url | default_profile}}"/> -->
-	<div layout="column" class="input_container">
-		<md-input-container layout-margin 
+<div layout="row" flex ng-if="info.show_share || info.embed_share" id="textbox">
+	<div layout="column" class="input_container" flex>
+		<md-input-container layout-padding layout-margin
 			style="font-family: 'Inconsolata', 'Courier New', serif;" 
 			class="textarea_container">
 	        <textarea name="text_area"
 	        		  ng-keypress="play_type_key($event)" 
-	        		  set-focus="info.show_share" 
+	        		  set-focus="info.show_share || info.embed_share" 
 	        		  ng-keydown="handle_text_input($event)"
 	        		  placeholder="Share your reading journey..." 
 	        		  ng-model="info.status">
@@ -14,3 +13,40 @@
 	    </md-input-container>
 	</div>
 </div>
+<style>
+	#textbox md-input-container.md-icon-float>label{
+		margin-left: 0px;
+	}
+
+	#textbox textarea,
+	#textbox .textarea_wrapper{
+		font-size: 0.9em;
+		font-family: 'Inconsolata', 'Courier New', serif;
+		/*line-height: 45px !important;*/
+		/*height: 55px !important;*/
+		/*padding-left: 75px !important;*/
+	    /*overflow: hidden;
+	    padding: 0;
+	    outline: none;
+	    resize: none;*/
+	}
+
+	#textbox .textarea_wrapper{
+		position: absolute;
+		cursor: url('http://www.i2symbol.com/images/symbols/geometry/white_small_square_u25AB_icon_256x256.png');
+	}
+
+	#textbox .textarea_wrapper a{
+		background-color: #FFFF00;
+		font-weight: 600;
+	}
+
+	#textbox .textarea_container{
+	    /*height: 60vh;
+	    vertical-align: bottom;
+	    display: table-cell;*/
+	    border: 1px solid #D8D8D8;
+  		margin-top: 10px;
+  		background-color: #FCFCFC;
+	}
+</style>

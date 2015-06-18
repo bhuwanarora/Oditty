@@ -1,49 +1,46 @@
-<md-list layout="row" hide-sm>
-	<div flex>
-		<div ng-repeat="feed in personal_feed" ng-if="$even">
-		    <div ng-include src="'/assets/angular/html/profile/partials/feed_type.html'"></div>
-		</div>
-	</div>
-	<div flex>
-		<div ng-if="reading_journeys" class="white">
-			<b class="small-padding">{{user.first_name}}'s Reading Journey</b>
-			<md-divider></md-divider>
-			<md-card ng-repeat="reading_journey in reading_journeys">
-				<section layout="column" layout-fill>
-					<img ng-src="{{reading_journey.image}}" class="full_width">
-					<a ng-href="/journey/{{reading_jounrey.id}}" layout="column">
-						<md-button class="clear full_width">
-							<div class="small-padding">
-								<b>{{reading_journey.title}}</b>
-								<div>by {{reading_journey.author_name}}</div>
-								RATING
-							</div>
-							<md-divider></md-divider>
-							<div class="small-padding">
-								<B>STARTED ON</B>
-								<div>{{reading_journey.started_on}}</div>
-							</div>
-						</md-button>
-					</a>
-				</section>
-			</md-card>
-		</div>
-		<div ng-repeat="feed in personal_feed" ng-if="$odd">
-		    <div ng-include src="'/assets/angular/html/profile/partials/feed_type.html'"></div>
-		</div>
-	</div>
-</md-list>
-<md-list layout="column" show-sm hide>
+<div ng-include src="'/assets/angular/html/share/status_options.html'" 
+	ng-if="!hide_follow_links"
+  	ng-controller="shareController" class="dark_grey extensive_padding" 
+  	layout-margin>
+</div>
+
+<!-- <div ng-include src="'/assets/angular/html/customise/_genres.html'" layout-padding></div> -->
+<md-list layout="column">
+	
 	<div ng-repeat="feed in personal_feed">
 	    <div ng-include src="'/assets/angular/html/profile/partials/feed_type.html'"></div>
+	    <md-divider></md-divider>
 	</div>
-</md-list>
-<md-list ng-if="!personal_feed || (personal_feed == 0)">
-	<md-card>
-		<md-card-content>
-			No recent activity.
-		</md-card-content>
-	</md-card>
+	<div ng-if="reading_journeys" class="white">
+		<b class="small-padding">{{user.first_name}}'s Reading Journey</b>
+		<md-divider></md-divider>
+		<md-card ng-repeat="reading_journey in reading_journeys">
+			<section layout="column" layout-fill>
+				<img ng-src="{{reading_journey.image}}" class="full_width">
+				<a ng-href="/journey/{{reading_jounrey.id}}" layout="column">
+					<md-button class="clear full_width">
+						<div class="small-padding">
+							<b>{{reading_journey.title}}</b>
+							<div>by {{reading_journey.author_name}}</div>
+							RATING
+						</div>
+						<md-divider></md-divider>
+						<div class="small-padding">
+							<B>STARTED ON</B>
+							<div>{{reading_journey.started_on}}</div>
+						</div>
+					</md-button>
+				</a>
+			</section>
+		</md-card>
+		<md-list ng-if="!personal_feed || (personal_feed == 0)">
+			<md-card>
+				<md-card-content>
+					No recent activity.
+				</md-card-content>
+			</md-card>
+		</md-list>
+	</div>
 </md-list>
 
 

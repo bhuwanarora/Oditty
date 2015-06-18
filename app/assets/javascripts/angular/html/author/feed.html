@@ -1,0 +1,20 @@
+<md-list layout-wrap layout="column">
+    <div flex ng-repeat="book in author.books" >
+        <div layout-padding>
+            <md-list-item  class="md-3-line">
+                <img ng-src="{{author.id | author_thumb}}" 
+                    class="circular"/>
+                <div>&nbsp;&nbsp;</div>
+                <div layout="column" layout-padding class="md-list-item-text side_padding">
+                    <div class="less_important">
+                        {{::book.published_year}}
+                    </div>
+                    <div>Published <a ng-href="/book?id={{book.id || book.book_id}}" class="big_title bold">
+                        {{::book.title}}
+                    </a></div>
+                </div>
+            </md-list-item>
+        </div>
+        <md-divider></md-divider>
+    </div>
+</md-list>

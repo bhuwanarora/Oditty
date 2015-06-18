@@ -117,10 +117,6 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         }
     }
 
-    this.news_visited = function(id){
-        return _deferred_request('/api/v0/news_visited?id='+id, $q, $http);
-    }
-
     this.follow = function(id, status){
         return _deferred_request('/api/v0/follow?id='+id+"&status="+status, $q, $http);
     }
@@ -142,6 +138,10 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
     
     this.suggest_communities = function(){
         return _deferred_request('/api/v0/suggest_communities', $q, $http);
+    }
+
+    this.recommend = function(friends_id, book_id){
+        return _deferred_request('/api/v0/recommend?friends_id='+friends_id+'&book_id='+book_id, $q, $http);
     }
 
 }]);

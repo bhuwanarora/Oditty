@@ -11,7 +11,9 @@ class WebsiteController < ApplicationController
 	end
 
 	def webhooks
-		email_params = {:email => Constant::EmailTemplate::Admin, :template => Constant::EmailTemplate::Webhooks, :params => params}
+		email_params = {:email => Constant::EmailTemplate::Admin, 
+				:template => Constant::EmailTemplate::Webhooks, 
+				:params => params}
 		SubscriptionMailer.webhooks(email_params).deliver
 		render :json => {:message => "Success"}, :status => 200
 	end
@@ -45,7 +47,7 @@ class WebsiteController < ApplicationController
 		render :layout => "clean"
 	end
 
-	def landing_page
+	def how_it_works
 		render :layout => "landing_page"
 	end
 
@@ -54,7 +56,7 @@ class WebsiteController < ApplicationController
 		cookies.delete :logged
 		session.clear
 		@signup = true
-		render :layout => "landing_page"
+		render :home, :layout => "material_home"
 	end
 
 	def jobs
@@ -74,30 +76,20 @@ class WebsiteController < ApplicationController
 	end
 
 
-	### WEBSITE NEW 
-	def home
+	def newsfeed_news_communities
 		session[:news_day_skip_count] = 0
 		session[:news_skip_count] = 0
+		@news_group = true
+		render :layout => "material"	
+	end
 
-		unless session[:user_id]
-			cookies[:logged] = nil
-			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
-			redirect_to :controller => 'website', :action => 'signup' 			
-		else
-			@home = true
-			render :layout => "material" 
-		end
+	### WEBSITE NEW 
+	def news_group
+		newsfeed_news_communities
 	end
 
 	def communities
-		unless session[:user_id]
-			cookies[:logged] = nil
-			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
-			redirect_to :controller => 'website', :action => 'signup'			
-		else
-			@home = true
-			render :layout => "material"
-		end
+		newsfeed_news_communities
 	end
 
 	def blogs
@@ -106,20 +98,15 @@ class WebsiteController < ApplicationController
 			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
 			redirect_to :controller => 'website', :action => 'signup'			
 		else
-			@home = true
+			@blogs = true
+			@news_group = true
 			render :layout => "material"
 		end
 	end
 
 	def infinity
-		unless session[:user_id]
-			cookies[:logged] = nil
-			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
-			redirect_to :controller => 'website', :action => 'signup'			
-		else
-			@infinity = true
-			render :layout => "material"
-		end
+		@infinity = true
+		render :layout => "material"
 	end
 
 	def search
@@ -133,13 +120,13 @@ class WebsiteController < ApplicationController
 		end
 	end
 
-	def room
+	def shelves
 		unless session[:user_id]
 			cookies[:logged] = nil
 			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
 			redirect_to :controller => 'website', :action => 'signup'			
 		else
-			@room = true
+			@shelves = true
 			render :layout => "material"
 		end
 	end
@@ -148,7 +135,7 @@ class WebsiteController < ApplicationController
 		@book = true
 		puts "in book".green
 		if BotDetector.detect request.env['HTTP_USER_AGENT']
-			id = params[:q]
+			id = params[:q] || params[:id]
 			puts "bot_incoming".red
 			@info = Book.new(id).get_basic_info.execute[0]
 			@info["original_url"] = request.original_url
@@ -167,14 +154,8 @@ class WebsiteController < ApplicationController
 	end
 
 	def profile
-		unless session[:user_id]
-			cookies[:logged] = nil
-			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
-			redirect_to :controller => 'website', :action => 'signup'			
-		else
-			@profile = true
-			render :layout => "material"
-		end
+		@profile = true
+		render :layout => "material"
 	end
 
 	def network
@@ -212,7 +193,7 @@ class WebsiteController < ApplicationController
 	def author
 		@author = true
 		if BotDetector.detect(request.env['HTTP_USER_AGENT'])
-			author_id = params[:q]
+			author_id = params[:q] || params[:id]
 			user_id = nil
 			puts "bot_incoming".red
 			@info = Author.new(author_id).get_basic_info.execute[0]
@@ -227,9 +208,11 @@ class WebsiteController < ApplicationController
 		end
 	end
 
-	def community
-		@community = true
+	def room
+		@room = true
 		if BotDetector.detect(request.env['HTTP_USER_AGENT'])
+			id = params[:id] || params[:q]
+			@info = Community.new(id).get_basic_info.execute[0]
 			render :layout => "social"
 		else
 			user_id = session[:user_id]
@@ -240,7 +223,7 @@ class WebsiteController < ApplicationController
 	def news
 		@news = true
 		if BotDetector.detect request.env['HTTP_USER_AGENT']
-			id = params[:q]
+			id = params[:q] || params[:id]
 			puts "bot_incoming".red
 			@info = News.new(id).get_basic_info.execute[0]
 			@info["meta_type"] = "readersdoor:news"
@@ -251,6 +234,31 @@ class WebsiteController < ApplicationController
 			user_id = session[:user_id]
 			render :layout => "material"
 		end	
+	end
+
+	def personalised_suggestions
+		unless session[:user_id]
+			cookies[:logged] = nil
+			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
+			redirect_to :controller => 'website', :action => 'signup'			
+		else
+			@personalised_suggestions = true
+			render :layout => "material"
+		end
+	end
+
+	def home
+		@home = true
+		render :layout => "material_home"
+	end
+
+	def publishers
+		@publishers = true
+		render :layout => "material"
+	end
+
+	def help
+		render :layout => "material_clean"
 	end
 
 end

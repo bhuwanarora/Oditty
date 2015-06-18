@@ -9,19 +9,25 @@
         <meta property="og:image" content="https://fbcdn-sphotos-f-a.akamaihd.net/hphotos-ak-xfp1/t31.0-8/s2048x2048/10928967_401263720044504_3799751116430229659_o.jpg" />
         <meta property="og:description" content="ReadersDoor is a global community for book readers, where we intend to enrich and enhance users’ reading experience by focusing on virtualisation and idealisation of their real life interactions and experiences." />
         <meta property="fb:app_id" content="667868653261167"/>
+
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
         <meta charset="utf-8" />
+
         <title>ReadersDoor</title>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="icon" type="image/png" href="assets/favicon.png">
         <script>document.write('<base href="' + document.location + '" />');</script>
         <!-- <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,100italic,400italic|Roboto+Condensed&amp;lang=en' rel='stylesheet' type='text/css'> -->
+
         <% if Rails.env.development? %>
+            <!-- <link rel="stylesheet" href="assets/material_icons.css" /> -->
             <link rel="stylesheet" href="assets/angular_material.css" />
             <link rel="stylesheet" href="assets/website/website.css" />
             <link rel="stylesheet" href="assets/website/icomoon.css" />
             <link rel="stylesheet" href="assets/website/home.css" />
             <link rel="stylesheet" href="assets/website/media_library.css" />
+            <link rel="stylesheet" type="text/css" href="assets/website/animation.css" >
             <script src='assets/min/angular/vendors/angular.min.js'></script>
             <script src='assets/min/angular/vendors/angular_messages.min.js'></script>
             <script src="assets/angular/vendors/hammer.js"></script>
@@ -39,13 +45,14 @@
             <script src='assets/min/angular/vendors/angular_filters.min.js'></script>
             <script src="assets/min/angular/vendors/angular-parallax.min.js"></script>
 
-            <script src="assets/angular/services/third_party/d3_service.js"></script>
+            <!-- // <script src="assets/angular/services/third_party/d3_service.js"></script> -->
             <script src="assets/angular/vendors/angular-parallax.min.js"></script>
             <script src="assets/angular/vendors/angular_sticky.js"></script>
             
             <script src="assets/angular/apps/filters_app.js"></script>
             <script src="assets/angular/apps/home_app.js"></script>
             <script src="assets/angular/apps/app_constants.js"></script>
+            <script src="assets/angular/constants/development.js"></script>
             <script src="assets/angular/services/user_service.js"></script>
             <script src="assets/angular/services/genre_service.js"></script>
             <script src="assets/angular/services/book_service.js"></script>
@@ -78,25 +85,45 @@
             <script src="assets/angular/services/status_service.js"></script>
             <script src="assets/angular/services/feed_service.js"></script>
 
-            <% if (@news || @home || @profile)%>
-                <script src="assets/angular/vendors/jquery.min.js"></script>
-                <script src="assets/angular/vendors/d3.min.js"></script>
-                <script src="assets/angular/vendors/bubble_chart/d3_transform.js"></script>
-                <script src="assets/angular/vendors/bubble_chart/extarray.js"></script>
-                <script src="assets/angular/vendors/bubble_chart/misc.js"></script>
-                <script src="assets/angular/vendors/bubble_chart/micro-observer.js"></script>
-                <script src="assets/angular/vendors/bubble_chart/microplugin.js"></script>
-                <script src="assets/angular/vendors/bubble_chart/bubble-chart.js"></script>
-                <script src="assets/angular/vendors/bubble_chart/central-click.js"></script>
-                <script src="assets/angular/vendors/bubble_chart/lines.js"></script>
-                <script src="assets/angular/directives/d3_directives.js"></script>
+            <% if (@news || @news_group)%>
+                 <!-- <script src="assets/angular/vendors/jquery.min.js"></script>
+                // <script src="assets/angular/vendors/d3.min.js"></script>
+                // <script src="assets/angular/vendors/bubble_chart/d3_transform.js"></script>
+                // <script src="assets/angular/vendors/bubble_chart/extarray.js"></script>
+                // <script src="assets/angular/vendors/bubble_chart/misc.js"></script>
+                // <script src="assets/angular/vendors/bubble_chart/micro-observer.js"></script>
+                // <script src="assets/angular/vendors/bubble_chart/microplugin.js"></script>
+                // <script src="assets/angular/vendors/bubble_chart/bubble-chart.js"></script>
+                // <script src="assets/angular/vendors/bubble_chart/central-click.js"></script>
+                // <script src="assets/angular/vendors/bubble_chart/lines.js"></script>
+                // <script src="assets/angular/directives/d3_directives.js"></script> -->
             <% end %>
 
             
-            <% if @home %>
+            <% if @news_group %>
                 <script src="assets/angular/services/news_service.js"></script>
                 <script src="assets/angular/directives/home_directives.js"></script>
-                <script src="assets/angular/controllers/home/home_controller.js"></script>
+                <script src="assets/angular/controllers/home/feed_controller.js"></script>
+            <% end %>
+
+            <div ng-if="info.hide_signin">
+                <script src='assets/angular/services/website_service.js'></script>
+                <script src="assets/angular/controllers/signup_controller.js"></script>
+            </div>
+
+            <% if @home || @signup %>
+                <script src="assets/angular/controllers/home_controller.js"></script>
+
+            <% end %>
+
+            <% if @publishers %>
+                <script src='assets/angular/services/publishers_service.js'></script>
+                <script src='assets/angular/controllers/publishers_controller.js'></script>
+            <% end %>
+
+            <% if @personalised_suggestions %>
+                <script src="assets/angular/services/news_service.js"></script>
+                <script src="assets/angular/controllers/personalised_controller.js"></script>
             <% end %>
 
             <% if @network %>
@@ -109,7 +136,7 @@
                 <script src="assets/angular/controllers/news_controller.js"></script>
             <% end %>
 
-            <% if @community %>
+            <% if @room %>
                 <script src="assets/angular/services/news_service.js"></script>
                 <script src="assets/angular/controllers/community_controller.js"></script>
             <% end %>
@@ -134,20 +161,21 @@
                 <script src="assets/angular/controllers/library/filters_controller.js"></script>
             <% end %>
 
-            <% if @room %>
+            <% if @shelves %>
                 <script src="assets/angular/directives/room_directives.js"></script>
                 <script src="assets/angular/services/room_service.js"></script>
                 <script src="assets/angular/controllers/room/room_controller.js"></script>
             <% end %>
 
             <% if @author %>
+                <script src="assets/angular/directives/author_directives.js"></script>
                 <script src="assets/angular/controllers/author_controller.js"></script>
             <% end %>
 
             <% if @profile %>
                 <script src="assets/angular/directives/profile_directives.js"></script>
                 <script src="assets/angular/services/news_service.js"></script>
-                
+                <script src="assets/angular/controllers/customise/genres_controller.js"></script>
                 <script src="assets/angular/controllers/profile_controller.js"></script>
                 
             <% end %>
@@ -160,12 +188,28 @@
             <link rel="stylesheet" href="assets/min/site.min.css" />
             <script src="assets/min/angular/site.min.js"></script>
 
-            <% if (@news || @home || @profile)%>
-                <script src="assets/min/angular/d3_group.min.js"></script> 
+            <% if (@news || @news_group)%>
+                <!-- // <script src="assets/min/angular/d3_group.min.js"></script>  -->
             <% end %>
 
-            <% if @home %>
+            <div ng-if="info.hide_signin">
+                <script src="assets/min/angular/controllers/signin_group.min.js"></script>
+            </div>
+            
+            <% if @home || @signup %>
                 <script src="assets/min/angular/controllers/home_group.min.js"></script>
+            <% end %>
+
+            <% if @news_group %>
+                <script src="assets/min/angular/controllers/news_group_group.min.js"></script>
+            <% end %>
+
+            <% if @personalised_suggestions %>
+                <script src="assets/min/angular/controllers/personalised_group.min.js"></script>
+            <% end %>
+
+            <% if @publishers %>
+                <script src="assets/min/angular/controllers/publishers_group.min.js"></script>
             <% end %>
 
             <% if @network %>
@@ -176,7 +220,7 @@
                 <script src="assets/min/angular/controllers/news_group.min.js"></script>
             <% end %>
 
-            <% if @community %>
+            <% if @room %>
                 <script src="assets/min/angular/controllers/community_group.min.js"></script>
             <% end %>
 
@@ -192,7 +236,7 @@
                 <script src="assets/min/angular/controllers/infinity_group.min.js"></script>
             <% end %>
 
-            <% if @room %>
+            <% if @shelves %>
                 <script src="assets/min/angular/controllers/room_group.min.js"></script>
             <% end %>
 
@@ -211,7 +255,7 @@
     </head>
 
     <body ng-controller="appController" ng-keydown="scroll_on_keypress($event)" 
-        class="<% if (@news || @infinity || @book) %>white<% end %>" ng-click="close_popups()" 
+         ng-click="close_popups()" 
         msd-wheel="close_popups()">
         <script>
           // (function() {
@@ -229,139 +273,59 @@
         <div layout="column" layout-fill>
             <!-- <div ng-include src="'/assets/angular/html/shared/header.html'"></div> -->
 
-            <md-toolbar md-scroll-shrink class="md-whiteframe-z1 header <% if !@infinity %>'no_shadow'<% end %>">
-                <section layout="row" layout-wrap>
-                    <div flex="20" flex-sm="35" layout="row" layout-align="start center">
-                        <md-button ng-show="info.mobile_search" class="burger padding <% if (@book || @news || @infinity) %>white<% end %>" ng-click="toggleLeft($event)">
-                            <a><span class="icon-menu2"></span></a>
-                        </md-button>
-                        <div ng-show="info.mobile_search" 
-                             layout-align-lg="center center">
-                            <a class="logo" href="/infinity">
-                                <img src="assets/rd_icon.png"/>
 
-                                <span hide-sm hide-md ng-hide="<%= @signup %>">ReadersDoor</span>
-                                
-                            </a>
+            <% if @home %>
+                <md-content class="white" flex ng-controller="homeController">
+            <% elsif @personalised_suggestions %>
+                <md-content ng-controller="personalisedController">
+            <% elsif @network %>
+                <md-content ng-controller="networkController" id="network" check-scroll-bottom="load_users()">
+            <% elsif @news %>
+                <md-content layout="column" ng-controller="newsController" id="news">
+            <% elsif @news_group && !@blogs %>
+                <md-content ng-controller="feedController" check-scroll-bottom="get_community_feed()" id="home" class="white">
+            <% elsif @blogs && @news_group %>
+                <md-content layout="row" layout-wrap ng-controller="feedController" 
+                    check-scroll-bottom="get_blog_feed()" id="home">
+            <% elsif @signup %>
+                <md-content class="white" flex ng-controller="homeController">
+            <% elsif @room %>
+                <md-content ng-controller="communityController" id="community" class="white">
+            <% elsif @infinity %>
+                <md-content ng-controller="libraryController" 
+                    check-scroll-bottom="get_popular_books()" ng-model="info" id="infinity_page">
+            <% elsif @shelves %>
+                <md-content ng-controller="roomController">
+            <% elsif @author %>
+                <md-content ng-controller="authorController" layout="row" layout-wrap class="white"
+                    check-scroll-bottom="load_books()" ng-keydown="keypress_scroll($event)">
+            <% elsif @profile %>
+                <md-content ng-controller="profileController" check-scroll-bottom="get_feed()" class="white">
+            <% elsif @search %>
+                <md-content layout="row" layout-wrap ng-controller="searchPageController" check-scroll-bottom="show_all_results()">
+            <% elsif @book %>
+                <md-content class="white" ng-controller="specificBookController" class="white">
+            <% elsif @customise %>
+                <md-content ng-controller="customiseController" class="white" flex="100">
+            <% elsif @publishers %>
+                <md-content ng-controller="publishersController">
+            <% end %>
+                    <div ng-show="info.mobile_search" flex>
+                        <div class="header <% if @profile || @shelves || @network %>yellow<% end %>">
+                            <% if @home || @signup %>
+                                <div ng-include src="'/assets/angular/html/shared/home_header.html'"></div>
+                            <% else %>
+                                <div ng-include src="'/assets/angular/html/shared/header.html'"></div>
+                            <% end %>
+                            <% unless @home || @profile || @network || @infinity || @signup || @publishers || @news_group %>
+                                <div ng-include src="'/assets/angular/html/shared/share.html'"></div>
+                            <% end %>
+                        </div>
+                        <div ng-hide="info.show_share || info.show_book_share">
+                            <%= yield %>
                         </div>
                     </div>
-                    <div flex="50" flex-md="45" 
-                         ng-controller="searchController"
-                         flex-sm="10" 
-                         layout="row" 
-                         layout-align="end center" 
-                         layout-align-sm="start center">
-                        <md-button ng-click="show_search_bar()" 
-                                   ng-show="info.mobile_search" show-sm hide>
-                            <span class="icon-search"></span>
-                        </md-button>
-                        <!-- <div hide-sm class="search_icon">
-                            <span class="icon-search"></span>
-                        </div> -->
-                        <!-- md-items="item in info.genres | filter:search_tag.genre" -->
-                        <md-autocomplete md-selected-item="selected_item_search"
-                                        md-search-text="search_text"
-                                        md-items="item in search_results"
-                                        md-search-text-change="query_search(search_text)"
-                                        md-selected-item-change="on_select(item)"
-                                        md-item-text="item.name"
-                                        md-min-length="2"
-                                        class="search"
-                                        hide-sm
-                                        flex="85"
-                                        ng-click="stop_propagation($event)"
-                                        md-floating-label="Search books, topics and more...">
-                            <md-item-template>
-                                <div layout="row" layout-align="space-between">
-                                    <div layout="row" flex="90">
-                                        <img ng-src="{{item.isbn | small_thumb}}" ng-show="item.isbn" class="search_thumb" />
-                                        <div>&nbsp;</div>
-                                        <div ng-bind-html="item.name || item.title" ></div>
-                                        <div class="less_important" ng-show="item.author_name">
-                                            <span>&nbsp;by </span>
-                                            <span ng-bind-html="item.author_name"></span>
-                                        </div>
-                                    </div>
-                                    <div flex="10" layout="row" layout-align="space-between">
-                                        <div></div>
-                                        <div ng-bind-html="item | search_item_type"></div>
-                                    </div>
-                                </div>
-                            </md-item-template>
-                            <md-not-found>
-                                No matches found.
-                            </md-not-found>
-                        </md-autocomplete>
-                    </div>
-                    <div layout="row" layout-align="center center" flex="10" flex-md="15" flex-sm="20">
-                        <a href="/communities" ng-show="info.mobile_search" class="library">
-                            <md-button>
-                                Communities
-                            </md-button>
-                        </a>
-                    </div>
-                    <div flex="20" flex-sm="35" layout="row" layout-align="end center">
-                        <a href="/room" ng-show="info.mobile_search">
-                            <md-button class="small-padding">
-                                <span class="icon-books"></span>
-                                <md-tooltip >
-                                    Room
-                                </md-tooltip>
-                            </md-button>
-                        </a>
-                        <md-button ng-show="info.mobile_search" class="small-padding" 
-                            ng-click="toggle_notifications($event)">
-                            <span class="icon-bell"></span>
-                            <md-tooltip >
-                                Notifications
-                            </md-tooltip>
-                        </md-button>
-                        <a href="/profile" ng-show="info.mobile_search">
-                            <md-button class="profile_link">
-                                <img ng-src="{{user.image_url | default_profile}}" 
-                                    class="circular">
-                                    <md-tooltip >
-                                        Profile
-                                    </md-tooltip>
-                            </md-button>
-                        </a>
-                    </div>
-                    <div layout="row" layout-align="center center" 
-                            ng-hide="info.mobile_search" layout-fill layout-padding hide-md hide-lg>
-                        <md-button flex="10" ng-click="show_search_bar()" hide-md hide-lg class="md-button-clear">
-                            <span class="icon-angle-left"></span>
-                        </md-button>
-                        <md-autocomplete
-                            md-selected-item="selectedItem1"
-                            md-search-text="searchText"
-                            md-items="item in querySearch(searchText)"
-                            md-item-text="display"
-                            class="search"
-                            flex="90" hide-md hide-lg
-                            placeholder="Search books, topics and more...">
-                            <span md-highlight-text="searchText" ng-bind-html="item.display"></span>
-                        </md-autocomplete>
-                    </div>
-                </section>
-            </md-toolbar>
-
-            <div ng-show="info.mobile_search">
-                <%= yield %>
-            </div>
-            
-            
-            <div ng-controller="shareController" ng-show="info.mobile_search">
-                <md-button class="md-warn md-fab md-whiteframe-z3 md-fab-bottom-right animate-fast fixed_share "
-                            ng-hide="active_shelf || info.show_share"
-                            aria-label="Share reading journey"
-                            ng-click="show_share_page($event)"
-                            ng-style="type_icon_pressed">
-                    <span class="icon-book-alt2"></span>
-                    <md-tooltip md-direction="left">
-                          Share your reading journey
-                    </md-tooltip>
-                </md-button>
-            </div>
+                </md-content>
             
             <md-progress-linear class="md-primary loader"
                                 ng-show="info.loading && !info.show_share"
@@ -373,8 +337,11 @@
             </md-progress-circular>
 
             <div ng-include src="'/assets/angular/html/shared/left_panel.html'" class="left_panel_container"></div>
-            <div ng-include src="'/assets/angular/html/shared/notifications.html'" ng-if="show_notifications"></div>
-            <div ng-include src="'/assets/angular/html/share/show.html'"></div>
+            <div ng-include src="'/assets/angular/html/shared/notifications.html'" class="right_panel_container"></div>
+            <% unless @profile %>
+                <div ng-include src="'/assets/angular/html/share/show.html'"></div>
+            <% end %>
+            <div ng-include src="'/assets/angular/html/shared/shelves_sidenav.html'" ></div>
         </div>
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

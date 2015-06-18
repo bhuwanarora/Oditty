@@ -5,15 +5,23 @@ class Community < Neo
 	end
 
 	def self.grouped_books_users
-		Community.match_grouped_books + Community.optional_match_users + ", books_info WITH DISTINCT user, books_info, community WITH books_info , community, " + User.collect_map({"users_info" => User.grouped_basic_info }) + " WITH users_info, books_info , community, "  + Community.collect_map({"most_important_tag" => Community.grouped_basic_info + ", books: books_info, users: users_info " })
+		Community.match_grouped_books + Community.optional_match_users + ", books_info WITH DISTINCT user, books_info, community WITH books_info , community, " + User.collect_map({"users_info" => User.grouped_basic_info }) + " WITH users_info, books_info , community, "  + Community.collect_map({"most_important_tag" => Community.grouped_basic_info + ", books: books_info, users: users_info "})
 	end
 
 	def match
 		" MATCH (community:Community) WHERE ID(community) = " + @id.to_s + " WITH community "
 	end
 
+	def self.match
+		" MATCH (community:Community) WITH community "
+	end
+
 	def self.basic_info
 		" community.view_count AS view_count, community.name AS name, ID(community) AS id, community.image_url AS image_url, labels(community) AS label, community.follow_count AS follow_count "
+	end
+
+	def get_basic_info
+		match + Community.return_group(Community.basic_info)
 	end
 
 	def self.grouped_basic_info
@@ -25,7 +33,7 @@ class Community < Neo
 	end
 
 	def feed_info
-		match + Community.match_grouped_books + Community.return_group(Community.basic_info, "books_info[0..3] AS books")
+		match + Community.return_group(Community.basic_info)
 	end
 
 	def self.match_books 
@@ -64,7 +72,6 @@ class Community < Neo
 		match + Community.match_users + Community.limit(Constant::Count::CommunityUsers) + Community.return_init + User.basic_info
 	end
 
-
 	def self.get_news
 		" MATCH (community)<-[:HasCommunity]-(news:News) WITH community, news "
 	end
@@ -81,147 +88,16 @@ class Community < Neo
 		Community.match_books + " WITH community, " + Book.collect_map({"books_info" => Book.grouped_basic_info})
 	end
 
-	# This funnction first checks the database for books, if no books are present,
-	# it calls google api to fetch books	
-	def self.fetch_books_database_Net community
-		clause = Community.search_by_name(community) + Community.match_books + "RETURN book.title,book.author_name"		
-		books_list = clause.execute				
-		if(books_list.empty?)
-			books = Community.fetch_books community
-		else
-			books = {community => []}
-			books_list.each do |book|
-				if(book.has_key?("book.author_name"))
-					author = book["book.author_name"] # it will be array, now it is not
-					if(author.nil?)
-						next
-					end
-					books[community] << [book["book.title"],[author[1..author.length]]]
-				end
-			end			
-		end
-		books 
-	end
-
-	def self.fetch_books community
-		community_books = {community => []}
-		count = 0
-		books_info = Book::GoogleBooks.get community
-		if books_info.present?
-			books,author_list = books_info.transpose			
-			books.each_with_index do |book,index|				
-				if(author_list[index].nil?)					
-					next
-				end
-				authors = author_list[index]			
-				authors = authors.sort				
-				author_string = authors.join('').search_ready
-				unique_index = book.search_ready + author_string
-				book_info = (Book.get_by_unique_index(unique_index).execute)[0] 
-				if book_info.present?					 
-					community_books[community] << [book,authors]
-				end	
-			end
-		end		
-		community_books
-	end
-
 	def self.most_important_category_info 
 		", HEAD(COLLECT({" + Community.grouped_basic_info + "})) AS community_info "
 	end
-
-	def self.has_required_book_count books
-		!books.blank? && books.length >= Constant::Count::MinimumCommunityBooks
-	end
-
-
-	def self.create news_metadata		
-		begin
-			communities_books = []		
-			relevance = []	 # This is the relevance which we will use
-			response = News.fetch_tags news_metadata["news_link"]
-			puts response.red
-
-			if response.is_json? 
-				response = JSON.parse(response)			
-				communities = Community.handle_communities response						
-				skip = 10000
-				timer = communities.length * skip -1
-				for i in 0..timer do
-					if (i % skip) == 0					
-						community_books = Community.fetch_books_database_Net(communities[i/skip]['value'])
-						temp = community_books[communities[i/skip]['value']]					
-						book_name,authors = temp.transpose
-						if Community.has_required_book_count(book_name)						
-							relevance << {'relevance' => communities[i/skip]['relevance'],
-										'relevanceOriginal' => communities[i/skip]['relevanceOriginal']}
-							communities_books << community_books
-						end
-					end
-				end			
-				unless communities_books.blank?	
-					news_metadata["news_id"] = News.create news_metadata
-					News.map_topics(news_metadata["news_id"], response["Hierarchy"]) 				
-					Community.map_books(communities_books.zip(relevance), news_metadata)
-					News.new(news_metadata["news_id"]).add_notification.execute
-					if news_metadata.present? && news_metadata["image_url"].present? && news_metadata["news_id"].present?
-						type = "news"
-						VersionerWorker.perform_async(news_metadata["news_id"], news_metadata["image_url"], type)
-					end
-				end
-			end
-		rescue Exception => e			
-			puts e.to_s.red
-		end
-	end 
 
 	def self.merge community
 		" MERGE (community:Community{indexed_community_name: \"" + community.search_ready + "\"}) ON CREATE SET community.name = \"" + community + "\", community.status = 1, community.created_at=" + Time.now.to_i.to_s + ", community.updated_at=" + Time.now.to_i.to_s + ", community.follow_count = 0, community.image_url = \"" + Community::CommunityImage.new(community).get_image + "\" WITH community "  
 	end
 
-
-	def self.map_books communities_books, news_metadata
-		batch_size_cypher = 4 
-	    communities_books.each do |community_books,relevance|	    	
-	    	community_books.each do |community, books_authors|
-	    		books,authors = books_authors.transpose
-	        	clause =  News.new(news_metadata["news_id"]).match + Community.merge(community) + ", news " + Community.set_importance + " WITH community, news " + News.merge_community(relevance)					        	
-	        	clause_temp = clause
-				books.each_with_index do |book,i|
-					authorlist_string = authors[i].sort.join('').search_ready						
-					unique_index = book.search_ready + authorlist_string
-					clause_temp += Book.search_by_unique_index(unique_index) + " , community " + Community.merge_book + " WITH community "
-					if((i+1)%batch_size_cypher == 0)
-						clause_temp += News.return_init + Community.basic_info
-						clause_temp.execute
-						clause_temp = clause
-					end
-				end
-				if(clause_temp.length > clause.length)
-					clause_temp += News.return_init + Community.basic_info
-					community_info = clause_temp.execute[0]				
-					if community_info.present? && community_info["image_url"].present? && community_info["id"].present?
-						type = "community"
-						VersionerWorker.perform_async(community_info["id"], community_info["image_url"], type)
-					end
-				end
-			end
-		end
-	end
-
 	def self.merge_book
 		" MERGE (community)-[:RelatedBooks]->(book) WITH book, community "
-	end
-
-	def self.handle_communities response
-		communities = []		
-		response["Tags"].each do |social_tag|
-			if social_tag['value'] != ""
-				communities << social_tag
-				
-			end
-		end
-		communities
 	end
 
 	def self.search_by_name name
@@ -237,7 +113,8 @@ class Community < Neo
 	end
 
 	def self.get_popular skip_count = 0
-		Community.match_news + Bookmark::Node::NewsLabel.optional_match_path + Community.return_group("community.name AS name", "COUNT(news) as news_count", "COUNT(bookmark_node) as bookmark_count") + Community.order_by("bookmark_count DESC , news_count DESC") + Community.skip(skip_count) + Community.limit(10)
+		Community.match + Community.return_group(Community.basic_info) + Community.order_by("follow_count DESC") + Community.limit(10)
+		# Community.match_news + Bookmark::Node::NewsLabel.optional_match_path + Community.return_group(Community.basic_info, "COUNT(news) as news_count", "COUNT(bookmark_node) as bookmark_count") + Community.order_by("bookmark_count DESC , news_count DESC") + Community.skip(skip_count) + Community.limit(10)
 	end
 
 	def get_books_users
@@ -246,5 +123,9 @@ class Community < Neo
 
 	def match_news_related_communities news_id
 		News.new(news_id).match + ", most_important_tag " + News.optional_match_community + " , most_important_tag  WHERE NOT ID(community) = " + @id.to_s + " WITH most_important_tag, community, has_community ORDER BY has_community.relevance DESC WITH  most_important_tag, " + Community.collect_map("other_tags" => Community.grouped_basic_info) + Article::NewsArticle.return_group(" most_important_tag ", " other_tags[0.." + (Constant::Count::CommunitiesShown+1).to_s + "] AS other_tags ")
+	end
+
+	def get_news skip_count = 0
+		match + Community.match_news +  Community.order_init + " news.created_at DESC " + Community.skip(skip_count) + Community.limit(10) + " WITH community, " + Community.collect_map("news" => News.grouped_basic_info) + Community.return_group(" news", Community.collect_map("community" => Community.grouped_basic_info))
 	end
 end

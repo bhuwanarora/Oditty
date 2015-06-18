@@ -21,5 +21,7 @@ class FacebookDataEntryWorker
 			end
 		end
 		clause.execute
+		params = {:type => "User", :response => user_id}
+		IndexerWorker.perform_async(params)
 	end
 end

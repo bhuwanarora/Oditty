@@ -11,8 +11,8 @@
                 </md-item>
                 <md-item ng-repeat="label in shelves" ng-show="show_all">
                     <md-checkbox ng-model="label.status" aria-label="{{label.label}}" class="md-warn" 
-                                ng-click="toggle_bookmark(label, label.status)" 
-                                ng-class="{'md-checked': label.status}">
+                        ng-click="toggle_bookmark(label, label.status)"
+                        ng-class="{'md-checked': label.status}">
                         <div layout-padding>{{label.name || label.label_name}}</div>
                     </md-checkbox>
                 </md-item>

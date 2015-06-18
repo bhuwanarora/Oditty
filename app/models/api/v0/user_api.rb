@@ -27,7 +27,11 @@ module Api
 			end
 
 			def self.news_visited(user_id, id)
-				Bookmark::Type::Visited.new(user_id, id).news.add.execute
+				visited = Bookmark::Type::Visited.new(user_id, id)
+				if user_id.present?
+					visited.news.add.execute
+				end
+				visited.change_news_view_count("+").execute
 			end
 
 			def self.follow_user user_id, friend_id
@@ -350,34 +354,33 @@ module Api
 				end
 			end
 
-			def self.recommend_book(user_id, friend_ids, book_id)
+			def self.recommend_book(user_id, friends_id, book_id)
 				@neo = Neography::Rest.new
-				for friend_id in friend_ids
-					UsersGraphHelper.recommend_book(user_id, friend_id, book_id)
-					clause = "MATCH (b:Book), (u:User), (f:User) WHERE ID(b)="+book_id.to_s+" AND ID(u)="+user_id.to_s+" AND ID(f)="+friend_id.to_s+" RETURN b, u, f"
-					data = @neo.execute_query(clause)["data"][0]
-					book = data[0]["data"]
-					user = data[1]["data"]
-					friend = data[2]["data"]
-					isbn = book["isbn"].split(",")[0] rescue ""
-					params = {
-								:template => Constant::EmailTemplate::RecommendBooks, 
-							  	:user => {
-							  		:thumb => user["thumb"], 
-							  		:id => user_id,
-							  		:name => user["name"]
-							  	},
-							  	:friend =>{
-							  		:name => friend["name"],
-							  		:email => friend["email"]
-							  	},
-							  	:book => {
-							  		:id => book_id,
-							  		:title => book["title"],
-							  		:author_name => book["author_name"],
-							  		:isbn => isbn
-							  	}
-							}
+				clause = UsersUser.new(user_id,friends_id).recommend_book(book_id)				
+				clause.execute
+				clause = "MATCH (book:Book), (user:User), (friend:User) WHERE ID(user)=" + user_id.to_s + " AND ID(book)=" + book_id.to_s + " AND ID(friend)=" + friends_id.to_s + User.return_group("book.title AS title, ID(book) as book_id, book.author_name AS author_name, book.isbn AS isbn", "user.image_url AS image_url, ID(user) as id, user.first_name AS first_name, user.last_name AS last_name", "friend.first_name as friends_first_name, friend.last_name AS friends_last_name, ID(friend) AS friends_id, friend.email AS friends_email")
+				info = clause.execute[0]
+				isbn = info["isbn"].split(",")[0] rescue ""
+				params = {
+					:template => Constant::EmailTemplate::RecommendBooks, 
+				  	:user => {
+				  		:image_url => info["image_url"], 
+				  		:id => info["id"],
+				  		:name => info["first_name"] + " " + info["last_name"],
+				  	},
+				  	:friend =>{
+				  		:name => info["friends_first_name"],
+				  		:email => info["friends_email"],
+				  		:id => info["friends_id"]
+				  	},
+				  	:book => {
+				  		:id => info["book_id"],
+				  		:title => info["title"],
+				  		:author_name => info["author_name"],
+				  		:isbn => isbn
+				  	}
+				}
+				if params[:friend][:email]
 					SubscriptionMailer.recommend_book(params).deliver
 				end
 			end
@@ -473,8 +476,22 @@ module Api
 			end
 
 			def self.get_notifications user_id
-				info = User.new(user_id).get_notifications
-				info
+				info = User.new(user_id).get_notifications.execute
+				notifications = []
+				for data_info in info
+					if data_info["label"][0] == "User"
+					elsif data_info["label"][0] == "RecommendNode"
+						notification = {
+							:friend_id => data_info["notification"]["data"]["friend_id"],
+							:book_id => data_info["notification"]["data"]["book_id"],
+							:user_id => data_info["notification"]["data"]["user_id"],
+							:timestamp => data_info["notification"]["data"]["timestamp"]
+						}
+						data_info["notification"] = notification
+						notifications.push data_info
+					end
+				end
+				notifications
 			end
 
 			def self.verify(params)
@@ -490,7 +507,7 @@ module Api
 
 
 			def self.get_lenders book_id, user_id
-				Book.new(book_id).get_lenders user_id											
+				UsersBook.new(user_id, book_id).notify_borrow + Book.new(book_id).get_lenders(user_id)
 			end
 
 			def self.get_profile_info_of_another id, user_id
@@ -500,6 +517,11 @@ module Api
 			def self.set_region user_id, region, ip
 				region = GeoIP.new('GeoIP.dat').country(remote_ip.to_s).country_name  
 				User.new(user_id).set_region(region)
+			end
+
+			def self.search_friends(user_id, search_text)
+				info = User.new(user_id).search_friends(search_text).execute
+				info
 			end
 		end
 	end

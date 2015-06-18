@@ -1,4 +1,4 @@
-app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeout", "$cookieStore", "LoginConstants", "WebsiteUIConstants", "$location", "$routeParams", "websiteService", function($scope, $rootScope, Facebook, $timeout, $cookieStore, LoginConstants, WebsiteUIConstants, $location, $routeParams, websiteService){
+homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeout", "$cookieStore", "LoginConstants", "WebsiteUIConstants", "$location", "$routeParams", "websiteService", function($scope, $rootScope, Facebook, $timeout, $cookieStore, LoginConstants, WebsiteUIConstants, $location, $routeParams, websiteService){
     // Here we do the authentication processing and error handling.
     // Note that authResult is a JSON object.
     $scope.processAuth = function(authResult){
@@ -94,7 +94,9 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
             $rootScope.user = data.user;
             $cookieStore.put('user', data.user);
             $scope._init_user();
-            _redirect_user();
+            // window.location.gr
+            $scope.info.hide_signin = true;
+            // _redirect_user();
         }
 
         var error_callback = function(reason){
@@ -199,12 +201,12 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
 
     var _redirect_user = function(){
         var redirect_url = getCookie("redirect_url");
-        if(redirect_url && (redirect_url != null)){
-            window.location.href = redirect_url;
-        }
-        else{
-            window.location.href = "/infinity";
-        }
+        window.location.href = "/home";
+        // if(redirect_url && (redirect_url != null)){
+        //     window.location.href = redirect_url;
+        // }
+        // else{
+        // }
     }
 
     
@@ -215,7 +217,7 @@ app.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeou
         setCookie("logged", $rootScope.user.id, 31);
     }
       
-    // $scope.logout = function() {
+    // $scope.logout = function(){
    //   Facebook.logout(function() {
    //           $scope.$apply(function() {
    //           $rootScope.user   = {};

@@ -1,0 +1,42 @@
+<md-button ng-click="show_search_bar()" aria-label="mobile search"
+           ng-show="info.mobile_search" show-sm hide>
+    <span class="icon-search"></span>
+</md-button>
+<md-autocomplete md-selected-item="selected_item_search"
+                md-search-text="search_text"
+                md-items="item in info.search_results"
+                md-search-text-change="query_search(search_text)"
+                md-selected-item-change="on_select(item)"
+                md-item-text="item.name"
+                md-min-length="0"
+                class="search"
+                hide-sm
+                flex="85"
+                ng-click="get_default_results($event)"
+                md-floating-label="Search books, topics and more...">
+    <md-item-template>
+        <div layout="row" layout-align="space-between">
+            <div layout="row" flex="90">
+                <img ng-src="{{item.isbn | small_thumb}}" ng-show="item.isbn" class="search_thumb" />
+                <img ng-src="{{item.image_url}}" ng-show="item.image_url" class="search_thumb" />
+                <img ng-src="{{item.id | author_small_thumb}}" ng-show="item.labels == 'Author'" 
+                    class=" circular" />
+                <div>&nbsp;</div>
+                <div layout-align="center start" layout="column">
+                    <div ng-bind-html="item.name || item.title" ></div>
+                    <div class="less_important" ng-show="item.author_name">
+                        <span>&nbsp;by </span>
+                        <span ng-bind-html="item.author_name"></span>
+                    </div>
+                </div>
+            </div>
+            <div flex="10" layout="row" layout-align="space-between center">
+                <div></div>
+                <div ng-bind-html="item | search_item_type"></div>
+            </div>
+        </div>
+    </md-item-template>
+    <md-not-found>
+        No matches found.
+    </md-not-found>
+</md-autocomplete>

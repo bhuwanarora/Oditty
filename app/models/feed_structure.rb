@@ -104,7 +104,7 @@ class FeedStructure < Neo
 		name = _get_name data
 		thumb = "assets/profile_pic.jpeg"
 		notification_json = {
-			:created_at => data["created_at"],
+			:created_at => data["created_at"] || data["timestamp"],
 			:user => {
 				:id => data["user_id"],
 				:name => data["name"]
@@ -123,6 +123,9 @@ class FeedStructure < Neo
 		end
 		if data["community_id"].present?
 			notification_json.merge!(:community => {:id => data["community_id"]})
+		end
+		if data["author_id"].present?
+			notification_json.merge!(:author => {:id => data["author_id"]})
 		end
 		notification_json
 	end

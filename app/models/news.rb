@@ -48,12 +48,19 @@ class News < Neo
 	end
 
 	def self.create news_metadata
-		clause  = News.merge(news_metadata) + News.match_timestamp  + News.merge_region(news_metadata) + News.return_init + " ID(news) as news_id "
-		(clause.execute)[0]["news_id"]
+		News.merge(news_metadata) + News.match_timestamp  + News.merge_region(news_metadata) + News.return_init + " ID(news) as news_id "
 	end
 
 	def self.match_timestamp
 		" MATCH (year:Year{year:#{Time.now.year}})-[:Has_month]->(month:Month{month:#{Time.now.month}})-[:Has_day]->(day:Day{day:#{Time.now.day}}) MERGE (time:TimePeriod{quarter:\"#{(Time.now.hour / 6) * 6}-#{((Time.now.hour / 6)+1) * 6}\"})-[:FromDay]->(day) MERGE (news)-[:TimeStamp]->(time) WITH news "
+	end
+
+	def self.match
+		" MATCH (news:News) WITH news "
+	end
+
+	def change_view_count operator
+		match + " SET news.view_count = COALESCE(news.view_count,0) " + operator + " 1 "
 	end
 
 	def self.set_indexed_title title
@@ -111,65 +118,13 @@ class News < Neo
 		clause
 	end
 
-	def self.handle
-		news_sources ||= self.fetch_news_sources
-		puts news_sources
-		for news_source in news_sources
-			
-			news_links = self.fetch_news news_source["url"]
-			puts news_links
-			for news_link in news_links
-				news_metadata = {}
-				puts news_link
-				news_metadata = News.get_metadata news_link
-				news_metadata["news_link"] = news_link
-				news_metadata["region"] = news_source["region"]
-				Community.create news_metadata
-			end
-		end
-	end
-
-	def self.map_topics news_id, topics
-		topics.each do |topic|
-			clause = News.new(news_id).match + " MERGE (topic:Topic{name:'" + topic["value"].to_s + "'}) <-[:HasTopic {relevance :"+ topic["relevance"].to_s+" }]-(news) "
-			clause.execute
-		end
-	end
-
-	def self.fetch_news news_source
-		news_links = []
-		doc = Nokogiri::HTML(open(URI(news_source))).css('.esc .esc-lead-article-title a')
-		for news_link in doc
-			news_links << news_link["href"]
-		end
-		news_links
-	end
-
-	def self.fetch_news_sources
-		news_sources = []
-		google_news_edition_url = Rails.application.config.google_news_sources
-		doc = Nokogiri::HTML(open(google_news_edition_url)).css('.i a')
-		for news_source in doc
-			if (news_source.children.text =~ /^[a-zA-Z]+$/) == 0 and !news_source.nil?
-				news_sources << {"url" => news_source["href"], "region" => news_source.children.text}
-			end
-		end
-		news_sources
-	end
-
-	def self.fetch_tags news_link
-		query = Rails.application.config.nlp_service + "api/v0/parser?q=" + news_link 
-		puts query
-		uri = URI(query)
-		response = Net::HTTP.get(uri)
-	end
-
+	
 	def get_basic_info
 		match + News.return_group(News.basic_info)
 	end
 
 	def self.basic_info
-		" ID(news) AS  id  ,news.url  AS url , news.image_url AS image_url, news.title AS title, news.description AS description, news.created_at AS created_at, labels(news) AS label, COALESCE(news.bookmark_count,0) AS bookmark_count "
+		" ID(news) AS  id, news.url  AS url, news.image_url AS image_url, news.title AS title, news.description AS description, news.created_at AS created_at, labels(news) AS label, COALESCE(news.bookmark_count,0) AS bookmark_count, news.view_count AS view_count"
 	end
 
 	def self.grouped_basic_info
@@ -219,10 +174,14 @@ class News < Neo
 	end
 
 	def self.get_feed skip_count, day_skip_count, region
-		 News.match_regional_temporal_news(skip_count, day_skip_count, region) + News.match_community_users + News.return_group(News.basic_info," follow_count, communities[0.." + Constant::Count::CommunitiesOfNewsShown.to_s + "] AS communities ", "users[0..4] AS users")
+		 News.match_regional_temporal_news(skip_count, day_skip_count, region) + News.match_community_users + News.return_group(News.basic_info, "follow_count", "communities[0.." + Constant::Count::CommunitiesOfNewsShown.to_s + "] AS communities ", "users[0..4] AS users")
 	end
 
 	def self.get_regions
-		" MATCH (region:Region) WITH region ORDER BY region.name RETURN COLLECT({id:ID(region)  , name:region.name, news_count:region.news_count }) AS regions "
+		" MATCH (region:Region) WITH region ORDER BY region.name RETURN COLLECT({id:ID(region), name:region.name, news_count:region.news_count }) AS regions "
+	end
+
+	def self.get_popular_news_from_last_week
+		News.match_community + " WHERE ("+Time.now.to_i.to_s+" - news.created_at)/86400 < 7 " + News.return_group(News.basic_info, News.collect_map({"communities" => Community.grouped_basic_info}), "community.count AS communities_count") + News.order_init + " communities_count DESC " + News.limit(4)
 	end
 end

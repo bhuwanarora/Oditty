@@ -1,4 +1,4 @@
-class Indexer
+class Indexer 
 	def initialize response
 		@response = response
 		@client = Elasticsearch::Client.new log: true	
@@ -18,152 +18,202 @@ class Indexer
 			end
 		end
 		
-		if client.indices.exists index: Time.now.strftime("%D").gsub("/","-")
-			client.indices.delete index: Time.now.strftime("%D").gsub("/","-")
+		if client.indices.exists index: Time.now.strftime("%D").gsub("/", "-")
+			client.indices.delete index: Time.now.strftime("%D").gsub("/", "-")
 		end
 
-		client.indices.create index: Time.now.strftime("%D").gsub("/","-"),
-		body: 
-			{settings:
-				{index:
-					{number_of_shards: 1,
+		client.indices.create index: Time.now.strftime("%D").gsub("/", "-"),
+		body:{
+			settings:{
+				index:{
+					number_of_shards: 1,
                     number_of_replicas: 0,
-                  	},
-				analysis: 
-					{filter:
-						{autocomplete_filter:
-                			{type:"edge_ngram",
+                },
+				analysis:{
+					filter:{
+						autocomplete_filter:{
+							type:"edge_ngram",
 		                    min_gram: "3",
 		                    max_gram: "12",
-		                    side: "front",
 		                    token_chars: [ "letter", "digit", "punctuation", "symbol"]
-	                		}
-	         			},
-	            	analyzer:
-	            		{autocomplete:
-	            			{type: "custom",
+	                	}
+	         		},
+	            	analyzer:{
+	            		autocomplete:{
+	            			type: "custom",
 	                    	tokenizer: "standard",
-	                    	filter: ["lowercase", "standard", "autocomplete_filter"]
-	                		},
-						whitespace: 
-							{type: "custom",
-		               		tokenizer: "whitespace",
-		               		filter: ["lowercase","asciifolding"]
-		            		}
+	                    	filter: ["standard", "autocomplete_filter"]
+	                	}
+		            }
+	            }
+	        },
+			mappings:{
+				books:{
+					_all:{
+						index_analyzer: "autocomplete",
+		            	search_analyzer: "autocomplete"
+					 },
+			        properties:{
+		         		description:{
+		         			type: "string",
+		               		index: "no"
 		            	},
-		            tokenizer: 
-		            	{edge_ngram_tokenizer: 
-		            		{type: "edgeNGram",
-			                min_gram: "2",
-			                max_gram: "12",
-			                token_chars: [ "letter", "digit" ]
-              				}
-          				}
-	                }
-	            },
-			mappings: 
-				{books:
-					{_all:
-						{index_analyzer: "autocomplete",
+		            	title:{
+		            		type: "string",
+							index: "analyzed",
+                        	analyzer: "autocomplete"
+		               	},
+		            	author_name:{
+		            		type: "string",
+							index: "analyzed",
+                        	analyzer: "autocomplete"
+		               	},
+			            author_id:{
+			            	type: "integer",
+			            	index: "no"
+			            },
+			            weight:{
+			            	type: "integer",
+			            	index: "no"
+			            }
+			        },
+               	},
+				blogs:{
+					_all:{
+						index_analyzer: "autocomplete",
 			            search_analyzer: "autocomplete"
-						 },
-			        properties:
-			         	{description:
-			         		{type: "string",
+					},
+			        properties:{
+			        	excerpt:{
+			        		type: "string",
 			               	index: "no"
-			            	},
-			            title:
-			            	{type: "string",
-							index: "analyzed",
-	                        analyzer: "autocomplete"
-			               	},
-			            author_name:
-			            	{type: "string",
-							index: "analyzed",
-	                        analyzer: "autocomplete"
-			               	}
-			            }
-                	},
-				blogs:
-					{_all:
-						{index_analyzer: "autocomplete",
-			            search_analyzer: "autocomplete"
-						 },
-			        properties:
-			         	{excerpt:
-			         		{type: "string",
+			            },
+			            image_url:{
+			        		type: "string",
 			               	index: "no"
-			            	},
-			        	title:
-			            	{type: "string",
+			            },
+			            weight:{
+			            	type: "integer",
+			            	index: "no"
+			            },
+			            blog_url:{
+			            	type: "string",
+			            	index: "no"
+			            },
+			            posted_at:{
+			            	type: "string",
+			            	index: "no"
+			            },
+			        	title:{
+			        		type: "string",
 							index: "analyzed",
 	                        analyzer: "autocomplete"
-			               	}
-		            	}
-                	},
-				news:
-					{_all:
-						{index_analyzer: "autocomplete",
+			            }
+		            }
+                },
+				news:{
+					_all:{
+						index_analyzer: "autocomplete",
 			            search_analyzer: "autocomplete"
-						 },
-			        properties:
-			         	{description:
-			         		{type: "string",
+					},
+			        properties:{
+			        	description:{
+			        		type: "string",
 			               	index: "no"
-			            	},
-			        	title:
-			            	{type: "string",
+			            },
+			        	title:{
+			        		type: "string",
 							index: "analyzed",
 	                        analyzer: "autocomplete"
-			               	}
+			            },
+			            image_url:{
+			            	type: "string",
+			            	index: "no"
+			            },
+			            created_at:{
+			            	type: "integer",
+			            	index: "no"
+			            },
+			            weight:{
+			            	type: "integer",
+			            	index: "no"
 			            }
-                	},				
-				authors:
-					{_all:
-						{index_analyzer: "autocomplete",
+			        }
+               	},				
+				authors:{
+					_all:{
+						index_analyzer: "autocomplete",
 			            search_analyzer: "autocomplete"
-						},
-			        properties:
-			         	{name:
-			         		{type: "string",
+					},
+			        properties:{
+			        	name:{
+			        		type: "string",
 							index: "analyzed",
 	                        analyzer: "autocomplete"
-			            	}
+			            },
+			            weight:{
+			            	type: "integer",
+			            	index: "no"
+			            },
+			            location:{
+			            	type: "string",
+			            	index: "no"
 			            }
-                	},				
-				communities:
-					{_all:
-						{index_analyzer: "autocomplete",
+			        }
+                },				
+				communities:{
+					_all:{
+						index_analyzer: "autocomplete",
 			            search_analyzer: "autocomplete"
-						},
-			        properties:
-			         	{name:
-			         		{type: "string",
+					},
+			        properties:{
+			        	name:{
+			         		type: "string",
 							index: "analyzed",
 	                        analyzer: "autocomplete"
-			            	}
+			            },
+			            image_url:{
+			            	type: "string",
+			            	index: "no"
+			            },
+			            weight:{
+			            	type: "integer",
+			            	index: "no"
+			            },
+			            overview:{
+			            	type: "string",
+			            	index: "no"
 			            }
-                	},				
-				users:
-					{_all:
-						{index_analyzer: "autocomplete",
+			        }
+                },				
+				users:{
+					_all:{
+						index_analyzer: "autocomplete",
 			            search_analyzer: "autocomplete"
-						},
-			        properties:
-			         	{first_name:
-			         		{type: "string",
+					},
+			        properties:{
+			        	first_name:{
+			        		type: "string",
 							index: "analyzed",
 	                        analyzer: "autocomplete"
-			            	},
-			            last_name:
-			         		{type: "string",
+			            },
+			            last_name:{
+			            	type: "string",
 							index: "analyzed",
 	                        analyzer: "autocomplete"
-			            	}
+			            },
+			            weight:{
+			            	type: "integer",
+			            	index: "no"
+			            },
+			            region:{
+			            	type: "string",
+			            	index: "no"
 			            }
-                	}				
-                }
-			}
+			        }
+                }				
+            }
+		}
 
 		client.indices.put_alias index: Time.now.strftime("%D").gsub("/","-"), name: 'search'			
 	end
@@ -173,8 +223,6 @@ class Indexer
 		range = get_ids_range_clause.execute[0]
 		maximum = range["maximum"]
 		minimum = range["minimum"]
-		puts maximum
-		puts minimum
 		range = (maximum - minimum) / 500
 		while minimum < maximum
 			get_nodes = " MATCH (node:#{label})  WHERE ID(node) <= #{minimum + range} AND ID(node) >= #{minimum} " + Neo.return_init + node_class.basic_info.search_compliant 
@@ -193,15 +241,15 @@ class Indexer
 		range = get_ids_range_clause.execute[0]
 		maximum = range["maximum"]
 		minimum = range["minimum"]
-		puts maximum
-		puts minimum
 		range = (maximum - minimum) / 500
 		while minimum < maximum
 			get_nodes = " MATCH (node:#{label})  WHERE ID(node) <= #{minimum + range} AND ID(node) >= #{minimum} " + Neo.return_init + node_class.basic_info.search_compliant + ", node.description AS description "
 			minimum += range
 			nodes = get_nodes.execute
-			for node in nodes
-				Indexer.new([node]).handle
+			if nodes.present?
+				for node in nodes
+					Indexer.new([node]).handle
+				end
 			end
 		end
 	end
@@ -223,53 +271,90 @@ class Indexer
 		end
 	end
 
-	def get_relationships id
-		id = id.to_s.strip
-		url = "#{Rails.application.config.neo4j_url}/db/data/node/#{id}/relationships/all/"
-		puts url 		
-		relations = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
+	def get_relationship_count id
+		clause = "MATCH (node)-[r]-() WHERE ID(node)="+id.to_s.strip+" RETURN COUNT(r) AS count"
+		clause.execute[0]
 	end
-	
+
 	def index_book
 		begin
 			authors = [] 
-			relationships = get_relationships(@response["book_id"])
-			relationships.each do |relationship|
-				if relationship["type"] == "Wrote" 
-					author_id = relationship["start"].split("/").last
-					clause = Author.new(author_id).match + Author.return_init + " author.name AS name "
-					author_name = clause.execute[0]["name"]
-					authors << {"id" => author_id, "name" => author_name }
-					puts authors.to_s.green
-				end 
-			end
+			# relationships = get_relationships(@response["book_id"])
+			@book = Book.new(@response["book_id"])
+			clause = @book.match + @book.match_author + Book.return_group(Author.primary_info)
+			authors = clause.execute
+
 			author_name = authors.present? ? authors.first["name"] : "null" 
 			author_id =  authors.present? ? authors.first["id"] : "null"
-			@client.index  index: 'search', type: 'books', id: @response["book_id"], body: { title: @response["title"], isbn: @response["isbn"], description: @response["description"], author_name: author_name, author_id: author_id, weight: get_relationships(@response["book_id"]).length}
+			body = {
+					title: @response["title"],
+					description: @response["description"],
+					isbn: @response["isbn"], 
+					author_name: author_name, 
+					author_id: author_id, 
+					weight: get_relationship_count(@response["book_id"])["count"]
+				}
+			@client.index  index: 'search', type: 'books', id: @response["book_id"], body: body
 		rescue Exception => e
 			puts e.to_s.red
 			message = "#{e} for id #{@response["book_id"]} at #{ Time.now.strftime("%D")}"
 			File.open(@filename, 'a') { |file| file.puts(message) }
 		end
-	end	
+	end
 
 	def index_blog
-		@client.index  index: 'search', type: 'blogs', id: @response["blog_id"], body: { title: @response["title"], excerpt: @response["excerpt"],  title: @response["title"], image_url: @response["image_url"], weight: get_relationships(@response["blog_id"]).length}
+		body = { 
+				title: @response["title"], 
+				excerpt: @response["excerpt"], 
+				image_url: @response["image_url"], 
+				weight: get_relationship_count(@response["blog_id"])["count"],
+				blog_url: @response["blog_url"],
+				posted_at: @response["posted_at"]
+			}
+		@client.index  index: 'search', type: 'blogs', id: @response["blog_id"], body: body
 	end
 
 	def index_news
-		@client.index  index: 'search', type: 'news', id: @response["id"], body: { title: @response["title"], description: @response["description"], image_url: @response["image_url"], title: @response["title"], created_at: @response["created_at"], weight: get_relationships(@response["id"]).length}
+		body = {
+			title: @response["title"], 
+			description: @response["description"], 
+			image_url: @response["image_url"], 
+			created_at: @response["created_at"], 
+			weight: get_relationship_count(@response["id"])["count"]
+		}
+		@client.index  index: 'search', type: 'news', id: @response["id"], body: body
 	end	
 
 	def index_user
-		@client.index  index: 'search', type: 'users', id: @response["id"], body: { search_index: @response["indexed_user_name"], first_name: @response["first_name"] , last_name: @response["last_name"], region: @response["region"] ,weight: get_relationships(@response["id"]).length}
+		body = {
+			first_name: @response["first_name"], 
+			last_name: @response["last_name"], 
+			region: @response["region"],
+			weight: get_relationship_count(@response["id"])["count"]
+		}
+		@client.index  index: 'search', type: 'users', id: @response["id"], body: body
 	end	
 
 	def index_author
-		@client.index  index: 'search', type: 'authors', id: @response["id"], body: { name: @response["name"], weight: get_relationships(@response["id"]).length}
+		body = {
+			name: @response["name"], 
+			weight: get_relationship_count(@response["id"])["count"],
+			overview: @response["overview"],
+			location: @response["location"]
+		}
+		@client.index  index: 'search', type: 'authors', id: @response["id"], body: body
 	end	
 
 	def index_community
-		@client.index  index: 'search', type: 'communities', id: @response["id"], body: { name: @response["name"], image_url: @response["image_url"], weight: get_relationships(@response["id"]).length}
-	end	
+		body = {
+			name: @response["name"], 
+			image_url: @response["image_url"], 
+			weight: get_relationship_count(@response["id"])["count"]
+		}
+		@client.index  index: 'search', type: 'communities', id: @response["id"], body: body
+	end
+
+	def create_index type, body
+		@client.index  index: 'search', type: type, id: @response["id"], body: body	
+	end
 end

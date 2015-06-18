@@ -1,7 +1,4 @@
-<div class="book animate-fast" ng-style="book_style" flex="100" ng-controller="specificBookController">
-    <div ng-include src="'/assets/angular/html/book/_left_panel.html'" ng-if="!book.show_info_only"></div>
-    <div ng-include src="'/assets/angular/html/book/_right_panel.html'" ng-if="!book.show_info_only"></div>
-    <!-- <div>TEST</div> -->
+<div class="md-whiteframe-z1 book animate-fast" ng-style="book_style" flex="100">
      <md-progress-linear class="md-primary loader"
                         ng-show="book_loading"
                         md-mode="indeterminate">
@@ -13,7 +10,7 @@
                     <div layout="row">
                         <img ng-src="{{book.isbn | small_thumb}}" width="40px" height="50px" layout-padding/>
                         <div>
-                            {{book.title}}
+                            {{::book.title}}
                         </div>
                     </div>
                 </md-tab>
@@ -29,11 +26,30 @@
                 <md-tab id="tab4" aria-controls="tab4-content" class="padding" ng-disabled="info.loading">
                     Get this book
                 </md-tab>
+                <md-tab id="tab5" aria-controls="tab5-content" class="padding" ng-disabled="info.loading">
+                    Recommend
+                </md-tab>
+                <md-tab id="tab6" aria-controls="tab6-content" class="padding" ng-disabled="info.loading">
+                    Preview
+                </md-tab>
             </md-tabs>
-          <!--    <md-button class="rating md-primary" ng-click="show_rating($event)" flex="10">
-                {{book.rating}}
-            </md-button> -->
         </div>
+    </div>
+    <div layout-padding class="yellow">
+        <div layout="row" layout-align="space-between">
+            <div class="bold less_important white_color pointer" ng-click="hide_rating = !hide_rating;">
+                Rate this book {{::book.user_rating}}/10
+            </div>
+            <div>
+                <i class="material-icons pointer white_color" ng-show="!hide_rating" ng-click="hide_rating = true;">add</i>
+                <i class="material-icons pointer white_color" ng-show="hide_rating" ng-click="hide_rating = false;">close</i>
+            </div>
+        </div>
+         <md-slider flex="20" md-discrete 
+                class="rate_slider" ng-show="hide_rating"
+                ng-model="::book.user_rating" ng-change="rate_book(book)"
+                step="1" min="1" max="10" aria-label="rating">
+        </md-slider>
     </div>
     <ng-switch on="data.selectedIndex" class="tabpanel-container">
         <div role="tabpanel"
@@ -79,6 +95,25 @@
              md-swipe-right="previous()" 
              class="white">
             <div ng-include src="'/assets/angular/html/book/_buy.html'"></div>
+        </div>
+        <div role="tabpanel"
+             id="tab5-content"
+             aria-labelledby="tab4"
+             ng-switch-when="4"
+             md-swipe-left="next()"
+             md-swipe-right="previous()" 
+             class="white">
+            <div layout="column"  ng-include src="'/assets/angular/html/shared/recommend_to_friends.html'"
+                ng-controller="recommendController"></div>
+        </div>
+        <div role="tabpanel"
+             id="tab6-content"
+             aria-labelledby="tab6"
+             ng-switch-when="5"
+             md-swipe-left="next()"
+             md-swipe-right="previous()" 
+             class="white">
+            <div ng-include src="'/assets/angular/html/book/_book_embed.html'"></div>
         </div>
     </ng-switch>
 </div>

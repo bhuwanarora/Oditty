@@ -1,21 +1,37 @@
-homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'ShareOptions', '$routeParams', '$mdBottomSheet', 'statusService', 'WebsiteUIConstants', 'bookService', 'ColorConstants', 'sharedService', 'Emotions', function($scope, $rootScope, $timeout, ShareOptions, $routeParams, $mdBottomSheet, statusService, WebsiteUIConstants, bookService, ColorConstants, sharedService, Emotions){
+homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'ShareOptions', '$routeParams', '$mdBottomSheet', 'statusService', 'WebsiteUIConstants', 'bookService', 'ColorConstants', 'sharedService', 'Emotions', '$mdSidenav', function($scope, $rootScope, $timeout, ShareOptions, $routeParams, $mdBottomSheet, statusService, WebsiteUIConstants, bookService, ColorConstants, sharedService, Emotions, $mdSidenav){
 
     $scope.play_type_key = function(event){
-        // if($scope.info.show_share){
-        //     if(angular.isUndefined($scope.current_track) || $scope.current_track == 0){
-        //         $scope.current_track = 1;
-        //         document.getElementById('audiotag1').play();
-        //     }
-        //     else if($scope.current_track == 1){
-        //         $scope.current_track = 2;
-        //         document.getElementById('audiotag2').play();
-        //     }
-        //     else{
-        //         $scope.current_track = 0;
-        //         document.getElementById('audiotag3').play();
-        //     }
-        //     event.stopPropagation();
-        // }
+        if(!$scope.mute){
+            if($scope.info.show_share){
+                if(angular.isUndefined($scope.current_track) || $scope.current_track == 0){
+                    $scope.current_track = 1;
+                    document.getElementById('audiotag1').play();
+                }
+                else if($scope.current_track == 1){
+                    $scope.current_track = 2;
+                    document.getElementById('audiotag2').play();
+                }
+                else{
+                    $scope.current_track = 0;
+                    document.getElementById('audiotag3').play();
+                }
+                event.stopPropagation();
+            }
+        }
+    }
+
+    $scope.mute_volume = function(){
+        $scope.mute = !$scope.mute;
+    }
+    
+    $scope.set_pages = function(current_page, page_count){
+        $scope.info.page_count = page_count;
+        $scope.info.current_page = current_page;
+        $scope.hide_page_count = true;
+    }
+
+    $scope.show_page_count = function(){
+        $scope.hide_page_count = false;      
     }
 
     $scope.toggle_buy = function(){
@@ -27,52 +43,26 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     }
 
     $scope.deselect_book = function(){
-        delete $scope.active_book;
-        delete $rootScope.active_book
+        delete $scope.info.page_count;
+        delete $scope.info.current_page;
+        delete $scope.selected_book;
         $scope.deselect_emotion();
         delete $scope.related_info;
         delete $scope.info.status_books;
+        $scope.info.status_books = [];
         $scope.show_relevant_books();
     }
 
     $scope.show_interesting_details = function(book){
-        $scope.active_book = book;
-        $scope.info.book = book;
-        $rootScope.active_book = book;
-        $scope.info.status_books = [book];
-        $scope.info.loading = true;
-
-
-        var _get_interesting_details = function(){
-            var id = book.book_id || book.id;
-            bookService.get_interesting_info(id).then(function(data){
-                $scope.related_info = [];
-                angular.forEach(data[0].info, function(value){
-                    var label = value.labels[0];
-                    var info = value.info.data;
-                    var id = value.id;
-
-                    if(label == "Author"){
-                        delete info.indexed_main_author_name;
-                        delete info.gr_url;
-                        delete info.search_index;
-                        var json = {"id": id, "label": "Author"};
-                        info = angular.extend(info, json);
-                    }
-                    else if(label == "Year"){
-                        var json = {"label": "Year"};
-                        info = angular.extend(info, json);
-                    }
-                    else{
-                        debugger
-                    }
-                    this.push(info);
-                    $scope.info.loading = false;
-                }, $scope.related_info);
-            });
+        if(angular.isUndefined($scope.selected_book)){
+            $scope.selected_book = book;
+            $scope.info.book = book;
+            $scope.info.status_books = [book];
+            if(angular.isUndefined($rootScope.active_book)){
+                $rootScope.active_book = book;
+                $scope.setting_rootscope = true;
+            }
         }
-
-        _get_interesting_details();
     }
 
     $scope.show_share_options = function(event){
@@ -91,6 +81,9 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         $scope.info.show_share = false;
         $scope.info.show_book_share = false;
         delete $rootScope.active_shelf;
+        if($scope.setting_rootscope){
+            delete $rootScope.active_book;
+        }
         event.stopPropagation();
     }
 
@@ -111,9 +104,9 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
             $scope.searched_books = [];
             books = $scope.searched_books;
         }
-        $scope.info.loading = true;
+        $scope.info.share_loading = true;
         bookService.search_books(q, 10).then(function(data){
-            $scope.info.loading = false;
+            $scope.info.share_loading = false;
             $scope.did_you_mean = true;
             angular.forEach(data, function(value){
                 var random_int = Math.floor(Math.random()*ColorConstants.value.length);
@@ -126,7 +119,6 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     }
 
     $scope.add_book = function(book){
-        debugger
         if($rootScope.active_shelf){
             var bookmark_object = {"id": (book.id || book.book_id), "type": 'Book'};
             sharedService.toggle_bookmark($rootScope.active_shelf, false, bookmark_object);
@@ -140,24 +132,30 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
 
     $scope.post_status = function(){
         $scope.posting = true;
-        $scope.info.loading = true;
+        $scope.info.share_loading = true;
         var status = {};
 
-        if($scope.reading_status_selected && $scope.active_book){
+        if($scope.reading_status_selected && $scope.selected_book){
+            $scope.info.wrapper_status = "";
+            $scope.info.status = $scope.info.status || "";
             if(!$scope.active_emotion){
-                $scope.info.status = $scope.reading_options[$scope.active_id].status;
-                $scope.info.wrapper_status = "<span><span class='custom_title light_title'><span>"+$scope.reading_options[$scope.active_id].status+"</span></span>"
+                $scope.info.status = $scope.info.status + " "+ $scope.reading_options[$scope.active_id].status;
+                $scope.info.wrapper_status = $scope.info.wrapper_status + "<span><span class='custom_title light_title'><span>"+$scope.reading_options[$scope.active_id].status+"</span></span>"
             }
             else{
-                $scope.info.status = "Feeling "+ $scope.active_emotion.name + $scope.reading_options[$scope.active_id].emotion_status;
-                $scope.info.wrapper_status = "<span class='custom_title light_title'><span>Feeling "+$scope.active_emotion.name+"  </span><span>"+$scope.reading_options[$scope.active_id].emotion_status+"</span></span>";
+                $scope.info.status = $scope.info.status + " Feeling "+ $scope.active_emotion.name + " " + $scope.reading_options[$scope.active_id].emotion_status;
+                $scope.info.wrapper_status = $scope.info.wrapper_status + "<span class='custom_title light_title'><span>Feeling "+$scope.active_emotion.name+"  </span><span>"+$scope.reading_options[$scope.active_id].emotion_status+"</span></span>";
             }
-            $scope.info.status = $scope.info.status + " " + $scope.active_book.title + " by " + $scope.active_book.author_name;
-            $scope.info.wrapper_status = $scope.info.wrapper_status + "<span class='big_title bold_light_title'>"+$scope.active_book.title+" </span><span class='less_important'>by "+$scope.active_book.author_name+"</span>";
+
+            $scope.info.status = $scope.info.status + " " + $scope.selected_book.title + " by " + $scope.selected_book.author_name;
+
+            $scope.info.wrapper_status = $scope.info.wrapper_status + "<span class='big_title bold_light_title'>"+$scope.selected_book.title+" </span><span class='less_important'>by "+$scope.selected_book.author_name+"</span>";
+
             if($scope.info.current_page){
                 $scope.info.status = $scope.info.status + " on page " + $scope.info.current_page;
                 $scope.info.wrapper_status = $scope.info.wrapper_status + "<span> on page <b>"+$scope.info.current_page+"</b></span>";
             }
+
             if($scope.info.page_count){
                 $scope.info.status = $scope.info.status + "/"+ $scope.info.page_count;
                 $scope.info.wrapper_status = $scope.info.wrapper_status + "<span><b>/{{info.page_count}}</b>.</span>";
@@ -189,13 +187,20 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
             status = angular.extend(status, {"wrapper_content": $scope.info.wrapper_status});
         }
         if(angular.isDefined($scope.info.book_exchange_status)){
-            status = angular.extend(status, {"book_exchange_status": $scope.info.book_exchange_status})
+            status = angular.extend(status, {"book_exchange_status": $scope.info.book_exchange_status});
+        }
+        if(angular.isDefined($scope.info.page_count)){
+            status = angular.extend(status, {"total_page_count": $scope.info.page_count});
+        }
+        if(angular.isDefined($scope.info.current_page)){
+            status = angular.extend(status, {"current_page": $scope.info.current_page});
         }
 
         if(Object.keys(status).length != 0){
             statusService.post_status(status).then(function(){
                 $scope.posting = false;
-                $scope.info.loading = false;
+                $scope.info.share_loading = false;
+                // $scope.post_again = true;
             });
             $scope.info.status = "";
             $scope.info.wrapper_status = "";
@@ -207,11 +212,17 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     }
 
     $scope.show_share_page = function(event){
-        if(!$scope.info.show_share){
-            $scope.info.show_share = true;
+        var unauthenticated_user = (getCookie("logged") == "") || (getCookie("logged") == null);
+        if(unauthenticated_user){
+            $mdSidenav('signup').toggle();
         }
         else{
-            $scope.post_status();
+            if(!$scope.info.show_share){
+                $scope.info.show_share = true;
+            }
+            else{
+                $scope.post_status();
+            }
         }
     };
 
@@ -367,7 +378,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
                             }
                         }
                         else{
-                            console.debug($scope.info.wrapper_status, text_state.current_character);
+                            // console.debug($scope.info.wrapper_status, text_state.current_character);
                             $scope.info.wrapper_status = $scope.info.wrapper_status+text_state.current_character;
                         }
                     }
@@ -485,6 +496,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     }
 
     $scope.make_active = function(id){
+        delete $scope.selected_book;
         $scope.active_id = id;
         $scope.info.reading_status_value = id;
         $scope.show_relevant_books();
@@ -493,34 +505,73 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     $scope.init_reading_options = function(){
         if(angular.isUndefined($scope.reading_options) || ($scope.reading_options.length != 3)){
             $scope.reading_options = [
-                {"name": "Which book do you plan to read?", "id": 0, "status": "Planning to Read", "emotion_status": "while planning to read"}, 
-                {"name": "What are you currently reading?", "id": 1, "status": "Currently Reading", "emotion_status": "while reading"}, 
-                {"name": "Which book did you recently read?", "id": 2, "status": "Recently Read", "emotion_status": "after reading"}
+                {"name": "Which Book do you plan to Read?", "id": 0, "status": "Planning to Read", "emotion_status": "while planning to read"}, 
+                {"name": "What are you Currently Reading?", "id": 1, "status": "Currently Reading", "emotion_status": "while reading"}, 
+                {"name": "Which Book did you Recently Read?", "id": 2, "status": "Recently Read", "emotion_status": "after reading"}
             ];
         }
         $scope.reading_status_selected = false;
         $scope.active_id = 0;
         $scope.info.status_books = [];
         $scope.related_info = [];
-        delete $scope.active_book;
-        delete $rootScope.active_book
+        delete $scope.selected_book;
+        // delete $rootScope.active_book;
         $scope.deselect_emotion();
     }
 
     $scope.show_relevant_books = function(){
         $scope.reading_status_selected = true;
-        if(angular.isUndefined($scope.active_book)){
+        if(angular.isUndefined($scope.selected_book) && $scope.info.status_books.length == 0){
             $scope.info.status_books = [];
-            $scope.info.loading = true;
+            $scope.info.share_loading = true;
+            // var top_searches = [{"title":"The Giver","description":"Jonas' world is perfect. Everything is under control. There is no war or fear or pain. There are no choices. Every person is assigned a role in the Community. When Jonas turns twelve, he is singled out to receive special training from The Giver. The Giver alone holds the memories of the true pain and pleasure of life. Now, it is time for Jonas to receive the truth. There is no turning back.","isbn":"0385732554,9780385732550","author_name":"Lois Lowry","author_id":390175,"degree":369,"base_rating":4.11,"base_ratings_count":746618,"base_reviews_count":30671,"labels":"Book","id":2364530},{"title":"The Awakening","description":"This story of a woman's struggle with oppressive social structures received much public contempt at its first release; put aside because of initial controversy, the novel gained popularity in the 1960s, some six decades after its first publication, and has since remained a favorite of many readers. Chopin's depiction of a married woman, bound to her family and with no way to assert a fulfilling life of her own, has become a foundation for feminism and a classic account of gender crises in the late Victorian era.","isbn":"0543898083,9780543898081","author_name":"Kate Chopin","author_id":389970,"degree":363,"base_rating":3.6,"base_ratings_count":2368,"base_reviews_count":108,"labels":"Book","id":389969},{"title":"Harry Potter and the Half-Blood Prince","description":"The war against Voldemort is not going well; even the Muggle governments are noticing. Ron scans the obituary pages of the Daily Prophet, looking for familiar names. Dumbledore is absent from Hogwarts for long stretches of time, and the Order of the Phoenix has already suffered losses. And yet, as with all wars, life goes on. Sixth-year students learn to Apparateâand lose a few eyebrows in the process. Teenagers flirt and fight and fall in love. Classes are never straightforward, though Harry receives some extraordinary help from the mysterious Half-Blood Prince.So it's the home front that takes center stage in the multilayered sixth installment of the story of Harry Potter. Here at Hogwarts, Harry will search for the full and complex story of the boy who became Lord Voldemortâand thereby find what may be his only vulnerability.","isbn":"0439785960,9780439785969","author_name":"J. K. Rowling","author_id":390054,"degree":359,"base_rating":4.47,"base_ratings_count":1088335,"base_reviews_count":15638,"labels":"Book","id":395599},{"title":"Eclipse","description":"In the dead silence, all the details suddenly fell into place for me with a burst of intuition.Something Edward didn't want me to know. Something Jacob wouldn't have kept from me...It was never going to end, was it?As Seattle is ravaged by a string of mysterious killings and a malicious vampire continues her quest for revenge, Bella once again finds herself surrounded by danger. In the midst of it all, she is forced to choose between her love for Edward and her friendship with Jacob - knowing that her decision has the potential to ignite the ageless struggle between vampire and werewolf. With her graduation quickly approaching, Bella has one more decision to make: life or death. But which is which?","isbn":"0316160202,9780316160209","author_name":"Stephenie Meyer","author_id":395656,"degree":358,"base_rating":3.73,"base_ratings_count":1054,"base_reviews_count":161,"labels":"Book","id":395892}];
             bookService.get_top_searches().then(function(data){
-                $scope.info.loading = false;
+                $scope.info.share_loading = false;
                 $scope.info.status_books = data;
             });
+            // $scope.info.share_loading = false;
+            // $scope.info.status_books = top_searches;
         }
     }
 
     $scope.toggle_options = function(){
         $scope.show_options = !$scope.show_options;
+        var _get_interesting_details = function(){
+            var id = book.book_id || book.id;
+            bookService.get_interesting_info(id).then(function(data){
+                $scope.related_info = [];
+                if(angular.isDefined(data[0])){
+                    angular.forEach(data[0].info, function(value){
+                        var label = value.labels[0];
+                        var info = value.info.data;
+                        var id = value.id;
+
+                        if(label == "Author"){
+                            delete info.indexed_main_author_name;
+                            delete info.gr_url;
+                            delete info.search_index;
+                            var json = {"id": id, "label": "Author"};
+                            info = angular.extend(info, json);
+                        }
+                        else if(label == "Year"){
+                            var json = {"label": "Year"};
+                            info = angular.extend(info, json);
+                        }
+                        else{
+                        }
+                        this.push(info);
+                        $scope.info.share_loading = false;
+                    }, $scope.related_info);
+                }
+            });
+        }
+        if(angular.isUndefined($scope.related_info)){
+            $scope.info.share_loading = true;
+            var interesting_details_timeout = $timeout(_get_interesting_details(), 100);
+            $scope.$on('destroy', function(){
+                $timeout.cancel(interesting_details_timeout);
+            });
+        }
     }
 
     $scope.set_emotion = function(emotion){
@@ -539,7 +590,13 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         $scope.info.status = "";
         $scope.info.hash_tags = [];
         $scope.info.wrapper_status = "";
+        if(angular.isDefined($rootScope.active_book)){
+            $scope.show_interesting_details($rootScope.active_book);
+        }
         $scope.init_reading_options();
+        if(angular.isDefined($rootScope.active_book)){
+            $scope.selected_book = $rootScope.active_book;
+        }
         $scope.emotions = Emotions;
     }());
 }]);

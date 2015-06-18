@@ -1,0 +1,39 @@
+<div msd-wheel="bind_mousewheel_scroll($event)" layout="column">
+    <div class="main_logo" ng-click="scroll_page(0)" layout="row" layout-align="center center">
+        <img src="assets/rd_icon.png">
+        <span hide-sm>ReadersDoor</span>
+    </div>
+    <header layout="row" class="main-header animate-fast" 
+            ng-if="show_content" layout-padding layout-align="space-between center">
+        <md-button aria-label="Left Sidenav" show-sm ng-click="left_tab_list($event)" class="padding" hide>
+            <a><span class="icon-menu2"></span></a>
+        </md-button>
+        <div></div>
+        <!-- <div class="h-btn-right" ng-hide="hide_signin">
+            <md-button ng-click="show_signin_options($event)" class="md-raised md-button-clear">
+                Sign In
+            </md-button>
+        </div> -->
+    </header>
+    <md-whiteframe class="md-whiteframe-z1 tab-main animate-fast" 
+        hide-sm layout="row" ng-if="show_content">
+        <md-tabs md-selected="data.selectedIndex" hide-sm flex class="white">
+            <md-tab md-on-select="scroll_page($index)"
+                    ng-class="{'active': current_page_id == $index}"
+                    ng-repeat="i in [0, 1, 2, 3, 4, 5,6] track by $index">
+                    {{data[$index]}}
+            </md-tab>
+        </md-tabs>
+    </md-whiteframe>
+    <div ng-view ng-fadein class="view-cont"></div>
+
+    <md-button class="md-fab btn-arrow" 
+               aria-label="Comment" 
+               ng-show="show_content"
+               ng-click="scroll_next_state()"
+               ng-style="down_button_style">
+        <img src="assets/arrow-down.png" class="arrow-icon" />
+    </md-button>
+</div>
+<div ng-include src="'/assets/angular/html/landing_page/_sign_in.html'"></div>
+<div ng-include src="'/assets/angular/html/landing_page/left_tablist.html'"></div>

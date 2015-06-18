@@ -1,0 +1,35 @@
+<div class="less_important bold" layout="row" layout-padding layout-align="center">
+	<div>
+		Books From your friends Reading Journey
+	</div>
+</div>
+<div ng-if="friends" layout="row" layout-padding layout-sm="column">
+	<div flex="30" layout="column" flex-sm="100">
+		<md-button class="margin_top clear md-whiteframe-z1"
+			 ng-repeat="profile in friends" 
+			 ng-click="refresh_data(profile)">
+			 <div layout="row">
+				<img ng-src="{{::profile.image_url}}" layout="row" class="square">
+				<div layout-padding ng-bind-html="::profile.name"
+					ng-class="{'bold': info.active_tag.name == profile.name}"></div>
+			 </div>
+		</md-button>
+	</div>
+	<div flex="70" layout-padding flex-sm="100">
+		<div layout-padding>
+			<a class="big_title" ng-href="/profile?q={{info.active_tag.id}}" 
+				ng-bind-html="info.active_tag.name"></a>
+		</div>
+		<div layout="row" layout-wrap>
+			<section layout-margin ng-repeat="book in info.active_tag.books" >
+				<md-button class="rd_book_image_cover md-whiteframe-z3 clear"
+					ng-click="show_book_dialog(book, $event)">
+					<div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></md-button>
+				</md-button>
+			</section>
+		</div>
+	</div>
+</div>
+<a ng-href="/room" ng-if="!friends" class="less_important" layout-padding>
+	<br/>You don't have enough friends. Follow more people.<br/><br/>
+</a>

@@ -1,0 +1,26 @@
+<div layout="row" layout-align="center">
+    <div flex="20" flex-md="10" hide-sm></div>
+    <div flex="60" flex-md="80" flex-sm="100" class="feed_margin">
+       <md-tabs md-dynamic-height class="full_width">
+            <md-tab label="Book Shelves" aria-controls="tab1-content" class="md-whiteframe-z1 white">
+                <book-shelves layout="column" layout-align="center" layout-padding></book-shelves>
+            </md-tab>
+            <md-tab label="Articles Visited" aria-controls="tab2-content" class="md-whiteframe-z1 white" layout-padding>
+                <articles layout="column" ></articles>
+            </md-tab>
+            <md-tab label="Article Shelves" aria-controls="tab3-content" class="md-whiteframe-z1 white" layout-padding>
+                <article-shelves layout="column" layout-align="center"></article-shelves>
+            </md-tab>
+        </md-tabs>
+    </div>
+    <div flex="20" flex-md="10" hide-sm></div>
+</div>
+<style>        
+   .article{
+        width: 130px;
+    }
+
+    .article img{
+        width: 100%;
+    }
+</style>

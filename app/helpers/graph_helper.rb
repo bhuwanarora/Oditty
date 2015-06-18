@@ -19,6 +19,28 @@ module GraphHelper
 		clause.execute
 	end
 
+	def self.set_book_feed
+		(end_id,start_id) = Book.get_max_min_id
+		step_count = 10000
+		book_feed_key = "book_feed_key"
+		if(!$redis[book_feed_key].nil?)
+			cur_id = $redis[book_feed_key].to_i
+		else
+			cur_id = start_id
+			$redis[book_feed_key] = cur_id -1
+		end
+		clause = " OPTIONAL MATCH (book:Book)-[f:BookFeed]->() "\
+			"FOREACH (book IN (CASE WHEN f IS NULL THEN [book] ELSE [] END )| "\
+				"CREATE UNIQUE (book)-[:BookFeed]->(book) "\
+				" ) "
+		while cur_id <= end_id
+			temp_clause = Book.match_in_range cur_id,(cur_id + step_count)
+			temp_clause += clause
+			temp_clause.execute
+			$redis[book_feed_key] = cur_id
+			cur_id += step_count
+		end
+	end
 
 	def self.detect_broken_feed user_id
 		clause = "MATCH (user) WHERE ID(user) = " + user_id.to_s + " WITH user MATCH (user)-[r:FeedNext*1..]->(user) RETURN LENGTH(r) AS length, ID(user) AS id "
@@ -26,6 +48,14 @@ module GraphHelper
 		unless response.present? && response[0]["length"].present?
 			GraphHelper.fix_feed user_id
 		end
+	end
+
+	def self.user_set_bookmark_count
+		clause = "MATCH (user:User) WITH user "\
+			"OPTIONAL " + Bookmark.match_path("book") + "WHERE label.key <> \'" + Bookmark::Type::FromFacebook.get_key + "\' AND label.key <> \'" + Bookmark::Type::Visited.get_key + "\' "\
+			" WITH user, COUNT(DISTINCT(bookmark_node)) as bookmark_node_count "\
+				"SET user.bookmark_count = bookmark_node_count"
+		clause.execute
 	end
 
 	def self.make_book_and_article_shelves
@@ -58,10 +88,10 @@ module GraphHelper
 		delete_clause.execute
 
 		starting_book_id = Constant::Id::BestBook.to_i
-		match_clause = " MATCH (book) WHERE ID(book) = " + starting_book_id.to_s + " WITH book MATCH  (last:Book)-[:Next_book]->(book) WITH book, last MATCH path = (book)-[:Next_book*]->(last) " 
+		match_clause = " MATCH (book) WHERE ID(book) = " + starting_book_id.to_s + " WITH book MATCH  (last:Book)-[:NextBook]->(book) WITH book, last MATCH path = (book)-[:NextBook*]->(last) "
 		extract_clause = " WITH path, EXTRACT (n IN nodes(path)|n) AS books UNWIND books AS book WITH book WHERE NOT (book)-[:NextInCategory]-() "
 		collect_categorised = Category::Root.match_books_root + " WITH DISTINCT root_category ,COLLECT(book) AS books "
-		create_links = " FOREACH(i in RANGE(0, length(books)-2) |  FOREACH(p1 in [books[i]] |  FOREACH(p2 in [books[i+1]] |  MERGE (p1)-[:NextInCategory{from_category:root_category.uuid}]->(p2)))) WITH root_category, HEAD(books) as most_popular, LAST(books) as least_popular MERGE (least_popular)-[:NextInCategory{from_category:root_category.uuid}]->(root_category) MERGE (root_category)-[:NextInCategory{from_category:root_category.uuid}]->(most_popular)  "		
+		create_links = " FOREACH(i in RANGE(0, length(books)-2) |  FOREACH(p1 in [books[i]] |  FOREACH(p2 in [books[i+1]] |  MERGE (p1)-[:NextInCategory{from_category:root_category.uuid}]->(p2)))) WITH root_category, HEAD(books) as most_popular, LAST(books) as least_popular MERGE (least_popular)-[:NextInCategory{from_category:root_category.uuid}]->(root_category) MERGE (root_category)-[:NextInCategory{from_category:root_category.uuid}]->(most_popular) "
 		clause = match_clause + extract_clause + collect_categorised + create_links
 		info = clause.execute[0]
 	end
@@ -71,7 +101,7 @@ module GraphHelper
 		delete_clause.execute
 
 		starting_book_id = Constant::Id::BestBook.to_i
-		match_clause = " MATCH (book) WHERE ID(book) = " + starting_book_id.to_s + " WITH book MATCH  (last:Book)-[:Next_book]->(book) WITH book, last MATCH path = (book)-[:Next_book*]->(last) " 
+		match_clause = " MATCH (book) WHERE ID(book) = " + starting_book_id.to_s + " WITH book MATCH  (last:Book)-[:NextBook]->(book) WITH book, last MATCH path = (book)-[:NextBook*]->(last) " 
 		extract_clause = " WITH path, EXTRACT (n IN nodes(path)|n) AS books UNWIND books AS book WITH book WHERE NOT (book)-[:NextInEra]-() "
 		collect_categorised = Era.match_books + " WITH DISTINCT era, COLLECT(book) AS books "
 		create_links = " FOREACH(i in RANGE(0, length(books)-2) |  FOREACH(p1 in [books[i]] |  FOREACH(p2 in [books[i+1]] |  MERGE (p1)-[:NextInEra{from_era:ID(era)}]->(p2)))) WITH era, HEAD(books) as most_popular, LAST(books) as least_popular MERGE (least_popular)-[:NextInEra{from_era:ID(era)}]->(era)-[:NextInEra{from_era:ID(era)}]->(most_popular) "		
@@ -90,7 +120,7 @@ module GraphHelper
 		set_root.execute
 		while !blogs_set
 			latest_blog = Blog.get_latest_blog.execute[0]
-			Blog.handle
+			BlogsHelper.handle
 			updated_latest_blog = Blog.get_latest_blog.execute[0]
 			if latest_blog["blog_url"] == updated_latest_blog["blog_url"]
 				blogs_set = true
@@ -261,6 +291,160 @@ module GraphHelper
 		end
 	end
 
+	def self.same_property(node1,node2,prop)
+		"(" + node1 + "." + prop +" = " + node2 + "." + prop +")"
+	end
+	def self.not_has(node, property)
+		"(NOT(has(" +node + "." + property + ")))"		
+	end
+
+	def self.match_duplicate_authors_conditions (original, duplicate)
+		"(" +GraphHelper.same_property(original,duplicate,"gr_url") + " OR "\
+		"((" + GraphHelper.not_has(original,"gr_url") + " OR " + GraphHelper.not_has(duplicate,"gr_url") + ") AND " + GraphHelper.same_property(original,duplicate,"url") + ")  OR "\
+		"((" + GraphHelper.not_has(original,"gr_url") + " OR " + GraphHelper.not_has( duplicate,"gr_url") + ") AND (" + GraphHelper.not_has(original,"url") + " OR " + GraphHelper.not_has( duplicate,"url") + ") AND (" +GraphHelper.same_property(original,duplicate,"wiki_url") + "))) "
+	end
+	
+	def self.set_original_author_properties (original, duplicate)
+		clause = ""\
+		" OPTIONAL MATCH(" + duplicate + ")-[wrote:Wrote]->(books:Book) "\
+		" FOREACH (book in ( CASE WHEN books IS NULL THEN [] ELSE [books] END)| "\
+		" MERGE(" + original + ")-[:Wrote]->(book)" \
+		" ) "\
+		" DELETE wrote "\
+		" WITH " + original + "," + duplicate + " "\
+		" "\
+		" OPTIONAL MATCH(" + duplicate + ")<-[is_about:IsAbout]-(blogs:Blog) "\
+		" FOREACH (blog in ( CASE WHEN blogs IS NULL THEN [] ELSE [blogs] END)| "\
+		" MERGE(" + original + ")<-[:IsAbout]-(blog)" \
+		" ) "\
+		" DELETE is_about "\
+		" WITH " + original + "," + duplicate + " "\
+		" "\
+		" OPTIONAL MATCH(" + duplicate + ")-[answered:Answered]->(questions:Question) "\
+		" FOREACH (question in ( CASE WHEN questions IS NULL THEN [] ELSE [questions] END)| "\
+		" MERGE(" + original + ")-[:Answered]->(question)" \
+		" ) "\
+		" DELETE answered "\
+		" WITH " + original + "," + duplicate + " "\
+		" "\
+		" OPTIONAL MATCH(" + duplicate + ")<-[follows:OfAuthor]-(followsnodes:FollowsNode) "\
+		" FOREACH (followsnode in ( CASE WHEN followsnodes IS NULL THEN [] ELSE [followsnodes] END)| "\
+		" MERGE(" + original + ")<-[:OfAuthor]-(followsnode) " \
+		" ON CREATE SET " + original + ".follow_count = CASE WHEN " + GraphHelper.not_has("original","follow_count") + "THEN 1 ELSE " + original + ".follow_count + 1 END, "\
+		" followsnode.author_id = ID(" + original + ") "\
+		" ) "\
+		" DELETE follows "\
+		" WITH " + original + "," + duplicate + " "\
+		" OPTIONAL MATCH (" + duplicate + ")-[r]-() "\
+		" DELETE "+ duplicate + ",r "\
+		" RETURN ID(original) AS id"
+		clause
+		
+	end
+	def self.copy_properties_author(original_id,duplicate_id)
+		dup = ("MATCH (duplicate:Author) WHERE ID(duplicate) = " + duplicate_id.to_s + " RETURN duplicate").execute[0]["duplicate"]["data"]
+		clause = "MATCH (orig:Author),(dup:Author) WHERE ID(orig) = " + original_id.to_s + "  AND ID(dup) = "+duplicate_id.to_s+" WITH orig, dup "
+		dup.keys.each do |prop|
+			if (dup[prop].is_a? String)
+				clause += ", (CASE WHEN (not(has(orig."+prop+")) OR length(orig."+prop+") <length(dup."+prop+")) THEN dup."+prop+" ELSE orig."+prop+" END) AS "+prop+" "
+			else
+				clause += ", (CASE WHEN (not(has(orig."+prop+"))) THEN dup."+prop+" ELSE orig."+prop+" END) AS "+prop+" "
+			end					
+		end
+		dup.keys.each do |prop|
+			clause += "SET orig."+prop+" = "+prop+" "					
+		end 		
+		clause.execute
+	end
+
+	def self.merge_duplicate_authors_in_range_auto_index(starting_regex)
+		puts "Removing duplicate authors with search_index starting with: " + starting_regex
+		clause = "START original=node:node_auto_index('indexed_main_author_name:" + starting_regex +"*" + "')  WITH original "\
+			"START duplicate = node:node_auto_index('indexed_main_author_name:" + starting_regex +"*" + "') "\
+			"WHERE ( (ID(original) <> ID(duplicate)) "\
+			"AND " + GraphHelper.match_duplicate_authors_conditions("original","duplicate") + " ) "\
+				" RETURN ID(original),ID(duplicate) LIMIT 1"
+		output = clause.execute
+		if (output.length >0)
+			id_orig = output[0]["ID(original)"]
+			id_dup = output[0]["ID(duplicate)"]
+			GraphHelper.copy_properties_author(id_orig,id_dup)
+			clause = "MATCH (original:Author),(duplicate:Author) WHERE "\
+				"ID(original) = " + id_orig.to_s + " AND ID(duplicate) = " + id_dup.to_s + " "\
+				"WITH original,duplicate  "\
+				"" + GraphHelper.set_original_author_properties("original","duplicate")
+			output = clause.execute
+		end
+		if(output.nil? || output.length == 0 || !(output[0].keys.include? "id"))
+			matched = 0
+		else
+			matched = 1
+		end
+		matched
+	end
+
+	def self.merge_duplicate_authors_in_range(starting_regex)
+		puts "Removing duplicate authors with search_index starting with: " + starting_regex
+		clause = "MATCH (original:Author),(duplicate:Author) WHERE ("\
+				"(original.search_index =~" + "\'" + starting_regex + ".*\'" + ") AND (duplicate.search_index =~ " + "\'" + starting_regex + ".*\'" + ")  AND (ID(original) <> ID(duplicate)) "\
+				"AND " + GraphHelper.match_duplicate_authors_conditions("original","duplicate") + " ) "\
+				" RETURN ID(original),ID(duplicate) LIMIT 1"
+		output = clause.execute		
+		if (output.length >0)
+			id_orig = output[0]["ID(original)"]
+			id_dup = output[0]["ID(duplicate)"]
+			GraphHelper.copy_properties_author(id_orig,id_dup)
+			clause = "MATCH (original:Author),(duplicate:Author) WHERE "\
+				"ID(original) = " + id_orig.to_s + " AND ID(duplicate) = " + id_dup.to_s + " "\
+				"WITH original,duplicate  "\
+				"" + GraphHelper.set_original_author_properties("original","duplicate")		
+			output = clause.execute
+		end
+		if(output.nil? || output.length == 0 || !(output[0].keys.include? "id"))
+			matched = 0
+		else
+			matched = 1
+		end
+		matched
+	end
+	
+	def self.next_regex(first_letter, second_letter, third_letter)
+		if (third_letter == 'z')
+			third_letter = 'a'
+			if(second_letter == 'z')
+				first_letter = first_letter.ord.next.chr
+				second_letter = 'a'
+			else
+				second_letter = second_letter.ord.next.chr
+			end
+		else
+			third_letter = third_letter.ord.next.chr
+		end
+		[first_letter,second_letter, third_letter]
+	end
+
+	def self.merge_duplicate_authors		
+		author_id_key = 'dup_author_regex'		
+		if(!$redis[author_id_key].nil?)			
+			cur_state = $redis[author_id_key]
+			fl = cur_state[0]
+			sl = cur_state[1]
+			tl = cur_state[2]
+		else
+			$redis[author_id_key] = "aaa"
+			fl = "a"
+			sl = "a"
+			tl = "a"
+		end
+		while (!(fl == 'z' && sl == 'z' && tl == 'z'))
+			matched = GraphHelper.merge_duplicate_authors_in_range_auto_index("" + fl + sl + tl)
+			if(matched == 0 )				
+				(fl,sl,tl) = GraphHelper.next_regex(fl,sl,tl)
+				$redis[author_id_key] = "" + fl + sl + tl
+			end
+		end
+	end
+
 	def update_follow_counts_for_user
 		clause = User.match + UsersUser.match + " WITH user, COUNT(DISTINCT(friend)) as follows_count RETURN ID(user), follows_count "
 		clause.execute
@@ -273,6 +457,41 @@ module GraphHelper
 
 	def self.set_author_feed
 		clause = "MATCH (author:Author) MERGE (author)-[r4:AuthorFeedNext]->(author) "
+		clause.execute
+	end
+
+	def self.set_author_books_count
+		end_id_author, start_id_author = Author.get_max_min_id
+		author_id_key = 'set_author_books_count'
+		if(!$redis[author_id_key].nil?)
+			cur_state = $redis[author_id_key]
+			fl = cur_state[0]
+			sl = cur_state[1]
+		else
+			$redis[author_id_key] = "aa"
+			fl = "a"
+			sl = "a"
+		end
+
+		while fl != "z" && sl != "z"
+			clause = "START author=node:node_auto_index('indexed_main_author_name:" + fl + sl +"*" + "')  WITH author "\
+				"MATCH (book:Book)<-[:Wrote]-(author:Author) "\
+				"WITH COLLECT(DISTINCT(book)) AS books,author "\
+				"SET author.books_count = CASE WHEN books IS NULL THEN 0 ELSE LENGTH(books) END "
+			clause.execute
+			(tl,fl,sl) = GraphHelper.next_regex("z",fl,sl)
+			$redis[author_id_key] = "" + fl + sl
+		end
+	end
+
+	def wrong_author_links
+		clause = "MATCH (book:Book)<-[:Wrote]-(author:Author) WHERE book.author_name <> author.name RETURN COUNT(b)"
+	end
+
+	def set_user_notification
+		clause = "MATCH (user:User) WITH user "\
+			"WHERE NOT ((user)-[:NextNotification]->())"\
+			"CREATE UNIQUE (user)-[:NextNotification]->(user)"
 		clause.execute
 	end
 end

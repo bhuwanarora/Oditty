@@ -1,4 +1,4 @@
-var homeApp = angular.module('homeApp', ['ngAnimate', 'ngMaterial', 'ngMessages', 'duScroll', 'ngRoute', 'monospaced.mousewheel', 'appConstants', 'timer', 'duScroll', 'filtersApp', 'angular.filter', 'd3', 'angular-parallax', 'ngSanitize', 'ngCookies']);
+var homeApp = angular.module('homeApp', ['ngAnimate', 'ngMaterial', 'ngMessages', 'duScroll', 'ngRoute', 'monospaced.mousewheel', 'appConstants', 'timer', 'duScroll', 'filtersApp', 'angular.filter', 'angular-parallax', 'ngSanitize', 'ngCookies', 'facebook']);
 
 homeApp.config(["$routeProvider", function($routeProvider){
     $routeProvider.when('/discover', {
@@ -74,15 +74,23 @@ homeApp.config(["$mdThemingProvider", function($mdThemingProvider){
         'contrastLightColors': undefined    // could also specify this if default was 'dark'
     });
     $mdThemingProvider.theme('default')
-                      .primaryPalette('googleBlue')
+                      .primaryPalette('blue')
                       .accentPalette('googleGreen')
                       .warnPalette('googleRed')
 }]);
 
+homeApp.constant('facebookAppId', "667868653261167");
+
+homeApp.config(["FacebookProvider", "facebookAppId", function(FacebookProvider, facebookAppId){
+    var myAppId = facebookAppId;
+    FacebookProvider.init(myAppId);
+  }
+]);
+
 homeApp.run(["$rootScope", "$location", "$cookieStore", "$cookies", "$http", function($rootScope, $location, $cookieStore, $cookies, $http){
     var unauthenticated_user = getCookie("logged") == "";
     if(unauthenticated_user){
-        var closed_urls = ($location.$$absUrl.indexOf("signup") < 0) && ($location.$$absUrl.indexOf("book") < 0) && ($location.$$absUrl.indexOf("author") < 0) && ($location.$$absUrl.indexOf("community") < 0);
+        var closed_urls = ($location.$$absUrl.indexOf("signup") < 0) && ($location.$$absUrl.indexOf("book") < 0) && ($location.$$absUrl.indexOf("author") < 0) && ($location.$$absUrl.indexOf("communities") < 0) && ($location.$$absUrl.indexOf("home") < 0) && ($location.$$absUrl.indexOf("room") < 0) && ($location.$$absUrl.indexOf("news") < 0) && ($location.$$absUrl.indexOf("news_group") < 0) && ($location.$$absUrl.indexOf("infinity") < 0) && ($location.$$absUrl.indexOf("publisher") < 0) && ($location.$$absUrl.indexOf("search") < 0) && ($location.$$absUrl.indexOf("profile") < 0);
         if(closed_urls){
             // $cookieStore.put('redirect_url', $location.$$absUrl);
             setCookie("redirect_url", $location.$$absUrl);
@@ -113,7 +121,7 @@ function deleteCookie(name){
     setCookie(name, "", -1);
 }
 
-var _deferred_request = function(url, $q, $http){
+var _deferred_request = function(url, $q, $http, search_service_url){
     var deferred = $q.defer();
     var success_callback = function(result){
         return deferred.resolve(result.data); 
@@ -123,7 +131,13 @@ var _deferred_request = function(url, $q, $http){
             alert("Something went wrong. Our developers are working on this error.");
         }
     }
-    $http.get(url).then(success_callback, error_callback);
+    if(angular.isDefined(search_service_url)){
+        // $http.defaults.headers.config.withCredentials = true;
+        $http.get(search_service_url + url, {"withCredentials": true}).then(success_callback, error_callback);
+    }
+    else{
+        $http.get(url).then(success_callback, error_callback);
+    }
     return deferred.promise;   
 }
 

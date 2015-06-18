@@ -2,10 +2,7 @@
                     ng-show="shelf_loading"
                     md-mode="indeterminate">
 </md-progress-linear>
-<section>
-	<div class="less_important" layout-padding hide-sm hide-md>
-		Article Shelves
-	</div>
+<section layout-padding>
 	<article-shelf shelf="shelf"
 		ng-repeat="shelf in articles_grouped_by_shelves">
 	</article-shelf>

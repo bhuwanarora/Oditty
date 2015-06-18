@@ -1,12 +1,12 @@
-<md-content ng-controller="homeController" check-scroll-bottom="get_community_feed()" id="home">
-	<div layout="row" layout-wrap>
-	    <div flex="10" hide-sm flex-md="10"></div>
-	    <div flex="80" flex-sm="100" flex-md="80">
-	        <div ng-include src="'/assets/angular/html/home/main.html'"></div>
-	    </div>
-	    <div flex="10" hide-sm flex-md="10"></div>
-	</div>
-</md-content>
+
+<div layout="row" layout-wrap>
+    <div flex="10" hide-sm flex-md="10"></div>
+    <div flex="80" flex-sm="100" flex-md="80">
+        <div ng-include src="'/assets/angular/html/home/main.html'"></div>
+    </div>
+    <div flex="10" hide-sm flex-md="10"></div>
+</div>
+
 <style>
 	a:hover{
 		text-decoration: underline!important;
@@ -14,9 +14,7 @@
 
     .communities{
         order: 2;
-        margin-top: -70px;
         z-index: 1;
-        background-color: transparent;
     }
 
     .feed{
@@ -72,9 +70,9 @@
         font-size: 0.9em;
     }
 
-    .communities md-list-item{
+    .communities .community_circle{
         height: auto;
-        width: 100px;
+        max-width: 150px;
         border-bottom: 1px solid #f5f5f5;
         text-align: center;
     }

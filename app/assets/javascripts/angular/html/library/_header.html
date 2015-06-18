@@ -1,5 +1,5 @@
 <div ng-controller="filtersController">
-    <md-subheader class="md-primary filters_header">
+    <div class="md-primary filters_header">
         <section layout="row" show-sm hide layout-align="space-between center" layout-fill>
             <md-button ng-click="show_left_nav($event)" class="clear_button" ng-show="info.infinity">
                 Sort by
@@ -18,14 +18,18 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
         </section>
+        <div layout-padding></div>
+        <div layout-padding></div>
+        <div layout-padding></div>
         <section layout="row" hide-sm layout-align="center center" layout-wrap>
             <div flex="10" flex-md="5"></div>
-            <div layout="row" layout-align="center center" ng-include src="'/assets/angular/html/library/shared/_filters.html'" 
+            <div layout="row" layout-align="center center" 
+                 ng-include src="'/assets/angular/html/library/shared/_filters.html'"
                  class="z-index-1" 
                  flex="80" flex-md="90"></div>  
             <div flex="10" flex-md="5"></div>
         </section>
-    </md-subheader>
+    </div>
     <md-sidenav class="md-sidenav-left md-whiteframe-z2 left_nav" md-component-id="sort_by_sidenav">
         <br/>
         <div flex="100" ng-include src="'/assets/angular/html/library/shared/_left_panel.html'" layout-fill></div>
@@ -38,10 +42,6 @@
 
 
 <style>
-/*    md-autocomplete ul{
-        z-index: 1;
-    }
-*/
     .filters_header md-autocomplete ul li{
         line-height: 16px;
         padding: 10px 15px;

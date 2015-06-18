@@ -1,4 +1,4 @@
-homeApp.directive('bookShelf', ["$rootScope", "roomService", "ColorConstants", '$mdDialog', function($rootScope, roomService, ColorConstants, $mdDialog){
+homeApp.directive('bookShelf', ["$rootScope", "roomService", "ColorConstants", '$mdDialog', 'sharedService', function($rootScope, roomService, ColorConstants, $mdDialog, sharedService){
     return {
         restrict: 'E',
         scope: {shelf: '=', info: '='},
@@ -9,14 +9,15 @@ homeApp.directive('bookShelf', ["$rootScope", "roomService", "ColorConstants", '
             }
 
             $scope.show_book_dialog = function(book, event){
-                $rootScope.active_book = book;
-                $rootScope.active_book.show_info_only = true;
-                $mdDialog.show({
-                    templateUrl: '/assets/angular/html/news/book.html',
-                    scope: $scope,
-                    preserveScope: true,
-                    clickOutsideToClose: true
-                });
+                // $rootScope.active_book = book;
+                // $rootScope.active_book.show_info_only = true;
+                // $mdDialog.show({
+                //     templateUrl: '/assets/angular/html/news/book.html',
+                //     scope: $scope,
+                //     preserveScope: true,
+                //     clickOutsideToClose: true
+                // });
+                sharedService.show_book_dialog($rootScope, $scope, book, event);
             }
 
             $scope.add_books_to_shelf = function(shelf, event){

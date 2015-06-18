@@ -21,3 +21,15 @@ homeApp.directive('newsScroller', ["$rootScope", "newsService", function($rootSc
         templateUrl: '/assets/angular/html/news/_footer.html'
     };
 }]);
+
+homeApp.directive('visitNews', ["newsService", function(newsService){
+    return{
+        restrict: 'E',
+        scope: {newsId: '='},
+        controller: ["$scope", function($scope){
+            var _init = (function(){
+                newsService.news_visited($scope.newsId);
+            }());
+        }]
+    }
+}]);

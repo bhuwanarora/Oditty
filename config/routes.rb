@@ -1,7 +1,7 @@
 require 'resque/server'
 require "sidekiq/web"
 ReadersDoor::Application.routes.draw do
-  root :to => "website#landing_page"
+  root :to => "website#home"
 
   resources :facebooks
 
@@ -37,12 +37,8 @@ ReadersDoor::Application.routes.draw do
 
   resources :website
 
-  get 'jobs'                        => 'website#jobs',          :as => "jobs"
-  get 'about'                       => 'website#about',         :as => "about"
-  get 'privacy'                     => 'website#privacy',       :as => "privacy"
-  get 'terms'                       => 'website#terms',         :as => "terms"
-  get 'advertising'                 => 'website#advertising',   :as => "advertising"
-
+  get 'how_it_works'                => 'website#how_it_works',  :as => 'how_it_works'
+  get 'publishers'                  => 'website#publishers',    :as => 'publishers'
   get 'recommended_books'     => "recommendations#books",    :as => "recommended_books"
   get 'recommendations'          => "recommendations#index",    :as => "recommendations"
 
@@ -76,19 +72,19 @@ ReadersDoor::Application.routes.draw do
   get "verify"                   => "users#verify",                   :as => "verify"   
   get "book_count"               => "books#count",                    :as => "get_book_count"
   # root :to => "website#coming_soon"
-  get 'dev'                       => "recommendations#index",         :as => "dev"
+  # get 'dev'                       => "recommendations#index",         :as => "dev"
   get 'home'                      => "website#home",                  :as => "home"
   get 'infinity'                   => "website#infinity",             :as => "infinity"
   get 'search'                    => "website#search",                :as => "search"
   get 'profile'                    => "website#profile",              :as => "profile"
-  get 'room'                      => "website#room",                  :as => "room"
+  get 'shelves'                     => "website#shelves",                  :as => "shelves"
   get 'book'                      => "website#book",                  :as => "dev_book"
   # get ':book/:id'                      => "website#book",             :as => "specific_book"
   get 'network'                   => "website#network",               :as => "network"
   get 'journey'                   => "website#journey",               :as => "journey"
   get 'customise'                 => "website#customise",             :as => "customise"
   get 'author'                    => "website#author",                :as => "author"
-  get 'community'                 => "website#community",             :as => "community"
+  get 'room'                      => "website#room",                  :as => "room"
   get 'news'                      => "website#news",                  :as => "news"
 
   get 'tree'                      => "categories#show_tree",    :as => "show_tree"
@@ -128,12 +124,14 @@ ReadersDoor::Application.routes.draw do
 
   get 'blogs'                           => "website#blogs",                     :as => "blogs"
   get 'communities'                     => "website#communities",               :as => "communities"
+  get 'personalised_suggestions'        => "website#personalised_suggestions",  :as => "personalised_suggestions"
 
   get 'signup'                          => "website#signup",                    :as => "signurep"
+  get 'news_group'                      => "website#news_group",                :as => "news_group"
 
   get "trending_community_books"        => "books#trending_community_books",     :as => "trending_community_books"
   get "delete_book_relationship"        => "books#delete_book_relationship",       :as => "delete_book_relationship"
-
+  get "help"                           => "website#help",                        :as => "help"
   post 'webhooks'                        => "website#webhooks",                  :as => "webhooks"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes"

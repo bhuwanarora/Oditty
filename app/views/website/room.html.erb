@@ -1,61 +1,19 @@
-<md-content ng-controller="roomController">
-	<!-- <div ng-include src="'/assets/angular/html/room/_header.html'" ng-hide="constant.show_book"></div> -->
-	<section layout="row" hide-sm hide-md>
-		<md-content flex="25" flex-sm="100" hide-md >
-			<book-shelves></book-shelves>
-		</md-content>
-		<md-content flex="50">
-		    <articles layout="column" ></articles>
-		</md-content>
-	    <md-content flex="25">
-		    <article-shelves></article-shelves>
-		</md-content>
-	</section>
-	<div show-sm show-md hide layout="row" layout-align="center">
-		<md-tabs md-dynamic-height class="full_width">
-			<md-tab label="Book Shelves" aria-controls="tab1-content">
-				<book-shelves layout="column" layout-align="center"></book-shelves>
-			</md-tab>
-			<md-tab label="Articles Visited" aria-controls="tab2-content">
-				<articles layout="column" ></articles>
-			</md-tab>
-			<md-tab label="Article Shelves" aria-controls="tab3-content">
-				<article-shelves layout="column" layout-align="center"></article-shelves>
-			</md-tab>
-		</md-tabs>
-	</div>
-	<!-- <book-stach></book-stach> -->
-</md-content>
-
-
-<!-- <img src="assets/table.png" class="table" hide-sm> -->
-
-<style>	
-	.table{
-		position: fixed;
-		bottom: -70px;
-		width: 46%;
-		left: 50%;
-		margin-left: -23%;
-		height: 178px;
+<section layout="row">
+	<div flex="10" hide-md hide-sm></div>
+	<div ng-include src="'/assets/angular/html/community/show.html'" 
+	         class="right_panel_container feed_margin"
+	         flex="80" flex-md="100" flex-sm="100"></div>
+	<div flex="10" hide-md hide-sm></div>
+</section>
+<style>
+	.users{
+		bottom: 0px;
+		left: 0px;
+		position: absolute;
 	}
 
-	.book_stack{
-		position: fixed;
-		bottom: 85px;
-		width: 35%;
-		left: 50%;
-		margin-left: -18%;
-		z-index: 1;
+	.max_full_width{
+		max-width: 100%;
+		max-height: 70vh;
 	}
-
-	.article{
-		width: 130px;
-		background-color: white;
-	}
-
-	.article img{
-		width: 100%;
-	}
-
 </style>

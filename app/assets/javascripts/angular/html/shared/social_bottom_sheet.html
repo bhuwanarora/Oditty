@@ -1,8 +1,10 @@
-<md-bottom-sheet class="md-list md-has-header" 
-        ng-controller="shelfController" ng-click="stop_propagation($event)">
-    <md-subheader>Share</md-subheader>
-    <md-list>
-        <md-item>
+<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right_share"
+    ng-click="stop_propagation($event)">
+    <md-toolbar class="md-primary">
+        <h1 class="md-toolbar-tools">Share</h1>
+    </md-toolbar>
+    <md-list layout="column">
+        <md-item layout-padding>
             <md-button aria-label="Facebook" class="md-button-clear"
                 class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" 
                 data-layout="link">
@@ -10,26 +12,26 @@
                 <span class="md-inline-list-icon-label">Facebook</span>
             </md-button>
         </md-item>
-        <md-item>
+        <md-item layout-padding>
             <md-button aria-label="Twitter" class="md-button-clear"  href="https://twitter.com/share" class="twitter-share-button" data-text="www.readersdoor.com" data-via="readers_door">
                 <md-inline-list-icon icon="icon-twitter"></md-inline-list-icon>
                 <span class="md-inline-list-icon-label">Twitter</span>
             </md-button>
         </md-item>
-        <md-item>
+        <md-item layout-padding>
             <md-button aria-label="Google+" class="md-button-clear">
                 <md-inline-list-icon icon="icon-google+"></md-inline-list-icon>
                 <span class="md-inline-list-icon-label">Google+</span>
             </md-button>
         </md-item>
-        <md-item>
+        <md-item layout-padding>
             <md-button aria-label="Linkedin" class="md-button-clear">
                 <md-inline-list-icon icon="icon-linkedin"></md-inline-list-icon>
                 <span class="md-inline-list-icon-label">Linkedin</span>
             </md-button>
         </md-item>
     </md-list>
-</md-bottom-sheet>
+</md-sidenav>
 
 <div id="fb-root"></div>
 <script>

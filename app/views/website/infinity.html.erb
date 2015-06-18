@@ -1,22 +1,27 @@
-<md-content ng-controller="libraryController" check-scroll-bottom="get_popular_books()" ng-model="info" 
-        class="white"
-        id="infinity_page">
-    <div ng-include src="'/assets/angular/html/library/_header.html'" ng-hide="constant.show_book"></div>
-    <section>
-        <section layout="row" layout-wrap>
-            <div flex="20" hide-sm layout="row" layout-align="end start" 
-                 ng-include src="'/assets/angular/html/library/shared/_left_panel.html'" layout-fill>
-            </div>
-            <div flex="60" flex-sm="100"
-                 ng-include src="'/assets/angular/html/library/show.html'"  
-                 layout-align="start start" layout-fill>
-            </div>
-            <div ng-include src="'/assets/angular/html/library/shared/_right_panel.html'" 
-                 flex="20" layout="column" layout-align="start start" layout-fill>
-            </div>
-        </section>
-    </section>
-</md-content>
+<div ng-include src="'/assets/angular/html/library/_header.html'" ng-hide="constant.show_book" class="primary"></div>
+<div ng-include src="'/assets/angular/html/shared/share.html'" class="primary"></div>
+<section layout="row" layout-wrap class="feed_margin">
+    <div flex="20" hide-sm hide-md layout="row" layout-align="end start"  class="background" 
+         ng-include src="'/assets/angular/html/library/shared/_left_panel.html'" layout-fill>
+    </div>
+    <div flex="60" flex-sm="100" flex-md="100"
+         ng-include src="'/assets/angular/html/library/show.html'" class="background" 
+         layout-align="center center" layout-fill>
+    </div>
+    <div ng-include src="'/assets/angular/html/library/shared/_right_panel.html'" class="background" 
+         flex="20" hide-md hide-sm layout="column" layout-align="start start" layout-fill>
+    </div>
+</section>
+<section layout="row" layout-wrap ng-if="constant.show_book"
+    ng-controller="specificBookController">
+    <div flex="20" hide-sm flex-md="10" ng-include src="'/assets/angular/html/book/_left_panel.html'" 
+        ng-if="!book.show_info_only"></div>
+    <div flex="60" flex-sm="100" flex-md="80" layout="column" layout-padding class="dark_grey">
+        <div ng-include src="'/assets/angular/html/book/show.html'" class="md-whiteframe-z4"></div>
+    </div>
+    <div flex="20" hide-sm flex-md="10" ng-include src="'/assets/angular/html/book/_right_panel.html'" 
+        ng-if="!book.show_info_only"></div>
+</section>
 
 <style>
     .subheaderdemoBasicUsage .face{
@@ -27,11 +32,10 @@
     }
 
     .filters_header{
-        background-color: white !important;
+        /*background-color: white !important;*/
         position: relative;
         box-shadow: none;
         padding: 7px;
-        border-bottom: 1px solid #DDDDDD;
     }
 
     .md-sticky-clone{

@@ -9,9 +9,10 @@
         md-items="item in info.genres"
         md-search-text-change="search_genres(search_tag.genre)"
         md-selected-item-change="select_genre(info.selected_genre)"
-        md-item-text="item.name"
-        placeholder="Subject">
-        <span md-highlight-text="search_tag.genre">{{item.name}}</span>
+        md-item-text="item.name || item.root_category_name"
+        md-min-length="0"
+        placeholder="Genre">
+        <span md-highlight-text="search_tag.genre">{{item.name || item.root_category_name}}</span>
     </md-autocomplete>
     <!-- <div class="icon_angle">
         <span class="icon-angle-down"></span>
@@ -25,6 +26,7 @@
         md-search-text-change="search_authors(search_tag.author)"
         md-selected-item-change="select_author(info.selected_author)"
         md-item-text="item.name"
+        md-min-length="0"
         placeholder="Author">
         <span md-highlight-text="search_tag.author">{{item.name}}</span>
     </md-autocomplete>
@@ -39,6 +41,7 @@
         md-items="item in info.time_groups"
         md-selected-item-change="select_publishing_year(info.selected_year)"
         md-item-text="item.name"
+        md-min-length="0"
         placeholder="Publishing Era">
         <span md-highlight-text="search_tag.time_group">{{item.name}}</span>
     </md-autocomplete>
@@ -53,7 +56,8 @@
         md-items="item in info.read_times"
         md-selected-item-change="select_reading_time(info.selected_duration)"
         md-item-text="item.name"
-        placeholder="Reading Time">
+        md-min-length="0"
+        placeholder="Duration">
         <span md-highlight-text="search_tag.read_time" md-highlight-flags="^i">{{item.name}}</span>
     </md-autocomplete>
     <!-- <div class="icon_angle">

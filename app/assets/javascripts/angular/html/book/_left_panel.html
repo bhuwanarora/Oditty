@@ -1,45 +1,22 @@
-<md-content	ng-if="constant.show_book" layout="column" 
+<div ng-if="constant.show_book" layout="column" 
 		hide-sm
-		layout-align="start end" layout-padding  
-		class="fixed_left_panel white">
+		layout-align="start end" layout-padding >
+	<div class="less_important" layout-margin>
+		Related Tags
+	</div>
 	<div layout="row" layout-align="center center" layout-margin 
 		 class="genre" 
 		 ng-repeat="genre in active_book.genres | limitTo:5">
-		<div hide-sm hide-md>{{genre}}&nbsp;&nbsp;</div>
-		<div class="grey_circle" layout-align="center center" layout="center">
+		<div hide-sm hide-md>{{::genre}}&nbsp;&nbsp;</div>
+		<!-- <div class="grey_circle" layout-align="center center" layout="center">
 			<div>{{genre | first_two | uppercase}}</div>
-		</div>
+		</div> -->
 	</div>
-</md-content>
+</div>
 
 <style>
-    .fixed_left_panel{
-        position: fixed;
-		top: 100px;
-    }
-
-	.grey_circle{
-		background-color: rgba(197, 197, 197, 0.46);
-		width: 40px;
-		height: 40px;
-		border-radius: 50%;
-		box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
-	}
-
 	.genre{
 		text-align: right;
+		text-transform: capitalize;
 	}
-
-    .genre:hover{
-    	/*text-decoration: underline;*/
-    	cursor: pointer;
-    }
-
-    .genre:hover .grey_circle{
-    	/*background-color: white;*/
-    	box-shadow: none;
-    	/*color: white;*/
-    	text-decoration: none !important;
-    }
-
 </style>
