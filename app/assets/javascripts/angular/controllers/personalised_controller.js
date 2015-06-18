@@ -164,15 +164,7 @@ homeApp.controller('personalisedController', ["$scope", "$timeout", '$rootScope'
             $timeout.cancel(authors_timeout);
         });
 
-        Facebook.api('me/books', function(response){
-            websiteService.handle_facebook_books(response);
-        });
-        Facebook.api('me/books.reads', function(response){
-            websiteService.handle_facebook_books(response);
-        });
-        Facebook.api('me/books.wants_to_reads', function(response){
-            websiteService.handle_facebook_books(response);
-        });
+       
         // Facebook.api('me/og.likes', function(response){
         //     websiteService.handle_facebook_books(response);
         // });

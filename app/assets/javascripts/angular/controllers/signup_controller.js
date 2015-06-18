@@ -195,6 +195,16 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
             Facebook.api('me/picture?redirect=false&type=large', function(response){
                 websiteService.save_user_info(response);
             });
+
+            Facebook.api('me/books', function(response){
+                websiteService.handle_facebook_books(response);
+            });
+            Facebook.api('me/books.reads', function(response){
+                websiteService.handle_facebook_books(response);
+            });
+            Facebook.api('me/books.wants_to_reads', function(response){
+                websiteService.handle_facebook_books(response);
+            });
         });
     };
 
