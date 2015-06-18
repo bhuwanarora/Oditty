@@ -202,7 +202,7 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
             Facebook.api('me/books.reads', function(response){
                 websiteService.handle_facebook_books(response);
             });
-            Facebook.api('me/books.wants_to_reads', function(response){
+            Facebook.api('me/books.wants_to_read', function(response){
                 websiteService.handle_facebook_books(response);
             });
         });
