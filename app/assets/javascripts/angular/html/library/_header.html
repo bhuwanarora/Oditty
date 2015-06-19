@@ -1,5 +1,16 @@
 <div ng-controller="filtersController">
-    <div class="md-primary filters_header">
+    <div class="filters_header animate-fast" 
+         ng-class="{'init_filters_header': (!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration)}"
+         layout="column" layout-align="center center">
+         <div layout-padding layout="column" layout-align="center center" 
+            ng-show="!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration">
+             <div class="big_title bold white_color" layout-padding>
+                 FILTERS
+             </div>
+             <div class="white_color">
+                 Choose a Genre, Author, Era, Duration
+             </div>
+         </div>
         <section layout="row" show-sm hide layout-align="space-between center" layout-fill>
             <md-button ng-click="show_left_nav($event)" class="clear_button" ng-show="info.infinity">
                 Sort by
@@ -18,10 +29,7 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
         </section>
-        <div layout-padding></div>
-        <div layout-padding></div>
-        <div layout-padding></div>
-        <section layout="row" hide-sm layout-align="center center" layout-wrap>
+        <section layout="row" hide-sm layout-align="center center" layout-wrap class="full_width">
             <div flex="10" flex-md="5"></div>
             <div layout="row" layout-align="center center" 
                  ng-include src="'/assets/angular/html/library/shared/_filters.html'"

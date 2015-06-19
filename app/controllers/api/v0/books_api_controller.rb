@@ -15,6 +15,12 @@ module Api
 				render :json => info, :status => status
 			end
 
+			def map_fb_book
+				book_data = params[:book]
+				BookApi.map_fb_book book_data
+				render :json => "Success", :status => 200
+			end
+
 			def books_on_signup
 				user_id = session[:user_id]
 				skip_count = JSON.parse(params["q"])["skip_count"]

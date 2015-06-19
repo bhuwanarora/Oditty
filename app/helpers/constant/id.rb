@@ -31,4 +31,6 @@ module Constant::Id
 	Modernism 					= 422373
 	PostModernLiterature 		= 422374
 	Contemporary				= 422375
+	FacebookAppId 				= "174275722710475"
+	GoodreadsAppId				= "2415071772"
 end
