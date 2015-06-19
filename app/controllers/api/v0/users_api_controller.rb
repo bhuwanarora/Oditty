@@ -2,6 +2,16 @@ module Api
 	module V0
 		class UsersApiController < ApplicationController
 
+			def facebook_books
+				user_id = session[:user_id]
+				if user_id
+					info = UserApi.get_facebook_books user_id
+				else
+					info = []
+				end
+				render :json => info, :status => 200
+			end
+
 			def get_info_card_data
 				info = UserApi.get_info_card_data
 				render :json => info, :status => 200

@@ -2,6 +2,10 @@ module Api
 	module V0
 		class UserApi
 
+			def self.get_facebook_books user_id
+				User.new(user_id).get_facebook_books.execute[0]
+			end
+
 			def self.set_intro_seen_status user_id, status
 				User.new(user_id).set_intro_seen_status(status)
 			end

@@ -1,12 +1,16 @@
 class User < Neo
 
+	def initialize user_id, skip_count=0
+		@id = user_id
+	end
+
+	def get_facebook_books
+		match + ReadingJourney.match_facebook_book + User.return_group(FacebookBook.basic_info)
+	end
+
 	def search_friends q
 		q.downcase!
 		match + UsersUser.follow_match + " WHERE LOWER(friend.first_name) =~ '"+q+".*' WITH friend AS user " + User.return_group(User.basic_info)
-	end
-
-	def initialize user_id, skip_count=0
-		@id = user_id
 	end
 
 	def self.match
