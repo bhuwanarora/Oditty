@@ -1,37 +1,50 @@
 module FacebookBooksHelper
-	def self.handle_books params
-		facebook_app_id = Constants::Id::FacebookAppId
-		goodreads_app_id = Constants::Id::GoodreadsAppId
+	def self.handle_books params, user_id
+		facebook_app_id = Constant::Id::FacebookAppId
+		goodreads_app_id = Constant::Id::GoodreadsAppId
 
-		books = params["data"]
+		books = params["data"] 
 		for data in books
-			publish_time = data["publish_time"]
-			start_time = data["start_time"]
-			book = data["data"]["book"]
+			book = data["data"]["book"] 
 			if data["application"]["id"] == facebook_app_id
-				(Book.merge_by_fb_id(data) + UsersBook.link_reading_journey(id) + Book.return_group(Book.basic_info)).execute 
+				book_id = FacebookBooksHelper.handle_facebook_book(data, user_id) 
 			elsif data["application"]["id"] == goodreads_app_id
-				progress = data["data"]["progress"]
-				reading_journey_info = (Book.merge_by_gr_url(data) + UsersBook.new(id).link_reading_journey + Book.return_group("COALESCE(recent_status.timestamp,0) AS timestamp, ID(reading_journey) AS id ")).execute[0]
-				UsersBook.create_progress(reading_journey_info, progress).execute 
+				book_id = FacebookBooksHelper.handle_gr_book(data, user_id) 
 			end
+			FacebookBooksHelper.set_bookmark(data["type"], user_id, book_id)
 		end
 	end
 
-	def self.handle_wants_to_reads
-		
+	def self.handle_gr_book data, user_id
+		progress = data["data"]["progress"]
+		reading_journey_info = (Book.merge_by_gr_url(data) + ReadingJourney.link_reading_journey(user_id) + Book.return_group("COALESCE(recent_status.timestamp,0) AS timestamp, ID(reading_journey) AS id , ID(book) AS book_id")).execute[0]
+		book_id = reading_journey_info['book_id']
+		progress_link = ReadingJourney.create_progress(reading_journey_info, progress)
+		if progress_link.present?
+			progress_link.execute 
+		end
+		book_id
 	end
 
-	def self.handle_facebook_book params
-		facebook_id = params["id"]
-		title = params["title"]
-		facebook_url = params["url"]
-		clause = " MERGE (book) WHERE (book:Book OR book:FacebookBook) AND book.facebook_id = " + facebook_id.to_s + " ON CREATE SET book.facebook_id = " + facebook_id.to_s + " SET book.title = \"" + title.to_s + "\" SET book.facebook_url = \"" + facebook_url + "\" SET book :FacebookBook WITH book "
-		clause
+	def self.handle_facebook_book data, user_id
+		(Book.merge_by_fb_id(data) + ReadingJourney.link_reading_journey(user_id) + Book.return_group(Book.basic_info)).execute[0]['book_id'] 
 	end
 
-	def self.handle_reading_journey
-		User.new(user_id).match + User.with_group("user", "book") + ReadingJourney.create
+	def self.set_bookmark type, user_id, book_id
+		case type 
+		when "books.wants_to_read"
+			bookmark_clause = FacebookBooksHelper.handle_wants_to_reads(user_id, book_id)
+		when "books.reads"
+			bookmark_clause = FacebookBooksHelper.handle_read(user_id, book_id)
+		end
+	end
+
+	def self.handle_wants_to_reads user_id, book_id
+		Bookmark::Type::IntendingToRead.new(user_id, book_id).news.add.execute
+	end
+
+	def self.handle_read user_id, book_id
+		Bookmark::Type::Read.new(user_id, book_id).book.add.execute
 	end
 
 	def self.handle_progress_in_reading_journey

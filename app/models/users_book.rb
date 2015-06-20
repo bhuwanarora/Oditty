@@ -95,36 +95,4 @@ class UsersBook < Neo
 	def notify_borrow
 		User.new(@user_id).match + UsersUser.match_followers + create_borrow_node + ", friend " + "WITH friend as user, borrow_node " + 	User::UserNotification.add("borrow_node")
 	end
-
-	def self.merge_reading_journey
-		" MERGE (user:User)-[has_reading_journey:HasReadingJourney]->(reading_journey:ReadingJourney{user_id: ID(user), book_id: ID(book)})-[for_book:ForBook]->(book) WITH user, book, reading_journey "
-	end
-
-	def self.optional_match_recent_reading_status
-		 " OPTIONAL MATCH (reading_journey)-[next_status:NextStatus]->(recent_status)  FOREACH (ignore IN CASE WHEN next_status IS NULL THEN [1] ELSE [] END | MERGE (reading_journey)-[next_status:NextStatus]->(reading_journey) ON CREATE SET reading_journey.timestamp = 0) WITH user, book, reading_journey, rec WITH user, book, reading_journey, recent_status "
-	end
-
-	def self.link_reading_journey user_id
-		User.new(user_id).match + ", book " + UsersBook.merge_reading_journey + UsersBook.optional_match_recent_reading_status 
-	end
-
-	def self.match_reading_journey_id id
-		" MATCH (reading_journey)-[next_status:NextStatus]->(recent_status) WHERE ID(reading_journey) = " + id + " WITH reading_journey, recent_status, next_status "
-	end
-
-	def self.create_progress reading_journey_info, progress
-		clause = " "
-		nodes = []
-		if progress.exist?
-			progress = progress.sort_by{ |hsh| hsh["percent_complete"] }
-			progress.each_with_index do |step, index|
-				if (step["timestamp"].to_i > reading_journey_info['timestamp'].to_i)
-					nodes << "node#{index}"
-					clause += " CREATE (node#{index}{percent_complete: " + step['percent_complete'].to_s + ", timestamp: " + step['timestamp'].to_s + " }) MERGE (node#{index})-[:NextStatus]->(#{nodes[-2]}) WITH " + nodes.join(", ")
-				end
-			end
-
-			clause += UsersBook.match_reading_journey_id(reading_journey_info['id']) + ", " + nodes.join(", ") + " DELETE next_status MERGE (#{nodes.first})-[:NextStatus]->(recent_status) MERGE (reading_journey)-[:NextStatus]->(#{nodes.last}) "
-		end
-	end
 end
