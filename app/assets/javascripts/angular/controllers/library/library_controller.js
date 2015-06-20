@@ -2,7 +2,9 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
 
     $scope.get_popular_books = function(){
         if(Object.keys($rootScope.filters).length > 0){
-            sharedService.filtered_books($scope);
+            if(!$scope.info.fetching_books){
+                sharedService.filtered_books($scope);
+            }
         }
         else{
             sharedService.get_popular_books($scope);

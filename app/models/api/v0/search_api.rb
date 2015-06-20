@@ -17,6 +17,12 @@ module Api
 				Search.get_top_searches
 			end
 
+			def self.search_star_genre q
+				q = q.search_ready
+				info = StarGenre.get_search_results(q).execute
+				info
+			end
+
 			private
 
             def self._get_search_clause(params)
