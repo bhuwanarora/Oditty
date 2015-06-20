@@ -22,14 +22,10 @@ class Facebook < Neo
 	end
 
 	def map data
-		original_book_id = Book.get_by_unique_index("#{data["name"].to_s.search_ready.strip}#{data["written_by"].to_s.search_ready.strip}").execute[0]['book_id'] rescue ""
-		if original_book_id.present?
-			handle_relations(original_book_id).execute
-		end  
+		" SET book.facebook_id = " + data["id"].to_s + ", book.description = \"" data["description"] + "\", book.likes = \"" + data["likes"].to_s + ", book.url = \"" + data['link'] + "\", book.talking_about_count " + data['talking_about_count'].to_s
 	end
-
-	def handle_relations original_book_id
-		relations = Facebook.get_relations(@id).execute[0]
+	
+	def handle_relations original_book_id, relations
 		clause = Book.new(original_book_id).match + " WITH book "
 		if relations.present? && relations["outgoing"].present?
 			relations["outgoing"].each do |relation|
@@ -56,7 +52,7 @@ class Facebook < Neo
 	end
 
 	def self.get_relations id
-		Facebook.new(id).match + " OPTIONAL MATCH (facebook_book)-[r]->(node) WITH facebook_book, COLLECT({ type: TYPE(r), node_id: ID(node)}) AS outgoing OPTIONAL MATCH (facebook_book)<-[r]-(node) WITH outgoing, COLLECT({ type: TYPE(r), node_id: ID(node)}) AS incoming RETURN outgoing, incoming "
+		Facebook.new(id).match + " OPTIONAL MATCH (facebook_book)-[r]->(node), (facebook_book)<-[r]-(node) WITH COLLECT({ type: TYPE(r), node_id: ID(node)}) AS outgoing, COLLECT({ type: TYPE(r), node_id: ID(node)}) AS incoming RETURN outgoing, incoming "
 	end
 
 	def self.post page

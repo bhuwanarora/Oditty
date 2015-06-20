@@ -4,7 +4,7 @@ module Api
 
 			def self.map_fb_book params
 				facebook_id = params["facebook_id"]
-				FacebookBook.new(facebook_id).map params
+				Api::V0::FacebookApi.map params, facebook_id
 			end
 
 			def self.create_thumb_request(params, user_id)

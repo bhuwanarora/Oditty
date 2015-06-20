@@ -11,6 +11,14 @@ class FacebookBook < Neo
 		" MATCH (book:FacebookBook) WHERE book.facebook_id =" + @id.to_s + " WITH book "
 	end
 
+	def merge book
+		" MERGE (book:Book :FacebookBook{fb_id: " + book["id"].to_s + "}) ON CREATE SET book.title =  \"" + book["title"].to_s + "\", book.url = \"" + book["url"].to_s + "\" ,book.type = \"" + book["type"].to_s.gsub("book.","") + "\" WITH book "
+	end
+
+	def self.merge_by_gr_url url
+		" MERGE (book:Book {gr_url: \"" + url.to_s + "\"}) WITH book "
+	end
+
 	def map params
 		facebook_id = params["id"]
 		facebook_likes = params["likes"] rescue 0
