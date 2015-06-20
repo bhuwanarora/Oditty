@@ -9,26 +9,11 @@ module FacebookBooksHelper
 			start_time = data["start_time"]
 			book = data["data"]["book"]
 			if data["application"]["id"] == facebook_app_id
-				# Search for a Book, FacebookBook with id == facebook_id
-				# if not found then Create a Separate Node with id, title, type, url
-				# (:User)-[:HasReadingJourney]->(reading_journey:ReadingJourney)-[:ForBook]->(:FacebookBook)
-				# handle_reading_journey + handle_reading_journey
-
-				# FRONTEND: now will fetch more data for these books and will send at the backend
-				# /api/v0/map_fb_book POST
-
-				# Remove these nodes, and create new links and also save the information in the Book node, and in the Reading Journey
-				# FacebookBook.new().map
+				(Book.merge_by_fb_id(data) + UsersBook.link_reading_journey(id) + Book.return_group(Book.basic_info)).execute 
 			elsif data["application"]["id"] == goodreads_app_id
 				progress = data["data"]["progress"]
-				# Search for a book with url == gr_url
-
-				# Save the progress with Reading Journey 
-				# handle_progress_in_reading_journey
-
-				# (:User)-[:HasReadingJourney]->(reading_journey:ReadingJourney)-[:ForBook]->(:Book)
-				# (reading_journey)-[:NextStatus]->(Progress{status, percentage, created_at})
-				# created_at == timestamp
+				reading_journey_info = (Book.merge_by_gr_url(data) + UsersBook.new(id).link_reading_journey + Book.return_group("COALESCE(recent_status.timestamp,0) AS timestamp, ID(reading_journey) AS id ")).execute[0]
+				UsersBook.create_progress(reading_journey_info, progress).execute 
 			end
 		end
 	end
@@ -52,5 +37,4 @@ module FacebookBooksHelper
 	def self.handle_progress_in_reading_journey
 		# ReadingJourney.create_progress
 	end
-
 end
