@@ -35,9 +35,15 @@ homeApp.controller('searchController', ["$scope", "searchService", "$location", 
 
     $scope.get_default_results = function(search_text, event){
         if(angular.isUndefined(search_text) || (search_text == "")){
-            searchService.get_top_searches().then(function(data){
-                $scope.info.search_results = data;
-            });
+            if(angular.isUndefined($scope.top_searches)){
+                searchService.get_top_searches().then(function(data){
+                    $scope.info.search_results = data;
+                    $scope.top_searches = data;
+                });
+            }
+            else{
+                $scope.info.search_results = $scope.top_searches;
+            }
         }
         event.stopPropagation();
     }
