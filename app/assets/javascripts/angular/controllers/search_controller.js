@@ -1,11 +1,12 @@
 homeApp.controller('searchController', ["$scope", "searchService", "$location", function($scope, searchService, $location){
 
-    $scope.query_search = function(search_text){    
+    $scope.query_search = function(search_text){
         if(search_text.length > 2){
             $scope.info.loading = true;
             params = {"q": search_text, "count": 4};
             searchService.raw(params).then(function(data){
                 delete $scope.info.search_results;
+                $scope.info.loading = false;
                 $scope.did_you_mean = false;
                 angular.forEach(data, function(value){
                     if(value.fuzzy){
