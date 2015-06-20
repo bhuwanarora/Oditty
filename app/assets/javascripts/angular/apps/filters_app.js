@@ -59,7 +59,7 @@ angular.module('filtersApp', [])
                     output = "News";
                 }
                 else if(community_label){
-                    output = "Community";
+                    output = "Room";
                 }
             }
             return output;
