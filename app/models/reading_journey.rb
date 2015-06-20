@@ -10,11 +10,45 @@ class ReadingJourney < Neo
 		" CREATE UNIQUE (user)-[:HasReadingJourney]->(reading_journey:ReadingJourney)-[:ForBook]->(book) CREATE UNIQUE (reading_journey)-[:NextStatus]->(reading_journey) "
 	end
 
-	def self.create_progress
-
-	end
-
 	def self.match_facebook_book
 		" MATCH (user)-[:HasReadingJourney]-(reading_journey:ReadingJourney)-[:ForBook]-(book:FacebookBook) "
+	end
+
+	def self.link_reading_journey user_id
+		User.new(user_id).match + ", book " + ReadingJourney.merge_reading_journey + ReadingJourney.optional_match_recent_reading_status 
+	end
+
+	def self.create_progress reading_journey_info, progress
+		clause = ""
+		nodes = []
+		if progress.present?
+			progress = progress.sort_by{ |hsh| hsh["percent_complete"] }
+			progress.each_with_index do |step, index|
+				if (step["timestamp"].to_i > reading_journey_info['timestamp'].to_i)
+					nodes << "node#{index}"
+					clause += " CREATE (node#{index}: Progress {percentage: " + step['percent_complete'].to_s + ", timestamp: " + step['timestamp'].to_s + " }) "
+					if index > 0
+						clause += " MERGE (node#{index})-[:NextStatus]->(#{nodes[-2]}) "
+					end
+					clause += " WITH " + nodes.join(", ")
+				end
+			end
+			if nodes.present?
+				clause += ReadingJourney.match_reading_journey_id(reading_journey_info['id']) + ", " + nodes.join(", ") + " DELETE next_status MERGE (#{nodes.first})-[:NextStatus]->(recent_status) MERGE (reading_journey)-[:NextStatus]->(#{nodes.last}) " + ReadingJourney.return_group("ID(reading_journey) AS id")
+			end
+		end
+		clause 
+	end
+
+	def self.match_reading_journey_id id
+		" MATCH (reading_journey)-[next_status:NextStatus]->(recent_status) WHERE ID(reading_journey) = " + id.to_s + " WITH reading_journey, recent_status, next_status "
+	end
+
+	def self.merge_reading_journey
+		" OPTIONAL MATCH (user)-[has_reading_journey:HasReadingJourney]->(reading_journey:ReadingJourney)-[for_book:ForBook]->(book) FOREACH(ignore IN CASE WHEN has_reading_journey IS NULL THEN [1] ELSE [] END | MERGE (reading_journey:ReadingJourney{user_id: ID(user), book_id: ID(book)}) MERGE (user)-[has_reading_journey:HasReadingJourney]->(reading_journey)-[for_book:ForBook]->(book)) WITH user, book MATCH (user)-[has_reading_journey:HasReadingJourney]->(reading_journey)-[for_book:ForBook]->(book) WITH user, book, reading_journey "
+	end
+
+	def self.optional_match_recent_reading_status
+		 " OPTIONAL MATCH (reading_journey)-[next_status:NextStatus]->(recent_status)  FOREACH (ignore IN CASE WHEN next_status IS NULL THEN [1] ELSE [] END | MERGE (reading_journey)-[next_status:NextStatus]->(reading_journey) ON CREATE SET reading_journey.timestamp = 0) WITH user, book, reading_journey, recent_status "
 	end
 end
