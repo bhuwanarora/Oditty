@@ -18,7 +18,7 @@ class Facebook < Neo
 	end
 
 	def match
-		" MATCH (facebook_book :Book :FacebookBook) WHERE facebook_book.fb_id = " + @id.to_s + " WITH facebook_book "
+		" MATCH (facebook_book :FacebookBook) WHERE facebook_book.fb_id = " + @id.to_s + " AND NOT facebook_book :Book WITH facebook_book "
 	end
 
 	def map data
