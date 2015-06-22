@@ -31,18 +31,18 @@ class Status < Neo
 			match_clause = @users_book.match
 			reading_status_value = @reading_status_value ? (@status_type.create_for(@reading_status_value)  + " WITH status ") : ""
 			book_exchange_status = @book_exchange_status ? @status_book_exchange_type.create_for(@book_exchange_status) : ""
-			set_page_count = @total_page_count ? Book.new(@book_id).set_page_count(["status"]) : ""
+			set_page_count_clause = @total_page_count ? set_page_count : ""
 		else
 			match_clause = @user.match
 			reading_status_value = ""
 			book_exchange_status = ""
-			set_page_count = ""
+			set_page_count_clause = ""
 		end
 		mentioned_users_ids = @mentioned_users_ids ? Status::Mention::MentionsUser.create_group(@mentioned_users_ids, @user_id) : ""
 		mentioned_authors_ids = @mentioned_authors_ids ? Status::Mention::MentionsAuthor.create_group(@mentioned_authors_ids, @user_id) : ""
 		hash_tags = @hash_tags ? Hashtag.create_group(@hash_tags, @user_id) : ""
 		feelings = @feelings ? Status::Feeling.create_group(@feelings, @user_id) : ""
-		match_clause + create_unique + " WITH status, status_node, user " + @user_feed.create("status_node") + ", status " + book_exchange_status + reading_status_value + mentioned_users_ids + mentioned_authors_ids + hash_tags + feelings + set_page_count + Status.return_init + Status.basic_info
+		match_clause + create_unique + " WITH status, status_node, user " + @user_feed.create("status_node") + ", status " + book_exchange_status + reading_status_value + mentioned_users_ids + mentioned_authors_ids + hash_tags + feelings + set_page_count_clause + Status.return_init + Status.basic_info
 	end
 
 	def create_unique 
@@ -86,5 +86,15 @@ class Status < Neo
 
 	def self.basic_info
 		" status.user_id AS updated_by, status.content AS status  "
+	end
+
+	def set_page_count
+		clause = " OPTIONAL MATCH (status)-[:Mentions]->(book:Book) "\
+			"WHERE HAS(status.total_page_count) AND ID(book) = " + @book_id.to_s + " "\
+			"WITH book, COLLECT(status.total_page_count) AS page_count, COUNT(status.total_page_count) AS count, status "
+		clause += "ORDER BY count DESC " + Book.limit(1) + " "
+		clause += " FOREACH (ignore IN (CASE WHEN (NOT HAS(book.page_count) AND LENGTH(page_count) > 0) THEN [1] ELSE [] END )|  "
+		clause += " SET book.page_count = HEAD(page_count)) "
+		clause
 	end
 end
