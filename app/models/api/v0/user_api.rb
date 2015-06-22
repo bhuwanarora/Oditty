@@ -32,7 +32,7 @@ module Api
 				if user_id.present?
 					clause = "WITH news" + visited.news.add
 				end
-				clause = visited.change_news_view_count + clause
+				clause = visited.set_news_view_count + clause
 				clause.execute
 			end
 

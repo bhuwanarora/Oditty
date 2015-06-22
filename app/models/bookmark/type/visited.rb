@@ -24,7 +24,7 @@ class Bookmark::Type::Visited < Bookmark::Type
 		@bookmark.add
 	end
 
-	def change_news_view_count
+	def set_news_view_count
 		News.new(@media_id).set_view_count
 	end
 
