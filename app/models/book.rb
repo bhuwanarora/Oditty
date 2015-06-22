@@ -249,8 +249,8 @@ class Book < Neo
 			clause += ", " + with_var + " "
 		end
 		clause += "ORDER BY count DESC " + Book.limit(1) + " "
-		clause += " FOREACH (ignore IN (CASE WHEN (NOT HAS(book.page_count) AND length(page_count) > 0) THEN [1] ELSE [] END )|  "
-		clause += " SET book.page_count = head(page_count)) "
+		clause += " FOREACH (ignore IN (CASE WHEN (NOT HAS(book.page_count) AND LENGTH(page_count) > 0) THEN [1] ELSE [] END )|  "
+		clause += " SET book.page_count = HEAD(page_count)) "
 		clause
 	end
 
