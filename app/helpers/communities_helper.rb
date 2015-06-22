@@ -167,12 +167,18 @@ module CommunitiesHelper
 
 	#deletes links to books for all communities before a time_stamp
 	def self.get_communities_created_before created_before
-		Community.match_by_creation_time(created_before) + " WITH community "\
+		CommunitiesHelper.match_by_creation_time(created_before) + " WITH community "\
 		"" + Community.return_group("ID(community) as id", "community.name as name ")
 	end
 
+	def self.match_by_creation_time created_before
+		"MATCH (community:Community) WHERE community.created_at <= " + created_before.to_s + " "
+	end
+
 	def self.delete_community_to_book_links id
-		Community.new(id).match + Community.delete_community_to_book_links
+		Community.new(id).match + ""\
+		"MATCH (community)-[r:RelatedBooks]->(:Book) "\
+		"DELETE r "
 	end
 
 	def self.create_book_links community_id, community_name
