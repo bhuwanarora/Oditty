@@ -45,15 +45,15 @@ module FacebookBooksHelper
 	end
 
 	def self.handle_wants_to_reads user_id, book_id
-		Bookmark::Type::IntendingToRead.new(user_id, book_id).book.add.execute
+		Bookmark::Type::IntendingToRead.new(user_id, book_id).facebook_book.add.execute
 	end
 
 	def self.handle_from_facebook user_id, book_id
-		Bookmark::Type::FromFacebook.new(user_id, book_id).book.add.execute
+		Bookmark::Type::FromFacebook.new(user_id, book_id).facebook_book.add.execute
 	end
 
 	def self.handle_read user_id, book_id
-		Bookmark::Type::Read.new(user_id, book_id).book.add.execute
+		Bookmark::Type::Read.new(user_id, book_id).facebook_book.add.execute
 	end
 
 	def self.handle_progress_in_reading_journey

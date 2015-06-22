@@ -1,7 +1,6 @@
 module Api
 	module V0
 		class BookApi
-
 			def self.map_fb_book params
 				facebook_id = params["facebook_id"]
 				Api::V0::FacebookApi.map params, facebook_id
