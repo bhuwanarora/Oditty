@@ -31,7 +31,7 @@ class Status < Neo
 			match_clause = @users_book.match
 			reading_status_value = @reading_status_value ? (@status_type.create_for(@reading_status_value)  + " WITH status ") : ""
 			book_exchange_status = @book_exchange_status ? @status_book_exchange_type.create_for(@book_exchange_status) : ""
-			set_page_count_clause = @total_page_count ? set_page_count : ""
+			set_page_count_clause = @total_page_count ? set_book_page_count : ""
 		else
 			match_clause = @user.match
 			reading_status_value = ""
@@ -88,7 +88,7 @@ class Status < Neo
 		" status.user_id AS updated_by, status.content AS status  "
 	end
 
-	def set_page_count
+	def set_book_page_count
 		clause = " OPTIONAL MATCH (status)-[:Mentions]->(book:Book) "\
 			"WHERE HAS(status.total_page_count) AND ID(book) = " + @book_id.to_s + " "\
 			"WITH book, COLLECT(status.total_page_count) AS page_count, COUNT(status.total_page_count) AS count, status "
