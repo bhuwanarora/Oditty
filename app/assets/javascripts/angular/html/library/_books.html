@@ -19,9 +19,10 @@
             md-mode="indeterminate">
     </md-progress-linear>
 
-    <div class="less_important" layout="row" layout-padding
-        layout-align="space-between center" ng-if="!constant.show_book">
+    <div class="less_important" layout="column" layout-padding layout-align="center center"
+        ng-if="!constant.show_book">
         <div>{{info.books.length}} results</div>
+        <div>Scroll to see more.</div>
     </div>
 
     <div layout-padding ng-if="info.other_info && info.other_info.name && !constant.show_book" 
