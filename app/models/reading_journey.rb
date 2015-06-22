@@ -51,4 +51,12 @@ class ReadingJourney < Neo
 	def self.optional_match_recent_reading_status
 		 " OPTIONAL MATCH (reading_journey)-[next_status:NextStatus]->(recent_status)  FOREACH (ignore IN CASE WHEN next_status IS NULL THEN [1] ELSE [] END | MERGE (reading_journey)-[next_status:NextStatus]->(reading_journey) ON CREATE SET reading_journey.timestamp = 0) WITH user, book, reading_journey, recent_status "
 	end
+
+	def self.set_start_time start_time
+		" SET reading_journey.start_time = " + start_time.to_i.to_s
+	end
+
+	def self.set_publish_time publish_time
+		" SET reading_journey.publish_time = " + publish_time.to_i.to_s
+	end
 end
