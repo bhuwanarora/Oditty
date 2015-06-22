@@ -205,8 +205,10 @@ module CommunitiesHelper
 	def self.reset_book_links created_before
 		communities = CommunitiesHelper.get_communities_created_before(created_before).execute
 		communities.each do |community|
-			CommunitiesHelper.delete_community_to_book_links(community["id"]).execute
-			CommunitiesHelper.create_book_links(community["id"], community["name"]).execute
+			if(community["name"].present?)
+				CommunitiesHelper.delete_community_to_book_links(community["id"]).execute
+				CommunitiesHelper.create_book_links(community["id"], community["name"]).execute
+			end
 		end
 	end
 
