@@ -1,5 +1,4 @@
 class FacebookBooksWorker
-	include FacebookBooksHelper
 	include Sidekiq::Worker
 	sidekiq_options :queue => :facebook_books
 	def perform params, user_id
