@@ -7,6 +7,7 @@ ReadersDoor::Application.routes.draw do
             match "fb_books_map"                           => 'website_api#fb_books_map',                     :via => [:put, :get, :post]
             match "book_lists"                             => 'website_api#book_lists',                       :via => [:put, :get, :post]
             match "genres"                                 => 'website_api#genres',                           :via => [:put, :get, :post]
+            match "categories"                             => 'website_api#categories',                       :via => [:put, :get, :post]
             match "countries"                              => 'website_api#countries',                        :via => [:put, :get, :post]
             match "times"                                  => 'website_api#times',                            :via => [:put, :get, :post]
             match "labels"                                 => 'website_api#labels',                           :via => [:put, :get, :post]

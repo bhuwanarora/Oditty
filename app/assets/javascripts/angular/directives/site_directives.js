@@ -41,7 +41,7 @@ homeApp.directive('bookEmbed', ["$rootScope", "google_public_key", function($roo
 homeApp.directive('recommend', ["$rootScope", "userService", "sharedService", function($rootScope, userService, sharedService){
     return{
         restrict: 'E',
-        scope: {user: '=', book: '=', usersList: '='},
+        scope: {user: '=', book: '='},
         controller: ['$scope', function($scope){
             $scope.recommend_friend = function(){
                 var friends_id = $scope.user.id;
@@ -51,6 +51,12 @@ homeApp.directive('recommend', ["$rootScope", "userService", "sharedService", fu
                     $scope.recommending = false;
                 });
             }
+
+            var _init = function(){
+                $scope.recommending = false;
+            }
+
+            _init();
         }],
         templateUrl: '/assets/angular/html/shared/recommend.html'
     }
@@ -161,7 +167,7 @@ homeApp.directive('setFocus', ["$timeout", "$parse", "$rootScope", function($tim
                 	       element[0].value = String.fromCharCode($rootScope.keyCode);
               	         }
                         element[0].focus();
-                        // $speechSynthetis.speak("You are at Reader's Door. How can I help you?", 'en-UK');
+                        // $speechSynthetis.speak("You are at ReadersDoor. How can I help you?", 'en-UK');
                     });
                 }
             });

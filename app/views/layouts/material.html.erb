@@ -153,7 +153,7 @@
                 
             <% end %>
 
-            <% if @infinity %>
+            <% if @filters %>
                 <script src="assets/angular/services/time_group_service.js"></script>
                 <script src="assets/angular/services/reading_time_service.js"></script>
                 
@@ -168,6 +168,7 @@
             <% end %>
 
             <% if @author %>
+                <script src="assets/angular/directives/author_directives.js"></script>
                 <script src="assets/angular/controllers/author_controller.js"></script>
             <% end %>
 
@@ -192,7 +193,6 @@
             <% end %>
 
             <div ng-if="info.hide_signin">
-                
                 <script src="assets/min/angular/controllers/signin_group.min.js"></script>
             </div>
             
@@ -232,7 +232,7 @@
                 <script src="assets/min/angular/controllers/book_group.min.js"></script>
             <% end %>
 
-            <% if @infinity %>
+            <% if @filters %>
                 <script src="assets/min/angular/controllers/infinity_group.min.js"></script>
             <% end %>
 
@@ -291,14 +291,14 @@
                 <md-content class="white" flex ng-controller="homeController">
             <% elsif @room %>
                 <md-content ng-controller="communityController" id="community" class="white">
-            <% elsif @infinity %>
+            <% elsif @filters %>
                 <md-content ng-controller="libraryController" 
-                    check-scroll-bottom="get_popular_books()" ng-model="info" id="infinity_page">
+                    check-scroll-bottom="get_popular_books()" ng-model="info" id="infinity_page" class="white">
             <% elsif @shelves %>
                 <md-content ng-controller="roomController">
             <% elsif @author %>
                 <md-content ng-controller="authorController" layout="row" layout-wrap class="white"
-                    check-scroll-bottom="get_books()" ng-keydown="keypress_scroll($event)">
+                    check-scroll-bottom="load_books()" ng-keydown="keypress_scroll($event)">
             <% elsif @profile %>
                 <md-content ng-controller="profileController" check-scroll-bottom="get_feed()" class="white">
             <% elsif @search %>
@@ -311,17 +311,17 @@
                 <md-content ng-controller="publishersController">
             <% end %>
                     <div ng-show="info.mobile_search" flex>
-                        <div class="header <% if @profile || @shelves || @network %>yellow<% end %>">
+                        <div class="header <% if @profile || @shelves || @network || @filters %>yellow<% end %>">
                             <% if @home || @signup %>
                                 <div ng-include src="'/assets/angular/html/shared/home_header.html'"></div>
                             <% else %>
                                 <div ng-include src="'/assets/angular/html/shared/header.html'"></div>
                             <% end %>
-                            <% unless @home || @profile || @network || @infinity || @signup || @publishers || @news_group %>
+                            <% unless @home || @profile || @network || @filters || @signup || @publishers || @news_group || @personalised_suggestions%>
                                 <div ng-include src="'/assets/angular/html/shared/share.html'"></div>
                             <% end %>
                         </div>
-                        <div ng-hide="info.show_share || info.show_book_share">
+                        <div ng-hide="info.show_share || info.show_book_share" id="yield" class="animate-fast">
                             <%= yield %>
                         </div>
                     </div>

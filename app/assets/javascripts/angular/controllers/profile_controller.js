@@ -5,6 +5,10 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
         });
 	}
 
+	$scope.toggle_genres = function(){
+		$scope.show_genres = !$scope.show_genres;
+	}
+
 	$scope.get_feed = function(){
         $scope.info.selectedIndex = 1;
 		if(!$scope.info.loading){
@@ -34,7 +38,12 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 						message = "Gave "+value.node.content + " rating on 10.";
 						break;
 					case "FollowsNode":
-						message = "Joined room.";
+						if(angular.isDefined(value.community)){
+							message = "Joined a room.";
+						}
+						else if(angular.isDefined(value.author)){
+							message = "Followed an author.";
+						}
 						break;
 					case "RecommendNode":
 						message = "Recommended this book.";
@@ -227,5 +236,6 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
         	_handle_me();
         }
        _get_feed();
+
     }());
 }]);

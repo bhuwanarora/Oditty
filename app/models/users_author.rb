@@ -4,6 +4,10 @@ class UsersAuthor < Neo
 		@user_id = user_id
 	end
 
+	def self.merged_viewed
+		" MERGE (user)-[:Viewed{created_at:" + Time.now.to_i.to_s + "}]->(author) WITH user, author "
+	end
+
 	def match
 		" MATCH (user:User), (author:Author) WHERE ID(user) = " + @user_id.to_s + " AND ID(author) = " + @author_id.to_s + " WITH author, user "
 	end

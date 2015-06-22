@@ -19,3 +19,13 @@
 .vertical_expansion.ng-enter.ng-enter-active{
 	min-height: 200px;
 }
+
+#yield.ng-enter,
+#yield.ng-leave.ng-leave-active{
+	opacity: 1;
+}
+
+#yield.ng-leave,
+#yield.ng-enter.ng-enter-active{
+	opacity: 0;
+}

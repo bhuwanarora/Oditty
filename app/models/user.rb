@@ -1,19 +1,23 @@
 class User < Neo
 
+	def initialize user_id, skip_count=0
+		@id = user_id
+	end
+
+	def get_facebook_books
+		match + ReadingJourney.match_facebook_book + " WHERE NOT book :Book " + User.return_group(FacebookBook.basic_info)
+	end
+
 	def search_friends q
 		q.downcase!
 		match + UsersUser.follow_match + " WHERE LOWER(friend.first_name) =~ '"+q+".*' WITH friend AS user " + User.return_group(User.basic_info)
-	end
-
-	def initialize user_id, skip_count=0
-		@id = user_id
 	end
 
 	def self.match
 		"MATCH (user:User) WITH user "
 	end
 
-	def self.link_primary_labels
+	def self.link_basic_labels
 		" CREATE (user)-[:Labelled{user_id:ID(user)}]->(label) WITH user, label "
 	end
 
@@ -146,7 +150,7 @@ class User < Neo
 	end
 
 	def self.handle_new(email, password=nil, verification_token=nil)
-		User.create(email, password, verification_token) + UserNotification.create_for_new_user +  User::Feed.create_first + Label.match_primary  + ", user " + User.link_primary_labels + User::UserNotification.create_for_new_user + Category::Root.match  + ", user " + User.link_root_categories + User.return_init + User.basic_info
+		User.create(email, password, verification_token) + UserNotification.create_for_new_user +  User::Feed.create_first + Label.match_basic  + ", user " + User.link_basic_labels + User::UserNotification.create_for_new_user + Category::Root.match  + ", user " + User.link_root_categories + User.return_init + User.basic_info
 	end
 
 	def get_notifications
@@ -336,5 +340,9 @@ class User < Neo
 
 	def self.get_max_min_id
 		output = "MATCH (a:User) RETURN max(ID(a)) as max_id,min(ID(a)) as min_id"
+	end
+
+	def self.set_facebook_books_retrieval_time
+		" SET user.facebook_books_retrieval_time = " + Time.now.to_i.to_s
 	end
 end

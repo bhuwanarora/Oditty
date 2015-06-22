@@ -33,11 +33,17 @@ homeApp.controller('searchController', ["$scope", "searchService", "$location", 
         }
     }
 
-    $scope.get_default_results = function(event){
-        if(angular.isUndefined($scope.search_text) || ($scope.search_text == "")){
-            searchService.get_top_searches().then(function(data){
-                $scope.info.search_results = data;
-            });
+    $scope.get_default_results = function(search_text, event){
+        if(angular.isUndefined(search_text) || (search_text == "")){
+            if(angular.isUndefined($scope.top_searches)){
+                searchService.get_top_results().then(function(data){
+                    $scope.info.search_results = data;
+                    $scope.top_searches = data;
+                });
+            }
+            else{
+                $scope.info.search_results = $scope.top_searches;
+            }
         }
         event.stopPropagation();
     }

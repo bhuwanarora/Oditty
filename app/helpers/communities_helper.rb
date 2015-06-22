@@ -28,7 +28,8 @@ module CommunitiesHelper
 				unless communities_books.blank?	
 					news_id = News.create(news_metadata).execute[0]["news_id"]
 					news_metadata["news_id"] = news_id
-					IndexerWorker.perform_async(news_id, "News")
+					params = {:type => "News", :response => news_id}
+					IndexerWorker.perform_async(params)
 
 					NewsHelper.map_topics(news_metadata["news_id"], response["Hierarchy"])
 					CommunitiesHelper.map_books(communities_books.zip(relevance), news_metadata)
@@ -101,7 +102,8 @@ module CommunitiesHelper
 				if(clause_temp.length > clause.length)
 					clause_temp += News.return_init + Community.basic_info
 					community_info = clause_temp.execute[0]
-					IndexerWorker.perform_async(community_info["id"], "Community")
+					params = {:type => "Community", :response => community_info["id"]}
+					IndexerWorker.perform_async(params)
 
 					if community_info.present? && community_info["image_url"].present? && community_info["id"].present?
 						type = "community"

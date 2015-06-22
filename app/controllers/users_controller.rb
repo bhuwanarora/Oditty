@@ -186,7 +186,7 @@ class UsersController < ApplicationController
     end
 
     def invalid_user
-        @message = "Invalid Reader's Door User Account."
+        @message = "Invalid ReadersDoor User Account."
         render 'invalid'
     end
 

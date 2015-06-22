@@ -58,13 +58,8 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
     }
 
 	$scope.toggleLeft = function(event){
-        if($scope.info.hide_signin){
-    	    $mdSidenav('left').toggle();
-            event.stopPropagation();
-        }
-        else{
-            $scope.show_signin_options(event);
-        }
+	    $mdSidenav('left').toggle();
+        event.stopPropagation();
 	};
 
 	$scope.toggleRight = function(event){
@@ -87,9 +82,9 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
         $scope.info = {};
         $scope.info.show_share = false;
         var url = $location.absUrl();
-        var communities = (url.indexOf("communities") > 0);
+        var communities = (url.indexOf("rooms") > 0);
         var personalised_suggestions = (url.indexOf("personalised_suggestions") > 0);
-        var infinity = (url.indexOf("infinity") > 0);
+        var infinity = (url.indexOf("filters") > 0);
 
         if(communities){
             $scope.active_page = 1;

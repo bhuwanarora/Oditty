@@ -34,6 +34,12 @@ module Api
 				results  = Api::V0::SearchApi.get_top_searches
 				render :json => results, :status => 200
 			end
+
+			def search_star_genre
+				query_params = params[:q].strip
+				results = Api::V0::SearchApi.search_star_genre query_params
+				render :json => results, :status => 200
+			end
 		end
 	end
 end
