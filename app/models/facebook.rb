@@ -17,44 +17,6 @@ class Facebook < Neo
 		pages
 	end
 
-	def match
-		" MATCH (facebook_book :FacebookBook) WHERE facebook_book.fb_id = " + @id.to_s + " AND NOT facebook_book :Book WITH facebook_book "
-	end
-
-	def map data
-		" SET book.facebook_id = " + data["id"].to_s + ", book.description = \"" data["description"] + "\", book.likes = \"" + data["likes"].to_s + ", book.url = \"" + data['link'] + "\", book.talking_about_count " + data['talking_about_count'].to_s
-	end
-	
-	def handle_relations original_book_id, relations
-		clause = Book.new(original_book_id).match + " WITH book "
-		if relations.present? && relations["outgoing"].present?
-			relations["outgoing"].each do |relation|
-				clause += relation['node_id'].present? ? Facebook.link_relations(relation, original_book_id, outgoing = true) : ""
-			end
-		end
-
-		if relations.present? && relations["incoming"].present?
-			relations["incoming"].each do |relation|
-				clause += relation['node_id'].present? ? Facebook.link_relations(relation, original_book_id) : ""
-			end
-		end
-		clause + match + ", book MATCH (facebook_book)-[r]-() DELETE r, facebook_book " + Book.set_facebook_book(@id) 
-	end
-
-	def self.link_relations relation, original_book_id, outgoing=false
-		clause = " MATCH (node) WHERE ID(node) = " + relation['node_id'].to_s 
-		if outgoing
-			clause += " MERGE (node)<-[:" + relation["type"] + "]-(book) "
-		else
-			clause += " MERGE (node)-[:" + relation["type"] + "]->(book) "
-		end
-		clause + " WITH book "
-	end
-
-	def self.get_relations id
-		Facebook.new(id).match + " OPTIONAL MATCH (facebook_book)-[r]->(node), (facebook_book)<-[r]-(node) WITH COLLECT({ type: TYPE(r), node_id: ID(node)}) AS outgoing, COLLECT({ type: TYPE(r), node_id: ID(node)}) AS incoming RETURN outgoing, incoming "
-	end
-
 	def self.post page
 		page.feed!(
 		 	:message => 'TEST MESSAGE',
