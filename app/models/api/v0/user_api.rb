@@ -1,7 +1,8 @@
 module Api
 	module V0
 		class UserApi
-
+			include FacebookBooksWorker
+			
 			def self.get_facebook_books user_id
 				User.new(user_id).get_facebook_books.execute[0]
 			end
