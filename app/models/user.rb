@@ -17,7 +17,7 @@ class User < Neo
 		"MATCH (user:User) WITH user "
 	end
 
-	def self.link_primary_labels
+	def self.link_basic_labels
 		" CREATE (user)-[:Labelled{user_id:ID(user)}]->(label) WITH user, label "
 	end
 
@@ -150,7 +150,7 @@ class User < Neo
 	end
 
 	def self.handle_new(email, password=nil, verification_token=nil)
-		User.create(email, password, verification_token) + UserNotification.create_for_new_user +  User::Feed.create_first + Label.match_primary  + ", user " + User.link_primary_labels + User::UserNotification.create_for_new_user + Category::Root.match  + ", user " + User.link_root_categories + User.return_init + User.basic_info
+		User.create(email, password, verification_token) + UserNotification.create_for_new_user +  User::Feed.create_first + Label.match_basic  + ", user " + User.link_basic_labels + User::UserNotification.create_for_new_user + Category::Root.match  + ", user " + User.link_root_categories + User.return_init + User.basic_info
 	end
 
 	def get_notifications
