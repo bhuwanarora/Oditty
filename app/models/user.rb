@@ -5,7 +5,7 @@ class User < Neo
 	end
 
 	def get_facebook_books
-		match + ReadingJourney.match_facebook_book + User.return_group(FacebookBook.basic_info)
+		match + ReadingJourney.match_facebook_book + " WHERE NOT book :Book " + User.return_group(FacebookBook.basic_info)
 	end
 
 	def search_friends q
