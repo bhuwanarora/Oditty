@@ -24,7 +24,7 @@
                 {{::communityFeed.title}}</a>
             </div>
             <div class="less_important">News, {{communityFeed.created_at | timestamp | date:'dd MMM'}}</div><br/>
-            <md-button ng-click="toggle_expand()"
+            <md-button aria-label="community description" ng-click="toggle_expand()"
                 class="clear community_description">
                 <div ng-bind-html="::communityFeed.description" class="wrap" ng-show="communityFeed.description"></div>
                 <div ng-show="!communityFeed.description">Expand</div>
