@@ -87,6 +87,13 @@ module Api
 				render :json => genres, :status => 200
 			end
 
+			def categories
+				user_id = session[:user_id]
+				genres = User::Predict::CategoryPrediction.new(user_id).get_favourites.execute
+                
+				render :json => genres, :status => 200
+			end
+
 			def test
 				render :json => {:message => "Success"}, :status => 200
 			end

@@ -4,7 +4,7 @@
 			<div><span class="icon-checkmark"></span></div>
 		</div>
 	</div>
-	<md-button class="info_button animate-fast" ng-click="select_genre(::genre)" aria-label="select_genre">
+	<md-button class="info_button animate-fast" ng-click="select_genre(genre)" aria-label="select_genre">
 	</md-button>
 	<img ng-src="{{::genre.url}}" class="genre_cover">
 	<br/>
@@ -24,6 +24,7 @@
 	#genres .genre_cover_gradient{
 		position: absolute;
 		z-index: 1;
+		margin-left: 10px;
 		background-color: rgba(0, 0, 0, 0.5);
 	}
 
