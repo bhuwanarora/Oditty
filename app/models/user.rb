@@ -341,4 +341,8 @@ class User < Neo
 	def self.get_max_min_id
 		output = "MATCH (a:User) RETURN max(ID(a)) as max_id,min(ID(a)) as min_id"
 	end
+
+	def self.set_facebook_books_retrieval_time
+		" SET user.facebook_books_retrieval_time = " + Time.now.to_i.to_s
+	end
 end

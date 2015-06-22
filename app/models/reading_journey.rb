@@ -15,18 +15,18 @@ class ReadingJourney < Neo
 	end
 
 	def self.link_reading_journey user_id
-		User.new(user_id).match + ", book " + ReadingJourney.merge_reading_journey + ReadingJourney.optional_match_recent_reading_status 
+		User.new(user_id).match + ", book " + ReadingJourney.merge + ReadingJourney.optional_match_recent_reading_status 
 	end
 
 	def self.create_progress reading_journey_info, progress
 		clause = ""
 		nodes = []
 		if progress.present?
-			progress = progress.sort_by{ |hsh| hsh["percent_complete"] }
+			progress = progress.sort_by{ |a| a["percent_complete"] }
 			progress.each_with_index do |step, index|
 				if (step["timestamp"].to_i > reading_journey_info['timestamp'].to_i)
 					nodes << "node#{index}"
-					clause += " CREATE (node#{index}: Progress {percentage: " + step['percent_complete'].to_s + ", timestamp: " + step['timestamp'].to_s + " }) "
+					clause += " CREATE (node#{index}: Progress {percentage: " + step['percent_complete'].to_s + ", created_at: " + step['timestamp'].to_s + " timestamp: " + Time.now.to_i.to_s + "}) "
 					if index > 0
 						clause += " MERGE (node#{index})-[:NextStatus]->(#{nodes[-2]}) "
 					end
@@ -44,8 +44,8 @@ class ReadingJourney < Neo
 		" MATCH (reading_journey)-[next_status:NextStatus]->(recent_status) WHERE ID(reading_journey) = " + id.to_s + " WITH reading_journey, recent_status, next_status "
 	end
 
-	def self.merge_reading_journey
-		" OPTIONAL MATCH (user)-[has_reading_journey:HasReadingJourney]->(reading_journey:ReadingJourney)-[for_book:ForBook]->(book) FOREACH(ignore IN CASE WHEN has_reading_journey IS NULL THEN [1] ELSE [] END | MERGE (reading_journey:ReadingJourney{user_id: ID(user), book_id: ID(book)}) MERGE (user)-[has_reading_journey:HasReadingJourney]->(reading_journey)-[for_book:ForBook]->(book)) WITH user, book MATCH (user)-[has_reading_journey:HasReadingJourney]->(reading_journey)-[for_book:ForBook]->(book) WITH user, book, reading_journey "
+	def self.merge
+		" MERGE (user)-[has_reading_journey:HasReadingJourney]->(reading_journey:ReadingJourney)-[for_book:ForBook]->(book) WITH user, book, reading_journey "
 	end
 
 	def self.optional_match_recent_reading_status

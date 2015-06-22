@@ -26,6 +26,17 @@ class Bookmark < Neo
 		self
 	end
 
+	def facebook_book
+		@media_class = Book
+		@media_feed_class = Book::BookFeed
+		@user_media_class = UsersFacebookBook
+		@media_label_class = Bookmark::Node::BookLabel
+		@media_label = "FacebookBook"
+		@shelf = ":BookShelf"
+		@media = "book"
+		self
+	end
+
 	def blog
 		@media_class = Article::BlogArticle
 		@user_media_class = UsersBlog
