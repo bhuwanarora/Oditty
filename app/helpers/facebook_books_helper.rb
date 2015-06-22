@@ -8,6 +8,7 @@ module FacebookBooksHelper
 			book = data["data"]["book"] 
 			if data["application"]["id"] == facebook_app_id
 				book_id = FacebookBooksHelper.handle_facebook_book(book, user_id) 
+				FacebookBooksHelper.set_bookmark("book.from_facebok", user_id, book_id)
 			elsif data["application"]["id"] == goodreads_app_id
 				book_id = FacebookBooksHelper.handle_gr_book(data, user_id) 
 			end
@@ -22,7 +23,7 @@ module FacebookBooksHelper
 		book_id = reading_journey_info['book_id']
 		progress_link = ReadingJourney.create_progress(reading_journey_info, progress)
 		if progress_link.present?
-			progress_link.execute 
+			progress_link.execute
 		end
 		book_id
 	end
@@ -38,11 +39,17 @@ module FacebookBooksHelper
 			bookmark_clause = FacebookBooksHelper.handle_wants_to_reads(user_id, book_id)
 		when "books.reads"
 			bookmark_clause = FacebookBooksHelper.handle_read(user_id, book_id)
+		when "books.from_facebok"
+			bookmark_clause = FacebookBooksHelper.handle_from_facebook(user_id, book_id)
 		end
 	end
 
 	def self.handle_wants_to_reads user_id, book_id
 		Bookmark::Type::IntendingToRead.new(user_id, book_id).book.add.execute
+	end
+
+	def self.handle_from_facebook user_id, book_id
+		Bookmark::Type::FromFacebook.new(user_id, book_id).book.add.execute
 	end
 
 	def self.handle_read user_id, book_id
