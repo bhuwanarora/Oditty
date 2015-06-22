@@ -5,12 +5,12 @@
 </div>
 <div ng-if="books_from_favourite_author" layout="row" layout-padding layout-sm="column">
 	<div flex="30" layout="column" flex-sm="100">
-		<md-button class="margin_top clear md-whiteframe-z1"
+		<md-button aria-label="refresh_author" class="margin_top clear md-whiteframe-z1"
 			 ng-repeat="author in books_from_favourite_author" 
 			 ng-click="refresh_data(author)">
 			 <div layout="row">
-				<img ng-src="{{author.image_url}}" layout="row" class="square">
-				<div layout-padding ng-bind-html="author.name"
+				<img ng-src="{{::author.image_url}}" layout="row" class="square">
+				<div layout-padding ng-bind-html="::author.name"
 					ng-class="{'bold': info.active_tag.name == author.name}"></div>
 			 </div>
 		</md-button>
@@ -22,7 +22,7 @@
 		</div>
 		<div layout="row" layout-wrap>
 			<section layout-margin ng-repeat="book in info.active_tag.books" >
-				<md-button class="rd_book_image_cover md-whiteframe-z3 clear"
+				<md-button aria-label="show_book_dialog" class="rd_book_image_cover md-whiteframe-z3 clear"
 					ng-click="show_book_dialog(book, $event)">
 					<div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></md-button>
 				</md-button>

@@ -85,4 +85,14 @@ class UsersBook < Neo
 			LIMIT 5 
 			ORDER BY similarity_index DESC, sb.gr_rating DESC"
 	end
+
+	def create_borrow_node
+		" MERGE (user) -[:BorrowItem]->(borrow_node:BorrowNode{book_id:" + @book_id.to_s + ", user_id:" + @user_id.to_s +  "})"\
+		"SET borrow_node.timestamp =\'" + Time.now.to_i.to_s + "\' "\
+		" WITH user, borrow_node "
+	end
+
+	def notify_borrow
+		User.new(@user_id).match + UsersUser.match_followers + create_borrow_node + ", friend " + "WITH friend as user, borrow_node " + 	User::UserNotification.add("borrow_node")
+	end
 end

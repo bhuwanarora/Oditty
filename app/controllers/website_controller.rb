@@ -56,7 +56,7 @@ class WebsiteController < ApplicationController
 		cookies.delete :logged
 		session.clear
 		@signup = true
-		render :home, :layout => "material"
+		render :home, :layout => "material_home"
 	end
 
 	def jobs
@@ -76,7 +76,7 @@ class WebsiteController < ApplicationController
 	end
 
 
-	def newsfeed_news_communities
+	def news_feed_rooms
 		session[:news_day_skip_count] = 0
 		session[:news_skip_count] = 0
 		@news_group = true
@@ -84,12 +84,12 @@ class WebsiteController < ApplicationController
 	end
 
 	### WEBSITE NEW 
-	def news_group
-		newsfeed_news_communities
+	def rooms
+		news_feed_rooms
 	end
 
 	def communities
-		newsfeed_news_communities
+		news_feed_rooms
 	end
 
 	def blogs
@@ -104,20 +104,14 @@ class WebsiteController < ApplicationController
 		end
 	end
 
-	def infinity
-		@infinity = true
+	def filters
+		@filters = true
 		render :layout => "material"
 	end
 
 	def search
-		unless session[:user_id]
-			cookies[:logged] = nil
-			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
-			redirect_to :controller => 'website', :action => 'signup'			
-		else
-			@search = true
-			render :layout => "material"
-		end
+		@search = true
+		render :layout => "material"
 	end
 
 	def shelves
@@ -249,7 +243,7 @@ class WebsiteController < ApplicationController
 
 	def home
 		@home = true
-		render :layout => "material"
+		render :layout => "material_home"
 	end
 
 	def publishers

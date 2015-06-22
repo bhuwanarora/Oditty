@@ -69,8 +69,6 @@ class String
     end
 
     def database_ready
-        self.gsub("\\","\\\\")
-            .gsub("\"","\\\"")
-            .gsub("\"",%q(\\\'))
+        self.gsub('"','\"')
     end
 end

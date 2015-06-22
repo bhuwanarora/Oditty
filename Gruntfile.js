@@ -307,6 +307,7 @@ module.exports = function(grunt) {
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/author_group.min.js":[
+                    "app/assets/javascripts/min/angular/directives/author_directives.js",
                     "app/assets/javascripts/min/angular/controllers/author_controller.js"
                 ],
 

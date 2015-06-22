@@ -1,73 +1,18 @@
-<md-list class="white md-whiteframe-z4">
-    <section layout-padding>
-        <md-list-item layout-padding class="md-3-line" layout-sm="column">
-            <img ng-src="{{author.id | author_thumb}}" 
-                 class="circular author_image"/>
-            <div layout="column" class="md-list-item-text" >
-                <div layout="row" layout-align="space-between">
-                    <div class="big_title" ng-bind-html="author.name" layout-padding></div>
-                    <md-button class=" md-button-clear md-warn" 
-                               ng-class="{'md-raised': !author.status}" 
-                               ng-click="toggle_follow()">
-                        <span ng-if="!author.status">Follow</span>
-                        <span ng-if="author.status">Following</span>
-                    </md-button>
-                </div>
-                <div ng-bind-html="author.overview" layout-padding></div>
-            </div>
-        </md-list-item>
-    </section>
-    <div ng-click="toggle_wiki()" ng-if="author.wiki_url" class="">
-        <section layout="row" layout-align="space-between" flex>
-            <div></div>
-            <div layout="row" class="pointer" layout-padding>
-                <span>More on Wikipedia</span>
-                <i class="material-icons" ng-show="show_author_wiki">expand_less</i>
-                <i class="material-icons" ng-show="!show_author_wiki">expand_more</i>
-            </div>
-        </section>
+<div layout="row" hide-sm hide-md >
+    <div flex="50" layout="column" layout-padding
+        ng-include src="'/assets/angular/html/author/feed.html'">
     </div>
-    <md-list-item ng-show="show_author_wiki">
-        <iframe ng-src="{{author.wiki_url}}" class="wiki" 
-                seamless="seamless"></iframe>
-    </md-list-item>
-
-</md-list>
-<!-- <md-list layout-wrap layout="row" hide-sm>
-    <div layout="column" flex>
-        <md-card ng-repeat="book in author.books" class="white md-whiteframe-z1"  ng-if="$even">
-            <div layout-padding>
-                <div class="big_title">Published {{book.title}}</div>
-                <div class="less_important">
-                    {{book.published_year}}
-                </div>
-            </div>
-            <book-info layout-padding book="book" info="info"></book-info>
-        </md-card>
+    <div flex="5"></div>
+    <div flex="45" class="md-whiteframe-z1" layout-padding
+        ng-include src="'/assets/angular/html/author/info.html'">
     </div>
-    <div layout="column" flex>
-        <md-card ng-repeat="book in author.books" class="white md-whiteframe-z1"  ng-if="$odd">
-            <div layout-padding>
-                <div class="big_title">Published {{book.title}}</div>
-                <div class="less_important">
-                    {{book.published_year}}
-                </div>
-            </div>
-            <book-info layout-padding book="book" info="info"></book-info>
-        </md-card>
+</div>
+<div hide show-sm show-md>
+    <div flex="100" class="md-whiteframe-z1" layout-padding
+        ng-include src="'/assets/angular/html/author/info.html'">
+        
     </div>
-</md-list> -->
-<md-list layout-wrap layout="column">
-    <div flex ng-repeat="book in author.books">
-        <md-card  class="no_shadow">
-            <div layout-padding>
-                <div class="less_important">
-                    {{book.published_year}}
-                </div>
-                <div class="bold">Published {{book.title}}</div>
-            </div>
-            <book-info layout-padding book="book" info="info"></book-info>
-        </md-card>
-        <md-divider></md-divider>
+    <div flex="100" layout="column" layout-padding
+        ng-include src="'/assets/angular/html/author/feed.html'">
     </div>
-</md-list>
+</div>

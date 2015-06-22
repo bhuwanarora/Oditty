@@ -44,7 +44,7 @@ class UsersUser < Neo
 		"recommend_node:RecommendNode{book_id:" + book_id.to_s + ", user_id:" + @user_id.to_s + ", "\
 		"friend_id:" + @friend_id.to_s + ", timestamp:\'" + Time.now.getutc.to_i.to_s + "\'})-[:Recommended]->(book) "
 	end
-	
+
 	def recommend_book book_id
 		clause = match_book book_id
 		clause += create_recommendation book_id
@@ -95,4 +95,5 @@ class UsersUser < Neo
 	def self.optional_match_invert
 		" OPTIONAL MATCH (friend)-[follows_user:FollowsUser]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(user) WITH user, friend, follows_node "
 	end
+
 end

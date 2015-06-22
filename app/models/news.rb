@@ -55,6 +55,14 @@ class News < Neo
 		" MATCH (year:Year{year:#{Time.now.year}})-[:Has_month]->(month:Month{month:#{Time.now.month}})-[:Has_day]->(day:Day{day:#{Time.now.day}}) MERGE (time:TimePeriod{quarter:\"#{(Time.now.hour / 6) * 6}-#{((Time.now.hour / 6)+1) * 6}\"})-[:FromDay]->(day) MERGE (news)-[:TimeStamp]->(time) WITH news "
 	end
 
+	def self.match
+		" MATCH (news:News) WITH news "
+	end
+
+	def set_view_count
+		match + " SET news.view_count = COALESCE(news.view_count,0) + 1 "
+	end
+
 	def self.set_indexed_title title
 		" SET news.indexed_title = \"" + title.to_s.search_ready + "\" "
 	end
@@ -116,7 +124,7 @@ class News < Neo
 	end
 
 	def self.basic_info
-		" ID(news) AS  id  ,news.url  AS url , news.image_url AS image_url, news.title AS title, news.description AS description, news.created_at AS created_at, labels(news) AS label, COALESCE(news.bookmark_count,0) AS bookmark_count "
+		" ID(news) AS  id, news.url  AS url, news.image_url AS image_url, news.title AS title, news.description AS description, news.created_at AS created_at, labels(news) AS label, COALESCE(news.bookmark_count,0) AS bookmark_count, news.view_count AS view_count"
 	end
 
 	def self.grouped_basic_info
@@ -166,10 +174,14 @@ class News < Neo
 	end
 
 	def self.get_feed skip_count, day_skip_count, region
-		 News.match_regional_temporal_news(skip_count, day_skip_count, region) + News.match_community_users + News.return_group(News.basic_info," follow_count, news.view_count AS view_count, communities[0.." + Constant::Count::CommunitiesOfNewsShown.to_s + "] AS communities ", "users[0..4] AS users")
+		 News.match_regional_temporal_news(skip_count, day_skip_count, region) + News.match_community_users + News.return_group(News.basic_info, "follow_count", "communities[0.." + Constant::Count::CommunitiesOfNewsShown.to_s + "] AS communities ", "users[0..4] AS users")
 	end
 
 	def self.get_regions
 		" MATCH (region:Region) WITH region ORDER BY region.name RETURN COLLECT({id:ID(region), name:region.name, news_count:region.news_count }) AS regions "
+	end
+
+	def self.get_popular_news_from_last_week
+		News.match_community + " WHERE ("+Time.now.to_i.to_s+" - news.created_at)/86400 < 7 " + News.return_group(News.basic_info, News.collect_map({"communities" => Community.grouped_basic_info}), "community.count AS communities_count") + News.order_init + " communities_count DESC " + News.limit(4)
 	end
 end

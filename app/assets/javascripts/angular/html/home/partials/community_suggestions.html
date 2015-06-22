@@ -1,26 +1,38 @@
-<div ng-class="{'dark_grey': show_suggestions}" layout-padding>
-	<md-card class="md-whiteframe-z1">
-		<md-card-content>
-			<div layout="row" layout-align="space-between">
-				<div class="less_important pointer" layout="row" ng-click="toggle_suggestions()">
-					<div>
-						<i class="material-icons">whatshot</i>
-					</div>
-					<div layout-padding>
-						Room Suggestions
-					</div>
-				</div>
-				<div>
-					<i class="material-icons pointer" ng-show="show_suggestions" ng-click="toggle_suggestions()">close</i>
-					<i class="material-icons pointer" ng-show="!show_suggestions" ng-click="toggle_suggestions()">add</i>
-				</div>
-				
+<div layout-padding layout="row">
+	<div flex="10" flex-md="5" hide-sm></div>
+	<div layout="column" layout-align="center center" flex="80" flex-md="90" flex-sm="100">
+		<div layout="row" class="white_color">
+			<div>
+				<i class="material-icons">whatshot</i>
 			</div>
-		</md-card-content>
-		<md-card-content ng-show="show_suggestions">
-			<join-community community="community" layout-padding layout="row" layout-align="space-between"
-				ng-repeat="community in suggest_communities" >
-			</join-community>
-		</md-card-content>
-	</md-card>
+			<div class="big_title bold">
+				&nbsp;POPULAR ROOMS
+			</div>
+		</div>
+		<div ng-show="show_suggestions" layout="row" layout-wrap layout-sm="column">
+			<div flex layout-margin>
+				<join-community community="community" 
+					layout-margin
+					ng-if="$index < 4"
+					ng-repeat="community in suggest_communities" >
+				</join-community>
+			</div>
+			<div flex layout-margin>
+				<join-community community="community" 
+					layout-margin ng-if="$index >= 4 && $index < 8"
+					ng-repeat="community in suggest_communities" >
+				</join-community>
+			</div>
+		</div>
+		<div class="white_color" layout-padding>
+			<span> · </span>
+			<span>Scroll through News</span>
+			<span> · </span>
+			<span>Discover associated Rooms you like</span>
+			<span> · </span>
+			<span>Explore relevant Books</span>
+			<span> · </span>
+		</div>
+	</div>
+	<div flex="10" flex-md="5" hide-sm></div>
 </div>

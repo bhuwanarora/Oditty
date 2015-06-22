@@ -1,4 +1,33 @@
-<div ng-include src="'/assets/angular/html/profile/_header.html'"></div>
+<div ng-include src="'/assets/angular/html/profile/_header.html'" class="md-whiteframe-z1"></div>
+<div class="genres light_grey" ng-if="!hide_follow_links" layout-margin>
+    <div layout="row" layout-align="space-between" layout-padding layout-sm="column">
+        <div layout="column">
+            <div class="big_title">
+                Select Subjects that you like.
+            </div>
+            <div class="less_important">
+                This will help us to know more about your taste.
+            </div>
+        </div>
+       
+        <!-- <div ng-click="toggle_genres()">
+            <i class="material-icons close_icon">close</i>
+        </div> -->
+        <div layout="row" layout-align="center center">
+            <a href="/customise">
+                Tell us more about you
+            </a>
+        </div>
+    </div>
+    <div ng-controller="genresController" layout="row" layout-wrap 
+        layout-padding layout-align="center">
+        <div layout="column" layout-padding class="center_text" 
+             style="width: 170px;"
+             ng-repeat="genre in info.genres  | orderBy:genre.name">
+            <div ng-include src="'/assets/angular/html/shared/partials/genre.html'"></div>
+        </div>
+    </div>
+</div>
 <section layout="row" layout-wrap>
     <div flex="20" hide-sm flex-md="15"
     	ng-include src="'/assets/angular/html/profile/left_panel.html'"></div>
@@ -12,4 +41,13 @@
 	.currently_reading md-list{
 		padding: 0px !important;
 	}
+
+    .close_icon{
+        cursor: pointer;
+        color: #333;
+    }
+
+    .close_icon:hover{
+        color: black;
+    }
 </style>

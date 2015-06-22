@@ -776,9 +776,12 @@ module Neo4jHelper
 
 	def create_linked_list
 		@neo ||= self.init
+		clause = " MATCH ()-[r:NextBook]->() DELETE r "
+		clause.execute
+
 		clause = "MATCH (book:Book) WITH book, toFloat(book.gr_rating)*toFloat(book.gr_ratings_count)*toFloat(book.gr_reviews_count) as weight ORDER BY weight DESC, toFloat(book.gr_rating) WITH collect(book) as p FOREACH(i in RANGE(0, length(p)-2) |  FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  CREATE UNIQUE (p1)-[:NextBook]->(p2)))) WITH LAST(p) AS last, HEAD(p) AS head MERGE (last)-[:NextBook]->(head)"
 		puts "adding books in form of sorted linked lists...".green
-		@neo.execute_query clause
+		clause.execute
 	end
 
 	def self.restructure_database
@@ -878,6 +881,13 @@ module Neo4jHelper
 		self.add_labels_to_existing_user
 	end
 
+	def self.set_bookshelf_label
+		clause = " MATCH (label:Label) WHERE label.key <> '" + Label.get_iownthis_key + "' AND label.key <> '" + Label.get_plantobuy_key + "' "\
+			" SET label" + Bookmark.get_articleshelf_string + " "\
+			" MATCH (label:Label) "\
+			" SET label" + Bookmark.get_bookshelf_string + " "
+		clause.execute
+	end
 
 	def self.remove_colon_from_indexed_fields
 		@neo ||= self.init

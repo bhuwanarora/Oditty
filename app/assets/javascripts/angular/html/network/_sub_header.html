@@ -1,22 +1,4 @@
-<md-tabs class="white" md-selected="selectedIndex" md-dynamic-height md-border-bottom>
-	<md-tab aria-controls="tab1-content"
-			id="tab1"
-			md-on-select="get_followers()"
-			label="{{profile_user.followed_by_count || 0}} FOLLOWERS">
-			<md-content ng-if="users_list" layout="row" 
-				layout-wrap check-scroll-bottom="load_users()"
-				ng-include src="'/assets/angular/html/network/show.html'">
-			</md-content>
-	</md-tab>
-	<md-tab aria-controls="tab2-content"
-			id="tab2"
-			md-on-select="get_users_followed()"
-			label="{{profile_user.follows_count || 0}} FOLLOWING">
-	        <md-content ng-if="users_list" layout="row" 
-				layout-wrap check-scroll-bottom="load_users()"
-				ng-include src="'/assets/angular/html/network/show.html'">
-			</md-content>
-	</md-tab>
-</md-tabs>
-<br/>
-<br/>
+<div ng-if="users_list" layout="row"
+	layout-wrap
+	ng-include src="'/assets/angular/html/network/show.html'">
+</div>

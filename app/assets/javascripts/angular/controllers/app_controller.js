@@ -1,4 +1,4 @@
-homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdBottomSheet', '$mdDialog', 'shelfService', 'userService', '$cookieStore', '$timeout', '$location', function($scope, $rootScope, $mdSidenav, $mdBottomSheet, $mdDialog, shelfService, userService, $cookieStore, $timeout, $location){
+homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdBottomSheet', '$mdDialog', 'shelfService', 'userService', '$cookieStore', '$timeout', '$location', 'feedService', function($scope, $rootScope, $mdSidenav, $mdBottomSheet, $mdDialog, shelfService, userService, $cookieStore, $timeout, $location, feedService){
 
     $scope.stop_propagation = function(event){
         event.stopPropagation();
@@ -28,7 +28,23 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
     }
 
     $scope.toggle_notifications = function(event){
-        $scope.show_notifications = !$scope.show_notifications;
+        $scope.info.notifications_seen = true;
+        $scope.info.loading = true;
+        var notifications_timeout = $timeout(function(){
+            feedService.get_notifications().then(function(data){
+                $scope.info.loading = false;
+                $scope.notifications = data;
+                angular.forEach($scope.notifications, function(value){
+                    if(value.label == "RecommendNode"){
+                        value.message = "<span>Your <a href='/profile?id="+value.notification.user_id+"'>friend</a> recommended you a <a href='/book?id="+value.notification.book_id+"'>book</a><span>.";
+                    }
+                });
+            });
+        }, 100);
+        $scope.$on('destroy', function(){
+            $timeout.cancel(notifications_timeout);
+        });
+        $mdSidenav('notifications').toggle();
         $scope.navigation_options = false;
         event.stopPropagation();
     }
@@ -42,13 +58,8 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
     }
 
 	$scope.toggleLeft = function(event){
-        if($scope.info.hide_signin){
-    	    $mdSidenav('left').toggle();
-            event.stopPropagation();
-        }
-        else{
-            $scope.show_signin_options(event);
-        }
+	    $mdSidenav('left').toggle();
+        event.stopPropagation();
 	};
 
 	$scope.toggleRight = function(event){
@@ -71,9 +82,9 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
         $scope.info = {};
         $scope.info.show_share = false;
         var url = $location.absUrl();
-        var communities = (url.indexOf("communities") > 0);
+        var communities = (url.indexOf("rooms") > 0);
         var personalised_suggestions = (url.indexOf("personalised_suggestions") > 0);
-        var infinity = (url.indexOf("infinity") > 0);
+        var infinity = (url.indexOf("filters") > 0);
 
         if(communities){
             $scope.active_page = 1;

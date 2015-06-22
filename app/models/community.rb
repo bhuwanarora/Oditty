@@ -33,7 +33,7 @@ class Community < Neo
 	end
 
 	def feed_info
-		match + Community.match_grouped_books + Community.return_group(Community.basic_info, "books_info[0..3] AS books")
+		match + Community.return_group(Community.basic_info)
 	end
 
 	def self.match_books 
@@ -123,5 +123,9 @@ class Community < Neo
 
 	def match_news_related_communities news_id
 		News.new(news_id).match + ", most_important_tag " + News.optional_match_community + " , most_important_tag  WHERE NOT ID(community) = " + @id.to_s + " WITH most_important_tag, community, has_community ORDER BY has_community.relevance DESC WITH  most_important_tag, " + Community.collect_map("other_tags" => Community.grouped_basic_info) + Article::NewsArticle.return_group(" most_important_tag ", " other_tags[0.." + (Constant::Count::CommunitiesShown+1).to_s + "] AS other_tags ")
+	end
+
+	def get_news skip_count = 0
+		match + Community.match_news +  Community.order_init + " news.created_at DESC " + Community.skip(skip_count) + Community.limit(10) + " WITH community, " + Community.collect_map("news" => News.grouped_basic_info) + Community.return_group(" news", Community.collect_map("community" => Community.grouped_basic_info))
 	end
 end

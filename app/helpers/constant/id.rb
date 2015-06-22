@@ -22,13 +22,15 @@ module Constant::Id
 	NormalReadNode	 			= 772854
 	LongReadNode	 			= 772855
 
-	OldEnglishLiterature		= 422360
-	MiddleEnglishLiterature		= 422363
-	EnglishRenaissance 			= 422367
-	NeoClassicalPeriod 			= 422368
-	Romanticism 				= 422371
-	VictorianLiterature 		= 422372
-	Modernism 					= 422373
-	PostModernLiterature 		= 422374
-	Contemporary				= 422375
+	OldEnglishLiterature		= 422359
+	MiddleEnglishLiterature		= 422362
+	EnglishRenaissance 			= 422366
+	NeoClassicalPeriod 			= 422367
+	Romanticism 				= 422370
+	VictorianLiterature 		= 422371
+	Modernism 					= 422372
+	PostModernLiterature 		= 422373
+	Contemporary				= 422374
+	FacebookAppId 				= "174275722710475"
+	GoodreadsAppId				= "2415071772"
 end

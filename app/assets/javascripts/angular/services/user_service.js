@@ -117,10 +117,6 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         }
     }
 
-    this.news_visited = function(id){
-        return _deferred_request('/api/v0/news_visited?id='+id, $q, $http);
-    }
-
     this.follow = function(id, status){
         return _deferred_request('/api/v0/follow?id='+id+"&status="+status, $q, $http);
     }

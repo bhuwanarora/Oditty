@@ -42,7 +42,7 @@ angular.module('filtersApp', [])
                 var user_label = input.labels == "User";
                 var blog_label = input.labels == "Blog";
                 var news_label = input.labels == "News";
-                var community_label = input.labels == "Room";
+                var community_label = input.labels == "Community";
                 if(book_label){
                     output = "Book";
                 }
@@ -59,7 +59,7 @@ angular.module('filtersApp', [])
                     output = "News";
                 }
                 else if(community_label){
-                    output = "Community";
+                    output = "Room";
                 }
             }
             return output;
@@ -69,7 +69,7 @@ angular.module('filtersApp', [])
         return function(input){
             var output = input;
             if(angular.isUndefined(input) || (input == "") || (input == null)){
-                output = "http://www.sessionlogs.com/media/icons/defaultIcon.png";
+                output = "/assets/user_profile.jpg";
             }
             return output;
         }
