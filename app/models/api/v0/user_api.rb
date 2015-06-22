@@ -349,7 +349,7 @@ module Api
 
 			def self.add_books_from_fb(params, user_id)
 				if params[:data].present?
-					FacebookBooksWorker.perform_async(params, user_id)
+					FacebookBookWorker.perform_async(params, user_id)
 				end
 			end
 
