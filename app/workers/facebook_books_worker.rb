@@ -2,7 +2,7 @@ class FacebookBooksWorker
 	include FacebookBooksHelper
 	include Sidekiq::Worker
 	sidekiq_options :queue => :facebook_books
-	def self.perform params, user_id
+	def perform params, user_id
 		begin
 			puts "Processing Facebook Books for User #{user_id.to_s}"
 			facebook_books_retrieval_time = (User.new(user_id).match + User.return_group("user.facebook_books_retrieval_time AS time")).execute[0]['time'] rescue ""
