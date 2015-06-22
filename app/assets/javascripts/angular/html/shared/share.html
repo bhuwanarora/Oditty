@@ -1,15 +1,44 @@
 <div ng-controller="shareController" 
     ng-show="info.mobile_search" 
     class="share_container">
-    <md-button class="md-warn md-fab md-whiteframe-z3 fixed_share "
+    <!-- <md-button class="md-warn md-fab md-whiteframe-z3 fixed_share "
                 ng-hide="active_shelf || info.show_share"
                 aria-label="Share reading journey"
                 ng-click="show_share_page($event)"
                 ng-style="type_icon_pressed">
         <span class="icon-book-alt2"></span>
-        <!-- <i class="material-icons">send</i> -->
         <md-tooltip md-direction="left">
               Share your reading journey
         </md-tooltip>
-    </md-button>
+    </md-button> -->
+    <md-fab-speed-dial md-direction="left"
+        ng-class="md-scale"
+        class="fixed_share "
+        ng-hide="active_shelf || info.show_share"
+        aria-label="Share reading journey"
+        ng-style="type_icon_pressed">
+        <md-fab-trigger>
+            <md-button aria-label="menu" class="md-fab md-warn" ng-click="show_share_page($event)">
+                <i class="material-icons">send</i>
+            </md-button>
+        </md-fab-trigger>
+        <!-- <md-fab-actions>
+            <section layout-margin>
+                <md-button aria-label="twitter" class="md-fab md-raised md-mini"
+                    ng-click="show_share_page($event)">
+                    <i class="material-icons">share</i>
+                </md-button>
+            </section>
+            <section layout-margin>
+                <md-button aria-label="facebook" class="md-fab md-raised md-mini">
+                    <span class="icon-book-alt2"></span>
+                </md-button>
+            </section>
+            <section layout-margin>
+                <md-button aria-label="Google hangout" class="md-fab md-raised md-mini">
+                    <span class="icon-book-alt2"></span>
+                </md-button>
+            </section>
+        </md-fab-actions> -->
+    </md-fab-speed-dial>
 </div>

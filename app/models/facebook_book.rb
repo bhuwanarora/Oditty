@@ -65,6 +65,6 @@ class FacebookBook < Neo
 
 		title = params["name"]
 		title_search_index = title.search_ready
-		" SET facebook_book.facebook_id = " + facebook_id.to_s + " SET facebook_book.facebook_likes = " + facebook_likes.to_s + " SET facebook_book.facebook_description = \"" + facebook_description.to_s.database_ready + "\" SET facebook_book.facebook_talking_about_count = " + facebook_talking_about_count.to_s + " SET facebook_book.facebook_likes_count = " + facebook_likes_count.to_s  
+		" SET facebook_book.facebook_id = " + facebook_id.to_s + " SET facebook_book.facebook_likes = " + facebook_likes.to_s + " SET facebook_book.facebook_description = \"" + facebook_description.to_s.database_ready + "\" SET facebook_book.facebook_talking_about_count = " + facebook_talking_about_count.to_s + " SET facebook_book.facebook_likes_count = " + facebook_likes_count.to_s  + " SET facebook_book.facebook_url = \"" + params["link"].to_s + "\""
 	end
 end

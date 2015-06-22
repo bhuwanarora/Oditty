@@ -42,8 +42,8 @@
         </md-card-content>
         
         <md-card-content class="footer" 
-            ng-if="communityFeed.id && communityFeed.expand"
-            ng-init="bookmark_object = {'id': ::communityFeed.id, 'type': 'Community'}; feed = communityFeed"
+            ng-if="communityFeed.id"
+            ng-init="bookmark_object = {'id': communityFeed.id, 'type': 'Community'}; feed = communityFeed"
             ng-include src="'/assets/angular/html/shared/partials/feed_footer.html'">
         </md-card-content>
     </md-card>
