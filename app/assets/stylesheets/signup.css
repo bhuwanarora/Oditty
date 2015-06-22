@@ -97,13 +97,16 @@
 
 .tagline{
     /*text-transform: uppercase;*/
+    width: 100%;
+    z-index: 2;
+    top: 40%;
+}
+
+.tagline .main_heading{
     color: #BABABA;
     font-weight: 800;
     line-height: 1.4em;
     font-size: 60px;
-    width: 100%;
-    z-index: 2;
-    top: 40%;
 }
 
 .tagline img{

@@ -48,7 +48,7 @@
                     ng-if="level2_loading">
                 </md-progress-circular>
                 <div layout="column" layout-align="start start">
-                    <md-button ng-repeat="option in level2_nested_options"
+                    <md-button aria-label="post_status" ng-repeat="option in level2_nested_options"
                             layout-padding
                             ng-hide="level2_loading"
                             ng-click="post_status(option, $event)" 
@@ -63,7 +63,7 @@
             <md-content ng-if="searched_books && searched_books.length > 0" 
                         layout="row" layout-wrap layout-padding class="white">
                 <div layout-padding ng-repeat="book in searched_books">
-                    <md-button ng-click="add_book(book)" class="clear book_image_cover">
+                    <md-button aria-label="add_book" ng-click="add_book(book)" class="clear book_image_cover">
                         <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
                     </md-button>
                 </div>
@@ -72,7 +72,7 @@
     </div>
 
     <div class="selected_option" layout-padding layout-align="start center" layout="row" hide show-sm>
-        <md-button ng-click="previous()"
+        <md-button aria-label="previous" ng-click="previous()"
                 ng-disabled="data.selectedIndex == 0"
                 flex="10" layout="row" layout-align="start">
             <div><span class="icon-angle-left"></span></div>
@@ -134,7 +134,7 @@
                             ng-if="level2_loading">
                         </md-progress-circular>
                         <div layout="column" layout-align="start start" layout-fill>
-                            <md-button ng-repeat="option in level2_nested_options"
+                            <md-button aria-label="post_status" ng-repeat="option in level2_nested_options"
                                     layout-padding
                                     ng-hide="level2_loading"
                                     ng-click="post_status(option, $event)" 

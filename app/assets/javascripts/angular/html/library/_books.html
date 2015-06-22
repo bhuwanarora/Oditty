@@ -19,9 +19,10 @@
             md-mode="indeterminate">
     </md-progress-linear>
 
-    <div class="less_important" layout="row" layout-padding
-        layout-align="space-between center" ng-if="!constant.show_book">
+    <div class="less_important" layout="column" layout-padding layout-align="center center"
+        ng-if="!constant.show_book">
         <div>{{info.books.length}} results</div>
+        <div>Scroll to see more.</div>
     </div>
 
     <div layout-padding ng-if="info.other_info && info.other_info.name && !constant.show_book" 
@@ -42,7 +43,7 @@
                 layout="row"
                 class="rd_book_image_cover md-whiteframe-z3"
                 ng-class="{'book': book.isBook}" >
-                <md-button class="book_grid_link" aria-label="book"
+                <md-button aria-label="show_book" class="book_grid_link" aria-label="book"
                         ng-click="show_book($event, book)">
                     <!-- <img ng-src="{{book | choose_medium_thumb}}"/> -->
                     <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'">
@@ -101,7 +102,7 @@
                     layout-margin
                     class="rd_book_image_cover md-whiteframe-z3"
                     ng-class="{'book': book.isBook}" >
-                    <md-button class="book_grid_link"
+                    <md-button aria-label="show_book" class="book_grid_link"
                             aria-label="book"
                             ng-click="show_book($event, book)">
                         <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
