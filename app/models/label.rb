@@ -60,6 +60,10 @@ class Label < Neo
 		" MATCH (label:Label{primary_label:true}) WITH label "
 	end
 
+	def self.match_basic
+		" MATCH (label:Label{basic: true}) WITH label "
+	end
+
 	def self.match_public
 		" MATCH (user)-[labelled:Labelled]->(label:Label) WHERE label.public = true WITH label "
 	end

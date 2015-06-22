@@ -15,7 +15,7 @@ homeApp.service('authorService', ["$http", "$q", "$rootScope", "WebsiteUIConstan
     }
 
     this.get_popular_authors = function(skip_count){
-        return _deferred_request('/api/v0/popular_authors?skip_count='+skip_count, $q, $http);
+        return _deferred_request('/api/v0/popular_authors?skip_count='+skip_count, $q, $http, search_service_url);
     }
 
     this.get_details = function(id, skip){

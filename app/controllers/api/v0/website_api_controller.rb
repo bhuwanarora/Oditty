@@ -82,7 +82,14 @@ module Api
 
 			def genres
 				user_id = session[:user_id]
-                genres = User::Predict::CategoryPrediction.new(user_id).get_favourites.execute
+                genres = Api::V0::WebsiteApi.get_genres(user_id)
+                
+				render :json => genres, :status => 200
+			end
+
+			def categories
+				user_id = session[:user_id]
+				genres = User::Predict::CategoryPrediction.new(user_id).get_favourites.execute
                 
 				render :json => genres, :status => 200
 			end

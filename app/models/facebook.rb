@@ -10,7 +10,7 @@ class Facebook < Neo
  		# page = FbGraph::Page.new('FbGraph').fetch(:access_token => access_token, :fields => :access_token)
  		me = FbGraph::User.me(access_token)
  		page = me.accounts.detect do |p|
-			p.name == "Reader's Door"
+			p.name == "ReadersDoor"
 		end
 		post page
 		pages = me.accounts

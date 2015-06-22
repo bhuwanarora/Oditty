@@ -5,6 +5,10 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
         });
 	}
 
+	$scope.toggle_genres = function(){
+		$scope.show_genres = !$scope.show_genres;
+	}
+
 	$scope.get_feed = function(){
         $scope.info.selectedIndex = 1;
 		if(!$scope.info.loading){
@@ -232,5 +236,6 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
         	_handle_me();
         }
        _get_feed();
+
     }());
 }]);

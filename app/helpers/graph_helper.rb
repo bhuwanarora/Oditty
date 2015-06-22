@@ -84,8 +84,8 @@ module GraphHelper
 	end
 
 	def self.set_category_linked_list
-		delete_clause = "MATCH ()-[r:NextInCategory]->() DELETE r"
-		delete_clause.execute
+		# delete_clause = "MATCH ()-[r:NextInCategory]->() DELETE r"
+		# delete_clause.execute
 
 		starting_book_id = Constant::Id::BestBook.to_i
 		match_clause = " MATCH (book) WHERE ID(book) = " + starting_book_id.to_s + " WITH book MATCH (last:Book)-[:NextBook]->(book) WITH book, last MATCH path = (book)-[:NextBook*1595212]->(last) "

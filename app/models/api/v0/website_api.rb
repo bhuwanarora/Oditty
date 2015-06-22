@@ -7,6 +7,10 @@ module Api
 				info
 			end
 
+			def self.get_genres user_id
+				User::Predict::GenrePrediction.new(user_id).get_favourites.execute
+			end
+
 			def self.save_feedback(feedback, user_id)
 				clause = "MATCH (u:User) WHERE ID(u)="+user_id.to_s+" CREATE (u)-[:GaveFeedback]->(f:Feedback) SET f.feedback_text=\""+feedback+"\", f.timestamp="+Time.now.to_i.to_s
 				clause.execute

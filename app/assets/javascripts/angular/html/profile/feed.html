@@ -4,9 +4,7 @@
   	layout-margin>
 </div>
 
-<!-- <div ng-include src="'/assets/angular/html/customise/_genres.html'" layout-padding></div> -->
-<md-list layout="column">
-	
+<md-list layout="column">	
 	<div ng-repeat="feed in personal_feed">
 	    <div ng-include src="'/assets/angular/html/profile/partials/feed_type.html'"></div>
 	    <md-divider></md-divider>
@@ -45,16 +43,6 @@
 
 
 <style>
-	.info_button{
-		width: 50px !important;
-		height: 50px !important;
-	}
-
-	.genre_cover, .genre_cover_gradient{
-		width: 50px !important;
-		height: 50px !important;
-	}
-
 	.book_image_cover, .book_backup_cover, .slider_wrapper{
         width: 80px;
         height: 110px;

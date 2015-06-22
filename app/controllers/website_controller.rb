@@ -110,14 +110,8 @@ class WebsiteController < ApplicationController
 	end
 
 	def search
-		unless session[:user_id]
-			cookies[:logged] = nil
-			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
-			redirect_to :controller => 'website', :action => 'signup'			
-		else
-			@search = true
-			render :layout => "material"
-		end
+		@search = true
+		render :layout => "material"
 	end
 
 	def shelves
