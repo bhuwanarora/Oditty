@@ -128,12 +128,12 @@ module CommunitiesHelper
 				authors = authors.sort
 				#author_string = authors.join('').search_ready
 				#unique_index = book.search_ready + author_string
-				books_id = (Book.get_by_one_author(book, authors) + Book.unwind("books") + " RETURN ID(book) AS id").execute
+				books_id = (BookHelper.get_by_one_author(book, authors) + Book.unwind("books") + " RETURN ID(book) AS id").execute
 				#book_info = (Book.get_by_unique_index(unique_index).execute)[0]
 				if books_id.present? && books_id[0].present? && books_id[0]["id"].present?
 					community_books[community] << [book,authors]
 					books_id.each do |book_id|
-						Book.new(book_id["id"]).set_author_list(authors).execute
+						BookHelper.set_author_list(authors,book_id["id"]).execute
 					end
 				end
 			end
@@ -153,11 +153,11 @@ module CommunitiesHelper
 				end
 				authors = author_list[index]
 				authors = authors.sort
-				books_id = (Book.get_by_one_author(book, authors) + Book.unwind("books") + " RETURN ID(book) AS id").execute
+				books_id = (BookHelper.get_by_one_author(book, authors) + Book.unwind("books") + " RETURN ID(book) AS id").execute
 				if books_id.present? && books_id[0].present? && books_id[0]["id"].present?
 					books_id.each do |book_id|
 						community_books[community] << book_id["id"]
-						Book.new(book_id["id"]).set_author_list(authors).execute
+						BookHelper.set_author_list(authors,book_id["id"]).execute
 					end
 				end
 			end
