@@ -97,13 +97,16 @@
 
 .tagline{
     /*text-transform: uppercase;*/
+    width: 100%;
+    z-index: 2;
+    top: 40%;
+}
+
+.tagline .main_heading{
     color: #BABABA;
     font-weight: 800;
     line-height: 1.4em;
     font-size: 60px;
-    width: 100%;
-    z-index: 2;
-    top: 40%;
 }
 
 .tagline img{
@@ -338,4 +341,35 @@ and (max-width : 800px){
     border-radius: 4rem;
     letter-spacing: 4px;
     background-size: cover;
+}
+
+@media (min-width: 1000px) and (max-width: 2200px){    
+    .profile__group .avatar-container .avatar,
+    .profile__group .avatar-container .avatar--large{
+        width: 8rem;
+        height: 8rem;
+        border-radius: 4rem;
+        letter-spacing: 4px;
+    }
+}
+
+
+@media (min-width: 550px)and (max-width:1000px){
+    .profile__group .avatar-container .avatar,
+    .profile__group .avatar-container .avatar--large{
+        width: 6rem;
+        height: 6rem;
+        border-radius: 3rem;
+        letter-spacing: 2.5px;
+    }
+}
+
+@media (max-width: 540px)and (max-height:1199px){
+    .profile__group .avatar-container .avatar,
+    .profile__group .avatar-container .avatar--large{
+        width: 5rem;
+        height: 5rem;
+        border-radius: 2.5rem;
+        letter-spacing: 2px;
+    }
 }

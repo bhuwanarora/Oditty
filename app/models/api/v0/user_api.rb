@@ -2,6 +2,10 @@ module Api
 	module V0
 		class UserApi
 
+			def self.get_facebook_books user_id
+				User.new(user_id).get_facebook_books.execute[0]
+			end
+
 			def self.set_intro_seen_status user_id, status
 				User.new(user_id).set_intro_seen_status(status)
 			end
@@ -344,16 +348,17 @@ module Api
 			end
 
 			def self.add_books_from_fb(params, user_id)
-				puts "#{params[:type].to_s.green}"
-				if params[:data].present?
-					for book in params[:data]
-						title = book[:name].search_ready
-						if title
-							id = SearchApi.search(title, 1, 'BOOK')
-							puts id.to_s.green
-						end
-					end
-				end
+				# puts "#{params[:type].to_s.green}"
+				# puts "#{params}.to_s"
+				# if params[:data].present?
+				# 	for book in params[:data]
+				# 		title = book[:name].search_ready
+				# 		if title
+				# 			# id = SearchApi.search(title, 1, 'BOOK')
+				# 			puts id.to_s.green
+				# 		end
+				# 	end
+				# end
 			end
 
 			def self.recommend_book(user_id, friends_id, book_id)
@@ -479,7 +484,21 @@ module Api
 
 			def self.get_notifications user_id
 				info = User.new(user_id).get_notifications.execute
-				info
+				notifications = []
+				for data_info in info
+					if data_info["label"][0] == "User"
+					elsif data_info["label"][0] == "RecommendNode"
+						notification = {
+							:friend_id => data_info["notification"]["data"]["friend_id"],
+							:book_id => data_info["notification"]["data"]["book_id"],
+							:user_id => data_info["notification"]["data"]["user_id"],
+							:timestamp => data_info["notification"]["data"]["timestamp"]
+						}
+						data_info["notification"] = notification
+						notifications.push data_info
+					end
+				end
+				notifications
 			end
 
 			def self.verify(params)
@@ -495,7 +514,7 @@ module Api
 
 
 			def self.get_lenders book_id, user_id
-				Book.new(book_id).get_lenders user_id											
+				UsersBook.new(user_id, book_id).notify_borrow + Book.new(book_id).get_lenders(user_id)
 			end
 
 			def self.get_profile_info_of_another id, user_id

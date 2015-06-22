@@ -1,13 +1,18 @@
 <md-content ng-controller="realVirtualityController" class="white" check-scroll-bottom="load_news()">
+    <div class="less_important" layout-align="center center" layout="row" layout-padding>
+        <div>
+            Real Virtuality is seeing the world through the eyes of a book.
+        </div>
+    </div>
     <md-radio-group layout="row" layout-align="center center" 
         layout-padding ng-change="load_news()"
         layout-wrap ng-model="active_community">
         <md-radio-button ng-repeat="community in communities" 
                         class="md-warn" layout="row" layout-margin
                         ng-value="community">
-            <img ng-src="{{community.image_url}}" class="circular">
+            <img ng-src="{{::community.image_url}}" class="circular">
             <md-tooltip>
-                <div ng-bind-html="community.name"></div>
+                <div ng-bind-html="::community.name"></div>
             </md-tooltip>
             <!-- <div ng-bind-html="community.name | uppercase" layout-padding class="less_important"></div> -->    
         </md-radio-button>
@@ -26,11 +31,11 @@
             </div>
         </div>
         <div flex="80" layout-align="start start" layout="column" class="small-padding" flex-sm="100">
-            <a ng-href="/news?id={{news.news_id}}">
-                <div ng-bind-html="news.title" class="big_title"></div>
+            <a ng-href="/news?id={{::news.news_id}}">
+                <div ng-bind-html="::news.title" class="big_title"></div>
             </a>
-            <a ng-href="{{news.news_url}}" class="less_important" target="_blank">{{news.news_url}}</a>
-            <div ng-bind-html="news.description"></div>
+            <a ng-href="{{::news.news_url}}" class="less_important" target="_blank">{{news.news_url}}</a>
+            <div ng-bind-html="::news.description"></div>
         </div>
      </section>
      <section ng-if="!active_community.news && !info.loading" layout-padding>

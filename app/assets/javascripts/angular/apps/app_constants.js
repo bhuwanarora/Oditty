@@ -47,7 +47,7 @@ var places = [
 var constants = {
 		"Emotions": emotions,
 		"IntroConstants":{
-			"NewsFeed": "<div class='tooltip_header'><div class='larger_font inline_block icon-newspaper site_color'></div><div class='inline_block header_text'>Keep track of what your friends are doing on Reader's Door.</div></div>",
+			"NewsFeed": "<div class='tooltip_header'><div class='larger_font inline_block icon-newspaper site_color'></div><div class='inline_block header_text'>Keep track of what your friends are doing on ReadersDoor.</div></div>",
 
 			"Shelves": "<div class='tooltip_header'><div class='larger_font inline_block icon-bookmark2 yellow_color'></div><div class='inline_block header_text'>Create virtual book shelves.</div></div>",
 
@@ -103,7 +103,7 @@ var constants = {
 			"InfluentialBooks": "INFLUENTIAL BOOKS",
 			"FetchingData": "Fetching data from your apps on facebook...",
 			"FetchingError": "Error in fetching data from the database...",
-			"DatabaseConnect": "Connecting to Reader's Door database...",
+			"DatabaseConnect": "Connecting to ReadersDoor database...",
 			"BooksFound": "Please choose the right book for the title you've read..."
 		},
 		"SearchUIConstants": {
@@ -164,7 +164,7 @@ var constants = {
 			"ReaderByTasteLink": "Find readers by their taste",
 			"ReaderByGenderLink": "Find readers by gender",
 			"ReaderListsLink": "Get popular lists of readers",
-			"SearchingWebsite": "Searching reader's door...",
+			"SearchingWebsite": "Searching ReadersDoor...",
 			"SearchAll": "ALL",
 			"Hash": "#",
 			"Plus": "+",

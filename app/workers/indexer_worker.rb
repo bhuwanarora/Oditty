@@ -1,7 +1,9 @@
 class IndexerWorker
 	include Sidekiq::Worker
 	sidekiq_options :queue => :indexer
-	def perform(response, type)
+	def perform(params)
+		type = params[:type]
+		response = params[:response]
 		if type == "Blog"
 			base_url = "/api/v0/update_blog"
 		elsif type == "News"

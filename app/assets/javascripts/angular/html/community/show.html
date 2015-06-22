@@ -1,7 +1,7 @@
 <div hide-sm layout="row" flex hide-md>
     <div layout="column"  flex="45" layout-padding>
-        <community-feed community-feed="community_feed"
-            ng-repeat="community_feed in active_tag.news"></community-feed>
+        <community-feed community-feed="::community_feed"
+            ng-repeat="community_feed in ::active_tag.news"></community-feed>
     </div>
     <div flex="5"></div>
     <div layout="column" flex="50" layout-padding
@@ -10,6 +10,6 @@
 <div show-sm show-md hide>
     <div layout="column" layout-padding
         ng-include src="'/assets/angular/html/room/info.html'"></div>
-    <community-feed community-feed="community_feed" 
-            ng-repeat="community_feed in active_tag.news"></community-feed>
+    <community-feed community-feed="::community_feed" 
+            ng-repeat="community_feed in ::active_tag.news"></community-feed>
 </div>

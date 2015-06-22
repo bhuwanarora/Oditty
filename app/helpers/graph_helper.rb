@@ -50,6 +50,14 @@ module GraphHelper
 		end
 	end
 
+	def self.user_set_bookmark_count
+		clause = "MATCH (user:User) WITH user "\
+			"OPTIONAL " + Bookmark.match_path("book") + "WHERE label.key <> \'" + Bookmark::Type::FromFacebook.get_key + "\' AND label.key <> \'" + Bookmark::Type::Visited.get_key + "\' "\
+			" WITH user, COUNT(DISTINCT(bookmark_node)) as bookmark_node_count "\
+				"SET user.bookmark_count = bookmark_node_count"
+		clause.execute
+	end
+
 	def self.make_book_and_article_shelves
 		clause = " MATCH (label: Label) SET label: BookShelf WITH label WHERE NOT (label.key = \"PlanToBuy\" OR label.key = \"IOwnThis\" OR label.key = \"IOwnthis\") WITH label SET label: ArticleShelf "
 		clause.execute
@@ -76,16 +84,20 @@ module GraphHelper
 	end
 
 	def self.set_category_linked_list
-		delete_clause = "MATCH ()-[r:NextInCategory]->() DELETE r"
-		delete_clause.execute
+		# delete_clause = "MATCH ()-[r:NextInCategory]->() DELETE r"
+		# delete_clause.execute
 
 		starting_book_id = Constant::Id::BestBook.to_i
-		match_clause = " MATCH (book) WHERE ID(book) = " + starting_book_id.to_s + " WITH book MATCH  (last:Book)-[:NextBook]->(book) WITH book, last MATCH path = (book)-[:NextBook*]->(last) " 
+		match_clause = " MATCH (book) WHERE ID(book) = " + starting_book_id.to_s + " WITH book MATCH (last:Book)-[:NextBook]->(book) WITH book, last MATCH path = (book)-[:NextBook*1595212]->(last) "
 		extract_clause = " WITH path, EXTRACT (n IN nodes(path)|n) AS books UNWIND books AS book WITH book WHERE NOT (book)-[:NextInCategory]-() "
-		collect_categorised = Category::Root.match_books_root + " WITH DISTINCT root_category ,COLLECT(book) AS books "
-		create_links = " FOREACH(i in RANGE(0, length(books)-2) |  FOREACH(p1 in [books[i]] |  FOREACH(p2 in [books[i+1]] |  MERGE (p1)-[:NextInCategory{from_category:root_category.uuid}]->(p2)))) WITH root_category, HEAD(books) as most_popular, LAST(books) as least_popular MERGE (least_popular)-[:NextInCategory{from_category:root_category.uuid}]->(root_category) MERGE (root_category)-[:NextInCategory{from_category:root_category.uuid}]->(most_popular)  "		
+		collect_categorised = Category::Root.match_books_root + " WITH DISTINCT root_category, COLLECT(book) AS books "
+		create_links = " FOREACH(i in RANGE(0, length(books)-2) |  FOREACH(p1 in [books[i]] |  FOREACH(p2 in [books[i+1]] |  MERGE (p1)-[:NextInCategory{from_category:root_category.uuid}]->(p2)))) WITH root_category, HEAD(books) as most_popular, LAST(books) as least_popular MERGE (least_popular)-[:NextInCategory{from_category:root_category.uuid}]->(root_category) MERGE (root_category)-[:NextInCategory{from_category:root_category.uuid}]->(most_popular) "
 		clause = match_clause + extract_clause + collect_categorised + create_links
 		info = clause.execute[0]
+
+		# clause = "MATCH (b:Book)-[r:NextBook]->() RETURN COUNT(b) AS count"
+		# info = clause.execute[0]
+		# puts info
 	end
 
 	def self.set_era_linked_list
@@ -476,9 +488,14 @@ module GraphHelper
 		end
 	end
 
-
 	def wrong_author_links
 		clause = "MATCH (book:Book)<-[:Wrote]-(author:Author) WHERE book.author_name <> author.name RETURN COUNT(b)"
+	end
 
+	def set_user_notification
+		clause = "MATCH (user:User) WITH user "\
+			"WHERE NOT ((user)-[:NextNotification]->())"\
+			"CREATE UNIQUE (user)-[:NextNotification]->(user)"
+		clause.execute
 	end
 end

@@ -6,7 +6,7 @@
      <div class="padding"></div>
      <div layout-margin class="relative_block">
           <div class="counter" layout="row" layout-align="center center" ng-if="book.endorse_count">
-               <div>{{book.endorse_count}}</div>
+               <div>{{::book.endorse_count}}</div>
           </div>
           <div ng-class="{'inactive_blue_circle': !book.endorse_status, 
                'md-raised blue_circle': book.endorse_status}"   layout="row" layout-align="center center"
@@ -20,7 +20,7 @@
      </div>
      <div layout-margin class="relative_block">
           <div class="counter" layout="row" layout-align="center center" ng-if="book.share_count">
-               <div>{{book.share_count}}</div>
+               <div>{{::book.share_count}}</div>
           </div>
           <div class="md-raised blue_circle pointer"  layout="row" layout-align="center center"
                layout-padding ng-click="show_share_bottom_sheet()">
@@ -34,7 +34,7 @@
      </div>
      <div layout-margin class="relative_block">
           <div class="counter" layout="row" layout-align="center center" ng-if="book.bookmark_count">
-               <div>{{book.bookmark_count}}</div>
+               <div>{{::book.bookmark_count}}</div>
           </div>
           <bookmark bookmark-id="book.book_id || book.id" bookmark-type="'Book'" ng-if="book"
                shelves="book.shelves" custom="true"></bookmark>

@@ -5,12 +5,12 @@
             <div layout="column" layout-padding>
                 <div class="big_title">
                     <a ng-href="/profile?q={{feed.user.id}}">
-                        <span>{{feed.user.first_name}}</span>
-                        <span>{{feed.user.last_name}}</span>
+                        <span>{{::feed.user.first_name}}</span>
+                        <span>{{::feed.user.last_name}}</span>
                     </a>
                 </div>
                 <div class="less_important">
-                    {{feed.user.init_book_read_count}}
+                    {{::feed.user.init_book_read_count}}
                 </div>
             </div>
         </md-card-content>
@@ -25,7 +25,7 @@
         <md-divider></md-divider>
      </md-card>
      <div layout="row" layout-align="center center" layout-padding>
-        <md-button class="md-button-clear primary" 
+        <md-button aria-label="share moments from reading journey" class="md-button-clear primary" 
                     ng-click="write_reading_journey_for($event)">
             <div><span>Share moments from Reading Journey.</span>
             <span class="icon-pencil"></span></div>

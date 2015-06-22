@@ -57,8 +57,11 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         if(angular.isUndefined($scope.selected_book)){
             $scope.selected_book = book;
             $scope.info.book = book;
-            $rootScope.active_book = book;
             $scope.info.status_books = [book];
+            if(angular.isUndefined($rootScope.active_book)){
+                $rootScope.active_book = book;
+                $scope.setting_rootscope = true;
+            }
         }
     }
 
@@ -78,6 +81,9 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         $scope.info.show_share = false;
         $scope.info.show_book_share = false;
         delete $rootScope.active_shelf;
+        if($scope.setting_rootscope){
+            delete $rootScope.active_book;
+        }
         event.stopPropagation();
     }
 

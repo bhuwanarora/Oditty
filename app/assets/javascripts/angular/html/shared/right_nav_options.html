@@ -6,14 +6,16 @@
         </md-tooltip>
     </div>
 </a>
-<div ng-show="info.mobile_search" 
+<!-- <div ng-show="info.mobile_search" 
     class="pointer"  layout-padding
     ng-click="toggle_notifications($event)">
-    <i class="material-icons">notifications_none</i>
+    <i class="material-icons" ng-show="notifications.length == 0">notifications_none</i>
+    <i class="material-icons red_color" ng-show="notifications.length != 0 && !info.notifications_seen">notifications_active</i>
+    <i class="material-icons" ng-show="notifications.length != 0 && info.notifications_seen">notifications</i>
     <md-tooltip >
         Notifications
     </md-tooltip>
-</div>
+</div> -->
 <a href="/profile" ng-show="info.mobile_search" hide-sm>
     <div class="profile_link pointer">
         <img ng-src="{{user.image_url}}" ng-if="user.image_url" class="circular">

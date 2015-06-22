@@ -18,7 +18,8 @@ module BlogsHelper
 			end
 			clause += Blog.return_init + Blog.basic_info
 			response = clause.execute[0]
-			IndexerWorker.perform_async(response["blog_id"], "Blog")
+			params = {:type => "Blog", :response => response["blog_id"]}
+			IndexerWorker.perform_async(params)
 		end					
 	end
 end

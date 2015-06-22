@@ -1,7 +1,47 @@
+homeApp.directive('bookEmbed', ["$rootScope", "google_public_key", function($rootScope, google_public_key){
+    return{
+        restrict: 'A',
+        scope: {book: '=', info: '='},
+        link: function($scope, $element, google_public_key){
+
+            var alert_not_found = function(){
+                $scope.info.loading = false;
+                $element.prepend("<div>Preview not found</div>");
+            }
+
+            var load_book = function(){
+                if($scope.book.isbn == null){
+                    $scope.alert_not_found();
+                }
+                else{
+                    var isbn = $scope.book.isbn.split(',');
+                    var isbn_string = "ISBN:"
+                    var viewer = new google.books.DefaultViewer($element.find('div')[0]);
+                    viewer.load(isbn_string.concat(isbn[1]), alert_not_found);
+                    $scope.info.loading = false;
+                }
+            }
+
+
+            var _init = (function () {
+                $scope.info.loading = true;
+                var id = ($rootScope.active_book.id) || ($rootScope.active_book.book_id);
+
+                if(angular.isUndefined($scope.book)){
+                    $scope.book = $rootScope.active_book;
+                }
+                $scope.book_loading = true;
+                
+                google.load("books", "0", {callback: load_book});
+            }());
+        }
+    };
+}]);
+
 homeApp.directive('recommend', ["$rootScope", "userService", "sharedService", function($rootScope, userService, sharedService){
     return{
         restrict: 'E',
-        scope: {user: '=', book: '=', usersList: '='},
+        scope: {user: '=', book: '='},
         controller: ['$scope', function($scope){
             $scope.recommend_friend = function(){
                 var friends_id = $scope.user.id;
@@ -11,6 +51,12 @@ homeApp.directive('recommend', ["$rootScope", "userService", "sharedService", fu
                     $scope.recommending = false;
                 });
             }
+
+            var _init = function(){
+                $scope.recommending = false;
+            }
+
+            _init();
         }],
         templateUrl: '/assets/angular/html/shared/recommend.html'
     }
@@ -121,7 +167,7 @@ homeApp.directive('setFocus', ["$timeout", "$parse", "$rootScope", function($tim
                 	       element[0].value = String.fromCharCode($rootScope.keyCode);
               	         }
                         element[0].focus();
-                        // $speechSynthetis.speak("You are at Reader's Door. How can I help you?", 'en-UK');
+                        // $speechSynthetis.speak("You are at ReadersDoor. How can I help you?", 'en-UK');
                     });
                 }
             });

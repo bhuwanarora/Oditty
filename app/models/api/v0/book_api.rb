@@ -1,6 +1,10 @@
 module Api
 	module V0
 		class BookApi
+			def self.map_fb_book params
+				facebook_id = params["facebook_id"]
+				Api::V0::FacebookApi.map params, facebook_id
+			end
 
 			def self.create_thumb_request(params, user_id)
 				BooksGraphHelper.create_thumb_request(params, user_id)
@@ -31,7 +35,13 @@ module Api
 			end
 
 			def self.get_interesting_info book_id
-				Book.new(book_id).get_interesting_info.execute
+				output = Book.new(book_id).get_interesting_info.execute[0]
+				info_list = output["info"]
+				filtered_info = []
+				filtered_info = info_list.map{|element| {"id" => element["id"], "labels" => element["labels"], "data" => element["info"]["data"]}}
+				filtered_output = output
+				filtered_output["info"] = filtered_info
+				filtered_output
 			end
 
 			# def self.get_timeline id

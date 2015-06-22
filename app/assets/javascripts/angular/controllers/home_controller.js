@@ -16,7 +16,7 @@ homeApp.controller('homeController', ["$scope", "$mdSidenav", function($scope, $
 
     $scope.handle_news_redirect = function(event){
     	if($scope.info.hide_signin){
-    		window.location.href = "/news_group";
+    		window.location.href = "/rooms";
     	}
     	else{
     		$scope.show_signin_options(event);
@@ -25,7 +25,7 @@ homeApp.controller('homeController', ["$scope", "$mdSidenav", function($scope, $
 
     $scope.handle_infinity_redirect = function(event){
     	if($scope.info.hide_signin){
-    		window.location.href = "/infinity";
+    		window.location.href = "/filters";
     	}
     	else{
     		$scope.show_signin_options(event);

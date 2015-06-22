@@ -2,7 +2,7 @@
 	<section>
 	    <md-list>
 	        <md-item>
-				<md-button ng-if="!active_tag.status"
+				<md-button aria-label="toggle_follow" ng-if="!active_tag.status"
 			        class=" md-raised user_circular circular big_title"
 			        layout-padding
 			        ng-click="toggle_follow()">
@@ -15,10 +15,10 @@
 			</md-item>
 	        <md-item ng-repeat="user in active_tag.users">
 	            <md-item-content>
-	            	<a ng-href="/profile?id={{user.id}}" ng-if="user.first_name">
+	            	<a ng-href="/profile?id={{::user.id}}" ng-if="user.first_name">
 		                <img ng-src="{{user.image_url | default_profile}}" layout-margin class="user_circular circular" />
 		                <md-tooltip md-direction="bottom">
-		                	{{user.first_name}} {{user.last_name}}
+		                	{{::user.first_name}} {{::user.last_name}}
 		                </md-tooltip>
 	            	</a>
 	            </md-item-content>

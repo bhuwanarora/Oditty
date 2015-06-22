@@ -111,10 +111,15 @@ homeApp.controller('newsController', ["$scope", "$mdSidenav", 'newsService', '$l
         $scope.info.active_tag = $scope.active_tag;
         $scope.info.loading = true;
         
-        $timeout(function(){
+        var news_timeout = $timeout(function(){
             $scope.get_news_info(news_id);
-            newsService.news_visited(news_id);
         }, 100);
+
+        
+        $scope.$on('destroy', function(){
+            $timeout.cancel(news_timeout);
+        });
+
 
     }());
 

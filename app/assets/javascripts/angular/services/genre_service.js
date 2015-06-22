@@ -14,6 +14,10 @@ homeApp.service('genreService', ["$http", "$q", "$rootScope", "WebsiteUIConstant
         return _deferred_request('/api/v0/search?q='+q+"&type=Genre", $q, $http);
     }
 
+    this.search_star_genres = function(q){
+        return _deferred_request('/api/v0/search_star_genre?q='+q, $q, $http);
+    }
+
     this.get_genres = function(){
         return _deferred_request('/api/v0/genres', $q, $http);
     }
