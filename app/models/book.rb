@@ -228,4 +228,17 @@ class Book < Neo
 			" SET book.recommended_count = TOINT(COALESCE(book.recommended_count, " + value.to_s + ")) - " + value.to_s + " "
 		end
 	end
+
+	def set_page_count with_variables
+		clause = " OPTIONAL MATCH (status: Status)-[:Mentions]->(book:Book) "\
+			"WHERE HAS(status.total_page_count) AND ID(book) = " + @id.to_s + " "\
+			"WITH book, COLLECT(status.total_page_count) AS page_count, COUNT(status.total_page_count) AS count "
+		with_variables.each do |with_var|
+			clause += ", " + with_var + " "
+		end
+		clause += "ORDER BY count DESC " + Book.limit(1) + " "
+		clause += " FOREACH (ignore IN (CASE WHEN (NOT HAS(book.page_count) AND length(page_count) > 0) THEN [1] ELSE [] END )|  "
+		clause += " SET book.page_count = head(page_count)) "
+		clause
+	end
 end
