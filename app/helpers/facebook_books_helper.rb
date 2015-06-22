@@ -3,16 +3,18 @@ module FacebookBooksHelper
 		facebook_app_id = Constant::Id::FacebookAppId
 		goodreads_app_id = Constant::Id::GoodreadsAppId
 
-		books = params["data"] 
-		for data in books
-			book = data["data"]["book"] 
-			if data["application"]["id"] == facebook_app_id
-				book_id = FacebookBooksHelper.handle_facebook_book(book, user_id) 
-				FacebookBooksHelper.set_bookmark("book.from_facebok", user_id, book_id)
-			elsif data["application"]["id"] == goodreads_app_id
-				book_id = FacebookBooksHelper.handle_gr_book(data, user_id) 
+		books = params["data"]
+		if books.present? 
+			for data in books
+				book = data["data"]["book"] 
+				if data["application"]["id"] == facebook_app_id
+					book_id = FacebookBooksHelper.handle_facebook_book(book, user_id) 
+					FacebookBooksHelper.set_bookmark("book.from_facebok", user_id, book_id)
+				elsif data["application"]["id"] == goodreads_app_id
+					book_id = FacebookBooksHelper.handle_gr_book(data, user_id) 
+				end
+				FacebookBooksHelper.set_bookmark(data["type"], user_id, book_id)
 			end
-			FacebookBooksHelper.set_bookmark(data["type"], user_id, book_id)
 		end
 	end
 
