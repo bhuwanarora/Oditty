@@ -3,6 +3,10 @@ class Book < Neo
 		@id = id
 	end
 
+	def self.search_by_fb_id id
+		" MATCH (book:Book :FacebookBook) WHERE book.fb_id = " + id.to_s + " WITH book "
+	end
+
 	def self.init_match
 		" MATCH (book:Book) "
 	end
@@ -235,5 +239,9 @@ class Book < Neo
 		else
 			" SET book.recommended_count = TOINT(COALESCE(book.recommended_count, " + value.to_s + ")) - " + value.to_s + " "
 		end
+	end
+
+	def self.set_facebook_book id
+		" SET book :FacebookBook, book.fb_id = " + id.to_s + " "
 	end
 end

@@ -22,6 +22,11 @@ class Bookmark::Type < Bookmark
 		self
 	end
 
+	def facebook_book
+		@bookmark = @bookmark.facebook_book
+		self
+	end
+
 	def news
 		@bookmark = @bookmark.news
 		self
